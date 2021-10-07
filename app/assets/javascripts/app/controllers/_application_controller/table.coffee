@@ -493,6 +493,23 @@ class App.ControllerTable extends App.Controller
       sortable:   @dndCallback
     ))
 
+  getGroupByKeyName: (object, groupBy) ->
+    reference_key = groupBy + '_id'
+
+    if reference_key of object
+      return reference_key
+
+    groupBy
+
+  sortObjectKeys: (objects, direction) ->
+    sorted = Object.keys(objects).sort()
+
+    switch direction
+      when 'DESC'
+        sorted.reverse()
+      else
+        sorted
+
   renderTableRows: (sort = false) =>
     if sort is true
       @sortList()
@@ -506,11 +523,11 @@ class App.ControllerTable extends App.Controller
     objectsToShow = @objectsOfPage(@pagerShownPage)
     if @groupBy
       # group by raw (and not printable) value so dates work also
-      objectsGrouped = _.groupBy(objectsToShow, (object) => object[@groupBy])
+      objectsGrouped = _.groupBy(objectsToShow, (object) => object[@getGroupByKeyName(object, @groupBy)])
     else
       objectsGrouped = { '': objectsToShow }
 
-    for groupValue in Object.keys(objectsGrouped).sort()
+    for groupValue in @sortObjectKeys(objectsGrouped, @groupDirection)
       groupObjects = objectsGrouped[groupValue]
 
       for object in groupObjects

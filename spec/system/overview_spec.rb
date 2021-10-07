@@ -65,4 +65,71 @@ RSpec.describe 'Overview', type: :system do
       end
     end
   end
+
+  context 'sorting when group by is set' do
+    let(:user) { create(:customer) }
+    let(:ticket1) { create(:ticket, group: Group.find_by(name: 'Users'), priority_id: 1, customer: user) }
+    let(:ticket2) { create(:ticket, group: Group.find_by(name: 'Users'), priority_id: 2, customer: user) }
+    let(:ticket3) { create(:ticket, group: Group.find_by(name: 'Users'), priority_id: 3, customer: user) }
+    let(:overview) do
+      create(:overview, group_by: 'priority', group_direction: group_direction, condition: {
+               'ticket.customer_id' => {
+                 operator: 'is',
+                 value:    user.id
+               }
+             })
+    end
+
+    before do
+      ticket1 && ticket2 && ticket3
+
+      visit "ticket/view/#{overview.link}"
+    end
+
+    context 'when group direction is default' do
+      let(:group_direction) { nil }
+
+      it 'sorts groups 1 > 3' do
+        within :active_content do
+          expect(find('.table-overview table tbody tr:first-child td:nth-child(1)').text).to match('1 low')
+          expect(find('.table-overview table tbody tr:nth-child(5) td:nth-child(1)').text).to match('3 high')
+        end
+      end
+
+      it 'does not show duplicates when any ticket attribute is updated using bulk update' do
+        find("tr[data-id='#{ticket3.id}']").check('bulk', allow_label_click: true)
+        select '2 normal', from: 'priority_id'
+
+        click '.js-confirm'
+        find('.js-confirm-step textarea').fill_in with: 'test tickets ordering'
+        click '.js-submit'
+
+        within :active_content do
+          expect(page).to have_css("tr[data-id='#{ticket3.id}']", count: 1)
+        end
+      end
+    end
+
+    context 'when group direction is ASC' do
+      let(:group_direction) { 'ASC' }
+
+      it 'sorts groups 1 > 3' do
+        within :active_content do
+          expect(find('.table-overview table tbody tr:first-child td:nth-child(1)').text).to match('1 low')
+          expect(find('.table-overview table tbody tr:nth-child(5) td:nth-child(1)').text).to match('3 high')
+        end
+      end
+    end
+
+    context 'when group direction is DESC' do
+      let(:group_direction) { 'DESC' }
+
+      it 'sorts groups 3 > 1' do
+        within :active_content do
+          expect(find('.table-overview table tbody tr:first-child td:nth-child(1)').text).to match('3 high')
+          expect(find('.table-overview table tbody tr:nth-child(5) td:nth-child(1)').text).to match('1 low')
+        end
+      end
+    end
+  end
 end
