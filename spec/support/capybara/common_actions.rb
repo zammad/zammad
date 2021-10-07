@@ -92,6 +92,8 @@ module CommonActions
   #
   def logout
     visit('logout')
+
+    wait.until_disappears { find('.user-menu .user a', wait: false) }
   end
 
   # Overwrites the Capybara::Session#visit method to allow SPA navigation

@@ -535,8 +535,7 @@ RSpec.describe 'Ticket Create', type: :system do
     let(:customer) { create(:customer, password: 'test') }
 
     it 'customer user should not have agent object attributes', authenticated_as: :agent do
-      visit 'ticket/create'
-
+      # Log out again, so that we can execute the next login.
       logout
 
       # Re-create agent session and fetch object attributes.
