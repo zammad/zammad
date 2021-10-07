@@ -13,7 +13,7 @@ class TicketPolicy < ApplicationPolicy
       super
     end
 
-    def resolve # rubocop:disable Metrics/AbcSize
+    def resolve # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
       raise NoMethodError, <<~ERR.chomp if instance_of?(TicketPolicy::BaseScope)
         specify an access type using a subclass of TicketPolicy::BaseScope
       ERR
@@ -26,12 +26,19 @@ class TicketPolicy < ApplicationPolicy
         bind.push(user.group_ids_access(self.class::ACCESS_TYPE))
       end
 
-      if user.organization&.shared
-        sql.push('(tickets.customer_id = ? OR tickets.organization_id = ?)')
-        bind.push(user.id, user.organization.id)
-      else
-        sql.push('tickets.customer_id = ?')
-        bind.push(user.id)
+      if user.permissions?('ticket.customer')
+        if user.organization&.shared
+          sql.push('(tickets.customer_id = ? OR tickets.organization_id = ?)')
+          bind.push(user.id, user.organization.id)
+        else
+          sql.push('tickets.customer_id = ?')
+          bind.push(user.id)
+        end
+      end
+
+      # The report permission can access all tickets.
+      if sql.empty? && !user.permissions?('report')
+        sql.push '0 = 1' # Forbid unlimited access for all other permissions.
       end
 
       scope.where sql.join(' OR '), *bind

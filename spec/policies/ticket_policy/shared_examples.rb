@@ -12,15 +12,13 @@ RSpec.shared_examples 'for agent user' do |access_type|
 
   shared_examples 'shown' do
     it 'returns its groups’ tickets' do
-      expect(scope.resolve)
-        .to match_array(Ticket.where(group: member_groups))
+      expect(scope.resolve).to match_array(Ticket.where(group: member_groups))
     end
   end
 
   shared_examples 'hidden' do
     it 'does not return its groups’ tickets' do
-      expect(scope.resolve)
-        .to be_empty
+      expect(scope.resolve).to be_empty
     end
   end
 
@@ -47,6 +45,62 @@ RSpec.shared_examples 'for agent user' do |access_type|
     end
   end
 
+  context 'without any role permission' do
+
+    let(:role_without_rights) { create(:role) }
+    let(:user) { create(:agent, groups: member_groups, role_ids: [ role_without_rights.id ]) }
+
+    context 'when checking for "full" access' do
+      # this is already true by default, but it doesn't hurt to be explicit
+      before { user.user_groups.each { |ug| ug.update_columns(access: 'full') } }
+
+      include_examples 'hidden'
+    end
+
+    context 'when limited to "read" access' do
+      before { user.user_groups.each { |ug| ug.update_columns(access: 'read') } }
+
+      include_examples 'hidden'
+    end
+
+    context 'when limited to "overview" access' do
+      before { user.user_groups.each { |ug| ug.update_columns(access: 'overview') } }
+
+      include_examples 'hidden'
+    end
+  end
+
+  context 'with report permission' do
+
+    let(:report_role) { create(:role).tap { |role| role.permission_grant('report') } }
+    let(:user) { create(:agent, groups: member_groups, role_ids: [ report_role.id ]) }
+
+    context 'when checking for "full" access' do
+      # this is already true by default, but it doesn't hurt to be explicit
+      before { user.user_groups.each { |ug| ug.update_columns(access: 'full') } }
+
+      it 'grants access to all tickets' do
+        expect(scope.resolve).to match_array(Ticket.all)
+      end
+    end
+
+    context 'when limited to "read" access' do
+      before { user.user_groups.each { |ug| ug.update_columns(access: 'read') } }
+
+      it 'grants access to all tickets' do
+        expect(scope.resolve).to match_array(Ticket.all)
+      end
+    end
+
+    context 'when limited to "overview" access' do
+      before { user.user_groups.each { |ug| ug.update_columns(access: 'overview') } }
+
+      it 'grants access to all tickets' do
+        expect(scope.resolve).to match_array(Ticket.all)
+      end
+    end
+  end
+
   context 'with indirect access via Role#groups' do
     let(:user) { create(:agent).tap { |u| u.roles << role } }
     let(:role) { create(:role, groups: member_groups) }
@@ -68,6 +122,41 @@ RSpec.shared_examples 'for agent user' do |access_type|
       before { role.role_groups.each { |rg| rg.update_columns(access: 'overview') } }
 
       include_examples access_type == 'overview' ? 'shown' : 'hidden'
+    end
+  end
+
+  context 'when checking access via customer organization but no customer permissions' do
+    let(:user) { create(:agent, organization: organization) }
+
+    let(:teammate) { create(:agent, organization: organization) }
+
+    before do
+      create_list(:ticket, 2, customer: user)
+      create_list(:ticket, 2, customer: teammate)
+    end
+
+    context 'with no #organization' do
+      let(:organization) { nil }
+
+      it 'returns no tickets' do
+        expect(scope.resolve).to be_empty
+      end
+    end
+
+    context 'with a non-shared #organization' do
+      let(:organization) { create(:organization, shared: false) }
+
+      it 'returns no tickets' do
+        expect(scope.resolve).to be_empty
+      end
+    end
+
+    context 'with a shared #organization (default)' do
+      let(:organization) { create(:organization, shared: true) }
+
+      it 'returns no tickets' do
+        expect(scope.resolve).to be_empty
+      end
     end
   end
 end
