@@ -11,7 +11,6 @@ if [ "$LEVEL" == '1' ]; then
   cp contrib/auto_wizard_test.json auto_wizard.json
   cp test/integration/aaa_auto_wizard_base_setup_test.rb test/browser/aaa_auto_wizard_base_setup_test.rb
   rm test/browser/abb_one_group_test.rb
-  rm test/browser/admin_channel_email_test.rb
   rm test/browser/admin_drag_drop_to_new_group_test.rb
   rm test/browser/admin_overview_test.rb
   rm test/browser/admin_permissions_granular_vs_full_test.rb
@@ -68,7 +67,6 @@ elif [ "$LEVEL" == '2' ]; then
   # only ticket action 2/3
   # test/browser/aaa_getting_started_test.rb
   # test/browser/abb_one_group_test.rb
-  rm test/browser/admin_channel_email_test.rb
   rm test/browser/admin_drag_drop_to_new_group_test.rb
   rm test/browser/admin_overview_test.rb
   rm test/browser/admin_permissions_granular_vs_full_test.rb
@@ -125,7 +123,6 @@ elif [ "$LEVEL" == '3' ]; then
   # only ticket action 2/3
   # test/browser/aaa_getting_started_test.rb
   # test/browser/abb_one_group_test.rb
-  rm test/browser/admin_channel_email_test.rb
   rm test/browser/admin_drag_drop_to_new_group_test.rb
   rm test/browser/admin_overview_test.rb
   rm test/browser/admin_permissions_granular_vs_full_test.rb
@@ -182,7 +179,6 @@ elif [ "$LEVEL" == '4' ]; then
   # only ticket action 3/3
   # test/browser/aaa_getting_started_test.rb
   # test/browser/abb_one_group_test.rb
-  rm test/browser/admin_channel_email_test.rb
   rm test/browser/admin_drag_drop_to_new_group_test.rb
   rm test/browser/admin_overview_test.rb
   rm test/browser/admin_permissions_granular_vs_full_test.rb
@@ -238,7 +234,6 @@ elif [ "$LEVEL" == '5' ]; then
 
   # only profile action & admin
   # test/browser/abb_one_group_test.rb
-  # test/browser/admin_channel_email_test.rb
   # rm test/browser/admin_drag_drop_to_new_group_test.rb
   # test/browser/admin_overview_test.rb
   # rm test/browser/admin_permissions_granular_vs_full_test.rb
@@ -297,7 +292,6 @@ elif [ "$LEVEL" == '6' ]; then
   cp contrib/auto_wizard_test.json auto_wizard.json
   cp test/integration/aaa_auto_wizard_base_setup_test.rb test/browser/aaa_auto_wizard_base_setup_test.rb
   rm test/browser/abb_one_group_test.rb
-  rm test/browser/admin_channel_email_test.rb
   rm test/browser/admin_drag_drop_to_new_group_test.rb
   rm test/browser/admin_overview_test.rb
   rm test/browser/admin_permissions_granular_vs_full_test.rb

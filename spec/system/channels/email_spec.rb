@@ -4,6 +4,113 @@ require 'rails_helper'
 
 RSpec.describe 'Manage > Channels > Email', type: :system do
 
+  context 'when managing email channels', required_envs: %w[MAILBOX_INIT] do
+
+    before do
+      visit '/#channels/email'
+    end
+
+    context 'when looking at the default screen' do
+
+      it 'has correct default settings' do
+
+        within :active_content do
+          # check if postmaster filters are shown
+          click 'a[href="#c-filter"]'
+          expect(find('#c-filter .overview')).to have_text 'NO ENTRIES'
+
+          # check if signatures are shown
+          click 'a[href="#c-signature"]'
+          expect(find('#c-signature .overview')).to have_text 'default'
+
+        end
+      end
+    end
+
+    context 'when creating new channels' do
+      let(:mailbox_user)     { ENV['MAILBOX_INIT'].split(':')[0] }
+      let(:mailbox_password) { ENV['MAILBOX_INIT'].split(':')[1] }
+
+      before do
+        # Make sure the channel is loaded
+        'Channel::Driver::Imap'.constantize
+        # The normal timeout may be too low in slow CI environments.
+        stub_const 'Channel::Driver::Imap::CHECK_ONLY_TIMEOUT', 1.minute
+      end
+
+      it 'refuses wrong credentials' do
+
+        click 'a[href="#c-account"]'
+        click '.js-channelNew'
+        modal_ready
+
+        within '.modal' do
+          fill_in 'realname', with: 'My System'
+          fill_in 'email',    with: "unknown_user.#{mailbox_user}"
+          fill_in 'password', with: mailbox_password
+          select 'Users', from: 'group_id'
+          click '.js-submit'
+          expect(page).to have_text('Unable to detect your server settings. Manual configuration needed.')
+        end
+
+      end
+
+      it 'accepts correct credentials' do
+
+        click 'a[href="#c-account"]'
+        click '.js-channelNew'
+        modal_ready
+
+        within '.modal' do
+          fill_in 'realname', with: 'My System'
+          fill_in 'email',    with: mailbox_user
+          fill_in 'password', with: mailbox_password
+          select 'Users', from: 'group_id'
+          click '.js-submit'
+        end
+
+        modal_disappear timeout: 2.minutes
+
+        within :active_content do
+          expect(page).to have_text(mailbox_user)
+          all('.js-editInbound').last.click
+          fill_in 'options::folder', with: 'nonexisting_folder'
+          click '.js-submit'
+          expect(page).to have_text("Mailbox doesn\'t exist")
+        end
+      end
+    end
+
+    context 'when managing filters' do
+      let(:filter_name) { "Test Filter #{SecureRandom.uuid}" }
+
+      it 'works as expected' do
+
+        click 'a[href="#c-filter"]'
+        click '.content.active a[data-type="new"]'
+
+        modal_ready
+        within '.modal' do
+          fill_in 'name', with: filter_name
+          fill_in 'match::from::value', with: 'target'
+          click '.js-submit'
+        end
+        modal_disappear
+
+        expect(page).to have_text(filter_name)
+        click '.content.active .table .dropdown .btn--table'
+        click '.content.active .table .dropdown .js-clone'
+
+        modal_ready
+        click '.modal .js-submit'
+        modal_disappear
+
+        expect(page).to have_text("Clone: #{filter_name}")
+      end
+
+    end
+  end
+
   context 'non editable' do
 
     it 'hides "Edit" links' do

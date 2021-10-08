@@ -7,6 +7,8 @@ class Channel::Driver::Imap < Channel::EmailParser
   FETCH_METADATA_TIMEOUT = 2.minutes
   FETCH_MSG_TIMEOUT = 4.minutes
   EXPUNGE_TIMEOUT = 16.minutes
+  DEFAULT_TIMEOUT = 45.seconds
+  CHECK_ONLY_TIMEOUT = 6.seconds
 
   def fetchable?(_channel)
     true
@@ -110,10 +112,7 @@ example
     Rails.logger.info "fetching imap (#{options[:host]}/#{options[:user]} port=#{port},ssl=#{ssl},starttls=#{starttls},folder=#{folder},keep_on_server=#{keep_on_server},auth_type=#{options.fetch(:auth_type, 'LOGIN')})"
 
     # on check, reduce open_timeout to have faster probing
-    check_type_timeout = 45
-    if check_type == 'check'
-      check_type_timeout = 6
-    end
+    check_type_timeout = check_type == 'check' ? CHECK_ONLY_TIMEOUT : DEFAULT_TIMEOUT
 
     timeout(check_type_timeout) do
       @imap = ::Net::IMAP.new(options[:host], port, ssl, nil, false)
