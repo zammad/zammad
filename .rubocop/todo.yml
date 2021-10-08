@@ -887,10 +887,6 @@ Metrics/PerceivedComplexity:
     - 'test/browser_test_helper.rb'
     - 'test/integration/slack_test.rb'
 
-Rails/AssertNot:
-  Exclude:
-    - 'test/browser/admin_permissions_granular_vs_full_test.rb'
-
 Rails/CreateTableWithTimestamps:
   Exclude:
     - 'db/migrate/20120101000001_create_base.rb'

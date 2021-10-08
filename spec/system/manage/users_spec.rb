@@ -111,6 +111,33 @@ RSpec.describe 'Manage > Users', type: :system do
     end
   end
 
+  context 'updating a user' do
+    before do
+      create(:admin)
+    end
+
+    it 'handles permission checkboxes correctly' do
+      visit '#manage/users'
+
+      within(:active_content) do
+        click 'table.user-list tbody tr:first-child'
+      end
+      in_modal disappears: false do
+        scroll_into_view 'table.settings-list'
+        within 'table.settings-list tbody tr:first-child' do
+          click 'input[value="full"]', visible: :all
+          expect(find('input[value="full"]', visible: :all).checked?).to be true
+          click 'input[value="read"]', visible: :all
+          expect(find('input[value="full"]', visible: :all).checked?).to be false
+          expect(find('input[value="read"]', visible: :all).checked?).to be true
+          click 'input[value="full"]', visible: :all
+          expect(find('input[value="full"]', visible: :all).checked?).to be true
+          expect(find('input[value="read"]', visible: :all).checked?).to be false
+        end
+      end
+    end
+  end
+
   describe 'check user edit permissions', authenticated_as: -> { user } do
 
     shared_examples 'user permission' do |allow|
