@@ -273,6 +273,9 @@ function elasticsearch_searchindex_rebuild () {
 
 function update_or_install () {
 
+  echo "# Clear cache..."
+  zammad run rails r Cache.clear
+
   if [ -f ${ZAMMAD_DIR}/config/database.yml ]; then
     update_database
 
