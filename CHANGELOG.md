@@ -1,5 +1,15 @@
 # Change Log
 
+## [5.0.1](https://github.com/zammad/zammad/tree/5.0.1) (2021-10-08)
+[Full Changelog](https://github.com/zammad/zammad/compare/5.0.0...5.0.1)
+
+**Fixed bugs:**
+-  Bug Report 4.1.x Overview Sort - Grouped by user [3737](https://github.com/zammad/zammad/issues/3737) [[bug](https://github.com/zammad/zammad/labels/bug)] [[UX/UI](https://github.com/zammad/zammad/labels/UX/UI)] [[overviews](https://github.com/zammad/zammad/labels/overviews)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised by payment)] [[regression](https://github.com/zammad/zammad/labels/regression)]
+- Article box opening on tickets with no changes [3789](https://github.com/zammad/zammad/issues/3789) [[bug](https://github.com/zammad/zammad/labels/bug)] [[UX/UI](https://github.com/zammad/zammad/labels/UX/UI)]
+- UploadCacheCleanupJob does not execute [3787](https://github.com/zammad/zammad/issues/3787) [[bug](https://github.com/zammad/zammad/labels/bug)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised by payment)]
+- lib/fill_db.rb fails to work in production environments [3788](https://github.com/zammad/zammad/issues/3788) [[bug](https://github.com/zammad/zammad/labels/bug)]
+
+
 ## [5.0.0](https://github.com/zammad/zammad/tree/5.0.0) (2021-10-05)
 [Full Changelog](https://github.com/zammad/zammad/compare/4.1.0...5.0.0)
 
