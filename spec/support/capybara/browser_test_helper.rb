@@ -32,6 +32,21 @@ module BrowserTestHelper
     sleep wait_time
   end
 
+  # Get the current cookies from the browser with the driver object.
+  #
+  def cookies
+    page.driver.browser.manage.all_cookies
+  end
+
+  # Get a single cookie by the given name (regex possible)
+  #
+  # @example
+  #  cookie('cookie-name')
+  #
+  def cookie(name)
+    cookies.find { |cookie| cookie[:name].match?(name) }
+  end
+
   # Finds an element and clicks it - wrapped in one method.
   #
   # @example

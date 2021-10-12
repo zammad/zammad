@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe 'Authentication', type: :system do
-
   it 'Login', authenticated_as: false do
     login(
       username: 'admin@example.com',
@@ -11,6 +10,35 @@ RSpec.describe 'Authentication', type: :system do
     )
 
     expect_current_route 'dashboard'
+
+    refresh
+
+    # Check that cookies is temporary.
+    cookie = cookie('^_zammad.+?')
+    expect(cookie[:expires]).to eq(nil)
+  end
+
+  it 'Login with remember me', authenticated_as: false do
+    login(
+      username:    'admin@example.com',
+      password:    'test',
+      remember_me: true
+    )
+
+    expect_current_route 'dashboard'
+
+    refresh
+
+    # Check that cookies has a  expire date.
+    cookie = cookie('^_zammad.+?')
+    expect(cookie[:expires]).to be_truthy
+
+    logout
+    expect_current_route 'login', wait: 10
+
+    # Check that cookies has no longer a expire date after logout.
+    cookie = cookie('^_zammad.+?')
+    expect(cookie[:expires]).to eq(nil)
   end
 
   it 'Logout' do
