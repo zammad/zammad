@@ -50,7 +50,6 @@ if [ "$LEVEL" == '1' ]; then
   # test/browser/manage_test.rb
   rm test/browser/integration_sipgate_test.rb
   rm test/browser/integration_cti_test.rb
-  rm test/browser/preferences_language_test.rb
   # test/browser/swich_to_user_test.rb
   # test/browser/taskbar_session_test.rb
   # test/browser/taskbar_task_test.rb
@@ -102,7 +101,7 @@ elif [ "$LEVEL" == '2' ]; then
   rm test/browser/manage_test.rb
   rm test/browser/integration_sipgate_test.rb
   rm test/browser/integration_cti_test.rb
-  rm test/browser/preferences_language_test.rb
+  rm test/browser/switch_to_user_test.rb
   rm test/browser/taskbar_session_test.rb
   rm test/browser/taskbar_task_test.rb
   # test/browser/user_access_permissions_test.rb
@@ -153,7 +152,7 @@ elif [ "$LEVEL" == '3' ]; then
   rm test/browser/manage_test.rb
   rm test/browser/integration_sipgate_test.rb
   rm test/browser/integration_cti_test.rb
-  rm test/browser/preferences_language_test.rb
+  rm test/browser/switch_to_user_test.rb
   rm test/browser/taskbar_session_test.rb
   rm test/browser/taskbar_task_test.rb
   rm test/browser/user_access_permissions_test.rb
@@ -204,7 +203,7 @@ elif [ "$LEVEL" == '4' ]; then
   rm test/browser/manage_test.rb
   rm test/browser/integration_sipgate_test.rb
   rm test/browser/integration_cti_test.rb
-  rm test/browser/preferences_language_test.rb
+  rm test/browser/switch_to_user_test.rb
   rm test/browser/taskbar_session_test.rb
   rm test/browser/taskbar_task_test.rb
   rm test/browser/user_access_permissions_test.rb
@@ -254,7 +253,7 @@ elif [ "$LEVEL" == '5' ]; then
   rm test/browser/manage_test.rb
   rm test/browser/integration_sipgate_test.rb
   rm test/browser/integration_cti_test.rb
-  rm test/browser/preferences_language_test.rb
+  rm test/browser/switch_to_user_test.rb
   rm test/browser/taskbar_session_test.rb
   rm test/browser/taskbar_task_test.rb
   rm test/browser/user_access_permissions_test.rb
@@ -307,7 +306,7 @@ elif [ "$LEVEL" == '6' ]; then
   rm test/browser/manage_test.rb
   # rm test/browser/integration_sipgate_test.rb
   # rm test/browser/integration_cti_test.rb
-  # test/browser/preferences_language_test.rb
+  rm test/browser/switch_to_user_test.rb
   rm test/browser/taskbar_session_test.rb
   rm test/browser/taskbar_task_test.rb
   rm test/browser/user_access_permissions_test.rb
