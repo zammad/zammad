@@ -13,23 +13,32 @@ class Job::TimeplanCalculation
 
   attr_reader :timeplan
 
-  def initialize(timeplan)
+  def initialize(timeplan, timezone)
     @timeplan = timeplan.deep_transform_keys(&:to_s)
+    @timezone = timezone
   end
 
   def contains?(time)
     return false if !valid?
 
-    day?(time) && hour?(time) && minute?(time)
+    time_in_zone = ensure_matching_time(time)
+
+    day?(time_in_zone) && hour?(time_in_zone) && minute?(time_in_zone)
   end
 
   def next_at(time)
     return nil if !valid?
 
-    next_run_at_same_day(time) || next_run_at_coming_week(time)
+    time_in_zone = ensure_matching_time(time)
+
+    next_run_at_same_day(time_in_zone) || next_run_at_coming_week(time_in_zone)
   end
 
   private
+
+  def ensure_matching_time(time)
+    time.in_time_zone @timezone
+  end
 
   def valid?
     timeplan.key?('days') && timeplan.key?('hours') && timeplan.key?('minutes')

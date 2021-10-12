@@ -81,13 +81,15 @@ job.run(true)
   end
 
   def in_timeplan?(time = Time.zone.now)
-    Job::TimeplanCalculation.new(timeplan).contains?(time)
+    timeplan_calculation.contains?(time)
   end
 
   def matching_count
     ticket_count, _tickets = Ticket.selectors(condition, limit: 1, execution_time: true)
     ticket_count || 0
   end
+
+  private
 
   def next_run_at_calculate(time = Time.zone.now)
     return nil if !active
@@ -96,10 +98,8 @@ job.run(true)
       time += 10.minutes
     end
 
-    Job::TimeplanCalculation.new(timeplan).next_at(time)
+    timeplan_calculation.next_at(time)
   end
-
-  private
 
   def updated_matching
     self.matching = matching_count
@@ -183,5 +183,11 @@ job.run(true)
           ticket.perform_changes(self, 'job')
         end
     end
+  end
+
+  def timeplan_calculation
+    timezone = Setting.get('timezone_default').presence || 'UTC'
+
+    Job::TimeplanCalculation.new(timeplan, timezone)
   end
 end

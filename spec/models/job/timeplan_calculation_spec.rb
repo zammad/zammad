@@ -3,7 +3,9 @@
 require 'rails_helper'
 
 RSpec.describe Job::TimeplanCalculation do
-  subject(:instance) { described_class.new(timeplan) }
+  subject(:instance) { described_class.new(timeplan, timezone) }
+
+  let(:timezone) { nil }
 
   describe '#contains?' do
     context 'without a valid timeplan' do
@@ -55,9 +57,17 @@ RSpec.describe Job::TimeplanCalculation do
       it { is_expected.not_to be_contains(Time.zone.parse('2020-12-22 9:20')) }
       it { is_expected.not_to be_contains(Time.zone.parse('2020-12-20 9:20')) }
     end
+
+    context 'with monday 09:00 and time zone' do
+      let(:timeplan) { { 'days' => { 'Mon' => true }, 'hours' => { '1' => true }, 'minutes' => { '0' => true } } }
+      let(:timezone) { 'Europe/Vilnius' }
+
+      it { is_expected.to be_contains(Time.use_zone('Europe/Vilnius') { Time.zone.parse('2020-12-21 01:00') }) }
+      it { is_expected.to be_contains(Time.zone.parse('2020-12-20 23:00')) }
+    end
   end
 
-  describe 'next_at?' do
+  describe '#next_at' do
     context 'without a valid timeplan' do
       let(:timeplan) { {} }
 
@@ -124,6 +134,25 @@ RSpec.describe Job::TimeplanCalculation do
       it { expect(instance.next_at(Time.zone.parse('2020-12-21 9:20'))).to eq(Time.zone.parse('2020-12-21 09:30')) }
       it { expect(instance.next_at(Time.zone.parse('2020-12-22 9:20'))).to eq(Time.zone.parse('2020-12-28 09:10')) }
       it { expect(instance.next_at(Time.zone.parse('2020-12-20 9:20'))).to eq(Time.zone.parse('2020-12-21 09:10')) }
+    end
+
+    context 'with monday 09:00 and time zone' do
+      let(:timezone) { 'Europe/Vilnius' }
+      let(:timeplan) { { 'days' => { 'Mon' => true }, 'hours' => { '1' => true }, 'minutes' => { '0' => true } } }
+
+      it 'calculates time respecting time zone' do
+        from = Time.use_zone('Europe/Vilnius') { Time.zone.parse('2020-12-21 01:15') }
+        to   = Time.use_zone('Europe/Vilnius') { Time.zone.parse('2020-12-28 01:00') }
+
+        expect(instance.next_at(from)).to eq(to)
+      end
+
+      it 'calculates time converting to time zone' do
+        from = Time.zone.parse('2020-12-20 23:10')
+        to   = Time.use_zone('Europe/Vilnius') { Time.zone.parse('2020-12-28 01:00') }
+
+        expect(instance.next_at(from)).to eq(to)
+      end
     end
   end
 
