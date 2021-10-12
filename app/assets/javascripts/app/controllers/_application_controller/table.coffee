@@ -497,7 +497,9 @@ class App.ControllerTable extends App.Controller
     reference_key = groupBy + '_id'
 
     if reference_key of object
-      return reference_key
+      attribute = _.findWhere(object.constructor.configure_attributes, { name: reference_key })
+
+      return App[attribute.relation]?.find(object[reference_key])?.displayName() || reference_key
 
     groupBy
 
