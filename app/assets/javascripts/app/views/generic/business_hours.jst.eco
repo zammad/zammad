@@ -20,8 +20,8 @@
       <td data-day="<%- id %>" data-slot="<%- slot %>" class="form-group day-time<%- ' is-active' if @hours[id].active %>">
         <label for="<%- id %>_start_time">from</label>
         <input type="text" id="<%- id %>_start_time" name="<%= @attribute.name %>::<%- id %>::start" value="<%- @hours[id].timeframes[slot][0] %>" data-day="<%- id %>" data-slot="<%- slot %>" data-i="0" class="form-control form-control--small time js-time">
-        <label for="monday_end_time">till</label>
-        <input type="text" id="monday_end_time" name="<%= @attribute.name %>::<%- id %>::end" value="<%- @hours[id].timeframes[slot][1] %>" data-day="<%- id %>" data-slot="<%- slot %>" data-i="1" class="form-control form-control--small time js-time">
+        <label for="<%- id %>_end_time">till</label>
+        <input type="text" id="<%- id %>_end_time" name="<%= @attribute.name %>::<%- id %>::end" value="<%- @hours[id].timeframes[slot][1] %>" data-day="<%- id %>" data-slot="<%- slot %>" data-i="1" class="form-control form-control--small time js-time">
       <% else: %>
       <td class="empty-cell">
       <% end %>
