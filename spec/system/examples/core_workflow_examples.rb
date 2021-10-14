@@ -782,6 +782,274 @@ RSpec.shared_examples 'core workflow' do
     end
   end
 
+  describe 'modify date attribute', authenticated_as: :authenticate, db_strategy: :reset do
+    def authenticate
+      create(:object_manager_attribute_date, object_name: object_name, name: field_name, display: field_name, screens: screens)
+      ObjectManager::Attribute.migration_execute
+      true
+    end
+
+    describe 'action - show' do
+      before do
+        create(:core_workflow,
+               object:  object_name,
+               perform: {
+                 "#{object_name.downcase}.#{field_name}": {
+                   operator: 'show',
+                   show:     'true'
+                 },
+               })
+      end
+
+      it 'does perform' do
+        before_it.call
+        expect(page).to have_selector(".form-group[data-attribute-name='#{field_name}']", wait: 10)
+      end
+    end
+
+    describe 'action - hide' do
+      before do
+        create(:core_workflow,
+               object:  object_name,
+               perform: {
+                 "#{object_name.downcase}.#{field_name}": {
+                   operator: 'hide',
+                   hide:     'true'
+                 },
+               })
+      end
+
+      it 'does perform' do
+        before_it.call
+        expect(page).to have_selector(".form-group[data-attribute-name='#{field_name}'].is-hidden", visible: :hidden, wait: 10)
+      end
+    end
+
+    describe 'action - remove' do
+      before do
+        create(:core_workflow,
+               object:  object_name,
+               perform: {
+                 "#{object_name.downcase}.#{field_name}": {
+                   operator: 'remove',
+                   remove:   'true'
+                 },
+               })
+      end
+
+      it 'does perform' do
+        before_it.call
+        expect(page).to have_selector(".form-group[data-attribute-name='#{field_name}'].is-removed", visible: :hidden, wait: 10)
+      end
+    end
+
+    describe 'action - set_optional' do
+      before do
+        create(:core_workflow,
+               object:  object_name,
+               perform: {
+                 "#{object_name.downcase}.#{field_name}": {
+                   operator:     'set_optional',
+                   set_optional: 'true'
+                 },
+               })
+      end
+
+      it 'does perform' do
+        before_it.call
+        expect(page.find("div[data-attribute-name='#{field_name}'] div.formGroup-label label")).to have_no_text('*', wait: 10)
+      end
+    end
+
+    describe 'action - set_mandatory' do
+      before do
+        create(:core_workflow,
+               object:  object_name,
+               perform: {
+                 "#{object_name.downcase}.#{field_name}": {
+                   operator:      'set_mandatory',
+                   set_mandatory: 'true'
+                 },
+               })
+      end
+
+      it 'does perform' do
+        before_it.call
+        expect(page.find("div[data-attribute-name='#{field_name}'] div.formGroup-label label")).to have_text('*', wait: 10)
+      end
+    end
+
+    describe 'action - unset_readonly' do
+      before do
+        create(:core_workflow,
+               object:  object_name,
+               perform: {
+                 "#{object_name.downcase}.#{field_name}": {
+                   operator:       'unset_readonly',
+                   unset_readonly: 'true'
+                 },
+               })
+      end
+
+      it 'does perform' do
+        before_it.call
+        expect(page).to have_no_selector("div[data-attribute-name='#{field_name}'].is-readonly", wait: 10)
+      end
+    end
+
+    describe 'action - set_readonly' do
+      before do
+        create(:core_workflow,
+               object:  object_name,
+               perform: {
+                 "#{object_name.downcase}.#{field_name}": {
+                   operator:     'set_readonly',
+                   set_readonly: 'true'
+                 },
+               })
+      end
+
+      it 'does perform' do
+        before_it.call
+        expect(page).to have_selector("div[data-attribute-name='#{field_name}'].is-readonly", wait: 10)
+      end
+    end
+  end
+
+  describe 'modify datetime attribute', authenticated_as: :authenticate, db_strategy: :reset do
+    def authenticate
+      create(:object_manager_attribute_datetime, object_name: object_name, name: field_name, display: field_name, screens: screens)
+      ObjectManager::Attribute.migration_execute
+      true
+    end
+
+    describe 'action - show' do
+      before do
+        create(:core_workflow,
+               object:  object_name,
+               perform: {
+                 "#{object_name.downcase}.#{field_name}": {
+                   operator: 'show',
+                   show:     'true'
+                 },
+               })
+      end
+
+      it 'does perform' do
+        before_it.call
+        expect(page).to have_selector(".form-group[data-attribute-name='#{field_name}']", wait: 10)
+      end
+    end
+
+    describe 'action - hide' do
+      before do
+        create(:core_workflow,
+               object:  object_name,
+               perform: {
+                 "#{object_name.downcase}.#{field_name}": {
+                   operator: 'hide',
+                   hide:     'true'
+                 },
+               })
+      end
+
+      it 'does perform' do
+        before_it.call
+        expect(page).to have_selector(".form-group[data-attribute-name='#{field_name}'].is-hidden", visible: :hidden, wait: 10)
+      end
+    end
+
+    describe 'action - remove' do
+      before do
+        create(:core_workflow,
+               object:  object_name,
+               perform: {
+                 "#{object_name.downcase}.#{field_name}": {
+                   operator: 'remove',
+                   remove:   'true'
+                 },
+               })
+      end
+
+      it 'does perform' do
+        before_it.call
+        expect(page).to have_selector(".form-group[data-attribute-name='#{field_name}'].is-removed", visible: :hidden, wait: 10)
+      end
+    end
+
+    describe 'action - set_optional' do
+      before do
+        create(:core_workflow,
+               object:  object_name,
+               perform: {
+                 "#{object_name.downcase}.#{field_name}": {
+                   operator:     'set_optional',
+                   set_optional: 'true'
+                 },
+               })
+      end
+
+      it 'does perform' do
+        before_it.call
+        expect(page.find("div[data-attribute-name='#{field_name}'] div.formGroup-label label")).to have_no_text('*', wait: 10)
+      end
+    end
+
+    describe 'action - set_mandatory' do
+      before do
+        create(:core_workflow,
+               object:  object_name,
+               perform: {
+                 "#{object_name.downcase}.#{field_name}": {
+                   operator:      'set_mandatory',
+                   set_mandatory: 'true'
+                 },
+               })
+      end
+
+      it 'does perform' do
+        before_it.call
+        expect(page.find("div[data-attribute-name='#{field_name}'] div.formGroup-label label")).to have_text('*', wait: 10)
+      end
+    end
+
+    describe 'action - unset_readonly' do
+      before do
+        create(:core_workflow,
+               object:  object_name,
+               perform: {
+                 "#{object_name.downcase}.#{field_name}": {
+                   operator:       'unset_readonly',
+                   unset_readonly: 'true'
+                 },
+               })
+      end
+
+      it 'does perform' do
+        before_it.call
+        expect(page).to have_no_selector("div[data-attribute-name='#{field_name}'].is-readonly", wait: 10)
+      end
+    end
+
+    describe 'action - set_readonly' do
+      before do
+        create(:core_workflow,
+               object:  object_name,
+               perform: {
+                 "#{object_name.downcase}.#{field_name}": {
+                   operator:     'set_readonly',
+                   set_readonly: 'true'
+                 },
+               })
+      end
+
+      it 'does perform' do
+        before_it.call
+        expect(page).to have_selector("div[data-attribute-name='#{field_name}'].is-readonly", wait: 10)
+      end
+    end
+  end
+
   describe 'Unable to close tickets in certran cases if core workflow is used #3710', authenticated_as: :authenticate, db_strategy: :reset do
     def authenticate
       create(:object_manager_attribute_text, object_name: object_name, name: field_name, display: field_name, screens: screens)
