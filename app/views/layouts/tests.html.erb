@@ -1,0 +1,22 @@
+<% content_for :content do %>
+  <link rel="stylesheet" href="/assets/tests/qunit-2.17.2.css">
+  <%= javascript_include_tag "/assets/tests/qunit-2.17.2.js",
+    "/assets/tests/sinon-9.2.4",
+    "/assets/tests/syn-0.15.0",
+    "/assets/tests/qunit/#{@filename}.js",
+    nonce: true %>
+
+  <style type="text/css">
+    body {
+      padding-top: 0px;
+    }
+
+    #qunit {
+      position: initial;
+    }
+  </style>
+
+  <%= yield %>
+<% end %>
+
+<%= render template: 'layouts/application' %>

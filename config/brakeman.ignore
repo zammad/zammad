@@ -521,6 +521,26 @@
       "note": "Admin configured RegExp"
     },
     {
+      "warning_type": "Dynamic Render Path",
+      "warning_code": 15,
+      "fingerprint": "c52f57d32456c9ab6dba6dfc93bd8effa16829a87a9ce9368da83a35fc6cf1a7",
+      "check_name": "Render",
+      "message": "Render path contains parameter value",
+      "file": "app/controllers/tests_controller.rb",
+      "line": 13,
+      "link": "https://brakemanscanner.org/docs/warning_types/dynamic_render_path/",
+      "code": "render(action => params[:name], {})",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "TestsController",
+        "method": "show"
+      },
+      "user_input": "params[:name]",
+      "confidence": "High",
+      "note": "Running QUnit tests"
+    },
+    {
       "warning_type": "SSL Verification Bypass",
       "warning_code": 71,
       "fingerprint": "cce91e3b231a7971f9f9d2298b8bba7b309610f4b98a88e530cac6fdd8efa1c4",
