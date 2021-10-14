@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :core_workflow do
-    sequence(:name) { |n| "test - workflow #{n}" }
+    sequence(:name) { |n| "test - workflow #{format '%07d', n}" }
     changeable { false }
     created_by_id { 1 }
     updated_by_id { 1 }

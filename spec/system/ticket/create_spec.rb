@@ -610,4 +610,59 @@ RSpec.describe 'Ticket Create', type: :system do
       end
     end
   end
+
+  describe 'Support workflow mechanism to do pending reminder state hide pending time use case #3790', authenticated_as: :authenticate do
+    let(:template) { create(:template, :dummy_data) }
+
+    def add_state
+      Ticket::State.create_or_update(
+        name:              'pending customer feedback',
+        state_type:        Ticket::StateType.find_by(name: 'pending reminder'),
+        ignore_escalation: true,
+        created_by_id:     1,
+        updated_by_id:     1,
+      )
+    end
+
+    def update_screens
+      attribute = ObjectManager::Attribute.get(
+        object: 'Ticket',
+        name:   'state_id',
+      )
+      attribute.data_option[:filter] = Ticket::State.by_category(:viewable).pluck(:id)
+      attribute.screens[:create_middle]['ticket.agent'][:filter] = Ticket::State.by_category(:viewable_agent_new).pluck(:id)
+      attribute.screens[:create_middle]['ticket.customer'][:filter] = Ticket::State.by_category(:viewable_customer_new).pluck(:id)
+      attribute.screens[:edit]['ticket.agent'][:filter] = Ticket::State.by_category(:viewable_agent_edit).pluck(:id)
+      attribute.screens[:edit]['ticket.customer'][:filter] = Ticket::State.by_category(:viewable_customer_edit).pluck(:id)
+      attribute.save!
+    end
+
+    def create_flow
+      create(:core_workflow,
+             object:             'Ticket',
+             condition_selected: { 'ticket.state_id'=>{ 'operator' => 'is', 'value' => Ticket::State.find_by(name: 'pending customer feedback').id.to_s } },
+             perform:            { 'ticket.pending_time'=> { 'operator' => 'remove', 'remove' => 'true' } })
+    end
+
+    def authenticate
+      add_state
+      update_screens
+      create_flow
+      template
+      true
+    end
+
+    before do
+      visit 'ticket/create'
+      use_template(template)
+    end
+
+    it 'does make it possible to create pending states where the pending time is optional and not visible' do
+      select 'pending customer feedback', from: 'state_id'
+      click '.js-submit'
+      expect(current_url).to include('ticket/zoom')
+      expect(Ticket.last.state_id).to eq(Ticket::State.find_by(name: 'pending customer feedback').id)
+      expect(Ticket.last.pending_time).to be nil
+    end
+  end
 end
