@@ -207,6 +207,24 @@ RSpec.describe CoreWorkflow, type: :model do
         expect(result[:restrict_values]['owner_id']).to eq(['', action_user.id.to_s])
       end
     end
+
+    describe 'Ticket owner selection is not updated if owner selection should be empty #3809' do
+      let(:group_no_owners) { create(:group) }
+      let(:ticket2) { create(:ticket, group: group_no_owners) }
+      let(:payload) do
+        base_payload.merge('screen' => 'overview_bulk', 'params' => { 'ticket_ids' => ticket2.id.to_s })
+      end
+
+      before do
+        action_user.group_names_access_map = {
+          group_no_owners.name => %w[create read change overview],
+        }
+      end
+
+      it 'does not show any owners for group with no full permitted users' do
+        expect(result[:restrict_values]['owner_id']).to eq([''])
+      end
+    end
   end
 
   describe '.perform - Default - State' do
@@ -1715,6 +1733,23 @@ RSpec.describe CoreWorkflow, type: :model do
       it 'does match the workflow' do
         expect(result[:matched_workflows]).to include(workflow.id)
       end
+    end
+  end
+
+  describe 'Ticket owner selection is not updated if owner selection should be empty #3809' do
+    let(:group_no_owners) { create(:group) }
+    let(:payload) do
+      base_payload.merge('params' => { 'group_id' => group_no_owners.id })
+    end
+
+    before do
+      action_user.group_names_access_map = {
+        group_no_owners.name => %w[create read change overview],
+      }
+    end
+
+    it 'does not show any owners because no one has full permissions' do
+      expect(result[:restrict_values]['owner_id']).to eq([''])
     end
   end
 end
