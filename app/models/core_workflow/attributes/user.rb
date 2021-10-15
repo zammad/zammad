@@ -3,8 +3,11 @@
 class CoreWorkflow::Attributes::User < CoreWorkflow::Attributes::Base
 
   def values
-    return ticket_owner_id_bulk if @attributes.payload['screen'] == 'overview_bulk'
-    return ticket_owner_id if @attributes.payload['class_name'] == 'Ticket' && @attribute[:name] == 'owner_id'
+    if @attribute[:name] == 'owner_id' && @attributes.payload['class_name'] == 'Ticket'
+      return ticket_owner_id_bulk if @attributes.payload['screen'] == 'overview_bulk'
+
+      return ticket_owner_id
+    end
 
     []
   end
@@ -35,7 +38,10 @@ class CoreWorkflow::Attributes::User < CoreWorkflow::Attributes::Base
   def ticket_owner_id
     return [''] if @attributes.selected_only.group_id.blank?
 
-    group_owner_ids
+    owner_ids = group_owner_ids
+    return [''] if owner_ids.blank?
+
+    owner_ids
   end
 
   def group_owner_ids
