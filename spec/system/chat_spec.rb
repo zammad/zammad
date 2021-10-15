@@ -388,4 +388,29 @@ RSpec.describe 'Chat Handling', type: :system do
       include_examples 'chat button is hidden after idle timeout'
     end
   end
+
+  describe "Chat can't be closed after timeout #2471", authenticated_as: :authenticate do
+    shared_examples 'test issue #2471' do
+      it 'is able to close to the dialog after a idleTimeout happened' do
+        click agent_chat_switch_selector
+        open_window_and_switch
+
+        visit chat_url
+        click '.zammad-chat .js-chat-open'
+        expect(page).to have_selector('.js-restart', wait: 60)
+        click '.js-chat-toggle .zammad-chat-header-icon'
+        expect(page).to have_no_selector('zammad-chat-is-open', wait: 60)
+      end
+    end
+
+    context 'with jquery' do
+      include_examples 'test issue #2471'
+    end
+
+    context 'wihtout jquery' do
+      let(:chat_url_type) { 'znuny-no-jquery' }
+
+      include_examples 'test issue #2471'
+    end
+  end
 end

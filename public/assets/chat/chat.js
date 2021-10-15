@@ -1416,15 +1416,14 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       if (this.initDelayId) {
         clearTimeout(this.initDelayId);
       }
-      if (!this.sessionId) {
-        this.log.debug('can\'t close widget without sessionId');
-        return;
+      if (this.sessionId) {
+        this.log.debug('session close before widget close');
+        this.sessionClose();
       }
       this.log.debug('close widget');
       if (event) {
         event.stopPropagation();
       }
-      this.sessionClose();
       if (this.isFullscreen) {
         this.enableScrollOnRoot();
       }

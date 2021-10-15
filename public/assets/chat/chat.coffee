@@ -1108,15 +1108,13 @@ do($ = window.jQuery, window) ->
         return
       if @initDelayId
         clearTimeout(@initDelayId)
-      if !@sessionId
-        @log.debug 'can\'t close widget without sessionId'
-        return
+      if @sessionId
+        @log.debug 'session close before widget close'
+        @sessionClose()
 
       @log.debug 'close widget'
 
       event.stopPropagation() if event
-
-      @sessionClose()
 
       if @isFullscreen
         @enableScrollOnRoot()
