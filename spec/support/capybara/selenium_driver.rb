@@ -7,21 +7,19 @@
 Capybara.register_driver(:zammad_chrome) do |app|
 
   # Turn on browser logs
-  capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
-    loggingPrefs:  {
+  options = Selenium::WebDriver::Chrome::Options.new(
+    logging_prefs: {
       browser: 'ALL'
     },
-    chromeOptions: {
-      prefs: {
-        'intl.accept_languages'                                => 'en-US',
-        'profile.default_content_setting_values.notifications' => 1, # ALLOW notifications
-      },
+    prefs:         {
+      'intl.accept_languages'                                => 'en-US',
+      'profile.default_content_setting_values.notifications' => 1, # ALLOW notifications
     },
   )
 
   options = {
-    browser:              :chrome,
-    desired_capabilities: capabilities,
+    browser: :chrome,
+    options: options
   }
 
   if ENV['REMOTE_URL'].present?
@@ -40,13 +38,9 @@ Capybara.register_driver(:zammad_firefox) do |app|
   profile['general.useragent.locale'] = 'en-US'
   profile['permissions.default.desktop-notification'] = 1 # ALLOW notifications
 
-  capabilities = Selenium::WebDriver::Remote::Capabilities.firefox(
-    firefox_profile: profile,
-  )
-
   options = {
-    browser:              :firefox,
-    desired_capabilities: capabilities,
+    browser: :firefox,
+    options: Selenium::WebDriver::Firefox::Options.new(profile: profile),
   }
 
   if ENV['REMOTE_URL'].present?
