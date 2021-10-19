@@ -3671,7 +3671,7 @@ wait untill text in selector disabppears
     element.send_keys(data[:name])
     element = instance.find_elements(css: '.modal select[name="email_address_id"]')[0]
     dropdown = Selenium::WebDriver::Support::Select.new(element)
-    dropdown.select_by(:index, 1)
+    dropdown.select_by(:value, '1')
     # dropdown.select_by(:text, action[:group])
     if data[:signature]
       element = instance.find_elements(css: '.modal select[name="signature_id"]')[0]
