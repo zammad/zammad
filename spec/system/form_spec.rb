@@ -50,7 +50,10 @@ RSpec.describe 'Form', type: :system, authenticated_as: true do
         fill_in 'Name', with: 'some sender'
         fill_in 'Message', with: 'message here'
         fill_in 'Email', with: 'somebody@notexistinginanydomainspacealsonothere.nowhere'
+
+        # We need to wait 10 seconds, because otherwise we are detected as a robot.
         sleep 10
+
         click_on 'Submit'
 
         expect(page).to have_selector('.has-error [name=email]').and have_no_selector('button[type="submit"][disabled]')
@@ -130,6 +133,7 @@ RSpec.describe 'Form', type: :system, authenticated_as: true do
       before do
         visit 'channels/form'
         check 'form_ticket_create', { allow_label_click: true }
+        wait(10).until { Setting.get('form_ticket_create') == true }
       end
 
       context 'when form is inline' do
@@ -164,6 +168,7 @@ RSpec.describe 'Form', type: :system, authenticated_as: true do
       before do
         visit 'channels/form'
         uncheck 'form_ticket_create', { allow_label_click: true }
+        wait(10).until { Setting.get('form_ticket_create') == false }
         visit path
       end
 
