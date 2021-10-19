@@ -131,10 +131,10 @@ class TestCase < ActiveSupport::TestCase
       caps.version  = ENV['BROWSER_VERSION']
     end
 
-    # (ironically) required for timeout checks
-    # https://github.com/zalando/zalenium/issues/469#issuecomment-371417340
-    # https://opensource.zalando.com/zalenium/#usage
-    caps['idleTimeout'] = 300
+    # # (ironically) required for timeout checks
+    # # https://github.com/zalando/zalenium/issues/469#issuecomment-371417340
+    # # https://opensource.zalando.com/zalenium/#usage
+    # caps['idleTimeout'] = 300
 
     http_client = Selenium::WebDriver::Remote::Http::Default.new(
       open_timeout: 120,
