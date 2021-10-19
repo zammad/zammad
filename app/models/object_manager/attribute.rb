@@ -820,7 +820,7 @@ is certain attribute used by triggers, overviews or schedulers
     end
 
     record = object_lookup.name.constantize.new
-    if record.respond_to?(name.to_sym) && record.attributes.key?(name) && new_record?
+    if new_record? && (record.respond_to?(name.to_sym) || record.attributes.key?(name))
       errors.add(:name, "#{name} already exists!")
     end
 
