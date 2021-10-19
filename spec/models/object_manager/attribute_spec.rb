@@ -76,6 +76,22 @@ RSpec.describe ObjectManager::Attribute, type: :model do
       end
     end
 
+    %w[title tags].each do |not_editable_attribute|
+      it "rejects '#{not_editable_attribute}' which is used" do
+        expect do
+          described_class.add attributes_for :object_manager_attribute_text, name: not_editable_attribute
+        end.to raise_error(ActiveRecord::RecordInvalid, 'Validation failed: Name Attribute not editable!')
+      end
+    end
+
+    %w[priority state note number].each do |existing_attribute|
+      it "rejects '#{existing_attribute}' which is used" do
+        expect do
+          described_class.add attributes_for :object_manager_attribute_text, name: existing_attribute
+        end.to raise_error(ActiveRecord::RecordInvalid, "Validation failed: Name #{existing_attribute} already exists!")
+      end
+    end
+
     it 'rejects duplicate attribute name of conflicting types' do
       attribute = attributes_for :object_manager_attribute_text
       described_class.add attribute
