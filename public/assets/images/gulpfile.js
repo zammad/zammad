@@ -6,7 +6,7 @@ var svgmin = require('gulp-svgmin');
 var cheerio = require('gulp-cheerio');
 var through2 = require('through2');
 
-var iconsource = 'public/assets/images/icons/*.svg'
+var iconsource = 'icons/*.svg'
 
 gulp.task('svgstore', function () {
   return gulp
@@ -47,7 +47,7 @@ gulp.task('svgstore', function () {
       this.push(file);
       cb();
     }))
-    .pipe(gulp.dest('public/assets/images'));
+    .pipe(gulp.dest('./'));
 });
 
 gulp.task('watch', function () {
