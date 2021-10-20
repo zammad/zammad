@@ -2149,6 +2149,13 @@ RSpec.describe 'Ticket zoom', type: :system do
       expect(page.find("select[name='priority_id']").value).to eq(high_prio.id.to_s)
     end
 
+    it 'does show up the new group (different case because it will also trigger a full rerender because of potential permission changes)' do
+      group = Group.find_by(name: 'some group1')
+      ticket.update(group: group)
+      wait(10, interval: 0.5).until { page.find("select[name='group_id']").value == group.id.to_s }
+      expect(page.find("select[name='group_id']").value).to eq(group.id.to_s)
+    end
+
     it 'does show up the new state and pending time' do
       pending_state = Ticket::State.find_by(name: 'pending reminder')
       ticket.update(state: pending_state, pending_time: 1.day.from_now)
