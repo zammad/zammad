@@ -244,7 +244,7 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
       params: params
     )
     configureAttributes = [
-      { name: 'data_option::diff', display: 'Default time Diff (minutes)', tag: 'integer', null: false, default: 24 },
+      { name: 'data_option::diff', display: 'Default time Diff (minutes)', tag: 'integer', null: true },
     ]
     datetimeDiff = new App.ControllerForm(
       model:
@@ -258,7 +258,7 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
 
   @date: (item, localParams, params) ->
     configureAttributes = [
-      { name: 'data_option::diff', display: 'Default time Diff (hours)', tag: 'integer', null: false, default: 24 },
+      { name: 'data_option::diff', display: 'Default time Diff (hours)', tag: 'integer', null: true },
     ]
     dateDiff = new App.ControllerForm(
       model:

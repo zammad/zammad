@@ -15,25 +15,30 @@ class ObjectManager
         method_name = "#{attr}="
 
         return if !record.respond_to? method_name
-        return if record.send(attr).present?
+        return if record.send("#{attr}_came_from_user?")
 
         record.send method_name, build_value(config)
       end
 
       def build_value(config)
-        case config[:data_type]
-        when 'date'
-          config[:diff].days.from_now
-        when 'datetime'
-          config[:diff].hours.from_now
-        else
-          config[:default]
-        end
+        method_name = "build_value_#{config[:data_type]}"
+
+        return send(method_name, config) if respond_to?(method_name, true)
+
+        config[:default]
+      end
+
+      def build_value_date(config)
+        config[:diff]&.days&.from_now
+      end
+
+      def build_value_datetime(config)
+        config[:diff]&.hours&.from_now&.change(usec: 0, sec: 0)
       end
 
       def attributes_for(record)
         query     = ObjectManager::Attribute.active.editable.for_object(record.class)
-        cache_key = "#{query.cache_key}/attribute_defaults"
+        cache_key = "#{query.cache_key_with_version}/attribute_defaults"
 
         Rails.cache.fetch cache_key do
           query

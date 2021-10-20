@@ -41,6 +41,8 @@ FactoryBot.define do
   end
 
   factory :object_manager_attribute_text, parent: :object_manager_attribute do
+    default { '' }
+
     data_type { 'input' }
     data_option do
       {
@@ -48,7 +50,7 @@ FactoryBot.define do
         'maxlength' => 200,
         'null'      => true,
         'translate' => false,
-        'default'   => default || '',
+        'default'   => default,
         'options'   => {},
         'relation'  => '',
       }
@@ -56,10 +58,12 @@ FactoryBot.define do
   end
 
   factory :object_manager_attribute_integer, parent: :object_manager_attribute do
+    default { 0 }
+
     data_type { 'integer' }
     data_option do
       {
-        'default' => default || 0,
+        'default' => default,
         'min'     => 0,
         'max'     => 9999,
       }
@@ -67,10 +71,12 @@ FactoryBot.define do
   end
 
   factory :object_manager_attribute_boolean, parent: :object_manager_attribute do
+    default { false }
+
     data_type { 'boolean' }
     data_option do
       {
-        default: default || false,
+        default: default,
         options: {
           true  => 'yes',
           false => 'no',
@@ -80,34 +86,40 @@ FactoryBot.define do
   end
 
   factory :object_manager_attribute_date, parent: :object_manager_attribute do
+    default { 24 }
+
     name      { 'date_attribute' }
     data_type { 'date' }
     data_option do
       {
-        'diff' => default || 24,
+        'diff' => default,
         'null' => true,
       }
     end
   end
 
   factory :object_manager_attribute_datetime, parent: :object_manager_attribute do
+    default { 24 }
+
     name      { 'datetime_attribute' }
     data_type { 'datetime' }
     data_option do
       {
         'future' => true,
         'past'   => true,
-        'diff'   => default || 24,
+        'diff'   => default,
         'null'   => true,
       }
     end
   end
 
   factory :object_manager_attribute_select, parent: :object_manager_attribute do
+    default { '' }
+
     data_type { 'select' }
     data_option do
       {
-        'default'    => default || '',
+        'default'    => default,
         'options'    => {
           'key_1' => 'value_1',
           'key_2' => 'value_2',
@@ -124,6 +136,8 @@ FactoryBot.define do
   end
 
   factory :object_manager_attribute_tree_select, parent: :object_manager_attribute do
+    default { '' }
+
     data_type { 'tree_select' }
     data_option do
       {

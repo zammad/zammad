@@ -2,18 +2,21 @@
 
 require 'rails_helper'
 
+DEFAULT_VALUES = {
+  text:     'rspec',
+  boolean:  true,
+  date:     1,
+  datetime: 12,
+  integer:  123,
+  select:   'key_1'
+}.freeze
+
 RSpec.describe ObjectManager::Attribute::SetDefaults, type: :model do
   describe 'setting default', db_strategy: :reset_all do
     before :all do # rubocop:disable RSpec/BeforeAfterAll
-      {
-        text:     'rspec',
-        boolean:  true,
-        date:     1,
-        datetime: 12,
-        integer:  123,
-        select:   'key_1'
-      }.each do |key, value|
+      DEFAULT_VALUES.each do |key, value|
         create("object_manager_attribute_#{key}", name: "rspec_#{key}", default: value)
+        create("object_manager_attribute_#{key}", name: "rspec_#{key}_no_default", default: nil)
       end
 
       create('object_manager_attribute_text', name: 'rspec_empty', default: '')
@@ -77,7 +80,7 @@ RSpec.describe ObjectManager::Attribute::SetDefaults, type: :model do
       end
 
       it 'datetime is set' do
-        freeze_time
+        travel_to Time.current.change(usec: 0, sec: 0)
         expect(example.rspec_datetime).to eq 12.hours.from_now
       end
 
@@ -87,6 +90,29 @@ RSpec.describe ObjectManager::Attribute::SetDefaults, type: :model do
 
       it 'select value is set' do
         expect(example.rspec_select).to eq 'key_1'
+      end
+    end
+
+    context 'when overriding default to empty value' do
+      subject(:example) do
+        params = DEFAULT_VALUES.keys.each_with_object({}) { |elem, memo| memo["rspec_#{elem}"] = nil }
+        create :ticket, params
+      end
+
+      DEFAULT_VALUES.each_key do |elem|
+        it "#{elem} is empty" do
+          expect(example.send("rspec_#{elem}")).to be_nil
+        end
+      end
+    end
+
+    context 'when default is not set' do
+      subject(:example) { create :ticket }
+
+      DEFAULT_VALUES.each_key do |elem|
+        it "#{elem} is empty" do
+          expect(example.send("rspec_#{elem}_no_default")).to be_nil
+        end
       end
     end
   end

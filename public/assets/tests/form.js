@@ -1125,7 +1125,7 @@ test("object manager form 1", function() {
   params = App.ControllerForm.params(el)
   var test_params = {
     data_option: {
-      diff: 24,
+      diff: null,
       future: true,
       past: true
     },
