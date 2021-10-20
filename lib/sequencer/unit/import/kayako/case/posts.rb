@@ -3,9 +3,9 @@
 class Sequencer
   class Unit
     module Import
-      module Freshdesk
-        module Ticket
-          class Conversations < Sequencer::Unit::Import::Freshdesk::SubSequence::Generic
+      module Kayako
+        module Case
+          class Posts < Sequencer::Unit::Import::Kayako::SubSequence::SubObject
             prepend ::Sequencer::Unit::Import::Common::Model::Mixin::Skip::Action
 
             optional :action
@@ -14,8 +14,12 @@ class Sequencer
 
             uses :resource
 
+            def object
+              'Post'
+            end
+
             def sequence_name
-              'Sequencer::Sequence::Import::Freshdesk::Conversations'.freeze
+              'Sequencer::Sequence::Import::Kayako::Posts'.freeze
             end
 
             def request_params

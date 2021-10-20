@@ -3283,6 +3283,61 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
+  title:       'Import Endpoint',
+  name:        'import_kayako_endpoint',
+  area:        'Import::Kayako',
+  description: 'Defines Kayako endpoint to import users, ticket, states and articles.',
+  options:     {
+    form: [
+      {
+        display: '',
+        null:    false,
+        name:    'import_kayako_endpoint',
+        tag:     'input',
+      },
+    ],
+  },
+  state:       'https://yours.kayako.com/api/v1',
+  frontend:    false
+)
+Setting.create_if_not_exists(
+  title:       'Import User for requesting the Kayako API',
+  name:        'import_kayako_endpoint_username',
+  area:        'Import::Kayako',
+  description: 'Defines Kayako endpoint authentication user.',
+  options:     {
+    form: [
+      {
+        display: '',
+        null:    false,
+        name:    'import_kayako_endpoint_username',
+        tag:     'input',
+      },
+    ],
+  },
+  state:       '',
+  frontend:    false
+)
+Setting.create_if_not_exists(
+  title:       'Import Password for requesting the Kayako API',
+  name:        'import_kayako_endpoint_password',
+  area:        'Import::Kayako',
+  description: 'Defines Kayako endpoint authentication password.',
+  options:     {
+    form: [
+      {
+        display: '',
+        null:    false,
+        name:    'import_kayako_endpoint_password',
+        tag:     'input',
+      },
+    ],
+  },
+  state:       '',
+  frontend:    false
+)
+
+Setting.create_if_not_exists(
   title:       'Import Backends',
   name:        'import_backends',
   area:        'Import',

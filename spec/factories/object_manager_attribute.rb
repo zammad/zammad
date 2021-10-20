@@ -55,6 +55,21 @@ FactoryBot.define do
     end
   end
 
+  factory :object_manager_attribute_textarea, parent: :object_manager_attribute do
+    data_type { 'textarea' }
+    data_option do
+      {
+        'type'      => 'textarea',
+        'maxlength' => 255,
+        'null'      => true,
+        'translate' => false,
+        'default'   => default || '',
+        'options'   => {},
+        'relation'  => '',
+      }
+    end
+  end
+
   factory :object_manager_attribute_integer, parent: :object_manager_attribute do
     data_type { 'integer' }
     data_option do

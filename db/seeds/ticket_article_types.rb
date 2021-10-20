@@ -12,3 +12,4 @@ Ticket::Article::Type.create_if_not_exists(id: 9, name: 'facebook feed comment',
 Ticket::Article::Type.create_if_not_exists(id: 10, name: 'note', communication: false)
 Ticket::Article::Type.create_if_not_exists(id: 11, name: 'web', communication: true)
 Ticket::Article::Type.create_if_not_exists(id: 12, name: 'telegram personal-message', communication: true)
+Ticket::Article::Type.create_if_not_exists(id: 13, name: 'facebook direct-message', communication: true)

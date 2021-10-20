@@ -1,22 +1,23 @@
-class ImportFreshdesk extends App.ControllerWizardFullScreen
+class ImportKayako extends App.ControllerWizardFullScreen
   className: 'getstarted fit'
   elements:
     '.input-feedback':                         'urlStatus'
-    '[data-target=freshdesk-credentials]':     'nextEnterCredentials'
-    '[data-target=freshdesk-start-migration]': 'nextStartMigration'
-    '#freshdesk-subdomain':                    'freshdeskSubdomain'
-    '#freshdesk-subdomain-addon':              'freshdeskSubdomainAddon'
-    '.freshdesk-subdomain-error':              'linkErrorMessage'
-    '.freshdesk-api-token-error':              'apiTokenErrorMessage'
-    '#freshdesk-api-token':                    'freshdeskApiToken'
+    '[data-target=kayako-credentials]':     'nextEnterCredentials'
+    '[data-target=kayako-start-migration]': 'nextStartMigration'
+    '#kayako-subdomain':                    'kayakoSubdomain'
+    '#kayako-subdomain-addon':              'kayakoSubdomainAddon'
+    '.kayako-subdomain-error':              'linkErrorMessage'
+    '.kayako-password-error':              'apiTokenErrorMessage'
+    '#kayako-email':                        'kayakoEmail'
+    '#kayako-password':                    'kayakoPassword'
     '.js-ticket-count-info':                   'ticketCountInfo'
   updateMigrationDisplayLoop: 0
 
   events:
-    'click .js-freshdesk-credentials': 'showCredentials'
+    'click .js-kayako-credentials': 'showCredentials'
     'click .js-migration-start':     'startMigration'
-    'keyup #freshdesk-subdomain':           'updateUrl'
-    'keyup #freshdesk-api-token':     'updateApiToken'
+    'keyup #kayako-subdomain':           'updateUrl'
+    'keyup #kayako-password':     'updateCredentials'
 
   constructor: ->
     super
@@ -24,7 +25,7 @@ class ImportFreshdesk extends App.ControllerWizardFullScreen
     # set title
     @title 'Import'
 
-    @freshdeskDomain = '.freshdesk.com'
+    @kayakoDomain = '.kayako.com'
 
     # redirect to login if admin user already exists
     if @Config.get('system_init_done')
@@ -44,7 +45,7 @@ class ImportFreshdesk extends App.ControllerWizardFullScreen
       success:     (data, status, xhr) =>
 
         # check if import is active
-        if data.import_mode == true && data.import_backend != 'freshdesk'
+        if data.import_mode == true && data.import_backend != 'kayako'
           @navigate "#import/#{data.import_backend}", { emptyEl: true }
           return
 
@@ -57,22 +58,22 @@ class ImportFreshdesk extends App.ControllerWizardFullScreen
     )
 
   render: ->
-    @replaceWith App.view('import/freshdesk')(
-      freshdeskDomain: @freshdeskDomain
+    @replaceWith App.view('import/kayako')(
+      kayakoDomain: @kayakoDomain
     )
 
   updateUrl: (e) =>
     @urlStatus.attr('data-state', 'loading')
-    @freshdeskSubdomainAddon.attr('style', 'padding-right: 42px')
+    @kayakoSubdomainAddon.attr('style', 'padding-right: 42px')
     @linkErrorMessage.text('')
 
     # get data
     callback = =>
       @ajax(
-        id:          'import_freshdesk_url'
+        id:          'import_kayako_url'
         type:        'POST'
-        url:         "#{@apiPath}/import/freshdesk/url_check"
-        data:        JSON.stringify(url: "https://#{@freshdeskSubdomain.val()}#{@freshdeskDomain}")
+        url:         "#{@apiPath}/import/kayako/url_check"
+        data:        JSON.stringify(url: "https://#{@kayakoSubdomain.val()}#{@kayakoDomain}")
         processData: true
         success:     (data, status, xhr) =>
 
@@ -87,19 +88,19 @@ class ImportFreshdesk extends App.ControllerWizardFullScreen
             @nextEnterCredentials.addClass('hide')
 
       )
-    @delay( callback, 700, 'import_freshdesk_url' )
+    @delay( callback, 700, 'import_kayako_url' )
 
-  updateApiToken: (e) =>
+  updateCredentials: (e) =>
     @urlStatus.attr('data-state', 'loading')
     @apiTokenErrorMessage.text('')
 
     # get data
     callback = =>
       @ajax(
-        id:          'import_freshdesk_api_token'
+        id:          'import_kayako_api_token'
         type:        'POST'
-        url:         "#{@apiPath}/import/freshdesk/credentials_check"
-        data:        JSON.stringify(token: @freshdeskApiToken.val())
+        url:         "#{@apiPath}/import/kayako/credentials_check"
+        data:        JSON.stringify(username: @kayakoEmail.val(), password: @kayakoPassword.val())
         processData: true
         success:     (data, status, xhr) =>
 
@@ -114,18 +115,18 @@ class ImportFreshdesk extends App.ControllerWizardFullScreen
             @nextStartMigration.addClass('hide')
 
       )
-    @delay(callback, 700, 'import_freshdesk_api_token')
+    @delay(callback, 700, 'import_kayako_api_token')
 
   showCredentials: (e) =>
     e.preventDefault()
     @urlStatus.attr('data-state', '')
-    @$('[data-slide=freshdesk-subdomain]').toggleClass('hide')
-    @$('[data-slide=freshdesk-credentials]').toggleClass('hide')
+    @$('[data-slide=kayako-subdomain]').toggleClass('hide')
+    @$('[data-slide=kayako-credentials]').toggleClass('hide')
 
   showImportState: =>
-    @$('[data-slide=freshdesk-subdomain]').addClass('hide')
-    @$('[data-slide=freshdesk-credentials]').addClass('hide')
-    @$('[data-slide=freshdesk-import]').removeClass('hide')
+    @$('[data-slide=kayako-subdomain]').addClass('hide')
+    @$('[data-slide=kayako-credentials]').addClass('hide')
+    @$('[data-slide=kayako-import]').removeClass('hide')
 
   startMigration: (e) =>
     e.preventDefault()
@@ -133,7 +134,7 @@ class ImportFreshdesk extends App.ControllerWizardFullScreen
     @ajax(
       id:          'import_start'
       type:        'POST'
-      url:         "#{@apiPath}/import/freshdesk/import_start"
+      url:         "#{@apiPath}/import/kayako/import_start"
       processData: true
       success:     (data, status, xhr) =>
 
@@ -148,7 +149,7 @@ class ImportFreshdesk extends App.ControllerWizardFullScreen
     @ajax(
       id:          'import_status'
       type:        'GET'
-      url:         "#{@apiPath}/import/freshdesk/import_status"
+      url:         "#{@apiPath}/import/kayako/import_status"
       processData: true
       success:     (data, status, xhr) =>
 
@@ -184,10 +185,10 @@ class ImportFreshdesk extends App.ControllerWizardFullScreen
         @delay(@updateMigration, 5000)
     )
 
-App.Config.set('import/freshdesk', ImportFreshdesk, 'Routes')
-App.Config.set('freshdesk', {
-  title: 'Freshdesk'
-  name:  'Freshdesk'
-  class: 'js-freshdesk'
-  url:   '#import/freshdesk'
+App.Config.set('import/kayako', ImportKayako, 'Routes')
+App.Config.set('kayako', {
+  title: 'Kayako'
+  name:  'Kayako'
+  class: 'js-kayako'
+  url:   '#import/kayako'
 }, 'ImportPlugins')
