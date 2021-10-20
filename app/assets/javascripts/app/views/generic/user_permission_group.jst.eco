@@ -1,4 +1,4 @@
-<div style="padding-left: 18px; padding-top: 10px; width: 95%;" class="js-groupList <% if @hideGroups: %>js-groupListHide hidden<% end %>">
+<div style="padding-left: 18px; padding-top: 10px; width: 95%;" class="js-groupList">
   <hr>
   <table class="settings-list" style="width: 100%;">
     <thead>
