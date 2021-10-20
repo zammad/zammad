@@ -29,41 +29,33 @@ class Edit extends App.Controller
       # for the new ticket + eventually changed task state
       @formMeta.core_workflow = undefined
 
-    if followUpPossible == 'new_ticket' && ticketState != 'closed' ||
-       followUpPossible != 'new_ticket' ||
-       @permissionCheck('admin') || @ticket.currentView() is 'agent'
-      @controllerFormSidebarTicket = new App.ControllerForm(
-        elReplace:      @el
-        model:          { className: 'Ticket', configure_attributes: @formMeta.configure_attributes || App.Ticket.configure_attributes }
-        screen:         'edit'
-        handlersConfig: handlers
-        filter:         @formMeta.filter
-        formMeta:       @formMeta
-        params:         defaults
-        isDisabled:     !@ticket.editable()
-        taskKey:        @taskKey
-        core_workflow: {
-          callbacks: [@markForm]
-        }
-        #bookmarkable:  true
-      )
-    else
-      @controllerFormSidebarTicket = new App.ControllerForm(
-        elReplace:      @el
-        model:          { className: 'Ticket', configure_attributes: @formMeta.configure_attributes || App.Ticket.configure_attributes }
-        screen:         'edit'
-        handlersConfig: handlers
-        filter:         @formMeta.filter
-        formMeta:       @formMeta
-        params:         defaults
-        isDisabled:     @ticket.editable()
-        taskKey:        @taskKey
-        core_workflow: {
-          callbacks: [@markForm]
-        }
-        #bookmarkable:  true
-      )
+    editable = @ticket.editable()
+    if followUpPossible == 'new_ticket' && ticketState != 'closed' || followUpPossible != 'new_ticket' || @permissionCheck('admin') || @ticket.currentView() is 'agent'
+      editable = !editable
 
+    # reset updated_at for the sidbar because we render a new state
+    # it is used to compare the ticket with the rendered data later
+    # and needed to prevent race conditions
+    @el.removeAttr('data-ticket-updated-at')
+
+    @controllerFormSidebarTicket = new App.ControllerForm(
+      elReplace:      @el
+      model:          { className: 'Ticket', configure_attributes: @formMeta.configure_attributes || App.Ticket.configure_attributes }
+      screen:         'edit'
+      handlersConfig: handlers
+      filter:         @formMeta.filter
+      formMeta:       @formMeta
+      params:         defaults
+      isDisabled:     editable
+      taskKey:        @taskKey
+      core_workflow: {
+        callbacks: [@markForm]
+      }
+      #bookmarkable:  true
+    )
+
+    # set updated_at for the sidbar because we render a new state
+    @el.attr('data-ticket-updated-at', defaults.updated_at)
     @markForm(true)
 
     return if @resetBind
