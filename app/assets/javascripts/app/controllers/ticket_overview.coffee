@@ -206,22 +206,13 @@ class App.TicketOverview extends App.Controller
           article: article
         )
         ticket.article = article
-        ticket.ajax().update(
-          ticket.attributes()
-          # this option will prevent callbacks and invalid data states in case of an error
-          failResponseNoTrigger: true
+        ticket.save(
           done: (r) =>
             @batchCountIndex++
 
             # refresh view after all tickets are proceeded
             if @batchCountIndex == @batchCount
               App.Event.trigger('overview:fetch')
-          fail: (record, settings, details) ->
-            console.log('record, settings, details', record, settings, details)
-            App.Event.trigger('notify', {
-              type: 'error'
-              msg: App.i18n.translateContent('Bulk action stopped %s!', error)
-            })
         )
       return
 
@@ -234,21 +225,13 @@ class App.TicketOverview extends App.Controller
         ticket.owner_id = id
         if !_.isEmpty(groupId)
           ticket.group_id = groupId
-        ticket.ajax().update(
-          ticket.attributes()
-          # this option will prevent callbacks and invalid data states in case of an error
-          failResponseNoTrigger: true
+        ticket.save(
           done: (r) =>
             @batchCountIndex++
 
             # refresh view after all tickets are proceeded
             if @batchCountIndex == @batchCount
               App.Event.trigger('overview:fetch')
-          fail: (record, settings, details) ->
-            App.Event.trigger('notify', {
-              type: 'error'
-              msg: App.i18n.translateContent('Bulk action stopped %s!', settings.error)
-            })
         )
       return
 
@@ -259,21 +242,13 @@ class App.TicketOverview extends App.Controller
         #console.log "perform action #{action} with id #{id} on ", $(item).val()
         ticket = App.Ticket.find($(item).val())
         ticket.group_id = id
-        ticket.ajax().update(
-          ticket.attributes()
-          # this option will prevent callbacks and invalid data states in case of an error
-          failResponseNoTrigger: true
+        ticket.save(
           done: (r) =>
             @batchCountIndex++
 
             # refresh view after all tickets are proceeded
             if @batchCountIndex == @batchCount
               App.Event.trigger('overview:fetch')
-          fail: (record, settings, details) ->
-            App.Event.trigger('notify', {
-              type: 'error'
-              msg: App.i18n.translateContent('Bulk action stopped %s!', error)
-            })
         )
       return
 
