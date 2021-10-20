@@ -489,4 +489,30 @@ RSpec.describe 'System > Objects', type: :system do
       end
     end
   end
+
+  context 'when creating with no diff' do
+    before do
+      visit '/#system/object_manager'
+      page.find('.js-new').click
+
+      in_modal disappears: false do
+        fill_in 'Name', with: 'nodiff'
+        fill_in 'Display', with: 'NoDiff'
+      end
+    end
+
+    it 'date attribute' do
+      page.find('select[name=data_type]').select('Date')
+      fill_in 'Default time Diff (hours)', with: ''
+
+      expect { page.find('.js-submit').click }.to change(ObjectManager::Attribute, :count).by(1)
+    end
+
+    it 'datetime attribute' do
+      page.find('select[name=data_type]').select('Datetime')
+      fill_in 'Default time Diff (minutes)', with: ''
+
+      expect { page.find('.js-submit').click }.to change(ObjectManager::Attribute, :count).by(1)
+    end
+  end
 end
