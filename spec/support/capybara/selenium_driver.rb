@@ -29,7 +29,7 @@ Capybara.register_driver(:zammad_chrome) do |app|
 
   Capybara::Selenium::Driver.new(app, **options).tap do |driver|
     # Selenium 4 installs a default file_detector which finds wrong files/directories such as zammad/test.
-    driver.browser.file_detector = nil
+    driver.browser.file_detector = nil if ENV['REMOTE_URL'].present?
   end
 end
 
@@ -53,6 +53,6 @@ Capybara.register_driver(:zammad_firefox) do |app|
 
   Capybara::Selenium::Driver.new(app, **options).tap do |driver|
     # Selenium 4 installs a default file_detector which finds wrong files/directories such as zammad/test.
-    driver.browser.file_detector = nil
+    driver.browser.file_detector = nil if ENV['REMOTE_URL'].present?
   end
 end
