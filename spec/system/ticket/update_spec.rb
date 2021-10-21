@@ -322,10 +322,10 @@ RSpec.describe 'Ticket Update', type: :system do
   end
 
   context 'when group will be changed' do
-    let(:user) { create(:user) }
+    let(:user) { User.find_by(email: 'agent1@example.com') }
     let(:ticket) { create(:ticket, group: group, owner: user) }
 
-    it 'check that owner is resetet after group change' do
+    it 'check that owner resets after group change' do
       visit "#ticket/zoom/#{ticket.id}"
 
       expect(page).to have_field('owner_id', with: user.id)

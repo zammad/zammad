@@ -238,13 +238,10 @@ class CoreWorkflow::Attributes
   end
 
   def saved_attribute_value(attribute)
-    saved_attribute_value = saved_only&.try(attribute[:name])
 
     # special case for owner_id
-    if saved_only&.class == Ticket && attribute[:name] == 'owner_id' && saved_attribute_value == 1
-      saved_attribute_value = nil
-    end
+    return if saved_only&.class == Ticket && attribute[:name] == 'owner_id'
 
-    saved_attribute_value
+    saved_only&.try(attribute[:name])
   end
 end
