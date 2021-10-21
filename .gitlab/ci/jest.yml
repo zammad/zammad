@@ -1,0 +1,9 @@
+jest:
+  stage: test
+  extends:
+    - .env_base
+  before_script:
+    - source /opt/rh/rh-nodejs12/enable
+    - yarn install
+  script:
+    - yarn test

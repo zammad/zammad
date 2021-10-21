@@ -6,6 +6,7 @@ include:
   - local: '/.gitlab/ci/pre.yml'
   - local: '/.gitlab/ci/integration.yml'
   - local: '/.gitlab/ci/rspec.yml'
+  - local: '/.gitlab/ci/jest.yml'
   - local: '/.gitlab/ci/unit.yml'
   - local: '/.gitlab/ci/browser-core.yml'
   - local: '/.gitlab/ci/browser-integration.yml'

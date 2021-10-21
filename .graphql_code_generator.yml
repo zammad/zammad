@@ -1,0 +1,18 @@
+# TODO:
+# overwrite: true
+# schema:
+#   - http://localhost:3000/graphql:
+#       headers:
+#         SkipAuthenticityTokenCheck: 'true'
+# documents: 'app/frontend/apps/mobile/graphql/**/*.graphql'
+# generates:
+#   ./app/frontend/apps/mobile/graphql/api.ts:
+#     plugins:
+#       - typescript
+#       - typescript-operations
+#       - typescript-vue-apollo
+#     config:
+#       vueCompositionApiImportFrom: vue
+#   ./app/frontend/apps/mobile/graphql/schema.json:
+#     plugins:
+#       - 'introspection'

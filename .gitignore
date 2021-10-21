@@ -41,9 +41,6 @@
 /config/locales-*.yml
 /config/translations/*.yml
 
-# NPM / Yarn
-/node_modules
-
 # logfiles and tempfiles
 /log
 /public/assets/*.*
@@ -88,3 +85,14 @@
 
 # Backup files
 *~
+
+# ESLint
+.eslintcache
+
+# Vite Ruby
+yarn-error.log
+/public/vite
+/public/vite-dev
+/public/vite-test
+/node_modules
+

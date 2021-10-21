@@ -42,6 +42,10 @@ gem 'aasm'
 # core - authorization
 gem 'pundit'
 
+# core - graphql handling
+gem 'graphql'
+gem 'graphql-batch', require: 'graphql/batch'
+
 # core - image processing
 gem 'rszr'
 
@@ -51,6 +55,9 @@ gem 'dalli', require: false
 # Only load gems for asset compilation if they are needed to avoid
 #   having unneeded runtime dependencies like NodeJS.
 group :assets do
+  # asset handling - frontend tool chain
+  gem 'vite_rails'
+
   # asset handling - javascript execution for e.g. linux
   gem 'execjs', require: false
 
