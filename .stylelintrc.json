@@ -1,0 +1,32 @@
+{
+  "extends": ["stylelint-config-standard"],
+  "plugins": ["stylelint-scss"],
+  "rules": {
+    "at-rule-no-unknown": null,
+    "block-no-empty": null,
+    "declaration-block-no-duplicate-properties": null,
+    "declaration-block-no-shorthand-property-overrides":null,
+    "declaration-block-single-line-max-declarations": null,
+    "font-family-no-missing-generic-family-keyword": null,
+    "function-calc-no-unspaced-operator":null,
+    "function-comma-space-after": null,
+    "max-empty-lines": null,
+    "no-descending-specificity": null,
+    "no-duplicate-selectors": null,
+    "selector-list-comma-newline-after": null,
+    "scss/at-rule-no-unknown": null,
+    "property-no-unknown": [true, { "ignoreProperties": ["scroll-snap-mode"] }]
+  },
+  "ignoreFiles": [
+    "public/assets/*.css",
+    "public/assets/doorkeeper/**",
+    "**/reset*.css",
+    "**/bootstrap*.css",
+    "**/jquery*.css",
+    "**/cropper.css",
+    "**/fineuploader.css",
+    "**/qunit*.css",
+    "**/svg-dimensions.css",
+    "vendor/**"
+  ]
+}

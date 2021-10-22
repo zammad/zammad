@@ -6,7 +6,7 @@ $color: hsl(207,7%,29%);
 $light-color: hsl(206,8%,50%);
 $dark-color: hsl(207,7%,19%);
 $subtle-color: hsl(207,14%,67%);
-$dropshadow: 0 2px 10px hsla(0,0%,0%,.13);
+$dropshadow: 0 2px 10px hsla(0,0%,0%,0.13);
 $light-bg: hsl(209,26%,98%);
 $dark-bg: hsl(209,22%,96%);
 $border: hsl(209,13%,95%);
@@ -88,7 +88,7 @@ html {
   font-size: 16px;
   line-height: 1.5;
   color: $light-color;
-  
+
   @include phone {
     font-size: 17px;
   }
@@ -104,19 +104,19 @@ body {
 h1 {
   font-size: 2.5em;
   line-height: 1.12;
-  margin: .8em 0 .6em;
+  margin: 0.8em 0 0.6em;
   font-weight: normal;
   overflow-wrap: break-word;
   word-wrap: break-word;
   word-break: break-word;
-  
+
   &:first-child {
     margin-top: 0;
   }
-  
+
   @include phone {
     font-size: 28px;
-    margin: 1em 0 .8em;
+    margin: 1em 0 0.8em;
   }
 }
 
@@ -124,11 +124,11 @@ h2 {
   font-size: 1.8em;
   font-weight: 500;
   line-height: 1.1;
-  margin: 1em 0 .4em;
-  
+  margin: 1em 0 0.4em;
+
   @include phone {
     font-size: 24px;
-    margin: 1.2em 0 .5em;
+    margin: 1.2em 0 0.5em;
   }
 }
 
@@ -136,13 +136,13 @@ h3 {
   font-size: 1.4em;
   font-weight: 500;
   line-height: 1.2;
-  margin: 1.33em 0 .55em;
-  letter-spacing: .015em;
-  
+  margin: 1.33em 0 0.55em;
+  letter-spacing: 0.015em;
+
   @include phone {
     font-size: 19px;
     line-height: 1.3;
-    margin: 1.2em 0 .75em;
+    margin: 1.2em 0 0.75em;
   }
 }
 
@@ -150,15 +150,15 @@ h4 {
   font-size: 1em;
   font-weight: bold;
   line-height: 1.25;
-  margin: 1.33em 0 .5em;
-  letter-spacing: .015em;
+  margin: 1.33em 0 0.5em;
+  letter-spacing: 0.015em;
 }
 
 p,
 ul,
 ol {
   margin: 0 0 1em;
-  
+
   &:last-child {
     margin-bottom: 0;
   }
@@ -177,7 +177,7 @@ b {
   color: #fff;
   height: 45px;
   padding: 0 17px;
-  box-shadow: 0 -1px hsla(0,0%,0%,.1) inset;
+  box-shadow: 0 -1px hsla(0,0%,0%,0.1) inset;
 
   &[data-color="yellow"] {
     color: hsl(45,98%,17%);
@@ -201,7 +201,9 @@ b {
 
   &-tag {
     font-weight: bold;
-    @include bidi-style(margin-right, 17px, margin-left, 0px);
+
+    @include bidi-style(margin-right, 17px, margin-left, 0);
+
     text-transform: uppercase;
     letter-spacing: 0.05em;
   }
@@ -225,8 +227,8 @@ b {
     border-radius: 4px;
     height: 30px;
     padding: 0 11px;
-    border: 1px solid hsla(0,0%,0%,.1);
-    
+    border: 1px solid hsla(0,0%,0%,0.1);
+
     & + & {
       margin-left: 10px;
     }
@@ -243,7 +245,7 @@ b {
   background: $light-bg;
   border-bottom: 1px solid $dark-border;
   position: relative;
-  padding: .3em 0 .9em;
+  padding: 0.3em 0 0.9em;
   flex-shrink: 0;
 
   .container {
@@ -263,13 +265,13 @@ b {
   display: flex;
   align-items: center;
   font-size: inherit;
-  
+
   a {
     text-decoration: none;
     display: block;
     color: inherit;
   }
-  
+
   img {
     height: 2em;
     width: auto;
@@ -285,7 +287,7 @@ b {
   font-size: 14px;
 
   &-item {
-    padding: .5em 1em;
+    padding: 0.5em 1em;
     white-space: nowrap;
     text-decoration: none;
     color: inherit;
@@ -300,12 +302,12 @@ b {
 
 .search {
   width: 100%;
-  margin: .9em 0 .6em;
-  
+  margin: 0.9em 0 0.6em;
+
   &-field {
     position: relative;
     font-size: 17px;
-    
+
     input[type="search"] {
       appearance: none;
       width: 100%;
@@ -314,11 +316,13 @@ b {
       background: white;
       border: 1px solid $border;
       border-radius: 999px;
-      @include ltr(padding, .75em 1.1em .75em 2.8em);
-      @include rtl(padding, .75em 2.8em .75em 1.1em);
+
+      @include ltr(padding, 0.75em 1.1em 0.75em 2.8em);
+      @include rtl(padding, 0.75em 2.8em 0.75em 1.1em);
+
       outline: none;
       font-weight: 300;
-      
+
       &::placeholder {
         color: $subtle-color;
         text-overflow: ellipsis;
@@ -327,21 +331,23 @@ b {
 
     .icon {
       position: absolute;
+
       @include bidi-style(left, 1.1em, right, inherit);
+
       top: 50%;
-      margin-top: -.54em;
+      margin-top: -0.54em;
       fill: $dark-color;
       width: 1.08em;
       height: 1.08em;
-    } 
+    }
   }
 
   &-results {
     list-style: none;
-    padding: .5em 0 0;
+    padding: 0.5em 0 0;
     padding-right: 0;
     padding-left: 0;
-    
+
     .section {
       margin-bottom: 2px;
     }
@@ -356,18 +362,20 @@ b {
 }
 
 .result {
-  margin: 0 .25em;
-  
+  margin: 0 0.25em;
+
   a {
     color: inherit;
     text-decoration: none;
     display: block;
     border: 1px solid transparent;
     border-radius: 3px;
-    padding: .8em;
+    padding: 0.8em;
+
     @include bidi-style(padding-left, 2.75em, padding-right, 0.8em);
+
     position: relative;
-    
+
     &:hover {
       border-color: hsl(209,13%,93%);
       background: $dark-bg;
@@ -376,10 +384,12 @@ b {
 
   &-icon {
     position: absolute;
-    @include bidi-style(left, .6em, right, 0em);
-    top: .6em;
+
+    @include bidi-style(left, 0.6em, right, 0);
+
+    top: 0.6em;
     color: hsl(210,22%,84%);
-    
+
     .icon {
       width: 1.5em;
       height: 1.5em;
@@ -387,7 +397,7 @@ b {
       vertical-align: top;
     }
 
-    [data-font]{
+    [data-font] {
       font-size: 1.5em;
       line-height: 1em;
     }
@@ -397,14 +407,14 @@ b {
     font-size: inherit;
     font-weight: 500;
     color: hsl(206,8%,38%);
-    margin: 0 0 .25em;
+    margin: 0 0 0.25em;
   }
-  
+
   &-category {
     color: $subtle-color;
     display: inline-block;
-    
-    &:after {
+
+    &::after {
       content: " — ";
     }
   }
@@ -423,7 +433,7 @@ b {
   margin: 0 auto;
   width: 100%;
   max-width: 900px;
-  
+
   @include phone {
     padding-left: 1em;
     padding-right: 1em;
@@ -435,11 +445,11 @@ b {
   flex-direction: column;
   justify-content: flex-start;
   margin: 30px 0 40px;
-  
+
   .header + & {
     margin-top: 0;
   }
-  
+
   .container {
     flex: 1 1 auto;
     display: flex;
@@ -455,18 +465,18 @@ b {
 .main--categories {
   h1 {
     color: $dark-color;
-    
+
     .icon-hashtag {
       fill: hsl(208,13%,81%);
-      width: .7em;
-      height: .7em;
+      width: 0.7em;
+      height: 0.7em;
     }
   }
 }
 
 .main--error {
   text-align: center;
-  
+
   .container {
     margin: auto;
     flex: none;
@@ -477,14 +487,14 @@ b {
     display: table;
     margin: 0 auto;
   }
-  
+
   .icon {
     width: 120px;
     height: 118px;
     fill: hsl(41,100%,49%);
 
     + h1 {
-      margin-top: .66em;
+      margin-top: 0.66em;
     }
   }
 
@@ -500,7 +510,7 @@ b {
   padding: 0;
   list-style: none;
   font-size: 13px;
-  
+
   .container {
     padding-top: 11px;
     padding-bottom: 11px;
@@ -511,21 +521,23 @@ b {
 
 .breadcrumb {
   position: relative;
+
   @include ltr(padding, 6px 20px 6px 11px);
   @include rtl(padding, 6px 11px 6px 20px);
+
   color: inherit;
   text-decoration: none;
   white-space: nowrap;
   overflow: hidden;
   line-height: 20px;
   text-overflow: ellipsis;
-  
+
   @include phone {
     .icon-knowledge-base + span {
       display: none;
     }
   }
-  
+
   &:first-child {
     padding-left: 2px;
   }
@@ -535,22 +547,24 @@ b {
   }
 
   &:last-child {
-    &:before,
-    &:after {
+    &::before,
+    &::after {
       display: none;
     }
   }
 
-  &:after,
-  &:before {
+  &::after,
+  &::before {
     content: "";
     position: absolute;
     width: 1px;
     height: 40%;
     background: $color;
-    opacity: .2;
+    opacity: 0.2;
+
     @include ltr(right, 0);
     @include rtl(left, 0);
+
     top: 0;
     transform-origin: bottom;
 
@@ -558,9 +572,10 @@ b {
     @include rtl(transform, translateY(13%) rotate(37deg));
   }
 
-  &:after {
+  &::after {
     top: 50%;
     transform-origin: top;
+
     @include ltr(transform, translateY(-13%) rotate(37deg));
     @include rtl(transform, translateY(-13%) rotate(-37deg));
   }
@@ -571,12 +586,12 @@ b {
     margin-top: -1px;
     width: 16px;
     height: 16px;
-    
+
     &-hashtag {
       width: 14px;
       height: 14px;
     }
-    
+
     &-knowledge-base {
       width: 20px;
       height: 20px;
@@ -585,9 +600,10 @@ b {
 
   .icon,
   [data-font] {
-    @include bidi-style(margin-right, 3px, margin-left, 0px);
+    @include bidi-style(margin-right, 3px, margin-left, 0);
+
     vertical-align: middle;
-    opacity: .75;
+    opacity: 0.75;
   }
 
   [data-font] {
@@ -634,12 +650,13 @@ b {
 
 .box {
   @extend %box;
+
   padding: 20px;
 }
 
 .sections--list {
   padding: 0 !important;
-  
+
   &:first-child {
     margin-top: 20px;
   }
@@ -650,18 +667,20 @@ b {
 
   .section-inner {
     @extend %box;
+
     margin: 15px 0;
     padding: 10px 15px;
     display: flex;
-  
+
     span {
       display: block;
     }
   }
 
   .not-published-note {
-    @include bidi-style(margin-left, .5em, margin-right, 0px);
-    margin-top: .5em;
+    @include bidi-style(margin-left, 0.5em, margin-right, 0);
+
+    margin-top: 0.5em;
   }
 }
 
@@ -669,14 +688,14 @@ b {
   display: flex;
   flex-wrap: wrap;
   margin: -10px;
-  
+
   @include phone {
     margin: -5px;
   }
 
   .section {
     width: 33.33%;
-    
+
     @include phone {
       width: 50%;
     }
@@ -689,6 +708,7 @@ b {
       padding-bottom: 72%;
       position: relative;
       line-height: 1.3;
+
       @extend %box-link;
     }
 
@@ -698,6 +718,7 @@ b {
 
     &-inner {
       @extend %box;
+
       position: absolute;
       padding: 10px;
       left: 0;
@@ -709,7 +730,7 @@ b {
       justify-content: center;
       flex-direction: column;
       text-align: center;
-  
+
       span {
         display: block;
         max-width: 100%;
@@ -728,22 +749,22 @@ b {
   grid-gap: 20px;
   grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
   font-size: 14px;
-  
+
   @include phone {
     display: block;
   }
 
   .section {
     margin: 0;
-    
+
     @include phone {
       margin-bottom: 10px;
-      
+
       &:last-child {
         margin-bottom: 0;
       }
     }
-    
+
     a {
       line-height: 1.5;
       text-decoration: none;
@@ -772,11 +793,11 @@ b {
     &-category {
       margin-bottom: 1px;
       order: -1;
-      opacity: .6;
+      opacity: 0.6;
     }
 
     &-preview {
-      &:before {
+      &::before {
         content: " — ";
         color: initial;
       }
@@ -796,6 +817,7 @@ b {
 
 .button {
   @extend %box;
+
   appearance: none;
   font-family: inherit;
   font-size: 16px;
@@ -827,7 +849,7 @@ b {
   [data-font] {
     color: $highlight-color;
     fill: currentColor;
-    line-height: inherit; 
+    line-height: inherit;
     flex-shrink: 0;
   }
 }
@@ -844,7 +866,7 @@ b {
     font-size: 42px;
     margin: 10px 0 20px;
     line-height: 1;
-    
+
     @include phone {
       font-size: 35px;
       margin: 10px 0 13px;
@@ -868,7 +890,7 @@ b {
 
   table, pre, blockquote {
     margin-bottom: 16px;
-    
+
     &:first-child {
       margin-top: 6px;
     }
@@ -971,11 +993,11 @@ b {
   list-style: none;
   border-top: 1px solid $border;
   position: relative;
-  
+
   @include phone {
     padding-left: 2.8rem;
   }
-  
+
   .icon {
     position: absolute;
     left: 1.2rem;
@@ -983,38 +1005,38 @@ b {
     width: 2rem;
     height: 2rem;
     fill: hsl(208,13%,81%);
-    
+
     @include phone {
-      left: .5rem;
+      left: 0.5rem;
     }
   }
-  
+
   &-title {
     text-transform: uppercase;
-    font-size: .8em;
+    font-size: 0.8em;
     font-weight: bold;
     color: $light-color;
-    padding: 0 .8rem .2rem;
+    padding: 0 0.8rem 0.2rem;
   }
 
   &:not(:last-child) {
     padding-bottom: 0;
-    margin-bottom:  0;
+    margin-bottom: 0;
   }
 }
 
 .tags-content {
   display: flex;
   flex-wrap: wrap;
-  padding: .2rem .6rem 0;
-  
+  padding: 0.2rem 0.6rem 0;
+
   .tag {
-    margin: .2rem;
+    margin: 0.2rem;
   }
 }
 
 .tag {
-  font-size: .8em;
+  font-size: 0.8em;
   display: inline-block;
   color: white;
   border-radius: 999px;
@@ -1026,20 +1048,20 @@ b {
   text-decoration: none;
   border-bottom: 1px solid $border;
   display: block;
-  padding: .5rem .8rem;
-  font-size: .8em;
-  
+  padding: 0.5rem 0.8rem;
+  font-size: 0.8em;
+
   &:hover {
     background: $light-bg;
   }
-  
+
   &:last-child {
     border-bottom: none;
   }
-  
+
   &-size {
     color: $subtle-color;
-    font-size: .9em;
+    font-size: 0.9em;
   }
 }
 
@@ -1076,28 +1098,29 @@ b {
 }
 
 .not-published-note {
-  margin: .1em 0 0;
-  font-size: .65em;
+  margin: 0.1em 0 0;
+  font-size: 0.65em;
   color: hsl(0,0,50%);
 }
 
 .btn {
   display: inline-block;
   padding: 10px 24px 9px;
-  border: 1px solid hsla(0,0%,0%,.1);
+  border: 1px solid hsla(0,0%,0%,0.1);
   color: inherit;
   outline: none !important;
   border-radius: 4px;
   text-align: center;
   white-space: nowrap;
   vertical-align: middle;
+
   @extend %clickable;
-  
+
   &--onDark {
-    border-color: hsla(0,0%,100%,.3);
+    border-color: hsla(0,0%,100%,0.3);
     color: white;
   }
-  
+
   &--action {
     text-transform: uppercase;
     font-size: 0.9em;
@@ -1106,9 +1129,10 @@ b {
     padding: 0 11px !important;
     display: inline-flex;
     align-items: center;
-    
+
     .icon {
       @include bidi-style(margin, 0 5px 0 -2px, margin, 0 -2px 0 5px);
+
       fill: currentColor;
 
       &:only-child {
@@ -1123,7 +1147,7 @@ b {
     &.btn--slim {
       padding-left: 7px !important;
       padding-right: 7px !important;
-      
+
       .btn-label {
         @include bidi-style(margin-left, 0, margin-right, 0);
       }
@@ -1137,6 +1161,7 @@ b {
   &--split,
   &--split--last {
     border-radius: 0;
+
     @include bidi-style(border-left-width, 0, border-right-width, 1px);
     @include ltr(margin-left, 0 !important);
     @include rtl(margin-right, 0 !important);
@@ -1146,7 +1171,6 @@ b {
     @include bidi-style(border-radius, 0 3px 3px 0, border-radius, 3px 0 0 3px);
   }
 }
-
 
 .btn[data-toggle="dropdown"] {
   text-decoration: none;
@@ -1165,17 +1189,17 @@ b {
     font-size: 14px;
     border-radius: 3px;
     box-shadow:
-      0 50px 100px hsla(200,30%,30%,.1),
-      0 15px 35px hsla(200,30%,30%,.15),
-      0 5px 15px hsla(0,0%,0%,.1);
+      0 50px 100px hsla(200,30%,30%,0.1),
+      0 15px 35px hsla(200,30%,30%,0.15),
+      0 5px 15px hsla(0,0%,0%,0.1);
     background: white;
     padding: 10px;
-    
+
     &.is-open {
       display: block;
     }
-    
-    &:before {
+
+    &::before {
       content: "";
       position: absolute;
       top: -6px;
@@ -1191,8 +1215,8 @@ b {
     &-right {
       left: auto;
       right: 0;
-      
-      &:before {
+
+      &::before {
         left: auto;
         right: 30px;
       }
@@ -1203,8 +1227,8 @@ b {
       bottom: 100%;
       margin-top: 0;
       margin-bottom: 12px !important;
-      
-      &:before {
+
+      &::before {
         top: auto;
         bottom: -6px;
         border-radius: 20px 0 3px 0;
@@ -1228,10 +1252,10 @@ b {
 
       &.is-disabled {
         cursor: default;
-        
+
         a {
           color: hsl(0,0%,72%);
-          
+
           &:hover,
           &:focus {
             background: none;
@@ -1239,7 +1263,7 @@ b {
         }
       }
     }
-    
+
     a {
       color: black;
       display: flex;
@@ -1248,7 +1272,7 @@ b {
       white-space: nowrap;
       text-decoration: none;
       border-radius: 3px;
-      
+
       &:hover,
       &:focus {
         background: hsl(200,5%,95%);
@@ -1257,14 +1281,16 @@ b {
 
     .icon {
       display: none;
-      @include bidi-style(margin-right, 7px, margin-left, 0px);
+
+      @include bidi-style(margin-right, 7px, margin-left, 0);
+
       vertical-align: middle;
     }
   }
 }
 
 .kb-item--empty {
-  opacity: .5;
+  opacity: 0.5;
 }
 
 .language-banner {
@@ -1286,8 +1312,10 @@ b {
     fill: currentColor;
     width: 22px;
     height: 22px;
+
     @include ltr(margin, 8px 2px 0 10px);
     @include rtl(margin, 8px 10px 0 2px);
+
     vertical-align: middle;
   }
 
@@ -1299,21 +1327,22 @@ b {
     padding: 7px 5px 0;
     fill: currentColor;
     width: 34px;
+
     @extend %clickable;
   }
 }
 
 .videoWrapper {
-	position: relative;
-	padding-bottom: 56.25%; /* 16:9 */
-	padding-top: 25px;
-	height: 0;
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 */
+  padding-top: 25px;
+  height: 0;
 }
 
 .videoWrapper iframe {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }

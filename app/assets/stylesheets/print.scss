@@ -139,7 +139,7 @@ th.js-tableHead:not([data-column-key="icon"]) {
 }
 
 .ticket-article {
-  a[href]:after {
+  a[href]::after {
     content: none !important;
   }
 }
@@ -150,7 +150,7 @@ th.js-tableHead:not([data-column-key="icon"]) {
   background: white !important;
 }
 
-.bubble-arrow:after {
+.bubble-arrow::after {
   background: white !important;
   border-color: black !important;
 }
@@ -201,9 +201,9 @@ th.js-tableHead:not([data-column-key="icon"]) {
 
 .avatar {
   border: 1px solid black;
-  
+
   &:not(.avatar--unique) {
-    &:before {
+    &::before {
       content: attr(data-initials);
       position: absolute;
       left: 0;
@@ -215,17 +215,17 @@ th.js-tableHead:not([data-column-key="icon"]) {
       line-height: 40px;
     }
 
-    &.size-30:before {
+    &.size-30::before {
       font-size: 10px;
       line-height: 32px;
     }
 
-    &.size-50:before {
+    &.size-50::before {
       font-size: 16px;
       line-height: 52px;
     }
 
-    &.size-80:before {
+    &.size-80::before {
       font-size: 26px;
       line-height: 84px;
     }

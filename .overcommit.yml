@@ -13,6 +13,8 @@ PreCommit:
   CoffeeLint:
     enabled: true
     on_warn: fail # Treat all warnings as failures
+  Stylelint:
+    enabled: true
 
 PostCheckout:
   ALL:

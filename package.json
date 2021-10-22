@@ -1,0 +1,13 @@
+{
+  "name": "zammad",
+  "version": "1.0.0",
+  "scripts": {
+    "lint:css": "stylelint \"**/*.{css,scss}\"",
+    "lint:css:fix": "stylelint \"**/*.{css,scss}\" --fix"
+  },
+  "devDependencies": {
+    "stylelint": "13.x",
+    "stylelint-config-standard": "22.x",
+    "stylelint-scss": "3.x"
+  }
+}

@@ -50,6 +50,14 @@ coffeelint:
   script:
     - coffeelint app/
 
+stylelint:
+  <<: *template_pre
+  before_script:
+    - source /opt/rh/rh-nodejs12/enable
+    - yarn install
+  script:
+    - yarn lint:css
+
 bundle-audit:
   <<: *template_pre
   script:
