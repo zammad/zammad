@@ -114,11 +114,22 @@
       sel = window.getSelection()
       if (sel) {
         node = $(sel.anchorNode)
-        if (node && node.parent() && node.parent().is('blockquote')) {
-          e.preventDefault()
-          document.execCommand('Insertparagraph')
-          document.execCommand('Outdent')
-          return
+
+        if (node.closest('blockquote').length > 0) {
+
+          // Special handling when the line is not wrapped inside of a html element.
+          if (!node.is('div') && node.parent().is('blockquote') && node.text()) {
+            e.preventDefault()
+            document.execCommand('formatBlock', false, 'div')
+            document.execCommand('insertParagraph')
+            return
+          }
+          if (!e.shiftKey && node && (node.is('blockquote') || (node.parent() && node.parent().is('blockquote')) || !node.text())) {
+            e.preventDefault()
+            document.execCommand('insertParagraph')
+            document.execCommand('outdent')
+            return
+          }
         }
       }
 
