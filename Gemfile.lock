@@ -167,7 +167,7 @@ GEM
     crass (1.0.6)
     csv (3.2.0)
     daemons (1.4.1)
-    dalli (3.0.2)
+    dalli (3.0.3)
     debug_inspector (1.1.0)
     delayed_job (4.1.9)
       activesupport (>= 3.0, < 6.2)
