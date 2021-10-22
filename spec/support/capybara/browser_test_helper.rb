@@ -170,7 +170,7 @@ module BrowserTestHelper
       rescue Capybara::ElementNotFound
         # doesn't exist yet
       end
-    rescue Selenium::WebDriver::Error::TimeOutError => e
+    rescue Selenium::WebDriver::Error::TimeoutError => e
       # cleanup backtrace
       e.set_backtrace(e.backtrace.drop(3))
       raise e
@@ -191,7 +191,7 @@ module BrowserTestHelper
       rescue Capybara::ElementNotFound
         true
       end
-    rescue Selenium::WebDriver::Error::TimeOutError => e
+    rescue Selenium::WebDriver::Error::TimeoutError => e
       # cleanup backtrace
       e.set_backtrace(e.backtrace.drop(3))
       raise e
