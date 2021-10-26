@@ -683,4 +683,48 @@ RSpec.describe 'Ticket Create', type: :system do
       expect(Ticket.last.pending_time).to be nil
     end
   end
+
+  context 'default priority' do
+    let!(:template)        { create(:template, :dummy_data) }
+    let!(:ticket_priority) { create(:ticket_priority, default_create: true) }
+    let(:another_priority) { Ticket::Priority.find(1) }
+    let(:priority_field)   { find('[name=priority_id]') }
+
+    it 'shows default priority on load' do
+      visit 'ticket/create'
+
+      expect(priority_field.value).to eq ticket_priority.id.to_s
+    end
+
+    it 'does not reset to default priority on reload' do
+      visit 'ticket/create'
+
+      taskbar_timestamp = Taskbar.last.updated_at
+
+      priority_field.select another_priority.name
+
+      wait.until { Taskbar.last.updated_at != taskbar_timestamp }
+
+      refresh
+
+      expect(priority_field.reload.value).to eq another_priority.id.to_s
+    end
+
+    it 'saves default priority' do
+      visit 'ticket/create'
+      use_template template
+      click '.js-submit'
+
+      expect(Ticket.last).to have_attributes(priority: ticket_priority)
+    end
+
+    it 'saves different priority if overriden' do
+      visit 'ticket/create'
+      use_template template
+      priority_field.select another_priority.name
+      click '.js-submit'
+
+      expect(Ticket.last).to have_attributes(priority: another_priority)
+    end
+  end
 end

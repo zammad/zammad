@@ -31,8 +31,9 @@ class App.TicketCreate extends App.Controller
     @sidebarState = {}
 
     # define default type and available types
-    @defaultType = @Config.get('ui_ticket_create_default_type')
-    @availableTypes = @Config.get('ui_ticket_create_available_types') || []
+    @defaultType     = @Config.get('ui_ticket_create_default_type')
+    @availableTypes  = @Config.get('ui_ticket_create_available_types') || []
+
     if !_.isArray(@availableTypes)
       @availableTypes = [@availableTypes]
 
@@ -294,6 +295,8 @@ class App.TicketCreate extends App.Controller
 
       if !_.isEmpty(params['form_id'])
         @formId = params['form_id']
+
+    params.priority_id ||= App.TicketPriority.findByAttribute( 'default_create', true )?.id
 
     @html(App.view('agent_ticket_create')(
       head:           'New Ticket'

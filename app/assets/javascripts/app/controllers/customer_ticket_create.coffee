@@ -119,11 +119,6 @@ class CustomerTicketCreate extends App.ControllerAppContent
     # set customer id
     params.customer_id = @Session.get('id')
 
-    # set prio
-    if !params.priority_id
-      priority = App.TicketPriority.findByAttribute( 'default_create', true )
-      params.priority_id = priority.id
-
     # set state
     if !params.state_id
       state = App.TicketState.findByAttribute( 'default_create', true )
