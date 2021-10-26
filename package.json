@@ -2,8 +2,8 @@
   "scripts": {
     "lint": "eslint --cache -c .eslintrc.js --ext .js,.ts,.vue app/frontend",
     "lint-and-fix": "npm run lint -- --fix",
-    "lint:css": "stylelint \"**/*.{css,scss}\" \"./app/frontend/**/*.{vue,css}\"",
-    "lint:css:fix": "stylelint \"**/*.{css,scss}\" --fix",
+    "lint:css": "stylelint \"**/*.{css,vue,scss}\"",
+    "lint:css:fix": "stylelint \"**/*.{css,vue,scss}\" --fix",
     "test": "jest --config app/frontend/tests/jest.config.js"
   },
   "devDependencies": {
