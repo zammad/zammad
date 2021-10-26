@@ -102,7 +102,7 @@ class CoreWorkflow::Attributes
   # dont cache this else the result object will work with references and cache bugs occur
   def visibility_default
     object_elements.each_with_object({}) do |attribute, result|
-      result[ attribute[:name] ] = screen_value(attribute, 'shown') == false ? 'hide' : 'show'
+      result[ attribute[:name] ] = screen_value(attribute, 'shown') == false ? 'remove' : 'show'
     end
   end
 

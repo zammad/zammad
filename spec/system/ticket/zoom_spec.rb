@@ -2267,4 +2267,32 @@ RSpec.describe 'Ticket zoom', type: :system do
       expect(page.all('select[name=owner_id] option').map(&:value)).to include(agent2.id.to_s)
     end
   end
+
+  describe 'Not displayed fields should not impact the edit screen #3819', authenticated_as: :authenticate, db_strategy: :reset do
+    let(:field_name) { SecureRandom.uuid }
+    let(:ticket) { create(:ticket, group: Group.find_by(name: 'Users')) }
+
+    def authenticate
+      create :object_manager_attribute_boolean, default: nil, screens: {
+        edit: {
+          'ticket.agent' => {
+            shown:    false,
+            required: false,
+          }
+        }
+      }
+      ObjectManager::Attribute.migration_execute
+      ticket
+      true
+    end
+
+    before do
+      visit "#ticket/zoom/#{ticket.id}"
+    end
+
+    it 'does not show any changes for the field because it has no value and because it is not shown it should also not show the ticket as changed' do
+      sleep 3
+      expect(page).to have_no_selector('.js-reset')
+    end
+  end
 end

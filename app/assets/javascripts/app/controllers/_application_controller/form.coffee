@@ -278,7 +278,7 @@ class App.ControllerForm extends App.Controller
       attribute.autocomplete = 'autocomplete="' + attribute.autocomplete + '"'
 
     # set default values
-    if attribute.value is undefined && 'default' of attribute
+    if attribute.value is undefined && 'default' of attribute && !@params?.id
       attribute.value = attribute.default
 
     # set params value

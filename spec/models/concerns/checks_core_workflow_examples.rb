@@ -9,16 +9,6 @@ RSpec.shared_examples 'ChecksCoreWorkflow' do
     UserInfo.current_user_id = agent.id
   end
 
-  context 'when pending time on open ticket' do
-    subject(:ticket) { create(:ticket, group: agent_group, screen: 'create_middle', state: Ticket::State.find_by(name: 'open'), pending_time: Time.zone.now + 5.days) }
-
-    before { subject }
-
-    it 'checks if the pending time got removed' do
-      expect(ticket.pending_time).to be nil
-    end
-  end
-
   context 'when creation of closed tickets are only allowed by type set' do
     subject(:ticket) { create(:ticket, group: agent_group, screen: 'create_middle', state: Ticket::State.find_by(name: 'open'), pending_time: Time.zone.now + 5.days) }
 

@@ -25,7 +25,6 @@ module ChecksCoreWorkflow
                                           }, user: User.find(UserInfo.current_user_id))
 
     check_restrict_values(perform_result)
-    check_visibility(perform_result)
     check_mandatory(perform_result)
   end
 
@@ -41,14 +40,6 @@ module ChecksCoreWorkflow
 
   def restricted_value?(perform_result, key)
     perform_result[:restrict_values][key].any? { |value| value.to_s == self[key].to_s }
-  end
-
-  def check_visibility(perform_result)
-    perform_result[:visibility].each_key do |key|
-      next if perform_result[:visibility][key] != 'remove'
-
-      self[key] = nil
-    end
   end
 
   def check_mandatory(perform_result)
