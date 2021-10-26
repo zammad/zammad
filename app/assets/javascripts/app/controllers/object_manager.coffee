@@ -247,8 +247,6 @@ class Edit extends App.ControllerGenericEdit
       #if attribute.name is 'data_type'
       #  attribute.disabled = true
 
-    console.log('configure_attributes', configure_attributes)
-
     @controller = new App.ControllerForm(
       model:
         configure_attributes: configure_attributes

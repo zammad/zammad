@@ -916,20 +916,25 @@ set new attributes of model (remove already available attributes)
 
       # use jquery instead of ._clone() because we need a deep copy of the obj
       @org_configure_attributes = $.extend(true, [], @configure_attributes)
+    configure_attributes = $.extend(true, [], @configure_attributes)
+    allAttributes = []
     for attribute in attributes
       @attributes.push attribute.name
 
       found = false
-      for attribute_model, index in @configure_attributes
+      for attribute_model, index in configure_attributes
         continue if attribute_model.name != attribute.name
 
-        @configure_attributes[index] = _.extend(attribute_model, attribute)
+        allAttributes.push $.extend(true, attribute_model, attribute)
+        configure_attributes.splice(index, 1) # remove found attribute
 
         found = true
         break
 
       if !found
-        @configure_attributes.push attribute
+        allAttributes.push $.extend(true, {}, attribute)
+
+    @configure_attributes = $.extend(true, [], allAttributes.concat(configure_attributes))
 
   @resetAttributes: ->
     return if _.isEmpty(@org_configure_attributes)

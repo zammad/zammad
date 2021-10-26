@@ -227,8 +227,9 @@ QUnit.test("updateAttributes will change existing attributes and add new ones", 
   var attributesAfterUpdate = _.clone(App.Ticket.configure_attributes);
 
   assert.equal(attributesAfterUpdate.length, attributesBefore.length + 1, 'new attributes list contains 1 more elements')
-  assert.equal(attributesAfterUpdate[attributesAfterUpdate.length - 1]['name'], 'new_attribute_1010101', 'new attributes list contains the new element')
-  assert.equal(attributesAfterUpdate[0]['new_option_1239393'], 1, 'first element of the new attributes got updated with the new option')
+  assert.equal(attributesAfterUpdate[0]['new_option_1239393'], 1, 'first element of the new attributes is number')
+  assert.equal(attributesAfterUpdate[0]['name'], 'number', 'first element of the new attributes got updated with the new option')
+  assert.equal(attributesAfterUpdate[1]['name'], 'new_attribute_1010101', 'new attributes list contains the new element')
 
   App.Ticket.resetAttributes();
   var attributesAfterReset = _.clone(App.Ticket.configure_attributes);
