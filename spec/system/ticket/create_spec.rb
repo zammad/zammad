@@ -665,4 +665,56 @@ RSpec.describe 'Ticket Create', type: :system do
       expect(Ticket.last.pending_time).to be nil
     end
   end
+
+  describe 'When looking for customers, it is no longer possible to change into organizations #3815' do
+    before do
+      visit 'ticket/create'
+
+      # modal reaper ;)
+      sleep 3
+    end
+
+    context 'when less than 10 customers' do
+      let(:organization) { Organization.first }
+
+      it 'has no show more option' do
+        find('[name=customer_id_completion]').fill_in with: 'zam'
+        expect(page).to have_selector("li.js-organization[data-organization-id='#{organization.id}']")
+        page.find("li.js-organization[data-organization-id='#{organization.id}']").click
+        expect(page).to have_selector("ul.recipientList-organizationMembers[organization-id='#{organization.id}'] li.js-showMoreMembers.hidden", visible: :all)
+      end
+    end
+
+    context 'when more than 10 customers', authenticated_as: :authenticate do
+      def authenticate
+        customers
+        true
+      end
+
+      let(:organization) { create(:organization, name: 'Zammed') }
+      let(:customers) do
+        create_list(:customer, 50, organization: organization)
+      end
+
+      it 'does paginate through organization' do
+        find('[name=customer_id_completion]').fill_in with: 'zam'
+        expect(page).to have_selector("li.js-organization[data-organization-id='#{organization.id}']")
+        page.find("li.js-organization[data-organization-id='#{organization.id}']").click
+        wait(5).until { page.all("ul.recipientList-organizationMembers[organization-id='#{organization.id}'] li", visible: :all).count == 12 } # 10 users + back + show more button
+
+        expect(page).to have_selector("ul.recipientList-organizationMembers[organization-id='#{organization.id}'] li.js-showMoreMembers[organization-member-limit='10']")
+        scroll_into_view('li.js-showMoreMembers')
+        page.find("ul.recipientList-organizationMembers[organization-id='#{organization.id}'] li.js-showMoreMembers").click
+        wait(5).until { page.all("ul.recipientList-organizationMembers[organization-id='#{organization.id}'] li", visible: :all).count == 27 } # 25 users + back + show more button
+
+        expect(page).to have_selector("ul.recipientList-organizationMembers[organization-id='#{organization.id}'] li.js-showMoreMembers[organization-member-limit='25']")
+        scroll_into_view('li.js-showMoreMembers')
+        page.find("ul.recipientList-organizationMembers[organization-id='#{organization.id}'] li.js-showMoreMembers").click
+        wait(5).until { page.all("ul.recipientList-organizationMembers[organization-id='#{organization.id}'] li", visible: :all).count == 52 } # 50 users + back + show more button
+
+        scroll_into_view('li.js-showMoreMembers')
+        expect(page).to have_selector("ul.recipientList-organizationMembers[organization-id='#{organization.id}'] li.js-showMoreMembers.hidden", visible: :all, wait: 20)
+      end
+    end
+  end
 end

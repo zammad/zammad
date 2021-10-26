@@ -153,7 +153,7 @@ class Object extends App.ControllerObserver
       elLocal.find('.js-userList').html(members)
     )
 
-    if @organization.member_ids.length < @memberLimit
+    if @organization.member_ids.length <= @memberLimit
       @el.find('.js-showMoreMembers').parent().addClass('hidden')
     else
       @el.find('.js-showMoreMembers').parent().removeClass('hidden')

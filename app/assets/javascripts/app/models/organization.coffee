@@ -36,7 +36,7 @@ Using **Organisations** you can **group** customers. This has among others two i
     userResult = ->
       users = []
       for user_id in member_ids
-        user = App.User.find(user_id)
+        user = App.User.fullLocal(user_id)
         continue if !user
         users.push(user)
       return users
