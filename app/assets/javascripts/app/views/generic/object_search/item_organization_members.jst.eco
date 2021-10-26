@@ -4,4 +4,9 @@
       <%- @Icon('arrow-left') %>
       <span class="btn-label"><%- @T('Back') %></span>
     </div>
+
+  <li class="recipientList-controls js-showMoreMembers" organization-member-limit="10">
+    <div class="btn btn--action btn--onDark">
+      <span class="btn-label"><%- @T('show more') %></span>
+    </div>
 </ul>

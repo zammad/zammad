@@ -14,6 +14,7 @@ class App.ObjectOrganizationAutocompletion extends App.Controller
     'click':                                  'stopPropagation'
     'change .js-objectId':                    'executeCallback'
     'click .js-remove':                       'removeThisToken'
+    'click .js-showMoreMembers':              'showMoreMembers'
 
   elements:
     '.recipientList':   'recipientList'
@@ -251,14 +252,42 @@ class App.ObjectOrganizationAutocompletion extends App.Controller
       objectCount: objectCount
     )
 
+  showMoreMembers: (e) ->
+    @preventDefaultAndStopPropagation(e)
+
+    memberElement  = $(e.target).closest('.js-showMoreMembers')
+    oldMemberLimit = memberElement.attr('organization-member-limit')
+    newMemberLimit = (parseInt(oldMemberLimit / 25) + 1) * 25
+    memberElement.attr('organization-member-limit', newMemberLimit)
+
+    @renderMembers(memberElement, oldMemberLimit, newMemberLimit)
+
+  renderMembers: (element, fromMemberLimit, toMemberLimit) ->
+    id           = element.closest('.recipientList-organizationMembers').attr('organization-id')
+    organization = App.Organization.find(id)
+
+    # only first 10 members else we would need more ajax requests
+    organization.members(fromMemberLimit, toMemberLimit, (users) =>
+      for user in users
+        element.before(@buildObjectItem(user))
+
+      if element.closest('ul').hasClass('is-shown')
+        @showOrganizationMembers(undefined, element.closest('ul'))
+    )
+
+    if organization.member_ids.length <= toMemberLimit
+      element.addClass('hidden')
+    else
+      element.removeClass('hidden')
+
   buildOrganizationMembers: (organization) =>
-    organizationMemebers = $( App.view(@templateOrganizationItemMembers)(
+    organizationMembers = $( App.view(@templateOrganizationItemMembers)(
       organization: organization
     ) )
-    if organization[@referenceAttribute]
-      for objectId in organization[@referenceAttribute]
-        object = App[@objectSingle].fullLocal(objectId)
-        organizationMemebers.append(@buildObjectItem(object))
+
+    @renderMembers(organizationMembers.find('.js-showMoreMembers'), 0, 10)
+
+    organizationMembers
 
   buildObjectItem: (object) =>
     icon = @objectIcon
@@ -404,8 +433,7 @@ class App.ObjectOrganizationAutocompletion extends App.Controller
       e.stopPropagation()
       listEntry = $(e.currentTarget)
 
-    organizationId = listEntry.data('organization-id')
-
+    organizationId = listEntry.data('organization-id') || listEntry.attr('organization-id')
     @organizationList = @$("[organization-id=#{ organizationId }]")
 
     return if !@organizationList.get(0)
