@@ -1,8 +1,7 @@
 @font-face {
   font-family: 'Fira Sans';
   src: url('firasans-regular-webfont.eot');
-  src:
-    url('firasans-regular-webfont.eot?#iefix') format('embedded-opentype'),
+  src: url('firasans-regular-webfont.eot?#iefix') format('embedded-opentype'),
     url('firasans-regular-webfont.woff') format('woff'),
     url('firasans-regular-webfont.ttf') format('truetype');
   font-weight: normal;
@@ -10,7 +9,7 @@
 }
 
 html {
-  font-family: "Fira Sans";
+  font-family: 'Fira Sans';
   height: 100%;
   color: #8c959c;
   background: #f8f9fa;

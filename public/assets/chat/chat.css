@@ -63,7 +63,8 @@
   color: white;
   line-height: 2.5em;
   height: 3.5em;
-  box-shadow: 0 -1px rgba(0, 0, 0, 0.1), 0 1px rgba(255, 255, 255, 0.3) inset, 0 -1px rgba(0, 0, 0, 0.1) inset, 0 1px 1px rgba(0, 0, 0, 0.13);
+  box-shadow: 0 -1px rgba(0, 0, 0, 0.1), 0 1px rgba(255, 255, 255, 0.3) inset,
+    0 -1px rgba(0, 0, 0, 0.1) inset, 0 1px 1px rgba(0, 0, 0, 0.13);
   position: relative;
   border-radius: 5px 5px 0 0;
   overflow: hidden;
@@ -96,7 +97,7 @@
 }
 
 .zammad-chat-header-icon::before {
-  content: "";
+  content: '';
   display: inline-block;
 }
 
@@ -151,7 +152,7 @@
 }
 
 .zammad-chat-agent-status::before {
-  content: "";
+  content: '';
   background: #f35912;
   display: inline-block;
   height: 0.9em;
@@ -163,11 +164,11 @@
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.04) inset;
 }
 
-.zammad-chat-agent-status[data-status="online"]::before {
+.zammad-chat-agent-status[data-status='online']::before {
   background: #52c782;
 }
 
-.zammad-chat-agent-status[data-status="connecting"]::before {
+.zammad-chat-agent-status[data-status='connecting']::before {
   animation: linear connect-fade 600ms infinite alternate;
   background: #faab00;
 }
@@ -299,7 +300,8 @@
   background: #ededed;
   display: inline-block;
   max-width: 70%;
-  box-shadow: 0 2px rgba(255, 255, 255, 0.15) inset, 0 0 0 1px rgba(0, 0, 0, 0.08) inset, 0 1px rgba(0, 0, 0, 0.02);
+  box-shadow: 0 2px rgba(255, 255, 255, 0.15) inset,
+    0 0 0 1px rgba(0, 0, 0, 0.08) inset, 0 1px rgba(0, 0, 0, 0.02);
 }
 
 .zammad-chat-status-inner {
@@ -346,7 +348,9 @@
   animation-delay: 0.13s;
 }
 
-.zammad-chat-loading-circle + .zammad-chat-loading-circle + .zammad-chat-loading-circle {
+.zammad-chat-loading-circle
+  + .zammad-chat-loading-circle
+  + .zammad-chat-loading-circle {
   animation-delay: 0.26s;
 }
 
@@ -421,7 +425,8 @@
   cursor: pointer;
   border: none;
   border-radius: 1.5em;
-  box-shadow: 0 2px rgba(255, 255, 255, 0.25) inset, 0 0 0 1px rgba(0, 0, 0, 0.1) inset, 0 1px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px rgba(255, 255, 255, 0.25) inset,
+    0 0 0 1px rgba(0, 0, 0, 0.1) inset, 0 1px rgba(0, 0, 0, 0.1);
   outline: none;
   display: inline-block;
 }

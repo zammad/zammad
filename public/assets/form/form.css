@@ -2,7 +2,8 @@
   width: 100%;
 }
 
-.zammad-form h1, .zammad-form h2 {
+.zammad-form h1,
+.zammad-form h2 {
   margin-top: 0;
 }
 
@@ -41,7 +42,7 @@
 }
 
 .zammad-form-modal::before {
-  content: "";
+  content: '';
   display: inline-block;
   height: 100%;
   vertical-align: middle;
@@ -70,6 +71,6 @@
   position: relative;
   display: inline-block;
   vertical-align: middle;
-  box-shadow: 0 0 50px rgba(0,0,0,0.3);
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.3);
   color: #949494;
 }
