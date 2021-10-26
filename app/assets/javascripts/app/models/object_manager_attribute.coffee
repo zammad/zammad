@@ -6,8 +6,8 @@ class App.ObjectManagerAttribute extends App.Model
     { name: 'name',       display: 'Name',     tag: 'input',     type: 'text', limit: 100, null: false },
     { name: 'display',    display: 'Display',  tag: 'input',     type: 'text', limit: 100, null: false },
     { name: 'object',     display: 'Object',   tag: 'input',     readonly: 1 },
-    { name: 'position',   display: 'Position', tag: 'input',     readonly: 1 },
     { name: 'active',     display: 'Active',   tag: 'active',    default: true },
     { name: 'data_type',  display: 'Format',   tag: 'object_manager_attribute', null: false },
     { name: 'updated_at', display: 'Updated',  tag: 'datetime',  readonly: 1 },
+    { name: 'position',   display: 'Position', tag: 'integer', type: 'number', limit: 100, null: true },
   ]

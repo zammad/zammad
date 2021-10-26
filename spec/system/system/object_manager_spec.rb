@@ -29,6 +29,19 @@ RSpec.describe 'System > Objects', type: :system do
     end
   end
 
+  context 'when creating a new attribute' do
+    before do
+      visit '/#system/object_manager'
+      find('.js-new').click
+    end
+
+    it 'has the position feild with no default value' do
+      within '.modal' do
+        expect(page).to have_field('position', with: '')
+      end
+    end
+  end
+
   context 'when creating but then discarding fields again' do
     before do
       visit '/#system/object_manager'
