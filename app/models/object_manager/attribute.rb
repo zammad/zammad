@@ -367,6 +367,12 @@ possible types
       return record
     end
 
+    # add maximum position only for new records with blank position
+    if !record && data[:position].blank?
+      maximum_position = where(object_lookup_id: data[:object_lookup_id]).maximum(:position)
+      data[:position] = maximum_position.present? ? maximum_position + 1 : 1
+    end
+
     # do not allow to overwrite certain attributes
     if !force
       data[:editable] = true

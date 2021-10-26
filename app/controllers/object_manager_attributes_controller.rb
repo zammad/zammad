@@ -29,7 +29,7 @@ class ObjectManagerAttributesController < ApplicationController
     )
     raise Exceptions::UnprocessableEntity, 'already exists' if exists
 
-    add_attribute_using_params(permitted_params.merge(position: 1550), status: :created)
+    add_attribute_using_params(permitted_params, status: :created)
   end
 
   # PUT /object_manager_attributes/1

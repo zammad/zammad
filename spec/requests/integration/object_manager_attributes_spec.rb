@@ -1039,7 +1039,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
     end
 
     context 'position handling', authenticated_as: -> { admin } do
-      let(:params) do
+      let(:base_params) do
         {
           name:        "customerdescription_#{SecureRandom.uuid.tr('-', '_')}",
           object:      'Ticket',
@@ -1060,15 +1060,35 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
       before { post '/api/v1/object_manager_attributes', params: params, as: :json }
 
       context 'when creating a new attribute' do
-        it 'defaults to 1550' do
-          expect(new_attribute_object.position).to eq 1550
+        let(:params) { base_params }
+
+        context 'with no position attribute provided' do
+          let(:maximum_position) do
+            ObjectManager::Attribute
+              .for_object(params[:object])
+              .maximum(:position)
+          end
+
+          it 'defaults to the maximum available position' do
+            expect(new_attribute_object.position).to eq maximum_position
+          end
+        end
+
+        context 'with a position attribute given' do
+          let(:position) { 50 }
+          let(:params) { base_params.merge(position: position) }
+
+          it 'defaults to given position' do
+            expect(new_attribute_object.position).to eq position
+          end
         end
       end
 
       context 'when updating an existing attribute' do
         let(:alternative_position) { 123 }
         let(:alternative_display)  { 'another description' }
-        let(:alternative_params)   { params.deep_dup.update(display: alternative_display) }
+        let(:params) { base_params }
+        let(:alternative_params)   { base_params.merge(display: alternative_display) }
 
         before do
           new_attribute_object.update! position: alternative_position

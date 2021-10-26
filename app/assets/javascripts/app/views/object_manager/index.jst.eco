@@ -55,6 +55,7 @@
         <th class=""><%- @T('Display') %></th>
         <th class=""><%- @T('Name') %></th>
         <th class="" style="width: 200px;"><%- @T('Type') %></th>
+        <th><%- @T('Position') %></th>
         <th class="" style="width: 140px;"><%- @T('Action') %></th>
       </tr>
     </thead>
@@ -64,6 +65,7 @@
         <td><%= item.display %></td>
         <td><%= item.name %></td>
         <td><%= item.data_type %></td>
+        <td><%= item.position %></td>
         <td>
           <% if item.to_create is true: %>
             <%- @T('will be created') %>
