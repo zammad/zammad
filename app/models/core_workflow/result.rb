@@ -35,7 +35,12 @@ class CoreWorkflow::Result
 
     # restrict init defaults to make sure param values to removed if not allowed
     attributes.restrict_values_default.each do |field, values|
-      run_backend_value('set_fixed_to', field, values)
+
+      # skip initial rerun to improve performance
+      # priority e.g. would trigger a rerun because its not set yet
+      # but we skip rerun here because the initial values have no logic which
+      # are dependent on form changes
+      run_backend_value('set_fixed_to', field, values, skip_rerun: true)
     end
 
     set_default_only_shown_if_selectable
@@ -89,21 +94,21 @@ class CoreWorkflow::Result
     end
   end
 
-  def run_backend(field, perform_config)
+  def run_backend(field, perform_config, skip_rerun: false)
     result = []
     Array(perform_config['operator']).each do |backend|
-      result << "CoreWorkflow::Result::#{backend.classify}".constantize.new(result_object: self, field: field, perform_config: perform_config).run
+      result << "CoreWorkflow::Result::#{backend.classify}".constantize.new(result_object: self, field: field, perform_config: perform_config, skip_rerun: skip_rerun).run
     end
     result
   end
 
-  def run_backend_value(backend, field, value)
+  def run_backend_value(backend, field, value, skip_rerun: false)
     perform_config = {
       'operator' => backend,
       backend    => value,
     }
 
-    run_backend(field, perform_config)
+    run_backend(field, perform_config, skip_rerun: skip_rerun)
   end
 
   def match_workflow(workflow)

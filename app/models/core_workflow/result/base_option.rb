@@ -2,8 +2,6 @@
 
 class CoreWorkflow::Result::BaseOption < CoreWorkflow::Result::Backend
   def remove_excluded_param_values
-    return if skip?
-
     if @result_object.payload['params'][field].is_a?(Array)
       remove_array
     elsif excluded_by_restrict_values?(@result_object.payload['params'][field])
@@ -26,7 +24,7 @@ class CoreWorkflow::Result::BaseOption < CoreWorkflow::Result::Backend
   end
 
   def remove_string
-    @result_object.payload['params'][field] = nil
+    @result_object.payload['params'][field] = @result_object.result[:restrict_values][field]&.first
     set_rerun
   end
 
