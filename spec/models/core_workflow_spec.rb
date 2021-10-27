@@ -1812,4 +1812,42 @@ RSpec.describe CoreWorkflow, type: :model do
       end
     end
   end
+
+  describe 'If selected value is not part of the restriction of set_fixed_to it should recalculate it with the new value #3822', db_strategy: :reset do
+    let(:field_name1) { SecureRandom.uuid }
+    let(:screens) do
+      {
+        'create_middle' => {
+          'ticket.agent' => {
+            'shown'    => false,
+            'required' => false,
+          }
+        }
+      }
+    end
+    let!(:workflow1) do
+      create(:core_workflow,
+             object:  'Ticket',
+             perform: { "ticket.#{field_name1}" => { 'operator' => 'set_fixed_to', 'set_fixed_to' => ['key_3'] } })
+    end
+    let!(:workflow2) do
+      create(:core_workflow,
+             object:             'Ticket',
+             condition_selected: {
+               "ticket.#{field_name1}": {
+                 operator: 'is',
+                 value:    'key_3',
+               },
+             })
+    end
+
+    before do
+      create :object_manager_attribute_select, name: field_name1, display: field_name1, screens: screens
+      ObjectManager::Attribute.migration_execute
+    end
+
+    it 'does select key_3 as new param value and based on this executes workflow 2' do
+      expect(result[:matched_workflows]).to include(workflow1.id, workflow2.id)
+    end
+  end
 end

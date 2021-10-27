@@ -1,10 +1,11 @@
 # Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
 
 class CoreWorkflow::Result::Backend
-  def initialize(result_object:, field:, perform_config:)
+  def initialize(result_object:, field:, perform_config:, skip_rerun: false)
     @result_object  = result_object
     @field          = field
     @perform_config = perform_config
+    @skip_rerun     = skip_rerun
   end
 
   def field
@@ -12,6 +13,8 @@ class CoreWorkflow::Result::Backend
   end
 
   def set_rerun
+    return if @skip_rerun
+
     @result_object.rerun = true
   end
 
