@@ -21,12 +21,17 @@ class Auth
       end
 
       def valid?
+        return false if password.blank? && password_required?
         return false if !perform?
 
         authenticated?
       end
 
       private
+
+      def password_required?
+        true
+      end
 
       def perform?
         raise NotImplementedError

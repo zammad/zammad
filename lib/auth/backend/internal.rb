@@ -21,7 +21,6 @@ class Auth
       #
       # @returns [Boolean] true if a internal password for the user is present.
       def perform?
-        return false if password.blank?
         return false if !user.verified && user.source == 'signup'
 
         user.password.present?
