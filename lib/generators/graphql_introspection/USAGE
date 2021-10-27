@@ -1,0 +1,5 @@
+Description:
+    Create JSON from the GraphQL introspection information
+
+Example:
+    rails generate graphql_introspection

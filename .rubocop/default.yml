@@ -3,10 +3,11 @@
 
 require:
   - rubocop-faker
+  - rubocop-graphql
+  - rubocop-inflector
   - rubocop-performance
   - rubocop-rails
   - rubocop-rspec
-  - rubocop-inflector
   - ../config/initializers/inflections.rb
   - ./rubocop_zammad.rb
 
@@ -268,6 +269,23 @@ Rails/Output:
     - "lib/tasks/**/*"
   Include:
     - "**/*_spec.rb"
+
+GraphQL/OrderedArguments:
+  Enabled: false
+
+GraphQL/OrderedFields:
+  Enabled: false
+
+# Our models can have many fields, and we should not enforce a different GraphQL structure just for the sake of it.
+GraphQL/ExtractType:
+  Enabled: false
+
+GraphQL/ExtractInputType:
+  MaxArguments: 3
+
+# Enforcing field descriptions for all model fields will be too verbose/redundant.
+GraphQL/FieldDescription:
+  Enabled: false
 
 # RSpec tests
 Style/NumericPredicate:

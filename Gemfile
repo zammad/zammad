@@ -56,7 +56,7 @@ gem 'dalli', require: false
 #   having unneeded runtime dependencies like NodeJS.
 group :assets do
   # asset handling - frontend tool chain
-  gem 'vite_rails'
+  gem 'vite_rails', require: false
 
   # asset handling - javascript execution for e.g. linux
   gem 'execjs', require: false
@@ -207,6 +207,7 @@ group :development, :test do
   gem 'overcommit'
   gem 'rubocop'
   gem 'rubocop-faker'
+  gem 'rubocop-graphql'
   gem 'rubocop-inflector'
   gem 'rubocop-performance'
   gem 'rubocop-rails'

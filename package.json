@@ -1,5 +1,6 @@
 {
   "scripts": {
+    "generate-graphql-api": "bundle exec rails generate graphql_introspection > tmp/graphql_introspection.json && npx graphql-codegen -c .graphql_code_generator.yml",
     "lint": "eslint --cache -c .eslintrc.js --ext .js,.ts,.vue app/frontend",
     "lint-and-fix": "npm run lint -- --fix",
     "lint:css": "stylelint \"**/*.{css,vue,scss}\"",
@@ -7,6 +8,7 @@
     "test": "jest --config app/frontend/tests/jest.config.js"
   },
   "devDependencies": {
+    "graphql": "^15.6.1",
     "@graphql-codegen/cli": "^2.2.1",
     "@graphql-codegen/introspection": "^2.1.0",
     "@graphql-codegen/typescript": "^2.2.4",
