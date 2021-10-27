@@ -168,6 +168,30 @@ RSpec.describe Auth do
         allow(Ldap::User).to receive(:new).with(any_args).and_return(ldap_user)
       end
 
+      shared_examples 'check empty password' do
+        before do
+          # Remove adapter from auth developer setting, to avoid execution for this test case, because of special empty
+          # password handling in adapter.
+          Setting.set('auth_developer', {})
+        end
+
+        context 'with empty password string' do
+          let(:password) { '' }
+
+          it 'returns false' do
+            expect(instance.valid?).to be false
+          end
+        end
+
+        context 'when password is nil' do
+          let(:password) { nil }
+
+          it 'returns false' do
+            expect(instance.valid?).to be false
+          end
+        end
+      end
+
       context 'with a ldap user without internal password' do
         let(:user) { create(:user, source: 'Ldap') }
         let(:password) { password_ldap }
@@ -197,6 +221,8 @@ RSpec.describe Auth do
             expect { instance.valid? }.not_to change { user.reload.login_failed }
           end
         end
+
+        include_examples 'check empty password'
       end
 
       context 'with a ldap user which also has a internal password' do
@@ -238,6 +264,8 @@ RSpec.describe Auth do
             expect(instance.valid?).to be true
           end
         end
+
+        include_examples 'check empty password'
       end
     end
   end

@@ -20,6 +20,13 @@ class Auth
         false
       end
 
+      # No password required for developer mode and test environment.
+      #
+      # @returns [Boolean] false
+      def password_required?
+        false
+      end
+
       # Overwrites the default behaviour to check for a allowed environment.
       #
       # @returns [Boolean] true if the environment is development or test.
