@@ -4,8 +4,8 @@ require 'rails_helper'
 
 RSpec.describe 'Ticket Escalation', type: :request do
   let(:sla_first_response) { 1.hour }
-  let(:sla_update)         { 3.hours }
-  let(:sla_close)          { 4.hours }
+  let(:sla_response)         { 3.hours }
+  let(:sla_close) { 4.hours }
 
   let!(:mail_group) { create(:group, email_address: create(:email_address)) }
 
@@ -14,7 +14,7 @@ RSpec.describe 'Ticket Escalation', type: :request do
     create(:sla,
            calendar:            calendar,
            first_response_time: sla_first_response / 1.minute,
-           update_time:         sla_update / 1.minute,
+           response_time:       sla_response / 1.minute,
            solution_time:       sla_close / 1.minute)
   end
 

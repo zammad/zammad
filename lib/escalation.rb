@@ -97,7 +97,7 @@ class Escalation
   end
 
   def update_escalations
-    ticket.assign_attributes [escalation_first_response, escalation_update, escalation_close]
+    ticket.assign_attributes [escalation_first_response, escalation_response, escalation_update, escalation_close]
       .compact
       .each_with_object({}) { |elem, memo| memo.merge!(elem) }
 
@@ -105,7 +105,7 @@ class Escalation
   end
 
   def update_statistics
-    ticket.assign_attributes [statistics_first_response, statistics_update, statistics_close]
+    ticket.assign_attributes [statistics_first_response, statistics_response, statistics_update, statistics_close]
       .compact
       .each_with_object({}) { |elem, memo| memo.merge!(elem) }
   end
@@ -130,11 +130,41 @@ class Escalation
     }
   end
 
-  def escalation_update
+  def escalation_update_reset
+    return if skip_escalation? && !preferences.last_update_at_changed?(ticket)
+    return if sla.response_time.present? || sla.update_time.present?
+
+    { update_escalation_at: nil }
+  end
+
+  def escalation_response_timestamp
+    return if escalation_disabled? || ticket.agent_responded?
+
+    ticket.last_contact_customer_at
+  end
+
+  def escalation_response
+    return if sla.response_time.nil?
     return if skip_escalation? && !preferences.last_update_at_changed?(ticket)
 
-    nullify   = escalation_disabled? || ticket.agent_responded?
-    timestamp = nullify ? nil : ticket.last_contact_customer_at
+    timestamp = escalation_response_timestamp
+
+    {
+      update_escalation_at: timestamp ? calculate_time(timestamp, sla.response_time) : nil
+    }
+  end
+
+  def escalation_update_timestamp
+    return if escalation_disabled?
+
+    ticket.last_contact_agent_at || ticket.created_at
+  end
+
+  def escalation_update
+    return if sla.update_time.nil?
+    return if skip_escalation? && !preferences.last_update_at_changed?(ticket)
+
+    timestamp = escalation_update_timestamp
 
     {
       update_escalation_at: timestamp ? calculate_time(timestamp, sla.update_time) : nil
@@ -186,11 +216,39 @@ class Escalation
     }
   end
 
+  def skip_statistics_response?
+    return true if !forced? && !preferences.last_update_at_changed?(ticket)
+    return true if !sla.response_time
+
+    !ticket.agent_responded?
+  end
+
+  # ATTENTION: Recalculation after SLA change won't happen
+  # SLA change will cause wrong statistics in some edge cases.
+  # Since this changes `update_in_min` calculation to retain longest timespan.
+  # But it does not keep track of previous update times.
+  def statistics_response_applicable?(minutes)
+    ticket.update_in_min.blank? || minutes > ticket.update_in_min # keep longest timespan
+  end
+
+  def statistics_response
+    return if skip_statistics_response?
+
+    minutes = calculate_minutes(ticket.last_contact_customer_at, ticket.last_contact_agent_at)
+
+    return if !forced? && !statistics_response_applicable?(minutes)
+
+    {
+      update_in_min:      minutes,
+      update_diff_in_min: minutes ? (sla.response_time - minutes) : nil
+    }
+  end
+
   def skip_statistics_update?
     return true if !forced? && !preferences.last_update_at_changed?(ticket)
     return true if !sla.update_time
 
-    !ticket.agent_responded?
+    ticket.last_contact_agent_at.blank?
   end
 
   # ATTENTION: Recalculation after SLA change won't happen
@@ -201,10 +259,28 @@ class Escalation
     ticket.update_in_min.blank? || minutes > ticket.update_in_min # keep longest timespan
   end
 
+  def statistics_update_responses
+    ticket
+      .articles
+      .reverse
+      .lazy
+      .select { |article| article.sender&.name == 'Agent' && article.type&.communication }
+      .first(2)
+  end
+
+  def statistics_update_minutes
+    last_agent_responses = statistics_update_responses
+
+    from = last_agent_responses.second&.created_at || ticket.created_at
+    to   = last_agent_responses.first&.created_at
+
+    calculate_minutes(from, to)
+  end
+
   def statistics_update
     return if skip_statistics_update?
 
-    minutes = calculate_minutes(ticket.last_contact_customer_at, ticket.last_contact_agent_at)
+    minutes = statistics_update_minutes
 
     return if !forced? && !statistics_update_applicable?(minutes)
 

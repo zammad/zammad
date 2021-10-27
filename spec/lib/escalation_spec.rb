@@ -3,13 +3,18 @@
 require 'rails_helper'
 
 RSpec.describe ::Escalation do
-  let(:instance) { described_class.new ticket, force: force }
+  let(:instance)              { described_class.new ticket, force: force }
   let(:instance_with_history) { described_class.new ticket_with_history, force: force }
+  let(:instance_with_open)    { described_class.new open_ticket_with_history, force: force }
+
   let(:ticket)   { create(:ticket) }
   let(:force)    { false }
-  let(:sla)      { nil }
-  let(:sla_247)  { create(:sla, :condition_blank, first_response_time: 60, update_time: 60, solution_time: 75, calendar: create(:calendar, :'24/7')) }
-  let(:calendar) { nil }
+  let(:calendar) { create(:calendar, :'24/7') }
+
+  let(:sla_247)          { create(:sla, :condition_blank, solution_time: 75, calendar: calendar) }
+  let(:sla_247_response) { create(:sla, :condition_blank, first_response_time: 30, response_time: 45, solution_time: 75, calendar: calendar) }
+  let(:sla_247_update)   { create(:sla, :condition_blank, first_response_time: 30, update_time: 60, solution_time: 75, calendar: calendar) }
+
   let(:ticket_with_history) do
     freeze_time
     ticket = create(:ticket)
@@ -252,7 +257,7 @@ RSpec.describe ::Escalation do
 
     # https://github.com/zammad/zammad/issues/3140
     it 'customer contact sets #update_escalation_at' do
-      sla_247
+      sla_247_response
       ticket
       create(:ticket_article, :inbound_email, ticket: ticket)
 
@@ -261,7 +266,7 @@ RSpec.describe ::Escalation do
 
     context 'with ticket with sla and customer enquiry' do
       before do
-        sla_247
+        sla_247_response
         ticket
 
         travel 10.minutes
@@ -289,34 +294,120 @@ RSpec.describe ::Escalation do
     let(:force) { true } # initial calculation
 
     it 'returns attribute' do
-      sla_247
+      sla_247_response
       allow(instance_with_history).to receive(:escalation_disabled?).and_return(false)
       result = instance_with_history.send(:escalation_first_response)
-      expect(result).to include first_response_escalation_at: 60.minutes.ago
+      expect(result).to include first_response_escalation_at: 90.minutes.ago
     end
 
     it 'returns nil when no sla#first_response_time' do
-      sla_247.update! first_response_time: nil
+      sla_247_response.update! first_response_time: nil
       allow(instance_with_history).to receive(:escalation_disabled?).and_return(false)
       result = instance_with_history.send(:escalation_first_response)
       expect(result).to include(first_response_escalation_at: nil)
     end
   end
 
-  describe '#escalation_update' do
-    it 'returns attribute' do
+  describe '#escalation_update_reset' do
+    it 'resets to nil when no sla#response_time and sla#update_time' do
       sla_247
-      ticket_with_history.last_contact_customer_at = 2.hours.ago
       allow(instance_with_history).to receive(:escalation_disabled?).and_return(false)
-      result = instance_with_history.send(:escalation_update)
-      expect(result).to include update_escalation_at: 60.minutes.ago
+      result = instance_with_history.send(:escalation_update_reset)
+      expect(result).to include(update_escalation_at: nil)
+    end
+
+    it 'returns nil when no sla#response_time' do
+      sla_247_update
+      allow(instance_with_history).to receive(:escalation_disabled?).and_return(false)
+      result = instance_with_history.send(:escalation_update_reset)
+      expect(result).to be_nil
     end
 
     it 'returns nil when no sla#update_time' do
-      sla_247.update! update_time: nil
+      sla_247_response
       allow(instance_with_history).to receive(:escalation_disabled?).and_return(false)
-      result = instance_with_history.send(:escalation_update)
-      expect(result).to include(update_escalation_at: nil)
+      result = instance_with_history.send(:escalation_update_reset)
+      expect(result).to be_nil
+    end
+  end
+
+  describe '#escalation_response' do
+    it 'returns attribute' do
+      sla_247_response
+      ticket_with_history.last_contact_customer_at = 2.hours.ago
+      allow(instance_with_history).to receive(:escalation_disabled?).and_return(false)
+      result = instance_with_history.send(:escalation_response)
+      expect(result).to include update_escalation_at: 75.minutes.ago
+    end
+
+    it 'returns nil when no sla#response_time' do
+      sla_247
+      allow(instance_with_history).to receive(:escalation_disabled?).and_return(false)
+      result = instance_with_history.send(:escalation_response)
+      expect(result).to be_nil
+    end
+
+    it 'response time is calculated when waiting for the first response with update-only SLA' do
+      sla_247_response.update! first_response_time: nil
+      ticket_with_history.last_contact_customer_at = 2.hours.ago
+      allow(instance_with_history).to receive(:escalation_disabled?).and_return(false)
+      result = instance_with_history.send(:escalation_response)
+      expect(result).to include update_escalation_at: 75.minutes.ago
+    end
+  end
+
+  describe '#escalation_update' do
+    context 'when has open ticket with history' do
+      before do
+        sla_247_update
+        open_ticket_with_history
+        allow(instance_with_open).to receive(:escalation_disabled?).and_return(false)
+      end
+
+      it 'update time is calculated before first agent response' do
+        result = instance_with_open.send(:escalation_update)
+        expect(result).to include update_escalation_at: 50.minutes.from_now
+      end
+
+      it 'update time is calculated after agent response' do
+        create(:ticket_article, :outbound_email, ticket: open_ticket_with_history)
+        result = instance_with_open.send(:escalation_update)
+        expect(result).to include update_escalation_at: 60.minutes.from_now
+      end
+
+      context 'when agent responds' do
+        before do
+          create(:ticket_article, :outbound_email, ticket: open_ticket_with_history)
+          travel 30.minutes
+        end
+
+        it 'update time is calculated after 2nd customer enquiry' do
+          create(:ticket_article, :inbound_email, ticket: open_ticket_with_history)
+          result = instance_with_open.send(:escalation_update)
+          expect(result).to include update_escalation_at: 30.minutes.from_now
+        end
+
+        it 'update time is calculated after 2nd agent response interrupted by customer' do
+          create(:ticket_article, :inbound_email, ticket: open_ticket_with_history)
+          travel 30.minutes
+          create(:ticket_article, :outbound_email, ticket: open_ticket_with_history)
+          result = instance_with_open.send(:escalation_update)
+          expect(result).to include update_escalation_at: 60.minutes.from_now
+        end
+
+        it 'update time is calculated after 2nd agent response in a row' do
+          create(:ticket_article, :outbound_email, ticket: open_ticket_with_history)
+          result = instance_with_open.send(:escalation_update)
+          expect(result).to include update_escalation_at: 60.minutes.from_now
+        end
+      end
+    end
+
+    it 'returns nil when no sla#update_time' do
+      sla_247
+      allow(instance_with_open).to receive(:escalation_disabled?).and_return(false)
+      result = instance_with_open.send(:escalation_update)
+      expect(result).to be_nil
     end
   end
 
@@ -387,16 +478,16 @@ RSpec.describe ::Escalation do
 
   describe '#statistics_first_response' do
     it 'calculates statistics' do
-      sla_247
+      sla_247_response
       ticket_with_history.first_response_at = 45.minutes.ago
       instance_with_history.force!
 
       result = instance_with_history.send(:statistics_first_response)
-      expect(result).to include(first_response_in_min: 75, first_response_diff_in_min: -15)
+      expect(result).to include(first_response_in_min: 75, first_response_diff_in_min: -45)
     end
 
     it 'does not touch statistics when sla time is nil' do
-      sla_247.update! first_response_time: nil
+      sla_247_response.update! first_response_time: nil
       ticket_with_history.first_response_at = 45.minutes.ago
       instance_with_history.force!
 
@@ -405,9 +496,9 @@ RSpec.describe ::Escalation do
     end
   end
 
-  describe '#statistics_update' do
+  describe '#statistics_response' do
     before do
-      sla_247
+      sla_247_response
       freeze_time
     end
 
@@ -415,22 +506,22 @@ RSpec.describe ::Escalation do
       ticket_with_history.last_contact_customer_at = 61.minutes.ago
       ticket_with_history.last_contact_agent_at    = 60.minutes.ago
 
-      result = instance_with_history.send(:statistics_update)
-      expect(result).to include(update_in_min: 1, update_diff_in_min: 59)
+      result = instance_with_history.send(:statistics_response)
+      expect(result).to include(update_in_min: 1, update_diff_in_min: 44)
     end
 
     it 'does not calculate statistics when customer respose is last' do
       ticket_with_history.last_contact_customer_at = 59.minutes.ago
       ticket_with_history.last_contact_agent_at    = 60.minutes.ago
 
-      result = instance_with_history.send(:statistics_update)
+      result = instance_with_history.send(:statistics_response)
       expect(result).to be_nil
     end
 
     it 'does not calculate statistics when only customer enquiry present' do
       create(:ticket_article, :inbound_email, ticket: ticket)
 
-      result = instance.send(:statistics_update)
+      result = instance.send(:statistics_response)
       expect(result).to be_nil
     end
 
@@ -440,7 +531,7 @@ RSpec.describe ::Escalation do
       create(:ticket_article, :outbound_email, ticket: ticket)
 
       instance.force!
-      expect(instance.send(:statistics_update)).to include(update_in_min: 10, update_diff_in_min: 50)
+      expect(instance.send(:statistics_response)).to include(update_in_min: 10, update_diff_in_min: 35)
     end
 
     context 'with multiple exchanges and later one being quicker' do
@@ -455,7 +546,95 @@ RSpec.describe ::Escalation do
       end
 
       it 'keeps statistics of longest exchange' do
-        expect(ticket.reload).to have_attributes(update_in_min: 10, update_diff_in_min: 50)
+        expect(ticket.reload).to have_attributes(update_in_min: 10, update_diff_in_min: 35)
+      end
+    end
+
+    it 'does not touch statistics when sla time is nil' do
+      sla_247.update! update_time: nil
+      ticket_with_history.last_contact_customer_at = 60.minutes.ago
+      instance_with_history.force!
+
+      result = instance_with_history.send(:statistics_update)
+      expect(result).to be_nil
+    end
+
+    it 'does not touch statistics when last update is nil' do
+      ticket_with_history.assign_attributes last_contact_agent_at: nil, last_contact_customer_at: nil
+      instance_with_history.force!
+
+      result = instance_with_history.send(:statistics_update)
+      expect(result).to be_nil
+    end
+  end
+
+  describe '#statistics_update' do
+    before do
+      sla_247_update
+      freeze_time
+    end
+
+    it 'does not calculate statistics when only customer enquiry present' do
+      create(:ticket_article, :inbound_email, ticket: ticket)
+
+      result = instance.send(:statistics_update)
+      expect(result).to be_nil
+    end
+
+    context 'when agent responds after 20 minutes' do
+      before do
+        ticket
+        travel 20.minutes
+        create(:ticket_article, :outbound_email, ticket: ticket)
+      end
+
+      it 'does not touch statistics when customer response is most recent' do
+        travel 30.minutes
+        create(:ticket_article, :inbound_email, ticket: ticket)
+
+        result = instance.send(:statistics_update)
+        expect(result).to include(update_diff_in_min: 40, update_in_min: 20)
+      end
+
+      it 'calculates statistics when only agent update present' do
+        result = instance.send(:statistics_update)
+        expect(result).to include(update_diff_in_min: 40, update_in_min: 20)
+      end
+
+      it 'calculates statistics when multiple agent updates present' do
+        travel 30.minutes
+        create(:ticket_article, :outbound_email, ticket: ticket)
+
+        result = instance.send(:statistics_update)
+        expect(result).to include(update_diff_in_min: 30, update_in_min: 30)
+      end
+
+      context 'when customer responds' do
+        before do
+          travel 10.minutes
+          create(:ticket_article, :inbound_email, ticket: ticket)
+        end
+
+        it 'calculates statistics when multiple agent updates intercepted by customer' do
+          travel 35.minutes
+          create(:ticket_article, :outbound_email, ticket: ticket)
+
+          result = instance.send(:statistics_update)
+          expect(result).to include(update_diff_in_min: 15, update_in_min: 45)
+        end
+      end
+    end
+
+    context 'with multiple exchanges and later one being quicker' do
+      before do
+        travel 10.minutes
+        create(:ticket_article, :outbound_email, ticket: ticket)
+        travel 5.minutes
+        create(:ticket_article, :outbound_email, ticket: ticket)
+      end
+
+      it 'keeps statistics of longest exchange' do
+        expect(ticket.reload).to have_attributes(update_in_min: 5, update_diff_in_min: 55)
       end
     end
 
@@ -512,7 +691,7 @@ RSpec.describe ::Escalation do
   it 'switching state pushes escalation date' do
     sla_247
     open_ticket_with_history.reload
-    expect(open_ticket_with_history.update_escalation_at).to eq open_ticket_with_history.created_at + 70.minutes
+    expect(open_ticket_with_history.escalation_at).to eq open_ticket_with_history.created_at + 85.minutes
   end
 
   def without_update_escalation_information_callback(&block)

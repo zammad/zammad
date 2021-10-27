@@ -377,7 +377,7 @@ RSpec.describe CoreWorkflow, type: :model do
         base_payload.merge(
           'screen'     => 'edit',
           'class_name' => 'Sla',
-          'params'     => { 'update_time_enabled' => 'true' }
+          'params'     => { 'update_time_enabled' => 'true', 'update_type' => 'update' }
         )
       end
 

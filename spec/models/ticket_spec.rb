@@ -1167,7 +1167,7 @@ RSpec.describe Ticket, type: :model do
     describe '#escalation_at' do
       before { travel_to(Time.current) } # freeze time
 
-      let(:sla) { create(:sla, calendar: calendar, first_response_time: 60, update_time: 180, solution_time: 240) }
+      let(:sla) { create(:sla, calendar: calendar, first_response_time: 60, response_time: 180, solution_time: 240) }
       let(:calendar) { create(:calendar, :'24/7') }
 
       context 'with no SLAs in the system' do
@@ -1378,7 +1378,7 @@ RSpec.describe Ticket, type: :model do
     describe '#first_response_escalation_at' do
       before { travel_to(Time.current) } # freeze time
 
-      let(:sla) { create(:sla, calendar: calendar, first_response_time: 60, update_time: 180, solution_time: 240) }
+      let(:sla) { create(:sla, calendar: calendar, first_response_time: 60, response_time: 180, solution_time: 240) }
       let(:calendar) { create(:calendar, :'24/7') }
 
       context 'with no SLAs in the system' do
@@ -1410,7 +1410,7 @@ RSpec.describe Ticket, type: :model do
     describe '#update_escalation_at' do
       before { travel_to(Time.current) } # freeze time
 
-      let(:sla) { create(:sla, calendar: calendar, first_response_time: 60, update_time: 180, solution_time: 240) }
+      let(:sla) { create(:sla, calendar: calendar, first_response_time: 60, response_time: 180, solution_time: 240) }
       let(:calendar) { create(:calendar, :'24/7') }
 
       context 'with no SLAs in the system' do
@@ -1450,7 +1450,7 @@ RSpec.describe Ticket, type: :model do
     describe '#close_escalation_at' do
       before { travel_to(Time.current) } # freeze time
 
-      let(:sla) { create(:sla, calendar: calendar, first_response_time: 60, update_time: 180, solution_time: 240) }
+      let(:sla) { create(:sla, calendar: calendar, first_response_time: 60, response_time: 180, solution_time: 240) }
       let(:calendar) { create(:calendar, :'24/7') }
 
       context 'with no SLAs in the system' do

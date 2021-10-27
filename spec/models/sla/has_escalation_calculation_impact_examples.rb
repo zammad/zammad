@@ -11,7 +11,7 @@ RSpec.shared_examples 'HasEscalationCalculationImpact', :performs_jobs do
 
   context 'when affected Ticket existed' do
 
-    subject(:sla) { create(:sla, calendar: calendar, first_response_time: 60, update_time: 180, solution_time: 240) }
+    subject(:sla) { create(:sla, calendar: calendar, first_response_time: 60, response_time: 180, solution_time: 240) }
 
     let(:calendar) { create(:calendar, :business_hours_9_17) }
     let!(:ticket) { create(:ticket) }
@@ -78,7 +78,7 @@ RSpec.shared_examples 'HasEscalationCalculationImpact', :performs_jobs do
                  },
                },
                first_response_time: 10,
-               update_time:         20,
+               response_time:       20,
                solution_time:       300)
       end
 
@@ -92,7 +92,7 @@ RSpec.shared_examples 'HasEscalationCalculationImpact', :performs_jobs do
                  },
                },
                first_response_time: 120,
-               update_time:         180,
+               response_time:       180,
                solution_time:       240)
       end
 
@@ -130,7 +130,7 @@ RSpec.shared_examples 'HasEscalationCalculationImpact', :performs_jobs do
                },
                calendar:            calendar,
                first_response_time: 60,
-               update_time:         120,
+               response_time:       120,
                solution_time:       180)
       end
 
@@ -172,7 +172,7 @@ RSpec.shared_examples 'HasEscalationCalculationImpact', :performs_jobs do
                },
                calendar:            calendar,
                first_response_time: 60,
-               update_time:         120,
+               response_time:       120,
                solution_time:       180)
       end
 
@@ -214,7 +214,7 @@ RSpec.shared_examples 'HasEscalationCalculationImpact', :performs_jobs do
                },
                calendar:            calendar,
                first_response_time: 60,
-               update_time:         120,
+               response_time:       120,
                solution_time:       180)
       end
 

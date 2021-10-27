@@ -36,7 +36,7 @@ App.ViewHelpers =
     App.Utils.decimal(data, positions)
 
   # define time_duration / mm:ss / hh:mm:ss format helper
-  time_duration: (time) ->
+  time_duration: (time, show_seconds = true) ->
     return '' if !time
     return '' if isNaN(parseInt(time))
 
@@ -48,7 +48,7 @@ App.ViewHelpers =
     # Output like "1:01" or "4:03:59" or "123:03:59"
     mins = "0#{mins}" if mins < 10
     secs = "0#{secs}" if secs < 10
-    if hrs > 0
+    if hrs > 0 && show_seconds
       return "#{hrs}:#{mins}:#{secs}"
     "#{mins}:#{secs}"
 

@@ -446,6 +446,7 @@ class CreateTicket < ActiveRecord::Migration[4.2]
       t.references :calendar,                                   null: false
       t.column :name,                 :string, limit: 150,      null: true
       t.column :first_response_time,  :integer,                 null: true
+      t.column :response_time,        :integer,                 null: true
       t.column :update_time,          :integer,                 null: true
       t.column :solution_time,        :integer,                 null: true
       t.column :condition,            :text, limit: 500.kilobytes + 1, null: true

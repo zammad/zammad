@@ -1,5 +1,5 @@
 class App.Sla extends App.Model
-  @configure 'Sla', 'name', 'first_response_time', 'update_time', 'solution_time', 'condition', 'calendar_id'
+  @configure 'Sla', 'name', 'first_response_time', 'response_time', 'update_time', 'solution_time', 'condition', 'calendar_id'
   @extend Spine.Model.Ajax
   @url: @apiPath + '/slas'
   @configure_attributes = [
@@ -12,6 +12,7 @@ class App.Sla extends App.Model
     { name: 'updated_by_id',  display: 'Updated by',      relation: 'User', readonly: 1 },
     { name: 'updated_at',     display: 'Updated',         tag: 'datetime', readonly: 1 },
     { name: 'first_response_time',skipRendering: true },
+    { name: 'response_time',        skipRendering: true },
     { name: 'update_time',        skipRendering: true },
     { name: 'solution_time',      skipRendering: true },
   ]

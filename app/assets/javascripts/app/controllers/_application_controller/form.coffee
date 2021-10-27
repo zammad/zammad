@@ -418,11 +418,11 @@ class App.ControllerForm extends App.Controller
 
       if !@constructor.fieldIsMandatory(field_by_name)
         field_by_name.attr('required', true)
-        field_by_name.parents('.form-group').find('label span').html('*')
+        field_by_name.closest('.form-group').find('label span').html('*')
         field_by_name.closest('.form-group').addClass('is-required')
       if !@constructor.fieldIsMandatory(field_by_data)
         field_by_data.attr('required', true)
-        field_by_data.parents('.form-group').find('label span').html('*')
+        field_by_data.closest('.form-group').find('label span').html('*')
         field_by_data.closest('.form-group').addClass('is-required')
 
   optional: (name, el = @form) ->
@@ -434,11 +434,11 @@ class App.ControllerForm extends App.Controller
 
       if @constructor.fieldIsMandatory(field_by_name)
         field_by_name.attr('required', false)
-        field_by_name.parents('.form-group').find('label span').html('')
+        field_by_name.closest('.form-group').find('label span').html('')
         field_by_name.closest('.form-group').removeClass('is-required')
       if @constructor.fieldIsMandatory(field_by_data)
         field_by_data.attr('required', false)
-        field_by_data.parents('.form-group').find('label span').html('')
+        field_by_data.closest('.form-group').find('label span').html('')
         field_by_data.closest('.form-group').removeClass('is-required')
 
   readonly: (name, el = @form) ->

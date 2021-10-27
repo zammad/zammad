@@ -16,7 +16,13 @@ class CoreWorkflow::Custom::AdminSla < CoreWorkflow::Custom::Backend
   end
 
   def update_time_enabled
-    return 'set_mandatory' if params['update_time_enabled'].present?
+    return 'set_mandatory' if params['update_time_enabled'].present? && params['update_type'] == 'update'
+
+    'set_optional'
+  end
+
+  def response_time_enabled
+    return 'set_mandatory' if params['update_time_enabled'].present? && params['update_type'] == 'response'
 
     'set_optional'
   end
@@ -32,6 +38,7 @@ class CoreWorkflow::Custom::AdminSla < CoreWorkflow::Custom::Backend
     # make fields mandatory if checkbox is checked
     result(first_response_time_enabled, 'first_response_time_in_text')
     result(update_time_enabled, 'update_time_in_text')
+    result(response_time_enabled, 'response_time_in_text')
     result(solution_time_enabled, 'solution_time_in_text')
   end
 end
