@@ -1327,7 +1327,7 @@ class App.Utils
         if type is 'email' && !e.attrs.value.match(/@/) || e.attrs.value.match(/\s/)
           e.preventDefault()
           return false
-        e.attrs.label = e.attrs.value
+        e.attrs.label ||= e.attrs.value
         true
       )
     App.Delay.set(a, 500, undefined, 'tags')

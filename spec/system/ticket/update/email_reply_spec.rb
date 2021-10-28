@@ -17,7 +17,7 @@ RSpec.describe 'Ticket > Update > Email Reply', current_user_id: -> { current_us
 
     it 'shows error dialog when updated value is an invalid email' do
       within(:active_content) do
-        click_reply
+        click_email_reply
 
         find('.token').double_click
         find('.js-to', visible: false).sibling('.token-input').set('test')
@@ -30,7 +30,7 @@ RSpec.describe 'Ticket > Update > Email Reply', current_user_id: -> { current_us
 
     it 'updates article when updated value is a valid email' do
       within(:active_content) do
-        click_reply
+        click_email_reply
 
         find('.token').double_click
         find('.js-to', visible: false).sibling('.token-input').set('user@test.com')
@@ -43,7 +43,20 @@ RSpec.describe 'Ticket > Update > Email Reply', current_user_id: -> { current_us
 
   end
 
-  def click_reply
+  context 'when a new recipient is added in email reply' do
+    it 'shows both name and email in token' do
+      click_email_reply
+
+      find('.js-to', visible: false).sibling('.token-input').set(customer.email)
+      find('ul.ui-autocomplete li:first-child', visible: false).click
+
+      within all('.token-label')[1] do
+        expect(page).to have_text("#{customer.firstname} #{customer.lastname} <#{customer.email}>")
+      end
+    end
+  end
+
+  def click_email_reply
     click '.js-ArticleAction[data-type=emailReply]'
   end
 
