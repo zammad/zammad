@@ -3,8 +3,6 @@
 ## [5.0.2](https://github.com/zammad/zammad/tree/5.0.2) (2021-10-28)
 [Full Changelog](https://github.com/zammad/zammad/compare/5.0.1...5.0.2)
 
-**Implemented enhancements:**
-
 **Fixed bugs:**
 - When looking for customers, it is no longer possible to change into organizations [3815](https://github.com/zammad/zammad/issues/3815) [[bug](https://github.com/zammad/zammad/labels/bug)] [[UX/UI](https://github.com/zammad/zammad/labels/UX/UI)]
 - Owner should get cleared if not listed in changed group [3818](https://github.com/zammad/zammad/issues/3818) [[bug](https://github.com/zammad/zammad/labels/bug)] [[UX/UI](https://github.com/zammad/zammad/labels/UX/UI)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised by payment)] [[core workflows](https://github.com/zammad/zammad/labels/core workflows)]
