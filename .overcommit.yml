@@ -26,6 +26,10 @@ PreCommit:
     flags: ['generate', 'translation_catalog', '--check']
   Stylelint:
     enabled: true
+  EsLint:
+    required_executable: 'yarn'
+    enabled: true
+    command: ['yarn', 'lint']
 
 PostCheckout:
   ALL:
