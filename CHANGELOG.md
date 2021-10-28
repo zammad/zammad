@@ -1,5 +1,27 @@
 # Change Log
 
+## [5.0.2](https://github.com/zammad/zammad/tree/5.0.2) (2021-10-28)
+[Full Changelog](https://github.com/zammad/zammad/compare/5.0.1...5.0.2)
+
+**Implemented enhancements:**
+
+**Fixed bugs:**
+- When looking for customers, it is no longer possible to change into organizations [3815](https://github.com/zammad/zammad/issues/3815) [[bug](https://github.com/zammad/zammad/labels/bug)] [[UX/UI](https://github.com/zammad/zammad/labels/UX/UI)]
+- Owner should get cleared if not listed in changed group [3818](https://github.com/zammad/zammad/issues/3818) [[bug](https://github.com/zammad/zammad/labels/bug)] [[UX/UI](https://github.com/zammad/zammad/labels/UX/UI)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised by payment)] [[core workflows](https://github.com/zammad/zammad/labels/core workflows)]
+- Custom date and datetime attributes are filled with dates on creation of tickets/users after update from 4.1 to 5.x [3810](https://github.com/zammad/zammad/issues/3810) [[bug](https://github.com/zammad/zammad/labels/bug)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised by payment)]
+- ActionController::UnknownHttpMethod FRAGE [3807](https://github.com/zammad/zammad/issues/3807) [[bug](https://github.com/zammad/zammad/labels/bug)] [[blocker](https://github.com/zammad/zammad/labels/blocker)] [[overviews](https://github.com/zammad/zammad/labels/overviews)] [[macros](https://github.com/zammad/zammad/labels/macros)]
+- Remote change of the group id does show it falsly as user change and not render the new value to the ticket [3801](https://github.com/zammad/zammad/issues/3801) [[bug](https://github.com/zammad/zammad/labels/bug)] [[UX/UI](https://github.com/zammad/zammad/labels/UX/UI)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised by payment)] [[core workflows](https://github.com/zammad/zammad/labels/core workflows)]
+- Adding private keys allows adding certificates [3727](https://github.com/zammad/zammad/issues/3727) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Able to create custom fields for existing relation (e. g. ticket.state) - will lead to non bootable Zammad [3811](https://github.com/zammad/zammad/issues/3811) [[bug](https://github.com/zammad/zammad/labels/bug)] [[regression](https://github.com/zammad/zammad/labels/regression)]
+- Sort order group_by broken (alphabetical) [3800](https://github.com/zammad/zammad/issues/3800) [[bug](https://github.com/zammad/zammad/labels/bug)] [[overviews](https://github.com/zammad/zammad/labels/overviews)] [[regression](https://github.com/zammad/zammad/labels/regression)]
+- Ticket owner selection is not updated if owner selection should be empty [3809](https://github.com/zammad/zammad/issues/3809) [[bug](https://github.com/zammad/zammad/labels/bug)] [[core workflows](https://github.com/zammad/zammad/labels/core workflows)]
+- Chat can't be closed after timeout [2471](https://github.com/zammad/zammad/issues/2471) [[bug](https://github.com/zammad/zammad/labels/bug)] [[chat](https://github.com/zammad/zammad/labels/chat)]
+- Support workflow mechanism to do pending reminder state hide pending time use case [3790](https://github.com/zammad/zammad/issues/3790) [[bug](https://github.com/zammad/zammad/labels/bug)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised by payment)]
+- Cache.clear in postinstall.sh throws ugly errors on fresh installations [3808](https://github.com/zammad/zammad/issues/3808) [[bug](https://github.com/zammad/zammad/labels/bug)] [[blocker](https://github.com/zammad/zammad/labels/blocker)] [[regression](https://github.com/zammad/zammad/labels/regression)]
+- Example payload in webhook view leads to 500 error [3794](https://github.com/zammad/zammad/issues/3794) [[bug](https://github.com/zammad/zammad/labels/bug)] [[regression](https://github.com/zammad/zammad/labels/regression)]
+- OS package upgrade fails (activity_stream_object_id) [3797](https://github.com/zammad/zammad/issues/3797) [[bug](https://github.com/zammad/zammad/labels/bug)]
+
+
 ## [5.0.1](https://github.com/zammad/zammad/tree/5.0.1) (2021-10-08)
 [Full Changelog](https://github.com/zammad/zammad/compare/5.0.0...5.0.1)
 
