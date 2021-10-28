@@ -1,6 +1,0 @@
-query session {
-  session {
-    sessionId
-    data
-  }
-}

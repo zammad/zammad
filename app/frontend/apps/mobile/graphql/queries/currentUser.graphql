@@ -1,0 +1,15 @@
+query currentUser {
+  currentUser {
+    firstname
+    lastname
+    objectAttributeValues {
+      ...objectAttributeValues
+    }
+    organization {
+      name
+      objectAttributeValues {
+        ...objectAttributeValues
+        }
+      }
+  }
+}

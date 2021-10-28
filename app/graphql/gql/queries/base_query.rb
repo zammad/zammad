@@ -2,5 +2,6 @@
 
 module Gql::Queries
   class BaseQuery < GraphQL::Schema::Resolver
+    include Gql::Concern::HandlesAuthorization
   end
 end

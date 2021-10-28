@@ -7,7 +7,9 @@ RSpec.describe Gql::Mutations::Login, type: :request do
   context 'when logging on' do
     let(:agent_password) { 'some_test_password' }
     let(:agent) { create(:agent, password: agent_password) }
-    let(:query) { File.read(Rails.root.join('app/frontend/apps/mobile/graphql/mutation/login.graphql')) }
+    let(:query) do
+      File.read(Rails.root.join('app/frontend/apps/mobile/graphql/mutations/login.graphql'))
+    end
     let(:password) { agent_password }
     let(:fingerprint) { Faker::Number.number(digits: 6).to_s }
     let(:variables) do
@@ -23,12 +25,8 @@ RSpec.describe Gql::Mutations::Login, type: :request do
     end
 
     context 'with correct credentials' do
-      it 'returns user data' do
-        expect(graphql_response['data']['login']['currentUser']['firstname']).to eq(agent.firstname)
-      end
-
       it 'returns session data' do
-        expect(graphql_response['data']['login']['session']['sessionId']).to be_present
+        expect(graphql_response['data']['login']['sessionId']).to be_present
       end
     end
 

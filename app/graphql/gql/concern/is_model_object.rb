@@ -7,6 +7,10 @@ module Gql::Concern::IsModelObject
     implements GraphQL::Types::Relay::Node
     global_id_field :id
 
+    # Make sure that objects in subdirectories do not get only the class name as type name,
+    #   but also the parent directories.
+    graphql_name name.sub('Gql::Types::', '').gsub('::', '').sub(%r{Type\Z}, '')
+
     field :created_at, GraphQL::Types::ISO8601DateTime, null: false, description: 'Create date/time of the record'
     field :updated_at, GraphQL::Types::ISO8601DateTime, null: false, description: 'Last update date/time of the record'
 

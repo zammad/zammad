@@ -4,8 +4,7 @@ module Gql::Mutations
   class Login < BaseMutation
     description 'Performs a user login to create a session'
 
-    field :current_user, Gql::Types::UserType, null: false, description: 'The logged-in user'
-    field :session, Gql::Types::SessionType, null: false, description: 'The current session'
+    field :session_id, String, null: false, description: 'The current session'
 
     argument :login, String, required: true, description: 'User name'
     argument :password, String, required: true, description: 'Password'
@@ -21,11 +20,8 @@ module Gql::Mutations
       # Register user for subsequent auth checks.
       context[:current_user] = authenticate(...)
 
-      session = context[:controller].session
-
       {
-        current_user: context[:current_user],
-        session:      { session_id: session.id, data: session.to_hash }
+        session_id: context[:controller].session.id
       }
     end
 

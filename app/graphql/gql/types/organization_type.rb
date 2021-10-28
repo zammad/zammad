@@ -10,6 +10,8 @@ module Gql::Types
 
     description 'Organizations that users can belong to'
 
+    implements Gql::Types::ObjectAttributeValueInterface
+
     field :name, String, null: false
     field :shared, Boolean, null: false
     field :domain, String, null: true

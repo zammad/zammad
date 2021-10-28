@@ -10,6 +10,8 @@ module Gql::Types
 
     description 'Users (admins, agents and customers)'
 
+    implements Gql::Types::ObjectAttributeValueInterface
+
     field :organization, Gql::Types::OrganizationType, null: true
     field :login, String, null: false
     field :firstname, String, null: true
@@ -22,12 +24,15 @@ module Gql::Types
     field :phone, String, null: true
     field :fax, String, null: true
     field :mobile, String, null: true
-    field :department, String, null: true
-    field :street, String, null: true
-    field :zip, String, null: true
-    field :city, String, null: true
-    field :country, String, null: true
-    field :address, String, null: true
+
+    # These fields are changeable object attributes, so manage them only via the ObjectAttributeInterface
+    # field :department, String, null: true
+    # field :street, String, null: true
+    # field :zip, String, null: true
+    # field :city, String, null: true
+    # field :country, String, null: true
+    # field :address, String, null: true
+
     field :vip, Boolean, null: true
     field :verified, Boolean, null: false
     field :active, Boolean, null: false
