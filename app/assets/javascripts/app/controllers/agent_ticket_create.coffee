@@ -282,6 +282,13 @@ class App.TicketCreate extends App.Controller
     return if !@formMeta
     App.QueueManager.run(@queueKey)
 
+  updateTaskManagerAttachments: (attribute, attachments) =>
+    taskData = App.TaskManager.get(@taskKey)
+    return if _.isEmpty(taskData)
+
+    taskData.attachments = attachments
+    App.TaskManager.update(@taskKey, taskData)
+
   render: (template = {}) ->
     return if !@formMeta
     # get params
@@ -376,6 +383,8 @@ class App.TicketCreate extends App.Controller
       handlersConfig: handlersTunnel
       params:  params
       taskKey: @taskKey
+      richTextUploadRenderCallback: @updateTaskManagerAttachments
+      richTextUploadDeleteCallback: @updateTaskManagerAttachments
     )
     @controllerFormCreateBottom = new App.ControllerForm(
       el:             @$('.ticket-form-bottom')

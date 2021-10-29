@@ -27,6 +27,8 @@ class App.UiElement.richtext
       renderFile = (file) ->
         item.find('.attachments').append(App.view('generic/attachment_item')(file))
         attachments.push file
+        if form.richTextUploadRenderCallback
+          form.richTextUploadRenderCallback(attribute, attachments)
 
       if params && params.attachments
         for file in params.attachments
@@ -54,6 +56,8 @@ class App.UiElement.richtext
             return if item.id.toString() is id.toString()
             item
         )
+        if form.richTextUploadDeleteCallback
+          form.richTextUploadDeleteCallback(attribute, attachments)
 
         form_id = item.closest('form').find('[name=form_id]').val()
 
