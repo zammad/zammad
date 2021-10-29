@@ -75,10 +75,11 @@ class Transaction::Notification
     # apply out of office agents
     possible_recipients_additions = Set.new
     possible_recipients.each do |user|
-      recursive_ooo_replacements(
+      ooo_replacements(
         user:         user,
         replacements: possible_recipients_additions,
         reasons:      recipients_reason,
+        ticket:       ticket,
       )
     end
 
@@ -339,26 +340,16 @@ class Transaction::Notification
 
   private
 
-  def recursive_ooo_replacements(user:, replacements:, reasons:, level: 0)
-    if level == 10
-      Rails.logger.warn("Found more than 10 replacement levels for agent #{user}.")
-      return
-    end
-
+  def ooo_replacements(user:, replacements:, ticket:, reasons:)
     replacement = user.out_of_office_agent
+
     return if !replacement
-    # return for already found, added and checked users
-    # to prevent re-doing complete lookup paths
+
+    return if !TicketPolicy.new(replacement, ticket).agent_read_access?
+
     return if !replacements.add?(replacement)
 
     reasons[replacement.id] = 'are the out-of-office replacement of the owner'
-
-    recursive_ooo_replacements(
-      user:         replacement,
-      replacements: replacements,
-      reasons:      reasons,
-      level:        level + 1
-    )
   end
 
   def possible_recipients_of_group(group_id)

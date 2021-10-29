@@ -217,9 +217,14 @@ returns
 
 =end
 
-  def out_of_office_agent(loop_user_ids: [])
+  def out_of_office_agent(loop_user_ids: [], stack_depth: 10)
     return if !out_of_office?
     return if out_of_office_replacement_id.blank?
+
+    if stack_depth.zero?
+      Rails.logger.warn("Found more than 10 replacement levels for agent #{self}.")
+      return self
+    end
 
     user = User.find_by(id: out_of_office_replacement_id)
 
@@ -228,7 +233,7 @@ returns
 
     loop_user_ids |= [out_of_office_replacement_id]
 
-    ooo_agent = user.out_of_office_agent(loop_user_ids: loop_user_ids)
+    ooo_agent = user.out_of_office_agent(loop_user_ids: loop_user_ids, stack_depth: stack_depth - 1)
     return ooo_agent if ooo_agent.present?
 
     user
