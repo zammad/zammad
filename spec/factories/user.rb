@@ -58,6 +58,18 @@ FactoryBot.define do
       user.define_singleton_method(:password_plain, -> { password_plain })
     end
 
+    trait :groupable do
+      transient do
+        group { nil }
+      end
+
+      after(:create) do |user, context|
+        Array(context.group).each do |group|
+          user.groups << group
+        end
+      end
+    end
+
     trait :preferencable do
       transient do
         notification_group_ids { [] }
@@ -76,6 +88,17 @@ FactoryBot.define do
           }
         }
       end
+    end
+
+    trait :ooo do
+      transient do
+        ooo_agent { nil }
+      end
+
+      out_of_office { true }
+      out_of_office_start_at { 1.day.ago }
+      out_of_office_end_at { 1.day.from_now }
+      out_of_office_replacement_id { ooo_agent.id }
     end
   end
 
