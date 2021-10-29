@@ -779,4 +779,39 @@ RSpec.describe 'Ticket Create', type: :system do
       end
     end
   end
+
+  describe 'Ticket create screen will loose attachments by time #3827' do
+    before do
+      visit 'ticket/create'
+    end
+
+    it 'does not loose attachments on rerender of the ui' do
+      # upload two files
+      page.find('input#fileUpload_1', visible: :all).set(Rails.root.join('test/data/mail/mail001.box'))
+      await_empty_ajax_queue
+      page.find('input#fileUpload_1', visible: :all).set(Rails.root.join('test/data/mail/mail002.box'))
+      await_empty_ajax_queue
+      wait(5).until { page.all('div.attachment-delete.js-delete', visible: :all).count == 2 }
+      expect(page).to have_text('mail001.box')
+      expect(page).to have_text('mail002.box')
+
+      # remove last file
+      begin
+        page.evaluate_script("$('div.attachment-delete.js-delete:last').click()") # not interactable
+      rescue # Lint/SuppressedException
+        # because its not interactable it also
+        # returns this weird exception for the jquery
+        # even tho it worked fine
+      end
+      await_empty_ajax_queue
+      wait(5).until { page.all('div.attachment-delete.js-delete', visible: :all).count == 1 }
+      expect(page).to have_text('mail001.box')
+      expect(page).to have_no_text('mail002.box')
+
+      # simulate rerender b
+      page.evaluate_script("App.Event.trigger('ui:rerender')")
+      expect(page).to have_text('mail001.box')
+      expect(page).to have_no_text('mail002.box')
+    end
+  end
 end
