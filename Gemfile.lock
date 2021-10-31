@@ -121,7 +121,7 @@ GEM
       tzinfo
     bootsnap (1.9.1)
       msgpack (~> 1.0)
-    brakeman (5.1.1)
+    brakeman (5.1.2)
     browser (5.3.1)
     buftok (0.2.0)
     builder (3.2.4)
