@@ -170,12 +170,15 @@ test('form checks', function() {
     first_response_time: '150',
     first_response_time_enabled: 'on',
     first_response_time_in_text: '02:30',
+    response_time: '',
+    response_time_in_text: '',
     solution_time: '',
     solution_time_enabled: undefined,
     solution_time_in_text: '',
     update_time: '45',
     update_time_enabled: 'on',
     update_time_in_text: '00:45',
+    update_type: 'update',
     working_hours: {
       mon: {
         active: true,
@@ -318,14 +321,89 @@ test('form checks', function() {
     first_response_time: '30',
     first_response_time_enabled: 'on',
     first_response_time_in_text: '00:30',
+    response_time: '',
+    response_time_in_text: '',
     solution_time: '',
     solution_time_enabled: undefined,
     solution_time_in_text: '',
     update_time: '',
     update_time_enabled: undefined,
     update_time_in_text: '',
+    update_type: undefined,
   }
   deepEqual(params, test_params, 'form param check')
+
+  // change sla times
+  el.find('#update_time').attr('checked', false)
+  el.find('[value=response]').click()
+  el.find('[name="response_time_in_text"]').val('4:30').trigger('blur')
+
+  var params = App.ControllerForm.params(el)
+  var test_params = {
+    priority1_id: '1',
+    priority2_id: ['1', '2'],
+    priority3_id: '2',
+    priority4_id: '2',
+    priority5_id: '1',
+    working_hours: {
+      mon: {
+        active: true,
+        timeframes: [
+          ['09:00','17:00']
+        ]
+      },
+      tue: {
+        active: true,
+        timeframes: [
+          ['00:00','22:00']
+        ]
+      },
+      wed: {
+        active: true,
+        timeframes: [
+          ['09:00','17:00']
+        ]
+      },
+      thu: {
+        active: true,
+        timeframes: [
+          ['09:00','12:00'],
+          ['13:00','17:00']
+        ]
+      },
+      fri: {
+        active: true,
+        timeframes: [
+          ['09:00','17:00']
+        ]
+      },
+      sat: {
+        active: false,
+        timeframes: [
+          ['10:00','14:00']
+        ]
+      },
+      sun: {
+        active: false,
+        timeframes: [
+          ['10:00','14:00']
+        ]
+      },
+    },
+    first_response_time: '30',
+    first_response_time_enabled: 'on',
+    first_response_time_in_text: '00:30',
+    response_time: '270',
+    response_time_in_text: '04:30',
+    solution_time: '',
+    solution_time_enabled: undefined,
+    solution_time_in_text: '',
+    update_time: '',
+    update_time_enabled: 'on',
+    update_time_in_text: '',
+    update_type: 'response'
+  }
+  deepEqual(params, test_params, 'form param check post response')
 
   /* empty params or defaults */
   $('#forms').append('<hr><h1>form condition check</h1><form id="form2"></form>')

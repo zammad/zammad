@@ -13,6 +13,8 @@ class Sla < ApplicationModel
 
   validates  :name, presence: true
 
+  validate   :cannot_have_response_and_update
+
   store      :condition
   store      :data
 
@@ -31,5 +33,13 @@ class Sla < ApplicationModel
       end
     end
     fallback
+  end
+
+  private
+
+  def cannot_have_response_and_update
+    return if response_time.blank? || update_time.blank?
+
+    errors.add :base, 'cannot have both response time and update time'
   end
 end

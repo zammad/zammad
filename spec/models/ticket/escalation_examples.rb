@@ -41,7 +41,7 @@ RSpec.shared_examples 'Ticket::Escalation' do
                  },
                })
       end
-      let(:sla) { create(:sla, calendar: calendar, first_response_time: 60, update_time: 120, solution_time: 180) }
+      let(:sla) { create(:sla, calendar: calendar, first_response_time: 60, response_time: 120, solution_time: 180) }
       let(:article) { create(:'ticket/article', :inbound_email, ticket: ticket, created_at: '2013-03-21 09:30:00 UTC', updated_at: '2013-03-21 09:30:00 UTC') }
 
       before do
@@ -434,7 +434,7 @@ RSpec.shared_examples 'Ticket::Escalation' do
                  },
                },
                first_response_time: 60,
-               update_time:         180,
+               response_time:       180,
                solution_time:       240)
       end
 
@@ -512,7 +512,7 @@ RSpec.shared_examples 'Ticket::Escalation' do
                })
       end
 
-      let(:sla) { create(:sla, calendar: calendar, first_response_time: 120, update_time: 180, solution_time: 250) }
+      let(:sla) { create(:sla, calendar: calendar, first_response_time: 120, response_time: 180, solution_time: 250) }
 
       context 'when Ticket is reopened' do
 
@@ -663,7 +663,7 @@ RSpec.shared_examples 'Ticket::Escalation' do
                  })
         end
 
-        let(:sla) { create(:sla, condition: {}, calendar: calendar, first_response_time: 120, update_time: 180, solution_time: 250) }
+        let(:sla) { create(:sla, condition: {}, calendar: calendar, first_response_time: 120, response_time: 180, solution_time: 250) }
 
         before do
           sla
@@ -774,7 +774,7 @@ RSpec.shared_examples 'Ticket::Escalation' do
                  })
         end
 
-        let(:sla) { create(:sla, condition: {}, calendar: calendar, first_response_time: 120, update_time: 180, solution_time: 240) }
+        let(:sla) { create(:sla, condition: {}, calendar: calendar, first_response_time: 120, response_time: 180, solution_time: 240) }
 
         before do
           sla
@@ -851,7 +851,7 @@ RSpec.shared_examples 'Ticket::Escalation' do
                  })
         end
 
-        let(:sla) { create(:sla, condition: {}, calendar: calendar, first_response_time: 120, update_time: 180, solution_time: 240) }
+        let(:sla) { create(:sla, condition: {}, calendar: calendar, first_response_time: 120, response_time: 180, solution_time: 240) }
 
         before do
           sla
@@ -950,7 +950,7 @@ RSpec.shared_examples 'Ticket::Escalation' do
                  })
         end
 
-        let(:sla) { create(:sla, condition: {}, calendar: calendar, first_response_time: 120, update_time: 180, solution_time: 240) }
+        let(:sla) { create(:sla, condition: {}, calendar: calendar, first_response_time: 120, response_time: 180, solution_time: 240) }
 
         before do
           sla
@@ -1068,7 +1068,7 @@ RSpec.shared_examples 'Ticket::Escalation' do
                })
       end
 
-      let(:sla) { create(:sla, condition: {}, calendar: calendar, first_response_time: 120, update_time: 1200, solution_time: nil) }
+      let(:sla) { create(:sla, condition: {}, calendar: calendar, first_response_time: 120, response_time: 1200, solution_time: nil) }
 
       before do
         sla

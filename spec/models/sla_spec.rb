@@ -35,6 +35,28 @@ RSpec.describe Sla, type: :model do
       end
     end
 
+    describe '#cannot_have_response_and_update' do
+      it 'allows neither #response_time nor #update_time' do
+        instance = build(:sla, response_time: nil, update_time: nil)
+        expect(instance).to be_valid
+      end
+
+      it 'allows #response_time' do
+        instance = build(:sla, response_time: 180, update_time: nil)
+        expect(instance).to be_valid
+      end
+
+      it 'allows #update_time' do
+        instance = build(:sla, response_time: nil, update_time: 180)
+        expect(instance).to be_valid
+      end
+
+      it 'denies both #response_time and #update_time' do
+        instance = build(:sla, response_time: 180, update_time: 180)
+        expect(instance).not_to be_valid
+      end
+    end
+
     describe '.for_ticket' do
       it 'returns matching SLA for the ticket' do
         sla

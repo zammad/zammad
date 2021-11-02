@@ -57,6 +57,30 @@ test("form SLA times highlights and shows settings accordingly", function(assert
   equal(firstRow.find('input[data-name=first_response_time]').val(), '')
   ok(secondRow.hasClass('is-active'))
   equal(secondRow.find('input[data-name=update_time]').val(), '04:00')
+  equal(secondRow.find('input[name=update_type]:checked').val(), 'update')
+
+  $('#forms').append('<hr><h1>SLA with response time set</h1><form id="form3a"></form>')
+
+  var el = $('#form3a')
+
+  var item = new App.Sla()
+  item.id = '123'
+  item.response_time = 180
+
+  new App.ControllerForm({
+    el:     el,
+    model:  item.constructor,
+    params: item
+  });
+
+  var firstRow = el.find('.sla_times tbody > tr:first')
+  var secondRow = el.find('.sla_times tbody > tr:nth-child(2)')
+
+  notOk(firstRow.hasClass('is-active'))
+  equal(firstRow.find('input[data-name=first_response_time]').val(), '')
+  ok(secondRow.hasClass('is-active'))
+  equal(secondRow.find('input[data-name=response_time]').val(), '03:00')
+  equal(secondRow.find('input[name=update_type]:checked').val(), 'response')
 })
 
 test("form SLA times clears field instead of 00:00", function(assert) {

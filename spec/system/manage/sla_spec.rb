@@ -14,6 +14,7 @@ RSpec.describe 'Manage > Sla', type: :system do
 
     # enable all checkboxes
     page.find('input#update_time', visible: false).find(:xpath, './/..').click
+    page.first('.js-updateTypeSelector', visible: false).click
     page.find('input#solution_time', visible: false).find(:xpath, './/..').click
 
     # check if required

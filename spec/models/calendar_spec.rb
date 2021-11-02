@@ -303,7 +303,7 @@ RSpec.describe Calendar, type: :model do
              })
     end
 
-    let(:sla) { create(:sla, condition: {}, calendar: calendar, first_response_time: 60, update_time: 120, solution_time: nil) }
+    let(:sla) { create(:sla, condition: {}, calendar: calendar, first_response_time: 60, response_time: 120, solution_time: nil) }
 
     before do
       queue_adapter.perform_enqueued_jobs = true
@@ -400,7 +400,7 @@ RSpec.describe Calendar, type: :model do
              calendar:            calendar,
              condition:           {},
              first_response_time: 120,
-             update_time:         180,
+             response_time:       180,
              solution_time:       240)
     end
 
