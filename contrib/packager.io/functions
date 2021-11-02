@@ -301,6 +301,9 @@ function update_or_install () {
   setup_elasticsearch
 
   elasticsearch_searchindex_rebuild
+
+  echo "# Enforcing 0600 on database.yml ..."
+  chmod 600 ${ZAMMAD_DIR}/config/database.yml
 }
 
 function set_env_vars () {
