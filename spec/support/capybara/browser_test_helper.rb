@@ -75,7 +75,7 @@ module BrowserTestHelper
     end
 
     wait(5, interval: 0.1).until_constant do
-      page.evaluate_script('App.Ajax.queue().length').zero?
+      page.evaluate_script('App.Ajax.queue().length').zero? && page.evaluate_script('Object.keys(App.FormHandlerCoreWorkflow.getRequests()).length').zero?
     end
   rescue
     nil

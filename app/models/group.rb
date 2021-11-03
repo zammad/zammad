@@ -9,7 +9,6 @@ class Group < ApplicationModel
   include HasHistory
   include HasObjectManagerAttributes
   include HasCollectionUpdate
-  include HasTicketCreateScreenImpact
   include HasSearchIndexBackend
 
   include Group::Assets

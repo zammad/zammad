@@ -13,13 +13,7 @@ class CustomerTicketCreate extends App.ControllerAppContent
     @form_id = App.ControllerForm.formId()
 
     @navupdate '#customer_ticket_new'
-
-    load = (data) =>
-      App.Collection.loadAssets(data.assets)
-      @formMeta = data.form_meta
-      @render()
-    @bindId = App.TicketCreateCollection.bind(load, false)
-    App.TicketCreateCollection.fetch()
+    @render()
 
   render: (template = {}) ->
     if !@Config.get('customer_ticket_create')
@@ -43,8 +37,6 @@ class CustomerTicketCreate extends App.ControllerAppContent
       form_id:                 @form_id
       model:                   App.Ticket
       screen:                  'create_middle'
-      filter:                  @formMeta.filter
-      formMeta:                @formMeta
       params:                  defaults
       noFieldset:              true
       handlersConfig:          handlers
@@ -70,8 +62,6 @@ class CustomerTicketCreate extends App.ControllerAppContent
       model:          App.Ticket
       screen:         'create_top'
       handlersConfig: handlersTunnel
-      filter:         @formMeta.filter
-      formMeta:       @formMeta
       autofocus:      true
       params:         defaults
     )
@@ -83,8 +73,6 @@ class CustomerTicketCreate extends App.ControllerAppContent
       events:
         'fileUploadStart .richtext': => @submitDisable()
         'fileUploadStop .richtext': => @submitEnable()
-      filter:         @formMeta.filter
-      formMeta:       @formMeta
       params:         defaults
       handlersConfig: handlersTunnel
     )
@@ -95,8 +83,6 @@ class CustomerTicketCreate extends App.ControllerAppContent
         model:          App.Ticket
         screen:         'create_bottom'
         handlersConfig: handlersTunnel
-        filter:         @formMeta.filter
-        formMeta:       @formMeta
         params:         defaults
       )
 
