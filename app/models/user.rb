@@ -12,9 +12,7 @@ class User < ApplicationModel
   include HasGroups
   include HasRoles
   include HasObjectManagerAttributes
-  include ::HasTicketCreateScreenImpact
   include HasTaskbars
-  include User::HasTicketCreateScreenImpact
   include User::Assets
   include User::Avatar
   include User::Search

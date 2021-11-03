@@ -49,12 +49,7 @@ class App.TicketCreate extends App.Controller
     if @ticket_id && @article_id
       @split = "/#{@ticket_id}/#{@article_id}"
 
-    load = (data) =>
-      App.Collection.loadAssets(data.assets)
-      @formMeta = data.form_meta
-      @buildScreen(params)
-    @bindId = App.TicketCreateCollection.bind(load, false)
-    App.TicketCreateCollection.fetch()
+    @buildScreen(params)
 
     # rerender view, e. g. on langauge change
     @controllerBind('ui:rerender', =>
@@ -69,9 +64,6 @@ class App.TicketCreate extends App.Controller
       return if !@sidebarWidget
       @sidebarWidget.render(@params())
     )
-
-  release: =>
-    App.TicketCreateCollection.unbindById(@bindId)
 
   currentChannel: =>
     if !type
@@ -280,7 +272,6 @@ class App.TicketCreate extends App.Controller
     localeRender = =>
       @render(template)
     App.QueueManager.add(@queueKey, localeRender)
-    return if !@formMeta
     App.QueueManager.run(@queueKey)
 
   updateTaskManagerAttachments: (attribute, attachments) =>
@@ -291,7 +282,7 @@ class App.TicketCreate extends App.Controller
     App.TaskManager.update(@taskKey, taskData)
 
   render: (template = {}) ->
-    return if !@formMeta
+
     # get params
     params = @prefilledParams || {}
     if template && !_.isEmpty(template.options)
@@ -340,8 +331,6 @@ class App.TicketCreate extends App.Controller
       model:                   App.Ticket
       screen:                  'create_middle'
       handlersConfig:          handlers
-      filter:                  @formMeta.filter
-      formMeta:                @formMeta
       params:                  params
       noFieldset:              true
       taskKey:                 @taskKey
@@ -369,8 +358,6 @@ class App.TicketCreate extends App.Controller
       events:
         'change [name=customer_id]': @localUserInfo
       handlersConfig: handlersTunnel
-      filter:         @formMeta.filter
-      formMeta:       @formMeta
       autofocus:      true
       params:         params
       taskKey:        @taskKey
@@ -395,8 +382,6 @@ class App.TicketCreate extends App.Controller
       model:          App.Ticket
       screen:         'create_bottom'
       handlersConfig: handlersTunnel
-      filter:         @formMeta.filter
-      formMeta:       @formMeta
       params:         params
       taskKey:        @taskKey
     )

@@ -8,7 +8,6 @@ class Role < ApplicationModel
   include ChecksLatestChangeObserved
   include HasGroups
   include HasCollectionUpdate
-  include HasTicketCreateScreenImpact
 
   include Role::Assets
 

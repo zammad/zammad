@@ -251,7 +251,6 @@ module HasGroups
     yield
     self.group_access_buffer = nil
     cache_delete
-    push_ticket_create_screen_background_job
   end
 
   def process_group_access_buffer

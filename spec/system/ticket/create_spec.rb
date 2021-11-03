@@ -684,11 +684,17 @@ RSpec.describe 'Ticket Create', type: :system do
     end
   end
 
-  context 'default priority' do
-    let!(:template)        { create(:template, :dummy_data) }
-    let!(:ticket_priority) { create(:ticket_priority, default_create: true) }
+  context 'default priority', authenticated_as: :authenticate do
+    let(:template)        { create(:template, :dummy_data) }
+    let(:ticket_priority) { create(:ticket_priority, default_create: true) }
     let(:another_priority) { Ticket::Priority.find(1) }
     let(:priority_field)   { find('[name=priority_id]') }
+
+    def authenticate
+      template
+      ticket_priority
+      true
+    end
 
     it 'shows default priority on load' do
       visit 'ticket/create'
