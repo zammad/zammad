@@ -32,9 +32,14 @@ RSpec.describe Gql::Queries::CurrentUser, type: :request do
     end
 
     context 'without authenticated session', authenticated_as: false do
-      it 'fails' do
-        expect(graphql_response['errors'][0]['message']).to eq('The field currentUser on an object of type Queries was hidden due to permissions')
+      it 'fails with error message' do
+        expect(graphql_response['errors'][0]['message']).to eq('Authentication required by Gql::Queries::CurrentUser')
       end
+
+      it 'fails with error type' do
+        expect(graphql_response['errors'][0]['extensions']).to include({ 'type' => 'Exceptions::NotAuthorized' })
+      end
+
     end
   end
 end

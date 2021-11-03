@@ -6,11 +6,8 @@ class GraphqlController < ApplicationController
   # but you'll have to authenticate your user separately
   # protect_from_forgery with: :null_session
 
-  skip_before_action :verify_csrf_token, if: lambda {
-    # required for (extend list if you use this header):
-    # - GraphQL Code Generator
-    Rails.env.development? && request.headers['SkipAuthenticityTokenCheck'] == 'true'
-  }
+  # Handled in the GraphQL processing, not on controller level.
+  skip_before_action :verify_csrf_token
 
   prepend_before_action :authentication_check_only
 

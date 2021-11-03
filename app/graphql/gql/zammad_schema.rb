@@ -31,12 +31,29 @@ class Gql::ZammadSchema < GraphQL::Schema
   end
 
   def self.unauthorized_object(error)
-    # Add a top-level error to the response instead of returning nil:
-    raise GraphQL::ExecutionError, "An object of type #{error.type.graphql_name} was hidden due to permissions"
+    raise Exceptions::Forbidden, error.message # Add a top-level error to the response instead of returning nil.
   end
 
   def self.unauthorized_field(error)
-    # Add a top-level error to the response instead of returning nil:
-    raise GraphQL::ExecutionError, "The field #{error.field.graphql_name} on an object of type #{error.type.graphql_name} was hidden due to permissions"
+    raise Exceptions::Forbidden, error.message # Add a top-level error to the response instead of returning nil.
+  end
+
+  # Post-process errors and enrich them with meta information for processing on the client side.
+  rescue_from(StandardError) do |err, _obj, _args, _ctx, _field|
+
+    # Re-throw built-in errors that point to programming errors rather than problems with input or data - causes GraphQL processing to be aborted.
+    [ArgumentError, IndexError, NameError, RangeError, RegexpError, SystemCallError, ThreadError, TypeError, ZeroDivisionError].each do |klass|
+      raise err if err.is_a? klass
+    end
+
+    extensions = {
+      type: err.class.name,
+    }
+    if Rails.env.development? || Rails.env.test?
+      extensions[:backtrace] = Rails.backtrace_cleaner.clean(err.backtrace)
+    end
+
+    # We need to throw an ExecutionError, all others would cause the GraphQL processing to die.
+    raise GraphQL::ExecutionError.new(err.message, extensions: extensions)
   end
 end
