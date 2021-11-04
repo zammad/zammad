@@ -15,6 +15,8 @@ RSpec.describe 'Online notification', type: :system do
     context 'when pending time is reached soon' do
       before do
         visit "ticket/zoom/#{ticket.id}"
+
+        wait.until_exists { find("a[data-key='Ticket-#{ticket.id}']", wait: 0) }
       end
 
       let(:ticket) { create(:ticket, owner: session_user, group: Group.first, state_name: 'pending reminder', pending_time: 4.seconds.from_now) }
@@ -44,6 +46,8 @@ RSpec.describe 'Online notification', type: :system do
       before do
         ensure_websocket do
           visit "ticket/zoom/#{ticket.id}"
+
+          wait.until_exists { find("a[data-key='Ticket-#{ticket.id}']", wait: 0) }
         end
 
         ticket.update! state: Ticket::State.lookup(name: 'pending reminder'), pending_time: 5.seconds.from_now
