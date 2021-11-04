@@ -181,6 +181,9 @@ function update_database_yml () {
     -e "s/.*username:.*/  username: ${DB_USER}/" \
     -e "s/.*password:.*/  password: ${DB_PASS}/" \
     -e "s/.*database:.*/  database: ${DB}/" < ${ZAMMAD_DIR}/contrib/packager.io/database.yml.pkgr > ${ZAMMAD_DIR}/config/database.yml
+
+  echo "# ... Fixing permission database.yml"
+  chown zammad:zammad ${ZAMMAD_DIR}/config/database.yml
 }
 
 function initialise_database () {
