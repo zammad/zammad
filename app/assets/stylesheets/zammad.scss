@@ -11680,6 +11680,10 @@ output {
   margin-bottom: 4px;
 }
 
+.chat-message img {
+  @extend %clickable;
+}
+
 .chat-message--customer.chat-message--new {
   font-weight: bold;
 }

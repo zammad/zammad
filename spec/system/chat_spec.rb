@@ -413,4 +413,33 @@ RSpec.describe 'Chat Handling', type: :system do
       include_examples 'test issue #2471'
     end
   end
+
+  context 'when image is present in chat message', authenticated_as: :authenticate do
+    let(:chat) { create(:chat) }
+    let(:chat_user) { create(:agent) }
+    let(:chat_session) { create(:'chat/session', user: chat_user, chat: chat) }
+
+    before do
+      file     = File.binread(Rails.root.join('spec/fixtures/image/squares.png'))
+      base64   = Base64.encode64(file).delete("\n")
+
+      create(
+        :'chat/message',
+        chat_session: chat_session,
+        content:      "With inline image: <img src='data:image/png;base64,#{base64}' style='width: 100%; max-width: 460px;'>"
+      )
+    end
+
+    context 'when image preview is used' do
+      it 'use image preview' do
+        visit "#customer_chat/session/#{chat_session.id}"
+
+        click '.chat-body .chat-message img'
+
+        modal_ready
+
+        expect(page).to have_css('.js-submit', text: 'Download')
+      end
+    end
+  end
 end

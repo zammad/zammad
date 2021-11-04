@@ -397,6 +397,7 @@ class ChatWindow extends App.Controller
     'click .js-info':                'toggleMeta'
     'click .js-createTicket':        'ticketCreate'
     'click .js-transferChat':        'transfer'
+    'click .chat-message img':       'imageView'
     'submit .js-metaForm':           'sendMetaForm'
 
   elements:
@@ -798,6 +799,11 @@ class ChatWindow extends App.Controller
     )
 
     @scrollToBottom()
+
+  imageView: (e) ->
+    e.preventDefault()
+    e.stopPropagation()
+    new App.CustomerChatImageView(image_base64: $(e.target).get(0).src)
 
   detectScrolledtoBottom: =>
     scrollBottom = @scrollHolder.scrollTop() + @scrollHolder.outerHeight()
