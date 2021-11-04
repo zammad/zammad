@@ -14,6 +14,19 @@ class GitLab
       @endpoint = endpoint
     end
 
+    # returns path of the subfolder of the endpoint if exists
+    def endpoint_path
+      path = URI.parse(endpoint).path
+      return if path.blank?
+      return if path == '/api/graphql'
+
+      if path.start_with?('/')
+        path = path[1..]
+      end
+
+      path.sub('api/graphql', '')
+    end
+
     def perform(payload)
       response = UserAgent.post(
         endpoint,
