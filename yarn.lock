@@ -587,6 +587,14 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
+"@graphql-codegen/add@^3.1.0":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@graphql-codegen/add/-/add-3.1.0.tgz#cd02fd6d80a7f62839cb27160b62e48366a237c5"
+  integrity sha512-vRRHpuUFadYXnPrb5RNiIzm3Ao39UxjvrdX760lEfXh2qeG7YddM5QFC+ev2BH3X452R15gv/gf/rXy0+Hqm1A==
+  dependencies:
+    "@graphql-codegen/plugin-helpers" "^2.1.0"
+    tslib "~2.3.0"
+
 "@graphql-codegen/cli@^2.2.1":
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/@graphql-codegen/cli/-/cli-2.3.0.tgz#07ef86eea6d42c56f9c7118871115d779dee49f3"
@@ -641,6 +649,16 @@
     "@graphql-codegen/plugin-helpers" "^2.3.0"
     "@graphql-tools/schema" "^8.1.2"
     "@graphql-tools/utils" "^8.1.1"
+    tslib "~2.3.0"
+
+"@graphql-codegen/import-types-preset@^2.1.7":
+  version "2.1.8"
+  resolved "https://registry.yarnpkg.com/@graphql-codegen/import-types-preset/-/import-types-preset-2.1.8.tgz#2259e93aeeaefef66cfbf31faa023a4c78efe751"
+  integrity sha512-mnjDwKhKq3LL24/6d92tsGHu1J9UfMiRSDCWgnzEZEK+0AN27uw2OszpABWe47kRNJ4gjQ19Z/V9AyWxDttMWw==
+  dependencies:
+    "@graphql-codegen/add" "^3.1.0"
+    "@graphql-codegen/plugin-helpers" "^2.3.0"
+    "@graphql-codegen/visitor-plugin-common" "2.5.1"
     tslib "~2.3.0"
 
 "@graphql-codegen/introspection@^2.1.0":

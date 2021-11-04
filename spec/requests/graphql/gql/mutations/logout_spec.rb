@@ -6,7 +6,7 @@ RSpec.describe Gql::Mutations::Logout, type: :request do
 
   context 'when logging out' do
     let(:agent) { create(:agent) }
-    let(:query) { File.read(Rails.root.join('app/frontend/apps/mobile/graphql/mutations/logout.graphql')) }
+    let(:query) { File.read(Rails.root.join('app/frontend/common/graphql/mutations/logout.graphql')) }
     let(:graphql_response) do
       post '/graphql', params: { query: query }, as: :json
       json_response

@@ -1,14 +1,24 @@
 overwrite: true
 schema: tmp/graphql_introspection.json
-documents: 'app/frontend/apps/mobile/graphql/**/*.graphql'
+config:
+  vueCompositionApiImportFrom: vue
 generates:
-  ./app/frontend/apps/mobile/graphql/api.ts:
+  ./app/frontend/common/graphql/types.ts:
     plugins:
       - typescript
+  ./app/frontend/common/graphql/api.ts:
+    documents: 'app/frontend/common/graphql/**/*.graphql'
+    preset: import-types
+    presetConfig:
+      typesPath: './types'
+    plugins:
       - typescript-operations
       - typescript-vue-apollo
-    config:
-      vueCompositionApiImportFrom: vue
-  ./app/frontend/apps/mobile/graphql/schema.json:
+  ./app/frontend/apps/mobile/graphql/api.ts:
+    documents: 'app/frontend/apps/mobile/graphql/**/*.graphql'
+    preset: import-types
+    presetConfig:
+      typesPath: '@common/graphql/types'
     plugins:
-      - 'introspection'
+      - typescript-operations
+      - typescript-vue-apollo

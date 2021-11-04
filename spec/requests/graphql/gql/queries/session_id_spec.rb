@@ -6,7 +6,7 @@ RSpec.describe Gql::Queries::SessionId, type: :request do
 
   context 'when checking the SessionID' do
     let(:agent) { create(:agent) }
-    let(:query) { File.read(Rails.root.join('app/frontend/apps/mobile/graphql/queries/sessionId.graphql')) }
+    let(:query) { File.read(Rails.root.join('app/frontend/common/graphql/queries/sessionId.graphql')) }
     let(:graphql_response) do
       post '/graphql', params: { query: query }, as: :json
       json_response

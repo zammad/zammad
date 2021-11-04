@@ -64,8 +64,12 @@
     - echo "Checking if auto-generated GraphQL API is up-to-date..."
     - echo "Use the command 'yarn run generate-graphql-api' to re-generate it, if required."
     - yarn install
+    - cp app/frontend/common/graphql/api.ts app/frontend/common/graphql/api.ts.bak
     - cp app/frontend/apps/mobile/graphql/api.ts app/frontend/apps/mobile/graphql/api.ts.bak
+    - cp app/frontend/common/graphql/types.ts app/frontend/common/graphql/types.ts.bak
     - yarn run generate-graphql-api
+    - cmp -s app/frontend/common/graphql/types.ts app/frontend/common/graphql/types.ts.bak
+    - cmp -s app/frontend/common/graphql/api.ts app/frontend/common/graphql/api.ts.bak
     - cmp -s app/frontend/apps/mobile/graphql/api.ts app/frontend/apps/mobile/graphql/api.ts.bak
 
 "lint: ruby, js & css":

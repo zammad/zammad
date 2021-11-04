@@ -8,8 +8,8 @@ RSpec.describe Gql::Queries::CurrentUser, type: :request do
     let(:organization) { create(:organization) }
     let(:agent) { create(:agent, department: 'TestDepartment', organization: organization) }
     let(:query) do
-      File.read(Rails.root.join('app/frontend/apps/mobile/graphql/queries/currentUser.graphql')) +
-        File.read(Rails.root.join('app/frontend/apps/mobile/graphql/fragments/objectAttributeValues.graphql'))
+      File.read(Rails.root.join('app/frontend/common/graphql/queries/currentUser.graphql')) +
+        File.read(Rails.root.join('app/frontend/common/graphql/fragments/objectAttributeValues.graphql'))
     end
     let(:graphql_response) do
       post '/graphql', params: { query: query }, as: :json
