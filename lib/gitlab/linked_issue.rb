@@ -106,6 +106,10 @@ class GitLab
       fullpath = $2
       id       = $3
 
+      if client.endpoint_path.present?
+        fullpath.sub!(client.endpoint_path, '')
+      end
+
       if client.endpoint.exclude?(host)
         raise Exceptions::UnprocessableEntity, "Issue link doesn't match configured GitLab endpoint '#{client.endpoint}'"
       end
