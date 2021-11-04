@@ -22,6 +22,8 @@ module CommonActions
   #
   # return [nil]
   def login(username:, password:, remember_me: false)
+    ENV['FAKE_SELENIUM_LOGIN_USER_ID'] = nil
+
     visit '/'
 
     within('#login') do
@@ -91,6 +93,7 @@ module CommonActions
   #  logout
   #
   def logout
+    ENV['FAKE_SELENIUM_LOGIN_USER_ID'] = nil
     visit('logout')
   end
 

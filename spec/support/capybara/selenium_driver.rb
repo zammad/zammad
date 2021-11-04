@@ -29,6 +29,8 @@ Capybara.register_driver(:zammad_chrome) do |app|
     options[:url]     = ENV['REMOTE_URL']
   end
 
+  ENV['FAKE_SELENIUM_LOGIN_USER_ID'] = nil
+
   Capybara::Selenium::Driver.new(app, **options)
 end
 
@@ -53,6 +55,8 @@ Capybara.register_driver(:zammad_firefox) do |app|
     options[:browser] = :remote
     options[:url]     = ENV['REMOTE_URL']
   end
+
+  ENV['FAKE_SELENIUM_LOGIN_USER_ID'] = nil
 
   Capybara::Selenium::Driver.new(app, **options)
 end
