@@ -330,8 +330,12 @@ class App.FormHandlerCoreWorkflow
 
     # get params and add id from ui if needed
     params = App.FormHandlerCoreWorkflow.cleanParams(params_ref)
-    if ui?.params?.id
+
+    # add object id for edit screens
+    if ui?.params?.id && ui.screen.match(/edit/)
       params.id = ui.params.id
+    else
+      delete params.id
 
     # skip double checks
     return if _.isEqual(coreWorkflowParams[classname], params)
