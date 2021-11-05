@@ -198,17 +198,17 @@ class App.TicketZoomArticleNew extends App.Controller
       inputField:             @$('.article-attachment input')
 
       onFileStartCallback: =>
-        @callbackFileUploadStart?()
+        @richTextUploadStartCallback?()
 
       onFileCompletedCallback: (response) =>
         @attachments.push response.data
         @renderAttachment(response.data)
         @$('.article-attachment input').val('')
 
-        @callbackFileUploadStop?()
+        @richTextUploadRenderCallback?(@attachments)
 
       onFileAbortedCallback: =>
-        @callbackFileUploadStop?()
+        @richTextUploadRenderCallback?(@attachments)
 
       attachmentPlaceholder: @attachmentPlaceholder
       attachmentUpload:      @attachmentUpload
@@ -287,7 +287,6 @@ class App.TicketZoomArticleNew extends App.Controller
       params.preferences ||= {}
       params.preferences.security = @paramsSecurity()
 
-    params.attachments = @attachments
     params
 
   validate: =>
@@ -624,6 +623,8 @@ class App.TicketZoomArticleNew extends App.Controller
       $(e.currentTarget).closest('.attachment').remove()
       if element.find('.attachment').length == 0
         element.empty()
+
+      @richTextUploadDeleteCallback?(@attachments)
     )
 
   actions: ->

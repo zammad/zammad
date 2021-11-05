@@ -2011,13 +2011,13 @@ RSpec.describe 'Ticket zoom', type: :system do
     end
 
     def expect_upload_and_text
-      expect(page).to have_text('mail001.box')
-      expect(page).to have_text("Hello\nThis\nis\nimportant!\nyo\nhoho\ntest test test test")
+      expect(page.find('.article-new')).to have_text('mail001.box')
+      expect(page.find('.article-new')).to have_text("Hello\nThis\nis\nimportant!\nyo\nhoho\ntest test test test")
     end
 
     def expect_no_upload_and_text
-      expect(page).to have_no_text('mail001.box')
-      expect(page).to have_no_text("Hello\nThis\nis\nimportant!\nyo\nhoho\ntest test test test")
+      expect(page.find('.article-new')).to have_no_text('mail001.box')
+      expect(page.find('.article-new')).to have_no_text("Hello\nThis\nis\nimportant!\nyo\nhoho\ntest test test test")
     end
 
     it 'does show up the attachments after a reload of the page' do
@@ -2043,6 +2043,55 @@ RSpec.describe 'Ticket zoom', type: :system do
       expect_no_upload_and_text
       refresh
       expect_no_upload_and_text
+    end
+
+    context 'when rerendering (#3831)' do
+      def rerender
+        page.evaluate_script("App.Event.trigger('ui:rerender')")
+      end
+
+      it 'does loose attachments after rerender' do
+        upload_and_set_text
+        expect_upload_and_text
+        rerender
+        expect_upload_and_text
+      end
+
+      it 'does not readd the attachments after reset' do
+        upload_and_set_text
+        expect_upload_and_text
+
+        page.find('.js-reset').click
+        wait_for_upload_blank
+        expect_no_upload_and_text
+        rerender
+        expect_no_upload_and_text
+      end
+
+      it 'does not readd the attachments after submit' do
+        upload_and_set_text
+        expect_upload_and_text
+
+        page.find('.js-submit').click
+        wait_for_upload_blank
+        expect_no_upload_and_text
+        rerender
+        expect_no_upload_and_text
+      end
+
+      it 'does not show the ticket as changed after the upload removal' do
+        page.find('input#fileUpload_1', visible: :all).set(Rails.root.join('test/data/mail/mail001.box'))
+        expect(page.find('.article-new')).to have_text('mail001.box')
+        wait_for_upload_present
+        begin
+          page.evaluate_script("$('div.attachment-delete.js-delete:last').click()") # not interactable
+        rescue # Lint/SuppressedException
+          # because its not interactable it also
+          # returns this weird exception for the jquery
+          # even tho it worked fine
+        end
+        expect(page).to have_no_selector('.js-reset')
+      end
     end
   end
 
