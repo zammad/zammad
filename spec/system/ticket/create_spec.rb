@@ -829,6 +829,7 @@ RSpec.describe 'Ticket Create', type: :system do
     end
 
     it 'does show an empty list of owners' do
+      wait(5).until { page.all('select[name=owner_id] option').count == 1 }
       expect(page.all('select[name=owner_id] option').count).to eq(1)
     end
   end
