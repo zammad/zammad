@@ -1790,4 +1790,64 @@ RSpec.describe CoreWorkflow, type: :model do
       expect(result[:matched_workflows]).to include(workflow1.id, workflow2.id)
     end
   end
+
+  describe 'Add clear selection action or has changed condition #3821' do
+    let!(:workflow_has_changed) do
+      create(:core_workflow,
+             object:             'Ticket',
+             condition_selected: {
+               'ticket.priority_id': {
+                 operator: 'has_changed',
+               },
+             })
+    end
+    let!(:workflow_changed_to) do
+      create(:core_workflow,
+             object:             'Ticket',
+             condition_selected: {
+               'ticket.priority_id': {
+                 operator: 'changed_to',
+                 value:    [ Ticket::Priority.find_by(name: '3 high').id.to_s ]
+               },
+             })
+    end
+
+    context 'when priority changed' do
+      let(:payload) do
+        base_payload.merge('last_changed_attribute' => 'priority_id', 'params' => { 'priority_id' => Ticket::Priority.find_by(name: '3 high').id.to_s })
+      end
+
+      it 'does match on condition has changed' do
+        expect(result[:matched_workflows]).to include(workflow_has_changed.id)
+      end
+
+      it 'does match on condition changed to' do
+        expect(result[:matched_workflows]).to include(workflow_changed_to.id)
+      end
+    end
+
+    context 'when nothing changed' do
+      it 'does not match on condition has changed' do
+        expect(result[:matched_workflows]).not_to include(workflow_has_changed.id)
+      end
+
+      it 'does not match on condition changed to' do
+        expect(result[:matched_workflows]).not_to include(workflow_changed_to.id)
+      end
+    end
+
+    context 'when state changed' do
+      let(:payload) do
+        base_payload.merge('last_changed_attribute' => 'state_id')
+      end
+
+      it 'does not match on condition has changed' do
+        expect(result[:matched_workflows]).not_to include(workflow_has_changed.id)
+      end
+
+      it 'does not match on condition changed to' do
+        expect(result[:matched_workflows]).not_to include(workflow_changed_to.id)
+      end
+    end
+  end
 end

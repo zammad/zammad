@@ -8,7 +8,7 @@ class CoreWorkflow::Condition
   def initialize(result_object:, workflow:)
     @user             = result_object.user
     @payload          = result_object.payload
-    @workflow = workflow
+    @workflow         = workflow
     @attribute_object = result_object.attributes
     @result_object    = result_object
     @check            = nil

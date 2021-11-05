@@ -50,15 +50,15 @@ class App.UiElement.core_workflow_condition extends App.UiElement.ApplicationSel
 
     operatorsType =
       'active$': ['is']
-      'boolean$': ['is', 'is not', 'is set', 'not set']
-      'integer$': ['is', 'is not', 'is set', 'not set']
-      '^select$': ['is', 'is not', 'is set', 'not set']
-      '^tree_select$': ['is', 'is not', 'is set', 'not set']
-      '^(input|textarea|richtext)$': ['is', 'is not', 'is set', 'not set', 'regex match', 'regex mismatch']
+      'boolean$': ['is', 'is not', 'is set', 'not set', 'has changed', 'changed to']
+      'integer$': ['is', 'is not', 'is set', 'not set', 'has changed', 'changed to']
+      '^select$': ['is', 'is not', 'is set', 'not set', 'has changed', 'changed to']
+      '^tree_select$': ['is', 'is not', 'is set', 'not set', 'has changed', 'changed to']
+      '^(input|textarea|richtext)$': ['is', 'is not', 'is set', 'not set', 'has changed', 'changed to', 'regex match', 'regex mismatch']
 
     operatorsName =
-      '_id$': ['is', 'is not', 'is set', 'not set']
-      '_ids$': ['is', 'is not', 'is set', 'not set']
+      '_id$': ['is', 'is not', 'is set', 'not set', 'has changed', 'changed to']
+      '_ids$': ['is', 'is not', 'is set', 'not set', 'has changed', 'changed to']
 
     # merge config
     elements = {}
@@ -175,7 +175,7 @@ class App.UiElement.core_workflow_condition extends App.UiElement.ApplicationSel
     currentOperator = elementRow.find('.js-operator option:selected').attr('value')
     name            = @buildValueName(elementFull, elementRow, groupAndAttribute, elements, meta, attribute)
 
-    if _.contains(['is set', 'not set'], currentOperator)
+    if _.contains(['is set', 'not set', 'has changed'], currentOperator)
       elementRow.find('.js-value').addClass('hide').html('<input type="hidden" name="' + name + '" value="true" />')
       return
 
