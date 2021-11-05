@@ -820,4 +820,16 @@ RSpec.describe 'Ticket Create', type: :system do
       expect(page).to have_no_text('mail002.box')
     end
   end
+
+  describe 'Invalid group and owner list for tickets created via customer profile #3835' do
+    let(:invalid_ticket) { create(:ticket) }
+
+    before do
+      visit "#ticket/create/id/#{invalid_ticket.id}/customer/#{User.find_by(firstname: 'Nicole').id}"
+    end
+
+    it 'does show an empty list of owners' do
+      expect(page.all('select[name=owner_id] option').count).to eq(1)
+    end
+  end
 end
