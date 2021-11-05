@@ -11,7 +11,7 @@ class CoreWorkflow::Result::Select < CoreWorkflow::Result::Backend
   end
 
   def skip?
-    return true if select_value.blank?
+    return true if select_value.nil?
     return true if params_set?
     return true if select_set?
 

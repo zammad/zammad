@@ -11,7 +11,7 @@ class CoreWorkflow::Result::FillIn < CoreWorkflow::Result::Backend
   end
 
   def skip?
-    return true if fill_in_value.blank?
+    return true if fill_in_value.nil?
     return true if params_set?
     return true if fill_in_set?
 

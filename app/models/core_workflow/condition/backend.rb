@@ -10,6 +10,10 @@ class CoreWorkflow::Condition::Backend
 
   attr_reader :value
 
+  def field
+    @key.sub(%r{.*\.}, '')
+  end
+
   def object?(object)
     @condition_object.attributes.instance_of?(object)
   end

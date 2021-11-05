@@ -305,6 +305,11 @@ class App.FormHandlerCoreWorkflow
       screen: ui.screen
     }
 
+    # send last changed attribute only once for has changed condition
+    if ui.lastChangedAttribute
+      requestData.last_changed_attribute = ui.lastChangedAttribute
+      ui.lastChangedAttribute            = '-'
+
     if App.FormHandlerCoreWorkflow.useWebSockets()
       App.WebSocket.send(requestData)
     else
