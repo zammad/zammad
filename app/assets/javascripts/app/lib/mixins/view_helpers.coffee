@@ -36,21 +36,37 @@ App.ViewHelpers =
     App.Utils.decimal(data, positions)
 
   # define time_duration / mm:ss / hh:mm:ss format helper
-  time_duration: (time, show_seconds = true) ->
+  time_duration: (time) ->
     return '' if !time
     return '' if isNaN(parseInt(time))
 
     # Hours, minutes and seconds
-    hrs = ~~parseInt((time / 3600))
+    hrs  = ~~parseInt((time / 3600))
     mins = ~~parseInt(((time % 3600) / 60))
     secs = parseInt(time % 60)
 
     # Output like "1:01" or "4:03:59" or "123:03:59"
     mins = "0#{mins}" if mins < 10
     secs = "0#{secs}" if secs < 10
-    if hrs > 0 && show_seconds
+
+    if hrs > 0
       return "#{hrs}:#{mins}:#{secs}"
+
     "#{mins}:#{secs}"
+
+  # define time_duration / hh:mm
+  time_duration_hh_mm: (time_in_minutes) ->
+    return '' if !time_in_minutes
+    return '' if isNaN(parseInt(time_in_minutes))
+
+    # Hours, minutes and seconds
+    hrs  = ~~parseInt((time_in_minutes / 60))
+    mins = ~~parseInt((time_in_minutes % 60))
+
+    hrs  = "0#{hrs}" if hrs < 10
+    mins = "0#{mins}" if mins < 10
+
+    "#{hrs}:#{mins}"
 
   # define mask helper
   # mask an value like 'a***********yz'
