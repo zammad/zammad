@@ -37,6 +37,7 @@ Zammad::Application.routes.draw do
   match '/tests_text_module',                 to: 'tests#text_module',                via: :get
   match '/tests_color_object',                to: 'tests#color_object',               via: :get
   match '/tests_kb_video_embeding',           to: 'tests#kb_video_embeding',          via: :get
+  match '/tests_view_helpers',                to: 'tests#view_helpers',               via: :get
   match '/tests/wait/:sec',                   to: 'tests#wait',                       via: :get
   match '/tests/raised_exception',            to: 'tests#error_raised_exception',     via: :get
 

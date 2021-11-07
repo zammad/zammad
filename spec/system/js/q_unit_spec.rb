@@ -68,6 +68,10 @@ RSpec.describe 'QUnit', type: :system, authenticated_as: false, set_up: true, we
     it 'Image Service' do
       q_unit_tests('image_service')
     end
+
+    it 'View helpers' do
+      q_unit_tests('view_helpers')
+    end
   end
 
   context 'Form' do

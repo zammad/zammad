@@ -34,19 +34,19 @@
       <div class="action-block action-block--flex">
         <div class="label"><%- @T('Escalation Times') %></div>
         <% if sla.first_response_time: %>
-          <%- @time_duration(sla.first_response_time, false) %> <%- @T('hours') %> - <%- @T('First Response Time') %>
+          <%- @time_duration_hh_mm(sla.first_response_time) %> <%- @T('hours') %> - <%- @T('First Response Time') %>
         <% end %>
         <% if sla.response_time: %>
           <br>
-          <%- @time_duration(sla.response_time, false) %> <%- @T('hours') %> - <%- @T('Response Time') %>
+          <%- @time_duration_hh_mm(sla.response_time) %> <%- @T('hours') %> - <%- @T('Response Time') %>
         <% end %>
         <% if sla.update_time: %>
           <br>
-          <%- @time_duration(sla.update_time, false) %> <%- @T('hours') %> - <%- @T('Update Time') %>
+          <%- @time_duration_hh_mm(sla.update_time) %> <%- @T('hours') %> - <%- @T('Update Time') %>
         <% end %>
         <% if sla.solution_time: %>
           <br>
-          <%- @time_duration(sla.solution_time, false) %> <%- @T('hours') %> - <%- @T('Solution Time') %>
+          <%- @time_duration_hh_mm(sla.solution_time) %> <%- @T('hours') %> - <%- @T('Solution Time') %>
         <% end %>
         <br>
       </div>
