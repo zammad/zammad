@@ -53,7 +53,7 @@ class TagsController < ApplicationController
       item:   params[:item],
     )
     if success
-      render json: success, status: :created
+      render json: success
     else
       render json: success.errors, status: :unprocessable_entity
     end

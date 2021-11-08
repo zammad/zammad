@@ -4,15 +4,43 @@ require 'rails_helper'
 
 RSpec.describe Tag, type: :request do
 
-  describe 'request handling' do
+  describe 'request handling', authenticated_as: :agent do
 
     let(:agent) { create(:agent) }
 
-    context 'tag search' do
-      before do
-        authenticated_as(agent)
+    context 'tag adding' do
+      it 'returns created' do
+        post '/api/v1/tags/add', params: { object: 'Foo', item: 'bar', o_id: 1 }
+
+        expect(response).to have_http_status(:created)
       end
 
+      it 'deletes tag' do
+        post '/api/v1/tags/add', params: { object: 'Foo', item: 'bar', o_id: 1 }
+
+        expect(described_class.tag_list({ object: 'Foo', item: 'bar', o_id: 1 })).to be_present
+      end
+    end
+
+    context 'tag removal', authenticated_as: :agent do
+      before do
+        described_class.tag_add(object: 'Foo', item: 'bar', o_id: 1, created_by_id: 1)
+      end
+
+      it 'returns ok' do
+        delete '/api/v1/tags/remove', params: { object: 'Foo', item: 'bar', o_id: 1 }
+
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'deletes tag' do
+        delete '/api/v1/tags/remove', params: { object: 'Foo', item: 'bar', o_id: 1 }
+
+        expect(described_class.tag_list({ object: 'Foo', item: 'bar', o_id: 1 })).to be_empty
+      end
+    end
+
+    context 'tag search' do
       let!(:tags) do
         [
           Tag::Item.lookup_by_name_and_create('foobar'),
