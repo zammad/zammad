@@ -10,6 +10,7 @@ rm app/assets/javascripts/app/controllers/karma.coffee
 rm -rf test
 rm -rf spec
 rm .rspec
+rm -rf app/frontend/tests
 
 # CI
 rm -rf .github
