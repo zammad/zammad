@@ -590,7 +590,7 @@ GEM
     telephone_number (1.4.12)
     term-ansicolor (1.7.1)
       tins (~> 1.0)
-    test-unit (3.5.0)
+    test-unit (3.5.1)
       power_assert
     thor (1.1.0)
     thread_safe (0.3.6)
