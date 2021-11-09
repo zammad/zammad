@@ -4,32 +4,6 @@ import gql from 'graphql-tag';
 import * as VueApolloComposable from '@vue/apollo-composable';
 import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
-export type ObjectAttributeValuesFragment = { __typename?: 'ObjectAttributeValue', value?: string | null | undefined, attribute: { __typename?: 'ObjectManagerAttribute', name: string, display: string, dataType: string, dataOption?: any | null | undefined, screens?: any | null | undefined, editable: boolean, active: boolean } };
-
-export type LoginMutationVariables = Types.Exact<{
-  login: Types.Scalars['String'];
-  password: Types.Scalars['String'];
-  fingerprint: Types.Scalars['String'];
-}>;
-
-
-export type LoginMutation = { __typename?: 'Mutations', login?: { __typename?: 'LoginPayload', sessionId: string } | null | undefined };
-
-export type LogoutMutationVariables = Types.Exact<{ [key: string]: never; }>;
-
-
-export type LogoutMutation = { __typename?: 'Mutations', logout?: { __typename?: 'LogoutPayload', success: boolean } | null | undefined };
-
-export type CurrentUserQueryVariables = Types.Exact<{ [key: string]: never; }>;
-
-
-export type CurrentUserQuery = { __typename?: 'Queries', currentUser: { __typename?: 'User', firstname?: string | null | undefined, lastname?: string | null | undefined, objectAttributeValues: Array<{ __typename?: 'ObjectAttributeValue', value?: string | null | undefined, attribute: { __typename?: 'ObjectManagerAttribute', name: string, display: string, dataType: string, dataOption?: any | null | undefined, screens?: any | null | undefined, editable: boolean, active: boolean } }>, organization?: { __typename?: 'Organization', name: string, objectAttributeValues: Array<{ __typename?: 'ObjectAttributeValue', value?: string | null | undefined, attribute: { __typename?: 'ObjectManagerAttribute', name: string, display: string, dataType: string, dataOption?: any | null | undefined, screens?: any | null | undefined, editable: boolean, active: boolean } }> } | null | undefined } };
-
-export type SessionIdQueryVariables = Types.Exact<{ [key: string]: never; }>;
-
-
-export type SessionIdQuery = { __typename?: 'Queries', sessionId: string };
-
 export const ObjectAttributeValuesFragmentDoc = gql`
     fragment objectAttributeValues on ObjectAttributeValue {
   attribute {

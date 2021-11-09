@@ -1,9 +1,10 @@
-import * as log from 'loglevel'
+import log from 'loglevel'
 
 // Use INFO as default log level rather than WARN.
 log.setDefaultLevel(log.levels.INFO)
 
 // Register window.setLogLevel to allow for manual changing for debugging.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 ;(window as any).setLogLevel = (level: log.LogLevelDesc): void => {
   return log.setLevel(level)
 }

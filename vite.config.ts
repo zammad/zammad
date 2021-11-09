@@ -10,8 +10,5 @@ export default defineConfig({
       '@common': path.resolve(__dirname, 'app/frontend/common'),
     },
   },
-  plugins: [
-    RubyPlugin(),
-    VuePlugin(),
-  ],
+  plugins: [RubyPlugin(), VuePlugin()],
 })

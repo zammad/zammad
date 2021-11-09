@@ -1,25 +1,31 @@
-<script setup lang="ts">
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
-
-import { ref } from 'vue'
-import CommonHelloWorld from '@common/components/CommonHelloWorld.vue'
-
-const state = ref<boolean>(false)
-</script>
-
 <template>
-  <input v-model="state" type="checkbox" /> Show output?
-  <CommonHelloWorld msg="Zammad Mobile!" :show="state" />
+  <CommonNotifications />
+  <div
+    class="
+      h-full
+      max-h-full
+      overflow-auto
+      w-full
+      bg-gray-200
+      text-center text-sm
+      antialiased
+      font-sans
+      select-none
+    "
+  >
+    <router-view v-if="applicationLoaded.value" v-slot="{ Component }">
+      <transition>
+        <component v-bind:is="Component" />
+      </transition>
+    </router-view>
+  </div>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+<script setup lang="ts">
+import CommonNotifications from '@common/components/CommonNotifications.vue'
+import useApplicationLoadedStore from '@common/stores/application/loaded'
+
+const applicationLoaded = useApplicationLoadedStore()
+
+applicationLoaded.setLoaded()
+</script>

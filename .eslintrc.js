@@ -24,6 +24,13 @@ module.exports = {
     'vue/script-setup-uses-vars': 'error',
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    'vue/component-tags-order': [
+      'error',
+      {
+        order: ['template', 'script', 'style'],
+      },
+    ],
+    // Disable the following rule, because it's not relevant for the tool chain and test envoirment.
     'import/no-extraneous-dependencies': [
       'error',
       { devDependencies: ['vite.config.ts', 'app/frontend/tests/**/*'] },
@@ -40,6 +47,19 @@ module.exports = {
         tsx: 'never',
       },
     ],
+    /* We strongly recommend that you do not use the no-undef lint rule on TypeScript projects. The checks it provides are already provided by TypeScript without the need for configuration - TypeScript just does this significantly better (Source: https://github.com/typescript-eslint/typescript-eslint/blob/master/docs/getting-started/linting/FAQ.md#i-get-errors-from-the-no-undef-rule-about-global-variables-not-being-defined-even-though-there-are-no-typescript-errors). */
+    'no-undef': 'off',
+
+    // We need to use the extended 'no-shadow' rule from typescript:
+    // https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/no-shadow.md
+    'no-shadow': 'off',
+    '@typescript-eslint/no-shadow': 'off',
+
+    // Enforce v-bind directive usage in long form.
+    'vue/v-bind-style': ['error', 'longform'],
+
+    // Enforce v-on directive usage in long form.
+    'vue/v-on-style': ['error', 'longform'],
   },
   overrides: [
     {
@@ -53,6 +73,7 @@ module.exports = {
     'import/resolver': {
       alias: {
         map: [
+          ['@', path.resolve(__dirname, './app/frontend/')],
           ['@mobile', path.resolve(__dirname, './app/frontend/apps/mobile')],
           ['@common', path.resolve(__dirname, './app/frontend/common')],
         ],

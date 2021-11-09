@@ -4,15 +4,20 @@ config:
   vueCompositionApiImportFrom: vue
 generates:
   ./app/frontend/common/graphql/types.ts:
+    documents:
+      [
+        'app/frontend/common/graphql/**/*.graphql',
+        'app/frontend/apps/mobile/graphql/**/*.graphql',
+      ]
     plugins:
       - typescript
+      - typescript-operations
   ./app/frontend/common/graphql/api.ts:
     documents: 'app/frontend/common/graphql/**/*.graphql'
     preset: import-types
     presetConfig:
       typesPath: './types'
     plugins:
-      - typescript-operations
       - typescript-vue-apollo
   ./app/frontend/apps/mobile/graphql/api.ts:
     documents: 'app/frontend/apps/mobile/graphql/**/*.graphql'
@@ -20,5 +25,4 @@ generates:
     presetConfig:
       typesPath: '@common/graphql/types'
     plugins:
-      - typescript-operations
       - typescript-vue-apollo

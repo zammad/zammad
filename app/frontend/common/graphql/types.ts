@@ -226,3 +226,34 @@ export type UserEdge = {
   /** The item at the end of the edge. */
   node?: Maybe<User>;
 };
+
+export type ApplicationConfigQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ApplicationConfigQuery = { __typename?: 'Queries', applicationConfig: Array<{ __typename?: 'KeyComplexValue', key: string, value?: any | null | undefined }> };
+
+export type ObjectAttributeValuesFragment = { __typename?: 'ObjectAttributeValue', value?: string | null | undefined, attribute: { __typename?: 'ObjectManagerAttribute', name: string, display: string, dataType: string, dataOption?: any | null | undefined, screens?: any | null | undefined, editable: boolean, active: boolean } };
+
+export type LoginMutationVariables = Exact<{
+  login: Scalars['String'];
+  password: Scalars['String'];
+  fingerprint: Scalars['String'];
+}>;
+
+
+export type LoginMutation = { __typename?: 'Mutations', login?: { __typename?: 'LoginPayload', sessionId: string } | null | undefined };
+
+export type LogoutMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type LogoutMutation = { __typename?: 'Mutations', logout?: { __typename?: 'LogoutPayload', success: boolean } | null | undefined };
+
+export type CurrentUserQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CurrentUserQuery = { __typename?: 'Queries', currentUser: { __typename?: 'User', firstname?: string | null | undefined, lastname?: string | null | undefined, objectAttributeValues: Array<{ __typename?: 'ObjectAttributeValue', value?: string | null | undefined, attribute: { __typename?: 'ObjectManagerAttribute', name: string, display: string, dataType: string, dataOption?: any | null | undefined, screens?: any | null | undefined, editable: boolean, active: boolean } }>, organization?: { __typename?: 'Organization', name: string, objectAttributeValues: Array<{ __typename?: 'ObjectAttributeValue', value?: string | null | undefined, attribute: { __typename?: 'ObjectManagerAttribute', name: string, display: string, dataType: string, dataOption?: any | null | undefined, screens?: any | null | undefined, editable: boolean, active: boolean } }> } | null | undefined } };
+
+export type SessionIdQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type SessionIdQuery = { __typename?: 'Queries', sessionId: string };

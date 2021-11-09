@@ -16,6 +16,7 @@
     "@graphql-codegen/typescript-vue-apollo": "^3.1.6",
     "@tailwindcss/forms": "^0.4.0-alpha.1",
     "@types/jest": "^27.0.2",
+    "@types/uuid": "^8.3.1",
     "@typescript-eslint/eslint-plugin": "^5.1.0",
     "@typescript-eslint/parser": "^5.1.0",
     "@vitejs/plugin-vue": "^1.9.3",
@@ -48,6 +49,7 @@
     "stylelint-scss": "^4.0.0",
     "tailwindcss": "^3.0.0-alpha.1",
     "ts-jest": "^27.0.7",
+    "type-fest": "^2.5.2",
     "typescript": "^4.4.4",
     "vite": "^2.6.10",
     "vite-plugin-ruby": "^3.0.1",
@@ -56,10 +58,13 @@
   "dependencies": {
     "@apollo/client": "^3.4.16",
     "@vue/apollo-composable": "^4.0.0-alpha.15",
-    "@vue/apollo-option": "^4.0.0-alpha.15",
     "actioncable": "^5.2.6",
+    "graphql": "^15.6.1",
     "graphql-ruby-client": "^1.10.1",
+    "graphql-tag": "^2.12.5",
     "loglevel": "^1.7.1",
+    "pinia": "^2.0.0",
+    "uuid": "^8.3.2",
     "vue": "^3.2.20",
     "vue-router": "^4.0.12"
   }

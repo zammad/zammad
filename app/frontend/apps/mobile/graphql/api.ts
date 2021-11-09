@@ -4,11 +4,6 @@ import gql from 'graphql-tag';
 import * as VueApolloComposable from '@vue/apollo-composable';
 import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
-export type ApplicationConfigQueryVariables = Types.Exact<{ [key: string]: never; }>;
-
-
-export type ApplicationConfigQuery = { __typename?: 'Queries', applicationConfig: Array<{ __typename?: 'KeyComplexValue', key: string, value?: any | null | undefined }> };
-
 
 export const ApplicationConfigDocument = gql`
     query applicationConfig {
