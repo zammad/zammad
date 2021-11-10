@@ -6,6 +6,10 @@ module Gql::Mutations
 
     field :success, Boolean, null: false, description: 'Was the logout successful?'
 
+    def self.requires_csrf_verification?
+      false
+    end
+
     def resolve(...)
 
       context[:controller].reset_session

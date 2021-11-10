@@ -12,25 +12,9 @@ RSpec.describe Gql::Queries::SessionId, type: :request do
       json_response
     end
 
-    context 'with authenticated session, CRSF checking disabled', authenticated_as: :agent do
+    context 'with authenticated session', authenticated_as: :agent do
       it 'has data' do
         expect(graphql_response['data']['sessionId']).to be_present
-      end
-    end
-
-    context 'with authenticated session, CRSF checking enabled but inactive due to basic_auth usage', authenticated_as: :agent, allow_forgery_protection: true do
-      it 'has data' do
-        expect(graphql_response['data']['sessionId']).to be_present
-      end
-    end
-
-    context 'with authenticated session, but missing CSRF token', allow_forgery_protection: true do
-      it 'fails with error message' do
-        expect(graphql_response['errors'][0]['message']).to eq('CSRF token verification failed!')
-      end
-
-      it 'fails with error type' do
-        expect(graphql_response['errors'][0]['extensions']).to include({ 'type' => 'Exceptions::NotAuthorized' })
       end
     end
 

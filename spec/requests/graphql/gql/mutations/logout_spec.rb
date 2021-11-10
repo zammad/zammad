@@ -27,5 +27,15 @@ RSpec.describe Gql::Mutations::Logout, type: :request do
         expect(graphql_response['errors'][0]['extensions']).to include({ 'type' => 'Exceptions::NotAuthorized' })
       end
     end
+
+    context 'without authenticated session and missing CSRF token', allow_forgery_protection: true do
+      it 'fails with error message, not with CSRF validation failed' do
+        expect(graphql_response['errors'][0]['message']).to eq('Authentication required by Gql::Mutations::Logout')
+      end
+
+      it 'fails with error type, not with CSRF validation failed' do
+        expect(graphql_response['errors'][0]['extensions']).to include({ 'type' => 'Exceptions::NotAuthorized' })
+      end
+    end
   end
 end

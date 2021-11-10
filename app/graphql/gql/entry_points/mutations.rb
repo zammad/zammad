@@ -4,8 +4,7 @@ module Gql::EntryPoints
   class Mutations < Gql::Types::BaseObject
     description 'All available mutations.'
 
-    # No auth required for the main mutation entry point, Gql::mutations
-    #   perform their own auth handling.
+    # No auth required for the main mutation entry point, Gql::mutations perform their own auth handling.
     def self.requires_authentication?
       false
     end

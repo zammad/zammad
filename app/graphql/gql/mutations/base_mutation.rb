@@ -8,5 +8,10 @@ module Gql::Mutations
     field_class Gql::Types::BaseField
     # input_object_class Gql::Types::BaseInputObject
     object_class Gql::Types::BaseObject
+
+    def self.requires_csrf_verification?
+      true
+    end
+
   end
 end

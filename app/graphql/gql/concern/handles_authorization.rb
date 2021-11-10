@@ -9,14 +9,19 @@ module Gql::Concern::HandlesAuthorization
     # Customizable methods
     #
 
-    # Override this method to specify if an object needs an authenticated user.
-    def self.requires_authentication?
-      true
+    # Override this method to specify if an object needs CSRF verification.
+    def self.requires_csrf_verification?
+      false # No check required by default, only by mutations.
     end
 
-    # Override this method if an object requires authorization, e.g. based on Pundit.
+    # Override this method to specify if an object needs an authenticated user.
+    def self.requires_authentication?
+      true # Authentication required by default for everything.
+    end
+
+    # Override this method if an object requires custom authorization, e.g. based on Pundit.
     def self.authorize(...)
-      true
+      true # Authorization is granted by default.
     end
 
     #
@@ -28,7 +33,7 @@ module Gql::Concern::HandlesAuthorization
       ctx = args[-1] # This may be called with 2 or 3 params, context is last.
 
       # CSRF
-      verify_csrf_token(ctx)
+      verify_csrf_token(ctx) if requires_csrf_verification?
 
       # Authenticate
       if requires_authentication? && !ctx[:current_user]

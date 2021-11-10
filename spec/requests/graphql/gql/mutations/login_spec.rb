@@ -30,6 +30,16 @@ RSpec.describe Gql::Mutations::Login, type: :request do
       end
     end
 
+    context 'without CSRF token', allow_forgery_protection: true do
+      it 'fails with error message' do
+        expect(graphql_response['errors'][0]['message']).to eq('CSRF token verification failed!')
+      end
+
+      it 'fails with error type' do
+        expect(graphql_response['errors'][0]['extensions']).to include({ 'type' => 'Exceptions::NotAuthorized' })
+      end
+    end
+
     context 'with wrong password' do
       let(:password) { 'wrong' }
 
