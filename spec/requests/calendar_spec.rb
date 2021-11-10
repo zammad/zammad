@@ -76,4 +76,18 @@ RSpec.describe 'Calendars', type: :request do
     end
   end
 
+  describe 'Removing calendars via UI and API does not check for references #3845', authenticated_as: -> { user } do
+    let(:calendar) { create(:calendar) }
+    let(:sla) { create(:sla, calendar: calendar) }
+    let(:user) { create(:admin) }
+
+    before do
+      sla
+    end
+
+    it 'does return reference error on delete if related objects exist' do
+      delete "/api/v1/calendars/#{calendar.id}", params: {}, as: :json
+      expect(json_response['error']).to eq("Can't delete, object has references.")
+    end
+  end
 end

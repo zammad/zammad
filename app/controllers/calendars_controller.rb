@@ -38,6 +38,7 @@ class CalendarsController < ApplicationController
   end
 
   def destroy
+    model_references_check(Calendar, params)
     model_destroy_render(Calendar, params)
   end
 
