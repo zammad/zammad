@@ -1,3 +1,5 @@
+// Copyright (C) 2012-2021 Zammad Foundation, https://zammad-foundation.org/
+
 import { v4 as uuid } from 'uuid'
 import { ref } from 'vue'
 

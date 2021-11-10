@@ -1,7 +1,7 @@
 {
   "scripts": {
     "generate-graphql-api": "bundle exec rails generate graphql_introspection > tmp/graphql_introspection.json && npx graphql-codegen -c .graphql_code_generator.yml",
-    "lint": "eslint --cache -c .eslintrc.js --ext .js,.ts,.vue app/frontend",
+    "lint": "eslint --cache --cache-location ./tmp/eslintcache.js -c .eslintrc.js --ext .js,.ts,.vue app/frontend/ .eslint/",
     "lint-and-fix": "npm run lint -- --fix",
     "lint:css": "stylelint \"**/*.{css,vue,scss}\"",
     "lint:css:fix": "stylelint \"**/*.{css,vue,scss}\" --fix",
@@ -34,6 +34,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-prettier-vue": "^3.1.0",
     "eslint-plugin-vue": "^7.19.1",
+    "eslint-plugin-zammad": "file:.eslint",
     "graphql": "^15.6.1",
     "jest": "^27.3.1",
     "jest-mock-console": "^1.2.3",

@@ -1,3 +1,5 @@
+// Copyright (C) 2012-2021 Zammad Foundation, https://zammad-foundation.org/
+
 import { createHttpLink, ApolloLink, from } from '@apollo/client/core'
 import { setContext } from '@apollo/client/link/context'
 

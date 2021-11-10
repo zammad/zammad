@@ -1,3 +1,5 @@
+// Copyright (C) 2012-2021 Zammad Foundation, https://zammad-foundation.org/
+
 import { createApp } from 'vue'
 import App from '@mobile/App.vue'
 import { DefaultApolloClient } from '@vue/apollo-composable'

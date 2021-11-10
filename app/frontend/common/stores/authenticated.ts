@@ -1,3 +1,5 @@
+// Copyright (C) 2012-2021 Zammad Foundation, https://zammad-foundation.org/
+
 import { MutationHandler } from '@common/server/apollo/handler'
 import { defineStore } from 'pinia'
 import { useLoginMutation, useLogoutMutation } from '@common/graphql/api'

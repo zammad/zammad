@@ -1,3 +1,5 @@
+// Copyright (C) 2012-2021 Zammad Foundation, https://zammad-foundation.org/
+
 import { Initializer, InitializerModule } from '@common/types/initializer'
 import { ImportGlobEagerResult } from '@common/types/utils'
 import { App } from 'vue'

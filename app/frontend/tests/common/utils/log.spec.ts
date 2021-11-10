@@ -1,3 +1,5 @@
+// Copyright (C) 2012-2021 Zammad Foundation, https://zammad-foundation.org/
+
 import mockConsole from 'jest-mock-console'
 
 // Needs to be done before importing log

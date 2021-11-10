@@ -1,3 +1,5 @@
+// Copyright (C) 2012-2021 Zammad Foundation, https://zammad-foundation.org/
+
 import { OperationVariables } from '@apollo/client/core'
 import BaseHandler from '@common/server/apollo/handler/BaseHandler'
 import {

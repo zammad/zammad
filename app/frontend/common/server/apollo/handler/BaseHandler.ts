@@ -1,3 +1,5 @@
+// Copyright (C) 2012-2021 Zammad Foundation, https://zammad-foundation.org/
+
 import log from '@common/utils/log'
 import { ApolloError, OperationVariables } from '@apollo/client/core'
 import {

@@ -86,9 +86,6 @@
 # Backup files
 *~
 
-# ESLint
-.eslintcache
-
 # Vite Ruby
 yarn-error.log
 /public/vite
@@ -96,3 +93,5 @@ yarn-error.log
 /public/vite-test
 /node_modules
 
+# Eslint
+.eslint/node_modules

@@ -22,6 +22,7 @@ rm .stylelintrc.json
 rm .eslintignore
 rm .eslintrc
 rm .eslintrc.js
+rm -r .eslint/
 rm .rubocop.yml
 rm coffeelint.json
 rm .overcommit.yml

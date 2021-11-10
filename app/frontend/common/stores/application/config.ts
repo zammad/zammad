@@ -1,3 +1,5 @@
+// Copyright (C) 2012-2021 Zammad Foundation, https://zammad-foundation.org/
+
 import { defineStore } from 'pinia'
 import { DefaultStore } from '@common/types/store'
 import { useApplicationConfigQuery } from '@mobile/graphql/api'

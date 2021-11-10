@@ -1,3 +1,5 @@
+// Copyright (C) 2012-2021 Zammad Foundation, https://zammad-foundation.org/
+
 import { useSessionIdQuery } from '@common/graphql/api'
 import { defineStore } from 'pinia'
 import { provideApolloClient } from '@vue/apollo-composable'

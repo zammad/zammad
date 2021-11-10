@@ -1,3 +1,5 @@
+// Copyright (C) 2012-2021 Zammad Foundation, https://zammad-foundation.org/
+
 module.exports = {
   verbose: true,
   // This option sets the URL for the jsdom environment. It is reflected in properties such as location.href

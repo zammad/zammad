@@ -1,3 +1,5 @@
+<!-- Copyright (C) 2012-2021 Zammad Foundation, https://zammad-foundation.org/ -->
+
 <template>
   <div class="w-full flex justify-center">
     <div class="fixed z-50" style="top: 30px; right: 0">
