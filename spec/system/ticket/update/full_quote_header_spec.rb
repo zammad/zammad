@@ -21,7 +21,7 @@ RSpec.describe 'Ticket > Update > Full Quote Header', current_user_id: -> { curr
   context 'when "ui_ticket_zoom_article_email_full_quote_header" is enabled' do
     let(:full_quote_header_setting) { true }
 
-    it 'includes OP when forwarding' do
+    it 'includes sender when forwarding' do
       within(:active_content) do
         click_forward
 
@@ -31,7 +31,7 @@ RSpec.describe 'Ticket > Update > Full Quote Header', current_user_id: -> { curr
       end
     end
 
-    it 'includes OP when replying' do
+    it 'includes sender when replying' do
       within(:active_content) do
         highlight_and_click_reply
 
@@ -41,7 +41,7 @@ RSpec.describe 'Ticket > Update > Full Quote Header', current_user_id: -> { curr
       end
     end
 
-    it 'includes OP when article visibility toggled' do
+    it 'includes sender when article visibility toggled' do
       within(:active_content) do
         set_internal
         highlight_and_click_reply
@@ -55,12 +55,31 @@ RSpec.describe 'Ticket > Update > Full Quote Header', current_user_id: -> { curr
     context 'when customer is agent' do
       let(:customer) { create(:agent) }
 
-      it 'includes OP without email when forwarding' do
+      it 'includes sender without email when forwarding' do
         within(:active_content) do
           click_forward
 
           within(:richtext) do
             expect(page).to contain_full_quote(ticket_article).formatted_for(:forward).ensuring_privacy(true)
+          end
+        end
+      end
+    end
+
+    # https://github.com/zammad/zammad/issues/3824
+    context 'when TO contains multiple senders and one of them is a known Zammad user' do
+      let(:customer) { create(:customer) }
+      let(:to_1) { "#{customer.fullname} <#{customer.email}>" }
+      let(:to_2) { 'Example Two <two@example.org>' }
+
+      let(:ticket_article) { create(:ticket_article, ticket: ticket, to: [to_1, to_2].join(', ')) }
+
+      it 'includes all TO email address' do
+        within(:active_content) do
+          click_forward
+
+          within(:richtext) do
+            expect(page).to have_text(to_1).and(have_text(to_2))
           end
         end
       end
@@ -72,7 +91,7 @@ RSpec.describe 'Ticket > Update > Full Quote Header', current_user_id: -> { curr
       let(:ticket)         { create(:ticket, group: group, title: 'Created by agent on behalf of a customer', customer: customer) }
       let(:ticket_article) { create(:ticket_article, ticket: ticket, from: 'Created by agent on behalf of a customer', origin_by_id: customer.id) }
 
-      it 'includes OP without email when replying' do
+      it 'includes sender without email when replying' do
         within(:active_content) do
           highlight_and_click_reply
 
@@ -87,7 +106,7 @@ RSpec.describe 'Ticket > Update > Full Quote Header', current_user_id: -> { curr
   context 'when "ui_ticket_zoom_article_email_full_quote_header" is disabled' do
     let(:full_quote_header_setting) { false }
 
-    it 'does not include OP when forwarding' do
+    it 'does not include sender when forwarding' do
       within(:active_content) do
         click_forward
 
@@ -97,7 +116,7 @@ RSpec.describe 'Ticket > Update > Full Quote Header', current_user_id: -> { curr
       end
     end
 
-    it 'does not include OP when replying' do
+    it 'does not include sender when replying' do
       within(:active_content) do
         highlight_and_click_reply
 
