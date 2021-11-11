@@ -28,7 +28,7 @@ class App.FullQuoteHeader
 
   @fullQuoteHeaderForwardTo: (article) ->
     if article.type.name is 'email' || article.type.name is 'web'
-      @fullQuoteHeaderEnsurePrivacy(article.to) || article.to
+      @fullQuoteHeaderEnsureMultiPrivacy(article.to)
     else if article.sender.name is 'Customer' && article.type.name is 'phone'
       if email_address_id = App.Group.findByAttribute('name', article.to)?.email_address_id
         App.EmailAddress.find(email_address_id).displayName()
@@ -36,15 +36,17 @@ class App.FullQuoteHeader
         article.to
     else if article.sender.name is 'Agent' && article.type.name is 'phone'
       ticket = App.Ticket.find article.ticket_id
-      @fullQuoteHeaderEnsurePrivacy(ticket.customer_id) || @fullQuoteHeaderEnsurePrivacy(article.to) || article.to
+      @fullQuoteHeaderEnsurePrivacy(ticket.customer_id) || @fullQuoteHeaderEnsureMultiPrivacy(article.to)
     else
       article.to
 
   @fullQuoteHeaderForwardCC: (article) ->
     return if !article.cc
 
-    article
-      .cc
+    @fullQuoteHeaderEnsureMultiPrivacy(article.cc)
+
+  @fullQuoteHeaderEnsureMultiPrivacy: (input) ->
+    input
       .split(',')
       .map (elem) ->
         elem.trim()
