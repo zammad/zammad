@@ -654,6 +654,11 @@
       var tokensBefore = this.getTokensList()
       this.setTokens( this.$input.val(), true )
 
+      // remove token text was cleared while editing
+      if (this.$input.data( 'edit' ) && !this.$input.val()) {
+        this.$element.val( this.getTokensList() )
+      }
+
       if (tokensBefore == this.getTokensList() && this.$input.val().length)
         return false // No tokens were added, do nothing (prevent form submit)
 
