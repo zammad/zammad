@@ -190,9 +190,9 @@ GEM
       eco-source
       execjs
     eco-source (1.1.0.rc.1)
-    em-websocket (0.5.2)
+    em-websocket (0.5.3)
       eventmachine (>= 0.12.9)
-      http_parser.rb (~> 0.6.0)
+      http_parser.rb (~> 0)
     equalizer (0.0.11)
     erubi (1.10.0)
     eventmachine (1.2.7)
