@@ -784,4 +784,33 @@ RSpec.describe 'Ticket Create', type: :system do
       expect(page.all('select[name=owner_id] option').count).to eq(1)
     end
   end
+
+  # https://github.com/zammad/zammad/issues/3825
+  describe 'CC token field' do
+    before do
+      visit 'ticket/create'
+
+      find('[data-type=email-out]').click
+    end
+
+    it 'can be cleared by cutting out text' do
+      add_email 'asd@example.com'
+      add_email 'def@example.com'
+
+      find('.token', text: 'def@example.com').double_click
+
+      meta_key = Gem::Platform.local.os == 'darwin' ? :command : :control
+      send_keys([meta_key, 'x'])
+
+      find('.token').click # trigger blur
+
+      expect(find('[name="cc"]', visible: :all).value).to eq 'asd@example.com'
+    end
+
+    def add_email(input)
+      fill_in 'Cc', with: input
+      send_keys(:enter) # trigger blur
+      find '.token', text: input # wait for email to tokenize
+    end
+  end
 end
