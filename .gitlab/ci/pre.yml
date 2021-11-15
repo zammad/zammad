@@ -48,7 +48,7 @@ brakeman:
 coffeelint:
   <<: *template_pre
   script:
-    - coffeelint app/
+    - coffeelint --rules ./.coffeelint/rules/* app/
 
 bundle-audit:
   <<: *template_pre
