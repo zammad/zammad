@@ -29,6 +29,10 @@ module Ticket::Article::AddsMetadataOriginById
     type_name = type.name
     return true if type_name != 'phone' && type_name != 'note' && type_name != 'web'
 
+    organization = created_by.organization
+
+    return true if organization&.shared? && organization.members.include?(ticket.customer)
+
     self.origin_by_id = ticket.customer_id
   end
 end

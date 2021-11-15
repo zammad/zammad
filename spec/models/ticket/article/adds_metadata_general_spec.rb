@@ -31,4 +31,24 @@ RSpec.describe Ticket::Article::AddsMetadataGeneral do
       end
     end
   end
+
+  context 'when Agent-Customer in shared organization creates Article' do
+    let(:organization) { create(:organization, shared: true) }
+    let(:agent_a) { create(:agent_and_customer, organization: organization) }
+    let(:agent_b) { create(:agent_and_customer, organization: organization) }
+    let(:group) { create(:group) }
+    let(:ticket) { create(:ticket, group: group, owner: agent_a, customer: agent_b) }
+
+    before do
+      [agent_a, agent_b].each do |elem|
+        elem.user_groups.create group: group, access: 'create'
+      end
+    end
+
+    it '#origin_by is set correctly', current_user_id: -> { agent_a.id } do
+      article = create(:ticket_article, :inbound_web, ticket: ticket)
+
+      expect(article.origin_by).to be_nil
+    end
+  end
 end
