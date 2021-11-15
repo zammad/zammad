@@ -2,7 +2,7 @@
   "scripts": {
     "generate-graphql-api": "bundle exec rails generate graphql_introspection > tmp/graphql_introspection.json && npx graphql-codegen -c .graphql_code_generator.yml",
     "lint": "eslint --cache --cache-location ./tmp/eslintcache.js -c .eslintrc.js --ext .js,.ts,.vue app/frontend/ .eslint/",
-    "lint-and-fix": "npm run lint -- --fix",
+    "lint:fix": "npm run lint -- --fix",
     "lint:css": "stylelint \"**/*.{css,vue,scss}\"",
     "lint:css:fix": "stylelint \"**/*.{css,vue,scss}\" --fix",
     "test": "jest --config app/frontend/tests/jest.config.js"
@@ -39,6 +39,7 @@
     "jest": "^27.3.1",
     "jest-mock-console": "^1.2.3",
     "jest-transform-stub": "^2.0.0",
+    "mock-apollo-client": "^1.2.0",
     "postcss": "^8.4.4",
     "postcss-html": "^1.3.0",
     "prettier": "2.5.0",

@@ -11,11 +11,11 @@
         <div v-for="notification in notifications" v-bind:key="notification.id">
           <div class="flex justify-center">
             <div class="flex items-center bg-black p-2 rounded text-white m-1">
-              <svg class="w-4 h-4 fill-current text-red-600">
+              <!-- <svg class="w-4 h-4 fill-current text-red-600">
                 <use
                   xlink:href="assets/images/icons.svg#icon-diagonal-cross"
                 ></use>
-              </svg>
+              </svg> -->
               <span class="ml-2">{{ notification.message }}</span>
             </div>
           </div>

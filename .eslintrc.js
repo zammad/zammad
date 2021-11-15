@@ -56,6 +56,12 @@ module.exports = {
     'no-shadow': 'off',
     '@typescript-eslint/no-shadow': 'off',
 
+    // Expect assertions are mandatory for async tests.
+    'jest/prefer-expect-assertions': [
+      'error',
+      { onlyFunctionsWithAsyncKeyword: true },
+    ],
+
     // Enforce v-bind directive usage in long form.
     'vue/v-bind-style': ['error', 'longform'],
 
@@ -77,6 +83,7 @@ module.exports = {
           ['@', path.resolve(__dirname, './app/frontend/')],
           ['@mobile', path.resolve(__dirname, './app/frontend/apps/mobile')],
           ['@common', path.resolve(__dirname, './app/frontend/common')],
+          ['@tests', path.resolve(__dirname, './app/frontend/tests')],
         ],
         extensions: ['.js', '.jsx', '.ts', '.tsx', '.vue'],
       },

@@ -2,8 +2,7 @@
 
 import { CurrentUserQuery } from '@common/graphql/types'
 
-// Should be used for a single value store.
-export interface DefaultStore<TValue> {
+export interface SingleValueStore<TValue> {
   value: TValue
 }
 

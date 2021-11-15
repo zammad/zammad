@@ -3,17 +3,22 @@
 import { useCurrentUserQuery } from '@common/graphql/api'
 import { defineStore } from 'pinia'
 import { QueryHandler } from '@common/server/apollo/handler'
-import { DefaultStore, UserData } from '@common/types/store'
+import { SingleValueStore, UserData } from '@common/types/store'
 
 const useSessionUserStore = defineStore('sessionUser', {
-  state: (): DefaultStore<Maybe<UserData>> => {
+  state: (): SingleValueStore<Maybe<UserData>> => {
     return {
       value: null,
     }
   },
   actions: {
-    async getCurrentUser(): Promise<UserData> {
-      const currentUserQuery = new QueryHandler(useCurrentUserQuery)
+    async getCurrentUser(refetchQuery = false): Promise<UserData> {
+      const currentUserQuery = new QueryHandler(useCurrentUserQuery())
+
+      // Trigger query refetch in some situtations, to skip the cache.
+      if (refetchQuery) {
+        currentUserQuery.refetch()
+      }
 
       const result = await currentUserQuery.onLoaded()
 

@@ -4,7 +4,7 @@ import useAuthenticatedStore from '@common/stores/authenticated'
 import useSessionIdStore from '@common/stores/session/id'
 import useSessionUserStore from '@common/stores/session/user'
 
-export default function initialize(): void {
+export default function initializeStoreSubscriptions(): void {
   const sessionId = useSessionIdStore()
   const authenticated = useAuthenticatedStore()
   const sessionUser = useSessionUserStore()

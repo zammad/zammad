@@ -7,8 +7,10 @@ log.setDefaultLevel(log.levels.INFO)
 
 // Register window.setLogLevel to allow for manual changing for debugging.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-;(window as any).setLogLevel = (level: log.LogLevelDesc): void => {
-  return log.setLevel(level)
+;(window as any).setLogLevel = (level: log.LogLevelDesc): string => {
+  log.setLevel(level)
+
+  return `Sets the current log level to: ${level}.`
 }
 
 // Usage:

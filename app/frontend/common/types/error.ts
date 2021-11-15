@@ -21,6 +21,5 @@ export interface GraphQLErrorReport {
 }
 export interface GraphQLHandlerError {
   type: GraphQLErrorTypes
-  message: string
-  backtrace?: string
+  message?: string
 }
