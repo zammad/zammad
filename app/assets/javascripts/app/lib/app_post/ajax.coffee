@@ -85,7 +85,7 @@ class _ajaxSingleton
       status = jqxhr.status
       detail = jqxhr.responseText
       if !status && !detail
-        detail = 'General communication error, maybe internet is not available!'
+        detail = __('General communication error, maybe internet is not available!')
 
       # do not show aborded requests
       return if status is 0

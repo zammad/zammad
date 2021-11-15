@@ -30,13 +30,13 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
       localItem.find('.js-dataScreens').html(@dataScreens(attribute, localParams, params))
 
     options =
-      datetime: 'Datetime'
-      date: 'Date'
-      input: 'Text'
-      select: 'Select'
-      tree_select: 'Tree Select'
-      boolean: 'Boolean'
-      integer: 'Integer'
+      datetime: __('Datetime')
+      date: __('Date')
+      input: __('Text')
+      select: __('Select')
+      tree_select: __('Tree Select')
+      boolean: __('Boolean')
+      integer: __('Integer')
 
     # if attribute already exists, do not allow to change it anymore
     if params.data_type
@@ -173,7 +173,7 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
 
   @input: (item, localParams, params) ->
     configureAttributes = [
-      { name: 'data_option::default', display: 'Default', tag: 'input', type: 'text', null: true, default: '' },
+      { name: 'data_option::default', display: __('Default'), tag: 'input', type: 'text', null: true, default: '' },
     ]
     inputDefault = new App.ControllerForm(
       model:
@@ -182,7 +182,7 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
       params: params
     )
     configureAttributes = [
-      { name: 'data_option::type', display: 'Type', tag: 'select', null: false, default: 'text', options: {text: 'Text', tel: 'Phone', email: 'Email', url: 'Url'}, translate: true },
+      { name: 'data_option::type', display: __('Type'), tag: 'select', null: false, default: 'text', options: {text: __('Text'), tel: 'Phone', email: 'Email', url: 'Url'}, translate: true },
     ]
     inputType = new App.ControllerForm(
       model:
@@ -191,7 +191,7 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
       params: params
     )
     configureAttributes = [
-      { name: 'data_option::maxlength', display: 'Maxlength', tag: 'integer', null: false, default: 120 },
+      { name: 'data_option::maxlength', display: __('Maxlength'), tag: 'integer', null: false, default: 120 },
     ]
     inputMaxlength = new App.ControllerForm(
       model:
@@ -201,7 +201,7 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
     )
     configureAttributes = [
       # coffeelint: disable=no_interpolation_in_single_quotes
-      { name: 'data_option::linktemplate', display: 'Link-Template', tag: 'input', type: 'text', null: true, default: '', placeholder: 'https://example.com/?q=#{object.attribute_name} - use ticket, user or organization as object' },
+      { name: 'data_option::linktemplate', display: __('Link-Template'), tag: 'input', type: 'text', null: true, default: '', placeholder: 'https://example.com/?q=#{object.attribute_name} - use ticket, user or organization as object' },
       # coffeelint: enable=no_interpolation_in_single_quotes
     ]
     inputLinkTemplate = new App.ControllerForm(
@@ -226,7 +226,7 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
 
   @datetime: (item, localParams, params) ->
     configureAttributes = [
-      { name: 'data_option::future', display: 'Allow future', tag: 'boolean', null: false, default: true },
+      { name: 'data_option::future', display: __('Allow future'), tag: 'boolean', null: false, default: true },
     ]
     datetimeFuture = new App.ControllerForm(
       model:
@@ -235,7 +235,7 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
       params: params
     )
     configureAttributes = [
-      { name: 'data_option::past', display: 'Allow past', tag: 'boolean', null: false, default: true },
+      { name: 'data_option::past', display: __('Allow past'), tag: 'boolean', null: false, default: true },
     ]
     datetimePast = new App.ControllerForm(
       model:
@@ -244,7 +244,7 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
       params: params
     )
     configureAttributes = [
-      { name: 'data_option::diff', display: 'Default time Diff (minutes)', tag: 'integer', null: true },
+      { name: 'data_option::diff', display: __('Default time Diff (minutes)'), tag: 'integer', null: true },
     ]
     datetimeDiff = new App.ControllerForm(
       model:
@@ -258,7 +258,7 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
 
   @date: (item, localParams, params) ->
     configureAttributes = [
-      { name: 'data_option::diff', display: 'Default time Diff (hours)', tag: 'integer', null: true },
+      { name: 'data_option::diff', display: __('Default time Diff (hours)'), tag: 'integer', null: true },
     ]
     dateDiff = new App.ControllerForm(
       model:
@@ -270,7 +270,7 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
 
   @integer: (item, localParams, params) ->
     configureAttributes = [
-      { name: 'data_option::default', display: 'Default', tag: 'integer', null: true, default: '', min: 1 },
+      { name: 'data_option::default', display: __('Default'), tag: 'integer', null: true, default: '', min: 1 },
     ]
     integerDefault = new App.ControllerForm(
       model:
@@ -279,7 +279,7 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
       params: params
     )
     configureAttributes = [
-      { name: 'data_option::min', display: 'Minimal', tag: 'integer', null: false, default: 0, min: -2147483647, max: 2147483647 },
+      { name: 'data_option::min', display: __('Minimal'), tag: 'integer', null: false, default: 0, min: -2147483647, max: 2147483647 },
     ]
     integerMin = new App.ControllerForm(
       model:
@@ -288,7 +288,7 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
       params: params
     )
     configureAttributes = [
-      { name: 'data_option::max', display: 'Maximal', tag: 'integer', null: false, min: -2147483647, max: 2147483647, default: 999999999 },
+      { name: 'data_option::max', display: __('Maximal'), tag: 'integer', null: false, min: -2147483647, max: 2147483647, default: 999999999 },
     ]
     integerMax = new App.ControllerForm(
       model:
@@ -339,7 +339,7 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
     )
     configureAttributes = [
       # coffeelint: disable=no_interpolation_in_single_quotes
-      { name: 'data_option::linktemplate', display: 'Link-Template', tag: 'input', type: 'text', null: true, default: '', placeholder: 'https://example.com/?q=#{ticket.attribute_name}' },
+      { name: 'data_option::linktemplate', display: __('Link-Template'), tag: 'input', type: 'text', null: true, default: '', placeholder: 'https://example.com/?q=#{ticket.attribute_name}' },
       # coffeelint: enable=no_interpolation_in_single_quotes
     ]
     inputLinkTemplate = new App.ControllerForm(
@@ -441,7 +441,7 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
 
   @autocompletion: (item, localParams, params) ->
     configureAttributes = [
-      { name: 'data_option::default', display: 'Default', tag: 'input', type: 'text', null: true, default: '' },
+      { name: 'data_option::default', display: __('Default'), tag: 'input', type: 'text', null: true, default: '' },
     ]
     autocompletionDefault = new App.ControllerForm(
       model:
@@ -450,7 +450,7 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
       params: params
     )
     configureAttributes = [
-      { name: 'data_option::url', display: 'Url (AJAX Endpoint)', tag: 'input', type: 'url', null: false, default: '', placeholder: 'https://example.com/serials' },
+      { name: 'data_option::url', display: __('Url (AJAX Endpoint)'), tag: 'input', type: 'url', null: false, default: '', placeholder: 'https://example.com/serials' },
     ]
     autocompletionUrl = new App.ControllerForm(
       model:
@@ -459,7 +459,7 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
       params: params
     )
     configureAttributes = [
-      { name: 'data_option::method', display: 'Method (AJAX Endpoint)', tag: 'input', type: 'url', null: false, default: '', placeholder: 'GET' },
+      { name: 'data_option::method', display: __('Method (AJAX Endpoint)'), tag: 'input', type: 'url', null: false, default: '', placeholder: __('GET') },
     ]
     autocompletionMethod = new App.ControllerForm(
       model:

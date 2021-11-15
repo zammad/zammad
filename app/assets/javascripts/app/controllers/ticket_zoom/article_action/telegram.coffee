@@ -4,7 +4,7 @@ class TelegramReply
 
     if article.sender.name is 'Customer' && article.type.name is 'telegram personal-message'
       actions.push {
-        name: 'reply'
+        name: __('reply')
         type: 'telegramPersonalMessageReply'
         icon: 'reply'
         href: '#'

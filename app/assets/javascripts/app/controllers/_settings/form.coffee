@@ -88,7 +88,7 @@ class App.SettingsForm extends App.Controller
           fail: (settings, details) ->
             App.Event.trigger('notify', {
               type:    'error'
-              msg:     App.i18n.translateContent(details.error_human || details.error || 'Unable to update object!')
+              msg:     App.i18n.translateContent(details.error_human || details.error || __('Unable to update object!'))
               timeout: 2000
             })
         )

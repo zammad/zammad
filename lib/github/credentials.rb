@@ -23,7 +23,7 @@ class GitHub
       )
       return if response.dig('data', 'viewer', 'login').present?
 
-      raise 'Invalid GitHub GraphQL API token'
+      raise __('Invalid GitHub GraphQL API token')
     end
   end
 end

@@ -952,7 +952,7 @@ try to find correct name
     return true if email.present? || firstname.present? || lastname.present? || phone.present?
     return true if login.present? && !login.start_with?('auto-')
 
-    raise Exceptions::UnprocessableEntity, 'Minimum one identifier (login, firstname, lastname, phone or email) for user is required.'
+    raise Exceptions::UnprocessableEntity, __('Minimum one identifier (login, firstname, lastname, phone or email) for user is required.')
   end
 
   def ensure_uniq_email
@@ -1024,7 +1024,7 @@ raise 'Minimum one user need to have admin permissions'
     return true if !will_save_change_to_attribute?('active')
     return true if active != false
     return true if !permissions?(['admin', 'admin.user'])
-    raise Exceptions::UnprocessableEntity, 'Minimum one user needs to have admin permissions.' if last_admin_check_admin_count < 1
+    raise Exceptions::UnprocessableEntity, __('Minimum one user needs to have admin permissions.') if last_admin_check_admin_count < 1
 
     true
   end
@@ -1032,7 +1032,7 @@ raise 'Minimum one user need to have admin permissions'
   def last_admin_check_by_role(role)
     return true if Setting.get('import_mode')
     return true if !role.with_permission?(['admin', 'admin.user'])
-    raise Exceptions::UnprocessableEntity, 'Minimum one user needs to have admin permissions.' if last_admin_check_admin_count < 1
+    raise Exceptions::UnprocessableEntity, __('Minimum one user needs to have admin permissions.') if last_admin_check_admin_count < 1
 
     true
   end
@@ -1050,7 +1050,7 @@ raise 'Minimum one user need to have admin permissions'
 
     ticket_agent_role_ids = Role.joins(:permissions).where(permissions: { name: 'ticket.agent', active: true }, roles: { active: true }).pluck(:id)
     count                 = User.joins(:roles).where(roles: { id: ticket_agent_role_ids }, users: { active: true }).distinct.count + 1
-    raise Exceptions::UnprocessableEntity, 'Agent limit exceeded, please check your account settings.' if count > Setting.get('system_agent_limit').to_i
+    raise Exceptions::UnprocessableEntity, __('Agent limit exceeded, please check your account settings.') if count > Setting.get('system_agent_limit').to_i
 
     true
   end
@@ -1081,7 +1081,7 @@ raise 'Minimum one user need to have admin permissions'
         count += 1
       end
     end
-    raise Exceptions::UnprocessableEntity, 'Agent limit exceeded, please check your account settings.' if count > Setting.get('system_agent_limit').to_i
+    raise Exceptions::UnprocessableEntity, __('Agent limit exceeded, please check your account settings.') if count > Setting.get('system_agent_limit').to_i
 
     true
   end

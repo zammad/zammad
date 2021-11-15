@@ -107,6 +107,6 @@ class CommunicateSmsJob < ApplicationJob
   end
 
   def log_error_prefix
-    'Unable to send sms message'
+    __('Unable to send sms message')
   end
 end

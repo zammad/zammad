@@ -114,7 +114,7 @@ class App.Controller extends Spine.Controller
     if window.clipboardData # IE
       window.clipboardData.setData('Text', text)
     else
-      window.prompt('Copy to clipboard: Ctrl+C, Enter', text)
+      window.prompt(__('Copy to clipboard: Ctrl+C, Enter'), text)
 
   # disable all delay's and interval's
   disconnectClient: ->

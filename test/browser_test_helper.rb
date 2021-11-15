@@ -4409,7 +4409,7 @@ wait untill text in selector disabppears
       browser: instance,
     )
     title_text = instance.find_elements(css: '.modal .modal-title').first.text
-    if ['Zammad is restarting...', 'Zammad need a restart!'].include?(title_text)
+    if ['Zammad is restarting...', 'Zammad requires a restart!'].include?(title_text)
       # in the complex case, wait for server to restart
       modal_disappear(
         browser: instance,

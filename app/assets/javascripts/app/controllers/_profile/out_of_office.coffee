@@ -1,6 +1,6 @@
 class ProfileOutOfOffice extends App.ControllerSubContent
   requiredPermission: 'user_preferences.out_of_office+ticket.agent'
-  header: 'Out of Office'
+  header: __('Out of Office')
   events:
     'submit form': 'submit'
     'click .js-disabled': 'disable'
@@ -70,7 +70,7 @@ class ProfileOutOfOffice extends App.ControllerSubContent
             multiple: false
             limit: 30
             minLengt: 2
-            placeholder: 'Enter Person or Organization/Company'
+            placeholder: __('Enter Person or Organization/Company')
             null: false
             translate: false
             disableCreateObject: true
@@ -131,7 +131,7 @@ class ProfileOutOfOffice extends App.ControllerSubContent
       @render()
       @notify(
         type: 'success'
-        msg:  App.i18n.translateContent('Successfully!')
+        msg:  App.i18n.translateContent('Update successful.')
         timeout: 1000
       )
     else
@@ -143,7 +143,7 @@ class ProfileOutOfOffice extends App.ControllerSubContent
       else
         @notify
           type:      'error'
-          msg:       'Please contact your administrator.'
+          msg:       __('Please contact your administrator.')
           removeAll: true
       @formEnable( @$('form') )
 
@@ -168,4 +168,4 @@ class ProfileOutOfOffice extends App.ControllerSubContent
       msg:       App.i18n.translateContent(message)
       removeAll: true
 
-App.Config.set('OutOfOffice', { prio: 2800, name: 'Out of Office', parent: '#profile', target: '#profile/out_of_office', permission: ['user_preferences.out_of_office+ticket.agent'], controller: ProfileOutOfOffice }, 'NavBarProfile')
+App.Config.set('OutOfOffice', { prio: 2800, name: __('Out of Office'), parent: '#profile', target: '#profile/out_of_office', permission: ['user_preferences.out_of_office+ticket.agent'], controller: ProfileOutOfOffice }, 'NavBarProfile')

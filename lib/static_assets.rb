@@ -74,7 +74,7 @@ returns
       return Store.find(list[0])
     end
 
-    raise 'No such raw logo!'
+    raise __('No such raw logo!')
   end
 
 =begin

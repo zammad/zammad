@@ -34,7 +34,7 @@ return is sent as message back to peer
         event: 'chat_session_start',
         data:  {
           state:   'failed',
-          message: 'No session available.',
+          message: __('No session available.'),
         },
       }
     end

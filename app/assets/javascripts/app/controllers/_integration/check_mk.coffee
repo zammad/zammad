@@ -1,10 +1,10 @@
 class CheckMk extends App.ControllerIntegrationBase
   featureIntegration: 'check_mk_integration'
-  featureName: 'Checkmk'
+  featureName: __('Checkmk')
   featureConfig: 'check_mk_config'
   description: [
-    ['This service receives http requests or emails from %s and creates tickets with host and service.', 'Checkmk']
-    ['If the host and service has recovered, the ticket can be closed automatically.']
+    [__('This service receives http requests or emails from %s and creates tickets with host and service.'), 'Checkmk']
+    [__('If the host and service has recovered, the ticket can be closed automatically.')]
   ]
 
   render: =>
@@ -52,9 +52,9 @@ class Form extends App.Controller
 App.Config.set(
   'IntegrationCheckMk'
   {
-    name: 'Checkmk'
+    name: __('Checkmk')
     target: '#system/integration/check_mk'
-    description: 'An open source monitoring tool.'
+    description: __('An open source monitoring tool.')
     controller: CheckMk
     state: State
     permission: ['admin.integration.check_mk']

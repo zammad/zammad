@@ -3,12 +3,12 @@ class App.Organization extends App.Model
   @extend Spine.Model.Ajax
   @url: @apiPath + '/organizations'
   @configure_attributes = [
-    { name: 'name',           display: 'Name',                tag: 'input',     type: 'text', limit: 100, null: false, info: true },
-    { name: 'shared',         display: 'Shared organization', tag: 'boolean',   note: 'Customers in the organization can view each other items.', type: 'boolean', default: true, null: false, info: false },
-    { name: 'created_by_id',  display: 'Created by',    relation: 'User', readonly: 1, info: false },
-    { name: 'created_at',     display: 'Created at',    tag: 'datetime',  readonly: 1, info: false },
-    { name: 'updated_by_id',  display: 'Updated by',    relation: 'User', readonly: 1, info: false },
-    { name: 'updated_at',     display: 'Updated at',    tag: 'datetime',  readonly: 1, info: false },
+    { name: 'name',           display: __('Name'),                tag: 'input',     type: 'text', limit: 100, null: false, info: true },
+    { name: 'shared',         display: __('Shared organization'), tag: 'boolean',   note: __('Customers in the organization can view each other items.'), type: 'boolean', default: true, null: false, info: false },
+    { name: 'created_by_id',  display: __('Created by'),    relation: 'User', readonly: 1, info: false },
+    { name: 'created_at',     display: __('Created at'),    tag: 'datetime',  readonly: 1, info: false },
+    { name: 'updated_by_id',  display: __('Updated by'),    relation: 'User', readonly: 1, info: false },
+    { name: 'updated_at',     display: __('Updated at'),    tag: 'datetime',  readonly: 1, info: false },
   ]
   @configure_clone = true
   @configure_overview = [
@@ -16,12 +16,12 @@ class App.Organization extends App.Model
     'shared',
   ]
 
-  @description = '''
+  @description = __('''
 Using **Organisations** you can **group** customers. This has among others two important benefits:
 
 1. As an **Agent** you do not only have an overview of the open tickets for one person but an **overview over their whole organisation**.
 2. As a **Customer** you can also check the **Tickets which your colleagues created** and modify their tickets (if your organization is set to "shared", which can be defined per organization).
-'''
+''')
 
   uiUrl: ->
     "#organization/profile/#{@id}"

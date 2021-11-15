@@ -2,7 +2,7 @@
 
 class Sessions::Event::ChatTransfer < Sessions::Event::ChatBase
 
-  def run
+  def run # rubocop:disable Metrics/AbcSize
     return super if super
     return if !permission_check('chat.agent', 'chat')
 
@@ -13,7 +13,7 @@ class Sessions::Event::ChatTransfer < Sessions::Event::ChatBase
         event: 'chat_session_start',
         data:  {
           state:   'failed',
-          message: 'No session available.',
+          message: __('No session available.'),
         },
       }
     end
@@ -30,7 +30,7 @@ class Sessions::Event::ChatTransfer < Sessions::Event::ChatBase
       event: 'chat_session_notice',
       data:  {
         session_id: chat_session.session_id,
-        message:    'Conversation transfered into other chat. Please stay tuned.',
+        message:    __('Conversation transfered into other chat. Please stay tuned.'),
       },
     }
     chat_session.send_to_recipients(message, @client_id)

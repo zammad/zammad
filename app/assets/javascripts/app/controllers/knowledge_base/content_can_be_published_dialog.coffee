@@ -3,7 +3,7 @@ class App.KnowledgeBaseContentCanBePublishedDialog extends App.ControllerModal
     'click .scheduled-widget-delete': 'clickedCancelTimer'
     'submit form':              'submitTiming'
 
-  head: 'Visibility'
+  head: __('Visibility')
   includeForm: false
   buttonSubmit: false
 
@@ -33,7 +33,7 @@ class App.KnowledgeBaseContentCanBePublishedDialog extends App.ControllerModal
         @formController.toggleDisabled(false)
       error:       (xhr) =>
         @formController.toggleDisabled(false)
-        @showAlert(xhr.responseJSON?.error || 'Unable to save changes')
+        @showAlert(xhr.responseJSON?.error || __('Unable to save changes'))
     )
 
   clickedCancelTimer: (e) ->

@@ -31,11 +31,11 @@ class UserSignupCheck extends App.Controller
 class Modal extends App.ControllerModal
   backdrop: false
   keyboard: false
-  head: 'Account not verified'
+  head: __('Account not verified')
   small: true
   buttonClose: false
   buttonCancel: false
-  buttonSubmit: 'Resend verification email'
+  buttonSubmit: __('Resend verification email')
 
   constructor: ->
     super

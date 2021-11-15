@@ -30,7 +30,7 @@ DbHelper.import_post
 Locale.create_if_not_exists(
   locale: 'en-us',
   alias:  'en',
-  name:   'English (United States)',
+  name:   __('English (United States)'),
 )
 Locale.sync
 Translation.sync

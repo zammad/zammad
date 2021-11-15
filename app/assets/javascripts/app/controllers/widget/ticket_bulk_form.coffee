@@ -70,7 +70,7 @@ class App.TicketBulkForm extends App.Controller
     new App.ControllerForm(
       el: @$('#form-ticket-bulk-comment')
       model:
-        configure_attributes: [{ name: 'body', display: 'Comment', tag: 'textarea', rows: 4, null: true, upload: false, item_class: 'flex' }]
+        configure_attributes: [{ name: 'body', display: __('Comment'), tag: 'textarea', rows: 4, null: true, upload: false, item_class: 'flex' }]
         className:            'Ticket'
         labelClass:           'input-group-addon'
       screen:     'overview_bulk_comment'
@@ -78,8 +78,8 @@ class App.TicketBulkForm extends App.Controller
     )
 
     @confirm_attributes = [
-      { name: 'type_id',  display: 'Type',       tag: 'select', multiple: false, null: true, relation: 'TicketArticleType', filter: @articleTypeFilter, default: '9', translate: true, class: 'medium' }
-      { name: 'internal', display: 'Visibility', tag: 'select', null: true, options: { true: 'internal', false: 'public' }, class: 'medium', item_class: '', default: false }
+      { name: 'type_id',  display: __('Type'),       tag: 'select', multiple: false, null: true, relation: 'TicketArticleType', filter: @articleTypeFilter, default: '9', translate: true, class: 'medium' }
+      { name: 'internal', display: __('Visibility'), tag: 'select', null: true, options: { true: 'internal', false: 'public' }, class: 'medium', item_class: '', default: false }
     ]
 
     new App.ControllerForm(
@@ -275,4 +275,3 @@ class App.TicketBulkForm extends App.Controller
           msg: App.i18n.translateContent('Can\'t update Ticket %s!', ticket.number)
         }
     )
-

@@ -108,13 +108,13 @@ class App.Model extends Spine.Model
 
             # key exists not in hash || value is '' || value is undefined
             if !( attributeName of data['params'] ) || data['params'][attributeName] is '' || data['params'][attributeName] is undefined || data['params'][attributeName] is null
-              errors[attributeName] = 'is required'
+              errors[attributeName] = __('is required')
 
           else if parts[0] && parts[1] && !parts[2]
 
             # key exists not in hash || value is '' || value is undefined
             if !data.params[parts[0]] || !( parts[1] of data.params[parts[0]] ) || data.params[parts[0]][parts[1]] is '' || data.params[parts[0]][parts[1]] is undefined || data.params[parts[0]][parts[1]] is null
-              errors[attributeName] = 'is required'
+              errors[attributeName] = __('is required')
 
           else
             throw "can't parse '#{attribute.name}'"
@@ -193,7 +193,7 @@ set new attributes of model (remove already available attributes)
     {
       'name': {
         name:    'name'
-        display: 'Name'
+        display: __('Name')
         tag:     'input'
         type:    'text'
         limit:   100
@@ -201,7 +201,7 @@ set new attributes of model (remove already available attributes)
       },
       'assignment_timeout': {
         name:    'assignment_timeout'
-        display: 'Assignment Timeout'
+        display: __('Assignment Timeout')
         tag:     'input'
         type:    'text'
         limit:   100

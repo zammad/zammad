@@ -99,7 +99,7 @@ class GitLab
 
     def variables(url)
       if url !~ %r{^https?://([^/]+)/(.*)/-/issues/(\d+)$}
-        raise Exceptions::UnprocessableEntity, 'Invalid GitLab issue link format'
+        raise Exceptions::UnprocessableEntity, __('Invalid GitLab issue link format')
       end
 
       host     = $1

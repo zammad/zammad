@@ -41,7 +41,7 @@ module ApplicationController::HasUser
     return @_user_on_behalf if @_user_on_behalf         # return memoized user
     return if !current_user_real                        # require session user
     if !SessionsPolicy.new(current_user_real, Sessions).impersonate?
-      raise Exceptions::Forbidden, "Current user has no permission to use 'From'/'X-On-Behalf-Of'!"
+      raise Exceptions::Forbidden, __("Current user has no permission to use 'From'/'X-On-Behalf-Of'!")
     end
 
     @_user_on_behalf = find_on_behalf_user request_header_from.to_s.downcase.strip

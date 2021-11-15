@@ -3,8 +3,8 @@ class SipgateIo extends App.ControllerIntegrationBase
   featureName: 'sipgate.io'
   featureConfig: 'sipgate_config'
   description: [
-    ['This service shows you contacts of incoming calls and a caller list in realtime.']
-    ['Also caller id of outbound calls can be changed.']
+    [__('This service shows you contacts of incoming calls and a caller list in realtime.')]
+    [__('Also caller id of outbound calls can be changed.')]
   ]
   events:
     'click .js-select': 'selectAll'
@@ -187,7 +187,7 @@ App.Config.set(
   {
     name: 'sipgate.io'
     target: '#system/integration/sipgate'
-    description: 'VoIP service provider with realtime push.'
+    description: __('VoIP service provider with realtime push.')
     controller: SipgateIo
     state: State
   }

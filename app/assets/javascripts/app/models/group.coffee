@@ -4,15 +4,15 @@ class App.Group extends App.Model
   @url: @apiPath + '/groups'
 
   @configure_attributes = [
-    { name: 'name',                 display: 'Name',              tag: 'input',  type: 'text', limit: 100, null: false },
-    { name: 'assignment_timeout',   display: 'Assignment Timeout', tag: 'input', note: 'Assignment timeout in minutes if assigned agent is not working on it. Ticket will be shown as unassigend.', type: 'text', limit: 100, null: true },
-    { name: 'follow_up_possible',   display: 'Follow-up possible',tag: 'select', default: 'yes', options: { yes: 'yes', 'new_ticket': 'do not reopen Ticket but create new Ticket' }, null: false, note: 'Follow-up for closed ticket possible or not.', translate: true },
-    { name: 'follow_up_assignment', display: 'Assign Follow-Ups', tag: 'select', default: 'yes', options: { true: 'yes', false: 'no' }, null: false, note: 'Assign follow-up to latest agent again.', translate: true },
-    { name: 'email_address_id',     display: 'Email',             tag: 'select', multiple: false, null: true, relation: 'EmailAddress', nulloption: true, do_not_log: true },
-    { name: 'signature_id',         display: 'Signature',         tag: 'select', multiple: false, null: true, relation: 'Signature', nulloption: true, do_not_log: true },
-    { name: 'note',                 display: 'Note',              tag: 'textarea', note: 'Notes are visible to agents only, never to customers.', limit: 250, null: true },
-    { name: 'updated_at',           display: 'Updated',           tag: 'datetime', readonly: 1 },
-    { name: 'active',               display: 'Active',            tag: 'active', default: true },
+    { name: 'name',                 display: __('Name'),              tag: 'input',  type: 'text', limit: 100, null: false },
+    { name: 'assignment_timeout',   display: __('Assignment Timeout'), tag: 'input', note: __('Assignment timeout in minutes if assigned agent is not working on it. Ticket will be shown as unassigend.'), type: 'text', limit: 100, null: true },
+    { name: 'follow_up_possible',   display: __('Follow-up possible'),tag: 'select', default: 'yes', options: { yes: 'yes', 'new_ticket': 'do not reopen Ticket but create new Ticket' }, null: false, note: __('Follow-up for closed ticket possible or not.'), translate: true },
+    { name: 'follow_up_assignment', display: __('Assign Follow-Ups'), tag: 'select', default: 'yes', options: { true: 'yes', false: 'no' }, null: false, note: __('Assign follow-up to latest agent again.'), translate: true },
+    { name: 'email_address_id',     display: __('Email'),             tag: 'select', multiple: false, null: true, relation: 'EmailAddress', nulloption: true, do_not_log: true },
+    { name: 'signature_id',         display: __('Signature'),         tag: 'select', multiple: false, null: true, relation: 'Signature', nulloption: true, do_not_log: true },
+    { name: 'note',                 display: __('Note'),              tag: 'textarea', note: __('Notes are visible to agents only, never to customers.'), limit: 250, null: true },
+    { name: 'updated_at',           display: __('Updated'),           tag: 'datetime', readonly: 1 },
+    { name: 'active',               display: __('Active'),            tag: 'active', default: true },
   ]
   @configure_clone = true
   @configure_overview = [

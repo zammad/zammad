@@ -50,35 +50,15 @@ class App.i18n
       _instance ?= new _i18nSingleton()
     _instance.set(args)
 
-  @setMap: (source, target, format) ->
+  @setMap: (source, target) ->
     if _instance == undefined
       _instance ?= new _i18nSingleton()
-    _instance.setMap(source, target, format)
+    _instance.setMap(source, target)
 
-  @meta: (source, target, format) ->
+  @meta: (source, target) ->
     if _instance == undefined
       _instance ?= new _i18nSingleton()
     _instance.meta()
-
-  @notTranslatedFeatureEnabled: (locale) ->
-    if _instance == undefined
-      _instance ?= new _i18nSingleton()
-    _instance.notTranslatedFeatureEnabled(locale)
-
-  @getNotTranslated: (locale) ->
-    if _instance == undefined
-      _instance ?= new _i18nSingleton()
-    _instance.getNotTranslated(locale)
-
-  @removeNotTranslated: (locale, key) ->
-    if _instance == undefined
-      _instance ?= new _i18nSingleton()
-    _instance.removeNotTranslated(locale, key)
-
-  @setNotTranslated: (locale, key) ->
-    if _instance == undefined
-      _instance ?= new _i18nSingleton()
-    _instance.setNotTranslated(locale, key)
 
   @timeFormat: (locale, key) ->
     if _instance == undefined
@@ -134,8 +114,6 @@ class _i18nSingleton extends Spine.Module
     @mapMeta           =
       total: 0
       translated: 0
-    @_notTranslatedLog = false
-    @_notTranslated    = {}
     @dateFormat        = 'yyyy-mm-dd'
     @timestampFormat   = 'yyyy-mm-dd HH:MM'
     @dirToSet          = 'ltr'
@@ -186,9 +164,6 @@ class _i18nSingleton extends Spine.Module
     # set locale
     @locale = localeToSet
 
-    # set if not translated should be logged
-    @_notTranslatedLog = @notTranslatedFeatureEnabled(@locale)
-
     # set lang and dir attribute of html tag
     $('html').prop('lang', localeToSet.substr(0, 2))
     $('html').prop('dir', @dirToSet)
@@ -209,7 +184,7 @@ class _i18nSingleton extends Spine.Module
         for object in data.list
 
           # set date/timestamp format
-          if object[3] is 'time'
+          if object[1] is 'FORMAT_DATE' or object[1] is 'FORMAT_DATETIME'
             @mapTime[ object[1] ] = object[2]
 
           else
@@ -273,14 +248,6 @@ class _i18nSingleton extends Spine.Module
       @_translated = false
       translated   = string
 
-      # log not translated strings in developer mode
-      if @_notTranslatedLog && App.Config.get('developer_mode') is true
-        if !@_notTranslated[@locale]
-          @_notTranslated[@locale] = {}
-        if !@_notTranslated[@locale][string]
-          @log 'notice', "translation for '#{string}' in '#{@locale}' is missing"
-        @_notTranslated[@locale][string] = true
-
     # apply html quote
     if quote
       translated = App.Utils.htmlEscape(translated)
@@ -321,8 +288,8 @@ class _i18nSingleton extends Spine.Module
   meta: =>
     @mapMeta
 
-  setMap: (source, target, format = 'string') =>
-    if format is 'time'
+  setMap: (source, target) =>
+    if source is 'FORMAT_DATE' or source is 'FORMAT_DATETIME'
       if target is ''
         delete @mapTime[source]
       else
@@ -333,37 +300,13 @@ class _i18nSingleton extends Spine.Module
       else
         @mapString[source] = target
 
-  notTranslatedFeatureEnabled: (locale) ->
-    if locale.substr(0,2) is 'en'
-      return false
-    true
-
-  getNotTranslated: (locale) =>
-    notTranslated = @_notTranslated[locale || @locale]
-    return notTranslated if locale && locale isnt @locale
-
-    # remove already translated entries
-    for local_locale, translation_list of notTranslated
-      if @mapString[local_locale] && @mapString[local_locale] isnt ''
-        delete notTranslated[local_locale]
-    notTranslated
-
-  removeNotTranslated: (locale, key) =>
-    return if !@_notTranslated[locale]
-    delete @_notTranslated[locale][key]
-
-  setNotTranslated: (locale, key) =>
-    if !@_notTranslated[locale]
-      @_notTranslated[locale] = {}
-    @_notTranslated[locale][key] = true
-
   date: (time, offset) =>
     return time if !time
-    @convert(time, offset, @mapTime['date'] || @dateFormat)
+    @convert(time, offset, @mapTime['FORMAT_DATE'] || @dateFormat)
 
   timestamp: (time, offset) =>
     return time if !time
-    @convert(time, offset, @mapTime['timestamp'] || @timestampFormat)
+    @convert(time, offset, @mapTime['FORMAT_DATETIME'] || @timestampFormat)
 
   convertUTC: (time) ->
     timeArray = time.match(/\d+/g)

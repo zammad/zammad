@@ -45,7 +45,7 @@ module ApplicationController::HandlesDevices
     # for sessions we need the fingperprint
     if type == 'session'
       if !session[:user_device_updated_at] && !params[:fingerprint] && !session[:user_device_fingerprint]
-        raise Exceptions::UnprocessableEntity, 'Need fingerprint param!'
+        raise Exceptions::UnprocessableEntity, __('Need fingerprint param!')
       end
 
       if params[:fingerprint]

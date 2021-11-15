@@ -23,7 +23,7 @@ class ImportZendesk extends App.ControllerWizardFullScreen
     super
 
     # set title
-    @title 'Import'
+    @title __('Import')
 
     # redirect to login if admin user already exists
     if @Config.get('system_init_done')
@@ -188,8 +188,8 @@ class ImportZendesk extends App.ControllerWizardFullScreen
 
 App.Config.set('import/zendesk', ImportZendesk, 'Routes')
 App.Config.set('zendesk', {
-  title: 'Zendesk'
-  name:  'Zendesk'
+  title: __('Zendesk')
+  name:  __('Zendesk')
   class: 'js-zendesk'
   url:   '#import/zendesk'
 }, 'ImportPlugins')

@@ -13,7 +13,7 @@ class GettingStartedAutoWizard extends App.ControllerWizardFullScreen
       return
 
     # set title
-    @title 'Auto Wizard'
+    @title __('Auto Wizard')
     @renderSplash()
     @fetch()
 

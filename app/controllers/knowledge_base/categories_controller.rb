@@ -20,7 +20,7 @@ class KnowledgeBase::CategoriesController < KnowledgeBase::BaseController
   def reorder_records(collection, ids, klass)
     # Check if ids for models in collection are present
     all_ids_present = collection.map(&:id).sort == ids.sort
-    raise Exceptions::UnprocessableEntity, 'Provide position of all items in scope' if !all_ids_present
+    raise Exceptions::UnprocessableEntity, __('Provide position of all items in scope') if !all_ids_present
 
     klass.notify_kb_clients_suspend = true
 

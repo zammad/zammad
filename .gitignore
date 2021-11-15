@@ -37,8 +37,8 @@
 /db/*.sqlite3
 /db/schema.rb
 
-# translation cache files
-/config/locales*.yml
+# legacy translation cache files
+/config/locales-*.yml
 /config/translations/*.yml
 
 # NPM / Yarn

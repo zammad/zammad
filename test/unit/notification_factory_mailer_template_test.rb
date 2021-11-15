@@ -6,7 +6,7 @@ class NotificationFactoryMailerTemplateTest < ActiveSupport::TestCase
 
   test 'notifications template' do
 
-    Translation.load('de-de')
+    Translation.sync_locale_from_po('de-de')
 
     groups = Group.where(name: 'Users')
     roles  = Role.where(name: 'Agent')

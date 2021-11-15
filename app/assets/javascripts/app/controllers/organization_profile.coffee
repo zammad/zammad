@@ -95,9 +95,9 @@ class ActionRow extends App.ControllerObserverActionRow
       genericObject: 'Organization'
       screen: 'edit'
       pageData:
-        title: 'Organizations'
-        object: 'Organization'
-        objects: 'Organizations'
+        title: __('Organizations')
+        object: __('Organization')
+        objects: __('Organizations')
       container: @el.closest('.content')
     )
 
@@ -105,12 +105,12 @@ class ActionRow extends App.ControllerObserverActionRow
     actions = [
       {
         name:     'edit'
-        title:    'Edit'
+        title:    __('Edit')
         callback: @editOrganization
       }
       {
         name:     'history'
-        title:    'History'
+        title:    __('History')
         callback: @showHistory
       }
     ]

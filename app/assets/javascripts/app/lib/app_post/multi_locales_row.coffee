@@ -34,7 +34,7 @@ class App.MultiLocalesRow extends App.Controller
         name:        name
         value:       value
         null:        false
-        placeholder: 'Select locale...'
+        placeholder: __('Select locale...')
         options:     [] #formattedLocales
         class:       'form-control--small'
     )

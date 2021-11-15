@@ -1,10 +1,10 @@
 class Slack extends App.ControllerIntegrationBase
   featureIntegration: 'slack_integration'
-  featureName: 'Slack'
+  featureName: __('Slack')
   featureConfig: 'slack_config'
   description: [
-    ['This service sends notifications to your %s channel.', 'Slack']
-    ['To set up this service you need to create a new |"Incoming webhook"| in your %s integration panel, and enter the web hook URL below.', 'Slack']
+    [__('This service sends notifications to your %s channel.'), 'Slack']
+    [__('To set up this service you need to create a new |"Incoming webhook"| in your %s integration panel, and enter the web hook URL below.'), 'Slack']
   ]
   events:
     'click .js-submit': 'update'
@@ -26,12 +26,12 @@ class Slack extends App.ControllerIntegrationBase
       escalation_warning: '5. Ticket Escalation Warning'
 
     configureAttributes = [
-      { name: 'types',     display: 'Trigger',  tag: 'checkbox', options: options, 'null': false, class: 'vertical', note: 'When notification is being sent.' },
-      { name: 'group_ids', display: 'Group',    tag: 'select', relation: 'Group', multiple: true, 'null': false, note: 'Only for these groups.' },
-      { name: 'webhook',   display: 'Webhook',  tag: 'input', type: 'url',  limit: 200, 'null': false, placeholder: 'https://hooks.slack.com/services/...' },
-      { name: 'username',  display: 'Username', tag: 'input', type: 'text', limit: 100, 'null': false, placeholder: 'username' },
-      { name: 'channel',   display: 'Channel',  tag: 'input', type: 'text', limit: 100, 'null': true, placeholder: '#channel' },
-      { name: 'icon_url',  display: 'Icon Url', tag: 'input', type: 'url',  limit: 200, 'null': true, placeholder: 'https://example.com/logo.png' },
+      { name: 'types',     display: __('Trigger'),  tag: 'checkbox', options: options, 'null': false, class: 'vertical', note: __('When notification is being sent.') },
+      { name: 'group_ids', display: __('Group'),    tag: 'select', relation: 'Group', multiple: true, 'null': false, note: __('Only for these groups.') },
+      { name: 'webhook',   display: __('Webhook'),  tag: 'input', type: 'url',  limit: 200, 'null': false, placeholder: 'https://hooks.slack.com/services/...' },
+      { name: 'username',  display: __('Username'), tag: 'input', type: 'text', limit: 100, 'null': false, placeholder: 'username' },
+      { name: 'channel',   display: __('Channel'),  tag: 'input', type: 'text', limit: 100, 'null': true, placeholder: '#channel' },
+      { name: 'icon_url',  display: __('Icon Url'), tag: 'input', type: 'url',  limit: 200, 'null': true, placeholder: 'https://example.com/logo.png' },
     ]
 
     settings = []
@@ -81,10 +81,10 @@ class State
 App.Config.set(
   'IntegrationSlack'
   {
-    name: 'Slack'
+    name: __('Slack')
     target: '#system/integration/slack'
-    description: 'A team communication tool for the 21st century. Compatible with tools like %s.'
-    descriptionSubstitute: 'Mattermost, RocketChat'
+    description: __('A team communication tool for the 21st century. Compatible with tools like %s.')
+    descriptionSubstitute: __('Mattermost, RocketChat')
     controller: Slack
     state: State
   }

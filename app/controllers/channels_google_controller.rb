@@ -93,7 +93,7 @@ class ChannelsGoogleController < ApplicationController
 
   def rollback_migration
     channel = Channel.find_by!(id: params[:id], area: 'Google::Account')
-    raise 'Failed to find backup on channel!' if !channel.options[:backup_imap_classic]
+    raise __('Failed to find backup on channel!') if !channel.options[:backup_imap_classic]
 
     channel.update!(channel.options[:backup_imap_classic][:attributes])
     render json: {}

@@ -14,15 +14,15 @@ class App.TicketCreate extends App.Controller
   types: {
     'phone-in': {
       icon: 'received-calls',
-      label: 'Received Call'
+      label: __('Received Call')
     },
     'phone-out': {
       icon: 'outbound-calls',
-      label: 'Outbound Call'
+      label: __('Outbound Call')
     },
     'email-out': {
       icon: 'email',
-      label: 'Send Email'
+      label: __('Send Email')
     }
   }
 
@@ -99,17 +99,17 @@ class App.TicketCreate extends App.Controller
       'phone-in':
         sender:  'Customer'
         article: 'phone'
-        title:   'Call Inbound'
+        title:   __('Call Inbound')
         screen:  'create_phone_in'
       'phone-out':
         sender:  'Agent'
         article: 'phone'
-        title:   'Call Outbound'
+        title:   __('Call Outbound')
         screen:  'create_phone_out'
       'email-out':
         sender:  'Agent'
         article: 'email'
-        title:   'Email'
+        title:   __('Email')
         screen:  'create_email_out'
     @articleAttributes = articleSenderTypeMap[type]
 
@@ -297,7 +297,7 @@ class App.TicketCreate extends App.Controller
     params.priority_id ||= App.TicketPriority.findByAttribute( 'default_create', true )?.id
 
     @html(App.view('agent_ticket_create')(
-      head:           'New Ticket'
+      head:           __('New Ticket')
       agent:          @permissionCheck('ticket.agent')
       admin:          @permissionCheck('admin')
       types:          @types,
@@ -307,7 +307,7 @@ class App.TicketCreate extends App.Controller
 
     App.Ticket.configure_attributes.push {
       name: 'cc'
-      display: 'Cc'
+      display: __('Cc')
       tag: 'input'
       type: 'text'
       maxlength: 1000
@@ -616,7 +616,7 @@ class App.TicketCreate extends App.Controller
         ui.submitEnable(e)
         ui.notify(
           type:    'error'
-          msg:     App.i18n.translateContent(details.error_human || details.error || 'Unable to create object!')
+          msg:     App.i18n.translateContent(details.error_human || details.error || __('Unable to create object!'))
           timeout: 6000
         )
     )
@@ -684,4 +684,4 @@ App.Config.set('ticket/create/:ticket_id/:article_id', Router, 'Routes')
 App.Config.set('ticket/create/id/:id/:ticket_id/:article_id', Router, 'Routes')
 
 # set new actions
-App.Config.set('TicketCreate', { prio: 8003, parent: '#new', name: 'New Ticket', translate: true, target: '#ticket/create', permission: ['ticket.agent'], divider: true }, 'NavBarRight')
+App.Config.set('TicketCreate', { prio: 8003, parent: '#new', name: __('New Ticket'), translate: true, target: '#ticket/create', permission: ['ticket.agent'], divider: true }, 'NavBarRight')

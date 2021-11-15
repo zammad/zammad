@@ -9,7 +9,7 @@ class CustomerTicketCreate extends App.ControllerAppContent
     super
 
     # set title
-    @title 'New Ticket'
+    @title __('New Ticket')
     @form_id = App.ControllerForm.formId()
 
     @navupdate '#customer_ticket_new'
@@ -18,7 +18,7 @@ class CustomerTicketCreate extends App.ControllerAppContent
   render: (template = {}) ->
     if !@Config.get('customer_ticket_create')
       @renderScreenError(
-        detail:     'Your role cannot create new ticket. Please contact your administrator.'
+        detail:     __('Your role cannot create new ticket. Please contact your administrator.')
         objectName: 'Ticket'
       )
       return
@@ -28,7 +28,7 @@ class CustomerTicketCreate extends App.ControllerAppContent
     handlers = @Config.get('TicketCreateFormHandler')
 
     @html App.view('customer_ticket_create')(
-      head: 'New Ticket'
+      head: __('New Ticket')
       form_id: @form_id
     )
 
@@ -186,7 +186,7 @@ class CustomerTicketCreate extends App.ControllerAppContent
           ui.submitEnable(e)
           ui.notify(
             type:    'error'
-            msg:     App.i18n.translateContent(details.error_human || details.error || 'Unable to create object!')
+            msg:     App.i18n.translateContent(details.error_human || details.error || __('Unable to create object!'))
             timeout: 6000
           )
       )
@@ -207,7 +207,7 @@ App.Config.set('customer_ticket_new', CustomerTicketCreate, 'Routes')
 App.Config.set('CustomerTicketNew', {
   prio: 8003,
   parent: '#new',
-  name: 'New Ticket',
+  name: __('New Ticket'),
   translate: true,
   target: '#customer_ticket_new',
   permission: (navigation) ->

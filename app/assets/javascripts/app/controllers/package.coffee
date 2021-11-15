@@ -1,6 +1,6 @@
 class Package extends App.ControllerSubContent
   requiredPermission: 'admin.package'
-  header: 'Packages'
+  header: __('Packages')
   events:
     'click .action':  'action'
 
@@ -33,7 +33,7 @@ class Package extends App.ControllerSubContent
         item.action = ['uninstall', 'activate']
 
     @html App.view('package')(
-      head:     'Dashboard'
+      head:     __('Dashboard')
       packages: @packages
       commands: @commands
     )
@@ -56,4 +56,4 @@ class Package extends App.ControllerSubContent
           @load()
         )
 
-App.Config.set('Packages', { prio: 3700, name: 'Packages', parent: '#system', target: '#system/package', controller: Package, permission: ['admin.package'] }, 'NavBarAdmin')
+App.Config.set('Packages', { prio: 3700, name: __('Packages'), parent: '#system', target: '#system/package', controller: Package, permission: ['admin.package'] }, 'NavBarAdmin')

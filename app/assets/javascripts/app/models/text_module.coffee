@@ -3,9 +3,9 @@ class App.TextModule extends App.Model
   @extend Spine.Model.Ajax
   @url: @apiPath + '/text_modules'
   @configure_attributes = [
-    { name: 'name',       display: 'Name',     tag: 'input',     type: 'text', limit: 100,  null: false },
-    { name: 'keywords',   display: 'Keywords', tag: 'input',     type: 'text', limit: 100,  null: true },
-    { name: 'content',    display: 'Content',  tag: 'richtext',                limit: 2000, null: false, plugins: [
+    { name: 'name',       display: __('Name'),     tag: 'input',     type: 'text', limit: 100,  null: false },
+    { name: 'keywords',   display: __('Keywords'), tag: 'input',     type: 'text', limit: 100,  null: true },
+    { name: 'content',    display: __('Content'),  tag: 'richtext',                limit: 2000, null: false, plugins: [
       {
         controller: 'WidgetPlaceholder'
         params:
@@ -13,19 +13,19 @@ class App.TextModule extends App.Model
             {
               prefix: 'ticket'
               object: 'Ticket'
-              display: 'Ticket'
+              display: __('Ticket')
             },
             {
               prefix: 'user'
               object: 'User'
-              display: 'Current User'
+              display: __('Current User')
             },
           ]
       }
-    ], note: 'To select placeholders from a list, just enter "::".'},
-    { name: 'updated_at', display: 'Updated', tag: 'datetime', readonly: 1 },
-    { name: 'group_ids',  display: 'Groups',  tag: 'column_select', relation: 'Group', null: true, unsortable: true },
-    { name: 'active',     display: 'Active',  tag: 'active',   default: true },
+    ], note: __('To select placeholders from a list, just enter "::".')},
+    { name: 'updated_at', display: __('Updated'), tag: 'datetime', readonly: 1 },
+    { name: 'group_ids',  display: __('Groups'),  tag: 'column_select', relation: 'Group', null: true, unsortable: true },
+    { name: 'active',     display: __('Active'),  tag: 'active',   default: true },
   ]
   @configure_delete = true
   @configure_clone = true
@@ -37,7 +37,7 @@ class App.TextModule extends App.Model
   ]
 
   # coffeelint: disable=no_interpolation_in_single_quotes
-  @description = '''
+  @description = __('''
 Create Text Modules to **spend less time writing responses**. Text Modules can include smart variables like the users name or email address.
 
 Examples of snippets are:
@@ -58,5 +58,5 @@ Available objects are:
 
 To select placeholders from a list, just enter "::".
 
-'''
+''')
   # coffeelint: enable=no_interpolation_in_single_quotes

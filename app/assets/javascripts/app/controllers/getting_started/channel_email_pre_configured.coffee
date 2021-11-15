@@ -8,7 +8,7 @@ class GettingStartedChannelEmailPreConfigured extends App.ControllerWizardFullSc
       return
 
     # set title
-    @title 'Connect Channels'
+    @title __('Connect Channels')
 
     @fetch()
 

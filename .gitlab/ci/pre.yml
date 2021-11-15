@@ -22,7 +22,26 @@ shellcheck:
   script:
     - shellcheck -S warning $(find . -name "*.sh" -o -name "functions" | grep -v "/vendor/")
 
-zeitwerk_check:
+gettext lint:
+  <<: *template_pre
+  before_script:
+    - echo "Disable default before_script."
+  script:
+    - for FILE in i18n/*.pot i18n/*.po; do echo "Checking $FILE"; msgfmt -o /dev/null -c $FILE; done
+
+gettext catalog consistency:
+  <<: *template_pre
+  extends:
+    - .tags_docker
+    - .services_postgresql
+  script:
+    - bundle install -j $(nproc) --path vendor
+    - bundle exec ruby .gitlab/configure_environment.rb
+    - source .gitlab/environment.env
+    - bundle exec rake zammad:db:init
+    - bundle exec rails generate translation_catalog --check
+
+zeitwerk:check:
   <<: *template_pre
   extends:
     - .tags_docker
@@ -48,7 +67,7 @@ brakeman:
 coffeelint:
   <<: *template_pre
   script:
-    - coffeelint app/
+    - coffeelint --rules ./.coffeelint/rules/* app/
 
 stylelint:
   <<: *template_pre

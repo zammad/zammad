@@ -26,7 +26,7 @@ To execute this manually, just paste the following into the browser console
       return {
         event: 'error',
         data:  {
-          error: 'Can\'t send spool, session not authenticated',
+          error: __('Can\'t send spool, session not authenticated'),
         },
       }
     end

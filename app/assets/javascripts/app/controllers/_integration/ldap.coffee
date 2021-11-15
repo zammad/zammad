@@ -1,9 +1,9 @@
 class Ldap extends App.ControllerIntegrationBase
   featureIntegration: 'ldap_integration'
-  featureName: 'LDAP'
+  featureName: __('LDAP')
   featureConfig: 'ldap_config'
   description: [
-    ['This service enables Zammad to connect with your LDAP server.']
+    [__('This service enables Zammad to connect with your LDAP server.')]
   ]
   events:
     'change .js-switch input': 'switch'
@@ -315,7 +315,7 @@ class ConnectionWizard extends App.ControllerWizardModal
         if !_.isEmpty(detailsRaw)
           details = JSON.parse(detailsRaw)
         @showSlide('js-discover')
-        @showAlert('js-discover', details.error || 'Unable to perform backend.')
+        @showAlert('js-discover', details.error || __('Unable to perform backend.'))
     )
 
 
@@ -345,12 +345,12 @@ class ConnectionWizard extends App.ControllerWizardModal
 
         if _.isEmpty(data.user_attributes)
           @showSlide('js-bind')
-          @showAlert('js-bind', 'Unable to retrive user information, please check your bind user permissions.')
+          @showAlert('js-bind', __('Unable to retrive user information, please check your bind user permissions.'))
           return
 
         if _.isEmpty(data.groups)
           @showSlide('js-bind')
-          @showAlert('js-bind', 'Unable to retrive group information, please check your bind user permissions.')
+          @showAlert('js-bind', __('Unable to retrive group information, please check your bind user permissions.'))
           return
 
         # update config if successful
@@ -384,7 +384,7 @@ class ConnectionWizard extends App.ControllerWizardModal
         if !_.isEmpty(detailsRaw)
           details = JSON.parse(detailsRaw)
         @showSlide('js-bind')
-        @showAlert('js-bind', details.error || 'Unable to perform backend.')
+        @showAlert('js-bind', details.error || __('Unable to perform backend.'))
     )
 
   mappingShow: (alreadyShown) =>
@@ -572,9 +572,9 @@ class ConnectionWizard extends App.ControllerWizardModal
 App.Config.set(
   'IntegrationLDAP'
   {
-    name: 'LDAP'
+    name: __('LDAP')
     target: '#system/integration/ldap'
-    description: 'LDAP integration for user management.'
+    description: __('LDAP integration for user management.')
     controller: Ldap
     state: State
     permission: ['admin.integration.ldap']

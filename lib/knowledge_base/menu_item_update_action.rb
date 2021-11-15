@@ -89,7 +89,7 @@ class KnowledgeBase
     end
 
     def raise_unprocessable
-      raise Exceptions::UnprocessableEntity, 'Provide position of all items in scope'
+      raise Exceptions::UnprocessableEntity, __('Provide position of all items in scope')
     end
   end
 end

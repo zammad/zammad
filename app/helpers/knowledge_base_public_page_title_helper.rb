@@ -22,9 +22,9 @@ module KnowledgeBasePublicPageTitleHelper
   def kb_public_page_title_suffix_exception(exception)
     case exception
     when :not_found
-      'Not Found'
+      __('Not Found')
     when :alternatives
-      'Alternative Translations'
+      __('Alternative Translations')
     end
   end
 end

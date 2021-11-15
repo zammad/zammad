@@ -28,7 +28,7 @@ load text modules from online
 =end
 
   def self.load(locale, overwrite_existing_item = false)
-    raise 'Got no locale' if locale.blank?
+    raise __('Got no locale') if locale.blank?
 
     locale = locale.split(',').first.downcase # in case of accept_language header is given
     url = "https://i18n.zammad.com/api/v1/text_modules/#{locale}"

@@ -5,7 +5,7 @@ class App.GenericHistory extends App.ControllerModal
   buttonClose: true
   buttonCancel: false
   buttonSubmit: false
-  head: 'History'
+  head: __('History')
   shown: false
 
   constructor: ->

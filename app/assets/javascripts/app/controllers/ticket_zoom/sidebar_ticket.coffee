@@ -83,23 +83,23 @@ class SidebarTicket extends App.Controller
     @item = {
       name: 'ticket'
       badgeIcon: 'message'
-      sidebarHead: 'Ticket'
+      sidebarHead: __('Ticket')
       sidebarCallback: @editTicket
     }
     if @ticket.currentView() is 'agent'
       @item.sidebarActions = [
         {
-          title:    'History'
+          title:    __('History')
           name:     'ticket-history'
           callback: @showTicketHistory
         },
         {
-          title:    'Merge'
+          title:    __('Merge')
           name:     'ticket-merge'
           callback: @showTicketMerge
         },
         {
-          title:    'Change Customer'
+          title:    __('Change Customer')
           name:     'customer-change'
           callback: @changeCustomer
         },

@@ -1,6 +1,6 @@
 class Group extends App.ControllerSubContent
   requiredPermission: 'admin.group'
-  header: 'Groups'
+  header: __('Groups')
   constructor: ->
     super
 
@@ -11,18 +11,18 @@ class Group extends App.ControllerSubContent
       defaultSortBy: 'name'
       pageData:
         home:      'groups'
-        object:    'Group'
-        objects:   'Groups'
+        object:    __('Group')
+        objects:   __('Groups')
         pagerAjax: true
         pagerBaseUrl: '#manage/groups/'
         pagerSelected: ( @page || 1 )
         pagerPerPage: 150
         navupdate: '#groups'
         notes:     [
-          'Groups are ...'
+          __('Groups are ...')
         ]
         buttons: [
-          { name: 'New Group', 'data-type': 'new', class: 'btn--success' }
+          { name: __('New Group'), 'data-type': 'new', class: 'btn--success' }
         ]
       container: @el.closest('.content')
     )
@@ -34,4 +34,4 @@ class Group extends App.ControllerSubContent
 
     @genericController.paginate( @page || 1 )
 
-App.Config.set('Group', { prio: 1500, name: 'Groups', parent: '#manage', target: '#manage/groups', controller: Group, permission: ['admin.group'] }, 'NavBarAdmin')
+App.Config.set('Group', { prio: 1500, name: __('Groups'), parent: '#manage', target: '#manage/groups', controller: Group, permission: ['admin.group'] }, 'NavBarAdmin')

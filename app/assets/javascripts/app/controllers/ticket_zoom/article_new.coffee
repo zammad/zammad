@@ -296,11 +296,11 @@ class App.TicketZoomArticleNew extends App.Controller
     attachmentCount = @$('.article-add .textBubble .attachments .attachment').length
     if !params.body && attachmentCount > 0
       new App.ControllerModal(
-        head: 'Text missing'
-        buttonCancel: 'Cancel'
+        head: __('Text missing')
+        buttonCancel: __('Cancel')
         buttonCancelClass: 'btn--danger'
         buttonSubmit: false
-        message: 'Please fill also some text in!'
+        message: __('Please fill also some text in!')
         shown: true
         small: true
         container: @el.closest('.content')

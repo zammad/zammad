@@ -70,7 +70,7 @@ class TimeAccountingsController < ApplicationController
 
     ticket_ids = []
     additional_attributes = []
-    additional_attributes_header = [{ display: 'Time Units', name: 'time_unit_for_range', width: 10, data_type: 'float' }]
+    additional_attributes_header = [{ display: __('Time Units'), name: 'time_unit_for_range', width: 10, data_type: 'float' }]
     time_unit.each do |ticket_id, local_time_unit|
       ticket_ids.push ticket_id
       additional_attribute = {
@@ -142,15 +142,15 @@ class TimeAccountingsController < ApplicationController
     if params[:download]
       header = [
         {
-          name:  'Customer',
+          name:  __('Customer'),
           width: 30,
         },
         {
-          name:  'Organization',
+          name:  __('Organization'),
           width: 30,
         },
         {
-          name:      'Time Units',
+          name:      __('Time Units'),
           width:     10,
           data_type: 'float'
         }
@@ -227,11 +227,11 @@ class TimeAccountingsController < ApplicationController
     if params[:download]
       header = [
         {
-          name:  'Organization',
+          name:  __('Organization'),
           width: 40,
         },
         {
-          name:      'Time Units',
+          name:      __('Time Units'),
           width:     20,
           data_type: 'float',
         }

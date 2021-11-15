@@ -1,5 +1,5 @@
 class App.KnowledgeBaseServerSnippet extends App.ControllerModal
-  head: 'Web Server Configuration'
+  head: __('Web Server Configuration')
   className: 'modal modal-knowledge-base-server-snippet'
   buttonSubmit: false
   initalFormParamsIgnore: true

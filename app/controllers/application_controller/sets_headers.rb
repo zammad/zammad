@@ -21,7 +21,7 @@ module ApplicationController::SetsHeaders
     headers['Access-Control-Allow-Origin']      = '*'
     headers['Access-Control-Allow-Methods']     = 'POST, GET, PUT, DELETE, PATCH, OPTIONS'
     headers['Access-Control-Max-Age']           = '1728000'
-    headers['Access-Control-Allow-Headers']     = 'Content-Type, Depth, User-Agent, X-File-Size, X-Requested-With, If-Modified-Since, X-File-Name, Cache-Control, Accept-Language'
+    headers['Access-Control-Allow-Headers']     = 'Content-Type, Depth, User-Agent, X-File-Size, X-Requested-With, If-Modified-Since, X-File-Name, Cache-Control, Accept-Language' # rubocop:disable Zammad/DetectTranslatableString
   end
 
   def set_cache_control_headers
@@ -41,7 +41,7 @@ module ApplicationController::SetsHeaders
 
     headers['Access-Control-Allow-Origin']      = '*'
     headers['Access-Control-Allow-Methods']     = 'POST, GET, PUT, DELETE, PATCH, OPTIONS'
-    headers['Access-Control-Allow-Headers']     = 'Content-Type, Depth, User-Agent, X-File-Size, X-Requested-With, If-Modified-Since, X-File-Name, Cache-Control, Accept-Language'
+    headers['Access-Control-Allow-Headers']     = 'Content-Type, Depth, User-Agent, X-File-Size, X-Requested-With, If-Modified-Since, X-File-Name, Cache-Control, Accept-Language' # rubocop:disable Zammad/DetectTranslatableString
     headers['Access-Control-Max-Age']           = '1728000'
     render plain: ''
   end

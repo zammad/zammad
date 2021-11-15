@@ -5,8 +5,8 @@ class App.UiElement.boolean extends App.UiElement.ApplicationUiElement
     # build options list
     if _.isEmpty(attribute.options)
       attribute.options = [
-        { name: 'yes', value: true }
-        { name: 'no', value: false }
+        { name: __('yes'), value: true }
+        { name: __('no'), value: false }
       ]
       attribute.translate = true
 

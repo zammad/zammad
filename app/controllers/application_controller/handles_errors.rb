@@ -56,7 +56,7 @@ module ApplicationController::HandlesErrors
     # check if a special authorization_error should be shown in the result payload
     # which was raised in one of the policies. Fall back to a simple "Not authorized"
     # error to hide actual cause for security reasons.
-    exeption = e.policy&.custom_exception || Exceptions::Forbidden.new('Not authorized')
+    exeption = e.policy&.custom_exception || Exceptions::Forbidden.new(__('Not authorized'))
     forbidden(exeption)
   end
 
@@ -87,14 +87,14 @@ module ApplicationController::HandlesErrors
     if e.message =~ %r{Validation failed: (.+?)(,|$)}i
       data[:error_human] = $1
     elsif e.message.match?(%r{(already exists|duplicate key|duplicate entry)}i)
-      data[:error_human] = 'Object already exists!'
+      data[:error_human] = __('Object already exists!')
     elsif e.message =~ %r{null value in column "(.+?)" violates not-null constraint}i || e.message =~ %r{Field '(.+?)' doesn't have a default value}i
       data[:error_human] = "Attribute '#{$1}' required!"
     elsif e.message == 'Exceptions::Forbidden'
-      data[:error]       = 'Not authorized'
+      data[:error]       = __('Not authorized')
       data[:error_human] = data[:error]
     elsif e.message == 'Exceptions::NotAuthorized'
-      data[:error]       = 'Authorization failed'
+      data[:error]       = __('Authorization failed')
       data[:error_human] = data[:error]
     elsif [ActionController::RoutingError, ActiveRecord::RecordNotFound, Exceptions::UnprocessableEntity, Exceptions::NotAuthorized, Exceptions::Forbidden].include?(e.class)
       data[:error_human] = data[:error]

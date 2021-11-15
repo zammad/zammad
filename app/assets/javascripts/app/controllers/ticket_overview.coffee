@@ -880,7 +880,7 @@ class Navbar extends App.Controller
       content.find('.js-error').removeClass('hide')
       @renderScreenError(
         el: @el.closest('.content').find('.js-error')
-        detail:     'Currently no overview is assigned to your roles. Please contact your administrator.'
+        detail:     __('Currently no overview is assigned to your roles. Please contact your administrator.')
         objectName: 'Ticket'
       )
       return
@@ -1342,7 +1342,7 @@ class App.OverviewSettings extends App.ControllerModal
     if @view_mode is 'd'
       @configure_attributes_article.push({
         name:     'view::per_page'
-        display:  'Items per page'
+        display:  __('Items per page')
         tag:      'select'
         multiple: false
         null:     false
@@ -1358,7 +1358,7 @@ class App.OverviewSettings extends App.ControllerModal
 
     @configure_attributes_article.push({
       name:      "view::#{@view_mode}"
-      display:   'Attributes'
+      display:   __('Attributes')
       tag:       'checkboxTicketAttributes'
       default:   @overview.view[@view_mode]
       null:      false
@@ -1367,7 +1367,7 @@ class App.OverviewSettings extends App.ControllerModal
     },
     {
       name:      'order::by'
-      display:   'Order'
+      display:   __('Order')
       tag:       'selectTicketAttributes'
       default:   @overview.order.by
       null:      false
@@ -1376,7 +1376,7 @@ class App.OverviewSettings extends App.ControllerModal
     },
     {
       name:      'order::direction'
-      display:   'Order by Direction'
+      display:   __('Order by Direction')
       tag:       'select'
       default:   @overview.order.direction
       null:      false
@@ -1387,7 +1387,7 @@ class App.OverviewSettings extends App.ControllerModal
     },
     {
       name:       'group_by'
-      display:    'Group by'
+      display:    __('Group by')
       tag:        'select'
       default:    @overview.group_by
       null:       true
@@ -1397,7 +1397,7 @@ class App.OverviewSettings extends App.ControllerModal
     },
     {
       name:    'group_direction'
-      display: 'Group by Direction'
+      display: __('Group by Direction')
       tag:     'select'
       default: @overview.group_direction
       null:    false
@@ -1475,4 +1475,4 @@ class TicketOverviewRouter extends App.ControllerPermanent
 App.Config.set('ticket/view', TicketOverviewRouter, 'Routes')
 App.Config.set('ticket/view/:view', TicketOverviewRouter, 'Routes')
 App.Config.set('TicketOverview', { controller: 'TicketOverview', permission: ['ticket.agent', 'ticket.customer'] }, 'permanentTask')
-App.Config.set('TicketOverview', { prio: 1000, parent: '', name: 'Overviews', target: '#ticket/view', key: 'TicketOverview', permission: ['ticket.agent', 'ticket.customer'], class: 'overviews' }, 'NavBar')
+App.Config.set('TicketOverview', { prio: 1000, parent: '', name: __('Overviews'), target: '#ticket/view', key: 'TicketOverview', permission: ['ticket.agent', 'ticket.customer'], class: 'overviews' }, 'NavBar')

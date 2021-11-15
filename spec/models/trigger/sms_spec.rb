@@ -6,7 +6,7 @@ RSpec.describe Trigger do
 
   describe 'sms' do
     before do
-      Translation.fetch(locale)
+      Translation.sync_locale_from_po(locale)
       Setting.set('locale_default', locale)
       Setting.set('timezone_default', time_zone)
     end

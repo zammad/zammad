@@ -4,7 +4,7 @@ class SidebarArticleAttachments extends App.Controller
     @item = {
       name: 'attachment'
       badgeIcon: 'paperclip'
-      sidebarHead: 'Attachments'
+      sidebarHead: __('Attachments')
       sidebarCallback: @showObjects
       sidebarActions: []
     }

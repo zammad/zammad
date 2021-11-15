@@ -45,7 +45,7 @@ class GitLab
 
       if !response.success?
         Rails.logger.error response.error
-        raise 'GitLab request failed! Please have a look at the log file for details'
+        raise __('GitLab request failed! Please have a look at the log file for details')
       end
 
       response.data

@@ -10,7 +10,7 @@ class GettingStartedAdmin extends App.ControllerWizardFullScreen
       return
 
     # set title
-    @title 'Create Admin'
+    @title __('Create Admin')
 
     # redirect to login if admin user already exists
     if @Config.get('system_init_done')
@@ -101,7 +101,7 @@ class GettingStartedAdmin extends App.ControllerWizardFullScreen
 
       fail: (settings, details) =>
         @formEnable(e)
-        @form.showAlert(details.error_human || details.error || 'Unable to create user!')
+        @form.showAlert(details.error_human || details.error || __('Unable to create user!'))
     )
 
   relogin: (data, status, xhr) =>

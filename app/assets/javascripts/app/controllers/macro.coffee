@@ -1,6 +1,6 @@
 class Macro extends App.ControllerSubContent
   requiredPermission: 'admin.macro'
-  header: 'Macros'
+  header: __('Macros')
   constructor: ->
     super
 
@@ -11,18 +11,18 @@ class Macro extends App.ControllerSubContent
       defaultSortBy: 'name'
       pageData:
         home: 'macros'
-        object: 'Macro'
-        objects: 'Macros'
+        object: __('Macro')
+        objects: __('Macros')
         pagerAjax: true
         pagerBaseUrl: '#manage/macros/'
         pagerSelected: ( @page || 1 )
         pagerPerPage: 150
         navupdate: '#macros'
         notes: [
-          'Text modules are ...'
+          __('Text modules are ...')
         ]
         buttons: [
-          { name: 'New Macro', 'data-type': 'new', class: 'btn--success' }
+          { name: __('New Macro'), 'data-type': 'new', class: 'btn--success' }
         ]
       container: @el.closest('.content')
     )
@@ -34,4 +34,4 @@ class Macro extends App.ControllerSubContent
 
     @genericController.paginate( @page || 1 )
 
-App.Config.set('Macros', { prio: 2310, name: 'Macros', parent: '#manage', target: '#manage/macros', controller: Macro, permission: ['admin.macro'] }, 'NavBarAdmin')
+App.Config.set('Macros', { prio: 2310, name: __('Macros'), parent: '#manage', target: '#manage/macros', controller: Macro, permission: ['admin.macro'] }, 'NavBarAdmin')

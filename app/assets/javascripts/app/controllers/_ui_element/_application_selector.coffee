@@ -5,59 +5,59 @@ class App.UiElement.ApplicationSelector
 
     groups =
       ticket:
-        name: 'Ticket'
+        name: __('Ticket')
         model: 'Ticket'
       article:
-        name: 'Article'
+        name: __('Article')
         model: 'TicketArticle'
       customer:
-        name: 'Customer'
+        name: __('Customer')
         model: 'User'
       organization:
-        name: 'Organization'
+        name: __('Organization')
         model: 'Organization'
 
     if attribute.executionTime
       groups.execution_time =
-        name: 'Execution Time'
+        name: __('Execution Time')
 
     operators_type =
-      '^datetime$': ['before (absolute)', 'after (absolute)', 'before (relative)', 'after (relative)', 'within next (relative)', 'within last (relative)', 'till (relative)', 'from (relative)']
-      '^timestamp$': ['before (absolute)', 'after (absolute)', 'before (relative)', 'after (relative)', 'within next (relative)', 'within last (relative)', 'till (relative)', 'from (relative)']
+      '^datetime$': [__('before (absolute)'), __('after (absolute)'), __('before (relative)'), __('after (relative)'), __('within next (relative)'), __('within last (relative)'), __('till (relative)'), __('from (relative)')]
+      '^timestamp$': [__('before (absolute)'), __('after (absolute)'), __('before (relative)'), __('after (relative)'), __('within next (relative)'), __('within last (relative)'), __('till (relative)'), __('from (relative)')]
       '^date$': ['before (absolute)', 'after (absolute)', 'before (relative)', 'after (relative)', 'within next (relative)', 'within last (relative)']
-      'boolean$': ['is', 'is not']
-      'integer$': ['is', 'is not']
-      '^radio$': ['is', 'is not']
-      '^select$': ['is', 'is not']
-      '^tree_select$': ['is', 'is not']
-      '^input$': ['contains', 'contains not']
-      '^richtext$': ['contains', 'contains not']
-      '^textarea$': ['contains', 'contains not']
-      '^tag$': ['contains all', 'contains one', 'contains all not', 'contains one not']
+      'boolean$': [__('is'), __('is not')]
+      'integer$': [__('is'), __('is not')]
+      '^radio$': [__('is'), __('is not')]
+      '^select$': [__('is'), __('is not')]
+      '^tree_select$': [__('is'), __('is not')]
+      '^input$': [__('contains'), __('contains not')]
+      '^richtext$': [__('contains'), __('contains not')]
+      '^textarea$': [__('contains'), __('contains not')]
+      '^tag$': [__('contains all'), __('contains one'), __('contains all not'), __('contains one not')]
 
     if attribute.hasChanged
       operators_type =
-        '^datetime$': ['before (absolute)', 'after (absolute)', 'before (relative)', 'after (relative)', 'within next (relative)', 'within last (relative)', 'till (relative)', 'from (relative)', 'has changed']
-        '^timestamp$': ['before (absolute)', 'after (absolute)', 'before (relative)', 'after (relative)', 'within next (relative)', 'within last (relative)', 'till (relative)', 'from (relative)', 'has changed']
-        '^date$': ['before (absolute)', 'after (absolute)', 'before (relative)', 'after (relative)', 'within next (relative)', 'within last (relative)', 'till (relative)', 'from (relative)', 'has changed']
-        'boolean$': ['is', 'is not', 'has changed']
-        'integer$': ['is', 'is not', 'has changed']
-        '^radio$': ['is', 'is not', 'has changed']
-        '^select$': ['is', 'is not', 'has changed']
-        '^tree_select$': ['is', 'is not', 'has changed']
-        '^input$': ['contains', 'contains not', 'has changed']
-        '^richtext$': ['contains', 'contains not', 'has changed']
-        '^textarea$': ['contains', 'contains not', 'has changed']
-        '^tag$': ['contains all', 'contains one', 'contains all not', 'contains one not']
+        '^datetime$': [__('before (absolute)'), __('after (absolute)'), __('before (relative)'), __('after (relative)'), __('within next (relative)'), __('within last (relative)'), __('till (relative)'), __('from (relative)'), __('has changed')]
+        '^timestamp$': [__('before (absolute)'), __('after (absolute)'), __('before (relative)'), __('after (relative)'), __('within next (relative)'), __('within last (relative)'), __('till (relative)'), __('from (relative)'), __('has changed')]
+        '^date$': [__('before (absolute)'), __('after (absolute)'), __('before (relative)'), __('after (relative)'), __('within next (relative)'), __('within last (relative)'), __('till (relative)'), __('from (relative)'), __('has changed')]
+        'boolean$': [__('is'), __('is not'), __('has changed')]
+        'integer$': [__('is'), __('is not'), __('has changed')]
+        '^radio$': [__('is'), __('is not'), __('has changed')]
+        '^select$': [__('is'), __('is not'), __('has changed')]
+        '^tree_select$': [__('is'), __('is not'), __('has changed')]
+        '^input$': [__('contains'), __('contains not'), __('has changed')]
+        '^richtext$': [__('contains'), __('contains not'), __('has changed')]
+        '^textarea$': [__('contains'), __('contains not'), __('has changed')]
+        '^tag$': [__('contains all'), __('contains one'), __('contains all not'), __('contains one not')]
 
     operators_name =
-      '_id$': ['is', 'is not']
-      '_ids$': ['is', 'is not']
+      '_id$': [__('is'), __('is not')]
+      '_ids$': [__('is'), __('is not')]
 
     if attribute.hasChanged
       operators_name =
-        '_id$': ['is', 'is not', 'has changed']
-        '_ids$': ['is', 'is not', 'has changed']
+        '_id$': [__('is'), __('is not'), __('has changed')]
+        '_ids$': [__('is'), __('is not'), __('has changed')]
 
     # merge config
     elements = {}
@@ -68,7 +68,7 @@ class App.UiElement.ApplicationSelector
     if attribute.action
       elements['ticket.action'] =
         name: 'action'
-        display: 'Action'
+        display: __('Action')
         tag: 'select'
         null: false
         translate: true
@@ -77,19 +77,19 @@ class App.UiElement.ApplicationSelector
           update:                  'updated'
           'update.merged_into':    'merged into'
           'update.received_merge': 'received merge'
-        operator: ['is', 'is not']
+        operator: [__('is'), __('is not')]
 
     for groupKey, groupMeta of groups
       if groupKey is 'execution_time'
         if attribute.executionTime
           elements['execution_time.calendar_id'] =
             name: 'calendar_id'
-            display: 'Calendar'
+            display: __('Calendar')
             tag: 'select'
             relation: 'Calendar'
             null: false
             translate: false
-            operator: ['is in working time', 'is not in working time']
+            operator: [__('is in working time'), __('is not in working time')]
 
       else
         for row in App[groupMeta.model].configure_attributes
@@ -115,12 +115,12 @@ class App.UiElement.ApplicationSelector
     if attribute.out_of_office
       elements['ticket.out_of_office_replacement_id'] =
         name: 'out_of_office_replacement_id'
-        display: 'Out of office replacement'
+        display: __('Out of office replacement')
         tag: 'autocompletion_ajax'
         relation: 'User'
         null: false
         translate: true
-        operator: ['is', 'is not']
+        operator: [__('is'), __('is not')]
 
     # Remove 'has changed' operator from attributes which don't support the operator.
     ['ticket.created_at', 'ticket.updated_at'].forEach (element_name) ->
@@ -128,12 +128,12 @@ class App.UiElement.ApplicationSelector
 
     elements['ticket.mention_user_ids'] =
       name: 'mention_user_ids'
-      display: 'Subscribe'
+      display: __('Subscribe')
       tag: 'autocompletion_ajax'
       relation: 'User'
       null: false
       translate: true
-      operator: ['is', 'is not']
+      operator: [__('is'), __('is not')]
 
     [defaults, groups, elements]
 
@@ -350,6 +350,9 @@ class App.UiElement.ApplicationSelector
 
     @buildOperator(elementFull, elementRow, groupAndAttribute, elements, meta, attribute)
 
+  @mapOperatorDisplayName: (operator) ->
+    return operator
+
   @buildOperator: (elementFull, elementRow, groupAndAttribute, elements, meta, attribute) ->
     currentOperator = elementRow.find('.js-operator option:selected').attr('value')
 
@@ -376,7 +379,7 @@ class App.UiElement.ApplicationSelector
           break
 
       for operator in attributeConfig.operator
-        operatorName = App.i18n.translateInline(operator.replace(/_/g, ' '))
+        operatorName = App.i18n.translateInline(@mapOperatorDisplayName(operator))
         selected = ''
         if !groupAndAttribute.match(/^ticket/) && operator is 'has changed'
           # do nothing, only show "has changed" in ticket attributes

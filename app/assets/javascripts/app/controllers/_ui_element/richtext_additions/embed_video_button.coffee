@@ -1,16 +1,16 @@
 # coffeelint: disable=camel_case_classes
 class App.UiElement.richtext.toolButtons.embed_video extends App.UiElement.richtext.additions.RichTextToolButton
   @icon: 'cloud'
-  @text: 'Video'
+  @text: __('Video')
   @klass: -> App.UiElement.richtext.additions.RichTextToolPopupVideo
   @initializeAttributes:
     model:
       configure_attributes: [
         {
           name: 'link'
-          display: 'Link'
+          display: __('Link')
           tag: 'input'
-          placeholder: 'Youtube or Vimeo address'
+          placeholder: __('Youtube or Vimeo address')
         }
       ]
 

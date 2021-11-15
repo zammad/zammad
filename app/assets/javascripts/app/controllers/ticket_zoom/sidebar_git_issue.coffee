@@ -17,7 +17,7 @@ class App.SidebarGitIssue extends App.Controller
       sidebarCallback: @reloadIssues
       sidebarActions: [
         {
-          title:    'Link issue'
+          title:    __('Link issue')
           name:     'link-issue'
           callback: @linkIssue
         },
@@ -70,7 +70,7 @@ class App.SidebarGitIssue extends App.Controller
                 success: =>
                   ui.close()
                   @renderIssues()
-                error: (message = 'Unable to save issue') =>
+                error: (message = __('Unable to save issue')) =>
                   ui.showAlert(App.i18n.translatePlain(message))
                   form = ui.el.find('.js-result')
                   @formEnable(form)
@@ -78,7 +78,7 @@ class App.SidebarGitIssue extends App.Controller
             else
               ui.close()
               @renderIssues()
-          error: (message = 'Unable to load issues') =>
+          error: (message = __('Unable to load issues')) =>
             ui.showAlert(App.i18n.translatePlain(message))
             form = ui.el.find('.js-result')
             @formEnable(form)
@@ -141,7 +141,7 @@ class App.SidebarGitIssue extends App.Controller
           # some issues redirect to pull requests like
           # https://github.com/zammad/zammad/issues/1574
           # in this case throw error
-          return params.error('Unable to load issues') if _.isEmpty(data.response)
+          return params.error(__('Unable to load issues')) if _.isEmpty(data.response)
 
           params.success(data.response)
         else
@@ -176,7 +176,7 @@ class App.SidebarGitIssue extends App.Controller
         links: @issueLinks
         success: =>
           @renderIssues()
-        error: (message = 'Unable to save issue') =>
+        error: (message = __('Unable to save issue')) =>
           @showError(App.i18n.translateInline(message))
       )
     else

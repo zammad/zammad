@@ -1,8 +1,8 @@
 class App.ControllerGenericDescription extends App.ControllerModal
   buttonClose: true
   buttonCancel: false
-  buttonSubmit: 'Close'
-  head: 'Description'
+  buttonSubmit: __('Close')
+  head: __('Description')
 
   content: =>
     marked(App.i18n.translateContent(@description))

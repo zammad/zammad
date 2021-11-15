@@ -29,7 +29,7 @@ class FixedTranslation2 < ActiveRecord::Migration[4.2]
       fetched_setting.save!
     end
 
-    Translation.load
+    Translation.sync
 
   end
 end

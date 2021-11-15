@@ -7,7 +7,7 @@ class GettingStarted extends App.ControllerWizardFullScreen
       return
 
     # set title
-    @title 'Get Started'
+    @title __('Get Started')
 
     # redirect to login if admin user already exists
     if @Config.get('system_init_done')

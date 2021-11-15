@@ -1,6 +1,6 @@
 class ProfileTokenAccess extends App.ControllerSubContent
   requiredPermission: 'user_preferences.access_token'
-  header: 'Token Access'
+  header: __('Token Access')
   events:
     'click .js-delete': 'delete'
     'click .js-create': 'create'
@@ -63,7 +63,7 @@ class ProfileTokenAccess extends App.ControllerSubContent
       )
 
     new App.ControllerConfirm(
-      message: 'Sure?'
+      message: __('Sure?')
       callback: callback
       container: @el.closest('.content')
     )
@@ -76,8 +76,8 @@ class ProfileTokenAccess extends App.ControllerSubContent
     )
 
 class Create extends App.ControllerModal
-  head: 'Add a Personal Access Token'
-  buttonSubmit: 'Create'
+  head: __('Add a Personal Access Token')
+  buttonSubmit: __('Create')
   buttonCancel: true
   shown: true
 
@@ -125,8 +125,8 @@ class Create extends App.ControllerModal
     return if !@newToken
     ui = @
     new App.ControllerModal(
-      head: 'Your New Personal Access Token'
-      buttonSubmit: "OK, I've copied my token"
+      head: __('Your New Personal Access Token')
+      buttonSubmit: __("OK, I've copied my token")
       content: ->
         App.view('profile/token_access_created')(
           name: ui.newToken.name
@@ -149,7 +149,7 @@ class Create extends App.ControllerModal
 
 App.Config.set('Token Access', {
   prio: 3200,
-  name: 'Token Access',
+  name: __('Token Access'),
   parent: '#profile',
   target: '#profile/token_access',
   controller: ProfileTokenAccess,

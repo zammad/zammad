@@ -3,35 +3,35 @@ class App.UiElement.postmaster_match
   @defaults: ->
     groups =
       general:
-        name: 'Basic Settings'
+        name: __('Basic Settings')
         options: [
           {
             value:    'from'
-            name:     'From'
+            name:     __('From')
           },
           {
             value:    'to'
-            name:     'To'
+            name:     __('To')
           },
           {
             value:    'cc'
-            name:     'Cc'
+            name:     __('Cc')
           },
           {
             value:    'x-any-recipient'
-            name:     'Any Recipient'
+            name:     __('Any Recipient')
           },
           {
             value:    'subject'
-            name:     'Subject'
+            name:     __('Subject')
           },
           {
             value:    'body'
-            name:     'Body'
+            name:     __('Body')
           },
         ]
       expert:
-        name: 'Expert Settings'
+        name: __('Expert Settings')
         options: [
           {
             value:    'x-spam'

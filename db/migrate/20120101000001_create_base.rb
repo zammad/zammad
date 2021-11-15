@@ -227,14 +227,15 @@ class CreateBase < ActiveRecord::Migration[4.2]
     add_index :locales, [:name], unique: true
 
     create_table :translations do |t|
-      t.string :locale,               limit: 10,   null: false
-      t.string :source,               limit: 500,  null: false
-      t.string :target,               limit: 500,  null: false
-      t.string :target_initial,       limit: 500,  null: false
-      t.string :format,               limit: 20,   null: false, default: 'string'
-      t.integer :updated_by_id,                    null: false
-      t.integer :created_by_id,                    null: false
-      t.timestamps limit: 3, null: false
+      t.string  :locale,               limit: 10,   null: false
+      t.string  :source,               limit: 500,  null: false
+      t.string  :target,               limit: 500,  null: false
+      t.string  :target_initial,       limit: 500,  null: false
+      t.boolean :is_synchronized_from_codebase,     null: false, default: false
+      t.string  :synchronized_from_translation_file, limit: 255
+      t.integer :updated_by_id,                     null: false
+      t.integer :created_by_id,                     null: false
+      t.timestamps limit: 3,                        null: false
     end
     add_index :translations, [:source], length: 255
     add_index :translations, [:locale]

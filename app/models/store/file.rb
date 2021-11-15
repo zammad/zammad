@@ -26,7 +26,7 @@ do also verify of written data
         # load backend based on config
         adapter_name = Setting.get('storage_provider') || 'DB'
         if !adapter_name
-          raise 'Missing storage_provider setting option'
+          raise __('Missing storage_provider setting option')
         end
 
         adapter = "Store::Provider::#{adapter_name}".constantize

@@ -672,7 +672,7 @@ QUnit.test('table test 4', assert => {
     value           = ' '
     attribute.class = 'glyphicon glyphicon-user'
     attribute.link  = '#'
-    attribute.title = App.i18n.translateInline('Switch to')
+    attribute.title = App.i18n.translateInline('Current User')
     if (object.id == 55) {
       attribute.data = {
         some: 'value55',
@@ -719,7 +719,7 @@ QUnit.test('table test 4', assert => {
   assert.equal(el.find('tbody > tr:nth-child(1) > td:nth-child(3)').text().trim(), '', 'check row 1')
   assert.equal(el.find('tbody > tr:nth-child(1) > td:nth-child(3) > a > span').hasClass('glyphicon-user'), true, 'check row 1')
   assert.equal(el.find('tbody > tr:nth-child(1) > td:nth-child(3) > a > span').hasClass('glyphicon'), true, 'check row 1')
-  assert.equal(el.find('tbody > tr:nth-child(1) > td:nth-child(3)').attr('title'), 'Umschalten zu', 'check row 1')
+  assert.equal(el.find('tbody > tr:nth-child(1) > td:nth-child(3)').attr('title'), 'Aktueller Benutzer', 'check row 1')
   assert.equal(el.find('tbody > tr:nth-child(1) > td:nth-child(3) > a > span').data('some'), 'value55', 'check row 2')
   assert.equal(el.find('tbody > tr:nth-child(1) > td:nth-child(3) > a > span').data('xxx'), '55', 'check row 2')
   assert.equal(el.find('tbody > tr:nth-child(2) > td').length, 3, 'check row 2')
@@ -728,7 +728,7 @@ QUnit.test('table test 4', assert => {
   assert.equal(el.find('tbody > tr:nth-child(2) > td:nth-child(3)').text().trim(), '', 'check row 2')
   assert.equal(el.find('tbody > tr:nth-child(2) > td:nth-child(3) > a > span').hasClass('glyphicon-user'), true, 'check row 2')
   assert.equal(el.find('tbody > tr:nth-child(2) > td:nth-child(3) > a > span').hasClass('glyphicon'), true, 'check row 2')
-  assert.equal(el.find('tbody > tr:nth-child(2) > td:nth-child(3)').attr('title'), 'Umschalten zu', 'check row 2')
+  assert.equal(el.find('tbody > tr:nth-child(2) > td:nth-child(3)').attr('title'), 'Aktueller Benutzer', 'check row 2')
   assert.equal(el.find('tbody > tr:nth-child(2) > td:nth-child(3) > a > span').data('some'), 'value56', 'check row 2')
   assert.equal(el.find('tbody > tr:nth-child(2) > td:nth-child(3) > a > span').data('xxx'), '56', 'check row 2')
 

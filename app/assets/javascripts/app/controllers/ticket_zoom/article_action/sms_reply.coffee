@@ -4,7 +4,7 @@ class SmsReply
 
     if article.sender.name is 'Customer' && article.type.name is 'sms'
       actions.push {
-        name: 'reply'
+        name: __('reply')
         type: 'smsMessageReply'
         icon: 'reply'
         href: '#'

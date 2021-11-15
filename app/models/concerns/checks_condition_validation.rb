@@ -31,6 +31,6 @@ module ChecksConditionValidation
     ticket_count, _tickets = Ticket.selectors(validate_condition, limit: 1, current_user: User.find(1))
     return true if ticket_count.present?
 
-    raise Exceptions::UnprocessableEntity, 'Invalid ticket selector conditions'
+    raise Exceptions::UnprocessableEntity, __('Invalid ticket selector conditions')
   end
 end

@@ -29,7 +29,7 @@ returns
 
       backends = Setting.where(area: 'Dashboard::Stats')
       if backends.blank?
-        raise "No settings with area 'Dashboard::Stats' defined"
+        raise __("No settings with area 'Dashboard::Stats' defined")
       end
 
       backends.each do |stats_item|

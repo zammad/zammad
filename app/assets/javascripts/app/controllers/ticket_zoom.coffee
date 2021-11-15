@@ -128,7 +128,7 @@ class App.TicketZoom extends App.Controller
           @taskIconClass = 'diagonal-cross'
 
           if !detail
-            detail = 'General communication error, maybe internet is not available!'
+            detail = __('General communication error, maybe internet is not available!')
           @renderScreenError(
             status:     status
             detail:     detail
@@ -1023,7 +1023,7 @@ class App.TicketZoom extends App.Controller
           error = settings.responseJSON.error
         App.Event.trigger 'notify', {
           type:    'error'
-          msg:     App.i18n.translateContent(details.error_human || details.error || error || 'Unable to update!')
+          msg:     App.i18n.translateContent(details.error_human || details.error || error || __('Unable to update!'))
           timeout: 2000
         }
         @autosaveStart()

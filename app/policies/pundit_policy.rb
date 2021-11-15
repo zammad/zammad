@@ -18,7 +18,7 @@ module PunditPolicy
   def user_required!
     return if user
 
-    raise Exceptions::Forbidden, 'Authentication required'
+    raise Exceptions::Forbidden, __('Authentication required')
   end
 
   private

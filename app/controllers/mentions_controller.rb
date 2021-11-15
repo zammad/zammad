@@ -55,7 +55,7 @@ class MentionsController < ApplicationController
 
   def mentionable_type!
     @mentionable_type ||= begin
-      raise 'Invalid mentionable_type!' if 'Ticket'.freeze != params[:mentionable_type]
+      raise __('Invalid mentionable_type!') if 'Ticket'.freeze != params[:mentionable_type]
 
       params[:mentionable_type]
     end

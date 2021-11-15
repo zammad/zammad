@@ -28,7 +28,7 @@ class Integration::SipgateController < ApplicationController
     end
 
     if result[:action] == 'invalid_direction'
-      response_error('Invalid direction!')
+      response_error(__('Invalid direction!'))
       return true
     end
 
@@ -42,11 +42,11 @@ class Integration::SipgateController < ApplicationController
     http_log_config facility: 'sipgate.io'
 
     if !Setting.get('sipgate_integration')
-      xml_error('Feature is disable, please contact your admin to enable it!')
+      xml_error(__('Feature is disable, please contact your admin to enable it!'))
       return
     end
     if config_integration.blank? || config_integration[:inbound].blank? || config_integration[:outbound].blank?
-      xml_error('Feature not configured, please contact your admin!')
+      xml_error(__('Feature not configured, please contact your admin!'))
       return
     end
 

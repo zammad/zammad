@@ -6,7 +6,7 @@ class EmailReply extends App.Controller
 
     if article.type.name is 'email' || article.type.name is 'web'
       actions.push {
-        name: 'reply'
+        name: __('reply')
         type: 'emailReply'
         icon: 'reply'
         href: '#'
@@ -216,7 +216,7 @@ class EmailReply extends App.Controller
         return @isInsideSelectionBoundary(range.startContainer, parentSelector) || @isInsideSelectionBoundary(range.endContainer, parentSelector) || @containsNode($('#' + parentSelector + ' .richtext-content')[0])
     else
       return false
-        
+
   @isInsideSelectionBoundary: (node, parentSelectorId) ->
     hasParent = $(node).closest('#' + parentSelectorId + ' .richtext-content')
     return hasParent && hasParent.attr('class') is 'richtext-content'
@@ -371,11 +371,11 @@ class EmailReply extends App.Controller
     # check if recipient exists
     if _.isEmpty(params.to) && _.isEmpty(params.cc)
       new App.ControllerModal(
-        head: 'Text missing'
-        buttonCancel: 'Cancel'
+        head: __('Text missing')
+        buttonCancel: __('Cancel')
         buttonCancelClass: 'btn--danger'
         buttonSubmit: false
-        message: 'Need recipient in "To" or "Cc".'
+        message: __('Need recipient in "To" or "Cc".')
         shown: true
         small: true
         container: ui.el.closest('.content')
@@ -385,11 +385,11 @@ class EmailReply extends App.Controller
     # check if message exists
     if _.isEmpty(params.body)
       new App.ControllerModal(
-        head: 'Text missing'
-        buttonCancel: 'Cancel'
+        head: __('Text missing')
+        buttonCancel: __('Cancel')
         buttonCancelClass: 'btn--danger'
         buttonSubmit: false
-        message: 'Text needed'
+        message: __('Text needed')
         shown: true
         small: true
         container: ui.el.closest('.content')

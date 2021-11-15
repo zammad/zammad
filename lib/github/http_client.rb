@@ -32,7 +32,7 @@ class GitHub
 
       if !response.success?
         Rails.logger.error response.error
-        raise 'GitHub request failed! Please have a look at the log file for details'
+        raise __('GitHub request failed! Please have a look at the log file for details')
       end
 
       response.data

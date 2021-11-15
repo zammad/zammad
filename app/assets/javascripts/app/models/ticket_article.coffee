@@ -3,20 +3,20 @@ class App.TicketArticle extends App.Model
   @extend Spine.Model.Ajax
   @url: @apiPath + '/ticket_articles'
   @configure_attributes = [
-      { name: 'ticket_id',      display: 'TicketID',    null: false, readonly: 1, searchable: false },
-      { name: 'from',           display: 'From',        tag: 'input',    type: 'text', limit: 100, null: false },
-      { name: 'to',             display: 'To',          tag: 'input',    type: 'text', limit: 100, null: true },
-      { name: 'cc',             display: 'Cc',          tag: 'input',    type: 'text', limit: 100, null: true },
-      { name: 'subject',        display: 'Subject',     tag: 'input',    type: 'text', limit: 100, null: true },
-      { name: 'body',           display: 'Text',        tag: 'textarea', rows: 5,      limit: 100, null: false, searchable: true },
-      { name: 'type_id',        display: 'Type',        tag: 'select',   multiple: false, null: false, relation: 'TicketArticleType', default: '' },
-      { name: 'sender_id',      display: 'Sender',      tag: 'select',   multiple: false, null: false, relation: 'TicketArticleSender', default: '' },
-      { name: 'internal',       display: 'Visibility',  tag: 'radio',  default: false,  null: true, options: { true: 'internal', false: 'public' } },
-      { name: 'created_by_id',  display: 'Created by',  relation: 'User', readonly: 1 },
-      { name: 'created_at',     display: 'Created',     tag: 'datetime', readonly: 1, searchable: false },
-      { name: 'updated_by_id',  display: 'Updated by',  relation: 'User', readonly: 1, searchable: false },
-      { name: 'updated_at',     display: 'Updated',     tag: 'datetime', readonly: 1, searchable: false },
-      { name: 'origin_by_id',   display: 'Origin By',   relation: 'User', readonly: 1 },
+      { name: 'ticket_id',      display: __('TicketID'),    null: false, readonly: 1, searchable: false },
+      { name: 'from',           display: __('From'),        tag: 'input',    type: 'text', limit: 100, null: false },
+      { name: 'to',             display: __('To'),          tag: 'input',    type: 'text', limit: 100, null: true },
+      { name: 'cc',             display: __('Cc'),          tag: 'input',    type: 'text', limit: 100, null: true },
+      { name: 'subject',        display: __('Subject'),     tag: 'input',    type: 'text', limit: 100, null: true },
+      { name: 'body',           display: __('Text'),        tag: 'textarea', rows: 5,      limit: 100, null: false, searchable: true },
+      { name: 'type_id',        display: __('Type'),        tag: 'select',   multiple: false, null: false, relation: 'TicketArticleType', default: '' },
+      { name: 'sender_id',      display: __('Sender'),      tag: 'select',   multiple: false, null: false, relation: 'TicketArticleSender', default: '' },
+      { name: 'internal',       display: __('Visibility'),  tag: 'radio',  default: false,  null: true, options: { true: 'internal', false: 'public' } },
+      { name: 'created_by_id',  display: __('Created by'),  relation: 'User', readonly: 1 },
+      { name: 'created_at',     display: __('Created'),     tag: 'datetime', readonly: 1, searchable: false },
+      { name: 'updated_by_id',  display: __('Updated by'),  relation: 'User', readonly: 1, searchable: false },
+      { name: 'updated_at',     display: __('Updated'),     tag: 'datetime', readonly: 1, searchable: false },
+      { name: 'origin_by_id',   display: __('Origin By'),   relation: 'User', readonly: 1 },
     ]
 
   uiUrl: ->

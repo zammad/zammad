@@ -23,7 +23,7 @@ class Login extends App.ControllerFullPage
         errorMessage: App.i18n.translateContent('Due to inactivity you are automatically logged out.')
       }
 
-    @title 'Sign in'
+    @title __('Sign in')
     @render(data)
     @navupdate '#login'
 

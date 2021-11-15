@@ -100,7 +100,7 @@ class App.KnowledgeBaseSearchFieldWidget extends App.Controller
 
     @searchField.removeClass('loading')
 
-    text = xhr.responseJSON?.error_human || xhr.responseJSON?.errorr || 'Unable to load'
+    text = xhr.responseJSON?.error_human || xhr.responseJSON?.errorr || __('Unable to load')
     @renderError(text)
 
   onSuccess: (data, originalQuery) =>

@@ -8,22 +8,6 @@ class TranslationsController < ApplicationController
     render json: Translation.lang(params[:locale])
   end
 
-  # PUT /translations/push
-  def push
-    start = Time.zone.now
-    Translation.push(params[:locale])
-    if start > Time.zone.now - 4.seconds
-      sleep 3
-    end
-    render json: { message: 'ok' }, status: :ok
-  end
-
-  # POST /translations/sync/:locale
-  def sync
-    Translation.load(params[:locale])
-    render json: { message: 'ok' }, status: :ok
-  end
-
   # POST /translations/reset
   def reset
     Translation.reset(params[:locale])

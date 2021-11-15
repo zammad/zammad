@@ -1,9 +1,9 @@
 class GitLab extends App.ControllerIntegrationBase
   featureIntegration: 'gitlab_integration'
-  featureName: 'GitLab'
+  featureName: __('GitLab')
   featureConfig: 'gitlab_config'
   description: [
-    ['This service allows you to connect %s with %s.', 'GitLab', 'Zammad']
+    [__('This service allows you to connect %s with %s.'), 'GitLab', 'Zammad']
   ]
   events:
     'change .js-switch input': 'switch'
@@ -60,7 +60,7 @@ class Form extends App.Controller
         details = data.responseJSON || {}
         App.Event.trigger 'notify', {
           type: 'error'
-          msg:  App.i18n.translateContent(details.error_human || details.error || 'Unable to save!')
+          msg:  App.i18n.translateContent(details.error_human || details.error || __('Unable to save!'))
         }
     )
 
@@ -71,9 +71,9 @@ class State
 App.Config.set(
   'IntegrationGitLab'
   {
-    name: 'GitLab'
+    name: __('GitLab')
     target: '#system/integration/gitlab'
-    description: 'Link GitLab issues to your tickets.'
+    description: __('Link GitLab issues to your tickets.')
     controller: GitLab
     state: State
   }

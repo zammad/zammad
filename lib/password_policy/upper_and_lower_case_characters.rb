@@ -10,7 +10,7 @@ class PasswordPolicy
     end
 
     def error
-      ['Invalid password, it must contain at least 2 lowercase and 2 uppercase characters!']
+      [__('Invalid password, it must contain at least 2 lowercase and 2 uppercase characters!')]
     end
 
     def self.applicable?

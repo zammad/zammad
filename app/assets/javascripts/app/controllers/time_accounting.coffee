@@ -1,6 +1,6 @@
 class TimeAccounting extends App.ControllerSubContent
   requiredPermission: 'admin.time_accounting'
-  header: 'Time Accounting'
+  header: __('Time Accounting')
   events:
     'change .js-timeAccountingSetting input': 'setTimeAccounting'
     'click .js-timePickerYear': 'setYear'
@@ -45,51 +45,51 @@ class TimeAccounting extends App.ControllerSubContent
 
     timeRangeMonth = [
       {
-        display: 'Jan'
+        display: __('Jan')
         value: 1
       },
       {
-        display: 'Feb'
+        display: __('Feb')
         value: 2
       },
       {
-        display: 'Mar'
+        display: __('Mar')
         value: 3
       },
       {
-        display: 'Apr'
+        display: __('Apr')
         value: 4,
       },
       {
-        display: 'May'
+        display: __('May')
         value: 5,
       },
       {
-        display: 'Jun'
+        display: __('Jun')
         value: 6,
       },
       {
-        display: 'Jul'
+        display: __('Jul')
         value: 7,
       },
       {
-        display: 'Aug'
+        display: __('Aug')
         value: 8,
       },
       {
-        display: 'Sep'
+        display: __('Sep')
         value: 9,
       },
       {
-        display: 'Oct'
+        display: __('Oct')
         value: 10,
       },
       {
-        display: 'Nov'
+        display: __('Nov')
         value: 11,
       },
       {
-        display: 'Dec'
+        display: __('Dec')
         value: 12,
       },
     ]
@@ -103,7 +103,7 @@ class TimeAccounting extends App.ControllerSubContent
     )
 
     configure_attributes = [
-      { name: 'condition',  display: 'Conditions for effected objects', tag: 'ticket_selector', null: false, preview: false, action: false, hasChanged: false },
+      { name: 'condition',  display: __('Conditions for effected objects'), tag: 'ticket_selector', null: false, preview: false, action: false, hasChanged: false },
     ]
 
     filter_params = App.Setting.get('time_accounting_selector')
@@ -222,4 +222,4 @@ class ByOrganization extends App.Controller
       rows: rows
     )
 
-App.Config.set('TimeAccounting', { prio: 8500, name: 'Time Accounting', parent: '#manage', target: '#manage/time_accounting', controller: TimeAccounting, permission: ['admin.time_accounting'] }, 'NavBarAdmin')
+App.Config.set('TimeAccounting', { prio: 8500, name: __('Time Accounting'), parent: '#manage', target: '#manage/time_accounting', controller: TimeAccounting, permission: ['admin.time_accounting'] }, 'NavBarAdmin')

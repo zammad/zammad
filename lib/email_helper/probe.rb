@@ -304,14 +304,14 @@ returns on fail
                  from:    email,
                  to:      email,
                  subject: "Zammad Getting started Test Email #{subject}",
-                 body:    "This is a Test Email of Zammad to check if sending and receiving is working correctly.\n\nYou can ignore or delete this email.",
+                 body:    __("This is a Test Email of Zammad to check if sending and receiving is working correctly.\n\nYou can ignore or delete this email."),
                }
              else
                {
                  from:    email,
                  to:      'emailtrytest@znuny.com',
-                 subject: 'This is a Test Email',
-                 body:    "This is a Test Email of Zammad to verify if Zammad can send emails to an external address.\n\nIf you see this email, you can ignore and delete it.",
+                 subject: __('This is a Test Email'),
+                 body:    __("This is a Test Email of Zammad to verify if Zammad can send emails to an external address.\n\nIf you see this email, you can ignore and delete it."),
                }
              end
       if subject.present?
@@ -402,17 +402,17 @@ returns on fail
 
     def self.translations
       {
-        'authentication failed'                                     => 'Authentication failed!',
-        'Username and Password not accepted'                        => 'Authentication failed!',
-        'Incorrect username'                                        => 'Authentication failed, username incorrect!',
-        'Lookup failed'                                             => 'Authentication failed, username incorrect!',
-        'Invalid credentials'                                       => 'Authentication failed, invalid credentials!',
-        'authentication not enabled'                                => 'Authentication not possible (not offered by the service)',
-        'getaddrinfo: nodename nor servname provided, or not known' => 'Hostname not found!',
-        'getaddrinfo: Name or service not known'                    => 'Hostname not found!',
-        'No route to host'                                          => 'No route to host!',
-        'execution expired'                                         => 'Host not reachable!',
-        'Connection refused'                                        => 'Connection refused!',
+        'authentication failed'                                     => __('Authentication failed!'),
+        'Username and Password not accepted'                        => __('Authentication failed!'),
+        'Incorrect username'                                        => __('Authentication failed, username incorrect!'),
+        'Lookup failed'                                             => __('Authentication failed, username incorrect!'),
+        'Invalid credentials'                                       => __('Authentication failed, invalid credentials!'),
+        'authentication not enabled'                                => __('Authentication not possible (not offered by the service)'),
+        'getaddrinfo: nodename nor servname provided, or not known' => __('Hostname not found!'),
+        'getaddrinfo: Name or service not known'                    => __('Hostname not found!'),
+        'No route to host'                                          => __('No route to host!'),
+        'execution expired'                                         => __('Host not reachable!'),
+        'Connection refused'                                        => __('Connection refused!'),
       }
     end
 

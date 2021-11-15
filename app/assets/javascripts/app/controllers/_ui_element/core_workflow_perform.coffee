@@ -60,7 +60,7 @@ class App.UiElement.core_workflow_perform extends App.UiElement.ApplicationSelec
         options = {}
         for module in App.CoreWorkflowCustomModule.all()
           options[module.name] = module.name
-        elements['custom.module'] = { name: 'module', display: 'Module', tag: 'select', multiple: true, options: options, null: false, operator: ['execute'] }
+        elements['custom.module'] = { name: 'module', display: __('Module'), tag: 'select', multiple: true, options: options, null: false, operator: ['execute'] }
         continue
 
       for row in App[groupMeta.model].configure_attributes
@@ -135,6 +135,24 @@ class App.UiElement.core_workflow_perform extends App.UiElement.ApplicationSelec
       config.multiple = false
       config.nulloption = false
     return config
+
+  @mapOperatorDisplayName: (operator) ->
+    names =
+      'show':           __('show')
+      'hide':           __('hide')
+      'remove':         __('remove')
+      'set_mandatory':  __('set mandatory')
+      'set_optional':   __('set optional')
+      'set_readonly':   __('set readonly')
+      'unset_readonly': __('unset readonly')
+      'add_option':     __('add option')
+      'remove_option':  __('remove option')
+      'set_fixed_to':   __('set fixed to')
+      'select':         __('select')
+      'auto_select':    __('auto select')
+      'fill_in':        __('fill in')
+      'fill_in_empty':  __('fill in empty')
+    return names[operator] || operator
 
   @HasPreCondition: ->
     return false

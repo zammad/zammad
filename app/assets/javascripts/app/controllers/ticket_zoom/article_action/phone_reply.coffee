@@ -8,7 +8,7 @@ class PhoneReply
   @articleTypes: (articleTypes, ticket, ui) ->
     return articleTypes if ticket.currentView() is 'customer'
     articleTypes.push {
-      name:       'phone'
+      name:       __('phone')
       icon:       'phone'
       attributes: []
       internal:   false,

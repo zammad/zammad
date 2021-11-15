@@ -1,6 +1,6 @@
 class ProfileDevices extends App.ControllerSubContent
   requiredPermission: 'user_preferences.device'
-  header: 'Devices'
+  header: __('Devices')
   events:
     'click [data-type=delete]': 'delete'
 
@@ -55,4 +55,4 @@ class ProfileDevices extends App.ControllerSubContent
       msg:  App.i18n.translateContent(data.message)
     )
 
-App.Config.set('Devices', { prio: 3100, name: 'Devices', parent: '#profile', target: '#profile/devices', controller: ProfileDevices, permission: ['user_preferences.device'] }, 'NavBarProfile')
+App.Config.set('Devices', { prio: 3100, name: __('Devices'), parent: '#profile', target: '#profile/devices', controller: ProfileDevices, permission: ['user_preferences.device'] }, 'NavBarProfile')

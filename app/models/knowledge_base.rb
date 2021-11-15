@@ -16,7 +16,7 @@ class KnowledgeBase < ApplicationModel
 
   accepts_nested_attributes_for :kb_locales, allow_destroy: true
   validates                     :kb_locales, presence: true
-  validates                     :kb_locales, length: { maximum: 1, message: 'System supports only one locale for knowledge base. Upgrade your plan to use more locales.' }, unless: :multi_lingual_support?
+  validates                     :kb_locales, length: { maximum: 1, message: __('System supports only one locale for knowledge base. Upgrade your plan to use more locales.') }, unless: :multi_lingual_support?
 
   has_many :categories, class_name: 'KnowledgeBase::Category',
                         inverse_of: :knowledge_base,
@@ -191,7 +191,7 @@ class KnowledgeBase < ApplicationModel
     end
 
     if custom_address == '/' # rubocop:disable Style/GuardClause
-      errors.add(:custom_address, 'Please enter valid path or domain')
+      errors.add(:custom_address, __('Please enter valid path or domain'))
     end
   end
 

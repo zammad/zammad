@@ -151,9 +151,9 @@ class App.KnowledgeBaseReaderController extends App.Controller
 
     @renderScreenPlaceholder(
       icon:   App.Utils.icon('mood-ok')
-      detail: 'Not available in selected language'
+      detail: __('Not available in selected language')
       el:     @answerBody
-      action: 'Create a translation'
+      action: __('Create a translation')
       actionCallback: =>
         url = answer.uiUrl(@parentController.kb_locale(), 'edit')
         @navigate url

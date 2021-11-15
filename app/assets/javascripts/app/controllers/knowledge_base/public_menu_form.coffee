@@ -65,5 +65,5 @@ class App.KnowledgeBasePublicMenuForm extends App.ControllerModal
     @close()
 
   onError: (xhr) =>
-    @showAlert(xhr.responseJSON?.error_human || 'Couldn\'t save changes')
+    @showAlert(xhr.responseJSON?.error_human || __('Couldn\'t save changes'))
     @formItems.forEach (elem) -> elem.toggleUserInteraction(true)

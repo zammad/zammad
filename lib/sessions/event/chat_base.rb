@@ -25,7 +25,7 @@ class Sessions::Event::ChatBase < Sessions::Event::Base
       error = {
         event: 'chat_error',
         data:  {
-          state: 'Need session_id.',
+          state: __('Need session_id.'),
         },
       }
       Sessions.send(@client_id, error)

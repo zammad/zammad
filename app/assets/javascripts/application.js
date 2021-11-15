@@ -54,6 +54,11 @@ if (!console.log) {
   console.log = function(){}
 }
 
+// No-op to mark translatable strings.
+function __(str) {
+  return str
+}
+
 function escapeRegExp(str) {
   return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
 }

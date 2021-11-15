@@ -1,7 +1,7 @@
 class Import extends App.ControllerWizardFullScreen
   constructor: ->
     super
-    @title 'Import'
+    @title __('Import')
     @fetch()
 
   fetch: ->

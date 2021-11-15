@@ -67,7 +67,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
       render json: {
         auto_wizard:         true,
         auto_wizard_success: false,
-        message:             'Invalid auto wizard file.',
+        message:             __('Invalid auto wizard file.'),
       }
       return
     end
@@ -87,7 +87,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
       render json: {
         auto_wizard:         true,
         auto_wizard_success: false,
-        message:             'Error during execution of auto wizard.',
+        message:             __('Error during execution of auto wizard.'),
       }
       return
     end
@@ -113,7 +113,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
         settings[:http_type] = result[:scheme]
         settings[:fqdn]      = result[:fqdn]
       else
-        messages[:url] = 'An URL looks like this: http://zammad.example.com'
+        messages[:url] = __('An URL looks like this: http://zammad.example.com')
       end
     end
 
@@ -128,7 +128,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     if params[:logo] && params[:logo] =~ %r{^data:image}i
       file = StaticAssets.data_url_attributes(params[:logo])
       if !file[:content] || !file[:mime_type]
-        messages[:logo] = 'Unable to process image upload.'
+        messages[:logo] = __('Unable to process image upload.')
       end
     end
 

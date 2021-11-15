@@ -78,11 +78,11 @@ class App.Html5Upload extends App.Controller
     @callbackFileUploadStop?()
 
     new App.ControllerModal(
-      head: 'Upload Failed'
+      head: __('Upload Failed')
       buttonCancel: 'Cancel'
       buttonCancelClass: 'btn--danger'
       buttonSubmit: false
-      message: message || 'Cannot upload file'
+      message: message || __('Cannot upload file')
       shown: true
       small: true
       container: @inputField.closest('.content')

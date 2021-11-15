@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
 
 Macro.create_if_not_exists(
-  name:            'Close & Tag as Spam',
+  name:            __('Close & Tag as Spam'),
   perform:         {
     'ticket.state_id' => {
       value: Ticket::State.by_category(:closed).first.id,
@@ -16,6 +16,6 @@ Macro.create_if_not_exists(
     },
   },
   ux_flow_next_up: 'next_task',
-  note:            'example macro',
+  note:            __('example macro'),
   active:          true,
 )

@@ -361,7 +361,7 @@ returns
   end
 
   def self.set_headers(request, options)
-    defaults = { 'User-Agent' => 'Zammad User Agent' }
+    defaults = { 'User-Agent' => __('Zammad User Agent') }
     headers  = defaults.merge(options.fetch(:headers, {}))
 
     headers.each do |header, value|
@@ -471,7 +471,7 @@ returns
         header:  response.each_header.to_h,
       )
     when Net::HTTPRedirection
-      raise 'Too many redirections for the original URL, halting.' if count <= 0
+      raise __('Too many redirections for the original URL, halting.') if count <= 0
 
       url = response['location']
       return get(url, params, options, count - 1)

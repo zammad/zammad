@@ -42,7 +42,7 @@ class App.HttpLog extends App.Controller
 class Show extends App.ControllerModal
   authenticateRequired: true
   large: true
-  head: 'HTTP Log'
+  head: __('HTTP Log')
   buttonClose: true
   buttonCancel: false
   buttonSubmit: false

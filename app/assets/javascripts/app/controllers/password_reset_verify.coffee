@@ -19,7 +19,7 @@ class PasswordResetVerify extends App.ControllerFullPage
       return
 
     # set title
-    @title 'Reset Password'
+    @title __('Reset Password')
     @navupdate '#password_reset_verify'
 
     # get data
@@ -37,7 +37,7 @@ class PasswordResetVerify extends App.ControllerFullPage
   renderChange: (data) =>
     if data.message is 'ok'
       configure_attributes = [
-        { name: 'password', display: 'Password', tag: 'input', type: 'password', limit: 100, null: false, class: 'input' }
+        { name: 'password', display: __('Password'), tag: 'input', type: 'password', limit: 100, null: false, class: 'input' }
       ]
 
       @replaceWith(App.view('password/reset_change')())
@@ -49,8 +49,8 @@ class PasswordResetVerify extends App.ControllerFullPage
       )
     else
       @replaceWith(App.view('password/reset_failed')(
-        head:    'Reset Password failed!'
-        message: 'Token is invalid!'
+        head:    __('Reset Password failed!')
+        message: __('Token is invalid!')
       ))
 
   submit: (e) ->
@@ -69,7 +69,7 @@ class PasswordResetVerify extends App.ControllerFullPage
       @$('[name=password_confirm]').val('')
       @notify(
         type:      'error'
-        msg:       'Can\'t update password, your new passwords do not match. Please try again!'
+        msg:       __('Can\'t update password, your new passwords do not match. Please try again!')
         removeAll: true
       )
       return
@@ -77,7 +77,7 @@ class PasswordResetVerify extends App.ControllerFullPage
       @formEnable(e)
       @notify(
         type:      'error'
-        msg:       'Please supply your new password!'
+        msg:       __('Please supply your new password!')
         removeAll: true
       )
       return
@@ -106,7 +106,7 @@ class PasswordResetVerify extends App.ControllerFullPage
           # add notify
           @notify(
             type:      'success'
-            msg:       'Woo hoo! Your password has been changed!'
+            msg:       __('Woo hoo! Your password has been changed!')
             removeAll: true
           )
 
@@ -119,7 +119,7 @@ class PasswordResetVerify extends App.ControllerFullPage
           # add notify
           @notify(
             type:      'error'
-            msg:       'Something went wrong. Please contact your administrator.'
+            msg:       __('Something went wrong. Please contact your administrator.')
             removeAll: true
           )
       )
@@ -133,7 +133,7 @@ class PasswordResetVerify extends App.ControllerFullPage
       else
         @notify(
           type:      'error'
-          msg:       'Unable to set password. Please contact your administrator.'
+          msg:       __('Unable to set password. Please contact your administrator.')
           removeAll: true
         )
       @formEnable(@$('form'))

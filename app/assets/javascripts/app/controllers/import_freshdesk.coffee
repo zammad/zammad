@@ -22,7 +22,7 @@ class ImportFreshdesk extends App.ControllerWizardFullScreen
     super
 
     # set title
-    @title 'Import'
+    @title __('Import')
 
     @freshdeskDomain = '.freshdesk.com'
 
@@ -186,8 +186,8 @@ class ImportFreshdesk extends App.ControllerWizardFullScreen
 
 App.Config.set('import/freshdesk', ImportFreshdesk, 'Routes')
 App.Config.set('freshdesk', {
-  title: 'Freshdesk'
-  name:  'Freshdesk'
+  title: __('Freshdesk')
+  name:  __('Freshdesk')
   class: 'js-freshdesk'
   url:   '#import/freshdesk'
 }, 'ImportPlugins')

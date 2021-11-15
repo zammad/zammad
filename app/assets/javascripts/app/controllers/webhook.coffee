@@ -1,6 +1,6 @@
 class Index extends App.ControllerSubContent
   requiredPermission: 'admin.webhook'
-  header: 'Webhooks'
+  header: __('Webhooks')
   constructor: ->
     super
 
@@ -11,19 +11,19 @@ class Index extends App.ControllerSubContent
       defaultSortBy: 'name'
       pageData:
         home: 'webhooks'
-        object: 'Webhook'
-        objects: 'Webhooks'
+        object: __('Webhook')
+        objects: __('Webhooks')
         pagerAjax: true
         pagerBaseUrl: '#manage/webhook/'
         pagerSelected: ( @page || 1 )
         pagerPerPage: 150
         navupdate: '#webhooks'
         notes: [
-          'Webhooks are ...'
+          __('Webhooks are ...')
         ]
         buttons: [
-          { name: 'Example Payload', 'data-type': 'payload', class: 'btn' }
-          { name: 'New Webhook', 'data-type': 'new', class: 'btn--success' }
+          { name: __('Example Payload'), 'data-type': 'payload', class: 'btn' }
+          { name: __('New Webhook'), 'data-type': 'new', class: 'btn--success' }
         ]
         logFacility: 'webhook'
       payloadExampleUrl: '/api/v1/webhooks/preview'
@@ -38,4 +38,4 @@ class Index extends App.ControllerSubContent
 
     @genericController.paginate( @page || 1 )
 
-App.Config.set('Webhook', { prio: 3350, name: 'Webhook', parent: '#manage', target: '#manage/webhook', controller: Index, permission: ['admin.webhook'] }, 'NavBarAdmin')
+App.Config.set('Webhook', { prio: 3350, name: __('Webhook'), parent: '#manage', target: '#manage/webhook', controller: Index, permission: ['admin.webhook'] }, 'NavBarAdmin')

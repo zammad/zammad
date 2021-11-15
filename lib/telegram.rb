@@ -43,7 +43,7 @@ returns
     begin
       api.setWebhook(callback_url)
     rescue
-      raise Exceptions::UnprocessableEntity, 'Unable to set webhook at Telegram, seems to be a invalid url.'
+      raise Exceptions::UnprocessableEntity, __('Unable to set webhook at Telegram, seems to be a invalid url.')
     end
     true
   end
@@ -66,16 +66,16 @@ returns
     bot = Telegram.check_token(token)
 
     if !channel && Telegram.bot_duplicate?(bot['id'])
-      raise Exceptions::UnprocessableEntity, 'Bot already exists!'
+      raise Exceptions::UnprocessableEntity, __('Bot already exists!')
     end
 
     if params[:group_id].blank?
-      raise Exceptions::UnprocessableEntity, 'Group needed!'
+      raise Exceptions::UnprocessableEntity, __('Group needed!')
     end
 
     group = Group.find_by(id: params[:group_id])
     if !group
-      raise Exceptions::UnprocessableEntity, 'Group invalid!'
+      raise Exceptions::UnprocessableEntity, __('Group invalid!')
     end
 
     # generate random callback token
@@ -718,7 +718,7 @@ returns
     # send welcome message and don't create ticket
     text = params[:message][:text]
     if text.present? && text.start_with?('/start')
-      message(params[:message][:chat][:id], channel.options[:welcome] || 'You are welcome! Just ask me something!', params[:message][:from][:language_code])
+      message(params[:message][:chat][:id], channel.options[:welcome] || __('You are welcome! Just ask me something!'), params[:message][:from][:language_code])
       return
 
     # find ticket and close it
@@ -770,7 +770,7 @@ returns
     # telegram bot files are limited up to 20MB
     # https://core.telegram.org/bots/api#getfile
     if !validate_file_size(file)
-      message_text = 'Telegram file is to big. (Maximum 20mb)'
+      message_text = __('Telegram file is to big. (Maximum 20mb)')
       message(params[:message][:chat][:id], "Sorry, we could not handle your message. #{message_text}", params[:message][:from][:language_code])
       raise Exceptions::UnprocessableEntity, message_text
     end
@@ -778,7 +778,7 @@ returns
     result = download_file(file[:file_id])
 
     if !validate_download(result)
-      message_text = 'Unable to get you file from bot.'
+      message_text = __('Unable to get you file from bot.')
       message(params[:message][:chat][:id], "Sorry, we could not handle your message. #{message_text}", params[:message][:from][:language_code])
       raise Exceptions::UnprocessableEntity, message_text
     end

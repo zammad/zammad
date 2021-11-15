@@ -23,7 +23,7 @@ class GitLab
       )
       return if response.dig('data', 'currentUser', 'username').present?
 
-      raise 'Invalid GitLab GraphQL API token'
+      raise __('Invalid GitLab GraphQL API token')
     end
   end
 end

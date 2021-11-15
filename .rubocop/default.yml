@@ -317,6 +317,20 @@ Zammad/ExistsResetColumnInformation:
     - 'db/migrate/201*_*.rb'
     - 'db/migrate/2020*_*.rb'
 
+Zammad/DetectTranslatableString:
+  Enabled: true
+  Include:
+    - "app/**/*.rb"
+    - "db/**/*.rb"
+    - "lib/**/*.rb"
+  Exclude:
+    - "db/migrate/**/*.rb"
+    - "db/addon/**/*.rb"
+    - "lib/generators/**/*.rb"
+    - "lib/sequencer/**/*.rb"
+    - "lib/import/**/*.rb"
+    - "lib/tasks/**/*.rb"
+
 Zammad/ExistsDbStrategy:
   Include:
     - "spec/**/*.rb"

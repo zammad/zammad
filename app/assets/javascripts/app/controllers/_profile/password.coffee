@@ -1,6 +1,6 @@
 class ProfilePassword extends App.ControllerSubContent
   requiredPermission: 'user_preferences.password'
-  header: 'Password'
+  header: __('Password')
   events:
     'submit form': 'update'
 
@@ -14,8 +14,8 @@ class ProfilePassword extends App.ControllerSubContent
     html = $( App.view('profile/password')() )
 
     configure_attributes = [
-      { name: 'password_old', display: 'Current password', tag: 'input', type: 'password', limit: 100, null: false, class: 'input', single: true  },
-      { name: 'password_new', display: 'New password',     tag: 'input', type: 'password', limit: 100, null: false, class: 'input',  },
+      { name: 'password_old', display: __('Current password'), tag: 'input', type: 'password', limit: 100, null: false, class: 'input', single: true  },
+      { name: 'password_new', display: __('New password'),     tag: 'input', type: 'password', limit: 100, null: false, class: 'input',  },
     ]
 
     @form = new App.ControllerForm(
@@ -37,14 +37,14 @@ class ProfilePassword extends App.ControllerSubContent
       @$('[name=password_new_confirm]').val('')
       @notify
         type:      'error'
-        msg:       'Can\'t update password, your new passwords do not match. Please try again!'
+        msg:       __('Can\'t update password, your new passwords do not match. Please try again!')
         removeAll: true
       return
     if !params['password_new']
       @formEnable(e)
       @notify
         type:      'error'
-        msg:       'Please supply your new password!'
+        msg:       __('Please supply your new password!')
         removeAll: true
       return
 
@@ -74,8 +74,8 @@ class ProfilePassword extends App.ControllerSubContent
       else
         @notify
           type:      'error'
-          msg:       'Unable to set password. Please contact your administrator.'
+          msg:       __('Unable to set password. Please contact your administrator.')
           removeAll: true
       @formEnable( @$('form') )
 
-App.Config.set('Password', { prio: 2000, name: 'Password', parent: '#profile', target: '#profile/password', controller: ProfilePassword, permission: ['user_preferences.password'] }, 'NavBarProfile')
+App.Config.set('Password', { prio: 2000, name: __('Password'), parent: '#profile', target: '#profile/password', controller: ProfilePassword, permission: ['user_preferences.password'] }, 'NavBarProfile')

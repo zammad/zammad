@@ -1,6 +1,6 @@
 class ReportProfile extends App.ControllerSubContent
   requiredPermission: 'admin.report_profile'
-  header: 'Report Profile'
+  header: __('Report Profile')
   constructor: ->
     super
 
@@ -11,8 +11,8 @@ class ReportProfile extends App.ControllerSubContent
       defaultSortBy: 'name'
       pageData:
         home: 'report_profiles'
-        object: 'Report Profile'
-        objects: 'Report Profiles'
+        object: __('Report Profile')
+        objects: __('Report Profiles')
         pagerAjax: true
         pagerBaseUrl: '#manage/report_profiles/'
         pagerSelected: ( @page || 1 )
@@ -22,7 +22,7 @@ class ReportProfile extends App.ControllerSubContent
 #          'Report Profile are ...'
         ]
         buttons: [
-          { name: 'New Profile', 'data-type': 'new', class: 'primary' }
+          { name: __('New Profile'), 'data-type': 'new', class: 'primary' }
         ]
       container: @el.closest('.content')
       veryLarge: true
@@ -35,4 +35,4 @@ class ReportProfile extends App.ControllerSubContent
 
     @genericController.paginate( @page || 1 )
 
-App.Config.set('ReportProfile', { prio: 8000, name: 'Report Profiles', parent: '#manage', target: '#manage/report_profiles', controller: ReportProfile, permission: ['admin.report_profile'] }, 'NavBarAdmin')
+App.Config.set('ReportProfile', { prio: 8000, name: __('Report Profiles'), parent: '#manage', target: '#manage/report_profiles', controller: ReportProfile, permission: ['admin.report_profile'] }, 'NavBarAdmin')

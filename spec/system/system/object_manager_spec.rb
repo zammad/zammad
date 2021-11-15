@@ -78,7 +78,7 @@ RSpec.describe 'System > Objects', type: :system do
           expect(page).to have_text('New field')
           expect(page).to have_text('Database Update required')
           click '.js-execute', wait: 7.minutes
-          expect(page).to have_text('Zammad need a restart')
+          expect(page).to have_text('Zammad requires a restart')
           page.refresh
 
           # Update
@@ -97,7 +97,7 @@ RSpec.describe 'System > Objects', type: :system do
           click 'tbody tr:last-child .js-delete'
           expect(page).to have_text('Database Update required')
           click '.js-execute', wait: 7.minutes
-          expect(page).to have_text('Zammad need a restart')
+          expect(page).to have_text('Zammad requires a restart')
           page.refresh
           expect(page).to have_no_text('New field updated')
         end

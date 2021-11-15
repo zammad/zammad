@@ -126,7 +126,7 @@ class App.SettingsAreaTicketNumber extends App.Controller
         ui.formEnable(e)
         App.Event.trigger 'notify', {
           type:    'error'
-          msg:     App.i18n.translateContent(details.error_human || details.error || 'Unable to update object!')
+          msg:     App.i18n.translateContent(details.error_human || details.error || __('Unable to update object!'))
           timeout: 2000
         }
     )

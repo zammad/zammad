@@ -1,6 +1,6 @@
 class CoreWorkflow extends App.ControllerSubContent
   requiredPermission: 'admin.core_workflow'
-  header: 'Core Workflows'
+  header: __('Core Workflows')
   constructor: ->
     super
 
@@ -13,18 +13,18 @@ class CoreWorkflow extends App.ControllerSubContent
       defaultSortBy: 'name'
       pageData:
         home: 'core_workflow'
-        object: 'Workflow'
-        objects: 'Workflows'
+        object: __('Workflow')
+        objects: __('Workflows')
         pagerAjax: true
         pagerBaseUrl: '#manage/core_workflow/'
         pagerSelected: ( @page || 1 )
         pagerPerPage: 150
         navupdate: '#core_workflow'
         notes: [
-          'Core Workflows are actions or constraints on selections in forms. Depending on an action, it is possible to hide or restrict fields or to change the obligation to fill them in.'
+          __('Core Workflows are actions or constraints on selections in forms. Depending on an action, it is possible to hide or restrict fields or to change the obligation to fill them in.')
         ]
         buttons: [
-          { name: 'New Workflow', 'data-type': 'new', class: 'btn--success' }
+          { name: __('New Workflow'), 'data-type': 'new', class: 'btn--success' }
         ]
       container: @el.closest('.content')
       veryLarge: true
@@ -47,10 +47,10 @@ class CoreWorkflow extends App.ControllerSubContent
 
   screen2displayName: (screen) ->
     mapping = {
-      create: 'Creation mask',
-      create_middle: 'Creation mask',
-      edit: 'Edit mask',
-      overview_bulk: 'Overview bulk mask',
+      create: __('Creation mask'),
+      create_middle: __('Creation mask'),
+      edit: __('Edit mask'),
+      overview_bulk: __('Overview bulk mask'),
     }
     return mapping[screen] || screen
 

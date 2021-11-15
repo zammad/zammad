@@ -829,12 +829,12 @@ generate url for index or document access (only for internal use)
       suffix += "Payload:\n#{payload.inspect}"
     end
 
-    message = if response&.error&.match?('Connection refused')
-                "Elasticsearch is not reachable, probably because it's not running or even installed."
+    message = if response&.error&.match?(__('Connection refused'))
+                __("Elasticsearch is not reachable, probably because it's not running or even installed.")
               elsif url.end_with?('pipeline/zammad-attachment', 'pipeline=zammad-attachment') && response.code == 400
-                'The installed attachment plugin could not handle the request payload. Ensure that the correct attachment plugin is installed (ingest-attachment).'
+                __('The installed attachment plugin could not handle the request payload. Ensure that the correct attachment plugin is installed (ingest-attachment).')
               else
-                'Check the response and payload for detailed information: '
+                __('Check the response and payload for detailed information: ')
               end
 
     result = "#{prefix} #{message}#{suffix}"
@@ -1161,7 +1161,7 @@ helper method for making HTTP calls and raising error if response was not succes
         },
         {
           action:      'create',
-          description: 'Extract zammad-attachment information from arrays',
+          description: __('Extract zammad-attachment information from arrays'),
           processors:  [
             {
               foreach: {

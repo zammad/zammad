@@ -4,7 +4,7 @@ class App.KnowledgeBaseTranslation extends App.Model
   @extend App.KnowledgeBaseTranslationable
   @url: @apiPath + '/knowledge_base/translations'
   @configure_attributes = [
-      { name: 'title', display: 'Title', tag: 'input' },
+      { name: 'title', display: __('Title'), tag: 'input' },
     ]
 
   parent: ->

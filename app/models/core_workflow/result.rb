@@ -6,8 +6,8 @@ class CoreWorkflow::Result
   attr_accessor :payload, :user, :assets, :assets_in_result, :result, :rerun
 
   def initialize(payload:, user:, assets: {}, assets_in_result: true, result: {})
-    raise ArgumentError, 'No payload->class_name given!' if !payload['class_name']
-    raise ArgumentError, 'No payload->screen given!' if !payload['screen']
+    raise ArgumentError, __('No payload->class_name given!') if !payload['class_name']
+    raise ArgumentError, __('No payload->screen given!') if !payload['screen']
 
     @payload          = payload
     @user             = user

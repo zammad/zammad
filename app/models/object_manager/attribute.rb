@@ -96,7 +96,7 @@ add a new attribute entry for an object
   ObjectManager::Attribute.add(
     object: 'Ticket',
     name: 'group_id',
-    display: 'Group',
+    display: __('Group'),
     data_type: 'select',
     data_option: {
       relation: 'Group',
@@ -820,10 +820,10 @@ is certain attribute used by triggers, overviews or schedulers
       errors.add(:name, 'spaces are not allowed')
     end
     if !name.match?(%r{^[a-z0-9_]+$})
-      errors.add(:name, 'Only letters from a-z because numbers from 0-9 and _ are allowed')
+      errors.add(:name, __('Only letters from a-z because numbers from 0-9 and _ are allowed'))
     end
     if !name.match?(%r{[a-z]})
-      errors.add(:name, 'At least one letters is needed')
+      errors.add(:name, __('At least one letters is needed'))
     end
 
     # do not allow model method names as attributes
@@ -854,7 +854,7 @@ is certain attribute used by triggers, overviews or schedulers
   def check_editable
     return if editable
 
-    errors.add(:name, 'Attribute not editable!')
+    errors.add(:name, __('Attribute not editable!'))
     raise ActiveRecord::RecordInvalid, self
   end
 

@@ -419,7 +419,7 @@ returns
     hours = business_hours_to_hash
 
     if hours.blank?
-      errors.add :base, 'No configured business hours found!'
+      errors.add :base, __('No configured business hours found!')
       return
     end
 

@@ -12,7 +12,7 @@ class PasswordPolicy
     end
 
     def error
-      ['Unknown error']
+      [__('Unknown error')]
     end
 
     def self.applicable?

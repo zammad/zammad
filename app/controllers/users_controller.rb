@@ -361,10 +361,10 @@ curl http://localhost/api/v1/users/email_verify -v -u #{login}:#{password} -H "C
 =end
 
   def email_verify
-    raise Exceptions::UnprocessableEntity, 'No token!' if !params[:token]
+    raise Exceptions::UnprocessableEntity, __('No token!') if !params[:token]
 
     user = User.signup_verify_via_token(params[:token], current_user)
-    raise Exceptions::UnprocessableEntity, 'Invalid token!' if !user
+    raise Exceptions::UnprocessableEntity, __('Invalid token!') if !user
 
     current_user_set(user)
 
@@ -393,7 +393,7 @@ curl http://localhost/api/v1/users/email_verify_send -v -u #{login}:#{password} 
 
   def email_verify_send
 
-    raise Exceptions::UnprocessableEntity, 'No email!' if !params[:email]
+    raise Exceptions::UnprocessableEntity, __('No email!') if !params[:email]
 
     user = User.find_by(email: params[:email].downcase)
     if !user || user.verified == true
@@ -445,7 +445,7 @@ curl http://localhost/api/v1/users/password_reset -v -u #{login}:#{password} -H 
   def password_reset_send
 
     # check if feature is enabled
-    raise Exceptions::UnprocessableEntity, 'Feature not enabled!' if !Setting.get('user_lost_password')
+    raise Exceptions::UnprocessableEntity, __('Feature not enabled!') if !Setting.get('user_lost_password')
 
     result = User.password_reset_new_token(params[:username])
     if result && result[:token]
@@ -492,7 +492,7 @@ curl http://localhost/api/v1/users/password_reset_verify -v -u #{login}:#{passwo
   def password_reset_verify
 
     # check if feature is enabled
-    raise Exceptions::UnprocessableEntity, 'Feature not enabled!' if !Setting.get('user_lost_password')
+    raise Exceptions::UnprocessableEntity, __('Feature not enabled!') if !Setting.get('user_lost_password')
     raise Exceptions::UnprocessableEntity, 'token param needed!' if params[:token].blank?
 
     # if no password is given, verify token only
@@ -558,19 +558,19 @@ curl http://localhost/api/v1/users/password_change -v -u #{login}:#{password} -H
 
     # check old password
     if !params[:password_old]
-      render json: { message: 'failed', notice: ['Current password needed!'] }, status: :ok
+      render json: { message: 'failed', notice: [__('Current password needed!')] }, status: :ok
       return
     end
 
     current_password_verified = PasswordHash.verified?(current_user.password, params[:password_old])
     if !current_password_verified
-      render json: { message: 'failed', notice: ['Current password is wrong!'] }, status: :ok
+      render json: { message: 'failed', notice: [__('Current password is wrong!')] }, status: :ok
       return
     end
 
     # set new password
     if !params[:password_new]
-      render json: { message: 'failed', notice: ['Please supply your new password!'] }, status: :ok
+      render json: { message: 'failed', notice: [__('Please supply your new password!')] }, status: :ok
       return
     end
 
@@ -702,7 +702,7 @@ curl http://localhost/api/v1/users/account -v -u #{login}:#{password} -H "Conten
       provider: params[:provider],
       uid:      params[:uid],
     )
-    raise Exceptions::UnprocessableEntity, 'No record found!' if !record.first
+    raise Exceptions::UnprocessableEntity, __('No record found!') if !record.first
 
     record.destroy_all
     render json: { message: 'ok' }, status: :ok
@@ -771,19 +771,19 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
     begin
       file_full = StaticAssets.data_url_attributes(params[:avatar_full])
     rescue
-      render json: { error: 'Full size image is invalid' }, status: :unprocessable_entity
+      render json: { error: __('Full size image is invalid') }, status: :unprocessable_entity
       return
     end
 
     if ActiveStorage::Variant::WEB_IMAGE_CONTENT_TYPES.exclude?(file_full[:mime_type])
-      render json: { error: 'Mime type is invalid' }, status: :unprocessable_entity
+      render json: { error: __('Mime type is invalid') }, status: :unprocessable_entity
       return
     end
 
     begin
       file_resize = StaticAssets.data_url_attributes(params[:avatar_resize])
     rescue
-      render json: { error: 'Resized image is invalid' }, status: :unprocessable_entity
+      render json: { error: __('Resized image is invalid') }, status: :unprocessable_entity
       return
     end
 
@@ -811,7 +811,7 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
 
   def avatar_set_default
     # get & validate image
-    raise Exceptions::UnprocessableEntity, 'No id of avatar!' if !params[:id]
+    raise Exceptions::UnprocessableEntity, __('No id of avatar!') if !params[:id]
 
     # set as default
     avatar = Avatar.set_default('User', current_user.id, params[:id])
@@ -825,7 +825,7 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
 
   def avatar_destroy
     # get & validate image
-    raise Exceptions::UnprocessableEntity, 'No id of avatar!' if !params[:id]
+    raise Exceptions::UnprocessableEntity, __('No id of avatar!') if !params[:id]
 
     # remove avatar
     Avatar.remove_one('User', current_user.id, params[:id])
@@ -875,7 +875,7 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
     if string.blank? && params[:file].present?
       string = params[:file].read.force_encoding('utf-8')
     end
-    raise Exceptions::UnprocessableEntity, 'No source data submitted!' if string.blank?
+    raise Exceptions::UnprocessableEntity, __('No source data submitted!') if string.blank?
 
     result = User.csv_import(
       string:       string,
@@ -955,17 +955,17 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
   def create_signup
     # check if feature is enabled
     if !Setting.get('user_create_account')
-      raise Exceptions::UnprocessableEntity, 'Feature not enabled!'
+      raise Exceptions::UnprocessableEntity, __('Feature not enabled!')
     end
 
     # check signup option only after admin account is created
     if !params[:signup]
-      raise Exceptions::UnprocessableEntity, 'Only signup with not authenticate user possible!'
+      raise Exceptions::UnprocessableEntity, __('Only signup with not authenticate user possible!')
     end
 
     # check if user already exists
     if clean_user_params[:email].blank?
-      raise Exceptions::UnprocessableEntity, 'Attribute \'email\' required!'
+      raise Exceptions::UnprocessableEntity, __('Attribute \'email\' required!')
     end
 
     email_taken_by = User.find_by email: clean_user_params[:email].downcase.strip
@@ -1020,12 +1020,12 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
   # @response_message 403        Forbidden / Invalid session.
   def create_admin
     if User.count > 2 # system and example users
-      raise Exceptions::UnprocessableEntity, 'Administrator account already created'
+      raise Exceptions::UnprocessableEntity, __('Administrator account already created')
     end
 
     # check if user already exists
     if clean_user_params[:email].blank?
-      raise Exceptions::UnprocessableEntity, 'Attribute \'email\' required!'
+      raise Exceptions::UnprocessableEntity, __('Attribute \'email\' required!')
     end
 
     # check password policy

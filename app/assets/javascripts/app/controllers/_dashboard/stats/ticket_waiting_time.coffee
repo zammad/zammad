@@ -7,7 +7,7 @@ class Stats extends App.ControllerDashboardStatsBase
         state: 'supergood'
         average_per_agent: 0
 
-    data.StatsTicketWaitingTime.description = 'How long has each customer had to wait, on average, to get a response from you today?'
+    data.StatsTicketWaitingTime.description = __('How long has each customer had to wait, on average, to get a response from you today?')
 
     content = App.view('dashboard/stats/ticket_waiting_time')(data)
     if @$('.ticket_waiting_time').length > 0

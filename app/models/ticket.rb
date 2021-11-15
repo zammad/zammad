@@ -290,7 +290,7 @@ returns
     raise Exceptions::UnprocessableEntity, 'ticket already merged, no merge into merged ticket possible' if target_ticket.state.state_type.name == 'merged'
 
     # check different ticket ids
-    raise Exceptions::UnprocessableEntity, 'Can\'t merge ticket with it self!' if id == target_ticket.id
+    raise Exceptions::UnprocessableEntity, __('Can\'t merge ticket with it self!') if id == target_ticket.id
 
     # update articles
     Transaction.execute context: 'merge' do
@@ -644,7 +644,7 @@ condition example
 
       if selector['operator'].include?('in working time')
         next if attributes[1] != 'calendar_id'
-        raise 'Please enable execution_time feature to use it (currently only allowed for triggers and schedulers)' if !options[:execution_time]
+        raise __('Please enable execution_time feature to use it (currently only allowed for triggers and schedulers)') if !options[:execution_time]
 
         biz = Calendar.lookup(id: selector['value'])&.biz
         next if biz.blank?
@@ -1083,7 +1083,7 @@ perform changes on ticket
         if value['pre_condition'].start_with?('not_set')
           value['value'] = 1
         elsif value['pre_condition'].start_with?('current_user.')
-          raise 'Unable to use current_user, got no current_user_id for ticket.perform_changes' if !current_user_id
+          raise __('Unable to use current_user, got no current_user_id for ticket.perform_changes') if !current_user_id
 
           value['value'] = current_user_id
         end
@@ -1105,7 +1105,7 @@ perform changes on ticket
     objects = build_notification_template_objects(article)
 
     perform_article.each do |key, value|
-      raise 'Unable to create article, we only support article.note' if key != 'article.note'
+      raise __('Unable to create article, we only support article.note') if key != 'article.note'
 
       add_trigger_note(id, value, objects, perform_origin)
     end
@@ -1197,7 +1197,7 @@ perform active triggers on ticket
                else
                  ::Trigger.where(active: true).order(:name)
                end
-    return [true, 'No triggers active'] if triggers.blank?
+    return [true, __('No triggers active')] if triggers.blank?
 
     # check if notification should be send because of customer emails
     send_notification = true

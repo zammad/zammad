@@ -1,6 +1,6 @@
 class ProfileLinkedAccounts extends App.ControllerSubContent
   requiredPermission: 'user_preferences.linked_accounts'
-  header: 'Linked Accounts'
+  header: __('Linked Accounts')
   events:
     'click .js-add':    'add'
     'click .js-remove': 'remove'
@@ -59,56 +59,56 @@ class ProfileLinkedAccounts extends App.ControllerSubContent
       msg:  App.i18n.translateContent(data.message)
     )
 
-App.Config.set('LinkedAccounts', { prio: 4000, name: 'Linked Accounts', parent: '#profile', target: '#profile/linked', controller: ProfileLinkedAccounts, permission: ['user_preferences.linked_accounts'] }, 'NavBarProfile')
+App.Config.set('LinkedAccounts', { prio: 4000, name: __('Linked Accounts'), parent: '#profile', target: '#profile/linked', controller: ProfileLinkedAccounts, permission: ['user_preferences.linked_accounts'] }, 'NavBarProfile')
 App.Config.set('auth_provider_all', {
   facebook:
     url:    '/auth/facebook'
-    name:   'Facebook'
+    name:   __('Facebook')
     config: 'auth_facebook'
     class:  'facebook'
   twitter:
     url:    '/auth/twitter'
-    name:   'Twitter'
+    name:   __('Twitter')
     config: 'auth_twitter'
     class:  'twitter'
   linkedin:
     url:    '/auth/linkedin'
-    name:   'LinkedIn'
+    name:   __('LinkedIn')
     config: 'auth_linkedin'
     class:  'linkedin'
   github:
     url:    '/auth/github'
-    name:   'GitHub'
+    name:   __('GitHub')
     config: 'auth_github'
     class:  'github'
   gitlab:
     url:    '/auth/gitlab'
-    name:   'GitLab'
+    name:   __('GitLab')
     config: 'auth_gitlab'
     class:  'gitlab'
   microsoft_office365:
     url:    '/auth/microsoft_office365'
-    name:   'Office 365'
+    name:   __('Office 365')
     config: 'auth_microsoft_office365'
     class:  'office365'
   google_oauth2:
     url:    '/auth/google_oauth2'
-    name:   'Google'
+    name:   __('Google')
     config: 'auth_google_oauth2'
     class:  'google'
   weibo:
     url:    '/auth/weibo'
-    name:   'Weibo'
+    name:   __('Weibo')
     config: 'auth_weibo'
     class:  'weibo'
   saml:
     url:    '/auth/saml'
-    name:   'SAML'
+    name:   __('SAML')
     config: 'auth_saml'
     class:  'saml'
   sso:
     url:    '/auth/sso'
-    name:   'SSO'
+    name:   __('SSO')
     config: 'auth_sso'
     class:  'sso'
 })

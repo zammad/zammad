@@ -129,7 +129,7 @@ class ArticleViewItem extends App.ControllerObserver
     links = clone(article.preferences.links) || []
     if article.type.name is 'email'
       link =
-        name: 'Raw'
+        name: __('Raw')
         url: "#{@Config.get('api_path')}/ticket_article_plain/#{article.id}"
         target: '_blank'
       links.push link
@@ -149,7 +149,7 @@ class ArticleViewItem extends App.ControllerObserver
         if attachment && attachment.preferences && attachment.preferences['original-format'] is true
           link =
               url: "#{App.Config.get('api_path')}/ticket_attachment/#{article.ticket_id}/#{article.id}/#{attachment.id}?disposition=attachment"
-              name: 'Original Formatting'
+              name: __('Original Formatting')
               target: '_blank'
           links.push link
 

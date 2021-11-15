@@ -1,6 +1,6 @@
 class Sla extends App.ControllerSubContent
   requiredPermission: 'admin.sla'
-  header: 'SLAs'
+  header: __('SLAs')
   events:
     'click .js-new':         'new'
     'click .js-edit':        'edit'
@@ -53,9 +53,9 @@ class Sla extends App.ControllerSubContent
     e.preventDefault()
     new App.ControllerGenericNew(
       pageData:
-        title: 'SLAs'
-        object: 'SLA'
-        objects: 'SLAs'
+        title: __('SLAs')
+        object: __('SLA')
+        objects: __('SLAs')
       genericObject: 'Sla'
       container:     @el.closest('.content')
       callback:      @load
@@ -68,9 +68,9 @@ class Sla extends App.ControllerSubContent
     new App.ControllerGenericEdit(
       id: id
       pageData:
-        title: 'SLAs'
-        object: 'Sla'
-        objects: 'SLAs'
+        title: __('SLAs')
+        object: __('Sla')
+        objects: __('SLAs')
       genericObject: 'Sla'
       callback:      @load
       container:     @el.closest('.content')
@@ -93,4 +93,4 @@ class Sla extends App.ControllerSubContent
       container:   @el.closest('.content')
     )
 
-App.Config.set('Sla', { prio: 2900, name: 'SLAs', parent: '#manage', target: '#manage/slas', controller: Sla, permission: ['admin.sla'] }, 'NavBarAdmin')
+App.Config.set('Sla', { prio: 2900, name: __('SLAs'), parent: '#manage', target: '#manage/slas', controller: Sla, permission: ['admin.sla'] }, 'NavBarAdmin')

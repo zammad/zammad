@@ -10,7 +10,7 @@ class PasswordPolicy
     end
 
     def error
-      ['Invalid password, it must contain at least 1 digit!']
+      [__('Invalid password, it must contain at least 1 digit!')]
     end
 
     def self.applicable?

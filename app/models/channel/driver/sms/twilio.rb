@@ -100,16 +100,16 @@ class Channel::Driver::Sms::Twilio < Channel::Driver::Sms::Base
       name:         'twilio',
       adapter:      'sms/twilio',
       account:      [
-        { name: 'options::webhook_token', display: 'Webhook Token', tag: 'input', type: 'text', limit: 200, null: false, default: Digest::MD5.hexdigest(SecureRandom.uuid), disabled: true, readonly: true },
-        { name: 'options::account_id', display: 'Account SID', tag: 'input', type: 'text', limit: 200, null: false, placeholder: 'XXXXXX' },
-        { name: 'options::token', display: 'Token', tag: 'input', type: 'text', limit: 200, null: false },
-        { name: 'options::sender', display: 'Sender', tag: 'input', type: 'text', limit: 200, null: false, placeholder: '+491710000000' },
-        { name: 'group_id', display: 'Destination Group', tag: 'select', null: false, relation: 'Group', nulloption: true, filter: { active: true } },
+        { name: 'options::webhook_token', display: __('Webhook Token'), tag: 'input', type: 'text', limit: 200, null: false, default: Digest::MD5.hexdigest(SecureRandom.uuid), disabled: true, readonly: true },
+        { name: 'options::account_id', display: __('Account SID'), tag: 'input', type: 'text', limit: 200, null: false, placeholder: 'XXXXXX' },
+        { name: 'options::token', display: __('Token'), tag: 'input', type: 'text', limit: 200, null: false },
+        { name: 'options::sender', display: __('Sender'), tag: 'input', type: 'text', limit: 200, null: false, placeholder: '+491710000000' },
+        { name: 'group_id', display: __('Destination Group'), tag: 'select', null: false, relation: 'Group', nulloption: true, filter: { active: true } },
       ],
       notification: [
-        { name: 'options::account_id', display: 'Account SID', tag: 'input', type: 'text', limit: 200, null: false, placeholder: 'XXXXXX' },
-        { name: 'options::token', display: 'Token', tag: 'input', type: 'text', limit: 200, null: false },
-        { name: 'options::sender', display: 'Sender', tag: 'input', type: 'text', limit: 200, null: false, placeholder: '+491710000000' },
+        { name: 'options::account_id', display: __('Account SID'), tag: 'input', type: 'text', limit: 200, null: false, placeholder: 'XXXXXX' },
+        { name: 'options::token', display: __('Token'), tag: 'input', type: 'text', limit: 200, null: false },
+        { name: 'options::sender', display: __('Sender'), tag: 'input', type: 'text', limit: 200, null: false, placeholder: '+491710000000' },
       ],
     }
   end

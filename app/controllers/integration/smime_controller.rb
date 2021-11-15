@@ -69,7 +69,7 @@ class Integration::SMIMEController < ApplicationController
       string = params[:file].read.force_encoding('utf-8')
     end
 
-    raise "Parameter 'data' or 'file' required." if string.blank?
+    raise __("Parameter 'data' or 'file' required.") if string.blank?
 
     SMIMECertificate.create_certificates(string)
     SMIMECertificate.create_private_keys(string, params[:secret])

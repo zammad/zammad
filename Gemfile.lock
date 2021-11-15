@@ -19,6 +19,8 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
+    PoParser (3.2.5)
+      simple_po_parser (~> 1.1.2)
     aasm (5.2.0)
       concurrent-ruby (~> 1.0)
     actioncable (6.0.4.1)
@@ -555,6 +557,7 @@ GEM
     shoulda-matchers (5.0.0)
       activesupport (>= 5.2.0)
     simple_oauth (0.3.1)
+    simple_po_parser (1.1.5)
     simplecov (0.21.2)
       docile (~> 1.1)
       simplecov-html (~> 0.11)
@@ -655,6 +658,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  PoParser
   aasm
   activerecord-import
   activerecord-nulldb-adapter

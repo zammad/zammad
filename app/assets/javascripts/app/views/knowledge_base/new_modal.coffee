@@ -1,5 +1,5 @@
 class App.KnowledgeBaseNewModal extends App.ControllerModal
-  head:   'Create Knowledge Base'
+  head:   __('Create Knowledge Base')
   screen: 'admin_create'
 
   buttonClose:   false
@@ -52,5 +52,5 @@ class App.KnowledgeBaseNewModal extends App.ControllerModal
 
       error: (xhr) =>
         @formEnable(@el)
-        @formController.showAlert(xhr.responseJSON?.error || "Couldn't create Knowledge Base")
+        @formController.showAlert(xhr.responseJSON?.error || __("Couldn't create Knowledge Base"))
     )

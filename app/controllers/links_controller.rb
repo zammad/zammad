@@ -31,7 +31,7 @@ class LinksController < ApplicationController
              end
 
     if !object
-      render json: { error: 'No such object!' }, status: :unprocessable_entity
+      render json: { error: __('No such object!') }, status: :unprocessable_entity
       return
     end
 

@@ -105,7 +105,7 @@ or
 
       {
         result:  'invalid',
-        message: 'Verification Email not found in mailbox.',
+        message: __('Verification Email not found in mailbox.'),
         subject: subject,
       }
     end

@@ -11,7 +11,7 @@ class Note
       internal = ui.Config.get('ui_ticket_zoom_article_note_new_internal')
 
     articleTypes.push {
-      name:       'note'
+      name:       __('note')
       icon:       'note'
       attributes: []
       internal:   internal,

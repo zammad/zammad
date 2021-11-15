@@ -3,7 +3,7 @@ class App.UserOrganizationAutocompletion extends App.ObjectOrganizationAutocompl
   objectIcon: 'user'
   inactiveObjectIcon: 'inactive-user'
   objectSingels: 'People'
-  objectCreate: 'Create new Customer'
+  objectCreate: __('Create new Customer')
   referenceAttribute: 'member_ids'
 
   newObject: (e) =>
@@ -34,7 +34,7 @@ class UserNew extends App.ControllerModal
   buttonClose: true
   buttonCancel: true
   buttonSubmit: true
-  head: 'User'
+  head: __('User')
   headPrefix: 'New'
 
   content: ->
@@ -89,5 +89,5 @@ class UserNew extends App.ControllerModal
       fail: (settings, details) ->
         ui.log 'errors', details
         ui.formEnable(e)
-        ui.controller.showAlert(details.error_human || details.error || 'Unable to create object!')
+        ui.controller.showAlert(details.error_human || details.error || __('Unable to create object!'))
     )

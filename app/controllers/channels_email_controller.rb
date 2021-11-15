@@ -257,7 +257,7 @@ class ChannelsEmailController < ApplicationController
 
       render json: {
         result:  'duplicate',
-        message: 'Account already exists!',
+        message: __('Account already exists!'),
       }
       return true
     end

@@ -7,7 +7,7 @@ class Channel::EmailParser
   EMAIL_REGEX = %r{.+@.+}.freeze
   RECIPIENT_FIELDS = %w[to cc delivered-to x-original-to envelope-to].freeze
   SENDER_FIELDS = %w[from reply-to return-path sender].freeze
-  EXCESSIVE_LINKS_MSG = 'This message cannot be displayed because it contains over 5,000 links. Download the raw message below and open it via an Email client if you still wish to view it.'.freeze
+  EXCESSIVE_LINKS_MSG = __('This message cannot be displayed because it contains over 5,000 links. Download the raw message below and open it via an Email client if you still wish to view it.').freeze
 
 =begin
 
@@ -180,7 +180,7 @@ returns
       # get sender user
       session_user_id = mail[:'x-zammad-session-user-id']
       if !session_user_id
-        raise 'No x-zammad-session-user-id, no sender set!'
+        raise __('No x-zammad-session-user-id, no sender set!')
       end
 
       session_user = User.lookup(id: session_user_id)

@@ -1,5 +1,5 @@
 class App.ControllerForm extends App.Controller
-  fullFormSubmitLabel: 'Submit'
+  fullFormSubmitLabel: __('Submit')
   fullFormSubmitAdditionalClasses: ''
   fullFormButtonsContainerClass: ''
   fullFormAdditionalButtons: [] # [{className: 'js-class', text: 'Label'}]
@@ -173,7 +173,7 @@ class App.ControllerForm extends App.Controller
   # input text field with max. 100 size
   attribute_config = {
     name:     'subject'
-    display:  'Subject'
+    display:  __('Subject')
     tag:      'input'
     type:     'text'
     limit:    100
@@ -185,7 +185,7 @@ class App.ControllerForm extends App.Controller
   # colection as relation with auto completion
   attribute_config = {
     name:           'customer_id'
-    display:        'Customer'
+    display:        __('Customer')
     tag:            'autocompletion'
     # auto completion params, endpoints, ui,...
     type:           'text'
@@ -193,7 +193,7 @@ class App.ControllerForm extends App.Controller
     null:           false
     relation:       'User'
     autocapitalize: false
-    help:           'Select the customer of the ticket or create one.'
+    help:           __('Select the customer of the ticket or create one.')
     helpLink:       '<a href="" class="customer_new">&raquo;</a>'
     callback:       @userInfo
     class:          'span7'
@@ -202,7 +202,7 @@ class App.ControllerForm extends App.Controller
   # colection as relation
   attribute_config = {
     name:       'priority_id'
-    display:    'Priority'
+    display:    __('Priority')
     tag:        'select'
     multiple:   false
     null:       false
@@ -216,7 +216,7 @@ class App.ControllerForm extends App.Controller
   # colection as options
   attribute_config = {
     name:       'priority_id'
-    display:    'Priority'
+    display:    __('Priority')
     tag:        'select'
     multiple:   false
     null:       false

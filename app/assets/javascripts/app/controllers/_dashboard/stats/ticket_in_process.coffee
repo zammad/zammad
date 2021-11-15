@@ -7,7 +7,7 @@ class Stats extends App.ControllerDashboardStatsBase
         in_process: 0
         average_per_agent: 0
 
-    data.StatsTicketInProcess.description = 'What percentage of your tickets have you responded to, updated, or modified in some way today?'
+    data.StatsTicketInProcess.description = __('What percentage of your tickets have you responded to, updated, or modified in some way today?')
 
     content = App.view('dashboard/stats/ticket_in_process')(data)
 

@@ -3,7 +3,7 @@ class Reporting extends App.ControllerAppContent
 
   constructor: ->
     super
-    @title 'Reporting'
+    @title __('Reporting')
     @navupdate '#report'
     @startLoading()
     @ajax(
@@ -477,51 +477,51 @@ class TimePicker extends App.Controller
 
     @timeRangeMonth = [
       {
-        display: 'Jan'
+        display: __('Jan')
         value: 1
       },
       {
-        display: 'Feb'
+        display: __('Feb')
         value: 2
       },
       {
-        display: 'Mar'
+        display: __('Mar')
         value: 3
       },
       {
-        display: 'Apr'
+        display: __('Apr')
         value: 4,
       },
       {
-        display: 'May'
+        display: __('May')
         value: 5,
       },
       {
-        display: 'Jun'
+        display: __('Jun')
         value: 6,
       },
       {
-        display: 'Jul'
+        display: __('Jul')
         value: 7,
       },
       {
-        display: 'Aug'
+        display: __('Aug')
         value: 8,
       },
       {
-        display: 'Sep'
+        display: __('Sep')
         value: 9,
       },
       {
-        display: 'Oct'
+        display: __('Oct')
         value: 10,
       },
       {
-        display: 'Nov'
+        display: __('Nov')
         value: 11,
       },
       {
-        display: 'Dec'
+        display: __('Dec')
         value: 12,
       },
     ]
@@ -592,4 +592,4 @@ class Sidebar extends App.Controller
     @ui.storeParams()
 
 App.Config.set('report', Reporting, 'Routes')
-App.Config.set('Reporting', { prio: 8000, parent: '', name: 'Reporting', translate: true, target: '#report', icon: 'report', permission: ['report'] }, 'NavBarRight')
+App.Config.set('Reporting', { prio: 8000, parent: '', name: __('Reporting'), translate: true, target: '#report', icon: 'report', permission: ['report'] }, 'NavBarRight')

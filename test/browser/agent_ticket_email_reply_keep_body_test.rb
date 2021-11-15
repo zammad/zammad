@@ -198,6 +198,9 @@ class AgentTicketEmailReplyKeepBodyTest < TestCase
       submit_css: '.modal #ui_ticket_zoom_article_email_full_quote .btn[type="submit"]',
     )
 
+    # Suppress the modal dialog that invites to contributions for translations that are < 95% as this breaks the tests for de-de.
+    @browser.execute_script "App.LocalStorage.set('translation_support_no', true, App.Session.get('id'))"
+
     # switch user profile language to German
     switch_language(
       data: {

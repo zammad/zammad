@@ -98,7 +98,7 @@ class App.CustomerChat extends App.Controller
       @renderScreenUnauthorized(objectName: 'Chat')
       return
     if !@Config.get('chat')
-      @renderScreenError(detail: 'Feature disabled!')
+      @renderScreenError(detail: __('Feature disabled!'))
       return
 
     @html App.view('customer_chat/index')()
@@ -122,7 +122,7 @@ class App.CustomerChat extends App.Controller
 
 
   show: (params) =>
-    @title('Customer Chat', true)
+    @title(__('Customer Chat'), true)
     @navupdate('#customer_chat')
 
     if params.session_id
@@ -195,7 +195,7 @@ class App.CustomerChat extends App.Controller
 
         # if we have more chats, let decide the user
         else
-          msg = 'To be able to chat you need to select min. one chat topic below!'
+          msg = __('To be able to chat you need to select min. one chat topic below!')
 
           # open modal settings
           @settings(
@@ -556,8 +556,8 @@ class ChatWindow extends App.Controller
     )
 
     configureAttributesOutbound = [
-      { name: 'name', display: 'Name', tag: 'input', null: true, },
-      { name: 'tags', display: 'Tags', tag: 'tag', null: true, },
+      { name: 'name', display: __('Name'), tag: 'input', null: true, },
+      { name: 'tags', display: __('Tags'), tag: 'tag', null: true, },
     ]
     new App.ControllerForm(
       el:    @$('.js-metaForm')
@@ -853,7 +853,7 @@ class ChatWindow extends App.Controller
       id: id
       prefilledParams:
         body: "#{http_type}://#{fqdn}/#{url}"
-        title: 'Chat'
+        title: __('Chat')
 
     App.TaskManager.execute(
       key:        "TicketCreateScreen-#{id}"
@@ -866,7 +866,7 @@ class Setting extends App.ControllerModal
   buttonClose: true
   buttonCancel: true
   buttonSubmit: true
-  head: 'Settings'
+  head: __('Settings')
 
   content: =>
 
@@ -953,4 +953,4 @@ class CustomerChatRouter extends App.ControllerPermanent
 App.Config.set('customer_chat', CustomerChatRouter, 'Routes')
 App.Config.set('customer_chat/session/:session_id', CustomerChatRouter, 'Routes')
 App.Config.set('CustomerChat', { controller: 'CustomerChat', permission: ['chat.agent'] }, 'permanentTask')
-App.Config.set('CustomerChat', { prio: 1200, parent: '', name: 'Customer Chat', target: '#customer_chat', key: 'CustomerChat', shown: false, permission: ['chat.agent'], class: 'chat' }, 'NavBar')
+App.Config.set('CustomerChat', { prio: 1200, parent: '', name: __('Customer Chat'), target: '#customer_chat', key: 'CustomerChat', shown: false, permission: ['chat.agent'], class: 'chat' }, 'NavBar')

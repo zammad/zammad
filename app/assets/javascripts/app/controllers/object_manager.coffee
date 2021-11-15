@@ -85,7 +85,7 @@ class ObjectManager extends App.ControllerTabs
     @render()
 
 class Items extends App.ControllerSubContent
-  header: 'Object Manager'
+  header: __('Object Manager')
   events:
     'click .js-delete':  'destroy'
     'click .js-new':     'new'
@@ -125,10 +125,10 @@ class Items extends App.ControllerSubContent
     new New(
       pageData:
         head:      @object
-        title:     'Attribute'
+        title:     __('Attribute')
         home:      'object_manager'
-        object:    'ObjectManagerAttribute'
-        objects:   'ObjectManagerAttributes'
+        object:    __('ObjectManagerAttribute')
+        objects:   __('ObjectManagerAttributes')
         navupdate: '#object_manager'
       genericObject: 'ObjectManagerAttribute'
       container:     @el.closest('.content')
@@ -142,10 +142,10 @@ class Items extends App.ControllerSubContent
     new Edit(
       pageData:
         head:      @object
-        title:     'Attribute'
+        title:     __('Attribute')
         home:      'object_manager'
-        object:    'ObjectManagerAttribute'
-        objects:   'ObjectManagerAttributes'
+        object:    __('ObjectManagerAttribute')
+        objects:   __('ObjectManagerAttributes')
         navupdate: '#object_manager'
       genericObject: 'ObjectManagerAttribute'
       container:     @el.closest('.content')
@@ -230,7 +230,7 @@ class New extends App.ControllerGenericNew
       fail: (settings, details) ->
         ui.log 'errors', details
         ui.formEnable(e)
-        ui.controller.showAlert(details.error_human || details.error || 'Unable to create object!')
+        ui.controller.showAlert(details.error_human || details.error || __('Unable to create object!'))
     )
 
 class Edit extends App.ControllerGenericEdit
@@ -294,7 +294,7 @@ class Edit extends App.ControllerGenericEdit
       fail: (settings, details) ->
         ui.log 'errors'
         ui.formEnable(e)
-        ui.controller.showAlert(details.error_human || details.error || 'Unable to update object!')
+        ui.controller.showAlert(details.error_human || details.error || __('Unable to update object!'))
     )
 
-App.Config.set('SystemObject', { prio: 1700, parent: '#system', name: 'Objects', target: '#system/object_manager', controller: ObjectManager, permission: ['admin.object'] }, 'NavBarAdmin')
+App.Config.set('SystemObject', { prio: 1700, parent: '#system', name: __('Objects'), target: '#system/object_manager', controller: ObjectManager, permission: ['admin.object'] }, 'NavBarAdmin')

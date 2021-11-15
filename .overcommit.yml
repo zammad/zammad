@@ -9,10 +9,18 @@ PreCommit:
     enabled: false
   RuboCop:
     enabled: true
-    on_warn: fail # Treat all warnings as failures
+    on_warn: fail
   CoffeeLint:
+    # .coffeelint/rules/* not supported in YAML, specify all rules separately.
+    flags: ['--reporter=csv', '--rules', './.coffeelint/rules/detect_translatable_string.coffee']
     enabled: true
-    on_warn: fail # Treat all warnings as failures
+    on_warn: fail
+    exclude: public/assets/chat/**/*
+  CustomScript:
+    enabled: true
+    description: 'Check if translation catalog is up-to-date'
+    required_executable: 'rails'
+    flags: ['generate', 'translation_catalog', '--check']
   Stylelint:
     enabled: true
 
@@ -43,4 +51,3 @@ PreRebase:
 PrepareCommitMsg:
   ALL:
     enabled: false
-

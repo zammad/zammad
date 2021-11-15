@@ -8,7 +8,7 @@ class CtiController < ApplicationController
   def index
     backends = [
       {
-        name:    'CTI (generic)',
+        name:    __('CTI (generic)'),
         enabled: Setting.get('cti_integration'),
         url:     '#system/integration/cti',
       },
@@ -18,7 +18,7 @@ class CtiController < ApplicationController
         url:     '#system/integration/sipgate',
       },
       {
-        name:    'Placetel',
+        name:    __('Placetel'),
         enabled: Setting.get('placetel_integration'),
         url:     '#system/integration/placetel',
       }

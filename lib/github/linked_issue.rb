@@ -99,7 +99,7 @@ class GitHub
 
     def variables!(url)
       if url !~ %r{^https?://([^/]+)/([^/]+)/([^/]+)/issues/(\d+)$}
-        raise Exceptions::UnprocessableEntity, 'Invalid GitHub issue link format'
+        raise Exceptions::UnprocessableEntity, __('Invalid GitHub issue link format')
       end
 
       host            = $1

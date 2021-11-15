@@ -158,8 +158,10 @@ generate email with S/MIME
       mail['X-Auto-Response-Suppress'] = 'All'
     end
 
+    # rubocop:disable Zammad/DetectTranslatableString
     mail['X-Powered-By'] = 'Zammad - Helpdesk/Support (https://zammad.org/)'
     mail['X-Mailer'] = 'Zammad Mail Service'
+    # rubocop:enable Zammad/DetectTranslatableString
 
     mail
   end

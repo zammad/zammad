@@ -181,13 +181,13 @@ class TicketsController < ApplicationController
     # }
     if params[:links].present?
       link = params[:links].permit!.to_h
-      raise Exceptions::UnprocessableEntity, 'Invalid link structure' if !link.is_a? Hash
+      raise Exceptions::UnprocessableEntity, __('Invalid link structure') if !link.is_a? Hash
 
       link.each do |target_object, link_types_with_object_ids|
-        raise Exceptions::UnprocessableEntity, 'Invalid link structure (Object)' if !link_types_with_object_ids.is_a? Hash
+        raise Exceptions::UnprocessableEntity, __('Invalid link structure (Object)') if !link_types_with_object_ids.is_a? Hash
 
         link_types_with_object_ids.each do |link_type, object_ids|
-          raise Exceptions::UnprocessableEntity, 'Invalid link structure (Object->LinkType)' if !object_ids.is_a? Array
+          raise Exceptions::UnprocessableEntity, __('Invalid link structure (Object->LinkType)') if !object_ids.is_a? Array
 
           object_ids.each do |local_object_id|
             link = Link.add(
@@ -375,7 +375,7 @@ class TicketsController < ApplicationController
     if !target_ticket
       render json: {
         result:  'failed',
-        message: 'No such target ticket number!',
+        message: __('No such target ticket number!'),
       }
       return
     end
@@ -386,7 +386,7 @@ class TicketsController < ApplicationController
     if !source_ticket
       render json: {
         result:  'failed',
-        message: 'No such source ticket!',
+        message: __('No such source ticket!'),
       }
       return
     end
@@ -507,7 +507,7 @@ class TicketsController < ApplicationController
   def stats
 
     if !params[:user_id] && !params[:organization_id]
-      raise 'Need user_id or organization_id as param'
+      raise __('Need user_id or organization_id as param')
     end
 
     # lookup open user tickets
@@ -636,14 +636,14 @@ class TicketsController < ApplicationController
   # @response_message 403 Forbidden / Invalid session.
   def import_start
     if Setting.get('import_mode') != true
-      raise 'Only can import tickets if system is in import mode.'
+      raise __('Only can import tickets if system is in import mode.')
     end
 
     string = params[:data]
     if string.blank? && params[:file].present?
       string = params[:file].read.force_encoding('utf-8')
     end
-    raise Exceptions::UnprocessableEntity, 'No source data submitted!' if string.blank?
+    raise Exceptions::UnprocessableEntity, __('No source data submitted!') if string.blank?
 
     result = Ticket.csv_import(
       string:       string,

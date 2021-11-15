@@ -81,7 +81,7 @@ class App.KnowledgeBaseContentController extends App.Controller
 
     new App.WidgetButtonWithDropdown(
       el:              @submitContainer
-      mainActionLabel: 'Update'
+      mainActionLabel: __('Update')
       actions:         @quickActions()
     )
 
@@ -103,8 +103,8 @@ class App.KnowledgeBaseContentController extends App.Controller
       return
 
     new App.ControllerConfirm(
-      head:    'Content was changed since loading'
-      message: 'Your changes may override someone else\'s changes. Are you sure to save?'
+      head:    __('Content was changed since loading')
+      message: __('Your changes may override someone else\'s changes. Are you sure to save?')
       callback: =>
         @parentController.coordinator.saveChanges(@object, paramsForSaving, @)
     )

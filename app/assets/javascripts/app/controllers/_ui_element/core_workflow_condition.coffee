@@ -5,38 +5,38 @@ class App.UiElement.core_workflow_condition extends App.UiElement.ApplicationSel
 
     groups =
       ticket:
-        name: 'Ticket'
+        name: __('Ticket')
         model: 'Ticket'
         model_show: ['Ticket']
       group:
-        name: 'Group'
+        name: __('Group')
         model: 'Group'
         model_show: ['Group']
       user:
-        name: 'User'
+        name: __('User')
         model: 'User'
         model_show: ['User']
       customer:
-        name: 'Customer'
+        name: __('Customer')
         model: 'User'
         model_show: ['Ticket']
       organization:
-        name: 'Organization'
+        name: __('Organization')
         model: 'Organization'
         model_show: ['User', 'Organization']
       'customer.organization':
-        name: 'Organization'
+        name: __('Organization')
         model: 'Organization'
         model_show: ['Ticket']
       session:
-        name: 'Session'
+        name: __('Session')
         model: 'User'
         model_show: ['Ticket']
 
     showCustomModules = @coreWorkflowCustomModulesActive()
     if showCustomModules
       groups['custom'] =
-        name: 'Custom'
+        name: __('Custom')
         model_show: ['Ticket', 'User', 'Organization', 'Sla']
 
     currentObject = params.object
@@ -49,16 +49,16 @@ class App.UiElement.core_workflow_condition extends App.UiElement.ApplicationSel
         delete groups[key]
 
     operatorsType =
-      'active$': ['is']
-      'boolean$': ['is', 'is not', 'is set', 'not set', 'has changed', 'changed to']
-      'integer$': ['is', 'is not', 'is set', 'not set', 'has changed', 'changed to']
-      '^select$': ['is', 'is not', 'is set', 'not set', 'has changed', 'changed to']
-      '^tree_select$': ['is', 'is not', 'is set', 'not set', 'has changed', 'changed to']
-      '^(input|textarea|richtext)$': ['is', 'is not', 'is set', 'not set', 'has changed', 'changed to', 'regex match', 'regex mismatch']
+      'active$': [__('is')]
+      'boolean$': [__('is'), __('is not'), __('is set'), __('not set'), _('has changed'), __('changed to')]
+      'integer$': [__('is'), __('is not'), __('is set'), __('not set'), _('has changed'), __('changed to')]
+      '^select$': [__('is'), __('is not'), __('is set'), __('not set'), _('has changed'), __('changed to')]
+      '^tree_select$': [__('is'), __('is not'), __('is set'), __('not set'), _('has changed'), __('changed to')]
+      '^(input|textarea|richtext)$': [__('is'), __('is not'), __('is set'), __('not set'), _('has changed'), __('changed to'), __('regex match'), __('regex mismatch')]
 
     operatorsName =
-      '_id$': ['is', 'is not', 'is set', 'not set', 'has changed', 'changed to']
-      '_ids$': ['is', 'is not', 'is set', 'not set', 'has changed', 'changed to']
+      '_id$': [__('is'), __('is not'), __('is set'), __('not set'), _('has changed'), __('changed to')]
+      '_ids$': [__('is'), __('is not'), __('is set'), __('not set'), _('has changed'), __('changed to')]
 
     # merge config
     elements = {}
@@ -73,76 +73,76 @@ class App.UiElement.core_workflow_condition extends App.UiElement.ApplicationSel
 
         elements['custom.module'] = {
           name: 'module',
-          display: 'Module',
+          display: __('Module'),
           tag: 'select',
           multiple: true,
           options: options,
           null: false,
-          operator: ['match one module', 'match all modules', 'match no modules']
+          operator: [__('match one module'), __('match all modules'), __('match no modules')]
         }
         continue
       if groupKey is 'session'
         elements['session.role_ids'] = {
           name: 'role_ids',
-          display: 'Role',
+          display: __('Role'),
           tag: 'select',
           relation: 'Role',
           null: false,
-          operator: ['is', 'is not'],
+          operator: [__('is'), __('is not')],
           multiple: true
         }
         elements['session.group_ids_read'] = {
           name: 'group_ids_read',
-          display: 'Group (read)',
+          display: __('Group (read)'),
           tag: 'select',
           relation: 'Group',
           null: false,
-          operator: ['is', 'is not'],
+          operator: [__('is'), __('is not')],
           multiple: true
         }
         elements['session.group_ids_create'] = {
           name: 'group_ids_create',
-          display: 'Group (create)',
+          display: __('Group (create)'),
           tag: 'select',
           relation: 'Group',
           null: false,
-          operator: ['is', 'is not'],
+          operator: [__('is'), __('is not')],
           multiple: true
         }
         elements['session.group_ids_change'] = {
           name: 'group_ids_change',
-          display: 'Group (change)',
+          display: __('Group (change)'),
           tag: 'select',
           relation: 'Group',
           null: false,
-          operator: ['is', 'is not'],
+          operator: [__('is'), __('is not')],
           multiple: true
         }
         elements['session.group_ids_overview'] = {
           name: 'group_ids_overview',
-          display: 'Group (overview)',
+          display: __('Group (overview)'),
           tag: 'select',
           relation: 'Group',
           null: false,
-          operator: ['is', 'is not'],
+          operator: [__('is'), __('is not')],
           multiple: true
         }
         elements['session.group_ids_full'] = {
           name: 'group_ids_full',
-          display: 'Group (full)',
+          display: __('Group (full)'),
           tag: 'select',
           relation: 'Group',
           null: false,
-          operator: ['is', 'is not'],
+          operator: [__('is'), __('is not')],
           multiple: true
         }
         elements['session.permission_ids'] = {
           name: 'permission_ids',
-          display: 'Permissions',
+          display: __('Permissions'),
           tag: 'select',
           relation: 'Permission',
           null: false,
-          operator: ['is', 'is not'],
+          operator: [__('is'), __('is not')],
           multiple: true
         }
 

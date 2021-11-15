@@ -140,11 +140,11 @@ UserAgent: #{request.env['HTTP_USER_AGENT'] || '-'}
     http_log_config facility: 'check_mk'
 
     if !Setting.get('check_mk_integration')
-      raise Exceptions::UnprocessableEntity, 'Feature is disable, please contact your admin to enable it!'
+      raise Exceptions::UnprocessableEntity, __('Feature is disable, please contact your admin to enable it!')
     end
 
     if Setting.get('check_mk_token') != params[:token]
-      raise Exceptions::UnprocessableEntity, 'Invalid token!'
+      raise Exceptions::UnprocessableEntity, __('Invalid token!')
     end
 
     true

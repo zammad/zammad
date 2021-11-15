@@ -10,7 +10,7 @@ class ImportKayakoController < ApplicationController
     if !valid_url_syntax?(url)
       render json: {
         result:  'invalid',
-        message: 'Invalid URL!',
+        message: __('Invalid URL!'),
       }
       return
     end
@@ -27,13 +27,13 @@ class ImportKayakoController < ApplicationController
     }
   end
 
-  def credentials_check
+  def credentials_check # rubocop:disable Metrics/AbcSize
     return if setup_done_response
 
     if !params[:username] || !params[:password]
       render json: {
         result:        'invalid',
-        message_human: 'Incomplete credentials',
+        message_human: __('Incomplete credentials'),
       }
       return
     end
@@ -106,7 +106,7 @@ class ImportKayakoController < ApplicationController
       render json: {
         result:        'invalid',
         message:       response.error.to_s,
-        message_human: 'Hostname not found!',
+        message_human: __('Hostname not found!'),
       }
       return false
     end
@@ -127,7 +127,7 @@ class ImportKayakoController < ApplicationController
 
       render json: {
         result:        'invalid',
-        message_human: 'Invalid credentials!',
+        message_human: __('Invalid credentials!'),
       }
       return false
     end

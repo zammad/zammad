@@ -37,7 +37,7 @@ class App.KnowledgeBaseDelete extends App.KnowledgeBaseForm
       fullForm:                        true
       formClass:                       'settings-entry'
       fullFormButtonsContainerClass:   'justify-end'
-      fullFormSubmitLabel:             'Delete Knowledge Base'
+      fullFormSubmitLabel:             __('Delete Knowledge Base')
       fullFormSubmitAdditionalClasses: 'btn--danger'
       model:
         configure_attributes: [
@@ -46,7 +46,7 @@ class App.KnowledgeBaseDelete extends App.KnowledgeBaseForm
             model:   'translation'
             style:   'block'
             null:    true
-            display: 'Permanently Delete Knowledge Base'
+            display: __('Permanently Delete Knowledge Base')
             help:    "Deleting your knowledge base requires an additional verification step. To proceed, enter its name below (\"#{@object().guaranteedTitle()}\"). THIS ACTION CANNOT BE UNDONE."
             tag:     'input'
           }

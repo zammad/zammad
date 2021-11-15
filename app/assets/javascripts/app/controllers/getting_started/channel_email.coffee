@@ -15,7 +15,7 @@ class GettingStartedChannelEmail extends App.ControllerWizardFullScreen
       return
 
     # set title
-    @title 'Email Account'
+    @title __('Email Account')
 
     # store account settings
     @account =
@@ -58,7 +58,7 @@ class GettingStartedChannelEmail extends App.ControllerWizardFullScreen
 
     # outbound
     configureAttributesOutbound = [
-      { name: 'adapter', display: 'Send Mails via', tag: 'select', multiple: false, null: false, options: @channelDriver.email.outbound },
+      { name: 'adapter', display: __('Send Mails via'), tag: 'select', multiple: false, null: false, options: @channelDriver.email.outbound },
     ]
     new App.ControllerForm(
       el:    @$('.base-outbound-type')
@@ -72,14 +72,14 @@ class GettingStartedChannelEmail extends App.ControllerWizardFullScreen
 
     # inbound
     configureAttributesInbound = [
-      { name: 'adapter',                  display: 'Type',     tag: 'select', multiple: false, null: false, options: @channelDriver.email.inbound },
-      { name: 'options::host',            display: 'Host',     tag: 'input',  type: 'text', limit: 120, null: false, autocapitalize: false },
-      { name: 'options::user',            display: 'User',     tag: 'input',  type: 'text', limit: 120, null: false, autocapitalize: false, autocomplete: 'off', },
-      { name: 'options::password',        display: 'Password', tag: 'input',  type: 'password', limit: 120, null: false, autocapitalize: false, autocomplete: 'off', single: true },
-      { name: 'options::ssl',             display: 'SSL/STARTTLS', tag: 'boolean', null: true, options: { true: 'yes', false: 'no'  }, default: true, translate: true, item_class: 'formGroup--halfSize' },
-      { name: 'options::port',            display: 'Port',     tag: 'input',  type: 'text', limit: 6,   null: true, autocapitalize: false,  default: '993', item_class: 'formGroup--halfSize' },
-      { name: 'options::folder',          display: 'Folder',   tag: 'input',  type: 'text', limit: 120, null: true, autocapitalize: false, item_class: 'formGroup--halfSize' },
-      { name: 'options::keep_on_server',  display: 'Keep messages on server', tag: 'boolean', null: true, options: { true: 'yes', false: 'no' }, translate: true, default: false, item_class: 'formGroup--halfSize' },
+      { name: 'adapter',                  display: __('Type'),     tag: 'select', multiple: false, null: false, options: @channelDriver.email.inbound },
+      { name: 'options::host',            display: __('Host'),     tag: 'input',  type: 'text', limit: 120, null: false, autocapitalize: false },
+      { name: 'options::user',            display: __('User'),     tag: 'input',  type: 'text', limit: 120, null: false, autocapitalize: false, autocomplete: 'off', },
+      { name: 'options::password',        display: __('Password'), tag: 'input',  type: 'password', limit: 120, null: false, autocapitalize: false, autocomplete: 'off', single: true },
+      { name: 'options::ssl',             display: __('SSL/STARTTLS'), tag: 'boolean', null: true, options: { true: 'yes', false: 'no'  }, default: true, translate: true, item_class: 'formGroup--halfSize' },
+      { name: 'options::port',            display: __('Port'),     tag: 'input',  type: 'text', limit: 6,   null: true, autocapitalize: false,  default: '993', item_class: 'formGroup--halfSize' },
+      { name: 'options::folder',          display: __('Folder'),   tag: 'input',  type: 'text', limit: 120, null: true, autocapitalize: false, item_class: 'formGroup--halfSize' },
+      { name: 'options::keep_on_server',  display: __('Keep messages on server'), tag: 'boolean', null: true, options: { true: 'yes', false: 'no' }, translate: true, default: false, item_class: 'formGroup--halfSize' },
     ]
 
     showHideFolder = (params, attribute, attributes, classname, form, ui) ->
@@ -131,10 +131,10 @@ class GettingStartedChannelEmail extends App.ControllerWizardFullScreen
     adapter = @$('.js-outbound [name=adapter]').val()
     if adapter is 'smtp'
       configureAttributesOutbound = [
-        { name: 'options::host',     display: 'Host',     tag: 'input', type: 'text',     limit: 120, null: false, autocapitalize: false, autofocus: true },
-        { name: 'options::user',     display: 'User',     tag: 'input', type: 'text',     limit: 120, null: true, autocapitalize: false, autocomplete: 'off', },
-        { name: 'options::password', display: 'Password', tag: 'input', type: 'password', limit: 120, null: true, autocapitalize: false, autocomplete: 'off', single: true },
-        { name: 'options::port',     display: 'Port',     tag: 'input', type: 'text',     limit: 6,   null: true, autocapitalize: false },
+        { name: 'options::host',     display: __('Host'),     tag: 'input', type: 'text',     limit: 120, null: false, autocapitalize: false, autofocus: true },
+        { name: 'options::user',     display: __('User'),     tag: 'input', type: 'text',     limit: 120, null: true, autocapitalize: false, autocomplete: 'off', },
+        { name: 'options::password', display: __('Password'), tag: 'input', type: 'password', limit: 120, null: true, autocapitalize: false, autocomplete: 'off', single: true },
+        { name: 'options::port',     display: __('Port'),     tag: 'input', type: 'text',     limit: 6,   null: true, autocapitalize: false },
       ]
       @form = new App.ControllerForm(
         el:    @$('.base-outbound-settings')
@@ -175,10 +175,10 @@ class GettingStartedChannelEmail extends App.ControllerWizardFullScreen
 
         else if data.result is 'duplicate'
           @showSlide('js-intro')
-          @showAlert('js-intro', 'Account already exists!' )
+          @showAlert('js-intro', __('Account already exists!') )
         else
           @showSlide('js-inbound')
-          @showAlert('js-inbound', 'Unable to detect your server settings. Manual configuration needed.' )
+          @showAlert('js-inbound', __('Unable to detect your server settings. Manual configuration needed.') )
           @$('.js-inbound [name="options::user"]').val( @account['meta']['email'] )
           @$('.js-inbound [name="options::password"]').val( @account['meta']['password'] )
 
@@ -354,7 +354,7 @@ class GettingStartedChannelEmail extends App.ControllerWizardFullScreen
               @delay(
                 =>
                   @showSlide('js-intro')
-                  @showAlert('js-intro', 'Unable to verify sending and receiving. Please check your settings.' )
+                  @showAlert('js-intro', __('Unable to verify sending and receiving. Please check your settings.') )
 
                 2300
               )
@@ -364,7 +364,7 @@ class GettingStartedChannelEmail extends App.ControllerWizardFullScreen
               @verify( @account, count + 1 )
       fail: =>
         @showSlide('js-intro')
-        @showAlert('js-intro', 'Unable to verify sending and receiving. Please check your settings.')
+        @showAlert('js-intro', __('Unable to verify sending and receiving. Please check your settings.'))
     )
 
 App.Config.set('getting_started/channel/email', GettingStartedChannelEmail, 'Routes')

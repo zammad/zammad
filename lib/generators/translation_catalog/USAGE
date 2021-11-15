@@ -1,0 +1,9 @@
+Description:
+    Create the translation catalog file for Zammad or an addon
+
+Example:
+    # Regenerate the catalog for Zammad
+    rails generate translation_catalog
+
+    # Regenerate for an addon
+    rails generate translation_catalog --addon /path/to/addon

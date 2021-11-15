@@ -28,7 +28,7 @@
     # add new header item
     attribute =
       name: 'some name'
-      display: 'Some Name'
+      display: __('Some Name')
     headers.push attribute
     console.log('new header is', headers)
     headers
@@ -78,12 +78,12 @@
     el:       element
     overview: ['time', 'area', 'level', 'browser', 'location', 'data']
     attribute_list: [
-      { name: 'time',     display: 'Time',      tag: 'datetime' },
-      { name: 'area',     display: 'Area',      type: 'text' },
-      { name: 'level',    display: 'Level',     type: 'text' },
-      { name: 'browser',  display: 'Browser',   type: 'text' },
-      { name: 'location', display: 'Location',  type: 'text' },
-      { name: 'data',     display: 'Data',      type: 'text' },
+      { name: 'time',     display: __('Time'),      tag: 'datetime' },
+      { name: 'area',     display: __('Area'),      type: 'text' },
+      { name: 'level',    display: __('Level'),     type: 'text' },
+      { name: 'browser',  display: __('Browser'),   type: 'text' },
+      { name: 'location', display: __('Location'),  type: 'text' },
+      { name: 'data',     display: __('Data'),      type: 'text' },
     ]
     objects:  data
   )
@@ -641,7 +641,7 @@ class App.ControllerTable extends App.Controller
     if @clone
       @actions.push
         name: 'clone'
-        display: 'Clone'
+        display: __('Clone')
         icon: 'clipboard'
         class: 'create  js-clone'
         callback: (id) =>
@@ -660,7 +660,7 @@ class App.ControllerTable extends App.Controller
     if @destroy
       @actions.push
         name: 'delete'
-        display: 'Delete'
+        display: __('Delete')
         icon: 'trash'
         class: 'danger js-delete'
         callback: (id) =>
@@ -672,7 +672,7 @@ class App.ControllerTable extends App.Controller
     if @actions.length
       @headers.push
         name:         'action'
-        display:      'Action'
+        display:      __('Action')
         width:        '50px'
         displayWidth: 50
         align:        'right'

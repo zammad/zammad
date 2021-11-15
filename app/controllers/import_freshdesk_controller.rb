@@ -9,7 +9,7 @@ class ImportFreshdeskController < ApplicationController
     if params[:url].blank? || params[:url] !~ %r{^(http|https)://.+?$}
       render json: {
         result:  'invalid',
-        message: 'Invalid URL!',
+        message: __('Invalid URL!'),
       }
       return
     end
@@ -43,7 +43,7 @@ class ImportFreshdeskController < ApplicationController
 
       render json: {
         result:        'invalid',
-        message_human: 'Incomplete credentials',
+        message_human: __('Incomplete credentials'),
       }
       return
     end
@@ -58,7 +58,7 @@ class ImportFreshdeskController < ApplicationController
 
       render json: {
         result:        'invalid',
-        message_human: 'Invalid credentials!',
+        message_human: __('Invalid credentials!'),
       }
       return
     end
@@ -116,10 +116,10 @@ class ImportFreshdeskController < ApplicationController
 
   def url_check_human_error_message(error)
     translation_map = {
-      'No such file'                                              => 'Hostname not found!',
-      'getaddrinfo: nodename nor servname provided, or not known' => 'Hostname not found!',
-      'No route to host'                                          => 'No route to host!',
-      'Connection refused'                                        => 'Connection refused!',
+      'No such file'                                              => __('Hostname not found!'),
+      'getaddrinfo: nodename nor servname provided, or not known' => __('Hostname not found!'),
+      'No route to host'                                          => __('No route to host!'),
+      'Connection refused'                                        => __('Connection refused!'),
     }
 
     message_human = ''

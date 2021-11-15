@@ -31,7 +31,7 @@ class App.ObjectOrganizationAutocompletion extends App.Controller
   objectIcon: 'user'
   inactiveObjectIcon: 'inactive-user'
   objectSingels: 'People'
-  objectCreate: 'Create new object'
+  objectCreate: __('Create new object')
   referenceAttribute: 'member_ids'
 
   constructor: (params) ->

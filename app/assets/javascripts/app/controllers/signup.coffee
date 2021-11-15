@@ -15,7 +15,7 @@ class Signup extends App.ControllerFullPage
       return
 
     # set title
-    @title 'Sign up'
+    @title __('Sign up')
     @navupdate '#signup'
 
     @render()
@@ -74,7 +74,7 @@ class Signup extends App.ControllerFullPage
         ))
       fail: (settings, details) =>
         @formEnable(e)
-        @form.showAlert(details.error_human || details.error || 'Unable to create user!')
+        @form.showAlert(details.error_human || details.error || __('Unable to create user!'))
     )
 
   resend: (e) =>

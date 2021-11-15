@@ -7,7 +7,7 @@ class GettingStartedAgent extends App.ControllerWizardFullScreen
     @authenticateCheckRedirect()
 
     # set title
-    @title 'Invite Agents'
+    @title __('Invite Agents')
     @fetch()
 
   fetch: ->
@@ -83,7 +83,7 @@ class GettingStartedAgent extends App.ControllerWizardFullScreen
 
       fail: (settings, details) =>
         @formEnable(e)
-        @form.showAlert(details.error_human || 'Can\'t create user!')
+        @form.showAlert(details.error_human || __('Can\'t create user!'))
     )
 
 App.Config.set('getting_started/agents', GettingStartedAgent, 'Routes')

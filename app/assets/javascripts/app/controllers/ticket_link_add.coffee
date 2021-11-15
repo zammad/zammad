@@ -2,7 +2,7 @@ class App.TicketLinkAdd extends App.ControllerModal
   buttonClose: true
   buttonCancel: true
   buttonSubmit: true
-  head: 'Link'
+  head: __('Link')
   shown: false
 
   constructor: ->
@@ -73,10 +73,10 @@ class App.TicketLinkAdd extends App.ControllerModal
     params = @formParam(e.target)
 
     if !params['ticket_number']
-      alert('Ticket# is needed!')
+      alert(__('Ticket# is needed!'))
       return
     if !params['link_type']
-      alert('Link type is needed!')
+      alert(__('Link type is needed!'))
       return
 
     # get data

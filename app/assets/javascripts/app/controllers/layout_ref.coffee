@@ -8,7 +8,7 @@ class LayoutRef extends App.ControllerAppContent
 
 App.Config.set('layout_ref', LayoutRef, 'Routes')
 
-
+# coffeelint: disable=detect_translatable_string
 class Content extends App.ControllerAppContent
   events:
     'hide.bs.dropdown .js-recipientDropdown': 'hideOrganizationMembers'
@@ -1364,7 +1364,7 @@ class SlaRef extends App.ControllerAppContent
       head: 'Service Level Agreement (SLA)'
       headPrefox: 'New'
       contentInline: App.view('layout_ref/sla_modal')()
-      buttonSubmit: 'Create SLA'
+      buttonSubmit: __('Create SLA')
       shown: true
       buttonCancel: true
       container: @el
@@ -1403,7 +1403,7 @@ class SchedulersRef extends App.ControllerAppContent
     new App.ControllerModal
       head: 'Scheduler'
       headPrefix: 'New'
-      buttonSubmit: 'Create'
+      buttonSubmit: __('Create')
       buttonCancel: true
       contentInline: App.view('layout_ref/scheduler_modal')()
       shown: true
@@ -1473,7 +1473,7 @@ class InputsRef extends App.ControllerAppContent
       attribute:
         name:        'project-name'
         id:          'project-name-123'
-        placeholder: 'Enter Project Name'
+        placeholder: __('Enter Project Name')
         options:     [{value:0,name:'Apple',selected:true},
         {value:1,name:'Microsoft',selected:true},
         {value:2,name:'Google'},
@@ -1500,7 +1500,7 @@ class InputsRef extends App.ControllerAppContent
       attribute:
         name:        'user'
         id:          'user-123'
-        placeholder: 'Enter User'
+        placeholder: __('Enter User')
         limt:        10
         object:      'User'
 
@@ -1510,7 +1510,7 @@ class InputsRef extends App.ControllerAppContent
     userOrganizationAutocomplete = new App.UserOrganizationAutocompletion
       attribute:
         name: 'customer_id'
-        display: 'Customer'
+        display: __('Customer')
         tag: 'user_autocompletion'
         type: 'text'
         limit: 200
@@ -1737,7 +1737,7 @@ class MergeCustomerRef extends App.ControllerAppContent
       head: "#{@mergeSource.firstname} #{@mergeSource.lastname}"
       headPrefix: 'Merge'
       contentInline: App.view('layout_ref/merge_customer')()
-      buttonSubmit: 'Merge'
+      buttonSubmit: __('Merge')
       buttonCancel: true
       container: @el
 
@@ -2405,14 +2405,14 @@ class KnowledgeBaseLinkAnswerToAnswerRef extends App.ControllerAppContent
           {
             name: 'translation::title'
             model: 'translation'
-            display: 'Title'
+            display: __('Title')
             tag: 'input'
             grid_width: '1/2'
           }
           {
             name: 'category_id'
             model: 'answer'
-            display: 'Category'
+            display: __('Category')
             tag: 'select'
             null: true
             options: [
@@ -2430,7 +2430,7 @@ class KnowledgeBaseLinkAnswerToAnswerRef extends App.ControllerAppContent
           {
             name: 'translation::content::body'
             model: 'translation'
-            display: 'Content'
+            display: __('Content')
             tag: 'richtext'
             buttons: [
               'link'

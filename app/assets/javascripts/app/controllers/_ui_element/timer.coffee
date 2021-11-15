@@ -2,13 +2,13 @@
 class App.UiElement.timer
   @render: (attribute) ->
     days =
-      Mon: 'Monday'
-      Tue: 'Tuesday'
-      Wed: 'Wednesday'
-      Thu: 'Thursday'
-      Fri: 'Friday'
-      Sat: 'Saturday'
-      Sun: 'Sunday'
+      Mon: __('Monday')
+      Tue: __('Tuesday')
+      Wed: __('Wednesday')
+      Thu: __('Thursday')
+      Fri: __('Friday')
+      Sat: __('Saturday')
+      Sun: __('Sunday')
     hours =
       0: '12 am'
       1: '1 am'

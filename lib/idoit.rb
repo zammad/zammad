@@ -89,8 +89,8 @@ or with filter:
 
   def self.query(method, filter = {})
     setting = Setting.get('idoit_config')
-    raise 'Unable for find api_token in config' if setting[:api_token].blank?
-    raise 'Unable for find endpoint in config' if setting[:endpoint].blank?
+    raise __('Unable for find api_token in config') if setting[:api_token].blank?
+    raise __('Unable for find endpoint in config') if setting[:endpoint].blank?
 
     # translator_key = Setting.get('translator_key')
     params = {

@@ -40,5 +40,5 @@ class App.KnowledgeBaseEditorCoordinator
       error: (xhr) ->
         data = JSON.parse(xhr.responseText)
         App.ControllerForm.enable(formController.form)
-        formController.showAlert(data.error || 'Unable to save changes.')
+        formController.showAlert(data.error || __('Unable to save changes.'))
     )

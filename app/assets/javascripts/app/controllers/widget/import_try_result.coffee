@@ -1,9 +1,9 @@
 class App.ImportTryResult extends App.ControllerModal
   buttonClose: true
   buttonCancel: true
-  buttonSubmit: 'Yes, start real import.'
+  buttonSubmit: __('Yes, start real import.')
   autoFocusOnFirstInput: false
-  head: 'Import'
+  head: __('Import')
   large: true
   templateDirectory: 'generic/object_import/'
   baseUrl: '/api/v1/text_modules'
@@ -12,7 +12,7 @@ class App.ImportTryResult extends App.ControllerModal
 
     # show start dialog
     content = $(App.view("#{@templateDirectory}/import_try")(
-      head: 'Import'
+      head: __('Import')
       import_example_url: "#{@baseUrl}/import"
       result: @result
     ))
@@ -59,7 +59,7 @@ class App.ImportTryResult extends App.ControllerModal
         details = data.responseJSON || {}
         @notify
           type:    'error'
-          msg:     App.i18n.translateContent(details.error_human || details.error || 'Unable to import!')
+          msg:     App.i18n.translateContent(details.error_human || details.error || __('Unable to import!'))
           timeout: 6000
         @formEnable(e)
     )
