@@ -27,12 +27,12 @@ module Gql::Mutations
 
     private
 
-    def authenticate(login:, password:, fingerprint:)
+    def authenticate(login:, password:, fingerprint:) # rubocop:disable Metrics/AbcSize
       auth = Auth.new(login, password)
       user = auth&.user
 
       if !auth.valid?
-        raise GraphQL::ExecutionError, 'Wrong login or password combination.'
+        raise GraphQL::ExecutionError, __('Wrong login or password combination.')
       end
 
       context[:controller].session.delete(:switched_from_user_id)

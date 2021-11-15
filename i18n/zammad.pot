@@ -10408,6 +10408,10 @@ msgstr ""
 msgid "Workflows"
 msgstr ""
 
+#: app/graphql/gql/mutations/login.rb
+msgid "Wrong login or password combination."
+msgstr ""
+
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco
 msgid "Year"
 msgstr ""
