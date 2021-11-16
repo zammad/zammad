@@ -17,7 +17,7 @@ class Channel::Driver::Sms::MessageBird < Channel::Driver::Sms::Base
       send_create(options, attr)
       true
     rescue => e
-      Rails.logger.debug { "MessageBird error: #{e.inspect}" }
+      Rails.logger.error { "MessageBird error: #{e.inspect}" }
       raise e
     end
   end
