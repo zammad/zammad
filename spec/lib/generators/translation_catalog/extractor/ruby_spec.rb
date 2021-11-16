@@ -33,6 +33,7 @@ RSpec.describe Generators::TranslationCatalog::Extractor::Ruby do
       <<~'CODE'
         Translation.translate('de-de', dynamic_variable)
         Translation.translate('de-de', "String with #{interpolation}")
+        __('')
       CODE
     end
 

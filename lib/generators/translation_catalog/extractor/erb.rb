@@ -6,7 +6,7 @@ class Generators::TranslationCatalog::Extractor::Erb < Generators::TranslationCa
     return if string.empty?
 
     # zt() / t()
-    literal_string_regex = %r{(['"])(.*?)(?<!\\)\1}
+    literal_string_regex = %r{(['"])(.+?)(?<!\\)\1}
     t_regex = %r{(?:#\{|\s)z?t\(?\s*#{literal_string_regex}}
 
     [t_regex].each do |r|

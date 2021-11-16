@@ -5,7 +5,7 @@ class Generators::TranslationCatalog::Extractor::Ruby < Generators::TranslationC
   def extract_from_string(string, filename) # rubocop:disable Metrics/AbcSize
     return if string.empty?
 
-    literal_string_regex = %r{('|")(.*?)(?<!\\)\1}
+    literal_string_regex = %r{('|")(.+?)(?<!\\)\1}
 
     # Translation.translate
     locale_regex = %r{['"a-z_0-9.&@:\[\]\-]+}

@@ -18,11 +18,13 @@ RSpec.describe Generators::TranslationCatalog::Extractor::Frontend do
         App.i18n.translateContent('String')
         App.i18n.translateInline('Inline string')
         App.i18n.translatePlain("Double quoted String with '")
+        @T('T')
+        @Ti('Ti')
       CODE
     end
 
     it 'finds the correct strings' do
-      expect(result_strings).to eq(Set['__ String', 'String', 'Inline string', "Double quoted String with '"])
+      expect(result_strings).to eq(Set['__ String', 'String', 'Inline string', "Double quoted String with '", 'T', 'Ti'])
     end
   end
 
@@ -31,6 +33,8 @@ RSpec.describe Generators::TranslationCatalog::Extractor::Frontend do
       <<~'CODE'
         App.i18n.translateContent(dynamic_variable)
         App.i18n.translateContent("String with #{interpolation}")
+        @Tdate(ignore)
+        @Ti('')
       CODE
     end
 

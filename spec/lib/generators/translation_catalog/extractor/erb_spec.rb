@@ -32,6 +32,7 @@ RSpec.describe Generators::TranslationCatalog::Extractor::Erb do
       <<~'CODE'
         <%= zt(dynamic_variable) %>
         <%= t("String with #{interpolation}") %>
+        <%= t("") %> # should not happen
       CODE
     end
 

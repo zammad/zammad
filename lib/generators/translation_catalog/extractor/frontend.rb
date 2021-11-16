@@ -6,7 +6,7 @@ class Generators::TranslationCatalog::Extractor::Frontend < Generators::Translat
     return if string.empty?
 
     # @T / @Ti
-    literal_string_regex = %r{('|")(.*?)(?<!\\)\1}
+    literal_string_regex = %r{('|")(.+?)(?<!\\)\1}
     t_regex = %r{@Ti?\(?\s*#{literal_string_regex}}
 
     # App.i18n.translate(Content|Plain|Inline)
