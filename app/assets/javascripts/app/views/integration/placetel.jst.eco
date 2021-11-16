@@ -91,24 +91,30 @@
       </tbody>
     </table>
   </div>
+-->
 
-  <p><%- @T('Default caller id.') %>
+  <p><%- @T('Settings') %>
 
   <div class="settings-entry">
     <table class="settings-list" style="width: 100%;">
       <thead>
         <tr>
-          <th width="50%"><%- @T('Default caller id') %>
-          <th width="50%"><%- @T('Note') %>
+          <th width="50%"><%- @T('Value') %>
+          <th width="50%"><%- @T('Description') %>
       </thead>
       <tbody>
+<!--
         <tr>
           <td class="settings-list-control-cell"><input name="default_caller_id" value="<%= @config.outbound.default_caller_id %>" placeholder="4930609854189" class="form-control form-control--small js-summary">
           <td class="settings-list-row-control"><%- @T('Default caller id for outbound calls.') %>
+-->
+        <tr>
+          <td class="settings-list-control-cell js-viewLimit">
+          <td class="settings-list-row-control"><%- @T('Shown records in caller log.') %>
       </tbody>
     </table>
   </div>
--->
+
   <h2><%- @T('User assignment to telephones') %></h2>
 
   <p><%- @T('User assignment to telephones to be able to offer extended like open new ticket screen on answering a call.') %>

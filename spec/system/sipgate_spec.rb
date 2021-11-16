@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Caller log', type: :system, authenticated_as: :agent do
+RSpec.describe 'Caller log', type: :system, authenticated_as: :authenticate do
   let(:agent_phone) { '0190111' }
   let(:customer_phone) { '0190333' }
   let(:agent) { create(:agent, phone: agent_phone) }
@@ -27,11 +27,10 @@ RSpec.describe 'Caller log', type: :system, authenticated_as: :agent do
     post "#{Capybara.app_host}/api/v1/sipgate/in", params: second_params
   end
 
-  let(:prepare) do
+  def authenticate
     Setting.set('sipgate_integration', sipgate_on)
+    agent
   end
-
-  before { prepare }
 
   context 'when sipgate integration is on' do
     it 'shows the phone menu in nav bar' do
