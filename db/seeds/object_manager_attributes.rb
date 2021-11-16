@@ -1691,12 +1691,12 @@ ObjectManager::Attribute.add(
   screens:     {
     create: {
       '-all-' => {
-        null: true,
+        null: false,
       },
     },
     edit:   {
       '-all-' => {
-        null: true,
+        null: false,
       },
     },
   },
@@ -1713,7 +1713,7 @@ ObjectManager::Attribute.add(
   display:     __('Assign Follow-Ups'),
   data_type:   'select',
   data_option: {
-    default:   'yes',
+    default:   'true',
     options:   {
       true:  'yes',
       false: 'no',
@@ -1727,12 +1727,12 @@ ObjectManager::Attribute.add(
   screens:     {
     create: {
       '-all-' => {
-        null: true,
+        null: false,
       },
     },
     edit:   {
       '-all-' => {
-        null: true,
+        null: false,
       },
     },
   },
