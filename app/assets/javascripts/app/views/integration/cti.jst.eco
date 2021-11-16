@@ -82,7 +82,7 @@
     <table class="settings-list" style="width: 100%;">
       <thead>
         <tr>
-          <th width="50%"><%- @T('Name') %>
+          <th width="50%"><%- @T('Value') %>
           <th width="50%"><%- @T('Description') %>
       </thead>
       <tbody>
