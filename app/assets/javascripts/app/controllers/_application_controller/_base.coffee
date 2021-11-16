@@ -300,9 +300,10 @@ class App.Controller extends Spine.Controller
 
   frontendTimeUpdateItem: (item, currentVal) =>
     timestamp = item.attr('datetime')
-    time      = @humanTime(timestamp, item.hasClass('escalation'))
+    return if timestamp is 'null'
 
     # only do dom updates on changes
+    time = @humanTime(timestamp, item.hasClass('escalation'))
     return if time is currentVal
 
     newTitle = App.i18n.translateTimestamp(timestamp)
