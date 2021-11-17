@@ -48,7 +48,15 @@ class App.TicketCreate extends App.Controller
     if @ticket_id && @article_id
       @split = "/#{@ticket_id}/#{@article_id}"
 
-    @buildScreen(params)
+    @ajax(
+      type: 'GET'
+      url:  "#{@apiPath}/ticket_create"
+      processData: true
+      success: (data, status, xhr) =>
+        App.Collection.loadAssets(data.assets)
+        @formMeta = data.form_meta
+        @buildScreen(params)
+    )
 
     # rerender view, e. g. on langauge change
     @controllerBind('ui:rerender', =>
@@ -271,6 +279,7 @@ class App.TicketCreate extends App.Controller
     localeRender = =>
       @render(template)
     App.QueueManager.add(@queueKey, localeRender)
+    return if !@formMeta
     App.QueueManager.run(@queueKey)
 
   updateTaskManagerAttachments: (attribute, attachments) =>
@@ -323,15 +332,16 @@ class App.TicketCreate extends App.Controller
     handlers = @Config.get('TicketCreateFormHandler')
 
     @controllerFormCreateMiddle = new App.ControllerForm(
-      el:                      @$('.ticket-form-middle')
-      form_id:                 @formId
-      model:                   App.Ticket
-      screen:                  'create_middle'
-      handlersConfig:          handlers
-      params:                  params
-      noFieldset:              true
-      taskKey:                 @taskKey
-      rejectNonExistentValues: true
+      el:                       @$('.ticket-form-middle')
+      form_id:                  @formId
+      model:                    App.Ticket
+      screen:                   'create_middle'
+      handlersConfig:           handlers
+      formMeta:                 @formMeta
+      params:                   params
+      noFieldset:               true
+      taskKey:                  @taskKey
+      rejectNonExistentValues:  true
     )
 
     # tunnel events to make sure core workflow does know

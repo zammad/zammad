@@ -813,4 +813,20 @@ RSpec.describe 'Ticket Create', type: :system do
       find '.token', text: input # wait for email to tokenize
     end
   end
+
+  describe 'No signature on new ticket if email is default message type #3844', authenticated_as: :authenticate do
+    def authenticate
+      Setting.set('ui_ticket_create_default_type', 'email-out')
+      Group.where.not(name: 'Users').each { |g| g.update(active: false) }
+      true
+    end
+
+    before do
+      visit 'ticket/create'
+    end
+
+    it 'does render the create screen with an initial core workflow state to set signatures and other defaults properly' do
+      expect(page.find('.richtext-content')).to have_text('Support')
+    end
+  end
 end
