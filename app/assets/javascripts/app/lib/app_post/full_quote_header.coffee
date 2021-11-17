@@ -41,11 +41,11 @@ class App.FullQuoteHeader
       article.to
 
   @fullQuoteHeaderForwardCC: (article) ->
-    return if !article.cc
-
     @fullQuoteHeaderEnsureMultiPrivacy(article.cc)
 
   @fullQuoteHeaderEnsureMultiPrivacy: (input) ->
+    return if !input
+
     input
       .split(',')
       .map (elem) ->

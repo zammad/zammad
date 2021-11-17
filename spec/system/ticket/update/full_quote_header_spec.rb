@@ -101,6 +101,28 @@ RSpec.describe 'Ticket > Update > Full Quote Header', current_user_id: -> { curr
         end
       end
     end
+
+    # https://github.com/zammad/zammad/issues/3855
+    context 'when ticket article has no recipient' do
+      shared_examples 'when recipient is set to' do |recipient:, recipient_human:|
+        context "when recipient is set to #{recipient_human}" do
+          let(:ticket_article) { create(:ticket_article, :inbound_web, ticket: ticket, to: recipient) }
+
+          it 'allows to forward without original recipient present' do
+            within(:active_content) do
+              click_forward
+
+              within(:richtext) do
+                expect(page).to contain_full_quote(ticket_article).formatted_for(:forward)
+              end
+            end
+          end
+        end
+      end
+
+      include_examples 'when recipient is set to', recipient: '', recipient_human: 'empty string'
+      include_examples 'when recipient is set to', recipient: nil, recipient_human: 'nil'
+    end
   end
 
   context 'when "ui_ticket_zoom_article_email_full_quote_header" is disabled' do
