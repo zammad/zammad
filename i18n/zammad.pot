@@ -362,10 +362,6 @@ msgstr ""
 msgid "API Key"
 msgstr ""
 
-#: app/assets/javascripts/app/views/integration/sipgate.jst.eco
-msgid "API Password"
-msgstr ""
-
 #: db/seeds/settings.rb
 msgid "API Password Access"
 msgstr ""
@@ -376,10 +372,6 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "API Token Access"
-msgstr ""
-
-#: app/assets/javascripts/app/views/integration/sipgate.jst.eco
-msgid "API User"
 msgstr ""
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
@@ -1947,7 +1939,6 @@ msgstr ""
 #: app/assets/javascripts/app/models/knowledge_base_answer.coffee
 #: app/assets/javascripts/app/models/text_module.coffee
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
-#: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 msgid "Content"
 msgstr ""
 
@@ -4821,10 +4812,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 msgid "In addition, we have found emails in your mailbox that are older than %s weeks. You can import such emails as an \"archive\", which means that no notifications are sent and the tickets have the status \"closed\". However, you can find them in Zammad anytime using the search function. "
-msgstr ""
-
-#: app/assets/javascripts/app/views/integration/sipgate.jst.eco
-msgid "In order for Zammad to access %s, a %s API user and password must be stored here"
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
