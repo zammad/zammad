@@ -438,11 +438,16 @@ RSpec.describe Ticket, type: :model do
     end
 
     describe '#perform_changes' do
+      before do
+        stub_const('PERFORMABLE_STRUCT', Struct.new(:id, :perform, keyword_init: true))
+      end
 
       # a `performable` can be a Trigger or a Job
       # we use DuckTyping and expect that a performable
       # implements the following interface
-      let(:performable) { OpenStruct.new(id: 1, perform: perform) }
+      let(:performable) do
+        PERFORMABLE_STRUCT.new(id: 1, perform: perform)
+      end
 
       # Regression test for https://github.com/zammad/zammad/issues/2001
       describe 'argument handling' do

@@ -11,7 +11,7 @@ RSpec.describe NotificationFactory::Mailer do
       let(:parsed_incoming_mail) { Channel::EmailParser.new.parse raw_incoming_mail }
 
       let(:incoming_mail) do
-        mail = OpenStruct.new
+        mail = Channel::EmailParser::MESSAGE_STRUCT.new
         mail.from_display_name = parsed_incoming_mail[:from_display_name]
         mail.subject = parsed_incoming_mail[:subject]
         mail.msg_size = format('%<MB>.2f', MB: raw_incoming_mail.size.to_f / 1024 / 1024)

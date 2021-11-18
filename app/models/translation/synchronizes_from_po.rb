@@ -3,6 +3,8 @@
 module Translation::SynchronizesFromPo
   extend ActiveSupport::Concern
 
+  TRANSLATION_FILE_STRUCT = Struct.new(:translation, :translation_file, keyword_init: true).freeze
+
   class_methods do # rubocop:disable Metrics/BlockLength
 
     def sync
@@ -64,7 +66,7 @@ module Translation::SynchronizesFromPo
 
           # For 'en-*' locales, treat source as translation as well, to indicate that nothing is missing.
           translation = source if translation.empty? && locale.start_with?('en')
-          result[source] = OpenStruct.new(translation: translation, translation_file: file)
+          result[source] = TRANSLATION_FILE_STRUCT.new(translation: translation, translation_file: file)
         end
       end
       result

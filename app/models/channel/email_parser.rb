@@ -8,6 +8,7 @@ class Channel::EmailParser
   RECIPIENT_FIELDS = %w[to cc delivered-to x-original-to envelope-to].freeze
   SENDER_FIELDS = %w[from reply-to return-path sender].freeze
   EXCESSIVE_LINKS_MSG = __('This message cannot be displayed because it contains over 5,000 links. Download the raw message below and open it via an Email client if you still wish to view it.').freeze
+  MESSAGE_STRUCT = Struct.new(:from_display_name, :subject, :msg_size).freeze
 
 =begin
 
@@ -927,7 +928,7 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
     parsed_incoming_mail = Channel::EmailParser.new.parse(raw_incoming_mail)
 
     # construct a dummy mail object
-    mail = OpenStruct.new
+    mail = MESSAGE_STRUCT.new
     mail.from_display_name = parsed_incoming_mail[:from_display_name]
     mail.subject = parsed_incoming_mail[:subject]
     mail.msg_size = format('%<MB>.2f', MB: raw_incoming_mail.size.to_f / 1024 / 1024)

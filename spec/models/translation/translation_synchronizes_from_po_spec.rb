@@ -48,21 +48,29 @@ RSpec.describe Translation do
 
     context 'when getting the en-us strings' do
       it 'contains the translation for "yes"' do
-        expect(described_class.strings_for_locale('en-us')).to include(
-          'yes'             => OpenStruct.new(translation: 'yes', translation_file: 'i18n/zammad.pot'),
-          'FORMAT_DATE'     => OpenStruct.new(translation: 'mm/dd/yyyy', translation_file: 'i18n/zammad.pot'),
-          'FORMAT_DATETIME' => OpenStruct.new(translation: 'mm/dd/yyyy HH:MM', translation_file: 'i18n/zammad.pot'),
-        )
+        expect(described_class.strings_for_locale('en-us')['yes']).to have_attributes(translation: 'yes', translation_file: 'i18n/zammad.pot')
+      end
+
+      it 'contains the translation for "FORMAT_DATE"' do
+        expect(described_class.strings_for_locale('en-us')['FORMAT_DATE']).to have_attributes(translation: 'mm/dd/yyyy', translation_file: 'i18n/zammad.pot')
+      end
+
+      it 'contains the translation for "FORMAT_DATE_TIME"' do
+        expect(described_class.strings_for_locale('en-us')['FORMAT_DATETIME']).to have_attributes(translation: 'mm/dd/yyyy HH:MM', translation_file: 'i18n/zammad.pot')
       end
     end
 
     context 'when getting the de-de strings' do
       it 'contains the translation for "yes"' do
-        expect(described_class.strings_for_locale('de-de')).to include(
-          'yes'             => OpenStruct.new(translation: 'ja', translation_file: 'i18n/zammad.de-de.po'),
-          'FORMAT_DATE'     => OpenStruct.new(translation: 'dd.mm.yyyy', translation_file: 'i18n/zammad.de-de.po'),
-          'FORMAT_DATETIME' => OpenStruct.new(translation: 'dd.mm.yyyy HH:MM', translation_file: 'i18n/zammad.de-de.po'),
-        )
+        expect(described_class.strings_for_locale('de-de')['yes']).to have_attributes(translation: 'ja', translation_file: 'i18n/zammad.de-de.po')
+      end
+
+      it 'contains the translation for "FORMAT_DATE"' do
+        expect(described_class.strings_for_locale('de-de')['FORMAT_DATE']).to have_attributes(translation: 'dd.mm.yyyy', translation_file: 'i18n/zammad.de-de.po')
+      end
+
+      it 'contains the translation for "FORMAT_DATE_TIME"' do
+        expect(described_class.strings_for_locale('de-de')['FORMAT_DATETIME']).to have_attributes(translation: 'dd.mm.yyyy HH:MM', translation_file: 'i18n/zammad.de-de.po')
       end
     end
   end
