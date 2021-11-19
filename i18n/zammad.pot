@@ -245,7 +245,7 @@ msgid "** Data Privacy **, helps you to delete and verify the removal of existin
 msgstr ""
 
 #: app/assets/javascripts/app/models/sla.coffee
-msgid "** Service Level Agreements **, abbreviated ** SLAs **, help you to meet certain customers' time-related responses. Thus, for example, you can say customers should always get a response from you after 8 hours at the latest. In the event of an imminent violation or a breach, Zammad will alert you to such events.\n\nIt can be ** response time ** (time between the creation of a ticket and the first reaction of an agent), ** update time ** (time between a customer's request and an agent's reaction) and ** solution time ** (time between creation and closing a ticket ) To be defined.\n\nAny violations are displayed in a separate view in the overviews. You can also configure ** e-mail notifications **."
+msgid "** Service Level Agreements **, abbreviated ** SLAs **, help you to meet certain customers' time-related responses. Thus, for example, you can say customers should always get a response from you after 8 hours at the latest. In the event of an imminent violation or a breach, Zammad will alert you to such events."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
@@ -793,6 +793,10 @@ msgstr ""
 msgid "Any Recipient"
 msgstr ""
 
+#: app/assets/javascripts/app/models/sla.coffee
+msgid "Any violations are displayed in a separate view in the overviews. You can also configure ** e-mail notifications **."
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "App ID"
 msgstr ""
@@ -1072,6 +1076,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/overview.coffee
 msgid "Available for the following roles"
+msgstr ""
+
+#: app/assets/javascripts/app/models/text_module.coffee
+msgid "Available objects are:\n* ticket (e. g. ticket.state, ticket.group)\n* ticket.customer (e. g. ticket.customer.firstname, ticket.customer.lastname)\n* ticket.owner (e. g. ticket.owner.firstname, ticket.owner.lastname)\n* ticket.organization (e. g. ticket.organization.name)\n* user (e. g. user.firstname, user.email)"
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -2077,7 +2085,7 @@ msgid "Create Text Modules"
 msgstr ""
 
 #: app/assets/javascripts/app/models/text_module.coffee
-msgid "Create Text Modules to **spend less time writing responses**. Text Modules can include smart variables like the users name or email address.\n\nExamples of snippets are:\n\n* Hello Mrs. #{ticket.customer.lastname},\n* Hello Mr. #{ticket.customer.lastname},\n* Hello #{ticket.customer.firstname},\n* My Name is #{user.firstname},\n\nOf course you can also use multi line snippets.\n\nAvailable objects are:\n* ticket (e. g. ticket.state, ticket.group)\n* ticket.customer (e. g. ticket.customer.firstname, ticket.customer.lastname)\n* ticket.owner (e. g. ticket.owner.firstname, ticket.owner.lastname)\n* ticket.organization (e. g. ticket.organization.name)\n* user (e. g. user.firstname, user.email)\n\nTo select placeholders from a list, just enter \"::\".\n"
+msgid "Create Text Modules to **spend less time writing responses**. Text Modules can include smart variables like the users name or email address."
 msgstr ""
 
 #: app/controllers/first_steps_controller.rb
@@ -3737,7 +3745,7 @@ msgid "Every category in your knowledge base should be given a unique icon for m
 msgstr ""
 
 #: app/assets/javascripts/app/models/trigger.coffee
-msgid "Every time a customer creates a new ticket, they automatically receive a confirmation email to assure them that their issue has been submitted successfully. This behavior is built into Zammad, but it’s also highly customizable, and you can set up other automated actions just like it.\n\nMaybe you want to set a higher priority on any ticket with the word “urgent” in the title. Maybe you want to avoid sending auto-reply emails to customers from certain organizations. Maybe you want mark a ticket as “pending” whenever someone adds an internal note to a ticket.\n\nWhatever it is, you can do it with triggers: actions that watch tickets for certain changes, and then fire off whenever those changes occur."
+msgid "Every time a customer creates a new ticket, they automatically receive a confirmation email to assure them that their issue has been submitted successfully. This behavior is built into Zammad, but it’s also highly customizable, and you can set up other automated actions just like it."
 msgstr ""
 
 #: app/assets/javascripts/app/views/api.jst.eco
@@ -3755,6 +3763,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco
 msgid "Examples"
+msgstr ""
+
+#: app/assets/javascripts/app/models/text_module.coffee
+msgid "Examples of snippets are:\n* Hello Mrs. #{ticket.customer.lastname},\n* Hello Mr. #{ticket.customer.lastname},\n* Hello #{ticket.customer.firstname},\n* My Name is #{user.firstname},"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_auto_assignment.coffee
@@ -5126,6 +5138,10 @@ msgstr ""
 msgid "Ionicons"
 msgstr ""
 
+#: app/assets/javascripts/app/models/sla.coffee
+msgid "It can be ** response time ** (time between the creation of a ticket and the first reaction of an agent), ** update time ** (time between a customer's request and an agent's reaction) and ** solution time ** (time between creation and closing a ticket ) To be defined."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 msgid "Items per page"
 msgstr ""
@@ -5663,6 +5679,10 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
 msgid "May"
+msgstr ""
+
+#: app/assets/javascripts/app/models/trigger.coffee
+msgid "Maybe you want to set a higher priority on any ticket with the word “urgent” in the title. Maybe you want to avoid sending auto-reply emails to customers from certain organizations. Maybe you want mark a ticket as “pending” whenever someone adds an internal note to a ticket."
 msgstr ""
 
 #: app/assets/javascripts/app/views/layout_ref/organization_profile.jst.eco
@@ -6671,6 +6691,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 msgid "October"
+msgstr ""
+
+#: app/assets/javascripts/app/models/text_module.coffee
+msgid "Of course you can also use multi line snippets."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
@@ -10338,6 +10362,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco
 msgid "What values of %s should be synced to users."
+msgstr ""
+
+#: app/assets/javascripts/app/models/trigger.coffee
+msgid "Whatever it is, you can do it with triggers: actions that watch tickets for certain changes, and then fire off whenever those changes occur."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee

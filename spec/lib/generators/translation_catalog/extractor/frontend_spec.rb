@@ -42,4 +42,16 @@ RSpec.describe Generators::TranslationCatalog::Extractor::Frontend do
       expect(result_strings).to eq(Set[])
     end
   end
+
+  context 'with strings too long' do
+    let(:string) do
+      <<~"CODE"
+        __("#{'a' * 501}")
+      CODE
+    end
+
+    it 'raises an error' do
+      expect { result_strings }.to raise_error(%r{Found a string that longer than than the allowed 500 characters})
+    end
+  end
 end

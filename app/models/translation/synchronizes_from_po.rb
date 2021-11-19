@@ -9,28 +9,38 @@ module Translation::SynchronizesFromPo
 
     def sync
       Locale.to_sync.each do |locale|
-        sync_locale_from_po locale.locale
+        ActiveRecord::Base.transaction do
+          sync_locale_from_po locale.locale
+        end
       end
     end
 
-    def sync_locale_from_po(locale) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity
+    def sync_locale_from_po(locale) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
       previous_unmodified_translations = Translation.where(locale: locale, is_synchronized_from_codebase: true).select { |t| t.target.eql?(t.target_initial) }
       updated_translation_ids = Set[]
+      importable_translations = []
 
-      strings_for_locale(locale).each_pair do |source, entry|
+      strings_for_locale(locale).each_pair do |source, entry| # rubocop:disable Metrics/BlockLength
+
+        if source.length > 500 || entry.translation.length > 500
+          Rails.logger.error "Cannot import translation for locale #{locale} because it exceeds maximum string length of 500: source: '#{source}', translation: '#{entry.translation}'"
+          next
+        end
+
         t = Translation.find_source(locale, source)
         # New string
         if !t
-          Translation.new(
+          importable_translations << Translation.new(
             locale:                             locale,
             source:                             source,
             target:                             entry.translation,
+            target_initial:                     entry.translation,
             is_synchronized_from_codebase:      true,
             synchronized_from_translation_file: entry.translation_file,
             created_by_id:                      1,
             updated_by_id:                      1
-          ).save!
+          )
           next
         end
 
@@ -48,6 +58,8 @@ module Translation::SynchronizesFromPo
         end
         updated_translation_ids.add t.id
       end
+
+      Translation.import importable_translations
       # Remove any unmodified & synchronized strings that are not present in the data any more.
       previous_unmodified_translations.reject { |t| updated_translation_ids.member? t.id }.each(&:destroy!)
       true

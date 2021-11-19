@@ -23,8 +23,8 @@ class App.Sla extends App.Model
 
   @description = __('''
 ** Service Level Agreements **, abbreviated ** SLAs **, help you to meet certain customers' time-related responses. Thus, for example, you can say customers should always get a response from you after 8 hours at the latest. In the event of an imminent violation or a breach, Zammad will alert you to such events.
-
+''') + '\n\n' + __('''
 It can be ** response time ** (time between the creation of a ticket and the first reaction of an agent), ** update time ** (time between a customer's request and an agent's reaction) and ** solution time ** (time between creation and closing a ticket ) To be defined.
-
+''') + '\n\n' + __('''
 Any violations are displayed in a separate view in the overviews. You can also configure ** e-mail notifications **.
 ''')

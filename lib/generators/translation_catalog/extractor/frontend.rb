@@ -29,6 +29,7 @@ class Generators::TranslationCatalog::Extractor::Frontend < Generators::Translat
         references[result] << filename
       end
     end
+    validate_strings
   end
 
   def find_files(base_path)

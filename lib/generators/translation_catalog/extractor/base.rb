@@ -15,6 +15,14 @@ class Generators::TranslationCatalog::Extractor::Base
     end
   end
 
+  def validate_strings
+    @strings.to_a.each do |s|
+      if s.length > 500
+        raise "Found a string that longer than than the allowed 500 characters: '#{s}'"
+      end
+    end
+  end
+
   def extract_from_string(string, filename)
     raise NotImplementedError
   end

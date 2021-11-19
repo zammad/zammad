@@ -177,6 +177,9 @@ RSpec.describe Translation do
         msgid "custom-string-translated"
         msgstr "custom-string-übersetzt"
 
+        msgid "custom-string-too-long"
+        msgstr "custom-string-too-long #{'a' * 501}"
+
         msgid "custom-string-untranslated"
         msgstr ""
 
@@ -220,6 +223,10 @@ RSpec.describe Translation do
 
     it 'adds the custom fuzzy entry without content' do
       expect(described_class.find_source('de-de', 'custom-string-fuzzy')).to have_attributes(target: '')
+    end
+
+    it 'ignores strings that are too long' do
+      expect(described_class.find_source('de-de', 'custom-string-too-long')).to be_nil
     end
   end
 

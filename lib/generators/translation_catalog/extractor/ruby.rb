@@ -24,6 +24,7 @@ class Generators::TranslationCatalog::Extractor::Ruby < Generators::TranslationC
         references[result] << filename
       end
     end
+    validate_strings
   end
 
   def find_files(base_path)
