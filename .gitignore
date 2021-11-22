@@ -90,6 +90,9 @@
 # Eclipse
 /.project
 
+# VSCode
+/.vscode
+
 # Byebug
 /.byebug_history
 
