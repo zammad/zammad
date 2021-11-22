@@ -89,7 +89,7 @@ class Sla extends App.ControllerSubContent
 
   description: (e) =>
     new App.ControllerGenericDescription(
-      description: App.Calendar.description
+      description: App.Sla.description
       container:   @el.closest('.content')
     )
 
