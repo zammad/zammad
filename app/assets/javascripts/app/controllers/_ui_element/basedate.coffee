@@ -155,4 +155,4 @@ class App.UiElement.basedate
       clear: 'clear'
     }
 
-    App.i18n.translateDeep(data)
+    App.i18n.translateDeepPlain(data)

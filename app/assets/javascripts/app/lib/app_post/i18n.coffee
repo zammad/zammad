@@ -8,7 +8,12 @@ class App.i18n
   @translateDeep: (input, args...) ->
     if _instance == undefined
       _instance ?= new _i18nSingleton()
-    _instance.translateDeep(input, args)
+    _instance.translateDeep(input, args, false)
+
+  @translateDeepPlain: (input, args...) ->
+    if _instance == undefined
+      _instance ?= new _i18nSingleton()
+    _instance.translateDeep(input, args, true)
 
   @translateContent: (string, args...) ->
     if _instance == undefined
@@ -230,17 +235,20 @@ class _i18nSingleton extends Spine.Module
     return string if !string
     @translate(string, args, true)
 
-  translateDeep: (input, args) =>
+  translateDeep: (input, args, plain) =>
     if _.isArray(input)
       _.map input, (item) =>
-        @translateDeep(item, args)
+        @translateDeep(item, args, plain)
     else if _.isObject(input)
       _.reduce _.keys(input), (memo, item) =>
-        memo[item] = @translateDeep(input[item])
+        memo[item] = @translateDeep(input[item], args, plain)
         memo
       , {}
     else
-      @translateInline(input, args)
+      if plain
+        @translatePlain(input, args)
+      else
+        @translateInline(input, args)
 
 
   translateContent: (string, args) =>
