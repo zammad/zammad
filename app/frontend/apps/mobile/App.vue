@@ -26,8 +26,36 @@
 <script setup lang="ts">
 import CommonNotifications from '@common/components/CommonNotifications.vue'
 import useApplicationLoadedStore from '@common/stores/application/loaded'
+import useAuthenticatedStore from '@common/stores/authenticated'
+import useSessionIdStore from '@common/stores/session/id'
+import { useRoute, useRouter } from 'vue-router'
+
+// TODO ... maybe show some special message, if the session was removed from a other place.
+// unauthorized () {
+//     return !this.$store.getters.accessToken && this.$store.getters.authenticated;
+// },
+
+const router = useRouter()
+const route = useRoute()
+
+const sessionId = useSessionIdStore()
+const authenticated = useAuthenticatedStore()
 
 const applicationLoaded = useApplicationLoadedStore()
 
 applicationLoaded.setLoaded()
+
+// Add a watcher for authenticated change.
+authenticated.$subscribe((mutation, state) => {
+  if (state.value && !sessionId.value) {
+    sessionId.checkSession().then((sessionId) => {
+      if (sessionId && route.name === 'Login') {
+        router.replace('/')
+      }
+    })
+  } else if (!state.value && sessionId.value) {
+    sessionId.value = null
+    router.replace('login')
+  }
+})
 </script>

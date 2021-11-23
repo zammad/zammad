@@ -63,6 +63,9 @@ const useAuthenticatedStore = defineStore('authenticated', {
       }
     },
   },
+  shareState: {
+    enabled: true,
+  },
 })
 
 export default useAuthenticatedStore

@@ -61,6 +61,7 @@
     "@apollo/client": "^3.4.16",
     "@vue/apollo-composable": "^4.0.0-alpha.15",
     "actioncable": "^5.2.6",
+    "broadcast-channel": "^4.5.0",
     "graphql": "^15.6.1",
     "graphql-ruby-client": "^1.10.1",
     "graphql-tag": "^2.12.5",

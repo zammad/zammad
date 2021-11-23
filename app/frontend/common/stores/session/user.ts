@@ -15,13 +15,13 @@ const useSessionUserStore = defineStore('sessionUser', {
     async getCurrentUser(refetchQuery = false): Promise<UserData> {
       const currentUserQuery = new QueryHandler(useCurrentUserQuery())
 
-      // Trigger query refetch in some situtations, to skip the cache.
-      if (refetchQuery) {
+      // Trigger query refetch in some situtations or if already some data exists,
+      // to skip the cache.
+      if (refetchQuery || currentUserQuery.result().value?.currentUser) {
         currentUserQuery.refetch()
       }
 
       const result = await currentUserQuery.onLoaded()
-
       this.value = result?.currentUser || null
 
       return this.value
