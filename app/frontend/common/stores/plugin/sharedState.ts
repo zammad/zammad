@@ -61,7 +61,7 @@ const shareState = <T extends Store>(store: T): void => {
  * @param options.enabled - Enable/disable sharing of state for all stores.
  */
 const PiniaSharedState = (
-  pluginOptions: ShareStateOptions = { enabled: true},
+  pluginOptions: ShareStateOptions = { enabled: true },
 ) => {
   return ({ store, options }: PiniaPluginContext) => {
     const isEnabled = options?.shareState?.enabled ?? pluginOptions.enabled

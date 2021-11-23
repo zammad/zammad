@@ -1,3 +1,5 @@
+// Copyright (C) 2012-2021 Zammad Foundation, https://zammad-foundation.org/
+
 const path = require('path')
 
 module.exports = {
@@ -31,10 +33,29 @@ module.exports = {
         order: ['template', 'script', 'style'],
       },
     ],
+    // Not allow the usage of relative imports, because we want always use the path aliases.
+    'no-restricted-imports': [
+      'error',
+      {
+        patterns: [
+          {
+            group: ['.*'],
+            message:
+              'Usage of relative imports is not allowed. Always path aliases should be used.',
+          },
+        ],
+      },
+    ],
     // Disable the following rule, because it's not relevant for the tool chain and test envoirment.
     'import/no-extraneous-dependencies': [
       'error',
-      { devDependencies: ['vite.config.ts', 'app/frontend/tests/**/*'] },
+      {
+        devDependencies: [
+          'tailwind.config.js',
+          'vite.config.ts',
+          'app/frontend/tests/**/*',
+        ],
+      },
     ],
     // Adding typescript file types, because airbnb doesn't allow this by default.
     'import/extensions': [

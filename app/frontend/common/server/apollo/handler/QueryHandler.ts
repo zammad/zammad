@@ -39,9 +39,12 @@ export default class QueryHandler<
     return new Promise((resolve, reject) => {
       const refetch = this.operationResult.refetch(variables)
 
-      if (!refetch) return resolve(null)
+      if (!refetch) {
+        resolve(null)
+        return
+      }
 
-      return refetch
+      refetch
         .then((result) => {
           if (this.refetchResolver) this.refetchResolver(result)
           this.refetchTriggered = false

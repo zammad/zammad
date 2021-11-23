@@ -4,12 +4,9 @@
   <CommonNotifications />
   <div
     class="
-      h-full
-      max-h-full
-      overflow-auto
-      w-full
-      bg-gray-200
-      text-center text-sm
+      min-h-screen min-w-screen
+      bg-dark
+      text-gray-400 text-center text-sm
       antialiased
       font-sans
       select-none
@@ -24,7 +21,7 @@
 </template>
 
 <script setup lang="ts">
-import CommonNotifications from '@common/components/CommonNotifications.vue'
+import CommonNotifications from '@common/components/common/CommonNotifications.vue'
 import useApplicationLoadedStore from '@common/stores/application/loaded'
 import useAuthenticatedStore from '@common/stores/authenticated'
 import useSessionIdStore from '@common/stores/session/id'

@@ -15,8 +15,19 @@ import useApplicationConfigStore from '@common//stores/application/config'
 import initializeRouter from '@common/router/index'
 import routes from '@mobile/router'
 
+const enableLoadingAnimation = (): void => {
+  const loadingElement: Maybe<HTMLElement> =
+    document.getElementById('loadingApp')
+
+  if (loadingElement) {
+    loadingElement.style.display = 'flex'
+  }
+}
+
 export default async function mountApp(): Promise<void> {
   const app = createApp(App)
+
+  enableLoadingAnimation()
 
   app.provide(DefaultApolloClient, apolloClient)
 

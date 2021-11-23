@@ -3,8 +3,21 @@
 import { RouteRecordRaw } from 'vue-router'
 import Login from '@mobile/views/Login.vue'
 import Home from '@mobile/views/Home.vue'
+import LayoutMain from '@mobile/components/layout/LayoutMain.vue'
 
-// TODO ...extend "meta" in RouteRecordRaw with real type behind.
+// TODO ...extend "meta" in RouteRecordRaw with real type behind if possible.
+
+const mainRoutes: Array<RouteRecordRaw> = [
+  {
+    path: '/',
+    name: 'Home',
+    props: true,
+    component: Home,
+    meta: {
+      requiresAuth: true,
+    },
+  },
+]
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -16,12 +29,9 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: '/',
-    name: 'Home',
     props: true,
-    component: Home,
-    meta: {
-      requiresAuth: true,
-    },
+    component: LayoutMain,
+    children: mainRoutes,
   },
 ]
 

@@ -80,7 +80,9 @@ export default abstract class BaseHandler<
       if (graphQLErrors.length > 0) {
         const { message, extensions }: GraphQLErrorReport = graphQLErrors[0]
         errorHandler = {
-          type: extensions?.type || GraphQLErrorTypes.NetworkError,
+          type:
+            (extensions?.type as GraphQLErrorTypes) ||
+            GraphQLErrorTypes.NetworkError,
           message,
         }
       } else if (networkError) {

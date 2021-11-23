@@ -19,7 +19,7 @@ const useApplicationLoadedStore = defineStore('applicationLoaded', {
       this.value = true
 
       const loadingAppElement: Maybe<HTMLElement> =
-        document.querySelector('#loadingApp')
+        document.getElementById('loadingApp')
       if (loadingAppElement) {
         loadingAppElement.remove()
       }
