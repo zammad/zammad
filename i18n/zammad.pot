@@ -4140,6 +4140,7 @@ msgid "For security reasons, the API token is shown only once. You'll need to sa
 msgstr ""
 
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/apps/mobile/views/Login.vue
 msgid "Forgot password?"
 msgstr ""
 
@@ -4545,6 +4546,10 @@ msgstr ""
 msgid "Health information can be retrieved as JSON using:"
 msgstr ""
 
+#: app/frontend/apps/mobile/views/Home.vue
+msgid "Hello Home!!!"
+msgstr ""
+
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Hello! I need help with your product."
 msgstr ""
@@ -4615,6 +4620,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/calendar.coffee
 msgid "Holidays iCalendar Feed"
+msgstr ""
+
+#: app/frontend/apps/mobile/views/Home.vue
+msgid "Home"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
@@ -5550,6 +5559,10 @@ msgstr ""
 msgid "Log in to %s"
 msgstr ""
 
+#: app/frontend/apps/mobile/views/Login.vue
+msgid "Log in with %s"
+msgstr ""
+
 #: app/assets/javascripts/app/models/user.coffee
 #: app/assets/javascripts/app/views/maintenance.jst.eco
 #: db/seeds/object_manager_attributes.rb
@@ -5566,6 +5579,7 @@ msgid "Logo"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
+#: app/frontend/apps/mobile/views/Home.vue
 msgid "Logout"
 msgstr ""
 
@@ -6906,6 +6920,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/apps/mobile/views/Login.vue
 #: db/seeds/object_manager_attributes.rb
 #: db/seeds/permissions.rb
 msgid "Password"
@@ -7128,6 +7143,7 @@ msgid "Postmaster Filter"
 msgstr ""
 
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/apps/mobile/views/Login.vue
 msgid "Powered by"
 msgstr ""
 
@@ -7380,6 +7396,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/apps/mobile/views/Login.vue
 msgid "Remember me"
 msgstr ""
 
@@ -8196,6 +8213,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/login.coffee
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/apps/mobile/views/Login.vue
 msgid "Sign in"
 msgstr ""
 
@@ -8783,6 +8801,10 @@ msgstr ""
 
 #: app/controllers/ticket_articles_controller.rb
 msgid "The file does not belong to the specified article."
+msgstr ""
+
+#: app/frontend/common/components/common/CommonHelloWorld.vue
+msgid "The first component."
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
@@ -9957,6 +9979,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 msgid "Username"
+msgstr ""
+
+#: app/frontend/apps/mobile/views/Login.vue
+msgid "Username / Email"
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco

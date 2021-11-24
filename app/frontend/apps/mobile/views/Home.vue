@@ -2,10 +2,10 @@
 
 <template>
   <div>
-    <h1>Home</h1>
+    <h1>{{ i18n.t('Home') }}</h1>
     <p>{{ userData?.firstname }} {{ userData?.lastname }}</p>
     <br />
-    <p v-on:click="logout">Logout</p>
+    <p v-on:click="logout">{{ i18n.t('Logout') }}</p>
     <br />
     <p v-on:click="refetchConfig">refetchConfig</p>
     <br /><br />
@@ -33,7 +33,7 @@ import { useApplicationConfigQuery } from '@mobile/graphql/api'
 const { notify } = useNotifications()
 
 notify({
-  message: 'Hello Home!!!',
+  message: __('Hello Home!!!'),
   type: 'alert',
 })
 

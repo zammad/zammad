@@ -2,8 +2,8 @@
 
 <template>
   <div v-if="show">
-    <h1>{{ msg }}</h1>
-    <p>The first component.</p>
+    <h1>{{ i18n.t(msg) }}</h1>
+    <p>{{ i18n.t('The first component.') }}</p>
   </div>
 </template>
 

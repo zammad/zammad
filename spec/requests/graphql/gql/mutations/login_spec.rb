@@ -32,7 +32,7 @@ RSpec.describe Gql::Mutations::Login, type: :request do
 
     context 'without CSRF token', allow_forgery_protection: true do
       it 'fails with error message' do
-        expect(graphql_response['errors'][0]['message']).to eq('CSRF token verification failed!')
+        expect(graphql_response['errors'][0]).to include('message' => 'CSRF token verification failed!')
       end
 
       it 'fails with error type' do
@@ -43,17 +43,23 @@ RSpec.describe Gql::Mutations::Login, type: :request do
     context 'with wrong password' do
       let(:password) { 'wrong' }
 
-      it 'fails' do
-        expect(graphql_response['errors'][0]['message']).to eq('Wrong login or password combination.')
+      it 'fails with error message' do
+        expect(graphql_response['errors'][0]).to include('message' => 'Wrong login or password combination.')
+      end
+
+      it 'fails with error type' do
+        expect(graphql_response['errors'][0]['extensions']).to include({ 'type' => 'RuntimeError' })
       end
     end
 
     context 'without fingerprint' do
       let(:fingerprint) { nil }
 
-      it 'fails' do
-        expect(graphql_response['errors'][0]['message']).to eq('Variable $fingerprint of type String! was provided invalid value')
+      it 'fails with error message' do
+        expect(graphql_response['errors'][0]).to include('message' => 'Variable $fingerprint of type String! was provided invalid value')
       end
+
+      # No error type available for GraphQL::ExecutionErrors.
     end
 
   end

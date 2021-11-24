@@ -1194,6 +1194,13 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
+"@pinia/testing@^0.0.5":
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/@pinia/testing/-/testing-0.0.5.tgz#d0fe0d1bba628afb6d8feaae0baaba56041f4c6c"
+  integrity sha512-Z2ok6UvnnSy4633uspJmpd8lJfDFKHStRTU5mYMF+cBUO01Y/70ImdSfS5hHa7TrAYPxJ7YS8gi+iBuUfuErmw==
+  dependencies:
+    vue-demi "*"
+
 "@samverschueren/stream-to-observable@^0.3.0":
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/@samverschueren/stream-to-observable/-/stream-to-observable-0.3.1.tgz#a21117b19ee9be70c379ec1877537ef2e1c63301"

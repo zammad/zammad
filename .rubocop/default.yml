@@ -285,7 +285,8 @@ GraphQL/ExtractInputType:
 
 # Enforcing field descriptions for all model fields will be too verbose/redundant.
 GraphQL/FieldDescription:
-  Enabled: false
+  Exclude:
+    - "app/graphql/gql/types/**/*"
 
 # RSpec tests
 Style/NumericPredicate:

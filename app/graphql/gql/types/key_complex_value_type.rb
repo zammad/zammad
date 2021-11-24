@@ -7,7 +7,7 @@ module Gql::Types
       false
     end
 
-    description 'Key/value type with complex values.'
+    description 'Key/value type with complex (JSON) values.'
 
     field :key, String, null: false
     field :value, GraphQL::Types::JSON, null: true

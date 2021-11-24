@@ -32,7 +32,7 @@ module Gql::Mutations
       user = auth&.user
 
       if !auth.valid?
-        raise GraphQL::ExecutionError, __('Wrong login or password combination.')
+        raise __('Wrong login or password combination.')
       end
 
       context[:controller].session.delete(:switched_from_user_id)

@@ -18,7 +18,7 @@ RSpec.describe Gql::Queries::CurrentUser, type: :request do
 
     context 'with authenticated session', authenticated_as: :agent do
       it 'has data' do
-        expect(graphql_response['data']['currentUser']['firstname']).to eq(agent.firstname)
+        expect(graphql_response['data']['currentUser']).to include('firstname' => agent.firstname)
       end
 
       it 'has objectAttributeValue data for User' do
@@ -27,13 +27,13 @@ RSpec.describe Gql::Queries::CurrentUser, type: :request do
       end
 
       it 'has data for Organization' do
-        expect(graphql_response['data']['currentUser']['organization']['name']).to eq(organization.name)
+        expect(graphql_response['data']['currentUser']['organization']).to include('name' => organization.name)
       end
     end
 
     context 'without authenticated session', authenticated_as: false do
       it 'fails with error message' do
-        expect(graphql_response['errors'][0]['message']).to eq('Authentication required by Gql::Queries::CurrentUser')
+        expect(graphql_response['errors'][0]).to include('message' => 'Authentication required by Gql::Queries::CurrentUser')
       end
 
       it 'fails with error type' do

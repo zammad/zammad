@@ -39,7 +39,6 @@ const sessionId = useSessionIdStore()
 const authenticated = useAuthenticatedStore()
 
 const applicationLoaded = useApplicationLoadedStore()
-
 applicationLoaded.setLoaded()
 
 // Add a watcher for authenticated change.

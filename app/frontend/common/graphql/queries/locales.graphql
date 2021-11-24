@@ -1,0 +1,9 @@
+query locales {
+  locales {
+    locale
+    alias
+    name
+    dir
+    active
+  }
+}

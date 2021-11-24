@@ -14,11 +14,13 @@ module Gql::EntryPoints
       false
     end
 
-    # Load all available Gql::queries so that they can be iterated.
-    Mixin::RequiredSubPaths.eager_load_recursive("#{__dir__}/../queries")
+    # Load all available Gql::Queries so that they can be iterated.
+    Dir.glob('**/*.rb', base: "#{__dir__}/../queries/").each do |file|
+      subclass = file.sub(%r{.rb$}, '').camelize
+      query = "Gql::Queries::#{subclass}".constantize
+      next if subclass.starts_with? 'Base' # Ignore base classes.
 
-    ::Gql::Queries::BaseQuery.descendants.each do |query|
-      field_name = query.name.sub('Gql::Queries::', '').gsub('::', '').camelize(:lower).to_sym
+      field_name = subclass.gsub('::', '').camelize(:lower).to_sym
       field field_name, resolver: query
     end
   end

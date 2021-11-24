@@ -2,6 +2,7 @@ query currentUser {
   currentUser {
     firstname
     lastname
+    preferences
     objectAttributeValues {
       ...objectAttributeValues
     }
@@ -9,7 +10,7 @@ query currentUser {
       name
       objectAttributeValues {
         ...objectAttributeValues
-        }
       }
+    }
   }
 }

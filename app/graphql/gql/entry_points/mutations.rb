@@ -10,10 +10,12 @@ module Gql::EntryPoints
     end
 
     # Load all available Gql::mutations so that they can be iterated.
-    Mixin::RequiredSubPaths.eager_load_recursive("#{__dir__}/../mutations")
+    Dir.glob('**/*.rb', base: "#{__dir__}/../mutations/").each do |file|
+      subclass = file.sub(%r{.rb$}, '').camelize
+      mutation = "Gql::Mutations::#{subclass}".constantize
+      next if subclass.starts_with? 'Base' # Ignore base classes.
 
-    ::Gql::Mutations::BaseMutation.descendants.each do |mutation|
-      field_name = mutation.name.sub('Gql::Mutations::', '').gsub('::', '').camelize(:lower).to_sym
+      field_name = subclass.gsub('::', '').camelize(:lower).to_sym
       field field_name, mutation: mutation
     end
   end

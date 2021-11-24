@@ -14,6 +14,8 @@ import initializeStoreSubscriptions from '@common/initializer/storeSubscriptions
 import useApplicationConfigStore from '@common//stores/application/config'
 import initializeRouter from '@common/router/index'
 import routes from '@mobile/router'
+import { i18n } from '@common/utils/i18n'
+import useLocaleStore from '@common/stores/locale'
 
 const enableLoadingAnimation = (): void => {
   const loadingElement: Maybe<HTMLElement> =
@@ -43,6 +45,14 @@ export default async function mountApp(): Promise<void> {
 
   const applicationConfig = useApplicationConfigStore()
   await applicationConfig.getConfig()
+
+  app.config.globalProperties.i18n = i18n
+
+  // Store subscriptions will set the locale for authenticated users,
+  //  do it manually here only if the user is not authenticated.
+  if (!sessionId.value) {
+    useLocaleStore().updateLocale()
+  }
 
   app.mount('#app')
 }

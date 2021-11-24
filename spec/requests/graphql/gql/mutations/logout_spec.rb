@@ -14,13 +14,13 @@ RSpec.describe Gql::Mutations::Logout, type: :request do
 
     context 'with authenticated session', authenticated_as: :agent do
       it 'logs out' do
-        expect(graphql_response['data']['logout']).to eq({ 'success' => true })
+        expect(graphql_response['data']['logout']).to eq('success' => true)
       end
     end
 
     context 'without authenticated session' do
       it 'fails with error message' do
-        expect(graphql_response['errors'][0]['message']).to eq('Authentication required by Gql::Mutations::Logout')
+        expect(graphql_response['errors'][0]).to include('message' => 'Authentication required by Gql::Mutations::Logout')
       end
 
       it 'fails with error type' do

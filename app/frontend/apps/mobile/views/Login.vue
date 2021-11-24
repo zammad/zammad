@@ -6,7 +6,7 @@
     <div class="max-w-sm w-full">
       <div class="h-full m-auto">
         <div class="flex-grow flex flex-col justify-center">
-          <p>Log in with {{ config.get('fqdn') }}</p>
+          <p>{{ i18n.t('Log in with %s', config.get('fqdn')) }}</p>
 
           <div class="my-5 p-5 max-w-full bg-white flex-grow rounded-md">
             <div class="flex flex-col">
@@ -21,7 +21,7 @@
               <div class="text-left">
                 <label class="block mt-4 cursor-pointer">
                   <span class="text-gray-600 uppercase text-xs tracking-wide">
-                    Username / Email
+                    {{ i18n.t('Username / Email') }}
                   </span>
                   <input
                     v-model="loginFormValues.login"
@@ -40,7 +40,7 @@
 
                 <label class="block mt-4 cursor-pointer">
                   <span class="text-gray-600 uppercase text-xs tracking-wide">
-                    Password
+                    {{ i18n.t('Password') }}
                   </span>
                   <input
                     v-model="loginFormValues.password"
@@ -67,7 +67,7 @@
                   "
                 >
                   <input type="checkbox" class="form-checkbox" checked />
-                  <span class="ml-2">Remember me</span>
+                  <span class="ml-2">{{ i18n.t('Remember me') }}</span>
                 </label>
               </div>
 
@@ -84,11 +84,11 @@
                   "
                   v-on:click="login"
                 >
-                  Sign in
+                  {{ i18n.t('Sign in') }}
                 </button>
 
                 <a class="cursor-pointer select-none underline">
-                  Forgot password?
+                  {{ i18n.t('Forgot password?') }}
                 </a>
               </div>
             </div>
@@ -103,7 +103,7 @@
           </svg>
         </a>
 
-        <span class="mx-1">Powered by</span>
+        <span class="mx-1">{{ i18n.t('Powered by') }}</span>
 
         <a class="ml-1 -mt-1" href="https://zammad.org" target="_blank">
           <svg class="w-20 h-10 fill-current">

@@ -3,7 +3,7 @@
 module Gql::Queries
   class SessionId < BaseQuery
 
-    description 'Information about the current session'
+    description 'The sessionId of the currently authenticated user.'
 
     type String, null: false
 

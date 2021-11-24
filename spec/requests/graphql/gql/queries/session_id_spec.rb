@@ -20,7 +20,7 @@ RSpec.describe Gql::Queries::SessionId, type: :request do
 
     context 'without authenticated session', authenticated_as: false do
       it 'fails with error message' do
-        expect(graphql_response['errors'][0]['message']).to eq('Authentication required by Gql::Queries::SessionId')
+        expect(graphql_response['errors'][0]).to include('message' => 'Authentication required by Gql::Queries::SessionId')
       end
 
       it 'fails with error type' do

@@ -46,6 +46,14 @@ module.exports = {
         ],
       },
     ],
+    // Loosen AirBnB's strict rules a bit to allow 'for .. of'
+    "no-restricted-syntax": [
+      "error",
+      "ForInStatement",
+      // "ForOfStatement",  // We want to allow this
+      "LabeledStatement",
+      "WithStatement"
+    ],
     // Disable the following rule, because it's not relevant for the tool chain and test envoirment.
     'import/no-extraneous-dependencies': [
       'error',
