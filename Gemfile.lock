@@ -590,7 +590,7 @@ GEM
     tcr (0.2.2)
     telegramAPI (1.4.2)
       rest-client (~> 2.0, >= 2.0.2)
-    telephone_number (1.4.12)
+    telephone_number (1.4.13)
     term-ansicolor (1.7.1)
       tins (~> 1.0)
     test-unit (3.5.1)
