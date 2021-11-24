@@ -1,7 +1,7 @@
 {
   "scripts": {
     "generate-graphql-api": "bundle exec rails generate graphql_introspection > tmp/graphql_introspection.json && npx graphql-codegen -c .graphql_code_generator.yml",
-    "lint": "eslint --cache --cache-location ./tmp/eslintcache.js -c .eslintrc.js --ext .js,.ts,.vue app/frontend/ .eslint/",
+    "lint": "vue-tsc --noEmit && eslint --cache --cache-location ./tmp/eslintcache.js -c .eslintrc.js --ext .js,.ts,.vue app/frontend/ .eslint/",
     "lint:fix": "npm run lint -- --fix",
     "lint:css": "stylelint \"**/*.{css,vue,scss}\"",
     "lint:css:fix": "stylelint \"**/*.{css,vue,scss}\" --fix",
@@ -71,5 +71,8 @@
     "uuid": "^8.3.2",
     "vue": "^3.2.22",
     "vue-router": "^4.0.12"
+  },
+  "resolutions": {
+    "vscode-languageserver": "8.0.0-next.3"
   }
 }

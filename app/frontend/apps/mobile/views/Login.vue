@@ -6,7 +6,7 @@
     <div class="max-w-sm w-full">
       <div class="h-full m-auto">
         <div class="flex-grow flex flex-col justify-center">
-          <p>{{ i18n.t('Log in with %s', config.get('fqdn')) }}</p>
+          <p>{{ i18n.t('Log in with %s', config.get('fqdn') as string) }}</p>
 
           <div class="my-5 p-5 max-w-full bg-white flex-grow rounded-md">
             <div class="flex flex-col">

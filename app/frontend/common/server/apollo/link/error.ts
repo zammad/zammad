@@ -16,8 +16,10 @@ const errorLink = onError(({ graphQLErrors, networkError, operation }) => {
   if (graphQLErrors) {
     graphQLErrors.forEach(({ message, extensions, path }) => {
       const { type, backtrace }: GraphQLErrorExtensionsHandler = {
-        type: extensions?.type || GraphQLErrorTypes.NetworkError,
-        backtrace: extensions?.backtrace,
+        type:
+          (extensions?.type as GraphQLErrorTypes) ||
+          GraphQLErrorTypes.NetworkError,
+        backtrace: extensions?.backtrace as string,
       }
 
       errorMessages.push(

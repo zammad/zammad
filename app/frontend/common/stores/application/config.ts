@@ -1,20 +1,20 @@
 // Copyright (C) 2012-2021 Zammad Foundation, https://zammad-foundation.org/
 
 import { defineStore } from 'pinia'
-import { SingleValueStore } from '@common/types/store'
+import { SingleValueStore, ConfigValues } from '@common/types/store'
 import { useApplicationConfigQuery } from '@mobile/graphql/api'
 import { QueryHandler } from '@common/server/apollo/handler'
 
 // TODO: maybe we can avoid the usage of unknown?
 const useApplicationConfigStore = defineStore('applicationConfig', {
-  state: (): SingleValueStore<Record<string, unknown>> => {
+  state: (): SingleValueStore<Record<string, ConfigValues>> => {
     return {
       value: {},
     }
   },
   getters: {
     get() {
-      return (name: string): unknown => this.value[name]
+      return (name: string): ConfigValues => this.value[name]
     },
   },
   actions: {
