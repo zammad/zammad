@@ -157,6 +157,13 @@ QUnit.test('i18n', assert => {
   date = App.i18n.translateDate(undefined, 0)
   assert.equal(date, undefined, 'de-de - date translated correctly')
 
+  date = App.i18n.timeFormat()
+  assert.deepEqual(date, { "FORMAT_DATE": "dd.mm.yyyy", "FORMAT_DATETIME": "dd.mm.yyyy HH:MM" }, 'timeFormat property')
+
+  // Verify that the datepicker gets the correct format too.
+  el_date = App.UiElement.date.render({name: 'test', value: '2018-07-06'})
+  assert.equal(el_date.find('.js-datepicker').get(0).value, '06.07.2018')
+
   // en
   App.i18n.set('en-us')
   translated = App.i18n.translateContent('yes')
@@ -233,6 +240,13 @@ QUnit.test('i18n', assert => {
 
   date = App.i18n.translateDate(undefined, 0)
   assert.equal(date, undefined, 'en - date translated correctly')
+
+  date = App.i18n.timeFormat()
+  assert.deepEqual(date, { "FORMAT_DATE": "mm/dd/yyyy", "FORMAT_DATETIME": "mm/dd/yyyy HH:MM" }, 'timeFormat property')
+
+  // Verify that the datepicker gets the correct format too.
+  el_date = App.UiElement.date.render({name: 'test', value: '2018-07-06'})
+  assert.equal(el_date.find('.js-datepicker').get(0).value, '07/06/2018')
 
   // locale alias test
   // de

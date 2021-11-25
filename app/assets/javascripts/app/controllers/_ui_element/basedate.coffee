@@ -33,7 +33,7 @@ class App.UiElement.basedate
       autoclose: true
       todayBtn: 'linked'
       todayHighlight: true
-      format: App.i18n.timeFormat().date
+      format: App.i18n.timeFormat()['FORMAT_DATE']
       rtl: App.i18n.dir() is 'rtl'
       container: item
       language: 'custom'
