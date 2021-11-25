@@ -1019,9 +1019,6 @@ msgstr "Allegati"
 
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #, fuzzy
-#| msgid ""
-#| "Attention: These will be your login password after the import is "
-#| "completed."
 msgid ""
 "Attention: These will also your login password after the import is completed."
 msgstr ""
@@ -2611,7 +2608,6 @@ msgstr ""
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid "Defines the sender of email notifications."
 msgid "Defines Kayako endpoint authentication user."
 msgstr "Definisce il mittente delle email di notifica."
 
@@ -7131,9 +7127,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/translation/support.jst.eco
 #, fuzzy
-#| msgid ""
-#| "Up to %s% of this language is translated, help to make Zammad even better "
-#| "and complete the translation."
 msgid ""
 "Only %s% of this language is already translated. Please help to improve "
 "Zammad and complete the translation."
@@ -8047,7 +8040,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/sla/index.jst.eco
 #, fuzzy
-#| msgid "First Response Time"
 msgid "Response Time"
 msgstr "Primo tempo di risposta"
 
@@ -10313,9 +10305,6 @@ msgstr "Non seguire più"
 
 #: app/assets/javascripts/app/views/translation/support.jst.eco
 #, fuzzy
-#| msgid ""
-#| "Up to %s% of this language is translated, help to make Zammad even better "
-#| "and complete the translation."
 msgid ""
 "Up to %s% of this language is already translated. Please help to make Zammad "
 "even better and complete the translation."
@@ -11569,7 +11558,6 @@ msgstr "prima (relativo)"
 
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
 #, fuzzy
-#| msgid "Latest updates"
 msgid "between agent updates"
 msgstr "Ultimo aggiornamento"
 
@@ -11583,7 +11571,6 @@ msgstr "da"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #, fuzzy
-#| msgid "Changed"
 msgid "changed to"
 msgstr "Modificato"
 
@@ -11755,7 +11742,6 @@ msgstr ""
 
 #: db/seeds/ticket_article_types.rb
 #, fuzzy
-#| msgid "twitter direct-message"
 msgid "facebook direct-message"
 msgstr "messaggi diretti twitter"
 
@@ -12344,6 +12330,81 @@ msgstr "|Destra| significa |Oggetto [Ticket#12345]|"
 msgid "∅ Waiting time today"
 msgstr "∅ Tempi di attesa - Oggi"
 
+#: app/assets/javascripts/app/models/sla.coffee
+msgid ""
+"** Service Level Agreements **, abbreviated ** SLAs **, help you to meet "
+"certain customers' time-related responses. Thus, for example, you can say "
+"customers should always get a response from you after 8 hours at the latest. "
+"In the event of an imminent violation or a breach, Zammad will alert you to "
+"such events."
+msgstr ""
+
+#: app/assets/javascripts/app/models/sla.coffee
+msgid ""
+"Any violations are displayed in a separate view in the overviews. You can "
+"also configure ** e-mail notifications **."
+msgstr ""
+
+#: app/assets/javascripts/app/models/text_module.coffee
+msgid ""
+"Available objects are:\n"
+"* ticket (e. g. ticket.state, ticket.group)\n"
+"* ticket.customer (e. g. ticket.customer.firstname, ticket.customer."
+"lastname)\n"
+"* ticket.owner (e. g. ticket.owner.firstname, ticket.owner.lastname)\n"
+"* ticket.organization (e. g. ticket.organization.name)\n"
+"* user (e. g. user.firstname, user.email)"
+msgstr ""
+
+#: app/assets/javascripts/app/models/text_module.coffee
+msgid ""
+"Create Text Modules to **spend less time writing responses**. Text Modules "
+"can include smart variables like the users name or email address."
+msgstr ""
+
+#: app/assets/javascripts/app/models/trigger.coffee
+msgid ""
+"Every time a customer creates a new ticket, they automatically receive a "
+"confirmation email to assure them that their issue has been submitted "
+"successfully. This behavior is built into Zammad, but it’s also highly "
+"customizable, and you can set up other automated actions just like it."
+msgstr ""
+
+#: app/assets/javascripts/app/models/text_module.coffee
+msgid ""
+"Examples of snippets are:\n"
+"* Hello Mrs. #{ticket.customer.lastname},\n"
+"* Hello Mr. #{ticket.customer.lastname},\n"
+"* Hello #{ticket.customer.firstname},\n"
+"* My Name is #{user.firstname},"
+msgstr ""
+
+#: app/assets/javascripts/app/models/sla.coffee
+msgid ""
+"It can be ** response time ** (time between the creation of a ticket and the "
+"first reaction of an agent), ** update time ** (time between a customer's "
+"request and an agent's reaction) and ** solution time ** (time between "
+"creation and closing a ticket ) To be defined."
+msgstr ""
+
+#: app/assets/javascripts/app/models/trigger.coffee
+msgid ""
+"Maybe you want to set a higher priority on any ticket with the word “urgent” "
+"in the title. Maybe you want to avoid sending auto-reply emails to customers "
+"from certain organizations. Maybe you want mark a ticket as “pending” "
+"whenever someone adds an internal note to a ticket."
+msgstr ""
+
+#: app/assets/javascripts/app/models/text_module.coffee
+msgid "Of course you can also use multi line snippets."
+msgstr ""
+
+#: app/assets/javascripts/app/models/trigger.coffee
+msgid ""
+"Whatever it is, you can do it with triggers: actions that watch tickets for "
+"certain changes, and then fire off whenever those changes occur."
+msgstr ""
+
 #~ msgid "Default caller id"
 #~ msgstr "Id chiamante predefinito"
 
@@ -12355,3 +12416,10 @@ msgstr "∅ Tempi di attesa - Oggi"
 
 #~ msgid "Timeframe for every following response."
 #~ msgstr "Tempi per ogni successiva risposta."
+
+#~ msgid ""
+#~ "Up to %s% of this language is translated, help to make Zammad even better "
+#~ "and complete the translation."
+#~ msgstr ""
+#~ "Tradotto il %s% di questa lingua, aiuta a migliorare ulteriormente Zammad "
+#~ "completando la traduzione. "
