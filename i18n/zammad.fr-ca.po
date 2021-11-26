@@ -39,7 +39,11 @@ msgid "FORMAT_DATETIME"
 msgstr "dd.mm.yyyy HH:MM"
 
 #: db/seeds/settings.rb
-msgid "\"Database\" stores all attachments in the database (not recommended for storing large amounts of data). \"Filesystem\" stores the data in the filesystem. You can switch between the modules even on a system that is already in production without any loss of data."
+msgid ""
+"\"Database\" stores all attachments in the database (not recommended for "
+"storing large amounts of data). \"Filesystem\" stores the data in the "
+"filesystem. You can switch between the modules even on a system that is "
+"already in production without any loss of data."
 msgstr ""
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
@@ -57,6 +61,7 @@ msgid "%s Group"
 msgstr ""
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
+#: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
 msgid "%s Migration"
@@ -91,10 +96,12 @@ msgid "%s Role"
 msgstr ""
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
+#: app/assets/javascripts/app/views/import/kayako.jst.eco
 msgid "%s Subdomain"
 msgstr ""
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
+#: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
 msgid "%s URL"
 msgstr "%s URL"
@@ -136,6 +143,7 @@ msgid "%s created data privacy task to delete user id |%s|"
 msgstr ""
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
+#: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
 msgid "%s credentials"
 msgstr "Justificatif de %s"
@@ -221,11 +229,15 @@ msgid "%s user to %s user"
 msgstr "%s utilisateur vers |%s| utilisateur"
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
-msgid "%s will only allow access via OAuth. Password-based access is no longer supported since %s."
+msgid ""
+"%s will only allow access via OAuth. Password-based access is no longer "
+"supported since %s."
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
-msgid "%s will only allow access via OAuth. Password-based access will no longer be supported on %s."
+msgid ""
+"%s will only allow access via OAuth. Password-based access will no longer be "
+"supported on %s."
 msgstr ""
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco
@@ -237,11 +249,33 @@ msgid "%s% have been reopened"
 msgstr "%s% ont été rouverts"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
-msgid "** Data Privacy **, helps you to delete and verify the removal of existing data of the system.\n\nIt can be used to delete tickets, organizations and users. The owner assignment will be unset in case the deleted user is an agent.\n\nData Privacy tasks will be executed every 10 minutes. The execution might take some additional time depending of the number of objects that should get deleted."
+msgid ""
+"** Data Privacy **, helps you to delete and verify the removal of existing "
+"data of the system.\n"
+"\n"
+"It can be used to delete tickets, organizations and users. The owner "
+"assignment will be unset in case the deleted user is an agent.\n"
+"\n"
+"Data Privacy tasks will be executed every 10 minutes. The execution might "
+"take some additional time depending of the number of objects that should get "
+"deleted."
 msgstr ""
 
 #: app/assets/javascripts/app/models/sla.coffee
-msgid "** Service Level Agreements **, abbreviated ** SLAs **, help you to meet certain customers' time-related responses. Thus, for example, you can say customers should always get a response from you after 8 hours at the latest. In the event of an imminent violation or a breach, Zammad will alert you to such events.\n\nIt can be ** response time ** (time between the creation of a ticket and the first reaction of an agent), ** update time ** (time between a customer's request and an agent's reaction) and ** solution time ** (time between creation and closing a ticket ) To be defined.\n\nAny violations are displayed in a separate view in the overviews. You can also configure ** e-mail notifications **."
+msgid ""
+"** Service Level Agreements **, abbreviated ** SLAs **, help you to meet "
+"certain customers' time-related responses. Thus, for example, you can say "
+"customers should always get a response from you after 8 hours at the latest. "
+"In the event of an imminent violation or a breach, Zammad will alert you to "
+"such events.\n"
+"\n"
+"It can be ** response time ** (time between the creation of a ticket and the "
+"first reaction of an agent), ** update time ** (time between a customer's "
+"request and an agent's reaction) and ** solution time ** (time between "
+"creation and closing a ticket ) To be defined.\n"
+"\n"
+"Any violations are displayed in a separate view in the overviews. You can "
+"also configure ** e-mail notifications **."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
@@ -301,7 +335,16 @@ msgid "4 weeks"
 msgstr ""
 
 #: app/assets/javascripts/app/models/calendar.coffee
-msgid "A **calendar** is needed for calculation of escalation based on business hours and sending out escalation notifications..\n\nDefine a **\"standard\"** calendar which is valid system-wide. Only in the defined business hours the escalation notifications will be sent to your agents.\n\nDo you have customers with different business hours, you can create multiple calendars. Tickets are linked to calendars using **SLAs**."
+msgid ""
+"A **calendar** is needed for calculation of escalation based on business "
+"hours and sending out escalation notifications..\n"
+"\n"
+"Define a **\"standard\"** calendar which is valid system-wide. Only in the "
+"defined business hours the escalation notifications will be sent to your "
+"agents.\n"
+"\n"
+"Do you have customers with different business hours, you can create multiple "
+"calendars. Tickets are linked to calendars using **SLAs**."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -309,12 +352,18 @@ msgid "A list of active import backends that get scheduled automatically."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/session_taken_over.coffee
-msgid "A new session was created with your account. This session will be stopped to prevent a conflict."
-msgstr "Une nouvelle session a été créée avec votre compte. Cette session sera arrêtée pour éviter un conflit.	"
+msgid ""
+"A new session was created with your account. This session will be stopped to "
+"prevent a conflict."
+msgstr ""
+"Une nouvelle session a été créée avec votre compte. Cette session sera "
+"arrêtée pour éviter un conflit.\t"
 
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee
 msgid "A new version of Zammad is available, please reload your browser."
-msgstr "Une nouvelle version de Zammad est disponible, veuillez recharger votre navigateur.	"
+msgstr ""
+"Une nouvelle version de Zammad est disponible, veuillez recharger votre "
+"navigateur.\t"
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee
 msgid "A powerful service to get more information about your customers."
@@ -325,20 +374,24 @@ msgid "A queue is required!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
-msgid "A team communication tool for the 21st century. Compatible with tools like %s."
+msgid ""
+"A team communication tool for the 21st century. Compatible with tools like "
+"%s."
 msgstr ""
 
 #: app/assets/javascripts/app/views/dashboard/first_steps_test_ticket_finish.jst.eco
-msgid "A test ticket has been created, you can find it in your overview \"%s\" %l."
-msgstr "Un billet de test a été créé, vous pouvez le trouver dans votre aperçu \"%s\" %l."
+msgid ""
+"A test ticket has been created, you can find it in your overview \"%s\" %l."
+msgstr ""
+"Un billet de test a été créé, vous pouvez le trouver dans votre aperçu \"%s"
+"\" %l."
 
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee
 msgid "A user is required!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/api.coffee
-#: app/assets/javascripts/app/views/api.jst.eco
-#: db/seeds/permissions.rb
+#: app/assets/javascripts/app/views/api.jst.eco db/seeds/permissions.rb
 msgid "API"
 msgstr "API"
 
@@ -358,10 +411,6 @@ msgstr ""
 msgid "API Key"
 msgstr ""
 
-#: app/assets/javascripts/app/views/integration/sipgate.jst.eco
-msgid "API Password"
-msgstr ""
-
 #: db/seeds/settings.rb
 msgid "API Password Access"
 msgstr ""
@@ -372,10 +421,6 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "API Token Access"
-msgstr ""
-
-#: app/assets/javascripts/app/views/integration/sipgate.jst.eco
-msgid "API User"
 msgstr ""
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
@@ -423,7 +468,7 @@ msgstr "Compte non vérifié"
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/time_unit.jst.eco
 msgid "Accounted Time"
-msgstr "Le temps comptabilisé	"
+msgstr "Le temps comptabilisé\t"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
@@ -590,7 +635,8 @@ msgstr "Ajouter un jeton d'accès personnel"
 
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 msgid "Add alarm to pending reminder and escalated tickets."
-msgstr "Ajoutez l'alarme aux rappels en attente et aux contraventions progressives."
+msgstr ""
+"Ajoutez l'alarme aux rappels en attente et aux contraventions progressives."
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Add attachment option to upload."
@@ -602,7 +648,8 @@ msgstr "Ajoutez les initiales de l'expéditeur à la fin d'un tweet."
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
 msgid "Add this class to a button on your page that should open the chat."
-msgstr "Ajoutez cette classe à un bouton sur votre page qui devrait ouvrir le chat."
+msgstr ""
+"Ajoutez cette classe à un bouton sur votre page qui devrait ouvrir le chat."
 
 #: app/controllers/first_steps_controller.rb
 msgid "Additional Channels"
@@ -610,7 +657,7 @@ msgstr "Canaux supplémentaires"
 
 #: db/seeds/settings.rb
 msgid "Additional follow-up detection"
-msgstr "Détection de suivi supplémentaire	"
+msgstr "Détection de suivi supplémentaire\t"
 
 #: db/seeds/object_manager_attributes.rb
 msgid "Address"
@@ -642,7 +689,9 @@ msgid "Advance to next ticket from overview"
 msgstr ""
 
 #: app/assets/javascripts/app/views/package.jst.eco
-msgid "After installing, updating or uninstalling packages the following commands need to be executed on the server:"
+msgid ""
+"After installing, updating or uninstalling packages the following commands "
+"need to be executed on the server:"
 msgstr ""
 
 #: app/assets/javascripts/app/views/session.jst.eco
@@ -651,8 +700,7 @@ msgstr "Âge "
 
 #: app/assets/javascripts/app/views/popover/ticket.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
-#: db/seeds/roles.rb
-#: db/seeds/ticket_article_senders.rb
+#: db/seeds/roles.rb db/seeds/ticket_article_senders.rb
 msgid "Agent"
 msgstr "Agent"
 
@@ -668,10 +716,11 @@ msgstr ""
 msgid "Agent idle timeout"
 msgstr ""
 
-#: app/models/role.rb
-#: app/models/user.rb
+#: app/models/role.rb app/models/user.rb
 msgid "Agent limit exceeded, please check your account settings."
-msgstr "La limite de l'agent est dépassée, veuillez vérifier les paramètres de votre compte.	"
+msgstr ""
+"La limite de l'agent est dépassée, veuillez vérifier les paramètres de votre "
+"compte.\t"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 msgid "Agents"
@@ -695,7 +744,9 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
 msgid "All computers and browsers that have access to your Zammad appear here."
-msgstr "Tous les ordinateurs et navigateurs qui ont accès à votre Zammad apparaissent ici.	"
+msgstr ""
+"Tous les ordinateurs et navigateurs qui ont accès à votre Zammad "
+"apparaissent ici.\t"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Allow future"
@@ -711,7 +762,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/tag/index.jst.eco
 msgid "Allow users to add new tags."
-msgstr "Permettre aux utilisateurs d'ajouter de nouvelles balises.	"
+msgstr "Permettre aux utilisateurs d'ajouter de nouvelles balises.\t"
 
 #: db/seeds/settings.rb
 msgid "Allow users to create new tags."
@@ -725,14 +776,17 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_integration/placetel.coffee
 #: app/assets/javascripts/app/controllers/_integration/sipgate_io.coffee
 msgid "Also caller id of outbound calls can be changed."
-msgstr "Il est également possible de modifier l'identification de l'appelant pour les appels sortants."
+msgstr ""
+"Il est également possible de modifier l'identification de l'appelant pour "
+"les appels sortants."
 
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
 msgid "Also notify via email"
 msgstr "Notifier également par courrier électronique"
 
 #: db/seeds/settings.rb
-msgid "Alternative FQDN for callbacks if you operate Zammad in internal network."
+msgid ""
+"Alternative FQDN for callbacks if you operate Zammad in internal network."
 msgstr ""
 
 #: app/helpers/knowledge_base_public_page_title_helper.rb
@@ -765,7 +819,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_integration/monit.coffee
 #: app/assets/javascripts/app/controllers/_integration/nagios.coffee
 msgid "An open source monitoring tool."
-msgstr "Un outil de surveillance de l'open source.	"
+msgstr "Un outil de surveillance de l'open source.\t"
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
@@ -899,7 +953,7 @@ msgstr ""
 
 #: db/seeds/object_manager_attributes.rb
 msgid "Assign Users based on users domain."
-msgstr "Attribuer des utilisateurs en fonction de leur domaine.	"
+msgstr "Attribuer des utilisateurs en fonction de leur domaine.\t"
 
 #: app/assets/javascripts/app/models/group.coffee
 #: db/seeds/object_manager_attributes.rb
@@ -926,8 +980,12 @@ msgstr "Délai d'affectation"
 
 #: app/assets/javascripts/app/models/group.coffee
 #: db/seeds/object_manager_attributes.rb
-msgid "Assignment timeout in minutes if assigned agent is not working on it. Ticket will be shown as unassigend."
-msgstr "Délai d'affectation en minutes si l'agent assigné ne travaille pas dessus. Le billet sera présenté comme non assigné.	"
+msgid ""
+"Assignment timeout in minutes if assigned agent is not working on it. Ticket "
+"will be shown as unassigend."
+msgstr ""
+"Délai d'affectation en minutes si l'agent assigné ne travaille pas dessus. "
+"Le billet sera présenté comme non assigné.\t"
 
 #: app/models/object_manager/attribute.rb
 msgid "At least one letters is needed"
@@ -954,10 +1012,24 @@ msgstr ""
 msgid "Attachments"
 msgstr "Attachements"
 
+#: app/assets/javascripts/app/views/import/kayako.jst.eco
+#, fuzzy
+#| msgid ""
+#| "Attention: These will be your login password after the import is "
+#| "completed."
+msgid ""
+"Attention: These will also your login password after the import is completed."
+msgstr ""
+"Attention: Ce sera votre mot de passe de connexion une fois l'importation "
+"terminée."
+
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
-msgid "Attention: These will be your login password after the import is completed."
-msgstr "Attention: Ce sera votre mot de passe de connexion une fois l'importation terminée."
+msgid ""
+"Attention: These will be your login password after the import is completed."
+msgstr ""
+"Attention: Ce sera votre mot de passe de connexion une fois l'importation "
+"terminée."
 
 #: db/seeds/settings.rb
 msgid "Attention: When creating a ticket an e-mail is sent."
@@ -998,8 +1070,7 @@ msgstr "Août"
 msgid "Authentication"
 msgstr "Identification"
 
-#: app/controllers/import_otrs_controller.rb
-#: lib/email_helper/probe.rb
+#: app/controllers/import_otrs_controller.rb lib/email_helper/probe.rb
 msgid "Authentication failed!"
 msgstr ""
 
@@ -1016,8 +1087,7 @@ msgid "Authentication not possible (not offered by the service)"
 msgstr ""
 
 #: app/controllers/application_controller/authenticates.rb
-#: app/policies/pundit_policy.rb
-#: lib/user_context.rb
+#: app/policies/pundit_policy.rb lib/user_context.rb
 msgid "Authentication required"
 msgstr ""
 
@@ -1059,12 +1129,21 @@ msgid "Automatic account link on initial logon"
 msgstr "Lien automatique du compte à la connexion initiale"
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee
-msgid "Automatically enrich your customers and organizations with fresh, up-to-date intel. Map data directly to object fields."
-msgstr "Enrichissez automatiquement vos clients et vos organisations avec des informations récentes et à jour. Mappez les données directement aux champs d'objet."
+msgid ""
+"Automatically enrich your customers and organizations with fresh, up-to-date "
+"intel. Map data directly to object fields."
+msgstr ""
+"Enrichissez automatiquement vos clients et vos organisations avec des "
+"informations récentes et à jour. Mappez les données directement aux champs "
+"d'objet."
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
-msgid "Automatically loads the chat.css file. If you want to use your own css, just set it to false."
-msgstr "Charge automatiquement le fichier chat.css. Si vous souhaitez utiliser votre propre css, définissez-le simplement sur \"false\"."
+msgid ""
+"Automatically loads the chat.css file. If you want to use your own css, just "
+"set it to false."
+msgstr ""
+"Charge automatiquement le fichier chat.css. Si vous souhaitez utiliser votre "
+"propre css, définissez-le simplement sur \"false\"."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Automatically show chat"
@@ -1119,9 +1198,12 @@ msgid "Background color"
 msgstr "Couleur d'arrière plan"
 
 #: app/assets/javascripts/app/controllers/import_freshdesk.coffee
+#: app/assets/javascripts/app/controllers/import_kayako.coffee
 #: app/assets/javascripts/app/controllers/import_otrs.coffee
 #: app/assets/javascripts/app/controllers/import_zendesk.coffee
-msgid "Background process did not start or has not finished! Please contact your support."
+msgid ""
+"Background process did not start or has not finished! Please contact your "
+"support."
 msgstr ""
 
 #: app/models/report.rb
@@ -1217,8 +1299,7 @@ msgid "Bots"
 msgstr "Bots"
 
 #: app/assets/javascripts/app/controllers/_manage/branding.coffee
-#: app/controllers/first_steps_controller.rb
-#: db/seeds/permissions.rb
+#: app/controllers/first_steps_controller.rb db/seeds/permissions.rb
 msgid "Branding"
 msgstr "Image de marque"
 
@@ -1235,7 +1316,6 @@ msgstr ""
 msgid "Bulk action executed!"
 msgstr "Action de masse exécutée !"
 
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee
 msgid "Bulk action stopped %s!"
 msgstr ""
@@ -1258,19 +1338,28 @@ msgid "Button for Single Sign On."
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "By default the follow-up check is done via the subject of an email. With this setting you can add more fields for which the follow-up check will be executed."
-msgstr "Par défaut le contrôle de suivi se fait via le sujet d'un courriel. Avec ce réglage, vous pouvez ajouter d'autres champs pour lesquels la vérification de suivi sera exécutée."
+msgid ""
+"By default the follow-up check is done via the subject of an email. With "
+"this setting you can add more fields for which the follow-up check will be "
+"executed."
+msgstr ""
+"Par défaut le contrôle de suivi se fait via le sujet d'un courriel. Avec ce "
+"réglage, vous pouvez ajouter d'autres champs pour lesquels la vérification "
+"de suivi sera exécutée."
 
 #: app/assets/javascripts/app/controllers/_integration/idoit.coffee
 msgid "CMDB to document complex relations of your network components."
 msgstr "CMDB pour documenter les relations complexes de vos composants réseau."
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
-msgid "CSS font-size with a unit like 12px, 1.5em. If left to undefined it inherits the font-size of the website."
-msgstr "Taille de la police CSS avec une unité telle 12px, 1.5em. Si elle n'est pas définie, elle hérite de la taille de police du site Web."
+msgid ""
+"CSS font-size with a unit like 12px, 1.5em. If left to undefined it inherits "
+"the font-size of the website."
+msgstr ""
+"Taille de la police CSS avec une unité telle 12px, 1.5em. Si elle n'est pas "
+"définie, elle hérite de la taille de police du site Web."
 
-#: app/assets/javascripts/app/controllers/cti.coffee
-#: db/seeds/permissions.rb
+#: app/assets/javascripts/app/controllers/cti.coffee db/seeds/permissions.rb
 msgid "CTI"
 msgstr "CTI"
 
@@ -1289,8 +1378,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/sla.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
-#: app/assets/javascripts/app/views/sla/index.jst.eco
-#: db/seeds/permissions.rb
+#: app/assets/javascripts/app/views/sla/index.jst.eco db/seeds/permissions.rb
 msgid "Calendar"
 msgstr "Calendrier "
 
@@ -1350,10 +1438,6 @@ msgstr ""
 msgid "Can't generate new ticket number!"
 msgstr ""
 
-#: app/models/translation.rb
-msgid "Can't import translation, source is missing"
-msgstr ""
-
 #: app/models/ticket.rb
 msgid "Can't merge ticket with it self!"
 msgstr ""
@@ -1368,7 +1452,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee
-msgid "Can't update password, your new passwords do not match. Please try again!"
+msgid ""
+"Can't update password, your new passwords do not match. Please try again!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
@@ -1405,6 +1490,10 @@ msgstr ""
 
 #: app/policies/ticket_policy.rb
 msgid "Cannot follow-up on a closed ticket. Please create a new ticket."
+msgstr ""
+
+#: app/assets/javascripts/app/lib/app_post/html5_upload.coffee
+msgid "Cannot upload file"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/categories.coffee
@@ -1486,7 +1575,9 @@ msgstr "Changement"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Changes were made that require a database update."
-msgstr "Des modifications ont été apportées qui nécessitent une mise à jour de la base de données."
+msgstr ""
+"Des modifications ont été apportées qui nécessitent une mise à jour de la "
+"base de données."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee
 msgid "Changes were made. Do you want to reload? You'll loose your changes"
@@ -1553,8 +1644,7 @@ msgstr "Canaux"
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
 #: app/assets/javascripts/app/controllers/chat.coffee
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
-#: app/controllers/first_steps_controller.rb
-#: db/seeds/permissions.rb
+#: app/controllers/first_steps_controller.rb db/seeds/permissions.rb
 msgid "Chat"
 msgstr "Chat"
 
@@ -1562,8 +1652,7 @@ msgstr "Chat"
 msgid "Chat Title"
 msgstr "Titre du clavardage"
 
-#: public/assets/chat/chat-no-jquery.coffee
-#: public/assets/chat/chat.coffee
+#: public/assets/chat/chat-no-jquery.coffee public/assets/chat/chat.coffee
 msgid "Chat closed by %s"
 msgstr ""
 
@@ -1614,7 +1703,8 @@ msgstr "Enfant"
 
 #: app/assets/javascripts/app/views/widget/template.jst.eco
 msgid "Choose attributes and then save them as a new template."
-msgstr "Choisissez des attributs, puis enregistrez-les en tant que nouveau modèle."
+msgstr ""
+"Choisissez des attributs, puis enregistrez-les en tant que nouveau modèle."
 
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
 msgid "Choose if retweets should also be converted to tickets."
@@ -1635,7 +1725,8 @@ msgstr "Choisissez le groupe dans lequel les messages seront ajoutés."
 
 #: app/assets/javascripts/app/views/facebook/account_edit.jst.eco
 msgid "Choose the group in which page postings will get added to."
-msgstr "Choisissez le groupe dans lequel les publications de page seront ajoutées."
+msgstr ""
+"Choisissez le groupe dans lequel les publications de page seront ajoutées."
 
 #: app/assets/javascripts/app/views/password/reset_change.jst.eco
 msgid "Choose your new password."
@@ -1910,13 +2001,11 @@ msgstr ""
 msgid "Connecting ..."
 msgstr "Connexion ..."
 
-#: public/assets/chat/chat-no-jquery.coffee
-#: public/assets/chat/chat.coffee
+#: public/assets/chat/chat-no-jquery.coffee public/assets/chat/chat.coffee
 msgid "Connection lost"
 msgstr ""
 
-#: public/assets/chat/chat-no-jquery.coffee
-#: public/assets/chat/chat.coffee
+#: public/assets/chat/chat-no-jquery.coffee public/assets/chat/chat.coffee
 msgid "Connection re-established"
 msgstr ""
 
@@ -1926,8 +2015,7 @@ msgstr ""
 
 #: app/controllers/import_freshdesk_controller.rb
 #: app/controllers/import_otrs_controller.rb
-#: app/controllers/import_zendesk_controller.rb
-#: lib/email_helper/probe.rb
+#: app/controllers/import_zendesk_controller.rb lib/email_helper/probe.rb
 msgid "Connection refused!"
 msgstr ""
 
@@ -1939,7 +2027,6 @@ msgstr ""
 #: app/assets/javascripts/app/models/knowledge_base_answer.coffee
 #: app/assets/javascripts/app/models/text_module.coffee
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
-#: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 msgid "Content"
 msgstr "Contenu"
 
@@ -1989,7 +2076,9 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Copy current object number (e. g. Ticket#) to clipboard"
-msgstr "Copier le numéro d'objet actuel (par exemple, Billet #: ) dans le presse-papiers"
+msgstr ""
+"Copier le numéro d'objet actuel (par exemple, Billet #: ) dans le presse-"
+"papiers"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_base.coffee
 msgid "Copy to clipboard: Ctrl+C, Enter"
@@ -2009,7 +2098,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
 #: app/assets/javascripts/app/models/core_workflow.coffee
-msgid "Core Workflows are actions or constraints on selections in forms. Depending on an action, it is possible to hide or restrict fields or to change the obligation to fill them in."
+msgid ""
+"Core Workflows are actions or constraints on selections in forms. Depending "
+"on an action, it is possible to hide or restrict fields or to change the "
+"obligation to fill them in."
 msgstr ""
 
 #: app/assets/javascripts/app/views/knowledge_base/new_modal.coffee
@@ -2078,7 +2170,28 @@ msgid "Create Text Modules"
 msgstr "Créer des modules de texte"
 
 #: app/assets/javascripts/app/models/text_module.coffee
-msgid "Create Text Modules to **spend less time writing responses**. Text Modules can include smart variables like the users name or email address.\n\nExamples of snippets are:\n\n* Hello Mrs. #{ticket.customer.lastname},\n* Hello Mr. #{ticket.customer.lastname},\n* Hello #{ticket.customer.firstname},\n* My Name is #{user.firstname},\n\nOf course you can also use multi line snippets.\n\nAvailable objects are:\n* ticket (e. g. ticket.state, ticket.group)\n* ticket.customer (e. g. ticket.customer.firstname, ticket.customer.lastname)\n* ticket.owner (e. g. ticket.owner.firstname, ticket.owner.lastname)\n* ticket.organization (e. g. ticket.organization.name)\n* user (e. g. user.firstname, user.email)\n\nTo select placeholders from a list, just enter \"::\".\n"
+msgid ""
+"Create Text Modules to **spend less time writing responses**. Text Modules "
+"can include smart variables like the users name or email address.\n"
+"\n"
+"Examples of snippets are:\n"
+"\n"
+"* Hello Mrs. #{ticket.customer.lastname},\n"
+"* Hello Mr. #{ticket.customer.lastname},\n"
+"* Hello #{ticket.customer.firstname},\n"
+"* My Name is #{user.firstname},\n"
+"\n"
+"Of course you can also use multi line snippets.\n"
+"\n"
+"Available objects are:\n"
+"* ticket (e. g. ticket.state, ticket.group)\n"
+"* ticket.customer (e. g. ticket.customer.firstname, ticket.customer."
+"lastname)\n"
+"* ticket.owner (e. g. ticket.owner.firstname, ticket.owner.lastname)\n"
+"* ticket.organization (e. g. ticket.organization.name)\n"
+"* user (e. g. user.firstname, user.email)\n"
+"\n"
+"To select placeholders from a list, just enter \"::\".\n"
 msgstr ""
 
 #: app/controllers/first_steps_controller.rb
@@ -2115,8 +2228,11 @@ msgid "Create organizations automatically if record has one."
 msgstr ""
 
 #: app/assets/javascripts/app/models/sla.coffee
-msgid "Create rules that single out the tickets for the Service Level Agreement."
-msgstr "Créez des règles qui distinguent les billets pour l'accord de niveau de service."
+msgid ""
+"Create rules that single out the tickets for the Service Level Agreement."
+msgstr ""
+"Créez des règles qui distinguent les billets pour l'accord de niveau de "
+"service."
 
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
 msgid "Create your first ticket"
@@ -2215,7 +2331,9 @@ msgid "Current user has no permission to use 'From'/'X-On-Behalf-Of'!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
-msgid "Currently no overview is assigned to your roles. Please contact your administrator."
+msgid ""
+"Currently no overview is assigned to your roles. Please contact your "
+"administrator."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
@@ -2248,10 +2366,8 @@ msgstr ""
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 #: app/controllers/time_accountings_controller.rb
-#: db/seeds/object_manager_attributes.rb
-#: db/seeds/roles.rb
-#: db/seeds/ticket_article_senders.rb
-#: lib/excel_sheet/ticket.rb
+#: db/seeds/object_manager_attributes.rb db/seeds/roles.rb
+#: db/seeds/ticket_article_senders.rb lib/excel_sheet/ticket.rb
 msgid "Customer"
 msgstr "Client "
 
@@ -2262,10 +2378,13 @@ msgstr "Clavardage"
 
 #: db/seeds/settings.rb
 msgid "Customer selection based on sender and receiver list"
-msgstr "Sélection du client basée sur la liste des expéditeurs et des destinataires"
+msgstr ""
+"Sélection du client basée sur la liste des expéditeurs et des destinataires"
 
 #: app/assets/javascripts/app/views/data_privacy/preview.jst.eco
-msgid "Customer tickets of the user will get deleted on execution of the task. No rollback possible."
+msgid ""
+"Customer tickets of the user will get deleted on execution of the task. No "
+"rollback possible."
 msgstr ""
 
 #: app/assets/javascripts/app/models/organization.coffee
@@ -2385,21 +2504,11 @@ msgstr "Par défaut à l'inscription"
 msgid "Default calendar tickets subscriptions"
 msgstr ""
 
-#: app/assets/javascripts/app/views/integration/placetel.jst.eco
-#: app/assets/javascripts/app/views/integration/sipgate.jst.eco
-msgid "Default caller id"
-msgstr "Identifiant par défaut de l'appelant"
-
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 msgid "Default caller id for outbound calls."
 msgstr "Identifiant par défaut de l'appelant pour les appels sortants."
-
-#: app/assets/javascripts/app/views/integration/placetel.jst.eco
-#: app/assets/javascripts/app/views/integration/sipgate.jst.eco
-msgid "Default caller id."
-msgstr "Identifiant de l'appelant par défaut."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Default time Diff (hours)"
@@ -2419,8 +2528,12 @@ msgstr "Visibilité par défaut pour une nouvelle note."
 
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco
 #: db/seeds/settings.rb
-msgid "Define an exception of \"automatic assignment\" for certain users (e.g. executives)."
-msgstr "Définissez une exception d' \"affectation automatique\" pour certains utilisateurs (par exemple les cadres)."
+msgid ""
+"Define an exception of \"automatic assignment\" for certain users (e.g. "
+"executives)."
+msgstr ""
+"Définissez une exception d' \"affectation automatique\" pour certains "
+"utilisateurs (par exemple les cadres)."
 
 #: db/seeds/settings.rb
 msgid "Define max. attachment size for Elasticsearch."
@@ -2435,11 +2548,15 @@ msgid "Define pipeline name for Elasticsearch."
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Define postmaster filter to check if email is a own created notification email, then ignore it to prevent email loops."
+msgid ""
+"Define postmaster filter to check if email is a own created notification "
+"email, then ignore it to prevent email loops."
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Define postmaster filter to check if follow-ups get created (based on admin settings)."
+msgid ""
+"Define postmaster filter to check if follow-ups get created (based on admin "
+"settings)."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -2467,7 +2584,8 @@ msgid "Defines Freshdesk endpoint authentication key."
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Defines Freshdesk endpoint to import users, ticket, states and articles."
+msgid ""
+"Defines Freshdesk endpoint to import users, ticket, states and articles."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -2479,7 +2597,25 @@ msgid "Defines HTTP basic auth user of Elasticsearch."
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Defines HTTP basic authentication user (only if OTRS is protected via HTTP basic auth)."
+msgid ""
+"Defines HTTP basic authentication user (only if OTRS is protected via HTTP "
+"basic auth)."
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Defines Kayako endpoint authentication password."
+msgstr ""
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Defines the sender of email notifications."
+msgid "Defines Kayako endpoint authentication user."
+msgstr ""
+"Cliquez simplement sur le marqueur et mettez à jour les mots en place. "
+"Faites-vous plaisir !"
+
+#: db/seeds/settings.rb
+msgid "Defines Kayako endpoint to import users, ticket, states and articles."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -2515,19 +2651,31 @@ msgid "Defines endpoint of Elasticsearch."
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Defines groups for which a customer can create tickets via web interface. \"-\" means all groups are available."
-msgstr "Définit les groupes pour lesquels un client peut créer des billets via l'interface Web. \"-\" signifie que tous les groupes sont disponibles."
+msgid ""
+"Defines groups for which a customer can create tickets via web interface. \"-"
+"\" means all groups are available."
+msgstr ""
+"Définit les groupes pour lesquels un client peut créer des billets via "
+"l'interface Web. \"-\" signifie que tous les groupes sont disponibles."
 
 #: db/seeds/settings.rb
-msgid "Defines how the From field of emails (sent from answers and email tickets) should look like."
-msgstr "Définit à quoi devrait ressembler le champ \"De\" des courriels (envoyés à partir des réponses et des billets par courriels)."
+msgid ""
+"Defines how the From field of emails (sent from answers and email tickets) "
+"should look like."
+msgstr ""
+"Définit à quoi devrait ressembler le champ \"De\" des courriels (envoyés à "
+"partir des réponses et des billets par courriels)."
 
 #: db/seeds/settings.rb
-msgid "Defines how to reach websocket server. \"websocket\" is default on production, \"websocketPort\" is for CI"
+msgid ""
+"Defines how to reach websocket server. \"websocket\" is default on "
+"production, \"websocketPort\" is for CI"
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Defines http basic authentication password (only if OTRS is protected via http basic auth)."
+msgid ""
+"Defines http basic authentication password (only if OTRS is protected via "
+"http basic auth)."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -2583,7 +2731,9 @@ msgid "Defines if a customer can create tickets via the web interface."
 msgstr "Définit si un client peut créer des billets via l'interface Web."
 
 #: db/seeds/settings.rb
-msgid "Defines if application is in developer mode (useful for developer, all users have the same password, password reset will work without email delivery)."
+msgid ""
+"Defines if application is in developer mode (useful for developer, all users "
+"have the same password, password reset will work without email delivery)."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -2611,15 +2761,19 @@ msgid "Defines if sipgate.io (http://www.sipgate.io) is enabled or not."
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Defines if the GitHub (http://www.github.com) integration is enabled or not."
+msgid ""
+"Defines if the GitHub (http://www.github.com) integration is enabled or not."
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Defines if the GitLab (http://www.gitlab.com) integration is enabled or not."
+msgid ""
+"Defines if the GitLab (http://www.gitlab.com) integration is enabled or not."
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Defines if the core workflow communication should run over ajax instead of websockets."
+msgid ""
+"Defines if the core workflow communication should run over ajax instead of "
+"websockets."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -2651,7 +2805,9 @@ msgid "Defines postmaster filter for filters managed via admin interface."
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Defines postmaster filter to check if email has been created by Zammad itself and will set the article sender."
+msgid ""
+"Defines postmaster filter to check if email has been created by Zammad "
+"itself and will set the article sender."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -2659,35 +2815,48 @@ msgid "Defines postmaster filter to handle secure mailing."
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Defines postmaster filter to identify auto responses to prevent auto replies from Zammad."
+msgid ""
+"Defines postmaster filter to identify auto responses to prevent auto replies "
+"from Zammad."
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Defines postmaster filter to identify follow-up ticket for merged tickets."
+msgid ""
+"Defines postmaster filter to identify follow-up ticket for merged tickets."
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Defines postmaster filter to identify follow-ups (based on admin settings)."
+msgid ""
+"Defines postmaster filter to identify follow-ups (based on admin settings)."
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Defines postmaster filter to identify jira mails for correct follow-ups."
+msgid ""
+"Defines postmaster filter to identify jira mails for correct follow-ups."
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Defines postmaster filter to identify out-of-office emails for follow-up detection and keeping current ticket state."
+msgid ""
+"Defines postmaster filter to identify out-of-office emails for follow-up "
+"detection and keeping current ticket state."
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Defines postmaster filter to identify postmaster bounced - disable sending notification on permanent deleivery failed."
+msgid ""
+"Defines postmaster filter to identify postmaster bounced - disable sending "
+"notification on permanent deleivery failed."
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Defines postmaster filter to identify postmaster bounced - reopen ticket on permanent temporary failed."
+msgid ""
+"Defines postmaster filter to identify postmaster bounced - reopen ticket on "
+"permanent temporary failed."
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Defines postmaster filter to identify postmaster bounced - to handle it as follow-up of the original ticket."
+msgid ""
+"Defines postmaster filter to identify postmaster bounced - to handle it as "
+"follow-up of the original ticket."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -2695,31 +2864,42 @@ msgid "Defines postmaster filter to identify sender user."
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Defines postmaster filter to identify service now mails for correct follow-ups."
+msgid ""
+"Defines postmaster filter to identify service now mails for correct follow-"
+"ups."
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Defines postmaster filter to manage Icinga (http://www.icinga.org) emails."
+msgid ""
+"Defines postmaster filter to manage Icinga (http://www.icinga.org) emails."
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Defines postmaster filter to manage Monit (https://mmonit.com/monit/) emails."
+msgid ""
+"Defines postmaster filter to manage Monit (https://mmonit.com/monit/) emails."
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Defines postmaster filter to manage Nagios (http://www.nagios.org) emails."
+msgid ""
+"Defines postmaster filter to manage Nagios (http://www.nagios.org) emails."
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Defines postmaster filter to remove X-Zammad headers from not trusted sources."
+msgid ""
+"Defines postmaster filter to remove X-Zammad headers from not trusted "
+"sources."
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Defines postmaster filter to set the owner (based on group follow up assignment)."
+msgid ""
+"Defines postmaster filter to set the owner (based on group follow up "
+"assignment)."
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Defines postmaster filter to set the sender/from of emails based on reply-to header."
+msgid ""
+"Defines postmaster filter to set the sender/from of emails based on reply-to "
+"header."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -2767,20 +2947,34 @@ msgid "Defines the S/MIME config."
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Defines the backend for geo IP lookups. Shows also location of an IP address if an IP address is shown."
-msgstr "Définit le l'application dorsale pour les recherches IP géo. Affiche également l'emplacement d'une adresse IP si une adresse IP est affichée."
+msgid ""
+"Defines the backend for geo IP lookups. Shows also location of an IP address "
+"if an IP address is shown."
+msgstr ""
+"Définit le l'application dorsale pour les recherches IP géo. Affiche "
+"également l'emplacement d'une adresse IP si une adresse IP est affichée."
 
 #: db/seeds/settings.rb
-msgid "Defines the backend for geo calendar lookups. Used for initial calendar succession."
-msgstr "Définit l'application dorsale pour les recherches de calendrier géo. Utilisé pour la succession initiale du calendrier."
+msgid ""
+"Defines the backend for geo calendar lookups. Used for initial calendar "
+"succession."
+msgstr ""
+"Définit l'application dorsale pour les recherches de calendrier géo. Utilisé "
+"pour la succession initiale du calendrier."
 
 #: db/seeds/settings.rb
-msgid "Defines the backend for geo location lookups to store geo locations for addresses."
-msgstr "Définit l'application dorsale pour les recherches d'emplacement géo pour stocker les emplacements géo pour les adresses."
+msgid ""
+"Defines the backend for geo location lookups to store geo locations for "
+"addresses."
+msgstr ""
+"Définit l'application dorsale pour les recherches d'emplacement géo pour "
+"stocker les emplacements géo pour les adresses."
 
 #: db/seeds/settings.rb
 msgid "Defines the backend for user and organization image lookups."
-msgstr "Définit l'application dorsale pour les recherches d'images d'utilisateurs et d'organisations."
+msgstr ""
+"Définit l'application dorsale pour les recherches d'images d'utilisateurs et "
+"d'organisations."
 
 #: db/seeds/settings.rb
 msgid "Defines the cti config."
@@ -2795,8 +2989,15 @@ msgid "Defines the default screen."
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Defines the fully qualified domain name of the system. This setting is used as a variable, #{setting.fqdn} which is found in all forms of messaging used by the application, to build links to the tickets within your system."
-msgstr "Définit le nom de domaine complet du système (FQDN). Ce réglage est utilisé comme une variable, #{setting.fqdn}, qui se trouve dans toutes les formes de messagerie utilisées par l'application, pour créer des liens vers les billets dans votre système."
+msgid ""
+"Defines the fully qualified domain name of the system. This setting is used "
+"as a variable, #{setting.fqdn} which is found in all forms of messaging used "
+"by the application, to build links to the tickets within your system."
+msgstr ""
+"Définit le nom de domaine complet du système (FQDN). Ce réglage est utilisé "
+"comme une variable, #{setting.fqdn}, qui se trouve dans toutes les formes de "
+"messagerie utilisées par l'application, pour créer des liens vers les "
+"billets dans votre système."
 
 #: db/seeds/settings.rb
 msgid "Defines the group of created tickets."
@@ -2823,15 +3024,21 @@ msgid "Defines the logo of the application, shown in the web interface."
 msgstr "Définit le logo de l'application; affiché dans l'interface Web."
 
 #: db/seeds/settings.rb
-msgid "Defines the name of the application, shown in the web interface, tabs and title bar of the web browser."
-msgstr "Définit le nom de l'application; affiché dans l'interface Web, les onglets et la barre de titre du navigateur Web."
+msgid ""
+"Defines the name of the application, shown in the web interface, tabs and "
+"title bar of the web browser."
+msgstr ""
+"Définit le nom de l'application; affiché dans l'interface Web, les onglets "
+"et la barre de titre du navigateur Web."
 
 #: db/seeds/settings.rb
 msgid "Defines the port of the websocket server."
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Defines the postmaster filter which set the article internal if a forwarded, replied or sent email also exists with the article internal received."
+msgid ""
+"Defines the postmaster filter which set the article internal if a forwarded, "
+"replied or sent email also exists with the article internal received."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -2839,7 +3046,9 @@ msgid "Defines the random application secret."
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Defines the range in seconds of customer activity to trigger the user profile dialog on call."
+msgid ""
+"Defines the range in seconds of customer activity to trigger the user "
+"profile dialog on call."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -2860,14 +3069,22 @@ msgstr "Définit l'adresse courriels de l'expéditeur des courriels de service."
 
 #: db/seeds/settings.rb
 msgid "Defines the sender of email notifications."
-msgstr "Cliquez simplement sur le marqueur et mettez à jour les mots en place. Faites-vous plaisir !"
+msgstr ""
+"Cliquez simplement sur le marqueur et mettez à jour les mots en place. "
+"Faites-vous plaisir !"
 
 #: db/seeds/settings.rb
-msgid "Defines the separator between the agent's real name and the given group email address."
-msgstr "Définit le séparateur entre le vrai nom de l'agent et l'adresse courriel donnée au groupe."
+msgid ""
+"Defines the separator between the agent's real name and the given group "
+"email address."
+msgstr ""
+"Définit le séparateur entre le vrai nom de l'agent et l'adresse courriel "
+"donnée au groupe."
 
 #: db/seeds/settings.rb
-msgid "Defines the session timeout for inactivity of users. Based on the assigned permissions the highest timeout value will be used, otherwise the default."
+msgid ""
+"Defines the session timeout for inactivity of users. Based on the assigned "
+"permissions the highest timeout value will be used, otherwise the default."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -2891,15 +3108,23 @@ msgid "Defines the system default timezone."
 msgstr "Définit le fuseau horaire par défaut du système."
 
 #: db/seeds/settings.rb
-msgid "Defines the system identifier. Every ticket number contains this ID. This ensures that only tickets which belong to your system will be processed as follow-ups (useful when communicating between two instances of Zammad)."
-msgstr "Définit l'identifiant du système. Chaque numéro de billet contient cet identifiant et garantit que seuls les billets appartenant à votre système seront traités comme des suivis (utile lors de la communication entre deux instances de Zammad)."
+msgid ""
+"Defines the system identifier. Every ticket number contains this ID. This "
+"ensures that only tickets which belong to your system will be processed as "
+"follow-ups (useful when communicating between two instances of Zammad)."
+msgstr ""
+"Définit l'identifiant du système. Chaque numéro de billet contient cet "
+"identifiant et garantit que seuls les billets appartenant à votre système "
+"seront traités comme des suivis (utile lors de la communication entre deux "
+"instances de Zammad)."
 
 #: db/seeds/settings.rb
 msgid "Defines the tab behaviour after a ticket action."
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Defines the transaction backend to detect customer signatures in emails."
+msgid ""
+"Defines the transaction backend to detect customer signatures in emails."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -2915,15 +3140,21 @@ msgid "Defines the transaction backend which creates the karma score."
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Defines the transaction backend which detects caller IDs in objects and store them for CTI lookups."
+msgid ""
+"Defines the transaction backend which detects caller IDs in objects and "
+"store them for CTI lookups."
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Defines the transaction backend which posts messages to Slack (http://www.slack.com)."
+msgid ""
+"Defines the transaction backend which posts messages to Slack (http://www."
+"slack.com)."
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Defines the transaction backend which will enrich customer and organization information from Clearbit (http://www.clearbit.com)."
+msgid ""
+"Defines the transaction backend which will enrich customer and organization "
+"information from Clearbit (http://www.clearbit.com)."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -3061,6 +3292,8 @@ msgstr "Département"
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/index.jst.eco
+#: app/assets/javascripts/app/views/integration/placetel.jst.eco
+#: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 #: app/assets/javascripts/app/views/settings/form.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
 msgid "Description"
@@ -3188,8 +3421,11 @@ msgid "Domain based assignment"
 msgstr "Affectation basée sur le domaine"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
-msgid "Don't load CSS for form. You need to generate your own CSS for the form."
-msgstr "Ne chargez pas de CSS pour le formulaire. Vous devez générer votre propre CSS pour le formulaire."
+msgid ""
+"Don't load CSS for form. You need to generate your own CSS for the form."
+msgstr ""
+"Ne chargez pas de CSS pour le formulaire. Vous devez générer votre propre "
+"CSS pour le formulaire."
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 msgid "Don't synchronize"
@@ -3217,7 +3453,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 msgid "Download and install the %s Migration Plugin on your %s instance."
-msgstr "Téléchargez et installez le greffon de migration %s sur votre instance %s."
+msgstr ""
+"Téléchargez et installez le greffon de migration %s sur votre instance %s."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 msgid "Draft"
@@ -3235,7 +3472,8 @@ msgid "Drop files here"
 msgstr "Déposez les fichiers ici"
 
 #: app/assets/javascripts/app/controllers/_plugin/session_timeout.coffee
-msgid "Due to inactivity are automatically logged out within the next 30 seconds."
+msgid ""
+"Due to inactivity are automatically logged out within the next 30 seconds."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/login.coffee
@@ -3248,7 +3486,8 @@ msgstr "Durée"
 
 #: app/assets/javascripts/app/views/dashboard.jst.eco
 msgid "E. g. recent changed tickets, users or organizations."
-msgstr "Par exemple: billets, utilisateurs ou organisations récemment modifiés."
+msgstr ""
+"Par exemple: billets, utilisateurs ou organisations récemment modifiés."
 
 #: app/assets/javascripts/app/models/user.coffee
 msgid "Easter holiday"
@@ -3323,7 +3562,9 @@ msgid "Elasticsearch Total Payload Size"
 msgstr ""
 
 #: lib/search_index_backend.rb
-msgid "Elasticsearch is not reachable, probably because it's not running or even installed."
+msgid ""
+"Elasticsearch is not reachable, probably because it's not running or even "
+"installed."
 msgstr ""
 
 #: app/controllers/reports_controller.rb
@@ -3338,6 +3579,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/group.coffee
 #: app/assets/javascripts/app/models/user.coffee
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
+#: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
 #: db/seeds/object_manager_attributes.rb
 msgid "Email"
@@ -3431,18 +3673,28 @@ msgstr "Activer"
 msgid "Enable Chat"
 msgstr "Activer le clavardage"
 
-#: app/assets/javascripts/app/views/api.jst.eco
-#: db/seeds/settings.rb
-msgid "Enable REST API access using the username/email address and password for the authentication user."
-msgstr "Activez l'accès à l'API REST en utilisant le nom d'utilisateur/l'adresse courriel et le mot de passe de l'utilisateur d'authentification."
+#: app/assets/javascripts/app/views/api.jst.eco db/seeds/settings.rb
+msgid ""
+"Enable REST API access using the username/email address and password for the "
+"authentication user."
+msgstr ""
+"Activez l'accès à l'API REST en utilisant le nom d'utilisateur/l'adresse "
+"courriel et le mot de passe de l'utilisateur d'authentification."
 
 #: db/seeds/settings.rb
-msgid "Enable REST API using tokens (not username/email address and password). Each user needs to create its own access tokens in user profile."
+msgid ""
+"Enable REST API using tokens (not username/email address and password). Each "
+"user needs to create its own access tokens in user profile."
 msgstr ""
 
 #: app/assets/javascripts/app/views/api.jst.eco
-msgid "Enable REST API using tokens (not username/email address and password). Each user needs to create own access tokens in user profile."
-msgstr "Activez l'API REST à l'aide de jetons (pas le nom d'utilisateur/adresse courriel et mot de passe). Chaque utilisateur doit créer ses propres jetons d'accès dans le profil utilisateur."
+msgid ""
+"Enable REST API using tokens (not username/email address and password). Each "
+"user needs to create own access tokens in user profile."
+msgstr ""
+"Activez l'API REST à l'aide de jetons (pas le nom d'utilisateur/adresse "
+"courriel et mot de passe). Chaque utilisateur doit créer ses propres jetons "
+"d'accès dans le profil utilisateur."
 
 #: db/seeds/settings.rb
 msgid "Enable Ticket creation"
@@ -3454,26 +3706,47 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco
 msgid "Enable automatic assignment the first time an agent opens a ticket."
-msgstr "Activez l'affectation automatique la première fois qu'un agent ouvre un billet."
+msgstr ""
+"Activez l'affectation automatique la première fois qu'un agent ouvre un "
+"billet."
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Enable debugging for implementation."
 msgstr "Activez le débogage pour l'implémentation."
 
 #: db/seeds/settings.rb
-msgid "Enable if you want a timestamped reply header to be automatically inserted in front of quoted messages."
+msgid ""
+"Enable if you want a timestamped reply header to be automatically inserted "
+"in front of quoted messages."
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Enable if you want to quote the full email in your answer. The quoted email will be put at the end of your answer. If you just want to quote a certain phrase, just mark the text and press reply (this feature is always available)."
-msgstr "Activez cette option si vous souhaitez citer le courriel complet dans votre réponse. Le courriel cité sera mis à la fin de votre réponse. Si vous voulez simplement citer une certaine phrase, marquez simplement le texte et appuyez sur \"Répondre\" (cette fonction est toujours disponible)."
+msgid ""
+"Enable if you want to quote the full email in your answer. The quoted email "
+"will be put at the end of your answer. If you just want to quote a certain "
+"phrase, just mark the text and press reply (this feature is always "
+"available)."
+msgstr ""
+"Activez cette option si vous souhaitez citer le courriel complet dans votre "
+"réponse. Le courriel cité sera mis à la fin de votre réponse. Si vous voulez "
+"simplement citer une certaine phrase, marquez simplement le texte et appuyez "
+"sur \"Répondre\" (cette fonction est toujours disponible)."
 
 #: app/assets/javascripts/app/views/maintenance.jst.eco
-msgid "Enable or disable the maintenance mode of Zammad. If enabled, _all non-administrators get logged out_ and _only administrators can start a new session_."
-msgstr "Activez ou désactivez le mode Maintenance de Zammad. Si cette option est activée, \"_all non-administrators\" sont déconnectés et \"_only administrators\" peuvent démarrer une nouvelle session_."
+msgid ""
+"Enable or disable the maintenance mode of Zammad. If enabled, _all non-"
+"administrators get logged out_ and _only administrators can start a new "
+"session_."
+msgstr ""
+"Activez ou désactivez le mode Maintenance de Zammad. Si cette option est "
+"activée, \"_all non-administrators\" sont déconnectés et \"_only "
+"administrators\" peuvent démarrer une nouvelle session_."
 
 #: db/seeds/settings.rb
-msgid "Enable or disable the maintenance mode of Zammad. If enabled, all non-administrators get logged out and only administrators can start a new session."
+msgid ""
+"Enable or disable the maintenance mode of Zammad. If enabled, all non-"
+"administrators get logged out and only administrators can start a new "
+"session."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -3482,7 +3755,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 msgid "Enable time accounting for following matching tickets."
-msgstr "Activez la comptabilité du temps pour suivre les billets correspondants."
+msgstr ""
+"Activez la comptabilité du temps pour suivre les billets correspondants."
 
 #: db/seeds/settings.rb
 msgid "Enable time accounting for these tickets."
@@ -3509,7 +3783,9 @@ msgid "Enables a sidebar to show an overview of all attachments."
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Enables button for user authentication via %s. The button will redirect to /auth/sso on user interaction."
+msgid ""
+"Enables button for user authentication via %s. The button will redirect to /"
+"auth/sso on user interaction."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
@@ -3525,16 +3801,27 @@ msgid "Enables priority icons in ticket overviews."
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Enables the automatic linking of an existing account on initial login via a third party application. If this is disabled, an existing user must first log into Zammad and then link his \"Third Party\" account to his Zammad account via Profile -> Linked Accounts."
-msgstr "Permet la liaison automatique d'un compte existant lors de la connexion initiale via une application tierce. Si cette option est désactivée, un utilisateur existant doit d'abord se connecter à Zammad, puis associer son compte \"tiers\" à son compte Zammad via Profil -> Comptes liés."
+msgid ""
+"Enables the automatic linking of an existing account on initial login via a "
+"third party application. If this is disabled, an existing user must first "
+"log into Zammad and then link his \"Third Party\" account to his Zammad "
+"account via Profile -> Linked Accounts."
+msgstr ""
+"Permet la liaison automatique d'un compte existant lors de la connexion "
+"initiale via une application tierce. Si cette option est désactivée, un "
+"utilisateur existant doit d'abord se connecter à Zammad, puis associer son "
+"compte \"tiers\" à son compte Zammad via Profil -> Comptes liés."
 
 #: db/seeds/settings.rb
 msgid "Enables user authentication via %s."
 msgstr "Active l'authentification des utilisateurs via %s."
 
 #: db/seeds/settings.rb
-msgid "Enables user authentication via %s. Register your app first at [%s](%s)."
-msgstr "Active l'authentification des utilisateurs via %s. Enregistrez d'abord votre application sur [%s](%s)."
+msgid ""
+"Enables user authentication via %s. Register your app first at [%s](%s)."
+msgstr ""
+"Active l'authentification des utilisateurs via %s. Enregistrez d'abord votre "
+"application sur [%s](%s)."
 
 #: db/seeds/settings.rb
 msgid "Enables user authentication via GitLab."
@@ -3566,7 +3853,8 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Enables users to create their own account via web interface."
-msgstr "Permet aux utilisateurs de créer leur propre compte via l'interface Web."
+msgstr ""
+"Permet aux utilisateurs de créer leur propre compte via l'interface Web."
 
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
@@ -3633,11 +3921,13 @@ msgid "Enter User"
 msgstr ""
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
+#: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
 msgid "Enter credentials"
 msgstr "Entrez le justificatif"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
+#: app/assets/javascripts/app/views/import/kayako.jst.eco
 msgid "Enter the Subdomain of your %s system"
 msgstr ""
 
@@ -3646,8 +3936,12 @@ msgid "Enter the URL of your %s system"
 msgstr "Entrez l'URL de votre système %s"
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
-msgid "Enter the link provided by the plugin at the end of the installation to link the two systems"
-msgstr "Enter the link provided by the plugin at the end of the installation to link the two systems "
+msgid ""
+"Enter the link provided by the plugin at the end of the installation to link "
+"the two systems"
+msgstr ""
+"Enter the link provided by the plugin at the end of the installation to link "
+"the two systems "
 
 #: app/assets/javascripts/app/controllers/_ui_element/timezone.coffee
 msgid "Enter timezone..."
@@ -3666,9 +3960,19 @@ msgstr ""
 msgid "Enter your %s App Keys"
 msgstr "Saisissez vos clés d'application %s"
 
+#: app/assets/javascripts/app/views/import/kayako.jst.eco
+msgid ""
+"Enter your email address and password from your %s account which should be "
+"used for the import."
+msgstr ""
+
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
-msgid "Enter your email address and the %s API token gained from your admin interface."
-msgstr "Saisissez votre adresse courriel et le jeton d'API %s obtenu à partir de votre interface d'administration."
+msgid ""
+"Enter your email address and the %s API token gained from your admin "
+"interface."
+msgstr ""
+"Saisissez votre adresse courriel et le jeton d'API %s obtenu à partir de "
+"votre interface d'administration."
 
 #: app/assets/javascripts/app/controllers/password_reset.coffee
 msgid "Enter your username or email address"
@@ -3723,11 +4027,32 @@ msgid "Evangelist"
 msgstr "Évangéliste"
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee
-msgid "Every category in your knowledge base should be given a unique icon for maximum visual clarity. Each set below provides a wide range of icons to choose from, but beware-you can't mix and match different icons from different sets. Choose carefully!"
-msgstr "Chaque catégorie de votre base de connaissances doit recevoir une icône unique pour une clarté visuelle maximale. Chaque ensemble ci-dessous fournit une large gamme d'icônes à choisir, mais attention, vous ne pouvez pas mélanger et assortir différentes icônes de différents ensembles. Choisir soigneusement!"
+msgid ""
+"Every category in your knowledge base should be given a unique icon for "
+"maximum visual clarity. Each set below provides a wide range of icons to "
+"choose from, but beware-you can't mix and match different icons from "
+"different sets. Choose carefully!"
+msgstr ""
+"Chaque catégorie de votre base de connaissances doit recevoir une icône "
+"unique pour une clarté visuelle maximale. Chaque ensemble ci-dessous fournit "
+"une large gamme d'icônes à choisir, mais attention, vous ne pouvez pas "
+"mélanger et assortir différentes icônes de différents ensembles. Choisir "
+"soigneusement!"
 
 #: app/assets/javascripts/app/models/trigger.coffee
-msgid "Every time a customer creates a new ticket, they automatically receive a confirmation email to assure them that their issue has been submitted successfully. This behavior is built into Zammad, but it’s also highly customizable, and you can set up other automated actions just like it.\n\nMaybe you want to set a higher priority on any ticket with the word “urgent” in the title. Maybe you want to avoid sending auto-reply emails to customers from certain organizations. Maybe you want mark a ticket as “pending” whenever someone adds an internal note to a ticket.\n\nWhatever it is, you can do it with triggers: actions that watch tickets for certain changes, and then fire off whenever those changes occur."
+msgid ""
+"Every time a customer creates a new ticket, they automatically receive a "
+"confirmation email to assure them that their issue has been submitted "
+"successfully. This behavior is built into Zammad, but it’s also highly "
+"customizable, and you can set up other automated actions just like it.\n"
+"\n"
+"Maybe you want to set a higher priority on any ticket with the word “urgent” "
+"in the title. Maybe you want to avoid sending auto-reply emails to customers "
+"from certain organizations. Maybe you want mark a ticket as “pending” "
+"whenever someone adds an internal note to a ticket.\n"
+"\n"
+"Whatever it is, you can do it with triggers: actions that watch tickets for "
+"certain changes, and then fire off whenever those changes occur."
 msgstr ""
 
 #: app/assets/javascripts/app/views/api.jst.eco
@@ -3845,7 +4170,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/user_profile.coffee
 msgid "Failed to sent Email \"%s\". Please contact an administrator."
-msgstr "Échec de l'envoi du courriel \"%s\". Veuillez contacter un administrateur."
+msgstr ""
+"Échec de l'envoi du courriel \"%s\". Veuillez contacter un administrateur."
 
 #: db/seeds/object_manager_attributes.rb
 msgid "Fax"
@@ -4008,8 +4334,12 @@ msgid "Footer menu"
 msgstr ""
 
 #: app/assets/javascripts/app/views/profile/token_access_created.jst.eco
-msgid "For security reasons, the API token is shown only once. You'll need to copy it somewhere safe before continuing."
-msgstr "Pour des raisons de sécurité, le jeton d'API n'est affiché qu'une seule fois. Vous devrez le copier dans un endroit sûr avant de continuer."
+msgid ""
+"For security reasons, the API token is shown only once. You'll need to copy "
+"it somewhere safe before continuing."
+msgstr ""
+"Pour des raisons de sécurité, le jeton d'API n'est affiché qu'une seule "
+"fois. Vous devrez le copier dans un endroit sûr avant de continuer."
 
 #: app/assets/javascripts/app/views/login.jst.eco
 msgid "Forgot password?"
@@ -4144,7 +4474,9 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee
 msgid "Generic API to integrate VoIP service provider with realtime push."
-msgstr "API générique pour intégrer le fournisseur de services VoIP avec push en temps réel."
+msgstr ""
+"API générique pour intégrer le fournisseur de services VoIP avec push en "
+"temps réel."
 
 #: db/seeds/settings.rb
 msgid "Geo Calendar Service"
@@ -4179,6 +4511,10 @@ msgstr ""
 msgid "GitHub integration"
 msgstr ""
 
+#: lib/github/http_client.rb
+msgid "GitHub request failed! Please have a look at the log file for details"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
 msgid "GitLab"
@@ -4198,6 +4534,10 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "GitLab integration"
+msgstr ""
+
+#: lib/gitlab/http_client.rb
+msgid "GitLab request failed! Please have a look at the log file for details"
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -4222,6 +4562,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/getting_started/email_pre_configured.jst.eco
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/index.jst.eco
+#: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
@@ -4294,8 +4635,7 @@ msgstr ""
 #: app/views/slack/ticket_create/pt-br.md.erb
 #: app/views/slack/ticket_create/zh-cn.md.erb
 #: app/views/slack/ticket_create/zh-tw.md.erb
-#: db/seeds/object_manager_attributes.rb
-#: db/seeds/settings.rb
+#: db/seeds/object_manager_attributes.rb db/seeds/settings.rb
 #: lib/excel_sheet/ticket.rb
 msgid "Group"
 msgstr "Groupe ajouté "
@@ -4354,8 +4694,7 @@ msgstr ""
 msgid "Group needed!"
 msgstr ""
 
-#: app/assets/javascripts/app/views/channel/form.jst.eco
-#: db/seeds/settings.rb
+#: app/assets/javascripts/app/views/channel/form.jst.eco db/seeds/settings.rb
 msgid "Group selection for Ticket creation"
 msgstr "Sélection de groupe pour la création d'un billet"
 
@@ -4363,6 +4702,7 @@ msgstr "Sélection de groupe pour la création d'un billet"
 #: app/assets/javascripts/app/models/macro.coffee
 #: app/assets/javascripts/app/models/text_module.coffee
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
+#: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
 #: db/seeds/permissions.rb
 msgid "Groups"
@@ -4427,7 +4767,9 @@ msgstr "Bilan de santé"
 
 #: app/assets/javascripts/app/views/monitoring.jst.eco
 msgid "Health information can be retrieved as JSON using"
-msgstr "Les informations d'intégrité peuvent être récupérées au format JSON à l'aide de"
+msgstr ""
+"Les informations d'intégrité peuvent être récupérées au format JSON à l'aide "
+"de"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Hello! I need help with your product."
@@ -4442,36 +4784,58 @@ msgid "Help to improve Zammad!"
 msgstr ""
 
 #: app/assets/javascripts/app/views/knowledge_base/public_menu_manager.jst.eco
-msgid "Here you can add further links to your public FAQ page, which will be displayed either in the header or footer."
+msgid ""
+"Here you can add further links to your public FAQ page, which will be "
+"displayed either in the header or footer."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
-msgid "Here you can create new tickets. Also if you have the permissions you can create new customers and organizations."
-msgstr "Ici, vous pouvez créer de nouveaux billets. De plus, si vous en avez les autorisations, vous pouvez créer de nouveaux clients et organisations."
+msgid ""
+"Here you can create new tickets. Also if you have the permissions you can "
+"create new customers and organizations."
+msgstr ""
+"Ici, vous pouvez créer de nouveaux billets. De plus, si vous en avez les "
+"autorisations, vous pouvez créer de nouveaux clients et organisations."
 
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee
 msgid "Here you can create one."
 msgstr "Ici, vous pouvez en créer un."
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
-msgid "Here you can search for tickets, customers and organizations. Use the wildcard §*§ to find everything. E. g. §smi*§ or §rosent*l§. You also can use ||double quotes|| for searching phrases §\"some phrase\"§."
-msgstr "Ici, vous pouvez rechercher des billets, des clients et des organisations. Utilisez le caractère générique §*§ pour tout trouver. Par exemple. §Smi*§ ou §rosent*l§. Vous pouvez également utiliser des ||guillemets|| pour rechercher des phrases §\"une phrase\"§."
+msgid ""
+"Here you can search for tickets, customers and organizations. Use the "
+"wildcard §*§ to find everything. E. g. §smi*§ or §rosent*l§. You also can "
+"use ||double quotes|| for searching phrases §\"some phrase\"§."
+msgstr ""
+"Ici, vous pouvez rechercher des billets, des clients et des organisations. "
+"Utilisez le caractère générique §*§ pour tout trouver. Par exemple. §Smi*§ "
+"ou §rosent*l§. Vous pouvez également utiliser des ||guillemets|| pour "
+"rechercher des phrases §\"une phrase\"§."
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
-msgid "Here you can sign out, change the frontend language and see your last viewed items."
-msgstr "Ici, vous pouvez vous déconnecter, changer la langue de l'interface et voir vos derniers éléments consultés."
+msgid ""
+"Here you can sign out, change the frontend language and see your last viewed "
+"items."
+msgstr ""
+"Ici, vous pouvez vous déconnecter, changer la langue de l'interface et voir "
+"vos derniers éléments consultés."
 
 #: app/assets/javascripts/app/views/object_manager/attribute.jst.eco
 msgid "Here you define which authorization has access to the attribute."
 msgstr "Here you define which authorization has access to the attribute. "
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
-msgid "Here you find your ticket overviews for open, assigned and escalated tickets."
-msgstr "Ici, vous trouverez les aperçus de vos billets pour les billets ouverts, affectés et escaladés."
+msgid ""
+"Here you find your ticket overviews for open, assigned and escalated tickets."
+msgstr ""
+"Ici, vous trouverez les aperçus de vos billets pour les billets ouverts, "
+"affectés et escaladés."
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
 msgid "Here you see a quick overview of your and other agents' performance."
-msgstr "Ici, vous voyez un aperçu rapide de vos performances et de celles des autres agents."
+msgstr ""
+"Ici, vous voyez un aperçu rapide de vos performances et de celles des autres "
+"agents."
 
 #: app/assets/javascripts/app/views/dashboard.jst.eco
 msgid "Here you will find the latest activities of your system."
@@ -4526,9 +4890,9 @@ msgid "Host not reachable!"
 msgstr ""
 
 #: app/controllers/import_freshdesk_controller.rb
+#: app/controllers/import_kayako_controller.rb
 #: app/controllers/import_otrs_controller.rb
-#: app/controllers/import_zendesk_controller.rb
-#: lib/email_helper/probe.rb
+#: app/controllers/import_zendesk_controller.rb lib/email_helper/probe.rb
 msgid "Hostname not found!"
 msgstr ""
 
@@ -4546,23 +4910,39 @@ msgstr "Heures"
 
 #: app/views/layouts/knowledge_base.html.erb
 msgid "How can we help you? Search for an answer or a topic..."
-msgstr "Comment pouvons-nous vous aider? Rechercher une réponse ou un sujet ..."
+msgstr ""
+"Comment pouvons-nous vous aider? Rechercher une réponse ou un sujet ..."
 
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_waiting_time.coffee
-msgid "How long has each customer had to wait, on average, to get a response from you today?"
-msgstr "Combien de temps chaque client a-t-il dû attendre, en moyenne, pour obtenir une réponse de votre part aujourd'hui?"
+msgid ""
+"How long has each customer had to wait, on average, to get a response from "
+"you today?"
+msgstr ""
+"Combien de temps chaque client a-t-il dû attendre, en moyenne, pour obtenir "
+"une réponse de votre part aujourd'hui?"
 
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_escalation.coffee
-msgid "How many escalated tickets do you have open? (Mr. Bubbles gets grumpy if you have too many…)"
-msgstr "Combien de billets escaladés avez-vous d'ouverts? (M. Bubbles devient grincheux si vous en avez trop…)"
+msgid ""
+"How many escalated tickets do you have open? (Mr. Bubbles gets grumpy if you "
+"have too many…)"
+msgstr ""
+"Combien de billets escaladés avez-vous d'ouverts? (M. Bubbles devient "
+"grincheux si vous en avez trop…)"
 
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_channel_distribution.coffee
-msgid "How many of your tickets are coming from email, phone, Twitter, or Facebook? (Shows percentages for both inbound and outbound tickets.)"
-msgstr "Combien de vos billets proviennent de la messagerie électronique, du téléphone, de Twitter ou de Facebook? (Affiche les pourcentages pour les billets entrants et sortants.)"
+msgid ""
+"How many of your tickets are coming from email, phone, Twitter, or Facebook? "
+"(Shows percentages for both inbound and outbound tickets.)"
+msgstr ""
+"Combien de vos billets proviennent de la messagerie électronique, du "
+"téléphone, de Twitter ou de Facebook? (Affiche les pourcentages pour les "
+"billets entrants et sortants.)"
 
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_reopen.coffee
-msgid "How many of your tickets have been re-opened after being marked “closed”?"
-msgstr "Combien de vos billets ont été rouverts après avoir été marqués \"Fermé\" ?"
+msgid ""
+"How many of your tickets have been re-opened after being marked “closed”?"
+msgstr ""
+"Combien de vos billets ont été rouverts après avoir été marqués \"Fermé\" ?"
 
 #: app/controllers/first_steps_controller.rb
 msgid "How to use it"
@@ -4622,51 +5002,92 @@ msgid "Idle timeout in seconds until agent is set offline automatically."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
-msgid "If left empty, the host gets auto-detected - in this case %s. The auto-detection reads out the host from the <script> tag. If you don't include it via a <script> tag you need to specify the host."
-msgstr "Si laissé vide, l'hôte est détecté automatiquement - dans ce cas %s. L'auto-détection lit l'hôte à partir de la balise <script>. Si vous ne l'incluez pas via une balise <script>, vous devez spécifier l'hôte."
+msgid ""
+"If left empty, the host gets auto-detected - in this case %s. The auto-"
+"detection reads out the host from the <script> tag. If you don't include it "
+"via a <script> tag you need to specify the host."
+msgstr ""
+"Si laissé vide, l'hôte est détecté automatiquement - dans ce cas %s. L'auto-"
+"détection lit l'hôte à partir de la balise <script>. Si vous ne l'incluez "
+"pas via une balise <script>, vous devez spécifier l'hôte."
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 msgid "If no mapping is defined, all user get notified about any event."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/check_mk.coffee
-msgid "If the host and service has recovered, the ticket can be closed automatically."
+msgid ""
+"If the host and service has recovered, the ticket can be closed "
+"automatically."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/icinga.coffee
 #: app/assets/javascripts/app/controllers/_integration/monit.coffee
 #: app/assets/javascripts/app/controllers/_integration/nagios.coffee
-msgid "If the host and service is recovered again, the ticket will be closed automatically."
-msgstr "Si l'hôte et le service sont à nouveau récupérés, le billet sera fermé automatiquement."
+msgid ""
+"If the host and service is recovered again, the ticket will be closed "
+"automatically."
+msgstr ""
+"Si l'hôte et le service sont à nouveau récupérés, le billet sera fermé "
+"automatiquement."
 
 #: db/seeds/settings.rb
-msgid "If the sender is an agent, set the first user in the recipient list as a customer."
-msgstr "Si l'expéditeur est un agent, définissez le premier utilisateur de la liste des destinataires comme un client."
+msgid ""
+"If the sender is an agent, set the first user in the recipient list as a "
+"customer."
+msgstr ""
+"Si l'expéditeur est un agent, définissez le premier utilisateur de la liste "
+"des destinataires comme un client."
 
 #: db/seeds/settings.rb
 msgid "If this regex matches, no notification will be sent by the sender."
-msgstr "Si cette expression régulière correspond, aucune notification ne sera envoyée par l'expéditeur."
+msgstr ""
+"Si cette expression régulière correspond, aucune notification ne sera "
+"envoyée par l'expéditeur."
 
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco
-msgid "If you don't receive instructions within a minute or two, check your email's spam and junk filters, or try resending your request."
-msgstr "Si vous ne recevez pas d'instructions dans une minute ou deux, vérifiez les filtres des pourriels et de courrier indésirable, ou essayez de renvoyer votre demande."
+msgid ""
+"If you don't receive instructions within a minute or two, check your email's "
+"spam and junk filters, or try resending your request."
+msgstr ""
+"Si vous ne recevez pas d'instructions dans une minute ou deux, vérifiez les "
+"filtres des pourriels et de courrier indésirable, ou essayez de renvoyer "
+"votre demande."
 
 #: app/assets/javascripts/app/controllers/_plugin/user_signup_check.coffee
 #: app/assets/javascripts/app/views/signup/verify.jst.eco
-msgid "If you don't see the email, check other places it might be, like your junk, spam, social, or other folders."
-msgstr "Si vous ne voyez pas le courriel, vérifiez les autres endroits où il pourrait se trouver: dossiers des indésirables, pourriels, média sociaux ou autres."
+msgid ""
+"If you don't see the email, check other places it might be, like your junk, "
+"spam, social, or other folders."
+msgstr ""
+"Si vous ne voyez pas le courriel, vérifiez les autres endroits où il "
+"pourrait se trouver: dossiers des indésirables, pourriels, média sociaux ou "
+"autres."
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
-msgid "If you want to move already stored attachments from one backend to another, you need to execute the following via console."
-msgstr "Si vous souhaitez déplacer des pièces jointes déjà stockées d'un serveur principal à un autre, vous devez exécuter les opérations suivantes via la console."
+msgid ""
+"If you want to move already stored attachments from one backend to another, "
+"you need to execute the following via console."
+msgstr ""
+"Si vous souhaitez déplacer des pièces jointes déjà stockées d'un serveur "
+"principal à un autre, vous devez exécuter les opérations suivantes via la "
+"console."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
-msgid "If you want to open the chat by the press of a button set the option §show§ to §false§ and add the class §open-zammad-chat§ to the button."
-msgstr "Si vous souhaitez ouvrir le clavardage en appuyant sur un bouton, réglez l'option §show§ sur §false§ et ajoutez la classe §open-zammad-chat§ au bouton."
+msgid ""
+"If you want to open the chat by the press of a button set the option §show§ "
+"to §false§ and add the class §open-zammad-chat§ to the button."
+msgstr ""
+"Si vous souhaitez ouvrir le clavardage en appuyant sur un bouton, réglez "
+"l'option §show§ sur §false§ et ajoutez la classe §open-zammad-chat§ au "
+"bouton."
 
 #: app/assets/javascripts/app/views/translation/index.jst.eco
-msgid "If you want to translate it via the translation table, just go ahead below."
-msgstr "Si vous souhaitez le traduire via le tableau de traduction, allez-y simplement ci-dessous."
+msgid ""
+"If you want to translate it via the translation table, just go ahead below."
+msgstr ""
+"Si vous souhaitez le traduire via le tableau de traduction, allez-y "
+"simplement ci-dessous."
 
 #: app/assets/javascripts/app/views/getting_started/email_pre_configured.jst.eco
 msgid "If you want to use more email adresses, you can configure them later."
@@ -4750,7 +5171,15 @@ msgid "Import Password for http basic authentication"
 msgstr ""
 
 #: db/seeds/settings.rb
+msgid "Import Password for requesting the Kayako API"
+msgstr ""
+
+#: db/seeds/settings.rb
 msgid "Import User for HTTP basic authentication"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Import User for requesting the Kayako API"
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -4759,12 +5188,17 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
-msgid "Import as archive: |No notifications are sent|, the |tickets are closed| and original timestamps are used. You can still find them in Zammad using the search."
+msgid ""
+"Import as archive: |No notifications are sent|, the |tickets are closed| and "
+"original timestamps are used. You can still find them in Zammad using the "
+"search."
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
-msgid "Import as regular: |Notifications are sent| and the |tickets are open| - you can find the tickets in the overview of open tickets."
+msgid ""
+"Import as regular: |Notifications are sent| and the |tickets are open| - you "
+"can find the tickets in the overview of open tickets."
 msgstr ""
 
 #: app/assets/javascripts/app/views/import/index.jst.eco
@@ -4777,16 +5211,20 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
-msgid "In addition, we have found emails in your mailbox that are older than %s weeks. You can import such emails as an \"archive\", which means that no notifications are sent and the tickets have the status \"closed\". However, you can find them in Zammad anytime using the search function."
+msgid ""
+"In addition, we have found emails in your mailbox that are older than %s "
+"weeks. You can import such emails as an \"archive\", which means that no "
+"notifications are sent and the tickets have the status \"closed\". However, "
+"you can find them in Zammad anytime using the search function."
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
-msgid "In addition, we have found emails in your mailbox that are older than %s weeks. You can import such emails as an \"archive\", which means that no notifications are sent and the tickets have the status \"closed\". However, you can find them in Zammad anytime using the search function. "
-msgstr ""
-
-#: app/assets/javascripts/app/views/integration/sipgate.jst.eco
-msgid "In order for Zammad to access %s, a %s API user and password must be stored here"
+msgid ""
+"In addition, we have found emails in your mailbox that are older than %s "
+"weeks. You can import such emails as an \"archive\", which means that no "
+"notifications are sent and the tickets have the status \"closed\". However, "
+"you can find them in Zammad anytime using the search function. "
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
@@ -4821,6 +5259,7 @@ msgid "Including private key."
 msgstr ""
 
 #: app/controllers/import_freshdesk_controller.rb
+#: app/controllers/import_kayako_controller.rb
 #: app/controllers/import_zendesk_controller.rb
 msgid "Incomplete credentials"
 msgstr ""
@@ -4890,8 +5329,14 @@ msgid "Inline translation"
 msgstr "Traduction en ligne"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
-msgid "Insert the widget code into the source code of every page the chat shall be visible on. It should be placed at the end of the page's source code before the §</body>§ closing tag."
-msgstr "Insérez le code du greffon dans le code source de chaque page sur laquelle le clavardage doit être visible. Il doit être placé à la fin du code source de la page, avant la balise de fermeture §</body>§."
+msgid ""
+"Insert the widget code into the source code of every page the chat shall be "
+"visible on. It should be placed at the end of the page's source code before "
+"the §</body>§ closing tag."
+msgstr ""
+"Insérez le code du greffon dans le code source de chaque page sur laquelle "
+"le clavardage doit être visible. Il doit être placé à la fin du code source "
+"de la page, avant la balise de fermeture §</body>§."
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Inserts Knowledge Base answer"
@@ -4937,7 +5382,9 @@ msgid "Internal"
 msgstr "Interne"
 
 #: app/models/scheduler.rb
-msgid "Interrupted by scheduler restart. Please restart manually or wait till next execution time."
+msgid ""
+"Interrupted by scheduler restart. Please restart manually or wait till next "
+"execution time."
 msgstr ""
 
 #: app/controllers/first_steps_controller.rb
@@ -4965,6 +5412,7 @@ msgid "Invalid GitLab issue link format"
 msgstr ""
 
 #: app/controllers/import_freshdesk_controller.rb
+#: app/controllers/import_kayako_controller.rb
 #: app/controllers/import_otrs_controller.rb
 #: app/controllers/import_zendesk_controller.rb
 msgid "Invalid URL!"
@@ -4983,6 +5431,7 @@ msgid "Invalid client_id receive!"
 msgstr ""
 
 #: app/controllers/import_freshdesk_controller.rb
+#: app/controllers/import_kayako_controller.rb
 #: app/controllers/import_zendesk_controller.rb
 msgid "Invalid credentials!"
 msgstr ""
@@ -5038,8 +5487,12 @@ msgid "Invalid password, it must contain at least 1 special character!"
 msgstr ""
 
 #: lib/password_policy/upper_and_lower_case_characters.rb
-msgid "Invalid password, it must contain at least 2 lowercase and 2 uppercase characters!"
-msgstr "Mot de passe invalide, il doit contenir au moins 2 minuscules et 2 majuscules!"
+msgid ""
+"Invalid password, it must contain at least 2 lowercase and 2 uppercase "
+"characters!"
+msgstr ""
+"Mot de passe invalide, il doit contenir au moins 2 minuscules et 2 "
+"majuscules!"
 
 #: app/controllers/settings_controller.rb
 msgid "Invalid payload, need data:image in logo param"
@@ -5147,7 +5600,9 @@ msgstr "Juin"
 
 #: app/assets/javascripts/app/views/translation/index.jst.eco
 msgid "Just click into the marker and update the words just in place. Enjoy!"
-msgstr "Cliquez simplement sur le marqueur et mettez à jour les mots directement en place. Prenez s'y plaisir !"
+msgstr ""
+"Cliquez simplement sur le marqueur et mettez à jour les mots directement en "
+"place. Prenez s'y plaisir !"
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 msgid "Kalimba"
@@ -5198,8 +5653,7 @@ msgstr "Mots clés"
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 #: app/assets/javascripts/app/models/knowledge_base.coffee
-#: app/models/knowledge_base.rb
-#: db/seeds/permissions.rb
+#: app/models/knowledge_base.rb db/seeds/permissions.rb
 msgid "Knowledge Base"
 msgstr "Base de connaissance"
 
@@ -5291,7 +5745,8 @@ msgid "Last customer contact (with consideration an agent has replied to it)"
 msgstr "Dernier contact client (avec considération qu'un agent y a répondu)"
 
 #: db/seeds/settings.rb
-msgid "Last customer contact (without consideration an agent has replied to it)"
+msgid ""
+"Last customer contact (without consideration an agent has replied to it)"
 msgstr "Dernier contact client (sans considérer qu'un agent y ait répondu)"
 
 #: app/assets/javascripts/app/models/job.coffee
@@ -5390,8 +5845,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
 #: app/assets/javascripts/app/views/popover/user.jst.eco
-#: app/assets/javascripts/app/views/widget/user.jst.eco
-#: db/seeds/permissions.rb
+#: app/assets/javascripts/app/views/widget/user.jst.eco db/seeds/permissions.rb
 msgid "Linked Accounts"
 msgstr "Comptes liés"
 
@@ -5452,6 +5906,10 @@ msgstr "Localisation"
 msgid "Location of an external chat.css file."
 msgstr "Emplacement d'un fichier chat.css externe. Endroit"
 
+#: app/assets/javascripts/app/views/login.jst.eco
+msgid "Log in to %s"
+msgstr ""
+
 #: app/assets/javascripts/app/models/user.coffee
 #: app/assets/javascripts/app/views/maintenance.jst.eco
 #: db/seeds/object_manager_attributes.rb
@@ -5459,12 +5917,10 @@ msgid "Login"
 msgstr "S'authentifier"
 
 #: app/controllers/application_controller/authenticates.rb
-msgid "Login failed. Have you double-checked your credentials and completed the email verification step?"
+msgid ""
+"Login failed. Have you double-checked your credentials and completed the "
+"email verification step?"
 msgstr ""
-
-#: app/assets/javascripts/app/views/login.jst.eco
-msgid "Login with %s"
-msgstr "Connectez-vous avec %s"
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 #: db/seeds/settings.rb
@@ -5487,18 +5943,21 @@ msgstr ""
 msgid "Macro"
 msgstr "Macro"
 
-#: app/assets/javascripts/app/controllers/macro.coffee
-#: db/seeds/permissions.rb
+#: app/assets/javascripts/app/controllers/macro.coffee db/seeds/permissions.rb
 msgid "Macros"
 msgstr "Macros"
 
 #: app/assets/javascripts/app/models/macro.coffee
-msgid "Macros make it easy to automate common, multi-step tasks within Zammad.\n\nYou can use macros in Zammad to automate recurring sequences, saving time (and nerves). This allows a combined sequence of actions on the ticket to be executed with just one click."
+msgid ""
+"Macros make it easy to automate common, multi-step tasks within Zammad.\n"
+"\n"
+"You can use macros in Zammad to automate recurring sequences, saving time "
+"(and nerves). This allows a combined sequence of actions on the ticket to be "
+"executed with just one click."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/maintenance.coffee
-#: app/assets/javascripts/app/views/maintenance.jst.eco
-#: db/seeds/permissions.rb
+#: app/assets/javascripts/app/views/maintenance.jst.eco db/seeds/permissions.rb
 msgid "Maintenance"
 msgstr "Entretien"
 
@@ -5531,8 +5990,12 @@ msgid "Manage Tags"
 msgstr "Gérer les étiquettes"
 
 #: app/assets/javascripts/app/views/api.jst.eco
-msgid "Manage applications that can use Zammad as an OAuth provider and applications that you've authorized to use your account."
-msgstr "Gérez les applications pouvant utiliser Zammad en tant que fournisseur OAuth et les applications que vous avez autorisées à utiliser votre compte."
+msgid ""
+"Manage applications that can use Zammad as an OAuth provider and "
+"applications that you've authorized to use your account."
+msgstr ""
+"Gérez les applications pouvant utiliser Zammad en tant que fournisseur OAuth "
+"et les applications que vous avez autorisées à utiliser votre compte."
 
 #: app/views/mailer/application.html.erb
 msgid "Manage your notifications settings"
@@ -5698,6 +6161,7 @@ msgid "Microsoft Application Registration Portal"
 msgstr ""
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
+#: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
 msgid "Migrate %s Data"
@@ -5717,6 +6181,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_git_issue.jst.eco
 msgid "Milestone"
+msgstr ""
+
+#: app/controllers/users_controller.rb
+msgid "Mime type is invalid"
 msgstr ""
 
 #: app/models/postmaster_filter.rb
@@ -5740,11 +6208,12 @@ msgid "Minimum of one permission is needed!"
 msgstr ""
 
 #: app/models/user.rb
-msgid "Minimum one identifier (login, firstname, lastname, phone or email) for user is required."
+msgid ""
+"Minimum one identifier (login, firstname, lastname, phone or email) for user "
+"is required."
 msgstr ""
 
-#: app/models/role.rb
-#: app/models/user.rb
+#: app/models/role.rb app/models/user.rb
 msgid "Minimum one user needs to have admin permissions."
 msgstr ""
 
@@ -5825,8 +6294,7 @@ msgid "Monit integration"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/monitoring.coffee
-#: app/assets/javascripts/app/views/monitoring.jst.eco
-#: db/seeds/permissions.rb
+#: app/assets/javascripts/app/views/monitoring.jst.eco db/seeds/permissions.rb
 msgid "Monitoring"
 msgstr "Surveillance"
 
@@ -5940,7 +6408,6 @@ msgstr ""
 #: app/assets/javascripts/app/models/twitter.coffee
 #: app/assets/javascripts/app/models/webhook.coffee
 #: app/assets/javascripts/app/views/channel/topics.jst.eco
-#: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/github.jst.eco
@@ -6086,8 +6553,7 @@ msgstr "Nouveau SLA"
 msgid "New Scheduler"
 msgstr "Nouveau Planification"
 
-#: app/assets/javascripts/app/views/tag/index.jst.eco
-#: db/seeds/settings.rb
+#: app/assets/javascripts/app/views/tag/index.jst.eco db/seeds/settings.rb
 msgid "New Tags"
 msgstr "Nouveau Tags"
 
@@ -6226,7 +6692,9 @@ msgid "No application_secret param!"
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/webhook_not_available.jst.eco
-msgid "No available webhook, please create a new one or activate an existing one at \"Manage > Webhook\""
+msgid ""
+"No available webhook, please create a new one or activate an existing one at "
+"\"Manage > Webhook\""
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
@@ -6237,18 +6705,15 @@ msgstr ""
 msgid "No categories"
 msgstr "Aucune catégorie"
 
-#: lib/external_credential/google.rb
-#: lib/external_credential/microsoft365.rb
+#: lib/external_credential/google.rb lib/external_credential/microsoft365.rb
 msgid "No client_id param!"
 msgstr ""
 
-#: lib/external_credential/google.rb
-#: lib/external_credential/microsoft365.rb
+#: lib/external_credential/google.rb lib/external_credential/microsoft365.rb
 msgid "No client_secret param!"
 msgstr ""
 
-#: lib/external_credential/google.rb
-#: lib/external_credential/microsoft365.rb
+#: lib/external_credential/google.rb lib/external_credential/microsoft365.rb
 msgid "No code for session found!"
 msgstr ""
 
@@ -6330,8 +6795,7 @@ msgstr ""
 msgid "No payload->screen given!"
 msgstr ""
 
-#: app/assets/javascripts/app/views/settings/proxy.jst.eco
-#: db/seeds/settings.rb
+#: app/assets/javascripts/app/views/settings/proxy.jst.eco db/seeds/settings.rb
 msgid "No proxy for the following hosts."
 msgstr "Aucun mandataire pour les hôtes suivants."
 
@@ -6353,13 +6817,11 @@ msgstr "Aucun resultat n'a été trouvé."
 
 #: app/controllers/import_freshdesk_controller.rb
 #: app/controllers/import_otrs_controller.rb
-#: app/controllers/import_zendesk_controller.rb
-#: lib/email_helper/probe.rb
+#: app/controllers/import_zendesk_controller.rb lib/email_helper/probe.rb
 msgid "No route to host!"
 msgstr ""
 
-#: lib/sessions/event/chat_session_start.rb
-#: lib/sessions/event/chat_transfer.rb
+#: lib/sessions/event/chat_session_start.rb lib/sessions/event/chat_transfer.rb
 msgid "No session available."
 msgstr ""
 
@@ -6370,8 +6832,7 @@ msgstr ""
 #: app/controllers/organizations_controller.rb
 #: app/controllers/text_modules_controller.rb
 #: app/controllers/ticket_articles_controller.rb
-#: app/controllers/tickets_controller.rb
-#: app/controllers/users_controller.rb
+#: app/controllers/tickets_controller.rb app/controllers/users_controller.rb
 msgid "No source data submitted!"
 msgstr ""
 
@@ -6464,7 +6925,8 @@ msgid "Not allowed to access this task."
 msgstr ""
 
 #: app/assets/javascripts/app/views/object_manager/screens.jst.eco
-msgid "Not applicable to: merging, emails, form, Facebook, Telegram, Twitter, SMS"
+msgid ""
+"Not applicable to: merging, emails, form, Facebook, Telegram, Twitter, SMS"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee
@@ -6481,13 +6943,11 @@ msgstr ""
 msgid "Not authorized (token expired)!"
 msgstr ""
 
-#: app/controllers/application_controller/authenticates.rb
-#: lib/user_context.rb
+#: app/controllers/application_controller/authenticates.rb lib/user_context.rb
 msgid "Not authorized (token)!"
 msgstr ""
 
-#: app/controllers/application_controller/authenticates.rb
-#: lib/user_context.rb
+#: app/controllers/application_controller/authenticates.rb lib/user_context.rb
 msgid "Not authorized (user)!"
 msgstr ""
 
@@ -6530,7 +6990,8 @@ msgstr "Remarque - visibilité par défaut"
 #: app/assets/javascripts/app/models/signature.coffee
 #: db/seeds/object_manager_attributes.rb
 msgid "Notes are visible to agents only, never to customers."
-msgstr "Les remarques ne sont visibles que par les agents, jamais par les clients."
+msgstr ""
+"Les remarques ne sont visibles que par les agents, jamais par les clients."
 
 #: app/assets/javascripts/app/views/generic/column_select.jst.eco
 msgid "Nothing selected"
@@ -6675,16 +7136,21 @@ msgid "Online Service"
 msgstr ""
 
 #: app/assets/javascripts/app/views/translation/support.jst.eco
-msgid "Only %s% of this language is translated, help to improve Zammad and complete the translation."
+msgid ""
+"Only %s% of this language is already translated. Please help to improve "
+"Zammad and complete the translation."
 msgstr ""
 
 #: app/assets/javascripts/app/models/overview.coffee
 msgid "Only available for Users which are replacements for other users."
-msgstr "Uniquement disponible pour les utilisateurs qui remplacent d'autres utilisateurs."
+msgstr ""
+"Uniquement disponible pour les utilisateurs qui remplacent d'autres "
+"utilisateurs."
 
 #: app/assets/javascripts/app/models/overview.coffee
 msgid "Only available for Users with shared Organization"
-msgstr "Disponible uniquement pour les utilisateurs avec une organisation partagée"
+msgstr ""
+"Disponible uniquement pour les utilisateurs avec une organisation partagée"
 
 #: app/controllers/ticket_articles_controller.rb
 #: app/controllers/tickets_controller.rb
@@ -6697,6 +7163,11 @@ msgstr "Uniquement pour ces groupes."
 
 #: app/models/object_manager/attribute.rb
 msgid "Only letters from a-z because numbers from 0-9 and _ are allowed"
+msgstr ""
+
+#: app/assets/javascripts/app/views/package.jst.eco
+msgid ""
+"Only packages from known, trusted and verfied sources should be installed."
 msgstr ""
 
 #: app/controllers/users_controller.rb
@@ -6783,8 +7254,7 @@ msgstr "Direction de l'ordre"
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 #: app/controllers/time_accountings_controller.rb
-#: db/seeds/object_manager_attributes.rb
-#: db/seeds/settings.rb
+#: db/seeds/object_manager_attributes.rb db/seeds/settings.rb
 #: lib/excel_sheet/ticket.rb
 msgid "Organization"
 msgstr "Entreprise "
@@ -6807,13 +7277,16 @@ msgstr "Assistance pour l'organisation"
 #: app/assets/javascripts/app/controllers/organization_profile.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_organization.coffee
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
+#: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
 #: db/seeds/permissions.rb
 msgid "Organizations"
 msgstr "Organizations"
 
 #: app/assets/javascripts/app/controllers/organization.coffee
-msgid "Organizations are for any person in the system. Agents (Owners, Resposbiles, ...) and Customers."
+msgid ""
+"Organizations are for any person in the system. Agents (Owners, "
+"Resposbiles, ...) and Customers."
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket_article.coffee
@@ -6836,7 +7309,9 @@ msgstr "Message d'absence"
 
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_load_measure.coffee
 msgid "Out of all open tickets (company-wide), how many are assigned to you?"
-msgstr "Sur tous les billets ouverts (à l'échelle de l'entreprise), combien vous sont attribués?"
+msgstr ""
+"Sur tous les billets ouverts (à l'échelle de l'entreprise), combien vous "
+"sont attribués?"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 msgid "Out of office replacement"
@@ -6896,13 +7371,14 @@ msgstr "Vue d'ensemble"
 #: app/views/slack/ticket_create/pt-br.md.erb
 #: app/views/slack/ticket_create/zh-cn.md.erb
 #: app/views/slack/ticket_create/zh-tw.md.erb
-#: db/seeds/object_manager_attributes.rb
-#: lib/excel_sheet/ticket.rb
+#: db/seeds/object_manager_attributes.rb lib/excel_sheet/ticket.rb
 msgid "Owner"
 msgstr "Propriétaire "
 
 #: app/assets/javascripts/app/views/data_privacy/preview.jst.eco
-msgid "Owner tickets of the user will not get deleted. The owner will be mapped to the system user (ID 1)."
+msgid ""
+"Owner tickets of the user will not get deleted. The owner will be mapped to "
+"the system user (ID 1)."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -6948,11 +7424,11 @@ msgstr "Parent"
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
+#: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
-#: db/seeds/object_manager_attributes.rb
-#: db/seeds/permissions.rb
+#: db/seeds/object_manager_attributes.rb db/seeds/permissions.rb
 msgid "Password"
 msgstr "Mot de passe "
 
@@ -6964,14 +7440,15 @@ msgstr "Accès par mot de passe"
 msgid "Password changed successfully!"
 msgstr ""
 
-#: app/assets/javascripts/app/views/settings/proxy.jst.eco
-#: db/seeds/settings.rb
+#: app/assets/javascripts/app/views/settings/proxy.jst.eco db/seeds/settings.rb
 msgid "Password for proxy connection."
 msgstr "Mot de passe pour la connexion au mandataire."
 
 #: db/seeds/settings.rb
 msgid "Password needs to contain 2 lower and 2 upper characters."
-msgstr "Le mot de passe doit contenir 2 caractères minuscules et 2 caractères majuscules."
+msgstr ""
+"Le mot de passe doit contenir 2 caractères minuscules et 2 caractères "
+"majuscules."
 
 #: db/seeds/settings.rb
 msgid "Password needs to contain at least one digit."
@@ -7070,7 +7547,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 msgid "Pick a name for the application, and we'll give you a unique token."
-msgstr "Choisissez un nom pour l'application et nous vous donnerons un jeton unique."
+msgstr ""
+"Choisissez un nom pour l'application et nous vous donnerons un jeton unique."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/highlighter.coffee
 msgid "Pink"
@@ -7100,7 +7578,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
 msgid "Please click the button below to create your first one."
-msgstr "Veuillez cliquer sur le bouton ci-dessous pour créer votre premier billet."
+msgstr ""
+"Veuillez cliquer sur le bouton ci-dessous pour créer votre premier billet."
 
 #: app/assets/javascripts/app/views/signup/verify.jst.eco
 msgid "Please click the link in the verification email."
@@ -7111,7 +7590,9 @@ msgid "Please contact your administrator."
 msgstr ""
 
 #: app/models/ticket.rb
-msgid "Please enable execution_time feature to use it (currently only allowed for triggers and schedulers)"
+msgid ""
+"Please enable execution_time feature to use it (currently only allowed for "
+"triggers and schedulers)"
 msgstr ""
 
 #: app/models/knowledge_base.rb
@@ -7124,7 +7605,9 @@ msgstr "Veuillez saisir l'heure à laquelle vous souhaitez rendre compte."
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Please execute database changes only in a maintenance time-slot."
-msgstr "Veuillez exécuter les modifications de la base de données uniquement dans un intervalle de temps d'entretien."
+msgstr ""
+"Veuillez exécuter les modifications de la base de données uniquement dans un "
+"intervalle de temps d'entretien."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
 msgid "Please fill also some text in!"
@@ -7167,6 +7650,7 @@ msgid "Port"
 msgstr "Port"
 
 #: app/assets/javascripts/app/models/object_manager_attribute.coffee
+#: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Position"
 msgstr ""
 
@@ -7233,8 +7717,7 @@ msgstr "Prio"
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco
 #: app/assets/javascripts/app/views/popover/ticket.jst.eco
-#: db/seeds/object_manager_attributes.rb
-#: lib/excel_sheet/ticket.rb
+#: db/seeds/object_manager_attributes.rb lib/excel_sheet/ticket.rb
 msgid "Priority"
 msgstr "Priorité "
 
@@ -7328,10 +7811,13 @@ msgstr ""
 msgid "Purple"
 msgstr "Mauve"
 
-#: app/assets/javascripts/app/views/maintenance.jst.eco
-#: db/seeds/settings.rb
-msgid "Put a message on the login page. To change it, click on the text area below and change it in-line."
-msgstr "Placez un message sur la page de connexion. Pour le modifier, cliquez sur la zone de texte ci-dessous et modifiez-le directement."
+#: app/assets/javascripts/app/views/maintenance.jst.eco db/seeds/settings.rb
+msgid ""
+"Put a message on the login page. To change it, click on the text area below "
+"and change it in-line."
+msgstr ""
+"Placez un message sur la page de connexion. Pour le modifier, cliquez sur la "
+"zone de texte ci-dessous et modifiez-le directement."
 
 #: db/seeds/settings.rb
 msgid "Puts Zammad into import mode (disables some triggers)."
@@ -7390,8 +7876,12 @@ msgid "Recipient"
 msgstr "Receveur"
 
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
-msgid "Records that exist in the import data (but not in Zammad) will always be created."
-msgstr "Les enregistrements qui existent dans les données d'importation (mais pas dans Zammad) seront toujours créés."
+msgid ""
+"Records that exist in the import data (but not in Zammad) will always be "
+"created."
+msgstr ""
+"Les enregistrements qui existent dans les données d'importation (mais pas "
+"dans Zammad) seront toujours créés."
 
 #: db/seeds/settings.rb
 msgid "Recursive Ticket Triggers"
@@ -7402,7 +7892,8 @@ msgid "Recursive Ticket Triggers Loop Max."
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "References - Search for follow-up also in In-Reply-To or References headers."
+msgid ""
+"References - Search for follow-up also in In-Reply-To or References headers."
 msgstr ""
 
 #: app/assets/javascripts/app/views/login.jst.eco
@@ -7563,6 +8054,12 @@ msgstr ""
 msgid "Response"
 msgstr ""
 
+#: app/assets/javascripts/app/views/sla/index.jst.eco
+#, fuzzy
+#| msgid "First Response Time"
+msgid "Response Time"
+msgstr "Temps de première réponse"
+
 #: app/assets/javascripts/app/views/monitoring.jst.eco
 msgid "Restart failed jobs"
 msgstr ""
@@ -7612,8 +8109,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/role.coffee
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
-#: app/assets/javascripts/app/views/user.jst.eco
-#: db/seeds/permissions.rb
+#: app/assets/javascripts/app/views/user.jst.eco db/seeds/permissions.rb
 msgid "Roles"
 msgstr "Rôles"
 
@@ -7653,7 +8149,10 @@ msgid "S/MIME"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee
-msgid "S/MIME (Secure/Multipurpose Internet Mail Extensions) is a widely accepted method (or more precisely, a protocol) for sending digitally signed and encrypted messages."
+msgid ""
+"S/MIME (Secure/Multipurpose Internet Mail Extensions) is a widely accepted "
+"method (or more precisely, a protocol) for sending digitally signed and "
+"encrypted messages."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -7677,8 +8176,7 @@ msgid "SAML App Credentials"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/sla.coffee
-#: app/assets/javascripts/app/views/sla/index.jst.eco
-#: db/seeds/permissions.rb
+#: app/assets/javascripts/app/views/sla/index.jst.eco db/seeds/permissions.rb
 msgid "SLA"
 msgstr "SLA "
 
@@ -7789,8 +8287,7 @@ msgstr "Ordonnancer pour"
 msgid "Scheduled for"
 msgstr "Ordonnancé pour"
 
-#: app/assets/javascripts/app/controllers/job.coffee
-#: db/seeds/permissions.rb
+#: app/assets/javascripts/app/controllers/job.coffee db/seeds/permissions.rb
 msgid "Scheduler"
 msgstr "Planificateur"
 
@@ -7874,8 +8371,12 @@ msgid "See more"
 msgstr "Voir plus"
 
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
-msgid "See your tickets from within your favorite calendar by adding the following URL to your calendar app."
-msgstr "Affichez vos billets depuis votre calendrier préféré en ajoutant l'URL suivante à votre application de calendrier."
+msgid ""
+"See your tickets from within your favorite calendar by adding the following "
+"URL to your calendar app."
+msgstr ""
+"Affichez vos billets depuis votre calendrier préféré en ajoutant l'URL "
+"suivante à votre application de calendrier."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Select"
@@ -7947,16 +8448,25 @@ msgid "Send client stats"
 msgstr "Envoyer les statistiques des clients"
 
 #: db/seeds/settings.rb
-msgid "Send client stats/error message to central server to improve the usability."
-msgstr "Envoyer les statistiques/messages d'erreur du client au serveur central pour améliorer la convivialité."
+msgid ""
+"Send client stats/error message to central server to improve the usability."
+msgstr ""
+"Envoyer les statistiques/messages d'erreur du client au serveur central pour "
+"améliorer la convivialité."
 
 #: db/seeds/settings.rb
 msgid "Send postmaster mail if mail too large"
-msgstr "Envoyer un courrier de style maître de poste si le courriel est trop volumineux"
+msgstr ""
+"Envoyer un courrier de style maître de poste si le courriel est trop "
+"volumineux"
 
 #: db/seeds/settings.rb
 msgid "Send postmaster reject mail to sender of mail if mail is too large."
-msgstr "Ce réglage obligera Zammad à répondre automatiquement, aux courriers qui dépassent la limite de taille ci-dessus, avec un courriel de style maître de poste. Ceci aidera votre utilisateur à comprendre que son courrier n'est pas arrivé et ne sera pas examiné."
+msgstr ""
+"Ce réglage obligera Zammad à répondre automatiquement, aux courriers qui "
+"dépassent la limite de taille ci-dessus, avec un courriel de style maître de "
+"poste. Ceci aidera votre utilisateur à comprendre que son courrier n'est pas "
+"arrivé et ne sera pas examiné."
 
 #: app/assets/javascripts/app/views/maintenance.jst.eco
 msgid "Send to clients"
@@ -7967,8 +8477,7 @@ msgstr "Envoyer aux clients"
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 #: app/models/channel/driver/sms/massenversand.rb
 #: app/models/channel/driver/sms/message_bird.rb
-#: app/models/channel/driver/sms/twilio.rb
-#: db/seeds/settings.rb
+#: app/models/channel/driver/sms/twilio.rb db/seeds/settings.rb
 #: lib/excel_sheet/ticket.rb
 msgid "Sender"
 msgstr "Expéditeur"
@@ -8034,8 +8543,7 @@ msgid "Session Timeout"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/session.coffee
-#: app/assets/javascripts/app/views/session.jst.eco
-#: db/seeds/permissions.rb
+#: app/assets/javascripts/app/views/session.jst.eco db/seeds/permissions.rb
 msgid "Sessions"
 msgstr "Sessions"
 
@@ -8063,7 +8571,9 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 msgid "Set caller id of outbound calls based on destination caller id."
-msgstr "Définir l'ID de l'appelant des appels sortants en fonction de l'ID de l'appelant de destination."
+msgstr ""
+"Définir l'ID de l'appelant des appels sortants en fonction de l'ID de "
+"l'appelant de destination."
 
 #: db/seeds/settings.rb
 msgid "Set limit of agents"
@@ -8084,20 +8594,35 @@ msgid "Set outbound caller id"
 msgstr "Définir l'ID de l'appelant sortant"
 
 #: db/seeds/settings.rb
-msgid "Set timeframe in seconds. If it's set to 0 you can delete notes without time limits"
+msgid ""
+"Set timeframe in seconds. If it's set to 0 you can delete notes without time "
+"limits"
 msgstr ""
 
 #: app/assets/javascripts/app/views/getting_started/channel.jst.eco
 msgid "Set up the communication channels you want to use with your Zammad."
-msgstr "Configure les canaux de communication qu'on souhaite utiliser avec votre Zammad."
+msgstr ""
+"Configure les canaux de communication qu'on souhaite utiliser avec votre "
+"Zammad."
 
 #: db/seeds/settings.rb
-msgid "Set/overwrite sender/from of email based on reply-to header. Useful to set correct customer if email is received from a third party system on behalf of a customer."
-msgstr "Définit/remplace l'expéditeur du courriel en fonction de l'en-tête \"Répondre à\". Utile pour définir correctement le client si un courriel est reçu d'un système tiers au nom d'un client."
+msgid ""
+"Set/overwrite sender/from of email based on reply-to header. Useful to set "
+"correct customer if email is received from a third party system on behalf of "
+"a customer."
+msgstr ""
+"Définit/remplace l'expéditeur du courriel en fonction de l'en-tête "
+"\"Répondre à\". Utile pour définir correctement le client si un courriel est "
+"reçu d'un système tiers au nom d'un client."
 
 #: db/seeds/settings.rb
-msgid "Sets the last customer contact based on the last contact of a customer or on the last contact of a customer to whom an agent has not yet responded."
-msgstr "Définit le dernier contact du client en fonction du dernier contact d'un client ou du dernier contact d'un client auquel un agent n'a pas encore répondu."
+msgid ""
+"Sets the last customer contact based on the last contact of a customer or on "
+"the last contact of a customer to whom an agent has not yet responded."
+msgstr ""
+"Définit le dernier contact du client en fonction du dernier contact d'un "
+"client ou du dernier contact d'un client auquel un agent n'a pas encore "
+"répondu."
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
@@ -8147,7 +8672,9 @@ msgstr "Tirer"
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
-msgid "Should the emails from this mailbox be imported as an archive or as regular emails?"
+msgid ""
+"Should the emails from this mailbox be imported as an archive or as regular "
+"emails?"
 msgstr ""
 
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
@@ -8176,6 +8703,8 @@ msgid "Show title in form."
 msgstr "Afficher le titre sur le formulaire."
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
+#: app/assets/javascripts/app/views/integration/placetel.jst.eco
+#: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 msgid "Shown records in caller log."
 msgstr ""
 
@@ -8249,11 +8778,14 @@ msgid "Sina Weibo Open Protal"
 msgstr ""
 
 #: public/assets/chat/views/customer_timeout.eco
-msgid "Since you didn't respond in the last %s minutes your conversation got closed."
+msgid ""
+"Since you didn't respond in the last %s minutes your conversation got closed."
 msgstr ""
 
 #: public/assets/chat/views/customer_timeout.eco
-msgid "Since you didn't respond in the last %s minutes your conversation with <strong>%s</strong> got closed."
+msgid ""
+"Since you didn't respond in the last %s minutes your conversation with "
+"<strong>%s</strong> got closed."
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
@@ -8298,11 +8830,16 @@ msgid "Some Text"
 msgstr "Du texte"
 
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee
-msgid "Some system settings have changed, Zammad is restarting. Please wait until Zammad is back again."
+msgid ""
+"Some system settings have changed, Zammad is restarting. Please wait until "
+"Zammad is back again."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee
-msgid "Some system settings have changed, please restart all Zammad processes! If you want to do this automatically, set environment variable APP_RESTART_CMD=\"/path/to/your_app_script.sh restart\"."
+msgid ""
+"Some system settings have changed, please restart all Zammad processes! If "
+"you want to do this automatically, set environment variable APP_RESTART_CMD="
+"\"/path/to/your_app_script.sh restart\"."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -8373,7 +8910,9 @@ msgid "Starting Zammad"
 msgstr "Démarrage de Zammad"
 
 #: app/assets/javascripts/app/views/translation/index.jst.eco
-msgid "Starting with Zammad 5.1, translations can be contributed exclusively via \"translations.zammad.org\" %l."
+msgid ""
+"Starting with Zammad 5.1, translations can be contributed exclusively via "
+"\"translations.zammad.org\" %l."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee
@@ -8397,8 +8936,7 @@ msgstr ""
 #: app/views/slack/ticket_create/pt-br.md.erb
 #: app/views/slack/ticket_create/zh-cn.md.erb
 #: app/views/slack/ticket_create/zh-tw.md.erb
-#: db/seeds/object_manager_attributes.rb
-#: lib/excel_sheet/ticket.rb
+#: db/seeds/object_manager_attributes.rb lib/excel_sheet/ticket.rb
 msgid "State"
 msgstr "État "
 
@@ -8558,8 +9096,7 @@ msgid "Sync calendars with ical feeds."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/system.coffee
-#: app/assets/javascripts/app/controllers/manage.coffee
-#: db/seeds/permissions.rb
+#: app/assets/javascripts/app/controllers/manage.coffee db/seeds/permissions.rb
 #: db/seeds/ticket_article_senders.rb
 msgid "System"
 msgstr "Système"
@@ -8577,7 +9114,9 @@ msgid "System URL"
 msgstr "URL du système"
 
 #: app/models/knowledge_base.rb
-msgid "System supports only one locale for knowledge base. Upgrade your plan to use more locales."
+msgid ""
+"System supports only one locale for knowledge base. Upgrade your plan to use "
+"more locales."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -8604,14 +9143,14 @@ msgstr "Étiquette"
 #: app/assets/javascripts/app/views/tag/index.jst.eco
 #: app/assets/javascripts/app/views/widget/tag.jst.eco
 #: app/views/knowledge_base/public/answers/show.html.erb
-#: db/seeds/object_manager_attributes.rb
-#: db/seeds/permissions.rb
+#: db/seeds/object_manager_attributes.rb db/seeds/permissions.rb
 #: lib/excel_sheet/ticket.rb
 msgid "Tags"
 msgstr "Étiquettes"
 
 #: db/seeds/settings.rb
-msgid "Take reply-to header as sender/from of email and use realname of origin from."
+msgid ""
+"Take reply-to header as sender/from of email and use realname of origin from."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -8723,8 +9262,11 @@ msgid "TextModule"
 msgstr "TextModule"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
-msgid "Thank you for your inquiry (#%s)! We'll contact you as soon as possible."
-msgstr "Merci pour votre demande (#%s) ! Nous vous recontacterons dans les plus brefs délais."
+msgid ""
+"Thank you for your inquiry (#%s)! We'll contact you as soon as possible."
+msgstr ""
+"Merci pour votre demande (#%s) ! Nous vous recontacterons dans les plus "
+"brefs délais."
 
 #: app/assets/javascripts/app/views/signup/verify.jst.eco
 msgid "Thanks for joining. Email sent to \"%s\"."
@@ -8739,32 +9281,63 @@ msgid "The auto wizard is enabled, please use the prodvided auto wizard url."
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
-msgid "The browser is outdated. It does not support WebSocket - the technology we use for the chat."
-msgstr "Le navigateur est obsolète. Il ne prend pas en charge WebSocket - la technologie que nous utilisons pour le clavardage."
+msgid ""
+"The browser is outdated. It does not support WebSocket - the technology we "
+"use for the chat."
+msgstr ""
+"Le navigateur est obsolète. Il ne prend pas en charge WebSocket - la "
+"technologie que nous utilisons pour le clavardage."
 
 #: app/assets/javascripts/app/views/integration/exchange_certificate_issue.jst.eco
-msgid "The certificate of the domain |%s| could not be verified. This may allow hackers to steal your credentials. If you are sure that you are using a self-signed certificate, you can press \"Proceed\". Otherwise, please \"Cancel\"."
-msgstr "Le certificat du domaine |%s| n'a pas pu être vérifié. Cela peut permettre aux pirates de voler vos informations d'identification. Si vous êtes certain d'utiliser un certificat auto-signé, vous pouvez appuyer sur \"Continuer\". Sinon, veuillez \"Annuler\"."
+msgid ""
+"The certificate of the domain |%s| could not be verified. This may allow "
+"hackers to steal your credentials. If you are sure that you are using a self-"
+"signed certificate, you can press \"Proceed\". Otherwise, please \"Cancel\"."
+msgstr ""
+"Le certificat du domaine |%s| n'a pas pu être vérifié. Cela peut permettre "
+"aux pirates de voler vos informations d'identification. Si vous êtes certain "
+"d'utiliser un certificat auto-signé, vous pouvez appuyer sur \"Continuer\". "
+"Sinon, veuillez \"Annuler\"."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "The chat is turned off."
 msgstr "Le clavardage est désactivé."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
-msgid "The chat will show up once the connection to the server got established and if there is someone online to chat with."
-msgstr "Le clavardage s'affichera une fois la connexion au serveur établie et s'il y a quelqu'un en ligne pour discuter."
+msgid ""
+"The chat will show up once the connection to the server got established and "
+"if there is someone online to chat with."
+msgstr ""
+"Le clavardage s'affichera une fois la connexion au serveur établie et s'il y "
+"a quelqu'un en ligne pour discuter."
 
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee
 msgid "The configuration of Zammad has changed, please reload your browser."
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
-msgid "The data must be in the comma separated values (CSV) format and saved as UTF-8. You can import a CSV file or paste the data directly into the text area."
-msgstr "Les données doivent être au format CSV (valeurs séparées par des virgules) et enregistrées au format UTF-8. Vous pouvez importer un fichier CSV ou coller les données directement dans la zone de texte."
+msgid ""
+"The data must be in the comma separated values (CSV) format and saved as "
+"UTF-8. You can import a CSV file or paste the data directly into the text "
+"area."
+msgstr ""
+"Les données doivent être au format CSV (valeurs séparées par des virgules) "
+"et enregistrées au format UTF-8. Vous pouvez importer un fichier CSV ou "
+"coller les données directement dans la zone de texte."
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee
-msgid "The default URL for your knowledge base is e.g. example.com or example.com/help. To serve it from a custom URL instead, enter the destination below (e.g., \"/support\", \"example.com\", or \"example.com/support\"). Then, follow the directions under \"Web Server Configuration\" to complete the process."
-msgstr "L'URL par défaut de votre base de connaissances est par exemple assistance.com ou assistance.com/aide. Pour la diffuser à partir d'une URL personnalisée, saisissez la destination ci-dessous (par exemple, \"/ assistance\", \"assistance.com\" ou \"assistance.com/assistance\"). Ensuite, suivez les instructions sous \"Configuration du serveur Web\" pour terminer le processus."
+msgid ""
+"The default URL for your knowledge base is e.g. example.com or example.com/"
+"help. To serve it from a custom URL instead, enter the destination below (e."
+"g., \"/support\", \"example.com\", or \"example.com/support\"). Then, follow "
+"the directions under \"Web Server Configuration\" to complete the process."
+msgstr ""
+"L'URL par défaut de votre base de connaissances est par exemple assistance."
+"com ou assistance.com/aide. Pour la diffuser à partir d'une URL "
+"personnalisée, saisissez la destination ci-dessous (par exemple, \"/ "
+"assistance\", \"assistance.com\" ou \"assistance.com/assistance\"). Ensuite, "
+"suivez les instructions sous \"Configuration du serveur Web\" pour terminer "
+"le processus."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "The default font size is 12px."
@@ -8783,23 +9356,39 @@ msgid "The following changes have been made:"
 msgstr "Les modifications suivantes ont été apportées:"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal.coffee
-msgid "The form content has been changed. Do you want to close it and lose your changes?"
-msgstr "Le contenu du formulaire a été modifié. Voulez-vous le fermer et perdre vos modifications?"
+msgid ""
+"The form content has been changed. Do you want to close it and lose your "
+"changes?"
+msgstr ""
+"Le contenu du formulaire a été modifié. Voulez-vous le fermer et perdre vos "
+"modifications?"
 
 #: app/assets/javascripts/app/views/settings/ticket_hook_position.jst.eco
 msgid "The format of the subject."
 msgstr "Le format du sujet."
 
 #: db/seeds/settings.rb
-msgid "The identifier for a ticket, e.g. Ticket#, Call#, MyTicket#. The default is Ticket#."
-msgstr "L'identifiant d'un billet, par exemple: Billet#, Appel#, MonBillet#. La valeur par défaut est Billet#."
+msgid ""
+"The identifier for a ticket, e.g. Ticket#, Call#, MyTicket#. The default is "
+"Ticket#."
+msgstr ""
+"L'identifiant d'un billet, par exemple: Billet#, Appel#, MonBillet#. La "
+"valeur par défaut est Billet#."
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
 msgid "The import was successful."
 msgstr "L'importation à été un succès."
 
+#: app/assets/javascripts/app/views/package.jst.eco
+msgid ""
+"The installation of packages comes with security implications, because "
+"arbitrary code will be executed in the context of the Zammad application."
+msgstr ""
+
 #: lib/search_index_backend.rb
-msgid "The installed attachment plugin could not handle the request payload. Ensure that the correct attachment plugin is installed (ingest-attachment)."
+msgid ""
+"The installed attachment plugin could not handle the request payload. Ensure "
+"that the correct attachment plugin is installed (ingest-attachment)."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
@@ -8819,20 +9408,28 @@ msgid "The test run was successful."
 msgstr "Le test a réussi."
 
 #: db/seeds/settings.rb
-msgid "The text at the beginning of the subject in an email forward, e. g. FWD."
+msgid ""
+"The text at the beginning of the subject in an email forward, e. g. FWD."
 msgstr "Le texte, au début du \"Sujet\", dans un courriel transféré,  ex: Fwd."
 
 #: db/seeds/settings.rb
-msgid "The text at the beginning of the subject in an email reply, e.g. RE, AW, or AS."
-msgstr "Le texte au début du \"Sujet\" dans une réponse par courriel, par exemple, RE, AW ou AS."
+msgid ""
+"The text at the beginning of the subject in an email reply, e.g. RE, AW, or "
+"AS."
+msgstr ""
+"Le texte au début du \"Sujet\" dans une réponse par courriel, par exemple, "
+"RE, AW ou AS."
 
 #: app/assets/javascripts/app/views/facebook/app_config.jst.eco
 #: app/assets/javascripts/app/views/google/app_config.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/twitter/app_config.jst.eco
-msgid "The tutorial on how to manage a %s is hosted on our online documentation %l."
-msgstr "Le didacticiel sur la gestion d'un %s est hébergé sur notre documentation en ligne %l."
+msgid ""
+"The tutorial on how to manage a %s is hosted on our online documentation %l."
+msgstr ""
+"Le didacticiel sur la gestion d'un %s est hébergé sur notre documentation en "
+"ligne %l."
 
 #: app/assets/javascripts/app/controllers/user.coffee
 msgid "The user is locked, because of too many failed login attempts."
@@ -8848,8 +9445,19 @@ msgid "Theme"
 msgstr "Thème"
 
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
-msgid "There are more than 1000 tickets in the Zendesk system. Due to API rate limit restrictions we can't get the exact number of tickets yet and have to fetch them in batches of 1000. This might take some time, better grab a cup of coffee. The total number of tickets gets updated as soon as the currently known number is surpassed."
-msgstr "Il y a plus de 1000 billets dans le système Zendesk. En raison des restrictions de limite de taux de l'API, nous ne pouvons pas encore obtenir le nombre exact de billets et nous devons les récupérer par lots de 1000. Cela peut prendre un certain temps, mieux vaut prendre un café. Le nombre total de billets est mis à jour dès que le nombre actuellement connu est dépassé."
+msgid ""
+"There are more than 1000 tickets in the Zendesk system. Due to API rate "
+"limit restrictions we can't get the exact number of tickets yet and have to "
+"fetch them in batches of 1000. This might take some time, better grab a cup "
+"of coffee. The total number of tickets gets updated as soon as the currently "
+"known number is surpassed."
+msgstr ""
+"Il y a plus de 1000 billets dans le système Zendesk. En raison des "
+"restrictions de limite de taux de l'API, nous ne pouvons pas encore obtenir "
+"le nombre exact de billets et nous devons les récupérer par lots de 1000. "
+"Cela peut prendre un certain temps, mieux vaut prendre un café. Le nombre "
+"total de billets est mis à jour dès que le nombre actuellement connu est "
+"dépassé."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "There are too many people in queue for the chat."
@@ -8857,7 +9465,9 @@ msgstr "Il y a trop de personnes dans la file d'attente pour le clavardage."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "There can be several reasons for the chat to not show up:"
-msgstr "Il peut y avoir plusieurs raisons pour lesquelles le clavardage ne s'affiche pas:"
+msgstr ""
+"Il peut y avoir plusieurs raisons pour lesquelles le clavardage ne s'affiche "
+"pas:"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "There is no agent online."
@@ -8868,7 +9478,9 @@ msgid "There is no match for your search."
 msgstr ""
 
 #: app/assets/javascripts/app/views/data_privacy/preview.jst.eco
-msgid "There is no rollback of this deletion possible. If you are absolutely sure to do this, then type in \"%s\" into the input."
+msgid ""
+"There is no rollback of this deletion possible. If you are absolutely sure "
+"to do this, then type in \"%s\" into the input."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
@@ -8880,8 +9492,12 @@ msgid "This category is empty"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
-msgid "This class gets added to the button on initialization and gets removed once the chat connection got established."
-msgstr "Cette classe est ajoutée au bouton lors de l'initialisation et est supprimée une fois la connexion au clavardage établie."
+msgid ""
+"This class gets added to the button on initialization and gets removed once "
+"the chat connection got established."
+msgstr ""
+"Cette classe est ajoutée au bouton lors de l'initialisation et est supprimée "
+"une fois la connexion au clavardage établie."
 
 #: app/assets/javascripts/app/views/version.jst.eco
 msgid "This is Zammad version %s"
@@ -8892,28 +9508,41 @@ msgid "This is a Test Email"
 msgstr ""
 
 #: lib/email_helper/probe.rb
-msgid "This is a Test Email of Zammad to check if sending and receiving is working correctly.\\n\\nYou can ignore or delete this email."
+msgid ""
+"This is a Test Email of Zammad to check if sending and receiving is working "
+"correctly.\\n\\nYou can ignore or delete this email."
 msgstr ""
 
 #: lib/email_helper/probe.rb
-msgid "This is a Test Email of Zammad to verify if Zammad can send emails to an external address.\\n\\nIf you see this email, you can ignore and delete it."
+msgid ""
+"This is a Test Email of Zammad to verify if Zammad can send emails to an "
+"external address.\\n\\nIf you see this email, you can ignore and delete it."
 msgstr ""
 
 #: app/models/channel/email_parser.rb
-msgid "This message cannot be displayed because it contains over 5,000 links. Download the raw message below and open it via an Email client if you still wish to view it."
+msgid ""
+"This message cannot be displayed because it contains over 5,000 links. "
+"Download the raw message below and open it via an Email client if you still "
+"wish to view it."
 msgstr ""
 
 #: lib/html_sanitizer.rb
-msgid "This message cannot be displayed due to HTML processing issues. Download the raw message below and open it via an Email client if you still wish to view it."
+msgid ""
+"This message cannot be displayed due to HTML processing issues. Download the "
+"raw message below and open it via an Email client if you still wish to view "
+"it."
 msgstr ""
 
 #: app/models/scheduler.rb
-msgid "This method should only get called when Scheduler.threads are initialized. Use `force: true` to start anyway."
+msgid ""
+"This method should only get called when Scheduler.threads are initialized. "
+"Use `force: true` to start anyway."
 msgstr ""
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "This might take some time where the system can't be used."
-msgstr "Peut prendre un certain temps lorsque le système ne peut pas être utilisé."
+msgstr ""
+"Peut prendre un certain temps lorsque le système ne peut pas être utilisé."
 
 #: app/views/knowledge_base/public/_top_banner.html.erb
 msgid "This page is invisible to the public."
@@ -8936,12 +9565,20 @@ msgstr "Ce service permet à Zammad de se connecter à votre serveur LDAP."
 #: app/assets/javascripts/app/controllers/_integration/icinga.coffee
 #: app/assets/javascripts/app/controllers/_integration/monit.coffee
 #: app/assets/javascripts/app/controllers/_integration/nagios.coffee
-msgid "This service receives emails from %s and creates tickets with host and service."
-msgstr "Ce service reçoit des courriels de %s et crée des billets avec l'hôte et le service."
+msgid ""
+"This service receives emails from %s and creates tickets with host and "
+"service."
+msgstr ""
+"Ce service reçoit des courriels de %s et crée des billets avec l'hôte et le "
+"service."
 
 #: app/assets/javascripts/app/controllers/_integration/check_mk.coffee
-msgid "This service receives http requests or emails from %s and creates tickets with host and service."
-msgstr "Ce service reçoit les requêtes http ou les courriels de %s et crée des billets avec l'hôte et le service."
+msgid ""
+"This service receives http requests or emails from %s and creates tickets "
+"with host and service."
+msgstr ""
+"Ce service reçoit les requêtes http ou les courriels de %s et crée des "
+"billets avec l'hôte et le service."
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 msgid "This service sends notifications to your %s channel."
@@ -8950,8 +9587,12 @@ msgstr "Ce service envoie des notifications à votre canal %s."
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee
 #: app/assets/javascripts/app/controllers/_integration/placetel.coffee
 #: app/assets/javascripts/app/controllers/_integration/sipgate_io.coffee
-msgid "This service shows you contacts of incoming calls and a caller list in realtime."
-msgstr "Ce service vous montre les contacts des appels entrants et une liste des appelants en temps réel."
+msgid ""
+"This service shows you contacts of incoming calls and a caller list in "
+"realtime."
+msgstr ""
+"Ce service vous montre les contacts des appels entrants et une liste des "
+"appelants en temps réel."
 
 #: app/assets/javascripts/app/controllers/_application_controller/generic_history.coffee
 msgid "This ticket was merged into"
@@ -9088,14 +9729,18 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/widget/user.coffee
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
+#: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
 msgid "Tickets"
 msgstr "Demandes"
 
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco
-msgid "Tickets are only assigned automatically if they do not already have an owner."
-msgstr "Les billets ne sont affectés automatiquement que s'ils n'ont pas déjà de propriétaire."
+msgid ""
+"Tickets are only assigned automatically if they do not already have an owner."
+msgstr ""
+"Les billets ne sont affectés automatiquement que s'ils n'ont pas déjà de "
+"propriétaire."
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_load_measure.jst.eco
 msgid "Tickets assigned to me: %s of %s"
@@ -9122,8 +9767,7 @@ msgstr "Date et heure"
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
-#: db/seeds/permissions.rb
-#: db/seeds/settings.rb
+#: db/seeds/permissions.rb db/seeds/settings.rb
 msgid "Time Accounting"
 msgstr "Comptabilité horaire"
 
@@ -9149,8 +9793,8 @@ msgid "Time zone"
 msgstr "Fuseau horaire"
 
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
-msgid "Timeframe for every following response."
-msgstr "Calendrier pour chaque réponse suivante."
+msgid "Timeframe between agent updates or for an agent to respond."
+msgstr ""
 
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
 msgid "Timeframe for solving the problem."
@@ -9160,8 +9804,7 @@ msgstr "Calendrier pour résoudre le problème."
 msgid "Timeframe for the first response."
 msgstr "Calendrier pour la première réponse."
 
-#: db/seeds/settings.rb
-#: lib/excel_sheet.rb
+#: db/seeds/settings.rb lib/excel_sheet.rb
 msgid "Timezone"
 msgstr "Fuseau horaire"
 
@@ -9180,8 +9823,7 @@ msgstr "Minutage"
 #: app/assets/javascripts/app/views/maintenance.jst.eco
 #: app/assets/javascripts/app/views/settings/form.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
-#: db/seeds/object_manager_attributes.rb
-#: lib/excel_sheet/ticket.rb
+#: db/seeds/object_manager_attributes.rb lib/excel_sheet/ticket.rb
 msgid "Title"
 msgstr "Titre "
 
@@ -9199,7 +9841,9 @@ msgid "To"
 msgstr "À "
 
 #: db/seeds/settings.rb
-msgid "To archive all outgoing emails from Zammad to external, you can store a bcc email address here."
+msgid ""
+"To archive all outgoing emails from Zammad to external, you can store a bcc "
+"email address here."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/chat.coffee
@@ -9211,27 +9855,41 @@ msgid "To configure your system."
 msgstr "Pour configurer votre système."
 
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco
-msgid "To enable %s for sending http requests to %s, you need create a own \"notification rule\" in %s."
-msgstr "Pour activer %s pour l'envoi de demandes http à %s, vous devez créer une \"règle de notification\" appropriée dans %s."
+msgid ""
+"To enable %s for sending http requests to %s, you need create a own "
+"\"notification rule\" in %s."
+msgstr ""
+"Pour activer %s pour l'envoi de demandes http à %s, vous devez créer une "
+"\"règle de notification\" appropriée dans %s."
 
 #: app/assets/javascripts/app/views/translation/index.jst.eco
-msgid "To make translations easier you can enable and disable the inline translation feature by pressing \"%s\"."
-msgstr "Pour faciliter les traductions, vous pouvez activer et désactiver la fonction de traduction en ligne en appuyant sur \"%s\"."
+msgid ""
+"To make translations easier you can enable and disable the inline "
+"translation feature by pressing \"%s\"."
+msgstr ""
+"Pour faciliter les traductions, vous pouvez activer et désactiver la "
+"fonction de traduction en ligne en appuyant sur \"%s\"."
 
 #: app/assets/javascripts/app/models/text_module.coffee
 msgid "To select placeholders from a list, just enter \"::\"."
-msgstr "Pour sélectionner des espaces réservés dans une liste, entrez simplement \"::\"."
+msgstr ""
+"Pour sélectionner des espaces réservés dans une liste, entrez simplement \"::"
+"\"."
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
-msgid "To set up this service you need to create a new |\"Incoming webhook\"| in your %s integration panel, and enter the web hook URL below."
-msgstr "Pour configurer ce service, vous devez créer un nouveau|\"Incoming webhook\"| dans votre panneau d'intégration %s, puis entrez l'URL du crochet logiciel Web ci-dessous."
+msgid ""
+"To set up this service you need to create a new |\"Incoming webhook\"| in "
+"your %s integration panel, and enter the web hook URL below."
+msgstr ""
+"Pour configurer ce service, vous devez créer un nouveau|\"Incoming webhook"
+"\"| dans votre panneau d'intégration %s, puis entrez l'URL du crochet "
+"logiciel Web ci-dessous."
 
 #: db/seeds/roles.rb
 msgid "To work on Tickets."
 msgstr "Pour travailler sur les billets."
 
-#: public/assets/chat/chat-no-jquery.coffee
-#: public/assets/chat/chat.coffee
+#: public/assets/chat/chat-no-jquery.coffee public/assets/chat/chat.coffee
 msgid "Today"
 msgstr "Aujourd'hui"
 
@@ -9424,7 +10082,7 @@ msgstr "URL"
 msgid "Unable for find api_token in config"
 msgstr ""
 
-#: app/controllers/integration/smime_controller.rb
+#: app/models/smime_certificate.rb
 msgid "Unable for find certificate for this private key."
 msgstr ""
 
@@ -9565,11 +10223,13 @@ msgid "Unable to process image upload."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
-msgid "Unable to retrive group information, please check your bind user permissions."
+msgid ""
+"Unable to retrive group information, please check your bind user permissions."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
-msgid "Unable to retrive user information, please check your bind user permissions."
+msgid ""
+"Unable to retrive user information, please check your bind user permissions."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
@@ -9635,7 +10295,8 @@ msgid "Unable to update!"
 msgstr ""
 
 #: app/models/ticket.rb
-msgid "Unable to use current_user, got no current_user_id for ticket.perform_changes"
+msgid ""
+"Unable to use current_user, got no current_user_id for ticket.perform_changes"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee
@@ -9647,15 +10308,15 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/email_verify.coffee
 msgid "Unable to verify email. Please contact your administrator."
-msgstr "Impossible de vérifier le courriel. Veuillez contacter votre administrateur."
+msgstr ""
+"Impossible de vérifier le courriel. Veuillez contacter votre administrateur."
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
 msgid "Unable to verify sending and receiving. Please check your settings."
 msgstr ""
 
-#: app/controllers/first_steps_controller.rb
-#: db/seeds/overviews.rb
+#: app/controllers/first_steps_controller.rb db/seeds/overviews.rb
 msgid "Unassigned & Open"
 msgstr "Non affecté et Ouvert"
 
@@ -9663,7 +10324,8 @@ msgstr "Non affecté et Ouvert"
 #: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 msgid "Unassigned email addresses, assign them to a channel or delete them."
-msgstr "Adresses courriel non affectées, affectez-les à un canal ou supprimez-les."
+msgstr ""
+"Adresses courriel non affectées, affectez-les à un canal ou supprimez-les."
 
 #: lib/password_policy/backend.rb
 msgid "Unknown error"
@@ -9678,7 +10340,9 @@ msgid "Unsubscribe"
 msgstr ""
 
 #: app/assets/javascripts/app/views/translation/support.jst.eco
-msgid "Up to %s% of this language is translated, help to make Zammad even better and complete the translation."
+msgid ""
+"Up to %s% of this language is already translated. Please help to make Zammad "
+"even better and complete the translation."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
@@ -9721,8 +10385,11 @@ msgid "Update existing records"
 msgstr "Mettre à jour les enregistrements existants"
 
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
-msgid "Update existing records with the attributes specified in the import data."
-msgstr "Mettez à jour les enregistrements existants avec les attributs spécifiés dans les données d'importation."
+msgid ""
+"Update existing records with the attributes specified in the import data."
+msgstr ""
+"Mettez à jour les enregistrements existants avec les attributs spécifiés "
+"dans les données d'importation."
 
 #: app/assets/javascripts/app/controllers/_settings/area_logo.coffee
 #: app/assets/javascripts/app/controllers/_settings/area_switch.coffee
@@ -9804,7 +10471,7 @@ msgstr "Télécharger"
 msgid "Upload Certificate"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
+#: app/assets/javascripts/app/lib/app_post/html5_upload.coffee
 msgid "Upload Failed"
 msgstr ""
 
@@ -9834,15 +10501,21 @@ msgstr "Utilisation de fonctionnalités avancées"
 
 #: db/seeds/settings.rb
 msgid "Use client storage to cache data to enhance performance of application."
-msgstr "Utiliser le stockage client pour mettre en cache les données afin d'améliorer les performances de l'application."
+msgstr ""
+"Utiliser le stockage client pour mettre en cache les données afin "
+"d'améliorer les performances de l'application."
 
 #: app/assets/javascripts/app/models/application.coffee
 msgid "Use one line per URI"
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Use subject field for emails. If disabled, the ticket title will be used as subject."
-msgstr "Utiliser le champ \"Sujet\" pour les courriels. S'il est désactivé, le titre du billet sera utilisé comme \"Sujet\"."
+msgid ""
+"Use subject field for emails. If disabled, the ticket title will be used as "
+"subject."
+msgstr ""
+"Utiliser le champ \"Sujet\" pour les courriels. S'il est désactivé, le titre "
+"du billet sera utilisé comme \"Sujet\"."
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Used anywhere"
@@ -9917,7 +10590,9 @@ msgid "User assignment to Sipgate users"
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
-msgid "User assignment to Sipgate users to be able to offer extended like open new ticket screen on answering a call."
+msgid ""
+"User assignment to Sipgate users to be able to offer extended like open new "
+"ticket screen on answering a call."
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
@@ -9925,7 +10600,9 @@ msgid "User assignment to telephones"
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
-msgid "User assignment to telephones to be able to offer extended like open new ticket screen on answering a call."
+msgid ""
+"User assignment to telephones to be able to offer extended like open new "
+"ticket screen on answering a call."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -9953,8 +10630,7 @@ msgstr "Nom d'usager"
 msgid "Username / email"
 msgstr "Nom d'usager / courriel"
 
-#: app/assets/javascripts/app/views/settings/proxy.jst.eco
-#: db/seeds/settings.rb
+#: app/assets/javascripts/app/views/settings/proxy.jst.eco db/seeds/settings.rb
 msgid "Username for proxy connection."
 msgstr "Nom d'utilisateur pour la connexion au mandataire."
 
@@ -9964,14 +10640,14 @@ msgstr "Nom d'utilisateur pour la connexion au mandataire."
 #: app/assets/javascripts/app/controllers/user.coffee
 #: app/assets/javascripts/app/controllers/user_profile.coffee
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
+#: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco
-#: db/seeds/groups.rb
-#: db/seeds/permissions.rb
+#: db/seeds/groups.rb db/seeds/permissions.rb
 msgid "Users"
 msgstr "Usagers"
 
@@ -9980,7 +10656,15 @@ msgid "Users without assigned LDAP groups"
 msgstr ""
 
 #: app/assets/javascripts/app/models/organization.coffee
-msgid "Using **Organisations** you can **group** customers. This has among others two important benefits:\n\n1. As an **Agent** you do not only have an overview of the open tickets for one person but an **overview over their whole organisation**.\n2. As a **Customer** you can also check the **Tickets which your colleagues created** and modify their tickets (if your organization is set to \"shared\", which can be defined per organization)."
+msgid ""
+"Using **Organisations** you can **group** customers. This has among others "
+"two important benefits:\n"
+"\n"
+"1. As an **Agent** you do not only have an overview of the open tickets for "
+"one person but an **overview over their whole organisation**.\n"
+"2. As a **Customer** you can also check the **Tickets which your colleagues "
+"created** and modify their tickets (if your organization is set to \"shared"
+"\", which can be defined per organization)."
 msgstr ""
 
 #: db/seeds/object_manager_attributes.rb
@@ -9988,6 +10672,7 @@ msgid "VIP"
 msgstr "VIP"
 
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco
+#: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/github.jst.eco
@@ -9995,6 +10680,8 @@ msgstr "VIP"
 #: app/assets/javascripts/app/views/integration/idoit.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
+#: app/assets/javascripts/app/views/integration/placetel.jst.eco
+#: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 #: app/assets/javascripts/app/views/settings/form.jst.eco
 msgid "Value"
 msgstr "Valeur"
@@ -10140,35 +10827,61 @@ msgid "Warning"
 msgstr ""
 
 #: public/assets/chat/views/waiting_list_timeout.eco
-msgid "We are sorry, it takes longer as expected to get an empty slot. Please try again later or send us an email. Thank you!"
+msgid ""
+"We are sorry, it takes longer as expected to get an empty slot. Please try "
+"again later or send us an email. Thank you!"
 msgstr ""
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
-msgid "We detected OTRS BPM processes which can't get imported into Zammad, since we currently don't support these kind of workflows."
-msgstr "Nous avons détecté des processus OTRS BPM qui ne peuvent pas être importés dans Zammad, car nous ne prenons actuellement pas en charge ce type de \"workflows\"."
+msgid ""
+"We detected OTRS BPM processes which can't get imported into Zammad, since "
+"we currently don't support these kind of workflows."
+msgstr ""
+"Nous avons détecté des processus OTRS BPM qui ne peuvent pas être importés "
+"dans Zammad, car nous ne prenons actuellement pas en charge ce type de "
+"\"workflows\"."
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
-msgid "We found a lot of dynamic fields which are not common in Zammad, as we follow a different approach to ticket attributes. Zammad uses also tags in addition to custom fields to classify tickets. This difference can create a new philosophy of your ticket attributes / tags compared to your current use of dynamic fields in OTRS."
-msgstr "Nous avons trouvé beaucoup de champs dynamiques qui ne sont pas courants dans Zammad, car nous suivons une approche différente des attributs de billet. Zammad utilise également des balises en plus des champs personnalisés pour classer les billets. Cette différence peut créer une nouvelle philosophie de vos attributs/balises de billet par rapport à votre utilisation actuelle des champs dynamiques dans OTRS."
+msgid ""
+"We found a lot of dynamic fields which are not common in Zammad, as we "
+"follow a different approach to ticket attributes. Zammad uses also tags in "
+"addition to custom fields to classify tickets. This difference can create a "
+"new philosophy of your ticket attributes / tags compared to your current use "
+"of dynamic fields in OTRS."
+msgstr ""
+"Nous avons trouvé beaucoup de champs dynamiques qui ne sont pas courants "
+"dans Zammad, car nous suivons une approche différente des attributs de "
+"billet. Zammad utilise également des balises en plus des champs "
+"personnalisés pour classer les billets. Cette différence peut créer une "
+"nouvelle philosophie de vos attributs/balises de billet par rapport à votre "
+"utilisation actuelle des champs dynamiques dans OTRS."
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
-msgid "We have already found %s email(s) in your mailbox. Zammad will move it all from your mailbox into Zammad."
-msgstr "Nous avons déjà trouvé %s courriel(s) dans votre boîte aux lettres. Zammad va tout déplacer de votre boîte aux lettres vers Zammad."
+msgid ""
+"We have already found %s email(s) in your mailbox. Zammad will move it all "
+"from your mailbox into Zammad."
+msgstr ""
+"Nous avons déjà trouvé %s courriel(s) dans votre boîte aux lettres. Zammad "
+"va tout déplacer de votre boîte aux lettres vers Zammad."
 
 #: app/assets/javascripts/app/views/cti/not_configured.jst.eco
 msgid "We support"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/user_signup_check.coffee
-msgid "We've sent an email to _%s_. Click the link in the email to verify your account."
+msgid ""
+"We've sent an email to _%s_. Click the link in the email to verify your "
+"account."
 msgstr ""
 
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco
 msgid "We've sent password reset instructions to your email address."
-msgstr "Nous avons envoyé des instructions de réinitialisation de mot de passe à votre adresse courriel."
+msgstr ""
+"Nous avons envoyé des instructions de réinitialisation de mot de passe à "
+"votre adresse courriel."
 
 #: app/assets/javascripts/app/controllers/_channel/web.coffee
 #: db/seeds/object_manager_attributes.rb
@@ -10208,7 +10921,14 @@ msgid "Webhooks are ..."
 msgstr ""
 
 #: app/assets/javascripts/app/models/webhook.coffee
-msgid "Webhooks make it easy to send information about events within Zammad to third party systems via HTTP(S).\n\nYou can use Webhooks in Zammad to send Ticket, Article and Attachment data whenever a Trigger is performed. Just create and configure your Webhook with an HTTP(S) endpoint and relevant security settings, configure a Trigger to perform it."
+msgid ""
+"Webhooks make it easy to send information about events within Zammad to "
+"third party systems via HTTP(S).\n"
+"\n"
+"You can use Webhooks in Zammad to send Ticket, Article and Attachment data "
+"whenever a Trigger is performed. Just create and configure your Webhook with "
+"an HTTP(S) endpoint and relevant security settings, configure a Trigger to "
+"perform it."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/link_button.coffee
@@ -10252,7 +10972,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
 msgid "Welcome Title shown on the closed chat. Can contain HTML."
-msgstr "Titre de bienvenue affiché sur le clavardage fermé. Peut contenir du HTML."
+msgstr ""
+"Titre de bienvenue affiché sur le clavardage fermé. Peut contenir du HTML."
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 msgid "Welcome message"
@@ -10275,8 +10996,12 @@ msgid "What can you do here?"
 msgstr "Que pouvez-vous faire ici ?"
 
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_in_process.coffee
-msgid "What percentage of your tickets have you responded to, updated, or modified in some way today?"
-msgstr "À quel pourcentage de vos billets avez-vous répondu, mis à jour ou modifié d'une manière ou d'une autre aujourd'hui?"
+msgid ""
+"What percentage of your tickets have you responded to, updated, or modified "
+"in some way today?"
+msgstr ""
+"À quel pourcentage de vos billets avez-vous répondu, mis à jour ou modifié "
+"d'une manière ou d'une autre aujourd'hui?"
 
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco
 msgid "What values of %s should be synced to organization."
@@ -10284,7 +11009,8 @@ msgstr "Quelles valeurs de %s doivent être synchronisées avec l'organisation."
 
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco
 msgid "What values of %s should be synced to users."
-msgstr "Quelles valeurs de %s doivent être synchronisées avec les utilisateurs."
+msgstr ""
+"Quelles valeurs de %s doivent être synchronisées avec les utilisateurs."
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 msgid "When notification is being sent."
@@ -10295,8 +11021,12 @@ msgid "When should the job run?"
 msgstr "Quand la \"job\" doit-elle s'exécuter ?"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
-msgid "When you turn on debugging by setting the option §debug§ to §true§ the reason gets printed to the javascript console."
-msgstr "Lorsque vous activez le débogage en définissant l'option §debug§ sur §true§, la raison est imprimée à la console javascript."
+msgid ""
+"When you turn on debugging by setting the option §debug§ to §true§ the "
+"reason gets printed to the javascript console."
+msgstr ""
+"Lorsque vous activez le débogage en définissant l'option §debug§ sur §true§, "
+"la raison est imprimée à la console javascript."
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 msgid "Where"
@@ -10307,7 +11037,10 @@ msgid "Where to append the chat to."
 msgstr "Où ajouter le clavardage."
 
 #: app/assets/javascripts/app/views/translation/index.jst.eco
-msgid "While it will be no longer possible to directly push changed translations from Zammad, they can be contributed in a very convenient user interface based on Weblate."
+msgid ""
+"While it will be no longer possible to directly push changed translations "
+"from Zammad, they can be contributed in a very convenient user interface "
+"based on Weblate."
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
@@ -10332,7 +11065,9 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Will be shown in the app and is included in email footers."
-msgstr "Sera affiché dans l'application et est inclus dans les pieds de page des courriels."
+msgstr ""
+"Sera affiché dans l'application et est inclus dans les pieds de page des "
+"courriels."
 
 #: app/assets/javascripts/app/models/job.coffee
 msgid "Will process"
@@ -10340,16 +11075,28 @@ msgstr "Traitera"
 
 #: app/assets/javascripts/app/views/settings/ticket_number_date.jst.eco
 #: app/assets/javascripts/app/views/settings/ticket_number_increment.jst.eco
-msgid "With Checksum, a checksum will be appended to the counter. The format looks like \"%s\" (e. g. %s)."
-msgstr "Avec \"Checksum\", une somme de contrôle sera ajoutée au compteur. Le format ressemble à \"%s\" (par exemple, %s)."
+msgid ""
+"With Checksum, a checksum will be appended to the counter. The format looks "
+"like \"%s\" (e. g. %s)."
+msgstr ""
+"Avec \"Checksum\", une somme de contrôle sera ajoutée au compteur. Le format "
+"ressemble à \"%s\" (par exemple, %s)."
 
 #: app/assets/javascripts/app/controllers/_channel/_email_filter.coffee
-msgid "With filters you can e. g. dispatch new tickets into certain groups or set a certain priority for tickets of a VIP customer."
-msgstr "Avec des filtres, vous pouvez envoyer de nouveaux billets à certains groupes ou définir une certaine priorité pour les billets d'un client VIP."
+msgid ""
+"With filters you can e. g. dispatch new tickets into certain groups or set a "
+"certain priority for tickets of a VIP customer."
+msgstr ""
+"Avec des filtres, vous pouvez envoyer de nouveaux billets à certains groupes "
+"ou définir une certaine priorité pour les billets d'un client VIP."
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
-msgid "With form you can add a form to your web page which directly generates a ticket for you."
-msgstr "Avec le \"form\", vous pouvez ajouter un formulaire à votre page Web qui génère directement un billet pour vous."
+msgid ""
+"With form you can add a form to your web page which directly generates a "
+"ticket for you."
+msgstr ""
+"Avec le \"form\", vous pouvez ajouter un formulaire à votre page Web qui "
+"génère directement un billet pour vous."
 
 #: app/assets/javascripts/app/views/widget/template.jst.eco
 msgid "With templates you can pre-fill ticket attributes."
@@ -10358,11 +11105,18 @@ msgstr "Avec les modèles, vous pouvez pré-remplir les attributs de billet."
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "With your current configuration the following will happen"
-msgstr "Avec votre configuration actuelle, les événements suivants se produiront"
+msgstr ""
+"Avec votre configuration actuelle, les événements suivants se produiront"
 
 #: app/assets/javascripts/app/views/settings/ticket_number.jst.eco
-msgid "With |Date| the ticket numbers will be generated by the current date, the SystemID and the counter. The format looks like \"Year.Month.Day.SystemID.Counter\" (e.g. 201206231010138, 201206231010139)."
-msgstr "Avec |Date| les numéros de billet seront générés avec la date du jour, l'ID du système et le compteur. Le format ressemble à \"Year.Month.Day.SystemID.Counter\" (par exemple 201206231010138, 201206231010139)."
+msgid ""
+"With |Date| the ticket numbers will be generated by the current date, the "
+"SystemID and the counter. The format looks like \"Year.Month.Day.SystemID."
+"Counter\" (e.g. 201206231010138, 201206231010139)."
+msgstr ""
+"Avec |Date| les numéros de billet seront générés avec la date du jour, l'ID "
+"du système et le compteur. Le format ressemble à \"Year.Month.Day.SystemID."
+"Counter\" (par exemple 201206231010138, 201206231010139)."
 
 #: app/assets/javascripts/app/controllers/email_verify.coffee
 msgid "Woo hoo! Your email address has been verified!"
@@ -10426,8 +11180,7 @@ msgid "You are receiving this because you \"%s\"."
 msgstr ""
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
-#: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
-#: lib/telegram.rb
+#: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco lib/telegram.rb
 msgid "You are welcome! Just ask me something!"
 msgstr "Je vous en prie! Demandez-moi juste quelque chose!"
 
@@ -10435,40 +11188,74 @@ msgstr "Je vous en prie! Demandez-moi juste quelque chose!"
 #: app/assets/javascripts/app/views/google/index.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/index.jst.eco
-msgid "You can connect %s with Zammad. You need to connect your Zammad with %s first."
-msgstr "Vous pouvez connecter %s à Zammad. Vous devez d'abord connecter votre Zammad avec %s."
+msgid ""
+"You can connect %s with Zammad. You need to connect your Zammad with %s "
+"first."
+msgstr ""
+"Vous pouvez connecter %s à Zammad. Vous devez d'abord connecter votre Zammad "
+"avec %s."
 
 #: app/assets/javascripts/app/models/overview.coffee
-msgid "You can create **overviews** for your agents and your customers. These could for instance serve as a sort of work list for items for which your agents would work.\n\nYou can also create overviews and limit them to specific agents or to groups of agents."
+msgid ""
+"You can create **overviews** for your agents and your customers. These could "
+"for instance serve as a sort of work list for items for which your agents "
+"would work.\n"
+"\n"
+"You can also create overviews and limit them to specific agents or to groups "
+"of agents."
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
-msgid "You can create chat widgets for your web pages to allow visitors to chat with you."
-msgstr "Vous pouvez créer des greffons de clavardage pour vos pages Web afin de permettre aux visiteurs de discuter avec vous."
+msgid ""
+"You can create chat widgets for your web pages to allow visitors to chat "
+"with you."
+msgstr ""
+"Vous pouvez créer des greffons de clavardage pour vos pages Web afin de "
+"permettre aux visiteurs de discuter avec vous."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "You can create multiple chat topics."
 msgstr "Vous pouvez créer plusieurs sujets de clavardage."
 
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee
-msgid "You can define different signatures for each group. So you can have different email signatures for different departments.\n\nOnce you have created a signature here, you need also to edit the groups where you want to use it."
+msgid ""
+"You can define different signatures for each group. So you can have "
+"different email signatures for different departments.\n"
+"\n"
+"Once you have created a signature here, you need also to edit the groups "
+"where you want to use it."
 msgstr ""
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
-msgid "You can generate a personal access token for each application you use that needs access to the Zammad API."
-msgstr "Vous pouvez générer un jeton d'accès personnel pour chaque application que vous utilisez qui a besoin d'accéder à l'API Zammad."
+msgid ""
+"You can generate a personal access token for each application you use that "
+"needs access to the Zammad API."
+msgstr ""
+"Vous pouvez générer un jeton d'accès personnel pour chaque application que "
+"vous utilisez qui a besoin d'accéder à l'API Zammad."
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee
-msgid "You can provide different versions of your knowledge base for different locales. Add a language below, then select it in the Knowledge Base Editor to add your translations."
-msgstr "Vous pouvez fournir différentes versions de votre base de connaissances pour différents paramètres régionaux. Ajoutez une langue ci-dessous, puis sélectionnez-la dans l'éditeur de la base de connaissances pour ajouter vos traductions."
+msgid ""
+"You can provide different versions of your knowledge base for different "
+"locales. Add a language below, then select it in the Knowledge Base Editor "
+"to add your translations."
+msgstr ""
+"Vous pouvez fournir différentes versions de votre base de connaissances pour "
+"différents paramètres régionaux. Ajoutez une langue ci-dessous, puis "
+"sélectionnez-la dans l'éditeur de la base de connaissances pour ajouter vos "
+"traductions."
 
 #: app/assets/javascripts/app/views/login.jst.eco
 msgid "You can request your password"
 msgstr "Vous pouvez demander votre mot de passe"
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
-msgid "You can switch between the backend for new attachments even on a system that is already in production without any loss of data."
-msgstr "Vous pouvez basculer l'application dorsale pour les nouvelles pièces jointes même sur un système qui est déjà en production sans aucune perte de données."
+msgid ""
+"You can switch between the backend for new attachments even on a system that "
+"is already in production without any loss of data."
+msgstr ""
+"Vous pouvez basculer l'application dorsale pour les nouvelles pièces jointes "
+"même sur un système qui est déjà en production sans aucune perte de données."
 
 #: app/assets/javascripts/app/models/postmaster_filter.coffee
 msgid "You can use regular expression by using \"regex:your_reg_exp\"."
@@ -10476,7 +11263,12 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco
 msgid "You can use the following script to post the data to %s."
-msgstr "Vous pouvez utiliser le script suivant pour publier les données sur %s."
+msgstr ""
+"Vous pouvez utiliser le script suivant pour publier les données sur %s."
+
+#: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
+msgid "You currently don't have any tickets."
+msgstr ""
 
 #: db/seeds/karma_activities.rb
 msgid "You have answered a ticket within 12h"
@@ -10537,7 +11329,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "You need to add the following Javascript code snippet to your web page"
-msgstr "Vous devez ajouter l'extrait de code Javascript suivant à votre page Web"
+msgstr ""
+"Vous devez ajouter l'extrait de code Javascript suivant à votre page Web"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 msgid "You need to configure the Zammad endpoints in the %s"
@@ -10554,16 +11347,34 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
-msgid "You use %s in text but no attachment is attached. Do you want to continue?"
-msgstr "Vous utilisez %s dans le texte mais aucune pièce jointe n'est incluse. Voulez-vous continuer?"
+msgid ""
+"You use %s in text but no attachment is attached. Do you want to continue?"
+msgstr ""
+"Vous utilisez %s dans le texte mais aucune pièce jointe n'est incluse. "
+"Voulez-vous continuer?"
 
 #: app/assets/javascripts/app/views/karma/index.jst.eco
-msgid "You |accumulate positive Karma| when you regularly answer and close tickets on time and when you use advanced features such as text modules, ticket reminders or tagging tickets. Zammad |Karma will decrease| when you have re-opend tickets, escalated tickets or tickets that are two or more days overdue."
-msgstr "Vous |accumulez du Karma positif| lorsque vous répondez et fermez régulièrement des billets à temps et lorsque vous utilisez des fonctionnalités avancées telles que des modules de texte, des rappels d'échéance pour des billets ou des étiquettes de billets. Le |karma Zammad diminuera| lorsque vous avez des billets réouvert, des billets escaladés ou des billets en retard de deux jours ou plus."
+msgid ""
+"You |accumulate positive Karma| when you regularly answer and close tickets "
+"on time and when you use advanced features such as text modules, ticket "
+"reminders or tagging tickets. Zammad |Karma will decrease| when you have re-"
+"opend tickets, escalated tickets or tickets that are two or more days "
+"overdue."
+msgstr ""
+"Vous |accumulez du Karma positif| lorsque vous répondez et fermez "
+"régulièrement des billets à temps et lorsque vous utilisez des "
+"fonctionnalités avancées telles que des modules de texte, des rappels "
+"d'échéance pour des billets ou des étiquettes de billets. Le |karma Zammad "
+"diminuera| lorsque vous avez des billets réouvert, des billets escaladés ou "
+"des billets en retard de deux jours ou plus."
 
 #: app/assets/javascripts/app/views/login.jst.eco
-msgid "You're already registered with your email address if you've been in touch with our support team."
-msgstr "Vous êtes déjà enregistré avec votre adresse courriel si vous avez été en contact avec notre équipe d'assistance."
+msgid ""
+"You're already registered with your email address if you've been in touch "
+"with our support team."
+msgstr ""
+"Vous êtes déjà enregistré avec votre adresse courriel si vous avez été en "
+"contact avec notre équipe d'assistance."
 
 #: app/controllers/first_steps_controller.rb
 msgid "Your Email Configuration"
@@ -10580,11 +11391,17 @@ msgid "Your New Personal Access Token"
 msgstr "Votre nouveau jeton personnel d'accès"
 
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
-msgid "Your Twitter-Account is not using the Twitter Account Activity API yet and is therefore limited to search terms only. Please add/update the account again via \"add account\"."
+msgid ""
+"Your Twitter-Account is not using the Twitter Account Activity API yet and "
+"is therefore limited to search terms only. Please add/update the account "
+"again via \"add account\"."
 msgstr ""
 
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
-msgid "Your Twitter-App is not using the Twitter Account Activity API yet and is therefore limited to search terms only. Please refer to the documentation %l on how to update your account."
+msgid ""
+"Your Twitter-App is not using the Twitter Account Activity API yet and is "
+"therefore limited to search terms only. Please refer to the documentation %l "
+"on how to update your account."
 msgstr ""
 
 #: app/assets/javascripts/app/views/getting_started/email_pre_configured.jst.eco
@@ -10592,8 +11409,12 @@ msgid "Your Zammad as the following email address."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/user_signup_check.coffee
-msgid "Your account has not been verified. Please click the link in the verification email."
-msgstr "Votre compte n'a pas été vérifié. Veuillez cliquer sur le lien dans le courriel de vérification."
+msgid ""
+"Your account has not been verified. Please click the link in the "
+"verification email."
+msgstr ""
+"Votre compte n'a pas été vérifié. Veuillez cliquer sur le lien dans le "
+"courriel de vérification."
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee
 msgid "Your api key."
@@ -10635,7 +11456,12 @@ msgid "Youtube or Vimeo address"
 msgstr ""
 
 #: app/assets/javascripts/app/views/karma/index.jst.eco
-msgid "You’re able to set goals regarding the number of tickets you want to answer or close you want to complete either daily or weekly. Reaching these self-set goals will result in bonus Karma. Zammad also tracks how many days/weeks you have attained your goals, and achieving ongoing \"streaks\" will similarly result in positive Karma."
+msgid ""
+"You’re able to set goals regarding the number of tickets you want to answer "
+"or close you want to complete either daily or weekly. Reaching these self-"
+"set goals will result in bonus Karma. Zammad also tracks how many days/weeks "
+"you have attained your goals, and achieving ongoing \"streaks\" will "
+"similarly result in positive Karma."
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco
@@ -10647,12 +11473,20 @@ msgid "Zammad"
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
-msgid "Zammad Chat requires jQuery. If you don't already use it on your website include it like this:"
-msgstr "Le clavardage Zammad nécessite jQuery. Si vous ne l'utilisez pas déjà sur votre site Web, incluez-le comme ceci:"
+msgid ""
+"Zammad Chat requires jQuery. If you don't already use it on your website "
+"include it like this:"
+msgstr ""
+"Le clavardage Zammad nécessite jQuery. Si vous ne l'utilisez pas déjà sur "
+"votre site Web, incluez-le comme ceci:"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
-msgid "Zammad Forms requires jQuery. If you don't already use it on your website include it like this:"
-msgstr "Les formulaires Zammad nécessitent jQuery. Si vous ne l'utilisez pas déjà sur votre site Web, incluez-le comme ceci:"
+msgid ""
+"Zammad Forms requires jQuery. If you don't already use it on your website "
+"include it like this:"
+msgstr ""
+"Les formulaires Zammad nécessitent jQuery. Si vous ne l'utilisez pas déjà "
+"sur votre site Web, incluez-le comme ceci:"
 
 #: db/seeds/community_user_resources.rb
 msgid "Zammad Foundation"
@@ -10679,8 +11513,11 @@ msgid "Zammad Karma"
 msgstr "Karma Zammad"
 
 #: app/assets/javascripts/app/views/karma/index.jst.eco
-msgid "Zammad Karma is a powerful tool that tracks and visualizes your productivity."
-msgstr "Le Karma Zammad est un outil puissant qui suit et visualise votre productivité."
+msgid ""
+"Zammad Karma is a powerful tool that tracks and visualizes your productivity."
+msgstr ""
+"Le Karma Zammad est un outil puissant qui suit et visualise votre "
+"productivité."
 
 #: lib/user_agent.rb
 msgid "Zammad User Agent"
@@ -10688,8 +11525,12 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
-msgid "Zammad is currently in maintenance mode. Only administrators can login. Please wait until the maintenance window is over."
-msgstr "Zammad est actuellement en mode Entretien. Seuls les administrateurs peuvent se connecter. Veuillez attendre la fin de la fenêtre d'Entretien."
+msgid ""
+"Zammad is currently in maintenance mode. Only administrators can login. "
+"Please wait until the maintenance window is over."
+msgstr ""
+"Zammad est actuellement en mode Entretien. Seuls les administrateurs peuvent "
+"se connecter. Veuillez attendre la fin de la fenêtre d'Entretien."
 
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee
 msgid "Zammad is restarting..."
@@ -10775,6 +11616,12 @@ msgstr "Avant (Absolut)"
 msgid "before (relative)"
 msgstr "Avant (Relative)"
 
+#: app/assets/javascripts/app/views/generic/sla_times.jst.eco
+#, fuzzy
+#| msgid "Latest updates"
+msgid "between agent updates"
+msgstr "Dernière mise à jour"
+
 #: app/assets/javascripts/app/controllers/cti.coffee
 msgid "busy"
 msgstr "occupé"
@@ -10782,6 +11629,12 @@ msgstr "occupé"
 #: app/assets/javascripts/app/views/knowledge_base/_reader_answer_meta.jst.eco
 msgid "by"
 msgstr "Par"
+
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
+#, fuzzy
+#| msgid "Changed"
+msgid "changed to"
+msgstr "Changé"
 
 #: db/seeds/ticket_article_types.rb
 msgid "chat"
@@ -10804,8 +11657,7 @@ msgstr "effacer"
 msgid "close"
 msgstr "Fermer"
 
-#: db/seeds/ticket_state_types.rb
-#: db/seeds/ticket_states.rb
+#: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
 msgid "closed"
 msgstr "fermée"
 
@@ -10888,8 +11740,7 @@ msgstr "jours"
 msgid "deactivated"
 msgstr "désactivé"
 
-#: app/assets/javascripts/app/views/channel/chat.jst.eco
-#: db/seeds/signatures.rb
+#: app/assets/javascripts/app/views/channel/chat.jst.eco db/seeds/signatures.rb
 msgid "default"
 msgstr "defaut"
 
@@ -10906,6 +11757,7 @@ msgid "disconnect"
 msgstr "déconnecter"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
+#: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco
@@ -10951,6 +11803,12 @@ msgid "example macro"
 msgstr ""
 
 #: db/seeds/ticket_article_types.rb
+#, fuzzy
+#| msgid "twitter direct-message"
+msgid "facebook direct-message"
+msgstr "message direct twitter"
+
+#: db/seeds/ticket_article_types.rb
 msgid "facebook feed comment"
 msgstr "flux de commentaires facebook"
 
@@ -10975,6 +11833,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "fill in empty"
+msgstr ""
+
+#: app/assets/javascripts/app/views/generic/sla_times.jst.eco
+msgid "for an agent to respond"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/generic_history.coffee
@@ -11126,8 +11988,7 @@ msgstr "égale"
 msgid "maybe"
 msgstr "peut-être"
 
-#: db/seeds/ticket_state_types.rb
-#: db/seeds/ticket_states.rb
+#: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
 msgid "merged"
 msgstr "fusionnée"
 
@@ -11154,8 +12015,7 @@ msgstr "minutes"
 msgid "my own note"
 msgstr ""
 
-#: db/seeds/ticket_state_types.rb
-#: db/seeds/ticket_states.rb
+#: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
 msgid "new"
 msgstr "nouvelle"
 
@@ -11214,8 +12074,7 @@ msgstr "note"
 msgid "of"
 msgstr "de"
 
-#: db/seeds/ticket_state_types.rb
-#: db/seeds/ticket_states.rb
+#: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
 msgid "open"
 msgstr "ouverte"
 
@@ -11244,8 +12103,7 @@ msgstr ""
 msgid "pending close"
 msgstr "En attente fermé"
 
-#: db/seeds/ticket_state_types.rb
-#: db/seeds/ticket_states.rb
+#: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
 msgid "pending reminder"
 msgstr "rappel d'En attente"
 
@@ -11279,8 +12137,7 @@ msgstr ""
 msgid "remove option"
 msgstr ""
 
-#: db/seeds/ticket_state_types.rb
-#: db/seeds/ticket_states.rb
+#: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
 msgid "removed"
 msgstr "supprimée"
 
@@ -11346,6 +12203,7 @@ msgstr "définir à public"
 msgid "show"
 msgstr ""
 
+#: app/assets/javascripts/app/views/generic/object_search/item_organization_members.jst.eco
 #: app/assets/javascripts/app/views/organization_profile/object.jst.eco
 #: app/assets/javascripts/app/views/widget/organization.jst.eco
 msgid "show more"
@@ -11505,16 +12363,26 @@ msgid "yes"
 msgstr "oui"
 
 #: app/assets/javascripts/app/views/settings/ticket_number.jst.eco
-msgid "|Increment| increments the ticket number, the SystemID and the counter are used with \"SystemID.Counter\" format (e.g. 1010138, 1010139)."
-msgstr "|Increment| incrémente le numéro de billet; l'ID Système et le compteur sont utilisés avec le format \"SystemID.Counter\" (par exemple 1010138, 1010139)."
+msgid ""
+"|Increment| increments the ticket number, the SystemID and the counter are "
+"used with \"SystemID.Counter\" format (e.g. 1010138, 1010139)."
+msgstr ""
+"|Increment| incrémente le numéro de billet; l'ID Système et le compteur sont "
+"utilisés avec le format \"SystemID.Counter\" (par exemple 1010138, 1010139)."
 
 #: app/assets/javascripts/app/views/settings/ticket_hook_position.jst.eco
 msgid "|Left| means |[Ticket#12345] Some Subject|"
 msgstr "|Left| signifie |[Billet# 12345] Un sujet|"
 
 #: app/assets/javascripts/app/views/settings/ticket_hook_position.jst.eco
-msgid "|None| means |Some Subject| (without ticket number). In the last case you should enable \"postmaster___follow___up___search___in\" to recognize followups based on email headers and/or body."
-msgstr "|None| signifie |Un sujet| (sans numéro de billrt). Dans le dernier cas, vous devez activer \"postmaster___follow___up___search___in\" pour reconnaître les suivis basés sur les en-têtes et/ou le corps des courriels."
+msgid ""
+"|None| means |Some Subject| (without ticket number). In the last case you "
+"should enable \"postmaster___follow___up___search___in\" to recognize "
+"followups based on email headers and/or body."
+msgstr ""
+"|None| signifie |Un sujet| (sans numéro de billrt). Dans le dernier cas, "
+"vous devez activer \"postmaster___follow___up___search___in\" pour "
+"reconnaître les suivis basés sur les en-têtes et/ou le corps des courriels."
 
 #: app/assets/javascripts/app/views/settings/ticket_hook_position.jst.eco
 msgid "|Right| means |Some Subject [Ticket#12345]|"
@@ -11524,3 +12392,14 @@ msgstr "|Right| signifie |Un sujet [Billet#12345]|"
 msgid "∅ Waiting time today"
 msgstr "∅ TEMPS D'ATTENTE AUJOURD'HUI"
 
+#~ msgid "Default caller id"
+#~ msgstr "Identifiant par défaut de l'appelant"
+
+#~ msgid "Default caller id."
+#~ msgstr "Identifiant de l'appelant par défaut."
+
+#~ msgid "Login with %s"
+#~ msgstr "Connectez-vous avec %s"
+
+#~ msgid "Timeframe for every following response."
+#~ msgstr "Calendrier pour chaque réponse suivante."
