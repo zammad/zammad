@@ -68,12 +68,32 @@ RSpec.describe 'Manage > Settings > Security', type: :system do
       end
     end
 
+    shared_examples 'Display callback urls for third-party applications #3622' do
+      def callback_url
+        page.evaluate_script("$('[data-name=#{app_setting}]').closest('.page-header').parent().find('[data-attribute-name=callback_url] input').val()")
+      end
+
+      context 'Display callback urls for third-party applications #3622', authenticated_as: true do
+        before do
+          visit '/#settings/security'
+          within :active_content do
+            click 'a[href="#third_party_auth"]'
+          end
+        end
+
+        it 'does have a filled callback url' do
+          expect(callback_url).to be_present
+        end
+      end
+    end
+
     describe 'Authentication via Facebook' do
       let(:app_name) { 'Facebook' }
       let(:app_setting) { 'auth_facebook' }
 
       include_examples 'for third-party applications button in login page'
       include_examples 'for third-party applications settings'
+      include_examples 'Display callback urls for third-party applications #3622'
     end
 
     describe 'Authentication via Github' do
@@ -82,6 +102,7 @@ RSpec.describe 'Manage > Settings > Security', type: :system do
 
       include_examples 'for third-party applications button in login page'
       include_examples 'for third-party applications settings'
+      include_examples 'Display callback urls for third-party applications #3622'
     end
 
     describe 'Authentication via GitLab' do
@@ -90,6 +111,7 @@ RSpec.describe 'Manage > Settings > Security', type: :system do
 
       include_examples 'for third-party applications button in login page'
       include_examples 'for third-party applications settings'
+      include_examples 'Display callback urls for third-party applications #3622'
     end
 
     describe 'Authentication via Google' do
@@ -98,6 +120,7 @@ RSpec.describe 'Manage > Settings > Security', type: :system do
 
       include_examples 'for third-party applications button in login page'
       include_examples 'for third-party applications settings'
+      include_examples 'Display callback urls for third-party applications #3622'
     end
 
     describe 'Authentication via LinkedIn' do
@@ -106,6 +129,7 @@ RSpec.describe 'Manage > Settings > Security', type: :system do
 
       include_examples 'for third-party applications button in login page'
       include_examples 'for third-party applications settings'
+      include_examples 'Display callback urls for third-party applications #3622'
     end
 
     describe 'Authentication via Office 365' do
@@ -114,6 +138,7 @@ RSpec.describe 'Manage > Settings > Security', type: :system do
 
       include_examples 'for third-party applications button in login page'
       include_examples 'for third-party applications settings'
+      include_examples 'Display callback urls for third-party applications #3622'
     end
 
     describe 'Authentication via SAML' do
@@ -122,6 +147,7 @@ RSpec.describe 'Manage > Settings > Security', type: :system do
 
       include_examples 'for third-party applications button in login page'
       include_examples 'for third-party applications settings'
+      include_examples 'Display callback urls for third-party applications #3622'
     end
 
     describe 'Authentication via SSO' do
@@ -138,6 +164,7 @@ RSpec.describe 'Manage > Settings > Security', type: :system do
 
       include_examples 'for third-party applications button in login page'
       include_examples 'for third-party applications settings'
+      include_examples 'Display callback urls for third-party applications #3622'
     end
 
     describe 'Authentication via Weibo' do
@@ -146,6 +173,7 @@ RSpec.describe 'Manage > Settings > Security', type: :system do
 
       include_examples 'for third-party applications button in login page'
       include_examples 'for third-party applications settings'
+      include_examples 'Display callback urls for third-party applications #3622'
     end
   end
 end

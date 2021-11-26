@@ -10661,6 +10661,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/google/app_config.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco
 #: app/assets/javascripts/app/views/twitter/app_config.jst.eco
+#: db/seeds/settings.rb
 msgid "Your callback URL"
 msgstr ""
 
