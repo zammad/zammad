@@ -23,8 +23,10 @@ RSpec.describe 'Caller log', type: :system, authenticated_as: :authenticate do
   let(:second_params) { params.merge(event: 'hangup')  }
 
   let(:place_call) do
-    post "#{Capybara.app_host}/api/v1/sipgate/in", params: first_params
-    post "#{Capybara.app_host}/api/v1/sipgate/in", params: second_params
+    token = Setting.get('sipgate_token')
+
+    post "#{Capybara.app_host}/api/v1/sipgate/#{token}/in", params: first_params
+    post "#{Capybara.app_host}/api/v1/sipgate/#{token}/in", params: second_params
   end
 
   def authenticate

@@ -57,6 +57,7 @@ class Form extends App.Controller
 
     @html App.view('integration/sipgate')(
       config: @config
+      sipgate_token: App.Setting.get('sipgate_token')
     )
 
     configure_attributes = [

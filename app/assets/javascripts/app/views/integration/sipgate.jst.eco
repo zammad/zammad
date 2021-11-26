@@ -14,10 +14,10 @@
       <tbody>
         <tr>
           <td class="settings-list-row-control"><%- @T('Inbound') %>
-          <td class="settings-list-control-cell"><input type="url" class="form-control form-control--small js-select" readonly value="<%- @C('http_type') %>://<%- @C('fqdn') %>/api/v1/sipgate/in">
+          <td class="settings-list-control-cell"><input type="url" class="form-control form-control--small js-select" readonly value="<%- @C('http_type') %>://<%- @C('fqdn') %>/api/v1/sipgate/<%= @sipgate_token %>/in">
         <tr>
           <td class="settings-list-row-control"><%- @T('Outbound') %>
-          <td class="settings-list-control-cell"><input type="url" class="form-control form-control--small js-select" readonly value="<%- @C('http_type') %>://<%- @C('fqdn') %>/api/v1/sipgate/out">
+          <td class="settings-list-control-cell"><input type="url" class="form-control form-control--small js-select" readonly value="<%- @C('http_type') %>://<%- @C('fqdn') %>/api/v1/sipgate/<%= @sipgate_token %>/out">
       </tbody>
     </table>
   </div>

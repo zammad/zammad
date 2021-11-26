@@ -4516,6 +4516,27 @@ Setting.create_if_not_exists(
   frontend:    true
 )
 Setting.create_if_not_exists(
+  title:       __('sipgate.io Token'),
+  name:        'sipgate_token',
+  area:        'Integration::Sipgate',
+  description: __('Token for Sipgate.'),
+  options:     {
+    form: [
+      {
+        display: '',
+        null:    false,
+        name:    'sipgate_token',
+        tag:     'input',
+      },
+    ],
+  },
+  state:       ENV['SIPGATE_TOKEN'] || SecureRandom.urlsafe_base64(20),
+  preferences: {
+    permission: ['admin.integration'],
+  },
+  frontend:    false
+)
+Setting.create_if_not_exists(
   title:       __('sipgate.io config'),
   name:        'sipgate_config',
   area:        'Integration::Sipgate',

@@ -5208,6 +5208,7 @@ msgstr ""
 
 #: app/controllers/integration/cti_controller.rb
 #: app/controllers/integration/placetel_controller.rb
+#: app/controllers/integration/sipgate_controller.rb
 msgid "Invalid token, please contact your admin!"
 msgstr ""
 
@@ -9491,6 +9492,11 @@ msgstr ""
 msgid "Token for CTI."
 msgstr ""
 
+#: db/migrate/20211118081558_maintenance_improve_sipgate_integration_handling.rb
+#: db/seeds/settings.rb
+msgid "Token for Sipgate."
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "Token for monitoring."
 msgstr ""
@@ -11338,6 +11344,11 @@ msgstr ""
 #: app/assets/javascripts/app/views/organization_profile/object.jst.eco
 #: app/assets/javascripts/app/views/widget/organization.jst.eco
 msgid "show more"
+msgstr ""
+
+#: db/migrate/20211118081558_maintenance_improve_sipgate_integration_handling.rb
+#: db/seeds/settings.rb
+msgid "sipgate.io Token"
 msgstr ""
 
 #: db/seeds/settings.rb
