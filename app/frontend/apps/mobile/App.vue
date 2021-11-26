@@ -3,14 +3,7 @@
 <template>
   <CommonNotifications />
   <div
-    class="
-      min-h-screen min-w-screen
-      bg-dark
-      text-gray-400 text-center text-sm
-      antialiased
-      font-sans
-      select-none
-    "
+    class="min-h-screen min-w-screen bg-dark text-gray-400 text-center text-sm antialiased font-sans select-none"
   >
     <router-view v-if="applicationLoaded.value" v-slot="{ Component }">
       <transition>

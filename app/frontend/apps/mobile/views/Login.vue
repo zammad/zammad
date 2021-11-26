@@ -26,15 +26,7 @@
                   <input
                     v-model="loginFormValues.login"
                     type="text"
-                    class="
-                      text-gray-700
-                      mt-1
-                      block
-                      w-full
-                      text-sm
-                      rounded
-                      border border-gray-200
-                    "
+                    class="text-gray-700 mt-1 block w-full text-sm rounded border border-gray-200"
                   />
                 </label>
 
@@ -45,26 +37,12 @@
                   <input
                     v-model="loginFormValues.password"
                     type="password"
-                    class="
-                      text-gray-700
-                      mt-1
-                      block
-                      w-full
-                      text-sm
-                      rounded
-                      border border-gray-200
-                    "
+                    class="text-gray-700 mt-1 block w-full text-sm rounded border border-gray-200"
                   />
                 </label>
 
                 <label
-                  class="
-                    mt-4
-                    cursor-pointer
-                    inline-flex
-                    items-center
-                    select-none
-                  "
+                  class="mt-4 cursor-pointer inline-flex items-center select-none"
                 >
                   <input type="checkbox" class="form-checkbox" checked />
                   <span class="ml-2">{{ i18n.t('Remember me') }}</span>
@@ -73,15 +51,7 @@
 
               <div class="flex justify-between flex-grow items-baseline mt-4">
                 <button
-                  class="
-                    bg-blue-500
-                    hover:bg-blue-600
-                    text-white
-                    py-2
-                    px-4
-                    rounded
-                    select-none
-                  "
+                  class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded select-none"
                   v-on:click="login"
                 >
                   {{ i18n.t('Sign in') }}
