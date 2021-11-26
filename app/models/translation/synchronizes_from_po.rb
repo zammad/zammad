@@ -23,8 +23,8 @@ module Translation::SynchronizesFromPo
 
       strings_for_locale(locale).each_pair do |source, entry| # rubocop:disable Metrics/BlockLength
 
-        if source.length > 500 || entry.translation.length > 500
-          Rails.logger.error "Cannot import translation for locale #{locale} because it exceeds maximum string length of 500: source: '#{source}', translation: '#{entry.translation}'"
+        if source.length > 3000 || entry.translation.length > 3000
+          Rails.logger.error "Cannot import translation for locale #{locale} because it exceeds maximum string length of 3000: source: '#{source}', translation: '#{entry.translation}'"
           next
         end
 

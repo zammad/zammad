@@ -178,7 +178,7 @@ RSpec.describe Translation do
         msgstr "custom-string-übersetzt"
 
         msgid "custom-string-too-long"
-        msgstr "custom-string-too-long #{'a' * 501}"
+        msgstr "custom-string-too-long #{'a' * 3001}"
 
         msgid "custom-string-untranslated"
         msgstr ""

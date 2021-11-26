@@ -17,8 +17,8 @@ class Generators::TranslationCatalog::Extractor::Base
 
   def validate_strings
     @strings.to_a.each do |s|
-      if s.length > 500
-        raise "Found a string that longer than than the allowed 500 characters: '#{s}'"
+      if s.length > 3000
+        raise "Found a string that longer than than the allowed 3000 characters: '#{s}'"
       end
     end
   end
