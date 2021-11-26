@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2021 Zammad Foundation, https://zammad-foundation.org/
 
 import { TranslationMap, Translator } from '@common/utils/i18n/translator'
+import { reactive } from 'vue'
 
 export class I18N {
   private translator = new Translator()
@@ -14,7 +15,7 @@ export class I18N {
   }
 }
 
-export const i18n = new I18N()
+export const i18n = reactive(new I18N())
 
 declare module '@vue/runtime-core' {
   export interface ComponentCustomProperties {
