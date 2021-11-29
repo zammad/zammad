@@ -1403,6 +1403,10 @@ msgstr ""
 msgid "Cannot follow-up on a closed ticket. Please create a new ticket."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/report.coffee
+msgid "Cannot generate report"
+msgstr ""
+
 #: app/assets/javascripts/app/lib/app_post/html5_upload.coffee
 msgid "Cannot upload file"
 msgstr ""
@@ -1865,6 +1869,14 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/knowledge_base/delete.coffee
 msgid "Confirmation failed."
+msgstr ""
+
+#: lib/search_index_backend.rb
+msgid "Conflicting date ranges"
+msgstr ""
+
+#: app/controllers/reports_controller.rb
+msgid "Conflicting date ranges. Please check your selected report profile."
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco

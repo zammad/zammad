@@ -11,7 +11,6 @@
     - bundle exec rails test test/integration/elasticsearch_active_test.rb
     - bundle exec rails test test/integration/elasticsearch_test.rb
     - bundle exec rspec --tag searchindex --tag ~type:system --profile 10
-    - bundle exec rails test test/integration/report_test.rb
 
 es:7:
   <<: *template_integration_es
