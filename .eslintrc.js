@@ -47,12 +47,12 @@ module.exports = {
       },
     ],
     // Loosen AirBnB's strict rules a bit to allow 'for .. of'
-    "no-restricted-syntax": [
-      "error",
-      "ForInStatement",
+    'no-restricted-syntax': [
+      'error',
+      'ForInStatement',
       // "ForOfStatement",  // We want to allow this
-      "LabeledStatement",
-      "WithStatement"
+      'LabeledStatement',
+      'WithStatement',
     ],
     // Disable the following rule, because it's not relevant for the tool chain and test envoirment.
     'import/no-extraneous-dependencies': [
@@ -62,6 +62,7 @@ module.exports = {
           'tailwind.config.js',
           'vite.config.ts',
           'app/frontend/tests/**/*',
+          'app/frontend/stories/**/*',
         ],
       },
     ],
@@ -96,6 +97,9 @@ module.exports = {
 
     // Enforce v-on directive usage in long form.
     'vue/v-on-style': ['error', 'longform'],
+
+    // Don't require a default value for the props.
+    'vue/require-default-prop': 'off',
   },
   overrides: [
     {

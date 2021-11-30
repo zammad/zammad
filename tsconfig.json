@@ -52,7 +52,7 @@
     },
     // "rootDirs": [],                              /* List of root folders whose combined content represents the structure of the project at runtime. */
     // "typeRoots": [],                             /* List of folders to include type definitions from. */
-    // "types": [],                                 /* Type declaration files to be included in compilation. */
+    "types": ["vite/client", "jest", "node"],                                 /* Type declaration files to be included in compilation. */
     // "allowSyntheticDefaultImports": true,        /* Allow default imports from modules with no default export. This does not affect code emit, just typechecking. */
     "esModuleInterop": true                         /* Enables emit interoperability between CommonJS and ES Modules via creation of namespace objects for all imports. Implies 'allowSyntheticDefaultImports'. */,
     // "preserveSymlinks": true,                    /* Do not resolve the real path of symlinks. */
@@ -75,5 +75,5 @@
     "resolveJsonModule": true                       /* Allow using json files in imports */
   },
   "include": ["app/frontend/**/*"],
-  "exclude": ["node_modules", "public", "vendor"]
+  "exclude": ["node_modules", "public", "vendor", "app/frontend/stories/**/*.stories.ts"]
 }

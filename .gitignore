@@ -95,3 +95,6 @@ yarn-error.log
 
 # Eslint
 .eslint/node_modules
+
+# Storybook
+storybook-static
