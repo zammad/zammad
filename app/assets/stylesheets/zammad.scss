@@ -358,6 +358,26 @@ ol, ul {
   z-index: 1;
 }
 
+code {
+  background: hsla(0, 0%, 0%, 0.2);
+  border-radius: 3px;
+  box-decoration-break: clone;
+}
+
+code,
+.hljs {
+  padding: 2px 4px;
+  font-size: 0.88em;
+}
+
+.hljs {
+  background: none;
+}
+
+pre code.hljs {
+  font-size: 1em;
+}
+
 pre {
   display: block;
   padding: 9.5px;
@@ -371,30 +391,26 @@ pre {
   border: 1px solid hsl(0,0%,90%);
   border-radius: 3px;
 }
+
+.modal-content pre {
+  background: hsl(0, 0%, 97%);
+  border: 1px solid hsl(0, 0%, 87%);
+}
+
 pre code {
   padding: 0;
   font-size: inherit;
   color: inherit;
   white-space: pre-wrap;
-  background-color: transparent;
-  border-radius: 0;
-}
-
-.hljs,
-code {
   background: none;
-  padding: 2px 4px;
-  font-size: 0.88em;
-}
+  border-radius: 0;
+  border: none;
+  overflow-x: auto;
 
-code:not(.hljs) {
-  border: 1px solid rgba(0,0,0,.2);
-  border-radius: 3px;
-  white-space: nowrap;
-}
-
-pre code.hljs {
-  font-size: 1em;
+  &.hljs {
+    padding: 0;
+    background: none;
+  }
 }
 
 .textarea::placeholder,

@@ -171,6 +171,13 @@ class Graph extends App.Controller
         backends:  @params.backendSelected
       )
       processData: true
+      error:       (xhr) =>
+        return if !_.include([401, 403, 404, 422, 502], xhr.status)
+
+        @bodyModal = new App.ControllerTechnicalErrorModal(
+          head:        'Cannot generate report'
+          contentCode: xhr.responseJSON.error
+        )
       success: (data) =>
         @update(data)
         @delay(@render, interval, 'report-update', 'page')

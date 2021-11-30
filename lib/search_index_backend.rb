@@ -438,6 +438,8 @@ example for aggregations within one year
 
     data = selector2query(selectors, options, aggs_interval)
 
+    verify_date_range(url, data)
+
     response = make_request(url, data: data)
 
     if !response.success?
@@ -1208,4 +1210,87 @@ helper method for making HTTP calls and raising error if response was not succes
     )
   end
 
+  # verifies date range ElasticSearch payload
+  #
+  # @param url [String] of ElasticSearch
+  # @param payload [Hash] Elasticsearch query payload
+  #
+  # @return [Boolean] or raises error
+  def self.verify_date_range(url, payload)
+    ranges_payload = payload.dig(:query, :bool, :must)
+
+    return true if ranges_payload.nil?
+
+    ranges = ranges_payload
+      .select { |elem| elem.key? :range }
+      .map    { |elem| [elem[:range].keys.first, convert_es_date_range(elem)] }
+      .each_with_object({}) { |elem, sum| (sum[elem.first] ||= []) << elem.last }
+
+    return true if ranges.all? { |_, ranges_by_key| verify_single_key_range(ranges_by_key) }
+
+    error_prefix  = "Unable to process request to elasticsearch URL '#{url}'."
+    error_suffix  = "Payload:\n#{payload.to_json}"
+    error_message = 'Conflicting date ranges'
+
+    result = "#{error_prefix} #{error_message} #{error_suffix}"
+    Rails.logger.error result.first(40_000)
+
+    raise result
+  end
+
+  # checks if all ranges are overlaping
+  #
+  # @param ranges [Array<Range<DateTime>>] to use in search
+  #
+  # @return [Boolean]
+  def self.verify_single_key_range(ranges)
+    ranges
+      .each_with_index
+      .all? do |range, i|
+        ranges
+          .slice((i + 1)..)
+          .all? { |elem| elem.overlaps? range }
+      end
+  end
+
+  # Converts paylaod component to dates range
+  #
+  # @param elem [Hash] payload component
+  #
+  # @return [Range<DateTime>]
+  def self.convert_es_date_range(elem)
+    range = elem[:range].first.last
+    from  = parse_es_range_date range[:from] || range[:gt] || '-9999-01-01'
+    to    = parse_es_range_date range[:to] || range[:lt] || '9999-01-01'
+
+    from..to
+  end
+
+  # Parses absolute date or converts relative date
+  #
+  # @param input [String] string representation of date
+  #
+  # @return [Range<DateTime>]
+  def self.parse_es_range_date(input)
+    match = input.match(%r{^now(-|\+)(\d+)(\w{1})$})
+
+    return DateTime.parse input if !match
+
+    map = {
+      d: 'day',
+      y: 'year',
+      M: 'month',
+      h: 'hour',
+      m: 'minute',
+    }
+
+    range = match.captures[1].to_i.send map[match.captures[2].to_sym]
+
+    case match.captures[0]
+    when '-'
+      range.ago
+    when '+'
+      range.from_now
+    end
+  end
 end

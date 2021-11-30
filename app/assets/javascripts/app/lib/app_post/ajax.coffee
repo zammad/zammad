@@ -102,12 +102,18 @@ class _ajaxSingleton
       # do not show any error message with code 502
       return if status is 502
 
+      try
+        json = JSON.parse(detail)
+        text = json.error_human || json.error
+
+      text = detail if !text
+
+      escaped = App.Utils.htmlEscape(text)
+
       # show error message
-      new App.ControllerModal(
-        head:          "StatusCode: #{status}"
-        contentInline: "<pre>#{App.Utils.htmlEscape(detail)}</pre>"
-        buttonClose:   true
-        buttonSubmit:  false
+      new App.ControllerTechnicalErrorModal(
+        contentCode: escaped
+        head:        "StatusCode: #{status}"
       )
     )
 
