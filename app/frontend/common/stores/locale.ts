@@ -4,9 +4,8 @@ import { defineStore } from 'pinia'
 import { SingleValueStore } from '@common/types/store'
 import log from '@common/utils/log'
 import localeForBrowserLanguage from '@common/utils/i18n/localeForBrowserLanguage'
-import { QueryHandler } from '@common/server/apollo/handler'
-import { useLocalesQuery } from '@common/graphql/api'
-import useSessionUserStore from '@common/stores/session/user'
+import getAvailableLocales from '@common/utils/i18n/availableLocales'
+import useTranslationsStore from '@common/stores/translations'
 
 const useLocaleStore = defineStore('locale', {
   state: (): SingleValueStore<string> => {
@@ -15,20 +14,24 @@ const useLocaleStore = defineStore('locale', {
     }
   },
   actions: {
-    async updateLocale() {
-      let locale = ''
-      if (useSessionUserStore().value) {
-        locale = useSessionUserStore().value?.preferences?.locale
-      }
+    async updateLocale(newLocale?: string): Promise<void> {
+      let locale = newLocale
+
       if (!locale) {
-        const query = new QueryHandler(useLocalesQuery())
-        const availableLocales =
-          query.result().value ?? (await query.loadedResult())
+        const availableLocales = await getAvailableLocales()
+
         locale = availableLocales
-          ? localeForBrowserLanguage(availableLocales?.locales)
+          ? localeForBrowserLanguage(availableLocales)
           : 'en-us'
       }
+
       log.debug('localeStore.updateLocale()', locale)
+
+      // Update the translation store, when the locale is different.
+      if (this.value !== locale) {
+        await useTranslationsStore().load(locale)
+      }
+
       this.value = locale
     },
   },

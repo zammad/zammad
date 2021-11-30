@@ -4,6 +4,7 @@ import { useCurrentUserQuery } from '@common/graphql/api'
 import { defineStore } from 'pinia'
 import { QueryHandler } from '@common/server/apollo/handler'
 import { SingleValueStore, UserData } from '@common/types/store'
+import useLocaleStore from '@common/stores/locale'
 
 const useSessionUserStore = defineStore('sessionUser', {
   state: (): SingleValueStore<Maybe<UserData>> => {
@@ -23,6 +24,14 @@ const useSessionUserStore = defineStore('sessionUser', {
 
       const result = await currentUserQuery.onLoaded()
       this.value = result?.currentUser || null
+
+      // Check if the locale is different, then a update is needed.
+      const locale = useLocaleStore()
+      const userLocale = this.value?.preferences?.locale
+
+      if (userLocale && (userLocale !== locale.value || !locale.value)) {
+        await locale.updateLocale(userLocale)
+      }
 
       return this.value
     },

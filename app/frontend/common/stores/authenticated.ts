@@ -7,6 +7,7 @@ import { SingleValueStore } from '@common/types/store'
 import useSessionIdStore from '@common/stores/session/id'
 import apolloClient from '@common/server/apollo/client'
 import useApplicationConfigStore from '@common/stores/application/config'
+import useSessionUserStore from '@common/stores/session/user'
 
 // TODO add this as a persistent state
 const useAuthenticatedStore = defineStore('authenticated', {
@@ -22,16 +23,13 @@ const useAuthenticatedStore = defineStore('authenticated', {
       const result = await logoutMutation.send()
 
       if (result?.logout?.success) {
-        this.value = false
+        await apolloClient.clearStore()
 
         const sessionId = useSessionIdStore()
         sessionId.value = null
 
-        await apolloClient.clearStore()
-
         // Refresh the config after logout, to have only the non authenticated version.
-        const config = useApplicationConfigStore()
-        await config.resetAndGetConfig()
+        await useApplicationConfigStore().resetAndGetConfig()
 
         // TODO... check for other things which must be removed/cleared during a logout.
       }
@@ -53,13 +51,13 @@ const useAuthenticatedStore = defineStore('authenticated', {
       const newSessionId = result?.login?.sessionId || null
 
       if (newSessionId) {
-        this.value = true
-
         const sessionId = useSessionIdStore()
         sessionId.value = newSessionId
 
-        const config = useApplicationConfigStore()
-        await config.getConfig(true)
+        await Promise.all([
+          useApplicationConfigStore().getConfig(true),
+          useSessionUserStore().getCurrentUser(),
+        ])
       }
     },
   },
