@@ -78,6 +78,20 @@ RSpec.describe Sla, type: :model do
         sla_blank
         expect(described_class.for_ticket(ticket_matching)).to eq sla
       end
+
+      context 'when multiple SLAs are matching' do
+        let(:sla) { create(:sla, :condition_title, condition_title: 'matching', name: 'ZZZ 1') }
+        let(:sla2) { create(:sla, :condition_title, condition_title: 'matching', name: 'AAA 1') }
+
+        before do
+          sla
+          sla2
+        end
+
+        it 'returns the AAA 1 sla as matching' do
+          expect(described_class.for_ticket(ticket_matching)).to eq sla2
+        end
+      end
     end
   end
 end
