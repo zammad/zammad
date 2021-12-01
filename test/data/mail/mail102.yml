@@ -4,21 +4,8 @@ from_email: top@secret.tld
 from_display_name: Mr. Top Secret
 to: zammad@XXXXXXXXX.de
 subject: Text - Bild - Text - PDF - Text - Bild - Text
-body: |+
-  Text
-
-  <img src='cid:inline_attachment_placeholder_1'>
-
-  Text
-
-
-
-  Text
-
-  <img src='cid:inline_attachment_placeholder_2'>
-
-  Text
-
+body: Text<br><br>new line<br><br>Test 123<br><img src='cid:inline_attachment_placeholder_1'><br><br>Text<br><br><br><br>Text<br><br><img
+  src='cid:inline_attachment_placeholder_2'><br><br>Text<br><br>Text line<br><br>end<br>
 content_type: text/html
 attachments:
 - !ruby/hash:ActiveSupport::HashWithIndifferentAccess
