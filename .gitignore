@@ -43,7 +43,6 @@
 
 # NPM / Yarn
 /node_modules
-/yarn.lock
 
 # logfiles and tempfiles
 /log
