@@ -29,6 +29,9 @@ Content-Type: text/plain;
 
 Text
 
+new line
+
+Test 123
 
 --Apple-Mail=_57B3D7B4-58AD-4E7A-9A4A-5053521E2862
 Content-Disposition: inline;
@@ -6646,5 +6649,8 @@ Content-Type: text/plain;
 
 Text
 
+Text line
+
+end
 
 --Apple-Mail=_57B3D7B4-58AD-4E7A-9A4A-5053521E2862--
