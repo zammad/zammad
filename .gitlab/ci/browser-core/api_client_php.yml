@@ -8,7 +8,7 @@ api_client_php:
   script:
     - RAILS_ENV=test bundle exec rake db:create
     - RAILS_ENV=test bundle exec rake zammad:ci:test:start zammad:setup:auto_wizard
-    - git clone https://github.com/zammad/zammad-api-client-php.git
+    - git clone https://github.com/zammad/zammad-api-client-php.git -b zammad-ci-5.0 # Use state with tests compatible to 5.0
     - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
     - php composer-setup.php --install-dir=/usr/local/bin
     - ln -s /usr/local/bin/composer.phar /usr/local/bin/composer
