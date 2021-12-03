@@ -496,7 +496,7 @@ class UserTest < ActiveSupport::TestCase
     assert(admin1.id)
     assert_equal(admin1.email, email1)
 
-    assert_raises(Exceptions::UnprocessableEntity) do
+    assert_raises(ActiveRecord::RecordInvalid) do
       User.create!(
         login:         "#{email1}-1",
         firstname:     'Role',
@@ -522,7 +522,7 @@ class UserTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
 
-    assert_raises(Exceptions::UnprocessableEntity) do
+    assert_raises(ActiveRecord::RecordInvalid) do
       admin2.email = email1
       admin2.save!
     end

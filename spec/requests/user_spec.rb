@@ -315,7 +315,7 @@ RSpec.describe 'User', type: :request do
       post '/api/v1/users', params: params, as: :json
       expect(response).to have_http_status(:unprocessable_entity)
       expect(json_response).to be_truthy
-      expect(json_response['error']).to eq('Minimum one identifier (login, firstname, lastname, phone or email) for user is required.')
+      expect(json_response['error']).to eq('At least one identifier (firstname, lastname, phone or email) for user is required.')
 
       # invalid email
       params = { firstname: 'newfirstname123', email: 'some_what', note: 'some note' }
@@ -1225,7 +1225,7 @@ RSpec.describe 'User', type: :request do
 
     it 'requires at least one identifier' do
       make_request({ web: 'example.com' })
-      expect(json_response['error']).to start_with('Minimum one identifier')
+      expect(json_response['error']).to start_with('At least one identifier')
     end
 
     it 'takes first name as identifier' do

@@ -44,12 +44,15 @@ class User < ApplicationModel
   has_many                :data_privacy_tasks,     as: :deletable
   belongs_to              :organization,           inverse_of: :members, optional: true
 
-  before_validation :check_name, :check_email, :check_login, :ensure_uniq_email, :ensure_password, :ensure_roles, :ensure_identifier
+  before_validation :check_name, :check_email, :check_login, :ensure_password, :ensure_roles
   before_validation :check_mail_delivery_failed, on: :update
   before_create     :check_preferences_default, :validate_preferences, :validate_ooo, :domain_based_assignment, :set_locale
   before_update     :check_preferences_default, :validate_preferences, :validate_ooo, :reset_login_failed_after_password_change, :validate_agent_limit_by_attributes, :last_admin_check_by_attribute
   before_destroy    :destroy_longer_required_objects, :destroy_move_dependency_ownership
   after_commit      :update_caller_id
+
+  validate :ensure_identifier, :ensure_email
+  validate :ensure_uniq_email, unless: :skip_ensure_uniq_email
 
   # workflow checks should run after before_create and before_update callbacks
   include ChecksCoreWorkflow
@@ -859,51 +862,49 @@ try to find correct name
     preferences.fetch(:locale) { Locale.default }
   end
 
+  attr_accessor :skip_ensure_uniq_email
+
   private
 
   def check_name
-    if firstname.present?
-      firstname.strip!
-    end
-    if lastname.present?
-      lastname.strip!
-    end
+    firstname&.strip!
+    lastname&.strip!
 
-    return true if firstname.present? && lastname.present?
+    return if firstname.present? && lastname.present?
 
     if (firstname.blank? && lastname.present?) || (firstname.present? && lastname.blank?)
       used_name = firstname.presence || lastname
       (local_firstname, local_lastname) = User.name_guess(used_name, email)
-
     elsif firstname.blank? && lastname.blank? && email.present?
       (local_firstname, local_lastname) = User.name_guess('', email)
     end
 
-    self.firstname = local_firstname if local_firstname.present?
-    self.lastname = local_lastname if local_lastname.present?
+    check_name_apply(:firstname, local_firstname)
+    check_name_apply(:lastname, local_lastname)
+  end
 
-    if firstname.present? && firstname.match(%r{^[A-z]+$}) && (firstname.downcase == firstname || firstname.upcase == firstname)
-      firstname.capitalize!
-    end
-    if lastname.present? && lastname.match(%r{^[A-z]+$}) && (lastname.downcase == lastname || lastname.upcase == lastname)
-      lastname.capitalize!
-    end
-    true
+  def check_name_apply(identifier, input)
+    self[identifier] = input if input.present?
+
+    self[identifier].capitalize! if self[identifier]&.match? %r{^([[:upper:]]+|[[:lower:]]+)$}
   end
 
   def check_email
-    return true if Setting.get('import_mode')
-    return true if email.blank?
+    return if Setting.get('import_mode')
+    return if email.blank?
 
     self.email = email.downcase.strip
-    return true if id == 1
+  end
+
+  def ensure_email
+    return if email.blank?
+    return if id == 1
 
     email_address_validation = EmailAddressValidation.new(email)
-    if !email_address_validation.valid_format?
-      raise Exceptions::UnprocessableEntity, "Invalid email '#{email}'"
-    end
 
-    true
+    return if email_address_validation.valid_format?
+
+    errors.add :base, "Invalid email '#{email}'"
   end
 
   def check_login
@@ -914,7 +915,7 @@ try to find correct name
     end
 
     # if email has changed, login is old email, change also login
-    if changes && changes['email'] && changes['email'][0] == login
+    if email_changed? && email_was == login
       self.login = email
     end
 
@@ -943,27 +944,26 @@ try to find correct name
   end
 
   def ensure_roles
-    return true if role_ids.present?
+    return if role_ids.present?
 
     self.role_ids = Role.signup_role_ids
   end
 
   def ensure_identifier
-    return true if email.present? || firstname.present? || lastname.present? || phone.present?
-    return true if login.present? && !login.start_with?('auto-')
+    return if login.present? && !login.start_with?('auto-')
+    return if [email, firstname, lastname, phone].any?(&:present?)
 
-    raise Exceptions::UnprocessableEntity, __('Minimum one identifier (login, firstname, lastname, phone or email) for user is required.')
+    errors.add :base, __('At least one identifier (firstname, lastname, phone or email) for user is required.')
   end
 
   def ensure_uniq_email
-    return true if Setting.get('user_email_multiple_use')
-    return true if Setting.get('import_mode')
-    return true if email.blank?
-    return true if !changes
-    return true if !changes['email']
-    return true if !User.exists?(email: email.downcase.strip)
+    return if Setting.get('user_email_multiple_use')
+    return if Setting.get('import_mode')
+    return if email.blank?
+    return if !email_changed?
+    return if !User.exists?(email: email.downcase.strip)
 
-    raise Exceptions::UnprocessableEntity, "Email address '#{email.downcase.strip}' is already used for other user."
+    errors.add :base, "Email address '#{email.downcase.strip}' is already used for other user."
   end
 
   def validate_roles(role)
@@ -1166,7 +1166,6 @@ raise 'Minimum one user need to have admin permissions'
 
   def ensure_password
     self.password = ensured_password
-    true
   end
 
   def ensured_password

@@ -84,8 +84,8 @@ module ApplicationController::HandlesErrors
       error: e.message
     }
 
-    if e.message =~ %r{Validation failed: (.+?)(,|$)}i
-      data[:error_human] = $1
+    if (message = e.try(:record)&.errors&.full_messages&.first)
+      data[:error_human] = message
     elsif e.message.match?(%r{(already exists|duplicate key|duplicate entry)}i)
       data[:error_human] = __('Object already exists!')
     elsif e.message =~ %r{null value in column "(.+?)" violates not-null constraint}i || e.message =~ %r{Field '(.+?)' doesn't have a default value}i

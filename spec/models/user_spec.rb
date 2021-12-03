@@ -603,6 +603,14 @@ RSpec.describe User, type: :model do
         expect(new_agent.login.sub!(agent.login, '')).to be_a_uuid
       end
     end
+
+    describe '#check_name' do
+      it 'guesses user first/last name with non-ASCII characters' do
+        user = create(:user, firstname: 'perkūnas ąžuolas', lastname: '')
+
+        expect(user).to have_attributes(firstname: 'Perkūnas', lastname: 'Ąžuolas')
+      end
+    end
   end
 
   describe 'Attributes:' do

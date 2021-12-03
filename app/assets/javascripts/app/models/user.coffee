@@ -6,9 +6,9 @@ class App.User extends App.Model
 #  @hasMany 'roles', 'App.Role'
   @configure_attributes = [
     { name: 'login',            display: __('Login'),         tag: 'input',    type: 'text',     limit: 100, null: false, autocapitalize: false, signup: false, quick: false },
-    { name: 'firstname',        display: __('Firstname'),     tag: 'input',    type: 'text',     limit: 100, null: false, signup: true, info: true, invite_agent: true, invite_customer: true },
-    { name: 'lastname',         display: __('Lastname'),      tag: 'input',    type: 'text',     limit: 100, null: false, signup: true, info: true, invite_agent: true, invite_customer: true },
-    { name: 'email',            display: __('Email'),         tag: 'input',    type: 'email',    limit: 100, null: false, signup: true, info: true, invite_agent: true, invite_customer: true },
+    { name: 'firstname',        display: __('Firstname'),     tag: 'input',    type: 'text',     limit: 100, null: true, signup: true, info: true, invite_agent: true, invite_customer: true },
+    { name: 'lastname',         display: __('Lastname'),      tag: 'input',    type: 'text',     limit: 100, null: true, signup: true, info: true, invite_agent: true, invite_customer: true },
+    { name: 'email',            display: __('Email'),         tag: 'input',    type: 'email',    limit: 100, null: true, signup: true, info: true, invite_agent: true, invite_customer: true },
     { name: 'organization_id',  display: __('Organization'),  tag: 'select',   multiple: false, nulloption: true, null: true, relation: 'Organization', signup: false, info: true, invite_customer: true },
     { name: 'created_by_id',    display: __('Created by'),    relation: 'User', readonly: 1 },
     { name: 'created_at',       display: __('Created at'),    tag: 'datetime',  readonly: 1 },

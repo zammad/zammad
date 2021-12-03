@@ -567,7 +567,7 @@ ObjectManager::Attribute.add(
   data_option: {
     type:       'text',
     maxlength:  150,
-    null:       false,
+    null:       true,
     item_class: 'formGroup--halfSize',
   },
   editable:    false,
@@ -575,27 +575,27 @@ ObjectManager::Attribute.add(
   screens:     {
     signup:          {
       '-all-' => {
-        null: false,
+        null: true,
       },
     },
     invite_agent:    {
       '-all-' => {
-        null: false,
+        null: true,
       },
     },
     invite_customer: {
       '-all-' => {
-        null: false,
+        null: true,
       },
     },
     edit:            {
       '-all-' => {
-        null: false,
+        null: true,
       },
     },
     create:          {
       '-all-' => {
-        null: false,
+        null: true,
       },
     },
     view:            {
@@ -619,7 +619,7 @@ ObjectManager::Attribute.add(
   data_option: {
     type:       'text',
     maxlength:  150,
-    null:       false,
+    null:       true,
     item_class: 'formGroup--halfSize',
   },
   editable:    false,
@@ -627,27 +627,27 @@ ObjectManager::Attribute.add(
   screens:     {
     signup:          {
       '-all-' => {
-        null: false,
+        null: true,
       },
     },
     invite_agent:    {
       '-all-' => {
-        null: false,
+        null: true,
       },
     },
     invite_customer: {
       '-all-' => {
-        null: false,
+        null: true,
       },
     },
     edit:            {
       '-all-' => {
-        null: false,
+        null: true,
       },
     },
     create:          {
       '-all-' => {
-        null: false,
+        null: true,
       },
     },
     view:            {
@@ -679,17 +679,17 @@ ObjectManager::Attribute.add(
   screens:     {
     signup:          {
       '-all-' => {
-        null: false,
+        null: true,
       },
     },
     invite_agent:    {
       '-all-' => {
-        null: false,
+        null: true,
       },
     },
     invite_customer: {
       '-all-' => {
-        null: false,
+        null: true,
       },
     },
     edit:            {

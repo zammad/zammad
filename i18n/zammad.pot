@@ -925,6 +925,10 @@ msgstr ""
 msgid "Assignment timeout in minutes if assigned agent is not working on it. Ticket will be shown as unassigend."
 msgstr ""
 
+#: app/models/user.rb
+msgid "At least one identifier (firstname, lastname, phone or email) for user is required."
+msgstr ""
+
 #: app/models/object_manager/attribute.rb
 msgid "At least one letters is needed"
 msgstr ""
@@ -5782,10 +5786,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 msgid "Minimum of one permission is needed!"
-msgstr ""
-
-#: app/models/user.rb
-msgid "Minimum one identifier (login, firstname, lastname, phone or email) for user is required."
 msgstr ""
 
 #: app/models/role.rb

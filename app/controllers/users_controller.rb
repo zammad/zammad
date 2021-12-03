@@ -982,9 +982,8 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
     user.source        = 'signup'
 
     if email_taken_by # show fake OK response to avoid leaking that email is already in use
-      User.without_callback :validation, :before, :ensure_uniq_email do # skip unique email validation
-        user.valid? # trigger errors raised in validations
-      end
+      user.skip_ensure_uniq_email = true
+      user.validate!
 
       result = User.password_reset_new_token(email_taken_by.email)
       NotificationFactory::Mailer.notification(
