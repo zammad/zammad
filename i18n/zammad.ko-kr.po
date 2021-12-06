@@ -977,6 +977,12 @@ msgstr ""
 "분 할당 시간 초과 할당 된 에이전트가 작동하지 않은 경우. Ticket은 unassigend"
 "로 표시됩니다."
 
+#: app/models/user.rb
+msgid ""
+"At least one identifier (firstname, lastname, phone or email) for user is "
+"required."
+msgstr ""
+
 #: app/models/object_manager/attribute.rb
 msgid "At least one letters is needed"
 msgstr ""
@@ -1474,6 +1480,10 @@ msgstr ""
 msgid "Cannot follow-up on a closed ticket. Please create a new ticket."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/report.coffee
+msgid "Cannot generate report"
+msgstr ""
+
 #: app/assets/javascripts/app/lib/app_post/html5_upload.coffee
 msgid "Cannot upload file"
 msgstr ""
@@ -1934,6 +1944,14 @@ msgstr "대화 상자를 제출 / 확인"
 
 #: app/assets/javascripts/app/views/knowledge_base/delete.coffee
 msgid "Confirmation failed."
+msgstr ""
+
+#: lib/search_index_backend.rb
+msgid "Conflicting date ranges"
+msgstr ""
+
+#: app/controllers/reports_controller.rb
+msgid "Conflicting date ranges. Please check your selected report profile."
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
@@ -6106,12 +6124,6 @@ msgstr "최소 길이"
 
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 msgid "Minimum of one permission is needed!"
-msgstr ""
-
-#: app/models/user.rb
-msgid ""
-"Minimum one identifier (login, firstname, lastname, phone or email) for user "
-"is required."
 msgstr ""
 
 #: app/models/role.rb app/models/user.rb
