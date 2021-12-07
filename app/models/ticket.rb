@@ -207,7 +207,7 @@ returns
         next
       end
 
-      # check if warning need to be sent
+      # check if warning needs to be sent
       TransactionJob.perform_now(
         object:     'Ticket',
         type:       'escalation_warning',

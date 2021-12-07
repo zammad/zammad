@@ -219,7 +219,7 @@ class App.TicketCreate extends App.Controller
         @log 'debug', 'form hash changed', diff, data
         App.TaskManager.update(@taskKey, { 'state': data })
 
-        # check it task title in task need to be updated
+        # check it task title in task needs to be updated
         if @latestTitle isnt data.title
           @latestTitle = data.title
           App.TaskManager.touch(@taskKey)

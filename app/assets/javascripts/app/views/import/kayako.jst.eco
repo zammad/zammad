@@ -36,7 +36,7 @@
           <%- @T('Enter your email address and password from your %s account which should be used for the import.', 'Kayako') %>
         </p>
         <p>
-          <%- @T('Attention: These will also your login password after the import is completed.') %>
+          <%- @T('Attention: These will also be your login and password after the import is completed.') %>
         </p>
         <div class="form-group">
           <label for="kayako-email"><%- @T('Email') %></label>

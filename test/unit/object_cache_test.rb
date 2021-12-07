@@ -40,7 +40,7 @@ class ObjectCacheTest < ActiveSupport::TestCase
     roles  = Role.where(name: %w[Agent Admin])
     groups = Group.all.order(:id)
 
-    # be sure that minimum one admin is available
+    # be sure that at least one admin is available
     User.create_or_update(
       login:         'last_admin_check@example.org',
       firstname:     'last_admin_check',

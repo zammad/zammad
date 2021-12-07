@@ -7,7 +7,7 @@ class ReportsController < ApplicationController
   def reporting_config
     if !Report.enabled?
       render json: {
-        error: __('Elasticsearch need to be configured!'),
+        error: __('Elasticsearch needs to be configured!'),
       }
       return
     end

@@ -125,7 +125,7 @@ class ArticleViewItem extends App.ControllerObserver
     else
       @el.removeClass('is-internal')
 
-    # check if email link need to be updated
+    # check if email link needs to be updated
     links = clone(article.preferences.links) || []
     if article.type.name is 'email'
       link =

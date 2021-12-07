@@ -89,7 +89,7 @@ RSpec.describe 'Message Bird SMS', type: :request do
       expect(ticket.state.name).to eq('new')
       expect(article.id).to eq(Ticket::Article.last.id)
 
-      # new ticket need to be create
+      # new ticket needs to be created
       ticket.state = Ticket::State.find_by(name: 'closed')
       ticket.save!
 

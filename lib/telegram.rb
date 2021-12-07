@@ -325,7 +325,7 @@ returns
     ticket           = possible_tickets.find_each.find { |possible_ticket| possible_ticket.preferences[:channel_id] == channel.id }
 
     if ticket
-      # check if title need to be updated
+      # check if title needs to be updated
       if ticket.title == '-'
         ticket.title = title
       end

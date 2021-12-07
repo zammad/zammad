@@ -180,7 +180,7 @@ add avatar by url
       end
     end
 
-    # check if avatar need to be updated
+    # check if avatar needs to be updated
     if data[:resize].present? && data[:resize][:content].present?
       record[:store_hash] = Digest::MD5.hexdigest(data[:resize][:content])
       if avatar_already_exists&.store_hash == record[:store_hash]

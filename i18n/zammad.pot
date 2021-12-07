@@ -937,6 +937,11 @@ msgstr ""
 msgid "At least one object must be selected."
 msgstr ""
 
+#: app/models/role.rb
+#: app/models/user.rb
+msgid "At least one user needs to have admin permissions."
+msgstr ""
+
 #: app/assets/javascripts/app/views/generic/attachments.jst.eco
 #: app/assets/javascripts/app/views/layout_ref/communication_overview.jst.eco
 #: app/assets/javascripts/app/views/layout_ref/ticket_zoom.jst.eco
@@ -955,7 +960,7 @@ msgid "Attachments"
 msgstr ""
 
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
-msgid "Attention: These will also your login password after the import is completed."
+msgid "Attention: These will also be your login and password after the import is completed."
 msgstr ""
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
@@ -3346,7 +3351,7 @@ msgid "Elasticsearch is not reachable, probably because it's not running or even
 msgstr ""
 
 #: app/controllers/reports_controller.rb
-msgid "Elasticsearch need to be configured!"
+msgid "Elasticsearch needs to be configured!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
@@ -5788,11 +5793,6 @@ msgstr ""
 msgid "Minimum of one permission is needed!"
 msgstr ""
 
-#: app/models/role.rb
-#: app/models/user.rb
-msgid "Minimum one user needs to have admin permissions."
-msgstr ""
-
 #: app/assets/javascripts/app/views/generic/timer.jst.eco
 msgid "Minute"
 msgstr ""
@@ -6235,10 +6235,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 msgid "No Knowledge Base created"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
-msgid "No Knowledge Base. Please create first Knowledge Base"
 msgstr ""
 
 #: lib/external_credential/microsoft365.rb
@@ -8918,6 +8914,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "There can be several reasons for the chat to not show up:"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
+msgid "There is no Knowledge Base yet. Please create one."
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco

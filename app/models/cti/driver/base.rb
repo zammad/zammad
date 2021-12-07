@@ -73,7 +73,7 @@ class Cti::Driver::Base
     config_inbound = @config[:inbound] || {}
     block_caller_ids = config_inbound[:block_caller_ids] || []
 
-    # check if call need to be blocked
+    # check if call needs to be blocked
     block_caller_ids.each do |item|
       next if item[:caller_id] != @params['from']
 

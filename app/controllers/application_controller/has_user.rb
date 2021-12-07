@@ -73,7 +73,7 @@ module ApplicationController::HasUser
 
     session[:ping] = Time.zone.now.iso8601
 
-    # check if remote ip need to be updated
+    # check if remote ip needs to be updated
     if session[:user_id]
       if !session[:remote_ip] || session[:remote_ip] != request.remote_ip # rubocop:disable Style/SoleNestedConditional
         session[:remote_ip] = request.remote_ip

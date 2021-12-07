@@ -311,7 +311,7 @@ curl http://localhost/api/v1/monitoring/amount_check?token=XXX&periode=1h
     raise Exceptions::UnprocessableEntity, 'periode need to have s, m, h or d as last!' if !scale.match?(%r{^(s|m|h|d)$})
 
     periode = params[:periode][0, params[:periode].length - 1]
-    raise Exceptions::UnprocessableEntity, 'periode need to be an integer!' if periode.to_i.zero?
+    raise Exceptions::UnprocessableEntity, 'periode needs to be an integer!' if periode.to_i.zero?
 
     case scale
     when 's'
@@ -334,7 +334,7 @@ curl http://localhost/api/v1/monitoring/amount_check?token=XXX&periode=1h
     state_param = false
     map.each do |row|
       next if params[row[:param]].blank?
-      raise Exceptions::UnprocessableEntity, "#{row[:param]} need to be an integer!" if params[row[:param]].to_i.zero?
+      raise Exceptions::UnprocessableEntity, "#{row[:param]} needs to be an integer!" if params[row[:param]].to_i.zero?
 
       state_param = true
 

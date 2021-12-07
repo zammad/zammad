@@ -59,7 +59,7 @@ class App.ManageKnowledgeBase extends App.ControllerTabs
       @renderNonExistant()
 
   renderNonExistant: ->
-    @renderScreenError(detail: __('No Knowledge Base. Please create first Knowledge Base'), el: @$('.page-content'))
+    @renderScreenError(detail: __('There is no Knowledge Base yet. Please create one.'), el: @$('.page-content'))
     @headerSwitchInput.prop('checked', false)
 
     @modal = new App.KnowledgeBaseNewModal(

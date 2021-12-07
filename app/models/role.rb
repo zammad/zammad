@@ -176,7 +176,7 @@ returns
     return true if !will_save_change_to_attribute?('active')
     return true if active != false
     return true if !with_permission?(['admin', 'admin.user'])
-    raise Exceptions::UnprocessableEntity, __('Minimum one user needs to have admin permissions.') if last_admin_check_admin_count < 1
+    raise Exceptions::UnprocessableEntity, __('At least one user needs to have admin permissions.') if last_admin_check_admin_count < 1
 
     true
   end
@@ -184,7 +184,7 @@ returns
   def last_admin_check_by_permission(permission)
     return true if Setting.get('import_mode')
     return true if permission.name != 'admin' && permission.name != 'admin.user'
-    raise Exceptions::UnprocessableEntity, __('Minimum one user needs to have admin permissions.') if last_admin_check_admin_count < 1
+    raise Exceptions::UnprocessableEntity, __('At least one user needs to have admin permissions.') if last_admin_check_admin_count < 1
 
     true
   end

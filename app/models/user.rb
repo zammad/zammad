@@ -1010,7 +1010,7 @@ try to find correct name
       preferences[:notification_sound][:enabled] = false
     end
     class_name = preferences[:notification_sound][:enabled].class.to_s
-    raise Exceptions::UnprocessableEntity, "preferences.notification_sound.enabled need to be an boolean, but it was a #{class_name}" if class_name != 'TrueClass' && class_name != 'FalseClass'
+    raise Exceptions::UnprocessableEntity, "preferences.notification_sound.enabled needs to be an boolean, but it was a #{class_name}" if class_name != 'TrueClass' && class_name != 'FalseClass'
 
     true
   end
@@ -1021,7 +1021,7 @@ checks if the current user is the last one with admin permissions.
 
 Raises
 
-raise 'Minimum one user need to have admin permissions'
+raise 'At least one user need to have admin permissions'
 
 =end
 
@@ -1029,7 +1029,7 @@ raise 'Minimum one user need to have admin permissions'
     return true if !will_save_change_to_attribute?('active')
     return true if active != false
     return true if !permissions?(['admin', 'admin.user'])
-    raise Exceptions::UnprocessableEntity, __('Minimum one user needs to have admin permissions.') if last_admin_check_admin_count < 1
+    raise Exceptions::UnprocessableEntity, __('At least one user needs to have admin permissions.') if last_admin_check_admin_count < 1
 
     true
   end
@@ -1037,7 +1037,7 @@ raise 'Minimum one user need to have admin permissions'
   def last_admin_check_by_role(role)
     return true if Setting.get('import_mode')
     return true if !role.with_permission?(['admin', 'admin.user'])
-    raise Exceptions::UnprocessableEntity, __('Minimum one user needs to have admin permissions.') if last_admin_check_admin_count < 1
+    raise Exceptions::UnprocessableEntity, __('At least one user needs to have admin permissions.') if last_admin_check_admin_count < 1
 
     true
   end

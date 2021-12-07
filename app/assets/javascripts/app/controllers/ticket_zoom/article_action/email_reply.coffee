@@ -12,7 +12,7 @@ class EmailReply extends App.Controller
         href: '#'
       }
 
-      # check if reply all need to be shown
+      # check if reply all needs to be shown
       recipients = []
       if article.sender.name is 'Customer'
         if article.from
@@ -127,7 +127,7 @@ class EmailReply extends App.Controller
     # get current body
     body = ui.el.closest('.ticketZoom').find('.article-add [data-name="body"]').html() || ''
 
-    # check if quote need to be added via user selection of content
+    # check if quote needs to be added via user selection of content
     signaturePosition = 'bottom'
 
     if !@hasUserSelectedContent(ui)

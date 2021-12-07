@@ -163,7 +163,7 @@ class _i18nSingleton extends Spine.Module
           @dirToSet = locale.dir
           localeFound = true
 
-    # check if locale need to be changed
+    # check if locale needs to be changed
     return if localeToSet is @locale
 
     # set locale
