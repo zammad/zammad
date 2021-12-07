@@ -1,9 +1,53 @@
 # Change Log
 
+## [5.0.3](https://github.com/zammad/zammad/tree/5.0.3) (2021-12-07)
+
+[Full Changelog](https://github.com/zammad/zammad/compare/5.0.2...5.0.3)
+
+**Implemented enhancements:**
+
+- Possibility to specify the order of objects [294](https://github.com/zammad/zammad/issues/294) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)] [[UX/UI](https://github.com/zammad/zammad/labels/UX/UI)] [[object manager attribute](https://github.com/zammad/zammad/labels/object manager attribute)]
+- Display callback urls for third-party applications [3622](https://github.com/zammad/zammad/issues/3622) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)]
+- Add clear selection action or has changed condition [3821](https://github.com/zammad/zammad/issues/3821) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised by payment)] [[specification required](https://github.com/zammad/zammad/labels/specification required)] [[core workflows](https://github.com/zammad/zammad/labels/core workflows)]
+
+**Fixed bugs:**
+
+- Missing ticket updates on high load in MariaDB/MySQL environments [3877](https://github.com/zammad/zammad/issues/3877) [[bug](https://github.com/zammad/zammad/labels/bug)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised by payment)]
+- Wrong SLA is used (alphabetical order is ignored) [3871](https://github.com/zammad/zammad/issues/3871) [[bug](https://github.com/zammad/zammad/labels/bug)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised by payment)] [[regression](https://github.com/zammad/zammad/labels/regression)]
+- Agent with CREATE only permission acts "on behalf" ticket customer on shared organizations [3872](https://github.com/zammad/zammad/issues/3872) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Provide meaningful modal if report profile tries to use dates out side the filtered date range [3616](https://github.com/zammad/zammad/issues/3616) [[bug](https://github.com/zammad/zammad/labels/bug)] [[UX/UI](https://github.com/zammad/zammad/labels/UX/UI)] [[reporting](https://github.com/zammad/zammad/labels/reporting)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised by payment)]
+- Allow `position` to determine an attributes position entirely [3594](https://github.com/zammad/zammad/issues/3594) [[bug](https://github.com/zammad/zammad/labels/bug)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised by payment)] [[object manager attribute](https://github.com/zammad/zammad/labels/object manager attribute)] [[specification required](https://github.com/zammad/zammad/labels/specification required)]
+- Till label not assigned to corresponding input fields in calendar edit view [3793](https://github.com/zammad/zammad/issues/3793) [[bug](https://github.com/zammad/zammad/labels/bug)] [[UX/UI](https://github.com/zammad/zammad/labels/UX/UI)] [[frontend / JS app](https://github.com/zammad/zammad/labels/frontend / JS app)]
+- Simple quote characters (`'`) not properly displayed [3846](https://github.com/zammad/zammad/issues/3846) [[bug](https://github.com/zammad/zammad/labels/bug)] [[frontend / JS app](https://github.com/zammad/zammad/labels/frontend / JS app)]
+- Remove api user and password for sipgate integration [3848](https://github.com/zammad/zammad/issues/3848) [[bug](https://github.com/zammad/zammad/labels/bug)] [[admin area](https://github.com/zammad/zammad/labels/admin area)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised by payment)]
+- No signature on new ticket if email is default message type [3844](https://github.com/zammad/zammad/issues/3844) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Forwarding no longer possible for email and web articles [3855](https://github.com/zammad/zammad/issues/3855) [[bug](https://github.com/zammad/zammad/labels/bug)] [[UX/UI](https://github.com/zammad/zammad/labels/UX/UI)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised by payment)] [[regression](https://github.com/zammad/zammad/labels/regression)]
+- Default values of new group dialog is different in german vs. english [3851](https://github.com/zammad/zammad/issues/3851) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- If no date is set the UI show it's shown as NaN.NaN.NaN. [3850](https://github.com/zammad/zammad/issues/3850) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Number of to show caller log entries is inconsistent setting wise [3852](https://github.com/zammad/zammad/issues/3852) [[bug](https://github.com/zammad/zammad/labels/bug)] [[UX/UI](https://github.com/zammad/zammad/labels/UX/UI)] [[admin area](https://github.com/zammad/zammad/labels/admin area)] [[integration](https://github.com/zammad/zammad/labels/integration)]
+- Reply all: Duplicate email on changing recipient and cc in a certain way [3825](https://github.com/zammad/zammad/issues/3825) [[bug](https://github.com/zammad/zammad/labels/bug)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised by payment)]
+- Removing calendars via UI and API does not check for references [3845](https://github.com/zammad/zammad/issues/3845) [[bug](https://github.com/zammad/zammad/labels/bug)] [[blocker](https://github.com/zammad/zammad/labels/blocker)] [[UX/UI](https://github.com/zammad/zammad/labels/UX/UI)] [[escalation logic](https://github.com/zammad/zammad/labels/escalation logic)]
+- Email address not shown inside forwarded email [3824](https://github.com/zammad/zammad/issues/3824) [[bug](https://github.com/zammad/zammad/labels/bug)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised by payment)]
+- Wrong escalation update time in admin interface is shown [3837](https://github.com/zammad/zammad/issues/3837) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Zammad returns stack error when one tries to remove groups via API [3841](https://github.com/zammad/zammad/issues/3841) [[bug](https://github.com/zammad/zammad/labels/bug)] [[API](https://github.com/zammad/zammad/labels/API)]
+- Zammad ignores relative GitLab URLs [3830](https://github.com/zammad/zammad/issues/3830) [[bug](https://github.com/zammad/zammad/labels/bug)] [[integration](https://github.com/zammad/zammad/labels/integration)]
+- If selected value is not part of the restriction of set_fixed_to it should recalculate it with the new value [3822](https://github.com/zammad/zammad/issues/3822) [[bug](https://github.com/zammad/zammad/labels/bug)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised by payment)]
+- Invalid group and owner list for tickets created via customer profile [3835](https://github.com/zammad/zammad/issues/3835) [[bug](https://github.com/zammad/zammad/labels/bug)] [[core workflows](https://github.com/zammad/zammad/labels/core workflows)]
+- Ticket zoom will loose attachments on rerender [3831](https://github.com/zammad/zammad/issues/3831) [[bug](https://github.com/zammad/zammad/labels/bug)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised by payment)]
+- Package installation creates database.yml as `root` and thus breaks the installation until next update [3834](https://github.com/zammad/zammad/issues/3834) [[bug](https://github.com/zammad/zammad/labels/bug)] [[blocker](https://github.com/zammad/zammad/labels/blocker)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised by payment)] [[regression](https://github.com/zammad/zammad/labels/regression)]
+- Ticket create screen will loose attachments by time [3827](https://github.com/zammad/zammad/issues/3827) [[bug](https://github.com/zammad/zammad/labels/bug)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised by payment)]
+- Simple quote characters (`'`) not properly displayed [3733](https://github.com/zammad/zammad/issues/3733) [[bug](https://github.com/zammad/zammad/labels/bug)] [[frontend / JS app](https://github.com/zammad/zammad/labels/frontend / JS app)]
+- When quoting, no breakout from div container possible [3094](https://github.com/zammad/zammad/issues/3094) [[bug](https://github.com/zammad/zammad/labels/bug)] [[ticket](https://github.com/zammad/zammad/labels/ticket)]
+- Quoting not working cleanly, if content gets too much [2334](https://github.com/zammad/zammad/issues/2334) [[bug](https://github.com/zammad/zammad/labels/bug)] [[UX/UI](https://github.com/zammad/zammad/labels/UX/UI)] [[ticket](https://github.com/zammad/zammad/labels/ticket)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised by payment)]
+- Zammad database credentials are world-readable [3828](https://github.com/zammad/zammad/issues/3828) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Update time SLAs escalates tickets with agent response [3140](https://github.com/zammad/zammad/issues/3140) [[bug](https://github.com/zammad/zammad/labels/bug)] [[escalation logic](https://github.com/zammad/zammad/labels/escalation logic)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised by payment)]
+
 ## [5.0.2](https://github.com/zammad/zammad/tree/5.0.2) (2021-10-28)
+
 [Full Changelog](https://github.com/zammad/zammad/compare/5.0.1...5.0.2)
 
 **Fixed bugs:**
+
 - When looking for customers, it is no longer possible to change into organizations [3815](https://github.com/zammad/zammad/issues/3815) [[bug](https://github.com/zammad/zammad/labels/bug)] [[UX/UI](https://github.com/zammad/zammad/labels/UX/UI)]
 - Owner should get cleared if not listed in changed group [3818](https://github.com/zammad/zammad/issues/3818) [[bug](https://github.com/zammad/zammad/labels/bug)] [[UX/UI](https://github.com/zammad/zammad/labels/UX/UI)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised by payment)] [[core workflows](https://github.com/zammad/zammad/labels/core workflows)]
 - Custom date and datetime attributes are filled with dates on creation of tickets/users after update from 4.1 to 5.x [3810](https://github.com/zammad/zammad/issues/3810) [[bug](https://github.com/zammad/zammad/labels/bug)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised by payment)]
@@ -19,24 +63,26 @@
 - Example payload in webhook view leads to 500 error [3794](https://github.com/zammad/zammad/issues/3794) [[bug](https://github.com/zammad/zammad/labels/bug)] [[regression](https://github.com/zammad/zammad/labels/regression)]
 - OS package upgrade fails (activity_stream_object_id) [3797](https://github.com/zammad/zammad/issues/3797) [[bug](https://github.com/zammad/zammad/labels/bug)]
 
-
 ## [5.0.1](https://github.com/zammad/zammad/tree/5.0.1) (2021-10-08)
+
 [Full Changelog](https://github.com/zammad/zammad/compare/5.0.0...5.0.1)
 
 **Fixed bugs:**
--  Bug Report 4.1.x Overview Sort - Grouped by user [3737](https://github.com/zammad/zammad/issues/3737) [[bug](https://github.com/zammad/zammad/labels/bug)] [[UX/UI](https://github.com/zammad/zammad/labels/UX/UI)] [[overviews](https://github.com/zammad/zammad/labels/overviews)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised by payment)] [[regression](https://github.com/zammad/zammad/labels/regression)]
+
+- Bug Report 4.1.x Overview Sort - Grouped by user [3737](https://github.com/zammad/zammad/issues/3737) [[bug](https://github.com/zammad/zammad/labels/bug)] [[UX/UI](https://github.com/zammad/zammad/labels/UX/UI)] [[overviews](https://github.com/zammad/zammad/labels/overviews)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised by payment)] [[regression](https://github.com/zammad/zammad/labels/regression)]
 - Article box opening on tickets with no changes [3789](https://github.com/zammad/zammad/issues/3789) [[bug](https://github.com/zammad/zammad/labels/bug)] [[UX/UI](https://github.com/zammad/zammad/labels/UX/UI)]
 - UploadCacheCleanupJob does not execute [3787](https://github.com/zammad/zammad/issues/3787) [[bug](https://github.com/zammad/zammad/labels/bug)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised by payment)]
 - lib/fill_db.rb fails to work in production environments [3788](https://github.com/zammad/zammad/issues/3788) [[bug](https://github.com/zammad/zammad/labels/bug)]
 
-
 ## [5.0.0](https://github.com/zammad/zammad/tree/5.0.0) (2021-10-05)
+
 [Full Changelog](https://github.com/zammad/zammad/compare/4.1.0...5.0.0)
 
 **Implemented enhancements:**
+
 - Core Workflow: Add organization condition attributes for object User [3779](https://github.com/zammad/zammad/issues/3779) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised by payment)]
 - No script content (e. g. javascript) in emails [3365](https://github.com/zammad/zammad/issues/3365) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised by payment)] [[mail processing](https://github.com/zammad/zammad/labels/mail processing)]
-- Read-only custom objects  [2102](https://github.com/zammad/zammad/issues/2102) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised by payment)] [[object manager attribute](https://github.com/zammad/zammad/labels/object manager attribute)] [[core workflows](https://github.com/zammad/zammad/labels/core workflows)]
+- Read-only custom objects [2102](https://github.com/zammad/zammad/issues/2102) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised by payment)] [[object manager attribute](https://github.com/zammad/zammad/labels/object manager attribute)] [[core workflows](https://github.com/zammad/zammad/labels/core workflows)]
 - Granular admin permission for google channel is missing [3194](https://github.com/zammad/zammad/issues/3194) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)]
 - Use country codes (e.g. `DE` or `ES`) for knowledgebase answer selection [3574](https://github.com/zammad/zammad/issues/3574) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)] [[knowledge base](https://github.com/zammad/zammad/labels/knowledge base)]
 - New email account expert view cannot be opened without filling in all fields [3137](https://github.com/zammad/zammad/issues/3137) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)] [[UX/UI](https://github.com/zammad/zammad/labels/UX/UI)]
@@ -54,7 +100,7 @@
 - Visualise locked users in UI and make them unlock-able for admin [2565](https://github.com/zammad/zammad/issues/2565) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised by payment)]
 - Representation of inactive customers and orgnizations [3302](https://github.com/zammad/zammad/issues/3302) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)] [[UX/UI](https://github.com/zammad/zammad/labels/UX/UI)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised by payment)]
 - No possibility to enforce auto response if one of the blocking auto response mail header exists [3667](https://github.com/zammad/zammad/issues/3667) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised by payment)] [[mail processing](https://github.com/zammad/zammad/labels/mail processing)]
-- REST doc of Online Notification controler is outdated/wrong and expand param is missing.  [3635](https://github.com/zammad/zammad/issues/3635) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)]
+- REST doc of Online Notification controler is outdated/wrong and expand param is missing. [3635](https://github.com/zammad/zammad/issues/3635) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)]
 - Scroll background instead of foreground [978](https://github.com/zammad/zammad/issues/978) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)] [[UX/UI](https://github.com/zammad/zammad/labels/UX/UI)] [[frontend / JS app](https://github.com/zammad/zammad/labels/frontend / JS app)]
 - Log if a active user (in UI) has been logged out due to SessionTimeout [3614](https://github.com/zammad/zammad/issues/3614) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)]
 - The rake task `zammad:package:migrate` does not execute migrations for linked packages. [3606](https://github.com/zammad/zammad/issues/3606) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)] [[developer experience](https://github.com/zammad/zammad/labels/developer experience)]
@@ -64,7 +110,8 @@
 - Display minutes for session timeouts instead of seconds [3575](https://github.com/zammad/zammad/issues/3575) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)] [[UX/UI](https://github.com/zammad/zammad/labels/UX/UI)] [[admin area](https://github.com/zammad/zammad/labels/admin area)]
 
 **Fixed bugs:**
--  Inconstant alignment in the listing of attachments/submit button in new article area [3773](https://github.com/zammad/zammad/issues/3773) [[bug](https://github.com/zammad/zammad/labels/bug)]
+
+- Inconstant alignment in the listing of attachments/submit button in new article area [3773](https://github.com/zammad/zammad/issues/3773) [[bug](https://github.com/zammad/zammad/labels/bug)]
 - Improve contrasts in answer search for articles [3783](https://github.com/zammad/zammad/issues/3783) [[bug](https://github.com/zammad/zammad/labels/bug)] [[UX/UI](https://github.com/zammad/zammad/labels/UX/UI)] [[knowledge base](https://github.com/zammad/zammad/labels/knowledge base)]
 - escaped 'Set fixed' workflows don't refresh set values on active ticket sessions [3757](https://github.com/zammad/zammad/issues/3757) [[bug](https://github.com/zammad/zammad/labels/bug)] [[core workflows](https://github.com/zammad/zammad/labels/core workflows)]
 - ObjectManager Attribute without screen attribute causes CoreWorkflows migration to fail [3781](https://github.com/zammad/zammad/issues/3781) [[bug](https://github.com/zammad/zammad/labels/bug)] [[migration / update](https://github.com/zammad/zammad/labels/migration / update)]
@@ -79,7 +126,7 @@
 - Possible race condition causing OTRS import to fail [3765](https://github.com/zammad/zammad/issues/3765) [[bug](https://github.com/zammad/zammad/labels/bug)] [[import](https://github.com/zammad/zammad/labels/import)]
 - Incorrect alignment in the listing of attachments when creating a ticket [3746](https://github.com/zammad/zammad/issues/3746) [[bug](https://github.com/zammad/zammad/labels/bug)]
 - Saved conditions break on selections without reloading [3758](https://github.com/zammad/zammad/issues/3758) [[bug](https://github.com/zammad/zammad/labels/bug)] [[core workflows](https://github.com/zammad/zammad/labels/core workflows)]
-- Misleading view of user icons which are on vacation and disabled  [3075](https://github.com/zammad/zammad/issues/3075) [[bug](https://github.com/zammad/zammad/labels/bug)] [[UX/UI](https://github.com/zammad/zammad/labels/UX/UI)] [[ticket](https://github.com/zammad/zammad/labels/ticket)]
+- Misleading view of user icons which are on vacation and disabled [3075](https://github.com/zammad/zammad/issues/3075) [[bug](https://github.com/zammad/zammad/labels/bug)] [[UX/UI](https://github.com/zammad/zammad/labels/UX/UI)] [[ticket](https://github.com/zammad/zammad/labels/ticket)]
 - User with user_id 1 is show in admin interface (which should not) [3755](https://github.com/zammad/zammad/issues/3755) [[bug](https://github.com/zammad/zammad/labels/bug)] [[blocker](https://github.com/zammad/zammad/labels/blocker)]
 - Unable to close tickets in certran cases if core workflow is used [3710](https://github.com/zammad/zammad/issues/3710) [[bug](https://github.com/zammad/zammad/labels/bug)] [[UX/UI](https://github.com/zammad/zammad/labels/UX/UI)] [[core workflows](https://github.com/zammad/zammad/labels/core workflows)]
 - Login failed after upgrade to zammad 5.0 [3759](https://github.com/zammad/zammad/issues/3759) [[bug](https://github.com/zammad/zammad/labels/bug)] [[blocker](https://github.com/zammad/zammad/labels/blocker)] [[migration / update](https://github.com/zammad/zammad/labels/migration / update)]
@@ -146,7 +193,7 @@
 - Allow out of office for one day without setting two days [3590](https://github.com/zammad/zammad/issues/3590) [[bug](https://github.com/zammad/zammad/labels/bug)] [[personal settings/menu](https://github.com/zammad/zammad/labels/personal settings/menu)]
 - FreshDesk Import doesn't pull in auto-assign domain(s) for organizations [3687](https://github.com/zammad/zammad/issues/3687) [[bug](https://github.com/zammad/zammad/labels/bug)] [[import](https://github.com/zammad/zammad/labels/import)]
 - FreshDesk Import brings in all users as inactive [3689](https://github.com/zammad/zammad/issues/3689) [[bug](https://github.com/zammad/zammad/labels/bug)] [[import](https://github.com/zammad/zammad/labels/import)]
-- KB Public UI icons are misspaced  [3680](https://github.com/zammad/zammad/issues/3680) [[bug](https://github.com/zammad/zammad/labels/bug)] [[knowledge base](https://github.com/zammad/zammad/labels/knowledge base)]
+- KB Public UI icons are misspaced [3680](https://github.com/zammad/zammad/issues/3680) [[bug](https://github.com/zammad/zammad/labels/bug)] [[knowledge base](https://github.com/zammad/zammad/labels/knowledge base)]
 - FreshDesk Import Error - undefined method `body' for 10:Integer [3661](https://github.com/zammad/zammad/issues/3661) [[bug](https://github.com/zammad/zammad/labels/bug)] [[import](https://github.com/zammad/zammad/labels/import)]
 - Cannot select multiple tickets in ticket overview with shift+click in Firefox [3449](https://github.com/zammad/zammad/issues/3449) [[bug](https://github.com/zammad/zammad/labels/bug)] [[UX/UI](https://github.com/zammad/zammad/labels/UX/UI)] [[overviews](https://github.com/zammad/zammad/labels/overviews)]
 - "Drop files here" drag area not always hiding [3460](https://github.com/zammad/zammad/issues/3460) [[bug](https://github.com/zammad/zammad/labels/bug)] [[UX/UI](https://github.com/zammad/zammad/labels/UX/UI)] [[help appreciated](https://github.com/zammad/zammad/labels/help appreciated)]
