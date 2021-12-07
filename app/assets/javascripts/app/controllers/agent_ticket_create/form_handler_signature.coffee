@@ -1,4 +1,4 @@
-class TicketCreateFormHanderSignature
+class TicketCreateFormHandlerSignature
 
   @run: (params, attribute, attributes, classname, form, ui) ->
     return if !attribute
@@ -19,10 +19,7 @@ class TicketCreateFormHanderSignature
         if App.Utils.signatureCheck(currentBody.html() || '', signatureFinished)
 
           # if signature has changed, in case remove old signature
-          signature_id = ui.el.closest('.content').find('[data-signature=true]').data('signature-id')
-          if signature_id && signature_id.toString() isnt signature.id.toString()
-
-            ui.el.closest('.content').find('[data-signature="true"]').remove()
+          ui.el.closest('.content').find('[data-signature="true"]').remove()
 
           if !App.Utils.htmlLastLineEmpty(currentBody)
             currentBody.append('<br><br>')
@@ -35,4 +32,4 @@ class TicketCreateFormHanderSignature
     else
       ui.el.closest('.content').find('[data-name="body"]').find('[data-signature=true]').remove()
 
-App.Config.set('200-ticketFormSignature', TicketCreateFormHanderSignature, 'TicketCreateFormHandler')
+App.Config.set('200-ticketFormSignature', TicketCreateFormHandlerSignature, 'TicketCreateFormHandler')
