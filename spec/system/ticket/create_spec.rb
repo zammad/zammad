@@ -829,4 +829,32 @@ RSpec.describe 'Ticket Create', type: :system do
       expect(page.find('.richtext-content')).to have_text('Support')
     end
   end
+
+  describe 'Zammad 5 mail template double signature #3816', authenticated_as: :authenticate do
+    let(:agent_template) { create(:agent) }
+    let!(:template) do
+      create(
+        :template,
+        :dummy_data,
+        group: Group.first, owner: agent_template,
+        body: 'Content dummy.<br><br><div data-signature="true" data-signature-id="1">  Test Other Agent<br><br>--<br> Super Support - Waterford Business Park<br> 5201 Blue Lagoon Drive - 8th Floor &amp; 9th Floor - Miami, 33126 USA<br> Email: hot@example.com - Web: <a href="http://www.example.com/" rel="nofollow noreferrer noopener" target="_blank">http://www.example.com/</a><br>--</div>'
+      )
+    end
+
+    def authenticate
+      Group.first.update(signature: Signature.first)
+      true
+    end
+
+    before do
+      visit 'ticket/create'
+      find('[data-type=email-out]').click
+    end
+
+    it 'does not show double signature on template usage' do
+      select Group.first.name, from: 'group_id'
+      use_template(template)
+      expect(page).to have_no_text('Test Other Agent')
+    end
+  end
 end
