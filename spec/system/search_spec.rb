@@ -9,7 +9,7 @@ RSpec.describe 'Search', type: :system, authenticated: true, searchindex: true d
   let(:note) { 'Test note' }
 
   before do
-    configure_elasticsearch(required: true, rebuild: true)
+    ticket_1 && ticket_2 && configure_elasticsearch(required: true, rebuild: true)
   end
 
   it 'shows default widgets' do
@@ -24,8 +24,6 @@ RSpec.describe 'Search', type: :system, authenticated: true, searchindex: true d
 
   context 'with ticket search result' do
     before do
-      ticket_1 && ticket_2 && rebuild_searchindex
-
       fill_in id: 'global-search', with: 'Testing'
       click_on 'Show Search Details'
 
@@ -174,6 +172,66 @@ RSpec.describe 'Search', type: :system, authenticated: true, searchindex: true d
       popover_on_hover(find('.nav-tab--search.user.is-inactive'))
 
       expect(page).to have_css('.popover-title .is-inactive', count: 1)
+    end
+  end
+
+  describe 'Search is not triggered/updated if url of search is updated new search item or new search is triggered via global search #3873' do
+
+    context 'when search changed via input box' do
+      before do
+        visit '#search'
+      end
+
+      it 'does switch search results properly' do
+        page.find('.js-search').fill_in(with: '"Testing Ticket 1"', fill_options: { clear: :backspace })
+        expect(page.find('.js-tableBody')).to have_text('Testing Ticket 1')
+        expect(page.find('.js-tableBody')).to have_no_text('Testing Ticket 2')
+        expect(current_url).to include('Testing%20Ticket%201')
+
+        # switch by global search
+        page.find('.js-search').fill_in(with: '"Testing Ticket 2"', fill_options: { clear: :backspace })
+        expect(page.find('.js-tableBody')).to have_text('Testing Ticket 2')
+        expect(page.find('.js-tableBody')).to have_no_text('Testing Ticket 1')
+        expect(current_url).to include('Testing%20Ticket%202')
+      end
+    end
+
+    context 'when search changed via global search' do
+      before do
+        fill_in id: 'global-search', with: '"Testing Ticket 1"'
+        click_on 'Show Search Details'
+      end
+
+      it 'does switch search results properly' do
+        expect(page.find('.js-tableBody')).to have_text('Testing Ticket 1')
+        expect(page.find('.js-tableBody')).to have_no_text('Testing Ticket 2')
+        expect(current_url).to include('Testing%20Ticket%201')
+
+        # switch by global search
+        fill_in id: 'global-search', with: '"Testing Ticket 2"'
+        click_on 'Show Search Details'
+        expect(page.find('.js-tableBody')).to have_text('Testing Ticket 2')
+        expect(page.find('.js-tableBody')).to have_no_text('Testing Ticket 1')
+        expect(current_url).to include('Testing%20Ticket%202')
+      end
+    end
+
+    context 'when search is changed via url' do
+      before do
+        visit '#search/"Testing Ticket 1"'
+      end
+
+      it 'does switch search results properly' do
+        expect(page.find('.js-tableBody')).to have_text('Testing Ticket 1')
+        expect(page.find('.js-tableBody')).to have_no_text('Testing Ticket 2')
+        expect(current_url).to include('Testing%20Ticket%201')
+
+        # switch by url
+        visit '#search/"Testing Ticket 2"'
+        expect(page.find('.js-tableBody')).to have_text('Testing Ticket 2')
+        expect(page.find('.js-tableBody')).to have_no_text('Testing Ticket 1')
+        expect(current_url).to include('Testing%20Ticket%202')
+      end
     end
   end
 end
