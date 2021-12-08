@@ -56,13 +56,9 @@ class App.Search extends App.Controller
     @navupdate(url: '#search', type: 'menu')
     return if _.isEmpty(params.query)
 
-    @$('.js-search').val(params.query).trigger('change')
-    return if @shown
-
-    @search(1000, true)
+    @$('.js-search').val(params.query).trigger('keyup')
 
   hide: ->
-    @shown = false
     if @table
       @table.hide()
 
@@ -108,6 +104,7 @@ class App.Search extends App.Controller
       return
 
     # on other keys, show result
+    @navigate "#search/#{encodeURIComponent(@searchInput.val())}"
     @search(0)
 
   empty: =>
