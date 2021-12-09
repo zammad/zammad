@@ -11302,9 +11302,7 @@ msgstr ""
 msgid ""
 "You're already registered with your email address if you've been in touch "
 "with our support team."
-msgstr ""
-"IKCU Atatürk Eğitim Ve Araştırma Hastanesi Bilgi İşlem Arıza Bildirim "
-"Uygulaması"
+msgstr "Eğer destek ekibimiz ile görüştüyseniz mail adresiniz sistemde kayıtlıdır."
 
 #: app/controllers/first_steps_controller.rb
 msgid "Your Email Configuration"
