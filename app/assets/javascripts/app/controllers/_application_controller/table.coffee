@@ -493,16 +493,6 @@ class App.ControllerTable extends App.Controller
       sortable:   @dndCallback
     ))
 
-  getGroupByKeyName: (object, groupBy) ->
-    reference_key = groupBy + '_id'
-
-    if reference_key of object
-      attribute = _.findWhere(object.constructor.configure_attributes, { name: reference_key })
-
-      return App[attribute.relation]?.find(object[reference_key])?.displayName() || reference_key
-
-    groupBy
-
   sortObjectKeys: (objects, direction) ->
     sorted = Object.keys(objects).sort()
 
@@ -525,7 +515,7 @@ class App.ControllerTable extends App.Controller
     objectsToShow = @objectsOfPage(@pagerShownPage)
     if @groupBy
       # group by raw (and not printable) value so dates work also
-      objectsGrouped = _.groupBy(objectsToShow, (object) => object[@getGroupByKeyName(object, @groupBy)])
+      objectsGrouped = _.groupBy(objectsToShow, (object) => @groupObjectName(object, @groupBy, excludeTags: ['date', 'datetime']))
     else
       objectsGrouped = { '': objectsToShow }
 
@@ -865,11 +855,15 @@ class App.ControllerTable extends App.Controller
     @objects = localObjects
     @lastSortedobjects = localObjects
 
-  groupObjectName: (object, key = undefined) ->
+  groupObjectName: (object, key = undefined, options = {}) ->
     group = object
     if key
       if key not of object
         key += '_id'
+
+      # return internal value if needed
+      return object[key] if options.excludeTags && _.find(@attributesList, (attr) -> attr.name == key && _.contains(options.excludeTags, attr.tag))
+
       group = App.viewPrint(object, key, @attributesList)
     if _.isEmpty(group)
       group = ''

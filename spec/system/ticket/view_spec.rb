@@ -363,13 +363,50 @@ RSpec.describe 'Ticket views', type: :system do
         true
       end
 
-      it 'does show the date groups sorted' do
+      it 'does show the values grouped and sorted by date key value (yyy-mm-dd) instead of display value' do
         visit 'ticket/view/all_unassigned'
         text = page.find('.js-tableBody').text(:all)
 
         expect(text.index('01/17/2018') < text.index('08/19/2018')).to eq(true)
         expect(text.index('08/19/2018') < text.index('01/19/2019')).to eq(true)
         expect(text.index('01/19/2019') < text.index('08/18/2021')).to eq(true)
+      end
+    end
+
+    context 'when sorted by custom object select', authenticated_as: :authenticate, db_strategy: :reset do
+      let(:ticket1) { create(:ticket, group: Group.find_by(name: 'Users'), cselect: 'a') }
+      let(:ticket2) { create(:ticket, group: Group.find_by(name: 'Users'), cselect: 'b') }
+      let(:ticket3) { create(:ticket, group: Group.find_by(name: 'Users'), cselect: 'c') }
+
+      def authenticate
+        create :object_manager_attribute_select, name: 'cselect', data_option: {
+          'default'    => '',
+          'options'    => {
+            'a' => 'Zzz a',
+            'b' => 'Yyy b',
+            'c' => 'Xxx c',
+          },
+          'relation'   => '',
+          'nulloption' => true,
+          'multiple'   => false,
+          'null'       => true,
+          'translate'  => true,
+          'maxlength'  => 255
+        }
+        ObjectManager::Attribute.migration_execute
+        ticket1
+        ticket2
+        ticket3
+        Overview.find_by(link: 'all_unassigned').update(group_by: 'cselect')
+        true
+      end
+
+      it 'does show the values grouped and sorted by display value instead of key value' do
+        visit 'ticket/view/all_unassigned'
+        text = page.find('.js-tableBody').text(:all)
+
+        expect(text.index('Xxx c') < text.index('Yyy b')).to eq(true)
+        expect(text.index('Yyy b') < text.index('Zzz a')).to eq(true)
       end
     end
   end
