@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Caller log', type: :system, authenticated_as: :agent do
+RSpec.describe 'Caller log', type: :system, authenticated_as: :authenticate do
   let(:agent_phone) { '0190111' }
   let(:customer_phone) { '0190333' }
   let(:cti_token) { 'token1234' }
@@ -28,12 +28,13 @@ RSpec.describe 'Caller log', type: :system, authenticated_as: :agent do
     post "#{Capybara.app_host}/api/v1/cti/#{cti_token}", params: second_params
   end
 
-  let(:prepare) do
+  # Do the preperation before the authentication.
+  def authenticate
     Setting.set('cti_integration', cti_on)
     Setting.set('cti_token', cti_token)
-  end
 
-  before { prepare }
+    agent
+  end
 
   context 'when cti integration is on' do
     it 'shows the phone menu in nav bar' do
