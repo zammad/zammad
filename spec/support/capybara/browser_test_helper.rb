@@ -63,7 +63,7 @@ module BrowserTestHelper
   # @see BrowserTestHelper::Waiter
   #
   # @example
-  #  wait(5).until { ... }
+  #  wait.until { ... }
   #
   # @example
   #  wait(5, interval: 0.5).until { ... }
@@ -161,7 +161,7 @@ module BrowserTestHelper
     # in the given block.
     #
     # @example
-    #  wait(5).until_exists { find('[data-title="example"]') }
+    #  wait.until_exists { find('[data-title="example"]') }
     #
     def until_exists
       self.until do
@@ -181,7 +181,7 @@ module BrowserTestHelper
     # in the given block.
     #
     # @example
-    #  wait(5).until_disappear { find('[data-title="example"]') }
+    #  wait.until_disappear { find('[data-title="example"]') }
     #
     def until_disappears
       self.until do
@@ -200,7 +200,7 @@ module BrowserTestHelper
     # This method loops a given block until the result of it is constant.
     #
     # @example
-    #  wait(5).until_constant { find('.total').text }
+    #  wait.until_constant { find('.total').text }
     #
     def until_constant
       previous = nil

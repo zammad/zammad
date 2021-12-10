@@ -31,7 +31,7 @@ RSpec.configure do |config|
 
       visit '/'
 
-      wait(4).until_exists do
+      wait.until_exists do
         current_login
       end
     end

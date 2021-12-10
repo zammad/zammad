@@ -768,17 +768,17 @@ RSpec.describe 'Ticket Create', type: :system do
         find('[name=customer_id_completion]').fill_in with: 'zam'
         expect(page).to have_selector("li.js-organization[data-organization-id='#{organization.id}']")
         page.find("li.js-organization[data-organization-id='#{organization.id}']").click
-        wait(5).until { page.all("ul.recipientList-organizationMembers[organization-id='#{organization.id}'] li", visible: :all).count == 12 } # 10 users + back + show more button
+        wait.until { page.all("ul.recipientList-organizationMembers[organization-id='#{organization.id}'] li", visible: :all).count == 12 } # 10 users + back + show more button
 
         expect(page).to have_selector("ul.recipientList-organizationMembers[organization-id='#{organization.id}'] li.js-showMoreMembers[organization-member-limit='10']")
         scroll_into_view('li.js-showMoreMembers')
         page.find("ul.recipientList-organizationMembers[organization-id='#{organization.id}'] li.js-showMoreMembers").click
-        wait(5).until { page.all("ul.recipientList-organizationMembers[organization-id='#{organization.id}'] li", visible: :all).count == 27 } # 25 users + back + show more button
+        wait.until { page.all("ul.recipientList-organizationMembers[organization-id='#{organization.id}'] li", visible: :all).count == 27 } # 25 users + back + show more button
 
         expect(page).to have_selector("ul.recipientList-organizationMembers[organization-id='#{organization.id}'] li.js-showMoreMembers[organization-member-limit='25']")
         scroll_into_view('li.js-showMoreMembers')
         page.find("ul.recipientList-organizationMembers[organization-id='#{organization.id}'] li.js-showMoreMembers").click
-        wait(5).until { page.all("ul.recipientList-organizationMembers[organization-id='#{organization.id}'] li", visible: :all).count == 52 } # 50 users + back + show more button
+        wait.until { page.all("ul.recipientList-organizationMembers[organization-id='#{organization.id}'] li", visible: :all).count == 52 } # 50 users + back + show more button
 
         scroll_into_view('li.js-showMoreMembers')
         expect(page).to have_selector("ul.recipientList-organizationMembers[organization-id='#{organization.id}'] li.js-showMoreMembers.hidden", visible: :all, wait: 20)
@@ -797,7 +797,7 @@ RSpec.describe 'Ticket Create', type: :system do
       await_empty_ajax_queue
       page.find('input#fileUpload_1', visible: :all).set(Rails.root.join('test/data/mail/mail002.box'))
       await_empty_ajax_queue
-      wait(5).until { page.all('div.attachment-delete.js-delete', visible: :all).count == 2 }
+      wait.until { page.all('div.attachment-delete.js-delete', visible: :all).count == 2 }
       expect(page).to have_text('mail001.box')
       expect(page).to have_text('mail002.box')
 
@@ -810,7 +810,7 @@ RSpec.describe 'Ticket Create', type: :system do
         # even tho it worked fine
       end
       await_empty_ajax_queue
-      wait(5).until { page.all('div.attachment-delete.js-delete', visible: :all).count == 1 }
+      wait.until { page.all('div.attachment-delete.js-delete', visible: :all).count == 1 }
       expect(page).to have_text('mail001.box')
       expect(page).to have_no_text('mail002.box')
 
@@ -829,7 +829,7 @@ RSpec.describe 'Ticket Create', type: :system do
     end
 
     it 'does show an empty list of owners' do
-      wait(5).until { page.all('select[name=owner_id] option').count == 1 }
+      wait.until { page.all('select[name=owner_id] option').count == 1 }
       expect(page.all('select[name=owner_id] option').count).to eq(1)
     end
   end

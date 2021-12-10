@@ -15,7 +15,7 @@ RSpec.describe 'System > Maintenance', type: :system do
 
         click '.js-loginSetting label'
 
-        wait(10).until { expect(Setting.get('maintenance_login')).to be true }
+        wait.until { expect(Setting.get('maintenance_login')).to be true }
       end
     end
 
@@ -30,7 +30,7 @@ RSpec.describe 'System > Maintenance', type: :system do
 
         click '.js-loginSetting label'
 
-        wait(10).until { expect(Setting.get('maintenance_login')).to be false }
+        wait.until { expect(Setting.get('maintenance_login')).to be false }
       end
     end
 
@@ -64,7 +64,7 @@ RSpec.describe 'System > Maintenance', type: :system do
 
         find('#global-search').click # unfocus
 
-        wait(10).until { expect(Setting.get('maintenance_login_message')).to eq "#{message}#{message_suffix}" }
+        wait.until { expect(Setting.get('maintenance_login_message')).to eq "#{message}#{message_suffix}" }
       end
     end
   end
@@ -84,7 +84,7 @@ RSpec.describe 'System > Maintenance', type: :system do
         click '.content.active .modal .js-submit'
         modal_disappear
 
-        wait(10).until { expect(Setting.get('maintenance_mode')).to be true }
+        wait.until { expect(Setting.get('maintenance_mode')).to be true }
       end
     end
 
@@ -99,7 +99,7 @@ RSpec.describe 'System > Maintenance', type: :system do
 
         click '.js-modeSetting label'
 
-        wait(10).until { expect(Setting.get('maintenance_mode')).to be false }
+        wait.until { expect(Setting.get('maintenance_mode')).to be false }
       end
     end
   end

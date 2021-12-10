@@ -133,7 +133,7 @@ RSpec.describe 'Form', type: :system, authenticated_as: true do
       before do
         visit 'channels/form'
         check 'form_ticket_create', { allow_label_click: true }
-        wait(10).until { Setting.get('form_ticket_create') == true }
+        wait.until { Setting.get('form_ticket_create') == true }
       end
 
       context 'when form is inline' do
@@ -168,7 +168,7 @@ RSpec.describe 'Form', type: :system, authenticated_as: true do
       before do
         visit 'channels/form'
         uncheck 'form_ticket_create', { allow_label_click: true }
-        wait(10).until { Setting.get('form_ticket_create') == false }
+        wait.until { Setting.get('form_ticket_create') == false }
         visit path
       end
 

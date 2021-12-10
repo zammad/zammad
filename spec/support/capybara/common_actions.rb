@@ -37,7 +37,7 @@ module CommonActions
       click_button
     end
 
-    wait(4).until_exists do
+    wait.until_exists do
       current_login
     end
 
@@ -224,14 +224,14 @@ module CommonActions
       wrapper = all('div.ticket-article-item').last
 
       wrapper.find('.article-content .textBubble').click
-      wait(3).until do
+      wait.until do
         wrapper.find('.article-content-meta .article-meta.top').in_fixed_position
       end
     end
   end
 
   def use_template(template)
-    wait(4).until do
+    wait.until do
       field  = find('#form-template select[name="id"]')
       option = field.find(:option, template.name)
       option.select_option

@@ -43,7 +43,7 @@ RSpec.describe 'inserting Knowledge Base answer', type: :system, searchindex: tr
 
       within(:active_content) do
         within(:richtext) do
-          wait(5).until do
+          wait.until do
             elem   = first('img')
             script = 'return arguments[0].naturalWidth;'
             height = Capybara.current_session.driver.browser.execute_script(script, elem.native)

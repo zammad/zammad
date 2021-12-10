@@ -1992,11 +1992,11 @@ RSpec.describe 'Ticket zoom', type: :system do
     end
 
     def wait_for_upload_present
-      wait(5).until { Taskbar.find_by(key: "Ticket-#{ticket.id}").attributes_with_association_ids['attachments'].present? }
+      wait.until { Taskbar.find_by(key: "Ticket-#{ticket.id}").attributes_with_association_ids['attachments'].present? }
     end
 
     def wait_for_upload_blank
-      wait(5).until { Taskbar.find_by(key: "Ticket-#{ticket.id}").attributes_with_association_ids['attachments'].blank? }
+      wait.until { Taskbar.find_by(key: "Ticket-#{ticket.id}").attributes_with_association_ids['attachments'].blank? }
     end
 
     def switch_language_german
@@ -2272,14 +2272,14 @@ RSpec.describe 'Ticket zoom', type: :system do
 
     it 'does open automatically when body is given from sidebar' do
       find('.js-textarea').send_keys('test')
-      wait(5).until { Taskbar.find_by(key: "Ticket-#{ticket.id}").state.dig('article', 'body').present? }
+      wait.until { Taskbar.find_by(key: "Ticket-#{ticket.id}").state.dig('article', 'body').present? }
       refresh
       expect(page).to have_selector('form.article-add.is-open')
     end
 
     it 'does open automatically when attachment is given from sidebar' do
       page.find('input#fileUpload_1', visible: :all).set(Rails.root.join('test/data/mail/mail001.box'))
-      wait(5).until { Taskbar.find_by(key: "Ticket-#{ticket.id}").attributes_with_association_ids['attachments'].present? }
+      wait.until { Taskbar.find_by(key: "Ticket-#{ticket.id}").attributes_with_association_ids['attachments'].present? }
       refresh
       expect(page).to have_selector('form.article-add.is-open')
     end
@@ -2310,7 +2310,7 @@ RSpec.describe 'Ticket zoom', type: :system do
 
     it 'does clear agent1 on select of group 2' do
       select group2.name, from: 'Group'
-      wait(5).until { page.find('select[name=owner_id]').value != agent1.id.to_s }
+      wait.until { page.find('select[name=owner_id]').value != agent1.id.to_s }
       expect(page.find('select[name=owner_id]').value).to eq('')
       expect(page.all('select[name=owner_id] option').map(&:value)).not_to include(agent1.id.to_s)
       expect(page.all('select[name=owner_id] option').map(&:value)).to include(agent2.id.to_s)
