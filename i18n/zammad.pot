@@ -44,7 +44,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
-msgid "%s Api Token"
+msgid "%s API Token"
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
@@ -63,37 +63,8 @@ msgstr ""
 msgid "%s Migration"
 msgstr ""
 
-#: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
-msgid "%s Object(s) are created."
-msgstr ""
-
-#: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
-msgid "%s Object(s) are deleted."
-msgstr ""
-
-#: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
-msgid "%s Object(s) are updated."
-msgstr ""
-
-#: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
-msgid "%s Object(s) have been created."
-msgstr ""
-
-#: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
-msgid "%s Object(s) have been updated."
-msgstr ""
-
-#: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
-msgid "%s Object(s) were deleted."
-msgstr ""
-
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "%s Role"
-msgstr ""
-
-#: app/assets/javascripts/app/views/import/freshdesk.jst.eco
-#: app/assets/javascripts/app/views/import/kayako.jst.eco
-msgid "%s Subdomain"
 msgstr ""
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
@@ -107,35 +78,35 @@ msgid "%s ago"
 msgstr ""
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
-msgid "%s completed data privacy task to delete user id |%s|"
+msgid "%s completed data privacy task to delete user ID |%s|"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket_article.coffee
-msgid "%s created Article for |%s|"
-msgstr ""
-
-#: app/assets/javascripts/app/models/group.coffee
-msgid "%s created Group |%s|"
-msgstr ""
-
-#: app/assets/javascripts/app/models/organization.coffee
-msgid "%s created Organization |%s|"
-msgstr ""
-
-#: app/assets/javascripts/app/models/role.coffee
-msgid "%s created Role |%s|"
-msgstr ""
-
-#: app/assets/javascripts/app/models/ticket.coffee
-msgid "%s created Ticket |%s|"
-msgstr ""
-
-#: app/assets/javascripts/app/models/user.coffee
-msgid "%s created User |%s|"
+msgid "%s created article for |%s|"
 msgstr ""
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
-msgid "%s created data privacy task to delete user id |%s|"
+msgid "%s created data privacy task to delete user ID |%s|"
+msgstr ""
+
+#: app/assets/javascripts/app/models/group.coffee
+msgid "%s created group |%s|"
+msgstr ""
+
+#: app/assets/javascripts/app/models/organization.coffee
+msgid "%s created organization |%s|"
+msgstr ""
+
+#: app/assets/javascripts/app/models/role.coffee
+msgid "%s created role |%s|"
+msgstr ""
+
+#: app/assets/javascripts/app/models/ticket.coffee
+msgid "%s created ticket |%s|"
+msgstr ""
+
+#: app/assets/javascripts/app/models/user.coffee
+msgid "%s created user |%s|"
 msgstr ""
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
@@ -162,15 +133,39 @@ msgstr ""
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
-msgid "%s is inactive, please select a active one."
+msgid "%s is inactive, please select an active one."
+msgstr ""
+
+#: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
+msgid "%s object(s) are created."
+msgstr ""
+
+#: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
+msgid "%s object(s) are deleted."
+msgstr ""
+
+#: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
+msgid "%s object(s) are updated."
+msgstr ""
+
+#: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
+msgid "%s object(s) have been created."
+msgstr ""
+
+#: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
+msgid "%s object(s) have been updated."
+msgstr ""
+
+#: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
+msgid "%s object(s) were deleted."
+msgstr ""
+
+#: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco
+msgid "%s of my tickets are currently in process."
 msgstr ""
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_escalation.jst.eco
 msgid "%s of my tickets escalated."
-msgstr ""
-
-#: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco
-msgid "%s of your tickets are currently in process."
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay_user_group.jst.eco
@@ -185,36 +180,41 @@ msgstr ""
 msgid "%s started a new session"
 msgstr ""
 
+#: app/assets/javascripts/app/views/import/freshdesk.jst.eco
+#: app/assets/javascripts/app/views/import/kayako.jst.eco
+msgid "%s subdomain"
+msgstr ""
+
 #: app/assets/javascripts/app/models/user.coffee
 msgid "%s switched to |%s|!"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket_article.coffee
-msgid "%s updated Article for |%s|"
-msgstr ""
-
-#: app/assets/javascripts/app/models/group.coffee
-msgid "%s updated Group |%s|"
-msgstr ""
-
-#: app/assets/javascripts/app/models/organization.coffee
-msgid "%s updated Organization |%s|"
-msgstr ""
-
-#: app/assets/javascripts/app/models/role.coffee
-msgid "%s updated Role |%s|"
-msgstr ""
-
-#: app/assets/javascripts/app/models/ticket.coffee
-msgid "%s updated Ticket |%s|"
-msgstr ""
-
-#: app/assets/javascripts/app/models/user.coffee
-msgid "%s updated User |%s|"
+msgid "%s updated article for |%s|"
 msgstr ""
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
-msgid "%s updated data privacy task to delete user id |%s|"
+msgid "%s updated data privacy task to delete user ID |%s|"
+msgstr ""
+
+#: app/assets/javascripts/app/models/group.coffee
+msgid "%s updated group |%s|"
+msgstr ""
+
+#: app/assets/javascripts/app/models/organization.coffee
+msgid "%s updated organization |%s|"
+msgstr ""
+
+#: app/assets/javascripts/app/models/role.coffee
+msgid "%s updated role |%s|"
+msgstr ""
+
+#: app/assets/javascripts/app/models/ticket.coffee
+msgid "%s updated ticket |%s|"
+msgstr ""
+
+#: app/assets/javascripts/app/models/user.coffee
+msgid "%s updated user |%s|"
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
@@ -225,11 +225,11 @@ msgid "%s user to %s user"
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
-msgid "%s will only allow access via OAuth. Password-based access is no longer supported since %s."
+msgid "%s will only allow access via OAuth. Password-based access has not been supported since %s."
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
-msgid "%s will only allow access via OAuth. Password-based access will no longer be supported on %s."
+msgid "%s will only allow access via OAuth. Password-based access is no longer supported on %s."
 msgstr ""
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco
@@ -241,11 +241,11 @@ msgid "%s% have been reopened"
 msgstr ""
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
-msgid "** Data Privacy **, helps you to delete and verify the removal of existing data of the system.\n\nIt can be used to delete tickets, organizations and users. The owner assignment will be unset in case the deleted user is an agent.\n\nData Privacy tasks will be executed every 10 minutes. The execution might take some additional time depending of the number of objects that should get deleted."
+msgid "** Data Privacy ** helps you to delete and verify the removal of existing data from the system.\n\nIt can be used to delete tickets, organizations, and users. The owner assignment will be unset in case the deleted user is an agent.\n\nData Privacy tasks will be executed every 10 minutes. The execution might take some additional time depending on the number of objects that will be deleted."
 msgstr ""
 
 #: app/assets/javascripts/app/models/sla.coffee
-msgid "** Service Level Agreements **, abbreviated ** SLAs **, help you to meet certain customers' time-related responses. Thus, for example, you can say customers should always get a response from you after 8 hours at the latest. In the event of an imminent violation or a breach, Zammad will alert you to such events.\n\nIt can be ** response time ** (time between the creation of a ticket and the first reaction of an agent), ** update time ** (time between a customer's request and an agent's reaction) and ** solution time ** (time between creation and closing a ticket ) To be defined.\n\nAny violations are displayed in a separate view in the overviews. You can also configure ** e-mail notifications **."
+msgid "** Service Level Agreements **, abbreviated ** SLAs **, help you to meet specific response times for your customers' requests. This way you can define goals such as answering every inquiry within eight hours. If you are at risk of missing this target, Zammad will alert you.\n\nYou can define targets for three different metrics: ** response time ** (time between the creation of a ticket and the first reaction of an agent), ** update time ** (time between a customer's request and an agent's reaction), and ** solution time ** (time between creating and closing a ticket).\n\nAny escalated tickets (i.e. tickets that have missed the defined target) are displayed in a separate view in your overviews. You can also configure ** email notifications **."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
@@ -257,7 +257,7 @@ msgid "...add object title"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
-msgid "...of whole textarea"
+msgid "...of whole text area"
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -305,7 +305,7 @@ msgid "4 weeks"
 msgstr ""
 
 #: app/assets/javascripts/app/models/calendar.coffee
-msgid "A **calendar** is needed for calculation of escalation based on business hours and sending out escalation notifications..\n\nDefine a **\"standard\"** calendar which is valid system-wide. Only in the defined business hours the escalation notifications will be sent to your agents.\n\nDo you have customers with different business hours, you can create multiple calendars. Tickets are linked to calendars using **SLAs**."
+msgid "A **calendar** is needed to calculate escalations based on business hours and to send out escalation notifications.\n\nDefine a **\"standard\"** calendar which is valid system-wide. The escalation notifications will only be sent to your agents during the defined business hours.\n\nIf you have customers with different business hours, you can create multiple calendars. Tickets are linked to calendars using **SLAs**."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -5949,6 +5949,10 @@ msgstr ""
 msgid "My subscribed Tickets"
 msgstr ""
 
+#: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco
+msgid "My tickets in process"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_integration/nagios.coffee
 msgid "Nagios"
 msgstr ""
@@ -6022,7 +6026,7 @@ msgid "Navigation"
 msgstr ""
 
 #: app/controllers/concerns/creates_ticket_articles.rb
-msgid "Need at least article: { body: \"some text\" }"
+msgid "Need at least an article body field."
 msgstr ""
 
 #: app/controllers/application_controller/handles_devices.rb
@@ -7064,7 +7068,7 @@ msgid "Pending reached"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee
-msgid "Pending reminder reached for Ticket |%s|"
+msgid "Pending reminder reached for ticket |%s|"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee
@@ -10695,10 +10699,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee
 msgid "Your role cannot create new ticket. Please contact your administrator."
-msgstr ""
-
-#: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco
-msgid "Your tickets in process"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/embed_video_button.coffee

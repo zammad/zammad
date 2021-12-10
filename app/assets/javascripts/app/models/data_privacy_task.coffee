@@ -13,11 +13,11 @@ class App.DataPrivacyTask extends App.Model
   @configure_overview = []
 
   @description = __('''
-** Data Privacy **, helps you to delete and verify the removal of existing data of the system.
+** Data Privacy ** helps you to delete and verify the removal of existing data from the system.
 
-It can be used to delete tickets, organizations and users. The owner assignment will be unset in case the deleted user is an agent.
+It can be used to delete tickets, organizations, and users. The owner assignment will be unset in case the deleted user is an agent.
 
-Data Privacy tasks will be executed every 10 minutes. The execution might take some additional time depending of the number of objects that should get deleted.
+Data Privacy tasks will be executed every 10 minutes. The execution might take some additional time depending on the number of objects that will be deleted.
 ''')
 
   activityMessage: (item) ->
@@ -25,9 +25,9 @@ Data Privacy tasks will be executed every 10 minutes. The execution might take s
     return if !item.created_by
 
     if item.type is 'create'
-      return App.i18n.translateContent('%s created data privacy task to delete user id |%s|', item.created_by.displayName(), item.objectNative.deletable_id)
+      return App.i18n.translateContent('%s created data privacy task to delete user ID |%s|', item.created_by.displayName(), item.objectNative.deletable_id)
     else if item.type is 'update'
-      return App.i18n.translateContent('%s updated data privacy task to delete user id |%s|', item.created_by.displayName(), item.objectNative.deletable_id)
+      return App.i18n.translateContent('%s updated data privacy task to delete user ID |%s|', item.created_by.displayName(), item.objectNative.deletable_id)
     else if item.type is 'completed'
-      return App.i18n.translateContent('%s completed data privacy task to delete user id |%s|', item.created_by.displayName(), item.objectNative.deletable_id)
+      return App.i18n.translateContent('%s completed data privacy task to delete user ID |%s|', item.created_by.displayName(), item.objectNative.deletable_id)
     return "Unknow action for (#{@objectDisplayName()}/#{item.type}), extend activityMessage() of model."

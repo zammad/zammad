@@ -8,7 +8,7 @@
           <%- @T('Enter the Subdomain of your %s system', 'Kayako') %>:
         </p>
         <div class="form-group">
-          <label for="kayako-subdomain"><%- @T('%s Subdomain', 'Kayako') %></label>
+          <label for="kayako-subdomain"><%- @T('%s subdomain', 'Kayako') %></label>
           <div class="u-positionOrigin">
             <div class="input-group">
               <input type="text" id="kayako-subdomain" class="form-control" placeholder="example" name="kayako-subdomain" aria-describedby="kayako-subdomain-addon">

@@ -24,9 +24,9 @@ class App.Group extends App.Model
 
   activityMessage: (item) ->
     if item.type is 'create'
-      return App.i18n.translateContent('%s created Group |%s|', item.created_by.displayName(), item.title)
+      return App.i18n.translateContent('%s created group |%s|', item.created_by.displayName(), item.title)
     else if item.type is 'update'
-      return App.i18n.translateContent('%s updated Group |%s|', item.created_by.displayName(), item.title)
+      return App.i18n.translateContent('%s updated group |%s|', item.created_by.displayName(), item.title)
     return "Unknow action for (#{@objectDisplayName()}/#{item.type}), extend activityMessage() of model."
 
   avatar: (size = 40, cssClass = []) ->

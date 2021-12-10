@@ -473,7 +473,7 @@ App.Config.set(
             {
               key: 'y'
               hotkeys: true
-              description: __('...of whole textarea')
+              description: __('...of whole text area')
               globalEvent: 'richtext-remove-formating-textarea'
             }
             {

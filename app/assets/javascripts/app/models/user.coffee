@@ -177,9 +177,9 @@ class App.User extends App.Model
     return if !item.created_by
 
     if item.type is 'create'
-      return App.i18n.translateContent('%s created User |%s|', item.created_by.displayName(), item.title)
+      return App.i18n.translateContent('%s created user |%s|', item.created_by.displayName(), item.title)
     else if item.type is 'update'
-      return App.i18n.translateContent('%s updated User |%s|', item.created_by.displayName(), item.title)
+      return App.i18n.translateContent('%s updated user |%s|', item.created_by.displayName(), item.title)
     else if item.type is 'session started'
       return App.i18n.translateContent('%s started a new session', item.created_by.displayName())
     else if item.type is 'switch to'

@@ -12,7 +12,7 @@ RSpec.describe 'Dashboard', type: :system do
     expect(page).to have_css('.ticket_escalation > div > div.stat-title', text: %r{Mood}i)
     expect(page).to have_css('.ticket_channel_distribution > div > div.stat-title', text: %r{Channel Distribution}i)
     expect(page).to have_css('.ticket_load_measure > div > div.stat-title', text: %r{Assigned}i)
-    expect(page).to have_css('.ticket_in_process > div > div.stat-title', text: %r{Your tickets in process}i)
+    expect(page).to have_css('.ticket_in_process > div > div.stat-title', text: %r{My tickets in process}i)
     expect(page).to have_css('.ticket_reopen > div > div.stat-title', text: %r{Reopening rate}i)
   end
 

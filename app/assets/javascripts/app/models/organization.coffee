@@ -79,7 +79,7 @@ Using **Organisations** you can **group** customers. This has among others two i
     return if !item.created_by
 
     if item.type is 'create'
-      return App.i18n.translateContent('%s created Organization |%s|', item.created_by.displayName(), item.title)
+      return App.i18n.translateContent('%s created organization |%s|', item.created_by.displayName(), item.title)
     else if item.type is 'update'
-      return App.i18n.translateContent('%s updated Organization |%s|', item.created_by.displayName(), item.title)
+      return App.i18n.translateContent('%s updated organization |%s|', item.created_by.displayName(), item.title)
     return "Unknow action for (#{@objectDisplayName()}/#{item.type}), extend activityMessage() of model."

@@ -3,7 +3,7 @@
   <h2><%- @T('Enter your %s App Keys', 'Telegram') %></h2>
   <div class="input form-group">
     <div class="formGroup-label">
-      <label for="api_token"><%- @T('%s Api Token', 'Telegram') %> <span>*</span></label>
+      <label for="api_token"><%- @T('%s API Token', 'Telegram') %> <span>*</span></label>
     </div>
     <div class="controls">
       <input id="api_token" type="text" name="api_token" value="<%= @channel.options.api_token %>" class="form-control" required autocomplete="off">

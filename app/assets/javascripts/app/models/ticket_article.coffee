@@ -46,9 +46,9 @@ class App.TicketArticle extends App.Model
     return if !item.created_by
 
     if item.type is 'create'
-      return App.i18n.translateContent('%s created Article for |%s|', item.created_by.displayName(), item.title)
+      return App.i18n.translateContent('%s created article for |%s|', item.created_by.displayName(), item.title)
     else if item.type is 'update'
-      return App.i18n.translateContent('%s updated Article for |%s|', item.created_by.displayName(), item.title)
+      return App.i18n.translateContent('%s updated article for |%s|', item.created_by.displayName(), item.title)
     return "Unknow action for (#{@objectDisplayName()}/#{item.type}), extend activityMessage() of model."
 
   @contentAttachments: (article) ->
