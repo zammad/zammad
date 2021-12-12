@@ -129,17 +129,23 @@ FactoryBot.define do
   end
 
   factory :object_manager_attribute_select, parent: :object_manager_attribute do
+    transient do
+      data_option_options do
+        {
+          'key_1' => 'value_1',
+          'key_2' => 'value_2',
+          'key_3' => 'value_3',
+        }
+      end
+    end
+
     default { '' }
 
     data_type { 'select' }
     data_option do
       {
         'default'    => default,
-        'options'    => {
-          'key_1' => 'value_1',
-          'key_2' => 'value_2',
-          'key_3' => 'value_3',
-        },
+        'options'    => data_option_options,
         'relation'   => '',
         'nulloption' => true,
         'multiple'   => false,

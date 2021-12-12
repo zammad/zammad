@@ -133,10 +133,12 @@ module BrowserTestHelper
   # overview section.
   #
   # @example
-  # display_macro_batches(ticket)
-  # display_macro_batches(tr[data-id='1'])
+  # display_macro_batches(Ticket.first)
   #
-  def display_macro_batches(element)
+  def display_macro_batches(ticket)
+    # get DOM element
+    element = page.find(:table_row, ticket.id).native
+    # get element moving
     click_and_hold(element)
     # move element to y -ticket.location.y
     move_mouse_by(0, -element.location.y + 5)
