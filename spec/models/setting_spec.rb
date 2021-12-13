@@ -56,4 +56,36 @@ RSpec.describe Setting, type: :model do
       end
     end
   end
+
+  describe 'check_broadcast' do
+    context 'when setting is non-frontend' do
+      subject(:setting) { build(:setting, name: 'broadcast_test', state: 'foo', frontend: false) }
+
+      it 'does not broadcast' do
+        allow(Sessions).to receive(:broadcast)
+        setting.save
+        expect(Sessions).not_to have_received(:broadcast)
+      end
+    end
+
+    context 'when setting is public' do
+      subject(:setting) { build(:setting, name: 'broadcast_test', state: 'foo', frontend: true) }
+
+      it 'broadcasts to public' do
+        allow(Sessions).to receive(:broadcast)
+        setting.save
+        expect(Sessions).to have_received(:broadcast).with({ data: { name: 'broadcast_test', value: 'foo' }, event: 'config_update' }, 'public')
+      end
+    end
+
+    context 'when setting requires authentication' do
+      subject(:setting) { build(:setting, name: 'broadcast_test', state: 'foo', frontend: true, preferences: { authentication: true }) }
+
+      it 'broadcasts to authenticated only' do
+        allow(Sessions).to receive(:broadcast)
+        setting.save
+        expect(Sessions).to have_received(:broadcast).with({ data: { name: 'broadcast_test', value: 'foo' }, event: 'config_update' }, 'authenticated')
+      end
+    end
+  end
 end
