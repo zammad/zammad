@@ -56,21 +56,41 @@ class CoreWorkflow::Attributes
     result
   end
 
-  def selected
-    if @payload['params']['id'] && payload_class.exists?(id: @payload['params']['id'])
-      result = saved_only
+  def exists?
+    return if @payload['params']['id'].blank?
+
+    @exists ||= payload_class.exists?(id: @payload['params']['id'])
+  end
+
+  def overwritten
+
+    # params loading and preparing is very expensive so cache it
+    checksum = Digest::MD5.hexdigest(Marshal.dump(@payload['params']))
+    return @overwritten[checksum] if @overwritten.present? && @overwritten[checksum]
+
+    @overwritten = {}
+    @overwritten[checksum] = begin
+      result = saved_only(dump: true)
       overwrite_selected(result)
+    end
+  end
+
+  def selected
+    if exists?
+      overwritten
     else
       selected_only
     end
   end
 
-  def saved_only
-    return if @payload['params']['id'].blank?
+  def saved_only(dump: false)
+    return if !exists?
 
     # dont use lookup here because the cache will not
     # know about new attributes and make crashes
     @saved_only ||= payload_class.find_by(id: @payload['params']['id'])
+
+    return @saved_only if !dump
 
     # we use marshal here because clone still uses references and dup can't
     # detect changes for the rails object
