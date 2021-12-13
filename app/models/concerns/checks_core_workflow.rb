@@ -34,7 +34,7 @@ module ChecksCoreWorkflow
       next if self[key].blank?
       next if restricted_value?(perform_result, key)
 
-      raise Exceptions::UnprocessableEntity, "Invalid value '#{self[key]}' for field '#{key}'!"
+      raise Exceptions::ApplicationModel.new(self, "Invalid value '#{self[key]}' for field '#{key}'!")
     end
   end
 
@@ -49,7 +49,7 @@ module ChecksCoreWorkflow
       next if !column_value?(key)
       next if !colum_default?(key)
 
-      raise Exceptions::UnprocessableEntity, "Missing required value for field '#{key}'!"
+      raise Exceptions::ApplicationModel.new(self, "Missing required value for field '#{key}'!")
     end
   end
 
