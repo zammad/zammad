@@ -68,17 +68,16 @@
 
       <div class="flex justify-center items-center align-baseline p-6">
         <a href="https://zammad.org" target="_blank">
-          <svg class="w-10 h-10">
-            <use xlink:href="@common/assets/icons.svg#icon-logo"></use>
-          </svg>
+          <CommonIcon name="logo" size="large" />
         </a>
 
         <span class="mx-1">{{ i18n.t('Powered by') }}</span>
 
         <a class="ml-1 -mt-1" href="https://zammad.org" target="_blank">
-          <svg class="w-20 h-10 fill-current">
-            <use xlink:href="@common/assets/icons.svg#icon-logotype"></use>
-          </svg>
+          <CommonIcon
+            name="logotype"
+            v-bind:fixed-size="{ width: 80, height: 14 }"
+          />
         </a>
       </div>
     </div>

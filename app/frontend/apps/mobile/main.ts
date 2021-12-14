@@ -11,13 +11,15 @@ import useSessionIdStore from '@common/stores/session/id'
 import '@common/styles/main.css'
 import initializeStore from '@common/stores'
 import initializeStoreSubscriptions from '@common/initializer/storeSubscriptions'
-import useApplicationConfigStore from '@common//stores/application/config'
 import initializeRouter from '@common/router/index'
+import initializeGlobalComponents from '@common/initializer/globalComponents'
 import routes from '@mobile/router'
+import useApplicationConfigStore from '@common//stores/application/config'
 import { i18n } from '@common/utils/i18n'
 import useLocaleStore from '@common/stores/locale'
 import useSessionUserStore from '@common/stores/session/user'
 import useAuthenticatedStore from '@common/stores/authenticated'
+import 'virtual:svg-icons-register' // eslint-disable-line import/no-unresolved
 
 const enableLoadingAnimation = (): void => {
   const loadingElement: Maybe<HTMLElement> =
@@ -39,6 +41,8 @@ export default async function mountApp(): Promise<void> {
 
   initializeStore(app)
   initializeRouter(app, routes)
+
+  initializeGlobalComponents(app)
 
   initializeStoreSubscriptions()
 

@@ -1,5 +1,7 @@
 import { app } from '@storybook/vue3';
 import { i18n } from '@common/utils/i18n';
+import 'virtual:svg-icons-register' // eslint-disable-line import/no-unresolved
+import '@common/styles/main.css'
 
 // adds translation to app
 app.config.globalProperties.i18n = i18n
