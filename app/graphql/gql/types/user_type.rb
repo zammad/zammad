@@ -45,5 +45,6 @@ module Gql::Types
     field :out_of_office_end_at, GraphQL::Types::ISO8601Date, null: true
     field :out_of_office_replacement_id, Integer, null: true
     field :preferences, GraphQL::Types::JSON, null: true
+    field :permissions, Gql::Types::User::PermissionType, null: true, method: :itself
   end
 end

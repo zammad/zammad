@@ -404,17 +404,24 @@ returns
 =end
 
   def permissions_with_child_ids
-    where = ''
-    where_bind = [true]
-    permissions.pluck(:name).each do |permission_name|
-      where += ' OR ' if where != ''
-      where += 'permissions.name = ? OR permissions.name LIKE ?'
-      where_bind.push permission_name
-      where_bind.push "#{permission_name}.%"
-    end
-    return [] if where == ''
+    permissions_with_child_elements.pluck(:id)
+  end
 
-    ::Permission.where("permissions.active = ? AND (#{where})", *where_bind).pluck(:id)
+=begin
+
+returns all accessable permission names of user
+
+  user = User.find(123)
+  user.permissions_with_child_names
+
+returns
+
+  [permission1_name, permission2_name, permission3_name]
+
+=end
+
+  def permissions_with_child_names
+    permissions_with_child_elements.pluck(:name)
   end
 
 =begin
@@ -955,6 +962,20 @@ try to find correct name
     return if !User.exists?(email: email.downcase.strip)
 
     errors.add :base, "Email address '#{email.downcase.strip}' is already used for other user."
+  end
+
+  def permissions_with_child_elements
+    where = ''
+    where_bind = [true]
+    permissions.pluck(:name).each do |permission_name|
+      where += ' OR ' if where != ''
+      where += 'permissions.name = ? OR permissions.name LIKE ?'
+      where_bind.push permission_name
+      where_bind.push "#{permission_name}.%"
+    end
+    return [] if where == ''
+
+    ::Permission.where("permissions.active = ? AND (#{where})", *where_bind)
   end
 
   def validate_roles(role)

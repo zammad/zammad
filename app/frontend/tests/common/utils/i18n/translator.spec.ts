@@ -1,6 +1,5 @@
 // Copyright (C) 2012-2021 Zammad Foundation, https://zammad-foundation.org/
 
-// eslint-disable-next-line import/first
 import { Translator } from '@common/utils/i18n/translator'
 
 describe('Translator', () => {

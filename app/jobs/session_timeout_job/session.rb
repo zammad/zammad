@@ -31,7 +31,7 @@ class SessionTimeoutJob::Session
 
   def timeout_user
     @timeout_user ||= begin
-      permissions = Permission.where(id: user.permissions_with_child_ids).pluck(:name)
+      permissions = user.permissions_with_child_names
 
       result = -1
       config.each do |key, value|

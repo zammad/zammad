@@ -89,6 +89,9 @@ export const CurrentUserDocument = gql`
         ...objectAttributeValues
       }
     }
+    permissions {
+      names
+    }
   }
 }
     ${ObjectAttributeValuesFragmentDoc}`;

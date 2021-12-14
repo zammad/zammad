@@ -12,5 +12,8 @@ query currentUser {
         ...objectAttributeValues
       }
     }
+    permissions {
+      names
+    }
   }
 }

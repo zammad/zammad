@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2021 Zammad Foundation, https://zammad-foundation.org/
 
-import authenticationGuard from '@common/router/guards/authentication'
+import authenticationGuard from '@common/router/guards/before/authentication'
 import { App } from 'vue'
 import {
   createRouter,
@@ -8,6 +8,14 @@ import {
   Router,
   RouteRecordRaw,
 } from 'vue-router'
+import { RouteRecordMeta } from '@common/types/router'
+import permissionGuard from '@common/router/guards/before/permission'
+import headerTitleGuard from '@common/router/guards/after/headerTitle'
+
+declare module 'vue-router' {
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  interface RouteMeta extends RouteRecordMeta {}
+}
 
 export default function initializeRouter(
   app: App,
@@ -19,6 +27,9 @@ export default function initializeRouter(
   })
 
   router.beforeEach(authenticationGuard)
+  router.beforeEach(permissionGuard)
+
+  router.afterEach(headerTitleGuard)
 
   app.use(router)
 

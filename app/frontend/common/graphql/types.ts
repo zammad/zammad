@@ -161,6 +161,13 @@ export type PageInfo = {
   startCursor?: Maybe<Scalars['String']>;
 };
 
+/** Permissions for the current user */
+export type Permission = {
+  __typename?: 'Permission';
+  ids: Array<Scalars['Int']>;
+  names: Array<Scalars['String']>;
+};
+
 /** All available queries */
 export type Queries = {
   __typename?: 'Queries';
@@ -237,6 +244,7 @@ export type User = Node & ObjectAttributeValueInterface & {
   outOfOfficeReplacementId?: Maybe<Scalars['Int']>;
   outOfOfficeStartAt?: Maybe<Scalars['ISO8601Date']>;
   password?: Maybe<Scalars['String']>;
+  permissions?: Maybe<Permission>;
   phone?: Maybe<Scalars['String']>;
   preferences?: Maybe<Scalars['JSON']>;
   source?: Maybe<Scalars['String']>;
@@ -293,7 +301,7 @@ export type LogoutMutation = { __typename?: 'Mutations', logout?: { __typename?:
 export type CurrentUserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CurrentUserQuery = { __typename?: 'Queries', currentUser: { __typename?: 'User', firstname?: string | null | undefined, lastname?: string | null | undefined, preferences?: any | null | undefined, objectAttributeValues: Array<{ __typename?: 'ObjectAttributeValue', value?: string | null | undefined, attribute: { __typename?: 'ObjectManagerAttribute', name: string, display: string, dataType: string, dataOption?: any | null | undefined, screens?: any | null | undefined, editable: boolean, active: boolean } }>, organization?: { __typename?: 'Organization', name: string, objectAttributeValues: Array<{ __typename?: 'ObjectAttributeValue', value?: string | null | undefined, attribute: { __typename?: 'ObjectManagerAttribute', name: string, display: string, dataType: string, dataOption?: any | null | undefined, screens?: any | null | undefined, editable: boolean, active: boolean } }> } | null | undefined } };
+export type CurrentUserQuery = { __typename?: 'Queries', currentUser: { __typename?: 'User', firstname?: string | null | undefined, lastname?: string | null | undefined, preferences?: any | null | undefined, objectAttributeValues: Array<{ __typename?: 'ObjectAttributeValue', value?: string | null | undefined, attribute: { __typename?: 'ObjectManagerAttribute', name: string, display: string, dataType: string, dataOption?: any | null | undefined, screens?: any | null | undefined, editable: boolean, active: boolean } }>, organization?: { __typename?: 'Organization', name: string, objectAttributeValues: Array<{ __typename?: 'ObjectAttributeValue', value?: string | null | undefined, attribute: { __typename?: 'ObjectManagerAttribute', name: string, display: string, dataType: string, dataOption?: any | null | undefined, screens?: any | null | undefined, editable: boolean, active: boolean } }> } | null | undefined, permissions?: { __typename?: 'Permission', names: Array<string> } | null | undefined } };
 
 export type LocalesQueryVariables = Exact<{ [key: string]: never; }>;
 

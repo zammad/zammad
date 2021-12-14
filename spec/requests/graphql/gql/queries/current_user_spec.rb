@@ -29,6 +29,10 @@ RSpec.describe Gql::Queries::CurrentUser, type: :request do
       it 'has data for Organization' do
         expect(graphql_response['data']['currentUser']['organization']).to include('name' => organization.name)
       end
+
+      it 'has permission data' do
+        expect(graphql_response['data']['currentUser']['permissions']['names']).to eq(agent.permissions_with_child_names)
+      end
     end
 
     context 'without authenticated session', authenticated_as: false do

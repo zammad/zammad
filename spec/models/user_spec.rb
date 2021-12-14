@@ -596,6 +596,28 @@ RSpec.describe User, type: :model do
       end
     end
 
+    describe '#permissions_with_child_names' do
+      context 'with privileges for a root permission (e.g., "foo", not "foo.bar")' do
+        subject(:user) { create(:user, roles: [role]) }
+
+        let(:role) { create(:role, permissions: [permission]) }
+        let!(:permission) { create(:permission, name: 'foo') }
+        let!(:child_permission) { create(:permission, name: 'foo.bar') }
+        let!(:inactive_child_permission) { create(:permission, name: 'foo.baz', active: false) }
+
+        it 'includes the names of user’s explicit permissions' do
+          expect(user.permissions_with_child_names)
+            .to include(permission.name)
+        end
+
+        it 'includes the names of user’s active sub-permissions' do
+          expect(user.permissions_with_child_names)
+            .to include(child_permission.name)
+            .and not_include(inactive_child_permission.name)
+        end
+      end
+    end
+
     describe '#locale' do
       subject(:user) { create(:user, preferences: preferences) }
 

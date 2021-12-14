@@ -3809,6 +3809,10 @@ msgstr ""
 msgid "Error"
 msgstr ""
 
+#: app/frontend/apps/mobile/views/Error.vue
+msgid "Error - %s"
+msgstr ""
+
 #: app/controllers/getting_started_controller.rb
 msgid "Error during execution of auto wizard."
 msgstr ""
@@ -4137,6 +4141,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/profile/token_access_created.jst.eco
 msgid "For security reasons, the API token is shown only once. You'll need to save it somewhere secure before continuing."
+msgstr ""
+
+#: app/frontend/common/router/guards/before/permission.ts
+msgid "Forbidden"
 msgstr ""
 
 #: app/assets/javascripts/app/views/login.jst.eco
@@ -4622,6 +4630,7 @@ msgstr ""
 msgid "Holidays iCalendar Feed"
 msgstr ""
 
+#: app/frontend/apps/mobile/router/routes/home.ts
 #: app/frontend/apps/mobile/views/Home.vue
 msgid "Home"
 msgstr ""
@@ -6449,6 +6458,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee
+#: app/frontend/apps/mobile/views/Error.vue
 #: app/helpers/knowledge_base_public_page_title_helper.rb
 msgid "Not Found"
 msgstr ""
@@ -8213,6 +8223,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/login.coffee
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/apps/mobile/router/index.ts
 #: app/frontend/apps/mobile/views/Login.vue
 msgid "Sign in"
 msgstr ""
@@ -9288,6 +9299,14 @@ msgstr ""
 msgid "Ticket Number ignore system_id"
 msgstr ""
 
+#: app/frontend/apps/mobile/views/TicketOverview.vue
+msgid "Ticket Overview"
+msgstr ""
+
+#: app/frontend/apps/mobile/router/routes/ticketOverview.ts
+msgid "Ticket Overviews"
+msgstr ""
+
 #: app/assets/javascripts/app/models/sla.coffee
 msgid "Ticket Selector"
 msgstr ""
@@ -10199,6 +10218,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/cti/not_configured.jst.eco
 msgid "We support"
+msgstr ""
+
+#: app/frontend/apps/mobile/views/Error.vue
+msgid "We're sorry, but this page doesn't exist."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/user_signup_check.coffee

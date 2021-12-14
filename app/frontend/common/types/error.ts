@@ -23,3 +23,8 @@ export interface GraphQLHandlerError {
   type: GraphQLErrorTypes
   message?: string
 }
+
+export enum ErrorStatusCodes {
+  'Forbidden' = 403,
+  'NotFound' = 404,
+}

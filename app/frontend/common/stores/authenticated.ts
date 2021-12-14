@@ -9,7 +9,6 @@ import apolloClient from '@common/server/apollo/client'
 import useApplicationConfigStore from '@common/stores/application/config'
 import useSessionUserStore from '@common/stores/session/user'
 
-// TODO add this as a persistent state
 const useAuthenticatedStore = defineStore('authenticated', {
   state: (): SingleValueStore<boolean> => {
     return {

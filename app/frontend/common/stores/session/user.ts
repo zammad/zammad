@@ -5,6 +5,7 @@ import { defineStore } from 'pinia'
 import { QueryHandler } from '@common/server/apollo/handler'
 import { SingleValueStore, UserData } from '@common/types/store'
 import useLocaleStore from '@common/stores/locale'
+import hasPermission from '@common/permissions/hasPermission'
 
 const useSessionUserStore = defineStore('sessionUser', {
   state: (): SingleValueStore<Maybe<UserData>> => {
@@ -34,6 +35,13 @@ const useSessionUserStore = defineStore('sessionUser', {
       }
 
       return this.value
+    },
+
+    hasPermission(requiredPermission: Array<string>): boolean {
+      return hasPermission(
+        requiredPermission,
+        this.value?.permissions?.names || [],
+      )
     },
   },
 })

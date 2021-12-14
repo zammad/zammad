@@ -33,8 +33,8 @@ class UserInfo::Assets
     end
 
     self.level = UserInfo::Assets::LEVEL_CUSTOMER
-    Permission.where(id: user.permissions_with_child_ids).each do |permission|
-      case permission.name
+    user.permissions_with_child_names.each do |permission|
+      case permission
       when %r{^admin\.}
         self.level = UserInfo::Assets::LEVEL_ADMIN
         break

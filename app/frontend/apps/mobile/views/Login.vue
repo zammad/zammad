@@ -2,9 +2,9 @@
 
 <template>
   <!-- TODO: Only a dummy implementation for the login... -->
-  <div class="flex flex-col h-screen items-center justify-center">
+  <div class="flex flex-col h-full min-h-screen items-center justify-center">
     <div class="max-w-sm w-full">
-      <div class="h-full m-auto">
+      <div class="m-auto">
         <div class="flex-grow flex flex-col justify-center">
           <p>{{ i18n.t('Log in with %s', config.get('fqdn') as string) }}</p>
 

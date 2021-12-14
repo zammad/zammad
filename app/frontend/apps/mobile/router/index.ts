@@ -2,22 +2,23 @@
 
 import { RouteRecordRaw } from 'vue-router'
 import Login from '@mobile/views/Login.vue'
-import Home from '@mobile/views/Home.vue'
+import Error from '@mobile/views/Error.vue'
 import LayoutMain from '@mobile/components/layout/LayoutMain.vue'
+import { ImportGlobEagerDefault } from '@common/types/utils'
 
-// TODO ...extend "meta" in RouteRecordRaw with real type behind if possible.
+const routeModules = import.meta.globEager('./routes/*.ts')
 
-const mainRoutes: Array<RouteRecordRaw> = [
-  {
-    path: '/',
-    name: 'Home',
-    props: true,
-    component: Home,
-    meta: {
-      requiresAuth: true,
-    },
-  },
-]
+const mainRoutes: Array<RouteRecordRaw> = []
+
+Object.values(routeModules).forEach((module: ImportGlobEagerDefault) => {
+  const defaultExport = module.default as RouteRecordRaw | Array<RouteRecordRaw>
+
+  if (Array.isArray(defaultExport)) {
+    mainRoutes.push(...defaultExport)
+  } else {
+    mainRoutes.push(defaultExport)
+  }
+})
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -25,7 +26,22 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Login',
     props: true,
     component: Login,
-    meta: {},
+    meta: {
+      title: __('Sign in'),
+      requiresAuth: false,
+      requiredPermission: null,
+    },
+  },
+  {
+    path: '/error',
+    alias: '/:pathMatch(.*)*',
+    name: 'Error',
+    props: true,
+    component: Error,
+    meta: {
+      requiresAuth: false,
+      requiredPermission: null,
+    },
   },
   {
     path: '/',

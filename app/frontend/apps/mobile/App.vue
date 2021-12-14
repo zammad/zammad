@@ -18,6 +18,7 @@ import CommonNotifications from '@common/components/common/CommonNotifications.v
 import useApplicationLoadedStore from '@common/stores/application/loaded'
 import useAuthenticatedStore from '@common/stores/authenticated'
 import useSessionIdStore from '@common/stores/session/id'
+import useMetaTitle from '@common/composables/useMetaTitle'
 import { useRoute, useRouter } from 'vue-router'
 
 // TODO ... maybe show some special message, if the session was removed from a other place.
@@ -30,6 +31,8 @@ const route = useRoute()
 
 const sessionId = useSessionIdStore()
 const authenticated = useAuthenticatedStore()
+
+useMetaTitle().initializeMetaTitle()
 
 const applicationLoaded = useApplicationLoadedStore()
 applicationLoaded.setLoaded()
