@@ -8,7 +8,7 @@ module Gql::Queries
     type String, null: false
 
     def resolve(...)
-      context[:controller].session.id
+      context[:sid]
     end
 
   end

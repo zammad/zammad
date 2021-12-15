@@ -2,6 +2,8 @@
 
 import QueryHandler from '@common/server/apollo/handler/QueryHandler'
 import MutationHandler from '@common/server/apollo/handler/MutationHandler'
+import SubscriptionHandler from '@common/server/apollo/handler/SubscriptionHandler'
 
 export { QueryHandler }
 export { MutationHandler }
+export { SubscriptionHandler }

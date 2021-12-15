@@ -6,12 +6,8 @@ const csrfLink = new ApolloLink((operation, forward) => {
   return forward(operation).map((response) => {
     const context = operation.getContext()
 
-    const {
-      response: { headers },
-    } = context
-
-    if (headers) {
-      const csrfToken = headers.get('CSRF-Token')
+    if (context.response) {
+      const csrfToken = context.response.headers.get('CSRF-Token')
 
       if (csrfToken) {
         localStorage.setItem('csrf-token', csrfToken) // TODO move to a different solution. only for now...

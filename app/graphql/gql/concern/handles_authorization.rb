@@ -32,7 +32,7 @@ module Gql::Concern::HandlesAuthorization
     def self.authorized?(*args)
       ctx = args[-1] # This may be called with 2 or 3 params, context is last.
 
-      # CSRF
+      # CSRF - since this is expensive it is only called by mutations.
       verify_csrf_token(ctx) if requires_csrf_verification?
 
       # Authenticate

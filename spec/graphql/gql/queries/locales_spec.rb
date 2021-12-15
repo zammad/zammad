@@ -2,15 +2,11 @@
 
 require 'rails_helper'
 
-RSpec.describe Gql::Queries::Locales, type: :request do
+RSpec.describe Gql::Queries::Locales, type: :graphql do
 
   context 'when fetching locales' do
     let(:agent) { create(:agent) }
-    let(:query) { File.read(Rails.root.join('app/frontend/common/graphql/queries/locales.graphql')) }
-    let(:graphql_response) do
-      post '/graphql', params: { query: query }, as: :json
-      json_response
-    end
+    let(:query) { read_graphql_file('common/graphql/queries/locales.graphql') }
     let(:target_locale) do
       {
         'locale' => 'de-de',
@@ -19,6 +15,10 @@ RSpec.describe Gql::Queries::Locales, type: :request do
         'dir'    => 'ltr',
         'active' => true,
       }
+    end
+
+    before do
+      graphql_execute(query)
     end
 
     context 'with authenticated session', authenticated_as: :agent do

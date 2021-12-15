@@ -69,7 +69,6 @@ describe('QueryHandler', () => {
       const queryHandlerObject = new QueryHandler(sampleQuery({ id: 1 }))
       expect(queryHandlerObject).toBeInstanceOf(QueryHandler)
     })
-    //
     it('default handler options can be changed', () => {
       const errorNotitifactionMessage = 'A test message.'
 
@@ -113,20 +112,18 @@ describe('QueryHandler', () => {
       const queryHandlerObject = new QueryHandler(sampleQuery({ id: 1 }))
 
       const result = await queryHandlerObject.loadedResult()
-      expect(result).toStrictEqual(querySampleResult)
+      expect(result).toEqual(querySampleResult)
     })
 
-    it('loaded result is also resolved after refetch with same data', async () => {
+    it('loaded result is also resolved after additional result call with active trigger refetch', async () => {
       expect.assertions(2)
       const queryHandlerObject = new QueryHandler(sampleQuery({ id: 1 }))
 
       let result = await queryHandlerObject.loadedResult()
-      expect(result).toStrictEqual(querySampleResult)
+      expect(result).toEqual(querySampleResult)
 
-      queryHandlerObject.refetch()
-
-      result = await queryHandlerObject.loadedResult()
-      expect(result).toStrictEqual(querySampleResult)
+      result = await queryHandlerObject.loadedResult(true)
+      expect(result).toEqual(querySampleResult)
     })
 
     it('watch on result change', async () => {
@@ -134,7 +131,7 @@ describe('QueryHandler', () => {
       const queryHandlerObject = new QueryHandler(sampleQuery({ id: 1 }))
 
       queryHandlerObject.watchOnResult((result) => {
-        expect(result).toStrictEqual(querySampleResult)
+        expect(result).toEqual(querySampleResult)
       })
     })
   })
@@ -158,30 +155,37 @@ describe('QueryHandler', () => {
 
       it('use error callback', async () => {
         expect.assertions(1)
+
+        const errorCallbackSpy = jest.fn()
+
         const queryHandlerObject = new QueryHandler(sampleQuery({ id: 1 }), {
           errorCallback: (error) => {
-            expect(error).toStrictEqual({
-              type: 'Exceptions::NotAuthorized',
-              message: 'GraphQL Error',
-            })
+            errorCallbackSpy(error)
           },
         })
 
         await queryHandlerObject.loadedResult()
+
+        expect(errorCallbackSpy).toHaveBeenCalledWith({
+          type: 'Exceptions::NotAuthorized',
+          message: 'GraphQL Error',
+        })
       })
 
       it('refetch with error', async () => {
         expect.assertions(1)
         const queryHandlerObject = new QueryHandler(sampleQuery({ id: 1 }))
 
+        const errorCallbackSpy = jest.fn()
+
         await queryHandlerObject.loadedResult()
-        queryHandlerObject.refetch().catch(() => {
-          return null
+
+        // Refetch after first load again.
+        await queryHandlerObject.refetch().catch((error) => {
+          errorCallbackSpy(error)
         })
 
-        const error = await queryHandlerObject.loadedResult()
-
-        expect(error).toBeTruthy()
+        expect(errorCallbackSpy).toHaveBeenCalled()
       })
     })
 
@@ -194,7 +198,7 @@ describe('QueryHandler', () => {
         expect.assertions(1)
         const queryHandlerObject = new QueryHandler(sampleQuery({ id: 1 }), {
           errorCallback: (error) => {
-            expect(error).toStrictEqual({
+            expect(error).toEqual({
               type: GraphQLErrorTypes.NetworkError,
             })
           },

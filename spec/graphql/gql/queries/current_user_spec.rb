@@ -2,18 +2,18 @@
 
 require 'rails_helper'
 
-RSpec.describe Gql::Queries::CurrentUser, type: :request do
+RSpec.describe Gql::Queries::CurrentUser, type: :graphql do
 
   context 'when fetching user information' do
     let(:organization) { create(:organization) }
     let(:agent) { create(:agent, department: 'TestDepartment', organization: organization) }
     let(:query) do
-      File.read(Rails.root.join('app/frontend/common/graphql/queries/currentUser.graphql')) +
-        File.read(Rails.root.join('app/frontend/common/graphql/fragments/objectAttributeValues.graphql'))
+      read_graphql_file('common/graphql/queries/currentUser.graphql') +
+        read_graphql_file('common/graphql/fragments/objectAttributeValues.graphql')
     end
-    let(:graphql_response) do
-      post '/graphql', params: { query: query }, as: :json
-      json_response
+
+    before do
+      graphql_execute(query)
     end
 
     context 'with authenticated session', authenticated_as: :agent do

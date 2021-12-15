@@ -1,11 +1,11 @@
 .template_integration_es: &template_integration_es
   extends:
     - .env_base
-    - .services_mysql_postgresql_elasticsearch
+    - .services_mysql_postgresql_redis_memcached_elasticsearch
     - .variables_es
   stage: test
   variables:
-    RAILS_ENV: "test"
+    RAILS_ENV: 'test'
   tags:
     - integration
   script:
@@ -17,18 +17,18 @@
     - bundle exec rspec --tag searchindex --tag ~type:system --profile 10
 
 # Lowest supported version
-"rspec:es:7.8":
+'rspec:es:7.8':
   <<: *template_integration_es
   variables:
     ELASTICSEARCH_TAG: '7.8.1'
 
 # Highest supported version (except for newer releases that are not yet in CI)
-"rspec:es:7.16":
+'rspec:es:7.16':
   <<: *template_integration_es
   variables:
     ELASTICSEARCH_TAG: '7.16'
 
-"rspec:es:8.1":
+'rspec:es:8.1':
   <<: *template_integration_es
   variables:
     ELASTICSEARCH_TAG: '8.1'

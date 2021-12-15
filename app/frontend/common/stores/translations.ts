@@ -1,13 +1,17 @@
 // Copyright (C) 2012-2021 Zammad Foundation, https://zammad-foundation.org/
 
 import { defineStore } from 'pinia'
-import { SingleValueStore } from '@common/types/store'
+import { SingleValueStore, TranslationsStoreValue } from '@common/types/store'
 import { i18n } from '@common/utils/i18n'
 import log from '@common/utils/log'
 import { useTranslationsQuery } from '@common/graphql/api'
 import { QueryHandler } from '@common/server/apollo/handler'
-
-type TranslationsStoreValue = { cacheKey: string; translations: object }
+import {
+  TranslationsQuery,
+  TranslationsQueryVariables,
+} from '@common/graphql/types'
+import { reactive } from 'vue'
+import { ReactiveFunction } from '@common/types/utils'
 
 function localStorageKey(locale: string): string {
   return `translationsStoreCache::${locale}`
@@ -30,6 +34,25 @@ function setCache(locale: string, value: TranslationsStoreValue): void {
   log.debug('translations.setCache()', locale, value)
 }
 
+const translationsQueryVariables = reactive({})
+
+let translationsQuery: QueryHandler<
+  TranslationsQuery,
+  TranslationsQueryVariables
+>
+
+const getTranslationsQuery = () => {
+  if (translationsQuery) return translationsQuery
+
+  translationsQuery = new QueryHandler(
+    useTranslationsQuery(
+      translationsQueryVariables as ReactiveFunction<TranslationsQueryVariables>,
+    ),
+  )
+
+  return translationsQuery
+}
+
 const useTranslationsStore = defineStore('translations', {
   state: (): SingleValueStore<TranslationsStoreValue> => {
     return {
@@ -45,11 +68,14 @@ const useTranslationsStore = defineStore('translations', {
 
       const cachedData = loadCache(locale)
 
-      const query = new QueryHandler(
-        useTranslationsQuery({ locale, cacheKey: cachedData.cacheKey }),
-      )
+      Object.assign(translationsQueryVariables, {
+        cacheKey: cachedData.cacheKey,
+        locale,
+      })
 
-      const result = query.result().value ?? (await query.loadedResult())
+      const query = getTranslationsQuery()
+
+      const result = await query.loadedResult()
       if (result?.translations?.isCacheStillValid) {
         this.value = cachedData
       } else {
@@ -66,8 +92,6 @@ const useTranslationsStore = defineStore('translations', {
         this.value.translations,
       )
       i18n.setTranslationMap(new Map(Object.entries(this.value.translations)))
-
-      // TODO: trigger rerender?
     },
   },
 })

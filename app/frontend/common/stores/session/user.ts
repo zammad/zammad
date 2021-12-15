@@ -6,6 +6,22 @@ import { QueryHandler } from '@common/server/apollo/handler'
 import { SingleValueStore, UserData } from '@common/types/store'
 import useLocaleStore from '@common/stores/locale'
 import hasPermission from '@common/permissions/hasPermission'
+import {
+  CurrentUserQuery,
+  CurrentUserQueryVariables,
+} from '@common/graphql/types'
+
+let currentUserQuery: QueryHandler<CurrentUserQuery, CurrentUserQueryVariables>
+
+const getCurrentUserQuery = () => {
+  if (currentUserQuery) return currentUserQuery
+
+  currentUserQuery = new QueryHandler(
+    useCurrentUserQuery({ fetchPolicy: 'no-cache' }),
+  )
+
+  return currentUserQuery
+}
 
 const useSessionUserStore = defineStore('sessionUser', {
   state: (): SingleValueStore<Maybe<UserData>> => {
@@ -14,16 +30,10 @@ const useSessionUserStore = defineStore('sessionUser', {
     }
   },
   actions: {
-    async getCurrentUser(refetchQuery = false): Promise<UserData> {
-      const currentUserQuery = new QueryHandler(useCurrentUserQuery())
+    async getCurrentUser(): Promise<UserData> {
+      const currentUserQuery = getCurrentUserQuery()
 
-      // Trigger query refetch in some situtations or if already some data exists,
-      // to skip the cache.
-      if (refetchQuery || currentUserQuery.result().value?.currentUser) {
-        currentUserQuery.refetch()
-      }
-
-      const result = await currentUserQuery.onLoaded()
+      const result = await currentUserQuery.loadedResult(true)
       this.value = result?.currentUser || null
 
       // Check if the locale is different, then a update is needed.

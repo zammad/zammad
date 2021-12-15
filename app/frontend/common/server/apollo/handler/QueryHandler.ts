@@ -1,15 +1,13 @@
 // Copyright (C) 2012-2021 Zammad Foundation, https://zammad-foundation.org/
 
-import {
-  OperationVariables,
-  NetworkStatus,
-  ApolloQueryResult,
-} from '@apollo/client/core'
+import { OperationVariables, SubscribeToMoreOptions } from '@apollo/client/core'
 import BaseHandler from '@common/server/apollo/handler/BaseHandler'
 import {
   OperationQueryOptionsReturn,
   OperationQueryResult,
+  WatchResultCallback,
 } from '@common/types/server/apollo/handler'
+import { ReactiveFunction } from '@common/types/utils'
 import { UseQueryReturn } from '@vue/apollo-composable'
 import { Ref, watch } from 'vue'
 
@@ -21,9 +19,7 @@ export default class QueryHandler<
   TVariables,
   UseQueryReturn<TResult, TVariables>
 > {
-  private refetchTriggered?: boolean
-
-  private refetchResolver?: (result?: ApolloQueryResult<TResult>) => void
+  private firstResultLoaded = false
 
   public options(): OperationQueryOptionsReturn<TResult, TVariables> {
     return this.operationResult.options
@@ -33,9 +29,15 @@ export default class QueryHandler<
     return this.operationResult.result
   }
 
-  public refetch(variables?: TVariables): Promise<Maybe<TResult>> {
-    this.refetchTriggered = true
+  public subscribeToMore<TSubscriptionData = TResult>(
+    options: ReactiveFunction<
+      SubscribeToMoreOptions<TResult, TVariables, TSubscriptionData>
+    >,
+  ): void {
+    return this.operationResult.subscribeToMore(options)
+  }
 
+  public refetch(variables?: TVariables): Promise<Maybe<TResult>> {
     return new Promise((resolve, reject) => {
       const refetch = this.operationResult.refetch(variables)
 
@@ -46,48 +48,54 @@ export default class QueryHandler<
 
       refetch
         .then((result) => {
-          if (this.refetchResolver) this.refetchResolver(result)
-          this.refetchTriggered = false
-
           resolve(result.data)
         })
         .catch(() => {
-          if (this.refetchResolver) this.refetchResolver()
-          this.refetchTriggered = false
-
-          reject()
+          reject(this.operationError().value)
         })
     })
   }
 
-  public async onLoaded(): Promise<Maybe<TResult>> {
+  public async onLoaded(
+    triggerPossibleRefetch = false,
+  ): Promise<Maybe<TResult>> {
+    if (this.firstResultLoaded && triggerPossibleRefetch) {
+      return this.refetch()
+    }
+
     return new Promise((resolve, reject) => {
-      if (this.refetchTriggered) {
-        this.refetchResolver = (result) => {
-          if (!result) {
-            return reject(this.operationError().value)
-          }
-          return resolve(result?.data || null)
-        }
-      } else {
-        this.operationResult.onResult((result) => {
-          if (result.networkStatus === NetworkStatus.error) {
-            return reject(this.operationError().value)
-          }
+      let errorUnsubscribe!: () => void
+      let resultUnsubscribe!: () => void
 
-          return resolve(result.data)
-        })
+      const onFirstResultLoaded = () => {
+        this.firstResultLoaded = true
+        resultUnsubscribe()
+        errorUnsubscribe()
       }
+
+      resultUnsubscribe = watch(this.result(), (result) => {
+        // After a variable change, the result will be reseted.
+        if (result === undefined) return null
+
+        // Remove the watchers again after the promise was resolved.
+        onFirstResultLoaded()
+        return resolve(result || null)
+      })
+
+      errorUnsubscribe = watch(this.operationError(), (error) => {
+        onFirstResultLoaded()
+        return reject(error)
+      })
     })
   }
 
-  public loadedResult(): Promise<Maybe<TResult>> {
-    return this.onLoaded()
+  public loadedResult(triggerPossibleRefetch = false): Promise<Maybe<TResult>> {
+    return this.onLoaded(triggerPossibleRefetch)
       .then((data: Maybe<TResult>) => data)
       .catch((error) => error)
   }
 
-  public watchOnResult(callback: (result?: TResult) => void): void {
+  public watchOnResult(callback: WatchResultCallback<TResult>): void {
     watch(
       this.result(),
       (result) => {

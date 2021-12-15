@@ -3,7 +3,9 @@
 class Gql::ZammadSchema < GraphQL::Schema
   mutation(Gql::EntryPoints::Mutations)
   query(Gql::EntryPoints::Queries)
-  # subscription(Gql::Types::SubscriptionType)
+  subscription(Gql::EntryPoints::Subscriptions)
+
+  use GraphQL::Subscriptions::ActionCableSubscriptions
 
   # Enable batch loading
   use GraphQL::Batch

@@ -2,14 +2,14 @@
 
 require 'rails_helper'
 
-RSpec.describe Gql::Queries::SessionId, type: :request do
+RSpec.describe Gql::Queries::SessionId, type: :graphql do
 
   context 'when checking the SessionID' do
     let(:agent) { create(:agent) }
-    let(:query) { File.read(Rails.root.join('app/frontend/common/graphql/queries/sessionId.graphql')) }
-    let(:graphql_response) do
-      post '/graphql', params: { query: query }, as: :json
-      json_response
+    let(:query) { read_graphql_file('common/graphql/queries/sessionId.graphql') }
+
+    before do
+      graphql_execute(query)
     end
 
     context 'with authenticated session', authenticated_as: :agent do

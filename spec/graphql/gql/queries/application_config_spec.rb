@@ -2,14 +2,14 @@
 
 require 'rails_helper'
 
-RSpec.describe Gql::Queries::ApplicationConfig, type: :request do
+RSpec.describe Gql::Queries::ApplicationConfig, type: :graphql do
 
   context 'when fetching the application config' do
     let(:agent) { create(:agent) }
-    let(:query) { File.read(Rails.root.join('app/frontend/apps/mobile/graphql/queries/applicationConfig.graphql')) }
-    let(:graphql_response) do
-      post '/graphql', params: { query: query }, as: :json
-      json_response
+    let(:query) { read_graphql_file('apps/mobile/graphql/queries/applicationConfig.graphql') }
+
+    before do
+      graphql_execute(query)
     end
 
     context 'with authenticated session', authenticated_as: :agent do

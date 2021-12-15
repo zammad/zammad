@@ -4,6 +4,8 @@ import {
   UseMutationReturn,
   UseQueryReturn,
   UseQueryOptions,
+  UseSubscriptionReturn,
+  UseSubscriptionOptions,
 } from '@vue/apollo-composable'
 import { Ref } from 'vue'
 import { GraphQLHandlerError } from '@common/types/error'
@@ -11,10 +13,20 @@ import { GraphQLHandlerError } from '@common/types/error'
 export type OperationReturn<TResult, TVariables> =
   | UseQueryReturn<TResult, TVariables>
   | UseMutationReturn<TResult, TVariables>
+  | UseSubscriptionReturn<TResult, TVariables>
 
 export type OperationQueryOptionsReturn<TResult, TVariables> =
   | UseQueryOptions<TResult, TVariables>
   | Ref<UseQueryOptions<TResult, TVariables>>
+
+export type OperationSubscriptionOptionsReturn<TResult, TVariables> =
+  | UseSubscriptionOptions<TResult, TVariables>
+  | Ref<UseSubscriptionOptions<TResult, TVariables>>
+
+export type OperationSubscriptionsResult = {
+  __typename?: 'Subscriptions'
+  [key: string]: unknown
+}
 
 export type OperationQueryResult = {
   __typename?: 'Queries'
@@ -26,7 +38,10 @@ export type OperationMutationResult = {
   [key: string]: unknown
 }
 
-export type OperationResult = OperationQueryResult | OperationMutationResult
+export type OperationResult =
+  | OperationQueryResult
+  | OperationMutationResult
+  | OperationSubscriptionsResult
 
 export interface BaseHandlerOptions {
   errorShowNotification: boolean
@@ -39,3 +54,5 @@ export type CommonHandlerOptions<TOptions> = BaseHandlerOptions & TOptions
 
 export type CommonHandlerOptionsParameter<TOptions> =
   Partial<BaseHandlerOptions> & Partial<TOptions>
+
+export type WatchResultCallback<TResult> = (result?: TResult) => void

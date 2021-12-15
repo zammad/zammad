@@ -10,10 +10,10 @@
     <p v-on:click="refetchConfig">refetchConfig</p>
     <br /><br />
     <h1 class="text-lg mb-4">Configs:</h1>
-    <template v-if="result && result.applicationConfig">
-      <p v-for="item in result.applicationConfig" v-bind:key="item.key">
-        Key: {{ item.key }}<br />
-        Value: {{ item.value }} <br /><br />
+    <template v-if="config.value">
+      <p v-for="(value, key) in config.value" v-bind:key="(key as string)">
+        Key: {{ key }}<br />
+        Value: {{ value }} <br /><br />
       </p>
     </template>
   </div>
@@ -26,8 +26,6 @@ import useSessionUserStore from '@common/stores/session/user'
 import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
 import useApplicationConfigStore from '@common/stores/application/config'
-import { QueryHandler } from '@common/server/apollo/handler'
-import { useApplicationConfigQuery } from '@mobile/graphql/api'
 
 // TODO: Only testing for the notifications...
 const { notify } = useNotifications()
@@ -54,10 +52,6 @@ const logout = (): void => {
 const config = useApplicationConfigStore()
 
 const refetchConfig = async (): Promise<void> => {
-  await config.getConfig(true)
+  await config.getConfig()
 }
-
-// TODO: Only testing for the query handler...
-const configQuery = new QueryHandler(useApplicationConfigQuery())
-const result = configQuery.result()
 </script>

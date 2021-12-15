@@ -8,8 +8,7 @@ module Gql::EntryPoints
 
     description 'All available queries'
 
-    # No auth required for the main query entry point, Gql::queries
-    #   perform their own auth handling.
+    # No auth required for the main query entry point, Gql::Queries perform their own auth handling.
     def self.requires_authentication?
       false
     end

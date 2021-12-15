@@ -18,7 +18,6 @@ const mutationSampleResult = {
 }
 
 const mutationSampleErrorResult = {
-  // networkStatus: NetworkStatus.error,
   errors: [
     {
       message: 'GraphQL Error',
@@ -121,7 +120,7 @@ describe('MutationHandler', () => {
       const mutationHandlerObject = new MutationHandler(sampleMutation())
       const result = await mutationHandlerObject.send({ id: 1, Sample: {} })
 
-      expect(result).toStrictEqual(result)
+      expect(result).toEqual(result)
     })
   })
 
@@ -144,17 +143,22 @@ describe('MutationHandler', () => {
 
       it('use error callback', async () => {
         expect.assertions(1)
+
+        const errorCallbackSpy = jest.fn()
+
         const mutationHandlerObject = new MutationHandler(sampleMutation(), {
           errorCallback: (error) => {
-            expect(error).toStrictEqual({
-              type: 'Exceptions::NotAuthorized',
-              message: 'GraphQL Error',
-            })
+            errorCallbackSpy(error)
           },
         })
 
         await mutationHandlerObject.send().catch(() => {
           return null
+        })
+
+        expect(errorCallbackSpy).toHaveBeenCalledWith({
+          type: 'Exceptions::NotAuthorized',
+          message: 'GraphQL Error',
         })
       })
     })
@@ -168,7 +172,7 @@ describe('MutationHandler', () => {
         expect.assertions(1)
         const mutationHandlerObject = new MutationHandler(sampleMutation(), {
           errorCallback: (error) => {
-            expect(error).toStrictEqual({
+            expect(error).toEqual({
               type: GraphQLErrorTypes.NetworkError,
             })
           },

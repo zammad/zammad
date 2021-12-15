@@ -2,6 +2,7 @@
 
 require 'rails_helper'
 
+# Login and logout work only via controller, so use type: request.
 RSpec.describe Gql::Mutations::Login, type: :request do
 
   context 'when logging on' do

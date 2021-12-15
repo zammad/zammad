@@ -54,7 +54,7 @@ const useAuthenticatedStore = defineStore('authenticated', {
         sessionId.value = newSessionId
 
         await Promise.all([
-          useApplicationConfigStore().getConfig(true),
+          useApplicationConfigStore().getConfig(),
           useSessionUserStore().getCurrentUser(),
         ])
       }

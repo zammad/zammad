@@ -5,6 +5,7 @@ import useLocaleStore from '@common/stores/locale'
 import useSessionIdStore from '@common/stores/session/id'
 import useSessionUserStore from '@common/stores/session/user'
 import useApplicationLoadedStore from '@common/stores/application/loaded'
+import consumer from '@common/server/action_cable/consumer'
 
 export default function initializeStoreSubscriptions(): void {
   const sessionId = useSessionIdStore()
@@ -21,6 +22,8 @@ export default function initializeStoreSubscriptions(): void {
         authenticated.value = false
         sessionUser.value = null
       }
+      // Reopen WS connection to reflect authentication state.
+      consumer.connection.reopen()
     })
 
     sessionUser.$subscribe((mutation, state) => {

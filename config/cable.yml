@@ -1,10 +1,2 @@
-development:
-  adapter: async
-
-test:
-  adapter: test
-
-production:
-  adapter: redis
-  url: <%= ENV.fetch("REDIS_URL") { "redis://localhost:6379/1" } %>
-  channel_prefix: zammad_production
+# This file is not used by Zammad, configuration happens in:
+#   config/initializers/action_cable_preferences.rb

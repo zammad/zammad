@@ -2,7 +2,8 @@
 
 module Gql::Types
   class BaseObject < GraphQL::Schema::Object
-    include Gql::Concern::HandlesAuthorization
+    # Don't include HandlesAuthorization here. The auto-generated payload types
+    #   use this as a base but allow no changes of the behaviour regarding autentication/authorization.
 
     edge_type_class(Gql::Types::BaseEdge)
     connection_type_class(Gql::Types::BaseConnection)

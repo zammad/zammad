@@ -94,7 +94,6 @@ export default abstract class BaseHandler<
           type: GraphQLErrorTypes.UnkownError,
         }
       }
-
       options.errorCallback(errorHandler)
     }
   }

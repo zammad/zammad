@@ -64,7 +64,7 @@ module ZammadAuthenticatedAsHelper
 end
 
 RSpec.configure do |config|
-  %i[request system].each do |type|
+  %i[request system graphql].each do |type|
     config.include ZammadAuthenticatedAsHelper, type: type
   end
 end

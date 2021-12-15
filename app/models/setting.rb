@@ -5,10 +5,10 @@ class Setting < ApplicationModel
   store         :state_current
   store         :state_initial
   store         :preferences
-  before_create :state_check, :set_initial, :check_broadcast
-  after_create  :reset_change_id, :reset_cache
-  before_update :state_check, :check_broadcast
-  after_update  :reset_change_id, :reset_cache
+  before_create :state_check, :set_initial
+  after_create  :reset_change_id, :reset_cache, :check_broadcast
+  before_update :state_check
+  after_update  :reset_change_id, :reset_cache, :check_broadcast
 
   attr_accessor :state
 
@@ -191,6 +191,7 @@ reload config settings
     if state_current.key?(:value)
       value = state_current[:value]
     end
+
     Sessions.broadcast(
       {
         event: 'config_update',
@@ -198,6 +199,7 @@ reload config settings
       },
       preferences[:authentication] ? 'authenticated' : 'public'
     )
+    Gql::ZammadSchema.subscriptions.trigger(:configUpdated, {}, self)
     true
   end
 end

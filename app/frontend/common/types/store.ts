@@ -13,3 +13,5 @@ export type ConfigValues =
   | Primitive
   | Record<string, Primitive>
   | Array<Primitive | Record<string, Primitive>>
+
+export type TranslationsStoreValue = { cacheKey: string; translations: object }

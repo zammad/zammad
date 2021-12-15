@@ -3,6 +3,7 @@
 
 require 'yaml'
 require 'resolv'
+require 'fileutils'
 
 #
 # Configures the CI system
@@ -20,32 +21,6 @@ class ConfigureEnvironment
     FRESHENVFILE=fresh.env && test -f $FRESHENVFILE && source $FRESHENVFILE
     true
   ENV_FILE_CONTENT
-
-  def self.configure_redis
-    if ENV['REDIS_URL'].nil? || ENV['REDIS_URL'].empty? # rubocop:disable Rails/Blank
-      puts 'Redis is not available, using File as web socket session store.'
-      return
-    end
-    if [true, false].sample
-      puts 'Using Redis as web socket session store.'
-      return
-    end
-    puts 'Using File as web socket session store.'
-    @env_file_content += "unset REDIS_URL\n"
-  end
-
-  def self.configure_memcached
-    if ENV['MEMCACHE_SERVERS'].nil? || ENV['MEMCACHE_SERVERS'].empty? # rubocop:disable Rails/Blank
-      puts 'Memcached is not available, using File as Rails cache store.'
-      return
-    end
-    if [true, false].sample
-      puts 'Using memcached as Rails cache store.'
-      return
-    end
-    puts "Using Zammad's file store as Rails cache store."
-    @env_file_content += "unset MEMCACHE_SERVERS\n"
-  end
 
   def self.configure_database # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
@@ -110,14 +85,58 @@ class ConfigureEnvironment
     File.write(File.join(__dir__, '../config/database.yml'), Psych.dump(cnf))
   end
 
+  def self.configure_redis
+    if ENV['REDIS_URL'].nil? || ENV['REDIS_URL'].empty? # rubocop:disable Rails/Blank
+      if database_type == 'mysql'
+        raise 'Redis was not found, but is required for ActionCable on MySQL based systems.'
+      end
+
+      puts 'Redis is not available, using File as web socket session store.'
+      puts 'Redis is not available, using the PostgreSQL adapter for ActionCable.'
+      return
+    end
+    if database_type == 'mysql' || [true, false].sample
+      puts 'Using Redis as web socket session store.'
+      puts 'Using the Redis adapter for ActionCable.'
+      return
+    end
+    puts 'Using File as web socket session store.'
+    puts 'Using the PostgreSQL adapter for ActionCable.'
+    @env_file_content += "unset REDIS_URL\n"
+  end
+
+  def self.configure_memcached
+    if ENV['MEMCACHE_SERVERS'].nil? || ENV['MEMCACHE_SERVERS'].empty? # rubocop:disable Rails/Blank
+      puts 'Memcached is not available, using File as Rails cache store.'
+      return
+    end
+    if [true, false].sample
+      puts 'Using memcached as Rails cache store.'
+      return
+    end
+    puts "Using Zammad's file store as Rails cache store."
+    @env_file_content += "unset MEMCACHE_SERVERS\n"
+  end
+
+  # Since configure_database skips if database.yml already exists, check the
+  #   content of that file to reliably determine the database type in all cases.
+  def self.database_type
+    database = File.read(File.join(__dir__, '../config/database.yml')).match(%r{^\s*adapter:\s*(mysql|postgresql)})[1]
+    if !database
+      raise 'Could not determine database type, cannot setup cable.yml'
+    end
+
+    database
+  end
+
   def self.write_env_file
     File.write(File.join(__dir__, 'environment.env'), @env_file_content)
   end
 
   def self.run
+    configure_database
     configure_redis
     configure_memcached
-    configure_database
     write_env_file
   end
 end

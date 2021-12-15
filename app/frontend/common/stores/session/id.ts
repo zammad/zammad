@@ -4,6 +4,29 @@ import { useSessionIdQuery } from '@common/graphql/api'
 import { defineStore } from 'pinia'
 import { QueryHandler } from '@common/server/apollo/handler'
 import { SingleValueStore } from '@common/types/store'
+import { SessionIdQuery, SessionIdQueryVariables } from '@common/graphql/types'
+
+let sessionIdQuery: QueryHandler<SessionIdQuery, SessionIdQueryVariables>
+
+const getSessionIdQuery = () => {
+  if (sessionIdQuery) return sessionIdQuery
+
+  sessionIdQuery = new QueryHandler(
+    useSessionIdQuery({
+      fetchPolicy: 'no-cache',
+      context: {
+        error: {
+          logLevel: 'silent',
+        },
+      },
+    }),
+    {
+      errorShowNotification: false,
+    },
+  )
+
+  return sessionIdQuery
+}
 
 const useSessionIdStore = defineStore('sessionId', {
   state: (): SingleValueStore<Maybe<string>> => {
@@ -13,21 +36,9 @@ const useSessionIdStore = defineStore('sessionId', {
   },
   actions: {
     async checkSession(): Promise<string | null> {
-      const sessionIdQuery = new QueryHandler(
-        useSessionIdQuery({
-          fetchPolicy: 'no-cache',
-          context: {
-            error: {
-              logLevel: 'silent',
-            },
-          },
-        }),
-        {
-          errorShowNotification: false,
-        },
-      )
+      const sessionIdQuery = getSessionIdQuery()
 
-      const result = await sessionIdQuery.loadedResult()
+      const result = await sessionIdQuery.loadedResult(true)
 
       // Refresh the current sessionId state.
       this.value = result?.sessionId || null

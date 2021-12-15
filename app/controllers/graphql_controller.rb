@@ -12,15 +12,11 @@ class GraphqlController < ApplicationController
   prepend_before_action :authentication_check_only
 
   def execute
-    variables = prepare_variables(params[:variables])
-    query = params[:query]
-    operation_name = params[:operationName]
-    context = {
-      current_user: current_user,
-      controller:   self,
-    }
-    result = Gql::ZammadSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
-    render json: result
+    if params[:_json]
+      return render json: multiplex
+    end
+
+    render json: single_query
   rescue => e
     raise e if !Rails.env.development?
 
@@ -28,6 +24,36 @@ class GraphqlController < ApplicationController
   end
 
   private
+
+  def multiplex
+    queries = params[:_json].map do |param|
+      {
+        query:          param[:query],
+        operation_name: param[:operationName],
+        variables:      prepare_variables(param[:variables]),
+        context:        context
+      }
+    end
+    Gql::ZammadSchema.multiplex(queries)
+  end
+
+  def single_query
+    query = params[:query]
+    variables = prepare_variables(params[:variables])
+    operation_name = params[:operation_name]
+
+    Gql::ZammadSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
+  end
+
+  def context
+    # context must be kept in sync with GraphqlChannel!
+    {
+      sid:          session.id,
+      current_user: current_user,
+      # :controller is used by login/logout mutations and MUST NOT be used otherwise.
+      controller:   self,
+    }
+  end
 
   # Handle variables in form data, JSON body, or a blank value
   def prepare_variables(variables_param)

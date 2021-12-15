@@ -21,6 +21,16 @@ export const SampleDocument = gql`
   }
 `
 
+export const SampleSubscriptionDocument = gql`
+  subscription subscribeSample($id: ID!) {
+    sampleUpdated(id: $id) {
+      id
+      title
+      text
+    }
+  }
+`
+
 export type SampleQuery = {
   Sample?: {
     __typename?: 'Sample'
@@ -53,6 +63,16 @@ export type SampleUpdateMutationVariables = {
   Sample: SampleInput
 }
 
+export interface SampleUpdatedSubscription {
+  SampleUpdated: {
+    title?: string
+    text?: string
+  }
+}
+export interface SampleUpdatedSubscriptionVariables {
+  id: ID
+}
+
 export const SampleTypedQueryDocument: TypedDocumentNode<
   SampleQuery,
   SampleQueryVariables
@@ -62,3 +82,8 @@ export const SampleTypedMutationDocument: TypedDocumentNode<
   SampleUpdateMutation,
   SampleUpdateMutationVariables
 > = SampleDocument
+
+export const SampleTypedSubscriptionDocument: TypedDocumentNode<
+  SampleUpdatedSubscription,
+  SampleUpdatedSubscriptionVariables
+> = SampleSubscriptionDocument

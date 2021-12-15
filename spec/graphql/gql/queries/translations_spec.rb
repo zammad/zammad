@@ -2,15 +2,15 @@
 
 require 'rails_helper'
 
-RSpec.describe Gql::Queries::Translations, type: :request do
+RSpec.describe Gql::Queries::Translations, type: :graphql do
 
   context 'when fetching translations' do
-    let(:query) { File.read(Rails.root.join('app/frontend/common/graphql/queries/translations.graphql')) }
+    let(:query) { read_graphql_file('common/graphql/queries/translations.graphql') }
     let(:variables) { { locale: locale, cacheKey: cache_key } }
     let(:expected_cache_key) { Translation.where(locale: locale).order(updated_at: :desc).take.updated_at.to_s }
-    let(:graphql_response) do
-      post '/graphql', params: { query: query, variables: variables }, as: :json
-      json_response
+
+    before do
+      graphql_execute(query, variables: variables)
     end
 
     context 'with a valid locale' do
