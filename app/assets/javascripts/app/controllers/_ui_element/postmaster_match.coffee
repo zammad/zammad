@@ -15,11 +15,11 @@ class App.UiElement.postmaster_match
           },
           {
             value:    'cc'
-            name:     __('Cc')
+            name:     __('CC')
           },
           {
             value:    'x-any-recipient'
-            name:     __('Any Recipient')
+            name:     __('Any recipient')
           },
           {
             value:    'subject'

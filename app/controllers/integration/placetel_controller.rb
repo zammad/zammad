@@ -51,7 +51,7 @@ class Integration::PlacetelController < ApplicationController
     http_log_config facility: 'placetel'
 
     if !Setting.get('placetel_integration')
-      response_error(__('Feature is disable, please contact your admin to enable it!'))
+      response_error(__('Feature is disabled, please contact your administrator!'))
       return
     end
     if config_integration.blank? || config_integration[:inbound].blank? || config_integration[:outbound].blank?

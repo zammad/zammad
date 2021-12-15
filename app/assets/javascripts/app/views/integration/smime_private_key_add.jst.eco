@@ -27,7 +27,7 @@
 
 <div class="form-group">
   <div class="formGroup-label">
-    <label for="key-secret"><%- @T('Enter Private Key secret') %></label>
+    <label for="key-secret"><%- @T('Enter Private Key Secret') %></label>
   </div>
   <div class="controls">
     <input class="form-control" name="secret" type="password" id="key-secret">

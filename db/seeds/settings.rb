@@ -872,7 +872,7 @@ Setting.create_if_not_exists(
   description: __('Set notes for ticket create types by selecting type.'),
   options:     {},
   state:       {
-    # 'email-out' => __('Attention: When creating a ticket an e-mail is sent.'),
+    # 'email-out' => __('Attention: When creating a ticket an email is sent.'),
   },
   preferences: {
     permission: ['admin.ui'],

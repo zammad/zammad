@@ -21,7 +21,7 @@
     <% end %>
     <% if @article.cc: %>
       <div class="horizontal article-meta-row">
-        <div class="article-meta-key u-textTruncate"><%- @T('Cc') %></div>
+        <div class="article-meta-key u-textTruncate"><%- @T('CC') %></div>
         <div class="article-meta-value flex contain-text"><%- @AddressLine(@article.cc) %></div>
       </div>
     <% end %>
@@ -126,4 +126,3 @@
 <div class="js-article-actions"></div>
 
 <a href="<%- @C('http_type') %>://<%- @C('fqdn') %>/#ticket/zoom/<%- @article.ticket_id %>/<%- @article.id %>"><small class="task-subline"><%- @humanTime(@article.created_at) %></small></a>
-

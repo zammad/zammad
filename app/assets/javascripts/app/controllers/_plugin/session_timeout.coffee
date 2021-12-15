@@ -96,7 +96,7 @@ class SessionTimeout extends App.Controller
 
     @warningDialog = new App.ControllerModal(
       head:         __('Session')
-      message:      __('Due to inactivity are automatically logged out within the next 30 seconds.')
+      message:      __('Due to inactivity, you will be automatically logged out within the next 30 seconds.')
       keyboard:     true
       backdrop:     true
       buttonClose:  true

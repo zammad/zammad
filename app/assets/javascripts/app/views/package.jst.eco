@@ -9,7 +9,7 @@
     <%- @T('Only packages from known, trusted and verfied sources should be installed.') %>
   </p>
   <p>
-    <%- @T('After installing, updating or uninstalling packages the following commands need to be executed on the server:') %>
+    <%- @T('After installing, updating, or uninstalling packages the following commands need to be executed on the server:') %>
     <ul>
     <% for command in @commands: %>
       <li><code>zammad> <%- command %></code></li>

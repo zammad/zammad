@@ -23,7 +23,7 @@ App.Config.set(
   {
     name: __('Monit')
     target: '#system/integration/monit'
-    description: __('An open source monitoring tool.')
+    description: __('An open-source monitoring tool.')
     controller: Monit
     state: State
     permission: ['admin.integration.monit']

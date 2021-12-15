@@ -210,7 +210,7 @@ class ChannelAccountOverview extends App.ControllerSubContent
       error: (data) =>
         @notify
           type: 'error'
-          msg:  __('Failed to rollback migration of the channel!')
+          msg:  __('Failed to roll back the migration of the channel!')
     )
 
   groupChange: (e) =>

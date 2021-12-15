@@ -97,7 +97,7 @@ RSpec.describe Ticket, type: :model do
       context 'when attempting to self-merge (i.e., to merge A → A)' do
         it 'raises an error' do
           expect { ticket.merge_to(ticket_id: ticket.id, user_id: 1) }
-            .to raise_error("Can't merge ticket with it self!")
+            .to raise_error("Can't merge ticket with itself!")
         end
       end
 

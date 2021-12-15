@@ -32,7 +32,7 @@ class Cti::Driver::Base
       return result
     end
 
-    # set caller id of outbound call
+    # set caller ID of outbound call
     result = caller_id_rewrite(@params)
     if result.present? && result[:action] == 'set_caller_id'
       @params['from'] = result[:params][:from_caller_id]

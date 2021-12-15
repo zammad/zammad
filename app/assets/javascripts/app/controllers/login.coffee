@@ -20,7 +20,7 @@ class Login extends App.ControllerFullPage
     data = {}
     if window.location.hash is '#session_timeout'
       data = {
-        errorMessage: App.i18n.translateContent('Due to inactivity you are automatically logged out.')
+        errorMessage: App.i18n.translateContent('Due to inactivity, you have been automatically logged out.')
       }
 
     @title __('Sign in')

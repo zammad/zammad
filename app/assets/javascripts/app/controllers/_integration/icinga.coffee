@@ -23,7 +23,7 @@ App.Config.set(
   {
     name: __('Icinga')
     target: '#system/integration/icinga'
-    description: __('An open source monitoring tool.')
+    description: __('An open-source monitoring tool.')
     controller: Icinga
     state: State
     permission: ['admin.integration.icinga']

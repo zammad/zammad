@@ -60,7 +60,7 @@ class App.UiElement.holiday_selector
       # check if entry already exists
       exists = item.find("[data-date=#{date}]").get(0)
       if exists
-        alert(App.i18n.translateInline('Aready exists!'))
+        alert(App.i18n.translateInline('This entry already exists!'))
         return
 
       # reset form input

@@ -110,7 +110,7 @@ class App.KnowledgeBaseSidebarAttachments extends App.Controller
 
 class DeleteConfirm extends App.ControllerConfirm
   content: ->
-    sentence = App.i18n.translateContent('Are you sure to delete')
+    sentence = App.i18n.translateContent('Are you sure you want to delete')
     "#{sentence} #{@attachment.filename}?"
   buttonSubmit: __('delete')
   onSubmit: ->

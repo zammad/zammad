@@ -122,7 +122,7 @@ class ActionRow extends App.ControllerObserverActionRow
       error: (data, status, xhr) =>
         @notify
           type:      'error'
-          msg:       App.i18n.translateContent('Failed to sent Email "%s". Please contact an administrator.', user.email)
+          msg:       App.i18n.translateContent('Failed to send email to "%s". Please contact an administrator.', user.email)
           removeAll: true
     )
 

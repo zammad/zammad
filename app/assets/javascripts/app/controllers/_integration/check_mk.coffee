@@ -54,7 +54,7 @@ App.Config.set(
   {
     name: __('Checkmk')
     target: '#system/integration/check_mk'
-    description: __('An open source monitoring tool.')
+    description: __('An open-source monitoring tool.')
     controller: CheckMk
     state: State
     permission: ['admin.integration.check_mk']

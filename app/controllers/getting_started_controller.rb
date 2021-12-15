@@ -113,7 +113,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
         settings[:http_type] = result[:scheme]
         settings[:fqdn]      = result[:fqdn]
       else
-        messages[:url] = __('An URL looks like this: http://zammad.example.com')
+        messages[:url] = __('A URL looks like this: https://zammad.example.com')
       end
     end
 

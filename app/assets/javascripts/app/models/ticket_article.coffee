@@ -6,7 +6,7 @@ class App.TicketArticle extends App.Model
       { name: 'ticket_id',      display: __('TicketID'),    null: false, readonly: 1, searchable: false },
       { name: 'from',           display: __('From'),        tag: 'input',    type: 'text', limit: 100, null: false },
       { name: 'to',             display: __('To'),          tag: 'input',    type: 'text', limit: 100, null: true },
-      { name: 'cc',             display: __('Cc'),          tag: 'input',    type: 'text', limit: 100, null: true },
+      { name: 'cc',             display: __('CC'),          tag: 'input',    type: 'text', limit: 100, null: true },
       { name: 'subject',        display: __('Subject'),     tag: 'input',    type: 'text', limit: 100, null: true },
       { name: 'body',           display: __('Text'),        tag: 'textarea', rows: 5,      limit: 100, null: false, searchable: true },
       { name: 'type_id',        display: __('Type'),        tag: 'select',   multiple: false, null: false, relation: 'TicketArticleType', default: '' },

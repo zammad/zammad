@@ -4,7 +4,7 @@ class App.Organization extends App.Model
   @url: @apiPath + '/organizations'
   @configure_attributes = [
     { name: 'name',           display: __('Name'),                tag: 'input',     type: 'text', limit: 100, null: false, info: true },
-    { name: 'shared',         display: __('Shared organization'), tag: 'boolean',   note: __('Customers in the organization can view each other items.'), type: 'boolean', default: true, null: false, info: false },
+    { name: 'shared',         display: __('Shared organization'), tag: 'boolean',   note: __("Customers in the organization can view each other's items."), type: 'boolean', default: true, null: false, info: false },
     { name: 'created_by_id',  display: __('Created by'),    relation: 'User', readonly: 1, info: false },
     { name: 'created_at',     display: __('Created at'),    tag: 'datetime',  readonly: 1, info: false },
     { name: 'updated_by_id',  display: __('Updated by'),    relation: 'User', readonly: 1, info: false },

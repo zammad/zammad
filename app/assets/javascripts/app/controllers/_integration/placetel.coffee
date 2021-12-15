@@ -4,7 +4,7 @@ class Placetel extends App.ControllerIntegrationBase
   featureConfig: 'placetel_config'
   description: [
     [__('This service shows you contacts of incoming calls and a caller list in realtime.')]
-    [__('Also caller id of outbound calls can be changed.')]
+    [__('Caller ID of outbound calls can be changed as well.')]
   ]
   events:
     'click .js-select': 'selectAll'
@@ -111,7 +111,7 @@ class Form extends App.Controller
       }
     )
 
-    # blocked caller ids
+    # blocked caller IDs
     config.inbound.block_caller_ids = []
     @$('.js-inboundBlockCallerId .js-row').each(->
       caller_id = $(@).find('input[name="caller_id"]').val()

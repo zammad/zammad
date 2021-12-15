@@ -4397,7 +4397,7 @@ wait untill text in selector disabppears
     watch_for(
       browser:  instance,
       css:      '.content.active',
-      value:    'Database Update required',
+      value:    'Database Update Required',
       mute_log: true,
     )
     click(

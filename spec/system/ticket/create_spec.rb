@@ -857,7 +857,7 @@ RSpec.describe 'Ticket Create', type: :system do
     end
 
     def add_email(input)
-      fill_in 'Cc', with: input
+      fill_in 'CC', with: input
       send_keys(:enter) # trigger blur
       find '.token', text: input # wait for email to tokenize
     end

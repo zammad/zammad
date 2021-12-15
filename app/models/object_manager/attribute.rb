@@ -823,7 +823,7 @@ is certain attribute used by triggers, overviews or schedulers
       errors.add(:name, __('Only letters from a-z because numbers from 0-9 and _ are allowed'))
     end
     if !name.match?(%r{[a-z]})
-      errors.add(:name, __('At least one letters is needed'))
+      errors.add(:name, __('At least one letter is required'))
     end
 
     # do not allow model method names as attributes

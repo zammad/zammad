@@ -326,7 +326,7 @@ class ArticleViewItem extends App.ControllerObserver
         if data.encryption.success
           @notify
             type: 'success'
-            msg:  App.i18n.translateContent('Decryption success!')
+            msg:  App.i18n.translateContent('Decryption successful!')
         else if data.encryption.comment
           comment = App.i18n.translateContent('Decryption failed!') + ' ' + App.i18n.translateContent(data.encryption.comment || '')
           @notify

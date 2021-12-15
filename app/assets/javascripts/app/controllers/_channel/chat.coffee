@@ -69,7 +69,7 @@ class ChannelChat extends App.ControllerSubContent
       name: 'fontSize'
       default: 'undefined'
       type: 'String'
-      description: __('CSS font-size with a unit like 12px, 1.5em. If left to undefined it inherits the font-size of the website.')
+      description: __('CSS font-size with a unit like 12px, 1.5em. If left undefined it inherits the font-size of the website.')
     }
     {
       name: 'flat'

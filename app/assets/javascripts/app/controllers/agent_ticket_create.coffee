@@ -316,7 +316,7 @@ class App.TicketCreate extends App.Controller
 
     App.Ticket.configure_attributes.push {
       name: 'cc'
-      display: __('Cc')
+      display: __('CC')
       tag: 'input'
       type: 'text'
       maxlength: 1000

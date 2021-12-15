@@ -18,7 +18,7 @@ To execute this manually, just paste the following into the browser console
     client_list = Sessions.list
     client_list.each do |local_client_id, local_client|
       if local_client_id == @client_id
-        log 'info', 'do not send broadcast to it self'
+        log 'info', 'do not send broadcast to itself'
         next
       end
 

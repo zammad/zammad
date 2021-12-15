@@ -368,7 +368,7 @@ class App.CustomerChat extends App.Controller
       @switch(false)
       @notify(
         type: 'notice'
-        msg:  App.i18n.translateContent('Chat not answered, set to offline automatically.')
+        msg:  App.i18n.translateContent('Chat not answered, automatically set to offline.')
       )
     @idleTimeoutId = @delay(switchOff, @idleTimeout * 1000)
 

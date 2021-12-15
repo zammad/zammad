@@ -42,7 +42,7 @@ class Integration::SipgateController < ApplicationController
     http_log_config facility: 'sipgate.io'
 
     if !Setting.get('sipgate_integration')
-      xml_error(__('Feature is disable, please contact your admin to enable it!'))
+      xml_error(__('Feature is disabled, please contact your administrator!'))
       return
     end
     if config_integration.blank? || config_integration[:inbound].blank? || config_integration[:outbound].blank?

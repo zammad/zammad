@@ -71,7 +71,7 @@ class App.KnowledgeBaseContentController extends App.Controller
     @rerenderIfConfirmed()
 
   rerenderIfConfirmed: ->
-    text = App.i18n.translatePlain('Changes were made. Do you want to reload? You\'ll loose your changes')
+    text = App.i18n.translatePlain('Are you sure you want to reload? You have unsaved changes that will get lost')
     if confirm(text)
       @render()
 

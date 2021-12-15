@@ -362,10 +362,10 @@ class App.UiElement.ticket_perform_action
     elementRow.find('.js-setNotification').empty()
 
     options =
-      'article_last_sender': __('Article Last Sender')
+      'article_last_sender': __('Sender of last article')
       'ticket_owner': __('Owner')
       'ticket_customer': __('Customer')
-      'ticket_agents': __('All Agents')
+      'ticket_agents': __('All agents')
 
     name = "#{attribute.name}::notification.#{notificationType}"
 

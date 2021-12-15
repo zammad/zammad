@@ -832,7 +832,7 @@ generate url for index or document access (only for internal use)
     end
 
     message = if response&.error&.match?(__('Connection refused'))
-                __("Elasticsearch is not reachable, probably because it's not running or even installed.")
+                __("Elasticsearch is not reachable. It's possible that it's not running. Please check whether it is installed.")
               elsif url.end_with?('pipeline/zammad-attachment', 'pipeline=zammad-attachment') && response.code == 400
                 __('The installed attachment plugin could not handle the request payload. Ensure that the correct attachment plugin is installed (ingest-attachment).')
               else

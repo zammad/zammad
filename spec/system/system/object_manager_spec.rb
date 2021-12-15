@@ -76,7 +76,7 @@ RSpec.describe 'System > Objects', type: :system do
             click '.js-submit'
           end
           expect(page).to have_text('New field')
-          expect(page).to have_text('Database Update required')
+          expect(page).to have_text('Database Update Required')
           click '.js-execute', wait: 7.minutes
           expect(page).to have_text('Zammad requires a restart')
           page.refresh
@@ -88,14 +88,14 @@ RSpec.describe 'System > Objects', type: :system do
             click '.js-submit'
           end
           expect(page).to have_text('New field updated')
-          expect(page).to have_text('Database Update required')
+          expect(page).to have_text('Database Update Required')
           click '.js-execute', wait: 7.minutes
           expect(page).to have_text('please reload your browser')
           click '.modal-content button.js-submit'
 
           # Delete
           click 'tbody tr:last-child .js-delete'
-          expect(page).to have_text('Database Update required')
+          expect(page).to have_text('Database Update Required')
           click '.js-execute', wait: 7.minutes
           expect(page).to have_text('Zammad requires a restart')
           page.refresh
@@ -131,7 +131,7 @@ RSpec.describe 'System > Objects', type: :system do
       end
       click '.js-submit'
 
-      expect(page).to have_text('Database Update required')
+      expect(page).to have_text('Database Update Required')
       click '.js-execute', wait: 7.minutes
       expect(page).to have_text('please reload your browser')
       click '.modal-content button.js-submit'
@@ -222,7 +222,7 @@ RSpec.describe 'System > Objects', type: :system do
         2.times { find('tr:nth-child(3) .icon-trash').click }
         click '.js-submit'
       end
-      expect(page).to have_text('Database Update required')
+      expect(page).to have_text('Database Update Required')
       click '.js-execute', wait: 7.minutes
       expect(page).to have_text('please reload your browser')
       click '.modal-content button.js-submit'
@@ -516,14 +516,14 @@ RSpec.describe 'System > Objects', type: :system do
 
     it 'date attribute' do
       page.find('select[name=data_type]').select('Date')
-      fill_in 'Default time Diff (hours)', with: ''
+      fill_in 'Default time diff (hours)', with: ''
 
       expect { page.find('.js-submit').click }.to change(ObjectManager::Attribute, :count).by(1)
     end
 
     it 'datetime attribute' do
       page.find('select[name=data_type]').select('Datetime')
-      fill_in 'Default time Diff (minutes)', with: ''
+      fill_in 'Default time diff (minutes)', with: ''
 
       expect { page.find('.js-submit').click }.to change(ObjectManager::Attribute, :count).by(1)
     end

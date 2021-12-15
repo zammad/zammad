@@ -201,7 +201,7 @@ set new attributes of model (remove already available attributes)
       },
       'assignment_timeout': {
         name:    'assignment_timeout'
-        display: __('Assignment Timeout')
+        display: __('Assignment timeout')
         tag:     'input'
         type:    'text'
         limit:   100
@@ -696,7 +696,7 @@ set new attributes of model (remove already available attributes)
       # lookup relations
       if attribute.relation
 
-        # relations - not calling object it self, to prevent loops
+        # relations - not calling object itself, to prevent loops
         if !_.contains(classNames, @className)
 
           # only if relation model exists

@@ -290,7 +290,7 @@ returns
     raise Exceptions::UnprocessableEntity, 'ticket already merged, no merge into merged ticket possible' if target_ticket.state.state_type.name == 'merged'
 
     # check different ticket ids
-    raise Exceptions::UnprocessableEntity, __('Can\'t merge ticket with it self!') if id == target_ticket.id
+    raise Exceptions::UnprocessableEntity, __('Can\'t merge ticket with itself!') if id == target_ticket.id
 
     # update articles
     Transaction.execute context: 'merge' do

@@ -75,7 +75,7 @@
         <% if channel.options.sync.track_retweets: %>
           <%- @T('Retweets are converted to Tickets') %>.
         <% else: %>
-          <%- @T('Conversion of retweets to tickets is turned off') %>.
+          <%- @T('Conversion of retweets into tickets is turned off') %>.
         <% end %>
       </div>
     </div>

@@ -23,7 +23,7 @@ App.Config.set(
   {
     name: __('Nagios')
     target: '#system/integration/nagios'
-    description: __('An open source monitoring tool.')
+    description: __('An open-source monitoring tool.')
     controller: Nagios
     state: State
   }

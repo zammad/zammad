@@ -308,6 +308,10 @@ msgstr ""
 msgid "A **calendar** is needed to calculate escalations based on business hours and to send out escalation notifications.\n\nDefine a **\"standard\"** calendar which is valid system-wide. The escalation notifications will only be sent to your agents during the defined business hours.\n\nIf you have customers with different business hours, you can create multiple calendars. Tickets are linked to calendars using **SLAs**."
 msgstr ""
 
+#: app/controllers/getting_started_controller.rb
+msgid "A URL looks like this: https://zammad.example.com"
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "A list of active import backends that get scheduled automatically."
 msgstr ""
@@ -638,7 +642,7 @@ msgid "Advance to next ticket from overview"
 msgstr ""
 
 #: app/assets/javascripts/app/views/package.jst.eco
-msgid "After installing, updating or uninstalling packages the following commands need to be executed on the server:"
+msgid "After installing, updating, or uninstalling packages the following commands need to be executed on the server:"
 msgstr ""
 
 #: app/assets/javascripts/app/views/session.jst.eco
@@ -677,12 +681,12 @@ msgstr ""
 msgid "Alarm"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
-msgid "All Agents"
-msgstr ""
-
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
 msgid "All Tickets"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
+msgid "All agents"
 msgstr ""
 
 #: public/assets/chat/views/waiting.eco
@@ -717,12 +721,6 @@ msgstr ""
 msgid "Allow websites (separated by ;)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_integration/cti.coffee
-#: app/assets/javascripts/app/controllers/_integration/placetel.coffee
-#: app/assets/javascripts/app/controllers/_integration/sipgate_io.coffee
-msgid "Also caller id of outbound calls can be changed."
-msgstr ""
-
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
 msgid "Also notify via email"
 msgstr ""
@@ -747,10 +745,6 @@ msgstr ""
 msgid "Alternatively, you can use the Zammad API to import data."
 msgstr ""
 
-#: app/controllers/getting_started_controller.rb
-msgid "An URL looks like this: http://zammad.example.com"
-msgstr ""
-
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
 msgid "An error occurred: %s"
@@ -760,7 +754,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_integration/icinga.coffee
 #: app/assets/javascripts/app/controllers/_integration/monit.coffee
 #: app/assets/javascripts/app/controllers/_integration/nagios.coffee
-msgid "An open source monitoring tool."
+msgid "An open-source monitoring tool."
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
@@ -790,7 +784,7 @@ msgid "Anticon"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee
-msgid "Any Recipient"
+msgid "Any recipient"
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -856,7 +850,11 @@ msgid "Archived at"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/attachments.coffee
-msgid "Are you sure to delete"
+msgid "Are you sure you want to delete"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee
+msgid "Are you sure you want to reload? You have unsaved changes that will get lost"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
@@ -865,10 +863,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee
 msgid "Area"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_ui_element/holiday_selector.coffee
-msgid "Aready exists!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
@@ -880,15 +874,10 @@ msgstr ""
 msgid "Article Count"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
-msgid "Article Last Sender"
-msgstr ""
-
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "Article#"
 msgstr ""
 
-#: app/assets/javascripts/app/models/group.coffee
 #: db/seeds/object_manager_attributes.rb
 msgid "Assign Follow-Ups"
 msgstr ""
@@ -900,6 +889,10 @@ msgstr ""
 #: app/assets/javascripts/app/models/group.coffee
 #: db/seeds/object_manager_attributes.rb
 msgid "Assign follow-up to latest agent again."
+msgstr ""
+
+#: app/assets/javascripts/app/models/group.coffee
+msgid "Assign follow-ups"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
@@ -914,10 +907,13 @@ msgstr ""
 msgid "Assignee"
 msgstr ""
 
-#: app/assets/javascripts/app/models/_application_model.coffee
-#: app/assets/javascripts/app/models/group.coffee
 #: db/seeds/object_manager_attributes.rb
 msgid "Assignment Timeout"
+msgstr ""
+
+#: app/assets/javascripts/app/models/_application_model.coffee
+#: app/assets/javascripts/app/models/group.coffee
+msgid "Assignment timeout"
 msgstr ""
 
 #: app/assets/javascripts/app/models/group.coffee
@@ -930,7 +926,7 @@ msgid "At least one identifier (firstname, lastname, phone or email) for user is
 msgstr ""
 
 #: app/models/object_manager/attribute.rb
-msgid "At least one letters is needed"
+msgid "At least one letter is required"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee
@@ -965,11 +961,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
-msgid "Attention: These will be your login password after the import is completed."
+msgid "Attention: These will be your login and password after the import is completed."
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Attention: When creating a ticket an e-mail is sent."
+msgid "Attention: When creating a ticket an email is sent."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/object_manager.coffee
@@ -1073,10 +1069,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
 msgid "Automatically loads the chat.css file. If you want to use your own css, just set it to false."
-msgstr ""
-
-#: app/assets/javascripts/app/views/channel/chat.jst.eco
-msgid "Automatically show chat"
 msgstr ""
 
 #: app/assets/javascripts/app/models/overview.coffee
@@ -1191,7 +1183,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
-msgid "Blocked caller ids based on sender caller id."
+msgid "Blocked caller IDs based on sender caller ID."
 msgstr ""
 
 #: app/assets/javascripts/app/models/chat.coffee
@@ -1270,12 +1262,20 @@ msgstr ""
 msgid "By default the follow-up check is done via the subject of an email. With this setting you can add more fields for which the follow-up check will be executed."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee
+#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
+#: app/assets/javascripts/app/models/ticket_article.coffee
+#: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
+#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
+msgid "CC"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_integration/idoit.coffee
 msgid "CMDB to document complex relations of your network components."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
-msgid "CSS font-size with a unit like 12px, 1.5em. If left to undefined it inherits the font-size of the website."
+msgid "CSS font-size with a unit like 12px, 1.5em. If left undefined it inherits the font-size of the website."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/cti.coffee
@@ -1324,6 +1324,12 @@ msgstr ""
 msgid "Callback URL"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_integration/cti.coffee
+#: app/assets/javascripts/app/controllers/_integration/placetel.coffee
+#: app/assets/javascripts/app/controllers/_integration/sipgate_io.coffee
+msgid "Caller ID of outbound calls can be changed as well."
+msgstr ""
+
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
@@ -1360,7 +1366,7 @@ msgid "Can't generate new ticket number!"
 msgstr ""
 
 #: app/models/ticket.rb
-msgid "Can't merge ticket with it self!"
+msgid "Can't merge ticket with itself!"
 msgstr ""
 
 #: lib/sessions/event/spool.rb
@@ -1373,7 +1379,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee
-msgid "Can't update password, your new passwords do not match. Please try again!"
+msgid "Can't update password, your entered passwords do not match. Please try again!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
@@ -1434,11 +1440,6 @@ msgstr ""
 msgid "Category page layout"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee
-#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
-#: app/assets/javascripts/app/models/ticket_article.coffee
-#: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
-#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: db/seeds/object_manager_attributes.rb
 msgid "Cc"
 msgstr ""
@@ -1467,17 +1468,13 @@ msgstr ""
 msgid "Change Objects"
 msgstr ""
 
+#: app/assets/javascripts/app/views/profile/password.jst.eco
+msgid "Change Your Password"
+msgstr ""
+
 #: app/assets/javascripts/app/views/generic/history.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/generic_list.jst.eco
 msgid "Change order"
-msgstr ""
-
-#: app/assets/javascripts/app/views/profile/language.jst.eco
-msgid "Change your language."
-msgstr ""
-
-#: app/assets/javascripts/app/views/profile/password.jst.eco
-msgid "Change your password"
 msgstr ""
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
@@ -1499,10 +1496,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Changes were made that require a database update."
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee
-msgid "Changes were made. Do you want to reload? You'll loose your changes"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
@@ -1581,7 +1574,7 @@ msgid "Chat closed by %s"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/chat.coffee
-msgid "Chat not answered, set to offline automatically."
+msgid "Chat not answered, automatically set to offline."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
@@ -1633,21 +1626,25 @@ msgstr ""
 msgid "Choose if retweets should also be converted to tickets."
 msgstr ""
 
-#: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
-msgid "Choose the group in which direct messages will get added to."
+#: app/assets/javascripts/app/views/facebook/account_edit.jst.eco
+msgid "Choose the Group to which page posts will get added."
 msgstr ""
 
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
-msgid "Choose the group in which mentions will get added to."
+msgid "Choose the group to which direct messages will get added."
+msgstr ""
+
+#: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
+msgid "Choose the group to which mentions will get added."
 msgstr ""
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
-msgid "Choose the group in which messages will get added to."
+msgid "Choose the group to which messages will get added."
 msgstr ""
 
-#: app/assets/javascripts/app/views/facebook/account_edit.jst.eco
-msgid "Choose the group in which page postings will get added to."
+#: app/assets/javascripts/app/views/profile/language.jst.eco
+msgid "Choose your language."
 msgstr ""
 
 #: app/assets/javascripts/app/views/password/reset_change.jst.eco
@@ -1823,7 +1820,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
 #: app/assets/javascripts/app/models/job.coffee
 #: app/assets/javascripts/app/models/trigger.coffee
-msgid "Conditions for effected objects"
+msgid "Conditions for affected objects"
 msgstr ""
 
 #: app/assets/javascripts/app/models/overview.coffee
@@ -2000,7 +1997,7 @@ msgid "Conversation transfered into other chat. Please stay tuned."
 msgstr ""
 
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
-msgid "Conversion of retweets to tickets is turned off"
+msgid "Conversion of retweets into tickets is turned off"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
@@ -2098,7 +2095,7 @@ msgid "Create Text Modules"
 msgstr ""
 
 #: app/assets/javascripts/app/models/text_module.coffee
-msgid "Create Text Modules to **spend less time writing responses**. Text Modules can include smart variables like the users name or email address.\n\nExamples of snippets are:\n\n* Hello Mrs. #{ticket.customer.lastname},\n* Hello Mr. #{ticket.customer.lastname},\n* Hello #{ticket.customer.firstname},\n* My Name is #{user.firstname},\n\nOf course you can also use multi line snippets.\n\nAvailable objects are:\n* ticket (e. g. ticket.state, ticket.group)\n* ticket.customer (e. g. ticket.customer.firstname, ticket.customer.lastname)\n* ticket.owner (e. g. ticket.owner.firstname, ticket.owner.lastname)\n* ticket.organization (e. g. ticket.organization.name)\n* user (e. g. user.firstname, user.email)\n\nTo select placeholders from a list, just enter \"::\".\n"
+msgid "Create Text Modules to **spend less time writing responses**. Text Modules can include smart variables like the user's name or email address.\n\nExamples of snippets are:\n\n* Hello Mrs. #{ticket.customer.lastname},\n* Hello Mr. #{ticket.customer.lastname},\n* Hello #{ticket.customer.firstname},\n* My name is #{user.firstname},\n\nOf course, you can also use multi-line snippets.\n\nAvailable objects are:\n* ticket (e.g. ticket.state, ticket.group)\n* ticket.customer (e.g. ticket.customer.firstname, ticket.customer.lastname)\n* ticket.owner (e.g. ticket.owner.firstname, ticket.owner.lastname)\n* ticket.organization (e.g. ticket.organization.name)\n* user (e.g. user.firstname, user.email)\n\nTo select placeholders from a list, just enter \"::\"."
 msgstr ""
 
 #: app/controllers/first_steps_controller.rb
@@ -2156,6 +2153,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/ticket_article.coffee
 #: app/assets/javascripts/app/models/ticket_priority.coffee
 #: app/assets/javascripts/app/models/ticket_state.coffee
+#: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
 #: app/assets/javascripts/app/views/popover/ticket.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
@@ -2288,9 +2286,12 @@ msgstr ""
 msgid "Customer tickets of the user will get deleted on execution of the task. No rollback possible."
 msgstr ""
 
-#: app/assets/javascripts/app/models/organization.coffee
 #: db/seeds/object_manager_attributes.rb
 msgid "Customers in the organization can view each other items."
+msgstr ""
+
+#: app/assets/javascripts/app/models/organization.coffee
+msgid "Customers in the organization can view each other's items."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
@@ -2327,7 +2328,7 @@ msgid "Database"
 msgstr ""
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
-msgid "Database Update required"
+msgid "Database Update Required"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
@@ -2376,7 +2377,7 @@ msgid "Decryption failed!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
-msgid "Decryption success!"
+msgid "Decryption successful!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
@@ -2408,15 +2409,15 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
-msgid "Default caller id for outbound calls."
+msgid "Default caller ID for outbound calls."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
-msgid "Default time Diff (hours)"
+msgid "Default time diff (hours)"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
-msgid "Default time Diff (minutes)"
+msgid "Default time diff (minutes)"
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -3109,11 +3110,11 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
-msgid "Destination caller id"
+msgid "Destination caller ID"
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
-msgid "Destination caller id or queue"
+msgid "Destination caller ID or queue"
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -3258,20 +3259,16 @@ msgstr ""
 msgid "Drop files here"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/session_timeout.coffee
-msgid "Due to inactivity are automatically logged out within the next 30 seconds."
+#: app/assets/javascripts/app/controllers/login.coffee
+msgid "Due to inactivity, you have been automatically logged out."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/login.coffee
-msgid "Due to inactivity you are automatically logged out."
+#: app/assets/javascripts/app/controllers/_plugin/session_timeout.coffee
+msgid "Due to inactivity, you will be automatically logged out within the next 30 seconds."
 msgstr ""
 
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco
 msgid "Duration"
-msgstr ""
-
-#: app/assets/javascripts/app/views/dashboard.jst.eco
-msgid "E. g. recent changed tickets, users or organizations."
 msgstr ""
 
 #: app/assets/javascripts/app/models/user.coffee
@@ -3347,7 +3344,7 @@ msgid "Elasticsearch Total Payload Size"
 msgstr ""
 
 #: lib/search_index_backend.rb
-msgid "Elasticsearch is not reachable, probably because it's not running or even installed."
+msgid "Elasticsearch is not reachable. It's possible that it's not running. Please check whether it is installed."
 msgstr ""
 
 #: app/controllers/reports_controller.rb
@@ -3461,12 +3458,12 @@ msgstr ""
 msgid "Enable REST API access using the username/email address and password for the authentication user."
 msgstr ""
 
-#: db/seeds/settings.rb
-msgid "Enable REST API using tokens (not username/email address and password). Each user needs to create its own access tokens in user profile."
+#: app/assets/javascripts/app/views/api.jst.eco
+msgid "Enable REST API using tokens (not username/email address and password). All users need to create their own access tokens in the user profile."
 msgstr ""
 
-#: app/assets/javascripts/app/views/api.jst.eco
-msgid "Enable REST API using tokens (not username/email address and password). Each user needs to create own access tokens in user profile."
+#: db/seeds/settings.rb
+msgid "Enable REST API using tokens (not username/email address and password). Each user needs to create its own access tokens in user profile."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -3642,7 +3639,7 @@ msgid "Enter Person or Organization/Company"
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/smime_private_key_add.jst.eco
-msgid "Enter Private Key secret"
+msgid "Enter Private Key Secret"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/layout_ref.coffee
@@ -3677,7 +3674,7 @@ msgid "Enter the link provided by the plugin at the end of the installation to l
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/timezone.coffee
-msgid "Enter timezone..."
+msgid "Enter time zone"
 msgstr ""
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
@@ -3717,10 +3714,6 @@ msgstr ""
 msgid "Error during execution of auto wizard."
 msgstr ""
 
-#: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco
-msgid "Erstellt"
-msgstr ""
-
 #: db/seeds/overviews.rb
 msgid "Escalated"
 msgstr ""
@@ -3754,7 +3747,7 @@ msgid "Evangelist"
 msgstr ""
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee
-msgid "Every category in your knowledge base should be given a unique icon for maximum visual clarity. Each set below provides a wide range of icons to choose from, but beware-you can't mix and match different icons from different sets. Choose carefully!"
+msgid "Every category in your knowledge base should be given a unique icon for maximum visual clarity. Each set below provides a wide range of icons to choose from, but beware: You can't mix and match different icons from different sets. Choose carefully!"
 msgstr ""
 
 #: app/assets/javascripts/app/models/trigger.coffee
@@ -3871,11 +3864,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
-msgid "Failed to rollback migration of the channel!"
+msgid "Failed to roll back the migration of the channel!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/user_profile.coffee
-msgid "Failed to sent Email \"%s\". Please contact an administrator."
+msgid "Failed to send email to \"%s\". Please contact an administrator."
 msgstr ""
 
 #: db/seeds/object_manager_attributes.rb
@@ -3890,7 +3883,7 @@ msgstr ""
 #: app/controllers/integration/cti_controller.rb
 #: app/controllers/integration/placetel_controller.rb
 #: app/controllers/integration/sipgate_controller.rb
-msgid "Feature is disable, please contact your admin to enable it!"
+msgid "Feature is disabled, please contact your administrator!"
 msgstr ""
 
 #: app/controllers/integration/cti_controller.rb
@@ -3939,7 +3932,7 @@ msgid "Filter"
 msgstr ""
 
 #: app/assets/javascripts/app/views/search/index.jst.eco
-msgid "Find what you search. E. g. \"search phrase\""
+msgid "Find what you're looking for, e.g. \"search phrase\""
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
@@ -4036,6 +4029,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/public_menu_manager.coffee
 msgid "Footer menu"
+msgstr ""
+
+#: app/assets/javascripts/app/views/dashboard.jst.eco
+msgid "For example, recently changed tickets, users, or organizations."
 msgstr ""
 
 #: app/assets/javascripts/app/views/profile/token_access_created.jst.eco
@@ -6614,7 +6611,7 @@ msgid "Notify Map"
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
-msgid "Notify certain users by matching caller id."
+msgid "Notify certain users by matching caller ID."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
@@ -8040,6 +8037,10 @@ msgstr ""
 msgid "Sender based on Reply-To header"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
+msgid "Sender of last article"
+msgstr ""
+
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco
 msgid "Sending..."
 msgstr ""
@@ -8117,7 +8118,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
-msgid "Set caller id of outbound calls based on destination caller id."
+msgid "Set caller ID of outbound calls based on destination caller ID."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -8135,7 +8136,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
-msgid "Set outbound caller id"
+msgid "Set outbound caller ID"
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -8216,6 +8217,10 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/ticket_list.jst.eco
 #: app/assets/javascripts/app/views/widget/ticket_stats_list.jst.eco
 msgid "Show all..."
+msgstr ""
+
+#: app/assets/javascripts/app/views/channel/chat.jst.eco
+msgid "Show chat automatically"
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/ticket_list.jst.eco
@@ -8946,6 +8951,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
 msgid "This class gets added to the button on initialization and gets removed once the chat connection got established."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ui_element/holiday_selector.coffee
+msgid "This entry already exists!"
 msgstr ""
 
 #: app/assets/javascripts/app/views/version.jst.eco
