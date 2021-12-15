@@ -253,14 +253,14 @@ module CommonActions
   # Checks if modal is ready
   #
   # @param timeout [Integer] seconds to wait
-  def modal_ready(timeout: 4)
+  def modal_ready(timeout: Capybara.default_max_wait_time)
     wait(timeout).until_exists { find('.modal.in', wait: 0) }
   end
 
   # Checks if modal has disappeared
   #
   # @param timeout [Integer] seconds to wait
-  def modal_disappear(timeout: 4)
+  def modal_disappear(timeout: Capybara.default_max_wait_time)
     wait(timeout).until_disappears { find('.modal', wait: 0) }
   end
 
@@ -268,7 +268,7 @@ module CommonActions
   #
   # @param timeout [Integer] seconds to wait
   # @param wait_for_disappear [Bool] wait for modal to close
-  def in_modal(timeout: 4, disappears: true, &block)
+  def in_modal(timeout: Capybara.default_max_wait_time, disappears: true, &block)
     modal_ready(timeout: timeout)
 
     within('.modal', &block)
