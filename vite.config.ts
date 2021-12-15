@@ -3,8 +3,8 @@
 import { defineConfig } from 'vite'
 import RubyPlugin from 'vite-plugin-ruby'
 import VuePlugin from '@vitejs/plugin-vue'
-import viteSvgIcons from 'vite-plugin-svg-icons';
-import type { OptimizeOptions } from 'svgo';
+import viteSvgIcons from 'vite-plugin-svg-icons'
+import type { OptimizeOptions } from 'svgo'
 import * as path from 'path'
 
 export default defineConfig({
@@ -24,28 +24,28 @@ export default defineConfig({
       symbolId: 'icon-[dir]-[name]',
       svgoOptions: {
         plugins: [
-          {name: 'preset-default'},
+          { name: 'preset-default' },
           {
-            name: "removeAttributesBySelector",
+            name: 'removeAttributesBySelector',
             params: {
               selectors: [
                 {
                   selector: "[fill='#50E3C2']",
-                  attributes: "fill"
+                  attributes: 'fill',
                 },
                 {
                   selector: "[fill='#BD0FE1']",
-                  attributes: "fill"
+                  attributes: 'fill',
                 },
                 {
                   selector: "[fill='#BD10E0']",
-                  attributes: "fill"
-                }
-              ]
-            } 
-          }
+                  attributes: 'fill',
+                },
+              ],
+            },
+          },
         ],
-      } as OptimizeOptions
+      } as OptimizeOptions,
     }),
   ],
 })

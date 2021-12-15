@@ -3,13 +3,12 @@
 import { Operation } from '@apollo/client/core'
 import { ClientErrorContext } from '@common/types/server/apollo/client'
 
-const defaultErrorContext: ClientErrorContext = {
-  logLevel: 'error',
-}
-
 export default function getErrorContext(
   operation: Operation,
 ): ClientErrorContext {
+  const defaultErrorContext: ClientErrorContext = {
+    logLevel: 'error',
+  }
   const context = operation.getContext()
   const error: Partial<ClientErrorContext> = context.error || {}
 
