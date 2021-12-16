@@ -4,7 +4,7 @@ class Icinga extends App.ControllerIntegrationBase
   featureConfig: 'icinga_config'
   description: [
     [__('This service receives emails from %s and creates tickets with host and service.'), 'Icinga']
-    [__('If the host and service is recovered again, the ticket will be closed automatically.')]
+    [__('If the host and service have recovered, the ticket can be closed automatically.')]
   ]
 
   render: =>

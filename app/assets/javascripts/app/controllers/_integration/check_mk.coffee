@@ -4,7 +4,7 @@ class CheckMk extends App.ControllerIntegrationBase
   featureConfig: 'check_mk_config'
   description: [
     [__('This service receives http requests or emails from %s and creates tickets with host and service.'), 'Checkmk']
-    [__('If the host and service has recovered, the ticket can be closed automatically.')]
+    [__('If the host and service have recovered, the ticket can be closed automatically.')]
   ]
 
   render: =>

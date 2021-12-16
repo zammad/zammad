@@ -4023,12 +4023,12 @@ msgstr ""
 msgid "Font size"
 msgstr ""
 
-#: app/assets/javascripts/app/models/knowledge_base.coffee
-msgid "Footer Note"
+#: app/assets/javascripts/app/controllers/knowledge_base/public_menu_manager.coffee
+msgid "Footer Menu"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/knowledge_base/public_menu_manager.coffee
-msgid "Footer menu"
+#: app/assets/javascripts/app/models/knowledge_base.coffee
+msgid "Footer Note"
 msgstr ""
 
 #: app/assets/javascripts/app/views/dashboard.jst.eco
@@ -4036,7 +4036,7 @@ msgid "For example, recently changed tickets, users, or organizations."
 msgstr ""
 
 #: app/assets/javascripts/app/views/profile/token_access_created.jst.eco
-msgid "For security reasons, the API token is shown only once. You'll need to copy it somewhere safe before continuing."
+msgid "For security reasons, the API token is shown only once. You'll need to save it somewhere secure before continuing."
 msgstr ""
 
 #: app/assets/javascripts/app/views/login.jst.eco
@@ -4130,7 +4130,7 @@ msgid "Full Name"
 msgstr ""
 
 #: app/controllers/users_controller.rb
-msgid "Full size image is invalid"
+msgid "Full-size image is invalid"
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -4171,7 +4171,7 @@ msgid "Generate user based stats."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee
-msgid "Generic API to integrate VoIP service provider with realtime push."
+msgid "Generic API to integrate VoIP service provider with real-time push."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -4456,7 +4456,7 @@ msgid "Header Link Color"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/public_menu_manager.coffee
-msgid "Header menu"
+msgid "Header Menu"
 msgstr ""
 
 #: app/assets/javascripts/app/views/monitoring.jst.eco
@@ -4464,7 +4464,7 @@ msgid "Health Check"
 msgstr ""
 
 #: app/assets/javascripts/app/views/monitoring.jst.eco
-msgid "Health information can be retrieved as JSON using"
+msgid "Health information can be retrieved as JSON using:"
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
@@ -4484,7 +4484,7 @@ msgid "Here you can add further links to your public FAQ page, which will be dis
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
-msgid "Here you can create new tickets. Also if you have the permissions you can create new customers and organizations."
+msgid "Here you can create new tickets. Also, if you have the permission, you can create new customers and organizations."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee
@@ -4492,11 +4492,11 @@ msgid "Here you can create one."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
-msgid "Here you can search for tickets, customers and organizations. Use the wildcard §*§ to find everything. E. g. §smi*§ or §rosent*l§. You also can use ||double quotes|| for searching phrases §\"some phrase\"§."
+msgid "Here you can search for tickets, customers, and organizations. Use the asterisk §*§ to find anything, e.g. §smi*§ or §rosent*l§. You also can use ||quotation marks|| for searching phrases: §\"some phrase\"§."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
-msgid "Here you can sign out, change the frontend language and see your last viewed items."
+msgid "Here you can sign out, change the frontend language, and see your last viewed items."
 msgstr ""
 
 #: app/assets/javascripts/app/views/object_manager/attribute.jst.eco
@@ -4504,7 +4504,7 @@ msgid "Here you define which authorization has access to the attribute."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
-msgid "Here you find your ticket overviews for open, assigned and escalated tickets."
+msgid "Here you find your ticket overviews for open, assigned, and escalated tickets."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
@@ -4588,7 +4588,7 @@ msgid "How can we help you? Search for an answer or a topic..."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_waiting_time.coffee
-msgid "How long has each customer had to wait, on average, to get a response from you today?"
+msgid "How long did each customer have to wait, on average, to get a response from you today?"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_escalation.coffee
@@ -4649,11 +4649,11 @@ msgid "Icon Set"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
-msgid "Icon Url"
+msgid "Icon URL"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
-msgid "Identifier of the chat-topic."
+msgid "Identifier of the chat topic."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -4665,17 +4665,14 @@ msgid "If left empty, the host gets auto-detected - in this case %s. The auto-de
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
-msgid "If no mapping is defined, all user get notified about any event."
+msgid "If no mapping is defined, all users will get notified of any event."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/check_mk.coffee
-msgid "If the host and service has recovered, the ticket can be closed automatically."
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_integration/icinga.coffee
 #: app/assets/javascripts/app/controllers/_integration/monit.coffee
 #: app/assets/javascripts/app/controllers/_integration/nagios.coffee
-msgid "If the host and service is recovered again, the ticket will be closed automatically."
+msgid "If the host and service have recovered, the ticket can be closed automatically."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -4700,7 +4697,7 @@ msgid "If you want to move already stored attachments from one backend to anothe
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
-msgid "If you want to open the chat by the press of a button set the option §show§ to §false§ and add the class §open-zammad-chat§ to the button."
+msgid "If you want to open the chat by clicking a button, set the option §show§ to §false§ and add the class §open-zammad-chat§ to the button."
 msgstr ""
 
 #: app/assets/javascripts/app/views/translation/index.jst.eco
@@ -4806,7 +4803,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
-msgid "Import as archive: |No notifications are sent|, the |tickets are closed| and original timestamps are used. You can still find them in Zammad using the search."
+msgid "Import as archive: |No notifications are sent|, the |tickets are closed|, and original timestamps are used. You can still find them in Zammad using the search."
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
@@ -4938,19 +4935,19 @@ msgid "Insert the widget code into the source code of every page the chat shall 
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
-msgid "Inserts Knowledge Base answer"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
-msgid "Inserts Text module"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Inserts a horizontal rule"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Inserts a mention for a user"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
+msgid "Inserts knowledge base answer"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
+msgid "Inserts text module"
 msgstr ""
 
 #: app/assets/javascripts/app/views/package.jst.eco
@@ -5024,7 +5021,7 @@ msgid "Invalid client_id in receive loop!"
 msgstr ""
 
 #: app/controllers/long_polling_controller.rb
-msgid "Invalid client_id receive!"
+msgid "Invalid client_id received!"
 msgstr ""
 
 #: app/controllers/import_freshdesk_controller.rb
@@ -5056,11 +5053,11 @@ msgid "Invalid link structure"
 msgstr ""
 
 #: app/controllers/tickets_controller.rb
-msgid "Invalid link structure (Object)"
+msgid "Invalid link structure (Object → LinkType)"
 msgstr ""
 
 #: app/controllers/tickets_controller.rb
-msgid "Invalid link structure (Object->LinkType)"
+msgid "Invalid link structure (Object)"
 msgstr ""
 
 #: app/controllers/mentions_controller.rb
@@ -5192,7 +5189,7 @@ msgid "June"
 msgstr ""
 
 #: app/assets/javascripts/app/views/translation/index.jst.eco
-msgid "Just click into the marker and update the words just in place. Enjoy!"
+msgid "Just click into the highlighted area and update the words right there. Enjoy!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
@@ -5422,16 +5419,16 @@ msgstr ""
 msgid "Link Related Answer"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+msgid "Link Template"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee
 msgid "Link issue"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_link_add.coffee
 msgid "Link type is needed!"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
-msgid "Link-Template"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
@@ -5529,6 +5526,10 @@ msgstr ""
 msgid "Lost network connection!"
 msgstr ""
 
+#: app/controllers/users_controller.rb
+msgid "MIME type is invalid"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/macro.coffee
 msgid "Macro"
 msgstr ""
@@ -5581,7 +5582,7 @@ msgid "Manage applications that can use Zammad as an OAuth provider and applicat
 msgstr ""
 
 #: app/views/mailer/application.html.erb
-msgid "Manage your notifications settings"
+msgid "Manage your notification settings"
 msgstr ""
 
 #: app/assets/javascripts/app/views/api.jst.eco
@@ -5642,7 +5643,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/chat.coffee
 #: app/assets/javascripts/app/views/channel/topics.jst.eco
-msgid "Max. clients in waitlist"
+msgid "Max. clients on waitlist"
 msgstr ""
 
 #: app/assets/javascripts/app/views/customer_chat/setting.jst.eco
@@ -5764,10 +5765,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_git_issue.jst.eco
 msgid "Milestone"
-msgstr ""
-
-#: app/controllers/users_controller.rb
-msgid "Mime type is invalid"
 msgstr ""
 
 #: app/models/postmaster_filter.rb

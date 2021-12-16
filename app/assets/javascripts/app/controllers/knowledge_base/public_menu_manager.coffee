@@ -25,13 +25,13 @@ class App.KnowledgeBasePublicMenuManager extends App.Controller
 
     [
       {
-        headline: __('Header menu'),
+        headline: __('Header Menu'),
         identifier: 'header',
         color:      kb.color_header,
         color_link: kb.color_header_link
       },
       {
-        headline: __('Footer menu'),
+        headline: __('Footer Menu'),
         identifier: 'footer',
         color_link: 'hsl(207,12%,50%)'
       }

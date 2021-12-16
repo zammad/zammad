@@ -400,13 +400,13 @@ App.Config.set(
             {
               key: '::'
               hotkeys: false
-              description: __('Inserts Text module')
+              description: __('Inserts text module')
               globalEvent: 'richtext-insert-text-module'
             }
             {
               key: '??'
               hotkeys: false
-              description: __('Inserts Knowledge Base answer')
+              description: __('Inserts knowledge base answer')
               globalEvent: 'richtext-insert-kb-answer'
             }
             {

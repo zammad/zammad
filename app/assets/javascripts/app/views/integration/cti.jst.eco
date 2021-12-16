@@ -98,7 +98,7 @@
 
   <h2><%- @T('Notify Map') %></h2>
 
-  <p><%- @T('Notify certain users by matching caller ID.') %><%- @T('If no mapping is defined, all user get notified about any event.') %>
+  <p><%- @T('Notify certain users by matching caller ID.') %><%- @T('If no mapping is defined, all users will get notified of any event.') %>
 
   <div class="settings-entry">
     <table class="settings-list js-notifyMap" style="width: 100%;">

@@ -31,7 +31,7 @@ class Slack extends App.ControllerIntegrationBase
       { name: 'webhook',   display: __('Webhook'),  tag: 'input', type: 'url',  limit: 200, 'null': false, placeholder: 'https://hooks.slack.com/services/...' },
       { name: 'username',  display: __('Username'), tag: 'input', type: 'text', limit: 100, 'null': false, placeholder: 'username' },
       { name: 'channel',   display: __('Channel'),  tag: 'input', type: 'text', limit: 100, 'null': true, placeholder: '#channel' },
-      { name: 'icon_url',  display: __('Icon Url'), tag: 'input', type: 'url',  limit: 200, 'null': true, placeholder: 'https://example.com/logo.png' },
+      { name: 'icon_url',  display: __('Icon URL'), tag: 'input', type: 'url',  limit: 200, 'null': true, placeholder: 'https://example.com/logo.png' },
     ]
 
     settings = []

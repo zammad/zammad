@@ -261,7 +261,7 @@ App.Config.set(
   {
     name: __('CTI (generic)')
     target: '#system/integration/cti'
-    description: __('Generic API to integrate VoIP service provider with realtime push.')
+    description: __('Generic API to integrate VoIP service provider with real-time push.')
     controller: Cti
     state: State
   }

@@ -183,7 +183,7 @@ class TicketsController < ApplicationController
           raise Exceptions::UnprocessableEntity, __('Invalid link structure (Object)') if !link_types_with_object_ids.is_a? Hash
 
           link_types_with_object_ids.each do |link_type, object_ids|
-            raise Exceptions::UnprocessableEntity, __('Invalid link structure (Object->LinkType)') if !object_ids.is_a? Array
+            raise Exceptions::UnprocessableEntity, __('Invalid link structure (Object → LinkType)') if !object_ids.is_a? Array
 
             object_ids.each do |local_object_id|
               link = Link.add(

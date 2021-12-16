@@ -154,7 +154,7 @@ $(function() {
 &lt;/script&gt;</code></pre>
 
   <h3><%- @T('Manually open chat') %></h3>
-  <p><%- @T('If you want to open the chat by the press of a button set the option §show§ to §false§ and add the class §open-zammad-chat§ to the button.') %></p>
+  <p><%- @T('If you want to open the chat by clicking a button, set the option §show§ to §false§ and add the class §open-zammad-chat§ to the button.') %></p>
   <pre><code class="language-html js-code">&lt;button class="open-zammad-chat"&gt;Chat with us&lt;/button&gt;
 
 &lt;script src="<%= @baseurl %>/assets/chat/chat.min.js"&gt;&lt;/script&gt;

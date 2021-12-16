@@ -11,13 +11,13 @@ class App.FirstStepsClues extends App.Controller
     {
       container: '.search-holder'
       headline: __('Search')
-      text: __('Here you can search for tickets, customers and organizations. Use the wildcard §*§ to find everything. E. g. §smi*§ or §rosent*l§. You also can use ||double quotes|| for searching phrases §"some phrase"§.')
+      text: __('Here you can search for tickets, customers, and organizations. Use the asterisk §*§ to find anything, e.g. §smi*§ or §rosent*l§. You also can use ||quotation marks|| for searching phrases: §"some phrase"§.')
       actions: []
     }
     {
       container: '.user-menu .add'
       headline: __('Create')
-      text: __('Here you can create new tickets. Also if you have the permissions you can create new customers and organizations.')
+      text: __('Here you can create new tickets. Also, if you have the permission, you can create new customers and organizations.')
       actions: [
         'hover .navigation',
         'hover .user-menu .add'
@@ -26,7 +26,7 @@ class App.FirstStepsClues extends App.Controller
     {
       container: '.user-menu .user .dropdown-menu'
       headline: __('Personal Settings')
-      text: __('Here you can sign out, change the frontend language and see your last viewed items.')
+      text: __('Here you can sign out, change the frontend language, and see your last viewed items.')
       actions: [
         'hover .navigation',
         'click .user-menu .user .js-action',
@@ -36,7 +36,7 @@ class App.FirstStepsClues extends App.Controller
     {
       container: '.js-overviewsMenuItem'
       headline: __('Overviews')
-      text: __('Here you find your ticket overviews for open, assigned and escalated tickets.')
+      text: __('Here you find your ticket overviews for open, assigned, and escalated tickets.')
       actions: [
         'hover'
       ]

@@ -21,7 +21,7 @@ RSpec.describe 'LongPolling', type: :request do
       get '/api/v1/message_receive', params: { data: {} }, as: :json
       expect(response).to have_http_status(:unprocessable_entity)
       expect(json_response).to be_a_kind_of(Hash)
-      expect(json_response['error']).to eq('Invalid client_id receive!')
+      expect(json_response['error']).to eq('Invalid client_id received!')
     end
 
     it 'send without client_id - no user login' do
@@ -39,7 +39,7 @@ RSpec.describe 'LongPolling', type: :request do
       get '/api/v1/message_receive', params: { client_id: client_id, data: {} }, as: :json
       expect(response).to have_http_status(:unprocessable_entity)
       expect(json_response).to be_a_kind_of(Hash)
-      expect(json_response['error']).to eq('Invalid client_id receive!')
+      expect(json_response['error']).to eq('Invalid client_id received!')
     end
 
     it 'receive without client_id' do
@@ -47,7 +47,7 @@ RSpec.describe 'LongPolling', type: :request do
       get '/api/v1/message_receive', params: { data: {} }, as: :json
       expect(response).to have_http_status(:unprocessable_entity)
       expect(json_response).to be_a_kind_of(Hash)
-      expect(json_response['error']).to eq('Invalid client_id receive!')
+      expect(json_response['error']).to eq('Invalid client_id received!')
     end
 
     it 'receive without wrong client_id' do
@@ -55,7 +55,7 @@ RSpec.describe 'LongPolling', type: :request do
       get '/api/v1/message_receive', params: { client_id: 'not existing', data: {} }, as: :json
       expect(response).to have_http_status(:unprocessable_entity)
       expect(json_response).to be_a_kind_of(Hash)
-      expect(json_response['error']).to eq('Invalid client_id receive!')
+      expect(json_response['error']).to eq('Invalid client_id received!')
     end
 
     it 'send without client_id' do

@@ -1523,7 +1523,7 @@ RSpec.describe 'User', type: :request do
 
       it 'returns verbose error for a not allowed mime-type' do
         make_request(avatar_full: base64)
-        expect(json_response).to include('error' => 'Mime type is invalid')
+        expect(json_response).to include('error' => 'MIME type is invalid')
       end
     end
   end

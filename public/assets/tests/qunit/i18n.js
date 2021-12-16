@@ -196,8 +196,8 @@ QUnit.test('i18n', assert => {
   translated = App.i18n.translateContent('§%s§ %s test', 123, 'xxx')
   assert.equal(translated, '<kbd>123</kbd> xxx test', 'en-us - §%s§ %s')
 
-  translated = App.i18n.translateContent('Here you can search for tickets, customers and organizations. Use the wildcard §*§ to find everything. E. g. §smi*§ or §rosent*l§. You also can use ||double quotes|| for searching phrases §"some phrase"§.')
-  assert.equal(translated, 'Here you can search for tickets, customers and organizations. Use the wildcard <kbd>*</kbd> to find everything. E. g. <kbd>smi*</kbd> or <kbd>rosent*l</kbd>. You also can use <i>double quotes</i> for searching phrases <kbd>&quot;some phrase&quot;</kbd>.', 'en-us - §§ §§ §§ || §§')
+  translated = App.i18n.translateContent('Here you can search for tickets, customers, and organizations. Use the asterisk §*§ to find anything, e.g. §smi*§ or §rosent*l§. You also can use ||quotation marks|| for searching phrases: §"some phrase"§.')
+  assert.equal(translated, 'Here you can search for tickets, customers, and organizations. Use the asterisk <kbd>*</kbd> to find anything, e.g. <kbd>smi*</kbd> or <kbd>rosent*l</kbd>. You also can use <i>quotation marks</i> for searching phrases: <kbd>&quot;some phrase&quot;</kbd>.', 'en-us - §§ §§ §§ || §§')
 
   translated = App.i18n.translateContent('//%s// %s test', 123, 'xxx')
   assert.equal(translated, '<del>123</del> xxx test', 'en-us - //%s// %s')

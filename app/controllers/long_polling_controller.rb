@@ -56,7 +56,7 @@ class LongPollingController < ApplicationController
 
     # check client id
     client_id = client_id_verify
-    raise Exceptions::UnprocessableEntity, __('Invalid client_id receive!') if !client_id
+    raise Exceptions::UnprocessableEntity, __('Invalid client_id received!') if !client_id
 
     # check queue to send
     begin

@@ -201,7 +201,7 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
     )
     configureAttributes = [
       # coffeelint: disable=no_interpolation_in_single_quotes
-      { name: 'data_option::linktemplate', display: __('Link-Template'), tag: 'input', type: 'text', null: true, default: '', placeholder: 'https://example.com/?q=#{object.attribute_name} - use ticket, user or organization as object' },
+      { name: 'data_option::linktemplate', display: __('Link Template'), tag: 'input', type: 'text', null: true, default: '', placeholder: 'https://example.com/?q=#{object.attribute_name} - use ticket, user or organization as object' },
       # coffeelint: enable=no_interpolation_in_single_quotes
     ]
     inputLinkTemplate = new App.ControllerForm(
@@ -339,7 +339,7 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
     )
     configureAttributes = [
       # coffeelint: disable=no_interpolation_in_single_quotes
-      { name: 'data_option::linktemplate', display: __('Link-Template'), tag: 'input', type: 'text', null: true, default: '', placeholder: 'https://example.com/?q=#{ticket.attribute_name}' },
+      { name: 'data_option::linktemplate', display: __('Link Template'), tag: 'input', type: 'text', null: true, default: '', placeholder: 'https://example.com/?q=#{ticket.attribute_name}' },
       # coffeelint: enable=no_interpolation_in_single_quotes
     ]
     inputLinkTemplate = new App.ControllerForm(

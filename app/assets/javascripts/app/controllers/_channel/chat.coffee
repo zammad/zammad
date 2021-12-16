@@ -32,7 +32,7 @@ class ChannelChat extends App.ControllerSubContent
       name: 'chatId'
       default: '1'
       type: 'Number'
-      description: __('Identifier of the chat-topic.')
+      description: __('Identifier of the chat topic.')
     }
     {
       name: 'show'
