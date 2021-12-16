@@ -2344,4 +2344,34 @@ RSpec.describe 'Ticket zoom', type: :system do
       expect(page).to have_no_selector('.js-reset')
     end
   end
+
+  describe 'Changing ticket status from "new" to any other status always results in uncommited status "closed" #3880', authenticated_as: :authenticate do
+    let(:ticket) { create(:ticket, group: Group.find_by(name: 'Users')) }
+    let(:workflow) do
+      create(:core_workflow,
+             object:             'Ticket',
+             condition_selected: {
+               'ticket.priority_id': {
+                 operator: 'is',
+                 value:    [ Ticket::Priority.find_by(name: '3 high').id.to_s ],
+               },
+             },
+             perform:            { 'ticket.state_id' => { operator: 'remove_option', remove_option: [ Ticket::State.find_by(name: 'pending reminder').id.to_s ] } })
+    end
+
+    def authenticate
+      workflow
+      true
+    end
+
+    before do
+      visit "#ticket/zoom/#{ticket.id}"
+    end
+
+    it 'does switch back to the saved value in the ticket instead of the first value of the dropdown' do
+      page.select 'pending reminder', from: 'state_id'
+      page.select '3 high', from: 'priority_id'
+      expect(page).to have_select('state_id', selected: 'new')
+    end
+  end
 end
