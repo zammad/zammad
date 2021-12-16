@@ -7,7 +7,11 @@
     <br />
     <p v-on:click="logout">{{ i18n.t('Logout') }}</p>
     <br />
+    <p v-on:click="goToTickets">Go to Tickets</p>
+    <br />
     <p v-on:click="refetchConfig">refetchConfig</p>
+    <br />
+    <p v-on:click="fetchCurrentUser">fetchCurrentUser</p>
     <br /><br />
     <h1 class="text-lg mb-4">Configs:</h1>
     <template v-if="config.value">
@@ -26,6 +30,7 @@ import useSessionUserStore from '@common/stores/session/user'
 import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
 import useApplicationConfigStore from '@common/stores/application/config'
+import { useCurrentUserQuery } from '@common/graphql/api'
 
 // TODO: Only testing for the notifications...
 const { notify } = useNotifications()
@@ -45,7 +50,7 @@ const router = useRouter()
 
 const logout = (): void => {
   authenticated.logout().then(() => {
-    router.push('/login')
+    router.push('login')
   })
 }
 
@@ -53,5 +58,14 @@ const config = useApplicationConfigStore()
 
 const refetchConfig = async (): Promise<void> => {
   await config.getConfig()
+}
+
+const fetchCurrentUser = () => {
+  const { result } = useCurrentUserQuery({ fetchPolicy: 'no-cache' })
+  console.log('result', result)
+}
+
+const goToTickets = () => {
+  router.push('/tickets')
 }
 </script>

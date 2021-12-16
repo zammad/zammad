@@ -3,9 +3,16 @@
 <template>
   <div>
     <h1>{{ i18n.t('Ticket Overview') }}</h1>
+    <p v-on:click="goTo">Go to link Home</p>
   </div>
 </template>
 
 <script setup lang="ts">
-// TODO ...
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+const goTo = () => {
+  router.push('/')
+}
 </script>

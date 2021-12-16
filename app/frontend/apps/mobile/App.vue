@@ -20,11 +20,7 @@ import useAuthenticatedStore from '@common/stores/authenticated'
 import useSessionIdStore from '@common/stores/session/id'
 import useMetaTitle from '@common/composables/useMetaTitle'
 import { useRoute, useRouter } from 'vue-router'
-
-// TODO ... maybe show some special message, if the session was removed from a other place.
-// unauthorized () {
-//     return !this.$store.getters.accessToken && this.$store.getters.authenticated;
-// },
+import { computed, watch } from 'vue'
 
 const router = useRouter()
 const route = useRoute()
@@ -37,7 +33,22 @@ useMetaTitle().initializeMetaTitle()
 const applicationLoaded = useApplicationLoadedStore()
 applicationLoaded.setLoaded()
 
-// Add a watcher for authenticated change.
+const invalidatedSession = computed(() => {
+  return !sessionId.value && authenticated.value
+})
+
+watch(invalidatedSession, () => {
+  authenticated.clearAuthentication()
+
+  router.replace({
+    name: 'Login',
+    params: {
+      invalidatedSession: '1',
+    },
+  })
+})
+
+// Add a watcher for authenticated changes (e.g. login/logout in a other browser tab).
 authenticated.$subscribe((mutation, state) => {
   if (state.value && !sessionId.value) {
     sessionId.checkSession().then((sessionId) => {

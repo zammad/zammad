@@ -7,6 +7,7 @@ import {
   GraphQLErrorExtensionsHandler,
   GraphQLErrorTypes,
 } from '@common/types/error'
+import useSessionIdStore from '@common/stores/session/id'
 
 const errorLink = onError(({ graphQLErrors, networkError, operation }) => {
   const errorContext = getErrorContext(operation)
@@ -31,9 +32,10 @@ const errorLink = onError(({ graphQLErrors, networkError, operation }) => {
         operation.operationName !== 'sessionId' &&
         type === GraphQLErrorTypes.NotAuthorized
       ) {
-        // Session Invalid:
-        // TODO ...do something...
-        log.warn('Session invalid...')
+        // Reset sessionId after an unathenticated error type.
+        useSessionIdStore().value = null
+
+        log.warn('Session invalid, trigger logout and show login page.')
       }
     })
   }

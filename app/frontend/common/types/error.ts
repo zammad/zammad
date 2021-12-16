@@ -5,10 +5,12 @@ import { GraphQLErrorExtensions } from 'graphql'
 export enum GraphQLErrorTypes {
   UnkownError = 'Exceptions::UnkownError',
   NetworkError = 'Exceptions::NetworkError',
+
+  // This exception actually means 'NotAuthenticated'
   NotAuthorized = 'Exceptions::NotAuthorized',
 }
 
-export type GraphQLErrorTypeKeys = keyof GraphQLErrorTypes | 'test'
+export type GraphQLErrorTypeKeys = keyof GraphQLErrorTypes
 
 export interface GraphQLErrorExtensionsHandler {
   type: GraphQLErrorTypes

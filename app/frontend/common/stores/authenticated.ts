@@ -22,16 +22,21 @@ const useAuthenticatedStore = defineStore('authenticated', {
       const result = await logoutMutation.send()
 
       if (result?.logout?.success) {
-        await apolloClient.clearStore()
-
-        const sessionId = useSessionIdStore()
-        sessionId.value = null
-
-        // Refresh the config after logout, to have only the non authenticated version.
-        await useApplicationConfigStore().resetAndGetConfig()
-
-        // TODO... check for other things which must be removed/cleared during a logout.
+        await this.clearAuthentication()
       }
+    },
+
+    async clearAuthentication(): Promise<void> {
+      await apolloClient.clearStore()
+
+      const sessionId = useSessionIdStore()
+      sessionId.value = null
+      this.value = false
+
+      // Refresh the config after logout, to have only the non authenticated version.
+      await useApplicationConfigStore().resetAndGetConfig()
+
+      // TODO... check for other things which must be removed/cleared during a logout.
     },
 
     async login(login: string, password: string): Promise<void> {
@@ -52,6 +57,7 @@ const useAuthenticatedStore = defineStore('authenticated', {
       if (newSessionId) {
         const sessionId = useSessionIdStore()
         sessionId.value = newSessionId
+        this.value = true
 
         await Promise.all([
           useApplicationConfigStore().getConfig(),

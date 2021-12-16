@@ -85,9 +85,27 @@
 </template>
 
 <script setup lang="ts">
+import useNotifications from '@common/composables/useNotifications'
 import useApplicationConfigStore from '@common/stores/application/config'
 import useAuthenticationStore from '@common/stores/authenticated'
 import { useRouter } from 'vue-router'
+
+interface Props {
+  invalidatedSession?: string
+}
+
+const props = defineProps<Props>()
+
+// Output a hint, when the session is longer valid, maybe because because the session
+// was deleted on the server.
+if (props.invalidatedSession === '1') {
+  const { notify } = useNotifications()
+
+  notify({
+    message: __('The session is no longer valid. Please log in again.'),
+    type: 'warning',
+  })
+}
 
 const authentication = useAuthenticationStore()
 const loginFormValues = {

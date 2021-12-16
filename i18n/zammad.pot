@@ -9048,6 +9048,10 @@ msgstr ""
 msgid "The server settings could not be automatically detected. Please configure them manually."
 msgstr ""
 
+#: app/frontend/apps/mobile/views/Login.vue
+msgid "The session is no longer valid. Please log in again."
+msgstr ""
+
 #: app/models/store/file.rb
 msgid "The setting 'storage_provider' was not configured."
 msgstr ""
