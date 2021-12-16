@@ -601,7 +601,7 @@ GEM
     timers (4.3.3)
     tins (1.29.1)
       sync
-    twilio-ruby (5.61.2)
+    twilio-ruby (5.62.0)
       faraday (>= 0.9, < 2.0)
       jwt (>= 1.5, <= 2.5)
       nokogiri (>= 1.6, < 2.0)
