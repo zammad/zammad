@@ -599,13 +599,13 @@
     textmodule.emptyResultsContainer()
 
     if(!term) {
-      var element = $('<li>').text(App.i18n.translateInline('Start typing to search in Knowledge Base...'))
+      var element = $('<li>').text(App.i18n.translateInline('Start typing to search in Knowledge Base…'))
       textmodule.appendResults(element)
 
       return
     }
 
-    var element = $('<li>').text(App.i18n.translateInline('Loading...'))
+    var element = $('<li>').text(App.i18n.translateInline('Loading…'))
     textmodule.appendResults(element)
 
     App.Delay.set(function() {

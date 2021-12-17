@@ -5455,10 +5455,6 @@ msgstr ""
 msgid "Load"
 msgstr ""
 
-#: app/assets/javascripts/app/lib/base/jquery.textmodule.js
-msgid "Loading..."
-msgstr ""
-
 #: app/assets/javascripts/app/lib/app_post/task_manager.coffee
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 #: app/assets/javascripts/app/views/generic/page_loading.jst.eco
@@ -8412,7 +8408,7 @@ msgid "Start typing to search for users…"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
-msgid "Start typing to search in Knowledge Base..."
+msgid "Start typing to search in Knowledge Base…"
 msgstr ""
 
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
