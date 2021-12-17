@@ -2001,6 +2001,8 @@ RSpec.describe 'Ticket zoom', type: :system do
 
     def switch_language_german
       visit '#profile/language'
+      # Suppress the modal dialog that invites to contributions for translations that are < 95% as this breaks the tests for de-de.
+      page.evaluate_script "App.LocalStorage.set('translation_support_no', true, App.Session.get('id'))"
       page.find('.js-input').click
       page.find('.js-input').set('Deutsch')
       page.find('.js-input').send_keys(:enter)
