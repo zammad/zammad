@@ -6,7 +6,7 @@
       <% uid =  _.uniqueId('fileUpload_') %>
       <input multiple="multiple" type="file" name="file" id="<%- uid %>">
       <label class="attachmentPlaceholder-label" for="<%- uid %>">
-        <%- @T('select attachment...') %>
+        <%- @T('select attachment…') %>
       </label>
     </span>
   </div>

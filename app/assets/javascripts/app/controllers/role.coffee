@@ -19,7 +19,7 @@ class Role extends App.ControllerSubContent
         pagerPerPage: 150
         navupdate: '#roles'
         notes:     [
-          __('Roles are ...')
+          __('Roles are …')
         ]
         buttons: [
           { name: __('New Role'), 'data-type': 'new', class: 'btn--success' }

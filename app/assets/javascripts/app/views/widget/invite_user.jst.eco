@@ -32,7 +32,7 @@
     <div class="modal-body">
       <div class="wizard-body vertical justified">
         <p class="wizard-loadingText">
-          <span class="loading icon"></span> <%- @T('Sending...') %>
+          <span class="loading icon"></span> <%- @T('Sending…') %>
         </p>
       </div>
     </div>

@@ -42,7 +42,7 @@ returns
       },
       outbound: {
         smtp:     __('SMTP - configure your own outgoing SMTP settings'),
-        sendmail: __('Local MTA (Sendmail/Postfix/Exim/...) - use server setup'),
+        sendmail: __('Local MTA (Sendmail/Postfix/Exim/…) - use server setup'),
       },
     }
   end

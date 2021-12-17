@@ -401,4 +401,4 @@ class Modal extends App.ControllerModal
   head: __('Lost network connection!')
 
   content: ->
-    __('Trying to reconnect...')
+    __('Trying to reconnect…')

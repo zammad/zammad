@@ -19,7 +19,7 @@ class Group extends App.ControllerSubContent
         pagerPerPage: 150
         navupdate: '#groups'
         notes:     [
-          __('Groups are ...')
+          __('Groups are …')
         ]
         buttons: [
           { name: __('New Group'), 'data-type': 'new', class: 'btn--success' }

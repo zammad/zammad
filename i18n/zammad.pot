@@ -248,18 +248,6 @@ msgstr ""
 msgid "** Service Level Agreements **, abbreviated ** SLAs **, help you to meet specific response times for your customers' requests. This way you can define goals such as answering every inquiry within eight hours. If you are at risk of missing this target, Zammad will alert you.\n\nYou can define targets for three different metrics: ** response time ** (time between the creation of a ticket and the first reaction of an agent), ** update time ** (time between a customer's request and an agent's reaction), and ** solution time ** (time between creating and closing a ticket).\n\nAny escalated tickets (i.e. tickets that have missed the defined target) are displayed in a separate view in your overviews. You can also configure ** email notifications **."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
-msgid "...add object link URL"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
-msgid "...add object title"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
-msgid "...of whole text area"
-msgstr ""
-
 #: db/seeds/settings.rb
 msgid "1 day"
 msgstr ""
@@ -759,12 +747,12 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
-msgid "Analyzing entries with given configuration..."
+msgid "Analyzing entries with given configuration…"
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
-msgid "Analyzing structure..."
+msgid "Analyzing structure…"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee
@@ -1813,7 +1801,7 @@ msgid "Completed Tasks"
 msgstr ""
 
 #: public/assets/chat/views/chat.eco
-msgid "Compose your message..."
+msgid "Compose your message…"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_auto_assignment.coffee
@@ -1925,7 +1913,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
-msgid "Connecting ..."
+msgid "Connecting …"
 msgstr ""
 
 #: public/assets/chat/chat-no-jquery.coffee
@@ -4407,7 +4395,7 @@ msgid "Groups"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/group.coffee
-msgid "Groups are ..."
+msgid "Groups are …"
 msgstr ""
 
 #: app/assets/javascripts/app/models/webhook.coffee
@@ -5157,7 +5145,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
-msgid "Job is waiting to get started..."
+msgid "Job is waiting to get started…"
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
@@ -5469,12 +5457,15 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/task_manager.coffee
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
-#: app/assets/javascripts/app/views/generic/page_loading.jst.eco
 msgid "Loading..."
 msgstr ""
 
+#: app/assets/javascripts/app/views/generic/page_loading.jst.eco
+msgid "Loading…"
+msgstr ""
+
 #: lib/email_helper.rb
-msgid "Local MTA (Sendmail/Postfix/Exim/...) - use server setup"
+msgid "Local MTA (Sendmail/Postfix/Exim/…) - use server setup"
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -6697,7 +6688,7 @@ msgid "On %s, %s wrote:"
 msgstr ""
 
 #: app/assets/javascripts/app/models/macro.coffee
-msgid "Once completed..."
+msgid "Once completed…"
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
@@ -6856,7 +6847,7 @@ msgid "Organizations"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/organization.coffee
-msgid "Organizations are for any person in the system. Agents (Owners, Resposbiles, ...) and Customers."
+msgid "Organizations are for any person in the system. Agents (Owners, Resposbiles, …) and Customers."
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket_article.coffee
@@ -6905,7 +6896,7 @@ msgid "Overview"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/overview.coffee
-msgid "Overview are ..."
+msgid "Overview are …"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
@@ -7597,7 +7588,7 @@ msgid "Reset changes"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/translation.coffee
-msgid "Reseting changes..."
+msgid "Reseting changes…"
 msgstr ""
 
 #: app/controllers/users_controller.rb
@@ -7667,7 +7658,7 @@ msgid "Roles"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/role.coffee
-msgid "Roles are ..."
+msgid "Roles are …"
 msgstr ""
 
 #: app/assets/javascripts/app/views/google/list.jst.eco
@@ -7694,7 +7685,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
-msgid "Running..."
+msgid "Running…"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee
@@ -7844,7 +7835,7 @@ msgid "Scheduler"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/job.coffee
-msgid "Scheduler are ..."
+msgid "Scheduler are …"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/job.coffee
@@ -7892,8 +7883,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax.coffee
 #: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee
-#: app/assets/javascripts/app/views/generic/icon_picker.jst.eco
 msgid "Search..."
+msgstr ""
+
+#: app/assets/javascripts/app/views/generic/icon_picker.jst.eco
+msgid "Search…"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
@@ -7951,7 +7945,7 @@ msgid "Select item"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/multi_locales_row.coffee
-msgid "Select locale..."
+msgid "Select locale…"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee
@@ -8039,7 +8033,7 @@ msgid "Sender of last article"
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco
-msgid "Sending..."
+msgid "Sending…"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/maintenance.coffee
@@ -8213,7 +8207,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/generic/ticket_list.jst.eco
 #: app/assets/javascripts/app/views/widget/ticket_stats_list.jst.eco
-msgid "Show all..."
+msgid "Show all…"
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
@@ -8762,7 +8756,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/macro.coffee
 #: app/assets/javascripts/app/controllers/text_module.coffee
-msgid "Text modules are ..."
+msgid "Text modules are …"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
@@ -9392,11 +9386,11 @@ msgid "Triggers"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/trigger.coffee
-msgid "Triggers are ..."
+msgid "Triggers are …"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/websocket.coffee
-msgid "Trying to reconnect..."
+msgid "Trying to reconnect…"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
@@ -9599,7 +9593,7 @@ msgid "Unable to load content"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee
-msgid "Unable to load data..."
+msgid "Unable to load data…"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/payload_example.coffee
@@ -10109,7 +10103,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco
-msgid "Verifying..."
+msgid "Verifying…"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/version.coffee
@@ -10280,7 +10274,7 @@ msgid "Webhooks"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/webhook.coffee
-msgid "Webhooks are ..."
+msgid "Webhooks are …"
 msgstr ""
 
 #: app/assets/javascripts/app/models/webhook.coffee
@@ -11404,7 +11398,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/generic/attachment.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
-msgid "select attachment..."
+msgid "select attachment…"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/generic_history.coffee
@@ -11613,6 +11607,18 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/settings/ticket_hook_position.jst.eco
 msgid "|Right| means |Some Subject [Ticket#12345]|"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
+msgid "…add object link URL"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
+msgid "…add object title"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
+msgid "…of whole text area"
 msgstr ""
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco

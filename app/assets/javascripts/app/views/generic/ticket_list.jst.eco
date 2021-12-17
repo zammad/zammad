@@ -27,7 +27,7 @@
   <% if @tickets.length > @show_max: %>
   </div>
   <div class="btn btn--text btn-show-all" role="button" data-toggle="collapse" data-target="#<%= id %>" aria-expanded="false" aria-controls="<%= id %>">
-    <div data-show="open"><%- @Icon('arrow-down') %> <span><%- @T('Show all...') %></span></div>
+    <div data-show="open"><%- @Icon('arrow-down') %> <span><%- @T('Show all…') %></span></div>
     <div data-show="collapsed"><%- @Icon('arrow-up') %> <span><%- @T('Show less') %></span></div>
   </div>
   <% end %>

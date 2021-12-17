@@ -24,7 +24,7 @@ class Organization extends App.ControllerSubContent
         pagerPerPage: 150
         navupdate: '#organizations'
         notes: [
-          __('Organizations are for any person in the system. Agents (Owners, Resposbiles, ...) and Customers.')
+          __('Organizations are for any person in the system. Agents (Owners, Resposbiles, …) and Customers.')
         ]
         buttons: [
           { name: __('Import'), 'data-type': 'import', class: 'btn' }

@@ -298,13 +298,13 @@ App.Config.set(
               keyPrefix: '2x'
               key: '.'
               hotkeys: true
-              description: __('...add object title')
+              description: __('…add object title')
             }
             {
               keyPrefix: '3x'
               key: '.'
               hotkeys: true
-              description: __('...add object link URL')
+              description: __('…add object link URL')
             }
           ]
         }
@@ -473,7 +473,7 @@ App.Config.set(
             {
               key: 'y'
               hotkeys: true
-              description: __('...of whole text area')
+              description: __('…of whole text area')
               globalEvent: 'richtext-remove-formating-textarea'
             }
             {

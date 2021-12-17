@@ -19,7 +19,7 @@ class Macro extends App.ControllerSubContent
         pagerPerPage: 150
         navupdate: '#macros'
         notes: [
-          __('Text modules are ...')
+          __('Text modules are …')
         ]
         buttons: [
           { name: __('New Macro'), 'data-type': 'new', class: 'btn--success' }

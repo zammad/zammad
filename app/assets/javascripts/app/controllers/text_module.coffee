@@ -25,7 +25,7 @@ class TextModule extends App.ControllerSubContent
         pagerPerPage: 150
         navupdate: '#text_modules'
         notes:     [
-          __('Text modules are ...')
+          __('Text modules are …')
         ]
         buttons: [
           { name: __('Import'),          'data-type': 'import', class: 'btn' }

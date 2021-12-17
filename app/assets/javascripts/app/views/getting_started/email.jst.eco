@@ -44,7 +44,7 @@
       <h2><%- @T('Email Account') %></h2>
       <div class="wizard-body vertical justified">
         <p class="wizard-loadingText">
-          <span class="loading icon"></span> <%- @T('Verifying...') %>
+          <span class="loading icon"></span> <%- @T('Verifying…') %>
         </p>
       </div>
     </div>

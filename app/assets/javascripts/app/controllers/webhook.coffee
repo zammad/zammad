@@ -19,7 +19,7 @@ class Index extends App.ControllerSubContent
         pagerPerPage: 150
         navupdate: '#webhooks'
         notes: [
-          __('Webhooks are ...')
+          __('Webhooks are …')
         ]
         buttons: [
           { name: __('Example Payload'), 'data-type': 'payload', class: 'btn' }
