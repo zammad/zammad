@@ -58,7 +58,7 @@ brakeman:
   artifacts:
     expire_in: 1 week
     paths:
-    - tmp/brakeman-report.html
+      - tmp/brakeman-report.html
     when: on_failure
   script:
     - bundle install -j $(nproc) --path vendor
@@ -89,8 +89,9 @@ github:
   tags:
     - deploy
   before_script:
-    - "" # no RVM present in deploy ENV
+    - '' # no RVM present in deploy ENV
   script:
+    - git fetch --unshallow
     - script/build/sync_repo.sh git@github.com:zammad/zammad.git
 
 global_refresh_envs:
@@ -104,7 +105,7 @@ global_refresh_envs:
   artifacts:
     expire_in: 1 day
     paths:
-    - fresh.env
+      - fresh.env
   rules:
     - if: $CI_MERGE_REQUEST_ID
       when: never
