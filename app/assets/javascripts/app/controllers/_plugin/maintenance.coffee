@@ -46,7 +46,7 @@ class Maintenance extends App.Controller
   maintanaceRestartAuto: (data) =>
     return if @messageRestartAuto
     @messageRestartAuto = new App.SessionMessage(
-      head:         App.i18n.translateContent('Zammad is restarting...')
+      head:         App.i18n.translateContent('Zammad is restarting…')
       message:      App.i18n.translateContent('Some system settings have changed, Zammad is restarting. Please wait until Zammad is back again.')
       keyboard:     false
       backdrop:     false

@@ -3635,7 +3635,7 @@ msgid "Enter Project Name"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/title.jst.eco
-msgid "Enter Title..."
+msgid "Enter Title…"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/layout_ref.coffee
@@ -4572,7 +4572,7 @@ msgid "Hours"
 msgstr ""
 
 #: app/views/layouts/knowledge_base.html.erb
-msgid "How can we help you? Search for an answer or a topic..."
+msgid "How can we help you? Search for an answer or a topic…"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_waiting_time.coffee
@@ -5455,11 +5455,12 @@ msgstr ""
 msgid "Load"
 msgstr ""
 
-#: app/assets/javascripts/app/lib/app_post/task_manager.coffee
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 msgid "Loading..."
 msgstr ""
 
+#: app/assets/javascripts/app/lib/app_post/task_manager.coffee
+#: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 #: app/assets/javascripts/app/views/generic/page_loading.jst.eco
 msgid "Loading…"
 msgstr ""
@@ -7188,7 +7189,7 @@ msgid "Please supply your new password!"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
-msgid "Please wait..."
+msgid "Please wait…"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
@@ -7883,9 +7884,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax.coffee
 #: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee
-msgid "Search..."
-msgstr ""
-
 #: app/assets/javascripts/app/views/generic/icon_picker.jst.eco
 msgid "Search…"
 msgstr ""
@@ -8410,7 +8408,7 @@ msgid "Start new conversation"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
-msgid "Start typing to search for users..."
+msgid "Start typing to search for users…"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
@@ -10763,7 +10761,7 @@ msgid "Zammad is currently in maintenance mode. Only administrators can login. P
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee
-msgid "Zammad is restarting..."
+msgid "Zammad is restarting…"
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/switch_back_to_user.jst.eco

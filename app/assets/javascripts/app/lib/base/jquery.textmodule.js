@@ -554,7 +554,7 @@
   KbAnswer.renderValue = function(textmodule, elem, callback) {
     textmodule.emptyResultsContainer()
 
-    var element = $('<li>').text(App.i18n.translateInline('Please wait...'))
+    var element = $('<li>').text(App.i18n.translateInline('Please wait…'))
     textmodule.appendResults(element)
 
     var form_id = textmodule.$element.closest('form').find('[name=form_id]').val()
@@ -672,7 +672,7 @@
   Mention.renderValue = function(textmodule, elem, callback) {
     textmodule.emptyResultsContainer()
 
-    var element = $('<li>').text(App.i18n.translateInline('Please wait...'))
+    var element = $('<li>').text(App.i18n.translateInline('Please wait…'))
     textmodule.appendResults(element)
 
     var form_id = textmodule.$element.closest('form').find('[name=form_id]').val()
@@ -699,13 +699,13 @@
     textmodule.emptyResultsContainer()
 
     if(!term) {
-      var element = $('<li>').text(App.i18n.translateInline('Start typing to search for users...'))
+      var element = $('<li>').text(App.i18n.translateInline('Start typing to search for users…'))
       textmodule.appendResults(element)
 
       return
     }
 
-    var element = $('<li>').text(App.i18n.translateInline('Loading...'))
+    var element = $('<li>').text(App.i18n.translateInline('Loading…'))
     textmodule.appendResults(element)
 
     App.Delay.set(function() {
