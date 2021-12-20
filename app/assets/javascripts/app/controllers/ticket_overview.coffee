@@ -1,4 +1,6 @@
 class App.TicketOverview extends App.Controller
+  @extend App.TicketMassUpdatable
+
   className: 'overviews'
   activeFocus: 'nav'
   mouse:
@@ -192,65 +194,35 @@ class App.TicketOverview extends App.Controller
         duration: 300
 
   performBatchAction: (items, action, id, groupId) ->
-    if action is 'macro'
-      @batchCount = items.length
-      @batchCountIndex = 0
-      macro = App.Macro.find(id)
-      for item in items
-        #console.log "perform action #{action} with id #{id} on ", $(item).val()
-        ticket = App.Ticket.find($(item).val())
-        article = {}
-        App.Ticket.macro(
-          macro: macro.perform
-          ticket: ticket
-          article: article
-        )
-        ticket.article = article
-        ticket.save(
-          done: (r) =>
-            @batchCountIndex++
+    ticket_ids = items.toArray().map (item) -> $(item).val()
 
-            # refresh view after all tickets are proceeded
-            if @batchCountIndex == @batchCount
-              App.Event.trigger('overview:fetch')
-        )
-      return
+    switch action
+      when 'macro'
+        path = 'macro'
+        data =
+          ticket_ids: ticket_ids
+          macro_id:   id
 
-    if action is 'user_assign'
-      @batchCount = items.length
-      @batchCountIndex = 0
-      for item in items
-        #console.log "perform action #{action} with id #{id} on ", $(item).val()
-        ticket = App.Ticket.find($(item).val())
-        ticket.owner_id = id
+      when 'user_assign'
+        path = 'update'
+
+        data =
+          ticket_ids: ticket_ids
+          attributes:
+            owner_id: id
+
         if !_.isEmpty(groupId)
-          ticket.group_id = groupId
-        ticket.save(
-          done: (r) =>
-            @batchCountIndex++
+          data.attributes.group_id = groupId
 
-            # refresh view after all tickets are proceeded
-            if @batchCountIndex == @batchCount
-              App.Event.trigger('overview:fetch')
-        )
-      return
+      when 'group_assign'
+        path = 'update'
 
-    if action is 'group_assign'
-      @batchCount = items.length
-      @batchCountIndex = 0
-      for item in items
-        #console.log "perform action #{action} with id #{id} on ", $(item).val()
-        ticket = App.Ticket.find($(item).val())
-        ticket.group_id = id
-        ticket.save(
-          done: (r) =>
-            @batchCountIndex++
+        data =
+          ticket_ids: ticket_ids
+          attributes:
+            group_id: id
 
-            # refresh view after all tickets are proceeded
-            if @batchCountIndex == @batchCount
-              App.Event.trigger('overview:fetch')
-        )
-      return
+    @ajax_mass(path, data)
 
   showBatchOverlay: ->
     @batchOverlay.addClass('is-visible')

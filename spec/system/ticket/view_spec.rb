@@ -118,6 +118,54 @@ RSpec.describe 'Ticket views', type: :system do
       end
     end
 
+    context 'when saving is blocked by one of selected tickets', authenticated_as: :pre_authentication do
+      let(:core_workflow_action) {  { 'ticket.priority_id': { operator: 'remove_option', remove_option: '3' } } }
+      let(:core_workflow) { create(:core_workflow, :active_and_screen, :perform_action) }
+
+      let(:macro_perform) do
+        {
+          'ticket.priority_id': { pre_condition: 'specific', value: 3.to_s }
+        }
+      end
+
+      let(:macro_priority) { create :macro, perform: macro_perform }
+      let(:ticket1)        { create :ticket, group: Group.first }
+
+      def pre_authentication
+        core_workflow && macro_priority && ticket1
+
+        true
+      end
+
+      it 'shows modal with blocking ticket title' do
+        visit '#ticket/view/all_open'
+
+        within(:active_content) do
+          ticket_dom = page.find(:table_row, ticket1.id).native
+
+          # click and hold first ticket in table
+          click_and_hold(ticket_dom)
+
+          # move ticket to y -ticket.location.y
+          move_mouse_by(0, -ticket_dom.location.y + 5)
+
+          # move a bit to the left to display macro batches
+          move_mouse_by(-250, 0)
+
+          expect(page).to have_selector(:macro_batch, macro_priority.id, wait: 10)
+
+          macro_dom = find(:macro_batch, macro_priority.id)
+          move_mouse_to(macro_dom)
+
+          release_mouse
+
+          in_modal disappears: false do
+            expect(page).to have_text(ticket1.title)
+          end
+        end
+      end
+    end
+
     context 'with macro batch overlay' do
       shared_examples "adding 'small' class to macro element" do
         it 'adds a "small" class to the macro element' do
@@ -295,6 +343,32 @@ RSpec.describe 'Ticket views', type: :system do
           # Check if still only one article exists on the ticket.
           click("tr[data-id='#{created_ticket_id}'] a")
           expect(page).to have_css('.ticket-article-item', count: 1)
+        end
+      end
+    end
+
+    context 'when saving is blocked by one of selected tickets', authenticated_as: :pre_authentication do
+      let(:core_workflow) { create(:core_workflow, :active_and_screen, :perform_action) }
+      let(:ticket1)       { create :ticket, group: Group.first }
+
+      def pre_authentication
+        core_workflow && ticket1
+
+        true
+      end
+
+      it 'shows modal with blocking ticket title' do
+        visit '#ticket/view/all_open'
+
+        within(:active_content) do
+          find("tr[data-id='#{ticket1.id}']").check('bulk', allow_label_click: true)
+          select '3 high', from: 'priority_id'
+          click '.js-confirm'
+          click '.js-submit'
+
+          in_modal disappears: false do
+            expect(page).to have_text(ticket1.title)
+          end
         end
       end
     end

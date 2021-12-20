@@ -82,6 +82,9 @@ class _ajaxSingleton
 
     # show error messages
     $(document).bind('ajaxError', (e, jqxhr, settings, exception) ->
+      if settings.failResponseNoTrigger
+        return
+
       status = jqxhr.status
       detail = jqxhr.responseText
       if !status && !detail

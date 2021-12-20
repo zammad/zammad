@@ -11,6 +11,8 @@ Zammad::Application.routes.draw do
   match api_path + '/tickets',                                       to: 'tickets#create',            via: :post
   match api_path + '/tickets/:id',                                   to: 'tickets#update',            via: :put
   match api_path + '/tickets/:id',                                   to: 'tickets#destroy',           via: :delete
+  match api_path + '/tickets/mass_macro',                            to: 'tickets_mass#macro',        via: :post
+  match api_path + '/tickets/mass_update',                           to: 'tickets_mass#update',       via: :post
   match api_path + '/ticket_create',                                 to: 'tickets#ticket_create',     via: :get
   match api_path + '/ticket_split',                                  to: 'tickets#ticket_split',      via: :get
   match api_path + '/ticket_history/:id',                            to: 'tickets#ticket_history',    via: :get

@@ -1221,8 +1221,12 @@ msgstr ""
 msgid "Browser too old!"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee
+#: app/assets/javascripts/app/lib/mixins/ticket_mass_updatable.coffee
 msgid "Bulk action executed!"
+msgstr ""
+
+#: app/assets/javascripts/app/lib/mixins/ticket_mass_updatable.coffee
+msgid "Bulk action failed"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee
@@ -1359,10 +1363,6 @@ msgstr ""
 
 #: lib/sessions/event/spool.rb
 msgid "Can't send spool, session not authenticated"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee
-msgid "Can't update Ticket %s!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
@@ -5522,6 +5522,10 @@ msgstr ""
 msgid "Macro"
 msgstr ""
 
+#: app/controllers/tickets_mass_controller.rb
+msgid "Macro group restrictions do not cover some tickets"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/macro.coffee
 #: db/seeds/permissions.rb
 msgid "Macros"
@@ -9110,6 +9114,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 msgid "Ticket escalation"
+msgstr ""
+
+#: app/assets/javascripts/app/lib/mixins/ticket_mass_updatable.coffee
+msgid "Ticket failed to save: %s"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee

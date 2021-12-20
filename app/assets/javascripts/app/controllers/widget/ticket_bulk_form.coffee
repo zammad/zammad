@@ -1,4 +1,6 @@
 class App.TicketBulkForm extends App.Controller
+  @extend App.TicketMassUpdatable
+
   className: 'bulkAction hide'
 
   events:
@@ -171,6 +173,10 @@ class App.TicketBulkForm extends App.Controller
 
     params = @formParam(e.target)
 
+    for key, value of params
+      if value == '' || value == null
+        delete params[key]
+
     for ticket_id in ticket_ids
       ticket = App.Ticket.find(ticket_id)
 
@@ -204,74 +210,34 @@ class App.TicketBulkForm extends App.Controller
         @cancel()
         return
 
-    @bulkCountIndex = 0
-    for ticket_id in ticket_ids
-      ticket = App.Ticket.find(ticket_id)
+    if params['body']
+      article = new App.TicketArticle
+      params.from      = @Session.get().displayName()
+      params.form_id   = @form_id
 
-      # update ticket
-      ticketUpdate = @ticketMergeParams(params)
+      sender           = App.TicketArticleSender.findByAttribute('name', 'Agent')
+      type             = App.TicketArticleType.find(params['type_id'])
+      params.sender_id = sender.id
 
-      # validate article
-      if params['body']
-        article = new App.TicketArticle
-        params.from      = @Session.get().displayName()
-        params.ticket_id = ticket.id
-        params.form_id   = @form_id
+      if !params['internal']
+        params['internal'] = false
 
-        sender           = App.TicketArticleSender.findByAttribute('name', 'Agent')
-        type             = App.TicketArticleType.find(params['type_id'])
-        params.sender_id = sender.id
+      @log 'notice', 'update article', params, sender
+      article.load(params)
+      errors = article.validate()
+      if errors
+        @log 'error', 'update article', errors
+        @formEnable(e)
+        return
 
-        if !params['internal']
-          params['internal'] = false
 
-        @log 'notice', 'update article', params, sender
-        article.load(params)
-        errors = article.validate()
-        if errors
-          @log 'error', 'update article', errors
-          @formEnable(e)
-          return
+    data =
+      ticket_ids: ticket_ids
+      attributes: params
+      article: article?.attributes()
 
-      ticket.load(ticketUpdate)
-
-      # if title is empty - ticket can't processed, set ?
-      if _.isEmpty(ticket.title)
-        ticket.title = '-'
-
-      @saveTicketArticle(ticket, article)
-
-    @holder.find('.table').find('[name="bulk"]:checked').prop('checked', false)
-    App.Event.trigger('notify', {
-      type: 'success'
-      msg: App.i18n.translateContent('Bulk action executed!')
-    })
-
-  saveTicketArticle: (ticket, article) =>
-    ticket.save(
-      done: (r) =>
-        @bulkCountIndex++
-
-        # reset form after save
-        if article
-          article.save(
-            fail: (r) =>
-              @log 'error', 'update article', r
-          )
-
-        # refresh view after all tickets are proceeded
-        if @bulkCountIndex == @bulkCount
-          @render()
-          @hide()
-
-          # fetch overview data again
-          App.Event.trigger('overview:fetch')
-
-      fail: (r) =>
-        @bulkCountIndex++
-        @log 'error', 'update ticket', r
-        App.Event.trigger 'notify', {
-          type: 'error'
-          msg: App.i18n.translateContent('Can\'t update Ticket %s!', ticket.number)
-        }
+    @ajax_mass_update(data, =>
+      @holder.find('.table').find('[name="bulk"]:checked').prop('checked', false)
+      @render()
+      @hide()
     )
