@@ -593,7 +593,7 @@ GEM
     telephone_number (1.4.13)
     term-ansicolor (1.7.1)
       tins (~> 1.0)
-    test-unit (3.5.2)
+    test-unit (3.5.3)
       power_assert
     thor (1.1.0)
     thread_safe (0.3.6)
