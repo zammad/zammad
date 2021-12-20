@@ -9,6 +9,35 @@ RSpec.describe 'Manage > Groups', type: :system do
     include_examples 'pagination', model: :group, klass: Group, path: 'manage/groups'
   end
 
+  # Fixes GitHub Issue#3129 - Deactivation of signature does not clear it from groups
+  describe 'When active status of signature assigned to a group is changed', authenticated_as: -> { user } do
+    let(:user)      { create(:admin, groups: [group]) }
+    let(:group)     { create(:group, signature_id: signature.id) }
+    let(:signature) { create(:signature) }
+
+    it 'does not display warning, when signature is active' do
+      visit '#manage/groups'
+
+      click "tr[data-id='#{group.id}']"
+
+      expect(page).to have_select('signature_id', selected: signature.name)
+        .and have_no_css('.alert--warning')
+    end
+
+    context 'When signature is marked inactive' do
+      let(:signature) { create(:signature, active: false) }
+
+      it 'displays warning' do
+        visit '#manage/groups'
+
+        click "tr[data-id='#{group.id}']"
+
+        expect(page).to have_select('signature_id', selected: signature.name)
+          .and have_css('.alert--warning')
+      end
+    end
+  end
+
   describe 'Core Workflow' do
     include_examples 'core workflow' do
       let(:object_name) { 'Group' }

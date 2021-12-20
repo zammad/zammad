@@ -339,7 +339,7 @@ class EmailReply extends App.Controller
       signature = App.Signature.find(group.signature_id)
 
     # add/replace signature
-    if signature && signature.body
+    if signature && signature.active && signature.body
 
       # if signature has changed, remove it
       signature_id = ui.$('[data-signature=true]').data('signature-id')

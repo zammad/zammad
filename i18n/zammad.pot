@@ -9016,6 +9016,10 @@ msgstr ""
 msgid "This service shows you contacts of incoming calls and a caller list in realtime."
 msgstr ""
 
+#: app/assets/javascripts/app/models/group.coffee
+msgid "This signature is inactive, it won't be included in the reply. Change state <a href=\"#channels/email\">here</a>"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_application_controller/generic_history.coffee
 msgid "This ticket was merged into"
 msgstr ""
