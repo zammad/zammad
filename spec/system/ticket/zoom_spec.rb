@@ -2009,7 +2009,7 @@ RSpec.describe 'Ticket zoom', type: :system do
       click_on 'Submit'
 
       visit "#ticket/zoom/#{ticket.id}"
-      expect(page).to have_text('Dateien wählen')
+      expect(page).to have_text(Translation.translate('de-de', 'select attachment…'))
     end
 
     def expect_upload_and_text
