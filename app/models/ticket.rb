@@ -846,113 +846,29 @@ condition example
         bind_params.push selector['value']
       elsif selector['operator'] == 'within last (relative)'
         query += "#{attribute} BETWEEN ? AND ?"
-        time = nil
-        case selector['range']
-        when 'minute'
-          time = selector['value'].to_i.minutes.ago
-        when 'hour'
-          time = selector['value'].to_i.hours.ago
-        when 'day'
-          time = selector['value'].to_i.days.ago
-        when 'month'
-          time = selector['value'].to_i.months.ago
-        when 'year'
-          time = selector['value'].to_i.years.ago
-        else
-          raise "Unknown selector attributes '#{selector.inspect}'"
-        end
+        time = range(selector).ago
         bind_params.push time
         bind_params.push Time.zone.now
       elsif selector['operator'] == 'within next (relative)'
         query += "#{attribute} BETWEEN ? AND ?"
-        time = nil
-        case selector['range']
-        when 'minute'
-          time = selector['value'].to_i.minutes.from_now
-        when 'hour'
-          time = selector['value'].to_i.hours.from_now
-        when 'day'
-          time = selector['value'].to_i.days.from_now
-        when 'month'
-          time = selector['value'].to_i.months.from_now
-        when 'year'
-          time = selector['value'].to_i.years.from_now
-        else
-          raise "Unknown selector attributes '#{selector.inspect}'"
-        end
+        time = range(selector).from_now
         bind_params.push Time.zone.now
         bind_params.push time
       elsif selector['operator'] == 'before (relative)'
         query += "#{attribute} <= ?"
-        time = nil
-        case selector['range']
-        when 'minute'
-          time = selector['value'].to_i.minutes.ago
-        when 'hour'
-          time = selector['value'].to_i.hours.ago
-        when 'day'
-          time = selector['value'].to_i.days.ago
-        when 'month'
-          time = selector['value'].to_i.months.ago
-        when 'year'
-          time = selector['value'].to_i.years.ago
-        else
-          raise "Unknown selector attributes '#{selector.inspect}'"
-        end
+        time = range(selector).ago
         bind_params.push time
       elsif selector['operator'] == 'after (relative)'
         query += "#{attribute} >= ?"
-        time = nil
-        case selector['range']
-        when 'minute'
-          time = selector['value'].to_i.minutes.from_now
-        when 'hour'
-          time = selector['value'].to_i.hours.from_now
-        when 'day'
-          time = selector['value'].to_i.days.from_now
-        when 'month'
-          time = selector['value'].to_i.months.from_now
-        when 'year'
-          time = selector['value'].to_i.years.from_now
-        else
-          raise "Unknown selector attributes '#{selector.inspect}'"
-        end
+        time = range(selector).from_now
         bind_params.push time
       elsif selector['operator'] == 'till (relative)'
         query += "#{attribute} <= ?"
-        time = nil
-        case selector['range']
-        when 'minute'
-          time = selector['value'].to_i.minutes.from_now
-        when 'hour'
-          time = selector['value'].to_i.hours.from_now
-        when 'day'
-          time = selector['value'].to_i.days.from_now
-        when 'month'
-          time = selector['value'].to_i.months.from_now
-        when 'year'
-          time = selector['value'].to_i.years.from_now
-        else
-          raise "Unknown selector attributes '#{selector.inspect}'"
-        end
+        time = range(selector).from_now
         bind_params.push time
       elsif selector['operator'] == 'from (relative)'
         query += "#{attribute} >= ?"
-        time = nil
-        case selector['range']
-        when 'minute'
-          time = selector['value'].to_i.minutes.ago
-        when 'hour'
-          time = selector['value'].to_i.hours.ago
-        when 'day'
-          time = selector['value'].to_i.days.ago
-        when 'month'
-          time = selector['value'].to_i.months.ago
-        when 'year'
-          time = selector['value'].to_i.years.ago
-        else
-          raise "Unknown selector attributes '#{selector.inspect}'"
-        end
+        time = range(selector).ago
         bind_params.push time
       else
         raise "Invalid operator '#{selector['operator']}' for '#{selector['value'].inspect}'"
@@ -1347,6 +1263,12 @@ perform active triggers on ticket
       end
     end
     [true, ticket, local_options]
+  end
+
+  def self.range(selector)
+    selector['value'].to_i.send(selector['range'].pluralize)
+  rescue
+    raise 'unknown selector'
   end
 
 =begin
@@ -1883,4 +1805,5 @@ result
     # blocked for 60 full days
     (user.preferences[:mail_delivery_failed_data].to_date - Time.zone.now.to_date).to_i + 61
   end
+
 end

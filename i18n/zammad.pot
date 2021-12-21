@@ -10318,6 +10318,10 @@ msgstr ""
 msgid "Week"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ui_element/time_range.coffee
+msgid "Week(s)"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
 msgid "Weibo"
 msgstr ""
