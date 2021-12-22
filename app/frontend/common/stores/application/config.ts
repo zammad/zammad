@@ -1,8 +1,8 @@
 // Copyright (C) 2012-2021 Zammad Foundation, https://zammad-foundation.org/
 
 import { defineStore } from 'pinia'
-import { SingleValueStore, ConfigValues } from '@common/types/store'
-import {
+import type { SingleValueStore, ConfigValues } from '@common/types/store'
+import type {
   ApplicationConfigQuery,
   ApplicationConfigQueryVariables,
 } from '@common/graphql/types'

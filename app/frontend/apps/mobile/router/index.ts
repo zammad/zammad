@@ -1,10 +1,10 @@
 // Copyright (C) 2012-2021 Zammad Foundation, https://zammad-foundation.org/
 
-import { RouteRecordRaw } from 'vue-router'
+import type { RouteRecordRaw } from 'vue-router'
 import Login from '@mobile/views/Login.vue'
 import Error from '@mobile/views/Error.vue'
 import LayoutMain from '@mobile/components/layout/LayoutMain.vue'
-import { ImportGlobEagerDefault } from '@common/types/utils'
+import type { ImportGlobEagerDefault } from '@common/types/utils'
 
 const routeModules = import.meta.globEager('./routes/*.ts')
 

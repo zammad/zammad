@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2021 Zammad Foundation, https://zammad-foundation.org/
 
 import { defineStore } from 'pinia'
-import { SingleValueStore } from '@common/types/store'
+import type { SingleValueStore } from '@common/types/store'
 import log from '@common/utils/log'
 import localeForBrowserLanguage from '@common/utils/i18n/localeForBrowserLanguage'
 import getAvailableLocales from '@common/utils/i18n/availableLocales'

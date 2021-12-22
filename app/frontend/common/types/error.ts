@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2021 Zammad Foundation, https://zammad-foundation.org/
 
-import { GraphQLErrorExtensions } from 'graphql'
+import type { GraphQLErrorExtensions } from 'graphql'
 
 export enum GraphQLErrorTypes {
   UnkownError = 'Exceptions::UnkownError',

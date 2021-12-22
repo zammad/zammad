@@ -3,7 +3,7 @@
 import { MutationHandler } from '@common/server/apollo/handler'
 import { defineStore } from 'pinia'
 import { useLoginMutation, useLogoutMutation } from '@common/graphql/api'
-import { SingleValueStore } from '@common/types/store'
+import type { SingleValueStore } from '@common/types/store'
 import useSessionIdStore from '@common/stores/session/id'
 import apolloClient from '@common/server/apollo/client'
 import useApplicationConfigStore from '@common/stores/application/config'

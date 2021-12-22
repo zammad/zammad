@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2021 Zammad Foundation, https://zammad-foundation.org/
 
 import TicketOverview from '@mobile/views/TicketOverview.vue'
-import { RouteRecordRaw } from 'vue-router'
+import type { RouteRecordRaw } from 'vue-router'
 
 const route: RouteRecordRaw = {
   path: '/tickets',

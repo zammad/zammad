@@ -1,17 +1,20 @@
 // Copyright (C) 2012-2021 Zammad Foundation, https://zammad-foundation.org/
 
 import { defineStore } from 'pinia'
-import { SingleValueStore, TranslationsStoreValue } from '@common/types/store'
+import type {
+  SingleValueStore,
+  TranslationsStoreValue,
+} from '@common/types/store'
 import { i18n } from '@common/utils/i18n'
 import log from '@common/utils/log'
 import { useTranslationsQuery } from '@common/graphql/api'
 import { QueryHandler } from '@common/server/apollo/handler'
-import {
+import type {
   TranslationsQuery,
   TranslationsQueryVariables,
 } from '@common/graphql/types'
 import { reactive } from 'vue'
-import { ReactiveFunction } from '@common/types/utils'
+import type { ReactiveFunction } from '@common/types/utils'
 
 function localStorageKey(locale: string): string {
   return `translationsStoreCache::${locale}`

@@ -590,10 +590,10 @@ GEM
       logging
       nokogiri
       rubyntlm
-    vite_rails (3.0.0)
+    vite_rails (3.0.2)
       railties (>= 5.1, < 8)
       vite_ruby (~> 3.0)
-    vite_ruby (3.0.0)
+    vite_ruby (3.0.5)
       dry-cli (~> 0.7.0)
       rack-proxy (~> 0.6, >= 0.6.1)
       zeitwerk (~> 2.2)

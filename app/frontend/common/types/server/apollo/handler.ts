@@ -1,14 +1,14 @@
 // Copyright (C) 2012-2021 Zammad Foundation, https://zammad-foundation.org/
 
-import {
+import type {
   UseMutationReturn,
   UseQueryReturn,
   UseQueryOptions,
   UseSubscriptionReturn,
   UseSubscriptionOptions,
 } from '@vue/apollo-composable'
-import { Ref } from 'vue'
-import { GraphQLHandlerError } from '@common/types/error'
+import type { Ref } from 'vue'
+import type { GraphQLHandlerError } from '@common/types/error'
 
 export type OperationReturn<TResult, TVariables> =
   | UseQueryReturn<TResult, TVariables>

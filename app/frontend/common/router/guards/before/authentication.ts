@@ -3,7 +3,7 @@
 import useApplicationLoadedStore from '@common/stores/application/loaded'
 import useAuthenticatedStore from '@common/stores/authenticated'
 import log from '@common/utils/log'
-import {
+import type {
   NavigationGuard,
   RouteLocationNormalized,
   NavigationGuardNext,

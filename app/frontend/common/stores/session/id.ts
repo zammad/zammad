@@ -3,8 +3,11 @@
 import { useSessionIdQuery } from '@common/graphql/api'
 import { defineStore } from 'pinia'
 import { QueryHandler } from '@common/server/apollo/handler'
-import { SingleValueStore } from '@common/types/store'
-import { SessionIdQuery, SessionIdQueryVariables } from '@common/graphql/types'
+import type { SingleValueStore } from '@common/types/store'
+import type {
+  SessionIdQuery,
+  SessionIdQueryVariables,
+} from '@common/graphql/types'
 
 let sessionIdQuery: QueryHandler<SessionIdQuery, SessionIdQueryVariables>
 

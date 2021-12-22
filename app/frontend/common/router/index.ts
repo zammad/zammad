@@ -1,14 +1,14 @@
 // Copyright (C) 2012-2021 Zammad Foundation, https://zammad-foundation.org/
 
 import authenticationGuard from '@common/router/guards/before/authentication'
-import { App } from 'vue'
+import type { App } from 'vue'
 import {
   createRouter,
   createWebHashHistory,
   Router,
   RouteRecordRaw,
 } from 'vue-router'
-import { RouteRecordMeta } from '@common/types/router'
+import type { RouteRecordMeta } from '@common/types/router'
 import permissionGuard from '@common/router/guards/before/permission'
 import headerTitleGuard from '@common/router/guards/after/headerTitle'
 

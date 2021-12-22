@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2021 Zammad Foundation, https://zammad-foundation.org/
 
-import { FetchResult } from '@apollo/client/core'
-import { DocumentNode } from 'graphql'
+import type { FetchResult } from '@apollo/client/core'
+import type { DocumentNode } from 'graphql'
 
 export interface ClientErrorContext {
   logLevel: LogLevel

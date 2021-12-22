@@ -2,7 +2,7 @@
 
 import { BroadcastChannel } from 'broadcast-channel'
 import type { PiniaPluginContext, Store } from 'pinia'
-import { ShareStateOptions } from '@common/types/stores/plugins'
+import type { ShareStateOptions } from '@common/types/stores/plugins'
 import { watch } from 'vue'
 
 declare module 'pinia' {
