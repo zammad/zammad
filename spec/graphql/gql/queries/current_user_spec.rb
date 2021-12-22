@@ -37,7 +37,7 @@ RSpec.describe Gql::Queries::CurrentUser, type: :graphql do
 
     context 'without authenticated session', authenticated_as: false do
       it 'fails with error message' do
-        expect(graphql_response['errors'][0]).to include('message' => 'Authentication required by Gql::Queries::CurrentUser')
+        expect(graphql_response['errors'][0]).to include('message' => 'Authentication required')
       end
 
       it 'fails with error type' do

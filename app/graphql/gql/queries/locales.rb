@@ -3,10 +3,6 @@
 module Gql::Queries
   class Locales < BaseQuery
 
-    def self.requires_authentication?
-      false
-    end
-
     description 'Locales available in the system'
 
     type [Gql::Types::LocaleType, { null: false }], null: false

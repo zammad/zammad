@@ -6,7 +6,7 @@ module Gql::Types::User
 
     # Only allow usage of permission type for the current user itself.
     def self.authorize(object, ctx)
-      ctx[:current_user].id == object.id
+      ctx.current_user.id == object.id
     end
 
     field :names, [String], null: false, resolver_method: :resolve_names

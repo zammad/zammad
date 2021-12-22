@@ -8,7 +8,7 @@ module Gql::Types
     field :object_attribute_values, [Gql::Types::ObjectAttributeValueType, { null: false }], null: false
 
     def object_attribute_values
-      return [] if !@object || !context[:current_user]
+      return [] if !@object || !context.current_user?
 
       result = []
 
@@ -20,7 +20,7 @@ module Gql::Types
     end
 
     def find_object_attributes
-      ::ObjectManager::Object.new(@object.class.name).attributes(context[:current_user], @object, data_only: false)
+      ::ObjectManager::Object.new(@object.class.name).attributes(context.current_user, @object, data_only: false)
         .select { |oa| oa.attribute.active && oa.attribute.editable }
     end
   end

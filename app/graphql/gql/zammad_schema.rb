@@ -1,9 +1,10 @@
 # Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
 
 class Gql::ZammadSchema < GraphQL::Schema
-  mutation(Gql::EntryPoints::Mutations)
-  query(Gql::EntryPoints::Queries)
-  subscription(Gql::EntryPoints::Subscriptions)
+  mutation      Gql::EntryPoints::Mutations
+  query         Gql::EntryPoints::Queries
+  subscription  Gql::EntryPoints::Subscriptions
+  context_class Gql::Context::CurrentUserAware
 
   use GraphQL::Subscriptions::ActionCableSubscriptions
 

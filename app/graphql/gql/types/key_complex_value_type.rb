@@ -3,10 +3,6 @@
 module Gql::Types
   class KeyComplexValueType < Gql::Types::BaseObject
 
-    def self.requires_authentication?
-      false
-    end
-
     description 'Key/value type with complex (JSON) values.'
 
     field :key, String, null: false

@@ -1019,6 +1019,7 @@ msgid "Authentication not possible (not offered by the service)"
 msgstr ""
 
 #: app/controllers/application_controller/authenticates.rb
+#: app/graphql/gql/context/current_user_aware.rb
 #: app/policies/pundit_policy.rb
 #: lib/user_context.rb
 msgid "Authentication required"

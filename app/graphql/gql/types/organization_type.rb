@@ -5,7 +5,7 @@ module Gql::Types
     include Gql::Concern::IsModelObject
 
     def self.authorize(object, ctx)
-      Pundit.authorize ctx[:current_user], object, :show?
+      Pundit.authorize ctx.current_user, object, :show?
     end
 
     description 'Organizations that users can belong to'

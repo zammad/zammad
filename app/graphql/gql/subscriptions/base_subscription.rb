@@ -4,8 +4,8 @@ module Gql::Subscriptions
   class BaseSubscription < GraphQL::Schema::Subscription
     include Gql::Concern::HandlesAuthorization
 
-    object_class Gql::Types::BaseObject
-    field_class Gql::Types::BaseField
+    object_class   Gql::Types::BaseObject
+    field_class    Gql::Types::BaseField
     argument_class Gql::Types::BaseArgument
 
     #
@@ -21,5 +21,11 @@ module Gql::Subscriptions
       # NameError: uninitialized constant GraphQL::Schema::Subscription::NO_UPDATE
       :no_update
     end
+
+    def self.register_in_schema(schema)
+      field_name = name.sub('Gql::Subscriptions::', '').gsub('::', '').camelize(:lower).to_sym
+      schema.field field_name, resolver: self
+    end
+
   end
 end

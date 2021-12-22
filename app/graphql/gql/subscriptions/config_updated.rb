@@ -3,10 +3,6 @@
 module Gql::Subscriptions
   class ConfigUpdated < BaseSubscription
 
-    def self.requires_authentication?
-      false
-    end
-
     description 'Updates to configuration settings'
 
     field :setting, Gql::Types::KeyComplexValueType, null: true, description: 'Updated setting'
@@ -14,7 +10,7 @@ module Gql::Subscriptions
     def update
       setting = object
 
-      if !setting.frontend || (setting.preferences[:authentication] && !context[:current_user])
+      if !setting.frontend || (setting.preferences[:authentication] && !context.current_user?)
         return no_update
       end
 

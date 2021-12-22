@@ -3,10 +3,6 @@
 module Gql::Queries
   class ApplicationConfig < BaseQuery
 
-    def self.requires_authentication?
-      false
-    end
-
     description 'Configuration required for front end operation (more results returned for authenticated users)'
 
     type [Gql::Types::KeyComplexValueType, { null: false }], null: false
@@ -14,7 +10,7 @@ module Gql::Queries
     # Reimplemented from sessions_controller#config_frontend.
     def resolve(...)
       result = []
-      unauthenticated = context[:current_user].nil?
+      unauthenticated = context.current_user?.nil?
       Setting.select('name, preferences').where(frontend: true).each do |setting|
         next if setting.preferences[:authentication] && unauthenticated
 

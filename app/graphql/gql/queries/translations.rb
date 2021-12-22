@@ -3,10 +3,6 @@
 module Gql::Queries
   class Translations < BaseQueryWithPayload
 
-    def self.requires_authentication?
-      false
-    end
-
     description 'Translations for a given locale'
 
     argument :locale,    String, required: true, description: 'The locale to fetch translations for, e.g. "de-de".'

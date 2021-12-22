@@ -10,6 +10,10 @@ module Gql::Mutations
       false
     end
 
+    def self.authorize(_obj, ctx)
+      ctx.current_user
+    end
+
     def resolve(...)
 
       context[:controller].reset_session

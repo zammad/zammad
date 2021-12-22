@@ -10,10 +10,6 @@ module Gql::Mutations
     argument :password, String, required: true, description: 'Password'
     argument :fingerprint, String, required: true, description: 'Device fingerprint - a string identifying the device used for the login'
 
-    def self.requires_authentication?
-      false
-    end
-
     # reimplementation of `authenticate_with_password`
     def resolve(...)
 

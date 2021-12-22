@@ -4,10 +4,6 @@ module Gql::Types
   class LocaleType < Gql::Types::BaseObject
     include Gql::Concern::IsModelObject
 
-    def self.requires_authentication?
-      false
-    end
-
     description 'Locales available in the system'
 
     field :locale, String, null: false

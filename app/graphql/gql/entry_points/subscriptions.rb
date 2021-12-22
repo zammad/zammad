@@ -8,19 +8,12 @@ module Gql::EntryPoints
 
     description 'All available subscriptions'
 
-    # No auth required for the main subscription entry point, Gql::Subscriptions perform their own auth handling.
-    def self.requires_authentication?
-      false
-    end
-
     # Load all available Gql::Subscriptions so that they can be iterated.
     Dir.glob('**/*.rb', base: "#{__dir__}/../subscriptions/").each do |file|
       subclass = file.sub(%r{.rb$}, '').camelize
-      subscription = "Gql::Subscriptions::#{subclass}".constantize
       next if subclass.starts_with? 'Base' # Ignore base classes.
 
-      field_name = subclass.gsub('::', '').camelize(:lower).to_sym
-      field field_name, subscription: subscription
+      "Gql::Subscriptions::#{subclass}".constantize.register_in_schema(self)
     end
   end
 end
