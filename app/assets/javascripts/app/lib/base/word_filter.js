@@ -74,7 +74,7 @@ window.word_filter = function(editor){
         }
     })
 
-    // style and align is handled by utils.coffee itself, don't clean it here
+    // style and align is handled by utils.coffee it self, don't clean it here
     //$('[style]', editor).removeAttr('style');
     //$('[align]', editor).removeAttr('align');
     $('span', editor).replaceWith(function() {return $(this).contents();});

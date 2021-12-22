@@ -9,6 +9,7 @@ import type {
 } from '@vue/apollo-composable'
 import type { Ref } from 'vue'
 import type { GraphQLHandlerError } from '@common/types/error'
+import type { NotificationTypes } from '@common/types/notification'
 
 export type OperationReturn<TResult, TVariables> =
   | UseQueryReturn<TResult, TVariables>
@@ -46,7 +47,7 @@ export type OperationResult =
 export interface BaseHandlerOptions {
   errorShowNotification: boolean
   errorNotitifactionMessage: string
-  errorNotitifactionType: string
+  errorNotitifactionType: NotificationTypes
   errorCallback?: (error: GraphQLHandlerError) => void
 }
 

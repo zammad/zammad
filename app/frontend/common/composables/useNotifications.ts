@@ -2,18 +2,10 @@
 
 import { v4 as uuid } from 'uuid'
 import { ref } from 'vue'
-
-interface NewNotificationInterface {
-  id?: string
-  message: string
-  messagePlaceholder?: string[]
-  type: string // TODO type for different types or enum?
-  duration?: number
-}
-
-interface NotificationInterface extends NewNotificationInterface {
-  id: string
-}
+import type {
+  NewNotificationInterface,
+  NotificationInterface,
+} from '@common/types/notification'
 
 const notifications = ref<NotificationInterface[]>([])
 const defaultNotificationDuration = 5000
@@ -22,6 +14,10 @@ function removeNotification(id: string) {
   notifications.value = notifications.value.filter(
     (notification: NotificationInterface) => notification.id !== id,
   )
+}
+
+function clearAllNotifications() {
+  notifications.value = []
 }
 
 export default function useNotifications() {
@@ -46,5 +42,6 @@ export default function useNotifications() {
   return {
     notify,
     notifications,
+    clearAllNotifications,
   }
 }

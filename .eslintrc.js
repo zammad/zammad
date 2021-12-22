@@ -63,6 +63,7 @@ module.exports = {
           'vite.config.ts',
           'app/frontend/tests/**/*',
           'app/frontend/stories/**/*',
+          '.storybook/**/*',
         ],
       },
     ],

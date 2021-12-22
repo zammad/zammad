@@ -10,6 +10,7 @@ import {
 } from '@common/types/server/apollo/handler'
 import { Ref } from 'vue'
 import useNotifications from '@common/composables/useNotifications'
+import { NotificationTypes } from '@common/types/notification'
 import {
   GraphQLErrorReport,
   GraphQLErrorTypes,
@@ -31,7 +32,7 @@ export default abstract class BaseHandler<
     errorShowNotification: true,
     errorNotitifactionMessage:
       'An error occured during the operation. Please contact your administrator.',
-    errorNotitifactionType: 'error',
+    errorNotitifactionType: NotificationTypes.ERROR,
   }
 
   public handlerOptions!: CommonHandlerOptions<THandlerOptions>

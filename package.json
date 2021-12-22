@@ -1,7 +1,7 @@
 {
   "scripts": {
     "generate-graphql-api": "bundle exec rails generate graphql_introspection > tmp/graphql_introspection.json && npx graphql-codegen -c .graphql_code_generator.yml",
-    "lint": "vue-tsc --noEmit && eslint --cache --cache-location ./tmp/eslintcache.js -c .eslintrc.js --ext .js,.ts,.vue app/frontend/ .eslint/",
+    "lint": "vue-tsc --noEmit && eslint --cache --cache-location ./tmp/eslintcache.js -c .eslintrc.js --ext .js,.ts,.vue app/frontend/ .eslint/ .storybook/",
     "lint:fix": "npm run lint -- --fix",
     "lint:css": "stylelint \"**/*.{css,vue,scss}\"",
     "lint:css:fix": "stylelint \"**/*.{css,vue,scss}\" --fix",

@@ -89,6 +89,7 @@ import useNotifications from '@common/composables/useNotifications'
 import useApplicationConfigStore from '@common/stores/application/config'
 import useAuthenticationStore from '@common/stores/authenticated'
 import { useRouter } from 'vue-router'
+import { NotificationTypes } from '@common/types/notification'
 
 interface Props {
   invalidatedSession?: string
@@ -103,7 +104,7 @@ if (props.invalidatedSession === '1') {
 
   notify({
     message: __('The session is no longer valid. Please log in again.'),
-    type: 'warning',
+    type: NotificationTypes.WARN,
   })
 }
 

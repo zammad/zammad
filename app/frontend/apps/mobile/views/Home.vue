@@ -31,13 +31,14 @@ import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
 import useApplicationConfigStore from '@common/stores/application/config'
 import { useCurrentUserQuery } from '@common/graphql/api'
+import { NotificationTypes } from '@common/types/notification'
 
 // TODO: Only testing for the notifications...
-const { notify } = useNotifications()
+const { notify, clearAllNotifications } = useNotifications()
 
 notify({
   message: __('Hello Home!!!'),
-  type: 'alert',
+  type: NotificationTypes.WARN,
 })
 
 const sessionUser = useSessionUserStore()
@@ -49,8 +50,9 @@ const authenticated = useAuthenticatedStore()
 const router = useRouter()
 
 const logout = (): void => {
+  clearAllNotifications()
   authenticated.logout().then(() => {
-    router.push('login')
+    router.push('/login')
   })
 }
 

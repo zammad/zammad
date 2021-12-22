@@ -1,5 +1,8 @@
+// Copyright (C) 2012-2021 Zammad Foundation, https://zammad-foundation.org/
+
 const { loadConfigFromFile, mergeConfig } = require('vite')
 const path = require('path')
+const postcss = require('postcss')
 
 module.exports = {
   stories: ['../app/**/*.stories.mdx', '../app/**/*.stories.@(js|jsx|ts|tsx)'],
@@ -16,7 +19,7 @@ module.exports = {
         },
         postcssLoaderOptions: {
           // When using postCSS 8
-          implementation: require('postcss'),
+          implementation: postcss,
         },
       },
     },
@@ -25,7 +28,7 @@ module.exports = {
   core: {
     builder: 'storybook-builder-vite',
   },
-  async viteFinal(storybookViteConfig: any) {
+  async viteFinal(storybookViteConfig) {
     const { config } = await loadConfigFromFile(
       path.resolve(__dirname, '../vite.config.ts'),
     )
@@ -35,7 +38,7 @@ module.exports = {
 
       // Manually specify plugins to avoid conflicts.
       plugins: [
-        config.plugins.find((plugin: any) => plugin.name === 'vite:svg-icons')
+        config.plugins.find((plugin) => plugin.name === 'vite:svg-icons'),
       ],
     })
   },
