@@ -1,5 +1,5 @@
 default:
-  image: registry.znuny.com/docker/zammad-ci:2.7.4
+  image: $CI_REGISTRY/docker/zammad-ci:2.7.4
 
 include:
   - local: '/.gitlab/ci/base.yml'

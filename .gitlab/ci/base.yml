@@ -74,35 +74,35 @@
 
 # DB Docker
 .docker_mysql: &docker_mysql
-  name: registry.znuny.com/docker/zammad-mysql:stable
+  name: $CI_REGISTRY/docker/zammad-mysql:stable
   alias: mysql
 
 .docker_postgresql: &docker_postgresql
-  name: registry.znuny.com/docker/zammad-postgresql:stable
+  name: $CI_REGISTRY/docker/zammad-postgresql:stable
   alias: postgresql
 
 .docker_elasticsearch: &docker_elasticsearch
-  name: registry.znuny.com/docker/zammad-elasticsearch:$ELASTICSEARCH_TAG
+  name: $CI_REGISTRY/docker/zammad-elasticsearch:$ELASTICSEARCH_TAG
   alias: elasticsearch
 
 .docker_selenium_chrome: &docker_selenium_chrome
-  name: registry.znuny.com/docker/zammad-selenium-chrome:stable
+  name: $CI_REGISTRY/docker/zammad-selenium-chrome:stable
   alias: selenium-chrome
 
 .docker_selenium_firefox: &docker_selenium_firefox
-  name: registry.znuny.com/docker/zammad-selenium-firefox:stable
+  name: $CI_REGISTRY/docker/zammad-selenium-firefox:stable
   alias: selenium-firefox
 
 .docker_imap: &docker_imap
-  name: registry.znuny.com/docker/zammad-imap:stable
+  name: $CI_REGISTRY/docker/zammad-imap:stable
   alias: mail
 
 .docker_redis: &docker_redis
-  name: registry.znuny.com/docker/zammad-redis:stable
+  name: $CI_REGISTRY/docker/zammad-redis:stable
   alias: redis
 
 .docker_memcached: &docker_memcached
-  name: registry.znuny.com/docker/zammad-memcached:stable
+  name: $CI_REGISTRY/docker/zammad-memcached:stable
   alias: memcached
   command: ["memcached", "-m", "256M"]
 
