@@ -239,5 +239,5 @@ end
 #               without having your changes overwritten during upgrades.)
 # ZAMMAD DEVS:  Consult the internal wiki
 #               (or else risk pushing unwanted changes to Gemfile.lock!)
-#               https://git.znuny.com/zammad/zammad/wikis/Tips#user-content-customizing-the-gemfile
+#               https://git.zammad.com/zammad/zammad/wikis/Tips#user-content-customizing-the-gemfile
 eval_gemfile 'Gemfile.local' if File.exist?('Gemfile.local')

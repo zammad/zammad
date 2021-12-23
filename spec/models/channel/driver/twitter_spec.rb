@@ -15,7 +15,7 @@ RSpec.describe Channel::Driver::Twitter, required_envs: %w[TWITTER_CONSUMER_KEY 
 
     let(:payload) { YAML.safe_load(File.read(payload_file), [ActiveSupport::HashWithIndifferentAccess]) }
 
-    # https://git.znuny.com/zammad/zammad/-/issues/305
+    # https://git.zammad.com/zammad/zammad/-/issues/305
     shared_examples 'for user processing' do
       let(:sender_attributes) do
         {

@@ -10,7 +10,7 @@
 # see lines 75:83:91:109:123:131:139 of this file).
 #
 # This omission is discussed in detail in
-# https://git.znuny.com/zammad/zammad/merge_requests/363
+# https://git.zammad.com/zammad/zammad/merge_requests/363
 
 require 'test_helper'
 

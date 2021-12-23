@@ -86,7 +86,7 @@ This MR does not require any follow-up.
 
 - [ ] Implementation satisfies specification
 - [ ] Changes confirmed by manual testing
-- [ ] [Code style](https://git.znuny.com/zammad/zammad/-/wikis/Coding-style-guide) is appropriate
+- [ ] [Code style](https://git.zammad.com/zammad/zammad/-/wikis/Coding-style-guide) is appropriate
 - [ ] Performance will not degrade
 - [ ] Code is properly covered with tests
 - If follow-up by the documentation team is needed:
