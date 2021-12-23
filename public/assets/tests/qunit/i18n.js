@@ -126,7 +126,7 @@ QUnit.test('i18n', assert => {
   assert.equal(translated, 'some link <a href="http://lalala" target="_blank">to what ever</a>', 'de-de - link')
 
   translated = App.i18n.translateContent('Enables user authentication via %s. Register your app first at [%s](%s).', 'XXX', 'YYY', 'http://lalala')
-  assert.equal(translated, 'Aktivieren der Benutzeranmeldung über XXX. Registriere Deine Anwendung zuerst über <a href="http://lalala" target="_blank">YYY</a>.', 'en-us - link')
+  assert.equal(translated, 'Aktivieren der Benutzeranmeldung über XXX. Registrieren Sie Ihre Anwendung zuerst über <a href="http://lalala" target="_blank">YYY</a>.', 'en-us - link')
 
   var time_local = new Date();
   var offset = time_local.getTimezoneOffset();

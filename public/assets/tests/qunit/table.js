@@ -758,7 +758,7 @@ QUnit.test('table test 5', assert => {
 
   assert.equal(el.find('table > thead > tr').length, 1, 'row count')
   assert.equal(el.find('table > thead > tr > th:nth-child(1)').text().trim(), 'Name', 'check header')
-  assert.equal(el.find('table > thead > tr > th:nth-child(2)').text().trim(), 'Data', 'check header')
+  assert.equal(el.find('table > thead > tr > th:nth-child(2)').text().trim(), 'Daten', 'check header')
   assert.equal(el.find('table > thead > tr > th:nth-child(3)').text().trim(), 'Aktiv', 'check header')
   assert.equal(el.find('tbody > tr:nth-child(1) > td').length, 3, 'check row 1')
   assert.equal(el.find('tbody > tr:nth-child(1) > td:first').text().trim(), 'some name 1', 'check row 1')
