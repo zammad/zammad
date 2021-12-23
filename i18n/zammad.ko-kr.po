@@ -48,7 +48,9 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
-msgid "%s Api Token"
+#, fuzzy
+#| msgid "%s Api Token"
+msgid "%s API Token"
 msgstr "%s Api Token"
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
@@ -67,37 +69,8 @@ msgstr ""
 msgid "%s Migration"
 msgstr "%s 마이그레이션"
 
-#: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
-msgid "%s Object(s) are created."
-msgstr "%s 객체 (들)이 생성된다."
-
-#: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
-msgid "%s Object(s) are deleted."
-msgstr "%s 객체 (들) 삭제됩니다."
-
-#: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
-msgid "%s Object(s) are updated."
-msgstr "%s 객체 (들) 업데이트됩니다."
-
-#: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
-msgid "%s Object(s) have been created."
-msgstr "%s 객체 (들)가 생성되었다."
-
-#: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
-msgid "%s Object(s) have been updated."
-msgstr "%s 객체 (들) 업데이트되었습니다."
-
-#: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
-msgid "%s Object(s) were deleted."
-msgstr "%s 객체 (들) 삭제되었습니다."
-
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "%s Role"
-msgstr ""
-
-#: app/assets/javascripts/app/views/import/freshdesk.jst.eco
-#: app/assets/javascripts/app/views/import/kayako.jst.eco
-msgid "%s Subdomain"
 msgstr ""
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
@@ -111,36 +84,48 @@ msgid "%s ago"
 msgstr "%s 전"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
-msgid "%s completed data privacy task to delete user id |%s|"
+msgid "%s completed data privacy task to delete user ID |%s|"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket_article.coffee
-msgid "%s created Article for |%s|"
+#, fuzzy
+#| msgid "%s created Article for |%s|"
+msgid "%s created article for |%s|"
 msgstr "%s |에 대한 %s 생성 제 |"
 
+#: app/assets/javascripts/app/models/data_privacy_task.coffee
+msgid "%s created data privacy task to delete user ID |%s|"
+msgstr ""
+
 #: app/assets/javascripts/app/models/group.coffee
-msgid "%s created Group |%s|"
+#, fuzzy
+#| msgid "%s created Group |%s|"
+msgid "%s created group |%s|"
 msgstr "%s 생성 그룹 |%s|"
 
 #: app/assets/javascripts/app/models/organization.coffee
-msgid "%s created Organization |%s|"
+#, fuzzy
+#| msgid "%s created Organization |%s|"
+msgid "%s created organization |%s|"
 msgstr "%s 생성기구 |%s|"
 
 #: app/assets/javascripts/app/models/role.coffee
-msgid "%s created Role |%s|"
-msgstr ""
+#, fuzzy
+#| msgid "%s created Group |%s|"
+msgid "%s created role |%s|"
+msgstr "%s 생성 그룹 |%s|"
 
 #: app/assets/javascripts/app/models/ticket.coffee
-msgid "%s created Ticket |%s|"
+#, fuzzy
+#| msgid "%s created Ticket |%s|"
+msgid "%s created ticket |%s|"
 msgstr "%s 의 생성 Ticket |%s|"
 
 #: app/assets/javascripts/app/models/user.coffee
-msgid "%s created User |%s|"
+#, fuzzy
+#| msgid "%s created User |%s|"
+msgid "%s created user |%s|"
 msgstr "%s 생성 사용자 |%s|"
-
-#: app/assets/javascripts/app/models/data_privacy_task.coffee
-msgid "%s created data privacy task to delete user id |%s|"
-msgstr ""
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
@@ -166,16 +151,54 @@ msgstr "%s 역할 할당에 %s 그룹"
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
-msgid "%s is inactive, please select a active one."
+msgid "%s is inactive, please select an active one."
 msgstr ""
+
+#: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
+#, fuzzy
+#| msgid "%s Object(s) are created."
+msgid "%s object(s) are created."
+msgstr "%s 객체 (들)이 생성된다."
+
+#: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
+#, fuzzy
+#| msgid "%s Object(s) are deleted."
+msgid "%s object(s) are deleted."
+msgstr "%s 객체 (들) 삭제됩니다."
+
+#: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
+#, fuzzy
+#| msgid "%s Object(s) are updated."
+msgid "%s object(s) are updated."
+msgstr "%s 객체 (들) 업데이트됩니다."
+
+#: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
+#, fuzzy
+#| msgid "%s Object(s) have been created."
+msgid "%s object(s) have been created."
+msgstr "%s 객체 (들)가 생성되었다."
+
+#: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
+#, fuzzy
+#| msgid "%s Object(s) have been updated."
+msgid "%s object(s) have been updated."
+msgstr "%s 객체 (들) 업데이트되었습니다."
+
+#: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
+#, fuzzy
+#| msgid "%s Object(s) were deleted."
+msgid "%s object(s) were deleted."
+msgstr "%s 객체 (들) 삭제되었습니다."
+
+#: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco
+#, fuzzy
+#| msgid "%s of your tickets are currently in process."
+msgid "%s of my tickets are currently in process."
+msgstr "Ticket의 %s 현재 처리됩니다."
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_escalation.jst.eco
 msgid "%s of my tickets escalated."
 msgstr "내 Ticket %s은 (는) 에스컬레이션."
-
-#: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco
-msgid "%s of your tickets are currently in process."
-msgstr "Ticket의 %s 현재 처리됩니다."
 
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay_user_group.jst.eco
 msgid "%s people"
@@ -189,37 +212,54 @@ msgstr "%S가 필요합니다!"
 msgid "%s started a new session"
 msgstr "%s은 (는) 새로운 세션을 시작"
 
+#: app/assets/javascripts/app/views/import/freshdesk.jst.eco
+#: app/assets/javascripts/app/views/import/kayako.jst.eco
+msgid "%s subdomain"
+msgstr ""
+
 #: app/assets/javascripts/app/models/user.coffee
 msgid "%s switched to |%s|!"
 msgstr "%s | %s는로 전환 |!"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee
-msgid "%s updated Article for |%s|"
+#, fuzzy
+#| msgid "%s created Article for |%s|"
+msgid "%s updated article for |%s|"
+msgstr "%s |에 대한 %s 생성 제 |"
+
+#: app/assets/javascripts/app/models/data_privacy_task.coffee
+msgid "%s updated data privacy task to delete user ID |%s|"
 msgstr ""
 
 #: app/assets/javascripts/app/models/group.coffee
-msgid "%s updated Group |%s|"
+#, fuzzy
+#| msgid "%s updated Group |%s|"
+msgid "%s updated group |%s|"
 msgstr "%s에 업데이트 된 그룹 |%s|"
 
 #: app/assets/javascripts/app/models/organization.coffee
-msgid "%s updated Organization |%s|"
+#, fuzzy
+#| msgid "%s updated Organization |%s|"
+msgid "%s updated organization |%s|"
 msgstr "%s 업데이트기구 |%s|"
 
 #: app/assets/javascripts/app/models/role.coffee
-msgid "%s updated Role |%s|"
-msgstr ""
+#, fuzzy
+#| msgid "%s updated Group |%s|"
+msgid "%s updated role |%s|"
+msgstr "%s에 업데이트 된 그룹 |%s|"
 
 #: app/assets/javascripts/app/models/ticket.coffee
-msgid "%s updated Ticket |%s|"
+#, fuzzy
+#| msgid "%s updated Ticket |%s|"
+msgid "%s updated ticket |%s|"
 msgstr "%s에 업데이트 된 Ticket |%s|"
 
 #: app/assets/javascripts/app/models/user.coffee
-msgid "%s updated User |%s|"
+#, fuzzy
+#| msgid "%s updated User |%s|"
+msgid "%s updated user |%s|"
 msgstr "%s에 업데이트 된 사용자 |%s|"
-
-#: app/assets/javascripts/app/models/data_privacy_task.coffee
-msgid "%s updated data privacy task to delete user id |%s|"
-msgstr ""
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco
@@ -230,13 +270,13 @@ msgstr "%s 사용자의 사용자 %"
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 msgid ""
-"%s will only allow access via OAuth. Password-based access is no longer "
+"%s will only allow access via OAuth. Password-based access has not been "
 "supported since %s."
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 msgid ""
-"%s will only allow access via OAuth. Password-based access will no longer be "
+"%s will only allow access via OAuth. Password-based access is no longer "
 "supported on %s."
 msgstr ""
 
@@ -250,45 +290,34 @@ msgstr "%s %가 재개되었다"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 msgid ""
-"** Data Privacy **, helps you to delete and verify the removal of existing "
-"data of the system.\n"
+"** Data Privacy ** helps you to delete and verify the removal of existing "
+"data from the system.\n"
 "\n"
-"It can be used to delete tickets, organizations and users. The owner "
+"It can be used to delete tickets, organizations, and users. The owner "
 "assignment will be unset in case the deleted user is an agent.\n"
 "\n"
 "Data Privacy tasks will be executed every 10 minutes. The execution might "
-"take some additional time depending of the number of objects that should get "
+"take some additional time depending on the number of objects that will be "
 "deleted."
 msgstr ""
 
 #: app/assets/javascripts/app/models/sla.coffee
 msgid ""
 "** Service Level Agreements **, abbreviated ** SLAs **, help you to meet "
-"certain customers' time-related responses. Thus, for example, you can say "
-"customers should always get a response from you after 8 hours at the latest. "
-"In the event of an imminent violation or a breach, Zammad will alert you to "
-"such events.\n"
+"specific response times for your customers' requests. This way you can "
+"define goals such as answering every inquiry within eight hours. If you are "
+"at risk of missing this target, Zammad will alert you.\n"
 "\n"
-"It can be ** response time ** (time between the creation of a ticket and the "
-"first reaction of an agent), ** update time ** (time between a customer's "
-"request and an agent's reaction) and ** solution time ** (time between "
-"creation and closing a ticket ) To be defined.\n"
+"You can define targets for three different metrics: ** response time ** "
+"(time between the creation of a ticket and the first reaction of an agent), "
+"** update time ** (time between a customer's request and an agent's "
+"reaction), and ** solution time ** (time between creating and closing a "
+"ticket).\n"
 "\n"
-"Any violations are displayed in a separate view in the overviews. You can "
-"also configure ** e-mail notifications **."
+"Any escalated tickets (i.e. tickets that have missed the defined target) are "
+"displayed in a separate view in your overviews. You can also configure ** "
+"email notifications **."
 msgstr ""
-
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
-msgid "...add object link URL"
-msgstr "... 오브젝트 링크 URL을 추가"
-
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
-msgid "...add object title"
-msgstr "... 개체의 제목을 추가"
-
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
-msgid "...of whole textarea"
-msgstr "... 전체 텍스트 영역의"
 
 #: db/seeds/settings.rb
 msgid "1 day"
@@ -336,15 +365,19 @@ msgstr "4주"
 
 #: app/assets/javascripts/app/models/calendar.coffee
 msgid ""
-"A **calendar** is needed for calculation of escalation based on business "
-"hours and sending out escalation notifications..\n"
+"A **calendar** is needed to calculate escalations based on business hours "
+"and to send out escalation notifications.\n"
 "\n"
-"Define a **\"standard\"** calendar which is valid system-wide. Only in the "
-"defined business hours the escalation notifications will be sent to your "
-"agents.\n"
+"Define a **\"standard\"** calendar which is valid system-wide. The "
+"escalation notifications will only be sent to your agents during the defined "
+"business hours.\n"
 "\n"
-"Do you have customers with different business hours, you can create multiple "
+"If you have customers with different business hours, you can create multiple "
 "calendars. Tickets are linked to calendars using **SLAs**."
+msgstr ""
+
+#: app/controllers/getting_started_controller.rb
+msgid "A URL looks like this: https://zammad.example.com"
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -686,7 +719,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/package.jst.eco
 msgid ""
-"After installing, updating or uninstalling packages the following commands "
+"After installing, updating, or uninstalling packages the following commands "
 "need to be executed on the server:"
 msgstr ""
 
@@ -724,13 +757,15 @@ msgstr "자치령 대표"
 msgid "Alarm"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
-msgid "All Agents"
-msgstr "모든 에이전트"
-
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
 msgid "All Tickets"
 msgstr "모든 Ticket"
+
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
+#, fuzzy
+#| msgid "All Agents"
+msgid "All agents"
+msgstr "모든 에이전트"
 
 #: public/assets/chat/views/waiting.eco
 msgid "All colleagues are busy."
@@ -764,12 +799,6 @@ msgstr ""
 msgid "Allow websites (separated by ;)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_integration/cti.coffee
-#: app/assets/javascripts/app/controllers/_integration/placetel.coffee
-#: app/assets/javascripts/app/controllers/_integration/sipgate_io.coffee
-msgid "Also caller id of outbound calls can be changed."
-msgstr "또한 아웃 바운드 통화의 발신자 ID는 변경 될 수 있습니다."
-
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
 msgid "Also notify via email"
 msgstr "또한 이메일을 통해 통지"
@@ -795,10 +824,6 @@ msgstr ""
 msgid "Alternatively, you can use the Zammad API to import data."
 msgstr "다른 방법으로는 데이터를 가져올 Zammad API를 사용할 수 있습니다."
 
-#: app/controllers/getting_started_controller.rb
-msgid "An URL looks like this: http://zammad.example.com"
-msgstr ""
-
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
 msgid "An error occurred: %s"
@@ -808,17 +833,23 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_integration/icinga.coffee
 #: app/assets/javascripts/app/controllers/_integration/monit.coffee
 #: app/assets/javascripts/app/controllers/_integration/nagios.coffee
-msgid "An open source monitoring tool."
+#, fuzzy
+#| msgid "An open source monitoring tool."
+msgid "An open-source monitoring tool."
 msgstr "오픈 소스 모니터링 도구."
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
-msgid "Analyzing entries with given configuration..."
+#, fuzzy
+#| msgid "Analyzing entries with given configuration..."
+msgid "Analyzing entries with given configuration…"
 msgstr "주어진 구성 항목을 분석 ..."
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
-msgid "Analyzing structure..."
+#, fuzzy
+#| msgid "Analyzing structure..."
+msgid "Analyzing structure…"
 msgstr "구조를 분석 ..."
 
 #: app/assets/javascripts/app/models/ticket.coffee
@@ -838,7 +869,9 @@ msgid "Anticon"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee
-msgid "Any Recipient"
+#, fuzzy
+#| msgid "Any Recipient"
+msgid "Any recipient"
 msgstr "특정 수신자"
 
 #: db/seeds/settings.rb
@@ -904,7 +937,12 @@ msgid "Archived at"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/attachments.coffee
-msgid "Are you sure to delete"
+msgid "Are you sure you want to delete"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee
+msgid ""
+"Are you sure you want to reload? You have unsaved changes that will get lost"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
@@ -913,10 +951,6 @@ msgstr "확실한가요?"
 
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee
 msgid "Area"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_ui_element/holiday_selector.coffee
-msgid "Aready exists!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
@@ -928,15 +962,10 @@ msgstr "조"
 msgid "Article Count"
 msgstr "제 개수"
 
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
-msgid "Article Last Sender"
-msgstr "제 마지막 발신자"
-
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "Article#"
 msgstr "조#"
 
-#: app/assets/javascripts/app/models/group.coffee
 #: db/seeds/object_manager_attributes.rb
 msgid "Assign Follow-Ups"
 msgstr ""
@@ -948,6 +977,10 @@ msgstr "사용자의 도메인을 기반으로 사용자를 할당합니다."
 #: app/assets/javascripts/app/models/group.coffee
 #: db/seeds/object_manager_attributes.rb
 msgid "Assign follow-up to latest agent again."
+msgstr ""
+
+#: app/assets/javascripts/app/models/group.coffee
+msgid "Assign follow-ups"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
@@ -962,10 +995,15 @@ msgstr "할당"
 msgid "Assignee"
 msgstr ""
 
-#: app/assets/javascripts/app/models/_application_model.coffee
-#: app/assets/javascripts/app/models/group.coffee
 #: db/seeds/object_manager_attributes.rb
 msgid "Assignment Timeout"
+msgstr "지정 시간 초과"
+
+#: app/assets/javascripts/app/models/_application_model.coffee
+#: app/assets/javascripts/app/models/group.coffee
+#, fuzzy
+#| msgid "Assignment Timeout"
+msgid "Assignment timeout"
 msgstr "지정 시간 초과"
 
 #: app/assets/javascripts/app/models/group.coffee
@@ -984,11 +1022,15 @@ msgid ""
 msgstr ""
 
 #: app/models/object_manager/attribute.rb
-msgid "At least one letters is needed"
+msgid "At least one letter is required"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee
 msgid "At least one object must be selected."
+msgstr ""
+
+#: app/models/role.rb app/models/user.rb
+msgid "At least one user needs to have admin permissions."
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/attachments.jst.eco
@@ -1011,17 +1053,25 @@ msgstr "첨부파일"
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #, fuzzy
 msgid ""
-"Attention: These will also your login password after the import is completed."
+"Attention: These will also be your login and password after the import is "
+"completed."
 msgstr "주의 : 가져 오기가 완료된 후 이들은 당신의 로그인 암호를 될 것입니다."
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
+#, fuzzy
+#| msgid ""
+#| "Attention: These will be your login password after the import is "
+#| "completed."
 msgid ""
-"Attention: These will be your login password after the import is completed."
+"Attention: These will be your login and password after the import is "
+"completed."
 msgstr "주의 : 가져 오기가 완료된 후 이들은 당신의 로그인 암호를 될 것입니다."
 
 #: db/seeds/settings.rb
-msgid "Attention: When creating a ticket an e-mail is sent."
+#, fuzzy
+#| msgid "Attention: When creating a ticket an e-mail is sent."
+msgid "Attention: When creating a ticket an email is sent."
 msgstr "주의 : Ticket을 만들 때 전자 메일이 전송됩니다."
 
 #: app/assets/javascripts/app/controllers/object_manager.coffee
@@ -1132,10 +1182,6 @@ msgid ""
 msgstr ""
 "자동 chat.css 파일을로드합니다. 당신이 당신의 자신의 CSS를 사용하려면, 단지 "
 "false로 설정합니다."
-
-#: app/assets/javascripts/app/views/channel/chat.jst.eco
-msgid "Automatically show chat"
-msgstr "자동으로 채팅을 보여"
 
 #: app/assets/javascripts/app/models/overview.coffee
 msgid "Available for the following roles"
@@ -1251,7 +1297,9 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
-msgid "Blocked caller ids based on sender caller id."
+#, fuzzy
+#| msgid "Blocked caller ids based on sender caller id."
+msgid "Blocked caller IDs based on sender caller ID."
 msgstr "발신자 발신자 ID를 기반으로 발신자 ID를 차단."
 
 #: app/assets/javascripts/app/models/chat.coffee
@@ -1300,8 +1348,14 @@ msgstr "브라우저"
 msgid "Browser too old!"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee
+#: app/assets/javascripts/app/lib/mixins/ticket_mass_updatable.coffee
 msgid "Bulk action executed!"
+msgstr "대량 작업 실행!"
+
+#: app/assets/javascripts/app/lib/mixins/ticket_mass_updatable.coffee
+#, fuzzy
+#| msgid "Bulk action executed!"
+msgid "Bulk action failed"
 msgstr "대량 작업 실행!"
 
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee
@@ -1335,13 +1389,25 @@ msgstr ""
 "기본적으로 추적 검사는 이메일의 제목을 통해 이루어집니다. 이 설정을 사용하면 "
 "후속 검사가 실행됩니다있는 더 많은 필드를 추가 할 수 있습니다."
 
+#: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee
+#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
+#: app/assets/javascripts/app/models/ticket_article.coffee
+#: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
+#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
+msgid "CC"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_integration/idoit.coffee
 msgid "CMDB to document complex relations of your network components."
 msgstr "CMDB는 네트워크 구성 요소의 복잡한 관계를 문서화합니다."
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
+#, fuzzy
+#| msgid ""
+#| "CSS font-size with a unit like 12px, 1.5em. If left to undefined it "
+#| "inherits the font-size of the website."
 msgid ""
-"CSS font-size with a unit like 12px, 1.5em. If left to undefined it inherits "
+"CSS font-size with a unit like 12px, 1.5em. If left undefined it inherits "
 "the font-size of the website."
 msgstr ""
 "12 픽셀과 같은 단위, 1.5em와 CSS 폰트 크기. 정의되지 않은 왼쪽 경우 웹 사이트"
@@ -1391,6 +1457,14 @@ msgstr ""
 msgid "Callback URL"
 msgstr "콜백 URL"
 
+#: app/assets/javascripts/app/controllers/_integration/cti.coffee
+#: app/assets/javascripts/app/controllers/_integration/placetel.coffee
+#: app/assets/javascripts/app/controllers/_integration/sipgate_io.coffee
+#, fuzzy
+#| msgid "Also caller id of outbound calls can be changed."
+msgid "Caller ID of outbound calls can be changed as well."
+msgstr "또한 아웃 바운드 통화의 발신자 ID는 변경 될 수 있습니다."
+
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
@@ -1427,21 +1501,17 @@ msgid "Can't generate new ticket number!"
 msgstr ""
 
 #: app/models/ticket.rb
-msgid "Can't merge ticket with it self!"
+msgid "Can't merge ticket with itself!"
 msgstr ""
 
 #: lib/sessions/event/spool.rb
 msgid "Can't send spool, session not authenticated"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee
-msgid "Can't update Ticket %s!"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee
 msgid ""
-"Can't update password, your new passwords do not match. Please try again!"
+"Can't update password, your entered passwords do not match. Please try again!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
@@ -1502,11 +1572,6 @@ msgstr "카테고리"
 msgid "Category page layout"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee
-#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
-#: app/assets/javascripts/app/models/ticket_article.coffee
-#: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
-#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: db/seeds/object_manager_attributes.rb
 msgid "Cc"
 msgstr "참조"
@@ -1535,18 +1600,16 @@ msgstr "변경 고객"
 msgid "Change Objects"
 msgstr "변경 개체"
 
+#: app/assets/javascripts/app/views/profile/password.jst.eco
+#, fuzzy
+#| msgid "Change your password"
+msgid "Change Your Password"
+msgstr "비밀번호 변경"
+
 #: app/assets/javascripts/app/views/generic/history.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/generic_list.jst.eco
 msgid "Change order"
 msgstr "주문 변경"
-
-#: app/assets/javascripts/app/views/profile/language.jst.eco
-msgid "Change your language."
-msgstr "언어를 변경합니다."
-
-#: app/assets/javascripts/app/views/profile/password.jst.eco
-msgid "Change your password"
-msgstr "비밀번호 변경"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Changed"
@@ -1568,10 +1631,6 @@ msgstr "변경"
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Changes were made that require a database update."
 msgstr "변경 내용은 데이터베이스 업데이트를 필요로 하였다."
-
-#: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee
-msgid "Changes were made. Do you want to reload? You'll loose your changes"
-msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
@@ -1647,7 +1706,7 @@ msgid "Chat closed by %s"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/chat.coffee
-msgid "Chat not answered, set to offline automatically."
+msgid "Chat not answered, automatically set to offline."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
@@ -1699,22 +1758,28 @@ msgstr "속성을 선택한 다음 새 템플릿으로 저장할 수 있습니�
 msgid "Choose if retweets should also be converted to tickets."
 msgstr ""
 
-#: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
-msgid "Choose the group in which direct messages will get added to."
+#: app/assets/javascripts/app/views/facebook/account_edit.jst.eco
+msgid "Choose the Group to which page posts will get added."
 msgstr ""
 
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
-msgid "Choose the group in which mentions will get added to."
+msgid "Choose the group to which direct messages will get added."
+msgstr ""
+
+#: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
+msgid "Choose the group to which mentions will get added."
 msgstr ""
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
-msgid "Choose the group in which messages will get added to."
+msgid "Choose the group to which messages will get added."
 msgstr ""
 
-#: app/assets/javascripts/app/views/facebook/account_edit.jst.eco
-msgid "Choose the group in which page postings will get added to."
-msgstr ""
+#: app/assets/javascripts/app/views/profile/language.jst.eco
+#, fuzzy
+#| msgid "Change your language."
+msgid "Choose your language."
+msgstr "언어를 변경합니다."
 
 #: app/assets/javascripts/app/views/password/reset_change.jst.eco
 msgid "Choose your new password."
@@ -1882,14 +1947,18 @@ msgid "Completed Tasks"
 msgstr "완료 작업"
 
 #: public/assets/chat/views/chat.eco
-msgid "Compose your message..."
-msgstr ""
+#, fuzzy
+#| msgid "Change your language."
+msgid "Compose your message…"
+msgstr "언어를 변경합니다."
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_auto_assignment.coffee
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
 #: app/assets/javascripts/app/models/job.coffee
 #: app/assets/javascripts/app/models/trigger.coffee
-msgid "Conditions for effected objects"
+#, fuzzy
+#| msgid "Conditions for effected objects"
+msgid "Conditions for affected objects"
 msgstr "영향받는 개체에 대한 조건"
 
 #: app/assets/javascripts/app/models/overview.coffee
@@ -1994,7 +2063,9 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
-msgid "Connecting ..."
+#, fuzzy
+#| msgid "Connecting ..."
+msgid "Connecting …"
 msgstr "연결 중 ..."
 
 #: public/assets/chat/chat-no-jquery.coffee public/assets/chat/chat.coffee
@@ -2063,7 +2134,7 @@ msgid "Conversation transfered into other chat. Please stay tuned."
 msgstr ""
 
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
-msgid "Conversion of retweets to tickets is turned off"
+msgid "Conversion of retweets into tickets is turned off"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
@@ -2166,26 +2237,26 @@ msgstr "텍스트 모듈 만들기"
 #: app/assets/javascripts/app/models/text_module.coffee
 msgid ""
 "Create Text Modules to **spend less time writing responses**. Text Modules "
-"can include smart variables like the users name or email address.\n"
+"can include smart variables like the user's name or email address.\n"
 "\n"
 "Examples of snippets are:\n"
 "\n"
 "* Hello Mrs. #{ticket.customer.lastname},\n"
 "* Hello Mr. #{ticket.customer.lastname},\n"
 "* Hello #{ticket.customer.firstname},\n"
-"* My Name is #{user.firstname},\n"
+"* My name is #{user.firstname},\n"
 "\n"
-"Of course you can also use multi line snippets.\n"
+"Of course, you can also use multi-line snippets.\n"
 "\n"
 "Available objects are:\n"
-"* ticket (e. g. ticket.state, ticket.group)\n"
-"* ticket.customer (e. g. ticket.customer.firstname, ticket.customer."
+"* ticket (e.g. ticket.state, ticket.group)\n"
+"* ticket.customer (e.g. ticket.customer.firstname, ticket.customer."
 "lastname)\n"
-"* ticket.owner (e. g. ticket.owner.firstname, ticket.owner.lastname)\n"
-"* ticket.organization (e. g. ticket.organization.name)\n"
-"* user (e. g. user.firstname, user.email)\n"
+"* ticket.owner (e.g. ticket.owner.firstname, ticket.owner.lastname)\n"
+"* ticket.organization (e.g. ticket.organization.name)\n"
+"* user (e.g. user.firstname, user.email)\n"
 "\n"
-"To select placeholders from a list, just enter \"::\".\n"
+"To select placeholders from a list, just enter \"::\"."
 msgstr ""
 
 #: app/controllers/first_steps_controller.rb
@@ -2244,6 +2315,7 @@ msgstr "첫 번째 표를 작성"
 #: app/assets/javascripts/app/models/ticket_article.coffee
 #: app/assets/javascripts/app/models/ticket_priority.coffee
 #: app/assets/javascripts/app/models/ticket_state.coffee
+#: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
 #: app/assets/javascripts/app/views/popover/ticket.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
@@ -2378,9 +2450,14 @@ msgid ""
 "rollback possible."
 msgstr ""
 
-#: app/assets/javascripts/app/models/organization.coffee
 #: db/seeds/object_manager_attributes.rb
 msgid "Customers in the organization can view each other items."
+msgstr "조직의 고객은 각각 다른 항목을 볼 수 있습니다."
+
+#: app/assets/javascripts/app/models/organization.coffee
+#, fuzzy
+#| msgid "Customers in the organization can view each other items."
+msgid "Customers in the organization can view each other's items."
 msgstr "조직의 고객은 각각 다른 항목을 볼 수 있습니다."
 
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
@@ -2417,7 +2494,9 @@ msgid "Database"
 msgstr ""
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
-msgid "Database Update required"
+#, fuzzy
+#| msgid "Database Update required"
+msgid "Database Update Required"
 msgstr "데이터베이스 업데이트가 필요합니다"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
@@ -2466,8 +2545,10 @@ msgid "Decryption failed!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
-msgid "Decryption success!"
-msgstr ""
+#, fuzzy
+#| msgid "Connection test successful"
+msgid "Decryption successful!"
+msgstr "연결 테스트 성공"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
@@ -2498,15 +2579,17 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
-msgid "Default caller id for outbound calls."
+#, fuzzy
+#| msgid "Default caller id for outbound calls."
+msgid "Default caller ID for outbound calls."
 msgstr "아웃 바운드 통화에 대한 기본 발신자 ID입니다."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
-msgid "Default time Diff (hours)"
+msgid "Default time diff (hours)"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
-msgid "Default time Diff (minutes)"
+msgid "Default time diff (minutes)"
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -3295,12 +3378,16 @@ msgstr "대상 그룹"
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
-msgid "Destination caller id"
+#, fuzzy
+#| msgid "Destination caller id"
+msgid "Destination caller ID"
 msgstr "대상 발신자 ID"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
-msgid "Destination caller id or queue"
-msgstr ""
+#, fuzzy
+#| msgid "Destination caller id"
+msgid "Destination caller ID or queue"
+msgstr "대상 발신자 ID"
 
 #: db/seeds/settings.rb
 msgid "Developer System"
@@ -3446,22 +3533,19 @@ msgstr "재정렬 드래그"
 msgid "Drop files here"
 msgstr "여기에 파일을 드롭"
 
-#: app/assets/javascripts/app/controllers/_plugin/session_timeout.coffee
-msgid ""
-"Due to inactivity are automatically logged out within the next 30 seconds."
+#: app/assets/javascripts/app/controllers/login.coffee
+msgid "Due to inactivity, you have been automatically logged out."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/login.coffee
-msgid "Due to inactivity you are automatically logged out."
+#: app/assets/javascripts/app/controllers/_plugin/session_timeout.coffee
+msgid ""
+"Due to inactivity, you will be automatically logged out within the next 30 "
+"seconds."
 msgstr ""
 
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco
 msgid "Duration"
 msgstr "지속"
-
-#: app/assets/javascripts/app/views/dashboard.jst.eco
-msgid "E. g. recent changed tickets, users or organizations."
-msgstr "E.의 g. 변경 Ticket, 사용자 또는 조직 최근."
 
 #: app/assets/javascripts/app/models/user.coffee
 msgid "Easter holiday"
@@ -3537,12 +3621,12 @@ msgstr ""
 
 #: lib/search_index_backend.rb
 msgid ""
-"Elasticsearch is not reachable, probably because it's not running or even "
-"installed."
+"Elasticsearch is not reachable. It's possible that it's not running. Please "
+"check whether it is installed."
 msgstr ""
 
 #: app/controllers/reports_controller.rb
-msgid "Elasticsearch need to be configured!"
+msgid "Elasticsearch needs to be configured!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
@@ -3655,19 +3739,23 @@ msgstr ""
 "인증 사용자에 대한 사용자 이름 / 이메일 주소와 비밀번호를 사용하여 REST API "
 "액세스를 활성화합니다."
 
+#: app/assets/javascripts/app/views/api.jst.eco
+#, fuzzy
+#| msgid ""
+#| "Enable REST API using tokens (not username/email address and password). "
+#| "Each user needs to create own access tokens in user profile."
+msgid ""
+"Enable REST API using tokens (not username/email address and password). All "
+"users need to create their own access tokens in the user profile."
+msgstr ""
+"토큰을 사용하여 REST API를 사용 (이메일 주소와 비밀번호 / 사용자 이름 없음). "
+"각 사용자는 사용자 프로필에 자신의 액세스 토큰을 만들 필요가있다."
+
 #: db/seeds/settings.rb
 msgid ""
 "Enable REST API using tokens (not username/email address and password). Each "
 "user needs to create its own access tokens in user profile."
 msgstr ""
-
-#: app/assets/javascripts/app/views/api.jst.eco
-msgid ""
-"Enable REST API using tokens (not username/email address and password). Each "
-"user needs to create own access tokens in user profile."
-msgstr ""
-"토큰을 사용하여 REST API를 사용 (이메일 주소와 비밀번호 / 사용자 이름 없음). "
-"각 사용자는 사용자 프로필에 자신의 액세스 토큰을 만들 필요가있다."
 
 #: db/seeds/settings.rb
 msgid "Enable Ticket creation"
@@ -3872,7 +3960,7 @@ msgid "Enter Person or Organization/Company"
 msgstr "개인이나 조직 / 회사를 입력"
 
 #: app/assets/javascripts/app/views/integration/smime_private_key_add.jst.eco
-msgid "Enter Private Key secret"
+msgid "Enter Private Key Secret"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/layout_ref.coffee
@@ -3880,7 +3968,9 @@ msgid "Enter Project Name"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/title.jst.eco
-msgid "Enter Title..."
+#, fuzzy
+#| msgid "Enter Title..."
+msgid "Enter Title…"
 msgstr "제목을 입력 ..."
 
 #: app/assets/javascripts/app/controllers/layout_ref.coffee
@@ -3910,7 +4000,9 @@ msgstr ""
 "두 시스템을 연결하기 위해 설치가 끝날 때 플러그인에서 제공하는 링크를 입력"
 
 #: app/assets/javascripts/app/controllers/_ui_element/timezone.coffee
-msgid "Enter timezone..."
+#, fuzzy
+#| msgid "Enter timezone..."
+msgid "Enter time zone"
 msgstr "시간대 입력"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
@@ -3955,10 +4047,6 @@ msgstr ""
 msgid "Error during execution of auto wizard."
 msgstr ""
 
-#: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco
-msgid "Erstellt"
-msgstr ""
-
 #: db/seeds/overviews.rb
 msgid "Escalated"
 msgstr "에스컬레이션"
@@ -3992,10 +4080,16 @@ msgid "Evangelist"
 msgstr "전도자"
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee
+#, fuzzy
+#| msgid ""
+#| "Every category in your knowledge base should be given a unique icon for "
+#| "maximum visual clarity. Each set below provides a wide range of icons to "
+#| "choose from, but beware-you can't mix and match different icons from "
+#| "different sets. Choose carefully!"
 msgid ""
 "Every category in your knowledge base should be given a unique icon for "
 "maximum visual clarity. Each set below provides a wide range of icons to "
-"choose from, but beware-you can't mix and match different icons from "
+"choose from, but beware: You can't mix and match different icons from "
 "different sets. Choose carefully!"
 msgstr "모든 카테고리"
 
@@ -4125,11 +4219,13 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
-msgid "Failed to rollback migration of the channel!"
+msgid "Failed to roll back the migration of the channel!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/user_profile.coffee
-msgid "Failed to sent Email \"%s\". Please contact an administrator."
+#, fuzzy
+#| msgid "Failed to sent Email \"%s\". Please contact an administrator."
+msgid "Failed to send email to \"%s\". Please contact an administrator."
 msgstr "이메일 전송에 실패했습니다 \"%\". 관리자에게 연락해 주세요."
 
 #: db/seeds/object_manager_attributes.rb
@@ -4144,8 +4240,10 @@ msgstr "기능은 사용할 수 없습니다!"
 #: app/controllers/integration/cti_controller.rb
 #: app/controllers/integration/placetel_controller.rb
 #: app/controllers/integration/sipgate_controller.rb
-msgid "Feature is disable, please contact your admin to enable it!"
-msgstr ""
+#, fuzzy
+#| msgid "Unable to verify email. Please contact your administrator."
+msgid "Feature is disabled, please contact your administrator!"
+msgstr "이메일을 확인할 수 없습니다. 관리자에게 문의하시기 바랍니다."
 
 #: app/controllers/integration/cti_controller.rb
 #: app/controllers/integration/placetel_controller.rb
@@ -4193,7 +4291,9 @@ msgid "Filter"
 msgstr "필터"
 
 #: app/assets/javascripts/app/views/search/index.jst.eco
-msgid "Find what you search. E. g. \"search phrase\""
+#, fuzzy
+#| msgid "Find what you search. E. g. \"search phrase\""
+msgid "Find what you're looking for, e.g. \"search phrase\""
 msgstr "당신이 검색을 찾으십시오. E.의 g. \"검색 구문\""
 
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
@@ -4284,18 +4384,30 @@ msgstr ""
 msgid "Font size"
 msgstr "글꼴 크기"
 
+#: app/assets/javascripts/app/controllers/knowledge_base/public_menu_manager.coffee
+#, fuzzy
+#| msgid "Footer Note"
+msgid "Footer Menu"
+msgstr "하단 노트"
+
 #: app/assets/javascripts/app/models/knowledge_base.coffee
 msgid "Footer Note"
 msgstr "하단 노트"
 
-#: app/assets/javascripts/app/controllers/knowledge_base/public_menu_manager.coffee
-msgid "Footer menu"
-msgstr ""
+#: app/assets/javascripts/app/views/dashboard.jst.eco
+#, fuzzy
+#| msgid "E. g. recent changed tickets, users or organizations."
+msgid "For example, recently changed tickets, users, or organizations."
+msgstr "E.의 g. 변경 Ticket, 사용자 또는 조직 최근."
 
 #: app/assets/javascripts/app/views/profile/token_access_created.jst.eco
+#, fuzzy
+#| msgid ""
+#| "For security reasons, the API token is shown only once. You'll need to "
+#| "copy it somewhere safe before continuing."
 msgid ""
-"For security reasons, the API token is shown only once. You'll need to copy "
-"it somewhere safe before continuing."
+"For security reasons, the API token is shown only once. You'll need to save "
+"it somewhere secure before continuing."
 msgstr ""
 "보안상의 이유로 API 토큰은 한 번만 표시됩니다. 계속하기 전에 안전한 곳에 복사"
 "해야합니다."
@@ -4391,7 +4503,7 @@ msgid "Full Name"
 msgstr "전체 이름"
 
 #: app/controllers/users_controller.rb
-msgid "Full size image is invalid"
+msgid "Full-size image is invalid"
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -4432,8 +4544,10 @@ msgid "Generate user based stats."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee
-msgid "Generic API to integrate VoIP service provider with realtime push."
-msgstr ""
+#, fuzzy
+#| msgid "VoIP service provider with realtime push."
+msgid "Generic API to integrate VoIP service provider with real-time push."
+msgstr "실시간 푸시와 VoIP 서비스 제공 업체."
 
 #: db/seeds/settings.rb
 msgid "Geo Calendar Service"
@@ -4666,8 +4780,10 @@ msgid "Groups"
 msgstr "그룹"
 
 #: app/assets/javascripts/app/controllers/group.coffee
-msgid "Groups are ..."
-msgstr ""
+#, fuzzy
+#| msgid "Groups"
+msgid "Groups are …"
+msgstr "그룹"
 
 #: app/assets/javascripts/app/models/webhook.coffee
 msgid "HMAC SHA1 Signature Token"
@@ -4715,15 +4831,19 @@ msgid "Header Link Color"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/public_menu_manager.coffee
-msgid "Header menu"
-msgstr ""
+#, fuzzy
+#| msgid "Header Color"
+msgid "Header Menu"
+msgstr "머릿말 색상"
 
 #: app/assets/javascripts/app/views/monitoring.jst.eco
 msgid "Health Check"
 msgstr "Health Check"
 
 #: app/assets/javascripts/app/views/monitoring.jst.eco
-msgid "Health information can be retrieved as JSON using"
+#, fuzzy
+#| msgid "Health information can be retrieved as JSON using"
+msgid "Health information can be retrieved as JSON using:"
 msgstr "건강 정보를 사용하여 JSON으로 검색 할 수 있습니다"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
@@ -4745,8 +4865,12 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
+#, fuzzy
+#| msgid ""
+#| "Here you can create new tickets. Also if you have the permissions you can "
+#| "create new customers and organizations."
 msgid ""
-"Here you can create new tickets. Also if you have the permissions you can "
+"Here you can create new tickets. Also, if you have the permission, you can "
 "create new customers and organizations."
 msgstr ""
 "여기에 새로운 Ticket을 만들 수 있습니다. 당신은 권한이있는 경우 또한 당신은 "
@@ -4758,15 +4882,19 @@ msgstr "여기에 하나를 만들 수 있습니다."
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
 msgid ""
-"Here you can search for tickets, customers and organizations. Use the "
-"wildcard §*§ to find everything. E. g. §smi*§ or §rosent*l§. You also can "
-"use ||double quotes|| for searching phrases §\"some phrase\"§."
+"Here you can search for tickets, customers, and organizations. Use the "
+"asterisk §*§ to find anything, e.g. §smi*§ or §rosent*l§. You also can use ||"
+"quotation marks|| for searching phrases: §\"some phrase\"§."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
+#, fuzzy
+#| msgid ""
+#| "Here you can sign out, change the frontend language and see your last "
+#| "viewed items."
 msgid ""
-"Here you can sign out, change the frontend language and see your last viewed "
-"items."
+"Here you can sign out, change the frontend language, and see your last "
+"viewed items."
 msgstr ""
 "여기, 아웃 프론트 엔드 언어를 변경하고 마지막으로 본 항목을 볼 수 있습니다."
 
@@ -4775,8 +4903,13 @@ msgid "Here you define which authorization has access to the attribute."
 msgstr "여기에서 속성에 액세스 할 수있는 권한을 정의합니다."
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
+#, fuzzy
+#| msgid ""
+#| "Here you find your ticket overviews for open, assigned and escalated "
+#| "tickets."
 msgid ""
-"Here you find your ticket overviews for open, assigned and escalated tickets."
+"Here you find your ticket overviews for open, assigned, and escalated "
+"tickets."
 msgstr ""
 "여기가 열려, 할당 및 에스컬레이션 Ticket Ticket 개요를 찾을 수 있습니다."
 
@@ -4858,12 +4991,12 @@ msgid "Hours"
 msgstr "시간"
 
 #: app/views/layouts/knowledge_base.html.erb
-msgid "How can we help you? Search for an answer or a topic..."
+msgid "How can we help you? Search for an answer or a topic…"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_waiting_time.coffee
 msgid ""
-"How long has each customer had to wait, on average, to get a response from "
+"How long did each customer have to wait, on average, to get a response from "
 "you today?"
 msgstr ""
 
@@ -4930,11 +5063,15 @@ msgid "Icon Set"
 msgstr "아이콘"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
-msgid "Icon Url"
-msgstr ""
+#, fuzzy
+#| msgid "Icon"
+msgid "Icon URL"
+msgstr "아이콘"
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
-msgid "Identifier of the chat-topic."
+#, fuzzy
+#| msgid "Identifier of the chat-topic."
+msgid "Identifier of the chat topic."
 msgstr "채팅 주제의 식별자."
 
 #: db/seeds/settings.rb
@@ -4952,20 +5089,19 @@ msgstr ""
 "지 않는 경우 호스트를 지정해야합니다 태그."
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
-msgid "If no mapping is defined, all user get notified about any event."
+msgid "If no mapping is defined, all users will get notified of any event."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/check_mk.coffee
-msgid ""
-"If the host and service has recovered, the ticket can be closed "
-"automatically."
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_integration/icinga.coffee
 #: app/assets/javascripts/app/controllers/_integration/monit.coffee
 #: app/assets/javascripts/app/controllers/_integration/nagios.coffee
+#, fuzzy
+#| msgid ""
+#| "If the host and service is recovered again, the ticket will be closed "
+#| "automatically."
 msgid ""
-"If the host and service is recovered again, the ticket will be closed "
+"If the host and service have recovered, the ticket can be closed "
 "automatically."
 msgstr "호스트와 서비스가 다시 복구되는 경우, Ticket은 자동으로 종료됩니다."
 
@@ -5006,8 +5142,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid ""
-"If you want to open the chat by the press of a button set the option §show§ "
-"to §false§ and add the class §open-zammad-chat§ to the button."
+"If you want to open the chat by clicking a button, set the option §show§ to "
+"§false§ and add the class §open-zammad-chat§ to the button."
 msgstr ""
 
 #: app/assets/javascripts/app/views/translation/index.jst.eco
@@ -5115,9 +5251,9 @@ msgstr ""
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 msgid ""
-"Import as archive: |No notifications are sent|, the |tickets are closed| and "
-"original timestamps are used. You can still find them in Zammad using the "
-"search."
+"Import as archive: |No notifications are sent|, the |tickets are closed|, "
+"and original timestamps are used. You can still find them in Zammad using "
+"the search."
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
@@ -5262,20 +5398,24 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
-msgid "Inserts Knowledge Base answer"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
-msgid "Inserts Text module"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Inserts a horizontal rule"
 msgstr "수평 규칙을 삽입"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Inserts a mention for a user"
 msgstr ""
+
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
+#, fuzzy
+#| msgid "Delete Knowledge Base"
+msgid "Inserts knowledge base answer"
+msgstr "지식 삭제"
+
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
+#, fuzzy
+#| msgid "New text module"
+msgid "Inserts text module"
+msgstr "새로운 텍스트 모듈"
 
 #: app/assets/javascripts/app/views/package.jst.eco
 msgid "Install Package"
@@ -5350,7 +5490,7 @@ msgid "Invalid client_id in receive loop!"
 msgstr ""
 
 #: app/controllers/long_polling_controller.rb
-msgid "Invalid client_id receive!"
+msgid "Invalid client_id received!"
 msgstr ""
 
 #: app/controllers/import_freshdesk_controller.rb
@@ -5382,11 +5522,11 @@ msgid "Invalid link structure"
 msgstr ""
 
 #: app/controllers/tickets_controller.rb
-msgid "Invalid link structure (Object)"
+msgid "Invalid link structure (Object → LinkType)"
 msgstr ""
 
 #: app/controllers/tickets_controller.rb
-msgid "Invalid link structure (Object->LinkType)"
+msgid "Invalid link structure (Object)"
 msgstr ""
 
 #: app/controllers/mentions_controller.rb
@@ -5488,7 +5628,9 @@ msgstr "1월"
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
-msgid "Job is waiting to get started..."
+#, fuzzy
+#| msgid "Job is waiting to get started..."
+msgid "Job is waiting to get started…"
 msgstr "작업은 시작을 기다리고 있습니다 ..."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
@@ -5520,7 +5662,11 @@ msgid "June"
 msgstr "6월"
 
 #: app/assets/javascripts/app/views/translation/index.jst.eco
-msgid "Just click into the marker and update the words just in place. Enjoy!"
+#, fuzzy
+#| msgid ""
+#| "Just click into the marker and update the words just in place. Enjoy!"
+msgid ""
+"Just click into the highlighted area and update the words right there. Enjoy!"
 msgstr "그냥 마커로 클릭하고 바로 자리에 단어를 업데이트합니다. 즐겨!"
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
@@ -5750,16 +5896,18 @@ msgstr ""
 msgid "Link Related Answer"
 msgstr "연결 관련 답변"
 
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+#, fuzzy
+#| msgid "Templates"
+msgid "Link Template"
+msgstr "템플릿"
+
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee
 msgid "Link issue"
 msgstr "이슈 연결"
 
 #: app/assets/javascripts/app/controllers/ticket_link_add.coffee
 msgid "Link type is needed!"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
-msgid "Link-Template"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
@@ -5800,11 +5948,13 @@ msgstr "하중"
 #: app/assets/javascripts/app/lib/app_post/task_manager.coffee
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 #: app/assets/javascripts/app/views/generic/page_loading.jst.eco
-msgid "Loading..."
+#, fuzzy
+#| msgid "Loading..."
+msgid "Loading…"
 msgstr "로드 중 ..."
 
 #: lib/email_helper.rb
-msgid "Local MTA (Sendmail/Postfix/Exim/...) - use server setup"
+msgid "Local MTA (Sendmail/Postfix/Exim/…) - use server setup"
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -5858,9 +6008,17 @@ msgstr "비밀번호 분실"
 msgid "Lost network connection!"
 msgstr ""
 
+#: app/controllers/users_controller.rb
+msgid "MIME type is invalid"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/macro.coffee
 msgid "Macro"
 msgstr "매크로"
+
+#: app/controllers/tickets_mass_controller.rb
+msgid "Macro group restrictions do not cover some tickets"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/macro.coffee db/seeds/permissions.rb
 msgid "Macros"
@@ -5917,7 +6075,9 @@ msgstr ""
 "Zammad을 사용할 수있는 응용 프로그램을 관리 할 수 ​​있습니다."
 
 #: app/views/mailer/application.html.erb
-msgid "Manage your notifications settings"
+#, fuzzy
+#| msgid "Manage your notifications settings"
+msgid "Manage your notification settings"
 msgstr "알림 설정 관리"
 
 #: app/assets/javascripts/app/views/api.jst.eco
@@ -5978,7 +6138,9 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/chat.coffee
 #: app/assets/javascripts/app/views/channel/topics.jst.eco
-msgid "Max. clients in waitlist"
+#, fuzzy
+#| msgid "Max. clients in waitlist"
+msgid "Max. clients on waitlist"
 msgstr "최대. 대기자 명단에있는 클라이언트"
 
 #: app/assets/javascripts/app/views/customer_chat/setting.jst.eco
@@ -6102,10 +6264,6 @@ msgstr ""
 msgid "Milestone"
 msgstr ""
 
-#: app/controllers/users_controller.rb
-msgid "Mime type is invalid"
-msgstr ""
-
 #: app/models/postmaster_filter.rb
 msgid "Min. one match rule needed!"
 msgstr ""
@@ -6124,10 +6282,6 @@ msgstr "최소 길이"
 
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 msgid "Minimum of one permission is needed!"
-msgstr ""
-
-#: app/models/role.rb app/models/user.rb
-msgid "Minimum one user needs to have admin permissions."
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/timer.jst.eco
@@ -6285,6 +6439,12 @@ msgstr "내 교체 Ticket"
 msgid "My subscribed Tickets"
 msgstr ""
 
+#: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco
+#, fuzzy
+#| msgid "Your tickets in process"
+msgid "My tickets in process"
+msgstr "과정에서 귀하의 Ticket"
+
 #: app/assets/javascripts/app/controllers/_integration/nagios.coffee
 msgid "Nagios"
 msgstr ""
@@ -6358,7 +6518,7 @@ msgid "Navigation"
 msgstr ""
 
 #: app/controllers/concerns/creates_ticket_articles.rb
-msgid "Need at least article: { body: \"some text\" }"
+msgid "Need at least an article body field."
 msgstr ""
 
 #: app/controllers/application_controller/handles_devices.rb
@@ -6570,10 +6730,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 msgid "No Knowledge Base created"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
-msgid "No Knowledge Base. Please create first Knowledge Base"
 msgstr ""
 
 #: lib/external_credential/microsoft365.rb
@@ -6943,7 +7099,7 @@ msgid "Notify Map"
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
-msgid "Notify certain users by matching caller id."
+msgid "Notify certain users by matching caller ID."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
@@ -7032,7 +7188,7 @@ msgid "On %s, %s wrote:"
 msgstr "%s에서 %s 님이 작성 :"
 
 #: app/assets/javascripts/app/models/macro.coffee
-msgid "Once completed..."
+msgid "Once completed…"
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
@@ -7194,8 +7350,8 @@ msgstr "조직"
 
 #: app/assets/javascripts/app/controllers/organization.coffee
 msgid ""
-"Organizations are for any person in the system. Agents (Owners, "
-"Resposbiles, ...) and Customers."
+"Organizations are for any person in the system. Agents (Owners, Resposbiles, "
+"…) and Customers."
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket_article.coffee
@@ -7244,8 +7400,10 @@ msgid "Overview"
 msgstr "Overview"
 
 #: app/assets/javascripts/app/controllers/overview.coffee
-msgid "Overview are ..."
-msgstr ""
+#, fuzzy
+#| msgid "Overview"
+msgid "Overview are …"
+msgstr "Overview"
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
 msgid "Overview bulk mask"
@@ -7400,7 +7558,9 @@ msgid "Pending reached"
 msgstr "도달 보류"
 
 #: app/assets/javascripts/app/models/ticket.coffee
-msgid "Pending reminder reached for Ticket |%s|"
+#, fuzzy
+#| msgid "Pending reminder reached for Ticket |%s|"
+msgid "Pending reminder reached for ticket |%s|"
 msgstr "%s | Ticket에 도달 보류 알림 |"
 
 #: app/assets/javascripts/app/models/ticket.coffee
@@ -7538,7 +7698,7 @@ msgid "Please supply your new password!"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
-msgid "Please wait..."
+msgid "Please wait…"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
@@ -7943,8 +8103,10 @@ msgid "Reset changes"
 msgstr "변경 재설정"
 
 #: app/assets/javascripts/app/controllers/translation.coffee
-msgid "Reseting changes..."
-msgstr ""
+#, fuzzy
+#| msgid "Reset changes"
+msgid "Reseting changes…"
+msgstr "변경 재설정"
 
 #: app/controllers/users_controller.rb
 msgid "Resized image is invalid"
@@ -8013,7 +8175,7 @@ msgid "Roles"
 msgstr "역할"
 
 #: app/assets/javascripts/app/controllers/role.coffee
-msgid "Roles are ..."
+msgid "Roles are …"
 msgstr ""
 
 #: app/assets/javascripts/app/views/google/list.jst.eco
@@ -8040,7 +8202,9 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
-msgid "Running..."
+#, fuzzy
+#| msgid "Running..."
+msgid "Running…"
 msgstr "달리는..."
 
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee
@@ -8191,8 +8355,10 @@ msgid "Scheduler"
 msgstr "스케줄러"
 
 #: app/assets/javascripts/app/controllers/job.coffee
-msgid "Scheduler are ..."
-msgstr ""
+#, fuzzy
+#| msgid "Scheduler"
+msgid "Scheduler are …"
+msgstr "스케줄러"
 
 #: app/assets/javascripts/app/controllers/job.coffee
 msgid "Schedulers"
@@ -8240,8 +8406,10 @@ msgstr "사용자를위한 검색"
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax.coffee
 #: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee
 #: app/assets/javascripts/app/views/generic/icon_picker.jst.eco
-msgid "Search..."
-msgstr "수색..."
+#, fuzzy
+#| msgid "Search"
+msgid "Search…"
+msgstr "검색"
 
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco
@@ -8302,8 +8470,10 @@ msgid "Select item"
 msgstr "물품을 고르시 오"
 
 #: app/assets/javascripts/app/lib/app_post/multi_locales_row.coffee
-msgid "Select locale..."
-msgstr ""
+#, fuzzy
+#| msgid "Select Template"
+msgid "Select locale…"
+msgstr "템플릿 선택"
 
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee
 msgid "Select the customer of the ticket or create one."
@@ -8386,9 +8556,17 @@ msgstr "보낸 사람 형식 구분"
 msgid "Sender based on Reply-To header"
 msgstr "를 기반으로 보낸 회신하려면 헤더"
 
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
+#, fuzzy
+#| msgid "Reply to last article"
+msgid "Sender of last article"
+msgstr "마지막 기사에 회신"
+
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco
-msgid "Sending..."
-msgstr "배상..."
+#, fuzzy
+#| msgid "pending"
+msgid "Sending…"
+msgstr "대기"
 
 #: app/assets/javascripts/app/controllers/maintenance.coffee
 msgid "Sent successfully!"
@@ -8462,7 +8640,9 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
-msgid "Set caller id of outbound calls based on destination caller id."
+#, fuzzy
+#| msgid "Set caller id of outbound calls based on destination caller id."
+msgid "Set caller ID of outbound calls based on destination caller ID."
 msgstr "대상 발신자 ID를 기반으로 아웃 바운드 통화의 설정 발신자 ID입니다."
 
 #: db/seeds/settings.rb
@@ -8480,7 +8660,9 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
-msgid "Set outbound caller id"
+#, fuzzy
+#| msgid "Set outbound caller id"
+msgid "Set outbound caller ID"
 msgstr "설정 아웃 바운드 발신자 ID"
 
 #: db/seeds/settings.rb
@@ -8573,8 +8755,14 @@ msgstr "표시 상세 검색"
 
 #: app/assets/javascripts/app/views/generic/ticket_list.jst.eco
 #: app/assets/javascripts/app/views/widget/ticket_stats_list.jst.eco
-msgid "Show all..."
+#, fuzzy
+#| msgid "Show all..."
+msgid "Show all…"
 msgstr "모두 보이기..."
+
+#: app/assets/javascripts/app/views/channel/chat.jst.eco
+msgid "Show chat automatically"
+msgstr ""
 
 #: app/assets/javascripts/app/views/generic/ticket_list.jst.eco
 msgid "Show less"
@@ -8780,12 +8968,16 @@ msgid "Start new conversation"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
-msgid "Start typing to search for users..."
-msgstr ""
+#, fuzzy
+#| msgid "Search for users"
+msgid "Start typing to search for users…"
+msgstr "사용자를위한 검색"
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
-msgid "Start typing to search in Knowledge Base..."
-msgstr ""
+#, fuzzy
+#| msgid "Search for users"
+msgid "Start typing to search in Knowledge Base…"
+msgstr "사용자를위한 검색"
 
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
 msgid "Started"
@@ -9128,8 +9320,10 @@ msgstr "텍스트 모듈"
 
 #: app/assets/javascripts/app/controllers/macro.coffee
 #: app/assets/javascripts/app/controllers/text_module.coffee
-msgid "Text modules are ..."
-msgstr ""
+#, fuzzy
+#| msgid "Text modules"
+msgid "Text modules are …"
+msgstr "텍스트 모듈"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 msgid "Text needed"
@@ -9338,6 +9532,10 @@ msgstr "채팅을위한 큐에 너무 많은 사람들이있다."
 msgid "There can be several reasons for the chat to not show up:"
 msgstr "표시하지 않도록 채팅 여러 가지 이유가있을 수 있습니다 :"
 
+#: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
+msgid "There is no Knowledge Base yet. Please create one."
+msgstr ""
+
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "There is no agent online."
 msgstr "어떤 에이전트가 온라인이 없습니다."
@@ -9366,6 +9564,10 @@ msgid ""
 "the chat connection got established."
 msgstr ""
 "이 클래스는 초기화의 버튼에 추가됩니다 및 채팅 연결이있어 일단 제거됩니다."
+
+#: app/assets/javascripts/app/controllers/_ui_element/holiday_selector.coffee
+msgid "This entry already exists!"
+msgstr ""
 
 #: app/assets/javascripts/app/views/version.jst.eco
 msgid "This is Zammad version %s"
@@ -9458,6 +9660,12 @@ msgid ""
 msgstr ""
 "이 서비스는 당신에게 걸려 오는 전화와 실시간으로 발신자 목록의 연락처를 보여"
 "줍니다."
+
+#: app/assets/javascripts/app/models/group.coffee
+msgid ""
+"This signature is inactive, it won't be included in the reply. Change state "
+"<a href=\"#channels/email\">here</a>"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/generic_history.coffee
 msgid "This ticket was merged into"
@@ -9558,6 +9766,12 @@ msgstr "Ticket 구독"
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 msgid "Ticket escalation"
 msgstr "Ticket 에스컬레이션"
+
+#: app/assets/javascripts/app/lib/mixins/ticket_mass_updatable.coffee
+#, fuzzy
+#| msgid "Tickets assigned to me: %s of %s"
+msgid "Ticket failed to save: %s"
+msgstr "나에게 할당 된 Ticket : %s의 %s"
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 msgid "Ticket reminder reached"
@@ -9838,11 +10052,13 @@ msgid "Triggers"
 msgstr "트리거"
 
 #: app/assets/javascripts/app/controllers/trigger.coffee
-msgid "Triggers are ..."
-msgstr ""
+#, fuzzy
+#| msgid "Triggers"
+msgid "Triggers are …"
+msgstr "트리거"
 
 #: app/assets/javascripts/app/lib/app_post/websocket.coffee
-msgid "Trying to reconnect..."
+msgid "Trying to reconnect…"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
@@ -10045,7 +10261,7 @@ msgid "Unable to load content"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee
-msgid "Unable to load data..."
+msgid "Unable to load data…"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/payload_example.coffee
@@ -10576,7 +10792,9 @@ msgstr ""
 #: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco
-msgid "Verifying..."
+#, fuzzy
+#| msgid "Verifying..."
+msgid "Verifying…"
 msgstr "확인 중 ..."
 
 #: app/assets/javascripts/app/controllers/version.coffee
@@ -10768,8 +10986,10 @@ msgid "Webhooks"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/webhook.coffee
-msgid "Webhooks are ..."
-msgstr ""
+#, fuzzy
+#| msgid "Webhook"
+msgid "Webhooks are …"
+msgstr "Webhook"
 
 #: app/assets/javascripts/app/models/webhook.coffee
 msgid ""
@@ -10811,6 +11031,12 @@ msgstr "수요일"
 
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco
 msgid "Week"
+msgstr "주"
+
+#: app/assets/javascripts/app/controllers/_ui_element/time_range.coffee
+#, fuzzy
+#| msgid "Week"
+msgid "Week(s)"
 msgstr "주"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
@@ -11280,10 +11506,6 @@ msgstr "|%s| 귀하의 카르마입니다."
 msgid "Your role cannot create new ticket. Please contact your administrator."
 msgstr ""
 
-#: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco
-msgid "Your tickets in process"
-msgstr "과정에서 귀하의 Ticket"
-
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/embed_video_button.coffee
 msgid "Youtube or Vimeo address"
 msgstr ""
@@ -11362,7 +11584,7 @@ msgstr ""
 "간이 끝날 때까지 기다려주십시오."
 
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee
-msgid "Zammad is restarting..."
+msgid "Zammad is restarting…"
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/switch_back_to_user.jst.eco
@@ -11993,7 +12215,9 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/generic/attachment.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
-msgid "select attachment..."
+#, fuzzy
+#| msgid "select attachment..."
+msgid "select attachment…"
 msgstr "선택 첨부 ..."
 
 #: app/assets/javascripts/app/controllers/_application_controller/generic_history.coffee
@@ -12214,9 +12438,42 @@ msgstr ""
 msgid "|Right| means |Some Subject [Ticket#12345]|"
 msgstr "| 오른쪽 | 어떤 주제 [Ticket # 12345] | | 의미"
 
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
+#, fuzzy
+#| msgid "...add object link URL"
+msgid "…add object link URL"
+msgstr "... 오브젝트 링크 URL을 추가"
+
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
+#, fuzzy
+#| msgid "...add object title"
+msgid "…add object title"
+msgstr "... 개체의 제목을 추가"
+
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
+#, fuzzy
+#| msgid "...of whole textarea"
+msgid "…of whole text area"
+msgstr "... 전체 텍스트 영역의"
+
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ 오늘 대기 시간"
+
+#~ msgid "Loading..."
+#~ msgstr "로드 중 ..."
+
+#~ msgid "Search..."
+#~ msgstr "수색..."
+
+#~ msgid "Sending..."
+#~ msgstr "배상..."
+
+#~ msgid "Article Last Sender"
+#~ msgstr "제 마지막 발신자"
+
+#~ msgid "Automatically show chat"
+#~ msgstr "자동으로 채팅을 보여"
 
 #~ msgid "Default caller id"
 #~ msgstr "기본 발신자 ID"
