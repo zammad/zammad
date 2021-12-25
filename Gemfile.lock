@@ -295,7 +295,6 @@ GEM
     inflection (1.0.0)
     iniparse (1.5.0)
     interception (0.5)
-    ipaddr (1.2.2)
     json (2.6.1)
     jwt (2.3.0)
     kgio (2.11.4)
@@ -396,8 +395,7 @@ GEM
     omniauth-weibo-oauth2 (0.5.2)
       omniauth (~> 1.5)
       omniauth-oauth2 (>= 1.4.0)
-    openssl (2.2.1)
-      ipaddr
+    openssl (3.0.0)
     overcommit (0.58.0)
       childprocess (>= 0.6.3, < 5)
       iniparse (~> 1.4)
