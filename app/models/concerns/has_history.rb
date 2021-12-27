@@ -77,8 +77,8 @@ log object update history with all updated attributes, if configured - will be e
             if relation_model
               if relation_model['name']
                 value_str[0] = relation_model['name']
-              elsif relation_model.respond_to?('fullname')
-                value_str[0] = relation_model.send('fullname')
+              elsif relation_model.respond_to?(:fullname)
+                value_str[0] = relation_model.send(:fullname)
               end
             end
           end
@@ -87,8 +87,8 @@ log object update history with all updated attributes, if configured - will be e
             if relation_model
               if relation_model['name']
                 value_str[1] = relation_model['name']
-              elsif relation_model.respond_to?('fullname')
-                value_str[1] = relation_model.send('fullname')
+              elsif relation_model.respond_to?(:fullname)
+                value_str[1] = relation_model.send(:fullname)
               end
             end
           end
