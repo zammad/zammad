@@ -11,11 +11,7 @@
           <div class="my-5 p-5 max-w-full bg-white flex-grow rounded-md">
             <div class="flex flex-col">
               <div class="flex justify-center p-4">
-                <img
-                  class="w-32 h-32"
-                  src="@common/assets/logo.svg"
-                  alt="Zammad"
-                />
+                <CommonLogo />
               </div>
 
               <div class="text-left">
@@ -90,6 +86,7 @@ import useApplicationConfigStore from '@common/stores/application/config'
 import useAuthenticationStore from '@common/stores/authenticated'
 import { useRouter } from 'vue-router'
 import { NotificationTypes } from '@common/types/notification'
+import CommonLogo from '@common/components/common/CommonLogo.vue'
 
 interface Props {
   invalidatedSession?: string
