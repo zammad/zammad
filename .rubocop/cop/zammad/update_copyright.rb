@@ -13,7 +13,8 @@ module RuboCop
 
         def on_new_investigation
           if processed_source.raw_source.include? '# Copyright (C) 2012-'
-            update_copyright
+            # Disabled for stable branches.
+            # update_copyright
           else
             insert_copyright
           end
