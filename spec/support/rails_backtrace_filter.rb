@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 RSpec.configure do |config| # rubocop:disable Style/SymbolProc
   # Filter lines from Rails gems in backtraces.

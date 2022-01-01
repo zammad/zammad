@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 RSpec.describe GitLab, type: :integration, required_envs: %w[GITLAB_ENDPOINT GITLAB_APITOKEN] do

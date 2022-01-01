@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 # Class for establishing LDAP connections. A wrapper around Net::LDAP needed for Auth and Sync.
 # ATTENTION: Loads custom 'net/ldap/entry' from 'lib/core_ext' which extends the Net::LDAP::Entry class.

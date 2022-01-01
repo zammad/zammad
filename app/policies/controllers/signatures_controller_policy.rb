@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Controllers::SignaturesControllerPolicy < Controllers::ApplicationControllerPolicy
   permit! %i[index show], to: ['ticket.agent', 'admin.channel_email', 'admin.channel_google', 'admin.channel_microsoft365']

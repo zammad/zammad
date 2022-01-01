@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 # https://github.com/telent/ar-as-batches
 # TODO: Should be reconsidered with rails 6.1 because then

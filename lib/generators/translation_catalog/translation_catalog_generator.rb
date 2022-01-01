@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Generators::TranslationCatalog::TranslationCatalogGenerator < Rails::Generators::Base
   class_option :check, type: :boolean, required: false, desc: 'Only check if the catalog file is up-to-date.'
