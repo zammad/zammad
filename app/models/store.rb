@@ -211,9 +211,7 @@ returns
     if !path
       path = Rails.root.join('tmp', filename)
     end
-    ::File.open(path, 'wb') do |handle|
-      handle.write file.content
-    end
+    ::File.binwrite(path, file.content)
     path
   end
 

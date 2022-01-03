@@ -16,12 +16,12 @@ class Sequencer
               return {} if custom_fields.blank?
 
               custom_fields.select { |custom_field| ticket_field_map[ custom_field['id'] ].present? }
-              .map do |custom_field|
+              .to_h do |custom_field|
                 [
                   ticket_field_map[ custom_field['id'] ].to_sym, # remote_name
                   custom_field['value']
                 ]
-              end.to_h
+              end
             end
           end
         end

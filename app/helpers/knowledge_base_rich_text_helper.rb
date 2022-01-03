@@ -33,8 +33,7 @@ module KnowledgeBaseRichTextHelper
       settings = match
         .slice(1...-1)
         .split(',')
-        .map { |pair| pair.split(':').map(&:strip) }
-        .to_h
+        .to_h { |pair| pair.split(':').map(&:strip) }
         .symbolize_keys
 
       url = case settings[:provider]

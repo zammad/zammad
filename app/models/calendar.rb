@@ -93,9 +93,9 @@ returns
     data = YAML.load_file(Rails.root.join('config/holiday_calendars.yml'))
     url  = data['url']
 
-    data['countries'].map do |country, domain|
+    data['countries'].to_h do |country, domain|
       [format(url, domain: domain), country]
-    end.to_h
+    end
   end
 
 =begin

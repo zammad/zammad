@@ -4681,7 +4681,7 @@ wait untill text in selector disabppears
 =end
 
   def set_setting(name, value)
-    name_to_id = fetch_settings.map { |s| [s['name'], s['id']] }.to_h
+    name_to_id = fetch_settings.to_h { |s| [s['name'], s['id']] }
     id = name_to_id[name]
 
     url = URI.parse(browser_url)

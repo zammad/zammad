@@ -20,9 +20,7 @@ class Sessions::Store::File
 
     # store session data in session file
     FileUtils.mkpath path_tmp
-    File.open(session_file, 'wb') do |file|
-      file.write content
-    end
+    File.binwrite(session_file, content)
 
     # destroy old session if needed
     if File.exist?(path)

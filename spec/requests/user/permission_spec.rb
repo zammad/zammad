@@ -88,7 +88,7 @@ RSpec.describe 'User endpoint', type: :request do
         context 'parameter groups' do
 
           let(:group_names_access_map) do
-            Group.all.map { |g| [g.name, ['full']] }.to_h
+            Group.all.to_h { |g| [g.name, ['full']] }
           end
 
           let(:payload) do
@@ -103,7 +103,7 @@ RSpec.describe 'User endpoint', type: :request do
         context 'parameter group_ids' do
 
           let(:group_ids_access_map) do
-            Group.all.map { |g| [g.id, ['full']] }.to_h
+            Group.all.to_h { |g| [g.id, ['full']] }
           end
 
           let(:payload) do
@@ -436,7 +436,7 @@ RSpec.describe 'User endpoint', type: :request do
 
           let(:privileged) do
             {
-              groups: Group.all.map { |g| [g.name, ['full']] }.to_h
+              groups: Group.all.to_h { |g| [g.name, ['full']] }
             }
           end
 
@@ -448,7 +448,7 @@ RSpec.describe 'User endpoint', type: :request do
 
           let(:privileged) do
             {
-              group_ids: Group.all.map { |g| [g.id, ['full']] }.to_h
+              group_ids: Group.all.to_h { |g| [g.id, ['full']] }
             }
           end
 

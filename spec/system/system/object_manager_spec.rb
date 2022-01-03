@@ -167,7 +167,7 @@ RSpec.describe 'System > Objects', type: :system do
   context 'when checking field sorting', db_strategy: :reset do
     # lexicographically ordered list of option strings
     let(:options) { %w[0 000.000 1 100.100 100.200 2 200.100 200.200 3 ä b n ö p sr ß st t ü v] }
-    let(:options_hash) { options.reverse.collect { |o| [o, o] }.to_h }
+    let(:options_hash) { options.reverse.to_h { |o| [o, o] } }
 
     let(:object_attribute) do
       attribute = create(:object_manager_attribute_select, data_option: { options: options_hash, default: 0 }, position: 999)

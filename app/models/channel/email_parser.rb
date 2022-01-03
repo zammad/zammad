@@ -561,7 +561,7 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
   end
 
   def message_header_hash(mail)
-    imported_fields = mail.header.fields.map do |f|
+    imported_fields = mail.header.fields.to_h do |f|
       begin
         value = if f.value.match?(ISO2022JP_REGEXP)
                   value = header_field_unpack_japanese(f)
@@ -582,7 +582,7 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
         value = f.decoded.to_utf8(fallback: :read_as_sanitized_binary)
       end
       [f.name.downcase, value]
-    end.to_h
+    end
 
     # imported_fields = mail.header.fields.map { |f| [f.name.downcase, f.to_utf8] }.to_h
     raw_fields = mail.header.fields.index_by { |f| "raw-#{f.name.downcase}" }
@@ -910,9 +910,7 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
     md5 = Digest::MD5.hexdigest(msg)
     file_path = Rails.root.join('tmp', folder, "#{md5}.eml")
 
-    File.open(file_path, 'wb') do |file|
-      file.write msg
-    end
+    File.binwrite(file_path, msg)
 
     file_path
   end
