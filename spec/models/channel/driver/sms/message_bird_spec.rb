@@ -28,14 +28,14 @@ RSpec.describe Channel::Driver::Sms::MessageBird do
   private
 
   def create_channel
-    FactoryBot.create(:channel,
-                      options:       {
-                        adapter: 'sms/message_bird',
-                        sender:  sender_number,
-                        token:   token
-                      },
-                      created_by_id: 1,
-                      updated_by_id: 1)
+    create(:channel,
+           options:       {
+             adapter: 'sms/message_bird',
+             sender:  sender_number,
+             token:   token
+           },
+           created_by_id: 1,
+           updated_by_id: 1)
   end
 
   # api parameters

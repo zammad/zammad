@@ -28,15 +28,15 @@ RSpec.describe Channel::Driver::Sms::Twilio do
   private
 
   def create_channel
-    FactoryBot.create(:channel,
-                      options:       {
-                        account_id: account_id,
-                        adapter:    'sms/twilio',
-                        sender:     sender_number,
-                        token:      token
-                      },
-                      created_by_id: 1,
-                      updated_by_id: 1)
+    create(:channel,
+           options:       {
+             account_id: account_id,
+             adapter:    'sms/twilio',
+             sender:     sender_number,
+             token:      token
+           },
+           created_by_id: 1,
+           updated_by_id: 1)
   end
 
   # api parameters
