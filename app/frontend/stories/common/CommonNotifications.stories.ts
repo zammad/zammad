@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2021 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import CommonNotifications from '@common/components/common/CommonNotifications.vue'
 import { Story } from '@storybook/vue3'

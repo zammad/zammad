@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2021 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import type { App } from 'vue'
 import CommonIcon from '@common/components/common/CommonIcon.vue'

@@ -1,7 +1,7 @@
-// Copyright (C) 2012-2021 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import useViewTransition from '@mobile/composables/useViewTransition'
-import { ViewTransitions } from '@mobile/types/transition'
+import ViewTransitions from '@mobile/types/transition'
 import type {
   NavigationGuard,
   RouteLocationNormalized,
