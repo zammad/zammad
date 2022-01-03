@@ -437,7 +437,7 @@ returns
       Rails.logger.error e
       return true
     end
-    return true if verify_time < Time.zone.now - 30.minutes
+    return true if verify_time < 30.minutes.ago
 
     Rails.logger.info "  - ignore message #{count}/#{count_all} - because message has a verify message"
 

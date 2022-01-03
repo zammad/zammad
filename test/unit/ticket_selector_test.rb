@@ -465,7 +465,7 @@ class TicketSelectorTest < ActiveSupport::TestCase
       },
       'ticket.updated_at' => {
         operator: 'before (absolute)',
-        value:    (Time.zone.now + 1.day).iso8601,
+        value:    1.day.from_now.iso8601,
       },
     }
     ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
@@ -487,7 +487,7 @@ class TicketSelectorTest < ActiveSupport::TestCase
       },
       'ticket.updated_at' => {
         operator: 'before (absolute)',
-        value:    (Time.zone.now - 1.day).iso8601,
+        value:    1.day.ago.iso8601,
       },
     }
     ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
@@ -509,7 +509,7 @@ class TicketSelectorTest < ActiveSupport::TestCase
       },
       'ticket.updated_at' => {
         operator: 'after (absolute)',
-        value:    (Time.zone.now + 1.day).iso8601,
+        value:    1.day.from_now.iso8601,
       },
     }
     ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
@@ -531,7 +531,7 @@ class TicketSelectorTest < ActiveSupport::TestCase
       },
       'ticket.updated_at' => {
         operator: 'after (absolute)',
-        value:    (Time.zone.now - 1.day).iso8601,
+        value:    1.day.ago.iso8601,
       },
     }
     ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)

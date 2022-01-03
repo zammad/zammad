@@ -7,7 +7,7 @@ class Stats::TicketReopen
     # get my closed tickets
     total = Ticket.select('id').where(
       'owner_id = ? AND close_at > ?',
-      user.id, Time.zone.now - 7.days
+      user.id, 7.days.ago
     ).count
 
     # get count of reopens

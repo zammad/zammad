@@ -10,7 +10,7 @@ RSpec.shared_examples 'ChecksCoreWorkflow' do
   end
 
   context 'when creation of closed tickets are only allowed by type set' do
-    subject(:ticket) { create(:ticket, group: agent_group, screen: 'create_middle', state: Ticket::State.find_by(name: 'open'), pending_time: Time.zone.now + 5.days) }
+    subject(:ticket) { create(:ticket, group: agent_group, screen: 'create_middle', state: Ticket::State.find_by(name: 'open'), pending_time: 5.days.from_now) }
 
     before do
       create(:core_workflow,
@@ -29,7 +29,7 @@ RSpec.shared_examples 'ChecksCoreWorkflow' do
   end
 
   context 'when creation of closed tickets are only allowed by type remove' do
-    subject(:ticket) { create(:ticket, group: agent_group, screen: 'create_middle', state: Ticket::State.find_by(name: 'open'), pending_time: Time.zone.now + 5.days) }
+    subject(:ticket) { create(:ticket, group: agent_group, screen: 'create_middle', state: Ticket::State.find_by(name: 'open'), pending_time: 5.days.from_now) }
 
     before do
       create(:core_workflow,
@@ -48,7 +48,7 @@ RSpec.shared_examples 'ChecksCoreWorkflow' do
   end
 
   context 'when creation of closed tickets are only allowed by type add' do
-    subject(:ticket) { create(:ticket, group: agent_group, screen: 'create_middle', state: Ticket::State.find_by(name: 'open'), pending_time: Time.zone.now + 5.days) }
+    subject(:ticket) { create(:ticket, group: agent_group, screen: 'create_middle', state: Ticket::State.find_by(name: 'open'), pending_time: 5.days.from_now) }
 
     before do
       create(:core_workflow,

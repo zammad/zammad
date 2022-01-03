@@ -222,7 +222,7 @@ class ExternalCredential::Microsoft365
   end
 
   def self.refresh_token(token)
-    return token if token[:created_at] >= Time.zone.now - 50.minutes
+    return token if token[:created_at] >= 50.minutes.ago
 
     params = refresh_token_params(token)
     uri    = refresh_token_uri(token)

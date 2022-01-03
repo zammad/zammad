@@ -18,8 +18,6 @@ class KnowledgeBase::Answer < ApplicationModel
 
   acts_as_list scope: :category, top_of_list: 0
 
-  validates :category, presence: true
-
   # provide consistent naming with KB category
   alias_attribute :parent, :category
 

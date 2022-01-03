@@ -17,7 +17,7 @@ class UserDevicesController < ApplicationController
       attributes.delete('fingerprint')
 
       # mark current device to prevent killing own session via user preferences device management
-      if session[:user_device_fingerprint] == device.fingerprint && device.updated_at > Time.zone.now - 30.minutes
+      if session[:user_device_fingerprint] == device.fingerprint && device.updated_at > 30.minutes.ago
         attributes['current'] = true
       end
       devices_full.push attributes

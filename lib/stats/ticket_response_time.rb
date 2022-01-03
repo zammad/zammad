@@ -22,7 +22,7 @@ class Stats::TicketResponseTime
   end
 
   def self.generate(user)
-    items = StatsStore.where('created_at > ? AND created_at < ?', Time.zone.now - 7.days, Time.zone.now).where(key: 'ticket:response_time')
+    items = StatsStore.where('created_at > ? AND created_at < ?', 7.days.ago, Time.zone.now).where(key: 'ticket:response_time')
     total = 0
     count_own = 0
     own = 0

@@ -582,8 +582,8 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       user_id:       @agent_user1.id,
       created_by_id: 1,
       updated_by_id: 1,
-      created_at:    Time.zone.now - 2.days,
-      updated_at:    Time.zone.now - 2.days,
+      created_at:    2.days.ago,
+      updated_at:    2.days.ago,
     )
     online_notification4 = OnlineNotification.add(
       type:          'create',
@@ -593,8 +593,8 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       user_id:       @agent_user1.id,
       created_by_id: @agent_user1.id,
       updated_by_id: @agent_user1.id,
-      created_at:    Time.zone.now - 2.days,
-      updated_at:    Time.zone.now - 2.days,
+      created_at:    2.days.ago,
+      updated_at:    2.days.ago,
     )
     online_notification5 = OnlineNotification.add(
       type:          'create',
@@ -604,8 +604,8 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       user_id:       @agent_user1.id,
       created_by_id: @agent_user2.id,
       updated_by_id: @agent_user2.id,
-      created_at:    Time.zone.now - 2.days,
-      updated_at:    Time.zone.now - 2.days,
+      created_at:    2.days.ago,
+      updated_at:    2.days.ago,
     )
     online_notification6 = OnlineNotification.add(
       type:          'create',
@@ -615,8 +615,8 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       user_id:       @agent_user1.id,
       created_by_id: @agent_user1.id,
       updated_by_id: @agent_user1.id,
-      created_at:    Time.zone.now - 5.minutes,
-      updated_at:    Time.zone.now - 5.minutes,
+      created_at:    5.minutes.ago,
+      updated_at:    5.minutes.ago,
     )
     online_notification7 = OnlineNotification.add(
       type:          'create',
@@ -626,8 +626,8 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       user_id:       @agent_user1.id,
       created_by_id: @agent_user2.id,
       updated_by_id: @agent_user2.id,
-      created_at:    Time.zone.now - 5.minutes,
-      updated_at:    Time.zone.now - 5.minutes,
+      created_at:    5.minutes.ago,
+      updated_at:    5.minutes.ago,
     )
 
     OnlineNotification.cleanup

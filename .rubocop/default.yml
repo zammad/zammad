@@ -189,6 +189,10 @@ Rails/SkipsModelValidations:
     - "**/*_spec.rb"
     - "**/*_examples.rb"
 
+Rails/ReversibleMigration:
+  Description: This cop checks whether the change method of the migration file is reversible.
+  Enabled: false
+
 Style/ClassAndModuleChildren:
   Description: 'Checks style of children classes and modules.'
   Enabled: false

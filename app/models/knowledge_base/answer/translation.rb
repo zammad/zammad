@@ -19,7 +19,6 @@ class KnowledgeBase::Answer::Translation < ApplicationModel
   accepts_nested_attributes_for :content, update_only: true
 
   validates :title,        presence: true, length: { maximum: 250 }
-  validates :content,      presence: true
   validates :kb_locale_id, uniqueness: { case_sensitive: true, scope: :answer_id }
 
   scope :neighbours_of, ->(translation) { joins(:answer).where(knowledge_base_answers: { category_id: translation.answer&.category_id }) }

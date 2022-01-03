@@ -126,7 +126,7 @@ class SlackTest < ActiveSupport::TestCase
     assert_equal(1, slack_check(channel, hash))
 
     ticket2.state = Ticket::State.find_by(name: 'pending reminder')
-    ticket2.pending_time = Time.zone.now - 2.days
+    ticket2.pending_time = 2.days.ago
     ticket2.save
 
     TransactionDispatcher.commit

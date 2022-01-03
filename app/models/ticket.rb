@@ -186,7 +186,7 @@ returns
     result = []
 
     # fetch all escalated and soon to be escalating tickets
-    where('escalation_at <= ?', Time.zone.now + 15.minutes).find_each(batch_size: 500) do |ticket|
+    where('escalation_at <= ?', 15.minutes.from_now).find_each(batch_size: 500) do |ticket|
 
       article_id = nil
       article = Ticket::Article.last_customer_agent_article(ticket.id)

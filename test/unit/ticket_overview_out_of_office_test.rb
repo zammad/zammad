@@ -169,8 +169,8 @@ class TicketOverviewOutOfOfficeTest < ActiveSupport::TestCase
     assert_equal(1, result.count)
     assert_equal('My Tickets', result[0].name)
     @agent1.out_of_office = true
-    @agent1.out_of_office_start_at = Time.zone.now - 2.days
-    @agent1.out_of_office_end_at = Time.zone.now + 2.days
+    @agent1.out_of_office_start_at = 2.days.ago
+    @agent1.out_of_office_end_at = 2.days.from_now
     @agent1.out_of_office_replacement_id = @agent2.id
     @agent1.save!
 
@@ -220,8 +220,8 @@ class TicketOverviewOutOfOfficeTest < ActiveSupport::TestCase
     assert(result[0][:tickets].blank?)
 
     @agent1.out_of_office = true
-    @agent1.out_of_office_start_at = Time.zone.now - 2.days
-    @agent1.out_of_office_end_at = Time.zone.now + 2.days
+    @agent1.out_of_office_start_at = 2.days.ago
+    @agent1.out_of_office_end_at = 2.days.from_now
     @agent1.out_of_office_replacement_id = @agent2.id
     @agent1.save!
 

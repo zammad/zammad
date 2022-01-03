@@ -151,7 +151,7 @@ class ReportsController < ApplicationController
 
     case params[:timeRange]
     when 'realtime'
-      start_at = (Time.zone.now - 60.minutes)
+      start_at = 60.minutes.ago
       stop_at = Time.zone.now
       range = 'minute'
     when 'day'

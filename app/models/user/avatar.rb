@@ -27,7 +27,7 @@ class User
       email_address_validation = EmailAddressValidation.new(email)
       return if !email_address_validation.valid_format?
 
-      return if !saved_change_to_attribute?('email') && updated_at > Time.zone.now - 10.days
+      return if !saved_change_to_attribute?('email') && updated_at > 10.days.ago
 
       avatar_auto_detection
     end

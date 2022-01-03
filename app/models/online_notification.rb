@@ -225,7 +225,7 @@ with dedicated times
 
 =end
 
-  def self.cleanup(max_age = Time.zone.now - 9.months, max_own_seen = Time.zone.now - 10.minutes, max_auto_seen = Time.zone.now - 8.hours)
+  def self.cleanup(max_age = Time.zone.now - 9.months, max_own_seen = 10.minutes.ago, max_auto_seen = 8.hours.ago)
     OnlineNotification.where('created_at < ?', max_age).delete_all
     OnlineNotification.where('seen = ? AND updated_at < ?', true, max_own_seen).each do |notification|
 

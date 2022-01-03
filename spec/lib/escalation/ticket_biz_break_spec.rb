@@ -132,7 +132,7 @@ RSpec.describe Escalation::TicketBizBreak, time_zone: 'Europe/Berlin' do
       let(:second_value) { result.values.second }
 
       it { expect(result.keys.count).to be(6) }
-      it { expect(result.keys).to eq ((Time.current - 5.days).to_date..Time.current).to_a }
+      it { expect(result.keys).to eq (5.days.ago.to_date..Time.current).to_a }
       it { expect(result.values[0].keys).to eq %w[12:00] }
       it { expect(result.values[0]['12:00']).to eq '24:00' }
       it { expect(result.values[1].keys).to eq %w[00:00] }
@@ -257,7 +257,7 @@ RSpec.describe Escalation::TicketBizBreak, time_zone: 'Europe/Berlin' do
       let(:history_to) { mock_state_hash(ticket.created_at + 2.days, 'pending close', 'closed') }
 
       it { expect(result).to be_a Hash }
-      it { expect(result.keys).to eq [Time.current.to_date, Time.current.tomorrow.to_date, (Time.current + 2.days).to_date] }
+      it { expect(result.keys).to eq [Time.current.to_date, Time.current.tomorrow.to_date, 2.days.from_now.to_date] }
       it { expect(result.values.first).to eq({ '13:30' => '24:00' }) }
       it { expect(result.values.second).to eq({ '00:00' => '24:00' }) }
       it { expect(result.values.third).to eq({ '00:00' => '12:00' }) }

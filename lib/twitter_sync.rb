@@ -551,7 +551,7 @@ create a tweet or direct message from an article
     max_count = 120
     max_count *= factor
     type_id = Ticket::Article::Type.lookup(name: 'twitter status').id
-    created_at = Time.zone.now - 15.minutes
+    created_at = 15.minutes.ago
     created_count = Ticket::Article.where('created_at > ? AND type_id = ?', created_at, type_id).count
     if created_count > max_count
       Rails.logger.info "Tweet limit of #{created_count}/#{max_count} reached, ignored tweed id (#{tweet.id})"

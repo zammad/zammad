@@ -68,10 +68,10 @@ job.run(true)
     return false if !active
 
     # only execute jobs older than 1 min to give admin time to make last-minute changes
-    return false if updated_at > Time.zone.now - 1.minute
+    return false if updated_at > 1.minute.ago
 
     # check if job got stuck
-    return false if running == true && last_run_at && Time.zone.now - 1.day < last_run_at
+    return false if running == true && last_run_at && 1.day.ago < last_run_at
 
     # check if jobs need to be executed
     # ignore if job was running within last 10 min.

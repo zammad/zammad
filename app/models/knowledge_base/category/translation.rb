@@ -9,10 +9,8 @@ class KnowledgeBase::Category::Translation < ApplicationModel
   AGENT_ALLOWED_ATTRIBUTES = %i[title kb_locale_id].freeze
 
   belongs_to :kb_locale, class_name: 'KnowledgeBase::Locale', inverse_of: :category_translations
-  validates  :kb_locale, presence: true
 
   belongs_to :category,  class_name: 'KnowledgeBase::Category', inverse_of: :translations, touch: true
-  validates  :category,  presence: true
 
   validates :title,        presence: true
   validates :kb_locale_id, uniqueness: { case_sensitive: true, scope: :category_id }

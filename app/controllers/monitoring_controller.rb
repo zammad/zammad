@@ -34,7 +34,7 @@ curl http://localhost/api/v1/monitoring/health_check?token=XXX
     actions = Set.new
 
     # channel check
-    last_run_tolerance = Time.zone.now - 1.hour
+    last_run_tolerance = 1.hour.ago
     options_keys = %w[host user uid]
     Channel.where(active: true).each do |channel|
 
@@ -124,7 +124,7 @@ curl http://localhost/api/v1/monitoring/health_check?token=XXX
     end
 
     # job count check
-    total_jobs = Delayed::Job.where('created_at < ?', Time.zone.now - 15.minutes).count
+    total_jobs = Delayed::Job.where('created_at < ?', 15.minutes.ago).count
     if total_jobs > 8000
       issues.push "#{total_jobs} background jobs in queue"
     end

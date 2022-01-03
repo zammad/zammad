@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe CoreWorkflow, type: :model do
   let(:group) { create(:group) }
-  let!(:ticket) { create(:ticket, state: Ticket::State.find_by(name: 'pending reminder'), pending_time: Time.zone.now + 5.days, group: group) }
+  let!(:ticket) { create(:ticket, state: Ticket::State.find_by(name: 'pending reminder'), pending_time: 5.days.from_now, group: group) }
   let!(:base_payload) do
     {
       'event'      => 'core_workflow',

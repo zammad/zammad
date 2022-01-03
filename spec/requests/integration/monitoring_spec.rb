@@ -393,7 +393,7 @@ RSpec.describe 'Monitoring', type: :request do
 
       # health_check - scheduler may not run
       scheduler = Scheduler.where(active: true).last
-      scheduler.last_run = Time.zone.now - 20.minutes
+      scheduler.last_run = 20.minutes.ago
       scheduler.period = 600
       scheduler.save!
 
@@ -408,7 +408,7 @@ RSpec.describe 'Monitoring', type: :request do
 
       # health_check - scheduler may not run
       scheduler = Scheduler.where(active: true).last
-      scheduler.last_run = Time.zone.now - 1.day
+      scheduler.last_run = 1.day.ago
       scheduler.period = 600
       scheduler.save!
 

@@ -152,7 +152,7 @@ returns
       if mail.match?(%r{(X-Zammad-Ignore: true|X-Zammad-Verify: true)}) && mail =~ %r{X-Zammad-Verify-Time:\s(.+?)\s}
         begin
           verify_time = Time.zone.parse($1)
-          if verify_time > Time.zone.now - 30.minutes
+          if verify_time > 30.minutes.ago
             info = "  - ignore message #{count}/#{count_all} - because it's a verify message"
             Rails.logger.info info
             next

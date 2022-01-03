@@ -93,7 +93,7 @@ cleanup old token
 =end
 
   def self.cleanup
-    Token.where('persistent IS ? AND created_at < ?', nil, Time.zone.now - 30.days).delete_all
+    Token.where('persistent IS ? AND created_at < ?', nil, 30.days.ago).delete_all
     true
   end
 

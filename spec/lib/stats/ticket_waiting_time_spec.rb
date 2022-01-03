@@ -28,8 +28,8 @@ RSpec.describe Stats::TicketWaitingTime do
         let(:ticket) { create(:ticket, group: group) }
 
         before do
-          create(:ticket_article, sender_name: 'Customer', ticket: ticket, created_at: Time.current + 1.hour)
-          create(:ticket_article, sender_name: 'Agent', ticket: ticket, created_at: Time.current + 2.hours)
+          create(:ticket_article, sender_name: 'Customer', ticket: ticket, created_at: 1.hour.from_now)
+          create(:ticket_article, sender_name: 'Agent', ticket: ticket, created_at: 2.hours.from_now)
         end
 
         it 'returns a hash with 1-day average ticket wait time across user’s groups (in minutes)' do
@@ -42,8 +42,8 @@ RSpec.describe Stats::TicketWaitingTime do
       let(:ticket) { create(:ticket, group: group, owner_id: user.id) }
 
       before do
-        create(:ticket_article, sender_name: 'Customer', ticket: ticket, created_at: Time.current + 1.hour)
-        create(:ticket_article, sender_name: 'Agent', ticket: ticket, created_at: Time.current + 2.hours)
+        create(:ticket_article, sender_name: 'Customer', ticket: ticket, created_at: 1.hour.from_now)
+        create(:ticket_article, sender_name: 'Agent', ticket: ticket, created_at: 2.hours.from_now)
       end
 
       it 'returns a hash with 1-day average ticket wait time for user (in minutes)' do
@@ -66,8 +66,8 @@ RSpec.describe Stats::TicketWaitingTime do
         let(:other_ticket) { create(:ticket, group: group) }
 
         before do
-          create(:ticket_article, sender_name: 'Customer', ticket: other_ticket, created_at: Time.current + 1.hour)
-          create(:ticket_article, sender_name: 'Agent', ticket: other_ticket, created_at: Time.current + 3.hours)
+          create(:ticket_article, sender_name: 'Customer', ticket: other_ticket, created_at: 1.hour.from_now)
+          create(:ticket_article, sender_name: 'Agent', ticket: other_ticket, created_at: 3.hours.from_now)
         end
 
         it 'returns a hash with 1-day average ticket wait time across user’s groups (in minutes)' do
