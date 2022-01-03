@@ -15,7 +15,7 @@ module KnowledgeBaseBreadcrumbHelper
     objects = calculate_breadcrumb_to_category(object&.parent)
 
     last = if alternative.present? && alternative.translations.any?
-             Translation.translate(system_locale_via_uri&.locale, 'Alternative translations')
+             Translation.translate(system_locale_via_uri&.locale, 'Alternative Translations')
            else
              object
            end
