@@ -26,7 +26,7 @@ const Template: Story = (args) => ({
     },
   },
   template:
-    '<button class="bg-white hover:bg-gray-100 text-gray-800 py-2 px-4 border border-gray-400 rounded text-sm" @click="showNotification()">Show notification</button><CommonNotifications v-bind="args" />',
+    '<button class="bg-white hover:bg-gray-100 text-gray-800 py-2 px-4 border border-gray-400 rounded text-sm" v-on:click="showNotification()">Show notification</button><CommonNotifications />',
 })
 
 export const WarnNotification = Template.bind({})

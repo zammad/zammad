@@ -40,7 +40,8 @@ const useApplicationConfigStore = defineStore('applicationConfig', {
   },
   getters: {
     get() {
-      return (name: string): ConfigValues => this.value[name]
+      return <T extends ConfigValues = ConfigValues>(name: string): T =>
+        this.value[name] as T
     },
   },
   actions: {

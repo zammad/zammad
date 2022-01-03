@@ -32,6 +32,8 @@ import { useRouter } from 'vue-router'
 import useApplicationConfigStore from '@common/stores/application/config'
 import { useCurrentUserQuery } from '@common/graphql/api'
 import { NotificationTypes } from '@common/types/notification'
+import useViewTransition from '@mobile/composables/useViewTransition'
+import { ViewTransitions } from '@mobile/types/transition'
 
 // TODO: Only testing for the notifications...
 const { notify, clearAllNotifications } = useNotifications()
@@ -39,6 +41,7 @@ const { notify, clearAllNotifications } = useNotifications()
 notify({
   message: __('Hello Home!!!'),
   type: NotificationTypes.WARN,
+  duration: 10000,
 })
 
 const sessionUser = useSessionUserStore()
@@ -68,6 +71,8 @@ const fetchCurrentUser = () => {
 }
 
 const goToTickets = () => {
+  const { setViewTransition } = useViewTransition()
+  setViewTransition(ViewTransitions.NEXT)
   router.push('/tickets')
 }
 </script>

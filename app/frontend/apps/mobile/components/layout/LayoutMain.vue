@@ -4,13 +4,28 @@
   <div class="flex flex-col h-screen overflow-hidden">
     <main class="flex-1 overflow-y-scroll">
       <router-view v-slot="{ Component }">
-        <transition>
+        <TransitionViewNavigation>
           <component v-bind:is="Component" />
-        </transition>
+        </TransitionViewNavigation>
       </router-view>
     </main>
-    <footer class="w-full bg-darker text-center border-t p-4">
+    <footer
+      v-if="showBottomNavigation"
+      class="w-full bg-darker text-center border-t p-4"
+    >
       Bottom-Navigation
     </footer>
   </div>
 </template>
+
+<script setup lang="ts">
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
+import TransitionViewNavigation from '@mobile/components/transition/TransitionViewNavigation.vue'
+
+const route = useRoute()
+
+const showBottomNavigation = computed(() => {
+  return route.meta.hasBottomNavigation
+})
+</script>

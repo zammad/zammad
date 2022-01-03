@@ -12,6 +12,8 @@ const route: RouteRecordRaw = {
     title: __('Ticket Overviews'),
     requiresAuth: true,
     requiredPermission: ['ticket.agent', 'ticket.customer'],
+    hasBottomNavigation: true,
+    level: 2,
   },
 }
 

@@ -12,6 +12,8 @@ const route: RouteRecordRaw = {
     title: __('Home'),
     requiresAuth: true,
     requiredPermission: ['*'],
+    hasBottomNavigation: true,
+    level: 1,
   },
 }
 

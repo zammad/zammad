@@ -4,7 +4,7 @@ import authenticationGuard from '@common/router/guards/before/authentication'
 import type { App } from 'vue'
 import {
   createRouter,
-  createWebHashHistory,
+  createWebHistory,
   Router,
   RouteRecordRaw,
 } from 'vue-router'
@@ -22,7 +22,7 @@ export default function initializeRouter(
   routes: Array<RouteRecordRaw>,
 ): Router {
   const router: Router = createRouter({
-    history: createWebHashHistory(),
+    history: createWebHistory('mobile'),
     routes,
   })
 

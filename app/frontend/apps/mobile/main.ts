@@ -20,6 +20,7 @@ import useLocaleStore from '@common/stores/locale'
 import useSessionUserStore from '@common/stores/session/user'
 import useAuthenticatedStore from '@common/stores/authenticated'
 import 'virtual:svg-icons-register' // eslint-disable-line import/no-unresolved
+import transitionViewGuard from '@mobile/router/guards/before/viewTransition'
 
 const enableLoadingAnimation = (): void => {
   const loadingElement: Maybe<HTMLElement> =
@@ -40,7 +41,10 @@ export default async function mountApp(): Promise<void> {
   provideApolloClient(apolloClient)
 
   initializeStore(app)
-  initializeRouter(app, routes)
+  const router = initializeRouter(app, routes)
+
+  // Add app custom specific guards.
+  router.beforeEach(transitionViewGuard)
 
   initializeGlobalComponents(app)
 

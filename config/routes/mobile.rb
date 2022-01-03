@@ -2,4 +2,5 @@
 
 Zammad::Application.routes.draw do
   get '/mobile', to: 'mobile#index'
+  get '/mobile/*path', to: 'mobile#index'
 end
