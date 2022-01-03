@@ -1,14 +1,14 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class MaintenanceImproveSipgateIntegrationHandling < ActiveRecord::Migration[6.0]
   def change
     return if !Setting.exists?(name: 'system_init_done')
 
     Setting.create_if_not_exists(
-      title:       __('sipgate.io Token'),
+      title:       'sipgate.io Token',
       name:        'sipgate_token',
       area:        'Integration::Sipgate',
-      description: __('Token for Sipgate.'),
+      description: 'Token for Sipgate.',
       options:     {
         form: [
           {

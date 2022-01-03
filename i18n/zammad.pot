@@ -9492,7 +9492,6 @@ msgstr ""
 msgid "Token for CTI."
 msgstr ""
 
-#: db/migrate/20211118081558_maintenance_improve_sipgate_integration_handling.rb
 #: db/seeds/settings.rb
 msgid "Token for Sipgate."
 msgstr ""
@@ -11346,7 +11345,6 @@ msgstr ""
 msgid "show more"
 msgstr ""
 
-#: db/migrate/20211118081558_maintenance_improve_sipgate_integration_handling.rb
 #: db/seeds/settings.rb
 msgid "sipgate.io Token"
 msgstr ""
