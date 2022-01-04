@@ -373,18 +373,14 @@ returns
     end
 
     # check if sla's are refer to an existing calendar
-    default_calendar = Calendar.find_by(default: true)
-    Sla.find_each do |sla|
-      if !sla.calendar_id
-        sla.calendar_id = default_calendar.id
-        sla.save!
-        next
-      end
-      if !Calendar.exists?(id: sla.calendar_id)
+    if destroyed?
+      default_calendar = Calendar.find_by(default: true)
+      Sla.where(calendar_id: id).find_each do |sla|
         sla.calendar_id = default_calendar.id
         sla.save!
       end
     end
+
     true
   end
 

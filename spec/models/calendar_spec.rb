@@ -43,6 +43,19 @@ RSpec.describe Calendar, type: :model do
           expect { described_class.first.destroy }
             .to change { calendar.reload.default }.to(true)
         end
+
+        context 'when sla has destroyed calendar set' do
+          let(:sla) { create(:sla, calendar: described_class.first) }
+
+          before do
+            sla
+          end
+
+          it 'sets the new default calendar to the sla' do
+            expect { described_class.first.destroy }
+              .to change { sla.reload.calendar }.to(calendar)
+          end
+        end
       end
     end
 
