@@ -11,7 +11,7 @@
     </main>
     <footer
       v-if="showBottomNavigation"
-      class="w-full bg-darker text-center border-t p-4"
+      class="w-full bg-black text-center border-t p-4"
     >
       Bottom-Navigation
     </footer>

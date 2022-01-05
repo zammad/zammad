@@ -22,19 +22,8 @@ import useAuthenticatedStore from '@common/stores/authenticated'
 import 'virtual:svg-icons-register' // eslint-disable-line import/no-unresolved
 import transitionViewGuard from '@mobile/router/guards/before/viewTransition'
 
-const enableLoadingAnimation = (): void => {
-  const loadingElement: Maybe<HTMLElement> =
-    document.getElementById('loadingApp')
-
-  if (loadingElement) {
-    loadingElement.style.display = 'flex'
-  }
-}
-
 export default async function mountApp(): Promise<void> {
   const app = createApp(App)
-
-  enableLoadingAnimation()
 
   app.provide(DefaultApolloClient, apolloClient)
 

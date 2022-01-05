@@ -1,7 +1,28 @@
-<!-- TODO ... we should use plain css, so that nothing needs to be loaded before the animation is visible -->
-<div id="loadingApp" class="flex h-screen" style="display: none">
-  <div class="m-auto">
-    <svg class="w-10 h-10 fill-current animate-pulse">
+<style>
+#loading-app {
+  display: flex;
+  height: 100vh;
+}
+.loading-main {
+  margin: auto
+}
+.loading-svg {
+  fill: currentColor;
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: .5;
+  }
+}
+</style>
+<div id="loading-app">
+  <div class="loading-main">
+    <svg xmlns="http://www.w3.org/2000/svg" width="80px" height="68px" viewBox="0 0 42 36" class="loading-svg">
       <g fill-rule="evenodd">
           <path fill="#CA2317" d="M28.337 12.6l9.383-2.88-5.557 3.532z"/>
           <path fill="#E84F83" d="M34.053 19.62l-1.89-6.368L37.72 9.72l-1.665 5.715z"/>

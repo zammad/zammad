@@ -5569,10 +5569,6 @@ msgstr ""
 msgid "Log in to %s"
 msgstr ""
 
-#: app/frontend/apps/mobile/views/Login.vue
-msgid "Log in with %s"
-msgstr ""
-
 #: app/assets/javascripts/app/models/user.coffee
 #: app/assets/javascripts/app/views/maintenance.jst.eco
 #: db/seeds/object_manager_attributes.rb
@@ -7154,7 +7150,6 @@ msgid "Postmaster Filter"
 msgstr ""
 
 #: app/assets/javascripts/app/views/login.jst.eco
-#: app/frontend/apps/mobile/views/Login.vue
 msgid "Powered by"
 msgstr ""
 
@@ -7387,6 +7382,10 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "References - Search for follow-up also in In-Reply-To or References headers."
+msgstr ""
+
+#: app/frontend/apps/mobile/views/Login.vue
+msgid "Register"
 msgstr ""
 
 #: app/assets/javascripts/app/views/login.jst.eco

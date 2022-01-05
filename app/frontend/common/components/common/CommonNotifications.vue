@@ -39,9 +39,9 @@ import useNotifications from '@common/composables/useNotifications'
 import { NotificationTypes } from '@common/types/notification'
 
 const notificationTypeClassMap = {
-  warn: 'bg-yellow-500 text-white',
-  success: 'bg-green-500 text-white',
-  error: 'bg-red-500 text-white',
+  warn: 'bg-yellow text-white',
+  success: 'bg-green text-white',
+  error: 'bg-red text-white',
   info: 'bg-white text-black',
 }
 

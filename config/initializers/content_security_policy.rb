@@ -54,7 +54,7 @@ Rails.application.config.content_security_policy do |policy|
       "ws://localhost:#{Setting.get('websocket_port')}"
     end
 
-    policy.script_src  :self, :unsafe_eval, :unsafe_inline
+    policy.script_src :self, :unsafe_eval, :unsafe_inline
     policy.connect_src :self, :https, "http://#{ViteRuby.config.host_with_port}", "ws://#{ViteRuby.config.host_with_port}", websocket_uri
   end
 end
