@@ -984,14 +984,13 @@ class App.TicketZoom extends App.Controller
       processData: true
       success: (data) =>
 
-        #App.SessionStorage.set(@key, data)
-        @load(data, true, true)
-
         # reset article - should not be resubmitted on next ticket update
         ticket.article = undefined
 
         # reset form after save
         @reset()
+
+        @load(data, false, true)
 
         if @sidebarWidget
           @sidebarWidget.commit()
