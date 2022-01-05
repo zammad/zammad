@@ -121,7 +121,13 @@ RSpec.describe 'Import Zendesk', type: :system, set_up: false, authenticated_as:
 
       Rake::Task['zammad:setup:auto_wizard'].execute
 
-      expect(page).to have_text('Login')
+      expect(page).to have_text(Setting.get('fqdn'))
+
+      # Check that the login is working and also the left navigation side bar is visible.
+      login(
+        username: 'admin@example.com',
+        password: 'test',
+      )
     end
   end
 end

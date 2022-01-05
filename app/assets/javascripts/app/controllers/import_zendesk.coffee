@@ -163,7 +163,7 @@ class ImportZendesk extends App.ControllerWizardFullScreen
           @$('.js-error').addClass('hide')
 
         if !_.isEmpty(data.finished_at) && _.isEmpty(data.result['error'])
-          window.location.reload()
+          @redirectToLogin()
           return
 
         if !_.isEmpty(data.result)
