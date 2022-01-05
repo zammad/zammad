@@ -139,6 +139,11 @@ class App.FormHandlerCoreWorkflow
         if valueFound
           item.default  = paramValue
           item.newValue = paramValue
+        else if params.id
+          obj = App[ui.model.className].find(params.id)
+          if obj && obj[item.name]
+            item.default  = obj[item.name]
+            item.newValue = obj[item.name]
         else
           item.default  = ''
           item.newValue = ''
