@@ -50,15 +50,28 @@ class ImportFreshdeskController < ApplicationController
 
     Setting.set('import_freshdesk_endpoint_key', params[:token])
 
-    result = Sequencer.process('Import::Freshdesk::ConnectionTest')
+    connection_result = Sequencer.process('Import::Freshdesk::ConnectionTest')
 
-    if !result[:connected]
+    if !connection_result[:connected]
 
       Setting.set('import_freshdesk_endpoint_key', nil)
 
       render json: {
         result:        'invalid',
         message_human: 'Invalid credentials!',
+      }
+      return
+    end
+
+    permission_result = Sequencer.process('Import::Freshdesk::PermissionCheck')
+
+    if !permission_result[:permission_present]
+
+      Setting.set('import_freshdesk_endpoint_key', nil)
+
+      render json: {
+        result:        'invalid',
+        message_human: 'Missing administrator permission!',
       }
       return
     end
