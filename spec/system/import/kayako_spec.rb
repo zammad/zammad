@@ -113,12 +113,18 @@ RSpec.describe 'Import Kayako', type: :system, set_up: false, authenticated_as: 
         .and(have_css('.js-tickets .js-total', text: '5'))
     end
 
-    it 'shows login after import is finished' do
+    it 'shows login after import is finished and process login' do
       job.update! finished_at: Time.zone.now
 
       Rake::Task['zammad:setup:auto_wizard'].execute
 
       expect(page).to have_text(Setting.get('fqdn'))
+
+      # Check that the login is working and also the left navigation side bar is visible.
+      login(
+        username: 'admin@example.com',
+        password: 'test',
+      )
     end
   end
 end
