@@ -5799,6 +5799,10 @@ msgstr ""
 msgid "Missing SSO ENV REMOTE_USER or X-Forwarded-User header"
 msgstr ""
 
+#: app/controllers/import_freshdesk_controller.rb
+msgid "Missing administrator permission!"
+msgstr ""
+
 #: app/controllers/channels_sms_controller.rb
 msgid "Missing area params"
 msgstr ""
