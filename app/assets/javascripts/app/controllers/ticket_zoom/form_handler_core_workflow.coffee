@@ -127,7 +127,7 @@ class App.FormHandlerCoreWorkflow
         for value in values
 
           # false values are valid values e.g. for boolean fields (be careful)
-          if value isnt undefined && paramValue isnt undefined
+          if value isnt undefined && paramValue isnt undefined && value isnt null && paramValue isnt null
             if value.toString() == paramValue.toString()
               valueFound = true
               break
