@@ -2017,6 +2017,38 @@ msgstr ""
 msgid "Core Workflows are actions or constraints on selections in forms. Depending on an action, it is possible to hide or restrict fields or to change the obligation to fill them in."
 msgstr ""
 
+#: app/controllers/reports_controller.rb
+msgid "Could not find active reporting profile."
+msgstr ""
+
+#: app/controllers/channels_twitter_controller.rb
+msgid "Could not find external_credential 'twitter'!"
+msgstr ""
+
+#: app/controllers/channels_twitter_controller.rb
+msgid "Could not find external_credential in cache!"
+msgstr ""
+
+#: app/controllers/channels_twitter_controller.rb
+msgid "Could not find external_credential[:consumer_secret] in cache!"
+msgstr ""
+
+#: app/controllers/links_controller.rb
+msgid "Could not find object!"
+msgstr ""
+
+#: app/controllers/tickets_controller.rb
+msgid "Could not find source ticket!"
+msgstr ""
+
+#: app/controllers/tickets_controller.rb
+msgid "Could not find target ticket number!"
+msgstr ""
+
+#: lib/static_assets.rb
+msgid "Could not read raw logo!"
+msgstr ""
+
 #: app/assets/javascripts/app/views/knowledge_base/new_modal.coffee
 msgid "Couldn't create Knowledge Base"
 msgstr ""
@@ -6303,24 +6335,12 @@ msgstr ""
 msgid "No content to show"
 msgstr ""
 
-#: app/controllers/channels_twitter_controller.rb
-msgid "No crc_token in verify payload from twitter!"
-msgstr ""
-
 #: app/controllers/users_controller.rb
 msgid "No email!"
 msgstr ""
 
 #: app/controllers/integration/exchange_controller.rb
 msgid "No entries found in selected folder(s)."
-msgstr ""
-
-#: app/controllers/channels_twitter_controller.rb
-msgid "No external_credential in cache!"
-msgstr ""
-
-#: app/controllers/channels_twitter_controller.rb
-msgid "No external_credential[:consumer_secret] in cache!"
 msgstr ""
 
 #: lib/external_credential/facebook.rb
@@ -6407,38 +6427,6 @@ msgstr ""
 #: app/controllers/tickets_controller.rb
 #: app/controllers/users_controller.rb
 msgid "No source data submitted!"
-msgstr ""
-
-#: app/controllers/reports_controller.rb
-msgid "No such active profile"
-msgstr ""
-
-#: app/controllers/reports_controller.rb
-msgid "No such downloadBackendSelected param"
-msgstr ""
-
-#: app/controllers/channels_twitter_controller.rb
-msgid "No such external_credential 'twitter'!"
-msgstr ""
-
-#: app/controllers/links_controller.rb
-msgid "No such object!"
-msgstr ""
-
-#: app/controllers/reports_controller.rb
-msgid "No such profiles param"
-msgstr ""
-
-#: lib/static_assets.rb
-msgid "No such raw logo!"
-msgstr ""
-
-#: app/controllers/tickets_controller.rb
-msgid "No such source ticket!"
-msgstr ""
-
-#: app/controllers/tickets_controller.rb
-msgid "No such target ticket number!"
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/template.jst.eco
@@ -7154,6 +7142,10 @@ msgstr ""
 msgid "Please enable execution_time feature to use it (currently only allowed for triggers and schedulers)"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
+msgid "Please enter a text."
+msgstr ""
+
 #: app/models/knowledge_base.rb
 msgid "Please enter valid path or domain"
 msgstr ""
@@ -7164,10 +7156,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Please execute database changes only in a maintenance time-slot."
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
-msgid "Please fill also some text in!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/public_menu_form_item.coffee
@@ -7558,6 +7546,18 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid "Requesting the Grant"
+msgstr ""
+
+#: app/controllers/channels_twitter_controller.rb
+msgid "Required parameter 'crc_token' missing in verify payload from twitter!"
+msgstr ""
+
+#: app/controllers/reports_controller.rb
+msgid "Required parameter 'downloadBackendSelected' is missing."
+msgstr ""
+
+#: app/controllers/reports_controller.rb
+msgid "Required parameter 'profile' is missing."
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
@@ -9057,7 +9057,7 @@ msgid "Ticket %s created!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee
-msgid "Ticket %s merged!"
+msgid "Ticket %s merged."
 msgstr ""
 
 #: app/models/report.rb

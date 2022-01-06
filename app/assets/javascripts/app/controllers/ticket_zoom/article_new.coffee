@@ -300,7 +300,7 @@ class App.TicketZoomArticleNew extends App.Controller
         buttonCancel: __('Cancel')
         buttonCancelClass: 'btn--danger'
         buttonSubmit: false
-        message: __('Please fill also some text in!')
+        message: __('Please enter a text.')
         shown: true
         small: true
         container: @el.closest('.content')

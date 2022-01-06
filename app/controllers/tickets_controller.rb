@@ -372,7 +372,7 @@ class TicketsController < ApplicationController
     if !target_ticket
       render json: {
         result:  'failed',
-        message: __('No such target ticket number!'),
+        message: __('Could not find target ticket number!'),
       }
       return
     end
@@ -383,7 +383,7 @@ class TicketsController < ApplicationController
     if !source_ticket
       render json: {
         result:  'failed',
-        message: __('No such source ticket!'),
+        message: __('Could not find source ticket!'),
       }
       return
     end

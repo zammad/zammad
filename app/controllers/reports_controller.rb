@@ -64,7 +64,7 @@ class ReportsController < ApplicationController
 
     if !params[:downloadBackendSelected]
       render json: {
-        error: __('No such downloadBackendSelected param'),
+        error: __("Required parameter 'downloadBackendSelected' is missing."),
       }, status: :unprocessable_entity
       return
     end
@@ -126,7 +126,7 @@ class ReportsController < ApplicationController
   def params_all
     profile = nil
     if !params[:profiles] && !params[:profile_id]
-      raise Exceptions::UnprocessableEntity, __('No such profiles param')
+      raise Exceptions::UnprocessableEntity, __("Required parameter 'profile' is missing.")
     end
 
     if params[:profile_id]
@@ -139,12 +139,12 @@ class ReportsController < ApplicationController
       end
     end
     if !profile
-      raise Exceptions::UnprocessableEntity, __('No such active profile')
+      raise Exceptions::UnprocessableEntity, __('Could not find active reporting profile.')
     end
 
     local_config = Report.config
     if !local_config || !local_config[:metric] || !local_config[:metric][params[:metric].to_sym]
-      raise Exceptions::UnprocessableEntity, "No such metric #{params[:metric]}"
+      raise Exceptions::UnprocessableEntity, "Could not find metric #{params[:metric]}"
     end
 
     metric = local_config[:metric][params[:metric].to_sym]

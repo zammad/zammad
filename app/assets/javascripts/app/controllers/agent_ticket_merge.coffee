@@ -95,7 +95,7 @@ class App.TicketMerge extends App.ControllerModal
           # notify UI
           @notify
             type:    'success'
-            msg:     App.i18n.translateContent('Ticket %s merged!', data.source_ticket['number'])
+            msg:     App.i18n.translateContent('Ticket %s merged.', data.source_ticket['number'])
             timeout: 4000
 
           App.TaskManager.remove("Ticket-#{data.source_ticket['id']}")
