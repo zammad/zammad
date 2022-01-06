@@ -2217,6 +2217,38 @@ msgid ""
 "obligation to fill them in."
 msgstr ""
 
+#: app/controllers/reports_controller.rb
+msgid "Could not find active reporting profile."
+msgstr ""
+
+#: app/controllers/channels_twitter_controller.rb
+msgid "Could not find external_credential 'twitter'!"
+msgstr ""
+
+#: app/controllers/channels_twitter_controller.rb
+msgid "Could not find external_credential in cache!"
+msgstr ""
+
+#: app/controllers/channels_twitter_controller.rb
+msgid "Could not find external_credential[:consumer_secret] in cache!"
+msgstr ""
+
+#: app/controllers/links_controller.rb
+msgid "Could not find object!"
+msgstr ""
+
+#: app/controllers/tickets_controller.rb
+msgid "Could not find source ticket!"
+msgstr ""
+
+#: app/controllers/tickets_controller.rb
+msgid "Could not find target ticket number!"
+msgstr ""
+
+#: lib/static_assets.rb
+msgid "Could not read raw logo!"
+msgstr ""
+
 #: app/assets/javascripts/app/views/knowledge_base/new_modal.coffee
 msgid "Couldn't create Knowledge Base"
 msgstr ""
@@ -6447,6 +6479,10 @@ msgstr ""
 msgid "Missing SSO ENV REMOTE_USER or X-Forwarded-User header"
 msgstr ""
 
+#: app/controllers/import_freshdesk_controller.rb
+msgid "Missing administrator permission!"
+msgstr ""
+
 #: app/controllers/channels_sms_controller.rb
 msgid "Missing area params"
 msgstr ""
@@ -6946,24 +6982,12 @@ msgstr ""
 msgid "No content to show"
 msgstr ""
 
-#: app/controllers/channels_twitter_controller.rb
-msgid "No crc_token in verify payload from twitter!"
-msgstr ""
-
 #: app/controllers/users_controller.rb
 msgid "No email!"
 msgstr ""
 
 #: app/controllers/integration/exchange_controller.rb
 msgid "No entries found in selected folder(s)."
-msgstr ""
-
-#: app/controllers/channels_twitter_controller.rb
-msgid "No external_credential in cache!"
-msgstr ""
-
-#: app/controllers/channels_twitter_controller.rb
-msgid "No external_credential[:consumer_secret] in cache!"
 msgstr ""
 
 #: lib/external_credential/facebook.rb
@@ -7046,38 +7070,6 @@ msgstr ""
 #: app/controllers/ticket_articles_controller.rb
 #: app/controllers/tickets_controller.rb app/controllers/users_controller.rb
 msgid "No source data submitted!"
-msgstr ""
-
-#: app/controllers/reports_controller.rb
-msgid "No such active profile"
-msgstr ""
-
-#: app/controllers/reports_controller.rb
-msgid "No such downloadBackendSelected param"
-msgstr ""
-
-#: app/controllers/channels_twitter_controller.rb
-msgid "No such external_credential 'twitter'!"
-msgstr ""
-
-#: app/controllers/links_controller.rb
-msgid "No such object!"
-msgstr ""
-
-#: app/controllers/reports_controller.rb
-msgid "No such profiles param"
-msgstr ""
-
-#: lib/static_assets.rb
-msgid "No such raw logo!"
-msgstr ""
-
-#: app/controllers/tickets_controller.rb
-msgid "No such source ticket!"
-msgstr ""
-
-#: app/controllers/tickets_controller.rb
-msgid "No such target ticket number!"
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/template.jst.eco
@@ -7809,6 +7801,10 @@ msgid ""
 "triggers and schedulers)"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
+msgid "Please enter a text."
+msgstr ""
+
 #: app/models/knowledge_base.rb
 msgid "Please enter valid path or domain"
 msgstr ""
@@ -7822,10 +7818,6 @@ msgid "Please execute database changes only in a maintenance time-slot."
 msgstr ""
 "Por favor, execute mudanças no banco de dados apenas durante a janela de "
 "manutenções."
-
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
-msgid "Please fill also some text in!"
-msgstr "Please fill also some text in!"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/public_menu_form_item.coffee
 msgid "Please fill in all fields"
@@ -8225,6 +8217,18 @@ msgstr ""
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid "Requesting the Grant"
 msgstr "Obter Permissão "
+
+#: app/controllers/channels_twitter_controller.rb
+msgid "Required parameter 'crc_token' missing in verify payload from twitter!"
+msgstr ""
+
+#: app/controllers/reports_controller.rb
+msgid "Required parameter 'downloadBackendSelected' is missing."
+msgstr ""
+
+#: app/controllers/reports_controller.rb
+msgid "Required parameter 'profile' is missing."
+msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #: app/assets/javascripts/app/views/channel/form.jst.eco
@@ -9878,7 +9882,9 @@ msgid "Ticket %s created!"
 msgstr "Chamado %s criado!"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee
-msgid "Ticket %s merged!"
+#, fuzzy
+#| msgid "Ticket %s merged!"
+msgid "Ticket %s merged."
 msgstr "Bilhete %s fundido!"
 
 #: app/models/report.rb
@@ -12661,6 +12667,9 @@ msgstr "...da area de texto"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ tempo de espera hoje"
+
+#~ msgid "Please fill also some text in!"
+#~ msgstr "Please fill also some text in!"
 
 #~ msgid "Loading..."
 #~ msgstr "Carregando..."
