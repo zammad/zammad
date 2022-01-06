@@ -13,7 +13,7 @@
     <br />
     <p v-on:click="fetchCurrentUser">fetchCurrentUser</p>
     <br /><br />
-    <h1 class="text-lg mb-4">Configs:</h1>
+    <h1 class="mb-4 text-lg">Configs:</h1>
     <template v-if="config.value">
       <p v-for="(value, key) in config.value" v-bind:key="(key as string)">
         Key: {{ key }}<br />

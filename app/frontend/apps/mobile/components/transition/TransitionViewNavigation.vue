@@ -1,8 +1,8 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <template>
-  <main class="min-h-screen grid flex-1 overflow-hidden">
-    <transition class="flex-auto z-10" v-bind:name="viewTransition">
+  <main class="grid overflow-hidden flex-1 min-h-screen">
+    <transition class="z-10 flex-auto" v-bind:name="viewTransition">
       <slot></slot>
     </transition>
   </main>

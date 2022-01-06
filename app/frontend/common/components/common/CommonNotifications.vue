@@ -1,8 +1,8 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <template>
-  <div id="Notifications" class="w-full flex justify-center">
-    <div class="fixed z-50 top-0 right-0">
+  <div id="Notifications" class="flex justify-center w-full">
+    <div class="fixed top-0 right-0 z-50">
       <transition-group
         tag="div"
         enter-class="opacity-0"
@@ -11,7 +11,7 @@
         <div v-for="notification in notifications" v-bind:key="notification.id">
           <div class="flex justify-center">
             <div
-              class="flex items-center py-2 px-4 rounded m-1"
+              class="flex items-center py-2 px-4 m-1 rounded"
               v-bind:class="getClassName(notification.type)"
             >
               <CommonIcon

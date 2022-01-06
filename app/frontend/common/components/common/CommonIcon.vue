@@ -3,7 +3,7 @@
 <template>
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    class="icon fill-current"
+    class="fill-current icon"
     v-bind:class="iconClass"
     v-bind:width="finalSize.width"
     v-bind:height="finalSize.height"

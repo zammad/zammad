@@ -2,45 +2,45 @@
 
 <template>
   <!-- TODO: Only a dummy implementation for the login... -->
-  <div class="flex flex-col h-full min-h-screen items-center justify-center">
-    <div class="max-w-md w-full">
-      <div class="flex-grow flex flex-col justify-center">
-        <div class="my-5 p-8 flex-grow">
+  <div class="flex flex-col justify-center items-center h-full min-h-screen">
+    <div class="w-full max-w-md">
+      <div class="flex flex-col grow justify-center">
+        <div class="grow p-8 my-5">
           <div class="flex justify-center p-2">
             <CommonLogo />
           </div>
-          <div class="flex justify-center p-2 mb-6 font-extrabold text-2xl">
+          <div class="flex justify-center p-2 mb-6 text-2xl font-extrabold">
             {{ 'Zammad' }}
           </div>
 
           <form class="text-left">
-            <fieldset class="floating-input relative">
+            <fieldset class="relative floating-input">
               <input
                 id="username"
                 v-model="loginFormValues.login"
                 type="text"
                 v-bind:placeholder="i18n.t('Username / Email')"
-                class="block h-14 bg-gray-300 mt-1 w-full text-sm rounded border-none focus:outline-none"
+                class="block mt-1 w-full h-14 text-sm bg-gray-300 rounded border-none focus:outline-none"
               />
               <label
                 for="username"
-                class="absolute top-0 left-0 px-3 py-5 h-full pointer-events-none transform origin-left transition-all duration-100 ease-in-out text-base"
+                class="absolute top-0 left-0 py-5 px-3 h-full text-base transition-all duration-100 ease-in-out origin-left pointer-events-none"
               >
                 {{ i18n.t('Username / Email') }}
               </label>
             </fieldset>
 
-            <fieldset class="floating-input relative">
+            <fieldset class="relative floating-input">
               <input
                 id="password"
                 v-model="loginFormValues.password"
                 type="password"
                 v-bind:placeholder="i18n.t('Password')"
-                class="block h-14 bg-gray-300 mt-1 w-full text-sm rounded border-none focus:outline-none"
+                class="block mt-1 w-full h-14 text-sm bg-gray-300 rounded border-none focus:outline-none"
               />
               <label
                 for="password"
-                class="absolute top-0 left-0 px-3 py-5 h-full pointer-events-none transform origin-left transition-all duration-100 ease-in-out text-base"
+                class="absolute top-0 left-0 py-5 px-3 h-full text-base transition-all duration-100 ease-in-out origin-left pointer-events-none"
               >
                 {{ i18n.t('Password') }}
               </label>
@@ -54,8 +54,8 @@
                 </label> -->
           </form>
 
-          <div class="flex justify-between flex-grow items-baseline mt-1">
-            <a class="text-yellow cursor-pointer select-none underline">
+          <div class="flex grow justify-between items-baseline mt-1">
+            <a class="text-yellow underline cursor-pointer select-none">
               {{ i18n.t('Register') }}
             </a>
 
@@ -64,9 +64,9 @@
             </a>
           </div>
 
-          <div class="flex flex-grow items-cemter justify-center mt-8 mx-8">
+          <div class="flex grow justify-center items-center mx-8 mt-8">
             <button
-              class="h-14 bg-yellow text-black text-xl font-semibold w-full py-2 px-4 rounded select-none"
+              class="py-2 px-4 w-full h-14 text-xl font-semibold text-black bg-yellow rounded select-none"
               v-on:click="login"
             >
               {{ i18n.t('Sign in') }}

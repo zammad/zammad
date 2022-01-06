@@ -1,8 +1,8 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <template>
-  <div class="flex flex-col h-screen overflow-hidden">
-    <main class="flex-1 overflow-y-scroll">
+  <div class="flex overflow-hidden flex-col h-screen">
+    <main class="overflow-y-scroll flex-1">
       <router-view v-slot="{ Component }">
         <TransitionViewNavigation>
           <component v-bind:is="Component" />
@@ -11,7 +11,7 @@
     </main>
     <footer
       v-if="showBottomNavigation"
-      class="w-full bg-black text-center border-t p-4"
+      class="p-4 w-full text-center bg-black border-t"
     >
       Bottom-Navigation
     </footer>
