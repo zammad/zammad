@@ -883,7 +883,6 @@ Metrics/PerceivedComplexity:
     - 'lib/twitter_sync.rb'
     - 'lib/user_agent.rb'
     - 'test/browser/admin_object_manager_test.rb'
-    - 'test/browser/keyboard_shortcuts_test.rb'
     - 'test/browser_test_helper.rb'
     - 'test/integration/slack_test.rb'
 

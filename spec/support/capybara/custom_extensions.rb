@@ -77,6 +77,18 @@ module ZammadCapybarActionDelegator
       await_empty_ajax_queue
     end
   end
+
+  def hot_keys
+    mac_platform? ? %i[control alt] : %i[control shift]
+  end
+
+  def magic_key
+    mac_platform? ? :command : :control
+  end
+
+  def mac_platform?
+    Gem::Platform.local.os.eql? 'darwin'
+  end
 end
 
 module ZammadCapybarSelectorDelegator

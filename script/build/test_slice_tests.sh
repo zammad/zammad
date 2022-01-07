@@ -45,7 +45,6 @@ if [ "$LEVEL" == '1' ]; then
   rm test/browser/agent_user_profile_test.rb
   rm test/browser/customer_ticket_create_test.rb
   rm test/browser/first_steps_test.rb
-  rm test/browser/keyboard_shortcuts_test.rb
   # test/browser/manage_test.rb
   # test/browser/swich_to_user_test.rb
   # test/browser/taskbar_session_test.rb
@@ -93,7 +92,6 @@ elif [ "$LEVEL" == '2' ]; then
   rm test/browser/agent_user_profile_test.rb
   rm test/browser/customer_ticket_create_test.rb
   rm test/browser/first_steps_test.rb
-  rm test/browser/keyboard_shortcuts_test.rb
   rm test/browser/manage_test.rb
   rm test/browser/taskbar_session_test.rb
   rm test/browser/taskbar_task_test.rb
@@ -140,7 +138,6 @@ elif [ "$LEVEL" == '3' ]; then
   rm test/browser/agent_user_profile_test.rb
   rm test/browser/customer_ticket_create_test.rb
   rm test/browser/first_steps_test.rb
-  rm test/browser/keyboard_shortcuts_test.rb
   rm test/browser/manage_test.rb
   rm test/browser/taskbar_session_test.rb
   rm test/browser/taskbar_task_test.rb
@@ -187,7 +184,6 @@ elif [ "$LEVEL" == '4' ]; then
   rm test/browser/agent_user_profile_test.rb
   # test/browser/customer_ticket_create_test.rb
   rm test/browser/first_steps_test.rb
-  rm test/browser/keyboard_shortcuts_test.rb
   rm test/browser/manage_test.rb
   rm test/browser/taskbar_session_test.rb
   rm test/browser/taskbar_task_test.rb
@@ -233,7 +229,6 @@ elif [ "$LEVEL" == '5' ]; then
   # test/browser/agent_user_profile_test.rb
   rm test/browser/customer_ticket_create_test.rb
   rm test/browser/first_steps_test.rb
-  rm test/browser/keyboard_shortcuts_test.rb
   rm test/browser/manage_test.rb
   rm test/browser/taskbar_session_test.rb
   rm test/browser/taskbar_task_test.rb
@@ -282,7 +277,6 @@ elif [ "$LEVEL" == '6' ]; then
   rm test/browser/agent_user_profile_test.rb
   rm test/browser/customer_ticket_create_test.rb
   # test/browser/first_steps_test.rb
-  # test/browser/keyboard_shortcuts_test.rb
   rm test/browser/manage_test.rb
   rm test/browser/taskbar_session_test.rb
   rm test/browser/taskbar_task_test.rb
