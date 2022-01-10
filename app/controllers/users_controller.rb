@@ -771,19 +771,24 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
     begin
       file_full = StaticAssets.data_url_attributes(params[:avatar_full])
     rescue
-      render json: { error: __('Full-size image is invalid') }, status: :unprocessable_entity
+      render json: { error: __('The full-size image is invalid.') }, status: :unprocessable_entity
       return
     end
 
     if ActiveStorage::Variant::WEB_IMAGE_CONTENT_TYPES.exclude?(file_full[:mime_type])
-      render json: { error: __('MIME type is invalid') }, status: :unprocessable_entity
+      render json: { error: __('The MIME type of the full-size image is invalid.') }, status: :unprocessable_entity
       return
     end
 
     begin
       file_resize = StaticAssets.data_url_attributes(params[:avatar_resize])
     rescue
-      render json: { error: __('Resized image is invalid') }, status: :unprocessable_entity
+      render json: { error: __('The resized image is invalid.') }, status: :unprocessable_entity
+      return
+    end
+
+    if ActiveStorage::Variant::WEB_IMAGE_CONTENT_TYPES.exclude?(file_resize[:mime_type])
+      render json: { error: __('The MIME type of the resized image is invalid.') }, status: :unprocessable_entity
       return
     end
 

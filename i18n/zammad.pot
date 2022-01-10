@@ -4149,10 +4149,6 @@ msgstr ""
 msgid "Full Name"
 msgstr ""
 
-#: app/controllers/users_controller.rb
-msgid "Full-size image is invalid"
-msgstr ""
-
 #: db/seeds/settings.rb
 msgid "Fully Qualified Domain Name"
 msgstr ""
@@ -5544,10 +5540,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/websocket.coffee
 msgid "Lost network connection!"
-msgstr ""
-
-#: app/controllers/users_controller.rb
-msgid "MIME type is invalid"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/macro.coffee
@@ -7596,10 +7588,6 @@ msgstr ""
 msgid "Reseting changes…"
 msgstr ""
 
-#: app/controllers/users_controller.rb
-msgid "Resized image is invalid"
-msgstr ""
-
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
 msgid "Response"
 msgstr ""
@@ -8785,6 +8773,14 @@ msgstr ""
 msgid "Thanks for joining. Email sent to \"%s\"."
 msgstr ""
 
+#: app/controllers/users_controller.rb
+msgid "The MIME type of the full-size image is invalid."
+msgstr ""
+
+#: app/controllers/users_controller.rb
+msgid "The MIME type of the resized image is invalid."
+msgstr ""
+
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 msgid "The URL to this installation of Zammad."
 msgstr ""
@@ -8845,6 +8841,10 @@ msgstr ""
 msgid "The format of the subject."
 msgstr ""
 
+#: app/controllers/users_controller.rb
+msgid "The full-size image is invalid."
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "The identifier for a ticket, e.g. Ticket#, Call#, MyTicket#. The default is Ticket#."
 msgstr ""
@@ -8871,6 +8871,10 @@ msgstr ""
 
 #: app/views/knowledge_base/public/not_found.html.erb
 msgid "The page you were looking for does not exist."
+msgstr ""
+
+#: app/controllers/users_controller.rb
+msgid "The resized image is invalid."
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco

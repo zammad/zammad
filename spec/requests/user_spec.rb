@@ -1505,12 +1505,12 @@ RSpec.describe 'User', type: :request do
 
     it 'returns verbose error when full image is missing' do
       make_request(avatar_full: '')
-      expect(json_response).to include('error' => match(%r{Full}).and(match(%r{is invalid})))
+      expect(json_response).to include('error' => match(%r{full}).and(match(%r{is invalid})))
     end
 
     it 'returns verbose error when resized image is missing' do
       make_request(avatar_full: base64)
-      expect(json_response).to include('error' => match(%r{Resized}).and(match(%r{is invalid})))
+      expect(json_response).to include('error' => match(%r{resized}).and(match(%r{is invalid})))
     end
 
     it 'successfully changes avatar' do
@@ -1523,7 +1523,16 @@ RSpec.describe 'User', type: :request do
 
       it 'returns verbose error for a not allowed mime-type' do
         make_request(avatar_full: base64)
-        expect(json_response).to include('error' => 'MIME type is invalid')
+        expect(json_response).to include('error' => 'The MIME type of the full-size image is invalid.')
+      end
+    end
+
+    context 'with a not allowed resized image mime-type' do
+      let(:resized_base64) { 'data:image/svg+xml;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==' }
+
+      it 'returns verbose error for a not allowed mime-type' do
+        make_request(avatar_full: base64, avatar_resize: resized_base64)
+        expect(json_response).to include('error' => 'The MIME type of the resized image is invalid.')
       end
     end
   end
