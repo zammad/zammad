@@ -569,8 +569,8 @@ RSpec.describe 'Integration Placetel', type: :request do
       config[:outbound][:default_caller_id] = ''
       Setting.set('placetel_config', config)
 
-      stub_request(:post, 'https://api.placetel.de/api/getVoIPUsers.json')
-        .to_return(status: 200, body: [{ 'callerid' => '03055571600', 'did' => 10, 'name' => 'Bob Smith', 'stype' => 3, 'uid' => '777008478072@example.com', 'uid2' => nil }, { 'callerid' => '03055571600', 'did' => 12, 'name' => 'Josef Müller', 'stype' => 3, 'uid' => '777042617425@example.com', 'uid2' => nil }].to_json)
+      stub_request(:get, 'https://api.placetel.de/v2/sip_users')
+        .to_return(status: 200, body: [{ 'callerid' => '03055571600', 'did' => 10, 'name' => 'Bob Smith', 'type' => 'standard', 'sipuid' => '777008478072@example.com' }, { 'callerid' => '03055571600', 'did' => 12, 'name' => 'Josef Müller', 'type' => 'standard', 'sipuid' => '777042617425@example.com' }].to_json)
 
       params = 'event=OutgoingCall&direction=out&to=099999222222&call_id=1234567890-2&from=777008478072@example.com'
       post "/api/v1/placetel/#{token}", params: params
