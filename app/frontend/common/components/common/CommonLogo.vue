@@ -4,7 +4,7 @@
   <img
     class="w-40 h-40"
     v-bind:src="logoUrl"
-    v-bind:alt="config.get('product_name') as string"
+    v-bind:alt="(config.get('product_name') as string)"
   />
 </template>
 

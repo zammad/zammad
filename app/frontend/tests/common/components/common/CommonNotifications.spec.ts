@@ -126,8 +126,6 @@ describe('CommonNotifications.vue', () => {
       type: NotificationTypes.WARN,
     })
 
-    console.log(wrapper.find('.icon'))
-
     expect(wrapper.find('.icon').exists()).toBeTruthy()
   })
 })

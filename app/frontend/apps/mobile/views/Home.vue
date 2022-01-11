@@ -9,6 +9,16 @@
     <br />
     <p v-on:click="goToTickets">Go to Tickets</p>
     <br />
+    <CommonLink v-bind:link="{ name: 'TicketOverview' }">
+      <span>Test Route Link</span>
+    </CommonLink>
+    <br />
+    <CommonLink v-bind:link="{ name: 'Login' }" v-bind:disabled="true">
+      <span>DisabledTest Route Link</span>
+    </CommonLink>
+    <br />
+    <CommonLink link="https://www.google.com"> Test External Link </CommonLink>
+    <br />
     <p v-on:click="refetchConfig">refetchConfig</p>
     <br />
     <p v-on:click="fetchCurrentUser">fetchCurrentUser</p>
@@ -67,7 +77,6 @@ const refetchConfig = async (): Promise<void> => {
 
 const fetchCurrentUser = () => {
   const { result } = useCurrentUserQuery({ fetchPolicy: 'no-cache' })
-  console.log('result', result)
 }
 
 const goToTickets = () => {
