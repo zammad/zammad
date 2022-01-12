@@ -9,7 +9,7 @@ import type {
 import {
   useApplicationConfigQuery,
   useConfigUpdatedSubscription,
-} from '@mobile/graphql/api'
+} from '@common/graphql/api'
 import {
   QueryHandler,
   SubscriptionHandler,

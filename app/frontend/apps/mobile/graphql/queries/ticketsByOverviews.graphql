@@ -1,0 +1,66 @@
+query ticketsByOverview(
+  $overviewId: ID!
+  $orderBy: TicketOrderBy
+  $orderDirection: OrderDirection
+  $cursor: String
+  $pageSize: Int = 10
+) {
+  ticketsByOverview(
+    overviewId: $overviewId
+    orderBy: $orderBy
+    orderDirection: $orderDirection
+    after: $cursor
+    first: $pageSize
+  ) {
+    totalCount
+    edges {
+      node {
+        id
+        number
+        title
+        owner {
+          firstname
+          lastname
+        }
+        customer {
+          firstname
+          lastname
+        }
+        organization {
+          name
+        }
+        state {
+          name
+          stateTypeName
+        }
+        group {
+          name
+        }
+        priority {
+          name
+        }
+        objectAttributeValues {
+          ...objectAttributeValues
+        }
+      }
+      cursor
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+  }
+}
+
+fragment objectAttributeValues on ObjectAttributeValue {
+  attribute {
+    name
+    display
+    dataType
+    dataOption
+    screens
+    editable
+    active
+  }
+  value
+}

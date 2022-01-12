@@ -19,15 +19,7 @@ RSpec.describe Gql::Mutations::Logout, type: :request do
       end
     end
 
-    context 'without authenticated session' do
-      it 'fails with error message' do
-        expect(graphql_response['errors'][0]).to include('message' => 'Authentication required')
-      end
-
-      it 'fails with error type' do
-        expect(graphql_response['errors'][0]['extensions']).to include({ 'type' => 'Exceptions::NotAuthorized' })
-      end
-    end
+    include_examples 'graphql responds with error if unauthenticated'
 
     context 'without authenticated session and missing CSRF token', allow_forgery_protection: true do
       it 'fails with error message, not with CSRF validation failed' do

@@ -1,6 +1,11 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { OperationVariables, SubscribeToMoreOptions } from '@apollo/client/core'
+import {
+  FetchMoreOptions,
+  FetchMoreQueryOptions,
+  OperationVariables,
+  SubscribeToMoreOptions,
+} from '@apollo/client/core'
 import BaseHandler from '@common/server/apollo/handler/BaseHandler'
 import {
   OperationQueryOptionsReturn,
@@ -35,6 +40,28 @@ export default class QueryHandler<
     >,
   ): void {
     return this.operationResult.subscribeToMore(options)
+  }
+
+  public fetchMore(
+    options: FetchMoreQueryOptions<TVariables, TResult> &
+      FetchMoreOptions<TResult, TVariables>,
+  ): Promise<Maybe<TResult>> {
+    return new Promise((resolve, reject) => {
+      const fetchMore = this.operationResult.fetchMore(options)
+
+      if (!fetchMore) {
+        resolve(null)
+        return
+      }
+
+      fetchMore
+        .then((result) => {
+          resolve(result.data)
+        })
+        .catch(() => {
+          reject(this.operationError().value)
+        })
+    })
   }
 
   public refetch(variables?: TVariables): Promise<Maybe<TResult>> {

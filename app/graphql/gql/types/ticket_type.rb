@@ -10,13 +10,18 @@ module Gql::Types
 
     description 'Tickets'
 
-    # def self.scope_items(items, ctx)
-    #   items.where(title: '123')
-    # end
+    # Even though we might fetch tickets with 'overview' permissions in the first place,
+    #   check that they always have 'read' permissions as well, as that is logicaly
+    #   included in 'overview'.
+    def self.scope_items(items, ctx)
+      TicketPolicy::ReadScope.new(ctx.current_user, items).resolve
+    end
 
-    # field :group_id, Integer, null: false
-    # field :priority_id, Integer, null: false
-    # field :state_id, Integer, null: false
+    implements Gql::Types::ObjectAttributeValueInterface
+
+    field :group, Gql::Types::GroupType, null: false
+    field :priority, Gql::Types::Ticket::PriorityType, null: false
+    field :state, Gql::Types::Ticket::StateType, null: false
 
     field :organization, Gql::Types::OrganizationType, null: true
     field :number, String, null: false

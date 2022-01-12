@@ -1,0 +1,21 @@
+query overviews($withTicketCount: Boolean!) {
+  overviews {
+    edges {
+      node {
+        id
+        name
+        link
+        prio
+        order
+        view
+        active
+        ticketCount @include(if: $withTicketCount)
+      }
+      cursor
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+  }
+}

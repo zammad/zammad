@@ -11,6 +11,8 @@ class Gql::ZammadSchema < GraphQL::Schema
   # Enable batch loading
   use GraphQL::Batch
 
+  default_max_page_size 1000
+
   # # Enable ActionCable and GraphQL connection
   # use GraphQL::Subscriptions::ActionCableSubscriptions
 

@@ -10,6 +10,7 @@ import type {
 import type { Ref } from 'vue'
 import type { GraphQLHandlerError } from '@common/types/error'
 import type { NotificationTypes } from '@common/types/notification'
+import { PageInfo } from '@common/graphql/types'
 
 export type OperationReturn<TResult, TVariables> =
   | UseQueryReturn<TResult, TVariables>
@@ -37,6 +38,19 @@ export type OperationQueryResult = {
 export type OperationMutationResult = {
   __typename?: 'Mutations'
   [key: string]: unknown
+}
+
+export type BaseConnection = {
+  __typename?: string
+  pageInfo: PageInfo
+  nodes?: Maybe<Array<Maybe<unknown>>>
+  edges?: Maybe<Array<Maybe<unknown>>>
+  totalCount: number
+}
+
+export type PaginationVariables = {
+  cursor?: Maybe<string>
+  pageSize?: Maybe<number>
 }
 
 export type OperationResult =

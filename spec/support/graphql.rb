@@ -1,5 +1,7 @@
 # Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
+require 'graphql/gql/shared_examples/fails_if_unauthenticated'
+
 module ZammadSpecSupportGraphql
   #
   # Taken from github.com/rmosolgo/graphql-ruby/blob/master/spec/graphql/subscriptions/action_cable_subscriptions_spec.rb

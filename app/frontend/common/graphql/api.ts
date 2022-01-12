@@ -74,6 +74,31 @@ export function useLogoutMutation(options: VueApolloComposable.UseMutationOption
   return VueApolloComposable.useMutation<Types.LogoutMutation, Types.LogoutMutationVariables>(LogoutDocument, options);
 }
 export type LogoutMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.LogoutMutation, Types.LogoutMutationVariables>;
+export const ApplicationConfigDocument = gql`
+    query applicationConfig {
+  applicationConfig {
+    key
+    value
+  }
+}
+    `;
+
+/**
+ * __useApplicationConfigQuery__
+ *
+ * To run a query within a Vue component, call `useApplicationConfigQuery` and pass it any options that fit your needs.
+ * When your component renders, `useApplicationConfigQuery` returns an object from Apollo Client that contains result, loading and error properties
+ * you can use to render your UI.
+ *
+ * @param options that will be passed into the query, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/query.html#options;
+ *
+ * @example
+ * const { result, loading, error } = useApplicationConfigQuery();
+ */
+export function useApplicationConfigQuery(options: VueApolloComposable.UseQueryOptions<Types.ApplicationConfigQuery, Types.ApplicationConfigQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.ApplicationConfigQuery, Types.ApplicationConfigQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.ApplicationConfigQuery, Types.ApplicationConfigQueryVariables>> = {}) {
+  return VueApolloComposable.useQuery<Types.ApplicationConfigQuery, Types.ApplicationConfigQueryVariables>(ApplicationConfigDocument, {}, options);
+}
+export type ApplicationConfigQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<Types.ApplicationConfigQuery, Types.ApplicationConfigQueryVariables>;
 export const CurrentUserDocument = gql`
     query currentUser {
   currentUser {
@@ -140,6 +165,49 @@ export function useLocalesQuery(options: VueApolloComposable.UseQueryOptions<Typ
   return VueApolloComposable.useQuery<Types.LocalesQuery, Types.LocalesQueryVariables>(LocalesDocument, {}, options);
 }
 export type LocalesQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<Types.LocalesQuery, Types.LocalesQueryVariables>;
+export const OverviewsDocument = gql`
+    query overviews($withTicketCount: Boolean!) {
+  overviews {
+    edges {
+      node {
+        id
+        name
+        link
+        prio
+        order
+        view
+        active
+        ticketCount @include(if: $withTicketCount)
+      }
+      cursor
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+  }
+}
+    `;
+
+/**
+ * __useOverviewsQuery__
+ *
+ * To run a query within a Vue component, call `useOverviewsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useOverviewsQuery` returns an object from Apollo Client that contains result, loading and error properties
+ * you can use to render your UI.
+ *
+ * @param variables that will be passed into the query
+ * @param options that will be passed into the query, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/query.html#options;
+ *
+ * @example
+ * const { result, loading, error } = useOverviewsQuery({
+ *   withTicketCount: // value for 'withTicketCount'
+ * });
+ */
+export function useOverviewsQuery(variables: Types.OverviewsQueryVariables | VueCompositionApi.Ref<Types.OverviewsQueryVariables> | ReactiveFunction<Types.OverviewsQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.OverviewsQuery, Types.OverviewsQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.OverviewsQuery, Types.OverviewsQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.OverviewsQuery, Types.OverviewsQueryVariables>> = {}) {
+  return VueApolloComposable.useQuery<Types.OverviewsQuery, Types.OverviewsQueryVariables>(OverviewsDocument, variables, options);
+}
+export type OverviewsQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<Types.OverviewsQuery, Types.OverviewsQueryVariables>;
 export const SessionIdDocument = gql`
     query sessionId {
   sessionId
@@ -192,3 +260,30 @@ export function useTranslationsQuery(variables: Types.TranslationsQueryVariables
   return VueApolloComposable.useQuery<Types.TranslationsQuery, Types.TranslationsQueryVariables>(TranslationsDocument, variables, options);
 }
 export type TranslationsQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<Types.TranslationsQuery, Types.TranslationsQueryVariables>;
+export const ConfigUpdatedDocument = gql`
+    subscription configUpdated {
+  configUpdated {
+    setting {
+      key
+      value
+    }
+  }
+}
+    `;
+
+/**
+ * __useConfigUpdatedSubscription__
+ *
+ * To run a query within a Vue component, call `useConfigUpdatedSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useConfigUpdatedSubscription` returns an object from Apollo Client that contains result, loading and error properties
+ * you can use to render your UI.
+ *
+ * @param options that will be passed into the subscription, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/subscription.html#options;
+ *
+ * @example
+ * const { result, loading, error } = useConfigUpdatedSubscription();
+ */
+export function useConfigUpdatedSubscription(options: VueApolloComposable.UseSubscriptionOptions<Types.ConfigUpdatedSubscription, Types.ConfigUpdatedSubscriptionVariables> | VueCompositionApi.Ref<VueApolloComposable.UseSubscriptionOptions<Types.ConfigUpdatedSubscription, Types.ConfigUpdatedSubscriptionVariables>> | ReactiveFunction<VueApolloComposable.UseSubscriptionOptions<Types.ConfigUpdatedSubscription, Types.ConfigUpdatedSubscriptionVariables>> = {}) {
+  return VueApolloComposable.useSubscription<Types.ConfigUpdatedSubscription, Types.ConfigUpdatedSubscriptionVariables>(ConfigUpdatedDocument, {}, options);
+}
+export type ConfigUpdatedSubscriptionCompositionFunctionResult = VueApolloComposable.UseSubscriptionReturn<Types.ConfigUpdatedSubscription, Types.ConfigUpdatedSubscriptionVariables>;

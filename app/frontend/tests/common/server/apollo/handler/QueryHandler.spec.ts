@@ -219,5 +219,19 @@ describe('QueryHandler', () => {
 
       expect(queryHandlerObject.options()).toBeTruthy()
     })
+
+    it('use fetchMore query function', async () => {
+      expect.assertions(1)
+
+      const queryHandlerObject = new QueryHandler(sampleQuery({ id: 1 }))
+
+      const resultCallbackSpy = jest.fn()
+
+      await queryHandlerObject.fetchMore({}).then((result) => {
+        resultCallbackSpy(result)
+      })
+
+      expect(resultCallbackSpy).toHaveBeenCalledWith(querySampleResult)
+    })
   })
 })

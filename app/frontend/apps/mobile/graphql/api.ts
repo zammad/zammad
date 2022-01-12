@@ -4,56 +4,90 @@ import gql from 'graphql-tag';
 import * as VueApolloComposable from '@vue/apollo-composable';
 import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
-
-export const ApplicationConfigDocument = gql`
-    query applicationConfig {
-  applicationConfig {
-    key
-    value
+export const ObjectAttributeValuesFragmentDoc = gql`
+    fragment objectAttributeValues on ObjectAttributeValue {
+  attribute {
+    name
+    display
+    dataType
+    dataOption
+    screens
+    editable
+    active
   }
+  value
 }
     `;
-
-/**
- * __useApplicationConfigQuery__
- *
- * To run a query within a Vue component, call `useApplicationConfigQuery` and pass it any options that fit your needs.
- * When your component renders, `useApplicationConfigQuery` returns an object from Apollo Client that contains result, loading and error properties
- * you can use to render your UI.
- *
- * @param options that will be passed into the query, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/query.html#options;
- *
- * @example
- * const { result, loading, error } = useApplicationConfigQuery();
- */
-export function useApplicationConfigQuery(options: VueApolloComposable.UseQueryOptions<Types.ApplicationConfigQuery, Types.ApplicationConfigQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.ApplicationConfigQuery, Types.ApplicationConfigQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.ApplicationConfigQuery, Types.ApplicationConfigQueryVariables>> = {}) {
-  return VueApolloComposable.useQuery<Types.ApplicationConfigQuery, Types.ApplicationConfigQueryVariables>(ApplicationConfigDocument, {}, options);
-}
-export type ApplicationConfigQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<Types.ApplicationConfigQuery, Types.ApplicationConfigQueryVariables>;
-export const ConfigUpdatedDocument = gql`
-    subscription configUpdated {
-  configUpdated {
-    setting {
-      key
-      value
+export const TicketsByOverviewDocument = gql`
+    query ticketsByOverview($overviewId: ID!, $orderBy: TicketOrderBy, $orderDirection: OrderDirection, $cursor: String, $pageSize: Int = 10) {
+  ticketsByOverview(
+    overviewId: $overviewId
+    orderBy: $orderBy
+    orderDirection: $orderDirection
+    after: $cursor
+    first: $pageSize
+  ) {
+    totalCount
+    edges {
+      node {
+        id
+        number
+        title
+        owner {
+          firstname
+          lastname
+        }
+        customer {
+          firstname
+          lastname
+        }
+        organization {
+          name
+        }
+        state {
+          name
+          stateTypeName
+        }
+        group {
+          name
+        }
+        priority {
+          name
+        }
+        objectAttributeValues {
+          ...objectAttributeValues
+        }
+      }
+      cursor
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
     }
   }
 }
-    `;
+    ${ObjectAttributeValuesFragmentDoc}`;
 
 /**
- * __useConfigUpdatedSubscription__
+ * __useTicketsByOverviewQuery__
  *
- * To run a query within a Vue component, call `useConfigUpdatedSubscription` and pass it any options that fit your needs.
- * When your component renders, `useConfigUpdatedSubscription` returns an object from Apollo Client that contains result, loading and error properties
+ * To run a query within a Vue component, call `useTicketsByOverviewQuery` and pass it any options that fit your needs.
+ * When your component renders, `useTicketsByOverviewQuery` returns an object from Apollo Client that contains result, loading and error properties
  * you can use to render your UI.
  *
- * @param options that will be passed into the subscription, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/subscription.html#options;
+ * @param variables that will be passed into the query
+ * @param options that will be passed into the query, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/query.html#options;
  *
  * @example
- * const { result, loading, error } = useConfigUpdatedSubscription();
+ * const { result, loading, error } = useTicketsByOverviewQuery({
+ *   overviewId: // value for 'overviewId'
+ *   orderBy: // value for 'orderBy'
+ *   orderDirection: // value for 'orderDirection'
+ *   cursor: // value for 'cursor'
+ *   pageSize: // value for 'pageSize'
+ * });
  */
-export function useConfigUpdatedSubscription(options: VueApolloComposable.UseSubscriptionOptions<Types.ConfigUpdatedSubscription, Types.ConfigUpdatedSubscriptionVariables> | VueCompositionApi.Ref<VueApolloComposable.UseSubscriptionOptions<Types.ConfigUpdatedSubscription, Types.ConfigUpdatedSubscriptionVariables>> | ReactiveFunction<VueApolloComposable.UseSubscriptionOptions<Types.ConfigUpdatedSubscription, Types.ConfigUpdatedSubscriptionVariables>> = {}) {
-  return VueApolloComposable.useSubscription<Types.ConfigUpdatedSubscription, Types.ConfigUpdatedSubscriptionVariables>(ConfigUpdatedDocument, {}, options);
+export function useTicketsByOverviewQuery(variables: Types.TicketsByOverviewQueryVariables | VueCompositionApi.Ref<Types.TicketsByOverviewQueryVariables> | ReactiveFunction<Types.TicketsByOverviewQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.TicketsByOverviewQuery, Types.TicketsByOverviewQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.TicketsByOverviewQuery, Types.TicketsByOverviewQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.TicketsByOverviewQuery, Types.TicketsByOverviewQueryVariables>> = {}) {
+  return VueApolloComposable.useQuery<Types.TicketsByOverviewQuery, Types.TicketsByOverviewQueryVariables>(TicketsByOverviewDocument, variables, options);
 }
-export type ConfigUpdatedSubscriptionCompositionFunctionResult = VueApolloComposable.UseSubscriptionReturn<Types.ConfigUpdatedSubscription, Types.ConfigUpdatedSubscriptionVariables>;
+export type TicketsByOverviewQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<Types.TicketsByOverviewQuery, Types.TicketsByOverviewQueryVariables>;

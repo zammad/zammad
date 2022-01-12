@@ -6,7 +6,7 @@ RSpec.describe Gql::Queries::ApplicationConfig, type: :graphql do
 
   context 'when fetching the application config' do
     let(:agent) { create(:agent) }
-    let(:query) { read_graphql_file('apps/mobile/graphql/queries/applicationConfig.graphql') }
+    let(:query) { read_graphql_file('common/graphql/queries/applicationConfig.graphql') }
 
     before do
       graphql_execute(query)
