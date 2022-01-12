@@ -80,10 +80,9 @@ class App.ObjectOrganizationAutocompletion extends App.Controller
 
   onBlur: =>
     selectObject = @objectSelect.val()
-    if _.isEmpty(selectObject)
+    if _.isEmpty(selectObject) && !@attribute.multiple
       @objectId.val('')
-      return
-    if @attribute.guess is true
+    else if @attribute.guess is true
       currentObjectId = @objectId.val()
       if _.isEmpty(currentObjectId) || currentObjectId.match(/^guess:/)
         if !_.isEmpty(selectObject)
@@ -95,31 +94,28 @@ class App.ObjectOrganizationAutocompletion extends App.Controller
 
   onObjectClick: (e) =>
     objectId = $(e.currentTarget).data('object-id')
-    @selectObject(objectId)
+    objectName = $(e.currentTarget).find('.recipientList-name').text().trim()
+    @selectObject(objectId, objectName)
     @close()
 
-  selectObject: (objectId) =>
-    if @attribute.multiple and @objectId.val()
-      # add objectId to end of comma separated list
-      objectId = _.chain( @objectId.val().split(',') ).push(objectId).join(',').value()
-
-    @objectSelect.val('')
-    @objectId.val(objectId).trigger('change')
+  selectObject: (objectId, objectName) =>
+    if @attribute.multiple
+      @addValueToObjectInput(objectName, objectId)
+    else
+      @objectSelect.val('')
+      @objectId.val(objectId).trigger('change')
 
   executeCallback: =>
-    # with @attribute.multiple this can be several objects ids.
-    # Only work with the last one since its the newest one
-    objectId = @objectId.val().split(',').pop()
+    if @attribute.multiple
+      # create token
+      @createToken(@currentObject) if @currentObject
+      @currentObject = null
 
-    if objectId && App[@objectSingle].exists(objectId)
-      object = App[@objectSingle].find(objectId)
-      name = object.displayName()
-
-      if @attribute.multiple
-
-        # create token
-        @createToken(name, objectId)
-      else
+    else
+      objectId = @objectId.val()
+      if objectId && App[@objectSingle].exists(objectId)
+        object = App[@objectSingle].find(objectId)
+        name = object.displayName()
         if object.email
 
           # quote name for special character
@@ -132,10 +128,10 @@ class App.ObjectOrganizationAutocompletion extends App.Controller
     if @callback
       @callback(objectId)
 
-  createToken: (name, objectId) =>
+  createToken: ({name, value}) =>
     @objectSelect.before App.view('generic/token')(
       name: name
-      value: objectId
+      value: value
     )
 
   removeThisToken: (e) =>
@@ -149,12 +145,9 @@ class App.ObjectOrganizationAutocompletion extends App.Controller
       else
         token = which
 
-    # remove objectId from input
-    index = @$('.token').index(token)
-    ids = @objectId.val().split(',')
-    ids.splice(index, 1)
-    @objectId.val ids.join(',')
-
+    id = token.data('value')
+    @objectId.find("[value=#{id}]").remove()
+    @objectId.trigger('change')
     token.remove()
 
   navigateByKeyboard: (e) =>
@@ -170,7 +163,7 @@ class App.ObjectOrganizationAutocompletion extends App.Controller
         @objectSelect.val('').trigger('change')
       # remove last token on backspace
       when 8
-        if @objectSelect.val() is ''
+        if @objectSelect.val() is '' && @objectSelect.is(e.target)
           @removeToken('last')
       # close on tab
       when 9 then @close()
@@ -223,7 +216,8 @@ class App.ObjectOrganizationAutocompletion extends App.Controller
             return
           objectId = recipientListOrganizationMembers.find('li.is-active').data('object-id')
           return if !objectId
-          @selectObject(objectId)
+          objectName = recipientListOrganizationMembers.find('li.is-active .recipientList-name').text().trim()
+          @selectObject(objectId, objectName)
           @close() if !@attribute.multiple
           return
 
@@ -233,7 +227,8 @@ class App.ObjectOrganizationAutocompletion extends App.Controller
           if objectId is 'new'
             @newObject()
           else
-            @selectObject(objectId)
+            objectName = @recipientList.find('li.is-active .recipientList-name').text().trim()
+            @selectObject(objectId, objectName)
             @close() if !@attribute.multiple
           return
 
@@ -241,6 +236,14 @@ class App.ObjectOrganizationAutocompletion extends App.Controller
         return if !organizationId
         @showOrganizationMembers(undefined, @recipientList.find('li.is-active'))
 
+
+  addValueToObjectInput: (objectName, objectId) ->
+    @objectSelect.val('')
+    @currentObject = {name: objectName, value: objectId}
+    if @objectId.val()
+      return if @objectId.val().includes("#{objectId}") # cast objectId to string before check
+    @objectId.append("<option value=#{App.Utils.htmlEscape(@currentObject.value)} selected>#{App.Utils.htmlEscape(@currentObject.name)}</option>")
+    @objectId.trigger('change')
 
   buildOrganizationItem: (organization) ->
     objectCount = 0
@@ -315,17 +318,23 @@ class App.ObjectOrganizationAutocompletion extends App.Controller
       # fallback for if the value is not an array
       if typeof @attribute.value isnt 'object'
         @attribute.value = [@attribute.value]
-      value = @attribute.value.join ','
 
-      # create tokens
+      # create tokens and attribute values
+      values = []
       for objectId in @attribute.value
         if App[@objectSingle].exists objectId
+          objectName = App[@objectSingle].find(objectId).displayName()
+          objectValue = objectId
+          values.push({name: objectName, value: objectValue})
           tokens += App.view('generic/token')(
-            name: App[@objectSingle].find(objectId).displayName()
-            value: objectId
+            name: objectName
+            value: objectValue
           )
         else
           @log 'objectId doesn\'t exist', objectId
+
+      @attribute.value = values
+
     else
       value = @attribute.value
       if value
@@ -369,7 +378,7 @@ class App.ObjectOrganizationAutocompletion extends App.Controller
         @recipientList.append(@buildObjectNew())
 
       # reset object selection
-      @resetObjectSelection()
+      @resetObjectSelection() if !@attribute.multiple
       return
 
     # show dropdown

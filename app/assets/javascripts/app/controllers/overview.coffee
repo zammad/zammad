@@ -27,7 +27,7 @@ class Overview extends App.ControllerSubContent
           { name: __('New Overview'), 'data-type': 'new', class: 'btn--success' }
         ]
       container: @el.closest('.content')
-      large: true
+      veryLarge: true
       dndCallback: (e, item) =>
         items = @el.find('table > tbody > tr')
         prios = []

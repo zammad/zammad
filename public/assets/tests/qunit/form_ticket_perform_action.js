@@ -595,7 +595,7 @@ QUnit.test( "ticket_perform_action check possible owner selection", assert => {
     ticket_perform_action5: {
       'ticket.owner_id': {
         pre_condition: 'not_set',
-        value: '',
+        value: null,
         value_completion: ''
       }
     }
@@ -610,7 +610,7 @@ QUnit.test( "ticket_perform_action check possible owner selection", assert => {
     ticket_perform_action5: {
       'ticket.owner_id': {
         pre_condition: 'specific',
-        value: '',
+        value: null,
         value_completion: ''
       }
     }

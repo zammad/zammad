@@ -531,17 +531,18 @@ QUnit.test('form checks', assert => {
         operator: 'is not',
         pre_condition: 'specific',
         value: '12',
+        value_completion: '',
       },
       'ticket.owner_id': {
         operator: 'is',
         pre_condition: 'specific',
         value: '47',
-        value_completion: 'Bob Smith <bod@example.com>',
+        value_completion: '',
       },
       'ticket.created_by_id': {
         operator: 'is',
         pre_condition: 'current_user.id',
-        value: '',
+        value: null,
         value_completion: ''
       },
     },
@@ -552,7 +553,7 @@ QUnit.test('form checks', assert => {
       'ticket.owner_id': {
         pre_condition: 'specific',
         value: '47',
-        value_completion: 'Bob Smith <bod@example.com>'
+        value_completion: ''
       },
       'ticket.priority_id': {
         value: '3',
@@ -596,17 +597,18 @@ QUnit.test('form checks', assert => {
         operator: 'is not',
         pre_condition: 'specific',
         value: '12',
+        value_completion: '',
       },
       'ticket.owner_id': {
         operator: 'is',
         pre_condition: 'specific',
         value: '47',
-        value_completion: 'Bob Smith <bod@example.com>',
+        value_completion: '',
       },
       'ticket.created_by_id': {
         operator: 'is',
         pre_condition: 'current_user.id',
-        value: '',
+        value: null,
         value_completion: ''
       },
     },
@@ -617,7 +619,7 @@ QUnit.test('form checks', assert => {
       'ticket.owner_id': {
         pre_condition: 'specific',
         value: '47',
-        value_completion: 'Bob Smith <bod@example.com>'
+        value_completion: ''
       },
       'ticket.tags': {
         operator: 'remove',
@@ -657,17 +659,18 @@ QUnit.test('form checks', assert => {
         operator: 'is not',
         pre_condition: 'specific',
         value: '12',
+        value_completion: '',
       },
       'ticket.owner_id': {
         operator: 'is',
         pre_condition: 'specific',
         value: '47',
-        value_completion: 'Bob Smith <bod@example.com>',
+        value_completion: '',
       },
       'ticket.created_by_id': {
         operator: 'is',
         pre_condition: 'current_user.id',
-        value: '',
+        value: null,
         value_completion: ''
       },
     },
@@ -678,7 +681,7 @@ QUnit.test('form checks', assert => {
       'ticket.owner_id': {
         pre_condition: 'specific',
         value: '47',
-        value_completion: 'Bob Smith <bod@example.com>'
+        value_completion: ''
       },
       'ticket.tags': {
         operator: 'remove',
@@ -714,17 +717,18 @@ QUnit.test('form checks', assert => {
         operator: 'is not',
         pre_condition: 'specific',
         value: '12',
+        value_completion: '',
       },
       'ticket.owner_id': {
         operator: 'is',
         pre_condition: 'specific',
         value: '47',
-        value_completion: 'Bob Smith <bod@example.com>',
+        value_completion: '',
       },
       'ticket.created_by_id': {
         operator: 'is',
         pre_condition: 'current_user.id',
-        value: '',
+        value: null,
         value_completion: ''
       },
     },
@@ -735,7 +739,7 @@ QUnit.test('form checks', assert => {
       'ticket.owner_id': {
         pre_condition: 'specific',
         value: '47',
-        value_completion: 'Bob Smith <bod@example.com>'
+        value_completion: ''
       },
       'notification.email': {
         recipient: 'ticket_owner',
@@ -849,4 +853,167 @@ QUnit.test('form checks', assert => {
     },
   }
   assert.deepEqual(params, test_params, 'form article body param check')
+
+  App.User.refresh([
+    {
+      id:         44,
+      login:      'bod@example.com',
+      email:      'bod@example.com',
+      firstname:  'Bob',
+      lastname:   'Smith',
+      active:     true,
+      created_at: '2014-06-10T11:17:34.000Z',
+    },
+    {
+      id:         45,
+      login:      'john@example.com',
+      email:      'john@example.com',
+      firstname:  'John',
+      lastname:   'Doe',
+      active:     true,
+      created_at: '2014-07-10T11:17:34.000Z',
+    },
+    {
+      id:         46,
+      login:      'sam@example.com',
+      email:      'sam@example.com',
+      firstname:  'Sam',
+      lastname:   'Bond',
+      active:     true,
+      created_at: '2014-08-10T11:17:34.000Z',
+    },
+    {
+      id:         30,
+      login:      'clark@example.com',
+      email:      'clark@example.com',
+      firstname:  'Clark',
+      lastname:   'Olsen',
+      active:     true,
+      created_at: '2016-02-10T11:17:34.000Z',
+    },
+    {
+      id:         31,
+      login:      'james@example.com',
+      email:      'james@example.com',
+      firstname:  'James',
+      lastname:   'Puth',
+      active:     true,
+      created_at: '2016-03-10T11:17:34.000Z',
+    },
+    {
+      id:         32,
+      login:      'charles@example.com',
+      email:      'charles@example.com',
+      firstname:  'Charles',
+      lastname:   'Kent',
+      active:     true,
+      created_at: '2016-04-10T11:17:34.000Z',
+    },
+  ])
+
+  App.Organization.refresh([
+    {
+      id:         9,
+      name:      'Org 1',
+      active:     true,
+      created_at: '2018-06-10T11:19:34.000Z',
+    },
+    {
+      id:         10,
+      name:      'Org 2',
+      active:     true,
+      created_at: '2018-06-10T11:19:34.000Z',
+    },
+    {
+      id:         11,
+      name:      'Org 3',
+      active:     true,
+      created_at: '2018-06-10T11:19:34.000Z',
+    },
+  ])
+
+  /* with params or defaults */
+  $('#forms').append('<hr><h1>form condition check for multiple user and organisation selection</h1><form id="form6"></form>')
+  var el = $('#form6')
+  var defaults = {
+    condition: {
+      'ticket.title': {
+        operator: 'contains',
+        value: 'some title',
+      },
+      'ticket.organization_id': {
+        operator: 'is',
+        pre_condition: 'specific',
+        value: [9, 10, 11],
+      },
+      'ticket.owner_id': {
+        operator: 'is not',
+        pre_condition: 'specific',
+        value: [44, 45, 46],
+      },
+      'ticket.customer_id': {
+        operator: 'is',
+        pre_condition: 'specific',
+        value: [30, 31, 32],
+      },
+    },
+    executions: {
+      'ticket.title': {
+        value: 'some title new',
+      },
+      'ticket.owner_id': {
+        pre_condition: 'specific',
+        value: [44, 46],
+      },
+    },
+  }
+  new App.ControllerForm({
+    el:        el,
+    model:     {
+      configure_attributes: [
+        { name: 'condition',  display: 'Conditions', tag: 'ticket_selector', null: true },
+        { name: 'executions', display: 'Executions', tag: 'ticket_perform_action', null: true, notification: true },
+      ]
+    },
+    params: defaults,
+    autofocus: true
+  })
+  var params = App.ControllerForm.params(el)
+  var test_params = {
+    condition: {
+      'ticket.title': {
+        operator: 'contains',
+        value: 'some title',
+      },
+      'ticket.organization_id': {
+        operator: 'is',
+        pre_condition: 'specific',
+        value: ['9', '10', '11'],
+        value_completion: ''
+      },
+      'ticket.owner_id': {
+        operator: 'is not',
+        pre_condition: 'specific',
+        value: ['44', '45', '46'],
+        value_completion: ''
+      },
+      'ticket.customer_id': {
+        operator: 'is',
+        pre_condition: 'specific',
+        value: ['30', '31', '32'],
+        value_completion: ''
+      },
+    },
+    executions: {
+      'ticket.title': {
+        value: 'some title new',
+      },
+      'ticket.owner_id': {
+        pre_condition: 'specific',
+        value: ['44', '46'],
+        value_completion: ''
+      },
+    },
+  }
+  assert.deepEqual(params, test_params, 'form param condition check for multiple users and organisation')
 });

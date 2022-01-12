@@ -3,4 +3,5 @@ class App.UiElement.user_autocompletion_search
   @render: (attributeOrig, params = {}) ->
     attribute = _.clone(attributeOrig)
     attribute.disableCreateObject = true
+    attribute.multiple = true
     new App.UserOrganizationAutocompletion(attribute: attribute, params: params).element()
