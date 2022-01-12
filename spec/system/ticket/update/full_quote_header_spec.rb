@@ -375,7 +375,7 @@ RSpec.describe 'Ticket > Update > Full Quote Header', current_user_id: -> { curr
       expected
         .created_at
         .in_time_zone('Europe/London')
-        .strftime('%m/%d/%Y %H:%M')
+        .strftime('%m/%d/%Y %1I:%M %P')
     end
   end
 end

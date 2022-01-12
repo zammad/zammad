@@ -217,8 +217,11 @@ QUnit.test('i18n', assert => {
   translated = App.i18n.translateContent('Enables user authentication via %s. Register your app first at [%s](%s).', 'XXX', 'YYY', 'http://lalala')
   assert.equal(translated, 'Enables user authentication via XXX. Register your app first at <a href="http://lalala" target="_blank">YYY</a>.', 'en-us - link')
 
-  timestamp = App.i18n.translateTimestamp('2012-11-06T21:07:24Z', offset)
-  assert.equal(timestamp, '11/06/2012 21:07', 'en - timestamp translated correctly')
+  timestamp = App.i18n.translateTimestamp('2012-11-06T09:07:24Z', offset)
+  assert.equal(timestamp, '11/06/2012  9:07 am', 'en - timestamp translated correctly (pm)')
+
+  timestamp = App.i18n.translateTimestamp('2012-11-06T22:07:24Z', offset)
+  assert.equal(timestamp, '11/06/2012 10:07 pm', 'en - timestamp translated correctly (pm)')
 
   timestamp = App.i18n.translateTimestamp('', offset);
   assert.equal(timestamp, '', 'en - timestamp translated correctly')
@@ -242,7 +245,7 @@ QUnit.test('i18n', assert => {
   assert.equal(date, undefined, 'en - date translated correctly')
 
   date = App.i18n.timeFormat()
-  assert.deepEqual(date, { "FORMAT_DATE": "mm/dd/yyyy", "FORMAT_DATETIME": "mm/dd/yyyy HH:MM" }, 'timeFormat property')
+  assert.deepEqual(date, { "FORMAT_DATE": "mm/dd/yyyy", "FORMAT_DATETIME": "mm/dd/yyyy l:MM P" }, 'timeFormat property')
 
   // Verify that the datepicker gets the correct format too.
   el_date = App.UiElement.date.render({name: 'test', value: '2018-07-06'})

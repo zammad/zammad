@@ -1362,7 +1362,13 @@ QUnit.test("check replace tags", assert => {
     yfull     = localTime.getFullYear()
     M         = formatNumber(localTime.getMinutes(), 2)
     H         = formatNumber(localTime.getHours(), 2)
-    return m + '/' + d + '/' + yfull + ' ' + H + ':' + M
+    l         = (H + 11) % 12 + 1
+    if (l < 10) {
+      l = ' ' + l
+    }
+    P         = H >= 12 ? 'pm' : 'am'
+
+    return m + '/' + d + '/' + yfull + ' ' + l + ':' + M + ' ' + P
   }
 
   var message = "<div>#{user.firstname} #{user.lastname}</div>"

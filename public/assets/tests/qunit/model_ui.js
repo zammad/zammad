@@ -54,7 +54,7 @@ QUnit.test( "model ui basic tests", assert => {
   assert.equal( App.viewPrint( ticket, 'state' ), 'open')
   assert.equal( App.viewPrint( ticket, 'state_id' ), 'open')
   assert.equal( App.viewPrint( ticket, 'not_existing' ), '-')
-  assert.equal( App.viewPrint( ticket, 'updated_at' ), '<time class="humanTimeFromNow " datetime="2014-11-07T23:43:08.000Z" title="11/07/2014 23:43">11/07/2014</time>')
+  assert.equal( App.viewPrint( ticket, 'updated_at' ), '<time class="humanTimeFromNow " datetime="2014-11-07T23:43:08.000Z" title="11/07/2014 11:43 pm">11/07/2014</time>')
   assert.equal( App.viewPrint( ticket, 'date' ), '02/07/2015')
   assert.equal( App.viewPrint( ticket, 'textarea' ), '<div>some new</div><div>line</div>')
   assert.equal( App.viewPrint( ticket, 'link1' ), '<a href="http://zammad.com" target="blank">closed</a>')
@@ -65,7 +65,7 @@ QUnit.test( "model ui basic tests", assert => {
   let attr = App.Ticket.configure_attributes.find(e => { return e.name == 'updated_at' })
   attr.include_timezone = true
 
-  assert.equal( App.viewPrint( ticket, 'updated_at' ), '<time class="humanTimeFromNow " datetime="2014-11-07T23:43:08.000Z" title="11/07/2014 23:43 Example/Timezone" timezone="Example/Timezone">11/07/2014</time>')
+  assert.equal( App.viewPrint( ticket, 'updated_at' ), '<time class="humanTimeFromNow " datetime="2014-11-07T23:43:08.000Z" title="11/07/2014 11:43 pm Example/Timezone" timezone="Example/Timezone">11/07/2014</time>')
 
   attr.include_timezone = false
   stub.restore()

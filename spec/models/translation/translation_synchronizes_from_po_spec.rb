@@ -56,7 +56,7 @@ RSpec.describe Translation do
       end
 
       it 'contains the translation for "FORMAT_DATE_TIME"' do
-        expect(described_class.strings_for_locale('en-us')['FORMAT_DATETIME']).to have_attributes(translation: 'mm/dd/yyyy HH:MM', translation_file: 'i18n/zammad.pot')
+        expect(described_class.strings_for_locale('en-us')['FORMAT_DATETIME']).to have_attributes(translation: 'mm/dd/yyyy l:MM P', translation_file: 'i18n/zammad.pot')
       end
     end
 
@@ -210,7 +210,7 @@ RSpec.describe Translation do
     end
 
     it 'adds the en-us FORMAT_DATETIME entry' do
-      expect(described_class.find_source('en-us', 'FORMAT_DATETIME')).to have_attributes(is_synchronized_from_codebase: true, synchronized_from_translation_file: 'i18n/zammad.pot', target: 'mm/dd/yyyy HH:MM')
+      expect(described_class.find_source('en-us', 'FORMAT_DATETIME')).to have_attributes(is_synchronized_from_codebase: true, synchronized_from_translation_file: 'i18n/zammad.pot', target: 'mm/dd/yyyy l:MM P')
     end
 
     it 'adds the custom translated entry with content' do

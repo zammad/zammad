@@ -164,6 +164,8 @@ or
     record.sub!('SS', format('%<second>02d', second: timestamp.sec.to_s))
     record.sub!('MM', format('%<minute>02d', minute: timestamp.min.to_s))
     record.sub!('HH', format('%<hour>02d', hour: timestamp.hour.to_s))
+    record.sub!('l', timestamp.strftime('%l'))
+    record.sub!('P', timestamp.strftime('%P'))
     "#{record} (#{timezone})"
   end
 

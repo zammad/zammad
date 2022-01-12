@@ -69,12 +69,20 @@ RSpec.describe Translation do
       expect(described_class.timestamp('en-us', 'Invalid/TimeZone', '2018-10-10T10:00:00Z0')).to eq(Time.zone.parse('2018-10-10T10:00:00Z0').to_s)
     end
 
-    it 'en-us with timestamp as string' do
-      expect(described_class.timestamp('en-us', 'Europe/Berlin', '2018-10-10T10:00:00Z0')).to eq('10/10/2018 12:00 (Europe/Berlin)')
+    it 'en-us with timestamp as string (am)' do
+      expect(described_class.timestamp('en-us', 'Europe/Berlin', '2018-10-10T01:00:00Z0')).to eq('10/10/2018  3:00 am (Europe/Berlin)')
     end
 
-    it 'en-us with time object' do
-      expect(described_class.timestamp('en-us', 'Europe/Berlin', Time.zone.parse('2018-10-10T10:00:00Z0'))).to eq('10/10/2018 12:00 (Europe/Berlin)')
+    it 'en-us with timestamp as string (pm)' do
+      expect(described_class.timestamp('en-us', 'Europe/Berlin', '2018-10-10T10:00:00Z0')).to eq('10/10/2018 12:00 pm (Europe/Berlin)')
+    end
+
+    it 'en-us with time object (am)' do
+      expect(described_class.timestamp('en-us', 'Europe/Berlin', Time.zone.parse('2018-10-10T01:00:00Z0'))).to eq('10/10/2018  3:00 am (Europe/Berlin)')
+    end
+
+    it 'en-us with time object (pm)' do
+      expect(described_class.timestamp('en-us', 'Europe/Berlin', Time.zone.parse('2018-10-10T10:00:00Z0'))).to eq('10/10/2018 12:00 pm (Europe/Berlin)')
     end
 
     it 'de-de with timestamp as string' do

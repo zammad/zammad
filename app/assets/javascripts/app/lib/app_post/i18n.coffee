@@ -348,6 +348,9 @@ class _i18nSingleton extends Spine.Module
     S      = timeObject.getSeconds()
     M      = timeObject.getMinutes()
     H      = timeObject.getHours()
+    l      = (H + 11) % 12 + 1
+    l      = ' ' + l if l < 10
+
     format = format
       .replace(/dd/, @formatNumber(d, 2))
       .replace(/d/, d)
@@ -358,4 +361,6 @@ class _i18nSingleton extends Spine.Module
       .replace(/SS/, @formatNumber(S, 2))
       .replace(/MM/, @formatNumber(M, 2))
       .replace(/HH/, @formatNumber(H, 2))
+      .replace(/l/, l)
+      .replace(/P/, if H >= 12 then 'pm' else 'am')
     format

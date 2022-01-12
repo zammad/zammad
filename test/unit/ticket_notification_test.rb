@@ -1194,7 +1194,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     assert_match(%r{1 low}, result[:body])
     assert_match(%r{2 normal}, result[:body])
     assert_match(%r{Pending till}, result[:body])
-    assert_match('01/11/2015 19:33 (America/St_Lucia)', result[:body])
+    assert_match('01/11/2015  7:33 pm (America/St_Lucia)', result[:body])
     assert_match(%r{update}, result[:body])
     assert_no_match(%r{pending_till}, result[:body])
     assert_no_match(%r{i18n}, result[:body])
@@ -1322,7 +1322,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     )
 
     assert_match('Ticket is escalated (some notification template test 1 Bobs\'s resumé', result[:subject])
-    assert_match('is escalated since "04/01/2019 06:00 (America/St_Lucia)"!', result[:body])
+    assert_match('is escalated since "04/01/2019  6:00 am (America/St_Lucia)"!', result[:body])
 
   end
 

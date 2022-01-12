@@ -32,7 +32,9 @@ class Generators::TranslationCatalog::TranslationCatalogGenerator < Rails::Gener
     #. - 'yy' - last 2 digits of year
     #. - 'SS' - 2-digit second
     #. - 'MM' - 2-digit minute
-    #. - 'HH' - 2-digit hour
+    #. - 'HH' - 2-digit hour (24h)
+    #. - 'l' - hour (12h)
+    #. - 'P' - Meridian indicator ('am' or 'pm')
   LEGEND
 
   def extract_strings(path)
@@ -91,6 +93,9 @@ class Generators::TranslationCatalog::TranslationCatalogGenerator < Rails::Gener
 
     POT_HEADER
 
+    # Add the default date/time format strings for 'en_US' as translations to
+    #   the source catalog file. They will be read into the Translation model
+    #   and can be customized via the translations admin GUI.
     pot += <<~FORMAT_STRINGS if !options['addon_path']
       #. Default date format to use for the current locale.
       #{DATE_FORMAT_LEGEND}
@@ -100,7 +105,7 @@ class Generators::TranslationCatalog::TranslationCatalogGenerator < Rails::Gener
       #. Default date/time format to use for the current locale.
       #{DATE_FORMAT_LEGEND}
       msgid "FORMAT_DATETIME"
-      msgstr "mm/dd/yyyy HH:MM"
+      msgstr "mm/dd/yyyy l:MM P"
 
     FORMAT_STRINGS
 

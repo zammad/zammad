@@ -362,9 +362,14 @@ QUnit.test("check pretty date", assert => {
     yshort = date.getYear()-100
     M      = date.getMinutes()
     H      = date.getHours()
+    l      = (H + 11) % 12 + 1
+    if (l < 10) {
+      l = ' ' + l
+    }
+    P      = H >= 12 ? 'pm' : 'am'
 
     // YYYY-MM-DD HH::MM
-    return (m < 10 ? '0':'') + m + '/' + (d < 10 ? '0':'') + d + '/' + (yfull) + ' ' + (H < 10 ? '0':'') + H + ':' + (M < 10 ? '0':'') + M
+    return (m < 10 ? '0':'') + m + '/' + (d < 10 ? '0':'') + d + '/' + (yfull) + ' ' + l + ':' + (M < 10 ? '0':'') + M + ' ' + P
   }
 
 });
