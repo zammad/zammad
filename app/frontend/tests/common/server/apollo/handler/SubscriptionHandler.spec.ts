@@ -1,11 +1,8 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import { provideApolloClient, useSubscription } from '@vue/apollo-composable'
-import {
-  createMockClient,
-  createMockSubscription,
-  IMockSubscription,
-} from 'mock-apollo-client'
+import { createMockSubscription, IMockSubscription } from 'mock-apollo-client'
+import createMockClient from '@tests/support/mock-apollo-client'
 import SubscriptionHandler from '@common/server/apollo/handler/SubscriptionHandler'
 import {
   SampleTypedSubscriptionDocument,
@@ -40,15 +37,14 @@ const subscriptionSampleErrorResult = {
 let mockSubscription: IMockSubscription
 
 const mockClient = () => {
-  const mockApolloClient = createMockClient()
   mockSubscription = createMockSubscription()
 
-  mockApolloClient.setRequestHandler(
-    SampleTypedSubscriptionDocument,
-    () => mockSubscription,
-  )
-
-  provideApolloClient(mockApolloClient)
+  createMockClient([
+    {
+      operationDocument: SampleTypedSubscriptionDocument,
+      handler: () => mockSubscription,
+    },
+  ])
 
   subscriptionFunctionCallSpy.mockClear()
 }

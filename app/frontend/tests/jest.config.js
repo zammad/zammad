@@ -1,9 +1,8 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 module.exports = {
-  verbose: true,
-  // This option sets the URL for the jsdom environment. It is reflected in properties such as location.href
-  // testURL: "http://localhost",
+  // This option sets the URL for the jsdom environment. It is reflected in properties such as location.href.
+  testURL: 'http://localhost',
   rootDir: '../../../',
   roots: ['app/frontend/tests'],
   moduleDirectories: ['node_modules', 'app/frontend'],
@@ -24,5 +23,4 @@ module.exports = {
     '^.+\\.vue$': '@vue/vue3-jest',
   },
   testEnvironment: 'jsdom',
-  // snapshotSerializers: ['<rootDir>/node_modules/jest-serializer-vue'],
 }

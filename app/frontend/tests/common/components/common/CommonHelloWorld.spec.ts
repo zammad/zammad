@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { shallowMount } from '@vue/test-utils'
 import CommonHelloWorld from '@common/components/common/CommonHelloWorld.vue'
+import { getWrapper } from '@tests/support/components'
 
 describe('CommonHelloWorld.vue', () => {
   it('renders props.msg when passed', () => {
@@ -11,7 +11,7 @@ describe('CommonHelloWorld.vue', () => {
         return source
       },
     }
-    const wrapper = shallowMount(CommonHelloWorld, {
+    const wrapper = getWrapper(CommonHelloWorld, {
       props: { msg, show: true },
       global: {
         mocks: {

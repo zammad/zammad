@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { useQuery, provideApolloClient } from '@vue/apollo-composable'
-import { createMockClient } from 'mock-apollo-client'
+import { useQuery } from '@vue/apollo-composable'
+import createMockClient from '@tests/support/mock-apollo-client'
 import QueryHandler from '@common/server/apollo/handler/QueryHandler'
 import {
   SampleTypedQueryDocument,
@@ -15,7 +15,12 @@ import { GraphQLErrorTypes } from '@common/types/error'
 const queryFunctionCallSpy = jest.fn()
 
 const querySampleResult = {
-  Sample: { id: 1, title: 'Test Title', text: 'Test Text' },
+  Sample: {
+    __typename: 'Sample',
+    id: 1,
+    title: 'Test Title',
+    text: 'Test Text',
+  },
 }
 
 const querySampleErrorResult = {
@@ -31,21 +36,22 @@ const querySampleErrorResult = {
 const querySampleNetworkErrorResult = new Error('GraphQL Network Error')
 
 const mockClient = (error = false, errorType = 'GraphQL') => {
-  const mockApolloClient = createMockClient()
+  createMockClient([
+    {
+      operationDocument: SampleTypedQueryDocument,
+      handler: () => {
+        if (error) {
+          return errorType === 'GraphQL'
+            ? Promise.resolve(querySampleErrorResult)
+            : Promise.reject(querySampleNetworkErrorResult)
+        }
 
-  mockApolloClient.setRequestHandler(SampleTypedQueryDocument, () => {
-    if (error) {
-      return errorType === 'GraphQL'
-        ? Promise.resolve(querySampleErrorResult)
-        : Promise.reject(querySampleNetworkErrorResult)
-    }
-
-    return Promise.resolve({
-      data: querySampleResult,
-    })
-  })
-
-  provideApolloClient(mockApolloClient)
+        return Promise.resolve({
+          data: querySampleResult,
+        })
+      },
+    },
+  ])
 
   queryFunctionCallSpy.mockClear()
 }

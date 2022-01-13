@@ -1,43 +1,20 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { mount, VueWrapper } from '@vue/test-utils'
-import { Component, ComponentPublicInstance, nextTick } from 'vue'
+import { VueWrapper } from '@vue/test-utils'
+import { ComponentPublicInstance, nextTick } from 'vue'
 import CommonNotifications from '@common/components/common/CommonNotifications.vue'
 import { NotificationTypes } from '@common/types/notification'
-import CommonIcon from '@common/components/common/CommonIcon.vue'
 import useNotifications from '@/common/composables/useNotifications'
-
-const transitionStub = () => ({
-  render(this: typeof CommonNotifications): Component {
-    return this.$options.renderChildren
-  },
-})
+import { getWrapper } from '@tests/support/components'
 
 let wrapper: VueWrapper<ComponentPublicInstance>
-const message = 'Test Notification'
-const i18n = {
-  t(source: string) {
-    return source
-  },
-}
 
+const message = 'Test Notification'
 beforeEach(() => {
   const { clearAllNotifications } = useNotifications()
   clearAllNotifications()
 
-  wrapper = mount(CommonNotifications, {
-    stubs: {
-      transition: transitionStub(),
-    },
-    global: {
-      components: {
-        CommonIcon,
-      },
-      mocks: {
-        i18n,
-      },
-    },
-  })
+  wrapper = getWrapper(CommonNotifications, { shallow: false })
 })
 
 describe('CommonNotifications.vue', () => {

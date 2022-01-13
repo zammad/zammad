@@ -2,27 +2,32 @@
 
 import CommonLogo from '@common/components/common/CommonLogo.vue'
 import useApplicationConfigStore from '@common/stores/application/config'
-import { createTestingPinia } from '@pinia/testing'
-import { shallowMount } from '@vue/test-utils'
+import { getWrapper } from '@tests/support/components'
+import { nextTick } from 'vue'
+
+const wrapper = getWrapper(CommonLogo, { store: true })
 
 describe('CommonLogo.vue', () => {
-  createTestingPinia()
   const configStore = useApplicationConfigStore()
 
-  it('renders custom logo', () => {
+  it('renders custom logo', async () => {
+    expect.assertions(2)
+
     configStore.value.product_name = 'Zammad Custom Logo'
 
-    const wrapper = shallowMount(CommonLogo)
+    await nextTick()
 
     expect(wrapper.attributes().alt).toBe('Zammad Custom Logo')
     expect(wrapper.attributes().src).toBe('/assets/images/logo.svg')
   })
 
-  it('renders default zammad logo', () => {
+  it('renders default zammad logo', async () => {
+    expect.assertions(2)
+
     configStore.value.product_logo = 'icons/logotype.svg'
     configStore.value.product_name = undefined
 
-    const wrapper = shallowMount(CommonLogo)
+    await nextTick()
 
     expect(wrapper.attributes().alt).toBe(undefined)
     expect(wrapper.attributes().src).toBe('/assets/images/icons/logotype.svg')

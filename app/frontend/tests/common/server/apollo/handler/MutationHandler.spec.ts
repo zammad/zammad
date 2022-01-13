@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { useMutation, provideApolloClient } from '@vue/apollo-composable'
-import { createMockClient } from 'mock-apollo-client'
+import { useMutation } from '@vue/apollo-composable'
+import createMockClient from '@tests/support/mock-apollo-client'
 import MutationHandler from '@common/server/apollo/handler/MutationHandler'
 import {
   SampleUpdateMutation,
@@ -14,7 +14,12 @@ import { GraphQLErrorTypes } from '@common/types/error'
 const mutationFunctionCallSpy = jest.fn()
 
 const mutationSampleResult = {
-  Sample: { id: 1, title: 'Test Title', text: 'Test Text' },
+  Sample: {
+    __typename: 'Sample',
+    id: 1,
+    title: 'Test Title',
+    text: 'Test Text',
+  },
 }
 
 const mutationSampleErrorResult = {
@@ -29,21 +34,22 @@ const mutationSampleErrorResult = {
 const mutationSampleNetworkErrorResult = new Error('GraphQL Network Error')
 
 const mockClient = (error = false, errorType = 'GraphQL') => {
-  const mockApolloClient = createMockClient()
+  createMockClient([
+    {
+      operationDocument: SampleTypedMutationDocument,
+      handler: () => {
+        if (error) {
+          return errorType === 'GraphQL'
+            ? Promise.resolve(mutationSampleErrorResult)
+            : Promise.reject(mutationSampleNetworkErrorResult)
+        }
 
-  mockApolloClient.setRequestHandler(SampleTypedMutationDocument, () => {
-    if (error) {
-      return errorType === 'GraphQL'
-        ? Promise.resolve(mutationSampleErrorResult)
-        : Promise.reject(mutationSampleNetworkErrorResult)
-    }
-
-    return Promise.resolve({
-      data: mutationSampleResult,
-    })
-  })
-
-  provideApolloClient(mockApolloClient)
+        return Promise.resolve({
+          data: mutationSampleResult,
+        })
+      },
+    },
+  ])
 
   mutationFunctionCallSpy.mockClear()
 }
