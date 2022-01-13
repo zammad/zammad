@@ -96,6 +96,8 @@ class App.UiElement.ApplicationSelector
           # ignore passwords and relations
           if row.type isnt 'password' && row.name.substr(row.name.length-4,4) isnt '_ids' && row.searchable isnt false
             config = _.clone(row)
+            if config.tag is 'textarea'
+              config.expanding = false
             if config.type is 'email' || config.type is 'tel'
               config.type = 'text'
             for operatorRegEx, operator of operators_type
