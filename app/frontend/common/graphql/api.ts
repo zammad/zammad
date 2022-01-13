@@ -22,6 +22,7 @@ export const LoginDocument = gql`
     mutation login($login: String!, $password: String!, $fingerprint: String!) {
   login(login: $login, password: $password, fingerprint: $fingerprint) {
     sessionId
+    errors
   }
 }
     `;

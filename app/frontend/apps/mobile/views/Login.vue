@@ -116,6 +116,13 @@ const login = (): void => {
     .then(() => {
       router.replace('/')
     })
+    .catch((errors) => {
+      const { notify } = useNotifications()
+      notify({
+        message: errors[0],
+        type: NotificationTypes.WARN,
+      })
+    })
 }
 </script>
 

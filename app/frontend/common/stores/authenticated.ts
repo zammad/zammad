@@ -52,6 +52,10 @@ const useAuthenticatedStore = defineStore('authenticated', {
 
       const result = await loginMutation.send()
 
+      if (result?.login?.errors) {
+        return Promise.reject(result?.login?.errors)
+      }
+
       const newSessionId = result?.login?.sessionId || null
 
       if (newSessionId) {
@@ -64,6 +68,8 @@ const useAuthenticatedStore = defineStore('authenticated', {
           useSessionUserStore().getCurrentUser(),
         ])
       }
+
+      return Promise.resolve()
     },
   },
   shareState: {

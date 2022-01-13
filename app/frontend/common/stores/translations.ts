@@ -79,12 +79,16 @@ const useTranslationsStore = defineStore('translations', {
       const query = getTranslationsQuery()
 
       const result = await query.loadedResult()
-      if (result?.translations?.isCacheStillValid) {
+      if (!result?.translations) {
+        return
+      }
+
+      if (result.translations.isCacheStillValid) {
         this.value = cachedData
       } else {
         this.value = {
-          cacheKey: result?.translations?.cacheKey || 'CACHE_EMPTY',
-          translations: result?.translations?.translations,
+          cacheKey: result.translations.cacheKey || 'CACHE_EMPTY',
+          translations: result.translations.translations,
         }
         setCache(locale, this.value)
       }

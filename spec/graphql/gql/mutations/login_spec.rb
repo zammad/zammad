@@ -45,11 +45,7 @@ RSpec.describe Gql::Mutations::Login, type: :request do
       let(:password) { 'wrong' }
 
       it 'fails with error message' do
-        expect(graphql_response['errors'][0]).to include('message' => 'Wrong login or password combination.')
-      end
-
-      it 'fails with error type' do
-        expect(graphql_response['errors'][0]['extensions']).to include({ 'type' => 'RuntimeError' })
+        expect(graphql_response['data']['login']['errors']).to eq(['Wrong login or password combination.'])
       end
     end
 
