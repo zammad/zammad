@@ -11,7 +11,7 @@
   <% else: %>
     <input class="js-objectId" type="hidden" value="<%= @value %>" name="<%= @attribute.name %>" tabindex="-1">
   <% end %>
-  <input name="<%= @attribute.name %>_completion" class="user-select token-input js-objectSelect" autocapitalize="off" placeholder="<%- @Ti(@attribute.placeholder) %>" autocomplete="off" <%= @attribute.autofocus %> role="textbox" aria-autocomplete="list" value="<%= @name %>" aria-haspopup="true">
+  <input name="<%= @attribute.name %>_completion" class="user-select token-input js-objectSelect form-control" autocapitalize="off" placeholder="<%- @Ti(@attribute.placeholder) %>" autocomplete="off" <%= @attribute.autofocus %> role="textbox" aria-autocomplete="list" value="<%= @name %>" aria-haspopup="true">
   <% if @attribute.disableCreateObject isnt true: %><%- @Icon('arrow-down', 'dropdown-arrow') %><% end %>
 </div>
 
