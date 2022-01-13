@@ -153,6 +153,8 @@ class App.UiElement.core_workflow_condition extends App.UiElement.ApplicationSel
         # ignore passwords and relations
         if row.type isnt 'password' && row.name.substr(row.name.length-4,4) isnt '_ids' && row.searchable isnt false
           config = _.clone(row)
+          if config.tag is 'textarea'
+            config.expanding = false
           if config.tag is 'select'
             config.multiple = true
             config.default  = undefined

@@ -1607,3 +1607,27 @@ QUnit.test("form with external links", assert => {
   assert.equal('https://example.com/?q=133', el.find('input[name="a"]').parents('.controls').find('a[href]').attr('href'))
   assert.equal('https://example.com/?q=abc%20d', el.find('select[name="b"]').parents('.controls').find('a[href]').attr('href'))
 });
+
+QUnit.test("Fixes #3909 - Wrong size for textareas in triggers and core workflow.", assert => {
+  var done = assert.async(1)
+  $('#qunit').append('<hr><h1>Fixes #3909 - Wrong size for textareas in triggers and core workflow.</h1><form id="form21"></form>')
+  var el = $('#form21')
+  new App.ControllerForm({
+    el:        el,
+    model:     {
+      configure_attributes: [
+        { name: '3909_textarea_expanding', display: 'Textarea1', tag: 'textarea', rows: 6, limit: 100, null: true },
+        { name: '3909_textarea_no_expanding', display: 'Textarea2', tag: 'textarea', rows: 6, limit: 100, null: false, expanding: false },
+      ],
+    },
+    autofocus: true
+  });
+
+  new Promise( (resolve, reject) => {
+    App.Delay.set(resolve, 200);
+  }).then( function() {
+    assert.equal(el.find('textarea[name="3909_textarea_expanding"]').parent().hasClass('expanding-wrapper'), true, '3909_textarea_expanding has correct class')
+    assert.equal(el.find('textarea[name="3909_textarea_no_expanding"]').parent().hasClass('expanding-wrapper'), false, '3909_textarea_no_expanding has correct class')
+  })
+  .finally(done)
+});
