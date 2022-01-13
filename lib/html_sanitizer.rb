@@ -7,7 +7,7 @@ class HtmlSanitizer
 
 =begin
 
-satinize html string based on whiltelist
+sanitize html string based on whiltelist
 
   string = HtmlSanitizer.strict(string, external)
 
@@ -409,7 +409,7 @@ cleanup html string:
 
 =begin
 
-reolace inline images with cid images
+replace inline images with cid images
 
   string = HtmlSanitizer.replace_inline_images(article.body)
 
@@ -450,7 +450,7 @@ reolace inline images with cid images
 
 =begin
 
-satinize style of img tags
+sanitize style of img tags
 
   string = HtmlSanitizer.dynamic_image_size(article.body)
 
