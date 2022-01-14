@@ -20,7 +20,7 @@ import { FragmentDefinitionNode, OperationDefinitionNode } from 'graphql'
 const enableBatchLink = true
 
 // Should queries and mutations be sent over ActionCable?
-const enableQueriesOverWebsocket = true
+const enableQueriesOverWebsocket = false
 
 const connectionSettings = {
   uri: '/graphql',

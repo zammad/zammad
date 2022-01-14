@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import { ApolloLink } from '@apollo/client/core'
+import { setCSRFToken } from '@common/server/apollo/utils/csrfToken'
 
 const csrfLink = new ApolloLink((operation, forward) => {
   return forward(operation).map((response) => {
@@ -10,7 +11,7 @@ const csrfLink = new ApolloLink((operation, forward) => {
       const csrfToken = context.response.headers.get('CSRF-Token')
 
       if (csrfToken) {
-        localStorage.setItem('csrf-token', csrfToken) // TODO move to a different solution. only for now...
+        setCSRFToken(csrfToken)
       }
     }
     return response
