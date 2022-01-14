@@ -58,7 +58,7 @@ Scheduler.create_if_not_exists(
   created_by_id: 1,
 )
 Scheduler.create_if_not_exists(
-  name:          __('Cleanup expired sessions'),
+  name:          __('Cleanup expired sessions.'),
   method:        'SessionHelper.cleanup_expired',
   period:        60 * 60 * 12,
   prio:          2,
