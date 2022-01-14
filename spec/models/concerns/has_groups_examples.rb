@@ -1,5 +1,7 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 RSpec.shared_examples 'HasGroups' do |group_access_factory:|
-  context 'group' do
+  describe 'group' do
     subject { create(group_access_factory) }
 
     let(:group_full) { create(:group) }
@@ -44,7 +46,7 @@ RSpec.shared_examples 'HasGroups' do |group_access_factory:|
           expect(subject.groups).to respond_to(:access)
         end
 
-        context 'result' do
+        describe 'result' do
 
           before do
             subject.group_names_access_map = {
@@ -152,7 +154,7 @@ RSpec.shared_examples 'HasGroups' do |group_access_factory:|
         expect(subject.group_ids_access('read')).to be_empty
       end
 
-      context 'single access' do
+      describe 'single access' do
 
         it 'lists access Group IDs' do
           result = subject.group_ids_access('read')
@@ -165,7 +167,7 @@ RSpec.shared_examples 'HasGroups' do |group_access_factory:|
         end
       end
 
-      context 'access list' do
+      describe 'access list' do
 
         it 'lists access Group IDs' do
           result = subject.group_ids_access(%w[read change])

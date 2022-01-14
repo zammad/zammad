@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class User
   module SearchIndex
@@ -6,6 +6,7 @@ class User
 
     def search_index_attribute_lookup(include_references: true)
       attributes = super
+      attributes['fullname'] = fullname
       attributes.delete('password')
 
       if include_references

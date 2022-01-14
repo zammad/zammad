@@ -201,7 +201,7 @@ Some Textäöü".encode('ISO-8859-1'),
         result: {
           0 => {
             priority: '2 normal',
-            title: '??? some subject 3', # it's ok, because subject need to be 7bit encoded
+            title: '??? some subject 3', # it's ok, because subject needs to be 7bit encoded
           },
           1 => {
             body: 'Some Text???', # it's ok, because no content-type is given

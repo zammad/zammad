@@ -1,6 +1,4 @@
-# Copyright (C) 2012-2015 Zammad Foundation, http://zammad-foundation.org/
-
-require_dependency 'external_credential/twitter'
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Channel::Driver::Twitter
 

@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 class Sequencer
   class Unit
     module Import
@@ -10,8 +12,8 @@ class Sequencer
           private
 
           def statistics_diff
-            %i[Groups Users Organizations Tickets].each_with_object({}) do |object, stats|
-              stats[object] = empty_diff.merge(
+            %i[Groups Users Organizations Tickets].index_with do |object|
+              empty_diff.merge(
                 total: request(object).count!
               )
             end
@@ -25,6 +27,7 @@ class Sequencer
           # that it returns max. 1000. That's why we need to update the total
           # number while importing in the resource loop
           def request(object)
+            require 'zendesk_api' # Only load this gem when it is really used.
             resource_class = "::ZendeskAPI::#{object.to_s.singularize}".safe_constantize
             if resource_class.respond_to?(:incremental_export)
               # read as: ::ZendeskAPI::Ticket.incremental_export(client, 1)

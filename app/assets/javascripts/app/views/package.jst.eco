@@ -3,6 +3,20 @@
 </div>
 
 <div class="page-content">
+  <p>
+    <%- @T('The installation of packages comes with security implications, because arbitrary code will be executed in the context of the Zammad application.') %>
+    <br>
+    <%- @T('Only packages from known, trusted and verfied sources should be installed.') %>
+  </p>
+  <p>
+    <%- @T('After installing, updating, or uninstalling packages the following commands need to be executed on the server:') %>
+    <ul>
+    <% for command in @commands: %>
+      <li><code>zammad> <%- command %></code></li>
+    <% end %>
+      <li><code>root> systemctl restart zammad</code></li>
+    </ul>
+  </p>
   <!--
   <ul class="nav nav-tabs nav-stacked">
     <li class=""><a data-type="" ><%- @T('Installed') %></a></li>

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 module Channel::Filter::IdentifySender
 
@@ -123,10 +123,10 @@ module Channel::Filter::IdentifySender
         recipients.each do |recipient|
           address = nil
           display_name = nil
-          if recipient =~ /.*<(.+?)>/
+          if recipient =~ %r{.*<(.+?)>}
             address = $1
           end
-          if recipient =~ /^(.+?)<(.+?)>/
+          if recipient =~ %r{^(.+?)<(.+?)>}
             display_name = $1
           end
 
@@ -162,7 +162,7 @@ module Channel::Filter::IdentifySender
   end
 
   def self.populate_attributes!(attrs, **extras)
-    if attrs[:email].match?(/\S\s+\S/) || attrs[:email].match?(/^<|>$/)
+    if attrs[:email].match?(%r{\S\s+\S}) || attrs[:email].match?(%r{^<|>$})
       attrs[:preferences] = { mail_delivery_failed:        true,
                               mail_delivery_failed_reason: 'invalid email',
                               mail_delivery_failed_data:   Time.zone.now }
@@ -187,7 +187,7 @@ module Channel::Filter::IdentifySender
           .delete('"')
           .delete_prefix("'")
           .delete_suffix("'")
-          .gsub(/.+?\s\(.+?\)$/, '')
+          .gsub(%r{.+?\s\(.+?\)$}, '')
   end
 
   def self.sanitize_email(string)
@@ -197,10 +197,10 @@ module Channel::Filter::IdentifySender
           .strip
           .delete('"')
           .delete("'")
-          .delete(' ')             # see https://github.com/zammad/zammad/issues/2254
-          .sub(/^<|>$/, '')        # see https://github.com/zammad/zammad/issues/2254
-          .sub(/\A'(.*)'\z/, '\1') # see https://github.com/zammad/zammad/issues/2154
-          .gsub(/\s/, '')          # see https://github.com/zammad/zammad/issues/2198
+          .delete(' ') # see https://github.com/zammad/zammad/issues/2254
+          .sub(%r{^<|>$}, '')        # see https://github.com/zammad/zammad/issues/2254
+          .sub(%r{\A'(.*)'\z}, '\1') # see https://github.com/zammad/zammad/issues/2154
+          .gsub(%r{\s}, '')          # see https://github.com/zammad/zammad/issues/2198
           .delete_suffix('.')
   end
 

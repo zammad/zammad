@@ -1,15 +1,16 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class CalendarSubscriptions
 
   def initialize(user)
     @user        = user
     @preferences = {}
+    @time_zone   = Setting.get('timezone_default').presence || 'UTC'
 
     default_preferences = Setting.where(area: 'Defaults::CalendarSubscriptions')
     default_preferences.each do |calendar_subscription|
 
-      next if calendar_subscription.name !~ /\Adefaults_calendar_subscriptions_(.*)\z/
+      next if calendar_subscription.name !~ %r{\Adefaults_calendar_subscriptions_(.*)\z}
 
       object_name                 = $1 # rubocop:disable Lint/OutOfRangeRegexpRef
       @preferences[ object_name ] = calendar_subscription.state_current[:value]
@@ -23,8 +24,8 @@ class CalendarSubscriptions
   def all
     events_data = []
     @preferences.each_key do |object_name|
-      result      = generic_call(object_name)
-      events_data = events_data + result
+      result = generic_call(object_name)
+      events_data += result
     end
     to_ical(events_data)
   end
@@ -42,7 +43,7 @@ class CalendarSubscriptions
     if @preferences[ object_name ].present?
       sub_class_name = object_name.to_s.capitalize
       object         = "CalendarSubscriptions::#{sub_class_name}".constantize
-      instance       = object.new(@user, @preferences[ object_name ])
+      instance       = object.new(@user, @preferences[ object_name ], @time_zone)
       method         = instance.method(method_name)
       events_data += method.call
     end
@@ -56,8 +57,8 @@ class CalendarSubscriptions
     events_data.each do |event_data|
 
       cal.event do |e|
-        e.dtstart = Icalendar::Values::DateTime.new(event_data[:dtstart], 'tzid' => 'UTC')
-        e.dtend   = Icalendar::Values::DateTime.new(event_data[:dtend], 'tzid' => 'UTC')
+        e.dtstart = Icalendar::Values::DateTime.new(event_data[:dtstart], 'tzid' => @time_zone)
+        e.dtend   = Icalendar::Values::DateTime.new(event_data[:dtend], 'tzid' => @time_zone)
         if event_data[:alarm]
           e.alarm do |a|
             a.action  = 'DISPLAY'

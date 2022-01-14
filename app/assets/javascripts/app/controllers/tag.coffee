@@ -1,6 +1,6 @@
 class Tag extends App.ControllerSubContent
   requiredPermission: 'admin.tag'
-  header: 'Tags'
+  header: __('Tags')
   events:
     'change .js-newTagSetting input': 'setTagNew'
     'submit .js-create': 'create'
@@ -100,8 +100,8 @@ class Table extends App.Controller
 class Edit extends App.ControllerModal
   buttonClose: true
   buttonCancel: true
-  buttonSubmit: 'Submit'
-  head: 'Edit'
+  buttonSubmit: __('Submit')
+  head: __('Edit')
   small: true
 
   content: ->
@@ -130,9 +130,9 @@ class Edit extends App.ControllerModal
 class DestroyConfirm extends App.ControllerModal
   buttonClose: true
   buttonCancel: true
-  buttonSubmit: 'yes'
+  buttonSubmit: __('yes')
   buttonClass: 'btn--danger'
-  head: 'Confirm'
+  head: __('Confirm')
   small: true
 
   content: ->
@@ -149,4 +149,4 @@ class DestroyConfirm extends App.ControllerModal
         @close()
     )
 
-App.Config.set('Tags', { prio: 2320, name: 'Tags', parent: '#manage', target: '#manage/tags', controller: Tag, permission: ['admin.tag'] }, 'NavBarAdmin')
+App.Config.set('Tags', { prio: 2320, name: __('Tags'), parent: '#manage', target: '#manage/tags', controller: Tag, permission: ['admin.tag'] }, 'NavBarAdmin')

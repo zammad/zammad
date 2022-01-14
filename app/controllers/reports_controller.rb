@@ -1,4 +1,5 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 class ReportsController < ApplicationController
   prepend_before_action { authentication_check && authorize! }
 
@@ -6,7 +7,7 @@ class ReportsController < ApplicationController
   def reporting_config
     if !Report.enabled?
       render json: {
-        error: 'Elasticsearch need to be configured!',
+        error: __('Elasticsearch needs to be configured!'),
       }
       return
     end
@@ -21,26 +22,34 @@ class ReportsController < ApplicationController
     get_params = params_all
     return if !get_params
 
-    result = {}
-    get_params[:metric][:backend].each do |backend|
-      condition = get_params[:profile].condition
-      if backend[:condition]
-        backend[:condition].merge(condition)
-      else
-        backend[:condition] = condition
-      end
-      next if !backend[:adapter]
+    begin
+      result = {}
+      get_params[:metric][:backend].each do |backend|
+        condition = get_params[:profile].condition
+        if backend[:condition]
+          backend[:condition].merge(condition)
+        else
+          backend[:condition] = condition
+        end
+        next if !backend[:adapter]
 
-      result[backend[:name]] = backend[:adapter].aggs(
-        range_start:     get_params[:start],
-        range_end:       get_params[:stop],
-        interval:        get_params[:range],
-        selector:        backend[:condition],
-        params:          backend[:params],
-        timezone:        get_params[:timezone],
-        timezone_offset: get_params[:timezone_offset],
-        current_user:    current_user
-      )
+        result[backend[:name]] = backend[:adapter].aggs(
+          range_start:     get_params[:start],
+          range_end:       get_params[:stop],
+          interval:        get_params[:range],
+          selector:        backend[:condition],
+          params:          backend[:params],
+          timezone:        get_params[:timezone],
+          timezone_offset: get_params[:timezone_offset],
+          current_user:    current_user
+        )
+      end
+    rescue => e
+      if e.message.include? 'Conflicting date range'
+        raise Exceptions::UnprocessableEntity, __('Conflicting date ranges. Please check your selected report profile.')
+      end
+
+      raise e
     end
 
     render json: {
@@ -55,7 +64,7 @@ class ReportsController < ApplicationController
 
     if !params[:downloadBackendSelected]
       render json: {
-        error: 'No such downloadBackendSelected param',
+        error: __('No such downloadBackendSelected param'),
       }, status: :unprocessable_entity
       return
     end
@@ -117,7 +126,7 @@ class ReportsController < ApplicationController
   def params_all
     profile = nil
     if !params[:profiles] && !params[:profile_id]
-      raise Exceptions::UnprocessableEntity, 'No such profiles param'
+      raise Exceptions::UnprocessableEntity, __('No such profiles param')
     end
 
     if params[:profile_id]
@@ -130,7 +139,7 @@ class ReportsController < ApplicationController
       end
     end
     if !profile
-      raise Exceptions::UnprocessableEntity, 'No such active profile'
+      raise Exceptions::UnprocessableEntity, __('No such active profile')
     end
 
     local_config = Report.config

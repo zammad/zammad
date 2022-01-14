@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 class SearchKnowledgeBaseBackend
   attr_reader :knowledge_base
 
@@ -7,7 +9,9 @@ class SearchKnowledgeBaseBackend
   # @option params [KnowledgeBase::Category] :scope (nil) optional search scope
   # @option params [Symbol]  :flavor (:public) agent or public to indicate source and narrow down to internal or public answers accordingly
   # @option params [String, Array<String>] :index (nil) indexes to limit search to, searches all indexes if nil
+  # @option params [Integer] :limit per page param for paginatin
   # @option params [Boolean] :highlight_enabled (true) highlight matching text
+  # @option params [Hash<String=>String>, Hash<Symbol=>Symbol>] :order_by hash with column => asc/desc
 
   def initialize(params)
     @params = params.compact
@@ -15,23 +19,18 @@ class SearchKnowledgeBaseBackend
     prepare_scope_ids
   end
 
-  def search(query, user: nil)
-    raw_results = if SearchIndexBackend.enabled?
-                    SearchIndexBackend
-                      .search(query, indexes, options)
-                      .map do |hash|
-                        hash[:id] = hash[:id].to_i
-                        hash
-                      end
-                  else
-                    search_fallback(query, indexes, { user: user })
-                  end
+  def search(query, user: nil, pagination: nil)
+    raw_results = raw_results(query, user, pagination: pagination)
 
-    if (limit = @params.fetch(:limit, nil))
-      raw_results = raw_results[0, limit]
+    filtered = filter_results raw_results, user
+
+    if pagination
+      filtered = filtered.slice pagination.offset, pagination.limit
+    elsif @params[:limit]
+      filtered = filtered.slice 0, @params[:limit]
     end
 
-    filter_results raw_results, user
+    filtered
   end
 
   def search_fallback(query, indexes, options)
@@ -45,8 +44,24 @@ class SearchKnowledgeBaseBackend
       .constantize
       .search_fallback("%#{query}%", @cached_scope_ids, options: options)
       .where(kb_locale: kb_locales)
+      .order(**search_fallback_order)
       .pluck(:id)
       .map { |id| { id: id, type: index } }
+  end
+
+  def search_fallback_order
+    @params[:order_by].presence || { updated_at: :desc }
+  end
+
+  def raw_results(query, user, pagination: nil)
+    return search_fallback(query, indexes, { user: user }) if !SearchIndexBackend.enabled?
+
+    SearchIndexBackend
+      .search(query, indexes, options(pagination: pagination))
+      .map do |hash|
+        hash[:id] = hash[:id].to_i
+        hash
+      end
   end
 
   def filter_results(raw_results, user)
@@ -89,7 +104,6 @@ class SearchKnowledgeBaseBackend
             else
               scope.published
             end
-
     flatten_translation_ids(scope)
   end
 
@@ -158,28 +172,56 @@ class SearchKnowledgeBaseBackend
     @params.fetch(:flavor, :public).to_sym
   end
 
-  def options
-    output = {
+  def base_options
+    {
       query_extension: {
         bool: {
           must: [ { terms: { kb_locale_id: kb_locale_ids } } ]
         }
       }
     }
+  end
 
-    if @params.fetch(:highlight_enabled, true)
-      output[:highlight_fields_by_indexes] = {
-        'KnowledgeBase::Answer::Translation':   %w[title content.body attachment.content],
-        'KnowledgeBase::Category::Translation': %w[title],
-        'KnowledgeBase::Translation':           %w[title]
-      }
+  def options_apply_highlight(hash)
+    return if !@params.fetch(:highlight_enabled, true)
+
+    hash[:highlight_fields_by_indexes] = {
+      'KnowledgeBase::Answer::Translation':   %w[title content.body attachment.content tags],
+      'KnowledgeBase::Category::Translation': %w[title],
+      'KnowledgeBase::Translation':           %w[title]
+    }
+  end
+
+  def options_apply_scope(hash)
+    return if !@params.fetch(:scope, nil)
+
+    hash[:query_extension][:bool][:must].push({ terms: { scope_id: @cached_scope_ids } })
+  end
+
+  def options_apply_pagination(hash, pagination)
+    if @params[:from] && @params[:limit]
+      hash[:from]  = @params[:from]
+      hash[:limit] = @params[:limit]
+    elsif pagination
+      hash[:from]  = 0
+      hash[:limit] = pagination.limit * 99
     end
+  end
 
-    if @params.fetch(:scope, nil)
-      scope = { terms: { scope_id: @cached_scope_ids } }
+  def options_apply_order(hash)
+    return if @params[:order_by].blank?
 
-      output[:query_extension][:bool][:must].push scope
-    end
+    hash[:sort_by]  = @params[:order_by].keys
+    hash[:order_by] = @params[:order_by].values
+  end
+
+  def options(pagination: nil)
+    output = base_options
+
+    options_apply_highlight(output)
+    options_apply_scope(output)
+    options_apply_pagination(output, pagination)
+    options_apply_order(output)
 
     output
   end

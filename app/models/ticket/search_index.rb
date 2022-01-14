@@ -1,4 +1,5 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 module Ticket::SearchIndex
   extend ActiveSupport::Concern
 
@@ -98,7 +99,7 @@ module Ticket::SearchIndex
     return true if attachment.filename.blank?
 
     filename_extention = attachment.filename.downcase
-    filename_extention.gsub!(/^.*(\..+?)$/, '\\1')
+    filename_extention.gsub!(%r{^.*(\..+?)$}, '\\1')
 
     # list ignored file extensions
     attachments_ignore = Setting.get('es_attachment_ignore') || [ '.png', '.jpg', '.jpeg', '.mpeg', '.mpg', '.mov', '.bin', '.exe' ]

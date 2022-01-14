@@ -1,9 +1,11 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 
 RSpec.describe 'Manage > Calendars', type: :system do
 
   context 'Date' do
-    let(:calendar_title) { "test calendar #{rand(999_999_999)}" }
+    let(:calendar_title) { "test calendar #{SecureRandom.uuid}" }
 
     it 'show festivity dates correctly far away from UTC', time_zone: 'America/Sao_Paulo' do
       visit '/#manage/calendars'
@@ -31,16 +33,30 @@ RSpec.describe 'Manage > Calendars', type: :system do
         end
       end
 
-      wait(5).until_constant { find('.modal-dialog').style('height') }
+      # Check that holidays were imported by looking at the first entry.
+      expect(find('.modal-dialog .holiday_selector tbody tr:first-child td:nth-child(2)').text).to match(%r{^\d{4}-\d{2}-\d{2}$})
+      expect(find('.modal-dialog .holiday_selector tbody tr:first-child td input.js-summary').value).to be_present
+    end
+  end
 
-      within '.modal-dialog' do
-        row = first('.holiday_selector tr') do |elem|
-          elem.find('input.js-summary').value.starts_with?('Christmas Eve')
-        rescue
-          false
-        end
+  # https://github.com/zammad/zammad/issues/2528
+  context 'ical feed - subscribe to public holidays in another country' do
+    it 'shows countries dropdown in sorted order' do
+      allow(Calendar).to receive(:ical_feeds).and_return({
+                                                           'https://argentinien.de':  'Argentinien',
+                                                           'https://australien.de':   'Australien',
+                                                           'https://osterreich.de':   'Österreich',
+                                                           'https://weibrussland.de': 'Weißrussland',
+                                                           'https://kanada.de':       'Kanada',
+                                                           'https://chile.de':        'Chile',
+                                                         })
 
-        expect(row).to have_text('24').and have_text('12')
+      visit '/#manage/calendars'
+
+      click '.js-new'
+
+      in_modal disappears: false do
+        expect(all('.ical_feed select option').map(&:text)).to eq ['-', 'Argentinien', 'Australien', 'Chile', 'Kanada', 'Österreich', 'Weißrussland']
       end
     end
   end

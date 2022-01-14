@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 RSpec.shared_examples 'macros' do |path:|
 
   let!(:group1)              { create :group }
@@ -10,8 +12,8 @@ RSpec.shared_examples 'macros' do |path:|
 
     # give user access to all groups including those created
     # by using FactoryBot outside of the example
-    group_names_access_map = Group.all.pluck(:name).each_with_object({}) do |group_name, result|
-      result[group_name] = 'full'.freeze
+    group_names_access_map = Group.all.pluck(:name).index_with do |_group_name|
+      'full'.freeze
     end
 
     current_user do |user|

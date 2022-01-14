@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 
 RSpec.describe 'KnowledgeBase attachments', type: :request, authenticated_as: :current_user do

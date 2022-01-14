@@ -24,7 +24,7 @@
 
   <h2><%- @T('Inbound') %></h2>
 
-  <p><%- @T('Blocked caller ids based on sender caller id.') %>
+  <p><%- @T('Blocked caller IDs based on sender caller ID.') %>
 
   <div class="settings-entry">
     <table class="settings-list js-inboundBlockCallerId" style="width: 100%;">
@@ -51,14 +51,14 @@
 
   <h2><%- @T('Outbound') %></h2>
 
-  <p><%- @T('Set caller id of outbound calls based on destination caller id.') %>
+  <p><%- @T('Set caller ID of outbound calls based on destination caller ID.') %>
 
   <div class="settings-entry js-outboundRouting">
     <table class="settings-list" style="width: 100%;">
       <thead>
         <tr>
-          <th width="30%"><%- @T('Destination caller id') %>
-          <th width="30%"><%- @T('Set outbound caller id') %>
+          <th width="30%"><%- @T('Destination caller ID') %>
+          <th width="30%"><%- @T('Set outbound caller ID') %>
           <th width="30%"><%- @T('Note') %>
           <th width="10%"><%- @T('Action') %>
       </thead>
@@ -79,38 +79,22 @@
     </table>
   </div>
 
-  <p><%- @T('Default caller id.') %>
+  <p><%- @T('Settings') %>
 
   <div class="settings-entry">
     <table class="settings-list" style="width: 100%;">
       <thead>
         <tr>
-          <th width="50%"><%- @T('Default caller id') %>
-          <th width="50%"><%- @T('Note') %>
+          <th width="50%"><%- @T('Value') %>
+          <th width="50%"><%- @T('Description') %>
       </thead>
       <tbody>
         <tr>
           <td class="settings-list-control-cell"><input name="default_caller_id" value="<%= @config.outbound.default_caller_id %>" placeholder="4930609854189" class="form-control form-control--small js-summary">
-          <td class="settings-list-row-control"><%- @T('Default caller id for outbound calls.') %>
-      </tbody>
-    </table>
-  </div>
-
-  <p><%- @T('In order for Zammad to access %s, a %s API user and password must be stored here', 'Sipgate', 'Sipgate') %>:<p>
-  <div class="settings-entry">
-    <table class="settings-list" style="width: 100%;">
-      <thead>
+          <td class="settings-list-row-control"><%- @T('Default caller ID for outbound calls.') %>
         <tr>
-          <th width="20%"><%- @T('Type') %>
-          <th width="80%"><%- @T('Content') %>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="settings-list-row-control"><%- @T('API User') %>
-          <td class="settings-list-control-cell"><input type="input" class="form-control form-control--small js-select" value="<%= @config.api_user %>" name="api_user" placeholder="someuser@example.com">
-        <tr>
-          <td class="settings-list-row-control"><%- @T('API Password') %>
-          <td class="settings-list-control-cell"><input type="password" class="form-control form-control--small js-select" value="<%= @config.api_password %>" name="api_password" placeholder="">
+          <td class="settings-list-control-cell js-viewLimit">
+          <td class="settings-list-row-control"><%- @T('Shown records in caller log.') %>
       </tbody>
     </table>
   </div>

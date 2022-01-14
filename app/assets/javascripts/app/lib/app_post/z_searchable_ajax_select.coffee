@@ -38,7 +38,6 @@ class App.SearchableAjaxSelect extends App.SearchableSelect
       success:     (data, status, xhr) =>
         # cache search result
         @searchResultCache[cacheKey] = data
-
         @renderResponse(data, query)
 
     # if delegate is given and provides getAjaxAttributes method, try to extend ajax call
@@ -78,10 +77,14 @@ class App.SearchableAjaxSelect extends App.SearchableSelect
   renderResponseItemAjax: (elem, data) ->
     result = _.find(data.details, (detailElem) -> detailElem.type == elem.type and detailElem.id == elem.id)
 
+    category = undefined
+    if result.type is 'KnowledgeBase::Answer::Translation' && result.subtitle
+      category = result.subtitle
     if result
       {
-        name:  result.title
-        value: elem.id
+        category: category
+        name:     result.title
+        value:    elem.id
       }
 
   renderResponseItem: (elem) ->
@@ -98,6 +101,7 @@ class App.SearchableAjaxSelect extends App.SearchableSelect
     {
       name:  name
       value: object.id
+      inactive: object.active == false
     }
 
   showLoader: =>

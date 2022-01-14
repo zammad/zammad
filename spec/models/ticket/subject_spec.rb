@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 
 RSpec.describe Ticket::Subject do
@@ -36,7 +38,7 @@ RSpec.describe Ticket::Subject do
       expect(ticket.subject_clean('')).to eq('')
     end
 
-    it 'cleanup subject with long string which need to be truncated by [...]' do
+    it 'cleanup subject with long string which needs to be truncated by [...]' do
       expect(ticket.subject_clean('123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890')).to eq('12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890[...]')
     end
 

@@ -1,14 +1,16 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 class PasswordPolicy
   class UpperAndLowerCaseCharacters < PasswordPolicy::Backend
 
-    UPPER_LOWER_REGEXPS = [/\p{Upper}.*\p{Upper}/, /\p{Lower}.*\p{Lower}/].freeze
+    UPPER_LOWER_REGEXPS = [%r{\p{Upper}.*\p{Upper}}, %r{\p{Lower}.*\p{Lower}}].freeze
 
     def valid?
       UPPER_LOWER_REGEXPS.all? { |regexp| @password.match?(regexp) }
     end
 
     def error
-      ['Invalid password, it must contain at least 2 lowercase and 2 uppercase characters!']
+      [__('Invalid password, it must contain at least 2 lowercase and 2 uppercase characters!')]
     end
 
     def self.applicable?

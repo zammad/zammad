@@ -1,9 +1,13 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 
 RSpec.describe NotificationFactory::Template do
   subject(:template) do
-    described_class.new(template_string, escape)
+    described_class.new(template_string, escape, trusted)
   end
+
+  let(:trusted) { false }
 
   describe '#to_s' do
     context 'for empty input template (incl. whitespace-only)' do
@@ -22,6 +26,28 @@ RSpec.describe NotificationFactory::Template do
 
         it 'returns an ERB template with the #d helper, and passes escape arg as string' do
           expect(template.to_s).to eq('<%= d "", false %>')
+        end
+      end
+    end
+
+    context 'for sanitizing the template string' do
+      let(:escape) { false }
+
+      context 'for strings containing ERB' do
+        let(:template_string) { '<%% <% "<%" %> <%# comment %> <%= "<%" %> <%- "" %> %%>' }
+
+        context 'for untrusted templates' do
+          it 'mutes all pre-existing ERB tags' do
+            expect(template.to_s).to eq('<%% <%% "<%%" %> <%%# comment %> <%%= "<%%" %> <%%- "" %> %%>')
+          end
+        end
+
+        context 'for trusted templates' do
+          let(:trusted) { true }
+
+          it 'keeps all pre-existing ERB tags' do
+            expect(template.to_s).to eq(template_string)
+          end
         end
       end
     end

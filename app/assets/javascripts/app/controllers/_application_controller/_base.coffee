@@ -114,7 +114,7 @@ class App.Controller extends Spine.Controller
     if window.clipboardData # IE
       window.clipboardData.setData('Text', text)
     else
-      window.prompt('Copy to clipboard: Ctrl+C, Enter', text)
+      window.prompt(__('Copy to clipboard: Ctrl+C, Enter'), text)
 
   # disable all delay's and interval's
   disconnectClient: ->
@@ -273,6 +273,7 @@ class App.Controller extends Spine.Controller
     return if location is '#'
     return if location is '#login'
     return if location is '#logout'
+    return if location is '#session_timeout'
     return if location is '#keyboard_shortcuts'
 
     # remember requested url
@@ -299,11 +300,17 @@ class App.Controller extends Spine.Controller
 
   frontendTimeUpdateItem: (item, currentVal) =>
     timestamp = item.attr('datetime')
-    time      = @humanTime(timestamp, item.hasClass('escalation'))
+    return if timestamp is 'null'
 
     # only do dom updates on changes
+    time = @humanTime(timestamp, item.hasClass('escalation'))
     return if time is currentVal
-    item.attr('title', App.i18n.translateTimestamp(timestamp))
+
+    newTitle = App.i18n.translateTimestamp(timestamp)
+    if item.attr('timezone')
+      newTitle += ' ' + item.attr('timezone')
+
+    item.attr('title', newTitle)
     item.html(time)
 
   recentView: (object, o_id) =>

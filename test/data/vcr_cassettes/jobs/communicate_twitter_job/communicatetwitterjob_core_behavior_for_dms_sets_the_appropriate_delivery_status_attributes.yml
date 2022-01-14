@@ -1,0 +1,77 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.twitter.com/1.1/direct_messages/events/new.json
+    body:
+      encoding: UTF-8
+      string: '{"event":{"type":"message_create","message_create":{"target":{"recipient_id":<TWITTER_DM_RECIPIENT>},"message_data":{"text":"Please
+        ignore this message."}}}}'
+    headers:
+      User-Agent:
+      - TwitterRubyGem/7.0.0
+      Authorization:
+      - OAuth oauth_consumer_key="<TWITTER_CONSUMER_KEY>", oauth_nonce="059956a1ece3b3a66c79a841a2b63373",
+        oauth_signature="ktziTsboTa%2BF8wvC%2BH1%2BSr%2FLCl4%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1625040245", oauth_token="<TWITTER_OAUTH_TOKEN>", oauth_version="1.0"
+      Connection:
+      - close
+      Content-Type:
+      - application/json; charset=UTF-8
+      Host:
+      - api.twitter.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 30 Jun 2021 08:04:05 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - tsa_o
+      Status:
+      - 200 OK
+      Expires:
+      - Tue, 31 Mar 1981 05:00:00 GMT
+      Set-Cookie:
+      - guest_id=v1%3A162504024541934708; Max-Age=63072000; Expires=Fri, 30 Jun 2023
+        08:04:05 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      - lang=en; Path=/
+      - personalization_id="v1_Htfee3TSOnWMFrP/Xf/T/w=="; Max-Age=63072000; Expires=Fri,
+        30 Jun 2023 08:04:05 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      Content-Type:
+      - application/json;charset=utf-8
+      Cache-Control:
+      - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+      Last-Modified:
+      - Wed, 30 Jun 2021 08:04:05 GMT
+      X-Transaction:
+      - e3208fd407c4eed3
+      Content-Length:
+      - '313'
+      X-Access-Level:
+      - read-write-directmessages
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - '0'
+      Content-Disposition:
+      - attachment; filename=json.json
+      X-Content-Type-Options:
+      - nosniff
+      X-Twitter-Response-Tags:
+      - BouncerCompliant
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-Connection-Hash:
+      - 82d50f9badd633a8c1b3e0469fb921464cfdbc6a09f99332740f2b3e98b2f8d8
+      Connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"event":{"type":"message_create","id":"1410147112021528582","created_timestamp":"1625040245429","message_create":{"target":{"recipient_id":"<TWITTER_DM_RECIPIENT>"},"sender_id":"<TWITTER_USER_ID>","message_data":{"text":"Please
+        ignore this message.","entities":{"hashtags":[],"symbols":[],"user_mentions":[],"urls":[]}}}}}'
+  recorded_at: Wed, 30 Jun 2021 08:04:05 GMT
+recorded_with: VCR 6.0.0

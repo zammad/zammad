@@ -6,7 +6,7 @@
       <% uid =  _.uniqueId('fileUpload_') %>
       <input multiple="multiple" type="file" name="file" id="<%- uid %>">
       <label class="attachmentPlaceholder-label" for="<%- uid %>">
-        <%- @T('select attachment...') %>
+        <%- @T('select attachment…') %>
       </label>
     </span>
   </div>
@@ -17,7 +17,7 @@
         <%- @T('Uploading') %> (<span class="js-percentage">0</span>%) ...
       </div>
       <div class="attachmentUpload-cancel js-cancel">
-        <%- @Icon('diagonal-cross') %></div><%- @T('Cancel Upload') %>
+        <%- @Icon('diagonal-cross') %><%- @T('Cancel Upload') %>
       </div>
     </div>
     <div class="attachmentUpload-progressBar" style="width: 0%"></div>

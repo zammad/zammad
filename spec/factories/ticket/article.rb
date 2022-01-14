@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 FactoryBot.define do
   factory :'ticket/article', aliases: %i[ticket_article] do
     inbound_email
@@ -6,6 +8,7 @@ FactoryBot.define do
     from          { 'factory-customer-1@example.com' }
     to            { 'factory-customer-1@example.com' }
     subject       { 'factory article' }
+
     message_id    { 'factory@id_com_1' }
     body          { 'some message 123' }
     internal      { false }
@@ -64,6 +67,13 @@ FactoryBot.define do
       end
     end
 
+    trait :outbound_web do
+      transient do
+        type_name   { 'web' }
+        sender_name { 'Agent' }
+      end
+    end
+
     factory :twitter_article do
       transient do
         type_name { 'twitter status' }
@@ -75,7 +85,7 @@ FactoryBot.define do
       sender_name { 'Agent' }
 
       trait :reply do
-        in_reply_to { Faker::Number.number(19) }
+        in_reply_to { Faker::Number.number(digits: 19) }
       end
     end
 
@@ -90,18 +100,18 @@ FactoryBot.define do
       trait :pending_delivery do
         transient do
           recipient { create(:twitter_authorization) }
-          sender_id { Faker::Number.number(10) }
+          sender_id { Faker::Number.number(digits: 10) }
         end
 
         from         { ticket.owner.fullname }
         to           { recipient.username }
-        in_reply_to  { Faker::Number.number(19) }
+        in_reply_to  { Faker::Number.number(digits: 19) }
         content_type { 'text/plain' }
       end
 
       trait :delivered do
         pending_delivery
-        message_id { Faker::Number.number(19) }
+        message_id { Faker::Number.number(digits: 19) }
         preferences do
           {
             delivery_retry:          1,

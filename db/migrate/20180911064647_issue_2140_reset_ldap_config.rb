@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 # ATTENTION: This migration is most likely not required anymore
 # because the encoding error was fixed by using a newer version of the psych gem (3.1.0).
 # However, we'll keep it as a regression test.

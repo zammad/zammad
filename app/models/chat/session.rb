@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 class Chat::Session < ApplicationModel
   include HasSearchIndexBackend
   include HasTags
@@ -7,7 +9,7 @@ class Chat::Session < ApplicationModel
   include Chat::Session::Assets
 
   # rubocop:disable Rails/InverseOf
-  has_many   :messages, class_name: 'Chat::Message', foreign_key: 'chat_session_id'
+  has_many   :messages, class_name: 'Chat::Message', foreign_key: 'chat_session_id', dependent: :destroy
   belongs_to :user,     class_name: 'User', optional: true
   belongs_to :chat,     class_name: 'Chat'
   # rubocop:enable Rails/InverseOf
@@ -38,7 +40,7 @@ class Chat::Session < ApplicationModel
   end
 
   def generate_session_id
-    self.session_id = Digest::MD5.hexdigest(Time.zone.now.to_s + rand(99_999_999_999_999).to_s)
+    self.session_id = Digest::MD5.hexdigest(SecureRandom.uuid)
   end
 
   def add_recipient(client_id, store = false)

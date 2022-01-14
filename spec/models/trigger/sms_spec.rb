@@ -1,10 +1,12 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 
 RSpec.describe Trigger do
 
   describe 'sms' do
     before do
-      Translation.fetch(locale)
+      Translation.sync_locale_from_po(locale)
       Setting.set('locale_default', locale)
       Setting.set('timezone_default', time_zone)
     end
@@ -33,7 +35,7 @@ RSpec.describe Trigger do
       let(:agent) { create(:agent) }
       let(:ticket) do
         ticket = create(:ticket, group: Group.lookup(id: 1), created_by_id: agent.id)
-        Observer::Transaction.commit
+        TransactionDispatcher.commit
         ticket
       end
 
@@ -42,7 +44,7 @@ RSpec.describe Trigger do
       end
 
       it 'renders HTML chars' do
-        expect(triggered_article.body).to match(/space between/)
+        expect(triggered_article.body).to match(%r{space between})
       end
 
       it 'interpolates ticket properties' do
@@ -72,7 +74,7 @@ RSpec.describe Trigger do
 
       let(:ticket) do
         ticket = create(:ticket, group: ticket_group, created_by_id: create(:agent).id)
-        Observer::Transaction.commit
+        TransactionDispatcher.commit
         ticket
       end
 

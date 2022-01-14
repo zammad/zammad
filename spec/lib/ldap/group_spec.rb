@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 # rails autoloading issue
 require 'ldap'
@@ -8,7 +10,7 @@ RSpec.describe Ldap::Group do
   # required as 'let' to perform test based
   # expectations and reuse it in 'let' instance
   # as additional parameter
-  let(:mocked_ldap) { double() }
+  let(:mocked_ldap) { double }
 
   describe '.uid_attribute' do
 
@@ -21,7 +23,7 @@ RSpec.describe Ldap::Group do
     end
   end
 
-  context 'initialization config parameters' do
+  describe 'initialization config parameters' do
 
     it 'reuses given Ldap instance if given' do
       config = {}
@@ -60,7 +62,7 @@ RSpec.describe Ldap::Group do
     end
   end
 
-  context 'instance methods' do
+  describe 'instance methods' do
 
     let(:initialization_config) do
       {

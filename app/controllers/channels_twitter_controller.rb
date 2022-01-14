@@ -1,5 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
-require_dependency 'channel/driver/twitter'
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class ChannelsTwitterController < ApplicationController
   prepend_before_action -> { authentication_check && authorize! }, except: %i[webhook_incoming webhook_verify]
@@ -19,7 +18,7 @@ class ChannelsTwitterController < ApplicationController
 
     calculated_signature = hmac_signature_by_app(request.raw_post)
     raise Exceptions::NotAuthorized if calculated_signature != given_signature
-    raise Exceptions::UnprocessableEntity, "Missing 'for_user_id' in payload!" if params[:for_user_id].blank?
+    raise Exceptions::UnprocessableEntity, __("Missing 'for_user_id' in payload!") if params[:for_user_id].blank?
 
     @channel = nil
     Channel.where(area: 'Twitter::Account', active: true).each do |channel|
@@ -36,7 +35,7 @@ class ChannelsTwitterController < ApplicationController
 
   def hmac_signature_by_app(content)
     external_credential = ExternalCredential.find_by(name: 'twitter')
-    raise Exceptions::UnprocessableEntity, 'No such external_credential \'twitter\'!' if !external_credential
+    raise Exceptions::UnprocessableEntity, __('No such external_credential \'twitter\'!') if !external_credential
 
     hmac_signature_gen(external_credential.credentials[:consumer_secret], content)
   end
@@ -48,13 +47,13 @@ class ChannelsTwitterController < ApplicationController
   end
 
   def webhook_verify
-    external_credential = Cache.get('external_credential_twitter')
+    external_credential = Cache.read('external_credential_twitter')
     if !external_credential && ExternalCredential.exists?(name: 'twitter')
       external_credential = ExternalCredential.find_by(name: 'twitter').credentials
     end
-    raise Exceptions::UnprocessableEntity, 'No external_credential in cache!' if external_credential.blank?
-    raise Exceptions::UnprocessableEntity, 'No external_credential[:consumer_secret] in cache!' if external_credential[:consumer_secret].blank?
-    raise Exceptions::UnprocessableEntity, 'No crc_token in verify payload from twitter!' if params['crc_token'].blank?
+    raise Exceptions::UnprocessableEntity, __('No external_credential in cache!') if external_credential.blank?
+    raise Exceptions::UnprocessableEntity, __('No external_credential[:consumer_secret] in cache!') if external_credential[:consumer_secret].blank?
+    raise Exceptions::UnprocessableEntity, __('No crc_token in verify payload from twitter!') if params['crc_token'].blank?
 
     render json: {
       response_token: hmac_signature_gen(external_credential[:consumer_secret], params['crc_token'])

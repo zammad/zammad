@@ -28,7 +28,7 @@
     # add new header item
     attribute =
       name: 'some name'
-      display: 'Some Name'
+      display: __('Some Name')
     headers.push attribute
     console.log('new header is', headers)
     headers
@@ -78,12 +78,12 @@
     el:       element
     overview: ['time', 'area', 'level', 'browser', 'location', 'data']
     attribute_list: [
-      { name: 'time',     display: 'Time',      tag: 'datetime' },
-      { name: 'area',     display: 'Area',      type: 'text' },
-      { name: 'level',    display: 'Level',     type: 'text' },
-      { name: 'browser',  display: 'Browser',   type: 'text' },
-      { name: 'location', display: 'Location',  type: 'text' },
-      { name: 'data',     display: 'Data',      type: 'text' },
+      { name: 'time',     display: __('Time'),      tag: 'datetime' },
+      { name: 'area',     display: __('Area'),      type: 'text' },
+      { name: 'level',    display: __('Level'),     type: 'text' },
+      { name: 'browser',  display: __('Browser'),   type: 'text' },
+      { name: 'location', display: __('Location'),  type: 'text' },
+      { name: 'data',     display: __('Data'),      type: 'text' },
     ]
     objects:  data
   )
@@ -111,8 +111,9 @@ class App.ControllerTable extends App.Controller
   groupBy:            undefined
   groupDirection:     undefined
 
-  shownPerPage: 150
-  shownPage: 0
+  pagerEnabled: true
+  pagerItemsPerPage: 150
+  pagerShownPage: 0
 
   destroy: false
   customActions: []
@@ -197,6 +198,8 @@ class App.ControllerTable extends App.Controller
     App.QueueManager.run('tableRender')
 
   renderPager: (el, find = false) =>
+    return if !@pagerEnabled
+
     if @pagerAjax
       @renderPagerAjax(el, find)
     else
@@ -220,7 +223,7 @@ class App.ControllerTable extends App.Controller
       el.filter('.js-pager').html(pager)
 
   renderPagerStatic: (el, find = false) =>
-    pages = parseInt(((@objects.length - 1)  / @shownPerPage))
+    pages = parseInt(((@objects.length - 1)  / @pagerItemsPerPage))
     if pages < 1
       if find
         el.find('.js-pager').html('')
@@ -228,7 +231,7 @@ class App.ControllerTable extends App.Controller
         el.filter('.js-pager').html('')
       return
     pager = App.view('generic/table_pager')(
-      page:  @shownPage
+      page:  @pagerShownPage
       pages: pages
     )
     if find
@@ -490,6 +493,15 @@ class App.ControllerTable extends App.Controller
       sortable:   @dndCallback
     ))
 
+  sortObjectKeys: (objects, direction) ->
+    sorted = Object.keys(objects).sort()
+
+    switch direction
+      when 'DESC'
+        sorted.reverse()
+      else
+        sorted
+
   renderTableRows: (sort = false) =>
     if sort is true
       @sortList()
@@ -500,16 +512,34 @@ class App.ControllerTable extends App.Controller
     groupLast = ''
     groupLastName = ''
     tableBody = []
-    objectsToShow = @objectsOfPage(@shownPage)
-    for object in objectsToShow
-      if object
-        position++
-        if @groupBy
-          groupByName = @groupObjectName(object, @groupBy)
-          if groupLastName isnt groupByName
-            groupLastName = groupByName
-            tableBody.push @renderTableGroupByRow(object, position, groupByName)
-        tableBody.push @renderTableRow(object, position)
+    objectsToShow = @objectsOfPage(@pagerShownPage)
+    if @groupBy
+      # group by raw (and not printable) value so dates work also
+      objectsGrouped = _.groupBy(objectsToShow, (object) => @groupObjectName(object, @groupBy, excludeTags: ['date', 'datetime']))
+    else
+      objectsGrouped = { '': objectsToShow }
+
+    for groupValue in @sortObjectKeys(objectsGrouped, @groupDirection)
+      groupObjects = objectsGrouped[groupValue]
+
+      for object in groupObjects
+        objectActions = []
+
+        if object
+          position++
+          if @groupBy
+            groupByName = @groupObjectName(object, @groupBy)
+            if groupLastName isnt groupByName
+              groupLastName = groupByName
+              tableBody.push @renderTableGroupByRow(object, position, groupByName)
+          for action in @actions
+            # Check if the available key is used, it can be a Boolean or a function which should be called.
+            if !action.available? || action.available == true
+              objectActions.push action
+            else if typeof action.available is 'function' && action.available(object) == true
+              objectActions.push action
+
+          tableBody.push @renderTableRow(object, position, objectActions)
     tableBody
 
   renderTableGroupByRow: (object, position, groupByName) =>
@@ -531,7 +561,7 @@ class App.ControllerTable extends App.Controller
       columnsLength: @columnsLength
     )
 
-  renderTableRow: (object, position) =>
+  renderTableRow: (object, position, actions) =>
     App.view('generic/table_row')(
       headers:    @headers
       attributes: @attributesList
@@ -541,7 +571,7 @@ class App.ControllerTable extends App.Controller
       sortable:   @dndCallback
       position:   position
       object:     object
-      actions:    @actions
+      actions:    actions
     )
 
   tableHeadersHasChanged: =>
@@ -601,7 +631,7 @@ class App.ControllerTable extends App.Controller
     if @clone
       @actions.push
         name: 'clone'
-        display: 'Clone'
+        display: __('Clone')
         icon: 'clipboard'
         class: 'create  js-clone'
         callback: (id) =>
@@ -620,7 +650,7 @@ class App.ControllerTable extends App.Controller
     if @destroy
       @actions.push
         name: 'delete'
-        display: 'Delete'
+        display: __('Delete')
         icon: 'trash'
         class: 'danger js-delete'
         callback: (id) =>
@@ -632,12 +662,13 @@ class App.ControllerTable extends App.Controller
     if @actions.length
       @headers.push
         name:         'action'
-        display:      'Action'
+        display:      __('Action')
         width:        '50px'
         displayWidth: 50
         align:        'right'
         parentClass:  'noTruncate no-padding'
         unresizable:  true
+        unsortable:   true
 
       @bindCol['action'] =
         events:
@@ -653,13 +684,17 @@ class App.ControllerTable extends App.Controller
     ['new headers', @headers]
 
   setMaxPage: =>
-    pages = parseInt(((@objects.length - 1)  / @shownPerPage))
-    if parseInt(@shownPage) > pages
-      @shownPage = pages
+    return if !@pagerEnabled
+
+    pages = parseInt(((@objects.length - 1)  / @pagerItemsPerPage))
+    if parseInt(@pagerShownPage) > pages
+      @pagerShownPage = pages
 
   objectsOfPage: (page = 0) =>
+    return @objects if !@pagerEnabled
+
     page = parseInt(page)
-    @objects.slice(page * @shownPerPage, (page + 1) * @shownPerPage)
+    @objects.slice(page * @pagerItemsPerPage, (page + 1) * @pagerItemsPerPage)
 
   paginate: (e) =>
     e.stopPropagation()
@@ -668,7 +703,7 @@ class App.ControllerTable extends App.Controller
       @navigate "#{@pagerBaseUrl}#{(parseInt(page) + 1)}"
     else
       render = =>
-        @shownPage = page
+        @pagerShownPage = page
         @renderTableFull()
       App.QueueManager.add('tableRender', render)
       App.QueueManager.run('tableRender')
@@ -707,7 +742,9 @@ class App.ControllerTable extends App.Controller
         list
         (item) ->
           res = iteratee(item)
-          return res if res
+          # Checking for a falsey value would overide 0 or false to placeholder.
+          # UnderscoreJS sorter breaks when \uFFFF is sorted together with non-string values.
+          return res if res != null and res != undefined and res != ''
           # null values are considered lexicographically "last"
           '\uFFFF'
       )
@@ -818,11 +855,15 @@ class App.ControllerTable extends App.Controller
     @objects = localObjects
     @lastSortedobjects = localObjects
 
-  groupObjectName: (object, key = undefined) ->
+  groupObjectName: (object, key = undefined, options = {}) ->
     group = object
     if key
       if key not of object
         key += '_id'
+
+      # return internal value if needed
+      return object[key] if options.excludeTags && _.find(@attributesList, (attr) -> attr.name == key && _.contains(options.excludeTags, attr.tag))
+
       group = App.viewPrint(object, key, @attributesList)
     if _.isEmpty(group)
       group = ''
@@ -1035,12 +1076,13 @@ class App.ControllerTable extends App.Controller
     # update store
     @preferencesStore('order', 'customOrderBy', @orderBy)
     @preferencesStore('order', 'customOrderDirection', @orderDirection)
-    render = =>
-      @renderTableFull(false, skipHeadersResize: true)
-    App.QueueManager.add('tableRender', render)
 
     if @sortRenderCallback
       App.QueueManager.add('tableRender', @sortRenderCallback)
+    else
+      render = =>
+        @renderTableFull(false, skipHeadersResize: true)
+      App.QueueManager.add('tableRender', render)
 
     App.QueueManager.run('tableRender')
 

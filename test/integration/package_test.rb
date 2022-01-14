@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'integration_test_helper'
 
 class PackageTest < ActiveSupport::TestCase
@@ -359,17 +361,17 @@ class PackageTest < ActiveSupport::TestCase
           file.close
         end
         begin
-          Package.auto_install()
+          Package.auto_install
         rescue
           false
         end
         if test[:zpm]
-          File.delete(location )
+          File.delete(location)
         end
       end
       if test[:verify] && test[:verify][:package]
         exists = Package.where(name: test[:verify][:package][:name], version: test[:verify][:package][:version]).first
-        assert(exists, "package '#{test[:verify][:package][:name]}' is not installed" )
+        assert(exists, "package '#{test[:verify][:package][:name]}' is not installed")
       end
       next if !test[:verify]
       next if !test[:verify][:check_files]
@@ -377,9 +379,9 @@ class PackageTest < ActiveSupport::TestCase
       test[:verify][:check_files].each do |item|
         exists = File.exist?(item[:location])
         if item[:result]
-          assert(exists, "'#{item[:location]}' exists" )
+          assert(exists, "'#{item[:location]}' exists")
         else
-          assert_not(exists, "'#{item[:location]}' doesn't exists" )
+          assert_not(exists, "'#{item[:location]}' doesn't exists")
         end
       end
     end

@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 
 RSpec.describe SMIMECertificate, type: :model do
@@ -185,11 +187,13 @@ RSpec.describe SMIMECertificate, type: :model do
       it_behaves_like 'correctly parsed', 'smime2@example.com'
       it_behaves_like 'correctly parsed', 'smime3@example.com'
       it_behaves_like 'correctly parsed', 'CaseInsenstive@eXample.COM'
-      it_behaves_like 'correctly parsed', 'ca'
+      it_behaves_like 'correctly parsed', 'RootCA'
+      it_behaves_like 'correctly parsed', 'IntermediateCA'
+      it_behaves_like 'correctly parsed', 'ChainCA'
     end
   end
 
   it 'ensures uniqueness of records' do
-    expect { create_list(:smime_certificate, 2, fixture: 'smime1@example.com') }.to raise_error(ActiveRecord::RecordInvalid, /Validation failed/)
+    expect { create_list(:smime_certificate, 2, fixture: 'smime1@example.com') }.to raise_error(ActiveRecord::RecordInvalid, %r{Validation failed})
   end
 end

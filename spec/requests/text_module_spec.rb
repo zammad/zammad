@@ -1,5 +1,6 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
-require 'byebug'
 
 RSpec.describe 'Text Module', type: :request do
 

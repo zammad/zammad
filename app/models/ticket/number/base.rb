@@ -1,4 +1,5 @@
-# Copyright (C) 2012-2019 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 module Ticket::Number::Base
   extend self
 
@@ -16,7 +17,7 @@ module Ticket::Number::Base
     chksum = 0
     mult   = 1
 
-    number.to_s.split('').map(&:to_i).each do |digit|
+    number.to_s.chars.map(&:to_i).each do |digit|
       chksum += digit * mult
       mult    = (mult % 3) + 1
     end

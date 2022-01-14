@@ -1,24 +1,54 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 
 RSpec.describe 'Authentication', type: :system do
-
   it 'Login', authenticated_as: false do
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
     )
 
     expect_current_route 'dashboard'
+
+    refresh
+
+    # Check that cookies is temporary.
+    cookie = cookie('^_zammad.+?')
+    expect(cookie[:expires]).to eq(nil)
+  end
+
+  it 'Login with remember me', authenticated_as: false do
+    login(
+      username:    'admin@example.com',
+      password:    'test',
+      remember_me: true
+    )
+
+    expect_current_route 'dashboard'
+
+    refresh
+
+    # Check that cookies has a  expire date.
+    cookie = cookie('^_zammad.+?')
+    expect(cookie[:expires]).to be_truthy
+
+    logout
+    expect_current_route 'login', wait: 10
+
+    # Check that cookies has no longer a expire date after logout.
+    cookie = cookie('^_zammad.+?')
+    expect(cookie[:expires]).to eq(nil)
   end
 
   it 'Logout' do
     logout
-    expect_current_route 'login', wait: 2
+    expect_current_route 'login', wait: 10
   end
 
   it 'will unset user attributes after logout' do
     logout
-    expect_current_route 'login', wait: 2
+    expect_current_route 'login', wait: 10
 
     visit '/#signup'
 
@@ -29,26 +59,26 @@ RSpec.describe 'Authentication', type: :system do
   it 'Login and redirect to requested url', authenticated_as: false do
     visit 'ticket/zoom/1'
 
-    expect_current_route 'login', wait: 2
+    expect_current_route 'login', wait: 10
 
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
     )
 
-    expect_current_route 'ticket/zoom/1', wait: 2
+    expect_current_route 'ticket/zoom/1', wait: 10
   end
 
   it 'Login and redirect to requested url via external authentication', authenticated_as: false do
     visit 'ticket/zoom/1'
 
-    expect_current_route 'login', wait: 2
+    expect_current_route 'login', wait: 10
 
     # simulate jump to external ressource
     visit 'https://www.zammad.org'
 
     # simulate successful login via third party
-    user = User.find_by(login: 'master@example.com')
+    user = User.find_by(login: 'admin@example.com')
     ActiveRecord::SessionStore::Session.all.each do |session|
       session.data[:user_id] = user.id
       session.save!
@@ -57,9 +87,9 @@ RSpec.describe 'Authentication', type: :system do
     # jump back and check if origin requested url is shown
     visit ''
 
-    expect_current_route 'ticket/zoom/1', wait: 2
+    expect_current_route 'ticket/zoom/1', wait: 10
 
-    expect(current_login).to eq('master@example.com')
+    expect(current_login).to eq('admin@example.com')
   end
 
 end

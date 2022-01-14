@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 class EmailHelper
   class Probe
 
@@ -71,7 +73,7 @@ returns on fail
       provider_map.each_value do |settings|
         domains.each do |domain_to_check|
 
-          next if !domain_to_check.match?(/#{settings[:domain]}/i)
+          next if !domain_to_check.match?(%r{#{settings[:domain]}}i)
 
           # add folder to config if needed
           if params[:folder].present? && settings[:inbound] && settings[:inbound][:options]
@@ -166,7 +168,7 @@ returns on fail
           reason: 'outbound failed',
         }
       end
-      Rails.logger.info "PROBE FULL SUCCESS: #{result.inspect}"
+      Rails.logger.debug { "PROBE FULL SUCCESS: #{result.inspect}" }
       result
     end
 
@@ -225,8 +227,6 @@ returns on fail
       # connection test
       result_inbound = {}
       begin
-        require_dependency "channel/driver/#{adapter.to_filename}"
-
         driver_class    = "Channel::Driver::#{adapter.to_classname}".constantize
         driver_instance = driver_class.new
         result_inbound  = driver_instance.fetch(params[:options], nil, 'check')
@@ -304,14 +304,14 @@ returns on fail
                  from:    email,
                  to:      email,
                  subject: "Zammad Getting started Test Email #{subject}",
-                 body:    "This is a Test Email of Zammad to check if sending and receiving is working correctly.\n\nYou can ignore or delete this email.",
+                 body:    __("This is a Test Email of Zammad to check if sending and receiving is working correctly.\n\nYou can ignore or delete this email."),
                }
              else
                {
                  from:    email,
                  to:      'emailtrytest@znuny.com',
-                 subject: 'This is a Test Email',
-                 body:    "This is a Test Email of Zammad to verify if Zammad can send emails to an external address.\n\nIf you see this email, you can ignore and delete it.",
+                 subject: __('This is a Test Email'),
+                 body:    __("This is a Test Email of Zammad to verify if Zammad can send emails to an external address.\n\nIf you see this email, you can ignore and delete it."),
                }
              end
       if subject.present?
@@ -328,8 +328,6 @@ returns on fail
 
       # test connection
       begin
-        require_dependency "channel/driver/#{adapter.to_filename}"
-
         driver_class    = "Channel::Driver::#{adapter.to_classname}".constantize
         driver_instance = driver_class.new
         driver_instance.send(
@@ -347,7 +345,7 @@ returns on fail
           }
           white_map.each_key do |key|
 
-            next if !e.message.match?(/#{Regexp.escape(key)}/i)
+            next if !e.message.match?(%r{#{Regexp.escape(key)}}i)
 
             return {
               result:   'ok',
@@ -372,7 +370,7 @@ returns on fail
 
     def self.invalid_field(message_backend)
       invalid_fields.each do |key, fields|
-        return fields if message_backend.match?(/#{Regexp.escape(key)}/i)
+        return fields if message_backend.match?(%r{#{Regexp.escape(key)}}i)
       end
       {}
     end
@@ -397,24 +395,24 @@ returns on fail
 
     def self.translation(message_backend)
       translations.each do |key, message_human|
-        return message_human if message_backend.match?(/#{Regexp.escape(key)}/i)
+        return message_human if message_backend.match?(%r{#{Regexp.escape(key)}}i)
       end
       nil
     end
 
     def self.translations
       {
-        'authentication failed'                                     => 'Authentication failed!',
-        'Username and Password not accepted'                        => 'Authentication failed!',
-        'Incorrect username'                                        => 'Authentication failed, username incorrect!',
-        'Lookup failed'                                             => 'Authentication failed, username incorrect!',
-        'Invalid credentials'                                       => 'Authentication failed, invalid credentials!',
-        'authentication not enabled'                                => 'Authentication not possible (not offered by the service)',
-        'getaddrinfo: nodename nor servname provided, or not known' => 'Hostname not found!',
-        'getaddrinfo: Name or service not known'                    => 'Hostname not found!',
-        'No route to host'                                          => 'No route to host!',
-        'execution expired'                                         => 'Host not reachable!',
-        'Connection refused'                                        => 'Connection refused!',
+        'authentication failed'                                     => __('Authentication failed!'),
+        'Username and Password not accepted'                        => __('Authentication failed!'),
+        'Incorrect username'                                        => __('Authentication failed, username incorrect!'),
+        'Lookup failed'                                             => __('Authentication failed, username incorrect!'),
+        'Invalid credentials'                                       => __('Authentication failed, invalid credentials!'),
+        'authentication not enabled'                                => __('Authentication not possible (not offered by the service)'),
+        'getaddrinfo: nodename nor servname provided, or not known' => __('Hostname not found!'),
+        'getaddrinfo: Name or service not known'                    => __('Hostname not found!'),
+        'No route to host'                                          => __('No route to host!'),
+        'execution expired'                                         => __('Host not reachable!'),
+        'Connection refused'                                        => __('Connection refused!'),
       }
     end
 

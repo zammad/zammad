@@ -1,6 +1,6 @@
 class ChannelFacebook extends App.ControllerSubContent
   requiredPermission: 'admin.channel_facebook'
-  header: 'Facebook'
+  header: __('Facebook')
   events:
     'click .js-new':       'new'
     'click .js-edit':      'edit'
@@ -95,7 +95,7 @@ class ChannelFacebook extends App.ControllerSubContent
     e.preventDefault()
     id   = $(e.target).closest('.action').data('id')
     new App.ControllerConfirm(
-      message: 'Sure?'
+      message: __('Sure?')
       callback: =>
         @ajax(
           id:   'facebook_delete'
@@ -136,7 +136,7 @@ class ChannelFacebook extends App.ControllerSubContent
     )
 
 class AppConfig extends App.ControllerModal
-  head: 'Connect Facebook App'
+  head: __('Connect Facebook App')
   shown: true
   button: 'Connect'
   buttonCancel: true
@@ -178,15 +178,15 @@ class AppConfig extends App.ControllerModal
               @isChanged = true
               @close()
             fail: =>
-              @el.find('.alert').removeClass('hidden').text('Unable to create entry.')
+              @el.find('.alert').removeClass('hidden').text(__('Unable to create entry.'))
           )
           return
         @formEnable(e)
-        @el.find('.alert').removeClass('hidden').text(data.error || 'Unable to verify App.')
+        @el.find('.alert').removeClass('hidden').text(data.error || __('Unable to verify App.'))
     )
 
 class AccountEdit extends App.ControllerModal
-  head: 'Facebook Account'
+  head: __('Facebook Account')
   shown: true
   buttonCancel: true
 
@@ -242,7 +242,7 @@ class AccountEdit extends App.ControllerModal
       error: (xhr) =>
         data = JSON.parse(xhr.responseText)
         @formEnable(e)
-        @el.find('.alert').removeClass('hidden').text(data.error || 'Unable to save changes.')
+        @el.find('.alert').removeClass('hidden').text(data.error || __('Unable to save changes.'))
     )
 
-App.Config.set('Facebook', { prio: 5100, name: 'Facebook', parent: '#channels', target: '#channels/facebook', controller: ChannelFacebook, permission: ['admin.channel_facebook'] }, 'NavBarAdmin')
+App.Config.set('Facebook', { prio: 5100, name: __('Facebook'), parent: '#channels', target: '#channels/facebook', controller: ChannelFacebook, permission: ['admin.channel_facebook'] }, 'NavBarAdmin')

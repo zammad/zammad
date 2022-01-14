@@ -9,11 +9,11 @@ class SidebarOrganization extends App.Controller
     @item = {
       name: 'organization'
       badgeIcon: 'group'
-      sidebarHead: 'Organization'
+      sidebarHead: __('Organization')
       sidebarCallback: @showOrganization
       sidebarActions: [
         {
-          title:    'Edit Organization'
+          title:    __('Edit Organization')
           name:     'organization-edit'
           callback: @editOrganization
         },
@@ -33,9 +33,9 @@ class SidebarOrganization extends App.Controller
       id: @organization_id,
       genericObject: 'Organization'
       pageData:
-        title:   'Organizations'
-        object:  'Organization'
-        objects: 'Organizations'
+        title:   __('Organizations')
+        object:  __('Organization')
+        objects: __('Organizations')
       container: @elSidebar.closest('.content')
     )
 

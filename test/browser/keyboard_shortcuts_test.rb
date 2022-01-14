@@ -1,21 +1,23 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'browser_test_helper'
 
 class KeyboardShortcutsTest < TestCase
   def test_navigation
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
     sleep 2
 
     # show shortkeys
     shortcut(key: 'h')
 
     # ff issue, sometimes shortcut is not fired in browser test env
-    if ENV['BROWSER'] && ENV['BROWSER'] =~ /firefox/i
+    if ENV['BROWSER'] && ENV['BROWSER'] =~ %r{firefox}i
       exists = false
       (1..4).each do |_count|
         sleep 1
@@ -39,14 +41,14 @@ class KeyboardShortcutsTest < TestCase
       end
     end
 
-    modal_ready()
+    modal_ready
     # hide shortkeys
     shortcut(key: 'h')
-    modal_disappear()
+    modal_disappear
 
     # show shortkeys
     shortcut(key: 'h')
-    modal_ready()
+    modal_ready
 
     # show notifications
     shortcut(key: 'a')
@@ -219,10 +221,9 @@ class KeyboardShortcutsTest < TestCase
 
     shortcut(key: 'e')
     watch_for(
-      css:     'body',
-      value:   'login',
+      css:     '#login',
+      value:   'username',
       timeout: 4,
     )
-
   end
 end

@@ -110,9 +110,9 @@ class App.KnowledgeBaseSidebarAttachments extends App.Controller
 
 class DeleteConfirm extends App.ControllerConfirm
   content: ->
-    sentence = App.i18n.translateContent('Are you sure to delete')
+    sentence = App.i18n.translateContent('Are you sure you want to delete')
     "#{sentence} #{@attachment.filename}?"
-  buttonSubmit: 'delete'
+  buttonSubmit: __('delete')
   onSubmit: ->
     @formDisable(@el)
 
@@ -132,4 +132,4 @@ class DeleteConfirm extends App.ControllerConfirm
 
   error: (xhr) =>
     @formEnable(@el)
-    @showAlert(xhr.responseJSON?.error || 'Unable to save changes')
+    @showAlert(xhr.responseJSON?.error || __('Unable to save changes'))

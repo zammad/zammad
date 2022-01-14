@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 # This file registers the custom Zammad chrome and firefox drivers.
 # The options check if a REMOTE_URL ENV is given and change the
 # configurations accordingly.
@@ -5,21 +7,19 @@
 Capybara.register_driver(:zammad_chrome) do |app|
 
   # Turn on browser logs
-  capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
-    loggingPrefs:  {
+  options = Selenium::WebDriver::Chrome::Options.new(
+    logging_prefs: {
       browser: 'ALL'
     },
-    chromeOptions: {
-      prefs: {
-        'intl.accept_languages'                                => 'en-US',
-        'profile.default_content_setting_values.notifications' => 1, # ALLOW notifications
-      },
+    prefs:         {
+      'intl.accept_languages'                                => 'en-US',
+      'profile.default_content_setting_values.notifications' => 1, # ALLOW notifications
     },
   )
 
   options = {
-    browser:              :chrome,
-    desired_capabilities: capabilities,
+    browser: :chrome,
+    options: options
   }
 
   if ENV['REMOTE_URL'].present?
@@ -27,7 +27,12 @@ Capybara.register_driver(:zammad_chrome) do |app|
     options[:url]     = ENV['REMOTE_URL']
   end
 
-  Capybara::Selenium::Driver.new(app, options)
+  ENV['FAKE_SELENIUM_LOGIN_USER_ID'] = nil
+
+  Capybara::Selenium::Driver.new(app, **options).tap do |driver|
+    # Selenium 4 installs a default file_detector which finds wrong files/directories such as zammad/test.
+    driver.browser.file_detector = nil if ENV['REMOTE_URL'].present?
+  end
 end
 
 Capybara.register_driver(:zammad_firefox) do |app|
@@ -38,13 +43,9 @@ Capybara.register_driver(:zammad_firefox) do |app|
   profile['general.useragent.locale'] = 'en-US'
   profile['permissions.default.desktop-notification'] = 1 # ALLOW notifications
 
-  capabilities = Selenium::WebDriver::Remote::Capabilities.firefox(
-    firefox_profile: profile,
-  )
-
   options = {
-    browser:              :firefox,
-    desired_capabilities: capabilities,
+    browser: :firefox,
+    options: Selenium::WebDriver::Firefox::Options.new(profile: profile),
   }
 
   if ENV['REMOTE_URL'].present?
@@ -52,5 +53,10 @@ Capybara.register_driver(:zammad_firefox) do |app|
     options[:url]     = ENV['REMOTE_URL']
   end
 
-  Capybara::Selenium::Driver.new(app, options)
+  ENV['FAKE_SELENIUM_LOGIN_USER_ID'] = nil
+
+  Capybara::Selenium::Driver.new(app, **options).tap do |driver|
+    # Selenium 4 installs a default file_detector which finds wrong files/directories such as zammad/test.
+    driver.browser.file_detector = nil if ENV['REMOTE_URL'].present?
+  end
 end

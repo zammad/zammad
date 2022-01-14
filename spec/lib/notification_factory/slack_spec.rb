@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 
 RSpec.describe NotificationFactory::Slack do
@@ -33,8 +35,8 @@ RSpec.describe NotificationFactory::Slack do
 
       it 'returns a hash with body: <article author & body>' do
         expect(template[:body])
-          .to match(/Created by #{current_user.fullname}/)
-          .and match(/#{article.body}\z/)
+          .to match(%r{Created by #{current_user.fullname}})
+          .and match(%r{#{article.body}\z})
       end
     end
 
@@ -55,11 +57,11 @@ RSpec.describe NotificationFactory::Slack do
 
       it 'returns a hash with body: <article editor, changes, & body>' do
         expect(template[:body])
-          .to match(/Updated by #{current_user.fullname}/)
-          .and match(/state: aaa -> bbb/)
-          .and match(/group: xxx -> yyy/)
+          .to match(%r{Updated by #{current_user.fullname}})
+          .and match(%r{state: aaa -> bbb})
+          .and match(%r{group: xxx -> yyy})
           .and match(%r{pending_time: 04/01/2019 12:00 \(Europe/Berlin\) -> 04/02/2019 01:00 \(Europe/Berlin\)})
-          .and match(/#{article.body}\z/)
+          .and match(%r{#{article.body}\z})
       end
     end
 
@@ -87,9 +89,9 @@ RSpec.describe NotificationFactory::Slack do
 
       it 'returns a hash with body: <ticket customer, escalation time, & body>' do
         expect(template[:body])
-          .to match(/A ticket \(#{ticket.title}\) from "#{ticket.customer.fullname}"/)
+          .to match(%r{A ticket \(#{ticket.title}\) from "#{ticket.customer.fullname}"})
           .and match(%r{is escalated since "04/01/2019 12:00 \(Europe/Berlin\)"!})
-          .and match(/#{article.body}\z/)
+          .and match(%r{#{article.body}\z})
       end
     end
   end

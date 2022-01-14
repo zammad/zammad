@@ -27,7 +27,7 @@ class App.InviteUser extends App.ControllerWizardModal
     modal = $(App.view('widget/invite_user')(
       head: @head
     ))
-    new App.ControllerForm(
+    @controller = new App.ControllerForm(
       el:        modal.find('.js-form')
       model:     App.User
       screen:    @screen
@@ -60,7 +60,7 @@ class App.InviteUser extends App.ControllerWizardModal
     user.load(@params)
 
     errors = user.validate(
-      screen: @screen
+      controllerForm: @controller
     )
     if errors
       @log 'error new', errors

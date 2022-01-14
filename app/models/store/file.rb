@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Store < ApplicationModel
   class File < ApplicationModel
@@ -26,7 +26,7 @@ do also verify of written data
         # load backend based on config
         adapter_name = Setting.get('storage_provider') || 'DB'
         if !adapter_name
-          raise 'Missing storage_provider setting option'
+          raise __('Missing storage_provider setting option')
         end
 
         adapter = "Store::Provider::#{adapter_name}".constantize
@@ -78,11 +78,8 @@ in case of fixing sha hash use:
 
     def self.verify(fix_it = nil)
       success = true
-      file_ids = Store::File.all.pluck(:id)
-      file_ids.each do |item_id|
-        item = Store::File.find(item_id)
-        content = item.content
-        sha = Digest::SHA256.hexdigest(content)
+      Store::File.find_each(batch_size: 10) do |item|
+        sha = Digest::SHA256.hexdigest(item.content)
         logger.info "CHECK: Store::File.find(#{item.id})"
         next if sha == item.sha
 
@@ -90,9 +87,7 @@ in case of fixing sha hash use:
         logger.error "DIFF: sha diff of Store::File.find(#{item.id}) current:#{sha}/db:#{item.sha}/provider:#{item.provider}"
         store = Store.find_by(store_file_id: item.id)
         logger.error "STORE: #{store.inspect}"
-        if fix_it
-          item.update_attribute(:sha, sha) # rubocop:disable Rails/SkipsModelValidations
-        end
+        item.update_attribute(:sha, sha) if fix_it # rubocop:disable Rails/SkipsModelValidations
       end
       success
     end
@@ -119,26 +114,16 @@ nice move to keep system responsive
       adapter_source = "Store::Provider::#{source}".constantize
       adapter_target = "Store::Provider::#{target}".constantize
 
-      file_ids = Store::File.all.pluck(:id)
-      file_ids.each do |item_id|
-        item = Store::File.find(item_id)
-        next if item.provider == target
-
-        content = item.content
-
-        # add to new provider
-        adapter_target.add(content, item.sha)
-
-        # update meta data
+      Store::File.where(provider: source).find_each(batch_size: 10) do |item|
+        adapter_target.add(item.content, item.sha)
         item.update_attribute(:provider, target) # rubocop:disable Rails/SkipsModelValidations
-
-        # remove from old provider
         adapter_source.delete(item.sha)
 
         logger.info "Moved file #{item.sha} from #{source} to #{target}"
 
         sleep delay if delay
       end
+
       true
     end
 

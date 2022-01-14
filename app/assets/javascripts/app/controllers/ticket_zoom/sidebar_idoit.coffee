@@ -4,11 +4,11 @@ class SidebarIdoit extends App.Controller
     @item = {
       name: 'idoit'
       badgeIcon: 'printer'
-      sidebarHead: 'i-doit'
+      sidebarHead: __('i-doit')
       sidebarCallback: @showObjects
       sidebarActions: [
         {
-          title:    'Change Objects'
+          title:    __('Change Objects')
           name:     'objects-change'
           callback: @changeObjects
         },
@@ -67,7 +67,7 @@ class SidebarIdoit extends App.Controller
         if data.response
           @showList(data.response.result)
           return
-        @showError('Unable to load data...')
+        @showError(__('Unable to load data…'))
 
       error: (xhr, status, error) =>
 
@@ -75,7 +75,7 @@ class SidebarIdoit extends App.Controller
         return if status is 'abort'
 
         # show error message
-        @showError('Unable to load data...')
+        @showError(__('Unable to load data…'))
     )
 
   showList: (objects) =>
@@ -133,7 +133,7 @@ class SidebarIdoit extends App.Controller
         @log 'errors', details
         @notify(
           type:    'error'
-          msg:     App.i18n.translateContent(details.error_human || details.error || 'Unable to update object!')
+          msg:     App.i18n.translateContent(details.error_human || details.error || __('Unable to update object!'))
           timeout: 6000
         )
     )

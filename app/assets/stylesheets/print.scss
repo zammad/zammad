@@ -4,11 +4,11 @@
 }
 
 .table {
-  border: 1px solid hsl(0,0%,90%);
+  border: 1px solid hsl(0, 0%, 90%);
 }
 
 .table thead tr {
-  border-bottom: 1px solid hsl(0,0%,90%);
+  border-bottom: 1px solid hsl(0, 0%, 90%);
 }
 
 html {
@@ -65,7 +65,14 @@ main {
   padding: 0;
 }
 
-h1, .popover-notificationsHeader .popover-title, .ticket-title-update, h2, h3, h4, h5, h6 {
+h1,
+.popover-notificationsHeader .popover-title,
+.ticket-title-update,
+h2,
+h3,
+h4,
+h5,
+h6 {
   color: inherit;
 }
 
@@ -88,7 +95,7 @@ td a {
   display: none;
 }
 
-th.js-tableHead:not([data-column-key="icon"]) {
+th.js-tableHead:not([data-column-key='icon']) {
   width: auto !important;
 }
 
@@ -139,7 +146,7 @@ th.js-tableHead:not([data-column-key="icon"]) {
 }
 
 .ticket-article {
-  a[href]:after {
+  a[href]::after {
     content: none !important;
   }
 }
@@ -150,7 +157,7 @@ th.js-tableHead:not([data-column-key="icon"]) {
   background: white !important;
 }
 
-.bubble-arrow:after {
+.bubble-arrow::after {
   background: white !important;
   border-color: black !important;
 }
@@ -158,7 +165,7 @@ th.js-tableHead:not([data-column-key="icon"]) {
 .article-meta {
   color: black;
   background: none;
-  border: 1px dashed hsl(240,2%,60%);
+  border: 1px dashed hsl(240, 2%, 60%);
   padding: 11px 10px 1px;
 
   &.top {
@@ -201,9 +208,9 @@ th.js-tableHead:not([data-column-key="icon"]) {
 
 .avatar {
   border: 1px solid black;
-  
+
   &:not(.avatar--unique) {
-    &:before {
+    &::before {
       content: attr(data-initials);
       position: absolute;
       left: 0;
@@ -215,24 +222,22 @@ th.js-tableHead:not([data-column-key="icon"]) {
       line-height: 40px;
     }
 
-    &.size-30:before {
+    &.size-30::before {
       font-size: 10px;
       line-height: 32px;
     }
 
-    &.size-50:before {
+    &.size-50::before {
       font-size: 16px;
       line-height: 52px;
     }
 
-    &.size-80:before {
+    &.size-80::before {
       font-size: 26px;
       line-height: 84px;
     }
   }
 }
-
-
 
 /*
 

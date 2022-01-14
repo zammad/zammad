@@ -1,9 +1,9 @@
 class Exchange extends App.ControllerIntegrationBase
   featureIntegration: 'exchange_integration'
-  featureName: 'Exchange'
+  featureName: __('Exchange')
   featureConfig: 'exchange_config'
   description: [
-    ['This service enables Zammad to connect with your Exchange server.']
+    [__('This service enables Zammad to connect with your Exchange server.')]
   ]
   events:
     'change .js-switch input': 'switch'
@@ -282,7 +282,7 @@ class ConnectionWizard extends App.ControllerWizardModal
         if !_.isEmpty(detailsRaw)
           details = JSON.parse(detailsRaw)
         @showSlide('js-discover')
-        @showAlert('js-discover', details.error || 'Unable to perform backend.')
+        @showAlert('js-discover', details.error || __('Unable to perform backend.'))
     )
 
   folders: (e) =>
@@ -323,7 +323,7 @@ class ConnectionWizard extends App.ControllerWizardModal
         if !_.isEmpty(detailsRaw)
           details = JSON.parse(detailsRaw)
         @showSlide('js-bind')
-        @showAlert('js-bind', details.error || 'Unable to perform backend.')
+        @showAlert('js-bind', details.error || __('Unable to perform backend.'))
     )
 
   foldersShow: (alreadyShown) =>
@@ -429,7 +429,7 @@ class ConnectionWizard extends App.ControllerWizardModal
         if !_.isEmpty(detailsRaw)
           details = JSON.parse(detailsRaw)
         @showSlide('js-folders')
-        @showAlert('js-folders', details.error || 'Unable to perform backend.')
+        @showAlert('js-folders', details.error || __('Unable to perform backend.'))
     )
 
   mappingShow: (alreadyShown) =>
@@ -554,9 +554,9 @@ class ConnectionWizard extends App.ControllerWizardModal
 App.Config.set(
   'IntegrationExchange'
   {
-    name: 'Exchange'
+    name: __('Exchange')
     target: '#system/integration/exchange'
-    description: 'Exchange integration for contacts management.'
+    description: __('Exchange integration for contacts management.')
     controller: Exchange
     state: State
     permission: ['admin.integration.exchange']

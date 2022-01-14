@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 # Rails 5.0 has changed to only store and read ActiveSupport::HashWithIndifferentAccess from stores
 # we extended lib/core_ext/active_record/store/indifferent_coder.rb to read also ActionController::Parameters
 # and convert them to ActiveSupport::HashWithIndifferentAccess for migration in db/migrate/20171023000001_fixed_store_upgrade_ror_45.rb.

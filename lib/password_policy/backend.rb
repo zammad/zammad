@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 class PasswordPolicy
   class Backend
     # @param password [String] to evaluate
@@ -10,7 +12,7 @@ class PasswordPolicy
     end
 
     def error
-      ['Unknown error']
+      [__('Unknown error')]
     end
 
     def self.applicable?

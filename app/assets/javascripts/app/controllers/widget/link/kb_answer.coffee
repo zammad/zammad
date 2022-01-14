@@ -50,7 +50,7 @@ class App.WidgetLinkKbAnswer extends App.WidgetLink
       attribute:
         id:          'link_kb_answer'
         name:        'input'
-        placeholder: App.i18n.translateInline('Search...')
+        placeholder: App.i18n.translateInline('Search…')
         limit:       40
         object:      'KnowledgeBaseAnswerTranslation'
         ajax:        true

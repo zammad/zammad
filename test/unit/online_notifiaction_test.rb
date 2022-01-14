@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'test_helper'
 
 class OnlineNotificationTest < ActiveSupport::TestCase
@@ -118,7 +120,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     tickets.push ticket1
 
     # execute object transaction
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     # because it's already closed
@@ -136,7 +138,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     )
 
     # execute object transaction
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     # because it's already open
@@ -173,7 +175,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     tickets.push ticket2
 
     # execute object transaction
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     # because it's already closed
@@ -191,7 +193,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     )
 
     # execute object transaction
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     # because it's already open
@@ -227,7 +229,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     tickets.push ticket3
 
     # execute object transaction
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     # because it's already new
@@ -245,7 +247,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     )
 
     # execute object transaction
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     # because it's already closed
@@ -269,7 +271,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     )
 
     # execute object transaction
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     # because it's already closed but an follow-up arrived later
@@ -307,7 +309,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     tickets.push ticket4
 
     # execute object transaction
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     # because it's already new
@@ -325,7 +327,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     )
 
     # execute object transaction
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     # because it's already open
@@ -342,7 +344,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       owner_id:      User.lookup(login: '-').id,
       title:         'Unit Test 4 (äöüß)!',
       state_id:      Ticket::State.lookup(name: 'new').id,
-      priority_id:   Ticket::Priority.lookup( name: '2 normal').id,
+      priority_id:   Ticket::Priority.lookup(name: '2 normal').id,
       updated_by_id: @agent_user1.id,
       created_by_id: @agent_user1.id,
     )
@@ -361,7 +363,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     tickets.push ticket5
 
     # execute object transaction
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     # because it's already new
@@ -379,7 +381,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     )
 
     # execute object transaction
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     # because it's already open

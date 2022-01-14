@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 require 'lib/import/import_factory_examples'
 
@@ -43,7 +45,7 @@ RSpec.describe Import::OTRS::Article::AttachmentFactory do
   end
 
   it 'deletes old and reimports' do
-    dummy_attachment = double()
+    dummy_attachment = double
     expect(dummy_attachment).to receive(:delete)
     article_attachment_expectations([dummy_attachment])
     import_expectations

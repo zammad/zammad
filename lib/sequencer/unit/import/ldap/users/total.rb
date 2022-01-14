@@ -1,4 +1,4 @@
-require_dependency 'sequencer/unit/import/common/model/statistics/mixin/empty_diff'
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Sequencer
   class Unit
@@ -22,7 +22,7 @@ class Sequencer
 
             def total
               if !dry_run
-                result = Cache.get(cache_key)
+                result = Cache.read(cache_key)
               end
 
               result ||= ldap_connection.count(ldap_config[:user_filter])

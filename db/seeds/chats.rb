@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 Chat.create_if_not_exists(
   name:          'default',
   max_queue:     5,

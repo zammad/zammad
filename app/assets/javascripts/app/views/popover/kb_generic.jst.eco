@@ -28,9 +28,20 @@
         <% end %>
       </div>
       <div class="column">
+        <label><%- @T('Category') %></label>
+        <a href="<%= @object.parent().category().uiUrl(App.KnowledgeBaseLocale.find(@object.kb_locale_id)) %>" title="<%= @object.parent().category().categoriesForSearch({ full: true, kb_locale: App.KnowledgeBaseLocale.find(@object.kb_locale_id) }) %>"><%= @object.parent().category().guaranteedTitle(@object.kb_locale_id) %></a>
+      </div>
+      <div class="column">
         <label><%- @T('Language') %></label>
         <%= App.KnowledgeBaseLocale.localeFor(@object).systemLocale().name %>
       </div>
+
+      <% if !_.isEmpty(@object.parent().tags): %>
+        <div class="column">
+          <label><%- @T('Tags') %></label>
+          <%= @object.parent().tags.map((elem) -> "##{elem}").join(' ') %>
+        </div>
+      <% end %>
     </div>
   </div>
 <% end %>

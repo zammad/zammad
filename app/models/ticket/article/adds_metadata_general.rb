@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 # Adds certain (missing) meta data when creating articles.
 # This module depends on AddsMetadataOriginById to run before it.
@@ -55,7 +55,9 @@ module Ticket::Article::AddsMetadataGeneral
     return true if user_id.blank?
 
     user = User.find(user_id)
-    if type.name == 'web' || type.name == 'phone'
+    is_customer = !TicketPolicy.new(user, ticket).agent_read_access?
+
+    if (type.name == 'web' || type.name == 'phone') && is_customer
       self.from = "#{user.firstname} #{user.lastname} <#{user.email}>"
       return
     end

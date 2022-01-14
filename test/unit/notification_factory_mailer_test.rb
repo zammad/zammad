@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'test_helper'
 
 class NotificationFactoryMailerTest < ActiveSupport::TestCase
@@ -278,6 +280,11 @@ class NotificationFactoryMailerTest < ActiveSupport::TestCase
     agent1.preferences[:notification_config][:group_ids] = [Group.lookup(name: 'Users').id]
     agent1.save
     travel 30.seconds
+
+    if Rails.application.config.cache_store.first.eql? :mem_cache_store
+      # External memcached does not support time travel, so clear the cache to avoid an outdated match.
+      Cache.clear
+    end
 
     result = NotificationFactory::Mailer.notification_settings(agent1, ticket1, 'create')
     assert_equal(true, result[:channels][:online])

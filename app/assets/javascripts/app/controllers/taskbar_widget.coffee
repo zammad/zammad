@@ -59,6 +59,10 @@ class App.TaskbarWidget extends App.CollectionController
     @controllerBind('taskCollectionOrderSet', (taskKeys) =>
       @collectionOrderSet(taskKeys)
     )
+    @controllerBind('taskClose', (tasks) =>
+      for task in tasks
+        @remove(null, task)
+    )
 
   itemGet: (key) ->
     App.TaskManager.get(key)
@@ -74,8 +78,8 @@ class App.TaskbarWidget extends App.CollectionController
     @locationVerify(e)
 
   remove: (e, key = false, force = false) =>
-    e.preventDefault()
-    e.stopPropagation()
+    e?.preventDefault()
+    e?.stopPropagation()
     if !key
       key = $(e.target).parents('a').data('key')
     if !key
@@ -121,9 +125,9 @@ class App.TaskbarWidget extends App.CollectionController
 class Remove extends App.ControllerModal
   buttonClose: true
   buttonCancel: true
-  buttonSubmit: 'Discard Changes'
+  buttonSubmit: __('Discard Changes')
   buttonClass: 'btn--danger'
-  head: 'Confirm'
+  head: __('Confirm')
 
   content: ->
     App.i18n.translateContent('Tab has changed, do you really want to close it?')

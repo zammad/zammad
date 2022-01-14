@@ -1,13 +1,12 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
-
-require_dependency 'store/object'
-require_dependency 'store/file'
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Store < ApplicationModel
   PREFERENCES_SIZE_MAX = 2400
 
   belongs_to :store_object, class_name: 'Store::Object', optional: true
   belongs_to :store_file,   class_name: 'Store::File', optional: true
+  delegate :content, to: :store_file
+  delegate :provider, to: :store_file
 
   validates :filename, presence: true
 
@@ -145,28 +144,6 @@ remove one attachment from storage
 
 =begin
 
-get content of file
-
-  store = Store.find(store_id)
-  content_as_string = store.content
-
-returns
-
-  content_as_string
-
-=end
-
-  def content
-    file = Store::File.find_by(id: store_file_id)
-    if !file
-      raise "No such file #{store_file_id}!"
-    end
-
-    file.content
-  end
-
-=begin
-
 get content of file in preview size
 
   store = Store.find(store_id)
@@ -183,7 +160,7 @@ returns
     if !file
       raise "No such file #{store_file_id}!"
     end
-    raise 'Unable to generate preview' if options[:silence] != true && preferences[:content_preview] != true
+    raise __('Unable to generate preview') if options[:silence] != true && preferences[:content_preview] != true
 
     image_resize(file.content, 200)
   end
@@ -206,7 +183,7 @@ returns
     if !file
       raise "No such file #{store_file_id}!"
     end
-    raise 'Unable to generate inline' if options[:silence] != true && preferences[:content_inline] != true
+    raise __('Unable to generate inline') if options[:silence] != true && preferences[:content_inline] != true
 
     image_resize(file.content, 1800)
   end
@@ -234,23 +211,12 @@ returns
     if !path
       path = Rails.root.join('tmp', filename)
     end
-    ::File.open(path, 'wb') do |handle|
-      handle.write file.content
-    end
+    ::File.binwrite(path, file.content)
     path
   end
 
   def attributes_for_display
     slice :id, :filename, :size, :preferences
-  end
-
-  def provider
-    file = Store::File.find_by(id: store_file_id)
-    if !file
-      raise "No such file #{store_file_id}!"
-    end
-
-    file.provider
   end
 
   RESIZABLE_MIME_REGEXP = %r{image/(jpeg|jpg|png)}i.freeze
@@ -294,7 +260,7 @@ returns
     local_sha = Digest::SHA256.hexdigest(content)
 
     cache_key = "image-resize-#{local_sha}_#{width}"
-    image = Cache.get(cache_key)
+    image = Cache.read(cache_key)
     return image if image
 
     temp_file = ::Tempfile.new

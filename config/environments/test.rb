@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -28,7 +30,7 @@ Rails.application.configure do
   # Disable request forgery protection in test environment.
   config.action_controller.allow_forgery_protection = false
 
-  # Store uploaded files on the local file system in a temporary directory
+  # Store uploaded files on the local file system in a temporary directory.
   # config.active_storage.service = :test
 
   config.action_mailer.perform_caching = false
@@ -44,7 +46,7 @@ Rails.application.configure do
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
 
-  # Raises error for missing translations
+  # Raises error for missing translations.
   # config.action_view.raise_on_missing_translations = true
 
   # Enable autoload

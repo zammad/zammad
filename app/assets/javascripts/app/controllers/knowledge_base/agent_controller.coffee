@@ -1,6 +1,6 @@
 class App.KnowledgeBaseAgentController extends App.Controller
   className: 'knowledge-base vertical'
-  name:      'Knowledge Base'
+  name:      __('Knowledge Base')
 
   elements:
     '.js-body':       'body'
@@ -164,7 +164,7 @@ class App.KnowledgeBaseAgentController extends App.Controller
         if (kb = App.KnowledgeBase.all()[0])
           @navigate kb.uiUrl(App.KnowledgeBaseLocale.detect(kb)), { hideCurrentLocationFromHistory: true }
         else
-          @renderScreenErrorInContent('No Knowledge Base created')
+          @renderScreenErrorInContent(__('No Knowledge Base created'))
     else
       @pendingParams = params
 
@@ -225,12 +225,12 @@ class App.KnowledgeBaseAgentController extends App.Controller
     title = App.i18n.translateInline('Not Found')
     @updateTitle(title)
     @navigationController?.show(undefined, title)
-    @renderScreenErrorInContent('The page was not found')
+    @renderScreenErrorInContent(__('The page was not found'))
     @sidebarController?.hide()
 
   renderNotAvailableAnymore: ->
     @updateTitle(App.i18n.translateInline('Not Available'))
-    @renderScreenErrorInContent('The page is not available anymore')
+    @renderScreenErrorInContent(__('The page is not available anymore'))
 
   renderError: ->
     @bodyModal?.close()
@@ -238,7 +238,7 @@ class App.KnowledgeBaseAgentController extends App.Controller
     url = App.Utils.joinUrlComponents @lastParams.effectivePath, @getKnowledgeBase().primaryKbLocale().urlSuffix()
 
     @bodyModal = new App.ControllerModal(
-      head:          'Locale not found'
+      head:          __('Locale not found')
       contentInline: "<a href='#{url}'>Open in primary locale</a>"
       buttonClose:   false
       buttonSubmit: false
@@ -383,4 +383,4 @@ class App.KnowledgeBaseAgentController extends App.Controller
       kb
 
 App.Config.set('KnowledgeBase', { controller: 'KnowledgeBaseAgentController' }, 'permanentTask')
-App.Config.set('KnowledgeBase', { prio: 1150, parent: '', name: 'Knowledge Base', target: '#knowledge_base', key: 'KnowledgeBase', class: 'knowledge-base', shown: false}, 'NavBar')
+App.Config.set('KnowledgeBase', { prio: 1150, parent: '', name: __('Knowledge Base'), target: '#knowledge_base', key: 'KnowledgeBase', class: 'knowledge-base', shown: false}, 'NavBar')

@@ -1,0 +1,109 @@
+<div class="main flex vertical centered darkBackground">
+  <%- @Icon('full-logo', 'wizard-logo') %>
+  <div class="import wizard">
+    <div class="wizard-slide vertical" data-slide="freshdesk-subdomain">
+      <h2><%- @T('%s URL', 'Freshdesk') %></h2>
+      <div class="wizard-body flex vertical justified">
+        <p>
+          <%- @T('Enter the Subdomain of your %s system', 'Freshdesk') %>:
+        </p>
+        <div class="form-group">
+          <label for="freshdesk-subdomain"><%- @T('%s subdomain', 'Freshdesk') %></label>
+          <div class="u-positionOrigin">
+            <div class="input-group">
+              <input type="text" id="freshdesk-subdomain" class="form-control" placeholder="example" name="freshdesk-subdomain" aria-describedby="freshdesk-subdomain-addon">
+              <span class="input-group-addon" id="freshdesk-subdomain-addon"><%- @freshdeskDomain %></span>
+            </div>
+            <div class="input-feedback input-feedback--no-background centered">
+              <div class="small loading icon"></div>
+              <%- @Icon('diagonal-cross', 'icon-error') %>
+              <%- @Icon('checkmark') %>
+            </div>
+          </div>
+          <div class="error freshdesk-subdomain-error"></div>
+        </div>
+      </div>
+      <div class="wizard-controls horizontal center">
+        <a class="btn btn--text btn--secondary" href="#import"><%- @T('Go Back') %></a>
+        <div class="btn btn--primary align-right hide js-freshdesk-credentials" data-target="freshdesk-credentials"><%- @T('Enter credentials') %></div>
+      </div>
+    </div>
+
+    <div class="wizard-slide vertical hide" data-slide="freshdesk-credentials">
+      <h2><%- @T('%s credentials', 'Freshdesk') %></h2>
+      <div class="wizard-body flex vertical justified">
+        <p>
+          <a class="js-freshdeskUrlApiToken" href="https://support.freshdesk.com/support/solutions/articles/215517-how-to-find-your-api-key" target="_blank"><%- @T('Enter your %s API token gained from your account profile settings.', 'Freshdesk') %></a>
+        </p>
+        <p>
+          <%- @T('Attention: These will be your login and password after the import is completed.') %>
+        </p>
+        <div class="form-group">
+          <label for="freshdesk-api-token"><%- @T('API token') %></label>
+          <div class="u-positionOrigin">
+            <input type="text" id="freshdesk-api-token" class="form-control" placeholder="XYZ3133723421111" name="freshdesk-api-token">
+            <div class="input-feedback centered">
+              <div class="small loading icon"></div>
+              <%- @Icon('diagonal-cross', 'icon-error') %>
+              <%- @Icon('checkmark') %>
+            </div>
+          </div>
+          <div class="error freshdesk-api-token-error"></div>
+        </div>
+      </div>
+      <div class="wizard-controls horizontal center">
+        <a class="btn btn--text btn--secondary" href="#import"><%- @T('Go Back') %></a>
+        <div class="btn btn--primary align-right hide js-migration-start" data-target="freshdesk-start-migration"><%- @T('Migrate %s Data', 'Freshdesk') %></div>
+      </div>
+    </div>
+
+    <div class="wizard-slide vertical hide" data-slide="freshdesk-import">
+      <h2><%- @T('%s Migration', 'Freshdesk') %></h2>
+      <div class="alert alert--danger hide js-error" role="alert"></div>
+      <div class="wizard-body flex vertical justified">
+        <table class="progressTable">
+          <tr class="js-groups">
+            <td><span class="js-done">-</span>/<span class="js-total">-</span>
+            <td><span><%- @T('Groups') %></span>
+            <td class="progressTable-progressCell">
+              <div class="horizontal center">
+                <div class="flex"><progress max="42" value="42"></progress></div>
+                <%- @Icon('checkmark') %>
+              </div>
+          </tr>
+          <tr class="js-organizations">
+            <td><span class="js-done">-</span>/<span class="js-total">-</span>
+            <td><span><%- @T('Organizations') %></span>
+            <td class="progressTable-progressCell">
+              <div class="horizontal center">
+                <div class="flex"><progress max="42" value="42"></progress></div>
+                <%- @Icon('checkmark') %>
+              </div>
+          </tr>
+          <tr class="js-users">
+            <td><span class="js-done">-</span>/<span class="js-total">-</span>
+            <td><span><%- @T('Users') %></span>
+            <td class="progressTable-progressCell">
+              <div class="horizontal center">
+                <div class="flex"><progress max="42" value="42"></progress></div>
+                <%- @Icon('checkmark') %>
+              </div>
+          </tr>
+          <tr class="js-tickets">
+            <td><span class="js-done">-</span>/<span class="js-total">-</span>
+            <td><span><%- @T('Tickets') %></span>
+            <td class="progressTable-progressCell">
+              <div class="horizontal center">
+                <div class="flex"><progress max="42" value="42"></progress></div>
+                <%- @Icon('checkmark') %>
+              </div>
+          </tr>
+        </table>
+      </div>
+      <div class="wizard-controls horizontal center">
+        <a href="#" class="btn btn--primary align-right hide js-finished"><%- @T('done') %></a>
+      </div>
+    </div>
+
+  </div>
+</div>

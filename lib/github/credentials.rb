@@ -1,4 +1,5 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 class GitHub
   class Credentials
 
@@ -22,7 +23,7 @@ class GitHub
       )
       return if response.dig('data', 'viewer', 'login').present?
 
-      raise 'Invalid GitHub GraphQL API token'
+      raise __('Invalid GitHub GraphQL API token')
     end
   end
 end

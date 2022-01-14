@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'test_helper'
 
 class TicketSelectorTest < ActiveSupport::TestCase
@@ -84,7 +86,7 @@ class TicketSelectorTest < ActiveSupport::TestCase
       state:         Ticket::State.lookup(name: 'new'),
       priority:      Ticket::Priority.lookup(name: '2 normal'),
       created_at:    '2015-02-05 16:37:00',
-      #updated_at: '2015-02-05 17:37:00',
+      # updated_at: '2015-02-05 17:37:00',
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -100,7 +102,7 @@ class TicketSelectorTest < ActiveSupport::TestCase
       state:         Ticket::State.lookup(name: 'new'),
       priority:      Ticket::Priority.lookup(name: '2 normal'),
       created_at:    '2015-02-05 16:37:00',
-      #updated_at: '2015-02-05 17:37:00',
+      # updated_at: '2015-02-05 17:37:00',
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -116,7 +118,7 @@ class TicketSelectorTest < ActiveSupport::TestCase
       state:         Ticket::State.lookup(name: 'open'),
       priority:      Ticket::Priority.lookup(name: '2 normal'),
       created_at:    '2015-02-05 16:37:00',
-      #updated_at: '2015-02-05 17:37:00',
+      # updated_at: '2015-02-05 17:37:00',
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -415,6 +417,29 @@ class TicketSelectorTest < ActiveSupport::TestCase
         value:    @group.id,
       },
       'ticket.created_at' => {
+        operator: 'till (relative)',
+        range:    'year', # minute|hour|day|month|
+        value:    '10',
+      },
+    }
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
+    assert_equal(ticket_count, 3)
+
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent2)
+    assert_equal(ticket_count, 0)
+
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer1)
+    assert_equal(ticket_count, 1)
+
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer2)
+    assert_equal(ticket_count, 2)
+
+    condition = {
+      'ticket.group_id'   => {
+        operator: 'is',
+        value:    @group.id,
+      },
+      'ticket.created_at' => {
         operator: 'within last (relative)',
         range:    'year', # minute|hour|day|month|
         value:    '10',
@@ -543,6 +568,29 @@ class TicketSelectorTest < ActiveSupport::TestCase
 
     ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer2)
     assert_equal(ticket_count, 0)
+
+    condition = {
+      'ticket.group_id'   => {
+        operator: 'is',
+        value:    @group.id,
+      },
+      'ticket.updated_at' => {
+        operator: 'till (relative)',
+        range:    'year', # minute|hour|day|month|
+        value:    '10',
+      },
+    }
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
+    assert_equal(ticket_count, 3)
+
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent2)
+    assert_equal(ticket_count, 0)
+
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer1)
+    assert_equal(ticket_count, 1)
+
+    ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @customer2)
+    assert_equal(ticket_count, 2)
 
     condition = {
       'ticket.group_id'   => {
@@ -725,7 +773,7 @@ class TicketSelectorTest < ActiveSupport::TestCase
       'ticket.owner_id' => {
         operator:      'is',
         pre_condition: 'specific',
-        #value: @agent1.id, # value is not set, no result should be shown
+        # value: @agent1.id, # value is not set, no result should be shown
       },
     }
     ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)

@@ -1,4 +1,5 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 module HasHistory
   extend ActiveSupport::Concern
 
@@ -46,7 +47,7 @@ log object update history with all updated attributes, if configured - will be e
       end
     end
     self.history_changes_last_done = changes
-    #logger.info 'updated ' + self.changes.inspect
+    # logger.info 'updated ' + self.changes.inspect
 
     return if changes['id'] && !changes['id'][0]
 
@@ -76,8 +77,8 @@ log object update history with all updated attributes, if configured - will be e
             if relation_model
               if relation_model['name']
                 value_str[0] = relation_model['name']
-              elsif relation_model.respond_to?('fullname')
-                value_str[0] = relation_model.send('fullname')
+              elsif relation_model.respond_to?(:fullname)
+                value_str[0] = relation_model.send(:fullname)
               end
             end
           end
@@ -86,8 +87,8 @@ log object update history with all updated attributes, if configured - will be e
             if relation_model
               if relation_model['name']
                 value_str[1] = relation_model['name']
-              elsif relation_model.respond_to?('fullname')
-                value_str[1] = relation_model.send('fullname')
+              elsif relation_model.respond_to?(:fullname)
+                value_str[1] = relation_model.send(:fullname)
               end
             end
           end
@@ -100,7 +101,7 @@ log object update history with all updated attributes, if configured - will be e
         id_from:           value_id[0],
         id_to:             value_id[1],
       }
-      #logger.info "HIST NEW #{self.class.to_s}.find(#{self.id}) #{data.inspect}"
+      # logger.info "HIST NEW #{self.class.to_s}.find(#{self.id}) #{data.inspect}"
       history_log('updated', updated_by_id, data)
     end
   end

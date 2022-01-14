@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 # Using older 5.0 migration to stick to Integer primary keys. Otherwise migration fails in MySQL.
 class InitializeKnowledgeBase < ActiveRecord::Migration[5.0]
   def change
@@ -6,8 +8,9 @@ class InitializeKnowledgeBase < ActiveRecord::Migration[5.0]
     create_table :knowledge_bases do |t|
       t.string :iconset, limit: 30, null: false
 
-      t.string :color_highlight, limit: 25, null: false
-      t.string :color_header,    limit: 25, null: false
+      t.string :color_highlight,   limit: 25, null: false
+      t.string :color_header,      limit: 25, null: false
+      t.string :color_header_link, limit: 25, null: false
 
       t.string :homepage_layout, null: false
       t.string :category_layout, null: false

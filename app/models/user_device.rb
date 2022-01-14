@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class UserDevice < ApplicationModel
   store     :device_details
@@ -81,11 +81,11 @@ store new device for user if device not already known
     end
 
     # generate device name
-    if browser[:name] == 'Generic Browser'
+    if browser[:name] == 'Unknown Browser'
       browser[:name] = user_agent
     end
     name = ''
-    if browser[:plattform].present? && browser[:plattform] != 'Other'
+    if browser[:plattform].present? && browser[:plattform] != 'UnknownPlatform'
       name = browser[:plattform]
     end
     if browser[:name].present? && browser[:name] != 'Other'

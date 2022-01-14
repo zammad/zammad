@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 class Sequencer
   class Unit
     module Import
@@ -10,8 +12,7 @@ class Sequencer
             private
 
             def groups
-              remote_ids.map { |remote_id| group_map[remote_id] }
-                        .compact
+              remote_ids.filter_map { |remote_id| group_map[remote_id] }
                         .map { |local_id| ::Group.find(local_id) }
             end
 

@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 RSpec.shared_examples 'HasTags' do
   subject { create(described_class.name.underscore) }
 
@@ -61,6 +63,39 @@ RSpec.shared_examples 'HasTags' do
               o_id:   subject.id)
 
       subject.tag_list
+    end
+  end
+
+  shared_context 'with subject and another object being tagged', current_user_id: 1 do
+    before do
+      subject.tag_add(tag)
+      Tag.tag_add(object: 'AnotherObject', o_id: 123, item: tag)
+    end
+
+    let(:tag) { 'tag_name' }
+  end
+
+  describe '.tag_references' do
+    include_context 'with subject and another object being tagged' do
+      it 'returns reference to subject' do
+        expect(described_class.tag_references(tag)).to match_array [subject.id]
+      end
+
+      it 'does not return reference to subject when called with other tag' do
+        expect(described_class.tag_references('other')).to be_blank
+      end
+    end
+  end
+
+  describe '.tag_objects' do
+    include_context 'with subject and another object being tagged' do
+      it 'returns subject' do
+        expect(described_class.tag_objects(tag)).to match_array [subject]
+      end
+
+      it 'does not return subject when called with other tag' do
+        expect(described_class.tag_objects('other')).to be_blank
+      end
     end
   end
 end

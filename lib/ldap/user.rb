@@ -1,17 +1,12 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 class Ldap
 
   # Class for handling LDAP Groups.
-  #  ATTENTION: Make sure to add the following lines to your code if accessing this class.
-  #  Otherwise Rails will autoload the Group model or might throw parameter errors if crearing
-  #  an ::Ldap instance.
-  #
-  # @example
-  #  require_dependency 'ldap'
-  #  require_dependency 'ldap/user'
   class User
     include Ldap::FilterLookup
 
-    BLACKLISTED = %i[
+    IGNORED_ATTRIBUTES = %i[
       admincount
       accountexpires
       badpasswordtime
@@ -77,8 +72,6 @@ class Ldap
     # @param ldap [Ldap] An optional existing Ldap class instance. Default is a new connection with given configuration.
     #
     # @example
-    #  require_dependency 'ldap'
-    #  require_dependency 'ldap/user'
     #  ldap_user = Ldap::User.new
     #
     # @return [nil]
@@ -102,7 +95,7 @@ class Ldap
     def valid?(username, password)
       bind_success = @ldap.connection.bind_as(
         base:     @ldap.base_dn,
-        filter:   "(#{login_attribute}=#{username})",
+        filter:   @user_filter ? "(&(#{login_attribute}=#{username})#{@user_filter})" : "(#{login_attribute}=#{username})",
         password: password
       )
 
@@ -131,7 +124,7 @@ class Ldap
           pre_merge_count = attributes.count
 
           attributes.reverse_merge!(entry.to_h
-                                         .except(*BLACKLISTED)
+                                         .except(*IGNORED_ATTRIBUTES)
                                          .transform_values(&:first)
                                          .compact)
 
@@ -186,6 +179,7 @@ class Ldap
 
       @uid_attribute = config[:uid_attribute]
       @filter        = config[:filter]
+      @user_filter   = config[:user_filter]
     end
   end
 end

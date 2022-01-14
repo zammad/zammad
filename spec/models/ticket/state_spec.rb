@@ -1,18 +1,22 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 require 'models/application_model_examples'
 require 'models/concerns/can_be_imported_examples'
 require 'models/concerns/has_collection_update_examples'
+require 'models/concerns/has_xss_sanitized_note_examples'
 
 RSpec.describe Ticket::State, type: :model do
   it_behaves_like 'ApplicationModel'
   it_behaves_like 'CanBeImported'
   it_behaves_like 'HasCollectionUpdate', collection_factory: :ticket_state
+  it_behaves_like 'HasXssSanitizedNote', model_factory: :ticket_state
 
   describe 'Default state' do
     describe 'of whole table:' do
       it 'has seven records' do
         expect(described_class.pluck(:name))
-          .to match_array(%w[closed merged new open pending\ close pending\ reminder removed])
+          .to match_array(['closed', 'merged', 'new', 'open', 'pending close', 'pending reminder', 'removed'])
       end
     end
 
@@ -40,9 +44,9 @@ RSpec.describe Ticket::State, type: :model do
       end
 
       context 'with invalid category name' do
-        it 'raises RuntimeError' do
+        it 'raises ArgumentError' do
           expect { described_class.by_category(:invalidcategoryname) }
-            .to raise_error(RuntimeError)
+            .to raise_error(ArgumentError)
         end
       end
     end

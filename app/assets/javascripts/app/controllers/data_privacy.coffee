@@ -1,6 +1,6 @@
 class Index extends App.ControllerSubContent
   requiredPermission: 'admin.data_privacy'
-  header: 'Data Privacy'
+  header: __('Data Privacy')
   events:
     'click .js-new':         'new'
     'click .js-description': 'description'
@@ -91,10 +91,10 @@ class Index extends App.ControllerSubContent
 
     new TaskNew(
       pageData:
-        head: 'Deletion Task'
-        title: 'Deletion Task'
-        object: 'DataPrivacyTask'
-        objects: 'DataPrivacyTasks'
+        head: __('Deletion Task')
+        title: __('Deletion Task')
+        object: __('DataPrivacyTask')
+        objects: __('DataPrivacyTasks')
       genericObject: 'DataPrivacyTask'
       container:     @el.closest('.content')
       callback:      @load
@@ -113,10 +113,10 @@ class Index extends App.ControllerSubContent
     return if !id
 
     new_expanded = ''
-    text         = 'See more'
+    text         = __('See more')
     if !expanded
       new_expanded = ' expanded'
-      text         = 'See less'
+      text         = __('See less')
 
     task = App.DataPrivacyTask.find(id)
 
@@ -183,10 +183,10 @@ class Index extends App.ControllerSubContent
             if user.organization_id
               organization = App.Organization.find(user.organization_id)
               if organization && organization.member_ids.length < 2
-                attribute          = { name: 'preferences::delete_organization',  display: 'Delete organization?', tag: 'boolean', default: true, translate: true }
+                attribute          = { name: 'preferences::delete_organization',  display: __('Delete organization?'), tag: 'boolean', default: true, translate: true }
                 deleteOrganization = ui.formGenItem(attribute, classname, form).html()
 
-            sure_attribute = { name: 'preferences::sure',  display: 'Are you sure?', tag: 'input', translate: false, placeholder: App.i18n.translateInline('delete').toUpperCase() }
+            sure_attribute = { name: 'preferences::sure',  display: __('Are you sure?'), tag: 'input', translate: false, placeholder: App.i18n.translateInline('delete').toUpperCase() }
             sureInput      = ui.formGenItem(sure_attribute, classname, form).html()
 
             preview_html = App.view('data_privacy/preview')(
@@ -216,7 +216,7 @@ class Index extends App.ControllerSubContent
     )
 
 class TaskNew extends App.ControllerGenericNew
-  buttonSubmit: 'Delete'
+  buttonSubmit: __('Delete')
   buttonClass: 'btn--danger js-TaskNew hidden'
 
   content: ->
@@ -261,7 +261,7 @@ class TaskNew extends App.ControllerGenericNew
       fail: (settings, details) ->
         ui.log 'errors', details
         ui.formEnable(e)
-        ui.controller.showAlert(details.error_human || details.error || 'Unable to create object!')
+        ui.controller.showAlert(details.error_human || details.error || __('Unable to create object!'))
     )
 
-App.Config.set('DataPrivacy', { prio: 3600, name: 'Data Privacy', parent: '#system', target: '#system/data_privacy', controller: Index, permission: ['admin.data_privacy'] }, 'NavBarAdmin')
+App.Config.set('DataPrivacy', { prio: 3600, name: __('Data Privacy'), parent: '#system', target: '#system/data_privacy', controller: Index, permission: ['admin.data_privacy'] }, 'NavBarAdmin')

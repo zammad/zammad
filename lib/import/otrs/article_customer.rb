@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 module Import
   module OTRS
     class ArticleCustomer
@@ -7,6 +9,10 @@ module Import
         import(article)
       rescue Exceptions::UnprocessableEntity
         log "ERROR: Can't extract customer from Article #{article[:id]}"
+      end
+
+      def self.mutex
+        @mutex ||= Mutex.new
       end
 
       class << self
@@ -33,7 +39,7 @@ module Import
         def extract_email(from)
           Mail::Address.new(from).address
         rescue
-          return from if from !~ /<\s*([^>]+)/
+          return from if from !~ %r{<\s*([^>]+)}
 
           $1.strip
         end
@@ -46,9 +52,11 @@ module Import
       end
 
       def find_or_create(article)
-        return if self.class.find(article)
+        self.class.mutex.synchronize do
+          return if self.class.find(article)
 
-        create(article)
+          create(article)
+        end
       end
 
       def create(article)
@@ -64,14 +72,6 @@ module Import
           updated_by_id: 1,
           created_by_id: 1,
         )
-      rescue ActiveRecord::RecordNotUnique
-        log "User #{email} was handled by another thread, taking this."
-
-        return if self.class.find(article)
-
-        log "User #{email} wasn't created sleep and retry."
-        sleep rand 3
-        retry
       end
 
       def roles

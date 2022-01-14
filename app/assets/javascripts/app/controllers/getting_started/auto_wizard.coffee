@@ -7,13 +7,13 @@ class GettingStartedAutoWizard extends App.ControllerWizardFullScreen
       @navigate '#'
       return
 
-    # redirect to login if master user already exists
+    # redirect to login if admin user already exists
     if @Config.get('system_init_done')
       @navigate '#login'
       return
 
     # set title
-    @title 'Auto Wizard'
+    @title __('Auto Wizard')
     @renderSplash()
     @fetch()
 
@@ -48,7 +48,7 @@ class GettingStartedAutoWizard extends App.ControllerWizardFullScreen
             @renderToken()
           return
 
-        # redirect to login if master user already exists
+        # redirect to login if admin user already exists
         @redirectToLogin()
     )
 

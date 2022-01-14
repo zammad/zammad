@@ -1,6 +1,11 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
+require 'models/concerns/has_xss_sanitized_note_examples'
 
 RSpec.describe Webhook, type: :model do
+
+  it_behaves_like 'HasXssSanitizedNote', model_factory: :webhook
 
   describe 'check endpoint' do
     subject(:webhook) { build(:webhook, endpoint: endpoint) }
@@ -73,7 +78,7 @@ RSpec.describe Webhook, type: :model do
       let!(:trigger) { create(:trigger, perform: { 'notification.webhook' => { 'webhook_id' => webhook.id.to_s } }) }
 
       it 'raises error with details' do
-        expect { webhook.destroy }.to raise_error(Exceptions::UnprocessableEntity, /#{Regexp.escape("Trigger: #{trigger.name} (##{trigger.id})")}/)
+        expect { webhook.destroy }.to raise_error(Exceptions::UnprocessableEntity, %r{#{Regexp.escape("Trigger: #{trigger.name} (##{trigger.id})")}})
       end
     end
   end

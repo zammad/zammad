@@ -1,12 +1,14 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 
 RSpec.describe 'Ticket', type: :request do
 
   let!(:ticket_group) do
-    create(:group, email_address: create(:email_address) )
+    create(:group, email_address: create(:email_address))
   end
   let!(:ticket_group_without_create) do
-    create(:group, email_address: create(:email_address) )
+    create(:group, email_address: create(:email_address))
   end
   let(:admin) do
     create(:admin, groups: Group.all, firstname: 'Tickets', lastname: 'Admin')
@@ -99,10 +101,43 @@ RSpec.describe 'Ticket', type: :request do
         article:     {},
       }
       authenticated_as(agent)
-      post '/api/v1/tickets', params: params, as: :json
+      expect { post '/api/v1/tickets', params: params, as: :json }.not_to change(Ticket, :count)
       expect(response).to have_http_status(:unprocessable_entity)
       expect(json_response).to be_a_kind_of(Hash)
-      expect(json_response['error']).to eq('Need at least article: { body: "some text" }')
+      expect(json_response['error']).to eq('Need at least an article body field.')
+    end
+
+    it 'does ticket create with agent - article.body set to empty string (01.03)' do
+      params = {
+        title:       'a new ticket #3',
+        group:       ticket_group.name,
+        priority:    '2 normal',
+        state:       'new',
+        customer_id: customer.id,
+        article:     { body: " \n " },
+      }
+      authenticated_as(agent)
+      expect { post '/api/v1/tickets', params: params, as: :json }.not_to change(Ticket, :count)
+      expect(response).to have_http_status(:unprocessable_entity)
+      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response['error']).to eq('Need at least an article body field.')
+    end
+
+    it 'does ticket create with agent - missing article (01.03)' do
+      params = {
+        title:       'a new ticket #3',
+        group:       ticket_group.name,
+        priority:    '2 normal',
+        state:       'new',
+        customer_id: customer.id
+      }
+      authenticated_as(agent)
+      expect { post '/api/v1/tickets', params: params, as: :json }.to change(Ticket, :count).by(1)
+      expect(response).to have_http_status(:created)
+      expect(json_response).to be_a_kind_of(Hash)
+
+      ticket = Ticket.find(json_response['id'])
+      expect(ticket.articles).to be_empty
     end
 
     it 'does ticket create with agent - minimal article (01.03)' do
@@ -147,30 +182,6 @@ RSpec.describe 'Ticket', type: :request do
       expect(json_response['customer_id']).to eq(customer.id)
       expect(json_response['updated_by_id']).to eq(agent.id)
       expect(json_response['created_by_id']).to eq(agent.id)
-    end
-
-    it 'does ticket create with empty article body' do
-      params = {
-        title:    'a new ticket with empty article body',
-        group:    ticket_group.name,
-        priority: '2 normal',
-        state:    'new',
-        customer: customer.email,
-        article:  { body: '' }
-      }
-      authenticated_as(agent)
-      post '/api/v1/tickets', params: params, as: :json
-      expect(response).to have_http_status(:created)
-      expect(json_response).to be_a_kind_of(Hash)
-      expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
-      expect(json_response['title']).to eq('a new ticket with empty article body')
-      expect(json_response['customer_id']).to eq(customer.id)
-      expect(json_response['updated_by_id']).to eq(agent.id)
-      expect(json_response['created_by_id']).to eq(agent.id)
-      ticket = Ticket.find(json_response['id'])
-      expect(ticket.articles.count).to eq(1)
-      article = ticket.articles.first
-      expect(article.body).to eq('')
     end
 
     it 'does ticket create with agent - wrong owner_id - 0 (01.05)' do
@@ -472,7 +483,7 @@ RSpec.describe 'Ticket', type: :request do
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:unprocessable_entity)
       expect(json_response).to be_a_kind_of(Hash)
-      expect(json_response['error']).to eq('Need at least article: { body: "some text" }')
+      expect(json_response['error']).to eq('Need at least an article body field.')
     end
 
     it 'does ticket create with agent - minimal article and attachment with customer (01.13)' do
@@ -699,13 +710,13 @@ RSpec.describe 'Ticket', type: :request do
       expect(Digest::MD5.hexdigest(file.content)).to eq('d3c1e09bdefb92b6a06b791a24ca9599')
       expect(file.filename).to eq('image1.png')
       expect(file.preferences['Mime-Type']).to eq('image/png')
-      expect(file.preferences['Content-ID']).to match(/#{ticket.id}\..+?@zammad.example.com/)
+      expect(file.preferences['Content-ID']).to match(%r{#{ticket.id}\..+?@zammad.example.com})
       expect(file.preferences['Content-ID']).to be_truthy
       file = ticket.articles.first.attachments[1]
       expect(Digest::MD5.hexdigest(file.content)).to eq('006a2ca3793b550c8fe444acdeb39252')
       expect(file.filename).to eq('image2.jpeg')
       expect(file.preferences['Mime-Type']).to eq('image/jpeg')
-      expect(file.preferences['Content-ID']).to match(/#{ticket.id}\..+?@zammad.example.com/)
+      expect(file.preferences['Content-ID']).to match(%r{#{ticket.id}\..+?@zammad.example.com})
       expect(file.preferences['Content-ID']).to be_truthy
     end
 
@@ -744,7 +755,7 @@ RSpec.describe 'Ticket', type: :request do
       expect(file.filename).to eq('image1.jpeg')
       expect(file.preferences['Mime-Type']).to eq('image/jpeg')
       expect(file.preferences['Content-ID']).to be_truthy
-      expect(file.preferences['Content-ID']).to match(/#{ticket.id}\..+?@zammad.example.com/)
+      expect(file.preferences['Content-ID']).to match(%r{#{ticket.id}\..+?@zammad.example.com})
       file = ticket.articles.first.attachments[1]
       expect(Digest::MD5.hexdigest(file.content)).to eq('39d0d586a701e199389d954f2d592720')
       expect(file.filename).to eq('some_file.txt')
@@ -815,7 +826,7 @@ RSpec.describe 'Ticket', type: :request do
     end
 
     it 'does ticket with correct ticket id (02.04)' do
-      title = "ticket with corret ticket id testagent#{rand(999_999_999)}"
+      title = "ticket with corret ticket id testagent#{SecureRandom.uuid}"
       ticket = create(
         :ticket,
         title:       title,
@@ -1053,7 +1064,7 @@ RSpec.describe 'Ticket', type: :request do
     end
 
     it 'does ticket pagination (02.05)' do
-      title = "ticket pagination #{rand(999_999_999)}"
+      title = "ticket pagination #{SecureRandom.uuid}"
       tickets = []
       (1..20).each do |count|
         ticket = create(
@@ -1220,7 +1231,7 @@ RSpec.describe 'Ticket', type: :request do
     end
 
     it 'does ticket with correct ticket id (03.05)' do
-      title = "ticket with corret ticket id testme#{rand(999_999_999)}"
+      title = "ticket with corret ticket id testme#{SecureRandom.uuid}"
       ticket = create(
         :ticket,
         title:       title,
@@ -1425,7 +1436,7 @@ RSpec.describe 'Ticket', type: :request do
     end
 
     it 'does ticket show and response format (04.01)' do
-      title = "ticket testagent#{rand(999_999_999)}"
+      title = "ticket testagent#{SecureRandom.uuid}"
       ticket = create(
         :ticket,
         title:         title,
@@ -1509,7 +1520,7 @@ RSpec.describe 'Ticket', type: :request do
     end
 
     it 'does ticket index and response format (04.02)' do
-      title = "ticket testagent#{rand(999_999_999)}"
+      title = "ticket testagent#{SecureRandom.uuid}"
       ticket = create(
         :ticket,
         title:         title,
@@ -1604,7 +1615,7 @@ RSpec.describe 'Ticket', type: :request do
     end
 
     it 'does ticket create and response format (04.03)' do
-      title = "ticket testagent#{rand(999_999_999)}"
+      title = "ticket testagent#{SecureRandom.uuid}"
       params = {
         title:       title,
         group:       ticket_group.name,
@@ -1675,7 +1686,7 @@ RSpec.describe 'Ticket', type: :request do
     end
 
     it 'does ticket update and response formats (04.04)' do
-      title = "ticket testagent#{rand(999_999_999)}"
+      title = "ticket testagent#{SecureRandom.uuid}"
       ticket = create(
         :ticket,
         title:         title,
@@ -2020,7 +2031,7 @@ RSpec.describe 'Ticket', type: :request do
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['result']).to eq('failed')
-      expect(json_response['message']).to eq('No such master ticket number!')
+      expect(json_response['message']).to eq('No such target ticket number!')
 
       put "/api/v1/ticket_merge/#{ticket3.id}/#{ticket1.number}", params: {}, as: :json
       expect(response).to have_http_status(:forbidden)
@@ -2038,7 +2049,7 @@ RSpec.describe 'Ticket', type: :request do
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['result']).to eq('success')
-      expect(json_response['master_ticket']['id']).to eq(ticket2.id)
+      expect(json_response['target_ticket']['id']).to eq(ticket2.id)
     end
 
     it 'does ticket merge - change permission (07.02)' do
@@ -2068,11 +2079,11 @@ RSpec.describe 'Ticket', type: :request do
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['result']).to eq('success')
-      expect(json_response['master_ticket']['id']).to eq(ticket2.id)
+      expect(json_response['target_ticket']['id']).to eq(ticket2.id)
     end
 
     it 'does ticket search sorted (08.01)' do
-      title = "ticket pagination #{rand(999_999_999)}"
+      title = "ticket pagination #{SecureRandom.uuid}"
 
       ticket1 = create(
         :ticket,
@@ -2143,7 +2154,7 @@ RSpec.describe 'Ticket', type: :request do
       expect(json_response['tickets']).to eq([ticket2.id, ticket1.id])
     end
 
-    it 'does ticket history ' do
+    it 'does ticket history' do
       ticket1 = create(
         :ticket,
         title:       'some title',
@@ -2332,6 +2343,43 @@ RSpec.describe 'Ticket', type: :request do
 
         context 'as customer', authenticated_as: -> { customer } do
           include_examples 'fail to reopen a ticket'
+        end
+      end
+    end
+  end
+
+  describe 'GET /api/v1/tickets/:id' do
+
+    subject!(:ticket) { create(:ticket) }
+
+    let(:agent) { create(:agent, groups: [ticket.group]) }
+
+    context 'links present', authenticated_as: -> { agent } do
+
+      before do
+        create(:link, from: ticket, to: linked)
+        get "/api/v1/tickets/#{ticket.id}", params: { all: 'true' }, as: :json
+      end
+
+      let(:linked) { create(:ticket, group: ticket.group) }
+
+      it 'is present in response' do
+        expect(response).to have_http_status(:ok)
+        expect(json_response['links']).to eq([
+                                               {
+                                                 'link_type'         => 'normal',
+                                                 'link_object'       => 'Ticket',
+                                                 'link_object_value' => linked.id
+                                               }
+                                             ])
+      end
+
+      context 'no permission to linked Ticket Group' do
+        let(:linked) { create(:ticket) }
+
+        it 'is not present in response' do
+          expect(response).to have_http_status(:ok)
+          expect(json_response['links']).to be_blank
         end
       end
     end

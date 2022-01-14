@@ -1,45 +1,45 @@
 class ProfileNotification extends App.ControllerSubContent
   requiredPermission: 'user_preferences.notifications+ticket.agent'
-  header: 'Notifications'
+  header: __('Notifications')
   events:
     'submit form': 'update'
     'change .js-notificationSound': 'previewSound'
 
   sounds: [
     {
-      name: 'Bell'
+      name: __('Bell')
       file: 'Bell.mp3'
     },
     {
-      name: 'Kalimba'
+      name: __('Kalimba')
       file: 'Kalimba.mp3'
     },
     {
-      name: 'Marimba'
+      name: __('Marimba')
       file: 'Marimba.mp3'
     },
     {
-      name: 'Peep'
+      name: __('Peep')
       file: 'Peep.mp3'
     },
     {
-      name: 'Plop'
+      name: __('Plop')
       file: 'Plop.mp3'
     },
     {
-      name: 'Ring'
+      name: __('Ring')
       file: 'Ring.mp3'
     },
     {
-      name: 'Space'
+      name: __('Space')
       file: 'Space.mp3'
     },
     {
-      name: 'Wood'
+      name: __('Wood')
       file: 'Wood.mp3'
     },
     {
-      name: 'Xylo'
+      name: __('Xylo')
       file: 'Xylo.mp3'
     }
   ]
@@ -52,13 +52,13 @@ class ProfileNotification extends App.ControllerSubContent
 
     matrix =
       create:
-        name: 'New Ticket'
+        name: __('New Ticket')
       update:
-        name: 'Ticket update'
+        name: __('Ticket update')
       reminder_reached:
-        name: 'Ticket reminder reached'
+        name: __('Ticket reminder reached')
       escalation:
-        name: 'Ticket escalation'
+        name: __('Ticket escalation')
 
     config =
       group_ids: []
@@ -196,4 +196,4 @@ class ProfileNotification extends App.ControllerSubContent
     return if !params.notification_sound.file
     App.OnlineNotification.play(params.notification_sound.file)
 
-App.Config.set('Notifications', { prio: 2600, name: 'Notifications', parent: '#profile', target: '#profile/notifications', permission: ['user_preferences.notifications+ticket.agent'], controller: ProfileNotification }, 'NavBarProfile')
+App.Config.set('Notifications', { prio: 2600, name: __('Notifications'), parent: '#profile', target: '#profile/notifications', permission: ['user_preferences.notifications+ticket.agent'], controller: ProfileNotification }, 'NavBarProfile')

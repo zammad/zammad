@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 class Sessions::Event::Broadcast < Sessions::Event::Base
 
 =begin
@@ -16,7 +18,7 @@ To execute this manually, just paste the following into the browser console
     client_list = Sessions.list
     client_list.each do |local_client_id, local_client|
       if local_client_id == @client_id
-        log 'info', 'do not send broadcast to it self'
+        log 'info', 'do not send broadcast to itself'
         next
       end
 

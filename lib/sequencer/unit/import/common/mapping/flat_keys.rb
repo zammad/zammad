@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 class Sequencer
   class Unit
     module Import
@@ -23,9 +25,9 @@ class Sequencer
             def mapped
               @mapped ||= begin
                 resource_with_indifferent_access = resource.with_indifferent_access
-                mapping.symbolize_keys.collect do |source, local|
+                mapping.symbolize_keys.to_h do |source, local|
                   [local, resource_with_indifferent_access[source]]
-                end.to_h.with_indifferent_access
+                end.with_indifferent_access
               end
             end
 

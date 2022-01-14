@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 FactoryBot.define do
   factory :signature do
     sequence(:name) { |n| "Test signature #{n}" }

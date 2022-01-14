@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 class Sequencer
   class Sequence
     module Import
@@ -7,14 +9,14 @@ class Sequencer
           def self.sequence
             [
               'Import::Zendesk::Ticket::Skip::Deleted',
-              'Import::Zendesk::Ticket::UserID',
-              'Import::Zendesk::Ticket::OwnerID',
-              'Import::Zendesk::Ticket::GroupID',
-              'Import::Zendesk::Ticket::OrganizationID',
-              'Import::Zendesk::Ticket::PriorityID',
-              'Import::Zendesk::Ticket::StateID',
-              'Import::Zendesk::Common::ArticleSenderID',
-              'Import::Zendesk::Common::ArticleTypeID',
+              'Import::Zendesk::Ticket::UserId',
+              'Import::Zendesk::Ticket::OwnerId',
+              'Import::Zendesk::Ticket::GroupId',
+              'Import::Zendesk::Ticket::OrganizationId',
+              'Import::Zendesk::Ticket::PriorityId',
+              'Import::Zendesk::Ticket::StateId',
+              'Import::Zendesk::Common::ArticleSenderId',
+              'Import::Zendesk::Common::ArticleTypeId',
               'Import::Zendesk::Ticket::Subject',
               'Import::Zendesk::Ticket::CustomFields',
               'Import::Zendesk::Ticket::Mapping',

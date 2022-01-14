@@ -13,6 +13,12 @@
 # database (copy from config/database/database.yml, or use `rails bs:init`)
 /config/database.yml
 
+# local backup config file
+/contrib/backup/config
+
+# Dynamic environment config for Gitlab
+/.gitlab/environment.env
+
 # Third-Party ------------------------------------------------------------------
 # The config files / dev tools listed below are optional
 # and may not be present on most users' machines
@@ -31,8 +37,8 @@
 /db/*.sqlite3
 /db/schema.rb
 
-# translation cache files
-/config/locales*.yml
+# legacy translation cache files
+/config/locales-*.yml
 /config/translations/*.yml
 
 # NPM / Yarn
@@ -41,6 +47,7 @@
 # logfiles and tempfiles
 /log
 /public/assets/*.*
+/public/assets/addons
 /public/assets/app
 /public/assets/custom
 /public/assets/chat/node_modules
@@ -55,6 +62,12 @@
 
 # images
 /public/assets/images/*
+/public/assets/images/yarn.lock
+/public/assets/images/node_modules
+!/public/assets/images/*.sh
+!/public/assets/images/Dockerfile
+!/public/assets/images/package.json
+!/public/assets/images/gulpfile.js
 !/public/assets/images/icons/
 !/public/assets/images/avatar-bg.png
 !/public/assets/images/chat-demo-avatar.png
@@ -75,6 +88,9 @@
 
 # Eclipse
 /.project
+
+# VSCode
+/.vscode
 
 # Byebug
 /.byebug_history

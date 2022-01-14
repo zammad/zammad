@@ -1,6 +1,6 @@
 class Job extends App.ControllerSubContent
   requiredPermission: 'admin.scheduler'
-  header: 'Scheduler'
+  header: __('Scheduler')
   constructor: ->
     super
 
@@ -11,18 +11,18 @@ class Job extends App.ControllerSubContent
       defaultSortBy: 'name'
       pageData:
         home: 'Jobs'
-        object: 'Scheduler'
-        objects: 'Schedulers'
+        object: __('Scheduler')
+        objects: __('Schedulers')
         pagerAjax: true
         pagerBaseUrl: '#manage/job/'
         pagerSelected: ( @page || 1 )
         pagerPerPage: 150
         navupdate: '#Jobs'
         notes: [
-          'Scheduler are ...'
+          __('Scheduler are …')
         ]
         buttons: [
-          { name: 'New Scheduler', 'data-type': 'new', class: 'btn--success' }
+          { name: __('New Scheduler'), 'data-type': 'new', class: 'btn--success' }
         ]
       container: @el.closest('.content')
       veryLarge: true
@@ -35,4 +35,4 @@ class Job extends App.ControllerSubContent
 
     @genericController.paginate( @page || 1 )
 
-App.Config.set('Job', { prio: 3400, name: 'Scheduler', parent: '#manage', target: '#manage/job', controller: Job, permission: ['admin.scheduler'] }, 'NavBarAdmin')
+App.Config.set('Job', { prio: 3400, name: __('Scheduler'), parent: '#manage', target: '#manage/job', controller: Job, permission: ['admin.scheduler'] }, 'NavBarAdmin')

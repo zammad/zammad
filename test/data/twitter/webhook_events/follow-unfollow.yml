@@ -31,7 +31,7 @@ follow_events:
     time_zone: ''
     geo_enabled: false
     verified: false
-    profile_image_url: http://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png
+    profile_image_url: https://pbs.twimg.com/profile_images/1408343046731845632/K56uhLP2_400x400.png
     following: false
     profile_image_url_https: https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png
     profile_background_tile: false

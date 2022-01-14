@@ -1,22 +1,19 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 module ApplicationController::HandlesDevices
   extend ActiveSupport::Concern
 
   included do
-    before_action :user_device_check
+    before_action :user_device_log
   end
 
-  def user_device_check
-    return false if !user_device_log(current_user, 'session')
-
-    true
-  end
-
-  def user_device_log(user, type)
+  def user_device_log(user = current_user, type = 'session')
     switched_from_user_id = ENV['SWITCHED_FROM_USER_ID'] || session[:switched_from_user_id]
     return true if params[:controller] == 'init' # do no device logging on static initial page
     return true if switched_from_user_id
+    return true if current_user_on_behalf # do no device logging for the user on behalf feature
     return true if !user
-    return true if !user.permissions?('user_preferences.device')
+    return true if !policy(UserDevice).log?
     return true if type == 'SSO'
 
     time_to_check = true
@@ -40,6 +37,7 @@ module ApplicationController::HandlesDevices
 
     # if ip has not changed and ttl in still valid
     remote_ip = ENV['TEST_REMOTE_IP'] || request.remote_ip
+
     return true if time_to_check == false && session[:user_device_remote_ip] == remote_ip
 
     session[:user_device_remote_ip] = remote_ip
@@ -47,7 +45,7 @@ module ApplicationController::HandlesDevices
     # for sessions we need the fingperprint
     if type == 'session'
       if !session[:user_device_updated_at] && !params[:fingerprint] && !session[:user_device_fingerprint]
-        raise Exceptions::UnprocessableEntity, 'Need fingerprint param!'
+        raise Exceptions::UnprocessableEntity, __('Need fingerprint param!')
       end
 
       if params[:fingerprint]

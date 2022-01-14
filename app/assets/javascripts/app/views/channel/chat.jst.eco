@@ -139,9 +139,9 @@
 
   <h3><%- @T('Requirements') %></h3>
   <p><%- @T("Zammad Chat requires jQuery. If you don't already use it on your website include it like this:") %></p>
-  <pre><code class="language-html js-code">&lt;script src="https://code.jquery.com/jquery-2.1.4.min.js"&gt;&lt;/script&gt;</code></pre>
+  <pre><code class="language-html js-code">&lt;script src="https://code.jquery.com/jquery-3.6.0.min.js"&gt;&lt;/script&gt;</code></pre>
 
-  <h3><%- @T('Automatically show chat') %> (<%- @T('default') %>)</h3>
+  <h3><%- @T('Show chat automatically') %> (<%- @T('default') %>)</h3>
   <p><%- @T('The chat will show up once the connection to the server got established and if there is someone online to chat with.') %></p>
 
   <pre><code class="language-html js-code">&lt;script src="<%= @baseurl %>/assets/chat/chat.min.js"&gt;&lt;/script&gt;
@@ -154,7 +154,7 @@ $(function() {
 &lt;/script&gt;</code></pre>
 
   <h3><%- @T('Manually open chat') %></h3>
-  <p><%- @T('If you want to open the chat by the press of a button set the option §show§ to §false§ and add the class §open-zammad-chat§ to the button.') %></p>
+  <p><%- @T('If you want to open the chat by clicking a button, set the option §show§ to §false§ and add the class §open-zammad-chat§ to the button.') %></p>
   <pre><code class="language-html js-code">&lt;button class="open-zammad-chat"&gt;Chat with us&lt;/button&gt;
 
 &lt;script src="<%= @baseurl %>/assets/chat/chat.min.js"&gt;&lt;/script&gt;

@@ -46,7 +46,7 @@ class App.UiElement.ApplicationUiElement
     result = []
     for row in selection
       if attribute.translate
-        row.name = App.i18n.translateInline(row.name)
+        row.name = App.i18n.translatePlain(row.name)
         if !_.isEmpty(row.children)
           row.children = @getConfigOptionListArray(attribute, row.children)
       result.push row
@@ -65,7 +65,7 @@ class App.UiElement.ApplicationUiElement
       for key in order
         name_new = selection[key]
         if attribute.translate
-          name_new = App.i18n.translateInline(name_new)
+          name_new = App.i18n.translatePlain(name_new)
         attribute.options.push {
           name:  name_new
           value: key
@@ -114,26 +114,20 @@ class App.UiElement.ApplicationUiElement
 
         App.Log.debug 'ControllerForm', '_getRelationOptionList:filter-array', attribute.filter
 
+        filter = _.clone(attribute.filter)
+        if !attribute.rejectNonExistentValues && params[ attribute.name ] && !_.contains(filter, params[ attribute.name ])
+          filter.push(params[ attribute.name ])
+
         # check all records
-        for record in App[ attribute.relation ].search(sortBy: attribute.sortBy)
+        for record in App[ attribute.relation ].search(sortBy: attribute.sortBy, translate: attribute.translate)
 
           # check all filter attributes
-          for key in attribute.filter
+          for key in filter
 
             # check all filter values as array
             # if it's matching, use it for selection
             if record['id'] is key || ( record['id'] && key && record['id'].toString() is key.toString() )
               list.push record
-
-        # check if current value need to be added
-        if params[ attribute.name ] && !attribute.rejectNonExistentValues
-          hit = false
-          for value in list
-            if value['id'].toString() is params[ attribute.name ].toString()
-              hit = true
-          if !hit
-            currentRecord = App[ attribute.relation ].find(params[ attribute.name ])
-            list.push currentRecord
 
       # no data filter matched
       else
@@ -168,7 +162,7 @@ class App.UiElement.ApplicationUiElement
           nameNew = item.name
 
         if attribute.translate
-          nameNew = App.i18n.translateInline(nameNew)
+          nameNew = App.i18n.translatePlain(nameNew)
 
         row =
           value: item.id,
@@ -192,10 +186,20 @@ class App.UiElement.ApplicationUiElement
     return if !attribute.filter
     return if _.isEmpty(attribute.options)
 
-    return if typeof attribute.filter isnt 'function'
-    App.Log.debug 'ControllerForm', '_filterOption:filter-function'
+    if typeof attribute.filter is 'function'
+      App.Log.debug 'ControllerForm', '_filterOption:filter-function'
+      attribute.options = attribute.filter(attribute.options, attribute)
+    else if !attribute.relation && attribute.filter && _.isArray(attribute.filter)
+      @filterOptionArray(attribute)
 
-    attribute.options = attribute.filter(attribute.options, attribute)
+  @filterOptionArray: (attribute) ->
+    result = []
+    for option in attribute.options
+      for value in attribute.filter
+        if value.toString() == option.value.toString()
+          result.push(option)
+
+    attribute.options = result
 
   # set selected attributes
   @selectedOptions: (attribute) ->

@@ -1,6 +1,8 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 overview_role = Role.find_by(name: 'Agent')
 Overview.create_if_not_exists(
-  name:      'My assigned Tickets',
+  name:      __('My assigned Tickets'),
   link:      'my_assigned',
   prio:      1000,
   role_ids:  [overview_role.id],
@@ -27,7 +29,7 @@ Overview.create_if_not_exists(
 )
 
 Overview.create_if_not_exists(
-  name:      'Unassigned & Open',
+  name:      __('Unassigned & Open'),
   link:      'all_unassigned',
   prio:      1010,
   role_ids:  [overview_role.id],
@@ -54,7 +56,7 @@ Overview.create_if_not_exists(
 )
 
 Overview.create_if_not_exists(
-  name:      'My pending reached Tickets',
+  name:      __('My pending reached Tickets'),
   link:      'my_pending_reached',
   prio:      1020,
   role_ids:  [overview_role.id],
@@ -86,7 +88,7 @@ Overview.create_if_not_exists(
 )
 
 Overview.create_if_not_exists(
-  name:      'My subscribed Tickets',
+  name:      __('My subscribed Tickets'),
   link:      'my_subscribed_tickets',
   prio:      1025,
   role_ids:  [overview_role.id],
@@ -104,7 +106,7 @@ Overview.create_if_not_exists(
 )
 
 Overview.create_if_not_exists(
-  name:      'Open',
+  name:      __('Open'),
   link:      'all_open',
   prio:      1030,
   role_ids:  [overview_role.id],
@@ -127,7 +129,7 @@ Overview.create_if_not_exists(
 )
 
 Overview.create_if_not_exists(
-  name:      'Pending reached',
+  name:      __('Pending reached'),
   link:      'all_pending_reached',
   prio:      1040,
   role_ids:  [overview_role.id],
@@ -155,13 +157,13 @@ Overview.create_if_not_exists(
 )
 
 Overview.create_if_not_exists(
-  name:      'Escalated',
+  name:      __('Escalated'),
   link:      'all_escalated',
   prio:      1050,
   role_ids:  [overview_role.id],
   condition: {
     'ticket.escalation_at' => {
-      operator: 'before (relative)',
+      operator: 'till (relative)',
       value:    '10',
       range:    'minute',
     },
@@ -179,7 +181,7 @@ Overview.create_if_not_exists(
 )
 
 Overview.create_if_not_exists(
-  name:          'My replacement Tickets',
+  name:          __('My replacement Tickets'),
   link:          'my_replacement_tickets',
   prio:          1080,
   role_ids:      [overview_role.id],
@@ -208,7 +210,7 @@ Overview.create_if_not_exists(
 
 overview_role = Role.find_by(name: 'Customer')
 Overview.create_if_not_exists(
-  name:      'My Tickets',
+  name:      __('My Tickets'),
   link:      'my_tickets',
   prio:      1100,
   role_ids:  [overview_role.id],
@@ -234,7 +236,7 @@ Overview.create_if_not_exists(
   },
 )
 Overview.create_if_not_exists(
-  name:                'My Organization Tickets',
+  name:                __('My Organization Tickets'),
   link:                'my_organization_tickets',
   prio:                1200,
   role_ids:            [overview_role.id],

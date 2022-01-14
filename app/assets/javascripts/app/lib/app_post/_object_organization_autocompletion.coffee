@@ -7,12 +7,14 @@ class App.ObjectOrganizationAutocompletion extends App.Controller
     'click .js-object':                       'onObjectClick'
     'click .js-objectNew':                    'newObject'
     'focus .js-objectSelect':                 'onFocus'
+    'input .js-objectSelect':                 'open'
     'click .js-objectSelect':                 'stopPropagation'
     'blur .js-objectSelect':                  'onBlur'
     'click .form-control':                    'focusInput'
     'click':                                  'stopPropagation'
     'change .js-objectId':                    'executeCallback'
     'click .js-remove':                       'removeThisToken'
+    'click .js-showMoreMembers':              'showMoreMembers'
 
   elements:
     '.recipientList':   'recipientList'
@@ -29,7 +31,7 @@ class App.ObjectOrganizationAutocompletion extends App.Controller
   objectIcon: 'user'
   inactiveObjectIcon: 'inactive-user'
   objectSingels: 'People'
-  objectCreate: 'Create new object'
+  objectCreate: __('Create new object')
   referenceAttribute: 'member_ids'
 
   constructor: (params) ->
@@ -39,6 +41,8 @@ class App.ObjectOrganizationAutocompletion extends App.Controller
 
     @key = Math.floor( Math.random() * 999999 ).toString()
 
+    if !@attribute.sourceType
+      @attribute.sourceType = 'GET'
     if !@attribute.source
       @attribute.source = "#{@apiPath}/search/user-organization"
     @build()
@@ -248,14 +252,42 @@ class App.ObjectOrganizationAutocompletion extends App.Controller
       objectCount: objectCount
     )
 
+  showMoreMembers: (e) ->
+    @preventDefaultAndStopPropagation(e)
+
+    memberElement  = $(e.target).closest('.js-showMoreMembers')
+    oldMemberLimit = memberElement.attr('organization-member-limit')
+    newMemberLimit = (parseInt(oldMemberLimit / 25) + 1) * 25
+    memberElement.attr('organization-member-limit', newMemberLimit)
+
+    @renderMembers(memberElement, oldMemberLimit, newMemberLimit)
+
+  renderMembers: (element, fromMemberLimit, toMemberLimit) ->
+    id           = element.closest('.recipientList-organizationMembers').attr('organization-id')
+    organization = App.Organization.find(id)
+
+    # only first 10 members else we would need more ajax requests
+    organization.members(fromMemberLimit, toMemberLimit, (users) =>
+      for user in users
+        element.before(@buildObjectItem(user))
+
+      if element.closest('ul').hasClass('is-shown')
+        @showOrganizationMembers(undefined, element.closest('ul'))
+    )
+
+    if organization.member_ids.length <= toMemberLimit
+      element.addClass('hidden')
+    else
+      element.removeClass('hidden')
+
   buildOrganizationMembers: (organization) =>
-    organizationMemebers = $( App.view(@templateOrganizationItemMembers)(
+    organizationMembers = $( App.view(@templateOrganizationItemMembers)(
       organization: organization
     ) )
-    if organization[@referenceAttribute]
-      for objectId in organization[@referenceAttribute]
-        object = App[@objectSingle].fullLocal(objectId)
-        organizationMemebers.append(@buildObjectItem(object))
+
+    @renderMembers(organizationMembers.find('.js-showMoreMembers'), 0, 10)
+
+    organizationMembers
 
   buildObjectItem: (object) =>
     icon = @objectIcon
@@ -345,38 +377,49 @@ class App.ObjectOrganizationAutocompletion extends App.Controller
       @lazySearch(query)
 
   searchObject: (query) =>
+    data =
+      query: query
+    if @attribute.queryCallback
+      data = @attribute.queryCallback(query)
+
     @ajax(
-      id:    "searchObject#{@key}"
-      type:  'GET'
-      url:   @attribute.source
-      data:
-        query: query
+      id:          "searchObject#{@key}"
+      type:        @attribute.sourceType
+      url:         @attribute.source
+      data:        data
       processData: true
-      success: (data, status, xhr) =>
+      success:     (data, status, xhr) =>
         @emptyResultList()
 
         # load assets
         App.Collection.loadAssets(data.assets)
 
-        # build markup
-        for item in data.result
-
-          # organization
-          if item.type is 'Organization'
-            organization = App.Organization.fullLocal(item.id)
-            @recipientList.append(@buildOrganizationItem(organization))
-
-            # objectss of organization
-            if organization[@referenceAttribute]
-              @$('.dropdown-menu').append(@buildOrganizationMembers(organization))
-
-          # objectss
-          if item.type is @objectSingle
-            object = App[@objectSingle].fullLocal(item.id)
+        # user search endpoint
+        if data.user_ids
+          for id in data.user_ids
+            object = App[@objectSingle].fullLocal(id)
             @recipientList.append(@buildObjectItem(object))
 
-        if !@attribute.disableCreateObject
-          @recipientList.append(@buildObjectNew())
+        # global search endpoint
+        else
+          for item in data.result
+
+            # organization
+            if item.type is 'Organization'
+              organization = App.Organization.fullLocal(item.id)
+              @recipientList.append(@buildOrganizationItem(organization))
+
+              # objectss of organization
+              if organization[@referenceAttribute]
+                @$('.dropdown-menu').append(@buildOrganizationMembers(organization))
+
+            # objectss
+            else if item.type is @objectSingle
+              object = App[@objectSingle].fullLocal(item.id)
+              @recipientList.append(@buildObjectItem(object))
+
+          if !@attribute.disableCreateObject
+            @recipientList.append(@buildObjectNew())
 
         @recipientList.find('.js-object').first().addClass('is-active')
     )
@@ -390,8 +433,7 @@ class App.ObjectOrganizationAutocompletion extends App.Controller
       e.stopPropagation()
       listEntry = $(e.currentTarget)
 
-    organizationId = listEntry.data('organization-id')
-
+    organizationId = listEntry.data('organization-id') || listEntry.attr('organization-id')
     @organizationList = @$("[organization-id=#{ organizationId }]")
 
     return if !@organizationList.get(0)

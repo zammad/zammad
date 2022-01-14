@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 require 'models/contexts/factory_context'
 
@@ -7,7 +9,7 @@ RSpec.describe KnowledgeBase::Answer::Translation, type: :model, current_user_id
   include_context 'factory'
 
   it { is_expected.to validate_presence_of(:title) }
-  it { is_expected.to validate_uniqueness_of(:kb_locale_id).scoped_to(:answer_id).with_message(//) }
+  it { is_expected.to validate_uniqueness_of(:kb_locale_id).scoped_to(:answer_id).with_message(%r{}) }
 
   it { is_expected.to belong_to(:answer) }
   it { is_expected.to belong_to(:kb_locale) }

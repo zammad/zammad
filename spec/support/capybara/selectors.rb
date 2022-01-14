@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 # This file defines custom Capybara selectors for DRYed specs.
 
 Capybara.add_selector(:href) do
@@ -42,4 +44,12 @@ end
 
 Capybara.add_selector(:link_containing) do
   xpath { |text| ".//a//*[text()[contains(.,\"#{text}\")]]" }
+end
+
+Capybara.add_selector(:task_active) do
+  css { '.tasks .task.is-active' }
+end
+
+Capybara.add_selector(:task_with) do
+  css { |task_key| ".tasks .task[data-key='#{task_key}']" }
 end

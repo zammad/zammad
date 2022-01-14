@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'browser_test_helper'
 
 class TaskbarTaskTest < TestCase
@@ -8,7 +10,7 @@ class TaskbarTaskTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     # persistant task
     click(css: 'a[href="#new"]', only_if_exists: true)
@@ -37,7 +39,7 @@ class TaskbarTaskTest < TestCase
       value: 'some test AAA',
     )
 
-    tasks_close_all()
+    tasks_close_all
 
     exists_not(css: '.active .newTicket input[name="title"]')
   end
@@ -49,7 +51,7 @@ class TaskbarTaskTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     click(css: 'a[href="#new"]', only_if_exists: true)
     click(css: 'a[href="#ticket/create"]', wait: 0.8)
@@ -75,12 +77,12 @@ class TaskbarTaskTest < TestCase
     )
     sleep 3
 
-    logout()
+    logout
     sleep 4
 
     # relogin with master - task are not viewable
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
@@ -94,7 +96,7 @@ class TaskbarTaskTest < TestCase
       css:   'body',
       value: 'OUTBOUND TEST#1',
     )
-    logout()
+    logout
     sleep 2
 
     match_not(

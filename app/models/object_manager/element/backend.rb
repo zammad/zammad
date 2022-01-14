@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 class ObjectManager::Element::Backend
 
   attr_reader :user, :attribute, :record
@@ -36,12 +38,12 @@ class ObjectManager::Element::Backend
       name:    attribute.name,
       display: attribute.display,
       tag:     attribute.data_type,
-      #:null     => attribute.null,
+      # :null     => attribute.null,
     }
   end
 
   def screens
-    attribute.screens.transform_values do |permission_options|
+    @screens ||= attribute.screens.transform_values do |permission_options|
       screen_value(permission_options)
     end
   end

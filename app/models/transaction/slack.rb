@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Transaction::Slack
 
@@ -106,7 +106,7 @@ class Transaction::Slack
       if ticket.pending_time && ticket.pending_time < Time.zone.now
         color = '#faab00'
       end
-    elsif ticket_state_type.match?(/^(new|open)$/)
+    elsif ticket_state_type.match?(%r{^(new|open)$})
       color = '#faab00'
     elsif ticket_state_type == 'closed'
       color = '#38ad69'
@@ -119,7 +119,7 @@ class Transaction::Slack
       md5_webhook = Digest::MD5.hexdigest(local_config['webhook'])
       cache_key = "slack::backend::#{@item[:type]}::#{ticket.id}::#{md5_webhook}"
       if sent_value
-        value = Cache.get(cache_key)
+        value = Cache.read(cache_key)
         if value == sent_value
           Rails.logger.debug { "did not send webhook, already sent (#{@item[:type]}/#{ticket.id}/#{local_config['webhook']})" }
           next
@@ -168,6 +168,7 @@ class Transaction::Slack
 
       Rails.logger.debug { "sent webhook (#{@item[:type]}/#{ticket.id}/#{local_config['webhook']})" }
 
+      require 'slack-notifier' # Only load this gem when it is really used.
       notifier = Slack::Notifier.new(
         local_config['webhook'],
         channel:     local_config['channel'],
@@ -209,7 +210,7 @@ class Transaction::Slack
 
     # only show allowed attributes
     attribute_list = ObjectManager::Object.new('Ticket').attributes(user).index_by { |item| item[:name] }
-    #puts "AL #{attribute_list.inspect}"
+    # puts "AL #{attribute_list.inspect}"
     user_related_changes = {}
     @item[:changes].each do |key, value|
 
@@ -249,8 +250,8 @@ class Transaction::Slack
             if relation_model
               if relation_model['name']
                 value_str[0] = relation_model['name']
-              elsif relation_model.respond_to?('fullname')
-                value_str[0] = relation_model.send('fullname')
+              elsif relation_model.respond_to?(:fullname)
+                value_str[0] = relation_model.send(:fullname)
               end
             end
           end
@@ -259,8 +260,8 @@ class Transaction::Slack
             if relation_model
               if relation_model['name']
                 value_str[1] = relation_model['name']
-              elsif relation_model.respond_to?('fullname')
-                value_str[1] = relation_model.send('fullname')
+              elsif relation_model.respond_to?(:fullname)
+                value_str[1] = relation_model.send(:fullname)
               end
             end
           end
@@ -299,7 +300,8 @@ class Transaction::Slack
           total_timeout: 20,
           log:           {
             facility: 'slack_webhook',
-          }
+          },
+          verify_ssl:    true,
         },
       )
     end

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2017 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class KnowledgeBase::AnswersController < KnowledgeBase::BaseController
   include HasPublishing
@@ -75,7 +75,7 @@ class KnowledgeBase::AnswersController < KnowledgeBase::BaseController
 
     assets = object.assets({})
 
-    contents = object.translations.map(&:content).compact
+    contents = object.translations.filter_map(&:content)
     assets = ApplicationModel::CanAssets.reduce contents, assets
 
     render json: { id: object.id, assets: assets }, status: :created

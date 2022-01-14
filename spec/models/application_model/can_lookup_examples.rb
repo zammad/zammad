@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 RSpec.shared_examples 'ApplicationModel::CanLookup' do
   describe '.lookup_keys' do
     it 'returns a subset of: id, name, login, email, number' do
@@ -91,7 +93,7 @@ RSpec.shared_examples 'ApplicationModel::CanLookup' do
                   expect { instance.update(attribute => new_attribute_val) }
                     .to change { described_class.cache_get(old_attribute_val) }.to(nil)
 
-                  expect { described_class.lookup({ attribute => instance.send(attribute) }) }
+                  expect { described_class.lookup(attribute => instance.send(attribute)) }
                     .to change { described_class.cache_get(new_attribute_val) }.to(instance)
                 end
               end

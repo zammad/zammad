@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 class CreateTicket < ActiveRecord::Migration[4.2]
   def up
     create_table :ticket_state_types do |t|
@@ -383,7 +385,6 @@ class CreateTicket < ActiveRecord::Migration[4.2]
       t.column :content,              :text,    limit: 10.megabytes + 1, null: false
       t.column :note,                 :string,  limit: 250,  null: true
       t.column :active,               :boolean,              null: false, default: true
-      t.column :foreign_id,           :integer,              null: true
       t.column :updated_by_id,        :integer,              null: false
       t.column :created_by_id,        :integer,              null: false
       t.timestamps limit: 3, null: false
@@ -444,6 +445,7 @@ class CreateTicket < ActiveRecord::Migration[4.2]
       t.references :calendar,                                   null: false
       t.column :name,                 :string, limit: 150,      null: true
       t.column :first_response_time,  :integer,                 null: true
+      t.column :response_time,        :integer,                 null: true
       t.column :update_time,          :integer,                 null: true
       t.column :solution_time,        :integer,                 null: true
       t.column :condition,            :text, limit: 500.kilobytes + 1, null: true
@@ -477,7 +479,7 @@ class CreateTicket < ActiveRecord::Migration[4.2]
       t.boolean :public,                              null: false, default: false
       t.string  :block_ip,               limit: 5000, null: true
       t.string  :block_country,          limit: 5000, null: true
-      t.string  :whitelisted_websites,   limit: 5000, null: true
+      t.string  :allowed_websites,   limit: 5000, null: true
       t.string  :preferences,            limit: 5000, null: true
       t.integer :updated_by_id,                       null: false
       t.integer :created_by_id,                       null: false
@@ -486,18 +488,6 @@ class CreateTicket < ActiveRecord::Migration[4.2]
     add_index :chats, [:name], unique: true
     add_foreign_key :chats, :users, column: :created_by_id
     add_foreign_key :chats, :users, column: :updated_by_id
-
-    create_table :chat_topics do |t|
-      t.integer :chat_id,                             null: false
-      t.string  :name,                   limit: 250,  null: false
-      t.string  :note,                   limit: 250,  null: true
-      t.integer :updated_by_id,                       null: false
-      t.integer :created_by_id,                       null: false
-      t.timestamps limit: 3, null: false
-    end
-    add_index :chat_topics, [:name], unique: true
-    add_foreign_key :chat_topics, :users, column: :created_by_id
-    add_foreign_key :chat_topics, :users, column: :updated_by_id
 
     create_table :chat_sessions do |t|
       t.references :chat,                             null: false
@@ -606,7 +596,6 @@ class CreateTicket < ActiveRecord::Migration[4.2]
     drop_table :karma_activities
     drop_table :karma_users
     drop_table :report_profiles
-    drop_table :chat_topics
     drop_table :chat_sessions
     drop_table :chat_messages
     drop_table :chat_agents

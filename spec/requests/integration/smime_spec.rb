@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 
 RSpec.describe 'Integration SMIME', type: :request do
@@ -30,7 +32,7 @@ RSpec.describe 'Integration SMIME', type: :request do
         end.to change(SMIMECertificate, :count).by(1)
 
         expect(response).to have_http_status(:ok)
-        expect(DateTime.parse(json_response['response']['not_after_at'])).to eq(parsed_certificate.not_after)
+        expect(DateTime.parse(json_response['response'][0]['not_after_at'])).to eq(parsed_certificate.not_after)
       end
 
       it 'adds certificate by file' do
@@ -39,7 +41,7 @@ RSpec.describe 'Integration SMIME', type: :request do
         end.to change(SMIMECertificate, :count).by(1)
 
         expect(response).to have_http_status(:ok)
-        expect(DateTime.parse(json_response['response']['not_after_at'])).to eq(parsed_certificate.not_after)
+        expect(DateTime.parse(json_response['response'][0]['not_after_at'])).to eq(parsed_certificate.not_after)
       end
     end
 

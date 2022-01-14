@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 class TransactionJob < ApplicationJob
 
 =begin
@@ -20,7 +22,7 @@ class TransactionJob < ApplicationJob
       backend = Setting.get(setting.name)
       next if params[:disable]&.include?(backend)
 
-      Observer::Transaction.execute_singel_backend(backend.constantize, item, params)
+      TransactionDispatcher.execute_single_backend(backend.constantize, item, params)
     end
   end
 end

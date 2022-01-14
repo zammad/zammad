@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class ChannelsMicrosoft365Controller < ApplicationController
   prepend_before_action -> { authentication_check && authorize! }
@@ -55,7 +55,7 @@ class ChannelsMicrosoft365Controller < ApplicationController
   def destroy
     channel = Channel.find_by(id: params[:id], area: 'Microsoft365::Account')
     email   = EmailAddress.find_by(channel_id: channel.id)
-    email.destroy!
+    email&.destroy!
     channel.destroy!
     render json: {}
   end
@@ -76,7 +76,7 @@ class ChannelsMicrosoft365Controller < ApplicationController
     channel.refresh_xoauth2!(force: true)
 
     result = EmailHelper::Probe.inbound(channel.options[:inbound])
-    raise Exceptions::UnprocessableEntity, ( result[:message_human] || result[:message] ) if result[:result] == 'invalid'
+    raise Exceptions::UnprocessableEntity, (result[:message_human] || result[:message]) if result[:result] == 'invalid'
 
     channel.status_in    = 'ok'
     channel.status_out   = 'ok'
@@ -93,7 +93,7 @@ class ChannelsMicrosoft365Controller < ApplicationController
 
   def rollback_migration
     channel = Channel.find_by(id: params[:id], area: 'Microsoft365::Account')
-    raise 'Failed to find backup on channel!' if !channel.options[:backup_imap_classic]
+    raise __('Failed to find backup on channel!') if !channel.options[:backup_imap_classic]
 
     channel.update!(channel.options[:backup_imap_classic][:attributes])
     render json: {}

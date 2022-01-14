@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 
 RSpec.describe ImportJob do
@@ -155,7 +157,7 @@ RSpec.describe ImportJob do
       expect do
         described_class.start_registered
       end.to change {
-        described_class.where.not(started_at: nil, finished_at: nil).count
+        described_class.where.not(started_at: nil).where.not(finished_at: nil).count
       }.by(1)
     end
   end
@@ -246,7 +248,7 @@ RSpec.describe ImportJob do
 
     it 'returns false for already finished jobs' do
       instance    = create(:import_job)
-      delayed_job = double()
+      delayed_job = double
 
       instance.update!(finished_at: Time.zone.now)
 
@@ -255,14 +257,14 @@ RSpec.describe ImportJob do
 
     it 'returns false for backends not responding to reschedule?' do
       instance    = create(:import_job)
-      delayed_job = double()
+      delayed_job = double
 
       expect(instance.reschedule?(delayed_job)).to be false
     end
 
     it 'returns the backend reschedule? value' do
       instance    = create(:import_job, name: 'Import::NoRescheduleMethod')
-      delayed_job = double()
+      delayed_job = double
 
       expect(instance.reschedule?(delayed_job)).to eq 'invalid_but_checkable_result'
     end

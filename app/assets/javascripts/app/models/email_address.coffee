@@ -22,12 +22,12 @@ class App.EmailAddress extends App.Model
     )
 
   @configure_attributes = [
-    { name: 'realname',   display: 'Display name',  tag: 'input', type: 'text', limit: 250, null: false },
-    { name: 'email',      display: 'Email',     tag: 'input', type: 'email', limit: 250, null: false },
-    { name: 'channel_id', display: 'Channel',   tag: 'select', multiple: false, null: true, relation: 'Channel', nulloption: true, filter: @filterChannel, do_not_log: true },
-    { name: 'note',       display: 'Note',      tag: 'textarea', note: 'Notes are visible to agents only, never to customers.', limit: 250, null: true },
-    { name: 'updated_at', display: 'Updated',   tag: 'datetime', readonly: 1 },
-    { name: 'active',     display: 'Active',    tag: 'active',   readonly: 1 },
+    { name: 'realname',   display: __('Display name'),  tag: 'input', type: 'text', limit: 250, null: false },
+    { name: 'email',      display: __('Email'),     tag: 'input', type: 'email', limit: 250, null: false },
+    { name: 'channel_id', display: __('Channel'),   tag: 'select', multiple: false, null: true, relation: 'Channel', nulloption: true, filter: @filterChannel, do_not_log: true },
+    { name: 'note',       display: __('Note'),      tag: 'textarea', note: __('Notes are visible to agents only, never to customers.'), limit: 250, null: true },
+    { name: 'updated_at', display: __('Updated'),   tag: 'datetime', readonly: 1 },
+    { name: 'active',     display: __('Active'),    tag: 'active',   readonly: 1 },
   ]
   @configure_overview = [
     'realname', 'email'

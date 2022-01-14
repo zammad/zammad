@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 
 RSpec.describe Issue2541FixNotificationEmailWithoutBody, type: :db_migration do
@@ -49,7 +51,7 @@ RSpec.describe Issue2541FixNotificationEmailWithoutBody, type: :db_migration do
         subject(:job) do
           UserInfo.ensure_current_user_id do
 
-            create(:job, condition: { 'ticket.owner_id' => { 'operator' => 'is', 'pre_condition' => 'current_user.id', 'value' => '', 'value_completion' => '' } } )
+            create(:job, condition: { 'ticket.owner_id' => { 'operator' => 'is', 'pre_condition' => 'current_user.id', 'value' => '', 'value_completion' => '' } })
           end
         end
 

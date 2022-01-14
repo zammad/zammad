@@ -1,6 +1,6 @@
 class Role extends App.ControllerSubContent
   requiredPermission: 'admin.role'
-  header: 'Roles'
+  header: __('Roles')
   constructor: ->
     super
 
@@ -11,18 +11,18 @@ class Role extends App.ControllerSubContent
       defaultSortBy: 'name'
       pageData:
         home:      'roles'
-        object:    'Role'
-        objects:   'Roles'
+        object:    __('Role')
+        objects:   __('Roles')
         pagerAjax: true
         pagerBaseUrl: '#manage/roles/'
         pagerSelected: ( @page || 1 )
         pagerPerPage: 150
         navupdate: '#roles'
         notes:     [
-          'Roles are ...'
+          __('Roles are …')
         ]
         buttons: [
-          { name: 'New Role', 'data-type': 'new', class: 'btn--success' }
+          { name: __('New Role'), 'data-type': 'new', class: 'btn--success' }
         ]
       container: @el.closest('.content')
     )
@@ -34,4 +34,4 @@ class Role extends App.ControllerSubContent
 
     @genericController.paginate( @page || 1 )
 
-App.Config.set('Role', { prio: 1600, name: 'Roles', parent: '#manage', target: '#manage/roles', controller: Role, permission: ['admin.role'] }, 'NavBarAdmin')
+App.Config.set('Role', { prio: 1600, name: __('Roles'), parent: '#manage', target: '#manage/roles', controller: Role, permission: ['admin.role'] }, 'NavBarAdmin')

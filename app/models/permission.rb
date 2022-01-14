@@ -1,13 +1,16 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Permission < ApplicationModel
   include ChecksClientNotification
+  include ChecksHtmlSanitized
   include ChecksLatestChangeObserved
   include HasCollectionUpdate
 
   has_and_belongs_to_many :roles
   validates               :name, presence: true
   store                   :preferences
+
+  sanitized_html :note
 
 =begin
 

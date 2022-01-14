@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 
 RSpec.describe 'Time Accounting API endpoints', type: :request do
@@ -25,8 +27,8 @@ RSpec.describe 'Time Accounting API endpoints', type: :request do
     context 'when requesting a log report download' do
       it 'responds with an Excel spreadsheet' do
         create(:group)
-        ticket  = create(:ticket, state: Ticket::State.lookup(name: 'open'), customer: customer )
-        article = create(:ticket_article, ticket: ticket, type: Ticket::Article::Type.lookup(name: 'note') )
+        ticket  = create(:ticket, state: Ticket::State.lookup(name: 'open'), customer: customer)
+        article = create(:ticket_article, ticket: ticket, type: Ticket::Article::Type.lookup(name: 'note'))
 
         create(:ticket_time_accounting, ticket_id: ticket.id, ticket_article_id: article.id)
 
@@ -35,7 +37,7 @@ RSpec.describe 'Time Accounting API endpoints', type: :request do
 
         expect(response).to have_http_status(:ok)
         expect(response['Content-Disposition']).to be_truthy
-        expect(response['Content-Disposition']).to eq("attachment; filename=\"by_ticket-#{year}-#{month}.xls\"")
+        expect(response['Content-Disposition']).to eq("attachment; filename=\"by_ticket-#{year}-#{month}.xls\"; filename*=UTF-8''by_ticket-#{year}-#{month}.xls")
         expect(response['Content-Type']).to eq('application/vnd.ms-excel')
       end
     end
@@ -47,8 +49,8 @@ RSpec.describe 'Time Accounting API endpoints', type: :request do
         ObjectManager::Attribute.add attributes_for :object_manager_attribute_select
 
         create(:group)
-        ticket  = create(:ticket, state: Ticket::State.lookup(name: 'open'), customer: customer )
-        article = create(:ticket_article, ticket: ticket, type: Ticket::Article::Type.lookup(name: 'note') )
+        ticket  = create(:ticket, state: Ticket::State.lookup(name: 'open'), customer: customer)
+        article = create(:ticket_article, ticket: ticket, type: Ticket::Article::Type.lookup(name: 'note'))
 
         create(:ticket_time_accounting, ticket_id: ticket.id, ticket_article_id: article.id)
 
@@ -57,7 +59,7 @@ RSpec.describe 'Time Accounting API endpoints', type: :request do
 
         expect(response).to have_http_status(:ok)
         expect(response['Content-Disposition']).to be_truthy
-        expect(response['Content-Disposition']).to eq("attachment; filename=\"by_ticket-#{year}-#{month}.xls\"")
+        expect(response['Content-Disposition']).to eq("attachment; filename=\"by_ticket-#{year}-#{month}.xls\"; filename*=UTF-8''by_ticket-#{year}-#{month}.xls")
         expect(response['Content-Type']).to eq('application/vnd.ms-excel')
       end
     end

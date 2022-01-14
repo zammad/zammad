@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 class Report::TicketGenericTime
 
 =begin
@@ -88,7 +90,7 @@ returns
           replace = '\d\d:\d\d:\d\dZ$'
         end
 
-        next if key_as_string.iso8601.sub(/#{replace}/, '') != params[:range_start].iso8601.sub(/#{replace}/, '')
+        next if key_as_string.iso8601.sub(%r{#{replace}}, '') != params[:range_start].iso8601.sub(%r{#{replace}}, '')
         next if match
 
         match = true

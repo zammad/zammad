@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 Zammad::Application.routes.draw do
   api_path = Rails.configuration.api_path
 
@@ -9,16 +11,19 @@ Zammad::Application.routes.draw do
   match api_path + '/tickets',                                       to: 'tickets#create',            via: :post
   match api_path + '/tickets/:id',                                   to: 'tickets#update',            via: :put
   match api_path + '/tickets/:id',                                   to: 'tickets#destroy',           via: :delete
+  match api_path + '/tickets/mass_macro',                            to: 'tickets_mass#macro',        via: :post
+  match api_path + '/tickets/mass_update',                           to: 'tickets_mass#update',       via: :post
   match api_path + '/ticket_create',                                 to: 'tickets#ticket_create',     via: :get
   match api_path + '/ticket_split',                                  to: 'tickets#ticket_split',      via: :get
   match api_path + '/ticket_history/:id',                            to: 'tickets#ticket_history',    via: :get
   match api_path + '/ticket_customer',                               to: 'tickets#ticket_customer',   via: :get
   match api_path + '/ticket_related/:ticket_id',                     to: 'tickets#ticket_related',    via: :get
   match api_path + '/ticket_recent',                                 to: 'tickets#ticket_recent',     via: :get
-  match api_path + '/ticket_merge/:slave_ticket_id/:master_ticket_number', to: 'tickets#ticket_merge', via: :put
+  match api_path + '/ticket_merge/:source_ticket_id/:target_ticket_number', to: 'tickets#ticket_merge', via: :put
   match api_path + '/ticket_stats',                                  to: 'tickets#stats',             via: :get
 
   # ticket overviews
+  match api_path + '/ticket_overview',                               to: 'ticket_overviews#data',     via: :get
   match api_path + '/ticket_overviews',                              to: 'ticket_overviews#show',     via: :get
 
   # ticket priority

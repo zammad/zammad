@@ -1,12 +1,10 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class WebhooksController < ApplicationController
   prepend_before_action { authentication_check && authorize! }
 
   def preview
-    access_condition = Ticket.access_condition(current_user, 'read')
-
-    ticket = Ticket.where(access_condition).last
+    ticket = TicketPolicy::ReadScope.new(current_user).resolve.last
 
     render json:   JSON.pretty_generate({
                                           ticket:  TriggerWebhookJob::RecordPayload.generate(ticket),

@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 require 'lib/import/transaction_factory_examples'
 
@@ -41,8 +43,6 @@ RSpec.describe Import::OTRS::StateFactory do
       ticket_state_id.data_option
     }.and change {
       ticket_state_id.screens
-    }.and change {
-      ticket_pending_time.data_option
     }
   end
 
@@ -155,24 +155,6 @@ RSpec.describe Import::OTRS::StateFactory do
         trigger.id
       }.and change {
         trigger.condition['ticket.state_id'][:value]
-      }
-    end
-
-    it 'updates ObjectManager::Attributes' do
-
-      attribute = ObjectManager::Attribute.get(
-        object: 'Ticket',
-        name:   'pending_time',
-      )
-      expect do
-        described_class.import(state_backend_param)
-
-        attribute = ObjectManager::Attribute.get(
-          object: 'Ticket',
-          name:   'pending_time',
-        )
-      end.to change {
-        attribute.data_option[:required_if][:state_id]
       }
     end
   end

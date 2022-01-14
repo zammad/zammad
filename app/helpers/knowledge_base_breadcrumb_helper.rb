@@ -1,6 +1,12 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 module KnowledgeBaseBreadcrumbHelper
   def render_breadcrumb_if_needed(knowledge_base, object, alternative)
-    objects = calculate_breadcrumb_path(object, alternative)
+    objects = if object.is_a? Array
+                calculate_breadcrumb_nonpath(object)
+              else
+                calculate_breadcrumb_path(object, alternative)
+              end
 
     return if objects.empty?
 
@@ -21,6 +27,10 @@ module KnowledgeBaseBreadcrumbHelper
            end
 
     objects + [last].compact
+  end
+
+  def calculate_breadcrumb_nonpath(object)
+    [object]
   end
 
   def calculate_breadcrumb_to_category(category)
@@ -51,6 +61,8 @@ module KnowledgeBaseBreadcrumbHelper
     case object
     when HasTranslations
       object.translation.title
+    when Array
+      object[1]
     else
       object
     end

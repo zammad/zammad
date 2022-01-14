@@ -1,16 +1,32 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'browser_test_helper'
 
 class AgentTicketOverviewTabTest < TestCase
+  def task_count_equals(count)
+
+    retries ||= 0
+    assert_equal(count, @browser.find_elements(css: '.tasks .task').count)
+  rescue
+    retries += 1
+    if retries < 5
+      sleep 1
+      retry
+    end
+    raise e
+
+  end
+
   def test_i
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
-    title = "test #{rand(9_999_999)}"
+    title = "test #{SecureRandom.uuid}"
 
     # create new ticket
     ticket1 = ticket_create(
@@ -37,14 +53,14 @@ class AgentTicketOverviewTabTest < TestCase
         body:     "overview tab test #3 - #{title}",
       }
     )
-    tasks_close_all()
+    tasks_close_all
 
-    #click(text: 'Overviews')
+    # click(text: 'Overviews')
     # enable full overviews
-    #execute(
+    # execute(
     #  js: '$(".content.active .sidebar").css("display", "block")',
-    #)
-    #click(text: 'Unassigned & Open')
+    # )
+    # click(text: 'Unassigned & Open')
 
     ticket_open_by_overview(
       number: ticket1[:number],
@@ -52,7 +68,7 @@ class AgentTicketOverviewTabTest < TestCase
       link:   '#ticket/view/all_unassigned',
     )
 
-    assert_equal(1, @browser.find_elements(css: '.tasks .task').count)
+    task_count_equals(1)
 
     ticket_update(
       data:      {
@@ -68,7 +84,7 @@ class AgentTicketOverviewTabTest < TestCase
       timeout: 8,
     )
 
-    assert_equal(1, @browser.find_elements(css: '.tasks .task').count)
+    task_count_equals(1)
 
     ticket_update(
       data:      {
@@ -78,9 +94,9 @@ class AgentTicketOverviewTabTest < TestCase
       task_type: 'closeTab', # default: stayOnTab / possible: closeTab, closeNextInOverview, stayOnTab
     )
 
-    assert_equal(0, @browser.find_elements(css: '.tasks .task').count)
+    task_count_equals(0)
 
     # cleanup
-    tasks_close_all()
+    tasks_close_all
   end
 end

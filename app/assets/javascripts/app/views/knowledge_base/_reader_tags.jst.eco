@@ -1,0 +1,14 @@
+<% if @tags?.length: %>
+  <div class="attachments attachments--list">
+    <%- @Icon('hashtag') %>
+    <div class="attachments-title">
+      <%- @T('Tags') %>
+    </div>
+
+    <div class="knowledge-base-article-tags--container">
+      <% for tag, i in @tags: %>
+        <a href="#" class="tag js-tag"><%= tag %></a>
+      <% end %>
+    </div>
+  </div>
+<% end %>

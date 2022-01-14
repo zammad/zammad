@@ -1,25 +1,4 @@
-# Rails autoload has some issues with same namend sub-classes
-# in the importer folder require AND simultaniuos requiring
-# of the same file in different threads so we need to
-# require them ourself
-require_dependency 'import/otrs/ticket'
-require_dependency 'import/otrs/ticket_factory'
-require_dependency 'import/otrs/article_customer'
-require_dependency 'import/otrs/article_customer_factory'
-require_dependency 'import/otrs/article'
-require_dependency 'import/otrs/article_factory'
-require_dependency 'import/otrs/article/attachment_factory'
-require_dependency 'import/otrs/history'
-require_dependency 'import/otrs/history_factory'
-require_dependency 'import/otrs/history/article'
-require_dependency 'import/otrs/history/move'
-require_dependency 'import/otrs/history/new_ticket'
-require_dependency 'import/otrs/history/priority_update'
-require_dependency 'import/otrs/history/state_update'
-require_dependency 'store'
-require_dependency 'store/object'
-require_dependency 'store/provider/db'
-require_dependency 'store/provider/file'
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 module Import
   module OTRS
@@ -103,7 +82,7 @@ module Import
             # get the offset for the current thread and loop count
             thread_offset_base = (Thread.current[:thread_no] - 1) * limit
             thread_step        = thread_count * limit
-            offset             = Thread.current[:loop_count] * thread_step + thread_offset_base + start_offset_base
+            offset             = (Thread.current[:loop_count] * thread_step) + thread_offset_base + start_offset_base
 
             break if !imported?(
               remote_object: remote_object,

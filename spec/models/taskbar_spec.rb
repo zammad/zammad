@@ -1,6 +1,10 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
+require 'models/taskbar/has_attachments_examples'
 
 RSpec.describe Taskbar do
+  it_behaves_like 'Taskbar::HasAttachments'
 
   context 'key = Search' do
 

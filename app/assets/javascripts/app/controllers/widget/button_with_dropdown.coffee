@@ -9,7 +9,7 @@ class App.WidgetButtonWithDropdown extends App.Controller
     super
     @render()
 
-  mainActionLabel:            'Submit'
+  mainActionLabel:            __('Submit')
   mainActionIdentifier:       'js-submit'
   accessoryActionsIdentifier: 'js-submit-action'
 

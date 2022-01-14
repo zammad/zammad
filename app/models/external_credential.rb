@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 class ExternalCredential < ApplicationModel
   include ApplicationLib
 
@@ -33,9 +35,7 @@ class ExternalCredential < ApplicationModel
   end
 
   def self.load_backend(provider)
-    adapter = "ExternalCredential::#{provider.camelcase}"
-    require_dependency adapter.to_filename.to_s
-    adapter.constantize
+    "ExternalCredential::#{provider.camelcase}".constantize
   end
 
 end

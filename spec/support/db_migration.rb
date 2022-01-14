@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 # require all database migrations so we can test them without manual require
 Rails.root.join('db/migrate').children.each do |migration|
   require migration.to_s
@@ -115,7 +117,7 @@ module DbMigrationHelper
   #  remove_foreign_key(:online_notifications, :users)
   #
   # @return [nil]
-  def respond_to_missing?(*)
+  def respond_to_missing?(...)
     true
   end
 
@@ -155,7 +157,7 @@ module DbMigrationHelper
       # @example
       #  it 'does stuff in an unitialized system', system_init_done: false do
       #
-      before(:each) do |example|
+      before do |example|
         initialized = example.metadata.fetch(:system_init_done, true)
         system_init_done(initialized)
       end

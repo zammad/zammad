@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 module ApplicationLib
   def self.included(base)
     base.extend(ClassMethods)

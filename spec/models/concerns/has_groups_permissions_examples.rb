@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 RSpec.shared_examples 'HasGroups and Permissions' do |group_access_no_permission_factory:|
   context 'group' do
     subject { build(group_access_no_permission_factory) }

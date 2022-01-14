@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 module Mixin
   module RequiredSubPaths
 
@@ -7,18 +9,10 @@ module Mixin
       eager_load_recursive(sub_path)
     end
 
-    # Loads a directory recursively.
-    # The specialty of this method is that it will first load all
-    # files in a directory and then start with the sub directories.
-    # This is needed since otherwise some parent namespaces might not
-    # be initialized yet.
-    #
-    # The cause of this is that Rails autoload doesn't work properly
-    # for same named classes or modules in different namespaces.
-    # Here is a good description how autoload works:
-    # http://urbanautomaton.com/blog/2013/08/27/rails-autoloading-hell/
-    #
-    # This avoids a) Rails autoloading issues and b) require '...' workarounds
+    # Loads a directory recursively. This can be needed when accessing
+    #   modules not directly via .constantize on a known string, but dynamically
+    #   via the inheritance tree, e.g. via .descendants (which assumes they have
+    #   previously been loaded).
     def self.eager_load_recursive(path)
 
       excluded  = ['.', '..']
@@ -30,7 +24,7 @@ module Mixin
 
         if File.directory?(sub_path)
           sub_paths.push(sub_path)
-        elsif sub_path =~ /\A(.*)\.rb\z/
+        elsif sub_path =~ %r{\A(.*)\.rb\z}
           require_path = $1
           require_dependency(require_path)
         end

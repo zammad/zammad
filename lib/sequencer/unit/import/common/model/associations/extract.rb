@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 class Sequencer
   class Unit
     module Import
@@ -14,7 +16,7 @@ class Sequencer
 
               def process
                 state.provide(:associations) do
-                  associations.collect do |association|
+                  associations.filter_map do |association|
 
                     logger.debug { "Checking association '#{association}'" }
                     next if !mapped.key?(association)
@@ -28,7 +30,7 @@ class Sequencer
 
                     logger.debug { "Using value of association '#{association}'" }
                     [association, value]
-                  end.compact.to_h
+                  end.to_h
                 end
               end
 

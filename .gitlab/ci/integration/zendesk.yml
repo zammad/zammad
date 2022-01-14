@@ -1,6 +1,0 @@
-zendesk:
-  extends:
-    - .template_integration
-  script:
-    - bundle exec rake zammad:db:unseeded
-    - bundle exec rails test test/integration/zendesk_import_test.rb

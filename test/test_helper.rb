@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 ENV['RAILS_ENV'] = 'test'
 require File.expand_path('../config/environment', __dir__)
 require 'rails/test_help'
@@ -60,14 +62,14 @@ class ActiveSupport::TestCase
     # read config file and count type & recipients
     file = Rails.root.join('log', "#{Rails.env}.log")
     lines = []
-    IO.foreach(file) do |line|
+    File.foreach(file) do |line|
       lines.push line
     end
     count = 0
     lines.reverse_each do |line|
       break if line.include?('++++NEW++++TEST++++')
-      next if !line.match?(/Send notification \(#{type}\)/)
-      next if !line.match?(/to:\s#{recipient}/)
+      next if !line.match?(%r{Send notification \(#{type}\)})
+      next if !line.match?(%r{to:\s#{recipient}})
 
       count += 1
     end

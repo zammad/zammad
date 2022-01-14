@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 class ObjectManager::Object
   attr_reader :object_name
 
@@ -15,14 +17,14 @@ get user based list of used object attributes
 returns:
 
   [
-    { name: 'api_key', display: 'API Key', tag: 'input', null: true, edit: true, maxlength: 32 },
-    { name: 'api_ip_regexp', display: 'API IP RegExp', tag: 'input', null: true, edit: true },
-    { name: 'api_ip_max', display: 'API IP Max', tag: 'input', null: true, edit: true },
+    { name: 'api_key', display: __('API Key'), tag: 'input', null: true, edit: true, maxlength: 32 },
+    { name: 'api_ip_regexp', display: __('API IP RegExp'), tag: 'input', null: true, edit: true },
+    { name: 'api_ip_max', display: __('API IP Max'), tag: 'input', null: true, edit: true },
   ]
 
 =end
 
-  def attributes(user, record = nil)
+  def attributes(user, record = nil, data_only: true)
     @attributes ||= begin
       attribute_records.each_with_object([]) do |attribute_record, result|
 
@@ -34,7 +36,11 @@ returns:
 
         next if !element.visible?
 
-        result.push element.data
+        if data_only
+          result.push element.data
+        else
+          result.push element
+        end
       end
     end
   end

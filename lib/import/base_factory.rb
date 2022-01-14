@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 module Import
   module BaseFactory
     extend self
@@ -39,7 +41,7 @@ module Import
     end
 
     def module_name
-      name.to_s.sub(/Import::/, '').sub(/Factory/, '')
+      name.to_s.sub(%r{Import::}, '').sub(%r{Factory}, '')
     end
   end
 end

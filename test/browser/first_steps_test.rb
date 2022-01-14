@@ -1,18 +1,20 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'browser_test_helper'
 
 class FirstStepsTest < TestCase
 
   def test_basic
-    agent    = "bob.smith_#{rand(99_999_999)}"
-    customer = "customer.smith_#{rand(99_999_999)}"
+    agent    = "bob.smith_#{SecureRandom.uuid}"
+    customer = "customer.smith_#{SecureRandom.uuid}"
 
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     click(css: '.active.content .tab[data-area="first-steps-widgets"]')
     watch_for(
@@ -23,7 +25,7 @@ class FirstStepsTest < TestCase
     # invite agent (with more then one group)
     click(css: '.active.content .js-inviteAgent')
 
-    modal_ready()
+    modal_ready
 
     set(
       css:   '.modal [name="firstname"]',
@@ -50,11 +52,11 @@ class FirstStepsTest < TestCase
       css:   'body div.modal',
       value: 'Sending',
     )
-    modal_disappear()
+    modal_disappear
 
     # invite customer
     click(css: '.active.content .js-inviteCustomer')
-    modal_ready()
+    modal_ready
     set(
       css:   '.modal [name="firstname"]',
       value: 'Client',
@@ -83,14 +85,14 @@ class FirstStepsTest < TestCase
       css:   'body div.modal',
       value: 'Sending',
     )
-    modal_disappear()
+    modal_disappear
 
     # test ticket
     click(
       css:  '.active.content .js-testTicket',
       fast: true,
     )
-    modal_ready()
+    modal_ready
     watch_for(
       css:   'body div.modal',
       value: 'A Test Ticket has been created',
@@ -103,14 +105,14 @@ class FirstStepsTest < TestCase
       css:   'body div.modal',
       value: 'Test Ticket',
     )
-    modal_disappear()
+    modal_disappear
 
     execute(
       js: '$(".active.content .sidebar").show()',
     )
     watch_for(
       css:     '.active.content .js-activityContent',
-      value:   'Nicole Braun created Article for Test Ticket!',
+      value:   'Nicole Braun created article for Test Ticket!',
       timeout: 35,
     )
 

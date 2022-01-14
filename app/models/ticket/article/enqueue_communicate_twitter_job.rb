@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 # Schedules a backgrond communication job for new twitter articles.
 module Ticket::Article::EnqueueCommunicateTwitterJob
@@ -31,7 +31,7 @@ module Ticket::Article::EnqueueCommunicateTwitterJob
 
     type = Ticket::Article::Type.lookup(id: type_id)
     return true if type.nil?
-    return true if !type.name.match?(/\Atwitter/i)
+    return true if !type.name.match?(%r{\Atwitter}i)
 
     raise Exceptions::UnprocessableEntity, 'twitter to: parameter is missing' if to.blank? && type['name'] == 'twitter direct-message'
 

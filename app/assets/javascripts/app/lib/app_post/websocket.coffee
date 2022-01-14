@@ -398,7 +398,7 @@ class Modal extends App.ControllerModal
   buttonSubmit: false
   backdrop: 'static'
   keyboard: false
-  head: 'Lost network connection!'
+  head: __('Lost network connection!')
 
   content: ->
-    'Trying to reconnect...'
+    __('Trying to reconnect…')

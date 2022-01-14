@@ -1,9 +1,11 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'browser_test_helper'
 
 class AaaGettingStartedTest < TestCase
   def test_a_getting_started
     if !ENV['MAILBOX_INIT']
-      #raise "Need MAILBOX_INIT as ENV variable like export MAILBOX_INIT='unittest01@znuny.com:somepass'"
+      # raise "Need MAILBOX_INIT as ENV variable like export MAILBOX_INIT='unittest01@znuny.com:somepass'"
       puts "NOTICE: Need MAILBOX_INIT as ENV variable like export MAILBOX_INIT='unittest01@znuny.com:somepass'"
       return
     end
@@ -23,7 +25,7 @@ class AaaGettingStartedTest < TestCase
     )
     set(
       css:   '.js-admin input[name="firstname"]',
-      value: 'Test Master',
+      value: 'Test Admin',
     )
     set(
       css:   '.js-admin input[name="lastname"]',
@@ -31,11 +33,11 @@ class AaaGettingStartedTest < TestCase
     )
     set(
       css:   '.js-admin input[name="email"]',
-      value: 'master@example.com',
+      value: 'admin@example.com',
     )
     set(
       css:   '.js-admin input[name="firstname"]',
-      value: 'Test Master',
+      value: 'Test Admin',
     )
     set(
       css:   '.js-admin input[name="password"]',
@@ -65,7 +67,7 @@ class AaaGettingStartedTest < TestCase
     )
     watch_for(
       css:   'body',
-      value: 'An URL looks like this',
+      value: 'A URL looks like this',
     )
     set(
       css:   '.js-base input[name="url"]',
@@ -144,9 +146,10 @@ class AaaGettingStartedTest < TestCase
       value: 'agent1@example.com',
     )
     # not needed since we hide group selections if only one group exists
-    #click(
+    # click(
     #  css: '.js-agent input[name="group_ids"][value="1"]',
-    #)
+    # )
+    check(css: '.js-agent .js-groupListItem[value=full]')
     click(
       css: '.js-agent .btn--success',
     )

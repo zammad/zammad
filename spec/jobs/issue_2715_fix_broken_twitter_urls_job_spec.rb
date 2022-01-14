@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 require_dependency 'issue_2715_fix_broken_twitter_urls_job' # Rails autoloading expects `issue2715_fix...`
 
@@ -8,13 +10,13 @@ RSpec.describe Issue2715FixBrokenTwitterUrlsJob, type: :job do
 
     let(:tweet_preferences) do
       # NOTE: Faker 2.0+ has deprecated the `#number(20)` syntax in favor of `#number(digits: 20)`.
-      { links: [{ url: "https://twitter.com/statuses/#{Faker::Number.number(20)}" }] }
+      { links: [{ url: "https://twitter.com/statuses/#{Faker::Number.number(digits: 20)}" }] }
     end
 
     let(:dm_preferences) do
       {
         # NOTE: Faker 2.0+ has deprecated the `#number(20)` syntax in favor of `#number(digits: 20)`.
-        links:   [{ url: "https://twitter.com/statuses/#{Faker::Number.number(20)}" }],
+        links:   [{ url: "https://twitter.com/statuses/#{Faker::Number.number(digits: 20)}" }],
         twitter: {
           recipient_id: recipient_id,
           sender_id:    sender_id,

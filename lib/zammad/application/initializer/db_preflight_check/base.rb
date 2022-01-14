@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 # NOTE: Why use Mysql2::Client / PG::Connection over ActiveRecord::Base.connection?
 #
 # As of Rails 5.2, db:create now runs initializers prior to creating the DB.
@@ -11,8 +13,8 @@
 
 module Zammad
   class Application
-    class Initializer
-      module DBPreflightCheck
+    module Initializer
+      module DbPreflightCheck
         module Base
           def check_version_compatibility
             return if Gem::Version.new(current_version) >= Gem::Version.new(min_version)

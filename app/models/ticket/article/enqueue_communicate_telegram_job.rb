@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 # Schedules a backgrond communication job for new telegram articles.
 module Ticket::Article::EnqueueCommunicateTelegramJob
@@ -26,7 +26,7 @@ module Ticket::Article::EnqueueCommunicateTelegramJob
     return true if !type_id
 
     type = Ticket::Article::Type.lookup(id: type_id)
-    return true if !type.name.match?(/\Atelegram/i)
+    return true if !type.name.match?(%r{\Atelegram}i)
 
     CommunicateTelegramJob.perform_later(id)
   end

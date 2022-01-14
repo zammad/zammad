@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 
 RSpec.describe 'Ticket Article API endpoints', type: :request do
@@ -61,7 +63,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
       expect(response).to have_http_status(:created)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['subject']).to be_nil
-      expect(json_response['body']).not_to match(/some body <img src="cid:.+?/)
+      expect(json_response['body']).not_to match(%r{some body <img src="cid:.+?})
       expect(json_response['body']).to match(%r{some body <img src="/api/v1/ticket_attachment/.+?" alt="Red dot"})
       expect(json_response['content_type']).to eq('text/html')
       expect(json_response['updated_by_id']).to eq(agent.id)
@@ -76,7 +78,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
       expect(ticket.articles[2].attachments[0]['size']).to eq('21')
       expect(ticket.articles[2].attachments[0]['preferences']['Mime-Type']).to eq('image/png')
       expect(ticket.articles[2].attachments[0]['preferences']['Content-Disposition']).to eq('inline')
-      expect(ticket.articles[2].attachments[0]['preferences']['Content-ID']).to match(/@zammad.example.com/)
+      expect(ticket.articles[2].attachments[0]['preferences']['Content-ID']).to match(%r{@zammad.example.com})
 
       params = {
         ticket_id:    json_response['ticket_id'],
@@ -528,25 +530,25 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
     let(:article_communication) do
       create(:ticket_article,
              sender_name: 'Agent', type_name: 'email', ticket: ticket,
-             updated_by_id: agent.id, created_by_id: agent.id )
+             updated_by_id: agent.id, created_by_id: agent.id)
     end
 
     let(:article_note_self) do
       create(:ticket_article,
              sender_name: 'Agent', internal: true, type_name: 'note', ticket: ticket,
-             updated_by_id: user.id, created_by_id: user.id )
+             updated_by_id: user.id, created_by_id: user.id)
     end
 
     let(:article_note_other) do
       create(:ticket_article,
              sender_name: 'Agent', internal: true, type_name: 'note', ticket: ticket,
-             updated_by_id: other_agent.id, created_by_id: other_agent.id )
+             updated_by_id: other_agent.id, created_by_id: other_agent.id)
     end
 
     let(:article_note_customer) do
       create(:ticket_article,
              sender_name: 'Customer', internal: false, type_name: 'note', ticket: ticket,
-             updated_by_id: customer.id, created_by_id: customer.id )
+             updated_by_id: customer.id, created_by_id: customer.id)
     end
 
     let(:article_note_communication_self) do
@@ -554,7 +556,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
 
       create(:ticket_article,
              sender_name: 'Agent', internal: true, type_name: 'note_communication', ticket: ticket,
-             updated_by_id: user.id, created_by_id: user.id )
+             updated_by_id: user.id, created_by_id: user.id)
     end
 
     let(:article_note_communication_other) do
@@ -562,7 +564,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
 
       create(:ticket_article,
              sender_name: 'Agent', internal: true, type_name: 'note_communication', ticket: ticket,
-             updated_by_id: other_agent.id, created_by_id: other_agent.id )
+             updated_by_id: other_agent.id, created_by_id: other_agent.id)
     end
 
     def delete_article_via_rest(article)

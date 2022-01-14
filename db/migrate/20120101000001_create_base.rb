@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 class CreateBase < ActiveRecord::Migration[4.2]
   def up
 
@@ -51,7 +53,7 @@ class CreateBase < ActiveRecord::Migration[4.2]
     end
     add_index :users, [:login], unique: true
     add_index :users, [:email]
-    #add_index :users, [:email], unique: => true
+    # add_index :users, [:email], unique: => true
     add_index :users, [:organization_id]
     add_index :users, [:image]
     add_index :users, [:department]
@@ -225,14 +227,15 @@ class CreateBase < ActiveRecord::Migration[4.2]
     add_index :locales, [:name], unique: true
 
     create_table :translations do |t|
-      t.string :locale,               limit: 10,   null: false
-      t.string :source,               limit: 500,  null: false
-      t.string :target,               limit: 500,  null: false
-      t.string :target_initial,       limit: 500,  null: false
-      t.string :format,               limit: 20,   null: false, default: 'string'
-      t.integer :updated_by_id,                    null: false
-      t.integer :created_by_id,                    null: false
-      t.timestamps limit: 3, null: false
+      t.string  :locale,               limit: 10,    null: false
+      t.string  :source,               limit: 3000,  null: false
+      t.string  :target,               limit: 3000,  null: false
+      t.string  :target_initial,       limit: 3000,  null: false
+      t.boolean :is_synchronized_from_codebase,      null: false, default: false
+      t.string  :synchronized_from_translation_file, limit: 255
+      t.integer :updated_by_id,                      null: false
+      t.integer :created_by_id,                      null: false
+      t.timestamps limit: 3,                         null: false
     end
     add_index :translations, [:source], length: 255
     add_index :translations, [:locale]
@@ -424,7 +427,7 @@ class CreateBase < ActiveRecord::Migration[4.2]
       t.string :name,                   limit: 200,  null: false
       t.string :area,                   limit: 100,  null: false
       t.string :description,            limit: 2000, null: false
-      t.string :options,                limit: 2000, null: true
+      t.text :options, null: true
       t.text :state_current,            limit: 200.kilobytes + 1, null: true
       t.string :state_initial,          limit: 2000, null: true
       t.boolean :frontend,                           null: false
@@ -741,7 +744,7 @@ class CreateBase < ActiveRecord::Migration[4.2]
     create_table :data_privacy_tasks do |t|
       t.column :state,                :string, limit: 150, default: 'in process', null: true
       t.references :deletable,        polymorphic: true
-      t.string :preferences,          limit: 8000,                                null: true
+      t.text :preferences
       t.column :updated_by_id,        :integer,                                   null: false
       t.column :created_by_id,        :integer,                                   null: false
       t.timestamps limit: 3, null: false
@@ -759,5 +762,24 @@ class CreateBase < ActiveRecord::Migration[4.2]
     add_foreign_key :mentions, :users, column: :created_by_id
     add_foreign_key :mentions, :users, column: :updated_by_id
     add_foreign_key :mentions, :users, column: :user_id
+
+    create_table :core_workflows do |t|
+      t.string :name,                     limit: 100, null: false
+      t.string :object,                   limit: 100, null: true
+      t.text   :preferences,              limit: 500.kilobytes + 1, null: true
+      t.text   :condition_saved,          limit: 500.kilobytes + 1, null: true
+      t.text   :condition_selected,       limit: 500.kilobytes + 1, null: true
+      t.text   :perform,                  limit: 500.kilobytes + 1, null: true
+      t.boolean :active,                  null: false, default: true
+      t.boolean :stop_after_match,        null: false, default: false
+      t.boolean :changeable,              null: false, default: true
+      t.integer :priority,                null: false, default: 0
+      t.integer :updated_by_id,           null: false
+      t.integer :created_by_id,           null: false
+      t.timestamps limit: 3, null: false
+    end
+    add_index :core_workflows, [:name], unique: true
+    add_foreign_key :core_workflows, :users, column: :created_by_id
+    add_foreign_key :core_workflows, :users, column: :updated_by_id
   end
 end

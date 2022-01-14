@@ -1,6 +1,8 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 
-RSpec.describe 'inserting Knowledge Base answer', type: :system, authenticated_as: true, searchindex: true do
+RSpec.describe 'inserting Knowledge Base answer', type: :system, searchindex: true do
   include_context 'basic Knowledge Base'
 
   let(:field) { find(:richtext) }
@@ -41,7 +43,7 @@ RSpec.describe 'inserting Knowledge Base answer', type: :system, authenticated_a
 
       within(:active_content) do
         within(:richtext) do
-          wait(5).until do
+          wait.until do
             elem   = first('img')
             script = 'return arguments[0].naturalWidth;'
             height = Capybara.current_session.driver.browser.execute_script(script, elem.native)
@@ -61,7 +63,7 @@ RSpec.describe 'inserting Knowledge Base answer', type: :system, authenticated_a
 
   def insert_kb_answer(translation, target_field)
     target_field.send_keys('??')
-    translation.title.slice(0, 3).split('').each { |letter| target_field.send_keys(letter) }
+    translation.title.slice(0, 3).chars.each { |letter| target_field.send_keys(letter) }
 
     find(:text_module, translation.id).click
   end

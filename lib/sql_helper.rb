@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class SqlHelper
 
@@ -9,7 +9,7 @@ class SqlHelper
   def get_param_key(key, params)
     sort_by = []
     if params[key].present? && params[key].is_a?(String)
-      params[key] = params[key].split(/\s*,\s*/)
+      params[key] = params[key].split(%r{\s*,\s*})
     elsif params[key].blank?
       params[key] = []
     end
@@ -79,7 +79,7 @@ order_by = [
 
     # check order
     params[:order_by].each do |value|
-      raise "Found invalid order by value #{value}. Please use 'asc' or 'desc'." if !value.match?(/\A(asc|desc)\z/i)
+      raise "Found invalid order by value #{value}. Please use 'asc' or 'desc'." if !value.match?(%r{\A(asc|desc)\z}i)
 
       order_by.push(value.downcase)
     end
@@ -128,7 +128,7 @@ sql = 'tickets.created_at, tickets.updated_at'
       next if value.blank?
       next if order_by[index].blank?
 
-      sql.push( "#{ActiveRecord::Base.connection.quote_table_name(@object.table_name)}.#{ActiveRecord::Base.connection.quote_column_name(value)}" )
+      sql.push("#{ActiveRecord::Base.connection.quote_table_name(@object.table_name)}.#{ActiveRecord::Base.connection.quote_column_name(value)}")
     end
 
     sql = set_sql_order_default(sql, default)
@@ -162,7 +162,7 @@ sql = 'tickets.created_at ASC, tickets.updated_at DESC'
       next if value.blank?
       next if order_by[index].blank?
 
-      sql.push( "#{ActiveRecord::Base.connection.quote_table_name(@object.table_name)}.#{ActiveRecord::Base.connection.quote_column_name(value)} #{order_by[index]}" )
+      sql.push("#{ActiveRecord::Base.connection.quote_table_name(@object.table_name)}.#{ActiveRecord::Base.connection.quote_column_name(value)} #{order_by[index]}")
     end
 
     sql = set_sql_order_default(sql, default)

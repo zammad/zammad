@@ -39,6 +39,21 @@ treeParams = (e, params) ->
     params.data_option.options = tree
   params
 
+setSelectDefaults = (el) ->
+  data_type = el.find('select[name=data_type]').val()
+  return if data_type isnt 'select' && data_type isnt 'boolean'
+
+  el.find('.js-value, .js-valueTrue, .js-valueFalse').each(->
+    element = $(@)
+    return true if element.val()
+
+    if element.hasClass('js-valueTrue') || element.hasClass('js-valueFalse')
+      element.val(element.attr('placeholder'))
+    else
+      key_value = element.closest('tr').find('.js-key').val()
+      element.val(key_value)
+  )
+
 class ObjectManager extends App.ControllerTabs
   requiredPermission: 'admin.object'
   constructor: ->
@@ -70,7 +85,7 @@ class ObjectManager extends App.ControllerTabs
     @render()
 
 class Items extends App.ControllerSubContent
-  header: 'Object Manager'
+  header: __('Object Manager')
   events:
     'click .js-delete':  'destroy'
     'click .js-new':     'new'
@@ -110,10 +125,10 @@ class Items extends App.ControllerSubContent
     new New(
       pageData:
         head:      @object
-        title:     'Attribute'
+        title:     __('Attribute')
         home:      'object_manager'
-        object:    'ObjectManagerAttribute'
-        objects:   'ObjectManagerAttributes'
+        object:    __('ObjectManagerAttribute')
+        objects:   __('ObjectManagerAttributes')
         navupdate: '#object_manager'
       genericObject: 'ObjectManagerAttribute'
       container:     @el.closest('.content')
@@ -127,10 +142,10 @@ class Items extends App.ControllerSubContent
     new Edit(
       pageData:
         head:      @object
-        title:     'Attribute'
+        title:     __('Attribute')
         home:      'object_manager'
-        object:    'ObjectManagerAttribute'
-        objects:   'ObjectManagerAttributes'
+        object:    __('ObjectManagerAttribute')
+        objects:   __('ObjectManagerAttributes')
         navupdate: '#object_manager'
       genericObject: 'ObjectManagerAttribute'
       container:     @el.closest('.content')
@@ -179,6 +194,8 @@ class Items extends App.ControllerSubContent
 class New extends App.ControllerGenericNew
 
   onSubmit: (e) =>
+    setSelectDefaults(@el)
+
     params = @formParam(e.target)
     params = treeParams(e, params)
 
@@ -213,7 +230,7 @@ class New extends App.ControllerGenericNew
       fail: (settings, details) ->
         ui.log 'errors', details
         ui.formEnable(e)
-        ui.controller.showAlert(details.error_human || details.error || 'Unable to create object!')
+        ui.controller.showAlert(details.error_human || details.error || __('Unable to create object!'))
     )
 
 class Edit extends App.ControllerGenericEdit
@@ -230,8 +247,6 @@ class Edit extends App.ControllerGenericEdit
       #if attribute.name is 'data_type'
       #  attribute.disabled = true
 
-    console.log('configure_attributes', configure_attributes)
-
     @controller = new App.ControllerForm(
       model:
         configure_attributes: configure_attributes
@@ -242,6 +257,8 @@ class Edit extends App.ControllerGenericEdit
     @controller.form
 
   onSubmit: (e) =>
+    setSelectDefaults(@el)
+
     params = @formParam(e.target)
     params = treeParams(e, params)
 
@@ -254,7 +271,9 @@ class Edit extends App.ControllerGenericEdit
     @item.load(params)
 
     # validate
-    errors = @item.validate()
+    errors = @item.validate(
+      controllerForm: @controller
+    )
     if errors
       @log 'error', errors
       @formValidate(form: e.target, errors: errors)
@@ -275,7 +294,7 @@ class Edit extends App.ControllerGenericEdit
       fail: (settings, details) ->
         ui.log 'errors'
         ui.formEnable(e)
-        ui.controller.showAlert(details.error_human || details.error || 'Unable to update object!')
+        ui.controller.showAlert(details.error_human || details.error || __('Unable to update object!'))
     )
 
-App.Config.set('SystemObject', { prio: 1700, parent: '#system', name: 'Objects', target: '#system/object_manager', controller: ObjectManager, permission: ['admin.object'] }, 'NavBarAdmin')
+App.Config.set('SystemObject', { prio: 1700, parent: '#system', name: __('Objects'), target: '#system/object_manager', controller: ObjectManager, permission: ['admin.object'] }, 'NavBarAdmin')

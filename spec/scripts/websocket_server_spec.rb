@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 # rubocop:disable RSpec/DescribeClass
 
 require 'spec_helper'
@@ -18,7 +20,7 @@ describe 'websocket-server', type: :script do
     let(:error_msg) { "`start_tcp_server': no acceptor" }
     let(:ipv6_addr) { '::1/128' }
     # Prevent port assignment conflicts during parallel test execution
-    let(:port)      { rand(60_000..65_000) }
+    let(:port)      { rand(60_000..65_000) } # rubocop:disable Zammad/ForbidRand
 
     # Flush logs
     before do

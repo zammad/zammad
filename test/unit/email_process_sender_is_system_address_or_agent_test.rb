@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'test_helper'
 
 class EmailProcessSenderIsSystemAddressOrAgent < ActiveSupport::TestCase
@@ -14,7 +16,7 @@ class EmailProcessSenderIsSystemAddressOrAgent < ActiveSupport::TestCase
   end
 
   test 'process email with sender as system address check' do
-    subject = "some new subject #{rand(9_999_999)}"
+    subject = "some new subject #{SecureRandom.uuid}"
     email_raw_string = "From: me+is+customer@example.com
 To: customer@example.com
 Subject: #{subject}
@@ -31,7 +33,7 @@ Some Text"
     assert_equal('me+is+customer@example.com', ticket.customer.email)
 
     # check article sender + customer of ticket
-    subject = "some new subject #{rand(9_999_999)}"
+    subject = "some new subject #{SecureRandom.uuid}"
     email_raw_string = "From: myzammad@system.test
 To: me+is+customer@example.com, customer@example.com
 Subject: #{subject}
@@ -69,7 +71,7 @@ Some Text"
     assert_equal(ticket.id, ticket2.id)
 
     # follow-up not possible because subject has changed
-    subject = "new subject without ticket ref #{rand(9_999_999)}"
+    subject = "new subject without ticket ref #{SecureRandom.uuid}"
     email_raw_string = "From: me+is+customer@example.com
 To: myzammad@system.test
 Subject: #{subject}

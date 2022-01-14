@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 module ChecksClientNotification
   extend ActiveSupport::Concern
@@ -11,8 +11,7 @@ module ChecksClientNotification
   end
 
   def notify_clients_data(event)
-    class_name = self.class.name
-    class_name.gsub!(/::/, '')
+    class_name = self.class.name.gsub(%r{::}, '')
 
     {
       message: {

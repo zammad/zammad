@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Stats::TicketInProcess
 
@@ -40,7 +40,7 @@ class Stats::TicketInProcess
     average_in_percent = '-'
 
     if total.nonzero?
-      in_process_precent = ( count.to_f / (total.to_f / 100) ).round(1)
+      in_process_precent = (count.to_f / (total.to_f / 100)).round(1)
     end
 
     {
@@ -62,7 +62,7 @@ class Stats::TicketInProcess
       return result
     end
 
-    in_percent = ( result[:used_for_average].to_f / (result[:average_per_agent].to_f / 100) ).round(1)
+    in_percent = (result[:used_for_average].to_f / (result[:average_per_agent].to_f / 100)).round(1)
     result[:state] = if in_percent >= 90
                        'supergood'
                      elsif in_percent >= 65

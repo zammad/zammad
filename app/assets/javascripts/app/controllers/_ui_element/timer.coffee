@@ -2,13 +2,13 @@
 class App.UiElement.timer
   @render: (attribute) ->
     days =
-      Mon: 'Monday'
-      Tue: 'Tuesday'
-      Wed: 'Wednesday'
-      Thu: 'Thursday'
-      Fri: 'Friday'
-      Sat: 'Saturday'
-      Sun: 'Sunday'
+      Mon: __('Monday')
+      Tue: __('Tuesday')
+      Wed: __('Wednesday')
+      Thu: __('Thursday')
+      Fri: __('Friday')
+      Sat: __('Saturday')
+      Sun: __('Sunday')
     hours =
       0: '12 am'
       1: '1 am'
@@ -112,8 +112,9 @@ class App.UiElement.timer
 
     days = @joinItems days
     hours = @joinItems hours
+    timezone = App.Config.get('timezone_default') || 'UTC'
 
-    formGroup.find('.js-timerResult').text(App.i18n.translateInline('Run every %s at %s', days, hours))
+    formGroup.find('.js-timerResult').text(App.i18n.translateInline('Run every %s at %s in %s time', days, hours, timezone))
 
   @injectMinutes: (hours, minutes) ->
     newHours = [] # hours.length x minutes.length long

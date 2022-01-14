@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 module SendsNotificationEmailsHelper
 
   # Provides a helper method to check notification email sending for a code block.
@@ -37,7 +39,7 @@ module SendsNotificationEmailsHelper
   # @return [nil]
   def not_sent(args)
     check_in_progress!
-    expect(NotificationFactory::Mailer).to_not have_received(:notification).with(
+    expect(NotificationFactory::Mailer).not_to have_received(:notification).with(
       hash_including(args)
     )
   end

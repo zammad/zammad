@@ -1,8 +1,10 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 
 # rubocop:disable RSpec/StubbedMock,RSpec/MessageSpies
 
-RSpec.describe 'GitHub', type: :request do
+RSpec.describe 'GitHub', type: :request, required_envs: %w[GITHUB_ENDPOINT GITHUB_APITOKEN] do
 
   let(:token) { 't0k3N' }
   let(:endpoint) { 'https://api.github.com/graphql' }

@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 # rails autoloading issue
 require 'ldap'
@@ -6,7 +8,7 @@ require 'tcr/net/ldap'
 
 RSpec.describe Ldap::User do
 
-  let(:mocked_ldap) { double() }
+  let(:mocked_ldap) { double }
 
   describe '.uid_attribute' do
 
@@ -35,7 +37,7 @@ RSpec.describe Ldap::User do
   # expectations and reuse it in 'let' instance
   # as additional parameter
 
-  context 'initialization config parameters' do
+  describe 'initialization config parameters' do
 
     it 'reuses given Ldap instance if given' do
       expect(Ldap).not_to receive(:new)
@@ -69,11 +71,11 @@ RSpec.describe Ldap::User do
     it 'creates own Ldap instance if none given' do
       expect(Ldap).to receive(:new)
 
-      described_class.new()
+      described_class.new
     end
   end
 
-  context 'instance methods' do
+  describe 'instance methods' do
 
     let(:initialization_config) do
       {
@@ -88,32 +90,48 @@ RSpec.describe Ldap::User do
 
     describe '#valid?' do
 
+      shared_examples 'validates credentials' do
+        it 'validates username and password' do
+          connection = double
+          allow(mocked_ldap).to receive(:connection).and_return(connection)
+
+          build(:ldap_entry)
+
+          allow(mocked_ldap).to receive(:base_dn)
+          allow(connection).to receive(:bind_as).and_return(true)
+
+          expect(instance.valid?('example_username', 'password')).to be true
+        end
+
+        it 'fails for invalid credentials' do
+          connection = double
+          allow(mocked_ldap).to receive(:connection).and_return(connection)
+
+          build(:ldap_entry)
+
+          allow(mocked_ldap).to receive(:base_dn)
+          allow(connection).to receive(:bind_as).and_return(false)
+
+          expect(instance.valid?('example_username', 'wrong_password')).to be false
+        end
+      end
+
       it 'responds to #valid?' do
         expect(instance).to respond_to(:valid?)
       end
 
-      it 'validates username and password' do
-        connection = double()
-        allow(mocked_ldap).to receive(:connection).and_return(connection)
+      it_behaves_like 'validates credentials'
 
-        build(:ldap_entry)
+      context 'with a user_filter inside of the config' do
+        let(:initialization_config) do
+          {
+            uid_attribute: 'objectguid',
+            filter:        '(objectClass=user)',
+            user_filter:   '(cn=example)'
+          }
+        end
 
-        allow(mocked_ldap).to receive(:base_dn)
-        allow(connection).to receive(:bind_as).and_return(true)
-
-        expect(instance.valid?('example_username', 'password')).to be true
-      end
-
-      it 'fails for invalid credentials' do
-        connection = double()
-        allow(mocked_ldap).to receive(:connection).and_return(connection)
-
-        build(:ldap_entry)
-
-        allow(mocked_ldap).to receive(:base_dn)
-        allow(connection).to receive(:bind_as).and_return(false)
-
-        expect(instance.valid?('example_username', 'wrong_password')).to be false
+        it_behaves_like 'validates credentials'
       end
     end
 
@@ -129,7 +147,7 @@ RSpec.describe Ldap::User do
         # selectable attribute
         ldap_entry['mail'] = 'test@example.com'
 
-        # blacklisted attribute
+        # filtered attribute
         ldap_entry['lastlogon'] = DateTime.current
 
         allow(mocked_ldap).to receive(:search).and_yield(ldap_entry)
@@ -202,9 +220,9 @@ RSpec.describe Ldap::User do
   # Each of these test cases depends on
   # sample TCP transmission data recorded with TCR,
   # stored in test/data/tcr_cassettes.
-  context 'on mocked LDAP connections' do
+  describe 'on mocked LDAP connections' do
     around do |example|
-      cassette_name = example.description.gsub(/[^0-9A-Za-z.\-]+/, '_')
+      cassette_name = example.description.gsub(%r{[^0-9A-Za-z.\-]+}, '_')
 
       begin
         original_tcr_format = TCR.configuration.format
@@ -215,9 +233,10 @@ RSpec.describe Ldap::User do
       end
     end
 
-    describe '#attributes' do
-      let(:subject) { described_class.new(config, ldap: ldap) }
-      let(:ldap)    { Ldap.new(config) }
+    describe 'attributes' do
+      subject(:user) { described_class.new(config, ldap: ldap) }
+
+      let(:ldap)     { Ldap.new(config) }
       let(:config) do
         { 'host_url'  => 'ldap://localhost',
           'options'   => { 'dc=example,dc=org' => 'dc=example,dc=org' },
@@ -238,7 +257,7 @@ RSpec.describe Ldap::User do
       # ActiveRecord::Store would convert them to binary (ASCII-8BIT) strings,
       # which would then break #to_json with an Encoding::UndefinedConversion error.
       it 'skips binary attributes (#2140)' do
-        Setting.set('ldap_config', subject.attributes)
+        Setting.set('ldap_config', user.attributes)
 
         expect { Setting.get('ldap_config').to_json }
           .not_to raise_error

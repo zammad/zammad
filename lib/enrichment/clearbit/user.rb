@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 module Enrichment
   module Clearbit
     class User
@@ -146,6 +148,7 @@ module Enrichment
         }
 
         begin
+          require 'clearbit' # Only load this gem when it is really used.
           ::Clearbit.key = @config['api_key']
           result = ::Clearbit::Enrichment.find(email: @local_user.email, stream: true)
           record[:response] = { code: 200, content: result.to_s }

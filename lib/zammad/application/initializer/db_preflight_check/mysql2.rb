@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 # NOTE: Why use Mysql2::Client over ActiveRecord::Base.connection?
 #
 # As of Rails 5.2, db:create now runs initializers prior to creating the DB.
@@ -10,8 +12,8 @@
 
 module Zammad
   class Application
-    class Initializer
-      module DBPreflightCheck
+    module Initializer
+      module DbPreflightCheck
         module Mysql2
           extend Base
 
@@ -64,9 +66,9 @@ module Zammad
           def self.min_version
             case vendor
             when 'MySQL'
-              '5.6'
+              '5.7'
             when 'MariaDB'
-              '10.0'
+              '10.3'
             end
           end
 

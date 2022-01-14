@@ -16,8 +16,7 @@ class DefaultLocale extends App.Controller
         processData: true
       )
 
-    @controllerBind('auth:login', (session) =>
+    if App.Session.get() isnt undefined
       @delay(check, 3500, 'default_locale')
-    )
 
 App.Config.set('default_locale', DefaultLocale, 'Plugins')

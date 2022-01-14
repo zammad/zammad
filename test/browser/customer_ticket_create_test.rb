@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'browser_test_helper'
 
 class CustomerTicketCreateTest < TestCase
@@ -203,15 +205,15 @@ class CustomerTicketCreateTest < TestCase
       no_quote: true,
     )
 
-    logout()
+    logout
 
     # verify if we still can create new tickets as agent
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     ticket_create(
       data: {
@@ -229,7 +231,7 @@ class CustomerTicketCreateTest < TestCase
 
     # disable ticket creation
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
@@ -242,7 +244,7 @@ class CustomerTicketCreateTest < TestCase
 
     sleep(1)
 
-    logout()
+    logout
 
     # check if new ticket button is not visible
 
@@ -254,12 +256,12 @@ class CustomerTicketCreateTest < TestCase
 
     assert(exists_not(css: 'a[href="#customer_ticket_new"]'))
 
-    logout()
+    logout
 
     # enable ticket creation
 
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
@@ -272,7 +274,7 @@ class CustomerTicketCreateTest < TestCase
 
     sleep(1)
 
-    logout()
+    logout
 
     # check if new ticket button is visible
 

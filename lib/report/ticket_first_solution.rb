@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 class Report::TicketFirstSolution
 
 =begin
@@ -60,7 +62,7 @@ returns
       ticket_list.each do |ticket|
         closed_at  = ticket.close_at
         created_at = ticket.created_at
-        if (closed_at - (60 * 15) ) < created_at
+        if (closed_at - (60 * 15)) < created_at
           count += 1
         end
       end
@@ -110,7 +112,7 @@ returns
     ticket_list.each do |ticket|
       closed_at  = ticket.close_at
       created_at = ticket.created_at
-      if (closed_at - (60 * 15) ) < created_at
+      if (closed_at - (60 * 15)) < created_at
         count += 1
         ticket_ids.push ticket.id
       end

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 module PasswordHash
   include ApplicationLib
@@ -44,7 +44,7 @@ module PasswordHash
 
   def hashed_argon2i?(pw_hash, password)
     # taken from: https://github.com/technion/ruby-argon2/blob/7e1f4a2634316e370ab84150e4f5fd91d9263713/lib/argon2.rb#L33
-    return false if !pw_hash.match?(/^\$argon2i\$.{,112}/)
+    return false if !pw_hash.match?(%r{^\$argon2i\$.{,112}})
 
     # Argon2::Password.verify_password verifies argon2i hashes, too
     verified?(pw_hash, password)

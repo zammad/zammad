@@ -1,8 +1,11 @@
-# Copyright (C) 2018 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 module HasObjectManagerAttributesValidation
   extend ActiveSupport::Concern
 
   included do
-    validates_with ObjectManager::Attribute::Validation, on: %i[create update]
+    ActiveSupport::Deprecation.warn("Concern 'HasObjectManagerAttributesValidation' is  deprecated. Use 'HasObjectManagerValidation' instead.")
+
+    include HasObjectManagerAttributes
   end
 end

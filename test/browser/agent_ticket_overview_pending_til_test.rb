@@ -1,18 +1,20 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'browser_test_helper'
 
 class AgentTicketOverviewPendingTil < TestCase
 
   # regression for issue #2367 - cannot sort by Pending Til
   def test_sorting_by_pending_til
-    name = "overview_pending_til_#{rand(999_999)}"
+    name = "overview_pending_til_#{SecureRandom.uuid}"
 
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     # create 4 tickets, 2 with pending til data and 2 without
     tickets = []

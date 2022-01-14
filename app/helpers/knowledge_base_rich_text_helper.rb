@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 module KnowledgeBaseRichTextHelper
   def prepare_rich_text(input)
     prepare_rich_text_videos(prepare_rich_text_links(input))
@@ -27,12 +29,11 @@ module KnowledgeBaseRichTextHelper
   end
 
   def prepare_rich_text_videos(input)
-    input.gsub(/\((\s*)widget:(\s*)video\W([\s\S])+?\)/) do |match|
+    input.gsub(%r{\((\s*)widget:(\s*)video\W([\s\S])+?\)}) do |match|
       settings = match
         .slice(1...-1)
         .split(',')
-        .map { |pair| pair.split(':').map(&:strip) }
-        .to_h
+        .to_h { |pair| pair.split(':').map(&:strip) }
         .symbolize_keys
 
       url = case settings[:provider]

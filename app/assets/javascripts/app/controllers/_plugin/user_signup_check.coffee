@@ -7,10 +7,6 @@ class UserSignupCheck extends App.Controller
       new Modal(user: user)
     )
 
-    @controllerBind('auth:login', (user) =>
-      return if !user
-      @verifyLater(user.id)
-    )
     user = App.User.current()
     @verifyLater(user.id) if user?
 
@@ -35,11 +31,11 @@ class UserSignupCheck extends App.Controller
 class Modal extends App.ControllerModal
   backdrop: false
   keyboard: false
-  head: 'Account not verified'
+  head: __('Account not verified')
   small: true
   buttonClose: false
   buttonCancel: false
-  buttonSubmit: 'Resend verification email'
+  buttonSubmit: __('Resend verification email')
 
   constructor: ->
     super
@@ -66,13 +62,6 @@ class Modal extends App.ControllerModal
   success: (data) =>
     @sent = true
     @update()
-
-    # if in developer mode, redirect to verify
-    if data.token && @Config.get('developer_mode') is true
-      redirect = =>
-        @close()
-        @navigate "#email_verify/#{data.token}"
-      App.Delay.set(redirect, 4000)
 
   error: =>
     @contentInline = App.i18n.translateContent('Unable to send verify email.')

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Stats::TicketChannelDistribution
 
@@ -86,12 +86,12 @@ class Stats::TicketChannelDistribution
       }
       type_ids = []
       Ticket::Article::Type.all.each do |type|
-        next if !type.name.match?(/^#{channel[:sender]}/i)
+        next if !type.name.match?(%r{^#{channel[:sender]}}i)
 
         type_ids.push type.id
       end
 
-      sender = Ticket::Article::Sender.lookup( name: 'Customer' )
+      sender = Ticket::Article::Sender.lookup(name: 'Customer')
       count = Ticket.where(group_id: group_ids).joins(:articles).where(
         ticket_articles: { sender_id: sender, type_id: type_ids }
       ).where(
@@ -100,7 +100,7 @@ class Stats::TicketChannelDistribution
       result[channel[:sender].to_sym][:inbound] = count
       total_in += count
 
-      sender = Ticket::Article::Sender.lookup( name: 'Agent' )
+      sender = Ticket::Article::Sender.lookup(name: 'Agent')
       count = Ticket.where(group_id: group_ids).joins(:articles).where(
         ticket_articles: { sender_id: sender, type_id: type_ids }
       ).where(
@@ -113,7 +113,7 @@ class Stats::TicketChannelDistribution
     # append in percent
     channels.each do |channel| # rubocop:disable Style/CombinableLoops
       count = result[channel[:sender].to_sym][:inbound]
-      #puts "#{channel.inspect}:in/#{result.inspect}:#{count}"
+      # puts "#{channel.inspect}:in/#{result.inspect}:#{count}"
       in_process_precent = if count.zero?
                              0
                            else

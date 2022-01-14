@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class ImportOtrsController < ApplicationController
 
@@ -9,24 +9,24 @@ class ImportOtrsController < ApplicationController
     if !params[:url] || params[:url] !~ %r{^(http|https)://.+?$}
       render json: {
         result:  'invalid',
-        message: 'Invalid URL!',
+        message: __('Invalid URL!'),
       }
       return
     end
 
     # connection test
     translation_map = {
-      'authentication failed'                                     => 'Authentication failed!',
-      'getaddrinfo: nodename nor servname provided, or not known' => 'Hostname not found!',
-      'No route to host'                                          => 'No route to host!',
-      'Connection refused'                                        => 'Connection refused!',
+      'authentication failed'                                     => __('Authentication failed!'),
+      'getaddrinfo: nodename nor servname provided, or not known' => __('Hostname not found!'),
+      'No route to host'                                          => __('No route to host!'),
+      'Connection refused'                                        => __('Connection refused!'),
     }
 
     response = UserAgent.request(params[:url])
-    if !response.success? && response.code.to_s !~ /^40.$/
+    if !response.success? && response.code.to_s !~ %r{^40.$}
       message_human = ''
       translation_map.each do |key, message|
-        if response.error.to_s.match?(/#{Regexp.escape(key)}/i)
+        if response.error.to_s.match?(%r{#{Regexp.escape(key)}}i)
           message_human = message
         end
       end
@@ -60,7 +60,7 @@ class ImportOtrsController < ApplicationController
           if !key_parts[1]
             render json: {
               result:        'invalid',
-              message_human: 'Unable to get key from URL!'
+              message_human: __('Unable to get key from URL!')
             }
             return
           end
@@ -86,15 +86,15 @@ class ImportOtrsController < ApplicationController
           message_human: migrator_response['Error']
         }
       end
-    elsif response.body.match?(/(otrs\sag|otrs\.com|otrs\.org)/i)
+    elsif response.body.match?(%r{(otrs\sag|otrs\.com|otrs\.org)}i)
       result = {
         result:        'invalid',
-        message_human: 'Host found, but no OTRS migrator is installed!'
+        message_human: __('Host found, but no OTRS migrator is installed!')
       }
     else
       result = {
         result:        'invalid',
-        message_human: 'Host found, but it seems to be no OTRS installation!',
+        message_human: __('Host found, but it seems to be no OTRS installation!'),
       }
     end
 
@@ -108,7 +108,7 @@ class ImportOtrsController < ApplicationController
     welcome = Import::OTRS.connection_test
     if !welcome
       render json: {
-        message: 'Migrator can\'t read OTRS output!',
+        message: __('Migrator can\'t read OTRS output!'),
         result:  'invalid',
       }
       return

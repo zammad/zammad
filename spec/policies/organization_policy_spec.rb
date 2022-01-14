@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 
 describe OrganizationPolicy do
@@ -9,13 +11,13 @@ describe OrganizationPolicy do
     let(:user) { create(:customer, organization: record) }
 
     it { is_expected.to permit_actions(%i[show]) }
-    it { is_expected.not_to permit_actions(%i[update]) }
+    it { is_expected.to forbid_actions(%i[update]) }
   end
 
   context 'when customer without organization' do
     let(:user) { create(:customer) }
 
-    it { is_expected.not_to permit_actions(%i[show update]) }
+    it { is_expected.to forbid_actions(%i[show update]) }
   end
 
   context 'when agent and customer' do

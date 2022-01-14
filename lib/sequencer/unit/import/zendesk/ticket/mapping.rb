@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 class Sequencer
   class Unit
     module Import
@@ -15,6 +17,7 @@ class Sequencer
               provide_mapped do
                 {
                   id:                       resource.id,
+                  number:                   resource.id,
                   title:                    subject,
                   owner_id:                 owner_id,
                   group_id:                 group_id,

@@ -1,9 +1,11 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'browser_test_helper'
 
 class AgentTicketEmailSignatureTest < TestCase
   def test_agent_signature_check
 
-    suffix          = rand(99_999_999_999_999_999).to_s
+    suffix          = SecureRandom.uuid
     signature_name1 = "sig name 1 äöüß #{suffix}"
     signature_body1 = "--\nsig body 1 äöüß #{suffix}"
     signature_name2 = "sig name 2 äöüß #{suffix}"
@@ -14,11 +16,11 @@ class AgentTicketEmailSignatureTest < TestCase
 
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     #
     # create groups and signatures
@@ -45,7 +47,7 @@ class AgentTicketEmailSignatureTest < TestCase
         signature: signature_name1,
         member:    [
           {
-            login:  'master@example.com',
+            login:  'admin@example.com',
             access: 'full',
           },
         ],
@@ -57,7 +59,7 @@ class AgentTicketEmailSignatureTest < TestCase
         signature: signature_name2,
         member:    [
           {
-            login:  'master@example.com',
+            login:  'admin@example.com',
             access: 'full',
           },
         ],
@@ -68,7 +70,7 @@ class AgentTicketEmailSignatureTest < TestCase
         name:   group_name3,
         member: [
           {
-            login:  'master@example.com',
+            login:  'admin@example.com',
             access: 'full',
           },
         ],
@@ -81,7 +83,7 @@ class AgentTicketEmailSignatureTest < TestCase
     #
 
     # reload instances to get new group permissions
-    reload()
+    reload
 
     # create ticket
     ticket_create(

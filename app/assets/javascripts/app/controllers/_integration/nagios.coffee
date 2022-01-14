@@ -1,10 +1,10 @@
 class Nagios extends App.ControllerIntegrationBase
   featureIntegration: 'nagios_integration'
-  featureName: 'Nagios'
+  featureName: __('Nagios')
   featureConfig: 'nagios_config'
   description: [
-    ['This service receives emails from %s and creates tickets with host and service.', 'Nagios']
-    ['If the host and service is recovered again, the ticket will be closed automatically.']
+    [__('This service receives emails from %s and creates tickets with host and service.'), 'Nagios']
+    [__('If the host and service have recovered, the ticket can be closed automatically.')]
   ]
 
   render: =>
@@ -21,9 +21,9 @@ class State
 App.Config.set(
   'IntegrationNagios'
   {
-    name: 'Nagios'
+    name: __('Nagios')
     target: '#system/integration/nagios'
-    description: 'An open source monitoring tool.'
+    description: __('An open-source monitoring tool.')
     controller: Nagios
     state: State
   }

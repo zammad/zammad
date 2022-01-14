@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 class RenameLocaleOnUsers < ActiveRecord::Migration[5.1]
   def up
     return if !Setting.exists?(name: 'system_init_done')

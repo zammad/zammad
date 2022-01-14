@@ -1,9 +1,13 @@
 #!/usr/bin/env ruby
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 APP_ROOT = File.expand_path('..', __dir__)
 Dir.chdir(APP_ROOT) do
-  exec 'yarnpkg', *ARGV
-rescue Errno::ENOENT
-  warn 'Yarn executable was not detected in the system.'
-  warn 'Download Yarn at https://yarnpkg.com/en/docs/install'
-  exit 1
+  begin
+    exec "yarnpkg", *ARGV
+  rescue Errno::ENOENT
+    $stderr.puts "Yarn executable was not detected in the system."
+    $stderr.puts "Download Yarn at https://yarnpkg.com/en/docs/install"
+    exit 1
+  end
 end

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Overview < ApplicationModel
   include ChecksClientNotification
@@ -98,11 +98,11 @@ class Overview < ApplicationModel
   def link_name(name)
     local_link = name.downcase
     local_link = local_link.parameterize(separator: '_')
-    local_link.gsub!(/\s/, '_')
+    local_link.gsub!(%r{\s}, '_')
     local_link.squeeze!('_')
     local_link = CGI.escape(local_link)
     if local_link.blank?
-      local_link = id || rand(999)
+      local_link = id || SecureRandom.uuid
     end
     check = true
     count = 0

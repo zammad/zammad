@@ -59,7 +59,7 @@
                   <% groupName = channel.group %>
                 <% end %>
                 <% if channel.group.active is false: %>
-                  <%- @T('%s is inactive, please select a active one.', groupName) %>
+                  <%- @T('%s is inactive, please select an active one.', groupName) %>
                 <% else: %>
                   <%= groupName %>
                 <% end %>

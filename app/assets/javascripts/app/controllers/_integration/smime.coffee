@@ -1,9 +1,9 @@
 class Index extends App.ControllerIntegrationBase
   featureIntegration: 'smime_integration'
-  featureName: 'S/MIME'
+  featureName: __('S/MIME')
   featureConfig: 'smime_config'
   description: [
-    ['S/MIME (Secure/Multipurpose Internet Mail Extensions) is a widely accepted method (or more precisely, a protocol) for sending digitally signed and encrypted messages.']
+    [__('S/MIME (Secure/Multipurpose Internet Mail Extensions) is a widely accepted method (or more precisely, a protocol) for sending digitally signed and encrypted messages.')]
   ]
   events:
     'change .js-switch input': 'switch'
@@ -70,16 +70,16 @@ class Form extends App.Controller
 class Certificate extends App.ControllerModal
   buttonClose: true
   buttonCancel: true
-  buttonSubmit: 'Add'
+  buttonSubmit: __('Add')
   autoFocusOnFirstInput: false
-  head: 'Add Certificate'
+  head: __('Add Certificate')
   large: true
 
   content: ->
 
     # show start dialog
     content = $(App.view('integration/smime_certificate_add')(
-      head: 'Add Certificate'
+      head: __('Add Certificate')
     ))
     content
 
@@ -106,23 +106,23 @@ class Certificate extends App.ControllerModal
         details = data.responseJSON || {}
         @notify
           type:    'error'
-          msg:     App.i18n.translateContent(details.error_human || details.error || 'Unable to import!')
+          msg:     App.i18n.translateContent(details.error_human || details.error || __('Unable to import!'))
           timeout: 6000
     )
 
 class PrivateKey extends App.ControllerModal
   buttonClose: true
   buttonCancel: true
-  buttonSubmit: 'Add'
+  buttonSubmit: __('Add')
   autoFocusOnFirstInput: false
-  head: 'Add Private Key'
+  head: __('Add Private Key')
   large: true
 
   content: ->
 
     # show start dialog
     content = $(App.view('integration/smime_private_key_add')(
-      head: 'Add Private Key'
+      head: __('Add Private Key')
     ))
     content
 
@@ -149,7 +149,7 @@ class PrivateKey extends App.ControllerModal
         details = data.responseJSON || {}
         @notify
           type:    'error'
-          msg:     App.i18n.translateContent(details.error_human || details.error || 'Unable to import!')
+          msg:     App.i18n.translateContent(details.error_human || details.error || __('Unable to import!'))
           timeout: 6000
     )
 
@@ -178,7 +178,7 @@ class List extends App.Controller
         details = data.responseJSON || {}
         @notify(
           type: 'error'
-          msg:  App.i18n.translateContent(details.error_human || details.error || 'Unable to load list of certificates!')
+          msg:  App.i18n.translateContent(details.error_human || details.error || __('Unable to load list of certificates!'))
         )
 
         # do something
@@ -210,7 +210,7 @@ class List extends App.Controller
         details = data.responseJSON || {}
         @notify(
           type: 'error'
-          msg:  App.i18n.translateContent(details.error_human || details.error || 'Unable to save!')
+          msg:  App.i18n.translateContent(details.error_human || details.error || __('Unable to save!'))
         )
     )
 
@@ -246,9 +246,9 @@ class State
 App.Config.set(
   'Integrationsmime'
   {
-    name: 'S/MIME'
+    name: __('S/MIME')
     target: '#system/integration/smime'
-    description: 'S/MIME enables you to send digitally signed and encrypted messages.'
+    description: __('S/MIME enables you to send digitally signed and encrypted messages.')
     controller: Index
     state: State
   }

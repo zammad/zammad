@@ -27,7 +27,9 @@ class App.ControllerGenericEdit extends App.ControllerModal
       return false
 
     # validate
-    errors = @item.validate()
+    errors = @item.validate(
+      controllerForm: @controller
+    )
     if errors
       @log 'error', errors
       @formValidate( form: e.target, errors: errors )
@@ -49,5 +51,5 @@ class App.ControllerGenericEdit extends App.ControllerModal
         App[ ui.genericObject ].fetch(id: @id)
         ui.log 'errors'
         ui.formEnable(e)
-        ui.controller.showAlert(details.error_human || details.error || 'Unable to update object!')
+        ui.controller.showAlert(details.error_human || details.error || __('Unable to update object!'))
     )

@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 # A wrapper class around Store that handles temporary attachment uploads
 # and provides an interface for those.
 class UploadCache

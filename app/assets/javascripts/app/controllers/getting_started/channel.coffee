@@ -8,11 +8,11 @@ class GettingStartedChannel extends App.ControllerWizardFullScreen
       return
 
     # set title
-    @title 'Connect Channels'
+    @title __('Connect Channels')
 
     @adapters = [
       {
-        name: 'Email'
+        name: __('Email')
         class: 'email'
         link: '#getting_started/channel/email'
       },

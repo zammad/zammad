@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 Zammad::Application.routes.draw do
 
   #
@@ -65,6 +67,8 @@ Zammad::Application.routes.draw do
   scope :help do
     get '', to: 'knowledge_base/public/categories#forward_root', as: :help_no_locale
     get ':locale', to: 'knowledge_base/public/categories#index', as: :help_root
+
+    get ':locale/tag/:tag', to: 'knowledge_base/public/tags#show', as: :help_tag
 
     get ':locale/:category', to: 'knowledge_base/public/categories#show', as: :help_category
     get ':locale/:category/:answer', to: 'knowledge_base/public/answers#show', as: :help_answer

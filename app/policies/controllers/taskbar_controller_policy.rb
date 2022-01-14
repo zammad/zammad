@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 class Controllers::TaskbarControllerPolicy < Controllers::ApplicationControllerPolicy
 
   def show?
@@ -20,6 +22,6 @@ class Controllers::TaskbarControllerPolicy < Controllers::ApplicationControllerP
 
     # current implementation requires this exception type
     # should be replaced by unified way
-    raise Exceptions::UnprocessableEntity, 'Not allowed to access this task.'
+    raise Exceptions::UnprocessableEntity, __('Not allowed to access this task.')
   end
 end

@@ -63,7 +63,7 @@ class ChannelTelegram extends App.ControllerSubContent
     e.preventDefault()
     id   = $(e.target).closest('.action').data('id')
     new App.ControllerConfirm(
-      message: 'Sure?'
+      message: __('Sure?')
       callback: =>
         @ajax(
           id:   'telegram_delete'
@@ -104,7 +104,7 @@ class ChannelTelegram extends App.ControllerSubContent
     )
 
 class BotAdd extends App.ControllerModal
-  head: 'Add Telegram Bot'
+  head: __('Add Telegram Bot')
   shown: true
   button: 'Add'
   buttonCancel: true
@@ -149,12 +149,12 @@ class BotAdd extends App.ControllerModal
       error: (xhr) =>
         data = JSON.parse(xhr.responseText)
         @formEnable(e)
-        error_message = App.i18n.translateContent(data.error || 'Unable to save Bot.')
+        error_message = App.i18n.translateContent(data.error || __('Unable to save Bot.'))
         @el.find('.alert').removeClass('hidden').text(error_message)
     )
 
 class BotEdit extends App.ControllerModal
-  head: 'Telegram Account'
+  head: __('Telegram Account')
   shown: true
   buttonCancel: true
 
@@ -197,8 +197,8 @@ class BotEdit extends App.ControllerModal
       error: (xhr) =>
         data = JSON.parse(xhr.responseText)
         @formEnable(e)
-        error_message = App.i18n.translateContent(data.error || 'Unable to save changes.')
+        error_message = App.i18n.translateContent(data.error || __('Unable to save changes.'))
         @el.find('.alert').removeClass('hidden').text(error_message)
     )
 
-App.Config.set('Telegram', { prio: 5100, name: 'Telegram', parent: '#channels', target: '#channels/telegram', controller: ChannelTelegram, permission: ['admin.channel_telegram'] }, 'NavBarAdmin')
+App.Config.set('Telegram', { prio: 5100, name: __('Telegram'), parent: '#channels', target: '#channels/telegram', controller: ChannelTelegram, permission: ['admin.channel_telegram'] }, 'NavBarAdmin')

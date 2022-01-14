@@ -125,11 +125,11 @@ class ArticleViewItem extends App.ControllerObserver
     else
       @el.removeClass('is-internal')
 
-    # check if email link need to be updated
+    # check if email link needs to be updated
     links = clone(article.preferences.links) || []
     if article.type.name is 'email'
       link =
-        name: 'Raw'
+        name: __('Raw')
         url: "#{@Config.get('api_path')}/ticket_article_plain/#{article.id}"
         target: '_blank'
       links.push link
@@ -149,7 +149,7 @@ class ArticleViewItem extends App.ControllerObserver
         if attachment && attachment.preferences && attachment.preferences['original-format'] is true
           link =
               url: "#{App.Config.get('api_path')}/ticket_attachment/#{article.ticket_id}/#{article.id}/#{attachment.id}?disposition=attachment"
-              name: 'Original Formatting'
+              name: __('Original Formatting')
               target: '_blank'
           links.push link
 
@@ -274,7 +274,7 @@ class ArticleViewItem extends App.ControllerObserver
       offsetTop = signatureMarker.next('div, p, br').position()
 
     # remember bubble content height
-    bubbleContentHeigth = bubbleContent.height()
+    bubbleContentHeight = bubbleContent.height()
 
     # get marker height
     if offsetTop
@@ -282,18 +282,18 @@ class ArticleViewItem extends App.ControllerObserver
 
     # if signature marker exists and height is within maxHeight
     if markerHeight && markerHeight < maxHeight
-      newHeigth = markerHeight + 30
-      if newHeigth < minHeight
-        newHeigth = minHeight
+      newHeight = markerHeight + 30
+      if newHeight < minHeight
+        newHeight = minHeight
 
-      bubbleContent.attr('data-height', bubbleContentHeigth + 30)
-      bubbleContent.attr('data-height-origin', newHeigth)
-      bubbleContent.css('height', "#{newHeigth}px")
+      bubbleContent.attr('data-height', bubbleContentHeight + 30)
+      bubbleContent.attr('data-height-origin', newHeight)
+      bubbleContent.css('height', "#{newHeight}px")
       bubbleOverflowContainer.removeClass('hide')
 
     # if height is higher then maxHeight
-    else if bubbleContentHeigth > maxHeight
-      bubbleContent.attr('data-height', bubbleContentHeigth + 30)
+    else if bubbleContentHeight > maxHeight
+      bubbleContent.attr('data-height', bubbleContentHeight + 30)
       bubbleContent.attr('data-height-origin', maxHeight)
       bubbleContent.css('height', "#{maxHeight}px")
       bubbleOverflowContainer.removeClass('hide')
@@ -326,7 +326,7 @@ class ArticleViewItem extends App.ControllerObserver
         if data.encryption.success
           @notify
             type: 'success'
-            msg:  App.i18n.translateContent('Decryption success!')
+            msg:  App.i18n.translateContent('Decryption successful!')
         else if data.encryption.comment
           comment = App.i18n.translateContent('Decryption failed!') + ' ' + App.i18n.translateContent(data.encryption.comment || '')
           @notify

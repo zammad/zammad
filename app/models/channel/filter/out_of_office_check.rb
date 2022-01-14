@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 module Channel::Filter::OutOfOfficeCheck
 
@@ -8,7 +8,7 @@ module Channel::Filter::OutOfOfficeCheck
 
     # check ms out of office characteristics
     if mail[ :'x-auto-response-suppress' ]
-      return if !mail[ :'x-auto-response-suppress' ].match?(/all/i)
+      return if !mail[ :'x-auto-response-suppress' ].match?(%r{all}i)
       return if !mail[ :'x-ms-exchange-inbox-rules-loop' ]
 
       mail[ :'x-zammad-out-of-office' ] = true
@@ -18,17 +18,17 @@ module Channel::Filter::OutOfOfficeCheck
     if mail[ :'auto-submitted' ]
 
       # check zimbra out of office characteristics
-      if mail[ :'auto-submitted' ].match?(/vacation/i)
+      if mail[ :'auto-submitted' ].match?(%r{vacation}i)
         mail[ :'x-zammad-out-of-office' ] = true
       end
 
       # check cloud out of office characteristics
-      if mail[ :'auto-submitted' ].match?(/auto-replied;\sowner-email=/i)
+      if mail[ :'auto-submitted' ].match?(%r{auto-replied;\sowner-email=}i)
         mail[ :'x-zammad-out-of-office' ] = true
       end
 
       # gmail check out of office characteristics
-      if mail[ :'auto-submitted' ] =~ /auto-replied/i && mail[ :subject ] =~ /vacation/i
+      if mail[ :'auto-submitted' ] =~ %r{auto-replied}i && mail[ :subject ] =~ %r{vacation}i
         mail[ :'x-zammad-out-of-office' ] = true
       end
 

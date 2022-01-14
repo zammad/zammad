@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 module Channel::Filter::FollowUpCheck
 
@@ -55,7 +55,7 @@ module Channel::Filter::FollowUpCheck
     end
 
     # get ticket# from references
-    return true if ( setting.include?('references') || (mail[:'x-zammad-is-auto-response'] == true || Setting.get('ticket_hook_position') == 'none') ) && follow_up_by_md5(mail)
+    return true if (setting.include?('references') || (mail[:'x-zammad-is-auto-response'] == true || Setting.get('ticket_hook_position') == 'none')) && follow_up_by_md5(mail)
 
     # get ticket# from references current email has same subject as initial article
     if mail[:subject].present?
@@ -72,7 +72,7 @@ module Channel::Filter::FollowUpCheck
         references += mail[:'in-reply-to']
       end
       if references != ''
-        message_ids = references.split(/\s+/)
+        message_ids = references.split(%r{\s+})
         message_ids.each do |message_id|
           message_id_md5 = Digest::MD5.hexdigest(message_id)
           article = Ticket::Article.where(message_id_md5: message_id_md5).order('created_at DESC, id DESC').limit(1).first
@@ -86,7 +86,7 @@ module Channel::Filter::FollowUpCheck
 
           # remove leading "..:\s" and "..[\d+]:\s" e. g. "Re: " or "Re[5]: "
           subject_to_check = mail[:subject]
-          subject_to_check.gsub!(/^(..(\[\d+\])?:\s+)+/, '')
+          subject_to_check.gsub!(%r{^(..(\[\d+\])?:\s+)+}, '')
 
           # if subject is different, it's no followup
           next if subject_to_check != article_first.subject
@@ -119,11 +119,11 @@ module Channel::Filter::FollowUpCheck
   def self.follow_up_by_md5(mail)
     return if mail[:'x-zammad-ticket-id']
 
-    mail_references(mail).split(/\s+/).each do |message_id|
+    mail_references(mail).split(%r{\s+}).each do |message_id|
       article = message_id_article(message_id)
       next if article.blank?
 
-      Rails.logger.debug "Follow up for '##{article.ticket.number}' in references."
+      Rails.logger.debug { "Follow up for '##{article.ticket.number}' in references." }
       mail[:'x-zammad-ticket-id'] = article.ticket_id
       return true
     end

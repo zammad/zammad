@@ -1,4 +1,5 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 class KnowledgeBase::Category::Translation < ApplicationModel
   include HasAgentAllowedParams
   include HasSearchIndexBackend
@@ -14,7 +15,7 @@ class KnowledgeBase::Category::Translation < ApplicationModel
   validates  :category,  presence: true
 
   validates :title,        presence: true
-  validates :kb_locale_id, uniqueness: { scope: :category_id }
+  validates :kb_locale_id, uniqueness: { case_sensitive: true, scope: :category_id }
 
   scope :neighbours_of, ->(translation) { joins(:category).where(knowledge_base_categories: { parent_id: translation.category&.parent_id }) }
 

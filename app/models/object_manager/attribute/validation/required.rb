@@ -1,7 +1,10 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 class ObjectManager::Attribute::Validation::Required < ObjectManager::Attribute::Validation::Backend
 
   def validate
-    return if value.present?
+    return if record.class.include?(ChecksCoreWorkflow)
+    return if !value.nil?
     return if optional_for_user?
 
     invalid_because_attribute('is required but missing.')

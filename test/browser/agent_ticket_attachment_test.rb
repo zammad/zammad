@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'browser_test_helper'
 
 class AgentTicketAttachmentTest < TestCase
@@ -9,7 +11,7 @@ class AgentTicketAttachmentTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     #
     # attachment checks - new ticket
@@ -28,14 +30,7 @@ class AgentTicketAttachmentTest < TestCase
     sleep 1
 
     # submit form
-    click(css: '.content.active .js-submit')
-    sleep 2
-
-    # check warning
-    alert = @browser.switch_to.alert
-    alert.dismiss()
-    #alert.accept()
-    #alert = alert.text
+    click(css: '.content.active .js-submit', expect_alert: true)
 
     # since selenium webdriver with firefox is not able to upload files, skipp here
     # https://github.com/w3c/webdriver/issues/1230
@@ -88,12 +83,7 @@ class AgentTicketAttachmentTest < TestCase
     )
 
     # submit form
-    click(css: '.content.active .js-submit')
-    sleep 2
-
-    # check warning
-    alert = @browser.switch_to.alert
-    alert.dismiss()
+    click(css: '.content.active .js-submit', expect_alert: true)
 
     # add attachment, attachment check should quiet
     file_upload(
@@ -109,12 +99,6 @@ class AgentTicketAttachmentTest < TestCase
 
     # submit form
     click(css: '.content.active .js-submit')
-    sleep 2
-
-    # no warning
-    #alert = @browser.switch_to.alert
-
-    # check if article exists
 
     # discard changes should gone away
     watch_for_disappear(
@@ -163,13 +147,13 @@ class AgentTicketAttachmentTest < TestCase
     click(css: '.content.active .js-submit')
 
     # check warning
-    modal_ready()
+    modal_ready
     match(
       css:   '.content.active .modal',
       value: 'missing',
     )
     click(css: '.content.active .modal .js-cancel')
-    modal_disappear()
+    modal_disappear
 
     ticket_update(
       data:          {
@@ -211,7 +195,7 @@ class AgentTicketAttachmentTest < TestCase
     browser2 = browser_instance
     login(
       browser:  browser2,
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
@@ -219,7 +203,7 @@ class AgentTicketAttachmentTest < TestCase
       browser: browser2,
     )
 
-    random     = "ticket-actions-6-test-#{rand(999_999)}"
+    random     = "ticket-actions-6-test-#{SecureRandom.uuid}"
     user_email = "#{random}@example.com"
     user_create(
       browser: browser2,
@@ -314,7 +298,7 @@ class AgentTicketAttachmentTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     ticket_create(
       data:          {

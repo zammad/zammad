@@ -59,7 +59,7 @@ class App.ControllerModal extends App.Controller
     false
 
   content: ->
-    'You need to implement a one @content()!'
+    __('You need to implement a one @content()!')
 
   update: =>
     if @message
@@ -106,7 +106,7 @@ class App.ControllerModal extends App.Controller
     if @buttonSubmit is true
       @buttonSubmit = 'Submit'
     if @buttonCancel is true
-      @buttonCancel = 'Cancel & Go Back'
+      @buttonCancel = __('Cancel & Go Back')
 
     @update()
 

@@ -1,47 +1,49 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 
 RSpec.describe ObjectManager::Attribute, type: :model do
 
   describe 'callbacks' do
     context 'for setting default values on local data options' do
-      let(:subject) { described_class.new }
+      subject(:attr) { described_class.new }
 
       context ':null' do
         it 'sets nil values to true' do
-          expect { subject.validate }
-            .to change { subject.data_option[:null] }.to(true)
+          expect { attr.validate }
+            .to change { attr.data_option[:null] }.to(true)
         end
 
         it 'does not overwrite false values' do
-          subject.data_option[:null] = false
+          attr.data_option[:null] = false
 
-          expect { subject.validate }
-            .not_to change { subject.data_option[:null] }
+          expect { attr.validate }
+            .not_to change { attr.data_option[:null] }
         end
       end
 
       context ':maxlength' do
         context 'for data_type: select / tree_select / checkbox' do
-          let(:subject) { described_class.new(data_type: 'select') }
+          subject(:attr) { described_class.new(data_type: 'select') }
 
           it 'sets nil values to 255' do
-            expect { subject.validate }
-              .to change { subject.data_option[:maxlength] }.to(255)
+            expect { attr.validate }
+              .to change { attr.data_option[:maxlength] }.to(255)
           end
         end
       end
 
       context ':nulloption' do
         context 'for data_type: select / tree_select / checkbox' do
-          let(:subject) { described_class.new(data_type: 'select') }
+          subject(:attr) { described_class.new(data_type: 'select') }
 
           it 'sets nil values to true' do
-            expect { subject.validate }
-              .to change { subject.data_option[:nulloption] }.to(true)
+            expect { attr.validate }
+              .to change { attr.data_option[:nulloption] }.to(true)
           end
 
           it 'does not overwrite false values' do
-            subject.data_option[:nulloption] = false
+            attr.data_option[:nulloption] = false
 
             expect { subject.validate }
               .not_to change { subject.data_option[:nulloption] }
@@ -62,7 +64,7 @@ RSpec.describe ObjectManager::Attribute, type: :model do
       it "rejects Zammad reserved word '#{reserved_word}'" do
         expect do
           described_class.add attributes_for :object_manager_attribute_text, name: reserved_word
-        end.to raise_error(ActiveRecord::RecordInvalid, /is a reserved word! \(1\)/)
+        end.to raise_error(ActiveRecord::RecordInvalid, %r{is a reserved word! \(1\)})
       end
     end
 
@@ -71,6 +73,22 @@ RSpec.describe ObjectManager::Attribute, type: :model do
         expect do
           described_class.add attributes_for :object_manager_attribute_text, name: reserved_word
         end.to raise_error(ActiveRecord::RecordInvalid, "Validation failed: Name can't get used because *_id and *_ids are not allowed")
+      end
+    end
+
+    %w[title tags number].each do |not_editable_attribute|
+      it "rejects '#{not_editable_attribute}' which is used" do
+        expect do
+          described_class.add attributes_for :object_manager_attribute_text, name: not_editable_attribute
+        end.to raise_error(ActiveRecord::RecordInvalid, 'Validation failed: Name Attribute not editable!')
+      end
+    end
+
+    %w[priority state note].each do |existing_attribute|
+      it "rejects '#{existing_attribute}' which is used" do
+        expect do
+          described_class.add attributes_for :object_manager_attribute_text, name: existing_attribute
+        end.to raise_error(ActiveRecord::RecordInvalid, "Validation failed: Name #{existing_attribute} already exists!")
       end
     end
 
@@ -144,6 +162,14 @@ RSpec.describe ObjectManager::Attribute, type: :model do
       let(:is_referenced) { true }
 
       it { is_expected.to be_valid }
+    end
+  end
+
+  describe 'Class methods:' do
+    describe '.attribute_to_references_hash_objects' do
+      it 'returns classes with conditions' do
+        expect(described_class.attribute_to_references_hash_objects).to match_array [Trigger, Overview, Job, Sla, Report::Profile ]
+      end
     end
   end
 end

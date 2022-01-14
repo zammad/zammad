@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 class Cti::Driver::SipgateIo < Cti::Driver::Base
 
   def config
@@ -27,7 +29,7 @@ class Cti::Driver::SipgateIo < Cti::Driver::Base
   def load_voip_users
     return {} if @config.blank? || @config[:api_user].blank? || @config[:api_password].blank?
 
-    list = Cache.get('sipgateUserList')
+    list = Cache.read('sipgateUserList')
     return list if list
 
     url = 'https://api.sipgate.com/v2/users'
@@ -45,6 +47,7 @@ class Cti::Driver::SipgateIo < Cti::Driver::Base
         open_timeout:  4,
         read_timeout:  6,
         total_timeout: 6,
+        verify_ssl:    true,
       },
     )
 

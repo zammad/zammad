@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class UserAccessTokenController < ApplicationController
   prepend_before_action { authentication_check && authorize! }
@@ -79,7 +79,7 @@ curl http://localhost/api/v1/user_access_token -v -u #{login}:#{password} -H "Co
       raise Exceptions::UnprocessableEntity, 'API token access disabled!'
     end
     if params[:label].blank?
-      raise Exceptions::UnprocessableEntity, 'Need label!'
+      raise Exceptions::UnprocessableEntity, __('Need label!')
     end
 
     token = Token.create!(
@@ -112,7 +112,7 @@ curl http://localhost/api/v1/user_access_token/{id} -v -u #{login}:#{password} -
 
   def destroy
     token = Token.find_by(action: 'api', user_id: current_user.id, id: params[:id])
-    raise Exceptions::UnprocessableEntity, 'Unable to find api token!' if !token
+    raise Exceptions::UnprocessableEntity, __('Unable to find api token!') if !token
 
     token.destroy!
     render json: {}, status: :ok

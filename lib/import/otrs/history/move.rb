@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 module Import
   module OTRS
     class History
@@ -7,7 +9,7 @@ module Import
           # "%%Queue1%%5%%Postmaster%%1"
           from = nil
           to   = nil
-          if data =~ /%%(.+?)%%(.+?)%%(.+?)%%(.+?)$/
+          if data =~ %r{%%(.+?)%%(.+?)%%(.+?)%%(.+?)$}
             from    = $1
             from_id = $2
             to      = $3

@@ -1,5 +1,7 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'integration_test_helper'
-require 'slack'
+require 'slack-ruby-client' # Only load this gem when it is really used.
 
 class SlackTest < ActiveSupport::TestCase
 
@@ -67,7 +69,7 @@ class SlackTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     # check if message exists
@@ -76,7 +78,7 @@ class SlackTest < ActiveSupport::TestCase
     ticket1.state = Ticket::State.find_by(name: 'open')
     ticket1.save
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     # check if message exists
@@ -105,7 +107,7 @@ class SlackTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     # check if message exists
@@ -117,7 +119,7 @@ class SlackTest < ActiveSupport::TestCase
     ticket2.title = text
     ticket2.save
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     # check if message exists
@@ -127,7 +129,7 @@ class SlackTest < ActiveSupport::TestCase
     ticket2.pending_time = Time.zone.now - 2.days
     ticket2.save
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     # check if message exists
@@ -135,7 +137,7 @@ class SlackTest < ActiveSupport::TestCase
 
     Ticket.process_pending
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     # check if message exists
@@ -143,7 +145,7 @@ class SlackTest < ActiveSupport::TestCase
 
     Ticket.process_pending
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     # check if message exists
@@ -186,7 +188,7 @@ class SlackTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     # check if message exists
@@ -195,7 +197,7 @@ class SlackTest < ActiveSupport::TestCase
     ticket3.state = Ticket::State.find_by(name: 'open')
     ticket3.save
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     # check if message exists
@@ -224,7 +226,7 @@ class SlackTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     # check if message exists
@@ -236,7 +238,7 @@ class SlackTest < ActiveSupport::TestCase
     ticket4.title = text
     ticket4.save
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     # check if message exists
@@ -245,7 +247,7 @@ class SlackTest < ActiveSupport::TestCase
   end
 
   def hash_gen
-    (0...10).map { ('a'..'z').to_a[rand(26)] }.join
+    SecureRandom.hex(10)
   end
 
   def rand_word
@@ -267,7 +269,7 @@ class SlackTest < ActiveSupport::TestCase
       'be a good boy',
       'invent new things',
     ]
-    words[rand(words.length)]
+    words.sample
   end
 
   def slack_check(channel_name, search_for)
@@ -302,7 +304,7 @@ class SlackTest < ActiveSupport::TestCase
     channel_history['messages'].each do |message|
       next if !message['text']
 
-      if message['text'].match?(/#{search_for}/i)
+      if message['text'].match?(%r{#{search_for}}i)
         message_count += 1
         p "SUCCESS: message with #{search_for} found #{message_count} time(s)!"
       end

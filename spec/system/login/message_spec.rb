@@ -1,8 +1,10 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 
 RSpec.describe 'Login Message', type: :system, authenticated_as: false do
   context 'with maintenance_login_message' do
-    let(:message) { "badum tssss #{rand(99_999)}" }
+    let(:message) { "badum tssss #{SecureRandom.uuid}" }
     let(:alt_message) { 'lorem ipsum' }
 
     before { Setting.set 'maintenance_login_message', message }
@@ -21,7 +23,7 @@ RSpec.describe 'Login Message', type: :system, authenticated_as: false do
 
         Setting.set 'maintenance_login', false
 
-        expect(page).to have_no_css('.js-maintenanceLogin', text: message)
+        expect(page).to have_no_css('.js-maintenanceLogin', text: message, wait: 30)
       end
 
       it 'changes message text on the go' do
@@ -29,7 +31,7 @@ RSpec.describe 'Login Message', type: :system, authenticated_as: false do
 
         Setting.set 'maintenance_login_message', alt_message
 
-        expect(page).to have_css('.js-maintenanceLogin', text: alt_message)
+        expect(page).to have_css('.js-maintenanceLogin', text: alt_message, wait: 30)
       end
     end
 
@@ -47,7 +49,7 @@ RSpec.describe 'Login Message', type: :system, authenticated_as: false do
 
         Setting.set 'maintenance_login', true
 
-        expect(page).to have_css('.js-maintenanceLogin', text: message)
+        expect(page).to have_css('.js-maintenanceLogin', text: message, wait: 30)
       end
     end
   end

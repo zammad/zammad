@@ -1,14 +1,16 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'browser_test_helper'
 
 class AgentNavigationAndTitleTest < TestCase
   def test_highlight_and_title
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     # since we run the basic functionality tests via Capybara now the clues are shown
     # and closed after the login. This unfortunately removes the 'is-active' class from the
@@ -16,7 +18,7 @@ class AgentNavigationAndTitleTest < TestCase
     # Because the browser tests are deprecated and there is no easy fix to change the
     # behavior we refresh the page and wait for it to finish loading the app as a workaround.
     # This will cause the 'is-active' class to be set on the menu item again
-    reload()
+    reload
     sleep 4
 
     # dashboard after login
@@ -30,7 +32,7 @@ class AgentNavigationAndTitleTest < TestCase
     exists(css: '#navigation .js-menu .js-dashboardMenuItem.is-active')
     exists_not(css: '#navigation .tasks .js-item.is-active')
 
-    reload()
+    reload
     sleep 2
     verify_title(value: 'dashboard')
     exists(css: '#navigation .js-menu .js-dashboardMenuItem.is-active')
@@ -65,7 +67,7 @@ class AgentNavigationAndTitleTest < TestCase
     )
     exists_not(css: '#navigation .js-menu .is-active')
 
-    reload()
+    reload
     sleep 2
     verify_title(value: 'Call Inbound')
     verify_task(
@@ -103,7 +105,7 @@ class AgentNavigationAndTitleTest < TestCase
     )
     exists_not(css: '#navigation .js-menu .is-active')
 
-    reload()
+    reload
     sleep 2
     verify_title(value: 'ticket create #2')
     verify_task(
@@ -125,7 +127,7 @@ class AgentNavigationAndTitleTest < TestCase
     exists(css: '#navigation .js-menu .js-dashboardMenuItem.is-active')
     exists_not(css: '#navigation .tasks .js-item.is-active')
 
-    reload()
+    reload
     sleep 2
     verify_title(value: 'dashboard')
     exists(css: '#navigation .js-menu .js-dashboardMenuItem.is-active')
@@ -149,7 +151,7 @@ class AgentNavigationAndTitleTest < TestCase
     exists_not(css: '#navigation .js-menu .is-active')
     exists_not(css: '#navigation .tasks .js-item.is-active')
 
-    reload()
+    reload
     sleep 2
     verify_title(value: 'Users')
     exists_not(css: '#navigation .js-menu .is-active')

@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 
 RSpec.describe Calendar, type: :model do
@@ -94,10 +96,10 @@ RSpec.describe Calendar, type: :model do
 
     context 'when called explicitly after creation' do
       it 'writes #public_holidays to the cache (valid for 1 day)' do
-        expect(Cache.get("CalendarIcal::#{calendar.id}")).to be(nil)
+        expect(Cache.read("CalendarIcal::#{calendar.id}")).to be(nil)
 
         expect { calendar.sync }
-          .to change { Cache.get("CalendarIcal::#{calendar.id}") }
+          .to change { Cache.read("CalendarIcal::#{calendar.id}") }
           .to(calendar.attributes.slice('public_holidays', 'ical_url').symbolize_keys)
       end
 
@@ -209,14 +211,14 @@ RSpec.describe Calendar, type: :model do
                      timeframes: [['09:00', '00:00']]
                    }
                  })
-        end.to raise_error(Exceptions::UnprocessableEntity, 'nonsensical hours provided')
+        end.to raise_error(ActiveRecord::RecordInvalid, %r{nonsensical hours provided})
       end
 
       it 'fails for blank structure' do
         expect do
           create(:calendar,
                  business_hours: {})
-        end.to raise_error(Exceptions::UnprocessableEntity, 'No configured business hours found!')
+        end.to raise_error(ActiveRecord::RecordInvalid, %r{No configured business hours found!})
       end
     end
   end
@@ -301,7 +303,7 @@ RSpec.describe Calendar, type: :model do
              })
     end
 
-    let(:sla) { create(:sla, condition: {}, calendar: calendar, first_response_time: 60, update_time: 120, solution_time: nil) }
+    let(:sla) { create(:sla, condition: {}, calendar: calendar, first_response_time: 60, response_time: 120, solution_time: nil) }
 
     before do
       queue_adapter.perform_enqueued_jobs = true
@@ -398,7 +400,7 @@ RSpec.describe Calendar, type: :model do
              calendar:            calendar,
              condition:           {},
              first_response_time: 120,
-             update_time:         180,
+             response_time:       180,
              solution_time:       240)
     end
 

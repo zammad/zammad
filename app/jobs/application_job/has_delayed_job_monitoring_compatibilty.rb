@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 class ApplicationJob
   module HasDelayedJobMonitoringCompatibilty
     extend ActiveSupport::Concern
@@ -9,7 +11,7 @@ class ApplicationJob
       # until we resolve this dependency.
       after_enqueue do |job|
         # skip update of `attempts` attribute if job wasn't queued because of ActiveJobLock
-        #(another job with same lock key got queued before this job could be retried)
+        # (another job with same lock key got queued before this job could be retried)
         next if job.provider_job_id.blank?
 
         # update the column right away without loading Delayed::Job record

@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 class NotificationFactory::Renderer
 
 =begin
@@ -11,7 +13,8 @@ examples how to use
       locale: 'de-de',
       timezone: 'America/Port-au-Prince',
       template: 'some template <b>#{ticket.title}</b> {config.fqdn}',
-      escape: false
+      escape: false,
+      trusted: false, # Allow ERB tags in the template?
     ).render
 
     message_body = NotificationFactory::Renderer.new(
@@ -25,16 +28,20 @@ examples how to use
 
 =end
 
-  def initialize(objects:, template:, locale: nil, timezone: nil, escape: true)
+  def initialize(objects:, template:, locale: nil, timezone: nil, escape: true, trusted: false) # rubocop:disable Metrics/ParameterLists
     @objects  = objects
     @locale   = locale || Locale.default
     @timezone = timezone || Setting.get('timezone_default')
-    @template = NotificationFactory::Template.new(template, escape)
+    @template = NotificationFactory::Template.new(template, escape, trusted)
     @escape = escape
   end
 
   def render
     ERB.new(@template.to_s).result(binding)
+  rescue Exception => e # rubocop:disable Lint/RescueException
+    raise StandardError, e.message if e.is_a? SyntaxError
+
+    raise
   end
 
   # d - data of object
@@ -47,6 +54,7 @@ examples how to use
     # aliases
     map = {
       'article.body' => 'article.body_as_text_with_quote.text2html',
+      'ticket.tags'  => 'ticket.tag_list',
     }
     if map[key]
       key = map[key]
@@ -105,7 +113,7 @@ examples how to use
       end
 
       arguments = nil
-      if /\A(?<method_id>[^(]+)\((?<parameter>[^)]+)\)\z/ =~ method
+      if %r{\A(?<method_id>[^(]+)\((?<parameter>[^)]+)\)\z} =~ method
 
         if parameter != parameter.to_i.to_s
           value = "\#{#{object_name}.#{object_methods_s} / invalid parameter: #{parameter}}"
@@ -176,6 +184,7 @@ examples how to use
   end
 
   def escaping(key, escape)
+    return escaping(key.join(', '), escape) if key.respond_to?(:join)
     return key if escape == false
     return key if escape.nil? && !@escape
 
@@ -183,7 +192,7 @@ examples how to use
   end
 
   def data_key_valid?(key)
-    return false if key =~ /`|\.(|\s*)(save|destroy|delete|remove|drop|update|create|new|all|where|find|raise|dump|rollback|freeze)/i && key !~ /(update|create)d_(at|by)/i
+    return false if key =~ %r{`|\.(|\s*)(save|destroy|delete|remove|drop|update|create|new|all|where|find|raise|dump|rollback|freeze)}i && key !~ %r{(update|create)d_(at|by)}i
 
     true
   end

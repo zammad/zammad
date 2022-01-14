@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 
 RSpec.describe 'Twilio SMS', type: :request do
@@ -94,7 +96,7 @@ RSpec.describe 'Twilio SMS', type: :request do
       expect(ticket.state.name).to eq('new')
       expect(article.id).to eq(Ticket::Article.last.id)
 
-      # new ticket need to be create
+      # new ticket needs to be created
       ticket.state = Ticket::State.find_by(name: 'closed')
       ticket.save!
 
@@ -159,7 +161,7 @@ RSpec.describe 'Twilio SMS', type: :request do
       expect(article.preferences[:delivery_retry]).to be_nil
       expect(article.preferences[:delivery_status]).to be_nil
 
-      Observer::Transaction.commit
+      TransactionDispatcher.commit
       Scheduler.worker(true)
 
       article = Ticket::Article.find(json_response['id'])
@@ -175,7 +177,7 @@ RSpec.describe 'Twilio SMS', type: :request do
         email:  'me@example.com',
         mobile: '01710000000',
       )
-      Observer::Transaction.commit
+      TransactionDispatcher.commit
       Scheduler.worker(true)
 
       UserInfo.current_user_id = 1
@@ -197,6 +199,28 @@ RSpec.describe 'Twilio SMS', type: :request do
       expect(1).to eq(xml_response.elements.count)
 
       expect(customer.id).to eq(User.last.id)
+    end
+
+    it 'does basic call when ticket has a custom attribute', db_strategy: :reset do
+      create(:object_manager_attribute_text, screens: attributes_for(:required_screen))
+      ObjectManager::Attribute.migration_execute
+
+      UserInfo.current_user_id = 1
+      create(
+        :channel,
+        area:     'Sms::Account',
+        options:  {
+          adapter:       'sms/twilio',
+          webhook_token: 'f409460e50f76d331fdac8ba7b7963b6',
+          account_id:    '111',
+          token:         '223',
+          sender:        '333',
+        },
+        group_id: Group.first.id,
+      )
+
+      post '/api/v1/sms_webhook/f409460e50f76d331fdac8ba7b7963b6', params: read_message('inbound_sms1'), as: :json
+      expect(response).to have_http_status(:ok)
     end
 
     def read_message(file)

@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'test_helper'
 
 class NotificationFactoryRendererTest < ActiveSupport::TestCase
@@ -244,7 +246,7 @@ class NotificationFactoryRendererTest < ActiveSupport::TestCase
 
   test 'translation' do
 
-    #template = "<%= t 'new' %>"
+    # template = "<%= t 'new' %>"
     template = "\#{t('new')}"
     result = described_class.new(
       objects:  {

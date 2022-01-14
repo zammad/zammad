@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 module Channel::Filter::FollowUpPossibleCheck
 
@@ -8,7 +8,7 @@ module Channel::Filter::FollowUpPossibleCheck
 
     ticket = Ticket.lookup(id: ticket_id)
     return true if !ticket
-    return true if !ticket.state.state_type.name.match?(/^(closed|merged|removed)/i)
+    return true if !ticket.state.state_type.name.match?(%r{^(closed|merged|removed)}i)
 
     # in case of closed tickets, remove follow-up information
     case ticket.group.follow_up_possible

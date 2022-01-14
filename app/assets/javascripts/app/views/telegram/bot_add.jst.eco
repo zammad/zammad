@@ -6,7 +6,7 @@
   <h2><%- @T('Enter your %s App Keys', 'Telegram') %></h2>
   <div class="input form-group">
     <div class="formGroup-label">
-      <label for="api_token"><%- @T('%s Api Token', 'Telegram') %> <span>*</span></label>
+      <label for="api_token"><%- @T('%s API Token', 'Telegram') %> <span>*</span></label>
     </div>
     <div class="controls">
       <input id="api_token" type="text" name="api_token" value="" class="form-control" required autocomplete="off">
@@ -31,7 +31,7 @@
   </div>
   <div class="input form-group">
     <div class="formGroup-label">
-      <label for=""><%- @T('Choose the group in which messages will get added to.') %> <span>*</span></label>
+      <label for=""><%- @T('Choose the group to which messages will get added.') %> <span>*</span></label>
     </div>
     <div class="controls">
       <div class="js-messagesGroup"></div>

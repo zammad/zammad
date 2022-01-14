@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class LongPollingController < ApplicationController
   skip_before_action :session_update # prevent race conditions
@@ -56,7 +56,7 @@ class LongPollingController < ApplicationController
 
     # check client id
     client_id = client_id_verify
-    raise Exceptions::UnprocessableEntity, 'Invalid client_id receive!' if !client_id
+    raise Exceptions::UnprocessableEntity, __('Invalid client_id received!') if !client_id
 
     # check queue to send
     begin
@@ -64,7 +64,7 @@ class LongPollingController < ApplicationController
       4.times do
         sleep 0.25
       end
-      #sleep 1
+      # sleep 1
       Sessions.touch(client_id) # rubocop:disable Rails/SkipsModelValidations
 
       # set max loop time to 24 sec. because of 30 sec. timeout of mod_proxy
@@ -73,7 +73,7 @@ class LongPollingController < ApplicationController
         count = 12
       end
       loop do
-        count = count - 1
+        count -= 1
         queue = Sessions.queue(client_id)
         if queue && queue[0]
           logger.debug { "send #{queue.inspect} to #{client_id}" }
@@ -83,21 +83,21 @@ class LongPollingController < ApplicationController
         8.times do
           sleep 0.25
         end
-        #sleep 2
+        # sleep 2
         if count.zero?
           render json: { event: 'pong' }
           return
         end
       end
     rescue
-      raise Exceptions::UnprocessableEntity, 'Invalid client_id in receive loop!'
+      raise Exceptions::UnprocessableEntity, __('Invalid client_id in receive loop!')
     end
   end
 
   private
 
   def client_id_gen
-    rand(9_999_999_999).to_s
+    SecureRandom.uuid
   end
 
   def client_id_verify

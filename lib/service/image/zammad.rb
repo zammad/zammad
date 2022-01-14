@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Service::Image::Zammad
 
@@ -12,7 +12,7 @@ class Service::Image::Zammad
 
     email.downcase!
 
-    return if email.match?(/@example.com$/)
+    return if email.match?(%r{@example.com$})
 
     # fetch image
     response = UserAgent.post(
@@ -24,6 +24,7 @@ class Service::Image::Zammad
         open_timeout:  OPEN_TIMEOUT,
         read_timeout:  READ_TIMEOUT,
         total_timeout: TOTAL_TIMEOUT,
+        verify_ssl:    true,
       },
     )
     if !response.success?
@@ -42,7 +43,7 @@ class Service::Image::Zammad
     raise Exceptions::UnprocessableEntity, 'no domain given' if domain.blank?
 
     # strip, just use domain name
-    domain = domain.sub(/^.+?@(.+?)$/, '\1')
+    domain = domain.sub(%r{^.+?@(.+?)$}, '\1')
 
     domain.downcase!
     return if domain == 'example.com'
@@ -57,6 +58,7 @@ class Service::Image::Zammad
         open_timeout:  OPEN_TIMEOUT,
         read_timeout:  READ_TIMEOUT,
         total_timeout: TOTAL_TIMEOUT,
+        verify_ssl:    true,
       },
     )
     if !response.success?

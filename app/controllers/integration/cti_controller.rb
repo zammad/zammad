@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Integration::CtiController < ApplicationController
   skip_before_action :verify_csrf_token
@@ -30,7 +30,7 @@ class Integration::CtiController < ApplicationController
     end
 
     if result[:action] == 'invalid_direction'
-      response_error('Invalid direction!')
+      response_error(__('Invalid direction!'))
       return true
     end
 
@@ -41,7 +41,7 @@ class Integration::CtiController < ApplicationController
 
   def check_token
     if Setting.get('cti_token') != params[:token]
-      response_unauthorized('Invalid token, please contact your admin!')
+      response_unauthorized(__('Invalid token, please contact your admin!'))
       return
     end
 
@@ -52,11 +52,11 @@ class Integration::CtiController < ApplicationController
     http_log_config facility: 'cti'
 
     if !Setting.get('cti_integration')
-      response_error('Feature is disable, please contact your admin to enable it!')
+      response_error(__('Feature is disabled, please contact your administrator!'))
       return
     end
     if config_integration.blank? || config_integration[:inbound].blank? || config_integration[:outbound].blank?
-      response_error('Feature not configured, please contact your admin!')
+      response_error(__('Feature not configured, please contact your admin!'))
       return
     end
 

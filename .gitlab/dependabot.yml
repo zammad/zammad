@@ -1,0 +1,17 @@
+version: 2
+updates:
+  - package-ecosystem: "bundler"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    # Only create pull requests to update lockfiles. Ignore any new versions that would require package manifest changes.
+    versioning-strategy: lockfile-only
+    open-pull-requests-limit: 5
+    pull-request-branch-name:
+      separator: "/"
+    commit-message:
+      prefix: "Maintenance:"
+    assignees:
+      - mg
+    reviewers:
+      - mg

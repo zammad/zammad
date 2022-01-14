@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 
 RSpec.describe Ticket::Number::Increment do
@@ -24,12 +26,12 @@ RSpec.describe Ticket::Number::Increment do
           before { Setting.set('system_id', 123_456) }
 
           it 'still adheres to numbering pattern (and does not require padding zeroes)' do
-            expect(number).to match(/^#{system_id}#{ticket_count}$/)
+            expect(number).to match(%r{^#{system_id}#{ticket_count}$})
           end
         end
 
         it 'returns a string following the pattern system_id + padding zeroes + ticket_count' do
-          expect(number).to match(/^#{system_id}0*#{ticket_count}$/)
+          expect(number).to match(%r{^#{system_id}0*#{ticket_count}$})
         end
 
         context '/ checksum: false (default)' do
@@ -41,14 +43,14 @@ RSpec.describe Ticket::Number::Increment do
           end
 
           it 'returns a string following the pattern system_id + padding zeroes + ticket_counter' do
-            expect(number).to match(/^#{system_id}0*#{ticket_count}$/)
+            expect(number).to match(%r{^#{system_id}0*#{ticket_count}$})
           end
 
           context 'when "system_id" setting exceeds :min_size' do
             before { Setting.set('system_id', 123_456) }
 
             it 'still adheres to numbering pattern (and does not require padding zeroes)' do
-              expect(number).to match(/^#{system_id}#{ticket_count}$/)
+              expect(number).to match(%r{^#{system_id}#{ticket_count}$})
             end
           end
         end
@@ -63,14 +65,14 @@ RSpec.describe Ticket::Number::Increment do
           end
 
           it 'returns a string following the pattern system_id + padding zeroes + ticket_counter + checksum' do
-            expect(number).to match(/^#{system_id}0*#{ticket_count}\d$/)
+            expect(number).to match(%r{^#{system_id}0*#{ticket_count}\d$})
           end
 
           context 'when "system_id" setting exceeds :min_size' do
             before { Setting.set('system_id', 123_456) }
 
             it 'still adheres to numbering pattern (and does not require padding zeroes)' do
-              expect(number).to match(/^#{system_id}#{ticket_count}\d$/)
+              expect(number).to match(%r{^#{system_id}#{ticket_count}\d$})
             end
           end
         end
@@ -80,7 +82,11 @@ RSpec.describe Ticket::Number::Increment do
 
   describe '.check' do
     context 'for tickets with increment-style numbers' do
-      let(:ticket) { create(:ticket, number: ticket_number) }
+      let(:ticket) do
+        # There might be conflicts with the hardcoded ticket number
+        #   and the one from the welcome ticket, so use find_by || create.
+        Ticket.find_by(number: ticket_number) || create(:ticket, number: ticket_number)
+      end
       let(:ticket_number) { "#{Setting.get('system_id')}0001" }
       let(:check_query) { ticket.subject_build(ticket.title) }
 

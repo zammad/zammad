@@ -1,0 +1,143 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://<IMPORT_FRESHDESK_ENDPOINT_SUBDOMAIN>.freshdesk.com/api/v2/contacts
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Zammad User Agent
+      Host:
+      - "<IMPORT_FRESHDESK_ENDPOINT_SUBDOMAIN>.freshdesk.com"
+  response:
+    status:
+      code: 401
+      message: Unauthorized
+    headers:
+      Date:
+      - Thu, 08 Jul 2021 14:45:03 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 401 Unauthorized
+      X-Request-Id:
+      - 16535d28-0fa9-4bbd-81a5-7734a134dbe6
+      X-Freshdesk-Api-Version:
+      - latest=v2; requested=v2
+      X-Rack-Cache:
+      - miss
+      Cache-Control:
+      - no-cache
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      X-Content-Type-Options:
+      - nosniff
+      Set-Cookie:
+      - _x_w=5_2; path=/; HttpOnly; secure
+      X-Fw-Ratelimiting-Managed:
+      - 'true'
+      X-Ratelimit-Total:
+      - '40'
+      X-Ratelimit-Remaining:
+      - '36'
+      X-Ratelimit-Used-Currentrequest:
+      - '1'
+      X-Envoy-Upstream-Service-Time:
+      - '226'
+      X-Trace-Id:
+      - 00-cfd704f35e647fd26907025f0d0227db-0078eeaf66759491-00
+      Server:
+      - fwe
+    body:
+      encoding: UTF-8
+      string: '{"code":"invalid_credentials","message":"You have to be logged in to
+        perform this action."}'
+  recorded_at: Thu, 08 Jul 2021 14:45:03 GMT
+- request:
+    method: get
+    uri: https://<IMPORT_FRESHDESK_ENDPOINT_SUBDOMAIN>.freshdesk.com/api/v2/agents/me
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - "<IMPORT_FRESHDESK_ENDPOINT_SUBDOMAIN>.freshdesk.com"
+      Authorization:
+      - Basic <IMPORT_FRESHDESK_ENDPOINT_BASIC_AUTH>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 08 Jul 2021 14:45:04 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Pragma:
+      - no-cache
+      X-Request-Id:
+      - 3613fc6e-8364-44f1-b5ae-e4b92c4f17b6
+      X-Freshdesk-Api-Version:
+      - latest=v2; requested=v2
+      X-Rack-Cache:
+      - miss
+      Cache-Control:
+      - must-revalidate, no-cache, no-store, private, max-age=0
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      X-Content-Type-Options:
+      - nosniff
+      Expires:
+      - Wed, 13 Oct 2010 00:00:00 UTC
+      Set-Cookie:
+      - _helpkit_session=BAh7B0kiD3Nlc3Npb25faWQGOgZFVEkiJTNmMDYxMzM4YmI1MGE3NjdhMWM5YjMxODJjMDJiYjQ1BjsAVEkiEF9jc3JmX3Rva2VuBjsARkkiMU9rVTAybEdLVmVCc2ZXaGpERThtNHYyeERURHVrRllZYnRJT3ZkQnN4MHc9BjsARg%3D%3D--362eaa4142cd23acdd978a5d43af16884701199e;
+        path=/; HttpOnly; secure
+      - _x_w=5_2; path=/; HttpOnly; secure
+      X-Fw-Ratelimiting-Managed:
+      - 'true'
+      X-Ratelimit-Total:
+      - '100'
+      X-Ratelimit-Remaining:
+      - '90'
+      X-Ratelimit-Used-Currentrequest:
+      - '1'
+      X-Envoy-Upstream-Service-Time:
+      - '71'
+      X-Trace-Id:
+      - 00-0b4df5d88358f783274f4e709f735c1b-f919d65b8eb09b19-00
+      Server:
+      - fwe
+    body:
+      encoding: ASCII-8BIT
+      string: '{"available":false,"occasional":false,"id":80014400475,"ticket_scope":1,"signature":null,"group_ids":[],"role_ids":[80000198826],"skill_ids":[],"available_since":null,"contact":{"active":true,"email":"info@<IMPORT_FRESHDESK_ENDPOINT_SUBDOMAIN>.org","job_title":null,"language":"en","mobile":null,"name":"Thorsten
+        Eckel","phone":null,"time_zone":"Eastern Time (US & Canada)","created_at":"2021-04-09T13:23:58Z","updated_at":"2021-04-09T13:31:00Z","last_login_at":"2021-06-07T05:38:22Z"},"created_at":"2021-04-09T13:23:58Z","updated_at":"2021-07-08T07:08:47Z","type":"support_agent"}'
+  recorded_at: Thu, 08 Jul 2021 14:45:04 GMT
+recorded_with: VCR 6.0.0

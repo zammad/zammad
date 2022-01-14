@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Organization < ApplicationModel
   include HasActivityStreamLog
@@ -8,12 +8,14 @@ class Organization < ApplicationModel
   include HasSearchIndexBackend
   include CanCsvImport
   include ChecksHtmlSanitized
-  include HasObjectManagerAttributesValidation
+  include HasObjectManagerAttributes
   include HasTaskbars
 
   include Organization::Assets
   include Organization::Search
   include Organization::SearchIndex
+
+  include HasTransactionDispatcher
 
   has_many :members, class_name: 'User'
   has_many :tickets, class_name: 'Ticket'
@@ -22,7 +24,9 @@ class Organization < ApplicationModel
 
   before_create :domain_cleanup
   before_update :domain_cleanup
-  before_destroy :delete_associations
+
+  # workflow checks should run after before_create and before_update callbacks
+  include ChecksCoreWorkflow
 
   validates :name,   presence: true
   validates :domain, presence: { message: 'required when Domain Based Assignment is enabled' }, if: :domain_assignment
@@ -33,13 +37,22 @@ class Organization < ApplicationModel
 
   sanitized_html :note
 
+  def destroy(associations: false)
+    if associations
+      delete_associations
+    else
+      unset_associations
+    end
+    super()
+  end
+
   private
 
   def domain_cleanup
     return true if domain.blank?
 
-    domain.gsub!(/@/, '')
-    domain.gsub!(/\s*/, '')
+    domain.gsub!(%r{@}, '')
+    domain.gsub!(%r{\s*}, '')
     domain.strip!
     domain.downcase!
     true
@@ -48,5 +61,14 @@ class Organization < ApplicationModel
   def delete_associations
     User.where(organization_id: id).find_each(&:destroy)
     Ticket.where(organization_id: id).find_each(&:destroy)
+  end
+
+  def unset_associations
+    User.where(organization_id: id).find_each do |user|
+      user.update(organization_id: nil)
+    end
+    Ticket.where(organization_id: id).find_each do |ticket|
+      ticket.update(organization_id: nil)
+    end
   end
 end

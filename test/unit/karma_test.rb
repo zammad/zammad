@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'test_helper'
 
 class KarmaTest < ActiveSupport::TestCase
@@ -71,7 +73,7 @@ class KarmaTest < ActiveSupport::TestCase
     assert(ticket1)
 
     # execute object transaction
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     assert_equal(10, Karma.score_by_user(agent1))
@@ -93,7 +95,7 @@ class KarmaTest < ActiveSupport::TestCase
     ticket1.save!
 
     # execute object transaction
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     assert_equal(10 + 2, Karma.score_by_user(agent1))
@@ -115,7 +117,7 @@ class KarmaTest < ActiveSupport::TestCase
     ticket1.save!
 
     # execute object transaction
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     assert_equal(10 + 2, Karma.score_by_user(agent1))
@@ -129,7 +131,7 @@ class KarmaTest < ActiveSupport::TestCase
     ticket1.save!
 
     # execute object transaction
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     assert_equal(10 + 2, Karma.score_by_user(agent1))
@@ -156,7 +158,7 @@ class KarmaTest < ActiveSupport::TestCase
     )
 
     # execute object transaction
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     assert_equal(10 + 2, Karma.score_by_user(agent1))
@@ -164,14 +166,14 @@ class KarmaTest < ActiveSupport::TestCase
     assert_equal(0, Karma.score_by_user(customer1))
 
     # execute object transaction
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     ticket1.state = Ticket::State.lookup(name: 'closed')
     ticket1.save!
 
     # execute object transaction
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     assert_equal(10 + 2, Karma.score_by_user(agent1))
@@ -195,7 +197,7 @@ class KarmaTest < ActiveSupport::TestCase
     )
 
     # execute object transaction
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     assert_equal(10 + 2, Karma.score_by_user(agent1))
@@ -219,7 +221,7 @@ class KarmaTest < ActiveSupport::TestCase
     )
 
     # execute object transaction
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     assert_equal(10 + 2 + 25, Karma.score_by_user(agent1))
@@ -243,7 +245,7 @@ class KarmaTest < ActiveSupport::TestCase
     )
 
     # execute object transaction
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     assert_equal(10 + 2 + 25, Karma.score_by_user(agent1))
@@ -267,7 +269,7 @@ class KarmaTest < ActiveSupport::TestCase
     )
 
     # execute object transaction
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     assert_equal(10 + 2 + 25, Karma.score_by_user(agent1))
@@ -291,7 +293,7 @@ class KarmaTest < ActiveSupport::TestCase
     )
 
     # execute object transaction
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     assert_equal(10 + 2 + 25, Karma.score_by_user(agent1))
@@ -315,7 +317,7 @@ class KarmaTest < ActiveSupport::TestCase
     )
 
     # execute object transaction
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     assert_equal(10 + 2 + 25, Karma.score_by_user(agent1))
@@ -323,11 +325,11 @@ class KarmaTest < ActiveSupport::TestCase
     assert_equal(0, Karma.score_by_user(customer1))
 
     ticket1.tag_add('Tag1', agent1.id)
-    #travel 5.seconds
+    # travel 5.seconds
     ticket1.tag_add('Tag2', agent1.id)
 
     # execute object transaction
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     assert_equal(10 + 2 + 25 + 4, Karma.score_by_user(agent1))
@@ -338,7 +340,7 @@ class KarmaTest < ActiveSupport::TestCase
     ticket1.tag_add('Tag4', agent2.id)
 
     # execute object transaction
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     assert_equal(10 + 2 + 25 + 4, Karma.score_by_user(agent1))
@@ -375,7 +377,7 @@ class KarmaTest < ActiveSupport::TestCase
     assert(ticket2)
 
     # execute object transaction
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     assert_equal(10 + 2 + 25 + 4 + 10, Karma.score_by_user(agent1))
@@ -460,11 +462,11 @@ class KarmaTest < ActiveSupport::TestCase
     ticket2.state = Ticket::State.lookup(name: 'open')
     ticket2.save!
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
-    #Scheduler.worker(true)
-    #Ticket::Escalation.rebuild_all
+    # Scheduler.worker(true)
+    # Ticket::Escalation.rebuild_all
     Ticket.process_escalation
 
     assert_equal(10 + 2 + 25 + 4 + 10 - 5 - 5, Karma.score_by_user(agent1))

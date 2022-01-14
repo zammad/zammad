@@ -20,6 +20,14 @@
       <input id="client_secret" type="text" name="client_secret" value="<% if @external_credential && @external_credential.credentials: %><%= @external_credential.credentials.client_secret %><% end %>" class="form-control" required autocomplete="off" >
     </div>
   </div>
+  <div class="input form-group">
+    <div class="formGroup-label">
+      <label for="client_tenant">Tenant UUID/Name</label>
+    </div>
+    <div class="controls">
+      <input id="client_tenant" type="text" name="client_tenant" value="<%= @external_credential?.credentials?.client_tenant %>" class="form-control" required autocomplete="off" placeholder="common">
+    </div>
+  </div>
   <h2><%- @T('Your callback URL') %></h2>
   <div class="input form-group">
     <div class="controls">

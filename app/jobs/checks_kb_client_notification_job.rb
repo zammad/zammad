@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 class ChecksKbClientNotificationJob < ApplicationJob
   include HasActiveJobLock
 
@@ -51,10 +53,8 @@ class ChecksKbClientNotificationJob < ApplicationJob
   def users_for(permission_suffix)
     Sessions
       .sessions
-      .map { |client_id| Sessions.get(client_id)&.dig(:user, 'id') }
-      .compact
-      .map { |user_id| User.find_by(id: user_id) }
-      .compact
+      .filter_map { |client_id| Sessions.get(client_id)&.dig(:user, 'id') }
+      .filter_map { |user_id| User.find_by(id: user_id) }
       .select { |user| user.permissions? "knowledge_base.#{permission_suffix}" }
   end
 

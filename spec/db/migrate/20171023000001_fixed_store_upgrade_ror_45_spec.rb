@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 
 # Rails 5.0 has changed to only store and read ActiveSupport::HashWithIndifferentAccess from stores

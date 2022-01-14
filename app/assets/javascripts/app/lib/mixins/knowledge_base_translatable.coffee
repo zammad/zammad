@@ -45,6 +45,7 @@ InstanceMethods =
     if @ instanceof App.KnowledgeBaseAnswer
       attrs.icon  = 'knowledge-base-answer'
       attrs.state = @can_be_published_state()
+      attrs.tags  = @tags
 
       if options.isEditor
         attrs.editorOnly = !@is_internally_published(kb_locale)

@@ -1,24 +1,26 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 
 RSpec.describe 'Ticket Escalation', type: :request do
   let(:sla_first_response) { 1.hour }
-  let(:sla_update)         { 3.hours }
-  let(:sla_close)          { 4.hours }
+  let(:sla_response)         { 3.hours }
+  let(:sla_close) { 4.hours }
 
-  let!(:mail_group) { create(:group, email_address: create(:email_address) ) }
+  let!(:mail_group) { create(:group, email_address: create(:email_address)) }
 
   let(:calendar) { create(:calendar, :'24/7') }
   let(:sla) do
     create(:sla,
            calendar:            calendar,
            first_response_time: sla_first_response / 1.minute,
-           update_time:         sla_update / 1.minute,
+           response_time:       sla_response / 1.minute,
            solution_time:       sla_close / 1.minute)
   end
 
   define :json_equal_date do
     match do
-      actual&.sub(/.\d\d\dZ$/, 'Z') == expected&.iso8601
+      actual&.sub(%r{.\d\d\dZ$}, 'Z') == expected&.iso8601
     end
   end
 

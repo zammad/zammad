@@ -10,7 +10,7 @@ class App.ControllerGenericNew extends App.ControllerModal
     @controller = new App.ControllerForm(
       model:     App[ @genericObject ]
       params:    @item
-      screen:    @screen || 'edit'
+      screen:    @screen || 'create'
       autofocus: true
       handlers: @handlers
     )
@@ -28,7 +28,9 @@ class App.ControllerGenericNew extends App.ControllerModal
       return false
 
     # validate
-    errors = object.validate()
+    errors = object.validate(
+      controllerForm: @controller
+    )
     if errors
       @log 'error', errors
       @formValidate( form: e.target, errors: errors )
@@ -49,5 +51,5 @@ class App.ControllerGenericNew extends App.ControllerModal
       fail: (settings, details) ->
         ui.log 'errors', details
         ui.formEnable(e)
-        ui.controller.showAlert(details.error_human || details.error || 'Unable to create object!')
+        ui.controller.showAlert(details.error_human || details.error || __('Unable to create object!'))
     )

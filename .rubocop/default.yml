@@ -2,22 +2,31 @@
 # https://github.com/rubocop-hq/rubocop/blob/master/config/default.yml
 
 require:
+  - rubocop-faker
   - rubocop-performance
   - rubocop-rails
   - rubocop-rspec
+  - rubocop-inflector
+  - ../config/initializers/inflections.rb
   - ./rubocop_zammad.rb
 
 inherit_from:
   - todo.yml
   - todo.rspec.yml
 
+inherit_mode:
+  merge:
+    - Include
+
 AllCops:
   NewCops: enable
   DisplayCopNames: true
+  Include:
+    - '.gitlab/**/*.rb'
+    - '.github/**/*.rb'
+    - '.rubocop/**/*.rb'
   Exclude:
-    - 'bin/rails'
-    - 'bin/rake'
-    - 'bin/spring'
+    - 'bin/*'
     - 'db/schema.rb'
     - 'vendor/**/*'
     - 'node_modules/**/*'
@@ -74,28 +83,6 @@ Style/RescueStandardError:
   Enabled: true
   EnforcedStyle: implicit
 
-Layout/SpaceInsideParens:
-  Description: 'No spaces after ( or before ).'
-  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#no-spaces-braces'
-  Enabled: false
-
-Layout/SpaceAfterMethodName:
-  Description: >-
-                 Do not put a space between a method name and the opening
-                 parenthesis in a method definition.
-  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#parens-no-spaces'
-  Enabled: false
-
-Layout/LeadingCommentSpace:
-  Description: 'Comments should start with a space.'
-  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#hash-space'
-  Enabled: false
-
-Style/MethodCallWithoutArgsParentheses:
-  Description: 'Do not use parentheses for method calls with no arguments.'
-  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#no-args-no-parens'
-  Enabled: false
-
 Layout/SpaceInsideReferenceBrackets:
   Description: 'Checks the spacing inside referential brackets.'
   Enabled: false
@@ -106,12 +93,6 @@ Layout/SpaceInsideArrayLiteralBrackets:
 
 Style/DefWithParentheses:
   Description: 'Use def with parentheses when there are arguments.'
-  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#method-parens'
-  Enabled: false
-Style/MethodDefParentheses:
-  Description: >-
-                 Checks if the method definitions have or don't have
-                 parentheses.
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#method-parens'
   Enabled: false
 
@@ -170,22 +151,6 @@ Style/BlockComments:
 Style/PerlBackrefs:
   Description: 'Avoid Perl-style regex back references.'
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#no-perl-regexp-last-matchers'
-  Enabled: false
-
-Style/HashEachMethods:
-  Enabled: true
-
-Style/HashTransformKeys:
-  Enabled: true
-
-Style/HashTransformValues:
-  Enabled: true
-
-Style/SelfAssignment:
-  Description: >-
-                 Checks for places where self-assignment shorthand should have
-                 been used.
-  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#self-assignment'
   Enabled: false
 
 Rails/ApplicationRecord:
@@ -273,6 +238,25 @@ Style/StringConcatenation:
   Exclude:
     - "config/routes/**/*"
 
+Style/RegexpLiteral:
+  Description: 'This cop enforces using // or %r around regular expressions.'
+  EnforcedStyle: percent_r
+
+Style/RedundantBegin:
+  Description: 'This cop checks for redundant `begin` blocks.'
+  Enabled: false
+
+Rails/EnvironmentVariableAccess:
+  Description: 'This cop looks for direct access to environment variables through the ENV variable within the application code.'
+  Enabled: true
+  AllowReads: true
+
+Rails/Output:
+  Exclude:
+    - "lib/tasks/**/*"
+  Include:
+    - "**/*_spec.rb"
+
 # RSpec tests
 Style/NumericPredicate:
   Description: >-
@@ -309,6 +293,13 @@ Layout/MultilineMethodCallIndentation:
 Lint/UnusedMethodArgument:
   AllowUnusedKeywordArguments: true
 
+RSpec/NestedGroups:
+  Max: 6
+
+RSpec/Rails/AvoidSetupHook:
+  Exclude:
+    - "test/**/*"
+
 Zammad/PreferNegatedIfOverUnless:
   Exclude:
     - 'bin/rspec'
@@ -322,3 +313,26 @@ Zammad/ExistsResetColumnInformation:
   Include:
     - "db/migrate/*.rb"
     - "**/db/addon/**/*.rb"
+  Exclude:
+    - 'db/migrate/201*_*.rb'
+    - 'db/migrate/2020*_*.rb'
+
+Zammad/DetectTranslatableString:
+  Enabled: true
+  Include:
+    - "app/**/*.rb"
+    - "db/**/*.rb"
+    - "lib/**/*.rb"
+  Exclude:
+    - "db/migrate/**/*.rb"
+    - "db/addon/**/*.rb"
+    - "lib/generators/**/*.rb"
+    - "lib/sequencer/**/*.rb"
+    - "lib/import/**/*.rb"
+    - "lib/tasks/**/*.rb"
+
+Zammad/ExistsDbStrategy:
+  Include:
+    - "spec/**/*.rb"
+  Exclude:
+    - spec/support/capybara/common_actions.rb

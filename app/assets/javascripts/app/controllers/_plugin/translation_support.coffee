@@ -7,8 +7,8 @@ class TranslationSupport extends App.Controller
       # only show if system is already up and running
       return if !@Config.get('system_init_done')
 
-      # to not translate en
-      return if !App.i18n.notTranslatedFeatureEnabled(App.i18n.get())
+      # do not show for English locales
+      return if App.i18n.get().substr(0,2) is 'en'
 
       # only show for admins
       return if !@permissionCheck('admin.translation')
@@ -27,17 +27,16 @@ class TranslationSupport extends App.Controller
     @controllerBind('i18n:language:change', =>
       @delay(check, 2500, 'translation_support')
     )
-    @controllerBind('auth:login', =>
+    if App.Session.get() isnt undefined
       @delay(check, 2500, 'translation_support')
-    )
 
-App.Config.set( 'translaton_support', TranslationSupport, 'Plugins' )
+App.Config.set( 'translation_support', TranslationSupport, 'Plugins' )
 
 class Modal extends App.ControllerModal
   buttonClose: true
-  buttonCancel: 'No Thanks!'
-  buttonSubmit: 'Complete translations'
-  head: 'Help to improve Zammad!'
+  buttonCancel: __('No Thanks!')
+  buttonSubmit: __('Complete translations')
+  head: __('Help to improve Zammad!')
   shown: false
 
   constructor: ->
@@ -46,12 +45,8 @@ class Modal extends App.ControllerModal
     @render()
 
   content: =>
-    better = false
-    if @percent > 80
-      better = true
     App.view('translation/support')(
       percent: @percent
-      better: better
     )
 
   onCancel: =>

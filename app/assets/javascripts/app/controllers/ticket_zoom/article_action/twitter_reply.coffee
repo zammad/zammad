@@ -4,7 +4,7 @@ class TwitterReply
 
     if article.type.name is 'twitter status'
       actions.push {
-        name: 'reply'
+        name: __('reply')
         type: 'twitterStatusReply'
         icon: 'reply'
         href: '#'
@@ -172,11 +172,11 @@ class TwitterReply
       # check if recipient exists
       if _.isEmpty(params.to)
         new App.ControllerModal(
-          head: 'Text missing'
-          buttonCancel: 'Cancel'
+          head: __('Text missing')
+          buttonCancel: __('Cancel')
           buttonCancelClass: 'btn--danger'
           buttonSubmit: false
-          message: 'Need recipient in "To".'
+          message: __('Need recipient in "To".')
           shown: true
           small: true
           container: ui.el.closest('.content')

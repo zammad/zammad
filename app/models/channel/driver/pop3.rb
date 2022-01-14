@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'net/pop'
 
@@ -63,7 +63,7 @@ returns
     Rails.logger.info "fetching pop3 (#{options[:host]}/#{options[:user]} port=#{port},ssl=#{ssl})"
 
     @pop = ::Net::POP3.new(options[:host], port)
-    #@pop.set_debug_output $stderr
+    # @pop.set_debug_output $stderr
 
     # on check, reduce open_timeout to have faster probing
     @pop.open_timeout = 16
@@ -91,7 +91,7 @@ returns
         next if !mail
 
         # check how many content messages we have, for notice used
-        if !mail.match?(/(X-Zammad-Ignore: true|X-Zammad-Verify: true)/)
+        if !mail.match?(%r{(X-Zammad-Ignore: true|X-Zammad-Verify: true)})
           content_messages += 1
           break if content_max_check < content_messages
         end
@@ -117,7 +117,7 @@ returns
         next if !mail
 
         # check if verify message exists
-        next if !mail.match?(/#{verify_string}/)
+        next if !mail.match?(%r{#{verify_string}})
 
         Rails.logger.info " - verify email #{verify_string} found"
         m.delete
@@ -149,7 +149,7 @@ returns
       next if !mail
 
       # ignore verify messages
-      if mail.match?(/(X-Zammad-Ignore: true|X-Zammad-Verify: true)/) && mail =~ /X-Zammad-Verify-Time:\s(.+?)\s/
+      if mail.match?(%r{(X-Zammad-Ignore: true|X-Zammad-Verify: true)}) && mail =~ %r{X-Zammad-Verify-Time:\s(.+?)\s}
         begin
           verify_time = Time.zone.parse($1)
           if verify_time > Time.zone.now - 30.minutes

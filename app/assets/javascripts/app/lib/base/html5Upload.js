@@ -57,6 +57,10 @@
                 console.log('Event: upload onCompleted, data = ' + data);
                 file = null;
                 (self.eventHandlers.onCompleted || noop)(data);
+            },
+            onError: function (message) {
+                console.log('Event: upload error, message: ' + message);
+                (self.eventHandlers.onError || noop)(message);
             }
         };
     }
@@ -99,9 +103,16 @@
                 };
                 onDrop = function (e) {
                     inCounter = 0
-                    onDragEnter(e);
+                    e.preventDefault()
+                    e.stopPropagation()
                     hideDropZone(dropContainer)
                     manager.processFiles(e.dataTransfer.files)
+                };
+                onDragEnd = function (e) {
+                    inCounter = 0
+                    e.preventDefault()
+                    e.stopPropagation()
+                    hideDropZone(dropContainer)
                 };
                 showDropZone = function(dropContainer) {
                   $(dropContainer).trigger('html5Upload.dropZone.show')
@@ -122,6 +133,7 @@
                 manager.on(dropContainer, 'dragleave', onDragLeave)
                 manager.on(dropContainer, 'dragover', onDragOver)
                 manager.on(dropContainer, 'dragenter', onDragEnter)
+                manager.on(dropContainer, 'dragend', onDragEnd)
                 manager.on(dropContainer, 'drop', onDrop)
             }
 
@@ -226,19 +238,24 @@
 
             // Triggered when upload is completed:
             xhr.onload = function (event) {
-                console.log('Upload completed: ' + fileName);
-
                 // Reduce number of active uploads:
                 manager.activeUploads -= 1;
 
-                upload.events.onCompleted(event.target.responseText);
+                // call the error callback when the status is not ok
+                if (xhr.status !== 200){
+                  console.log('Upload failed: ' + fileName);
+                  upload.events.onError(event.target.statusText);
+                } else {
+                  console.log('Upload completed: ' + fileName);
+                  upload.events.onCompleted(event.target.responseText);
+                }
 
                 // Check if there are any uploads left in a queue:
                 if (manager.uploadsQueue.length) {
                     manager.ajaxUpload(manager.uploadsQueue.shift());
                 }
             };
-            xhr.abort = function (event) {
+            xhr.onabort = function (event) {
                 console.log('Upload abort');
 
                 // Reduce number of active uploads:
@@ -252,6 +269,7 @@
             // Triggered when upload fails:
             xhr.onerror = function () {
                 console.log('Upload failed: ', upload.fileName);
+                upload.events.onError('Upload failed: ' + upload.fileName);
             };
 
             // Append additional data if provided:

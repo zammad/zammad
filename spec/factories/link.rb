@@ -1,9 +1,11 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 FactoryBot.define do
   factory :link do
     transient do
       link_type { 'normal' }
-      link_object_source { 'Ticket' }
-      link_object_target { 'Ticket' }
+      link_object_source { from.class.name }
+      link_object_target { to.class.name }
       from { Ticket.first }
       to   { Ticket.last }
     end

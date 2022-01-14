@@ -1,4 +1,5 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 class Stats
 
 =begin
@@ -28,7 +29,7 @@ returns
 
       backends = Setting.where(area: 'Dashboard::Stats')
       if backends.blank?
-        raise "No settings with area 'Dashboard::Stats' defined"
+        raise __("No settings with area 'Dashboard::Stats' defined")
       end
 
       backends.each do |stats_item|
@@ -40,7 +41,6 @@ returns
           raise "Dashboard::Stats backend #{stats_item.name} is not defined"
         end
 
-        require_dependency backend.to_filename
         backend = backend.constantize
 
         data[backend] = backend.generate(user)
@@ -63,7 +63,7 @@ returns
 
     # generate average param and icon state
     backend_average_sum.each do |backend_model_average, result|
-      average = ( result.to_f / agent_count ).round(1)
+      average = (result.to_f / agent_count).round(1)
       user_result.each do |user, data|
         next if !data[backend_model_average]
         next if !data[backend_model_average].key?(:used_for_average)

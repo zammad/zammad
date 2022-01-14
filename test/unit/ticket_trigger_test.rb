@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'test_helper'
 
 class TicketTriggerTest < ActiveSupport::TestCase
@@ -184,7 +186,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal(1, ticket1.articles.count, 'ticket1.articles verify')
     assert_equal([], ticket1.tag_list)
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
 
     ticket1.reload
     assert_equal('some <b>title</b>  äöüß', ticket1.title, 'ticket1.title verify')
@@ -211,7 +213,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
 
     ticket1.priority = Ticket::Priority.lookup(name: '2 normal')
     ticket1.save!
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
 
     ticket1.reload
     assert_equal('some <b>title</b>  äöüß', ticket1.title, 'ticket1.title verify')
@@ -224,7 +226,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     ticket1.state = Ticket::State.lookup(name: 'open')
     ticket1.save!
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
 
     ticket1.reload
     assert_equal('some <b>title</b>  äöüß', ticket1.title, 'ticket1.title verify')
@@ -237,7 +239,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     ticket1.state = Ticket::State.lookup(name: 'new')
     ticket1.save!
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
 
     ticket1.reload
     assert_equal('some <b>title</b>  äöüß', ticket1.title, 'ticket1.title verify')
@@ -264,7 +266,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal(0, ticket2.articles.count, 'ticket2.articles verify')
     assert_equal([], ticket2.tag_list)
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
 
     ticket2.reload
     assert_equal('some title  äöüß', ticket2.title, 'ticket2.title verify')
@@ -305,7 +307,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal(1, ticket3.articles.count, 'ticket3.articles verify')
     assert_equal([], ticket3.tag_list)
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
 
     ticket3.reload
     assert_equal('some <b>title</b>  äöüß3', ticket3.title, 'ticket3.title verify')
@@ -349,7 +351,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
 
     ticket3.reload
     assert_equal('some <b>title</b>  äöüß3', ticket3.title, 'ticket3.title verify')
@@ -374,7 +376,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
 
     ticket3.reload
     assert_equal('some <b>title</b>  äöüß3', ticket3.title, 'ticket3.title verify')
@@ -399,7 +401,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
 
     ticket3.reload
     assert_equal('some <b>title</b>  äöüß3', ticket3.title, 'ticket3.title verify')
@@ -453,7 +455,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('2 normal', ticket1.priority.name, 'ticket1.priority verify')
     assert_equal(0, ticket1.articles.count, 'ticket1.articles verify')
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
 
     ticket1.reload
     assert_equal('some title  äöüß', ticket1.title, 'ticket1.title verify')
@@ -471,7 +473,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     ticket1.priority = Ticket::Priority.lookup(name: '2 normal')
     ticket1.save!
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
 
     assert_equal('some title  äöüß', ticket1.title, 'ticket1.title verify')
     assert_equal('Users', ticket1.group.name, 'ticket1.group verify')
@@ -482,7 +484,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     ticket1.state = Ticket::State.lookup(name: 'open')
     ticket1.save!
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
 
     assert_equal('some title  äöüß', ticket1.title, 'ticket1.title verify')
     assert_equal('Users', ticket1.group.name, 'ticket1.group verify')
@@ -493,7 +495,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     ticket1.state = Ticket::State.lookup(name: 'new')
     ticket1.save!
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
 
     ticket1.reload
     assert_equal('some title  äöüß', ticket1.title, 'ticket1.title verify')
@@ -546,7 +548,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('2 normal', ticket1.priority.name, 'ticket1.priority verify')
     assert_equal(0, ticket1.articles.count, 'ticket1.articles verify')
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
 
     ticket1.reload
     assert_equal('some title  äöüß', ticket1.title, 'ticket1.title verify')
@@ -558,7 +560,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     ticket1.priority = Ticket::Priority.lookup(name: '2 normal')
     ticket1.save!
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
 
     assert_equal('some title  äöüß', ticket1.title, 'ticket1.title verify')
     assert_equal('Users', ticket1.group.name, 'ticket1.group verify')
@@ -569,7 +571,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     ticket1.state = Ticket::State.lookup(name: 'open')
     ticket1.save!
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
 
     assert_equal('some title  äöüß', ticket1.title, 'ticket1.title verify')
     assert_equal('Users', ticket1.group.name, 'ticket1.group verify')
@@ -580,7 +582,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     ticket1.state = Ticket::State.lookup(name: 'new')
     ticket1.save!
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
 
     ticket1.reload
     assert_equal('some title  äöüß', ticket1.title, 'ticket1.title verify')
@@ -739,7 +741,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
 
     ticket_p.priority = Ticket::Priority.lookup(name: '2 normal')
     ticket_p.save!
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     assert_equal('aaäöüßad asd', ticket_p.title, 'ticket_p.title verify')
     assert_equal('Users', ticket_p.group.name, 'ticket_p.group verify')
     assert_equal('new', ticket_p.state.name, 'ticket_p.state verify')
@@ -759,7 +761,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     assert_equal('aaäöüßad asd', ticket_p.title, 'ticket_p.title verify')
     assert_equal('Users', ticket_p.group.name, 'ticket_p.group verify')
     assert_equal('new', ticket_p.state.name, 'ticket_p.state verify')
@@ -779,7 +781,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     assert_equal('aaäöüßad asd', ticket_p.title, 'ticket_p.title verify')
     assert_equal('Users', ticket_p.group.name, 'ticket_p.group verify')
     assert_equal('new', ticket_p.state.name, 'ticket_p.state verify')
@@ -799,7 +801,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     assert_equal('aaäöüßad asd', ticket_p.title, 'ticket_p.title verify')
     assert_equal('Users', ticket_p.group.name, 'ticket_p.group verify')
     assert_equal('new', ticket_p.state.name, 'ticket_p.state verify')
@@ -830,7 +832,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     assert_equal('aaäöüßad asd', ticket_p.title, 'ticket_p.title verify')
     assert_equal('Users', ticket_p.group.name, 'ticket_p.group verify')
     assert_equal('open', ticket_p.state.name, 'ticket_p.state verify')
@@ -960,18 +962,18 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal(1, ticket_p.articles.count)
     ticket_p.articles.last
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
 
     ticket_p.owner = agent1
     ticket_p.save!
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     assert_equal('aaäöüßad asd', ticket_p.title, 'ticket_p.title verify')
     assert_equal('Users', ticket_p.group.name, 'ticket_p.group verify')
     assert_equal('new', ticket_p.state.name, 'ticket_p.state verify')
     assert_equal('2 normal', ticket_p.priority.name, 'ticket_p.priority verify')
     assert_equal(2, ticket_p.articles.count, 'ticket_p.articles verify')
 
-    #p ticket_p.articles.last.inspect
+    # p ticket_p.articles.last.inspect
     article_p = ticket_p.articles.last
     assert_match('Owner has changed', article_p.subject)
     assert_match('Zammad <zammad@localhost>', article_p.from)
@@ -1024,25 +1026,25 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('new', ticket_p.state.name)
     assert_equal(1, ticket_p.articles.count)
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     assert_equal(1, ticket_p.articles.count)
 
     ticket_p.priority = Ticket::Priority.lookup(name: '1 low')
     ticket_p.save!
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     assert_equal(1, ticket_p.articles.count)
 
     ticket_p.priority = Ticket::Priority.lookup(name: '3 high')
     ticket_p.save!
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     assert_equal(1, ticket_p.articles.count)
 
     ticket_p.owner = agent1
     ticket_p.save!
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
 
     assert_equal('aaäöüßad asd', ticket_p.title, 'ticket_p.title verify')
     assert_equal('Users', ticket_p.group.name, 'ticket_p.group verify')
@@ -1050,7 +1052,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('3 high', ticket_p.priority.name, 'ticket_p.priority verify')
     assert_equal(2, ticket_p.articles.count, 'ticket_p.articles verify')
 
-    #p ticket_p.articles.last.inspect
+    # p ticket_p.articles.last.inspect
     article_p = ticket_p.articles.last
     assert_match('Owner has changed', article_p.subject)
     assert_match('Zammad <zammad@localhost>', article_p.from)
@@ -1108,32 +1110,32 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('new', ticket_p.state.name)
     assert_equal(1, ticket_p.articles.count)
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     assert_equal(1, ticket_p.articles.count)
 
     ticket_p.priority = Ticket::Priority.lookup(name: '1 low')
     ticket_p.save!
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     assert_equal(1, ticket_p.articles.count)
 
     ticket_p.priority = Ticket::Priority.lookup(name: '3 high')
     ticket_p.save!
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     assert_equal(1, ticket_p.articles.count)
 
     ticket_p.owner = agent1
     ticket_p.save!
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     assert_equal('aaäöüßad asd', ticket_p.title, 'ticket_p.title verify')
     assert_equal('Users', ticket_p.group.name, 'ticket_p.group verify')
     assert_equal('new', ticket_p.state.name, 'ticket_p.state verify')
     assert_equal('3 high', ticket_p.priority.name, 'ticket_p.priority verify')
     assert_equal(2, ticket_p.articles.count, 'ticket_p.articles verify')
 
-    #p ticket_p.articles.last.inspect
+    # p ticket_p.articles.last.inspect
     article_p = ticket_p.articles.last
     assert_match('Owner has changed', article_p.subject)
     assert_match('Zammad <zammad@localhost>', article_p.from)
@@ -1184,13 +1186,13 @@ class TicketTriggerTest < ActiveSupport::TestCase
 
     assert_equal(1, ticket_p.articles.count)
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     assert_equal(1, ticket_p.articles.count)
 
     ticket_p.owner = agent1
     ticket_p.save!
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     assert_equal(1, ticket_p.articles.count)
   end
 
@@ -1263,7 +1265,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal(1, ticket1.articles.count, 'ticket1.articles verify')
     assert_equal([], ticket1.tag_list)
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
 
     assert_equal(1, ticket1.articles.count)
 
@@ -1281,7 +1283,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
 
     assert_equal(3, ticket1.articles.count)
 
@@ -1324,7 +1326,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
 
     assert_equal(6, ticket1.articles.count)
   end
@@ -1373,7 +1375,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
 
     ticket1 = Ticket.create!(
       title:         'test 123',
-      #owner: agent,
+      # owner: agent,
       group:         Group.lookup(name: 'Users'),
       customer:      User.lookup(email: 'nicole.braun@zammad.org'),
       updated_by_id: 1,
@@ -1392,7 +1394,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
 
     assert_equal('test 123', ticket1.title, 'ticket1.title verify')
     assert_equal('Users', ticket1.group.name, 'ticket1.group verify')
@@ -1415,7 +1417,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       sender:       Ticket::Article::Sender.find_by(name: 'Agent'),
       type:         Ticket::Article::Type.find_by(name: 'note'),
     )
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     UserInfo.current_user_id = nil
 
     ticket1.reload
@@ -1430,7 +1432,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     UserInfo.current_user_id = agent.id
     ticket1.owner_id = 1
     ticket1.save!
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     UserInfo.current_user_id = nil
 
     assert_equal('test 123', ticket1.title, 'ticket1.title verify')
@@ -1518,7 +1520,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
 
     assert_equal('test 123', ticket1.title, 'ticket1.title verify')
     assert_equal('Users', ticket1.group.name, 'ticket1.group verify')
@@ -1528,7 +1530,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal(1, ticket1.articles.count, 'ticket1.articles verify')
     assert_equal([], ticket1.tag_list)
 
-    ticket1.update!(customer: User.lookup(email: 'nicole.braun@zammad.org') )
+    ticket1.update!(customer: User.lookup(email: 'nicole.braun@zammad.org'))
 
     UserInfo.current_user_id = agent.id
     Ticket::Article.create!(
@@ -1543,7 +1545,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       sender:       Ticket::Article::Sender.find_by(name: 'Agent'),
       type:         Ticket::Article::Type.find_by(name: 'note'),
     )
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     UserInfo.current_user_id = nil
 
     ticket1.reload
@@ -1631,7 +1633,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
 
     assert_equal('test 123', ticket1.title, 'ticket1.title verify')
     assert_equal('Users', ticket1.group.name, 'ticket1.group verify')
@@ -1656,7 +1658,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       sender:       Ticket::Article::Sender.find_by(name: 'Agent'),
       type:         Ticket::Article::Type.find_by(name: 'note'),
     )
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     UserInfo.current_user_id = nil
 
     ticket1.reload
@@ -1729,7 +1731,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
 
     ticket1 = Ticket.create!(
       title:         'test 123',
-      #owner: agent,
+      # owner: agent,
       group:         Group.lookup(name: 'Users'),
       customer:      User.lookup(email: 'nicole.braun@zammad.org'),
       updated_by_id: 1,
@@ -1748,7 +1750,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
 
     assert_equal('test 123', ticket1.title, 'ticket1.title verify')
     assert_equal('Users', ticket1.group.name, 'ticket1.group verify')
@@ -1771,7 +1773,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       sender:       Ticket::Article::Sender.find_by(name: 'Agent'),
       type:         Ticket::Article::Type.find_by(name: 'note'),
     )
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     UserInfo.current_user_id = nil
 
     ticket1.reload
@@ -1786,7 +1788,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     UserInfo.current_user_id = agent1.id
     ticket1.owner_id = 1
     ticket1.save!
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     UserInfo.current_user_id = nil
 
     assert_equal('test 123', ticket1.title, 'ticket1.title verify')
@@ -1810,7 +1812,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       sender:       Ticket::Article::Sender.find_by(name: 'Customer'),
       type:         Ticket::Article::Type.find_by(name: 'note'),
     )
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     UserInfo.current_user_id = nil
 
     ticket1.reload
@@ -1825,7 +1827,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     UserInfo.current_user_id = agent2.id
     ticket1.owner_id = agent2.id
     ticket1.save!
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     UserInfo.current_user_id = nil
 
     assert_equal('test 123', ticket1.title, 'ticket1.title verify')
@@ -1849,7 +1851,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       sender:       Ticket::Article::Sender.find_by(name: 'Agent'),
       type:         Ticket::Article::Type.find_by(name: 'note'),
     )
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     UserInfo.current_user_id = nil
 
     ticket1.reload
@@ -1912,7 +1914,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
 
     ticket1 = Ticket.create!(
       title:         'test 123',
-      #owner: agent,
+      # owner: agent,
       group:         Group.lookup(name: 'Users'),
       customer:      User.lookup(email: 'nicole.braun@zammad.org'),
       updated_by_id: 1,
@@ -1931,7 +1933,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
 
     assert_equal('test 123', ticket1.title, 'ticket1.title verify')
     assert_equal('Users', ticket1.group.name, 'ticket1.group verify')
@@ -1954,7 +1956,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       sender:       Ticket::Article::Sender.find_by(name: 'Agent'),
       type:         Ticket::Article::Type.find_by(name: 'note'),
     )
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     UserInfo.current_user_id = nil
 
     ticket1.reload
@@ -1969,7 +1971,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     UserInfo.current_user_id = agent.id
     ticket1.priority = Ticket::Priority.find_by(name: '1 low')
     ticket1.save!
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     UserInfo.current_user_id = nil
 
     ticket1.reload
@@ -1984,7 +1986,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     UserInfo.current_user_id = agent.id
     ticket1.owner_id = 1
     ticket1.save!
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     UserInfo.current_user_id = nil
 
     ticket1.reload
@@ -1999,7 +2001,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     UserInfo.current_user_id = agent.id
     ticket1.owner_id = agent.id
     ticket1.save!
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     UserInfo.current_user_id = nil
 
     ticket1.reload
@@ -2090,7 +2092,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal(1, ticket1.articles.count, 'ticket1.articles verify')
     assert_equal([], ticket1.tag_list)
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
 
     ticket1.reload
     assert_equal('test 123', ticket1.title, 'ticket1.title verify')
@@ -2136,7 +2138,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal(1, ticket2.articles.count, 'ticket2.articles verify')
     assert_equal([], ticket2.tag_list)
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
 
     ticket2.reload
     assert_equal('test 123', ticket2.title, 'ticket2.title verify')
@@ -2220,7 +2222,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
 
     assert_equal('test 123', ticket1.title, 'ticket1.title verify')
     assert_equal('Users', ticket1.group.name, 'ticket1.group verify')
@@ -2233,7 +2235,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     UserInfo.current_user_id = agent1.id
     ticket1.owner_id = agent1.id
     ticket1.save!
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     UserInfo.current_user_id = nil
 
     ticket1.reload
@@ -2248,7 +2250,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     UserInfo.current_user_id = agent1.id
     ticket1.owner_id = agent1.id
     ticket1.save!
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     UserInfo.current_user_id = nil
 
     ticket1.reload
@@ -2263,7 +2265,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     UserInfo.current_user_id = agent1.id
     ticket1.owner_id = agent2.id
     ticket1.save!
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     UserInfo.current_user_id = nil
 
     ticket1.reload
@@ -2358,7 +2360,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
 
     ticket1.reload
     assert_equal('test 123', ticket1.title, 'ticket1.title verify')
@@ -2383,7 +2385,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
 
     ticket1.reload
     assert_equal('test 123', ticket1.title, 'ticket1.title verify')
@@ -2408,7 +2410,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
 
     ticket1.reload
     assert_equal('test 123', ticket1.title, 'ticket1.title verify')
@@ -2435,7 +2437,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
 
     ticket1.reload
     assert_equal('test 123', ticket1.title, 'ticket1.title verify')
@@ -2449,7 +2451,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
 
     article.internal = false
     article.save!
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
 
     ticket1.reload
     assert_equal('test 123', ticket1.title, 'ticket1.title verify')
@@ -2474,7 +2476,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
 
     ticket1.reload
     assert_equal('test 123', ticket1.title, 'ticket1.title verify')
@@ -2623,7 +2625,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
 
     ticket1 = Ticket.create!(
       title:         'test 123',
-      #owner: agent,
+      # owner: agent,
       customer:      customer,
       group:         Group.lookup(name: 'Users'),
       updated_by_id: 1,
@@ -2643,7 +2645,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
 
     ticket1.reload
     assert_equal('test 123', ticket1.title, 'ticket1.title verify')
@@ -2658,7 +2660,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     UserInfo.current_user_id = agent.id
     ticket1.owner_id = agent.id
     ticket1.save!
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     UserInfo.current_user_id = nil
 
     ticket1.reload
@@ -2685,7 +2687,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
 
     ticket1.reload
     assert_equal('test 123', ticket1.title, 'ticket1.title verify')
@@ -2700,7 +2702,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     UserInfo.current_user_id = agent.id
     ticket1.owner_id = 1
     ticket1.save!
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     UserInfo.current_user_id = nil
 
     ticket1.reload
@@ -2787,7 +2789,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
 
     ticket1.reload
     assert_equal('new', ticket1.state.name, 'ticket1.state new')
@@ -2843,7 +2845,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
 
     ticket1.reload
     assert_equal('new', ticket1.state.name, 'ticket1.state new')
@@ -2912,7 +2914,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
 
     ticket1.reload
     assert_equal('new', ticket1.state.name, 'ticket1.state new')
@@ -2980,7 +2982,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       created_by_id: customer1.id,
     )
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
 
     ticket1.reload
     assert_equal('new', ticket1.state.name, 'ticket1.state new')
@@ -3050,7 +3052,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
 
     ticket1.reload
     assert_equal('new', ticket1.state.name, 'ticket1.state new')
@@ -3108,7 +3110,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
 
     ticket1.reload
     assert_equal('new', ticket1.state.name, 'ticket1.state new')
@@ -3172,14 +3174,14 @@ class TicketTriggerTest < ActiveSupport::TestCase
     ticket1.reload
     assert_equal(1, ticket1.articles.count)
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     ticket1.reload
     assert_equal(2, ticket1.articles.count)
 
     ticket1.priority = Ticket::Priority.lookup(name: '2 normal')
     ticket1.save!
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     ticket1.reload
     assert_equal(2, ticket1.articles.count)
 
@@ -3198,7 +3200,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     ticket1.reload
     assert_equal(4, ticket1.articles.count)
     assert_equal('some_loop_sender@example.com', ticket1.articles[2].from)
@@ -3219,7 +3221,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     ticket1.reload
     assert_equal(6, ticket1.articles.count)
     assert_equal('some_loop_sender@example.com', ticket1.articles[4].from)
@@ -3240,7 +3242,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     ticket1.reload
     assert_equal(8, ticket1.articles.count)
     assert_equal('some_loop_sender@example.com', ticket1.articles[6].from)
@@ -3261,7 +3263,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     ticket1.reload
     assert_equal(10, ticket1.articles.count)
     assert_equal('some_loop_sender@example.com', ticket1.articles[8].from)
@@ -3282,7 +3284,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     ticket1.reload
     assert_equal(12, ticket1.articles.count)
     assert_equal('some_loop_sender@example.com', ticket1.articles[10].from)
@@ -3303,7 +3305,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     ticket1.reload
     assert_equal(14, ticket1.articles.count)
     assert_equal('some_loop_sender@example.com', ticket1.articles[12].from)
@@ -3324,7 +3326,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     ticket1.reload
     assert_equal(16, ticket1.articles.count)
     assert_equal('some_loop_sender@example.com', ticket1.articles[14].from)
@@ -3345,7 +3347,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     ticket1.reload
     assert_equal(18, ticket1.articles.count)
     assert_equal('some_loop_sender@example.com', ticket1.articles[16].from)
@@ -3366,7 +3368,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     ticket1.reload
     assert_equal(20, ticket1.articles.count)
     assert_equal('some_loop_sender@example.com', ticket1.articles[18].from)
@@ -3387,7 +3389,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     ticket1.reload
     assert_equal(21, ticket1.articles.count)
     assert_equal('some_loop_sender@example.com', ticket1.articles[20].from)
@@ -3407,7 +3409,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     ticket1.reload
     assert_equal(22, ticket1.articles.count)
     assert_equal('some_loop_sender@example.com', ticket1.articles[21].from)
@@ -3507,7 +3509,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal(1, ticket1.articles.count, 'ticket1.articles verify')
     assert_equal([], ticket1.tag_list)
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
 
     ticket1.reload
     assert_equal('some <b>title</b>  äöüß', ticket1.title, 'ticket1.title verify')
@@ -3587,7 +3589,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
           'value'    => Ticket::State.lookup(name: 'new').id.to_s,
         },
         'ticket.tags'     => {
-          #'operator' => 'contains one not',
+          # 'operator' => 'contains one not',
           'operator' => 'contains all not',
           'value'    => 'sender1, sender2',
         },
@@ -3633,7 +3635,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('2 normal', ticket1.priority.name, 'ticket1.priority verify')
     assert_equal(1, ticket1.articles.count, 'ticket1.articles verify')
     assert_equal([], ticket1.tag_list)
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     ticket1.reload
     assert_equal('test 1', ticket1.title, 'ticket1.title verify')
     assert_equal('Users', ticket1.group.name, 'ticket1.group verify')
@@ -3671,7 +3673,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal(1, ticket2.articles.count, 'ticket2.articles verify')
     assert_equal([], ticket2.tag_list)
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
 
     ticket2.reload
     assert_equal('test 2', ticket2.title, 'ticket2.title verify')
@@ -3710,7 +3712,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('2 normal', ticket3.priority.name, 'ticket3.priority verify')
     assert_equal(1, ticket3.articles.count, 'ticket3.articles verify')
     assert_equal([], ticket3.tag_list)
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     ticket3.reload
     assert_equal('test 3', ticket3.title, 'ticket3.title verify')
     assert_equal('Users', ticket3.group.name, 'ticket3.group verify')
@@ -3785,7 +3787,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal(1, ticket1.articles.count, 'ticket1.articles verify')
     assert_equal([], ticket1.tag_list)
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
 
     ticket1.reload
     assert_equal('test 1', ticket1.title, 'ticket1.title verify')
@@ -3830,7 +3832,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal(1, ticket2.articles.count, 'ticket2.articles verify')
     assert_equal([], ticket2.tag_list)
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
 
     ticket2.reload
     assert_equal('test 1', ticket2.title, 'ticket2.title verify')
@@ -3901,7 +3903,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal(1, ticket3.articles.count, 'ticket3.articles verify')
     assert_equal([], ticket3.tag_list)
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
 
     ticket3.reload
     assert_equal('test 1', ticket3.title, 'ticket3.title verify')
@@ -3939,7 +3941,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal(1, ticket4.articles.count, 'ticket4.articles verify')
     assert_equal([], ticket4.tag_list)
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
 
     ticket4.reload
     assert_equal('test 1', ticket4.title, 'ticket4.title verify')
@@ -4089,7 +4091,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     ticket1.owner_id = agent1.id
     ticket1.save!
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
 
     # this will add a tag by trigger
     ticket1.reload
@@ -4108,7 +4110,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     ticket1.owner_id = agent2.id
     ticket1.save!
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
 
     ticket1.reload
     assert_equal('some title  äöüß', ticket1.title, 'ticket1.title verify')
@@ -4126,7 +4128,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     ticket1.owner_id = agent1.id
     ticket1.save!
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
 
     ticket1.reload
     assert_equal('some title  äöüß', ticket1.title, 'ticket1.title verify')
@@ -4144,7 +4146,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     ticket2.owner_id = agent1.id
     ticket2.save!
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
 
     ticket2.reload
     assert_equal('some title  äöüß', ticket2.title, 'ticket2.title verify')
@@ -4214,7 +4216,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('Sabine Schütz <some_sender@example.com>', ticket1.articles.first.from, 'ticket1.articles.first.from verify')
     assert_equal([], ticket1.tag_list)
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
 
     ticket1.reload
     assert_equal('test 1', ticket1.title, 'ticket1.title verify')
@@ -4308,7 +4310,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_match('Zammad <zammad@localhost>', article1.from)
     assert_match('smith@example.com', article1.to)
     assert_match('Thanks for your inquiry (aaäöüßad asd)!', article1.subject)
-    assert_match(/.+cid:.+?@zammad.example.com.+/, article1.body)
+    assert_match(%r{.+cid:.+?@zammad.example.com.+}, article1.body)
     assert_equal(1, article1.attachments.count)
     assert_equal('789', article1.attachments[0].size)
     assert_equal('text/html', article1.content_type)
@@ -4353,7 +4355,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_nil(customer.organization_id)
     assert_equal(0, ticket.reload.articles.count, 'ticket.articles verify')
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
 
     assert_equal(1, ticket.reload.articles.count, 'ticket.articles verify')
 
@@ -4418,7 +4420,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal(1, ticket1.articles.count, 'ticket1.articles verify')
     assert_equal([], ticket1.tag_list)
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
 
     ticket1.reload
     assert_equal('some <b>title</b>  äöüß', ticket1.title, 'ticket1.title verify')
@@ -4489,7 +4491,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal(1, ticket1.articles.count, 'ticket1.articles verify')
     assert_equal([], ticket1.tag_list)
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
 
     ticket1.reload
     assert_equal('some <b>title</b>  äöüß', ticket1.title, 'ticket1.title verify')
@@ -4594,7 +4596,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     end
   end
 
-  #2399 - Attached images are broken on trigger reply with #{article.body_as_html}
+  # 2399 - Attached images are broken on trigger reply with #{article.body_as_html}
   test 'make sure auto reply using #{article.body_as_html} copies all articles image attachments as well' do
     # make sure that this auto reply trigger only reacts to this particular test in order not to interfer with other auto reply tests
     Trigger.create!(
@@ -4639,7 +4641,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('CPG-Reklamationsmitteilung bezügl.01234567895 an Voda-28.03.2017.jpg', article1.attachments[0].filename)
   end
 
-  #2399 - Attached images are broken on trigger reply with #{article.body_as_html}
+  # 2399 - Attached images are broken on trigger reply with #{article.body_as_html}
   test 'make sure auto reply using #{article.body_as_html} does not copy any non-image attachments' do
     # make sure that this auto reply trigger only reacts to this particular test in order not to interfer with other auto reply tests
     Trigger.create!(

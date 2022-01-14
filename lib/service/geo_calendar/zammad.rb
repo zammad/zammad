@@ -1,11 +1,11 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Service::GeoCalendar::Zammad
   def self.location(address)
 
     # check cache
     cache_key = "zammadgeocalendar::#{address}"
-    cache = ::Cache.get(cache_key)
+    cache = ::Cache.read(cache_key)
     return cache if cache
 
     # do lookup
@@ -25,9 +25,10 @@ class Service::GeoCalendar::Zammad
           open_timeout:  2,
           read_timeout:  4,
           total_timeout: 12,
+          verify_ssl:    true,
         },
       )
-      if !response.success? && response.code.to_s !~ /^40.$/
+      if !response.success? && response.code.to_s !~ %r{^40.$}
         raise "#{response.code}/#{response.body}"
       end
 

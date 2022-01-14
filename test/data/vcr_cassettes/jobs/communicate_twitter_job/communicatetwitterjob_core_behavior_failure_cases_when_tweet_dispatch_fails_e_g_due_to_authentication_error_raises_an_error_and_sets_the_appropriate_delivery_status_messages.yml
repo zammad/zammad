@@ -1,0 +1,53 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.twitter.com/1.1/statuses/update.json
+    body:
+      encoding: UTF-8
+      string: in_reply_to_status_id&status=Dolor+rerum+illo+voluptatibus.
+    headers:
+      User-Agent:
+      - TwitterRubyGem/7.0.0
+      Authorization:
+      - OAuth oauth_consumer_key="q7K8GEkhyCHs9jHLtkmD9Kod4", oauth_nonce="d374bebfd96c764d209aaed0d96ba8e9",
+        oauth_signature="soiG9cT63KFZZuJvIje4ImaQlcI%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1625040247", oauth_token="7783712304-H9s75r2d532diPmJYK6JrvUWxu9gTDZ6ocjfToL",
+        oauth_version="1.0"
+      Connection:
+      - close
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Host:
+      - api.twitter.com
+  response:
+    status:
+      code: 401
+      message: Unauthorized
+    headers:
+      Date:
+      - Wed, 30 Jun 2021 08:04:07 GMT
+      Server:
+      - tsa_o
+      Set-Cookie:
+      - guest_id=v1%3A162504024752063664; Max-Age=63072000; Expires=Fri, 30 Jun 2023
+        08:04:07 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      - personalization_id="v1_gSc3bw28qFN+ZFLU763IQA=="; Max-Age=63072000; Expires=Fri,
+        30 Jun 2023 08:04:07 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      Content-Type:
+      - application/json; charset=utf-8
+      Cache-Control:
+      - no-cache, no-store, max-age=0
+      Content-Length:
+      - '62'
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-Connection-Hash:
+      - 1f1fe60ac5f10347a4c84b938827ffe2b2b9141eff3233e40528e5c1d835ea81
+      Connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"errors":[{"code":89,"message":"Invalid or expired token."}]}'
+  recorded_at: Wed, 30 Jun 2021 08:04:07 GMT
+recorded_with: VCR 6.0.0

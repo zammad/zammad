@@ -1,4 +1,5 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 module ApplicationModel::HasCache
   extend ActiveSupport::Concern
 
@@ -8,8 +9,9 @@ module ApplicationModel::HasCache
   end
 
   def cache_update(other)
-    cache_delete if respond_to?('cache_delete')
-    other.cache_delete if other.respond_to?('cache_delete')
+    cache_delete if respond_to?(:cache_delete)
+    other.cache_delete if other.respond_to?(:cache_delete)
+    ActiveSupport::CurrentAttributes.clear_all
     true
   end
 
@@ -47,7 +49,7 @@ module ApplicationModel::HasCache
 
     def cache_get(data_id)
       key = "#{self}::#{data_id}"
-      Cache.get(key)
+      Cache.read(key)
     end
   end
 end

@@ -1,4 +1,7 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
+require 'autodiscover' # Only load this gem when it is really used.
 
 RSpec.describe 'Exchange integration endpoint', type: :request do
   before { authenticated_as(admin_with_admin_user_permissions) }

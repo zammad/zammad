@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 module ApplicationController::Authenticates
   extend ActiveSupport::Concern
 
@@ -14,12 +16,12 @@ module ApplicationController::Authenticates
       )
       return false if user
 
-      raise Exceptions::Forbidden, 'Not authorized (token)!'
+      raise Exceptions::Forbidden, __('Not authorized (token)!')
     end
 
     return false if current_user&.permissions?(key)
 
-    raise Exceptions::Forbidden, 'Not authorized (user)!'
+    raise Exceptions::Forbidden, __('Not authorized (user)!')
   end
 
   def authentication_check(auth_param = {})
@@ -33,7 +35,7 @@ module ApplicationController::Authenticates
 
     # return auth not ok
     if !user
-      raise Exceptions::Forbidden, 'Authentication required'
+      raise Exceptions::Forbidden, __('Authentication required')
     end
 
     # return auth ok
@@ -41,10 +43,14 @@ module ApplicationController::Authenticates
   end
 
   def authentication_check_only(auth_param = {})
-    #logger.debug 'authentication_check'
-    #logger.debug params.inspect
-    #logger.debug session.inspect
-    #logger.debug cookies.inspect
+    if Rails.env.test? && ENV['FAKE_SELENIUM_LOGIN_USER_ID'].present? && session[:user_id].blank?
+      session[:user_id] = ENV['FAKE_SELENIUM_LOGIN_USER_ID'].to_i
+    end
+
+    # logger.debug 'authentication_check'
+    # logger.debug params.inspect
+    # logger.debug session.inspect
+    # logger.debug cookies.inspect
     authentication_errors = []
 
     # already logged in, early exit
@@ -64,10 +70,10 @@ module ApplicationController::Authenticates
         raise Exceptions::Forbidden, 'API password access disabled!'
       end
 
-      user = User.authenticate(username, password)
-      return authentication_check_prerequesits(user, 'basic_auth', auth_param) if user
+      auth = Auth.new(username, password)
+      return authentication_check_prerequesits(auth.user, 'basic_auth', auth_param) if auth.valid?
 
-      authentication_errors.push('Invalid BasicAuth credentials')
+      authentication_errors.push(__('Invalid BasicAuth credentials'))
     end
 
     # check http token based authentication
@@ -92,7 +98,7 @@ module ApplicationController::Authenticates
           permission:    auth_param[:permission],
           inactive_user: true,
         )
-        raise Exceptions::NotAuthorized, 'Not authorized (token)!' if !user
+        raise Exceptions::NotAuthorized, __('Not authorized (token)!') if !user
       end
 
       if user
@@ -103,7 +109,7 @@ module ApplicationController::Authenticates
 
         if token.expires_at &&
            Time.zone.today >= token.expires_at
-          raise Exceptions::NotAuthorized, 'Not authorized (token expired)!'
+          raise Exceptions::NotAuthorized, __('Not authorized (token expired)!')
         end
 
         @_token = token # remember for Pundit authorization / permit!
@@ -112,7 +118,7 @@ module ApplicationController::Authenticates
       @_token_auth = token_string # remember for permission_check
       return authentication_check_prerequesits(user, 'token_auth', auth_param) if user
 
-      authentication_errors.push("Can't find User for Token")
+      authentication_errors.push(__("Can't find User for Token"))
     end
 
     # check oauth2 token based authentication
@@ -122,11 +128,11 @@ module ApplicationController::Authenticates
       logger.debug { "OAuth2 token auth check '#{token}'" }
       access_token = Doorkeeper::AccessToken.by_token(token)
 
-      raise Exceptions::NotAuthorized, 'Invalid token!' if !access_token
+      raise Exceptions::NotAuthorized, __('Invalid token!') if !access_token
 
       # check expire
       if access_token.expires_in && (access_token.created_at + access_token.expires_in) < Time.zone.now
-        raise Exceptions::NotAuthorized, 'OAuth2 token is expired!'
+        raise Exceptions::NotAuthorized, __('OAuth2 token is expired!')
       end
 
       # if access_token.scopes.empty?
@@ -144,16 +150,8 @@ module ApplicationController::Authenticates
     raise Exceptions::NotAuthorized, authentication_errors.join(', ')
   end
 
-  def authenticate_with_password
-    user = User.authenticate(params[:username], params[:password])
-    raise_unified_login_error if !user
-
-    session.delete(:switched_from_user_id)
-    authentication_check_prerequesits(user, 'session', {})
-  end
-
   def authentication_check_prerequesits(user, auth_type, auth_param)
-    raise Exceptions::Forbidden, 'Maintenance mode enabled!' if in_maintenance_mode?(user)
+    raise Exceptions::Forbidden, __('Maintenance mode enabled!') if in_maintenance_mode?(user)
 
     raise_unified_login_error if !user.active
 
@@ -161,7 +159,7 @@ module ApplicationController::Authenticates
       ActiveSupport::Deprecation.warn("Parameter ':permission' is deprecated. Use Pundit policy and `authorize!` instead.")
 
       if !user.permissions?(auth_param[:permission])
-        raise Exceptions::Forbidden, 'Not authorized (user)!'
+        raise Exceptions::Forbidden, __('Not authorized (user)!')
       end
     end
 
@@ -172,6 +170,6 @@ module ApplicationController::Authenticates
   end
 
   def raise_unified_login_error
-    raise Exceptions::NotAuthorized, 'Login failed. Have you double-checked your credentials and completed the email verification step?'
+    raise Exceptions::NotAuthorized, __('Login failed. Have you double-checked your credentials and completed the email verification step?')
   end
 end

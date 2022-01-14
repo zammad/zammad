@@ -1,6 +1,8 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 class TriggerWebhookJob::RecordPayload::Base
 
-  USER_ATTRIBUTE_BLACKLIST = %w[
+  USER_ATTRIBUTE_FILTER = %w[
     last_login
     login_failed
     password
@@ -47,7 +49,7 @@ class TriggerWebhookJob::RecordPayload::Base
     attributes = attributes_with_association_names(record)
     return attributes if !record.instance_of?(::User)
 
-    attributes.except(*USER_ATTRIBUTE_BLACKLIST)
+    attributes.except(*USER_ATTRIBUTE_FILTER)
   end
 
   def attributes_with_association_names(record)

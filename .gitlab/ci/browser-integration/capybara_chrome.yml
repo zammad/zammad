@@ -1,5 +1,3 @@
 integration_capybara_chrome:
   extends:
-    - .template_browser-integration_capybara
-  variables:
-    BROWSER: "chrome"
+    - .template_browser-integration_capybara_chrome

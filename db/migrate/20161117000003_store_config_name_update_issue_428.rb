@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 class StoreConfigNameUpdateIssue428 < ActiveRecord::Migration[4.2]
   def up
     # return if it's a new setup

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Transaction::Notification
 
@@ -75,16 +75,17 @@ class Transaction::Notification
     # apply out of office agents
     possible_recipients_additions = Set.new
     possible_recipients.each do |user|
-      recursive_ooo_replacements(
+      ooo_replacements(
         user:         user,
         replacements: possible_recipients_additions,
         reasons:      recipients_reason,
+        ticket:       ticket,
       )
     end
 
     if possible_recipients_additions.present?
       # join unique entries
-      possible_recipients = possible_recipients | possible_recipients_additions.to_a
+      possible_recipients |= possible_recipients_additions.to_a
     end
 
     already_checked_recipient_ids = {}
@@ -125,11 +126,13 @@ class Transaction::Notification
           identifier = user.login
         end
 
+        already_notified_cutoff = Time.use_zone(Setting.get('timezone_default').presence || 'UTC') { Time.current.beginning_of_day }
+
         already_notified = History.where(
           history_type_id:   History.type_lookup('notification').id,
           history_object_id: History.object_lookup('Ticket').id,
           o_id:              ticket.id
-        ).where('created_at > ?', Time.zone.now.beginning_of_day).exists?(['value_to LIKE ?', "%#{identifier}(#{@item[:type]}:%"])
+        ).where('created_at > ?', already_notified_cutoff).exists?(['value_to LIKE ?', "%#{identifier}(#{@item[:type]}:%"])
 
         next if already_notified
       end
@@ -182,21 +185,24 @@ class Transaction::Notification
 
       # get user based notification template
       # if create, send create message / block update messages
-      template = nil
-      case @item[:type]
-      when 'create'
-        template = 'ticket_create'
-      when 'update'
-        template = 'ticket_update'
-      when 'reminder_reached'
-        template = 'ticket_reminder_reached'
-      when 'escalation'
-        template = 'ticket_escalation'
-      when 'escalation_warning'
-        template = 'ticket_escalation_warning'
-      else
-        raise "unknown type for notification #{@item[:type]}"
-      end
+      template = case @item[:type]
+                 when 'create'
+                   'ticket_create'
+                 when 'update'
+                   'ticket_update'
+                 when 'reminder_reached'
+                   'ticket_reminder_reached'
+                 when 'escalation'
+                   'ticket_escalation'
+                 when 'escalation_warning'
+                   'ticket_escalation_warning'
+                 when 'update.merged_into'
+                   'ticket_update_merged_into'
+                 when 'update.received_merge'
+                   'ticket_update_received_merge'
+                 else
+                   raise "unknown type for notification #{@item[:type]}"
+                 end
 
       current_user = User.lookup(id: @item[:user_id])
       if !current_user
@@ -218,7 +224,7 @@ class Transaction::Notification
           changes:      changes,
           reason:       recipients_reason[user.id],
         },
-        message_id:  "<notification.#{DateTime.current.to_s(:number)}.#{ticket.id}.#{user.id}.#{rand(999_999)}@#{Setting.get('fqdn')}>",
+        message_id:  "<notification.#{DateTime.current.to_s(:number)}.#{ticket.id}.#{user.id}.#{SecureRandom.uuid}@#{Setting.get('fqdn')}>",
         references:  ticket.get_references,
         main_object: ticket,
         attachments: attachments,
@@ -293,8 +299,8 @@ class Transaction::Notification
             if relation_model
               if relation_model['name']
                 value_str[0] = relation_model['name']
-              elsif relation_model.respond_to?('fullname')
-                value_str[0] = relation_model.send('fullname')
+              elsif relation_model.respond_to?(:fullname)
+                value_str[0] = relation_model.send(:fullname)
               end
             end
           end
@@ -303,8 +309,8 @@ class Transaction::Notification
             if relation_model
               if relation_model['name']
                 value_str[1] = relation_model['name']
-              elsif relation_model.respond_to?('fullname')
-                value_str[1] = relation_model.send('fullname')
+              elsif relation_model.respond_to?(:fullname)
+                value_str[1] = relation_model.send(:fullname)
               end
             end
           end
@@ -334,30 +340,20 @@ class Transaction::Notification
 
   private
 
-  def recursive_ooo_replacements(user:, replacements:, reasons:, level: 0)
-    if level == 10
-      Rails.logger.warn("Found more than 10 replacement levels for agent #{user}.")
-      return
-    end
-
+  def ooo_replacements(user:, replacements:, ticket:, reasons:)
     replacement = user.out_of_office_agent
+
     return if !replacement
-    # return for already found, added and checked users
-    # to prevent re-doing complete lookup paths
+
+    return if !TicketPolicy.new(replacement, ticket).agent_read_access?
+
     return if !replacements.add?(replacement)
 
     reasons[replacement.id] = 'are the out-of-office replacement of the owner'
-
-    recursive_ooo_replacements(
-      user:         replacement,
-      replacements: replacements,
-      reasons:      reasons,
-      level:        level + 1
-    )
   end
 
   def possible_recipients_of_group(group_id)
-    cache = Cache.get("Transaction::Notification.group_access.full::#{group_id}")
+    cache = Cache.read("Transaction::Notification.group_access.full::#{group_id}")
     return cache if cache
 
     possible_recipients = User.group_access(group_id, 'full').sort_by(&:login)

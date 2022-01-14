@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 class OmniauthOffice365Setting < ActiveRecord::Migration[4.2]
   def up
 
@@ -27,7 +29,7 @@ class OmniauthOffice365Setting < ActiveRecord::Migration[4.2]
         controller:       'SettingsAreaSwitch',
         sub:              ['auth_microsoft_office365_credentials'],
         title_i18n:       ['Office 365'],
-        description_i18n: ['Office 365', 'Microsoft Application Registration Portal', 'https://apps.dev.microsoft.com'],
+        description_i18n: ['Office 365', 'Microsoft Application Registration Portal', 'https://portal.azure.com'],
         permission:       ['admin.security'],
       },
       state:       false,

@@ -1,5 +1,5 @@
 class App.KnowledgeBaseNewModal extends App.ControllerModal
-  head:   'Create Knowledge Base'
+  head:   __('Create Knowledge Base')
   screen: 'admin_create'
 
   buttonClose:   false
@@ -26,11 +26,12 @@ class App.KnowledgeBaseNewModal extends App.ControllerModal
       App.UiElement[attribute.tag].prepareParams?(attribute, dom, params)
 
   applyDefaults: (params) ->
-    params['iconset']         = 'FontAwesome'
-    params['color_highlight'] = '#38ae6a'
-    params['color_header']    = '#f9fafb'
-    params['homepage_layout'] = 'grid'
-    params['category_layout'] = 'grid'
+    params['iconset']           = 'FontAwesome'
+    params['color_highlight']   = '#38ae6a'
+    params['color_header']      = '#f9fafb'
+    params['color_header_link'] = 'hsl(206,8%,50%)'
+    params['homepage_layout']   = 'grid'
+    params['category_layout']   = 'grid'
 
   onSubmit: (e) ->
     params = @formParams(@el)
@@ -51,5 +52,5 @@ class App.KnowledgeBaseNewModal extends App.ControllerModal
 
       error: (xhr) =>
         @formEnable(@el)
-        @formController.showAlert(xhr.responseJSON?.error || "Couldn't create Knowledge Base")
+        @formController.showAlert(xhr.responseJSON?.error || __("Couldn't create Knowledge Base"))
     )

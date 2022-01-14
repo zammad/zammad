@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rchardet'
 
 class String
@@ -6,8 +8,8 @@ class String
 
   def strip!
     begin
-      sub!(/\A[[[:space:]]\u{200B}\u{FEFF}]+/, '')
-      sub!(/[[[:space:]]\u{200B}\u{FEFF}]+\Z/, '')
+      sub!(%r{\A[[[:space:]]\u{200B}\u{FEFF}]+}, '')
+      sub!(%r{[[[:space:]]\u{200B}\u{FEFF}]+\Z}, '')
 
     # if incompatible encoding regexp match (UTF-8 regexp with ASCII-8BIT string) (Encoding::CompatibilityError), use default
     rescue Encoding::CompatibilityError
@@ -18,8 +20,8 @@ class String
 
   def strip
     begin
-      new_string = sub(/\A[[[:space:]]\u{200B}\u{FEFF}]+/, '')
-      new_string.sub!(/[[[:space:]]\u{200B}\u{FEFF}]+\Z/, '')
+      new_string = sub(%r{\A[[[:space:]]\u{200B}\u{FEFF}]+}, '')
+      new_string.sub!(%r{[[[:space:]]\u{200B}\u{FEFF}]+\Z}, '')
 
     # if incompatible encoding regexp match (UTF-8 regexp with ASCII-8BIT string) (Encoding::CompatibilityError), use default
     rescue Encoding::CompatibilityError
@@ -46,7 +48,7 @@ class String
 
     lines = self
     lines.split("\n").collect do |line|
-      line.length > options[:line_width] ? line.gsub(/(.{1,#{options[:line_width]}})(\s+|$)/, "\\1\n").strip : line
+      line.length > options[:line_width] ? line.gsub(%r{(.{1,#{options[:line_width]}})(\s+|$)}, "\\1\n").strip : line
     end * "\n"
   end
 
@@ -61,9 +63,9 @@ class String
 
   def to_filename
     camel_cased_word = dup
-    camel_cased_word.gsub(/::/, '/')
-                    .gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2')
-                    .gsub(/([a-z\d])([A-Z])/, '\1_\2')
+    camel_cased_word.gsub(%r{::}, '/')
+                    .gsub(%r{([A-Z]+)([A-Z][a-z])}, '\1_\2')
+                    .gsub(%r{([a-z\d])([A-Z])}, '\1_\2')
                     .tr('-', '_').downcase
   end
 
@@ -119,7 +121,7 @@ class String
     end
 
     # remove html comments
-    string.gsub!(/<!--.+?-->/m, '')
+    string.gsub!(%r{<!--.+?-->}m, '')
 
     # find <a href=....> and replace it with [x]
     link_list = ''
@@ -128,7 +130,7 @@ class String
       string.gsub!(%r{<a[[:space:]]+(|\S+[[:space:]]+)href=("|')(.+?)("|')([[:space:]]*|[[:space:]]+[^>]*)>(.+?)<[[:space:]]*/a[[:space:]]*>}mxi) do |_placeholder|
         link = $3
         text = $6
-        text.gsub!(/<.+?>/, '')
+        text.gsub!(%r{<.+?>}, '')
 
         link_compare = link.dup
         if link_compare.present?
@@ -147,20 +149,20 @@ class String
 
         if link_compare.present? && text_compare.blank?
           link
-        elsif (link_compare.blank? && text_compare.present?) || (link_compare && link_compare =~ /^mailto/i)
+        elsif (link_compare.blank? && text_compare.present?) || (link_compare && link_compare =~ %r{^mailto}i)
           text
         elsif link_compare.present? && text_compare.present? && (link_compare == text_compare || link_compare == "mailto:#{text}".downcase || link_compare == "http://#{text}".downcase)
           "######LINKEXT:#{link}/TEXT:#{text}######"
-        elsif text !~ /^http/
+        elsif text !~ %r{^http}
           "#{text} (######LINKRAW:#{link}######)"
         else
           "#{link} (######LINKRAW:#{text}######)"
         end
       end
-    elsif string.scan(/<a[[:space:]]/i).count < 5_000
-      string.gsub!(/<a[[:space:]].*?href=("|')(.+?)("|').*?>/ix) do
+    elsif string.scan(%r{<a[[:space:]]}i).count < 5_000
+      string.gsub!(%r{<a[[:space:]].*?href=("|')(.+?)("|').*?>}ix) do
         link = $2
-        counter = counter + 1
+        counter += 1
         link_list += "[#{counter}] #{link}\n"
         "[#{counter}] "
       end
@@ -170,35 +172,35 @@ class String
     string.gsub!(%r{<style(|[[:space:]].+?)>(.+?)</style>}im, '')
 
     # remove empty lines
-    string.gsub!(/^[[:space:]]*/m, '')
+    string.gsub!(%r{^[[:space:]]*}m, '')
     if strict
       string.gsub!(%r{< [[:space:]]* (/*) [[:space:]]* (b|i|ul|ol|li|u|h1|h2|h3|hr) ([[:space:]]*|[[:space:]]+[^>]*) >}mxi, '######\1\2######')
     end
 
     # pre/code handling 1/2
     string.gsub!(%r{<pre>(.+?)</pre>}m) do |placeholder|
-      placeholder.gsub(/\n/, '###BR###')
+      placeholder.gsub(%r{\n}, '###BR###')
     end
     string.gsub!(%r{<code>(.+?)</code>}m) do |placeholder|
-      placeholder.gsub(/\n/, '###BR###')
+      placeholder.gsub(%r{\n}, '###BR###')
     end
 
     # insert spaces on [A-z]\n[A-z]
-    string.gsub!(/([A-z])[[:space:]]([A-z])/m, '\1 \2')
+    string.gsub!(%r{([A-z])[[:space:]]([A-z])}m, '\1 \2')
 
     # remove all new lines
-    string.gsub!(/(\n\r|\r\r\n|\r\n|\n)/, '')
+    string.gsub!(%r{(\n\r|\r\r\n|\r\n|\n)}, '')
 
     # blockquote handling
     string.gsub!(%r{<blockquote(| [^>]*)>(.+?)</blockquote>}m) do
-      "\n#{$2.html2text(true).gsub(/^(.*)$/, '&gt; \1')}\n"
+      "\n#{$2.html2text(true).gsub(%r{^(.*)$}, '&gt; \1')}\n"
     end
 
     # pre/code handling 2/2
-    string.gsub!(/###BR###/, "\n")
+    string.gsub!(%r{###BR###}, "\n")
 
     # add counting
-    string.gsub!(/<li(| [^>]*)>/i, "\n* ")
+    string.gsub!(%r{<li(| [^>]*)>}i, "\n* ")
 
     # add hr
     string.gsub!(%r{<hr(|/| [^>]*)>}i, "\n___\n")
@@ -214,10 +216,10 @@ class String
     string.gsub!(%r{</td>}i, ' ')
 
     # strip all other tags
-    string.gsub!(/<.+?>/, '')
+    string.gsub!(%r{<.+?>}, '')
 
     # replace multiple spaces with one
-    string.gsub!(/  /, ' ')
+    string.gsub!(%r{  }, ' ')
 
     # add hyperlinks
     if strict
@@ -225,11 +227,11 @@ class String
         pre = $1
         content = $2
         post = $5
-        if content.match?(/^www/i)
+        if content.match?(%r{^www}i)
           content = "http://#{content}"
         end
 
-        if content =~ /^(http|https|ftp|tel)/i
+        if content =~ %r{^(http|https|ftp|tel)}i
           "#{pre}######LINKRAW:#{content}#######{post}"
         else
           "#{pre}#{content}#{post}"
@@ -250,12 +252,12 @@ class String
       string.gsub!('&nbsp;', ' ')
 
       # encode html entities like "&#8211;"
-      string.gsub!(/(&\#(\d+);?)/x) do
+      string.gsub!(%r{(&\#(\d+);?)}x) do
         $2.chr
       end
 
       # encode html entities like "&#3d;"
-      string.gsub!(/(&\#[xX]([0-9a-fA-F]+);?)/x) do
+      string.gsub!(%r{(&\#[xX]([0-9a-fA-F]+);?)}x) do
         chr_orig = $1
         hex      = $2.hex
         if hex
@@ -283,10 +285,10 @@ class String
     string = string.utf8_encode(fallback: :read_as_sanitized_binary)
 
     # remove tailing empty spaces
-    string.gsub!(/[[:blank:]]+$/, '')
+    string.gsub!(%r{[[:blank:]]+$}, '')
 
     # remove double multiple empty lines
-    string.gsub!(/\n\n\n+/, "\n\n")
+    string.gsub!(%r{\n\n\n+}, "\n\n")
 
     # add extracted links
     if link_list != ''
@@ -294,7 +296,7 @@ class String
     end
 
     # remove double multiple empty lines
-    string.gsub!(/\n\n\n+/, "\n\n")
+    string.gsub!(%r{\n\n\n+}, "\n\n")
 
     string.strip
   end
@@ -307,7 +309,7 @@ class String
 
   def text2html
     text = CGI.escapeHTML(self)
-    text.gsub!(/\n/, '<br>')
+    text.gsub!(%r{\n}, '<br>')
     text.chomp
   end
 
@@ -327,8 +329,8 @@ class String
       string = html2text.text2html
       string.signature_identify('text')
       marker_template = '<span class="js-signatureMarker"></span>'
-      string.sub!(/######SIGNATURE_MARKER######/, marker_template)
-      string.gsub!(/######SIGNATURE_MARKER######/, '')
+      string.sub!(%r{######SIGNATURE_MARKER######}, marker_template)
+      string.gsub!(%r{######SIGNATURE_MARKER######}, '')
       return string.chomp
     end
     string.gsub!(%r{(<p>[[:space:]]*</p>([[:space:]]*)){2,}}im, '<p>&nbsp;</p>\2')
@@ -340,7 +342,7 @@ class String
     string.gsub!(%r{<p>[[:space:]]*</p>(<br(|/)>[[:space:]]*)+<p>[[:space:]]*</p>}im, '<p> </p><p> </p>')
     string.gsub!(%r\(<div>[[:space:]]*</div>[[:space:]]*){2,}\im, '<div> </div>')
     string.gsub!(%r{<div>&nbsp;</div>[[:space:]]*(<div>&nbsp;</div>){1,}}im, '<div>&nbsp;</div>')
-    string.gsub!(/(<br>[[:space:]]*){3,}/im, '<br><br>')
+    string.gsub!(%r{(<br>[[:space:]]*){3,}}im, '<br><br>')
     string.gsub!(%r\(<br(|/)>[[:space:]]*){3,}\im, '<br/><br/>')
     string.gsub!(%r{<p>[[:space:]]+</p>}im, '<p>&nbsp;</p>')
     string.gsub!(%r{\A(<br(|/)>[[:space:]]*)*}i, '')
@@ -350,8 +352,8 @@ class String
     string.signature_identify('html')
 
     marker_template = '<span class="js-signatureMarker"></span>'
-    string.sub!(/######SIGNATURE_MARKER######/, marker_template)
-    string.gsub!(/######SIGNATURE_MARKER######/, '')
+    string.sub!(%r{######SIGNATURE_MARKER######}, marker_template)
+    string.gsub!(%r{######SIGNATURE_MARKER######}, '')
     string.chomp
   end
 
@@ -371,7 +373,7 @@ class String
         '<div(|.+?)>[[:space:]]*<br>[[:space:]]*(On|Am|Le|El|Den|Dňa|W dniu|Il|Op|Dne|Dana)[[:space:]].{1,500}<blockquote',
       ]
       map.each do |regexp|
-        string.sub!(/#{regexp}/m) do |placeholder|
+        string.sub!(%r{#{regexp}}m) do |placeholder|
           "#{marker}#{placeholder}"
         end
       end
@@ -385,7 +387,7 @@ class String
     end
 
     # search for signature separator "--\n"
-    string.sub!(/^\s{0,2}--\s{0,2}$/) do |placeholder|
+    string.sub!(%r{^\s{0,2}--\s{0,2}$}) do |placeholder|
       "#{marker}#{placeholder}"
     end
 
@@ -415,7 +417,6 @@ class String
     map['otrs-en-de'] = '^.{6,10}[[:space:]].{3,10}[[:space:]]-[[:space:]].{1,250}[[:space:]](wrote|schrieb):'
 
     # Ms
-    # rubocop:disable Style/AsciiComments
     # From: Martin Edenhofer via Znuny Support [mailto:support@znuny.inc]
     # Send: Donnerstag, 2. April 2015 10:00
     # To/Cc/Bcc: xxx
@@ -430,8 +431,6 @@ class String
     # À/?/?: xxx
     # Envoyé : mercredi 29 avril 2015 17:31
     # Objet : xxx
-    # rubocop:enable Style/AsciiComments
-
     # en/de/fr | sometimes ms adds a space to "xx : value"
     map['ms-en-de-fr_from'] = '^(Von|From|De|от|Z|Od|Ze|Fra|Van|Mistä|Από|Dal|から|Из|од|iz|Från|จาก|з|Từ)( ?):[[:space:]].+?'
     map['ms-en-de-fr_from_html'] = "\n######b######(From|Von|De)([[:space:]]?):([[:space:]]?)(######\/b######)[[:space:]].+?"
@@ -439,10 +438,10 @@ class String
     # word 14
     # edv hotline wrote:
     # edv hotline schrieb:
-    #map['word-en-de'] = "[^#{marker}].{1,250}\s(wrote|schrieb):"
+    # map['word-en-de'] = "[^#{marker}].{1,250}\s(wrote|schrieb):"
 
     map.each_value do |regexp|
-      string.sub!(/#{regexp}/) do |placeholder|
+      string.sub!(%r{#{regexp}}) do |placeholder|
         "#{marker}#{placeholder}"
       rescue
         # regexp was not possible because of some string encoding issue, use next
@@ -468,8 +467,8 @@ class String
   #     * `:output_to_binary` returns an ASCII-8BIT-encoded string.
   #     * `:read_as_sanitized_binary` returns a UTF-8-encoded string with all
   #       invalid byte sequences replaced with "?" characters.
-  def utf8_encode(**options)
-    dup.utf8_encode!(options)
+  def utf8_encode(...)
+    dup.utf8_encode!(...)
   end
 
   def utf8_encode!(**options)

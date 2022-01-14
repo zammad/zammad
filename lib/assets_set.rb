@@ -1,4 +1,4 @@
-require_dependency 'assets_set/proxy'
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 # The name AssetsSet combines the Assets term in Zammad with the Set class from the Ruby StdLib.
 # Zammad Assets serve the purpose to limit requests to the REST API. For a requested object all

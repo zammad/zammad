@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 
 RSpec.describe Ldap::Guid do
@@ -28,7 +30,7 @@ RSpec.describe Ldap::Guid do
     end
 
     it 'tunnels to instance method' do
-      instance = double()
+      instance = double
       allow(instance).to receive(:hex)
       allow(described_class).to receive(:new).with(string).and_return(instance)
 
@@ -46,7 +48,7 @@ RSpec.describe Ldap::Guid do
 
     it 'tunnels to instance method' do
 
-      instance = double()
+      instance = double
       allow(instance).to receive(:string)
       allow(described_class).to receive(:new).with(hex).and_return(instance)
 

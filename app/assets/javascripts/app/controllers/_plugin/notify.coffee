@@ -51,11 +51,9 @@ class App.Notify extends App.Controller
     )
 
     # request desktop notification after login
-    @controllerBind('auth', (data) ->
-      if !_.isEmpty(data)
-        return if !window.Notification
-        window.Notification.requestPermission()
-    )
+    if App.Session.get() isnt undefined && window.Notification
+      window.Notification.requestPermission()
+
     $(window).focus(
       =>
         for counter, notification of @desktopNotify

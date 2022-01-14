@@ -1,6 +1,6 @@
 class ChannelChat extends App.ControllerSubContent
   requiredPermission: 'admin.channel_chat'
-  header: 'Chat'
+  header: __('Chat')
   events:
     'change .js-params': 'updateParams'
     'input .js-params': 'updateParams'
@@ -32,74 +32,74 @@ class ChannelChat extends App.ControllerSubContent
       name: 'chatId'
       default: '1'
       type: 'Number'
-      description: 'Identifier of the chat-topic.'
+      description: __('Identifier of the chat topic.')
     }
     {
       name: 'show'
       default: true
       type: 'Boolean'
-      description: 'Show the chat when ready.'
+      description: __('Show the chat when ready.')
     }
     {
       name: 'target'
       default: "$('body')"
       type: 'jQuery Object'
-      description: 'Where to append the chat to.'
+      description: __('Where to append the chat to.')
     }
     {
       name: 'host'
       default: '(Empty)'
       type: 'String'
-      description: "If left empty, the host gets auto-detected - in this case %s. The auto-detection reads out the host from the <script> tag. If you don't include it via a <script> tag you need to specify the host."
+      description: __("If left empty, the host gets auto-detected - in this case %s. The auto-detection reads out the host from the <script> tag. If you don't include it via a <script> tag you need to specify the host.")
       descriptionSubstitute: window.location.origin
     }
     {
       name: 'debug'
       default: false
       type: 'Boolean'
-      description: 'Enables console logging.'
+      description: __('Enables console logging.')
     }
     {
       name: 'title'
       default: "'<strong>Chat</strong> with us!'"
       type: 'String'
-      description: 'Welcome Title shown on the closed chat. Can contain HTML.'
+      description: __('Welcome Title shown on the closed chat. Can contain HTML.')
     }
     {
       name: 'fontSize'
       default: 'undefined'
       type: 'String'
-      description: 'CSS font-size with a unit like 12px, 1.5em. If left to undefined it inherits the font-size of the website.'
+      description: __('CSS font-size with a unit like 12px, 1.5em. If left undefined it inherits the font-size of the website.')
     }
     {
       name: 'flat'
       default: 'false'
       type: 'Boolean'
-      description: 'Removes the shadows for a flat look.'
+      description: __('Removes the shadows for a flat look.')
     }
     {
       name: 'buttonClass'
       default: "'open-zammad-chat'"
       type: 'String'
-      description: 'Add this class to a button on your page that should open the chat.'
+      description: __('Add this class to a button on your page that should open the chat.')
     }
     {
       name: 'inactiveClass'
       default: "'is-inactive'"
       type: 'String'
-      description: 'This class gets added to the button on initialization and gets removed once the chat connection got established.'
+      description: __('This class gets added to the button on initialization and gets removed once the chat connection got established.')
     }
     {
       name: 'cssAutoload'
       default: 'true'
       type: 'Boolean'
-      description: 'Automatically loads the chat.css file. If you want to use your own css, just set it to false.'
+      description: __('Automatically loads the chat.css file. If you want to use your own css, just set it to false.')
     }
     {
       name: 'cssUrl'
       default: 'undefined'
       type: 'String'
-      description: 'Location of an external chat.css file.'
+      description: __('Location of an external chat.css file.')
     }
   ]
 
@@ -353,7 +353,7 @@ class ChannelChat extends App.ControllerSubContent
     @code.each (i, block) ->
       hljs.highlightBlock block
 
-App.Config.set('Chat', { prio: 4000, name: 'Chat', parent: '#channels', target: '#channels/chat', controller: ChannelChat, permission: ['admin.channel_chat'] }, 'NavBarAdmin')
+App.Config.set('Chat', { prio: 4000, name: __('Chat'), parent: '#channels', target: '#channels/chat', controller: ChannelChat, permission: ['admin.channel_chat'] }, 'NavBarAdmin')
 
 class Topics extends App.Controller
   events:
@@ -373,9 +373,9 @@ class Topics extends App.Controller
   new: (e) =>
     new App.ControllerGenericNew(
       pageData:
-        title: 'Chats'
-        object: 'Chat'
-        objects: 'Chats'
+        title: __('Chats')
+        object: __('Chat')
+        objects: __('Chats')
       genericObject: 'Chat'
       callback:   @render
       container:  @el.closest('.content')
@@ -389,7 +389,7 @@ class Topics extends App.Controller
       id:        id
       genericObject: 'Chat'
       pageData:
-        object: 'Chat'
+        object: __('Chat')
       container: @el.closest('.content')
       callback:  @render
     )

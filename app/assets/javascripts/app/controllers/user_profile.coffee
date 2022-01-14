@@ -15,10 +15,15 @@ class App.UserProfile extends App.Controller
 
     if App.User.exists(@user_id)
       user = App.User.find(@user_id)
+      icon = user.icon()
+
+      if user.active is false
+        icon = 'inactive-' + icon
 
       meta.head       = user.displayName()
       meta.title      = user.displayName()
-      meta.iconClass  = user.icon()
+      meta.iconClass  = icon
+      meta.active     = user.active
     meta
 
   url: =>
@@ -93,9 +98,9 @@ class ActionRow extends App.ControllerObserverActionRow
       genericObject: 'User'
       screen: 'edit'
       pageData:
-        title: 'Users'
-        object: 'User'
-        objects: 'Users'
+        title: __('Users')
+        object: __('User')
+        objects: __('Users')
       container: @el.closest('.content')
     )
 
@@ -117,7 +122,7 @@ class ActionRow extends App.ControllerObserverActionRow
       error: (data, status, xhr) =>
         @notify
           type:      'error'
-          msg:       App.i18n.translateContent('Failed to sent Email "%s". Please contact an administrator.', user.email)
+          msg:       App.i18n.translateContent('Failed to send email to "%s". Please contact an administrator.', user.email)
           removeAll: true
     )
 
@@ -125,12 +130,12 @@ class ActionRow extends App.ControllerObserverActionRow
     actions = [
       {
         name:     'history'
-        title:    'History'
+        title:    __('History')
         callback: @showHistory
       }
       {
         name:     'ticket'
-        title:    'New Ticket'
+        title:    __('New Ticket')
         callback: @newTicket
       }
     ]
@@ -138,20 +143,20 @@ class ActionRow extends App.ControllerObserverActionRow
     if user.isAccessibleBy(App.User.current(), 'change')
       actions.unshift {
         name:     'edit'
-        title:    'Edit'
+        title:    __('Edit')
         callback: @editUser
       }
 
       if user.verified isnt true && user.source is 'signup'
         actions.push({
           name:     'resend_verification_email'
-          title:    'Resend verification email'
+          title:    __('Resend verification email')
           callback: @resendVerificationEmail
         })
 
     if @permissionCheck('admin.data_privacy')
       actions.push {
-        title:    'Delete'
+        title:    __('Delete')
         name:     'delete'
         callback: =>
           @navigate "#system/data_privacy/#{user.id}"

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 module Ticket::Number::Increment
   extend Ticket::Number::Base
@@ -38,13 +38,13 @@ module Ticket::Number::Increment
     # probe format
     # NOTE: we use `(?<=\W|^)` at the start of the regular expressions below
     # because `\b` fails when ticket_hook begins with a non-word character (like '#')
-    string.scan(/(?<=\W|^)#{Regexp.quote(ticket_hook)}#{Regexp.quote(ticket_hook_divider)}(#{system_id}\d{2,48})\b/i) do
+    string.scan(%r{(?<=\W|^)#{Regexp.quote(ticket_hook)}#{Regexp.quote(ticket_hook_divider)}(#{system_id}\d{2,48})\b}i) do
       ticket = Ticket.find_by(number: $1)
       break if ticket
     end
 
     if !ticket
-      string.scan(/(?<=\W|^)#{Regexp.quote(ticket_hook)}\s{0,2}(#{system_id}\d{2,48})\b/i) do
+      string.scan(%r{(?<=\W|^)#{Regexp.quote(ticket_hook)}\s{0,2}(#{system_id}\d{2,48})\b}i) do
         ticket = Ticket.find_by(number: $1)
         break if ticket
       end

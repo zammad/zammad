@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'test_helper'
 
 class EmailBuildTest < ActiveSupport::TestCase
@@ -7,7 +9,7 @@ class EmailBuildTest < ActiveSupport::TestCase
     result = Channel::EmailBuild.html_complete_check(html)
 
     assert(result.start_with?('<!DOCTYPE'), 'test 1')
-    assert(result !~ /^.+?<!DOCTYPE/, 'test 1')
+    assert(result !~ %r{^.+?<!DOCTYPE}, 'test 1')
     assert(result.include?('<html>'), 'test 1')
     assert(result.include?('font-family'), 'test 1')
     assert(result.include?('<b>test</b>'), 'test 1')
@@ -15,10 +17,10 @@ class EmailBuildTest < ActiveSupport::TestCase
     html   = 'invalid <!DOCTYPE html><html><b>test</b></html>'
     result = Channel::EmailBuild.html_complete_check(html)
 
-    assert(result !~ /^<!DOCTYPE/, 'test 2')
-    assert(result =~ /^.+?<!DOCTYPE/, 'test 2')
+    assert(result !~ %r{^<!DOCTYPE}, 'test 2')
+    assert(result =~ %r{^.+?<!DOCTYPE}, 'test 2')
     assert(result.include?('<html>'), 'test 2')
-    assert(result !~ /font-family/, 'test 2')
+    assert(result !~ %r{font-family}, 'test 2')
     assert(result.include?('<b>test</b>'), 'test 2')
 
     # Issue #1230, missing backslashes
@@ -335,8 +337,8 @@ text
     quoted_in_one_line = Channel::EmailBuild.recipient_line('Somebody | Some Org', 'some.body@example.com')
     assert_equal('"Somebody | Some Org" <some.body@example.com>', quoted_in_one_line)
 
-    quoted_in_one_line = Channel::EmailBuild.recipient_line('Test Master Agent via Support', 'some.body@example.com')
-    assert_equal('"Test Master Agent via Support" <some.body@example.com>', quoted_in_one_line)
+    quoted_in_one_line = Channel::EmailBuild.recipient_line('Test Admin Agent via Support', 'some.body@example.com')
+    assert_equal('"Test Admin Agent via Support" <some.body@example.com>', quoted_in_one_line)
 
   end
 
@@ -396,6 +398,6 @@ text
     File.write('append_test.eml', mail.to_s)
 
     # Email Content should appear before the Text Content within the raw email
-    assert_match(/Email Content[\s\S]*Text Content/, mail.to_s)
+    assert_match(%r{Email Content[\s\S]*Text Content}, mail.to_s)
   end
 end

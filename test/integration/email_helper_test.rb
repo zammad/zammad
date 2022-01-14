@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'test_helper'
 
 class EmailHelperTest < ActiveSupport::TestCase
@@ -142,7 +144,7 @@ class EmailHelperTest < ActiveSupport::TestCase
     result = EmailHelper::Probe.inbound(
       adapter: 'imap2',
       options: {
-        host:     'not_existsing_host',
+        host:     'nonexisting_host',
         port:     993,
         ssl:      true,
         user:     'some@example.com',
@@ -156,7 +158,7 @@ class EmailHelperTest < ActiveSupport::TestCase
     result = EmailHelper::Probe.inbound(
       adapter: 'imap',
       options: {
-        host:     'not_existsing_host',
+        host:     'nonexisting_host',
         port:     993,
         ssl:      true,
         user:     'some@example.com',
@@ -166,14 +168,14 @@ class EmailHelperTest < ActiveSupport::TestCase
 
     assert_equal('invalid', result[:result])
     assert_equal('Hostname not found!', result[:message_human])
-    assert_equal('not_existsing_host', result[:settings][:options][:host])
+    assert_equal('nonexisting_host', result[:settings][:options][:host])
 
     # try to access imap on host with blocked port to force a "Connection refused!" error
     result = EmailHelper::Probe.inbound(
       adapter: 'imap',
       options: {
-        host:     'no-imap-host.test.zammad.org',
-        port:     993,
+        host:     '127.0.0.1',
+        port:     8, # no service to be expected
         ssl:      true,
         user:     'some@example.com',
         password: 'password',
@@ -181,7 +183,7 @@ class EmailHelperTest < ActiveSupport::TestCase
     )
     assert_equal('invalid', result[:result])
     assert_equal('Connection refused!', result[:message_human])
-    assert_equal('no-imap-host.test.zammad.org', result[:settings][:options][:host])
+    assert_equal('127.0.0.1', result[:settings][:options][:host])
 
     result = EmailHelper::Probe.inbound(
       adapter: 'imap',
@@ -194,7 +196,7 @@ class EmailHelperTest < ActiveSupport::TestCase
       }
     )
     assert_equal('invalid', result[:result])
-    assert_match(/Host not reachable|No route to host/, result[:message_human])
+    assert_match(%r{Host not reachable|No route to host}, result[:message_human])
     assert_equal('172.42.42.42', result[:settings][:options][:host])
 
     # gmail
@@ -209,7 +211,7 @@ class EmailHelperTest < ActiveSupport::TestCase
       }
     )
     assert_equal('invalid', result[:result])
-    assert_match(/Authentication failed, username incorrect|Authentication failed, invalid credentials/, result[:message_human])
+    assert_match(%r{Authentication failed, username incorrect|Authentication failed, invalid credentials}, result[:message_human])
     assert_equal('imap.gmail.com', result[:settings][:options][:host])
 
     result = EmailHelper::Probe.inbound(
@@ -226,9 +228,9 @@ class EmailHelperTest < ActiveSupport::TestCase
 
     # if we have to many failed logins, we need to handle another error message
     if result[:message_human].present?
-      assert_match(/Authentication failed, username incorrect|Authentication failed, invalid credentials/, result[:message_human])
+      assert_match(%r{Authentication failed, username incorrect|Authentication failed, invalid credentials}, result[:message_human])
     else
-      assert_match(/Web login required/, result[:message])
+      assert_match(%r{Web login required}, result[:message])
     end
     assert_equal('imap.gmail.com', result[:settings][:options][:host])
 
@@ -275,7 +277,7 @@ class EmailHelperTest < ActiveSupport::TestCase
       {
         adapter: 'smtp2',
         options: {
-          host:      'not_existsing_host',
+          host:      'nonexisting_host',
           port:      25,
           start_tls: true,
           user:      'some@example.com',
@@ -292,7 +294,7 @@ class EmailHelperTest < ActiveSupport::TestCase
       {
         adapter: 'smtp',
         options: {
-          host:      'not_existsing_host',
+          host:      'nonexisting_host',
           port:      25,
           start_tls: true,
           user:      'some@example.com',
@@ -304,15 +306,15 @@ class EmailHelperTest < ActiveSupport::TestCase
 
     assert_equal('invalid', result[:result])
     assert_equal('Hostname not found!', result[:message_human])
-    assert_equal('not_existsing_host', result[:settings][:options][:host])
+    assert_equal('nonexisting_host', result[:settings][:options][:host])
 
     # try to access SMTP on host with blocked port to force a "Connection refused!" error
     result = EmailHelper::Probe.outbound(
       {
         adapter: 'smtp',
         options: {
-          host:      'no-imap-host.test.zammad.org',
-          port:      26,
+          host:      '127.0.0.1',
+          port:      8, # no service to be expected
           start_tls: true,
           user:      'some@example.com',
           password:  'password',
@@ -322,7 +324,7 @@ class EmailHelperTest < ActiveSupport::TestCase
     )
     assert_equal('invalid', result[:result])
     assert_equal('Connection refused!', result[:message_human])
-    assert_equal('no-imap-host.test.zammad.org', result[:settings][:options][:host])
+    assert_equal('127.0.0.1', result[:settings][:options][:host])
 
     result = EmailHelper::Probe.outbound(
       {
@@ -338,7 +340,7 @@ class EmailHelperTest < ActiveSupport::TestCase
       'some@example.com',
     )
     assert_equal('invalid', result[:result])
-    assert_match(/Host not reachable|No route to host/, result[:message_human])
+    assert_match(%r{Host not reachable|No route to host}, result[:message_human])
     assert_equal('172.42.42.42', result[:settings][:options][:host])
 
     # gmail
@@ -378,7 +380,7 @@ class EmailHelperTest < ActiveSupport::TestCase
     if result[:message_human].present?
       assert_equal('Authentication failed!', result[:message_human])
     else
-      assert_match(/Please log in with your web browser and then try again/, result[:message])
+      assert_match(%r{Please log in with your web browser and then try again}, result[:message])
     end
     assert_equal('smtp.gmail.com', result[:settings][:options][:host])
 

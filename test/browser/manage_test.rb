@@ -1,14 +1,16 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'browser_test_helper'
 
 class ManageTest < TestCase
   def test_user
-    random     = "manage-test-#{rand(999_999)}"
+    random     = "manage-test-#{SecureRandom.uuid}"
     user_email = "#{random}@example.com"
 
     # user management
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
@@ -28,13 +30,13 @@ class ManageTest < TestCase
 
     click(css: '.table-overview tr:last-child td')
 
-    modal_ready()
+    modal_ready
     set(
       css:   '.modal input[name="lastname"]',
       value: "2Manage Lastname#{random}",
     )
     click(css: '.modal button.js-submit')
-    modal_disappear()
+    modal_disappear
 
     watch_for(
       css:   'body',
@@ -56,7 +58,7 @@ class ManageTest < TestCase
 
     click(css: '.content:not(.hide) .action:last-child .js-edit')
 
-    modal_ready()
+    modal_ready
     set(
       css:   '.modal input[name=name]',
       value: "some sla update #{random}",
@@ -66,7 +68,7 @@ class ManageTest < TestCase
       value: '2:01',
     )
     click(css: '.modal button.js-submit')
-    modal_disappear()
+    modal_disappear
 
     watch_for(
       css:   'body',
@@ -92,7 +94,7 @@ class ManageTest < TestCase
       value: "some sla update #{random}",
     )
 
-    reload()
+    reload
     sleep 2
 
     click(css: 'a[href="#manage"]')

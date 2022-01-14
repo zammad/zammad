@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 module NotificationFactory
   TEMPLATE_PATH_STRING = Rails.root.join('app/views/%<type>s/%<template>s/%<filename>s').to_s.freeze
   APPLICATION_TEMPLATE_PATH_STRING = Rails.root.join('app/views/%<type>s/application.%<format>s.erb').to_s.freeze

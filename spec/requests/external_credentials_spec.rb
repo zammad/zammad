@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 
 RSpec.describe 'External Credentials', type: :request do
@@ -177,7 +179,7 @@ RSpec.describe 'External Credentials', type: :request do
       end
     end
 
-    context 'for Twitter', :use_vcr do
+    context 'for Twitter', :use_vcr, required_envs: %w[TWITTER_CONSUMER_KEY TWITTER_CONSUMER_SECRET TWITTER_OAUTH_TOKEN TWITTER_OAUTH_TOKEN_SECRET TWITTER_DEV_ENVIRONMENT] do
       shared_context 'for callback URL configuration' do
         # NOTE: When recording a new VCR cassette for these tests,
         # the URL below must match the callback URL
@@ -190,7 +192,7 @@ RSpec.describe 'External Credentials', type: :request do
 
       shared_examples 'for failure cases' do
         it 'responds with the appropriate status and error message' do
-          send(*endpoint, as: :json, params: try(:params) || {})
+          send(*endpoint, as: :json, params: try(:params) || {}, headers: headers)
 
           expect(response).to have_http_status(status)
           expect(json_response).to include('error' => error_message)
@@ -225,7 +227,7 @@ RSpec.describe 'External Credentials', type: :request do
           include_examples 'for failure cases' do
             let(:status) { :ok }
             let(:error_message) { <<~ERR.chomp }
-              401 Authorization Required (Invalid credentials may be to blame.)
+              401 Unauthorized (Invalid credentials may be to blame.)
             ERR
           end
         end
@@ -260,7 +262,7 @@ RSpec.describe 'External Credentials', type: :request do
           include_examples 'for failure cases' do
             let(:status) { :ok }
             let(:error_message) { <<~ERR.chomp }
-              Dev Environment Label invalid. Please use an existing one ["zammad"], or create a new one.
+              Dev Environment Label invalid. Please use an existing one ["#{ENV.fetch('TWITTER_DEV_ENVIRONMENT', 'Integration')}"], or create a new one.
             ERR
           end
         end
@@ -291,7 +293,7 @@ RSpec.describe 'External Credentials', type: :request do
 
               expect(WebMock)
                 .to have_requested(:post, "https://api.twitter.com/1.1/account_activity/all/#{env_name}/webhooks.json")
-                .with(body: "url=#{CGI.escape(webhook_url)}" )
+                .with(body: "url=#{CGI.escape(webhook_url)}")
             end
           end
 
@@ -346,7 +348,7 @@ RSpec.describe 'External Credentials', type: :request do
           include_examples 'for failure cases' do
             let(:status) { :internal_server_error }
             let(:error_message) { <<~ERR.chomp }
-              401 Authorization Required (Invalid credentials may be to blame.)
+              401 Unauthorized (Invalid credentials may be to blame.)
             ERR
           end
         end
@@ -372,7 +374,7 @@ RSpec.describe 'External Credentials', type: :request do
 
             expect(WebMock)
               .to have_requested(:post, 'https://api.twitter.com/oauth/request_token')
-              .with(headers: { 'Authorization' => /oauth_consumer_key="#{twitter_credential.credentials[:consumer_key]}"/ } )
+              .with(headers: { 'Authorization' => %r{oauth_consumer_key="#{twitter_credential.credentials[:consumer_key]}"} })
           end
 
           it 'redirects to Twitter authorization URL' do
@@ -413,7 +415,14 @@ RSpec.describe 'External Credentials', type: :request do
 
           let!(:twitter_credential) { create(:twitter_credential) }
 
-          before { get '/api/v1/external_credentials/twitter/link_account', as: :json }
+          # Rails / Rack needs to detect that the request comes via HTTPS as well
+          let(:headers) do
+            {
+              'X-Forwarded-Proto' => 'https'
+            }
+          end
+
+          before { get '/api/v1/external_credentials/twitter/link_account', as: :json, headers: headers }
 
           include_examples 'for failure cases' do
             let(:status) { :unprocessable_entity }
@@ -456,7 +465,14 @@ RSpec.describe 'External Credentials', type: :request do
           let(:oauth_token) { 'DyhnyQAAAAAA9CNXAAABcSxAexs' }
           let(:oauth_verifier) { '15DOeRkjP4JkOSVqULkTKA1SCuIPP105' }
 
-          before { get '/api/v1/external_credentials/twitter/link_account', as: :json }
+          # Rails / Rack needs to detect that the request comes via HTTPS as well
+          let(:headers) do
+            {
+              'X-Forwarded-Proto' => 'https'
+            }
+          end
+
+          before { get '/api/v1/external_credentials/twitter/link_account', as: :json, headers: headers }
 
           context 'if Twitter account has already been added' do
             let!(:channel) { create(:twitter_channel, custom_options: channel_options) }
@@ -470,12 +486,12 @@ RSpec.describe 'External Credentials', type: :request do
             end
 
             it 'uses the existing channel' do
-              expect { send(*endpoint, as: :json, params: params) }
+              expect { send(*endpoint, as: :json, params: params, headers: headers) }
                 .not_to change(Channel, :count)
             end
 
             it 'updates channel properties' do
-              expect { send(*endpoint, as: :json, params: params) }
+              expect { send(*endpoint, as: :json, params: params, headers: headers) }
                 .to change { channel.reload.options[:user][:name] }
                 .and change { channel.reload.options[:auth][:external_credential_id] }
                 .and change { channel.reload.options[:auth][:oauth_token] }
@@ -483,7 +499,7 @@ RSpec.describe 'External Credentials', type: :request do
             end
 
             it 'subscribes to webhooks' do
-              send(*endpoint, as: :json, params: params)
+              send(*endpoint, as: :json, params: params, headers: headers)
 
               expect(WebMock)
                 .to have_requested(:post, "https://api.twitter.com/1.1/account_activity/all/#{twitter_credential.credentials[:env]}/subscriptions.json")
@@ -494,7 +510,7 @@ RSpec.describe 'External Credentials', type: :request do
           end
 
           it 'creates a new channel' do
-            expect { send(*endpoint, as: :json, params: params) }
+            expect { send(*endpoint, as: :json, params: params, headers: headers) }
               .to change(Channel, :count).by(1)
 
             expect(Channel.last.options)
@@ -504,19 +520,19 @@ RSpec.describe 'External Credentials', type: :request do
           end
 
           it 'redirects to the newly created channel' do
-            send(*endpoint, as: :json, params: params)
+            send(*endpoint, as: :json, params: params, headers: headers)
 
             expect(response).to redirect_to(%r{/#channels/twitter/#{Channel.last.id}$})
           end
 
           it 'clears the :request_token session variable' do
-            send(*endpoint, as: :json, params: params)
+            send(*endpoint, as: :json, params: params, headers: headers)
 
             expect(session[:request_token]).to be(nil)
           end
 
           it 'subscribes to webhooks' do
-            send(*endpoint, as: :json, params: params)
+            send(*endpoint, as: :json, params: params, headers: headers)
 
             expect(WebMock)
               .to have_requested(:post, "https://api.twitter.com/1.1/account_activity/all/#{twitter_credential.credentials[:env]}/subscriptions.json")

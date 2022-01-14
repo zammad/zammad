@@ -14,6 +14,15 @@ class App.WidgetUser extends App.Controller
   release: =>
     App.User.unsubscribe(@subscribeId)
 
+  getAdvancedSearchUrl: (customer_id, states) ->
+    states_string = ''
+    if states.length > 1
+      states_string = ' AND state.name:("' + states.join('" OR "') + '")'
+    else
+      states_string = " AND state.name:\"#{states[0]}\""
+
+    return "/#search/customer_id:#{customer_id}#{states_string}"
+
   render: (user) =>
 
     # execute callback on render/rerender
@@ -48,34 +57,36 @@ class App.WidgetUser extends App.Controller
     if user.preferences
       items = []
       if user.preferences.tickets_open > 0
+        states_open = App.TicketState.byCategory('open').map((state) -> state.name)
         item =
-          url: ''
+          url: @getAdvancedSearchUrl(@user_id, states_open)
           name: 'open'
           count: user.preferences.tickets_open
-          title: 'Open Tickets'
+          title: __('Open Tickets')
           class: 'user-tickets'
           data:  'open'
         items.push item
       if user.preferences.tickets_closed > 0
+        states_closed = App.TicketState.byCategory('closed').map((state) -> state.name)
         item =
-          url: ''
+          url: @getAdvancedSearchUrl(@user_id, states_closed)
           name: 'closed'
           count: user.preferences.tickets_closed
-          title: 'Closed Tickets'
+          title: __('Closed Tickets')
           class: 'user-tickets'
           data:  'closed'
         items.push item
 
       if items[0]
         topic =
-          title: 'Tickets'
+          title: __('Tickets')
           items: items
         user['links'] = []
         user['links'].push topic
 
     # insert userData
     @html App.view('widget/user')(
-      header:   'Customer'
+      header:   __('Customer')
       edit:     true
       user:     user
       userData: userData

@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 module CanCloneAttachments
   extend ActiveSupport::Concern
 
@@ -37,7 +39,7 @@ returns
       if options[:only_attached_attachments] == true && is_html_content == true
 
         content_id = new_attachment.preferences['Content-ID'] || new_attachment.preferences['content_id']
-        next if content_id.present? && body.present? && body.match?(/#{Regexp.quote(content_id)}/i)
+        next if content_id.present? && body.present? && body.match?(%r{#{Regexp.quote(content_id)}}i)
       end
 
       # only_inline_attachments mode is used when quoting HTML mail with #{article.body_as_html}
@@ -46,11 +48,11 @@ returns
         next if body.blank?
 
         content_disposition = new_attachment.preferences['Content-Disposition'] || new_attachment.preferences['content_disposition']
-        next if content_disposition.present? && content_disposition !~ /inline/
+        next if content_disposition.present? && content_disposition !~ %r{inline}
 
         content_id = new_attachment.preferences['Content-ID'] || new_attachment.preferences['content_id']
         next if content_id.blank?
-        next if !body.match?(/#{Regexp.quote(content_id)}/i)
+        next if !body.match?(%r{#{Regexp.quote(content_id)}}i)
       end
 
       already_added = false

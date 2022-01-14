@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 class Sequencer
   class Unit
     module Import
@@ -13,6 +15,7 @@ class Sequencer
             end
 
             def resource_collection
+              require 'zendesk_api' # Only load this gem when it is really used.
               @resource_collection ||= "::ZendeskAPI::#{resource_klass}".constantize.incremental_export(client, 1)
             end
 

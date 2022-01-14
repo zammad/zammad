@@ -1,6 +1,8 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 class TriggerWebhookJob < ApplicationJob
 
-  USER_ATTRIBUTE_BLACKLIST = %w[
+  USER_ATTRIBUTE_FILTER = %w[
     last_login
     login_failed
     password

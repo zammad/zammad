@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'test_helper'
 
 class TicketTriggerExtendedTest < ActiveSupport::TestCase
@@ -548,7 +550,7 @@ Some Text'
     # verfiy if agent2 got no notifcation
     assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket1, user2, 'email'), ticket1.id)
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     ticket1.reload
@@ -664,7 +666,7 @@ Some Text'
       created_by_id: 1,
     )
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     ticket1.reload
@@ -704,7 +706,7 @@ Some Text'
       created_by_id: 1,
     )
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     ticket1.reload
@@ -824,7 +826,7 @@ Some Text'
     assert_equal(1, ticket1.articles.count, 'ticket1.articles verify')
     assert_equal([], ticket1.tag_list)
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
 
     ticket1.reload
     assert_equal('some <b>title</b>  äöüß', ticket1.title, 'ticket1.title verify')

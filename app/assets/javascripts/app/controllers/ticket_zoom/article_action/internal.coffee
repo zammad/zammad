@@ -4,13 +4,13 @@ class Internal
 
     if article.internal is true
       actions.push {
-        name: 'set to public'
+        name: __('set to public')
         type: 'public'
         icon: 'lock-open'
       }
     else
       actions.push {
-        name: 'set to internal'
+        name: ('set to internal')
         type: 'internal'
         icon: 'lock'
       }

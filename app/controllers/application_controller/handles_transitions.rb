@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 module ApplicationController::HandlesTransitions
   extend ActiveSupport::Concern
 
@@ -13,7 +15,7 @@ module ApplicationController::HandlesTransitions
 
     yield
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     PushMessages.finish
     ActiveSupport::Dependencies::Reference.clear!
   ensure

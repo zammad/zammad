@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 
 RSpec.describe ExternalCredential::Google do
@@ -106,7 +108,7 @@ RSpec.describe ExternalCredential::Google do
           .to_return(status: 200, body: token_response_payload.to_json, headers: {})
         stub_request(:get, alias_url).to_return(status: 200, body: alias_response_payload.to_json, headers: {})
 
-        create(:external_credential, name: provider, credentials: { client_id: client_id, client_secret: client_secret } )
+        create(:external_credential, name: provider, credentials: { client_id: client_id, client_secret: client_secret })
       end
 
       it 'creates a Channel instance' do
@@ -127,7 +129,6 @@ RSpec.describe ExternalCredential::Google do
               'options' => a_hash_including(
                 'authentication' => 'xoauth2',
                 'host'           => 'smtp.gmail.com',
-                'domain'         => 'gmail.com',
                 'port'           => 465,
                 'ssl'            => true,
                 'user'           => primary_email,
@@ -155,7 +156,7 @@ RSpec.describe ExternalCredential::Google do
       before do
         stub_request(:post, token_url).to_return(status: response_status, body: response_payload&.to_json, headers: {})
 
-        create(:external_credential, name: provider, credentials: { client_id: client_id, client_secret: client_secret } )
+        create(:external_credential, name: provider, credentials: { client_id: client_id, client_secret: client_secret })
       end
 
       shared_examples 'failed attempt' do
@@ -206,7 +207,7 @@ RSpec.describe ExternalCredential::Google do
       stub_request(:post, token_url).to_return(status: 200, body: token_response_payload.to_json, headers: {})
       stub_request(:get, alias_url).to_return(status: 200, body: alias_response_payload.to_json, headers: {})
 
-      create(:external_credential, name: provider, credentials: { client_id: client_id, client_secret: client_secret } )
+      create(:external_credential, name: provider, credentials: { client_id: client_id, client_secret: client_secret })
       channel = described_class.link_account(request_token, authorization_payload)
 
       # remove stubs and allow new stubbing for tested requests
@@ -299,7 +300,7 @@ RSpec.describe ExternalCredential::Google do
             error_description: 'The OAuth client was not found.'
           }
         end
-        let(:exception_message) { /The OAuth client was not found/ }
+        let(:exception_message) { %r{The OAuth client was not found} }
 
         include_examples 'failed attempt'
       end
@@ -307,7 +308,7 @@ RSpec.describe ExternalCredential::Google do
       context '500 Internal Server Error' do
         let(:response_status) { 500 }
         let(:response_payload) { nil }
-        let(:exception_message) { /code: 500/ }
+        let(:exception_message) { %r{code: 500} }
 
         include_examples 'failed attempt'
       end
@@ -316,7 +317,7 @@ RSpec.describe ExternalCredential::Google do
 
   describe '.request_account_to_link' do
     it 'generates authorize_url from credentials' do
-      google  = create(:external_credential, name: provider, credentials: { client_id: client_id, client_secret: client_secret } )
+      google  = create(:external_credential, name: provider, credentials: { client_id: client_id, client_secret: client_secret })
       request = described_class.request_account_to_link(google.credentials)
 
       expect(request[:authorize_url]).to eq(authorize_url)

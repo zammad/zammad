@@ -1,9 +1,11 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 require 'models/application_model_examples'
 require 'models/concerns/can_be_imported_examples'
 require 'models/concerns/can_csv_import_examples'
 require 'models/concerns/has_history_examples'
-require 'models/concerns/has_object_manager_attributes_validation_examples'
+require 'models/concerns/has_object_manager_attributes_examples'
 require 'models/ticket/article/has_ticket_contact_attributes_impact_examples'
 
 RSpec.describe Ticket::Article, type: :model do
@@ -13,7 +15,7 @@ RSpec.describe Ticket::Article, type: :model do
   it_behaves_like 'CanBeImported'
   it_behaves_like 'CanCsvImport'
   it_behaves_like 'HasHistory'
-  it_behaves_like 'HasObjectManagerAttributesValidation'
+  it_behaves_like 'HasObjectManagerAttributes'
 
   it_behaves_like 'Ticket::Article::HasTicketContactAttributesImpact'
 
@@ -85,11 +87,11 @@ RSpec.describe Ticket::Article, type: :model do
 
       context 'when body contains only injected JS' do
         let(:body) { <<~RAW.chomp }
-          <script type="text/javascript">alert("XSS!");</script>
+          <script type="text/javascript">alert("XSS!");</script> some other text
         RAW
 
         it 'removes <script> tags' do
-          expect(article.body).to eq('alert("XSS!");')
+          expect(article.body).to eq(' some other text')
         end
       end
 
@@ -100,7 +102,7 @@ RSpec.describe Ticket::Article, type: :model do
 
         it 'removes <script> tags' do
           expect(article.body).to eq(<<~SANITIZED.chomp)
-            please tell me this doesn't work: alert("XSS!");
+            please tell me this doesn't work:#{' '}
           SANITIZED
         end
       end
@@ -338,7 +340,7 @@ RSpec.describe Ticket::Article, type: :model do
             it 'does not modify any Log records (because CallerIds from article bodies have #level "maybe")' do
               expect do
                 article.save
-                Observer::Transaction.commit
+                TransactionDispatcher.commit
                 Scheduler.worker(true)
               end.not_to change { log.reload.attributes }
             end
@@ -347,7 +349,7 @@ RSpec.describe Ticket::Article, type: :model do
       end
     end
 
-    describe 'Auto-setting of outgoing Twitter article attributes (via bg jobs):', use_vcr: :with_oauth_headers do
+    describe 'Auto-setting of outgoing Twitter article attributes (via bg jobs):', use_vcr: :with_oauth_headers, required_envs: %w[TWITTER_CONSUMER_KEY TWITTER_CONSUMER_SECRET TWITTER_OAUTH_TOKEN TWITTER_OAUTH_TOKEN_SECRET] do
       subject!(:twitter_article) { create(:twitter_article, sender_name: 'Agent') }
 
       let(:channel) { Channel.find(twitter_article.ticket.preferences[:channel_id]) }
@@ -356,7 +358,7 @@ RSpec.describe Ticket::Article, type: :model do
       it 'sets #from to sender’s Twitter handle' do
         expect(&run_bg_jobs)
           .to change { twitter_article.reload.from }
-          .to('@example')
+          .to('@ZammadTesting')
       end
 
       it 'sets #to to recipient’s Twitter handle' do
@@ -368,7 +370,7 @@ RSpec.describe Ticket::Article, type: :model do
       it 'sets #message_id to tweet ID (https://twitter.com/_/status/<id>)' do
         expect(&run_bg_jobs)
           .to change { twitter_article.reload.message_id }
-          .to('1069382411899817990')
+          .to('1410130368498372609')
       end
 
       it 'sets #preferences with tweet metadata' do
@@ -613,7 +615,7 @@ RSpec.describe Ticket::Article, type: :model do
           article_new = create(:ticket_article)
           UserInfo.current_user_id = 1
 
-          attachments = article_parent.clone_attachments(article_new.class.name, article_new.id, only_inline_attachments: true )
+          attachments = article_parent.clone_attachments(article_new.class.name, article_new.id, only_inline_attachments: true)
 
           expect(attachments.count).to eq(1)
           expect(attachments[0].filename).to eq('some_file1.jpg')

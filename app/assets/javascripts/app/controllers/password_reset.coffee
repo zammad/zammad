@@ -20,14 +20,14 @@ class PasswordReset extends App.ControllerFullPage
       return
 
     # set title
-    @title 'Reset Password'
+    @title __('Reset Password')
     @navupdate '#password_reset'
 
     @render()
 
   render: (params) ->
     configure_attributes = [
-      { name: 'username', display: 'Enter your username or email address', tag: 'input', type: 'text', limit: 100, null: false, class: 'input span4' }
+      { name: 'username', display: __('Enter your username or email address'), tag: 'input', type: 'text', limit: 100, null: false, class: 'input span4' }
     ]
 
     @replaceWith(App.view('password/reset')(params))
@@ -58,12 +58,6 @@ class PasswordReset extends App.ControllerFullPage
     )
 
   success: (data) =>
-
-    # if in developer mode, redirect to set new password
-    if data.token && @Config.get('developer_mode') is true
-      redirect = =>
-        @navigate "#password_reset_verify/#{data.token}"
-      @delay(redirect, 2000)
     @html(App.view('password/reset_sent')())
 
 App.Config.set('password_reset', PasswordReset, 'Routes')

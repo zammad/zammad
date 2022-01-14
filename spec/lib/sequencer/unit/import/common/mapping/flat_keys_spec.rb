@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 
 RSpec.describe Sequencer::Unit::Import::Common::Mapping::FlatKeys, sequencer: :unit do
@@ -9,7 +11,7 @@ RSpec.describe Sequencer::Unit::Import::Common::Mapping::FlatKeys, sequencer: :u
           remote_attribute: 'value',
         }
       )
-    end.to raise_error(RuntimeError, /mapping/)
+    end.to raise_error(RuntimeError, %r{mapping})
   end
 
   it 'maps flat key structures' do

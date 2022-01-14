@@ -1,4 +1,5 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 class GitLab
   class LinkedIssue
 
@@ -98,12 +99,16 @@ class GitLab
 
     def variables(url)
       if url !~ %r{^https?://([^/]+)/(.*)/-/issues/(\d+)$}
-        raise Exceptions::UnprocessableEntity, 'Invalid GitLab issue link format'
+        raise Exceptions::UnprocessableEntity, __('Invalid GitLab issue link format')
       end
 
       host     = $1
       fullpath = $2
       id       = $3
+
+      if client.endpoint_path.present?
+        fullpath.sub!(client.endpoint_path, '')
+      end
 
       if client.endpoint.exclude?(host)
         raise Exceptions::UnprocessableEntity, "Issue link doesn't match configured GitLab endpoint '#{client.endpoint}'"

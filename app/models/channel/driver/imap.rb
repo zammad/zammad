@@ -1,4 +1,5 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'net/imap'
 
 class Channel::Driver::Imap < Channel::EmailParser
@@ -6,6 +7,8 @@ class Channel::Driver::Imap < Channel::EmailParser
   FETCH_METADATA_TIMEOUT = 2.minutes
   FETCH_MSG_TIMEOUT = 4.minutes
   EXPUNGE_TIMEOUT = 16.minutes
+  DEFAULT_TIMEOUT = 45.seconds
+  CHECK_ONLY_TIMEOUT = 6.seconds
 
   def fetchable?(_channel)
     true
@@ -109,15 +112,12 @@ example
     Rails.logger.info "fetching imap (#{options[:host]}/#{options[:user]} port=#{port},ssl=#{ssl},starttls=#{starttls},folder=#{folder},keep_on_server=#{keep_on_server},auth_type=#{options.fetch(:auth_type, 'LOGIN')})"
 
     # on check, reduce open_timeout to have faster probing
-    check_type_timeout = 45
-    if check_type == 'check'
-      check_type_timeout = 6
-    end
+    check_type_timeout = check_type == 'check' ? CHECK_ONLY_TIMEOUT : DEFAULT_TIMEOUT
 
     timeout(check_type_timeout) do
       @imap = ::Net::IMAP.new(options[:host], port, ssl, nil, false)
       if starttls
-        @imap.starttls()
+        @imap.starttls
       end
     end
 
@@ -226,12 +226,12 @@ example
         headers = self.class.extract_rfc822_headers(message_meta)
         subject = headers['Subject']
         next if !subject
-        next if !subject.match?(/#{verify_string}/)
+        next if !subject.match?(%r{#{verify_string}})
 
         Rails.logger.info " - verify email #{verify_string} found"
         timeout(600) do
           @imap.store(message_id, '+FLAGS', [:Deleted])
-          @imap.expunge()
+          @imap.expunge
         end
         disconnect
         return {
@@ -338,7 +338,7 @@ example
     if !keep_on_server
       begin
         timeout(EXPUNGE_TIMEOUT) do
-          @imap.expunge()
+          @imap.expunge
         end
       rescue Timeout::Error => e
         Rails.logger.error "Unable to expunge server (#{options[:host]}/#{options[:user]}): #{e.inspect}"
@@ -354,7 +354,6 @@ example
       raise too_large_messages.join("\n")
     end
 
-    Rails.logger.info 'done'
     {
       result:  result,
       fetched: count_fetched,
@@ -382,7 +381,7 @@ example
     return if !@imap
 
     timeout(1.minute) do
-      @imap.disconnect()
+      @imap.disconnect
     end
   end
 
@@ -407,7 +406,7 @@ returns
     array = string
               .gsub("\r\n\t", ' ') # Some servers (e.g. microsoft365) may put attribute value on a separate line and tab it
               .lines(chomp: true)
-              .map { |line| line.split(/:\s*/, 2).map(&:strip) }
+              .map { |line| line.split(%r{:\s*}, 2).map(&:strip) }
 
     array.each { |elem| elem.append(nil) if elem.one? }
 

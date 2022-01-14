@@ -610,7 +610,7 @@ Some Text'
     # move ticket
     ticket.group = group1
     ticket.save
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
 
     data = "From: me@example.com
 To: customer@example.com

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class UserDevicesController < ApplicationController
   prepend_before_action { authentication_check && authorize! }
@@ -37,7 +37,7 @@ class UserDevicesController < ApplicationController
         next if !session.data['user_device_id']
         next if session.data['user_device_id'] != user_device.id
 
-        SessionHelper.destroy( session.id )
+        SessionHelper.destroy(session.id)
       end
       user_device.destroy
     end

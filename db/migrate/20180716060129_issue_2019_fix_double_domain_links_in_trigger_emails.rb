@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 class Issue2019FixDoubleDomainLinksInTriggerEmails < ActiveRecord::Migration[5.1]
   DOUBLE_DOMAIN_REGEX = %r{(?<=<a href=")https?://[^"]+(?=(https?|\#{config\.http_type})://.+?".*?>)}.freeze
 

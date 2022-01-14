@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 # This temporary workaround for issue #2656.
 # The root cause is an issue in Rails: https://github.com/rails/rails/issues/33600
 # It disables database connnection reaping by setting `reaping_frequency` to 0 for each environment in the config/database.yml file.

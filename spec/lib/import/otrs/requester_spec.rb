@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 
 RSpec.describe Import::OTRS::Requester do
@@ -17,8 +19,8 @@ RSpec.describe Import::OTRS::Requester do
     context 'caching request results' do
 
       let(:response) do
-        response      = double()
-        response_body = double()
+        response      = double
+        response_body = double
         allow(response_body).to receive(:to_s).at_least(:once).and_return('{"Result": {}}')
         allow(response).to receive('success?').at_least(:once).and_return(true)
         allow(response).to receive('body').at_least(:once).and_return(response_body)

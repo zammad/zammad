@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Ticket < ApplicationModel
   include CanBeImported
@@ -13,7 +13,7 @@ class Ticket < ApplicationModel
   include HasOnlineNotifications
   include HasKarmaActivityLog
   include HasLinks
-  include HasObjectManagerAttributesValidation
+  include HasObjectManagerAttributes
   include HasTaskbars
   include Ticket::CallsStatsTicketReopenLog
   include Ticket::EnqueuesUserTicketCounterJob
@@ -35,6 +35,11 @@ class Ticket < ApplicationModel
 
   # This must be loaded late as it depends on the internal before_create and before_update handlers of ticket.rb.
   include Ticket::SetsLastOwnerUpdateTime
+
+  include HasTransactionDispatcher
+
+  # workflow checks should run after before_create and before_update callbacks
+  include ChecksCoreWorkflow
 
   validates :group_id, presence: true
 
@@ -87,46 +92,7 @@ class Ticket < ApplicationModel
 
   association_attributes_ignored :flags, :mentions
 
-  self.inheritance_column = nil
-
   attr_accessor :callback_loop
-
-=begin
-
-get user access conditions
-
-  conditions = Ticket.access_condition( User.find(1) , 'full')
-
-returns
-
-  result = [user1, user2, ...]
-
-=end
-
-  def self.access_condition(user, access)
-    sql  = []
-    bind = []
-
-    if user.permissions?('ticket.agent')
-      sql.push('group_id IN (?)')
-      bind.push(user.group_ids_access(access))
-    end
-
-    if user.permissions?('ticket.customer')
-      if !user.organization || ( !user.organization.shared || user.organization.shared == false )
-        sql.push('tickets.customer_id = ?')
-        bind.push(user.id)
-      else
-        sql.push('(tickets.customer_id = ? OR tickets.organization_id = ?)')
-        bind.push(user.id)
-        bind.push(user.organization.id)
-      end
-    end
-
-    return if sql.blank?
-
-    [ sql.join(' OR ') ].concat(bind)
-  end
 
 =begin
 
@@ -241,7 +207,7 @@ returns
         next
       end
 
-      # check if warning need to be sent
+      # check if warning needs to be sent
       TransactionJob.perform_now(
         object:     'Ticket',
         type:       'escalation_warning',
@@ -324,10 +290,10 @@ returns
     raise Exceptions::UnprocessableEntity, 'ticket already merged, no merge into merged ticket possible' if target_ticket.state.state_type.name == 'merged'
 
     # check different ticket ids
-    raise Exceptions::UnprocessableEntity, 'Can\'t merge ticket with it self!' if id == target_ticket.id
+    raise Exceptions::UnprocessableEntity, __('Can\'t merge ticket with itself!') if id == target_ticket.id
 
     # update articles
-    Transaction.execute do
+    Transaction.execute context: 'merge' do
 
       Ticket::Article.where(ticket_id: id).each(&:touch)
 
@@ -413,6 +379,26 @@ returns
 
       # touch new ticket (to broadcast change)
       target_ticket.touch # rubocop:disable Rails/SkipsModelValidations
+
+      EventBuffer.add('transaction', {
+                        object:     target_ticket.class.name,
+                        type:       'update.received_merge',
+                        data:       target_ticket,
+                        changes:    {},
+                        id:         target_ticket.id,
+                        user_id:    UserInfo.current_user_id,
+                        created_at: Time.zone.now,
+                      })
+
+      EventBuffer.add('transaction', {
+                        object:     self.class.name,
+                        type:       'update.merged_into',
+                        data:       self,
+                        changes:    {},
+                        id:         id,
+                        user_id:    UserInfo.current_user_id,
+                        created_at: Time.zone.now,
+                      })
     end
     true
   end
@@ -500,11 +486,13 @@ get count of tickets and tickets which match on selector
         return [ticket_count, tickets]
       end
 
-      access_condition = Ticket.access_condition(current_user, access)
-      ticket_count = Ticket.distinct.where(access_condition).where(query, *bind_params).joins(tables).count
-      tickets = Ticket.distinct.where(access_condition).where(query, *bind_params).joins(tables).limit(limit)
+      tickets = "TicketPolicy::#{access.camelize}Scope".constantize
+                                                       .new(current_user).resolve
+                                                       .distinct
+                                                       .where(query, *bind_params)
+                                                       .joins(tables)
 
-      return [ticket_count, tickets]
+      return [tickets.count, tickets.limit(limit)]
     rescue ActiveRecord::StatementInvalid => e
       Rails.logger.error e
       raise ActiveRecord::Rollback
@@ -627,7 +615,7 @@ condition example
 
       selector = selector_raw.stringify_keys
       raise "Invalid selector, operator missing #{selector.inspect}" if !selector['operator']
-      raise "Invalid selector, operator #{selector['operator']} is invalid #{selector.inspect}" if !selector['operator'].match?(/^(is|is\snot|contains|contains\s(not|all|one|all\snot|one\snot)|(after|before)\s\(absolute\)|(within\snext|within\slast|after|before)\s\(relative\))|(is\sin\sworking\stime|is\snot\sin\sworking\stime)$/)
+      raise "Invalid selector, operator #{selector['operator']} is invalid #{selector.inspect}" if !selector['operator'].match?(%r{^(is|is\snot|contains|contains\s(not|all|one|all\snot|one\snot)|(after|before)\s\(absolute\)|(within\snext|within\slast|after|before|till|from)\s\(relative\))|(is\sin\sworking\stime|is\snot\sin\sworking\stime)$})
 
       # validate value / allow blank but only if pre_condition exists and is not specific
       if !selector.key?('value') ||
@@ -639,7 +627,7 @@ condition example
       end
 
       # validate pre_condition values
-      return nil if selector['pre_condition'] && selector['pre_condition'] !~ /^(not_set|current_user\.|specific)/
+      return nil if selector['pre_condition'] && selector['pre_condition'] !~ %r{^(not_set|current_user\.|specific)}
 
       # get attributes
       attributes = attribute.split('.')
@@ -656,12 +644,12 @@ condition example
 
       if selector['operator'].include?('in working time')
         next if attributes[1] != 'calendar_id'
-        raise 'Please enable execution_time feature to use it (currently only allowed for triggers and schedulers)' if !options[:execution_time]
+        raise __('Please enable execution_time feature to use it (currently only allowed for triggers and schedulers)') if !options[:execution_time]
 
         biz = Calendar.lookup(id: selector['value'])&.biz
         next if biz.blank?
 
-        if ( selector['operator'] == 'is in working time' && !biz.in_hours?(Time.zone.now) ) || ( selector['operator'] == 'is not in working time' && biz.in_hours?(Time.zone.now) )
+        if (selector['operator'] == 'is in working time' && !biz.in_hours?(Time.zone.now)) || (selector['operator'] == 'is not in working time' && biz.in_hours?(Time.zone.now))
           no_result = true
           break
         end
@@ -699,7 +687,7 @@ condition example
 
       if selector['operator'] == 'is'
         if selector['pre_condition'] == 'not_set'
-          if attributes[1].match?(/^(created_by|updated_by|owner|customer|user)_id/)
+          if attributes[1].match?(%r{^(created_by|updated_by|owner|customer|user)_id})
             query += "(#{attribute} IS NULL OR #{attribute} IN (?))"
             bind_params.push 1
           else
@@ -744,7 +732,7 @@ condition example
         end
       elsif selector['operator'] == 'is not'
         if selector['pre_condition'] == 'not_set'
-          if attributes[1].match?(/^(created_by|updated_by|owner|customer|user)_id/)
+          if attributes[1].match?(%r{^(created_by|updated_by|owner|customer|user)_id})
             query += "(#{attribute} IS NOT NULL AND #{attribute} NOT IN (?))"
             bind_params.push 1
           else
@@ -858,77 +846,29 @@ condition example
         bind_params.push selector['value']
       elsif selector['operator'] == 'within last (relative)'
         query += "#{attribute} BETWEEN ? AND ?"
-        time = nil
-        case selector['range']
-        when 'minute'
-          time = Time.zone.now - selector['value'].to_i.minutes
-        when 'hour'
-          time = Time.zone.now - selector['value'].to_i.hours
-        when 'day'
-          time = Time.zone.now - selector['value'].to_i.days
-        when 'month'
-          time = Time.zone.now - selector['value'].to_i.months
-        when 'year'
-          time = Time.zone.now - selector['value'].to_i.years
-        else
-          raise "Unknown selector attributes '#{selector.inspect}'"
-        end
+        time = range(selector).ago
         bind_params.push time
         bind_params.push Time.zone.now
       elsif selector['operator'] == 'within next (relative)'
         query += "#{attribute} BETWEEN ? AND ?"
-        time = nil
-        case selector['range']
-        when 'minute'
-          time = Time.zone.now + selector['value'].to_i.minutes
-        when 'hour'
-          time = Time.zone.now + selector['value'].to_i.hours
-        when 'day'
-          time = Time.zone.now + selector['value'].to_i.days
-        when 'month'
-          time = Time.zone.now + selector['value'].to_i.months
-        when 'year'
-          time = Time.zone.now + selector['value'].to_i.years
-        else
-          raise "Unknown selector attributes '#{selector.inspect}'"
-        end
+        time = range(selector).from_now
         bind_params.push Time.zone.now
         bind_params.push time
       elsif selector['operator'] == 'before (relative)'
         query += "#{attribute} <= ?"
-        time = nil
-        case selector['range']
-        when 'minute'
-          time = Time.zone.now - selector['value'].to_i.minutes
-        when 'hour'
-          time = Time.zone.now - selector['value'].to_i.hours
-        when 'day'
-          time = Time.zone.now - selector['value'].to_i.days
-        when 'month'
-          time = Time.zone.now - selector['value'].to_i.months
-        when 'year'
-          time = Time.zone.now - selector['value'].to_i.years
-        else
-          raise "Unknown selector attributes '#{selector.inspect}'"
-        end
+        time = range(selector).ago
         bind_params.push time
       elsif selector['operator'] == 'after (relative)'
         query += "#{attribute} >= ?"
-        time = nil
-        case selector['range']
-        when 'minute'
-          time = Time.zone.now + selector['value'].to_i.minutes
-        when 'hour'
-          time = Time.zone.now + selector['value'].to_i.hours
-        when 'day'
-          time = Time.zone.now + selector['value'].to_i.days
-        when 'month'
-          time = Time.zone.now + selector['value'].to_i.months
-        when 'year'
-          time = Time.zone.now + selector['value'].to_i.years
-        else
-          raise "Unknown selector attributes '#{selector.inspect}'"
-        end
+        time = range(selector).from_now
+        bind_params.push time
+      elsif selector['operator'] == 'till (relative)'
+        query += "#{attribute} <= ?"
+        time = range(selector).from_now
+        bind_params.push time
+      elsif selector['operator'] == 'from (relative)'
+        query += "#{attribute} >= ?"
+        time = range(selector).ago
         bind_params.push time
       else
         raise "Invalid operator '#{selector['operator']}' for '#{selector['value'].inspect}'"
@@ -1059,7 +999,7 @@ perform changes on ticket
         if value['pre_condition'].start_with?('not_set')
           value['value'] = 1
         elsif value['pre_condition'].start_with?('current_user.')
-          raise 'Unable to use current_user, got no current_user_id for ticket.perform_changes' if !current_user_id
+          raise __('Unable to use current_user, got no current_user_id for ticket.perform_changes') if !current_user_id
 
           value['value'] = current_user_id
         end
@@ -1081,7 +1021,7 @@ perform changes on ticket
     objects = build_notification_template_objects(article)
 
     perform_article.each do |key, value|
-      raise 'Unable to create article, we only support article.note' if key != 'article.note'
+      raise __('Unable to create article, we only support article.note') if key != 'article.note'
 
       add_trigger_note(id, value, objects, perform_origin)
     end
@@ -1134,6 +1074,7 @@ perform changes on ticket
       type:          Ticket::Article::Type.find_by(name: 'note'),
       preferences:   {
         perform_origin: perform_origin,
+        notification:   true,
       },
       updated_by_id: 1,
       created_by_id: 1,
@@ -1172,7 +1113,7 @@ perform active triggers on ticket
                else
                  ::Trigger.where(active: true).order(:name)
                end
-    return [true, 'No triggers active'] if triggers.blank?
+    return [true, __('No triggers active')] if triggers.blank?
 
     # check if notification should be send because of customer emails
     send_notification = true
@@ -1283,9 +1224,7 @@ perform active triggers on ticket
           user_id = article.updated_by_id
         end
 
-        user = if user_id != 1
-                 User.lookup(id: user_id)
-               end
+        user = User.lookup(id: user_id)
 
         # verify is condition is matching
         ticket_count, tickets = Ticket.selectors(condition, limit: 1, execution_time: true, current_user: user, access: 'ignore')
@@ -1319,11 +1258,17 @@ perform active triggers on ticket
         ticket.perform_changes(trigger, 'trigger', item, user_id)
 
         if recursive == true
-          Observer::Transaction.commit(local_options)
+          TransactionDispatcher.commit(local_options)
         end
       end
     end
     [true, ticket, local_options]
+  end
+
+  def self.range(selector)
+    selector['value'].to_i.send(selector['range'].pluralize)
+  rescue
+    raise 'unknown selector'
   end
 
 =begin
@@ -1408,7 +1353,7 @@ result
   def check_title
     return true if !title
 
-    title.gsub!(/\s|\t|\r/, ' ')
+    title.gsub!(%r{\s|\t|\r}, ' ')
     true
   end
 
@@ -1440,7 +1385,7 @@ result
     current_state_type = Ticket::StateType.lookup(id: current_state.state_type_id)
 
     # in case, set pending_time to nil
-    return true if current_state_type.name.match?(/^pending/i)
+    return true if current_state_type.name.match?(%r{^pending}i)
 
     self.pending_time = nil
     true
@@ -1525,7 +1470,7 @@ result
         User.group_access(group_id, 'full').sort_by(&:login).each do |user|
           recipients_raw.push(user.email)
         end
-      when /\Auserid_(\d+)\z/
+      when %r{\Auserid_(\d+)\z}
         user = User.lookup(id: $1)
         if !user
           logger.warn "Can't find configured Trigger Email recipient User with ID '#{$1}'"
@@ -1556,7 +1501,7 @@ result
         end
       rescue
         if recipient_email.present?
-          if recipient_email !~ /^(.+?)<(.+?)@(.+?)>$/
+          if recipient_email !~ %r{^(.+?)<(.+?)@(.+?)>$}
             next # no usable format found
           end
 
@@ -1573,15 +1518,15 @@ result
       # do not sent notifications to this recipients
       send_no_auto_response_reg_exp = Setting.get('send_no_auto_response_reg_exp')
       begin
-        next if recipient_email.match?(/#{send_no_auto_response_reg_exp}/i)
+        next if recipient_email.match?(%r{#{send_no_auto_response_reg_exp}}i)
       rescue => e
         logger.error "Invalid regex '#{send_no_auto_response_reg_exp}' in setting send_no_auto_response_reg_exp"
         logger.error e
-        next if recipient_email.match?(/(mailer-daemon|postmaster|abuse|root|noreply|noreply.+?|no-reply|no-reply.+?)@.+?/i)
+        next if recipient_email.match?(%r{(mailer-daemon|postmaster|abuse|root|noreply|noreply.+?|no-reply|no-reply.+?)@.+?}i)
       end
 
       # check if notification should be send because of customer emails
-      if article.present? && article.preferences.fetch('is-auto-response', false) == true && article.from && article.from =~ /#{Regexp.quote(recipient_email)}/i
+      if article.present? && article.preferences.fetch('is-auto-response', false) == true && article.from && article.from =~ %r{#{Regexp.quote(recipient_email)}}i
         logger.info "Send no trigger based notification to #{recipient_email} because of auto response tagged incoming email"
         next
       end
@@ -1754,6 +1699,11 @@ result
     end
 
     original_article = objects[:article]
+
+    if ActiveModel::Type::Boolean.new.cast(value['include_attachments']) == true && original_article&.attachments.present?
+      original_article.clone_attachments('Ticket::Article', message.id, only_attached_attachments: true)
+    end
+
     if original_article&.should_clone_inline_attachments? # rubocop:disable Style/GuardClause
       original_article.clone_attachments('Ticket::Article', message.id, only_inline_attachments: true)
       original_article.should_clone_inline_attachments = false # cancel the temporary flag after cloning
@@ -1776,7 +1726,7 @@ result
       owner_id
     when 'ticket_agents'
       User.group_access(group_id, 'full').sort_by(&:login)
-    when /\Auserid_(\d+)\z/
+    when %r{\Auserid_(\d+)\z}
       return $1 if User.exists?($1)
 
       logger.warn "Can't find configured Trigger SMS recipient User with ID '#{$1}'"
@@ -1855,4 +1805,5 @@ result
     # blocked for 60 full days
     (user.preferences[:mail_delivery_failed_data].to_date - Time.zone.now.to_date).to_i + 61
   end
+
 end

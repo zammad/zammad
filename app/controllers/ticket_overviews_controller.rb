@@ -1,6 +1,18 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 class TicketOverviewsController < ApplicationController
   prepend_before_action :authentication_check
+
+  # GET /api/v1/ticket_overview
+  def data
+
+    # get attributes to update
+    attributes_to_change = Ticket::ScreenOptions.attributes_to_change(
+      view:         'ticket_overview',
+      current_user: current_user,
+    )
+    render json: attributes_to_change
+  end
 
   # GET /api/v1/ticket_overviews
   def show

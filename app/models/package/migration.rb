@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Package::Migration < ApplicationModel
 
@@ -41,7 +41,7 @@ class Package::Migration < ApplicationModel
 
       version = nil
       name    = nil
-      if migration =~ /^(.+?)_(.*)\.rb$/
+      if migration =~ %r{^(.+?)_(.*)\.rb$}
         version = $1
         name    = $2
       end

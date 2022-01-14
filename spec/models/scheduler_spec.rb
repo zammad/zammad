@@ -1,8 +1,10 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
+require 'models/concerns/has_xss_sanitized_note_examples'
 
 RSpec.describe Scheduler do
 
-  let(:test_backend_name) { 'SpecSpace::DelayedJobBackend' }
   let(:test_backend_class) do
     Class.new do
       def self.start
@@ -20,10 +22,13 @@ RSpec.describe Scheduler do
       end
     end
   end
+  let(:test_backend_name) { 'SpecSpace::DelayedJobBackend' }
 
   before do
     stub_const test_backend_name, test_backend_class
   end
+
+  it_behaves_like 'HasXssSanitizedNote', model_factory: :scheduler
 
   describe '.failed_jobs' do
 

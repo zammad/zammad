@@ -1,5 +1,7 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 VCR_IGNORE_MATCHING_HOSTS = %w[elasticsearch selenium zammad.org zammad.com znuny.com google.com login.microsoftonline.com github.com].freeze
-VCR_IGNORE_MATCHING_REGEXPS = [/^192\.168\.\d+\.\d+$/].freeze
+VCR_IGNORE_MATCHING_REGEXPS = [%r{^192\.168\.\d+\.\d+$}].freeze
 
 VCR.configure do |config|
   config.cassette_library_dir = 'test/data/vcr_cassettes'
@@ -14,7 +16,7 @@ VCR.configure do |config|
   end
 
   config.register_request_matcher(:oauth_headers) do |r1, r2|
-    without_onetime_oauth_params = ->(params) { params.gsub(/oauth_(nonce|signature|timestamp)="[^"]+", /, '') }
+    without_onetime_oauth_params = ->(params) { params.gsub(%r{oauth_(nonce|signature|timestamp)="[^"]+", }, '') }
 
     r1.headers.except('Authorization') == r2.headers.except('Authorization') &&
       r1.headers['Authorization']&.map(&without_onetime_oauth_params) ==
@@ -74,9 +76,21 @@ RSpec.configure do |config|
   config.around(:each, use_vcr: true) do |example|
     vcr_options = Array(example.metadata[:use_vcr])
 
-    spec_path       = Pathname.new(example.file_path).realpath
-    cassette_path   = spec_path.relative_path_from(Rails.root.join('spec')).sub(/_spec\.rb$/, '')
-    cassette_name   = "#{example.example_group.description} #{example.description}".gsub(/[^0-9A-Za-z.\-]+/, '_').downcase
+    spec_path     = Pathname.new(example.file_path).realpath
+    cassette_path = spec_path.relative_path_from(Rails.root.join('spec')).sub(%r{_spec\.rb$}, '')
+    cassette_name = "#{example.metadata[:example_group][:full_description]}/#{example.description}".gsub(%r{[^0-9A-Za-z\-]+}, '_').downcase
+
+    # handle file name limit of 255 chars
+    if cassette_name.length > 253
+      hexdigest_cassette_name = Digest::SHA256.hexdigest(cassette_name)
+
+      shortened_casset_name = "#{cassette_name.first(30)}-#{cassette_name.last(30)}-#{hexdigest_cassette_name}"
+
+      Rails.logger.info "Detected too long VCR filename '#{cassette_name}' (#{cassette_name.length}) and therefore converted it to '#{shortened_casset_name}'"
+
+      cassette_name = shortened_casset_name
+    end
+
     request_profile = [
       :method,
       :uri,

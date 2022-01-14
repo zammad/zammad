@@ -38,12 +38,28 @@ class App.KnowledgeBaseCategory extends App.Model
       memo.concat elem.categoriesForDropdown(nested: options.nested + 1, kb_locale: options.kb_locale)
     , initial
 
+  categoriesForSearch: (options = {}) ->
+    result = [@guaranteedTitle(options.kb_locale.id)]
+
+    check = @
+    while check.parent()
+      result.push(check.parent().guaranteedTitle(options.kb_locale.id))
+      check = check.parent()
+
+    if options.full || result.length <= 2
+      result = result.reverse().join(' > ')
+    else
+      result = result.reverse()
+      result = "#{result[0]} > .. > #{result[result.length - 1]}"
+
+    result
+
   configure_attributes: (kb_locale = undefined) ->
     [
       {
         name:       'category_icon'
         model:      'category'
-        display:    'Icon'
+        display:    __('Icon')
         tag:        'icon_picker'
         iconset:    @knowledge_base().iconset
         grid_width: '1/5'
@@ -56,7 +72,7 @@ class App.KnowledgeBaseCategory extends App.Model
       {
         name:       'translation::title'
         model:      'translation'
-        display:    'Title'
+        display:    __('Title')
         tag:        'input'
         grid_width: '4/5'
         null:       false
@@ -67,7 +83,7 @@ class App.KnowledgeBaseCategory extends App.Model
       {
         name:       'parent_id'
         model:      'category'
-        display:    'Parent'
+        display:    __('Parent')
         tag:        'select'
         null:       true
         options:    @knowledge_base().categoriesForDropdown(includeRoot: true, kb_locale: kb_locale)

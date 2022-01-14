@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Ticket::Number
   include ApplicationLib
@@ -21,7 +21,7 @@ returns
       return number if !Ticket.exists?(number: number)
     end
 
-    raise "Can't generate new ticket number!"
+    raise __("Can't generate new ticket number!")
   end
 
 =begin
@@ -43,6 +43,6 @@ returns
   # load backend based on config
   def self.adapter
     Setting.get('ticket_number')&.constantize ||
-      raise('Missing ticket_number setting option')
+      raise(__('Missing ticket_number setting option'))
   end
 end

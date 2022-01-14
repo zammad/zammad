@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 class Models
   include ApplicationLib
 
@@ -30,7 +32,7 @@ returns
       dir    = Rails.root.join('app/models').to_s
       tables = ActiveRecord::Base.connection.tables
       Dir.glob("#{dir}/**/*.rb") do |entry|
-        next if entry.match?(/application_model/i)
+        next if entry.match?(%r{application_model}i)
         next if entry.match?(%r{channel/}i)
         next if entry.match?(%r{observer/}i)
         next if entry.match?(%r{store/provider/}i)
@@ -53,9 +55,9 @@ returns
         all[model_class][:attributes] = model_class.attribute_names
         all[model_class][:reflections] = model_class.reflections
         all[model_class][:table] = model_class.table_name
-        #puts model_class
-        #puts "rrrr #{all[model_class][:attributes]}"
-        #puts " #{model_class.attribute_names.inspect}"
+        # puts model_class
+        # puts "rrrr #{all[model_class][:attributes]}"
+        # puts " #{model_class.attribute_names.inspect}"
       end
       all
     end
@@ -131,6 +133,7 @@ returns
     if object_name == 'User'
       ref_attributes.push 'created_by_id'
       ref_attributes.push 'updated_by_id'
+      ref_attributes.push 'out_of_office_replacement_id'
     end
     list.each do |model_class, model_attributes|
       if !references[model_class.to_s]
@@ -142,7 +145,7 @@ returns
       ref_attributes.each do |item|
         next if model_attributes[:attributes].exclude?(item)
 
-        count = model_class.where("#{item} = ?", object_id).count
+        count = model_class.where(item => object_id).count
         next if count.zero? && !include_zero
 
         if !references[model_class.to_s][item]
@@ -165,7 +168,7 @@ returns
         next if ref_attributes.include?(col_name)
 
         if reflection_value.options[:class_name] == object_name
-          count = model_class.where("#{col_name} = ?", object_id).count
+          count = model_class.where(col_name => object_id).count
           next if count.zero? && !include_zero
 
           if !references[model_class.to_s][col_name]
@@ -178,7 +181,7 @@ returns
         next if reflection_value.options[:class_name]
         next if reflection_value.name != object_name.downcase.to_sym
 
-        count = model_class.where("#{col_name} = ?", object_id).count
+        count = model_class.where(col_name => object_id).count
         next if count.zero? && !include_zero
 
         if !references[model_class.to_s][col_name]
@@ -253,7 +256,7 @@ returns
       items_to_update = {}
       attributes.each_key do |attribute|
         Rails.logger.debug { "#{object_name}: #{model}.#{attribute}->#{object_id_to_merge}->#{object_id_primary}" }
-        model_object.where("#{attribute} = ?", object_id_to_merge).each do |item|
+        model_object.where(attribute => object_id_to_merge).each do |item|
           if !items_to_update[item.id]
             items_to_update[item.id] = item
           end

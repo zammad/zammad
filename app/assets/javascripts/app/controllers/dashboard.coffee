@@ -25,7 +25,7 @@ class App.Dashboard extends App.Controller
   render: ->
 
     localEl = $( App.view('dashboard')(
-      head:    'Dashboard'
+      head:    __('Dashboard')
       isAdmin: @permissionCheck('admin')
     ) )
 
@@ -81,7 +81,7 @@ class App.Dashboard extends App.Controller
       return
 
     # set title
-    @title 'Dashboard'
+    @title __('Dashboard')
 
     # highlight navbar
     @navupdate '#dashboard'
@@ -115,4 +115,4 @@ class DashboardRouter extends App.ControllerPermanent
 
 App.Config.set('dashboard', DashboardRouter, 'Routes')
 App.Config.set('Dashboard', { controller: 'Dashboard', permission: ['*'] }, 'permanentTask')
-App.Config.set('Dashboard', { prio: 100, parent: '', name: 'Dashboard', target: '#dashboard', key: 'Dashboard', permission: ['ticket.agent'], class: 'dashboard' }, 'NavBar')
+App.Config.set('Dashboard', { prio: 100, parent: '', name: __('Dashboard'), target: '#dashboard', key: 'Dashboard', permission: ['ticket.agent'], class: 'dashboard' }, 'NavBar')

@@ -2,7 +2,7 @@ class App.IdoitObjectSelector extends App.ControllerModal
   buttonClose: true
   buttonCancel: true
   buttonSubmit: true
-  head: 'i-doit'
+  head: __('i-doit')
   lastSearchTermEmpty: false
 
   content: ->
@@ -39,7 +39,7 @@ class App.IdoitObjectSelector extends App.ControllerModal
         return if status is 'abort'
 
         # show error message
-        @contentInline = 'Unable to load content'
+        @contentInline = __('Unable to load content')
         @render()
     )
     ''
@@ -71,7 +71,7 @@ class App.IdoitObjectSelector extends App.ControllerModal
         return if status is 'abort'
 
         # show error message
-        @contentInline = 'Unable to load content'
+        @contentInline = __('Unable to load content')
         @render()
     )
 
@@ -106,4 +106,3 @@ class App.IdoitObjectSelector extends App.ControllerModal
 
     @formDisable(form)
     @callback(object_ids, @)
-

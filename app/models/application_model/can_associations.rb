@@ -1,4 +1,5 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 module ApplicationModel::CanAssociations
   extend ActiveSupport::Concern
 
@@ -119,8 +120,8 @@ returns
   def attributes_with_association_ids
 
     key = "#{self.class}::aws::#{id}"
-    cache = Cache.get(key)
-    return cache if cache
+    cache = Cache.read(key)
+    return filter_unauthorized_attributes(cache) if cache
 
     attributes = self.attributes
     relevant   = %i[has_and_belongs_to_many has_many]
@@ -145,7 +146,7 @@ returns
 
       if keys.size > 1
         values = ids.transpose.map(&:compact).map(&:uniq)
-        attributes.merge!( keys.zip( values ).to_h )
+        attributes.merge!(keys.zip(values).to_h)
       else
         attributes[ keys.first ] = ids.compact
       end
@@ -159,7 +160,7 @@ returns
     filter_attributes(attributes)
 
     Cache.write(key, attributes)
-    attributes
+    filter_unauthorized_attributes(attributes)
   end
 
 =begin
@@ -175,7 +176,7 @@ returns
 
 =end
 
-  def attributes_with_association_names
+  def attributes_with_association_names(empty_keys: false)
 
     # get relations
     attributes = attributes_with_association_ids
@@ -184,6 +185,9 @@ returns
       next if association_attributes_ignored.include?(assoc.name)
 
       ref = send(assoc.name)
+      if empty_keys
+        attributes[assoc.name.to_s] = nil
+      end
       next if !ref
 
       if ref.respond_to?(:first)
@@ -230,13 +234,16 @@ returns
     end
 
     filter_attributes(attributes)
-
-    attributes
+    filter_unauthorized_attributes(attributes)
   end
 
   def filter_attributes(attributes)
     # remove forbidden attributes
     attributes.except!('password', 'token', 'tokens', 'token_ids')
+  end
+
+  def filter_unauthorized_attributes(attributes)
+    attributes
   end
 
 =begin

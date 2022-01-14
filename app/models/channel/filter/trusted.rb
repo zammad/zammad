@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 # delete all X-Zammad header if channel is not trusted
 module Channel::Filter::Trusted
@@ -8,7 +8,7 @@ module Channel::Filter::Trusted
     # check if trust x-headers
     if !trusted(channel)
       mail.each_key do |key|
-        next if !key.match?(/^x-zammad/i)
+        next if !key.match?(%r{^x-zammad}i)
 
         mail.delete(key)
       end
@@ -17,7 +17,7 @@ module Channel::Filter::Trusted
 
     # verify values
     mail.each do |key, value|
-      next if !key.match?(/^x-zammad/i)
+      next if !key.match?(%r{^x-zammad}i)
 
       # no assoc exists, remove header
       next if Channel::EmailParser.check_attributes_by_x_headers(key, value)

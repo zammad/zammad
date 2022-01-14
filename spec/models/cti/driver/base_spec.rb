@@ -1,7 +1,9 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 
 RSpec.describe Cti::Driver::Base do
-  subject!(:driver) { described_class.new(mapping: {}, params: params, config: config ) }
+  subject!(:driver) { described_class.new(mapping: {}, params: params, config: config) }
 
   let(:direction) { 'in' }
   let(:event) { 'newCall' }

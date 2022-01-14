@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 class Channel::Driver::Sms::Massenversand
   NAME = 'sms/massenversand'.freeze
 
@@ -8,17 +10,7 @@ class Channel::Driver::Sms::Massenversand
 
     Rails.logger.info "Backend sending Massenversand SMS to #{attr[:recipient]}"
     begin
-      url = build_url(options, attr)
-
-      if Setting.get('developer_mode') != true
-        response = Faraday.get(url).body
-
-        if !response.match?('OK')
-          message = "Received non-OK response from gateway URL '#{url}'"
-          Rails.logger.error "#{message}: #{response.inspect}"
-          raise message
-        end
-      end
+      send_create(options, attr)
 
       true
     rescue => e
@@ -29,14 +21,27 @@ class Channel::Driver::Sms::Massenversand
     end
   end
 
+  def send_create(options, attr)
+    url = build_url(options, attr)
+
+    return if Setting.get('developer_mode')
+
+    response = Faraday.get(url).body
+    return if response.match?('OK')
+
+    message = "Received non-OK response from gateway URL '#{url}'"
+    Rails.logger.error "#{message}: #{response.inspect}"
+    raise message
+  end
+
   def self.definition
     {
       name:         'Massenversand',
       adapter:      'sms/massenversand',
       notification: [
-        { name: 'options::gateway', display: 'Gateway', tag: 'input', type: 'text', limit: 200, null: false, placeholder: 'https://gate1.goyyamobile.com/sms/sendsms.asp', default: 'https://gate1.goyyamobile.com/sms/sendsms.asp' },
-        { name: 'options::token', display: 'Token', tag: 'input', type: 'text', limit: 200, null: false, placeholder: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX' },
-        { name: 'options::sender', display: 'Sender', tag: 'input', type: 'text', limit: 200, null: false, placeholder: '00491710000000' },
+        { name: 'options::gateway', display: __('Gateway'), tag: 'input', type: 'text', limit: 200, null: false, placeholder: 'https://gate1.goyyamobile.com/sms/sendsms.asp', default: 'https://gate1.goyyamobile.com/sms/sendsms.asp' },
+        { name: 'options::token', display: __('Token'), tag: 'input', type: 'text', limit: 200, null: false, placeholder: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX' },
+        { name: 'options::sender', display: __('Sender'), tag: 'input', type: 'text', limit: 200, null: false, placeholder: '00491710000000' },
       ]
     }
   end

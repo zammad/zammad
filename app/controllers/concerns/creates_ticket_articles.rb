@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 module CreatesTicketArticles
   extend ActiveSupport::Concern
 
@@ -11,7 +13,7 @@ module CreatesTicketArticles
     subtype = params.delete(:subtype)
 
     # check min. params
-    raise Exceptions::UnprocessableEntity, 'Need at least article: { body: "some text" }' if !params[:body]
+    raise Exceptions::UnprocessableEntity, __('Need at least an article body field.') if params[:body].blank?
 
     # fill default values
     if params[:type_id].blank? && params[:type].blank?
@@ -37,7 +39,7 @@ module CreatesTicketArticles
       clean_params.delete(:sender)
       clean_params.delete(:origin_by_id)
       type = Ticket::Article::Type.lookup(id: clean_params[:type_id])
-      if !type.name.match?(/^(note|web)$/)
+      if !type.name.match?(%r{^(note|web)$})
         clean_params[:type_id] = Ticket::Article::Type.lookup(name: 'note').id
       end
       clean_params.delete(:type)
@@ -54,24 +56,18 @@ module CreatesTicketArticles
     end
 
     # find attachments in upload cache
+    attachments = []
     if form_id
-      article.attachments = UploadCache.new(form_id).attachments
+      attachments += UploadCache.new(form_id).attachments
     end
-
-    # set subtype of present
-    article.preferences[:subtype] = subtype if subtype.present?
-
-    article.save!
 
     # store inline attachments
     attachments_inline.each do |attachment|
-      Store.add(
-        object:      'Ticket::Article',
-        o_id:        article.id,
+      attachments << {
         data:        attachment[:data],
         filename:    attachment[:filename],
         preferences: attachment[:preferences],
-      )
+      }
     end
 
     # add attachments as param
@@ -91,26 +87,31 @@ module CreatesTicketArticles
         preferences_keys.each do |key|
           next if !attachment[key]
 
-          store_key = key.tr('-', '_').camelize.gsub(/(.+)([A-Z])/, '\1_\2').tr('_', '-')
+          store_key = key.tr('-', '_').camelize.gsub(%r{(.+)([A-Z])}, '\1_\2').tr('_', '-')
           preferences[store_key] = attachment[key]
         end
 
         begin
-          base64_data = attachment[:data].gsub(/[\r\n]/, '')
+          base64_data = attachment[:data].gsub(%r{[\r\n]}, '')
           attachment_data = Base64.strict_decode64(base64_data)
         rescue ArgumentError
           raise Exceptions::UnprocessableEntity, "Invalid base64 for attachment with index '#{index}'"
         end
 
-        Store.add(
-          object:      'Ticket::Article',
-          o_id:        article.id,
+        attachments << {
           data:        attachment_data,
           filename:    attachment[:filename],
           preferences: preferences,
-        )
+        }
       end
     end
+
+    article.attachments = attachments
+
+    # set subtype of present
+    article.preferences[:subtype] = subtype if subtype.present?
+
+    article.save!
 
     # account time
     if time_unit.present?

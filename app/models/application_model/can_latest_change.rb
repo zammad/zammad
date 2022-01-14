@@ -1,4 +1,5 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 module ApplicationModel::CanLatestChange
   extend ActiveSupport::Concern
 
@@ -19,12 +20,12 @@ returns
 
     def latest_change
       key        = "#{name}_latest_change"
-      updated_at = Cache.get(key)
+      updated_at = Cache.read(key)
 
       return updated_at if updated_at
 
       # if we do not have it cached, do lookup
-      updated_at = order(updated_at: :desc).limit(1).pluck(:updated_at).first
+      updated_at = order(updated_at: :desc).limit(1).pick(:updated_at)
 
       return if !updated_at
 

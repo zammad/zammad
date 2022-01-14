@@ -1,9 +1,13 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 
 RSpec.describe ExternalCredential::Microsoft365 do
 
   let(:token_url) { 'https://login.microsoftonline.com/common/oauth2/v2.0/token' }
+  let(:token_url_with_tenant) { 'https://login.microsoftonline.com/tenant/oauth2/v2.0/token' }
   let(:authorize_url) { "https://login.microsoftonline.com/common/oauth2/v2.0/authorize?access_type=offline&client_id=#{client_id}&prompt=consent&redirect_uri=http%3A%2F%2Fzammad.example.com%2Fapi%2Fv1%2Fexternal_credentials%2Fmicrosoft365%2Fcallback&response_type=code&scope=https%3A%2F%2Foutlook.office.com%2FIMAP.AccessAsUser.All+https%3A%2F%2Foutlook.office.com%2FSMTP.Send+offline_access+openid+profile+email" }
+  let(:authorize_url_with_tenant) { "https://login.microsoftonline.com/tenant/oauth2/v2.0/authorize?access_type=offline&client_id=#{client_id}&prompt=consent&redirect_uri=http%3A%2F%2Fzammad.example.com%2Fapi%2Fv1%2Fexternal_credentials%2Fmicrosoft365%2Fcallback&response_type=code&scope=https%3A%2F%2Foutlook.office.com%2FIMAP.AccessAsUser.All+https%3A%2F%2Foutlook.office.com%2FSMTP.Send+offline_access+openid+profile+email" }
 
   let(:id_token) { 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImtnMkxZczJUMENUaklmajRydDZKSXluZW4zOCJ9.eyJhdWQiOiIyMTk4NTFhYS0wMDAwLTRhNDctMTExMS0zMmQwNzAyZTAxMjM0IiwiaXNzIjoiaHR0cHM6Ly9sb2dpbi5taWNyb3NvZnRvbmxpbmUuY29tLzM2YTlhYjU1LWZpZmEtMjAyMC04YTc4LTkwcnM0NTRkYmNmZDJkL3YyLjAiLCJpYXQiOjEzMDE1NTE4MzUsIm5iZiI6MTMwMTU1MTgzNSwiZXhwIjoxNjAxNTU5NzQ0LCJuYW1lIjoiRXhhbXBsZSBVc2VyIiwib2lkIjoiMTExYWIyMTQtMTJzNy00M2NnLThiMTItM2ozM2UydDBjYXUyIiwicHJlZmVycmVkX3VzZXJuYW1lIjoidGVzdEBleGFtcGxlLmNvbSIsImVtYWlsIjoidGVzdEBleGFtcGxlLmNvbSIsInJoIjoiMC40MjM0LWZmZnNmZGdkaGRLZUpEU1hiejlMYXBSbUNHZGdmZ2RmZ0kwZHkwSEF1QlhaSEFNYy4iLCJzdWIiOiJYY0VlcmVyQkVnX0EzNWJlc2ZkczNMTElXNjU1NFQtUy0ycGRnZ2R1Z3c1NDNXT2xJIiwidGlkIjoiMzZhOWFiNTUtZmlmYS0yMDIwLThhNzgtOTByczQ1NGRiY2ZkMmQiLCJ1dGkiOiJEU0dGZ3Nhc2RkZmdqdGpyMzV3cWVlIiwidmVyIjoiMi4wIn0=.l0nglq4rIlkR29DFK3PQFQTjE-VeHdgLmcnXwGvT8Z-QBaQjeTAcoMrVpr0WdL6SRYiyn2YuqPnxey6N0IQdlmvTMBv0X_dng_y4CiQ8ABdZrQK0VSRWZViboJgW5iBvJYFcMmVoilHChueCzTBnS1Wp2KhirS2ymUkPHS6AB98K0tzOEYciR2eJsJ2JOdo-82oOW4w6tbbqMvzT3DzsxqPQRGe2hUbNqo6gcwJLqq4t0bNf5XiYThw1sv4IivERmqW_pfybXEseKyZGd4NnJ6WwwOgTz5tkoLwls_YeDZVcp_Fpw9XR7J0UlyPqLtoUEjVihdyrJjAbdtHFKdOjrw' }
   let(:access_token) { '000.0000lvC3gAbjs8CYoKitfqM5LBS5N13374MCg6pNpZ28mxO2HuZvg0000_rsW00aACmFEto1BJeGDuu0000vmV6Esqv78iec-FbEe842ZevQtOOemQyQXjhMs62K1E6g3ehDLPRp6j4vtpSKSb6I-3MuDPfdzdqI23hM0' }
@@ -15,6 +19,7 @@ RSpec.describe ExternalCredential::Microsoft365 do
 
   let(:client_id) { '123' }
   let(:client_secret) { '345' }
+  let(:client_tenant) { 'tenant' }
   let(:authorization_code) { '567' }
 
   let(:email_address) { 'test@example.com' }
@@ -69,7 +74,7 @@ RSpec.describe ExternalCredential::Microsoft365 do
           .with(body: hash_including(request_payload))
           .to_return(status: 200, body: token_response_payload.to_json, headers: {})
 
-        create(:external_credential, name: provider, credentials: { client_id: client_id, client_secret: client_secret } )
+        create(:external_credential, name: provider, credentials: { client_id: client_id, client_secret: client_secret })
       end
 
       it 'creates a Channel instance' do
@@ -90,7 +95,6 @@ RSpec.describe ExternalCredential::Microsoft365 do
               'options' => a_hash_including(
                 'authentication' => 'xoauth2',
                 'host'           => 'smtp.office365.com',
-                'domain'         => 'office365.com',
                 'port'           => 587,
                 'user'           => email_address,
               )
@@ -117,7 +121,7 @@ RSpec.describe ExternalCredential::Microsoft365 do
       before do
         stub_request(:post, token_url).to_return(status: response_status, body: response_payload&.to_json, headers: {})
 
-        create(:external_credential, name: provider, credentials: { client_id: client_id, client_secret: client_secret } )
+        create(:external_credential, name: provider, credentials: { client_id: client_id, client_secret: client_secret })
       end
 
       shared_examples 'failed attempt' do
@@ -167,7 +171,7 @@ RSpec.describe ExternalCredential::Microsoft365 do
     let!(:channel) do
       stub_request(:post, token_url).to_return(status: 200, body: token_response_payload.to_json, headers: {})
 
-      create(:external_credential, name: provider, credentials: { client_id: client_id, client_secret: client_secret } )
+      create(:external_credential, name: provider, credentials: { client_id: client_id, client_secret: client_secret })
       channel = described_class.link_account(request_token, authorization_payload)
 
       # remove stubs and allow new stubbing for tested requests
@@ -260,7 +264,7 @@ RSpec.describe ExternalCredential::Microsoft365 do
             error_description: 'The OAuth client was not found.'
           }
         end
-        let(:exception_message) { /The OAuth client was not found/ }
+        let(:exception_message) { %r{The OAuth client was not found} }
 
         include_examples 'failed attempt'
       end
@@ -268,7 +272,7 @@ RSpec.describe ExternalCredential::Microsoft365 do
       context '500 Internal Server Error' do
         let(:response_status) { 500 }
         let(:response_payload) { nil }
-        let(:exception_message) { /code: 500/ }
+        let(:exception_message) { %r{code: 500} }
 
         include_examples 'failed attempt'
       end
@@ -277,7 +281,7 @@ RSpec.describe ExternalCredential::Microsoft365 do
 
   describe '.request_account_to_link' do
     it 'generates authorize_url from credentials' do
-      microsoft365 = create(:external_credential, name: provider, credentials: { client_id: client_id, client_secret: client_secret } )
+      microsoft365 = create(:external_credential, name: provider, credentials: { client_id: client_id, client_secret: client_secret })
       request      = described_class.request_account_to_link(microsoft365.credentials)
 
       expect(request[:authorize_url]).to eq(authorize_url)
@@ -329,8 +333,13 @@ RSpec.describe ExternalCredential::Microsoft365 do
 
   describe '.generate_authorize_url' do
     it 'generates valid URL' do
-      url = described_class.generate_authorize_url(client_id)
+      url = described_class.generate_authorize_url(client_id: client_id)
       expect(url).to eq(authorize_url)
+    end
+
+    it 'generates valid URL with tenant' do
+      url = described_class.generate_authorize_url(client_id: client_id, client_tenant: 'tenant')
+      expect(url).to eq(authorize_url_with_tenant)
     end
   end
 

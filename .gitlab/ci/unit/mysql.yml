@@ -1,5 +1,5 @@
 unit:mysql:
   stage: test
   extends:
-    - .services_mysql
+    - .services_mysql_redis_memcached
     - .template_unit

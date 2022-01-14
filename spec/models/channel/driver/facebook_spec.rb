@@ -1,35 +1,30 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 
-RSpec.describe Channel::Driver::Facebook, use_vcr: true do
+RSpec.describe Channel::Driver::Facebook, use_vcr: true, required_envs: %w[FACEBOOK_ADMIN_USER_ID FACEBOOK_ADMIN_FIRSTNAME FACEBOOK_ADMIN_LASTNAME FACEBOOK_PAGE_1_ACCCESS_TOKEN FACEBOOK_PAGE_1_ID FACEBOOK_PAGE_1_NAME FACEBOOK_PAGE_1_POST_ID FACEBOOK_PAGE_1_POST_COMMENT_ID FACEBOOK_PAGE_2_ACCCESS_TOKEN FACEBOOK_PAGE_2_ID FACEBOOK_PAGE_2_NAME FACEBOOK_CUSTOMER_ID FACEBOOK_CUSTOMER_FIRSTNAME FACEBOOK_CUSTOMER_LASTNAME] do
 
   before do
-    VCR.configure do |c|
-      %w[
-        FACEBOOK_ADMIN_USER_ID
-        FACEBOOK_ADMIN_FIRSTNAME
-        FACEBOOK_ADMIN_LASTNAME
-        FACEBOOK_PAGE_1_ACCCESS_TOKEN
-        FACEBOOK_PAGE_1_ID
-        FACEBOOK_PAGE_1_NAME
-        FACEBOOK_PAGE_1_POST_ID
-        FACEBOOK_PAGE_1_POST_COMMENT_ID
-        FACEBOOK_PAGE_2_ACCCESS_TOKEN
-        FACEBOOK_PAGE_2_ID
-        FACEBOOK_PAGE_2_NAME
-        FACEBOOK_CUSTOMER_ID
-        FACEBOOK_CUSTOMER_FIRSTNAME
-        FACEBOOK_CUSTOMER_LASTNAME
-      ].each do |env_key|
-        c.filter_sensitive_data("<#{env_key}>") { ENV[env_key] }
-      end
-    end
-
     travel_to '2021-02-13 13:37 +0100'
   end
 
   let!(:channel) { create(:facebook_channel) }
 
+  # This test requires ENV variables to run
+  # Yes, it runs off VCR cassette
+  # But it requires following ENV variables to be present:
+  #
+  # export FACEBOOK_CUSTOMER_ID=placeholder
+  # export FACEBOOK_CUSTOMER_FIRSTNAME=placeholder
+  # export FACEBOOK_CUSTOMER_LASTNAME=placeholder
+  # export FACEBOOK_PAGE_1_ACCCESS_TOKEN=placeholder
+  # export FACEBOOK_PAGE_1_ID=123
+  # export FACEBOOK_PAGE_1_NAME=placeholder
+  # export FACEBOOK_PAGE_1_POST_ID=placeholder
+  # export FACEBOOK_PAGE_1_POST_COMMENT_ID=placeholder
+  #
   it 'tests full run' do # rubocop:disable RSpec/MultipleExpectations, RSpec/ExampleLength
+    allow(ApplicationHandleInfo).to receive('context=')
     ExternalCredential.create name: :facebook, credentials: { application_id: ENV['FACEBOOK_APPLICATION_ID'], application_secret: ENV['FACEBOOK_APPLICATION_SECRET'] }
 
     channel.fetch
@@ -69,5 +64,7 @@ RSpec.describe Channel::Driver::Facebook, use_vcr: true do
     expect(outbound_article).to be_present
     expect(outbound_article.from).to eq ENV['FACEBOOK_PAGE_1_NAME']
     expect(outbound_article.ticket.articles.count).to be ticket_initial_count + 1
+
+    expect(ApplicationHandleInfo).to have_received('context=').with('facebook').at_least(1)
   end
 end

@@ -14,7 +14,7 @@
   </div>
   <div class="form-group js-sure">
     <h3 class="danger-color"><%- @T('Warning') %></h3>
-    <p class="danger-color"><%- @T('There is no rollback of this deletion possible. If you are absolutely sure to do this, then type in "%s" into the input.', App.i18n.translateInline('delete').toUpperCase()) %></p>
+    <p class="danger-color"><%- @T('There is no rollback of this deletion possible. If you are absolutely sure to do this, then type in "%s" into the input.', App.i18n.translatePlain('delete').toUpperCase()) %></p>
     <%- @sure_html %>
   </div>
 </div>

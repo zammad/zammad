@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'browser_test_helper'
 
 class AgentTicketTagTest < TestCase
@@ -8,7 +10,7 @@ class AgentTicketTagTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     # set tag (by tab)
     ticket_create(
@@ -29,14 +31,14 @@ class AgentTicketTagTest < TestCase
 
     # reload browser
     sleep 6
-    reload()
+    reload
     sleep 2
 
     click(
       css: '.active .newTicket button.js-submit',
     )
     sleep 5
-    if !@browser.current_url.match?(/#{Regexp.quote('#ticket/zoom/')}/)
+    if !@browser.current_url.match?(%r{#{Regexp.quote('#ticket/zoom/')}})
       raise 'Unable to create ticket!'
     end
 
@@ -68,7 +70,7 @@ class AgentTicketTagTest < TestCase
     click(css: '#global-search')
     click(css: '.active .newTicket button.js-submit')
     sleep 5
-    if !@browser.current_url.match?(/#{Regexp.quote('#ticket/zoom/')}/)
+    if !@browser.current_url.match?(%r{#{Regexp.quote('#ticket/zoom/')}})
       raise 'Unable to create ticket!'
     end
 
@@ -95,7 +97,7 @@ class AgentTicketTagTest < TestCase
     browser2 = browser_instance
     login(
       browser:  browser2,
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
@@ -186,7 +188,7 @@ class AgentTicketTagTest < TestCase
     )
 
     # reload browser
-    reload()
+    reload
     sleep 2
 
     # verify tags
@@ -359,15 +361,15 @@ class AgentTicketTagTest < TestCase
   end
 
   def test_b_tags
-    tag_prefix = "tag#{rand(1000)}"
+    tag_prefix = 'tag6'
 
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     click(css: 'a[href="#manage"]')
     click(css: '.content.active a[href="#manage/tags"]')
@@ -441,7 +443,7 @@ class AgentTicketTagTest < TestCase
       css: '.active .newTicket button.js-submit',
     )
     sleep 5
-    if !@browser.current_url.match?(/#{Regexp.quote('#ticket/zoom/')}/)
+    if !@browser.current_url.match?(%r{#{Regexp.quote('#ticket/zoom/')}})
       raise 'Unable to create ticket!'
     end
 
@@ -508,7 +510,7 @@ class AgentTicketTagTest < TestCase
         'NOT EXISTING'    => false,
       }
     )
-    reload()
+    reload
     sleep 2
 
     # verify tags

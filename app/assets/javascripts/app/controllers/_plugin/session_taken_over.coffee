@@ -35,12 +35,12 @@ class SessionTakeOver extends App.Controller
           # only if new client id isn't own client id
           if data.taskbar_id isnt App.TaskManager.TaskbarId()
             @error = new App.SessionMessage(
-              head:         'Session'
-              message:      'A new session was created with your account. This session will be stopped to prevent a conflict.'
+              head:         __('Session')
+              message:      __('A new session was created with your account. This session will be stopped to prevent a conflict.')
               keyboard:     false
               backdrop:     true
               buttonClose:  false
-              buttonSubmit: 'Continue session'
+              buttonSubmit: __('Continue session')
               forceReload:  true
             )
             @disconnectClient()

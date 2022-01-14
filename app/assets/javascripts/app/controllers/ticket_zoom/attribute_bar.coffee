@@ -15,7 +15,7 @@ class App.TicketZoomAttributeBar extends App.Controller
   constructor: ->
     super
 
-    @secondaryAction = 'stayOnTab'
+    @secondaryAction = @getAction()
 
     @subscribeId = App.Macro.subscribe(@checkMacroChanges)
     @render()
@@ -30,6 +30,9 @@ class App.TicketZoomAttributeBar extends App.Controller
       @searchCondition = data.params
       @render()
     )
+
+  getAction: ->
+    return App.Session.get().preferences.secondaryAction || App.Config.get('ticket_secondary_action') || 'stayOnTab'
 
   release: =>
     App.Macro.unsubscribe(@subscribeId)
@@ -74,6 +77,7 @@ class App.TicketZoomAttributeBar extends App.Controller
   start: =>
     return if !@taskbarWatcher
     @taskbarWatcher.start()
+    @setSecondaryAction(@getAction(), @el)
 
   stop: =>
     return if !@taskbarWatcher
@@ -114,11 +118,25 @@ class App.TicketZoomAttributeBar extends App.Controller
   chooseSecondaryAction: (e) =>
     type = $(e.currentTarget).find('.js-secondaryActionLabel').data('type')
     @setSecondaryAction(type, @el)
+    @setUserPreferencesSecondaryAction(type)
 
   setSecondaryAction: (type, localEl) ->
     element = localEl.find(".js-secondaryActionLabel[data-type=#{type}]")
+    return @setSecondaryAction('stayOnTab', localEl) if element.length == 0
     text = element.text()
     localEl.find('.js-secondaryAction .js-selectedIcon.is-selected').removeClass('is-selected')
     element.closest('.js-secondaryAction').find('.js-selectedIcon').addClass('is-selected')
     localEl.find('.js-secondaryActionButtonLabel').text(text)
     localEl.find('.js-secondaryActionButtonLabel').data('type', type)
+
+  setUserPreferencesSecondaryAction: (type) ->
+    session = App.Session.get()
+    return if session.preferences.secondaryAction is type
+
+    @ajax(
+      id:          'setUserPreferencesSecondaryAction'
+      type:        'PUT'
+      url:         "#{App.Config.get('api_path')}/users/preferences"
+      data:        JSON.stringify(secondaryAction: type)
+      processData: true
+    )

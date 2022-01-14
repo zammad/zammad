@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'test_helper'
 
 class ClearbitTest < ActiveSupport::TestCase
@@ -25,8 +27,8 @@ class ClearbitTest < ActiveSupport::TestCase
                     'person.site'            => 'user.web',
                     'company.location'       => 'user.address',
                     'person.location'        => 'user.address',
-                    #'person.timeZone' => 'user.preferences[:timezone]',
-                    #'person.gender' => 'user.preferences[:gender]',
+                    # 'person.timeZone' => 'user.preferences[:timezone]',
+                    # 'person.gender' => 'user.preferences[:gender]',
                   },
                   organization_sync:       {
                     'company.legalName'   => 'organization.name',
@@ -46,7 +48,7 @@ class ClearbitTest < ActiveSupport::TestCase
     )
     assert(customer1)
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     assert(ExternalSync.find_by(source: 'clearbit', object: 'User', o_id: customer1.id))
@@ -74,7 +76,7 @@ class ClearbitTest < ActiveSupport::TestCase
     )
     assert(customer2)
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     assert(ExternalSync.find_by(source: 'clearbit', object: 'User', o_id: customer2.id))
@@ -97,7 +99,7 @@ class ClearbitTest < ActiveSupport::TestCase
       note:      'changed by my self',
     )
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     assert(ExternalSync.find_by(source: 'clearbit', object: 'User', o_id: customer2.id))
@@ -169,7 +171,7 @@ class ClearbitTest < ActiveSupport::TestCase
     )
     assert(customer3)
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     assert_not(ExternalSync.find_by(source: 'clearbit', object: 'User', o_id: customer3.id))
@@ -199,7 +201,7 @@ class ClearbitTest < ActiveSupport::TestCase
     )
     assert(customer4)
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     assert(ExternalSync.find_by(source: 'clearbit', object: 'User', o_id: customer4.id))
@@ -227,7 +229,7 @@ class ClearbitTest < ActiveSupport::TestCase
     )
     assert(customer5)
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     assert(ExternalSync.find_by(source: 'clearbit', object: 'User', o_id: customer5.id))
@@ -257,7 +259,7 @@ class ClearbitTest < ActiveSupport::TestCase
     )
     assert(customer6)
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     assert_not(ExternalSync.find_by(source: 'clearbit', object: 'User', o_id: customer6.id))
@@ -268,16 +270,16 @@ class ClearbitTest < ActiveSupport::TestCase
     assert_equal('', customer6.lastname)
     assert_equal('', customer6.note)
     assert_equal('', customer6.web)
-    #assert_equal('http://clearbit.com', customer6.web)
+    # assert_equal('http://clearbit.com', customer6.web)
     sometimes_changing_but_valid_addresses = [
       'San Francisco, CA, USA',
       'San Francisco, CA 94103, USA',
       '90 Sheridan St, San Francisco, CA 94103, USA',
+      '90 Sheridan, San Francisco, CA 94103, USA',
       '3030 16th St, San Francisco, CA 94103, USA',
     ]
     assert_includes(sometimes_changing_but_valid_addresses, customer6.address)
-
-    organization6 = Organization.find_by('name LIKE ?', 'APIHub, Inc%')
+    organization6 = Organization.find_by('name LIKE ?', 'APIHub Inc%')
     assert(ExternalSync.find_by(source: 'clearbit', object: 'Organization', o_id: organization6.id))
     assert_equal(false, organization6.shared)
     assert_equal('The marketing data engine to deeply understand your customers, identify future prospects, &amp; personalize every single marketing &amp; sales interaction.', organization6.note)
@@ -326,7 +328,7 @@ class ClearbitTest < ActiveSupport::TestCase
     )
     assert(customer1)
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     Scheduler.worker(true)
 
     assert(ExternalSync.find_by(source: 'clearbit', object: 'User', o_id: customer1.id))

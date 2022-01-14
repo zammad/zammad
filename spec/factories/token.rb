@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 FactoryBot.define do
   factory :token, aliases: %i[token_api api_token] do
     user
@@ -5,8 +7,8 @@ FactoryBot.define do
     persistent { true }
     preferences do
 
-      permission_hash = permissions.each_with_object({}) do |permission, result|
-        result[permission] = true
+      permission_hash = permissions.index_with do |_permission|
+        true
       end
 
       {

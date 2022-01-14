@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'browser_test_helper'
 
 class AgentTicketEmailReplyKeepBodyTest < TestCase
@@ -10,7 +12,7 @@ class AgentTicketEmailReplyKeepBodyTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     # create new ticket
     ticket_create(
@@ -85,7 +87,7 @@ class AgentTicketEmailReplyKeepBodyTest < TestCase
       css:      '.content.active .js-settingContainer .js-setting',
     )
     click(css: '.content.active .js-settingContainer .js-setting')
-    modal_ready()
+    modal_ready
     select(
       css:   params[:css],
       value: params[:value]
@@ -93,18 +95,18 @@ class AgentTicketEmailReplyKeepBodyTest < TestCase
     click(
       css: params[:submit_css],
     )
-    modal_close()
-    modal_disappear()
+    modal_close
+    modal_disappear
   end
 
   def test_full_quote
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     ticket_open_by_title(
       title: 'Welcome to Zammad',
@@ -133,13 +135,13 @@ class AgentTicketEmailReplyKeepBodyTest < TestCase
 
     full_text = @browser.find_element(css: '.content.active .article-new .articleNewEdit-body').text
 
-    match = full_text.match(/\nOn (.*?) Nicole Braun wrote:/)
+    match = full_text.match(%r{\nOn (.*?) Nicole Braun wrote:})
     assert match
     assert match[1]
     assert Time.zone.parse(match[1])
 
     # try again, but with the full quote header disabled
-    tasks_close_all()
+    tasks_close_all
     ticket_open_by_title(
       title: 'Welcome to Zammad',
     )
@@ -157,11 +159,11 @@ class AgentTicketEmailReplyKeepBodyTest < TestCase
 
     full_text = @browser.find_element(css: '.content.active .article-new .articleNewEdit-body').text
 
-    match = full_text.match(/\nOn (.*?) Nicole Braun wrote:/)
+    match = full_text.match(%r{\nOn (.*?) Nicole Braun wrote:})
     assert_nil match
 
     # after test, turn full quote header back on again
-    tasks_close_all()
+    tasks_close_all
     ticket_open_by_title(
       title: 'Welcome to Zammad',
     )
@@ -176,11 +178,11 @@ class AgentTicketEmailReplyKeepBodyTest < TestCase
   def test_full_quote_german_locale
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     ticket_open_by_title(
       title: 'Welcome to Zammad',
@@ -195,6 +197,9 @@ class AgentTicketEmailReplyKeepBodyTest < TestCase
       value:      'yes',
       submit_css: '.modal #ui_ticket_zoom_article_email_full_quote .btn[type="submit"]',
     )
+
+    # Suppress the modal dialog that invites to contributions for translations that are < 95% as this breaks the tests for de-de.
+    @browser.execute_script "App.LocalStorage.set('translation_support_no', true, App.Session.get('id'))"
 
     # switch user profile language to German
     switch_language(
@@ -215,7 +220,7 @@ class AgentTicketEmailReplyKeepBodyTest < TestCase
 
     full_text = @browser.find_element(css: '.content.active .article-new .articleNewEdit-body').text
 
-    match = full_text.match(/\nAm (.*?), schrieb Nicole Braun:/)
+    match = full_text.match(%r{\nAm (.*?), schrieb Nicole Braun:})
     assert match
 
     datestamp = match[1]

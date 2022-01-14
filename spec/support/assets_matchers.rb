@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 RSpec::Matchers.define :include_assets_of do
   match do |actual|
     expected_array.all? { |elem| find_assets_of(elem, actual) }
@@ -52,7 +54,7 @@ RSpec::Matchers.define :include_assets_of do
   #
   # @return [Hash, nil]
   def find_assets_of(object, actual)
-    actual.dig(object.class.name.gsub(/::/, ''), object.id.to_s)
+    actual.dig(object.class.name.gsub(%r{::}, ''), object.id.to_s)
   end
 end
 

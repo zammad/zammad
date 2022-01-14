@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 
 RSpec.describe 'Richtext', type: :system do
@@ -33,7 +35,7 @@ RSpec.describe 'Richtext', type: :system do
         'and some other for browser'
       )
 
-      expect(element).to have_content(/some test for browser\s?\nand some other for browser/)
+      expect(element).to have_content(%r{some test for browser\s?\nand some other for browser})
     end
   end
 
@@ -49,7 +51,7 @@ RSpec.describe 'Richtext', type: :system do
         'and some other for browser'
       )
 
-      expect(element).to have_content(/some test for browser\s?\nand some other for browser/)
+      expect(element).to have_content(%r{some test for browser\s?\nand some other for browser})
     end
   end
 end

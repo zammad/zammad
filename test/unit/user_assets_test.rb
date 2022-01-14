@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 # NOTE: This test file is _almost_ fully migrated to RSpec, as of 4cc64d0ce.
 # It may be deleted once all missing spec coverage has been added.
 #
@@ -8,7 +10,7 @@
 # see lines 75:83:91:109:123:131:139 of this file).
 #
 # This omission is discussed in detail in
-# https://git.znuny.com/zammad/zammad/merge_requests/363
+# https://git.zammad.com/zammad/zammad/merge_requests/363
 
 require 'test_helper'
 
@@ -113,7 +115,7 @@ class UserAssetsTest < ActiveSupport::TestCase
     end
     return true if (object1.to_a - object2.to_a).blank?
 
-    #puts "ERROR: difference \n1: #{object1.inspect}\n2: #{object2.inspect}\ndiff: #{(object1.to_a - object2.to_a).inspect}"
+    # puts "ERROR: difference \n1: #{object1.inspect}\n2: #{object2.inspect}\ndiff: #{(object1.to_a - object2.to_a).inspect}"
     false
   end
 

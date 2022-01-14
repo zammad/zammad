@@ -1,9 +1,10 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 module SessionHelper
   def self.json_hash(user)
     collections, assets = default_collections(user)
-
     {
-      session:     user.filter_attributes(user.attributes),
+      session:     user.filter_unauthorized_attributes(user.filter_attributes(user.attributes)),
       models:      models(user),
       collections: collections,
       assets:      assets,
@@ -18,10 +19,10 @@ module SessionHelper
 
     # load collections to deliver from external files
     dir = File.expand_path('..', __dir__)
-    files = Dir.glob( "#{dir}/app/controllers/sessions/collection_*.rb")
+    files = Dir.glob("#{dir}/lib/session_helper/collection_*.rb")
     files.each do |file|
-      load file
-      (default_collection, assets) = ExtraCollection.session(default_collection, assets, user)
+      file =~ %r{/(session_helper/collection_.*)\.rb\z}
+      (default_collection, assets) = $1.camelize.constantize.session(default_collection, assets, user)
     end
 
     [default_collection, assets]

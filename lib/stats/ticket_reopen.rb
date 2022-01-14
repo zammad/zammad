@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Stats::TicketReopen
 
@@ -22,7 +22,7 @@ class Stats::TicketReopen
 
     reopen_in_precent = 0
     if total.nonzero?
-      reopen_in_precent = ( count.to_f / (total.to_f / 100) ).round(1)
+      reopen_in_precent = (count.to_f / (total.to_f / 100)).round(1)
     end
     {
       used_for_average:  reopen_in_precent,
@@ -38,14 +38,14 @@ class Stats::TicketReopen
 
     return result if !result.key?(:used_for_average)
 
-    if result[:total] < 1 || result[:average_per_agent].to_d == 0.0.to_d
+    if result[:total] < 1 || result[:average_per_agent].to_d == BigDecimal('0.0')
       result[:state] = 'supergood'
       return result
     end
 
-    #in_percent = ( result[:used_for_average].to_f / (result[:average_per_agent].to_f / 100) ).round(1)
-    #result[:average_per_agent_in_percent] = in_percent
-    in_percent = ( result[:count].to_f / (result[:total].to_f / 100) ).round(1)
+    # in_percent = ( result[:used_for_average].to_f / (result[:average_per_agent].to_f / 100) ).round(1)
+    # result[:average_per_agent_in_percent] = in_percent
+    in_percent = (result[:count].to_f / (result[:total].to_f / 100)).round(1)
     result[:state] = if in_percent >= 90
                        'superbad'
                      elsif in_percent >= 65

@@ -1,0 +1,20 @@
+{
+   "body":"Follow-up",
+   "createdDatetime":"",
+   "currentTime":"2021-07-22T10:06:00+02:00",
+   "date":"0",
+   "date_utc":"0",
+   "id":"",
+   "incomingMessage":"Follow-up",
+   "message":"",
+   "message_id":"123",
+   "originator":"+491710000000",
+   "payload":"Follow-up",
+   "receiver":"",
+   "recipient":"+4915700000000",
+   "reference":"",
+   "sender":"",
+   "controller":"channels_sms",
+   "action":"webhook",
+   "token":"xxx"
+}

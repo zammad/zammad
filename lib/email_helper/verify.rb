@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 class EmailHelper
   class Verify
 
@@ -56,7 +58,7 @@ or
     def self.email(params)
 
       # send verify email
-      subject = params[:subject].presence || "##{rand(99_999_999_999)}"
+      subject = params[:subject].presence || "##{SecureRandom.hex(10)}"
       result = EmailHelper::Probe.outbound(params[:outbound], params[:sender], subject)
       if result[:result] != 'ok'
         result[:source] = 'outbound'
@@ -80,8 +82,6 @@ or
         fetch_result = nil
 
         begin
-          require_dependency "channel/driver/#{adapter.to_filename}"
-
           driver_class    = "Channel::Driver::#{adapter.to_classname}".constantize
           driver_instance = driver_class.new
           fetch_result    = driver_instance.fetch(params[:inbound][:options], self, 'verify', subject)
@@ -105,7 +105,7 @@ or
 
       {
         result:  'invalid',
-        message: 'Verification Email not found in mailbox.',
+        message: __('Verification Email not found in mailbox.'),
         subject: subject,
       }
     end

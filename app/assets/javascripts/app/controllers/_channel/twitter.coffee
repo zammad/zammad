@@ -102,7 +102,7 @@ class ChannelTwitter extends App.ControllerSubContent
     e.preventDefault()
     id   = $(e.target).closest('.action').data('id')
     new App.ControllerConfirm(
-      message: 'Sure?'
+      message: __('Sure?')
       callback: =>
         @ajax(
           id:   'twitter_delete'
@@ -143,7 +143,7 @@ class ChannelTwitter extends App.ControllerSubContent
     )
 
 class AppConfig extends App.ControllerModal
-  head: 'Connect Twitter App'
+  head: __('Connect Twitter App')
   shown: true
   button: 'Connect'
   buttonCancel: true
@@ -185,15 +185,15 @@ class AppConfig extends App.ControllerModal
               @isChanged = true
               @close()
             fail: =>
-              @el.find('.alert').removeClass('hidden').text('Unable to create entry.')
+              @el.find('.alert').removeClass('hidden').text(__('Unable to create entry.'))
           )
           return
         @formEnable(e)
-        @el.find('.alert').removeClass('hidden').text(data.error || 'Unable to verify App.')
+        @el.find('.alert').removeClass('hidden').text(data.error || __('Unable to verify App.'))
     )
 
 class AccountEdit extends App.ControllerModal
-  head: 'Twitter Account'
+  head: __('Twitter Account')
   shown: true
   buttonCancel: true
 
@@ -296,7 +296,7 @@ class AccountEdit extends App.ControllerModal
       error: (xhr) =>
         data = JSON.parse(xhr.responseText)
         @formEnable(e)
-        @el.find('.alert').removeClass('hidden').text(data.error || 'Unable to save changes.')
+        @el.find('.alert').removeClass('hidden').text(data.error || __('Unable to save changes.'))
     )
 
-App.Config.set('Twitter', { prio: 5000, name: 'Twitter', parent: '#channels', target: '#channels/twitter', controller: ChannelTwitter, permission: ['admin.channel_twitter'] }, 'NavBarAdmin')
+App.Config.set('Twitter', { prio: 5000, name: __('Twitter'), parent: '#channels', target: '#channels/twitter', controller: ChannelTwitter, permission: ['admin.channel_twitter'] }, 'NavBarAdmin')

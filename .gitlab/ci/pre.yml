@@ -6,6 +6,7 @@
     - .rules_singletest
   before_script:
     - source /etc/profile.d/rvm.sh # ensure RVM is loaded
+    - source /opt/rh/rh-nodejs12/enable # ensure Node.js is available
 
 rubocop:
   <<: *template_pre
@@ -13,10 +14,68 @@ rubocop:
     - bundle install -j $(nproc) --path vendor
     - bundle exec rubocop --parallel
 
+shellcheck:
+  <<: *template_pre
+  image: koalaman/shellcheck-alpine:stable
+  before_script:
+    - echo "Disable default before_script."
+  script:
+    - shellcheck -S warning $(find . -name "*.sh" -o -name "functions" | grep -v "/vendor/")
+
+gettext lint:
+  <<: *template_pre
+  before_script:
+    - echo "Disable default before_script."
+  script:
+    - for FILE in i18n/*.pot i18n/*.po; do echo "Checking $FILE"; msgfmt -o /dev/null -c $FILE; done
+
+gettext catalog consistency:
+  <<: *template_pre
+  extends:
+    - .tags_docker
+    - .services_postgresql
+  script:
+    - bundle install -j $(nproc) --path vendor
+    - bundle exec ruby .gitlab/configure_environment.rb
+    - source .gitlab/environment.env
+    - bundle exec rake zammad:db:init
+    - bundle exec rails generate translation_catalog --check
+
+zeitwerk:check:
+  <<: *template_pre
+  extends:
+    - .tags_docker
+    - .services_postgresql
+  script:
+    - bundle install -j $(nproc) --path vendor
+    - bundle exec ruby .gitlab/configure_environment.rb
+    - source .gitlab/environment.env
+    - bundle exec rake zammad:db:init
+    - bundle exec rails zeitwerk:check
+
+brakeman:
+  <<: *template_pre
+  artifacts:
+    expire_in: 1 week
+    paths:
+      - tmp/brakeman-report.html
+    when: on_failure
+  script:
+    - bundle install -j $(nproc) --path vendor
+    - bundle exec brakeman -o /dev/stdout -o tmp/brakeman-report.html
+
 coffeelint:
   <<: *template_pre
   script:
-    - coffeelint app/
+    - coffeelint --rules ./.coffeelint/rules/* app/
+
+stylelint:
+  <<: *template_pre
+  before_script:
+    - source /opt/rh/rh-nodejs12/enable
+    - yarn install
+  script:
+    - yarn lint:css
 
 bundle-audit:
   <<: *template_pre
@@ -30,8 +89,9 @@ github:
   tags:
     - deploy
   before_script:
-    - "" # no RVM present in deploy ENV
+    - '' # no RVM present in deploy ENV
   script:
+    - git fetch --unshallow
     - script/build/sync_repo.sh git@github.com:zammad/zammad.git
 
 global_refresh_envs:
@@ -45,7 +105,7 @@ global_refresh_envs:
   artifacts:
     expire_in: 1 day
     paths:
-    - fresh.env
+      - fresh.env
   rules:
     - if: $CI_MERGE_REQUEST_ID
       when: never

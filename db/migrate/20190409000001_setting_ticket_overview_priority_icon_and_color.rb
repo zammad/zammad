@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 class SettingTicketOverviewPriorityIconAndColor < ActiveRecord::Migration[5.1]
   def change
     Setting.create_if_not_exists(

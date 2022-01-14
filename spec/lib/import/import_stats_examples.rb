@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 RSpec.shared_examples 'Import::ImportStats' do
   it 'responds to current_state' do
     expect(described_class).to respond_to('current_state')

@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 class Sequencer
   class Unit
     module Import
@@ -17,7 +19,7 @@ class Sequencer
                 end
 
                 def empty_diff
-                  possible_actions.collect { |key| [key, 0] }.to_h
+                  possible_actions.index_with { |_key| 0 }
                 end
 
                 def possible_actions

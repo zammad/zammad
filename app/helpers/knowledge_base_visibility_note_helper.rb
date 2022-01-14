@@ -1,6 +1,8 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 module KnowledgeBaseVisibilityNoteHelper
   def visibility_note(object)
-    return if !current_user&.permissions?('knowledge_base.editor')
+    return if !policy(:knowledge_base).edit?
 
     text = visibility_text(object)
 

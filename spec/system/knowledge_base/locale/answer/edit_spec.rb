@@ -1,6 +1,8 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 
-RSpec.describe 'Knowledge Base Locale Answer Edit', type: :system, authenticated_as: true do
+RSpec.describe 'Knowledge Base Locale Answer Edit', type: :system do
   include_context 'basic Knowledge Base'
 
   before do
@@ -83,6 +85,66 @@ RSpec.describe 'Knowledge Base Locale Answer Edit', type: :system, authenticated
 
       iframe = find('iframe')
       expect(iframe['src']).to start_with('https://www.youtube.com/embed/')
+    end
+  end
+
+  context 'tags' do
+    before do
+      visit "#knowledge_base/#{knowledge_base.id}/locale/#{locale_name}/answer/#{published_answer_with_tag.id}/edit"
+    end
+
+    let(:new_tag_name) { 'capybara_kb_tag' }
+
+    it 'adds a new tag' do
+      within :active_content do
+        click '.js-newTagLabel'
+
+        elem = find('.js-newTagInput')
+        elem.fill_in with: new_tag_name
+        elem.send_keys :return
+
+        expect(page).to have_css('a.js-tag', text: new_tag_name)
+      end
+    end
+
+    it 'saves new tag to the database' do
+      within :active_content do
+        click '.js-newTagLabel'
+
+        elem = find('.js-newTagInput')
+        elem.fill_in with: new_tag_name
+        elem.send_keys :return
+
+        wait.until_exists { published_answer_with_tag.reload.tag_list.include? new_tag_name }
+      end
+    end
+
+    it 'shows an existing tag' do
+      within :active_content do
+        expect(page).to have_css('a.js-tag', text: published_answer_tag_name)
+      end
+    end
+
+    it 'deletes a tag' do
+      within :active_content do
+        click '.js-newTagLabel'
+
+        find('.list-item', text: published_answer_tag_name)
+          .find('.js-delete').click
+
+        expect(page).to have_no_css('a.js-tag', text: published_answer_tag_name)
+      end
+    end
+
+    it 'deletes the tag from the database' do
+      within :active_content do
+        click '.js-newTagLabel'
+
+        find('.list-item', text: published_answer_tag_name)
+          .find('.js-delete').click
+
+        wait.until_exists { published_answer_with_tag.reload.tag_list.exclude? published_answer_tag_name }
+      end
     end
   end
 end

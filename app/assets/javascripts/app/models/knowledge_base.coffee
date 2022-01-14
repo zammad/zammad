@@ -1,5 +1,5 @@
 class App.KnowledgeBase extends App.Model
-  @configure 'KnowledgeBase', 'iconset', 'color_highlight', 'color_header', 'translation_ids', 'locale_ids', 'homepage_layout', 'category_layout', 'custom_address'
+  @configure 'KnowledgeBase', 'iconset', 'color_highlight', 'color_header', 'color_header_link', 'translation_ids', 'locale_ids', 'homepage_layout', 'category_layout', 'custom_address'
   @extend Spine.Model.Ajax
   @extend App.KnowledgeBaseActions
   @url: @apiPath + '/knowledge_bases'
@@ -59,7 +59,7 @@ class App.KnowledgeBase extends App.Model
     super
 
   objectName: ->
-    'Knowledge Base'
+    __('Knowledge Base')
 
   categoriesForDropdown: (options = {}) ->
     initial = []
@@ -92,7 +92,7 @@ class App.KnowledgeBase extends App.Model
     {
       name:    'translation::title'
       model:   'translation'
-      display: 'Title'
+      display: __('Title')
       tag:     'input'
       null:    false
       screen:
@@ -101,7 +101,7 @@ class App.KnowledgeBase extends App.Model
     #}, {
       #name:     'homepage_layout'
       #model:    'knowledge_base'
-      #display:  'Layout'
+      #display:  __('Layout')
       #tag:      'radio'
       #null:     true
       #screen:
@@ -120,7 +120,7 @@ class App.KnowledgeBase extends App.Model
     }, {
       name:    'translation::footer_note'
       model:   'translation'
-      display: 'Footer Note'
+      display: __('Footer Note')
       tag:     'input'
       null:    false
       screen:
@@ -128,7 +128,7 @@ class App.KnowledgeBase extends App.Model
           shown: true
     }, {
       name: 'color_highlight'
-      display: 'Icon & Link Color'
+      display: __('Icon & Link Color')
       tag: 'color'
       style: 'block'
       null: false
@@ -139,7 +139,7 @@ class App.KnowledgeBase extends App.Model
           shown:      true
     }, {
       name: 'color_header'
-      display: 'Header Color'
+      display: __('Header Color')
       tag: 'color'
       style: 'block'
       null: false
@@ -148,10 +148,21 @@ class App.KnowledgeBase extends App.Model
           display:    false
           horizontal: true
           shown:      true
+    }, {
+      name: 'color_header_link'
+      display: __('Header Link Color')
+      tag: 'color'
+      style: 'block'
+      null: false
+      screen:
+        admin_style_color_header_link:
+          display:    false
+          horizontal: true
+          shown:      true
     # Layout picker is disabled in V1
     #}, {
     #  name:     'homepage_layout'
-    #  display:  'Landing page layout'
+    #  display:  __('Landing page layout')
     #  tag:      'radio_graphic'
     #  null:     false
     #  style:    'block'
@@ -173,7 +184,7 @@ class App.KnowledgeBase extends App.Model
     #  ]
     #}, {
     #  name:     'category_layout'
-    #  display:  'Category page layout'
+    #  display:  __('Category page layout')
     #  tag:      'radio_graphic'
     #  null:     false
     #  style:    'block'
@@ -195,21 +206,21 @@ class App.KnowledgeBase extends App.Model
     #  ]
     }, {
       name:    'iconset'
-      display: 'Icon Set'
+      display: __('Icon Set')
       tag:     'iconset_picker'
       style:   'block'
-      help:    'Every category in your knowledge base should be given a unique icon for maximum visual clarity. Each set below provides a wide range of icons to choose from, but beware-you can\'t mix and match different icons from different sets. Choose carefully!'
+      help:    __('Every category in your knowledge base should be given a unique icon for maximum visual clarity. Each set below provides a wide range of icons to choose from, but beware: You can\'t mix and match different icons from different sets. Choose carefully!')
       null:    false
       screen:
         admin_style_iconset:
           shown: true
     }, {
       name: 'kb_locales'
-      display: 'Languages'
+      display: __('Languages')
       tag: 'multi_locales'
       style: 'block'
       null: false
-      help: 'You can provide different versions of your knowledge base for different locales. Add a language below, then select it in the Knowledge Base Editor to add your translations.'
+      help: __('You can provide different versions of your knowledge base for different locales. Add a language below, then select it in the Knowledge Base Editor to add your translations.')
       screen:
         admin_languages:
           shown: true
@@ -217,11 +228,11 @@ class App.KnowledgeBase extends App.Model
           shown: true
     }, {
       name:    'custom_address'
-      display: 'Custom URL'
+      display: __('Custom URL')
       tag:     'input'
       style:   'block'
       null:    true
-      help:    'The default URL for your knowledge base is e.g. example.com or example.com/help. To serve it from a custom URL instead, enter the destination below (e.g., "/support", "example.com", or "example.com/support"). Then, follow the directions under "Web Server Configuration" to complete the process.'
+      help:    __('The default URL for your knowledge base is e.g. example.com or example.com/help. To serve it from a custom URL instead, enter the destination below (e.g., "/support", "example.com", or "example.com/support"). Then, follow the directions under "Web Server Configuration" to complete the process.')
       screen:
         admin_custom_address:
           shown: true

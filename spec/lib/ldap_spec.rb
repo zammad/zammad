@@ -1,8 +1,10 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 
 RSpec.describe Ldap do
 
-  context 'initialization config parameters' do
+  describe 'initialization config parameters' do
 
     # required as 'let' to perform test based
     # expectations and reuse it in mock_initialization
@@ -27,7 +29,7 @@ RSpec.describe Ldap do
       )
     end
 
-    context 'bind credentials' do
+    describe 'bind credentials' do
 
       it 'uses given credentials' do
 
@@ -113,7 +115,7 @@ RSpec.describe Ldap do
       )
     end
 
-    context 'host_url' do
+    describe 'host_url' do
       it 'parses protocol and host' do
         config = {
           host_url: 'ldaps://localhost'
@@ -203,7 +205,7 @@ RSpec.describe Ldap do
     end
   end
 
-  context 'instance methods' do
+  describe 'instance methods' do
 
     # required as 'let' to perform test based
     # expectations and reuse it in 'let' instance
@@ -261,7 +263,7 @@ RSpec.describe Ldap do
         allow(mocked_ldap).to receive(:search).with(include(expected)).and_yield(yield_entry).and_return(true)
 
         check_entry = nil
-        instance.search(filter, additional) { |entry| check_entry = entry }
+        instance.search(filter, **additional) { |entry| check_entry = entry }
         expect(check_entry).to eq(yield_entry)
       end
 
@@ -281,7 +283,7 @@ RSpec.describe Ldap do
         allow(mocked_ldap).to receive(:search).with(include(expected)).and_yield(yield_entry).and_return(true)
 
         check_entry = nil
-        instance.search(filter, additional) { |entry| check_entry = entry }
+        instance.search(filter, **additional) { |entry| check_entry = entry }
         expect(check_entry).to eq(yield_entry)
       end
 

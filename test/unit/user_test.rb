@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
@@ -168,8 +170,8 @@ class UserTest < ActiveSupport::TestCase
         update_verify: {
           firstname: 'Bob',
           lastname:  'Smith',
-          image:     'a11ed3970e6d3a680527d6f3f075ff89',
-          image_md5: 'a11ed3970e6d3a680527d6f3f075ff89',
+          image:     '7c3af305038fc695a9563eda2eb78f57',
+          image_md5: '7c3af305038fc695a9563eda2eb78f57',
           email:     'unit-test1@znuny.com',
           login:     'login-4',
         }
@@ -187,8 +189,8 @@ class UserTest < ActiveSupport::TestCase
         create_verify: {
           firstname: 'Bob',
           lastname:  'Smith',
-          image:     'd76099edb79f39624b35187873184e3c',
-          image_md5: 'd76099edb79f39624b35187873184e3c',
+          image:     'cc98289b7af056fbd00ff0c1d08284c4',
+          image_md5: 'cc98289b7af056fbd00ff0c1d08284c4',
           email:     'unit-test2@znuny.com',
           login:     'login-5',
         },
@@ -198,8 +200,8 @@ class UserTest < ActiveSupport::TestCase
         update_verify: {
           firstname: 'Bob',
           lastname:  'Smith',
-          image:     'a11ed3970e6d3a680527d6f3f075ff89',
-          image_md5: 'a11ed3970e6d3a680527d6f3f075ff89',
+          image:     '7c3af305038fc695a9563eda2eb78f57',
+          image_md5: '7c3af305038fc695a9563eda2eb78f57',
           email:     'unit-test1@znuny.com',
           login:     'login-5',
         }
@@ -311,7 +313,7 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test 'strange spaces' do
-    name = "#{Time.zone.now.to_i}-#{rand(999_999_999_999)}"
+    name = "#{Time.zone.now.to_i}-#{SecureRandom.uuid}"
     email = "customer_email#{name}@example.com"
     customer = User.create!(
       firstname:     'Role',
@@ -327,7 +329,7 @@ class UserTest < ActiveSupport::TestCase
     assert_equal(email, customer.email)
     customer.destroy!
 
-    name = "#{Time.zone.now.to_i}-#{rand(999_999_999_999)}"
+    name = "#{Time.zone.now.to_i}-#{SecureRandom.uuid}"
     email = "customer_email#{name}@example.com"
     customer = User.create!(
       firstname:     "\u{00a0}\u{00a0}Role",
@@ -345,7 +347,7 @@ class UserTest < ActiveSupport::TestCase
     assert_equal(email, customer.email)
     customer.destroy!
 
-    name = "#{Time.zone.now.to_i}-#{rand(999_999_999_999)}"
+    name = "#{Time.zone.now.to_i}-#{SecureRandom.uuid}"
     email = "customer_email#{name}@example.com"
     customer = User.create!(
       firstname:     "\u{200B}\u{200B}Role",
@@ -363,7 +365,7 @@ class UserTest < ActiveSupport::TestCase
     assert_equal(email, customer.email)
     customer.destroy!
 
-    name = "#{Time.zone.now.to_i}-#{rand(999_999_999_999)}"
+    name = "#{Time.zone.now.to_i}-#{SecureRandom.uuid}"
     email = "customer_email#{name}@example.com"
     customer = User.create!(
       firstname:     "\u{200B}\u{200B}Role\u{00a0}",
@@ -381,7 +383,7 @@ class UserTest < ActiveSupport::TestCase
     assert_equal(email, customer.email)
     customer.destroy!
 
-    name = "#{Time.zone.now.to_i}-#{rand(999_999_999_999)}"
+    name = "#{Time.zone.now.to_i}-#{SecureRandom.uuid}"
     email = "customer_email#{name}@example.com"
     customer = User.create!(
       firstname:     "\u{200a}\u{200b}\u{202F}\u{205F}Role\u{2007}\u{2008}",
@@ -401,7 +403,7 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test 'without email - but login eq email' do
-    name = rand(999_999_999)
+    name = SecureRandom.uuid
 
     login = "admin-role_without_email#{name}@example.com"
     email = "admin-role_without_email#{name}@example.com"
@@ -409,7 +411,7 @@ class UserTest < ActiveSupport::TestCase
       login:         login,
       firstname:     'Role',
       lastname:      "Admin#{name}",
-      #email: "",
+      # email: "",
       password:      'adminpw',
       active:        true,
       roles:         Role.where(name: %w[Admin Agent]),
@@ -439,7 +441,7 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test 'without email - but login ne email' do
-    name = rand(999_999_999)
+    name = SecureRandom.uuid
 
     login = "admin-role_without_email#{name}"
     email = "admin-role_without_email#{name}@example.com"
@@ -447,7 +449,7 @@ class UserTest < ActiveSupport::TestCase
       login:         login,
       firstname:     'Role',
       lastname:      "Admin#{name}",
-      #email: "",
+      # email: "",
       password:      'adminpw',
       active:        true,
       roles:         Role.where(name: %w[Admin Agent]),
@@ -476,7 +478,7 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test 'uniq email' do
-    name = rand(999_999_999)
+    name = SecureRandom.uuid
 
     email1 = "admin1-role_without_email#{name}@example.com"
     admin1 = User.create!(
@@ -494,7 +496,7 @@ class UserTest < ActiveSupport::TestCase
     assert(admin1.id)
     assert_equal(admin1.email, email1)
 
-    assert_raises(Exceptions::UnprocessableEntity) do
+    assert_raises(ActiveRecord::RecordInvalid) do
       User.create!(
         login:         "#{email1}-1",
         firstname:     'Role',
@@ -520,7 +522,7 @@ class UserTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
 
-    assert_raises(Exceptions::UnprocessableEntity) do
+    assert_raises(ActiveRecord::RecordInvalid) do
       admin2.email = email1
       admin2.save!
     end
@@ -534,7 +536,7 @@ class UserTest < ActiveSupport::TestCase
 
   test 'uniq email - multiple use' do
     Setting.set('user_email_multiple_use', true)
-    name = rand(999_999_999)
+    name = SecureRandom.uuid
 
     email1 = "admin1-role_without_email#{name}@example.com"
     admin1 = User.create!(
@@ -570,7 +572,7 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test 'ensure roles' do
-    name = rand(999_999_999)
+    name = SecureRandom.uuid
     admin = User.create_or_update(
       login:         "admin-role#{name}@example.com",
       firstname:     'Role',
@@ -669,7 +671,7 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test 'user default preferences' do
-    name = rand(999_999_999)
+    name = SecureRandom.uuid
     groups = Group.where(name: 'Users')
     roles  = Role.where(name: 'Agent')
     agent1 = User.create_or_update(
@@ -764,7 +766,7 @@ class UserTest < ActiveSupport::TestCase
       created_by_id: 1,
       updated_by_id: 1,
     )
-    name = rand(999_999_999)
+    name = SecureRandom.uuid
     assert_raises(RuntimeError) do
       User.create_or_update(
         login:         "customer-role#{name}@example.com",
@@ -855,7 +857,7 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test 'permission default' do
-    name = rand(999_999_999)
+    name = SecureRandom.uuid
     admin_count = User.with_permissions('admin').count
     admin = User.create_or_update(
       login:         "admin-role#{name}@example.com",
@@ -933,7 +935,7 @@ class UserTest < ActiveSupport::TestCase
     assert_equal(0, admin_count_inital)
 
     # create two admin users
-    random = rand(999_999_999)
+    random = SecureRandom.uuid
     admin1 = User.create_or_update(
       login:         "1admin-role#{random}@example.com",
       firstname:     'Role',
@@ -946,7 +948,7 @@ class UserTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
 
-    random = rand(999_999_999)
+    random = SecureRandom.uuid
     admin2 = User.create_or_update(
       login:         "2admin-role#{random}@example.com",
       firstname:     'Role',
@@ -959,7 +961,7 @@ class UserTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
 
-    random = rand(999_999_999)
+    random = SecureRandom.uuid
     admin3 = User.create_or_update(
       login:         "2admin-role#{random}@example.com",
       firstname:     'Role',
@@ -1013,7 +1015,7 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test 'only valid agent in group permission check' do
-    name = rand(999_999_999)
+    name = SecureRandom.uuid
     group = Group.create!(
       name:          "ValidAgentGroupPermission-#{name}",
       active:        true,
@@ -1059,7 +1061,7 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test 'preferences[:notification_sound][:enabled] value check' do
-    name  = rand(999_999_999)
+    name  = SecureRandom.uuid
     roles = Role.where(name: 'Agent')
 
     agent1 = User.create!(
@@ -1221,7 +1223,7 @@ class UserTest < ActiveSupport::TestCase
 
     Cti::CallerId.maybe_add(
       caller_id: '49123456789',
-      comment:   'Hairdresser Bob Smith, San Francisco', #optional
+      comment:   'Hairdresser Bob Smith, San Francisco', # optional
       level:     'maybe', # known|maybe
       user_id:   agent1_id, # optional
       object:    'Ticket',
@@ -1304,7 +1306,7 @@ class UserTest < ActiveSupport::TestCase
     )
 
     group1 = Group.create_or_update(
-      name:          "GroupWithoutPermission-#{rand(9_999_999_999)}",
+      name:          "GroupWithoutPermission-#{SecureRandom.uuid}",
       active:        true,
       updated_by_id: 1,
       created_by_id: 1,

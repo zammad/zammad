@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 
 RSpec.describe 'Knowledge Base search with details', type: :request, searchindex: true do
@@ -59,6 +61,79 @@ RSpec.describe 'Knowledge Base search with details', type: :request, searchindex
     it 'returns category in locale without category translation', authenticated_as: -> { create(:admin) } do
       post endpoint, params: { query: search_phrase }
       expect(json_response['details'][0]['subtitle']).to eq category.translation_to(primary_locale).title
+    end
+  end
+
+  context 'when answer tree is long' do
+    let(:category1) { create('knowledge_base/category') }
+    let(:category2) { create('knowledge_base/category', parent: category1) }
+    let(:category3) { create('knowledge_base/category', parent: category2) }
+    let(:answer_cut_tree) { create(:knowledge_base_answer, :published, :with_attachment, category: category3) }
+    let(:category4) { create('knowledge_base/category') }
+    let(:category5) { create('knowledge_base/category', parent: category4) }
+    let(:answer_full_tree) { create(:knowledge_base_answer, :published, :with_attachment, category: category5) }
+
+    before do
+      answer_cut_tree && answer_full_tree && rebuild_searchindex
+    end
+
+    it 'returns category with cut tree', authenticated_as: -> { create(:admin) } do
+      post endpoint, params: { query: answer_cut_tree.translations.first.title }
+      expect(json_response['details'][0]['subtitle']).to eq("#{category1.translations.first.title} > .. > #{category3.translations.first.title}")
+    end
+
+    it 'returns category with full tree', authenticated_as: -> { create(:admin) } do
+      post endpoint, params: { query: answer_full_tree.translations.first.title }
+      expect(json_response['details'][0]['subtitle']).to eq("#{category4.translations.first.title} > #{category5.translations.first.title}")
+    end
+  end
+
+  context 'when using include_locale parameter' do
+    context 'when no multiple locales exists' do
+      it 'no locale added to title' do
+        post endpoint, params: { query: published_answer.translations.first.title, include_locale: true }
+        expect(json_response['details'][0]['title']).to not_include('(EN-US)')
+      end
+    end
+
+    context 'when multiple locales exists' do
+      before do
+        # Create a alternative knowledge base locale.
+        alternative_locale
+      end
+
+      it 'locale added to title' do
+        post endpoint, params: { query: published_answer.translations.first.title, include_locale: true }
+        expect(json_response['details'][0]['title']).to include('(EN-US)')
+      end
+    end
+  end
+
+  context 'when using paging' do
+    let(:answers) do
+      Array.new(20) do |nth|
+        create(:knowledge_base_answer, :published, :with_attachment, category: category, translation_attributes: { title: "#{search_phrase} #{nth}" })
+      end
+    end
+
+    let(:search_phrase) { 'paging test' }
+
+    before do
+      configure_elasticsearch(required: true, rebuild: true) do
+        answers
+      end
+    end
+
+    it 'returns success' do
+      post endpoint, params: { query: search_phrase, per_page: 10, page: 0 }
+
+      expect(response).to have_http_status(:ok)
+    end
+
+    it 'returns defined amount of items' do
+      post endpoint, params: { query: search_phrase, per_page: 7, page: 0 }
+
+      expect(json_response['result'].count).to be 7
     end
   end
 end

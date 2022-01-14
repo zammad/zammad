@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 
 RSpec.describe Channel::EmailParser, type: :model do
@@ -900,6 +902,28 @@ RSpec.describe Channel::EmailParser, type: :model do
           expect { described_class.new.process({}, raw_mail) }
             .to change { ticket.reload.state.name }.to('open')
         end
+
+        context 'when group has follow_up_assignment true' do
+          let(:group) { create(:group, follow_up_assignment: true) }
+          let(:agent) { create(:agent, groups: [group]) }
+          let(:ticket) { create(:ticket, state_name: 'closed', owner: agent, group: group) }
+
+          it 'does not change the owner' do
+            expect { described_class.new.process({}, raw_mail) }
+              .not_to change { ticket.reload.owner.login }
+          end
+        end
+
+        context 'when group has follow_up_assignment false' do
+          let(:group) { create(:group, follow_up_assignment: false) }
+          let(:agent) { create(:agent, groups: [group]) }
+          let(:ticket) { create(:ticket, state_name: 'closed', owner: agent, group: group) }
+
+          it 'does change the owner' do
+            expect { described_class.new.process({}, raw_mail) }
+              .to change { ticket.reload.owner.login }.to eq(User.find(1).login)
+          end
+        end
       end
     end
 
@@ -1064,6 +1088,49 @@ RSpec.describe Channel::EmailParser, type: :model do
           expect(article.attachments.first.content).to eq('Hello Zammad')
         end
       end
+
+      # https://github.com/zammad/zammad/issues/3529
+      context 'Attachments sent by Zammad not shown in Outlook' do
+        subject(:mail) do
+          Channel::EmailBuild.build(
+            from:         'sender@example.com',
+            to:           'recipient@example.com',
+            body:         body,
+            content_type: 'text/html',
+            attachments:  Store.where(filename: 'super-seven.jpg')
+          )
+        end
+
+        let(:mail_file) { Rails.root.join('test/data/mail/mail101.box') }
+
+        before do
+          described_class.new.process({}, raw_mail)
+        end
+
+        context 'when no reference in body' do
+          let(:body) { 'no reference here' }
+
+          it 'does not have content disposition inline' do
+            expect(mail.to_s).to include('Content-Disposition: attachment').and not_include('Content-Disposition: inline')
+          end
+        end
+
+        context 'when reference in body' do
+          let(:body) { %(somebody with some text <img src="cid:#{Store.find_by(filename: 'super-seven.jpg').preferences['Content-ID']}">) }
+
+          it 'does have content disposition inline' do
+            expect(mail.to_s).to include('Content-Disposition: inline').and not_include('Content-Disposition: attachment')
+          end
+
+          context 'when encoded as ISO-8859-1' do
+            let(:body) { super().encode('ISO-8859-1') }
+
+            it 'does not raise exception' do
+              expect { mail.to_s }.not_to raise_error
+            end
+          end
+        end
+      end
     end
 
     describe 'inline image handling' do
@@ -1124,7 +1191,57 @@ RSpec.describe Channel::EmailParser, type: :model do
       end
     end
 
+    describe 'Jira handling' do
+
+      context 'new Ticket' do
+        let(:mail_file) { Rails.root.join('test/data/mail/mail103.box') }
+
+        it 'creates an ExternalSync reference' do
+          described_class.new.process({}, raw_mail)
+
+          expect(ExternalSync.last).to have_attributes(
+            source:    'Jira-example@jira.com',
+            source_id: 'SYS-422',
+            object:    'Ticket',
+            o_id:      Ticket.last.id,
+          )
+        end
+      end
+
+      context 'follow up' do
+
+        let(:mail_file) { Rails.root.join('test/data/mail/mail104.box') }
+        let(:ticket) { create(:ticket) }
+        let!(:external_sync) do
+          create(:external_sync,
+                 source:    'Jira-example@jira.com',
+                 source_id: 'SYS-422',
+                 object:    'Ticket',
+                 o_id:      ticket.id,)
+        end
+
+        it 'adds Article to existing Ticket' do
+          expect { described_class.new.process({}, raw_mail) }.to change { ticket.reload.articles.count }
+        end
+
+        context 'key insensitive sender address' do
+
+          let(:raw_mail) { super().gsub('example@service-now.com', 'Example@Service-Now.com') }
+
+          it 'adds Article to existing Ticket' do
+            expect { described_class.new.process({}, raw_mail) }.to change { ticket.reload.articles.count }
+          end
+        end
+      end
+    end
+
     describe 'XSS protection' do
+
+      before do
+        # XSS processing may run into a timeout on slow CI systems, so turn the timeout off for the test.
+        stub_const("#{HtmlSanitizer}::PROCESSING_TIMEOUT", nil)
+      end
+
       let(:article) { described_class.new.process({}, raw_mail).second }
 
       let(:raw_mail) { <<~RAW.chomp }
@@ -1141,7 +1258,7 @@ RSpec.describe Channel::EmailParser, type: :model do
         let(:content_type) { 'text/html' }
 
         it 'removes injected <script> tags from body' do
-          expect(article.body).to eq("no HTML alert('XSS')")
+          expect(article.body).to eq('no HTML')
         end
       end
 
@@ -1159,7 +1276,7 @@ RSpec.describe Channel::EmailParser, type: :model do
     context 'for “delivery failed” notifications (a.k.a. bounce messages)' do
       let(:ticket) { article.ticket }
       let(:article) { create(:ticket_article, sender_name: 'Agent', message_id: message_id) }
-      let(:message_id) { raw_mail[/(?<=^(References|Message-ID): )\S*/] }
+      let(:message_id) { raw_mail[%r{(?<=^(References|Message-ID): )\S*}] }
 
       context 'with future retries (delayed)' do
         let(:mail_file) { Rails.root.join('test/data/mail/mail078.box') }
@@ -1347,7 +1464,7 @@ RSpec.describe Channel::EmailParser, type: :model do
 
             Postmaster of zammad.example.com
           BODY
-          body.gsub(/\n/, "\r\n")
+          body.gsub(%r{\n}, "\r\n")
         end
       end
     end
@@ -1370,7 +1487,7 @@ RSpec.describe Channel::EmailParser, type: :model do
 
             Postmaster von zammad.example.com
           BODY
-          body.gsub(/\n/, "\r\n")
+          body.gsub(%r{\n}, "\r\n")
         end
       end
     end

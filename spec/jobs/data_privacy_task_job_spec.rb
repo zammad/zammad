@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 
 RSpec.describe DataPrivacyTaskJob, type: :job do
@@ -16,6 +18,13 @@ RSpec.describe DataPrivacyTaskJob, type: :job do
       create(:data_privacy_task, deletable: user)
       described_class.perform_now
       expect { user.reload }.to raise_error(ActiveRecord::RecordNotFound)
+    end
+
+    it 'checks if deletion does not crash if the user is already deleted' do
+      task = create(:data_privacy_task, deletable: user)
+      user.destroy
+      described_class.perform_now
+      expect(task.reload.state).to eq('completed')
     end
 
     it 'checks if the organization is deleted' do

@@ -1,4 +1,5 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 class ActivityStream < ApplicationModel
   include ActivityStream::Assets
 
@@ -55,7 +56,7 @@ add a new activity entry for an object
     # check newest entry - is needed
     result = ActivityStream.where(
       o_id:                      data[:o_id],
-      #:activity_stream_type_id  => type_id,
+      # :activity_stream_type_id  => type_id,
       permission_id:             permission_id,
       activity_stream_object_id: object_id,
       created_by_id:             data[:created_by_id]
@@ -64,7 +65,7 @@ add a new activity entry for an object
     # return if old entry is really fresh
     if result
       activity_record_delay = 90.seconds
-      return result if result.created_at.to_i >= ( data[:created_at].to_i - activity_record_delay )
+      return result if result.created_at.to_i >= (data[:created_at].to_i - activity_record_delay)
     end
 
     # create history
@@ -106,22 +107,9 @@ return all activity entries of an user
 =end
 
   def self.list(user, limit)
-    # do not return an activity stream for customers
-    return [] if !user.permissions?('ticket.agent') && !user.permissions?('admin')
-
-    permission_ids = user.permissions_with_child_ids
-    group_ids = user.group_ids_access('read')
-
-    if group_ids.blank?
-      ActivityStream.where('(permission_id IN (?) AND group_id IS NULL)', permission_ids)
-                    .order(created_at: :desc)
-                    .limit(limit)
-    else
-      ActivityStream.where('(permission_id IN (?) AND (group_id IS NULL OR group_id IN (?))) OR (permission_id IS NULL AND group_id IN (?))', permission_ids, group_ids, group_ids)
-                    .order(created_at: :desc)
-                    .limit(limit)
-    end
-
+    ActivityStreamPolicy::Scope.new(user, self).resolve
+                               .order(created_at: :desc)
+                               .limit(limit)
   end
 
 =begin

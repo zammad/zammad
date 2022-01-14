@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class DataPrivacyTask < ApplicationModel
   include DataPrivacyTask::HasActivityStreamLog
@@ -19,20 +19,23 @@ class DataPrivacyTask < ApplicationModel
   validates_with DataPrivacyTask::Validation
 
   def perform
+    perform_deletable
+    update!(state: 'completed')
+  rescue => e
+    handle_exception(e)
+  end
+
+  def perform_deletable
     return if deletable.blank?
 
     prepare_deletion_preview
     save!
 
     if delete_organization?
-      deletable.organization.destroy
+      deletable.organization.destroy(associations: true)
     else
       deletable.destroy
     end
-
-    update!(state: 'completed')
-  rescue => e
-    handle_exception(e)
   end
 
   def handle_exception(e)

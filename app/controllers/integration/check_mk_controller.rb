@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Integration::CheckMkController < ApplicationController
   skip_before_action :verify_csrf_token
@@ -61,7 +61,7 @@ UserAgent: #{request.env['HTTP_USER_AGENT'] || '-'}
           internal:  false,
         )
       end
-      if (!auto_close && params[:state].match(/#{state_recovery_match}/i)) || !params[:state].match(/#{state_recovery_match}/i)
+      if (!auto_close && params[:state].match(%r{#{state_recovery_match}}i)) || !params[:state].match(%r{#{state_recovery_match}}i)
         render json: {
           result:     'ticket already open, added note',
           ticket_ids: ticket_ids_found,
@@ -71,7 +71,7 @@ UserAgent: #{request.env['HTTP_USER_AGENT'] || '-'}
     end
 
     # check if service is recovered
-    if auto_close && params[:state].present? && params[:state].match(/#{state_recovery_match}/i)
+    if auto_close && params[:state].present? && params[:state].match(%r{#{state_recovery_match}}i)
       if ticket_ids_found.blank?
         render json: {
           result: 'no open tickets found, ignore action',
@@ -140,11 +140,11 @@ UserAgent: #{request.env['HTTP_USER_AGENT'] || '-'}
     http_log_config facility: 'check_mk'
 
     if !Setting.get('check_mk_integration')
-      raise Exceptions::UnprocessableEntity, 'Feature is disable, please contact your admin to enable it!'
+      raise Exceptions::UnprocessableEntity, __('Feature is disabled, please contact your administrator!')
     end
 
     if Setting.get('check_mk_token') != params[:token]
-      raise Exceptions::UnprocessableEntity, 'Invalid token!'
+      raise Exceptions::UnprocessableEntity, __('Invalid token!')
     end
 
     true

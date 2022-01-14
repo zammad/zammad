@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 # NOTE: Why use PG::Connection over ActiveRecord::Base.connection?
 #
 # As of Rails 5.2, db:create now runs initializers prior to creating the DB.
@@ -10,8 +12,8 @@
 
 module Zammad
   class Application
-    class Initializer
-      module DBPreflightCheck
+    module Initializer
+      module DbPreflightCheck
         module Postgresql
           extend Base
 
@@ -56,7 +58,7 @@ module Zammad
           end
 
           def self.min_version
-            @min_version ||= '9.1'
+            @min_version ||= '9.3'
           end
 
           def self.vendor

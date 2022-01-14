@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 
 RSpec.shared_examples Import::Zendesk::ObjectAttribute::Base do
@@ -25,7 +27,7 @@ RSpec.shared_examples Import::Zendesk::ObjectAttribute::Base do
 
       expect do
         described_class.new('Ticket', 'example_field', attribute)
-      end.to raise_error(RuntimeError, /'example_field': #{error_text}$/)
+      end.to raise_error(RuntimeError, %r{'example_field': #{error_text}$})
     end
   end
 

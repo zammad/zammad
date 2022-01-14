@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 
 RSpec.describe 'Integration CTI', type: :request do
@@ -402,6 +404,18 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.end_at).to be_truthy
       expect(log.duration_waiting_time).to be_truthy
       expect(log.duration_talking_time).to be_truthy
+
+      travel 1.second
+
+      # inbound - I - answer for hangup by customer
+      post "/api/v1/cti/#{token}", params: {
+        event:     'answer',
+        direction: 'in',
+        call_id:   '1234567890-3',
+        to:        '4930600000000',
+        from:      '4912347114711',
+      }, as: :json
+      expect(response).to have_http_status(:ok)
 
       travel 1.second
 

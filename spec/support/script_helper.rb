@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 module ScriptHelper
   def has_ipv6?
     File.exist?('/proc/net/if_inet6') && system('ip -6 addr | grep ::1')

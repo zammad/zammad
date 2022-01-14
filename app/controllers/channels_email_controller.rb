@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class ChannelsEmailController < ApplicationController
   prepend_before_action { authentication_check && authorize! }
@@ -224,7 +224,7 @@ class ChannelsEmailController < ApplicationController
 
       Channel.where(area: 'Email::Notification').each do |channel|
         active = false
-        if adapter.match?(/^#{channel.options[:outbound][:adapter]}$/i)
+        if adapter.match?(%r{^#{channel.options[:outbound][:adapter]}$}i)
           active = true
           channel.options = {
             outbound: {
@@ -257,7 +257,7 @@ class ChannelsEmailController < ApplicationController
 
       render json: {
         result:  'duplicate',
-        message: 'Account already exists!',
+        message: __('Account already exists!'),
       }
       return true
     end

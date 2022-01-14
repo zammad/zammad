@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 class Sessions::Backend::TicketOverviewList < Sessions::Backend::Base
 
   def self.reset(user_id)
@@ -19,7 +21,7 @@ class Sessions::Backend::TicketOverviewList < Sessions::Backend::Base
 
   def self.overview_history_append(overview, user_id)
     key = "TicketOverviewHistory::#{user_id}"
-    history = Cache.get(key) || []
+    history = Cache.read(key) || []
 
     history.prepend overview
     history.uniq!
@@ -31,7 +33,7 @@ class Sessions::Backend::TicketOverviewList < Sessions::Backend::Base
   end
 
   def self.overview_history_get(user_id)
-    Cache.get("TicketOverviewHistory::#{user_id}")
+    Cache.read("TicketOverviewHistory::#{user_id}")
   end
 
   def load
@@ -93,7 +95,7 @@ class Sessions::Backend::TicketOverviewList < Sessions::Backend::Base
   end
 
   def pull_overview?
-    result = Cache.get("TicketOverviewPull::#{@user.id}")
+    result = Cache.read("TicketOverviewPull::#{@user.id}")
     Cache.delete("TicketOverviewPull::#{@user.id}") if result
     return true if result
 

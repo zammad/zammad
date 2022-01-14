@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 # This file registers a before and after each hook callback that
 # resets the stored current_user_id in the UserInfo which will otherwise
 # persists across multiple examples.
@@ -10,12 +12,12 @@
 # if it's a Proc it will get evaluated
 RSpec.configure do |config|
 
-  config.before(:each) do |example|
+  config.before do |example|
     current_user_id = example.metadata[:current_user_id]
     UserInfo.current_user_id = current_user_id.is_a?(Proc) ? instance_exec(&current_user_id) : current_user_id
   end
 
-  config.after(:each) do |_example|
+  config.after do |_example|
     UserInfo.current_user_id = nil
   end
 end

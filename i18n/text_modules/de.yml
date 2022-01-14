@@ -1,0 +1,117 @@
+---
+- name: bur - Bitte um Rückruf
+  keywords: ''
+  content:
+    ich konnte Sie telefonisch nicht erreichen. Können Sie mir bitte eine kurze E-Mail
+    schicken wenn Sie wieder verfügbar sind?
+  note: ''
+- name: ff - Für Fragen stehe ich...
+  keywords: ''
+  content: Für Fragen stehe ich gerne zur Verfügung!
+  note: ''
+- name: fwf - Für weitere Fragen stehe ich...
+  keywords: ''
+  content: Für weitere Fragen stehe ich gerne zur Verfügung!
+  note: ''
+- name: glg - Ganz liebe Grüße,
+  keywords: ''
+  content: Ganz liebe Grüße,
+  note: ''
+- name: vg - Viele Grüße,
+  keywords: ''
+  content: Viele Grüße,
+  note: ''
+- name: lg - Liebe Grüße,
+  keywords: ''
+  content: Liebe Grüße,
+  note: ''
+- name: 'hallo - Hallo #{ticket.customer.firstname},'
+  keywords: ''
+  content: 'Hallo #{ticket.customer.firstname},'
+  note: ''
+- name: 'hf - Hallo Frau #{ticket.customer.lastname},'
+  keywords: ''
+  content: 'Hallo Frau #{ticket.customer.lastname},'
+  note: ''
+- name: 'hh - Hallo Herr #{ticket.customer.lastname},'
+  keywords: ''
+  content: 'Hallo Herr #{ticket.customer.lastname},'
+  note: ''
+- name: ifm - Ich freue mich!
+  keywords: ''
+  content: Ich freue mich!
+  note: ''
+- name: 'sgf - Sehr geehrte Frau #{ticket.customer.lastname},'
+  keywords: ''
+  content: 'Sehr geehrte Frau #{ticket.customer.lastname},'
+  note: ''
+- name: 'sgh - Sehr geehrter Herr #{ticket.customer.lastname},'
+  keywords: ''
+  content: 'Sehr geehrter Herr #{ticket.customer.lastname},'
+  note: ''
+- name: vdfdra - Vielen Dank für die rasche Antwort!
+  keywords: ''
+  content: Vielen Dank für die rasche Antwort!
+  note: ''
+- name: vdff - Vielen Dank für das Feedback!
+  keywords: ''
+  content: Vielen Dank für das Feedback!
+  note: ''
+- name: vdfia - Vielen Dank für Ihre Anfrage
+  keywords: ''
+  content: Vielen Dank für Ihre Anfrage
+  note: ''
+- name: üff - Über Feedback würde ich mich freuen!
+  keywords: ''
+  content: Über Feedback würde ich mich freuen!
+  note: ''
+- name: üfwf - Über Feedback zum weiteren Vorgehen würde ich mich freuen!
+  keywords: ''
+  content: Über Feedback zum weiteren Vorgehen würde ich mich freuen!
+  note: ''
+- name: mfg - Mit freundlichen Grüßen,
+  keywords: ''
+  content: Mit freundlichen Grüßen,
+  note: ''
+- name: sg - Sonnige Grüße,
+  keywords: ''
+  content: Sonnige Grüße,
+  note: ''
+- name: sog - Sommerliche Grüße,
+  keywords: ''
+  content: Sommerliche Grüße,
+  note: ''
+- name: wg - Winterliche Grüße,
+  keywords: ''
+  content: Winterliche Grüße,
+  note: ''
+- name: ivbd - Ich verbleibe bis dahin,
+  keywords: ''
+  content: Ich verbleibe bis dahin,
+  note: ''
+- name: bg - Beste Grüße,
+  keywords: ''
+  content: Beste Grüße,
+  note: ''
+- name: vdbg - Vielen Dank und beste Grüße,
+  keywords: ''
+  content: Vielen Dank und beste Grüße.
+  note: ''
+- name: fwft - Für weitere Fragen
+  keywords: ''
+  content: Für weitere Fragen stehe ich gerne auch telefonisch zur Verfügung!
+  note: ''
+- name: ass - Anliegen sichten
+  keywords: ''
+  content:
+    '<p>Vielen Dank für Ihre Anfrage.</p><p>Wir werden Ihr Anliegen sichten
+    und uns schnellstmöglich mit Ihnen in Verbindung setzen.</p>'
+  note: ''
+- name: vdv - vielen Dank im Voraus
+  keywords: ''
+  content: Freundliche Grüße und vielen Dank im Voraus,
+  note: ''
+- name: hn - ich wollte höflich nachfragen
+  keywords: ''
+  content: ich wollte höflich nachfragen,
+  note: ''

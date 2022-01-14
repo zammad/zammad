@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require_relative 'boot'
 
 require 'rails/all'
@@ -10,24 +12,42 @@ Bundler.setup
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+# Only load gems for asset compilation if they are needed to avoid
+#   having unneeded runtime dependencies like NodeJS.
+if ARGV.include?('assets:precompile') || Rails.groups.exclude?('production')
+  Bundler.load.current_dependencies.select do |dep|
+    require dep.name if dep.groups.include?(:assets)
+  end
+end
+
 module Zammad
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 5.2
+    config.load_defaults 6.0
+
+    Rails.autoloaders.each do |autoloader|
+      autoloader.do_not_eager_load "#{config.root}/lib/core_ext"
+      autoloader.collapse          "#{config.root}/lib/omniauth"
+      autoloader.inflector.inflect(
+        'github_database' => 'GithubDatabase',
+        'otrs'            => 'OTRS',
+        'db'              => 'DB',
+      )
+    end
 
     # Settings in config/environments/* take precedence over those specified here.
-    # Application configuration should go into files in config/initializers
-    # -- all .rb files in that directory are automatically loaded.
+    # Application configuration can go into files in config/initializers
+    # -- all .rb files in that directory are automatically loaded after loading
+
+    # the framework and any gems in your application.
 
     # Custom directories with classes and modules you want to be autoloadable.
+    config.add_autoload_paths_to_load_path = false
     config.autoload_paths += %W[#{config.root}/lib]
-    config.eager_load_paths += %W[#{config.root}/lib]
 
-    # Activate observers that should always be running.
-    # config.active_record.observers = :cacher, :garbage_collector, :forum_observer
-    config.active_record.observers =
-      'observer::_session',
-      'observer::_transaction'
+    # zeitwerk:check will only check preloaded paths. To make sure that also lib/ gets validated,
+    #   add it to the eager_load_paths only if zeitwerk:check is running.
+    config.eager_load_paths += %W[#{config.root}/lib] if ARGV[0].eql? 'zeitwerk:check'
 
     config.active_job.queue_adapter = :delayed_job
 
@@ -38,7 +58,22 @@ module Zammad
     config.api_path = '/api/v1'
 
     # define cache store
-    config.cache_store = :file_store, Rails.root.join('tmp', "cache_file_store_#{Rails.env}")
+    if ENV['MEMCACHE_SERVERS'].present?
+      require 'dalli' # Only load this gem when it is really used.
+      config.cache_store = [:mem_cache_store, ENV['MEMCACHE_SERVERS'], { expires_in: 7.days }]
+    else
+      config.cache_store = [:zammad_file_store, Rails.root.join('tmp', "cache_file_store_#{Rails.env}"), { expires_in: 7.days }]
+    end
+
+    # define websocket session store
+    config.websocket_session_store = if ENV['REDIS_URL'].present?
+                                       :redis
+                                     else
+                                       :file
+                                     end
+
+    # Rails 6.1 returns false when the enqueuing is aborted.
+    config.active_job.return_false_on_aborted_enqueue = true
 
     # default preferences by permission
     config.preferences_default_by_permission = {

@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 module SystemInitDoneHelper
   def system_init_done(state = true)
     # generally allow all calls to Setting.exists? to avoid
@@ -6,7 +8,7 @@ module SystemInitDoneHelper
 
     # just mock the Setting check for `system_init_done`
     # and return the given parameter value
-    expect(Setting).to receive(:exists?).with(name: 'system_init_done').and_return(state)
+    allow(Setting).to receive(:exists?).with(name: 'system_init_done').and_return(state)
   end
 end
 

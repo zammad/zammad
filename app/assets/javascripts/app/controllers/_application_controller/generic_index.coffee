@@ -175,6 +175,7 @@ class App.ControllerGenericIndex extends App.Controller
       small:         @small
       large:         @large
       veryLarge:     @veryLarge
+      handlers:      @handlers
     )
 
   new: (e) ->
@@ -186,6 +187,7 @@ class App.ControllerGenericIndex extends App.Controller
       small:         @small
       large:         @large
       veryLarge:     @veryLarge
+      handlers:      @handlers
     )
 
   payload: (e) ->

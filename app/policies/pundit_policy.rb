@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 module PunditPolicy
 
   attr_reader :user, :custom_exception
@@ -16,7 +18,7 @@ module PunditPolicy
   def user_required!
     return if user
 
-    raise Exceptions::Forbidden, 'Authentication required'
+    raise Exceptions::Forbidden, __('Authentication required')
   end
 
   private

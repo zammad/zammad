@@ -1,10 +1,12 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'test_helper'
 
 class NotificationFactoryMailerTemplateTest < ActiveSupport::TestCase
 
   test 'notifications template' do
 
-    Translation.load('de-de')
+    Translation.sync_locale_from_po('de-de')
 
     groups = Group.where(name: 'Users')
     roles  = Role.where(name: 'Agent')
@@ -119,7 +121,7 @@ class NotificationFactoryMailerTemplateTest < ActiveSupport::TestCase
     assert_match('Notification&lt;b&gt;xxx&lt;/b&gt;', result[:body])
     assert_match('has been created by', result[:body])
     assert_match('&lt;b&gt;test123&lt;/b&gt;', result[:body])
-    assert_match('Manage your notifications settings', result[:body])
+    assert_match('Manage your notification settings', result[:body])
     assert_no_match('Dein', result[:body])
     assert_no_match('longname', result[:body])
     assert_match('Current User', result[:body])
@@ -139,7 +141,7 @@ class NotificationFactoryMailerTemplateTest < ActiveSupport::TestCase
     assert_match('Notification&lt;b&gt;xxx&lt;/b&gt;', result[:body])
     assert_match('es wurde ein neues Ticket', result[:body])
     assert_match('&lt;b&gt;test123&lt;/b&gt;', result[:body])
-    assert_match('Benachrichtigungseinstellungen Verwalten', result[:body])
+    assert_match(Translation.translate('de-de', 'Manage your notification settings'), result[:body])
     assert_no_match('Your', result[:body])
     assert_no_match('longname', result[:body])
     assert_match('Current User', result[:body])
@@ -175,7 +177,7 @@ class NotificationFactoryMailerTemplateTest < ActiveSupport::TestCase
     assert_match('Notification&lt;b&gt;xxx&lt;/b&gt;', result[:body])
     assert_match('has been updated by', result[:body])
     assert_match('<b>test123</b>', result[:body])
-    assert_match('Manage your notifications settings', result[:body])
+    assert_match('Manage your notification settings', result[:body])
     assert_no_match('Dein', result[:body])
     assert_no_match('longname', result[:body])
     assert_match('Current User', result[:body])
@@ -195,7 +197,7 @@ class NotificationFactoryMailerTemplateTest < ActiveSupport::TestCase
     assert_match('Notification&lt;b&gt;xxx&lt;/b&gt;', result[:body])
     assert_match('wurde von', result[:body])
     assert_match('<b>test123</b>', result[:body])
-    assert_match('Benachrichtigungseinstellungen Verwalten', result[:body])
+    assert_match(Translation.translate('de-de', 'Manage your notification settings'), result[:body])
     assert_no_match('Your', result[:body])
     assert_no_match('longname', result[:body])
     assert_match('Current User', result[:body])
@@ -215,7 +217,7 @@ class NotificationFactoryMailerTemplateTest < ActiveSupport::TestCase
     assert_match('Notification&lt;b&gt;xxx&lt;/b&gt;', result[:body])
     assert_match('wurde von', result[:body])
     assert_match('<b>test123</b>', result[:body])
-    assert_match('Benachrichtigungseinstellungen Verwalten', result[:body])
+    assert_match(Translation.translate('de-de', 'Manage your notification settings'), result[:body])
     assert_no_match('Your', result[:body])
     assert_no_match('longname', result[:body])
     assert_match('Current User', result[:body])
@@ -235,7 +237,7 @@ class NotificationFactoryMailerTemplateTest < ActiveSupport::TestCase
     assert_match('Notification&lt;b&gt;xxx&lt;/b&gt;', result[:body])
     assert_match('has been updated by', result[:body])
     assert_match('<b>test123</b>', result[:body])
-    assert_match('Manage your notifications settings', result[:body])
+    assert_match('Manage your notification settings', result[:body])
     assert_no_match('Dein', result[:body])
     assert_no_match('longname', result[:body])
     assert_match('Current User', result[:body])
@@ -255,7 +257,7 @@ class NotificationFactoryMailerTemplateTest < ActiveSupport::TestCase
     assert_match('Notification&lt;b&gt;xxx&lt;/b&gt;', result[:body])
     assert_match('foi atualizado por', result[:body])
     assert_match('<b>test123</b>', result[:body])
-    assert_match('Manage your notifications settings', result[:body])
+    assert_match('Manage your notification settings', result[:body])
     assert_no_match('Dein', result[:body])
     assert_no_match('longname', result[:body])
     assert_match('Current User', result[:body])

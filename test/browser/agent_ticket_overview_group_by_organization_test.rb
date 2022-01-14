@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'browser_test_helper'
 
 class AgentTicketOverviewGroupByOrganizationTest < TestCase
@@ -8,17 +10,17 @@ class AgentTicketOverviewGroupByOrganizationTest < TestCase
 
 =end
   def test_grouping_by_organzation_overview
-    random = rand(999_999).to_s
+    random = SecureRandom.uuid
     user_email = "user_#{random}@example.com"
     overview_name = "overview_#{random}"
 
     @browser = instance = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     # 1. Create a new test organization with special characters in its name
     organization_create(

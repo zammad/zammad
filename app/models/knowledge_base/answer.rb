@@ -1,9 +1,10 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 class KnowledgeBase::Answer < ApplicationModel
   include HasTranslations
   include HasAgentAllowedParams
+  include HasTags
   include CanBePublished
-  include HasKnowledgeBaseAttachmentPermissions
   include ChecksKbClientNotification
   include CanCloneAttachments
 
@@ -27,12 +28,13 @@ class KnowledgeBase::Answer < ApplicationModel
   def attributes_with_association_ids
     key = "#{self.class}::aws::#{id}"
 
-    cache = Cache.get(key)
+    cache = Cache.read(key)
     return cache if cache
 
     attrs = super
 
     attrs[:attachments] = attachments_sorted.map { |elem| self.class.attachment_to_hash(elem) }
+    attrs[:tags]        = tag_list
 
     Cache.write(key, attrs)
 
@@ -111,6 +113,11 @@ class KnowledgeBase::Answer < ApplicationModel
     category.answers.each(&:cache_delete)
   end
   before_save :reordering_callback
+
+  def touch_translations
+    translations.each(&:touch) # move to #touch_all when migrationg to Rails 6
+  end
+  after_touch :touch_translations
 
   class << self
     def attachment_to_hash(attachment)

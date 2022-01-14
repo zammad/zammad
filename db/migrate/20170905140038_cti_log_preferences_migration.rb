@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 # Rails dropped the class
 # ActiveRecord::ConnectionAdapters::AbstractMysqlAdapter::MysqlDateTime
 # via: https://github.com/rails/rails/commit/f1a0fa9e19b7e4ccaea191fc6cf0613880222ee7

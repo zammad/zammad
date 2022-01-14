@@ -4,7 +4,7 @@ class SidebarArticleAttachments extends App.Controller
     @item = {
       name: 'attachment'
       badgeIcon: 'paperclip'
-      sidebarHead: 'Attachments'
+      sidebarHead: __('Attachments')
       sidebarCallback: @showObjects
       sidebarActions: []
     }
@@ -17,12 +17,12 @@ class SidebarArticleAttachments extends App.Controller
       @el.html("<div>#{App.i18n.translateInline('none')}</div>")
       return
     html = ''
-    for ticket_article_id, index in @ticket.article_ids
+    for ticket_article_id in @ticket.article_ids.sort((a, b) -> b - a)
       if App.TicketArticle.exists(ticket_article_id)
         article = App.TicketArticle.find(ticket_article_id)
         attachments = App.TicketArticle.contentAttachments(article)
         if !_.isEmpty(attachments)
-          html = App.view('ticket_zoom/sidebar_article_attachment')(article: article, attachments: attachments) + html
+          html += App.view('ticket_zoom/sidebar_article_attachment')(article: article, attachments: attachments)
     @el.html(html)
     @el.delegate('.js-attachments img', 'click', (e) =>
       @imageView(e)

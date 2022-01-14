@@ -1,5 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
-require_dependency 'escalation'
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 module Ticket::Escalation
   extend ActiveSupport::Concern
@@ -55,8 +54,11 @@ returns
     return if callback_loop
 
     # needs to operate on a copy because otherwise caching breaks
-    record_copy = Ticket.find(id)
+    record_copy = Ticket.find_by(id: id)
+    return if !record_copy
+
     record_copy.callback_loop = true
+
     # needs saving explicitly because this is after_commit!
     record_copy.escalation_calculation
   end

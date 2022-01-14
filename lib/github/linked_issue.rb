@@ -1,4 +1,5 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 class GitHub
   class LinkedIssue
 
@@ -98,7 +99,7 @@ class GitHub
 
     def variables!(url)
       if url !~ %r{^https?://([^/]+)/([^/]+)/([^/]+)/issues/(\d+)$}
-        raise Exceptions::UnprocessableEntity, 'Invalid GitHub issue link format'
+        raise Exceptions::UnprocessableEntity, __('Invalid GitHub issue link format')
       end
 
       host            = $1

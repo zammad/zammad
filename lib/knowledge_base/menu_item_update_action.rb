@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 class KnowledgeBase
   class MenuItemUpdateAction
     def initialize(kb_locale, location, menu_items_data)
@@ -81,13 +83,13 @@ class KnowledgeBase
 
     def all_ids_present?
       old_ids = scope.pluck(:id)
-      new_ids = @menu_items_data.map { |elem| elem[:id]&.to_i }.compact
+      new_ids = @menu_items_data.filter_map { |elem| elem[:id]&.to_i }
 
       old_ids.sort == new_ids.sort
     end
 
     def raise_unprocessable
-      raise Exceptions::UnprocessableEntity, 'Provide position of all items in scope'
+      raise Exceptions::UnprocessableEntity, __('Provide position of all items in scope')
     end
   end
 end

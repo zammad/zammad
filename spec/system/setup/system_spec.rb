@@ -1,6 +1,8 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 
-RSpec.describe 'System setup process', type: :system, set_up: false, authenticated_as: false do
+RSpec.describe 'System setup process', type: :system, set_up: false, authenticated_as: false, required_envs: %w[MAILBOX_INIT] do
 
   def fqdn
     match_data = %r{://(.+?)(:.+?|/.+?|)$}.match(app_host)
@@ -11,9 +13,6 @@ RSpec.describe 'System setup process', type: :system, set_up: false, authenticat
 
   it 'Setting up a new system' do
 
-    if !ENV['MAILBOX_INIT']
-      skip("NOTICE: Need MAILBOX_INIT as ENV variable like export MAILBOX_INIT='unittest01@znuny.com:somepass'")
-    end
     mailbox_user     = ENV['MAILBOX_INIT'].split(':')[0]
     mailbox_password = ENV['MAILBOX_INIT'].split(':')[1]
 
@@ -28,9 +27,9 @@ RSpec.describe 'System setup process', type: :system, set_up: false, authenticat
     expect(page).to have_css('.js-admin h2', text: 'Administrator Account')
 
     within('.js-admin') do
-      fill_in 'firstname',        with: 'Test Master'
+      fill_in 'firstname',        with: 'Test Admin'
       fill_in 'lastname',         with: 'Agent'
-      fill_in 'email',            with: 'master@example.com'
+      fill_in 'email',            with: 'admin@example.com'
       fill_in 'password',         with: 'TEst1234äöüß'
       fill_in 'password_confirm', with: 'TEst1234äöüß'
 
@@ -45,7 +44,7 @@ RSpec.describe 'System setup process', type: :system, set_up: false, authenticat
       # fill in wrong URL
       fill_in 'url', with: 'some host'
       click_on('Next')
-      expect(page).to have_css('.alert', text: 'An URL looks like')
+      expect(page).to have_css('.alert', text: 'A URL looks like')
 
       # fill in valild/current URL
       fill_in 'url', with: app_host
@@ -118,9 +117,9 @@ RSpec.describe 'System setup process', type: :system, set_up: false, authenticat
     click_on('Setup new System')
 
     within('.js-admin') do
-      fill_in 'firstname',        with: 'Test Master'
+      fill_in 'firstname',        with: 'Test Admin'
       fill_in 'lastname',         with: 'Agent'
-      fill_in 'email',            with: 'master@example.com'
+      fill_in 'email',            with: 'admin@example.com'
       fill_in 'password',         with: 'asd'
       fill_in 'password_confirm', with: 'asd'
 

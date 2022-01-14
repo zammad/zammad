@@ -1,8 +1,7 @@
-require_dependency 'sequencer/mixin/prefixed_constantize'
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Sequencer
   class Unit
-    include ::Mixin::RequiredSubPaths
     extend ::Sequencer::Mixin::PrefixedConstantize
 
     PREFIX = 'Sequencer::Unit::'.freeze

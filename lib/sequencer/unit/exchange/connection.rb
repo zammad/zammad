@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 class Sequencer
   class Unit
     module Exchange
@@ -9,6 +11,7 @@ class Sequencer
         private
 
         def ews_connection
+          require 'viewpoint' # Only load this gem when it is really used.
           Viewpoint::EWSClient.new(
             config[:endpoint],
             config[:user],

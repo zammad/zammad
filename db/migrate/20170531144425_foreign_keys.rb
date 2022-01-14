@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 class ForeignKeys < ActiveRecord::Migration[4.2]
   disable_ddl_transaction!
 
@@ -194,9 +196,6 @@ class ForeignKeys < ActiveRecord::Migration[4.2]
 
       [:chats, :users, { column: :created_by_id }],
       [:chats, :users, { column: :updated_by_id }],
-
-      [:chat_topics, :users, { column: :created_by_id }],
-      [:chat_topics, :users, { column: :updated_by_id }],
 
       %i[chat_sessions chats],
       %i[chat_sessions users],

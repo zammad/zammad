@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 class ActiveJobLock < ActiveRecord::Base
 
   def of?(active_job)
@@ -9,7 +11,7 @@ class ActiveJobLock < ActiveRecord::Base
   end
 
   def transfer_to(active_job)
-    logger.info "Transferring ActiveJobLock with id '#{id}' from active_job_id '#{active_job_id}' to active_job_id '#{active_job_id}'."
+    logger.debug { "Transferring ActiveJobLock with id '#{id}' from active_job_id '#{active_job_id}' to active_job_id '#{active_job_id}'." }
 
     reset_time_stamp = Time.zone.now
     update!(

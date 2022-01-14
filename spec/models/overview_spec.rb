@@ -1,4 +1,7 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
+require 'models/application_model_examples'
 
 RSpec.describe Overview, type: :model do
   it_behaves_like 'ApplicationModel', can_assets: { associations: :users, selectors: :condition }
@@ -46,7 +49,7 @@ RSpec.describe Overview, type: :model do
 
       it 'handles special chars' do
         overview = create(:overview, name: 'Д дФ ф')
-        expect(overview.link).to match(/^\d{1,3}$/)
+        expect(overview.link).to match(%r{^[a-z0-9-]{36}$})
       end
 
       it 'removes special char fallback if possible' do

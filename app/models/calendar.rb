@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Calendar < ApplicationModel
   include ChecksClientNotification
@@ -8,11 +8,14 @@ class Calendar < ApplicationModel
   store :business_hours
   store :public_holidays
 
-  before_create  :validate_public_holidays, :validate_hours, :fetch_ical
-  after_create   :sync_default, :min_one_check
-  before_update  :validate_public_holidays, :validate_hours, :fetch_ical
-  after_update   :sync_default, :min_one_check
-  after_destroy  :min_one_check
+  validate :validate_hours
+
+  before_save :ensure_public_holidays_details, :fetch_ical
+
+  after_destroy :min_one_check
+  after_save    :min_one_check
+
+  after_save :sync_default
 
 =begin
 
@@ -27,12 +30,12 @@ returns calendar object
   def self.init_setup(ip = nil)
 
     # ignore client ip if not public ip
-    if ip && ip =~ /^(::1|127\.|10\.|172\.1[6-9]\.|172\.2[0-9]\.|172\.3[0-1]\.|192\.168\.)/
+    if ip && ip =~ %r{^(::1|127\.|10\.|172\.1[6-9]\.|172\.2[0-9]\.|172\.3[0-1]\.|192\.168\.)}
       ip = nil
     end
 
     # prevent multiple setups for same ip
-    cache = Cache.get('Calendar.init_setup.done')
+    cache = Cache.read('Calendar.init_setup.done')
     return if cache && cache[:ip] == ip
 
     Cache.write('Calendar.init_setup.done', { ip: ip }, { expires_in: 1.hour })
@@ -90,9 +93,9 @@ returns
     data = YAML.load_file(Rails.root.join('config/holiday_calendars.yml'))
     url  = data['url']
 
-    data['countries'].map do |country, domain|
+    data['countries'].to_h do |country, domain|
       [format(url, domain: domain), country]
-    end.to_h
+    end
   end
 
 =begin
@@ -156,7 +159,7 @@ returns
     # only sync every 5 days
     if id
       cache_key = "CalendarIcal::#{id}"
-      cache = Cache.get(cache_key)
+      cache = Cache.read(cache_key)
       return if !last_log && cache && cache[:ical_url] == ical_url
     end
 
@@ -214,7 +217,7 @@ returns
   end
 
   def self.fetch_parse(location)
-    if location.match?(/^http/i)
+    if location.match?(%r{^http}i)
       result = UserAgent.get(location)
       if !result.success?
         raise result.error
@@ -262,7 +265,7 @@ returns
     comment = comment.to_utf8(fallback: :read_as_sanitized_binary)
 
     # ignore daylight saving time entries
-    return if comment.match?(/(daylight saving|sommerzeit|summertime)/i)
+    return if comment.match?(%r{(daylight saving|sommerzeit|summertime)}i)
 
     [day, comment]
   end
@@ -391,8 +394,8 @@ returns
     true
   end
 
-  # validate format of public holidays
-  def validate_public_holidays
+  # ensure integrity of details of public holidays
+  def ensure_public_holidays_details
 
     # fillup feed info
     before = public_holidays_was
@@ -414,7 +417,13 @@ returns
 
     # get business hours
     hours = business_hours_to_hash
-    raise Exceptions::UnprocessableEntity, 'No configured business hours found!' if hours.blank?
+
+    if hours.blank?
+      errors.add :base, __('No configured business hours found!')
+      return
+    end
+
+    # raise Exceptions::UnprocessableEntity, 'No configured business hours found!' if hours.blank?
 
     # validate if business hours are usable by execute a try calculation
     begin
@@ -423,10 +432,8 @@ returns
       end
       Biz.time(10, :minutes).after(Time.zone.parse('Tue, 05 Feb 2019 21:40:28 UTC +00:00'))
     rescue => e
-      raise Exceptions::UnprocessableEntity, e.message
+      errors.add :base, e.message
     end
-
-    true
   end
 
 end

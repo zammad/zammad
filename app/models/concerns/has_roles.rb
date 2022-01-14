@@ -1,13 +1,14 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 module HasRoles
   extend ActiveSupport::Concern
 
   included do
     has_and_belongs_to_many :roles,
                             before_add:    %i[validate_agent_limit_by_role validate_roles],
-                            after_add:     %i[cache_update check_notifications push_ticket_create_screen_for_role_change],
+                            after_add:     %i[cache_update check_notifications],
                             before_remove: :last_admin_check_by_role,
-                            after_remove:  %i[cache_update push_ticket_create_screen_for_role_change]
+                            after_remove:  %i[cache_update]
   end
 
   # Checks a given Group( ID) for given access(es) for the instance associated roles.
@@ -29,7 +30,7 @@ module HasRoles
     return false if !groups_access_permission?
 
     group_id = self.class.ensure_group_id_parameter(group_id)
-    access   = self.class.ensure_group_access_list_parameter(access)
+    access   = Array(access).map(&:to_sym) | [:full]
 
     RoleGroup.eager_load(:group, :role).exists?(
       role_id:  roles.pluck(:id),
@@ -42,15 +43,6 @@ module HasRoles
         active: true
       }
     )
-  end
-
-  def push_ticket_create_screen_for_role_change(role)
-    return if Setting.get('import_mode')
-
-    permission = Permission.lookup(name: 'ticket.agent')
-    return if !role.permissions.exists?(id: permission.id)
-
-    push_ticket_create_screen_background_job
   end
 
   # methods defined here are going to extend the class, not the instance of it
@@ -73,7 +65,7 @@ module HasRoles
     # @return [Array<Integer>]
     def role_access(group_id, access)
       group_id = ensure_group_id_parameter(group_id)
-      access   = ensure_group_access_list_parameter(access)
+      access   = Array(access).map(&:to_sym) | [:full]
 
       role_ids   = RoleGroup.eager_load(:role).where(group_id: group_id, access: access, roles: { active: true }).pluck(:role_id)
       join_table = reflect_on_association(:roles).join_table
@@ -103,12 +95,6 @@ module HasRoles
       return group_or_id if group_or_id.is_a?(Integer)
 
       group_or_id.id
-    end
-
-    def ensure_group_access_list_parameter(access)
-      access = [access] if access.is_a?(String)
-      access.push('full') if access.exclude?('full')
-      access
     end
   end
 end

@@ -59,6 +59,8 @@ class App.DashboardActivityStream extends App.CollectionController
     @el.closest('.sidebar').find('.activity-description').addClass('hidden')
 
   onRenderItemEnd: (item, el) ->
+    return if App.Session.get() is undefined
+
     new App.WidgetAvatar(
       el:        el.find('.js-avatar')
       object_id: item.created_by_id

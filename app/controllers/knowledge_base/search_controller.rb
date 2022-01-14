@@ -1,12 +1,15 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 class KnowledgeBase::SearchController < ApplicationController
   skip_before_action :verify_csrf_token
   prepend_before_action :authentication_check_only
 
   include KnowledgeBaseHelper
   include ActionView::Helpers::SanitizeHelper
+  include CanPaginate
 
   # POST /api/v1/knowledge_bases/search
-  # knowledge_base_id, locale, flavor, index, limit, include_locale
+  # knowledge_base_id, locale, flavor, index, page, per_page, limit, include_locale
   def search
     knowledge_base = KnowledgeBase
                      .active
@@ -33,7 +36,7 @@ class KnowledgeBase::SearchController < ApplicationController
 
     include_locale = params[:include_locale] && KnowledgeBase.with_multiple_locales_exists?
 
-    result = search_backend.search params[:query], user: current_user
+    result = search_backend.search params[:query], user: current_user, pagination: pagination
 
     if (exclude_ids = params[:exclude_ids]&.map(&:to_i))
       result.reject! { |meta| meta[:type] == params[:index] && exclude_ids.include?(meta[:id]) }
@@ -67,7 +70,7 @@ class KnowledgeBase::SearchController < ApplicationController
              end
 
     if include_locale && (system_locale = object.kb_locale.system_locale)
-      output[:title] += " (#{system_locale.name})"
+      output[:title] += " (#{system_locale.locale.upcase})"
     end
 
     output
@@ -75,7 +78,13 @@ class KnowledgeBase::SearchController < ApplicationController
 
   def public_item_details_answer(meta, object)
     category_translation = object.answer.category.translation_preferred(object.kb_locale)
-    path = help_answer_path(category_translation, object, locale: object.kb_locale.system_locale.locale)
+    path                 = help_answer_path(category_translation, object, locale: object.kb_locale.system_locale.locale)
+    subtitle             = object.answer.category.self_with_parents.map { |c| strip_tags(c.translation_preferred(object.kb_locale).title) }.reverse
+    subtitle = if subtitle.count <= 2
+                 subtitle.join(' > ')
+               else
+                 subtitle.values_at(0, -1).join(' > .. > ')
+               end
 
     url = case url_type
           when :public
@@ -91,8 +100,9 @@ class KnowledgeBase::SearchController < ApplicationController
       date:     object.updated_at,
       url:      url,
       title:    meta.dig(:highlight, 'title')&.first || object.title,
-      subtitle: strip_tags(category_translation.title),
-      body:     meta.dig(:highlight, 'content.body')&.first || strip_tags(object.content.body).truncate(100)
+      subtitle: subtitle,
+      body:     meta.dig(:highlight, 'content.body')&.first || strip_tags(object.content.body).truncate(100),
+      tags:     object.answer.tag_list
     }
   end
 

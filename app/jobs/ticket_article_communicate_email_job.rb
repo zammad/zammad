@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 class TicketArticleCommunicateEmailJob < ApplicationJob
 
   retry_on StandardError, attempts: 4, wait: lambda { |executions|
@@ -140,7 +142,7 @@ class TicketArticleCommunicateEmailJob < ApplicationJob
       end
 
       # reopen ticket and notify agent
-      Observer::Transaction.reset
+      TransactionDispatcher.reset
       UserInfo.current_user_id = 1
       Ticket::Article.create!(
         ticket_id:    local_record.ticket_id,
@@ -159,7 +161,7 @@ class TicketArticleCommunicateEmailJob < ApplicationJob
       ticket       = Ticket.find(local_record.ticket_id)
       ticket.state = Ticket::State.find_by(default_follow_up: true)
       ticket.save!
-      Observer::Transaction.commit
+      TransactionDispatcher.commit
       UserInfo.current_user_id = nil
     end
 

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Service::GeoLocation::Gmaps
 
@@ -11,6 +11,7 @@ class Service::GeoLocation::Gmaps
         open_timeout:  2,
         read_timeout:  4,
         total_timeout: 4,
+        verify_ssl:    true,
       },
     )
     return if !response.success?
@@ -36,6 +37,7 @@ class Service::GeoLocation::Gmaps
         open_timeout:  2,
         read_timeout:  4,
         total_timeout: 4,
+        verify_ssl:    true,
       },
     )
     return if !response.success?

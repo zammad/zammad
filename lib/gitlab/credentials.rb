@@ -1,4 +1,5 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 class GitLab
   class Credentials
 
@@ -22,7 +23,7 @@ class GitLab
       )
       return if response.dig('data', 'currentUser', 'username').present?
 
-      raise 'Invalid GitLab GraphQL API token'
+      raise __('Invalid GitLab GraphQL API token')
     end
   end
 end

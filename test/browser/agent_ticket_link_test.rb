@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'browser_test_helper'
 
 class AgentTicketLinkTest < TestCase
@@ -9,7 +11,7 @@ class AgentTicketLinkTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     ticket1 = ticket_create(
       data: {
@@ -33,7 +35,7 @@ class AgentTicketLinkTest < TestCase
     browser2 = browser_instance
     login(
       browser:  browser2,
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
@@ -46,7 +48,7 @@ class AgentTicketLinkTest < TestCase
       css: '.content.active .js-links .js-add',
     )
 
-    modal_ready()
+    modal_ready
 
     set(
       css:   '.content.active .modal-body [name="ticket_number"]',
@@ -71,7 +73,7 @@ class AgentTicketLinkTest < TestCase
       value:   ticket2[:title],
     )
 
-    reload()
+    reload
 
     watch_for(
       css:   '.content.active .ticketLinks',
@@ -90,7 +92,7 @@ class AgentTicketLinkTest < TestCase
       value:   ticket2[:title],
     )
 
-    reload()
+    reload
 
     watch_for_disappear(
       css:   '.content.active .ticketLinks',
@@ -116,7 +118,7 @@ class AgentTicketLinkTest < TestCase
       }
     )
 
-    tasks_close_all()
+    tasks_close_all
 
     ticket_open_by_search(
       browser: browser2,

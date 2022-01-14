@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 # This class defines a Proxy for accessing objects inside of a AssetsSet Model sub structure.
 #
 # The Zammad Assets logic works by having an Assets Hash that contains a sub structure for

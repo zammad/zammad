@@ -1,9 +1,11 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 
-RSpec.describe 'Ticket history', type: :system, authenticated_as: true, time_zone: 'Europe/London' do
+RSpec.describe 'Ticket history', type: :system, time_zone: 'Europe/London' do
   let(:group) { Group.find_by(name: 'Users') }
   let(:ticket) { create(:ticket, group: group) }
-  let!(:session_user) { User.find_by(login: 'master@example.com') }
+  let!(:session_user) { User.find_by(login: 'admin@example.com') }
 
   before do
     freeze_time
@@ -36,6 +38,9 @@ RSpec.describe 'Ticket history', type: :system, authenticated_as: true, time_zon
     session_user.preferences[:locale] = 'de-de'
     session_user.save!
 
+    # Suppress the modal dialog that invites to contributions for translations that are < 95% as this breaks the tests for de-de.
+    page.evaluate_script "App.LocalStorage.set('translation_support_no', true, App.Session.get('id'))"
+
     refresh
 
     visit "#ticket/zoom/#{ticket.id}"
@@ -44,38 +49,38 @@ RSpec.describe 'Ticket history', type: :system, authenticated_as: true, time_zon
   end
 
   it "translates timestamp when attribute's tag is datetime" do
-    expect(page).to have_css('li', text: /22.01.2021 13:40/)
+    expect(page).to have_css('li', text: %r{22.01.2021 13:40})
   end
 
   it 'does not include time with UTC format' do
-    expect(page).to have_no_text(/ UTC/)
+    expect(page).to have_no_text(%r{ UTC})
   end
 
   it 'translates value when attribute is state' do
-    expect(page).to have_css('li', text: /Ticket Status von 'neu'/)
+    expect(page).to have_css('li', text: %r{Ticket Status von 'neu'})
   end
 
   it 'translates value when attribute is priority' do
-    expect(page).to have_css('li', text: /Ticket Priorität von '1 niedrig'/)
+    expect(page).to have_css('li', text: %r{Ticket Priorität von '1 niedrig'})
   end
 
   it 'translates value when attribute is internal' do
-    expect(page).to have_css('li', text: /Artikel intern von 'true'/)
+    expect(page).to have_css('li', text: %r{Artikel intern von 'true'})
   end
 
   it 'translates last_contact_at display attribute' do
-    expect(page).to have_css('li', text: /Ticket Letzter Kontakt von '22.01.2021 13:40' → '07.04.2021 00:30'/)
+    expect(page).to have_css('li', text: %r{Ticket Letzter Kontakt von '22.01.2021 13:40' → '07.04.2021 00:30'})
   end
 
   it 'translates last_contact_customer_at display attribute' do
-    expect(page).to have_css('li', text: /Ticket Letzter Kontakt \(Kunde\) von '22.01.2021 13:40' → '07.04.2021 00:30'/)
+    expect(page).to have_css('li', text: %r{Ticket Letzter Kontakt \(Kunde\) von '22.01.2021 13:40' → '07.04.2021 00:30'})
   end
 
   it 'translates last_contact_agent_at display attribute' do
-    expect(page).to have_css('li', text: /Ticket Letzter Kontakt \(Agent\) von '22.01.2021 13:40' → '07.04.2021 00:30'/)
+    expect(page).to have_css('li', text: %r{Ticket Letzter Kontakt \(Agent\) von '22.01.2021 13:40' → '07.04.2021 00:30'})
   end
 
   it 'translates pending_time display attribute' do
-    expect(page).to have_css('li', text: /Ticket Warten bis '07.04.2021 00:30'/)
+    expect(page).to have_css('li', text: %r{Ticket Warten bis '07.04.2021 00:30'})
   end
 end

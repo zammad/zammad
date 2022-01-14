@@ -23,9 +23,9 @@ class ImportZendesk extends App.ControllerWizardFullScreen
     super
 
     # set title
-    @title 'Import'
+    @title __('Import')
 
-    # redirect to login if master user already exists
+    # redirect to login if admin user already exists
     if @Config.get('system_init_done')
       @navigate '#login'
       return
@@ -73,14 +73,13 @@ class ImportZendesk extends App.ControllerWizardFullScreen
         success:     (data, status, xhr) =>
 
           # validate form
-          console.log(data)
           if data.result is 'ok'
             @urlStatus.attr('data-state', 'success')
             @linkErrorMessage.text('')
             @nextEnterCredentials.removeClass('hide')
           else
             @urlStatus.attr('data-state', 'error')
-            @linkErrorMessage.text( data.message_human || data.message)
+            @linkErrorMessage.text( data.message_human || data.message)
             @nextEnterCredentials.addClass('hide')
 
       )
@@ -101,14 +100,13 @@ class ImportZendesk extends App.ControllerWizardFullScreen
         success:     (data, status, xhr) =>
 
           # validate form
-          console.log(data)
           if data.result is 'ok'
             @urlStatus.attr('data-state', 'success')
             @apiTokenErrorMessage.text('')
             @nextStartMigration.removeClass('hide')
           else
             @urlStatus.attr('data-state', 'error')
-            @apiTokenErrorMessage.text(data.message_human || data.message)
+            @apiTokenErrorMessage.text(data.message_human || data.message)
             @nextStartMigration.addClass('hide')
 
       )
@@ -139,7 +137,6 @@ class ImportZendesk extends App.ControllerWizardFullScreen
       success:     (data, status, xhr) =>
 
         # validate form
-        console.log(data)
         if data.result is 'ok'
           @delay(@updateMigration, 3000)
     )
@@ -191,8 +188,8 @@ class ImportZendesk extends App.ControllerWizardFullScreen
 
 App.Config.set('import/zendesk', ImportZendesk, 'Routes')
 App.Config.set('zendesk', {
-  title: 'Zendesk'
-  name:  'Zendesk'
+  title: __('Zendesk')
+  name:  __('Zendesk')
   class: 'js-zendesk'
   url:   '#import/zendesk'
 }, 'ImportPlugins')

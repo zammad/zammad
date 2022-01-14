@@ -1,10 +1,11 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 class KnowledgeBase::Locale < ApplicationModel
   belongs_to :knowledge_base, inverse_of: :kb_locales, touch: true
   belongs_to :system_locale, inverse_of: :knowledge_base_locales, class_name: '::Locale'
 
-  validates :primary, uniqueness: { scope: %i[system_locale_id knowledge_base_id] }, if: :primary?
-  validates :system_locale_id, uniqueness: { scope: :knowledge_base_id }
+  validates :primary, uniqueness: { case_sensitive: true, scope: %i[system_locale_id knowledge_base_id] }, if: :primary?
+  validates :system_locale_id, uniqueness: { case_sensitive: true, scope: :knowledge_base_id }
 
   has_many :knowledge_base_translations, class_name:  'KnowledgeBase::Translation',
                                          inverse_of:  :kb_locale,

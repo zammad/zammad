@@ -188,6 +188,7 @@ do($ = window.jQuery, window) ->
     showTimeEveryXMinutes: 2
     lastTimestamp: null
     lastAddedType: null
+    inputDisabled: false
     inputTimeout: null
     isTyping: false
     state: 'offline'
@@ -357,7 +358,7 @@ do($ = window.jQuery, window) ->
         'Send': 'Wyślij'
         'Chat closed by %s': 'Czat zamknięty przez %s'
         'Compose your message...': 'Utwórz swoją wiadomość...'
-        'All colleagues are busy.': 'Wszyscy koledzy są zajęci.'
+        'All colleagues are busy.': 'Wszyscy konsultanci są zajęci.'
         'You are on waiting list position <strong>%s</strong>.': 'Na liście oczekujących znajduje się pozycja <strong>%s</strong>.'
         'Start new conversation': 'Rozpoczęcie nowej konwersacji'
         'Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> got closed.': 'Ponieważ w ciągu ostatnich %s minut nie odpowiedziałeś, Twoja rozmowa z <strong>%s</strong> została zamknięta.'
@@ -483,6 +484,23 @@ do($ = window.jQuery, window) ->
         'Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> got closed.': 'Ettersom du ikke har respondert i løpet av de siste %s minuttene av samtalen, vil samtalen med  <strong>%s</strong> nå avsluttes.'
         'Since you didn\'t respond in the last %s minutes your conversation got closed.': 'Ettersom du ikke har respondert i løpet av de siste %s minuttene, har samtalen nå blitt avsluttet.'
         'We are sorry, it takes longer as expected to get an empty slot. Please try again later or send us an email. Thank you!': 'Vi beklager, men det tar lengre tid enn vanlig å få en ledig plass i vår chat. Vennligst prøv igjen på et senere tidspunkt eller send oss en e-post. Tusen takk!'
+      'el':
+        '<strong>Chat</strong> with us!': '<strong>Επικοινωνήστε</strong> μαζί μας!'
+        'Scroll down to see new messages': 'Μεταβείτε κάτω για να δείτε τα νέα μηνύματα'
+        'Online': 'Σε σύνδεση'
+        'Offline': 'Αποσυνδεμένος'
+        'Connecting': 'Σύνδεση'
+        'Connection re-established': 'Η σύνδεση αποκαταστάθηκε'
+        'Today': 'Σήμερα'
+        'Send': 'Αποστολή'
+        'Chat closed by %s': 'Η συνομιλία έκλεισε από τον/την %s'
+        'Compose your message...': 'Γράψτε το μήνυμα σας...'
+        'All colleagues are busy.': 'Όλοι οι συνάδελφοι μας είναι απασχολημένοι.'
+        'You are on waiting list position <strong>%s</strong>.': 'Βρίσκεστε σε λίστα αναμονής στη θέση <strong>%s</strong>.'
+        'Start new conversation': 'Έναρξη νέας συνομιλίας'
+        'Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> got closed.': 'Από τη στιγμή που δεν απαντήσατε τα τελευταία %s λεπτά η συνομιλία σας με τον/την <strong>%s</strong> έκλεισε.'
+        'Since you didn\'t respond in the last %s minutes your conversation got closed.': 'Από τη στιγμή που δεν απαντήσατε τα τελευταία %s λεπτά η συνομιλία σας έκλεισε.'
+        'We are sorry, it takes longer as expected to get an empty slot. Please try again later or send us an email. Thank you!': 'Λυπούμαστε που χρειάζεται περισσότερος χρόνος από τον αναμενόμενο για να βρεθεί μία κενή θέση. Παρακαλούμε δοκιμάστε ξανά αργότερα ή στείλτε μας ένα email. Ευχαριστούμε!'
     sessionId: undefined
     scrolledToBottom: true
     scrollSnapTolerance: 10
@@ -700,7 +718,9 @@ do($ = window.jQuery, window) ->
           text = text.replace(/<div><\/div>/g, '<div><br></div>')
         console.log('p', docType, text)
         if docType is 'html'
-          html = $("<div>#{text}</div>")
+          sanitized = DOMPurify.sanitize(text)
+          @log.debug 'sanitized HTML clipboard', sanitized
+          html = $("<div>#{sanitized}</div>")
           match = false
           htmlTmp = text
           regex = new RegExp('<(/w|w)\:[A-Za-z]')
@@ -835,7 +855,7 @@ do($ = window.jQuery, window) ->
       event.stopPropagation()
 
     checkForEnter: (event) =>
-      if not event.shiftKey and event.keyCode is 13
+      if not @inputDisabled and not event.shiftKey and event.keyCode is 13
         event.preventDefault()
         @sendMessage()
 
@@ -1088,15 +1108,13 @@ do($ = window.jQuery, window) ->
         return
       if @initDelayId
         clearTimeout(@initDelayId)
-      if !@sessionId
-        @log.debug 'can\'t close widget without sessionId'
-        return
+      if @sessionId
+        @log.debug 'session close before widget close'
+        @sessionClose()
 
       @log.debug 'close widget'
 
       event.stopPropagation() if event
-
-      @sessionClose()
 
       if @isFullscreen
         @enableScrollOnRoot()
@@ -1133,11 +1151,14 @@ do($ = window.jQuery, window) ->
       @el.addClass('zammad-chat-is-shown')
 
     disableInput: ->
-      @input.prop('disabled', true)
+      @inputDisabled = true
+      @input.prop('contenteditable', false)
       @el.find('.zammad-chat-send').prop('disabled', true)
+      @io.close()
 
     enableInput: ->
-      @input.prop('disabled', false)
+      @inputDisabled = false
+      @input.prop('contenteditable', true)
       @el.find('.zammad-chat-send').prop('disabled', false)
 
     hideModal: ->
@@ -1257,6 +1278,9 @@ do($ = window.jQuery, window) ->
 
       if params.remove && @el
         @el.remove()
+        # Remove button, because it can no longer be used.
+        $(".#{ @options.buttonClass }").hide()
+
 
       # stop all timer
       if @waitingListTimeout
@@ -1373,7 +1397,7 @@ do($ = window.jQuery, window) ->
         url = @options.host
           .replace(/^wss/i, 'https')
           .replace(/^ws/i, 'http')
-          .replace(/\/ws/i, '')
+          .replace(/\/ws$/i, '') # WebSocket may run on example.com/ws path
         url += '/assets/chat/chat.css'
 
       @log.debug "load css from '#{url}'"

@@ -1,9 +1,12 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'browser_test_helper'
 
 class AgentUserManageTest < TestCase
   def test_agent_customer_ticket_create
-    customer_user_email = "customer-test-#{rand(999_999)}@example.com"
-    firstname           = 'Customer Firstname'
+    random_number       = SecureRandom.uuid
+    customer_user_email = "customer-test-#{random_number}@example.com"
+    firstname           = "Customer Firstname #{random_number}"
     lastname            = 'Customer Lastname'
     fullname            = "#{firstname} #{lastname} <#{customer_user_email}>"
 
@@ -13,16 +16,16 @@ class AgentUserManageTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     # create customer
     click(css: 'a[href="#new"]', only_if_exists: true)
     click(css: 'a[href="#ticket/create"]')
 
-    watch_for(
-      css:     '.content.active .newTicket',
-      timeout: 1,
-    )
+    await_text(text: 'New Ticket')
+
+    # Rumors say there is a modal reaper which will kill your modals if you dont sleep before a new ticket create
+    sleep 3
 
     click(css: '.content.active .newTicket [name="customer_id_completion"]')
 
@@ -34,7 +37,7 @@ class AgentUserManageTest < TestCase
     sleep 0.5
     click(css: '.content.active .newTicket .recipientList-entry.js-objectNew')
 
-    modal_ready()
+    modal_ready
     set(
       css:   '.content.active .modal input[name="firstname"]',
       value: firstname,
@@ -49,7 +52,7 @@ class AgentUserManageTest < TestCase
     )
 
     click(css: '.content.active .modal button.js-submit')
-    modal_disappear()
+    modal_disappear
 
     sleep 4
 
@@ -75,10 +78,12 @@ class AgentUserManageTest < TestCase
       css:   '.content.active .newTicket input[name="customer_id_completion"]',
       value: fullname,
     )
-    sleep 4
 
     # call new ticket screen again
-    tasks_close_all()
+    tasks_close_all
+
+    # wait for user get indexed in elastic search
+    await_global_search(query: random_number)
 
     click(css: 'a[href="#new"]', only_if_exists: true)
     click(css: 'a[href="#ticket/create"]')
@@ -130,7 +135,7 @@ class AgentUserManageTest < TestCase
   end
 
   def test_agent_customer_ticket_zoom
-    customer_user_email = "customer-test-#{rand(999_999)}@example.com"
+    customer_user_email = "customer-test-#{SecureRandom.uuid}@example.com"
     firstname           = 'Customer Firstname'
     lastname            = 'Customer Lastname'
     fullname            = "#{firstname} #{lastname} <#{customer_user_email}>"
@@ -141,7 +146,7 @@ class AgentUserManageTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     ticket_create(
       data: {
@@ -167,7 +172,7 @@ class AgentUserManageTest < TestCase
     click(css: '.content.active .tabsSidebar .sidebar[data-tab="customer"] .js-actions')
     click(css: '.content.active .tabsSidebar .sidebar[data-tab="customer"] .js-actions li[data-type="customer-change"]')
 
-    modal_ready()
+    modal_ready
     click(css: '.content.active .modal [name="customer_id_completion"]')
 
     # check if pulldown is open, it's not working stable via selenium
@@ -197,7 +202,7 @@ class AgentUserManageTest < TestCase
     )
 
     # there are 2 models, take the correct one
-    #click(css: '.content.active .modal button.js-submit')
+    # click(css: '.content.active .modal button.js-submit')
     @browser.execute_script("$('.content.active .modal input[name=\"firstname\"]').closest('form').find('button.js-submit').click()")
 
     # check is used to check selected
@@ -224,7 +229,7 @@ class AgentUserManageTest < TestCase
     )
 
     click(css: '.content.active .modal button.js-submit')
-    modal_disappear()
+    modal_disappear
 
     watch_for(
       css:     '.content.active .tabsSidebar .sidebar[data-tab="customer"]',

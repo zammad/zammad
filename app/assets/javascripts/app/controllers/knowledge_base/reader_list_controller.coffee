@@ -21,8 +21,8 @@ class App.KnowledgeBaseReaderListController extends App.Controller
     if @object.isEmpty()
       @renderScreenPlaceholder(
         icon:   App.Utils.icon('mood-ok')
-        detail: 'This category is empty'
-        action: 'Start Editing'
+        detail: __('This category is empty')
+        action: __('Start Editing')
         actionCallback: =>
           url = @object.uiUrl(@parentController.kb_locale(), 'edit')
           @navigate url

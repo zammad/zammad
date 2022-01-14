@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 require 'models/concerns/checks_kb_client_notification_examples'
 require 'models/contexts/factory_context'
@@ -38,6 +40,10 @@ RSpec.describe KnowledgeBase::Category, type: :model, current_user_id: 1 do
 
     it 'fetches all children' do
       expect(kb_category_with_tree.self_with_children.count).to eq 7
+    end
+
+    it 'fetches all parents' do
+      expect(grandchild_category.self_with_parents.count).to eq 3
     end
 
     it 'root category has no parent' do

@@ -1,5 +1,4 @@
-require_dependency 'mixin/rails_logger'
-require_dependency 'mixin/start_finish_logger'
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Sequencer
   class State
@@ -33,7 +32,7 @@ class Sequencer
     #
     # @example
     #  state.provide(:sum) do
-    #    some_value = rand(100)
+    #    some_value = ...
     #    some_value * 3
     #  end
     #
@@ -164,7 +163,7 @@ class Sequencer
     #
     # @return [Hash{Symbol => Object}]
     def to_h
-      available.map { |identifier| [identifier, @values[identifier]] }.to_h
+      available.index_with { |identifier| @values[identifier] }
     end
 
     private

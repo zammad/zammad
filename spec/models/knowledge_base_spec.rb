@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 require 'models/concerns/checks_kb_client_notification_examples'
 require 'models/contexts/factory_context'
@@ -14,7 +16,7 @@ RSpec.describe KnowledgeBase, type: :model do
 
   it { is_expected.to validate_presence_of(:color_highlight) }
   it { is_expected.to validate_presence_of(:color_header) }
-  it { is_expected.to validate_presence_of(:iconset).with_message(//) }
+  it { is_expected.to validate_presence_of(:iconset).with_message(%r{}) }
   it { is_expected.to validate_inclusion_of(:iconset).in_array(KnowledgeBase::ICONSETS) }
   it { is_expected.to validate_inclusion_of(:category_layout).in_array(KnowledgeBase::LAYOUTS) }
   it { is_expected.to validate_inclusion_of(:homepage_layout).in_array(KnowledgeBase::LAYOUTS) }
@@ -46,20 +48,6 @@ RSpec.describe KnowledgeBase, type: :model do
         it 'filter by activity' do
           expect(described_class.active).to contain_exactly(knowledge_base)
         end
-
-        it 'skip activity check for editors when filtering by activity' do
-          user = create(:admin)
-          expect(described_class.check_active_unless_editor(user).count).to eq(2)
-        end
-
-        it 'check activity if user is not editor when filtering by activity' do
-          user = create(:agent)
-          expect(described_class.check_active_unless_editor(user)).to contain_exactly(knowledge_base)
-        end
-
-        it 'skip activity check for guests when filtering by activity' do
-          expect(described_class.check_active_unless_editor(nil)).to contain_exactly(knowledge_base)
-        end
       end
     end
   end
@@ -68,9 +56,9 @@ RSpec.describe KnowledgeBase, type: :model do
     let(:allowed_values) { ['#aaa', '#ff0000', 'rgb(0,100,100)', 'hsl(0,100%,50%)'] }
     let(:not_allowed_values) { ['aaa', '#aa', '#ff000', 'rgb(0,100,100', 'def(0,100%,0.5)', 'test'] }
 
-    it { is_expected.to allow_values(*allowed_values).for(:color_header) }
-    it { is_expected.to allow_values(*allowed_values).for(:color_highlight) }
-    it { is_expected.not_to allow_values(*not_allowed_values).for(:color_header) }
-    it { is_expected.not_to allow_values(*not_allowed_values).for(:color_highlight) }
+    %i[color_header color_header_link color_highlight].each do |attr|
+      it { is_expected.to allow_values(*allowed_values).for(attr) }
+      it { is_expected.not_to allow_values(*not_allowed_values).for(attr) }
+    end
   end
 end

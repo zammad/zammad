@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 FactoryBot.define do
   factory :external_credential do
     factory :facebook_credential do
@@ -18,7 +20,7 @@ FactoryBot.define do
           controller:         'external_credentials',
           action:             'app_verify',
           provider:           'twitter',
-          webhook_id:         Faker::Number.number(19),
+          webhook_id:         Faker::Number.number(digits: 19),
         }
       end
 

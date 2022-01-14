@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class TagsController < ApplicationController
   prepend_before_action -> { authorize! }, only: %i[admin_list admin_create admin_rename admin_delete]
@@ -53,7 +53,7 @@ class TagsController < ApplicationController
       item:   params[:item],
     )
     if success
-      render json: success, status: :created
+      render json: success
     else
       render json: success.errors, status: :unprocessable_entity
     end

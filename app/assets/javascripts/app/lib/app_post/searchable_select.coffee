@@ -90,9 +90,17 @@ class App.SearchableSelect extends Spine.Controller
   renderOptions: (options) ->
     html = ''
     for option in options
+      classes = 'u-textTruncate'
+      if option.children
+        classes += ' js-enter'
+      else
+        classes += ' js-option'
+      if option.category
+        classes += ' with-category'
+
       html += App.view('generic/searchable_select_option')
         option: option
-        class: if option.children then 'js-enter' else 'js-option'
+        class: classes
     html
 
   renderAllOptions: (parentName, options, level) ->
@@ -232,8 +240,9 @@ class App.SearchableSelect extends Spine.Controller
     @invisiblePart.text('')
 
   selectItem: (event) ->
-    return if !event.currentTarget.textContent
-    @input.val event.currentTarget.textContent.trim()
+    currentText = event.currentTarget.querySelector('span.searchableSelect-option-text').textContent.trim()
+    return if !currentText
+    @input.val currentText
     @input.trigger('change')
     @shadowInput.val event.currentTarget.getAttribute('data-value')
     @shadowInput.trigger('change')
@@ -343,7 +352,7 @@ class App.SearchableSelect extends Spine.Controller
     event.preventDefault()
 
     if @currentItem || !@attribute.unknown
-      valueName = @currentItem.text().trim()
+      valueName = @currentItem.children('span.searchableSelect-option-text').text().trim()
       value     = @currentItem.attr('data-value')
       @input.val valueName
       @shadowInput.val value
@@ -419,7 +428,7 @@ class App.SearchableSelect extends Spine.Controller
     @currentItem.addClass 'is-active'
 
     if autocomplete
-      @autocomplete @currentItem.attr('data-value'), @currentItem.text().trim()
+      @autocomplete @currentItem.attr('data-value'), @currentItem.children('span.searchableSelect-option-text').text().trim()
 
   highlightItem: (event) =>
     @unhighlightCurrentItem()

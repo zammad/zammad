@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Tag::Object < ApplicationModel
   validates :name, presence: true
@@ -12,11 +12,11 @@ lookup by name and create tag item
 =end
 
   def self.lookup_by_name_and_create(name)
-    name.strip!
+    lookup = name.strip
 
-    tag_object = Tag::Object.lookup(name: name)
+    tag_object = Tag::Object.lookup(name: lookup)
     return tag_object if tag_object
 
-    Tag::Object.create(name: name)
+    Tag::Object.create(name: lookup)
   end
 end

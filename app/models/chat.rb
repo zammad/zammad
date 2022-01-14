@@ -1,8 +1,12 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Chat < ApplicationModel
+  include ChecksHtmlSanitized
+
   validates :name, presence: true
   store     :preferences
+
+  sanitized_html :note
 
 =begin
 
@@ -611,7 +615,7 @@ check if ip address is blocked for chat
     ips = block_ip.split(';')
     ips.each do |local_ip|
       return true if ip == local_ip.strip
-      return true if ip.match?(/#{local_ip.strip.gsub(/\*/, '.+?')}/)
+      return true if ip.match?(%r{#{local_ip.strip.gsub(%r{\*}, '.+?')}})
     end
     false
   end
@@ -621,15 +625,15 @@ check if ip address is blocked for chat
 check if website is allowed for chat
 
   chat = Chat.find(123)
-  chat.website_whitelisted?('zammad.org')
+  chat.website_allowed?('zammad.org')
 
 =end
 
-  def website_whitelisted?(website)
-    return true if whitelisted_websites.blank?
+  def website_allowed?(website)
+    return true if allowed_websites.blank?
 
-    whitelisted_websites.split(';').any? do |whitelisted_website|
-      website.downcase.include?(whitelisted_website.downcase.strip)
+    allowed_websites.split(';').any? do |allowed_website|
+      website.downcase.include?(allowed_website.downcase.strip)
     end
   end
 

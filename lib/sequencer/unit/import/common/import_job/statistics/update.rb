@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 class Sequencer
   class Unit
     module Import
@@ -31,6 +33,8 @@ class Sequencer
               end
 
               def sum_deeply(existing:, additions:)
+                return existing if additions.nil?
+
                 existing.merge(additions) do |_key, oldval, newval|
                   if oldval.is_a?(Hash) || newval.is_a?(Hash)
                     sum_deeply(

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class SearchController < ApplicationController
   prepend_before_action :authentication_check
@@ -65,7 +65,6 @@ class SearchController < ApplicationController
       if objects_with_direct_search_index.present?
         items = SearchIndexBackend.search(query, objects_with_direct_search_index, limit: limit)
         items.each do |item|
-          require_dependency item[:type].to_filename
           local_class = item[:type].constantize
           record = local_class.lookup(id: item[:id])
           next if !record

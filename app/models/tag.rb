@@ -1,7 +1,8 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Tag < ApplicationModel
   include Tag::WritesToTicketHistory
+  include HasTransactionDispatcher
 
   belongs_to :tag_object, class_name: 'Tag::Object', optional: true
   belongs_to :tag_item,   class_name: 'Tag::Item', optional: true
@@ -150,5 +151,38 @@ returns
        .where(o_id: data[:o_id], tag_objects: { name: data[:object] })
        .order(:id)
        .pluck('tag_items.name')
+  end
+
+=begin
+
+Lists references to objects with certain tag. Optionally filter by type.
+Returns array containing object class name and ID.
+
+@param tag [String] tag to lookup
+@param object [String] optional name of the class to search in
+
+@example
+
+references = Tag.tag_references(
+  tag: 'Tag',
+  object: 'Ticket'
+)
+
+references # [['Ticket', 1], ['Ticket', 4], ...]
+
+@return [Array<Array<String, Integer>>]
+
+=end
+
+  def self.tag_references(tag:, object: nil)
+    tag_item = Tag::Item.find_by name: tag
+
+    return [] if tag_item.nil?
+
+    output = Tag.where(tag_item: tag_item).joins(:tag_object)
+
+    output = output.where(tag_objects: { name: object }) if object.present?
+
+    output.pluck(:'tag_objects.name', :o_id)
   end
 end

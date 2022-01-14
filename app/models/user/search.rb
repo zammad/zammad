@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class User
   module Search
@@ -91,6 +91,8 @@ returns
         # enable search only for agents and admins
         return [] if !search_preferences(current_user)
 
+        is_query = query.present? && query != '*'
+
         # lookup for roles of permission
         if params[:permissions].present?
           params[:role_ids] ||= []
@@ -99,7 +101,7 @@ returns
         end
 
         # try search index backend
-        if SearchIndexBackend.enabled?
+        if SearchIndexBackend.enabled? && is_query
           query_extension = {}
           if params[:role_ids].present?
             query_extension['bool'] ||= {}
@@ -112,16 +114,20 @@ returns
             }
             query_extension['bool']['must'].push access_condition
           end
+
+          user_ids = []
           if params[:group_ids].present?
-            query_extension['bool'] ||= {}
-            query_extension['bool']['must'] ||= []
-            user_ids = []
             params[:group_ids].each do |group_id, access|
               user_ids |= User.group_access(group_id.to_i, access).pluck(:id)
             end
-
             return [] if user_ids.blank?
-
+          end
+          if params[:ids].present?
+            user_ids |= params[:ids].map(&:to_i)
+          end
+          if user_ids.present?
+            query_extension['bool'] ||= {}
+            query_extension['bool']['must'] ||= []
             query_extension['bool']['must'].push({ 'terms' => { '_id' => user_ids } })
           end
 
@@ -147,6 +153,10 @@ returns
         query.delete! '*'
 
         statement = User
+        if params[:ids].present?
+          statement = statement.where(id: params[:ids])
+        end
+
         if params[:role_ids]
           statement = statement.joins(:roles).where('roles.id' => params[:role_ids])
         end
@@ -162,12 +172,18 @@ returns
                       end
         end
 
-        statement.where(
-          '(users.firstname LIKE ? OR users.lastname LIKE ? OR users.email LIKE ? OR users.login LIKE ?) AND users.id != 1', "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%"
-        )
-        .order(Arel.sql(order_sql))
-        .offset(offset)
-        .limit(limit)
+        if is_query
+          statement = statement.where(
+            '(users.firstname LIKE ? OR users.lastname LIKE ? OR users.email LIKE ? OR users.login LIKE ?)', "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%"
+          )
+        end
+
+        # Fixes #3755 - User with user_id 1 is show in admin interface (which should not)
+        statement = statement.where('users.id != 1')
+
+        statement.order(Arel.sql(order_sql))
+          .offset(offset)
+          .limit(limit)
       end
     end
   end

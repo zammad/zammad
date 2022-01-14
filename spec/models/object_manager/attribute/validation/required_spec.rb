@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 require 'models/object_manager/attribute/validation/backend_examples'
 
@@ -10,7 +12,7 @@ RSpec.describe ::ObjectManager::Attribute::Validation::Required do
     )
   end
 
-  let(:record) { build(:user) }
+  let(:record) { build(:ticket_article) }
   let(:attribute) { build(:object_manager_attribute_date) }
 
   it_behaves_like 'validate backend'
@@ -39,10 +41,18 @@ RSpec.describe ::ObjectManager::Attribute::Validation::Required do
           }
         end
 
+        context 'when boolean field with false values' do
+          let(:value) { false }
+          let(:attribute) { build(:object_manager_attribute_boolean) }
+          let(:action) { 'create_middle' }
+
+          it_behaves_like 'a validation without errors'
+        end
+
         context 'when action is edit' do
 
           let(:action) { 'edit' }
-          let(:record) { create(:user) }
+          let(:record) { create(:ticket_article) }
 
           it_behaves_like 'a validation with errors'
         end
@@ -106,7 +116,7 @@ RSpec.describe ::ObjectManager::Attribute::Validation::Required do
           context 'when action is edit' do
 
             let(:action) { 'edit' }
-            let(:record) { create(:user) }
+            let(:record) { create(:ticket_article) }
 
             it_behaves_like 'a validation without errors'
           end
@@ -137,7 +147,7 @@ RSpec.describe ::ObjectManager::Attribute::Validation::Required do
         context 'when action is edit' do
 
           let(:action) { 'edit' }
-          let(:record) { create(:user) }
+          let(:record) { create(:ticket_article) }
 
           it_behaves_like 'a validation without errors'
         end

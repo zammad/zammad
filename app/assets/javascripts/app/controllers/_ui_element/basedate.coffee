@@ -33,7 +33,7 @@ class App.UiElement.basedate
       autoclose: true
       todayBtn: 'linked'
       todayHighlight: true
-      format: App.i18n.timeFormat().date
+      format: App.i18n.timeFormat()['FORMAT_DATE']
       rtl: App.i18n.dir() is 'rtl'
       container: item
       language: 'custom'
@@ -145,14 +145,14 @@ class App.UiElement.basedate
 
   @buildCustomDates: ->
     data = {
-      days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-      daysMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-      daysShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-      months: ['January', 'February', 'March', 'April', 'May', 'June',
-        'July', 'August', 'September', 'October', 'November', 'December'],
-      monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-      today: 'today',
-      clear: 'clear'
+      days: [__('Sunday'), __('Monday'), __('Tuesday'), __('Wednesday'), __('Thursday'), __('Friday'), __('Saturday')],
+      daysMin: [__('Sun'), __('Mon'), __('Tue'), __('Wed'), __('Thu'), __('Fri'), __('Sat')],
+      daysShort: [__('Sun'), __('Mon'), __('Tue'), __('Wed'), __('Thu'), __('Fri'), __('Sat')],
+      months: [__('January'), __('February'), __('March'), __('April'), __('May'), __('June'),
+        __('July'), __('August'), __('September'), __('October'), __('November'), __('December')],
+      monthsShort: [__('Jan'), __('Feb'), __('Mar'), __('Apr'), __('May'), __('Jun'), __('Jul'), __('Aug'), __('Sep'), __('Oct'), __('Nov'), __('Dec')],
+      today: __('today'),
+      clear: __('clear')
     }
 
-    App.i18n.translateDeep(data)
+    App.i18n.translateDeepPlain(data)

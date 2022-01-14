@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 class Issue2715FixBrokenTwitterUrlsJob < ApplicationJob
   STATUS_TEMPLATE = 'https://twitter.com/_/status/%<message_id>s'.freeze
   DM_TEMPLATE = 'https://twitter.com/messages/%<recipient_id>s-%<sender_id>s'.freeze

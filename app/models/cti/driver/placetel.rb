@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 class Cti::Driver::Placetel < Cti::Driver::Base
 
   def config
@@ -83,7 +85,7 @@ class Cti::Driver::Placetel < Cti::Driver::Base
   def load_voip_users
     return {} if @config.blank? || @config[:api_token].blank?
 
-    list = Cache.get('placetelGetVoipUsers')
+    list = Cache.read('placetelGetVoipUsers')
     return list if list
 
     response = UserAgent.post(
@@ -99,6 +101,7 @@ class Cti::Driver::Placetel < Cti::Driver::Base
         open_timeout:  4,
         read_timeout:  6,
         total_timeout: 6,
+        verify_ssl:    true,
       },
     )
 

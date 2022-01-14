@@ -1,6 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
-
-require_dependency 'stats/ticket_reopen'
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 # Adds new and updated tickets to the reopen log processing.
 module Ticket::CallsStatsTicketReopenLog

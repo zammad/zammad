@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 module Import
   module Helper
     class AttributesExamples
@@ -60,7 +62,7 @@ module Import
           next if value.nil?
 
           example = value.to_utf8(fallback: :read_as_sanitized_binary)
-          example.gsub!(/^(.{20,}?).*$/m, '\1...')
+          example.gsub!(%r{^(.{20,}?).*$}m, '\1...')
 
           @examples[attribute] = "#{attribute} (e. g. #{example})"
         end

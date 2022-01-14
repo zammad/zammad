@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 module StaticAssets
 
 =begin
@@ -16,7 +18,7 @@ returns
 
   def self.data_url_attributes(data_url)
     data = {}
-    if data_url =~ /^data:(.+?);base64,(.+?)$/
+    if data_url =~ %r{^data:(.+?);base64,(.+?)$}
       data[:mime_type] = $1
       data[:content]   = Base64.decode64($2)
       if data[:mime_type] =~ %r{/(.+?)$}
@@ -24,7 +26,7 @@ returns
       end
       return data
     end
-    raise "Unable to parse data url: #{data_url.substr(0, 100)}"
+    raise "Unable to parse data url: #{data_url&.slice(0, 100)}"
   end
 
 =begin
@@ -69,10 +71,10 @@ returns
   def self.read_raw
     list = Store.list(object: 'System::Logo', o_id: 1)
     if list && list[0]
-      return Store.find( list[0] )
+      return Store.find(list[0])
     end
 
-    raise 'No such raw logo!'
+    raise __('No such raw logo!')
   end
 
 =begin
@@ -146,13 +148,13 @@ generate filename based on Store model
     hash = Digest::MD5.hexdigest(file.content)
     extention = ''
     case file.preferences['Content-Type']
-    when /jpg|jpeg/i
+    when %r{jpg|jpeg}i
       extention = '.jpg'
-    when /png/i
+    when %r{png}i
       extention = '.png'
-    when /gif/i
+    when %r{gif}i
       extention = '.gif'
-    when /svg/i
+    when %r{svg}i
       extention = '.svg'
     end
     "#{hash}#{extention}"

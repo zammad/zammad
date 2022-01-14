@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 class CleanupUserPreferencesNotificationSound2 < ActiveRecord::Migration[5.1]
 
   def local_to_h!(value)

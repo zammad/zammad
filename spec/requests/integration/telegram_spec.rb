@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 
 RSpec.describe 'Telegram Webhook Integration', type: :request do
@@ -181,7 +183,7 @@ RSpec.describe 'Telegram Webhook Integration', type: :request do
           post callback_url, params: read_message('private', 'document'), as: :json
           expect(response).to have_http_status(:ok)
           ticket = Ticket.last
-          expect(ticket.articles.last.body).to match(/<img style="width:200px;height:200px;"/i)
+          expect(ticket.articles.last.body).to match(%r{<img style="width:200px;height:200px;"}i)
           expect(ticket.articles.last.content_type).to eq('text/html')
           expect(ticket.articles.last.attachments.count).to eq(1)
           expect(Store.last.filename).to eq('document.pdf')
@@ -191,7 +193,7 @@ RSpec.describe 'Telegram Webhook Integration', type: :request do
           post callback_url, params: read_message('private', 'photo'), as: :json
           expect(response).to have_http_status(:ok)
           ticket = Ticket.last
-          expect(ticket.articles.last.body).to match(/<img style="width:360px;height:327px;"/i)
+          expect(ticket.articles.last.body).to match(%r{<img style="width:360px;height:327px;"}i)
           expect(ticket.articles.last.content_type).to eq('text/html')
         end
 
@@ -200,7 +202,7 @@ RSpec.describe 'Telegram Webhook Integration', type: :request do
           expect(response).to have_http_status(:ok)
           ticket = Ticket.last
           expect(ticket.articles.count).to eq(1)
-          expect(ticket.articles.last.body).to match(/<img style="/i)
+          expect(ticket.articles.last.body).to match(%r{<img style="}i)
           expect(ticket.articles.last.content_type).to eq('text/html')
           expect(ticket.articles.last.attachments.count).to eq(1)
           expect(Store.last.filename).to eq('video-videofileid.mp4')
@@ -218,7 +220,7 @@ RSpec.describe 'Telegram Webhook Integration', type: :request do
           end
           expect(ticket.state.name).to eq('new')
           expect(ticket.articles.count).to eq(1)
-          expect(ticket.articles.last.body).to match(/<img style="/i)
+          expect(ticket.articles.last.body).to match(%r{<img style="}i)
           expect(ticket.articles.last.content_type).to eq('text/html')
           expect(ticket.articles.last.attachments.count).to eq(1)
           expect(Store.last.filename).to eq('HotCherry.webp')
@@ -287,7 +289,7 @@ RSpec.describe 'Telegram Webhook Integration', type: :request do
           post callback_url, params: read_message('channel', 'document'), as: :json
           expect(response).to have_http_status(:ok)
           ticket = Ticket.last
-          expect(ticket.articles.last.body).to match(/<img style="width:200px;height:200px;"/i)
+          expect(ticket.articles.last.body).to match(%r{<img style="width:200px;height:200px;"}i)
           expect(ticket.articles.last.content_type).to eq('text/html')
           expect(ticket.articles.last.attachments.count).to eq(1)
           expect(Store.last.filename).to eq('document.pdf')
@@ -297,7 +299,7 @@ RSpec.describe 'Telegram Webhook Integration', type: :request do
           post callback_url, params: read_message('channel', 'photo'), as: :json
           expect(response).to have_http_status(:ok)
           ticket = Ticket.last
-          expect(ticket.articles.last.body).to match(/<img style="width:360px;height:327px;"/i)
+          expect(ticket.articles.last.body).to match(%r{<img style="width:360px;height:327px;"}i)
           expect(ticket.articles.last.content_type).to eq('text/html')
         end
 
@@ -306,7 +308,7 @@ RSpec.describe 'Telegram Webhook Integration', type: :request do
           expect(response).to have_http_status(:ok)
           ticket = Ticket.last
           expect(ticket.articles.count).to eq(1)
-          expect(ticket.articles.last.body).to match(/<img style="/i)
+          expect(ticket.articles.last.body).to match(%r{<img style="}i)
           expect(ticket.articles.last.content_type).to eq('text/html')
           expect(ticket.articles.last.attachments.count).to eq(1)
           expect(Store.last.filename).to eq('video-videofileid.mp4')
@@ -324,7 +326,7 @@ RSpec.describe 'Telegram Webhook Integration', type: :request do
           end
           expect(ticket.state.name).to eq('new')
           expect(ticket.articles.count).to eq(1)
-          expect(ticket.articles.last.body).to match(/<img style="/i)
+          expect(ticket.articles.last.body).to match(%r{<img style="}i)
           expect(ticket.articles.last.content_type).to eq('text/html')
           expect(ticket.articles.last.attachments.count).to eq(1)
           expect(Store.last.filename).to eq('HotCherry.webp')
@@ -394,6 +396,20 @@ RSpec.describe 'Telegram Webhook Integration', type: :request do
 
         expect(ticket2.articles.first.from).to eq('Test Firstname2 Test Lastname2')
         expect(ticket2.articles.first.to).to eq('@ChrispressoBot2')
+      end
+
+      context 'when ApplicationHandleInfo context' do
+        it 'gets switched to "telegram"' do
+          allow(ApplicationHandleInfo).to receive('context=')
+          post callback_url, params: read_message('private', 'text'), as: :json
+          expect(ApplicationHandleInfo).to have_received('context=').with('telegram').at_least(1)
+        end
+
+        it 'reverts back to default' do
+          allow(ApplicationHandleInfo).to receive('context=')
+          post callback_url, params: read_message('private', 'text'), as: :json
+          expect(ApplicationHandleInfo.context).not_to eq 'telegram'
+        end
       end
 
     end

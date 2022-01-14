@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 require 'models/application_model_examples'
 require 'models/sla/has_escalation_calculation_impact_examples'
@@ -33,6 +35,28 @@ RSpec.describe Sla, type: :model do
       end
     end
 
+    describe '#cannot_have_response_and_update' do
+      it 'allows neither #response_time nor #update_time' do
+        instance = build(:sla, response_time: nil, update_time: nil)
+        expect(instance).to be_valid
+      end
+
+      it 'allows #response_time' do
+        instance = build(:sla, response_time: 180, update_time: nil)
+        expect(instance).to be_valid
+      end
+
+      it 'allows #update_time' do
+        instance = build(:sla, response_time: nil, update_time: 180)
+        expect(instance).to be_valid
+      end
+
+      it 'denies both #response_time and #update_time' do
+        instance = build(:sla, response_time: 180, update_time: 180)
+        expect(instance).not_to be_valid
+      end
+    end
+
     describe '.for_ticket' do
       it 'returns matching SLA for the ticket' do
         sla
@@ -53,6 +77,20 @@ RSpec.describe Sla, type: :model do
         sla
         sla_blank
         expect(described_class.for_ticket(ticket_matching)).to eq sla
+      end
+
+      context 'when multiple SLAs are matching' do
+        let(:sla) { create(:sla, :condition_title, condition_title: 'matching', name: 'ZZZ 1') }
+        let(:sla2) { create(:sla, :condition_title, condition_title: 'matching', name: 'AAA 1') }
+
+        before do
+          sla
+          sla2
+        end
+
+        it 'returns the AAA 1 sla as matching' do
+          expect(described_class.for_ticket(ticket_matching)).to eq sla2
+        end
       end
     end
   end

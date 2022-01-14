@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 module Import
   module OTRS
     class Article
@@ -14,11 +16,11 @@ module Import
         Subject:     :subject,
         InReplyTo:   :in_reply_to,
         MessageID:   :message_id,
-        #ReplyTo:    :reply_to,
+        # ReplyTo:    :reply_to,
         References:  :references,
         ContentType: :content_type,
-        Changed:     :updated_at,
-        Created:     :created_at,
+        ChangeTime:  :updated_at,
+        CreateTime:  :created_at,
         ChangedBy:   :updated_by_id,
         CreatedBy:   :created_by_id,
       }.freeze
@@ -92,7 +94,7 @@ module Import
         mapped.delete(:content_type) if mapped[:content_type].blank?
         return mapped if !mapped[:content_type]
 
-        mapped[:content_type].sub!(/[;,]\s?.+?$/, '')
+        mapped[:content_type].sub!(%r{[;,]\s?.+?$}, '')
         mapped
       end
 

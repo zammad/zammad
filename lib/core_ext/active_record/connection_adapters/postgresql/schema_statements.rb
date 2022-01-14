@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 require 'active_record/connection_adapters/postgresql/schema_statements'
 
 module ActiveRecord
@@ -6,14 +8,14 @@ module ActiveRecord
       module SchemaStatements
 
         # on postgres create lower indices to support case-insensitive where conditions
-        def add_index(table_name, column_name, options = {}) #:nodoc:
-          index_name, index_type, index_columns, index_options, index_algorithm, index_using = add_index_options(table_name, column_name, options)
+        def add_index(table_name, column_name, options = {}) # :nodoc:
+          index_name, index_type, index_columns, index_options, index_algorithm, index_using = add_index_options(table_name, column_name, **options)
 
           column_names = index_columns.split ', '
           if column_names.instance_of?(Array)
             index_columns_new = []
             column_names.each do |i|
-              if i =~ /^"(name|login|locale|alias)"$/ || i.end_with?('name"')
+              if i =~ %r{^"(name|login|locale|alias)"$} || i.end_with?('name"')
                 index_columns_new.push "LOWER(#{i})"
               else
                 index_columns_new.push i

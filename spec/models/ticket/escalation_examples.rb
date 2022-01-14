@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
 RSpec.shared_examples 'Ticket::Escalation' do
 
   describe '#update_escalation_information callback' do
@@ -39,7 +41,7 @@ RSpec.shared_examples 'Ticket::Escalation' do
                  },
                })
       end
-      let(:sla) { create(:sla, calendar: calendar, first_response_time: 60, update_time: 120, solution_time: 180) }
+      let(:sla) { create(:sla, calendar: calendar, first_response_time: 60, response_time: 120, solution_time: 180) }
       let(:article) { create(:'ticket/article', :inbound_email, ticket: ticket, created_at: '2013-03-21 09:30:00 UTC', updated_at: '2013-03-21 09:30:00 UTC') }
 
       before do
@@ -63,6 +65,17 @@ RSpec.shared_examples 'Ticket::Escalation' do
         expect(ticket.close_escalation_at.gmtime.to_s).to eq('2013-03-21 12:30:00 UTC')
         expect(ticket.close_in_min).to be_nil
         expect(ticket.close_diff_in_min).to be_nil
+      end
+
+      context 'with first response time resolved by answer + state pending reminder' do
+        before do
+          ticket.update(state: Ticket::State.find_by(name: 'pending reminder'))
+          create(:'ticket/article', :outbound_email, ticket: ticket, created_at: '2013-03-21 09:45:00 UTC', updated_at: '2013-03-21 09:45:00 UTC')
+        end
+
+        it 'does set first_response_diff_in_min' do
+          expect(ticket.reload.first_response_diff_in_min).to eq(45)
+        end
       end
 
       context 'with first response in time' do
@@ -421,7 +434,7 @@ RSpec.shared_examples 'Ticket::Escalation' do
                  },
                },
                first_response_time: 60,
-               update_time:         180,
+               response_time:       180,
                solution_time:       240)
       end
 
@@ -499,7 +512,7 @@ RSpec.shared_examples 'Ticket::Escalation' do
                })
       end
 
-      let(:sla) { create(:sla, calendar: calendar, first_response_time: 120, update_time: 180, solution_time: 250) }
+      let(:sla) { create(:sla, calendar: calendar, first_response_time: 120, response_time: 180, solution_time: 250) }
 
       context 'when Ticket is reopened' do
 
@@ -650,7 +663,7 @@ RSpec.shared_examples 'Ticket::Escalation' do
                  })
         end
 
-        let(:sla) { create(:sla, condition: {}, calendar: calendar, first_response_time: 120, update_time: 180, solution_time: 250) }
+        let(:sla) { create(:sla, condition: {}, calendar: calendar, first_response_time: 120, response_time: 180, solution_time: 250) }
 
         before do
           sla
@@ -761,7 +774,7 @@ RSpec.shared_examples 'Ticket::Escalation' do
                  })
         end
 
-        let(:sla) { create(:sla, condition: {}, calendar: calendar, first_response_time: 120, update_time: 180, solution_time: 240) }
+        let(:sla) { create(:sla, condition: {}, calendar: calendar, first_response_time: 120, response_time: 180, solution_time: 240) }
 
         before do
           sla
@@ -838,7 +851,7 @@ RSpec.shared_examples 'Ticket::Escalation' do
                  })
         end
 
-        let(:sla) { create(:sla, condition: {}, calendar: calendar, first_response_time: 120, update_time: 180, solution_time: 240) }
+        let(:sla) { create(:sla, condition: {}, calendar: calendar, first_response_time: 120, response_time: 180, solution_time: 240) }
 
         before do
           sla
@@ -937,7 +950,7 @@ RSpec.shared_examples 'Ticket::Escalation' do
                  })
         end
 
-        let(:sla) { create(:sla, condition: {}, calendar: calendar, first_response_time: 120, update_time: 180, solution_time: 240) }
+        let(:sla) { create(:sla, condition: {}, calendar: calendar, first_response_time: 120, response_time: 180, solution_time: 240) }
 
         before do
           sla
@@ -1055,7 +1068,7 @@ RSpec.shared_examples 'Ticket::Escalation' do
                })
       end
 
-      let(:sla) { create(:sla, condition: {}, calendar: calendar, first_response_time: 120, update_time: 1200, solution_time: nil) }
+      let(:sla) { create(:sla, condition: {}, calendar: calendar, first_response_time: 120, response_time: 1200, solution_time: nil) }
 
       before do
         sla
