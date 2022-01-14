@@ -13,8 +13,8 @@
     <th><%- @T('Agent') %>
     <th><%- @T('Time Units') %>
     <th><%- @T('Time Units Total') %>
-    <th><%- @T('Created at') %>
-    <th><%- @T('Closed at') %>
+    <th><%- @T('Created At') %>
+    <th><%- @T('Closed At') %>
   </thead>
   <tbody>
   <% for row in @rows: %>
