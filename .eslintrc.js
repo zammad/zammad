@@ -31,6 +31,7 @@ module.exports = {
   ],
   rules: {
     'zammad/zammad-copyright': 'error',
+    'zammad/zammad-detect-translatable-string': 'error',
     'vue/script-setup-uses-vars': 'error',
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
@@ -117,6 +118,12 @@ module.exports = {
       files: ['*.js'],
       rules: {
         '@typescript-eslint/no-var-requires': 'off',
+      },
+    },
+    {
+      files: ['app/frontend/tests/**', 'app/frontend/stories/**', '.eslint/**'],
+      rules: {
+        'zammad/zammad-detect-translatable-string': 'off',
       },
     },
   ],

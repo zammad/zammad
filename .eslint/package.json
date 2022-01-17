@@ -17,8 +17,8 @@
     "requireindex": "^1.2.0"
   },
   "devDependencies": {
-    "eslint": "^8.0.1",
-    "eslint-plugin-eslint-plugin": "^4.0.1",
+    "eslint": "^8.6.0",
+    "eslint-plugin-eslint-plugin": "^4.1.0",
     "eslint-plugin-node": "^11.1.0",
     "mocha": "^9.1.3"
   },

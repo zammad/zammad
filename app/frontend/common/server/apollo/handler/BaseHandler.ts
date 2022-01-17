@@ -30,8 +30,9 @@ export default abstract class BaseHandler<
 
   protected baseHandlerOptions: BaseHandlerOptions = {
     errorShowNotification: true,
-    errorNotitifactionMessage:
+    errorNotitifactionMessage: __(
       'An error occured during the operation. Please contact your administrator.',
+    ),
     errorNotitifactionType: NotificationTypes.ERROR,
   }
 
