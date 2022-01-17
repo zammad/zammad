@@ -76,7 +76,7 @@ const refetchConfig = async (): Promise<void> => {
 }
 
 const fetchCurrentUser = () => {
-  const { result } = useCurrentUserQuery({ fetchPolicy: 'no-cache' })
+  useCurrentUserQuery({ fetchPolicy: 'no-cache' })
 }
 
 const goToTickets = () => {

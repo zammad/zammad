@@ -23,4 +23,5 @@ module.exports = {
     '^.+\\.vue$': '@vue/vue3-jest',
   },
   testEnvironment: 'jsdom',
+  setupFiles: ['./app/frontend/tests/jest.setup.js'],
 }

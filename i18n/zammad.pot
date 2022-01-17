@@ -119,6 +119,10 @@ msgstr ""
 msgid "%s credentials"
 msgstr ""
 
+#: app/frontend/common/utils/i18n/dates.ts
+msgid "%s days ago"
+msgstr ""
+
 #: app/assets/javascripts/app/models/user.coffee
 msgid "%s ended switch to |%s|!"
 msgstr ""
@@ -133,11 +137,23 @@ msgstr ""
 msgid "%s groups to %s roles assignments"
 msgstr ""
 
+#: app/frontend/common/utils/i18n/dates.ts
+msgid "%s hours ago"
+msgstr ""
+
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 msgid "%s is inactive, please select an active one."
+msgstr ""
+
+#: app/frontend/common/utils/i18n/dates.ts
+msgid "%s minutes ago"
+msgstr ""
+
+#: app/frontend/common/utils/i18n/dates.ts
+msgid "%s months ago"
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
@@ -232,6 +248,14 @@ msgstr ""
 msgid "%s user to %s user"
 msgstr ""
 
+#: app/frontend/common/utils/i18n/dates.ts
+msgid "%s weeks ago"
+msgstr ""
+
+#: app/frontend/common/utils/i18n/dates.ts
+msgid "%s years ago"
+msgstr ""
+
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco
 msgid "%s% are currently in process"
 msgstr ""
@@ -252,16 +276,40 @@ msgstr ""
 msgid "1 day"
 msgstr ""
 
+#: app/frontend/common/utils/i18n/dates.ts
+msgid "1 day ago"
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "1 hour"
+msgstr ""
+
+#: app/frontend/common/utils/i18n/dates.ts
+msgid "1 hour ago"
 msgstr ""
 
 #: db/seeds/ticket_priorities.rb
 msgid "1 low"
 msgstr ""
 
+#: app/frontend/common/utils/i18n/dates.ts
+msgid "1 minute ago"
+msgstr ""
+
+#: app/frontend/common/utils/i18n/dates.ts
+msgid "1 month ago"
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "1 week"
+msgstr ""
+
+#: app/frontend/common/utils/i18n/dates.ts
+msgid "1 week ago"
+msgstr ""
+
+#: app/frontend/common/utils/i18n/dates.ts
+msgid "1 year ago"
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -11099,6 +11147,54 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
 msgid "in %s"
+msgstr ""
+
+#: app/frontend/common/utils/i18n/dates.ts
+msgid "in %s days"
+msgstr ""
+
+#: app/frontend/common/utils/i18n/dates.ts
+msgid "in %s hours"
+msgstr ""
+
+#: app/frontend/common/utils/i18n/dates.ts
+msgid "in %s minutes"
+msgstr ""
+
+#: app/frontend/common/utils/i18n/dates.ts
+msgid "in %s months"
+msgstr ""
+
+#: app/frontend/common/utils/i18n/dates.ts
+msgid "in %s weeks"
+msgstr ""
+
+#: app/frontend/common/utils/i18n/dates.ts
+msgid "in %s years"
+msgstr ""
+
+#: app/frontend/common/utils/i18n/dates.ts
+msgid "in 1 day"
+msgstr ""
+
+#: app/frontend/common/utils/i18n/dates.ts
+msgid "in 1 hour"
+msgstr ""
+
+#: app/frontend/common/utils/i18n/dates.ts
+msgid "in 1 minute"
+msgstr ""
+
+#: app/frontend/common/utils/i18n/dates.ts
+msgid "in 1 month"
+msgstr ""
+
+#: app/frontend/common/utils/i18n/dates.ts
+msgid "in 1 week"
+msgstr ""
+
+#: app/frontend/common/utils/i18n/dates.ts
+msgid "in 1 year"
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco

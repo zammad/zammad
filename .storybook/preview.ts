@@ -1,5 +1,6 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
+import '@common/initializer/translatableMarker'
 import initializeGlobalComponents from '@common/initializer/globalComponents'
 import '@common/styles/main.css'
 import { i18n } from '@common/utils/i18n'

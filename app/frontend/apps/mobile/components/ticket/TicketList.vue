@@ -20,6 +20,7 @@
         </span>
       </th>
       <th>Customer</th>
+      <th>Created</th>
     </thead>
     <tbody>
       <tr
@@ -34,11 +35,12 @@
         <td>
           {{ ticket?.customer.firstname }} {{ ticket?.customer.lastname }}
         </td>
+        <td>
+          <CommonDateTime v-bind:date-time="ticket?.createdAt" />
+        </td>
       </tr>
     </tbody>
   </table>
-  {{ orderBy }}
-  {{ orderDirection }}
   <p v-if="pagination.hasNextPage">
     <a v-on:click="pagination.fetchNextPage()">Load more...</a>
   </p>

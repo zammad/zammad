@@ -2,27 +2,17 @@
 
 import { mount, MountingOptions } from '@vue/test-utils'
 import { merge } from 'lodash-es'
-import {
-  createRouter,
-  createWebHistory,
-  Router,
-  RouteRecordRaw,
-} from 'vue-router'
+import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import CommonIcon from '@common/components/common/CommonIcon.vue'
 import CommonLink from '@common/components/common/CommonLink.vue'
 import { Plugin } from 'vue'
 import { createTestingPinia } from '@pinia/testing'
+import { i18n } from '@common/utils/i18n'
 
 interface ExtendedMountingOptions<Props> extends MountingOptions<Props> {
   router?: boolean
   store?: boolean
   routerRoutes?: RouteRecordRaw[]
-}
-
-const i18n = {
-  t(source: string) {
-    return source
-  },
 }
 
 const plugins: Plugin[] = []

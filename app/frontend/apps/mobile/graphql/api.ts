@@ -33,6 +33,8 @@ export const TicketsByOverviewDocument = gql`
         id
         number
         title
+        createdAt
+        updatedAt
         owner {
           firstname
           lastname

@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { provideApolloClient, useSubscription } from '@vue/apollo-composable'
+import { useSubscription } from '@vue/apollo-composable'
 import { createMockSubscription, IMockSubscription } from 'mock-apollo-client'
 import createMockClient from '@tests/support/mock-apollo-client'
 import SubscriptionHandler from '@common/server/apollo/handler/SubscriptionHandler'

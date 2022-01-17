@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import { createApp } from 'vue'
+import '@common/initializer/translatableMarker'
 import App from '@mobile/App.vue'
 import {
   DefaultApolloClient,
@@ -14,7 +15,7 @@ import initializeStoreSubscriptions from '@common/initializer/storeSubscriptions
 import initializeRouter from '@common/router/index'
 import initializeGlobalComponents from '@common/initializer/globalComponents'
 import routes from '@mobile/router'
-import useApplicationConfigStore from '@common//stores/application/config'
+import useApplicationConfigStore from '@common/stores/application/config'
 import { i18n } from '@common/utils/i18n'
 import useLocaleStore from '@common/stores/locale'
 import useSessionUserStore from '@common/stores/session/user'

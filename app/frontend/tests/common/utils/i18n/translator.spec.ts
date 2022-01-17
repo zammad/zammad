@@ -53,4 +53,8 @@ describe('Translator', () => {
       ),
     ).toBe('Zeichenkette mit 3 Platzhaltern: 1 2 some words')
   })
+  it('lookup() works correctly', () => {
+    expect(t.lookup('yes')).toBe('ja')
+    expect(t.lookup('NONEXISTING')).toBe(undefined)
+  })
 })

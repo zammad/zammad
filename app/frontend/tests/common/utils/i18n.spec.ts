@@ -19,6 +19,8 @@ describe('i18n', () => {
         'String with 3 placeholders: %s %s %s',
         'Zeichenkette mit 3 Platzhaltern: %s %s %s',
       ],
+      ['FORMAT_DATE', 'dd/mm/yyyy'],
+      ['FORMAT_DATETIME', 'dd/mm/yyyy HH:MM:SS'],
     ])
 
     i18n.setTranslationMap(map)
@@ -29,6 +31,12 @@ describe('i18n', () => {
     expect(i18n.t('String with 3 placeholders: %s %s %s')).toBe(
       'Zeichenkette mit 3 Platzhaltern: %s %s %s',
     )
+  })
+
+  it('translates dates', () => {
+    expect(i18n.date('2021-04-09T10:11:12Z')).toBe('09/04/2021')
+    expect(i18n.dateTime('2021-04-09T10:11:12Z')).toBe('09/04/2021 10:11:12')
+    expect(i18n.relativeDateTime(new Date().toISOString())).toBe('just now')
   })
 
   it('updates (reactive) translations automatically', async () => {

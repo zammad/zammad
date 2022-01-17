@@ -17,4 +17,8 @@ export class Translator {
 
     return target
   }
+
+  lookup(source: string): string | undefined {
+    return this.translationMap.get(source)
+  }
 }
