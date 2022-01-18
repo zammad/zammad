@@ -104,7 +104,7 @@ RSpec.describe 'Ticket', type: :request do
       expect { post '/api/v1/tickets', params: params, as: :json }.not_to change(Ticket, :count)
       expect(response).to have_http_status(:unprocessable_entity)
       expect(json_response).to be_a_kind_of(Hash)
-      expect(json_response['error']).to eq('Need at least an article body field.')
+      expect(json_response['error']).to eq("Need at least an 'article body' field.")
     end
 
     it 'does ticket create with agent - article.body set to empty string (01.03)' do
@@ -120,7 +120,7 @@ RSpec.describe 'Ticket', type: :request do
       expect { post '/api/v1/tickets', params: params, as: :json }.not_to change(Ticket, :count)
       expect(response).to have_http_status(:unprocessable_entity)
       expect(json_response).to be_a_kind_of(Hash)
-      expect(json_response['error']).to eq('Need at least an article body field.')
+      expect(json_response['error']).to eq("Need at least an 'article body' field.")
     end
 
     it 'does ticket create with agent - missing article (01.03)' do
@@ -483,7 +483,7 @@ RSpec.describe 'Ticket', type: :request do
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:unprocessable_entity)
       expect(json_response).to be_a_kind_of(Hash)
-      expect(json_response['error']).to eq('Need at least an article body field.')
+      expect(json_response['error']).to eq("Need at least an 'article body' field.")
     end
 
     it 'does ticket create with agent - minimal article and attachment with customer (01.13)' do

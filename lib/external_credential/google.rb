@@ -32,7 +32,7 @@ class ExternalCredential::Google
 
   def self.link_account(_request_token, params)
     external_credential = ExternalCredential.find_by(name: 'google')
-    raise Exceptions::UnprocessableEntity, __('No google app configured!') if !external_credential
+    raise Exceptions::UnprocessableEntity, __('No Google app configured!') if !external_credential
     raise Exceptions::UnprocessableEntity, __('No code for session found!') if !params[:code]
 
     response = authorize_tokens(external_credential.credentials[:client_id], external_credential.credentials[:client_secret], params[:code])

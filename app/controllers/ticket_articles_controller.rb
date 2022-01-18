@@ -159,7 +159,7 @@ class TicketArticlesController < ApplicationController
 
       # check if requested ticket got merged
       if ticket.state.state_type.name != 'merged'
-        raise Exceptions::Forbidden, __('No access, article_id/ticket_id is not matching.')
+        raise Exceptions::Forbidden, __('The article does not belong to the specified ticket.')
       end
 
       ticket = article.ticket
@@ -233,7 +233,7 @@ class TicketArticlesController < ApplicationController
   # @response_message 403 Forbidden / Invalid session.
   def import_start
     if Setting.get('import_mode') != true
-      raise __('Only can import tickets if system is in import mode.')
+      raise __('Tickets can only be imported if system is in import mode.')
     end
 
     string = params[:data]

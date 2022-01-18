@@ -820,7 +820,7 @@ is certain attribute used by triggers, overviews or schedulers
       errors.add(:name, 'spaces are not allowed')
     end
     if !name.match?(%r{^[a-z0-9_]+$})
-      errors.add(:name, __('Only letters from a-z because numbers from 0-9 and _ are allowed'))
+      errors.add(:name, __("Only lowercase letters, numbers, and '_' are allowed"))
     end
     if !name.match?(%r{[a-z]})
       errors.add(:name, __('At least one letter is required'))

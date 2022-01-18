@@ -5,6 +5,11 @@ class Generators::TranslationCatalog::Extractor::Ruby < Generators::TranslationC
   def extract_from_string(string, filename) # rubocop:disable Metrics/AbcSize
     return if string.empty?
 
+    # Remove doc comments
+    string.gsub!(%r{^=begin.*?^=end}mx, '')
+    # Remove standard comments
+    string.gsub!(%r{^\s*\#.*?$}mx, '')
+
     literal_string_regex = %r{('|")(.+?)(?<!\\)\1}
 
     # Translation.translate

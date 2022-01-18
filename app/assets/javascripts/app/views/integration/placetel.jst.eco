@@ -37,7 +37,7 @@
 
   <h2><%- @T('Inbound') %></h2>
 
-  <p><%- @T('Blocked caller IDs based on sender caller ID.') %>
+  <p><%- @T('Block caller IDs based on sender caller ID.') %>
 
   <div class="settings-entry">
     <table class="settings-list js-inboundBlockCallerId" style="width: 100%;">

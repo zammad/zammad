@@ -836,7 +836,7 @@ generate url for index or document access (only for internal use)
               elsif url.end_with?('pipeline/zammad-attachment', 'pipeline=zammad-attachment') && response.code == 400
                 __('The installed attachment plugin could not handle the request payload. Ensure that the correct attachment plugin is installed (ingest-attachment).')
               else
-                __('Check the response and payload for detailed information: ')
+                __('Check the response and payload for detailed information:')
               end
 
     result = "#{prefix} #{message}#{suffix}"

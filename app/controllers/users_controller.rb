@@ -816,7 +816,7 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
 
   def avatar_set_default
     # get & validate image
-    raise Exceptions::UnprocessableEntity, __('No id of avatar!') if !params[:id]
+    raise Exceptions::UnprocessableEntity, __("The required parameter 'id' is missing.") if !params[:id]
 
     # set as default
     avatar = Avatar.set_default('User', current_user.id, params[:id])
@@ -830,7 +830,7 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
 
   def avatar_destroy
     # get & validate image
-    raise Exceptions::UnprocessableEntity, __('No id of avatar!') if !params[:id]
+    raise Exceptions::UnprocessableEntity, __("The required parameter 'id' is missing.") if !params[:id]
 
     # remove avatar
     Avatar.remove_one('User', current_user.id, params[:id])

@@ -36,7 +36,7 @@ RSpec.describe Sessions::Event::ChatTransfer do
     Setting.set('chat', true)
   end
 
-  context 'when transfering a chat session as customer' do
+  context 'when transferring a chat session as customer' do
     let(:subject_as_customer) do
       Sessions.create(client_id, { 'id' => customer.id }, {})
       Sessions.queue(client_id)
@@ -64,7 +64,7 @@ RSpec.describe Sessions::Event::ChatTransfer do
     end
   end
 
-  context 'when transfering a chat session as agent' do
+  context 'when transferring a chat session as agent' do
     it 'send out chat_session_notice to customer and agent and set chat session to waiting' do
       expect(subject_as_agent.run).to eq(nil)
 
@@ -73,7 +73,7 @@ RSpec.describe Sessions::Event::ChatTransfer do
       expect(messages_to_customer[0]).to eq(
         'event' => 'chat_session_notice',
         'data'  => {
-          'message'    => 'Conversation transfered into other chat. Please stay tuned.',
+          'message'    => 'Conversation is transferred into another chat. Please stay tuned.',
           'session_id' => chat_session.session_id,
         },
       )

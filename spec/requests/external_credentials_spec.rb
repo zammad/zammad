@@ -119,7 +119,7 @@ RSpec.describe 'External Credentials', type: :request do
               get '/api/v1/external_credentials/facebook/link_account', as: :json
 
               expect(response).to have_http_status(:unprocessable_entity)
-              expect(json_response).to include('error' => 'No facebook app configured!')
+              expect(json_response).to include('error' => 'No Facebook app configured!')
             end
           end
 
@@ -128,7 +128,7 @@ RSpec.describe 'External Credentials', type: :request do
               get '/api/v1/external_credentials/facebook/link_account', params: invalid_credentials, as: :json
 
               expect(response).to have_http_status(:unprocessable_entity)
-              expect(json_response).to include('error' => 'No facebook app configured!')
+              expect(json_response).to include('error' => 'No Facebook app configured!')
             end
           end
 
@@ -152,7 +152,7 @@ RSpec.describe 'External Credentials', type: :request do
               get '/api/v1/external_credentials/facebook/callback', as: :json
 
               expect(response).to have_http_status(:unprocessable_entity)
-              expect(json_response).to include('error' => 'No facebook app configured!')
+              expect(json_response).to include('error' => 'No Facebook app configured!')
             end
           end
 
@@ -161,7 +161,7 @@ RSpec.describe 'External Credentials', type: :request do
               get '/api/v1/external_credentials/facebook/callback', params: invalid_credentials, as: :json
 
               expect(response).to have_http_status(:unprocessable_entity)
-              expect(json_response).to include('error' => 'No facebook app configured!')
+              expect(json_response).to include('error' => 'No Facebook app configured!')
             end
           end
 
@@ -338,7 +338,7 @@ RSpec.describe 'External Credentials', type: :request do
         context 'with no Twitter app' do
           include_examples 'for failure cases' do
             let(:status) { :unprocessable_entity }
-            let(:error_message) { 'No twitter app configured!' }
+            let(:error_message) { 'No Twitter app configured!' }
           end
         end
 
@@ -397,7 +397,7 @@ RSpec.describe 'External Credentials', type: :request do
         context 'with no Twitter app' do
           include_examples 'for failure cases' do
             let(:status) { :unprocessable_entity }
-            let(:error_message) { 'No twitter app configured!' }
+            let(:error_message) { 'No Twitter app configured!' }
           end
         end
 

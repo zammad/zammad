@@ -30,7 +30,7 @@ class Integration::CtiController < ApplicationController
     end
 
     if result[:action] == 'invalid_direction'
-      response_error(__('Invalid direction!'))
+      response_error(__("Invalid 'direction'!"))
       return true
     end
 

@@ -30,7 +30,7 @@ class Sessions::Event::ChatTransfer < Sessions::Event::ChatBase
       event: 'chat_session_notice',
       data:  {
         session_id: chat_session.session_id,
-        message:    __('Conversation transfered into other chat. Please stay tuned.'),
+        message:    __('Conversation is transferred into another chat. Please stay tuned.'),
       },
     }
     chat_session.send_to_recipients(message, @client_id)

@@ -15,9 +15,16 @@ RSpec.describe Generators::TranslationCatalog::Extractor::Ruby do
     let(:string) do
       <<~'CODE'
         __('__ String')
+        =begin
+        __('Doc comment must be ignored')
+        =end
         __('__ String that only looks like #{interpolation}')
-        __("__ double quoted String with '")
+        =begin
+        __('Another doc comment must be ignored')
+        =end
         Translation.translate('de-de', '.translate String')
+        # __('Comments must also be ignored')
+        __("__ double quoted String with '")
       CODE
     end
 

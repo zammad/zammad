@@ -651,7 +651,7 @@ QUnit.test( "ticket_perform_action check when there's no available webhook", ass
   var params = App.ControllerForm.params(el)
   assert.deepEqual(params, {}, 'form param check')
 
-  var testNoticeMessage = 'No available webhook, please create a new one or activate an existing one at "Manage > Webhook"'
+  var testNoticeMessage = 'No webhook available, please create a new one or activate an existing one at "Manage > Webhook"'
   var noticeMessage = el.find('.controls.js-webhooks div').text()
   assert.equal(noticeMessage, testNoticeMessage, 'form shows message when webhook is not available')
 });
@@ -704,7 +704,7 @@ QUnit.test( "ticket_perform_action check when there's an available webhook", ass
   }
   assert.deepEqual(params, test_params, 'form param check')
 
-  var testNoticeMessage = 'No available webhook, please create a new one or activate an existing one at "Manage > Webhook"'
+  var testNoticeMessage = 'No webhook available, please create a new one or activate an existing one at "Manage > Webhook"'
   var noticeMessage = el.find('.controls.js-webhooks').text()
   assert.notEqual(noticeMessage, testNoticeMessage, 'form does not show notice message when webhook is available')
 

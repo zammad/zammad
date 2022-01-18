@@ -132,7 +132,7 @@ RSpec.describe 'Ticket Article Attachments', type: :request, authenticated_as: -
         post "/api/v1/ticket_attachment_upload_clone_by_article/#{article_p.id}", params: {}, as: :json
         expect(response).to have_http_status(:unprocessable_entity)
         expect(json_response).to be_a_kind_of(Hash)
-        expect(json_response['error']).to eq('Need form_id to attach attachments to new form.')
+        expect(json_response['error']).to eq("Need 'form_id' to add attachments to new form.")
 
         post "/api/v1/ticket_attachment_upload_clone_by_article/#{article_p.id}", params: { form_id: '1234-1' }, as: :json
         expect(response).to have_http_status(:ok)

@@ -194,7 +194,7 @@ RSpec.describe Sessions::Event::ChatSessionStart do
     end
   end
 
-  context 'when starting a chat session as agent with transfered conversation' do
+  context 'when starting a chat session as agent with transferred conversation' do
     it 'send out chat_session_start to customer and agent with already created messages' do
       chat_message_history
       expect(subject_as_agent.run).to eq(nil)

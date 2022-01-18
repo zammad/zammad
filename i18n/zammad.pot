@@ -140,18 +140,6 @@ msgstr ""
 msgid "%s is inactive, please select an active one."
 msgstr ""
 
-#: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
-msgid "%s object(s) are created."
-msgstr ""
-
-#: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
-msgid "%s object(s) are deleted."
-msgstr ""
-
-#: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
-msgid "%s object(s) are updated."
-msgstr ""
-
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
 msgid "%s object(s) have been created."
 msgstr ""
@@ -162,6 +150,18 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
 msgid "%s object(s) were deleted."
+msgstr ""
+
+#: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
+msgid "%s object(s) will be created."
+msgstr ""
+
+#: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
+msgid "%s object(s) will be deleted."
+msgstr ""
+
+#: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
+msgid "%s object(s) will be updated."
 msgstr ""
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco
@@ -342,16 +342,7 @@ msgstr ""
 msgid "API"
 msgstr ""
 
-#: app/models/object_manager/object.rb
-msgid "API IP Max"
-msgstr ""
-
-#: app/models/object_manager/object.rb
-msgid "API IP RegExp"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee
-#: app/models/object_manager/object.rb
 msgid "API Key"
 msgstr ""
 
@@ -950,10 +941,6 @@ msgstr ""
 msgid "Attention: These will be your login and password after the import is completed."
 msgstr ""
 
-#: db/seeds/settings.rb
-msgid "Attention: When creating a ticket an email is sent."
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/object_manager.coffee
 msgid "Attribute"
 msgstr ""
@@ -1162,14 +1149,14 @@ msgstr ""
 msgid "Block Notifications"
 msgstr ""
 
-#: app/assets/javascripts/app/models/chat.coffee
-msgid "Blocked IPs (separated by ;)"
-msgstr ""
-
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
-msgid "Blocked caller IDs based on sender caller ID."
+msgid "Block caller IDs based on sender caller ID."
+msgstr ""
+
+#: app/assets/javascripts/app/models/chat.coffee
+msgid "Blocked IPs (separated by ;)"
 msgstr ""
 
 #: app/assets/javascripts/app/models/chat.coffee
@@ -1573,7 +1560,7 @@ msgid "Check streams for Channel"
 msgstr ""
 
 #: lib/search_index_backend.rb
-msgid "Check the response and payload for detailed information: "
+msgid "Check the response and payload for detailed information:"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/check_mk.coffee
@@ -1968,7 +1955,7 @@ msgid "Contributing Translations"
 msgstr ""
 
 #: lib/sessions/event/chat_transfer.rb
-msgid "Conversation transfered into other chat. Please stay tuned."
+msgid "Conversation is transferred into another chat. Please stay tuned."
 msgstr ""
 
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
@@ -4319,7 +4306,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
-#: app/models/object_manager/attribute.rb
 #: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/de.html.erb
 #: app/views/mailer/ticket_create/en.html.erb
@@ -4989,6 +4975,12 @@ msgstr ""
 msgid "Intro"
 msgstr ""
 
+#: app/controllers/integration/cti_controller.rb
+#: app/controllers/integration/placetel_controller.rb
+#: app/controllers/integration/sipgate_controller.rb
+msgid "Invalid 'direction'!"
+msgstr ""
+
 #: app/controllers/application_controller/authenticates.rb
 msgid "Invalid BasicAuth credentials"
 msgstr ""
@@ -5032,12 +5024,6 @@ msgstr ""
 #: app/controllers/import_kayako_controller.rb
 #: app/controllers/import_zendesk_controller.rb
 msgid "Invalid credentials!"
-msgstr ""
-
-#: app/controllers/integration/cti_controller.rb
-#: app/controllers/integration/placetel_controller.rb
-#: app/controllers/integration/sipgate_controller.rb
-msgid "Invalid direction!"
 msgstr ""
 
 #: app/models/webhook.rb
@@ -5535,7 +5521,7 @@ msgid "Macro"
 msgstr ""
 
 #: app/controllers/tickets_mass_controller.rb
-msgid "Macro group restrictions do not cover some tickets"
+msgid "Macro group restrictions do not cover all tickets"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/macro.coffee
@@ -6027,16 +6013,16 @@ msgstr ""
 msgid "Navigation"
 msgstr ""
 
+#: app/controllers/concerns/clones_ticket_article_attachments.rb
+msgid "Need 'form_id' to add attachments to new form."
+msgstr ""
+
 #: app/controllers/concerns/creates_ticket_articles.rb
-msgid "Need at least an article body field."
+msgid "Need at least an 'article body' field."
 msgstr ""
 
 #: app/controllers/application_controller/handles_devices.rb
 msgid "Need fingerprint param!"
-msgstr ""
-
-#: app/controllers/concerns/clones_ticket_article_attachments.rb
-msgid "Need form_id to attach attachments to new form."
 msgstr ""
 
 #: app/controllers/user_access_token_controller.rb
@@ -6052,7 +6038,7 @@ msgid "Need name, login, email or locale for create_or_update()"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
-msgid "Need recipient in \"To\" or \"Cc\"."
+msgid "Need recipient in \"TO\" or \"CC\"."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/twitter_reply.coffee
@@ -6080,7 +6066,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_default_navbar.coffee
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
-#: app/models/translation.rb
 msgid "New"
 msgstr ""
 
@@ -6235,6 +6220,10 @@ msgstr ""
 msgid "No Entries"
 msgstr ""
 
+#: lib/external_credential/facebook.rb
+msgid "No Facebook app configured!"
+msgstr ""
+
 #: lib/external_credential/google.rb
 msgid "No Google app configured!"
 msgstr ""
@@ -6255,8 +6244,8 @@ msgstr ""
 msgid "No Thanks!"
 msgstr ""
 
-#: app/controllers/ticket_articles_controller.rb
-msgid "No access, article_id/ticket_id is not matching."
+#: lib/external_credential/twitter.rb
+msgid "No Twitter app configured!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/answers.coffee
@@ -6269,10 +6258,6 @@ msgstr ""
 
 #: lib/external_credential/facebook.rb
 msgid "No application_secret param!"
-msgstr ""
-
-#: app/assets/javascripts/app/views/generic/ticket_perform_action/webhook_not_available.jst.eco
-msgid "No available webhook, please create a new one or activate an existing one at \"Manage > Webhook\""
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
@@ -6323,10 +6308,6 @@ msgstr ""
 msgid "No entries found in selected folder(s)."
 msgstr ""
 
-#: lib/external_credential/facebook.rb
-msgid "No facebook app configured!"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
 msgid "No filter."
@@ -6334,14 +6315,6 @@ msgstr ""
 
 #: app/controllers/integration/exchange_controller.rb
 msgid "No folders found for given user credentials."
-msgstr ""
-
-#: lib/external_credential/google.rb
-msgid "No google app configured!"
-msgstr ""
-
-#: app/controllers/users_controller.rb
-msgid "No id of avatar!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee
@@ -6425,12 +6398,12 @@ msgstr ""
 msgid "No triggers active"
 msgstr ""
 
-#: lib/external_credential/twitter.rb
-msgid "No twitter app configured!"
-msgstr ""
-
 #: app/assets/javascripts/app/views/widget/online_notification.jst.eco
 msgid "No unread notifications for you. :)"
+msgstr ""
+
+#: app/assets/javascripts/app/views/generic/ticket_perform_action/webhook_not_available.jst.eco
+msgid "No webhook available, please create a new one or activate an existing one at \"Manage > Webhook\""
 msgstr ""
 
 #: app/models/channel/email_parser.rb
@@ -6685,12 +6658,7 @@ msgid "Only available for Users which are replacements for other users."
 msgstr ""
 
 #: app/assets/javascripts/app/models/overview.coffee
-msgid "Only available for Users with shared Organization"
-msgstr ""
-
-#: app/controllers/ticket_articles_controller.rb
-#: app/controllers/tickets_controller.rb
-msgid "Only can import tickets if system is in import mode."
+msgid "Only available for Users with shared Organizations"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
@@ -6698,7 +6666,7 @@ msgid "Only for these groups."
 msgstr ""
 
 #: app/models/object_manager/attribute.rb
-msgid "Only letters from a-z because numbers from 0-9 and _ are allowed"
+msgid "Only lowercase letters, numbers, and '_' are allowed"
 msgstr ""
 
 #: app/assets/javascripts/app/views/package.jst.eco
@@ -8773,6 +8741,10 @@ msgstr ""
 msgid "The URL to this installation of Zammad."
 msgstr ""
 
+#: app/controllers/ticket_articles_controller.rb
+msgid "The article does not belong to the specified ticket."
+msgstr ""
+
 #: app/assets/javascripts/app/views/getting_started/auto_wizard_enabled.jst.eco
 msgid "The auto wizard is enabled, please use the prodvided auto wizard url."
 msgstr ""
@@ -8813,12 +8785,12 @@ msgstr ""
 msgid "The divider between TicketHook and ticket number. E. g. ': '."
 msgstr ""
 
-#: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
-msgid "The following changes are made:"
-msgstr ""
-
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
 msgid "The following changes have been made:"
+msgstr ""
+
+#: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
+msgid "The following changes will be made:"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal.coffee
@@ -8859,6 +8831,10 @@ msgstr ""
 
 #: app/views/knowledge_base/public/not_found.html.erb
 msgid "The page you were looking for does not exist."
+msgstr ""
+
+#: app/controllers/users_controller.rb
+msgid "The required parameter 'id' is missing."
 msgstr ""
 
 #: app/controllers/users_controller.rb
@@ -9167,6 +9143,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_load_measure.jst.eco
 msgid "Tickets assigned to me: %s of %s"
+msgstr ""
+
+#: app/controllers/ticket_articles_controller.rb
+#: app/controllers/tickets_controller.rb
+msgid "Tickets can only be imported if system is in import mode."
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/ticket_stats.jst.eco
