@@ -560,8 +560,8 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       user_id:       @agent_user1.id,
       created_by_id: 1,
       updated_by_id: 1,
-      created_at:    Time.zone.now - 10.months,
-      updated_at:    Time.zone.now - 10.months,
+      created_at:    10.months.ago,
+      updated_at:    10.months.ago,
     )
     online_notification2 = OnlineNotification.add(
       type:          'create',
@@ -571,8 +571,8 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       user_id:       @agent_user1.id,
       created_by_id: 1,
       updated_by_id: 1,
-      created_at:    Time.zone.now - 10.months,
-      updated_at:    Time.zone.now - 10.months,
+      created_at:    10.months.ago,
+      updated_at:    10.months.ago,
     )
     online_notification3 = OnlineNotification.add(
       type:          'create',
@@ -652,8 +652,8 @@ class OnlineNotificationTest < ActiveSupport::TestCase
         user_id:       @agent_user1.id,
         created_by_id: 1,
         updated_by_id: 1,
-        created_at:    Time.zone.now - 10.months,
-        updated_at:    Time.zone.now - 10.months,
+        created_at:    10.months.ago,
+        updated_at:    10.months.ago,
       )
     end
     assert_raises(ActiveRecord::RecordNotFound) do
@@ -665,8 +665,8 @@ class OnlineNotificationTest < ActiveSupport::TestCase
         user_id:       @agent_user1.id,
         created_by_id: 1,
         updated_by_id: 1,
-        created_at:    Time.zone.now - 10.months,
-        updated_at:    Time.zone.now - 10.months,
+        created_at:    10.months.ago,
+        updated_at:    10.months.ago,
       )
     end
   end

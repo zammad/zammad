@@ -235,8 +235,8 @@ returns
       if event.rrule
 
         # loop till days
-        interval_frame_start = Date.parse("#{Time.zone.now - 1.year}-01-01")
-        interval_frame_end   = Date.parse("#{Time.zone.now + 3.years}-12-31")
+        interval_frame_start = Date.parse("#{1.year.ago}-01-01")
+        interval_frame_end   = Date.parse("#{3.years.from_now}-12-31")
         occurrences          = event.occurrences_between(interval_frame_start, interval_frame_end)
         if occurrences.present?
           occurrences.each do |occurrence|
@@ -247,8 +247,8 @@ returns
           end
         end
       end
-      next if event.dtstart < Time.zone.now - 1.year
-      next if event.dtstart > Time.zone.now + 3.years
+      next if event.dtstart < 1.year.ago
+      next if event.dtstart > 3.years.from_now
 
       result = Calendar.day_and_comment_by_event(event, event.dtstart)
       next if !result
