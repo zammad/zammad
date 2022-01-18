@@ -57,19 +57,22 @@ const useAuthenticatedStore = defineStore('authenticated', {
       }
 
       const newSessionId = result?.login?.sessionId || null
-
       if (newSessionId) {
         const sessionId = useSessionIdStore()
         sessionId.value = newSessionId
         this.value = true
-
-        await Promise.all([
-          useApplicationConfigStore().getConfig(),
-          useSessionUserStore().getCurrentUser(),
-        ])
       }
 
+      await this.refreshAfterAuthentication()
+
       return Promise.resolve()
+    },
+
+    async refreshAfterAuthentication(): Promise<void> {
+      await Promise.all([
+        useApplicationConfigStore().getConfig(),
+        useSessionUserStore().getCurrentUser(),
+      ])
     },
   },
   shareState: {

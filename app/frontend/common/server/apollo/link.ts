@@ -17,7 +17,7 @@ import { BatchHttpLink } from '@apollo/client/link/batch-http'
 import { FragmentDefinitionNode, OperationDefinitionNode } from 'graphql'
 
 // Should subsequent HTTP calls be batched together?
-const enableBatchLink = true
+const enableBatchLink = false
 
 // Should queries and mutations be sent over ActionCable?
 const enableQueriesOverWebsocket = false

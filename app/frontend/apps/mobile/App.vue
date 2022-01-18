@@ -16,7 +16,8 @@ import useAuthenticatedStore from '@common/stores/authenticated'
 import useSessionIdStore from '@common/stores/session/id'
 import useMetaTitle from '@common/composables/useMetaTitle'
 import { useRoute, useRouter } from 'vue-router'
-import { computed, watch } from 'vue'
+import emitter from '@common/utils/emitter'
+import { onBeforeUnmount } from 'vue'
 
 const router = useRouter()
 const route = useRoute()
@@ -29,32 +30,41 @@ useMetaTitle().initializeMetaTitle()
 const applicationLoaded = useApplicationLoadedStore()
 applicationLoaded.setLoaded()
 
-const invalidatedSession = computed(() => {
-  return !sessionId.value && authenticated.value
-})
-
-watch(invalidatedSession, () => {
-  authenticated.clearAuthentication()
-
-  router.replace({
-    name: 'Login',
-    params: {
-      invalidatedSession: '1',
-    },
-  })
-})
-
 // Add a watcher for authenticated changes (e.g. login/logout in a other browser tab).
-authenticated.$subscribe((mutation, state) => {
+authenticated.$subscribe(async (mutation, state) => {
   if (state.value && !sessionId.value) {
-    sessionId.checkSession().then((sessionId) => {
-      if (sessionId && route.name === 'Login') {
+    sessionId.checkSession().then(async (sessionId) => {
+      if (sessionId) {
+        await authenticated.refreshAfterAuthentication()
+      }
+
+      if (route.name === 'Login') {
         router.replace('/')
       }
     })
   } else if (!state.value && sessionId.value) {
-    sessionId.value = null
+    await authenticated.clearAuthentication()
+
     router.replace('login')
   }
+})
+
+// The handling for invalid sessions. The event will be emitted, when from the server a "NotAuthorized"
+// response is received.
+emitter.on('sessionInvalid', async () => {
+  if (authenticated.value) {
+    await authenticated.clearAuthentication()
+
+    router.replace({
+      name: 'Login',
+      params: {
+        invalidatedSession: '1',
+      },
+    })
+  }
+})
+
+onBeforeUnmount(() => {
+  emitter.off('sessionInvalid')
 })
 </script>
