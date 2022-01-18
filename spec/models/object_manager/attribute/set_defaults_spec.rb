@@ -3,6 +3,7 @@
 require 'rails_helper'
 
 DEFAULT_VALUES = {
+  textarea: 'rspec',
   text:     'rspec',
   boolean:  true,
   date:     1,

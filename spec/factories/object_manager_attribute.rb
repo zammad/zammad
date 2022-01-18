@@ -65,7 +65,7 @@ FactoryBot.define do
         'maxlength' => 255,
         'null'      => true,
         'translate' => false,
-        'default'   => default || '',
+        'default'   => default,
         'options'   => {},
         'relation'  => '',
       }

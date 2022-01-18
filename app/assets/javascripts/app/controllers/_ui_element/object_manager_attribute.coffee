@@ -33,6 +33,7 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
       datetime: __('Datetime')
       date: __('Date')
       input: __('Text')
+      textarea: __('Textarea')
       select: __('Select')
       tree_select: __('Tree Select')
       boolean: __('Boolean')
@@ -223,6 +224,28 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
         item.find('.js-inputLinkTemplate').show()
     )
     item.find("select[name='data_option::type']").trigger('change')
+
+  @textarea: (item, localParams, params) ->
+    configureAttributes = [
+      { name: 'data_option::default', display: __('Default'), tag: 'input', type: 'text', null: true, default: '' },
+    ]
+    inputDefault = new App.ControllerForm(
+      model:
+        configure_attributes: configureAttributes
+      noFieldset: true
+      params: params
+    )
+    configureAttributes = [
+      { name: 'data_option::maxlength', display: __('Maxlength'), tag: 'integer', null: false, default: 500 },
+    ]
+    inputMaxlength = new App.ControllerForm(
+      model:
+        configure_attributes: configureAttributes
+      noFieldset: true
+      params: params
+    )
+    item.find('.js-inputDefault').html(inputDefault.form)
+    item.find('.js-inputMaxlength').html(inputMaxlength.form)
 
   @datetime: (item, localParams, params) ->
     configureAttributes = [

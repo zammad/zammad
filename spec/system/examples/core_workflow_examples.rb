@@ -25,7 +25,7 @@ RSpec.shared_examples 'core workflow' do
     }
   end
 
-  describe 'modify text attribute', authenticated_as: :authenticate, db_strategy: :reset do
+  describe 'modify input attribute', authenticated_as: :authenticate, db_strategy: :reset do
     def authenticate
       create(:object_manager_attribute_text, object_name: object_name, name: field_name, display: field_name, screens: screens)
       ObjectManager::Attribute.migration_execute
@@ -47,6 +47,204 @@ RSpec.shared_examples 'core workflow' do
       it 'does perform' do
         before_it.call
         expect(page).to have_selector("input[name='#{field_name}']", wait: 10)
+      end
+    end
+
+    describe 'action - hide' do
+      before do
+        create(:core_workflow,
+               object:  object_name,
+               perform: {
+                 "#{object_name.downcase}.#{field_name}": {
+                   operator: 'hide',
+                   hide:     'true'
+                 },
+               })
+      end
+
+      it 'does perform' do
+        before_it.call
+        expect(page).to have_selector(".form-group[data-attribute-name='#{field_name}'].is-hidden", visible: :hidden, wait: 10)
+      end
+    end
+
+    describe 'action - remove' do
+      before do
+        create(:core_workflow,
+               object:  object_name,
+               perform: {
+                 "#{object_name.downcase}.#{field_name}": {
+                   operator: 'remove',
+                   remove:   'true'
+                 },
+               })
+      end
+
+      it 'does perform' do
+        before_it.call
+        expect(page).to have_selector(".form-group[data-attribute-name='#{field_name}'].is-removed", visible: :hidden, wait: 10)
+      end
+    end
+
+    describe 'action - set_optional' do
+      before do
+        create(:core_workflow,
+               object:  object_name,
+               perform: {
+                 "#{object_name.downcase}.#{field_name}": {
+                   operator:     'set_optional',
+                   set_optional: 'true'
+                 },
+               })
+      end
+
+      it 'does perform' do
+        before_it.call
+        expect(page.find("div[data-attribute-name='#{field_name}'] div.formGroup-label label")).to have_no_text('*', wait: 10)
+      end
+    end
+
+    describe 'action - set_mandatory' do
+      before do
+        create(:core_workflow,
+               object:  object_name,
+               perform: {
+                 "#{object_name.downcase}.#{field_name}": {
+                   operator:      'set_mandatory',
+                   set_mandatory: 'true'
+                 },
+               })
+      end
+
+      it 'does perform' do
+        before_it.call
+        expect(page.find("div[data-attribute-name='#{field_name}'] div.formGroup-label label")).to have_text('*', wait: 10)
+      end
+    end
+
+    describe 'action - unset_readonly' do
+      before do
+        create(:core_workflow,
+               object:  object_name,
+               perform: {
+                 "#{object_name.downcase}.#{field_name}": {
+                   operator:       'unset_readonly',
+                   unset_readonly: 'true'
+                 },
+               })
+      end
+
+      it 'does perform' do
+        before_it.call
+        expect(page).to have_no_selector("div[data-attribute-name='#{field_name}'].is-readonly", wait: 10)
+      end
+    end
+
+    describe 'action - set_readonly' do
+      before do
+        create(:core_workflow,
+               object:  object_name,
+               perform: {
+                 "#{object_name.downcase}.#{field_name}": {
+                   operator:     'set_readonly',
+                   set_readonly: 'true'
+                 },
+               })
+      end
+
+      it 'does perform' do
+        before_it.call
+        expect(page).to have_selector("div[data-attribute-name='#{field_name}'].is-readonly", wait: 10)
+      end
+    end
+
+    describe 'action - fill_in' do
+      before do
+        create(:core_workflow,
+               object:  object_name,
+               perform: {
+                 "#{object_name.downcase}.#{field_name}": {
+                   operator: 'fill_in',
+                   fill_in:  '4cddb2twza'
+                 },
+               })
+      end
+
+      it 'does perform' do
+        before_it.call
+        expect(page).to have_field(field_name, with: '4cddb2twza', wait: 10)
+      end
+    end
+
+    describe 'action - fill_in_empty' do
+      describe 'with match' do
+        before do
+          create(:core_workflow,
+                 object:  object_name,
+                 perform: {
+                   "#{object_name.downcase}.#{field_name}": {
+                     operator:      'fill_in_empty',
+                     fill_in_empty: '9999'
+                   },
+                 })
+        end
+
+        it 'does perform' do
+          before_it.call
+          expect(page).to have_field(field_name, with: '9999', wait: 10)
+        end
+      end
+
+      describe 'without match' do
+        before do
+          create(:core_workflow,
+                 object:  object_name,
+                 perform: {
+                   "#{object_name.downcase}.#{field_name}": {
+                     operator: 'fill_in',
+                     fill_in:  '4cddb2twza'
+                   },
+                 })
+          create(:core_workflow,
+                 object:  object_name,
+                 perform: {
+                   "#{object_name.downcase}.#{field_name}": {
+                     operator:      'fill_in_empty',
+                     fill_in_empty: '9999'
+                   },
+                 })
+        end
+
+        it 'does perform' do
+          before_it.call
+          expect(page).to have_no_field(field_name, with: '9999', wait: 10)
+        end
+      end
+    end
+  end
+
+  describe 'modify textarea attribute', authenticated_as: :authenticate, db_strategy: :reset do
+    def authenticate
+      create(:object_manager_attribute_textarea, object_name: object_name, name: field_name, display: field_name, screens: screens)
+      ObjectManager::Attribute.migration_execute
+      true
+    end
+
+    describe 'action - show' do
+      before do
+        create(:core_workflow,
+               object:  object_name,
+               perform: {
+                 "#{object_name.downcase}.#{field_name}": {
+                   operator: 'show',
+                   show:     'true'
+                 },
+               })
+      end
+
+      it 'does perform' do
+        before_it.call
+        expect(page).to have_selector("textarea[name='#{field_name}']", wait: 10)
       end
     end
 

@@ -910,49 +910,63 @@ is certain attribute used by triggers, overviews or schedulers
     send("#{local_data_attr}=", val)
   end
 
+  def data_option_maxlength_check
+    [{ failed: !local_data_option[:maxlength].to_s.match?(%r{^\d+$}), message: 'must have integer for :maxlength' }]
+  end
+
+  def data_option_type_check
+    [{ failed: %w[text password tel fax email url].exclude?(local_data_option[:type]), message: 'must have one of text/password/tel/fax/email/url for :type' }]
+  end
+
+  def data_option_min_max_check
+    min = local_data_option[:min]
+    max = local_data_option[:max]
+
+    [
+      { failed:  !VALIDATE_INTEGER_REGEXP.match?(min.to_s), message: 'must have integer for :min' },
+      { failed:  !VALIDATE_INTEGER_REGEXP.match?(max.to_s), message: 'must have integer for :max' },
+      { failed:  !(min.is_a?(Integer) && min >= VALIDATE_INTEGER_MIN), message: 'min must be higher than -2147483648' },
+      { failed:  !(min.is_a?(Integer) && min <= VALIDATE_INTEGER_MAX), message: 'min must be lower than 2147483648' },
+      { failed:  !(max.is_a?(Integer) && max >= VALIDATE_INTEGER_MIN), message: 'max must be higher than -2147483648' },
+      { failed:  !(max.is_a?(Integer) && max <= VALIDATE_INTEGER_MAX), message: 'max must be lower than 2147483648' },
+      { failed:  !(max.is_a?(Integer) && min.is_a?(Integer) && min <= max), message: 'min must be lower than max' }
+    ]
+  end
+
+  def data_option_default_check
+    [{ failed: !local_data_option.key?(:default), message: 'must have value for :default' }]
+  end
+
+  def data_option_relation_check
+    [{ failed: local_data_option[:options].nil? && local_data_option[:relation].nil?, message: 'must have non-nil value for either :options or :relation' }]
+  end
+
+  def data_option_nil_check
+    [{ failed: local_data_option[:options].nil?, message: 'must have non-nil value for :options' }]
+  end
+
+  def data_option_future_check
+    [{ failed: local_data_option[:future].nil?, message: 'must have boolean value for :future' }]
+  end
+
+  def data_option_past_check
+    [{ failed: local_data_option[:past].nil?, message: 'must have boolean value for :past' }]
+  end
+
   def data_option_validations
     case data_type
     when 'input'
-      [{ failed:  %w[text password tel fax email url].exclude?(local_data_option[:type]),
-         message: 'must have one of text/password/tel/fax/email/url for :type' },
-       { failed:  !local_data_option[:maxlength].to_s.match?(%r{^\d+$}),
-         message: 'must have integer for :maxlength' }]
-    when 'richtext'
-      [{ failed:  !local_data_option[:maxlength].to_s.match?(%r{^\d+$}),
-         message: 'must have integer for :maxlength' }]
+      data_option_type_check + data_option_maxlength_check
+    when %r{^(textarea|richtext)$}
+      data_option_maxlength_check
     when 'integer'
-      min = local_data_option[:min]
-      max = local_data_option[:max]
-
-      [{ failed:  !VALIDATE_INTEGER_REGEXP.match?(min.to_s),
-         message: 'must have integer for :min' },
-       { failed:  !VALIDATE_INTEGER_REGEXP.match?(max.to_s),
-         message: 'must have integer for :max' },
-       { failed:  !(min.is_a?(Integer) && min >= VALIDATE_INTEGER_MIN),
-         message: 'min must be higher than -2147483648' },
-       { failed:  !(min.is_a?(Integer) && min <= VALIDATE_INTEGER_MAX),
-         message: 'min must be lower than 2147483648' },
-       { failed:  !(max.is_a?(Integer) && max >= VALIDATE_INTEGER_MIN),
-         message: 'max must be higher than -2147483648' },
-       { failed:  !(max.is_a?(Integer) && max <= VALIDATE_INTEGER_MAX),
-         message: 'max must be lower than 2147483648' },
-       { failed:  !(max.is_a?(Integer) && min.is_a?(Integer) && min <= max),
-         message: 'min must be lower than max' }]
+      data_option_min_max_check
     when %r{^((tree_)?select|checkbox)$}
-      [{ failed:  !local_data_option.key?(:default),
-         message: 'must have value for :default' },
-       { failed:  local_data_option[:options].nil? && local_data_option[:relation].nil?,
-         message: 'must have non-nil value for either :options or :relation' }]
+      data_option_default_check + data_option_relation_check
     when 'boolean'
-      [{ failed:  !local_data_option.key?(:default),
-         message: 'must have boolean/undefined value for :default' },
-       { failed:  local_data_option[:options].nil?,
-         message: 'must have non-nil value for :options' }]
+      data_option_default_check + data_option_nil_check
     when 'datetime'
-      [{ failed:  local_data_option[:future].nil?,
-         message: 'must have boolean value for :future' },
-       { failed:  local_data_option[:past].nil?,
-         message: 'must have boolean value for :past' }]
+      data_option_future_check + data_option_past_check
     else
       []
     end

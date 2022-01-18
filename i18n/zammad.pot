@@ -8721,6 +8721,10 @@ msgstr ""
 msgid "TextModule"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+msgid "Textarea"
+msgstr ""
+
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Thank you for your inquiry (#%s)! We'll contact you as soon as possible."
 msgstr ""
