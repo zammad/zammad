@@ -147,7 +147,7 @@ RSpec.describe 'Keyboard Shortcuts', type: :system do
 
         it 'show the next tab' do
           within :active_content, 'form.ticket-create' do
-            expect(page).to have_title 'Call Inbound'
+            expect(page).to have_title 'Inbound Call'
           end
         end
       end
@@ -157,7 +157,7 @@ RSpec.describe 'Keyboard Shortcuts', type: :system do
 
         it 'shows the previous tab' do
           within :active_content, 'form.ticket-create' do
-            expect(page).to have_title 'Call Outbound'
+            expect(page).to have_title 'Outbound Call'
           end
         end
       end

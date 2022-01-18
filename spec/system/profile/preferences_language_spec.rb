@@ -115,7 +115,7 @@ RSpec.describe 'Profile > Language', type: :system do
       let(:path) { 'ticket/create' }
       let(:title) { 'preferences lang check #1' }
       let(:customer) { 'nicole' }
-      let(:translated_content) { "Call Inbound: #{title}" }
+      let(:translated_content) { "Inbound Call: #{title}" }
 
       translated_element = '.newTicket .ticket-create'
 
@@ -206,7 +206,7 @@ RSpec.describe 'Profile > Language', type: :system do
       let(:path) { 'ticket/create' }
       let(:title) { 'preferences lang check #1' }
       let(:customer) { 'nicole' }
-      let(:translated_content) { "Anruf eingehend: #{title}" }
+      let(:translated_content) { "Eingehender Anruf: #{title}" }
 
       translated_element = '.newTicket .ticket-create'
 

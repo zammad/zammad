@@ -17,7 +17,7 @@ get user based list of used object attributes
 returns:
 
   [
-    { name: 'api_key', display: __('API KEY'), tag: 'input', null: true, edit: true, maxlength: 32 },
+    { name: 'api_key', display: __('API Key'), tag: 'input', null: true, edit: true, maxlength: 32 },
     { name: 'api_ip_regexp', display: __('API IP RegExp'), tag: 'input', null: true, edit: true },
     { name: 'api_ip_max', display: __('API IP Max'), tag: 'input', null: true, edit: true },
   ]

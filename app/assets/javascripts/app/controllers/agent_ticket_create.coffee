@@ -107,12 +107,12 @@ class App.TicketCreate extends App.Controller
       'phone-in':
         sender:  'Customer'
         article: 'phone'
-        title:   __('Call Inbound')
+        title:   __('Inbound Call')
         screen:  'create_phone_in'
       'phone-out':
         sender:  'Agent'
         article: 'phone'
-        title:   __('Call Outbound')
+        title:   __('Outbound Call')
         screen:  'create_phone_out'
       'email-out':
         sender:  'Agent'

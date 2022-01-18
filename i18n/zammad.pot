@@ -350,11 +350,8 @@ msgstr ""
 msgid "API IP RegExp"
 msgstr ""
 
-#: app/models/object_manager/object.rb
-msgid "API KEY"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee
+#: app/models/object_manager/object.rb
 msgid "API Key"
 msgstr ""
 
@@ -721,16 +718,13 @@ msgstr ""
 msgid "Alternative FQDN for callbacks if you operate Zammad in internal network."
 msgstr ""
 
+#: app/helpers/knowledge_base_breadcrumb_helper.rb
 #: app/helpers/knowledge_base_public_page_title_helper.rb
 msgid "Alternative Translations"
 msgstr ""
 
 #: app/assets/javascripts/app/views/customer_chat/setting.jst.eco
 msgid "Alternative name"
-msgstr ""
-
-#: app/helpers/knowledge_base_breadcrumb_helper.rb
-msgid "Alternative translations"
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
@@ -1304,14 +1298,6 @@ msgstr ""
 msgid "Calendars"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
-msgid "Call Inbound"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
-msgid "Call Outbound"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/cti.coffee
 msgid "Call from %s for %s"
 msgstr ""
@@ -1759,6 +1745,7 @@ msgstr ""
 msgid "Closed"
 msgstr ""
 
+#: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
 #: lib/excel_sheet/ticket.rb
 msgid "Closed At"
 msgstr ""
@@ -1766,10 +1753,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/widget/ticket_stats.coffee
 #: app/assets/javascripts/app/controllers/widget/user.coffee
 msgid "Closed Tickets"
-msgstr ""
-
-#: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
-msgid "Closed at"
 msgstr ""
 
 #: db/seeds/schedulers.rb
@@ -2186,6 +2169,7 @@ msgstr ""
 msgid "Created"
 msgstr ""
 
+#: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
 #: lib/excel_sheet/ticket.rb
 msgid "Created At"
 msgstr ""
@@ -2195,7 +2179,6 @@ msgstr ""
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/assets/javascripts/app/models/user.coffee
 #: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco
-#: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
 #: app/assets/javascripts/app/views/widget/http_log.jst.eco
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
 msgid "Created at"
@@ -4864,6 +4847,7 @@ msgstr ""
 msgid "Inbound"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco
 msgid "Inbound Call"
 msgstr ""
