@@ -302,10 +302,11 @@ GEM
     json (2.6.1)
     jwt (2.3.0)
     kgio (2.11.4)
-    koala (3.0.0)
+    koala (3.1.0)
       addressable
-      faraday
+      faraday (< 2)
       json (>= 1.8)
+      rexml
     libv8 (8.4.255.0)
     listen (3.7.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
