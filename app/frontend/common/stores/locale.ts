@@ -6,33 +6,43 @@ import log from '@common/utils/log'
 import localeForBrowserLanguage from '@common/utils/i18n/localeForBrowserLanguage'
 import getAvailableLocales from '@common/utils/i18n/availableLocales'
 import useTranslationsStore from '@common/stores/translations'
+import { LocalesQuery } from '@common/graphql/types'
+import type { LastArrayElement } from 'type-fest'
+
+type Locale = LastArrayElement<LocalesQuery['locales']>
 
 const useLocaleStore = defineStore('locale', {
-  state: (): SingleValueStore<string> => {
+  state: (): SingleValueStore<Maybe<Locale>> => {
     return {
-      value: '',
+      value: null,
     }
   },
   actions: {
     async updateLocale(newLocale?: string): Promise<void> {
-      let locale = newLocale
+      const availableLocales = await getAvailableLocales()
 
-      if (!locale) {
-        const availableLocales = await getAvailableLocales()
+      if (!availableLocales?.length) return
 
-        locale = availableLocales
-          ? localeForBrowserLanguage(availableLocales)
-          : 'en-us'
+      let locale
+
+      if (newLocale) {
+        locale = availableLocales.find((elem) => {
+          return elem.locale === newLocale
+        })
       }
+
+      if (!locale) locale = localeForBrowserLanguage(availableLocales || [])
 
       log.debug('localeStore.updateLocale()', locale)
 
       // Update the translation store, when the locale is different.
-      if (this.value !== locale) {
-        await useTranslationsStore().load(locale)
-      }
+      if (this.value?.locale !== locale.locale) {
+        await useTranslationsStore().load(locale.locale)
+        this.value = locale
 
-      this.value = locale
+        document.documentElement.setAttribute('dir', locale.dir)
+        document.documentElement.setAttribute('lang', locale.locale)
+      }
     },
   },
 })

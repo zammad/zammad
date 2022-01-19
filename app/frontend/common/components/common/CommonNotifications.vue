@@ -2,7 +2,7 @@
 
 <template>
   <div id="Notifications" class="flex justify-center w-full">
-    <div class="fixed top-0 right-0 z-50">
+    <div class="fixed top-0 ltr:right-0 rtl:left-0 z-50">
       <transition-group
         tag="div"
         enter-class="opacity-0"
@@ -18,7 +18,7 @@
                 v-bind:name="iconNameMap[notification.type]"
                 v-bind:fixed-size="{ width: 10, height: 10 }"
               />
-              <span class="ml-2 text-sm">{{
+              <span class="rtl:mr-2 ltr:ml-2 text-sm">{{
                 notification.messagePlaceholder
                   ? i18n.t(
                       notification.message,

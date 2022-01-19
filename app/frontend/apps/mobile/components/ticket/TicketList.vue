@@ -5,22 +5,22 @@
   <table>
     <thead>
       <th v-on:click="switchOrder(TicketOrderBy.Title)">
-        Title
+        {{ i18n.t('Title') }}
         <span v-if="orderBy == TicketOrderBy.Title">
           <span v-if="orderDirection == OrderDirection.Ascending">⇑</span>
           <span v-else>⇓</span>
         </span>
       </th>
-      <th>Status</th>
+      <th>{{ i18n.t('Status') }}</th>
       <th v-on:click="switchOrder(TicketOrderBy.Number)">
-        Number
+        {{ i18n.t('Number') }}
         <span v-if="orderBy == TicketOrderBy.Number">
           <span v-if="orderDirection == OrderDirection.Ascending">⇑</span>
           <span v-else>⇓</span>
         </span>
       </th>
-      <th>Customer</th>
-      <th>Created</th>
+      <th>{{ i18n.t('Customer') }}</th>
+      <th>{{ i18n.t('Created') }}</th>
     </thead>
     <tbody>
       <tr

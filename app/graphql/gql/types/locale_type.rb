@@ -9,7 +9,7 @@ module Gql::Types
     field :locale, String, null: false
     field :alias, String, null: true, resolver_method: :resolve_alias
     field :name, String, null: false
-    field :dir, String, null: false
+    field :dir, Gql::Types::Enum::TextDirectionType, null: false
     field :active, Boolean, null: false
 
     # Custom resolver is needed as there is a conflict with a built-in 'alias' method.

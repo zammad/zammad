@@ -61,7 +61,7 @@ export type Locale = Node & {
   createdAt: Scalars['ISO8601DateTime'];
   /** User that created this record */
   createdBy: User;
-  dir: Scalars['String'];
+  dir: TextDirection;
   id: Scalars['ID'];
   locale: Scalars['String'];
   name: Scalars['String'];
@@ -321,6 +321,14 @@ export type Subscriptions = {
   configUpdated: ConfigUpdatedPayload;
 };
 
+/** Option to choose SQL sorting direction */
+export enum TextDirection {
+  /** Left-to-right */
+  Ltr = 'ltr',
+  /** Right-to-left */
+  Rtl = 'rtl'
+}
+
 /** Tickets */
 export type Ticket = Node & ObjectAttributeValueInterface & {
   __typename?: 'Ticket';
@@ -554,7 +562,7 @@ export type CurrentUserQuery = { __typename?: 'Queries', currentUser: { __typena
 export type LocalesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type LocalesQuery = { __typename?: 'Queries', locales: Array<{ __typename?: 'Locale', locale: string, alias?: string | null | undefined, name: string, dir: string, active: boolean }> };
+export type LocalesQuery = { __typename?: 'Queries', locales: Array<{ __typename?: 'Locale', locale: string, alias?: string | null | undefined, name: string, dir: TextDirection, active: boolean }> };
 
 export type OverviewsQueryVariables = Exact<{
   withTicketCount: Scalars['Boolean'];

@@ -1,7 +1,5 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { provideApolloClient } from '@vue/apollo-composable'
-import apolloClient from '@common/server/apollo/client'
 import { QueryHandler } from '@common/server/apollo/handler'
 import { useLocalesQuery } from '@common/graphql/api'
 import { LocalesQuery } from '@common/graphql/types'
@@ -12,8 +10,6 @@ const getAvailableLocales = async (): Promise<
   Maybe<LocalesQuery['locales']>
 > => {
   if (availableLocales !== undefined) return availableLocales
-
-  provideApolloClient(apolloClient)
 
   const query = new QueryHandler(useLocalesQuery())
   const result = await query.loadedResult()
