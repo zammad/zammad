@@ -102,7 +102,7 @@ class User extends App.ControllerSubContent
       attribute.title = null
 
       if object.maxLoginFailedReached()
-        attribute.title = App.i18n.translateContent('The user is locked, because of too many failed login attempts.')
+        attribute.title = App.i18n.translateContent('This user is currently blocked because of too many failed login attempts.')
         attribute.prefixIcon = 'lock'
 
       value

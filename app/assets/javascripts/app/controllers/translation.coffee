@@ -110,7 +110,7 @@ class Translation extends App.ControllerSubContent
   resetChanges: =>
     @loader = new App.ControllerModalLoading(
       head:      __('Reset changes')
-      message:   __('Reseting changes…')
+      message:   __('Resetting changes…')
       container: @el.closest('.content')
     )
     @ajax(

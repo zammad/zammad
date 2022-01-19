@@ -1127,6 +1127,10 @@ msgstr ""
 msgid "Bcc address for all outgoing emails"
 msgstr ""
 
+#: app/assets/javascripts/app/lib/base/jquery.textmodule.js
+msgid "Before you mention a user, please select a group."
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "Beginner"
 msgstr ""
@@ -1959,7 +1963,7 @@ msgid "Conversation is transferred into another chat. Please stay tuned."
 msgstr ""
 
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
-msgid "Conversion of retweets into tickets is turned off"
+msgid "Conversion of retweets into tickets is turned off."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
@@ -2371,7 +2375,7 @@ msgid "Decryption failed!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
-msgid "Decryption successful!"
+msgid "Decryption was successful."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
@@ -3196,6 +3200,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
 msgid "Do not sign email"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_application_controller/generic_destroy_confirm.coffee
+#: app/assets/javascripts/app/controllers/tag.coffee
+msgid "Do you really want to delete this object?"
 msgstr ""
 
 #: db/seeds/object_manager_attributes.rb
@@ -6670,11 +6679,7 @@ msgid "Only lowercase letters, numbers, and '_' are allowed"
 msgstr ""
 
 #: app/assets/javascripts/app/views/package.jst.eco
-msgid "Only packages from known, trusted and verfied sources should be installed."
-msgstr ""
-
-#: app/controllers/users_controller.rb
-msgid "Only signup with not authenticate user possible!"
+msgid "Only packages from known, trusted, and verfied sources should be installed."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -6729,7 +6734,7 @@ msgid "Options"
 msgstr ""
 
 #: app/assets/javascripts/app/views/getting_started/intro.jst.eco
-msgid "Or"
+msgid "Or migrate from another system."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
@@ -6788,7 +6793,7 @@ msgid "Organizations"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/organization.coffee
-msgid "Organizations are for any person in the system. Agents (Owners, Resposbiles, …) and Customers."
+msgid "Organizations are for any person in the system: agents (owners, responsibles, …) and customers."
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket_article.coffee
@@ -6836,10 +6841,6 @@ msgstr ""
 msgid "Overview"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/overview.coffee
-msgid "Overview are …"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
 msgid "Overview bulk mask"
 msgstr ""
@@ -6851,6 +6852,10 @@ msgstr ""
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 #: db/seeds/permissions.rb
 msgid "Overviews"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/overview.coffee
+msgid "Overviews are …"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee
@@ -7075,11 +7080,11 @@ msgid "Please add categories and/or answers"
 msgstr ""
 
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
-msgid "Please click the button below to create your first one."
+msgid "Please click on the button below to create your first one."
 msgstr ""
 
 #: app/assets/javascripts/app/views/signup/verify.jst.eco
-msgid "Please click the link in the verification email."
+msgid "Please click on the link in the verification email."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee
@@ -7094,12 +7099,12 @@ msgstr ""
 msgid "Please enter a text."
 msgstr ""
 
-#: app/models/knowledge_base.rb
-msgid "Please enter valid path or domain"
+#: app/assets/javascripts/app/views/ticket_zoom/time_accounting.jst.eco
+msgid "Please enter the time you want to record."
 msgstr ""
 
-#: app/assets/javascripts/app/views/ticket_zoom/time_accounting.jst.eco
-msgid "Please enter your time which you want to account."
+#: app/models/knowledge_base.rb
+msgid "Please enter valid path or domain"
 msgstr ""
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
@@ -7108,10 +7113,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/public_menu_form_item.coffee
 msgid "Please fill in all fields"
-msgstr ""
-
-#: app/assets/javascripts/app/lib/base/jquery.textmodule.js
-msgid "Please select a group first, before you mention a user!"
 msgstr ""
 
 #: app/controllers/integration/exchange_controller.rb
@@ -7327,7 +7328,7 @@ msgid "Raw"
 msgstr ""
 
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco
-msgid "Realtime"
+msgid "Real-time"
 msgstr ""
 
 #: app/assets/javascripts/app/views/google/list.jst.eco
@@ -7350,7 +7351,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/agent_ticket_merge.jst.eco
 #: app/assets/javascripts/app/views/link/ticket/add.jst.eco
-msgid "Recent viewed Tickets"
+msgid "Recently Viewed Tickets"
 msgstr ""
 
 #: app/assets/javascripts/app/views/layout_ref/kb_link_ticket_to_answer_ref.jst.eco
@@ -7488,16 +7489,8 @@ msgstr ""
 msgid "Request for Change"
 msgstr ""
 
-#: app/controllers/ticket_articles_controller.rb
-msgid "Requested file id is not linked with article_id."
-msgstr ""
-
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid "Requesting the Grant"
-msgstr ""
-
-#: app/controllers/channels_twitter_controller.rb
-msgid "Required parameter 'crc_token' missing in verify payload from twitter!"
 msgstr ""
 
 #: app/controllers/reports_controller.rb
@@ -7541,7 +7534,7 @@ msgid "Reset changes"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/translation.coffee
-msgid "Reseting changes…"
+msgid "Resetting changes…"
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
@@ -7572,17 +7565,13 @@ msgstr ""
 msgid "Retry security process"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
-msgid "Retry security process failed!"
-msgstr ""
-
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
 msgid "Retweets"
 msgstr ""
 
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
-msgid "Retweets are converted to Tickets"
+msgid "Retweets are converted into tickets."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
@@ -7784,11 +7773,11 @@ msgid "Scheduler"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/job.coffee
-msgid "Scheduler are …"
+msgid "Schedulers"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/job.coffee
-msgid "Schedulers"
+msgid "Schedulers are …"
 msgstr ""
 
 #: app/assets/javascripts/app/views/object_manager/screens.jst.eco
@@ -8080,6 +8069,10 @@ msgstr ""
 msgid "Set timeframe in seconds. If it's set to 0 you can delete notes without time limits"
 msgstr ""
 
+#: app/assets/javascripts/app/views/getting_started/intro.jst.eco
+msgid "Set up a new system"
+msgstr ""
+
 #: app/assets/javascripts/app/views/getting_started/channel.jst.eco
 msgid "Set up the communication channels you want to use with your Zammad."
 msgstr ""
@@ -8120,7 +8113,6 @@ msgstr ""
 msgid "Setup Finished"
 msgstr ""
 
-#: app/assets/javascripts/app/views/getting_started/intro.jst.eco
 #: app/assets/javascripts/app/views/layout_ref/setup.jst.eco
 msgid "Setup new System"
 msgstr ""
@@ -8231,10 +8223,6 @@ msgstr ""
 msgid "Signed"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/getting_started/admin.coffee
-msgid "Signin failed! Please contact the support team!"
-msgstr ""
-
 #: app/assets/javascripts/app/lib/app_post/iconset_picker.coffee
 msgid "Simple Line Icons"
 msgstr ""
@@ -8265,10 +8253,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/getting_started/channel.jst.eco
 msgid "Skip"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/sla.coffee
-msgid "Sla"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
@@ -8535,11 +8519,6 @@ msgstr ""
 msgid "Support of multi-lingual Knowledge Base."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/generic_destroy_confirm.coffee
-#: app/assets/javascripts/app/controllers/tag.coffee
-msgid "Sure to delete this object?"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
@@ -8630,10 +8609,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 msgid "Telegram Account"
-msgstr ""
-
-#: lib/telegram.rb
-msgid "Telegram file is to big. (Maximum 20mb)"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_template.coffee
@@ -8741,6 +8716,10 @@ msgstr ""
 msgid "The MIME type of the resized image is invalid."
 msgstr ""
 
+#: lib/telegram.rb
+msgid "The Telegram file is larger than the allowed 20 MB."
+msgstr ""
+
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 msgid "The URL to this installation of Zammad."
 msgstr ""
@@ -8750,7 +8729,7 @@ msgid "The article does not belong to the specified ticket."
 msgstr ""
 
 #: app/assets/javascripts/app/views/getting_started/auto_wizard_enabled.jst.eco
-msgid "The auto wizard is enabled, please use the prodvided auto wizard url."
+msgid "The auto wizard is enabled. Please use the provided auto wizard url."
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
@@ -8766,7 +8745,7 @@ msgid "The chat is turned off."
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
-msgid "The chat will show up once the connection to the server got established and if there is someone online to chat with."
+msgid "The chat will show up once the connection to the server got established and if there is an operator online to chat with."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee
@@ -8787,6 +8766,14 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "The divider between TicketHook and ticket number. E. g. ': '."
+msgstr ""
+
+#: lib/telegram.rb
+msgid "The file could not be retrieved from the bot."
+msgstr ""
+
+#: app/controllers/ticket_articles_controller.rb
+msgid "The file does not belong to the specified article."
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
@@ -8837,12 +8824,32 @@ msgstr ""
 msgid "The page you were looking for does not exist."
 msgstr ""
 
+#: app/controllers/channels_twitter_controller.rb
+msgid "The required parameter 'crc_token' is missing from the Twitter verify payload!"
+msgstr ""
+
 #: app/controllers/users_controller.rb
 msgid "The required parameter 'id' is missing."
 msgstr ""
 
 #: app/controllers/users_controller.rb
+msgid "The required parameter 'signup' is missing."
+msgstr ""
+
+#: app/controllers/users_controller.rb
 msgid "The resized image is invalid."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+msgid "The retried security process failed!"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/getting_started/admin.coffee
+msgid "The sign-in failed. Please contact the Support team."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+msgid "The signature was successfully verified."
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
@@ -8855,18 +8862,6 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "The text at the beginning of the subject in an email reply, e.g. RE, AW, or AS."
-msgstr ""
-
-#: app/assets/javascripts/app/views/facebook/app_config.jst.eco
-#: app/assets/javascripts/app/views/google/app_config.jst.eco
-#: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco
-#: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
-#: app/assets/javascripts/app/views/twitter/app_config.jst.eco
-msgid "The tutorial on how to manage a %s is hosted on our online documentation %l."
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/user.coffee
-msgid "The user is locked, because of too many failed login attempts."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee
@@ -8883,11 +8878,11 @@ msgid "There are more than 1000 tickets in the Zendesk system. Due to API rate l
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
-msgid "There are too many people in queue for the chat."
+msgid "There are several possible reasons why the chat won't show up:"
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
-msgid "There can be several reasons for the chat to not show up:"
+msgid "There are too many people in the chat queue."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
@@ -8903,7 +8898,7 @@ msgid "There is no match for your search."
 msgstr ""
 
 #: app/assets/javascripts/app/views/data_privacy/preview.jst.eco
-msgid "There is no rollback of this deletion possible. If you are absolutely sure to do this, then type in \"%s\" into the input."
+msgid "There is no rollback of this deletion possible. If you are sure that you wish to proceed, please type \"%s\" into the input."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
@@ -8915,7 +8910,7 @@ msgid "This category is empty"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
-msgid "This class gets added to the button on initialization and gets removed once the chat connection got established."
+msgid "This class gets added to the button on initialization and will be removed once the chat connection is established."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/holiday_selector.coffee
@@ -8924,18 +8919,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/version.jst.eco
 msgid "This is Zammad version %s"
-msgstr ""
-
-#: lib/email_helper/probe.rb
-msgid "This is a Test Email"
-msgstr ""
-
-#: lib/email_helper/probe.rb
-msgid "This is a Test Email of Zammad to check if sending and receiving is working correctly.\\n\\nYou can ignore or delete this email."
-msgstr ""
-
-#: lib/email_helper/probe.rb
-msgid "This is a Test Email of Zammad to verify if Zammad can send emails to an external address.\\n\\nIf you see this email, you can ignore and delete it."
 msgstr ""
 
 #: app/models/channel/email_parser.rb
@@ -8998,6 +8981,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/generic_history.coffee
 msgid "This ticket was merged into"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/user.coffee
+msgid "This user is currently blocked because of too many failed login attempts."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
@@ -9560,10 +9547,6 @@ msgstr ""
 msgid "Unable to get key from URL!"
 msgstr ""
 
-#: lib/telegram.rb
-msgid "Unable to get you file from bot."
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee
 #: app/assets/javascripts/app/controllers/widget/import.coffee
 #: app/assets/javascripts/app/controllers/widget/import_try_result.coffee
@@ -10082,10 +10065,6 @@ msgstr ""
 msgid "Verify sign failed!"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
-msgid "Verify sign success!"
-msgstr ""
-
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
@@ -10515,6 +10494,14 @@ msgstr ""
 msgid "You can define different signatures for each group. So you can have different email signatures for different departments.\n\nOnce you have created a signature here, you need also to edit the groups where you want to use it."
 msgstr ""
 
+#: app/assets/javascripts/app/views/facebook/app_config.jst.eco
+#: app/assets/javascripts/app/views/google/app_config.jst.eco
+#: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco
+#: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
+#: app/assets/javascripts/app/views/twitter/app_config.jst.eco
+msgid "You can find a tutorial on how to manage a %s in our online documentation %l."
+msgstr ""
+
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 msgid "You can generate a personal access token for each application you use that needs access to the Zammad API."
 msgstr ""
@@ -10657,7 +10644,7 @@ msgid "Your Zammad as the following email address."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/user_signup_check.coffee
-msgid "Your account has not been verified. Please click the link in the verification email."
+msgid "Your account has not been verified. Please click on the link in the verification email."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee
@@ -11214,7 +11201,6 @@ msgstr ""
 msgid "message"
 msgstr ""
 
-#: app/assets/javascripts/app/views/getting_started/intro.jst.eco
 #: app/assets/javascripts/app/views/layout_ref/setup.jst.eco
 msgid "migrate from another system"
 msgstr ""

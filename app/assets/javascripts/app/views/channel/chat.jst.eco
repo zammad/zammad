@@ -142,7 +142,7 @@
   <pre><code class="language-html js-code">&lt;script src="https://code.jquery.com/jquery-3.6.0.min.js"&gt;&lt;/script&gt;</code></pre>
 
   <h3><%- @T('Show chat automatically') %> (<%- @T('default') %>)</h3>
-  <p><%- @T('The chat will show up once the connection to the server got established and if there is someone online to chat with.') %></p>
+  <p><%- @T('The chat will show up once the connection to the server got established and if there is an operator online to chat with.') %></p>
 
   <pre><code class="language-html js-code">&lt;script src="<%= @baseurl %>/assets/chat/chat.min.js"&gt;&lt;/script&gt;
 &lt;script&gt;
@@ -169,12 +169,12 @@ $(function() {
 
   <h3><%- @T("Why doesn't the chat show up?") %></h3>
   <p>
-    <%- @T('There can be several reasons for the chat to not show up:') %>
+    <%- @T("There are several possible reasons why the chat won't show up:") %>
     <ol>
       <li><%- @T('The browser is outdated. It does not support WebSocket - the technology we use for the chat.') %>
       <li><%- @T('There is no agent online.') %>
       <li><%- @T('The chat is turned off.') %>
-      <li><%- @T('There are too many people in queue for the chat.') %>
+      <li><%- @T('There are too many people in the chat queue.') %>
     </ol>
     <%- @T('When you turn on debugging by setting the option §debug§ to §true§ the reason gets printed to the javascript console.') %>
   </p>

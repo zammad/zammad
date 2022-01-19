@@ -18,10 +18,10 @@ RSpec.describe 'System setup process', type: :system, set_up: false, authenticat
 
     visit '/'
 
-    expect(page).to have_css('.setup.wizard', text: 'Setup new System')
+    expect(page).to have_css('.setup.wizard', text: 'Set up a new system')
 
     # choose setup (over migration)
-    click_on('Setup new System')
+    click_on('Set up a new system')
 
     # admin user form
     expect(page).to have_css('.js-admin h2', text: 'Administrator Account')
@@ -114,7 +114,7 @@ RSpec.describe 'System setup process', type: :system, set_up: false, authenticat
   it 'Shows an error message if too weak password is filled in' do
     visit '/'
 
-    click_on('Setup new System')
+    click_on('Set up a new system')
 
     within('.js-admin') do
       fill_in 'firstname',        with: 'Test Admin'

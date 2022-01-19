@@ -742,7 +742,7 @@
       }
       else {
         textmodule.emptyResultsContainer()
-        items.push($('<li>').text(App.i18n.translateInline('Please select a group first, before you mention a user!')))
+        items.push($('<li>').text(App.i18n.translateInline('Before you mention a user, please select a group.')))
         textmodule.appendResults(items)
       }
     }, 200, 'textmoduleMentionDelay', 'textmodule')

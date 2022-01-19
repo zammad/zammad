@@ -9,7 +9,7 @@
           <% if @is_allowed_to_create_ticket: %>
             <p><%- @T('You have not created a ticket yet.') %></p>
             <p><%- @T('The way to communicate with us is this thing called "ticket".') %></p>
-            <p><%- @T('Please click the button below to create your first one.') %></p>
+            <p><%- @T('Please click on the button below to create your first one.') %></p>
 
             <p><a class="btn btn--primary" href="#customer_ticket_new"><%- @T('Create your first ticket') %></a></p>
           <% else: %>

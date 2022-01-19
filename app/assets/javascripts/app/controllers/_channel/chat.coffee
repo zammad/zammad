@@ -87,7 +87,7 @@ class ChannelChat extends App.ControllerSubContent
       name: 'inactiveClass'
       default: "'is-inactive'"
       type: 'String'
-      description: __('This class gets added to the button on initialization and gets removed once the chat connection got established.')
+      description: __('This class gets added to the button on initialization and will be removed once the chat connection is established.')
     }
     {
       name: 'cssAutoload'

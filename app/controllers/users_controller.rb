@@ -965,7 +965,7 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
 
     # check signup option only after admin account is created
     if !params[:signup]
-      raise Exceptions::UnprocessableEntity, __('Only signup with not authenticate user possible!')
+      raise Exceptions::UnprocessableEntity, __("The required parameter 'signup' is missing.")
     end
 
     # check if user already exists

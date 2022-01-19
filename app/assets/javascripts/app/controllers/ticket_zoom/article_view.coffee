@@ -315,7 +315,7 @@ class ArticleViewItem extends App.ControllerObserver
         if data.sign.success
           @notify
             type: 'success'
-            msg:  App.i18n.translateContent('Verify sign success!')
+            msg:  App.i18n.translateContent('The signature was successfully verified.')
         else if data.sign.comment
           comment = App.i18n.translateContent('Verify sign failed!') + ' ' + App.i18n.translateContent(data.sign.comment || '')
           @notify
@@ -326,7 +326,7 @@ class ArticleViewItem extends App.ControllerObserver
         if data.encryption.success
           @notify
             type: 'success'
-            msg:  App.i18n.translateContent('Decryption successful!')
+            msg:  App.i18n.translateContent('Decryption was successful.')
         else if data.encryption.comment
           comment = App.i18n.translateContent('Decryption failed!') + ' ' + App.i18n.translateContent(data.encryption.comment || '')
           @notify
@@ -337,7 +337,7 @@ class ArticleViewItem extends App.ControllerObserver
       error: (xhr) =>
         @notify
           type: 'error'
-          msg:  App.i18n.translateContent('Retry security process failed!')
+          msg:  App.i18n.translateContent('The retried security process failed!')
     )
 
   stopPropagation: (e) ->

@@ -7,7 +7,7 @@ class App.ControllerGenericDestroyConfirm extends App.ControllerModal
   small: true
 
   content: ->
-    App.i18n.translateContent('Sure to delete this object?')
+    App.i18n.translateContent('Do you really want to delete this object?')
 
   onSubmit: =>
     options = @options || {}

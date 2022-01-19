@@ -53,7 +53,7 @@ class ChannelsTwitterController < ApplicationController
     end
     raise Exceptions::UnprocessableEntity, __('Could not find external_credential in cache!') if external_credential.blank?
     raise Exceptions::UnprocessableEntity, __('Could not find external_credential[:consumer_secret] in cache!') if external_credential[:consumer_secret].blank?
-    raise Exceptions::UnprocessableEntity, __("Required parameter 'crc_token' missing in verify payload from twitter!") if params['crc_token'].blank?
+    raise Exceptions::UnprocessableEntity, __("The required parameter 'crc_token' is missing from the Twitter verify payload!") if params['crc_token'].blank?
 
     render json: {
       response_token: hmac_signature_gen(external_credential[:consumer_secret], params['crc_token'])

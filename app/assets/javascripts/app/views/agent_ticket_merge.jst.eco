@@ -5,6 +5,6 @@
   <h4><%- @T( 'Recent Customer Tickets' ) %></h4>
   <div id="ticket-merge-customer-tickets"></div>
   <hr>
-  <h4><%- @T( 'Recent viewed Tickets' ) %></h4>
+  <h4><%- @T( 'Recently Viewed Tickets' ) %></h4>
   <div id="ticket-merge-recent-tickets"></div>
 </div>

@@ -73,9 +73,9 @@
       <div class="action-block">
         <h3><%- @T('Retweets') %></h3>
         <% if channel.options.sync.track_retweets: %>
-          <%- @T('Retweets are converted to Tickets') %>.
+          <%- @T('Retweets are converted into tickets.') %>
+          <%- @T('Conversion of retweets into tickets is turned off.') %>
         <% else: %>
-          <%- @T('Conversion of retweets into tickets is turned off') %>.
         <% end %>
       </div>
     </div>

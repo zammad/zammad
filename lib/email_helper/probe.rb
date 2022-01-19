@@ -299,21 +299,24 @@ returns on fail
       end
 
       # prepare test email
+      # rubocop:disable Zammad/DetectTranslatableString
       mail = if subject
                {
                  from:    email,
                  to:      email,
                  subject: "Zammad Getting started Test Email #{subject}",
-                 body:    __("This is a Test Email of Zammad to check if sending and receiving is working correctly.\n\nYou can ignore or delete this email."),
+                 body:    "This is a test email from Zammad to check if email sending and receiving work correctly.\n\nYou can ignore or delete this email.",
                }
              else
                {
                  from:    email,
                  to:      'emailtrytest@znuny.com',
-                 subject: __('This is a Test Email'),
-                 body:    __("This is a Test Email of Zammad to verify if Zammad can send emails to an external address.\n\nIf you see this email, you can ignore and delete it."),
+                 subject: 'This is a Test Email',
+                 body:    "This is a test email from Zammad to verify if Zammad can send emails to an external address.\n\nIf you see this email, you can ignore or delete it.",
                }
              end
+      # rubocop:enable Zammad/DetectTranslatableString
+
       if subject.present?
         mail['X-Zammad-Test-Message'] = subject
       end

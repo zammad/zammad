@@ -173,7 +173,7 @@ class TicketArticlesController < ApplicationController
         access = true
       end
     end
-    raise Exceptions::Forbidden, __('Requested file id is not linked with article_id.') if !access
+    raise Exceptions::Forbidden, __('The file does not belong to the specified article.') if !access
 
     send_data(
       download_file.content(params[:view]),

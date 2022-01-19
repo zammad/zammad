@@ -16,7 +16,7 @@ class AaaGettingStartedTest < TestCase
     location(url: browser_url)
     watch_for(
       css:   '.setup.wizard',
-      value: 'setup new system',
+      value: 'Set up a new system',
     )
     click(css: '.js-start .btn--primary')
     watch_for(

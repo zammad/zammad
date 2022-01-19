@@ -770,7 +770,7 @@ returns
     # telegram bot files are limited up to 20MB
     # https://core.telegram.org/bots/api#getfile
     if !validate_file_size(file)
-      message_text = __('Telegram file is to big. (Maximum 20mb)')
+      message_text = __('The Telegram file is larger than the allowed 20 MB.')
       message(params[:message][:chat][:id], "Sorry, we could not handle your message. #{message_text}", params[:message][:from][:language_code])
       raise Exceptions::UnprocessableEntity, message_text
     end
@@ -778,7 +778,7 @@ returns
     result = download_file(file[:file_id])
 
     if !validate_download(result)
-      message_text = __('Unable to get you file from bot.')
+      message_text = __('The file could not be retrieved from the bot.')
       message(params[:message][:chat][:id], "Sorry, we could not handle your message. #{message_text}", params[:message][:from][:language_code])
       raise Exceptions::UnprocessableEntity, message_text
     end

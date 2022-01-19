@@ -69,7 +69,7 @@ class Sla extends App.ControllerSubContent
       id: id
       pageData:
         title: __('SLAs')
-        object: __('Sla')
+        object: __('SLA')
         objects: __('SLAs')
       genericObject: 'Sla'
       callback:      @load
