@@ -28,7 +28,7 @@ class App.KnowledgeBaseDelete extends App.KnowledgeBaseForm
         loader.hide()
         @parentVC.clear()
       error:       (xhr) =>
-        formController.showAlert(xhr.responseJSON?.error || @T('Unable to proccess request'))
+        formController.showAlert(xhr.responseJSON?.error || @T('The request could not be processed.'))
         loader.hide()
     )
 

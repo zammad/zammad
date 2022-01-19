@@ -317,7 +317,7 @@ class ArticleViewItem extends App.ControllerObserver
             type: 'success'
             msg:  App.i18n.translateContent('The signature was successfully verified.')
         else if data.sign.comment
-          comment = App.i18n.translateContent('Verify sign failed!') + ' ' + App.i18n.translateContent(data.sign.comment || '')
+          comment = App.i18n.translateContent('Signature verification failed!') + ' ' + App.i18n.translateContent(data.sign.comment || '')
           @notify
             type: 'error'
             msg: comment

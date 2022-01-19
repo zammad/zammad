@@ -15,7 +15,7 @@
     <h2><%- @T('Database Update Required') %></h2>
     <p>
       <%- @T('Changes were made that require a database update.') %>
-      <%- @T('This might take some time where the system can\'t be used.') %>
+      <%- @T("This might take some time during which the system can't be used.") %>
       <%- @T('Please execute database changes only in a maintenance time-slot.') %>
     </p>
     <p>

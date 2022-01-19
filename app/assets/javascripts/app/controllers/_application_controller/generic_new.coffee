@@ -51,5 +51,5 @@ class App.ControllerGenericNew extends App.ControllerModal
       fail: (settings, details) ->
         ui.log 'errors', details
         ui.formEnable(e)
-        ui.controller.showAlert(details.error_human || details.error || __('Unable to create object!'))
+        ui.controller.showAlert(details.error_human || details.error || __('The object could not be created.'))
     )

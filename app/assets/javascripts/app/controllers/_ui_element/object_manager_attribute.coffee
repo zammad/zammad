@@ -473,7 +473,7 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
       params: params
     )
     configureAttributes = [
-      { name: 'data_option::url', display: __('Url (AJAX Endpoint)'), tag: 'input', type: 'url', null: false, default: '', placeholder: 'https://example.com/serials' },
+      { name: 'data_option::url', display: __('URL (AJAX endpoint)'), tag: 'input', type: 'url', null: false, default: '', placeholder: 'https://example.com/serials' },
     ]
     autocompletionUrl = new App.ControllerForm(
       model:
@@ -482,7 +482,7 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
       params: params
     )
     configureAttributes = [
-      { name: 'data_option::method', display: __('Method (AJAX Endpoint)'), tag: 'input', type: 'url', null: false, default: '', placeholder: __('GET') },
+      { name: 'data_option::method', display: __('Method (AJAX endpoint)'), tag: 'input', type: 'url', null: false, default: '', placeholder: __('GET') },
     ]
     autocompletionMethod = new App.ControllerForm(
       model:

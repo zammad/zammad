@@ -4,7 +4,7 @@ class Slack extends App.ControllerIntegrationBase
   featureConfig: 'slack_config'
   description: [
     [__('This service sends notifications to your %s channel.'), 'Slack']
-    [__('To set up this service you need to create a new |"Incoming webhook"| in your %s integration panel, and enter the web hook URL below.'), 'Slack']
+    [__('To set up this service you need to create a new |"Incoming webhook"| in your %s integration panel and enter the webhook URL below.'), 'Slack']
   ]
   events:
     'click .js-submit': 'update'

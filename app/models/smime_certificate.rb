@@ -13,7 +13,7 @@ class SMIMECertificate < ApplicationModel
       modulus     = private_key.public_key.n.to_s(16)
       certificate = find_by(modulus: modulus)
 
-      raise Exceptions::UnprocessableEntity, __('Unable for find certificate for this private key.') if !certificate
+      raise Exceptions::UnprocessableEntity, __('The certificate for this private key could not be found.') if !certificate
 
       certificate.update!(private_key: part, private_key_secret: secret)
     end

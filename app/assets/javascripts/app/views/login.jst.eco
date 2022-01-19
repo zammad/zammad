@@ -4,7 +4,7 @@
       <p><%- @T('Log in to %s', @C('fqdn')) %></p>
 
       <% if @C('maintenance_mode'): %>
-        <div class="hero-unit alert alert--danger js-maintenanceMode"><%- @T('Zammad is currently in maintenance mode. Only administrators can login. Please wait until the maintenance window is over.') %></div>
+        <div class="hero-unit alert alert--danger js-maintenanceMode"><%- @T('Zammad is currently in maintenance mode. Only administrators can log in. Please wait until the maintenance window is over.') %></div>
       <% end %>
       <% if @C('maintenance_login') && @C('maintenance_login_message'): %>
         <div class="hero-unit alert alert--success js-maintenanceLogin"><%- @C('maintenance_login_message') %></div>
@@ -75,7 +75,7 @@
       </div>
 
       <p>
-        <%- @T("You're already registered with your email address if you've been in touch with our support team.") %><br>
+        <%- @T("You're already registered with your email address if you've been in touch with our Support team.") %><br>
         <% if @C('user_lost_password'): %>
           <%- @T('You can request your password') %> <a href="#password_reset"><%- @T('here') %></a>.
         <% end %>

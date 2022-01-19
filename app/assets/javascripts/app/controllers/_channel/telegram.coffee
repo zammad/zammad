@@ -197,7 +197,7 @@ class BotEdit extends App.ControllerModal
       error: (xhr) =>
         data = JSON.parse(xhr.responseText)
         @formEnable(e)
-        error_message = App.i18n.translateContent(data.error || __('Unable to save changes.'))
+        error_message = App.i18n.translateContent(data.error || __('The changes could not be saved.'))
         @el.find('.alert').removeClass('hidden').text(error_message)
     )
 

@@ -61,7 +61,7 @@ class Form extends App.Controller
     if !@config
       @config = @currentConfig()
     settings = [
-      { name: 'api_key', display: __('API Key'), tag: 'input', type: 'text', limit: 100, null: false, placeholder: '...', note: __('Your api key.') },
+      { name: 'api_key', display: __('API Key'), tag: 'input', type: 'text', limit: 100, null: false, placeholder: '...', note: __('Your API key.') },
       { name: 'organization_autocreate', display: __('Auto create'), tag: 'boolean', type: 'boolean', null: false, note: __('Create organizations automatically if record has one.') },
       { name: 'organization_shared', display: __('Shared'), tag: 'boolean', type: 'boolean', null: false, note: __('New organizations are shared.') },
     ]

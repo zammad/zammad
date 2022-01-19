@@ -59,7 +59,9 @@ class App.ControllerModal extends App.Controller
     false
 
   content: ->
-    __('You need to implement a one @content()!')
+    # coffeelint: disable=detect_translatable_string
+    "You need to implement a '@content()' method!"
+    # coffeelint: enable=detect_translatable_string
 
   update: =>
     if @message

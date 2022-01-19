@@ -579,7 +579,7 @@ class App.TicketCreate extends App.Controller
       if !@hasAttachments()
         matchingWord = App.Utils.checkAttachmentReference(article['body'])
         if matchingWord
-          if !confirm(App.i18n.translateContent('You use %s in text but no attachment is attached. Do you want to continue?', matchingWord))
+          if !confirm(App.i18n.translateContent('You used %s in the text but no attachment could be found. Do you want to continue?', matchingWord))
             return
 
     # add sidebar params
@@ -626,7 +626,7 @@ class App.TicketCreate extends App.Controller
         ui.submitEnable(e)
         ui.notify(
           type:    'error'
-          msg:     App.i18n.translateContent(details.error_human || details.error || __('Unable to create object!'))
+          msg:     App.i18n.translateContent(details.error_human || details.error || __('The object could not be created.'))
           timeout: 6000
         )
     )

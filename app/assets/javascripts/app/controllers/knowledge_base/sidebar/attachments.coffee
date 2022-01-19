@@ -132,4 +132,4 @@ class DeleteConfirm extends App.ControllerConfirm
 
   error: (xhr) =>
     @formEnable(@el)
-    @showAlert(xhr.responseJSON?.error || __('Unable to save changes'))
+    @showAlert(xhr.responseJSON?.error || __('The changes could not be saved.'))

@@ -195,7 +195,7 @@ class App.CustomerChat extends App.Controller
 
         # if we have more chats, let decide the user
         else
-          msg = __('To be able to chat you need to select min. one chat topic below!')
+          msg = __('To be able to chat you need to select at least one chat topic from below!')
 
           # open modal settings
           @settings(

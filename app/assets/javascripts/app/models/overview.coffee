@@ -79,7 +79,7 @@ class App.Overview extends App.Model
   ]
 
   @description = __('''
-You can create **overviews** for your agents and your customers. These could for instance serve as a sort of work list for items for which your agents would work.
+You can create **overviews** for your agents and your customers. These have many purposes, such as serving as a to-do list for your agents.
 
 You can also create overviews and limit them to specific agents or to groups of agents.
 ''')

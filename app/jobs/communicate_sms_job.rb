@@ -107,6 +107,6 @@ class CommunicateSmsJob < ApplicationJob
   end
 
   def log_error_prefix
-    __('Unable to send sms message')
+    'Unable to send sms message' # rubocop:disable Zammad/DetectTranslatableString
   end
 end

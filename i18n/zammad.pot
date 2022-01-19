@@ -1533,6 +1533,10 @@ msgstr ""
 msgid "Chat"
 msgstr ""
 
+#: app/assets/javascripts/app/views/channel/topics.jst.eco
+msgid "Chat ID"
+msgstr ""
+
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Chat Title"
 msgstr ""
@@ -4373,6 +4377,10 @@ msgstr ""
 msgid "Group can't be blank"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_integration/ldap.coffee
+msgid "Group information could not be retrieved, please check your bind user permissions."
+msgstr ""
+
 #: lib/telegram.rb
 msgid "Group invalid!"
 msgstr ""
@@ -5730,7 +5738,7 @@ msgid "Method"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
-msgid "Method (AJAX Endpoint)"
+msgid "Method (AJAX endpoint)"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
@@ -6734,6 +6742,7 @@ msgid "Options"
 msgstr ""
 
 #: app/assets/javascripts/app/views/getting_started/intro.jst.eco
+#: app/assets/javascripts/app/views/layout_ref/setup.jst.eco
 msgid "Or migrate from another system."
 msgstr ""
 
@@ -8070,6 +8079,7 @@ msgid "Set timeframe in seconds. If it's set to 0 you can delete notes without t
 msgstr ""
 
 #: app/assets/javascripts/app/views/getting_started/intro.jst.eco
+#: app/assets/javascripts/app/views/layout_ref/setup.jst.eco
 msgid "Set up a new system"
 msgstr ""
 
@@ -8111,10 +8121,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/getting_started/finish.coffee
 #: app/assets/javascripts/app/views/getting_started/finish.jst.eco
 msgid "Setup Finished"
-msgstr ""
-
-#: app/assets/javascripts/app/views/layout_ref/setup.jst.eco
-msgid "Setup new System"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee
@@ -8211,6 +8217,10 @@ msgstr ""
 #: app/assets/javascripts/app/models/group.coffee
 #: db/seeds/object_manager_attributes.rb
 msgid "Signature"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+msgid "Signature verification failed!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
@@ -8708,6 +8718,10 @@ msgstr ""
 msgid "Thanks for joining. Email sent to \"%s\"."
 msgstr ""
 
+#: app/controllers/user_access_token_controller.rb
+msgid "The API token could not be found."
+msgstr ""
+
 #: app/controllers/users_controller.rb
 msgid "The MIME type of the full-size image is invalid."
 msgstr ""
@@ -8736,8 +8750,24 @@ msgstr ""
 msgid "The browser is outdated. It does not support WebSocket - the technology we use for the chat."
 msgstr ""
 
+#: app/models/smime_certificate.rb
+msgid "The certificate for this private key could not be found."
+msgstr ""
+
 #: app/assets/javascripts/app/views/integration/exchange_certificate_issue.jst.eco
 msgid "The certificate of the domain |%s| could not be verified. This may allow hackers to steal your credentials. If you are sure that you are using a self-signed certificate, you can press \"Proceed\". Otherwise, please \"Cancel\"."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_channel/email.coffee
+#: app/assets/javascripts/app/controllers/_channel/facebook.coffee
+#: app/assets/javascripts/app/controllers/_channel/google.coffee
+#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
+#: app/assets/javascripts/app/controllers/_channel/telegram.coffee
+#: app/assets/javascripts/app/controllers/_channel/twitter.coffee
+#: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_dialog.coffee
+#: app/assets/javascripts/app/controllers/knowledge_base/editor_coordinator.coffee
+#: app/assets/javascripts/app/controllers/knowledge_base/sidebar/attachments.coffee
+msgid "The changes could not be saved."
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
@@ -8766,6 +8796,13 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "The divider between TicketHook and ticket number. E. g. ': '."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_channel/facebook.coffee
+#: app/assets/javascripts/app/controllers/_channel/google.coffee
+#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
+#: app/assets/javascripts/app/controllers/_channel/twitter.coffee
+msgid "The entry could not be created."
 msgstr ""
 
 #: lib/telegram.rb
@@ -8812,6 +8849,27 @@ msgstr ""
 msgid "The installed attachment plugin could not handle the request payload. Ensure that the correct attachment plugin is installed (ingest-attachment)."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_application_controller/generic_new.coffee
+#: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee
+#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
+#: app/assets/javascripts/app/controllers/customer_ticket_create.coffee
+#: app/assets/javascripts/app/controllers/data_privacy.coffee
+#: app/assets/javascripts/app/controllers/object_manager.coffee
+#: app/assets/javascripts/app/lib/app_post/user_organization_autocompletion.coffee
+msgid "The object could not be created."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_application_controller/generic_edit.coffee
+#: app/assets/javascripts/app/controllers/_channel/sms.coffee
+#: app/assets/javascripts/app/controllers/_settings/area_switch.coffee
+#: app/assets/javascripts/app/controllers/_settings/area_ticket_number.coffee
+#: app/assets/javascripts/app/controllers/_settings/form.coffee
+#: app/assets/javascripts/app/controllers/object_manager.coffee
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee
+#: app/assets/javascripts/app/models/setting.coffee
+msgid "The object could not be updated."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 msgid "The page is not available anymore"
 msgstr ""
@@ -8822,6 +8880,18 @@ msgstr ""
 
 #: app/views/knowledge_base/public/not_found.html.erb
 msgid "The page you were looking for does not exist."
+msgstr ""
+
+#: app/assets/javascripts/app/views/knowledge_base/delete.coffee
+msgid "The request could not be processed."
+msgstr ""
+
+#: lib/idoit.rb
+msgid "The required field 'api_token' is missing from the config."
+msgstr ""
+
+#: lib/idoit.rb
+msgid "The required field 'endpoint' is missing from the config."
 msgstr ""
 
 #: app/controllers/channels_twitter_controller.rb
@@ -8867,6 +8937,10 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
 msgid "The way to communicate with us is this thing called \"ticket\"."
+msgstr ""
+
+#: lib/telegram.rb
+msgid "The webhook could not be saved by Telegram, seems to be an invalid URL."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
@@ -8929,12 +9003,8 @@ msgstr ""
 msgid "This message cannot be displayed due to HTML processing issues. Download the raw message below and open it via an Email client if you still wish to view it."
 msgstr ""
 
-#: app/models/scheduler.rb
-msgid "This method should only get called when Scheduler.threads are initialized. Use `force: true` to start anyway."
-msgstr ""
-
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
-msgid "This might take some time where the system can't be used."
+msgid "This might take some time during which the system can't be used."
 msgstr ""
 
 #: app/views/knowledge_base/public/_top_banner.html.erb
@@ -8955,14 +9025,14 @@ msgstr ""
 msgid "This service enables Zammad to connect with your LDAP server."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_integration/check_mk.coffee
+msgid "This service receives HTTP requests or emails from %s and creates tickets with host and service."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_integration/icinga.coffee
 #: app/assets/javascripts/app/controllers/_integration/monit.coffee
 #: app/assets/javascripts/app/controllers/_integration/nagios.coffee
 msgid "This service receives emails from %s and creates tickets with host and service."
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_integration/check_mk.coffee
-msgid "This service receives http requests or emails from %s and creates tickets with host and service."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
@@ -8981,6 +9051,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/generic_history.coffee
 msgid "This ticket was merged into"
+msgstr ""
+
+#: app/assets/javascripts/app/views/widget/mention.jst.eco
+msgid "This user has no access and will not receive notifications."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/user.coffee
@@ -9096,7 +9170,7 @@ msgid "Ticket update"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee
-msgid "Ticket |%s| is escalated!"
+msgid "Ticket |%s| has escalated!"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee
@@ -9243,7 +9317,7 @@ msgid "To archive all outgoing emails from Zammad to external, you can store a b
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/chat.coffee
-msgid "To be able to chat you need to select min. one chat topic below!"
+msgid "To be able to chat you need to select at least one chat topic from below!"
 msgstr ""
 
 #: db/seeds/roles.rb
@@ -9251,7 +9325,7 @@ msgid "To configure your system."
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco
-msgid "To enable %s for sending http requests to %s, you need create a own \"notification rule\" in %s."
+msgid "To enable %s for sending HTTP requests to %s, you need to create a designated \"notification rule\" in %s."
 msgstr ""
 
 #: app/assets/javascripts/app/views/translation/index.jst.eco
@@ -9263,7 +9337,7 @@ msgid "To select placeholders from a list, just enter \"::\"."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
-msgid "To set up this service you need to create a new |\"Incoming webhook\"| in your %s integration panel, and enter the web hook URL below."
+msgid "To set up this service you need to create a new |\"Incoming webhook\"| in your %s integration panel and enter the webhook URL below."
 msgstr ""
 
 #: db/seeds/roles.rb
@@ -9460,16 +9534,8 @@ msgstr ""
 msgid "URL"
 msgstr ""
 
-#: lib/idoit.rb
-msgid "Unable for find api_token in config"
-msgstr ""
-
-#: app/models/smime_certificate.rb
-msgid "Unable for find certificate for this private key."
-msgstr ""
-
-#: lib/idoit.rb
-msgid "Unable for find endpoint in config"
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+msgid "URL (AJAX endpoint)"
 msgstr ""
 
 #: app/assets/javascripts/app/views/knowledge_base/base_form.coffee
@@ -9478,23 +9544,6 @@ msgstr ""
 
 #: app/models/ticket.rb
 msgid "Unable to create article, we only support article.note"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_channel/facebook.coffee
-#: app/assets/javascripts/app/controllers/_channel/google.coffee
-#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
-#: app/assets/javascripts/app/controllers/_channel/twitter.coffee
-msgid "Unable to create entry."
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_application_controller/generic_new.coffee
-#: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee
-#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
-#: app/assets/javascripts/app/controllers/customer_ticket_create.coffee
-#: app/assets/javascripts/app/controllers/data_privacy.coffee
-#: app/assets/javascripts/app/controllers/object_manager.coffee
-#: app/assets/javascripts/app/lib/app_post/user_organization_autocompletion.coffee
-msgid "Unable to create object!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee
@@ -9521,10 +9570,6 @@ msgstr ""
 
 #: lib/external_credential/microsoft365.rb
 msgid "Unable to extract user preferred_username from id_token!"
-msgstr ""
-
-#: app/controllers/user_access_token_controller.rb
-msgid "Unable to find api token!"
 msgstr ""
 
 #: lib/secure_mailing/smime/incoming.rb
@@ -9591,40 +9636,13 @@ msgstr ""
 msgid "Unable to perform test"
 msgstr ""
 
-#: app/assets/javascripts/app/views/knowledge_base/delete.coffee
-msgid "Unable to proccess request"
-msgstr ""
-
 #: app/controllers/getting_started_controller.rb
 #: app/controllers/settings_controller.rb
 msgid "Unable to process image upload."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_integration/ldap.coffee
-msgid "Unable to retrive group information, please check your bind user permissions."
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_integration/ldap.coffee
-msgid "Unable to retrive user information, please check your bind user permissions."
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 msgid "Unable to save Bot."
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_dialog.coffee
-#: app/assets/javascripts/app/controllers/knowledge_base/sidebar/attachments.coffee
-msgid "Unable to save changes"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_channel/email.coffee
-#: app/assets/javascripts/app/controllers/_channel/facebook.coffee
-#: app/assets/javascripts/app/controllers/_channel/google.coffee
-#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
-#: app/assets/javascripts/app/controllers/_channel/telegram.coffee
-#: app/assets/javascripts/app/controllers/_channel/twitter.coffee
-#: app/assets/javascripts/app/controllers/knowledge_base/editor_coordinator.coffee
-msgid "Unable to save changes."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee
@@ -9638,32 +9656,9 @@ msgstr ""
 msgid "Unable to save!"
 msgstr ""
 
-#: app/jobs/communicate_sms_job.rb
-msgid "Unable to send sms message"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_plugin/user_signup_check.coffee
-msgid "Unable to send verify email."
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee
 msgid "Unable to set password. Please contact your administrator."
-msgstr ""
-
-#: lib/telegram.rb
-msgid "Unable to set webhook at Telegram, seems to be a invalid url."
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_application_controller/generic_edit.coffee
-#: app/assets/javascripts/app/controllers/_channel/sms.coffee
-#: app/assets/javascripts/app/controllers/_settings/area_switch.coffee
-#: app/assets/javascripts/app/controllers/_settings/area_ticket_number.coffee
-#: app/assets/javascripts/app/controllers/_settings/form.coffee
-#: app/assets/javascripts/app/controllers/object_manager.coffee
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee
-#: app/assets/javascripts/app/models/setting.coffee
-msgid "Unable to update object!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee
@@ -9855,10 +9850,6 @@ msgstr ""
 msgid "Uploading"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
-msgid "Url (AJAX Endpoint)"
-msgstr ""
-
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco
 msgid "Usage"
@@ -9953,7 +9944,7 @@ msgid "User assignment to Sipgate users"
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
-msgid "User assignment to Sipgate users to be able to offer extended like open new ticket screen on answering a call."
+msgid "User assignment to Sipgate users to be able to open new ticket screen upon answering a call."
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
@@ -9961,7 +9952,7 @@ msgid "User assignment to telephones"
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
-msgid "User assignment to telephones to be able to offer extended like open new ticket screen on answering a call."
+msgid "User assignment to telephones to be able to open new ticket screen upon answering a call."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -9972,8 +9963,8 @@ msgstr ""
 msgid "User filter"
 msgstr ""
 
-#: app/assets/javascripts/app/views/widget/mention.jst.eco
-msgid "User has no access and will not recieve notifications."
+#: app/assets/javascripts/app/controllers/_integration/ldap.coffee
+msgid "User information could not be retrieved, please check your bind user permissions."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/user.coffee
@@ -10017,7 +10008,7 @@ msgid "Users without assigned LDAP groups"
 msgstr ""
 
 #: app/assets/javascripts/app/models/organization.coffee
-msgid "Using **Organisations** you can **group** customers. This has among others two important benefits:\n\n1. As an **Agent** you do not only have an overview of the open tickets for one person but an **overview over their whole organisation**.\n2. As a **Customer** you can also check the **Tickets which your colleagues created** and modify their tickets (if your organization is set to \"shared\", which can be defined per organization)."
+msgid "Using **organizations** you can **group** customers. This has two main benefits:\n\n1. As an **agent** you don't just have an overview of the open tickets for one person but an **overview over their whole organization**.\n2. As a **customer** you can also check the **tickets which your colleagues created** and modify their tickets (if your organization is set to \"shared\", which can be defined per organization)."
 msgstr ""
 
 #: db/seeds/object_manager_attributes.rb
@@ -10043,11 +10034,6 @@ msgstr ""
 msgid "Variables"
 msgstr ""
 
-#: app/views/mailer/ticket_escalation/pt-br.html.erb
-#: app/views/mailer/ticket_reminder_reached/pt-br.html.erb
-msgid "Veja mais informações no Zammad"
-msgstr ""
-
 #: app/assets/javascripts/app/views/package.jst.eco
 msgid "Vendor"
 msgstr ""
@@ -10056,13 +10042,13 @@ msgstr ""
 msgid "Verification Email not found in mailbox."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_plugin/user_signup_check.coffee
+msgid "Verification email could not be sent."
+msgstr ""
+
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 msgid "Verify sending and receiving"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
-msgid "Verify sign failed!"
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
@@ -10180,18 +10166,18 @@ msgid "We are sorry, it takes longer as expected to get an empty slot. Please tr
 msgstr ""
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
-msgid "We detected OTRS BPM processes which can't get imported into Zammad, since we currently don't support these kind of workflows."
+msgid "We detected OTRS BPM processes that can't get imported into Zammad since we currently don't support this kind of workflows."
 msgstr ""
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
-msgid "We found a lot of dynamic fields which are not common in Zammad, as we follow a different approach to ticket attributes. Zammad uses also tags in addition to custom fields to classify tickets. This difference can create a new philosophy of your ticket attributes / tags compared to your current use of dynamic fields in OTRS."
+msgid "We found a lot of dynamic fields which are not common in Zammad, as we take a different approach to ticket attributes. Zammad also uses tags in addition to custom fields to classify tickets. This difference can create a new philosophy of your ticket attributes / tags compared to your current use of dynamic fields in OTRS."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
-msgid "We have already found %s email(s) in your mailbox. Zammad will move it all from your mailbox into Zammad."
+msgid "We have already found %s email(s) in your mailbox. We will move them all from your mailbox into Zammad."
 msgstr ""
 
 #: app/assets/javascripts/app/views/cti/not_configured.jst.eco
@@ -10244,7 +10230,7 @@ msgid "Webhooks are …"
 msgstr ""
 
 #: app/assets/javascripts/app/models/webhook.coffee
-msgid "Webhooks make it easy to send information about events within Zammad to third party systems via HTTP(S).\n\nYou can use Webhooks in Zammad to send Ticket, Article and Attachment data whenever a Trigger is performed. Just create and configure your Webhook with an HTTP(S) endpoint and relevant security settings, configure a Trigger to perform it."
+msgid "Webhooks make it easy to send information about events within Zammad to third-party systems via HTTP(S).\n\nYou can use webhooks in Zammad to send ticket, article, and attachment data whenever a trigger is performed. Just create and configure your webhook with an HTTP(S) endpoint and relevant security settings, then configure a trigger to perform it."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/link_button.coffee
@@ -10304,6 +10290,12 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
 msgid "Welcome!"
+msgstr ""
+
+#: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
+#: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
+#: lib/telegram.rb
+msgid "Welcome! Feel free to ask me a question!"
 msgstr ""
 
 #: app/assets/javascripts/app/views/karma/index.jst.eco
@@ -10401,7 +10393,7 @@ msgid "With your current configuration the following will happen"
 msgstr ""
 
 #: app/assets/javascripts/app/views/settings/ticket_number.jst.eco
-msgid "With |Date| the ticket numbers will be generated by the current date, the SystemID and the counter. The format looks like \"Year.Month.Day.SystemID.Counter\" (e.g. 201206231010138, 201206231010139)."
+msgid "With |Date| the ticket numbers will be generated by the current date, the SystemID, and the counter. The format will be \"Year.Month.Day.SystemID.Counter\" (e.g. 201206231010138, 201206231010139)."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/email_verify.coffee
@@ -10465,21 +10457,15 @@ msgstr ""
 msgid "You are receiving this because you \"%s\"."
 msgstr ""
 
-#: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
-#: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
-#: lib/telegram.rb
-msgid "You are welcome! Just ask me something!"
-msgstr ""
-
 #: app/assets/javascripts/app/views/facebook/index.jst.eco
 #: app/assets/javascripts/app/views/google/index.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/index.jst.eco
-msgid "You can connect %s with Zammad. You need to connect your Zammad with %s first."
+msgid "You can connect %s with Zammad. But first, you will have to connect your Zammad with %s."
 msgstr ""
 
 #: app/assets/javascripts/app/models/overview.coffee
-msgid "You can create **overviews** for your agents and your customers. These could for instance serve as a sort of work list for items for which your agents would work.\n\nYou can also create overviews and limit them to specific agents or to groups of agents."
+msgid "You can create **overviews** for your agents and your customers. These have many purposes, such as serving as a to-do list for your agents.\n\nYou can also create overviews and limit them to specific agents or to groups of agents."
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
@@ -10491,7 +10477,7 @@ msgid "You can create multiple chat topics."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee
-msgid "You can define different signatures for each group. So you can have different email signatures for different departments.\n\nOnce you have created a signature here, you need also to edit the groups where you want to use it."
+msgid "You can define different signatures for each group, which allows you to use a different signature for every department.\n\nOnce you have created a signature here, you will also need to edit the groups where you want to use it."
 msgstr ""
 
 #: app/assets/javascripts/app/views/facebook/app_config.jst.eco
@@ -10512,6 +10498,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/login.jst.eco
 msgid "You can request your password"
+msgstr ""
+
+#: app/assets/javascripts/app/views/karma/index.jst.eco
+msgid "You can set goals regarding the number of tickets you want to answer or close every day or every week. Reaching these self-set goals will result in bonus Karma. Zammad also tracks how many days/weeks you have attained your goals, and achieving ongoing \"streaks\" will similarly result in positive Karma."
 msgstr ""
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
@@ -10600,21 +10590,25 @@ msgstr ""
 msgid "You need to configure the Zammad endpoints in the %s web interface"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal.coffee
-msgid "You need to implement a one @content()!"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
-msgid "You use %s in text but no attachment is attached. Do you want to continue?"
+msgid "You used %s in the text but no attachment could be found. Do you want to continue?"
 msgstr ""
 
 #: app/assets/javascripts/app/views/karma/index.jst.eco
-msgid "You |accumulate positive Karma| when you regularly answer and close tickets on time and when you use advanced features such as text modules, ticket reminders or tagging tickets. Zammad |Karma will decrease| when you have re-opend tickets, escalated tickets or tickets that are two or more days overdue."
+msgid "You |accumulate positive Karma| when you regularly answer and close tickets on time and when you use advanced features such as text modules, ticket reminders, or tagging tickets. Zammad |Karma will decrease| when you have re-opened tickets, escalated tickets, or tickets that are two or more days overdue."
 msgstr ""
 
 #: app/assets/javascripts/app/views/login.jst.eco
-msgid "You're already registered with your email address if you've been in touch with our support team."
+msgid "You're already registered with your email address if you've been in touch with our Support team."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/embed_video_button.coffee
+msgid "YouTube or Vimeo address"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_integration/clearbit.coffee
+msgid "Your API key."
 msgstr ""
 
 #: app/controllers/first_steps_controller.rb
@@ -10632,23 +10626,19 @@ msgid "Your New Personal Access Token"
 msgstr ""
 
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
-msgid "Your Twitter-Account is not using the Twitter Account Activity API yet and is therefore limited to search terms only. Please add/update the account again via \"add account\"."
+msgid "Your Twitter account is not using the Twitter Account Activity API yet and is therefore limited to search terms only. Please add/update the account again via \"add account\"."
 msgstr ""
 
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
-msgid "Your Twitter-App is not using the Twitter Account Activity API yet and is therefore limited to search terms only. Please refer to the documentation %l on how to update your account."
+msgid "Your Twitter app is not using the Twitter Account Activity API yet and is therefore limited to search terms only. Please refer to the documentation %l on how to update your account."
 msgstr ""
 
 #: app/assets/javascripts/app/views/getting_started/email_pre_configured.jst.eco
-msgid "Your Zammad as the following email address."
+msgid "Your Zammad has the following email address:"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/user_signup_check.coffee
 msgid "Your account has not been verified. Please click on the link in the verification email."
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_integration/clearbit.coffee
-msgid "Your api key."
 msgstr ""
 
 #: app/assets/javascripts/app/views/facebook/app_config.jst.eco
@@ -10676,15 +10666,7 @@ msgid "Your karma is |%s|."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee
-msgid "Your role cannot create new ticket. Please contact your administrator."
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/embed_video_button.coffee
-msgid "Youtube or Vimeo address"
-msgstr ""
-
-#: app/assets/javascripts/app/views/karma/index.jst.eco
-msgid "You’re able to set goals regarding the number of tickets you want to answer or close you want to complete either daily or weekly. Reaching these self-set goals will result in bonus Karma. Zammad also tracks how many days/weeks you have attained your goals, and achieving ongoing \"streaks\" will similarly result in positive Karma."
+msgid "Your user role is not allowed to create new tickets. Please contact your administrator."
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco
@@ -10696,11 +10678,11 @@ msgid "Zammad"
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
-msgid "Zammad Chat requires jQuery. If you don't already use it on your website include it like this:"
+msgid "Zammad Chat requires jQuery. If you don't already use it on your website, you can add it like this:"
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
-msgid "Zammad Forms requires jQuery. If you don't already use it on your website include it like this:"
+msgid "Zammad Forms requires jQuery. If you don't already use it on your website, you can add it like this:"
 msgstr ""
 
 #: db/seeds/community_user_resources.rb
@@ -10737,7 +10719,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
-msgid "Zammad is currently in maintenance mode. Only administrators can login. Please wait until the maintenance window is over."
+msgid "Zammad is currently in maintenance mode. Only administrators can log in. Please wait until the maintenance window is over."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee
@@ -10758,10 +10740,6 @@ msgstr ""
 
 #: db/seeds/object_manager_attributes.rb
 msgid "Zip"
-msgstr ""
-
-#: app/views/mailer/ticket_escalation/pl.html.erb
-msgid "Zobacz w Zammad"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/active.coffee
@@ -10842,10 +10820,6 @@ msgstr ""
 
 #: db/seeds/ticket_article_types.rb
 msgid "chat"
-msgstr ""
-
-#: app/assets/javascripts/app/views/channel/topics.jst.eco
-msgid "chatId"
 msgstr ""
 
 #: app/assets/javascripts/app/views/object_manager/attribute/tree_select.jst.eco
@@ -11199,10 +11173,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
 msgid "message"
-msgstr ""
-
-#: app/assets/javascripts/app/views/layout_ref/setup.jst.eco
-msgid "migrate from another system"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
@@ -11571,7 +11541,7 @@ msgid "yes"
 msgstr ""
 
 #: app/assets/javascripts/app/views/settings/ticket_number.jst.eco
-msgid "|Increment| increments the ticket number, the SystemID and the counter are used with \"SystemID.Counter\" format (e.g. 1010138, 1010139)."
+msgid "|Increment| increases the ticket number. The SystemID and the counter are used with \"SystemID.Counter\" format (e.g. 1010138, 1010139)."
 msgstr ""
 
 #: app/assets/javascripts/app/views/settings/ticket_hook_position.jst.eco
@@ -11579,7 +11549,7 @@ msgid "|Left| means |[Ticket#12345] Some Subject|"
 msgstr ""
 
 #: app/assets/javascripts/app/views/settings/ticket_hook_position.jst.eco
-msgid "|None| means |Some Subject| (without ticket number). In the last case you should enable \"postmaster___follow___up___search___in\" to recognize followups based on email headers and/or body."
+msgid "|None| means |Some Subject| (without ticket number), in which case you should enable \"postmaster___follow___up___search___in\" to recognize follow-ups based on email headers and/or body."
 msgstr ""
 
 #: app/assets/javascripts/app/views/settings/ticket_hook_position.jst.eco

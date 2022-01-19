@@ -122,7 +122,7 @@ class Scheduler < ApplicationModel
   def self.cleanup(force: false)
 
     if !force && caller_locations(1..1).first.label != 'threads'
-      raise __('This method should only get called when Scheduler.threads are initialized. Use `force: true` to start anyway.')
+      raise 'This method should only get called when Scheduler.threads are initialized. Use `force: true` to start anyway.' # rubocop:disable Zammad/DetectTranslatableString
     end
 
     start_time = Time.zone.now

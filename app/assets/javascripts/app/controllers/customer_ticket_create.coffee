@@ -18,7 +18,7 @@ class CustomerTicketCreate extends App.ControllerAppContent
   render: (template = {}) ->
     if !@Config.get('customer_ticket_create')
       @renderScreenError(
-        detail:     __('Your role cannot create new ticket. Please contact your administrator.')
+        detail:     __('Your user role is not allowed to create new tickets. Please contact your administrator.')
         objectName: 'Ticket'
       )
       return
@@ -186,7 +186,7 @@ class CustomerTicketCreate extends App.ControllerAppContent
           ui.submitEnable(e)
           ui.notify(
             type:    'error'
-            msg:     App.i18n.translateContent(details.error_human || details.error || __('Unable to create object!'))
+            msg:     App.i18n.translateContent(details.error_human || details.error || __('The object could not be created.'))
             timeout: 6000
           )
       )

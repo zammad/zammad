@@ -314,7 +314,7 @@ class ChannelInboundEdit extends App.ControllerModal
         details = xhr.responseJSON || {}
         @notify
           type:    'error'
-          msg:     App.i18n.translateContent(details.error_human || details.error || __('Unable to save changes.'))
+          msg:     App.i18n.translateContent(details.error_human || details.error || __('The changes could not be saved.'))
           timeout: 6000
     )
 
@@ -366,7 +366,7 @@ class ChannelGroupEdit extends App.ControllerModal
       error: (xhr) =>
         data = JSON.parse(xhr.responseText)
         @formEnable(e)
-        @el.find('.alert').removeClass('hidden').text(data.error || __('Unable to save changes.'))
+        @el.find('.alert').removeClass('hidden').text(data.error || __('The changes could not be saved.'))
     )
 
 class AppConfig extends App.ControllerModal
@@ -412,7 +412,7 @@ class AppConfig extends App.ControllerModal
               @isChanged = true
               @close()
             fail: =>
-              @el.find('.alert').removeClass('hidden').text(__('Unable to create entry.'))
+              @el.find('.alert').removeClass('hidden').text(__('The entry could not be created.'))
           )
           return
         @formEnable(e)

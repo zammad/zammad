@@ -33,7 +33,7 @@ class App.KnowledgeBaseContentCanBePublishedDialog extends App.ControllerModal
         @formController.toggleDisabled(false)
       error:       (xhr) =>
         @formController.toggleDisabled(false)
-        @showAlert(xhr.responseJSON?.error || __('Unable to save changes'))
+        @showAlert(xhr.responseJSON?.error || __('The changes could not be saved.'))
     )
 
   clickedCancelTimer: (e) ->

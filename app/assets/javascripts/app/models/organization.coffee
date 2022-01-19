@@ -17,10 +17,10 @@ class App.Organization extends App.Model
   ]
 
   @description = __('''
-Using **Organisations** you can **group** customers. This has among others two important benefits:
+Using **organizations** you can **group** customers. This has two main benefits:
 
-1. As an **Agent** you do not only have an overview of the open tickets for one person but an **overview over their whole organisation**.
-2. As a **Customer** you can also check the **Tickets which your colleagues created** and modify their tickets (if your organization is set to "shared", which can be defined per organization).
+1. As an **agent** you don't just have an overview of the open tickets for one person but an **overview over their whole organization**.
+2. As a **customer** you can also check the **tickets which your colleagues created** and modify their tickets (if your organization is set to "shared", which can be defined per organization).
 ''')
 
   uiUrl: ->

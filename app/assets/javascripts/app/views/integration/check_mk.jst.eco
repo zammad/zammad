@@ -2,7 +2,7 @@
 
 <h2><%- @T('Usage') %></h2>
 
-<p><%- @T('To enable %s for sending http requests to %s, you need create a own "notification rule" in %s.', 'Checkmk', 'Zammad', 'Checkmk') %></p>
+<p><%- @T('To enable %s for sending HTTP requests to %s, you need to create a designated "notification rule" in %s.', 'Checkmk', 'Zammad', 'Checkmk') %></p>
 
 <div class="settings-entry">
   <table class="settings-list" style="width: 100%;">

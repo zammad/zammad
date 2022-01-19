@@ -311,7 +311,7 @@ class App.TicketZoomArticleNew extends App.Controller
     if params.body && attachmentCount < 1
       matchingWord = App.Utils.checkAttachmentReference(params.body)
       if matchingWord
-        if !confirm(App.i18n.translateContent('You use %s in text but no attachment is attached. Do you want to continue?', matchingWord))
+        if !confirm(App.i18n.translateContent('You used %s in the text but no attachment could be found. Do you want to continue?', matchingWord))
           return false
 
     # backend based validation

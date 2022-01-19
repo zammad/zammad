@@ -111,7 +111,7 @@ class App.Ticket extends App.Model
       when 'reminder_reached'
         App.i18n.translateContent('Pending reminder reached for ticket |%s|', item.title)
       when 'escalation'
-        App.i18n.translateContent('Ticket |%s| is escalated!', item.title)
+        App.i18n.translateContent('Ticket |%s| has escalated!', item.title)
       when 'escalation_warning'
         App.i18n.translateContent('Ticket |%s| will escalate soon!', item.title)
       when 'update.merged_into'

@@ -43,7 +43,7 @@ returns
     begin
       api.setWebhook(callback_url)
     rescue
-      raise Exceptions::UnprocessableEntity, __('Unable to set webhook at Telegram, seems to be a invalid url.')
+      raise Exceptions::UnprocessableEntity, __('The webhook could not be saved by Telegram, seems to be an invalid URL.')
     end
     true
   end
@@ -718,7 +718,7 @@ returns
     # send welcome message and don't create ticket
     text = params[:message][:text]
     if text.present? && text.start_with?('/start')
-      message(params[:message][:chat][:id], channel.options[:welcome] || __('You are welcome! Just ask me something!'), params[:message][:from][:language_code])
+      message(params[:message][:chat][:id], channel.options[:welcome] || __('Welcome! Feel free to ask me a question!'), params[:message][:from][:language_code])
       return
 
     # find ticket and close it

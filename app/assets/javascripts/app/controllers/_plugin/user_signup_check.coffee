@@ -64,7 +64,7 @@ class Modal extends App.ControllerModal
     @update()
 
   error: =>
-    @contentInline = App.i18n.translateContent('Unable to send verify email.')
+    @contentInline = App.i18n.translateContent('Verification email could not be sent.')
     @update()
 
 App.Config.set('user_signup', UserSignupCheck, 'Plugins')

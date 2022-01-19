@@ -6,7 +6,7 @@
 
 <div class="page-content">
   <div class="page-description">
-    <p><%- @T('You can connect %s with Zammad. You need to connect your Zammad with %s first.', 'Microsoft 365 Accounts', 'Microsoft 365') %></p>
+    <p><%- @T('You can connect %s with Zammad. But first, you will have to connect your Zammad with %s.', 'Microsoft 365 Accounts', 'Microsoft 365') %></p>
     <div class="btn btn--success js-configApp"><%- @T('Connect Microsoft 365 App') %></div>
   </div>
 </div>

@@ -261,7 +261,7 @@ class TaskNew extends App.ControllerGenericNew
       fail: (settings, details) ->
         ui.log 'errors', details
         ui.formEnable(e)
-        ui.controller.showAlert(details.error_human || details.error || __('Unable to create object!'))
+        ui.controller.showAlert(details.error_human || details.error || __('The object could not be created.'))
     )
 
 App.Config.set('DataPrivacy', { prio: 3600, name: __('Data Privacy'), parent: '#system', target: '#system/data_privacy', controller: Index, permission: ['admin.data_privacy'] }, 'NavBarAdmin')

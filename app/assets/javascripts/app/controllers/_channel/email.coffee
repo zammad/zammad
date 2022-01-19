@@ -298,7 +298,7 @@ class ChannelEmailEdit extends App.ControllerModal
       error: (xhr) =>
         data = JSON.parse(xhr.responseText)
         @formEnable(e)
-        @el.find('.alert').removeClass('hidden').text(data.error || __('Unable to save changes.'))
+        @el.find('.alert').removeClass('hidden').text(data.error || __('The changes could not be saved.'))
     )
 
 class ChannelEmailAccountWizard extends App.ControllerWizardModal
@@ -605,7 +605,7 @@ class ChannelEmailAccountWizard extends App.ControllerWizardModal
     )
 
   probeInboundMessagesFound: (data, verify) =>
-    message = App.i18n.translateContent('We have already found %s email(s) in your mailbox. Zammad will move it all from your mailbox into Zammad.', data.content_messages)
+    message = App.i18n.translateContent('We have already found %s email(s) in your mailbox. We will move them all from your mailbox into Zammad.', data.content_messages)
     @$('.js-inbound-acknowledge .js-messageFound').html(message)
 
     if !verify

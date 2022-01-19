@@ -230,7 +230,7 @@ class New extends App.ControllerGenericNew
       fail: (settings, details) ->
         ui.log 'errors', details
         ui.formEnable(e)
-        ui.controller.showAlert(details.error_human || details.error || __('Unable to create object!'))
+        ui.controller.showAlert(details.error_human || details.error || __('The object could not be created.'))
     )
 
 class Edit extends App.ControllerGenericEdit
@@ -294,7 +294,7 @@ class Edit extends App.ControllerGenericEdit
       fail: (settings, details) ->
         ui.log 'errors'
         ui.formEnable(e)
-        ui.controller.showAlert(details.error_human || details.error || __('Unable to update object!'))
+        ui.controller.showAlert(details.error_human || details.error || __('The object could not be updated.'))
     )
 
 App.Config.set('SystemObject', { prio: 1700, parent: '#system', name: __('Objects'), target: '#system/object_manager', controller: ObjectManager, permission: ['admin.object'] }, 'NavBarAdmin')

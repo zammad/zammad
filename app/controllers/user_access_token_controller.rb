@@ -112,7 +112,7 @@ curl http://localhost/api/v1/user_access_token/{id} -v -u #{login}:#{password} -
 
   def destroy
     token = Token.find_by(action: 'api', user_id: current_user.id, id: params[:id])
-    raise Exceptions::UnprocessableEntity, __('Unable to find api token!') if !token
+    raise Exceptions::UnprocessableEntity, __('The API token could not be found.') if !token
 
     token.destroy!
     render json: {}, status: :ok

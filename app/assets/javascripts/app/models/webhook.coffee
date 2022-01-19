@@ -19,9 +19,9 @@ class App.Webhook extends App.Model
   ]
 
   @description = __('''
-Webhooks make it easy to send information about events within Zammad to third party systems via HTTP(S).
+Webhooks make it easy to send information about events within Zammad to third-party systems via HTTP(S).
 
-You can use Webhooks in Zammad to send Ticket, Article and Attachment data whenever a Trigger is performed. Just create and configure your Webhook with an HTTP(S) endpoint and relevant security settings, configure a Trigger to perform it.
+You can use webhooks in Zammad to send ticket, article, and attachment data whenever a trigger is performed. Just create and configure your webhook with an HTTP(S) endpoint and relevant security settings, then configure a trigger to perform it.
 ''')
 
   displayName: ->

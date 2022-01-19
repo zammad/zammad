@@ -238,7 +238,7 @@ class GettingStartedChannelEmail extends App.ControllerWizardFullScreen
     )
 
   probeInboundMessagesFound: (data, verify) =>
-    message = App.i18n.translateContent('We have already found %s email(s) in your mailbox. Zammad will move it all from your mailbox into Zammad.', data.content_messages)
+    message = App.i18n.translateContent('We have already found %s email(s) in your mailbox. We will move them all from your mailbox into Zammad.', data.content_messages)
     @$('.js-inbound-acknowledge .js-messageFound').html(message)
 
     if !verify

@@ -262,7 +262,7 @@ class ChannelSmsAccount extends App.ControllerModal
       fail: (settings, details) ->
         ui.log 'errors', details
         ui.formEnable(e)
-        ui.showAlert(details.error_human || details.error || __('Unable to update object!'))
+        ui.showAlert(details.error_human || details.error || __('The object could not be updated.'))
     )
 
   onTest: (e) ->
@@ -376,7 +376,7 @@ class ChannelSmsNotification extends App.ControllerModal
       fail: (settings, details) ->
         ui.log 'errors', details
         ui.formEnable(e)
-        ui.showAlert(details.error_human || details.error || __('Unable to update object!'))
+        ui.showAlert(details.error_human || details.error || __('The object could not be updated.'))
     )
 
   onTest: (e) ->

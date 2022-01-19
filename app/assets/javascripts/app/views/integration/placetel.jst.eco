@@ -117,7 +117,7 @@
 
   <h2><%- @T('User assignment to telephones') %></h2>
 
-  <p><%- @T('User assignment to telephones to be able to offer extended like open new ticket screen on answering a call.') %>
+  <p><%- @T('User assignment to telephones to be able to open new ticket screen upon answering a call.') %>
 
   <div class="settings-entry">
     <table class="settings-list js-userDeviceMap" style="width: 100%;">

@@ -345,12 +345,12 @@ class ConnectionWizard extends App.ControllerWizardModal
 
         if _.isEmpty(data.user_attributes)
           @showSlide('js-bind')
-          @showAlert('js-bind', __('Unable to retrive user information, please check your bind user permissions.'))
+          @showAlert('js-bind', __('User information could not be retrieved, please check your bind user permissions.'))
           return
 
         if _.isEmpty(data.groups)
           @showSlide('js-bind')
-          @showAlert('js-bind', __('Unable to retrive group information, please check your bind user permissions.'))
+          @showAlert('js-bind', __('Group information could not be retrieved, please check your bind user permissions.'))
           return
 
         # update config if successful

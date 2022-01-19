@@ -10,7 +10,7 @@
 </div>
 
 <% if @external_credential && @external_credential.credentials && !@external_credential.credentials.webhook_id: %>
-  <div class="alert alert--warning" role="alert"><%- @T('Your Twitter-App is not using the Twitter Account Activity API yet and is therefore limited to search terms only. Please refer to the documentation %l on how to update your account.', 'https://zammad-admin-documentation.readthedocs.io/en/latest/channels-twitter.html') %></div>
+  <div class="alert alert--warning" role="alert"><%- @T('Your Twitter app is not using the Twitter Account Activity API yet and is therefore limited to search terms only. Please refer to the documentation %l on how to update your account.', 'https://zammad-admin-documentation.readthedocs.io/en/latest/channels-twitter.html') %></div>
 <% end %>
 
 <div class="page-content">
@@ -21,7 +21,7 @@
     </div>
 
     <% if @external_credential && @external_credential.credentials && @external_credential.credentials.webhook_id && channel.options && channel.options.subscribed_to_webhook_id isnt @external_credential.credentials.webhook_id: %>
-      <div class="alert alert--warning" role="alert"><%- @T('Your Twitter-Account is not using the Twitter Account Activity API yet and is therefore limited to search terms only. Please add/update the account again via "add account".') %></div>
+      <div class="alert alert--warning" role="alert"><%- @T('Your Twitter account is not using the Twitter Account Activity API yet and is therefore limited to search terms only. Please add/update the account again via "add account".') %></div>
     <% end %>
 
     <div class="action-flow action-flow--row">

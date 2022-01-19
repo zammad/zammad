@@ -12,9 +12,9 @@ class App.ChannelEmailSignature extends App.Controller
     template = $( '<div><div class="overview"></div><a data-type="new" class="btn btn--success">' + App.i18n.translateContent('New') + '</a></div>' )
 
     description = __('''
-You can define different signatures for each group. So you can have different email signatures for different departments.
+You can define different signatures for each group, which allows you to use a different signature for every department.
 
-Once you have created a signature here, you need also to edit the groups where you want to use it.
+Once you have created a signature here, you will also need to edit the groups where you want to use it.
 ''')
 
     new App.ControllerTable(
@@ -90,5 +90,5 @@ class ChannelEmailSignatureEdit extends App.ControllerModal
       fail: (settings, details) =>
         @log 'errors', details
         @formEnable(e)
-        @form.showAlert(details.error_human || details.error || __('Unable to create object!'))
+        @form.showAlert(details.error_human || details.error || __('The object could not be created.'))
     )
