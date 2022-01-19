@@ -416,7 +416,7 @@ class AppConfig extends App.ControllerModal
           )
           return
         @formEnable(e)
-        @el.find('.alert').removeClass('hidden').text(data.error || __('Unable to verify App.'))
+        @el.find('.alert').removeClass('hidden').text(data.error || __('App could not be verified.'))
     )
 
 App.Config.set('microsoft365', { prio: 5000, name: __('Microsoft 365'), parent: '#channels', target: '#channels/microsoft365', controller: App.ChannelMicrosoft365, permission: ['admin.channel_microsoft365'] }, 'NavBarAdmin')

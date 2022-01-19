@@ -56,7 +56,7 @@ class SettingsController < ApplicationController
     if !file[:content] || !file[:mime_type]
       render json: {
         result:  'invalid',
-        message: __('Unable to process image upload.'),
+        message: __('The uploaded image could not be processed.'),
       }
       return
     end

@@ -780,6 +780,13 @@ msgstr ""
 msgid "App Version"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_channel/facebook.coffee
+#: app/assets/javascripts/app/controllers/_channel/google.coffee
+#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
+#: app/assets/javascripts/app/controllers/_channel/twitter.coffee
+msgid "App could not be verified."
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "App credentials for Facebook."
 msgstr ""
@@ -849,6 +856,14 @@ msgstr ""
 
 #: lib/excel_sheet/ticket.rb
 msgid "Article Count"
+msgstr ""
+
+#: app/models/ticket.rb
+msgid "Article could not be created. An unsupported key other than 'article.note' was provided."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/delete.coffee
+msgid "Article could not be deleted."
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee
@@ -1413,6 +1428,10 @@ msgstr ""
 msgid "Cc"
 msgstr ""
 
+#: lib/secure_mailing/smime/incoming.rb
+msgid "Certificate for verification could not be found."
+msgstr ""
+
 #: app/assets/javascripts/app/views/integration/smime.jst.eco
 msgid "Certificates & Private Keys"
 msgstr ""
@@ -1461,6 +1480,10 @@ msgstr ""
 #: app/views/mailer/ticket_update/zh-cn.html.erb
 #: app/views/mailer/ticket_update/zh-tw.html.erb
 msgid "Changes"
+msgstr ""
+
+#: app/assets/javascripts/app/views/knowledge_base/base_form.coffee
+msgid "Changes could not be saved."
 msgstr ""
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
@@ -1928,6 +1951,14 @@ msgstr ""
 #: app/assets/javascripts/app/models/text_module.coffee
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 msgid "Content"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/idoit_object_selector.coffee
+msgid "Content could not be loaded."
+msgstr ""
+
+#: app/models/store.rb
+msgid "Content preview could not be generated."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee
@@ -3069,6 +3100,10 @@ msgstr ""
 msgid "Deletion Task"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee
+msgid "Deletion failed."
+msgstr ""
+
 #: app/assets/javascripts/app/views/ticket_zoom/article_view_delivery_failed.jst.eco
 msgid "Delivery failed"
 msgstr ""
@@ -3429,6 +3464,15 @@ msgstr ""
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 msgid "Email Outbound"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/email_verify.coffee
+msgid "Email could not be verified. Please contact your administrator."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_channel/email.coffee
+#: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
+msgid "Email sending and receiving could not be verified. Please check your settings."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/user_profile.coffee
@@ -4755,6 +4799,10 @@ msgstr ""
 msgid "Import %s"
 msgstr ""
 
+#: app/controllers/import_otrs_controller.rb
+msgid "Import API key could not be extracted from URL."
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "Import Backend"
 msgstr ""
@@ -4931,6 +4979,10 @@ msgstr ""
 #: app/views/mailer/ticket_update/zh-cn.html.erb
 #: app/views/mailer/ticket_update/zh-tw.html.erb
 msgid "Information"
+msgstr ""
+
+#: app/models/store.rb
+msgid "Inline content could not be generated."
 msgstr ""
 
 #: app/assets/javascripts/app/views/translation/index.jst.eco
@@ -5472,6 +5524,15 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Load"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_integration/smime.coffee
+#: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee
+#: app/assets/javascripts/app/controllers/widget/payload_example.coffee
+#: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee
+msgid "Loading failed."
 msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/task_manager.coffee
@@ -7229,6 +7290,10 @@ msgstr ""
 msgid "Priority Icons in Overviews"
 msgstr ""
 
+#: lib/secure_mailing/smime/incoming.rb
+msgid "Private key for decryption could not be found."
+msgstr ""
+
 #: db/seeds/object_manager_attributes.rb
 msgid "Problem"
 msgstr ""
@@ -7699,6 +7764,10 @@ msgstr ""
 msgid "SMS successfully sent"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_channel/sms.coffee
+msgid "SMS test failed."
+msgstr ""
+
 #: lib/email_helper.rb
 msgid "SMTP - configure your own outgoing SMTP settings"
 msgstr ""
@@ -7765,6 +7834,13 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Saved conditions"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_integration/github.coffee
+#: app/assets/javascripts/app/controllers/_integration/gitlab.coffee
+#: app/assets/javascripts/app/controllers/_integration/idoit.coffee
+#: app/assets/javascripts/app/controllers/ticket_zoom.coffee
+msgid "Saving failed."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
@@ -8000,6 +8076,12 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Sequencer log level"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_integration/exchange.coffee
+#: app/assets/javascripts/app/controllers/_integration/ldap.coffee
+#: app/assets/javascripts/app/controllers/_integration/smime.coffee
+msgid "Server operation failed."
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/index.jst.eco
@@ -8730,6 +8812,10 @@ msgstr ""
 msgid "The MIME type of the resized image is invalid."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_channel/telegram.coffee
+msgid "The Telegram bot could not be saved."
+msgstr ""
+
 #: lib/telegram.rb
 msgid "The Telegram file is larger than the allowed 20 MB."
 msgstr ""
@@ -8837,6 +8923,12 @@ msgstr ""
 msgid "The identifier for a ticket, e.g. Ticket#, Call#, MyTicket#. The default is Ticket#."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_integration/smime.coffee
+#: app/assets/javascripts/app/controllers/widget/import.coffee
+#: app/assets/javascripts/app/controllers/widget/import_try_result.coffee
+msgid "The import failed."
+msgstr ""
+
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
 msgid "The import was successful."
 msgstr ""
@@ -8847,6 +8939,10 @@ msgstr ""
 
 #: lib/search_index_backend.rb
 msgid "The installed attachment plugin could not handle the request payload. Ensure that the correct attachment plugin is installed (ingest-attachment)."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee
+msgid "The issue could not be saved."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/generic_new.coffee
@@ -8882,6 +8978,11 @@ msgstr ""
 msgid "The page you were looking for does not exist."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_profile/password.coffee
+#: app/assets/javascripts/app/controllers/password_reset_verify.coffee
+msgid "The password could not be set. Please contact your administrator."
+msgstr ""
+
 #: app/assets/javascripts/app/views/knowledge_base/delete.coffee
 msgid "The request could not be processed."
 msgstr ""
@@ -8898,6 +8999,10 @@ msgstr ""
 msgid "The required parameter 'crc_token' is missing from the Twitter verify payload!"
 msgstr ""
 
+#: app/models/ticket.rb
+msgid "The required parameter 'current_user_id' is missing."
+msgstr ""
+
 #: app/controllers/users_controller.rb
 msgid "The required parameter 'id' is missing."
 msgstr ""
@@ -8912,6 +9017,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 msgid "The retried security process failed!"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_channel/email.coffee
+#: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
+msgid "The server settings could not be automatically detected. Please configure them manually."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee
@@ -8932,6 +9042,19 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "The text at the beginning of the subject in an email reply, e.g. RE, AW, or AS."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee
+msgid "The tickets could not be merged."
+msgstr ""
+
+#: app/controllers/getting_started_controller.rb
+#: app/controllers/settings_controller.rb
+msgid "The uploaded image could not be processed."
+msgstr ""
+
+#: lib/external_credential/microsoft365.rb
+msgid "The user's 'preferred_username' could not be extracted from 'id_token'."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee
@@ -9538,153 +9661,6 @@ msgstr ""
 msgid "URL (AJAX endpoint)"
 msgstr ""
 
-#: app/assets/javascripts/app/views/knowledge_base/base_form.coffee
-msgid "Unable to  save changes"
-msgstr ""
-
-#: app/models/ticket.rb
-msgid "Unable to create article, we only support article.note"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/getting_started/admin.coffee
-#: app/assets/javascripts/app/controllers/signup.coffee
-msgid "Unable to create user!"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/delete.coffee
-msgid "Unable to delete article!"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee
-msgid "Unable to delete."
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_channel/email.coffee
-#: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
-msgid "Unable to detect your server settings. Manual configuration needed."
-msgstr ""
-
-#: lib/external_credential/google.rb
-msgid "Unable to extract user email from id_token!"
-msgstr ""
-
-#: lib/external_credential/microsoft365.rb
-msgid "Unable to extract user preferred_username from id_token!"
-msgstr ""
-
-#: lib/secure_mailing/smime/incoming.rb
-msgid "Unable to find certificate for verification"
-msgstr ""
-
-#: lib/secure_mailing/smime/incoming.rb
-msgid "Unable to find private key to decrypt"
-msgstr ""
-
-#: app/models/store.rb
-msgid "Unable to generate inline"
-msgstr ""
-
-#: app/models/store.rb
-msgid "Unable to generate preview"
-msgstr ""
-
-#: app/controllers/import_otrs_controller.rb
-msgid "Unable to get key from URL!"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_integration/smime.coffee
-#: app/assets/javascripts/app/controllers/widget/import.coffee
-#: app/assets/javascripts/app/controllers/widget/import_try_result.coffee
-msgid "Unable to import!"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee
-#: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee
-msgid "Unable to load"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/idoit_object_selector.coffee
-msgid "Unable to load content"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee
-msgid "Unable to load data…"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/widget/payload_example.coffee
-msgid "Unable to load example payload!"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee
-msgid "Unable to load issues"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_integration/smime.coffee
-msgid "Unable to load list of certificates!"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee
-msgid "Unable to merge!"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_integration/exchange.coffee
-#: app/assets/javascripts/app/controllers/_integration/ldap.coffee
-msgid "Unable to perform backend."
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_channel/sms.coffee
-msgid "Unable to perform test"
-msgstr ""
-
-#: app/controllers/getting_started_controller.rb
-#: app/controllers/settings_controller.rb
-msgid "Unable to process image upload."
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_channel/telegram.coffee
-msgid "Unable to save Bot."
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee
-msgid "Unable to save issue"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_integration/github.coffee
-#: app/assets/javascripts/app/controllers/_integration/gitlab.coffee
-#: app/assets/javascripts/app/controllers/_integration/idoit.coffee
-#: app/assets/javascripts/app/controllers/_integration/smime.coffee
-msgid "Unable to save!"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_profile/password.coffee
-#: app/assets/javascripts/app/controllers/password_reset_verify.coffee
-msgid "Unable to set password. Please contact your administrator."
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/ticket_zoom.coffee
-msgid "Unable to update!"
-msgstr ""
-
-#: app/models/ticket.rb
-msgid "Unable to use current_user, got no current_user_id for ticket.perform_changes"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_channel/facebook.coffee
-#: app/assets/javascripts/app/controllers/_channel/google.coffee
-#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
-#: app/assets/javascripts/app/controllers/_channel/twitter.coffee
-msgid "Unable to verify App."
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/email_verify.coffee
-msgid "Unable to verify email. Please contact your administrator."
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_channel/email.coffee
-#: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
-msgid "Unable to verify sending and receiving. Please check your settings."
-msgstr ""
-
 #: app/controllers/first_steps_controller.rb
 #: db/seeds/overviews.rb
 msgid "Unassigned & Open"
@@ -9953,6 +9929,15 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 msgid "User assignment to telephones to be able to open new ticket screen upon answering a call."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/getting_started/admin.coffee
+#: app/assets/javascripts/app/controllers/signup.coffee
+msgid "User could not be created."
+msgstr ""
+
+#: lib/external_credential/google.rb
+msgid "User email could not be extracted from 'id_token'."
 msgstr ""
 
 #: db/seeds/settings.rb

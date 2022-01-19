@@ -182,7 +182,7 @@ class AppConfig extends App.ControllerModal
           )
           return
         @formEnable(e)
-        @el.find('.alert').removeClass('hidden').text(data.error || __('Unable to verify App.'))
+        @el.find('.alert').removeClass('hidden').text(data.error || __('App could not be verified.'))
     )
 
 class AccountEdit extends App.ControllerModal

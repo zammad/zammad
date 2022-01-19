@@ -999,7 +999,7 @@ perform changes on ticket
         if value['pre_condition'].start_with?('not_set')
           value['value'] = 1
         elsif value['pre_condition'].start_with?('current_user.')
-          raise __('Unable to use current_user, got no current_user_id for ticket.perform_changes') if !current_user_id
+          raise __("The required parameter 'current_user_id' is missing.") if !current_user_id
 
           value['value'] = current_user_id
         end
@@ -1021,7 +1021,7 @@ perform changes on ticket
     objects = build_notification_template_objects(article)
 
     perform_article.each do |key, value|
-      raise __('Unable to create article, we only support article.note') if key != 'article.note'
+      raise __("Article could not be created. An unsupported key other than 'article.note' was provided.") if key != 'article.note'
 
       add_trigger_note(id, value, objects, perform_origin)
     end

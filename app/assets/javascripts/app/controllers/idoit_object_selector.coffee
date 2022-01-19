@@ -39,7 +39,7 @@ class App.IdoitObjectSelector extends App.ControllerModal
         return if status is 'abort'
 
         # show error message
-        @contentInline = __('Unable to load content')
+        @contentInline = __('Content could not be loaded.')
         @render()
     )
     ''
@@ -71,7 +71,7 @@ class App.IdoitObjectSelector extends App.ControllerModal
         return if status is 'abort'
 
         # show error message
-        @contentInline = __('Unable to load content')
+        @contentInline = __('Content could not be loaded.')
         @render()
     )
 

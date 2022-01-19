@@ -41,7 +41,7 @@ class ExternalCredential::Google
     end
 
     user_data = user_info(response[:id_token])
-    raise Exceptions::UnprocessableEntity, __('Unable to extract user email from id_token!') if user_data[:email].blank?
+    raise Exceptions::UnprocessableEntity, __("User email could not be extracted from 'id_token'.") if user_data[:email].blank?
 
     channel_options = {
       inbound:  {

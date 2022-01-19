@@ -60,7 +60,7 @@ class ImportOtrsController < ApplicationController
           if !key_parts[1]
             render json: {
               result:        'invalid',
-              message_human: __('Unable to get key from URL!')
+              message_human: __('Import API key could not be extracted from URL.')
             }
             return
           end

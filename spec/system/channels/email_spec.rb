@@ -50,7 +50,7 @@ RSpec.describe 'Manage > Channels > Email', type: :system do
           fill_in 'password', with: mailbox_password
           select 'Users', from: 'group_id'
           click '.js-submit'
-          expect(page).to have_text('Unable to detect your server settings. Manual configuration needed.')
+          expect(page).to have_text('The server settings could not be automatically detected. Please configure them manually.')
         end
 
       end

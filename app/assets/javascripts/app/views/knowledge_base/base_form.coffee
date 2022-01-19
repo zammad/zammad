@@ -85,7 +85,7 @@ class App.KnowledgeBaseForm extends App.Controller
         @scrollTop()
       error: (xhr) =>
         @formEnable(@el)
-        formController.showAlert(xhr.responseJSON?.error || __('Unable to  save changes'))
+        formController.showAlert(xhr.responseJSON?.error || __('Changes could not be saved.'))
         @scrollTop()
     )
 

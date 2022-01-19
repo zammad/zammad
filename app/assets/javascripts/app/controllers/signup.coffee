@@ -74,7 +74,7 @@ class Signup extends App.ControllerFullPage
         ))
       fail: (settings, details) =>
         @formEnable(e)
-        @form.showAlert(details.error_human || details.error || __('Unable to create user!'))
+        @form.showAlert(details.error_human || details.error || __('User could not be created.'))
     )
 
   resend: (e) =>

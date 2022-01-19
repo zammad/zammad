@@ -435,7 +435,7 @@ class TestModal extends App.ControllerModal
         data = JSON.parse(xhr.responseText)
         @formEnable(@el)
         @el.find('.js-danger')
-          .text(@T(data.error || __('Unable to perform test')))
+          .text(@T(data.error || __('SMS test failed.')))
           .removeClass('hide')
     )
 

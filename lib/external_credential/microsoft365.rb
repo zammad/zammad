@@ -45,7 +45,7 @@ class ExternalCredential::Microsoft365
     end
 
     user_data = user_info(response[:id_token])
-    raise Exceptions::UnprocessableEntity, __('Unable to extract user preferred_username from id_token!') if user_data[:preferred_username].blank?
+    raise Exceptions::UnprocessableEntity, __("The user's 'preferred_username' could not be extracted from 'id_token'.") if user_data[:preferred_username].blank?
 
     channel_options = {
       inbound:  {

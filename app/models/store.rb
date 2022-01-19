@@ -160,7 +160,7 @@ returns
     if !file
       raise "No such file #{store_file_id}!"
     end
-    raise __('Unable to generate preview') if options[:silence] != true && preferences[:content_preview] != true
+    raise __('Content preview could not be generated.') if options[:silence] != true && preferences[:content_preview] != true
 
     image_resize(file.content, 200)
   end
@@ -183,7 +183,7 @@ returns
     if !file
       raise "No such file #{store_file_id}!"
     end
-    raise __('Unable to generate inline') if options[:silence] != true && preferences[:content_inline] != true
+    raise __('Inline content could not be generated.') if options[:silence] != true && preferences[:content_inline] != true
 
     image_resize(file.content, 1800)
   end

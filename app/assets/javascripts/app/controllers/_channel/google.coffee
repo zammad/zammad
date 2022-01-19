@@ -425,7 +425,7 @@ class AppConfig extends App.ControllerModal
           )
           return
         @formEnable(e)
-        @el.find('.alert').removeClass('hidden').text(data.error || __('Unable to verify App.'))
+        @el.find('.alert').removeClass('hidden').text(data.error || __('App could not be verified.'))
     )
 
 App.Config.set('google', { prio: 5000, name: __('Google'), parent: '#channels', target: '#channels/google', controller: App.ChannelGoogle, permission: ['admin.channel_google'] }, 'NavBarAdmin')

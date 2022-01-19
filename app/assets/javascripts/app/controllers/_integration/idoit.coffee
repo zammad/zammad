@@ -73,7 +73,7 @@ class Form extends App.Controller
         details = data.responseJSON || {}
         @notify(
           type: 'error'
-          msg:  App.i18n.translateContent(details.error_human || details.error || __('Unable to save!'))
+          msg:  App.i18n.translateContent(details.error_human || details.error || __('Saving failed.'))
         )
     )
 

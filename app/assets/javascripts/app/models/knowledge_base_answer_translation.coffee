@@ -48,7 +48,7 @@ class App.KnowledgeBaseAnswerTranslation extends App.Model
 
         App.Event.trigger 'notify', {
           type: 'error'
-          msg: xhr.responseJSON?.error || __('Unable to load')
+          msg: xhr.responseJSON?.error || __('Loading failed.')
         }
     )
 

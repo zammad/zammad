@@ -133,7 +133,7 @@ class PasswordResetVerify extends App.ControllerFullPage
       else
         @notify(
           type:      'error'
-          msg:       __('Unable to set password. Please contact your administrator.')
+          msg:       __('The password could not be set. Please contact your administrator.')
           removeAll: true
         )
       @formEnable(@$('form'))

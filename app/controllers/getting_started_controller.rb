@@ -128,7 +128,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     if params[:logo] && params[:logo] =~ %r{^data:image}i
       file = StaticAssets.data_url_attributes(params[:logo])
       if !file[:content] || !file[:mime_type]
-        messages[:logo] = __('Unable to process image upload.')
+        messages[:logo] = __('The uploaded image could not be processed.')
       end
     end
 

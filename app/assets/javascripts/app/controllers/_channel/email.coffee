@@ -528,7 +528,7 @@ class ChannelEmailAccountWizard extends App.ControllerWizardModal
           @showAlert('js-intro', __('Account already exists!'))
         else
           @showSlide('js-inbound')
-          @showAlert('js-inbound', __('Unable to detect your server settings. Manual configuration needed.'))
+          @showAlert('js-inbound', __('The server settings could not be automatically detected. Please configure them manually.'))
           @$('.js-inbound [name="options::user"]').val(@account['meta']['email'])
           @$('.js-inbound [name="options::password"]').val(@account['meta']['password'])
           @$('.js-inbound [name="options::email"]').val(@account['meta']['email'])
@@ -749,7 +749,7 @@ class ChannelEmailAccountWizard extends App.ControllerWizardModal
               @delay(
                 =>
                   @showSlide('js-intro')
-                  @showAlert('js-intro', __('Unable to verify sending and receiving. Please check your settings.'))
+                  @showAlert('js-intro', __('Email sending and receiving could not be verified. Please check your settings.'))
 
                 2300
               )
@@ -759,7 +759,7 @@ class ChannelEmailAccountWizard extends App.ControllerWizardModal
               @verify(@account, count + 1)
       error: =>
         @showSlide('js-intro')
-        @showAlert('js-intro', __('Unable to verify sending and receiving. Please check your settings.'))
+        @showAlert('js-intro', __('Email sending and receiving could not be verified. Please check your settings.'))
     )
 
   hide: (e) =>

@@ -178,7 +178,7 @@ class GettingStartedChannelEmail extends App.ControllerWizardFullScreen
           @showAlert('js-intro', __('Account already exists!') )
         else
           @showSlide('js-inbound')
-          @showAlert('js-inbound', __('Unable to detect your server settings. Manual configuration needed.') )
+          @showAlert('js-inbound', __('The server settings could not be automatically detected. Please configure them manually.') )
           @$('.js-inbound [name="options::user"]').val( @account['meta']['email'] )
           @$('.js-inbound [name="options::password"]').val( @account['meta']['password'] )
 
@@ -354,7 +354,7 @@ class GettingStartedChannelEmail extends App.ControllerWizardFullScreen
               @delay(
                 =>
                   @showSlide('js-intro')
-                  @showAlert('js-intro', __('Unable to verify sending and receiving. Please check your settings.') )
+                  @showAlert('js-intro', __('Email sending and receiving could not be verified. Please check your settings.') )
 
                 2300
               )
@@ -364,7 +364,7 @@ class GettingStartedChannelEmail extends App.ControllerWizardFullScreen
               @verify( @account, count + 1 )
       fail: =>
         @showSlide('js-intro')
-        @showAlert('js-intro', __('Unable to verify sending and receiving. Please check your settings.'))
+        @showAlert('js-intro', __('Email sending and receiving could not be verified. Please check your settings.'))
     )
 
 App.Config.set('getting_started/channel/email', GettingStartedChannelEmail, 'Routes')

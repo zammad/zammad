@@ -67,7 +67,7 @@ class SidebarIdoit extends App.Controller
         if data.response
           @showList(data.response.result)
           return
-        @showError(__('Unable to load data…'))
+        @showError(__('Loading failed.'))
 
       error: (xhr, status, error) =>
 
@@ -75,7 +75,7 @@ class SidebarIdoit extends App.Controller
         return if status is 'abort'
 
         # show error message
-        @showError(__('Unable to load data…'))
+        @showError(__('Loading failed.'))
     )
 
   showList: (objects) =>

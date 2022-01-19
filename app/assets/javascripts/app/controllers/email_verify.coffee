@@ -50,7 +50,7 @@ class Fail extends App.ControllerAppContent
 
   render: =>
     @renderScreenError(
-      detail: __('Unable to verify email. Please contact your administrator.')
+      detail: __('Email could not be verified. Please contact your administrator.')
     )
 
 App.Config.set('email_verify/:token', EmailVerify, 'Routes')

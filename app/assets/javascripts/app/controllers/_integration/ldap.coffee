@@ -315,7 +315,7 @@ class ConnectionWizard extends App.ControllerWizardModal
         if !_.isEmpty(detailsRaw)
           details = JSON.parse(detailsRaw)
         @showSlide('js-discover')
-        @showAlert('js-discover', details.error || __('Unable to perform backend.'))
+        @showAlert('js-discover', details.error || __('Server operation failed.'))
     )
 
 
@@ -384,7 +384,7 @@ class ConnectionWizard extends App.ControllerWizardModal
         if !_.isEmpty(detailsRaw)
           details = JSON.parse(detailsRaw)
         @showSlide('js-bind')
-        @showAlert('js-bind', details.error || __('Unable to perform backend.'))
+        @showAlert('js-bind', details.error || __('Server operation failed.'))
     )
 
   mappingShow: (alreadyShown) =>

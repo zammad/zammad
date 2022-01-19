@@ -234,10 +234,10 @@ RSpec.describe Store, type: :model do
 
           it 'cannot be resized (neither inlined nor previewed)' do
             expect { store.content_inline }
-              .to raise_error('Unable to generate inline')
+              .to raise_error('Inline content could not be generated.')
 
             expect { store.content_preview }
-              .to raise_error('Unable to generate preview')
+              .to raise_error('Content preview could not be generated.')
 
             expect(store.preferences)
               .to not_include(resizable: true)
@@ -254,10 +254,10 @@ RSpec.describe Store, type: :model do
 
           it 'cannot be resized (neither inlined nor previewed)' do
             expect { store.content_inline }
-              .to raise_error('Unable to generate inline')
+              .to raise_error('Inline content could not be generated.')
 
             expect { store.content_preview }
-              .to raise_error('Unable to generate preview')
+              .to raise_error('Content preview could not be generated.')
 
             expect(store.preferences)
               .to not_include(resizable: true)
@@ -273,10 +273,10 @@ RSpec.describe Store, type: :model do
 
             it 'cannot be resized (neither inlined nor previewed)' do
               expect { store.content_inline }
-                .to raise_error('Unable to generate inline')
+                .to raise_error('Inline content could not be generated.')
 
               expect { store.content_preview }
-                .to raise_error('Unable to generate preview')
+                .to raise_error('Content preview could not be generated.')
 
               expect(store.preferences)
                 .to not_include(resizable: true)
@@ -291,7 +291,7 @@ RSpec.describe Store, type: :model do
 
             it 'can be resized (previewed but not inlined)' do
               expect { store.content_inline }
-                .to raise_error('Unable to generate inline')
+                .to raise_error('Inline content could not be generated.')
 
               expect(resized_preview_image.width).to eq(200)
 
@@ -335,10 +335,10 @@ RSpec.describe Store, type: :model do
 
               it 'cannot be resized (neither inlined nor previewed)' do
                 expect { store.content_inline }
-                  .to raise_error('Unable to generate inline')
+                  .to raise_error('Inline content could not be generated.')
 
                 expect { store.content_preview }
-                  .to raise_error('Unable to generate preview')
+                  .to raise_error('Content preview could not be generated.')
 
                 expect(store.preferences)
                   .to not_include(resizable: true)
@@ -352,10 +352,10 @@ RSpec.describe Store, type: :model do
 
               it 'cannot be resized (neither inlined nor previewed)' do
                 expect { store.content_inline }
-                  .to raise_error('Unable to generate inline')
+                  .to raise_error('Inline content could not be generated.')
 
                 expect { store.content_preview }
-                  .to raise_error('Unable to generate preview')
+                  .to raise_error('Content preview could not be generated.')
 
                 expect(store.preferences)
                   .to not_include(resizable: true)

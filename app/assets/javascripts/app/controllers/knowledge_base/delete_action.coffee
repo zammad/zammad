@@ -64,7 +64,7 @@ class App.KnowledgeBaseDeleteAction
 
   deleteFailure: (modal, xhr) ->
     modal.formEnable(modal.el)
-    modal.showAlert xhr.responseJSON?.error || __('Unable to delete.')
+    modal.showAlert xhr.responseJSON?.error || __('Deletion failed.')
 
   # simulate modal's close function
   close: ->
