@@ -98,7 +98,7 @@ class ObjectManagerAttributesController < ApplicationController
       if permitted[:data_option]
 
         if !permitted[:data_option].key?(:default)
-          permitted[:data_option][:default] = if permitted[:data_type].match?(%r{^(input|select|tree_select)$})
+          permitted[:data_option][:default] = if permitted[:data_type].match?(%r{^(input|select|multiselect|tree_select)$})
                                                 ''
                                               end
         end

@@ -124,16 +124,22 @@ class App.FormHandlerCoreWorkflow
         coreWorkflowRestrictions[classname][item.name] = App.FormHandlerCoreWorkflow.restrictValuesAttributeCache(attribute, values)
 
         valueFound = false
-        for value in values
+        if item.tag is 'multiselect'
+          if _.isArray(paramValue)
+            paramValue = _.intersection(paramValue, values)
+            if paramValue.length > 0
+              valueFound = true
+        else
+          for value in values
 
-          # false values are valid values e.g. for boolean fields (be careful)
-          if value isnt undefined && paramValue isnt undefined && value isnt null && paramValue isnt null
-            if value.toString() == paramValue.toString()
-              valueFound = true
-              break
-            if _.isArray(paramValue) && _.contains(paramValue, value.toString())
-              valueFound = true
-              break
+            # false values are valid values e.g. for boolean fields (be careful)
+            continue if value is undefined
+            continue if value is null
+            continue if paramValue is undefined
+            continue if paramValue is null
+            continue if value.toString() != paramValue.toString()
+            valueFound = true
+            break
 
         item.filter   = values
         if valueFound

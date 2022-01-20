@@ -40,7 +40,7 @@ class App.UiElement.core_workflow_perform extends App.UiElement.ApplicationSelec
       'boolean$': ['show', 'hide', 'remove', 'set_mandatory', 'set_optional', 'set_readonly', 'unset_readonly', 'add_option', 'remove_option', 'set_fixed_to']
       'integer$': ['show', 'hide', 'remove', 'set_mandatory', 'set_optional', 'set_readonly', 'unset_readonly']
       '^date': ['show', 'hide', 'remove', 'set_mandatory', 'set_optional', 'set_readonly', 'unset_readonly']
-      '^select$': ['show', 'hide', 'remove', 'set_mandatory', 'set_optional', 'set_readonly', 'unset_readonly', 'add_option', 'remove_option', 'set_fixed_to', 'select', 'auto_select']
+      '^(multi)?select$': ['show', 'hide', 'remove', 'set_mandatory', 'set_optional', 'set_readonly', 'unset_readonly', 'add_option', 'remove_option', 'set_fixed_to', 'select', 'auto_select']
       '^tree_select$': ['show', 'hide', 'remove', 'set_mandatory', 'set_optional', 'set_readonly', 'unset_readonly', 'add_option', 'remove_option', 'set_fixed_to', 'select', 'auto_select']
       '^(input|textarea)$': ['show', 'hide', 'remove', 'set_mandatory', 'set_optional', 'set_readonly', 'unset_readonly', 'fill_in', 'fill_in_empty']
 
@@ -64,7 +64,7 @@ class App.UiElement.core_workflow_perform extends App.UiElement.ApplicationSelec
         continue
 
       for row in App[groupMeta.model].configure_attributes
-        continue if !_.contains(['input', 'textarea', 'select', 'integer', 'boolean', 'tree_select', 'date', 'datetime'], row.tag)
+        continue if !_.contains(['input', 'textarea', 'select', 'multiselect', 'integer', 'boolean', 'tree_select', 'date', 'datetime'], row.tag)
         continue if _.contains(['created_at', 'updated_at'], row.name)
         continue if groupKey is 'ticket' && _.contains(['number', 'organization_id', 'title', 'escalation_at', 'first_response_escalation_at', 'update_escalation_at', 'close_escalation_at', 'last_contact_at', 'last_contact_agent_at', 'last_contact_customer_at', 'first_response_at', 'close_at'], row.name)
 
@@ -73,7 +73,7 @@ class App.UiElement.core_workflow_perform extends App.UiElement.ApplicationSelec
           config = _.clone(row)
           if config.tag is 'boolean'
             config.tag = 'select'
-          if config.tag is 'select'
+          if /^((multi)?select)$/.test(config.tag)
             config.multiple = true
             config.default  = undefined
           if config.type is 'email' || config.type is 'tel'
@@ -121,14 +121,14 @@ class App.UiElement.core_workflow_perform extends App.UiElement.ApplicationSelec
     currentOperator = elementRow.find('.js-operator option:selected').attr('value')
     name            = @buildValueName(elementFull, elementRow, groupAndAttribute, elements, meta, attribute)
 
-    if !_.contains(['add_option', 'remove_option', 'set_fixed_to', 'select', 'execute', 'fill_in', 'fill_in_empty'], currentOperator)
+    if !_.contains(['add_option', 'remove_option', 'set_fixed_to', 'select', 'multiselect', 'execute', 'fill_in', 'fill_in_empty'], currentOperator)
       elementRow.find('.js-value').addClass('hide').html('<input type="hidden" name="' + name + '" value="true" />')
       return
 
     super(elementFull, elementRow, groupAndAttribute, elements, meta, attribute)
 
   @buildValueConfigMultiple: (config, meta) ->
-    if _.contains(['add_option', 'remove_option', 'set_fixed_to', 'select'], meta.operator)
+    if _.contains(['add_option', 'remove_option', 'set_fixed_to', 'select', 'multiselect'], meta.operator)
       config.multiple = true
       config.nulloption = true
     else

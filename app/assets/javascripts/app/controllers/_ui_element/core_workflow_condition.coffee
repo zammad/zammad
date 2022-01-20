@@ -53,6 +53,7 @@ class App.UiElement.core_workflow_condition extends App.UiElement.ApplicationSel
       'boolean$': [__('is'), __('is not'), __('is set'), __('not set'), _('has changed'), __('changed to')]
       'integer$': [__('is'), __('is not'), __('is set'), __('not set'), _('has changed'), __('changed to')]
       '^select$': [__('is'), __('is not'), __('is set'), __('not set'), _('has changed'), __('changed to')]
+      '^multiselect$': [__('contains'), __('contains not'), __('contains all'), __('contains all not'), __('is set'), __('not set'), __('has changed'), __('changed to')]
       '^tree_select$': [__('is'), __('is not'), __('is set'), __('not set'), _('has changed'), __('changed to')]
       '^(input|textarea|richtext)$': [__('is'), __('is not'), __('is set'), __('not set'), _('has changed'), __('changed to'), __('regex match'), __('regex mismatch')]
 
@@ -147,7 +148,7 @@ class App.UiElement.core_workflow_condition extends App.UiElement.ApplicationSel
         }
 
       for row in App[groupMeta.model].configure_attributes
-        continue if !_.contains(['input', 'textarea', 'richtext', 'select', 'integer', 'boolean', 'active', 'tree_select', 'autocompletion_ajax'], row.tag)
+        continue if !_.contains(['input', 'textarea', 'richtext', 'multiselect', 'select', 'integer', 'boolean', 'active', 'tree_select', 'autocompletion_ajax'], row.tag)
         continue if groupKey is 'ticket' && _.contains(['number', 'title'], row.name)
 
         # ignore passwords and relations
@@ -155,7 +156,7 @@ class App.UiElement.core_workflow_condition extends App.UiElement.ApplicationSel
           config = _.clone(row)
           if config.tag is 'textarea'
             config.expanding = false
-          if config.tag is 'select'
+          if /^((multi)?select)$/.test(config.tag)
             config.multiple = true
             config.default  = undefined
           if config.type is 'email' || config.type is 'tel'

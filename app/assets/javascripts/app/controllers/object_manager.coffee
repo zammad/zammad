@@ -39,9 +39,16 @@ treeParams = (e, params) ->
     params.data_option.options = tree
   params
 
+multiselectParams = (params) ->
+  return params if !params.data_type || params.data_type isnt 'multiselect'
+
+  if typeof params.data_option.default is 'string'
+    params.data_option.default = new Array(params.data_option.default)
+  params
+
 setSelectDefaults = (el) ->
   data_type = el.find('select[name=data_type]').val()
-  return if data_type isnt 'select' && data_type isnt 'boolean'
+  return if !/^((multi)?select)$/.test(data_type) && data_type isnt 'boolean'
 
   el.find('.js-value, .js-valueTrue, .js-valueFalse').each(->
     element = $(@)
@@ -53,6 +60,19 @@ setSelectDefaults = (el) ->
       key_value = element.closest('tr').find('.js-key').val()
       element.val(key_value)
   )
+
+customsortDataOptions = ({target}, params) ->
+  return params if !params.data_option || params.data_option.customsort isnt 'on'
+
+  options = []
+  $(target).closest('.modal').find('table.js-Table tr.input-data-row').each( ->
+    $element = $(@)
+    name = $element.find('input.js-value').val().trim()
+    value = $element.find('input.js-key').val().trim()
+    options.push({name, value})
+  )
+  params.data_option.options = options
+  params
 
 class ObjectManager extends App.ControllerTabs
   requiredPermission: 'admin.object'
@@ -198,6 +218,8 @@ class New extends App.ControllerGenericNew
 
     params = @formParam(e.target)
     params = treeParams(e, params)
+    params = multiselectParams(params)
+    params = customsortDataOptions(e, params)
 
     # show attributes for create_middle in two column style
     if params.screens && params.screens.create_middle
@@ -261,6 +283,8 @@ class Edit extends App.ControllerGenericEdit
 
     params = @formParam(e.target)
     params = treeParams(e, params)
+    params = multiselectParams(params)
+    params = customsortDataOptions(e, params)
 
     # show attributes for create_middle in two column style
     if params.screens && params.screens.create_middle

@@ -11,18 +11,22 @@
     <tbody class="table-sortable">
       <% if @params.data_option && @params.data_option.mapped: %>
         <% for [key, display] in @params.data_option.mapped: %>
-        <tr class="input-data-row">
-          <td class="table-draggable"><%- @Icon('draggable') %></td>
-          <td class="settings-list-control-cell">
-            <input class="form-control form-control--small js-key" type="text" value="<%= key %>" required/>
-          <td class="settings-list-control-cell">
-            <input class="form-control form-control--small js-value" type="text" value="<%= display %>" name="data_option::options::<%= key %>" required/>
-          <td class="settings-list-row-control">
-            <input class="js-selected" type="radio" name="data_option::default" value="<%= key %>" <% if @params.data_option.default is key: %>checked<% end %>/>
-          <td class="settings-list-row-control">
-            <div class="btn btn--text js-remove">
-              <%- @Icon('trash') %> <%- @T('Remove') %>
-            </div>
+          <tr class="input-data-row">
+            <td class="table-draggable"><%- @Icon('draggable') %></td>
+            <td class="settings-list-control-cell">
+              <input class="form-control form-control--small js-key" type="text" value="<%= key %>" required/>
+            </td>
+            <td class="settings-list-control-cell">
+              <input class="form-control form-control--small js-value" type="text" value="<%= display %>" name="data_option::options::<%= key %>" required/>
+            </td>
+            <td class="settings-list-row-control">
+              <input class="js-selected" type="checkbox" name="data_option::default" value="<%= key %>" <% if _.include(@params.data_option.default, key): %>checked<% end %>/>
+            </td>
+            <td class="settings-list-row-control">
+              <div class="btn btn--text js-remove">
+                <%- @Icon('trash') %> <%- @T('Remove') %>
+              </div>
+            </td>
         <% end %>
       <% end %>
       <tr class="input-add-row">
@@ -32,7 +36,7 @@
         <td class="settings-list-control-cell">
           <input class="form-control form-control--small js-value" type="text" placeholder="<%- @T('Display') %>"/>
         <td class="settings-list-row-control">
-          <input class="js-selected" type="radio"/>
+          <input class="js-selected" type="checkbox"/>
         <td class="settings-list-row-control">
           <div class="btn btn--text btn--create js-add">
             <%- @Icon('plus-small') %> <%- @T('Add') %>
@@ -48,7 +52,7 @@
         <td class="settings-list-control-cell">
           <input class="form-control form-control--small js-value" type="text" value="" required/>
         <td class="settings-list-row-control">
-          <input class="js-selected" type="radio" name="data_option::default"/>
+          <input class="js-selected" type="checkbox" name="data_option::default"/>
         <td class="settings-list-row-control">
           <div class="btn btn--text js-remove">
             <%- @Icon('trash') %> <%- @T('Remove') %>

@@ -156,6 +156,28 @@ FactoryBot.define do
     end
   end
 
+  factory :object_manager_attribute_multiselect, parent: :object_manager_attribute do
+    default { '' }
+
+    data_type { 'multiselect' }
+    data_option do
+      {
+        'default'    => default,
+        'options'    => {
+          'key_1' => 'value_1',
+          'key_2' => 'value_2',
+          'key_3' => 'value_3',
+        },
+        'relation'   => '',
+        'nulloption' => true,
+        'multiple'   => true,
+        'null'       => true,
+        'translate'  => true,
+        'maxlength'  => 255
+      }
+    end
+  end
+
   factory :object_manager_attribute_tree_select, parent: :object_manager_attribute do
     default { '' }
 

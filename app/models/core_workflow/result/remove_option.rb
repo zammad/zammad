@@ -10,7 +10,7 @@ class CoreWorkflow::Result::RemoveOption < CoreWorkflow::Result::BaseOption
 
   def config_value
     result = Array(@perform_config['remove_option'])
-    result -= Array(saved_value)
+    result -= saved_value
     result
   end
 end

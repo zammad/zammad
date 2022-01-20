@@ -60,84 +60,250 @@ RSpec.describe NotificationFactory::Renderer do
     end
 
     context 'when handling ObjectManager::Attribute usage', db_strategy: :reset do
-
-      it 'correctly renders simple select attributes' do
-        create :object_manager_attribute_select, name: 'select'
+      before do
+        create_object_manager_attribute
         ObjectManager::Attribute.migration_execute
-
-        ticket = create :ticket, customer: @user, select: 'key_1'
-
-        renderer = build :notification_factory_renderer,
-                         objects:  { ticket: ticket },
-                         template: '#{ticket.select} _SEPERATOR_ #{ticket.select.value}'
-
-        expect(renderer.render).to eq 'key_1 _SEPERATOR_ value_1'
       end
 
-      it 'correctly renders select attributes on chained user object' do
-        create :object_manager_attribute_select,
-               object_lookup_id: ObjectLookup.by_name('User'),
-               name:             'select'
-        ObjectManager::Attribute.migration_execute
-
-        user = User.where(firstname: 'Nicole').first
-        user.select = 'key_2'
-        user.save
-        ticket = create :ticket, customer: user
-
-        renderer = build :notification_factory_renderer,
-                         objects:  { ticket: ticket },
-                         template: '#{ticket.customer.select} _SEPERATOR_ #{ticket.customer.select.value}'
-
-        expect(renderer.render).to eq 'key_2 _SEPERATOR_ value_2'
+      let(:renderer) do
+        build :notification_factory_renderer,
+              objects:  { ticket: ticket },
+              template: template
       end
 
-      it 'correctly renders select attributes on chained group object' do
-        create :object_manager_attribute_select,
-               object_lookup_id: ObjectLookup.by_name('Group'),
-               name:             'select'
-        ObjectManager::Attribute.migration_execute
-
-        ticket = create :ticket, customer: @user
-        group = ticket.group
-        group.select = 'key_3'
-        group.save
-
-        renderer = build :notification_factory_renderer,
-                         objects:  { ticket: ticket },
-                         template: '#{ticket.group.select} _SEPERATOR_ #{ticket.group.select.value}'
-
-        expect(renderer.render).to eq 'key_3 _SEPERATOR_ value_3'
+      shared_examples 'correctly rendering the attributes' do
+        it 'correctly renders the attributes' do
+          expect(renderer.render).to eq expected_render
+        end
       end
 
-      it 'correctly renders select attributes on chained organization object' do
-        create :object_manager_attribute_select,
-               object_lookup_id: ObjectLookup.by_name('Organization'),
-               name:             'select'
-        ObjectManager::Attribute.migration_execute
+      context 'with a simple select attribute' do
+        let(:create_object_manager_attribute) do
+          create :object_manager_attribute_select, name: 'select'
+        end
+        let(:ticket) { create :ticket, customer: @user, select: 'key_1' }
+        let(:template) { '#{ticket.select} _SEPERATOR_ #{ticket.select.value}' }
+        let(:expected_render) { 'key_1 _SEPERATOR_ value_1' }
 
-        @user.organization.select = 'key_2'
-        @user.organization.save
-        ticket = create :ticket, customer: @user
-
-        renderer = build :notification_factory_renderer,
-                         objects:  { ticket: ticket },
-                         template: '#{ticket.customer.organization.select} _SEPERATOR_ #{ticket.customer.organization.select.value}'
-
-        expect(renderer.render).to eq 'key_2 _SEPERATOR_ value_2'
+        it_behaves_like 'correctly rendering the attributes'
       end
 
-      it 'correctly renders tree select attributes' do
-        create :object_manager_attribute_tree_select, name: 'tree_select'
-        ObjectManager::Attribute.migration_execute
+      context 'with select attribute on chained user object' do
+        let(:create_object_manager_attribute) do
+          create :object_manager_attribute_select,
+                 object_lookup_id: ObjectLookup.by_name('User'),
+                 name:             'select'
+        end
 
-        ticket = create :ticket, customer: @user, tree_select: 'Incident::Hardware::Laptop'
+        let(:user) do
+          user = User.where(firstname: 'Nicole').first
+          user.select = 'key_2'
+          user.save
+          user
+        end
 
-        renderer = build :notification_factory_renderer,
-                         objects:  { ticket: ticket },
-                         template: '#{ticket.tree_select} _SEPERATOR_ #{ticket.tree_select.value}'
+        let(:ticket) { create :ticket, customer: user }
+        let(:template) { '#{ticket.customer.select} _SEPERATOR_ #{ticket.customer.select.value}' }
+        let(:expected_render) { 'key_2 _SEPERATOR_ value_2' }
 
-        expect(renderer.render).to eq 'Incident::Hardware::Laptop _SEPERATOR_ Incident::Hardware::Laptop'
+        it_behaves_like 'correctly rendering the attributes'
+      end
+
+      context 'with select attribute on chained group object' do
+        let(:create_object_manager_attribute) do
+          create :object_manager_attribute_select,
+                 object_lookup_id: ObjectLookup.by_name('Group'),
+                 name:             'select'
+        end
+        let(:template) { '#{ticket.group.select} _SEPERATOR_ #{ticket.group.select.value}' }
+        let(:expected_render) { 'key_3 _SEPERATOR_ value_3' }
+
+        let(:ticket) { create :ticket, customer: @user }
+
+        before do
+          group = ticket.group
+          group.select = 'key_3'
+          group.save
+        end
+
+        it_behaves_like 'correctly rendering the attributes'
+      end
+
+      context 'with select attribute on chained organization object' do
+        let(:create_object_manager_attribute) do
+          create :object_manager_attribute_select,
+                 object_lookup_id: ObjectLookup.by_name('Organization'),
+                 name:             'select'
+        end
+
+        let(:user) do
+          @user.organization.select = 'key_2'
+          @user.organization.save
+          @user
+        end
+
+        let(:ticket) { create :ticket, customer: user }
+        let(:template) { '#{ticket.customer.organization.select} _SEPERATOR_ #{ticket.customer.organization.select.value}' }
+        let(:expected_render) { 'key_2 _SEPERATOR_ value_2' }
+
+        it_behaves_like 'correctly rendering the attributes'
+      end
+
+      context 'with multiselect' do
+        context 'with a simple multiselect attribute' do
+          let(:create_object_manager_attribute) do
+            create :object_manager_attribute_multiselect, name: 'multiselect'
+          end
+          let(:ticket) { create :ticket, customer: @user, multiselect: ['key_1'] }
+          let(:template) { '#{ticket.multiselect} _SEPERATOR_ #{ticket.multiselect.value}' }
+          let(:expected_render) { 'key_1 _SEPERATOR_ value_1' }
+
+          it_behaves_like 'correctly rendering the attributes'
+        end
+
+        context 'with single multiselect attribute on chained user object' do
+          let(:create_object_manager_attribute) do
+            create :object_manager_attribute_multiselect,
+                   object_lookup_id: ObjectLookup.by_name('User'),
+                   name:             'multiselect'
+          end
+
+          let(:user) do
+            user = User.where(firstname: 'Nicole').first
+            user.multiselect = ['key_2']
+            user.save
+            user
+          end
+
+          let(:ticket) { create :ticket, customer: user }
+          let(:template) { '#{ticket.customer.multiselect} _SEPERATOR_ #{ticket.customer.multiselect.value}' }
+          let(:expected_render) { 'key_2 _SEPERATOR_ value_2' }
+
+          it_behaves_like 'correctly rendering the attributes'
+        end
+
+        context 'with single multiselect attribute on chained group object' do
+          let(:create_object_manager_attribute) do
+            create :object_manager_attribute_multiselect,
+                   object_lookup_id: ObjectLookup.by_name('Group'),
+                   name:             'multiselect'
+          end
+          let(:template) { '#{ticket.group.multiselect} _SEPERATOR_ #{ticket.group.multiselect.value}' }
+          let(:expected_render) { 'key_3 _SEPERATOR_ value_3' }
+
+          let(:ticket) { create :ticket, customer: @user }
+
+          before do
+            group = ticket.group
+            group.multiselect = ['key_3']
+            group.save
+          end
+
+          it_behaves_like 'correctly rendering the attributes'
+        end
+
+        context 'with single multiselect attribute on chained organization object' do
+          let(:create_object_manager_attribute) do
+            create :object_manager_attribute_multiselect,
+                   object_lookup_id: ObjectLookup.by_name('Organization'),
+                   name:             'multiselect'
+          end
+
+          let(:user) do
+            @user.organization.multiselect = ['key_2']
+            @user.organization.save
+            @user
+          end
+
+          let(:ticket) { create :ticket, customer: user }
+          let(:template) { '#{ticket.customer.organization.multiselect} _SEPERATOR_ #{ticket.customer.organization.multiselect.value}' }
+          let(:expected_render) { 'key_2 _SEPERATOR_ value_2' }
+
+          it_behaves_like 'correctly rendering the attributes'
+        end
+
+        context 'with a multiple multiselect attribute' do
+          let(:create_object_manager_attribute) do
+            create :object_manager_attribute_multiselect, name: 'multiselect'
+          end
+          let(:ticket) { create :ticket, customer: @user, multiselect: %w[key_1 key_2] }
+          let(:template) { '#{ticket.multiselect} _SEPERATOR_ #{ticket.multiselect.value}' }
+          let(:expected_render) { 'key_1, key_2 _SEPERATOR_ value_1, value_2' }
+
+          it_behaves_like 'correctly rendering the attributes'
+        end
+
+        context 'with multiple multiselect attribute on chained user object' do
+          let(:create_object_manager_attribute) do
+            create :object_manager_attribute_multiselect,
+                   object_lookup_id: ObjectLookup.by_name('User'),
+                   name:             'multiselect'
+          end
+
+          let(:user) do
+            user = User.where(firstname: 'Nicole').first
+            user.multiselect = %w[key_2 key_3]
+            user.save
+            user
+          end
+
+          let(:ticket) { create :ticket, customer: user }
+          let(:template) { '#{ticket.customer.multiselect} _SEPERATOR_ #{ticket.customer.multiselect.value}' }
+          let(:expected_render) { 'key_2, key_3 _SEPERATOR_ value_2, value_3' }
+
+          it_behaves_like 'correctly rendering the attributes'
+        end
+
+        context 'with multiple multiselect attribute on chained group object' do
+          let(:create_object_manager_attribute) do
+            create :object_manager_attribute_multiselect,
+                   object_lookup_id: ObjectLookup.by_name('Group'),
+                   name:             'multiselect'
+          end
+          let(:template) { '#{ticket.group.multiselect} _SEPERATOR_ #{ticket.group.multiselect.value}' }
+          let(:expected_render) { 'key_3, key_1 _SEPERATOR_ value_3, value_1' }
+
+          let(:ticket) { create :ticket, customer: @user }
+
+          before do
+            group = ticket.group
+            group.multiselect = %w[key_3 key_1]
+            group.save
+          end
+
+          it_behaves_like 'correctly rendering the attributes'
+        end
+
+        context 'with multiple multiselect attribute on chained organization object' do
+          let(:create_object_manager_attribute) do
+            create :object_manager_attribute_multiselect,
+                   object_lookup_id: ObjectLookup.by_name('Organization'),
+                   name:             'multiselect'
+          end
+
+          let(:user) do
+            @user.organization.multiselect = %w[key_2 key_1]
+            @user.organization.save
+            @user
+          end
+
+          let(:ticket) { create :ticket, customer: user }
+          let(:template) { '#{ticket.customer.organization.multiselect} _SEPERATOR_ #{ticket.customer.organization.multiselect.value}' }
+          let(:expected_render) { 'key_2, key_1 _SEPERATOR_ value_2, value_1' }
+
+          it_behaves_like 'correctly rendering the attributes'
+        end
+      end
+
+      context 'with a tree select attribute' do
+        let(:create_object_manager_attribute) do
+          create :object_manager_attribute_tree_select, name: 'tree_select'
+        end
+        let(:ticket) { create :ticket, customer: @user, tree_select: 'Incident::Hardware::Laptop' }
+        let(:template) { '#{ticket.tree_select} _SEPERATOR_ #{ticket.tree_select.value}' }
+        let(:expected_render) { 'Incident::Hardware::Laptop _SEPERATOR_ Incident::Hardware::Laptop' }
+
+        it_behaves_like 'correctly rendering the attributes'
       end
     end
   end

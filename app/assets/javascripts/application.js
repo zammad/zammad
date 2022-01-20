@@ -225,6 +225,7 @@ jQuery.fn.removeAttrs = function(regex) {
 // changes
 // - set type based on data('field-type')
 // - also catch [disabled] params
+// - return multiselect type to make sure that the data is always array
 jQuery.fn.extend( {
   serializeArrayWithType: function() {
     var r20 = /%20/g,
@@ -248,27 +249,29 @@ jQuery.fn.extend( {
         ( this.checked || !rcheckableType.test( type ) );
     } )
     .map( function( i, elem ) {
-      var $elem = jQuery( this );
-      var val = $elem.val();
-      var type = $elem.data('field-type');
+      var $elem       = jQuery( this );
+      var val         = $elem.val();
+      var type        = $elem.data('field-type');
+      var multiple    = $elem.prop('multiple');
+      var multiselect = multiple && $elem.hasClass('multiselect');
 
       var result;
       if ( val == null ) {
         // be sure that also null values are transferred
         // https://github.com/zammad/zammad/issues/944
         if ($elem.prop('multiple')) {
-          result = { name: elem.name, value: null, type: type }
+          result = { name: elem.name, value: null, type: type, multiselect: multiselect }
         } else {
           result = null
         }
       }
       else if ( jQuery.isArray( val ) ) {
         result = jQuery.map( val, function( val ) {
-          return { name: elem.name, value: val.replace( rCRLF, "\r\n" ), type: type };
+          return { name: elem.name, value: val.replace( rCRLF, "\r\n" ), type: type, multiselect: multiselect };
         } );
       }
       else {
-        result = { name: elem.name, value: val.replace( rCRLF, "\r\n" ), type: type };
+        result = { name: elem.name, value: val.replace( rCRLF, "\r\n" ), type: type, multiselect: multiselect };
       }
       return result;
     } ).get();

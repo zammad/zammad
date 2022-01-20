@@ -684,7 +684,6 @@ condition example
         end
         next
       end
-
       if selector['operator'] == 'is'
         if selector['pre_condition'] == 'not_set'
           if attributes[1].match?(%r{^(created_by|updated_by|owner|customer|user)_id})
@@ -779,65 +778,81 @@ condition example
         query += "#{attribute} NOT #{like} (?)"
         value = "%#{selector['value']}%"
         bind_params.push value
-      elsif selector['operator'] == 'contains all' && attributes[0] == 'ticket' && attributes[1] == 'tags'
-        query += "? = (
-                                              SELECT
-                                                COUNT(*)
-                                              FROM
-                                                tag_objects,
-                                                tag_items,
-                                                tags
-                                              WHERE
-                                                tickets.id = tags.o_id AND
-                                                tag_objects.id = tags.tag_object_id AND
-                                                tag_objects.name = 'Ticket' AND
-                                                tag_items.id = tags.tag_item_id AND
-                                                tag_items.name IN (?)
-                                            )"
-        bind_params.push selector['value'].count
-        bind_params.push selector['value']
-      elsif selector['operator'] == 'contains one' && attributes[0] == 'ticket' && attributes[1] == 'tags'
-        tables += ', tag_objects, tag_items, tags'
-        query += "
-          tickets.id = tags.o_id AND
-          tag_objects.id = tags.tag_object_id AND
-          tag_objects.name = 'Ticket' AND
-          tag_items.id = tags.tag_item_id AND
-          tag_items.name IN (?)"
+      elsif selector['operator'] == 'contains all'
+        if attributes[0] == 'ticket' && attributes[1] == 'tags'
+          query += "? = (
+                                                SELECT
+                                                  COUNT(*)
+                                                FROM
+                                                  tag_objects,
+                                                  tag_items,
+                                                  tags
+                                                WHERE
+                                                  tickets.id = tags.o_id AND
+                                                  tag_objects.id = tags.tag_object_id AND
+                                                  tag_objects.name = 'Ticket' AND
+                                                  tag_items.id = tags.tag_item_id AND
+                                                  tag_items.name IN (?)
+                                              )"
+          bind_params.push selector['value'].count
+          bind_params.push selector['value']
+        elsif Ticket.column_names.include?(attributes[1])
+          query += SqlHelper.new(object: Ticket).array_contains_all(attributes[1], selector['value'])
+        end
+      elsif selector['operator'] == 'contains one' && attributes[0] == 'ticket'
+        if attributes[1] == 'tags'
+          tables += ', tag_objects, tag_items, tags'
+          query += "
+            tickets.id = tags.o_id AND
+            tag_objects.id = tags.tag_object_id AND
+            tag_objects.name = 'Ticket' AND
+            tag_items.id = tags.tag_item_id AND
+            tag_items.name IN (?)"
 
-        bind_params.push selector['value']
-      elsif selector['operator'] == 'contains all not' && attributes[0] == 'ticket' && attributes[1] == 'tags'
-        query += "0 = (
-                        SELECT
-                          COUNT(*)
-                        FROM
-                          tag_objects,
-                          tag_items,
-                          tags
-                        WHERE
-                          tickets.id = tags.o_id AND
-                          tag_objects.id = tags.tag_object_id AND
-                          tag_objects.name = 'Ticket' AND
-                          tag_items.id = tags.tag_item_id AND
-                          tag_items.name IN (?)
-                      )"
-        bind_params.push selector['value']
-      elsif selector['operator'] == 'contains one not' && attributes[0] == 'ticket' && attributes[1] == 'tags'
-        query += "(
-                    SELECT
-                      COUNT(*)
-                    FROM
-                      tag_objects,
-                      tag_items,
-                      tags
-                    WHERE
-                      tickets.id = tags.o_id AND
-                      tag_objects.id = tags.tag_object_id AND
-                      tag_objects.name = 'Ticket' AND
-                      tag_items.id = tags.tag_item_id AND
-                      tag_items.name IN (?)
-                  ) BETWEEN 0 AND 0"
-        bind_params.push selector['value']
+          bind_params.push selector['value']
+        elsif Ticket.column_names.include?(attributes[1])
+          query += SqlHelper.new(object: Ticket).array_contains_one(attributes[1], selector['value'])
+        end
+      elsif selector['operator'] == 'contains all not' && attributes[0] == 'ticket'
+        if attributes[1] == 'tags'
+          query += "0 = (
+                          SELECT
+                            COUNT(*)
+                          FROM
+                            tag_objects,
+                            tag_items,
+                            tags
+                          WHERE
+                            tickets.id = tags.o_id AND
+                            tag_objects.id = tags.tag_object_id AND
+                            tag_objects.name = 'Ticket' AND
+                            tag_items.id = tags.tag_item_id AND
+                            tag_items.name IN (?)
+                        )"
+          bind_params.push selector['value']
+        elsif Ticket.column_names.include?(attributes[1])
+          query += SqlHelper.new(object: Ticket).array_contains_all(attributes[1], selector['value'], negated: true)
+        end
+      elsif selector['operator'] == 'contains one not' && attributes[0] == 'ticket'
+        if attributes[1] == 'tags'
+          query += "(
+                      SELECT
+                        COUNT(*)
+                      FROM
+                        tag_objects,
+                        tag_items,
+                        tags
+                      WHERE
+                        tickets.id = tags.o_id AND
+                        tag_objects.id = tags.tag_object_id AND
+                        tag_objects.name = 'Ticket' AND
+                        tag_items.id = tags.tag_item_id AND
+                        tag_items.name IN (?)
+                    ) BETWEEN 0 AND 0"
+          bind_params.push selector['value']
+        elsif Ticket.column_names.include?(attributes[1])
+          query += SqlHelper.new(object: Ticket).array_contains_one(attributes[1], selector['value'], negated: true)
+        end
       elsif selector['operator'] == 'before (absolute)'
         query += "#{attribute} <= ?"
         bind_params.push selector['value']

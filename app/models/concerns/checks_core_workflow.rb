@@ -39,7 +39,11 @@ module ChecksCoreWorkflow
   end
 
   def restricted_value?(perform_result, key)
-    perform_result[:restrict_values][key].any? { |value| value.to_s == self[key].to_s }
+    if self[key].is_a?(Array)
+      (self[key].map(&:to_s) - perform_result[:restrict_values][key].map(&:to_s)).blank?
+    else
+      perform_result[:restrict_values][key].any? { |value| value.to_s == self[key].to_s }
+    end
   end
 
   def check_mandatory(perform_result)

@@ -2376,4 +2376,68 @@ RSpec.describe 'Ticket zoom', type: :system do
       expect(page).to have_select('state_id', selected: 'new')
     end
   end
+
+  describe 'Multiselect displaying and saving', authenticated_as: :authenticate, db_strategy: :reset do
+    let(:field_name) { SecureRandom.uuid }
+    let(:ticket) { create(:ticket, group: Group.find_by(name: 'Users'), field_name => %w[key_2 key_3]) }
+
+    def authenticate
+      create :object_manager_attribute_multiselect, name: field_name, display: field_name, screens: {
+        'edit' => {
+          'ticket.agent' => {
+            'shown'    => true,
+            'required' => false,
+          }
+        }
+      }
+      ObjectManager::Attribute.migration_execute
+      ticket
+      true
+    end
+
+    before do
+      visit "#ticket/zoom/#{ticket.id}"
+    end
+
+    def multiselect_value
+      page.find("select[name='#{field_name}']").value
+    end
+
+    def multiselect_set(values)
+      multiselect_unset_all
+      values = Array(values)
+      values.each do |value|
+        page.find("select[name='#{field_name}']").select(value)
+      end
+    end
+
+    def multiselect_unset_all
+      values = page.all("select[name='#{field_name}'] option").map(&:text)
+      values.each do |value|
+        page.find("select[name='#{field_name}']").unselect(value)
+      end
+    end
+
+    it 'does show values properly and can save values also' do
+
+      # check ticket state rendering
+      wait(5).until { multiselect_value == %w[key_2 key_3] }
+      expect(multiselect_value).to eq(%w[key_2 key_3])
+
+      # save 2 values
+      multiselect_set(%w[value_1 value_2])
+      click '.js-submit'
+      expect(ticket.reload[field_name]).to eq(%w[key_1 key_2])
+
+      # save 1 value
+      multiselect_set(['value_1'])
+      click '.js-submit'
+      expect(ticket.reload[field_name]).to eq(['key_1'])
+
+      # unset all values
+      multiselect_unset_all
+      click '.js-submit'
+      expect(ticket.reload[field_name]).to be_nil
+    end
+  end
 end

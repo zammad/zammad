@@ -9,6 +9,7 @@ class ObjectManager::Attribute < ApplicationModel
     user_autocompletion
     checkbox
     select
+    multiselect
     tree_select
     datetime
     date
@@ -41,6 +42,9 @@ class ObjectManager::Attribute < ApplicationModel
   store :data_option_new
 
   before_validation :set_base_options
+
+  before_create :ensure_multiselect
+  before_update :ensure_multiselect
 
   scope :active,     -> { where(active:   true) }
   scope :editable,   -> { where(editable: true) }
@@ -588,11 +592,17 @@ to send no browser reload event, pass false
 
       data_type = nil
       case attribute.data_type
-      when %r{^input|select|tree_select|richtext|textarea|checkbox$}
+      when %r{^(input|select|tree_select|richtext|textarea|checkbox)$}
         data_type = :string
-      when %r{^integer|user_autocompletion$}
+      when %r{^(multiselect)$}
+        data_type = if Rails.application.config.db_column_array
+                      :string
+                    else
+                      :json
+                    end
+      when %r{^(integer|user_autocompletion)$}
         data_type = :integer
-      when %r{^boolean|active$}
+      when %r{^(boolean|active)$}
         data_type = :boolean
       when %r{^datetime$}
         data_type = :datetime
@@ -603,7 +613,7 @@ to send no browser reload event, pass false
       # change field
       if model.column_names.include?(attribute.name)
         case attribute.data_type
-        when %r{^input|select|tree_select|richtext|textarea|checkbox$}
+        when %r{^(input|select|tree_select|richtext|textarea|checkbox)$}
           ActiveRecord::Migration.change_column(
             model.table_name,
             attribute.name,
@@ -611,7 +621,21 @@ to send no browser reload event, pass false
             limit: attribute.data_option[:maxlength],
             null:  true
           )
-        when %r{^integer|user_autocompletion|datetime|date$}, %r{^boolean|active$}
+        when 'multiselect'
+          options = {
+            null: true,
+          }
+          if Rails.application.config.db_column_array
+            options[:array] = true
+          end
+
+          ActiveRecord::Migration.change_column(
+            model.table_name,
+            attribute.name,
+            data_type,
+            options,
+          )
+        when %r{^(integer|user_autocompletion|datetime|date)$}, %r{^(boolean|active)$}
           ActiveRecord::Migration.change_column(
             model.table_name,
             attribute.name,
@@ -635,7 +659,7 @@ to send no browser reload event, pass false
 
       # create field
       case attribute.data_type
-      when %r{^input|select|tree_select|richtext|textarea|checkbox$}
+      when %r{^(input|select|tree_select|richtext|textarea|checkbox)$}
         ActiveRecord::Migration.add_column(
           model.table_name,
           attribute.name,
@@ -643,7 +667,21 @@ to send no browser reload event, pass false
           limit: attribute.data_option[:maxlength],
           null:  true
         )
-      when %r{^integer|user_autocompletion$}, %r{^boolean|active$}, %r{^datetime|date$}
+      when 'multiselect'
+        options = {
+          null: true,
+        }
+        if Rails.application.config.db_column_array
+          options[:array] = true
+        end
+
+        ActiveRecord::Migration.add_column(
+          model.table_name,
+          attribute.name,
+          data_type,
+          options,
+        )
+      when %r{^(integer|user_autocompletion)$}, %r{^(boolean|active)$}, %r{^(datetime|date)$}
         ActiveRecord::Migration.add_column(
           model.table_name,
           attribute.name,
@@ -866,7 +904,7 @@ is certain attribute used by triggers, overviews or schedulers
     local_data_option[:null] = true if local_data_option[:null].nil?
 
     case data_type
-    when %r{^((tree_)?select|checkbox)$}
+    when %r{^((multi|tree_)?select|checkbox)$}
       local_data_option[:nulloption] = true if local_data_option[:nulloption].nil?
       local_data_option[:maxlength] ||= 255
     end
@@ -889,7 +927,7 @@ is certain attribute used by triggers, overviews or schedulers
   end
 
   def data_type_must_not_change
-    allowable_changes = %w[tree_select select input checkbox]
+    allowable_changes = %w[tree_select select multiselect input checkbox]
 
     return if !data_type_changed?
     return if (data_type_change - allowable_changes).empty?
@@ -961,7 +999,7 @@ is certain attribute used by triggers, overviews or schedulers
       data_option_maxlength_check
     when 'integer'
       data_option_min_max_check
-    when %r{^((tree_)?select|checkbox)$}
+    when %r{^((multi|tree_)?select|checkbox)$}
       data_option_default_check + data_option_relation_check
     when 'boolean'
       data_option_default_check + data_option_nil_check
@@ -970,5 +1008,12 @@ is certain attribute used by triggers, overviews or schedulers
     else
       []
     end
+  end
+
+  def ensure_multiselect
+    return if data_type != 'multiselect'
+    return if data_option && data_option[:multiple] == true
+
+    data_option[:multiple] = true
   end
 end

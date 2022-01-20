@@ -13,7 +13,7 @@ class CoreWorkflow::Result::SetFixedTo < CoreWorkflow::Result::BaseOption
 
   def config_value
     result = Array(@perform_config['set_fixed_to'])
-    result |= Array(saved_value)
+    result |= saved_value
     result
   end
 

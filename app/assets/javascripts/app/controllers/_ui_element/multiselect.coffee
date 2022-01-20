@@ -1,12 +1,14 @@
 # coffeelint: disable=camel_case_classes
-class App.UiElement.select extends App.UiElement.ApplicationUiElement
+class App.UiElement.multiselect extends App.UiElement.ApplicationUiElement
   @render: (attribute, params, form = {}) ->
 
     # set multiple option
-    if attribute.multiple
-      attribute.multiple = 'multiple'
+    attribute.multiple = 'multiple'
+
+    if attribute.class
+      attribute.class = "#{attribute.class} multiselect"
     else
-      attribute.multiple = ''
+      attribute.class = 'multiselect'
 
     if form.rejectNonExistentValues
       attribute.rejectNonExistentValues = true
@@ -20,9 +22,6 @@ class App.UiElement.select extends App.UiElement.ApplicationUiElement
     # build options list based on relation
     @getRelationOptionList(attribute, params)
 
-    # add null selection if needed
-    @addNullOption(attribute, params)
-
     # sort attribute.options
     @sortOptions(attribute, params)
 
@@ -35,43 +34,8 @@ class App.UiElement.select extends App.UiElement.ApplicationUiElement
     # filter attributes
     @filterOption(attribute, params)
 
-    item = $( App.view('generic/select')(attribute: attribute) )
-
-    # bind event listeners
-    @bindEventListeners(item, attribute, params)
-
     # return item
-    item
-
-  @bindEventListeners: (item, attribute, params) ->
-    if attribute.display_warn
-      item.bind('change', (e) =>
-        @bindWarnDisplayListener(e.target.value, attribute, params, item)
-      )
-
-      # initialization for default selection
-      @bindWarnDisplayListener(attribute.value, attribute, params, item)
-
-  @bindWarnDisplayListener: (selectedVal, attribute, params, item) ->
-    warn_visible = @shouldDisplayWarn(selectedVal, attribute, params)
-    @toggleDisplayWarn(warn_visible, attribute, item)
-
-  @shouldDisplayWarn: (selectedVal, attribute, params) ->
-    return if !selectedVal
-    return if !params
-    
-    params[attribute.name + '_is_display_warning'](selectedVal)
-
-  @toggleDisplayWarn: (warn_visible, attribute, item) ->
-    if !warn_visible
-      item.removeClass('display-warn')
-      item.find('.alert--warning').remove()
-      return
-
-    item.addClass('display-warn')
-    warn_elem = $('<div class="alert alert--warning" role="alert"></div>')
-    warn_elem.html(attribute.warn)
-    item.append(warn_elem)
+    $( App.view('generic/select')(attribute: attribute) )
 
   # 1. If attribute.value is not among the current options, then search within historical options
   # 2. If attribute.value is not among current and historical options, then add the value itself as an option
@@ -100,3 +64,10 @@ class App.UiElement.select extends App.UiElement.ApplicationUiElement
       attribute.options[value] = attribute.historical_options[value]
     else
       attribute.options[value] = value
+
+  @_selectedOptionsIsSelected: (value, record) ->
+    if _.isArray(value)
+      for valueItem in value
+        if @_selectedOptionsIsSelectedItem(valueItem, record)
+          return true
+    false

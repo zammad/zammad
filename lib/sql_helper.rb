@@ -6,6 +6,14 @@ class SqlHelper
     @object = object
   end
 
+  def db_column(column)
+    "#{ActiveRecord::Base.connection.quote_table_name(@object.table_name)}.#{ActiveRecord::Base.connection.quote_column_name(column)}"
+  end
+
+  def db_value(value)
+    ActiveRecord::Base.connection.quote_string(value)
+  end
+
   def get_param_key(key, params)
     sort_by = []
     if params[key].present? && params[key].is_a?(String)
@@ -97,7 +105,7 @@ order_by = [
 
   def set_sql_order_default(sql, default)
     if sql.blank? && default.present?
-      sql.push("#{ActiveRecord::Base.connection.quote_table_name(@object.table_name)}.#{ActiveRecord::Base.connection.quote_column_name(default)}")
+      sql.push(db_column(default))
     end
     sql
   end
@@ -128,7 +136,7 @@ sql = 'tickets.created_at, tickets.updated_at'
       next if value.blank?
       next if order_by[index].blank?
 
-      sql.push("#{ActiveRecord::Base.connection.quote_table_name(@object.table_name)}.#{ActiveRecord::Base.connection.quote_column_name(value)}")
+      sql.push(db_column(value))
     end
 
     sql = set_sql_order_default(sql, default)
@@ -162,11 +170,34 @@ sql = 'tickets.created_at ASC, tickets.updated_at DESC'
       next if value.blank?
       next if order_by[index].blank?
 
-      sql.push("#{ActiveRecord::Base.connection.quote_table_name(@object.table_name)}.#{ActiveRecord::Base.connection.quote_column_name(value)} #{order_by[index]}")
+      sql.push("#{db_column(value)} #{order_by[index]}")
     end
 
     sql = set_sql_order_default(sql, default)
 
     sql.join(', ')
   end
+
+  def array_contains_all(attribute, value, negated: false)
+    value = [''] if value.blank?
+    value = Array(value)
+    result = if Rails.application.config.db_column_array
+               "(#{db_column(attribute)} @> ARRAY[#{value.map { |v| "'#{db_value(v)}'" }.join(',')}]::varchar[])"
+             else
+               "JSON_CONTAINS(#{db_column(attribute)}, '#{db_value(value.to_json)}', '$')"
+             end
+    negated ? "NOT(#{result})" : "(#{result})"
+  end
+
+  def array_contains_one(attribute, value, negated: false)
+    value = [''] if value.blank?
+    value = Array(value)
+    result = if Rails.application.config.db_column_array
+               "(#{db_column(attribute)} && ARRAY[#{value.map { |v| "'#{db_value(v)}'" }.join(',')}]::varchar[])"
+             else
+               value.map { |v| "JSON_CONTAINS(#{db_column(attribute)}, '#{db_value(v.to_json)}', '$')" }.join(' OR ')
+             end
+    negated ? "NOT(#{result})" : "(#{result})"
+  end
+
 end

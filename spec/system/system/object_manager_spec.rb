@@ -107,6 +107,10 @@ RSpec.describe 'System > Objects', type: :system do
     ['Text', 'Select', 'Integer', 'Datetime', 'Date', 'Boolean', 'Tree Select'].each do |data_type|
       include_examples 'create and remove field with migration', data_type
     end
+
+    context 'with Multiselect' do
+      include_examples 'create and remove field with migration', 'Multiselect'
+    end
   end
 
   context 'when creating and modifying tree select fields', db_strategy: :reset do
@@ -168,25 +172,113 @@ RSpec.describe 'System > Objects', type: :system do
     # lexicographically ordered list of option strings
     let(:options) { %w[0 000.000 1 100.100 100.200 2 200.100 200.200 3 ä b n ö p sr ß st t ü v] }
     let(:options_hash) { options.reverse.to_h { |o| [o, o] } }
+    let(:cutomsort_options) { ['0', '1', '2', '3', 'v', 'ü', 't', 'st', 'ß', 'sr', 'p', 'ö', 'n', 'b', 'ä', '200.200', '200.100', '100.200', '100.100', '000.000'] }
 
-    let(:object_attribute) do
-      attribute = create(:object_manager_attribute_select, data_option: { options: options_hash, default: 0 }, position: 999)
+    before do
+      object_attribute
       ObjectManager::Attribute.migration_execute
-      attribute
+
+      refresh
+
+      visit '/#system/object_manager'
+      click 'tbody tr:last-child td:first-child'
     end
 
-    it 'preserves the sorting correctly' do
-      object_attribute
-      page.refresh
-      visit '/#system/object_manager'
-      click 'tbody tr:last-child'
+    shared_examples 'sorting options correctly' do
+      shared_examples 'preserving the sorting correctly' do
+        it 'preserves the sorting correctly' do
+          sorted_dialog_values = all('table.settings-list tbody tr td input.js-key').map(&:value).reject { |x| x == '' }
+          expect(sorted_dialog_values).to eq(expected_options)
 
-      sorted_dialog_values = all('table.settings-list tbody tr td:first-child input').map(&:value).reject { |x| x == '' }
-      expect(sorted_dialog_values).to eq(options)
+          visit '/#ticket/create'
+          sorted_ticket_values = all("select[name=#{object_attribute.name}] option").map(&:value).reject { |x| x == '' }
+          expect(sorted_ticket_values).to eq(expected_options)
+        end
+      end
 
-      visit '/#ticket/create'
-      sorted_ticket_values = all("select[name=#{object_attribute.name}] option").map(&:value).reject { |x| x == '' }
-      expect(sorted_ticket_values).to eq(options)
+      context 'with no customsort' do
+        let(:data_option) { { options: options_hash, default: 0 } }
+        let(:expected_options) { options } # sort lexicographically
+
+        it_behaves_like 'preserving the sorting correctly'
+      end
+
+      context 'with customsort' do
+        let(:options_hash) { options.reverse.collect { |o| { name: o, value: o } } }
+        let(:data_option) { { options: options_hash, default: 0, customsort: 'on' } }
+        let(:expected_options) { options.reverse } # preserves sorting from backend
+
+        it_behaves_like 'preserving the sorting correctly'
+      end
+    end
+
+    shared_examples 'sorting options correctly using drag and drop' do
+      shared_examples 'preserving drag and drop sorting correctly' do
+        it 'preserves drag and drop sorting correctly' do
+          sorted_dialog_values = all('table.settings-list tbody tr td input.js-key').map(&:value).reject { |x| x == '' }
+          expect(sorted_dialog_values).to eq(expected_options)
+        end
+      end
+
+      context 'with drag and drop sorting' do
+        let(:options) { %w[0 1 d u w] }
+        let(:options_hash) { options.to_h { |o| [o, o] } }
+
+        before do
+          # use drag and drop to reverse sort the options
+          within '.modal form' do
+            within '.js-dataMap table.js-Table .table-sortable' do
+              rows = all('tr.input-data-row td.table-draggable')
+              target = rows.last
+              pos = rows.size - 1
+              rows.each do |row|
+                next if pos <= 0
+
+                row.drag_to target
+                pos -= 1
+              end
+            end
+            click_button 'Submit'
+          end
+
+          click '.js-execute', wait: 7.minutes
+          # expect(page).to have_text('please reload your browser')
+          click '.modal-content button.js-submit'
+
+          refresh
+
+          visit '/#system/object_manager'
+          click 'tbody tr:last-child td:first-child'
+        end
+
+        context 'with no customsort' do
+          let(:data_option) { { options: options_hash, default: 0 } }
+          let(:expected_options) { options } # sort lexicographically
+
+          it_behaves_like 'preserving drag and drop sorting correctly'
+        end
+
+        context 'with customsort' do
+          let(:data_option) { { options: options_hash, default: 0, customsort: 'on' } }
+          let(:expected_options) { options.reverse } # preserves sorting from backend
+
+          it_behaves_like 'preserving drag and drop sorting correctly'
+        end
+      end
+    end
+
+    context 'with multiselect attribute' do
+      let(:object_attribute) { create(:object_manager_attribute_multiselect, data_option: data_option, position: 999) }
+
+      it_behaves_like 'sorting options correctly'
+      it_behaves_like 'sorting options correctly using drag and drop'
+    end
+
+    context 'with select attribute' do
+      let(:object_attribute) { create(:object_manager_attribute_select, data_option: data_option, position: 999) }
+
+      it_behaves_like 'sorting options correctly'
+      it_behaves_like 'sorting options correctly using drag and drop'
     end
   end
 
@@ -341,6 +433,34 @@ RSpec.describe 'System > Objects', type: :system do
       find('input[name=display]').set('select1')
 
       page.find('select[name=data_type]').select('Select')
+
+      page.first('div.js-add').click
+      page.first('div.js-add').click
+      page.first('div.js-add').click
+
+      counter = 0
+      page.all('.js-key').each do |field|
+        field.set(counter)
+        counter += 1
+      end
+
+      page.all('.js-value')[-2].set('special 2')
+      page.find('.js-submit').click
+
+      expected_data_options = {
+        '0' => '0',
+        '1' => '1',
+        '2' => 'special 2',
+      }
+
+      expect(ObjectManager::Attribute.last.data_option['options']).to eq(expected_data_options)
+    end
+
+    it 'checks smart defaults for multiselect field' do
+      fill_in 'Name', with: 'multiselect1'
+      find('input[name=display]').set('multiselect1')
+
+      page.find('select[name=data_type]').select('Multiselect')
 
       page.first('div.js-add').click
       page.first('div.js-add').click
@@ -526,6 +646,101 @@ RSpec.describe 'System > Objects', type: :system do
       fill_in 'Default time diff (minutes)', with: ''
 
       expect { page.find('.js-submit').click }.to change(ObjectManager::Attribute, :count).by(1)
+    end
+  end
+
+  context 'with drag and drop custom sort', db_strategy: :reset do
+    before do
+      visit '/#system/object_manager'
+      page.find('.js-new').click
+
+      page.find('select[name=data_type]').select data_type
+      fill_in 'Name', with: attribute_name
+      find('input[name=display]').set attribute_name
+    end
+
+    let(:attribute) { ObjectManager::Attribute.find_by(name: attribute_name) }
+    let(:data_options) do
+      {
+        '1' => 'one',
+        '2' => 'two',
+        '3' => 'three',
+        '4' => 'four',
+        '5' => 'five'
+      }
+    end
+
+    shared_examples 'having a custom sort option' do
+      it 'has a custom option checkbox' do
+        within '.modal-dialog form' do
+          expect(page).to have_field('data_option::customsort', type: 'checkbox', visible: :all)
+        end
+      end
+
+      context 'a context' do
+        before do
+          within '.modal-dialog form' do
+            within 'tr.input-add-row' do
+              5.times.each { first('div.js-add').click }
+            end
+
+            keys = data_options.keys
+            all_value_input = all('tr.input-data-row .js-value')
+            all_key_input = all('tr.input-data-row .js-key')
+
+            keys.each_with_index do |key, index|
+              all_key_input[index].set key
+              all_value_input[index].set data_options[key]
+            end
+          end
+        end
+
+        context 'with custom checkbox checked' do
+          it 'saves a customsort data option attribute' do
+            within '.modal-dialog form' do
+              check 'data_option::customsort', allow_label_click: true
+              click_button
+            end
+
+            # Update Database
+            click 'div.js-execute'
+            # Reload browser
+            refresh
+
+            expect(attribute['data_option']).to include('customsort' => 'on')
+          end
+        end
+
+        context 'with custom checkbox unchecked' do
+          it 'does not have a customsort data option attribute' do
+            within '.modal-dialog form' do
+              uncheck 'data_option::customsort', allow_label_click: true
+              click_button
+            end
+
+            # Update Database
+            click 'div.js-execute'
+            # Reload browser
+            refresh
+
+            expect(attribute['data_option']).not_to include('customsort' => 'on')
+          end
+        end
+      end
+    end
+
+    context 'when attribute is multiselect' do
+      let(:data_type) { 'Multiselect' }
+      let(:attribute_name) { 'multiselect_test' }
+
+      it_behaves_like 'having a custom sort option'
+    end
+
+    context 'when attribute is select' do
+      let(:data_type) { 'Select' }
+      let(:attribute_name) { 'select_test' }
+
+      it_behaves_like 'having a custom sort option'
     end
   end
 end

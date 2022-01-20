@@ -72,6 +72,27 @@ class App.UiElement.ApplicationUiElement
         }
     attribute.sortBy = null
 
+  @getConfigCustomSortOptionList: (attribute) ->
+    if attribute.customsort && attribute.customsort is 'on'
+      if !_.isEmpty(attribute.options)
+        selection = attribute.options
+        attribute.options = []
+        if _.isArray(selection)
+          attribute.options = @getConfigOptionListArray(attribute, selection)
+        else
+          keys = _.keys(selection)
+          for key in keys
+            name_new = selection[key]
+            if attribute.translate
+              name_new = App.i18n.translatePlain(name_new)
+            attribute.options.push {
+              name:  name_new
+              value: key
+            }
+        attribute.sortBy = null
+    else
+      @getConfigOptionList(attribute)
+
   @getRelationOptionList: (attribute, params) ->
 
     # build options list based on relation

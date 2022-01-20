@@ -32,6 +32,13 @@ RSpec.describe CheckForObjectAttributes, type: :db_migration do
       expect { migrate }
         .not_to change { attribute.reload.data_option }
     end
+
+    it 'does not change multiselect attribute' do
+      attribute = create(:object_manager_attribute_multiselect)
+
+      expect { migrate }
+        .not_to change { attribute.reload.data_option }
+    end
   end
 
   context 'for #data_option key:' do

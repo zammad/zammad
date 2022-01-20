@@ -234,8 +234,8 @@ class CoreWorkflow::Attributes
     return values if values == ['']
 
     saved_value = saved_attribute_value(attribute)
-    if saved_value.present? && values.exclude?(saved_value)
-      values |= Array(saved_value.to_s)
+    if saved_value.present?
+      values |= Array(saved_value).map(&:to_s)
     end
 
     if attribute[:nulloption] && values.exclude?('')

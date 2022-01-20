@@ -931,4 +931,220 @@ RSpec.describe Trigger, type: :model do
       end
     end
   end
+
+  describe 'multiselect triggers', db_strategy: :reset do
+
+    let(:attribute_name) { 'multiselect' }
+
+    let(:condition) do
+      { "ticket.#{attribute_name}" => { 'operator' => operator, 'value' => trigger_values } }
+    end
+
+    let(:perform) do
+      { 'article.note' => { 'subject' => 'Test subject note', 'internal' => 'true', 'body' => 'Test body note' } }
+    end
+
+    before do
+      create :object_manager_attribute_multiselect, name: attribute_name
+      ObjectManager::Attribute.migration_execute
+
+      described_class.destroy_all # Default DB state includes three sample triggers
+      trigger # create subject trigger
+    end
+
+    context 'when ticket is updated with a multiselect trigger condition', authenticated_as: :owner, db_strategy: :reset do
+      let(:options) do
+        {
+          a: 'a',
+          b: 'b',
+          c: 'c',
+          d: 'd',
+          e: 'e',
+        }
+      end
+
+      let(:trigger_values) { %w[a b c] }
+      let(:group) { create(:group) }
+      let(:owner) { create(:admin, group_ids: [group.id]) }
+      let!(:ticket) { create(:ticket, group: group,) }
+
+      before do
+        ticket.update_attribute(attribute_name, ticket_multiselect_values)
+      end
+
+      shared_examples 'updating the ticket with the trigger condition' do
+        it 'updates the ticket with the trigger condition' do
+          expect { TransactionDispatcher.commit }
+            .to change(Ticket::Article, :count).by(1)
+        end
+      end
+
+      shared_examples 'not updating the ticket with the trigger condition' do
+        it 'does not update the ticket with the trigger condition' do
+          expect { TransactionDispatcher.commit }
+            .to not_change(Ticket::Article, :count)
+        end
+      end
+
+      context "with 'contains all' used" do
+        let(:operator) { 'contains all' }
+
+        context 'when updated value is the same with trigger value' do
+          let(:ticket_multiselect_values) { trigger_values }
+
+          it_behaves_like 'updating the ticket with the trigger condition'
+        end
+
+        context 'when updated value is different from the trigger value' do
+          let(:ticket_multiselect_values) { options.values - trigger_values }
+
+          it_behaves_like 'not updating the ticket with the trigger condition'
+        end
+
+        context 'when no value is selected' do
+          let(:ticket_multiselect_values) { ['-'] }
+
+          it_behaves_like 'not updating the ticket with the trigger condition'
+        end
+
+        context 'when all value is selected' do
+          let(:ticket_multiselect_values) { options.values }
+
+          it_behaves_like 'updating the ticket with the trigger condition'
+        end
+
+        context 'when updated value contains one of the trigger value' do
+          let(:ticket_multiselect_values) { [trigger_values.first] }
+
+          it_behaves_like 'not updating the ticket with the trigger condition'
+        end
+
+        context 'when updated value does not contain one of the trigger value' do
+          let(:ticket_multiselect_values) { options.values - [trigger_values.first] }
+
+          it_behaves_like 'not updating the ticket with the trigger condition'
+        end
+      end
+
+      context "with 'contains one' used" do
+        let(:operator) { 'contains one' }
+
+        context 'when updated value is the same with trigger value' do
+          let(:ticket_multiselect_values) { trigger_values }
+
+          it_behaves_like 'updating the ticket with the trigger condition'
+        end
+
+        context 'when updated value is different from the trigger value' do
+          let(:ticket_multiselect_values) { options.values - trigger_values }
+
+          it_behaves_like 'not updating the ticket with the trigger condition'
+        end
+
+        context 'when no value is selected' do
+          let(:ticket_multiselect_values) { ['-'] }
+
+          it_behaves_like 'not updating the ticket with the trigger condition'
+        end
+
+        context 'when all value is selected' do
+          let(:ticket_multiselect_values) { options.values }
+
+          it_behaves_like 'updating the ticket with the trigger condition'
+        end
+
+        context 'when updated value contains only one of the trigger value' do
+          let(:ticket_multiselect_values) { [trigger_values.first] }
+
+          it_behaves_like 'updating the ticket with the trigger condition'
+        end
+
+        context 'when updated value does not contain one of the trigger value' do
+          let(:ticket_multiselect_values) { options.values - [trigger_values.first] }
+
+          it_behaves_like 'updating the ticket with the trigger condition'
+        end
+      end
+
+      context "with 'contains all not' used" do
+        let(:operator) { 'contains all not' }
+
+        context 'when updated value is the same with trigger value' do
+          let(:ticket_multiselect_values) { trigger_values }
+
+          it_behaves_like 'not updating the ticket with the trigger condition'
+        end
+
+        context 'when updated value is different from the trigger value' do
+          let(:ticket_multiselect_values) { options.values - trigger_values }
+
+          it_behaves_like 'updating the ticket with the trigger condition'
+        end
+
+        context 'when no value is selected' do
+          let(:ticket_multiselect_values) { ['-'] }
+
+          it_behaves_like 'updating the ticket with the trigger condition'
+        end
+
+        context 'when all value is selected' do
+          let(:ticket_multiselect_values) { options.values }
+
+          it_behaves_like 'not updating the ticket with the trigger condition'
+        end
+
+        context 'when updated value contains only one of the trigger value' do
+          let(:ticket_multiselect_values) { [trigger_values.first] }
+
+          it_behaves_like 'updating the ticket with the trigger condition'
+        end
+
+        context 'when updated value does not contain one of the trigger value' do
+          let(:ticket_multiselect_values) { options.values - [trigger_values.first] }
+
+          it_behaves_like 'updating the ticket with the trigger condition'
+        end
+      end
+
+      context "with 'contains one not' used" do
+        let(:operator) { 'contains one not' }
+
+        context 'when updated value is the same with trigger value' do
+          let(:ticket_multiselect_values) { trigger_values }
+
+          it_behaves_like 'not updating the ticket with the trigger condition'
+        end
+
+        context 'when updated value is different from the trigger value' do
+          let(:ticket_multiselect_values) { options.values - trigger_values }
+
+          it_behaves_like 'updating the ticket with the trigger condition'
+        end
+
+        context 'when no value is selected' do
+          let(:ticket_multiselect_values) { ['-'] }
+
+          it_behaves_like 'updating the ticket with the trigger condition'
+        end
+
+        context 'when all value is selected' do
+          let(:ticket_multiselect_values) { options.values }
+
+          it_behaves_like 'not updating the ticket with the trigger condition'
+        end
+
+        context 'when updated value contains only one of the trigger value' do
+          let(:ticket_multiselect_values) { [trigger_values.first] }
+
+          it_behaves_like 'not updating the ticket with the trigger condition'
+        end
+
+        context 'when updated value does not contain one of the trigger value' do
+          let(:ticket_multiselect_values) { options.values - [trigger_values.first] }
+
+          it_behaves_like 'not updating the ticket with the trigger condition'
+        end
+      end
+    end
+  end
 end

@@ -531,7 +531,10 @@ class App.ControllerForm extends App.Controller
         else
           param[item.name].push value
       else
-        param[item.name] = value
+        if item.multiselect && typeof value is 'string'
+          param[item.name] = new Array(value)
+        else
+          param[item.name] = value
 
     # verify if we have not checked checkboxes
     uncheckParam = {}

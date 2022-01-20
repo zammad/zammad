@@ -16,4 +16,16 @@ RSpec.configure do |config|
       end
     end
   end
+
+  config.filter_run_excluding db_adapter: lambda { |adapter|
+    adapter_config = ActiveRecord::Base.connection_config[:adapter]
+    case adapter
+    when :postgresql
+      adapter_config != 'postgresql'
+    when :mysql
+      adapter_config != 'mysql2'
+    else
+      false
+    end
+  }
 end
