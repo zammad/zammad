@@ -6,7 +6,7 @@
     - .rules_singletest
   before_script:
     - source /etc/profile.d/rvm.sh # ensure RVM is loaded
-    - source /opt/rh/rh-nodejs12/enable # ensure Node.js is available
+    - source /opt/rh/rh-nodejs*/enable # ensure Node.js is available
 
 rubocop:
   <<: *template_pre
@@ -72,7 +72,7 @@ coffeelint:
 stylelint:
   <<: *template_pre
   before_script:
-    - source /opt/rh/rh-nodejs12/enable
+    - source /opt/rh/rh-nodejs*/enable
     - yarn install
   script:
     - yarn lint:css
