@@ -702,6 +702,34 @@ Setting.create_if_not_exists(
   },
   frontend:    true
 )
+
+Setting.create_if_not_exists(
+  title:       __('Note - visibility confirmation dialog'),
+  name:        'ui_ticket_zoom_article_visibility_confirmation_dialog',
+  area:        'UI::TicketZoom',
+  description: __('Defines if the agent has to accept a confirmation dialog when changing the article visibility to "public".'),
+  options:     {
+    form: [
+      {
+        display: '',
+        null:    true,
+        name:    'ui_ticket_zoom_article_visibility_confirmation_dialog',
+        tag:     'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  state:       false,
+  preferences: {
+    prio:       100,
+    permission: ['admin.ui'],
+  },
+  frontend:    true
+)
+
 Setting.create_if_not_exists(
   title:       __('Email - subject field'),
   name:        'ui_ticket_zoom_article_email_subject',

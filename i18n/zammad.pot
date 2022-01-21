@@ -1724,8 +1724,8 @@ msgstr ""
 msgid "Clone"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/generic_description.coffee
-#: app/assets/javascripts/app/controllers/_application_controller/generic_error_modal.coffee
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_description.coffee
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_error_modal.coffee
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee
 #: app/assets/javascripts/app/controllers/_settings/area_proxy.coffee
 #: app/assets/javascripts/app/controllers/widget/error_modal.coffee
@@ -1862,7 +1862,6 @@ msgstr ""
 msgid "Configure Base"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/generic_destroy_confirm.coffee
 #: app/assets/javascripts/app/controllers/tag.coffee
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee
 #: app/assets/javascripts/app/views/agent_ticket_view/bulk.jst.eco
@@ -1871,6 +1870,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Confirm/submit dialog"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm.coffee
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_destroy_confirm.coffee
+msgid "Confirmation"
 msgstr ""
 
 #: app/assets/javascripts/app/views/knowledge_base/delete.coffee
@@ -2682,6 +2686,11 @@ msgstr ""
 msgid "Defines if the GitLab (http://www.gitlab.com) integration is enabled or not."
 msgstr ""
 
+#: db/migrate/20220119102815_issue3924_confirmation_dialog.rb
+#: db/seeds/settings.rb
+msgid "Defines if the agent has to accept a confirmation dialog when changing the article visibility to \"public\"."
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "Defines if the core workflow communication should run over ajax instead of websockets."
 msgstr ""
@@ -3120,7 +3129,7 @@ msgstr ""
 msgid "Department"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/generic_description.coffee
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_description.coffee
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
@@ -3250,9 +3259,13 @@ msgstr ""
 msgid "Do not sign email"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/generic_destroy_confirm.coffee
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_destroy_confirm.coffee
 #: app/assets/javascripts/app/controllers/tag.coffee
 msgid "Do you really want to delete this object?"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_application_controller/article_public_confirm.coffee
+msgid "Do you really want to set the visibility of this article to \"public\"?"
 msgstr ""
 
 #: db/seeds/object_manager_attributes.rb
@@ -3762,7 +3775,7 @@ msgstr ""
 msgid "Enter your username or email address"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/generic_error_modal.coffee
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_error_modal.coffee
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee
 #: app/assets/javascripts/app/controllers/_settings/area_proxy.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee
@@ -4582,7 +4595,7 @@ msgstr ""
 msgid "Hi! Which one of our products?"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/generic_history.coffee
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 #: app/assets/javascripts/app/controllers/organization_profile.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee
 #: app/assets/javascripts/app/controllers/user_profile.coffee
@@ -6590,6 +6603,11 @@ msgstr ""
 msgid "Note - default visibility"
 msgstr ""
 
+#: db/migrate/20220119102815_issue3924_confirmation_dialog.rb
+#: db/seeds/settings.rb
+msgid "Note - visibility confirmation dialog"
+msgstr ""
+
 #: app/assets/javascripts/app/models/email_address.coffee
 #: app/assets/javascripts/app/models/group.coffee
 #: app/assets/javascripts/app/models/job.coffee
@@ -7384,6 +7402,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee
 msgid "Publish"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_application_controller/article_public_confirm.coffee
+msgid "Publish Article"
 msgstr ""
 
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco
@@ -8960,7 +8982,7 @@ msgstr ""
 msgid "The issue could not be saved."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/generic_new.coffee
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_new.coffee
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee
@@ -8970,7 +8992,7 @@ msgstr ""
 msgid "The object could not be created."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/generic_edit.coffee
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_edit.coffee
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee
 #: app/assets/javascripts/app/controllers/_settings/area_switch.coffee
 #: app/assets/javascripts/app/controllers/_settings/area_ticket_number.coffee
@@ -9187,7 +9209,7 @@ msgstr ""
 msgid "This signature is inactive, it won't be included in the reply. Change state <a href=\"#channels/email\">here</a>"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/generic_history.coffee
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 msgid "This ticket was merged into"
 msgstr ""
 
@@ -9210,7 +9232,7 @@ msgstr ""
 msgid "Thursday"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/generic_history.coffee
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 #: app/assets/javascripts/app/controllers/_manage/ticket.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
@@ -10442,6 +10464,7 @@ msgstr ""
 msgid "Yellow"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
 msgid "Yes"
 msgstr ""
@@ -10933,7 +10956,7 @@ msgstr ""
 msgid "default"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/generic_destroy_confirm.coffee
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_destroy_confirm.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/attachments.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/delete.coffee
@@ -11026,7 +11049,7 @@ msgstr ""
 msgid "for an agent to respond"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/generic_history.coffee
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 msgid "from"
 msgstr ""
 
@@ -11358,7 +11381,7 @@ msgstr ""
 msgid "select attachment…"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/generic_history.coffee
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 msgid "sent to"
 msgstr ""
 
@@ -11446,7 +11469,7 @@ msgstr ""
 msgid "telegram personal-message"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/generic_history.coffee
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 #: lib/calendar_subscriptions/tickets.rb
 msgid "ticket"
 msgstr ""
@@ -11515,7 +11538,7 @@ msgstr ""
 msgid "updated"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/generic_history.coffee
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 msgid "was merged into this ticket"
 msgstr ""
 
@@ -11543,7 +11566,6 @@ msgstr ""
 msgid "within next (relative)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/generic_destroy_confirm.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/boolean.coffee
 #: app/assets/javascripts/app/controllers/tag.coffee
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco

@@ -20,6 +20,21 @@ class Internal
   @perform: (articleContainer, type, ticket, article, ui) ->
     return true if type isnt 'internal' && type isnt 'public'
 
+    if type is 'public'
+      if App.Config.get('ui_ticket_zoom_article_visibility_confirmation_dialog')
+        new App.ControllerArticlePublicConfirm(
+          callback: =>
+            @change(articleContainer, article, ui)
+          container: ui.el.closest('.content')
+        )
+      else
+        @change(articleContainer, article, ui)
+    else
+      @change(articleContainer, article, ui)
+
+    true
+
+  @change: (articleContainer, article, ui) ->
     # storage update
     internal = true
     if article.internal == true
@@ -35,6 +50,5 @@ class Internal
 
     ui.render()
 
-    true
 
 App.Config.set('100-Internal', Internal, 'TicketZoomArticleAction')

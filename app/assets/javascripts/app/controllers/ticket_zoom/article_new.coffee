@@ -329,7 +329,14 @@ class App.TicketZoomArticleNew extends App.Controller
     if @articleNewEdit.hasClass('is-public')
       @setArticleInternal(true)
     else
-      @setArticleInternal(false)
+      if App.Config.get('ui_ticket_zoom_article_visibility_confirmation_dialog')
+        new App.ControllerArticlePublicConfirm(
+          callback: =>
+            @setArticleInternal(false)
+          container: $(e.target).closest('.content')
+        )
+      else
+        @setArticleInternal(false)
 
   showSelectableArticleType: (event) =>
     event.stopPropagation()

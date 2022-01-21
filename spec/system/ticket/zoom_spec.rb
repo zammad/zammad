@@ -2440,4 +2440,68 @@ RSpec.describe 'Ticket zoom', type: :system do
       expect(ticket.reload[field_name]).to be_nil
     end
   end
+
+  describe 'Add confirmation dialog on visibility change of an article or in article creation #3924', authenticated_as: :authenticate do
+    let(:ticket) { create(:ticket, group: Group.find_by(name: 'Users')) }
+    let(:article) { create(:ticket_article, ticket: ticket) }
+
+    before do
+      visit "#ticket/zoom/#{article.ticket.id}"
+    end
+
+    context 'when dialog is disabled' do
+      def authenticate
+        true
+      end
+
+      it 'does set the article internal and external for existing articles' do
+        expect { page.find('.js-ArticleAction[data-type=internal]').click }.to change { article.reload.internal }.to(true)
+        expect { page.find('.js-ArticleAction[data-type=public]').click }.to change { article.reload.internal }.to(false)
+      end
+
+      it 'does set the article internal and external for new article' do
+        page.find('.js-writeArea').click({ x: 5, y: 5 })
+        expect(page).to have_css('.article-new .icon-internal')
+        expect(page).to have_no_css('.article-new .icon-public')
+
+        page.find('.article-new .icon-internal').click
+        expect(page).to have_no_css('.article-new .icon-internal')
+        expect(page).to have_css('.article-new .icon-public')
+
+        page.find('.article-new .icon-public').click
+        expect(page).to have_css('.article-new .icon-internal')
+        expect(page).to have_no_css('.article-new .icon-public')
+      end
+    end
+
+    context 'when dialog is enabled' do
+      def authenticate
+        Setting.set('ui_ticket_zoom_article_visibility_confirmation_dialog', true)
+        true
+      end
+
+      it 'does set the article internal and external for existing articles' do
+        expect { page.find('.js-ArticleAction[data-type=internal]').click }.to change { article.reload.internal }.to(true)
+        page.find('.js-ArticleAction[data-type=public]').click
+        expect(page).to have_css('.modal-dialog')
+        expect { find('.modal-dialog button[type=submit]').click }.to change { article.reload.internal }.to(false)
+      end
+
+      it 'does set the article internal and external for new article' do
+        page.find('.js-writeArea').click({ x: 5, y: 5 })
+        expect(page).to have_css('.article-new .icon-internal')
+        expect(page).to have_no_css('.article-new .icon-public')
+
+        page.find('.article-new .icon-internal').click
+        expect(page).to have_css('.modal-dialog')
+        find('.modal-dialog button[type=submit]').click
+        expect(page).to have_no_css('.article-new .icon-internal')
+        expect(page).to have_css('.article-new .icon-public')
+
+        page.find('.article-new .icon-public').click
+        expect(page).to have_css('.article-new .icon-internal')
+        expect(page).to have_no_css('.article-new .icon-public')
+      end
+    end
+  end
 end
