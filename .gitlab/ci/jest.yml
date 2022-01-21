@@ -3,7 +3,7 @@ jest:
   extends:
     - .env_base
   before_script:
-    - source /opt/rh/rh-nodejs12/enable
+    - source /opt/rh/rh-nodejs*/enable
     - yarn install
   script:
     - yarn test
