@@ -60,7 +60,7 @@ class App.WidgetTemplate extends App.Controller
     return if !params['id']
 
     template = App.Template.find(params['id'])
-    if confirm('Sure?')
+    if confirm(__('Are you sure?'))
       @id = false
       template.destroy()
 

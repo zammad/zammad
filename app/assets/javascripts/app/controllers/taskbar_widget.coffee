@@ -127,7 +127,7 @@ class Remove extends App.ControllerModal
   buttonCancel: true
   buttonSubmit: __('Discard Changes')
   buttonClass: 'btn--danger'
-  head: __('Confirm')
+  head: __('Confirmation')
 
   content: ->
     App.i18n.translateContent('Tab has changed, do you really want to close it?')

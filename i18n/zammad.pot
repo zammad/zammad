@@ -847,7 +847,17 @@ msgstr ""
 msgid "Are you sure you want to reload? You have unsaved changes that will get lost"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_channel/email.coffee
+#: app/assets/javascripts/app/controllers/_channel/facebook.coffee
+#: app/assets/javascripts/app/controllers/_channel/google.coffee
+#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
+#: app/assets/javascripts/app/controllers/_channel/telegram.coffee
+#: app/assets/javascripts/app/controllers/_channel/twitter.coffee
+#: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
+#: app/assets/javascripts/app/controllers/maintenance.coffee
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/delete.coffee
+#: app/assets/javascripts/app/controllers/widget/template.coffee
 msgid "Are you sure?"
 msgstr ""
 
@@ -1879,18 +1889,15 @@ msgstr ""
 msgid "Configure Base"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/tag.coffee
-#: app/assets/javascripts/app/controllers/taskbar_widget.coffee
-#: app/assets/javascripts/app/views/agent_ticket_view/bulk.jst.eco
-msgid "Confirm"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Confirm/submit dialog"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm.coffee
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_destroy_confirm.coffee
+#: app/assets/javascripts/app/controllers/tag.coffee
+#: app/assets/javascripts/app/controllers/taskbar_widget.coffee
+#: app/assets/javascripts/app/views/agent_ticket_view/bulk.jst.eco
 msgid "Confirmation"
 msgstr ""
 
@@ -8714,18 +8721,6 @@ msgstr ""
 msgid "Support of multilingual Knowledge Base."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/email.coffee
-#: app/assets/javascripts/app/controllers/_channel/facebook.coffee
-#: app/assets/javascripts/app/controllers/_channel/google.coffee
-#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
-#: app/assets/javascripts/app/controllers/_channel/telegram.coffee
-#: app/assets/javascripts/app/controllers/_channel/twitter.coffee
-#: app/assets/javascripts/app/controllers/_profile/token_access.coffee
-#: app/assets/javascripts/app/controllers/maintenance.coffee
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/delete.coffee
-msgid "Sure?"
-msgstr ""
-
 #: db/seeds/schedulers.rb
 msgid "Sync calendars with ical feeds."
 msgstr ""
@@ -10534,6 +10529,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
+#: app/assets/javascripts/app/controllers/tag.coffee
 msgid "Yes"
 msgstr ""
 
@@ -11624,7 +11620,6 @@ msgid "within next (relative)"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/boolean.coffee
-#: app/assets/javascripts/app/controllers/tag.coffee
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco
 msgid "yes"
 msgstr ""

@@ -63,7 +63,7 @@ class ProfileTokenAccess extends App.ControllerSubContent
       )
 
     new App.ControllerConfirm(
-      message: __('Sure?')
+      message: __('Are you sure?')
       callback: callback
       container: @el.closest('.content')
     )

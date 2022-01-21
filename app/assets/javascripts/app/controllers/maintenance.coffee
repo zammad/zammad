@@ -52,7 +52,7 @@ class Maintenance extends App.ControllerSubContent
       )
     if value
       new App.ControllerConfirm(
-        message: __('Sure?')
+        message: __('Are you sure?')
         callback: callback
         onCancel: =>
           @modeSetting.prop('checked', false)

@@ -136,7 +136,7 @@ class ChannelAccountOverview extends App.ControllerSubContent
     e.preventDefault()
     id   = $(e.target).closest('.action').data('id')
     new App.ControllerConfirm(
-      message: __('Sure?')
+      message: __('Are you sure?')
       callback: =>
         @ajax(
           id:   'microsoft365_delete'
