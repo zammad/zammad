@@ -1,3 +1,6 @@
+# Don't complain when changing branches with different overcommit configurations.
+verify_signatures: false
+
 CommitMsg:
   ALL:
     enabled: false
