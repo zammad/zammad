@@ -272,8 +272,9 @@ msgstr ""
 msgid "2 hours"
 msgstr ""
 
+#: db/migrate/20220121101413_setting_updates.rb
 #: db/seeds/settings.rb
-msgid "2 lower and 2 upper characters"
+msgid "2 lower case and 2 upper case characters"
 msgstr ""
 
 #: db/seeds/ticket_priorities.rb
@@ -305,7 +306,7 @@ msgid "A URL looks like this: https://zammad.example.com"
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "A list of active import backends that get scheduled automatically."
+msgid "A list of active import backends that gets scheduled automatically."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/session_taken_over.coffee
@@ -590,6 +591,7 @@ msgstr ""
 msgid "Additional Channels"
 msgstr ""
 
+#: db/migrate/20220121101413_setting_updates.rb
 #: db/seeds/settings.rb
 msgid "Additional follow-up detection"
 msgstr ""
@@ -687,16 +689,17 @@ msgstr ""
 msgid "Allow past"
 msgstr ""
 
-#: db/seeds/settings.rb
-msgid "Allow to use email address for muliple users."
-msgstr ""
-
 #: app/assets/javascripts/app/views/tag/index.jst.eco
 msgid "Allow users to add new tags."
 msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Allow users to create new tags."
+msgstr ""
+
+#: db/migrate/20220121101413_setting_updates.rb
+#: db/seeds/settings.rb
+msgid "Allow using one email address for multiple users."
 msgstr ""
 
 #: app/assets/javascripts/app/models/chat.coffee
@@ -707,8 +710,9 @@ msgstr ""
 msgid "Also notify via email"
 msgstr ""
 
+#: db/migrate/20220121101413_setting_updates.rb
 #: db/seeds/settings.rb
-msgid "Alternative FQDN for callbacks if you operate Zammad in internal network."
+msgid "Alternative FQDN for callbacks if you operate Zammad in an internal network."
 msgstr ""
 
 #: app/helpers/knowledge_base_breadcrumb_helper.rb
@@ -1024,12 +1028,10 @@ msgstr ""
 msgid "Authorization failed"
 msgstr ""
 
-#: db/seeds/settings.rb
-msgid "Auto Assigment"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_manage/ticket.coffee
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco
+#: db/migrate/20220121101413_setting_updates.rb
+#: db/seeds/settings.rb
 msgid "Auto Assignment"
 msgstr ""
 
@@ -1041,12 +1043,13 @@ msgstr ""
 msgid "Auto close"
 msgstr ""
 
-#: db/seeds/settings.rb
-msgid "Auto close state"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee
 msgid "Auto create"
+msgstr ""
+
+#: db/migrate/20220121101413_setting_updates.rb
+#: db/seeds/settings.rb
+msgid "Auto-close state"
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -1088,6 +1091,11 @@ msgstr ""
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_reopen.jst.eco
 msgid "Average: %s%"
+msgstr ""
+
+#: db/migrate/20220121101413_setting_updates.rb
+#: db/seeds/settings.rb
+msgid "BCC address for all outgoing emails"
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/object_search/item_organization_members.jst.eco
@@ -1138,10 +1146,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee
 msgid "Basic Settings"
-msgstr ""
-
-#: db/seeds/settings.rb
-msgid "Bcc address for all outgoing emails"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
@@ -1252,12 +1256,9 @@ msgstr ""
 msgid "But it's only available in these languages:"
 msgstr ""
 
+#: db/migrate/20220121101413_setting_updates.rb
 #: db/seeds/settings.rb
-msgid "Button for Single Sign On."
-msgstr ""
-
-#: db/seeds/settings.rb
-msgid "By default the follow-up check is done via the subject of an email. With this setting you can add more fields for which the follow-up check will be executed."
+msgid "By default, the follow-up check is done via the subject of an email. This setting lets you add more fields for which the follow-up check will be executed."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee
@@ -1286,8 +1287,24 @@ msgstr ""
 msgid "CTI (generic)"
 msgstr ""
 
+#: db/migrate/20220121101413_setting_updates.rb
 #: db/seeds/settings.rb
 msgid "CTI Token"
+msgstr ""
+
+#: db/migrate/20220121101413_setting_updates.rb
+#: db/seeds/settings.rb
+msgid "CTI config"
+msgstr ""
+
+#: db/migrate/20220121101413_setting_updates.rb
+#: db/seeds/settings.rb
+msgid "CTI customer last activity"
+msgstr ""
+
+#: db/migrate/20220121101413_setting_updates.rb
+#: db/seeds/settings.rb
+msgid "CTI integration"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee
@@ -2322,6 +2339,7 @@ msgstr ""
 msgid "Customer Chat"
 msgstr ""
 
+#: db/migrate/20220121101413_setting_updates.rb
 #: db/seeds/settings.rb
 msgid "Customer selection based on sender and receiver list"
 msgstr ""
@@ -2469,10 +2487,6 @@ msgstr ""
 msgid "Default type for a new ticket"
 msgstr ""
 
-#: db/seeds/settings.rb
-msgid "Default visibility for new note."
-msgstr ""
-
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco
 #: db/seeds/settings.rb
 msgid "Define an exception of \"automatic assignment\" for certain users (e.g. executives)."
@@ -2491,10 +2505,6 @@ msgid "Define pipeline name for Elasticsearch."
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Define postmaster filter to check if email is a own created notification email, then ignore it to prevent email loops."
-msgstr ""
-
-#: db/seeds/settings.rb
 msgid "Define postmaster filter to check if follow-ups get created (based on admin settings)."
 msgstr ""
 
@@ -2502,28 +2512,18 @@ msgstr ""
 msgid "Define postmaster filter to import archive mailboxes."
 msgstr ""
 
+#: db/migrate/20220121101413_setting_updates.rb
 #: db/seeds/settings.rb
 msgid "Define postmaster filter."
-msgstr ""
-
-#: db/seeds/settings.rb
-msgid "Define the http protocol of your instance."
-msgstr ""
-
-#: db/seeds/settings.rb
-msgid "Define timeframe where a own created note can get deleted."
 msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Defines Elasticsearch index name."
 msgstr ""
 
+#: db/migrate/20220121101413_setting_updates.rb
 #: db/seeds/settings.rb
-msgid "Defines Freshdesk endpoint authentication key."
-msgstr ""
-
-#: db/seeds/settings.rb
-msgid "Defines Freshdesk endpoint to import users, ticket, states and articles."
+msgid "Defines Freshdesk endpoint authentication API key."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -2532,6 +2532,11 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Defines HTTP basic auth user of Elasticsearch."
+msgstr ""
+
+#: db/migrate/20220121101413_setting_updates.rb
+#: db/seeds/settings.rb
+msgid "Defines HTTP basic authentication password (only if OTRS is protected via HTTP basic auth)."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -2547,31 +2552,61 @@ msgid "Defines Kayako endpoint authentication user."
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Defines Kayako endpoint to import users, ticket, states and articles."
-msgstr ""
-
-#: db/seeds/settings.rb
 msgid "Defines OTRS endpoint authentication key."
 msgstr ""
 
+#: db/migrate/20220121101413_setting_updates.rb
 #: db/seeds/settings.rb
-msgid "Defines OTRS endpoint to import users, tickets, states and articles."
-msgstr ""
-
-#: db/seeds/settings.rb
-msgid "Defines Zendesk endpoint authentication key."
+msgid "Defines Zendesk endpoint authentication API key."
 msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Defines Zendesk endpoint authentication user."
 msgstr ""
 
+#: db/migrate/20220121101413_setting_updates.rb
 #: db/seeds/settings.rb
-msgid "Defines Zendesk endpoint to import users, ticket, states and articles."
+msgid "Defines a Freshdesk endpoint to import users, tickets, states, and articles."
 msgstr ""
 
+#: db/migrate/20220121101413_setting_updates.rb
 #: db/seeds/settings.rb
-msgid "Defines a dashboard stats backend that get scheduled automatically."
+msgid "Defines a Kayako endpoint to import users, tickets, states, and articles."
+msgstr ""
+
+#: db/migrate/20220121101413_setting_updates.rb
+#: db/seeds/settings.rb
+msgid "Defines a Zendesk endpoint to import users, tickets, states, and articles."
+msgstr ""
+
+#: db/migrate/20220121101413_setting_updates.rb
+#: db/seeds/settings.rb
+msgid "Defines a dashboard stats backend that gets scheduled automatically."
+msgstr ""
+
+#: db/migrate/20220121101413_setting_updates.rb
+#: db/seeds/settings.rb
+msgid "Defines a limit for how many tickets can be created via web form from one IP address per day."
+msgstr ""
+
+#: db/migrate/20220121101413_setting_updates.rb
+#: db/seeds/settings.rb
+msgid "Defines a limit for how many tickets can be created via web form from one IP address per hour."
+msgstr ""
+
+#: db/migrate/20220121101413_setting_updates.rb
+#: db/seeds/settings.rb
+msgid "Defines a limit for how many tickets can be created via web form per day."
+msgstr ""
+
+#: db/migrate/20220121101413_setting_updates.rb
+#: db/seeds/settings.rb
+msgid "Defines after how many failed logins accounts will be deactivated."
+msgstr ""
+
+#: db/migrate/20220121101413_setting_updates.rb
+#: db/seeds/settings.rb
+msgid "Defines an OTRS endpoint to import users, tickets, states, and articles."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -2595,10 +2630,6 @@ msgid "Defines how to reach websocket server. \"websocket\" is default on produc
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Defines http basic authentication password (only if OTRS is protected via http basic auth)."
-msgstr ""
-
-#: db/seeds/settings.rb
 msgid "Defines if Checkmk (https://checkmk.com/) is enabled or not."
 msgstr ""
 
@@ -2614,12 +2645,14 @@ msgstr ""
 msgid "Defines if Icinga (http://www.icinga.org) is enabled or not."
 msgstr ""
 
+#: db/migrate/20220121101413_setting_updates.rb
 #: db/seeds/settings.rb
-msgid "Defines if KB navbar button is enabled"
+msgid "Defines if Knowledge Base navbar button is enabled for users without Knowledge Base permission."
 msgstr ""
 
+#: db/migrate/20220121101413_setting_updates.rb
 #: db/seeds/settings.rb
-msgid "Defines if KB navbar button is enabled for users without KB permission"
+msgid "Defines if Knowledge Base navbar button is enabled."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -2651,10 +2684,6 @@ msgid "Defines if a customer can create tickets via the web interface."
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Defines if application is in developer mode (useful for developer, all users have the same password, password reset will work without email delivery)."
-msgstr ""
-
-#: db/seeds/settings.rb
 msgid "Defines if application is in init mode."
 msgstr ""
 
@@ -2662,12 +2691,9 @@ msgstr ""
 msgid "Defines if application is used as online service."
 msgstr ""
 
+#: db/migrate/20220121101413_setting_updates.rb
 #: db/seeds/settings.rb
-msgid "Defines if generic CTI is enabled or not."
-msgstr ""
-
-#: db/seeds/settings.rb
-msgid "Defines if group of created tickets via web form."
+msgid "Defines if generic CTI integration is enabled or not."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -2691,8 +2717,18 @@ msgstr ""
 msgid "Defines if the agent has to accept a confirmation dialog when changing the article visibility to \"public\"."
 msgstr ""
 
+#: db/migrate/20220121101413_setting_updates.rb
+#: db/seeds/settings.rb
+msgid "Defines if the application is in developer mode (all users have the same password and password reset will work without email delivery)."
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "Defines if the core workflow communication should run over ajax instead of websockets."
+msgstr ""
+
+#: db/migrate/20220121101413_setting_updates.rb
+#: db/seeds/settings.rb
+msgid "Defines if the email should be displayed in the result of the user/organization widget."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -2708,18 +2744,6 @@ msgid "Defines karma levels."
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Defines limit of tickets by ip per day via web form."
-msgstr ""
-
-#: db/seeds/settings.rb
-msgid "Defines limit of tickets by ip per hour via web form."
-msgstr ""
-
-#: db/seeds/settings.rb
-msgid "Defines limit of tickets per day via web form."
-msgstr ""
-
-#: db/seeds/settings.rb
 msgid "Defines postmaster filter for filters managed via admin interface."
 msgstr ""
 
@@ -2727,8 +2751,23 @@ msgstr ""
 msgid "Defines postmaster filter to check if email has been created by Zammad itself and will set the article sender."
 msgstr ""
 
+#: db/migrate/20220121101413_setting_updates.rb
+#: db/seeds/settings.rb
+msgid "Defines postmaster filter to check if the email is a self-created notification email, then ignore it to prevent email loops."
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "Defines postmaster filter to handle secure mailing."
+msgstr ""
+
+#: db/migrate/20220121101413_setting_updates.rb
+#: db/seeds/settings.rb
+msgid "Defines postmaster filter to identify Jira mails for correct follow-ups."
+msgstr ""
+
+#: db/migrate/20220121101413_setting_updates.rb
+#: db/seeds/settings.rb
+msgid "Defines postmaster filter to identify ServiceNow mails for correct follow-ups."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -2744,31 +2783,26 @@ msgid "Defines postmaster filter to identify follow-ups (based on admin settings
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Defines postmaster filter to identify jira mails for correct follow-ups."
-msgstr ""
-
-#: db/seeds/settings.rb
 msgid "Defines postmaster filter to identify out-of-office emails for follow-up detection and keeping current ticket state."
 msgstr ""
 
+#: db/migrate/20220121101413_setting_updates.rb
 #: db/seeds/settings.rb
-msgid "Defines postmaster filter to identify postmaster bounced - disable sending notification on permanent deleivery failed."
+msgid "Defines postmaster filter to identify postmaster bounces; and disables sending notification if delivery fails permanently."
 msgstr ""
 
+#: db/migrate/20220121101413_setting_updates.rb
 #: db/seeds/settings.rb
-msgid "Defines postmaster filter to identify postmaster bounced - reopen ticket on permanent temporary failed."
+msgid "Defines postmaster filter to identify postmaster bounces; and handles them as follow-up of the original tickets"
 msgstr ""
 
+#: db/migrate/20220121101413_setting_updates.rb
 #: db/seeds/settings.rb
-msgid "Defines postmaster filter to identify postmaster bounced - to handle it as follow-up of the original ticket."
+msgid "Defines postmaster filter to identify postmaster bounces; and reopens tickets if delivery fails permanently."
 msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Defines postmaster filter to identify sender user."
-msgstr ""
-
-#: db/seeds/settings.rb
-msgid "Defines postmaster filter to identify service now mails for correct follow-ups."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -2783,8 +2817,9 @@ msgstr ""
 msgid "Defines postmaster filter to manage Nagios (http://www.nagios.org) emails."
 msgstr ""
 
+#: db/migrate/20220121101413_setting_updates.rb
 #: db/seeds/settings.rb
-msgid "Defines postmaster filter to remove X-Zammad headers from not trusted sources."
+msgid "Defines postmaster filter to remove X-Zammad headers from untrustworthy sources."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -2795,6 +2830,12 @@ msgstr ""
 msgid "Defines postmaster filter to set the sender/from of emails based on reply-to header."
 msgstr ""
 
+#: db/migrate/20220121101413_setting_updates.rb
+#: db/seeds/settings.rb
+msgid "Defines postmaster filter which sets the articles visibility to internal if it is a rely to an internal article or the last outgoing email is internal."
+msgstr ""
+
+#: db/migrate/20220121101413_setting_updates.rb
 #: db/seeds/settings.rb
 msgid "Defines postmaster filter."
 msgstr ""
@@ -2811,8 +2852,14 @@ msgstr ""
 msgid "Defines sync transaction backend."
 msgstr ""
 
+#: db/migrate/20220121101413_setting_updates.rb
 #: db/seeds/settings.rb
-msgid "Defines the CSS font information for HTML Emails."
+msgid "Defines the CSS font information for HTML emails."
+msgstr ""
+
+#: db/migrate/20220121101413_setting_updates.rb
+#: db/seeds/settings.rb
+msgid "Defines the CTI config."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -2827,6 +2874,11 @@ msgstr ""
 msgid "Defines the Exchange config."
 msgstr ""
 
+#: db/migrate/20220121101413_setting_updates.rb
+#: db/seeds/settings.rb
+msgid "Defines the HTTP protocol of your instance."
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "Defines the LDAP config."
 msgstr ""
@@ -2839,8 +2891,19 @@ msgstr ""
 msgid "Defines the S/MIME config."
 msgstr ""
 
+#: db/migrate/20220121101413_setting_updates.rb
 #: db/seeds/settings.rb
-msgid "Defines the backend for geo IP lookups. Shows also location of an IP address if an IP address is shown."
+msgid "Defines the Slack config."
+msgstr ""
+
+#: db/migrate/20220121101413_setting_updates.rb
+#: db/seeds/settings.rb
+msgid "Defines the agent limit."
+msgstr ""
+
+#: db/migrate/20220121101413_setting_updates.rb
+#: db/seeds/settings.rb
+msgid "Defines the backend for geo IP lookups. Also shows location of an IP address if it is traceable."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -2856,15 +2919,31 @@ msgid "Defines the backend for user and organization image lookups."
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Defines the cti config."
-msgstr ""
-
-#: db/seeds/settings.rb
 msgid "Defines the default calendar tickets subscription settings."
 msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Defines the default screen."
+msgstr ""
+
+#: db/migrate/20220121101413_setting_updates.rb
+#: db/seeds/settings.rb
+msgid "Defines the default system language."
+msgstr ""
+
+#: db/migrate/20220121101413_setting_updates.rb
+#: db/seeds/settings.rb
+msgid "Defines the default system timezone."
+msgstr ""
+
+#: db/migrate/20220121101413_setting_updates.rb
+#: db/seeds/settings.rb
+msgid "Defines the default visibility for new notes."
+msgstr ""
+
+#: db/migrate/20220121101413_setting_updates.rb
+#: db/seeds/settings.rb
+msgid "Defines the duration of customer activity (in seconds) on a call until the user profile dialog is shown."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -2873,6 +2952,11 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Defines the group of created tickets."
+msgstr ""
+
+#: db/migrate/20220121101413_setting_updates.rb
+#: db/seeds/settings.rb
+msgid "Defines the group of tickets created via web form."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -2884,10 +2968,6 @@ msgid "Defines the karma levels."
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Defines the limit of the agents."
-msgstr ""
-
-#: db/seeds/settings.rb
 msgid "Defines the log levels for various logging actions of the Sequencer."
 msgstr ""
 
@@ -2895,8 +2975,14 @@ msgstr ""
 msgid "Defines the logo of the application, shown in the web interface."
 msgstr ""
 
+#: db/migrate/20220121101413_setting_updates.rb
 #: db/seeds/settings.rb
-msgid "Defines the name of the application, shown in the web interface, tabs and title bar of the web browser."
+msgid "Defines the maximum accepted email size in MB."
+msgstr ""
+
+#: db/migrate/20220121101413_setting_updates.rb
+#: db/seeds/settings.rb
+msgid "Defines the name of the application, shown in the web interface, tabs, and title bar of the web browser."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -2904,15 +2990,7 @@ msgid "Defines the port of the websocket server."
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Defines the postmaster filter which set the article internal if a forwarded, replied or sent email also exists with the article internal received."
-msgstr ""
-
-#: db/seeds/settings.rb
 msgid "Defines the random application secret."
-msgstr ""
-
-#: db/seeds/settings.rb
-msgid "Defines the range in seconds of customer activity to trigger the user profile dialog on call."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -2947,20 +3025,9 @@ msgstr ""
 msgid "Defines the sipgate.io config."
 msgstr ""
 
+#: db/migrate/20220121101413_setting_updates.rb
 #: db/seeds/settings.rb
-msgid "Defines the slack config."
-msgstr ""
-
-#: db/seeds/settings.rb
-msgid "Defines the state of auto closed tickets."
-msgstr ""
-
-#: db/seeds/settings.rb
-msgid "Defines the system default language."
-msgstr ""
-
-#: db/seeds/settings.rb
-msgid "Defines the system default timezone."
+msgid "Defines the state of auto-closed tickets."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -2969,6 +3036,16 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Defines the tab behaviour after a ticket action."
+msgstr ""
+
+#: db/migrate/20220121101413_setting_updates.rb
+#: db/seeds/settings.rb
+msgid "Defines the timeframe during which a self-created note can be deleted."
+msgstr ""
+
+#: db/migrate/20220121101413_setting_updates.rb
+#: db/seeds/settings.rb
+msgid "Defines the token for Placetel."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -2987,8 +3064,9 @@ msgstr ""
 msgid "Defines the transaction backend which creates the karma score."
 msgstr ""
 
+#: db/migrate/20220121101413_setting_updates.rb
 #: db/seeds/settings.rb
-msgid "Defines the transaction backend which detects caller IDs in objects and store them for CTI lookups."
+msgid "Defines the transaction backend which detects caller IDs in objects and stores them for CTI lookups."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -3003,6 +3081,7 @@ msgstr ""
 msgid "Defines the translator identifier for contributions."
 msgstr ""
 
+#: db/migrate/20220121101413_setting_updates.rb
 #: db/seeds/settings.rb
 msgid "Defines transaction backend."
 msgstr ""
@@ -3171,6 +3250,7 @@ msgstr ""
 msgid "Destination caller ID or queue"
 msgstr ""
 
+#: db/migrate/20220121101413_setting_updates.rb
 #: db/seeds/settings.rb
 msgid "Developer System"
 msgstr ""
@@ -3245,10 +3325,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/email_address.coffee
 msgid "Display name"
-msgstr ""
-
-#: db/seeds/settings.rb
-msgid "Display of the e-mail in the result of the user/organization widget."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
@@ -3631,12 +3707,13 @@ msgstr ""
 msgid "Enables user authentication via %s. Register your app first at [%s](%s)."
 msgstr ""
 
+#: db/migrate/20220121101413_setting_updates.rb
 #: db/seeds/settings.rb
-msgid "Enables user authentication via GitLab."
+msgid "Enables user authentication via GitHub."
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Enables user authentication via Github."
+msgid "Enables user authentication via GitLab."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -3920,10 +3997,6 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Facebook App Credentials"
-msgstr ""
-
-#: db/seeds/settings.rb
-msgid "Facebook Developer Site"
 msgstr ""
 
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco
@@ -4247,6 +4320,7 @@ msgstr ""
 msgid "Geo Calendar Service"
 msgstr ""
 
+#: db/migrate/20220121101413_setting_updates.rb
 #: db/seeds/settings.rb
 msgid "Geo IP Service"
 msgstr ""
@@ -4266,6 +4340,11 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_integration/github.coffee
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
 msgid "GitHub"
+msgstr ""
+
+#: db/migrate/20220121101413_setting_updates.rb
+#: db/seeds/settings.rb
+msgid "GitHub App Credentials"
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -4290,10 +4369,6 @@ msgid "GitLab App Credentials"
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "GitLab Applications"
-msgstr ""
-
-#: db/seeds/settings.rb
 msgid "GitLab config"
 msgstr ""
 
@@ -4303,14 +4378,6 @@ msgstr ""
 
 #: lib/gitlab/http_client.rb
 msgid "GitLab request failed! Please have a look at the log file for details"
-msgstr ""
-
-#: db/seeds/settings.rb
-msgid "Github App Credentials"
-msgstr ""
-
-#: db/seeds/settings.rb
-msgid "Github OAuth Applications"
 msgstr ""
 
 #: app/assets/javascripts/app/views/google/index.jst.eco
@@ -4344,10 +4411,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
 msgid "Google"
-msgstr ""
-
-#: db/seeds/settings.rb
-msgid "Google API Console Site"
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -4468,6 +4531,11 @@ msgstr ""
 msgid "Group selection for Ticket creation"
 msgstr ""
 
+#: db/migrate/20220121101413_setting_updates.rb
+#: db/seeds/settings.rb
+msgid "Group selection for ticket creation"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/group.coffee
 #: app/assets/javascripts/app/models/macro.coffee
 #: app/assets/javascripts/app/models/text_module.coffee
@@ -4486,6 +4554,7 @@ msgstr ""
 msgid "HMAC SHA1 Signature Token"
 msgstr ""
 
+#: db/migrate/20220121101413_setting_updates.rb
 #: db/seeds/settings.rb
 msgid "HTML Email CSS Font"
 msgstr ""
@@ -4494,6 +4563,7 @@ msgstr ""
 msgid "HTTP Log"
 msgstr ""
 
+#: db/migrate/20220121101413_setting_updates.rb
 #: db/seeds/settings.rb
 msgid "HTTP type"
 msgstr ""
@@ -4747,8 +4817,9 @@ msgstr ""
 msgid "If the host and service have recovered, the ticket can be closed automatically."
 msgstr ""
 
+#: db/migrate/20220121101413_setting_updates.rb
 #: db/seeds/settings.rb
-msgid "If the sender is an agent, set the first user in the recipient list as a customer."
+msgid "If the sender is an agent, set the first user in the recipient list as the customer."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -4825,6 +4896,16 @@ msgstr ""
 msgid "Import API key could not be extracted from URL."
 msgstr ""
 
+#: db/migrate/20220121101413_setting_updates.rb
+#: db/seeds/settings.rb
+msgid "Import API key for requesting the Freshdesk API"
+msgstr ""
+
+#: db/migrate/20220121101413_setting_updates.rb
+#: db/seeds/settings.rb
+msgid "Import API key for requesting the Zendesk API"
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "Import Backend"
 msgstr ""
@@ -4833,6 +4914,7 @@ msgstr ""
 msgid "Import Backends"
 msgstr ""
 
+#: db/migrate/20220121101413_setting_updates.rb
 #: db/seeds/settings.rb
 msgid "Import Endpoint"
 msgstr ""
@@ -4846,19 +4928,12 @@ msgid "Import Key"
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Import Key for requesting the Freshdesk API"
-msgstr ""
-
-#: db/seeds/settings.rb
-msgid "Import Key for requesting the Zendesk API"
-msgstr ""
-
-#: db/seeds/settings.rb
 msgid "Import Mode"
 msgstr ""
 
+#: db/migrate/20220121101413_setting_updates.rb
 #: db/seeds/settings.rb
-msgid "Import Password for http basic authentication"
+msgid "Import Password for HTTP basic authentication"
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -5285,18 +5360,6 @@ msgstr ""
 msgid "Karma Trends"
 msgstr ""
 
-#: db/seeds/settings.rb
-msgid "Kb active"
-msgstr ""
-
-#: db/seeds/settings.rb
-msgid "Kb active publicly"
-msgstr ""
-
-#: db/seeds/settings.rb
-msgid "Kb multi-lingual support"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
@@ -5342,6 +5405,21 @@ msgstr ""
 
 #: db/seeds/permissions.rb
 msgid "Knowledge Base Reader"
+msgstr ""
+
+#: db/migrate/20220121101413_setting_updates.rb
+#: db/seeds/settings.rb
+msgid "Knowledge Base active"
+msgstr ""
+
+#: db/migrate/20220121101413_setting_updates.rb
+#: db/seeds/settings.rb
+msgid "Knowledge Base active publicly"
+msgstr ""
+
+#: db/migrate/20220121101413_setting_updates.rb
+#: db/seeds/settings.rb
+msgid "Knowledge Base multilingual support"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
@@ -5457,14 +5535,17 @@ msgstr ""
 msgid "Limit Groups"
 msgstr ""
 
+#: db/migrate/20220121101413_setting_updates.rb
 #: db/seeds/settings.rb
-msgid "Limit tickets by ip per day"
+msgid "Limit tickets by IP per day"
 msgstr ""
 
+#: db/migrate/20220121101413_setting_updates.rb
 #: db/seeds/settings.rb
-msgid "Limit tickets by ip per hour"
+msgid "Limit tickets by IP per hour"
 msgstr ""
 
+#: db/migrate/20220121101413_setting_updates.rb
 #: db/seeds/settings.rb
 msgid "Limit tickets per day"
 msgstr ""
@@ -5533,10 +5614,6 @@ msgstr ""
 msgid "LinkedIn App Credentials"
 msgstr ""
 
-#: db/seeds/settings.rb
-msgid "Linkedin Developer Site"
-msgstr ""
-
 #: app/assets/javascripts/app/views/link/ticket/list.jst.eco
 msgid "Links"
 msgstr ""
@@ -5568,6 +5645,7 @@ msgstr ""
 msgid "Local MTA (Sendmail/Postfix/Exim/…) - use server setup"
 msgstr ""
 
+#: db/migrate/20220121101413_setting_updates.rb
 #: db/seeds/settings.rb
 msgid "Locale"
 msgstr ""
@@ -5749,20 +5827,18 @@ msgstr ""
 msgid "Maximal"
 msgstr ""
 
+#: db/migrate/20220121101413_setting_updates.rb
 #: db/seeds/settings.rb
 msgid "Maximum Email Size"
 msgstr ""
 
+#: db/migrate/20220121101413_setting_updates.rb
 #: db/seeds/settings.rb
 msgid "Maximum failed logins"
 msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Maximum number of recursively executed triggers."
-msgstr ""
-
-#: db/seeds/settings.rb
-msgid "Maximum size in MB of emails."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
@@ -5829,10 +5905,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/microsoft365/index.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 msgid "Microsoft 365"
-msgstr ""
-
-#: db/seeds/settings.rb
-msgid "Microsoft Application Registration Portal"
 msgstr ""
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
@@ -6599,6 +6671,7 @@ msgstr ""
 msgid "Note"
 msgstr ""
 
+#: db/migrate/20220121101413_setting_updates.rb
 #: db/seeds/settings.rb
 msgid "Note - default visibility"
 msgstr ""
@@ -6673,10 +6746,6 @@ msgstr ""
 msgid "Number"
 msgstr ""
 
-#: db/seeds/settings.rb
-msgid "Number of failed logins after account will be deactivated."
-msgstr ""
-
 #: app/controllers/application_controller/authenticates.rb
 msgid "OAuth2 token is expired!"
 msgstr ""
@@ -6727,7 +6796,6 @@ msgid "October"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
-#: db/seeds/settings.rb
 msgid "Office 365"
 msgstr ""
 
@@ -6987,10 +7055,6 @@ msgstr ""
 msgid "Owner tickets of the user will not get deleted. The owner will be mapped to the system user (ID 1)."
 msgstr ""
 
-#: db/seeds/settings.rb
-msgid "PLACETEL Token"
-msgstr ""
-
 #: lib/email_helper.rb
 msgid "POP3"
 msgstr ""
@@ -7052,8 +7116,9 @@ msgstr ""
 msgid "Password for proxy connection."
 msgstr ""
 
+#: db/migrate/20220121101413_setting_updates.rb
 #: db/seeds/settings.rb
-msgid "Password needs to contain 2 lower and 2 upper characters."
+msgid "Password needs to contain 2 lower case and 2 upper case characters."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -7163,6 +7228,11 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/controllers/cti_controller.rb
 msgid "Placetel"
+msgstr ""
+
+#: db/migrate/20220121101413_setting_updates.rb
+#: db/seeds/settings.rb
+msgid "Placetel Token"
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -7346,6 +7416,7 @@ msgstr ""
 msgid "Process pending tickets"
 msgstr ""
 
+#: db/migrate/20220121101413_setting_updates.rb
 #: db/seeds/settings.rb
 msgid "Product Name"
 msgstr ""
@@ -8081,6 +8152,7 @@ msgstr ""
 msgid "Sender Format Separator"
 msgstr ""
 
+#: db/migrate/20220121101413_setting_updates.rb
 #: db/seeds/settings.rb
 msgid "Sender based on Reply-To header"
 msgstr ""
@@ -8153,6 +8225,11 @@ msgstr ""
 msgid "Set"
 msgstr ""
 
+#: db/migrate/20220121101413_setting_updates.rb
+#: db/seeds/settings.rb
+msgid "Set agent limit"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Set article to internal/public"
 msgstr ""
@@ -8173,10 +8250,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 msgid "Set caller ID of outbound calls based on destination caller ID."
-msgstr ""
-
-#: db/seeds/settings.rb
-msgid "Set limit of agents"
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -8206,12 +8279,14 @@ msgstr ""
 msgid "Set up the communication channels you want to use with your Zammad."
 msgstr ""
 
+#: db/migrate/20220121101413_setting_updates.rb
 #: db/seeds/settings.rb
-msgid "Set/overwrite sender/from of email based on reply-to header. Useful to set correct customer if email is received from a third party system on behalf of a customer."
+msgid "Set/overwrite sender/from of email based on \"Reply-To\" header. Useful to set correct customer if email is received from a third-party system on behalf of a customer."
 msgstr ""
 
+#: db/migrate/20220121101413_setting_updates.rb
 #: db/seeds/settings.rb
-msgid "Sets the last customer contact based on the last contact of a customer or on the last contact of a customer to whom an agent has not yet responded."
+msgid "Sets the last customer contact based on either the last contact of the customer in general or on the last contact of the customer that has not received a response."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
@@ -8356,14 +8431,6 @@ msgstr ""
 msgid "Simple Line Icons"
 msgstr ""
 
-#: db/seeds/settings.rb
-msgid "Sina Weibo"
-msgstr ""
-
-#: db/seeds/settings.rb
-msgid "Sina Weibo Open Protal"
-msgstr ""
-
 #: public/assets/chat/views/customer_timeout.eco
 msgid "Since you didn't respond in the last %s minutes your conversation got closed."
 msgstr ""
@@ -8388,6 +8455,7 @@ msgstr ""
 msgid "Slack"
 msgstr ""
 
+#: db/migrate/20220121101413_setting_updates.rb
 #: db/seeds/settings.rb
 msgid "Slack config"
 msgstr ""
@@ -8415,10 +8483,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee
 msgid "Some system settings have changed, please restart all Zammad processes! If you want to do this automatically, set environment variable APP_RESTART_CMD=\"/path/to/your_app_script.sh restart\"."
-msgstr ""
-
-#: db/seeds/settings.rb
-msgid "Something about to share. Click here to change."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee
@@ -8514,6 +8578,7 @@ msgstr ""
 msgid "State"
 msgstr ""
 
+#: db/migrate/20220121101413_setting_updates.rb
 #: db/seeds/settings.rb
 msgid "Stats Backend"
 msgstr ""
@@ -8644,8 +8709,9 @@ msgstr ""
 msgid "Sunday"
 msgstr ""
 
+#: db/migrate/20220121101413_setting_updates.rb
 #: db/seeds/settings.rb
-msgid "Support of multi-lingual Knowledge Base."
+msgid "Support of multilingual Knowledge Base."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
@@ -9155,6 +9221,10 @@ msgstr ""
 msgid "This is Zammad version %s"
 msgstr ""
 
+#: db/seeds/settings.rb
+msgid "This is a default maintenance message. Click here to change."
+msgstr ""
+
 #: app/models/channel/email_parser.rb
 msgid "This message cannot be displayed because it contains over 5,000 links. Download the raw message below and open it via an Email client if you still wish to view it."
 msgstr ""
@@ -9273,6 +9343,7 @@ msgstr ""
 msgid "Ticket Interface"
 msgstr ""
 
+#: db/migrate/20220121101413_setting_updates.rb
 #: db/seeds/settings.rb
 msgid "Ticket Last Contact Behaviour"
 msgstr ""
@@ -9434,6 +9505,7 @@ msgstr ""
 msgid "Timeframe for the first response."
 msgstr ""
 
+#: db/migrate/20220121101413_setting_updates.rb
 #: db/seeds/settings.rb
 #: lib/excel_sheet.rb
 msgid "Timezone"
@@ -9472,8 +9544,9 @@ msgstr ""
 msgid "To"
 msgstr ""
 
+#: db/migrate/20220121101413_setting_updates.rb
 #: db/seeds/settings.rb
-msgid "To archive all outgoing emails from Zammad to external, you can store a bcc email address here."
+msgid "To archive all outgoing emails from Zammad to external, you can store a BCC email address here."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/chat.coffee
@@ -9524,12 +9597,9 @@ msgstr ""
 msgid "Token Access"
 msgstr ""
 
+#: db/migrate/20220121101413_setting_updates.rb
 #: db/seeds/settings.rb
-msgid "Token for Placetel."
-msgstr ""
-
-#: db/seeds/settings.rb
-msgid "Token for cti."
+msgid "Token for CTI."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -9646,10 +9716,6 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Twitter App Credentials"
-msgstr ""
-
-#: db/seeds/settings.rb
-msgid "Twitter Developer Site"
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -9949,6 +10015,7 @@ msgstr ""
 msgid "User Filter"
 msgstr ""
 
+#: db/migrate/20220121101413_setting_updates.rb
 #: db/seeds/settings.rb
 msgid "User Organization Selector - email"
 msgstr ""
@@ -9982,8 +10049,9 @@ msgstr ""
 msgid "User email could not be extracted from 'id_token'."
 msgstr ""
 
+#: db/migrate/20220121101413_setting_updates.rb
 #: db/seeds/settings.rb
-msgid "User email for muliple users"
+msgid "User email for multiple users"
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
@@ -10908,18 +10976,6 @@ msgstr ""
 msgid "created"
 msgstr ""
 
-#: db/seeds/settings.rb
-msgid "cti config"
-msgstr ""
-
-#: db/seeds/settings.rb
-msgid "cti customer last activity"
-msgstr ""
-
-#: db/seeds/settings.rb
-msgid "cti integration"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
 msgid "current user"
@@ -11420,8 +11476,9 @@ msgstr ""
 msgid "show more"
 msgstr ""
 
+#: db/migrate/20220121101413_setting_updates.rb
 #: db/seeds/settings.rb
-msgid "sipgate.io alternative fqdn"
+msgid "sipgate.io alternative FQDN"
 msgstr ""
 
 #: db/seeds/settings.rb

@@ -63,7 +63,7 @@ Setting.create_if_not_exists(
   area:        'Core::WebApp',
   description: __('Message for login page.'),
   options:     {},
-  state:       __('Something about to share. Click here to change.'),
+  state:       __('This is a default maintenance message. Click here to change.'),
   preferences: {
     permission: ['admin.maintenance'],
   },
@@ -73,7 +73,7 @@ Setting.create_if_not_exists(
   title:       __('Developer System'),
   name:        'developer_mode',
   area:        'Core::Develop',
-  description: __('Defines if application is in developer mode (useful for developer, all users have the same password, password reset will work without email delivery).'),
+  description: __('Defines if the application is in developer mode (all users have the same password and password reset will work without email delivery).'),
   options:     {},
   state:       Rails.env.development?,
   preferences: { online_service_disable: true },
@@ -93,7 +93,7 @@ Setting.create_if_not_exists(
   title:       __('Product Name'),
   name:        'product_name',
   area:        'System::Branding',
-  description: __('Defines the name of the application, shown in the web interface, tabs and title bar of the web browser.'),
+  description: __('Defines the name of the application, shown in the web interface, tabs, and title bar of the web browser.'),
   options:     {
     form: [
       {
@@ -163,7 +163,7 @@ Setting.create_if_not_exists(
   title:       __('Locale'),
   name:        'locale_default',
   area:        'System::Branding',
-  description: __('Defines the system default language.'),
+  description: __('Defines the default system language.'),
   options:     {
     form: [
       {
@@ -183,7 +183,7 @@ Setting.create_if_not_exists(
   title:       __('Timezone'),
   name:        'timezone_default',
   area:        'System::Branding',
-  description: __('Defines the system default timezone.'),
+  description: __('Defines the default system timezone.'),
   options:     {
     form: [
       {
@@ -311,7 +311,7 @@ Setting.create_if_not_exists(
   title:       __('HTTP type'),
   name:        'http_type',
   area:        'System::Base',
-  description: __('Define the http protocol of your instance.'),
+  description: __('Defines the HTTP protocol of your instance.'),
   options:     {
     form: [
       {
@@ -395,7 +395,7 @@ Setting.create_if_not_exists(
   title:       __('Geo IP Service'),
   name:        'geo_ip_backend',
   area:        'System::Services',
-  description: __('Defines the backend for geo IP lookups. Shows also location of an IP address if an IP address is shown.'),
+  description: __('Defines the backend for geo IP lookups. Also shows location of an IP address if it is traceable.'),
   options:     {
     form: [
       {
@@ -652,7 +652,7 @@ Setting.create_if_not_exists(
   title:       __('User Organization Selector - email'),
   name:        'ui_user_organization_selector_with_email',
   area:        'UI::UserOrganizatiomSelector',
-  description: __('Display of the e-mail in the result of the user/organization widget.'),
+  description: __('Defines if the email should be displayed in the result of the user/organization widget.'),
   options:     {
     form: [
       {
@@ -679,7 +679,7 @@ Setting.create_if_not_exists(
   title:       __('Note - default visibility'),
   name:        'ui_ticket_zoom_article_note_new_internal',
   area:        'UI::TicketZoom',
-  description: __('Default visibility for new note.'),
+  description: __('Defines the default visibility for new notes.'),
   options:     {
     form: [
       {
@@ -1153,10 +1153,10 @@ Setting.create_if_not_exists(
   frontend:    true
 )
 Setting.create_if_not_exists(
-  title:       __('User email for muliple users'),
+  title:       __('User email for multiple users'),
   name:        'user_email_multiple_use',
   area:        'Model::User',
-  description: __('Allow to use email address for muliple users.'),
+  description: __('Allow using one email address for multiple users.'),
   options:     {
     form: [
       {
@@ -1289,7 +1289,7 @@ Setting.create_if_not_exists(
     controller:       'SettingsAreaSwitch',
     sub:              ['auth_twitter_credentials'],
     title_i18n:       ['Twitter'],
-    description_i18n: ['Twitter', __('Twitter Developer Site'), 'https://dev.twitter.com/apps'],
+    description_i18n: ['Twitter', 'Twitter Developer Site', 'https://dev.twitter.com/apps'], # rubocop:disable Zammad/DetectTranslatableString
     permission:       ['admin.security'],
   },
   state:       false,
@@ -1352,7 +1352,7 @@ Setting.create_if_not_exists(
     controller:       'SettingsAreaSwitch',
     sub:              ['auth_facebook_credentials'],
     title_i18n:       ['Facebook'],
-    description_i18n: ['Facebook', __('Facebook Developer Site'), 'https://developers.facebook.com/apps/'],
+    description_i18n: ['Facebook', 'Facebook Developer Site', 'https://developers.facebook.com/apps/'], # rubocop:disable Zammad/DetectTranslatableString
     permission:       ['admin.security'],
   },
   state:       false,
@@ -1417,7 +1417,7 @@ Setting.create_if_not_exists(
     controller:       'SettingsAreaSwitch',
     sub:              ['auth_google_oauth2_credentials'],
     title_i18n:       ['Google'],
-    description_i18n: ['Google', __('Google API Console Site'), 'https://console.cloud.google.com/apis/credentials'],
+    description_i18n: ['Google', 'Google API Console Site', 'https://console.cloud.google.com/apis/credentials'], # rubocop:disable Zammad/DetectTranslatableString
     permission:       ['admin.security'],
   },
   state:       false,
@@ -1481,7 +1481,7 @@ Setting.create_if_not_exists(
     controller:       'SettingsAreaSwitch',
     sub:              ['auth_linkedin_credentials'],
     title_i18n:       ['LinkedIn'],
-    description_i18n: ['LinkedIn', __('Linkedin Developer Site'), 'https://www.linkedin.com/developer/apps'],
+    description_i18n: ['LinkedIn', 'LinkedIn Developer Site', 'https://www.linkedin.com/developer/apps'], # rubocop:disable Zammad/DetectTranslatableString
     permission:       ['admin.security'],
   },
   state:       false,
@@ -1545,17 +1545,17 @@ Setting.create_if_not_exists(
     controller:       'SettingsAreaSwitch',
     sub:              ['auth_github_credentials'],
     title_i18n:       ['Github'],
-    description_i18n: ['Github', __('Github OAuth Applications'), 'https://github.com/settings/applications'],
+    description_i18n: ['Github', 'GitHub OAuth Applications', 'https://github.com/settings/applications'], # rubocop:disable Zammad/DetectTranslatableString
     permission:       ['admin.security'],
   },
   state:       false,
   frontend:    true
 )
 Setting.create_if_not_exists(
-  title:       __('Github App Credentials'),
+  title:       __('GitHub App Credentials'),
   name:        'auth_github_credentials',
   area:        'Security::ThirdPartyAuthentication::Github',
-  description: __('Enables user authentication via Github.'),
+  description: __('Enables user authentication via GitHub.'),
   options:     {
     form: [
       {
@@ -1609,7 +1609,7 @@ Setting.create_if_not_exists(
     controller:       'SettingsAreaSwitch',
     sub:              ['auth_gitlab_credentials'],
     title_i18n:       ['GitLab'],
-    description_i18n: ['GitLab', __('GitLab Applications'), 'https://your-gitlab-host/admin/applications'],
+    description_i18n: ['GitLab', 'GitLab Applications', 'https://your-gitlab-host/admin/applications'], # rubocop:disable Zammad/DetectTranslatableString
     permission:       ['admin.security'],
   },
   state:       false,
@@ -1679,8 +1679,8 @@ Setting.create_if_not_exists(
   preferences: {
     controller:       'SettingsAreaSwitch',
     sub:              ['auth_microsoft_office365_credentials'],
-    title_i18n:       [__('Office 365')],
-    description_i18n: [__('Office 365'), __('Microsoft Application Registration Portal'), 'https://portal.azure.com'],
+    title_i18n:       ['Office 365'], # rubocop:disable Zammad/DetectTranslatableString
+    description_i18n: ['Office 365', 'Microsoft Application Registration Portal', 'https://portal.azure.com'], # rubocop:disable Zammad/DetectTranslatableString
     permission:       ['admin.security'],
   },
   state:       false,
@@ -1750,7 +1750,7 @@ Setting.create_if_not_exists(
     controller:       'SettingsAreaSwitch',
     sub:              ['auth_weibo_credentials'],
     title_i18n:       ['Weibo'],
-    description_i18n: [__('Sina Weibo'), __('Sina Weibo Open Protal'), 'http://open.weibo.com'],
+    description_i18n: ['Sina Weibo', 'Sina Weibo Open Portal', 'http://open.weibo.com'], # rubocop:disable Zammad/DetectTranslatableString
     permission:       ['admin.security'],
   },
   state:       false,
@@ -1911,10 +1911,10 @@ Setting.create_if_not_exists(
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       __('2 lower and 2 upper characters'),
+  title:       __('2 lower case and 2 upper case characters'),
   name:        'password_min_2_lower_2_upper_characters',
   area:        'Security::Password',
-  description: __('Password needs to contain 2 lower and 2 upper characters.'),
+  description: __('Password needs to contain 2 lower case and 2 upper case characters.'),
   options:     {
     form: [
       {
@@ -1989,7 +1989,7 @@ Setting.create_if_not_exists(
   title:       __('Maximum failed logins'),
   name:        'password_max_login_failed',
   area:        'Security::Password',
-  description: __('Number of failed logins after account will be deactivated.'),
+  description: __('Defines after how many failed logins accounts will be deactivated.'),
   options:     {
     form: [
       {
@@ -2106,7 +2106,7 @@ Setting.create_if_not_exists(
   title:       __('Ticket Last Contact Behaviour'),
   name:        'ticket_last_contact_behaviour',
   area:        'Ticket::Base',
-  description: __('Sets the last customer contact based on the last contact of a customer or on the last contact of a customer to whom an agent has not yet responded.'),
+  description: __('Sets the last customer contact based on either the last contact of the customer in general or on the last contact of the customer that has not received a response.'),
   options:     {
     form: [
       {
@@ -2245,7 +2245,7 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       __('Auto Assigment'),
+  title:       __('Auto Assignment'),
   name:        'ticket_auto_assignment',
   area:        'Web::Base',
   description: __('Enable ticket auto assignment.'),
@@ -2519,10 +2519,10 @@ if group
   group_id = group.id
 end
 Setting.create_if_not_exists(
-  title:       __('Group selection for Ticket creation'),
+  title:       __('Group selection for ticket creation'),
   name:        'form_ticket_create_group_id',
   area:        'Form::Base',
-  description: __('Defines if group of created tickets via web form.'),
+  description: __('Defines the group of tickets created via web form.'),
   options:     {
     form: [
       {
@@ -2542,10 +2542,10 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       __('Limit tickets by ip per hour'),
+  title:       __('Limit tickets by IP per hour'),
   name:        'form_ticket_create_by_ip_per_hour',
   area:        'Form::Base',
-  description: __('Defines limit of tickets by ip per hour via web form.'),
+  description: __('Defines a limit for how many tickets can be created via web form from one IP address per hour.'),
   options:     {
     form: [
       {
@@ -2563,10 +2563,10 @@ Setting.create_if_not_exists(
   frontend:    false,
 )
 Setting.create_if_not_exists(
-  title:       __('Limit tickets by ip per day'),
+  title:       __('Limit tickets by IP per day'),
   name:        'form_ticket_create_by_ip_per_day',
   area:        'Form::Base',
-  description: __('Defines limit of tickets by ip per day via web form.'),
+  description: __('Defines a limit for how many tickets can be created via web form from one IP address per day.'),
   options:     {
     form: [
       {
@@ -2587,7 +2587,7 @@ Setting.create_if_not_exists(
   title:       __('Limit tickets per day'),
   name:        'form_ticket_create_per_day',
   area:        'Form::Base',
-  description: __('Defines limit of tickets per day via web form.'),
+  description: __('Defines a limit for how many tickets can be created via web form per day.'),
   options:     {
     form: [
       {
@@ -2723,7 +2723,7 @@ Setting.create_if_not_exists(
   title:       __('Maximum Email Size'),
   name:        'postmaster_max_size',
   area:        'Email::Base',
-  description: __('Maximum size in MB of emails.'),
+  description: __('Defines the maximum accepted email size in MB.'),
   options:     {
     form: [
       {
@@ -2773,7 +2773,7 @@ Setting.create_if_not_exists(
   title:       __('Additional follow-up detection'),
   name:        'postmaster_follow_up_search_in',
   area:        'Email::Base',
-  description: __('By default the follow-up check is done via the subject of an email. With this setting you can add more fields for which the follow-up check will be executed.'),
+  description: __('By default, the follow-up check is done via the subject of an email. This setting lets you add more fields for which the follow-up check will be executed.'),
   options:     {
     form: [
       {
@@ -2800,7 +2800,7 @@ Setting.create_if_not_exists(
   title:       __('Sender based on Reply-To header'),
   name:        'postmaster_sender_based_on_reply_to',
   area:        'Email::Base',
-  description: __('Set/overwrite sender/from of email based on reply-to header. Useful to set correct customer if email is received from a third party system on behalf of a customer.'),
+  description: __('Set/overwrite sender/from of email based on "Reply-To" header. Useful to set correct customer if email is received from a third-party system on behalf of a customer.'),
   options:     {
     form: [
       {
@@ -2827,7 +2827,7 @@ Setting.create_if_not_exists(
   title:       __('Customer selection based on sender and receiver list'),
   name:        'postmaster_sender_is_agent_search_for_customer',
   area:        'Email::Base',
-  description: __('If the sender is an agent, set the first user in the recipient list as a customer.'),
+  description: __('If the sender is an agent, set the first user in the recipient list as the customer.'),
   options:     {
     form: [
       {
@@ -2923,10 +2923,10 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       __('Bcc address for all outgoing emails'),
+  title:       __('BCC address for all outgoing emails'),
   name:        'system_bcc',
   area:        'Email::Enhanced',
-  description: __('To archive all outgoing emails from Zammad to external, you can store a bcc email address here.'),
+  description: __('To archive all outgoing emails from Zammad to external, you can store a BCC email address here.'),
   options:     {},
   state:       '',
   preferences: { online_service_disable: true },
@@ -3209,7 +3209,7 @@ Setting.create_if_not_exists(
   title:       __('Import Endpoint'),
   name:        'import_otrs_endpoint',
   area:        'Import::OTRS',
-  description: __('Defines OTRS endpoint to import users, tickets, states and articles.'),
+  description: __('Defines an OTRS endpoint to import users, tickets, states, and articles.'),
   options:     {
     form: [
       {
@@ -3262,10 +3262,10 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       __('Import Password for http basic authentication'),
+  title:       __('Import Password for HTTP basic authentication'),
   name:        'import_otrs_password',
   area:        'Import::OTRS',
-  description: __('Defines http basic authentication password (only if OTRS is protected via http basic auth).'),
+  description: __('Defines HTTP basic authentication password (only if OTRS is protected via HTTP basic auth).'),
   options:     {
     form: [
       {
@@ -3284,7 +3284,7 @@ Setting.create_if_not_exists(
   title:       __('Import Endpoint'),
   name:        'import_zendesk_endpoint',
   area:        'Import::Zendesk',
-  description: __('Defines Zendesk endpoint to import users, ticket, states and articles.'),
+  description: __('Defines a Zendesk endpoint to import users, tickets, states, and articles.'),
   options:     {
     form: [
       {
@@ -3299,10 +3299,10 @@ Setting.create_if_not_exists(
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       __('Import Key for requesting the Zendesk API'),
+  title:       __('Import API key for requesting the Zendesk API'),
   name:        'import_zendesk_endpoint_key',
   area:        'Import::Zendesk',
-  description: __('Defines Zendesk endpoint authentication key.'),
+  description: __('Defines Zendesk endpoint authentication API key.'),
   options:     {
     form: [
       {
@@ -3340,7 +3340,7 @@ Setting.create_if_not_exists(
   title:       __('Import Endpoint'),
   name:        'import_freshdesk_endpoint',
   area:        'Import::Freshdesk',
-  description: __('Defines Freshdesk endpoint to import users, ticket, states and articles.'),
+  description: __('Defines a Freshdesk endpoint to import users, tickets, states, and articles.'),
   options:     {
     form: [
       {
@@ -3355,10 +3355,10 @@ Setting.create_if_not_exists(
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       __('Import Key for requesting the Freshdesk API'),
+  title:       __('Import API key for requesting the Freshdesk API'),
   name:        'import_freshdesk_endpoint_key',
   area:        'Import::Freshdesk',
-  description: __('Defines Freshdesk endpoint authentication key.'),
+  description: __('Defines Freshdesk endpoint authentication API key.'),
   options:     {
     form: [
       {
@@ -3377,7 +3377,7 @@ Setting.create_if_not_exists(
   title:       __('Import Endpoint'),
   name:        'import_kayako_endpoint',
   area:        'Import::Kayako',
-  description: __('Defines Kayako endpoint to import users, ticket, states and articles.'),
+  description: __('Defines a Kayako endpoint to import users, tickets, states, and articles.'),
   options:     {
     form: [
       {
@@ -3432,7 +3432,7 @@ Setting.create_if_not_exists(
   title:       __('Import Backends'),
   name:        'import_backends',
   area:        'Import',
-  description: __('A list of active import backends that get scheduled automatically.'),
+  description: __('A list of active import backends that gets scheduled automatically.'),
   options:     {},
   state:       ['Import::Ldap', 'Import::Exchange'],
   preferences: {
@@ -3588,7 +3588,7 @@ Setting.create_if_not_exists(
   title:       __('Defines postmaster filter.'),
   name:        '0005_postmaster_filter_trusted',
   area:        'Postmaster::PreFilter',
-  description: __('Defines postmaster filter to remove X-Zammad headers from not trusted sources.'),
+  description: __('Defines postmaster filter to remove X-Zammad headers from untrustworthy sources.'),
   options:     {},
   state:       'Channel::Filter::Trusted',
   frontend:    false
@@ -3660,7 +3660,7 @@ Setting.create_if_not_exists(
   title:       __('Defines postmaster filter.'),
   name:        '0014_postmaster_filter_own_notification_loop_detection',
   area:        'Postmaster::PreFilter',
-  description: __('Define postmaster filter to check if email is a own created notification email, then ignore it to prevent email loops.'),
+  description: __('Defines postmaster filter to check if the email is a self-created notification email, then ignore it to prevent email loops.'),
   options:     {},
   state:       'Channel::Filter::OwnNotificationLoopDetection',
   frontend:    false
@@ -3705,7 +3705,7 @@ Setting.create_if_not_exists(
   title:       __('Defines postmaster filter.'),
   name:        '0900_postmaster_filter_bounce_follow_up_check',
   area:        'Postmaster::PreFilter',
-  description: __('Defines postmaster filter to identify postmaster bounced - to handle it as follow-up of the original ticket.'),
+  description: __('Defines postmaster filter to identify postmaster bounces; and handles them as follow-up of the original tickets'),
   options:     {},
   state:       'Channel::Filter::BounceFollowUpCheck',
   frontend:    false
@@ -3714,7 +3714,7 @@ Setting.create_if_not_exists(
   title:       __('Defines postmaster filter.'),
   name:        '0950_postmaster_filter_bounce_delivery_permanent_failed',
   area:        'Postmaster::PreFilter',
-  description: __('Defines postmaster filter to identify postmaster bounced - disable sending notification on permanent deleivery failed.'),
+  description: __('Defines postmaster filter to identify postmaster bounces; and disables sending notification if delivery fails permanently.'),
   options:     {},
   state:       'Channel::Filter::BounceDeliveryPermanentFailed',
   frontend:    false
@@ -3723,7 +3723,7 @@ Setting.create_if_not_exists(
   title:       __('Defines postmaster filter.'),
   name:        '0955_postmaster_filter_bounce_delivery_temporary_failed',
   area:        'Postmaster::PreFilter',
-  description: __('Defines postmaster filter to identify postmaster bounced - reopen ticket on permanent temporary failed.'),
+  description: __('Defines postmaster filter to identify postmaster bounces; and reopens tickets if delivery fails permanently.'),
   options:     {},
   state:       'Channel::Filter::BounceDeliveryTemporaryFailed',
   frontend:    false
@@ -3768,7 +3768,7 @@ Setting.create_if_not_exists(
   title:       __('Defines postmaster filter.'),
   name:        '5400_postmaster_filter_service_now_check',
   area:        'Postmaster::PreFilter',
-  description: __('Defines postmaster filter to identify service now mails for correct follow-ups.'),
+  description: __('Defines postmaster filter to identify ServiceNow mails for correct follow-ups.'),
   options:     {},
   state:       'Channel::Filter::ServiceNowCheck',
   frontend:    false
@@ -3777,7 +3777,7 @@ Setting.create_if_not_exists(
   title:       __('Defines postmaster filter.'),
   name:        '5401_postmaster_filter_service_now_check',
   area:        'Postmaster::PostFilter',
-  description: __('Defines postmaster filter to identify service now mails for correct follow-ups.'),
+  description: __('Defines postmaster filter to identify ServiceNow mails for correct follow-ups.'),
   options:     {},
   state:       'Channel::Filter::ServiceNowCheck',
   frontend:    false
@@ -3786,7 +3786,7 @@ Setting.create_if_not_exists(
   title:       __('Defines postmaster filter.'),
   name:        '5400_postmaster_filter_jira_check',
   area:        'Postmaster::PreFilter',
-  description: __('Defines postmaster filter to identify jira mails for correct follow-ups.'),
+  description: __('Defines postmaster filter to identify Jira mails for correct follow-ups.'),
   options:     {},
   state:       'Channel::Filter::JiraCheck',
   frontend:    false
@@ -3795,7 +3795,7 @@ Setting.create_if_not_exists(
   title:       __('Defines postmaster filter.'),
   name:        '5401_postmaster_filter_jira_check',
   area:        'Postmaster::PostFilter',
-  description: __('Defines postmaster filter to identify jira mails for correct follow-ups.'),
+  description: __('Defines postmaster filter to identify Jira mails for correct follow-ups.'),
   options:     {},
   state:       'Channel::Filter::JiraCheck',
   frontend:    false
@@ -3804,7 +3804,7 @@ Setting.create_if_not_exists(
   title:       __('Define postmaster filter.'),
   name:        '5500_postmaster_internal_article_check',
   area:        'Postmaster::PreFilter',
-  description: __('Defines the postmaster filter which set the article internal if a forwarded, replied or sent email also exists with the article internal received.'),
+  description: __('Defines postmaster filter which sets the articles visibility to internal if it is a rely to an internal article or the last outgoing email is internal.'),
   options:     {},
   state:       'Channel::Filter::InternalArticleCheck',
   frontend:    false
@@ -3885,10 +3885,10 @@ Setting.create_if_not_exists(
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       __('Auto close state'),
+  title:       __('Auto-close state'),
   name:        'icinga_auto_close_state_id',
   area:        'Integration::Icinga',
-  description: __('Defines the state of auto closed tickets.'),
+  description: __('Defines the state of auto-closed tickets.'),
   options:     {
     form: [
       {
@@ -3983,10 +3983,10 @@ Setting.create_if_not_exists(
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       __('Auto close state'),
+  title:       __('Auto-close state'),
   name:        'nagios_auto_close_state_id',
   area:        'Integration::Nagios',
-  description: __('Defines the state of auto closed tickets.'),
+  description: __('Defines the state of auto-closed tickets.'),
   options:     {
     form: [
       {
@@ -4081,10 +4081,10 @@ Setting.create_if_not_exists(
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       __('Auto close state'),
+  title:       __('Auto-close state'),
   name:        'check_mk_auto_close_state_id',
   area:        'Integration::CheckMK',
-  description: __('Defines the state of auto closed tickets.'),
+  description: __('Defines the state of auto-closed tickets.'),
   options:     {
     form: [
       {
@@ -4192,10 +4192,10 @@ Setting.create_if_not_exists(
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       __('Auto close state'),
+  title:       __('Auto-close state'),
   name:        'monit_auto_close_state_id',
   area:        'Integration::Monit',
-  description: __('Defines the state of auto closed tickets.'),
+  description: __('Defines the state of auto-closed tickets.'),
   options:     {
     form: [
       {
@@ -4486,7 +4486,7 @@ Setting.create_if_not_exists(
   title:       __('Slack config'),
   name:        'slack_config',
   area:        'Integration::Slack',
-  description: __('Defines the slack config.'),
+  description: __('Defines the Slack config.'),
   options:     {},
   state:       {
     items: []
@@ -4539,10 +4539,10 @@ Setting.create_if_not_exists(
   frontend:    false,
 )
 Setting.create_if_not_exists(
-  title:       __('sipgate.io alternative fqdn'),
+  title:       __('sipgate.io alternative FQDN'),
   name:        'sipgate_alternative_fqdn',
   area:        'Integration::Sipgate::Expert',
-  description: __('Alternative FQDN for callbacks if you operate Zammad in internal network.'),
+  description: __('Alternative FQDN for callbacks if you operate Zammad in an internal network.'),
   options:     {
     form: [
       {
@@ -4560,10 +4560,10 @@ Setting.create_if_not_exists(
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       __('cti integration'),
+  title:       __('CTI integration'),
   name:        'cti_integration',
   area:        'Integration::Switch',
-  description: __('Defines if generic CTI is enabled or not.'),
+  description: __('Defines if generic CTI integration is enabled or not.'),
   options:     {
     form: [
       {
@@ -4588,10 +4588,10 @@ Setting.create_if_not_exists(
   frontend:    true
 )
 Setting.create_if_not_exists(
-  title:       __('cti config'),
+  title:       __('CTI config'),
   name:        'cti_config',
   area:        'Integration::Cti',
-  description: __('Defines the cti config.'),
+  description: __('Defines the CTI config.'),
   options:     {},
   state:       { 'outbound' => { 'routing_table' => [], 'default_caller_id' => '' }, 'inbound' => { 'block_caller_ids' => [] } },
   preferences: {
@@ -4604,7 +4604,7 @@ Setting.create_if_not_exists(
   title:       __('CTI Token'),
   name:        'cti_token',
   area:        'Integration::Cti',
-  description: __('Token for cti.'),
+  description: __('Token for CTI.'),
   options:     {
     form: [
       {
@@ -4622,10 +4622,10 @@ Setting.create_if_not_exists(
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       __('cti customer last activity'),
+  title:       __('CTI customer last activity'),
   name:        'cti_customer_last_activity',
   area:        'Integration::Cti',
-  description: __('Defines the range in seconds of customer activity to trigger the user profile dialog on call.'),
+  description: __('Defines the duration of customer activity (in seconds) on a call until the user profile dialog is shown.'),
   options:     {},
   state:       30.days,
   preferences: {
@@ -4677,10 +4677,10 @@ Setting.create_if_not_exists(
   frontend:    false,
 )
 Setting.create_if_not_exists(
-  title:       __('PLACETEL Token'),
+  title:       __('Placetel Token'),
   name:        'placetel_token',
   area:        'Integration::Placetel',
-  description: __('Token for Placetel.'),
+  description: __('Defines the token for Placetel.'),
   options:     {
     form: [
       {
@@ -4749,7 +4749,7 @@ Setting.create_if_not_exists(
   title:       __('Defines transaction backend.'),
   name:        '9100_cti_caller_id_detection',
   area:        'Transaction::Backend::Async',
-  description: __('Defines the transaction backend which detects caller IDs in objects and store them for CTI lookups.'),
+  description: __('Defines the transaction backend which detects caller IDs in objects and stores them for CTI lookups.'),
   options:     {},
   state:       'Transaction::CtiCallerIdDetection',
   frontend:    false
@@ -4814,10 +4814,10 @@ Setting.create_if_not_exists(
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       __('Set limit of agents'),
+  title:       __('Set agent limit'),
   name:        'system_agent_limit',
   area:        'Core::Online',
-  description: __('Defines the limit of the agents.'),
+  description: __('Defines the agent limit.'),
   options:     {},
   state:       false,
   preferences: { online_service_disable: true },
@@ -4828,7 +4828,7 @@ Setting.create_if_not_exists(
   title:       __('HTML Email CSS Font'),
   name:        'html_email_css_font',
   area:        'Core',
-  description: __('Defines the CSS font information for HTML Emails.'),
+  description: __('Defines the CSS font information for HTML emails.'),
   options:     {},
   state:       "font-family:'Helvetica Neue', Helvetica, Arial, Geneva, sans-serif; font-size: 12px;",
   preferences: {
@@ -4842,7 +4842,7 @@ Setting.create_if_not_exists(
   title:       __('Stats Backend'),
   name:        'Stats::TicketWaitingTime',
   area:        'Dashboard::Stats',
-  description: __('Defines a dashboard stats backend that get scheduled automatically.'),
+  description: __('Defines a dashboard stats backend that gets scheduled automatically.'),
   options:     {},
   state:       'Stats::TicketWaitingTime',
   preferences: {
@@ -4857,7 +4857,7 @@ Setting.create_if_not_exists(
   title:       __('Stats Backend'),
   name:        'Stats::TicketEscalation',
   area:        'Dashboard::Stats',
-  description: __('Defines a dashboard stats backend that get scheduled automatically.'),
+  description: __('Defines a dashboard stats backend that gets scheduled automatically.'),
   options:     {},
   state:       'Stats::TicketEscalation',
   preferences: {
@@ -4872,7 +4872,7 @@ Setting.create_if_not_exists(
   title:       __('Stats Backend'),
   name:        'Stats::TicketChannelDistribution',
   area:        'Dashboard::Stats',
-  description: __('Defines a dashboard stats backend that get scheduled automatically.'),
+  description: __('Defines a dashboard stats backend that gets scheduled automatically.'),
   options:     {},
   state:       'Stats::TicketChannelDistribution',
   preferences: {
@@ -4887,7 +4887,7 @@ Setting.create_if_not_exists(
   title:       __('Stats Backend'),
   name:        'Stats::TicketLoadMeasure',
   area:        'Dashboard::Stats',
-  description: __('Defines a dashboard stats backend that get scheduled automatically.'),
+  description: __('Defines a dashboard stats backend that gets scheduled automatically.'),
   options:     {},
   state:       'Stats::TicketLoadMeasure',
   preferences: {
@@ -4902,7 +4902,7 @@ Setting.create_if_not_exists(
   title:       __('Stats Backend'),
   name:        'Stats::TicketInProcess',
   area:        'Dashboard::Stats',
-  description: __('Defines a dashboard stats backend that get scheduled automatically.'),
+  description: __('Defines a dashboard stats backend that gets scheduled automatically.'),
   options:     {},
   state:       'Stats::TicketInProcess',
   preferences: {
@@ -4917,7 +4917,7 @@ Setting.create_if_not_exists(
   title:       __('Stats Backend'),
   name:        'Stats::TicketReopen',
   area:        'Dashboard::Stats',
-  description: __('Defines a dashboard stats backend that get scheduled automatically.'),
+  description: __('Defines a dashboard stats backend that gets scheduled automatically.'),
   options:     {},
   state:       'Stats::TicketReopen',
   preferences: {
@@ -4928,10 +4928,10 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       __('Kb multi-lingual support'),
+  title:       __('Knowledge Base multilingual support'),
   name:        'kb_multi_lingual_support',
   area:        'Kb::Core',
-  description: __('Support of multi-lingual Knowledge Base.'),
+  description: __('Support of multilingual Knowledge Base.'),
   options:     {},
   state:       true,
   preferences: { online_service_disable: true },
@@ -4939,10 +4939,10 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       __('Kb active'),
+  title:       __('Knowledge Base active'),
   name:        'kb_active',
   area:        'Kb::Core',
-  description: __('Defines if KB navbar button is enabled'),
+  description: __('Defines if Knowledge Base navbar button is enabled.'),
   state:       true,
   preferences: {
     prio:           1,
@@ -4954,10 +4954,10 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       __('Kb active publicly'),
+  title:       __('Knowledge Base active publicly'),
   name:        'kb_active_publicly',
   area:        'Kb::Core',
-  description: __('Defines if KB navbar button is enabled for users without KB permission'),
+  description: __('Defines if Knowledge Base navbar button is enabled for users without Knowledge Base permission.'),
   state:       false,
   preferences: {
     prio:           1,
@@ -4969,7 +4969,7 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       __('Define timeframe where a own created note can get deleted.'),
+  title:       __('Defines the timeframe during which a self-created note can be deleted.'),
   name:        'ui_ticket_zoom_article_delete_timeframe',
   area:        'UI::TicketZoomArticle',
   description: __("Set timeframe in seconds. If it's set to 0 you can delete notes without time limits"),
@@ -5046,7 +5046,7 @@ Setting.create_if_not_exists(
     controller:       'SettingsAreaSwitch',
     sub:              {},
     title_i18n:       ['SSO'],
-    description_i18n: ['SSO', __('Button for Single Sign On.')],
+    description_i18n: ['SSO'],
     permission:       ['admin.security'],
   },
   state:       false,
