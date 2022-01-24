@@ -54,6 +54,12 @@ module ZammadCapybarActionDelegator
     end
   end
 
+  def click_link(...)
+    super.tap do
+      await_empty_ajax_queue
+    end
+  end
+
   def click_link_or_button(...)
     super.tap do
       await_empty_ajax_queue
