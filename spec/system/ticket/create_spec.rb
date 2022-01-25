@@ -91,8 +91,8 @@ RSpec.describe 'Ticket Create', type: :system do
             use_template(template)
 
             # wait till S/MIME check AJAX call is ready
-            expect(page).to have_css('div.js-securityEncrypt.btn--active', wait: 5)
-            expect(page).to have_css('div.js-securitySign.btn--active', wait: 5)
+            expect(page).to have_css('div.js-securityEncrypt.btn--active')
+            expect(page).to have_css('div.js-securitySign.btn--active')
 
             # deactivate encryption and signing
             click '.js-securityEncrypt'
@@ -120,8 +120,8 @@ RSpec.describe 'Ticket Create', type: :system do
             use_template(template)
 
             # wait till S/MIME check AJAX call is ready
-            expect(page).to have_css('div.js-securityEncrypt.btn--active', wait: 5)
-            expect(page).to have_css('div.js-securitySign.btn--active', wait: 5)
+            expect(page).to have_css('div.js-securityEncrypt.btn--active')
+            expect(page).to have_css('div.js-securitySign.btn--active')
 
             # deactivate encryption
             click '.js-securityEncrypt'
@@ -148,8 +148,8 @@ RSpec.describe 'Ticket Create', type: :system do
             use_template(template)
 
             # wait till S/MIME check AJAX call is ready
-            expect(page).to have_css('div.js-securityEncrypt.btn--active', wait: 5)
-            expect(page).to have_css('div.js-securitySign.btn--active', wait: 5)
+            expect(page).to have_css('div.js-securityEncrypt.btn--active')
+            expect(page).to have_css('div.js-securitySign.btn--active')
 
             # deactivate signing
             click '.js-securitySign'
@@ -176,8 +176,8 @@ RSpec.describe 'Ticket Create', type: :system do
             use_template(template)
 
             # wait till S/MIME check AJAX call is ready
-            expect(page).to have_css('div.js-securityEncrypt.btn--active', wait: 5)
-            expect(page).to have_css('div.js-securitySign.btn--active', wait: 5)
+            expect(page).to have_css('div.js-securityEncrypt.btn--active')
+            expect(page).to have_css('div.js-securitySign.btn--active')
 
             click '.js-submit'
 
@@ -202,12 +202,12 @@ RSpec.describe 'Ticket Create', type: :system do
 
             it "security defaults sign: #{sign}, encrypt: #{encrypt}" do
               within(:active_content) do
-                encrypt_button = find('.js-securityEncrypt', wait: 5)
-                sign_button    = find('.js-securitySign', wait: 5)
+                encrypt_button = find('.js-securityEncrypt')
+                sign_button    = find('.js-securitySign')
 
                 active_button_class = '.btn--active'
-                expect(encrypt_button.matches_css?(active_button_class, wait: 2)).to be(encrypt)
-                expect(sign_button.matches_css?(active_button_class, wait: 2)).to be(sign)
+                expect(encrypt_button.matches_css?(active_button_class)).to be(encrypt)
+                expect(sign_button.matches_css?(active_button_class)).to be(sign)
               end
             end
           end
@@ -781,7 +781,7 @@ RSpec.describe 'Ticket Create', type: :system do
         wait.until { page.all("ul.recipientList-organizationMembers[organization-id='#{organization.id}'] li", visible: :all).count == 52 } # 50 users + back + show more button
 
         scroll_into_view('li.js-showMoreMembers')
-        expect(page).to have_selector("ul.recipientList-organizationMembers[organization-id='#{organization.id}'] li.js-showMoreMembers.hidden", visible: :all, wait: 20)
+        expect(page).to have_selector("ul.recipientList-organizationMembers[organization-id='#{organization.id}'] li.js-showMoreMembers.hidden", visible: :all)
       end
     end
   end

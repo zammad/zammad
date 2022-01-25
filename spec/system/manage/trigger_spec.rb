@@ -197,7 +197,7 @@ RSpec.describe 'Manage > Trigger', type: :system do
       it 'updates the ticket with the trigger condition' do
         wait.until { ticket.multiselect_previously_changed? && ticket.articles.present? }
         expect(ticket.articles).not_to be_empty
-        expect(page).to have_text 'Test body note', wait: 5
+        expect(page).to have_text 'Test body note'
       end
     end
 

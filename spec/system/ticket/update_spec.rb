@@ -35,7 +35,7 @@ RSpec.describe 'Ticket Update', type: :system do
 
         select('closed', from: 'state_id')
         click('.js-attributeBar .js-submit')
-        expect(page).to have_no_css('.js-submitDropdown .js-submit[disabled]', wait: 10)
+        expect(page).to have_no_css('.js-submitDropdown .js-submit[disabled]')
       end
 
       # the update should have failed and thus the ticket is still in the new state
@@ -45,7 +45,7 @@ RSpec.describe 'Ticket Update', type: :system do
         # update should work now
         find(".edit [name=#{attribute.name}]").select('name 2')
         click('.js-attributeBar .js-submit')
-        expect(page).to have_no_css('.js-submitDropdown .js-submit[disabled]', wait: 10)
+        expect(page).to have_no_css('.js-submitDropdown .js-submit[disabled]')
       end
 
       ticket.reload
@@ -96,7 +96,7 @@ RSpec.describe 'Ticket Update', type: :system do
         set_date_field_value(date_attribute.name, '')
 
         click('.js-attributeBar .js-submit')
-        expect(page).to have_no_css('.js-submitDropdown .js-submit[disabled]', wait: 10)
+        expect(page).to have_no_css('.js-submitDropdown .js-submit[disabled]')
 
         ticket.reload
         expect(ticket[date_attribute.name]).to eq(nil)
@@ -235,21 +235,21 @@ RSpec.describe 'Ticket Update', type: :system do
     it 'tickets history of both tickets should show the merge event' do
       visit "#ticket/zoom/#{origin_ticket.id}"
       within(:active_content) do
-        expect(page).to have_css('.js-actions .dropdown-toggle', wait: 10)
+        expect(page).to have_css('.js-actions .dropdown-toggle')
         click '.js-actions .dropdown-toggle'
         click '.js-actions .dropdown-menu [data-type="ticket-history"]'
 
-        expect(page).to have_css('.modal', wait: 3)
+        expect(page).to have_css('.modal')
         modal = find('.modal')
         expect(modal).to have_content "This ticket was merged into ticket ##{target_ticket.number}"
         expect(modal).to have_link "##{target_ticket.number}", href: "#ticket/zoom/#{target_ticket.id}"
 
         visit "#ticket/zoom/#{target_ticket.id}"
-        expect(page).to have_css('.js-actions .dropdown-toggle', wait: 3)
+        expect(page).to have_css('.js-actions .dropdown-toggle')
         click '.js-actions .dropdown-toggle'
         click '.js-actions .dropdown-menu [data-type="ticket-history"]'
 
-        expect(page).to have_css('.modal', wait: 3)
+        expect(page).to have_css('.modal')
         modal = find('.modal')
         expect(modal).to have_content("Ticket ##{origin_ticket.number} was merged into this ticket")
         expect(modal).to have_link "##{origin_ticket.number}", href: "#ticket/zoom/#{origin_ticket.id}"
@@ -265,7 +265,7 @@ RSpec.describe 'Ticket Update', type: :system do
       it 'shows the target ticket history' do
         visit "#ticket/zoom/#{target_ticket.id}"
         within(:active_content) do
-          expect(page).to have_css('.js-actions .dropdown-toggle', wait: 3)
+          expect(page).to have_css('.js-actions .dropdown-toggle')
           click '.js-actions .dropdown-toggle'
           click '.js-actions .dropdown-menu [data-type="ticket-history"]'
         end
@@ -287,7 +287,7 @@ RSpec.describe 'Ticket Update', type: :system do
       it 'shows the origin history' do
         visit "#ticket/zoom/#{origin_ticket.id}"
         within(:active_content) do
-          expect(page).to have_css('.js-actions .dropdown-toggle', wait: 3)
+          expect(page).to have_css('.js-actions .dropdown-toggle')
           click '.js-actions .dropdown-toggle'
           click '.js-actions .dropdown-menu [data-type="ticket-history"]'
         end

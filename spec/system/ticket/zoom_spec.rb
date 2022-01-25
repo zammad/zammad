@@ -644,8 +644,8 @@ RSpec.describe 'Ticket zoom', type: :system do
         all('a[data-type=emailReply]').last.click
         find('.articleNewEdit-body').send_keys('Test')
 
-        expect(page).to have_css('.js-securityEncrypt.btn--active', wait: 5)
-        expect(page).to have_css('.js-securitySign.btn--active', wait: 5)
+        expect(page).to have_css('.js-securityEncrypt.btn--active')
+        expect(page).to have_css('.js-securitySign.btn--active')
 
         click '.js-securityEncrypt'
         click '.js-securitySign'
@@ -663,8 +663,8 @@ RSpec.describe 'Ticket zoom', type: :system do
         all('a[data-type=emailReply]').last.click
         find('.articleNewEdit-body').send_keys('Test')
 
-        expect(page).to have_css('.js-securityEncrypt.btn--active', wait: 5)
-        expect(page).to have_css('.js-securitySign.btn--active', wait: 5)
+        expect(page).to have_css('.js-securityEncrypt.btn--active')
+        expect(page).to have_css('.js-securitySign.btn--active')
 
         click '.js-securityEncrypt'
 
@@ -681,8 +681,8 @@ RSpec.describe 'Ticket zoom', type: :system do
         all('a[data-type=emailReply]').last.click
         find('.articleNewEdit-body').send_keys('Test')
 
-        expect(page).to have_css('.js-securityEncrypt.btn--active', wait: 5)
-        expect(page).to have_css('.js-securitySign.btn--active', wait: 5)
+        expect(page).to have_css('.js-securityEncrypt.btn--active')
+        expect(page).to have_css('.js-securitySign.btn--active')
 
         click '.js-securitySign'
 
@@ -699,8 +699,8 @@ RSpec.describe 'Ticket zoom', type: :system do
         all('a[data-type=emailReply]').last.click
         find('.articleNewEdit-body').send_keys('Test')
 
-        expect(page).to have_css('.js-securityEncrypt.btn--active', wait: 5)
-        expect(page).to have_css('.js-securitySign.btn--active', wait: 5)
+        expect(page).to have_css('.js-securityEncrypt.btn--active')
+        expect(page).to have_css('.js-securitySign.btn--active')
 
         click '.js-submit'
         expect(page).to have_css('.ticket-article-item', count: 2)
@@ -731,12 +731,12 @@ RSpec.describe 'Ticket zoom', type: :system do
 
         it "security defaults sign: #{sign}, encrypt: #{encrypt}" do
           within(:active_content) do
-            encrypt_button = find('.js-securityEncrypt', wait: 5)
-            sign_button    = find('.js-securitySign', wait: 5)
+            encrypt_button = find('.js-securityEncrypt')
+            sign_button    = find('.js-securitySign')
 
             active_button_class = '.btn--active'
-            expect(encrypt_button.matches_css?(active_button_class, wait: 2)).to be(encrypt)
-            expect(sign_button.matches_css?(active_button_class, wait: 2)).to be(sign)
+            expect(encrypt_button.matches_css?(active_button_class)).to be(encrypt)
+            expect(sign_button.matches_css?(active_button_class)).to be(sign)
           end
         end
       end
@@ -1018,7 +1018,7 @@ RSpec.describe 'Ticket zoom', type: :system do
         visit "ticket/zoom/#{ticket.id}"
         refresh # refresh to have assets generated for ticket
 
-        expect(page).to have_select('state_id', options: %w[new open closed], wait: 10)
+        expect(page).to have_select('state_id', options: %w[new open closed])
         expect(page).to have_no_select('priority_id')
         expect(page).to have_no_select('owner_id')
         expect(page).to have_no_css('div.tabsSidebar-tab[data-tab=customer]')
@@ -1154,7 +1154,7 @@ RSpec.describe 'Ticket zoom', type: :system do
 
         ticket_note.update!(internal: false)
 
-        expect(page).to have_selector(:active_ticket_article, ticket_note, wait: 10)
+        expect(page).to have_selector(:active_ticket_article, ticket_note)
       end
     end
   end
@@ -1281,7 +1281,7 @@ RSpec.describe 'Ticket zoom', type: :system do
       within :active_content do
         click_on ticket_a.title
 
-        expect(page).to have_css('.pagination-counter', wait: 10)
+        expect(page).to have_css('.pagination-counter')
       end
     end
 
@@ -1291,7 +1291,7 @@ RSpec.describe 'Ticket zoom', type: :system do
         visit 'dashboard'
         visit "ticket/zoom/#{ticket_a.id}"
 
-        expect(page).to have_css('.pagination-counter', wait: 10)
+        expect(page).to have_css('.pagination-counter')
       end
     end
   end
@@ -1337,7 +1337,7 @@ RSpec.describe 'Ticket zoom', type: :system do
       )
 
       # wait for article to be added to the page
-      expect(page).to have_css('.ticket-article-item', count: 2, wait: 10)
+      expect(page).to have_css('.ticket-article-item', count: 2)
 
       # click on forward of created article
       within :active_ticket_article, article1 do
@@ -1375,21 +1375,21 @@ RSpec.describe 'Ticket zoom', type: :system do
           visit "ticket/zoom/#{ticket.id}"
 
           click '.js-subscriptions .js-subscribe input'
-          expect(page).to have_selector('.js-subscriptions .js-unsubscribe input', wait: 10)
-          expect(page).to have_selector('.js-subscriptions span.avatar', wait: 10)
+          expect(page).to have_selector('.js-subscriptions .js-unsubscribe input')
+          expect(page).to have_selector('.js-subscriptions span.avatar')
 
           click '.js-subscriptions .js-unsubscribe input'
-          expect(page).to have_selector('.js-subscriptions .js-subscribe input', wait: 10)
-          expect(page).to have_no_selector('.js-subscriptions span.avatar', wait: 10)
+          expect(page).to have_selector('.js-subscriptions .js-subscribe input')
+          expect(page).to have_no_selector('.js-subscriptions span.avatar')
 
           create(:mention, mentionable: ticket, user: other_agent)
-          expect(page).to have_selector('.js-subscriptions span.avatar', wait: 10)
+          expect(page).to have_selector('.js-subscriptions span.avatar')
 
           # check history for mention entries
           click 'h2.sidebar-header-headline.js-headline'
           click 'li[data-type=ticket-history] a'
-          expect(page).to have_text('created Mention', wait: 10)
-          expect(page).to have_text('removed Mention', wait: 10)
+          expect(page).to have_text('created Mention')
+          expect(page).to have_text('removed Mention')
         end
       end
     end
@@ -1718,11 +1718,11 @@ RSpec.describe 'Ticket zoom', type: :system do
       visit "#ticket/zoom/#{ticket_open.id}"
       click '.tabsSidebar-tab[data-tab=customer]'
       click '.user-tickets[data-type=open]'
-      expect(page).to have_text(ticket_open.title, wait: 20)
+      expect(page).to have_text(ticket_open.title)
 
       visit "#ticket/zoom/#{ticket_open.id}"
       click '.user-tickets[data-type=closed]'
-      expect(page).to have_text(ticket_closed.title, wait: 20)
+      expect(page).to have_text(ticket_closed.title)
     end
   end
 
@@ -2162,7 +2162,7 @@ RSpec.describe 'Ticket zoom', type: :system do
         it 'does show up the saved value if it would not be possible because of the restriction' do
           expect(page.find("select[name='#{field_name}']").value).to eq('false')
           ticket.update(field_name => true)
-          wait(10, interval: 0.5).until { page.find("select[name='#{field_name}']").value == 'true' }
+          wait.until { page.find("select[name='#{field_name}']").value == 'true' }
           expect(page.find("select[name='#{field_name}']").value).to eq('true')
         end
       end
@@ -2179,7 +2179,7 @@ RSpec.describe 'Ticket zoom', type: :system do
         it 'does show up the saved value if it would not be possible because of the restriction' do
           expect(page.find("select[name='#{field_name}']").value).to eq('false')
           ticket.update(field_name => true)
-          wait(10, interval: 0.5).until { page.find("select[name='#{field_name}']").value == 'true' }
+          wait.until { page.find("select[name='#{field_name}']").value == 'true' }
           expect(page.find("select[name='#{field_name}']").value).to eq('true')
         end
       end
@@ -2196,21 +2196,21 @@ RSpec.describe 'Ticket zoom', type: :system do
     it 'does show up the new priority' do
       high_prio = Ticket::Priority.find_by(name: '3 high')
       ticket.update(priority: high_prio)
-      wait(10, interval: 0.5).until { page.find("select[name='priority_id']").value == high_prio.id.to_s }
+      wait.until { page.find("select[name='priority_id']").value == high_prio.id.to_s }
       expect(page.find("select[name='priority_id']").value).to eq(high_prio.id.to_s)
     end
 
     it 'does show up the new group (different case because it will also trigger a full rerender because of potential permission changes)' do
       group = Group.find_by(name: 'some group1')
       ticket.update(group: group)
-      wait(10, interval: 0.5).until { page.find("select[name='group_id']").value == group.id.to_s }
+      wait.until { page.find("select[name='group_id']").value == group.id.to_s }
       expect(page.find("select[name='group_id']").value).to eq(group.id.to_s)
     end
 
     it 'does show up the new state and pending time' do
       pending_state = Ticket::State.find_by(name: 'pending reminder')
       ticket.update(state: pending_state, pending_time: 1.day.from_now)
-      wait(10, interval: 0.5).until { page.find("select[name='state_id']").value == pending_state.id.to_s }
+      wait.until { page.find("select[name='state_id']").value == pending_state.id.to_s }
       expect(page.find("select[name='state_id']").value).to eq(pending_state.id.to_s)
       expect(page).to have_selector("div[data-name='pending_time']")
     end
@@ -2220,7 +2220,7 @@ RSpec.describe 'Ticket zoom', type: :system do
       high_prio = Ticket::Priority.find_by(name: '3 high')
       closed_state = Ticket::State.find_by(name: 'closed')
       ticket.update(priority: high_prio)
-      wait(10, interval: 0.5).until { page.find("select[name='priority_id']").value == high_prio.id.to_s }
+      wait.until { page.find("select[name='priority_id']").value == high_prio.id.to_s }
       expect(page.find("select[name='priority_id']").value).to eq(high_prio.id.to_s)
       expect(page.find("select[name='state_id']").value).to eq(closed_state.id.to_s)
     end
@@ -2421,7 +2421,7 @@ RSpec.describe 'Ticket zoom', type: :system do
     it 'does show values properly and can save values also' do
 
       # check ticket state rendering
-      wait(5).until { multiselect_value == %w[key_2 key_3] }
+      wait.until { multiselect_value == %w[key_2 key_3] }
       expect(multiselect_value).to eq(%w[key_2 key_3])
 
       # save 2 values

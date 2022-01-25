@@ -51,8 +51,8 @@ RSpec.describe 'Dashboard', type: :system do
       end
 
       it 'does logout user' do
-        expect(page).to have_text('Due to inactivity, you will be automatically logged out within the next 30 seconds.', wait: 20)
-        expect(page).to have_text('Due to inactivity, you have been automatically logged out.', wait: 20)
+        expect(page).to have_text('Due to inactivity, you will be automatically logged out within the next 30 seconds.')
+        expect(page).to have_text('Due to inactivity, you have been automatically logged out.')
       end
 
       it 'does not logout user', authenticated_as: :admin do
@@ -65,7 +65,7 @@ RSpec.describe 'Dashboard', type: :system do
       it 'does logout user' do
         expect(page).to have_no_text('Due to inactivity, you have been automatically logged out.')
         Setting.set('session_timeout', { default: '1' })
-        expect(page).to have_text('Due to inactivity, you have been automatically logged out.', wait: 20)
+        expect(page).to have_text('Due to inactivity, you have been automatically logged out.')
       end
     end
 
@@ -76,7 +76,7 @@ RSpec.describe 'Dashboard', type: :system do
       end
 
       it 'does logout user' do
-        expect(page).to have_text('Due to inactivity, you have been automatically logged out.', wait: 20)
+        expect(page).to have_text('Due to inactivity, you have been automatically logged out.')
       end
     end
 
@@ -87,7 +87,7 @@ RSpec.describe 'Dashboard', type: :system do
       end
 
       it 'does logout user' do
-        expect(page).to have_text('Due to inactivity, you have been automatically logged out.', wait: 20)
+        expect(page).to have_text('Due to inactivity, you have been automatically logged out.')
       end
     end
 
@@ -98,7 +98,7 @@ RSpec.describe 'Dashboard', type: :system do
       end
 
       it 'does logout user' do
-        expect(page).to have_text('Due to inactivity, you have been automatically logged out.', wait: 20)
+        expect(page).to have_text('Due to inactivity, you have been automatically logged out.')
       end
     end
 
@@ -112,7 +112,7 @@ RSpec.describe 'Dashboard', type: :system do
         # backend tests for the reset
         session = ActiveRecord::SessionStore::Session.all.detect { |s| s.data['user_id'] == admin.id }
         SessionTimeoutJob::Session.new(session).frontend_timeout
-        expect(page).to have_text('Due to inactivity, you have been automatically logged out.', wait: 20)
+        expect(page).to have_text('Due to inactivity, you have been automatically logged out.')
       end
     end
 

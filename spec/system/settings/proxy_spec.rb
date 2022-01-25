@@ -22,13 +22,13 @@ RSpec.describe 'Manage > Settings > System > Network', type: :system do
         fill_in 'proxy_password',   with: proxy_password
         click_on 'Test Connection'
 
-        expect(page).to have_button('Test Connection', visible: :hidden, wait: 5)
-        expect(page).to have_button('Submit', visible: :visible, wait: 5)
+        expect(page).to have_button('Test Connection', visible: :hidden)
+        expect(page).to have_button('Submit', visible: :visible)
 
         find('.js-submit:not(.hide)').click
 
-        expect(page).to have_button('Submit', visible: :hidden, wait: 5)
-        expect(page).to have_button('Test Connection', visible: :visible, wait: 5)
+        expect(page).to have_button('Submit', visible: :hidden)
+        expect(page).to have_button('Test Connection', visible: :visible)
       end
     end
 
@@ -44,10 +44,10 @@ RSpec.describe 'Manage > Settings > System > Network', type: :system do
           fill_in 'proxy_password',   with: proxy_password
           click_on 'Test Connection'
 
-          expect(page).to have_css('h1.modal-title', text: 'Error', wait: 5)
-          expect(page).to have_css('div.modal-body', text: %r{Invalid proxy address}, wait: 5)
-          expect(page).to have_button('Test Connection', visible: :visible, wait: 5)
-          expect(page).to have_button('Submit', visible: :hidden, wait: 5)
+          expect(page).to have_css('h1.modal-title', text: 'Error')
+          expect(page).to have_css('div.modal-body', text: %r{Invalid proxy address})
+          expect(page).to have_button('Test Connection', visible: :visible)
+          expect(page).to have_button('Submit', visible: :hidden)
 
         end
       end
@@ -62,10 +62,10 @@ RSpec.describe 'Manage > Settings > System > Network', type: :system do
           fill_in 'proxy_password',   with: proxy_password
           click_on 'Test Connection'
 
-          expect(page).to have_css('h1.modal-title', text: 'Error', wait: 5)
-          expect(page).to have_css('div.modal-body', text: %r{Failed to open TCP connection}, wait: 5)
-          expect(page).to have_button('Test Connection', visible: :visible, wait: 5)
-          expect(page).to have_button('Submit', visible: :hidden, wait: 5)
+          expect(page).to have_css('h1.modal-title', text: 'Error')
+          expect(page).to have_css('div.modal-body', text: %r{Failed to open TCP connection})
+          expect(page).to have_button('Test Connection', visible: :visible)
+          expect(page).to have_button('Submit', visible: :hidden)
 
         end
       end
@@ -80,10 +80,10 @@ RSpec.describe 'Manage > Settings > System > Network', type: :system do
           fill_in 'proxy_password',   with: proxy_password
           click_on 'Test Connection'
 
-          expect(page).to have_css('h1.modal-title', text: 'Error', wait: 5)
-          expect(page).to have_css('div.modal-body', text: %r{Access Denied}, wait: 5)
-          expect(page).to have_button('Test Connection', visible: :visible, wait: 5)
-          expect(page).to have_button('Submit', visible: :hidden, wait: 5)
+          expect(page).to have_css('h1.modal-title', text: 'Error')
+          expect(page).to have_css('div.modal-body', text: %r{Access Denied})
+          expect(page).to have_button('Test Connection', visible: :visible)
+          expect(page).to have_button('Submit', visible: :hidden)
 
         end
       end
@@ -98,10 +98,10 @@ RSpec.describe 'Manage > Settings > System > Network', type: :system do
           fill_in 'proxy_password',   with: 'invalid_password'
           click_on 'Test Connection'
 
-          expect(page).to have_css('h1.modal-title', text: 'Error', wait: 5)
-          expect(page).to have_css('div.modal-body', text: %r{Access Denied}, wait: 5)
-          expect(page).to have_button('Test Connection', visible: :visible, wait: 5)
-          expect(page).to have_button('Submit', visible: :hidden, wait: 5)
+          expect(page).to have_css('h1.modal-title', text: 'Error')
+          expect(page).to have_css('div.modal-body', text: %r{Access Denied})
+          expect(page).to have_button('Test Connection', visible: :visible)
+          expect(page).to have_button('Submit', visible: :hidden)
 
         end
       end

@@ -51,7 +51,7 @@ RSpec.describe 'Chat Handling', type: :system do
 
       expect(page).to have_css('.zammad-chat', visible: :all)
       expect(page).to have_css('.zammad-chat-is-hidden', visible: :all)
-      expect(page).to have_no_css('.open-zammad-chat:not([style*="display: none"]', visible: :all, wait: 20)
+      expect(page).to have_no_css('.open-zammad-chat:not([style*="display: none"]', visible: :all)
     end
   end
 
@@ -196,7 +196,7 @@ RSpec.describe 'Chat Handling', type: :system do
       # No customer action, hide the widget.
       expect(page).to have_css('.zammad-chat')
 
-      expect(page).to have_no_css('.zammad-chat', wait: 20)
+      expect(page).to have_no_css('.zammad-chat')
 
       refresh
 
@@ -204,7 +204,7 @@ RSpec.describe 'Chat Handling', type: :system do
       open_chat_dialog
 
       check_content('.zammad-chat-modal-text', %r{(waiting|Warte)})
-      check_content('.zammad-chat-modal-text', %r{(takes longer|dauert länger)}, wait: 20)
+      check_content('.zammad-chat-modal-text', %r{(takes longer|dauert länger)})
 
       refresh
 

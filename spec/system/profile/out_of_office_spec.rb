@@ -10,11 +10,11 @@ RSpec.describe 'Profile > Out of Office', type: :system do
 
   it 'does find agents' do
     find(:css, '.js-objectSelect').send_keys('Agent')
-    expect(page).to have_text('Agent 1 Test', wait: 20)
+    expect(page).to have_text('Agent 1 Test')
   end
 
   it 'does not find customers' do
     find(:css, '.js-objectSelect').send_keys('Nicole')
-    expect(page).to have_no_text('Nicole Braun', wait: 20)
+    expect(page).to have_no_text('Nicole Braun')
   end
 end

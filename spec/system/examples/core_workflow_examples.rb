@@ -46,7 +46,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page).to have_selector("input[name='#{field_name}']", wait: 10)
+        expect(page).to have_selector("input[name='#{field_name}']")
       end
     end
 
@@ -64,7 +64,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page).to have_selector(".form-group[data-attribute-name='#{field_name}'].is-hidden", visible: :hidden, wait: 10)
+        expect(page).to have_selector(".form-group[data-attribute-name='#{field_name}'].is-hidden", visible: :hidden)
       end
     end
 
@@ -82,7 +82,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page).to have_selector(".form-group[data-attribute-name='#{field_name}'].is-removed", visible: :hidden, wait: 10)
+        expect(page).to have_selector(".form-group[data-attribute-name='#{field_name}'].is-removed", visible: :hidden)
       end
     end
 
@@ -100,7 +100,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page.find("div[data-attribute-name='#{field_name}'] div.formGroup-label label")).to have_no_text('*', wait: 10)
+        expect(page.find("div[data-attribute-name='#{field_name}'] div.formGroup-label label")).to have_no_text('*')
       end
     end
 
@@ -118,7 +118,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page.find("div[data-attribute-name='#{field_name}'] div.formGroup-label label")).to have_text('*', wait: 10)
+        expect(page.find("div[data-attribute-name='#{field_name}'] div.formGroup-label label")).to have_text('*')
       end
     end
 
@@ -136,7 +136,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page).to have_no_selector("div[data-attribute-name='#{field_name}'].is-readonly", wait: 10)
+        expect(page).to have_no_selector("div[data-attribute-name='#{field_name}'].is-readonly")
       end
     end
 
@@ -154,7 +154,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page).to have_selector("div[data-attribute-name='#{field_name}'].is-readonly", wait: 10)
+        expect(page).to have_selector("div[data-attribute-name='#{field_name}'].is-readonly")
       end
     end
 
@@ -172,7 +172,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page).to have_field(field_name, with: '4cddb2twza', wait: 10)
+        expect(page).to have_field(field_name, with: '4cddb2twza')
       end
     end
 
@@ -191,7 +191,7 @@ RSpec.shared_examples 'core workflow' do
 
         it 'does perform' do
           before_it.call
-          expect(page).to have_field(field_name, with: '9999', wait: 10)
+          expect(page).to have_field(field_name, with: '9999')
         end
       end
 
@@ -217,7 +217,7 @@ RSpec.shared_examples 'core workflow' do
 
         it 'does perform' do
           before_it.call
-          expect(page).to have_no_field(field_name, with: '9999', wait: 10)
+          expect(page).to have_no_field(field_name, with: '9999')
         end
       end
     end
@@ -244,7 +244,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page).to have_selector("textarea[name='#{field_name}']", wait: 10)
+        expect(page).to have_selector("textarea[name='#{field_name}']")
       end
     end
 
@@ -262,7 +262,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page).to have_selector(".form-group[data-attribute-name='#{field_name}'].is-hidden", visible: :hidden, wait: 10)
+        expect(page).to have_selector(".form-group[data-attribute-name='#{field_name}'].is-hidden", visible: :hidden)
       end
     end
 
@@ -280,7 +280,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page).to have_selector(".form-group[data-attribute-name='#{field_name}'].is-removed", visible: :hidden, wait: 10)
+        expect(page).to have_selector(".form-group[data-attribute-name='#{field_name}'].is-removed", visible: :hidden)
       end
     end
 
@@ -298,7 +298,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page.find("div[data-attribute-name='#{field_name}'] div.formGroup-label label")).to have_no_text('*', wait: 10)
+        expect(page.find("div[data-attribute-name='#{field_name}'] div.formGroup-label label")).to have_no_text('*')
       end
     end
 
@@ -316,7 +316,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page.find("div[data-attribute-name='#{field_name}'] div.formGroup-label label")).to have_text('*', wait: 10)
+        expect(page.find("div[data-attribute-name='#{field_name}'] div.formGroup-label label")).to have_text('*')
       end
     end
 
@@ -334,7 +334,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page).to have_no_selector("div[data-attribute-name='#{field_name}'].is-readonly", wait: 10)
+        expect(page).to have_no_selector("div[data-attribute-name='#{field_name}'].is-readonly")
       end
     end
 
@@ -352,7 +352,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page).to have_selector("div[data-attribute-name='#{field_name}'].is-readonly", wait: 10)
+        expect(page).to have_selector("div[data-attribute-name='#{field_name}'].is-readonly")
       end
     end
 
@@ -370,7 +370,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page).to have_field(field_name, with: '4cddb2twza', wait: 10)
+        expect(page).to have_field(field_name, with: '4cddb2twza')
       end
     end
 
@@ -389,7 +389,7 @@ RSpec.shared_examples 'core workflow' do
 
         it 'does perform' do
           before_it.call
-          expect(page).to have_field(field_name, with: '9999', wait: 10)
+          expect(page).to have_field(field_name, with: '9999')
         end
       end
 
@@ -415,7 +415,7 @@ RSpec.shared_examples 'core workflow' do
 
         it 'does perform' do
           before_it.call
-          expect(page).to have_no_field(field_name, with: '9999', wait: 10)
+          expect(page).to have_no_field(field_name, with: '9999')
         end
       end
     end
@@ -442,7 +442,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page).to have_selector("select[name='#{field_name}']", wait: 10)
+        expect(page).to have_selector("select[name='#{field_name}']")
       end
     end
 
@@ -460,7 +460,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page).to have_selector(".form-group[data-attribute-name='#{field_name}'].is-hidden", visible: :hidden, wait: 10)
+        expect(page).to have_selector(".form-group[data-attribute-name='#{field_name}'].is-hidden", visible: :hidden)
       end
     end
 
@@ -478,7 +478,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page).to have_selector(".form-group[data-attribute-name='#{field_name}'].is-removed", visible: :hidden, wait: 10)
+        expect(page).to have_selector(".form-group[data-attribute-name='#{field_name}'].is-removed", visible: :hidden)
       end
     end
 
@@ -496,7 +496,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page.find("div[data-attribute-name='#{field_name}'] div.formGroup-label label")).to have_no_text('*', wait: 10)
+        expect(page.find("div[data-attribute-name='#{field_name}'] div.formGroup-label label")).to have_no_text('*')
       end
     end
 
@@ -514,7 +514,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page.find("div[data-attribute-name='#{field_name}'] div.formGroup-label label")).to have_text('*', wait: 10)
+        expect(page.find("div[data-attribute-name='#{field_name}'] div.formGroup-label label")).to have_text('*')
       end
     end
 
@@ -532,7 +532,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page).to have_no_selector("div[data-attribute-name='#{field_name}'].is-readonly", wait: 10)
+        expect(page).to have_no_selector("div[data-attribute-name='#{field_name}'].is-readonly")
       end
     end
 
@@ -550,7 +550,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page).to have_selector("div[data-attribute-name='#{field_name}'].is-readonly", wait: 10)
+        expect(page).to have_selector("div[data-attribute-name='#{field_name}'].is-readonly")
       end
     end
 
@@ -568,9 +568,9 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page).to have_selector("select[name='#{field_name}'] option[value='key_1']", wait: 10)
-        expect(page).to have_no_selector("select[name='#{field_name}'] option[value='key_2']", wait: 10)
-        expect(page).to have_selector("select[name='#{field_name}'] option[value='key_3']", wait: 10)
+        expect(page).to have_selector("select[name='#{field_name}'] option[value='key_1']")
+        expect(page).to have_no_selector("select[name='#{field_name}'] option[value='key_2']")
+        expect(page).to have_selector("select[name='#{field_name}'] option[value='key_3']")
       end
     end
 
@@ -588,7 +588,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page).to have_selector("select[name='#{field_name}'] option[value='key_3'][selected]", wait: 10)
+        expect(page).to have_selector("select[name='#{field_name}'] option[value='key_3'][selected]")
       end
     end
 
@@ -614,7 +614,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page).to have_selector("select[name='#{field_name}'] option[value='key_3'][selected]", wait: 10)
+        expect(page).to have_selector("select[name='#{field_name}'] option[value='key_3'][selected]")
       end
     end
   end
@@ -640,7 +640,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page).to have_selector("select[name='#{field_name}']", wait: 10)
+        expect(page).to have_selector("select[name='#{field_name}']")
       end
     end
 
@@ -658,7 +658,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page).to have_selector(".form-group[data-attribute-name='#{field_name}'].is-hidden", visible: :hidden, wait: 10)
+        expect(page).to have_selector(".form-group[data-attribute-name='#{field_name}'].is-hidden", visible: :hidden)
       end
     end
 
@@ -676,7 +676,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page).to have_selector(".form-group[data-attribute-name='#{field_name}'].is-removed", visible: :hidden, wait: 10)
+        expect(page).to have_selector(".form-group[data-attribute-name='#{field_name}'].is-removed", visible: :hidden)
       end
     end
 
@@ -694,7 +694,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page.find("div[data-attribute-name='#{field_name}'] div.formGroup-label label")).to have_no_text('*', wait: 10)
+        expect(page.find("div[data-attribute-name='#{field_name}'] div.formGroup-label label")).to have_no_text('*')
       end
     end
 
@@ -712,7 +712,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page.find("div[data-attribute-name='#{field_name}'] div.formGroup-label label")).to have_text('*', wait: 10)
+        expect(page.find("div[data-attribute-name='#{field_name}'] div.formGroup-label label")).to have_text('*')
       end
     end
 
@@ -730,7 +730,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page).to have_no_selector("div[data-attribute-name='#{field_name}'].is-readonly", wait: 10)
+        expect(page).to have_no_selector("div[data-attribute-name='#{field_name}'].is-readonly")
       end
     end
 
@@ -748,7 +748,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page).to have_selector("div[data-attribute-name='#{field_name}'].is-readonly", wait: 10)
+        expect(page).to have_selector("div[data-attribute-name='#{field_name}'].is-readonly")
       end
     end
 
@@ -766,9 +766,9 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page).to have_selector("select[name='#{field_name}'] option[value='key_1']", wait: 10)
-        expect(page).to have_no_selector("select[name='#{field_name}'] option[value='key_2']", wait: 10)
-        expect(page).to have_selector("select[name='#{field_name}'] option[value='key_3']", wait: 10)
+        expect(page).to have_selector("select[name='#{field_name}'] option[value='key_1']")
+        expect(page).to have_no_selector("select[name='#{field_name}'] option[value='key_2']")
+        expect(page).to have_selector("select[name='#{field_name}'] option[value='key_3']")
       end
     end
 
@@ -786,7 +786,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        wait(5).until { page.find("select[name='#{field_name}']").value == ['key_3'] }
+        wait.until { page.find("select[name='#{field_name}']").value == ['key_3'] }
         expect(page.find("select[name='#{field_name}']").value).to eq(['key_3'])
       end
     end
@@ -813,7 +813,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        wait(5).until { page.find("select[name='#{field_name}']").value == ['key_3'] }
+        wait.until { page.find("select[name='#{field_name}']").value == ['key_3'] }
         expect(page.find("select[name='#{field_name}']").value).to eq(['key_3'])
       end
     end
@@ -840,7 +840,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page).to have_selector("select[name='#{field_name}']", wait: 10)
+        expect(page).to have_selector("select[name='#{field_name}']")
       end
     end
 
@@ -858,7 +858,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page).to have_selector(".form-group[data-attribute-name='#{field_name}'].is-hidden", visible: :hidden, wait: 10)
+        expect(page).to have_selector(".form-group[data-attribute-name='#{field_name}'].is-hidden", visible: :hidden)
       end
     end
 
@@ -876,7 +876,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page).to have_selector(".form-group[data-attribute-name='#{field_name}'].is-removed", visible: :hidden, wait: 10)
+        expect(page).to have_selector(".form-group[data-attribute-name='#{field_name}'].is-removed", visible: :hidden)
       end
     end
 
@@ -894,7 +894,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page.find("div[data-attribute-name='#{field_name}'] div.formGroup-label label")).to have_no_text('*', wait: 10)
+        expect(page.find("div[data-attribute-name='#{field_name}'] div.formGroup-label label")).to have_no_text('*')
       end
     end
 
@@ -912,7 +912,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page.find("div[data-attribute-name='#{field_name}'] div.formGroup-label label")).to have_text('*', wait: 10)
+        expect(page.find("div[data-attribute-name='#{field_name}'] div.formGroup-label label")).to have_text('*')
       end
     end
 
@@ -930,8 +930,8 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page).to have_selector("select[name='#{field_name}'] option[value='false']", wait: 10)
-        expect(page).to have_no_selector("select[name='#{field_name}'] option[value='true']", wait: 10)
+        expect(page).to have_selector("select[name='#{field_name}'] option[value='false']")
+        expect(page).to have_no_selector("select[name='#{field_name}'] option[value='true']")
       end
     end
 
@@ -949,7 +949,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page).to have_selector("select[name='#{field_name}'] option[value='true'][selected]", wait: 10)
+        expect(page).to have_selector("select[name='#{field_name}'] option[value='true'][selected]")
       end
     end
 
@@ -975,7 +975,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page).to have_selector("select[name='#{field_name}'] option[value='false'][selected]", wait: 10)
+        expect(page).to have_selector("select[name='#{field_name}'] option[value='false'][selected]")
       end
     end
   end
@@ -1001,7 +1001,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page).to have_selector("input[name='#{field_name}']", visible: :all, wait: 10)
+        expect(page).to have_selector("input[name='#{field_name}']", visible: :all)
       end
     end
 
@@ -1019,7 +1019,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page).to have_selector(".form-group[data-attribute-name='#{field_name}'].is-hidden", visible: :all, wait: 10)
+        expect(page).to have_selector(".form-group[data-attribute-name='#{field_name}'].is-hidden", visible: :all)
       end
     end
 
@@ -1037,7 +1037,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page).to have_selector(".form-group[data-attribute-name='#{field_name}'].is-removed", visible: :hidden, wait: 10)
+        expect(page).to have_selector(".form-group[data-attribute-name='#{field_name}'].is-removed", visible: :hidden)
       end
     end
 
@@ -1055,7 +1055,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page.find("div[data-attribute-name='#{field_name}'] div.formGroup-label label")).to have_no_text('*', wait: 10)
+        expect(page.find("div[data-attribute-name='#{field_name}'] div.formGroup-label label")).to have_no_text('*')
       end
     end
 
@@ -1073,7 +1073,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page.find("div[data-attribute-name='#{field_name}'] div.formGroup-label label")).to have_text('*', wait: 10)
+        expect(page.find("div[data-attribute-name='#{field_name}'] div.formGroup-label label")).to have_text('*')
       end
     end
 
@@ -1091,7 +1091,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page).to have_no_selector("div[data-attribute-name='#{field_name}'].is-readonly", wait: 10)
+        expect(page).to have_no_selector("div[data-attribute-name='#{field_name}'].is-readonly")
       end
     end
 
@@ -1109,7 +1109,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page).to have_selector("div[data-attribute-name='#{field_name}'].is-readonly", wait: 10)
+        expect(page).to have_selector("div[data-attribute-name='#{field_name}'].is-readonly")
       end
     end
 
@@ -1127,11 +1127,11 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page).to have_selector('span.searchableSelect-option-text', text: 'Incident', visible: :all, wait: 10)
-        expect(page).to have_selector('span.searchableSelect-option-text', text: 'Hardware', visible: :all, wait: 10)
-        expect(page).to have_selector('span.searchableSelect-option-text', text: 'Monitor', visible: :all, wait: 10)
-        expect(page).to have_no_selector('span.searchableSelect-option-text', text: 'Mouse', visible: :all, wait: 10)
-        expect(page).to have_no_selector('span.searchableSelect-option-text', text: 'Softwareproblem', visible: :all, wait: 10)
+        expect(page).to have_selector('span.searchableSelect-option-text', text: 'Incident', visible: :all)
+        expect(page).to have_selector('span.searchableSelect-option-text', text: 'Hardware', visible: :all)
+        expect(page).to have_selector('span.searchableSelect-option-text', text: 'Monitor', visible: :all)
+        expect(page).to have_no_selector('span.searchableSelect-option-text', text: 'Mouse', visible: :all)
+        expect(page).to have_no_selector('span.searchableSelect-option-text', text: 'Softwareproblem', visible: :all)
       end
     end
 
@@ -1149,7 +1149,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page).to have_selector("input[name='#{field_name}'][value='Incident::Hardware::Monitor']", visible: :all, wait: 10)
+        expect(page).to have_selector("input[name='#{field_name}'][value='Incident::Hardware::Monitor']", visible: :all)
       end
     end
 
@@ -1175,7 +1175,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page).to have_selector("input[name='#{field_name}'][value='Incident']", visible: :all, wait: 10)
+        expect(page).to have_selector("input[name='#{field_name}'][value='Incident']", visible: :all)
       end
     end
   end
@@ -1201,7 +1201,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page).to have_selector(".form-group[data-attribute-name='#{field_name}']", wait: 10)
+        expect(page).to have_selector(".form-group[data-attribute-name='#{field_name}']")
       end
     end
 
@@ -1219,7 +1219,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page).to have_selector(".form-group[data-attribute-name='#{field_name}'].is-hidden", visible: :hidden, wait: 10)
+        expect(page).to have_selector(".form-group[data-attribute-name='#{field_name}'].is-hidden", visible: :hidden)
       end
     end
 
@@ -1237,7 +1237,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page).to have_selector(".form-group[data-attribute-name='#{field_name}'].is-removed", visible: :hidden, wait: 10)
+        expect(page).to have_selector(".form-group[data-attribute-name='#{field_name}'].is-removed", visible: :hidden)
       end
     end
 
@@ -1255,7 +1255,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page.find("div[data-attribute-name='#{field_name}'] div.formGroup-label label")).to have_no_text('*', wait: 10)
+        expect(page.find("div[data-attribute-name='#{field_name}'] div.formGroup-label label")).to have_no_text('*')
       end
     end
 
@@ -1273,7 +1273,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page.find("div[data-attribute-name='#{field_name}'] div.formGroup-label label")).to have_text('*', wait: 10)
+        expect(page.find("div[data-attribute-name='#{field_name}'] div.formGroup-label label")).to have_text('*')
       end
     end
 
@@ -1291,7 +1291,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page).to have_no_selector("div[data-attribute-name='#{field_name}'].is-readonly", wait: 10)
+        expect(page).to have_no_selector("div[data-attribute-name='#{field_name}'].is-readonly")
       end
     end
 
@@ -1309,7 +1309,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page).to have_selector("div[data-attribute-name='#{field_name}'].is-readonly", wait: 10)
+        expect(page).to have_selector("div[data-attribute-name='#{field_name}'].is-readonly")
       end
     end
   end
@@ -1335,7 +1335,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page).to have_selector(".form-group[data-attribute-name='#{field_name}']", wait: 10)
+        expect(page).to have_selector(".form-group[data-attribute-name='#{field_name}']")
       end
     end
 
@@ -1353,7 +1353,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page).to have_selector(".form-group[data-attribute-name='#{field_name}'].is-hidden", visible: :hidden, wait: 10)
+        expect(page).to have_selector(".form-group[data-attribute-name='#{field_name}'].is-hidden", visible: :hidden)
       end
     end
 
@@ -1371,7 +1371,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page).to have_selector(".form-group[data-attribute-name='#{field_name}'].is-removed", visible: :hidden, wait: 10)
+        expect(page).to have_selector(".form-group[data-attribute-name='#{field_name}'].is-removed", visible: :hidden)
       end
     end
 
@@ -1389,7 +1389,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page.find("div[data-attribute-name='#{field_name}'] div.formGroup-label label")).to have_no_text('*', wait: 10)
+        expect(page.find("div[data-attribute-name='#{field_name}'] div.formGroup-label label")).to have_no_text('*')
       end
     end
 
@@ -1407,7 +1407,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page.find("div[data-attribute-name='#{field_name}'] div.formGroup-label label")).to have_text('*', wait: 10)
+        expect(page.find("div[data-attribute-name='#{field_name}'] div.formGroup-label label")).to have_text('*')
       end
     end
 
@@ -1425,7 +1425,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page).to have_no_selector("div[data-attribute-name='#{field_name}'].is-readonly", wait: 10)
+        expect(page).to have_no_selector("div[data-attribute-name='#{field_name}'].is-readonly")
       end
     end
 
@@ -1443,7 +1443,7 @@ RSpec.shared_examples 'core workflow' do
 
       it 'does perform' do
         before_it.call
-        expect(page).to have_selector("div[data-attribute-name='#{field_name}'].is-readonly", wait: 10)
+        expect(page).to have_selector("div[data-attribute-name='#{field_name}'].is-readonly")
       end
     end
   end
@@ -1476,7 +1476,7 @@ RSpec.shared_examples 'core workflow' do
 
     it 'does not display hidden fields as mandatory' do
       before_it.call
-      expect(page.find("input[name='#{field_name}']", visible: :hidden, wait: 10)[:required]).not_to eq('true')
+      expect(page.find("input[name='#{field_name}']", visible: :hidden)[:required]).not_to eq('true')
     end
   end
 end

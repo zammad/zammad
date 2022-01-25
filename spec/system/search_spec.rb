@@ -114,7 +114,7 @@ RSpec.describe 'Search', type: :system, authenticated: true, searchindex: true d
         end
 
         expect do
-          wait(10, interval: 0.1).until { ticket_1.articles.last&.body == note }
+          wait.until { ticket_1.articles.last&.body == note }
         end.not_to raise_error
       end
     end

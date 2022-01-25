@@ -42,12 +42,12 @@ RSpec.describe 'Manage > Users', type: :system do
       visit 'manage/users'
 
       within(:active_content) do
-        row = find("tr[data-id=\"#{user.id}\"]", wait: 10)
+        row = find("tr[data-id=\"#{user.id}\"]")
         row.find('.js-action').click
         row.find('.js-switchTo').click
       end
 
-      expect(page).to have_text("Zammad looks like this for \"#{user.firstname} #{user.lastname}\"", wait: 10)
+      expect(page).to have_text("Zammad looks like this for \"#{user.firstname} #{user.lastname}\"")
     end
   end
 

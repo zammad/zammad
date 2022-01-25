@@ -164,8 +164,7 @@ module CommonActions
       route = Regexp.new(Regexp.quote("/##{route}"))
     end
 
-    # wait 1 sec by default because Firefox is slow
-    options.reverse_merge!(wait: 1, url: true)
+    options.reverse_merge!(url: true)
 
     have_current_path(route, **options)
   end

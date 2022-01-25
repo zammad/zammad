@@ -85,7 +85,7 @@ RSpec.describe 'Keyboard Shortcuts', type: :system do
     context 'for list of shortcuts' do
       before do
         send_keys([*hot_keys, 'h'])
-        wait(5).until_exists { find :active_modal_content }
+        wait.until_exists { find :active_modal_content }
       end
 
       it 'shows list of shortcuts' do

@@ -70,7 +70,7 @@ RSpec.describe 'System setup process', type: :system, set_up: false, authenticat
     end
 
     # wait for verification process to start
-    expect(page).to have_css('body', text: 'Verify sending and receiving', wait: 20)
+    expect(page).to have_css('body', text: 'Verify sending and receiving')
 
     # wait for verification process to finish
     expect(page).to have_css('.js-agent h2', text: 'Invite Colleagues', wait: 2.minutes)
@@ -95,7 +95,7 @@ RSpec.describe 'System setup process', type: :system, set_up: false, authenticat
     # expect Dashboard of a fresh system
     expect(page).to have_css('body', text: 'My Stats')
     expect_current_route 'clues'
-    find(:clues_close, wait: 4).in_fixed_position.click
+    find(:clues_close).in_fixed_position.click
 
     # verify organization and fqdn
     click(:manage)
