@@ -469,7 +469,7 @@ ObjectManager::Attribute.add(
   force:       true,
   object:      'TicketArticle',
   name:        'cc',
-  display:     __('Cc'),
+  display:     __('CC'),
   data_type:   'input',
   data_option: {
     type:      'text',
@@ -562,7 +562,7 @@ ObjectManager::Attribute.add(
   force:       true,
   object:      'User',
   name:        'firstname',
-  display:     __('Firstname'),
+  display:     __('First name'),
   data_type:   'input',
   data_option: {
     type:       'text',
@@ -614,7 +614,7 @@ ObjectManager::Attribute.add(
   force:       true,
   object:      'User',
   name:        'lastname',
-  display:     __('Lastname'),
+  display:     __('Last name'),
   data_type:   'input',
   data_option: {
     type:       'text',
@@ -1414,7 +1414,7 @@ ObjectManager::Attribute.add(
   data_option: {
     null:       true,
     default:    true,
-    note:       __('Customers in the organization can view each other items.'),
+    note:       __("Customers in the organization can view each other's items."),
     item_class: 'formGroup--halfSize',
     options:    {
       true:  'yes',
@@ -1457,7 +1457,7 @@ ObjectManager::Attribute.add(
   data_option: {
     null:       true,
     default:    false,
-    note:       __('Assign Users based on users domain.'),
+    note:       __('Assign users based on user domain.'),
     item_class: 'formGroup--halfSize',
     options:    {
       true:  'yes',

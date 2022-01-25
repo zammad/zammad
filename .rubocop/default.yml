@@ -335,6 +335,11 @@ Zammad/DetectTranslatableString:
     - "lib/import/**/*.rb"
     - "lib/tasks/**/*.rb"
 
+Zammad/ForbidTranslatableMarker:
+  Enabled: true
+  Include:
+    - "db/migrate/*.rb"
+
 Zammad/ExistsDbStrategy:
   Include:
     - "spec/**/*.rb"

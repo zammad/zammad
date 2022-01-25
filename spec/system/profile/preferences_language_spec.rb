@@ -105,7 +105,7 @@ RSpec.describe 'Profile > Language', type: :system do
 
     context 'with overview page visited' do
       let(:path) { 'ticket/view' }
-      let(:translated_content) { 'My assigned Tickets' }
+      let(:translated_content) { 'My Assigned Tickets' }
 
       it_behaves_like 'having translated content in the page title'
       it_behaves_like 'having translated content in', :active_content
@@ -196,7 +196,7 @@ RSpec.describe 'Profile > Language', type: :system do
 
     context 'with overview page visited' do
       let(:path) { 'ticket/view' }
-      let(:translated_content) { 'Meine zugewiesenen Tickets' }
+      let(:translated_content) { Translation.translate('de-de', 'My Assigned Tickets') }
 
       it_behaves_like 'having translated content in the page title'
       it_behaves_like 'having translated content in', :active_content

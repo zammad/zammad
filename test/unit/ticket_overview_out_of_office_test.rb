@@ -93,7 +93,7 @@ class TicketOverviewOutOfOfficeTest < ActiveSupport::TestCase
       },
     )
     @overview2 = Overview.create_if_not_exists(
-      name:      'My assigned Tickets',
+      name:      'My Assigned Tickets',
       link:      'my_assigned',
       prio:      900,
       role_ids:  [overview_role.id],
@@ -155,13 +155,13 @@ class TicketOverviewOutOfOfficeTest < ActiveSupport::TestCase
       current_user: @agent1,
     )
     assert_equal(1, result.count)
-    assert_equal('My assigned Tickets', result[0].name)
+    assert_equal('My Assigned Tickets', result[0].name)
 
     result = Ticket::Overviews.all(
       current_user: @agent2,
     )
     assert_equal(1, result.count)
-    assert_equal('My assigned Tickets', result[0].name)
+    assert_equal('My Assigned Tickets', result[0].name)
 
     result = Ticket::Overviews.all(
       current_user: @customer1,
@@ -178,13 +178,13 @@ class TicketOverviewOutOfOfficeTest < ActiveSupport::TestCase
       current_user: @agent1,
     )
     assert_equal(1, result.count)
-    assert_equal('My assigned Tickets', result[0].name)
+    assert_equal('My Assigned Tickets', result[0].name)
 
     result = Ticket::Overviews.all(
       current_user: @agent2,
     )
     assert_equal(2, result.count)
-    assert_equal('My assigned Tickets', result[0].name)
+    assert_equal('My Assigned Tickets', result[0].name)
     assert_equal('My replacement Tickets', result[1].name)
 
     result = Ticket::Overviews.all(
@@ -197,7 +197,7 @@ class TicketOverviewOutOfOfficeTest < ActiveSupport::TestCase
   test 'overview shown' do
     result = Ticket::Overviews.index(@agent1)
     assert(result[0])
-    assert_equal(result[0][:overview][:name], 'My assigned Tickets')
+    assert_equal(result[0][:overview][:name], 'My Assigned Tickets')
     assert_equal(result[0][:overview][:view], 'my_assigned')
     assert_equal(result[0][:count], 0)
     assert_equal(result[0][:tickets].class, Array)
@@ -205,7 +205,7 @@ class TicketOverviewOutOfOfficeTest < ActiveSupport::TestCase
 
     result = Ticket::Overviews.index(@agent2)
     assert(result[0])
-    assert_equal(result[0][:overview][:name], 'My assigned Tickets')
+    assert_equal(result[0][:overview][:name], 'My Assigned Tickets')
     assert_equal(result[0][:overview][:view], 'my_assigned')
     assert_equal(result[0][:count], 0)
     assert_equal(result[0][:tickets].class, Array)
@@ -231,7 +231,7 @@ class TicketOverviewOutOfOfficeTest < ActiveSupport::TestCase
 
     result = Ticket::Overviews.index(@agent1)
     assert(result[0])
-    assert_equal(result[0][:overview][:name], 'My assigned Tickets')
+    assert_equal(result[0][:overview][:name], 'My Assigned Tickets')
     assert_equal(result[0][:overview][:view], 'my_assigned')
     assert_equal(result[0][:count], 0)
     assert_equal(result[0][:tickets].class, Array)
@@ -239,7 +239,7 @@ class TicketOverviewOutOfOfficeTest < ActiveSupport::TestCase
 
     result = Ticket::Overviews.index(@agent2)
     assert(result[0])
-    assert_equal(result[0][:overview][:name], 'My assigned Tickets')
+    assert_equal(result[0][:overview][:name], 'My Assigned Tickets')
     assert_equal(result[0][:overview][:view], 'my_assigned')
     assert_equal(result[0][:count], 0)
     assert_equal(result[0][:tickets].class, Array)
@@ -285,7 +285,7 @@ class TicketOverviewOutOfOfficeTest < ActiveSupport::TestCase
 
     result = Ticket::Overviews.index(@agent1)
     assert(result[0])
-    assert_equal(result[0][:overview][:name], 'My assigned Tickets')
+    assert_equal(result[0][:overview][:name], 'My Assigned Tickets')
     assert_equal(result[0][:overview][:view], 'my_assigned')
     assert_equal(result[0][:count], 1)
     assert_equal(result[0][:tickets].class, Array)
@@ -294,7 +294,7 @@ class TicketOverviewOutOfOfficeTest < ActiveSupport::TestCase
 
     result = Ticket::Overviews.index(@agent2)
     assert(result[0])
-    assert_equal(result[0][:overview][:name], 'My assigned Tickets')
+    assert_equal(result[0][:overview][:name], 'My Assigned Tickets')
     assert_equal(result[0][:overview][:view], 'my_assigned')
     assert_equal(result[0][:count], 0)
     assert_equal(result[0][:tickets].class, Array)

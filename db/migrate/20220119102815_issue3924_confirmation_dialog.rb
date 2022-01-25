@@ -7,10 +7,10 @@ class Issue3924ConfirmationDialog < ActiveRecord::Migration[6.0]
     return if !Setting.exists?(name: 'system_init_done')
 
     Setting.create_if_not_exists(
-      title:       __('Note - visibility confirmation dialog'),
+      title:       'Note - visibility confirmation dialog',
       name:        'ui_ticket_zoom_article_visibility_confirmation_dialog',
       area:        'UI::TicketZoom',
-      description: __('Defines if the agent has to accept a confirmation dialog when changing the article visibility to "public".'),
+      description: 'Defines if the agent has to accept a confirmation dialog when changing the article visibility to "public".',
       options:     {
         form: [
           {

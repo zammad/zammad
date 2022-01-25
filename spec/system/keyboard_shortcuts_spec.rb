@@ -22,7 +22,7 @@ RSpec.describe 'Keyboard Shortcuts', type: :system do
       end
 
       it 'shows Overviews page' do
-        expect(page).to have_title('My assigned Tickets')
+        expect(page).to have_title('My Assigned Tickets')
       end
     end
 

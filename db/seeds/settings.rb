@@ -2106,7 +2106,7 @@ Setting.create_if_not_exists(
   title:       __('Ticket Last Contact Behaviour'),
   name:        'ticket_last_contact_behaviour',
   area:        'Ticket::Base',
-  description: __('Sets the last customer contact based on either the last contact of the customer in general or on the last contact of the customer that has not received a response.'),
+  description: __('Defines how the last customer contact time of tickets should be calculated.'),
   options:     {
     form: [
       {
@@ -2116,8 +2116,8 @@ Setting.create_if_not_exists(
         tag:       'select',
         translate: true,
         options:   {
-          'based_on_customer_reaction'     => __('Last customer contact (without consideration an agent has replied to it)'),
-          'check_if_agent_already_replied' => __('Last customer contact (with consideration an agent has replied to it)'),
+          'based_on_customer_reaction'     => __('Use the time of the very last customer article.'),
+          'check_if_agent_already_replied' => __('Use the start time of the last customer thread (which may consist of multiple articles).'),
         },
       },
     ],
@@ -2810,8 +2810,8 @@ Setting.create_if_not_exists(
         tag:     'select',
         options: {
           ''                                     => '-',
-          'as_sender_of_email'                   => __('Take reply-to header as sender/from of email.'),
-          'as_sender_of_email_use_from_realname' => __('Take reply-to header as sender/from of email and use realname of origin from.'),
+          'as_sender_of_email'                   => __('Take Reply-To header as sender/from of email.'),
+          'as_sender_of_email_use_from_realname' => __('Take Reply-To header as sender/from of email and use the real name of origin from.'),
         },
       },
     ],

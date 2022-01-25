@@ -212,7 +212,7 @@ class FirstStepsController < ApplicationController
   private
 
   def test_overview
-    Overview.find_by(name: __('Unassigned & Open'))
+    Overview.find_by(name: __('Unassigned & Open Tickets'))
   end
 
   def test_customer

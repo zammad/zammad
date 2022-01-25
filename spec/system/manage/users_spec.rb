@@ -143,8 +143,8 @@ RSpec.describe 'Manage > Users', type: :system do
 
     it 'allows to update a user with no email/first/last/phone if login is present' do
       in_modal do
-        fill_in 'Firstname', with: ''
-        fill_in 'Lastname', with: ''
+        fill_in 'firstname', with: ''
+        fill_in 'lastname', with: ''
         fill_in 'Email', with: ''
         fill_in 'Phone', with: ''
 
@@ -161,8 +161,8 @@ RSpec.describe 'Manage > Users', type: :system do
 
       it 'does not allow to update a user with no email/first/last/phone' do
         in_modal disappears: false do
-          fill_in 'Firstname', with: ''
-          fill_in 'Lastname', with: ''
+          fill_in 'firstname', with: ''
+          fill_in 'lastname', with: ''
           fill_in 'Email', with: ''
           fill_in 'Phone', with: ''
 

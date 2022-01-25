@@ -316,7 +316,7 @@ RSpec.describe 'Ticket views', type: :system, authenticated_as: :authenticate do
       custom_attribute
       ObjectManager::Attribute.migration_execute
       tickets
-      Overview.find_by(name: 'Open').update(group_by: custom_attribute.name)
+      Overview.find_by(name: 'Open Tickets').update(group_by: custom_attribute.name)
       Setting.set('ui_table_group_by_show_count', true)
       true
     end

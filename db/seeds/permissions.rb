@@ -114,7 +114,7 @@ Permission.create_if_not_exists(
   name:        'admin.channel_formular',
   note:        __('Manage %s'),
   preferences: {
-    translations: [__('Channel - Formular')]
+    translations: [__('Channel - Form')]
   },
 )
 Permission.create_if_not_exists(
@@ -417,7 +417,7 @@ Permission.create_if_not_exists(
 
 Permission.create_if_not_exists(
   name:        'admin.knowledge_base',
-  note:        __('Create and setup %s'),
+  note:        __('Create and set up %s'),
   preferences: {
     translations: [__('Knowledge Base')]
   }

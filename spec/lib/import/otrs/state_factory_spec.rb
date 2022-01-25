@@ -120,7 +120,7 @@ RSpec.describe Import::OTRS::StateFactory do
     end
 
     it 'updates Overviews' do
-      name     = 'My pending reached Tickets'
+      name     = 'My Pending Reached Tickets'
       overview = Overview.find_by(name: name)
       expect do
         described_class.import(state_backend_param)
