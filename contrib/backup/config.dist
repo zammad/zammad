@@ -5,4 +5,5 @@
 
 BACKUP_DIR='/var/tmp/zammad_backup'
 HOLD_DAYS='10'
+FULL_FS_DUMP='yes'
 DEBUG='no'
