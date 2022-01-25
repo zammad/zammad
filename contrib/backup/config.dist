@@ -2,6 +2,8 @@
 #
 # zammad backup script config
 #
+# Learn more about the options below at
+# https://docs.zammad.org/en/latest/appendix/backup-and-restore/configuration.html
 
 BACKUP_DIR='/var/tmp/zammad_backup'
 HOLD_DAYS='10'
