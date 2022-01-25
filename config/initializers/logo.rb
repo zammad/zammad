@@ -2,11 +2,14 @@
 
 Rails.application.reloader.to_prepare do
 
-  next if !ActiveRecord::Base.connected?
+  begin
+    # sync logo to fs / only if settings already exists
+    next if ActiveRecord::Base.connection.tables.exclude?('settings')
 
-  # sync logo to fs / only if settings already exists
-  next if ActiveRecord::Base.connection.tables.exclude?('settings')
-  next if Setting.column_names.exclude?('state_current')
+    next if Setting.column_names.exclude?('state_current')
 
-  StaticAssets.sync
+    StaticAssets.sync
+  rescue ::ActiveRecord::NoDatabaseError
+    Rails.logger.debug("Database doesn't exist. Skipping StaticAssets.sync")
+  end
 end
