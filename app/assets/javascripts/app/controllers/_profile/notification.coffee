@@ -176,7 +176,7 @@ class ProfileNotification extends App.ControllerSubContent
         App.Event.trigger('ui:rerender')
         @notify(
           type: 'success'
-          msg:  App.i18n.translateContent('Successful!')
+          msg:  App.i18n.translateContent('Update successful.')
         )
       ,
       true

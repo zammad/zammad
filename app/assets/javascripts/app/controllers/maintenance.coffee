@@ -71,7 +71,7 @@ class Maintenance extends App.ControllerSubContent
     App.Setting.set('maintenance_login_message', params.message)
     @notify
       type:      'success'
-      msg:       App.i18n.translateContent('Update successful!')
+      msg:       App.i18n.translateContent('Update successful.')
       removeAll: true
 
   sendMessage: (e) ->

@@ -19,7 +19,9 @@ class App.KnowledgeBaseDeleteAction
 
     @dialog = new App.ControllerConfirm(
       head:      __('Delete')
-      message:   "Are you sure you want to delete \"#{translation?.title}\"?"
+      # ControllerConfirm performs another (unneeded) translateContent which does also escape special characters, so
+      #   use translatePlain here.
+      message:   App.i18n.translatePlain('Do you really want to delete "%s"?', translation?.title)
       callback:  @doDelete
       container: @parentController.el
       onSubmit: ->

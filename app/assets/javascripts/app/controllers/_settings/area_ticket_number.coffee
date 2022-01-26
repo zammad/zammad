@@ -115,7 +115,7 @@ class App.SettingsAreaTicketNumber extends App.Controller
         ui.formEnable(e)
         App.Event.trigger 'notify', {
           type:    'success'
-          msg:     App.i18n.translateContent('Update successful!')
+          msg:     App.i18n.translateContent('Update successful.')
           timeout: 2000
         }
 

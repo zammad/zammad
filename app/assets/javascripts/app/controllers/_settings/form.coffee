@@ -78,7 +78,7 @@ class App.SettingsForm extends App.Controller
             if count == 0
               App.Event.trigger('notify', {
                 type:    'success'
-                msg:     App.i18n.translateContent('Update successful!')
+                msg:     App.i18n.translateContent('Update successful.')
                 timeout: 2000
               })
 

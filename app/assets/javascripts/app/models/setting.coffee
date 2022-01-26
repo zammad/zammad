@@ -17,7 +17,7 @@ class App.Setting extends App.Model
         if options.notify
           App.Event.trigger 'notify', {
             type:    'success'
-            msg:     App.i18n.translateContent('Update successful!')
+            msg:     App.i18n.translateContent('Update successful.')
             timeout: 2000
           }
         App.Setting.preferencesPost(@)

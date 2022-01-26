@@ -45,7 +45,7 @@ class ProfileLinkedAccounts extends App.ControllerSubContent
   success: (data, status, xhr) =>
     @notify(
       type: 'success'
-      msg:  App.i18n.translateContent('Successful!')
+      msg:  App.i18n.translateContent('Update successful.')
     )
     update = =>
       @render()

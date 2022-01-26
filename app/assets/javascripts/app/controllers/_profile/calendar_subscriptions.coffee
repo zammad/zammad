@@ -77,7 +77,7 @@ class ProfileCalendarSubscriptions extends App.ControllerSubContent
       =>
         @notify(
           type: 'success'
-          msg:  App.i18n.translateContent('Successful!')
+          msg:  App.i18n.translateContent('Update successful.')
         )
       true
     )
