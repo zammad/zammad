@@ -95,9 +95,6 @@
 # Byebug
 /.byebug_history
 
-# SimpleCov
-/coverage
-
 # RDoc / YARD
 /doc
 

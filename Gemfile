@@ -177,11 +177,6 @@ group :development, :test do
   # for testing Pundit authorisation policies in RSpec
   gem 'pundit-matchers'
 
-  # code coverage
-  gem 'coveralls', require: false
-  gem 'simplecov'
-  gem 'simplecov-rcov'
-
   # UI tests w/ Selenium
   gem 'capybara'
   gem 'selenium-webdriver'
