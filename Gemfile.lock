@@ -563,10 +563,6 @@ GEM
       websocket-driver
     slop (3.6.0)
     spring (4.0.0)
-    spring-commands-rspec (1.0.4)
-      spring (>= 0.9.1)
-    spring-commands-testunit (1.0.1)
-      spring (>= 0.9.1)
     sprockets (3.7.2)
       concurrent-ruby (~> 1.0)
       rack (> 1, < 3)
@@ -734,8 +730,6 @@ DEPENDENCIES
   slack-notifier
   slack-ruby-client
   spring
-  spring-commands-rspec
-  spring-commands-testunit
   sprockets (~> 3.7.2)
   tcr
   telegramAPI

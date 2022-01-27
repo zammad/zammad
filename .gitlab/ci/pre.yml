@@ -8,6 +8,20 @@
     - source /etc/profile.d/rvm.sh # ensure RVM is loaded
     - source /opt/rh/rh-nodejs*/enable # ensure Node.js is available
 
+.template_pre_rails: &template_pre_rails
+  stage: pre
+  extends:
+    - .tags_docker
+    - .rules_singletest
+    - .services_postgresql
+  before_script:
+    - source /etc/profile.d/rvm.sh # ensure RVM is loaded
+    - source /opt/rh/rh-nodejs*/enable # ensure Node.js is available
+    - bundle install -j $(nproc) --path vendor
+    - bundle exec ruby .gitlab/configure_environment.rb
+    - source .gitlab/environment.env
+    - bundle exec rake zammad:db:init
+
 rubocop:
   <<: *template_pre
   script:
@@ -30,27 +44,16 @@ gettext lint:
     - for FILE in i18n/*.pot i18n/*.po; do echo "Checking $FILE"; msgfmt -o /dev/null -c $FILE; done
 
 gettext catalog consistency:
-  <<: *template_pre
+  <<: *template_pre_rails
   extends:
     - .tags_docker
     - .services_postgresql
   script:
-    - bundle install -j $(nproc) --path vendor
-    - bundle exec ruby .gitlab/configure_environment.rb
-    - source .gitlab/environment.env
-    - bundle exec rake zammad:db:init
     - bundle exec rails generate translation_catalog --check
 
 zeitwerk:check:
-  <<: *template_pre
-  extends:
-    - .tags_docker
-    - .services_postgresql
+  <<: *template_pre_rails
   script:
-    - bundle install -j $(nproc) --path vendor
-    - bundle exec ruby .gitlab/configure_environment.rb
-    - source .gitlab/environment.env
-    - bundle exec rake zammad:db:init
     - bundle exec rails zeitwerk:check
 
 brakeman:
@@ -83,6 +86,18 @@ bundle-audit:
     - gem install bundler-audit
     - bundle-audit update
     - bundle-audit --ignore CVE-2015-9284
+
+bundle-orphaned:
+  <<: *template_pre_rails
+  allow_failure: true
+  rules:
+    - if: $CI_MERGE_REQUEST_ID
+      when: never
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+      when: always
+    - when: manual
+  script:
+    - bundle exec rake zammad:ci:bundle:orphaned 5
 
 github:
   <<: *template_pre
