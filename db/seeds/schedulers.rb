@@ -175,7 +175,7 @@ Scheduler.create_if_not_exists(
   created_by_id: 1,
 )
 Scheduler.create_if_not_exists(
-  name:          __("Clean up 'Cti::Log.'"),
+  name:          __("Clean up 'Cti::Log'."),
   method:        'Cti::Log.cleanup',
   period:        1.month,
   prio:          2,

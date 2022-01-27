@@ -1671,7 +1671,7 @@ msgid "City"
 msgstr ""
 
 #: db/seeds/schedulers.rb
-msgid "Clean up 'Cti::Log.'"
+msgid "Clean up 'Cti::Log'."
 msgstr ""
 
 #: db/seeds/schedulers.rb
