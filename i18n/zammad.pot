@@ -1239,7 +1239,7 @@ msgid "Bulk action failed"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee
-msgid "Bulk action stopped %s!"
+msgid "Bulk action stopped by error(s): %s!"
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco

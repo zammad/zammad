@@ -205,7 +205,7 @@ class App.TicketBulkForm extends App.Controller
 
         App.Event.trigger('notify', {
           type: 'error'
-          msg: App.i18n.translateContent('Bulk action stopped %s!', errorString)
+          msg: App.i18n.translateContent('Bulk action stopped by error(s): %s!', errorString)
         })
         @cancel()
         return
