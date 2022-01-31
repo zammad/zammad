@@ -13,10 +13,10 @@ class Generators::TranslationCatalog::Extractor::Frontend < Generators::Translat
     translate_regex = %r{App\.i18n\.translate(?:Content|Plain|Inline)\(\s*#{literal_string_regex}}
 
     # i18n.t
-    i18n_t_regex = %r{i18n\.t\(\s*#{literal_string_regex}}
+    i18n_t_regex = %r{i18n\.t\(\s*#{literal_string_regex},?}
 
     # __()
-    underscore_regex = %r{__\(\s*#{literal_string_regex}\s*\)}
+    underscore_regex = %r{__\(\s*#{literal_string_regex},?\s*\)}
 
     # __() with multiline ''' string
     multiline_string_regex = %r{(''')\n((?:\n|.)*?)\n'''}m

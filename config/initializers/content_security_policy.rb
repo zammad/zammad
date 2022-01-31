@@ -51,11 +51,15 @@ Rails.application.config.content_security_policy do |policy|
 
   if Rails.env.development?
     websocket_uri = proc do
-      "ws://localhost:#{Setting.get('websocket_port')}"
+      "ws://#{ViteRuby.config.host}:#{Setting.get('websocket_port')}"
+    end
+
+    websocket_cable_uri = proc do
+      "ws://#{ViteRuby.config.host}:#{ENV['ZAMMAD_RAILS_PORT'] || 3000}/cable"
     end
 
     policy.script_src :self, :unsafe_eval, :unsafe_inline
-    policy.connect_src :self, :https, "http://#{ViteRuby.config.host_with_port}", "ws://#{ViteRuby.config.host_with_port}", websocket_uri
+    policy.connect_src :self, :https, "http://#{ViteRuby.config.host_with_port}", "ws://#{ViteRuby.config.host_with_port}", websocket_cable_uri, websocket_uri
   end
 end
 

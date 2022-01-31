@@ -11,6 +11,7 @@ browser:build:
     - public/assets/application-*
     - public/assets/knowledge_base*
     - public/assets/print-*
+    - public/vite
   variables:
     RAILS_ENV: "production"
   script:

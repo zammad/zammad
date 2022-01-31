@@ -3,6 +3,9 @@
 module Gql::Subscriptions
   class ConfigUpdated < BaseSubscription
 
+    # This subscription must not be broadcastable as it sends different data depding on
+    #   authenticated state.
+
     description 'Updates to configuration settings'
 
     field :setting, Gql::Types::KeyComplexValueType, null: true, description: 'Updated setting'

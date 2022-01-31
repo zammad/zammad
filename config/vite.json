@@ -7,9 +7,5 @@
     "autoBuild": true,
     "publicOutputDir": "vite-dev",
     "port": 3036
-  },
-  "test": {
-    "autoBuild": true,
-    "publicOutputDir": "vite-test"
   }
 }

@@ -18,6 +18,7 @@ import useMetaTitle from '@common/composables/useMetaTitle'
 import { useRoute, useRouter } from 'vue-router'
 import emitter from '@common/utils/emitter'
 import { onBeforeUnmount } from 'vue'
+import useAppUpdateCheck from '@common/composables/useAppUpdateCheck'
 
 const router = useRouter()
 const route = useRoute()
@@ -29,6 +30,8 @@ useMetaTitle().initializeMetaTitle()
 
 const applicationLoaded = useApplicationLoadedStore()
 applicationLoaded.setLoaded()
+
+useAppUpdateCheck()
 
 // Add a watcher for authenticated changes (e.g. login/logout in a other browser tab).
 authenticated.$subscribe(async (mutation, state) => {

@@ -6,14 +6,23 @@ if ENV['REDIS_URL'].present?
     'url'            => ENV['REDIS_URL'],
     'channel_prefix' => "zammad_#{Rails.env}"
   }
-  Rails.logger.info 'Using the Redis adapter for ActionCable.'
+  Rails.logger.info 'Using the "Redis" adapter for ActionCable.'
 else
   if ActiveRecord::Base.connection_config[:adapter] == 'mysql'
     raise 'Please provide a working redis instance via REDIS_URL - this is required on MySQL databases.'
   end
 
-  Rails.application.config.action_cable.cable = {
-    'adapter' => 'postgresql',
-  }
-  Rails.logger.info 'Using the PostgreSQL adapter for ActionCable.'
+  # The 'postgresql' adapter does not work correctly in Capybara currently, so use
+  #   'test' instead.
+  if Rails.env.test?
+    Rails.application.config.action_cable.cable = {
+      'adapter' => 'test',
+    }
+    Rails.logger.info 'Using the "test" adapter for ActionCable.'
+  else
+    Rails.application.config.action_cable.cable = {
+      'adapter' => 'postgresql',
+    }
+    Rails.logger.info 'Using the "PostgreSQL" adapter for ActionCable.'
+  end
 end

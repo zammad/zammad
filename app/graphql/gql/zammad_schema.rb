@@ -6,7 +6,7 @@ class Gql::ZammadSchema < GraphQL::Schema
   subscription  Gql::EntryPoints::Subscriptions
   context_class Gql::Context::CurrentUserAware
 
-  use GraphQL::Subscriptions::ActionCableSubscriptions
+  use GraphQL::Subscriptions::ActionCableSubscriptions, broadcast: true, default_broadcastable: false
 
   # Enable batch loading
   use GraphQL::Batch

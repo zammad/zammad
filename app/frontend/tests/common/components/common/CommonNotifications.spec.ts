@@ -38,13 +38,49 @@ describe('CommonNotifications.vue', () => {
     await notify({
       message,
       type: NotificationTypes.WARN,
-      duration: 2000,
+      durationMS: 10,
     })
 
     await new Promise((resolve) => {
-      setTimeout(resolve, 2100)
+      setTimeout(resolve, 20)
     })
     expect(wrapper.find('span').exists()).toBeFalsy()
+  })
+
+  it('does not remove persistent notifications', async () => {
+    expect.assertions(1)
+
+    const { notify } = useNotifications()
+
+    await notify({
+      message,
+      type: NotificationTypes.WARN,
+      durationMS: 10,
+      persistent: true,
+    })
+
+    await new Promise((resolve) => {
+      setTimeout(resolve, 20)
+    })
+    expect(wrapper.find('span').exists()).toBeTruthy()
+  })
+
+  it('executes a callback on click', async () => {
+    expect.assertions(1)
+
+    const { notify } = useNotifications()
+
+    let test = false
+
+    await notify({
+      message,
+      type: NotificationTypes.WARN,
+      callback: () => {
+        test = true
+      },
+    })
+    wrapper.find('span').trigger('click')
+    expect(test).toBe(true)
   })
 
   it('renders multiple notifications at the same time', async () => {

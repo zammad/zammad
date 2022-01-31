@@ -1,5 +1,7 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
+import type { SetOptional } from 'type-fest'
+
 export enum NotificationTypes {
   WARN = 'warn',
   SUCCESS = 'success',
@@ -7,14 +9,14 @@ export enum NotificationTypes {
   INFO = 'info',
 }
 
-export interface NewNotificationInterface {
-  id?: string
+export interface NotificationInterface {
+  id: string
   message: string
   messagePlaceholder?: string[]
   type: NotificationTypes
-  duration?: number
+  durationMS?: number
+  persistent?: boolean
+  callback?: () => void
 }
 
-export interface NotificationInterface extends NewNotificationInterface {
-  id: string
-}
+export type NewNotificationInterface = SetOptional<NotificationInterface, 'id'>

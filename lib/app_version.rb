@@ -18,6 +18,11 @@ returns
     Setting.get('app_version')
   end
 
+  MSG_APP_VERSION    = 'app_version'.freeze
+  MSG_RESTART_MANUAL = 'restart_manual'.freeze
+  MSG_RESTART_AUTO   = 'restart_auto'.freeze
+  MSG_CONFIG_CHANGED = 'config_changed'.freeze
+
 =begin
 
 set new app version and if browser reload is required
@@ -26,14 +31,14 @@ set new app version and if browser reload is required
 
 send also reload type to clients
 
-  AppVersion.set(true, 'app_version')
-  AppVersion.set(true, 'restart_manual')
-  AppVersion.set(true, 'restart_auto')
-  AppVersion.set(true, 'config_changed')
+  AppVersion.set(true, AppVersion::MSG_APP_VERSION)     # -> new app version
+  AppVersion.set(true, AppVersion::MSG_RESTART_MANUAL)  # -> app needs restart
+  AppVersion.set(true, AppVersion::MSG_RESTART_AUTO)    # -> app is restarting
+  AppVersion.set(true, AppVersion::MSG_CONFIG_CHANGED)  # -> config has changed
 
 =end
 
-  def self.set(reload_required = false, type = 'app_version')
+  def self.set(reload_required = false, type = MSG_APP_VERSION)
     return false if !Setting.exists?(name: 'app_version')
 
     version = "#{Time.zone.now.strftime('%Y%m%d%H%M%S')}:#{reload_required}"
@@ -41,32 +46,9 @@ send also reload type to clients
 
     # broadcast to clients
     Sessions.broadcast(event_data(type), 'public')
+
+    Gql::ZammadSchema.subscriptions.trigger(:appVersion, {}, type)
   end
-
-=begin
-
-get event data
-
-  AppVersion.event_data(type)
-
-types:
-
-  app_version -> new app version
-  restart_manual -> app needs restart
-  restart_auto -> app is restarting
-  config_changed -> config has changed
-
-returns
-
-  {
-    event: 'maintenance'
-    data: {
-      type: 'app_version',
-      app_version: app_version,
-    }
-  }
-
-=end
 
   def self.event_data(type = 'app_version')
     {

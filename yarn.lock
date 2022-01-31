@@ -3642,6 +3642,21 @@
     source-map "0.5.6"
     tsconfig "^7.0.0"
 
+"@vueuse/router@^7.5.5":
+  version "7.5.5"
+  resolved "https://registry.yarnpkg.com/@vueuse/router/-/router-7.5.5.tgz#d2d55f2e7756f3035ce655655d0c3bb76b7cfe96"
+  integrity sha512-I7sPJeMH4gMEreJ8WkOfEakijTZgehVRqG9bqGBQVQM43QQTyY9X/x1G/3wpTTqU3s6lBbEJDVOa+HBpwwLahA==
+  dependencies:
+    "@vueuse/shared" "7.5.5"
+    vue-demi "*"
+
+"@vueuse/shared@7.5.5":
+  version "7.5.5"
+  resolved "https://registry.yarnpkg.com/@vueuse/shared/-/shared-7.5.5.tgz#0e5c16b848b4a19e5b9ee9199a997e1f6dd39679"
+  integrity sha512-mzzTsotHQRPnPAChy8iCv6ek/90CKYhAFyMRgNsMxpT0afZJkbMO/X0OaOu/1NuGbgb8UVjlsWKmCUgKTOF5hA==
+  dependencies:
+    vue-demi "*"
+
 "@webassemblyjs/ast@1.9.0":
   version "1.9.0"
   resolved "https://registry.yarnpkg.com/@webassemblyjs/ast/-/ast-1.9.0.tgz#bd850604b4042459a5a41cd7d338cbed695ed964"

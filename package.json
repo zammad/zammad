@@ -78,6 +78,7 @@
     "@apollo/client": "^3.5.6",
     "@rails/actioncable": "6.0.4",
     "@vue/apollo-composable": "^4.0.0-alpha.16",
+    "@vueuse/router": "^7.5.5",
     "broadcast-channel": "^4.9.0",
     "graphql": "^16.2.0",
     "graphql-ruby-client": "^1.10.5",

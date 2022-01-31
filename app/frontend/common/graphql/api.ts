@@ -75,6 +75,28 @@ export function useLogoutMutation(options: VueApolloComposable.UseMutationOption
   return VueApolloComposable.useMutation<Types.LogoutMutation, Types.LogoutMutationVariables>(LogoutDocument, options);
 }
 export type LogoutMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.LogoutMutation, Types.LogoutMutationVariables>;
+export const ApplicationBuildChecksumDocument = gql`
+    query applicationBuildChecksum {
+  applicationBuildChecksum
+}
+    `;
+
+/**
+ * __useApplicationBuildChecksumQuery__
+ *
+ * To run a query within a Vue component, call `useApplicationBuildChecksumQuery` and pass it any options that fit your needs.
+ * When your component renders, `useApplicationBuildChecksumQuery` returns an object from Apollo Client that contains result, loading and error properties
+ * you can use to render your UI.
+ *
+ * @param options that will be passed into the query, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/query.html#options;
+ *
+ * @example
+ * const { result, loading, error } = useApplicationBuildChecksumQuery();
+ */
+export function useApplicationBuildChecksumQuery(options: VueApolloComposable.UseQueryOptions<Types.ApplicationBuildChecksumQuery, Types.ApplicationBuildChecksumQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.ApplicationBuildChecksumQuery, Types.ApplicationBuildChecksumQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.ApplicationBuildChecksumQuery, Types.ApplicationBuildChecksumQueryVariables>> = {}) {
+  return VueApolloComposable.useQuery<Types.ApplicationBuildChecksumQuery, Types.ApplicationBuildChecksumQueryVariables>(ApplicationBuildChecksumDocument, {}, options);
+}
+export type ApplicationBuildChecksumQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<Types.ApplicationBuildChecksumQuery, Types.ApplicationBuildChecksumQueryVariables>;
 export const ApplicationConfigDocument = gql`
     query applicationConfig {
   applicationConfig {
@@ -261,6 +283,30 @@ export function useTranslationsQuery(variables: Types.TranslationsQueryVariables
   return VueApolloComposable.useQuery<Types.TranslationsQuery, Types.TranslationsQueryVariables>(TranslationsDocument, variables, options);
 }
 export type TranslationsQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<Types.TranslationsQuery, Types.TranslationsQueryVariables>;
+export const AppVersionDocument = gql`
+    subscription appVersion {
+  appVersion {
+    message
+  }
+}
+    `;
+
+/**
+ * __useAppVersionSubscription__
+ *
+ * To run a query within a Vue component, call `useAppVersionSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useAppVersionSubscription` returns an object from Apollo Client that contains result, loading and error properties
+ * you can use to render your UI.
+ *
+ * @param options that will be passed into the subscription, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/subscription.html#options;
+ *
+ * @example
+ * const { result, loading, error } = useAppVersionSubscription();
+ */
+export function useAppVersionSubscription(options: VueApolloComposable.UseSubscriptionOptions<Types.AppVersionSubscription, Types.AppVersionSubscriptionVariables> | VueCompositionApi.Ref<VueApolloComposable.UseSubscriptionOptions<Types.AppVersionSubscription, Types.AppVersionSubscriptionVariables>> | ReactiveFunction<VueApolloComposable.UseSubscriptionOptions<Types.AppVersionSubscription, Types.AppVersionSubscriptionVariables>> = {}) {
+  return VueApolloComposable.useSubscription<Types.AppVersionSubscription, Types.AppVersionSubscriptionVariables>(AppVersionDocument, {}, options);
+}
+export type AppVersionSubscriptionCompositionFunctionResult = VueApolloComposable.UseSubscriptionReturn<Types.AppVersionSubscription, Types.AppVersionSubscriptionVariables>;
 export const ConfigUpdatedDocument = gql`
     subscription configUpdated {
   configUpdated {

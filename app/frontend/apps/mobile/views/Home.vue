@@ -51,7 +51,7 @@ const { notify, clearAllNotifications } = useNotifications()
 notify({
   message: __('Hello Home!!!'),
   type: NotificationTypes.WARN,
-  duration: 10000,
+  durationMS: 10000,
 })
 
 const sessionUser = useSessionUserStore()

@@ -8,6 +8,22 @@ import { NotificationTypes } from '@common/types/notification'
 export default {
   title: 'Common/Notifications',
   component: CommonNotifications,
+  args: {
+    durationMS: '5000',
+    persistent: false,
+    message: 'This is a notification message.',
+  },
+  argTypes: {
+    type: {
+      control: { type: 'select' },
+      options: [
+        NotificationTypes.ERROR,
+        NotificationTypes.WARN,
+        NotificationTypes.SUCCESS,
+        NotificationTypes.INFO,
+      ],
+    },
+  },
 }
 
 const { notify } = useNotifications()
@@ -20,8 +36,10 @@ const Template: Story = (args) => ({
   methods: {
     showNotification() {
       notify({
-        message: "I'm inside a story",
+        message: args.message,
         type: args.type,
+        durationMS: args.durationMS,
+        callback: args.callback,
       })
     },
   },
@@ -40,3 +58,13 @@ SuccessNotification.args = { type: NotificationTypes.SUCCESS }
 
 export const InfoNotification = Template.bind({})
 InfoNotification.args = { type: NotificationTypes.INFO }
+
+export const CallbackNotification = Template.bind({})
+CallbackNotification.args = {
+  type: NotificationTypes.INFO,
+  persistent: true,
+  callback: () => {
+    // eslint-disable-next-line no-alert
+    window.alert('Callback executed.')
+  },
+}

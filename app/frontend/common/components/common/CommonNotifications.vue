@@ -11,8 +11,9 @@
         <div v-for="notification in notifications" v-bind:key="notification.id">
           <div class="flex justify-center">
             <div
-              class="flex items-center py-2 px-4 m-1 rounded"
-              v-bind:class="getClassName(notification.type)"
+              class="flex items-center py-2 px-4 m-1 rounded cursor-pointer"
+              v-bind:class="getClassName(notification)"
+              v-on:click="clickHandler(notification)"
             >
               <CommonIcon
                 v-bind:name="iconNameMap[notification.type]"
@@ -36,7 +37,7 @@
 
 <script setup lang="ts">
 import useNotifications from '@common/composables/useNotifications'
-import { NotificationTypes } from '@common/types/notification'
+import { NotificationInterface } from '@common/types/notification'
 
 const notificationTypeClassMap = {
   warn: 'bg-yellow text-white',
@@ -52,9 +53,15 @@ const iconNameMap = {
   info: 'info',
 }
 
-const { notifications } = useNotifications()
+const { notifications, removeNotification } = useNotifications()
 
-const getClassName = (notificationType: NotificationTypes) => {
-  return notificationTypeClassMap[notificationType]
+const getClassName = (notification: NotificationInterface) => {
+  return notificationTypeClassMap[notification.type]
+}
+
+const clickHandler = (notification: NotificationInterface) => {
+  const { callback } = notification
+  removeNotification(notification.id)
+  if (callback) callback()
 }
 </script>

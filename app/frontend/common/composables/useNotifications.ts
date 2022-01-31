@@ -8,7 +8,7 @@ import type {
 } from '@common/types/notification'
 
 const notifications = ref<NotificationInterface[]>([])
-const defaultNotificationDuration = 5000
+const defaultNotificationDurationMS = 5000
 
 function removeNotification(id: string) {
   notifications.value = notifications.value.filter(
@@ -22,7 +22,6 @@ function clearAllNotifications() {
 
 export default function useNotifications() {
   function notify(notification: NewNotificationInterface): string {
-    // TODO: Check different solution for the optional id in the interface, but required field in the removeNotification function.
     let { id } = notification
     if (!id) {
       id = uuid()
@@ -32,9 +31,11 @@ export default function useNotifications() {
 
     notifications.value.push(newNotification)
 
-    setTimeout(() => {
-      removeNotification(newNotification.id)
-    }, newNotification.duration || defaultNotificationDuration)
+    if (!newNotification.persistent) {
+      setTimeout(() => {
+        removeNotification(newNotification.id)
+      }, newNotification.durationMS || defaultNotificationDurationMS)
+    }
 
     return newNotification.id
   }
@@ -42,6 +43,7 @@ export default function useNotifications() {
   return {
     notify,
     notifications,
+    removeNotification,
     clearAllNotifications,
   }
 }
