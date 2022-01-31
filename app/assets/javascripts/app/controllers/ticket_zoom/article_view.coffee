@@ -218,11 +218,11 @@ class ArticleViewItem extends App.ControllerObserver
     )
 
     @articleActions = new App.TicketZoomArticleActions(
-      el:              @$('.js-article-actions')
-      ticket:          @ticket
-      article:         article
-      lastAttributres: @lastAttributres
-      form_id:         @form_id
+      el:             @$('.js-article-actions')
+      ticket:         @ticket
+      article:        article
+      lastAttributes: @lastAttributes
+      form_id:        @form_id
     )
 
     # set see more

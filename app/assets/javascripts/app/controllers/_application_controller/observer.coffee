@@ -2,6 +2,7 @@ class App.ControllerObserver extends App.Controller
   model: 'Ticket'
   template: 'tba'
   globalRerender: true
+  lastAttributes: undefined
 
   ###
   observe:
@@ -25,7 +26,7 @@ class App.ControllerObserver extends App.Controller
     # rerender, e. g. on language change
     if @globalRerender
       @controllerBind('ui:rerender', =>
-        @lastAttributres = undefined
+        @lastAttributes = undefined
         @maybeRender(App[@model].fullLocal(@object_id))
       )
 
@@ -43,32 +44,39 @@ class App.ControllerObserver extends App.Controller
     if !@subscribeId
       @subscribeId = object.subscribe(@subscribe)
 
-    # remember current attributes
+    return if !@hasChanged(object)
+
+    @render(object)
+
+  hasChanged: (object) =>
     currentAttributes = {}
+
     if @observe
       for key, active of @observe
-        if active
-          currentAttributes[key] = object[key]
+        if active && !_.isFunction(value)
+          currentAttributes[key] = clone(object[key])
+
     if @observeNot
       for key, value of object
-        if key isnt 'cid' && !@observeNot[key] && !_.isFunction(value) && !_.isObject(value)
-          currentAttributes[key] = value
+        if key isnt 'cid' && !@observeNot[key] && !_.isFunction(value)
+          currentAttributes[key] = clone(value)
 
-    if !@lastAttributres
-      @lastAttributres = {}
-    else
-      diff = difference(currentAttributes, @lastAttributres)
-      if _.isEmpty(diff)
-        @log 'debug', 'maybeRender no diff, no rerender'
-        return
+    if !@lastAttributes
+      @lastAttributes = currentAttributes
+      return true
+
+    diff = difference(currentAttributes, @lastAttributes)
+    if _.isEmpty(diff)
+      @log 'debug', 'maybeRender no diff, no rerender'
+      return false
 
     @log 'debug', 'maybeRender.diff', diff, @observe, @model
-    @lastAttributres = currentAttributes
+    @lastAttributes = currentAttributes
 
-    @render(object, diff)
+    true
 
-  render: (object, diff) =>
-    @log 'debug', 'render', @template, object, diff
+  render: (object) =>
+    @log 'debug', 'render', @template, object
     @html App.view(@template)(
       object: object
     )

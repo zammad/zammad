@@ -220,7 +220,7 @@ class Object extends App.ControllerObserver
     value = $(e.target).html()
     user  = App.User.find(@object_id)
     if user[name] isnt value
-      @lastAttributres[name] = value
+      @lastAttributes[name] = value
       data = {}
       data[name] = value
       user.updateAttributes(data)

@@ -19,7 +19,7 @@ class App.TicketZoomTitle extends App.ControllerObserver
     title = $(e.target).ceg() || ''
 
     # update title
-    return if title is @lastAttributres.title
+    return if title is @lastAttributes.title
     ticket = App.Ticket.find(@object_id)
     ticket.title = title
 

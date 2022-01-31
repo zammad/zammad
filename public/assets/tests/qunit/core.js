@@ -538,7 +538,9 @@ QUnit.test('difference', assert => {
   object2 = {
     key1: 123,
   }
-  result = {}
+  result = {
+    key2: undefined
+  }
   item = difference(object1, object2)
   assert.deepEqual(item, result)
 
@@ -549,38 +551,106 @@ QUnit.test('difference', assert => {
     key1: 123,
     key2: 124
   }
+  result = {
+    key2: 124
+  }
+  item = difference(object1, object2)
+  assert.deepEqual(item, result)
+
+  object1 = {
+    customer_id: 1,
+    organization_id: 2,
+  }
+  object2 = {
+    customer_id: 1,
+    organization_id: null,
+  }
+  result = {
+    organization_id: null,
+  }
+  item = difference(object1, object2)
+  assert.deepEqual(item, result)
+
+  object1 = {
+    customer_id: 1,
+    organization_id: null,
+  }
+  object2 = {
+    customer_id: 1,
+    organization_id: 2,
+  }
+  result = {
+    organization_id: 2,
+  }
+  item = difference(object1, object2)
+  assert.deepEqual(item, result)
+
+  object1 = {
+    customer_id: 1,
+    preferences: { resolved: true },
+  }
+  object2 = {
+    customer_id: 1,
+    preferences: {},
+  }
+  result = {
+    preferences: { resolved: undefined }
+  }
+  item = difference(object1, object2)
+  assert.deepEqual(item, result)
+
+  object1 = {
+    customer_id: 1,
+  }
+  object2 = {
+    customer_id: 1,
+    preferences: { resolved: true },
+  }
+  result = {
+    preferences: { resolved: true }
+  }
+  item = difference(object1, object2)
+  assert.deepEqual(item, result)
+
+  object1 = {
+    customer_id: 1,
+    preferences: {},
+  }
+  object2 = {
+    customer_id: 1,
+    preferences: { resolved: true },
+  }
+  result = {
+    preferences: { resolved: true }
+  }
+  item = difference(object1, object2)
+  assert.deepEqual(item, result)
+
+  object1 = {
+    customer_id: 1,
+    preferences: { resolved: false },
+  }
+  object2 = {
+    customer_id: 1,
+    preferences: { resolved: true },
+  }
+  result = {
+    preferences: { resolved: true }
+  }
+  item = difference(object1, object2)
+  assert.deepEqual(item, result)
+
+  object1 = {
+    customer_id: 1,
+    preferences: { resolved: true },
+  }
+  object2 = {
+    customer_id: 1,
+    preferences: { resolved: true },
+  }
   result = {}
   item = difference(object1, object2)
   assert.deepEqual(item, result)
-
-  object1 = {
-    customer_id: 1,
-    organization_id: 2,
-  }
-  object2 = {
-    customer_id: 1,
-    organization_id: null,
-  }
-  result = {
-    organization_id: null,
-  }
-  item = difference(object1, object2)
-  assert.deepEqual(item, result)
-
-  object1 = {
-    customer_id: 1,
-    organization_id: null,
-  }
-  object2 = {
-    customer_id: 1,
-    organization_id: 2,
-  }
-  result = {
-    organization_id: 2,
-  }
-  item = difference(object1, object2)
-  assert.deepEqual(item, result)
-
 });
 
 QUnit.test('auth - not existing user', assert => {
