@@ -85,6 +85,11 @@ RSpec.describe Ticket::Article, type: :model do
     describe 'XSS protection:' do
       subject(:article) { create(:ticket_article, body: body, content_type: 'text/html') }
 
+      before do
+        # XSS processing may run into a timeout on slow CI systems, so turn the timeout off for the test.
+        stub_const("#{HtmlSanitizer}::PROCESSING_TIMEOUT", nil)
+      end
+
       context 'when body contains only injected JS' do
         let(:body) { <<~RAW.chomp }
           <script type="text/javascript">alert("XSS!");</script> some other text

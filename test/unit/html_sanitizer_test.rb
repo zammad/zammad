@@ -4,6 +4,11 @@ require 'test_helper'
 
 class HtmlSanitizerTest < ActiveSupport::TestCase
 
+  processing_timeout = HtmlSanitizer.const_get(:PROCESSING_TIMEOUT)
+
+  # XSS processing may run into a timeout on slow CI systems, so turn the timeout off for the test.
+  HtmlSanitizer.const_set(:PROCESSING_TIMEOUT, nil)
+
   test 'xss' do
     assert_equal(HtmlSanitizer.strict('<b>123</b>'), '<b>123</b>')
     assert_equal(HtmlSanitizer.strict('<script><b>123</b></script>'), '')
@@ -153,4 +158,6 @@ test 123
 
     assert_equal(HtmlSanitizer.strict('<a href="mailto:testäöü@example.com" id="123">test</a>'), '<a href="mailto:test%C3%A4%C3%B6%C3%BC@example.com">test</a>')
   end
+
+  HtmlSanitizer.const_set(:PROCESSING_TIMEOUT, processing_timeout)
 end
