@@ -178,6 +178,7 @@ class CreateBase < ActiveRecord::Migration[4.2]
     add_index :groups_users, [:user_id]
     add_index :groups_users, [:group_id]
     add_index :groups_users, [:access]
+    add_index :groups_users, %i[user_id group_id access]
     add_foreign_key :groups_users, :users
     add_foreign_key :groups_users, :groups
 
