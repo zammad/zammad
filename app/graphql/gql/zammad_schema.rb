@@ -11,10 +11,10 @@ class Gql::ZammadSchema < GraphQL::Schema
   # Enable batch loading
   use GraphQL::Batch
 
+  # Set maximum page size and depth to protect the system.
+  #   Values may need to be adjusted in future.
   default_max_page_size 1000
-
-  # # Enable ActionCable and GraphQL connection
-  # use GraphQL::Subscriptions::ActionCableSubscriptions
+  max_depth 10
 
   # Union and Interface Resolution
   def self.resolve_type(_abstract_type, obj, _ctx)
