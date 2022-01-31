@@ -14,8 +14,7 @@ module HasGroupRelationDefinition
     validates :access, presence: true
     validate :validate_access
 
-    after_save :touch_related
-    after_destroy :touch_related
+    after_commit :touch_related
   end
 
   private
