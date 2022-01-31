@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-01-21 03:30+0000\n"
+"PO-Revision-Date: 2022-01-29 03:30+0000\n"
 "Last-Translator: Lorenzo Milesi <lorenzo.milesi@yetopen.com>\n"
 "Language-Team: Italian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/it/>\n"
@@ -970,10 +970,6 @@ msgstr "Archiviato"
 msgid "Archived at"
 msgstr "Archiviato il"
 
-#: app/assets/javascripts/app/controllers/knowledge_base/sidebar/attachments.coffee
-msgid "Are you sure you want to delete"
-msgstr "Sicuro di voler eliminare"
-
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee
 msgid ""
 "Are you sure you want to reload? You have unsaved changes that will get lost"
@@ -1417,7 +1413,9 @@ msgid "Bulk action failed"
 msgstr "Azione massiva non riuscita"
 
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee
-msgid "Bulk action stopped %s!"
+#, fuzzy
+#| msgid "Bulk action stopped %s!"
+msgid "Bulk action stopped by error(s): %s!"
 msgstr "Azione di massa arrestata %s!"
 
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
@@ -1893,7 +1891,7 @@ msgstr "Città"
 #: db/seeds/schedulers.rb
 #, fuzzy
 #| msgid "Cleanup Cti::Log"
-msgid "Clean up 'Cti::Log.'"
+msgid "Clean up 'Cti::Log'."
 msgstr "Pulizia Cti::Log"
 
 #: db/seeds/schedulers.rb
@@ -2980,8 +2978,8 @@ msgid ""
 "Defines how the From field of emails (sent from answers and email tickets) "
 "should look like."
 msgstr ""
-"Definisce come dovrebbe apparire il campo From delle email (inviato da "
-"risposte e ticket email)."
+"Definisce come dovrebbe apparire il campo Da delle email (inviato da "
+"risposte e ticket di tipo email)."
 
 #: db/seeds/settings.rb
 #, fuzzy
@@ -3437,10 +3435,10 @@ msgid ""
 "as a variable, #{setting.fqdn} which is found in all forms of messaging used "
 "by the application, to build links to the tickets within your system."
 msgstr ""
-"Definisce il nome di dominio completo del sistema. Questa impostazione viene "
-"utilizzata come una variabile, # {setting.fqdn} che si trova in tutte le "
-"forme di messaggistica utilizzate dall'applicazione, per creare collegamenti "
-"ai tickets all'interno del sistema."
+"Definisce il nome di dominio completo del sistema (FQDN). Questa "
+"impostazione viene utilizzata come una variabile, #{setting.fqdn} che si "
+"trova in tutti i moduli di messaggistica utilizzati dall'applicazione, e per "
+"creare collegamenti ai ticket all'interno del sistema."
 
 #: db/seeds/settings.rb
 msgid "Defines the group of created tickets."
@@ -3470,7 +3468,7 @@ msgstr "Definisce il logo dell'applicazione, mostrato nell'interfaccia web."
 
 #: db/seeds/settings.rb
 msgid "Defines the maximum accepted email size in MB."
-msgstr ""
+msgstr "Definisce la dimensione massima consentita (in MB) per le email."
 
 #: db/seeds/settings.rb
 #, fuzzy
@@ -3869,6 +3867,13 @@ msgstr "Non cifrare le email"
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
 msgid "Do not sign email"
 msgstr "Non firmare le email"
+
+#: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee
+#: app/assets/javascripts/app/controllers/knowledge_base/sidebar/attachments.coffee
+#, fuzzy
+#| msgid "Sure to delete this object?"
+msgid "Do you really want to delete \"%s\"?"
+msgstr "Vuoi eliminare questo oggetto?"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_destroy_confirm.coffee
 #: app/assets/javascripts/app/controllers/tag.coffee
@@ -6073,7 +6078,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/getting_started/agent.coffee
 msgid "Invitation sent!"
-msgstr "Spedito invito!"
+msgstr "Invito spedito!"
 
 #: app/assets/javascripts/app/views/getting_started/agent.jst.eco
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco
@@ -8167,7 +8172,7 @@ msgstr "Porta"
 #: app/assets/javascripts/app/models/object_manager_attribute.coffee
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Position"
-msgstr ""
+msgstr "Posizione"
 
 #: app/assets/javascripts/app/controllers/_channel/_email_filter.coffee
 msgid "Postmaster Filter"
@@ -9005,11 +9010,13 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Send postmaster mail if mail too large"
-msgstr ""
+msgstr "Invia un'email postmaster se il messaggio è troppo grande"
 
 #: db/seeds/settings.rb
 msgid "Send postmaster reject mail to sender of mail if mail is too large."
 msgstr ""
+"Invia una risposta di rifiuto da postmaster al mittente se l'email è troppo "
+"grande."
 
 #: app/assets/javascripts/app/views/maintenance.jst.eco
 msgid "Send to clients"
@@ -9596,13 +9603,6 @@ msgstr "Ticket Seguiti"
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 msgid "Subscription Settings"
 msgstr "Impostazioni di abbonamento"
-
-#: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee
-#: app/assets/javascripts/app/controllers/_profile/language.coffee
-#: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
-#: app/assets/javascripts/app/controllers/_profile/notification.coffee
-msgid "Successful!"
-msgstr "Fatto!"
 
 #: app/assets/javascripts/app/models/user.coffee
 msgid "Summer holiday"
@@ -10376,7 +10376,7 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Ticket Hook Position"
-msgstr "Ticket Hook Position"
+msgstr "Posizione numero ticket"
 
 #: db/seeds/permissions.rb
 msgid "Ticket Interface"
@@ -10890,16 +10890,17 @@ msgid ""
 msgstr ""
 "Aggiorna i record esistenti con gli attributi specificati nei dati di import."
 
+#: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee
+#: app/assets/javascripts/app/controllers/_profile/language.coffee
+#: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
+#: app/assets/javascripts/app/controllers/_profile/notification.coffee
+#: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee
 #: app/assets/javascripts/app/controllers/_settings/area_logo.coffee
 #: app/assets/javascripts/app/controllers/_settings/area_switch.coffee
 #: app/assets/javascripts/app/controllers/_settings/area_ticket_number.coffee
 #: app/assets/javascripts/app/controllers/_settings/form.coffee
 #: app/assets/javascripts/app/controllers/maintenance.coffee
 #: app/assets/javascripts/app/models/setting.coffee
-msgid "Update successful!"
-msgstr "Aggiornamento effettuato con successo!"
-
-#: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee
 msgid "Update successful."
 msgstr ""
 
@@ -11389,6 +11390,8 @@ msgid ""
 "We've sent an email to _%s_. Click the link in the email to verify your "
 "account."
 msgstr ""
+"Abbiamo inviato un'email a _%s_. Apri il collegamento ricevuto nel messaggio "
+"per verificare il tuo account."
 
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco
 msgid "We've sent password reset instructions to your email address."
@@ -11696,7 +11699,7 @@ msgstr "Tu sei un |%s|."
 
 #: public/assets/chat/views/waiting.eco
 msgid "You are on waiting list position <strong>%s</strong>."
-msgstr ""
+msgstr "Sei alla posizione <strong>%s</strong> della lista di attesa."
 
 #: app/views/mailer/application.html.erb
 msgid "You are receiving this because you \"%s\"."
@@ -12292,7 +12295,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_destroy_confirm.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
-#: app/assets/javascripts/app/controllers/knowledge_base/sidebar/attachments.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/delete.coffee
 #: app/assets/javascripts/app/views/data_privacy/preview.jst.eco
 msgid "delete"
@@ -12713,7 +12715,7 @@ msgstr "selezione allegato…"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 msgid "sent to"
-msgstr ""
+msgstr "inviata a"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "set fixed to"
@@ -12959,6 +12961,15 @@ msgstr "... dell'intera area di testo"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Tempi di attesa - Oggi"
+
+#~ msgid "Are you sure you want to delete"
+#~ msgstr "Sicuro di voler eliminare"
+
+#~ msgid "Successful!"
+#~ msgstr "Fatto!"
+
+#~ msgid "Update successful!"
+#~ msgstr "Aggiornamento effettuato con successo!"
 
 #~ msgid "Cc"
 #~ msgstr "Copia"

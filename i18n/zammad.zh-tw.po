@@ -2,13 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: \n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2022-01-31 07:17+0000\n"
+"Last-Translator: Jc <dottdot.dev@gmail.com>\n"
+"Language-Team: Chinese (Traditional) <https://translations.zammad.org/"
+"projects/zammad/zammad-development/zh_Hant/>\n"
 "Language: zh-tw\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 4.10.1\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -49,22 +52,23 @@ msgid ""
 "filesystem. You can switch between the modules even on a system that is "
 "already in production without any loss of data."
 msgstr ""
+"\"資料庫\"將所有附件都儲存資料庫中 (不建議用於儲存大型資料)。 \"檔案系統\"將"
+"資料儲存在檔案系統中。即使系統已經上線，您還是可以隨時切換模組，不需擔心遺失"
+"任何資料。"
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
-#, fuzzy
-#| msgid "%s Api Token"
 msgid "%s API Token"
 msgstr "%s API Token"
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "%s Attribute"
-msgstr ""
+msgstr "%s 屬性"
 
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "%s Group"
-msgstr ""
+msgstr "%s 群組"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
@@ -75,7 +79,7 @@ msgstr "%s 遷移"
 
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "%s Role"
-msgstr ""
+msgstr "%s 角色"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
@@ -148,7 +152,7 @@ msgstr "%s 最後切換為 |%s|！"
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco
 msgid "%s folders"
-msgstr ""
+msgstr "%s 文件夾"
 
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco
@@ -160,7 +164,7 @@ msgstr "%s 群組對應 %s 角色的權限指派"
 #: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 msgid "%s is inactive, please select an active one."
-msgstr ""
+msgstr "%s 並未啟用，請選擇已啟用的。"
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
 #, fuzzy
@@ -223,7 +227,7 @@ msgstr "%s 開始新的工作階段"
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 msgid "%s subdomain"
-msgstr ""
+msgstr "%s 子域"
 
 #: app/assets/javascripts/app/models/user.coffee
 msgid "%s switched to |%s|!"
@@ -282,13 +286,13 @@ msgstr "%s 使用者 到 %s 使用者"
 msgid ""
 "%s will only allow access via OAuth. Password-based access has not been "
 "supported since %s."
-msgstr ""
+msgstr "%s 將只允許透過 OAuth 登入。從 %s 起就不再提供密碼登入。"
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 msgid ""
 "%s will only allow access via OAuth. Password-based access is no longer "
 "supported on %s."
-msgstr ""
+msgstr "%s 將只允許透過 OAuth 登入。%s 不再提供密碼登入。"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco
 msgid "%s% are currently in process"
@@ -343,6 +347,14 @@ msgid ""
 "displayed in a separate view in your overviews. You can also configure ** "
 "email notifications **."
 msgstr ""
+"** 服務等級協議 (Service Level Agreements) **，其縮寫為 ** SLAs "
+"**，協助您針對客戶的提問滿足特定的回應時間。據此，您可以設定目標，例如每個詢問需在 8 小時內完成回應。如果您有可能錯過此目標，Zammad "
+"將會提醒您。\n"
+"\n"
+"您可以定義目標為三種不同指標：** 回應時間 ** (從工單建立到第一次客服人員的反應時間)，** 更新時間 ** "
+"(從客戶請求協助到客服人員的反應時間)，和 ** 解答時間 ** (從建立工單到關閉工單的時間)。\n"
+"\n"
+"任何投訴工單 (例如，工單已經錯過了所定目標) 會在您的總覽中分開單獨顯示。您也可以設置 ** 電子郵件通知 **。"
 
 #: db/seeds/settings.rb
 msgid "1 day"
@@ -955,10 +967,6 @@ msgstr "已封存"
 msgid "Archived at"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/knowledge_base/sidebar/attachments.coffee
-msgid "Are you sure you want to delete"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee
 msgid ""
 "Are you sure you want to reload? You have unsaved changes that will get lost"
@@ -1397,7 +1405,7 @@ msgid "Bulk action failed"
 msgstr "批量操作已執行！"
 
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee
-msgid "Bulk action stopped %s!"
+msgid "Bulk action stopped by error(s): %s!"
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
@@ -1876,7 +1884,7 @@ msgid "City"
 msgstr "城市"
 
 #: db/seeds/schedulers.rb
-msgid "Clean up 'Cti::Log.'"
+msgid "Clean up 'Cti::Log'."
 msgstr ""
 
 #: db/seeds/schedulers.rb
@@ -2427,7 +2435,7 @@ msgstr "如果有一記錄則自動建立組織。"
 #: app/assets/javascripts/app/models/sla.coffee
 msgid ""
 "Create rules that single out the tickets for the Service Level Agreement."
-msgstr "建立規則以單獨列出服務級別協議 SLA 的工單。"
+msgstr "建立規則以單獨列出服務等級協議 SLA 的工單。"
 
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
 msgid "Create your first ticket"
@@ -3668,6 +3676,13 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
 msgid "Do not sign email"
 msgstr ""
+
+#: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee
+#: app/assets/javascripts/app/controllers/knowledge_base/sidebar/attachments.coffee
+#, fuzzy
+#| msgid "Sure to delete this object?"
+msgid "Do you really want to delete \"%s\"?"
+msgstr "您確定要刪除這個物件嗎？"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_destroy_confirm.coffee
 #: app/assets/javascripts/app/controllers/tag.coffee
@@ -9368,13 +9383,6 @@ msgstr "關注的工單"
 msgid "Subscription Settings"
 msgstr "訂閱設定"
 
-#: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee
-#: app/assets/javascripts/app/controllers/_profile/language.coffee
-#: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
-#: app/assets/javascripts/app/controllers/_profile/notification.coffee
-msgid "Successful!"
-msgstr "成功！"
-
 #: app/assets/javascripts/app/models/user.coffee
 msgid "Summer holiday"
 msgstr "暑假"
@@ -10643,16 +10651,17 @@ msgid ""
 "Update existing records with the attributes specified in the import data."
 msgstr "指定匯入資料中的特定屬性來更新現有的記錄。"
 
+#: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee
+#: app/assets/javascripts/app/controllers/_profile/language.coffee
+#: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
+#: app/assets/javascripts/app/controllers/_profile/notification.coffee
+#: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee
 #: app/assets/javascripts/app/controllers/_settings/area_logo.coffee
 #: app/assets/javascripts/app/controllers/_settings/area_switch.coffee
 #: app/assets/javascripts/app/controllers/_settings/area_ticket_number.coffee
 #: app/assets/javascripts/app/controllers/_settings/form.coffee
 #: app/assets/javascripts/app/controllers/maintenance.coffee
 #: app/assets/javascripts/app/models/setting.coffee
-msgid "Update successful!"
-msgstr "更新成功！"
-
-#: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee
 msgid "Update successful."
 msgstr ""
 
@@ -12027,7 +12036,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_destroy_confirm.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
-#: app/assets/javascripts/app/controllers/knowledge_base/sidebar/attachments.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/delete.coffee
 #: app/assets/javascripts/app/views/data_privacy/preview.jst.eco
 msgid "delete"
@@ -12694,6 +12702,12 @@ msgstr "...整個文字區域"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ 今日等待時間"
+
+#~ msgid "Successful!"
+#~ msgstr "成功！"
+
+#~ msgid "Update successful!"
+#~ msgstr "更新成功！"
 
 #~ msgid "Cc"
 #~ msgstr "Cc"

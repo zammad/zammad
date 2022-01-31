@@ -934,10 +934,6 @@ msgstr ""
 msgid "Archived at"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/knowledge_base/sidebar/attachments.coffee
-msgid "Are you sure you want to delete"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee
 msgid ""
 "Are you sure you want to reload? You have unsaved changes that will get lost"
@@ -1359,7 +1355,7 @@ msgid "Bulk action failed"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee
-msgid "Bulk action stopped %s!"
+msgid "Bulk action stopped by error(s): %s!"
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
@@ -1807,7 +1803,7 @@ msgid "City"
 msgstr "शहर"
 
 #: db/seeds/schedulers.rb
-msgid "Clean up 'Cti::Log.'"
+msgid "Clean up 'Cti::Log'."
 msgstr ""
 
 #: db/seeds/schedulers.rb
@@ -3546,6 +3542,13 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
 msgid "Do not sign email"
 msgstr ""
+
+#: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee
+#: app/assets/javascripts/app/controllers/knowledge_base/sidebar/attachments.coffee
+#, fuzzy
+#| msgid "Sure to delete this object?"
+msgid "Do you really want to delete \"%s\"?"
+msgstr "इस वस्तु को हटाना सुनिश्चित करें?"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_destroy_confirm.coffee
 #: app/assets/javascripts/app/controllers/tag.coffee
@@ -9085,13 +9088,6 @@ msgstr ""
 msgid "Subscription Settings"
 msgstr "सदस्यता सेटिंग्स"
 
-#: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee
-#: app/assets/javascripts/app/controllers/_profile/language.coffee
-#: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
-#: app/assets/javascripts/app/controllers/_profile/notification.coffee
-msgid "Successful!"
-msgstr "सफल!"
-
 #: app/assets/javascripts/app/models/user.coffee
 msgid "Summer holiday"
 msgstr "गर्मी की छुट्टी"
@@ -10367,16 +10363,17 @@ msgid ""
 "Update existing records with the attributes specified in the import data."
 msgstr "आयात डेटा में निर्दिष्ट विशेषताओं के साथ मौजूदा रिकॉर्ड अपडेट करें।"
 
+#: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee
+#: app/assets/javascripts/app/controllers/_profile/language.coffee
+#: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
+#: app/assets/javascripts/app/controllers/_profile/notification.coffee
+#: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee
 #: app/assets/javascripts/app/controllers/_settings/area_logo.coffee
 #: app/assets/javascripts/app/controllers/_settings/area_switch.coffee
 #: app/assets/javascripts/app/controllers/_settings/area_ticket_number.coffee
 #: app/assets/javascripts/app/controllers/_settings/form.coffee
 #: app/assets/javascripts/app/controllers/maintenance.coffee
 #: app/assets/javascripts/app/models/setting.coffee
-msgid "Update successful!"
-msgstr "अद्यतन सफल!"
-
-#: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee
 msgid "Update successful."
 msgstr ""
 
@@ -11771,7 +11768,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_destroy_confirm.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
-#: app/assets/javascripts/app/controllers/knowledge_base/sidebar/attachments.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/delete.coffee
 #: app/assets/javascripts/app/views/data_privacy/preview.jst.eco
 msgid "delete"
@@ -12438,6 +12434,12 @@ msgstr " ... पूरे टेक्सारिया के"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "Iting आज समय की प्रतीक्षा है"
+
+#~ msgid "Successful!"
+#~ msgstr "सफल!"
+
+#~ msgid "Update successful!"
+#~ msgstr "अद्यतन सफल!"
 
 #~ msgid "Cc"
 #~ msgstr "प्रति "
