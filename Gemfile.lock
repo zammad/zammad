@@ -626,7 +626,7 @@ GEM
     xpath (3.2.0)
       nokogiri (~> 1.8)
     zeitwerk (2.5.3)
-    zendesk_api (1.34.0)
+    zendesk_api (1.35.0)
       faraday (>= 0.9.0, < 2.0.0)
       hashie (>= 3.5.2, < 6.0.0)
       inflection
