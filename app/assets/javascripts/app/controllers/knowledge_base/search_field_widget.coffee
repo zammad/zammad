@@ -109,7 +109,7 @@ class App.KnowledgeBaseSearchFieldWidget extends App.Controller
     @renderResults?(data, originalQuery)
 
   focus: ->
-    @searchField.focus()
+    @searchField.trigger('focus')
 
   startSearch: (query) ->
     @searchField

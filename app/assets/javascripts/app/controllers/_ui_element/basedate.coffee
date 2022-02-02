@@ -47,14 +47,14 @@ class App.UiElement.basedate
   @bindEvents: (item, attribute) ->
     item
       .find('input')
-      .bind('focus', (e) ->
+      .on('focus', (e) ->
         item.find('.js-datepicker').datepicker('rerender')
-      ).bind('keyup blur change', (e) =>
+      ).on('keyup blur change', (e) =>
         @setNewTime(item, attribute, 0)
         @validation(item, attribute, true)
       )
 
-    item.bind('validate', (e) =>
+    item.on('validate', (e) =>
       @validation(item, attribute)
     )
 

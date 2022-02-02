@@ -359,16 +359,16 @@ class App.TicketZoom extends App.Controller
       article_id: undefined
 
     modifier = 'alt+ctrl+left'
-    $(document).bind("keydown.ticket_zoom#{@ticket_id}", modifier, (e) =>
+    $(document).on("keydown.ticket_zoom#{@ticket_id}", modifier, (e) =>
       @articleNavigate('up')
     )
     modifier = 'alt+ctrl+right'
-    $(document).bind("keydown.ticket_zoom#{@ticket_id}", modifier, (e) =>
+    $(document).on("keydown.ticket_zoom#{@ticket_id}", modifier, (e) =>
       @articleNavigate('down')
     )
 
   shortcutNavigationstop: =>
-    $(document).unbind("keydown.ticket_zoom#{@ticket_id}")
+    $(document).off("keydown.ticket_zoom#{@ticket_id}")
 
   articleNavigate: (direction) =>
     articleStates = []
@@ -404,13 +404,13 @@ class App.TicketZoom extends App.Controller
     @positionPageHeaderUpdate()
 
     # scroll is also fired on window resize, if element scroll is changed
-    @main.bind(
+    @main.on(
       'scroll'
       @positionPageHeaderUpdate
     )
 
   positionPageHeaderStop: =>
-    @main.unbind('scroll', @positionPageHeaderUpdate)
+    @main.off('scroll', @positionPageHeaderUpdate)
 
   @scrollHeaderPos: undefined
 

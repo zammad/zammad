@@ -256,7 +256,7 @@ class AgentTicketTagTest < TestCase
     sleep 3
     execute(
       browser: browser2,
-      js:      "$('.content.active .js-name:contains(\"tag3\")').click()",
+      js:      "$('.content.active .js-name:contains(\"tag3\")').trigger('click')",
     )
 
     modal_ready(
@@ -317,7 +317,7 @@ class AgentTicketTagTest < TestCase
     sleep 3
     execute(
       browser: browser2,
-      js:      "$('.content.active .js-name:contains(\"tag5\")').closest('tr').find('.js-delete').click()",
+      js:      "$('.content.active .js-name:contains(\"tag5\")').closest('tr').find('.js-delete').trigger('click')",
     )
 
     modal_ready(

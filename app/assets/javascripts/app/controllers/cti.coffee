@@ -43,10 +43,10 @@ class App.CTI extends App.Controller
         item: @ringingCalls()
       )
       $('.js-phoneMenuItem').after(localHtml)
-      $('.call-widget').find('.js-newUser').bind('click', (e) =>
+      $('.call-widget').find('.js-newUser').on('click', (e) =>
         @newUser(e)
       )
-      $('.call-widget').find('.js-newTicket').bind('click', (e) =>
+      $('.call-widget').find('.js-newTicket').on('click', (e) =>
         user = undefined
         user_id = $(e.currentTarget).data('user-id')
         if user_id

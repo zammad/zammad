@@ -219,7 +219,7 @@ class AccountEdit extends App.ControllerModal
         term: ''
         group_id: ''
       renderSearchTerms()
-      content.find('.js-searchTermList [name="search::term"]').last().focus()
+      content.find('.js-searchTermList [name="search::term"]').last().trigger('focus')
 
     removeSearchTerm = (event) =>
       index = $(event.currentTarget).attr('data-index')
@@ -248,7 +248,7 @@ class AccountEdit extends App.ControllerModal
 
     renderSearchTerms()
 
-    content.find('.js-searchTermAdd').click(addSearchTerm)
+    content.find('.js-searchTermAdd').on('click', addSearchTerm)
     content.find('.js-searchTermList').on('click', '.js-searchTermRemove', removeSearchTerm)
 
     content.find('.js-mentionsGroup').replaceWith createGroupSelection(@channel.options.sync.mentions.group_id, 'mentions')

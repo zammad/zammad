@@ -706,7 +706,7 @@ class App.TicketOverview extends App.Controller
     else if e.keyCode is 32 # space
       e.preventDefault()
       if @activeFocus is 'overview'
-        @$('.table-overview table tbody tr.is-hover td.js-checkbox-field label input').first().click()
+        @$('.table-overview table tbody tr.is-hover td.js-checkbox-field label input').first().trigger('click')
     else if e.keyCode is 9 # tab
       e.preventDefault()
       if @activeFocus is 'nav'
@@ -726,18 +726,18 @@ class App.TicketOverview extends App.Controller
       items = @$('.table-overview table tbody')
       current = items.find('tr.is-hover')
 
-      if !current.size()
+      if !current.length
         items.find('tr').first().addClass('is-hover')
         return
 
       if position is 1
         next = current.next('tr')
-        if next.size()
+        if next.length
           current.removeClass('is-hover')
           next.addClass('is-hover')
       else
         prev = current.prev('tr')
-        if prev.size()
+        if prev.length
           current.removeClass('is-hover')
           prev.addClass('is-hover')
 
@@ -751,7 +751,7 @@ class App.TicketOverview extends App.Controller
       items = @$('.sidebar')
       current = items.find('li.active')
 
-      if !current.size()
+      if !current.length
         location = items.find('li a').first().attr('href')
         if location
           @navigate location
@@ -759,11 +759,11 @@ class App.TicketOverview extends App.Controller
 
       if position is 1
         next = current.next('li')
-        if next.size()
+        if next.length
           @navigate next.find('a').attr('href')
       else
         prev = current.prev('li')
-        if prev.size()
+        if prev.length
           @navigate prev.find('a').attr('href')
 
       if next
@@ -831,7 +831,7 @@ class Navbar extends App.Controller
 
     # if all tabs are visible
     # remove dropdown and dropdown button
-    if @dropdownItem.not('.hide').size() is 0
+    if @dropdownItem.not('.hide').length is 0
       @dropdown.remove()
       @dropdownToggle.remove()
 
@@ -1031,7 +1031,7 @@ class Table extends App.Controller
         checkbox: checkbox
       )
       table = $(table)
-      table.delegate('[name="bulk_all"]', 'change', (e) ->
+      table.on('change', '[name="bulk_all"]', (e) ->
         if $(e.currentTarget).prop('checked')
           $(e.currentTarget).closest('table').find('[name="bulk"]').prop('checked', true)
         else
@@ -1224,7 +1224,7 @@ class Table extends App.Controller
       @bulkForm.show()
 
     # show/hide bulk action
-    localElement.delegate('input[name="bulk"], input[name="bulk_all"]', 'change', (e) =>
+    localElement.on('change', 'input[name="bulk"], input[name="bulk_all"]', (e) =>
       if @shouldShowBulkForm()
         @bulkForm.show()
       else
@@ -1233,7 +1233,7 @@ class Table extends App.Controller
     )
 
     # deselect bulk_all if one item is uncheck observ
-    localElement.delegate('[name="bulk"]', 'change', (e) ->
+    localElement.on('change', '[name="bulk"]', (e) ->
       bulkAll = localElement.find('[name="bulk_all"]')
       checkedCount = localElement.find('input[name="bulk"]:checked').length
       checkboxCount = localElement.find('input[name="bulk"]').length

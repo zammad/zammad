@@ -14,17 +14,17 @@ class App.TicketZoomArticleImageView extends App.ControllerModal
   constructor: ->
     super
     @unbindAll()
-    $(document).bind('keydown.image_preview', 'right', (e) =>
+    $(document).on('keydown.image_preview', 'right', (e) =>
       nextElement = @parentElement.closest('.attachment').next('.attachment.attachment--preview')
       return if nextElement.length is 0
       @close()
-      nextElement.find('img').click()
+      nextElement.find('img').trigger('click')
     )
-    $(document).bind('keydown.image_preview', 'left', (e) =>
+    $(document).on('keydown.image_preview', 'left', (e) =>
       prevElement = @parentElement.closest('.attachment').prev('.attachment.attachment--preview')
       return if prevElement.length is 0
       @close()
-      prevElement.find('img').click()
+      prevElement.find('img').trigger('click')
     )
 
   content: ->
@@ -40,4 +40,4 @@ class App.TicketZoomArticleImageView extends App.ControllerModal
     @unbindAll()
 
   unbindAll: ->
-    $(document).unbind('keydown.image_preview')
+    $(document).off('keydown.image_preview')

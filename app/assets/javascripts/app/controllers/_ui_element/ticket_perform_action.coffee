@@ -163,7 +163,7 @@ class App.UiElement.ticket_perform_action
   @updateAttributeSelectors: (elementFull) ->
 
     # enable all
-    elementFull.find('.js-attributeSelector select option').removeAttr('disabled')
+    elementFull.find('.js-attributeSelector select option').prop('disabled', false)
 
     # disable all used attributes
     elementFull.find('.js-attributeSelector select').each(->
@@ -292,7 +292,7 @@ class App.UiElement.ticket_perform_action
     elementRow.find('.js-preCondition').closest('.controls').removeClass('hide')
     elementRow.find('.js-preCondition select').replaceWith(selection)
 
-    elementRow.find('.js-preCondition select').bind('change', (e) ->
+    elementRow.find('.js-preCondition select').on('change', (e) ->
       toggleValue()
     )
 

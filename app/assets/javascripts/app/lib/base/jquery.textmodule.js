@@ -102,10 +102,10 @@
         var active = this.$widget.find('.dropdown-menu li.is-active')
         active.removeClass('is-active')
 
-        if (e.keyCode == 38 && active.prev().size()) {
+        if (e.keyCode == 38 && active.prev().length) {
           active = active.prev()
         }
-        else if (e.keyCode == 40 && active.next().size()) {
+        else if (e.keyCode == 40 && active.next().length) {
           active = active.next()
         }
 

@@ -64,7 +64,7 @@ class App.TicketZoomArticleNew extends App.Controller
 
       # set focus into field
       if data.focus
-        @$("[name=\"#{data.focus}\"], [data-name=\"#{data.focus}\"]").focus().parent().find('.token-input').focus()
+        @$("[name=\"#{data.focus}\"], [data-name=\"#{data.focus}\"]").trigger('focus').parent().find('.token-input').trigger('focus')
         return
 
       # set focus at end of field
@@ -422,7 +422,7 @@ class App.TicketZoomArticleNew extends App.Controller
               @securityOptionsShow()
 
               # add observer to change options
-              @$('.js-to, .js-cc').bind('change', =>
+              @$('.js-to, .js-cc').on('change', =>
                 @updateSecurityOptions()
               )
               @updateSecurityOptions()
@@ -459,7 +459,7 @@ class App.TicketZoomArticleNew extends App.Controller
 
   propagateOpenTextarea: (event) ->
     event.stopPropagation()
-    @textarea.focus()
+    @textarea.trigger('focus')
 
   updateLetterCount: =>
     return if !@maxTextLength
@@ -505,7 +505,7 @@ class App.TicketZoomArticleNew extends App.Controller
         easing: 'easeOutQuad'
         complete: =>
           $(window).on('click.ticket-zoom-textarea', @closeTextarea)
-          @textarea.focus() if focus
+          @textarea.trigger('focus') if focus
 
     @textBubble.velocity
       properties:

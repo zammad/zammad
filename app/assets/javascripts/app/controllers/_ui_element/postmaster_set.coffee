@@ -198,7 +198,10 @@ class App.UiElement.postmaster_set
         config['tag'] = 'input'
         config['type'] = 'text'
     config['name'] = name
-    config['value'] = value
+    if !value && attribute.value && attribute.value[key]
+      config['value'] = attribute.value[key].value
+    else
+      config['value'] = value
     item = App.UiElement[config.tag].render(config, {})
     elementRow.find('.js-value').html(item)
 
@@ -227,7 +230,7 @@ class App.UiElement.postmaster_set
   @rebuildAttributeSelectors: (elementFull, elementRow, key, attribute) ->
 
     # enable all
-    elementFull.find('.js-attributeSelector select option').removeAttr('disabled')
+    elementFull.find('.js-attributeSelector select option').prop('disabled', false)
 
     # disable all used attributes
     elementFull.find('.js-attributeSelector select').each(->

@@ -211,7 +211,7 @@ class App.SearchableSelect extends Spine.Controller
     currentPosition += direction
 
     return if currentPosition < 0
-    return if currentPosition > visibleOptions.size() - 1
+    return if currentPosition > visibleOptions.length - 1
 
     @unhighlightCurrentItem()
     @currentItem = visibleOptions.eq(currentPosition)
@@ -419,7 +419,7 @@ class App.SearchableSelect extends Spine.Controller
 
   # propergate focus to our visible input
   onShadowFocus: ->
-    @input.focus()
+    @input.trigger('focus')
 
   onShadowChange: ->
     value = @shadowInput.val()
@@ -446,7 +446,7 @@ class App.SearchableSelect extends Spine.Controller
     switch which
       when 'last'
         token = @$('.token').last()
-        return if not token.size()
+        return if not token.length
       else
         token = which
 

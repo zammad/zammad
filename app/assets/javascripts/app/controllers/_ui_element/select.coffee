@@ -45,7 +45,7 @@ class App.UiElement.select extends App.UiElement.ApplicationUiElement
 
   @bindEventListeners: (item, attribute, params) ->
     if attribute.display_warn
-      item.bind('change', (e) =>
+      item.on('change', (e) =>
         @bindWarnDisplayListener(e.target.value, attribute, params, item)
       )
 

@@ -1,7 +1,7 @@
 function check_ajax_field(field, value, count, callback, assert, waitTotal = 30000, wait = 0) {
   $elementInput = $('[name="' + field + '"].js-shadow + .js-input')
   if ($elementInput.val() != value) {
-    $elementInput.focus().val(value).trigger('input')
+    $elementInput.trigger('focus').val(value).trigger('input')
   }
 
   var $element = $('[name="' + field + '"]').closest('.searchableSelect').find('.js-optionsList')

@@ -162,7 +162,7 @@ class App.UiElement.ApplicationSelector
     item = $( App.view('generic/application_selector')(attribute: attribute) )
 
     # add filter
-    item.delegate('.js-add', 'click', (e) =>
+    item.on('click', '.js-add', (e) =>
       element = $(e.target).closest('.js-filterElement')
 
       # add first available attribute
@@ -191,7 +191,7 @@ class App.UiElement.ApplicationSelector
     )
 
     # remove filter
-    item.delegate('.js-remove', 'click', (e) =>
+    item.on('click', '.js-remove', (e) =>
       return if $(e.currentTarget).hasClass('is-disabled')
 
       if @hasEmptySelectorAtStart()
@@ -229,7 +229,7 @@ class App.UiElement.ApplicationSelector
           item.filter('.js-filter').append(row)
 
     # change attribute selector
-    item.delegate('.js-attributeSelector select', 'change', (e) =>
+    item.on('change', '.js-attributeSelector select', (e) =>
       elementRow = $(e.target).closest('.js-filterElement')
       groupAndAttribute = elementRow.find('.js-attributeSelector option:selected').attr('value')
       return if !groupAndAttribute
@@ -238,7 +238,7 @@ class App.UiElement.ApplicationSelector
     )
 
     # change operator selector
-    item.delegate('.js-operator select', 'change', (e) =>
+    item.on('change', '.js-operator select', (e) =>
       elementRow = $(e.target).closest('.js-filterElement')
       groupAndAttribute = elementRow.find('.js-attributeSelector option:selected').attr('value')
       return if !groupAndAttribute
@@ -335,7 +335,7 @@ class App.UiElement.ApplicationSelector
     if !@hasDuplicateSelector()
 
       # enable all
-      elementFull.find('.js-attributeSelector select option').removeAttr('disabled')
+      elementFull.find('.js-attributeSelector select option').prop('disabled', false)
 
       # disable all used attributes
       elementFull.find('.js-attributeSelector select').each(->
@@ -460,7 +460,7 @@ class App.UiElement.ApplicationSelector
     elementRow.find('.js-preCondition').closest('.controls').removeClass('hide')
     elementRow.find('.js-preCondition select').replaceWith(selection)
 
-    elementRow.find('.js-preCondition select').bind('change', (e) ->
+    elementRow.find('.js-preCondition select').on('change', (e) ->
       toggleValue()
     )
 

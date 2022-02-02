@@ -181,7 +181,7 @@ class App.ControllerModal extends App.Controller
         form = @el
 
       # focus first input, select or textarea
-      form.find('input:not([disabled]):not([type="hidden"]):not(".btn"), select:not([disabled]), textarea:not([disabled])').first().focus()
+      form.find('input:not([disabled]):not([type="hidden"]):not(".btn"), select:not([disabled]), textarea:not([disabled])').first().trigger('focus')
 
     @initalFormParams = @formParams()
 

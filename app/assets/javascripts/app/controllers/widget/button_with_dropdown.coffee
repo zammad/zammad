@@ -28,4 +28,4 @@ class App.WidgetButtonWithDropdown extends App.Controller
       @preventDefaultAndStopPropagation(e)
       return
 
-    @accessoriesContainer.blur()
+    @accessoriesContainer.trigger('blur')

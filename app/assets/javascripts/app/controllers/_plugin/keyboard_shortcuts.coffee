@@ -33,13 +33,13 @@ class App.KeyboardShortcutWidget extends App.Controller
     @observerKeys()
     @lastKey = undefined
 
-    $(document).keyup((e) =>
+    $(document).on('keyup', (e) =>
       return if e.keyCode isnt 27
       @lastKey = undefined
     )
 
   observerKeys: =>
-    $(document).unbind('keydown.shortcuts')
+    $(document).off('keydown.shortcuts')
     navigationHotkeys = App.Browser.hotkeys()
 
     areas = App.Config.get('keyboard_shortcuts')
@@ -56,7 +56,7 @@ class App.KeyboardShortcutWidget extends App.Controller
               modifier += shortcut.key
               if shortcut.callback
                 @log 'debug', 'bind for', modifier
-                $(document).bind('keydown.shortcuts', modifier, (e) =>
+                $(document).on('keydown.shortcuts', {keys: modifier}, (e) =>
                   e.preventDefault()
                   if @lastKey && @lastKey.modifier is modifier && @lastKey.time + 5500  > new Date().getTime()
                     @lastKey.count += 1
@@ -94,7 +94,7 @@ App.Config.set(
               description: __('Dashboard')
               globalEvent: 'dashboard'
               callback: ->
-                $('#global-search').blur()
+                $('#global-search').trigger('blur')
                 App.Event.trigger('keyboard_shortcuts_close')
                 window.location.hash = '#dashboard'
             }
@@ -104,7 +104,7 @@ App.Config.set(
               description: __('Overviews')
               globalEvent: 'overview'
               callback: ->
-                $('#global-search').blur()
+                $('#global-search').trigger('blur')
                 App.Event.trigger('keyboard_shortcuts_close')
                 window.location.hash = '#ticket/view'
             }
@@ -115,7 +115,7 @@ App.Config.set(
               globalEvent: 'search'
               callback: ->
                 App.Event.trigger('keyboard_shortcuts_close')
-                $('#global-search').focus()
+                $('#global-search').trigger('focus')
             }
             {
               key: 'a'
@@ -123,9 +123,9 @@ App.Config.set(
               description: __('Notifications')
               globalEvent: 'notification'
               callback: ->
-                $('#global-search').blur()
+                $('#global-search').trigger('blur')
                 App.Event.trigger('keyboard_shortcuts_close')
-                $('#navigation .js-toggleNotifications').click()
+                $('#navigation .js-toggleNotifications').trigger('click')
             }
             {
               key: 'n'
@@ -133,7 +133,7 @@ App.Config.set(
               description: __('New Ticket')
               globalEvent: 'new-ticket'
               callback: ->
-                $('#global-search').blur()
+                $('#global-search').trigger('blur')
                 App.Event.trigger('keyboard_shortcuts_close')
                 window.location.hash = '#ticket/create'
             }
@@ -168,7 +168,7 @@ App.Config.set(
               globalEvent: 'close-current-tab'
               callback: ->
                 App.Event.trigger('keyboard_shortcuts_close')
-                $('#navigation .tasks .is-active .js-close').click()
+                $('#navigation .tasks .is-active .js-close').trigger('click')
             }
             {
               key: 'tab'
@@ -185,12 +185,12 @@ App.Config.set(
                 if current.get(0)
                   next = current.next()
                   if next.get(0)
-                    next.find('div').first().click()
+                    next.find('div').first().trigger('click')
                     scollIfNeeded(next)
                     return
                 prev = $('#navigation .tasks .task').first()
                 if prev.get(0)
-                  prev.find('div').first().click()
+                  prev.find('div').first().trigger('click')
                   scollIfNeeded(prev)
             }
             {
@@ -208,12 +208,12 @@ App.Config.set(
                 if current.get(0)
                   prev = current.prev()
                   if prev.get(0)
-                    prev.find('div').first().click()
+                    prev.find('div').first().trigger('click')
                     scollIfNeeded(prev)
                     return
                 last = $('#navigation .tasks .task').last()
                 if last.get(0)
-                  last.find('div').first().click()
+                  last.find('div').first().trigger('click')
                   scollIfNeeded(last)
             }
             {
@@ -227,24 +227,24 @@ App.Config.set(
                 # check of primary modal exists
                 dialog = $('body > div.modal')
                 if dialog.get(0)
-                  dialog.find('.js-submit').click()
+                  dialog.find('.js-submit').trigger('click')
                   return
 
                 # check of local modal exists
                 dialog = $('.active.content > div.modal')
                 if dialog.get(0)
-                  dialog.find('.js-submit').click()
+                  dialog.find('.js-submit').trigger('click')
                   return
 
                 # check ticket edit
                 dialog = $('.active.content .js-attributeBar .js-submit')
                 if dialog.get(0)
-                  dialog.first().click()
+                  dialog.first().trigger('click')
                   return
 
                 dialog = $('.active.content .js-submit')
                 if dialog.get(0)
-                  dialog.first().click()
+                  dialog.first().trigger('click')
                   return
             }
           ]
@@ -342,8 +342,8 @@ App.Config.set(
               globalEvent: 'article-note-open'
               callback: ->
                 App.Event.trigger('keyboard_shortcuts_close')
-                $('.active.content .editControls .js-articleTypes [data-value="note"]').click()
-                $('.active.content .article-new .articleNewEdit-body').first().focus()
+                $('.active.content .editControls .js-articleTypes [data-value="note"]').trigger('click')
+                $('.active.content .article-new .articleNewEdit-body').first().trigger('focus')
             }
             {
               key: 'g'
@@ -355,9 +355,9 @@ App.Config.set(
                 lastArticleWithReply = $('.active.content .ticket-article .icon-reply').last()
                 lastArticleWithReplyAll = lastArticleWithReply.parent().find('.icon-reply-all')
                 if lastArticleWithReplyAll.get(0)
-                  lastArticleWithReplyAll.click()
+                  lastArticleWithReplyAll.trigger('click')
                   return
-                lastArticleWithReply.click()
+                lastArticleWithReply.trigger('click')
             }
             {
               key: 'j'
@@ -366,7 +366,7 @@ App.Config.set(
               globalEvent: 'article-internal-public'
               callback: ->
                 App.Event.trigger('keyboard_shortcuts_close')
-                $('.active.content .editControls .js-selectInternalPublic').click()
+                $('.active.content .editControls .js-selectInternalPublic').trigger('click')
             }
             #{
             #  key: 'm'
@@ -385,7 +385,7 @@ App.Config.set(
                 App.Event.trigger('keyboard_shortcuts_close')
                 return if !$('.active.content .edit').get(0)
                 $('.active.content .edit [name="state_id"]').val(4)
-                $('.active.content .js-attributeBar .js-submit').first().click()
+                $('.active.content .js-attributeBar .js-submit').first().trigger('click')
             }
             {
               key: ['◀', '▶']

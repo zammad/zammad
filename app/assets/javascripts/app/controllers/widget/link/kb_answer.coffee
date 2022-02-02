@@ -74,7 +74,7 @@ class App.WidgetLinkKbAnswer extends App.WidgetLink
     @inputField.attr('disabled', false).val('')
 
     @setInputVisible(true)
-    @inputField.focus()
+    @inputField.trigger('focus')
 
   setInputVisible: (setInputVisible) ->
     @searchableSelect.toggleClass('hidden', !setInputVisible)

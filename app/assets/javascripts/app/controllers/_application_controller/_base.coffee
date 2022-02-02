@@ -77,8 +77,7 @@ class App.Controller extends Spine.Controller
 
     # release bindings
     if @el
-      @el.undelegate()
-      @el.unbind()
+      @el.off()
       @el.empty()
 
     # release spine bindings (see release() of spine.coffee)
@@ -220,7 +219,7 @@ class App.Controller extends Spine.Controller
 
   userInfo: (data) ->
     el = data.el || $('[data-id="customer_info"]')
-    el.unbind()
+    el.off()
 
     # start customer info controller
     new App.WidgetUser(

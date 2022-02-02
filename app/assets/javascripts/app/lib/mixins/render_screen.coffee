@@ -21,5 +21,5 @@ App.RenderScreen =
     App.TaskManager.touch(@taskKey) if @taskKey
     (data.el || @).html App.view('generic/error/placeholder')(data)
     if data.action && data.actionCallback
-      (data.el || @.el).find('.js-action').click(data.actionCallback)
+      (data.el || @.el).find('.js-action').on('click', data.actionCallback)
 

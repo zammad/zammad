@@ -129,7 +129,7 @@ class App.TicketCreate extends App.Controller
     @$('[name="group_id"]').trigger('change')
 
     # add observer to change options
-    @$('[name="cc"], [name="group_id"], [name="customer_id"]').bind('change', =>
+    @$('[name="cc"], [name="group_id"], [name="customer_id"]').on('change', =>
       @updateSecurityOptions()
     )
     @updateSecurityOptions()

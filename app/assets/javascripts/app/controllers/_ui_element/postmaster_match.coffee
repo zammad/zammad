@@ -146,7 +146,7 @@ class App.UiElement.postmaster_match
     item.find('.js-attributeSelector').prepend(selector)
 
     # add filter
-    item.find('.js-add').bind('click', (e) ->
+    item.find('.js-add').on('click', (e) ->
       element = $(e.target).closest('.js-filterElement')
       elementClone = element.clone(true)
       element.after(elementClone)
@@ -154,14 +154,14 @@ class App.UiElement.postmaster_match
     )
 
     # remove filter
-    item.find('.js-remove').bind('click', (e) =>
+    item.find('.js-remove').on('click', (e) =>
       return if $(e.currentTarget).hasClass('is-disabled')
       $(e.target).closest('.js-filterElement').remove()
       @rebuildAttributeSelectors(item)
     )
 
     # change attribute selector
-    item.find('.js-attributeSelector select').bind('change', (e) =>
+    item.find('.js-attributeSelector select').on('change', (e) =>
       key = $(e.target).find('option:selected').attr('value')
       elementRow = $(e.target).closest('.js-filterElement')
       @rebuildAttributeSelectors(item, elementRow, key, attribute)
@@ -170,7 +170,7 @@ class App.UiElement.postmaster_match
     )
 
     # change operator
-    item.find('.js-operator select').bind('change', (e) =>
+    item.find('.js-operator select').on('change', (e) =>
       key = $(e.target).find('.js-attributeSelector option:selected').attr('value')
       operator = $(e.target).find('option:selected').attr('value')
       elementRow = $(e.target).closest('.js-filterElement')
@@ -233,7 +233,7 @@ class App.UiElement.postmaster_match
   @rebuildAttributeSelectors: (elementFull, elementRow, key, attribute) ->
 
     # enable all
-    elementFull.find('.js-attributeSelector select option').removeAttr('disabled')
+    elementFull.find('.js-attributeSelector select option').prop('disabled', false)
 
     # disable all used attributes
     elementFull.find('.js-attributeSelector select').each(->

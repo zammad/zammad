@@ -76,7 +76,7 @@ class App.ObjectOrganizationAutocompletion extends App.Controller
     @open()
 
   focusInput: =>
-    @objectSelect.focus() if not @formControl.hasClass('focus')
+    @objectSelect.trigger('focus') if not @formControl.hasClass('focus')
 
   onBlur: =>
     selectObject = @objectSelect.val()
@@ -141,7 +141,7 @@ class App.ObjectOrganizationAutocompletion extends App.Controller
     switch which
       when 'last'
         token = @$('.token').last()
-        return if not token.size()
+        return if not token.length
       else
         token = which
 

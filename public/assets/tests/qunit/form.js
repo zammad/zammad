@@ -118,7 +118,7 @@ QUnit.test("form elements check", assert => {
   assert.equal(el.find('[name="boolean2"]').val(), 'false')
 });
 
-QUnit.test("form params check", assert => {
+QUnit.test("form params check 1", assert => {
 //    assert.deepEqual(item, test.value, 'group set/get tests' );
 
   $('#qunit').append('<hr><h1>form params check</h1><form id="form2"></form>')
@@ -359,7 +359,7 @@ QUnit.test("form params check", assert => {
     boolean3: true,
     boolean4: false,
   }
-  assert.deepEqual(params, test_params, 'form param check')
+  assert.deepEqual(params, test_params, 'form param check 1')
 
 });
 
@@ -589,7 +589,7 @@ QUnit.test("form dependend fields check", assert => {
     date3: '2015-01-11',
     date4: null,
   }
-  assert.deepEqual(params, test_params, 'form param check')
+  assert.deepEqual(params, test_params, 'form param check 2')
 
   errors = form.validate(params)
   test_errors = {
@@ -619,7 +619,7 @@ QUnit.test("form dependend fields check", assert => {
     date3: '2015-01-11',
     date4: null,
   }
-  assert.deepEqual(params, test_params, 'form param check')
+  assert.deepEqual(params, test_params, 'form param check 3')
 });
 
 QUnit.test("form handler check with and without fieldset", assert => {
@@ -694,7 +694,7 @@ QUnit.test("form handler check with and without fieldset", assert => {
     select1: 'a',
     select2: '1',
   }
-  assert.deepEqual(params, test_params, 'form param check')
+  assert.deepEqual(params, test_params, 'form param check 4')
   el.find('[name="select1"]').val('b')
   el.find('[name="select1"]').trigger('change')
   params = App.ControllerForm.params(el)
@@ -702,7 +702,7 @@ QUnit.test("form handler check with and without fieldset", assert => {
     select1: 'b',
     select2: '3',
   }
-  assert.deepEqual(params, test_params, 'form param check')
+  assert.deepEqual(params, test_params, 'form param check 5')
   el.find('[name="select1"]').val('a')
   el.find('[name="select1"]').trigger('change')
   params = App.ControllerForm.params(el)
@@ -710,7 +710,7 @@ QUnit.test("form handler check with and without fieldset", assert => {
     select1: 'a',
     select2: '1',
   }
-  assert.deepEqual(params, test_params, 'form param check')
+  assert.deepEqual(params, test_params, 'form param check 6')
 
   // test with noFieldset
   el.empty()
@@ -739,7 +739,7 @@ QUnit.test("form handler check with and without fieldset", assert => {
     select1: 'a',
     select2: '1',
   }
-  assert.deepEqual(params, test_params, 'form param check')
+  assert.deepEqual(params, test_params, 'form param check 7')
   el.find('[name="select1"]').val('b')
   el.find('[name="select1"]').trigger('change')
   params = App.ControllerForm.params(el)
@@ -747,7 +747,7 @@ QUnit.test("form handler check with and without fieldset", assert => {
     select1: 'b',
     select2: '3',
   }
-  assert.deepEqual(params, test_params, 'form param check')
+  assert.deepEqual(params, test_params, 'form param check 8')
   el.find('[name="select1"]').val('a')
   el.find('[name="select1"]').trigger('change')
   params = App.ControllerForm.params(el)
@@ -755,7 +755,7 @@ QUnit.test("form handler check with and without fieldset", assert => {
     select1: 'a',
     select2: '1',
   }
-  assert.deepEqual(params, test_params, 'form param check')
+  assert.deepEqual(params, test_params, 'form param check 9')
 
 });
 
@@ -864,10 +864,10 @@ QUnit.test("form postmaster filter", assert => {
       }
     },
   };
-  assert.deepEqual(params, test_params, 'form param check')
+  assert.deepEqual(params, test_params, 'form param check 10')
 
-  el.find('[name="set::x-zammad-ticket-priority_id::value"]').closest('.js-filterElement').find('.js-remove').click()
-  el.find('[name="set::x-zammad-ticket-customer_id::value"]').closest('.js-filterElement').find('.js-remove').click()
+  el.find('[name="set::x-zammad-ticket-priority_id::value"]').closest('.js-filterElement').find('.js-remove').trigger('click')
+  el.find('[name="set::x-zammad-ticket-customer_id::value"]').closest('.js-filterElement').find('.js-remove').trigger('click')
 
   params = App.ControllerForm.params(el)
   test_params = {
@@ -897,9 +897,9 @@ QUnit.test("form postmaster filter", assert => {
       },
     },
   };
-  assert.deepEqual(params, test_params, 'form param check')
+  assert.deepEqual(params, test_params, 'form param check 11')
 
-  el.find('.postmaster_set .js-filterElement').last().find('.filter-controls .js-add').click()
+  el.find('.postmaster_set .js-filterElement').last().find('.filter-controls .js-add').trigger('click')
 
   params = App.ControllerForm.params(el)
   test_params = {
@@ -932,11 +932,11 @@ QUnit.test("form postmaster filter", assert => {
       },
     },
   };
-  assert.deepEqual(params, test_params, 'form param check')
+  assert.deepEqual(params, test_params, 'form param check 12')
 
   App.Delay.set(function() {
     QUnit.test("form postmaster filter - needed to do delayed because of tag ui", assert => {
-      el.find('[name="set::x-zammad-ticket-tags::value"]').closest('.js-filterElement').find('.token .close').last().click()
+      el.find('[name="set::x-zammad-ticket-tags::value"]').closest('.js-filterElement').find('.token .close').last().trigger('click')
       params = App.ControllerForm.params(el)
       test_params = {
         input1: 'some not used default',
@@ -968,7 +968,7 @@ QUnit.test("form postmaster filter", assert => {
           },
         },
       };
-      assert.deepEqual(params, test_params, 'form param check')
+      assert.deepEqual(params, test_params, 'form param check 13')
     })
   }, 500);
 });
@@ -994,17 +994,17 @@ QUnit.test("form selector", assert => {
     input2: 'some name66',
   };
   params = App.ControllerForm.params(el)
-  assert.deepEqual(params, test_params, 'form param check via $("#form")')
+  assert.deepEqual(params, test_params, 'form param check 14 via $("#form")')
 
   params = App.ControllerForm.params(el.find('input'))
-  assert.deepEqual(params, test_params, 'form param check via $("#form").find("input")')
+  assert.deepEqual(params, test_params, 'form param check 15 via $("#form").find("input")')
 
   params = App.ControllerForm.params(el.parent())
-  assert.deepEqual(params, test_params, 'form param check via $("#form").parent()')
+  assert.deepEqual(params, test_params, 'form param check 16 via $("#form").parent()')
 
 });
 
-QUnit.test("form params check", assert => {
+QUnit.test("form params check 2", assert => {
 
   $('#qunit').append('<hr><h1>form params check</h1><form id="form9"></form>')
   var el = $('#form9')
@@ -1038,7 +1038,7 @@ QUnit.test("form params check", assert => {
   }
   //console.log('params', params)
   //console.log('test_params', test_params)
-  assert.deepEqual(params, test_params, 'form param check')
+  assert.deepEqual(params, test_params, 'form param check 17')
 
 });
 
@@ -1065,7 +1065,7 @@ QUnit.test("form params check direct", assert => {
   }
   //console.log('params', params)
   //console.log('test_params', test_params)
-  assert.deepEqual(params, test_params, 'form param check')
+  assert.deepEqual(params, test_params, 'form param check 18')
 });
 
 QUnit.test("object manager form 1", assert => {
@@ -1118,7 +1118,7 @@ QUnit.test("object manager form 1", assert => {
     }
   }
 
-  assert.deepEqual(params, test_params, 'form param check')
+  assert.deepEqual(params, test_params, 'form param check 19')
 
   el.find('[name=data_type]').val('datetime').trigger('change')
 
@@ -1153,7 +1153,7 @@ QUnit.test("object manager form 1", assert => {
       }
     }
   }
-  assert.deepEqual(params, test_params, 'form param check')
+  assert.deepEqual(params, test_params, 'form param check 20')
 
 });
 
@@ -1230,7 +1230,7 @@ QUnit.test("object manager form 2", assert => {
     }
   }
 
-  assert.deepEqual(params, test_params, 'form param check')
+  assert.deepEqual(params, test_params, 'form param check 21')
 
 });
 
@@ -1284,10 +1284,10 @@ QUnit.test("object manager form 3", assert => {
     }
   }
 
-  assert.deepEqual(params, test_params, 'form param check')
+  assert.deepEqual(params, test_params, 'form param check 22')
 
-  el.find('[name="screens::create_middle::ticket.customer::shown"]').click()
-  el.find('[name="screens::edit::ticket.customer::shown"]').click()
+  el.find('[name="screens::create_middle::ticket.customer::shown"]').trigger('click')
+  el.find('[name="screens::edit::ticket.customer::shown"]').trigger('click')
 
   params = App.ControllerForm.params(el)
   test_params = {
@@ -1321,7 +1321,7 @@ QUnit.test("object manager form 3", assert => {
       }
     }
   }
-  assert.deepEqual(params, test_params, 'form param check')
+  assert.deepEqual(params, test_params, 'form param check 23')
 
 });
 

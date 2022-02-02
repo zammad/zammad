@@ -235,7 +235,7 @@ class Download extends App.Controller
   constructor: (data) ->
 
     # unbind existing click binds
-    data.el.unbind('click .js-dataDownloadBackendSelector')
+    data.el.off('click .js-dataDownloadBackendSelector')
 
     super
     @render()

@@ -96,7 +96,7 @@ class App.KnowledgeBaseReaderController extends App.Controller
   prepareLinks: (input) ->
     input = $($.parseHTML(input))
 
-    for linkDom in input.find('a').andSelf('a').toArray()
+    for linkDom in input.find('a').addBack('a').toArray()
       switch $(linkDom).attr('data-target-type')
         when 'knowledge-base-answer'
           if object = App.KnowledgeBaseAnswerTranslation.find $(linkDom).attr('data-target-id')

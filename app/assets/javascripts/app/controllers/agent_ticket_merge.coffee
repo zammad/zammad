@@ -49,11 +49,11 @@ class App.TicketMerge extends App.ControllerModal
       radio:      true
     )
 
-    content.delegate('[name="target_ticket_number"]', 'focus', (e) ->
+    content.on('focus', '[name="target_ticket_number"]', (e) ->
       $(e.target).parents().find('[name="radio"]').prop('checked', false)
     )
 
-    content.delegate('[name="radio"]', 'click', (e) ->
+    content.on('click', '[name="radio"]', (e) ->
       if $(e.target).prop('checked')
         ticket_id = $(e.target).val()
         ticket    = App.Ticket.fullLocal(ticket_id)

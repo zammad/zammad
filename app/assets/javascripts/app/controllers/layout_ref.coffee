@@ -652,7 +652,7 @@ class ReferenceSetupWizard extends App.ControllerWizard
     }
 
     @agentEmail.add(@agentFirstName).add(@agentLastName).val('')
-    @agentFirstName.focus()
+    @agentFirstName.trigger('focus')
 
 App.Config.set( 'layout_ref/setup', ReferenceSetupWizard, 'Routes' )
 
@@ -709,7 +709,7 @@ class RichText extends App.ControllerAppContent
         App.Utils.htmlCleanup(textarea)
 
         # remove marker for cursor
-        textarea.find('[data-cursor=1]').focus()
+        textarea.find('[data-cursor=1]').trigger('focus')
         textarea.find('[data-cursor=1]').remove()
       @delay( execute, 1)
 
@@ -953,11 +953,11 @@ class TicketZoomRef extends App.ControllerAppContent
       @closeDropdown()
     else
       @buttonDropdown.addClass 'is-open'
-      $(document).bind 'click.buttonDropdown', @closeDropdown
+      $(document).on 'click.buttonDropdown', @closeDropdown
 
   closeDropdown: =>
     @buttonDropdown.removeClass 'is-open'
-    $(document).unbind 'click.buttonDropdown'
+    $(document).off 'click.buttonDropdown'
 
   performTicketMacro: (event) =>
     console.log 'perform action', @$(event.currentTarget).text()
@@ -1414,7 +1414,7 @@ class SchedulersRef extends App.ControllerAppContent
 
     if target.hasClass('is-selected')
       # prevent zero selections
-      if target.siblings('.is-selected').size() > 0
+      if target.siblings('.is-selected').length > 0
         target.removeClass('is-selected')
     else
       target.addClass('is-selected')
@@ -2053,7 +2053,7 @@ class ChatWindowRef extends Spine.Controller
     switch event.keyCode
       when TABKEY
         allChatInputs = $('.js-customerChatInput').not('[disabled="disabled"]')
-        chatCount = allChatInputs.size()
+        chatCount = allChatInputs.length
         index = allChatInputs.index(@input)
 
         if chatCount > 1
@@ -2333,7 +2333,7 @@ class KnowledgeBaseAgentReaderRef extends App.ControllerAppContent
     if $(event.currentTarget).is('.btn--primary')
       @el.find('.main[data-level]').addClass('hidden')
       @el.find('[data-level~="search"]').removeClass('hidden')
-      @searchInput.focus()
+      @searchInput.trigger('focus')
     else
       @el.find("[data-level~=\"#{@currentLevel}\"]").removeClass('hidden')
       @el.find('[data-level~="search"]').addClass('hidden')

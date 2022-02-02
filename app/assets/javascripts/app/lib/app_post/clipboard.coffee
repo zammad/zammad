@@ -10,7 +10,7 @@ class App.ClipBoard
     if _instance == undefined
       _instance ?= new _Singleton
     _instance.manuallyUpdateSelection(type)
-  
+
   @getSelected: (type) ->
     if _instance == undefined
       _instance ?= new _Singleton
@@ -56,10 +56,10 @@ class _Singleton
   bind: (el) ->
 
     # check selection on mouse up
-    $(el).bind('mouseup', =>
+    $(el).on('mouseup', =>
       @_updateSelection()
     )
-    $(el).bind('keyup', (e) =>
+    $(el).on('keyup', (e) =>
 
       # check selection on sonder key
       if e.keyCode == 91
@@ -90,7 +90,7 @@ class _Singleton
       sel = document.selection.createRange()
       text = sel.text
     if type is 'text'
-      return $.trim(text.toString()) if text
+      return (text.toString()).trim() if text
       return ''
 
     if sel && sel.rangeCount
@@ -98,7 +98,7 @@ class _Singleton
       for i in [1..sel.rangeCount]
         container.appendChild(sel.getRangeAt(i-1).cloneContents())
       html = container.innerHTML
-    
+
     if type != 'sel'
       html
     else

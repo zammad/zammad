@@ -33,6 +33,11 @@ RSpec.describe 'Ticket history', type: :system, time_zone: 'Europe/London' do
     refresh
 
     visit "#user/profile/#{customer.id}"
+
+    # there's a new modal that blocks the click event on the next lines,
+    # this closes the modal for other click event to work properly
+    find('.modal .modal-content .js-cancel').click
+
     find('#userAction').click
     click('[data-type="history"]')
   end
@@ -42,6 +47,7 @@ RSpec.describe 'Ticket history', type: :system, time_zone: 'Europe/London' do
   end
 
   it 'does not include time with UTC format' do
+    # sleep 5
     expect(page).to have_no_text(%r{ UTC})
   end
 

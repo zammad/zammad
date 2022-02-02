@@ -588,7 +588,7 @@ QUnit.test('table new - initial list', assert => {
   assert.equal(el.find('tbody > tr:nth-child(151) > td').length, 0)
 
   assert.equal(el.find('.js-tableHead[data-column-key="name"] .js-sort .icon').length, 0)
-  el.find('.js-tableHead[data-column-key="name"] .js-sort').click()
+  el.find('.js-tableHead[data-column-key="name"] .js-sort').trigger('click')
 
   assert.equal(el.find('table > thead > tr').length, 1, 'row count')
   assert.equal(el.find('table > thead > tr > th:nth-child(1)').text().trim(), 'Name', 'check header')
@@ -611,7 +611,7 @@ QUnit.test('table new - initial list', assert => {
 
   assert.equal(el.find('.js-tableHead[data-column-key="name"] .js-sort .icon.icon-arrow-up').length, 1)
   assert.equal(el.find('.js-tableHead[data-column-key="name"] .js-sort .icon.icon-arrow-down').length, 0)
-  el.find('.js-tableHead[data-column-key="name"] .js-sort').click()
+  el.find('.js-tableHead[data-column-key="name"] .js-sort').trigger('click')
 
   assert.equal(el.find('table > thead > tr').length, 1, 'row count')
   assert.equal(el.find('table > thead > tr > th:nth-child(1)').text().trim(), 'Name', 'check header')
@@ -635,7 +635,7 @@ QUnit.test('table new - initial list', assert => {
   assert.equal(el.find('.js-tableHead[data-column-key="name"] .js-sort .icon.icon-arrow-down').length, 1)
   assert.equal(el.find('.js-tableHead[data-column-key="name"] .js-sort .icon.icon-arrow-up').length, 0)
   assert.equal(el.find('.js-tableHead[data-column-key="created_at"] .js-sort .icon').length, 0)
-  el.find('.js-tableHead[data-column-key="created_at"] .js-sort').click()
+  el.find('.js-tableHead[data-column-key="created_at"] .js-sort').trigger('click')
 
   assert.equal(el.find('table > thead > tr').length, 1, 'row count')
   assert.equal(el.find('table > thead > tr > th:nth-child(1)').text().trim(), 'Name', 'check header')
@@ -659,7 +659,7 @@ QUnit.test('table new - initial list', assert => {
   assert.equal(el.find('.js-tableHead[data-column-key="name"] .js-sort .icon').length, 0)
   assert.equal(el.find('.js-tableHead[data-column-key="created_at"] .js-sort .icon.icon-arrow-down').length, 0)
   assert.equal(el.find('.js-tableHead[data-column-key="created_at"] .js-sort .icon.icon-arrow-up').length, 1)
-  el.find('.js-tableHead[data-column-key="created_at"] .js-sort').click()
+  el.find('.js-tableHead[data-column-key="created_at"] .js-sort').trigger('click')
 
   assert.equal(el.find('table > thead > tr').length, 1, 'row count')
   assert.equal(el.find('table > thead > tr > th:nth-child(1)').text().trim(), 'Name', 'check header')
@@ -723,7 +723,7 @@ QUnit.test('table new - initial list', assert => {
   assert.equal(el.find('.js-tableHead[data-column-key="name"] .js-sort .icon').length, 0)
   assert.equal(el.find('.js-tableHead[data-column-key="created_at"] .js-sort .icon.icon-arrow-down').length, 1)
   assert.equal(el.find('.js-tableHead[data-column-key="created_at"] .js-sort .icon.icon-arrow-up').length, 0)
-  el.find('.js-tableHead[data-column-key="created_at"] .js-sort').click()
+  el.find('.js-tableHead[data-column-key="created_at"] .js-sort').trigger('click')
 
   assert.equal(el.find('table > thead > tr').length, 1, 'row count')
   assert.equal(el.find('table > thead > tr > th:nth-child(1)').text().trim(), 'Name', 'check header')
@@ -748,7 +748,7 @@ QUnit.test('table new - initial list', assert => {
   assert.equal(el.find('.js-tableHead[data-column-key="created_at"] .js-sort .icon.icon-arrow-down').length, 0)
   assert.equal(el.find('.js-tableHead[data-column-key="created_at"] .js-sort .icon.icon-arrow-up').length, 1)
 
-  el.find('.js-tableHead[data-column-key="created_at"] .js-sort').click()
+  el.find('.js-tableHead[data-column-key="created_at"] .js-sort').trigger('click')
 
   assert.equal(el.find('table > thead > tr').length, 1, 'row count')
   assert.equal(el.find('table > thead > tr > th:nth-child(1)').text().trim(), 'Name', 'check header')
@@ -1098,7 +1098,7 @@ QUnit.test('table new - initial list', assert => {
   assert.equal(el.find('.js-pager').first().find('.js-page').length, 2)
   assert.equal(el.find('.js-pager').first().find('.js-page.is-selected').length, 1)
   assert.equal(el.find('.js-pager').first().find('.js-page.is-selected').text(), '1')
-  el.find('.js-pager').first().find('.js-page:nth-child(2)').click()
+  el.find('.js-pager').first().find('.js-page:nth-child(2)').trigger('click')
 
   assert.equal(el.find('table > thead > tr').length, 1, 'row count')
   assert.equal(el.find('table > thead > tr > th:nth-child(1)').text().trim(), 'Name', 'check header')
@@ -1212,7 +1212,7 @@ QUnit.test('table new - initial list', assert => {
   assert.equal(el.find('.js-pager').first().find('.js-page').length, 2)
   assert.equal(el.find('.js-pager').first().find('.js-page.is-selected').length, 1)
   assert.equal(el.find('.js-pager').first().find('.js-page.is-selected').text(), '1')
-  el.find('.js-pager').first().find('.js-page:nth-child(2)').click()
+  el.find('.js-pager').first().find('.js-page:nth-child(2)').trigger('click')
 
   assert.equal(el.find('table > thead > tr').length, 1, 'row count')
   assert.equal(el.find('table > thead > tr > th:nth-child(1)').text().trim(), 'Name', 'check header')
@@ -1232,7 +1232,7 @@ QUnit.test('table new - initial list', assert => {
   assert.equal(el.find('.js-pager').first().find('.js-page').length, 2)
   assert.equal(el.find('.js-pager').first().find('.js-page.is-selected').length, 1)
   assert.equal(el.find('.js-pager').first().find('.js-page.is-selected').text(), '2')
-  el.find('.js-pager').first().find('.js-page:nth-child(1)').click()
+  el.find('.js-pager').first().find('.js-page:nth-child(1)').trigger('click')
 
   assert.equal(el.find('table > thead > tr').length, 1, 'row count')
   assert.equal(el.find('table > thead > tr > th:nth-child(1)').text().trim(), 'Name', 'check header')

@@ -35,7 +35,7 @@ QUnit.test( "column_select check", assert => {
   assert.deepEqual(params, test_params, 'form param check')
 
   // add and remove selections
-  $('[data-name="column_select1"] .js-pool .js-option[data-value="bbb"]').click()
+  $('[data-name="column_select1"] .js-pool .js-option[data-value="bbb"]').trigger('click')
 
   params = App.ControllerForm.params(el)
   test_params = {
@@ -47,10 +47,10 @@ QUnit.test( "column_select check", assert => {
 
   var done = assert.async();
   setTimeout(function() {
-    $('[data-name="column_select1"] .js-pool .js-option[data-value="aaa"]').click()
-    $('[data-name="column_select2"] .js-pool .js-option[data-value="1"]').click()
-    $('[data-name="column_select2"].js-selected .js-option[data-value="aaa"]').click()
-    $('[data-name="column_select3"] .js-pool .js-option[data-value="aaa"]').click()
+    $('[data-name="column_select1"] .js-pool .js-option[data-value="aaa"]').trigger('click')
+    $('[data-name="column_select2"] .js-pool .js-option[data-value="1"]').trigger('click')
+    $('[data-name="column_select2"].js-selected .js-option[data-value="aaa"]').trigger('click')
+    $('[data-name="column_select3"] .js-pool .js-option[data-value="aaa"]').trigger('click')
 
     params = App.ControllerForm.params(el)
     test_params = {

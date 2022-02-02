@@ -96,11 +96,11 @@ class App.TicketZoomAttributeBar extends App.Controller
 
   openMacroMenu: =>
     @buttonDropdown.addClass 'is-open'
-    $(document).bind 'click.buttonDropdown', @closeMacroMenu
+    $(document).on 'click.buttonDropdown', @closeMacroMenu
 
   closeMacroMenu: =>
     @buttonDropdown.removeClass 'is-open'
-    $(document).unbind 'click.buttonDropdown'
+    $(document).off 'click.buttonDropdown'
 
   performTicketMacro: (e) =>
     macroId = $(e.currentTarget).data('id')

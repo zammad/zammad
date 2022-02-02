@@ -256,7 +256,7 @@ class Navigation extends App.Controller
       @nudge(e, 1)
       return
     else if e.keyCode is 13 # enter
-      @searchInput.blur()
+      @searchInput.trigger('blur')
       href = @$('.global-search-result .nav-tab.is-hover').attr('href')
       if href
         @navigate(href)

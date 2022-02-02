@@ -329,10 +329,10 @@ QUnit.test("searchable_select submenu and option list check", assert => {
     autofocus: true
   });
 
-  el.find("[name=\"tree_select\"].js-shadow + .js-input").click()
-  el.find(".searchableSelect .js-optionsList [data-value=\"a\\\\a\"]").mouseenter().click()
-  el.find(".searchableSelect .js-optionsSubmenu [data-value=\"a\\\\a::aab\"]").mouseenter().click()
-  el.find("[name=\"tree_select\"].js-shadow + .js-input").click()
+  el.find("[name=\"tree_select\"].js-shadow + .js-input").trigger('click')
+  el.find(".searchableSelect .js-optionsList [data-value=\"a\\\\a\"]").mouseenter().trigger('click')
+  el.find(".searchableSelect .js-optionsSubmenu [data-value=\"a\\\\a::aab\"]").mouseenter().trigger('click')
+  el.find("[name=\"tree_select\"].js-shadow + .js-input").trigger('click')
 
   var params = App.ControllerForm.params(el)
   var test_params = {

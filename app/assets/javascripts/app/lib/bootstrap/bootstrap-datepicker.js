@@ -84,7 +84,7 @@
 			replace: function(new_array){
 				if (!new_array)
 					return;
-				if (!$.isArray(new_array))
+				if (!Array.isArray(new_array))
 					new_array = [new_array];
 				this.clear();
 				this.push.apply(this, new_array);
@@ -266,21 +266,21 @@
 			}
 
 			o.daysOfWeekDisabled = o.daysOfWeekDisabled||[];
-			if (!$.isArray(o.daysOfWeekDisabled))
+			if (!Array.isArray(o.daysOfWeekDisabled))
 				o.daysOfWeekDisabled = o.daysOfWeekDisabled.split(/[,\s]*/);
 			o.daysOfWeekDisabled = $.map(o.daysOfWeekDisabled, function(d){
 				return parseInt(d, 10);
 			});
 
 			o.daysOfWeekHighlighted = o.daysOfWeekHighlighted||[];
-			if (!$.isArray(o.daysOfWeekHighlighted))
+			if (!Array.isArray(o.daysOfWeekHighlighted))
 				o.daysOfWeekHighlighted = o.daysOfWeekHighlighted.split(/[,\s]*/);
 			o.daysOfWeekHighlighted = $.map(o.daysOfWeekHighlighted, function(d){
 				return parseInt(d, 10);
 			});
 
 			o.datesDisabled = o.datesDisabled||[];
-			if (!$.isArray(o.datesDisabled)) {
+			if (!Array.isArray(o.datesDisabled)) {
 				var datesDisabled = [];
 				datesDisabled.push(DPGlobal.parseDate(o.datesDisabled, format, o.language));
 				o.datesDisabled = datesDisabled;
@@ -494,7 +494,7 @@
 			this._attachSecondaryEvents();
 			this._trigger('show');
 			if ((window.navigator.msMaxTouchPoints || 'ontouchstart' in document) && this.o.disableTouchKeyboard) {
-				$(this.element).blur();
+				$(this.element).trigger('blur');
 			}
 			return this;
 		},
@@ -609,7 +609,7 @@
 			}
 		},
 		setDates: function(){
-			var args = $.isArray(arguments[0]) ? arguments[0] : arguments;
+			var args = Array.isArray(arguments[0]) ? arguments[0] : arguments;
 			this.update.apply(this, args);
 			this._trigger('changeDate');
 			this.setValue();
@@ -617,7 +617,7 @@
 		},
 
 		setUTCDates: function(){
-			var args = $.isArray(arguments[0]) ? arguments[0] : arguments;
+			var args = Array.isArray(arguments[0]) ? arguments[0] : arguments;
 			this.update.apply(this, $.map(args, this._utc_to_local));
 			this._trigger('changeDate');
 			this.setValue();
@@ -785,7 +785,7 @@
 		_allow_update: true,
 		rerender: function(){
 			this.fill();
-			this.element.change();
+			this.element.trigger('change');
 			return this;
 		},
 		update: function(){
@@ -848,7 +848,7 @@
 				this._trigger('clearDate');
 
 			this.fill();
-			this.element.change();
+			this.element.trigger('change');
 			return this;
 		},
 
@@ -1017,7 +1017,7 @@
 						tooltip = before.tooltip;
 				}
 
-				clsName = $.unique(clsName);
+				clsName = $.uniqueSort(clsName);
 				html.push('<td class="'+clsName.join(' ')+'"' + (tooltip ? ' title="'+tooltip+'"' : '') + '>'+prevMonth.getUTCDate() + '</td>');
 				tooltip = null;
 				if (prevMonth.getUTCDay() === this.o.weekEnd){
@@ -1295,7 +1295,7 @@
 				element = this.element.find('input');
 			}
 			if (element){
-				element.change();
+				element.trigger('change');
 			}
 			if (this.o.autoclose && (!which || which === 'date')){
 				this.hide();
@@ -1487,7 +1487,7 @@
 					element = this.element.find('input');
 				}
 				if (element){
-					element.change();
+					element.trigger('change');
 				}
 			}
 		},

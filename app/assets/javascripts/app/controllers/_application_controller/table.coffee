@@ -406,7 +406,7 @@ class App.ControllerTable extends App.Controller
       if @bindCheckbox.events
         for event, callback of @bindCheckbox.events
           do (table, event, callback) ->
-            table.delegate('input[name="bulk"]', event, (e) ->
+            table.on(event, 'input[name="bulk"]', (e) ->
               e.stopPropagation()
               id      = $(e.currentTarget).parents('tr').data('id')
               checked = $(e.currentTarget).prop('checked')
@@ -424,12 +424,12 @@ class App.ControllerTable extends App.Controller
     if @checkbox
 
       # click first tr>td, catch click
-      table.delegate('tr > td:nth-child(1)', 'click', (e) ->
+      table.on('click', 'tr > td:nth-child(1)', (e) ->
         e.stopPropagation()
       )
 
       # bind on full bulk click
-      table.delegate('input[name="bulk_all"]', 'change', (e) =>
+      table.on('change', 'input[name="bulk_all"]', (e) =>
         e.stopPropagation()
         clicks = []
         if $(e.currentTarget).prop('checked')

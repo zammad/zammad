@@ -82,7 +82,7 @@ class SidebarIdoit extends App.Controller
     list = $(App.view('ticket_zoom/sidebar_idoit')(
       objects: objects
     ))
-    list.delegate('.js-delete', 'click', (e) =>
+    list.on('click', '.js-delete', (e) =>
       e.preventDefault()
       objectId = $(e.currentTarget).attr 'data-object-id'
       @delete(objectId)

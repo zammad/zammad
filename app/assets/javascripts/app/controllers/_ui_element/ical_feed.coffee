@@ -34,16 +34,16 @@ class App.UiElement.ical_feed extends App.UiElement.ApplicationUiElement
       updateCheckManual()
       item.find('.js-manual').val(attribute.value)
 
-    item.find('.js-check').bind('change', ->
+    item.find('.js-check').on('change', ->
       updateShadow()
     )
 
-    item.find('.js-list').bind('click change', ->
+    item.find('.js-list').on('click change', ->
       updateCheckList()
       updateShadow('list')
     )
 
-    item.find('.js-manual').bind('keyup focus blur', ->
+    item.find('.js-manual').on('keyup focus blur', ->
       updateCheckManual()
       updateShadow('manual')
     )

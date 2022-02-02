@@ -881,12 +881,12 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       }));
       this.options.target.append(this.el);
       this.input = this.el.find('.zammad-chat-input');
-      this.el.find('.js-chat-open').click(this.open);
-      this.el.find('.js-chat-toggle').click(this.toggle);
-      this.el.find('.js-chat-status').click(this.stopPropagation);
+      this.el.find('.js-chat-open').on('click', this.open);
+      this.el.find('.js-chat-toggle').on('click', this.toggle);
+      this.el.find('.js-chat-status').on('click', this.stopPropagation);
       this.el.find('.zammad-chat-controls').on('submit', this.onSubmit);
       this.el.find('.zammad-chat-body').on('scroll', this.detectScrolledtoBottom);
-      this.el.find('.zammad-scroll-hint').click(this.onScrollHintClick);
+      this.el.find('.zammad-scroll-hint').on('click', this.onScrollHintClick);
       this.input.on({
         keydown: this.checkForEnter,
         input: this.onInput
@@ -1095,7 +1095,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
           return _this.onLeaveTemporary();
         };
       })(this));
-      $(window).bind('hashchange', (function(_this) {
+      $(window).on('hashchange', (function(_this) {
         return function() {
           if (_this.isOpen) {
             if (_this.sessionId) {
@@ -1206,7 +1206,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
     ZammadChat.prototype.onReady = function() {
       var base;
       this.log.debug('widget ready for use');
-      $("." + this.options.buttonClass).click(this.open).removeClass(this.options.inactiveClass);
+      $("." + this.options.buttonClass).on('click', this.open).removeClass(this.options.inactiveClass);
       if (typeof (base = this.options).onReady === "function") {
         base.onReady();
       }
@@ -1709,7 +1709,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       reload = function() {
         return location.reload();
       };
-      this.el.find('.js-restart').click(reload);
+      this.el.find('.js-restart').on('click', reload);
       return this.sessionClose();
     };
 
@@ -1721,7 +1721,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       reload = function() {
         return location.reload();
       };
-      this.el.find('.js-restart').click(reload);
+      this.el.find('.js-restart').on('click', reload);
       return this.sessionClose();
     };
 

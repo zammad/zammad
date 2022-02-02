@@ -68,7 +68,7 @@ class App.WidgetTag extends App.Controller
   showInput: (e) =>
     e.preventDefault()
     @newTagLabel.addClass('hide')
-    @newTagInput.removeClass('hide').focus()
+    @newTagInput.removeClass('hide').trigger('focus')
     @newTagInput.trigger(jQuery.Event('keydown'))
     @editMode = true
 

@@ -31,7 +31,7 @@ class App.IdoitObjectSelector extends App.ControllerModal
           @search(params)
         )
         @render()
-        @$('.js-input').focus()
+        @$('.js-input').trigger('focus')
 
       error: (xhr, status, error) =>
 

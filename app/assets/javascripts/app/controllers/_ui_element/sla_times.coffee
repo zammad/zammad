@@ -23,7 +23,7 @@ class App.UiElement.sla_times
     )
 
     # disable/enable rows
-    item.find('.js-activateRow').bind('change', (e) ->
+    item.find('.js-activateRow').on('change', (e) ->
       element = $(e.target)
       row = element.closest('tr')
       if element.prop('checked')
@@ -43,7 +43,7 @@ class App.UiElement.sla_times
     )
 
     # convert hours into minutes
-    item.find('.js-timeConvertFrom').bind('keyup focus blur', (e) =>
+    item.find('.js-timeConvertFrom').on('keyup focus blur', (e) =>
       element = $(e.target)
       inText = element.val()
 
@@ -62,12 +62,12 @@ class App.UiElement.sla_times
     )
 
     # toggle row on clicking name cell
-    item.find('.js-forward-click').bind('click', (e) ->
-      $(e.currentTarget).closest('tr').find('.checkbox-replacement').click()
+    item.find('.js-forward-click').on('click', (e) ->
+      $(e.currentTarget).closest('tr').find('.checkbox-replacement').trigger('click')
     )
 
     # toggle update type on clicking around the element
-    item.find('.js-forward-radio').bind('click', (e) ->
+    item.find('.js-forward-radio').on('click', (e) ->
       elem = $(e.currentTarget).closest('p').find('.js-updateTypeSelector')
 
       elem.prop('checked', true)
@@ -75,20 +75,20 @@ class App.UiElement.sla_times
     )
 
     # focus time input on clicking surrounding cell
-    item.find('.js-focus-input').bind('click', (e) ->
+    item.find('.js-focus-input').on('click', (e) ->
       $(e.currentTarget)
         .find('.form-control:visible')
-        .focus()
+        .trigger('focus')
     )
 
     # show placeholder instead of 00:00
-    item.find('.js-timeConvertFrom').bind('changeTime.timepicker', (e) ->
+    item.find('.js-timeConvertFrom').on('changeTime.timepicker', (e) ->
       if $(e.currentTarget).val() == '00:00'
         $(e.currentTarget).val('')
     )
 
     # switch update/response times when type is selected accordingly
-    item.find('.js-updateTypeSelector').bind('change', (e) ->
+    item.find('.js-updateTypeSelector').on('change', (e) ->
       element = $(e.target)
       row = element.closest('tr')
       row.find('.js-activateRow').prop('checked', true)

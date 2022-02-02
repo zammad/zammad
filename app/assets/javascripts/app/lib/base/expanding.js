@@ -29,7 +29,7 @@
 
     this.attach();
     this.update();
-    if (opts.update) $textarea.bind("update.expanding", opts.update);
+    if (opts.update) $textarea.on("update.expanding", opts.update);
   };
 
   // Stores (active) `Expanding` instances
@@ -74,7 +74,7 @@
       var events = 'input.expanding change.expanding',
         _this = this;
       if(!inputSupported) events += ' keyup.expanding';
-      this.$textarea.bind(events, function() { _this.update(); });
+      this.$textarea.on(events, function() { _this.update(); });
     },
 
     // Updates the clone with the textarea value
@@ -96,7 +96,7 @@
       delete this._oldTextareaStyles;
       var index = $.inArray(this, Expanding._registry);
       if (index > -1) Expanding._registry.splice(index, 1);
-      this.$textarea.unbind(
+      this.$textarea.off(
         'input.expanding change.expanding keyup.expanding update.expanding');
     },
 

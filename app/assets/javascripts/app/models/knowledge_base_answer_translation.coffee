@@ -101,7 +101,7 @@ class App.KnowledgeBaseAnswerTranslationContent extends App.Model
   bodyWithPublicURLs: ->
     parsed = $("<div>#{@body}</div>")
 
-    for linkDom in parsed.find('a').andSelf('a').toArray()
+    for linkDom in parsed.find('a').addBack('a').toArray()
       switch $(linkDom).attr('data-target-type')
         when 'knowledge-base-answer'
           if object = App.KnowledgeBaseAnswerTranslation.find $(linkDom).attr('data-target-id')

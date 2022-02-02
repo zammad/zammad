@@ -620,12 +620,12 @@ do($ = window.jQuery, window) ->
       @input = @el.find('.zammad-chat-input')
 
       # start bindings
-      @el.find('.js-chat-open').click @open
-      @el.find('.js-chat-toggle').click @toggle
-      @el.find('.js-chat-status').click @stopPropagation
+      @el.find('.js-chat-open').on 'click', @open
+      @el.find('.js-chat-toggle').on 'click', @toggle
+      @el.find('.js-chat-status').on 'click', @stopPropagation
       @el.find('.zammad-chat-controls').on 'submit', @onSubmit
       @el.find('.zammad-chat-body').on 'scroll', @detectScrolledtoBottom
-      @el.find('.zammad-scroll-hint').click @onScrollHintClick
+      @el.find('.zammad-scroll-hint').on 'click', @onScrollHintClick
       @input.on(
         keydown: @checkForEnter
         input: @onInput
@@ -836,7 +836,7 @@ do($ = window.jQuery, window) ->
       $(window).on('beforeunload', =>
         @onLeaveTemporary()
       )
-      $(window).bind('hashchange', =>
+      $(window).on('hashchange', =>
         if @isOpen
           if @sessionId
             @send 'chat_session_notice',
@@ -907,7 +907,7 @@ do($ = window.jQuery, window) ->
 
     onReady: ->
       @log.debug 'widget ready for use'
-      $(".#{ @options.buttonClass }").click(@open).removeClass(@options.inactiveClass)
+      $(".#{ @options.buttonClass }").on('click', @open).removeClass(@options.inactiveClass)
 
       @options.onReady?()
 
@@ -954,7 +954,7 @@ do($ = window.jQuery, window) ->
       @scrollToBottom()
 
       if unfinishedMessage
-        @input.focus()
+        @input.trigger('focus')
 
     onInput: =>
       # remove unread-state from messages
@@ -1346,7 +1346,7 @@ do($ = window.jQuery, window) ->
       @el.find('.zammad-chat-agent').removeClass('zammad-chat-is-hidden')
       @el.find('.zammad-chat-agent-status').removeClass('zammad-chat-is-hidden')
 
-      @input.focus() if not @isFullscreen
+      @input.trigger('focus') if not @isFullscreen
 
       @setAgentOnlineState 'online'
 
@@ -1361,7 +1361,7 @@ do($ = window.jQuery, window) ->
         delay: @options.inactiveTimeout
       reload = ->
         location.reload()
-      @el.find('.js-restart').click reload
+      @el.find('.js-restart').on 'click', reload
       @sessionClose()
 
     showWaitingListTimeout: ->
@@ -1369,7 +1369,7 @@ do($ = window.jQuery, window) ->
         delay: @options.watingListTimeout
       reload = ->
         location.reload()
-      @el.find('.js-restart').click reload
+      @el.find('.js-restart').on 'click', reload
       @sessionClose()
 
     showLoader: ->

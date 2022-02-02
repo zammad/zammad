@@ -508,7 +508,7 @@ class ChatWindow extends App.Controller
     )
 
     @el.one('transitionend', @onTransitionend)
-    @scrollHolder.scroll(@detectScrolledtoBottom)
+    @scrollHolder.on('scroll', @detectScrolledtoBottom)
 
     # force repaint
     @el.prop('offsetHeight')
@@ -568,7 +568,7 @@ class ChatWindow extends App.Controller
     )
 
   focus: =>
-    @input.focus()
+    @input.trigger('focus')
 
   onTransitionend: (event) =>
     # chat window is done with animation - adjust scroll-bars
@@ -628,7 +628,7 @@ class ChatWindow extends App.Controller
     switch event.keyCode
       when TABKEY
         allChatInputs = @input.not('[disabled="disabled"]')
-        chatCount = allChatInputs.size()
+        chatCount = allChatInputs.length
         index = allChatInputs.index(@input)
 
         if chatCount > 1

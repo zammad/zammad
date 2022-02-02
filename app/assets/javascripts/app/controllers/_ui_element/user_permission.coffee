@@ -88,7 +88,7 @@ class App.UiElement.user_permission
     item.on('click', '.checkbox-replacement', throttled)
 
     # if customer, remove admin and agent
-    item.find('[name=role_ids]').bind('change', (e) =>
+    item.find('[name=role_ids]').on('change', (e) =>
       @checkUncheck($(e.currentTarget), rolesWithGroupPlugin, item)
     )
     item.find('[name=role_ids]').trigger('change')

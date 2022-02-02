@@ -15,14 +15,14 @@ QUnit.test("core_workflow_condition", assert => {
   });
 
   assert.equal(el.find('.js-remove.is-disabled').length, 1, 'find disabled button')
-  el.find('.js-add').click()
+  el.find('.js-add').trigger('click')
   assert.equal(el.find('.js-remove.is-disabled').length, 0, 'find no disabled button after add')
-  el.find('.js-remove').click()
+  el.find('.js-remove').trigger('click')
   assert.equal(el.find('.js-remove.is-disabled').length, 1, 'find disabled button after remove')
   assert.equal(typeof(App.ControllerForm.params(el).condition_selected), 'object', 'empty element results in a hash')
   assert.equal(_.isEmpty(App.ControllerForm.params(el).condition_selected), true, 'empty element results are empty')
 
-  el.find('.js-add').click()
+  el.find('.js-add').trigger('click')
   el.find("option[value='ticket.owner_id']").prop('selected', true)
   assert.equal(el.find('.js-preCondition').length, 0, 'pre condition not available')
 });
@@ -44,22 +44,22 @@ QUnit.test("core_workflow_perform", assert => {
   });
 
   assert.equal(el.find('.js-remove.is-disabled').length, 1, 'find disabled button')
-  el.find('.js-add').click()
+  el.find('.js-add').trigger('click')
   assert.equal(el.find('.js-remove.is-disabled').length, 0, 'find no disabled button after add')
-  el.find('.js-remove').click()
+  el.find('.js-remove').trigger('click')
   assert.equal(el.find('.js-remove.is-disabled').length, 1, 'find disabled button after remove')
   assert.equal(typeof(App.ControllerForm.params(el).perform), 'object', 'empty element results in a hash')
   assert.equal(_.isEmpty(App.ControllerForm.params(el).perform), true, 'empty element results are empty')
 
-  el.find('.js-add').click()
+  el.find('.js-add').trigger('click')
   el.find("option[value='ticket.owner_id']").prop('selected', true)
   assert.equal(el.find('.js-preCondition').length, 0, 'pre condition not available')
 
-  el.find('.js-add:last').click()
+  el.find('.js-add:last').trigger('click')
   el.find("option[value='ticket.group_id']:last").prop('selected', true)
-  el.find('.js-add:last').click()
+  el.find('.js-add:last').trigger('click')
   el.find("option[value='ticket.group_id']:last").prop('selected', true)
-  el.find('.js-add:last').click()
+  el.find('.js-add:last').trigger('click')
   el.find("option[value='ticket.group_id']:last").prop('selected', true)
 
   attribute_count = {}

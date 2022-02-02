@@ -153,9 +153,9 @@ QUnit.test("form elements check", assert => {
   }
   assert.deepEqual(params, test_params, 'form param check')
 
-  $('#form2 .js-day [data-value="Sat"]').click()
-  $('#form2 .js-hour [data-value="16"]').click()
-  $('#form2 .js-minute [data-value="10"]').click()
+  $('#form2 .js-day [data-value="Sat"]').trigger('click')
+  $('#form2 .js-hour [data-value="16"]').trigger('click')
+  $('#form2 .js-minute [data-value="10"]').trigger('click')
 
   assert.equal('Run every Monday, Friday and Saturday at 00:00, 00:50, 10:00 and 10:50 in UTC time', el.find('.js-timerResult').text())
 

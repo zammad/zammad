@@ -56,7 +56,7 @@ class App.FormHandlerCoreWorkflow
     if $(target).get(0).tagName == 'FORM'
       target = $(target).find('button[type=submit]').first()
 
-    $(target).click()
+    $(target).trigger('click')
 
   # checks if the controller has a running Core Workflow request
   @requestsRunning: (controllerForm) ->
@@ -170,7 +170,7 @@ class App.FormHandlerCoreWorkflow
                 eventToBind = event.type + '.' + event.namespace
               target = newElement.find("[name='" + target_name + "']")
               if target.length > 0
-                target.bind(eventToBind, event.data, event.handler)
+                target.on(eventToBind, event.data, event.handler)
             )
           )
         )

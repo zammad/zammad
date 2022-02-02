@@ -58,9 +58,9 @@ class Login extends App.ControllerFullPage
 
     # set focus to username or password
     if !@$('[name="username"]').val()
-      @$('[name="username"]').focus()
+      @$('[name="username"]').trigger('focus')
     else
-      @$('[name="password"]').focus()
+      @$('[name="password"]').trigger('focus')
 
     # scroll to top
     @scrollTo()

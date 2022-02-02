@@ -204,7 +204,7 @@ class ChannelChat extends App.ControllerSubContent
 
   onUrlSubmit: (event) ->
     event.preventDefault() if event
-    @urlInput.focus()
+    @urlInput.trigger('focus')
     @changeDemoWebsite()
 
   changeDemoWebsite: ->

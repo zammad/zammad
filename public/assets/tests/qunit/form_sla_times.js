@@ -99,7 +99,7 @@ QUnit.test("form SLA times clears field instead of 00:00", function(assert) {
   var row = el.find('.sla_times tbody > tr:nth-child(2)')
   var input = row.find('input[data-name=update_time]')
 
-  input.val('asd').blur()
+  input.val('asd').trigger('blur')
 
   assert.equal(input.val(), '', 'shows placeholder')
 });

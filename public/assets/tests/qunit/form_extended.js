@@ -264,7 +264,7 @@ QUnit.test('form checks', assert => {
 
   // change sla times
   el.find('[name="first_response_time_in_text"]').val('0:30').trigger('blur')
-  el.find('#update_time').click()
+  el.find('#update_time').trigger('click')
 
   var params = App.ControllerForm.params(el)
   var test_params = {
@@ -335,7 +335,7 @@ QUnit.test('form checks', assert => {
 
   // change sla times
   el.find('#update_time').attr('checked', false)
-  el.find('[value=response]').click()
+  el.find('[value=response]').trigger('click')
   el.find('[name="response_time_in_text"]').val('4:30').trigger('blur')
 
   var params = App.ControllerForm.params(el)
@@ -574,8 +574,8 @@ QUnit.test('form checks', assert => {
   assert.deepEqual(params, test_params, 'form param check')
 
   // change selector
-  el.find('[name="condition::ticket.priority_id::value"]').closest('.js-filterElement').find('.js-remove').click()
-  el.find('[name="executions::ticket.title::value"]').closest('.js-filterElement').find('.js-remove').click()
+  el.find('[name="condition::ticket.priority_id::value"]').closest('.js-filterElement').find('.js-remove').trigger('click')
+  el.find('[name="executions::ticket.title::value"]').closest('.js-filterElement').find('.js-remove').trigger('click')
 
   var params = App.ControllerForm.params(el)
   var test_params = {
@@ -637,7 +637,7 @@ QUnit.test('form checks', assert => {
   assert.deepEqual(params, test_params, 'form param check')
 
   // change selector
-  el.find('[name="executions::notification.email::subject"]').closest('.js-filterElement').find('.js-remove').click()
+  el.find('[name="executions::notification.email::subject"]').closest('.js-filterElement').find('.js-remove').trigger('click')
 
   var params = App.ControllerForm.params(el)
   var test_params = {
@@ -695,7 +695,7 @@ QUnit.test('form checks', assert => {
   el.find('.js-attributeSelector').last().find('select').val('notification.email').trigger('change')
   el.find('[name="executions::notification.email::subject"]').val('some subject')
   el.find('[data-name="executions::notification.email::body"]').html('lala')
-  el.find('[data-name="executions::notification.email::recipient"] .js-select.js-option[data-value="ticket_owner"]').click()
+  el.find('[data-name="executions::notification.email::recipient"] .js-select.js-option[data-value="ticket_owner"]').trigger('click')
 
   var params = App.ControllerForm.params(el)
   var test_params = {

@@ -12,7 +12,7 @@ class App.UiElement.textarea
         $( item[0] ).on('focus', ->
           visible = $( item[0] ).is(':visible')
           if visible && !$( item[0] ).expanding('active')
-            $( item[0] ).expanding().focus()
+            $( item[0] ).expanding().trigger('focus')
         )
       App.Delay.set(a, 80)
 

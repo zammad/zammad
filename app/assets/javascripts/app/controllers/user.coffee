@@ -43,7 +43,7 @@ class User extends App.ControllerSubContent
     )
 
     # start search
-    @searchInput.bind( 'keyup', (e) =>
+    @searchInput.on( 'keyup', (e) =>
       query = @searchInput.val().trim()
       return if query is @query
       @query = query

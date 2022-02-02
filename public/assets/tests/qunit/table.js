@@ -283,7 +283,7 @@ QUnit.test('table test', assert => {
   assert.equal(el.find('tbody > tr:nth-child(3) > td:nth-child(8)').text().trim(), 'neu', 'check row 3')
   assert.equal(el.find('tbody > tr:nth-child(3) > td:nth-child(9)').text().trim(), '10.06.2014', 'check row 3')
 
-  el.find('input[name="bulk_all"]').click()
+  el.find('input[name="bulk_all"]').trigger('click')
   assert.equal(el.find('tbody > tr:nth-child(1) > td:nth-child(1) input').prop('checked'), true, 'check row 1')
   assert.equal(el.find('tbody > tr:nth-child(1) > td:nth-child(1) input').val(), '3', 'check row 1')
   assert.equal(el.find('tbody > tr:nth-child(2) > td:nth-child(1) input').prop('checked'), true, 'check row 2')
@@ -345,14 +345,14 @@ QUnit.test('table test', assert => {
   assert.equal(el.find('tbody > tr:nth-child(4) > td:nth-child(7)').text().trim(), 'neu', 'check row 4')
   assert.equal(el.find('tbody > tr:nth-child(4) > td:nth-child(8)').text().trim(), '11.07.2014', 'check row 4')
 
-  el.find('input[name="bulk"]:eq(1)').click()
+  el.find('input[name="bulk"]:eq(1)').trigger('click')
   assert.equal(el.find('tbody > tr:nth-child(2) > td:nth-child(1) input').prop('checked'), '', 'check row 2')
   assert.equal(el.find('tbody > tr:nth-child(2) > td:nth-child(1) input').val(), '2', 'check row 1')
   assert.equal(el.find('tbody > tr:nth-child(4) > td:nth-child(1) input').prop('checked'), true, 'check row 4')
   assert.equal(el.find('tbody > tr:nth-child(4) > td:nth-child(1) input').val(), '3', 'check row 4')
   assert.equal(el.find('tbody > tr:nth-child(5) > td:nth-child(1) input').prop('checked'), '', 'check row 5')
   assert.equal(el.find('tbody > tr:nth-child(5) > td:nth-child(1) input').val(), '1', 'check row 5')
-  el.find('tbody > tr:nth-child(5) > td:nth-child(1) label').click()
+  el.find('tbody > tr:nth-child(5) > td:nth-child(1) label').trigger('click')
   assert.equal(el.find('tbody > tr:nth-child(5) > td:nth-child(1) input').prop('checked'), true, 'check row 5')
   assert.equal(el.find('tbody > tr:nth-child(5) > td:nth-child(1) input').val(), '1', 'check row 5')
 
@@ -831,7 +831,7 @@ QUnit.test('table test 6/7', assert => {
 function click_sort(table, column_number) {
   table
     .find(`table > thead > tr > th:nth-child(${column_number}) > .js-sort`)
-    .click()
+    .trigger('click')
 }
 
 function list_items(table, column_number) {

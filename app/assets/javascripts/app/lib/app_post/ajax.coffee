@@ -67,9 +67,9 @@ class _ajaxSingleton
     @runNextInQueue()
 
     # bindings
-    $(document).bind('ajaxSend', =>
+    $(document).on('ajaxSend', =>
       @_show_spinner()
-    ).bind('ajaxComplete', (request, xhr, settings) =>
+    ).on('ajaxComplete', (request, xhr, settings) =>
       @_hide_spinner()
 
       # remeber XSRF-TOKEN for later
@@ -81,7 +81,7 @@ class _ajaxSingleton
     )
 
     # show error messages
-    $(document).bind('ajaxError', (e, jqxhr, settings, exception) ->
+    $(document).on('ajaxError', (e, jqxhr, settings, exception) ->
       if settings.failResponseNoTrigger
         return
 

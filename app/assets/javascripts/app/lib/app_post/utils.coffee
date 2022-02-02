@@ -176,7 +176,9 @@ class App.Utils
 
   # textCleand = App.Utils.textCleanup(rawText)
   @textCleanup: (ascii) ->
-    $.trim( ascii )
+    return '' if !ascii
+
+    ascii.trim()
       .replace(/(\r\n|\n\r)/g, "\n")  # cleanup
       .replace(/\r/g, "\n")           # cleanup
       .replace(/[ ]\n/g, "\n")        # remove tailing spaces
@@ -274,7 +276,7 @@ class App.Utils
   @quote: (ascii, max = 82) ->
     ascii = @textCleanup(ascii)
     ascii = @wrap(ascii, max)
-    $.trim(ascii)
+    ascii.trim()
       .replace /^(.*)$/mg, (match) ->
         if match
           '> ' + match
@@ -1008,7 +1010,7 @@ class App.Utils
       valueTmp = value.toString().toLowerCase()
       byNames.push valueTmp
       byNamesWithValue[valueTmp] = [i, value]
-    
+
     # sort() by default doesn't compare non-ascii characters such as ['é', 'a', 'ú', 'c']
     # hence using localecompare in sorting for translated strings
     byNames = byNames.sort((a, b) -> a.localeCompare(b))

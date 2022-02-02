@@ -73,14 +73,14 @@ QUnit.test( "searchable_select check", assert => {
   assert.deepEqual(params, test_params, 'form param check')
 
   // change selection
-  $('[name="searchable_select1"].js-shadow + .js-input').focus().val('').trigger('input')
+  $('[name="searchable_select1"].js-shadow + .js-input').trigger('focus').val('').trigger('input')
   var $element = $('[name="searchable_select1"]').closest('.searchableSelect').find('.js-optionsList')
   var entries = $element.find('li:not(.is-hidden)').length
   assert.equal(entries, 3, 'dropdown count')
-  $('[name="searchable_select1"].js-shadow + .js-input').focus().val('ccc display').trigger('input')
+  $('[name="searchable_select1"].js-shadow + .js-input').trigger('focus').val('ccc display').trigger('input')
   var entries = $element.find('li:not(.is-hidden)').length
   assert.equal(entries, 1, 'dropdown count')
-  $element.find('li:not(.is-hidden)').first().click()
+  $element.find('li:not(.is-hidden)').first().trigger('click')
   params = App.ControllerForm.params(el)
   test_params = {
     searchable_select1: 'ccc',
@@ -90,14 +90,14 @@ QUnit.test( "searchable_select check", assert => {
   }
   assert.deepEqual(params, test_params, 'form param check')
 
-  $('[name="searchable_select2"].js-shadow + .js-input').focus().val('').trigger('input')
+  $('[name="searchable_select2"].js-shadow + .js-input').trigger('focus').val('').trigger('input')
   var $element = $('[name="searchable_select2"]').closest('.searchableSelect').find('.js-optionsList')
   var entries = $element.find('li:not(.is-hidden)').length
   assert.equal(entries, 3, 'dropdown count')
-  $('[name="searchable_select2"].js-shadow + .js-input').focus().val('ccc display').trigger('input')
+  $('[name="searchable_select2"].js-shadow + .js-input').trigger('focus').val('ccc display').trigger('input')
   var entries = $element.find('li:not(.is-hidden)').length
   assert.equal(entries, 1, 'dropdown count')
-  $element.find('li:not(.is-hidden)').first().click()
+  $element.find('li:not(.is-hidden)').first().trigger('click')
 
   params = App.ControllerForm.params(el)
   test_params = {
@@ -108,14 +108,14 @@ QUnit.test( "searchable_select check", assert => {
   }
   assert.deepEqual(params, test_params, 'form param check')
 
-  $('[name="searchable_select3"].js-shadow + .js-input').focus().val('').trigger('input')
+  $('[name="searchable_select3"].js-shadow + .js-input').trigger('focus').val('').trigger('input')
   var $element = $('[name="searchable_select3"]').closest('.searchableSelect').find('.js-optionsList')
   var entries = $element.find('li:not(.is-hidden)').length
   assert.equal(entries, 3, 'dropdown count')
-  $('[name="searchable_select3"].js-shadow + .js-input').focus().val('ccc display').trigger('input')
+  $('[name="searchable_select3"].js-shadow + .js-input').trigger('focus').val('ccc display').trigger('input')
   var entries = $element.find('li:not(.is-hidden)').length
   assert.equal(entries, 1, 'dropdown count')
-  $('[name="searchable_select3"].js-shadow + .js-input').focus().val('unknown value').trigger('input')
+  $('[name="searchable_select3"].js-shadow + .js-input').trigger('focus').val('unknown value').trigger('input')
   var entries = $element.find('li:not(.is-hidden)').length
   assert.equal(entries, 3, 'dropdown count')
   var entries = $element.find('li.is-active').length
@@ -218,10 +218,10 @@ QUnit.test("searchable_select submenu and option list check", assert => {
     },
   })
 
-  el.find("[name=\"searchable_select1\"].js-shadow + .js-input").click()
-  el.find(".searchableSelect .js-optionsList [data-value=\"c\\\\cc\"]").mouseenter().click()
-  el.find(".searchableSelect .js-optionsSubmenu [data-value=\"c\\\\cc::bbb\"]").mouseenter().click()
-  el.find("[name=\"searchable_select1\"].js-shadow + .js-input").click()
+  el.find("[name=\"searchable_select1\"].js-shadow + .js-input").trigger('click')
+  el.find(".searchableSelect .js-optionsList [data-value=\"c\\\\cc\"]").mouseenter().trigger('click')
+  el.find(".searchableSelect .js-optionsSubmenu [data-value=\"c\\\\cc::bbb\"]").mouseenter().trigger('click')
+  el.find("[name=\"searchable_select1\"].js-shadow + .js-input").trigger('click')
 
   var params = App.ControllerForm.params(el)
   var test_params = {

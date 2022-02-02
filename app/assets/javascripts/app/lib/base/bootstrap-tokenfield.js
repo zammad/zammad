@@ -194,7 +194,7 @@
         , defaults = {
             minLength: this.options.showAutocompleteOnFocus ? 0 : null
           }
-        , args = $.isArray( typeaheadOptions ) ? typeaheadOptions : [typeaheadOptions, typeaheadOptions]
+        , args = Array.isArray( typeaheadOptions ) ? typeaheadOptions : [typeaheadOptions, typeaheadOptions]
 
       args[0] = $.extend( {}, defaults, args[0] )
 
@@ -222,8 +222,8 @@
       }
 
       // Normalize label and value
-      attrs.value = $.trim(attrs.value.toString());
-      attrs.label = attrs.label && attrs.label.length ? $.trim(attrs.label) : attrs.value
+      attrs.value = (attrs.value.toString()).trim();
+      attrs.label = attrs.label && attrs.label.length ? (attrs.label).trim() : attrs.value
 
       // Bail out if has no value or label, or label is too short
       if (!attrs.value.length || !attrs.label.length || attrs.label.length <= this.options.minLength) return
@@ -310,11 +310,11 @@
     }
 
   , updateTokensOnEditDiscard: function(triggerChange) {
-      // if the field is being edited, update original field's value 
+      // if the field is being edited, update original field's value
       if(this.$input.data('edit') && triggerChange) {
         // Trigger change event on the original field
         this.$element.val( this.getTokensList() ).trigger( $.Event('change', { initiator: 'tokenfield' }) )
-      }        
+      }
     }
 
   , setTokens: function (tokens, add, triggerChange) {
@@ -382,7 +382,7 @@
   , getInput: function() {
     return this.$input.val()
   }
-      
+
   , setInput: function (val) {
       if (this.$input.hasClass('tt-input')) {
           // Typeahead acts weird when simply setting input value to empty,
@@ -897,7 +897,7 @@
       else {
         //temporary reset width to minimal value to get proper results
         this.$input.width(this.options.minWidth);
-        
+
         var w = (this.textDirection === 'rtl')
               ? this.$input.offset().left + this.$input.outerWidth() - this.$wrapper.offset().left - parseInt(this.$wrapper.css('padding-left'), 10) - inputPadding - 1
               : this.$wrapper.offset().left + this.$wrapper.width() + parseInt(this.$wrapper.css('padding-left'), 10) - this.$input.offset().left - inputPadding;

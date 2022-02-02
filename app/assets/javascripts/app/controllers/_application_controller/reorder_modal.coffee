@@ -21,7 +21,7 @@ class App.ControllerReorderModal extends App.ControllerModal
 
   onShown: ->
     super
-    @$('.js-submit').focus()
+    @$('.js-submit').trigger('focus')
 
   save: ->
     ids = @$('tr.item').toArray().map (el) -> parseInt(el.dataset.id)

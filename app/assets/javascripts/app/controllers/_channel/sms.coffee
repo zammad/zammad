@@ -170,7 +170,7 @@ class ChannelSmsAccount extends App.ControllerModal
       params: @channel
     )
     @renderAdapterOptions(@channel.options?.adapter, el)
-    el.find('[name="options::adapter"]').bind('change', (e) =>
+    el.find('[name="options::adapter"]').on('change', (e) =>
       @renderAdapterOptions(e.target.value, el)
     )
     el
@@ -309,7 +309,7 @@ class ChannelSmsNotification extends App.ControllerModal
       params: @channel
     )
     @renderAdapterOptions(@channel.options?.adapter, el)
-    el.find('[name="options::adapter"]').bind('change', (e) =>
+    el.find('[name="options::adapter"]').on('change', (e) =>
       @renderAdapterOptions(e.target.value, el)
     )
     el

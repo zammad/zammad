@@ -81,7 +81,7 @@ class App.UiElement.timer
 
     timer = $( App.view('generic/timer')( attribute: attribute, days: days, hours: hours, minutes: minutes ) )
     timer.find('.js-boolean').data('field-type', 'boolean')
-    timer.find('.select-value').bind('click', (e) =>
+    timer.find('.select-value').on('click', (e) =>
       @select(e)
     )
     @createOutputString(timer)
@@ -93,7 +93,7 @@ class App.UiElement.timer
 
     if target.hasClass('is-selected')
       # prevent zero selections
-      if target.siblings('.is-selected').size() > 0
+      if target.siblings('.is-selected').length > 0
         target.removeClass('is-selected')
         target.next().val('false')
     else

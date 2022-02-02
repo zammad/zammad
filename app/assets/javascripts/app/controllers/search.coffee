@@ -245,7 +245,7 @@ class App.Search extends App.Controller
         @bulkForm.show()
 
       # show/hide bulk action
-      localElement.delegate('input[name="bulk"], input[name="bulk_all"]', 'change', (e) =>
+      localElement.on('change', 'input[name="bulk"], input[name="bulk_all"]', (e) =>
         if @shouldShowBulkForm()
           @bulkForm.show()
         else
@@ -254,7 +254,7 @@ class App.Search extends App.Controller
       )
 
       # deselect bulk_all if one item is uncheck observ
-      localElement.delegate('[name="bulk"]', 'change', (e) ->
+      localElement.on('change', '[name="bulk"]', (e) ->
         bulkAll = localElement.find('[name="bulk_all"]')
         checkedCount = localElement.find('input[name="bulk"]:checked').length
         checkboxCount = localElement.find('input[name="bulk"]').length

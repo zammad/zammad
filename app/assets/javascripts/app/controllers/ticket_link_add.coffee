@@ -45,11 +45,11 @@ class App.TicketLinkAdd extends App.ControllerModal
     if @ticketIdsRecentViewed
       @buildContentTable(content, @ticketIdsRecentViewed, 'ticket-merge-recent-tickets')
 
-    content.delegate('[name="ticket_number"]', 'focus', (e) ->
+    content.on('focus', '[name="ticket_number"]', (e) ->
       $(e.target).parents().find('[name="radio"]').prop('checked', false)
     )
 
-    content.delegate('[name="radio"]', 'click', (e) ->
+    content.on('click', '[name="radio"]', (e) ->
       if $(e.target).prop('checked')
         ticket_id = $(e.target).val()
         ticket    = App.Ticket.fullLocal( ticket_id )

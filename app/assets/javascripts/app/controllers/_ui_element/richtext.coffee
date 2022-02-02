@@ -12,7 +12,7 @@ class App.UiElement.richtext
       buttons:   attribute.buttons
     )
 
-    item.find('a.btn--action[data-action]').click (event) => @toolButtonClicked(event, form)
+    item.find('a.btn--action[data-action]').on 'click', (event) => @toolButtonClicked(event, form)
 
     if attribute.plugins
       for plugin in attribute.plugins

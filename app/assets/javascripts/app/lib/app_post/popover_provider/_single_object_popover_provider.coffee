@@ -8,7 +8,7 @@ class App.SingleObjectPopoverProvider extends App.PopoverProvider
     "div.#{@cssClass()}, span.#{@cssClass()}"
 
   bind: ->
-    @params.parentController.$(@fullCssSelector()).bind('click', (e) =>
+    @params.parentController.$(@fullCssSelector()).on('click', (e) =>
       id = @objectIdFor(e.target)
       return if !id
       object = @constructor.klass.find(id)

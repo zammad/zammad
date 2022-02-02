@@ -610,11 +610,11 @@ class ChannelEmailAccountWizard extends App.ControllerWizardModal
 
     if !verify
       @$('.js-inbound-acknowledge .js-back').attr('data-slide', 'js-inbound')
-      @$('.js-inbound-acknowledge .js-next').unbind('click.verify')
+      @$('.js-inbound-acknowledge .js-next').off('click.verify')
     else
       @$('.js-inbound-acknowledge .js-back').attr('data-slide', 'js-intro')
       @$('.js-inbound-acknowledge .js-next').attr('data-slide', '')
-      @$('.js-inbound-acknowledge .js-next').unbind('click.verify').bind('click.verify', (e) =>
+      @$('.js-inbound-acknowledge .js-next').off('click.verify').on('click.verify', (e) =>
         e.preventDefault()
         @verify(@account)
       )

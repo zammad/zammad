@@ -378,6 +378,8 @@ RSpec.describe 'Ticket zoom', type: :system do
           it expects_visible ? 'delete button is visible' : 'delete button is not visible' do
             visit "ticket/zoom/#{article.ticket.id}"
 
+            wait.until_exists { find("#article-#{article.id}") }
+
             within :active_ticket_article, article do
               expect(page).to send(matcher, '.js-ArticleAction[data-type=delete]', wait: 0)
             end
@@ -970,7 +972,9 @@ RSpec.describe 'Ticket zoom', type: :system do
       it 'shows ticket state dropdown options in sorted translated alphabetically order' do
         visit "ticket/zoom/#{ticket.id}"
 
-        expect(all('select[name=state_id] option').map(&:text)).to eq(%w[geschlossen neu offen])
+        within :active_content, '.tabsSidebar' do
+          expect(all('select[name=state_id] option').map(&:text)).to eq(%w[geschlossen neu offen])
+        end
       end
     end
 
@@ -2086,7 +2090,7 @@ RSpec.describe 'Ticket zoom', type: :system do
         expect(page.find('.article-new')).to have_text('mail001.box')
         wait_for_upload_present
         begin
-          page.evaluate_script("$('div.attachment-delete.js-delete:last').click()") # not interactable
+          page.evaluate_script("$('div.attachment-delete.js-delete:last').trigger('click')") # not interactable
         rescue # Lint/SuppressedException
           # because its not interactable it also
           # returns this weird exception for the jquery

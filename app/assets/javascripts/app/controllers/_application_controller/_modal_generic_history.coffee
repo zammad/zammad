@@ -18,7 +18,7 @@ class App.GenericHistory extends App.ControllerModal
     content = $ App.view('generic/history')(
       items: localItem
     )
-    content.find('a[data-type="sortorder"]').bind('click', (e) =>
+    content.find('a[data-type="sortorder"]').on('click', (e) =>
       e.preventDefault()
       @sortorder()
     )

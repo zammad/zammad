@@ -105,7 +105,7 @@ class App.SidebarGitIssue extends App.Controller
     list = $(App.view('ticket_zoom/sidebar_git_issue')(
       issues: @issueLinkData
     ))
-    list.delegate('.js-delete', 'click', (e) =>
+    list.on('click', '.js-delete', (e) =>
       e.preventDefault()
       issueLink = $(e.currentTarget).attr 'data-issue-id'
       @deleteIssue(issueLink)

@@ -803,7 +803,7 @@ RSpec.describe 'Ticket Create', type: :system do
 
       # remove last file
       begin
-        page.evaluate_script("$('div.attachment-delete.js-delete:last').click()") # not interactable
+        page.evaluate_script("$('div.attachment-delete.js-delete:last').trigger('click')") # not interactable
       rescue # Lint/SuppressedException
         # because its not interactable it also
         # returns this weird exception for the jquery

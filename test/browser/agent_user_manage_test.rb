@@ -203,7 +203,7 @@ class AgentUserManageTest < TestCase
 
     # there are 2 models, take the correct one
     # click(css: '.content.active .modal button.js-submit')
-    @browser.execute_script("$('.content.active .modal input[name=\"firstname\"]').closest('form').find('button.js-submit').click()")
+    @browser.execute_script("$('.content.active .modal input[name=\"firstname\"]').closest('form').find('button.js-submit').trigger('click')")
 
     # check is used to check selected
     watch_for(

@@ -123,11 +123,11 @@ QUnit.test( "ticket_perform_action check", assert => {
   assert.deepEqual(params, test_params, 'form param check')
 
   // add email notification
-  $('[data-attribute-name="ticket_perform_action3"] .js-add').click()
+  $('[data-attribute-name="ticket_perform_action3"] .js-add').trigger('click')
   $('[data-attribute-name="ticket_perform_action3"] .js-attributeSelector .form-control').last().val('notification.email').trigger('change')
   $('[data-attribute-name="ticket_perform_action3"] .js-setNotification [name="ticket_perform_action3::notification.email::subject"]').val('some subject').trigger('change')
   $('[data-attribute-name="ticket_perform_action3"] .js-setNotification [data-name="ticket_perform_action3::notification.email::body"]').html('some body').trigger('change')
-  $('[data-attribute-name="ticket_perform_action3"] .js-setNotification .js-recipient .js-option[data-value="ticket_owner"]').click()
+  $('[data-attribute-name="ticket_perform_action3"] .js-setNotification .js-recipient .js-option[data-value="ticket_owner"]').trigger('click')
 
   params = App.ControllerForm.params(el)
   test_params = {
@@ -167,7 +167,7 @@ QUnit.test( "ticket_perform_action check", assert => {
   assert.deepEqual(params, test_params, 'form param check')
 
   // remove recipient
-  $('[data-attribute-name="ticket_perform_action2"] .js-setNotification .js-recipient .js-remove.js-option[data-value="ticket_owner"]').click()
+  $('[data-attribute-name="ticket_perform_action2"] .js-setNotification .js-recipient .js-remove.js-option[data-value="ticket_owner"]').trigger('click')
 
   params = App.ControllerForm.params(el)
   test_params = {
@@ -247,7 +247,7 @@ QUnit.test( "ticket_perform_action check", assert => {
   assert.deepEqual(params, test_params, 'form param check')
 
   // add pending time
-  $('[data-attribute-name="ticket_perform_action3"] .js-add').last().click()
+  $('[data-attribute-name="ticket_perform_action3"] .js-add').last().trigger('click')
 
   var row = $('[data-attribute-name="ticket_perform_action3"] .js-filterElement').last()
 
@@ -465,19 +465,19 @@ QUnit.test( "ticket_perform_action rows manipulation", assert => {
 
   var selector = '[data-attribute-name="ticket_perform_action99"] '
 
-  $(selector + '.js-remove').click()
+  $(selector + '.js-remove').trigger('click')
 
   assert.equal($(selector + '.js-filterElement').length, 1, 'prevents removing single initial row')
 
-  $(selector + '.js-add').click()
+  $(selector + '.js-add').trigger('click')
 
   assert.equal($(selector + '.js-filterElement').length, 2, 'adds 2nd row')
 
-  $(selector + ' .js-remove:last').click()
+  $(selector + ' .js-remove:last').trigger('click')
 
   assert.equal($(selector + '.js-filterElement').length, 1, 'removes 2nd row')
 
-  $(selector + '.js-remove:last').click()
+  $(selector + '.js-remove:last').trigger('click')
 
   assert.equal($(selector + ' .js-filterElement').length, 1, 'prevents removing last row')
 });
