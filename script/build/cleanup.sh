@@ -26,4 +26,3 @@ rm .overcommit.yml
 
 # misc
 rm .codeclimate.yml
-rm .github_changelog_generator

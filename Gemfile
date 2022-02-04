@@ -199,9 +199,6 @@ group :development, :test do
   gem 'rubocop-rails'
   gem 'rubocop-rspec'
 
-  # changelog generation
-  gem 'github_changelog_generator'
-
   # generate random test data
   gem 'factory_bot_rails'
   gem 'faker'
