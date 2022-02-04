@@ -25,17 +25,36 @@ class DataPrivacyTask < ApplicationModel
     handle_exception(e)
   end
 
+  # set user inactive before destroy to prevent
+  # new online notifications or other events while
+  # the deletion process is running
+  # https://github.com/zammad/zammad/issues/3942
+  def update_inactive(object)
+    object.update(active: false)
+  end
+
   def perform_deletable
-    return if deletable.blank?
+    return if !deletable_type.constantize.exists?(id: deletable_id)
 
     prepare_deletion_preview
     save!
 
     if delete_organization?
-      deletable.organization.destroy(associations: true)
+      perform_organization
     else
-      deletable.destroy
+      perform_user
     end
+  end
+
+  def perform_organization
+    update_inactive(deletable.organization)
+    deletable.organization.members.find_each { |user| update_inactive(user) }
+    deletable.organization.destroy(associations: true)
+  end
+
+  def perform_user
+    update_inactive(deletable)
+    deletable.destroy
   end
 
   def handle_exception(e)
