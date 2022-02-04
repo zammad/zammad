@@ -212,6 +212,8 @@ class App.TicketZoomHighlighter extends App.Controller
   # - clears the selection
 
   toggleHighlightAtSelection: (article, article_id) =>
+    return if !article
+
     selection = rangy.getSelection()
 
     # activate selection background

@@ -9025,6 +9025,15 @@ a.list-group-item.active > .badge,
     padding: 0 18px;
   }
 
+  li.dropdown-highlight-list {
+    // remove padding to add more click area for anchor tag
+    padding: 0;
+
+    a {
+      padding: 11px 18px;
+    }
+  }
+
   .icon {
     fill: currentColor;
   }
