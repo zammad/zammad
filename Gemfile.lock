@@ -500,7 +500,7 @@ GEM
       rspec-support (~> 3.10)
     rspec-support (3.10.3)
     rszr (0.5.2)
-    rubocop (1.25.0)
+    rubocop (1.25.1)
       parallel (~> 1.10)
       parser (>= 3.1.0.0)
       rainbow (>= 2.2.2, < 4.0)
