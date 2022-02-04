@@ -150,4 +150,81 @@ RSpec.describe 'Overview', type: :system do
       end
     end
   end
+
+  context 'when multiselect is choosen as column', authenticated_as: :authenticate, db_strategy: :reset do
+    def authenticate
+      create :object_manager_attribute_multiselect, data_option: data_option, name: attribute_name
+      ObjectManager::Attribute.migration_execute
+      user
+    end
+
+    let(:user) { create(:agent, groups: [group]) }
+
+    let(:attribute_name) { 'multiselect' }
+    let(:options_hash) do
+      {
+        'key_1' => 'display_value_1',
+        'key_2' => 'display_value_2',
+        'key_3' => 'display_value_3',
+        'key_4' => 'display_value_4',
+        'key_5' => 'display_value_5'
+      }
+    end
+    let(:data_option) { { options: options_hash, default: '' } }
+    let(:group) { create(:group, name: 'aaa') }
+
+    let(:ticket) { create(:ticket, group: group, customer: user, multiselect: multiselect_value) }
+
+    let(:view) { { 's'=>%w[number title multiselect] } }
+    let(:condition) do
+      {
+        'ticket.customer_id' => {
+          operator: 'is',
+          value:    user.id
+        }
+      }
+    end
+    let(:overview) { create(:overview, condition: condition, view: view) }
+
+    let(:overview_table_selector) { '.table-overview .js-tableBody' }
+
+    before do
+      ticket
+
+      visit "ticket/view/#{overview.link}"
+    end
+
+    context 'with nil multiselect value' do
+      let(:multiselect_value) { nil }
+      let(:expected_text) { '-' }
+
+      it "shows dash '-' for tickets" do
+        within :active_content, overview_table_selector do
+          expect(page).to have_selector 'tr.item td', text: expected_text
+        end
+      end
+    end
+
+    context 'with a single multiselect value' do
+      let(:multiselect_value) { ['key_4'] }
+      let(:expected_text) { 'display_value_4' }
+
+      it 'shows the display value for tickets' do
+        within :active_content, overview_table_selector do
+          expect(page).to have_selector 'tr.item td', text: expected_text
+        end
+      end
+    end
+
+    context 'with multiple multiselect values' do
+      let(:multiselect_value) { %w[key_2 key_3 key_5] }
+      let(:expected_text) { 'display_value_2, display_value_3, display_value_5' }
+
+      it 'shows comma seperated diaplay value for tickets' do
+        within :active_content, overview_table_selector do
+          expect(page).to have_selector 'tr.item td', text: expected_text
+        end
+      end
+    end
+  end
 end

@@ -95,7 +95,10 @@ class App extends Spine.Controller
 
       # fillup options
       if !_.isEmpty(attributeConfig.options)
-        if attributeConfig.options[resultLocal]
+        if Array.isArray(attributeConfig.options)
+          option = _.find(attributeConfig.options, (option) -> option.value == resultLocal)
+          resultLocal = option.name
+        else if attributeConfig.options[resultLocal]
           resultLocal = attributeConfig.options[resultLocal]
 
       # transform boolean
