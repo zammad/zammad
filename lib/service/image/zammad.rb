@@ -6,9 +6,12 @@ class Service::Image::Zammad
   OPEN_TIMEOUT  = 4
   READ_TIMEOUT  = 6
   TOTAL_TIMEOUT = 6
+  DISABLE_IN_TEST_ENV = true
 
   def self.user(email)
     raise Exceptions::UnprocessableEntity, 'no email given' if email.blank?
+
+    return if Rails.env.test? && DISABLE_IN_TEST_ENV
 
     email.downcase!
 
@@ -32,20 +35,20 @@ class Service::Image::Zammad
       return
     end
     Rails.logger.info "Fetched image for '#{email}', http code: #{response.code}"
-    mime_type = 'image/jpeg'
     {
       content:   response.body,
-      mime_type: mime_type,
+      mime_type: 'image/jpeg',
     }
   end
 
   def self.organization(domain)
     raise Exceptions::UnprocessableEntity, 'no domain given' if domain.blank?
 
-    # strip, just use domain name
-    domain = domain.sub(%r{^.+?@(.+?)$}, '\1')
+    return if Rails.env.test? && DISABLE_IN_TEST_ENV
 
-    domain.downcase!
+    # strip, just use domain name
+    domain = domain.sub(%r{^.+?@(.+?)$}, '\1').downcase
+
     return if domain == 'example.com'
 
     # fetch org logo
@@ -61,16 +64,16 @@ class Service::Image::Zammad
         verify_ssl:    true,
       },
     )
+    response_code = response.code
     if !response.success?
-      Rails.logger.info "Can't fetch image for '#{domain}' (maybe no avatar available), http code: #{response.code}"
+      Rails.logger.info "Can't fetch image for '#{domain}' (maybe no avatar available), http code: #{response_code}"
       return
     end
-    Rails.logger.info "Fetched image for '#{domain}', http code: #{response.code}"
-    mime_type = 'image/png'
+    Rails.logger.info "Fetched image for '#{domain}', http code: #{response_code}"
 
     {
       content:   response.body,
-      mime_type: mime_type,
+      mime_type: 'image/png',
     }
   end
 

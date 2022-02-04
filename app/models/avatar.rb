@@ -148,7 +148,7 @@ add avatar by url
           logger.info "Can't fetch '#{url}' (maybe no avatar available), http code: #{response.code}"
           return
         end
-        logger.info "Fetchd image '#{url}', http code: #{response.code}"
+        logger.info "Fetched image '#{url}', http code: #{response.code}"
         mime_type = 'image'
         if url.match?(%r{\.png}i)
           mime_type = 'image/png'

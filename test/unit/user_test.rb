@@ -261,6 +261,9 @@ class UserTest < ActiveSupport::TestCase
       },
     ]
 
+    default_disable_in_test_env = Service::Image::Zammad.const_get(:DISABLE_IN_TEST_ENV)
+    Service::Image::Zammad.const_set(:DISABLE_IN_TEST_ENV, false)
+
     tests.each do |test|
 
       # check if user exists
@@ -310,6 +313,8 @@ class UserTest < ActiveSupport::TestCase
 
       user.destroy!
     end
+
+    Service::Image::Zammad.const_set(:DISABLE_IN_TEST_ENV, default_disable_in_test_env)
   end
 
   test 'strange spaces' do
