@@ -132,8 +132,8 @@ RSpec.describe 'Manage > Settings > Security', type: :system do
       include_examples 'Display callback urls for third-party applications #3622'
     end
 
-    describe 'Authentication via Office 365' do
-      let(:app_name) { 'Office 365' }
+    describe 'Authentication via Microsoft' do
+      let(:app_name) { 'Microsoft' }
       let(:app_setting) { 'auth_microsoft_office365' }
 
       include_examples 'for third-party applications button in login page'

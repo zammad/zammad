@@ -3542,6 +3542,8 @@ ol.tabs li {
   border: none;
   text-align: initial;
 
+  @extend %clickable;
+
   &.auth-provider--wide {
     padding-right: 25px;
   }
@@ -3575,8 +3577,9 @@ ol.tabs li {
     background: hsl(10, 78%, 53%);
   }
 
-  &.auth-provider--office365 {
-    background: hsl(15, 100%, 47%);
+  &.auth-provider--microsoft {
+    background: hsl(0, 0%, 93%);
+    color: hsl(0, 0%, 46%) !important;
   }
 
   &.auth-provider--weibo {

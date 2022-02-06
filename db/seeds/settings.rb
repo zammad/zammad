@@ -1679,8 +1679,8 @@ Setting.create_if_not_exists(
   preferences: {
     controller:       'SettingsAreaSwitch',
     sub:              ['auth_microsoft_office365_credentials'],
-    title_i18n:       ['Office 365'], # rubocop:disable Zammad/DetectTranslatableString
-    description_i18n: ['Office 365', 'Microsoft Application Registration Portal', 'https://portal.azure.com'], # rubocop:disable Zammad/DetectTranslatableString
+    title_i18n:       ['Microsoft'],
+    description_i18n: ['Microsoft', __('Microsoft Application Registration Portal'), 'https://portal.azure.com'],
     permission:       ['admin.security'],
   },
   state:       false,

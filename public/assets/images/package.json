@@ -10,5 +10,8 @@
     "gulp-util": "^3.0.4",
     "gulp-watch": "^4.2.4",
     "through2": "^0.6.5"
+  },
+  "resolutions": {
+    "graceful-fs": "^4.2.9"
   }
 }

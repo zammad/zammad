@@ -5819,10 +5819,18 @@ msgstr ""
 msgid "Method (AJAX endpoint)"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
+msgid "Microsoft"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 #: app/assets/javascripts/app/views/microsoft365/index.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 msgid "Microsoft 365"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Microsoft Application Registration Portal"
 msgstr ""
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
@@ -6709,10 +6717,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 msgid "October"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
-msgid "Office 365"
 msgstr ""
 
 #: db/seeds/settings.rb

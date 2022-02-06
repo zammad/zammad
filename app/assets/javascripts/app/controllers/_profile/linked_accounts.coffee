@@ -88,9 +88,9 @@ App.Config.set('auth_provider_all', {
     class:  'gitlab'
   microsoft_office365:
     url:    '/auth/microsoft_office365'
-    name:   __('Office 365')
+    name:   __('Microsoft')
     config: 'auth_microsoft_office365'
-    class:  'office365'
+    class:  'microsoft'
   google_oauth2:
     url:    '/auth/google_oauth2'
     name:   __('Google')
