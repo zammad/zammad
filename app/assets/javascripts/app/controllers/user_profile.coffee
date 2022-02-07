@@ -117,7 +117,7 @@ class ActionRow extends App.ControllerObserverActionRow
       success: (data, status, xhr) =>
         @notify
           type:      'success'
-          msg:       App.i18n.translateContent('Email sent to "%s". Please let the user verify his email address.', user.email)
+          msg:       App.i18n.translateContent('Email sent to "%s". Please let the user verify their email account.', user.email)
           removeAll: true
       error: (data, status, xhr) =>
         @notify

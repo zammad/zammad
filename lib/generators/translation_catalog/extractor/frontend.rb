@@ -39,6 +39,6 @@ class Generators::TranslationCatalog::Extractor::Frontend < Generators::Translat
       files += Dir.glob("#{base_path}/#{dir}/*.eco")
       files += Dir.glob("#{base_path}/#{dir}/*.coffee")
     end
-    files
+    files.reject { |d| d.include?('layout_ref') }
   end
 end

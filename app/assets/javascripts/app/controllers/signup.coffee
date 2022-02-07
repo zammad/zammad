@@ -94,7 +94,7 @@ class Signup extends App.ControllerFullPage
         # add notify
         @notify(
           type:      'success'
-          msg:       App.i18n.translateContent('Email sent to "%s". Please verify your email address.', @params.email)
+          msg:       App.i18n.translateContent('Email sent to "%s". Please verify your email account.', @params.email)
           removeAll: true
         )
 

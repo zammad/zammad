@@ -60,7 +60,7 @@
       <%- @Icon('checkbox', 'icon-unchecked') %>
       <%- @Icon('checkbox-checked', 'icon-checked') %>
       <span class="label-text"><%- @T('Use custom option sort') %></span>
-      <span class="help-text"><%- @T('Check this box if you want to customise how options are been sorted. If checkbox is disabled, values are sorted in alphabetical order.') %></span>
+      <span class="help-text"><%- @T('Check this box if you want to customise how options are sorted. If the box is not checked, values are sorted in alphabetical order.') %></span>
     </label>
   </div>
   <div class="js-inputLinkTemplate"></div>
