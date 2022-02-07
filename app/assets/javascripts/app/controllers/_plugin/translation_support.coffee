@@ -19,7 +19,7 @@ class TranslationSupport extends App.Controller
       # verify current state of translation
       meta    = App.i18n.meta()
       percent = parseInt( meta.translated / (meta.total / 100) )
-      return if percent > 95
+      return if percent > 90
 
       # show message
       new Modal(percent: percent)

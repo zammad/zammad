@@ -121,8 +121,8 @@ RSpec.describe 'System > Translations', type: :system do
 
     it 'asks to improve translations with solid coverage' do
       visit '/#system/translation'
-      page.evaluate_script('App.i18n.meta = function(){ return { total: 100, translated: 90 } }')
-      expect(page).to have_text('Up to 90% of this language is already translated. Please help to make Zammad even better and complete the translation.')
+      page.evaluate_script('App.i18n.meta = function(){ return { total: 100, translated: 89 } }')
+      expect(page).to have_text('Up to 89% of this language is already translated. Please help to make Zammad even better and complete the translation.')
     end
   end
 
