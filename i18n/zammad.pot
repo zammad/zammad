@@ -5475,12 +5475,15 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/link_button.coffee
 #: app/assets/javascripts/app/controllers/ticket_link_add.coffee
 #: app/assets/javascripts/app/models/overview.coffee
-#: app/assets/javascripts/app/views/link/ticket/add.jst.eco
 msgid "Link"
 msgstr ""
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 msgid "Link %s"
+msgstr ""
+
+#: app/assets/javascripts/app/views/link/ticket/add.jst.eco
+msgid "Link %s %s as %s of Ticket# %s"
 msgstr ""
 
 #: app/assets/javascripts/app/views/profile/linked_accounts.jst.eco
@@ -10762,10 +10765,6 @@ msgstr ""
 msgid "archived"
 msgstr ""
 
-#: app/assets/javascripts/app/views/link/ticket/add.jst.eco
-msgid "as"
-msgstr ""
-
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay.jst.eco
 msgid "assign tickets"
 msgstr ""
@@ -11219,10 +11218,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/note.coffee
 #: db/seeds/ticket_article_types.rb
 msgid "note"
-msgstr ""
-
-#: app/assets/javascripts/app/views/link/ticket/add.jst.eco
-msgid "of"
 msgstr ""
 
 #: db/seeds/ticket_state_types.rb
