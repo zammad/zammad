@@ -629,8 +629,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/attachments.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/generic_list.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/linked_tickets.jst.eco
-#: app/assets/javascripts/app/views/layout_ref/scheduler_modal.jst.eco
-#: app/assets/javascripts/app/views/layout_ref/sla_modal.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/multiselect.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco
@@ -1085,8 +1083,6 @@ msgid "At least one user needs to have admin permissions."
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/attachments.jst.eco
-#: app/assets/javascripts/app/views/layout_ref/communication_overview.jst.eco
-#: app/assets/javascripts/app/views/layout_ref/ticket_zoom.jst.eco
 #: app/views/knowledge_base/public/answers/show.html.erb
 msgid "Attached Files"
 msgstr "Bifogade filer"
@@ -1265,8 +1261,6 @@ msgid "BCC address for all outgoing emails"
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/object_search/item_organization_members.jst.eco
-#: app/assets/javascripts/app/views/layout_ref/content.jst.eco
-#: app/assets/javascripts/app/views/layout_ref/ui.jst.eco
 msgid "Back"
 msgstr "Tillbaka"
 
@@ -1279,7 +1273,6 @@ msgid "Back to search results"
 msgstr "Tillbaka till sökresultat"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
-#: app/assets/javascripts/app/views/layout_ref/inputs.jst.eco
 msgid "Background color"
 msgstr "Bakgrundsfärg"
 
@@ -1601,7 +1594,6 @@ msgid "Cancel & Go Back"
 msgstr "Avbryt & Gå tillbaka"
 
 #: app/assets/javascripts/app/views/generic/attachment.jst.eco
-#: app/assets/javascripts/app/views/layout_ref/communication_reply.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 msgid "Cancel Upload"
 msgstr "Avbryt uppladdning"
@@ -1626,7 +1618,6 @@ msgstr ""
 msgid "Categories"
 msgstr "Kategorier"
 
-#: app/assets/javascripts/app/controllers/layout_ref.coffee
 #: app/assets/javascripts/app/models/knowledge_base_answer.coffee
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco
 msgid "Category"
@@ -1817,8 +1808,8 @@ msgstr ""
 #: app/assets/javascripts/app/views/object_manager/attribute/multiselect.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco
 msgid ""
-"Check this box if you want to customise how options are been sorted. If "
-"checkbox is disabled, values are sorted in alphabetical order."
+"Check this box if you want to customise how options are sorted. If the box "
+"is not checked, values are sorted in alphabetical order."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/check_mk.coffee
@@ -2191,7 +2182,6 @@ msgstr ""
 msgid "Connection test successful"
 msgstr "Uppkopplingstest lyckat"
 
-#: app/assets/javascripts/app/controllers/layout_ref.coffee
 #: app/assets/javascripts/app/models/knowledge_base_answer.coffee
 #: app/assets/javascripts/app/models/text_module.coffee
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
@@ -2342,7 +2332,6 @@ msgstr "Land"
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/add_form.coffee
-#: app/assets/javascripts/app/controllers/layout_ref.coffee
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco
 #: app/assets/javascripts/app/views/agent_user_create.jst.eco
 #: app/assets/javascripts/app/views/customer_ticket_create.jst.eco
@@ -2372,10 +2361,6 @@ msgstr ""
 #: app/controllers/first_steps_controller.rb
 msgid "Create Macros"
 msgstr "Skapa makron"
-
-#: app/assets/javascripts/app/controllers/layout_ref.coffee
-msgid "Create SLA"
-msgstr ""
 
 #: app/controllers/first_steps_controller.rb
 msgid "Create Text Modules"
@@ -2425,7 +2410,6 @@ msgid "Create my account"
 msgstr "Skapa mitt konto"
 
 #: app/assets/javascripts/app/lib/app_post/user_organization_autocompletion.coffee
-#: app/assets/javascripts/app/views/layout_ref/content.jst.eco
 msgid "Create new Customer"
 msgstr "Skapa ny kund"
 
@@ -2568,7 +2552,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_customer.coffee
-#: app/assets/javascripts/app/controllers/layout_ref.coffee
 #: app/assets/javascripts/app/controllers/ticket_customer.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee
 #: app/assets/javascripts/app/controllers/widget/user.coffee
@@ -3493,7 +3476,6 @@ msgid "Delete Customer"
 msgstr "Radera kund"
 
 #: app/assets/javascripts/app/views/generic/attachment_item.jst.eco
-#: app/assets/javascripts/app/views/layout_ref/communication_reply.jst.eco
 msgid "Delete File"
 msgstr "Radera fil"
 
@@ -3777,7 +3759,6 @@ msgstr "Drag för att ändra ordning"
 
 #: app/assets/javascripts/app/views/generic/attachment.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/attachments.jst.eco
-#: app/assets/javascripts/app/views/layout_ref/communication_reply.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 msgid "Drop files here"
 msgstr "Släpp filer här"
@@ -3822,10 +3803,6 @@ msgstr "Påskledighet"
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 msgid "Edit"
 msgstr "Redigera"
-
-#: app/assets/javascripts/app/views/layout_ref/kb_link_answer_to_answer_ref.jst.eco
-msgid "Edit Answer"
-msgstr "Redigera svar"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_customer.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee
@@ -3971,11 +3948,11 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/user_profile.coffee
-msgid "Email sent to \"%s\". Please let the user verify his email address."
+msgid "Email sent to \"%s\". Please let the user verify their email account."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/signup.coffee
-msgid "Email sent to \"%s\". Please verify your email address."
+msgid "Email sent to \"%s\". Please verify your email account."
 msgstr ""
 
 #: app/assets/javascripts/app/views/knowledge_base/public_menu_manager.jst.eco
@@ -4240,19 +4217,11 @@ msgstr "Ange person eller Organisation/Företag"
 msgid "Enter Private Key Secret"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/layout_ref.coffee
-msgid "Enter Project Name"
-msgstr ""
-
 #: app/assets/javascripts/app/views/ticket_zoom/title.jst.eco
 #, fuzzy
 #| msgid "Enter Title..."
 msgid "Enter Title…"
 msgstr "Ange titel..."
-
-#: app/assets/javascripts/app/controllers/layout_ref.coffee
-msgid "Enter User"
-msgstr ""
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
@@ -4590,7 +4559,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/dashboard/first_steps_clues_content.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email_pre_configured.jst.eco
-#: app/assets/javascripts/app/views/layout_ref/clue_content.jst.eco
 msgid "Finish"
 msgstr "Slut"
 
@@ -4755,8 +4723,6 @@ msgstr "Formatera som |fet|"
 msgid "Format as ||italic||"
 msgstr "Formatera som ||kursiv||"
 
-#: app/assets/javascripts/app/views/layout_ref/local_modal.jst.eco
-#: app/assets/javascripts/app/views/layout_ref/organization_profile.jst.eco
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco
 msgid "Frequency"
 msgstr "FREKVENS"
@@ -6062,10 +6028,6 @@ msgstr "Kunskapsbank"
 msgid "Knowledge Base Answer"
 msgstr ""
 
-#: app/assets/javascripts/app/views/layout_ref/kb_link_ticket_to_answer_ref.jst.eco
-msgid "Knowledge Base Browser"
-msgstr ""
-
 #: db/seeds/permissions.rb
 msgid "Knowledge Base Editor"
 msgstr ""
@@ -6213,13 +6175,16 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/link_button.coffee
 #: app/assets/javascripts/app/controllers/ticket_link_add.coffee
 #: app/assets/javascripts/app/models/overview.coffee
-#: app/assets/javascripts/app/views/link/ticket/add.jst.eco
 msgid "Link"
 msgstr "Länk"
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 msgid "Link %s"
 msgstr "Länk %s"
+
+#: app/assets/javascripts/app/views/link/ticket/add.jst.eco
+msgid "Link %s %s as %s of Ticket# %s"
+msgstr ""
 
 #: app/assets/javascripts/app/views/profile/linked_accounts.jst.eco
 msgid "Link Accounts"
@@ -6527,7 +6492,6 @@ msgstr ""
 msgid "May"
 msgstr "maj"
 
-#: app/assets/javascripts/app/views/layout_ref/organization_profile.jst.eco
 #: app/assets/javascripts/app/views/organization_profile/object.jst.eco
 #: app/assets/javascripts/app/views/popover/organization.jst.eco
 #: app/assets/javascripts/app/views/widget/organization.jst.eco
@@ -6543,7 +6507,6 @@ msgid "Mentions Group"
 msgstr "Grupp omnämnda"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee
-#: app/assets/javascripts/app/controllers/layout_ref.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee
 msgid "Merge"
 msgstr "Sammanfoga"
@@ -6577,10 +6540,20 @@ msgstr ""
 msgid "Method (AJAX endpoint)"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
+#, fuzzy
+#| msgid "Macros"
+msgid "Microsoft"
+msgstr "Macros"
+
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 #: app/assets/javascripts/app/views/microsoft365/index.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 msgid "Microsoft 365"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Microsoft Application Registration Portal"
 msgstr ""
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
@@ -7048,7 +7021,6 @@ msgstr "Nybörjare"
 #: app/assets/javascripts/app/views/dashboard/first_steps_clues_content.jst.eco
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
-#: app/assets/javascripts/app/views/layout_ref/clue_content.jst.eco
 msgid "Next"
 msgstr "Nästa"
 
@@ -7477,10 +7449,6 @@ msgstr "okt"
 msgid "October"
 msgstr "Oktober"
 
-#: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
-msgid "Office 365"
-msgstr ""
-
 #: db/seeds/settings.rb
 msgid "Office 365 App Credentials"
 msgstr ""
@@ -7589,7 +7557,6 @@ msgid "Options"
 msgstr "Tillval"
 
 #: app/assets/javascripts/app/views/getting_started/intro.jst.eco
-#: app/assets/javascripts/app/views/layout_ref/setup.jst.eco
 #, fuzzy
 #| msgid "migrate from another system"
 msgid "Or migrate from another system."
@@ -8065,7 +8032,6 @@ msgid "Preview owner tickets"
 msgstr "Förhandsgranska ägarärenden"
 
 #: app/assets/javascripts/app/views/dashboard/first_steps_clues_content.jst.eco
-#: app/assets/javascripts/app/views/layout_ref/clue_content.jst.eco
 msgid "Previous"
 msgstr "Föregående"
 
@@ -8254,10 +8220,6 @@ msgstr "Senaste loggar"
 msgid "Recently Viewed Tickets"
 msgstr "Senast visade ärendena"
 
-#: app/assets/javascripts/app/views/layout_ref/kb_link_ticket_to_answer_ref.jst.eco
-msgid "Recently Visited Answers"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_plugin/navigation.coffee
 msgid "Recently viewed"
 msgstr "Senast öppnade"
@@ -8312,8 +8274,6 @@ msgstr "Kom ihåg mig"
 #: app/assets/javascripts/app/views/generic/postmaster_match.jst.eco
 #: app/assets/javascripts/app/views/generic/postmaster_set_row.jst.eco
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/row.jst.eco
-#: app/assets/javascripts/app/views/layout_ref/scheduler_modal.jst.eco
-#: app/assets/javascripts/app/views/layout_ref/sla_modal.jst.eco
 msgid "Remote"
 msgstr ""
 
@@ -8730,11 +8690,6 @@ msgstr "Bläddra ner för att se nya meddelanden"
 msgid "Search"
 msgstr "Sök"
 
-#: app/assets/javascripts/app/views/layout_ref/kb_agent_reader_ref.jst.eco
-#: app/assets/javascripts/app/views/layout_ref/kb_link_ticket_to_answer_ref.jst.eco
-msgid "Search Knowledge Base"
-msgstr ""
-
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
 msgid "Search Term"
 msgstr "Sökterm"
@@ -8776,8 +8731,6 @@ msgstr "Se mindre"
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
-#: app/assets/javascripts/app/views/layout_ref/communication_overview.jst.eco
-#: app/assets/javascripts/app/views/layout_ref/ticket_zoom.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 msgid "See more"
 msgstr "Se mer"
@@ -8838,7 +8791,6 @@ msgstr "Väljer generatormodulen för ärendenummer."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco
-#: app/assets/javascripts/app/views/layout_ref/customer_chat_window.jst.eco
 #: public/assets/chat/views/chat.eco
 msgid "Send"
 msgstr "Skicka"
@@ -9028,7 +8980,6 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/views/getting_started/intro.jst.eco
-#: app/assets/javascripts/app/views/layout_ref/setup.jst.eco
 #, fuzzy
 #| msgid "Setup new System"
 msgid "Set up a new system"
@@ -9070,7 +9021,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
-#: app/assets/javascripts/app/views/layout_ref/customer_chat.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
 msgid "Settings"
@@ -9375,7 +9325,6 @@ msgstr "Status"
 
 #: app/assets/javascripts/app/views/generic/error/generic.jst.eco
 #: app/assets/javascripts/app/views/generic/error/placeholder.jst.eco
-#: app/assets/javascripts/app/views/layout_ref/error.jst.eco
 msgid "Status Code"
 msgstr "Statuskod"
 
@@ -10421,7 +10370,6 @@ msgstr ""
 msgid "Timing"
 msgstr "Tidtagning"
 
-#: app/assets/javascripts/app/controllers/layout_ref.coffee
 #: app/assets/javascripts/app/models/knowledge_base.coffee
 #: app/assets/javascripts/app/models/knowledge_base_answer.coffee
 #: app/assets/javascripts/app/models/knowledge_base_category.coffee
@@ -10857,7 +10805,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/generic/attachment.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/attachments.jst.eco
-#: app/assets/javascripts/app/views/layout_ref/communication_reply.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 msgid "Uploading"
 msgstr "Laddar upp"
@@ -11840,7 +11787,6 @@ msgstr "Din e-postkonfiguration"
 
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
-#: app/assets/javascripts/app/views/layout_ref/setup.jst.eco
 msgid "Your Logo"
 msgstr "Din logotyp"
 
@@ -12035,20 +11981,12 @@ msgstr "efter (relativ)"
 msgid "again"
 msgstr "igen"
 
-#: app/assets/javascripts/app/views/layout_ref/kb_link_ticket_to_answer_ref.jst.eco
-msgid "already linked"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee
 msgid "and"
 msgstr "och"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 msgid "archived"
-msgstr ""
-
-#: app/assets/javascripts/app/views/link/ticket/add.jst.eco
-msgid "as"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay.jst.eco
@@ -12397,10 +12335,6 @@ msgstr ""
 msgid "last week"
 msgstr ""
 
-#: app/assets/javascripts/app/views/layout_ref/kb_link_ticket_to_answer_ref.jst.eco
-msgid "link"
-msgstr ""
-
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
 msgid "m"
 msgstr ""
@@ -12504,10 +12438,6 @@ msgstr "ej översatta"
 #: db/seeds/ticket_article_types.rb
 msgid "note"
 msgstr "notering"
-
-#: app/assets/javascripts/app/views/link/ticket/add.jst.eco
-msgid "of"
-msgstr "av"
 
 #: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
 msgid "open"
@@ -12853,6 +12783,12 @@ msgstr "...av hel textarea"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Väntetid idag"
+
+#~ msgid "Edit Answer"
+#~ msgstr "Redigera svar"
+
+#~ msgid "of"
+#~ msgstr "av"
 
 #~ msgid "Successful!"
 #~ msgstr "Lyckad!"
