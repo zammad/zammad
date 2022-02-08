@@ -22,13 +22,8 @@
     - source .gitlab/environment.env
     - bundle exec rake zammad:db:init
 
-rubocop:
-  <<: *template_pre
-  script:
-    - bundle install -j $(nproc) --path vendor
-    - bundle exec rubocop --parallel
-
-shellcheck:
+# Must be a separate job because it uses a custom image.
+"lint: shellcheck":
   <<: *template_pre
   image: koalaman/shellcheck-alpine:stable
   before_script:
@@ -36,58 +31,41 @@ shellcheck:
   script:
     - shellcheck -S warning $(find . -name "*.sh" -o -name "functions" | grep -v "/vendor/")
 
-gettext lint:
-  <<: *template_pre
-  before_script:
-    - echo "Disable default before_script."
-  script:
-    - for FILE in i18n/*.pot i18n/*.po; do echo "Checking $FILE"; msgfmt -o /dev/null -c $FILE; done
-
-gettext catalog consistency:
+"lint: i18n, rails & security":
   <<: *template_pre_rails
-  extends:
-    - .tags_docker
-    - .services_postgresql
-  script:
-    - bundle exec rails generate translation_catalog --check
-
-zeitwerk:check:
-  <<: *template_pre_rails
-  script:
-    - bundle exec rails zeitwerk:check
-
-brakeman:
-  <<: *template_pre
   artifacts:
     expire_in: 1 week
     paths:
       - tmp/brakeman-report.html
     when: on_failure
   script:
-    - bundle install -j $(nproc) --path vendor
+    - echo "Checking .po file syntax..."
+    - for FILE in i18n/*.pot i18n/*.po; do echo "Checking $FILE"; msgfmt -o /dev/null -c $FILE; done
+    - echo "Checking .pot catalog consistency..."
+    - bundle exec rails generate translation_catalog --check
+    - echo "Brakeman security check..."
     - bundle exec brakeman -o /dev/stdout -o tmp/brakeman-report.html
-
-coffeelint:
-  <<: *template_pre
-  script:
-    - coffeelint --rules ./.coffeelint/rules/* app/
-
-stylelint:
-  <<: *template_pre
-  before_script:
-    - source /opt/rh/rh-nodejs*/enable
-    - yarn install
-  script:
-    - yarn lint:css
-
-bundle-audit:
-  <<: *template_pre
-  script:
+    - echo "bundler-audit security check..."
     - gem install bundler-audit
     - bundle-audit update
     - bundle-audit --ignore CVE-2015-9284
+    - echo "Rails zeitwerk:check autoloader check..."
+    - bundle exec rails zeitwerk:check
 
-bundle-orphaned:
+"lint: ruby, js & css":
+  <<: *template_pre
+  script:
+    - echo "Coffeelint check..."
+    - coffeelint --rules ./.coffeelint/rules/* app/
+    - echo "Stylelint check..."
+    - yarn install
+    - yarn lint:css
+    - echo "Rubocop check..."
+    - bundle install -j $(nproc) --path vendor
+    - bundle exec rubocop --parallel
+
+# Must be a separate job because it may fail and is only executed for develop.
+"lint: orphaned ruby gems":
   <<: *template_pre_rails
   allow_failure: true
   rules:
@@ -99,7 +77,8 @@ bundle-orphaned:
   script:
     - bundle exec rake zammad:ci:bundle:orphaned 5
 
-github:
+# Executed on a dedicated runner.
+"push to github":
   <<: *template_pre
   tags:
     - deploy
