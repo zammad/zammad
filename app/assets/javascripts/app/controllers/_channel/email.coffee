@@ -428,20 +428,7 @@ class ChannelEmailAccountWizard extends App.ControllerWizardModal
       ui.hide('options::folder')
       ui.hide('options::keep_on_server')
 
-    handlePort = (params, attribute, attributes, classname, form, ui) ->
-      return if !params
-      return if !params.options
-      currentPort = @$('[name="options::port"]').val()
-      if params.options.ssl is true
-        if !currentPort || currentPort is '143'
-          @$('[name="options::port"]').val('993')
-        return
-      if params.options.ssl is false
-        if !currentPort || currentPort is '993'
-          @$('[name="options::port"]').val('143')
-        return
-
-    new App.ControllerForm(
+    form = new App.ControllerForm(
       el:    @$('.base-inbound-settings'),
       model:
         configure_attributes: configureAttributesInbound
@@ -449,8 +436,14 @@ class ChannelEmailAccountWizard extends App.ControllerWizardModal
       params: @account.inbound
       handlers: [
         showHideFolder,
-        handlePort,
       ]
+    )
+
+    form.el.find("select[name='options::ssl']").off('change').on('change', (e) ->
+      if $(e.target).val() is 'true'
+        form.el.find("[name='options::port']").val('993')
+      else
+        form.el.find("[name='options::port']").val('143')
     )
 
   toggleOutboundAdapter: =>
