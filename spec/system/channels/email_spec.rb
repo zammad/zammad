@@ -161,8 +161,9 @@ RSpec.describe 'Manage > Channels > Email', type: :system do
         expect(find('input[name="options::port"]').value).to eq('143')
         port = '4242'
         fill_in 'options::port', with: port
+        field.click
         expect(find('input[name="options::port"]').value).to eq(port)
-        option_yes.select_option
+        fill_in 'options::folder', with: 'testabc'
         expect(find('input[name="options::port"]').value).to eq(port)
         click '.js-close'
       end
