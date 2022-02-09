@@ -9,7 +9,7 @@
     IMPORT_OTRS_ENDPOINT: "http://zammad-ci-otrsimport-app/otrs/public.pl?Action=ZammadMigrator"
     TZ: "Europe/Berlin"       # Required for the zammad-ci-otrsimport-app containers
 
-otrs:6:
+"minitest:integration:otrs:6":
   <<: *template_integration_otrs
   services:
     - name: $CI_REGISTRY/docker/zammad-mysql:stable
@@ -21,7 +21,7 @@ otrs:6:
     - name: $CI_REGISTRY/docker/zammad-ci-otrsimport-app:otrs6
       alias: zammad-ci-otrsimport-app
 
-otrs:5:
+"minitest:integration:otrs:5":
   <<: *template_integration_otrs
   services:
     - name: $CI_REGISTRY/docker/zammad-mysql:stable
@@ -33,7 +33,7 @@ otrs:5:
     - name: $CI_REGISTRY/docker/zammad-ci-otrsimport-app:otrs5
       alias: zammad-ci-otrsimport-app
 
-otrs:4:
+"minitest:integration:otrs:4":
   <<: *template_integration_otrs
   services:
     - name: $CI_REGISTRY/docker/zammad-mysql:stable
@@ -45,7 +45,7 @@ otrs:4:
     - name: $CI_REGISTRY/docker/zammad-ci-otrsimport-app:otrs4
       alias: zammad-ci-otrsimport-app
 
-otrs:33:
+"minitest:integration:otrs:33":
   <<: *template_integration_otrs
   services:
     - name: $CI_REGISTRY/docker/zammad-mysql:stable
@@ -57,7 +57,7 @@ otrs:33:
     - name: $CI_REGISTRY/docker/zammad-ci-otrsimport-app:otrs33
       alias: zammad-ci-otrsimport-app
 
-otrs:32:
+"minitest:integration:otrs:32":
   <<: *template_integration_otrs
   services:
     - name: $CI_REGISTRY/docker/zammad-mysql:stable
@@ -69,7 +69,7 @@ otrs:32:
     - name: $CI_REGISTRY/docker/zammad-ci-otrsimport-app:otrs32
       alias: zammad-ci-otrsimport-app
 
-otrs:31:
+"minitest:integration:otrs:31":
   <<: *template_integration_otrs
   services:
     - name: $CI_REGISTRY/docker/zammad-mysql:stable

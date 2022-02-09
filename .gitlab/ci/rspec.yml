@@ -23,13 +23,6 @@ rspec:integration:
     - .rules_integration_manual_start
   variables:
     RAILS_ENV: "test"
-  rules:
-    - if: $CI_MERGE_REQUEST_ID
-      when: never
-    - if: '$CI_COMMIT_BRANCH =~ /^private/ && $INTEGRATION_TESTS != "enabled"'
-      when: manual
-      allow_failure: true
-    - when: always
   script:
     - bundle exec rake zammad:db:init
     - bundle exec rspec -t type:integration --profile 10

@@ -131,11 +131,6 @@
     - <<: *docker_redis
     - <<: *docker_memcached
 
-.services_mysql_postgresql: &services_mysql_postgresql
-  services:
-    - <<: *docker_mysql
-    - <<: *docker_postgresql
-
 .services_mysql_postgresql_redis_memcached: &services_mysql_postgresql_redis_memcached
   extends:
     - .variables_redis_memcached
