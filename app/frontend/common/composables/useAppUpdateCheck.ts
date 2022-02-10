@@ -19,6 +19,7 @@ import {
 import { NotificationTypes } from '@common/types/notification'
 import { onMounted, reactive, watch } from 'vue'
 import { useRouteQuery } from '@vueuse/router'
+import testFlags from '@common/utils/testFlags'
 
 let query: QueryHandler<
   ApplicationBuildChecksumQuery,
@@ -81,9 +82,7 @@ export default function useAppUpdateCheck() {
     subscription.onResult((result) => {
       const message = result.data?.appVersion.message
       if (!message) {
-        // TODO: replace fake test flag with a real test flag implementation.
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        ;(window as any).appVersionSubscriptionReady = true
+        testFlags.set('useAppVersionSubscription.subscribed')
         return
       }
       switch (message) {

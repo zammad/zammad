@@ -5,10 +5,8 @@ require 'rails_helper'
 RSpec.describe 'Mobile > App Update Check', type: :system, authenticated_as: false do
   before do
     page.driver.browser.manage.window.resize_to(390, 844)
-    visit '/mobile/login?ApplicationRebuildCheckInterval=1000'
-    wait.until do
-      page.evaluate_script('window.appVersionSubscriptionReady')
-    end
+    visit '/mobile/login?ApplicationRebuildCheckInterval=500'
+    wait_for_test_flag('useAppVersionSubscription.subscribed')
   end
 
   it 'shows app rebuild dialog' do
