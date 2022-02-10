@@ -89,10 +89,10 @@ class ExternalCredential::Microsoft365
 
     migrate_channel = nil
     Channel.where(area: 'Email::Account').find_each do |channel|
-      next if channel.options.dig(:inbound, :options, :user) != user_data[:email]
-      next if channel.options.dig(:inbound, :options, :host) != 'outlook.office365.com'
-      next if channel.options.dig(:outbound, :options, :user) != user_data[:email]
-      next if channel.options.dig(:outbound, :options, :host) != 'smtp.office365.com'
+      next if channel.options.dig(:inbound, :options, :user)&.downcase != user_data[:email].downcase
+      next if channel.options.dig(:inbound, :options, :host)&.downcase != 'outlook.office365.com'
+      next if channel.options.dig(:outbound, :options, :user)&.downcase != user_data[:email].downcase
+      next if channel.options.dig(:outbound, :options, :host)&.downcase != 'smtp.office365.com'
 
       migrate_channel = channel
 

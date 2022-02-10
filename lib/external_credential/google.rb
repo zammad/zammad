@@ -85,10 +85,10 @@ class ExternalCredential::Google
 
     migrate_channel = nil
     Channel.where(area: 'Email::Account').find_each do |channel|
-      next if channel.options.dig(:inbound, :options, :user) != user_data[:email]
-      next if channel.options.dig(:inbound, :options, :host) != 'imap.gmail.com'
-      next if channel.options.dig(:outbound, :options, :user) != user_data[:email]
-      next if channel.options.dig(:outbound, :options, :host) != 'smtp.gmail.com'
+      next if channel.options.dig(:inbound, :options, :user)&.downcase != user_data[:email].downcase
+      next if channel.options.dig(:inbound, :options, :host)&.downcase != 'imap.gmail.com'
+      next if channel.options.dig(:outbound, :options, :user)&.downcase != user_data[:email].downcase
+      next if channel.options.dig(:outbound, :options, :host)&.downcase != 'smtp.gmail.com'
 
       migrate_channel = channel
 
