@@ -3617,6 +3617,10 @@ msgstr ""
 msgid "Devices"
 msgstr "Dispositivos"
 
+#: app/assets/javascripts/app/views/profile/language.jst.eco
+msgid "Did you know? You can help translating %s at:"
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "Digit required"
 msgstr "Necessário dígito"
