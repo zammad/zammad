@@ -213,7 +213,7 @@ class CoreWorkflow::Attributes
   end
 
   def attribute_options_relation?(attribute)
-    attribute[:relation].present?
+    attribute[:tag] == 'select' && attribute[:relation].present?
   end
 
   def values(attribute)
