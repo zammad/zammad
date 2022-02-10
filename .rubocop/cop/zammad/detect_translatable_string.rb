@@ -28,7 +28,7 @@ module RuboCop
           __ translate
           include? eql? parse
           debug info warn error fatal unknown log log_error
-          field argument description value
+          field argument description value has_one belongs_to
         ].freeze
 
         def on_send(node)

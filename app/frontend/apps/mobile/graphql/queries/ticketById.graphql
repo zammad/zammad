@@ -1,0 +1,46 @@
+query ticketsById(
+  $ticketId: ID!
+  $withArticles: Boolean = false
+  $withObjectAttributes: Boolean = false
+) {
+  ticketById(ticketId: $ticketId) {
+    id
+    number
+    title
+    createdAt
+    updatedAt
+    owner {
+      firstname
+      lastname
+    }
+    customer {
+      firstname
+      lastname
+    }
+    organization {
+      name
+    }
+    state {
+      name
+      stateType {
+        name
+      }
+    }
+    group {
+      name
+    }
+    priority {
+      name
+    }
+    articles @include(if: $withArticles) {
+      edges {
+        node {
+          subject
+        }
+      }
+    }
+    objectAttributeValues @include(if: $withObjectAttributes) {
+      ...objectAttributeValues
+    }
+  }
+}

@@ -12,7 +12,8 @@ module Gql::Types
 
     implements Gql::Types::ObjectAttributeValueInterface
 
-    field :organization, Gql::Types::OrganizationType, null: true
+    belongs_to :organization, Gql::Types::OrganizationType, null: true
+
     field :login, String, null: false
     field :firstname, String, null: true
     field :lastname, String, null: true

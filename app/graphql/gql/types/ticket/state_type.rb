@@ -6,8 +6,8 @@ module Gql::Types::Ticket
 
     description 'Ticket states'
 
-    # field :state_type_id, Integer, null: false
-    field :state_type_name, String, null: false
+    belongs_to :state_type, Gql::Types::Ticket::StateTypeType, null: false
+
     field :name, String, null: false
     field :next_state_id, Integer, null: true
     field :ignore_escalation, Boolean, null: false
@@ -15,10 +15,5 @@ module Gql::Types::Ticket
     field :default_follow_up, Boolean, null: false
     field :note, String, null: true
     field :active, Boolean, null: false
-
-    def state_type_name
-      @object.state_type.name
-    end
-
   end
 end

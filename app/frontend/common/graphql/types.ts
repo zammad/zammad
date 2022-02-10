@@ -289,6 +289,8 @@ export type Queries = {
   overviews: OverviewConnection;
   /** The sessionId of the currently authenticated user. */
   sessionId: Scalars['String'];
+  /** Fetch a ticket by ID */
+  ticketById: Ticket;
   /** Fetch tickets of a given ticket overview */
   ticketsByOverview: TicketConnection;
   /** Translations for a given locale */
@@ -314,6 +316,12 @@ export type QueriesOverviewsArgs = {
   before?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
   last?: InputMaybe<Scalars['Int']>;
+};
+
+
+/** All available queries */
+export type QueriesTicketByIdArgs = {
+  ticketId: Scalars['ID'];
 };
 
 
@@ -356,6 +364,7 @@ export enum TextDirection {
 export type Ticket = Node & ObjectAttributeValueInterface & {
   __typename?: 'Ticket';
   articleCount?: Maybe<Scalars['Int']>;
+  articles: TicketArticleConnection;
   closeAt?: Maybe<Scalars['ISO8601DateTime']>;
   closeDiffInMin?: Maybe<Scalars['Int']>;
   closeEscalationAt?: Maybe<Scalars['ISO8601DateTime']>;
@@ -394,6 +403,64 @@ export type Ticket = Node & ObjectAttributeValueInterface & {
   updatedAt: Scalars['ISO8601DateTime'];
   /** Last user that updated this record */
   updatedBy: User;
+};
+
+
+/** Tickets */
+export type TicketArticlesArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+};
+
+/** Ticket articles */
+export type TicketArticle = Node & {
+  __typename?: 'TicketArticle';
+  body: Scalars['String'];
+  cc?: Maybe<Scalars['String']>;
+  contentType: Scalars['String'];
+  /** Create date/time of the record */
+  createdAt: Scalars['ISO8601DateTime'];
+  /** User that created this record */
+  createdBy: User;
+  from?: Maybe<Scalars['String']>;
+  id: Scalars['ID'];
+  inReplyTo?: Maybe<Scalars['String']>;
+  internal: Scalars['Boolean'];
+  messageId?: Maybe<Scalars['String']>;
+  messageIdMd5?: Maybe<Scalars['String']>;
+  originBy?: Maybe<User>;
+  references?: Maybe<Scalars['String']>;
+  replyTo?: Maybe<Scalars['String']>;
+  subject?: Maybe<Scalars['String']>;
+  to?: Maybe<Scalars['String']>;
+  /** Last update date/time of the record */
+  updatedAt: Scalars['ISO8601DateTime'];
+  /** Last user that updated this record */
+  updatedBy: User;
+};
+
+/** The connection type for TicketArticle. */
+export type TicketArticleConnection = {
+  __typename?: 'TicketArticleConnection';
+  /** A list of edges. */
+  edges?: Maybe<Array<Maybe<TicketArticleEdge>>>;
+  /** A list of nodes. */
+  nodes?: Maybe<Array<Maybe<TicketArticle>>>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** Indicates the total number of available records. */
+  totalCount: Scalars['Int'];
+};
+
+/** An edge in a connection. */
+export type TicketArticleEdge = {
+  __typename?: 'TicketArticleEdge';
+  /** A cursor for use in pagination. */
+  cursor: Scalars['String'];
+  /** The item at the end of the edge. */
+  node?: Maybe<TicketArticle>;
 };
 
 /** The connection type for Ticket. */
@@ -465,7 +532,23 @@ export type TicketState = Node & {
   name: Scalars['String'];
   nextStateId?: Maybe<Scalars['Int']>;
   note?: Maybe<Scalars['String']>;
-  stateTypeName: Scalars['String'];
+  stateType: TicketStateType;
+  /** Last update date/time of the record */
+  updatedAt: Scalars['ISO8601DateTime'];
+  /** Last user that updated this record */
+  updatedBy: User;
+};
+
+/** Ticket state types */
+export type TicketStateType = Node & {
+  __typename?: 'TicketStateType';
+  /** Create date/time of the record */
+  createdAt: Scalars['ISO8601DateTime'];
+  /** User that created this record */
+  createdBy: User;
+  id: Scalars['ID'];
+  name: Scalars['String'];
+  note?: Maybe<Scalars['String']>;
   /** Last update date/time of the record */
   updatedAt: Scalars['ISO8601DateTime'];
   /** Last user that updated this record */
@@ -545,18 +628,28 @@ export type UserEdge = {
   node?: Maybe<User>;
 };
 
+export type ObjectAttributeValuesFragment = { __typename?: 'ObjectAttributeValue', value?: string | null | undefined, attribute: { __typename?: 'ObjectManagerAttribute', name: string, display: string, dataType: string, dataOption?: any | null | undefined, screens?: any | null | undefined, editable: boolean, active: boolean } };
+
+export type TicketsByIdQueryVariables = Exact<{
+  ticketId: Scalars['ID'];
+  withArticles?: InputMaybe<Scalars['Boolean']>;
+  withObjectAttributes?: InputMaybe<Scalars['Boolean']>;
+}>;
+
+
+export type TicketsByIdQuery = { __typename?: 'Queries', ticketById: { __typename?: 'Ticket', id: string, number: string, title: string, createdAt: any, updatedAt: any, owner: { __typename?: 'User', firstname?: string | null | undefined, lastname?: string | null | undefined }, customer: { __typename?: 'User', firstname?: string | null | undefined, lastname?: string | null | undefined }, organization?: { __typename?: 'Organization', name: string } | null | undefined, state: { __typename?: 'TicketState', name: string, stateType: { __typename?: 'TicketStateType', name: string } }, group: { __typename?: 'Group', name: string }, priority: { __typename?: 'TicketPriority', name: string }, articles?: { __typename?: 'TicketArticleConnection', edges?: Array<{ __typename?: 'TicketArticleEdge', node?: { __typename?: 'TicketArticle', subject?: string | null | undefined } | null | undefined } | null | undefined> | null | undefined }, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: string | null | undefined, attribute: { __typename?: 'ObjectManagerAttribute', name: string, display: string, dataType: string, dataOption?: any | null | undefined, screens?: any | null | undefined, editable: boolean, active: boolean } }> } };
+
 export type TicketsByOverviewQueryVariables = Exact<{
   overviewId: Scalars['ID'];
   orderBy?: InputMaybe<TicketOrderBy>;
   orderDirection?: InputMaybe<OrderDirection>;
   cursor?: InputMaybe<Scalars['String']>;
   pageSize?: InputMaybe<Scalars['Int']>;
+  withObjectAttributes?: InputMaybe<Scalars['Boolean']>;
 }>;
 
 
-export type TicketsByOverviewQuery = { __typename?: 'Queries', ticketsByOverview: { __typename?: 'TicketConnection', totalCount: number, edges?: Array<{ __typename?: 'TicketEdge', cursor: string, node?: { __typename?: 'Ticket', id: string, number: string, title: string, createdAt: any, updatedAt: any, owner: { __typename?: 'User', firstname?: string | null | undefined, lastname?: string | null | undefined }, customer: { __typename?: 'User', firstname?: string | null | undefined, lastname?: string | null | undefined }, organization?: { __typename?: 'Organization', name: string } | null | undefined, state: { __typename?: 'TicketState', name: string, stateTypeName: string }, group: { __typename?: 'Group', name: string }, priority: { __typename?: 'TicketPriority', name: string }, objectAttributeValues: Array<{ __typename?: 'ObjectAttributeValue', value?: string | null | undefined, attribute: { __typename?: 'ObjectManagerAttribute', name: string, display: string, dataType: string, dataOption?: any | null | undefined, screens?: any | null | undefined, editable: boolean, active: boolean } }> } | null | undefined } | null | undefined> | null | undefined, pageInfo: { __typename?: 'PageInfo', endCursor?: string | null | undefined, hasNextPage: boolean } } };
-
-export type ObjectAttributeValuesFragment = { __typename?: 'ObjectAttributeValue', value?: string | null | undefined, attribute: { __typename?: 'ObjectManagerAttribute', name: string, display: string, dataType: string, dataOption?: any | null | undefined, screens?: any | null | undefined, editable: boolean, active: boolean } };
+export type TicketsByOverviewQuery = { __typename?: 'Queries', ticketsByOverview: { __typename?: 'TicketConnection', totalCount: number, edges?: Array<{ __typename?: 'TicketEdge', cursor: string, node?: { __typename?: 'Ticket', id: string, number: string, title: string, createdAt: any, updatedAt: any, owner: { __typename?: 'User', firstname?: string | null | undefined, lastname?: string | null | undefined }, customer: { __typename?: 'User', firstname?: string | null | undefined, lastname?: string | null | undefined }, organization?: { __typename?: 'Organization', name: string } | null | undefined, state: { __typename?: 'TicketState', name: string, stateType: { __typename?: 'TicketStateType', name: string } }, group: { __typename?: 'Group', name: string }, priority: { __typename?: 'TicketPriority', name: string }, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: string | null | undefined, attribute: { __typename?: 'ObjectManagerAttribute', name: string, display: string, dataType: string, dataOption?: any | null | undefined, screens?: any | null | undefined, editable: boolean, active: boolean } }> } | null | undefined } | null | undefined> | null | undefined, pageInfo: { __typename?: 'PageInfo', endCursor?: string | null | undefined, hasNextPage: boolean } } };
 
 export type LoginMutationVariables = Exact<{
   login: Scalars['String'];

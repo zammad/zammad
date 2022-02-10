@@ -1,0 +1,12 @@
+fragment objectAttributeValues on ObjectAttributeValue {
+  attribute {
+    name
+    display
+    dataType
+    dataOption
+    screens
+    editable
+    active
+  }
+  value
+}

@@ -19,15 +19,16 @@ module Gql::Types
 
     implements Gql::Types::ObjectAttributeValueInterface
 
-    field :group, Gql::Types::GroupType, null: false
-    field :priority, Gql::Types::Ticket::PriorityType, null: false
-    field :state, Gql::Types::Ticket::StateType, null: false
+    belongs_to :group, Gql::Types::GroupType, null: false
+    belongs_to :priority, Gql::Types::Ticket::PriorityType, null: false
+    belongs_to :state, Gql::Types::Ticket::StateType, null: false
+    belongs_to :organization, Gql::Types::OrganizationType, null: true
+    belongs_to :owner, Gql::Types::UserType, null: false
+    belongs_to :customer, Gql::Types::UserType, null: false
 
-    field :organization, Gql::Types::OrganizationType, null: true
+    field :articles, Gql::Types::Ticket::ArticleType.connection_type, null: false
     field :number, String, null: false
     field :title, String, null: false
-    field :owner, Gql::Types::UserType, null: false
-    field :customer, Gql::Types::UserType, null: false
     field :note, String, null: true
 
     field :first_response_at, GraphQL::Types::ISO8601DateTime, null: true

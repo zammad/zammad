@@ -4,6 +4,7 @@ query ticketsByOverview(
   $orderDirection: OrderDirection
   $cursor: String
   $pageSize: Int = 10
+  $withObjectAttributes: Boolean = false
 ) {
   ticketsByOverview(
     overviewId: $overviewId
@@ -33,7 +34,9 @@ query ticketsByOverview(
         }
         state {
           name
-          stateTypeName
+          stateType {
+            name
+          }
         }
         group {
           name
@@ -41,7 +44,7 @@ query ticketsByOverview(
         priority {
           name
         }
-        objectAttributeValues {
+        objectAttributeValues @include(if: $withObjectAttributes) {
           ...objectAttributeValues
         }
       }
@@ -52,17 +55,4 @@ query ticketsByOverview(
       hasNextPage
     }
   }
-}
-
-fragment objectAttributeValues on ObjectAttributeValue {
-  attribute {
-    name
-    display
-    dataType
-    dataOption
-    screens
-    editable
-    active
-  }
-  value
 }
