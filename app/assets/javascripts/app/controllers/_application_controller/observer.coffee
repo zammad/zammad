@@ -51,15 +51,16 @@ class App.ControllerObserver extends App.Controller
   hasChanged: (object) =>
     currentAttributes = {}
 
+    objectCloned = $.extend(true, {}, object)
     if @observe
       for key, active of @observe
         if active && !_.isFunction(value)
-          currentAttributes[key] = clone(object[key])
+          currentAttributes[key] = objectCloned[key]
 
     if @observeNot
-      for key, value of object
+      for key, value of objectCloned
         if key isnt 'cid' && !@observeNot[key] && !_.isFunction(value)
-          currentAttributes[key] = clone(value)
+          currentAttributes[key] = value
 
     if !@lastAttributes
       @lastAttributes = currentAttributes
