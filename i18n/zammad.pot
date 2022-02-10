@@ -7217,11 +7217,8 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/application_selector.jst.eco
 #: app/assets/javascripts/app/views/profile/imageCropper.jst.eco
 #: app/assets/javascripts/app/views/settings/ticket_number.jst.eco
-msgid "Preview"
-msgstr ""
-
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
-msgid "Preview "
+msgid "Preview"
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
