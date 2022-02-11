@@ -1,4 +1,4 @@
-# Artifacts are stored for failed jobs for 2 days
+# Artifacts are stored for failed jobs
 .artifacts_error: &artifacts_error
   artifacts:
     expire_in: 1 week
