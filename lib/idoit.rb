@@ -92,7 +92,6 @@ or with filter:
     raise __("The required field 'api_token' is missing from the config.") if setting[:api_token].blank?
     raise __("The required field 'endpoint' is missing from the config.") if setting[:endpoint].blank?
 
-    # translator_key = Setting.get('translator_key')
     params = {
       apikey: setting[:api_token],
     }
