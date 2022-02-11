@@ -793,12 +793,14 @@ RSpec.describe 'Ticket Create', type: :system do
 
     it 'does not loose attachments on rerender of the ui' do
       # upload two files
+      await_empty_ajax_queue
       page.find('input#fileUpload_1', visible: :all).set(Rails.root.join('test/data/mail/mail001.box'))
       await_empty_ajax_queue
+      wait.until { page.all('div.attachment-delete.js-delete', visible: :all).count == 1 }
+      expect(page).to have_text('mail001.box')
       page.find('input#fileUpload_1', visible: :all).set(Rails.root.join('test/data/mail/mail002.box'))
       await_empty_ajax_queue
       wait.until { page.all('div.attachment-delete.js-delete', visible: :all).count == 2 }
-      expect(page).to have_text('mail001.box')
       expect(page).to have_text('mail002.box')
 
       # remove last file
