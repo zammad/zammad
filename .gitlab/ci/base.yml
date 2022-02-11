@@ -1,7 +1,7 @@
 # Artifacts are stored for failed jobs for 2 days
 .artifacts_error: &artifacts_error
   artifacts:
-    expire_in: 2 days
+    expire_in: 1 week
     when: on_failure
     paths:
     - tmp/screenshot*

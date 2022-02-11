@@ -97,7 +97,7 @@ global_refresh_envs:
   resource_group: global_refresh_envs
   # allow download via the web UI to restore ENVs in case global cache got deleted (see: `.gitlab-ci.yml`)
   artifacts:
-    expire_in: 1 day
+    expire_in: 1 week
     paths:
       - fresh.env
   rules:
