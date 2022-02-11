@@ -4,6 +4,11 @@ require 'rails_helper'
 
 RSpec.describe 'Text Module', type: :request do
 
+  before do
+    # XSS processing may run into a timeout on slow CI systems, so turn the timeout off for the test.
+    stub_const("#{HtmlSanitizer}::PROCESSING_TIMEOUT", nil)
+  end
+
   let(:admin) do
     create(:admin)
   end
