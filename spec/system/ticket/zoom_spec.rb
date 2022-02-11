@@ -959,14 +959,9 @@ RSpec.describe 'Ticket zoom', type: :system do
   end
 
   # https://github.com/zammad/zammad/issues/3335
-  context 'ticket state sort order maintained when locale is de-de', authenticated_as: :authenticate do
-    def authenticate
-      user.preferences[:locale] = 'de-de'
-      user
-    end
-
+  context 'ticket state sort order maintained when locale is de-de', authenticated_as: :user do
     context 'when existing ticket is open' do
-      let(:user) { create(:customer) }
+      let(:user) { create(:customer, preferences: { locale: 'de-de' }) }
       let(:ticket) { create(:ticket, customer: user) }
 
       it 'shows ticket state dropdown options in sorted translated alphabetically order' do
@@ -979,7 +974,7 @@ RSpec.describe 'Ticket zoom', type: :system do
     end
 
     context 'when a new ticket is created' do
-      let(:user) { create(:agent, groups: [permitted_group]) }
+      let(:user) { create(:agent, preferences: { locale: 'de-de' }, groups: [permitted_group]) }
       let(:permitted_group) { create(:group) }
 
       it 'shows ticket state dropdown options in sorted order' do

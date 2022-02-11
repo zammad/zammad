@@ -34,6 +34,8 @@ RSpec.configure do |config|
       wait.until_exists do
         current_login
       end
+
+      await_empty_ajax_queue
     end
   end
 end
