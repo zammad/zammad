@@ -21,6 +21,8 @@ RSpec.describe 'Login Message', type: :system, authenticated_as: false do
       it 'hides message on the go' do
         open_login_page
 
+        expect(page).to have_css('.js-maintenanceLogin', text: message)
+
         Setting.set 'maintenance_login', false
 
         expect(page).to have_no_css('.js-maintenanceLogin', text: message, wait: 30)
@@ -28,6 +30,8 @@ RSpec.describe 'Login Message', type: :system, authenticated_as: false do
 
       it 'changes message text on the go' do
         open_login_page
+
+        expect(page).to have_css('.js-maintenanceLogin', text: message)
 
         Setting.set 'maintenance_login_message', alt_message
 
