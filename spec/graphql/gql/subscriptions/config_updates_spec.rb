@@ -2,15 +2,15 @@
 
 require 'rails_helper'
 
-RSpec.describe Gql::Subscriptions::ConfigUpdated, type: :graphql do
+RSpec.describe Gql::Subscriptions::ConfigUpdates, type: :graphql do
 
-  let(:subscription) { read_graphql_file('common/graphql/subscriptions/configUpdated.graphql') }
+  let(:subscription) { read_graphql_file('common/graphql/subscriptions/configUpdates.graphql') }
   let(:mock_channel) { build_mock_channel }
   let(:expected_msg) do
     {
       result: {
         'data' => {
-          'configUpdated' => {
+          'configUpdates' => {
             'setting' => {
               'key'   => 'product_name',
               'value' => 'subscription_test'

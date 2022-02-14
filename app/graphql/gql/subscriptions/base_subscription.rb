@@ -8,6 +8,10 @@ module Gql::Subscriptions
     field_class    Gql::Types::BaseField
     argument_class Gql::Types::BaseArgument
 
+    def self.field_name
+      name.sub('Gql::Subscriptions::', '').gsub('::', '').camelize(:lower).to_sym
+    end
+
     #
     # Default subscribe implementation that returns nothing. For this to work, all fields must have null: true.
     # Otherwise, you can provide a subscribe method in the inheriting class.
@@ -23,7 +27,6 @@ module Gql::Subscriptions
     end
 
     def self.register_in_schema(schema)
-      field_name = name.sub('Gql::Subscriptions::', '').gsub('::', '').camelize(:lower).to_sym
       schema.field field_name, resolver: self
     end
 

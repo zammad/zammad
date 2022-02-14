@@ -199,7 +199,7 @@ reload config settings
       },
       preferences[:authentication] ? 'authenticated' : 'public'
     )
-    Gql::ZammadSchema.subscriptions.trigger(:configUpdated, {}, self)
+    Gql::ZammadSchema.subscriptions.trigger(Gql::Subscriptions::ConfigUpdates.field_name, {}, self)
     true
   end
 end

@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Subscriptions
-  class ConfigUpdated < BaseSubscription
+  class ConfigUpdates < BaseSubscription
 
     # This subscription must not be broadcastable as it sends different data depding on
     #   authenticated state.
@@ -17,7 +17,7 @@ module Gql::Subscriptions
         return no_update
       end
 
-      { setting: { key: setting.name, value: Setting.get(setting.name) } }
+      { setting: { key: setting.name, value: setting.state_current[:value] } }
     end
   end
 end

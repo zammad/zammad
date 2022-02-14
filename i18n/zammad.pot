@@ -360,7 +360,7 @@ msgstr ""
 msgid "A new version of Zammad is available, please reload your browser."
 msgstr ""
 
-#: app/frontend/common/composables/useAppUpdateCheck.ts
+#: app/frontend/common/composables/useAppMaintenanceCheck.ts
 msgid "A newer version of the app is available. Please reload at your earliest."
 msgstr ""
 
@@ -8843,7 +8843,7 @@ msgstr ""
 msgid "The configuration of Zammad has changed, please reload your browser."
 msgstr ""
 
-#: app/frontend/common/composables/useAppUpdateCheck.ts
+#: app/frontend/common/composables/useAppMaintenanceCheck.ts
 msgid "The configuration of Zammad has changed. Please reload at your earliest."
 msgstr ""
 

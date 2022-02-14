@@ -1,5 +1,5 @@
-subscription configUpdated {
-  configUpdated {
+subscription configUpdates {
+  configUpdates {
     setting {
       key
       value

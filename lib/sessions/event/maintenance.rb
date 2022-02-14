@@ -19,6 +19,20 @@ To execute this manually, just paste the following into the browser console
     return if !permission_check('admin.maintenance', 'maintenance')
 
     Sessions.broadcast(@payload, 'public', @session['id'])
+
+    # Maintenance mode start/stop messages are not needed for GraphQL, as clients
+    #   watch on changes of the config settings.
+    data = @payload['data']
+    return if data['type'] != 'message'
+
+    Gql::ZammadSchema.subscriptions.trigger(
+      Gql::Subscriptions::PushMessages.field_name,
+      {},
+      {
+        title: data['head'],
+        text:  data['message'],
+      }
+    )
     false
   end
 

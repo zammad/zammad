@@ -4,7 +4,7 @@ class Generators::GraphqlIntrospection::GraphqlIntrospectionGenerator < Rails::G
 
   def generate
     result = Gql::ZammadSchema.execute(introspection_query, variables: {}, context: { is_graphql_introspection_generator: true }, max_depth: 13)
-    raise 'GraphQL schema could not be successfully generated' if result['errors']
+    raise "GraphQL schema could not be successfully generated: #{result['errors'].first['message']}" if result['errors']
 
     # rubocop:disable Rails/Output
     puts JSON.pretty_generate(result)

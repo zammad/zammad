@@ -17,8 +17,11 @@ import useSessionIdStore from '@common/stores/session/id'
 import useMetaTitle from '@common/composables/useMetaTitle'
 import { useRoute, useRouter } from 'vue-router'
 import emitter from '@common/utils/emitter'
-import { onBeforeUnmount } from 'vue'
-import useAppUpdateCheck from '@common/composables/useAppUpdateCheck'
+import { onBeforeUnmount, onMounted, watch } from 'vue'
+import useAppMaintenanceCheck from '@common/composables/useAppMaintenanceCheck'
+import useApplicationConfigStore from '@common/stores/application/config'
+import useSessionUserStore from '@common/stores/session/user'
+import usePushMessages from '@common/composables/usePushMessages'
 
 const router = useRouter()
 const route = useRoute()
@@ -29,9 +32,12 @@ const authenticated = useAuthenticatedStore()
 useMetaTitle().initializeMetaTitle()
 
 const applicationLoaded = useApplicationLoadedStore()
-applicationLoaded.setLoaded()
+onMounted(() => {
+  applicationLoaded.setLoaded()
+})
 
-useAppUpdateCheck()
+useAppMaintenanceCheck()
+usePushMessages()
 
 // Add a watcher for authenticated changes (e.g. login/logout in a other browser tab).
 authenticated.$subscribe(async (mutation, state) => {
@@ -47,10 +53,24 @@ authenticated.$subscribe(async (mutation, state) => {
     })
   } else if (!state.value && sessionId.value) {
     await authenticated.clearAuthentication()
-
     router.replace('login')
   }
 })
+
+watch(
+  () => useApplicationConfigStore().value.maintenance_mode,
+  async (newValue, oldValue) => {
+    if (
+      !oldValue &&
+      newValue &&
+      useAuthenticatedStore().value &&
+      !useSessionUserStore().hasPermission(['admin.maintenance', 'maintenance'])
+    ) {
+      await useAuthenticatedStore().logout()
+      router.replace('login')
+    }
+  },
+)
 
 // The handling for invalid sessions. The event will be emitted, when from the server a "NotAuthorized"
 // response is received.

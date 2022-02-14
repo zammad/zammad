@@ -47,7 +47,7 @@ send also reload type to clients
     # broadcast to clients
     Sessions.broadcast(event_data(type), 'public')
 
-    Gql::ZammadSchema.subscriptions.trigger(:appVersion, {}, type)
+    Gql::ZammadSchema.subscriptions.trigger(Gql::Subscriptions::AppMaintenance.field_name, {}, { type: type })
   end
 
   def self.event_data(type = 'app_version')

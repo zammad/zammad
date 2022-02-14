@@ -13,6 +13,14 @@
             {{ 'Zammad' }}
           </div>
 
+          <template v-if="authenticationConfig.value.maintenance_login">
+            <!-- eslint-disable vue/no-v-html -->
+            <div
+              class="flex items-center py-2 px-4 my-1 text-white bg-green rounded"
+              v-html="authenticationConfig.value.maintenance_login_message"
+            ></div>
+          </template>
+
           <form class="text-left">
             <fieldset class="relative floating-input">
               <input
@@ -84,6 +92,7 @@ import useAuthenticationStore from '@common/stores/authenticated'
 import { useRouter } from 'vue-router'
 import { NotificationTypes } from '@common/types/notification'
 import CommonLogo from '@common/components/common/CommonLogo.vue'
+import useApplicationConfigStore from '@common/stores/application/config'
 
 interface Props {
   invalidatedSession?: string
@@ -91,8 +100,8 @@ interface Props {
 
 const props = defineProps<Props>()
 
-// Output a hint, when the session is longer valid, maybe because because the session
-// was deleted on the server.
+// Output a hint when the session is longer valid.
+// This could happen because because the session was deleted on the server.
 if (props.invalidatedSession === '1') {
   const { notify } = useNotifications()
 
@@ -124,6 +133,8 @@ const login = (): void => {
       })
     })
 }
+
+const authenticationConfig = useApplicationConfigStore()
 </script>
 
 <style lang="postcss">

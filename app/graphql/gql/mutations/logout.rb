@@ -10,9 +10,8 @@ module Gql::Mutations
       false
     end
 
-    def self.authorize(_obj, ctx)
-      ctx.current_user
-    end
+    # Don't require an authenticated user, because that is not present in maintenance_mode,
+    #   when users still need to be correctly logged out.
 
     def resolve(...)
 

@@ -3,14 +3,14 @@
 import useNotifications from '@common/composables/useNotifications'
 import {
   useApplicationBuildChecksumQuery,
-  useAppVersionSubscription,
+  useAppMaintenanceSubscription,
 } from '@common/graphql/api'
 import {
   ApplicationBuildChecksumQuery,
   ApplicationBuildChecksumQueryVariables,
-  AppVersionMessage,
-  AppVersionSubscription,
-  AppVersionSubscriptionVariables,
+  AppMaintenanceType,
+  AppMaintenanceSubscription,
+  AppMaintenanceSubscriptionVariables,
 } from '@common/graphql/types'
 import {
   QueryHandler,
@@ -27,11 +27,11 @@ let query: QueryHandler<
 >
 let previousChecksum: string
 let subscription: SubscriptionHandler<
-  AppVersionSubscription,
-  AppVersionSubscriptionVariables
+  AppMaintenanceSubscription,
+  AppMaintenanceSubscriptionVariables
 >
 
-export default function useAppUpdateCheck() {
+export default function useAppMaintenanceCheck() {
   function notify(message: string) {
     useNotifications().notify({
       message,
@@ -78,21 +78,21 @@ export default function useAppUpdateCheck() {
       }
     })
 
-    subscription = new SubscriptionHandler(useAppVersionSubscription())
+    subscription = new SubscriptionHandler(useAppMaintenanceSubscription())
     subscription.onResult((result) => {
-      const message = result.data?.appVersion.message
-      if (!message) {
-        testFlags.set('useAppVersionSubscription.subscribed')
+      const type = result.data?.appMaintenance.type
+      if (!type) {
+        testFlags.set('useAppMaintenanceSubscription.subscribed')
         return
       }
-      switch (message) {
-        case AppVersionMessage.ConfigChanged:
+      switch (type) {
+        case AppMaintenanceType.ConfigChanged:
           notificationMessage = __(
             'The configuration of Zammad has changed. Please reload at your earliest.',
           )
           break
-        case AppVersionMessage.RestartAuto:
-        case AppVersionMessage.RestartManual:
+        case AppMaintenanceType.RestartAuto:
+        case AppMaintenanceType.RestartManual:
           // TODO: this case cannot be handled right now. Legacy interface performs a connectivity check.
           break
         default:

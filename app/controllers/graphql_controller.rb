@@ -1,15 +1,16 @@
 # Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class GraphqlController < ApplicationController
-  # If accessing from outside this domain, nullify the session
-  # This allows for outside API access while preventing CSRF attacks,
-  # but you'll have to authenticate your user separately
-  # protect_from_forgery with: :null_session
-
   # Handled in the GraphQL processing, not on controller level.
   skip_before_action :verify_csrf_token
 
-  prepend_before_action :authentication_check_only
+  prepend_before_action lambda {
+    begin
+      authentication_check_only
+    rescue Exceptions::Forbidden
+      # Don't throw if the user is not authenticated. Just continue without a current_user.
+    end
+  }
 
   def execute
     if params[:_json]

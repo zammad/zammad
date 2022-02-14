@@ -8,14 +8,15 @@ import type {
 } from '@common/graphql/types'
 import {
   useApplicationConfigQuery,
-  useConfigUpdatedSubscription,
+  useConfigUpdatesSubscription,
 } from '@common/graphql/api'
 import {
   QueryHandler,
   SubscriptionHandler,
 } from '@common/server/apollo/handler'
+import testFlags from '@common/utils/testFlags'
 
-let configUpdatedSubscriptionInitialized = false
+let configUpdatesSubscriptionInitialized = false
 
 let applicationConfigQuery: QueryHandler<
   ApplicationConfigQuery,
@@ -55,20 +56,22 @@ const useApplicationConfigStore = defineStore('applicationConfig', {
         })
       }
 
-      if (!configUpdatedSubscriptionInitialized) {
-        const configUpdatedSubscription = new SubscriptionHandler(
-          useConfigUpdatedSubscription(),
+      if (!configUpdatesSubscriptionInitialized) {
+        const configUpdatesSubscription = new SubscriptionHandler(
+          useConfigUpdatesSubscription(),
         )
 
-        configUpdatedSubscription.onResult((result) => {
-          const updatedSetting = result.data?.configUpdated.setting
+        configUpdatesSubscription.onResult((result) => {
+          const updatedSetting = result.data?.configUpdates.setting
 
           if (updatedSetting) {
             this.value[updatedSetting.key] = updatedSetting.value
+          } else {
+            testFlags.set('useConfigUpdatesSubscription.subscribed')
           }
         })
 
-        configUpdatedSubscriptionInitialized = true
+        configUpdatesSubscriptionInitialized = true
       }
     },
 

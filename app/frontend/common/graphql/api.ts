@@ -283,33 +283,33 @@ export function useTranslationsQuery(variables: Types.TranslationsQueryVariables
   return VueApolloComposable.useQuery<Types.TranslationsQuery, Types.TranslationsQueryVariables>(TranslationsDocument, variables, options);
 }
 export type TranslationsQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<Types.TranslationsQuery, Types.TranslationsQueryVariables>;
-export const AppVersionDocument = gql`
-    subscription appVersion {
-  appVersion {
-    message
+export const AppMaintenanceDocument = gql`
+    subscription appMaintenance {
+  appMaintenance {
+    type
   }
 }
     `;
 
 /**
- * __useAppVersionSubscription__
+ * __useAppMaintenanceSubscription__
  *
- * To run a query within a Vue component, call `useAppVersionSubscription` and pass it any options that fit your needs.
- * When your component renders, `useAppVersionSubscription` returns an object from Apollo Client that contains result, loading and error properties
+ * To run a query within a Vue component, call `useAppMaintenanceSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useAppMaintenanceSubscription` returns an object from Apollo Client that contains result, loading and error properties
  * you can use to render your UI.
  *
  * @param options that will be passed into the subscription, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/subscription.html#options;
  *
  * @example
- * const { result, loading, error } = useAppVersionSubscription();
+ * const { result, loading, error } = useAppMaintenanceSubscription();
  */
-export function useAppVersionSubscription(options: VueApolloComposable.UseSubscriptionOptions<Types.AppVersionSubscription, Types.AppVersionSubscriptionVariables> | VueCompositionApi.Ref<VueApolloComposable.UseSubscriptionOptions<Types.AppVersionSubscription, Types.AppVersionSubscriptionVariables>> | ReactiveFunction<VueApolloComposable.UseSubscriptionOptions<Types.AppVersionSubscription, Types.AppVersionSubscriptionVariables>> = {}) {
-  return VueApolloComposable.useSubscription<Types.AppVersionSubscription, Types.AppVersionSubscriptionVariables>(AppVersionDocument, {}, options);
+export function useAppMaintenanceSubscription(options: VueApolloComposable.UseSubscriptionOptions<Types.AppMaintenanceSubscription, Types.AppMaintenanceSubscriptionVariables> | VueCompositionApi.Ref<VueApolloComposable.UseSubscriptionOptions<Types.AppMaintenanceSubscription, Types.AppMaintenanceSubscriptionVariables>> | ReactiveFunction<VueApolloComposable.UseSubscriptionOptions<Types.AppMaintenanceSubscription, Types.AppMaintenanceSubscriptionVariables>> = {}) {
+  return VueApolloComposable.useSubscription<Types.AppMaintenanceSubscription, Types.AppMaintenanceSubscriptionVariables>(AppMaintenanceDocument, {}, options);
 }
-export type AppVersionSubscriptionCompositionFunctionResult = VueApolloComposable.UseSubscriptionReturn<Types.AppVersionSubscription, Types.AppVersionSubscriptionVariables>;
-export const ConfigUpdatedDocument = gql`
-    subscription configUpdated {
-  configUpdated {
+export type AppMaintenanceSubscriptionCompositionFunctionResult = VueApolloComposable.UseSubscriptionReturn<Types.AppMaintenanceSubscription, Types.AppMaintenanceSubscriptionVariables>;
+export const ConfigUpdatesDocument = gql`
+    subscription configUpdates {
+  configUpdates {
     setting {
       key
       value
@@ -319,18 +319,43 @@ export const ConfigUpdatedDocument = gql`
     `;
 
 /**
- * __useConfigUpdatedSubscription__
+ * __useConfigUpdatesSubscription__
  *
- * To run a query within a Vue component, call `useConfigUpdatedSubscription` and pass it any options that fit your needs.
- * When your component renders, `useConfigUpdatedSubscription` returns an object from Apollo Client that contains result, loading and error properties
+ * To run a query within a Vue component, call `useConfigUpdatesSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useConfigUpdatesSubscription` returns an object from Apollo Client that contains result, loading and error properties
  * you can use to render your UI.
  *
  * @param options that will be passed into the subscription, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/subscription.html#options;
  *
  * @example
- * const { result, loading, error } = useConfigUpdatedSubscription();
+ * const { result, loading, error } = useConfigUpdatesSubscription();
  */
-export function useConfigUpdatedSubscription(options: VueApolloComposable.UseSubscriptionOptions<Types.ConfigUpdatedSubscription, Types.ConfigUpdatedSubscriptionVariables> | VueCompositionApi.Ref<VueApolloComposable.UseSubscriptionOptions<Types.ConfigUpdatedSubscription, Types.ConfigUpdatedSubscriptionVariables>> | ReactiveFunction<VueApolloComposable.UseSubscriptionOptions<Types.ConfigUpdatedSubscription, Types.ConfigUpdatedSubscriptionVariables>> = {}) {
-  return VueApolloComposable.useSubscription<Types.ConfigUpdatedSubscription, Types.ConfigUpdatedSubscriptionVariables>(ConfigUpdatedDocument, {}, options);
+export function useConfigUpdatesSubscription(options: VueApolloComposable.UseSubscriptionOptions<Types.ConfigUpdatesSubscription, Types.ConfigUpdatesSubscriptionVariables> | VueCompositionApi.Ref<VueApolloComposable.UseSubscriptionOptions<Types.ConfigUpdatesSubscription, Types.ConfigUpdatesSubscriptionVariables>> | ReactiveFunction<VueApolloComposable.UseSubscriptionOptions<Types.ConfigUpdatesSubscription, Types.ConfigUpdatesSubscriptionVariables>> = {}) {
+  return VueApolloComposable.useSubscription<Types.ConfigUpdatesSubscription, Types.ConfigUpdatesSubscriptionVariables>(ConfigUpdatesDocument, {}, options);
 }
-export type ConfigUpdatedSubscriptionCompositionFunctionResult = VueApolloComposable.UseSubscriptionReturn<Types.ConfigUpdatedSubscription, Types.ConfigUpdatedSubscriptionVariables>;
+export type ConfigUpdatesSubscriptionCompositionFunctionResult = VueApolloComposable.UseSubscriptionReturn<Types.ConfigUpdatesSubscription, Types.ConfigUpdatesSubscriptionVariables>;
+export const PushMessagesDocument = gql`
+    subscription pushMessages {
+  pushMessages {
+    title
+    text
+  }
+}
+    `;
+
+/**
+ * __usePushMessagesSubscription__
+ *
+ * To run a query within a Vue component, call `usePushMessagesSubscription` and pass it any options that fit your needs.
+ * When your component renders, `usePushMessagesSubscription` returns an object from Apollo Client that contains result, loading and error properties
+ * you can use to render your UI.
+ *
+ * @param options that will be passed into the subscription, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/subscription.html#options;
+ *
+ * @example
+ * const { result, loading, error } = usePushMessagesSubscription();
+ */
+export function usePushMessagesSubscription(options: VueApolloComposable.UseSubscriptionOptions<Types.PushMessagesSubscription, Types.PushMessagesSubscriptionVariables> | VueCompositionApi.Ref<VueApolloComposable.UseSubscriptionOptions<Types.PushMessagesSubscription, Types.PushMessagesSubscriptionVariables>> | ReactiveFunction<VueApolloComposable.UseSubscriptionOptions<Types.PushMessagesSubscription, Types.PushMessagesSubscriptionVariables>> = {}) {
+  return VueApolloComposable.useSubscription<Types.PushMessagesSubscription, Types.PushMessagesSubscriptionVariables>(PushMessagesDocument, {}, options);
+}
+export type PushMessagesSubscriptionCompositionFunctionResult = VueApolloComposable.UseSubscriptionReturn<Types.PushMessagesSubscription, Types.PushMessagesSubscriptionVariables>;
