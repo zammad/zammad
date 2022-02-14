@@ -96,6 +96,9 @@ export const ApplicationBuildChecksumDocument = gql`
 export function useApplicationBuildChecksumQuery(options: VueApolloComposable.UseQueryOptions<Types.ApplicationBuildChecksumQuery, Types.ApplicationBuildChecksumQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.ApplicationBuildChecksumQuery, Types.ApplicationBuildChecksumQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.ApplicationBuildChecksumQuery, Types.ApplicationBuildChecksumQueryVariables>> = {}) {
   return VueApolloComposable.useQuery<Types.ApplicationBuildChecksumQuery, Types.ApplicationBuildChecksumQueryVariables>(ApplicationBuildChecksumDocument, {}, options);
 }
+export function useApplicationBuildChecksumLazyQuery(options: VueApolloComposable.UseQueryOptions<Types.ApplicationBuildChecksumQuery, Types.ApplicationBuildChecksumQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.ApplicationBuildChecksumQuery, Types.ApplicationBuildChecksumQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.ApplicationBuildChecksumQuery, Types.ApplicationBuildChecksumQueryVariables>> = {}) {
+  return VueApolloComposable.useLazyQuery<Types.ApplicationBuildChecksumQuery, Types.ApplicationBuildChecksumQueryVariables>(ApplicationBuildChecksumDocument, {}, options);
+}
 export type ApplicationBuildChecksumQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<Types.ApplicationBuildChecksumQuery, Types.ApplicationBuildChecksumQueryVariables>;
 export const ApplicationConfigDocument = gql`
     query applicationConfig {
@@ -120,6 +123,9 @@ export const ApplicationConfigDocument = gql`
  */
 export function useApplicationConfigQuery(options: VueApolloComposable.UseQueryOptions<Types.ApplicationConfigQuery, Types.ApplicationConfigQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.ApplicationConfigQuery, Types.ApplicationConfigQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.ApplicationConfigQuery, Types.ApplicationConfigQueryVariables>> = {}) {
   return VueApolloComposable.useQuery<Types.ApplicationConfigQuery, Types.ApplicationConfigQueryVariables>(ApplicationConfigDocument, {}, options);
+}
+export function useApplicationConfigLazyQuery(options: VueApolloComposable.UseQueryOptions<Types.ApplicationConfigQuery, Types.ApplicationConfigQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.ApplicationConfigQuery, Types.ApplicationConfigQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.ApplicationConfigQuery, Types.ApplicationConfigQueryVariables>> = {}) {
+  return VueApolloComposable.useLazyQuery<Types.ApplicationConfigQuery, Types.ApplicationConfigQueryVariables>(ApplicationConfigDocument, {}, options);
 }
 export type ApplicationConfigQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<Types.ApplicationConfigQuery, Types.ApplicationConfigQueryVariables>;
 export const CurrentUserDocument = gql`
@@ -159,6 +165,9 @@ export const CurrentUserDocument = gql`
 export function useCurrentUserQuery(options: VueApolloComposable.UseQueryOptions<Types.CurrentUserQuery, Types.CurrentUserQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.CurrentUserQuery, Types.CurrentUserQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.CurrentUserQuery, Types.CurrentUserQueryVariables>> = {}) {
   return VueApolloComposable.useQuery<Types.CurrentUserQuery, Types.CurrentUserQueryVariables>(CurrentUserDocument, {}, options);
 }
+export function useCurrentUserLazyQuery(options: VueApolloComposable.UseQueryOptions<Types.CurrentUserQuery, Types.CurrentUserQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.CurrentUserQuery, Types.CurrentUserQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.CurrentUserQuery, Types.CurrentUserQueryVariables>> = {}) {
+  return VueApolloComposable.useLazyQuery<Types.CurrentUserQuery, Types.CurrentUserQueryVariables>(CurrentUserDocument, {}, options);
+}
 export type CurrentUserQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<Types.CurrentUserQuery, Types.CurrentUserQueryVariables>;
 export const LocalesDocument = gql`
     query locales {
@@ -186,6 +195,9 @@ export const LocalesDocument = gql`
  */
 export function useLocalesQuery(options: VueApolloComposable.UseQueryOptions<Types.LocalesQuery, Types.LocalesQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.LocalesQuery, Types.LocalesQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.LocalesQuery, Types.LocalesQueryVariables>> = {}) {
   return VueApolloComposable.useQuery<Types.LocalesQuery, Types.LocalesQueryVariables>(LocalesDocument, {}, options);
+}
+export function useLocalesLazyQuery(options: VueApolloComposable.UseQueryOptions<Types.LocalesQuery, Types.LocalesQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.LocalesQuery, Types.LocalesQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.LocalesQuery, Types.LocalesQueryVariables>> = {}) {
+  return VueApolloComposable.useLazyQuery<Types.LocalesQuery, Types.LocalesQueryVariables>(LocalesDocument, {}, options);
 }
 export type LocalesQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<Types.LocalesQuery, Types.LocalesQueryVariables>;
 export const OverviewsDocument = gql`
@@ -230,6 +242,9 @@ export const OverviewsDocument = gql`
 export function useOverviewsQuery(variables: Types.OverviewsQueryVariables | VueCompositionApi.Ref<Types.OverviewsQueryVariables> | ReactiveFunction<Types.OverviewsQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.OverviewsQuery, Types.OverviewsQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.OverviewsQuery, Types.OverviewsQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.OverviewsQuery, Types.OverviewsQueryVariables>> = {}) {
   return VueApolloComposable.useQuery<Types.OverviewsQuery, Types.OverviewsQueryVariables>(OverviewsDocument, variables, options);
 }
+export function useOverviewsLazyQuery(variables: Types.OverviewsQueryVariables | VueCompositionApi.Ref<Types.OverviewsQueryVariables> | ReactiveFunction<Types.OverviewsQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.OverviewsQuery, Types.OverviewsQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.OverviewsQuery, Types.OverviewsQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.OverviewsQuery, Types.OverviewsQueryVariables>> = {}) {
+  return VueApolloComposable.useLazyQuery<Types.OverviewsQuery, Types.OverviewsQueryVariables>(OverviewsDocument, variables, options);
+}
 export type OverviewsQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<Types.OverviewsQuery, Types.OverviewsQueryVariables>;
 export const SessionIdDocument = gql`
     query sessionId {
@@ -251,6 +266,9 @@ export const SessionIdDocument = gql`
  */
 export function useSessionIdQuery(options: VueApolloComposable.UseQueryOptions<Types.SessionIdQuery, Types.SessionIdQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.SessionIdQuery, Types.SessionIdQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.SessionIdQuery, Types.SessionIdQueryVariables>> = {}) {
   return VueApolloComposable.useQuery<Types.SessionIdQuery, Types.SessionIdQueryVariables>(SessionIdDocument, {}, options);
+}
+export function useSessionIdLazyQuery(options: VueApolloComposable.UseQueryOptions<Types.SessionIdQuery, Types.SessionIdQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.SessionIdQuery, Types.SessionIdQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.SessionIdQuery, Types.SessionIdQueryVariables>> = {}) {
+  return VueApolloComposable.useLazyQuery<Types.SessionIdQuery, Types.SessionIdQueryVariables>(SessionIdDocument, {}, options);
 }
 export type SessionIdQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<Types.SessionIdQuery, Types.SessionIdQueryVariables>;
 export const TranslationsDocument = gql`
@@ -281,6 +299,9 @@ export const TranslationsDocument = gql`
  */
 export function useTranslationsQuery(variables: Types.TranslationsQueryVariables | VueCompositionApi.Ref<Types.TranslationsQueryVariables> | ReactiveFunction<Types.TranslationsQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.TranslationsQuery, Types.TranslationsQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.TranslationsQuery, Types.TranslationsQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.TranslationsQuery, Types.TranslationsQueryVariables>> = {}) {
   return VueApolloComposable.useQuery<Types.TranslationsQuery, Types.TranslationsQueryVariables>(TranslationsDocument, variables, options);
+}
+export function useTranslationsLazyQuery(variables: Types.TranslationsQueryVariables | VueCompositionApi.Ref<Types.TranslationsQueryVariables> | ReactiveFunction<Types.TranslationsQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.TranslationsQuery, Types.TranslationsQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.TranslationsQuery, Types.TranslationsQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.TranslationsQuery, Types.TranslationsQueryVariables>> = {}) {
+  return VueApolloComposable.useLazyQuery<Types.TranslationsQuery, Types.TranslationsQueryVariables>(TranslationsDocument, variables, options);
 }
 export type TranslationsQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<Types.TranslationsQuery, Types.TranslationsQueryVariables>;
 export const AppMaintenanceDocument = gql`

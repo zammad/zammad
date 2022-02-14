@@ -10,15 +10,19 @@ const routeModules = import.meta.globEager('./routes/*.ts')
 
 const mainRoutes: Array<RouteRecordRaw> = []
 
-Object.values(routeModules).forEach((module: ImportGlobEagerDefault) => {
-  const defaultExport = module.default as RouteRecordRaw | Array<RouteRecordRaw>
+Object.values(routeModules).forEach(
+  (module: ImportGlobEagerDefault<RouteRecordRaw | Array<RouteRecordRaw>>) => {
+    const defaultExport = module.default as
+      | RouteRecordRaw
+      | Array<RouteRecordRaw>
 
-  if (Array.isArray(defaultExport)) {
-    mainRoutes.push(...defaultExport)
-  } else {
-    mainRoutes.push(defaultExport)
-  }
-})
+    if (Array.isArray(defaultExport)) {
+      mainRoutes.push(...defaultExport)
+    } else {
+      mainRoutes.push(defaultExport)
+    }
+  },
+)
 
 const routes: Array<RouteRecordRaw> = [
   {

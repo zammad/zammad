@@ -49,6 +49,7 @@
       - tmp/brakeman-report.html
     when: on_failure
   script:
+    - yarn install
     - echo "Checking .po file syntax..."
     - for FILE in i18n/*.pot i18n/*.po; do echo "Checking $FILE"; msgfmt -o /dev/null -c $FILE; done
     - echo "Checking .pot catalog consistency..."
@@ -63,7 +64,6 @@
     - bundle exec rails zeitwerk:check
     - echo "Checking if auto-generated GraphQL API is up-to-date..."
     - echo "Use the command 'yarn run generate-graphql-api' to re-generate it, if required."
-    - yarn install
     - cp app/frontend/common/graphql/api.ts app/frontend/common/graphql/api.ts.bak
     - cp app/frontend/apps/mobile/graphql/api.ts app/frontend/apps/mobile/graphql/api.ts.bak
     - cp app/frontend/common/graphql/types.ts app/frontend/common/graphql/types.ts.bak

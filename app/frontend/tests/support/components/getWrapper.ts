@@ -3,19 +3,24 @@
 import { mount, MountingOptions } from '@vue/test-utils'
 import { merge } from 'lodash-es'
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
+import { plugin as formPlugin } from '@formkit/vue'
+import { buildFormKitPluginConfig } from '@common/form'
 import CommonIcon from '@common/components/common/CommonIcon.vue'
 import CommonLink from '@common/components/common/CommonLink.vue'
 import { Plugin } from 'vue'
 import { createTestingPinia } from '@pinia/testing'
 import { i18n } from '@common/utils/i18n'
 
+// TODO: some things can be handled differently: https://test-utils.vuejs.org/api/#config-global
+
 interface ExtendedMountingOptions<Props> extends MountingOptions<Props> {
   router?: boolean
-  store?: boolean
   routerRoutes?: RouteRecordRaw[]
+  store?: boolean
+  form?: boolean
 }
 
-const plugins: Plugin[] = []
+const plugins: (Plugin | [Plugin, ...unknown[]])[] = []
 
 const defaultWrapperOptions: ExtendedMountingOptions<unknown> = {
   shallow: true,
@@ -79,6 +84,20 @@ const initializeStore = () => {
   storeInitialized = true
 }
 
+let formInitialized = false
+
+const initializeForm = () => {
+  plugins.push([formPlugin, buildFormKitPluginConfig()])
+  defaultWrapperOptions.shallow = false
+
+  formInitialized = true
+
+  defaultWrapperOptions.props ||= {}
+
+  // Reset the defult of 20ms for testing.
+  defaultWrapperOptions.props.delay = 0
+}
+
 const getWrapper: typeof mount = <Props>(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   component: any,
@@ -90,6 +109,9 @@ const getWrapper: typeof mount = <Props>(
   }
   if (wrapperOptions?.store && !storeInitialized) {
     initializeStore()
+  }
+  if (wrapperOptions?.form && !formInitialized) {
+    initializeForm()
   }
 
   const localWrapperOptions: ExtendedMountingOptions<Props> = merge(

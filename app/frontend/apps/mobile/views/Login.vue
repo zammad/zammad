@@ -12,7 +12,6 @@
           <div class="flex justify-center p-2 mb-6 text-2xl font-extrabold">
             {{ 'Zammad' }}
           </div>
-
           <template v-if="authenticationConfig.value.maintenance_login">
             <!-- eslint-disable vue/no-v-html -->
             <div
@@ -20,66 +19,32 @@
               v-html="authenticationConfig.value.maintenance_login_message"
             ></div>
           </template>
+          <FormKit
+            type="form"
+            form-class="text-left"
+            v-bind:actions="false"
+            v-on:submit="login"
+          >
+            <FormKitSchema v-bind:schema="formSchema" />
+            <div class="flex grow justify-between items-baseline mt-1">
+              <a class="text-yellow underline cursor-pointer select-none">
+                {{ i18n.t('Register') }}
+              </a>
 
-          <form class="text-left">
-            <fieldset class="relative floating-input">
-              <input
-                id="username"
-                v-model="loginFormValues.login"
-                type="text"
-                v-bind:placeholder="i18n.t('Username / Email')"
-                class="block mt-1 w-full h-14 text-sm bg-gray-300 rounded border-none focus:outline-none"
-              />
-              <label
-                for="username"
-                class="absolute top-0 left-0 py-5 px-3 h-full text-base transition-all duration-100 ease-in-out origin-left pointer-events-none"
-              >
-                {{ i18n.t('Username / Email') }}
-              </label>
-            </fieldset>
+              <a class="text-yellow cursor-pointer select-none">
+                {{ i18n.t('Forgot password?') }}
+              </a>
+            </div>
 
-            <fieldset class="relative floating-input">
-              <input
-                id="password"
-                v-model="loginFormValues.password"
-                type="password"
-                v-bind:placeholder="i18n.t('Password')"
-                class="block mt-1 w-full h-14 text-sm bg-gray-300 rounded border-none focus:outline-none"
-              />
-              <label
-                for="password"
-                class="absolute top-0 left-0 py-5 px-3 h-full text-base transition-all duration-100 ease-in-out origin-left pointer-events-none"
-              >
-                {{ i18n.t('Password') }}
-              </label>
-            </fieldset>
-
-            <!-- <label
-                  class="mt-4 cursor-pointer inline-flex items-center select-none"
-                >
-                  <input type="checkbox" />
-                  <span class="ml-2">{{ i18n.t('Remember me') }}</span>
-                </label> -->
-          </form>
-
-          <div class="flex grow justify-between items-baseline mt-1">
-            <a class="text-yellow underline cursor-pointer select-none">
-              {{ i18n.t('Register') }}
-            </a>
-
-            <a class="text-yellow cursor-pointer select-none">
-              {{ i18n.t('Forgot password?') }}
-            </a>
-          </div>
-
-          <div class="flex grow justify-center items-center mx-8 mt-8">
-            <button
-              class="py-2 px-4 w-full h-14 text-xl font-semibold text-black bg-yellow rounded select-none"
-              v-on:click="login"
+            <FormKit
+              v-bind:ignore="true"
+              wrapper-class="flex grow justify-center items-center mx-8 mt-8"
+              input-class="py-2 px-4 w-full h-14 text-xl font-semibold text-black bg-yellow rounded select-none"
+              type="submit"
             >
               {{ i18n.t('Sign in') }}
-            </button>
-          </div>
+            </FormKit>
+          </FormKit>
         </div>
       </div>
     </div>
@@ -93,6 +58,10 @@ import { useRouter } from 'vue-router'
 import { NotificationTypes } from '@common/types/notification'
 import CommonLogo from '@common/components/common/CommonLogo.vue'
 import useApplicationConfigStore from '@common/stores/application/config'
+import { i18n } from '@common/utils/i18n'
+import { FormKit, FormKitSchema } from '@formkit/vue'
+import { FormKitGroupValue } from '@formkit/core'
+import { reactive } from 'vue'
 
 interface Props {
   invalidatedSession?: string
@@ -112,16 +81,76 @@ if (props.invalidatedSession === '1') {
 }
 
 const authentication = useAuthenticationStore()
-const loginFormValues = {
-  login: '',
-  password: '',
-}
 
 const router = useRouter()
 
-const login = (): void => {
+const forFloatingLabel = {
+  wrapper: {
+    attrs: {
+      'data-has-value': {
+        if: '$_value != "" && $fns.string($_value) !== "undefined"',
+        then: 'true',
+        else: undefined,
+      },
+    },
+  },
+}
+
+const formSchema = reactive([
+  {
+    $formkit: 'text',
+    name: 'login',
+    label: __('Username / Email'),
+    labelPlaceholder: ['replaced'],
+    placeholder: __('Username / Email'),
+    wrapperClass: 'relative floating-input',
+    inputClass:
+      'block mt-1 w-full h-14 text-sm bg-gray-300 rounded border-none focus:outline-none placeholder:text-transparent',
+    labelClass:
+      'absolute top-0 left-0 py-5 px-3 h-full text-base transition-all duration-100 ease-in-out origin-left pointer-events-none',
+    __raw__sectionsSchema: forFloatingLabel,
+    validation: 'required',
+  },
+  {
+    $formkit: 'password',
+    label: __('Password'),
+    labelPlaceholder: ['replaced'],
+    name: 'password',
+    placeholder: __('Password'),
+    wrapperClass: 'relative floating-input',
+    inputClass:
+      'block mt-1 w-full h-14 text-sm bg-gray-300 rounded border-none focus:outline-none placeholder:text-transparent',
+    labelClass:
+      'absolute top-0 left-0 py-5 px-3 h-full text-base transition-all duration-100 ease-in-out origin-left pointer-events-none',
+    __raw__sectionsSchema: forFloatingLabel,
+    validation: 'required',
+  },
+  // {
+  //   $formkit: 'select',
+  //   label: __('Select'),
+  //   labelPlaceholder: ['replaced'],
+  //   name: 'select',
+  //   placeholder: __('Select'),
+  //   wrapperClass: 'relative floating-input',
+  //   inputClass:
+  //     'block mt-1 w-full h-14 text-sm bg-gray-300 rounded border-none focus:outline-none placeholder:text-transparent',
+  //   labelClass:
+  //     'absolute top-0 left-0 py-5 px-3 h-full text-base transition-all duration-100 ease-in-out origin-left pointer-events-none',
+  //   options: ['1', '2', '3', '4'],
+  //   __raw__sectionsSchema: forFloatingLabel,
+  //   validation: 'required',
+  // },
+])
+
+interface FormData {
+  login: string
+  password: string
+}
+
+const login = (formData: FormKitGroupValue): void => {
+  const data = formData as unknown as FormData
   authentication
-    .login(loginFormValues.login, loginFormValues.password)
+    .login(data.login, data.password)
     .then(() => {
       router.replace('/')
     })
@@ -129,7 +158,7 @@ const login = (): void => {
       const { notify } = useNotifications()
       notify({
         message: errors[0],
-        type: NotificationTypes.WARN,
+        type: NotificationTypes.ERROR,
       })
     })
 }
@@ -138,17 +167,13 @@ const authenticationConfig = useApplicationConfigStore()
 </script>
 
 <style lang="postcss">
-.floating-input > input::placeholder {
-  color: transparent;
-}
-
-.floating-input > input:focus,
-.floating-input > input:not(:placeholder-shown) {
+.floating-input > .formkit-inner > input:focus,
+.floating-input > .formkit-inner > input:not(:placeholder-shown) {
   @apply pt-8;
 }
 
-.floating-input > input:focus ~ label,
-.floating-input > input:not(:placeholder-shown) ~ label {
+.floating-input:focus-within > label,
+.floating-input[data-has-value] > label {
   @apply opacity-75 scale-75 -translate-y-3 translate-x-1;
 }
 </style>

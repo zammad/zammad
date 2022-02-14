@@ -83,6 +83,9 @@ export const TicketsByIdDocument = gql`
 export function useTicketsByIdQuery(variables: Types.TicketsByIdQueryVariables | VueCompositionApi.Ref<Types.TicketsByIdQueryVariables> | ReactiveFunction<Types.TicketsByIdQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.TicketsByIdQuery, Types.TicketsByIdQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.TicketsByIdQuery, Types.TicketsByIdQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.TicketsByIdQuery, Types.TicketsByIdQueryVariables>> = {}) {
   return VueApolloComposable.useQuery<Types.TicketsByIdQuery, Types.TicketsByIdQueryVariables>(TicketsByIdDocument, variables, options);
 }
+export function useTicketsByIdLazyQuery(variables: Types.TicketsByIdQueryVariables | VueCompositionApi.Ref<Types.TicketsByIdQueryVariables> | ReactiveFunction<Types.TicketsByIdQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.TicketsByIdQuery, Types.TicketsByIdQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.TicketsByIdQuery, Types.TicketsByIdQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.TicketsByIdQuery, Types.TicketsByIdQueryVariables>> = {}) {
+  return VueApolloComposable.useLazyQuery<Types.TicketsByIdQuery, Types.TicketsByIdQueryVariables>(TicketsByIdDocument, variables, options);
+}
 export type TicketsByIdQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<Types.TicketsByIdQuery, Types.TicketsByIdQueryVariables>;
 export const TicketsByOverviewDocument = gql`
     query ticketsByOverview($overviewId: ID!, $orderBy: TicketOrderBy, $orderDirection: OrderDirection, $cursor: String, $pageSize: Int = 10, $withObjectAttributes: Boolean = false) {
@@ -160,5 +163,8 @@ export const TicketsByOverviewDocument = gql`
  */
 export function useTicketsByOverviewQuery(variables: Types.TicketsByOverviewQueryVariables | VueCompositionApi.Ref<Types.TicketsByOverviewQueryVariables> | ReactiveFunction<Types.TicketsByOverviewQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.TicketsByOverviewQuery, Types.TicketsByOverviewQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.TicketsByOverviewQuery, Types.TicketsByOverviewQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.TicketsByOverviewQuery, Types.TicketsByOverviewQueryVariables>> = {}) {
   return VueApolloComposable.useQuery<Types.TicketsByOverviewQuery, Types.TicketsByOverviewQueryVariables>(TicketsByOverviewDocument, variables, options);
+}
+export function useTicketsByOverviewLazyQuery(variables: Types.TicketsByOverviewQueryVariables | VueCompositionApi.Ref<Types.TicketsByOverviewQueryVariables> | ReactiveFunction<Types.TicketsByOverviewQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.TicketsByOverviewQuery, Types.TicketsByOverviewQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.TicketsByOverviewQuery, Types.TicketsByOverviewQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.TicketsByOverviewQuery, Types.TicketsByOverviewQueryVariables>> = {}) {
+  return VueApolloComposable.useLazyQuery<Types.TicketsByOverviewQuery, Types.TicketsByOverviewQueryVariables>(TicketsByOverviewDocument, variables, options);
 }
 export type TicketsByOverviewQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<Types.TicketsByOverviewQuery, Types.TicketsByOverviewQueryVariables>;

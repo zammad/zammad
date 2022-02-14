@@ -33,12 +33,20 @@
     "scss/no-global-function-names": null,
     "value-no-vendor-prefix": null,
     "property-no-unknown": [true, { "ignoreProperties": ["scroll-snap-mode"] }],
-    "property-no-vendor-prefix": null
+    "property-no-vendor-prefix": null,
+    "value-keyword-case": [
+      "lower",
+      {
+        "camelCaseSvgKeywords": true
+      }
+    ]
   },
   "ignoreFiles": [
     "public/assets/*.css",
     "public/assets/chat/chat.css",
     "public/assets/doorkeeper/**",
+    "public/vite-dev/**",
+    "public/vite/**",
     "**/reset*.css",
     "**/bootstrap*.css",
     "**/jquery*.css",

@@ -15,7 +15,7 @@ RSpec.describe Gql::Queries::Overviews, type: :graphql do
 
     context 'with an agent', authenticated_as: :agent do
       it 'has agent overview' do
-        expect(graphql_response['data']['overviews']['edges'][0]['node']).to include('name' => 'My assigned Tickets', 'link' => 'my_assigned', 'prio' => 1000, 'active' => true,)
+        expect(graphql_response['data']['overviews']['edges'][0]['node']).to include('name' => 'My Assigned Tickets', 'link' => 'my_assigned', 'prio' => 1000, 'active' => true,)
       end
 
       context 'without ticket count' do

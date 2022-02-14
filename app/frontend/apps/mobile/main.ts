@@ -22,6 +22,7 @@ import useSessionUserStore from '@common/stores/session/user'
 import useAuthenticatedStore from '@common/stores/authenticated'
 import 'virtual:svg-icons-register' // eslint-disable-line import/no-unresolved
 import transitionViewGuard from '@mobile/router/guards/before/viewTransition'
+import initializeForm from '@mobile/form'
 
 export default async function mountApp(): Promise<void> {
   const app = createApp(App)
@@ -63,6 +64,8 @@ export default async function mountApp(): Promise<void> {
   }
 
   app.config.globalProperties.i18n = i18n
+
+  initializeForm(app)
 
   app.mount('#app')
 }

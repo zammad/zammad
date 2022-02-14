@@ -1,12 +1,12 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import mockConsole from 'jest-mock-console'
-
-// Needs to be done before importing log
-mockConsole(['error', 'warn', 'info', 'log', 'trace'])
-
-// eslint-disable-next-line import/first
+import '@tests/support/mock-hoist-helper'
 import log from '@common/utils/log'
+
+jest.mock('@tests/support/mock-hoist-helper', () => {
+  mockConsole(['error', 'warn', 'info', 'log', 'trace'])
+})
 
 describe('log', () => {
   it('logs with default log level', () => {

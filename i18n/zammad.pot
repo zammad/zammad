@@ -6407,6 +6407,14 @@ msgstr ""
 msgid "No entries were found in the selected folder(s)."
 msgstr ""
 
+#: app/frontend/common/form/i18n/locales.ts
+msgid "No file chosen."
+msgstr ""
+
+#: app/frontend/common/form/i18n/locales.ts
+msgid "No file formats allowed."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
 msgid "No filter."
@@ -7135,6 +7143,10 @@ msgstr ""
 msgid "Play user interface sound effects"
 msgstr ""
 
+#: app/frontend/common/form/i18n/locales.ts
+msgid "Please accept the %s."
+msgstr ""
+
 #: app/views/knowledge_base/public/categories/index.html.erb
 msgid "Please add categories and/or answers"
 msgstr ""
@@ -7159,6 +7171,10 @@ msgstr ""
 msgid "Please enter a text."
 msgstr ""
 
+#: app/frontend/common/form/i18n/locales.ts
+msgid "Please enter a valid email address."
+msgstr ""
+
 #: app/assets/javascripts/app/views/ticket_zoom/time_accounting.jst.eco
 msgid "Please enter the time you want to record."
 msgstr ""
@@ -7173,6 +7189,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/public_menu_form_item.coffee
 msgid "Please fill in all fields"
+msgstr ""
+
+#: app/frontend/common/form/i18n/locales.ts
+msgid "Please include a valid url."
 msgstr ""
 
 #: app/controllers/integration/exchange_controller.rb
@@ -7465,7 +7485,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
-#: app/frontend/apps/mobile/views/Login.vue
 msgid "Remember me"
 msgstr ""
 
@@ -7491,7 +7510,12 @@ msgstr ""
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
 #: app/assets/javascripts/app/views/twitter/search_term.jst.eco
+#: app/frontend/common/form/i18n/locales.ts
 msgid "Remove"
+msgstr ""
+
+#: app/frontend/common/form/i18n/locales.ts
+msgid "Remove all"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
@@ -7928,6 +7952,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 msgid "See your tickets from within your favorite calendar by adding the following URL to your calendar app."
+msgstr ""
+
+#: app/frontend/apps/mobile/views/Login.vue
+msgid "Select"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
@@ -8381,6 +8409,10 @@ msgstr ""
 msgid "Something went wrong. Please contact your administrator."
 msgstr ""
 
+#: app/frontend/common/form/i18n/locales.ts
+msgid "Sorry, not all fields are filled out correctly."
+msgstr ""
+
 #: app/assets/javascripts/app/views/cti/not_configured.jst.eco
 msgid "Sorry, there is currently no CTI backend enabled."
 msgstr ""
@@ -8551,6 +8583,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/settings/switch.jst.eco
 #: app/assets/javascripts/app/views/settings/ticket_hook_position.jst.eco
 #: app/assets/javascripts/app/views/settings/ticket_number.jst.eco
+#: app/frontend/common/form/i18n/locales.ts
 msgid "Submit"
 msgstr ""
 
@@ -8870,6 +8903,102 @@ msgstr ""
 msgid "The entry could not be created."
 msgstr ""
 
+#: app/frontend/common/form/i18n/locales.ts
+msgid "The field \"%s\" can only contain alphabetical characters."
+msgstr ""
+
+#: app/frontend/common/form/i18n/locales.ts
+msgid "The field \"%s\" can only contain letters and numbers."
+msgstr ""
+
+#: app/frontend/common/form/i18n/locales.ts
+msgid "The field \"%s\" can't contain the value \"%s\"."
+msgstr ""
+
+#: app/frontend/common/form/i18n/locales.ts
+msgid "The field \"%s\" can't have less than %s entries."
+msgstr ""
+
+#: app/frontend/common/form/i18n/locales.ts
+msgid "The field \"%s\" can't have more than %s entries."
+msgstr ""
+
+#: app/frontend/common/form/i18n/locales.ts
+msgid "The field \"%s\" doesn't contain an allowed value."
+msgstr ""
+
+#: app/frontend/common/form/i18n/locales.ts
+msgid "The field \"%s\" doesn't correspond to the expected value."
+msgstr ""
+
+#: app/frontend/common/form/i18n/locales.ts
+msgid "The field \"%s\" doesn't end with \"%s\"."
+msgstr ""
+
+#: app/frontend/common/form/i18n/locales.ts
+msgid "The field \"%s\" doesn't start with \"%s\"."
+msgstr ""
+
+#: app/frontend/common/form/i18n/locales.ts
+msgid "The field \"%s\" is required."
+msgstr ""
+
+#: app/frontend/common/form/i18n/locales.ts
+msgid "The field \"%s\" isn't a valid date, please use the format \"%s\"."
+msgstr ""
+
+#: app/frontend/common/form/i18n/locales.ts
+msgid "The field \"%s\" must be of the type \"%s\"."
+msgstr ""
+
+#: app/frontend/common/form/i18n/locales.ts
+msgid "The field \"%s\" must contain a number."
+msgstr ""
+
+#: app/frontend/common/form/i18n/locales.ts
+msgid "The field \"%s\" must contain at least %s characters."
+msgstr ""
+
+#: app/frontend/common/form/i18n/locales.ts
+msgid "The field \"%s\" must contain at least one character."
+msgstr ""
+
+#: app/frontend/common/form/i18n/locales.ts
+msgid "The field \"%s\" must contain between %s and %s characters."
+msgstr ""
+
+#: app/frontend/common/form/i18n/locales.ts
+msgid "The field \"%s\" must have a value that is after %s."
+msgstr ""
+
+#: app/frontend/common/form/i18n/locales.ts
+msgid "The field \"%s\" must have a value that is at least %s."
+msgstr ""
+
+#: app/frontend/common/form/i18n/locales.ts
+msgid "The field \"%s\" must have a value that is at most %s."
+msgstr ""
+
+#: app/frontend/common/form/i18n/locales.ts
+msgid "The field \"%s\" must have a value that is before %s."
+msgstr ""
+
+#: app/frontend/common/form/i18n/locales.ts
+msgid "The field \"%s\" must have a value that is between %s and %s."
+msgstr ""
+
+#: app/frontend/common/form/i18n/locales.ts
+msgid "The field \"%s\" must have a value that is in the future."
+msgstr ""
+
+#: app/frontend/common/form/i18n/locales.ts
+msgid "The field \"%s\" must have a value that is in the past."
+msgstr ""
+
+#: app/frontend/common/form/i18n/locales.ts
+msgid "The field \"%s\" must not contain more than %s characters."
+msgstr ""
+
 #: lib/telegram.rb
 msgid "The file could not be retrieved from the bot."
 msgstr ""
@@ -9107,6 +9236,10 @@ msgstr ""
 msgid "The retried security process failed!"
 msgstr ""
 
+#: app/frontend/common/components/common/CommonHelloWorld.vue
+msgid "The second component."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
 msgid "The server settings could not be automatically detected. Please configure them manually."
@@ -9220,6 +9353,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/holiday_selector.coffee
 msgid "This entry already exists!"
+msgstr ""
+
+#: app/frontend/common/form/i18n/locales.ts
+msgid "This field was configured incorrectly and can't be submitted."
 msgstr ""
 
 #: app/assets/javascripts/app/views/version.jst.eco

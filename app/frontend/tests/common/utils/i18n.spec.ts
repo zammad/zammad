@@ -15,6 +15,7 @@ describe('i18n', () => {
     const map = new Map([
       ['yes', 'ja'],
       ['Hello world!', 'Hallo Welt!'],
+      ['The second component.', 'Die zweite Komponente.'],
       [
         'String with 3 placeholders: %s %s %s',
         'Zeichenkette mit 3 Platzhaltern: %s %s %s',
@@ -40,7 +41,7 @@ describe('i18n', () => {
   })
 
   it('updates (reactive) translations automatically', async () => {
-    expect.assertions(2)
+    expect.assertions(4)
     const msg = 'Hello world!'
     const wrapper = shallowMount(CommonHelloWorld, {
       props: { msg, show: true },
@@ -51,8 +52,10 @@ describe('i18n', () => {
       },
     })
     expect(wrapper.text()).toMatch('Hallo Welt!')
+    expect(wrapper.text()).toMatch('Die zweite Komponente.')
     i18n.setTranslationMap(new Map())
     await nextTick()
     expect(wrapper.text()).toMatch('Hello world!')
+    expect(wrapper.text()).toMatch('The second component.')
   })
 })

@@ -16,10 +16,12 @@ module.exports = {
     '^lodash-es$': 'lodash',
   },
   moduleFileExtensions: ['js', 'ts', 'json', 'vue'],
-  preset: 'ts-jest',
   testMatch: ['**/?(*.)+(spec|test).+(ts|tsx)'],
   transform: {
-    '^.+\\.(ts|tsx)$': 'ts-jest',
+    '^.+\\.(ts|tsx)$': [
+      'babel-jest',
+      { configFile: './app/frontend/tests/babel.test.config.js' },
+    ],
     '^.+\\.vue$': '@vue/vue3-jest',
   },
   testEnvironment: 'jsdom',

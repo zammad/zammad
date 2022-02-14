@@ -22,6 +22,8 @@ import useAppMaintenanceCheck from '@common/composables/useAppMaintenanceCheck'
 import useApplicationConfigStore from '@common/stores/application/config'
 import useSessionUserStore from '@common/stores/session/user'
 import usePushMessages from '@common/composables/usePushMessages'
+import useLocaleStore from '@common/stores/locale'
+import useFormKitConfig from '@common/composables/useFormKitConfig'
 
 const router = useRouter()
 const route = useRoute()
@@ -71,6 +73,12 @@ watch(
     }
   },
 )
+
+// We need to trigger a manual translation update for the form related strings.
+const formConfig = useFormKitConfig()
+useLocaleStore().$subscribe(() => {
+  formConfig.locale = 'staticLocale'
+})
 
 // The handling for invalid sessions. The event will be emitted, when from the server a "NotAuthorized"
 // response is received.

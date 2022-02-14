@@ -10,11 +10,14 @@ const cacheInitializerModules = import.meta.globEager(
   './cache/initializer/*.ts',
 )
 
+type RegisterInMemoryCacheConfig = (
+  config: InMemoryCacheConfig,
+) => InMemoryCacheConfig
+
 Object.values(cacheInitializerModules).forEach(
-  (module: ImportGlobEagerDefault) => {
-    const register = module.default as (
-      config: InMemoryCacheConfig,
-    ) => InMemoryCacheConfig
+  (module: ImportGlobEagerDefault<RegisterInMemoryCacheConfig>) => {
+    const register = module.default
+
     cacheConfig = register(cacheConfig)
   },
 )
