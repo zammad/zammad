@@ -62,5 +62,15 @@ RSpec.describe 'Login Message', type: :system, authenticated_as: false do
     visit '/'
 
     ensure_websocket
+
+    # Wait until the event binding for the 'config_update_local' is present.
+    # TODO: If this works we can maybe move the check for event bindings in a helper function.
+    wait.until do
+      page.evaluate_script("Object.keys(App.Event._allBindings()).find((key) => {
+    return App.Event._allBindings()[key].find((item) => {
+      return item.event === 'config_update_local';
+    });
+  })")
+    end
   end
 end
