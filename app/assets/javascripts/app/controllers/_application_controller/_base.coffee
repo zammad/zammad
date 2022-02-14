@@ -309,7 +309,8 @@ class App.Controller extends Spine.Controller
     if item.attr('timezone')
       newTitle += ' ' + item.attr('timezone')
 
-    item.attr('title', newTitle)
+    if !item.hasClass('noTitle')
+      item.attr('title', newTitle)
     item.html(time)
 
   recentView: (object, o_id) =>

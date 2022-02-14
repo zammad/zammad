@@ -146,12 +146,18 @@ App.ViewHelpers =
     App.Utils.humanFileSize(size)
 
   # define pretty/human time helper
-  humanTime: (time, escalation = false, cssClass = '') ->
+  humanTime: (time, escalation = false, cssClass = '', setTitle = true) ->
     timestamp = App.i18n.translateTimestamp(time)
     if escalation
       cssClass += ' escalation'
     humanTime = App.PrettyDate.humanTime(time, escalation)
-    "<time class=\"humanTimeFromNow #{cssClass}\" datetime=\"#{time}\" title=\"#{timestamp}\">#{humanTime}</time>"
+
+    title = " title=\"#{timestamp}\""
+    if !setTitle
+      title = ''
+      cssClass += ' noTitle'
+
+    "<time class=\"humanTimeFromNow #{cssClass}\" datetime=\"#{time}\"#{title}>#{humanTime}</time>"
 
   # Why not just use `Icon: App.Utils.icon`?
   # Because App.Utils isn't loaded until after this file.

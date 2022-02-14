@@ -2503,4 +2503,26 @@ RSpec.describe 'Ticket zoom', type: :system do
       end
     end
   end
+
+  describe 'Show which escalation type escalated in ticket zoom #3928', authenticated_as: :authenticate do
+    let(:sla) { create(:sla, first_response_time: 1, update_time: 1, solution_time: 1) }
+    let(:ticket) { create(:ticket, group: Group.find_by(name: 'Users')) }
+
+    def authenticate
+      sla
+      true
+    end
+
+    before do
+      visit "#ticket/zoom/#{ticket.id}"
+    end
+
+    it 'does show the extended escalation information' do
+      sleep 4 # wait for popup killer
+      page.find('.escalation-popover').hover
+      expect(page).to have_text('FIRST RESPONSE TIME')
+      expect(page).to have_text('UPDATE TIME')
+      expect(page).to have_text('SOLUTION TIME')
+    end
+  end
 end
