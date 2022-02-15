@@ -67,9 +67,9 @@ RSpec.describe 'Login Message', type: :system, authenticated_as: false do
     # TODO: If this works we can maybe move the check for event bindings in a helper function.
     wait.until do
       page.evaluate_script("Object.keys(App.Event._allBindings()).find((key) => {
-    return App.Event._allBindings()[key].find((item) => {
-      return item.event === 'config_update_local';
-    });
+    return App.Event._allBindings()[key].filter((item) => {
+      return item.event === 'config_update_local' || item.event === 'ui:rerender';
+    }).length === 2;
   })")
     end
   end
