@@ -61,3 +61,95 @@ you can use this workflow:
 ## Known Issues With Localization
 
 - There is currently no support for plural forms.
+
+## API & Code Examples
+
+### CoffeeScript
+
+See [i18n.coffee](app/assets/javascripts/app/lib/app_post/i18n.coffee)
+
+#### Translate With Markup Support
+
+```coffeescript
+App.i18n.translateContent('translate and <b>html escape</b> and replace _markup_')
+```
+
+#### Translate Without Markup Support
+
+```coffeescript
+App.i18n.translateInline('translate and <b>html escape</b> and no _markup_')
+```
+
+#### Translate Without Escaping
+
+```coffeescript
+App.i18n.translatePlain('plain text')
+```
+
+#### Translate Datetime
+
+```coffeescript
+App.Ticket.find(1).created_at
+"2021-06-10T09:45:30.394Z"
+App.i18n.translateTimestamp(App.Ticket.find(1).created_at)
+"10.06.2021 11:45"
+```
+
+#### Translate Date
+
+```coffeescript
+App.Ticket.find(1).created_at
+"2021-06-10T09:45:30.394Z"
+App.i18n.translateDate(App.Ticket.find(1).created_at)
+"10.06.2021"
+```
+
+### Ruby
+
+#### Translate a String
+
+```ruby
+Translation.translate('de-de', '3 high')
+"3 hoch"
+```
+
+#### Enable Translation For a Dropdown
+
+```ruby
+> obj = ObjectManager::Attribute.find_by(name: 'group_id')
+=> #<ObjectManager::Attribute:0x0000564593325508
+ id: 4,
+ object_lookup_id: 2,
+ name: "group_id",
+ display: "Group",
+ data_type: "select",
+ data_option:
+  {"default"=>"",
+   "relation"=>"Group",
+   "relation_condition"=>{"access"=>"full"},
+   "nulloption"=>true,
+   "multiple"=>false,
+   "null"=>false,
+   "translate"=>false,
+   "only_shown_if_selectable"=>true,
+   "permission"=>["ticket.agent", "ticket.customer"],
+   "maxlength"=>255},
+ data_option_new: {},
+ editable: false,
+ active: true,
+ screens: {"create_middle"=>{"-all-"=>{"null"=>false, "item_class"=>"column"}}, "edit"=>{"ticket.agent"=>{"null"=>false}}},
+ to_create: false,
+ to_migrate: false,
+ to_delete: false,
+ to_config: false,
+ position: 25,
+ created_by_id: 1,
+ updated_by_id: 1,
+ created_at: Thu, 10 Jun 2021 09:45:30 UTC +00:00,
+ updated_at: Thu, 10 Jun 2021 09:45:30 UTC +00:00>
+
+[34] pry(main)> obj.data_option['translate'] = true
+=> true
+[35] pry(main)> obj.save
+=> true
+```
