@@ -11,3 +11,5 @@
 global.__ = (source) => {
   return source
 }
+
+global.VITE_TEST_MODE = true

@@ -7,24 +7,22 @@ class TestFlags {
 
   private flags: Map<string, boolean> = new Map()
 
-  public enabled = true
-
   get(flag: string, skipClearing = false): boolean {
-    if (!this.enabled) return false
+    if (!VITE_TEST_MODE) return false
     const flagValue = !!this.flags.get(flag)
     if (!skipClearing) this.clear(flag)
     return flagValue
   }
 
   async set(flag: string): Promise<void> {
-    if (!this.enabled) return
+    if (!VITE_TEST_MODE) return
     await this.mutex.runExclusive(() => {
       this.flags.set(flag, true)
     })
   }
 
   async clear(flag: string): Promise<void> {
-    if (!this.enabled) return
+    if (!VITE_TEST_MODE) return
     await this.mutex.runExclusive(() => {
       this.flags.delete(flag)
     })
@@ -39,7 +37,9 @@ declare global {
   }
 }
 
-// Register globally for access from Capybara/Selenium.
-window.testFlags = testFlags
+if (VITE_TEST_MODE) {
+  // Register globally for access from Capybara/Selenium.
+  window.testFlags = testFlags
+}
 
 export default testFlags

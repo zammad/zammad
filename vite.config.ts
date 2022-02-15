@@ -14,6 +14,9 @@ export default defineConfig({
       '@common': path.resolve(__dirname, 'app/frontend/common'),
     },
   },
+  define: {
+    VITE_TEST_MODE: !!process.env.VITE_TEST_MODE,
+  },
   plugins: [
     RubyPlugin(),
     VuePlugin(),
