@@ -206,6 +206,12 @@ msgstr "%s מכרטיסים שלי הוסלמו."
 msgid "%s people"
 msgstr "%s אנשים"
 
+#: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
+msgid ""
+"%s recommends using OAuth. %s announced it's going to drop Basic "
+"Authentication support in the future."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee
 msgid "%s required!"
 msgstr "% s נדרש!"
@@ -269,18 +275,6 @@ msgstr "%s עדכן משתמש |%s|"
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco
 msgid "%s user to %s user"
 msgstr "משתמש %s למשתמש %s"
-
-#: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
-msgid ""
-"%s will only allow access via OAuth. Password-based access has not been "
-"supported since %s."
-msgstr ""
-
-#: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
-msgid ""
-"%s will only allow access via OAuth. Password-based access is no longer "
-"supported on %s."
-msgstr ""
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco
 msgid "%s% are currently in process"
@@ -3352,15 +3346,7 @@ msgid ""
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Defines the translator identifier for contributions."
-msgstr ""
-
-#: db/seeds/settings.rb
 msgid "Defines transaction backend."
-msgstr ""
-
-#: db/seeds/settings.rb
-msgid "Defines translator identifier."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee
@@ -4210,6 +4196,7 @@ msgstr "זמן הסלמה"
 msgid "Escalation At"
 msgstr ""
 
+#: app/assets/javascripts/app/lib/app_post/popover_provider/escalation_popover_provider.coffee
 #: app/assets/javascripts/app/views/sla/index.jst.eco
 msgid "Escalation Times"
 msgstr "זמן הסלמה"
@@ -4473,6 +4460,7 @@ msgid "First Response In Min"
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
+#: app/assets/javascripts/app/views/popover/escalation.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
 msgid "First Response Time"
 msgstr "זמן תגוה ראשוני"
@@ -7837,12 +7825,9 @@ msgstr "תאריך מעוצב"
 #: app/assets/javascripts/app/views/generic/application_selector.jst.eco
 #: app/assets/javascripts/app/views/profile/imageCropper.jst.eco
 #: app/assets/javascripts/app/views/settings/ticket_number.jst.eco
+#: app/assets/javascripts/app/views/widget/text_module.jst.eco
 msgid "Preview"
 msgstr "תצוגה מקדימה"
-
-#: app/assets/javascripts/app/views/widget/text_module.jst.eco
-msgid "Preview "
-msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Preview Width"
@@ -8995,6 +8980,7 @@ msgid "Slack integration"
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
+#: app/assets/javascripts/app/views/popover/escalation.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
 msgid "Solution Time"
 msgstr "זמן פתרון"
@@ -10452,6 +10438,7 @@ msgid "Update In Min"
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
+#: app/assets/javascripts/app/views/popover/escalation.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
 msgid "Update Time"
 msgstr "זמן עדכון"

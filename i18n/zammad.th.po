@@ -4,8 +4,8 @@ msgstr ""
 "POT-Creation-Date: \n"
 "PO-Revision-Date: 2022-02-09 03:30+0000\n"
 "Last-Translator: LAO <sumonchai@gmail.com>\n"
-"Language-Team: Thai <https://translations.zammad.org/projects/zammad/"
-"zammad-development/th/>\n"
+"Language-Team: Thai <https://translations.zammad.org/projects/zammad/zammad-"
+"development/th/>\n"
 "Language: th\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -186,6 +186,12 @@ msgstr ""
 msgid "%s people"
 msgstr ""
 
+#: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
+msgid ""
+"%s recommends using OAuth. %s announced it's going to drop Basic "
+"Authentication support in the future."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee
 msgid "%s required!"
 msgstr "%s จำเป็น!"
@@ -236,18 +242,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco
 msgid "%s user to %s user"
-msgstr ""
-
-#: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
-msgid ""
-"%s will only allow access via OAuth. Password-based access has not been "
-"supported since %s."
-msgstr ""
-
-#: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
-msgid ""
-"%s will only allow access via OAuth. Password-based access is no longer "
-"supported on %s."
 msgstr ""
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco
@@ -3200,15 +3194,7 @@ msgid ""
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Defines the translator identifier for contributions."
-msgstr ""
-
-#: db/seeds/settings.rb
 msgid "Defines transaction backend."
-msgstr ""
-
-#: db/seeds/settings.rb
-msgid "Defines translator identifier."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee
@@ -4023,6 +4009,7 @@ msgstr ""
 msgid "Escalation At"
 msgstr ""
 
+#: app/assets/javascripts/app/lib/app_post/popover_provider/escalation_popover_provider.coffee
 #: app/assets/javascripts/app/views/sla/index.jst.eco
 msgid "Escalation Times"
 msgstr ""
@@ -4278,6 +4265,7 @@ msgid "First Response In Min"
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
+#: app/assets/javascripts/app/views/popover/escalation.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
 msgid "First Response Time"
 msgstr ""
@@ -7528,12 +7516,9 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/application_selector.jst.eco
 #: app/assets/javascripts/app/views/profile/imageCropper.jst.eco
 #: app/assets/javascripts/app/views/settings/ticket_number.jst.eco
+#: app/assets/javascripts/app/views/widget/text_module.jst.eco
 msgid "Preview"
 msgstr "ดูตัวอย่าง"
-
-#: app/assets/javascripts/app/views/widget/text_module.jst.eco
-msgid "Preview "
-msgstr "ดูตัวอย่าง "
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Preview Width"
@@ -8643,6 +8628,7 @@ msgid "Slack integration"
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
+#: app/assets/javascripts/app/views/popover/escalation.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
 msgid "Solution Time"
 msgstr ""
@@ -10038,6 +10024,7 @@ msgid "Update In Min"
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
+#: app/assets/javascripts/app/views/popover/escalation.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
 msgid "Update Time"
 msgstr ""
@@ -11972,6 +11959,9 @@ msgstr ""
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ รอเวลาวันนี้"
+
+#~ msgid "Preview "
+#~ msgstr "ดูตัวอย่าง "
 
 #~ msgid "Create SLA"
 #~ msgstr "สร้าง SLA"

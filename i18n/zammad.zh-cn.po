@@ -216,6 +216,12 @@ msgstr "共有 %s 工单升级了。"
 msgid "%s people"
 msgstr "％s 人"
 
+#: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
+msgid ""
+"%s recommends using OAuth. %s announced it's going to drop Basic "
+"Authentication support in the future."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee
 msgid "%s required!"
 msgstr "需要 ％s！"
@@ -283,26 +289,6 @@ msgstr "%s 更新了用户 |%s|"
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco
 msgid "%s user to %s user"
 msgstr "％s 用户到 ％s 用户"
-
-#: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
-#, fuzzy
-#| msgid ""
-#| "%s will only allow access via OAuth. Password-based access is no longer "
-#| "supported since %s."
-msgid ""
-"%s will only allow access via OAuth. Password-based access has not been "
-"supported since %s."
-msgstr "%s 将只允许通过 OAuth 访问。 自 %s 起不再支持基于密码的访问。"
-
-#: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
-#, fuzzy
-#| msgid ""
-#| "%s will only allow access via OAuth. Password-based access is no longer "
-#| "supported since %s."
-msgid ""
-"%s will only allow access via OAuth. Password-based access is no longer "
-"supported on %s."
-msgstr "%s 将只允许通过 OAuth 访问。 自 %s 起不再支持基于密码的访问。"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco
 msgid "%s% are currently in process"
@@ -3459,15 +3445,7 @@ msgid ""
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Defines the translator identifier for contributions."
-msgstr ""
-
-#: db/seeds/settings.rb
 msgid "Defines transaction backend."
-msgstr ""
-
-#: db/seeds/settings.rb
-msgid "Defines translator identifier."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee
@@ -4324,6 +4302,7 @@ msgstr "SLA層級提升時間"
 msgid "Escalation At"
 msgstr ""
 
+#: app/assets/javascripts/app/lib/app_post/popover_provider/escalation_popover_provider.coffee
 #: app/assets/javascripts/app/views/sla/index.jst.eco
 msgid "Escalation Times"
 msgstr "SLA層級提升時間"
@@ -4596,6 +4575,7 @@ msgid "First Response In Min"
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
+#: app/assets/javascripts/app/views/popover/escalation.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
 msgid "First Response Time"
 msgstr "第一响应时间"
@@ -8001,12 +7981,9 @@ msgstr "漂亮的日期"
 #: app/assets/javascripts/app/views/generic/application_selector.jst.eco
 #: app/assets/javascripts/app/views/profile/imageCropper.jst.eco
 #: app/assets/javascripts/app/views/settings/ticket_number.jst.eco
+#: app/assets/javascripts/app/views/widget/text_module.jst.eco
 msgid "Preview"
 msgstr "预览"
-
-#: app/assets/javascripts/app/views/widget/text_module.jst.eco
-msgid "Preview "
-msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Preview Width"
@@ -9164,6 +9141,7 @@ msgid "Slack integration"
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
+#: app/assets/javascripts/app/views/popover/escalation.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
 msgid "Solution Time"
 msgstr "解决时间"
@@ -10645,6 +10623,7 @@ msgid "Update In Min"
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
+#: app/assets/javascripts/app/views/popover/escalation.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
 msgid "Update Time"
 msgstr "更新时间"
@@ -12695,6 +12674,24 @@ msgstr "...整个文本区域"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅轮候时间"
+
+#, fuzzy
+#~| msgid ""
+#~| "%s will only allow access via OAuth. Password-based access is no longer "
+#~| "supported since %s."
+#~ msgid ""
+#~ "%s will only allow access via OAuth. Password-based access has not been "
+#~ "supported since %s."
+#~ msgstr "%s 将只允许通过 OAuth 访问。 自 %s 起不再支持基于密码的访问。"
+
+#, fuzzy
+#~| msgid ""
+#~| "%s will only allow access via OAuth. Password-based access is no longer "
+#~| "supported since %s."
+#~ msgid ""
+#~ "%s will only allow access via OAuth. Password-based access is no longer "
+#~ "supported on %s."
+#~ msgstr "%s 将只允许通过 OAuth 访问。 自 %s 起不再支持基于密码的访问。"
 
 #~ msgid "Edit Answer"
 #~ msgstr "編輯回答"

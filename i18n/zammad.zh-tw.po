@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-01-31 07:17+0000\n"
+"PO-Revision-Date: 2022-02-15 10:46+0000\n"
 "Last-Translator: Jc <dottdot.dev@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <https://translations.zammad.org/"
 "projects/zammad/zammad-development/zh_Hant/>\n"
@@ -216,6 +216,12 @@ msgstr "我有 %s 工單被提升層級。"
 msgid "%s people"
 msgstr "%s 人"
 
+#: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
+msgid ""
+"%s recommends using OAuth. %s announced it's going to drop Basic "
+"Authentication support in the future."
+msgstr "%s 建議使用 OAuth。%s 已宣告未來即將放棄基本驗證的支援。"
+
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee
 msgid "%s required!"
 msgstr "需要 %s！"
@@ -281,18 +287,6 @@ msgstr "%s 更新了使用者 |%s|"
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco
 msgid "%s user to %s user"
 msgstr "%s 使用者 到 %s 使用者"
-
-#: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
-msgid ""
-"%s will only allow access via OAuth. Password-based access has not been "
-"supported since %s."
-msgstr "%s 將只允許透過 OAuth 登入。從 %s 起就不再提供密碼登入。"
-
-#: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
-msgid ""
-"%s will only allow access via OAuth. Password-based access is no longer "
-"supported on %s."
-msgstr "%s 將只允許透過 OAuth 登入。%s 不再提供密碼登入。"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco
 msgid "%s% are currently in process"
@@ -3401,15 +3395,7 @@ msgid ""
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Defines the translator identifier for contributions."
-msgstr ""
-
-#: db/seeds/settings.rb
 msgid "Defines transaction backend."
-msgstr ""
-
-#: db/seeds/settings.rb
-msgid "Defines translator identifier."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee
@@ -4265,6 +4251,7 @@ msgstr "層級提升次數"
 msgid "Escalation At"
 msgstr ""
 
+#: app/assets/javascripts/app/lib/app_post/popover_provider/escalation_popover_provider.coffee
 #: app/assets/javascripts/app/views/sla/index.jst.eco
 msgid "Escalation Times"
 msgstr "層級提升次數"
@@ -4537,6 +4524,7 @@ msgid "First Response In Min"
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
+#: app/assets/javascripts/app/views/popover/escalation.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
 msgid "First Response Time"
 msgstr "第一次回應時間"
@@ -5245,7 +5233,7 @@ msgstr "如何使用"
 #: app/assets/javascripts/app/views/integration/idoit_object_result.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_idoit.jst.eco
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #: db/seeds/settings.rb
 msgid "IDP SSO target URL"
@@ -7944,12 +7932,9 @@ msgstr "優雅的日期"
 #: app/assets/javascripts/app/views/generic/application_selector.jst.eco
 #: app/assets/javascripts/app/views/profile/imageCropper.jst.eco
 #: app/assets/javascripts/app/views/settings/ticket_number.jst.eco
+#: app/assets/javascripts/app/views/widget/text_module.jst.eco
 msgid "Preview"
 msgstr "預覽"
-
-#: app/assets/javascripts/app/views/widget/text_module.jst.eco
-msgid "Preview "
-msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Preview Width"
@@ -9108,6 +9093,7 @@ msgid "Slack integration"
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
+#: app/assets/javascripts/app/views/popover/escalation.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
 msgid "Solution Time"
 msgstr "解決時間"
@@ -10588,6 +10574,7 @@ msgid "Update In Min"
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
+#: app/assets/javascripts/app/views/popover/escalation.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
 msgid "Update Time"
 msgstr "更新時間"
@@ -12638,6 +12625,16 @@ msgstr "...整個文字區域"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ 今日等待時間"
+
+#~ msgid ""
+#~ "%s will only allow access via OAuth. Password-based access has not been "
+#~ "supported since %s."
+#~ msgstr "%s 將只允許透過 OAuth 登入。從 %s 起就不再提供密碼登入。"
+
+#~ msgid ""
+#~ "%s will only allow access via OAuth. Password-based access is no longer "
+#~ "supported on %s."
+#~ msgstr "%s 將只允許透過 OAuth 登入。%s 不再提供密碼登入。"
 
 #~ msgid "Edit Answer"
 #~ msgstr "編輯回答"

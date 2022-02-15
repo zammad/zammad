@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-02-10 03:30+0000\n"
-"Last-Translator: Lorenzo Milesi <lorenzo.milesi@yetopen.com>\n"
+"PO-Revision-Date: 2022-02-15 03:30+0000\n"
+"Last-Translator: crnfpp <crnfpp@unife.it>\n"
 "Language-Team: Italian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/it/>\n"
 "Language: it-it\n"
@@ -197,6 +197,14 @@ msgstr "%s dei miei ticket hanno subito un'escalation."
 msgid "%s people"
 msgstr "%s persone"
 
+#: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
+msgid ""
+"%s recommends using OAuth. %s announced it's going to drop Basic "
+"Authentication support in the future."
+msgstr ""
+"%s raccomanda l'utilizzo di OAuth. %s avvisa che verrà discontinuato il "
+"supporto di Basic Authentication nelle future versioni."
+
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee
 msgid "%s required!"
 msgstr "% obbligatorio!"
@@ -250,22 +258,6 @@ msgstr "%s ha modificato l'utente |%s|"
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco
 msgid "%s user to %s user"
 msgstr "%s utente verso utente %s"
-
-#: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
-msgid ""
-"%s will only allow access via OAuth. Password-based access has not been "
-"supported since %s."
-msgstr ""
-"%s consente solamente l'accesso via OAuth. L'accesso tramite password non è "
-"più supportato dal %s."
-
-#: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
-msgid ""
-"%s will only allow access via OAuth. Password-based access is no longer "
-"supported on %s."
-msgstr ""
-"%s consente solamente l'accesso via OAuth. L'accesso tramite password non è "
-"più supportato su %s."
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco
 msgid "%s% are currently in process"
@@ -908,10 +900,8 @@ msgstr "Versione app"
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee
-#, fuzzy
-#| msgid "Account not verified"
 msgid "App could not be verified."
-msgstr "Account non verificato"
+msgstr "Account non verificato."
 
 #: db/seeds/settings.rb
 msgid "App credentials for Facebook."
@@ -3591,15 +3581,7 @@ msgid ""
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Defines the translator identifier for contributions."
-msgstr "Definisce l'identificatore del traduttore per i contributi."
-
-#: db/seeds/settings.rb
 msgid "Defines transaction backend."
-msgstr ""
-
-#: db/seeds/settings.rb
-msgid "Defines translator identifier."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee
@@ -4492,6 +4474,7 @@ msgstr "Escalation Times"
 msgid "Escalation At"
 msgstr ""
 
+#: app/assets/javascripts/app/lib/app_post/popover_provider/escalation_popover_provider.coffee
 #: app/assets/javascripts/app/views/sla/index.jst.eco
 msgid "Escalation Times"
 msgstr "Escalation Times"
@@ -4756,6 +4739,7 @@ msgid "First Response In Min"
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
+#: app/assets/javascripts/app/views/popover/escalation.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
 msgid "First Response Time"
 msgstr "Primo tempo di risposta"
@@ -8167,12 +8151,9 @@ msgstr "Data Graziosa"
 #: app/assets/javascripts/app/views/generic/application_selector.jst.eco
 #: app/assets/javascripts/app/views/profile/imageCropper.jst.eco
 #: app/assets/javascripts/app/views/settings/ticket_number.jst.eco
+#: app/assets/javascripts/app/views/widget/text_module.jst.eco
 msgid "Preview"
 msgstr "Anteprima"
-
-#: app/assets/javascripts/app/views/widget/text_module.jst.eco
-msgid "Preview "
-msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Preview Width"
@@ -9336,6 +9317,7 @@ msgid "Slack integration"
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
+#: app/assets/javascripts/app/views/popover/escalation.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
 msgid "Solution Time"
 msgstr "Tempo di soluzione"
@@ -10829,6 +10811,7 @@ msgid "Update In Min"
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
+#: app/assets/javascripts/app/views/popover/escalation.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
 msgid "Update Time"
 msgstr "Aggiorna Orario"
@@ -12898,6 +12881,23 @@ msgstr "... dell'intera area di testo"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Tempi di attesa - Oggi"
+
+#~ msgid ""
+#~ "%s will only allow access via OAuth. Password-based access has not been "
+#~ "supported since %s."
+#~ msgstr ""
+#~ "%s consente solamente l'accesso via OAuth. L'accesso tramite password non "
+#~ "è più supportato dal %s."
+
+#~ msgid ""
+#~ "%s will only allow access via OAuth. Password-based access is no longer "
+#~ "supported on %s."
+#~ msgstr ""
+#~ "%s consente solamente l'accesso via OAuth. L'accesso tramite password non "
+#~ "è più supportato su %s."
+
+#~ msgid "Defines the translator identifier for contributions."
+#~ msgstr "Definisce l'identificatore del traduttore per i contributi."
 
 #~ msgid "Create SLA"
 #~ msgstr "Crea SLA"
