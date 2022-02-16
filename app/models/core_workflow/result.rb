@@ -7,7 +7,7 @@ class CoreWorkflow::Result
 
   def initialize(payload:, user:, assets: {}, assets_in_result: true, result: {})
     raise ArgumentError, __("The required parameter 'payload->class_name' is missing.") if !payload['class_name']
-    raise ArgumentError, __("The required parmeter 'payload->screen' is missing.") if !payload['screen']
+    raise ArgumentError, __("The required parameter 'payload->screen' is missing.") if !payload['screen']
 
     @payload          = payload
     @user             = user

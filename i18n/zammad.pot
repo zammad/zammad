@@ -8925,12 +8925,12 @@ msgstr ""
 msgid "The required parameter 'payload->class_name' is missing."
 msgstr ""
 
-#: app/controllers/users_controller.rb
-msgid "The required parameter 'signup' is missing."
+#: app/models/core_workflow/result.rb
+msgid "The required parameter 'payload->screen' is missing."
 msgstr ""
 
-#: app/models/core_workflow/result.rb
-msgid "The required parmeter 'payload->screen' is missing."
+#: app/controllers/users_controller.rb
+msgid "The required parameter 'signup' is missing."
 msgstr ""
 
 #: app/controllers/users_controller.rb
