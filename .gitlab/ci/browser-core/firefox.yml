@@ -28,9 +28,3 @@
     - .template_browser-core_firefox
   variables:
     TEST_SLICE: "5"
-
-6_firefox:
-  extends:
-    - .template_browser-core_firefox
-  variables:
-    TEST_SLICE: "6"

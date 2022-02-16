@@ -85,21 +85,18 @@ RSpec.describe 'Keyboard Shortcuts', type: :system do
     context 'for list of shortcuts' do
       before do
         send_keys([*hot_keys, 'h'])
-        wait.until_exists { find :active_modal_content }
       end
 
       it 'shows list of shortcuts' do
-        within :active_modal_content do
+        in_modal disappears: false do
           expect(page).to have_selector('h1.modal-title', text: 'Keyboard Shortcuts')
         end
       end
 
       it 'hides list of shortcuts when re-pressed' do
-        within :active_modal_content do
+        in_modal do
           send_keys([*hot_keys, 'h'])
         end
-
-        expect(page).to have_no_selector :active_modal_content
       end
     end
 

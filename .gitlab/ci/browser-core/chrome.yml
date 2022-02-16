@@ -27,9 +27,3 @@
     - .template_browser-core_chrome
   variables:
     TEST_SLICE: "5"
-
-6_chrome:
-  extends:
-    - .template_browser-core_chrome
-  variables:
-    TEST_SLICE: "6"
