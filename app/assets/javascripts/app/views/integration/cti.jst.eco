@@ -1,6 +1,6 @@
 <form>
 
-  <h2><%- @T('Settings') %></h2>
+  <h2><%- @T('Endpoint Settings') %></h2>
 
   <p><%- @T('You need to configure the Zammad endpoints in the %s', 'PBX') %>:<p>
 
@@ -19,7 +19,8 @@
     </table>
   </div>
 
-  <h2><%- @T('Inbound') %></h2>
+  <h2><%- @T('Call Settings') %></h2>
+  <h3><%- @T('Inbound') %></h3>
 
   <p><%- @T('Block caller IDs based on sender caller ID.') %>
 
@@ -46,7 +47,7 @@
     </table>
   </div>
 
-  <h2><%- @T('Outbound') %></h2>
+  <h3><%- @T('Outbound') %></h3>
 
   <p><%- @T('Set caller ID of outbound calls based on destination caller ID.') %>
 
@@ -76,7 +77,7 @@
     </table>
   </div>
 
-  <p><%- @T('Settings') %>
+  <h2><%- @T('Other Settings') %></h2>
 
   <div class="settings-entry">
     <table class="settings-list" style="width: 100%;">
@@ -96,9 +97,9 @@
     </table>
   </div>
 
-  <h2><%- @T('Notify Map') %></h2>
+  <h2><%- @T('Phone Extension to Agent Mapping') %></h2>
 
-  <p><%- @T('Notify certain users by matching caller ID.') %><%- @T('If no mapping is defined, all users will get notified of any event.') %>
+  <p><%- @T("By mapping your agents' phone extensions to their Zammad user accounts, Zammad can support your agents by opening either a new ticket dialogue or the user profile upon picking up a new call.") %></p>
 
   <div class="settings-entry">
     <table class="settings-list js-notifyMap" style="width: 100%;">

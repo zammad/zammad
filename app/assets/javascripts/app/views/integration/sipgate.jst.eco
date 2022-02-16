@@ -1,6 +1,6 @@
 <form>
 
-  <h2>sipgate.io <%- @T('Settings') %></h2>
+  <h2><%- @T('Endpoint Settings') %></h2>
 
   <p><%- @T('You need to configure the Zammad endpoints in the %s web interface', 'Sipgate') %>:<p>
 
@@ -22,7 +22,8 @@
     </table>
   </div>
 
-  <h2><%- @T('Inbound') %></h2>
+  <h2><%- @T('Call Settings') %></h2>
+  <h3><%- @T('Inbound') %></h3>
 
   <p><%- @T('Block caller IDs based on sender caller ID.') %>
 
@@ -49,7 +50,7 @@
     </table>
   </div>
 
-  <h2><%- @T('Outbound') %></h2>
+  <h3><%- @T('Outbound') %></h3>
 
   <p><%- @T('Set caller ID of outbound calls based on destination caller ID.') %>
 
@@ -79,7 +80,7 @@
     </table>
   </div>
 
-  <p><%- @T('Settings') %>
+  <h2><%- @T('Other Settings') %></h2>
 
   <div class="settings-entry">
     <table class="settings-list" style="width: 100%;">
@@ -99,9 +100,9 @@
     </table>
   </div>
 
-  <h2><%- @T('User assignment to Sipgate users') %></h2>
+  <h2><%- @T('Phone Extension to Agent Mapping') %></h2>
 
-  <p><%- @T('User assignment to Sipgate users to be able to open new ticket screen upon answering a call.') %>
+  <p><%- @T("By mapping your agents' sipgate users to their Zammad user accounts, Zammad can support your agents by opening either a new ticket dialogue or the user profile upon picking up a new call.") %>
 
   <div class="settings-entry">
     <table class="settings-list js-userRemoteMap" style="width: 100%;">

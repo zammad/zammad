@@ -1248,6 +1248,18 @@ msgstr ""
 msgid "By default, the follow-up check is done via the subject of an email. This setting lets you add more fields for which the follow-up check will be executed."
 msgstr ""
 
+#: app/assets/javascripts/app/views/integration/placetel.jst.eco
+msgid "By mapping your agents' Placetel SIP users to their Zammad user accounts, Zammad can support your agents by opening either a new ticket dialogue or the user profile upon picking up a new call."
+msgstr ""
+
+#: app/assets/javascripts/app/views/integration/cti.jst.eco
+msgid "By mapping your agents' phone extensions to their Zammad user accounts, Zammad can support your agents by opening either a new ticket dialogue or the user profile upon picking up a new call."
+msgstr ""
+
+#: app/assets/javascripts/app/views/integration/sipgate.jst.eco
+msgid "By mapping your agents' sipgate users to their Zammad user accounts, Zammad can support your agents by opening either a new ticket dialogue or the user profile upon picking up a new call."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
 #: app/assets/javascripts/app/models/ticket_article.coffee
@@ -1305,6 +1317,12 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/calendar.coffee
 #: db/seeds/permissions.rb
 msgid "Calendars"
+msgstr ""
+
+#: app/assets/javascripts/app/views/integration/cti.jst.eco
+#: app/assets/javascripts/app/views/integration/placetel.jst.eco
+#: app/assets/javascripts/app/views/integration/sipgate.jst.eco
+msgid "Call Settings"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/cti.coffee
@@ -3688,6 +3706,12 @@ msgstr ""
 msgid "Endpoint"
 msgstr ""
 
+#: app/assets/javascripts/app/views/integration/cti.jst.eco
+#: app/assets/javascripts/app/views/integration/placetel.jst.eco
+#: app/assets/javascripts/app/views/integration/sipgate.jst.eco
+msgid "Endpoint Settings"
+msgstr ""
+
 #: db/seeds.rb
 msgid "English (United States)"
 msgstr ""
@@ -4708,10 +4732,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
 msgid "If left empty, the host gets auto-detected - in this case %s. The auto-detection reads out the host from the <script> tag. If you don't include it via a <script> tag you need to specify the host."
-msgstr ""
-
-#: app/assets/javascripts/app/views/integration/cti.jst.eco
-msgid "If no mapping is defined, all users will get notified of any event."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/check_mk.coffee
@@ -6595,14 +6615,6 @@ msgstr ""
 msgid "Notifications"
 msgstr ""
 
-#: app/assets/javascripts/app/views/integration/cti.jst.eco
-msgid "Notify Map"
-msgstr ""
-
-#: app/assets/javascripts/app/views/integration/cti.jst.eco
-msgid "Notify certain users by matching caller ID."
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
@@ -6842,6 +6854,12 @@ msgstr ""
 msgid "Original Formatting"
 msgstr ""
 
+#: app/assets/javascripts/app/views/integration/cti.jst.eco
+#: app/assets/javascripts/app/views/integration/placetel.jst.eco
+#: app/assets/javascripts/app/views/integration/sipgate.jst.eco
+msgid "Other Settings"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
 #: db/seeds/permissions.rb
@@ -7077,6 +7095,12 @@ msgstr ""
 
 #: app/models/report.rb
 msgid "Phone (out)"
+msgstr ""
+
+#: app/assets/javascripts/app/views/integration/cti.jst.eco
+#: app/assets/javascripts/app/views/integration/placetel.jst.eco
+#: app/assets/javascripts/app/views/integration/sipgate.jst.eco
+msgid "Phone Extension to Agent Mapping"
 msgstr ""
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
@@ -7384,7 +7408,7 @@ msgid "Recent Customer Tickets"
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/http_log.jst.eco
-msgid "Recent logs"
+msgid "Recent Logs"
 msgstr ""
 
 #: app/assets/javascripts/app/views/agent_ticket_merge.jst.eco
@@ -8132,14 +8156,11 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_zoom/setting.coffee
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 #: app/assets/javascripts/app/views/customer_chat/index.jst.eco
-#: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/github.jst.eco
 #: app/assets/javascripts/app/views/integration/gitlab.jst.eco
 #: app/assets/javascripts/app/views/integration/idoit.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
-#: app/assets/javascripts/app/views/integration/placetel.jst.eco
-#: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
 msgid "Settings"
@@ -9844,22 +9865,6 @@ msgstr ""
 
 #: db/seeds/permissions.rb
 msgid "User Preferences"
-msgstr ""
-
-#: app/assets/javascripts/app/views/integration/sipgate.jst.eco
-msgid "User assignment to Sipgate users"
-msgstr ""
-
-#: app/assets/javascripts/app/views/integration/sipgate.jst.eco
-msgid "User assignment to Sipgate users to be able to open new ticket screen upon answering a call."
-msgstr ""
-
-#: app/assets/javascripts/app/views/integration/placetel.jst.eco
-msgid "User assignment to telephones"
-msgstr ""
-
-#: app/assets/javascripts/app/views/integration/placetel.jst.eco
-msgid "User assignment to telephones to be able to open new ticket screen upon answering a call."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee
