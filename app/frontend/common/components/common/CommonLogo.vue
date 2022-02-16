@@ -2,7 +2,7 @@
 
 <template>
   <img
-    class="w-40 h-40"
+    class="h-40 w-40"
     v-bind:src="logoUrl"
     v-bind:alt="(config.get('product_name') as string)"
   />

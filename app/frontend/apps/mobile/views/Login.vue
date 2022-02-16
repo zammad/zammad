@@ -2,20 +2,20 @@
 
 <template>
   <!-- TODO: Only a dummy implementation for the login... -->
-  <div class="flex flex-col justify-center items-center h-full min-h-screen">
+  <div class="flex h-full min-h-screen flex-col items-center justify-center">
     <div class="w-full max-w-md">
-      <div class="flex flex-col grow justify-center">
-        <div class="grow p-8 my-5">
+      <div class="flex grow flex-col justify-center">
+        <div class="my-5 grow p-8">
           <div class="flex justify-center p-2">
             <CommonLogo />
           </div>
-          <div class="flex justify-center p-2 mb-6 text-2xl font-extrabold">
+          <div class="mb-6 flex justify-center p-2 text-2xl font-extrabold">
             {{ 'Zammad' }}
           </div>
           <template v-if="authenticationConfig.value.maintenance_login">
             <!-- eslint-disable vue/no-v-html -->
             <div
-              class="flex items-center py-2 px-4 my-1 text-white bg-green rounded"
+              class="my-1 flex items-center rounded bg-green py-2 px-4 text-white"
               v-html="authenticationConfig.value.maintenance_login_message"
             ></div>
           </template>
@@ -26,12 +26,12 @@
             v-on:submit="login"
           >
             <FormKitSchema v-bind:schema="formSchema" />
-            <div class="flex grow justify-between items-baseline mt-1">
-              <a class="text-yellow underline cursor-pointer select-none">
+            <div class="mt-1 flex grow items-baseline justify-between">
+              <a class="cursor-pointer select-none text-yellow underline">
                 {{ i18n.t('Register') }}
               </a>
 
-              <a class="text-yellow cursor-pointer select-none">
+              <a class="cursor-pointer select-none text-yellow">
                 {{ i18n.t('Forgot password?') }}
               </a>
             </div>
@@ -174,6 +174,6 @@ const authenticationConfig = useApplicationConfigStore()
 
 .floating-input:focus-within > label,
 .floating-input[data-has-value] > label {
-  @apply opacity-75 scale-75 -translate-y-3 translate-x-1;
+  @apply -translate-y-3 translate-x-1 scale-75 opacity-75;
 }
 </style>

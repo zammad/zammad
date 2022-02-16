@@ -3,7 +3,7 @@
 <template>
   <CommonNotifications />
   <div
-    class="min-w-full min-h-screen font-sans text-sm antialiased text-center text-white bg-black select-none"
+    class="min-h-screen min-w-full select-none bg-black text-center font-sans text-sm text-white antialiased"
   >
     <router-view v-if="applicationLoaded.value" />
   </div>

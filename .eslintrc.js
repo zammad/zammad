@@ -9,14 +9,7 @@ module.exports = {
     jest: true,
     node: true,
   },
-  plugins: [
-    '@typescript-eslint',
-    'vue',
-    'prettier',
-    'jest',
-    'tailwindcss',
-    'zammad',
-  ],
+  plugins: ['@typescript-eslint', 'vue', 'prettier', 'jest', 'zammad'],
   extends: [
     'airbnb-base',
     'plugin:vue/vue3-recommended',
@@ -24,7 +17,6 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended',
     'plugin:jest/recommended',
-    'plugin:tailwindcss/recommended',
     '@vue/prettier',
     '@vue/typescript/recommended',
     'prettier',
@@ -110,9 +102,6 @@ module.exports = {
 
     // Don't require a default value for the props.
     'vue/require-default-prop': 'off',
-
-    // Disabled for now, because it's not working on the CI and also leads to a bad performance.
-    'tailwindcss/no-custom-classname': 'off',
   },
   overrides: [
     {

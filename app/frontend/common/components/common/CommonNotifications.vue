@@ -1,8 +1,8 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <template>
-  <div id="Notifications" class="flex justify-center w-full">
-    <div class="fixed top-0 ltr:right-0 rtl:left-0 z-50">
+  <div id="Notifications" class="flex w-full justify-center">
+    <div class="fixed top-0 z-50 ltr:right-0 rtl:left-0">
       <transition-group
         tag="div"
         enter-class="opacity-0"
@@ -11,7 +11,7 @@
         <div v-for="notification in notifications" v-bind:key="notification.id">
           <div class="flex justify-center">
             <div
-              class="flex items-center py-2 px-4 m-1 rounded cursor-pointer"
+              class="m-1 flex cursor-pointer items-center rounded py-2 px-4"
               v-bind:class="getClassName(notification)"
               v-on:click="clickHandler(notification)"
             >
@@ -19,7 +19,7 @@
                 v-bind:name="iconNameMap[notification.type]"
                 v-bind:fixed-size="{ width: 10, height: 10 }"
               />
-              <span class="rtl:mr-2 ltr:ml-2 text-sm">{{
+              <span class="text-sm ltr:ml-2 rtl:mr-2">{{
                 notification.messagePlaceholder
                   ? i18n.t(
                       notification.message,
