@@ -305,34 +305,38 @@ class ArticleViewItem extends App.ControllerObserver
     e.stopPropagation()
 
     article_id = $(e.target).closest('.ticket-article-item').data('id')
+    article    = App.TicketArticle.find(article_id)
 
     @ajax(
       id:   'retrySecurityProcess'
       type: 'POST'
       url:  "#{@apiPath}/ticket_articles/#{article_id}/retry_security_process"
       processData: true
-      success: (data, status, xhr) =>
-        if data.sign.success
-          @notify
-            type: 'success'
-            msg:  App.i18n.translateContent('Verify sign success!')
-        else if data.sign.comment
-          comment = App.i18n.translateContent('Verify sign failed!') + ' ' + App.i18n.translateContent(data.sign.comment || '')
-          @notify
-            type: 'error'
-            msg: comment
-            timeout: 2000
+      success: (encryption_data, status, xhr) =>
+        for data in encryption_data
+          continue if article.preferences.security.type isnt data.type
 
-        if data.encryption.success
-          @notify
-            type: 'success'
-            msg:  App.i18n.translateContent('Decryption success!')
-        else if data.encryption.comment
-          comment = App.i18n.translateContent('Decryption failed!') + ' ' + App.i18n.translateContent(data.encryption.comment || '')
-          @notify
-            type: 'error'
-            msg:  comment
-            timeout: 2000
+          if data.sign.success
+            @notify
+              type: 'success'
+              msg:  App.i18n.translateContent('Verify sign success!')
+          else if data.sign.comment
+            comment = App.i18n.translateContent('Verify sign failed!') + ' ' + App.i18n.translateContent(data.sign.comment || '')
+            @notify
+              type: 'error'
+              msg: comment
+              timeout: 2000
+
+          if data.encryption.success
+            @notify
+              type: 'success'
+              msg:  App.i18n.translateContent('Decryption success!')
+          else if data.encryption.comment
+            comment = App.i18n.translateContent('Decryption failed!') + ' ' + App.i18n.translateContent(data.encryption.comment || '')
+            @notify
+              type: 'error'
+              msg:  comment
+              timeout: 2000
 
       error: (xhr) =>
         @notify

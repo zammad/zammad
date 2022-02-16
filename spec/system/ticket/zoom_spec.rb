@@ -588,8 +588,7 @@ RSpec.describe 'Ticket zoom', type: :system do
       end
 
       context 'certificate not present at time of arrival' do
-
-        it 'retry' do
+        let(:mail) do
           smime1 = create(:smime_certificate, :with_private, fixture: system_email_address)
           smime2 = create(:smime_certificate, :with_private, fixture: sender_email_address)
 
@@ -612,6 +611,10 @@ RSpec.describe 'Ticket zoom', type: :system do
           smime1.destroy
           smime2.destroy
 
+          mail
+        end
+
+        it 'does retry successfully' do
           parsed_mail = Channel::EmailParser.new.parse(mail.to_s)
           ticket, article, _user, _mail = Channel::EmailParser.new.process({ group_id: group.id }, parsed_mail['raw'])
           expect(Ticket::Article.find(article.id).body).to eq('no visible content')
@@ -623,6 +626,17 @@ RSpec.describe 'Ticket zoom', type: :system do
           expect(page).to have_no_css('.article-content', text: 'somebody with some text')
           click '.js-securityRetryProcess'
           expect(page).to have_css('.article-content', text: 'somebody with some text')
+        end
+
+        it 'does fail on retry (S/MIME function buttons no longer working in tickets #3957)' do
+          parsed_mail = Channel::EmailParser.new.parse(mail.to_s)
+          ticket, article, _user, _mail = Channel::EmailParser.new.process({ group_id: group.id }, parsed_mail['raw'])
+          expect(Ticket::Article.find(article.id).body).to eq('no visible content')
+
+          visit "#ticket/zoom/#{ticket.id}"
+          expect(page).to have_no_css('.article-content', text: 'somebody with some text')
+          click '.js-securityRetryProcess'
+          expect(page).to have_css('#notify', text: 'Decryption failed! Unable to find private key to decrypt')
         end
       end
     end
