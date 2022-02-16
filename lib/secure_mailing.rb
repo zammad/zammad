@@ -10,9 +10,11 @@ class SecureMailing
   end
 
   def self.retry(article)
+    result = []
     active_backends.each do |backend|
-      "#{backend}::Retry".constantize.process(article)
+      result << "#{backend}::Retry".constantize.process(article)
     end
+    result
   end
 
   def self.outgoing(mail, security)
