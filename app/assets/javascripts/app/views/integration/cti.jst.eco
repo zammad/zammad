@@ -97,9 +97,9 @@
     </table>
   </div>
 
-  <h2><%- @T('Phone Extension to Agent Mapping') %></h2>
+  <h2><%- @T('Caller Log Filter') %></h2>
 
-  <p><%- @T("By mapping your agents' phone extensions to their Zammad user accounts, Zammad can support your agents by opening either a new ticket dialogue or the user profile upon picking up a new call.") %></p>
+  <p><%- @T("Define queues or call destinations (whatever fits your PBX) and map your agents to it. By this, Zammad can support your agents by showing them only relevant call entries and notifications.") %></p>
 
   <div class="settings-entry">
     <table class="settings-list js-notifyMap" style="width: 100%;">

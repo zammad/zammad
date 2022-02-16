@@ -1252,10 +1252,6 @@ msgstr ""
 msgid "By mapping your agents' Placetel SIP users to their Zammad user accounts, Zammad can support your agents by opening either a new ticket dialogue or the user profile upon picking up a new call."
 msgstr ""
 
-#: app/assets/javascripts/app/views/integration/cti.jst.eco
-msgid "By mapping your agents' phone extensions to their Zammad user accounts, Zammad can support your agents by opening either a new ticket dialogue or the user profile upon picking up a new call."
-msgstr ""
-
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 msgid "By mapping your agents' sipgate users to their Zammad user accounts, Zammad can support your agents by opening either a new ticket dialogue or the user profile upon picking up a new call."
 msgstr ""
@@ -1337,6 +1333,10 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_integration/placetel.coffee
 #: app/assets/javascripts/app/controllers/_integration/sipgate_io.coffee
 msgid "Caller ID of outbound calls can be changed as well."
+msgstr ""
+
+#: app/assets/javascripts/app/views/integration/cti.jst.eco
+msgid "Caller Log Filter"
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
@@ -2495,6 +2495,10 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Define postmaster filter."
+msgstr ""
+
+#: app/assets/javascripts/app/views/integration/cti.jst.eco
+msgid "Define queues or call destinations (whatever fits your PBX) and map your agents to it. By this, Zammad can support your agents by showing them only relevant call entries and notifications."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -7097,7 +7101,6 @@ msgstr ""
 msgid "Phone (out)"
 msgstr ""
 
-#: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 msgid "Phone Extension to Agent Mapping"
