@@ -257,7 +257,7 @@ class EmailReply extends App.Controller
 
     quote_header = App.FullQuoteHeader.fullQuoteHeaderForward(article)
 
-    body = "<br/><div>---Begin forwarded message:---<br/><br/></div><div><blockquote type=\"cite\">#{quote_header}#{body}</blockquote></div><div><br></div>"
+    body = "<br/><div>---#{App.i18n.translateInline('Begin forwarded message')}:---<br/><br/></div><div><blockquote type=\"cite\">#{quote_header}#{body}</blockquote></div><div><br></div>"
 
     articleNew = {}
     articleNew.body = body
