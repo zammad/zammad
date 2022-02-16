@@ -6364,7 +6364,7 @@ msgid "No email!"
 msgstr ""
 
 #: app/controllers/integration/exchange_controller.rb
-msgid "No entries found in selected folder(s)."
+msgid "No entries were found in the selected folder(s)."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
@@ -6373,7 +6373,7 @@ msgid "No filter."
 msgstr ""
 
 #: app/controllers/integration/exchange_controller.rb
-msgid "No folders found for given user credentials."
+msgid "No folders were found for the given user credentials."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee
@@ -6386,14 +6386,6 @@ msgstr ""
 
 #: lib/external_credential/twitter.rb
 msgid "No oauth_token_secret param!"
-msgstr ""
-
-#: app/models/core_workflow/result.rb
-msgid "No payload->class_name given!"
-msgstr ""
-
-#: app/models/core_workflow/result.rb
-msgid "No payload->screen given!"
 msgstr ""
 
 #: app/assets/javascripts/app/views/settings/proxy.jst.eco
@@ -8929,8 +8921,16 @@ msgstr ""
 msgid "The required parameter 'id' is missing."
 msgstr ""
 
+#: app/models/core_workflow/result.rb
+msgid "The required parameter 'payload->class_name' is missing."
+msgstr ""
+
 #: app/controllers/users_controller.rb
 msgid "The required parameter 'signup' is missing."
+msgstr ""
+
+#: app/models/core_workflow/result.rb
+msgid "The required parmeter 'payload->screen' is missing."
 msgstr ""
 
 #: app/controllers/users_controller.rb
@@ -10275,7 +10275,7 @@ msgid "Will be published"
 msgstr ""
 
 #: app/views/knowledge_base/public/_top_banner.html.erb
-msgid "Will be published on "
+msgid "Will be published on"
 msgstr ""
 
 #: db/seeds/settings.rb

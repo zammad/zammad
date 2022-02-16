@@ -30,7 +30,7 @@ class Integration::ExchangeController < ApplicationController
       Sequencer.process('Import::Exchange::AvailableFolders',
                         parameters: { ews_config: ews_config })
                .tap do |res|
-                 raise __('No folders found for given user credentials.') if res[:folders].blank?
+                 raise __('No folders were found for the given user credentials.') if res[:folders].blank?
                end
     end
   end
@@ -43,7 +43,7 @@ class Integration::ExchangeController < ApplicationController
                         parameters: { ews_folder_ids: params[:folders],
                                       ews_config:     ews_config })
                .tap do |res|
-                 raise __('No entries found in selected folder(s).') if res[:attributes].blank?
+                 raise __('No entries were found in the selected folder(s).') if res[:attributes].blank?
                end
     end
   end
