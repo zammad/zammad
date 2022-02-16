@@ -1140,6 +1140,10 @@ msgstr ""
 msgid "Before you mention a user, please select a group."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
+msgid "Begin forwarded message"
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "Beginner"
 msgstr ""
