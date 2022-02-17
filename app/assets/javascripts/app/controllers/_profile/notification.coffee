@@ -7,39 +7,39 @@ class ProfileNotification extends App.ControllerSubContent
 
   sounds: [
     {
-      name: __('Bell')
+      name: 'Bell'
       file: 'Bell.mp3'
     },
     {
-      name: __('Kalimba')
+      name: 'Kalimba'
       file: 'Kalimba.mp3'
     },
     {
-      name: __('Marimba')
+      name: 'Marimba'
       file: 'Marimba.mp3'
     },
     {
-      name: __('Peep')
+      name: 'Peep'
       file: 'Peep.mp3'
     },
     {
-      name: __('Plop')
+      name: 'Plop'
       file: 'Plop.mp3'
     },
     {
-      name: __('Ring')
+      name: 'Ring'
       file: 'Ring.mp3'
     },
     {
-      name: __('Space')
+      name: 'Space'
       file: 'Space.mp3'
     },
     {
-      name: __('Wood')
+      name: 'Wood'
       file: 'Wood.mp3'
     },
     {
-      name: __('Xylo')
+      name: 'Xylo'
       file: 'Xylo.mp3'
     }
   ]

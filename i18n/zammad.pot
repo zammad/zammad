@@ -1148,10 +1148,6 @@ msgstr ""
 msgid "Beginner"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_profile/notification.coffee
-msgid "Bell"
-msgstr ""
-
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "Bind Password"
@@ -5271,10 +5267,6 @@ msgstr ""
 msgid "Just click into the highlighted area and update the words right there. Enjoy!"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_profile/notification.coffee
-msgid "Kalimba"
-msgstr ""
-
 #: app/assets/javascripts/app/views/karma/index.jst.eco
 msgid "Karma Level"
 msgstr ""
@@ -5691,10 +5683,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 msgid "March"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_profile/notification.coffee
-msgid "Marimba"
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/online_notification.jst.eco
@@ -7046,10 +7034,6 @@ msgstr ""
 msgid "Paste in CSV data"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_profile/notification.coffee
-msgid "Peep"
-msgstr ""
-
 #: db/seeds/overviews.rb
 msgid "Pending Reached Tickets"
 msgstr ""
@@ -7196,10 +7180,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 msgid "Please wait…"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_profile/notification.coffee
-msgid "Plop"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
@@ -7636,10 +7616,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
 msgid "Retweets are converted into tickets."
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_profile/notification.coffee
-msgid "Ring"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
@@ -8361,10 +8337,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/translation/list.jst.eco
 #: app/assets/javascripts/app/views/translation/todo.jst.eco
 msgid "Source"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_profile/notification.coffee
-msgid "Space"
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -10332,10 +10304,6 @@ msgstr ""
 msgid "Woo hoo! Your password has been changed!"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_profile/notification.coffee
-msgid "Wood"
-msgstr ""
-
 #: app/assets/javascripts/app/views/translation/list.jst.eco
 #: app/assets/javascripts/app/views/translation/todo.jst.eco
 msgid "Words"
@@ -10347,10 +10315,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
 msgid "Workflows"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_profile/notification.coffee
-msgid "Xylo"
 msgstr ""
 
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco
