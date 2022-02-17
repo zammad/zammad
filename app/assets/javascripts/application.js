@@ -65,9 +65,9 @@ Date.prototype.getWeek = function() {
 
 function difference(object1, object2) {
   var changes = {};
-  for (var name in object1) {
-    if (name in object2) {
-      if (_.isObject(object2[name]) && !_.isArray(object2[name])) {
+  _.uniq(Object.keys(object1).concat(Object.keys(object2))).forEach(function(name) {
+    if (name in object1 && name in object2) {
+      if (_.isObject(object1[name]) && !_.isArray(object1[name]) && _.isObject(object2[name]) && !_.isArray(object2[name])) {
         var diff = difference(object1[name], object2[name]);
         if (!_.isEmpty(diff)) {
             changes[name] = diff;
@@ -75,8 +75,10 @@ function difference(object1, object2) {
       } else if (!_.isEqual(object1[name], object2[name])) {
         changes[name] = object2[name];
       }
+    } else {
+      changes[name] = object2[name]
     }
-  }
+  })
   return changes;
 }
 

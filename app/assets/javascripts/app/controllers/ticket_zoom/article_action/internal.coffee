@@ -24,7 +24,7 @@ class Internal
     internal = true
     if article.internal == true
       internal = false
-    ui.lastAttributres.internal = internal
+    ui.lastAttributes.internal = internal
     article.updateAttributes(internal: internal)
 
     # runtime update

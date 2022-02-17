@@ -202,7 +202,7 @@ class Object extends App.ControllerObserver
     value = $(e.target).html()
     org   = App.Organization.find(@object_id)
     if org[name] isnt value
-      @lastAttributres[name] = value
+      @lastAttributes[name] = value
       data = {}
       data[name] = value
       org.updateAttributes(data)
