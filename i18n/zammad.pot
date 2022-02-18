@@ -6653,14 +6653,6 @@ msgid "Object already exists!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/object_manager.coffee
-msgid "ObjectManagerAttribute"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/object_manager.coffee
-msgid "ObjectManagerAttributes"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/object_manager.coffee
 #: db/seeds/permissions.rb
 msgid "Objects"
 msgstr ""

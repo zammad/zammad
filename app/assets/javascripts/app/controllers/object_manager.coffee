@@ -147,8 +147,8 @@ class Items extends App.ControllerSubContent
         head:      @object
         title:     __('Attribute')
         home:      'object_manager'
-        object:    __('ObjectManagerAttribute')
-        objects:   __('ObjectManagerAttributes')
+        object:    'ObjectManagerAttribute'
+        objects:   'ObjectManagerAttributes'
         navupdate: '#object_manager'
       genericObject: 'ObjectManagerAttribute'
       container:     @el.closest('.content')
@@ -164,8 +164,8 @@ class Items extends App.ControllerSubContent
         head:      @object
         title:     __('Attribute')
         home:      'object_manager'
-        object:    __('ObjectManagerAttribute')
-        objects:   __('ObjectManagerAttributes')
+        object:    'ObjectManagerAttribute'
+        objects:   'ObjectManagerAttributes'
         navupdate: '#object_manager'
       genericObject: 'ObjectManagerAttribute'
       container:     @el.closest('.content')
