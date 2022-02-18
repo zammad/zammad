@@ -8670,6 +8670,10 @@ msgid "Text missing"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/text_module.coffee
+msgid "Text module"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/text_module.coffee
 msgid "Text modules"
 msgstr ""
 
@@ -8688,10 +8692,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/translation/index.jst.eco
 msgid "Text with enabled inline translations looks like"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/text_module.coffee
-msgid "TextModule"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee

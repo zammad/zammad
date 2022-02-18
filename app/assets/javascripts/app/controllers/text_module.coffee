@@ -17,7 +17,7 @@ class TextModule extends App.ControllerSubContent
         )
       pageData:
         home:      'text_modules'
-        object:    __('TextModule')
+        object:    __('Text module')
         objects:   __('Text modules')
         pagerAjax: true
         pagerBaseUrl: '#manage/text_modules/'
