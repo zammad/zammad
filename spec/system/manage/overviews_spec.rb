@@ -44,6 +44,11 @@ RSpec.describe 'Manage > Overviews', type: :system do
   let(:overview) { create(:overview, condition: condition) }
 
   shared_examples 'previewing the correct ticket for single selected object' do
+    before do
+      wait.until { page.has_css?('.js-previewLoader.hide', visible: :all) }
+      scroll_into_view('.ticket_selector')
+    end
+
     context "with 'is' operator" do
       let(:operator) { 'is' }
 
@@ -80,6 +85,11 @@ RSpec.describe 'Manage > Overviews', type: :system do
   end
 
   shared_examples 'previewing the correct ticket for multiple selected objects' do
+    before do
+      wait.until { page.has_css?('.js-previewLoader.hide', visible: :all) }
+      scroll_into_view('.ticket_selector')
+    end
+
     context "with 'is' operator" do
       let(:operator) { 'is' }
 
