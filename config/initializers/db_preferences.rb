@@ -10,7 +10,7 @@ when 'mysql2'
   # Because of missing ticket updates in high load environments
   # we changed the transaction isolation level equally to postgres
   # to READ COMMITTED which fixed the problem entirely #3877
-  ActiveRecord::ConnectionAdapters::Mysql2Adapter.set_callback :checkout, :before do |conn|
+  ActiveRecord::ConnectionAdapters::Mysql2Adapter.set_callback :checkout, :after do |conn|
     conn.execute('SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED')
   end
 when 'postgresql'
