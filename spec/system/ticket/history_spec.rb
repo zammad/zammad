@@ -35,7 +35,7 @@ RSpec.describe 'Ticket history', type: :system, time_zone: 'Europe/London', auth
 
     travel_back
 
-    # Suppress the modal dialog that invites to contributions for translations that are < 95% as this breaks the tests for de-de.
+    # Suppress the modal dialog that invites to contributions for translations that are < 90% as this breaks the tests for de-de.
     page.evaluate_script "App.LocalStorage.set('translation_support_no', true, App.Session.get('id'))"
 
     refresh

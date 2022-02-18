@@ -1935,6 +1935,9 @@ RSpec.describe 'Ticket zoom', type: :system do
       it 'does setup the last behaviour' do
         click '.js-attributeBar .dropup div'
         click 'span[data-type=stayOnTab]'
+        wait.until do
+          User.find_by(email: 'admin@example.com').preferences['secondaryAction'] == 'stayOnTab'
+        end
         visit "ticket/zoom/#{ticket1.id}"
         expect(page).to have_text('Stay on tab')
       end
@@ -2014,7 +2017,7 @@ RSpec.describe 'Ticket zoom', type: :system do
 
     def switch_language_german
       visit '#profile/language'
-      # Suppress the modal dialog that invites to contributions for translations that are < 95% as this breaks the tests for de-de.
+      # Suppress the modal dialog that invites to contributions for translations that are < 90% as this breaks the tests for de-de.
       page.evaluate_script "App.LocalStorage.set('translation_support_no', true, App.Session.get('id'))"
       page.find('.js-input').click
       page.find('.js-input').set('Deutsch')

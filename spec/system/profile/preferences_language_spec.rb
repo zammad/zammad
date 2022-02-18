@@ -60,7 +60,11 @@ RSpec.describe 'Profile > Language', type: :system do
     let(:priority) { 'PRIORITY' }
     let(:owner) { 'OWNER' }
 
-    before { visit path }
+    before do
+      visit path
+      # Suppress the modal dialog that invites to contributions for translations that are < 90% as this breaks the tests for de-de.
+      page.evaluate_script "App.LocalStorage.set('translation_support_no', true, App.Session.get('id'))"
+    end
 
     it_behaves_like 'displaying the current language'
 
@@ -150,7 +154,11 @@ RSpec.describe 'Profile > Language', type: :system do
     let(:priority) { 'PRIORITÄT' }
     let(:owner) { 'BESITZER' }
 
-    before { visit path }
+    before do
+      visit path
+      # Suppress the modal dialog that invites to contributions for translations that are < 90% as this breaks the tests for de-de.
+      page.evaluate_script "App.LocalStorage.set('translation_support_no', true, App.Session.get('id'))"
+    end
 
     it_behaves_like 'displaying the current language'
 
