@@ -2444,17 +2444,17 @@ RSpec.describe 'Ticket zoom', type: :system do
       # save 2 values
       multiselect_set(%w[value_1 value_2])
       click '.js-submit'
-      expect(ticket.reload[field_name]).to eq(%w[key_1 key_2])
+      wait.until { ticket.reload[field_name] == %w[key_1 key_2] }
 
       # save 1 value
       multiselect_set(['value_1'])
       click '.js-submit'
-      expect(ticket.reload[field_name]).to eq(['key_1'])
+      wait.until { ticket.reload[field_name] == ['key_1'] }
 
       # unset all values
       multiselect_unset_all
       click '.js-submit'
-      expect(ticket.reload[field_name]).to be_nil
+      wait.until { ticket.reload[field_name].nil? }
     end
   end
 
