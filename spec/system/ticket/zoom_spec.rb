@@ -1427,6 +1427,7 @@ RSpec.describe 'Ticket zoom', type: :system do
       ticket.update(pending_time: 1.day.from_now, state: Ticket::State.lookup(name: 'pending reminder'))
 
       visit "ticket/zoom/#{ticket.id}"
+      sleep 3 # wait for popover killer to pass
     end
 
     let(:ticket) { Ticket.first }
