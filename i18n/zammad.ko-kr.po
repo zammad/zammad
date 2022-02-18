@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-01-24 14:37+0000\n"
-"Last-Translator: 두리아범 <laislavonita@gmail.com>\n"
+"PO-Revision-Date: 2022-02-18 07:02+0000\n"
+"Last-Translator: 황윤성 <hys@osbusiness.net>\n"
 "Language-Team: Korean <https://translations.zammad.org/projects/zammad/"
 "zammad-development/ko/>\n"
 "Language: ko-kr\n"
@@ -52,13 +52,13 @@ msgid ""
 "filesystem. You can switch between the modules even on a system that is "
 "already in production without any loss of data."
 msgstr ""
+"\"데이터베이스\"는 모든 첨부 파일을 데이터베이스에 저장합니다(많은 양의 데이터 저장에는 권장되지 않음).  \"파일 시스템\"은 파일 "
+"시스템에 데이터를 저장합니다.  이미 프로덕션인 시스템에서도 데이터 손실 없이 모듈 간에 전환할 수 있습니다."
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
-#, fuzzy
-#| msgid "%s Api Token"
 msgid "%s API Token"
-msgstr "%s Api Token"
+msgstr "%s API Token"
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
@@ -1278,13 +1278,13 @@ msgstr "기본설정"
 msgid "Before you mention a user, please select a group."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
+msgid "Begin forwarded message"
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "Beginner"
 msgstr "초보자"
-
-#: app/assets/javascripts/app/controllers/_profile/notification.coffee
-msgid "Bell"
-msgstr ""
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
@@ -1400,6 +1400,20 @@ msgstr ""
 "기본적으로 추적 검사는 이메일의 제목을 통해 이루어집니다. 이 설정을 사용하면 "
 "후속 검사가 실행됩니다있는 더 많은 필드를 추가 할 수 있습니다."
 
+#: app/assets/javascripts/app/views/integration/placetel.jst.eco
+msgid ""
+"By mapping your agents' Placetel SIP users to their Zammad user accounts, "
+"Zammad can support your agents by opening either a new ticket dialogue or "
+"the user profile upon picking up a new call."
+msgstr ""
+
+#: app/assets/javascripts/app/views/integration/sipgate.jst.eco
+msgid ""
+"By mapping your agents' sipgate users to their Zammad user accounts, Zammad "
+"can support your agents by opening either a new ticket dialogue or the user "
+"profile upon picking up a new call."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
 #: app/assets/javascripts/app/models/ticket_article.coffee
@@ -1469,6 +1483,14 @@ msgstr "달력"
 msgid "Calendars"
 msgstr "달력"
 
+#: app/assets/javascripts/app/views/integration/cti.jst.eco
+#: app/assets/javascripts/app/views/integration/placetel.jst.eco
+#: app/assets/javascripts/app/views/integration/sipgate.jst.eco
+#, fuzzy
+#| msgid "Settings"
+msgid "Call Settings"
+msgstr "설정"
+
 #: app/assets/javascripts/app/controllers/cti.coffee
 msgid "Call from %s for %s"
 msgstr ""
@@ -1484,6 +1506,12 @@ msgstr "콜백 URL"
 #| msgid "Also caller id of outbound calls can be changed."
 msgid "Caller ID of outbound calls can be changed as well."
 msgstr "또한 아웃 바운드 통화의 발신자 ID는 변경 될 수 있습니다."
+
+#: app/assets/javascripts/app/views/integration/cti.jst.eco
+#, fuzzy
+#| msgid "Caller log"
+msgid "Caller Log Filter"
+msgstr "발신자 로그"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
@@ -2710,6 +2738,13 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Define postmaster filter."
+msgstr ""
+
+#: app/assets/javascripts/app/views/integration/cti.jst.eco
+msgid ""
+"Define queues or call destinations (whatever fits your PBX) and map your "
+"agents to it. By this, Zammad can support your agents by showing them only "
+"relevant call entries and notifications."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -4125,6 +4160,14 @@ msgstr ""
 msgid "Endpoint"
 msgstr "엔드 포인트"
 
+#: app/assets/javascripts/app/views/integration/cti.jst.eco
+#: app/assets/javascripts/app/views/integration/placetel.jst.eco
+#: app/assets/javascripts/app/views/integration/sipgate.jst.eco
+#, fuzzy
+#| msgid "Expert Settings"
+msgid "Endpoint Settings"
+msgstr "고급 설정"
+
 #: db/seeds.rb
 msgid "English (United States)"
 msgstr ""
@@ -5262,10 +5305,6 @@ msgstr ""
 "는 <script> 태그에서 호스트를 읽습니다. 당신이 <script>를 통해 그것을 포함하"
 "지 않는 경우 호스트를 지정해야합니다 태그."
 
-#: app/assets/javascripts/app/views/integration/cti.jst.eco
-msgid "If no mapping is defined, all users will get notified of any event."
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_integration/check_mk.coffee
 #: app/assets/javascripts/app/controllers/_integration/icinga.coffee
 #: app/assets/javascripts/app/controllers/_integration/monit.coffee
@@ -5854,10 +5893,6 @@ msgid ""
 "Just click into the highlighted area and update the words right there. Enjoy!"
 msgstr "그냥 마커로 클릭하고 바로 자리에 단어를 업데이트합니다. 즐겨!"
 
-#: app/assets/javascripts/app/controllers/_profile/notification.coffee
-msgid "Kalimba"
-msgstr ""
-
 #: app/assets/javascripts/app/views/karma/index.jst.eco
 msgid "Karma Level"
 msgstr "카르마 레벨"
@@ -6296,10 +6331,6 @@ msgstr "월"
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 msgid "March"
 msgstr "3월"
-
-#: app/assets/javascripts/app/controllers/_profile/notification.coffee
-msgid "Marimba"
-msgstr ""
 
 #: app/assets/javascripts/app/views/widget/online_notification.jst.eco
 msgid "Mark all as read"
@@ -7009,7 +7040,7 @@ msgid "No email!"
 msgstr ""
 
 #: app/controllers/integration/exchange_controller.rb
-msgid "No entries found in selected folder(s)."
+msgid "No entries were found in the selected folder(s)."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
@@ -7018,7 +7049,7 @@ msgid "No filter."
 msgstr "필터 없음."
 
 #: app/controllers/integration/exchange_controller.rb
-msgid "No folders found for given user credentials."
+msgid "No folders were found for the given user credentials."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee
@@ -7031,14 +7062,6 @@ msgstr ""
 
 #: lib/external_credential/twitter.rb
 msgid "No oauth_token_secret param!"
-msgstr ""
-
-#: app/models/core_workflow/result.rb
-msgid "No payload->class_name given!"
-msgstr ""
-
-#: app/models/core_workflow/result.rb
-msgid "No payload->screen given!"
 msgstr ""
 
 #: app/assets/javascripts/app/views/settings/proxy.jst.eco db/seeds/settings.rb
@@ -7244,14 +7267,6 @@ msgstr "알림 소리"
 #: db/seeds/permissions.rb
 msgid "Notifications"
 msgstr "알림"
-
-#: app/assets/javascripts/app/views/integration/cti.jst.eco
-msgid "Notify Map"
-msgstr ""
-
-#: app/assets/javascripts/app/views/integration/cti.jst.eco
-msgid "Notify certain users by matching caller ID."
-msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
@@ -7500,6 +7515,14 @@ msgstr "기발한"
 msgid "Original Formatting"
 msgstr "원래 서식"
 
+#: app/assets/javascripts/app/views/integration/cti.jst.eco
+#: app/assets/javascripts/app/views/integration/placetel.jst.eco
+#: app/assets/javascripts/app/views/integration/sipgate.jst.eco
+#, fuzzy
+#| msgid "Expert Settings"
+msgid "Other Settings"
+msgstr "고급 설정"
+
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
 #: db/seeds/permissions.rb
@@ -7681,10 +7704,6 @@ msgstr ""
 msgid "Paste in CSV data"
 msgstr "CSV 데이터에 붙여 넣기"
 
-#: app/assets/javascripts/app/controllers/_profile/notification.coffee
-msgid "Peep"
-msgstr ""
-
 #: db/seeds/overviews.rb
 #, fuzzy
 #| msgid "My pending reached Tickets"
@@ -7742,6 +7761,11 @@ msgstr ""
 
 #: app/models/report.rb
 msgid "Phone (out)"
+msgstr ""
+
+#: app/assets/javascripts/app/views/integration/placetel.jst.eco
+#: app/assets/javascripts/app/views/integration/sipgate.jst.eco
+msgid "Phone Extension to Agent Mapping"
 msgstr ""
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
@@ -7839,10 +7863,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 msgid "Please wait…"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_profile/notification.coffee
-msgid "Plop"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
@@ -8068,7 +8088,9 @@ msgid "Recent Customer Tickets"
 msgstr "최근 고객 Ticket"
 
 #: app/assets/javascripts/app/views/widget/http_log.jst.eco
-msgid "Recent logs"
+#, fuzzy
+#| msgid "Recent logs"
+msgid "Recent Logs"
 msgstr "최근 로그"
 
 #: app/assets/javascripts/app/views/agent_ticket_merge.jst.eco
@@ -8297,10 +8319,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
 msgid "Retweets are converted into tickets."
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_profile/notification.coffee
-msgid "Ring"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
@@ -8862,14 +8880,11 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_zoom/setting.coffee
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 #: app/assets/javascripts/app/views/customer_chat/index.jst.eco
-#: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/github.jst.eco
 #: app/assets/javascripts/app/views/integration/gitlab.jst.eco
 #: app/assets/javascripts/app/views/integration/idoit.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
-#: app/assets/javascripts/app/views/integration/placetel.jst.eco
-#: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
 msgid "Settings"
@@ -9078,10 +9093,6 @@ msgstr "사운드"
 #: app/assets/javascripts/app/views/translation/todo.jst.eco
 msgid "Source"
 msgstr "출처"
-
-#: app/assets/javascripts/app/controllers/_profile/notification.coffee
-msgid "Space"
-msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Special character required"
@@ -9730,6 +9741,14 @@ msgstr ""
 
 #: app/controllers/users_controller.rb
 msgid "The required parameter 'id' is missing."
+msgstr ""
+
+#: app/models/core_workflow/result.rb
+msgid "The required parameter 'payload->class_name' is missing."
+msgstr ""
+
+#: app/models/core_workflow/result.rb
+msgid "The required parameter 'payload->screen' is missing."
 msgstr ""
 
 #: app/controllers/users_controller.rb
@@ -10748,26 +10767,6 @@ msgstr ""
 msgid "User Preferences"
 msgstr "사용자 환경 설정"
 
-#: app/assets/javascripts/app/views/integration/sipgate.jst.eco
-msgid "User assignment to Sipgate users"
-msgstr ""
-
-#: app/assets/javascripts/app/views/integration/sipgate.jst.eco
-msgid ""
-"User assignment to Sipgate users to be able to open new ticket screen upon "
-"answering a call."
-msgstr ""
-
-#: app/assets/javascripts/app/views/integration/placetel.jst.eco
-msgid "User assignment to telephones"
-msgstr ""
-
-#: app/assets/javascripts/app/views/integration/placetel.jst.eco
-msgid ""
-"User assignment to telephones to be able to open new ticket screen upon "
-"answering a call."
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee
 #: app/assets/javascripts/app/controllers/signup.coffee
 #, fuzzy
@@ -11249,8 +11248,10 @@ msgid "Will be published"
 msgstr "게시 예정"
 
 #: app/views/knowledge_base/public/_top_banner.html.erb
-msgid "Will be published on "
-msgstr ""
+#, fuzzy
+#| msgid "Will be published"
+msgid "Will be published on"
+msgstr "게시 예정"
 
 #: db/seeds/settings.rb
 msgid "Will be shown in the app and is included in email footers."
@@ -11316,10 +11317,6 @@ msgstr "~이 우! 귀하의 이메일 주소가 확인되었습니다!"
 msgid "Woo hoo! Your password has been changed!"
 msgstr "당신의 비밀번호가 변경되었습니다!"
 
-#: app/assets/javascripts/app/controllers/_profile/notification.coffee
-msgid "Wood"
-msgstr ""
-
 #: app/assets/javascripts/app/views/translation/list.jst.eco
 #: app/assets/javascripts/app/views/translation/todo.jst.eco
 msgid "Words"
@@ -11331,10 +11328,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
 msgid "Workflows"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_profile/notification.coffee
-msgid "Xylo"
 msgstr ""
 
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco

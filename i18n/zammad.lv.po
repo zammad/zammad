@@ -1201,12 +1201,12 @@ msgstr ""
 msgid "Before you mention a user, please select a group."
 msgstr ""
 
-#: db/seeds/settings.rb
-msgid "Beginner"
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
+msgid "Begin forwarded message"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_profile/notification.coffee
-msgid "Bell"
+#: db/seeds/settings.rb
+msgid "Beginner"
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
@@ -1311,6 +1311,20 @@ msgid ""
 "executed."
 msgstr ""
 
+#: app/assets/javascripts/app/views/integration/placetel.jst.eco
+msgid ""
+"By mapping your agents' Placetel SIP users to their Zammad user accounts, "
+"Zammad can support your agents by opening either a new ticket dialogue or "
+"the user profile upon picking up a new call."
+msgstr ""
+
+#: app/assets/javascripts/app/views/integration/sipgate.jst.eco
+msgid ""
+"By mapping your agents' sipgate users to their Zammad user accounts, Zammad "
+"can support your agents by opening either a new ticket dialogue or the user "
+"profile upon picking up a new call."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
 #: app/assets/javascripts/app/models/ticket_article.coffee
@@ -1370,6 +1384,14 @@ msgstr "Kalendārs"
 msgid "Calendars"
 msgstr ""
 
+#: app/assets/javascripts/app/views/integration/cti.jst.eco
+#: app/assets/javascripts/app/views/integration/placetel.jst.eco
+#: app/assets/javascripts/app/views/integration/sipgate.jst.eco
+#, fuzzy
+#| msgid "Settings"
+msgid "Call Settings"
+msgstr "Iestatījumi"
+
 #: app/assets/javascripts/app/controllers/cti.coffee
 msgid "Call from %s for %s"
 msgstr ""
@@ -1382,6 +1404,10 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_integration/placetel.coffee
 #: app/assets/javascripts/app/controllers/_integration/sipgate_io.coffee
 msgid "Caller ID of outbound calls can be changed as well."
+msgstr ""
+
+#: app/assets/javascripts/app/views/integration/cti.jst.eco
+msgid "Caller Log Filter"
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
@@ -2573,6 +2599,13 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Define postmaster filter."
+msgstr ""
+
+#: app/assets/javascripts/app/views/integration/cti.jst.eco
+msgid ""
+"Define queues or call destinations (whatever fits your PBX) and map your "
+"agents to it. By this, Zammad can support your agents by showing them only "
+"relevant call entries and notifications."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -3904,6 +3937,14 @@ msgstr ""
 msgid "Endpoint"
 msgstr ""
 
+#: app/assets/javascripts/app/views/integration/cti.jst.eco
+#: app/assets/javascripts/app/views/integration/placetel.jst.eco
+#: app/assets/javascripts/app/views/integration/sipgate.jst.eco
+#, fuzzy
+#| msgid "Settings"
+msgid "Endpoint Settings"
+msgstr "Iestatījumi"
+
 #: db/seeds.rb
 msgid "English (United States)"
 msgstr ""
@@ -4974,10 +5015,6 @@ msgid ""
 "via a <script> tag you need to specify the host."
 msgstr ""
 
-#: app/assets/javascripts/app/views/integration/cti.jst.eco
-msgid "If no mapping is defined, all users will get notified of any event."
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_integration/check_mk.coffee
 #: app/assets/javascripts/app/controllers/_integration/icinga.coffee
 #: app/assets/javascripts/app/controllers/_integration/monit.coffee
@@ -5541,10 +5578,6 @@ msgid ""
 "Just click into the highlighted area and update the words right there. Enjoy!"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_profile/notification.coffee
-msgid "Kalimba"
-msgstr ""
-
 #: app/assets/javascripts/app/views/karma/index.jst.eco
 msgid "Karma Level"
 msgstr ""
@@ -5969,10 +6002,6 @@ msgstr "Mar"
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 msgid "March"
 msgstr "Marts"
-
-#: app/assets/javascripts/app/controllers/_profile/notification.coffee
-msgid "Marimba"
-msgstr ""
 
 #: app/assets/javascripts/app/views/widget/online_notification.jst.eco
 msgid "Mark all as read"
@@ -6664,7 +6693,7 @@ msgid "No email!"
 msgstr ""
 
 #: app/controllers/integration/exchange_controller.rb
-msgid "No entries found in selected folder(s)."
+msgid "No entries were found in the selected folder(s)."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
@@ -6673,7 +6702,7 @@ msgid "No filter."
 msgstr ""
 
 #: app/controllers/integration/exchange_controller.rb
-msgid "No folders found for given user credentials."
+msgid "No folders were found for the given user credentials."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee
@@ -6686,14 +6715,6 @@ msgstr ""
 
 #: lib/external_credential/twitter.rb
 msgid "No oauth_token_secret param!"
-msgstr ""
-
-#: app/models/core_workflow/result.rb
-msgid "No payload->class_name given!"
-msgstr ""
-
-#: app/models/core_workflow/result.rb
-msgid "No payload->screen given!"
 msgstr ""
 
 #: app/assets/javascripts/app/views/settings/proxy.jst.eco db/seeds/settings.rb
@@ -6898,14 +6919,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/online_notification.jst.eco
 #: db/seeds/permissions.rb
 msgid "Notifications"
-msgstr ""
-
-#: app/assets/javascripts/app/views/integration/cti.jst.eco
-msgid "Notify Map"
-msgstr ""
-
-#: app/assets/javascripts/app/views/integration/cti.jst.eco
-msgid "Notify certain users by matching caller ID."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
@@ -7151,6 +7164,14 @@ msgstr ""
 msgid "Original Formatting"
 msgstr ""
 
+#: app/assets/javascripts/app/views/integration/cti.jst.eco
+#: app/assets/javascripts/app/views/integration/placetel.jst.eco
+#: app/assets/javascripts/app/views/integration/sipgate.jst.eco
+#, fuzzy
+#| msgid "Settings"
+msgid "Other Settings"
+msgstr "Iestatījumi"
+
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
 #: db/seeds/permissions.rb
@@ -7332,10 +7353,6 @@ msgstr ""
 msgid "Paste in CSV data"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_profile/notification.coffee
-msgid "Peep"
-msgstr ""
-
 #: db/seeds/overviews.rb
 msgid "Pending Reached Tickets"
 msgstr ""
@@ -7389,6 +7406,11 @@ msgstr ""
 
 #: app/models/report.rb
 msgid "Phone (out)"
+msgstr ""
+
+#: app/assets/javascripts/app/views/integration/placetel.jst.eco
+#: app/assets/javascripts/app/views/integration/sipgate.jst.eco
+msgid "Phone Extension to Agent Mapping"
 msgstr ""
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
@@ -7479,10 +7501,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 msgid "Please wait…"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_profile/notification.coffee
-msgid "Plop"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
@@ -7698,7 +7716,7 @@ msgid "Recent Customer Tickets"
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/http_log.jst.eco
-msgid "Recent logs"
+msgid "Recent Logs"
 msgstr ""
 
 #: app/assets/javascripts/app/views/agent_ticket_merge.jst.eco
@@ -7922,10 +7940,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
 msgid "Retweets are converted into tickets."
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_profile/notification.coffee
-msgid "Ring"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
@@ -8459,14 +8473,11 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_zoom/setting.coffee
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 #: app/assets/javascripts/app/views/customer_chat/index.jst.eco
-#: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/github.jst.eco
 #: app/assets/javascripts/app/views/integration/gitlab.jst.eco
 #: app/assets/javascripts/app/views/integration/idoit.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
-#: app/assets/javascripts/app/views/integration/placetel.jst.eco
-#: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
 msgid "Settings"
@@ -8670,10 +8681,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/translation/list.jst.eco
 #: app/assets/javascripts/app/views/translation/todo.jst.eco
 msgid "Source"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_profile/notification.coffee
-msgid "Space"
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -9286,6 +9293,14 @@ msgstr ""
 
 #: app/controllers/users_controller.rb
 msgid "The required parameter 'id' is missing."
+msgstr ""
+
+#: app/models/core_workflow/result.rb
+msgid "The required parameter 'payload->class_name' is missing."
+msgstr ""
+
+#: app/models/core_workflow/result.rb
+msgid "The required parameter 'payload->screen' is missing."
 msgstr ""
 
 #: app/controllers/users_controller.rb
@@ -10252,26 +10267,6 @@ msgstr ""
 msgid "User Preferences"
 msgstr ""
 
-#: app/assets/javascripts/app/views/integration/sipgate.jst.eco
-msgid "User assignment to Sipgate users"
-msgstr ""
-
-#: app/assets/javascripts/app/views/integration/sipgate.jst.eco
-msgid ""
-"User assignment to Sipgate users to be able to open new ticket screen upon "
-"answering a call."
-msgstr ""
-
-#: app/assets/javascripts/app/views/integration/placetel.jst.eco
-msgid "User assignment to telephones"
-msgstr ""
-
-#: app/assets/javascripts/app/views/integration/placetel.jst.eco
-msgid ""
-"User assignment to telephones to be able to open new ticket screen upon "
-"answering a call."
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee
 #: app/assets/javascripts/app/controllers/signup.coffee
 msgid "User could not be created."
@@ -10719,7 +10714,7 @@ msgid "Will be published"
 msgstr ""
 
 #: app/views/knowledge_base/public/_top_banner.html.erb
-msgid "Will be published on "
+msgid "Will be published on"
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -10773,10 +10768,6 @@ msgstr ""
 msgid "Woo hoo! Your password has been changed!"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_profile/notification.coffee
-msgid "Wood"
-msgstr ""
-
 #: app/assets/javascripts/app/views/translation/list.jst.eco
 #: app/assets/javascripts/app/views/translation/todo.jst.eco
 msgid "Words"
@@ -10788,10 +10779,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
 msgid "Workflows"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_profile/notification.coffee
-msgid "Xylo"
 msgstr ""
 
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco
