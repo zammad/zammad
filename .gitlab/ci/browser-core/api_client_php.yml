@@ -7,7 +7,9 @@ api_client_php:
     ZAMMAD_PHP_API_CLIENT_UNIT_TESTS_PASSWORD: "test"
   script:
     - RAILS_ENV=test bundle exec rake db:create
+    - echo -e "\\e[0Ksection_start:`date +%s`:zammad_ci_test_start[collapsed=true]\\r\\e[0Kbundle exec rake zammad:ci:test:start"
     - RAILS_ENV=test bundle exec rake zammad:ci:test:start zammad:setup:auto_wizard
+    - echo -e "\\e[0Ksection_end:`date +%s`:zammad_ci_test_start\\r\\e[0K"
     - git clone https://github.com/zammad/zammad-api-client-php.git
     - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
     - php composer-setup.php --install-dir=/usr/local/bin

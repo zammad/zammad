@@ -8,7 +8,9 @@ include:
   variables:
     RAILS_ENV: "test"
   script:
+    - echo -e "\\e[0Ksection_start:`date +%s`:zammad_db_init[collapsed=true]\\r\\e[0Kbundle exec rake zammad:db:init"
     - bundle exec rake zammad:db:init
+    - echo -e "\\e[0Ksection_end:`date +%s`:zammad_db_init\\r\\e[0K"
     - bundle exec rake test:units
     - bundle exec rails test test/integration/object_manager_test.rb
     - bundle exec rails test test/integration/package_test.rb

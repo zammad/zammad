@@ -17,10 +17,14 @@
   before_script:
     - source /etc/profile.d/rvm.sh # ensure RVM is loaded
     - source /opt/rh/rh-nodejs*/enable # ensure Node.js is available
+    - echo -e "\\e[0Ksection_start:`date +%s`:bundle_install[collapsed=true]\\r\\e[0Kbundle install"
     - bundle install -j $(nproc) --path vendor
+    - echo -e "\\e[0Ksection_end:`date +%s`:bundle_install\\r\\e[0K"
     - bundle exec ruby .gitlab/configure_environment.rb
     - source .gitlab/environment.env
+    - echo -e "\\e[0Ksection_start:`date +%s`:zammad_db_init[collapsed=true]\\r\\e[0Kbundle exec rake zammad:db:init"
     - bundle exec rake zammad:db:init
+    - echo -e "\\e[0Ksection_end:`date +%s`:zammad_db_init\\r\\e[0K"
 
 # Must be a separate job because it uses a custom image.
 "lint: shellcheck":
@@ -61,7 +65,9 @@
     - yarn install
     - yarn lint:css
     - echo "Rubocop check..."
+    - echo -e "\\e[0Ksection_start:`date +%s`:bundle_install[collapsed=true]\\r\\e[0Kbundle install"
     - bundle install -j $(nproc) --path vendor
+    - echo -e "\\e[0Ksection_end:`date +%s`:bundle_install\\r\\e[0K"
     - bundle exec rubocop --parallel
 
 # Must be a separate job because it may fail and is only executed for develop.

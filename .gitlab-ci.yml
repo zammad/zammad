@@ -56,6 +56,8 @@ cache:
 before_script:
   - source /etc/profile.d/rvm.sh
   - source /opt/rh/rh-nodejs*/enable
+  - echo -e "\\e[0Ksection_start:`date +%s`:bundle_install[collapsed=true]\\r\\e[0Kbundle install"
   - bundle install -j $(nproc) --path vendor
+  - echo -e "\\e[0Ksection_end:`date +%s`:bundle_install\\r\\e[0K"
   - bundle exec ruby .gitlab/configure_environment.rb
   - source .gitlab/environment.env
