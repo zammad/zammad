@@ -7,7 +7,7 @@ class KnowledgeBase::Public::CategoriesController < KnowledgeBase::Public::BaseC
     @categories     = categories_filter(@knowledge_base.categories.root)
     @object_locales = find_locales(@knowledge_base)
 
-    authorize(@categories, policy_class: KnowledgeBase::Public::CategoryPolicy)
+    authorize(@categories, policy_class: Controllers::KnowledgeBase::Public::CategoriesControllerPolicy)
   rescue Pundit::NotAuthorizedError
     raise ActiveRecord::RecordNotFound
   end

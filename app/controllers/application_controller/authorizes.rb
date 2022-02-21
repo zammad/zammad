@@ -2,7 +2,7 @@
 
 module ApplicationController::Authorizes
   extend ActiveSupport::Concern
-  include Pundit
+  include Pundit::Authorization
 
   private
 
