@@ -1813,6 +1813,42 @@ ObjectManager::Attribute.add(
 ObjectManager::Attribute.add(
   force:       true,
   object:      'Group',
+  name:        'shared_drafts',
+  display:     __('Shared Drafts'),
+  data_type:   'active',
+  data_option: {
+    null:       false,
+    default:    true,
+    permission: ['admin.group'],
+  },
+  editable:    true,
+  active:      true,
+  screens:     {
+    create: {
+      '-all-' => {
+        null: true,
+      },
+    },
+    edit:   {
+      '-all-': {
+        null: false,
+      },
+    },
+    view:   {
+      '-all-' => {
+        shown: false,
+      },
+    },
+  },
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    1400,
+)
+
+ObjectManager::Attribute.add(
+  force:       true,
+  object:      'Group',
   name:        'note',
   display:     __('Note'),
   data_type:   'richtext',

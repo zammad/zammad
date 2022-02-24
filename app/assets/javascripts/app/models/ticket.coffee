@@ -374,3 +374,11 @@ class App.Ticket extends App.Model
     return false if !user.permission('ticket.agent')
     return true if @isAccessibleByOwner(user)
     return @isAccessibleByGroup(user, permission)
+
+  attributes: ->
+    attrs = super
+
+    if @shared_draft_id
+      attrs.shared_draft_id = @shared_draft_id
+
+    attrs

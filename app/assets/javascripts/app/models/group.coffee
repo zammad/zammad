@@ -1,5 +1,5 @@
 class App.Group extends App.Model
-  @configure 'Group', 'name', 'assignment_timeout', 'follow_up_possible', 'follow_up_assignment', 'email_address_id', 'signature_id', 'note', 'active', 'updated_at'
+  @configure 'Group', 'name', 'assignment_timeout', 'follow_up_possible', 'follow_up_assignment', 'email_address_id', 'signature_id', 'note', 'active', 'shared_drafts', 'updated_at'
   @extend Spine.Model.Ajax
   @url: @apiPath + '/groups'
 
@@ -13,6 +13,7 @@ class App.Group extends App.Model
     { name: 'note',                 display: __('Note'),              tag: 'textarea', note: __('Notes are visible to agents only, never to customers.'), limit: 250, null: true },
     { name: 'updated_at',           display: __('Updated'),           tag: 'datetime', readonly: 1 },
     { name: 'active',               display: __('Active'),            tag: 'active', default: true },
+    { name: 'shared_drafts',        display: __('Shared Drafts'),     tag: 'active' },
   ]
   @configure_clone = true
   @configure_overview = [

@@ -76,4 +76,20 @@ returns
 
     new_attachments
   end
+
+  def attach_upload_cache(form_id, source_object_name: 'UploadCache')
+    attachments_remove_all
+
+    Store
+      .list(object: source_object_name, o_id: form_id)
+      .map do |old_attachment|
+        Store.add(
+          object:      self.class.name,
+          o_id:        id,
+          data:        old_attachment.content,
+          filename:    old_attachment.filename,
+          preferences: old_attachment.preferences,
+        )
+      end
+  end
 end

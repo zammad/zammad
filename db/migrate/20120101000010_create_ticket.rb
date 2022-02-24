@@ -589,6 +589,27 @@ class CreateTicket < ActiveRecord::Migration[4.2]
       t.timestamps limit: 3, null: false
     end
 
+    create_table :ticket_shared_draft_zooms do |t|
+      t.references :ticket, null: false, foreign_key: { to_table: :tickets }
+      t.text       :new_article
+      t.text       :ticket_attributes
+
+      t.column :created_by_id, :integer, null: true
+      t.column :updated_by_id, :integer, null: true
+
+      t.timestamps limit: 3
+    end
+
+    create_table :ticket_shared_draft_starts do |t|
+      t.references :group, null: false, foreign_key: { to_table: :groups }
+      t.string     :name
+      t.text       :content
+
+      t.column :created_by_id, :integer, null: true
+      t.column :updated_by_id, :integer, null: true
+
+      t.timestamps limit: 3
+    end
   end
 
   def self.down
@@ -626,5 +647,7 @@ class CreateTicket < ActiveRecord::Migration[4.2]
     drop_table :ticket_states
     drop_table :ticket_state_types
     drop_table :webhooks
+    drop_table :ticket_shared_draft_zooms
+    drop_table :ticket_shared_draft_starts
   end
 end

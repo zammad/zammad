@@ -8157,6 +8157,16 @@ a.list-group-item.active > .badge,
     margin-right: 10px;
   }
 
+  &-draft-spacer {
+    width: 2px;
+    height: 60px;
+    margin-right: 15px;
+  }
+
+  &-avatars:empty + &-draft-spacer {
+    display: none;
+  }
+
   &--border {
     border-top: 1px solid hsl(0, 0%, 94%);
   }
@@ -8779,6 +8789,10 @@ a.list-group-item.active > .badge,
   @include phone {
     padding: 15px;
   }
+
+  .btn--text + .btn--text {
+    margin-bottom: -10px;
+  }
 }
 
 .modal-leftFooter,
@@ -8929,6 +8943,14 @@ a.list-group-item.active > .badge,
 
 .dropdown li:not(:first-child) {
   box-shadow: 0 1px rgba(255, 255, 255, 0.13) inset;
+}
+
+.dropdown li.label {
+  box-shadow: none;
+
+  + li {
+    box-shadow: none;
+  }
 }
 
 .dropdown li:hover,

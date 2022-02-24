@@ -2,14 +2,15 @@ class App.TicketZoom extends App.Controller
   @include App.TicketNavigable
 
   elements:
-    '.main':             'main'
-    '.ticketZoom':       'ticketZoom'
-    '.scrollPageHeader': 'scrollPageHeader'
+    '.main':               'main'
+    '.ticketZoom':         'ticketZoom'
+    '.scrollPageHeader':   'scrollPageHeader'
 
   events:
     'click .js-submit':   'submit'
     'click .js-bookmark': 'bookmark'
     'click .js-reset':    'reset'
+    'click .js-draft':    'draft'
     'click .main':        'muteTask'
 
   constructor: (params) ->
@@ -186,6 +187,9 @@ class App.TicketZoom extends App.Controller
 
       # remember mentions
       @mentions = data.mentions
+
+      if draft = App.TicketSharedDraftZoom.findByAttribute 'ticket_id', @ticket_id
+        draft.remove(clear: true)
 
       App.Collection.loadAssets(data.assets, targetModel: 'Ticket')
 
@@ -481,11 +485,13 @@ class App.TicketZoom extends App.Controller
       )
 
       @attributeBar = new App.TicketZoomAttributeBar(
-        ticket:      @ticket
-        el:          elLocal.find('.js-attributeBar')
-        overview_id: @overview_id
-        callback:    @submit
-        taskKey:     @taskKey
+        ticket:        @ticket
+        el:            elLocal.find('.js-attributeBar')
+        overview_id:   @overview_id
+        macroCallback: @submit
+        draftCallback: @saveDraft
+        draftState:    @draftState()
+        taskKey:       @taskKey
       )
       #if @shown
       #  @attributeBar.start()
@@ -965,6 +971,55 @@ class App.TicketZoom extends App.Controller
         @submitPost(e, ticket, macro)
     )
 
+  saveDraft: (e) =>
+    e.stopPropagation()
+    e.preventDefault()
+
+    params =
+      new_article:       @articleNew.params()
+      ticket_attributes: @ticketParams()
+
+    loaded_draft_id = params.new_article.shared_draft_id
+
+    params.form_id = params.new_article['form_id']
+    delete params.new_article['form_id']
+    delete params.new_article['shared_draft_id']
+
+    sharedDraft = @sharedDraft()
+
+    draftExists = sharedDraft?
+    isLoaded = loaded_draft_id == String(sharedDraft?.id)
+
+    matches = draftExists &&
+      _.isEqual(sharedDraft.new_article, params.new_article) &&
+      _.isEqual(sharedDraft.ticket_attributes, params.ticket_attributes)
+
+    if draftExists && !(isLoaded && matches)
+      new App.TicketSharedDraftOverwriteModal(
+        onShowDraft: @draft
+        onSaveDraft: =>
+          @draftSaveToServer(params)
+      )
+
+      return
+
+    @draftSaveToServer(params)
+
+  draftSaveToServer: (params) =>
+    @draftSaving()
+
+    @ajax
+      id: 'ticket_shared_draft_update'
+      type: 'PUT'
+      url: @apiPath + '/tickets/' + @ticket_id + '/shared_draft'
+      processData: true
+      data: JSON.stringify(params)
+      success: (data, status, xhr) =>
+        App.Collection.loadAssets(data.assets)
+        @draftFetched()
+      error: =>
+        @draftFetched()
+
   submitPost: (e, ticket, macro) =>
     taskAction = @$('.js-secondaryActionButtonLabel').data('type')
 
@@ -1033,6 +1088,49 @@ class App.TicketZoom extends App.Controller
 
   bookmark: (e) ->
     $(e.currentTarget).find('.bookmark.icon').toggleClass('filled')
+
+  draft: (e) =>
+    e.preventDefault()
+
+    new App.TicketSharedDraftModal(
+      container:    @el.closest('.content')
+      hasChanges:   App.TaskManager.worker(@taskKey).changed()
+      parent:       @
+      shared_draft: @sharedDraft()
+    )
+
+  fetchDraft: ->
+    @ajax(
+      id:    "ticket_#{@ticket_id}_shared_draft"
+      type: 'GET'
+      url:    "#{@apiPath}/tickets/#{@ticket_id}/shared_draft"
+      processData: true
+      success: (data, status, xhr) =>
+        App.Collection.loadAssets(data.assets)
+        @draftFetched()
+    )
+
+  draftSaving: ->
+    @updateDraftButton(true, 'saving')
+
+  updateDraftButton: (visible, state) ->
+    button = @el.find('.js-draft')
+
+    button.toggleClass('hide', !visible)
+    button.find('.attributeBar-draft--available').toggleClass('hide', state != 'available')
+    button.find('.attributeBar-draft--saving').toggleClass('hide', state != 'saving')
+    button.attr('disabled', state == 'saving')
+
+    @el.find('.js-dropdownActionSaveDraft').attr('disabled', state == 'saving')
+
+  draftFetched: ->
+    @updateDraftButton(@sharedDraft()?, 'available')
+
+  draftState: ->
+    @sharedDraft()?
+
+  sharedDraft: ->
+    App.TicketSharedDraftZoom.findByAttribute 'ticket_id', @ticket_id
 
   reset: (e) =>
     if e

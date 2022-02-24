@@ -81,6 +81,16 @@ class TicketsController < ApplicationController
         params.delete(:customer)
       end
 
+      if (shared_draft_id = params[:shared_draft_id])
+        shared_draft = Ticket::SharedDraftStart.find_by id: shared_draft_id
+
+        if shared_draft && (shared_draft.group_id.to_s != params[:group_id]&.to_s || !shared_draft.group.shared_drafts?)
+          raise Exceptions::UnprocessableEntity, __('Shared draft not eligible for this ticket')
+        end
+
+        shared_draft&.destroy
+      end
+
       clean_params = Ticket.association_name_to_id_convert(params)
 
       # overwrite params
@@ -92,7 +102,7 @@ class TicketsController < ApplicationController
       end
 
       # The parameter :customer_id is 'abused' in cases where it is not an integer, but a string like
-      #   'guess:customers.email@domain.com' which implies that the customer should be looked up.
+      #   'guess:customers.email@domain.cm' which implies that the customer should be looked up.
       if clean_params[:customer_id].is_a?(String) && clean_params[:customer_id] =~ %r{^guess:(.+?)$}
         email_address = $1
         email_address_validation = EmailAddressValidation.new(email_address)
@@ -245,6 +255,16 @@ class TicketsController < ApplicationController
     ticket.with_lock do
       ticket.update!(clean_params)
       if params[:article].present?
+        if (shared_draft_id = params[:article][:shared_draft_id])
+          shared_draft = Ticket::SharedDraftZoom.find_by id: shared_draft_id
+
+          if shared_draft && shared_draft.ticket != ticket
+            raise Exceptions::UnprocessableEntity, __('Shared draft not eligible for this ticket')
+          end
+
+          shared_draft&.destroy
+        end
+
         article_create(ticket, params[:article])
       end
     end
@@ -692,6 +712,10 @@ class TicketsController < ApplicationController
     mentions = Mention.where(mentionable: ticket).order(created_at: :desc)
     mentions.each do |mention|
       assets = mention.assets(assets)
+    end
+
+    if (draft = ticket.shared_draft) && authorized?(draft, :show?)
+      assets = draft.assets(assets)
     end
 
     # return result

@@ -9,6 +9,9 @@ class App.TicketZoomAttributeBar extends App.Controller
     'mouseup .js-dropdownActionMacro':    'performTicketMacro'
     'mouseenter .js-dropdownActionMacro': 'onActionMacroMouseEnter'
     'mouseleave .js-dropdownActionMacro': 'onActionMacroMouseLeave'
+    'mouseup .js-dropdownActionSaveDraft': 'saveDraft'
+    'mouseenter .js-dropdownActionSaveDraft': 'onActionMacroMouseEnter'
+    'mouseleave .js-dropdownActionSaveDraft': 'onActionMacroMouseLeave'
     'click .js-secondaryAction':          'chooseSecondaryAction'
 
   searchCondition: {}
@@ -31,18 +34,44 @@ class App.TicketZoomAttributeBar extends App.Controller
       @render()
     )
 
+    @controllerBind('ui::ticket::updateSharedDraft', (data) =>
+      return if data.taskKey isnt @taskKey
+      @render(data)
+    )
+
+    @listenTo(App.Group, 'refresh', (refreshed_group) =>
+      selected_group_id = @el.closest('.content').find('[name=group_id]').val()
+      selected_group    = App.Group.find selected_group_id
+
+      return if !selected_group
+      return if !refreshed_group
+      return if refreshed_group.id != selected_group.id
+
+      return if @sharedDraftsEnabled == selected_group.shared_drafts
+
+      @render({ newGroupId: selected_group.id })
+    )
+
   getAction: ->
     return App.Session.get().preferences.secondaryAction || App.Config.get('ticket_secondary_action') || 'stayOnTab'
 
   release: =>
     App.Macro.unsubscribe(@subscribeId)
 
-  render: =>
-
+  render: (options = {}) =>
     # remember current reset state
     resetButtonShown = false
     if @resetButton.get(0) && !@resetButton.hasClass('hide')
       resetButtonShown = true
+
+    group                  = App.Group.find options?.newGroupId || @ticket.group_id
+    draft                  = App.TicketSharedDraftZoom.findByAttribute 'ticket_id', @ticket.id
+    accessibleGroups       = App.User.current().allGroupIds('change')
+    sharedDraftButtonShown = group?.shared_drafts && _.contains(accessibleGroups, String(group.id))
+    sharedDraftsEnabled    = group?.shared_drafts && _.contains(accessibleGroups, String(group.id))
+    sharedButtonVisible    = sharedDraftsEnabled && draft?
+
+    @sharedDraftsEnabled = sharedDraftsEnabled
 
     macros = App.Macro.getList()
 
@@ -59,11 +88,15 @@ class App.TicketZoomAttributeBar extends App.Controller
         @possibleMacros.push macro
 
     localeEl = $(App.view('ticket_zoom/attribute_bar')(
-      macros:           @possibleMacros
-      macroDisabled:    macroDisabled
-      overview_id:      @overview_id
-      resetButtonShown: resetButtonShown
+      macros:                 @possibleMacros
+      macroDisabled:          macroDisabled
+      sharedButtonVisible:    sharedButtonVisible
+      sharedDraftsDisabled:   !sharedDraftsEnabled
+      overview_id:            @overview_id
+      resetButtonShown:       resetButtonShown
+      sharedDraftButtonShown: sharedDraftButtonShown
     ))
+
     @setSecondaryAction(@secondaryAction, localeEl)
 
     if @ticket.currentView() is 'agent'
@@ -73,6 +106,26 @@ class App.TicketZoomAttributeBar extends App.Controller
       )
 
     @html localeEl
+
+    @el.find('.js-draft').popover(
+      trigger:   'hover'
+      container: 'body'
+      html:      true
+      animation: false
+      delay:     100
+      placement: 'auto'
+      sanitize:  false
+      content:   =>
+        draft     = App.TicketSharedDraftZoom.findByAttribute 'ticket_id', @ticket?.id
+        timestamp = App.ViewHelpers.humanTime(draft?.updated_at)
+        user      = App.User.find draft?.updated_by_id
+        name      = user?.displayName()
+
+        content =  App.i18n.translatePlain('Last change %s<br>by %s', timestamp, name)
+
+        # needs linebreak to align vertically without title
+        '<br>' + content
+    )
 
   start: =>
     return if !@taskbarWatcher
@@ -106,8 +159,11 @@ class App.TicketZoomAttributeBar extends App.Controller
     macroId = $(e.currentTarget).data('id')
     macro = App.Macro.find(macroId)
 
-    @callback(e, macro)
+    @macroCallback(e, macro)
     @closeMacroMenu()
+
+  saveDraft: (e) =>
+    @draftCallback(e)
 
   onActionMacroMouseEnter: (e) =>
     @$(e.currentTarget).addClass('is-active')

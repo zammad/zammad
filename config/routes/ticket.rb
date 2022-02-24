@@ -3,6 +3,20 @@
 Zammad::Application.routes.draw do
   api_path = Rails.configuration.api_path
 
+  # ticket shared drafts
+
+  resource api_path + '/tickets/:ticket_id/shared_draft', controller: 'ticket_shared_draft_zoom', except: %w[new edit create] do
+    collection do
+      post :import_attachments, as: nil
+    end
+  end
+
+  resources api_path + '/tickets/shared_drafts',           controller: 'tickets_shared_draft_starts', except: %w[new edit] do
+    member do
+      post :import_attachments, as: nil
+    end
+  end
+
   # tickets
   match api_path + '/tickets/search',                                to: 'tickets#search',            via: %i[get post]
   match api_path + '/tickets/selector',                              to: 'tickets#selector',          via: :post

@@ -59,3 +59,11 @@ class App.TicketArticle extends App.Model
       if attachment && (!attachment.preferences || attachment.preferences && attachment.preferences['original-format'] isnt true)
         attachments.push attachment
     attachments
+
+  attributes: ->
+    attrs = super
+
+    if @shared_draft_id
+      attrs.shared_draft_id = @shared_draft_id
+
+    attrs

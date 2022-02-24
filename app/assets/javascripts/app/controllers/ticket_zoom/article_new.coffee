@@ -53,12 +53,15 @@ class App.TicketZoomArticleNew extends App.Controller
 
       @setArticleTypePre(data.type.name, data.signaturePosition)
 
-      @openTextarea(null, true, true)
+      @openTextarea(null, true, !data.nofocus)
       for key, value of data.article
         if key is 'body'
           @$("[data-name=\"#{key}\"]").html(value)
         else
           @$("[name=\"#{key}\"]").val(value).trigger('change')
+
+
+      @$('[name=shared_draft_id]').val(data.shared_draft_id)
 
       @setArticleTypePost(data.type.name, data.signaturePosition)
 
@@ -75,6 +78,8 @@ class App.TicketZoomArticleNew extends App.Controller
       # fixes email validation issue right after new ticket creation
       @tokanice(data.type.name)
     )
+
+    @controllerBind('ui::ticket::import_draft_attachments', @importDraftAttachments)
 
     # add article attachment
     @controllerBind('ui::ticket::addArticleAttachent', (data) =>
@@ -633,6 +638,26 @@ class App.TicketZoomArticleNew extends App.Controller
 
       @richTextUploadDeleteCallback?(@attachments)
     )
+
+  importDraftAttachments: (options) =>
+    return if @ticket.id != options.ticket_id
+
+    @ajax
+      id: 'import_attachments'
+      type: 'POST'
+      url: "#{@apiPath}/tickets/#{@ticket.id}/shared_draft/import_attachments"
+      data: JSON.stringify({ form_id: @form_id })
+      processData: true
+      success: (data, status, xhr) =>
+        App.Event.trigger('ui::ticket::addArticleAttachent', {
+          ticket:      @ticket
+          attachments: data.attachments
+          form_id:     @form_id
+        })
+
+        App.Event.trigger(options.callbackName, { success: true })
+      error: ->
+        App.Event.trigger(options.callbackName, { success: false })
 
   actions: ->
     actionConfig = App.Config.get('TicketZoomArticleAction')

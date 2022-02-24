@@ -132,6 +132,14 @@ class App.TicketCreate extends App.Controller
     @$('[name="cc"], [name="group_id"], [name="customer_id"]').on('change', =>
       @updateSecurityOptions()
     )
+
+    @listenTo(App.Group, 'refresh', =>
+      @sidebarWidget.render(@params())
+    )
+
+    @$('[name="group_id"]').bind('change', =>
+      @sidebarWidget.render(@params())
+    )
     @updateSecurityOptions()
 
     # show cc
@@ -174,6 +182,7 @@ class App.TicketCreate extends App.Controller
     @navupdate("#ticket/create/id/#{@id}#{@split}", type: 'menu')
     @autosaveStart()
     @controllerBind('ticket_create_rerender', (template) => @renderQueue(template))
+    @controllerBind('ticket_create_import_draft_attachments', @importDraftAttachments)
 
     # initially hide sidebar on mobile
     if window.matchMedia('(max-width: 767px)').matches
@@ -183,6 +192,7 @@ class App.TicketCreate extends App.Controller
   hide: =>
     @autosaveStop()
     @controllerUnbind('ticket_create_rerender', (template) => @renderQueue(template))
+    @controllerUnbind('ticket_create_import_draft_attachments')
 
   changed: =>
     return true if @hasAttachments()
@@ -283,6 +293,18 @@ class App.TicketCreate extends App.Controller
     return if !@formMeta
     App.QueueManager.run(@queueKey)
 
+  importDraftAttachments: (options = {}) =>
+    @ajax
+      id: 'import_attachments'
+      type: 'POST'
+      url: "#{@apiPath}/tickets/shared_drafts/#{options.shared_draft_id}/import_attachments"
+      data: JSON.stringify({ form_id: @formId })
+      processData: true
+      success: (data, status, xhr) ->
+        App.Event.trigger(options.callbackName, { success: true, attachments: data.attachments })
+      error: ->
+        App.Event.trigger(options.callbackName, { success: false })
+
   updateTaskManagerAttachments: (attribute, attachments) =>
     taskData = App.TaskManager.get(@taskKey)
     return if _.isEmpty(taskData)
@@ -306,12 +328,13 @@ class App.TicketCreate extends App.Controller
     params.priority_id ||= App.TicketPriority.findByAttribute( 'default_create', true )?.id
 
     @html(App.view('agent_ticket_create')(
-      head:           __('New Ticket')
-      agent:          @permissionCheck('ticket.agent')
-      admin:          @permissionCheck('admin')
-      types:          @types,
-      availableTypes: @availableTypes
-      form_id:        @formId
+      head:            __('New Ticket')
+      agent:           @permissionCheck('ticket.agent')
+      admin:           @permissionCheck('admin')
+      types:           @types,
+      availableTypes:  @availableTypes
+      form_id:         @formId
+      shared_draft_id: template.shared_draft_id || params.shared_draft_id
     ))
 
     App.Ticket.configure_attributes.push {

@@ -81,6 +81,7 @@ class Ticket < ApplicationModel
   has_many      :ticket_time_accounting, class_name: 'Ticket::TimeAccounting', dependent: :destroy, inverse_of: :ticket
   has_many      :flags,                  class_name: 'Ticket::Flag', dependent: :destroy
   has_many      :mentions,               as: :mentionable, dependent: :destroy
+  has_one       :shared_draft,           class_name: 'Ticket::SharedDraftZoom', inverse_of: :ticket, dependent: :destroy
   belongs_to    :state,                  class_name: 'Ticket::State', optional: true
   belongs_to    :priority,               class_name: 'Ticket::Priority', optional: true
   belongs_to    :owner,                  class_name: 'User', optional: true

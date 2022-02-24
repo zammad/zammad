@@ -1778,9 +1778,10 @@ RSpec.describe Ticket, type: :model do
       end
 
       it 'destroys all related dependencies' do
-        refs_known = { 'Ticket::Article'        => { 'ticket_id'=>1 },
-                       'Ticket::TimeAccounting' => { 'ticket_id'=>1 },
-                       'Ticket::Flag'           => { 'ticket_id'=>1 } }
+        refs_known = { 'Ticket::Article'         => { 'ticket_id'=>1 },
+                       'Ticket::TimeAccounting'  => { 'ticket_id'=>1 },
+                       'Ticket::SharedDraftZoom' => { 'ticket_id'=>0 },
+                       'Ticket::Flag'            => { 'ticket_id'=>1 } }
 
         ticket     = create(:ticket)
         article    = create(:ticket_article, ticket: ticket)
