@@ -216,7 +216,7 @@ returns
   end
 
   def attributes_for_display
-    slice :id, :filename, :size, :preferences
+    slice :id, :store_file_id, :filename, :size, :preferences
   end
 
   RESIZABLE_MIME_REGEXP = %r{image/(jpeg|jpg|png)}i.freeze

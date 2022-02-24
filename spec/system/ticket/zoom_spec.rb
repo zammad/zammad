@@ -2542,4 +2542,52 @@ RSpec.describe 'Ticket zoom', type: :system do
       expect(page).to have_text('SOLUTION TIME')
     end
   end
+
+  context 'Make sidebar attachments unique #3930', authenticated_as: :authenticate do
+    let(:ticket) { create(:ticket, group: Group.find_by(name: 'Users')) }
+    let(:article1)         { create(:ticket_article, ticket: ticket) }
+    let(:article2)         { create(:ticket_article, ticket: ticket) }
+
+    def attachment_add(article, filename)
+      Store.add(
+        object:        'Ticket::Article',
+        o_id:          article.id,
+        data:          "content #{filename}",
+        filename:      filename,
+        preferences:   {
+          'Content-Type' => 'text/plain',
+        },
+        created_by_id: 1,
+      )
+    end
+
+    def authenticate
+      attachment_add(article1, 'some_file.txt')
+      attachment_add(article2, 'some_file.txt')
+      attachment_add(article2, 'some_file2.txt')
+      Setting.set('ui_ticket_zoom_sidebar_article_attachments', true)
+
+      true
+    end
+
+    before do
+      visit "#ticket/zoom/#{ticket.id}"
+      page.find(".tabsSidebar-tabs .tabsSidebar-tab[data-tab='attachment']").click
+    end
+
+    it 'does show the attachment once' do
+      expect(page).to have_selector('.sidebar-content .attachment.attachment--preview', count: 2)
+      expect(page).to have_selector('.sidebar-content', text: 'some_file.txt')
+      expect(page).to have_selector('.sidebar-content', text: 'some_file2.txt')
+    end
+
+    it 'does show up new attachments' do
+      page.find('.js-textarea').send_keys('new article with attachment')
+      page.find('input#fileUpload_1', visible: :all).set(Rails.root.join('test/data/mail/mail001.box'))
+      expect(page).to have_text('mail001.box')
+      wait.until { Taskbar.find_by(key: "Ticket-#{ticket.id}").attributes_with_association_ids['attachments'].present? }
+      click '.js-submit'
+      expect(page).to have_selector('.sidebar-content', text: 'mail001.box')
+    end
+  end
 end

@@ -16,16 +16,35 @@ class SidebarArticleAttachments extends App.Controller
     if _.isEmpty(@ticket) || _.isEmpty(@ticket.article_ids)
       @el.html("<div>#{App.i18n.translateInline('none')}</div>")
       return
-    html = ''
-    for ticket_article_id in @ticket.article_ids.sort((a, b) -> b - a)
-      if App.TicketArticle.exists(ticket_article_id)
-        article = App.TicketArticle.find(ticket_article_id)
-        attachments = App.TicketArticle.contentAttachments(article)
-        if !_.isEmpty(attachments)
-          html += App.view('ticket_zoom/sidebar_article_attachment')(article: article, attachments: attachments)
+
+    articleIDs = _.clone(@ticket.article_ids)
+    articleIDs.sort((a, b) -> a - b)
+
+    uniqueAttachments = {}
+    ticketAttachments = []
+    for articleID in articleIDs
+      continue if !App.TicketArticle.exists(articleID)
+
+      article = App.TicketArticle.find(articleID)
+      attachments = App.TicketArticle.contentAttachments(article)
+      for attachment in attachments
+        continue if uniqueAttachments[attachment.store_file_id]
+        uniqueAttachments[attachment.store_file_id] = true
+
+        ticketAttachments.push({ attachment: attachment, article: article })
+
+    ticketAttachments = ticketAttachments.reverse()
+
+    html = App.view('ticket_zoom/sidebar_article_attachment')(
+      ticketAttachments: ticketAttachments,
+    )
+
     @el.html(html)
     @el.on('click', '.js-attachments img', (e) =>
       @imageView(e)
+    )
+    @controllerBind('ui::ticket::load', =>
+      @showObjects(el)
     )
 
   imageView: (e) ->
