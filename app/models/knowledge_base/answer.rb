@@ -6,6 +6,7 @@ class KnowledgeBase::Answer < ApplicationModel
   include HasTags
   include CanBePublished
   include ChecksKbClientNotification
+  include ChecksKbClientVisibility
   include CanCloneAttachments
 
   AGENT_ALLOWED_ATTRIBUTES       = %i[category_id promoted internal_note].freeze
@@ -49,7 +50,13 @@ class KnowledgeBase::Answer < ApplicationModel
     siblings = category.answers
 
     if !User.lookup(id: UserInfo.current_user_id)&.permissions?('knowledge_base.editor')
-      siblings = siblings.internal
+      ep = KnowledgeBase::EffectivePermission.new User.find(UserInfo.current_user_id), category
+
+      siblings = if ep.access_effective == 'public_reader'
+                   siblings.published
+                 else
+                   siblings.internal
+                 end
     end
 
     data = ApplicationModel::CanAssets.reduce(siblings, data)

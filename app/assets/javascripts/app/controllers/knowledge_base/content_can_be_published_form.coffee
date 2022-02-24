@@ -103,7 +103,7 @@ class App.KnowledgeBaseContentCanBePublishedForm extends App.ControllerForm
           ,
             value: 'internal'
             name:  __('Internal')
-            note:  __('Visible to agents & editors')
+            note:  __('Visible to readers & editors')
           ,
             value: 'published'
             name:  __('Public')

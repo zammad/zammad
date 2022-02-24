@@ -5,13 +5,39 @@ class KnowledgeBasesController < KnowledgeBase::BaseController
     render json: assets(params[:answer_translation_content_ids])
   end
 
+  def visible_ids
+    render json: KnowledgeBase::InternalAssets.new(current_user).visible_ids
+  end
+
   private
 
   def assets(answer_translation_content_ids = nil)
-    return editor_assets(answer_translation_content_ids) if current_user&.permissions?('knowledge_base.editor')
-    return reader_assets(answer_translation_content_ids) if current_user&.permissions?('knowledge_base.reader')
+    if KnowledgeBase.granular_permissions?
+      return granular_assets(answer_translation_content_ids) if kb_permissions?
+    else
+      return editor_assets(answer_translation_content_ids) if kb_permission_editor?
+      return reader_assets(answer_translation_content_ids) if kb_permission_reader?
+    end
 
     public_assets
+  end
+
+  def kb_permissions?
+    current_user&.permissions?(%w[knowledge_base.editor knowledge_base.reader])
+  end
+
+  def kb_permission_editor?
+    current_user&.permissions?('knowledge_base.editor')
+  end
+
+  def kb_permission_reader?
+    current_user&.permissions?('knowledge_base.reader')
+  end
+
+  def granular_assets(answer_translation_content_ids)
+    KnowledgeBase::InternalAssets
+      .new(current_user, answer_translation_content_ids: answer_translation_content_ids)
+      .collect_assets
   end
 
   def editor_assets(answer_translation_content_ids)

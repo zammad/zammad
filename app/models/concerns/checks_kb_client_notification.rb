@@ -4,10 +4,7 @@ module ChecksKbClientNotification
   extend ActiveSupport::Concern
 
   included do
-    after_create  :notify_kb_clients_after_create
-    after_update  :notify_kb_clients_after_update
-    after_touch   :notify_kb_clients_after_touch
-    after_destroy :notify_kb_clients_after_destroy
+    after_commit :notify_kb_clients_after
 
     class_attribute :notify_kb_clients_suspend, default: false
   end
@@ -30,25 +27,9 @@ module ChecksKbClientNotification
 
   # generic call
 
-  def notify_kb_clients(event)
+  def notify_kb_clients_after
     return if self.class.notify_kb_clients_suspend?
 
-    ChecksKbClientNotificationJob.notify_later(self, event)
-  end
-
-  def notify_kb_clients_after_create
-    notify_kb_clients(:create)
-  end
-
-  def notify_kb_clients_after_update
-    notify_kb_clients(:update)
-  end
-
-  def notify_kb_clients_after_touch
-    notify_kb_clients(:touch)
-  end
-
-  def notify_kb_clients_after_destroy
-    notify_kb_clients(:destroy)
+    ChecksKbClientNotificationJob.perform_later(self.class.name, id)
   end
 end

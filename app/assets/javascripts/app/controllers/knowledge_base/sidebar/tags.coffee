@@ -11,3 +11,6 @@ class App.KnowledgeBaseSidebarTags extends App.Controller
       object:      @object
       tags:        @object.tags
     )
+
+  updateIfNeeded: ->
+    @widget.reload(@object.tags)

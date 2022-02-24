@@ -4,25 +4,31 @@ class KnowledgeBase::Category < ApplicationModel
   include HasTranslations
   include HasAgentAllowedParams
   include ChecksKbClientNotification
+  include ChecksKbClientVisibility
 
   AGENT_ALLOWED_ATTRIBUTES       = %i[knowledge_base_id parent_id category_icon].freeze
   AGENT_ALLOWED_NESTED_RELATIONS = %i[translations].freeze
 
   belongs_to :knowledge_base, inverse_of: :categories
 
-  has_many   :answers,  class_name: 'KnowledgeBase::Answer',
-                        inverse_of: :category,
-                        dependent:  :restrict_with_exception
+  has_many   :answers,   class_name: 'KnowledgeBase::Answer',
+                         inverse_of: :category,
+                         dependent:  :restrict_with_exception
 
-  has_many   :children, class_name:  'KnowledgeBase::Category',
-                        foreign_key: :parent_id,
-                        inverse_of:  :parent,
-                        dependent:   :restrict_with_exception
+  has_many   :children,  class_name:  'KnowledgeBase::Category',
+                         foreign_key: :parent_id,
+                         inverse_of:  :parent,
+                         dependent:   :restrict_with_exception
 
-  belongs_to :parent,   class_name: 'KnowledgeBase::Category',
-                        inverse_of: :children,
-                        touch:      true,
-                        optional:   true
+  belongs_to :parent,    class_name: 'KnowledgeBase::Category',
+                         inverse_of: :children,
+                         touch:      true,
+                         optional:   true
+
+  has_many :permissions, class_name: 'KnowledgeBase::Permission',
+                         as:         :permissionable,
+                         autosave:   true,
+                         dependent:  :destroy
 
   validates :category_icon, presence: true
 
@@ -117,6 +123,20 @@ class KnowledgeBase::Category < ApplicationModel
 
   def api_url
     Rails.application.routes.url_helpers.knowledge_base_category_path(knowledge_base, self)
+  end
+
+  def permissions_effective
+    cache_key = KnowledgeBase::Permission.cache_key self
+
+    Rails.cache.fetch cache_key do
+      KnowledgeBase::Category::Permission.new(self).permissions_effective
+    end
+  end
+
+  def attributes_with_association_ids
+    attrs = super
+    attrs[:permissions_effective] = permissions_effective
+    attrs
   end
 
   private

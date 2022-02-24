@@ -2,12 +2,50 @@
 
 class KnowledgeBase::CategoryPolicy < ApplicationPolicy
   def show?
-    return true if user&.permissions?('knowledge_base.editor')
+    access_editor? || access_reader?
+  end
 
-    record.public_content?
+  def show_public?
+    access_editor? || record.public_content?
+  end
+
+  def permissions?
+    access_editor?
+  end
+
+  def create?
+    parent_editor?
+  end
+
+  def update?
+    access_editor?
+  end
+
+  def destroy?
+    parent_editor?
   end
 
   private
+
+  def access
+    @access ||= KnowledgeBase::EffectivePermission.new(user, record).access_effective
+  end
+
+  def access_editor?
+    access == 'editor'
+  end
+
+  def access_reader?
+    access == 'reader'
+  end
+
+  def parent_access
+    @parent_access ||= KnowledgeBase::EffectivePermission.new(user, (record.parent || record.knowledge_base)).access_effective
+  end
+
+  def parent_editor?
+    parent_access == 'editor'
+  end
 
   def user_required?
     false

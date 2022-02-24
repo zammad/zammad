@@ -12,4 +12,18 @@ class Controllers::KnowledgeBasesControllerPolicy < Controllers::KnowledgeBase::
   def destroy?
     false
   end
+
+  def update?
+    access(__method__)
+  end
+
+  private
+
+  def object
+    @object ||= record.klass.find(record.params[:id])
+  end
+
+  def access(method)
+    KnowledgeBase::CategoryPolicy.new(user, object).send(method)
+  end
 end

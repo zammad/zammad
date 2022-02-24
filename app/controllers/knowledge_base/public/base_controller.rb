@@ -2,7 +2,8 @@
 
 class KnowledgeBase::Public::BaseController < ApplicationController
   before_action :load_kb
-  helper_method :system_locale_via_uri, :fallback_locale, :current_user, :find_category, :filter_primary_kb_locale, :menu_items, :all_locales
+  helper_method :system_locale_via_uri, :fallback_locale, :current_user, :find_category,
+                :filter_primary_kb_locale, :menu_items, :all_locales, :can_preview?
 
   layout 'knowledge_base'
 
@@ -31,12 +32,9 @@ class KnowledgeBase::Public::BaseController < ApplicationController
   end
 
   def fallback_locale
-    if all_locales.find { |locale| locale.id == system_locale_via_uri&.id }
-      system_locale_via_uri
-    else
-      filter_primary_kb_locale || all_locales.first
-    end
+    return system_locale_via_uri if all_locales.find { |locale| locale.id == system_locale_via_uri&.id }
 
+    filter_primary_kb_locale || all_locales.first
   end
 
   def filter_primary_kb_locale
@@ -62,16 +60,40 @@ class KnowledgeBase::Public::BaseController < ApplicationController
     list
       .localed(system_locale_via_uri)
       .sorted
-      .select { |category| policy(category).show? }
+      .select { |category| policy(category).show_public? }
   end
 
-  def find_answer(scope, id)
+  def answers_filter(list)
+    answers = list
+                .localed(system_locale_via_uri)
+                .sorted
+
+    if current_user&.permissions?('knowledge_base.editor')
+      answers.filter { |answer| policy(answer).show_public? }
+    else
+      answers.published
+    end
+  end
+
+  def find_answer(scope, id, locale: system_locale_via_uri)
     return if scope.nil?
 
-    policy_scope(scope)
-      .localed(system_locale_via_uri)
-      .include_contents
-      .find_by(id: id)
+    scope = scope.include_contents
+    scope = scope.localed(locale) if locale
+
+    if !current_user&.permissions?('knowledge_base.editor')
+      return scope.published.find_by(id: id)
+    end
+
+    if (item = scope.find_by(id: id)) && policy(item).show_public?
+      return item
+    end
+
+    nil
+  end
+
+  def can_preview?
+    @can_preview ||= policy(@knowledge_base).update?
   end
 
   def not_found(e)

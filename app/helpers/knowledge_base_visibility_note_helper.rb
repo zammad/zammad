@@ -2,7 +2,7 @@
 
 module KnowledgeBaseVisibilityNoteHelper
   def visibility_note(object)
-    return if !policy(:knowledge_base).edit?
+    return if !can_preview?
 
     text = visibility_text(object)
 

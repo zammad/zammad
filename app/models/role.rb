@@ -14,11 +14,12 @@ class Role < ApplicationModel
   has_and_belongs_to_many :users, after_add: :cache_update, after_remove: :cache_update
   has_and_belongs_to_many :permissions,
                           before_add:    %i[validate_agent_limit_by_permission validate_permissions],
-                          after_add:     :cache_update,
+                          after_add:     %i[cache_update cache_add_kb_permission],
                           before_remove: :last_admin_check_by_permission,
-                          after_remove:  :cache_update
+                          after_remove:  %i[cache_update cache_remove_kb_permission]
   validates               :name, presence: true
   store                   :preferences
+  has_many                :knowledge_base_permissions, class_name: 'KnowledgeBase::Permission', dependent: :destroy
 
   before_create  :check_default_at_signup_permissions
   before_update  :last_admin_check_by_attribute, :validate_agent_limit_by_attributes, :check_default_at_signup_permissions
@@ -232,4 +233,31 @@ returns
     raise Exceptions::UnprocessableEntity, "Cannot set default at signup when role has #{forbidden_permissions.join(', ')} permissions."
   end
 
+  def cache_add_kb_permission(permission)
+    return if !permission.name.starts_with? 'knowledge_base.'
+    return if !KnowledgeBase.granular_permissions?
+
+    KnowledgeBase::Category.all.each(&:touch)
+  end
+
+  def cache_remove_kb_permission(permission)
+    return if !permission.name.starts_with? 'knowledge_base.'
+    return if !KnowledgeBase.granular_permissions?
+
+    has_editor = permissions.where(name: 'knowledge_base.editor').any?
+    has_reader = permissions.where(name: 'knowledge_base.reader').any?
+
+    KnowledgeBase::Permission
+      .where(role: self)
+      .each do |elem|
+        if !has_editor && !has_reader
+          elem.destroy!
+        elsif !has_editor && has_reader
+          elem.update!(access: 'reader') if permission.access == 'editor'
+        end
+
+      end
+
+    KnowledgeBase::Category.all.each(&:touch)
+  end
 end

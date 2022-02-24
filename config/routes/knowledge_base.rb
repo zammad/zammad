@@ -20,6 +20,7 @@ Zammad::Application.routes.draw do
     resources :knowledge_bases, only: %i[show update] do
       collection do
         post :init
+        get  :visible_ids
         post :search,         controller: 'knowledge_base/search'
         get  :recent_answers, controller: 'knowledge_base/answers'
 
@@ -35,11 +36,17 @@ Zammad::Application.routes.draw do
         end
       end
 
+      member do
+        resource :permissions, controller: 'knowledge_base/permissions', only: %i[update show]
+      end
+
       resources :categories, controller: 'knowledge_base/categories',
                              except:     %i[new edit] do
 
         member do
           patch :reorder_categories, :reorder_answers
+
+          resource :permissions, controller: 'knowledge_base/permissions', only: %i[update show]
         end
 
         collection do

@@ -19,9 +19,9 @@ class App.KnowledgeBaseSidebarAttachments extends App.Controller
     super
 
     @render()
-    @listenTo @object, 'refresh', @needsUpdate
+    @listenTo @object, 'refresh', @updateIfNeeded
 
-  needsUpdate: =>
+  updateIfNeeded: =>
     @render()
 
   render: ->

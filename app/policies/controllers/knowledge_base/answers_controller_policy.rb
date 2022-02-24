@@ -2,9 +2,34 @@
 
 class Controllers::KnowledgeBase::AnswersControllerPolicy < Controllers::KnowledgeBase::BaseControllerPolicy
   def show?
-    return true if user.permissions?('knowledge_base.editor')
+    access(__method__)
+  end
 
-    object = record.klass.find(record.params[:id])
-    object.can_be_published_aasm.internal? || object.can_be_published_aasm.published?
+  def create?
+    verify_category(__method__)
+  end
+
+  def update?
+    access(__method__) && verify_category(__method__)
+  end
+
+  def destroy?
+    access(__method__)
+  end
+
+  private
+
+  def object
+    @object ||= record.klass.find(record.params[:id])
+  end
+
+  def access(method)
+    KnowledgeBase::AnswerPolicy.new(user, object).send(method)
+  end
+
+  def verify_category(method)
+    new_category = KnowledgeBase::Category.find(record.params[:category_id])
+
+    KnowledgeBase::CategoryPolicy.new(user, new_category).send(method)
   end
 end

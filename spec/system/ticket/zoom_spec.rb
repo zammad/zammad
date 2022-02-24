@@ -939,7 +939,6 @@ RSpec.describe 'Ticket zoom', type: :system do
 
     def forward
       within :active_content do
-        # binding.pry
         wait.until_exists { find('.textBubble-content .richtext-content') }
         click '.js-ArticleAction[data-type=emailForward]'
         fill_in 'To', with: 'customer@example.com'

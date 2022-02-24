@@ -11,6 +11,15 @@ InstanceMethods =
         disabled: @isNew()
       }
 
+    if (@ instanceof App.KnowledgeBaseCategory) || (@ instanceof App.KnowledgeBase)
+      buttons.push {
+        iconName: 'lock'
+        name:     'Permissions'
+        action:   'permissions'
+        cssClass: 'btn--success'
+        disabled: @isNew()
+      }
+
     if !(@ instanceof App.KnowledgeBase)
       buttons.push {
         iconName: 'trash'

@@ -6,6 +6,12 @@ FactoryBot.define do
     created_by_id   { 1 }
     updated_by_id   { 1 }
 
+    transient do
+      permission_names { nil }
+    end
+
+    permissions { Permission.where(name: permission_names) }
+
     factory :agent_role do
       permissions { Permission.where(name: 'ticket.agent') }
     end

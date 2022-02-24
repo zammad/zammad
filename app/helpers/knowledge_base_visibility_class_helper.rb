@@ -2,7 +2,7 @@
 
 module KnowledgeBaseVisibilityClassHelper
   def visibility_class_name(object)
-    return if !policy(:knowledge_base).edit?
+    return if !can_preview?
 
     suffix = case object
              when CanBePublished

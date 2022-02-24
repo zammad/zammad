@@ -2,13 +2,39 @@
 
 class KnowledgeBase::AnswerPolicy < ApplicationPolicy
   def show?
-    return true if user&.permissions?(%w[knowledge_base.editor])
+    return true if access_editor?
 
     record.visible? ||
-      (user&.permissions?(%w[knowledge_base.reader]) && record.visible_internally?)
+      (access_reader? && record.visible_internally?)
+  end
+
+  def show_public?
+    access_editor? || record.visible?
+  end
+
+  def create?
+    access_editor?
+  end
+
+  def update?
+    access_editor?
   end
 
   def destroy?
-    user&.permissions?(%w[knowledge_base.editor])
+    access_editor?
+  end
+
+  private
+
+  def access
+    @access ||= KnowledgeBase::EffectivePermission.new(user, record.category).access_effective
+  end
+
+  def access_editor?
+    access == 'editor'
+  end
+
+  def access_reader?
+    access == 'reader'
   end
 end

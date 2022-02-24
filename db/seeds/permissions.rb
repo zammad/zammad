@@ -441,11 +441,12 @@ Permission.create_if_not_exists(
 )
 
 Permission.create_if_not_exists(
-  name:        'knowledge_base.reader',
-  note:        __('Manage %s'),
-  preferences: {
+  name:         'knowledge_base.reader',
+  note:         __('Manage %s'),
+  preferences:  {
     translations: [__('Knowledge Base Reader')]
-  }
+  },
+  allow_signup: true,
 )
 
 admin = Role.find_by(name: 'Admin')

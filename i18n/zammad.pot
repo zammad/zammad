@@ -5163,6 +5163,10 @@ msgstr ""
 msgid "Invalid payload, need data:image in logo param"
 msgstr ""
 
+#: lib/knowledge_base/permissions_update.rb
+msgid "Invalid permissions, do not lock out yourself"
+msgstr ""
+
 #: app/models/concerns/checks_condition_validation.rb
 msgid "Invalid ticket selector conditions"
 msgstr ""
@@ -7613,6 +7617,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #: app/assets/javascripts/app/controllers/role.coffee
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
+#: app/assets/javascripts/app/views/knowledge_base/permissions_dialog.jst.eco
 msgid "Role"
 msgstr ""
 
@@ -9570,6 +9575,14 @@ msgstr ""
 msgid "URL (AJAX endpoint)"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee
+msgid "Unable to load changes"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee
+msgid "Unable to save changes"
+msgstr ""
+
 #: app/controllers/first_steps_controller.rb
 #: db/seeds/overviews.rb
 msgid "Unassigned & Open Tickets"
@@ -10024,11 +10037,11 @@ msgid "Visibility"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
-msgid "Visible to agents & editors"
+msgid "Visible to everyone"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
-msgid "Visible to everyone"
+msgid "Visible to readers & editors"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/placetel.coffee

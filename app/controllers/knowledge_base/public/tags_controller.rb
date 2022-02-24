@@ -2,12 +2,7 @@
 
 class KnowledgeBase::Public::TagsController < KnowledgeBase::Public::BaseController
   def show
-    @object = [:tag, params[:tag]]
-
-    all_tagged = KnowledgeBase::Answer.tag_objects(params[:tag])
-
-    @answers = policy_scope(all_tagged)
-               .localed(system_locale_via_uri)
-               .sorted
+    @object  = [:tag, params[:tag]]
+    @answers = answers_filter KnowledgeBase::Answer.tag_objects(params[:tag])
   end
 end

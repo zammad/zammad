@@ -16,6 +16,7 @@ RSpec.describe KnowledgeBase::Category, type: :model, current_user_id: 1 do
 
   it { is_expected.to have_many(:answers) }
   it { is_expected.to have_many(:children) }
+  it { is_expected.to have_many(:permissions) }
   it { is_expected.to belong_to(:parent).optional }
   it { is_expected.to belong_to(:knowledge_base) }
 

@@ -2,6 +2,7 @@ class App.KnowledgeBaseCategory extends App.Model
   @configure 'KnowledgeBaseCategory', 'category_icon', 'parent_id', 'child_ids', 'translation_ids'
   @extend Spine.Model.Ajax
   @extend App.KnowledgeBaseActions
+  @extend App.KnowledgeBaseAccess
 
   url: ->
     @knowledge_base().generateURL('categories')
@@ -166,6 +167,8 @@ class App.KnowledgeBaseCategory extends App.Model
       'draft'
 
   visibleInternally: (kb_locale) =>
+    #return false if @access() == 'none'
+
     @findDeepAnswer( (record) ->
       record.is_internally_published(kb_locale)
     )?

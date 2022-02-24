@@ -2,6 +2,7 @@ class App.KnowledgeBase extends App.Model
   @configure 'KnowledgeBase', 'iconset', 'color_highlight', 'color_header', 'color_header_link', 'translation_ids', 'locale_ids', 'homepage_layout', 'category_layout', 'custom_address'
   @extend Spine.Model.Ajax
   @extend App.KnowledgeBaseActions
+  @extend App.KnowledgeBaseAccess
   @url: @apiPath + '/knowledge_bases'
 
   @manageUrl: @apiPath + '/knowledge_bases/manage'
@@ -76,7 +77,7 @@ class App.KnowledgeBase extends App.Model
     , initial
 
   visibleInternally: (kb_locale) ->
-    @active
+    @active && @access() != 'none'
 
   visiblePublicly: (kb_locale) ->
     @active
@@ -87,6 +88,41 @@ class App.KnowledgeBase extends App.Model
     attrs.kb_locales = @kb_locales().map (elem) -> elem.attributes()
 
     attrs
+
+  loadedAnswerIds: ->
+    App.KnowledgeBaseAnswer
+      .all()
+      .filter (elem) => elem.knowledge_base().id == @id
+      .map (elem) -> elem.id
+
+  loadedCategoryIds: ->
+    App.KnowledgeBaseCategory
+      .all()
+      .map (elem) -> elem.id
+
+  removeAssetsIfNeeded: (data) =>
+    removeAnswers    = _.difference @loadedAnswerIds(), data.answer_ids
+    removeCategories = _.difference @loadedAnswerIds(), data.category_ids
+
+    for answer_id in removeAnswers
+      App.KnowledgeBaseAnswer.find(answer_id)?.remove(clear: true)
+
+    for category_id in removeCategories
+      App.KnowledgeBaseCategory.find(category_id)?.remove(clear: true)
+
+    !_.isEmpty(removeAnswers) || !_.isEmpty(removeCategories)
+
+  hasAssetsToLoad: (data) =>
+    needsLoadingAnswers    = _.difference data.answer_ids, @loadedAnswerIds()
+    needsLoadingCategories = _.difference data.category_ids, @loadedCategoryIds()
+
+    !_.isEmpty(needsLoadingAnswers) || !_.isEmpty(needsLoadingCategories)
+
+  @allKbModelNames: ->
+    Object
+      .keys(App)
+      .filter (elem) ->
+        elem.match(/^KnowledgeBase/) && App[elem]?.prototype instanceof App.Model
 
   @configure_attributes: [
     {

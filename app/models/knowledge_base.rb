@@ -24,6 +24,11 @@ class KnowledgeBase < ApplicationModel
 
   has_many :answers, through: :categories
 
+  has_many :permissions, class_name: 'KnowledgeBase::Permission',
+                         as:         :permissionable,
+                         autosave:   true,
+                         dependent:  :destroy
+
   validates :category_layout, inclusion: { in: KnowledgeBase::LAYOUTS }
   validates :homepage_layout, inclusion: { in: KnowledgeBase::LAYOUTS }
 
@@ -154,6 +159,24 @@ class KnowledgeBase < ApplicationModel
       .group('knowledge_bases.id')
       .pluck(Arel.sql('COUNT(knowledge_base_locales.id) as locales_count'))
       .any? { |e| e > 1 }
+  end
+
+  def permissions_effective
+    cache_key = KnowledgeBase::Permission.cache_key self
+
+    Rails.cache.fetch cache_key do
+      permissions
+    end
+  end
+
+  def attributes_with_association_ids
+    attrs = super
+    attrs[:permissions_effective] = permissions_effective
+    attrs
+  end
+
+  def self.granular_permissions?
+    KnowledgeBase::Permission.any?
   end
 
   private

@@ -10921,9 +10921,14 @@ output {
     }
   }
 
-  .settings-list-checkbox-cell {
+  .settings-list-checkbox-cell,
+  .settings-list-radio-cell {
     vertical-align: middle;
     padding-left: 8px;
+  }
+
+  .settings-list-radio-cell {
+    text-align: center;
   }
 }
 

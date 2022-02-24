@@ -3,6 +3,7 @@ class App.KnowledgeBaseAnswer extends App.Model
   @extend Spine.Model.Ajax
   @extend App.KnowledgeBaseActions
   @extend App.KnowledgeBaseCanBePublished
+  @extend App.KnowledgeBaseAccess
 
   @serverClassName: 'KnowledgeBase::Answer'
 
@@ -95,4 +96,4 @@ class App.KnowledgeBaseAnswer extends App.Model
     'Answer'
 
   visibleInternally: (kb_locale) =>
-    @is_internally_published(kb_locale)
+    (@is_internally_published(kb_locale) && @access() != 'none') || @is_published(kb_locale)

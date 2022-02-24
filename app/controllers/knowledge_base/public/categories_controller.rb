@@ -15,14 +15,11 @@ class KnowledgeBase::Public::CategoriesController < KnowledgeBase::Public::BaseC
   def show
     @object = find_category(params[:category])
 
-    render_alternatives && return if @object.nil? || !policy(@object).show?
+    render_alternatives && return if @object.nil? || !policy(@object).show_public?
 
     @categories     = categories_filter(@object.children)
     @object_locales = find_locales(@object)
-
-    @answers = policy_scope(@object.answers)
-               .localed(system_locale_via_uri)
-               .sorted
+    @answers        = answers_filter(@object.answers)
 
     render :index
   end

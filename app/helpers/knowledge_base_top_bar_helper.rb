@@ -36,7 +36,7 @@ module KnowledgeBaseTopBarHelper
   end
 
   def render_top_bar_if_needed(object, knowledge_base)
-    return if !policy(:knowledge_base).edit?
+    return if !can_preview?
 
     editable = object || knowledge_base
 

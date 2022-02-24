@@ -6,6 +6,7 @@ class App.KnowledgeBaseSidebar extends App.Controller
 
   constructor: ->
     super
+    @renderedWidgets = []
     @show()
 
     @controllerBind 'knowledge_base::sidebar::rerender', => @rerender()
@@ -14,9 +15,9 @@ class App.KnowledgeBaseSidebar extends App.Controller
       @rerender()
       true
 
-  rerender: ->
+  rerender: =>
     @delay( =>
-      @show(@savedParams, @savedAction)
+      @update()
     , 300, 'rerender')
 
   contentActionClicked: (e) ->
@@ -24,9 +25,14 @@ class App.KnowledgeBaseSidebar extends App.Controller
     actionName = switch e.target.dataset.action
                    when 'delete' then 'clickedDelete'
                    when 'visibility' then 'clickedCanBePublished'
+                   when 'permissions' then 'clickedPermissions'
     # coffeelint: enable=indentation
 
     @parentController.bodyModal = @parentController.coordinator[actionName]?(@savedParams)
+
+  update: =>
+    for elem in @renderedWidgets
+      elem.updateIfNeeded?()
 
   show: (object, action) ->
     isEdit = action is 'edit'
@@ -39,17 +45,22 @@ class App.KnowledgeBaseSidebar extends App.Controller
     if !isEdit
       return
 
-    for widget in @widgets(object)
-      @el.append new widget(
+    @renderedWidgets = []
+
+    for elem in @getWidgets(object)
+      widget = new elem(
         object:           object
         kb_locale:        @parentController.kb_locale()
         parentController: @parentController
-      ).el
+      )
+
+      @renderedWidgets.push widget
+      @el.append widget.el
 
   hide: ->
     @el.addClass('hidden')
 
-  widgets: (object) ->
+  getWidgets: (object) ->
     output = [App.KnowledgeBaseSidebarActions]
 
     if object instanceof App.KnowledgeBase || object instanceof App.KnowledgeBaseCategory
