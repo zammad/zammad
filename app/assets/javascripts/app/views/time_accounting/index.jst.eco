@@ -35,6 +35,9 @@
         <% end %>
       </div>
     </div>
+    <h3><%- @T('Activity') %> <a href="<%- @apiPath %>/time_accounting/log/by_activity/<%= @year %>/<%= @month %>?download=true" class="js-downloadByActivity" data-type="attachment"><%- @Icon('download') %></a></h3>
+    <div class="js-tableActivity"></div>
+    <br>
     <h3><%- @T('Ticket') %> <a href="<%- @apiPath %>/time_accounting/log/by_ticket/<%= @year %>/<%= @month %>?download=true" class="js-downloadByTicket" data-type="attachment"><%- @Icon('download') %></a></h3>
     <div class="js-tableTicket"></div>
     <br>

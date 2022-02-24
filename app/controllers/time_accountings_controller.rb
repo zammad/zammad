@@ -3,6 +3,132 @@
 class TimeAccountingsController < ApplicationController
   prepend_before_action { authentication_check && authorize! }
 
+  def by_activity
+
+    year = params[:year] || Time.zone.now.year
+    month = params[:month] || Time.zone.now.month
+
+    start_periode = Time.zone.parse("#{year}-#{month}-01")
+    end_periode = start_periode.end_of_month
+
+    records = []
+    Ticket::TimeAccounting.where('created_at >= ? AND created_at <= ?', start_periode, end_periode).pluck(:ticket_id, :ticket_article_id, :time_unit, :created_by_id, :created_at).each do |record|
+      records.push record
+    end
+
+    if !params[:download]
+      customers = {}
+      organizations = {}
+      agents = {}
+      results = []
+      records.each do |record|
+        ticket = Ticket.lookup(id: record[0])
+        next if !ticket
+
+        if !customers[ticket.customer_id]
+          customers[ticket.customer_id] = '-'
+          if ticket.customer_id
+            customer_user = User.lookup(id: ticket.customer_id)
+            if customer_user
+              customers[ticket.customer_id] = customer_user.fullname
+            end
+          end
+        end
+        if !organizations[ticket.organization_id]
+          organizations[ticket.organization_id] = '-'
+          if ticket.organization_id
+            organization = Organization.lookup(id: ticket.organization_id)
+            if organization
+              organizations[ticket.organization_id] = organization.name
+            end
+          end
+        end
+        if !agents[record[3]]
+          agent_user = User.lookup(id: record[3])
+          if agent_user
+            agents[record[3]] = agent_user.fullname
+          end
+        end
+        result = {
+          ticket:       ticket.attributes,
+          time_unit:    record[2],
+          customer:     customers[ticket.customer_id],
+          organization: organizations[ticket.organization_id],
+          agent:        agents[record[3]],
+          created_at:   record[4],
+        }
+        results.push result
+      end
+      render json: results
+      return
+    end
+
+    header = [
+      {
+        name:  __('Ticket#'),
+        width: 20,
+      },
+      {
+        name:  __('Title'),
+        width: 20,
+      },
+      {
+        name:  __('Customer') + ' - ' + __('Name'),
+        width: 20,
+      },
+      {
+        name:  __('Organization'),
+        width: 20,
+      },
+      {
+        name:  __('Agent') + ' - ' + __('Name'),
+        width: 20,
+      },
+      {
+        name:  __('Agent') + ' - ' + __('Login'),
+        width: 20,
+      },
+      {
+        name:      __('Time Units'),
+        width:     10,
+        data_type: 'float'
+      },
+      {
+        name:  __('Created at'),
+        width: 20,
+      },
+    ]
+    results = []
+    records.each do |record|
+      ticket = Ticket.lookup(id: record[0])
+      next if !ticket
+
+      customer_name = User.lookup(id: record[3]).fullname
+      organization_name = ''
+      if ticket.organization_id.present?
+        organization_name = Organization.lookup(id: ticket.organization_id).name
+      end
+      agent = User.lookup(id: record[3])
+
+      result_row = [ticket.number, ticket.title, customer_name, organization_name, agent.fullname, agent.login, record[2], record[4]]
+      results.push result_row
+    end
+
+    excel = ExcelSheet.new(
+      title:    "By Activity #{year}-#{month}",
+      header:   header,
+      records:  results,
+      timezone: params[:timezone],
+      locale:   current_user.locale,
+    )
+    send_data(
+      excel.content,
+      filename:    "by_activity-#{year}-#{month}.xls",
+      type:        'application/vnd.ms-excel',
+      disposition: 'attachment'
+    )
+  end
+
   def by_ticket
 
     year = params[:year] || Time.zone.now.year

@@ -4,9 +4,47 @@ require 'rails_helper'
 
 RSpec.describe 'Time Accounting API endpoints', type: :request do
   let(:admin)    { create(:admin) }
+  let(:agent)    { create(:agent) }
   let(:customer) { create(:customer) }
   let(:year)     { Time.current.year }
   let(:month)    { Time.current.month }
+
+  describe '/api/v1/time_accounting/log/by_activity' do
+    context 'when requesting a JSON response' do
+      it 'responds with an JSON' do
+        ticket = create(:ticket, customer: admin)
+        create(:ticket_time_accounting, ticket: ticket, created_by_id: admin.id)
+        create(:ticket_time_accounting, ticket: ticket, created_by_id: agent.id)
+
+        authenticated_as(admin)
+        get "/api/v1/time_accounting/log/by_activity/#{year}/#{month}", as: :json
+
+        expect(json_response.first).to include('agent' => admin.fullname)
+        expect(json_response.first).to include('customer' => admin.fullname)
+
+        expect(json_response.second).to include('agent' => agent.fullname)
+        expect(json_response.second).to include('customer' => admin.fullname)
+      end
+    end
+
+    context 'when requesting a log report download' do
+      it 'responds with an Excel spreadsheet' do
+        create(:group)
+        ticket  = create(:ticket, state: Ticket::State.lookup(name: 'open'), customer: customer)
+        article = create(:ticket_article, ticket: ticket, type: Ticket::Article::Type.lookup(name: 'note'))
+
+        create(:ticket_time_accounting, ticket_id: ticket.id, ticket_article_id: article.id)
+
+        authenticated_as(admin)
+        get "/api/v1/time_accounting/log/by_activity/#{year}/#{month}?download=true", params: {}
+
+        expect(response).to have_http_status(:ok)
+        expect(response['Content-Disposition']).to be_truthy
+        expect(response['Content-Disposition']).to eq("attachment; filename=\"by_activity-#{year}-#{month}.xls\"; filename*=UTF-8''by_activity-#{year}-#{month}.xls")
+        expect(response['Content-Type']).to eq('application/vnd.ms-excel')
+      end
+    end
+  end
 
   describe '/api/v1/time_accounting/log/by_ticket' do
     context 'when requesting a JSON response' do
