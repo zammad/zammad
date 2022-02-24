@@ -73,7 +73,7 @@ class TimeAccountingsController < ApplicationController
         width: 20,
       },
       {
-        name:  __('Customer') + ' - ' + __('Name'),
+        name:  "#{__('Customer')} - #{__('Name')}",
         width: 20,
       },
       {
@@ -81,11 +81,11 @@ class TimeAccountingsController < ApplicationController
         width: 20,
       },
       {
-        name:  __('Agent') + ' - ' + __('Name'),
+        name:  "#{__('Agent')} - #{__('Name')}",
         width: 20,
       },
       {
-        name:  __('Agent') + ' - ' + __('Login'),
+        name:  "#{__('Agent')} - #{__('Login')}",
         width: 20,
       },
       {
