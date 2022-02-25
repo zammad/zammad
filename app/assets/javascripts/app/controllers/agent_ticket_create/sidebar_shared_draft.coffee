@@ -26,4 +26,4 @@ class SidebarSharedDraft extends App.Controller
       active_draft_id: @params.shared_draft_id
     )
 
-App.Config.set('400-SharedDraft', SidebarSharedDraft, 'TicketCreateSidebar')
+App.Config.set('110-SharedDraft', SidebarSharedDraft, 'TicketCreateSidebar')
