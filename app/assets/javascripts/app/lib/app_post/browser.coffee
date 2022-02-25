@@ -21,7 +21,7 @@ get used browser
       version: "10.11.3",
     }
   }
-
+  
 ###
 
 class App.Browser
@@ -93,7 +93,7 @@ class App.Browser
     browser = @detection()
     hotkeys = 'ctrl+shift'
     if browser && browser.os && browser.os.name.toString().match(/mac/i)
-      hotkeys = 'alt+ctrl'
+      hotkeys = 'ctrl+alt'
     hotkeys
 
 class Modal extends App.ControllerModal
@@ -106,3 +106,4 @@ class Modal extends App.ControllerModal
 
   content: ->
     "Your Browser is not supported (#{@data.browser.name} #{@data.browser.major} on #{@data.os.name}). Please use a newer one (e. g. #{@data.browser.name} #{@version} or higher)."
+    

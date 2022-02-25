@@ -27,6 +27,7 @@ class Translation extends App.ControllerSubContent
         currentLanguage = locale.name
     @html App.view('translation/index')(
       currentLanguage: currentLanguage
+      hotkeys: App.Browser.hotkeys() + '+t'
     )
     @load('render')
 

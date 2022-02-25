@@ -9625,7 +9625,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/translation/index.jst.eco
 msgid "Text with disabled inline translations looks like"
-msgstr "Text with disabled inline translations looks like"
+msgstr "Text with disabled s looks like"
 
 #: app/assets/javascripts/app/views/translation/index.jst.eco
 msgid "Text with enabled inline translations looks like"
