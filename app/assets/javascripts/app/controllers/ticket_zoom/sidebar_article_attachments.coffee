@@ -1,4 +1,12 @@
 class SidebarArticleAttachments extends App.Controller
+  constructor: ->
+    super
+    @controllerBind('ui::ticket::load', (data) =>
+      return if data.ticket_id.toString() isnt @ticket.id.toString()
+      return if !@el
+      @showObjects(@el)
+    )
+
   sidebarItem: =>
     return if !@Config.get('ui_ticket_zoom_sidebar_article_attachments')
     @item = {
@@ -42,9 +50,6 @@ class SidebarArticleAttachments extends App.Controller
     @el.html(html)
     @el.on('click', '.js-attachments img', (e) =>
       @imageView(e)
-    )
-    @controllerBind('ui::ticket::load', =>
-      @showObjects(el)
     )
 
   imageView: (e) ->
