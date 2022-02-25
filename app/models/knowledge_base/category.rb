@@ -46,13 +46,7 @@ class KnowledgeBase::Category < ApplicationModel
     data = knowledge_base.assets(data)
 
     # include all siblings to make sure ordering is always up to date
-    siblings = sibling_categories
-
-    if !User.lookup(id: UserInfo.current_user_id)&.permissions?('knowledge_base.editor')
-      siblings = siblings.select(&:internal_content?)
-    end
-
-    data = ApplicationModel::CanAssets.reduce(siblings, data)
+    data = ApplicationModel::CanAssets.reduce(assets_siblings, data)
     data = ApplicationModel::CanAssets.reduce(translations, data)
 
     # include parent category or KB for root to have full path
@@ -140,6 +134,31 @@ class KnowledgeBase::Category < ApplicationModel
   end
 
   private
+
+  def assets_siblings(siblings: sibling_categories, current_user: User.lookup(id: UserInfo.current_user_id))
+    granular = KnowledgeBase.granular_permissions?
+
+    if !granular && !current_user&.permissions?('knowledge_base.editor')
+      siblings.select(&:internal_content?)
+    elsif granular
+      siblings.select { |elem| assets_siblings_applicable?(elem, current_user) }
+    else
+      siblings
+    end
+  end
+
+  def assets_siblings_applicable?(elem, current_user)
+    ep = KnowledgeBase::EffectivePermission.new(current_user, elem)
+
+    case ep.access_effective
+    when 'none'
+      false
+    when 'reader'
+      elem.internal_content?
+    else
+      true
+    end
+  end
 
   def cannot_be_child_of_parent
     errors.add(:parent_id, 'cannot be a child of the parent') if self_parent?(self)

@@ -131,4 +131,50 @@ RSpec.describe KnowledgeBase::Category, type: :model, current_user_id: 1 do
     include_examples 'verify visibility in given state', state: :draft,     is_visible: false
     include_examples 'verify visibility in given state', state: :archived,  is_visible: false
   end
+
+  describe '#assets', current_user_id: -> { user.id } do
+    subject(:assets) { another_category_answer && internal_answer && category.assets }
+
+    include_context 'basic Knowledge Base'
+
+    let(:user) { create(:agent) }
+    let(:another_category) { create(:knowledge_base_category, knowledge_base: knowledge_base) }
+    let(:another_category_answer) { create(:knowledge_base_answer, :internal, category: another_category) }
+
+    context 'without permissions' do
+      it { expect(assets).to include_assets_of category }
+      it { expect(assets).to include_assets_of another_category }
+    end
+
+    context 'with readable another category' do
+      before do
+        KnowledgeBase::PermissionsUpdate
+          .new(another_category)
+          .update! user.roles.first => 'reader'
+      end
+
+      it { expect(assets).to include_assets_of category }
+      it { expect(assets).to include_assets_of another_category }
+    end
+
+    context 'with hidden another category' do
+      before do
+        KnowledgeBase::PermissionsUpdate
+          .new(another_category)
+          .update! user.roles.first => 'none'
+      end
+
+      it { expect(assets).to include_assets_of category }
+      it { expect(assets).not_to include_assets_of another_category }
+
+      context 'with published answer' do
+        let(:another_category_published_answer) { create(:knowledge_base_answer, :published, category: another_category) }
+
+        before { another_category_published_answer }
+
+        it { expect(assets).to include_assets_of category }
+        it { expect(assets).to include_assets_of another_category }
+      end
+    end
+  end
 end

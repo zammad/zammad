@@ -47,19 +47,8 @@ class KnowledgeBase::Answer < ApplicationModel
     data = category.assets(data)
 
     # include all siblings to make sure ordering is always up to date. Reader gets only accessible siblings.
-    siblings = category.answers
+    data = ApplicationModel::CanAssets.reduce(assets_siblings, data)
 
-    if !User.lookup(id: UserInfo.current_user_id)&.permissions?('knowledge_base.editor')
-      ep = KnowledgeBase::EffectivePermission.new User.find(UserInfo.current_user_id), category
-
-      siblings = if ep.access_effective == 'public_reader'
-                   siblings.published
-                 else
-                   siblings.internal
-                 end
-    end
-
-    data = ApplicationModel::CanAssets.reduce(siblings, data)
     ApplicationModel::CanAssets.reduce(translations, data)
   end
 
@@ -110,6 +99,27 @@ class KnowledgeBase::Answer < ApplicationModel
   end
 
   private
+
+  def assets_siblings(siblings: category.answers, current_user: User.lookup(id: UserInfo.current_user_id))
+    if KnowledgeBase.granular_permissions?
+      ep = KnowledgeBase::EffectivePermission.new current_user, category
+
+      case ep.access_effective
+      when 'public_reader'
+        siblings.published
+      when 'none'
+        siblings.none
+      when 'reader'
+        siblings.internal
+      else
+        siblings
+      end
+    elsif !current_user&.permissions?('knowledge_base.editor')
+      siblings.internal
+    else
+      siblings
+    end
+  end
 
   def reordering_callback
     return if !category_id_changed? && !position_changed?
