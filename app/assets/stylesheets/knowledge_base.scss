@@ -457,7 +457,7 @@ b {
 
     ul,
     ol {
-      @include bidi-style(padding-left, 1.5em, padding-right, 0);
+      @include bidi-style(padding-left, 0, padding-right, 0);
     }
   }
 }
