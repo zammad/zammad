@@ -35,11 +35,14 @@ class KnowledgeBase::PermissionsController < ApplicationController
   end
 
   def response_hash
+    roles_editor = Role.with_permissions('knowledge_base.editor')
+    roles_reader = Role.with_permissions('knowledge_base.reader') - roles_editor
+
     {
-      roles_reader: Role.with_permissions('knowledge_base.reader').pluck_as_hash(:id, :name),
-      roles_editor: Role.with_permissions('knowledge_base.editor').pluck_as_hash(:id, :name),
+      roles_reader: roles_reader.pluck_as_hash(:id, :name),
+      roles_editor: roles_editor.pluck_as_hash(:id, :name),
       permissions:  @object.permissions_effective.pluck_as_hash(:id, :access, :role_id),
-      inherited:    parent_object&.permissions_effective&.pluck_as_hash(:id, :access, :role_id)
+      inherited:    parent_object&.permissions_effective&.pluck_as_hash(:id, :access, :role_id) || []
     }
   end
 end
