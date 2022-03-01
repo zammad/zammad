@@ -282,7 +282,7 @@ class ClearbitTest < ActiveSupport::TestCase
     organization6 = Organization.find_by('name LIKE ?', 'APIHub Inc%')
     assert(ExternalSync.find_by(source: 'clearbit', object: 'Organization', o_id: organization6.id))
     assert_equal(false, organization6.shared)
-    assert_equal('The marketing data engine to deeply understand your customers, identify future prospects, &amp; personalize every single marketing &amp; sales interaction.', organization6.note)
+    assert_equal('The Clearbit Data Activation Platform helps B2B teams understand customers, identify prospects, &amp; personalize interactions with real-time intelligence.', organization6.note)
 
   end
 
