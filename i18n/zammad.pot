@@ -837,10 +837,6 @@ msgstr ""
 msgid "Archived at"
 msgstr ""
 
-#: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
-msgid "Are you sure to delete this draft?"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee
 msgid "Are you sure you want to reload? You have unsaved changes that will get lost"
 msgstr ""
@@ -1510,6 +1506,11 @@ msgstr ""
 msgid "Changes"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee
+msgid "Changes could not be loaded."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee
 #: app/assets/javascripts/app/views/knowledge_base/base_form.coffee
 msgid "Changes could not be saved."
 msgstr ""
@@ -3293,6 +3294,10 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/attachments.coffee
 msgid "Do you really want to delete \"%s\"?"
+msgstr ""
+
+#: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
+msgid "Do you really want to delete this draft?"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_destroy_confirm.coffee
@@ -5186,7 +5191,7 @@ msgid "Invalid payload, need data:image in logo param"
 msgstr ""
 
 #: lib/knowledge_base/permissions_update.rb
-msgid "Invalid permissions, do not lock out yourself"
+msgid "Invalid permissions, do not lock yourself out."
 msgstr ""
 
 #: app/models/concerns/checks_condition_validation.rb
@@ -5412,7 +5417,7 @@ msgid "Last Contact Customer At"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/attribute_bar.coffee
-msgid "Last change %s<br>by %s"
+msgid "Last change %s %s by %s"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee
@@ -8200,7 +8205,7 @@ msgid "Shared Drafts"
 msgstr ""
 
 #: app/controllers/tickets_controller.rb
-msgid "Shared draft not eligible for this ticket"
+msgid "Shared draft cannot be selected for this ticket."
 msgstr ""
 
 #: app/assets/javascripts/app/models/organization.coffee
@@ -8209,7 +8214,7 @@ msgid "Shared organization"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
-msgid "Sharing draft..."
+msgid "Sharing draft…"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
@@ -9639,14 +9644,6 @@ msgstr ""
 msgid "URL (AJAX endpoint)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee
-msgid "Unable to load changes"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee
-msgid "Unable to save changes"
-msgstr ""
-
 #: app/controllers/first_steps_controller.rb
 #: db/seeds/overviews.rb
 msgid "Unassigned & Open Tickets"
@@ -10614,7 +10611,7 @@ msgid "Your callback URL"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee
-msgid "Your changes may override someone else's changes. Are you sure to save?"
+msgid "Your changes may override someone else's changes. Do you really want to save?"
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/exchange_certificate_issue.jst.eco

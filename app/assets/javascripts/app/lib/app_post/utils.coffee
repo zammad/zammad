@@ -1419,7 +1419,7 @@ class App.Utils
     imageCache.onload = ->
       App.Utils._htmlImage2DataUrl(imageCache, params)
     imageCache.onerror = ->
-      App.Log.notice('Utils', "Unable to load image from #{originalImage.src}")
+      App.Log.notice('Utils', "Image could not be loaded from #{originalImage.src}")
       params.fail(originalImage) if params.fail
     imageCache.alt = originalImage.alt
     imageCache.src = originalImage.src

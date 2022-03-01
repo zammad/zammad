@@ -16,7 +16,7 @@
 
   <span class="attributeBar-draft--saving hide">
     <%- @Icon('reload') %>
-    <%- @T('Sharing draft...') %>
+    <%- @T('Sharing draft…') %>
   </span>
 </div>
 

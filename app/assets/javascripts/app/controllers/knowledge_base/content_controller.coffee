@@ -104,7 +104,7 @@ class App.KnowledgeBaseContentController extends App.Controller
 
     new App.ControllerConfirm(
       head:    __('Content was changed since loading')
-      message: __('Your changes may override someone else\'s changes. Are you sure to save?')
+      message: __('Your changes may override someone else\'s changes. Do you really want to save?')
       callback: =>
         @parentController.coordinator.saveChanges(@object, paramsForSaving, @)
     )

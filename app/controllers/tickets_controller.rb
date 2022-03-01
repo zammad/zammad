@@ -85,7 +85,7 @@ class TicketsController < ApplicationController
         shared_draft = Ticket::SharedDraftStart.find_by id: shared_draft_id
 
         if shared_draft && (shared_draft.group_id.to_s != params[:group_id]&.to_s || !shared_draft.group.shared_drafts?)
-          raise Exceptions::UnprocessableEntity, __('Shared draft not eligible for this ticket')
+          raise Exceptions::UnprocessableEntity, __('Shared draft cannot be selected for this ticket.')
         end
 
         shared_draft&.destroy
@@ -259,7 +259,7 @@ class TicketsController < ApplicationController
           shared_draft = Ticket::SharedDraftZoom.find_by id: shared_draft_id
 
           if shared_draft && shared_draft.ticket != ticket
-            raise Exceptions::UnprocessableEntity, __('Shared draft not eligible for this ticket')
+            raise Exceptions::UnprocessableEntity, __('Shared draft cannot be selected for this ticket.')
           end
 
           shared_draft&.destroy

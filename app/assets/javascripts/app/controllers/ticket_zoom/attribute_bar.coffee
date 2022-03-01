@@ -121,7 +121,7 @@ class App.TicketZoomAttributeBar extends App.Controller
         user      = App.User.find draft?.updated_by_id
         name      = user?.displayName()
 
-        content =  App.i18n.translatePlain('Last change %s<br>by %s', timestamp, name)
+        content =  App.i18n.translatePlain('Last change %s %s by %s', timestamp, '<br>', name)
 
         # needs linebreak to align vertically without title
         '<br>' + content

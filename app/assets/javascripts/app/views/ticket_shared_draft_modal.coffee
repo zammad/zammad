@@ -124,7 +124,7 @@ class App.TicketSharedDraftModal extends App.ControllerModal
       small: true
 
       content: ->
-        App.i18n.translateContent('Are you sure to delete this draft?')
+        App.i18n.translateContent('Do you really want to delete this draft?')
 
       onSubmit: ->
         @startLoading()

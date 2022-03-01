@@ -64,7 +64,7 @@ class App.KnowledgeBasePermissionsDialog extends App.ControllerModal
         @data = data
         @update()
       error:       (xhr) =>
-        @showAlert(xhr.responseJSON?.error || __('Unable to load changes'))
+        @showAlert(xhr.responseJSON?.error || __('Changes could not be loaded.'))
     )
 
   toggleDisabled: (state) =>
@@ -88,5 +88,5 @@ class App.KnowledgeBasePermissionsDialog extends App.ControllerModal
         @close()
       error:       (xhr) =>
         @toggleDisabled(false)
-        @showAlert(xhr.responseJSON?.error || __('Unable to save changes'))
+        @showAlert(xhr.responseJSON?.error || __('Changes could not be saved.'))
     )
