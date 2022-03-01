@@ -906,6 +906,16 @@ msgstr "Forrit"
 msgid "Apply"
 msgstr "Virkja"
 
+#: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
+#, fuzzy
+#| msgid "Apply"
+msgid "Apply Draft"
+msgstr "Virkja"
+
+#: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
+msgid "Apply Shared Draft"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
@@ -944,6 +954,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/maintenance.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/delete.coffee
 #: app/assets/javascripts/app/controllers/widget/template.coffee
+#: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
 msgid "Are you sure?"
 msgstr "Ertu viss?"
 
@@ -1639,6 +1650,13 @@ msgstr "Breytt"
 msgid "Changes"
 msgstr "Breytingar"
 
+#: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee
+#, fuzzy
+#| msgid "%s% have been reopened"
+msgid "Changes could not be loaded."
+msgstr "%s% hafa verið enduropnaðir"
+
+#: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee
 #: app/assets/javascripts/app/views/knowledge_base/base_form.coffee
 #, fuzzy
 #| msgid "%s% have been reopened"
@@ -2281,6 +2299,7 @@ msgstr "Land"
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 #: app/assets/javascripts/app/views/translation/todo.jst.eco
+#: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
 msgid "Create"
 msgstr "Stofna"
 
@@ -2336,6 +2355,12 @@ msgstr ""
 #: app/controllers/first_steps_controller.rb
 msgid "Create a Test Ticket"
 msgstr "Stofna prufu miða"
+
+#: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
+#, fuzzy
+#| msgid "Created at"
+msgid "Create a shared draft"
+msgstr "Stofnað þann"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/reader_controller.coffee
 msgid "Create a translation"
@@ -3605,6 +3630,12 @@ msgstr ""
 msgid "Do you really want to delete \"%s\"?"
 msgstr "Flipi hefur breyst, ertu viss um að þú viljir loka?"
 
+#: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
+#, fuzzy
+#| msgid "Tab has changed, do you really want to close it?"
+msgid "Do you really want to delete this draft?"
+msgstr "Flipi hefur breyst, ertu viss um að þú viljir loka?"
+
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_destroy_confirm.coffee
 #: app/assets/javascripts/app/controllers/tag.coffee
 #, fuzzy
@@ -3662,6 +3693,10 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 msgid "Draft"
 msgstr "Drög"
+
+#: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
+msgid "Draft available"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/reorder_modal.coffee
 msgid "Drag to reorder"
@@ -5707,6 +5742,10 @@ msgstr ""
 msgid "Invalid payload, need data:image in logo param"
 msgstr ""
 
+#: lib/knowledge_base/permissions_update.rb
+msgid "Invalid permissions, do not lock yourself out."
+msgstr ""
+
 #: app/models/concerns/checks_condition_validation.rb
 msgid "Invalid ticket selector conditions"
 msgstr ""
@@ -5936,6 +5975,10 @@ msgstr ""
 
 #: lib/excel_sheet/ticket.rb
 msgid "Last Contact Customer At"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/attribute_bar.coffee
+msgid "Last change %s %s by %s"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee
@@ -7234,14 +7277,6 @@ msgid "Object already exists!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/object_manager.coffee
-msgid "ObjectManagerAttribute"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/object_manager.coffee
-msgid "ObjectManagerAttributes"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/object_manager.coffee
 #: db/seeds/permissions.rb
 msgid "Objects"
 msgstr "Hlutir"
@@ -7499,6 +7534,10 @@ msgstr "Yfirlit"
 #| msgid "Overview"
 msgid "Overviews are …"
 msgstr "Yfirlit"
+
+#: app/assets/javascripts/app/views/ticket_shared_draft_overwrite_modal.coffee
+msgid "Overwrite Draft"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
@@ -8249,6 +8288,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #: app/assets/javascripts/app/controllers/role.coffee
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
+#: app/assets/javascripts/app/views/knowledge_base/permissions_dialog.jst.eco
 msgid "Role"
 msgstr "Hlutverk"
 
@@ -8412,6 +8452,12 @@ msgstr "Laugardagur"
 msgid "Save"
 msgstr "Vista"
 
+#: app/assets/javascripts/app/views/ticket_shared_draft_overwrite_modal.coffee
+#, fuzzy
+#| msgid "Draft"
+msgid "Save Draft"
+msgstr "Drög"
+
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 msgid "Save as"
 msgstr ""
@@ -8548,6 +8594,10 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
 msgid "Select CSV file"
 msgstr "Veldu CSV skrá"
+
+#: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
+msgid "Select Shared Draft"
+msgstr ""
 
 #: app/assets/javascripts/app/views/widget/template.jst.eco
 msgid "Select Template"
@@ -8814,10 +8864,28 @@ msgstr "Uppsetningu lokið"
 msgid "Shared"
 msgstr "Samnýtt"
 
+#: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_shared_draft.coffee
+#: app/assets/javascripts/app/models/group.coffee
+#: db/seeds/object_manager_attributes.rb
+#, fuzzy
+#| msgid "Shared"
+msgid "Shared Drafts"
+msgstr "Samnýtt"
+
+#: app/controllers/tickets_controller.rb
+msgid "Shared draft cannot be selected for this ticket."
+msgstr ""
+
 #: app/assets/javascripts/app/models/organization.coffee
 #: db/seeds/object_manager_attributes.rb
 msgid "Shared organization"
 msgstr "Samnýtt stofnun"
+
+#: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
+#, fuzzy
+#| msgid "Shared"
+msgid "Sharing draft…"
+msgstr "Samnýtt"
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
 msgid "Shoot"
@@ -8833,6 +8901,12 @@ msgstr ""
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 msgid "Show"
 msgstr "Birta"
+
+#: app/assets/javascripts/app/views/ticket_shared_draft_overwrite_modal.coffee
+#, fuzzy
+#| msgid "Draft"
+msgid "Show Draft"
+msgstr "Drög"
 
 #: app/assets/javascripts/app/views/navigation.jst.eco
 msgid "Show Search Details"
@@ -9355,6 +9429,12 @@ msgid "Text missing"
 msgstr "Texta vantar"
 
 #: app/assets/javascripts/app/controllers/text_module.coffee
+#, fuzzy
+#| msgid "Text modules"
+msgid "Text module"
+msgstr "Texta einingar"
+
+#: app/assets/javascripts/app/controllers/text_module.coffee
 msgid "Text modules"
 msgstr "Texta einingar"
 
@@ -9376,10 +9456,6 @@ msgstr "Texti með innværar þýðingar óvirkar lýta svona út"
 #: app/assets/javascripts/app/views/translation/index.jst.eco
 msgid "Text with enabled inline translations looks like"
 msgstr "Texti með innværar þýðingar virkar lýtur svona út"
-
-#: app/assets/javascripts/app/controllers/text_module.coffee
-msgid "TextModule"
-msgstr "TextaEining"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #, fuzzy
@@ -9755,6 +9831,14 @@ msgstr "Það geta verið ýmsar ástæður fyrir því að spjallið kemur ekki
 #| msgid "There are too many people in queue for the chat."
 msgid "There are too many people in the chat queue."
 msgstr "Það eru of margar persónur í bið eftir spjalli."
+
+#: app/assets/javascripts/app/views/ticket_shared_draft_overwrite_modal.coffee
+msgid "There is an existing draft. Do you want to overwrite it?"
+msgstr ""
+
+#: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
+msgid "There is existing content. Do you want to overwrite it?"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
 msgid "There is no Knowledge Base yet. Please create one."
@@ -10406,6 +10490,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/knowledge_base/content.jst.eco
 #: app/assets/javascripts/app/views/session.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
+#: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
 msgid "Update"
 msgstr "Uppfæra"
 
@@ -10846,12 +10931,14 @@ msgid "Visibility"
 msgstr "Sýnileiki"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
-msgid "Visible to agents & editors"
-msgstr "Sýnilegt fulltrúum og ritstjórum"
-
-#: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 msgid "Visible to everyone"
 msgstr "Sýnilegt öllum"
+
+#: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
+#, fuzzy
+#| msgid "Visible to agents & editors"
+msgid "Visible to readers & editors"
+msgstr "Sýnilegt fulltrúum og ritstjórum"
 
 #: app/assets/javascripts/app/controllers/_integration/placetel.coffee
 #: app/assets/javascripts/app/controllers/_integration/sipgate_io.coffee
@@ -11197,6 +11284,7 @@ msgstr "Gulur"
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
 #: app/assets/javascripts/app/controllers/tag.coffee
+#: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
 msgid "Yes"
 msgstr "Já"
 
@@ -11460,7 +11548,8 @@ msgid "Your callback URL"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee
-msgid "Your changes may override someone else's changes. Are you sure to save?"
+msgid ""
+"Your changes may override someone else's changes. Do you really want to save?"
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/exchange_certificate_issue.jst.eco
@@ -12396,6 +12485,24 @@ msgstr "...af textasvæðinu"
 msgid "∅ Waiting time today"
 msgstr "∅ Biðtími í dag"
 
+#, fuzzy
+#~| msgid "Tab has changed, do you really want to close it?"
+#~ msgid "Are you sure to delete this draft?"
+#~ msgstr "Flipi hefur breyst, ertu viss um að þú viljir loka?"
+
+#, fuzzy
+#~| msgid "Unable to save changes."
+#~ msgid "Unable to load changes"
+#~ msgstr "Ekki tókst að vista breytingar."
+
+#, fuzzy
+#~| msgid "Unable to save changes."
+#~ msgid "Unable to save changes"
+#~ msgstr "Ekki tókst að vista breytingar."
+
+#~ msgid "TextModule"
+#~ msgstr "TextaEining"
+
 #~ msgid "Edit Answer"
 #~ msgstr "Breyta svari"
 
@@ -12436,9 +12543,6 @@ msgstr "∅ Biðtími í dag"
 
 #~ msgid "Setup new System"
 #~ msgstr "Setja upp nýtt kerfi"
-
-#~ msgid "Unable to save changes."
-#~ msgstr "Ekki tókst að vista breytingar."
 
 #~ msgid "migrate from another system"
 #~ msgstr "flytja þig úr öðru kerfi"

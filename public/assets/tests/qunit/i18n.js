@@ -77,7 +77,7 @@ QUnit.test('i18n', assert => {
   })
   assert.deepEqual(translated, {
     days: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
-    today: 'Heute',
+    today: 'heute',
   }, 'de-de - deep object/array translated correctly')
 
   translated = App.i18n.translateDeepPlain({
@@ -86,7 +86,7 @@ QUnit.test('i18n', assert => {
   })
   assert.deepEqual(translated, {
     days: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
-    today: 'Heute',
+    today: 'heute',
   }, 'de-de - deep object/array translated correctly')
 
   translated = App.i18n.translateContent('%s ago', 123);

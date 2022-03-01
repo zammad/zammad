@@ -853,6 +853,14 @@ msgstr ""
 msgid "Apply"
 msgstr ""
 
+#: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
+msgid "Apply Draft"
+msgstr ""
+
+#: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
+msgid "Apply Shared Draft"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
@@ -891,6 +899,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/maintenance.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/delete.coffee
 #: app/assets/javascripts/app/controllers/widget/template.coffee
+#: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
 msgid "Are you sure?"
 msgstr ""
 
@@ -1566,6 +1575,11 @@ msgstr ""
 msgid "Changes"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee
+msgid "Changes could not be loaded."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee
 #: app/assets/javascripts/app/views/knowledge_base/base_form.coffee
 msgid "Changes could not be saved."
 msgstr ""
@@ -2184,6 +2198,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 #: app/assets/javascripts/app/views/translation/todo.jst.eco
+#: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
 msgid "Create"
 msgstr ""
 
@@ -2238,6 +2253,10 @@ msgstr ""
 
 #: app/controllers/first_steps_controller.rb
 msgid "Create a Test Ticket"
+msgstr ""
+
+#: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
+msgid "Create a shared draft"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/reader_controller.coffee
@@ -3466,6 +3485,10 @@ msgstr ""
 msgid "Do you really want to delete \"%s\"?"
 msgstr ""
 
+#: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
+msgid "Do you really want to delete this draft?"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_destroy_confirm.coffee
 #: app/assets/javascripts/app/controllers/tag.coffee
 msgid "Do you really want to delete this object?"
@@ -3518,6 +3541,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 msgid "Draft"
+msgstr ""
+
+#: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
+msgid "Draft available"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/reorder_modal.coffee
@@ -5460,6 +5487,10 @@ msgstr ""
 msgid "Invalid payload, need data:image in logo param"
 msgstr ""
 
+#: lib/knowledge_base/permissions_update.rb
+msgid "Invalid permissions, do not lock yourself out."
+msgstr ""
+
 #: app/models/concerns/checks_condition_validation.rb
 msgid "Invalid ticket selector conditions"
 msgstr ""
@@ -5680,6 +5711,10 @@ msgstr ""
 
 #: lib/excel_sheet/ticket.rb
 msgid "Last Contact Customer At"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/attribute_bar.coffee
+msgid "Last change %s %s by %s"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee
@@ -6948,14 +6983,6 @@ msgid "Object already exists!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/object_manager.coffee
-msgid "ObjectManagerAttribute"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/object_manager.coffee
-msgid "ObjectManagerAttributes"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/object_manager.coffee
 #: db/seeds/permissions.rb
 msgid "Objects"
 msgstr ""
@@ -7203,6 +7230,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/overview.coffee
 msgid "Overviews are …"
+msgstr ""
+
+#: app/assets/javascripts/app/views/ticket_shared_draft_overwrite_modal.coffee
+msgid "Overwrite Draft"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee
@@ -7924,6 +7955,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #: app/assets/javascripts/app/controllers/role.coffee
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
+#: app/assets/javascripts/app/views/knowledge_base/permissions_dialog.jst.eco
 msgid "Role"
 msgstr ""
 
@@ -8085,6 +8117,10 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
+#: app/assets/javascripts/app/views/ticket_shared_draft_overwrite_modal.coffee
+msgid "Save Draft"
+msgstr ""
+
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 msgid "Save as"
 msgstr ""
@@ -8214,6 +8250,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
 msgid "Select CSV file"
+msgstr ""
+
+#: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
+msgid "Select Shared Draft"
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/template.jst.eco
@@ -8467,9 +8507,23 @@ msgstr ""
 msgid "Shared"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_shared_draft.coffee
+#: app/assets/javascripts/app/models/group.coffee
+#: db/seeds/object_manager_attributes.rb
+msgid "Shared Drafts"
+msgstr ""
+
+#: app/controllers/tickets_controller.rb
+msgid "Shared draft cannot be selected for this ticket."
+msgstr ""
+
 #: app/assets/javascripts/app/models/organization.coffee
 #: db/seeds/object_manager_attributes.rb
 msgid "Shared organization"
+msgstr ""
+
+#: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
+msgid "Sharing draft…"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
@@ -8485,6 +8539,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 msgid "Show"
+msgstr ""
+
+#: app/assets/javascripts/app/views/ticket_shared_draft_overwrite_modal.coffee
+msgid "Show Draft"
 msgstr ""
 
 #: app/assets/javascripts/app/views/navigation.jst.eco
@@ -9000,6 +9058,10 @@ msgid "Text missing"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/text_module.coffee
+msgid "Text module"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/text_module.coffee
 msgid "Text modules"
 msgstr ""
 
@@ -9018,10 +9080,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/translation/index.jst.eco
 msgid "Text with enabled inline translations looks like"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/text_module.coffee
-msgid "TextModule"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
@@ -9359,6 +9417,14 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "There are too many people in the chat queue."
+msgstr ""
+
+#: app/assets/javascripts/app/views/ticket_shared_draft_overwrite_modal.coffee
+msgid "There is an existing draft. Do you want to overwrite it?"
+msgstr ""
+
+#: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
+msgid "There is existing content. Do you want to overwrite it?"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
@@ -9995,6 +10061,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/knowledge_base/content.jst.eco
 #: app/assets/javascripts/app/views/session.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
+#: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
 msgid "Update"
 msgstr ""
 
@@ -10428,11 +10495,11 @@ msgid "Visibility"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
-msgid "Visible to agents & editors"
+msgid "Visible to everyone"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
-msgid "Visible to everyone"
+msgid "Visible to readers & editors"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/placetel.coffee
@@ -10763,6 +10830,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
 #: app/assets/javascripts/app/controllers/tag.coffee
+#: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
 msgid "Yes"
 msgstr ""
 
@@ -11018,7 +11086,8 @@ msgid "Your callback URL"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee
-msgid "Your changes may override someone else's changes. Are you sure to save?"
+msgid ""
+"Your changes may override someone else's changes. Do you really want to save?"
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/exchange_certificate_issue.jst.eco

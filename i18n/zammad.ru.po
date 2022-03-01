@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2021-12-16 13:42+0000\n"
-"Last-Translator: xXxLeVIaFaNxXx <sakovalev@polyplast-nm.ru>\n"
+"PO-Revision-Date: 2022-03-01 03:30+0000\n"
+"Last-Translator: Вячеслав Карпов <pvd86@mail.ru>\n"
 "Language-Team: Russian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/ru/>\n"
 "Language: ru\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.9.1\n"
+"X-Generator: Weblate 4.10.1\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -69,11 +69,11 @@ msgstr "%s Api-ключ"
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "%s Attribute"
-msgstr ""
+msgstr "%s Атрибут"
 
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "%s Group"
-msgstr ""
+msgstr "%s Группа"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
@@ -84,7 +84,7 @@ msgstr "%s Миграция"
 
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "%s Role"
-msgstr ""
+msgstr "%s Роль"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
@@ -161,7 +161,7 @@ msgstr "%s ended switch to |%s|!"
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco
 msgid "%s folders"
-msgstr ""
+msgstr "%s папки"
 
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco
@@ -173,7 +173,7 @@ msgstr "% s группирует %s назначение ролей"
 #: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 msgid "%s is inactive, please select an active one."
-msgstr ""
+msgstr "%s неактивен, пожалуйста, выберите активный."
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
 #, fuzzy
@@ -230,6 +230,8 @@ msgid ""
 "%s recommends using OAuth. %s announced it's going to drop Basic "
 "Authentication support in the future."
 msgstr ""
+"%s рекомендует использовать OAuth. %s объявил, что в будущем откажется от "
+"поддержки базовой аутентификации."
 
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee
 msgid "%s required!"
@@ -242,7 +244,7 @@ msgstr "%s авторизовался"
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 msgid "%s subdomain"
-msgstr ""
+msgstr "%s поддомен"
 
 #: app/assets/javascripts/app/models/user.coffee
 msgid "%s switched to |%s|!"
@@ -420,7 +422,7 @@ msgstr ""
 
 #: app/controllers/getting_started_controller.rb
 msgid "A URL looks like this: https://zammad.example.com"
-msgstr ""
+msgstr "URL-адрес выглядит следующим образом: https://zammad.example.com"
 
 #: db/seeds/settings.rb
 #, fuzzy
@@ -957,6 +959,16 @@ msgstr "Приложения"
 msgid "Apply"
 msgstr "Применить"
 
+#: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
+#, fuzzy
+#| msgid "Apply"
+msgid "Apply Draft"
+msgstr "Применить"
+
+#: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
+msgid "Apply Shared Draft"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
@@ -995,6 +1007,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/maintenance.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/delete.coffee
 #: app/assets/javascripts/app/controllers/widget/template.coffee
+#: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
 msgid "Are you sure?"
 msgstr "Вы уверены?"
 
@@ -1736,6 +1749,13 @@ msgstr "Изменено"
 msgid "Changes"
 msgstr "Изменения"
 
+#: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee
+#, fuzzy
+#| msgid "%s Object(s) are created."
+msgid "Changes could not be loaded."
+msgstr "%s Объекта(тов) создано."
+
+#: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee
 #: app/assets/javascripts/app/views/knowledge_base/base_form.coffee
 #, fuzzy
 #| msgid "%s Object(s) are created."
@@ -2390,6 +2410,7 @@ msgstr "Страна"
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 #: app/assets/javascripts/app/views/translation/todo.jst.eco
+#: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
 msgid "Create"
 msgstr "Создать"
 
@@ -2445,6 +2466,12 @@ msgstr ""
 #: app/controllers/first_steps_controller.rb
 msgid "Create a Test Ticket"
 msgstr "Создать тестовый тикет"
+
+#: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
+#, fuzzy
+#| msgid "Created at"
+msgid "Create a shared draft"
+msgstr "Создано в"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/reader_controller.coffee
 msgid "Create a translation"
@@ -3756,6 +3783,12 @@ msgstr ""
 msgid "Do you really want to delete \"%s\"?"
 msgstr "Точно хотите удалить этот объект?"
 
+#: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
+#, fuzzy
+#| msgid "Sure to delete this object?"
+msgid "Do you really want to delete this draft?"
+msgstr "Точно хотите удалить этот объект?"
+
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_destroy_confirm.coffee
 #: app/assets/javascripts/app/controllers/tag.coffee
 #, fuzzy
@@ -3813,6 +3846,10 @@ msgstr "Загрузите и установите %s Плагин Миграц�
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 msgid "Draft"
 msgstr "черновик"
+
+#: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
+msgid "Draft available"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/reorder_modal.coffee
 msgid "Drag to reorder"
@@ -5953,6 +5990,10 @@ msgstr ""
 msgid "Invalid payload, need data:image in logo param"
 msgstr ""
 
+#: lib/knowledge_base/permissions_update.rb
+msgid "Invalid permissions, do not lock yourself out."
+msgstr ""
+
 #: app/models/concerns/checks_condition_validation.rb
 msgid "Invalid ticket selector conditions"
 msgstr "Не корректные условия отбора заявок"
@@ -6182,6 +6223,10 @@ msgstr ""
 
 #: lib/excel_sheet/ticket.rb
 msgid "Last Contact Customer At"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/attribute_bar.coffee
+msgid "Last change %s %s by %s"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee
@@ -7485,14 +7530,6 @@ msgid "Object already exists!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/object_manager.coffee
-msgid "ObjectManagerAttribute"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/object_manager.coffee
-msgid "ObjectManagerAttributes"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/object_manager.coffee
 #: db/seeds/permissions.rb
 msgid "Objects"
 msgstr "Объекты"
@@ -7752,6 +7789,10 @@ msgstr "Обзор"
 #| msgid "Overview"
 msgid "Overviews are …"
 msgstr "Обзор"
+
+#: app/assets/javascripts/app/views/ticket_shared_draft_overwrite_modal.coffee
+msgid "Overwrite Draft"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
@@ -8510,6 +8551,7 @@ msgstr "Ретвиты конвертируются в тикеты"
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #: app/assets/javascripts/app/controllers/role.coffee
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
+#: app/assets/javascripts/app/views/knowledge_base/permissions_dialog.jst.eco
 msgid "Role"
 msgstr "Роль"
 
@@ -8674,6 +8716,12 @@ msgstr "Суббота"
 msgid "Save"
 msgstr "Сохранить"
 
+#: app/assets/javascripts/app/views/ticket_shared_draft_overwrite_modal.coffee
+#, fuzzy
+#| msgid "Draft"
+msgid "Save Draft"
+msgstr "черновик"
+
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 msgid "Save as"
 msgstr ""
@@ -8812,6 +8860,10 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
 msgid "Select CSV file"
 msgstr "Выбрать файл CSV "
+
+#: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
+msgid "Select Shared Draft"
+msgstr ""
 
 #: app/assets/javascripts/app/views/widget/template.jst.eco
 msgid "Select Template"
@@ -9091,10 +9143,28 @@ msgstr "Установка завершена"
 msgid "Shared"
 msgstr "Общий"
 
+#: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_shared_draft.coffee
+#: app/assets/javascripts/app/models/group.coffee
+#: db/seeds/object_manager_attributes.rb
+#, fuzzy
+#| msgid "Shared"
+msgid "Shared Drafts"
+msgstr "Общий"
+
+#: app/controllers/tickets_controller.rb
+msgid "Shared draft cannot be selected for this ticket."
+msgstr ""
+
 #: app/assets/javascripts/app/models/organization.coffee
 #: db/seeds/object_manager_attributes.rb
 msgid "Shared organization"
 msgstr "общий доступ"
+
+#: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
+#, fuzzy
+#| msgid "Shared"
+msgid "Sharing draft…"
+msgstr "Общий"
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
 msgid "Shoot"
@@ -9112,6 +9182,12 @@ msgstr ""
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 msgid "Show"
 msgstr "Показать"
+
+#: app/assets/javascripts/app/views/ticket_shared_draft_overwrite_modal.coffee
+#, fuzzy
+#| msgid "Draft"
+msgid "Show Draft"
+msgstr "черновик"
 
 #: app/assets/javascripts/app/views/navigation.jst.eco
 msgid "Show Search Details"
@@ -9634,6 +9710,12 @@ msgid "Text missing"
 msgstr "Текст отсутствует"
 
 #: app/assets/javascripts/app/controllers/text_module.coffee
+#, fuzzy
+#| msgid "Text modules"
+msgid "Text module"
+msgstr "Текстовые блоки"
+
+#: app/assets/javascripts/app/controllers/text_module.coffee
 msgid "Text modules"
 msgstr "Текстовые блоки"
 
@@ -9655,10 +9737,6 @@ msgstr "Текст с отключенными встроенными перев
 #: app/assets/javascripts/app/views/translation/index.jst.eco
 msgid "Text with enabled inline translations looks like"
 msgstr "Текст с включенными встроенными переводами выглядит так:"
-
-#: app/assets/javascripts/app/controllers/text_module.coffee
-msgid "TextModule"
-msgstr "Текстовый модуль"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #, fuzzy
@@ -10053,6 +10131,14 @@ msgstr "Может быть несколько причин, чтобы чат �
 #| msgid "There are too many people in queue for the chat."
 msgid "There are too many people in the chat queue."
 msgstr "В очереди слишком много людей для чата."
+
+#: app/assets/javascripts/app/views/ticket_shared_draft_overwrite_modal.coffee
+msgid "There is an existing draft. Do you want to overwrite it?"
+msgstr ""
+
+#: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
+msgid "There is existing content. Do you want to overwrite it?"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
 msgid "There is no Knowledge Base yet. Please create one."
@@ -10742,6 +10828,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/knowledge_base/content.jst.eco
 #: app/assets/javascripts/app/views/session.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
+#: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
 msgid "Update"
 msgstr "Обновить"
 
@@ -11186,12 +11273,14 @@ msgid "Visibility"
 msgstr "Видимость"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
-msgid "Visible to agents & editors"
-msgstr "Доступно для агентов и редакторов"
-
-#: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 msgid "Visible to everyone"
 msgstr "Доступно для всех"
+
+#: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
+#, fuzzy
+#| msgid "Visible to agents & editors"
+msgid "Visible to readers & editors"
+msgstr "Доступно для агентов и редакторов"
 
 #: app/assets/javascripts/app/controllers/_integration/placetel.coffee
 #: app/assets/javascripts/app/controllers/_integration/sipgate_io.coffee
@@ -11572,6 +11661,7 @@ msgstr "Желтый"
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
 #: app/assets/javascripts/app/controllers/tag.coffee
+#: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
 msgid "Yes"
 msgstr "Да"
 
@@ -11877,7 +11967,8 @@ msgid "Your callback URL"
 msgstr "Ваш обратный URL"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee
-msgid "Your changes may override someone else's changes. Are you sure to save?"
+msgid ""
+"Your changes may override someone else's changes. Do you really want to save?"
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/exchange_certificate_issue.jst.eco
@@ -12827,16 +12918,29 @@ msgstr "всего текста"
 msgid "∅ Waiting time today"
 msgstr "Время ожидания сегодня"
 
+#, fuzzy
+#~| msgid "Are you sure to delete"
+#~ msgid "Are you sure to delete this draft?"
+#~ msgstr "Вы уверены, что хотите удалить"
+
+#, fuzzy
+#~| msgid "Unable to save changes."
+#~ msgid "Unable to load changes"
+#~ msgstr "Невозможно сохранить изменения."
+
+#, fuzzy
+#~| msgid "Unable to save changes."
+#~ msgid "Unable to save changes"
+#~ msgstr "Невозможно сохранить изменения."
+
+#~ msgid "TextModule"
+#~ msgstr "Текстовый модуль"
+
 #~ msgid "Edit Answer"
 #~ msgstr "Править ответ"
 
 #~ msgid "of"
 #~ msgstr "из"
-
-#, fuzzy
-#~| msgid "Are you sure to delete"
-#~ msgid "Are you sure you want to delete"
-#~ msgstr "Вы уверены, что хотите удалить"
 
 #~ msgid "Successful!"
 #~ msgstr "Успешно!"
@@ -12907,9 +13011,6 @@ msgstr "Время ожидания сегодня"
 
 #~ msgid "Setup new System"
 #~ msgstr "Установка новой системы"
-
-#~ msgid "Unable to save changes."
-#~ msgstr "Невозможно сохранить изменения."
 
 #~ msgid "You are welcome! Just ask me something!"
 #~ msgstr "Добро пожаловать! Просто спроси меня что-нибудь!"
