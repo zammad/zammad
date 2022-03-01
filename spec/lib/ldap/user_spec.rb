@@ -28,7 +28,7 @@ RSpec.describe Ldap::User do
       attributes = {
         custom: 'value',
       }
-      expect(described_class.uid_attribute(attributes)).to be nil
+      expect(described_class.uid_attribute(attributes)).to be_nil
     end
 
   end
@@ -183,7 +183,7 @@ RSpec.describe Ldap::User do
 
       it 'fails if no filter found entries' do
         allow(mocked_ldap).to receive(:entries?).and_return(false)
-        expect(instance.filter).to be nil
+        expect(instance.filter).to be_nil
       end
     end
 
@@ -212,7 +212,7 @@ RSpec.describe Ldap::User do
 
       it 'fails if no uid attribute could be found' do
         expect(mocked_ldap).to receive(:search)
-        expect(instance.uid_attribute).to be nil
+        expect(instance.uid_attribute).to be_nil
       end
     end
   end

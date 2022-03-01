@@ -830,7 +830,7 @@ RSpec.describe Ticket, type: :model do
         let(:customer) { create(:customer) }
 
         it 'send trigger base notification' do
-          expect(ticket.send(:trigger_based_notification?, customer)).to eq(true)
+          expect(ticket.send(:trigger_based_notification?, customer)).to be(true)
         end
       end
 
@@ -846,7 +846,7 @@ RSpec.describe Ticket, type: :model do
         end
 
         it 'send no trigger base notification' do
-          expect(ticket.send(:trigger_based_notification?, customer)).to eq(false)
+          expect(ticket.send(:trigger_based_notification?, customer)).to be(false)
         end
 
         context 'with failed date 61 days ago' do
@@ -854,7 +854,7 @@ RSpec.describe Ticket, type: :model do
           let(:failed_date) { 61.days.ago }
 
           it 'send trigger base notification' do
-            expect(ticket.send(:trigger_based_notification?, customer)).to eq(true)
+            expect(ticket.send(:trigger_based_notification?, customer)).to be(true)
           end
         end
       end
@@ -1179,7 +1179,7 @@ RSpec.describe Ticket, type: :model do
 
       context 'with no SLAs in the system' do
         it 'defaults to nil' do
-          expect(ticket.escalation_at).to be(nil)
+          expect(ticket.escalation_at).to be_nil
         end
       end
 
@@ -1390,7 +1390,7 @@ RSpec.describe Ticket, type: :model do
 
       context 'with no SLAs in the system' do
         it 'defaults to nil' do
-          expect(ticket.first_response_escalation_at).to be(nil)
+          expect(ticket.first_response_escalation_at).to be_nil
         end
       end
 
@@ -1422,7 +1422,7 @@ RSpec.describe Ticket, type: :model do
 
       context 'with no SLAs in the system' do
         it 'defaults to nil' do
-          expect(ticket.update_escalation_at).to be(nil)
+          expect(ticket.update_escalation_at).to be_nil
         end
       end
 
@@ -1462,7 +1462,7 @@ RSpec.describe Ticket, type: :model do
 
       context 'with no SLAs in the system' do
         it 'defaults to nil' do
-          expect(ticket.close_escalation_at).to be(nil)
+          expect(ticket.close_escalation_at).to be_nil
         end
       end
 
@@ -2179,7 +2179,7 @@ RSpec.describe Ticket, type: :model do
       let(:current_payload_size) { 3.megabyte }
 
       it 'return false' do
-        expect(ticket.send(:search_index_attribute_lookup_oversized?, current_payload_size)).to eq false
+        expect(ticket.send(:search_index_attribute_lookup_oversized?, current_payload_size)).to be false
       end
     end
 
@@ -2187,7 +2187,7 @@ RSpec.describe Ticket, type: :model do
       let(:current_payload_size) { 350.megabyte }
 
       it 'return true' do
-        expect(ticket.send(:search_index_attribute_lookup_oversized?, current_payload_size)).to eq true
+        expect(ticket.send(:search_index_attribute_lookup_oversized?, current_payload_size)).to be true
       end
     end
   end
@@ -2207,7 +2207,7 @@ RSpec.describe Ticket, type: :model do
       let(:current_payload_size) { 200.megabyte }
 
       it 'return false' do
-        expect(ticket.send(:search_index_attribute_lookup_file_oversized?, store, current_payload_size)).to eq false
+        expect(ticket.send(:search_index_attribute_lookup_file_oversized?, store, current_payload_size)).to be false
       end
     end
 
@@ -2215,7 +2215,7 @@ RSpec.describe Ticket, type: :model do
       let(:current_payload_size) { 299.megabyte }
 
       it 'return true' do
-        expect(ticket.send(:search_index_attribute_lookup_file_oversized?, store, current_payload_size)).to eq true
+        expect(ticket.send(:search_index_attribute_lookup_file_oversized?, store, current_payload_size)).to be true
       end
     end
   end
@@ -2233,7 +2233,7 @@ RSpec.describe Ticket, type: :model do
       end
 
       it 'return false' do
-        expect(ticket.send(:search_index_attribute_lookup_file_ignored?, store_with_indexable_extention)).to eq false
+        expect(ticket.send(:search_index_attribute_lookup_file_ignored?, store_with_indexable_extention)).to be false
       end
     end
 
@@ -2249,7 +2249,7 @@ RSpec.describe Ticket, type: :model do
       end
 
       it 'return true' do
-        expect(ticket.send(:search_index_attribute_lookup_file_ignored?, store_without_indexable_extention)).to eq true
+        expect(ticket.send(:search_index_attribute_lookup_file_ignored?, store_without_indexable_extention)).to be true
       end
     end
   end

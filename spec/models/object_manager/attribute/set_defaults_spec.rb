@@ -72,7 +72,7 @@ RSpec.describe ObjectManager::Attribute::SetDefaults, type: :model do
       subject(:example) { create :ticket }
 
       it 'boolean is set' do
-        expect(example.rspec_boolean).to eq true
+        expect(example.rspec_boolean).to be true
       end
 
       it 'date is set' do

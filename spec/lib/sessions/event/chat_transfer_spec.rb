@@ -51,7 +51,7 @@ RSpec.describe Sessions::Event::ChatTransfer do
 
     context 'without chat.agent permissions' do
       it 'send out no_permission event to user' do
-        expect(subject_as_customer.run).to eq(nil)
+        expect(subject_as_customer.run).to be_nil
         messages = Sessions.queue(client_id)
         expect(messages.count).to eq(1)
         expect(messages).to eq([
@@ -66,7 +66,7 @@ RSpec.describe Sessions::Event::ChatTransfer do
 
   context 'when transferring a chat session as agent' do
     it 'send out chat_session_notice to customer and agent and set chat session to waiting' do
-      expect(subject_as_agent.run).to eq(nil)
+      expect(subject_as_agent.run).to be_nil
 
       messages_to_customer = Sessions.queue('customer_session_id')
       expect(messages_to_customer.count).to eq(1)

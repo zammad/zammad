@@ -528,7 +528,7 @@ RSpec.describe 'External Credentials', type: :request do
           it 'clears the :request_token session variable' do
             send(*endpoint, as: :json, params: params, headers: headers)
 
-            expect(session[:request_token]).to be(nil)
+            expect(session[:request_token]).to be_nil
           end
 
           it 'subscribes to webhooks' do

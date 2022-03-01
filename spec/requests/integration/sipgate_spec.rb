@@ -217,7 +217,7 @@ RSpec.describe 'Integration Sipgate', type: :request do
       expect(log.to_comment).to eq('CallerId Customer1')
       expect(log.comment).to be_nil
       expect(log.state).to eq('newCall')
-      expect(log.done).to eq(true)
+      expect(log.done).to be(true)
 
       travel 1.second
 
@@ -234,7 +234,7 @@ RSpec.describe 'Integration Sipgate', type: :request do
       expect(log.to_comment).to eq('CallerId Customer1')
       expect(log.comment).to eq('cancel')
       expect(log.state).to eq('hangup')
-      expect(log.done).to eq(true)
+      expect(log.done).to be(true)
 
       travel 1.second
 
@@ -251,7 +251,7 @@ RSpec.describe 'Integration Sipgate', type: :request do
       expect(log.to_comment).to eq('CallerId Customer1')
       expect(log.comment).to be_nil
       expect(log.state).to eq('newCall')
-      expect(log.done).to eq(true)
+      expect(log.done).to be(true)
 
       travel 1.second
 
@@ -268,7 +268,7 @@ RSpec.describe 'Integration Sipgate', type: :request do
       expect(log.to_comment).to eq('CallerId Customer1')
       expect(log.comment).to be_nil
       expect(log.state).to eq('answer')
-      expect(log.done).to eq(true)
+      expect(log.done).to be(true)
 
       travel 1.second
 
@@ -285,7 +285,7 @@ RSpec.describe 'Integration Sipgate', type: :request do
       expect(log.to_comment).to eq('CallerId Customer1')
       expect(log.comment).to eq('normalClearing')
       expect(log.state).to eq('hangup')
-      expect(log.done).to eq(true)
+      expect(log.done).to be(true)
 
       travel 1.second
 
@@ -302,7 +302,7 @@ RSpec.describe 'Integration Sipgate', type: :request do
       expect(log.from_comment).to eq('CallerId Customer1')
       expect(log.comment).to be_nil
       expect(log.state).to eq('newCall')
-      expect(log.done).to eq(false)
+      expect(log.done).to be(false)
 
       travel 1.second
 
@@ -319,7 +319,7 @@ RSpec.describe 'Integration Sipgate', type: :request do
       expect(log.from_comment).to eq('CallerId Customer1')
       expect(log.comment).to be_nil
       expect(log.state).to eq('answer')
-      expect(log.done).to eq(true)
+      expect(log.done).to be(true)
 
       travel 1.second
 
@@ -336,7 +336,7 @@ RSpec.describe 'Integration Sipgate', type: :request do
       expect(log.from_comment).to eq('CallerId Customer1')
       expect(log.comment).to eq('normalClearing')
       expect(log.state).to eq('hangup')
-      expect(log.done).to eq(true)
+      expect(log.done).to be(true)
 
       travel 1.second
 
@@ -353,7 +353,7 @@ RSpec.describe 'Integration Sipgate', type: :request do
       expect(log.from_comment).to eq('CallerId Customer1')
       expect(log.comment).to be_nil
       expect(log.state).to eq('newCall')
-      expect(log.done).to eq(false)
+      expect(log.done).to be(false)
 
       travel 1.second
 
@@ -370,7 +370,7 @@ RSpec.describe 'Integration Sipgate', type: :request do
       expect(log.from_comment).to eq('CallerId Customer1')
       expect(log.comment).to be_nil
       expect(log.state).to eq('answer')
-      expect(log.done).to eq(true)
+      expect(log.done).to be(true)
 
       travel 1.second
 
@@ -387,7 +387,7 @@ RSpec.describe 'Integration Sipgate', type: :request do
       expect(log.from_comment).to eq('CallerId Customer1')
       expect(log.comment).to eq('normalClearing')
       expect(log.state).to eq('hangup')
-      expect(log.done).to eq(false)
+      expect(log.done).to be(false)
 
       travel 1.second
 
@@ -404,7 +404,7 @@ RSpec.describe 'Integration Sipgate', type: :request do
       expect(log.from_comment).to eq('CallerId Customer1')
       expect(log.comment).to be_nil
       expect(log.state).to eq('newCall')
-      expect(log.done).to eq(false)
+      expect(log.done).to be(false)
 
       travel 1.second
 
@@ -421,7 +421,7 @@ RSpec.describe 'Integration Sipgate', type: :request do
       expect(log.from_comment).to eq('CallerId Customer1')
       expect(log.comment).to eq('normalClearing')
       expect(log.state).to eq('hangup')
-      expect(log.done).to eq(false)
+      expect(log.done).to be(false)
 
       travel 1.second
 
@@ -440,7 +440,7 @@ RSpec.describe 'Integration Sipgate', type: :request do
       expect(log.preferences['from']).to be_truthy
       expect(log.comment).to be_nil
       expect(log.state).to eq('newCall')
-      expect(log.done).to eq(false)
+      expect(log.done).to be(false)
 
       # get caller list
       get '/api/v1/cti/log'

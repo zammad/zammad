@@ -55,8 +55,8 @@ RSpec.describe 'Settings', type: :request do
           hit_product_name = true
         end
       end
-      expect(hit_api).to eq(true)
-      expect(hit_product_name).to eq(true)
+      expect(hit_api).to be(true)
+      expect(hit_product_name).to be(true)
 
       # show
       setting = Setting.find_by(name: 'product_name')
@@ -87,7 +87,7 @@ RSpec.describe 'Settings', type: :request do
       expect(json_response['name']).to eq('product_name')
       expect(json_response['preferences']['permission'].length).to eq(1)
       expect(json_response['preferences']['permission'][0]).to eq('admin.branding')
-      expect(json_response['preferences']['some_new_key']).to eq(true)
+      expect(json_response['preferences']['some_new_key']).to be(true)
 
       # update
       setting = Setting.find_by(name: 'api_token_access')
@@ -105,7 +105,7 @@ RSpec.describe 'Settings', type: :request do
       expect(json_response['name']).to eq('api_token_access')
       expect(json_response['preferences']['permission'].length).to eq(1)
       expect(json_response['preferences']['permission'][0]).to eq('admin.api')
-      expect(json_response['preferences']['some_new_key']).to eq(true)
+      expect(json_response['preferences']['some_new_key']).to be(true)
 
       # delete
       setting = Setting.find_by(name: 'product_name')
@@ -132,8 +132,8 @@ RSpec.describe 'Settings', type: :request do
           hit_product_name = true
         end
       end
-      expect(hit_api).to eq(true)
-      expect(hit_product_name).to eq(false)
+      expect(hit_api).to be(true)
+      expect(hit_product_name).to be(false)
 
       # show
       setting = Setting.find_by(name: 'product_name')
@@ -177,7 +177,7 @@ RSpec.describe 'Settings', type: :request do
       expect(json_response['name']).to eq('api_token_access')
       expect(json_response['preferences']['permission'].length).to eq(1)
       expect(json_response['preferences']['permission'][0]).to eq('admin.api')
-      expect(json_response['preferences']['some_new_key']).to eq(true)
+      expect(json_response['preferences']['some_new_key']).to be(true)
 
       # delete
       setting = Setting.find_by(name: 'product_name')
@@ -229,7 +229,7 @@ RSpec.describe 'Settings', type: :request do
     it 'protected setting not existing in list' do
       authenticated_as(admin)
       get '/api/v1/settings', params: {}, as: :json
-      expect(json_response.detect { |setting| setting['name'] == 'application_secret' }).to eq(nil)
+      expect(json_response.detect { |setting| setting['name'] == 'application_secret' }).to be_nil
     end
 
     it 'can not show protected setting' do

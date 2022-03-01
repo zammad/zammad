@@ -56,14 +56,14 @@ RSpec.describe Import::OTRS::ArticleCustomer do
   describe '.find' do
 
     it 'returns nil if no email could be found' do
-      expect(described_class.find({})).to be nil
+      expect(described_class.find({})).to be_nil
     end
   end
 
   describe '.local_email' do
 
     it 'returns nil if no email could be found' do
-      expect(described_class.local_email(nil)).to be nil
+      expect(described_class.local_email(nil)).to be_nil
     end
 
     it 'returns the parameter if no email could be found' do

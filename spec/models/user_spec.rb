@@ -43,7 +43,7 @@ RSpec.describe User, type: :model do
       end
 
       it 'returns nil for empty username' do
-        expect(described_class.identify('')).to eq(nil)
+        expect(described_class.identify('')).to be_nil
       end
     end
   end
@@ -176,7 +176,7 @@ RSpec.describe User, type: :model do
 
       context 'when user has no designated substitute' do
         it 'returns nil' do
-          expect(user.out_of_office_agent).to be(nil)
+          expect(user.out_of_office_agent).to be_nil
         end
       end
 
@@ -195,7 +195,7 @@ RSpec.describe User, type: :model do
           let(:out_of_office) { false }
 
           it 'returns nil' do
-            expect(user.out_of_office_agent).to be(nil)
+            expect(user.out_of_office_agent).to be_nil
           end
         end
 
@@ -410,7 +410,7 @@ RSpec.describe User, type: :model do
 
       context 'with an invalid token' do
         it 'returns nil' do
-          expect(described_class.by_reset_token('not-existing')).to be(nil)
+          expect(described_class.by_reset_token('not-existing')).to be_nil
         end
       end
     end
@@ -776,7 +776,7 @@ RSpec.describe User, type: :model do
           let(:another_user) { create(:user, password: '') }
 
           it 'sets password to nil' do
-            expect(another_user.password).to eq(nil)
+            expect(another_user.password).to be_nil
           end
         end
 
@@ -784,7 +784,7 @@ RSpec.describe User, type: :model do
           let(:another_user) { create(:user, password: nil) }
 
           it 'sets password to nil' do
-            expect(another_user.password).to eq(nil)
+            expect(another_user.password).to be_nil
           end
         end
       end
@@ -930,17 +930,17 @@ RSpec.describe User, type: :model do
         let(:escaped) { Regexp.escape(value) }
 
         it 'valid create' do
-          expect(create(:user, image_source: 'https://zammad.org/avatar.png').image_source).not_to eq(nil)
+          expect(create(:user, image_source: 'https://zammad.org/avatar.png').image_source).not_to be_nil
         end
 
         it 'removes invalid image source of create' do
-          expect(create(:user, image_source: value).image_source).to eq(nil)
+          expect(create(:user, image_source: value).image_source).to be_nil
         end
 
         it 'removes invalid image source of update' do
           user = create(:user)
           user.update!(image_source: value)
-          expect(user.image_source).to eq(nil)
+          expect(user.image_source).to be_nil
         end
       end
     end

@@ -109,7 +109,7 @@ RSpec.describe Ticket::Number::Increment do
         end
 
         it 'returns nil' do
-          expect(described_class.check(check_query)).to be(nil)
+          expect(described_class.check(check_query)).to be_nil
         end
 
         context 'and "ticket_number_ignore_system_id" is true' do

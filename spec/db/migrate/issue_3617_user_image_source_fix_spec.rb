@@ -12,7 +12,7 @@ RSpec.describe Issue3617UserImageSourceFix, type: :db_migration, db_strategy: :r
 
     it 'removes invalid image sources' do
       migrate
-      expect(user.reload.image_source).to eq(nil)
+      expect(user.reload.image_source).to be_nil
     end
   end
 

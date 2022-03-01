@@ -99,7 +99,7 @@ RSpec.describe 'Ticket Update', type: :system do
         expect(page).to have_no_css('.js-submitDropdown .js-submit[disabled]')
 
         ticket.reload
-        expect(ticket[date_attribute.name]).to eq(nil)
+        expect(ticket[date_attribute.name]).to be_nil
       end
     end
   end
@@ -217,7 +217,7 @@ RSpec.describe 'Ticket Update', type: :system do
         expect(article).to be_present
         expect(article.body).to eq('test body')
         expect(article.subject).to eq('test sub')
-        expect(article.internal).to eq(true)
+        expect(article.internal).to be(true)
       end
     end
   end

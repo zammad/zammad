@@ -14,13 +14,13 @@ RSpec.describe Token, type: :model do
 
     context 'with invalid name' do
       it 'returns nil' do
-        expect(described_class.check(action: token.action, name: '1NV4L1D')).to be(nil)
+        expect(described_class.check(action: token.action, name: '1NV4L1D')).to be_nil
       end
     end
 
     context 'with invalid action' do
       it 'returns nil' do
-        expect(described_class.check(action: 'PasswordReset_NotExisting', name: token.name)).to be(nil)
+        expect(described_class.check(action: 'PasswordReset_NotExisting', name: token.name)).to be_nil
       end
     end
 
@@ -66,7 +66,7 @@ RSpec.describe Token, type: :model do
           let(:created_at) { 1.day.ago }
 
           it 'returns nil' do
-            expect(described_class.check(action: token.action, name: token.name)).to be(nil)
+            expect(described_class.check(action: token.action, name: token.name)).to be_nil
           end
 
           it 'deletes the token' do
@@ -99,25 +99,25 @@ RSpec.describe Token, type: :model do
 
       context 'with the parent of a permission shared by both token.user and token.preferences' do
         it 'returns nil' do
-          expect(described_class.check(action: token.action, name: token.name, permission: 'ticket')).to be(nil)
+          expect(described_class.check(action: token.action, name: token.name, permission: 'ticket')).to be_nil
         end
       end
 
       context 'with a permission in token.preferences, but not on token.user' do
         it 'returns nil' do
-          expect(described_class.check(action: token.action, name: token.name, permission: 'admin')).to be(nil)
+          expect(described_class.check(action: token.action, name: token.name, permission: 'admin')).to be_nil
         end
       end
 
       context 'with a permission not in token.preferences, but on token.user' do
         it 'returns nil' do
-          expect(described_class.check(action: token.action, name: token.name, permission: 'cti.agent')).to be(nil)
+          expect(described_class.check(action: token.action, name: token.name, permission: 'cti.agent')).to be_nil
         end
       end
 
       context 'with non-existent permission' do
         it 'returns nil' do
-          expect(described_class.check(action: token.action, name: token.name, permission: 'foo')).to be(nil)
+          expect(described_class.check(action: token.action, name: token.name, permission: 'foo')).to be_nil
         end
       end
 
@@ -264,7 +264,7 @@ RSpec.describe Token, type: :model do
         subject(:token) { described_class.create(action: 'foo', user_id: User.first.id) }
 
         it 'defaults to nil' do
-          expect(token.persistent).to be(nil)
+          expect(token.persistent).to be_nil
         end
       end
     end

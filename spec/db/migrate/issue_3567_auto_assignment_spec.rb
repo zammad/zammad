@@ -11,7 +11,7 @@ RSpec.describe Issue3567AutoAssignment, type: :db_migration, db_strategy: :reset
 
     it 'config gets removed' do
       config = Setting.get('ticket_auto_assignment_selector')
-      expect(config['condition']['article.subject']).to be nil
+      expect(config['condition']['article.subject']).to be_nil
     end
   end
 end

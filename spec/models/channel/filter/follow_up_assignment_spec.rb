@@ -17,7 +17,7 @@ RSpec.describe Channel::Filter::FollowUpAssignment, type: :channel_filter do
 
         filter(mail)
 
-        expect(mail[:'x-zammad-ticket-followup-owner']).to be nil
+        expect(mail[:'x-zammad-ticket-followup-owner']).to be_nil
       end
     end
 
@@ -31,7 +31,7 @@ RSpec.describe Channel::Filter::FollowUpAssignment, type: :channel_filter do
 
         filter(mail)
 
-        expect(mail[:'x-zammad-ticket-followup-owner']).to be nil
+        expect(mail[:'x-zammad-ticket-followup-owner']).to be_nil
       end
     end
   end
@@ -63,7 +63,7 @@ RSpec.describe Channel::Filter::FollowUpAssignment, type: :channel_filter do
 
         filter(mail)
 
-        expect(mail[:'x-zammad-ticket-followup-owner']).to be nil
+        expect(mail[:'x-zammad-ticket-followup-owner']).to be_nil
       end
     end
   end

@@ -86,7 +86,7 @@ RSpec.describe 'Text Module', type: :request do
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
 
-      expect(json_response['try']).to eq(false)
+      expect(json_response['try']).to be(false)
       expect(json_response['records'].count).to eq(2)
       expect(json_response['result']).to eq('success')
 

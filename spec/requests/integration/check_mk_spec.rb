@@ -311,7 +311,7 @@ RSpec.describe 'Integration Check MK', type: :request do
 
         expect(json_response).to be_a_kind_of(Hash)
         expect(json_response['result']).to eq('no open tickets found, ignore action')
-        expect(json_response['ticket_ids']).to eq(nil)
+        expect(json_response['ticket_ids']).to be_nil
 
         ticket.reload
         expect(ticket.state.name).to eq('new')
@@ -500,7 +500,7 @@ RSpec.describe 'Integration Check MK', type: :request do
 
         expect(json_response).to be_a_kind_of(Hash)
         expect(json_response['result']).to eq('no open tickets found, ignore action')
-        expect(json_response['ticket_ids']).to eq(nil)
+        expect(json_response['ticket_ids']).to be_nil
 
         ticket.reload
         expect(ticket.state.name).to eq('new')

@@ -53,7 +53,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
       expect(response).to have_http_status(:created)
       expect(json_response).to be_truthy
       expect(json_response['data_option']['null']).to be_truthy
-      expect(json_response['data_option']['null']).to eq(true)
+      expect(json_response['data_option']['null']).to be(true)
       expect(json_response['name']).to eq('test1')
     end
 
@@ -99,7 +99,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
       expect(response).to have_http_status(:created)
       expect(json_response).to be_truthy
       expect(json_response['data_option']['null']).to be_truthy
-      expect(json_response['data_option']['null']).to eq(true)
+      expect(json_response['data_option']['null']).to be(true)
       expect(json_response['name']).to eq('test2')
     end
 
@@ -109,7 +109,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
       object = create(:object_manager_attribute_text)
 
       migration = ObjectManager::Attribute.migration_execute
-      expect(migration).to eq(true)
+      expect(migration).to be(true)
 
       authenticated_as(admin)
       post "/api/v1/object_manager_attributes/#{object.id}", params: {}, as: :json
@@ -202,7 +202,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
       expect(response).to have_http_status(:created)
       expect(json_response).to be_truthy
       expect(json_response['data_option']['null']).to be_truthy
-      expect(json_response['data_option']['null']).to eq(true)
+      expect(json_response['data_option']['null']).to be(true)
       expect(json_response['name']).to eq('bool2')
     end
 
@@ -261,7 +261,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
       expect(response).to have_http_status(:created)
       expect(json_response).to be_truthy
       expect(json_response['data_option']['null']).to be_truthy
-      expect(json_response['data_option']['null']).to eq(true)
+      expect(json_response['data_option']['null']).to be(true)
       expect(json_response['name']).to eq('test5')
     end
 
@@ -270,7 +270,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
       object = create(:object_manager_attribute_text, object_name: 'User')
 
       migration = ObjectManager::Attribute.migration_execute
-      expect(migration).to eq(true)
+      expect(migration).to be(true)
 
       post "/api/v1/object_manager_attributes/#{object.id}", params: {}, as: :json
 
@@ -372,13 +372,13 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
       post '/api/v1/object_manager_attributes', params: params, as: :json
 
       migration = ObjectManager::Attribute.migration_execute
-      expect(migration).to eq(true)
+      expect(migration).to be(true)
 
       expect(response).to have_http_status(:created) # created
 
       expect(json_response).to be_truthy
       expect(json_response['data_option']['default']).to be_truthy
-      expect(json_response['data_option']['default']).to eq(true)
+      expect(json_response['data_option']['default']).to be(true)
       expect(json_response['data_type']).to eq('boolean')
     end
 
@@ -422,13 +422,13 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
       post '/api/v1/object_manager_attributes', params: params, as: :json
 
       migration = ObjectManager::Attribute.migration_execute
-      expect(migration).to eq(true)
+      expect(migration).to be(true)
 
       expect(response).to have_http_status(:created) # created
 
       expect(json_response).to be_truthy
       expect(json_response['data_option']['default']).to be_falsey
-      expect(json_response['data_option']['default']).to eq(false)
+      expect(json_response['data_option']['default']).to be(false)
       expect(json_response['data_type']).to eq('boolean')
     end
 
@@ -477,7 +477,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
       post '/api/v1/object_manager_attributes', params: params, as: :json
 
       migration = ObjectManager::Attribute.migration_execute
-      expect(migration).to eq(true)
+      expect(migration).to be(true)
 
       # 2. create an overview that uses the attribute
       params = {
@@ -572,7 +572,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
       post '/api/v1/object_manager_attributes', params: params, as: :json
 
       migration = ObjectManager::Attribute.migration_execute
-      expect(migration).to eq(true)
+      expect(migration).to be(true)
 
       # 2. create an trigger that uses the attribute
       params = {
@@ -658,7 +658,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
       post '/api/v1/object_manager_attributes', params: params, as: :json
 
       migration = ObjectManager::Attribute.migration_execute
-      expect(migration).to eq(true)
+      expect(migration).to be(true)
 
       # 2. create a scheduler that uses the attribute
       params = {
@@ -829,7 +829,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
       post '/api/v1/object_manager_attributes', params: params, as: :json
 
       migration = ObjectManager::Attribute.migration_execute
-      expect(migration).to eq(true)
+      expect(migration).to be(true)
 
       # 2. create an overview that uses the attribute
       params = {
@@ -888,7 +888,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
       expect(response.body).to include('cannot be deleted!')
 
       migration = ObjectManager::Attribute.migration_execute
-      expect(migration).to eq(true)
+      expect(migration).to be(true)
     end
 
     it 'does verify if attribute type can not be changed (07)', db_strategy: :reset do
@@ -935,11 +935,11 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
 
       expect(json_response).to be_truthy
       expect(json_response['data_option']['default']).to be_falsey
-      expect(json_response['data_option']['default']).to eq(false)
+      expect(json_response['data_option']['default']).to be(false)
       expect(json_response['data_type']).to eq('boolean')
 
       migration = ObjectManager::Attribute.migration_execute
-      expect(migration).to eq(true)
+      expect(migration).to be(true)
 
       params['data_type'] = 'input'
       params['data_option'] = {
@@ -1000,7 +1000,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
       expect(json_response['data_type']).to eq('input')
 
       migration = ObjectManager::Attribute.migration_execute
-      expect(migration).to eq(true)
+      expect(migration).to be(true)
 
       params['data_type'] = 'select'
       params['data_option'] = {

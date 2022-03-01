@@ -55,12 +55,12 @@ RSpec.describe Organization, type: :model do
       context 'without associations' do
         it 'checks user deletion' do
           organization.destroy
-          expect(user.reload.organization_id).to be nil
+          expect(user.reload.organization_id).to be_nil
         end
 
         it 'checks ticket deletion' do
           organization.destroy
-          expect(ticket.reload.organization_id).to be nil
+          expect(ticket.reload.organization_id).to be_nil
         end
       end
 

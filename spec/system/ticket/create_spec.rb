@@ -55,8 +55,8 @@ RSpec.describe 'Ticket Create', type: :system do
           expect(page).to have_no_css('span', text: 'Encrypted')
 
           security_result = Ticket::Article.last.preferences['security']
-          expect(security_result['encryption']['success']).to be nil
-          expect(security_result['sign']['success']).to be nil
+          expect(security_result['encryption']['success']).to be_nil
+          expect(security_result['sign']['success']).to be_nil
         end
       end
     end
@@ -108,8 +108,8 @@ RSpec.describe 'Ticket Create', type: :system do
             expect(page).to have_no_css('span', text: 'Encrypted')
 
             security_result = Ticket::Article.last.preferences['security']
-            expect(security_result['encryption']['success']).to be nil
-            expect(security_result['sign']['success']).to be nil
+            expect(security_result['encryption']['success']).to be_nil
+            expect(security_result['sign']['success']).to be_nil
           end
         end
 
@@ -136,7 +136,7 @@ RSpec.describe 'Ticket Create', type: :system do
             expect(page).to have_no_css('span', text: 'Encrypted')
 
             security_result = Ticket::Article.last.preferences['security']
-            expect(security_result['encryption']['success']).to be nil
+            expect(security_result['encryption']['success']).to be_nil
             expect(security_result['sign']['success']).to be true
           end
         end
@@ -165,7 +165,7 @@ RSpec.describe 'Ticket Create', type: :system do
 
             security_result = Ticket::Article.last.preferences['security']
             expect(security_result['encryption']['success']).to be true
-            expect(security_result['sign']['success']).to be nil
+            expect(security_result['sign']['success']).to be_nil
           end
         end
 
@@ -680,7 +680,7 @@ RSpec.describe 'Ticket Create', type: :system do
       click '.js-submit'
       expect(current_url).to include('ticket/zoom')
       expect(Ticket.last.state_id).to eq(Ticket::State.find_by(name: 'pending customer feedback').id)
-      expect(Ticket.last.pending_time).to be nil
+      expect(Ticket.last.pending_time).to be_nil
     end
   end
 

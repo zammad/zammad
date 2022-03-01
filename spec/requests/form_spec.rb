@@ -34,7 +34,7 @@ RSpec.describe 'Form', type: :request, searchindex: true do
 
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
-      expect(json_response['enabled']).to eq(true)
+      expect(json_response['enabled']).to be(true)
       expect(json_response['endpoint']).to eq('http://zammad.example.com/api/v1/form_submit')
       expect(json_response['token']).to be_truthy
       token = json_response['token']
@@ -99,7 +99,7 @@ RSpec.describe 'Form', type: :request, searchindex: true do
 
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
-      expect(json_response['enabled']).to eq(true)
+      expect(json_response['enabled']).to be(true)
       expect(json_response['endpoint']).to eq('http://zammad.example.com/api/v1/form_submit')
       expect(json_response['token']).to be_truthy
       token = json_response['token']
@@ -147,7 +147,7 @@ RSpec.describe 'Form', type: :request, searchindex: true do
 
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
-      expect(json_response['enabled']).to eq(true)
+      expect(json_response['enabled']).to be(true)
       expect(json_response['endpoint']).to eq('http://zammad.example.com/api/v1/form_submit')
       expect(json_response['token']).to be_truthy
       token = json_response['token']

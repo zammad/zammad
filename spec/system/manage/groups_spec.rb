@@ -81,7 +81,7 @@ RSpec.describe 'Manage > Groups', type: :system do
 
         click_button
       end
-      expect(Group.find_by(name: 'Users').assignment_timeout).to be nil
+      expect(Group.find_by(name: 'Users').assignment_timeout).to be_nil
     end
   end
 end

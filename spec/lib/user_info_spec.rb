@@ -7,7 +7,7 @@ RSpec.describe UserInfo do
   describe '#current_user_id' do
 
     it 'is nil by default' do
-      expect(described_class.current_user_id).to be nil
+      expect(described_class.current_user_id).to be_nil
     end
 
     it 'takes a User ID as paramter and returns it' do
@@ -39,7 +39,7 @@ RSpec.describe UserInfo do
         expect(described_class.current_user_id).to eq(1)
       end
 
-      expect(described_class.current_user_id).to be nil
+      expect(described_class.current_user_id).to be_nil
     end
 
     it 'resets current_user_id in case of an exception' do
@@ -50,7 +50,7 @@ RSpec.describe UserInfo do
       rescue # rubocop:disable Lint/SuppressedException
       end
 
-      expect(described_class.current_user_id).to be nil
+      expect(described_class.current_user_id).to be_nil
     end
 
     it 'passes return value of given block' do

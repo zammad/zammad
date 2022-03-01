@@ -454,14 +454,14 @@ RSpec.describe 'User', type: :request do
       expect(json_response[0]['id']).to eq(json_response1['id'])
       expect(json_response[0]['label']).to eq("Customer#{firstname} Customer Last <new_customer_by_agent@example.com>")
       expect(json_response[0]['value']).to eq('new_customer_by_agent@example.com')
-      expect(json_response[0]['inactive']).to eq(false)
+      expect(json_response[0]['inactive']).to be(false)
       expect(json_response[0]['role_ids']).to be_falsey
       expect(json_response[0]['roles']).to be_falsey
 
       get "/api/v1/users/search?term=#{CGI.escape('CustomerInactive')}", params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Array)
-      expect(json_response[0]['inactive']).to eq(true)
+      expect(json_response[0]['inactive']).to be(true)
 
       # Regression test for issue #2539 - search pagination broken in users_controller.rb
       # Get the total number of users N, then search with one result per page, so there should N pages with one result each
@@ -897,7 +897,7 @@ RSpec.describe 'User', type: :request do
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
 
-      expect(json_response['try']).to eq(true)
+      expect(json_response['try']).to be(true)
       expect(json_response['records']).to be_empty
       expect(json_response['result']).to eq('failed')
       expect(json_response['errors'].count).to eq(2)
@@ -910,7 +910,7 @@ RSpec.describe 'User', type: :request do
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
 
-      expect(json_response['try']).to eq(true)
+      expect(json_response['try']).to be(true)
       expect(json_response['records'].count).to eq(2)
       expect(json_response['result']).to eq('success')
 
@@ -923,7 +923,7 @@ RSpec.describe 'User', type: :request do
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
 
-      expect(json_response['try']).to eq(false)
+      expect(json_response['try']).to be(false)
       expect(json_response['records'].count).to eq(2)
       expect(json_response['result']).to eq('success')
 
@@ -933,14 +933,14 @@ RSpec.describe 'User', type: :request do
       expect(user1.firstname).to eq('firstname-simple-import1')
       expect(user1.lastname).to eq('lastname-simple-import1')
       expect(user1.email).to eq('user-simple-import1@example.com')
-      expect(user1.active).to eq(true)
+      expect(user1.active).to be(true)
       user2 = User.find_by(login: 'user-simple-import2')
       expect(user2).to be_truthy
       expect(user2.login).to eq('user-simple-import2')
       expect(user2.firstname).to eq('firstname-simple-import2')
       expect(user2.lastname).to eq('lastname-simple-import2')
       expect(user2.email).to eq('user-simple-import2@example.com')
-      expect(user2.active).to eq(false)
+      expect(user2.active).to be(false)
 
       user1.destroy!
       user2.destroy!

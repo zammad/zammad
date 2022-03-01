@@ -119,7 +119,7 @@ RSpec.describe SignatureDetection do
       end
 
       it 'does not detect the warning information as signature' do
-        expect(described_class.find_signature(messages)).to eq(nil)
+        expect(described_class.find_signature(messages)).to be_nil
       end
     end
   end

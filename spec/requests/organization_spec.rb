@@ -518,7 +518,7 @@ RSpec.describe 'Organization', type: :request, searchindex: true do
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
 
-      expect(json_response['try']).to eq(true)
+      expect(json_response['try']).to be(true)
       expect(json_response['records']).to be_empty
       expect(json_response['result']).to eq('failed')
       expect(json_response['errors'].count).to eq(2)
@@ -531,7 +531,7 @@ RSpec.describe 'Organization', type: :request, searchindex: true do
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
 
-      expect(json_response['try']).to eq(true)
+      expect(json_response['try']).to be(true)
       expect(json_response['records'].count).to eq(2)
       expect(json_response['result']).to eq('success')
 
@@ -544,7 +544,7 @@ RSpec.describe 'Organization', type: :request, searchindex: true do
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
 
-      expect(json_response['try']).to eq(false)
+      expect(json_response['try']).to be(false)
       expect(json_response['records'].count).to eq(2)
       expect(json_response['result']).to eq('success')
 
@@ -553,13 +553,13 @@ RSpec.describe 'Organization', type: :request, searchindex: true do
       expect(organization1.name).to eq('organization-member-import1')
       expect(organization1.members.count).to eq(1)
       expect(organization1.members.first.login).to eq(customer1.login)
-      expect(organization1.active).to eq(true)
+      expect(organization1.active).to be(true)
       organization2 = Organization.find_by(name: 'organization-member-import2')
       expect(organization2).to be_truthy
       expect(organization2.name).to eq('organization-member-import2')
       expect(organization2.members.count).to eq(1)
       expect(organization2.members.first.login).to eq(customer2.login)
-      expect(organization2.active).to eq(false)
+      expect(organization2.active).to be(false)
     end
   end
 end

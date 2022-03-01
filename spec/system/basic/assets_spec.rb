@@ -16,19 +16,19 @@ RSpec.describe 'Assets', type: :system, db_strategy: :reset do
 
     describe 'when customer', authenticated_as: :customer do
       it 'can not access group details' do
-        expect(group_note).to be nil
+        expect(group_note).to be_nil
       end
     end
 
     describe 'when agent', authenticated_as: :agent do
       it 'can access group details' do
-        expect(group_note).not_to be nil
+        expect(group_note).not_to be_nil
       end
     end
 
     describe 'when admin', authenticated_as: :admin do
       it 'can access group details' do
-        expect(group_note).not_to be nil
+        expect(group_note).not_to be_nil
       end
     end
   end
@@ -44,19 +44,19 @@ RSpec.describe 'Assets', type: :system, db_strategy: :reset do
 
     describe 'when customer', authenticated_as: :customer do
       it 'can not access organization details' do
-        expect(organization_note).to be nil
+        expect(organization_note).to be_nil
       end
     end
 
     describe 'when agent', authenticated_as: :agent do
       it 'can access organization details' do
-        expect(organization_note).not_to be nil
+        expect(organization_note).not_to be_nil
       end
     end
 
     describe 'when admin', authenticated_as: :admin do
       it 'can access organization details' do
-        expect(organization_note).not_to be nil
+        expect(organization_note).not_to be_nil
       end
     end
   end
@@ -117,11 +117,11 @@ RSpec.describe 'Assets', type: :system, db_strategy: :reset do
 
     describe 'when customer', authenticated_as: :customer do
       it 'can access customer email' do
-        expect(customer_email).not_to be nil
+        expect(customer_email).not_to be_nil
       end
 
       it 'can not access customer note' do
-        expect(customer_note).to be nil
+        expect(customer_note).to be_nil
       end
 
       it 'can not access owner details' do
@@ -129,17 +129,17 @@ RSpec.describe 'Assets', type: :system, db_strategy: :reset do
       end
 
       it 'can access owner firstname' do
-        expect(owner_firstname).not_to be nil
+        expect(owner_firstname).not_to be_nil
       end
     end
 
     describe 'when agent', authenticated_as: :agent do
       it 'can access customer email' do
-        expect(customer_email).not_to be nil
+        expect(customer_email).not_to be_nil
       end
 
       it 'can access customer note' do
-        expect(customer_note).not_to be nil
+        expect(customer_note).not_to be_nil
       end
 
       it 'can access owner details' do
@@ -147,17 +147,17 @@ RSpec.describe 'Assets', type: :system, db_strategy: :reset do
       end
 
       it 'can access owner firstname' do
-        expect(owner_firstname).not_to be nil
+        expect(owner_firstname).not_to be_nil
       end
     end
 
     describe 'when admin', authenticated_as: :admin do
       it 'can access customer email' do
-        expect(customer_email).not_to be nil
+        expect(customer_email).not_to be_nil
       end
 
       it 'can access customer note' do
-        expect(customer_note).not_to be nil
+        expect(customer_note).not_to be_nil
       end
 
       it 'can access owner details' do
@@ -165,7 +165,7 @@ RSpec.describe 'Assets', type: :system, db_strategy: :reset do
       end
 
       it 'can access owner firstname' do
-        expect(owner_firstname).not_to be nil
+        expect(owner_firstname).not_to be_nil
       end
     end
   end

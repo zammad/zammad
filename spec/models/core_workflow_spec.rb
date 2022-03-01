@@ -295,7 +295,7 @@ RSpec.describe CoreWorkflow, type: :model do
     end
 
     it 'does show the field as optional because it has no required value' do
-      expect(result[:mandatory][field_name]).to eq(false)
+      expect(result[:mandatory][field_name]).to be(false)
     end
   end
 
@@ -370,15 +370,15 @@ RSpec.describe CoreWorkflow, type: :model do
     end
 
     it 'does set first_response_time_in_text optional' do
-      expect(result[:mandatory]['first_response_time_in_text']).to eq(false)
+      expect(result[:mandatory]['first_response_time_in_text']).to be(false)
     end
 
     it 'does set update_time_in_text optional' do
-      expect(result[:mandatory]['update_time_in_text']).to eq(false)
+      expect(result[:mandatory]['update_time_in_text']).to be(false)
     end
 
     it 'does set solution_time_in_text optional' do
-      expect(result[:mandatory]['solution_time_in_text']).to eq(false)
+      expect(result[:mandatory]['solution_time_in_text']).to be(false)
     end
 
     describe 'on first_response_time_enabled' do
@@ -391,15 +391,15 @@ RSpec.describe CoreWorkflow, type: :model do
       end
 
       it 'does set first_response_time_in_text mandatory' do
-        expect(result[:mandatory]['first_response_time_in_text']).to eq(true)
+        expect(result[:mandatory]['first_response_time_in_text']).to be(true)
       end
 
       it 'does set update_time_in_text optional' do
-        expect(result[:mandatory]['update_time_in_text']).to eq(false)
+        expect(result[:mandatory]['update_time_in_text']).to be(false)
       end
 
       it 'does set solution_time_in_text optional' do
-        expect(result[:mandatory]['solution_time_in_text']).to eq(false)
+        expect(result[:mandatory]['solution_time_in_text']).to be(false)
       end
     end
 
@@ -413,15 +413,15 @@ RSpec.describe CoreWorkflow, type: :model do
       end
 
       it 'does set first_response_time_in_text optional' do
-        expect(result[:mandatory]['first_response_time_in_text']).to eq(false)
+        expect(result[:mandatory]['first_response_time_in_text']).to be(false)
       end
 
       it 'does set update_time_in_text mandatory' do
-        expect(result[:mandatory]['update_time_in_text']).to eq(true)
+        expect(result[:mandatory]['update_time_in_text']).to be(true)
       end
 
       it 'does set solution_time_in_text optional' do
-        expect(result[:mandatory]['solution_time_in_text']).to eq(false)
+        expect(result[:mandatory]['solution_time_in_text']).to be(false)
       end
     end
 
@@ -435,15 +435,15 @@ RSpec.describe CoreWorkflow, type: :model do
       end
 
       it 'does set first_response_time_in_text optional' do
-        expect(result[:mandatory]['first_response_time_in_text']).to eq(false)
+        expect(result[:mandatory]['first_response_time_in_text']).to be(false)
       end
 
       it 'does set update_time_in_text optional' do
-        expect(result[:mandatory]['update_time_in_text']).to eq(false)
+        expect(result[:mandatory]['update_time_in_text']).to be(false)
       end
 
       it 'does set solution_time_in_text mandatory' do
-        expect(result[:mandatory]['solution_time_in_text']).to eq(true)
+        expect(result[:mandatory]['solution_time_in_text']).to be(true)
       end
     end
   end
@@ -1220,7 +1220,7 @@ RSpec.describe CoreWorkflow, type: :model do
       end
 
       it 'does not select owner' do
-        expect(result[:select]['owner_id']).to be nil
+        expect(result[:select]['owner_id']).to be_nil
       end
 
       it 'does rerun 0 times' do
@@ -1326,7 +1326,7 @@ RSpec.describe CoreWorkflow, type: :model do
       end
 
       it 'does not fill in title' do
-        expect(result[:fill_in]['title']).to be nil
+        expect(result[:fill_in]['title']).to be_nil
       end
 
       it 'does rerun 1 times (group select)' do
@@ -1518,7 +1518,7 @@ RSpec.describe CoreWorkflow, type: :model do
 
   describe '.perform - Default - auto selection based on only_shown_if_selectable' do
     it 'does auto select group' do
-      expect(result[:select]['group_id']).not_to be nil
+      expect(result[:select]['group_id']).not_to be_nil
     end
 
     it 'does auto hide group' do
@@ -1544,7 +1544,7 @@ RSpec.describe CoreWorkflow, type: :model do
     end
 
     it 'does set owner optional' do
-      expect(result[:mandatory]['owner_id']).to eq(false)
+      expect(result[:mandatory]['owner_id']).to be(false)
     end
   end
 
@@ -1628,7 +1628,7 @@ RSpec.describe CoreWorkflow, type: :model do
     end
 
     it 'does set group readonly' do
-      expect(result[:readonly]['group_id']).to eq(true)
+      expect(result[:readonly]['group_id']).to be(true)
     end
 
     context 'when readonly unset' do
@@ -1648,7 +1648,7 @@ RSpec.describe CoreWorkflow, type: :model do
       end
 
       it 'does set group readonly' do
-        expect(result[:readonly]['group_id']).to eq(false)
+        expect(result[:readonly]['group_id']).to be(false)
       end
     end
   end

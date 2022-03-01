@@ -41,7 +41,7 @@ RSpec.describe 'Taskbars', type: :request do
       expect(json_response['client_id']).to eq('123')
       expect(json_response['user_id']).to eq(agent.id)
       expect(json_response['params']['ticket_id']).to eq(5)
-      expect(json_response['params']['shown']).to eq(true)
+      expect(json_response['params']['shown']).to be(true)
 
       taskbar_id = json_response['id']
       params[:user_id] = customer.id
@@ -55,7 +55,7 @@ RSpec.describe 'Taskbars', type: :request do
       expect(json_response['client_id']).to eq('123')
       expect(json_response['user_id']).to eq(agent.id)
       expect(json_response['params']['ticket_id']).to eq(5)
-      expect(json_response['params']['shown']).to eq(false)
+      expect(json_response['params']['shown']).to be(false)
 
       # try to access with other user
       params = {

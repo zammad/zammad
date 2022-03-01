@@ -140,7 +140,7 @@ RSpec.describe 'Overviews', type: :request do
       post '/api/v1/overviews_prio', params: params, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
-      expect(json_response['success']).to eq(true)
+      expect(json_response['success']).to be(true)
 
       overview1.reload
       overview2.reload

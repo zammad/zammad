@@ -234,7 +234,7 @@ RSpec.describe UserDevice, type: :model do
 
       it 'returns true' do
         expect(user_device.notification_send('user_device_new_location'))
-          .to eq(true)
+          .to be(true)
       end
     end
 
@@ -243,7 +243,7 @@ RSpec.describe UserDevice, type: :model do
 
       it 'returns false' do
         expect(user_device.notification_send('user_device_new_location'))
-          .to eq(false)
+          .to be(false)
       end
     end
   end

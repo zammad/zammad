@@ -15,7 +15,7 @@ RSpec.describe 'Authentication', type: :system do
 
     # Check that cookies is temporary.
     cookie = cookie('^_zammad.+?')
-    expect(cookie[:expires]).to eq(nil)
+    expect(cookie[:expires]).to be_nil
   end
 
   it 'Login with remember me', authenticated_as: false do
@@ -38,7 +38,7 @@ RSpec.describe 'Authentication', type: :system do
 
     # Check that cookies has no longer a expire date after logout.
     cookie = cookie('^_zammad.+?')
-    expect(cookie[:expires]).to eq(nil)
+    expect(cookie[:expires]).to be_nil
   end
 
   it 'Logout' do

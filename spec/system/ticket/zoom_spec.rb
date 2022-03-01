@@ -669,8 +669,8 @@ RSpec.describe 'Ticket zoom', type: :system do
         click '.js-submit'
         expect(page).to have_css('.ticket-article-item', count: 2)
 
-        expect(Ticket::Article.last.preferences['security']['encryption']['success']).to be nil
-        expect(Ticket::Article.last.preferences['security']['sign']['success']).to be nil
+        expect(Ticket::Article.last.preferences['security']['encryption']['success']).to be_nil
+        expect(Ticket::Article.last.preferences['security']['sign']['success']).to be_nil
       end
 
       it 'signed' do
@@ -687,7 +687,7 @@ RSpec.describe 'Ticket zoom', type: :system do
         click '.js-submit'
         expect(page).to have_css('.ticket-article-item', count: 2)
 
-        expect(Ticket::Article.last.preferences['security']['encryption']['success']).to be nil
+        expect(Ticket::Article.last.preferences['security']['encryption']['success']).to be_nil
         expect(Ticket::Article.last.preferences['security']['sign']['success']).to be true
       end
 
@@ -706,7 +706,7 @@ RSpec.describe 'Ticket zoom', type: :system do
         expect(page).to have_css('.ticket-article-item', count: 2)
 
         expect(Ticket::Article.last.preferences['security']['encryption']['success']).to be true
-        expect(Ticket::Article.last.preferences['security']['sign']['success']).to be nil
+        expect(Ticket::Article.last.preferences['security']['sign']['success']).to be_nil
       end
 
       it 'signed and encrypted' do
@@ -1641,7 +1641,7 @@ RSpec.describe 'Ticket zoom', type: :system do
 
         content = find('.sidebar[data-tab=gitlab] .sidebar-content')
         expect(content).to have_text('No linked issues')
-        expect(ticket.reload.preferences[:gitlab][:issue_links][0]).to be nil
+        expect(ticket.reload.preferences[:gitlab][:issue_links][0]).to be_nil
 
         # check that counter got removed
         expect(page).to have_no_selector('.tabsSidebar-tab[data-tab=gitlab] .js-tabCounter')
@@ -1692,7 +1692,7 @@ RSpec.describe 'Ticket zoom', type: :system do
 
         content = find('.sidebar[data-tab=github] .sidebar-content')
         expect(content).to have_text('No linked issues')
-        expect(ticket.reload.preferences[:github][:issue_links][0]).to be nil
+        expect(ticket.reload.preferences[:github][:issue_links][0]).to be_nil
 
         # check that counter got removed
         expect(page).to have_no_selector('.tabsSidebar-tab[data-tab=github] .js-tabCounter')
