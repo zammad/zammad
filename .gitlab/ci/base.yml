@@ -22,17 +22,15 @@
   variables:
     REMOTE_URL: "http://selenium-firefox:4444/wd/hub"
     BROWSER: "firefox"
-    # Settings for Selenium 3:
-    NODE_MAX_INSTANCES: "5"
-    NODE_MAX_SESSION: "5"
+    SE_NODE_MAX_SESSIONS: "5"
+    SE_NODE_OVERRIDE_MAX_SESSIONS: "true"
 
 .variables_selenium_chrome: &variables_selenium_chrome
   variables:
     REMOTE_URL: "http://selenium-chrome:4444/wd/hub"
     BROWSER: chrome
-    # Settings for Selenium 3:
-    NODE_MAX_INSTANCES: "5"
-    NODE_MAX_SESSION: "5"
+    SE_NODE_MAX_SESSIONS: "5"
+    SE_NODE_OVERRIDE_MAX_SESSIONS: "true"
 
 .variables_app_restart_cmd: &variables_app_restart_cmd
   variables:
@@ -86,11 +84,11 @@
   alias: elasticsearch
 
 .docker_selenium_chrome: &docker_selenium_chrome
-  name: $CI_REGISTRY/docker/zammad-selenium-chrome:stable
+  name: $CI_REGISTRY/docker/zammad-selenium-chrome:4
   alias: selenium-chrome
 
 .docker_selenium_firefox: &docker_selenium_firefox
-  name: $CI_REGISTRY/docker/zammad-selenium-firefox:stable
+  name: $CI_REGISTRY/docker/zammad-selenium-firefox:4
   alias: selenium-firefox
 
 .docker_imap: &docker_imap

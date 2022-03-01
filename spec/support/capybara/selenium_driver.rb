@@ -60,3 +60,16 @@ Capybara.register_driver(:zammad_firefox) do |app|
     driver.browser.file_detector = nil if ENV['REMOTE_URL'].present?
   end
 end
+
+class Capybara::Selenium::Driver
+  alias original_quit quit
+
+  def quit
+    original_quit
+  rescue Selenium::WebDriver::Error::ServerError
+    # Work around a possible capybara/Selenium bug. driver.quit() fails because there is already no session any more;
+    #   not sure why that happens.
+  ensure
+    @browser = nil
+  end
+end

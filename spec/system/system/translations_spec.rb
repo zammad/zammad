@@ -64,22 +64,13 @@ RSpec.describe 'System > Translations', type: :system do
         visit '/#system/translation'
 
         def toggle_inline_translations
-          if Gem::Platform.local.os.eql? 'darwin'
-            page.send_keys [:control, :alt, 't']
-          else
-            page.send_keys [:control, :shift, 't']
-          end
+          page.send_keys [*hot_keys, 't']
         end
 
         toggle_inline_translations
 
         span = find '.sidebar span.translation[title="Overviews"]'
-        # Move cursor to the end of the string.
-        if Gem::Platform.local.os.eql? 'darwin'
-          span.send_keys %i[command right], '_modified', :tab
-        else
-          span.send_keys %i[control right], '_modified', :tab
-        end
+        span.native.send_keys 'translation_modified', :tab
 
         # Leave the span to be able to turn off inline translations again
         visit '/#dashboard'
@@ -87,8 +78,8 @@ RSpec.describe 'System > Translations', type: :system do
 
         visit '/#system/translation'
         expect(page).to have_no_css('.sidebar span.translation[title="Overviews"]')
-        expect(find('a[href="#manage/overviews"]')).to have_text("#{overviews_translated}_modified")
-        expect(find('.content.active input.js-Item[data-source="Overviews"]').value).to eq("#{overviews_translated}_modified")
+        expect(find('a[href="#manage/overviews"]')).to have_text('translation_modified').and(have_text(overviews_translated))
+        expect(find('.content.active input.js-Item[data-source="Overviews"]').value).to have_text('translation_modified').and(have_text(overviews_translated))
       end
     end
 
