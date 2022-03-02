@@ -2681,6 +2681,8 @@ input.has-error {
     position: absolute;
     opacity: 0;
     padding: 18px;
+
+    @extend .zIndex-11;
   }
 
   .modal-arrow {
@@ -8487,7 +8489,7 @@ a.list-group-item.active > .badge,
 
 /* allow/show autocomplete in modal dialog */
 .ui-autocomplete.ui-widget-content {
-  @extend .zIndex-9;
+  @extend .zIndex-11;
 
   position: absolute;
   max-height: 380px;
@@ -8665,7 +8667,7 @@ a.list-group-item.active > .badge,
 }
 
 .modal {
-  @extend .zIndex-10;
+  @extend .zIndex-11;
 
   &-loader {
     text-align: center;
@@ -8678,6 +8680,8 @@ a.list-group-item.active > .badge,
   max-width: 660px;
   margin-top: 35px;
   margin-bottom: 35px;
+
+  @extend .zIndex-11;
 
   @include phone {
     max-width: calc(100vw - 20px) !important;
@@ -8807,7 +8811,7 @@ a.list-group-item.active > .badge,
   display: block;
   padding: 0 40px;
 
-  @extend .zIndex-9;
+  @extend .zIndex-11;
 
   @include bidi-style(padding-left, 40px, padding-right, 0);
 
