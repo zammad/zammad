@@ -103,8 +103,6 @@ RSpec.describe 'Search', type: :system, authenticated: true, searchindex: true d
     end
 
     context 'bulk note' do
-      before { current_window.resize_to(1300, 1040) }
-
       it 'adds note to selected ticket' do
         within :active_content do
           find("tr[data-id='#{ticket_1.id}']").check('bulk', allow_label_click: true)

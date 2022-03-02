@@ -55,9 +55,6 @@ RSpec.describe 'First Steps', type: :system do
   end
 
   it 'creates test ticket', sessions_jobs: true do
-    # make window large enough to show activity stream
-    page.current_window.resize_to(1520, 800)
-
     initial_ticket_count = Ticket.count
 
     within(:active_content) { click '.js-testTicket' }

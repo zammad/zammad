@@ -59,16 +59,19 @@ QUnit.test("form elements check", assert => {
 
       previousSwatchColor = getSwatchColor()
       return new Promise( (resolve,reject) => {
-        syn.click(inputEl).drag(circle, { to: '-10x-10'}, resolve)
+        syn.click(inputEl, resolve)
+      })
+      .then(function(resolve){
+        return new Promise( (resolve, reject) => {
+          var square = el.find('.js-colorpicker-saturation-gradient')[0]
+          syn.click(square, {}, resolve)
+        })
       })
     })
     .then( function() {
       var params = App.ControllerForm.params(el)
-      var test_params = {
-        color: 'hsl(169,100%,20%)'
-      }
 
-      assert.deepEqual(params, test_params, 'Color is transformed to HSL after moving the circle')
+      assert.ok(params.color.match(/hsl\(180,(\d{2})%,2\d{1}%\)/), 'Color is transformed to HSL after moving the circle')
       assert.notEqual(previousSwatchColor, getSwatchColor(), 'color in swatch was updated')
     })
     .then( function() {
@@ -76,16 +79,13 @@ QUnit.test("form elements check", assert => {
 
       previousSwatchColor = getSwatchColor()
       return new Promise( (resolve,reject) => {
-        syn.drag(slider, { to: '-0x-11'}, resolve)
+        syn.drag(slider, { to: '-0x-15'}, resolve)
       })
     })
     .then( function() {
       var params = App.ControllerForm.params(el)
-      var test_params = {
-        color: 'hsl(169,100%,27%)'
-      }
 
-      assert.deepEqual(params, test_params, 'Color code is changed after draging slider')
+      assert.ok(params.color.match(/hsl\(180,(\d{2})%,3\d{1}%\)/), 'Color is changed after moving slider')
       assert.notEqual(previousSwatchColor, getSwatchColor(), 'color in swatch was updated')
     })
     .then( function() {

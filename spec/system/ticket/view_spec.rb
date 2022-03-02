@@ -149,59 +149,42 @@ RSpec.describe 'Ticket views', type: :system, authenticated_as: :authenticate do
         end
       end
 
-      shared_examples 'show macros batch overlay' do
-        def authenticate
-          Macro.destroy_all && (create_list :macro, all)
-          true
-        end
-
-        before do
-          page.current_window.resize_to(width, height)
-          visit '#ticket/view/all_open'
-        end
-
-        context 'with few macros' do
-          let(:all) { 15 }
-
-          context 'when on large screen' do
-            let(:width) { 1520 }
-            let(:height) { 1040 }
-
-            it_behaves_like 'showing all macros'
-            it_behaves_like "not adding 'small' class to macro element"
-          end
-
-          context 'when on small screen' do
-            let(:width) { 1020 }
-            let(:height) { 1040 }
-
-            it_behaves_like 'showing all macros'
-            it_behaves_like "not adding 'small' class to macro element"
-          end
-
-        end
-
-        context 'with many macros' do
-          let(:all) { 50 }
-
-          context 'when on large screen' do
-            let(:width) { 1520 }
-            let(:height) { 1040 }
-
-            it_behaves_like 'showing some macros', 32
-          end
-
-          context 'when on small screen' do
-            let(:width) { 1020 }
-            let(:height) { 1040 }
-
-            it_behaves_like 'showing some macros', 30
-            it_behaves_like "adding 'small' class to macro element"
-          end
-        end
+      def authenticate
+        Macro.destroy_all && (create_list :macro, all)
+        true
       end
 
-      include_examples 'show macros batch overlay'
+      before do
+        visit '#ticket/view/all_open'
+      end
+
+      context 'with few macros' do
+        let(:all) { 15 }
+
+        context 'when on large screen', screen_size: :desktop do
+          it_behaves_like 'showing all macros'
+          it_behaves_like "not adding 'small' class to macro element"
+        end
+
+        context 'when on small screen', screen_size: :tablet do
+          it_behaves_like 'showing all macros'
+          it_behaves_like "not adding 'small' class to macro element"
+        end
+
+      end
+
+      context 'with many macros' do
+        let(:all) { 50 }
+
+        context 'when on large screen', screen_size: :desktop do
+          it_behaves_like 'showing some macros', 32
+        end
+
+        context 'when on small screen', screen_size: :tablet do
+          it_behaves_like 'showing some macros', 24
+          it_behaves_like "adding 'small' class to macro element"
+        end
+      end
     end
   end
 
