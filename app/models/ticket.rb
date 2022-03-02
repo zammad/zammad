@@ -71,7 +71,7 @@ class Ticket < ApplicationModel
                              :article_count,
                              :preferences
 
-  history_relation_object 'Ticket::Article', 'Mention'
+  history_relation_object 'Ticket::Article', 'Mention', 'Ticket::SharedDraftZoom'
 
   sanitized_html :note
 

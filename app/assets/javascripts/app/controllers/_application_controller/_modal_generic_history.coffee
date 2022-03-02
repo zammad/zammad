@@ -44,6 +44,8 @@ class App.GenericHistory extends App.ControllerModal
 
       if item.object is 'Ticket::Article'
         item.object = 'Article'
+      if item.object is 'Ticket::SharedDraftZoom'
+        item.object = 'Draft'
 
       data = item
       data.created_by = App.User.find( item.created_by_id )

@@ -593,10 +593,8 @@ class CreateTicket < ActiveRecord::Migration[4.2]
       t.references :ticket, null: false, foreign_key: { to_table: :tickets }
       t.text       :new_article
       t.text       :ticket_attributes
-
-      t.column :created_by_id, :integer, null: true
-      t.column :updated_by_id, :integer, null: true
-
+      t.column :created_by_id, :integer, null: false
+      t.column :updated_by_id, :integer, null: false
       t.timestamps limit: 3
     end
 
@@ -604,10 +602,8 @@ class CreateTicket < ActiveRecord::Migration[4.2]
       t.references :group, null: false, foreign_key: { to_table: :groups }
       t.string     :name
       t.text       :content
-
-      t.column :created_by_id, :integer, null: true
-      t.column :updated_by_id, :integer, null: true
-
+      t.column :created_by_id, :integer, null: false
+      t.column :updated_by_id, :integer, null: false
       t.timestamps limit: 3
     end
   end

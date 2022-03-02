@@ -961,8 +961,8 @@ RSpec.describe User, type: :model do
                      'Ticket::Article::Type'              => { 'created_by_id' => 0, 'updated_by_id' => 0 },
                      'Ticket::Article::Flag'              => { 'created_by_id' => 0 },
                      'Ticket::Priority'                   => { 'created_by_id' => 0, 'updated_by_id' => 0 },
-                     'Ticket::SharedDraftStart'           => { 'created_by_id' => 0, 'updated_by_id' => 0 },
-                     'Ticket::SharedDraftZoom'            => { 'created_by_id' => 0, 'updated_by_id' => 0 },
+                     'Ticket::SharedDraftStart'           => { 'created_by_id' => 1, 'updated_by_id' => 0 },
+                     'Ticket::SharedDraftZoom'            => { 'created_by_id' => 1, 'updated_by_id' => 0 },
                      'Ticket::TimeAccounting'             => { 'created_by_id' => 0 },
                      'Ticket::State'                      => { 'created_by_id' => 0, 'updated_by_id' => 0 },
                      'Ticket::Flag'                       => { 'created_by_id' => 0 },
@@ -1006,7 +1006,7 @@ RSpec.describe User, type: :model do
                      'Mention'                            => { 'created_by_id' => 1, 'updated_by_id' => 0, 'user_id' => 1 },
                      'Channel'                            => { 'created_by_id' => 0, 'updated_by_id' => 0 },
                      'Role'                               => { 'created_by_id' => 0, 'updated_by_id' => 0 },
-                     'History'                            => { 'created_by_id' => 4 },
+                     'History'                            => { 'created_by_id' => 5 },
                      'Webhook'                            => { 'created_by_id' => 0, 'updated_by_id' => 0 },
                      'Overview'                           => { 'created_by_id' => 1, 'updated_by_id' => 0 },
                      'ActivityStream'                     => { 'created_by_id' => 0 },
@@ -1034,6 +1034,8 @@ RSpec.describe User, type: :model do
       chat_session        = create(:'chat/session', user: user)
       chat_message        = create(:'chat/message', chat_session: chat_session)
       chat_message2       = create(:'chat/message', chat_session: chat_session, created_by: user)
+      draft_start         = create(:ticket_shared_draft_start, created_by: user)
+      draft_zoom          = create(:ticket_shared_draft_zoom, created_by: user)
       expect(overview.reload.user_ids).to eq([user.id])
 
       # create a chat agent for admin user (id=1) before agent user
@@ -1094,6 +1096,8 @@ RSpec.describe User, type: :model do
         .to change(user_created_by, :created_by_id).to(1)
         .and change(user_created_by, :updated_by_id).to(1)
         .and change(user_created_by, :out_of_office_replacement_id).to(1)
+      expect { draft_start.reload }.to change(draft_start, :created_by_id).to(1)
+      expect { draft_zoom.reload }.to change(draft_zoom, :created_by_id).to(1)
     end
 
     it 'does delete cache after user deletion' do

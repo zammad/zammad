@@ -54,7 +54,9 @@ and check if there are reset_column_information function calls existing for the 
         end
 
         def reset_class(node)
-          node.children[0].children[1].to_s
+          # simplify namespaced class names
+          # Rubocop can't reliably convert table names to namespaced class names
+          node.children[0].const_name.gsub '::', ''
         end
 
         def table_class(node)

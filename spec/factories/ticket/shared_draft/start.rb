@@ -5,5 +5,7 @@ FactoryBot.define do
     name    { Faker::Name.unique.name }
     group   { create(:group) }
     content { { content: true } }
+    updated_by_id { 1 }
+    created_by_id { 1 }
   end
 end

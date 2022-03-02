@@ -26,7 +26,7 @@ RSpec.describe Ticket, type: :model do
   it_behaves_like 'CanBeImported'
   it_behaves_like 'CanCsvImport'
   it_behaves_like 'ChecksCoreWorkflow'
-  it_behaves_like 'HasHistory', history_relation_object: ['Ticket::Article', 'Mention']
+  it_behaves_like 'HasHistory', history_relation_object: ['Ticket::Article', 'Mention', 'Ticket::SharedDraftZoom']
   it_behaves_like 'HasTags'
   it_behaves_like 'TagWritesToTicketHistory'
   it_behaves_like 'HasTaskbars'
