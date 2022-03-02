@@ -249,15 +249,4 @@ RSpec.describe 'Ticket Shared Draft Zoom', type: :system, authenticated_as: :aut
       expect(page).to have_text('1x1.png')
     end
   end
-
-  def attach(id:, object_name: 'UploadCache')
-    Store.add(
-      object:        object_name,
-      o_id:          id,
-      data:          File.binread(Rails.root.join('test/data/image/1x1.png')),
-      filename:      '1x1.png',
-      preferences:   {},
-      created_by_id: 1,
-    )
-  end
 end
