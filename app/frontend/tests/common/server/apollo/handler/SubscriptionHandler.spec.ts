@@ -12,7 +12,7 @@ import {
 import useNotifications from '@common/composables/useNotifications'
 import { NetworkStatus } from '@apollo/client/core'
 
-const subscriptionFunctionCallSpy = jest.fn()
+const subscriptionFunctionCallSpy = vi.fn()
 
 const subscriptionSampleResult = {
   sampleUpdated: { id: 1, title: 'Test Title', text: 'Test Text' },
@@ -177,7 +177,7 @@ describe('SubscriptionHandler', () => {
         sampleSubscription({ id: 1 }),
       )
 
-      const resultCallbackSpy = jest.fn()
+      const resultCallbackSpy = vi.fn()
 
       const subscribed = subscriptionHandlerObject.onSubscribed()
 
@@ -224,7 +224,7 @@ describe('SubscriptionHandler', () => {
       it('use error callback', () => {
         expect.assertions(2)
 
-        const errorCallbackSpy = jest.fn()
+        const errorCallbackSpy = vi.fn()
 
         const subscriptionHandlerObject = new SubscriptionHandler(
           sampleSubscription({ id: 1 }),

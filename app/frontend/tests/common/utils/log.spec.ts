@@ -1,12 +1,13 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import mockConsole from 'jest-mock-console'
-import '@tests/support/mock-hoist-helper'
-import log from '@common/utils/log'
+vi.spyOn(console, 'error')
+vi.spyOn(console, 'warn')
+vi.spyOn(console, 'info')
+vi.spyOn(console, 'log')
+vi.spyOn(console, 'trace')
 
-jest.mock('@tests/support/mock-hoist-helper', () => {
-  mockConsole(['error', 'warn', 'info', 'log', 'trace'])
-})
+// eslint-disable-next-line import/first
+import log from '@common/utils/log'
 
 describe('log', () => {
   it('logs with default log level', () => {
@@ -27,7 +28,8 @@ describe('log', () => {
     log.info('info')
     log.debug('debug')
     log.trace('trace')
-    expect(console.error).toHaveBeenCalledTimes(2)
+    // It seems trace also calls error().
+    expect(console.error).toHaveBeenCalledTimes(3)
     expect(console.warn).toHaveBeenCalledTimes(2)
     expect(console.info).toHaveBeenCalledTimes(2)
     expect(console.log).toHaveBeenCalledTimes(1)

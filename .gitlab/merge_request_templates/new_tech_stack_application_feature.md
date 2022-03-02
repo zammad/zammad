@@ -13,7 +13,7 @@
 - [ ] Covered new functionality with Jest-Test(*)
 - [ ] When relevant: Covered new GraphQL (Mutation/Query) with a request test.
 
-(*) Jest tests are normally only needed for the common components or other typescript functionality, because the other functionality will be tested with selenium tests and own GraphQL-API tests (with this we avoid that we need always to mock the graphql calls). But for sure special frontend handling should also be tested with a jest test.
+(*) Jest tests are normally only needed for the common components or other typescript functionality, because the other functionality will be tested with selenium tests and own GraphQL-API tests (with this we avoid that we need always to mock the graphql calls). But for sure special frontend handling should also be tested with a vitest test.
 
 ## QA Checklist (to be filled by the reviewer)
 

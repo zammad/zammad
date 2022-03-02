@@ -6,17 +6,15 @@ module.exports = {
   root: true,
   env: {
     browser: true,
-    jest: true,
     node: true,
   },
-  plugins: ['@typescript-eslint', 'vue', 'prettier', 'jest', 'zammad'],
+  plugins: ['@typescript-eslint', 'vue', 'prettier', 'zammad'],
   extends: [
     'airbnb-base',
     'plugin:vue/vue3-recommended',
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended',
-    'plugin:jest/recommended',
     '@vue/prettier',
     '@vue/typescript/recommended',
     'prettier',
@@ -87,12 +85,6 @@ module.exports = {
     // https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/no-shadow.md
     'no-shadow': 'off',
     '@typescript-eslint/no-shadow': 'off',
-
-    // Expect assertions are mandatory for async tests.
-    'jest/prefer-expect-assertions': [
-      'error',
-      { onlyFunctionsWithAsyncKeyword: true },
-    ],
 
     // Enforce v-bind directive usage in long form.
     'vue/v-bind-style': ['error', 'longform'],

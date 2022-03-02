@@ -6,7 +6,7 @@ import useSessionUserStore from '@common/stores/session/user'
 import { createTestingPinia } from '@pinia/testing'
 import { RouteLocationNormalized } from 'vue-router'
 
-jest.mock('@common/server/apollo/client', () => {
+vi.mock('@common/server/apollo/client', () => {
   return {}
 })
 
@@ -24,7 +24,7 @@ const errorRedirect = (route: string) => {
 }
 
 describe('permissionGuard', () => {
-  createTestingPinia()
+  createTestingPinia({ createSpy: vi.fn })
 
   const from = {} as RouteLocationNormalized
 
@@ -34,7 +34,7 @@ describe('permissionGuard', () => {
       path: '/test',
       meta: {},
     } as RouteLocationNormalized
-    const next = jest.fn()
+    const next = vi.fn()
 
     permissionGuard(to, from, next)
 
@@ -50,7 +50,7 @@ describe('permissionGuard', () => {
         requiredPermission: null,
       },
     } as RouteLocationNormalized
-    const next = jest.fn()
+    const next = vi.fn()
 
     useAuthenticatedStore().value = true
 
@@ -69,7 +69,7 @@ describe('permissionGuard', () => {
         requiredPermission: ['ticket.agent'],
       },
     } as RouteLocationNormalized
-    const next = jest.fn()
+    const next = vi.fn()
 
     useAuthenticatedStore().value = true
     useSessionUserStore().value = {
@@ -94,7 +94,7 @@ describe('permissionGuard', () => {
         requiredPermission: ['ticket.agent'],
       },
     } as RouteLocationNormalized
-    const next = jest.fn()
+    const next = vi.fn()
 
     useAuthenticatedStore().value = true
     useSessionUserStore().value = {

@@ -8,14 +8,23 @@ import type { OptimizeOptions } from 'svgo'
 import * as path from 'path'
 
 export default defineConfig({
+  esbuild: {
+    target: 'es2020', // Must stay in sync with tsconfig.json.
+  },
   resolve: {
     alias: {
       '@mobile': path.resolve(__dirname, 'app/frontend/apps/mobile'),
       '@common': path.resolve(__dirname, 'app/frontend/common'),
+      '@tests': path.resolve(__dirname, 'app/frontend/tests'),
     },
   },
   define: {
-    VITE_TEST_MODE: !!process.env.VITE_TEST_MODE,
+    VITE_TEST_MODE: !!process.env.VITEST || !!process.env.VITE_TEST_MODE,
+  },
+  test: {
+    globals: true,
+    setupFiles: ['./tests/vitest.setup.ts'],
+    environment: 'jsdom',
   },
   plugins: [
     RubyPlugin(),

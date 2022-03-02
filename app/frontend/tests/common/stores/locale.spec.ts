@@ -38,7 +38,7 @@ const mockClient = () => {
 }
 
 describe('Translations Store', () => {
-  createTestingPinia()
+  createTestingPinia({ createSpy: vi.fn })
   mockClient()
   const locale = useLocaleStore()
 

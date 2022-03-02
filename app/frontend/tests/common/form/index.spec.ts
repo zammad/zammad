@@ -28,7 +28,7 @@ describe('getFormPlugins', () => {
 describe('initializeForm', () => {
   const app = createApp({})
 
-  jest.spyOn(app, 'use')
+  vi.spyOn(app, 'use')
 
   it('check use form plugin without an error', () => {
     initializeForm(app)

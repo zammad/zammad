@@ -80,7 +80,7 @@ const initializeRouter = (routes?: RouteRecordRaw[]) => {
 let storeInitialized = false
 
 const initializeStore = () => {
-  plugins.push(createTestingPinia())
+  plugins.push(createTestingPinia({ createSpy: vi.fn }))
   storeInitialized = true
 }
 

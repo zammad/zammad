@@ -2,7 +2,8 @@
   "compilerOptions": {
     /* Basic Options */
     // "incremental": true,                         /* Enable incremental compilation */
-    "target": "es2019" /* Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018', 'ES2019', 'ES2020', or 'ESNEXT'. */,
+    // 'target' must stay in sync with vite.config.ts.
+    "target": "es2020" /* Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018', 'ES2019', 'ES2020', or 'ESNEXT'. */,
     "module": "esnext" /* Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', 'es2020', or 'ESNext'. */,
     // "lib": [],                                   /* Specify library files to be included in the compilation. */
     // "allowJs": true,                             /* Allow javascript files to be compiled. */
@@ -54,7 +55,7 @@
     // "typeRoots": [],                             /* List of folders to include type definitions from. */
     "types": [
       "vite/client",
-      "jest",
+      "vitest/globals",
       "node"
     ] /* Type declaration files to be included in compilation. */,
     // "allowSyntheticDefaultImports": true,        /* Allow default imports from modules with no default export. This does not affect code emit, just typechecking. */

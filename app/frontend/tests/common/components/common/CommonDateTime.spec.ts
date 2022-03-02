@@ -1,14 +1,12 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import '@tests/support/mock-hoist-helper'
+/* eslint-disable import/first */
+vi.useFakeTimers().setSystemTime(new Date('2020-10-11T10:10:10Z'))
+
 import CommonDateTime from '@common/components/common/CommonDateTime.vue'
 import { getWrapper } from '@tests/support/components'
 import useApplicationConfigStore from '@common/stores/application/config'
 import { nextTick } from 'vue'
-
-jest.mock('@tests/support/mock-hoist-helper', () => {
-  jest.useFakeTimers().setSystemTime(new Date('2020-10-11T10:10:10Z'))
-})
 
 describe('CommonDateTime.vue', () => {
   it('renders DateTime', async () => {

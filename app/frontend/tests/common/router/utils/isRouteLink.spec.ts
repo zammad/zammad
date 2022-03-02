@@ -1,11 +1,9 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import isRouteLink from '@common/router/utils/isRouteLink'
-import { useRouter } from 'vue-router'
-
+/* eslint-disable import/first */
 // Add a mocked router resolve function for the success case.
-jest.mock('vue-router', () => ({
-  useRouter: jest.fn(() => ({
+vi.mock('vue-router', () => ({
+  useRouter: vi.fn(() => ({
     resolve: () => {
       return {
         name: 'RouteName',
@@ -15,7 +13,11 @@ jest.mock('vue-router', () => ({
   })),
 }))
 
-const router = useRouter as jest.Mock
+import isRouteLink from '@common/router/utils/isRouteLink'
+import { useRouter } from 'vue-router'
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const router = useRouter as any
 
 describe('isRouteLink', () => {
   it('is correct route link', () => {

@@ -1,4 +1,4 @@
-jest:
+vitest:
   stage: test
   extends:
     - .env_base

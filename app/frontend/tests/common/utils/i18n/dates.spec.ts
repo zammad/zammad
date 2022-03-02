@@ -22,7 +22,7 @@ describe('Dates', () => {
     )
 
     // Switch to US/Eastern
-    timezoneMock.register('US/Eastern')
+    timezoneMock.register('US/Eastern', global)
     expect(absDT('2021-04-09T10:11:12Z', dateUS)).toBe('04/09/2021')
     expect(absDT('2021-04-09T10:11:12Z', dateTimeUS)).toBe(
       '04/09/2021  6:11 am',
@@ -30,7 +30,7 @@ describe('Dates', () => {
     expect(absDT('2021-04-09T22:11:12Z', dateTimeUS)).toBe(
       '04/09/2021  6:11 pm',
     )
-    timezoneMock.unregister()
+    timezoneMock.unregister(global)
   })
 
   it('handles UTC date strings', () => {

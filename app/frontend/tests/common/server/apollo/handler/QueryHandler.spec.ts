@@ -12,7 +12,7 @@ import useNotifications from '@common/composables/useNotifications'
 import { NetworkStatus } from '@apollo/client/core'
 import { GraphQLErrorTypes } from '@common/types/error'
 
-const queryFunctionCallSpy = jest.fn()
+const queryFunctionCallSpy = vi.fn()
 
 const querySampleResult = {
   Sample: {
@@ -139,6 +139,7 @@ describe('QueryHandler', () => {
       queryHandlerObject.watchOnResult((result) => {
         expect(result).toEqual(querySampleResult)
       })
+      await queryHandlerObject.onLoaded()
     })
   })
 
@@ -162,7 +163,7 @@ describe('QueryHandler', () => {
       it('use error callback', async () => {
         expect.assertions(1)
 
-        const errorCallbackSpy = jest.fn()
+        const errorCallbackSpy = vi.fn()
 
         const queryHandlerObject = new QueryHandler(sampleQuery({ id: 1 }), {
           errorCallback: (error) => {
@@ -182,7 +183,7 @@ describe('QueryHandler', () => {
         expect.assertions(1)
         const queryHandlerObject = new QueryHandler(sampleQuery({ id: 1 }))
 
-        const errorCallbackSpy = jest.fn()
+        const errorCallbackSpy = vi.fn()
 
         await queryHandlerObject.loadedResult()
 
@@ -231,7 +232,7 @@ describe('QueryHandler', () => {
 
       const queryHandlerObject = new QueryHandler(sampleQuery({ id: 1 }))
 
-      const resultCallbackSpy = jest.fn()
+      const resultCallbackSpy = vi.fn()
 
       await queryHandlerObject.fetchMore({}).then((result) => {
         resultCallbackSpy(result)

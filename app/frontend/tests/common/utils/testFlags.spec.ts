@@ -2,8 +2,6 @@
 
 import testFlags from '@common/utils/testFlags'
 
-jest.useFakeTimers()
-
 describe('TestFlags', () => {
   it('handles test flags properly', async () => {
     expect.assertions(5)

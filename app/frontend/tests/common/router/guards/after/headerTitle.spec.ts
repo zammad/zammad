@@ -7,12 +7,12 @@ import { nextTick } from 'vue'
 import useMetaTitle from '@common/composables/useMetaTitle'
 import useApplicationConfigStore from '@common/stores/application/config'
 
-jest.mock('@common/server/apollo/client', () => {
+vi.mock('@common/server/apollo/client', () => {
   return {}
 })
 
 describe('headerTitle', () => {
-  createTestingPinia()
+  createTestingPinia({ createSpy: vi.fn })
   useApplicationConfigStore().value.product_name = 'Zammad'
 
   const from = {} as RouteLocationNormalized

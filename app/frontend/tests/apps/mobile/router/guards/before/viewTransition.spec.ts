@@ -18,7 +18,7 @@ describe('viewTransition', () => {
         level: 1,
       },
     } as RouteLocationNormalized
-    const next = jest.fn()
+    const next = vi.fn()
 
     viewTransition(to, from, next)
 
@@ -36,7 +36,7 @@ describe('viewTransition', () => {
         level: 2,
       },
     } as RouteLocationNormalized
-    const next = jest.fn()
+    const next = vi.fn()
 
     viewTransition(to, from, next)
 
@@ -54,7 +54,7 @@ describe('viewTransition', () => {
         level: 1,
       },
     } as RouteLocationNormalized
-    const next = jest.fn()
+    const next = vi.fn()
 
     viewTransition(to, from, next)
 
@@ -70,7 +70,7 @@ describe('viewTransition', () => {
     const to = {
       meta: {},
     } as RouteLocationNormalized
-    const next = jest.fn()
+    const next = vi.fn()
 
     viewTransition(to, from, next)
 

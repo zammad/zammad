@@ -8,7 +8,7 @@ describe('localeFinder', () => {
   let windowSpy: any
 
   beforeEach(() => {
-    windowSpy = jest.spyOn(window.navigator, 'languages', 'get')
+    windowSpy = vi.spyOn(window.navigator, 'languages', 'get')
   })
 
   afterEach(() => {

@@ -51,7 +51,7 @@ const mockClient = () => {
 }
 
 describe('Translations Store', () => {
-  createTestingPinia()
+  createTestingPinia({ createSpy: vi.fn })
   const translations = useTranslationsStore()
   mockClient()
 

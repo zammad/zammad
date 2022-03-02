@@ -14,6 +14,19 @@ import useViewTransition from '@mobile/composables/useViewTransition'
 const { viewTransition } = useViewTransition()
 </script>
 
+<!-- # TODO: does not work with vitest currently.
+
+tests/apps/mobile/components/transition/TransitionViewNavigation.spec.ts [ tests/apps/mobile/components/transition/TransitionViewNavigation.spec.ts ]
+TypeError: Cannot read property 'config' of undefined
+ ❯ getTailwindConfig ../../node_modules/tailwindcss/lib/lib/setupTrackingContext.js:81:62
+ ❯ ../../node_modules/tailwindcss/lib/lib/setupTrackingContext.js:124:92
+ ❯ ../../node_modules/tailwindcss/lib/processTailwindFeatures.js:43:11
+ ❯ plugins ../../node_modules/tailwindcss/lib/index.js:20:104
+ ❯ LazyResult.runOnRoot ../../node_modules/postcss/lib/lazy-result.js:339:16
+ ❯ LazyResult.runAsync ../../node_modules/postcss/lib/lazy-result.js:393:26
+ ❯ LazyResult.async ../../node_modules/postcss/lib/lazy-result.js:221:30
+ ❯ LazyResult.then ../../node_modules/postcss/lib/lazy-result.js:206:17
+
 <style scoped>
 /* TODO: Styles needs to be aligned/beautified. */
 
@@ -94,3 +107,5 @@ main > * {
   }
 }
 </style>
+
+-->

@@ -11,7 +11,7 @@ import {
 import useNotifications from '@common/composables/useNotifications'
 import { GraphQLErrorTypes } from '@common/types/error'
 
-const mutationFunctionCallSpy = jest.fn()
+const mutationFunctionCallSpy = vi.fn()
 
 const mutationSampleResult = {
   Sample: {
@@ -150,7 +150,7 @@ describe('MutationHandler', () => {
       it('use error callback', async () => {
         expect.assertions(1)
 
-        const errorCallbackSpy = jest.fn()
+        const errorCallbackSpy = vi.fn()
 
         const mutationHandlerObject = new MutationHandler(sampleMutation(), {
           errorCallback: (error) => {

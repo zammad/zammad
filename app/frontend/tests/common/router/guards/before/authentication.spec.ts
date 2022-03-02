@@ -6,12 +6,12 @@ import useAuthenticatedStore from '@common/stores/authenticated'
 import { createTestingPinia } from '@pinia/testing'
 import { RouteLocationNormalized } from 'vue-router'
 
-jest.mock('@common/server/apollo/client', () => {
+vi.mock('@common/server/apollo/client', () => {
   return {}
 })
 
 describe('authenticationGuard', () => {
-  createTestingPinia()
+  createTestingPinia({ createSpy: vi.fn })
   useApplicationLoadedStore().value = true
 
   const from = {} as RouteLocationNormalized
@@ -24,7 +24,7 @@ describe('authenticationGuard', () => {
         requiresAuth: true,
       },
     } as RouteLocationNormalized
-    const next = jest.fn()
+    const next = vi.fn()
 
     authenticationGuard(to, from, next)
 
@@ -39,7 +39,7 @@ describe('authenticationGuard', () => {
         requiresAuth: true,
       },
     } as RouteLocationNormalized
-    const next = jest.fn()
+    const next = vi.fn()
 
     useAuthenticatedStore().value = true
 
@@ -56,7 +56,7 @@ describe('authenticationGuard', () => {
         requiresAuth: true,
       },
     } as RouteLocationNormalized
-    const next = jest.fn()
+    const next = vi.fn()
 
     useAuthenticatedStore().value = true
 
@@ -73,7 +73,7 @@ describe('authenticationGuard', () => {
         requiresAuth: false,
       },
     } as RouteLocationNormalized
-    const next = jest.fn()
+    const next = vi.fn()
 
     authenticationGuard(to, from, next)
 

@@ -4,7 +4,7 @@ import emitter from '@common/utils/emitter'
 
 describe('emitter', () => {
   it('check working emitter object', () => {
-    const emitCallbackSpy = jest.fn()
+    const emitCallbackSpy = vi.fn()
 
     emitter.on('sessionInvalid', emitCallbackSpy)
 
