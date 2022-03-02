@@ -80,6 +80,7 @@ class App.TicketZoomArticleNew extends App.Controller
     )
 
     @controllerBind('ui::ticket::import_draft_attachments', @importDraftAttachments)
+    @controllerBind('ui::ticket::shared_draft_saved',       @sharedDraftSaved)
 
     # add article attachment
     @controllerBind('ui::ticket::addArticleAttachent', (data) =>
@@ -658,6 +659,13 @@ class App.TicketZoomArticleNew extends App.Controller
         App.Event.trigger(options.callbackName, { success: true })
       error: ->
         App.Event.trigger(options.callbackName, { success: false })
+
+  sharedDraftSaved: (options) =>
+    return if @ticket.id != options.ticket_id
+
+    @el
+      .find('input[name=shared_draft_id]')
+      .val(options.shared_draft_id)
 
   actions: ->
     actionConfig = App.Config.get('TicketZoomArticleAction')

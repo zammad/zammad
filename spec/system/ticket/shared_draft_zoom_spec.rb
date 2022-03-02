@@ -32,6 +32,16 @@ RSpec.describe 'Ticket Shared Draft Zoom', type: :system, authenticated_as: :aut
     visit "ticket/zoom/#{ticket.id}"
   end
 
+  shared_examples 'shared draft ID is present' do
+    it 'sets shared draft ID' do
+      within :active_content do
+        elem = find('.article-add input[name=shared_draft_id]', visible: :all)
+
+        expect(Ticket::SharedDraftZoom).to be_exist(elem.value)
+      end
+    end
+  end
+
   context 'buttons' do
     context 'when drafts disabled for the group' do
       let(:group_shared_drafts) { false }
@@ -169,6 +179,17 @@ RSpec.describe 'Ticket Shared Draft Zoom', type: :system, authenticated_as: :aut
       expect(draft.reload.new_article[:body]).to match %r{another reply}
     end
 
+    context 'draft saved' do
+      before do
+        find('.articleNewEdit-body').send_keys('Some reply')
+
+        click '.js-openDropdownMacro'
+        click :draft_save_button
+      end
+
+      include_examples 'shared draft ID is present'
+    end
+
     context 'draft loaded' do
       before do
         visit "ticket/zoom/#{ticket_with_draft.id}"
@@ -213,6 +234,8 @@ RSpec.describe 'Ticket Shared Draft Zoom', type: :system, authenticated_as: :aut
         click '.js-submit'
       end
     end
+
+    include_examples 'shared draft ID is present'
 
     it 'applies new article body' do
       expect(page).to have_text draft_body

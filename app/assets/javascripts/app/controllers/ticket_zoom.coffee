@@ -1016,6 +1016,7 @@ class App.TicketZoom extends App.Controller
       data: JSON.stringify(params)
       success: (data, status, xhr) =>
         App.Collection.loadAssets(data.assets)
+        App.Event.trigger 'ui::ticket::shared_draft_saved', { ticket_id: @ticket_id, shared_draft_id: data.shared_draft_id }
         @draftFetched()
       error: =>
         @draftFetched()

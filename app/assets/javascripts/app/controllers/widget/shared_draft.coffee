@@ -66,6 +66,7 @@ class App.WidgetSharedDraft extends App.Controller
 
   success: (data, status, xhr) =>
     App.Collection.loadAssets(data.assets)
+    App.Event.trigger 'ticket_create_shared_draft_saved', { shared_draft_id: data.shared_draft_id }
     @render()
 
   highlightError: ->

@@ -31,6 +31,16 @@ RSpec.describe 'Ticket Shared Draft Start', type: :system, authenticated_as: :au
     click '.settings.add'
   end
 
+  shared_examples 'shared draft ID is present' do
+    it 'sets shared draft ID' do
+      within :active_content do
+        elem = find('.ticket-create input[name=shared_draft_id]', visible: :all)
+
+        expect(Ticket::SharedDraftStart).to be_exist(elem.value)
+      end
+    end
+  end
+
   context 'sidebar' do
     context 'given multiple groups' do
       let(:another_group) { create(:group, shared_drafts: false) }
@@ -95,6 +105,18 @@ RSpec.describe 'Ticket Shared Draft Start', type: :system, authenticated_as: :au
           .to change { Ticket::SharedDraftStart.count }
           .by 1
       end
+    end
+
+    context 'draft saved' do
+      before do
+        within :draft_sidebar do
+          find('.js-name').fill_in with: 'Draft Name'
+
+          click '.js-create'
+        end
+      end
+
+      include_examples 'shared draft ID is present'
     end
   end
 
@@ -206,6 +228,8 @@ RSpec.describe 'Ticket Shared Draft Start', type: :system, authenticated_as: :au
         click '.js-submit'
       end
     end
+
+    include_examples 'shared draft ID is present'
 
     it 'applies body' do
       within :active_content do

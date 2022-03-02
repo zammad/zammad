@@ -181,7 +181,8 @@ class App.TicketCreate extends App.Controller
   show: =>
     @navupdate("#ticket/create/id/#{@id}#{@split}", type: 'menu')
     @autosaveStart()
-    @controllerBind('ticket_create_rerender', (template) => @renderQueue(template))
+    @controllerBind('ticket_create_rerender',           (template) => @renderQueue(template))
+    @controllerBind('ticket_create_shared_draft_saved',       @sharedDraftSaved)
     @controllerBind('ticket_create_import_draft_attachments', @importDraftAttachments)
 
     # initially hide sidebar on mobile
@@ -192,6 +193,7 @@ class App.TicketCreate extends App.Controller
   hide: =>
     @autosaveStop()
     @controllerUnbind('ticket_create_rerender', (template) => @renderQueue(template))
+    @controllerUnbind('ticket_create_shared_draft_saved')
     @controllerUnbind('ticket_create_import_draft_attachments')
 
   changed: =>
@@ -304,6 +306,11 @@ class App.TicketCreate extends App.Controller
         App.Event.trigger(options.callbackName, { success: true, attachments: data.attachments })
       error: ->
         App.Event.trigger(options.callbackName, { success: false })
+
+  sharedDraftSaved: (options) =>
+    @el
+      .find('.ticket-create input[name=shared_draft_id]')
+      .val(options.shared_draft_id)
 
   updateTaskManagerAttachments: (attribute, attachments) =>
     taskData = App.TaskManager.get(@taskKey)
