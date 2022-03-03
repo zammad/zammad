@@ -151,8 +151,8 @@ RSpec.describe 'Manage > Channels > Email', type: :system do
         click '.js-expert'
         expect(find('input[name="options::port"]').value).to eq('993')
         field = find('select[name="options::ssl"]')
-        option_yes = field.find(:option, 'yes')
-        option_no = field.find(:option, 'no')
+        option_yes = field.find(:option, 'SSL')
+        option_no = field.find(:option, 'No SSL')
         option_no.select_option
         expect(find('input[name="options::port"]').value).to eq('143')
         option_yes.select_option

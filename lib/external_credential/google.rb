@@ -49,7 +49,7 @@ class ExternalCredential::Google
         options: {
           auth_type: 'XOAUTH2',
           host:      'imap.gmail.com',
-          ssl:       true,
+          ssl:       'ssl',
           user:      user_data[:email],
         },
       },

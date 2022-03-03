@@ -45,20 +45,18 @@ returns
 =end
 
   def fetch(options, channel, check_type = '', verify_string = '')
-    ssl  = true
-    port = 995
-    if options.key?(:ssl) && options[:ssl] == false
-      ssl  = false
-      port = 110
+    ssl = true
+    if options[:ssl] == 'off'
+      ssl = false
     end
-    if options.key?(:port) && options[:port].present?
-      port = options[:port]
 
-      # disable ssl for non ssl ports
-      if port == 110 && !options.key?(:ssl)
-        ssl = false
-      end
-    end
+    port = if options.key?(:port) && options[:port].present?
+             options[:port].to_i
+           elsif ssl == true
+             995
+           else
+             110
+           end
 
     Rails.logger.info "fetching pop3 (#{options[:host]}/#{options[:user]} port=#{port},ssl=#{ssl})"
 

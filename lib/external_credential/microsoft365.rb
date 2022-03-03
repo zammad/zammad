@@ -53,7 +53,7 @@ class ExternalCredential::Microsoft365
         options: {
           auth_type: 'XOAUTH2',
           host:      'outlook.office365.com',
-          ssl:       true,
+          ssl:       'ssl',
           user:      user_data[:preferred_username],
         },
       },

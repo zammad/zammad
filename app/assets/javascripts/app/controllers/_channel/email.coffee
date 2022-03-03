@@ -307,6 +307,7 @@ class ChannelEmailAccountWizard extends App.ControllerWizardModal
   events:
     'submit .js-intro':                   'probeBasedOnIntro'
     'submit .js-inbound':                 'probeInbound'
+    'change .js-inbound [name=adapter]':  'toggleInboundAdapter'
     'change .js-outbound [name=adapter]': 'toggleOutboundAdapter'
     'submit .js-outbound':                'probleOutbound'
     'click  .js-goToSlide':               'goToSlide'
@@ -404,7 +405,7 @@ class ChannelEmailAccountWizard extends App.ControllerWizardModal
       { name: 'options::host',            display: __('Host'),     tag: 'input',  type: 'text', limit: 120, null: false, autocapitalize: false },
       { name: 'options::user',            display: __('User'),     tag: 'input',  type: 'text', limit: 120, null: false, autocapitalize: false, autocomplete: 'off' },
       { name: 'options::password',        display: __('Password'), tag: 'input',  type: 'password', limit: 120, null: false, autocapitalize: false, autocomplete: 'new-password', single: true },
-      { name: 'options::ssl',             display: __('SSL/STARTTLS'),      tag: 'boolean', null: true, options: { true: 'yes', false: 'no'  }, default: true, translate: true, item_class: 'formGroup--halfSize' },
+      { name: 'options::ssl',             display: __('SSL/STARTTLS'), tag: 'select', null: true, options: { 'off': __('No SSL'), 'ssl': __('SSL'), 'starttls': __('STARTTLS')  }, default: 'ssl', translate: true, item_class: 'formGroup--halfSize' },
       { name: 'options::port',            display: __('Port'),     tag: 'input',  type: 'text', limit: 6,   null: true, autocapitalize: false,  default: '993', item_class: 'formGroup--halfSize' },
       { name: 'options::folder',          display: __('Folder'),   tag: 'input',  type: 'text', limit: 120, null: true, autocapitalize: false, item_class: 'formGroup--halfSize' },
       { name: 'options::keep_on_server',  display: __('Keep messages on server'), tag: 'boolean', null: true, options: { true: 'yes', false: 'no' }, translate: true, default: false, item_class: 'formGroup--halfSize' },
@@ -438,13 +439,25 @@ class ChannelEmailAccountWizard extends App.ControllerWizardModal
         showHideFolder,
       ]
     )
+    @toggleInboundAdapter()
 
     form.el.find("select[name='options::ssl']").off('change').on('change', (e) ->
-      if $(e.target).val() is 'true'
+      if $(e.target).val() is 'ssl'
         form.el.find("[name='options::port']").val('993')
-      else
+      else if $(e.target).val() is 'off'
         form.el.find("[name='options::port']").val('143')
     )
+
+  toggleInboundAdapter: =>
+    form     = @$('.base-inbound-settings')
+    adapter  = form.find("select[name='adapter']")
+    starttls = form.find("select[name='options::ssl'] option[value='starttls']")
+
+    if adapter.val() isnt 'imap'
+      starttls.remove()
+    else if starttls.length < 1
+      starttls = $('<option/>').attr('value', 'starttls').text(__('STARTTLS'))
+      form.find("select[name='options::ssl']").append(starttls)
 
   toggleOutboundAdapter: =>
 

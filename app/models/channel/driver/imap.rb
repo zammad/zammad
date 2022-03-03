@@ -87,9 +87,12 @@ example
       keep_on_server = true
     end
 
-    if options.key?(:ssl) && options[:ssl] == false
-      ssl  = false
-      port = 143
+    case options[:ssl]
+    when 'off'
+      ssl = false
+    when 'starttls'
+      ssl = false
+      starttls = true
     end
 
     port = if options.key?(:port) && options[:port].present?
@@ -99,11 +102,6 @@ example
            else
              143
            end
-
-    if ssl == true && port != 993
-      ssl = false
-      starttls = true
-    end
 
     if options[:folder].present?
       folder = options[:folder]
