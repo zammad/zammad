@@ -105,6 +105,6 @@ class KnowledgeBase::Public::BaseController < ApplicationController
     end
 
     @page_title_error = :not_found
-    render 'knowledge_base/public/not_found'
+    render 'knowledge_base/public/not_found', status: :not_found
   end
 end
