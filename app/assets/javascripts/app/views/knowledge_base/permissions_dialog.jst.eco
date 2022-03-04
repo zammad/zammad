@@ -18,9 +18,9 @@
             value="<%= key %>"
             name="<%= role.id %>"
             <% if @params[role.id] == key: %>checked<% end %>
-            <% if role.limit?: %>
-              <% if key == 'editor' && role.limit != 'editor': %>disabled<% end %>
-              <% if key == 'reader' && role.limit == 'none': %>disabled<% end %>
+            <% if role.accessLevelIsDisabled[key]: %>
+              disabled
+              data-permanently-disabled
             <% end %>
             />
           <%- @Icon('radio', 'icon-unchecked') %>

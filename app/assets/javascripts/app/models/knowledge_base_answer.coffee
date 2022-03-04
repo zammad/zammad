@@ -96,4 +96,7 @@ class App.KnowledgeBaseAnswer extends App.Model
     'Answer'
 
   visibleInternally: (kb_locale) =>
-    (@is_internally_published(kb_locale) && @access() != 'none') || @is_published(kb_locale)
+    (@is_internally_published(kb_locale) && @access(kb_locale) != 'none') || @is_published(kb_locale)
+
+  visiblePublicly: (kb_locale) =>
+    @is_published(kb_locale)

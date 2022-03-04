@@ -41,10 +41,44 @@ RSpec.describe KnowledgeBase::Permission, type: :model do
   end
 
   describe '#access' do
-    it { is_expected.to validate_presence_of(:access).with_message(%r{}) }
-    it { is_expected.to allow_value('editor').for(:access) }
-    it { is_expected.to allow_value('reader').for(:access) }
-    it { is_expected.to allow_value('none').for(:access) }
-    it { is_expected.not_to allow_value('foobar').for(:access) }
+    it { is_expected.not_to allow_access_value(nil) }
+    it { is_expected.not_to allow_access_value('foobar') }
+
+    context 'when role is editor' do
+      it { is_expected.to allow_access_value('editor') }
+      it { is_expected.to allow_access_value('reader') }
+      it { is_expected.to allow_access_value('none') }
+    end
+
+    context 'when role is reader' do
+      subject(:kb_category_permission) { build(:knowledge_base_permission, role: create(:role, permission_names: 'knowledge_base.reader')) }
+
+      it { is_expected.not_to allow_access_value('editor') }
+      it { is_expected.to allow_access_value('reader') }
+      it { is_expected.to allow_access_value('none') }
+    end
+
+    context 'when role has no KB access' do
+      subject(:kb_category_permission) { build(:knowledge_base_permission, role: create(:role)) }
+
+      it { is_expected.not_to allow_access_value('editor') }
+      it { is_expected.not_to allow_access_value('reader') }
+      it { is_expected.not_to allow_access_value('none') }
+    end
+  end
+
+  matcher :allow_access_value do
+    match do
+      actual.access = expected
+      actual.valid?
+    end
+
+    failure_message do
+      "Expected to allow #{expected} as access, but was not allowed"
+    end
+
+    failure_message_when_negated do
+      "Expected to not allow #{expected} as access, but was allowed"
+    end
   end
 end

@@ -13,13 +13,24 @@ class KnowledgeBase
       @user.roles.reduce('none') do |memo, role|
         access = access_role_effective(role)
 
-        return access if access == 'editor'
+        return 'editor' if access == 'editor'
 
-        memo == 'reader' ? memo : access
+        access_role_reducer(memo, access)
       end
     end
 
     private
+
+    def access_role_reducer(memo, access)
+      case access
+      when 'reader'
+        'reader'
+      when 'public_reader'
+        memo == 'reader' ? memo : access
+      when 'none'
+        memo
+      end
+    end
 
     def permissions
       @permissions ||= @object.permissions_effective

@@ -358,10 +358,10 @@ class App.KnowledgeBaseAgentController extends App.Controller
       parentController: @
     )
 
-  access: (params) ->
+  access: (params) =>
     @constructor
       .pickObjectUsing(params, @)
-      ?.access()
+      ?.access(@kb_locale())
 
   isEditor: ->
     @access(@lastParams) == 'editor'

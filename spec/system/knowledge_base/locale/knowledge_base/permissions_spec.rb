@@ -26,8 +26,9 @@ RSpec.describe 'Knowledge Base Locale Knowledge Base Permissions', type: :system
 
       in_modal disappears: false do
         expect(page)
-          .to have_css("input[name='#{role_editor.id}'][value='editor'][checked]", visible: :all)
-          .and(have_css("input[name='#{role_editor.id}'][value='reader']", visible: :all))
+          .to have_css("input[name='#{role_editor.id}'][value='editor'][checked]:not([disabled])", visible: :all)
+          .and(have_css("input[name='#{role_editor.id}'][value='reader']:not([disabled])", visible: :all))
+          .and(have_css("input[name='#{role_editor.id}'][value='none']:not([disabled])", visible: :all))
       end
     end
 
@@ -38,8 +39,20 @@ RSpec.describe 'Knowledge Base Locale Knowledge Base Permissions', type: :system
 
       in_modal disappears: false do
         expect(page)
-          .to have_css("input[name='#{role_another_editor.id}'][value='reader'][checked]", visible: :all)
-          .and(have_css("input[name='#{role_another_editor.id}'][value='editor']", visible: :all))
+          .to have_css("input[name='#{role_another_editor.id}'][value='reader'][checked]:not([disabled])", visible: :all)
+          .and(have_css("input[name='#{role_another_editor.id}'][value='editor']:not([disabled])", visible: :all))
+          .and(have_css("input[name='#{role_another_editor.id}'][value='none']:not([disabled])", visible: :all))
+      end
+    end
+
+    it 'shows reader permissions limited by role itself' do
+      open_page
+
+      in_modal disappears: false do
+        expect(page)
+          .to have_css("input[name='#{role_reader.id}'][value='none']:not([disabled])", visible: :all)
+          .and(have_css("input[name='#{role_reader.id}'][value='reader'][checked]:not([disabled])", visible: :all))
+          .and(have_css("input[name='#{role_reader.id}'][value='editor'][disabled]", visible: :all))
       end
     end
   end

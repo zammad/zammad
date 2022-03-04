@@ -167,8 +167,6 @@ class App.KnowledgeBaseCategory extends App.Model
       'draft'
 
   visibleInternally: (kb_locale) =>
-    #return false if @access() == 'none'
-
     @findDeepAnswer( (record) ->
       record.is_internally_published(kb_locale)
     )?

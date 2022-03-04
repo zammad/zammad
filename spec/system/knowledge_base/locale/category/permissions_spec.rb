@@ -43,6 +43,7 @@ RSpec.describe 'Knowledge Base Locale Category Permissions', type: :system do
         expect(page)
           .to have_css("input[name='#{role_reader.id}'][value='reader']:not([disabled])", visible: :all)
           .and(have_css("input[name='#{role_reader.id}'][value='none'][checked]:not([disabled])", visible: :all))
+          .and(have_css("input[name='#{role_reader.id}'][value='editor'][disabled]", visible: :all))
       end
     end
 
@@ -55,6 +56,7 @@ RSpec.describe 'Knowledge Base Locale Category Permissions', type: :system do
         expect(page)
           .to have_css("input[name='#{role_reader.id}'][value='reader']:not([disabled])", visible: :all)
           .and(have_css("input[name='#{role_reader.id}'][value='none'][checked]:not([disabled])", visible: :all))
+          .and(have_css("input[name='#{role_reader.id}'][value='editor'][disabled]", visible: :all))
       end
     end
 
@@ -93,6 +95,18 @@ RSpec.describe 'Knowledge Base Locale Category Permissions', type: :system do
         expect(page)
           .to have_css("input[name='#{role_reader.id}'][value='none'][checked]:not([disabled])", visible: :all)
           .and(have_css("input[name='#{role_reader.id}'][value='reader'][disabled]", visible: :all))
+          .and(have_css("input[name='#{role_reader.id}'][value='editor'][disabled]", visible: :all))
+      end
+    end
+
+    it 'shows reader permissions limited by role itself' do
+      open_page child_category
+
+      in_modal disappears: false do
+        expect(page)
+          .to have_css("input[name='#{role_reader.id}'][value='none']:not([disabled])", visible: :all)
+          .and(have_css("input[name='#{role_reader.id}'][value='reader'][checked]:not([disabled])", visible: :all))
+          .and(have_css("input[name='#{role_reader.id}'][value='editor'][disabled]", visible: :all))
       end
     end
   end

@@ -5,8 +5,10 @@ require 'rails_helper'
 RSpec.describe KnowledgeBase::PermissionsUpdate do
   describe '#update!' do
     include_context 'basic Knowledge Base'
-    let(:role_editor) { create(:role, permission_names: %w[knowledge_base.editor]) }
-    let(:role_another) { create(:role, permission_names: %w[knowledge_base.editor]) }
+
+    let(:role_editor)    { create(:role, permission_names: %w[knowledge_base.editor]) }
+    let(:role_another)   { create(:role, permission_names: %w[knowledge_base.editor]) }
+    let(:role_reader)    { create(:role, permission_names: %w[knowledge_base.reader]) }
     let(:child_category) { create(:knowledge_base_category, parent: category) }
 
     describe 'updating itself' do
@@ -34,6 +36,11 @@ RSpec.describe KnowledgeBase::PermissionsUpdate do
 
           expect { described_class.new(object).update! role_editor => 'reader' }
             .not_to change(object, :updated_at)
+        end
+
+        it 'throws error when role does not allow given access' do
+          expect { described_class.new(object).update! role_reader => 'editor' }
+            .to raise_error(%r{Validation failed})
         end
       end
 

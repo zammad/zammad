@@ -77,7 +77,7 @@ class App.KnowledgeBase extends App.Model
     , initial
 
   visibleInternally: (kb_locale) ->
-    @active && @access() != 'none'
+    @active && @access(kb_locale) != 'none'
 
   visiblePublicly: (kb_locale) ->
     @active

@@ -54,6 +54,19 @@ class App.KnowledgeBasePermissionsDialog extends App.ControllerModal
     elem.accessLevel = role_name
     elem.limit = _.findWhere(data.inherited, { role_id: elem.id })?.access
 
+    if elem.limit?
+      elem.accessLevelIsDisabled = {
+        editor: elem.limit != 'editor'
+        reader: elem.limit == 'none'
+        none:   false
+      }
+    else
+      elem.accessLevelIsDisabled = {
+        editor: elem.accessLevel != 'editor'
+        reader: false
+        none:   false
+      }
+
   load: =>
     @ajax(
       id:          'knowledge_base_permissions_get'
@@ -68,7 +81,7 @@ class App.KnowledgeBasePermissionsDialog extends App.ControllerModal
     )
 
   toggleDisabled: (state) =>
-    @el.find('input, button').attr('disabled', state)
+    @el.find('input:not([data-permanently-disabled]), button').attr('disabled', state)
 
   onSubmit: (e) =>
     @clearAlerts()

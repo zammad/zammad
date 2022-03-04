@@ -84,8 +84,10 @@ module ApplicationController::HandlesErrors
       error: e.message
     }
 
-    if (message = e.try(:record)&.errors&.full_messages&.first)
-      data[:error_human] = message
+    if (base_error = e.try(:record)&.errors&.messages&.find { |key, _| key.match? %r{[\w+.]?base} }&.last&.last)
+      data[:error_human] = base_error
+    elsif (first_error = e.try(:record)&.errors&.full_messages&.first)
+      data[:error_human] = first_error
     elsif e.message.match?(%r{(already exists|duplicate key|duplicate entry)}i)
       data[:error_human] = __('Object already exists!')
     elsif e.message =~ %r{null value in column "(.+?)" violates not-null constraint}i || e.message =~ %r{Field '(.+?)' doesn't have a default value}i

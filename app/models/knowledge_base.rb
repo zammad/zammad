@@ -179,6 +179,14 @@ class KnowledgeBase < ApplicationModel
     KnowledgeBase::Permission.any?
   end
 
+  def public_content?(kb_locale = nil)
+    scope = answers.published
+
+    scope = scope.localed(kb_locale.system_locale) if kb_locale
+
+    scope.any?
+  end
+
   private
 
   def set_defaults

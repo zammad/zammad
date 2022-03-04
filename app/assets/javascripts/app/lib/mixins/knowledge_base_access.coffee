@@ -1,5 +1,5 @@
 InstanceMethods =
-  access: ->
+  access: (kb_locale) ->
     permission_reader = App.Permission.findByAttribute('name', 'knowledge_base.reader')
     permission_editor = App.Permission.findByAttribute('name', 'knowledge_base.editor')
 
@@ -20,6 +20,8 @@ InstanceMethods =
             return 'editor'
           when 'reader'
             access = 'reader'
+          when 'none'
+            access = 'reader' if kb_locale && @visiblePublicly(kb_locale)
       else if role = App.Role.find(role_id)
         if role.permission_ids.indexOf(permission_editor.id) > -1
           return 'editor'
