@@ -1,11 +1,11 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { v4 as uuid } from 'uuid'
 import { ref } from 'vue'
 import type {
   NewNotificationInterface,
   NotificationInterface,
 } from '@common/types/notification'
+import getUuid from '@common/utils/getUuid'
 
 const notifications = ref<NotificationInterface[]>([])
 const defaultNotificationDurationMS = 5000
@@ -24,7 +24,7 @@ export default function useNotifications() {
   function notify(notification: NewNotificationInterface): string {
     let { id } = notification
     if (!id) {
-      id = uuid()
+      id = getUuid()
     }
 
     const newNotification: NotificationInterface = { id, ...notification }

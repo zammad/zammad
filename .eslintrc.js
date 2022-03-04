@@ -92,8 +92,14 @@ module.exports = {
     // Enforce v-on directive usage in long form.
     'vue/v-on-style': ['error', 'longform'],
 
+    // Enforce v-slot directive usage in long form.
+    'vue/v-slot-style': ['error', 'longform'],
+
     // Don't require a default value for the props.
     'vue/require-default-prop': 'off',
+
+    // Don't require multi word component names.
+    'vue/multi-word-component-names': 'off',
   },
   overrides: [
     {
@@ -103,7 +109,12 @@ module.exports = {
       },
     },
     {
-      files: ['app/frontend/tests/**', 'app/frontend/stories/**', '.eslint/**'],
+      files: [
+        'app/frontend/tests/**',
+        'app/frontend/stories/**',
+        '.eslint/**',
+        '.eslintrc.js',
+      ],
       rules: {
         'zammad/zammad-detect-translatable-string': 'off',
       },

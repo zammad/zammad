@@ -3,7 +3,7 @@
 <template>
   <div class="flex h-screen flex-col overflow-hidden">
     <main class="flex-1 overflow-y-scroll">
-      <router-view v-slot="{ Component }">
+      <router-view v-slot:default="{ Component }">
         <TransitionViewNavigation>
           <component v-bind:is="Component" />
         </TransitionViewNavigation>

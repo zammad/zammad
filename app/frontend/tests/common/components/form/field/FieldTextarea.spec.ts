@@ -4,6 +4,7 @@ import { i18n } from '@common/utils/i18n'
 import { getNode } from '@formkit/core'
 import { FormKit } from '@formkit/vue'
 import { getWrapper } from '@tests/support/components'
+import { waitForTimeout } from '@tests/support/utils'
 import { nextTick } from 'vue'
 
 const wrapperParameters = {
@@ -69,9 +70,7 @@ describe('FormField - Textarea (Formkit-BuildIn)', () => {
     textarea.setValue('example body')
     textarea.trigger('input')
 
-    await new Promise((resolve) => {
-      setTimeout(resolve, 0)
-    })
+    await waitForTimeout()
 
     expect(wrapper.emitted('input')).toBeTruthy()
 

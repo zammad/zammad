@@ -4,8 +4,9 @@ import { VueWrapper } from '@vue/test-utils'
 import { ComponentPublicInstance, nextTick } from 'vue'
 import CommonNotifications from '@common/components/common/CommonNotifications.vue'
 import { NotificationTypes } from '@common/types/notification'
-import useNotifications from '@/common/composables/useNotifications'
+import useNotifications from '@common/composables/useNotifications'
 import { getWrapper } from '@tests/support/components'
+import { waitForTimeout } from '@tests/support/utils'
 
 let wrapper: VueWrapper<ComponentPublicInstance>
 
@@ -41,9 +42,8 @@ describe('CommonNotifications.vue', () => {
       durationMS: 10,
     })
 
-    await new Promise((resolve) => {
-      setTimeout(resolve, 20)
-    })
+    await waitForTimeout(20)
+
     expect(wrapper.find('span').exists()).toBeFalsy()
   })
 
@@ -59,9 +59,8 @@ describe('CommonNotifications.vue', () => {
       persistent: true,
     })
 
-    await new Promise((resolve) => {
-      setTimeout(resolve, 20)
-    })
+    await waitForTimeout(20)
+
     expect(wrapper.find('span').exists()).toBeTruthy()
   })
 

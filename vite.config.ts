@@ -1,5 +1,7 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
+/// <reference types="vitest" />
+
 import { defineConfig } from 'vite'
 import RubyPlugin from 'vite-plugin-ruby'
 import VuePlugin from '@vitejs/plugin-vue'
@@ -7,7 +9,7 @@ import viteSvgIcons from 'vite-plugin-svg-icons'
 import type { OptimizeOptions } from 'svgo'
 import * as path from 'path'
 
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   esbuild: {
     target: 'es2020', // Must stay in sync with tsconfig.json.
   },
@@ -23,11 +25,12 @@ export default defineConfig({
   },
   test: {
     globals: true,
-    setupFiles: ['./tests/vitest.setup.ts'],
+    setupFiles: ['app/frontend/tests/vitest.setup.ts'],
     environment: 'jsdom',
   },
   plugins: [
-    RubyPlugin(),
+    // Ruby plugin is not needed inside of the vitest context and has some side effects.
+    mode !== 'test' ? RubyPlugin() : [],
     VuePlugin(),
     viteSvgIcons({
       // Specify the icon folder to be cached
@@ -60,4 +63,4 @@ export default defineConfig({
       } as OptimizeOptions,
     }),
   ],
-})
+}))

@@ -3,6 +3,7 @@
 import { getNode } from '@formkit/core'
 import { FormKit } from '@formkit/vue'
 import { getWrapper } from '@tests/support/components'
+import { waitForTimeout } from '@tests/support/utils'
 import { nextTick } from 'vue'
 
 const wrapperParameters = {
@@ -62,18 +63,16 @@ describe('FormField - Inputs (Text) (Formkit-BuildIn)', () => {
   it('check for the input event', async () => {
     expect.assertions(2)
     const input = wrapper.find('input')
-    input.setValue('example title')
+    input.setValue('Example title')
     input.trigger('input')
 
-    await new Promise((resolve) => {
-      setTimeout(resolve, 0)
-    })
+    await waitForTimeout()
 
     expect(wrapper.emitted('input')).toBeTruthy()
 
     const emittedInput = wrapper.emitted().input as Array<Array<InputEvent>>
 
-    expect(emittedInput[0][0]).toBe('example title')
+    expect(emittedInput[0][0]).toBe('Example title')
   })
 
   it('can be disabled', async () => {

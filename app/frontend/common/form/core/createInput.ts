@@ -1,37 +1,42 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-// import type { FormCreateInputDefinitionOptions } from '@common/types/form'
-// import type { FormKitTypeDefinition } from '@formkit/core'
-// import type { FormKitInputSchema } from '@formkit/inputs'
-// import { createInput as createFormKitInput } from '@formkit/vue'
-// import type { Component } from 'vue'
+import initializeFieldDefinition from '@common/form/core/initializeFieldDefinition'
+import type { FormKitTypeDefinition } from '@formkit/core'
+import type { FormKitInputSchema } from '@formkit/inputs'
+import { createInput as createFormKitInput } from '@formkit/vue'
+import type { Component } from 'vue'
 
-// TODO add create custom input handling...
 /**
- * Wrapper around the formkit createInput function. This function adds additional default
- * properties to the field components.
+ * Wrapper around the formkit createInput function. This function adds the default initilization of the
+ * field definition.
  *
  * @param schemaOrComponent - The actual input schema or component.
+ * @param props - The additional props for the field.
  * @param options - Additional formkit type definition options.
+ * @param addDefaultProps - Add the default props to the field definition.
+ * @param addDefaultFeatures - Add the default features to the field definition.
  * @public
  */
-// const createInput = (
-//   schemaOrComponent: FormKitInputSchema | Component,
-//   props: string[],
-//   options: Partial<FormKitTypeDefinition> = {},
-// ): FormKitTypeDefinition => {
-//   const definitionOptions: FormCreateInputDefinitionOptions = {
-//     props: additionalDefaultFieldProps,
-//   }
+const createInput = (
+  schemaOrComponent: FormKitInputSchema | Component,
+  props?: string[],
+  options: Partial<FormKitTypeDefinition> = {},
+  addDefaultProps = true,
+  addDefaultFeatures = true,
+): FormKitTypeDefinition => {
+  const fieldDefinition = createFormKitInput(schemaOrComponent, {
+    props,
+    ...options,
+  })
 
-//   if (props) {
-//     definitionOptions.props.push(...props)
-//   }
+  initializeFieldDefinition(
+    fieldDefinition,
+    {},
+    addDefaultProps,
+    addDefaultFeatures,
+  )
 
-//   return createFormKitInput(schemaOrComponent, {
-//     ...definitionOptions,
-//     ...options,
-//   })
-// }
+  return fieldDefinition
+}
 
-// export default createInput
+export default createInput

@@ -26,7 +26,7 @@
 </template>
 
 <script setup lang="ts">
-import { Link } from '@common/types/router'
+import type { Link } from '@common/types/router'
 import isRouteLink from '@common/router/utils/isRouteLink'
 import { computed } from 'vue'
 import stopEvent from '@common/utils/events'

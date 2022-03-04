@@ -19,32 +19,34 @@
               v-html="authenticationConfig.value.maintenance_login_message"
             ></div>
           </template>
-          <FormKit
-            type="form"
-            form-class="text-left"
-            v-bind:actions="false"
+          <Form
+            id="testing"
+            v-bind:schema="formSchema"
+            class="text-left"
             v-on:submit="login"
           >
-            <FormKitSchema v-bind:schema="formSchema" />
-            <div class="mt-1 flex grow items-baseline justify-between">
-              <a class="cursor-pointer select-none text-yellow underline">
-                {{ i18n.t('Register') }}
-              </a>
+            <template v-slot:after-fields>
+              <div class="mt-1 flex grow items-baseline justify-between">
+                <a class="cursor-pointer select-none text-yellow underline">
+                  {{ i18n.t('Register') }}
+                </a>
 
-              <a class="cursor-pointer select-none text-yellow">
-                {{ i18n.t('Forgot password?') }}
-              </a>
-            </div>
-
-            <FormKit
-              v-bind:ignore="true"
-              wrapper-class="flex grow justify-center items-center mx-8 mt-8"
-              input-class="py-2 px-4 w-full h-14 text-xl font-semibold text-black bg-yellow rounded select-none"
-              type="submit"
-            >
-              {{ i18n.t('Sign in') }}
-            </FormKit>
-          </FormKit>
+                <a class="cursor-pointer select-none text-yellow">
+                  {{ i18n.t('Forgot password?') }}
+                </a>
+              </div>
+            </template>
+            <template v-slot:buttons>
+              <FormKit
+                v-bind:ignore="true"
+                wrapper-class="flex grow justify-center items-center mx-8 mt-8"
+                input-class="py-2 px-4 w-full h-14 text-xl font-semibold text-black bg-yellow rounded select-none"
+                type="submit"
+              >
+                {{ i18n.t('Sign in') }}
+              </FormKit>
+            </template>
+          </Form>
         </div>
       </div>
     </div>
@@ -59,9 +61,8 @@ import { NotificationTypes } from '@common/types/notification'
 import CommonLogo from '@common/components/common/CommonLogo.vue'
 import useApplicationConfigStore from '@common/stores/application/config'
 import { i18n } from '@common/utils/i18n'
-import { FormKit, FormKitSchema } from '@formkit/vue'
 import { FormKitGroupValue } from '@formkit/core'
-import { reactive } from 'vue'
+import Form from '@common/components/form/Form.vue'
 
 interface Props {
   invalidatedSession?: string
@@ -96,25 +97,23 @@ const forFloatingLabel = {
   },
 }
 
-const formSchema = reactive([
+const formSchema = [
   {
-    $formkit: 'text',
+    type: 'text',
     name: 'login',
     label: __('Username / Email'),
-    labelPlaceholder: ['replaced'],
     placeholder: __('Username / Email'),
     wrapperClass: 'relative floating-input',
     inputClass:
       'block mt-1 w-full h-14 text-sm bg-gray-300 rounded border-none focus:outline-none placeholder:text-transparent',
     labelClass:
       'absolute top-0 left-0 py-5 px-3 h-full text-base transition-all duration-100 ease-in-out origin-left pointer-events-none',
-    __raw__sectionsSchema: forFloatingLabel,
+    sectionsSchema: forFloatingLabel,
     validation: 'required',
   },
   {
-    $formkit: 'password',
+    type: 'password',
     label: __('Password'),
-    labelPlaceholder: ['replaced'],
     name: 'password',
     placeholder: __('Password'),
     wrapperClass: 'relative floating-input',
@@ -122,25 +121,10 @@ const formSchema = reactive([
       'block mt-1 w-full h-14 text-sm bg-gray-300 rounded border-none focus:outline-none placeholder:text-transparent',
     labelClass:
       'absolute top-0 left-0 py-5 px-3 h-full text-base transition-all duration-100 ease-in-out origin-left pointer-events-none',
-    __raw__sectionsSchema: forFloatingLabel,
+    sectionsSchema: forFloatingLabel,
     validation: 'required',
   },
-  // {
-  //   $formkit: 'select',
-  //   label: __('Select'),
-  //   labelPlaceholder: ['replaced'],
-  //   name: 'select',
-  //   placeholder: __('Select'),
-  //   wrapperClass: 'relative floating-input',
-  //   inputClass:
-  //     'block mt-1 w-full h-14 text-sm bg-gray-300 rounded border-none focus:outline-none placeholder:text-transparent',
-  //   labelClass:
-  //     'absolute top-0 left-0 py-5 px-3 h-full text-base transition-all duration-100 ease-in-out origin-left pointer-events-none',
-  //   options: ['1', '2', '3', '4'],
-  //   __raw__sectionsSchema: forFloatingLabel,
-  //   validation: 'required',
-  // },
-])
+]
 
 interface FormData {
   login: string

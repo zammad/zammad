@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import testFlags from '@common/utils/testFlags'
+import { waitForTimeout } from '@tests/support/utils'
 
 describe('TestFlags', () => {
   it('handles test flags properly', async () => {
@@ -12,9 +13,9 @@ describe('TestFlags', () => {
     expect(testFlags.get('defined')).toBe(false)
     await testFlags.set('defined')
     expect(testFlags.get('defined')).toBe(true)
-    await setTimeout(() => {
-      // just for the waiting
-    }, 0)
+
+    await waitForTimeout(0)
+
     // Test the clearing side effect of get()
     expect(testFlags.get('defined')).toBe(false)
   })

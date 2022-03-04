@@ -4,12 +4,14 @@ import type { App } from 'vue'
 import CommonIcon from '@common/components/common/CommonIcon.vue'
 import CommonLink from '@common/components/common/CommonLink.vue'
 import CommonDateTime from '@common/components/common/CommonDateTime.vue'
+import { FormKit } from '@formkit/vue'
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     CommonIcon: typeof CommonIcon
     CommonLink: typeof CommonLink
     CommonDateTime: typeof CommonDateTime
+    FormKit: typeof FormKit
   }
 }
 

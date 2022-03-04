@@ -7954,10 +7954,6 @@ msgstr ""
 msgid "See your tickets from within your favorite calendar by adding the following URL to your calendar app."
 msgstr ""
 
-#: app/frontend/apps/mobile/views/Login.vue
-msgid "Select"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
 msgid "Select All"
 msgstr ""
@@ -8903,102 +8899,6 @@ msgstr ""
 msgid "The entry could not be created."
 msgstr ""
 
-#: app/frontend/common/form/i18n/locales.ts
-msgid "The field \"%s\" can only contain alphabetical characters."
-msgstr ""
-
-#: app/frontend/common/form/i18n/locales.ts
-msgid "The field \"%s\" can only contain letters and numbers."
-msgstr ""
-
-#: app/frontend/common/form/i18n/locales.ts
-msgid "The field \"%s\" can't contain the value \"%s\"."
-msgstr ""
-
-#: app/frontend/common/form/i18n/locales.ts
-msgid "The field \"%s\" can't have less than %s entries."
-msgstr ""
-
-#: app/frontend/common/form/i18n/locales.ts
-msgid "The field \"%s\" can't have more than %s entries."
-msgstr ""
-
-#: app/frontend/common/form/i18n/locales.ts
-msgid "The field \"%s\" doesn't contain an allowed value."
-msgstr ""
-
-#: app/frontend/common/form/i18n/locales.ts
-msgid "The field \"%s\" doesn't correspond to the expected value."
-msgstr ""
-
-#: app/frontend/common/form/i18n/locales.ts
-msgid "The field \"%s\" doesn't end with \"%s\"."
-msgstr ""
-
-#: app/frontend/common/form/i18n/locales.ts
-msgid "The field \"%s\" doesn't start with \"%s\"."
-msgstr ""
-
-#: app/frontend/common/form/i18n/locales.ts
-msgid "The field \"%s\" is required."
-msgstr ""
-
-#: app/frontend/common/form/i18n/locales.ts
-msgid "The field \"%s\" isn't a valid date, please use the format \"%s\"."
-msgstr ""
-
-#: app/frontend/common/form/i18n/locales.ts
-msgid "The field \"%s\" must be of the type \"%s\"."
-msgstr ""
-
-#: app/frontend/common/form/i18n/locales.ts
-msgid "The field \"%s\" must contain a number."
-msgstr ""
-
-#: app/frontend/common/form/i18n/locales.ts
-msgid "The field \"%s\" must contain at least %s characters."
-msgstr ""
-
-#: app/frontend/common/form/i18n/locales.ts
-msgid "The field \"%s\" must contain at least one character."
-msgstr ""
-
-#: app/frontend/common/form/i18n/locales.ts
-msgid "The field \"%s\" must contain between %s and %s characters."
-msgstr ""
-
-#: app/frontend/common/form/i18n/locales.ts
-msgid "The field \"%s\" must have a value that is after %s."
-msgstr ""
-
-#: app/frontend/common/form/i18n/locales.ts
-msgid "The field \"%s\" must have a value that is at least %s."
-msgstr ""
-
-#: app/frontend/common/form/i18n/locales.ts
-msgid "The field \"%s\" must have a value that is at most %s."
-msgstr ""
-
-#: app/frontend/common/form/i18n/locales.ts
-msgid "The field \"%s\" must have a value that is before %s."
-msgstr ""
-
-#: app/frontend/common/form/i18n/locales.ts
-msgid "The field \"%s\" must have a value that is between %s and %s."
-msgstr ""
-
-#: app/frontend/common/form/i18n/locales.ts
-msgid "The field \"%s\" must have a value that is in the future."
-msgstr ""
-
-#: app/frontend/common/form/i18n/locales.ts
-msgid "The field \"%s\" must have a value that is in the past."
-msgstr ""
-
-#: app/frontend/common/form/i18n/locales.ts
-msgid "The field \"%s\" must not contain more than %s characters."
-msgstr ""
-
 #: lib/telegram.rb
 msgid "The file could not be retrieved from the bot."
 msgstr ""
@@ -9353,6 +9253,102 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/holiday_selector.coffee
 msgid "This entry already exists!"
+msgstr ""
+
+#: app/frontend/common/form/i18n/locales.ts
+msgid "This field can only contain alphabetical characters."
+msgstr ""
+
+#: app/frontend/common/form/i18n/locales.ts
+msgid "This field can only contain letters and numbers."
+msgstr ""
+
+#: app/frontend/common/form/i18n/locales.ts
+msgid "This field can't contain the value \"%s\"."
+msgstr ""
+
+#: app/frontend/common/form/i18n/locales.ts
+msgid "This field can't have less than %s entries."
+msgstr ""
+
+#: app/frontend/common/form/i18n/locales.ts
+msgid "This field can't have more than %s entries."
+msgstr ""
+
+#: app/frontend/common/form/i18n/locales.ts
+msgid "This field doesn't contain an allowed value."
+msgstr ""
+
+#: app/frontend/common/form/i18n/locales.ts
+msgid "This field doesn't correspond to the expected value."
+msgstr ""
+
+#: app/frontend/common/form/i18n/locales.ts
+msgid "This field doesn't end with \"%s\"."
+msgstr ""
+
+#: app/frontend/common/form/i18n/locales.ts
+msgid "This field doesn't start with \"%s\"."
+msgstr ""
+
+#: app/frontend/common/form/i18n/locales.ts
+msgid "This field is required."
+msgstr ""
+
+#: app/frontend/common/form/i18n/locales.ts
+msgid "This field isn't a valid date, please use the format \"%s\"."
+msgstr ""
+
+#: app/frontend/common/form/i18n/locales.ts
+msgid "This field must be of the type \"%s\"."
+msgstr ""
+
+#: app/frontend/common/form/i18n/locales.ts
+msgid "This field must contain a number."
+msgstr ""
+
+#: app/frontend/common/form/i18n/locales.ts
+msgid "This field must contain at least %s characters."
+msgstr ""
+
+#: app/frontend/common/form/i18n/locales.ts
+msgid "This field must contain at least one character."
+msgstr ""
+
+#: app/frontend/common/form/i18n/locales.ts
+msgid "This field must contain between %s and %s characters."
+msgstr ""
+
+#: app/frontend/common/form/i18n/locales.ts
+msgid "This field must have a value that is after %s."
+msgstr ""
+
+#: app/frontend/common/form/i18n/locales.ts
+msgid "This field must have a value that is at least %s."
+msgstr ""
+
+#: app/frontend/common/form/i18n/locales.ts
+msgid "This field must have a value that is at most %s."
+msgstr ""
+
+#: app/frontend/common/form/i18n/locales.ts
+msgid "This field must have a value that is before %s."
+msgstr ""
+
+#: app/frontend/common/form/i18n/locales.ts
+msgid "This field must have a value that is between %s and %s."
+msgstr ""
+
+#: app/frontend/common/form/i18n/locales.ts
+msgid "This field must have a value that is in the future."
+msgstr ""
+
+#: app/frontend/common/form/i18n/locales.ts
+msgid "This field must have a value that is in the past."
+msgstr ""
+
+#: app/frontend/common/form/i18n/locales.ts
+msgid "This field must not contain more than %s characters."
 msgstr ""
 
 #: app/frontend/common/form/i18n/locales.ts

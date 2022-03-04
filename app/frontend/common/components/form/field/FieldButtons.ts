@@ -6,6 +6,9 @@ import {
   submit as submitDefinition,
 } from '@formkit/inputs'
 
+// TODO: Build-In loading cycle funcitonality for the buttons?
+// TODO: Build-In Variants? => Best solution with Tailwind?
+
 const buttonInputs: FormFieldType[] = [
   {
     fieldType: 'button',
