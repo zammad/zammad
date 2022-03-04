@@ -188,6 +188,7 @@ class App.TicketZoomAttributeBar extends App.Controller
   setUserPreferencesSecondaryAction: (type) ->
     session = App.Session.get()
     return if session.preferences.secondaryAction is type
+    session.preferences.secondaryAction = type
 
     @ajax(
       id:          'setUserPreferencesSecondaryAction'
