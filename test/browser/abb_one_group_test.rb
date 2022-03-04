@@ -62,6 +62,7 @@ class AgentTicketActionLevel0Test < TestCase
     click(
       css:  '.modal button.btn.btn--primary',
       fast: true,
+      ajax: false,
     )
     watch_for(
       css:   'body div.modal',
@@ -98,6 +99,7 @@ class AgentTicketActionLevel0Test < TestCase
     click(
       css:  '.modal button.btn.btn--primary',
       fast: true,
+      ajax: false,
     )
     watch_for(
       css:   'body div.modal',

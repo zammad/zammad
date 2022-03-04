@@ -4881,7 +4881,7 @@ wait untill text in selector disabppears
       sleep 0.5
 
       break if instance.execute_script('return typeof(App) === "undefined"')
-      break if instance.execute_script('return App.Ajax.queue().length').zero? && instance.execute_script('return Object.keys(App.FormHandlerCoreWorkflow.getRequests()).length').zero?
+      break if instance.execute_script('return App.Ajax.queue().length === 0 && $.active === 0 && Object.keys(App.FormHandlerCoreWorkflow.getRequests()).length === 0').present?
     end
   end
 
