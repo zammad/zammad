@@ -22,6 +22,7 @@
   variables:
     REMOTE_URL: "http://selenium-firefox:4444/wd/hub"
     BROWSER: "firefox"
+    START_XVFB: "false" # not needed for headless mode
     SE_NODE_MAX_SESSIONS: "5"
     SE_NODE_OVERRIDE_MAX_SESSIONS: "true"
 
@@ -29,6 +30,7 @@
   variables:
     REMOTE_URL: "http://selenium-chrome:4444/wd/hub"
     BROWSER: chrome
+    START_XVFB: "false" # not needed for headless mode
     SE_NODE_MAX_SESSIONS: "5"
     SE_NODE_OVERRIDE_MAX_SESSIONS: "true"
 

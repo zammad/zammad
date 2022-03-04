@@ -35,10 +35,19 @@ RSpec.configure do |config|
       browser_height = 1000
     end
 
-    # Firefox and Chrome effective screen sizes are slightly different
-    # accomodate that by reducing declared screen size on Firefox
-    browser_height -= 44 if browser_name == 'firefox'
-
     page.driver.browser.manage.window.resize_to(browser_width, browser_height)
   end
+
+  config.after(:each, type: :system) do
+    # Make sure additional sessions (from using_sessions) are always ended
+    #   after every test and not kept alive. Selenium will automatically close
+    #   idle sessions which can cause 404 errors later.
+    #   (see https://github.com/teamcapybara/capybara/issues/2237)
+    Capybara.send(:session_pool).reverse_each do |_mode, session|
+      if !session.eql?(Capybara.current_session)
+        session.quit
+      end
+    end
+  end
+
 end

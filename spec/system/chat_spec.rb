@@ -37,7 +37,12 @@ RSpec.describe 'Chat Handling', type: :system do
   end
 
   def send_agent_message(message)
-    find('.active .chat-window .js-customerChatInput').send_keys(message)
+    input = find('.active .chat-window .js-customerChatInput')
+    input.send_keys(message)
+    # Work around an obsure bug of send_keys sometimes not working on Firefox headless.
+    if input.text != message
+      input.execute_script("this.textContent = '#{message}'")
+    end
     click '.active .chat-window .js-send'
   end
 
@@ -45,13 +50,13 @@ RSpec.describe 'Chat Handling', type: :system do
     it 'check that button is hidden after idle timeout', authenticated_as: :authenticate do
       click agent_chat_switch_selector
 
-      open_window_and_switch
+      using_session :customer do
+        visit chat_url
 
-      visit chat_url
-
-      expect(page).to have_css('.zammad-chat', visible: :all)
-      expect(page).to have_css('.zammad-chat-is-hidden', visible: :all)
-      expect(page).to have_no_css('.open-zammad-chat:not([style*="display: none"]', visible: :all)
+        expect(page).to have_css('.zammad-chat', visible: :all)
+        expect(page).to have_css('.zammad-chat-is-hidden', visible: :all)
+        expect(page).to have_no_css('.open-zammad-chat:not([style*="display: none"]', visible: :all)
+      end
     end
   end
 
@@ -59,13 +64,10 @@ RSpec.describe 'Chat Handling', type: :system do
     it 'messages in each direction, starting on agent side', authenticated_as: :authenticate do
       enable_agent_chat
 
-      open_window_and_switch
-
-      visit chat_url
-
-      open_chat_dialog
-
-      switch_to_window_index(1)
+      using_session :customer do
+        visit chat_url
+        open_chat_dialog
+      end
 
       click '.active .js-acceptChat'
 
@@ -74,14 +76,11 @@ RSpec.describe 'Chat Handling', type: :system do
 
       send_agent_message('my name is me')
 
-      switch_to_window_index(2)
-
-      check_content('.zammad-chat .zammad-chat-agent-status', 'Online')
-      check_content('.zammad-chat', 'my name is me')
-
-      send_customer_message('my name is customer')
-
-      switch_to_window_index(1)
+      using_session :customer do
+        check_content('.zammad-chat .zammad-chat-agent-status', 'Online')
+        check_content('.zammad-chat', 'my name is me')
+        send_customer_message('my name is customer')
+      end
 
       check_content('.active .chat-window', 'my name is customer')
       expect(page).to have_css('.active .chat-window .chat-status.is-modified')
@@ -90,11 +89,9 @@ RSpec.describe 'Chat Handling', type: :system do
 
       expect(page).to have_no_css('.active .chat-window .chat-status.is-modified')
 
-      switch_to_window_index(2)
-
-      click '.js-chat-toggle .zammad-chat-header-icon'
-
-      switch_to_window_index(1)
+      using_session :customer do
+        click '.js-chat-toggle .zammad-chat-header-icon'
+      end
 
       check_content('.active .chat-window', 'closed the conversation')
     end
@@ -102,13 +99,12 @@ RSpec.describe 'Chat Handling', type: :system do
     it 'messages in each direction, starting on customer side', authenticated_as: :authenticate do
       enable_agent_chat
 
-      open_window_and_switch
+      using_session :customer do
 
-      visit chat_url
+        visit chat_url
 
-      open_chat_dialog
-
-      switch_to_window_index(1)
+        open_chat_dialog
+      end
 
       click '.active .js-acceptChat'
 
@@ -117,13 +113,10 @@ RSpec.describe 'Chat Handling', type: :system do
       # Keep focus outside of chat window to check .chat-status.is-modified later.
       click '#global-search'
 
-      switch_to_window_index(2)
-
-      check_content('.zammad-chat .zammad-chat-agent-status', 'Online')
-
-      send_customer_message('my name is customer')
-
-      switch_to_window_index(1)
+      using_session :customer do
+        check_content('.zammad-chat .zammad-chat-agent-status', 'Online')
+        send_customer_message('my name is customer')
+      end
 
       expect(page).to have_css('.active .chat-window .chat-status.is-modified')
       check_content('.active .chat-window', 'my name is customer')
@@ -131,27 +124,24 @@ RSpec.describe 'Chat Handling', type: :system do
       send_agent_message('my name is me')
       expect(page).to have_no_css('.active .chat-window .chat-status.is-modified')
 
-      switch_to_window_index(2)
-
-      check_content('.zammad-chat', 'my name is me')
-
-      switch_to_window_index(1)
+      using_session :customer do
+        check_content('.zammad-chat', 'my name is me')
+      end
 
       click '.active .chat-window .js-disconnect:not(.is-hidden)'
       click '.active .chat-window .js-close'
 
-      switch_to_window_index(2)
+      using_session :customer do
 
-      check_content('.zammad-chat .zammad-chat-agent-status', 'Offline')
-      check_content('.zammad-chat', %r{(Chat closed by|Chat beendet von)})
+        check_content('.zammad-chat .zammad-chat-agent-status', 'Offline')
+        check_content('.zammad-chat', %r{(Chat closed by|Chat beendet von)})
 
-      click '.zammad-chat .js-chat-toggle .zammad-chat-header-icon'
+        click '.zammad-chat .js-chat-toggle .zammad-chat-header-icon'
 
-      expect(page).to have_no_css('.zammad-chat-is-open')
+        expect(page).to have_no_css('.zammad-chat-is-open')
 
-      open_chat_dialog
-
-      switch_to_window_index(1)
+        open_chat_dialog
+      end
 
       click '.active .js-acceptChat'
 
@@ -163,25 +153,25 @@ RSpec.describe 'Chat Handling', type: :system do
     it 'open the chat', authenticated_as: :authenticate do
       enable_agent_chat
 
-      open_window_and_switch
+      using_session :customer do
+        visit chat_url
 
-      visit chat_url
+        expect(page).to have_css('.zammad-chat', visible: :all)
+        expect(page).to have_css('.zammad-chat-is-hidden', visible: :all)
+        expect(page).to have_no_css('.zammad-chat-is-shown', visible: :all)
+        expect(page).to have_no_css('.zammad-chat-is-open', visible: :all)
 
-      expect(page).to have_css('.zammad-chat', visible: :all)
-      expect(page).to have_css('.zammad-chat-is-hidden', visible: :all)
-      expect(page).to have_no_css('.zammad-chat-is-shown', visible: :all)
-      expect(page).to have_no_css('.zammad-chat-is-open', visible: :all)
+        click '.open-zammad-chat'
 
-      click '.open-zammad-chat'
+        expect(page).to have_css('.zammad-chat-is-shown', visible: :all)
+        expect(page).to have_css('.zammad-chat-is-open', visible: :all)
+        check_content('.zammad-chat-modal-text', %r{(waiting|Warte)})
 
-      expect(page).to have_css('.zammad-chat-is-shown', visible: :all)
-      expect(page).to have_css('.zammad-chat-is-open', visible: :all)
-      check_content('.zammad-chat-modal-text', %r{(waiting|Warte)})
+        click '.zammad-chat-header-icon-close'
 
-      click '.zammad-chat-header-icon-close'
-
-      expect(page).to have_no_css('.zammad-chat-is-shown', visible: :all)
-      expect(page).to have_no_css('.zammad-chat-is-open', visible: :all)
+        expect(page).to have_no_css('.zammad-chat-is-shown', visible: :all)
+        expect(page).to have_no_css('.zammad-chat-is-open', visible: :all)
+      end
     end
   end
 
@@ -189,60 +179,56 @@ RSpec.describe 'Chat Handling', type: :system do
     it 'check different timeouts', authenticated_as: :authenticate do
       enable_agent_chat
 
-      open_window_and_switch
+      using_session :customer do
 
-      visit chat_url
+        visit chat_url
 
-      # No customer action, hide the widget.
-      expect(page).to have_css('.zammad-chat')
+        # No customer action, hide the widget.
+        expect(page).to have_css('.zammad-chat')
 
-      expect(page).to have_no_css('.zammad-chat')
+        expect(page).to have_no_css('.zammad-chat')
 
-      refresh
+        refresh
 
-      # No agent action, show sorry screen.
-      open_chat_dialog
+        # No agent action, show sorry screen.
+        open_chat_dialog
 
-      check_content('.zammad-chat-modal-text', %r{(waiting|Warte)})
-      check_content('.zammad-chat-modal-text', %r{(takes longer|dauert länger)})
+        check_content('.zammad-chat-modal-text', %r{(waiting|Warte)})
+        check_content('.zammad-chat-modal-text', %r{(takes longer|dauert länger)})
 
-      refresh
+        refresh
 
-      # No customer action, show sorry screen.
-      open_chat_dialog
-
-      switch_to_window_index(1)
+        # No customer action, show sorry screen.
+        open_chat_dialog
+      end
 
       click '.active .js-acceptChat'
 
       send_agent_message('agent is asking')
 
-      switch_to_window_index(2)
+      using_session :customer do
 
-      check_content('.zammad-chat', 'agent is asking')
+        check_content('.zammad-chat', 'agent is asking')
 
-      check_content('.zammad-chat-modal-text', %r{(Since you didn't respond|Da Sie in den letzten)}, wait: 30)
+        check_content('.zammad-chat-modal-text', %r{(Since you didn't respond|Da Sie in den letzten)}, wait: 30)
+      end
 
       # Test the restart of inactive chat.
-      switch_to_window_index(1)
-
       click '.active .chat-window .js-close'
 
-      switch_to_window_index(2)
+      using_session :customer do
 
-      click '.js-restart'
-
-      open_chat_dialog
-
-      switch_to_window_index(1)
+        click '.js-restart'
+        open_chat_dialog
+      end
 
       click '.active .js-acceptChat'
 
       send_agent_message('my name is me')
 
-      switch_to_window_index(2)
-
-      check_content('.zammad-chat', 'my name is me')
+      using_session :customer do
+        check_content('.zammad-chat', 'my name is me')
+      end
     end
   end
 
@@ -254,55 +240,51 @@ RSpec.describe 'Chat Handling', type: :system do
 
       expect(page).to have_no_css(agent_chat_switch_selector)
 
-      open_window_and_switch
+      using_session :customer do
 
-      visit chat_url
+        visit chat_url
 
-      check_content('.settings', '{"state":"chat_disabled"}')
-
-      switch_to_window_index(1)
+        check_content('.settings', '{"state":"chat_disabled"}')
+      end
 
       click '.content.active .js-chatSetting'
 
       expect(page).to have_css(agent_chat_switch_selector)
 
-      switch_to_window_index(2)
+      using_session :customer do
 
-      refresh
+        refresh
 
-      expect(page).to have_no_css('.zammad-chat')
-      check_content('.settings', '{"state":"chat_disabled"}', should_match: false)
-      check_content('.settings', '{"event":"chat_status_customer","data":{"state":"offline"}}')
-
-      switch_to_window_index(1)
+        expect(page).to have_no_css('.zammad-chat')
+        check_content('.settings', '{"state":"chat_disabled"}', should_match: false)
+        check_content('.settings', '{"event":"chat_status_customer","data":{"state":"offline"}}')
+      end
 
       click agent_chat_switch_selector
       click 'a[href="#customer_chat"]'
 
-      switch_to_window_index(2)
+      using_session :customer do
 
-      refresh
+        refresh
 
-      expect(page).to have_css('.zammad-chat')
-      check_content('.settings', '{"event":"chat_status_customer","data":{"state":"offline"}}', should_match: false)
-      check_content('.settings', '{"state":"online"}')
+        expect(page).to have_css('.zammad-chat')
+        check_content('.settings', '{"event":"chat_status_customer","data":{"state":"offline"}}', should_match: false)
+        check_content('.settings', '{"state":"online"}')
 
-      click '.zammad-chat .js-chat-open'
+        click '.zammad-chat .js-chat-open'
 
-      expect(page).to have_css('.zammad-chat-is-shown')
-      check_content('.zammad-chat-modal-text', %r{(waiting|Warte)})
-
-      switch_to_window_index(1)
+        expect(page).to have_css('.zammad-chat-is-shown')
+        check_content('.zammad-chat-modal-text', %r{(waiting|Warte)})
+      end
 
       check_content('.js-chatMenuItem .counter', '1')
 
-      switch_to_window_index(2)
+      using_session :customer do
 
-      click '.zammad-chat .js-chat-toggle .zammad-chat-header-icon'
+        click '.zammad-chat .js-chat-toggle .zammad-chat-header-icon'
 
-      check_content('.zammad-chat-modal-text', %r{(waiting|Warte)}, should_match: false)
-
-      switch_to_window_index(1)
+        check_content('.zammad-chat-modal-text', %r{(waiting|Warte)}, should_match: false)
+      end
 
       expect(page).to have_no_css('.js-chatMenuItem .counter')
     end
@@ -321,39 +303,35 @@ RSpec.describe 'Chat Handling', type: :system do
 
       modal_disappear
 
-      open_window_and_switch
+      using_session :customer do
 
-      visit chat_url
+        visit chat_url
 
-      open_chat_dialog
-
-      switch_to_window_index(1)
+        open_chat_dialog
+      end
 
       click '.active .js-acceptChat'
 
       expect(page).to have_css('.active .chat-window .chat-status')
 
-      switch_to_window_index(2)
-
-      check_content('.zammad-chat', %r{(Hi Stranger|My Greeting)})
-
-      switch_to_window_index(1)
+      using_session :customer do
+        check_content('.zammad-chat', %r{(Hi Stranger|My Greeting)})
+      end
 
       send_agent_message('my name is me')
 
-      switch_to_window_index(2)
+      using_session :customer do
 
-      check_content('.zammad-chat', 'my name is me')
+        check_content('.zammad-chat', 'my name is me')
 
-      refresh
+        refresh
 
-      expect(page).to have_css('.zammad-chat')
-      check_content('.zammad-chat', %r{(Hi Stranger|My Greeting)})
-      check_content('.zammad-chat', 'my name is me')
+        expect(page).to have_css('.zammad-chat')
+        check_content('.zammad-chat', %r{(Hi Stranger|My Greeting)})
+        check_content('.zammad-chat', 'my name is me')
 
-      visit "#{chat_url}#new_hash"
-
-      switch_to_window_index(1)
+        visit "#{chat_url}#new_hash"
+      end
 
       check_content('.active .chat-window .js-body', "#{chat_url}#new_hash")
     end
@@ -373,7 +351,7 @@ RSpec.describe 'Chat Handling', type: :system do
     end
   end
 
-  context 'when none jquery variant is used' do
+  context 'when no-jquery variant is used' do
     let(:chat_url_type) { 'znuny-no-jquery' }
 
     context 'when normal mode is used' do
@@ -393,13 +371,14 @@ RSpec.describe 'Chat Handling', type: :system do
     shared_examples 'test issue #2471' do
       it 'is able to close to the dialog after a idleTimeout happened' do
         click agent_chat_switch_selector
-        open_window_and_switch
+        using_session :customer do
 
-        visit chat_url
-        click '.zammad-chat .js-chat-open'
-        expect(page).to have_selector('.js-restart', wait: 60)
-        click '.js-chat-toggle .zammad-chat-header-icon'
-        expect(page).to have_no_selector('zammad-chat-is-open', wait: 60)
+          visit chat_url
+          click '.zammad-chat .js-chat-open'
+          expect(page).to have_selector('.js-restart', wait: 60)
+          click '.js-chat-toggle .zammad-chat-header-icon'
+          expect(page).to have_no_selector('zammad-chat-is-open', wait: 60)
+        end
       end
     end
 
@@ -407,7 +386,7 @@ RSpec.describe 'Chat Handling', type: :system do
       include_examples 'test issue #2471'
     end
 
-    context 'wihtout jquery' do
+    context 'without jquery' do
       let(:chat_url_type) { 'znuny-no-jquery' }
 
       include_examples 'test issue #2471'

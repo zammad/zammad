@@ -8,13 +8,15 @@ Capybara.register_driver(:zammad_chrome) do |app|
 
   # Turn on browser logs
   options = Selenium::WebDriver::Chrome::Options.new(
-    logging_prefs: {
+    logging_prefs:   {
       browser: 'ALL'
     },
-    prefs:         {
+    prefs:           {
       'intl.accept_languages'                                => 'en-US',
       'profile.default_content_setting_values.notifications' => 1, # ALLOW notifications
     },
+    # Disable the "Chrome is controlled by automation software" info bar.
+    excludeSwitches: ['enable-automation'],
   )
 
   options = {
@@ -25,6 +27,7 @@ Capybara.register_driver(:zammad_chrome) do |app|
   if ENV['REMOTE_URL'].present?
     options[:browser] = :remote
     options[:url]     = ENV['REMOTE_URL']
+    options[:options].headless!
   end
 
   ENV['FAKE_SELENIUM_LOGIN_USER_ID'] = nil
@@ -51,6 +54,7 @@ Capybara.register_driver(:zammad_firefox) do |app|
   if ENV['REMOTE_URL'].present?
     options[:browser] = :remote
     options[:url]     = ENV['REMOTE_URL']
+    options[:options].headless!
   end
 
   ENV['FAKE_SELENIUM_LOGIN_USER_ID'] = nil
@@ -58,18 +62,5 @@ Capybara.register_driver(:zammad_firefox) do |app|
   Capybara::Selenium::Driver.new(app, **options).tap do |driver|
     # Selenium 4 installs a default file_detector which finds wrong files/directories such as zammad/test.
     driver.browser.file_detector = nil if ENV['REMOTE_URL'].present?
-  end
-end
-
-class Capybara::Selenium::Driver
-  alias original_quit quit
-
-  def quit
-    original_quit
-  rescue Selenium::WebDriver::Error::ServerError
-    # Work around a possible capybara/Selenium bug. driver.quit() fails because there is already no session any more;
-    #   not sure why that happens.
-  ensure
-    @browser = nil
   end
 end

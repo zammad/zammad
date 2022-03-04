@@ -139,9 +139,7 @@ class AgentUserProfileTest < TestCase
       browser: browser1,
       css:     '.active [data-name="note"]',
       value:   message,
-    )
-    empty_search(
-      browser: browser1,
+      blur:    true,
     )
 
     watch_for(

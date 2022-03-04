@@ -152,16 +152,6 @@ module CapybaraCustomExtensions
   def page(...)
     ZammadCapybaraSessionDelegator.new(element: super, context: self)
   end
-
-  # Work around an issue with failures in Capybara if different specs of the same rspec run
-  #   use using_session with the same name, e.g. :second_browser. Solve by prepending the test name.
-  def using_session(name_or_session, &block)
-    if !(name_or_session.is_a? Capybara::Session)
-      # self.class.name refers to the RSpec test case.
-      name_or_session = (self.class.name + "::#{name_or_session}").to_sym
-    end
-    Capybara.using_session(name_or_session, &block)
-  end
 end
 
 RSpec.configure do |config|

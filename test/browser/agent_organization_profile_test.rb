@@ -146,9 +146,7 @@ class AgentOrganizationProfileTest < TestCase
       css:     '.active .profile [data-name="note"]',
       slow:    true,
       value:   message,
-    )
-    empty_search(
-      browser: browser1,
+      blur:    true
     )
 
     # verify

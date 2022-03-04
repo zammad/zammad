@@ -91,16 +91,6 @@ class TestCase < ActiveSupport::TestCase
       params = {
         profile: profile,
       }
-      if ENV['BROWSER_HEADLESS'].present?
-        case browser
-        when 'firefox'
-          params[:options] = Selenium::WebDriver::Firefox::Options.new
-          params[:options].add_argument('-headless')
-        when 'chrome'
-          params[:options] = Selenium::WebDriver::Chrome::Options.new
-          params[:options].add_argument('-headless')
-        end
-      end
       local_browser = Selenium::WebDriver.for(browser.to_sym, params)
       @browsers[local_browser.hash] = local_browser
       browser_instance_preferences(local_browser)
@@ -135,12 +125,24 @@ class TestCase < ActiveSupport::TestCase
       open_timeout: 120,
       read_timeout: 120
     )
+    case browser
+    when 'firefox'
+      options = Selenium::WebDriver::Firefox::Options.new
+      options.headless!
+    when 'chrome'
+      options = Selenium::WebDriver::Chrome::Options.new(
+        # Disable the "Chrome is controlled by automation software" info bar.
+        excludeSwitches: ['enable-automation'],
+      )
+      options.headless!
+    end
 
     local_browser = Selenium::WebDriver.for(
       :remote,
       url:                  ENV['REMOTE_URL'],
       desired_capabilities: caps,
       http_client:          http_client,
+      options:              options,
     )
     @browsers[local_browser.hash] = local_browser
     browser_instance_preferences(local_browser)
