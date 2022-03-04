@@ -317,7 +317,7 @@ RSpec.describe 'Manage > Overviews', type: :system do
             within '.ticket_selector' do
               fill_in 'condition::ticket.organization_id::value_completion',	with: organization_one.name
 
-              find(".js-optionsList [data-value='#{organization_one.id}'].js-option").click
+              find('.js-optionsList span', text: organization_one.name).click
             end
           end
 
@@ -328,10 +328,10 @@ RSpec.describe 'Manage > Overviews', type: :system do
           before do
             within '.ticket_selector' do
               fill_in 'condition::ticket.organization_id::value_completion',	with: organization_one.name
-              find(".js-optionsList [data-value='#{organization_one.id}'].js-option").click
+              find('.js-optionsList span', text: organization_one.name).click
 
               fill_in 'condition::ticket.organization_id::value_completion',	with: organization_two.name
-              find(".js-optionsList [data-value='#{organization_two.id}'].js-option").click
+              find('.js-optionsList span', text: organization_two.name).click
             end
           end
 
