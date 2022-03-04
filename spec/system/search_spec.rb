@@ -49,7 +49,7 @@ RSpec.describe 'Search', type: :system, authenticated: true, searchindex: true d
         end
 
         expect(page).to have_selector('.bulkAction.no-sidebar')
-          .and have_no_selector('.bulkAction.no-sidebar.hide', visible: :all)
+        expect(page).to have_no_selector('.bulkAction.no-sidebar.hide', visible: :all)
       end
 
       it 'shows bulkform when all checkbox is checked' do
@@ -58,7 +58,7 @@ RSpec.describe 'Search', type: :system, authenticated: true, searchindex: true d
         end
 
         expect(page).to have_selector('.bulkAction.no-sidebar')
-          .and have_no_selector('.bulkAction.no-sidebar.hide', visible: :all)
+        expect(page).to have_no_selector('.bulkAction.no-sidebar.hide', visible: :all)
       end
 
       it 'hides bulkform when checkbox is unchecked' do
