@@ -11,4 +11,4 @@ set -eux
 rm -r tmp/cache
 
 # delete node_modules folder - only required for building
-rm -rf node_modules
+rm -r node_modules

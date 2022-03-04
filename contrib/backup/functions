@@ -138,7 +138,7 @@ function backup_files () {
   if [ "${FULL_FS_DUMP}" == 'yes' ]; then
     echo " ... as full dump"
     tar -C / -czf ${BACKUP_DIR}/${TIMESTAMP}_zammad_files.tar.gz\
-      --exclude='tmp' --exclude='config/database.yml' ${ZAMMAD_DIR#/}
+      --exclude='tmp' --exclude 'node_modules' --exclude '.git' --exclude='config/database.yml' ${ZAMMAD_DIR#/}
 
     state=$?
   else

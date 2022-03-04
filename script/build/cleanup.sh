@@ -22,11 +22,12 @@ rm .stylelintrc.json
 rm .eslintignore
 rm .eslintrc
 rm .eslintrc.js
-rm -r .eslint/
 rm .rubocop.yml
 rm coffeelint.json
 rm .overcommit.yml
 rm .prettierrc.json
+# Since the .eslint folder is a dependency in package.json (requied by assets:precompile),
+#   it cannot be removed.
 
 # misc
 rm .codeclimate.yml

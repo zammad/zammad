@@ -159,11 +159,16 @@
     - <<: *docker_postgresql
     - <<: *docker_selenium_firefox
 
-.services_mysql_postgresql_imap: &services_mysql_postgresql_imap
+.services_mysql_postgresql_imap_redis_memcached:
+  &services_mysql_postgresql_imap_redis_memcached
+  extends:
+    - .variables_redis_memcached
   services:
     - <<: *docker_mysql
     - <<: *docker_postgresql
     - <<: *docker_imap
+    - <<: *docker_redis
+    - <<: *docker_memcached
 
 .services_mysql_postgresql_elasticsearch:
   &services_mysql_postgresql_elasticsearch

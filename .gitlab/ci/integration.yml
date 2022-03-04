@@ -6,7 +6,7 @@ include:
 .template_integration: &template_integration
   extends:
     - .env_base
-    - .services_mysql_postgresql_imap
+    - .services_mysql_postgresql_imap_redis_memcached
     - .rules_integration_manual_start
   tags:
     - integration

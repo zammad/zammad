@@ -18,6 +18,11 @@
       alias: mysql
     - name: $CI_REGISTRY/docker/zammad-postgresql:stable
       alias: postgresql
+    - name: $CI_REGISTRY/docker/zammad-redis:stable
+      alias: redis
+    - name: $CI_REGISTRY/docker/zammad-memcached:stable
+      alias: memcached
+      command: ['memcached', '-m', '256M']
     - name: $CI_REGISTRY/docker/zammad-ci-otrsimport-db:otrs6
       alias: zammad-ci-otrsimport-db
     - name: $CI_REGISTRY/docker/zammad-ci-otrsimport-app:otrs6
@@ -30,6 +35,11 @@
       alias: mysql
     - name: $CI_REGISTRY/docker/zammad-postgresql:stable
       alias: postgresql
+    - name: $CI_REGISTRY/docker/zammad-redis:stable
+      alias: redis
+    - name: $CI_REGISTRY/docker/zammad-memcached:stable
+      alias: memcached
+      command: ['memcached', '-m', '256M']
     - name: $CI_REGISTRY/docker/zammad-ci-otrsimport-db:otrs5
       alias: zammad-ci-otrsimport-db
     - name: $CI_REGISTRY/docker/zammad-ci-otrsimport-app:otrs5
@@ -42,6 +52,11 @@
       alias: mysql
     - name: $CI_REGISTRY/docker/zammad-postgresql:stable
       alias: postgresql
+    - name: $CI_REGISTRY/docker/zammad-redis:stable
+      alias: redis
+    - name: $CI_REGISTRY/docker/zammad-memcached:stable
+      alias: memcached
+      command: ['memcached', '-m', '256M']
     - name: $CI_REGISTRY/docker/zammad-ci-otrsimport-db:otrs4
       alias: zammad-ci-otrsimport-db
     - name: $CI_REGISTRY/docker/zammad-ci-otrsimport-app:otrs4
@@ -54,6 +69,11 @@
       alias: mysql
     - name: $CI_REGISTRY/docker/zammad-postgresql:stable
       alias: postgresql
+    - name: $CI_REGISTRY/docker/zammad-redis:stable
+      alias: redis
+    - name: $CI_REGISTRY/docker/zammad-memcached:stable
+      alias: memcached
+      command: ['memcached', '-m', '256M']
     - name: $CI_REGISTRY/docker/zammad-ci-otrsimport-db:otrs33
       alias: zammad-ci-otrsimport-db
     - name: $CI_REGISTRY/docker/zammad-ci-otrsimport-app:otrs33
@@ -66,6 +86,11 @@
       alias: mysql
     - name: $CI_REGISTRY/docker/zammad-postgresql:stable
       alias: postgresql
+    - name: $CI_REGISTRY/docker/zammad-redis:stable
+      alias: redis
+    - name: $CI_REGISTRY/docker/zammad-memcached:stable
+      alias: memcached
+      command: ['memcached', '-m', '256M']
     - name: $CI_REGISTRY/docker/zammad-ci-otrsimport-db:otrs32
       alias: zammad-ci-otrsimport-db
     - name: $CI_REGISTRY/docker/zammad-ci-otrsimport-app:otrs32
@@ -78,6 +103,11 @@
       alias: mysql
     - name: $CI_REGISTRY/docker/zammad-postgresql:stable
       alias: postgresql
+    - name: $CI_REGISTRY/docker/zammad-redis:stable
+      alias: redis
+    - name: $CI_REGISTRY/docker/zammad-memcached:stable
+      alias: memcached
+      command: ['memcached', '-m', '256M']
     - name: $CI_REGISTRY/docker/zammad-ci-otrsimport-db:otrs31
       alias: zammad-ci-otrsimport-db
     - name: $CI_REGISTRY/docker/zammad-ci-otrsimport-app:otrs31
