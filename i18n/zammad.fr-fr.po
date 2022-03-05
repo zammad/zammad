@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-02-10 03:30+0000\n"
-"Last-Translator: Misha <misha@association-enoria.org>\n"
+"PO-Revision-Date: 2022-03-04 03:30+0000\n"
+"Last-Translator: Jean-Etienne Castagnede <jecastagnede@vivaldi.net>\n"
 "Language-Team: French <https://translations.zammad.org/projects/zammad/"
 "zammad-development/fr/>\n"
 "Language: fr-fr\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.10.1\n"
+"X-Generator: Weblate 4.11\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -7160,6 +7160,11 @@ msgstr ""
 msgid "No Proxy"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_channel/email.coffee
+#: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
+msgid "No SSL"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_plugin/translation_support.coffee
 msgid "No Thanks!"
 msgstr "Non merci !"
@@ -7596,7 +7601,7 @@ msgstr "Ouvrir le ticket n°%s"
 #: app/assets/javascripts/app/controllers/widget/user.coffee
 #: db/seeds/overviews.rb
 msgid "Open Tickets"
-msgstr "Ouvrir des tickets"
+msgstr "Tickets ouverts"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Open macro selection"
@@ -8649,6 +8654,13 @@ msgstr ""
 msgid "SMTP - configure your own outgoing SMTP settings"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_channel/email.coffee
+#: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
+#, fuzzy
+#| msgid "SLA"
+msgid "SSL"
+msgstr "SLA"
+
 #: app/assets/javascripts/app/models/webhook.coffee
 msgid "SSL Verify"
 msgstr ""
@@ -8664,6 +8676,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
 msgid "SSO"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_channel/email.coffee
+#: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
+msgid "STARTTLS"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee

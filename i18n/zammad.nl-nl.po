@@ -7152,6 +7152,11 @@ msgstr ""
 msgid "No Proxy"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_channel/email.coffee
+#: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
+msgid "No SSL"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_plugin/translation_support.coffee
 msgid "No Thanks!"
 msgstr ""
@@ -8631,6 +8636,13 @@ msgstr ""
 msgid "SMTP - configure your own outgoing SMTP settings"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_channel/email.coffee
+#: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
+#, fuzzy
+#| msgid "SLA"
+msgid "SSL"
+msgstr "SLA"
+
 #: app/assets/javascripts/app/models/webhook.coffee
 msgid "SSL Verify"
 msgstr ""
@@ -8646,6 +8658,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
 msgid "SSO"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_channel/email.coffee
+#: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
+msgid "STARTTLS"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee

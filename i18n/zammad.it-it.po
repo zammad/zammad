@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-02-22 03:30+0000\n"
-"Last-Translator: Lorenzo Milesi <lorenzo.milesi@yetopen.com>\n"
+"PO-Revision-Date: 2022-03-04 13:17+0000\n"
+"Last-Translator: crnfpp <crnfpp@unife.it>\n"
 "Language-Team: Italian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/it/>\n"
 "Language: it-it\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.10.1\n"
+"X-Generator: Weblate 4.11\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -168,22 +168,16 @@ msgid "%s object(s) were deleted."
 msgstr "%s oggetto(i) sono stato(i) eliminato(i)."
 
 #: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
-#, fuzzy
-#| msgid "%s object(s) are created."
 msgid "%s object(s) will be created."
-msgstr "%s oggetto(i) creato(i)."
+msgstr "%s l'/gli oggetto/i sarà/saranno creato/i."
 
 #: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
-#, fuzzy
-#| msgid "%s object(s) were deleted."
 msgid "%s object(s) will be deleted."
-msgstr "%s oggetto(i) sono stato(i) eliminato(i)."
+msgstr "%s l'/gli oggetto/i sarà/saranno eliminato(i)."
 
 #: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
-#, fuzzy
-#| msgid "%s object(s) are updated."
 msgid "%s object(s) will be updated."
-msgstr "%s oggetto(i) aggiornato(i)."
+msgstr "%s l'/gli oggetto/i sarà/saranno aggiornato(i)."
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco
 msgid "%s of my tickets are currently in process."
@@ -344,8 +338,6 @@ msgid "2 hours"
 msgstr "2 ore"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "2 lower and 2 upper characters"
 msgid "2 lower case and 2 upper case characters"
 msgstr "2 caratteri minuscoli e 2 maiuscoli"
 
@@ -396,8 +388,6 @@ msgid "A URL looks like this: https://zammad.example.com"
 msgstr "Un URL somiglia a questo: https://zammad.example.com"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "A list of active import backends that get scheduled automatically."
 msgid "A list of active import backends that gets scheduled automatically."
 msgstr "Una lista di importazioni attive che vengono eseguite automaticamente."
 
@@ -802,8 +792,6 @@ msgid "Allow users to create new tags."
 msgstr "Consenti agli utenti la creazione di nuove tag."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Allow to use email address for muliple users."
 msgid "Allow using one email address for multiple users."
 msgstr "Consenti di usare un indirizzo email per più utenti."
 
@@ -816,9 +804,6 @@ msgid "Also notify via email"
 msgstr "Invia notifica anche tramite email"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid ""
-#| "Alternative FQDN for callbacks if you operate Zammad in internal network."
 msgid ""
 "Alternative FQDN for callbacks if you operate Zammad in an internal network."
 msgstr ""
@@ -928,14 +913,12 @@ msgid "Apply"
 msgstr "Applica"
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
-#, fuzzy
-#| msgid "Apply"
 msgid "Apply Draft"
-msgstr "Applica"
+msgstr "Applica bozza"
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
 msgid "Apply Shared Draft"
-msgstr ""
+msgstr "Applica bozza condivisa"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
@@ -1003,10 +986,8 @@ msgstr ""
 "diversa da 'article.note'."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/delete.coffee
-#, fuzzy
-#| msgid "%s object(s) are created."
 msgid "Article could not be deleted."
-msgstr "%s oggetto(i) creato(i)."
+msgstr "Non è stato possibile cancellare l'articolo."
 
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "Article#"
@@ -1030,8 +1011,6 @@ msgid "Assign signup roles"
 msgstr "Assegna ruoli di registrazione"
 
 #: db/seeds/object_manager_attributes.rb
-#, fuzzy
-#| msgid "Assign Users based on users domain."
 msgid "Assign users based on user domain."
 msgstr "Assegna utenti in base al dominio."
 
@@ -1196,8 +1175,6 @@ msgid "Auto create"
 msgstr "Creazione Automatica"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Auto close state"
 msgid "Auto-close state"
 msgstr "Stato chiusura automatica"
 
@@ -1251,8 +1228,6 @@ msgid "Average: %s%"
 msgstr "Media: %s%"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Bcc address for all outgoing emails"
 msgid "BCC address for all outgoing emails"
 msgstr "Indirizzo BCC per tutte le email in uscita"
 
@@ -1313,7 +1288,7 @@ msgstr "Prima di citare un utente devi selezionare un gruppo."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 msgid "Begin forwarded message"
-msgstr ""
+msgstr "Inizia del messaggio inoltrato"
 
 #: db/seeds/settings.rb
 msgid "Beginner"
@@ -1336,8 +1311,6 @@ msgstr "Blocca Notifiche"
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
-#, fuzzy
-#| msgid "Blocked caller IDs based on sender caller ID."
 msgid "Block caller IDs based on sender caller ID."
 msgstr "ID bloccati in base all'ID chiamante del mittente."
 
@@ -1400,10 +1373,8 @@ msgid "Bulk action failed"
 msgstr "Azione massiva non riuscita"
 
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee
-#, fuzzy
-#| msgid "Bulk action stopped %s!"
 msgid "Bulk action stopped by error(s): %s!"
-msgstr "Azione di massa arrestata %s!"
+msgstr "Azione di massa arrestata a causa di uno o più errori%s!"
 
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
 msgid "Bulk import allows you to create and update many records at once."
@@ -7294,6 +7265,11 @@ msgstr ""
 msgid "No Proxy"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_channel/email.coffee
+#: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
+msgid "No SSL"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_plugin/translation_support.coffee
 msgid "No Thanks!"
 msgstr "No grazie!"
@@ -8766,6 +8742,13 @@ msgstr ""
 msgid "SMTP - configure your own outgoing SMTP settings"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_channel/email.coffee
+#: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
+#, fuzzy
+#| msgid "SLA"
+msgid "SSL"
+msgstr "SLA"
+
 #: app/assets/javascripts/app/models/webhook.coffee
 msgid "SSL Verify"
 msgstr ""
@@ -8781,6 +8764,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
 msgid "SSO"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_channel/email.coffee
+#: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
+msgid "STARTTLS"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
