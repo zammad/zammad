@@ -964,10 +964,6 @@ msgstr ""
 msgid "Are you sure?"
 msgstr "Sei sicuro?"
 
-#: app/assets/javascripts/app/controllers/_application_controller/table.coffee
-msgid "Area"
-msgstr "Area"
-
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
 msgid "Article"
@@ -1355,7 +1351,6 @@ msgstr "Bots"
 msgid "Branding"
 msgstr "Branding"
 
-#: app/assets/javascripts/app/controllers/_application_controller/table.coffee
 #: app/assets/javascripts/app/views/session.jst.eco
 msgid "Browser"
 msgstr "Browser"
@@ -2648,10 +2643,6 @@ msgstr "Taglia"
 #: app/assets/javascripts/app/controllers/package.coffee
 msgid "Dashboard"
 msgstr "Cruscotto"
-
-#: app/assets/javascripts/app/controllers/_application_controller/table.coffee
-msgid "Data"
-msgstr "Dati"
 
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco
@@ -6347,10 +6338,6 @@ msgstr "Ultimo aggiornamento"
 msgid "Layout"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/table.coffee
-msgid "Level"
-msgstr ""
-
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
 msgid "Limit Groups"
 msgstr "Limita Gruppi"
@@ -6474,7 +6461,6 @@ msgstr "Lingua"
 msgid "Locale not found"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/table.coffee
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
 #: app/assets/javascripts/app/views/session.jst.eco
 msgid "Location"
@@ -9399,10 +9385,6 @@ msgstr ""
 msgid "Solution Time"
 msgstr "Tempo di soluzione"
 
-#: app/assets/javascripts/app/controllers/_application_controller/table.coffee
-msgid "Some Name"
-msgstr ""
-
 #: app/assets/javascripts/app/views/translation/index.jst.eco
 msgid "Some Text"
 msgstr "Del testo"
@@ -10540,7 +10522,6 @@ msgstr "Tickets dell'utente"
 msgid "Till"
 msgstr "Fino a"
 
-#: app/assets/javascripts/app/controllers/_application_controller/table.coffee
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
 msgid "Time"
@@ -12957,6 +12938,12 @@ msgstr "... dell'intera area di testo"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Tempi di attesa - Oggi"
+
+#~ msgid "Area"
+#~ msgstr "Area"
+
+#~ msgid "Data"
+#~ msgstr "Dati"
 
 #, fuzzy
 #~| msgid "Are you sure you want to delete"

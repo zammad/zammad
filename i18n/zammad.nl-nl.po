@@ -991,10 +991,6 @@ msgstr ""
 msgid "Are you sure?"
 msgstr "Weet je het zeker?"
 
-#: app/assets/javascripts/app/controllers/_application_controller/table.coffee
-msgid "Area"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
 msgid "Article"
@@ -1389,7 +1385,6 @@ msgstr "Bots"
 msgid "Branding"
 msgstr "Brandmerken"
 
-#: app/assets/javascripts/app/controllers/_application_controller/table.coffee
 #: app/assets/javascripts/app/views/session.jst.eco
 msgid "Browser"
 msgstr "Browser"
@@ -2650,10 +2645,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/package.coffee
 msgid "Dashboard"
 msgstr "Dashboard"
-
-#: app/assets/javascripts/app/controllers/_application_controller/table.coffee
-msgid "Data"
-msgstr ""
 
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco
@@ -6230,10 +6221,6 @@ msgstr "Laatste aanpassing"
 msgid "Layout"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/table.coffee
-msgid "Level"
-msgstr ""
-
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
 msgid "Limit Groups"
 msgstr "Groepen beperken"
@@ -6361,7 +6348,6 @@ msgstr "Taal"
 msgid "Locale not found"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/table.coffee
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
 #: app/assets/javascripts/app/views/session.jst.eco
 msgid "Location"
@@ -9299,10 +9285,6 @@ msgstr ""
 msgid "Solution Time"
 msgstr "Oplossingstijd"
 
-#: app/assets/javascripts/app/controllers/_application_controller/table.coffee
-msgid "Some Name"
-msgstr ""
-
 #: app/assets/javascripts/app/views/translation/index.jst.eco
 msgid "Some Text"
 msgstr "Sommige tekst"
@@ -10438,7 +10420,6 @@ msgstr "Tickets van gebruiker"
 msgid "Till"
 msgstr "Tot"
 
-#: app/assets/javascripts/app/controllers/_application_controller/table.coffee
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
 msgid "Time"

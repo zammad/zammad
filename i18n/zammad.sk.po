@@ -940,10 +940,6 @@ msgstr ""
 msgid "Are you sure?"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/table.coffee
-msgid "Area"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
 msgid "Article"
@@ -1337,7 +1333,6 @@ msgstr "Boti"
 msgid "Branding"
 msgstr "Označenie"
 
-#: app/assets/javascripts/app/controllers/_application_controller/table.coffee
 #: app/assets/javascripts/app/views/session.jst.eco
 msgid "Browser"
 msgstr "Prehliadač"
@@ -2588,10 +2583,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/package.coffee
 msgid "Dashboard"
 msgstr "Nástenka"
-
-#: app/assets/javascripts/app/controllers/_application_controller/table.coffee
-msgid "Data"
-msgstr ""
 
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco
@@ -5963,10 +5954,6 @@ msgstr ""
 msgid "Layout"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/table.coffee
-msgid "Level"
-msgstr ""
-
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
 msgid "Limit Groups"
 msgstr "Limit skupín"
@@ -6094,7 +6081,6 @@ msgstr ""
 msgid "Locale not found"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/table.coffee
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
 #: app/assets/javascripts/app/views/session.jst.eco
 msgid "Location"
@@ -8964,10 +8950,6 @@ msgstr ""
 msgid "Solution Time"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/table.coffee
-msgid "Some Name"
-msgstr ""
-
 #: app/assets/javascripts/app/views/translation/index.jst.eco
 msgid "Some Text"
 msgstr ""
@@ -10035,7 +10017,6 @@ msgstr "Ticket používateľa"
 msgid "Till"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/table.coffee
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
 msgid "Time"
