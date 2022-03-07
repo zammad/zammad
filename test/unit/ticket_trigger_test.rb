@@ -4,13 +4,17 @@ require 'test_helper'
 
 class TicketTriggerTest < ActiveSupport::TestCase
 
-  processing_timeout = HtmlSanitizer.const_get(:PROCESSING_TIMEOUT)
-
-  # XSS processing may run into a timeout on slow CI systems, so turn the timeout off for the test.
-  HtmlSanitizer.const_set(:PROCESSING_TIMEOUT, 0.0001)
-
   setup do
     Setting.set('ticket_trigger_recursive', true)
+
+    @processing_timeout = HtmlSanitizer.const_get(:PROCESSING_TIMEOUT)
+
+    # XSS processing may run into a timeout on slow CI systems, so turn the timeout off for the test.
+    HtmlSanitizer.const_set(:PROCESSING_TIMEOUT, nil)
+  end
+
+  teardown do
+    HtmlSanitizer.const_set(:PROCESSING_TIMEOUT, @processing_timeout)
   end
 
   test '1 basic' do
@@ -4688,6 +4692,4 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_match('Thanks for your inquiry (Online-apotheke. Günstigster Preis. Ohne Rezepte)!', article1.subject)
     assert_equal(0, article1.attachments.count)
   end
-
-  HtmlSanitizer.const_set(:PROCESSING_TIMEOUT, processing_timeout)
 end
