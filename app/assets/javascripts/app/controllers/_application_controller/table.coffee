@@ -28,7 +28,7 @@
     # add new header item
     attribute =
       name: 'some name'
-      display: __('Some Name')
+      display: 'Some Name'
     headers.push attribute
     console.log('new header is', headers)
     headers
@@ -78,12 +78,12 @@
     el:       element
     overview: ['time', 'area', 'level', 'browser', 'location', 'data']
     attribute_list: [
-      { name: 'time',     display: __('Time'),      tag: 'datetime' },
-      { name: 'area',     display: __('Area'),      type: 'text' },
-      { name: 'level',    display: __('Level'),     type: 'text' },
-      { name: 'browser',  display: __('Browser'),   type: 'text' },
-      { name: 'location', display: __('Location'),  type: 'text' },
-      { name: 'data',     display: __('Data'),      type: 'text' },
+      { name: 'time',     display: 'Time',      tag: 'datetime' },
+      { name: 'area',     display: 'Area',      type: 'text' },
+      { name: 'level',    display: 'Level',     type: 'text' },
+      { name: 'browser',  display: 'Browser',   type: 'text' },
+      { name: 'location', display: 'Location',  type: 'text' },
+      { name: 'data',     display: 'Data',      type: 'text' },
     ]
     objects:  data
   )
