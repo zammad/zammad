@@ -95,7 +95,10 @@ module Translation::SynchronizesFromPo
       return ['i18n/zammad.pot'] if locale.eql? 'en-us'
 
       files = Dir.glob "i18n/*.#{locale}.po", base: Rails.root
-      raise "No translation found for locale '#{locale}'." if files.exclude?("i18n/zammad.#{locale}.po")
+      if files.exclude?("i18n/zammad.#{locale}.po")
+        Rails.logger.error "No translation found for locale '#{locale}'."
+        return []
+      end
 
       [
         files.delete("i18n/zammad.#{locale}.po"),

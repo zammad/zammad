@@ -7,8 +7,14 @@ RSpec.describe Translation do
   context 'when getting the list of files for a locale' do
 
     context 'when a locale is nonexistent' do
-      it 'throws' do
-        expect { described_class.po_files_for_locale('nonexisting-locale') }.to raise_error "No translation found for locale 'nonexisting-locale'."
+      it 'logs an error' do
+        allow(Rails.logger).to receive(:error)
+        described_class.po_files_for_locale('nonexisting-locale')
+        expect(Rails.logger).to have_received(:error).with("No translation found for locale 'nonexisting-locale'.")
+      end
+
+      it 'returns an empty array' do
+        expect(described_class.po_files_for_locale('nonexisting-locale')).to eq([])
       end
     end
 
@@ -41,8 +47,14 @@ RSpec.describe Translation do
 
   context 'when getting po strings for a locale' do
     context 'when getting strings for a nonexistent locale' do
-      it 'throws' do
-        expect { described_class.strings_for_locale('nonexisting-locale') }.to raise_error "No translation found for locale 'nonexisting-locale'."
+      it 'logs an error' do
+        allow(Rails.logger).to receive(:error)
+        described_class.strings_for_locale('nonexisting-locale')
+        expect(Rails.logger).to have_received(:error).with("No translation found for locale 'nonexisting-locale'.")
+      end
+
+      it 'returns an empty array' do
+        expect(described_class.strings_for_locale('nonexisting-locale')).to eq({})
       end
     end
 
