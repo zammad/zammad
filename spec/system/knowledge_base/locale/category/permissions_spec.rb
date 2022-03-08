@@ -14,8 +14,6 @@ RSpec.describe 'Knowledge Base Locale Category Permissions', type: :system do
   it 'shows roles with has KB permissions only' do
     open_page category
 
-    find('[data-action=permissions]').click
-
     in_modal disappears: false do
       expect(page)
         .to have_text(%r{Admin}i)
@@ -27,8 +25,6 @@ RSpec.describe 'Knowledge Base Locale Category Permissions', type: :system do
   describe 'permissions shown' do
     it 'shows existing permissions when category has no permissions' do
       open_page category
-
-      find('[data-action=permissions]').click
 
       in_modal disappears: false do
         expect(page)
@@ -43,8 +39,6 @@ RSpec.describe 'Knowledge Base Locale Category Permissions', type: :system do
 
       open_page category
 
-      find('[data-action=permissions]').click
-
       in_modal disappears: false do
         expect(page)
           .to have_css("input[name='#{role_reader.id}'][value='reader']:not([disabled])", visible: :all)
@@ -57,8 +51,6 @@ RSpec.describe 'Knowledge Base Locale Category Permissions', type: :system do
 
       open_page child_category
 
-      find('[data-action=permissions]').click
-
       in_modal disappears: false do
         expect(page)
           .to have_css("input[name='#{role_reader.id}'][value='reader']:not([disabled])", visible: :all)
@@ -70,8 +62,6 @@ RSpec.describe 'Knowledge Base Locale Category Permissions', type: :system do
       KnowledgeBase::PermissionsUpdate.new(category).update! role_another_editor => 'reader'
 
       open_page child_category
-
-      find('[data-action=permissions]').click
 
       in_modal disappears: false do
         expect(page)
@@ -86,8 +76,6 @@ RSpec.describe 'Knowledge Base Locale Category Permissions', type: :system do
 
       open_page child_category
 
-      find('[data-action=permissions]').click
-
       in_modal disappears: false do
         expect(page)
           .to have_css("input[name='#{role_another_editor.id}'][value='none'][checked]:not([disabled])", visible: :all)
@@ -101,8 +89,6 @@ RSpec.describe 'Knowledge Base Locale Category Permissions', type: :system do
 
       open_page child_category
 
-      find('[data-action=permissions]').click
-
       in_modal disappears: false do
         expect(page)
           .to have_css("input[name='#{role_reader.id}'][value='none'][checked]:not([disabled])", visible: :all)
@@ -114,8 +100,6 @@ RSpec.describe 'Knowledge Base Locale Category Permissions', type: :system do
   describe 'saving changes' do
     it 'saves permissions' do
       open_page category
-
-      find('[data-action=permissions]').click
 
       in_modal do
         find("input[name='#{role_reader.id}'][value='none']", visible: :all)
@@ -137,8 +121,6 @@ RSpec.describe 'Knowledge Base Locale Category Permissions', type: :system do
 
       open_page category
 
-      find('[data-action=permissions]').click
-
       in_modal do
         find("input[name='#{role_reader.id}'][value='reader']", visible: :all)
           .ancestor('label')
@@ -157,8 +139,6 @@ RSpec.describe 'Knowledge Base Locale Category Permissions', type: :system do
     it 'does not allow to lock user himself' do
       open_page category
 
-      find('[data-action=permissions]').click
-
       in_modal disappears: false do
         find("input[name='#{role_editor.id}'][value='reader']", visible: :all)
           .ancestor('label')
@@ -173,5 +153,9 @@ RSpec.describe 'Knowledge Base Locale Category Permissions', type: :system do
 
   def open_page(category)
     visit "knowledge_base/#{knowledge_base.id}/locale/#{Locale.first.locale}/category/#{category.id}/edit"
+
+    find('[data-action=permissions]').click
+
+    travel_to 1.hour.from_now
   end
 end

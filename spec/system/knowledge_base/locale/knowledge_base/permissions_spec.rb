@@ -12,8 +12,6 @@ RSpec.describe 'Knowledge Base Locale Knowledge Base Permissions', type: :system
   it 'shows roles with has KB permissions only' do
     open_page
 
-    find('[data-action=permissions]').click
-
     in_modal disappears: false do
       expect(page)
         .to have_text(%r{Admin}i)
@@ -25,8 +23,6 @@ RSpec.describe 'Knowledge Base Locale Knowledge Base Permissions', type: :system
   describe 'permissions shown' do
     it 'shows existing permissions when KB has no permissions' do
       open_page
-
-      find('[data-action=permissions]').click
 
       in_modal disappears: false do
         expect(page)
@@ -40,8 +36,6 @@ RSpec.describe 'Knowledge Base Locale Knowledge Base Permissions', type: :system
 
       open_page
 
-      find('[data-action=permissions]').click
-
       in_modal disappears: false do
         expect(page)
           .to have_css("input[name='#{role_another_editor.id}'][value='reader'][checked]", visible: :all)
@@ -53,9 +47,8 @@ RSpec.describe 'Knowledge Base Locale Knowledge Base Permissions', type: :system
   describe 'saving changes' do
     it 'saves permissions' do
       role_another_editor
-      open_page
 
-      find('[data-action=permissions]').click
+      open_page
 
       in_modal do
         find("input[name='#{role_another_editor.id}'][value='reader']", visible: :all)
@@ -75,9 +68,8 @@ RSpec.describe 'Knowledge Base Locale Knowledge Base Permissions', type: :system
 
     it 'allows to modify existing permissions' do
       KnowledgeBase::PermissionsUpdate.new(knowledge_base).update! role_another_editor => 'reader'
-      open_page
 
-      find('[data-action=permissions]').click
+      open_page
 
       in_modal do
         find("input[name='#{role_another_editor.id}'][value='editor']", visible: :all)
@@ -98,8 +90,6 @@ RSpec.describe 'Knowledge Base Locale Knowledge Base Permissions', type: :system
     it 'does not allow to lock user himself' do
       open_page
 
-      find('[data-action=permissions]').click
-
       in_modal disappears: false do
         find("input[name='#{role_editor.id}'][value='reader']", visible: :all)
           .ancestor('label')
@@ -114,5 +104,9 @@ RSpec.describe 'Knowledge Base Locale Knowledge Base Permissions', type: :system
 
   def open_page
     visit "knowledge_base/#{knowledge_base.id}/locale/#{Locale.first.locale}/edit"
+
+    find('[data-action=permissions]').click
+
+    travel_to 1.hour.from_now
   end
 end
