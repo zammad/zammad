@@ -10802,7 +10802,7 @@ output {
   }
 
   td {
-    word-break: break-all;
+    word-break: break-word;
   }
 
   td.empty-cell {
@@ -10955,6 +10955,16 @@ output {
 
   .settings-list-radio-cell {
     text-align: center;
+  }
+}
+
+.settings-list--roles-permissions {
+  margin-left: 18px;
+  margin-right: 18px;
+  margin-top: 10px;
+
+  th:first-child {
+    min-width: 150px;
   }
 }
 
