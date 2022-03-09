@@ -97,7 +97,8 @@ class App extends Spine.Controller
       if !_.isEmpty(attributeConfig.options)
         if Array.isArray(attributeConfig.options)
           option = _.find(attributeConfig.options, (option) -> option.value == resultLocal)
-          resultLocal = option.name
+          if option && option.name
+            resultLocal = option.name
         else if attributeConfig.options[resultLocal]
           resultLocal = attributeConfig.options[resultLocal]
 

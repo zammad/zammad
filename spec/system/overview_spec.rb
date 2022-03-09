@@ -149,6 +149,103 @@ RSpec.describe 'Overview', type: :system do
         end
       end
     end
+
+    context 'when grouping by tree_selects', authenticated_as: :authenticate, db_strategy: :reset do
+      def authenticate
+        create(:object_manager_attribute_tree_select, name: 'tree_select_field', display: 'Tree Select Field', data_option: data_option)
+        ObjectManager::Attribute.migration_execute
+        user
+      end
+
+      let(:data_option) do
+        {
+          'options'    => [
+            {
+              'name'     => 'a',
+              'value'    => 'a',
+              'children' => [
+                {
+                  'name'  => '1',
+                  'value' => 'a::1',
+                }
+              ]
+            },
+            {
+              'name'     => 'b',
+              'value'    => 'b',
+              'children' => [
+                {
+                  'name'  => '1',
+                  'value' => 'b::1',
+                },
+                {
+                  'name'  => '2',
+                  'value' => 'b::2',
+                }
+              ]
+            },
+            {
+              'name'     => 'c',
+              'value'    => 'c',
+              'children' => [
+                {
+                  'name'  => '1',
+                  'value' => 'c::1',
+                },
+                {
+                  'name'  => '2',
+                  'value' => 'c::2',
+                },
+                {
+                  'name'  => '3',
+                  'value' => 'c::3',
+                },
+              ]
+            },
+          ],
+          'default'    => '',
+          'null'       => true,
+          'relation'   => '',
+          'maxlength'  => 255,
+          'nulloption' => true,
+        }
+      end
+
+      let(:ticket1) { create(:ticket, group: group_a, priority_id: 1, customer: user, tree_select_field: 'a::1') }
+      let(:ticket2) { create(:ticket, group: group_c, priority_id: 2, customer: user, tree_select_field: 'b::2') }
+      let(:ticket3) { create(:ticket, group: group_b, priority_id: 3, customer: user, tree_select_field: 'c::3') }
+      let(:group_key) { 'tree_select_field' }
+
+      context 'when group direction is default' do
+        let(:group_direction) { nil }
+
+        it 'sorts groups a::1 > b::2 > c::3' do
+          within :active_content do
+            expect(all('.table-overview table b').map(&:text)).to eq %w[a::1 b::2 c::3]
+          end
+        end
+      end
+
+      context 'when group direction is ASC' do
+        let(:group_direction) { 'ASC' }
+
+        it 'sorts groups a::1 > b::2 > c::3' do
+          within :active_content do
+            expect(all('.table-overview table b').map(&:text)).to eq %w[a::1 b::2 c::3]
+          end
+        end
+      end
+
+      context 'when group direction is DESC' do
+        let(:group_direction) { 'DESC' }
+
+        it 'sorts groups c::3 > b::2 > a::1' do
+          within :active_content do
+            expect(all('.table-overview table b').map(&:text)).to eq %w[c::3 b::2 a::1]
+          end
+        end
+      end
+    end
   end
 
   context 'when multiselect is choosen as column', authenticated_as: :authenticate, db_strategy: :reset do
