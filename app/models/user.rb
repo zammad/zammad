@@ -490,15 +490,13 @@ returns
     # try second lookup with email
     user ||= User.find_by(email: username.downcase.strip, active: true)
 
-    # check if email address exists
-    return if !user
-    return if !user.email
+    return if !user || !user.email
 
-    # generate token
-    token = Token.create(action: 'PasswordReset', user_id: user.id)
+    # Discard any possible previous tokens for safety reasons.
+    Token.where(action: 'PasswordReset', user_id: user.id).destroy_all
 
     {
-      token: token,
+      token: Token.create(action: 'PasswordReset', user_id: user.id, persistent: false),
       user:  user,
     }
   end
