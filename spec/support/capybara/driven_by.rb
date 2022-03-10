@@ -26,7 +26,17 @@ RSpec.configure do |config|
     browser_name = ENV.fetch('BROWSER', 'firefox')
     driven_by(:"zammad_#{browser_name}")
 
-    case example.metadata.fetch(:screen_size, :desktop)
+    screen_size = example.metadata[:screen_size] || case example.metadata[:app]
+                                                    when :mobile
+                                                      :mobile
+                                                    else
+                                                      :desktop
+                                                    end
+
+    case screen_size
+    when :mobile
+      browser_width  = 390
+      browser_height = 844
     when :tablet
       browser_width  = 1020
       browser_height = 760

@@ -10,6 +10,7 @@ import type {
   CurrentUserQuery,
   CurrentUserQueryVariables,
 } from '@common/graphql/types'
+import testFlags from '@common/utils/testFlags'
 
 let currentUserQuery: QueryHandler<CurrentUserQuery, CurrentUserQueryVariables>
 
@@ -42,6 +43,10 @@ const useSessionUserStore = defineStore('sessionUser', {
 
       if (userLocale && (userLocale !== locale.value || !locale.value)) {
         await locale.updateLocale(userLocale)
+      }
+
+      if (this.value) {
+        testFlags.set('useSessionUserStore.getCurrentUser.loaded')
       }
 
       return this.value

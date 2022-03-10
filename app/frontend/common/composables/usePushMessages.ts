@@ -8,6 +8,7 @@ import {
 } from '@common/graphql/types'
 import { SubscriptionHandler } from '@common/server/apollo/handler'
 import { NotificationTypes } from '@common/types/notification'
+import testFlags from '@common/utils/testFlags'
 import { onMounted } from 'vue'
 
 let subscription: SubscriptionHandler<
@@ -30,7 +31,10 @@ export default function usePushMessages() {
     subscription = new SubscriptionHandler(usePushMessagesSubscription())
     subscription.onResult((result) => {
       const message = result.data?.pushMessages
-      if (!message?.title && !message?.text) return
+      if (!message?.title && !message?.text) {
+        testFlags.set('usePushMessagesSubscription.subscribed')
+        return
+      }
       notify(`${message.title}: ${message.text}`)
     })
   })
