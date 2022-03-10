@@ -13510,6 +13510,13 @@ span.is-disabled {
         justify-content: center;
         flex-direction: column;
         text-align: center;
+
+        .title {
+          display: -webkit-box;
+          overflow: auto;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 5;
+        }
       }
     }
 

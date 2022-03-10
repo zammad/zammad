@@ -36,6 +36,12 @@ $dark-border: hsl(210, 14%, 91%);
   }
 }
 
+@mixin small-phone {
+  @media screen and (max-width: 576px) {
+    @content;
+  }
+}
+
 /* sets LTR and RTL within the same style call */
 @mixin bidi-style($prop, $value, $inverse-prop, $default-value) {
   #{$prop}: $value;
@@ -458,6 +464,9 @@ b {
     ul,
     ol {
       @include bidi-style(padding-left, 1.5em, padding-right, 0);
+      @include phone {
+        @include bidi-style(padding-left, 0, padding-right, 0);
+      }
     }
   }
 }
@@ -704,12 +713,20 @@ b {
       width: 25%;
     }
 
+    @include small-phone {
+      width: 100%;
+    }
+
     a {
-      padding-bottom: 72%;
+      padding-bottom: 82%;
       position: relative;
       line-height: 1.3;
 
       @extend %box-link;
+
+      @include small-phone {
+        padding: 0;
+      }
     }
 
     &--subsection {
@@ -731,9 +748,30 @@ b {
       flex-direction: column;
       text-align: center;
 
+      @include small-phone {
+        position: static;
+        padding: 10px;
+        flex-direction: row;
+        justify-content: flex-start;
+        text-align: initial;
+
+        > span {
+          padding-left: 1em;
+        }
+      }
+
       span {
         display: block;
         max-width: 100%;
+      }
+
+      @media screen and (min-width: 576px) {
+        .title {
+          display: -webkit-box;
+          overflow: auto;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 3;
+        }
       }
     }
 
@@ -852,6 +890,14 @@ b {
     fill: currentColor;
     line-height: inherit;
     flex-shrink: 0;
+    width: 35px;
+
+    .sections--grid & {
+      @include small-phone {
+        @include ltr(margin, 0);
+        @include rtl(margin, 0);
+      }
+    }
   }
 }
 
