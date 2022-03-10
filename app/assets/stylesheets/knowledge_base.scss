@@ -463,7 +463,7 @@ b {
 
     ul,
     ol {
-      @include bidi-style(padding-left, 1.5em, padding-right, 0);
+      @include bidi-style(padding-left, 0, padding-right, 0);
       @include phone {
         @include bidi-style(padding-left, 0, padding-right, 0);
       }
@@ -718,7 +718,7 @@ b {
     }
 
     a {
-      padding-bottom: 82%;
+      padding-bottom: 78%;
       position: relative;
       line-height: 1.3;
 
