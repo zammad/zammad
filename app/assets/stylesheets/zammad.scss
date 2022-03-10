@@ -13222,10 +13222,6 @@ body.fit {
   @include bidi-style(margin-right, 5px, margin-left, 0);
 }
 
-.min-fit-content {
-  min-width: fit-content;
-}
-
 .align-center {
   margin-left: auto;
   margin-right: auto;
