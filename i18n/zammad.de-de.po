@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-03-08 13:05+0000\n"
+"PO-Revision-Date: 2022-03-11 13:49+0000\n"
 "Last-Translator: Martin Gruner <mg@zammad.com>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
 "zammad-development/de/>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.11\n"
+"X-Generator: Weblate 4.11.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -208,7 +208,7 @@ msgstr "%s startet eine neue Sitzung"
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 msgid "%s subdomain"
-msgstr "%s Subdomain"
+msgstr "%s-Subdomain"
 
 #: app/assets/javascripts/app/models/user.coffee
 msgid "%s switched to |%s|!"
@@ -493,7 +493,7 @@ msgstr "Konto existiert bereits!"
 
 #: app/assets/javascripts/app/controllers/_plugin/user_signup_check.coffee
 msgid "Account not verified"
-msgstr "Account nicht verifiziert"
+msgstr "Konto nicht verifiziert"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/time_unit.jst.eco
@@ -967,7 +967,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/widget/template.coffee
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
 msgid "Are you sure?"
-msgstr "Sind Sie sich sicher?"
+msgstr "Sind Sie sicher?"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
@@ -1010,7 +1010,7 @@ msgstr "Zuweisung bei Nachfrage"
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 msgid "Assign signup roles"
-msgstr "Neuanmeldungs-Rollen zuweisen"
+msgstr "Registrierungs-Rollen zuweisen"
 
 #: db/seeds/object_manager_attributes.rb
 msgid "Assign users based on user domain."
@@ -1468,7 +1468,7 @@ msgstr "CTI letzte Kundenaktivität"
 
 #: db/seeds/settings.rb
 msgid "CTI integration"
-msgstr "CIT-Integration"
+msgstr "CTI-Integration"
 
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
@@ -1667,6 +1667,7 @@ msgstr "Geändert"
 #: app/views/mailer/ticket_update/fr.html.erb
 #: app/views/mailer/ticket_update/it.html.erb
 #: app/views/mailer/ticket_update/pt-br.html.erb
+#: app/views/mailer/ticket_update/ru.html.erb
 #: app/views/mailer/ticket_update/zh-cn.html.erb
 #: app/views/mailer/ticket_update/zh-tw.html.erb
 msgid "Changes"
@@ -2108,7 +2109,7 @@ msgstr "Kanäle verbinden"
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee
 #: app/assets/javascripts/app/views/facebook/index.jst.eco
 msgid "Connect Facebook App"
-msgstr "Verbinde Facebook App"
+msgstr "Facebook App verbinden"
 
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
 #: app/assets/javascripts/app/views/google/index.jst.eco
@@ -2123,7 +2124,7 @@ msgstr "Microsoft 365 App verbinden"
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee
 #: app/assets/javascripts/app/views/twitter/index.jst.eco
 msgid "Connect Twitter App"
-msgstr "Verbinde mit Twitter App"
+msgstr "Twitter App verbinden"
 
 #: public/assets/chat/views/loader.eco
 msgid "Connecting"
@@ -2337,7 +2338,7 @@ msgstr "Makros erstellen"
 
 #: app/controllers/first_steps_controller.rb
 msgid "Create Text Modules"
-msgstr "Erstelle Text-Bausteine"
+msgstr "Text-Bausteine erstellen"
 
 #: app/assets/javascripts/app/models/text_module.coffee
 msgid ""
@@ -2396,7 +2397,7 @@ msgstr "Gemeinsamen Entwurf erstellen"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/reader_controller.coffee
 msgid "Create a translation"
-msgstr "Erstelle eine Übersetzung"
+msgstr "Übersetzung erstellen"
 
 #: db/seeds/permissions.rb
 msgid "Create and set up %s"
@@ -2404,7 +2405,7 @@ msgstr "Erstellen und Einrichten von %s"
 
 #: app/assets/javascripts/app/views/signup.jst.eco
 msgid "Create my account"
-msgstr "Meinen Account erstellen"
+msgstr "Mein Konto erstellen"
 
 #: app/assets/javascripts/app/lib/app_post/user_organization_autocompletion.coffee
 msgid "Create new Customer"
@@ -2754,7 +2755,7 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Define postmaster filter."
-msgstr "Definieren Sie den Postmaster-Filter."
+msgstr "Definiert Postmaster-Filter."
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 msgid ""
@@ -3222,7 +3223,7 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Defines postmaster filter."
-msgstr "Definiert einen Postmaster-Filter."
+msgstr "Definiert Postmaster-Filter."
 
 #: db/seeds/settings.rb
 msgid "Defines pretty date format."
@@ -5031,6 +5032,7 @@ msgstr "Begrüßung"
 #: app/views/mailer/ticket_create/it.html.erb
 #: app/views/mailer/ticket_create/pl.html.erb
 #: app/views/mailer/ticket_create/pt-br.html.erb
+#: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
 #: app/views/slack/ticket_create/en.md.erb
@@ -5136,7 +5138,7 @@ msgstr "HTML E-Mail CSS Font"
 
 #: app/assets/javascripts/app/controllers/widget/http_log.coffee
 msgid "HTTP Log"
-msgstr "HTTP-Log"
+msgstr "HTTP-Protokoll"
 
 #: db/seeds/settings.rb
 msgid "HTTP type"
@@ -5173,7 +5175,7 @@ msgstr "Linkfarbe Kopfzeile"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/public_menu_manager.coffee
 msgid "Header Menu"
-msgstr "Kopf-Menü"
+msgstr "Kopfzeilen-Menü"
 
 #: app/assets/javascripts/app/views/monitoring.jst.eco
 msgid "Health Check"
@@ -5708,6 +5710,7 @@ msgstr "Info: %s"
 #: app/views/mailer/ticket_create/it.html.erb
 #: app/views/mailer/ticket_create/pl.html.erb
 #: app/views/mailer/ticket_create/pt-br.html.erb
+#: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
 #: app/views/mailer/ticket_escalation/cs.html.erb
@@ -5718,6 +5721,7 @@ msgstr "Info: %s"
 #: app/views/mailer/ticket_escalation/it.html.erb
 #: app/views/mailer/ticket_escalation/pl.html.erb
 #: app/views/mailer/ticket_escalation/pt-br.html.erb
+#: app/views/mailer/ticket_escalation/ru.html.erb
 #: app/views/mailer/ticket_escalation/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation/zh-tw.html.erb
 #: app/views/mailer/ticket_escalation_warning/cs.html.erb
@@ -5728,6 +5732,7 @@ msgstr "Info: %s"
 #: app/views/mailer/ticket_escalation_warning/it.html.erb
 #: app/views/mailer/ticket_escalation_warning/pl.html.erb
 #: app/views/mailer/ticket_escalation_warning/pt-br.html.erb
+#: app/views/mailer/ticket_escalation_warning/ru.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb
 #: app/views/mailer/ticket_reminder_reached/cs.html.erb
@@ -5737,6 +5742,7 @@ msgstr "Info: %s"
 #: app/views/mailer/ticket_reminder_reached/fr.html.erb
 #: app/views/mailer/ticket_reminder_reached/it.html.erb
 #: app/views/mailer/ticket_reminder_reached/pt-br.html.erb
+#: app/views/mailer/ticket_reminder_reached/ru.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-cn.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-tw.html.erb
 #: app/views/mailer/ticket_update/cs.html.erb
@@ -5746,6 +5752,7 @@ msgstr "Info: %s"
 #: app/views/mailer/ticket_update/fr.html.erb
 #: app/views/mailer/ticket_update/it.html.erb
 #: app/views/mailer/ticket_update/pt-br.html.erb
+#: app/views/mailer/ticket_update/ru.html.erb
 #: app/views/mailer/ticket_update/zh-cn.html.erb
 #: app/views/mailer/ticket_update/zh-tw.html.erb
 msgid "Information"
@@ -5901,7 +5908,7 @@ msgstr ""
 
 #: app/controllers/mentions_controller.rb
 msgid "Invalid mentionable_type!"
-msgstr "mentionable_type ungültig!"
+msgstr "Falscher mentionable_type!"
 
 #: lib/external_credential/twitter.rb
 msgid "Invalid oauth_token given!"
@@ -6890,7 +6897,7 @@ msgstr "Benötige Fingerabdruck-Parameter!"
 
 #: app/controllers/user_access_token_controller.rb
 msgid "Need label!"
-msgstr "Benötigt ein Label!"
+msgstr "Label wird benötigt!"
 
 #: app/controllers/settings_controller.rb
 msgid "Need logo param"
@@ -6910,7 +6917,7 @@ msgstr "Benötigt Empfänger in \"To\"."
 
 #: lib/sessions/event/chat_base.rb
 msgid "Need session_id."
-msgstr "Benötige session_id."
+msgstr "session_id wird benötigt."
 
 #: app/controllers/tickets_controller.rb
 msgid "Need user_id or organization_id as param"
@@ -7718,6 +7725,7 @@ msgstr "Entwurf überschreiben"
 #: app/views/mailer/ticket_create/it.html.erb
 #: app/views/mailer/ticket_create/pl.html.erb
 #: app/views/mailer/ticket_create/pt-br.html.erb
+#: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
 #: app/views/slack/ticket_create/en.md.erb
@@ -8207,7 +8215,7 @@ msgstr "Letzte kunden Tickets"
 
 #: app/assets/javascripts/app/views/widget/http_log.jst.eco
 msgid "Recent Logs"
-msgstr "Aktuellste Logs"
+msgstr "Aktuellste Protokolle"
 
 #: app/assets/javascripts/app/views/agent_ticket_merge.jst.eco
 #: app/assets/javascripts/app/views/link/ticket/add.jst.eco
@@ -8644,7 +8652,7 @@ msgstr "Gespeicherte Bedingungen"
 #: app/assets/javascripts/app/controllers/_integration/idoit.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee
 msgid "Saving failed."
-msgstr "Speichern fehlgeschlagen."
+msgstr "Das Speichern ist fehlgeschlagen."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 msgid "Schedule for"
@@ -9300,6 +9308,7 @@ msgstr ""
 #: app/views/mailer/ticket_create/it.html.erb
 #: app/views/mailer/ticket_create/pl.html.erb
 #: app/views/mailer/ticket_create/pt-br.html.erb
+#: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
 #: app/views/slack/ticket_create/en.md.erb
@@ -10075,6 +10084,12 @@ msgstr ""
 #: app/views/knowledge_base/public/_top_banner.html.erb
 msgid "This page is invisible to the public."
 msgstr "Diese Seite ist unsichtbar für die Öffentlichkeit."
+
+#: app/models/knowledge_base/permission.rb
+msgid ""
+"This permission level is not available based on the current roles "
+"permissions."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/github.coffee
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee
@@ -11080,6 +11095,7 @@ msgstr "Aus Benutzersicht ansehen"
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/it.html.erb
+#: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
 #: app/views/mailer/ticket_escalation/cs.html.erb
@@ -11088,6 +11104,7 @@ msgstr "Aus Benutzersicht ansehen"
 #: app/views/mailer/ticket_escalation/es.html.erb
 #: app/views/mailer/ticket_escalation/fr.html.erb
 #: app/views/mailer/ticket_escalation/it.html.erb
+#: app/views/mailer/ticket_escalation/ru.html.erb
 #: app/views/mailer/ticket_escalation/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation/zh-tw.html.erb
 #: app/views/mailer/ticket_escalation_warning/cs.html.erb
@@ -11096,6 +11113,7 @@ msgstr "Aus Benutzersicht ansehen"
 #: app/views/mailer/ticket_escalation_warning/es.html.erb
 #: app/views/mailer/ticket_escalation_warning/fr.html.erb
 #: app/views/mailer/ticket_escalation_warning/it.html.erb
+#: app/views/mailer/ticket_escalation_warning/ru.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb
 #: app/views/mailer/ticket_reminder_reached/cs.html.erb
@@ -11104,6 +11122,7 @@ msgstr "Aus Benutzersicht ansehen"
 #: app/views/mailer/ticket_reminder_reached/es.html.erb
 #: app/views/mailer/ticket_reminder_reached/fr.html.erb
 #: app/views/mailer/ticket_reminder_reached/it.html.erb
+#: app/views/mailer/ticket_reminder_reached/ru.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-cn.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-tw.html.erb
 #: app/views/mailer/ticket_update/cs.html.erb
@@ -11112,10 +11131,13 @@ msgstr "Aus Benutzersicht ansehen"
 #: app/views/mailer/ticket_update/es.html.erb
 #: app/views/mailer/ticket_update/fr.html.erb
 #: app/views/mailer/ticket_update/it.html.erb
+#: app/views/mailer/ticket_update/ru.html.erb
 #: app/views/mailer/ticket_update/zh-cn.html.erb
 #: app/views/mailer/ticket_update/zh-tw.html.erb
 #: app/views/mailer/ticket_update_merged_into/en.html.erb
+#: app/views/mailer/ticket_update_merged_into/ru.html.erb
 #: app/views/mailer/ticket_update_received_merge/en.html.erb
+#: app/views/mailer/ticket_update_received_merge/ru.html.erb
 msgid "View this in Zammad"
 msgstr "In Zammad anzeigen"
 
@@ -12525,7 +12547,7 @@ msgstr "als optional festlegen"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "set readonly"
-msgstr "als schreibgeschützt anzeigen"
+msgstr "als schreibgeschützt festlegen"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 msgid "set to internal"
@@ -12648,7 +12670,7 @@ msgstr "Benutzerzuweisung entfernen"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "unset readonly"
-msgstr "als änderbar anzeigen"
+msgstr "als änderbar festlegen"
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco
