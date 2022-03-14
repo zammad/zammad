@@ -479,7 +479,7 @@ class ConnectionWizard extends App.ControllerWizardModal
 
   buildRowGroupRole: (source, dest) =>
     el = $(App.view('integration/ldap_group_role_row')())
-    el.find('.js-ldapList').html(@createSelection('source', @wizardConfig.wizardData.backend_groups, source))
+    el.find('.js-ldapList').html(@createAutocompletion('source', @wizardConfig.wizardData.backend_groups, source))
     el.find('.js-roleList').html(@createSelection('dest', @wizardConfig.wizardData.roles, dest))
     el
 
@@ -495,6 +495,34 @@ class ConnectionWizard extends App.ControllerWizardModal
       unknown: unknown
       class: 'form-control--small'
     )
+
+  # LDAP with many groups (<5k) and group role relation (>50) will crash in frontend #3994
+  createAutocompletion: (name, options, selected) ->
+    return App.UiElement.autocompletion.render(
+      id: "#{name}#{Math.floor( Math.random() * 999999 ).toString()}"
+      name: name
+      multiple: false
+      null: false
+      nulloption: false
+      class: 'form-control--small'
+      minLengt: -1 # show values without any value
+      value: selected
+      source: (request, response) ->
+        data    = Object.keys(options)
+        counter = 0
+        total   = 200
+        result  = []
+        for entry in data
+          continue if !entry.includes(request.term)
+          break if counter >= total
+          result.push(
+            id: entry
+            label: entry
+            value: entry
+          )
+          counter++
+        response(result)
+    , "#{name}_autocompletion_value_shown": selected)
 
   removeRow: (e) ->
     e.preventDefault()
