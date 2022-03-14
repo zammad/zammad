@@ -22,7 +22,7 @@ class ReportProfile extends App.ControllerSubContent
 #          'Report Profile are ...'
         ]
         buttons: [
-          { name: __('New Profile'), 'data-type': 'new', class: 'primary' }
+          { name: __('New Profile'), 'data-type': 'new', class: 'btn--success' }
         ]
       container: @el.closest('.content')
       veryLarge: true
