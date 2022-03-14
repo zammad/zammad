@@ -704,7 +704,7 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       __('Note - visibility confirmation dialog'),
+  title:       __('Article - visibility confirmation dialog'),
   name:        'ui_ticket_zoom_article_visibility_confirmation_dialog',
   area:        'UI::TicketZoom',
   description: __('Defines if the agent has to accept a confirmation dialog when changing the article visibility to "public".'),

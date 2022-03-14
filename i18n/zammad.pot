@@ -861,6 +861,10 @@ msgstr ""
 msgid "Article"
 msgstr ""
 
+#: db/seeds/settings.rb
+msgid "Article - visibility confirmation dialog"
+msgstr ""
+
 #: lib/excel_sheet/ticket.rb
 msgid "Article Count"
 msgstr ""
@@ -6596,10 +6600,6 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Note - default visibility"
-msgstr ""
-
-#: db/seeds/settings.rb
-msgid "Note - visibility confirmation dialog"
 msgstr ""
 
 #: app/assets/javascripts/app/models/email_address.coffee
