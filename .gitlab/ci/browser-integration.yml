@@ -14,6 +14,7 @@ include:
     - .env_base
     - .variables_app_restart_cmd
     - .variables_es
+    - .tags_docker_low_concurrency
   variables:
     RAILS_ENV: "test"
   script:
@@ -40,6 +41,7 @@ include:
     - .env_base
     - .variables_app_restart_cmd
     - .services_postgresql_selenium_chrome
+    - .tags_docker_low_concurrency
   variables:
     RAILS_ENV: "production"
     AUTO_WIZARD_FILE: "contrib/auto_wizard_test.json"
@@ -58,6 +60,7 @@ include:
   extends:
     - .env_base
     - .services_postgresql_selenium_chrome
+    - .tags_docker_low_concurrency
   variables:
     RAILS_ENV: "production"
     RAILS_SERVE_STATIC_FILES: "true"
