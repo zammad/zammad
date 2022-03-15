@@ -19,6 +19,7 @@ include:
     - .env_base
     - .variables_es
     - .variables_app_restart_cmd
+    - .tags_docker_low_concurrency
   variables:
     RAILS_ENV: "production"
   script:
@@ -46,6 +47,7 @@ include:
   extends:
     - .env_base
     - .variables_app_restart_cmd
+    - .tags_docker_low_concurrency
   variables:
     RAILS_ENV: "production"
     AUTO_WIZARD_FILE: "contrib/auto_wizard_example.json"
@@ -76,6 +78,7 @@ include:
     - .env_base
     - .variables_app_restart_cmd
     - .services_mysql_postgresql_redis_memcached
+    - .tags_docker_low_concurrency
   variables:
     RAILS_ENV: "production"
 
@@ -87,6 +90,7 @@ include:
     - .env_base
     - .variables_es
     - .variables_rspec_slicing
+    - .tags_docker_low_concurrency
   variables:
     RAILS_ENV: "test"
   script:
