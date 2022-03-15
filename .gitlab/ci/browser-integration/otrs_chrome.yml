@@ -9,7 +9,7 @@ otrs_chrome:
   services:
     - name: $CI_REGISTRY/docker/zammad-postgresql:stable
       alias: postgresql
-    - name: $CI_REGISTRY/docker/zammad-selenium-chrome:4
+    - name: $CI_REGISTRY/docker/zammad-selenium-chrome:stable
       alias: selenium-chrome
     - name: $CI_REGISTRY/docker/zammad-ci-otrsimport-db:otrs6
       alias: zammad-ci-otrsimport-db
