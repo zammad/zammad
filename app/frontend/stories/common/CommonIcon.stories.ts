@@ -9,13 +9,6 @@ const iconsList = ids.map((item) => item.substring(5))
 export default {
   title: 'Common/Icon',
   component: CommonIcon,
-  args: {
-    name: '',
-    size: 'medium',
-    fixedSize: null,
-    decorative: false,
-    animation: '',
-  },
   argTypes: {
     name: {
       control: { type: 'select' },
@@ -43,6 +36,7 @@ const Template: Story = (args) => ({
 export const BaseIcon = Template.bind({})
 BaseIcon.args = {
   name: 'arrow-left',
+  size: 'medium',
 }
 
 export const BaseIconAnimated = Template.bind({})

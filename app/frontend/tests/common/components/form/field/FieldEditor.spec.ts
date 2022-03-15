@@ -10,6 +10,7 @@ import { ComponentPublicInstance, nextTick } from 'vue'
 
 const wrapperParameters = {
   form: true,
+  formField: true,
 }
 
 const wrapper = getWrapper(FormKit, {
@@ -21,7 +22,7 @@ const wrapper = getWrapper(FormKit, {
   },
 })
 
-describe('FormField - Editor (TipTap)', () => {
+describe('Form - Field - Editor (TipTap)', () => {
   it('mounts successfully', () => {
     expect(wrapper.exists()).toBe(true)
   })

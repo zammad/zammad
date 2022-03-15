@@ -9,6 +9,7 @@ export default {
   title: 'Common/Notifications',
   component: CommonNotifications,
   args: {
+    // No real props, notifications are triggered with a composable function.
     durationMS: '5000',
     persistent: false,
     message: 'This is a notification message.',
@@ -23,6 +24,9 @@ export default {
         NotificationTypes.INFO,
       ],
     },
+  },
+  parameters: {
+    durationMS: 5000,
   },
 }
 
@@ -44,7 +48,7 @@ const Template: Story = (args) => ({
     },
   },
   template:
-    '<button class="bg-white hover:bg-gray-100 text-gray-800 py-2 px-4 border border-gray-400 rounded text-sm" v-on:click="showNotification()">Show notification</button><CommonNotifications />',
+    '<button class="bg-white hover:bg-gray-300 text-gray-600 py-2 px-4 border border-gray-600 rounded text-sm" v-on:click="showNotification()">Show notification</button><CommonNotifications />',
 })
 
 export const WarnNotification = Template.bind({})

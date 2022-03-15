@@ -37,8 +37,8 @@ const Template: Story = (args) => ({
       this.component = FirstView
     },
   },
-  template: `<button class="bg-white hover:bg-gray-100 text-gray-800 py-2 px-4 border border-gray-400 rounded text-sm mr-5" v-on:click="switchView()">Switch View</button>
-    <button class="bg-white hover:bg-gray-100 text-gray-800 py-2 px-4 border border-gray-400 rounded text-sm mb-10" v-on:click="resetView()">Reset View</button>
+  template: `<button class="bg-white hover:bg-gray-300 text-gray-800 py-2 px-4 border border-gray-600 rounded text-sm mr-5" v-on:click="switchView()">Switch View</button>
+    <button class="bg-white hover:bg-gray-300 text-gray-600 py-2 px-4 border border-gray-600 rounded text-sm mb-10" v-on:click="resetView()">Reset View</button>
     <TransitionViewNavigation> <component v-bind:is="component" /></TransitionViewNavigation>
     `,
 })

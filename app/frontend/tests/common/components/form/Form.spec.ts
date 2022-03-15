@@ -190,6 +190,7 @@ describe('Form.vue', () => {
         schema: [
           {
             isLayout: true,
+            component: 'FormLayout',
             props: {
               columns: 2,
             },
@@ -210,9 +211,65 @@ describe('Form.vue', () => {
       },
     })
 
-    expect(wrapper.html()).toContain('form')
-    expect(wrapper.html()).toContain('fieldset')
+    expect(wrapper.html()).toContain('<form')
+    expect(wrapper.html()).toContain('<fieldset')
     expect(wrapper.html()).toContain('<input')
     expect(wrapper.html()).toContain('<textarea')
+  })
+
+  it('can use DOM elements and other components inside of the schema', () => {
+    wrapper = getWrapper(Form, {
+      ...wrapperParameters,
+      router: true,
+      props: {
+        schema: [
+          {
+            isLayout: true,
+            element: 'div',
+            attrs: {
+              class: 'example-class',
+            },
+            children: [
+              {
+                type: 'text',
+                name: 'title',
+                label: 'Title',
+              },
+              {
+                isLayout: true,
+                component: 'CommonLink',
+                props: {
+                  isExternalLink: true,
+                  link: 'https://example.com',
+                },
+                children: 'Example Link',
+              },
+            ],
+          },
+        ],
+      },
+    })
+
+    expect(wrapper.html()).toContain('form')
+    expect(wrapper.html()).toContain('<input')
+    expect(wrapper.find('div.example-class')).toBeTruthy()
+    expect(wrapper.find('a').text()).toBe('Example Link')
+  })
+
+  it('can use fields slot instead of a form schema', () => {
+    wrapper = getWrapper(Form, {
+      ...wrapperParameters,
+      slots: {
+        fields: '<FormKit type="text" name="example" label="Example" />',
+      },
+    })
+
+    expect(wrapper.html()).toContain('form')
+
+    // Check for some field ouput.
+    expect(wrapper.html()).toContain('<input')
+    expect(wrapper.find('div[data-type="text"] label').text()).toContain(
+      'Example',
+    )
   })
 })

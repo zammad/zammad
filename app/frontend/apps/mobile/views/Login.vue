@@ -2,44 +2,39 @@
 
 <template>
   <!-- TODO: Only a dummy implementation for the login... -->
-  <div class="flex h-full min-h-screen flex-col items-center justify-center">
-    <div class="w-full max-w-md">
+  <div class="flex h-full min-h-screen flex-col items-center px-7 pt-7 pb-4">
+    <div class="m-auto w-full max-w-md">
       <div class="flex grow flex-col justify-center">
-        <div class="my-5 grow p-8">
+        <div class="my-5 grow">
           <div class="flex justify-center p-2">
             <CommonLogo />
           </div>
           <div class="mb-6 flex justify-center p-2 text-2xl font-extrabold">
-            {{ 'Zammad' }}
+            {{ applicationConfig.value.product_name }}
           </div>
-          <template v-if="authenticationConfig.value.maintenance_login">
+          <template v-if="applicationConfig.value.maintenance_login">
             <!-- eslint-disable vue/no-v-html -->
             <div
               class="my-1 flex items-center rounded bg-green py-2 px-4 text-white"
-              v-html="authenticationConfig.value.maintenance_login_message"
+              v-html="applicationConfig.value.maintenance_login_message"
             ></div>
           </template>
           <Form
-            id="testing"
             v-bind:schema="formSchema"
             class="text-left"
             v-on:submit="login"
           >
             <template v-slot:after-fields>
-              <div class="mt-1 flex grow items-baseline justify-between">
-                <a class="cursor-pointer select-none text-yellow underline">
-                  {{ i18n.t('Register') }}
-                </a>
-
-                <a class="cursor-pointer select-none text-yellow">
-                  {{ i18n.t('Forgot password?') }}
-                </a>
+              <div class="mt-4 flex grow items-center justify-center">
+                <span class="ltr:mr-1 rtl:ml-1">{{ i18n.t('New user?') }}</span>
+                <CommonLink
+                  v-bind:link="'TODO'"
+                  class="cursor-pointer select-none !text-yellow underline"
+                  >{{ i18n.t('Register') }}</CommonLink
+                >
               </div>
-            </template>
-            <template v-slot:buttons>
               <FormKit
-                v-bind:ignore="true"
-                wrapper-class="flex grow justify-center items-center mx-8 mt-8"
+                wrapper-class="mx-8 mt-8 flex grow justify-center items-center"
                 input-class="py-2 px-4 w-full h-14 text-xl font-semibold text-black bg-yellow rounded select-none"
                 type="submit"
               >
@@ -49,6 +44,30 @@
           </Form>
         </div>
       </div>
+    </div>
+    <div class="mb-6 flex items-center justify-center">
+      <CommonLink link="TODO" class="!text-gray underline">
+        {{ i18n.t('Continue to desktop app') }}
+      </CommonLink>
+    </div>
+    <div class="flex items-center justify-center align-middle text-gray-200">
+      <CommonLink
+        link="https://zammad.org"
+        is-external
+        open-in-new-tab
+        class="ltr:mr-1 rtl:ml-1"
+      >
+        <CommonIcon name="logo" v-bind:fixed-size="{ width: 24, height: 24 }" />
+      </CommonLink>
+      <span class="ltr:mr-1 rtl:ml-1">{{ i18n.t('Powered by') }}</span>
+      <CommonLink
+        link="https://zammad.org"
+        is-external
+        open-in-new-tab
+        class="font-semibold !text-gray-200"
+      >
+        Zammad
+      </CommonLink>
     </div>
   </div>
 </template>
@@ -105,7 +124,7 @@ const formSchema = [
     placeholder: __('Username / Email'),
     wrapperClass: 'relative floating-input',
     inputClass:
-      'block mt-1 w-full h-14 text-sm bg-gray-300 rounded border-none focus:outline-none placeholder:text-transparent',
+      'block mt-1 w-full h-14 text-sm bg-gray-500 rounded border-none focus:outline-none placeholder:text-transparent',
     labelClass:
       'absolute top-0 left-0 py-5 px-3 h-full text-base transition-all duration-100 ease-in-out origin-left pointer-events-none',
     sectionsSchema: forFloatingLabel,
@@ -118,11 +137,38 @@ const formSchema = [
     placeholder: __('Password'),
     wrapperClass: 'relative floating-input',
     inputClass:
-      'block mt-1 w-full h-14 text-sm bg-gray-300 rounded border-none focus:outline-none placeholder:text-transparent',
+      'block mt-1 w-full h-14 text-sm bg-gray-500 rounded border-none focus:outline-none placeholder:text-transparent',
     labelClass:
       'absolute top-0 left-0 py-5 px-3 h-full text-base transition-all duration-100 ease-in-out origin-left pointer-events-none',
     sectionsSchema: forFloatingLabel,
     validation: 'required',
+  },
+  {
+    isLayout: true,
+    element: 'div',
+    attrs: {
+      class: 'mt-2 flex grow items-center justify-between text-white',
+    },
+    children: [
+      {
+        type: 'checkbox',
+        label: __('Remember me'),
+        name: 'remember_me',
+        wrapperClass: 'inline-flex items-center',
+        inputClass:
+          'appearance-none h-4 w-4 border-[1.5px] border-white rounded-sm bg-transparent',
+        innerClass: 'mr-2',
+      },
+      {
+        isLayout: true,
+        component: 'CommonLink',
+        props: {
+          class: 'text-right !text-white',
+          link: 'TODO',
+        },
+        children: i18n.t('Forgot password?'),
+      },
+    ],
   },
 ]
 
@@ -147,7 +193,7 @@ const login = (formData: FormKitGroupValue): void => {
     })
 }
 
-const authenticationConfig = useApplicationConfigStore()
+const applicationConfig = useApplicationConfigStore()
 </script>
 
 <style lang="postcss">

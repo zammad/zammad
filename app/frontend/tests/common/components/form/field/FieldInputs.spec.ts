@@ -8,6 +8,7 @@ import { nextTick } from 'vue'
 
 const wrapperParameters = {
   form: true,
+  formField: true,
 }
 
 let wrapper = getWrapper(FormKit, {
@@ -19,7 +20,7 @@ let wrapper = getWrapper(FormKit, {
   },
 })
 
-describe('FormField - Inputs (Text) (Formkit-BuildIn)', () => {
+describe('Form - Field - Inputs (Text) (Formkit-BuildIn)', () => {
   it('mounts successfully', () => {
     expect(wrapper.exists()).toBe(true)
   })
@@ -96,7 +97,7 @@ describe('FormField - Inputs (Text) (Formkit-BuildIn)', () => {
   })
 })
 
-describe('FormField - Email (Formkit-BuildIn)', () => {
+describe('Form - Field - Email (Formkit-BuildIn)', () => {
   it('mounts successfully', () => {
     wrapper = getWrapper(FormKit, {
       ...wrapperParameters,
@@ -123,7 +124,7 @@ describe('FormField - Email (Formkit-BuildIn)', () => {
   })
 })
 
-describe('FormField - Color (Formkit-BuildIn)', () => {
+describe('Form - Field - Color (Formkit-BuildIn)', () => {
   it('mounts successfully', () => {
     wrapper = getWrapper(FormKit, {
       ...wrapperParameters,
@@ -142,7 +143,7 @@ describe('FormField - Color (Formkit-BuildIn)', () => {
   })
 })
 
-describe('FormField - Tel (Formkit-BuildIn)', () => {
+describe('Form - Field - Tel (Formkit-BuildIn)', () => {
   it('mounts successfully', () => {
     wrapper = getWrapper(FormKit, {
       ...wrapperParameters,
@@ -161,7 +162,7 @@ describe('FormField - Tel (Formkit-BuildIn)', () => {
   })
 })
 
-describe('FormField - Search (Formkit-BuildIn)', () => {
+describe('Form - Field - Search (Formkit-BuildIn)', () => {
   it('mounts successfully', () => {
     wrapper = getWrapper(FormKit, {
       ...wrapperParameters,
@@ -180,7 +181,7 @@ describe('FormField - Search (Formkit-BuildIn)', () => {
   })
 })
 
-describe('FormField - Number (Formkit-BuildIn)', () => {
+describe('Form - Field - Number (Formkit-BuildIn)', () => {
   it('mounts successfully', () => {
     wrapper = getWrapper(FormKit, {
       ...wrapperParameters,
@@ -207,7 +208,7 @@ describe('FormField - Number (Formkit-BuildIn)', () => {
   })
 })
 
-describe('FormField - Time (Formkit-BuildIn)', () => {
+describe('Form - Field - Time (Formkit-BuildIn)', () => {
   it('mounts successfully', () => {
     wrapper = getWrapper(FormKit, {
       ...wrapperParameters,
@@ -226,7 +227,7 @@ describe('FormField - Time (Formkit-BuildIn)', () => {
   })
 })
 
-describe('FormField - Date (Formkit-BuildIn)', () => {
+describe('Form - Field - Date (Formkit-BuildIn)', () => {
   it('mounts successfully', () => {
     wrapper = getWrapper(FormKit, {
       ...wrapperParameters,
@@ -245,13 +246,13 @@ describe('FormField - Date (Formkit-BuildIn)', () => {
   })
 })
 
-describe('FormField - Datetime (Formkit-BuildIn)', () => {
+describe('Form - Field - Datetime (Formkit-BuildIn)', () => {
   it('mounts successfully', () => {
     wrapper = getWrapper(FormKit, {
       ...wrapperParameters,
       props: {
         name: 'datetimeLocal',
-        type: 'datetimeLocal',
+        type: 'datetime-local',
         id: 'datetimeLocal',
       },
     })
@@ -260,6 +261,6 @@ describe('FormField - Datetime (Formkit-BuildIn)', () => {
 
   it('can render a datetimeLocal input', () => {
     expect(wrapper.html()).toContain('<input')
-    expect(wrapper.find('input').attributes().type).toBe('datetimeLocal')
+    expect(wrapper.find('input').attributes().type).toBe('datetime-local')
   })
 })

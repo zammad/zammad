@@ -124,7 +124,7 @@ module.exports = {
     'import/resolver': {
       alias: {
         map: [
-          ['@', path.resolve(__dirname, './app/frontend/')],
+          ['@', path.resolve(__dirname, './app/frontend')],
           ['@mobile', path.resolve(__dirname, './app/frontend/apps/mobile')],
           ['@common', path.resolve(__dirname, './app/frontend/common')],
           ['@tests', path.resolve(__dirname, './app/frontend/tests')],

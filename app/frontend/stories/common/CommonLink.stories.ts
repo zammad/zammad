@@ -6,23 +6,6 @@ import { Story } from '@storybook/vue3'
 export default {
   title: 'Common/Link',
   component: CommonLink,
-  args: {
-    link: '',
-    isExternal: false,
-    isRoute: false,
-    disabled: false,
-    rel: '',
-    target: '',
-    openInNewTab: false,
-    replace: false,
-    activeClass: '',
-    exactActiveClass: '',
-  },
-  parameters: {
-    actions: {
-      handles: ['click'],
-    },
-  },
 }
 
 const Template: Story = (args) => ({

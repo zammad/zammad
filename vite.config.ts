@@ -18,6 +18,7 @@ export default defineConfig(({ mode }) => ({
       '@mobile': path.resolve(__dirname, 'app/frontend/apps/mobile'),
       '@common': path.resolve(__dirname, 'app/frontend/common'),
       '@tests': path.resolve(__dirname, 'app/frontend/tests'),
+      '@': path.resolve(__dirname, 'app/frontend'),
     },
   },
   define: {

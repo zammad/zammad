@@ -12,7 +12,10 @@
 import { i18n } from '@common/utils/i18n'
 import { computed } from 'vue'
 
-defineProps<{ msg: string; show: boolean }>()
+defineProps<{
+  msg: string
+  show: boolean
+}>()
 
 const manualTranslation = computed(() => {
   return i18n.t('The second component.')

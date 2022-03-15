@@ -2069,6 +2069,10 @@ msgstr ""
 msgid "Continue session"
 msgstr ""
 
+#: app/frontend/apps/mobile/views/Login.vue
+msgid "Continue to desktop app"
+msgstr ""
+
 #: app/assets/javascripts/app/views/translation/index.jst.eco
 msgid "Contributing Translations"
 msgstr ""
@@ -6299,6 +6303,10 @@ msgstr ""
 msgid "New text module"
 msgstr ""
 
+#: app/frontend/apps/mobile/views/Login.vue
+msgid "New user?"
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "Newbie"
 msgstr ""
@@ -7229,6 +7237,7 @@ msgid "Postmaster Filter"
 msgstr ""
 
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/apps/mobile/views/Login.vue
 msgid "Powered by"
 msgstr ""
 
@@ -7485,6 +7494,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/apps/mobile/views/Login.vue
 msgid "Remember me"
 msgstr ""
 
@@ -9261,6 +9271,10 @@ msgstr ""
 
 #: app/frontend/common/form/i18n/locales.ts
 msgid "This field can only contain letters and numbers."
+msgstr ""
+
+#: app/frontend/common/form/i18n/locales.ts
+msgid "This field can only contain letters and spaces."
 msgstr ""
 
 #: app/frontend/common/form/i18n/locales.ts

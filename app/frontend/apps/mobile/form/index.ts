@@ -5,8 +5,8 @@ import type {
   FormFieldTypeImportModules,
   InitializeAppForm,
 } from '@common/types/form'
-import { ImportGlobEagerOutput } from '@common/types/utils'
-import { FormKitPlugin } from '@formkit/core'
+import type { ImportGlobEagerOutput } from '@common/types/utils'
+import type { FormKitPlugin } from '@formkit/core'
 import { App } from 'vue'
 
 const pluginModules: ImportGlobEagerOutput<FormKitPlugin> =

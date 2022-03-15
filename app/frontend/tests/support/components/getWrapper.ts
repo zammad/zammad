@@ -10,6 +10,7 @@ import CommonLink from '@common/components/common/CommonLink.vue'
 import { Plugin } from 'vue'
 import { createTestingPinia } from '@pinia/testing'
 import { i18n } from '@common/utils/i18n'
+import { cloneDeep } from '@apollo/client/utilities'
 
 // TODO: some things can be handled differently: https://test-utils.vuejs.org/api/#config-global
 
@@ -18,6 +19,7 @@ interface ExtendedMountingOptions<Props> extends MountingOptions<Props> {
   routerRoutes?: RouteRecordRaw[]
   store?: boolean
   form?: boolean
+  formField?: boolean
 }
 
 const plugins: (Plugin | [Plugin, ...unknown[]])[] = []
@@ -91,11 +93,6 @@ const initializeForm = () => {
   defaultWrapperOptions.shallow = false
 
   formInitialized = true
-
-  defaultWrapperOptions.props ||= {}
-
-  // Reset the defult of 20ms for testing.
-  defaultWrapperOptions.props.delay = 0
 }
 
 const getWrapper: typeof mount = <Props>(
@@ -114,8 +111,15 @@ const getWrapper: typeof mount = <Props>(
     initializeForm()
   }
 
+  if (wrapperOptions?.form && wrapperOptions?.formField) {
+    defaultWrapperOptions.props ||= {}
+
+    // Reset the defult of 20ms for testing.
+    defaultWrapperOptions.props.delay = 0
+  }
+
   const localWrapperOptions: ExtendedMountingOptions<Props> = merge(
-    defaultWrapperOptions,
+    cloneDeep(defaultWrapperOptions),
     wrapperOptions,
   )
 

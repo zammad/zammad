@@ -1,0 +1,46 @@
+// Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
+import { Story } from '@storybook/vue3'
+import { FormKit } from '@formkit/vue'
+import defaultArgTypes from '@/stories/support/form/field/defaultArgTypes'
+
+export default {
+  title: 'Form/Field/Inputs/Color',
+  component: FormKit,
+  argTypes: {
+    ...defaultArgTypes,
+    value: {
+      name: 'value',
+      type: { name: 'string', required: false },
+      description: '',
+      table: {
+        type: { summary: 'string' },
+      },
+      control: {
+        type: 'color',
+      },
+    },
+  },
+  parameters: {
+    docs: {
+      description: {
+        component:
+          '[FormKit Built-In - Color](https://formkit.com/inputs/color)',
+      },
+    },
+  },
+}
+
+const Template: Story = (args) => ({
+  components: { FormKit },
+  setup() {
+    return { args }
+  },
+  template: '<FormKit type="color" v-bind="args"/>',
+})
+
+export const Default = Template.bind({})
+Default.args = {
+  label: 'Color',
+  name: 'color',
+}

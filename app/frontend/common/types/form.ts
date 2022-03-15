@@ -5,6 +5,7 @@ import type {
   FormKitClasses,
   FormKitFrameworkContext,
   FormKitPlugin,
+  FormKitSchemaAttributes,
   FormKitSchemaCondition,
   FormKitSchemaNode,
   FormKitTypeDefinition,
@@ -59,7 +60,6 @@ export interface FormSchemaField extends FormFieldAdditionalProps {
   classes?: Record<string, string | Record<string, boolean> | FormKitClasses>
   delay?: number
   errors?: string[]
-  inputErrors?: Record<string, string[]>
   id?: string
   plugins?: FormKitPlugin[]
   sectionsSchema?: Record<
@@ -70,16 +70,30 @@ export interface FormSchemaField extends FormFieldAdditionalProps {
   validation?: string | Array<[rule: string, ...args: any]>
   validationMessages?: FormKitValidationMessages
   validationRules?: FormKitValidationRules
-  validationVisibility?: FormValidationVisibility
+  validationVisibility?: Exclude<
+    FormValidationVisibility,
+    FormValidationVisibility.submit
+  >
 }
 
-export interface FormSchemaLayout {
+interface FormSchemaLayoutBase {
   isLayout: boolean
-  children: FormSchemaField[]
-  props: {
-    columns?: number
+}
+
+export interface FormSchemaComponent extends FormSchemaLayoutBase {
+  component: string
+  props?: {
+    [index: string]: unknown
   }
-  // TODO: add addtional stuff, when the form layout component is more ready
+}
+
+export interface FormSchemaDOMElement extends FormSchemaLayoutBase {
+  element: string
+  attrs?: FormKitSchemaAttributes
+}
+
+export type FormSchemaLayout = (FormSchemaComponent | FormSchemaDOMElement) & {
+  children: (FormSchemaLayout | FormSchemaField | string)[] | string
 }
 
 export type FormSchemaNode = FormSchemaLayout | FormSchemaField

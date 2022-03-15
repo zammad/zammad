@@ -75,7 +75,7 @@ const linkClass = computed(() => {
   let classes = 'text-blue hover:underline'
 
   if (props.disabled) {
-    classes += ' pointer-events-none text-gray-100/75'
+    classes += ' pointer-events-none text-gray-300/75'
   }
 
   return classes

@@ -6,10 +6,6 @@ import { Story } from '@storybook/vue3'
 export default {
   title: 'Common/DateTime',
   component: CommonDateTime,
-  args: {
-    dateTime: '',
-    customFormat: '',
-  },
   argTypes: {
     dateTime: {
       type: {
@@ -20,7 +16,7 @@ export default {
         type: 'date',
       },
     },
-    customFormat: {
+    format: {
       control: { type: 'select' },
       options: ['absolute', 'relative'],
     },
@@ -38,11 +34,11 @@ const Template: Story = (args) => ({
 export const AbsoluteDateTime = Template.bind({})
 AbsoluteDateTime.args = {
   dateTime: '2020-10-10 10:10:11',
-  customFormat: 'absolute',
+  format: 'absolute',
 }
 
 export const RelativeDateTime = Template.bind({})
 RelativeDateTime.args = {
   dateTime: '2020-10-10 10:10:11',
-  customFormat: 'relative',
+  format: 'relative',
 }

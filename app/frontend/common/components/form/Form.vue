@@ -2,26 +2,31 @@
 
 <template>
   <FormKit
-    v-if="Object.keys(schemaData.fields).length > 0"
+    v-if="Object.keys(schemaData.fields).length > 0 || $slots.fields"
     v-bind:id="formId"
     v-model="values"
     type="form"
     v-bind:config="formConfig"
     v-bind:form-class="localClass"
     v-bind:actions="false"
+    v-bind:incomplete-message="false"
     v-bind:plugins="localFormKitPlugins"
     v-bind:sections-schema="formKitSectionsSchema"
     v-on:node="setFormNode"
     v-on:submit="onSubmit"
   >
     <slot name="before-fields" />
-    <FormKitSchema
-      v-bind:schema="staticSchema"
-      v-bind:data="schemaData"
-      v-bind:library="additionalComponentLibrary"
-    />
+    <template v-if="!$slots.fields">
+      <FormKitSchema
+        v-bind:schema="staticSchema"
+        v-bind:data="schemaData"
+        v-bind:library="additionalComponentLibrary"
+      />
+    </template>
+    <template v-else>
+      <slot name="fields" />
+    </template>
     <slot name="after-fields" />
-    <slot name="buttons" />
   </FormKit>
 </template>
 
@@ -53,6 +58,8 @@ import type {
   FormKitSchemaCondition,
   FormKitNode,
   FormKitClasses,
+  FormKitSchemaDOMNode,
+  FormKitSchemaComponent,
 } from '@formkit/core'
 import getUuid from '@common/utils/getUuid'
 
@@ -164,7 +171,9 @@ const updateSchemaDataField = (field: FormSchemaField) => {
 }
 
 const buildStaticSchema = (schema: FormSchemaNode[]) => {
-  const buildFormKitField = (field: FormSchemaField) => {
+  const buildFormKitField = (
+    field: FormSchemaField,
+  ): FormKitSchemaComponent => {
     return {
       $cmp: 'FormKit',
       if: `$fields.${field.name}.show`,
@@ -178,26 +187,64 @@ const buildStaticSchema = (schema: FormSchemaNode[]) => {
     }
   }
 
-  schema.forEach((field) => {
-    if ((field as FormSchemaLayout).isLayout) {
-      const layoutItem = field as FormSchemaLayout
-      const childrens = layoutItem.children.map((childField) => {
-        updateSchemaDataField(childField)
-
-        return buildFormKitField(childField)
-      })
-
-      staticSchema.push({
-        $cmp: 'FormLayout',
+  const getLayoutType = (
+    layoutItem: FormSchemaLayout,
+  ): FormKitSchemaDOMNode | FormKitSchemaComponent => {
+    if ('component' in layoutItem) {
+      return {
+        $cmp: layoutItem.component,
         props: layoutItem.props,
-        children: childrens,
-      })
+      }
+    }
+
+    return {
+      $el: layoutItem.element,
+      attrs: layoutItem.attrs,
+    }
+  }
+
+  schema.forEach((node) => {
+    if ((node as FormSchemaLayout).isLayout) {
+      const layoutItem = node as FormSchemaLayout
+
+      if (typeof layoutItem.children === 'string') {
+        staticSchema.push({
+          ...getLayoutType(layoutItem),
+          children: layoutItem.children,
+        })
+      } else {
+        const childrens = layoutItem.children.map((childNode) => {
+          if (typeof childNode === 'string') {
+            return childNode
+          }
+          if ((childNode as FormSchemaLayout).isLayout) {
+            return {
+              ...getLayoutType(childNode as FormSchemaLayout),
+              children: childNode.children as
+                | string
+                | FormKitSchemaNode[]
+                | FormKitSchemaCondition,
+            }
+          }
+
+          updateSchemaDataField(childNode as FormSchemaField)
+          return buildFormKitField(childNode as FormSchemaField)
+        })
+
+        staticSchema.push({
+          ...getLayoutType(layoutItem),
+          children: childrens,
+        })
+      }
     } else {
-      const localField = field as FormSchemaField
+      const field = node as FormSchemaField
 
-      staticSchema.push(buildFormKitField(localField))
+      // TODO: maybe we can also add better support for Group and List fields, when this bug is fixed:
+      // https://github.com/formkit/formkit/issues/91
 
-      updateSchemaDataField(localField)
+      staticSchema.push(buildFormKitField(field))
+
+      updateSchemaDataField(field)
     }
   })
 }

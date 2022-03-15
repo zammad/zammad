@@ -9,6 +9,7 @@ import { nextTick } from 'vue'
 
 const wrapperParameters = {
   form: true,
+  formField: true,
 }
 
 let wrapper = getWrapper(FormKit, {
@@ -20,7 +21,7 @@ let wrapper = getWrapper(FormKit, {
   },
 })
 
-describe('FormField - Textarea (Formkit-BuildIn)', () => {
+describe('Form - Field - Textarea (Formkit-BuildIn)', () => {
   it('mounts successfully', () => {
     expect(wrapper.exists()).toBe(true)
   })

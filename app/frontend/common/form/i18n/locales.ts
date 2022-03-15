@@ -50,6 +50,16 @@ const loadLocales = (): FormKitLocaleExtended => {
       },
 
       /**
+       * The value is not letter and/or spaces
+       * @see {@link https://docs.formkit.com/essentials/validation#alpha-spaces}
+       */
+      alpha_spaces() {
+        /* <i18n case="Shown when the user-provided value contains non-alphabetical and non-space characters."> */
+        return i18n.t('This field can only contain letters and spaces.')
+        /* </i18n> */
+      },
+
+      /**
        * The date is not after
        * @see {@link https://docs.formkit.com/essentials/validation#date-after}
        */

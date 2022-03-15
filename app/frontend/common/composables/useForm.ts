@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { FormKitGroupValue, getNode } from '@formkit/core'
+import { getNode } from '@formkit/core'
 import log from '@common/utils/log'
 
 // TODO: only a start, needs to be extended...

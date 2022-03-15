@@ -7,6 +7,9 @@ import { i18n } from '@common/utils/i18n'
 import { app } from '@storybook/vue3'
 import 'virtual:svg-icons-register' // eslint-disable-line import/no-unresolved
 import initializeStore from '@common/stores'
+import initializeForm, { getFormPlugins } from '@common/form'
+import type { ImportGlobEagerOutput } from '@common/types/utils'
+import type { FormKitPlugin } from '@formkit/core'
 import { createRouter, createWebHashHistory, type Router } from 'vue-router'
 
 // Adds the translations to storybook.
@@ -15,6 +18,16 @@ app.config.globalProperties.i18n = i18n
 // Initialize the needed core components and plugins.
 initializeGlobalComponents(app)
 initializeStore(app)
+
+// Initialize the FormKit plugin witht he needed fields ands internal FormKit plugins.
+const mobilePluginModules: ImportGlobEagerOutput<FormKitPlugin> =
+  import.meta.globEager('../app/frontend/apps/mobile/form/plugins/*.ts')
+const mobileFieldModules: ImportGlobEagerOutput<FormFieldTypeImportModules> =
+  import.meta.globEager(
+    '../app/frontend/apps/mobile/components/form/field/**/*.ts',
+  )
+const plugins = getFormPlugins(mobilePluginModules)
+initializeForm(app, mobileFieldModules, plugins)
 
 const router: Router = createRouter({
   history: createWebHashHistory(),
