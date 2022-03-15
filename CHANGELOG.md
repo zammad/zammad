@@ -4,6 +4,7 @@
 
 [Full Changelog](https://github.com/zammad/zammad/compare/5.0.2...5.0.3)
 
+
 **Implemented enhancements:**
 
 - Possibility to specify the order of objects [294](https://github.com/zammad/zammad/issues/294) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)] [[UX/UI](https://github.com/zammad/zammad/labels/UX/UI)] [[object manager attribute](https://github.com/zammad/zammad/labels/object manager attribute)]
