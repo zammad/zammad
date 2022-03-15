@@ -141,7 +141,7 @@ For use in #search_index_attribute_lookup
         data[:preferences] = attachment[:preferences]
       end
 
-      article_store.push Store.add(data)
+      article_store.push Store.create!(data)
     end
   end
 end

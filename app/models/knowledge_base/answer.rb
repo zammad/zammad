@@ -62,7 +62,7 @@ class KnowledgeBase::Answer < ApplicationModel
     filename     = file.try(:original_filename) || File.basename(file.path)
     content_type = file.try(:content_type) || MIME::Types.type_for(filename).first&.content_type || 'application/octet-stream'
 
-    Store.add(
+    Store.create!(
       object:      self.class.name,
       o_id:        id,
       data:        file.read,

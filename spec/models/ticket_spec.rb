@@ -739,17 +739,15 @@ RSpec.describe Ticket, type: :model do
               UserInfo.current_user_id = 1
               ticket_article = create(:ticket_article, ticket: ticket)
 
-              Store.add(
-                object:        'Ticket::Article',
-                o_id:          ticket_article.id,
-                data:          'dGVzdCAxMjM=',
-                filename:      'some_file.pdf',
-                preferences:   {
-                  'Content-Type': 'image/pdf',
-                  'Content-ID':   'image/pdf@01CAB192.K8H512Y9',
-                },
-                created_by_id: 1,
-              )
+              create(:store,
+                     object:      'Ticket::Article',
+                     o_id:        ticket_article.id,
+                     data:        'dGVzdCAxMjM=',
+                     filename:    'some_file.pdf',
+                     preferences: {
+                       'Content-Type': 'image/pdf',
+                       'Content-ID':   'image/pdf@01CAB192.K8H512Y9',
+                     })
             end
 
             include_examples 'add attachment to new article'
@@ -777,17 +775,15 @@ RSpec.describe Ticket, type: :model do
               UserInfo.current_user_id = 1
               ticket_article = create(:ticket_article, ticket: ticket)
 
-              Store.add(
-                object:        'Ticket::Article',
-                o_id:          ticket_article.id,
-                data:          'dGVzdCAxMjM=',
-                filename:      'some_file.pdf',
-                preferences:   {
-                  'Content-Type': 'image/pdf',
-                  'Content-ID':   'image/pdf@01CAB192.K8H512Y9',
-                },
-                created_by_id: 1,
-              )
+              create(:store,
+                     object:      'Ticket::Article',
+                     o_id:        ticket_article.id,
+                     data:        'dGVzdCAxMjM=',
+                     filename:    'some_file.pdf',
+                     preferences: {
+                       'Content-Type': 'image/pdf',
+                       'Content-ID':   'image/pdf@01CAB192.K8H512Y9',
+                     })
             end
 
             include_examples 'does not add attachment to new article'
@@ -2194,13 +2190,11 @@ RSpec.describe Ticket, type: :model do
 
   describe '.search_index_attribute_lookup_file_oversized?' do
     subject!(:store) do
-      Store.add(
-        object:        'SomeObject',
-        o_id:          1,
-        data:          'a' * ((1024**2) * 2.4), # with 2.4 mb
-        filename:      'test.TXT',
-        created_by_id: 1,
-      )
+      create(:store,
+             object:   'SomeObject',
+             o_id:     1,
+             data:     'a' * ((1024**2) * 2.4), # with 2.4 mb
+             filename: 'test.TXT')
     end
 
     context 'when total payload is ok' do
@@ -2223,13 +2217,11 @@ RSpec.describe Ticket, type: :model do
   describe '.search_index_attribute_lookup_file_ignored?' do
     context 'when attachment is indexable' do
       subject!(:store_with_indexable_extention) do
-        Store.add(
-          object:        'SomeObject',
-          o_id:          1,
-          data:          'some content',
-          filename:      'test.TXT',
-          created_by_id: 1,
-        )
+        create(:store,
+               object:   'SomeObject',
+               o_id:     1,
+               data:     'some content',
+               filename: 'test.TXT')
       end
 
       it 'return false' do
@@ -2239,13 +2231,11 @@ RSpec.describe Ticket, type: :model do
 
     context 'when attachment is no indexable' do
       subject!(:store_without_indexable_extention) do
-        Store.add(
-          object:        'SomeObject',
-          o_id:          1,
-          data:          'some content',
-          filename:      'test.BIN',
-          created_by_id: 1,
-        )
+        create(:store,
+               object:   'SomeObject',
+               o_id:     1,
+               data:     'some content',
+               filename: 'test.BIN')
       end
 
       it 'return true' do
@@ -2259,36 +2249,30 @@ RSpec.describe Ticket, type: :model do
 
     let(:search_index_attribute_lookup) do
       article1 = create(:ticket_article, ticket: ticket)
-      Store.add(
-        object:        'Ticket::Article',
-        o_id:          article1.id,
-        data:          'some content',
-        filename:      'some_file.bin',
-        preferences:   {
-          'Content-Type' => 'text/plain',
-        },
-        created_by_id: 1,
-      )
-      Store.add(
-        object:        'Ticket::Article',
-        o_id:          article1.id,
-        data:          'a' * ((1024**2) * 2.4), # with 2.4 mb
-        filename:      'some_file.pdf',
-        preferences:   {
-          'Content-Type' => 'image/pdf',
-        },
-        created_by_id: 1,
-      )
-      Store.add(
-        object:        'Ticket::Article',
-        o_id:          article1.id,
-        data:          'a' * ((1024**2) * 5.8), # with 5,8 mb
-        filename:      'some_file.txt',
-        preferences:   {
-          'Content-Type' => 'text/plain',
-        },
-        created_by_id: 1,
-      )
+      create(:store,
+             object:      'Ticket::Article',
+             o_id:        article1.id,
+             data:        'some content',
+             filename:    'some_file.bin',
+             preferences: {
+               'Content-Type' => 'text/plain',
+             })
+      create(:store,
+             object:      'Ticket::Article',
+             o_id:        article1.id,
+             data:        'a' * ((1024**2) * 2.4), # with 2.4 mb
+             filename:    'some_file.pdf',
+             preferences: {
+               'Content-Type' => 'image/pdf',
+             })
+      create(:store,
+             object:      'Ticket::Article',
+             o_id:        article1.id,
+             data:        'a' * ((1024**2) * 5.8), # with 5,8 mb
+             filename:    'some_file.txt',
+             preferences: {
+               'Content-Type' => 'text/plain',
+             })
       create(:ticket_article, ticket: ticket, body: 'a' * ((1024**2) * 1.2)) # body with 1,2 mb
       create(:ticket_article, ticket: ticket)
       ticket.search_index_attribute_lookup

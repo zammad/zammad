@@ -7,16 +7,15 @@ require 'rails_helper'
 # This pattern is a strong candidate for refactoring
 # to make use of Rails' native ActiveRecord + callbacks functionality.
 RSpec.describe Store, type: :model do
-  subject(:store) { described_class.add(**attributes) }
+  subject(:store) { create(:store, **attributes) }
 
   let(:attributes) do
     {
-      object:        'Test',
-      o_id:          1,
-      data:          data,
-      filename:      filename,
-      preferences:   preferences,
-      created_by_id: 1,
+      object:      'Test',
+      o_id:        1,
+      data:        data,
+      filename:    filename,
+      preferences: preferences,
     }
   end
 
@@ -27,25 +26,25 @@ RSpec.describe Store, type: :model do
   describe 'Class methods:' do
     describe '.add' do
       it 'creates a new Store record' do
-        expect { described_class.add(**attributes) }.to change(described_class, :count).by(1)
+        expect { create(:store, **attributes) }.to change(described_class, :count).by(1)
       end
 
       it 'returns the newly created Store record' do
-        expect(described_class.add(**attributes)).to eq(described_class.last)
+        expect(create(:store, **attributes)).to eq(described_class.last)
       end
 
       it 'saves data to #content attribute' do
-        expect { described_class.add(**attributes) }
+        expect { create(:store, **attributes) }
           .to change { described_class.last&.content }.to('hello world')
       end
 
       it 'saves filename to #filename attribute' do
-        expect { described_class.add(**attributes) }
+        expect { create(:store, **attributes) }
           .to change { described_class.last&.filename }.to('test.txt')
       end
 
       it 'sets #provider attribute to "DB"' do
-        expect { described_class.add(**attributes) }
+        expect { create(:store, **attributes) }
           .to change { described_class.last&.provider }.to('DB')
       end
 
@@ -53,7 +52,7 @@ RSpec.describe Store, type: :model do
         let(:data) { 'hello world äöüß' }
 
         it 'stores data as binary string to #content attribute' do
-          expect { described_class.add(**attributes) }
+          expect { create(:store, **attributes) }
             .to change { described_class.last&.content }.to('hello world äöüß'.force_encoding('ASCII-8BIT'))
         end
       end
@@ -62,7 +61,7 @@ RSpec.describe Store, type: :model do
         let(:filename) { 'testäöüß.txt' }
 
         it 'stores filename verbatim to #filename attribute' do
-          expect { described_class.add(**attributes) }
+          expect { create(:store, **attributes) }
             .to change { described_class.last&.filename }.to('testäöüß.txt')
         end
       end
@@ -71,26 +70,26 @@ RSpec.describe Store, type: :model do
         let(:data) { File.binread(Rails.root.join('test/data/pdf/test1.pdf')) }
 
         it 'stores data as binary string to #content attribute' do
-          expect { described_class.add(**attributes) }
+          expect { create(:store, **attributes) }
             .to change { described_class.last&.content&.class }.to(String)
             .and change { described_class.last&.content }.to(data)
         end
 
         it 'saves filename to #filename attribute' do
-          expect { described_class.add(**attributes) }
+          expect { create(:store, **attributes) }
             .to change { described_class.last&.filename }.to('test.txt')
         end
 
         it 'sets #provider attribute to "DB"' do
-          expect { described_class.add(**attributes) }
+          expect { create(:store, **attributes) }
             .to change { described_class.last&.provider }.to('DB')
         end
 
         context 'when an identical file has been stored before under a different name' do
-          before { described_class.add(**attributes) }
+          before { create(:store, **attributes) }
 
           it 'creates a new (duplicate) described_class record' do
-            expect { described_class.add(**attributes.merge(filename: 'test-again.pdf')) }
+            expect { create(:store, **attributes.merge(filename: 'test-again.pdf')) }
               .to change(described_class, :count).by(1)
               .and change { described_class.last&.filename }.to('test-again.pdf')
               .and not_change { described_class.last&.content&.class }
@@ -104,7 +103,7 @@ RSpec.describe Store, type: :model do
         let(:preferences) { { content_type: 'image/jpg' } }
 
         it 'generates previews' do
-          described_class.add(**attributes)
+          create(:store, **attributes)
 
           expect(described_class.last.preferences)
             .to include(resizable: true, content_inline: true, content_preview: true)
@@ -114,7 +113,7 @@ RSpec.describe Store, type: :model do
           before { Setting.set('import_mode', true) }
 
           it 'does not generate previews' do
-            described_class.add(**attributes)
+            create(:store, **attributes)
 
             expect(described_class.last.preferences)
               .not_to include(resizable: true, content_inline: true, content_preview: true)
@@ -124,7 +123,7 @@ RSpec.describe Store, type: :model do
     end
 
     describe '.remove' do
-      before { described_class.add(**attributes) }
+      before { create(:store, **attributes) }
 
       it 'destroys the specified Store record' do
         expect { described_class.remove(object: 'Test', o_id: 1) }
@@ -137,7 +136,7 @@ RSpec.describe Store, type: :model do
       end
 
       context 'with the same file stored under multiple o_ids' do
-        before { described_class.add(**attributes.merge(o_id: 2)) }
+        before { create(:store, **attributes.merge(o_id: 2)) }
 
         it 'destroys only the specified Store record' do
           expect { described_class.remove(object: 'Test', o_id: 1) }
@@ -151,7 +150,7 @@ RSpec.describe Store, type: :model do
       end
 
       context 'with multiple files stored under the same o_id' do
-        before { described_class.add(**attributes.merge(data: 'bar')) }
+        before { create(:store, **attributes.merge(data: 'bar')) }
 
         it 'destroys all matching Store records' do
           expect { described_class.remove(object: 'Test', o_id: 1) }
@@ -167,14 +166,11 @@ RSpec.describe Store, type: :model do
 
     describe '.list' do
       let!(:store) do
-        described_class.add(
-          object:        'Test',
-          o_id:          1,
-          data:          'hello world',
-          filename:      'test.txt',
-          preferences:   {},
-          created_by_id: 1,
-        )
+        create(:store,
+               object:   'Test',
+               o_id:     1,
+               data:     'hello world',
+               filename: 'test.txt')
       end
 
       it 'runs a Store.where query for :object / :o_id parameters (:object is Store::Object association name)' do
@@ -202,15 +198,14 @@ RSpec.describe Store, type: :model do
     describe 'image previews (#content_inline / #content_preview)' do
       let(:attributes) do
         {
-          object:        'Test',
-          o_id:          1,
-          data:          data,
-          filename:      'test1.pdf',
-          preferences:   {
+          object:      'Test',
+          o_id:        1,
+          data:        data,
+          filename:    'test1.pdf',
+          preferences: {
             content_type: content_type,
             content_id:   234,
-          },
-          created_by_id: 1,
+          }
         }
       end
 

@@ -122,7 +122,7 @@ RSpec.describe 'Ticket Shared Draft Start', type: :system, authenticated_as: :au
 
   context 'update' do
     before do
-      attach(id: draft.id, object_name: draft.class.name)
+      create(:store_image, o_id: draft.id, object: draft.class.name)
       click :draft_sidebar_button
 
       within :draft_sidebar do
@@ -217,7 +217,7 @@ RSpec.describe 'Ticket Shared Draft Start', type: :system, authenticated_as: :au
 
   context 'apply' do
     before do
-      attach(id: draft.id, object_name: draft.class.name)
+      create(:store_image, o_id: draft.id, object: draft.class.name)
       click :draft_sidebar_button
 
       within :draft_sidebar do

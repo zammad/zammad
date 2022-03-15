@@ -26,10 +26,10 @@ RSpec.describe Import::OTRS::Article::AttachmentFactory do
   end
 
   def import_expectations
-    expect(Store).to receive(:add).exactly(3).times.with(hash_including(
-                                                           object: 'Ticket::Article',
-                                                           o_id:   local_article.id,
-                                                         ))
+    expect(Store).to receive(:create!).exactly(3).times.with(hash_including(
+                                                               object: 'Ticket::Article',
+                                                               o_id:   local_article.id,
+                                                             ))
   end
 
   def article_attachment_expectations(article_attachments)
@@ -54,7 +54,7 @@ RSpec.describe Import::OTRS::Article::AttachmentFactory do
 
   it 'skips import for same count' do
     article_attachment_expectations([1, 2, 3])
-    expect(Store).not_to receive(:add)
+    expect(Store).not_to receive(:create!)
     start_import
   end
 end

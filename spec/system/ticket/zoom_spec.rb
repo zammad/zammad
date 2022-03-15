@@ -138,16 +138,14 @@ RSpec.describe 'Ticket zoom', type: :system do
     let(:attachment_name) { 'some_file.txt' }
 
     before do
-      Store.add(
-        object:        'Ticket::Article',
-        o_id:          article.id,
-        data:          'some content',
-        filename:      attachment_name,
-        preferences:   {
-          'Content-Type' => 'text/plain',
-        },
-        created_by_id: 1,
-      )
+      create(:store,
+             object:      'Ticket::Article',
+             o_id:        article.id,
+             data:        'some content',
+             filename:    attachment_name,
+             preferences: {
+               'Content-Type' => 'text/plain',
+             })
     end
 
     context 'article was already forwarded once' do
@@ -1337,16 +1335,14 @@ RSpec.describe 'Ticket zoom', type: :system do
 
       # create a on-the-fly article with attachment that will get pushed to open browser
       article1 = create(:ticket_article, ticket: ticket)
-      Store.add(
-        object:        'Ticket::Article',
-        o_id:          article1.id,
-        data:          'some content',
-        filename:      'some_file.txt',
-        preferences:   {
-          'Content-Type' => 'text/plain',
-        },
-        created_by_id: 1,
-      )
+      create(:store,
+             object:      'Ticket::Article',
+             o_id:        article1.id,
+             data:        'some content',
+             filename:    'some_file.txt',
+             preferences: {
+               'Content-Type' => 'text/plain',
+             })
 
       # wait for article to be added to the page
       expect(page).to have_css('.ticket-article-item', count: 2)
@@ -2549,16 +2545,14 @@ RSpec.describe 'Ticket zoom', type: :system do
     let(:article2)         { create(:ticket_article, ticket: ticket) }
 
     def attachment_add(article, filename)
-      Store.add(
-        object:        'Ticket::Article',
-        o_id:          article.id,
-        data:          "content #{filename}",
-        filename:      filename,
-        preferences:   {
-          'Content-Type' => 'text/plain',
-        },
-        created_by_id: 1,
-      )
+      create(:store,
+             object:      'Ticket::Article',
+             o_id:        article.id,
+             data:        "content #{filename}",
+             filename:    filename,
+             preferences: {
+               'Content-Type' => 'text/plain',
+             })
     end
 
     def authenticate

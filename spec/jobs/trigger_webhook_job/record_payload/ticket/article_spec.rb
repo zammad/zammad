@@ -27,16 +27,15 @@ RSpec.describe TriggerWebhookJob::RecordPayload::Ticket::Article do
     context 'when Article has stored attachments' do
 
       before do
-        Store.add(
-          object:        record.class.name,
-          o_id:          record.id,
-          data:          'some content',
-          filename:      'some_file.txt',
-          preferences:   {
-            'Content-Type' => 'text/plain',
-          },
-          created_by_id: 1,
-        )
+        create(:store,
+               object:        record.class.name,
+               o_id:          record.id,
+               data:          'some content',
+               filename:      'some_file.txt',
+               preferences:   {
+                 'Content-Type' => 'text/plain',
+               },
+               created_by_id: 1,)
       end
 
       it 'adds URLs to attachments' do

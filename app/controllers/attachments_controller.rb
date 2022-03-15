@@ -32,7 +32,7 @@ class AttachmentsController < ApplicationController
       'Content-Type' => content_type
     }
 
-    store = Store.add(
+    store = Store.create!(
       object:      'UploadCache',
       o_id:        params[:form_id],
       data:        file.read,

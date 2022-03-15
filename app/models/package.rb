@@ -267,7 +267,7 @@ subsequently in a separate step.
       # store package
       if !data[:reinstall]
         package_db = Package.create(meta)
-        Store.add(
+        Store.create!(
           object:        'Package',
           o_id:          package_db.id,
           data:          package.to_json,

@@ -116,13 +116,11 @@ RSpec.describe 'Monitoring', type: :request do
         string += 'Some Text Some Text Some Text Some Text Some Text Some Text Some Text Some Text'
       end
 
-      Store.add(
-        object:        'User',
-        o_id:          1,
-        data:          string,
-        filename:      'filename.txt',
-        created_by_id: 1,
-      )
+      create(:store,
+             object:   'User',
+             o_id:     1,
+             data:     string,
+             filename: 'filename.txt')
 
       # health_check
       get "/api/v1/monitoring/health_check?token=#{token}", params: {}, as: :json
@@ -159,13 +157,11 @@ RSpec.describe 'Monitoring', type: :request do
       end
 
       # save same file again
-      Store.add(
-        object:        'User',
-        o_id:          1,
-        data:          string,
-        filename:      'filename.txt',
-        created_by_id: 1,
-      )
+      create(:store,
+             object:   'User',
+             o_id:     1,
+             data:     string,
+             filename: 'filename.txt')
 
       # status
       get "/api/v1/monitoring/status?token=#{token}", params: {}, as: :json
@@ -190,13 +186,11 @@ RSpec.describe 'Monitoring', type: :request do
         expect(json_response['storage']).to be_falsey
       end
 
-      Store.add(
-        object:        'User',
-        o_id:          1,
-        data:          "#{string}123",
-        filename:      'filename2.txt',
-        created_by_id: 1,
-      )
+      create(:store,
+             object:   'User',
+             o_id:     1,
+             data:     "#{string}123",
+             filename: 'filename2.txt')
 
       # status
       get "/api/v1/monitoring/status?token=#{token}", params: {}, as: :json

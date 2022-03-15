@@ -19,16 +19,14 @@ RSpec.describe 'Ticket Article Attachments', type: :request, authenticated_as: -
 
       let(:store_file_content_type) { 'text/plain' }
       let!(:store_file) do
-        Store.add(
-          object:        'Ticket::Article',
-          o_id:          article1.id,
-          data:          'some content',
-          filename:      'some_file.txt',
-          preferences:   {
-            'Content-Type' => store_file_content_type,
-          },
-          created_by_id: 1,
-        )
+        create(:store,
+               object:      'Ticket::Article',
+               o_id:        article1.id,
+               data:        'some content',
+               filename:    'some_file.txt',
+               preferences: {
+                 'Content-Type' => store_file_content_type,
+               })
       end
 
       context 'with one article attachment' do

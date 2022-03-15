@@ -64,7 +64,7 @@ returns
       end
       next if already_added == true
 
-      file = Store.add(
+      file = Store.create!(
         object:      object_type,
         o_id:        object_id,
         data:        new_attachment.content,
@@ -83,7 +83,7 @@ returns
     Store
       .list(object: source_object_name, o_id: form_id)
       .map do |old_attachment|
-        Store.add(
+        Store.create!(
           object:      self.class.name,
           o_id:        id,
           data:        old_attachment.content,

@@ -192,7 +192,7 @@ add avatar by url
     # store images
     object_name = "Avatar::#{data[:object]}"
     if data[:full].present?
-      store_full = Store.add(
+      store_full = Store.create!(
         object:        "#{object_name}::Full",
         o_id:          data[:o_id],
         data:          data[:full][:content],
@@ -206,7 +206,7 @@ add avatar by url
       record[:store_hash]    = Digest::MD5.hexdigest(data[:full][:content])
     end
     if data[:resize].present?
-      store_resize = Store.add(
+      store_resize = Store.create!(
         object:        "#{object_name}::Resize",
         o_id:          data[:o_id],
         data:          data[:resize][:content],

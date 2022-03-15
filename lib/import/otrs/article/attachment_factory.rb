@@ -32,7 +32,7 @@ module Import
           @@mutex.synchronize do
             # rubocop:enable Style/ClassVars
 
-            Store.add(
+            Store.create!(
               object:        'Ticket::Article',
               o_id:          local_article.id,
               filename:      decoded_filename.force_encoding('utf-8'),

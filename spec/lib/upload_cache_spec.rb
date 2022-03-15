@@ -96,15 +96,14 @@ RSpec.describe UploadCache do
 
     it 'prevents removage of non UploadCache Store items' do
 
-      item = Store.add(
-        object:      'Ticket',
-        o_id:        1,
-        data:        "Can't touch this",
-        filename:    'keep.txt',
-        preferences: {
-          'Content-Type' => 'text/plain',
-        },
-      )
+      item = create(:store,
+                    object:      'Ticket',
+                    o_id:        1,
+                    data:        "Can't touch this",
+                    filename:    'keep.txt',
+                    preferences: {
+                      'Content-Type' => 'text/plain',
+                    },)
 
       expect { upload_cache.remove_item(item.id) }.to raise_error(Exceptions::UnprocessableEntity)
     end

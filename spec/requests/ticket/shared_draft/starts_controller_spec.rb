@@ -101,7 +101,7 @@ RSpec.describe 'Ticket Shared Drafts Start API endpoints', authenticated_as: :ag
       end
 
       it 'creates draft with attachment' do
-        attach(id: form_id)
+        create(:store_image, o_id: form_id)
 
         post path, params: base_params, as: :json
 
@@ -137,7 +137,7 @@ RSpec.describe 'Ticket Shared Drafts Start API endpoints', authenticated_as: :ag
       end
 
       it 'updates draft with attachment' do
-        attach(id: form_id)
+        create(:store_image, o_id: form_id)
 
         expect { patch path_draft_a, params: base_params, as: :json }
           .to change { draft_a.attachments.count }
@@ -145,7 +145,7 @@ RSpec.describe 'Ticket Shared Drafts Start API endpoints', authenticated_as: :ag
       end
 
       it 'updates draft to have no attachments' do
-        attach(id: draft_a.id, object_name: draft_a.class.name)
+        create(:store_image, o_id: draft_a.id, object: draft_a.class.name)
 
         expect { patch path_draft_a, params: base_params, as: :json }
           .to change { draft_a.attachments.count }
@@ -220,7 +220,7 @@ RSpec.describe 'Ticket Shared Drafts Start API endpoints', authenticated_as: :ag
       end
 
       it 'imports attachments from draft to given form ID' do
-        attach(id: draft_a.id, object_name: draft_a.class.name)
+        create(:store_image, o_id: draft_a.id, object: draft_a.class.name)
 
         expect { post import_path, params: import_params, as: :json }
           .to change { Store.list(object: 'UploadCache', o_id: form_id).count }

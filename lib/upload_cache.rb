@@ -19,7 +19,7 @@ class UploadCache
 
   # Adds a Store item with the given attributes for the form_id.
   #
-  # @see Store#add
+  # @see Store#create!
   #
   # @example
   #   cache = UploadCache.new(form_id)
@@ -33,7 +33,7 @@ class UploadCache
   #
   # @return [Store] the created Store item
   def add(args)
-    Store.add(
+    Store.create!(
       args.merge(
         object: store_object,
         o_id:   id,

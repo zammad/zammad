@@ -10,16 +10,15 @@ RSpec.describe ApplicationController::HasDownload::DownloadFile do
   let(:file_name) { 'example.pdf' }
 
   let(:stored_file) do
-    Store.add(
-      object:        'Ticket',
-      o_id:          1,
-      data:          file_data,
-      filename:      file_name,
-      preferences:   {
-        'Content-Type' => file_content_type,
-      },
-      created_by_id: 1,
-    )
+    create(:store,
+           object:        'Ticket',
+           o_id:          1,
+           data:          file_data,
+           filename:      file_name,
+           preferences:   {
+             'Content-Type' => file_content_type,
+           },
+           created_by_id: 1,)
   end
 
   describe '#disposition' do

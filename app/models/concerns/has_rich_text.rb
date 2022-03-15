@@ -80,7 +80,7 @@ Checks if file is used inline
     return if has_rich_text_attachments_cache.blank?
 
     has_rich_text_attachments_cache.each do |attachment_cache|
-      Store.add(
+      Store.create!(
         object:      self.class.name,
         o_id:        id,
         data:        attachment_cache[:data],

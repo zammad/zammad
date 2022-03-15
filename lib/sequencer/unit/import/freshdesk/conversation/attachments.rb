@@ -61,7 +61,7 @@ class Sequencer
             def store_attachment(attachment, response)
 
               self.class.mutex.synchronize do
-                ::Store.add(
+                ::Store.create!(
                   object:        model_class.name,
                   o_id:          instance.id,
                   data:          response.body,

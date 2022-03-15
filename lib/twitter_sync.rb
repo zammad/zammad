@@ -362,7 +362,7 @@ class TwitterSync
     )
 
     attachments.each do |attachment|
-      Store.add(
+      Store.create!(
         object:      'Ticket::Article',
         o_id:        article.id,
         data:        attachment[:content],

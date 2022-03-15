@@ -332,70 +332,60 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
         body:         '<b>test</b> <img src="cid:15.274327094.140938@ZAMMAD.example.com"/> test <img src="cid:15.274327094.140938.3@ZAMMAD.example.com"/>',
         content_type: 'text/html',
       )
-      Store.add(
-        object:        'Ticket::Article',
-        o_id:          article.id,
-        data:          'content_file1_normally_should_be_an_image',
-        filename:      'some_file1.jpg',
-        preferences:   {
-          'Content-Type'        => 'image/jpeg',
-          'Mime-Type'           => 'image/jpeg',
-          'Content-ID'          => '15.274327094.140938@zammad.example.com',
-          'Content-Disposition' => 'inline',
-        },
-        created_by_id: 1,
-      )
-      Store.add(
-        object:        'Ticket::Article',
-        o_id:          article.id,
-        data:          'content_file2_normally_should_be_an_image',
-        filename:      'some_file2.jpg',
-        preferences:   {
-          'Content-Type'        => 'image/jpeg',
-          'Mime-Type'           => 'image/jpeg',
-          'Content-ID'          => '15.274327094.140938.2@zammad.example.com',
-          'Content-Disposition' => 'inline',
-        },
-        created_by_id: 1,
-      )
-      Store.add(
-        object:        'Ticket::Article',
-        o_id:          article.id,
-        data:          'content_file3_normally_should_be_an_image',
-        filename:      'some_file3.jpg',
-        preferences:   {
-          'Content-Type' => 'image/jpeg',
-          'Mime-Type'    => 'image/jpeg',
-          'Content-ID'   => '15.274327094.140938.3@zammad.example.com',
-        },
-        created_by_id: 1,
-      )
-      Store.add(
-        object:        'Ticket::Article',
-        o_id:          article.id,
-        data:          'content_file4_normally_should_be_an_image',
-        filename:      'some_file4.jpg',
-        preferences:   {
-          'Content-Type' => 'image/jpeg',
-          'Mime-Type'    => 'image/jpeg',
-          'Content-ID'   => '15.274327094.140938.4@zammad.example.com',
-        },
-        created_by_id: 1,
-      )
-      Store.add(
-        object:        'Ticket::Article',
-        o_id:          article.id,
-        data:          'content_file1_normally_should_be_an_pdf',
-        filename:      'Rechnung_RE-2018-200.pdf',
-        preferences:   {
-          'Content-Type'        => 'application/octet-stream; name="Rechnung_RE-2018-200.pdf"',
-          'Mime-Type'           => 'application/octet-stream',
-          'Content-ID'          => '8AB0BEC88984EE4EBEF643C79C8E0346@zammad.example.com',
-          'Content-Description' => 'Rechnung_RE-2018-200.pdf',
-          'Content-Disposition' => 'attachment',
-        },
-        created_by_id: 1,
-      )
+      create(:store,
+             object:      'Ticket::Article',
+             o_id:        article.id,
+             data:        'content_file1_normally_should_be_an_image',
+             filename:    'some_file1.jpg',
+             preferences: {
+               'Content-Type'        => 'image/jpeg',
+               'Mime-Type'           => 'image/jpeg',
+               'Content-ID'          => '15.274327094.140938@zammad.example.com',
+               'Content-Disposition' => 'inline',
+             })
+      create(:store,
+             object:      'Ticket::Article',
+             o_id:        article.id,
+             data:        'content_file2_normally_should_be_an_image',
+             filename:    'some_file2.jpg',
+             preferences: {
+               'Content-Type'        => 'image/jpeg',
+               'Mime-Type'           => 'image/jpeg',
+               'Content-ID'          => '15.274327094.140938.2@zammad.example.com',
+               'Content-Disposition' => 'inline',
+             })
+      create(:store,
+             object:      'Ticket::Article',
+             o_id:        article.id,
+             data:        'content_file3_normally_should_be_an_image',
+             filename:    'some_file3.jpg',
+             preferences: {
+               'Content-Type' => 'image/jpeg',
+               'Mime-Type'    => 'image/jpeg',
+               'Content-ID'   => '15.274327094.140938.3@zammad.example.com',
+             })
+      create(:store,
+             object:      'Ticket::Article',
+             o_id:        article.id,
+             data:        'content_file4_normally_should_be_an_image',
+             filename:    'some_file4.jpg',
+             preferences: {
+               'Content-Type' => 'image/jpeg',
+               'Mime-Type'    => 'image/jpeg',
+               'Content-ID'   => '15.274327094.140938.4@zammad.example.com',
+             })
+      create(:store,
+             object:      'Ticket::Article',
+             o_id:        article.id,
+             data:        'content_file1_normally_should_be_an_pdf',
+             filename:    'Rechnung_RE-2018-200.pdf',
+             preferences: {
+               'Content-Type'        => 'application/octet-stream; name="Rechnung_RE-2018-200.pdf"',
+               'Mime-Type'           => 'application/octet-stream',
+               'Content-ID'          => '8AB0BEC88984EE4EBEF643C79C8E0346@zammad.example.com',
+               'Content-Description' => 'Rechnung_RE-2018-200.pdf',
+               'Content-Disposition' => 'attachment',
+             })
 
       params = {
         form_id: 'new_form_id123',
@@ -431,46 +421,40 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
         updated_by_id: 1,
         created_by_id: 1,
       )
-      Store.add(
-        object:        'Ticket::Article',
-        o_id:          article.id,
-        data:          'content_file1_normally_should_be_an_image',
-        filename:      'some_file1.jpg',
-        preferences:   {
-          'Content-Type'        => 'image/jpeg',
-          'Mime-Type'           => 'image/jpeg',
-          'Content-ID'          => '15.274327094.140938@zammad.example.com',
-          'Content-Disposition' => 'inline',
-        },
-        created_by_id: 1,
-      )
-      Store.add(
-        object:        'Ticket::Article',
-        o_id:          article.id,
-        data:          'content_file1_normally_should_be_an_image',
-        filename:      'some_file2.jpg',
-        preferences:   {
-          'Content-Type'        => 'image/jpeg',
-          'Mime-Type'           => 'image/jpeg',
-          'Content-ID'          => '15.274327094.140938.2@zammad.example.com',
-          'Content-Disposition' => 'inline',
-        },
-        created_by_id: 1,
-      )
-      Store.add(
-        object:        'Ticket::Article',
-        o_id:          article.id,
-        data:          'content_file1_normally_should_be_an_pdf',
-        filename:      'Rechnung_RE-2018-200.pdf',
-        preferences:   {
-          'Content-Type'        => 'application/octet-stream; name="Rechnung_RE-2018-200.pdf"',
-          'Mime-Type'           => 'application/octet-stream',
-          'Content-ID'          => '8AB0BEC88984EE4EBEF643C79C8E0346@zammad.example.com',
-          'Content-Description' => 'Rechnung_RE-2018-200.pdf',
-          'Content-Disposition' => 'attachment',
-        },
-        created_by_id: 1,
-      )
+      create(:store,
+             object:      'Ticket::Article',
+             o_id:        article.id,
+             data:        'content_file1_normally_should_be_an_image',
+             filename:    'some_file1.jpg',
+             preferences: {
+               'Content-Type'        => 'image/jpeg',
+               'Mime-Type'           => 'image/jpeg',
+               'Content-ID'          => '15.274327094.140938@zammad.example.com',
+               'Content-Disposition' => 'inline',
+             })
+      create(:store,
+             object:      'Ticket::Article',
+             o_id:        article.id,
+             data:        'content_file1_normally_should_be_an_image',
+             filename:    'some_file2.jpg',
+             preferences: {
+               'Content-Type'        => 'image/jpeg',
+               'Mime-Type'           => 'image/jpeg',
+               'Content-ID'          => '15.274327094.140938.2@zammad.example.com',
+               'Content-Disposition' => 'inline',
+             })
+      create(:store,
+             object:      'Ticket::Article',
+             o_id:        article.id,
+             data:        'content_file1_normally_should_be_an_pdf',
+             filename:    'Rechnung_RE-2018-200.pdf',
+             preferences: {
+               'Content-Type'        => 'application/octet-stream; name="Rechnung_RE-2018-200.pdf"',
+               'Mime-Type'           => 'application/octet-stream',
+               'Content-ID'          => '8AB0BEC88984EE4EBEF643C79C8E0346@zammad.example.com',
+               'Content-Description' => 'Rechnung_RE-2018-200.pdf',
+               'Content-Disposition' => 'attachment',
+             })
 
       params = {
         form_id: 'new_form_id123',

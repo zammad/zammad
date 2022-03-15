@@ -8,14 +8,13 @@ RSpec.describe 'KnowledgeBase attachments', type: :request, authenticated_as: :c
   let(:attachment) do
     attachment_file = File.open 'spec/fixtures/upload/hello_world.txt'
 
-    Store.add(
-      object:        object.class.to_s,
-      o_id:          object.id,
-      data:          attachment_file.read,
-      filename:      'hello_world.txt',
-      preferences:   {},
-      created_by_id: 1,
-    )
+    create(:store,
+           object:        object.class.to_s,
+           o_id:          object.id,
+           data:          attachment_file.read,
+           filename:      'hello_world.txt',
+           preferences:   {},
+           created_by_id: 1,)
   end
 
   let(:endpoint)     { "/api/v1/attachments/#{attachment.id}" }

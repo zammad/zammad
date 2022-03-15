@@ -488,7 +488,7 @@ RSpec.describe 'Ticket Create', type: :system do
 
   context 'when uploading attachment' do
     it 'shows an error if server throws an error' do
-      allow(Store).to receive(:add) { raise 'Error' }
+      allow(Store).to receive(:create!) { raise 'Error' }
       visit 'ticket/create'
 
       within :active_content do

@@ -188,7 +188,7 @@ class EmailBuildTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
 
-    store1 = Store.add(
+    store1 = Store.create!(
       object:        'Ticket::Article',
       o_id:          article1.id,
       data:          'content_file1_normally_should_be_an_ics_calendar_file',
@@ -376,7 +376,7 @@ text
       > Email Content
     MSG_TEXT
 
-    store1 = Store.add(
+    store1 = Store.create!(
       object:        'Ticket::Article',
       o_id:          article1.id,
       data:          'Text Content',

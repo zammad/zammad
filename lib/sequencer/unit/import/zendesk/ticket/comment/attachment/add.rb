@@ -16,7 +16,7 @@ class Sequencer
                 uses :instance, :resource, :response, :model_class
 
                 def process
-                  ::Store.add(
+                  ::Store.create!(
                     object:        model_class.name,
                     o_id:          instance.id,
                     data:          response.body,

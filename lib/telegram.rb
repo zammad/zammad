@@ -461,7 +461,7 @@ returns
         object: 'Ticket::Article',
         o_id:   article.id,
       )
-      Store.add(
+      Store.create!(
         object:      'Ticket::Article',
         o_id:        article.id,
         data:        document_result.body,
@@ -502,7 +502,7 @@ returns
 
       # get video type
       type = video[:mime_type].gsub(%r{(.+/)}, '')
-      Store.add(
+      Store.create!(
         object:      'Ticket::Article',
         o_id:        article.id,
         data:        video_result.body,
@@ -533,7 +533,7 @@ returns
         object: 'Ticket::Article',
         o_id:   article.id,
       )
-      Store.add(
+      Store.create!(
         object:      'Ticket::Article',
         o_id:        article.id,
         data:        document_result.body,
@@ -574,7 +574,7 @@ returns
           object: 'Ticket::Article',
           o_id:   article.id,
         )
-        Store.add(
+        Store.create!(
           object:      'Ticket::Article',
           o_id:        article.id,
           data:        document_result.body,

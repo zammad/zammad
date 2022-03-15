@@ -240,7 +240,7 @@ returns:
 =end
 
   def save_as_raw(msg)
-    Store.add(
+    Store.create!(
       object:        'Ticket::Article::Mail',
       o_id:          id,
       data:          msg,

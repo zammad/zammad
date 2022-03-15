@@ -123,17 +123,15 @@ RSpec.describe Trigger, type: :model do
               UserInfo.current_user_id = 1
               ticket_article = create(:ticket_article, ticket: ticket)
 
-              Store.add(
-                object:        'Ticket::Article',
-                o_id:          ticket_article.id,
-                data:          'dGVzdCAxMjM=',
-                filename:      'some_file.pdf',
-                preferences:   {
-                  'Content-Type': 'image/pdf',
-                  'Content-ID':   'image/pdf@01CAB192.K8H512Y9',
-                },
-                created_by_id: 1,
-              )
+              create(:store,
+                     object:      'Ticket::Article',
+                     o_id:        ticket_article.id,
+                     data:        'dGVzdCAxMjM=',
+                     filename:    'some_file.pdf',
+                     preferences: {
+                       'Content-Type': 'image/pdf',
+                       'Content-ID':   'image/pdf@01CAB192.K8H512Y9',
+                     })
             end
 
             include_examples 'add attachment to new article'
@@ -160,17 +158,15 @@ RSpec.describe Trigger, type: :model do
               UserInfo.current_user_id = 1
               ticket_article = create(:ticket_article, ticket: ticket)
 
-              Store.add(
-                object:        'Ticket::Article',
-                o_id:          ticket_article.id,
-                data:          'dGVzdCAxMjM=',
-                filename:      'some_file.pdf',
-                preferences:   {
-                  'Content-Type': 'image/pdf',
-                  'Content-ID':   'image/pdf@01CAB192.K8H512Y9',
-                },
-                created_by_id: 1,
-              )
+              create(:store,
+                     object:      'Ticket::Article',
+                     o_id:        ticket_article.id,
+                     data:        'dGVzdCAxMjM=',
+                     filename:    'some_file.pdf',
+                     preferences: {
+                       'Content-Type': 'image/pdf',
+                       'Content-ID':   'image/pdf@01CAB192.K8H512Y9',
+                     })
             end
 
             include_examples 'does not add attachment to new article'

@@ -122,7 +122,7 @@ class FormController < ApplicationController
       )
 
       params[:file]&.each do |file|
-        Store.add(
+        Store.create!(
           object:      'Ticket::Article',
           o_id:        article.id,
           data:        file.read,

@@ -1705,7 +1705,7 @@ result
     )
 
     attachments_inline.each do |attachment|
-      Store.add(
+      Store.create!(
         object:      'Ticket::Article',
         o_id:        message.id,
         data:        attachment[:data],

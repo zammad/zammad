@@ -43,7 +43,7 @@ returns
 
   def self.store_raw(content, content_type)
     Store.remove(object: 'System::Logo', o_id: 1)
-    file = Store.add(
+    file = Store.create!(
       object:        'System::Logo',
       o_id:          1,
       data:          content,
@@ -91,7 +91,7 @@ returns
 
   def self.store(content, content_type)
     Store.remove(object: 'System::Logo', o_id: 2)
-    file = Store.add(
+    file = Store.create!(
       object:        'System::Logo',
       o_id:          2,
       data:          content,

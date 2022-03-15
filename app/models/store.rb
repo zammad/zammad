@@ -12,49 +12,23 @@ class Store < ApplicationModel
 
   store :preferences
 
-  before_create :oversized_preferences_check
+  before_validation :set_object_id
+  before_create :set_store_file, :oversized_preferences_check
   after_create :generate_previews
   before_update :oversized_preferences_check
 
-=begin
+  attr_accessor :object, :data
 
-add an attachment to storage
+  def set_object_id
+    return if object.blank?
 
-  result = Store.add(
-    object: 'Ticket::Article',
-    o_id: 4711,
-    data: binary_string,
-    filename: 'filename.txt',
-    preferences: {
-      content_type: 'image/png',
-      content_id: 234,
-    }
-  )
+    self.store_object_id = Store::Object.create_if_not_exists(name: object).id
+  end
 
-returns
-
-  result = true
-
-=end
-
-  def self.add(data)
-    data.deep_stringify_keys!
-
-    # lookup store_object.id
-    store_object = Store::Object.create_if_not_exists(name: data['object'])
-    data['store_object_id'] = store_object.id
-
-    # add to real store
-    file = Store::File.add(data['data'])
-
-    data['size'] = data['data'].to_s.bytesize
-    data['store_file_id'] = file.id
-
-    # not needed attributes
-    data.delete('data')
-    data.delete('object')
-
-    Store.create!(data)
+  def set_store_file
+    file = Store::File.add(data)
+    self.size = data.to_s.bytesize
+    self.store_file_id = file.id
   end
 
 =begin

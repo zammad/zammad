@@ -519,44 +519,38 @@ RSpec.describe Ticket::Article, type: :model do
                                   type:         Ticket::Article::Type.find_by(name: 'email'),
                                   content_type: 'text/html',
                                   body:         '<img src="cid:15.274327094.140938@zammad.example.com"> some text',)
-          Store.add(
-            object:        'Ticket::Article',
-            o_id:          article_parent.id,
-            data:          'content_file1_normally_should_be_an_image',
-            filename:      'some_file1.jpg',
-            preferences:   {
-              'Content-Type'        => 'image/jpeg',
-              'Mime-Type'           => 'image/jpeg',
-              'Content-ID'          => '15.274327094.140938@zammad.example.com',
-              'Content-Disposition' => 'inline',
-            },
-            created_by_id: 1,
-          )
-          Store.add(
-            object:        'Ticket::Article',
-            o_id:          article_parent.id,
-            data:          'content_file2_normally_should_be_an_image',
-            filename:      'some_file2.jpg',
-            preferences:   {
-              'Content-Type'        => 'image/jpeg',
-              'Mime-Type'           => 'image/jpeg',
-              'Content-ID'          => '15.274327094.140938_not_reffered@zammad.example.com',
-              'Content-Disposition' => 'inline',
-            },
-            created_by_id: 1,
-          )
-          Store.add(
-            object:        'Ticket::Article',
-            o_id:          article_parent.id,
-            data:          'content_file3_normally_should_be_an_image',
-            filename:      'some_file3.jpg',
-            preferences:   {
-              'Content-Type'        => 'image/jpeg',
-              'Mime-Type'           => 'image/jpeg',
-              'Content-Disposition' => 'attached',
-            },
-            created_by_id: 1,
-          )
+          create(:store,
+                 object:      'Ticket::Article',
+                 o_id:        article_parent.id,
+                 data:        'content_file1_normally_should_be_an_image',
+                 filename:    'some_file1.jpg',
+                 preferences: {
+                   'Content-Type'        => 'image/jpeg',
+                   'Mime-Type'           => 'image/jpeg',
+                   'Content-ID'          => '15.274327094.140938@zammad.example.com',
+                   'Content-Disposition' => 'inline',
+                 })
+          create(:store,
+                 object:      'Ticket::Article',
+                 o_id:        article_parent.id,
+                 data:        'content_file2_normally_should_be_an_image',
+                 filename:    'some_file2.jpg',
+                 preferences: {
+                   'Content-Type'        => 'image/jpeg',
+                   'Mime-Type'           => 'image/jpeg',
+                   'Content-ID'          => '15.274327094.140938_not_reffered@zammad.example.com',
+                   'Content-Disposition' => 'inline',
+                 })
+          create(:store,
+                 object:      'Ticket::Article',
+                 o_id:        article_parent.id,
+                 data:        'content_file3_normally_should_be_an_image',
+                 filename:    'some_file3.jpg',
+                 preferences: {
+                   'Content-Type'        => 'image/jpeg',
+                   'Mime-Type'           => 'image/jpeg',
+                   'Content-Disposition' => 'attached',
+                 })
           article_new = create(:ticket_article)
           UserInfo.current_user_id = 1
 
@@ -576,46 +570,40 @@ RSpec.describe Ticket::Article, type: :model do
                                   type:         Ticket::Article::Type.find_by(name: 'email'),
                                   content_type: 'text/html',
                                   body:         '<img src="cid:15.274327094.140938@zammad.example.com"> some text',)
-          Store.add(
-            object:        'Ticket::Article',
-            o_id:          article_parent.id,
-            data:          'content_file1_normally_should_be_an_image',
-            filename:      'some_file1.jpg',
-            preferences:   {
-              'Content-Type'        => 'image/jpeg',
-              'Mime-Type'           => 'image/jpeg',
-              'Content-ID'          => '15.274327094.140938@zammad.example.com',
-              'Content-Disposition' => 'inline',
-            },
-            created_by_id: 1,
-          )
-          Store.add(
-            object:        'Ticket::Article',
-            o_id:          article_parent.id,
-            data:          'content_file2_normally_should_be_an_image',
-            filename:      'some_file2.jpg',
-            preferences:   {
-              'Content-Type'        => 'image/jpeg',
-              'Mime-Type'           => 'image/jpeg',
-              'Content-ID'          => '15.274327094.140938_not_reffered@zammad.example.com',
-              'Content-Disposition' => 'inline',
-            },
-            created_by_id: 1,
-          )
+          create(:store,
+                 object:      'Ticket::Article',
+                 o_id:        article_parent.id,
+                 data:        'content_file1_normally_should_be_an_image',
+                 filename:    'some_file1.jpg',
+                 preferences: {
+                   'Content-Type'        => 'image/jpeg',
+                   'Mime-Type'           => 'image/jpeg',
+                   'Content-ID'          => '15.274327094.140938@zammad.example.com',
+                   'Content-Disposition' => 'inline',
+                 })
+          create(:store,
+                 object:      'Ticket::Article',
+                 o_id:        article_parent.id,
+                 data:        'content_file2_normally_should_be_an_image',
+                 filename:    'some_file2.jpg',
+                 preferences: {
+                   'Content-Type'        => 'image/jpeg',
+                   'Mime-Type'           => 'image/jpeg',
+                   'Content-ID'          => '15.274327094.140938_not_reffered@zammad.example.com',
+                   'Content-Disposition' => 'inline',
+                 })
 
           # #2483 - #{article.body_as_html} now includes attachments (e.g. PDFs)
           # Regular attachments do not get assigned a Content-ID, and should not be copied in this use case
-          Store.add(
-            object:        'Ticket::Article',
-            o_id:          article_parent.id,
-            data:          'content_file3_with_no_content_id',
-            filename:      'some_file3.jpg',
-            preferences:   {
-              'Content-Type' => 'image/jpeg',
-              'Mime-Type'    => 'image/jpeg',
-            },
-            created_by_id: 1,
-          )
+          create(:store,
+                 object:      'Ticket::Article',
+                 o_id:        article_parent.id,
+                 data:        'content_file3_with_no_content_id',
+                 filename:    'some_file3.jpg',
+                 preferences: {
+                   'Content-Type' => 'image/jpeg',
+                   'Mime-Type'    => 'image/jpeg',
+                 })
 
           article_new = create(:ticket_article)
           UserInfo.current_user_id = 1
