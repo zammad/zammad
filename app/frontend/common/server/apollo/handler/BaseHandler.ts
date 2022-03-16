@@ -9,13 +9,13 @@ import {
   OperationReturn,
 } from '@common/types/server/apollo/handler'
 import { Ref } from 'vue'
-import useNotifications from '@common/composables/useNotifications'
 import { NotificationTypes } from '@common/types/notification'
 import {
   GraphQLErrorReport,
   GraphQLErrorTypes,
   GraphQLHandlerError,
 } from '@common/types/error'
+import useNotifications from '@common/composables/useNotifications'
 
 export default abstract class BaseHandler<
   TResult = OperationResult,
@@ -30,10 +30,10 @@ export default abstract class BaseHandler<
 
   protected baseHandlerOptions: BaseHandlerOptions = {
     errorShowNotification: true,
-    errorNotitifactionMessage: __(
+    errorNotificationMessage: __(
       'An error occured during the operation. Please contact your administrator.',
     ),
-    errorNotitifactionType: NotificationTypes.ERROR,
+    errorNotificationType: NotificationTypes.ERROR,
   }
 
   public handlerOptions!: CommonHandlerOptions<THandlerOptions>
@@ -67,11 +67,9 @@ export default abstract class BaseHandler<
     const options = this.handlerOptions
 
     if (options.errorShowNotification) {
-      const { notify } = useNotifications()
-
-      notify({
-        message: options.errorNotitifactionMessage,
-        type: options.errorNotitifactionType,
+      useNotifications().notify({
+        message: options.errorNotificationMessage,
+        type: options.errorNotificationType,
       })
     }
 

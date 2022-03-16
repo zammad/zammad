@@ -8886,6 +8886,10 @@ msgstr ""
 msgid "The configuration of Zammad has changed. Please reload at your earliest."
 msgstr ""
 
+#: app/frontend/common/stores/application/connected.ts
+msgid "The connection to the server was lost."
+msgstr ""
+
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
 msgid "The data must be in the comma separated values (CSV) format and saved as UTF-8. You can import a CSV file or paste the data directly into the text area."
 msgstr ""

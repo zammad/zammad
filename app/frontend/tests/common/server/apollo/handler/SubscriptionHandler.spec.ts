@@ -74,17 +74,17 @@ describe('SubscriptionHandler', () => {
     })
 
     it('default handler options can be changed', () => {
-      const errorNotitifactionMessage = 'A test message.'
+      const errorNotificationMessage = 'A test message.'
 
       const subscriptionHandlerObject = new SubscriptionHandler(
         sampleSubscription({ id: 1 }),
         {
-          errorNotitifactionMessage,
+          errorNotificationMessage,
         },
       )
       expect(
-        subscriptionHandlerObject.handlerOptions.errorNotitifactionMessage,
-      ).toBe(errorNotitifactionMessage)
+        subscriptionHandlerObject.handlerOptions.errorNotificationMessage,
+      ).toBe(errorNotificationMessage)
     })
 
     it('given subscription function was executed', () => {

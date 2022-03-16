@@ -10,6 +10,12 @@
   fill: currentColor;
   animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
+.loading-failed {
+  display: none;
+}
+.loading-failed.active {
+  display: block;
+}
 
 @keyframes pulse {
   0%, 100% {
@@ -42,6 +48,9 @@
           <path fill="#F39804" d="M18.37 22.073l6.03-3.826.36 4.478z"/>
       </g>
     </svg>
+    <div class="loading-failed"><!-- TODO: add correct styling -->
+      Loading failed, please try again later.
+    </div>
   </div>
 </div>
 <div id="app"></div>

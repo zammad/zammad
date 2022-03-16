@@ -60,8 +60,8 @@ export type OperationResult =
 
 export interface BaseHandlerOptions {
   errorShowNotification: boolean
-  errorNotitifactionMessage: string
-  errorNotitifactionType: NotificationTypes
+  errorNotificationMessage: string
+  errorNotificationType: NotificationTypes
   errorCallback?: (error: GraphQLHandlerError) => void
 }
 

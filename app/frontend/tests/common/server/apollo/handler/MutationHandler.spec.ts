@@ -73,14 +73,14 @@ describe('MutationHandler', () => {
     })
 
     it('default handler options can be changed', () => {
-      const errorNotitifactionMessage = 'A test message.'
+      const errorNotificationMessage = 'A test message.'
 
       const mutationHandlerObject = new MutationHandler(sampleMutation(), {
-        errorNotitifactionMessage,
+        errorNotificationMessage,
       })
       expect(
-        mutationHandlerObject.handlerOptions.errorNotitifactionMessage,
-      ).toBe(errorNotitifactionMessage)
+        mutationHandlerObject.handlerOptions.errorNotificationMessage,
+      ).toBe(errorNotificationMessage)
     })
 
     it('given mutation function was executed', () => {

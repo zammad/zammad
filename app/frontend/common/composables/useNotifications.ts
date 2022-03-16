@@ -1,9 +1,10 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import { ref } from 'vue'
-import type {
+import {
   NewNotificationInterface,
   NotificationInterface,
+  NotificationTypes,
 } from '@common/types/notification'
 import getUuid from '@common/utils/getUuid'
 
@@ -40,10 +41,17 @@ export default function useNotifications() {
     return newNotification.id
   }
 
+  function hasErrors() {
+    return notifications.value.some((notification) => {
+      return notification.type === NotificationTypes.ERROR
+    })
+  }
+
   return {
     notify,
     notifications,
     removeNotification,
     clearAllNotifications,
+    hasErrors,
   }
 }

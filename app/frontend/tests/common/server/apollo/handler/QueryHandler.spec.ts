@@ -76,13 +76,13 @@ describe('QueryHandler', () => {
       expect(queryHandlerObject).toBeInstanceOf(QueryHandler)
     })
     it('default handler options can be changed', () => {
-      const errorNotitifactionMessage = 'A test message.'
+      const errorNotificationMessage = 'A test message.'
 
       const queryHandlerObject = new QueryHandler(sampleQuery({ id: 1 }), {
-        errorNotitifactionMessage,
+        errorNotificationMessage,
       })
-      expect(queryHandlerObject.handlerOptions.errorNotitifactionMessage).toBe(
-        errorNotitifactionMessage,
+      expect(queryHandlerObject.handlerOptions.errorNotificationMessage).toBe(
+        errorNotificationMessage,
       )
     })
 
