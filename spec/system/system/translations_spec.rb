@@ -126,4 +126,15 @@ RSpec.describe 'System > Translations', type: :system do
     end
   end
 
+  context 'when transaltion settings page is visited' do
+    let(:translation_shortkey)  { @inlineTranslationKey }
+
+    it 'shows a dynamic keyboard shortcut according to the OS' do
+      visit '/#system/translation'
+      within :active_content do
+        expect(page).to have_text(translation_shortkey)
+      end
+    end
+  end
+
 end
