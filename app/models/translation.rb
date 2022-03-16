@@ -4,9 +4,6 @@ class Translation < ApplicationModel
   include Translation::SynchronizesFromPo
 
   before_create :set_initial
-  after_create  :cache_clear
-  after_update  :cache_clear
-  after_destroy :cache_clear
 
 =begin
 
@@ -44,7 +41,7 @@ get list of translations
 
     # use cache if not admin page is requested
     if !admin
-      data = cache_get(locale)
+      data = lang_cache_get(locale)
       return data if data
     end
 
@@ -91,7 +88,7 @@ get list of translations
 
     # set cache
     if !admin
-      cache_set(locale, data)
+      lang_cache_set(locale, data)
     end
 
     data
@@ -220,6 +217,23 @@ or
     [true, nil]
   end
 
+  def self.import(locale, translations)
+    bulk_import translations
+    lang_cache_clear(locale)
+  end
+
+  def self.lang_cache_clear(locale)
+    Cache.delete lang_cache_key(locale)
+  end
+
+  def self.lang_cache_set(locale, data)
+    Cache.write lang_cache_key(locale), data
+  end
+
+  def self.lang_cache_get(locale)
+    Cache.read lang_cache_key(locale)
+  end
+
   private
 
   def set_initial
@@ -230,18 +244,13 @@ or
     true
   end
 
-  def cache_clear
-    Cache.delete("TranslationMapOnlyContent::#{locale.downcase}")
-    true
+  def cache_delete
+    super
+    self.class.lang_cache_clear(locale) # delete whole lang cache as well
   end
 
-  def self.cache_set(locale, data)
-    Cache.write("TranslationMapOnlyContent::#{locale.downcase}", data)
+  def self.lang_cache_key(locale)
+    "TranslationMapOnlyContent::#{locale.downcase}"
   end
-  private_class_method :cache_set
-
-  def self.cache_get(locale)
-    Cache.read("TranslationMapOnlyContent::#{locale.downcase}")
-  end
-  private_class_method :cache_get
+  private_class_method :lang_cache_key
 end
