@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -ex
+set -eux
 
 rm app/assets/javascripts/app/controllers/layout_ref.coffee
 rm -rf app/assets/javascripts/app/views/layout_ref/
