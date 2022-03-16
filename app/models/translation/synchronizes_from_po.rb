@@ -59,7 +59,7 @@ module Translation::SynchronizesFromPo
         updated_translation_ids.add t.id
       end
 
-      Translation.import importable_translations
+      Translation.import locale, importable_translations
       # Remove any unmodified & synchronized strings that are not present in the data any more.
       previous_unmodified_translations.reject { |t| updated_translation_ids.member? t.id }.each(&:destroy!)
       true
