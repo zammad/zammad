@@ -41,30 +41,6 @@ class TestCase < ActiveSupport::TestCase
     ENV['BROWSER'] || 'firefox'
   end
 
-  def profile
-    browser_profile = nil
-    case browser
-    when 'firefox'
-      browser_profile = Selenium::WebDriver::Firefox::Profile.new
-
-      browser_profile['intl.locale.matchOS']      = false
-      browser_profile['intl.accept_languages']    = 'en-US'
-      browser_profile['general.useragent.locale'] = 'en-US'
-      # currently console log not working for firefox
-      # https://github.com/SeleniumHQ/selenium/issues/1161
-      # browser_profile['loggingPref']              = { browser: :all }
-    when 'chrome'
-
-      # profile are only working on remote selenium
-      if ENV['REMOTE_URL']
-        browser_profile = Selenium::WebDriver::Chrome::Profile.new
-        browser_profile['intl.accept_languages'] = 'en'
-        browser_profile['loggingPref']           = { browser: :all }
-      end
-    end
-    browser_profile
-  end
-
   def browser_support_cookies
     if browser.match?(%r{(internet_explorer|ie)}i)
       return false
@@ -85,13 +61,41 @@ class TestCase < ActiveSupport::TestCase
     Socket.ip_address_list.detect(&:ipv4_private?).ip_address
   end
 
+  def browser_options
+    case browser
+    when 'firefox'
+      profile = Selenium::WebDriver::Firefox::Profile.new
+      profile['intl.locale.matchOS']      = false
+      profile['intl.accept_languages']    = 'en-US'
+      profile['general.useragent.locale'] = 'en-US'
+      profile['permissions.default.desktop-notification'] = 1 # ALLOW notifications
+
+      options = Selenium::WebDriver::Firefox::Options.new(
+        profile: profile
+      )
+    when 'chrome'
+      options = Selenium::WebDriver::Chrome::Options.new(
+        logging_prefs:   {
+          browser: 'ALL'
+        },
+        prefs:           {
+          'intl.accept_languages'                                => 'en-US',
+          'profile.default_content_setting_values.notifications' => 1, # ALLOW notifications
+        },
+        # Disable the "Chrome is controlled by automation software" info bar.
+        excludeSwitches: ['enable-automation'],
+      )
+    end
+    if ENV['BROWSER_HEADLESS'].present?
+      options.headless!
+    end
+    options
+  end
+
   def browser_instance
     @browsers ||= {}
     if ENV['REMOTE_URL'].blank?
-      params = {
-        profile: profile,
-      }
-      local_browser = Selenium::WebDriver.for(browser.to_sym, params)
+      local_browser = Selenium::WebDriver.for(browser.to_sym, options: browser_options)
       @browsers[local_browser.hash] = local_browser
       browser_instance_preferences(local_browser)
       return local_browser
@@ -113,36 +117,16 @@ class TestCase < ActiveSupport::TestCase
   end
 
   def browser_instance_remote
-    caps = Selenium::WebDriver::Remote::Capabilities.send(browser)
-    if ENV['BROWSER_OS']
-      caps.platform = ENV['BROWSER_OS']
-    end
-    if ENV['BROWSER_VERSION']
-      caps.version  = ENV['BROWSER_VERSION']
-    end
-
     http_client = Selenium::WebDriver::Remote::Http::Default.new(
       open_timeout: 120,
       read_timeout: 120
     )
-    case browser
-    when 'firefox'
-      options = Selenium::WebDriver::Firefox::Options.new
-      options.headless!
-    when 'chrome'
-      options = Selenium::WebDriver::Chrome::Options.new(
-        # Disable the "Chrome is controlled by automation software" info bar.
-        excludeSwitches: ['enable-automation'],
-      )
-      options.headless!
-    end
 
     local_browser = Selenium::WebDriver.for(
       :remote,
-      url:                  ENV['REMOTE_URL'],
-      desired_capabilities: caps,
-      http_client:          http_client,
-      options:              options,
+      url:         ENV['REMOTE_URL'],
+      http_client: http_client,
+      options:     browser_options,
     )
     @browsers[local_browser.hash] = local_browser
     browser_instance_preferences(local_browser)
