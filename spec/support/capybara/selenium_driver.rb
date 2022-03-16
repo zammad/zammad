@@ -7,7 +7,7 @@
 Capybara.register_driver(:zammad_chrome) do |app|
 
   # Turn on browser logs
-  options = Selenium::WebDriver::Chrome::Options.new(
+  chrome_options = Selenium::WebDriver::Chrome::Options.new(
     logging_prefs:   {
       browser: 'ALL'
     },
@@ -21,12 +21,19 @@ Capybara.register_driver(:zammad_chrome) do |app|
 
   options = {
     browser: :chrome,
-    options: options
+    options: chrome_options
   }
 
   if ENV['REMOTE_URL'].present?
     options[:browser] = :remote
     options[:url]     = ENV['REMOTE_URL']
+    options[:http_client] = Selenium::WebDriver::Remote::Http::Default.new(
+      open_timeout: 120,
+      read_timeout: 120
+    )
+  end
+
+  if ENV['BROWSER_HEADLESS'].present?
     options[:options].headless!
   end
 
@@ -54,6 +61,13 @@ Capybara.register_driver(:zammad_firefox) do |app|
   if ENV['REMOTE_URL'].present?
     options[:browser] = :remote
     options[:url]     = ENV['REMOTE_URL']
+    options[:http_client] = Selenium::WebDriver::Remote::Http::Default.new(
+      open_timeout: 120,
+      read_timeout: 120
+    )
+  end
+
+  if ENV['BROWSER_HEADLESS'].present?
     options[:options].headless!
   end
 
