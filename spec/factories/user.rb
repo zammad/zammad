@@ -52,6 +52,11 @@ FactoryBot.define do
       password { generate :password_valid }
     end
 
+    trait :without_email do
+      sequence(:login) { |n| "login_#{slug}.#{n}" }
+      sequence(:email) { nil }
+    end
+
     # make given password accessible for e.g. authentication logic
     before(:create) do |user|
       password_plain = user.password

@@ -944,6 +944,35 @@ RSpec.describe User, type: :model do
         end
       end
     end
+
+    describe 'fetch_avatar_for_email', performs_jobs: true do
+      it 'enqueues avatar job when creating a user with email' do
+        expect { create(:user) }.to have_enqueued_job AvatarCreateJob
+      end
+
+      it 'does not enqueue avatar job when creating a user without email' do
+        expect { create(:user, :without_email) }.not_to have_enqueued_job AvatarCreateJob
+      end
+
+      context 'with an existing user' do
+        before do
+          agent
+          clear_jobs
+        end
+
+        it 'enqueues avatar job when updating a user with email' do
+          expect { agent.update! email: 'avatar@example.com' }.to have_enqueued_job AvatarCreateJob
+        end
+
+        it 'does not enqueue avatar job when updating a user without email' do
+          expect { agent.update! login: 'avatar_login', email: nil }.not_to have_enqueued_job AvatarCreateJob
+        end
+
+        it 'does not enqueue avatar job when updating a user having email' do
+          expect { agent.update! firstname: 'no avatar update' }.not_to have_enqueued_job AvatarCreateJob
+        end
+      end
+    end
   end
 
   describe 'Associations:' do

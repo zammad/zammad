@@ -148,65 +148,6 @@ class UserTest < ActiveSupport::TestCase
         },
       },
       {
-        name:          '#9 - update with avatar check',
-        create:        {
-          firstname:     'Bob',
-          lastname:      'Smith',
-          email:         'bob.smith@example.com',
-          login:         'login-4',
-          updated_by_id: 1,
-          created_by_id: 1,
-        },
-        create_verify: {
-          firstname: 'Bob',
-          lastname:  'Smith',
-          image:     nil,
-          email:     'bob.smith@example.com',
-          login:     'login-4',
-        },
-        update:        {
-          email: 'unit-test1@znuny.com',
-        },
-        update_verify: {
-          firstname: 'Bob',
-          lastname:  'Smith',
-          image:     '7c3af305038fc695a9563eda2eb78f57',
-          image_md5: '7c3af305038fc695a9563eda2eb78f57',
-          email:     'unit-test1@znuny.com',
-          login:     'login-4',
-        }
-      },
-      {
-        name:          '#10 - update create with avatar check',
-        create:        {
-          firstname:     'Bob',
-          lastname:      'Smith',
-          email:         'unit-test2@znuny.com',
-          login:         'login-5',
-          updated_by_id: 1,
-          created_by_id: 1,
-        },
-        create_verify: {
-          firstname: 'Bob',
-          lastname:  'Smith',
-          image:     'cc98289b7af056fbd00ff0c1d08284c4',
-          image_md5: 'cc98289b7af056fbd00ff0c1d08284c4',
-          email:     'unit-test2@znuny.com',
-          login:     'login-5',
-        },
-        update:        {
-          email: 'unit-test1@znuny.com',
-        },
-        update_verify: {
-          firstname: 'Bob',
-          lastname:  'Smith',
-          image:     '7c3af305038fc695a9563eda2eb78f57',
-          image_md5: '7c3af305038fc695a9563eda2eb78f57',
-          email:     'unit-test1@znuny.com',
-          login:     'login-5',
-        }
-      },
-      {
         name:          '#11 - update create with login/email check',
         create:        {
           firstname:     '',
@@ -286,11 +227,6 @@ class UserTest < ActiveSupport::TestCase
           assert_equal(user[key], value, "create check #{key} in (#{test[:name]})")
         end
       end
-      if test[:create_verify][:image_md5]
-        file = Avatar.get_by_hash(user.image)
-        file_md5 = Digest::MD5.hexdigest(file.content)
-        assert_equal(file_md5, test[:create_verify][:image_md5], "create avatar md5 check in (#{test[:name]})")
-      end
       if test[:update]
         user.update!(test[:update])
 
@@ -304,11 +240,6 @@ class UserTest < ActiveSupport::TestCase
           end
         end
 
-        if test[:update_verify][:image_md5]
-          file = Avatar.get_by_hash(user.image)
-          file_md5 = Digest::MD5.hexdigest(file.content)
-          assert_equal(file_md5, test[:update_verify][:image_md5], "update avatar md5 check in (#{test[:name]})")
-        end
       end
 
       user.destroy!
