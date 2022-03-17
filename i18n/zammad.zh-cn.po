@@ -1045,6 +1045,10 @@ msgstr "你确定吗？"
 msgid "Article"
 msgstr "文章"
 
+#: db/seeds/settings.rb
+msgid "Article - visibility confirmation dialog"
+msgstr ""
+
 #: lib/excel_sheet/ticket.rb
 msgid "Article Count"
 msgstr "文章数"
@@ -5934,6 +5938,7 @@ msgstr ""
 
 #: app/controllers/integration/cti_controller.rb
 #: app/controllers/integration/placetel_controller.rb
+#: app/controllers/integration/sipgate_controller.rb
 msgid "Invalid token, please contact your admin!"
 msgstr ""
 
@@ -7365,10 +7370,6 @@ msgstr "备注"
 #: db/seeds/settings.rb
 msgid "Note - default visibility"
 msgstr "備註-預設可見性"
-
-#: db/seeds/settings.rb
-msgid "Note - visibility confirmation dialog"
-msgstr ""
 
 #: app/assets/javascripts/app/models/email_address.coffee
 #: app/assets/javascripts/app/models/group.coffee
@@ -10519,6 +10520,10 @@ msgid "Token for CTI."
 msgstr ""
 
 #: db/seeds/settings.rb
+msgid "Token for Sipgate."
+msgstr ""
+
+#: db/seeds/settings.rb
 msgid "Token for monitoring."
 msgstr ""
 
@@ -12570,6 +12575,12 @@ msgid "show more"
 msgstr ""
 
 #: db/seeds/settings.rb
+#, fuzzy
+#| msgid "%s Api Token"
+msgid "sipgate.io Token"
+msgstr "%s Api Token"
+
+#: db/seeds/settings.rb
 msgid "sipgate.io alternative FQDN"
 msgstr ""
 
@@ -12938,9 +12949,6 @@ msgstr "∅轮候时间"
 
 #~ msgid "Automatically show chat"
 #~ msgstr "自动显示即时聊天"
-
-#~ msgid "%s Api Token"
-#~ msgstr "%s Api Token"
 
 #~ msgid ""
 #~ "%s will only allow access via OAuth. Password-based access will no longer "
