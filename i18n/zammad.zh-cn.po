@@ -2,16 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2021-12-15 21:01+0000\n"
-"Last-Translator: Never Min <59808@qq.com>\n"
+"PO-Revision-Date: 2022-03-18 07:57+0000\n"
+"Last-Translator: grantw <grantw@gmail.com>\n"
 "Language-Team: Chinese (Simplified) <https://translations.zammad.org/"
-"projects/zammad/zammad-development/zh_Hans/>\n"
+"projects/zammad/zammad-stable/zh_Hans/>\n"
 "Language: zh-cn\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.9.1\n"
+"X-Generator: Weblate 4.11.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -96,44 +96,30 @@ msgid "%s completed data privacy task to delete user ID |%s|"
 msgstr "%s 完成了数据隐私任务 - 删除用户ID |%s|"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee
-#, fuzzy
-#| msgid "%s created Article for |%s|"
 msgid "%s created article for |%s|"
 msgstr "%s 为 |%s| 创建了文章"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
-#, fuzzy
-#| msgid "%s created data privacy task to delete user id |%s|"
 msgid "%s created data privacy task to delete user ID |%s|"
 msgstr "%s 创建了数据隐私任务以删除用户ID |%s|"
 
 #: app/assets/javascripts/app/models/group.coffee
-#, fuzzy
-#| msgid "%s created Group |%s|"
 msgid "%s created group |%s|"
 msgstr "%s 创建了组 |%s|"
 
 #: app/assets/javascripts/app/models/organization.coffee
-#, fuzzy
-#| msgid "%s created Organization |%s|"
 msgid "%s created organization |%s|"
 msgstr "%s 创建了客户公司 |%s|"
 
 #: app/assets/javascripts/app/models/role.coffee
-#, fuzzy
-#| msgid "%s created Role |%s|"
 msgid "%s created role |%s|"
 msgstr "%s 创建了角色 |%s|"
 
 #: app/assets/javascripts/app/models/ticket.coffee
-#, fuzzy
-#| msgid "%s created Ticket |%s|"
 msgid "%s created ticket |%s|"
 msgstr "%s 创建了工单 |%s|"
 
 #: app/assets/javascripts/app/models/user.coffee
-#, fuzzy
-#| msgid "%s created User |%s|"
 msgid "%s created user |%s|"
 msgstr "%s 创建了用户 |%s|"
 
@@ -141,7 +127,7 @@ msgstr "%s 创建了用户 |%s|"
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
 msgid "%s credentials"
-msgstr "%s 证书"
+msgstr "%s 凭据"
 
 #: app/assets/javascripts/app/models/user.coffee
 msgid "%s ended switch to |%s|!"
@@ -161,52 +147,36 @@ msgstr "%s 组到 %s 角色分配"
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
-#, fuzzy
-#| msgid "%s is inactive, please select a active one."
 msgid "%s is inactive, please select an active one."
 msgstr "%s 处于非活动状态，请选择一个活动的。"
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
-#, fuzzy
-#| msgid "%s Object(s) have been created."
 msgid "%s object(s) have been created."
-msgstr "％s 个对象已被建立"
+msgstr "％s 个对象已被建立。"
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
-#, fuzzy
-#| msgid "%s Object(s) have been updated."
 msgid "%s object(s) have been updated."
 msgstr "％s 对象已被更新。"
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
-#, fuzzy
-#| msgid "%s Object(s) were deleted."
 msgid "%s object(s) were deleted."
 msgstr "％s 个对象已被删除。"
 
 #: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
-#, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "%s object(s) will be created."
-msgstr "％s 对象已创建。"
+msgstr "将创建 ％s 对象。"
 
 #: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
-#, fuzzy
-#| msgid "%s Object(s) were deleted."
 msgid "%s object(s) will be deleted."
-msgstr "％s 个对象已被删除。"
+msgstr "％s 个对象将被删除。"
 
 #: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
-#, fuzzy
-#| msgid "%s Object(s) are updated."
 msgid "%s object(s) will be updated."
-msgstr "％s 对象已更新。"
+msgstr "％s 对象将更新。"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco
-#, fuzzy
-#| msgid "%s of your tickets are currently in process."
 msgid "%s of my tickets are currently in process."
-msgstr "共有 %s 个工单当前正在处理中。"
+msgstr "共有 %s 个我的工单当前正在处理中。"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_escalation.jst.eco
 msgid "%s of my tickets escalated."
@@ -220,7 +190,7 @@ msgstr "％s 人"
 msgid ""
 "%s recommends using OAuth. %s announced it's going to drop Basic "
 "Authentication support in the future."
-msgstr ""
+msgstr "%s 推荐使用OAuth方式。 %s 未来将停止支持简单鉴权方式。"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee
 msgid "%s required!"
@@ -232,8 +202,6 @@ msgstr "%s 开始了新会话"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
-#, fuzzy
-#| msgid "%s Subdomain"
 msgid "%s subdomain"
 msgstr "%s 子域"
 
@@ -242,44 +210,30 @@ msgid "%s switched to |%s|!"
 msgstr "%s 切换为 |%s|!"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee
-#, fuzzy
-#| msgid "%s updated Article for |%s|"
 msgid "%s updated article for |%s|"
 msgstr "%s 为 |%s| 更新了文章"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
-#, fuzzy
-#| msgid "%s updated data privacy task to delete user id |%s|"
 msgid "%s updated data privacy task to delete user ID |%s|"
 msgstr "%s 更新了数据隐私任务以删除用户ID |%s|"
 
 #: app/assets/javascripts/app/models/group.coffee
-#, fuzzy
-#| msgid "%s updated Group |%s|"
 msgid "%s updated group |%s|"
 msgstr "%s 更新了群组 |%s|"
 
 #: app/assets/javascripts/app/models/organization.coffee
-#, fuzzy
-#| msgid "%s updated Organization |%s|"
 msgid "%s updated organization |%s|"
 msgstr "%s 更新了客户公司 |%s|"
 
 #: app/assets/javascripts/app/models/role.coffee
-#, fuzzy
-#| msgid "%s updated Role |%s|"
 msgid "%s updated role |%s|"
 msgstr "%s更新的角色|%s|"
 
 #: app/assets/javascripts/app/models/ticket.coffee
-#, fuzzy
-#| msgid "%s updated Ticket |%s|"
 msgid "%s updated ticket |%s|"
-msgstr "%s 修改了 |%s|"
+msgstr "%s 修改了工单 |%s|"
 
 #: app/assets/javascripts/app/models/user.coffee
-#, fuzzy
-#| msgid "%s updated User |%s|"
 msgid "%s updated user |%s|"
 msgstr "%s 更新了用户 |%s|"
 
@@ -299,17 +253,6 @@ msgid "%s% have been reopened"
 msgstr "%s% 的工单已被重新打开"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
-#, fuzzy
-#| msgid ""
-#| "** Data Privacy **, helps you to delete and verify the removal of "
-#| "existing data of the system.\n"
-#| "\n"
-#| "It can be used to delete tickets, organizations and users. The owner "
-#| "assignment will be unset in case the deleted user is an agent.\n"
-#| "\n"
-#| "Data Privacy tasks will be executed every 10 minutes. The execution might "
-#| "take some additional time depending of the number of objects that should "
-#| "get deleted."
 msgid ""
 "** Data Privacy ** helps you to delete and verify the removal of existing "
 "data from the system.\n"
@@ -321,30 +264,15 @@ msgid ""
 "take some additional time depending on the number of objects that will be "
 "deleted."
 msgstr ""
-"**数据隐私**，可帮助您删除并验证系统中现有数据的删除。 \n"
+"**数据隐私**，可帮助您删除并验证从系统中删除已有的数据。 \n"
 "\n"
-"它可用于删除故障单，客户公司和用户。 如果删除的用户是代理，则将不设置所有者分"
-"配。 \n"
+"它可用于删除工单，客户公司和用户。 "
+"如果删除的用户是服务坐席，则其对应被分配工单的所有者将被置空。 \n"
 "\n"
-"数据隐私任务将每10分钟执行一次。 执行过程可能需要一些额外的时间，具体取决于应"
-"删除的对象数量。"
+"数据隐私任务将每10分钟执行一次。 "
+"执行过程可能需要一些额外的时间，具体取决于将被删除的对象数量。"
 
 #: app/assets/javascripts/app/models/sla.coffee
-#, fuzzy
-#| msgid ""
-#| "** Service Level Agreements **, abbreviated ** SLAs **, help you to meet "
-#| "certain customers' time-related responses. Thus, for example, you can say "
-#| "customers should always get a response from you after 8 hours at the "
-#| "latest. In the event of an imminent violation or a breach, Zammad will "
-#| "alert you to such events.\n"
-#| "\n"
-#| "It can be ** response time ** (time between the creation of a ticket and "
-#| "the first reaction of an agent), ** update time ** (time between a "
-#| "customer's request and an agent's reaction) and ** solution time ** (time "
-#| "between creation and closing a ticket ) To be defined.\n"
-#| "\n"
-#| "Any violations are displayed in a separate view in the overviews. You can "
-#| "also configure ** e-mail notifications **."
 msgid ""
 "** Service Level Agreements **, abbreviated ** SLAs **, help you to meet "
 "specific response times for your customers' requests. This way you can "
@@ -361,15 +289,17 @@ msgid ""
 "displayed in a separate view in your overviews. You can also configure ** "
 "email notifications **."
 msgstr ""
-"** Service Level Agreements **，缩写为** SLAs **，帮助您满足某些客户与时间相"
-"关的响应。 因此，例如，您可以说客户最迟应在 8 小时后收到您的回复。 如果即将发"
-"生违规或违规事件，Zammad 会提醒您注意此类事件。\n"
+"** Service Level Agreements **，缩写为** SLAs "
+"**，帮助您满足与客户约定的响应时间。 你可以通过这样的方式来定义一个 SLA "
+"目标，例如，在 8 个小时以内对回应每个问题。 如果达到约定的目标会有风险时，"
+"Zammad 会提醒您。\n"
 "\n"
-"它可以是**响应时间**（创建工单和代理第一反应之间的时间）、**更新时间**（客户"
-"请求和代理反应之间的时间）和**解决时间** （创建和关闭工单之间的时间）有待定"
-"义。\n"
+"你能够定义 3 个不同的标准：**响应时间**（创建工单和坐席第一次反馈之间的时间）"
+"、**更新时间**（客户请求和坐席反馈之间的时间）和**解决时间** "
+"（创建和关闭工单之间的时间）。\n"
 "\n"
-"任何违规行为都显示在概览中的单独视图中。 您还可以配置**电子邮件通知**。"
+"任何升级的工单（例如没有达到 SLA 目标的工单）都会被显示在概览中的单独视图中。"
+" 您还可以配置**电子邮件通知**。"
 
 #: db/seeds/settings.rb
 msgid "1 day"
@@ -392,8 +322,6 @@ msgid "2 hours"
 msgstr "2小时"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "2 lower and 2 upper characters"
 msgid "2 lower case and 2 upper case characters"
 msgstr "两个小写字母和两个大写字母"
 
@@ -418,17 +346,6 @@ msgid "4 weeks"
 msgstr "4周"
 
 #: app/assets/javascripts/app/models/calendar.coffee
-#, fuzzy
-#| msgid ""
-#| "A **calendar** is needed for calculation of escalation based on business "
-#| "hours and sending out escalation notifications..\n"
-#| "\n"
-#| "Define a **\"standard\"** calendar which is valid system-wide. Only in "
-#| "the defined business hours the escalation notifications will be sent to "
-#| "your agents.\n"
-#| "\n"
-#| "Do you have customers with different business hours, you can create "
-#| "multiple calendars. Tickets are linked to calendars using **SLAs**."
 msgid ""
 "A **calendar** is needed to calculate escalations based on business hours "
 "and to send out escalation notifications.\n"
@@ -440,24 +357,21 @@ msgid ""
 "If you have customers with different business hours, you can create multiple "
 "calendars. Tickets are linked to calendars using **SLAs**."
 msgstr ""
-"**日历** 需要根据工作时间计算升级并发送升级通知。\n"
+"**日历** 需要根据工作时间计算升级的工单并发送升级通知。\n"
 "\n"
-"定义一个在系统范围内有效的**“标准”** 日历。 只有在定义的工作时间内，升级通知"
-"才会发送给您的代理。\n"
+"定义一个在系统范围内有效的**“标准”** 日历。 "
+"只有在定义的工作时间内，升级的工单的通知才会发送给您的坐席。\n"
 "\n"
-"您有不同营业时间的客户，您可以创建多个日历。 票证使用**SLAs** 链接到日历。"
+"您有在不同工作时间的客户，您可以创建多个日历。 工单会使用**SLAs** "
+"链接到日历。"
 
 #: app/controllers/getting_started_controller.rb
-#, fuzzy
-#| msgid "An URL looks like this: http://zammad.example.com"
 msgid "A URL looks like this: https://zammad.example.com"
 msgstr "URL 如下所示：http://zammad.example.com"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "A list of active import backends that get scheduled automatically."
 msgid "A list of active import backends that gets scheduled automatically."
-msgstr "自动安排的活动导入后端列表。"
+msgstr "一系列活动的后台导入任务会被自动的触发。"
 
 #: app/assets/javascripts/app/controllers/_plugin/session_taken_over.coffee
 msgid ""
@@ -725,23 +639,23 @@ msgstr "添加个人Access Token"
 
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 msgid "Add alarm to pending reminder and escalated tickets."
-msgstr "新加警報於待處理的提醒工單和層級提升的工單"
+msgstr "增加对待处理的工单和提升的工单的提醒。"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Add attachment option to upload."
-msgstr "允许上传附件"
+msgstr "允许上传附件。"
 
 #: db/seeds/settings.rb
 msgid "Add sender initials to end of a tweet."
-msgstr "將寄件人姓名縮寫添加到推文結尾"
+msgstr "将寄件人姓名缩写添加到推文末尾。"
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
 msgid "Add this class to a button on your page that should open the chat."
-msgstr "將此語法新增到頁面的按鈕上即可打開文字對話框"
+msgstr "将这个类添加到页面的按钮上即可允许打开聊天对话框"
 
 #: app/controllers/first_steps_controller.rb
 msgid "Additional Channels"
-msgstr "其他管道"
+msgstr "其他渠道"
 
 #: db/seeds/settings.rb
 msgid "Additional follow-up detection"
@@ -777,10 +691,6 @@ msgid "Advance to next ticket from overview"
 msgstr "从概览前进到下一个工单"
 
 #: app/assets/javascripts/app/views/package.jst.eco
-#, fuzzy
-#| msgid ""
-#| "After installing, updating or uninstalling packages the following "
-#| "commands need to be executed on the server:"
 msgid ""
 "After installing, updating, or uninstalling packages the following commands "
 "need to be executed on the server:"
@@ -794,7 +704,7 @@ msgstr "总时长"
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
 #: db/seeds/roles.rb db/seeds/ticket_article_senders.rb
 msgid "Agent"
-msgstr "服务人员"
+msgstr "客服坐席"
 
 #: db/seeds/settings.rb
 msgid "Agent Name"
@@ -802,7 +712,7 @@ msgstr "客服名称"
 
 #: db/seeds/settings.rb
 msgid "Agent Name + FromSeparator + System Address Display Name"
-msgstr "客服名称 + FromSeparator + 系统地址显示名称"
+msgstr "客服名称 + 来自分隔符+ 系统地址显示名称"
 
 #: db/seeds/settings.rb
 msgid "Agent idle timeout"
@@ -825,10 +735,8 @@ msgid "All Tickets"
 msgstr "所有工单"
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
-#, fuzzy
-#| msgid "All Agents"
 msgid "All agents"
-msgstr "所有的客服"
+msgstr "所有的客服坐席"
 
 #: public/assets/chat/views/waiting.eco
 msgid "All colleagues are busy."
@@ -836,7 +744,7 @@ msgstr "所有同事都很忙。"
 
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
 msgid "All computers and browsers that have access to your Zammad appear here."
-msgstr "擁有存取 Zammad 的電腦及瀏覽器"
+msgstr "所有访问Zammad的电脑和浏览器都会显示在这里。"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Allow future"
@@ -855,10 +763,8 @@ msgid "Allow users to create new tags."
 msgstr "允许用户创建新的标签。"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Allow to use email address for muliple users."
 msgid "Allow using one email address for multiple users."
-msgstr "允许多个用户使用电子邮件地址。"
+msgstr "允许多个用户使用同一个电子邮件地址。"
 
 #: app/assets/javascripts/app/models/chat.coffee
 msgid "Allow websites (separated by ;)"
@@ -869,12 +775,9 @@ msgid "Also notify via email"
 msgstr "也通过邮件通知"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid ""
-#| "Alternative FQDN for callbacks if you operate Zammad in internal network."
 msgid ""
 "Alternative FQDN for callbacks if you operate Zammad in an internal network."
-msgstr "如果您在内部网络中操作 Zammad，则用于回调的替代 FQDN。"
+msgstr "如果您在内部网络中操作 Zammad，则使用 FQDN 来回调。"
 
 #: app/helpers/knowledge_base_breadcrumb_helper.rb
 #: app/helpers/knowledge_base_public_page_title_helper.rb
@@ -887,7 +790,7 @@ msgstr "替代名稱"
 
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
 msgid "Alternatively, you can use the Zammad API to import data."
-msgstr "另外，您可以使用 Zammad API 匯入數據"
+msgstr "另外，您可以使用 Zammad API 导入数据。"
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
@@ -898,24 +801,18 @@ msgstr "发生错误：%s"
 #: app/assets/javascripts/app/controllers/_integration/icinga.coffee
 #: app/assets/javascripts/app/controllers/_integration/monit.coffee
 #: app/assets/javascripts/app/controllers/_integration/nagios.coffee
-#, fuzzy
-#| msgid "An open source monitoring tool."
 msgid "An open-source monitoring tool."
 msgstr "一个开源监控工具。"
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
-#, fuzzy
-#| msgid "Analyzing entries with given configuration..."
 msgid "Analyzing entries with given configuration…"
-msgstr "分析具有給定配置的條目..."
+msgstr "使用指定配置分析条目…"
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
-#, fuzzy
-#| msgid "Analyzing structure..."
 msgid "Analyzing structure…"
-msgstr "正在分析结构……"
+msgstr "正在分析结构…"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "Another ticket was merged into ticket |%s|"
@@ -931,11 +828,9 @@ msgstr "回答"
 
 #: app/assets/javascripts/app/lib/app_post/iconset_picker.coffee
 msgid "Anticon"
-msgstr ""
+msgstr "Ant Design图标"
 
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee
-#, fuzzy
-#| msgid "Any Recipient"
 msgid "Any recipient"
 msgstr "任何接收者"
 
@@ -949,20 +844,18 @@ msgstr "App Secret"
 
 #: db/seeds/settings.rb
 msgid "App Tenant ID"
-msgstr ""
+msgstr "App租户ID"
 
 #: db/seeds/settings.rb
 msgid "App Version"
-msgstr ""
+msgstr "App版本"
 
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee
-#, fuzzy
-#| msgid "Account not verified"
 msgid "App could not be verified."
-msgstr "账号尚未通过验证"
+msgstr "App不能通过验证。"
 
 #: db/seeds/settings.rb
 msgid "App credentials for Facebook."
@@ -974,11 +867,11 @@ msgstr "Twitter的应用程序凭据。"
 
 #: app/assets/javascripts/app/controllers/api.coffee
 msgid "Application"
-msgstr ""
+msgstr "应用程序"
 
 #: db/seeds/settings.rb
 msgid "Application secret"
-msgstr ""
+msgstr "应用程序密码"
 
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid "Applications"
@@ -989,14 +882,12 @@ msgid "Apply"
 msgstr "应用"
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
-#, fuzzy
-#| msgid "Apply"
 msgid "Apply Draft"
-msgstr "应用"
+msgstr "应用草稿"
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
 msgid "Apply Shared Draft"
-msgstr ""
+msgstr "应用共享草稿"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
@@ -1018,12 +909,12 @@ msgstr "已封存"
 
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco
 msgid "Archived at"
-msgstr ""
+msgstr "归档在"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee
 msgid ""
 "Are you sure you want to reload? You have unsaved changes that will get lost"
-msgstr ""
+msgstr "请确认是否需要重新加载？没有保存的改动会丢失"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee
@@ -1045,6 +936,10 @@ msgstr "你确定吗？"
 msgid "Article"
 msgstr "文章"
 
+#: db/seeds/settings.rb
+msgid "Article - visibility confirmation dialog"
+msgstr "文章 - 确认可见对话框"
+
 #: lib/excel_sheet/ticket.rb
 msgid "Article Count"
 msgstr "文章数"
@@ -1053,13 +948,11 @@ msgstr "文章数"
 msgid ""
 "Article could not be created. An unsupported key other than 'article.note' "
 "was provided."
-msgstr ""
+msgstr "不能创建文章。提供了不在“article.note”中的不支持的关键字。"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/delete.coffee
-#, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "Article could not be deleted."
-msgstr "％s 对象已创建。"
+msgstr "文章不能被删除。"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "Article#"
@@ -1072,23 +965,19 @@ msgstr "分配后续工作"
 #: app/assets/javascripts/app/models/group.coffee
 #: db/seeds/object_manager_attributes.rb
 msgid "Assign follow-up to latest agent again."
-msgstr ""
+msgstr "再次分配跟进给最新的客服坐席。"
 
 #: app/assets/javascripts/app/models/group.coffee
-#, fuzzy
-#| msgid "Assign Follow-Ups"
 msgid "Assign follow-ups"
-msgstr "分配后续工作"
+msgstr "分配跟进工作"
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 msgid "Assign signup roles"
 msgstr "分配注册角色"
 
 #: db/seeds/object_manager_attributes.rb
-#, fuzzy
-#| msgid "Assign Users based on users domain."
 msgid "Assign users based on user domain."
-msgstr "根據使用者的網域分配使用者權限"
+msgstr "跟进用户的域名分配用户。"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_load_measure.jst.eco
 msgid "Assigned"
@@ -1096,7 +985,7 @@ msgstr "分配比例"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_git_issue.jst.eco
 msgid "Assignee"
-msgstr "受让人 "
+msgstr "受让人"
 
 #: db/seeds/object_manager_attributes.rb
 msgid "Assignment Timeout"
@@ -1104,39 +993,33 @@ msgstr "分配超時"
 
 #: app/assets/javascripts/app/models/_application_model.coffee
 #: app/assets/javascripts/app/models/group.coffee
-#, fuzzy
-#| msgid "Assignment Timeout"
 msgid "Assignment timeout"
-msgstr "分配超時"
+msgstr "分配超时"
 
 #: app/assets/javascripts/app/models/group.coffee
 #: db/seeds/object_manager_attributes.rb
 msgid ""
 "Assignment timeout in minutes if assigned agent is not working on it. Ticket "
 "will be shown as unassigend."
-msgstr ""
-"如果被分配的客服人員不在工作崗位上，則分配超時（以分鐘為單位）。工單將顯示為"
-"未分配"
+msgstr "如果客服坐席不在工作岗位上，分配会很快超时，工单将显示为未分配。"
 
 #: app/models/user.rb
 msgid ""
 "At least one identifier (firstname, lastname, phone or email) for user is "
 "required."
-msgstr ""
+msgstr "至少需要提供一种方式（名字，姓氏，电话或者电子邮件）确认用户。"
 
 #: app/models/object_manager/attribute.rb
-#, fuzzy
-#| msgid "A user is required!"
 msgid "At least one letter is required"
-msgstr "需要一个用户！"
+msgstr "至少需要一个字符"
 
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee
 msgid "At least one object must be selected."
-msgstr ""
+msgstr "至少必须选择一个对象。"
 
 #: app/models/role.rb app/models/user.rb
 msgid "At least one user needs to have admin permissions."
-msgstr ""
+msgstr "至少有一个用户需要拥有admin权限。"
 
 #: app/assets/javascripts/app/views/generic/attachments.jst.eco
 #: app/views/knowledge_base/public/answers/show.html.erb
@@ -1145,7 +1028,7 @@ msgstr "附件"
 
 #: db/seeds/settings.rb
 msgid "Attachment - Search for follow-up also in attachments."
-msgstr ""
+msgstr "附件 - 在附件中也搜索跟进。"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_article_attachments.coffee
 #: app/assets/javascripts/app/views/knowledge_base/_answer_attachments.jst.eco
@@ -1161,30 +1044,26 @@ msgstr "注意：导入完成后，这些也将是您的登录名和密码。"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
-#, fuzzy
-#| msgid ""
-#| "Attention: These will be your login password after the import is "
-#| "completed."
 msgid ""
 "Attention: These will be your login and password after the import is "
 "completed."
-msgstr "注意：這些將是匯入完成後的登入密碼"
+msgstr "注意：导入完成后这些将会成为你的登录用户名和密码。"
 
 #: app/assets/javascripts/app/controllers/object_manager.coffee
 msgid "Attribute"
-msgstr ""
+msgstr "属性"
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 msgid "Attribute '%s' is required in the mapping"
-msgstr ""
+msgstr "映射需要属性 '%s'"
 
 #: app/controllers/users_controller.rb
 msgid "Attribute 'email' required!"
-msgstr ""
+msgstr "需要”电子邮件“属性！"
 
 #: app/models/object_manager/attribute.rb
 msgid "Attribute not editable!"
-msgstr ""
+msgstr "属性不能编辑！"
 
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
@@ -1207,24 +1086,24 @@ msgstr "验证"
 
 #: app/controllers/import_otrs_controller.rb lib/email_helper/probe.rb
 msgid "Authentication failed!"
-msgstr ""
+msgstr "验证失败！"
 
 #: lib/email_helper/probe.rb
 msgid "Authentication failed, invalid credentials!"
-msgstr ""
+msgstr "登录失败，无效的凭据！"
 
 #: lib/email_helper/probe.rb
 msgid "Authentication failed, username incorrect!"
-msgstr ""
+msgstr "登录失败，用户名不正确！"
 
 #: lib/email_helper/probe.rb
 msgid "Authentication not possible (not offered by the service)"
-msgstr ""
+msgstr "不能登录（不提供服务）"
 
 #: app/controllers/application_controller/authenticates.rb
 #: app/policies/pundit_policy.rb lib/user_context.rb
 msgid "Authentication required"
-msgstr ""
+msgstr "需要登录"
 
 #: db/seeds/settings.rb
 msgid "Authentication via %s"
@@ -1232,17 +1111,17 @@ msgstr "使用s%登录"
 
 #: app/controllers/application_controller/handles_errors.rb
 msgid "Authorization failed"
-msgstr ""
+msgstr "登录失败"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket.coffee
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco
 #: db/seeds/settings.rb
 msgid "Auto Assignment"
-msgstr "自動分配"
+msgstr "自动分配"
 
 #: app/assets/javascripts/app/controllers/getting_started/auto_wizard.coffee
 msgid "Auto Wizard"
-msgstr ""
+msgstr "自动向导"
 
 #: db/seeds/settings.rb
 msgid "Auto close"
@@ -1253,8 +1132,6 @@ msgid "Auto create"
 msgstr "自动建立"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Auto close state"
 msgid "Auto-close state"
 msgstr "自动关闭状态"
 
@@ -1266,23 +1143,21 @@ msgstr "初始登入時自動建立帳戶連結"
 msgid ""
 "Automatically enrich your customers and organizations with fresh, up-to-date "
 "intel. Map data directly to object fields."
-msgstr "自動使用最新的信息滿足您的客戶和組織。將數據直接映射到物件上"
+msgstr "自动允许客户和组织使用最新的信息。将数据直接映射到对象上。"
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
 msgid ""
 "Automatically loads the chat.css file. If you want to use your own css, just "
 "set it to false."
-msgstr ""
-"自動加載chat.css文件。如果要使用自己的http://desk.bonvies.com/#CSS，請將其設"
-"置為false"
+msgstr "自动加载chat.css文件。如果要使用自己的CSS，请将其设置为false。"
 
 #: app/assets/javascripts/app/models/overview.coffee
 msgid "Available for the following roles"
-msgstr "适用于以下角色 "
+msgstr "适用于以下角色"
 
 #: db/seeds/settings.rb
 msgid "Available types for a new ticket"
-msgstr ""
+msgstr "允许新建工单的类型"
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
 #: app/assets/javascripts/app/views/customer_chat/setting.jst.eco
@@ -1307,7 +1182,7 @@ msgstr "平均: %s%"
 
 #: db/seeds/settings.rb
 msgid "BCC address for all outgoing emails"
-msgstr ""
+msgstr "所有发出的邮件密送地址（BCC）"
 
 #: app/assets/javascripts/app/views/generic/object_search/item_organization_members.jst.eco
 msgid "Back"
@@ -1332,11 +1207,11 @@ msgstr "背景颜色"
 msgid ""
 "Background process did not start or has not finished! Please contact your "
 "support."
-msgstr ""
+msgstr "后台进程没有启动或者完成！请联系你的支持。"
 
 #: app/models/report.rb
 msgid "Backlog"
-msgstr ""
+msgstr "待处理项"
 
 #: app/assets/javascripts/app/controllers/_manage/branding.coffee
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
@@ -1352,7 +1227,7 @@ msgstr "基本DN"
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 msgid "Base Objects"
-msgstr "基礎物件"
+msgstr "基础对象"
 
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee
 msgid "Basic Settings"
@@ -1360,11 +1235,11 @@ msgstr "基本设置"
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 msgid "Before you mention a user, please select a group."
-msgstr ""
+msgstr "在提及用户前，请选择一个组。"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 msgid "Begin forwarded message"
-msgstr ""
+msgstr "开始转发信息"
 
 #: db/seeds/settings.rb
 msgid "Beginner"
@@ -1387,14 +1262,12 @@ msgstr "封鎖通知"
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
-#, fuzzy
-#| msgid "Blocked caller ids based on sender caller id."
 msgid "Block caller IDs based on sender caller ID."
-msgstr "封鎖 caller ids 根據來源方的 caller id"
+msgstr "跟进发送者的 caller ID 封锁 caller id。"
 
 #: app/assets/javascripts/app/models/chat.coffee
 msgid "Blocked IPs (separated by ;)"
-msgstr "封锁的IP（以 ; 号分隔） "
+msgstr "封锁的IP（以 ; 号分隔）"
 
 #: app/assets/javascripts/app/models/chat.coffee
 msgid "Blocked countries"
@@ -1410,19 +1283,19 @@ msgstr "蓝色"
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco
 #: app/assets/javascripts/app/views/widget/payload_example.jst.eco
 msgid "Body"
-msgstr "主体"
+msgstr "正文"
 
 #: db/seeds/settings.rb
 msgid "Body - Search for follow-up also in mail body."
-msgstr ""
+msgstr "正文 - 在邮件正文中搜索跟进。"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Boolean"
-msgstr ""
+msgstr "布尔值"
 
 #: lib/telegram.rb
 msgid "Bot already exists!"
-msgstr ""
+msgstr "已存在机器人！"
 
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 msgid "Bots"
@@ -1439,25 +1312,23 @@ msgstr "浏览器"
 
 #: app/assets/javascripts/app/lib/app_post/browser.coffee
 msgid "Browser too old!"
-msgstr ""
+msgstr "浏览器太老了！"
 
 #: app/assets/javascripts/app/lib/mixins/ticket_mass_updatable.coffee
 msgid "Bulk action executed!"
 msgstr "批量操作已執行！"
 
 #: app/assets/javascripts/app/lib/mixins/ticket_mass_updatable.coffee
-#, fuzzy
-#| msgid "Bulk action executed!"
 msgid "Bulk action failed"
-msgstr "批量操作已執行！"
+msgstr "批量操作执行失败"
 
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee
 msgid "Bulk action stopped by error(s): %s!"
-msgstr ""
+msgstr "批量操作报错 %s 并停止!"
 
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
 msgid "Bulk import allows you to create and update many records at once."
-msgstr "批量匯入允許您一次建立和更新許多記錄"
+msgstr "批量导入允许您一次创建和更新多条记录。"
 
 #: app/assets/javascripts/app/models/calendar.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
@@ -1466,21 +1337,15 @@ msgstr "工作日"
 
 #: app/views/knowledge_base/public/show_alternatives.html.erb
 msgid "But it's only available in these languages:"
-msgstr ""
+msgstr "但是它只在这些语言有效："
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid ""
-#| "By default the follow-up check is done via the subject of an email. With "
-#| "this setting you can add more fields for which the follow-up check will "
-#| "be executed."
 msgid ""
 "By default, the follow-up check is done via the subject of an email. This "
 "setting lets you add more fields for which the follow-up check will be "
 "executed."
-msgstr ""
-"預設情況下，後續檢查通過電子郵件主旨進行。使用此設置，您可以新加更多字段，將"
-"對其執行後續檢查"
+msgstr "默认情况下，通过电子邮件的主题进行跟进检查。这个设置允许你增加更多的字段执行"
+"跟进检查。"
 
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 msgid ""
@@ -1503,21 +1368,17 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: db/seeds/object_manager_attributes.rb
 msgid "CC"
-msgstr ""
+msgstr "抄送（CC）"
 
 #: app/assets/javascripts/app/controllers/_integration/idoit.coffee
 msgid "CMDB to document complex relations of your network components."
-msgstr "CMDB記錄您的網路組件間的複雜關係"
+msgstr "CMDB記錄您的網路組件間的複雜關係。"
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
-#, fuzzy
-#| msgid ""
-#| "CSS font-size with a unit like 12px, 1.5em. If left to undefined it "
-#| "inherits the font-size of the website."
 msgid ""
 "CSS font-size with a unit like 12px, 1.5em. If left undefined it inherits "
 "the font-size of the website."
-msgstr "CSS字體大小，單位為12px，1.5em。如果未定義，它將繼承網站的字體大小"
+msgstr "CSS字體大小，單位為12px，1.5em。如果未定義，它將繼承網站的字體大小。"
 
 #: app/assets/javascripts/app/controllers/cti.coffee db/seeds/permissions.rb
 msgid "CTI"
@@ -1530,23 +1391,19 @@ msgstr "CTI (generic)"
 
 #: db/seeds/settings.rb
 msgid "CTI Token"
-msgstr ""
+msgstr "CTI Token"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Config"
 msgid "CTI config"
-msgstr "配置"
+msgstr "CTI 配置"
 
 #: db/seeds/settings.rb
 msgid "CTI customer last activity"
-msgstr ""
+msgstr "CTI 客户最近一次活动"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Integrations"
 msgid "CTI integration"
-msgstr "集成"
+msgstr "CTI 集成"
 
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
@@ -1566,14 +1423,12 @@ msgstr "日程"
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
-#, fuzzy
-#| msgid "Settings"
 msgid "Call Settings"
-msgstr "设置"
+msgstr "来电设置"
 
 #: app/assets/javascripts/app/controllers/cti.coffee
 msgid "Call from %s for %s"
-msgstr ""
+msgstr "从 %s 关于 %s 的来电"
 
 #: app/assets/javascripts/app/models/application.coffee
 msgid "Callback URL"
@@ -1582,16 +1437,12 @@ msgstr "授权回调 URL"
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee
 #: app/assets/javascripts/app/controllers/_integration/placetel.coffee
 #: app/assets/javascripts/app/controllers/_integration/sipgate_io.coffee
-#, fuzzy
-#| msgid "Also caller id of outbound calls can be changed."
 msgid "Caller ID of outbound calls can be changed as well."
-msgstr "也可以更改出站呼叫的来电显示。"
+msgstr "也可以更改呼出号码的显示。"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
-#, fuzzy
-#| msgid "Caller log"
 msgid "Caller Log Filter"
-msgstr "通聯記錄"
+msgstr "通话记录过滤"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
@@ -1614,33 +1465,33 @@ msgstr "可以是任何CSS颜色格式。"
 
 #: app/assets/javascripts/app/controllers/getting_started/agent.coffee
 msgid "Can't create user!"
-msgstr ""
+msgstr "不能创建用户！"
 
 #: app/controllers/application_controller/renders_models.rb
 msgid "Can't delete, object has references."
-msgstr ""
+msgstr "不能删除，对象有引用。"
 
 #: app/controllers/application_controller/authenticates.rb
 msgid "Can't find User for Token"
-msgstr ""
+msgstr "不能找到用户Token"
 
 #: app/models/ticket/number.rb
 msgid "Can't generate new ticket number!"
-msgstr ""
+msgstr "不能生成新的工单号！"
 
 #: app/models/ticket.rb
 msgid "Can't merge ticket with itself!"
-msgstr ""
+msgstr "同一工单不能合并！"
 
 #: lib/sessions/event/spool.rb
 msgid "Can't send spool, session not authenticated"
-msgstr ""
+msgstr "不能发送spool，会话没有登录"
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee
 msgid ""
 "Can't update password, your entered passwords do not match. Please try again!"
-msgstr ""
+msgstr "不能更新密码，输入的密码不对。请重试！"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/twitter_reply.coffee
@@ -1671,19 +1522,19 @@ msgstr "取消上传"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee
 msgid "Cannot delete category"
-msgstr ""
+msgstr "不能删除分类"
 
 #: app/policies/ticket_policy.rb
 msgid "Cannot follow-up on a closed ticket. Please create a new ticket."
-msgstr ""
+msgstr "不能跟进一个关闭了的工单。请创建一个新的工单。"
 
 #: app/assets/javascripts/app/controllers/report.coffee
 msgid "Cannot generate report"
-msgstr ""
+msgstr "不能生成报告"
 
 #: app/assets/javascripts/app/lib/app_post/html5_upload.coffee
 msgid "Cannot upload file"
-msgstr ""
+msgstr "不能上传文件"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/categories.coffee
 msgid "Categories"
@@ -1696,17 +1547,15 @@ msgstr "類別"
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee
 msgid "Category page layout"
-msgstr ""
+msgstr "分类页面布局"
 
 #: lib/secure_mailing/smime/incoming.rb
-#, fuzzy
-#| msgid "When notification is being sent."
 msgid "Certificate for verification could not be found."
-msgstr "触发该通知的事件."
+msgstr "不能找到验证的证书。"
 
 #: app/assets/javascripts/app/views/integration/smime.jst.eco
 msgid "Certificates & Private Keys"
-msgstr ""
+msgstr "证书 & 私钥"
 
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
@@ -1729,8 +1578,6 @@ msgid "Change Objects"
 msgstr "變更物件"
 
 #: app/assets/javascripts/app/views/profile/password.jst.eco
-#, fuzzy
-#| msgid "Change your password"
 msgid "Change Your Password"
 msgstr "修改登录密码"
 
@@ -1758,21 +1605,17 @@ msgid "Changes"
 msgstr "修改"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee
-#, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "Changes could not be loaded."
-msgstr "％s 对象已创建。"
+msgstr "修改不能被加载。"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee
 #: app/assets/javascripts/app/views/knowledge_base/base_form.coffee
-#, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "Changes could not be saved."
-msgstr "％s 对象已创建。"
+msgstr "修改不能被保存。"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Changes were made that require a database update."
-msgstr "已更改需要更新資料庫"
+msgstr "已更改需要数据库更新。"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
@@ -1786,45 +1629,43 @@ msgstr "渠道"
 
 #: db/seeds/permissions.rb
 msgid "Channel - Chat"
-msgstr ""
+msgstr "渠道 - 在线聊天"
 
 #: db/seeds/permissions.rb
 msgid "Channel - Email"
-msgstr ""
+msgstr "渠道 - 电子邮件"
 
 #: db/seeds/permissions.rb
 msgid "Channel - Facebook"
-msgstr ""
+msgstr "渠道 - Facebook"
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Channel"
 msgid "Channel - Form"
-msgstr "渠道"
+msgstr "渠道 - 来自"
 
 #: db/seeds/permissions.rb
 msgid "Channel - Google"
-msgstr ""
+msgstr "渠道 - Google"
 
 #: db/seeds/permissions.rb
 msgid "Channel - Microsoft 365"
-msgstr ""
+msgstr "渠道 - Microsoft 365"
 
 #: db/seeds/permissions.rb
 msgid "Channel - SMS"
-msgstr ""
+msgstr "渠道 - 短信"
 
 #: db/seeds/permissions.rb
 msgid "Channel - Telegram"
-msgstr ""
+msgstr "渠道 - Telegram"
 
 #: db/seeds/permissions.rb
 msgid "Channel - Twitter"
-msgstr ""
+msgstr "渠道 - Twitter"
 
 #: db/seeds/permissions.rb
 msgid "Channel - Web"
-msgstr ""
+msgstr "渠道 - Web"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_channel_distribution.jst.eco
 msgid "Channel Distribution"
@@ -1842,10 +1683,8 @@ msgid "Chat"
 msgstr "对话"
 
 #: app/assets/javascripts/app/views/channel/topics.jst.eco
-#, fuzzy
-#| msgid "Chat"
 msgid "Chat ID"
-msgstr "对话"
+msgstr "对话 ID"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Chat Title"
@@ -1853,15 +1692,15 @@ msgstr "对话标题"
 
 #: public/assets/chat/chat-no-jquery.coffee public/assets/chat/chat.coffee
 msgid "Chat closed by %s"
-msgstr ""
+msgstr "对话被 %s 终止"
 
 #: app/assets/javascripts/app/controllers/chat.coffee
 msgid "Chat not answered, automatically set to offline."
-msgstr ""
+msgstr "对话没有回应，自动设置为离线。"
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
 msgid "Chats"
-msgstr ""
+msgstr "对话"
 
 #: app/assets/javascripts/app/controllers/chat.coffee
 #: app/assets/javascripts/app/views/customer_chat/chat_header.jst.eco
@@ -1869,43 +1708,40 @@ msgid "Chatting Customers"
 msgstr "正在交谈的客户"
 
 #: db/seeds/schedulers.rb
-#, fuzzy
-#| msgid "Connect Channels"
 msgid "Check 'Channel' streams."
-msgstr "連接管道"
+msgstr "检查 ”渠道“源。"
 
 #: db/seeds/schedulers.rb
-#, fuzzy
-#| msgid "Connect Channels"
 msgid "Check channels."
-msgstr "連接管道"
+msgstr "检查渠道。"
 
 #: lib/search_index_backend.rb
 msgid "Check the response and payload for detailed information:"
-msgstr ""
+msgstr "检查回复和载荷的详细信息："
 
 #: app/assets/javascripts/app/views/object_manager/attribute/multiselect.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco
 msgid ""
 "Check this box if you want to customise how options are sorted. If the box "
 "is not checked, values are sorted in alphabetical order."
-msgstr ""
+msgstr "如果你想定制选项如何排序请选择这个选项。如果这个选项没有被选中，项目将按照字"
+"母序排列。"
 
 #: app/assets/javascripts/app/controllers/_integration/check_mk.coffee
 msgid "Checkmk"
-msgstr ""
+msgstr "Checkmk"
 
 #: db/seeds/settings.rb
 msgid "Checkmk integration"
-msgstr ""
+msgstr "Checkmk集成"
 
 #: db/seeds/settings.rb
 msgid "Checkmk token"
-msgstr ""
+msgstr "Checkmk token"
 
 #: db/seeds/settings.rb
 msgid "Checksum"
-msgstr "校驗"
+msgstr "校验"
 
 #: app/assets/javascripts/app/controllers/widget/link/ticket.coffee
 msgid "Child"
@@ -1920,14 +1756,10 @@ msgid "Choose if retweets should also be converted to tickets."
 msgstr "选择是否将转推也转换为工单。"
 
 #: app/assets/javascripts/app/views/facebook/account_edit.jst.eco
-#, fuzzy
-#| msgid "Choose the group in which page postings will get added to."
 msgid "Choose the Group to which page posts will get added."
 msgstr "選擇要新增頁面張貼的群組"
 
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
-#, fuzzy
-#| msgid "Choose the group in which direct messages will get added to."
 msgid "Choose the group to which direct messages will get added."
 msgstr "選擇要新增直接消息的群組"
 
@@ -1956,7 +1788,7 @@ msgstr "选择您的新密码。"
 
 #: app/assets/javascripts/app/models/user.coffee
 msgid "Christmas holiday"
-msgstr "國定假日"
+msgstr "圣诞假期"
 
 #: db/seeds/object_manager_attributes.rb
 msgid "City"
@@ -1964,29 +1796,27 @@ msgstr "城市"
 
 #: db/seeds/schedulers.rb
 msgid "Clean up 'Cti::Log'."
-msgstr ""
+msgstr "清除 ”Cti::Log“。"
 
 #: db/seeds/schedulers.rb
 msgid "Clean up 'HttpLog'."
-msgstr ""
+msgstr "清除”HttpLog“。"
 
 #: db/seeds/schedulers.rb
 msgid "Clean up ActiveJob locks."
-msgstr ""
+msgstr "清除活动任务锁定。"
 
 #: db/seeds/schedulers.rb
 msgid "Clean up closed sessions."
-msgstr ""
+msgstr "清除关闭的会话。"
 
 #: db/seeds/schedulers.rb
-#, fuzzy
-#| msgid "Continue session"
 msgid "Clean up dead sessions."
-msgstr "切換登入 回復連線"
+msgstr "清除死会话。"
 
 #: db/seeds/schedulers.rb
 msgid "Clean up expired sessions."
-msgstr ""
+msgstr "清除过期会话。"
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco
@@ -1995,24 +1825,24 @@ msgstr "Clearbit"
 
 #: db/seeds/settings.rb
 msgid "Clearbit config"
-msgstr ""
+msgstr "Clearbit配置"
 
 #: db/seeds/settings.rb
 msgid "Clearbit integration"
-msgstr ""
+msgstr "Clearbit集成"
 
 #: app/views/knowledge_base/public/not_found.html.erb
 msgid "Click here"
-msgstr ""
+msgstr "点击这里"
 
 #: app/assets/javascripts/app/views/integration/idoit.jst.eco
 #: db/seeds/settings.rb
 msgid "Client ID"
-msgstr ""
+msgstr "客户 ID"
 
 #: db/seeds/settings.rb
 msgid "Client Secret"
-msgstr "客戶機密"
+msgstr "客户密码"
 
 #: db/seeds/settings.rb
 msgid "Client storage"
@@ -2053,7 +1883,7 @@ msgstr ""
 
 #: db/seeds/schedulers.rb
 msgid "Close chat sessions where participants are offline."
-msgstr ""
+msgstr "参与者离线，关闭会话。"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Close current tab"
@@ -2069,7 +1899,7 @@ msgstr "从列表关闭"
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 #: db/seeds/settings.rb
 msgid "Close tab on ticket close"
-msgstr ""
+msgstr "当工单关闭时关闭tab页"
 
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco
 #: app/models/report.rb
@@ -2079,7 +1909,7 @@ msgstr "已关闭"
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
 #: lib/excel_sheet/ticket.rb
 msgid "Closed At"
-msgstr ""
+msgstr "关闭在"
 
 #: app/assets/javascripts/app/controllers/widget/ticket_stats.coffee
 #: app/assets/javascripts/app/controllers/widget/user.coffee
@@ -2112,13 +1942,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco
 msgid "Completed Tasks"
-msgstr "完成的任务 "
+msgstr "完成的任务"
 
 #: public/assets/chat/views/chat.eco
-#, fuzzy
-#| msgid "Change your language."
 msgid "Compose your message…"
-msgstr "更換個人語言"
+msgstr "编辑你的信息…"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_auto_assignment.coffee
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
@@ -2316,10 +2144,8 @@ msgid "Conversation is transferred into another chat. Please stay tuned."
 msgstr ""
 
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
-#, fuzzy
-#| msgid "Conversion of retweets to tickets is turned off"
 msgid "Conversion of retweets into tickets is turned off."
-msgstr "转推到工单的转换已关闭 "
+msgstr "转推到工单的转换已关闭"
 
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
 msgid "Copy"
@@ -2666,7 +2492,7 @@ msgstr "根據寄件人和收件人列表選擇客戶"
 msgid ""
 "Customer tickets of the user will get deleted on execution of the task. No "
 "rollback possible."
-msgstr "用户的客户工单将在执行任务时被删除。 无法回滚。 "
+msgstr "用户的客户工单将在执行任务时被删除。 无法回滚。"
 
 #: app/assets/javascripts/app/models/organization.coffee
 #: db/seeds/object_manager_attributes.rb
@@ -2756,10 +2582,8 @@ msgid "Decryption failed!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
-#, fuzzy
-#| msgid "Registration successful!"
 msgid "Decryption was successful."
-msgstr "注册成功！"
+msgstr "解密成功。"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
@@ -2813,7 +2637,7 @@ msgstr ""
 msgid ""
 "Define an exception of \"automatic assignment\" for certain users (e.g. "
 "executives)."
-msgstr "例外定義“自動分配” 為某些用戶 (例如主管) "
+msgstr "为某些用户定义“自动分配”的例外情况（例如主管）"
 
 #: db/seeds/settings.rb
 msgid "Define max. attachment size for Elasticsearch."
@@ -3321,10 +3145,8 @@ msgid "Defines the default system language."
 msgstr "定義系統預設語言"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Defines the system default timezone."
 msgid "Defines the default system timezone."
-msgstr "定义系统默认时区。 "
+msgstr "定义系统默认时区。"
 
 #: db/seeds/settings.rb
 #, fuzzy
@@ -3535,7 +3357,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee
 msgid "Delete Customer"
-msgstr "删除客户 "
+msgstr "删除客户"
 
 #: app/assets/javascripts/app/views/generic/attachment_item.jst.eco
 msgid "Delete File"
@@ -3547,7 +3369,7 @@ msgstr "刪除知識庫"
 
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
 msgid "Delete User"
-msgstr "删除用户 "
+msgstr "删除用户"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee
 msgid "Delete all child categories and answers, then try again."
@@ -3595,7 +3417,7 @@ msgstr "刪除紀錄"
 
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
 msgid "Deleted Organization"
-msgstr "删除的组织 "
+msgstr "删除的组织"
 
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
 msgid "Deleted tickets (%s in total)"
@@ -3603,7 +3425,7 @@ msgstr "删除的工单(总计 %s)"
 
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
 msgid "Deletion Task"
-msgstr "删除任务 "
+msgstr "删除任务"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee
 #, fuzzy
@@ -3693,7 +3515,7 @@ msgstr "直接消息"
 
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
 msgid "Direct Messages Group"
-msgstr "直接消息组 "
+msgstr "直接消息组"
 
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 msgid "Direct URL"
@@ -3839,10 +3661,8 @@ msgid "Drop files here"
 msgstr "拖拽文件至此"
 
 #: app/assets/javascripts/app/controllers/login.coffee
-#, fuzzy
-#| msgid "Due to inactivity you are automatically logged out."
 msgid "Due to inactivity, you have been automatically logged out."
-msgstr "由于不活动，您将自动注销。 "
+msgstr "由于不活动，您将自动注销。"
 
 #: app/assets/javascripts/app/controllers/_plugin/session_timeout.coffee
 #, fuzzy
@@ -4094,7 +3914,7 @@ msgstr "开启调试模式"
 msgid ""
 "Enable if you want a timestamped reply header to be automatically inserted "
 "in front of quoted messages."
-msgstr "如果希望将带有时间戳的答复标题自动插入到引用消息的前面，请启用。 "
+msgstr "如果希望将带有时间戳的答复标题自动插入到引用消息的前面，请启用。"
 
 #: db/seeds/settings.rb
 msgid ""
@@ -4229,7 +4049,7 @@ msgstr "用户可以通过网页创建属于自己的帐号."
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 msgid "Encrypt"
-msgstr "加密 "
+msgstr "加密"
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
 msgid "Encrypt email (if not possible, discard notification)"
@@ -4263,10 +4083,8 @@ msgstr "終點"
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
-#, fuzzy
-#| msgid "Expert Settings"
 msgid "Endpoint Settings"
-msgstr "专家设定 "
+msgstr "端点设定"
 
 #: db/seeds.rb
 msgid "English (United States)"
@@ -4289,10 +4107,8 @@ msgid "Enter Private Key Secret"
 msgstr "添加私钥"
 
 #: app/assets/javascripts/app/views/ticket_zoom/title.jst.eco
-#, fuzzy
-#| msgid "Enter Title..."
 msgid "Enter Title…"
-msgstr "輸入標題..."
+msgstr "输入标题…"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
@@ -4383,7 +4199,7 @@ msgstr "層級提升於"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "Escalation at (Close Time)"
-msgstr "在（关闭时）升级 "
+msgstr "在（关闭时）升级"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "Escalation at (First Response Time)"
@@ -4495,7 +4311,7 @@ msgstr "專家"
 
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee
 msgid "Expert Settings"
-msgstr "专家设定 "
+msgstr "专家设定"
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 msgid "Experts"
@@ -4563,10 +4379,8 @@ msgstr "功能已禁用！"
 #: app/controllers/integration/cti_controller.rb
 #: app/controllers/integration/placetel_controller.rb
 #: app/controllers/integration/sipgate_controller.rb
-#, fuzzy
-#| msgid "Unable to verify email. Please contact your administrator."
 msgid "Feature is disabled, please contact your administrator!"
-msgstr "無法驗證電子郵件 請與您的管理員聯繫"
+msgstr "功能被关闭。请联系管理员！"
 
 #: app/controllers/integration/cti_controller.rb
 #: app/controllers/integration/placetel_controller.rb
@@ -4699,7 +4513,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/group.coffee
 #: db/seeds/object_manager_attributes.rb
 msgid "Follow-up possible"
-msgstr "可以跟进 "
+msgstr "可以跟进"
 
 #: app/assets/javascripts/app/lib/app_post/iconset_picker.coffee
 msgid "Font Awesome"
@@ -4862,10 +4676,8 @@ msgid "Generate user-based stats."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee
-#, fuzzy
-#| msgid "Generic API to integrate VoIP service provider with realtime push."
 msgid "Generic API to integrate VoIP service provider with real-time push."
-msgstr "用于将VoIP服务提供商与实时推送集成的通用API。 "
+msgstr "用于将VoIP服务提供商与实时推送集成的通用API。"
 
 #: db/seeds/settings.rb
 msgid "Geo Calendar Service"
@@ -5025,11 +4837,11 @@ msgstr "组（更改）"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "Group (create)"
-msgstr "组（创建） "
+msgstr "组（创建）"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "Group (full)"
-msgstr "组（完整） "
+msgstr "组（完整）"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "Group (overview)"
@@ -5051,7 +4863,7 @@ msgstr "所属群组"
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 msgid "Group by Direction"
-msgstr "按方向分组 "
+msgstr "按方向分组"
 
 #: app/policies/ticket_policy.rb
 msgid "Group can't be blank"
@@ -5100,10 +4912,8 @@ msgid "Groups"
 msgstr "组"
 
 #: app/assets/javascripts/app/controllers/group.coffee
-#, fuzzy
-#| msgid "Group (read)"
 msgid "Groups are …"
-msgstr "组（读）"
+msgstr "组是 …"
 
 #: app/assets/javascripts/app/models/webhook.coffee
 msgid "HMAC SHA1 Signature Token"
@@ -5161,14 +4971,12 @@ msgid "Health Check"
 msgstr "健康检测"
 
 #: app/assets/javascripts/app/views/monitoring.jst.eco
-#, fuzzy
-#| msgid "Health information can be retrieved as JSON using"
 msgid "Health information can be retrieved as JSON using:"
-msgstr "健康信息檢索可以為 JSON 格式"
+msgstr "健康信息檢索可以為 JSON 格式："
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Hello! I need help with your product."
-msgstr "你好！ 我需要产品方面的帮助。 "
+msgstr "你好！ 我需要产品方面的帮助。"
 
 #: app/assets/javascripts/app/views/customer_chat/setting.jst.eco
 msgid "Hello, my name is %s, what can I do for you?"
@@ -5182,8 +4990,7 @@ msgstr ""
 msgid ""
 "Here you can add further links to your public FAQ page, which will be "
 "displayed either in the header or footer."
-msgstr ""
-"您可以在此处向公共常见问题解答页面添加更多链接，该链接将显示在页眉或页脚中。 "
+msgstr "您可以在此处向 FAQ 解答页面添加更多链接，该链接将显示在页眉或页脚中。"
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
 #, fuzzy
@@ -5253,7 +5060,7 @@ msgstr "英雄"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Hi! Which one of our products?"
-msgstr "嗨！ 我们的哪一款产品？ "
+msgstr "嗨！ 我们的哪一款产品？"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 #: app/assets/javascripts/app/controllers/organization_profile.coffee
@@ -5315,10 +5122,8 @@ msgid "Hours"
 msgstr "小时"
 
 #: app/views/layouts/knowledge_base.html.erb
-#, fuzzy
-#| msgid "How can we help you? Search for an answer or a topic..."
 msgid "How can we help you? Search for an answer or a topic…"
-msgstr "我們該怎樣幫助你？ 搜尋回答或主題..."
+msgstr "请问需要什么帮助？搜索回答或者主题…"
 
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_waiting_time.coffee
 #, fuzzy
@@ -5934,6 +5739,7 @@ msgstr ""
 
 #: app/controllers/integration/cti_controller.rb
 #: app/controllers/integration/placetel_controller.rb
+#: app/controllers/integration/sipgate_controller.rb
 msgid "Invalid token, please contact your admin!"
 msgstr ""
 
@@ -5991,10 +5797,8 @@ msgstr "一月"
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
-#, fuzzy
-#| msgid "Job is waiting to get started..."
 msgid "Job is waiting to get started…"
-msgstr "工作等待開始中..."
+msgstr "任务正等待开始…"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "John Smith"
@@ -6303,10 +6107,8 @@ msgstr "加载"
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee
 #: app/assets/javascripts/app/controllers/widget/payload_example.coffee
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee
-#, fuzzy
-#| msgid "Loading..."
 msgid "Loading failed."
-msgstr "加载中..."
+msgstr "加载失败。"
 
 #: app/assets/javascripts/app/lib/app_post/task_manager.coffee
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
@@ -6314,7 +6116,7 @@ msgstr "加载中..."
 #, fuzzy
 #| msgid "Loading..."
 msgid "Loading…"
-msgstr "加载中..."
+msgstr "加载中…"
 
 #: lib/email_helper.rb
 msgid "Local MTA (Sendmail/Postfix/Exim/…) - use server setup"
@@ -6962,7 +6764,7 @@ msgstr "新日程"
 
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco
 msgid "New Deletion Task"
-msgstr "新删除任务 "
+msgstr "新删除任务"
 
 #: app/assets/javascripts/app/controllers/group.coffee
 msgid "New Group"
@@ -7094,10 +6896,8 @@ msgid "No Entries"
 msgstr "没有工单"
 
 #: lib/external_credential/facebook.rb
-#, fuzzy
-#| msgid "No %s configured."
 msgid "No Facebook app configured!"
-msgstr "未配置 ％s"
+msgstr "未配置Facebook App！"
 
 #: lib/external_credential/google.rb
 msgid "No Google app configured!"
@@ -7125,10 +6925,8 @@ msgid "No Thanks!"
 msgstr ""
 
 #: lib/external_credential/twitter.rb
-#, fuzzy
-#| msgid "Not configured"
 msgid "No Twitter app configured!"
-msgstr "未配置"
+msgstr "未配置Twitter App！"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/answers.coffee
 msgid "No answers"
@@ -7366,10 +7164,6 @@ msgstr "备注"
 msgid "Note - default visibility"
 msgstr "備註-預設可見性"
 
-#: db/seeds/settings.rb
-msgid "Note - visibility confirmation dialog"
-msgstr ""
-
 #: app/assets/javascripts/app/models/email_address.coffee
 #: app/assets/javascripts/app/models/group.coffee
 #: app/assets/javascripts/app/models/job.coffee
@@ -7481,10 +7275,8 @@ msgid "On %s, %s wrote:"
 msgstr "在 %s, %s 編輯:"
 
 #: app/assets/javascripts/app/models/macro.coffee
-#, fuzzy
-#| msgid "Once completed..."
 msgid "Once completed…"
-msgstr "一旦完成..."
+msgstr "一旦完成…"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Online"
@@ -7656,10 +7448,8 @@ msgstr "原始格式"
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
-#, fuzzy
-#| msgid "Expert Settings"
 msgid "Other Settings"
-msgstr "专家设定 "
+msgstr "其他设定"
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
@@ -7708,10 +7498,8 @@ msgid "Overviews"
 msgstr "概览"
 
 #: app/assets/javascripts/app/controllers/overview.coffee
-#, fuzzy
-#| msgid "Overview"
 msgid "Overviews are …"
-msgstr "工单概览"
+msgstr "概览…"
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_overwrite_modal.coffee
 msgid "Overwrite Draft"
@@ -8006,10 +7794,8 @@ msgid "Please supply your new password!"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
-#, fuzzy
-#| msgid "Please wait..."
 msgid "Please wait…"
-msgstr "请等待..."
+msgstr "请等待…"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
@@ -8423,10 +8209,8 @@ msgid "Reset changes"
 msgstr "重置所有更改"
 
 #: app/assets/javascripts/app/controllers/translation.coffee
-#, fuzzy
-#| msgid "Reset changes"
 msgid "Resetting changes…"
-msgstr "重置所有更改"
+msgstr "重置所有更改…"
 
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
 msgid "Response"
@@ -8512,10 +8296,8 @@ msgstr "运行任务"
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
-#, fuzzy
-#| msgid "Running..."
 msgid "Running…"
-msgstr "執行中..."
+msgstr "运行中…"
 
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee
 msgid "S/MIME"
@@ -8677,10 +8459,8 @@ msgstr "保存的条件"
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee
 #: app/assets/javascripts/app/controllers/_integration/idoit.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee
-#, fuzzy
-#| msgid "Bulk action executed!"
 msgid "Saving failed."
-msgstr "批量操作已執行！"
+msgstr "保存失败。"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 msgid "Schedule for"
@@ -8700,10 +8480,8 @@ msgid "Schedulers"
 msgstr "自动任务"
 
 #: app/assets/javascripts/app/controllers/job.coffee
-#, fuzzy
-#| msgid "Scheduler"
 msgid "Schedulers are …"
-msgstr "自动任务"
+msgstr "调度程序是…"
 
 #: app/assets/javascripts/app/views/object_manager/screens.jst.eco
 msgid "Screen"
@@ -8742,10 +8520,8 @@ msgstr "用户搜索"
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax.coffee
 #: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee
 #: app/assets/javascripts/app/views/generic/icon_picker.jst.eco
-#, fuzzy
-#| msgid "Search"
 msgid "Search…"
-msgstr "搜索"
+msgstr "搜索…"
 
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco
@@ -8806,10 +8582,8 @@ msgid "Select item"
 msgstr "选中"
 
 #: app/assets/javascripts/app/lib/app_post/multi_locales_row.coffee
-#, fuzzy
-#| msgid "Select Template"
 msgid "Select locale…"
-msgstr "选择模板"
+msgstr "选择本地…"
 
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee
 msgid "Select the customer of the ticket or create one."
@@ -8897,10 +8671,8 @@ msgid "Sender of last article"
 msgstr "回复最新的信件"
 
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco
-#, fuzzy
-#| msgid "pending"
 msgid "Sending…"
-msgstr "待處理"
+msgstr "发送中…"
 
 #: app/assets/javascripts/app/controllers/maintenance.coffee
 msgid "Sent successfully!"
@@ -9083,10 +8855,8 @@ msgid "Shared organization"
 msgstr "是否为共享的机构"
 
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
-#, fuzzy
-#| msgid "Shared"
 msgid "Sharing draft…"
-msgstr "已分享"
+msgstr "分享草稿…"
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
 msgid "Shoot"
@@ -9115,10 +8885,8 @@ msgstr "顯示詳細搜尋信息"
 
 #: app/assets/javascripts/app/views/generic/ticket_list.jst.eco
 #: app/assets/javascripts/app/views/widget/ticket_stats_list.jst.eco
-#, fuzzy
-#| msgid "Show all..."
 msgid "Show all…"
-msgstr "显示全部..."
+msgstr "显示全部…"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Show chat automatically"
@@ -9140,7 +8908,7 @@ msgstr "显示表单标题"
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 msgid "Shown records in caller log."
-msgstr "来电记录中显示的记录。 "
+msgstr "来电记录中显示的记录。"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Shown when the chat is closed."
@@ -9186,10 +8954,8 @@ msgid "Signature"
 msgstr "回复签名"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
-#, fuzzy
-#| msgid "Resend verification email"
 msgid "Signature verification failed!"
-msgstr "重发验证邮件"
+msgstr "签名验证失败！"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
@@ -9307,20 +9073,16 @@ msgid "Start new conversation"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
-#, fuzzy
-#| msgid "Start typing to search for users..."
 msgid "Start typing to search for users…"
-msgstr "开始输入以搜索用户..."
+msgstr "开始输入以搜索用户…"
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
-#, fuzzy
-#| msgid "Start typing to search for users..."
 msgid "Start typing to search in Knowledge Base…"
-msgstr "开始输入以搜索用户..."
+msgstr "开始输入以搜索知识库…"
 
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
 msgid "Started"
-msgstr "已开始 "
+msgstr "已开始"
 
 #: app/assets/javascripts/app/views/getting_started/finish.jst.eco
 msgid "Starting Zammad"
@@ -9638,10 +9400,8 @@ msgstr "引用"
 
 #: app/assets/javascripts/app/controllers/macro.coffee
 #: app/assets/javascripts/app/controllers/text_module.coffee
-#, fuzzy
-#| msgid "Text modules"
 msgid "Text modules are …"
-msgstr "引用"
+msgstr "文本模块是…"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 msgid "Text needed"
@@ -10218,10 +9978,8 @@ msgid "Ticket %s created!"
 msgstr "工單 ％s已建立 ！"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee
-#, fuzzy
-#| msgid "Ticket %s merged!"
 msgid "Ticket %s merged."
-msgstr "机票 ％s 合并了!"
+msgstr "工单 ％s 被合并了。"
 
 #: app/models/report.rb
 msgid "Ticket Count"
@@ -10519,6 +10277,10 @@ msgid "Token for CTI."
 msgstr ""
 
 #: db/seeds/settings.rb
+msgid "Token for Sipgate."
+msgstr ""
+
+#: db/seeds/settings.rb
 msgid "Token for monitoring."
 msgstr ""
 
@@ -10580,10 +10342,8 @@ msgid "Triggers"
 msgstr "触发器"
 
 #: app/assets/javascripts/app/controllers/trigger.coffee
-#, fuzzy
-#| msgid "Triggers"
 msgid "Triggers are …"
-msgstr "触发器"
+msgstr "触发器是…"
 
 #: app/assets/javascripts/app/lib/app_post/websocket.coffee
 msgid "Trying to reconnect…"
@@ -11082,10 +10842,8 @@ msgstr "驗證寄送和接收"
 #: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco
-#, fuzzy
-#| msgid "Verifying..."
 msgid "Verifying…"
-msgstr "正在确认..."
+msgstr "正在验证中…"
 
 #: app/assets/javascripts/app/controllers/version.coffee
 #: app/assets/javascripts/app/views/package.jst.eco
@@ -11295,10 +11053,8 @@ msgid "Webhooks"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/webhook.coffee
-#, fuzzy
-#| msgid "Webhook"
 msgid "Webhooks are …"
-msgstr "Webhook"
+msgstr "Webhook是…"
 
 #: app/assets/javascripts/app/models/webhook.coffee
 msgid ""
@@ -12525,10 +12281,8 @@ msgstr "选择"
 
 #: app/assets/javascripts/app/views/generic/attachment.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
-#, fuzzy
-#| msgid "select attachment..."
 msgid "select attachment…"
-msgstr "增加附件"
+msgstr "增加附件…"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 msgid "sent to"
@@ -12568,6 +12322,12 @@ msgstr "显示"
 #: app/assets/javascripts/app/views/widget/organization.jst.eco
 msgid "show more"
 msgstr ""
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "%s Api Token"
+msgid "sipgate.io Token"
+msgstr "%s Api Token"
 
 #: db/seeds/settings.rb
 msgid "sipgate.io alternative FQDN"
@@ -12938,9 +12698,6 @@ msgstr "∅轮候时间"
 
 #~ msgid "Automatically show chat"
 #~ msgstr "自动显示即时聊天"
-
-#~ msgid "%s Api Token"
-#~ msgstr "%s Api Token"
 
 #~ msgid ""
 #~ "%s will only allow access via OAuth. Password-based access will no longer "
