@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Sequencer
   class Unit
@@ -13,8 +13,9 @@ class Sequencer
             def process
               provide_mapped do
                 {
-                  name: resource['name'],
-                  note: resource['description'],
+                  name:   resource['name'],
+                  note:   resource['description'],
+                  domain: resource['domains']&.first,
                 }
               end
             end

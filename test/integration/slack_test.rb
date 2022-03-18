@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'integration_test_helper'
 require 'slack-ruby-client' # Only load this gem when it is really used.
@@ -126,7 +126,7 @@ class SlackTest < ActiveSupport::TestCase
     assert_equal(1, slack_check(channel, hash))
 
     ticket2.state = Ticket::State.find_by(name: 'pending reminder')
-    ticket2.pending_time = Time.zone.now - 2.days
+    ticket2.pending_time = 2.days.ago
     ticket2.save
 
     TransactionDispatcher.commit
@@ -247,7 +247,7 @@ class SlackTest < ActiveSupport::TestCase
   end
 
   def hash_gen
-    (0...10).map { ('a'..'z').to_a[rand(26)] }.join
+    SecureRandom.hex(10)
   end
 
   def rand_word
@@ -269,7 +269,7 @@ class SlackTest < ActiveSupport::TestCase
       'be a good boy',
       'invent new things',
     ]
-    words[rand(words.length)]
+    words.sample
   end
 
   def slack_check(channel_name, search_for)

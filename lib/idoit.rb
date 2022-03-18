@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Idoit
 
@@ -89,10 +89,9 @@ or with filter:
 
   def self.query(method, filter = {})
     setting = Setting.get('idoit_config')
-    raise 'Unable for find api_token in config' if setting[:api_token].blank?
-    raise 'Unable for find endpoint in config' if setting[:endpoint].blank?
+    raise __("The required field 'api_token' is missing from the config.") if setting[:api_token].blank?
+    raise __("The required field 'endpoint' is missing from the config.") if setting[:endpoint].blank?
 
-    #translator_key = Setting.get('translator_key')
     params = {
       apikey: setting[:api_token],
     }

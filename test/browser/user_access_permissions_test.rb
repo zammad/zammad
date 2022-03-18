@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'browser_test_helper'
 
@@ -10,7 +10,7 @@ class AgentProfilePermissionsTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     user_open_by_search(value: 'Braun')
 
@@ -34,13 +34,13 @@ class AgentProfilePermissionsTest < TestCase
       css:   '.content.active [data-name="note"]',
       value: 'some note 123',
     )
-    empty_search()
+    empty_search
 
     # check and change note again in edit screen
     click(css: '.content.active .js-action .icon-arrow-down', fast: true)
     click(css: '.content.active .js-action [data-type="edit"]')
 
-    modal_ready()
+    modal_ready
     watch_for(
       css:   '.content.active .modal',
       value: 'some note 123',
@@ -55,7 +55,7 @@ class AgentProfilePermissionsTest < TestCase
       value: 'some note abc',
     )
     click(css: '.content.active .modal button.js-submit')
-    modal_disappear()
+    modal_disappear
 
     watch_for(
       css:   '.content.active .profile-window',
@@ -72,13 +72,13 @@ class AgentProfilePermissionsTest < TestCase
     click(css: '.content.active .js-action .icon-arrow-down', fast: true)
     click(css: '.content.active .js-action [data-type="edit"]')
 
-    modal_ready()
+    modal_ready
     set(
       css:   '.modal [name="lastname"]',
       value: 'Braun',
     )
     click(css: '.content.active .modal button.js-submit')
-    modal_disappear()
+    modal_disappear
 
     verify_task(
       data: {
@@ -94,13 +94,13 @@ class AgentProfilePermissionsTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
-    user_open_by_search(value: 'Test Master')
+    user_open_by_search(value: 'Test Admin')
 
     verify_task(
       data: {
-        title: 'Test Master Agent',
+        title: 'Test Admin Agent',
       }
     )
 
@@ -113,7 +113,7 @@ class AgentProfilePermissionsTest < TestCase
       value: 'email',
     )
 
-    empty_search()
+    empty_search
     sleep 2
 
     click(css: '.content.active .js-action .icon-arrow-down', fast: true)
@@ -123,31 +123,31 @@ class AgentProfilePermissionsTest < TestCase
   def test_agent_to_edit_admin_ticket_user_details
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     ticket1 = ticket_create(
       data: {
-        customer: 'master',
+        customer: 'admin',
         group:    'Users',
         title:    'test_user_access_permissions - ticket 1',
         body:     'test_user_access_permissions - ticket 1',
       },
     )
 
-    tasks_close_all()
+    tasks_close_all
 
-    logout()
+    logout
 
     login(
       username: 'agent1@example.com',
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     ticket_open_by_search(
       number: ticket1[:number],
@@ -171,7 +171,7 @@ class AgentProfilePermissionsTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     ticket1 = ticket_create(
       data: {
@@ -189,7 +189,7 @@ class AgentProfilePermissionsTest < TestCase
     click(css: '.content.active .sidebar[data-tab="customer"] .js-actions .dropdown-toggle')
     click(css: '.content.active .sidebar[data-tab="customer"] .js-actions [data-type="customer-edit"]')
 
-    modal_ready()
+    modal_ready
     set(
       css:   '.modal [name="lastname"]',
       value: 'B2',
@@ -199,7 +199,7 @@ class AgentProfilePermissionsTest < TestCase
       value: 'some note abc',
     )
     click(css: '.content.active .modal button.js-submit')
-    modal_disappear()
+    modal_disappear
 
     watch_for(
       css:   '.content.active .sidebar[data-tab="customer"] .sidebar-block [data-name="note"]',
@@ -215,7 +215,7 @@ class AgentProfilePermissionsTest < TestCase
     click(css: '.content.active .sidebar[data-tab="customer"] .js-actions')
     click(css: 'li[data-type="customer-edit"]')
 
-    modal_ready()
+    modal_ready
     set(
       css:   '.modal [name="lastname"]',
       value: 'Braun',
@@ -225,7 +225,7 @@ class AgentProfilePermissionsTest < TestCase
       value: 'some note abc',
     )
     click(css: '.content.active .modal button.js-submit')
-    modal_disappear()
+    modal_disappear
 
     watch_for(
       css:   '.content.active .sidebar[data-tab="customer"] .sidebar-block [data-name="note"]',
@@ -246,7 +246,7 @@ class AgentProfilePermissionsTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     ticket1 = ticket_create(
       data: {
@@ -278,7 +278,7 @@ class AgentProfilePermissionsTest < TestCase
     click(css: '.content.active .js-action .dropdown-toggle')
     click(css: '.content.active .js-action [data-type="edit"]')
 
-    modal_ready()
+    modal_ready
     set(
       css:   '.modal [name="lastname"]',
       value: 'B2',
@@ -288,7 +288,7 @@ class AgentProfilePermissionsTest < TestCase
       value: 'some note abc',
     )
     click(css: '.content.active .modal button.js-submit')
-    modal_disappear()
+    modal_disappear
 
     watch_for(
       css:   '.content.active .profile-window',
@@ -305,7 +305,7 @@ class AgentProfilePermissionsTest < TestCase
     click(css: '.content.active .js-action .dropdown-toggle')
     click(css: '.content.active .js-action [data-type="edit"]')
 
-    modal_ready()
+    modal_ready
     set(
       css:   '.modal [name="lastname"]',
       value: 'Braun',
@@ -315,7 +315,7 @@ class AgentProfilePermissionsTest < TestCase
       value: 'note',
     )
     click(css: '.content.active .modal button.js-submit')
-    modal_disappear()
+    modal_disappear
 
     verify_task(
       data: {
@@ -332,11 +332,11 @@ class AgentProfilePermissionsTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     ticket1 = ticket_create(
       data: {
-        customer: 'master',
+        customer: 'admin',
         group:    'Users',
         title:    'test_user_access_permissions - ticket 4',
         body:     'test_user_access_permissions - ticket 4',

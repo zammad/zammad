@@ -46,11 +46,6 @@ class App.UiElement.user_permission
             if group_id.toString() is group.id.toString()
               groupsSelected[group.id] = true
 
-    # if only one group is selectable, hide all groups
-    hideGroups = false
-    if groups.length <= 1
-      hideGroups = true
-
     # get roles with group plugin
     rolesWithGroupPlugin = {}
     for role in rolesRaw
@@ -76,13 +71,12 @@ class App.UiElement.user_permission
       groups: groups
       params: params
       groupsSelected: groupsSelected
-      hideGroups: hideGroups
       groupAccesses: App.Group.accesses()
     ) )
 
     throttled = _.throttle( (e) ->
       input = $(@).find('input')
-      upcoming_state = !input.prop('checked')
+      upcoming_state = if $(e.target).is(':checkbox') then input.prop('checked') else !input.prop('checked')
       value = input.val()
 
       if value is 'full' and upcoming_state is true
@@ -94,13 +88,13 @@ class App.UiElement.user_permission
     item.on('click', '.checkbox-replacement', throttled)
 
     # if customer, remove admin and agent
-    item.find('[name=role_ids]').bind('change', (e) =>
-      @checkUncheck($(e.currentTarget), rolesWithGroupPlugin, item, hideGroups)
+    item.find('[name=role_ids]').on('change', (e) =>
+      @checkUncheck($(e.currentTarget), rolesWithGroupPlugin, item)
     )
     item.find('[name=role_ids]').trigger('change')
     item
 
-  @checkUncheck: (element, rolesWithGroupPlugin, item, hideGroups) ->
+  @checkUncheck: (element, rolesWithGroupPlugin, item) ->
     checked = element.prop('checked')
     role_id = element.prop('value')
     return if !role_id
@@ -121,34 +115,6 @@ class App.UiElement.user_permission
                 return
               item.localElement.prop('checked', false)
               triggers.push item.localElement
-
-    # if role with groups plugin is deselected, hide group selection
-    if !checked
-      selectedRoleIds = []
-      item.find('input[name=role_ids]:checked').each( ->
-        selectedRoleIds.push($(@).val())
-      )
-
-      show = false
-      for role_id, group of rolesWithGroupPlugin
-        if _.contains(selectedRoleIds, role_id.toString())
-          show = true
-          break
-      if !show
-        item.find('.js-groupList').addClass('hidden')
-
-        # select groups if only one is available
-        if hideGroups
-          item.find('.js-groupList .js-groupListItem[value=full]').prop('checked', false)
-      return
-
-    # if role with groups plugin is selected, show group selection
-    if rolesWithGroupPlugin[role_id] is 'group'
-      item.find('.js-groupList:not(.js-groupListHide)').removeClass('hidden')
-
-      # select groups if only one is available
-      if hideGroups
-        item.find('.js-groupList .js-groupListItem[value=full]').prop('checked', true)
 
     for trigger in triggers
       trigger.trigger('change')

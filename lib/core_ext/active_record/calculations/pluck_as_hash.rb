@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'active_record/relation/calculations'
 
@@ -34,6 +34,27 @@ module ActiveRecord
       else
         keys.zip(values).to_h
       end
+    end
+  end
+end
+
+module Enumerable
+  def pluck_as_hash(*column_names)
+    column_names.flatten! # flatten args in case array was given
+
+    pluck(*column_names)
+      .map { |elem| pluck_as_hash_map(column_names, elem) }
+  end
+
+  private
+
+  def pluck_as_hash_map(keys, values)
+    if keys.one?
+      {
+        keys.first => values
+      }
+    else
+      keys.zip(values).to_h
     end
   end
 end

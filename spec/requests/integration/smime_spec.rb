@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -156,9 +156,9 @@ RSpec.describe 'Integration SMIME', type: :request do
           post endpoint, params: search_query, as: :json
 
           expect(response).to have_http_status(:ok)
-          expect(json_response['encryption']['success']).to eq(false)
+          expect(json_response['encryption']['success']).to be(false)
           expect(json_response['encryption']['comment']).to include(email_address)
-          expect(json_response['sign']['success']).to eq(false)
+          expect(json_response['sign']['success']).to be(false)
           expect(json_response['sign']['comment']).to include(email_address)
         end
       end
@@ -173,9 +173,9 @@ RSpec.describe 'Integration SMIME', type: :request do
           post endpoint, params: search_query, as: :json
 
           expect(response).to have_http_status(:ok)
-          expect(json_response['encryption']['success']).to eq(true)
+          expect(json_response['encryption']['success']).to be(true)
           expect(json_response['encryption']['comment']).to include(email_address)
-          expect(json_response['sign']['success']).to eq(true)
+          expect(json_response['sign']['success']).to be(true)
           expect(json_response['sign']['comment']).to include(email_address)
         end
 
@@ -186,9 +186,9 @@ RSpec.describe 'Integration SMIME', type: :request do
             post endpoint, params: search_query, as: :json
 
             expect(response).to have_http_status(:ok)
-            expect(json_response['encryption']['success']).to eq(false)
+            expect(json_response['encryption']['success']).to be(false)
             expect(json_response['encryption']['comment']).to include(email_address).and include('expired')
-            expect(json_response['sign']['success']).to eq(false)
+            expect(json_response['sign']['success']).to be(false)
             expect(json_response['sign']['comment']).to include(email_address).and include('expired')
           end
         end

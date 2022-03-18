@@ -86,35 +86,35 @@ class App.KnowledgeBaseContentCanBePublishedForm extends App.ControllerForm
     @visibilityRadios.attr('disabled', state)
 
   fullForm:                        true
-  fullFormSubmitLabel:             'Update'
+  fullFormSubmitLabel:             __('Update')
   fullFormSubmitAdditionalClasses: 'btn--primary'
-  states:                          ['draft', 'internal', 'published', 'archived']
+  states:                          [__('draft'), __('internal'), __('published'), __('archived')]
 
   model:
     configure_attributes: [
         name:    'visibility'
-        display: 'Permissions'
+        display: __('Permissions')
         tag:     'radio'
         default: false
         options: [
             value: 'draft'
-            name:  'Draft'
-            note:  'Only visible to editors'
+            name:  __('Draft')
+            note:  __('Only visible to editors')
           ,
             value: 'internal'
-            name:  'Internal'
-            note:  'Visible to agents & editors'
+            name:  __('Internal')
+            note:  __('Visible to readers & editors')
           ,
             value: 'published'
-            name:  'Public'
-            note:  'Visible to everyone'
+            name:  __('Public')
+            note:  __('Visible to everyone')
           ,
             value: 'archived'
-            name:  'Archived'
+            name:  __('Archived')
         ]
       ,
         name:    'timing'
-        display: 'Timing'
+        display: __('Timing')
         tag:     'radio'
         default: 'now'
         options: [
@@ -122,11 +122,11 @@ class App.KnowledgeBaseContentCanBePublishedForm extends App.ControllerForm
             name:  'now'
           ,
             value: 'scheduled'
-            name:  'Schedule for'
+            name:  __('Schedule for')
         ]
       ,
         name:    'scheduled'
-        display: 'Date'
+        display: __('Date')
         tag:     'datetime'
         class:   'form-control--small'
         null:    true

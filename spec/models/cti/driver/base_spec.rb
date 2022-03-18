@@ -1,9 +1,9 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
 RSpec.describe Cti::Driver::Base do
-  subject!(:driver) { described_class.new(mapping: {}, params: params, config: config ) }
+  subject!(:driver) { described_class.new(mapping: {}, params: params, config: config) }
 
   let(:direction) { 'in' }
   let(:event) { 'newCall' }
@@ -15,7 +15,7 @@ RSpec.describe Cti::Driver::Base do
       subject!(:direction) { 'in' }
 
       it 'returns nil' do
-        expect(driver.direction_check).to be(nil)
+        expect(driver.direction_check).to be_nil
       end
     end
 
@@ -23,7 +23,7 @@ RSpec.describe Cti::Driver::Base do
       subject!(:direction) { 'out' }
 
       it 'returns nil' do
-        expect(driver.direction_check).to be(nil)
+        expect(driver.direction_check).to be_nil
       end
     end
 
@@ -64,7 +64,7 @@ RSpec.describe Cti::Driver::Base do
       end
 
       it 'returns nil' do
-        expect(driver.reject_check).to be(nil)
+        expect(driver.reject_check).to be_nil
       end
     end
 
@@ -80,7 +80,7 @@ RSpec.describe Cti::Driver::Base do
       end
 
       it 'returns nil' do
-        expect(driver.reject_check).to be(nil)
+        expect(driver.reject_check).to be_nil
       end
     end
   end
@@ -100,7 +100,7 @@ RSpec.describe Cti::Driver::Base do
       let!(:user) { create(:agent, phone: '1234567') }
 
       it 'returns nil' do
-        expect(driver.push_open_ticket_screen_recipient).to be(nil)
+        expect(driver.push_open_ticket_screen_recipient).to be_nil
       end
     end
 

@@ -5,7 +5,6 @@ include:
   - local: '/.gitlab/ci/browser-integration/capybara_ff.yml'
   - local: '/.gitlab/ci/browser-integration/idoit_chrome.yml'
   - local: '/.gitlab/ci/browser-integration/otrs_chrome.yml'
-  - local: '/.gitlab/ci/browser-integration/zendesk_chrome.yml'
 
 .template_browser-integration_capybara: &template_browser-integration_capybara
   stage: browser-integration
@@ -15,44 +14,61 @@ include:
     - .env_base
     - .variables_app_restart_cmd
     - .variables_es
-    - .services_mysql_postgresql_elasticsearch_selenium_imap_redis_memcached
+    - .tags_docker_low_concurrency
   variables:
     RAILS_ENV: "test"
   script:
+    - echo -e "\\e[0Ksection_start:`date +%s`:zammad_ci_test_prepare[collapsed=true]\\r\\e[0Kbundle exec rake zammad:ci:test:prepare"
     - bundle exec rake zammad:ci:test:prepare
-    - bundle exec rspec --fail-fast --pattern "spec/system/**/*_spec.rb" -t integration
+    - echo -e "\\e[0Ksection_end:`date +%s`:zammad_ci_test_prepare\\r\\e[0K"
+    - bundle exec rspec --fail-fast --pattern "spec/system/**/*_spec.rb" -t integration --profile 10
 
-.template_browser-integration: &template_browser-integration
+.template_browser-integration_capybara_chrome: &template_browser-integration_capybara_chrome
+  extends:
+    - .template_browser-integration_capybara
+    - .services_mysql_postgresql_elasticsearch_selenium_chrome_imap_redis_memcached
+
+.template_browser-integration_capybara_firefox: &template_browser-integration_capybara_firefox
+  extends:
+    - .template_browser-integration_capybara
+    - .services_mysql_postgresql_elasticsearch_selenium_firefox_imap_redis_memcached
+
+.template_browser-integration_chrome: &template_browser-integration_chrome
   stage: browser-integration
   dependencies:
     - browser:build
   extends:
     - .env_base
     - .variables_app_restart_cmd
-    - .services_postgresql_selenium
+    - .services_postgresql_selenium_chrome
+    - .tags_docker_low_concurrency
   variables:
     RAILS_ENV: "production"
     AUTO_WIZARD_FILE: "contrib/auto_wizard_test.json"
   script:
     - RAILS_ENV=test bundle exec rake db:create
     - cp $AUTO_WIZARD_FILE auto_wizard.json
+    - echo -e "\\e[0Ksection_start:`date +%s`:zammad_ci_test_start[collapsed=true]\\r\\e[0Kbundle exec rake zammad:ci:test:start"
     - bundle exec rake zammad:ci:test:start
+    - echo -e "\\e[0Ksection_end:`date +%s`:zammad_ci_test_start\\r\\e[0K"
     - bundle exec rails test $TEST_FILE
 
-.template_browser-integration_import: &template_browser-integration_import
+.template_browser-integration_import_chrome: &template_browser-integration_import_chrome
   stage: browser-integration
   dependencies:
     - browser:build
   extends:
     - .env_base
-    - .services_postgresql_selenium
+    - .services_postgresql_selenium_chrome
+    - .tags_docker_low_concurrency
   variables:
     RAILS_ENV: "production"
-    BROWSER: "chrome"
     RAILS_SERVE_STATIC_FILES: "true"
   script:
     - RAILS_ENV=test bundle exec rake db:create
+    - echo -e "\\e[0Ksection_start:`date +%s`:zammad_ci_test_start[collapsed=true]\\r\\e[0Kbundle exec rake zammad:ci:test:start"
     - bundle exec rake zammad:ci:test:start
+    - echo -e "\\e[0Ksection_end:`date +%s`:zammad_ci_test_start\\r\\e[0K"
     - bundle exec rails test $TEST_FILE
 
 # we need at least one job to store and include this template

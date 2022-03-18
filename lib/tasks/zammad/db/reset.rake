@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 namespace :zammad do
 
@@ -10,28 +10,27 @@ namespace :zammad do
       # we loop over each dependent task to be able to
       # execute them and their prerequisites multiple times (in tests)
       # there is no way in rake to achieve that
-      %w[db:drop:_unsafe db:create db:migrate db:seed].each do |task|
+      %w[db:drop:_unsafe db:create db:migrate db:seed zammad:db:rebuild].each do |task|
+        case task
+        when 'db:migrate'
 
-        if task == 'db:drop:_unsafe'
+          # make sure that old column schemas are getting dropped to prevent
+          # wrong schema for new db setup
+          ActiveRecord::Base.descendants.each(&:reset_column_information)
+
+          $stdout = StringIO.new
+        when 'db:drop:_unsafe'
           # ensure all DB connections are closed before dropping the DB
           # since Rails > 5.2 two connections are present (after `db:migrate`) that
           # block dropping the DB for PostgreSQL
           ActiveRecord::Base.connection_handler.connection_pools.each(&:disconnect!)
         end
 
-        $stdout = StringIO.new if task == 'db:migrate'.freeze
-
         Rake::Task[task].reenable
         Rake::Task[task].invoke
       ensure
         $stdout = STDOUT
       end
-
-      Package::Migration.linked
-      ActiveRecord::Base.connection.reconnect!
-      ActiveRecord::Base.descendants.each(&:reset_column_information)
-      Cache.clear
-      Setting.reload
     end
   end
 end

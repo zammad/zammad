@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -56,14 +56,14 @@ RSpec.describe Import::OTRS::ArticleCustomer do
   describe '.find' do
 
     it 'returns nil if no email could be found' do
-      expect(described_class.find({})).to be nil
+      expect(described_class.find({})).to be_nil
     end
   end
 
   describe '.local_email' do
 
     it 'returns nil if no email could be found' do
-      expect(described_class.local_email(nil)).to be nil
+      expect(described_class.local_email(nil)).to be_nil
     end
 
     it 'returns the parameter if no email could be found' do

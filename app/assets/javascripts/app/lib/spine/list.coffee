@@ -34,7 +34,7 @@ class Spine.List extends Spine.Controller
     @change @current
     if @selectFirst
       unless @children('.active').length
-        @children(':first').click()
+        @children(':first').trigger('click')
 
   children: (sel) ->
     @el.children(sel)

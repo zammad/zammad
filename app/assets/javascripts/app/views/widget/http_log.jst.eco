@@ -1,5 +1,5 @@
 <hr>
-<h2><%- @T('Recent logs') %></h2>
+<h2><%- @T('Recent Logs') %></h2>
 <% if @description: %>
   <% for item in @description: %>
     <p><%- @T(item...) %></p>

@@ -8,7 +8,6 @@ class ImportFreshdesk extends App.ControllerWizardFullScreen
     '#freshdesk-subdomain-addon':              'freshdeskSubdomainAddon'
     '.freshdesk-subdomain-error':              'linkErrorMessage'
     '.freshdesk-api-token-error':              'apiTokenErrorMessage'
-    '#freshdesk-email':                        'freshdeskEmail'
     '#freshdesk-api-token':                    'freshdeskApiToken'
     '.js-ticket-count-info':                   'ticketCountInfo'
   updateMigrationDisplayLoop: 0
@@ -23,11 +22,11 @@ class ImportFreshdesk extends App.ControllerWizardFullScreen
     super
 
     # set title
-    @title 'Import'
+    @title __('Import')
 
     @freshdeskDomain = '.freshdesk.com'
 
-    # redirect to login if master user already exists
+    # redirect to login if admin user already exists
     if @Config.get('system_init_done')
       @navigate '#login'
       return
@@ -165,7 +164,7 @@ class ImportFreshdesk extends App.ControllerWizardFullScreen
           @$('.js-error').addClass('hide')
 
         if !_.isEmpty(data.finished_at) && _.isEmpty(data.result['error'])
-          window.location.reload()
+          @redirectToLogin()
           return
 
         if !_.isEmpty(data.result)
@@ -187,8 +186,8 @@ class ImportFreshdesk extends App.ControllerWizardFullScreen
 
 App.Config.set('import/freshdesk', ImportFreshdesk, 'Routes')
 App.Config.set('freshdesk', {
-  title: 'Freshdesk'
-  name:  'Freshdesk'
+  title: __('Freshdesk')
+  name:  __('Freshdesk')
   class: 'js-freshdesk'
   url:   '#import/freshdesk'
 }, 'ImportPlugins')

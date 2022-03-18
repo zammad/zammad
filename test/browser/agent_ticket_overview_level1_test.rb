@@ -1,16 +1,16 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'browser_test_helper'
 
 class AgentTicketOverviewLevel1Test < TestCase
   def test_i
-    name1 = "name_low_#{rand(999_999)}"
-    name2 = "name_high_#{rand(999_999)}"
+    name1 = "name_low_#{SecureRandom.uuid}"
+    name2 = "name_high_#{SecureRandom.uuid}"
 
     browser1 = browser_instance
     login(
       browser:  browser1,
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )

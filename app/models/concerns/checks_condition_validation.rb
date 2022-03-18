@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 module ChecksConditionValidation
   extend ActiveSupport::Concern
@@ -31,6 +31,6 @@ module ChecksConditionValidation
     ticket_count, _tickets = Ticket.selectors(validate_condition, limit: 1, current_user: User.find(1))
     return true if ticket_count.present?
 
-    raise Exceptions::UnprocessableEntity, 'Invalid ticket selector conditions'
+    raise Exceptions::UnprocessableEntity, __('Invalid ticket selector conditions')
   end
 end

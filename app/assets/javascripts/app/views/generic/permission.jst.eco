@@ -18,7 +18,7 @@
         <span class="help-text"><%- @T.apply(@, [permission.note].concat(permission.preferences.translations)) %></span>
       </label>
   <%     if _.contains(permission.preferences.plugin, 'groups'): %>
-    <div style="padding-left: 18px; padding-top: 10px;" class="js-groupList <% if @hideGroups: %>js-groupListHide hidden<% end %>">
+    <div style="padding-left: 18px; padding-top: 10px;" class="js-groupList">
       <table class="settings-list">
         <thead>
           <th><%- @T('Group') %>

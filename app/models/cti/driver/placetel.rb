@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Cti::Driver::Placetel < Cti::Driver::Base
 
@@ -88,12 +88,13 @@ class Cti::Driver::Placetel < Cti::Driver::Base
     list = Cache.read('placetelGetVoipUsers')
     return list if list
 
-    response = UserAgent.post(
-      'https://api.placetel.de/api/getVoIPUsers.json',
+    response = UserAgent.get(
+      'https://api.placetel.de/v2/sip_users',
+      {},
       {
-        api_key: @config[:api_token],
-      },
-      {
+        headers:       {
+          Authorization: "Bearer #{@config[:api_token]}",
+        },
         log:           {
           facility: 'placetel',
         },
@@ -101,6 +102,7 @@ class Cti::Driver::Placetel < Cti::Driver::Base
         open_timeout:  4,
         read_timeout:  6,
         total_timeout: 6,
+        verify_ssl:    true,
       },
     )
 
@@ -129,13 +131,9 @@ class Cti::Driver::Placetel < Cti::Driver::Base
     list = {}
     result.each do |entry|
       next if entry['name'].blank?
+      next if entry['sipuid'].blank?
 
-      if entry['uid'].present?
-        list[entry['uid']] = entry['name']
-      end
-      next if entry['uid2'].blank?
-
-      list[entry['uid2']] = entry['name']
+      list[entry['sipuid']] = entry['name']
     end
     Cache.write('placetelGetVoipUsers', list, { expires_in: 24.hours })
     list

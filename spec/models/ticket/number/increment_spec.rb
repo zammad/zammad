@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -82,7 +82,11 @@ RSpec.describe Ticket::Number::Increment do
 
   describe '.check' do
     context 'for tickets with increment-style numbers' do
-      let(:ticket) { create(:ticket, number: ticket_number) }
+      let(:ticket) do
+        # There might be conflicts with the hardcoded ticket number
+        #   and the one from the welcome ticket, so use find_by || create.
+        Ticket.find_by(number: ticket_number) || create(:ticket, number: ticket_number)
+      end
       let(:ticket_number) { "#{Setting.get('system_id')}0001" }
       let(:check_query) { ticket.subject_build(ticket.title) }
 
@@ -105,7 +109,7 @@ RSpec.describe Ticket::Number::Increment do
         end
 
         it 'returns nil' do
-          expect(described_class.check(check_query)).to be(nil)
+          expect(described_class.check(check_query)).to be_nil
         end
 
         context 'and "ticket_number_ignore_system_id" is true' do

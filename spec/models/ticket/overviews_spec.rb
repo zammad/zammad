@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -23,7 +23,7 @@ RSpec.describe Ticket::Overviews do
     context 'when Agent' do
       let(:current_user) { create(:agent) }
 
-      it_behaves_like 'containing', 'Open'
+      it_behaves_like 'containing', 'Open Tickets'
       it_behaves_like 'not containing', 'My Tickets'
       it_behaves_like 'not containing', 'My Organization Tickets'
     end
@@ -31,7 +31,7 @@ RSpec.describe Ticket::Overviews do
     context 'when Agent is also Customer' do
       let(:current_user) { create(:agent_and_customer, :with_org) }
 
-      it_behaves_like 'containing', 'Open'
+      it_behaves_like 'containing', 'Open Tickets'
       it_behaves_like 'containing', 'My Tickets'
       it_behaves_like 'containing', 'My Organization Tickets'
     end
@@ -39,7 +39,7 @@ RSpec.describe Ticket::Overviews do
     context 'when Customer' do
       let(:current_user) { create(:customer, :with_org) }
 
-      it_behaves_like 'not containing', 'Open'
+      it_behaves_like 'not containing', 'Open Tickets'
       it_behaves_like 'containing', 'My Tickets'
       it_behaves_like 'containing', 'My Organization Tickets'
     end

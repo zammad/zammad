@@ -102,12 +102,21 @@ class App.Sidebar extends App.Controller
   toggleTabAction: (name) =>
     return if !name
 
+    # remove active state
+    @tabs.removeClass('active')
+
+    if name == 'shared_draft'
+      draft_enabled = _.find @items, (elem) -> elem?.item?.name == 'shared_draft' and elem.sidebarItem()?
+
+      if !draft_enabled?
+        name = 'template'
+
+        available_sidebar = _.first @items, (elem) -> elem.sidebarItem()?
+        available_sidebar?.shown = true
+
     # remember sidebarState for outsite
     if @sidebarState
       @sidebarState.active = name
-
-    # remove active state
-    @tabs.removeClass('active')
 
     # add active state
     @$('.tabsSidebar-tab[data-tab=' + name + ']').addClass('active')

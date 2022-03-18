@@ -1,10 +1,10 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'builder'
 
 class Integration::SipgateController < ApplicationController
   skip_before_action :verify_csrf_token
-  before_action :check_configured
+  before_action :check_configured, :check_token
 
   # notify about inbound call / block inbound call
   def event
@@ -28,7 +28,7 @@ class Integration::SipgateController < ApplicationController
     end
 
     if result[:action] == 'invalid_direction'
-      response_error('Invalid direction!')
+      response_error(__("Invalid 'direction'!"))
       return true
     end
 
@@ -38,15 +38,24 @@ class Integration::SipgateController < ApplicationController
 
   private
 
+  def check_token
+    if Setting.get('sipgate_token') != params[:token]
+      response_unauthorized(__('Invalid token, please contact your admin!'))
+      return
+    end
+
+    true
+  end
+
   def check_configured
     http_log_config facility: 'sipgate.io'
 
     if !Setting.get('sipgate_integration')
-      xml_error('Feature is disable, please contact your admin to enable it!')
+      xml_error(__('Feature is disabled, please contact your administrator!'))
       return
     end
     if config_integration.blank? || config_integration[:inbound].blank? || config_integration[:outbound].blank?
-      xml_error('Feature not configured, please contact your admin!')
+      xml_error(__('Feature not configured, please contact your admin!'))
       return
     end
 
@@ -57,13 +66,13 @@ class Integration::SipgateController < ApplicationController
     @config_integration ||= Setting.get('sipgate_config')
   end
 
-  def xml_error(error)
+  def xml_error(error, code = 422)
     xml = Builder::XmlMarkup.new(indent: 2)
     xml.instruct!
     content = xml.Response() do
       xml.Error(error)
     end
-    send_data content, type: 'application/xml; charset=UTF-8;', status: 422
+    send_data content, type: 'application/xml; charset=UTF-8;', status: code
   end
 
   def base_url
@@ -72,11 +81,15 @@ class Integration::SipgateController < ApplicationController
     if fqdn.blank?
       fqdn = Setting.get('fqdn')
     end
-    "#{http_type}://#{fqdn}/api/v1/sipgate"
+    "#{http_type}://#{fqdn}/api/v1/sipgate/#{Setting.get('sipgate_token')}"
   end
 
   def url
     "#{base_url}/#{params['direction']}"
+  end
+
+  def response_unauthorized(error)
+    xml_error(error, 401)
   end
 
   def response_reject(_result)

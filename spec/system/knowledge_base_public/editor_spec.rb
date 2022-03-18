@@ -1,8 +1,8 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
-RSpec.describe 'Public Knowledge Base for editor', type: :system, authenticated_as: true do
+RSpec.describe 'Public Knowledge Base for editor', authentication_type: :form, type: :system do
   include_context 'basic Knowledge Base'
 
   before do

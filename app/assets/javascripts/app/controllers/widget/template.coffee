@@ -26,7 +26,7 @@ class App.WidgetTemplate extends App.Controller
     @html App.view('widget/template')(
       template: template
     )
-    new App.ControllerForm(
+    @controller = new App.ControllerForm(
       el:        @el.find('#form-template')
       model:
         configure_attributes: @configure_attributes
@@ -60,7 +60,7 @@ class App.WidgetTemplate extends App.Controller
     return if !params['id']
 
     template = App.Template.find(params['id'])
-    if confirm('Sure?')
+    if confirm(__('Are you sure?'))
       @id = false
       template.destroy()
 
@@ -98,7 +98,9 @@ class App.WidgetTemplate extends App.Controller
     )
 
     # validate form
-    errors = template.validate()
+    errors = template.validate(
+      controllerForm: @controller
+    )
 
     # show errors in form
     if errors

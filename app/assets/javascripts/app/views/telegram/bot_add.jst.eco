@@ -1,12 +1,12 @@
 <div class="alert alert--danger hidden" role="alert"></div>
 <p>
-  <%- @T('The tutorial on how to manage a %s is hosted on our online documentation %l.', 'Telegram Bot', 'https://admin-docs.zammad.org/en/latest/channels/telegram.html') %>
+  <%- @T('You can find a tutorial on how to manage a %s in our online documentation %l.', 'Telegram Bot', 'https://admin-docs.zammad.org/en/latest/channels/telegram.html') %>
 </p>
 <fieldset>
   <h2><%- @T('Enter your %s App Keys', 'Telegram') %></h2>
   <div class="input form-group">
     <div class="formGroup-label">
-      <label for="api_token"><%- @T('%s Api Token', 'Telegram') %> <span>*</span></label>
+      <label for="api_token"><%- @T('%s API Token', 'Telegram') %> <span>*</span></label>
     </div>
     <div class="controls">
       <input id="api_token" type="text" name="api_token" value="" class="form-control" required autocomplete="off">
@@ -18,7 +18,7 @@
       <label for="welcome"><%- @T('Welcome message') %> <span>*</span></label>
     </div>
     <div class="controls">
-      <input id="welcome" type="text" name="welcome" value="" placeholder="<%- @Ti('You are welcome! Just ask me something!') %>" class="form-control" required autocomplete="off">
+      <input id="welcome" type="text" name="welcome" value="" placeholder="<%- @Ti('Welcome! Feel free to ask me a question!') %>" class="form-control" required autocomplete="off">
     </div>
   </div>
   <div class="input form-group">
@@ -31,7 +31,7 @@
   </div>
   <div class="input form-group">
     <div class="formGroup-label">
-      <label for=""><%- @T('Choose the group in which messages will get added to.') %> <span>*</span></label>
+      <label for=""><%- @T('Choose the group to which messages will get added.') %> <span>*</span></label>
     </div>
     <div class="controls">
       <div class="js-messagesGroup"></div>

@@ -74,15 +74,17 @@
       this.el.classList.add('result')
       this.el.innerHTML = this.constructor.template
 
-      this.setTitle(data.title)
+      this.setTitle(data.title, data.tags)
       this.setSubtitle(data.subtitle)
       this.setPreview(data.body)
       this.setURL(data.url)
       this.setIcon(data.icon, data.type)
     }
 
-    this.setTitle = function(text) {
-      this.el.querySelector('.result-title').innerHTML = text || ''
+    this.setTitle = function(text, tags) {
+      var title = text || ''
+
+      this.el.querySelector('.result-title').innerHTML = title
     }
 
     this.setSubtitle = function(text) {

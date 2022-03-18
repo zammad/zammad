@@ -15,7 +15,7 @@ class GettingStartedBase extends App.ControllerWizardFullScreen
       return
 
     # set title
-    @title 'Configure Base'
+    @title __('Configure Base')
 
     @fetch()
 
@@ -58,7 +58,7 @@ class GettingStartedBase extends App.ControllerWizardFullScreen
       logoUrl:      @logoUrl()
       organization: organization
     )
-    @$('input, select').first().focus()
+    @$('input, select').first().trigger('focus')
 
   onLogoPick: (event) =>
     reader = new FileReader()

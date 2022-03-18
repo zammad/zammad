@@ -43,13 +43,9 @@ class App.TicketZoomArticleNew extends App.Controller
       closed: 20
 
     @dragEventCounter = 0
-    @attachments      = []
+    @attachments      = @defaults.attachments || []
 
     @render()
-
-    if _.isArray(@defaults.attachments)
-      for attachment in @defaults.attachments
-        @renderAttachment(attachment)
 
     # set article type and expand text area
     @controllerBind('ui::ticket::setArticleType', (data) =>
@@ -57,25 +53,34 @@ class App.TicketZoomArticleNew extends App.Controller
 
       @setArticleTypePre(data.type.name, data.signaturePosition)
 
-      @openTextarea(null, true, true)
+      @openTextarea(null, true, !data.nofocus)
       for key, value of data.article
         if key is 'body'
           @$("[data-name=\"#{key}\"]").html(value)
         else
           @$("[name=\"#{key}\"]").val(value).trigger('change')
 
+
+      @$('[name=shared_draft_id]').val(data.shared_draft_id)
+
       @setArticleTypePost(data.type.name, data.signaturePosition)
 
       # set focus into field
       if data.focus
-        @$("[name=\"#{data.focus}\"], [data-name=\"#{data.focus}\"]").focus().parent().find('.token-input').focus()
+        @$("[name=\"#{data.focus}\"], [data-name=\"#{data.focus}\"]").trigger('focus').parent().find('.token-input').trigger('focus')
         return
 
       # set focus at end of field
       if data.position is 'end'
         @placeCaretAtEnd(@textarea.get(0))
         return
+
+      # fixes email validation issue right after new ticket creation
+      @tokanice(data.type.name)
     )
+
+    @controllerBind('ui::ticket::import_draft_attachments', @importDraftAttachments)
+    @controllerBind('ui::ticket::shared_draft_saved',       @sharedDraftSaved)
 
     # add article attachment
     @controllerBind('ui::ticket::addArticleAttachent', (data) =>
@@ -89,22 +94,17 @@ class App.TicketZoomArticleNew extends App.Controller
     @controllerBind('ui::ticket::taskReset', (data) =>
       @releaseGlobalClickEvents()
       return if data.ticket_id.toString() isnt @ticket_id.toString()
-      @type     = 'note'
-      @defaults = {}
+      @type        = 'note'
+      @defaults    = {}
+      @attachments = []
       @render()
-    )
-
-    # set expand of text area only once
-    @controllerBind('ui::ticket::shown', (data) =>
-      return if data.ticket_id.toString() isnt @ticket.id.toString()
-      @tokanice(@type)
-
-      if @defaults.body or @isIE10()
-        @openTextarea(null, true)
     )
 
     # rerender, e. g. on language change
     @controllerBind('ui:rerender', =>
+      @adjustedTextarea = false
+      @defaults         = @ui.taskGet('article')
+      @attachments      = @defaults.attachments || []
       @render()
     )
 
@@ -113,6 +113,18 @@ class App.TicketZoomArticleNew extends App.Controller
       return if data.taskKey isnt @taskKey
       @updateSecurityOptions()
     )
+
+  show: ->
+    @adjustTextarea()
+
+  adjustTextarea: ->
+    return if @adjustedTextarea
+    @adjustedTextarea = true
+
+    @tokanice(@type)
+
+    if @defaults.body or @attachments.length > 0 or @isIE10()
+      @openTextarea(null, true)
 
   tokanice: (type = 'email') ->
     App.Utils.tokanice('.content.active .js-to, .js-cc, js-bcc', type)
@@ -185,82 +197,30 @@ class App.TicketZoomArticleNew extends App.Controller
       maxlength: 150000
     })
 
-    html5Upload.initialize(
-      uploadUrl:       "#{App.Config.get('api_path')}/upload_caches/#{@form_id}"
-      dropContainer:   @$('.article-add').get(0)
-      cancelContainer: @cancelContainer
-      inputField:      @$('.article-attachment input').get(0)
-      key:             'File'
-      maxSimultaneousUploads: 1
-      onFileAdded:            (file) =>
+    new App.Html5Upload(
+      uploadUrl:              "#{App.Config.get('api_path')}/upload_caches/#{@form_id}"
+      dropContainer:          @$('.article-add')
+      cancelContainer:        @cancelContainer
+      inputField:             @$('.article-attachment input')
 
-        file.on(
+      onFileStartCallback: =>
+        @richTextUploadStartCallback?()
 
-          onStart: =>
-            @attachmentPlaceholder.addClass('hide')
-            @attachmentUpload.removeClass('hide')
-            @cancelContainer.removeClass('hide')
+      onFileCompletedCallback: (response) =>
+        @attachments.push response.data
+        @renderAttachment(response.data)
+        @$('.article-attachment input').val('')
 
-            if @callbackFileUploadStart
-              @callbackFileUploadStart()
+        @richTextUploadRenderCallback?(@attachments)
 
-          onAborted: =>
-            @attachmentPlaceholder.removeClass('hide')
-            @attachmentUpload.addClass('hide')
-            @$('.article-attachment input').val('')
+      onFileAbortedCallback: =>
+        @richTextUploadRenderCallback?(@attachments)
 
-            if @callbackFileUploadStop
-              @callbackFileUploadStop()
-
-          # Called after received response from the server
-          onCompleted: (response) =>
-
-            response = JSON.parse(response)
-            @attachments.push response.data
-
-            @attachmentPlaceholder.removeClass('hide')
-            @attachmentUpload.addClass('hide')
-
-            # reset progress bar
-            @progressBar.width(parseInt(0) + '%')
-            @progressText.text('')
-
-            @renderAttachment(response.data)
-            @$('.article-attachment input').val('')
-
-            if @callbackFileUploadStop
-              @callbackFileUploadStop()
-
-          # Called during upload progress, first parameter
-          # is decimal value from 0 to 100.
-          onProgress: (progress, fileSize, uploadedBytes) =>
-            @progressBar.width(parseInt(progress) + '%')
-            @progressText.text(parseInt(progress))
-            # hide cancel on 90%
-            if parseInt(progress) >= 90
-              @cancelContainer.addClass('hide')
-
-          # Called when upload failed
-          onError: (message) =>
-            @attachmentPlaceholder.removeClass('hide')
-            @attachmentUpload.addClass('hide')
-            @$('.article-attachment input').val('')
-
-            if @callbackFileUploadStop
-              @callbackFileUploadStop()
-
-            new App.ControllerModal(
-              head: 'Upload Failed'
-              buttonCancel: 'Cancel'
-              buttonCancelClass: 'btn--danger'
-              buttonSubmit: false
-              message: message
-              shown: true
-              small: true
-              container: @el.closest('.content')
-            )
-        )
-    )
+      attachmentPlaceholder: @attachmentPlaceholder
+      attachmentUpload:      @attachmentUpload
+      progressBar:           @progressBar
+      progressText:          @progressText
+    ).render()
 
     @bindAttachmentDelete()
 
@@ -281,6 +241,10 @@ class App.TicketZoomArticleNew extends App.Controller
         )
       if !@subscribeIdTextModule
         @subscribeIdTextModule = ticket.subscribe(callback)
+
+    if _.isArray(@attachments)
+      for attachment in @attachments
+        @renderAttachment(attachment)
 
   params: =>
     params = @formParam( @$('.article-add') )
@@ -338,11 +302,11 @@ class App.TicketZoomArticleNew extends App.Controller
     attachmentCount = @$('.article-add .textBubble .attachments .attachment').length
     if !params.body && attachmentCount > 0
       new App.ControllerModal(
-        head: 'Text missing'
-        buttonCancel: 'Cancel'
+        head: __('Text missing')
+        buttonCancel: __('Cancel')
         buttonCancelClass: 'btn--danger'
         buttonSubmit: false
-        message: 'Please fill also some text in!'
+        message: __('Please enter a text.')
         shown: true
         small: true
         container: @el.closest('.content')
@@ -353,7 +317,7 @@ class App.TicketZoomArticleNew extends App.Controller
     if params.body && attachmentCount < 1
       matchingWord = App.Utils.checkAttachmentReference(params.body)
       if matchingWord
-        if !confirm(App.i18n.translateContent('You use %s in text but no attachment is attached. Do you want to continue?', matchingWord))
+        if !confirm(App.i18n.translateContent('You used %s in the text but no attachment could be found. Do you want to continue?', matchingWord))
           return false
 
     # backend based validation
@@ -371,7 +335,14 @@ class App.TicketZoomArticleNew extends App.Controller
     if @articleNewEdit.hasClass('is-public')
       @setArticleInternal(true)
     else
-      @setArticleInternal(false)
+      if App.Config.get('ui_ticket_zoom_article_visibility_confirmation_dialog')
+        new App.ControllerArticlePublicConfirm(
+          callback: =>
+            @setArticleInternal(false)
+          container: $(e.target).closest('.content')
+        )
+      else
+        @setArticleInternal(false)
 
   showSelectableArticleType: (event) =>
     event.stopPropagation()
@@ -457,7 +428,7 @@ class App.TicketZoomArticleNew extends App.Controller
               @securityOptionsShow()
 
               # add observer to change options
-              @$('.js-to, .js-cc').bind('change', =>
+              @$('.js-to, .js-cc').on('change', =>
                 @updateSecurityOptions()
               )
               @updateSecurityOptions()
@@ -494,7 +465,7 @@ class App.TicketZoomArticleNew extends App.Controller
 
   propagateOpenTextarea: (event) ->
     event.stopPropagation()
-    @textarea.focus()
+    @textarea.trigger('focus')
 
   updateLetterCount: =>
     return if !@maxTextLength
@@ -540,7 +511,7 @@ class App.TicketZoomArticleNew extends App.Controller
         easing: 'easeOutQuad'
         complete: =>
           $(window).on('click.ticket-zoom-textarea', @closeTextarea)
-          @textarea.focus() if focus
+          @textarea.trigger('focus') if focus
 
     @textBubble.velocity
       properties:
@@ -665,7 +636,36 @@ class App.TicketZoomArticleNew extends App.Controller
       $(e.currentTarget).closest('.attachment').remove()
       if element.find('.attachment').length == 0
         element.empty()
+
+      @richTextUploadDeleteCallback?(@attachments)
     )
+
+  importDraftAttachments: (options) =>
+    return if @ticket.id != options.ticket_id
+
+    @ajax
+      id: 'import_attachments'
+      type: 'POST'
+      url: "#{@apiPath}/tickets/#{@ticket.id}/shared_draft/import_attachments"
+      data: JSON.stringify({ form_id: @form_id })
+      processData: true
+      success: (data, status, xhr) =>
+        App.Event.trigger('ui::ticket::addArticleAttachent', {
+          ticket:      @ticket
+          attachments: data.attachments
+          form_id:     @form_id
+        })
+
+        App.Event.trigger(options.callbackName, { success: true })
+      error: ->
+        App.Event.trigger(options.callbackName, { success: false })
+
+  sharedDraftSaved: (options) =>
+    return if @ticket.id != options.ticket_id
+
+    @el
+      .find('input[name=shared_draft_id]')
+      .val(options.shared_draft_id)
 
   actions: ->
     actionConfig = App.Config.get('TicketZoomArticleAction')

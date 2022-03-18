@@ -1,7 +1,29 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class SMIMECertificate < ApplicationModel
   validates :fingerprint, uniqueness: { case_sensitive: true }
+
+  def self.parts(raw)
+    raw.scan(%r{-----BEGIN[^-]+-----.+?-----END[^-]+-----}m)
+  end
+
+  def self.create_private_keys(raw, secret)
+    parts(raw).select { |part| part.include?('PRIVATE KEY') }.each do |part|
+      private_key = OpenSSL::PKey.read(part, secret)
+      modulus     = private_key.public_key.n.to_s(16)
+      certificate = find_by(modulus: modulus)
+
+      raise Exceptions::UnprocessableEntity, __('The certificate for this private key could not be found.') if !certificate
+
+      certificate.update!(private_key: part, private_key_secret: secret)
+    end
+  end
+
+  def self.create_certificates(raw)
+    parts(raw).select { |part| part.include?('CERTIFICATE') }.each_with_object([]) do |part, result|
+      result << create!(public_key: part)
+    end
+  end
 
   def self.parse(raw)
     OpenSSL::X509::Certificate.new(raw.gsub(%r{(?:TRUSTED\s)?(CERTIFICATE---)}, '\1'))

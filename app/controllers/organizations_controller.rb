@@ -1,8 +1,10 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class OrganizationsController < ApplicationController
   prepend_before_action -> { authorize! }, except: %i[index show]
   prepend_before_action { authentication_check }
+
+  include CanPaginate
 
 =begin
 
@@ -176,23 +178,14 @@ curl http://localhost/api/v1/organization/{id} -v -u #{login}:#{password} -H "Co
 
   # GET /api/v1/organizations/search
   def search
-    per_page = params[:per_page] || params[:limit] || 100
-    per_page = per_page.to_i
-    if per_page > 500
-      per_page = 500
-    end
-    page = params[:page] || 1
-    page = page.to_i
-    offset = (page - 1) * per_page
-
     query = params[:query]
     if query.respond_to?(:permit!)
       query = query.permit!.to_h
     end
     query_params = {
       query:        query,
-      limit:        per_page,
-      offset:       offset,
+      limit:        pagination.limit,
+      offset:       pagination.offset,
       sort_by:      params[:sort_by],
       order_by:     params[:order_by],
       current_user: current_user,
@@ -289,7 +282,7 @@ curl http://localhost/api/v1/organization/{id} -v -u #{login}:#{password} -H "Co
     if string.blank? && params[:file].present?
       string = params[:file].read.force_encoding('utf-8')
     end
-    raise Exceptions::UnprocessableEntity, 'No source data submitted!' if string.blank?
+    raise Exceptions::UnprocessableEntity, __('No source data submitted!') if string.blank?
 
     result = Organization.csv_import(
       string:       string,

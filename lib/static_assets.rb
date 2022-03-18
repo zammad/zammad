@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 module StaticAssets
 
@@ -43,7 +43,7 @@ returns
 
   def self.store_raw(content, content_type)
     Store.remove(object: 'System::Logo', o_id: 1)
-    file = Store.add(
+    file = Store.create!(
       object:        'System::Logo',
       o_id:          1,
       data:          content,
@@ -71,10 +71,10 @@ returns
   def self.read_raw
     list = Store.list(object: 'System::Logo', o_id: 1)
     if list && list[0]
-      return Store.find( list[0] )
+      return Store.find(list[0])
     end
 
-    raise 'No such raw logo!'
+    raise __('Could not read raw logo!')
   end
 
 =begin
@@ -91,7 +91,7 @@ returns
 
   def self.store(content, content_type)
     Store.remove(object: 'System::Logo', o_id: 2)
-    file = Store.add(
+    file = Store.create!(
       object:        'System::Logo',
       o_id:          2,
       data:          content,

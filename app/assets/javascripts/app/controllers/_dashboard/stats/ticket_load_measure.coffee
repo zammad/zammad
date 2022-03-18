@@ -8,7 +8,7 @@ class Stats extends App.ControllerDashboardStatsBase
         total: 0
         average_per_agent: 0
 
-    data.StatsTicketLoadMeasure.description = 'Out of all open tickets (company-wide), how many are assigned to you?'
+    data.StatsTicketLoadMeasure.description = __('Out of all open tickets (company-wide), how many are assigned to you?')
 
     content = App.view('dashboard/stats/ticket_load_measure')(data)
 

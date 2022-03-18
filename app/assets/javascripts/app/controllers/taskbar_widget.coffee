@@ -125,9 +125,9 @@ class App.TaskbarWidget extends App.CollectionController
 class Remove extends App.ControllerModal
   buttonClose: true
   buttonCancel: true
-  buttonSubmit: 'Discard Changes'
+  buttonSubmit: __('Discard Changes')
   buttonClass: 'btn--danger'
-  head: 'Confirm'
+  head: __('Confirmation')
 
   content: ->
     App.i18n.translateContent('Tab has changed, do you really want to close it?')

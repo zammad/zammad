@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class MentionsController < ApplicationController
   prepend_before_action -> { authorize! }
@@ -53,22 +53,22 @@ class MentionsController < ApplicationController
 
   private
 
-  def ensure_mentionable_type!
-    return if ['Ticket'].include?(params[:mentionable_type])
+  def mentionable_type!
+    @mentionable_type ||= begin
+      raise __('Invalid mentionable_type!') if 'Ticket'.freeze != params[:mentionable_type]
 
-    raise 'Invalid mentionable_type!'
+      params[:mentionable_type]
+    end
   end
 
   def mentionable!
-    ensure_mentionable_type!
-
-    object = params[:mentionable_type].constantize.find(params[:mentionable_id])
+    object = mentionable_type!.constantize.find(params[:mentionable_id])
     authorize!(object, :agent_read_access?)
     object
   end
 
   def fill_condition_mentionable(condition)
-    condition[:mentionable_type] = params[:mentionable_type]
+    condition[:mentionable_type] = mentionable_type!
     return if params[:mentionable_id].blank?
 
     condition[:mentionable_id] = params[:mentionable_id]

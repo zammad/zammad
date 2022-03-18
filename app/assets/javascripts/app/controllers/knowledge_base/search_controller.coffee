@@ -14,7 +14,8 @@ class App.KnowledgeBaseSearchController extends App.Controller
       return_path: @parentController.getKnowledgeBase().uiUrl(@parentController.kb_locale(), 'search')
     )
 
-    if query = @parentController.lastParams.arguments
+    if @parentController.lastParams.arguments
+      query = decodeURIComponent(@parentController.lastParams.arguments)
       @searchFieldPanel.widget.startSearch(query)
 
     @searchFieldPanel.widget.focus()

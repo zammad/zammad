@@ -176,7 +176,9 @@ class App.Utils
 
   # textCleand = App.Utils.textCleanup(rawText)
   @textCleanup: (ascii) ->
-    $.trim( ascii )
+    return '' if !ascii
+
+    ascii.trim()
       .replace(/(\r\n|\n\r)/g, "\n")  # cleanup
       .replace(/\r/g, "\n")           # cleanup
       .replace(/[ ]\n/g, "\n")        # remove tailing spaces
@@ -274,7 +276,7 @@ class App.Utils
   @quote: (ascii, max = 82) ->
     ascii = @textCleanup(ascii)
     ascii = @wrap(ascii, max)
-    $.trim(ascii)
+    ascii.trim()
       .replace /^(.*)$/mg, (match) ->
         if match
           '> ' + match
@@ -795,8 +797,8 @@ class App.Utils
     try content = $('<div/>').html(message)
     catch e then content = $('<div/>').html('<div>' + message + '</div>')
 
-    # ignore mail structures of case Ticket#1085048
-    return message if content.find("div:first span:contains('CAUTION:')").css('color') == 'rgb(156, 101, 0)'
+    # Invalid html signature detection for exchange warning boxes #3571
+    return message if content.find("div:first:contains('CAUTION:')").length > 0
 
     content.contents().each (index, node) ->
       text = $(node).text()
@@ -1008,7 +1010,10 @@ class App.Utils
       valueTmp = value.toString().toLowerCase()
       byNames.push valueTmp
       byNamesWithValue[valueTmp] = [i, value]
-    byNames = byNames.sort()
+
+    # sort() by default doesn't compare non-ascii characters such as ['é', 'a', 'ú', 'c']
+    # hence using localecompare in sorting for translated strings
+    byNames = byNames.sort((a, b) -> a.localeCompare(b))
 
     # do a reverse, if needed
     if order == 'DESC'
@@ -1311,12 +1316,20 @@ class App.Utils
         autocomplete: {
           source: source
           minLength: 2
+          create: ->
+            $(@).data('ui-autocomplete')._renderItem = (ul, item) ->
+              option_html = App.Utils.htmlEscape(item.label)
+              additional_class = ''
+              if item.inactive
+                option_html += '<span style="float: right;">' + App.i18n.translateContent('inactive') + '</span>'
+                additional_class = 'is-inactive'
+              return $('<li>').addClass(additional_class).append(option_html).appendTo(ul)
         },
       ).on('tokenfield:createtoken', (e) ->
         if type is 'email' && !e.attrs.value.match(/@/) || e.attrs.value.match(/\s/)
           e.preventDefault()
           return false
-        e.attrs.label = e.attrs.value
+        e.attrs.label ||= e.attrs.value
         true
       )
     App.Delay.set(a, 500, undefined, 'tags')
@@ -1406,7 +1419,7 @@ class App.Utils
     imageCache.onload = ->
       App.Utils._htmlImage2DataUrl(imageCache, params)
     imageCache.onerror = ->
-      App.Log.notice('Utils', "Unable to load image from #{originalImage.src}")
+      App.Log.notice('Utils', "Image could not be loaded from #{originalImage.src}")
       params.fail(originalImage) if params.fail
     imageCache.alt = originalImage.alt
     imageCache.src = originalImage.src

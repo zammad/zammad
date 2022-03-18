@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'test_helper'
 
@@ -37,7 +37,7 @@ class NotificationFactoryMailerTest < ActiveSupport::TestCase
     assert_match('text/html', result.to_s)
 
     attachments = []
-    attachments.push Store.add(
+    attachments.push Store.create!(
       object:        'TestMailer',
       o_id:          1,
       data:          'content_file1_normally_should_be_an_image',
@@ -50,7 +50,7 @@ class NotificationFactoryMailerTest < ActiveSupport::TestCase
       },
       created_by_id: 1,
     )
-    attachments.push Store.add(
+    attachments.push Store.create!(
       object:        'TestMailer',
       o_id:          1,
       data:          'content_file2',

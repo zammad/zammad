@@ -104,7 +104,7 @@
           document.getSelection().addRange(range)
         }
 
-        elem.focus()
+        elem.trigger('focus')
 
         break
       default:

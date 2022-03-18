@@ -23,19 +23,19 @@ class ElectronEvents extends App.Controller
     createDefault = ->
       menu = new Menu()
       menu.append(new MenuItem(
-        label: 'Cut',
+        label: __('Cut'),
         role: 'cut'
       ))
       menu.append(new MenuItem(
-        label: 'Copy',
+        label: __('Copy'),
         role: 'copy'
       ))
       menu.append(new MenuItem(
-        label: 'Paste',
+        label: __('Paste'),
         role: 'paste'
       ))
       menu.append(new MenuItem(
-        label: 'Select All',
+        label: __('Select All'),
         role: 'selectall'
       ))
       menu
@@ -81,7 +81,7 @@ class ElectronEvents extends App.Controller
         dataURL = badgeDataURL(content.toString())
         sendBadge(dataURL, 'You have unread messages (' + content + ')')
       else
-        sendBadge(null, 'You have no unread messages')
+        sendBadge(null, __('You have no unread messages'))
 
     setBadgeOSX = (content) ->
       remote.app.dock.setBadge(content)

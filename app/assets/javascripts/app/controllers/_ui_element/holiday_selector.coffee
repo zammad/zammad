@@ -24,7 +24,7 @@ class App.UiElement.holiday_selector
     item.find('.js-datePicker').html(datePicker)
 
     # set active/inactive of date
-    item.delegate('.js-active', 'click', (e) ->
+    item.on('click', '.js-active', (e) ->
       active = $(e.target).prop('checked')
       row = $(e.target).closest('tr')
       input = $(e.target).closest('tr').find('.js-summary')
@@ -39,19 +39,19 @@ class App.UiElement.holiday_selector
     )
 
     # remove date
-    item.delegate('.js-remove', 'click', (e) ->
+    item.on('click', '.js-remove', (e) ->
       $(e.target).closest('tr').remove()
     )
 
     # catch enter / apply add
-    item.find('.js-summary').bind( 'keydown', (e) ->
+    item.find('.js-summary').on( 'keydown', (e) ->
       return if e.which isnt 13
       e.preventDefault()
-      item.find('.js-add').click()
+      item.find('.js-add').trigger('click')
     )
 
     # add date
-    item.find('.js-add').bind('click', (e) ->
+    item.find('.js-add').on('click', (e) ->
       date = $(e.target).closest('tr').find('[name="{date}public_holidays_date"]').val()
       return if !date
       summary = $(e.target).closest('tr').find('.js-summary').val()
@@ -60,7 +60,7 @@ class App.UiElement.holiday_selector
       # check if entry already exists
       exists = item.find("[data-date=#{date}]").get(0)
       if exists
-        alert(App.i18n.translateInline('Aready exists!'))
+        alert(App.i18n.translateInline('This entry already exists!'))
         return
 
       # reset form input

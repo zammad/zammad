@@ -1,8 +1,22 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class TestsController < ApplicationController
 
   prepend_before_action -> { authentication_check_only }
+
+  layout 'tests', except: %i[wait raised_exception]
+
+  def show
+    @filename = params[:name]
+
+    if lookup_context.exists? @filename, 'tests'
+      render @filename
+    elsif @filename.starts_with? 'form'
+      render 'form'
+    else
+      render
+    end
+  end
 
   # GET /test/wait
   def wait

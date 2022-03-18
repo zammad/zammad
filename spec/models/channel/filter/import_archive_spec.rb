@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -124,7 +124,7 @@ RSpec.describe Channel::Filter::ImportArchive do
 
     context 'when initial ticket (import till outdated)' do
       let(:channel_as_model) do
-        Channel.new(options: { inbound: { options: { archive: true, archive_till: (Time.zone.now - 1.day).to_s } } })
+        Channel.new(options: { inbound: { options: { archive: true, archive_till: 1.day.ago.to_s } } })
       end
 
       include_examples 'notification sent checks', 1
@@ -132,7 +132,7 @@ RSpec.describe Channel::Filter::ImportArchive do
 
     context 'when initial ticket (import till matched)' do
       let(:channel_as_model) do
-        Channel.new(options: { inbound: { options: { archive: true, archive_till: (Time.zone.now + 1.day).to_s } } })
+        Channel.new(options: { inbound: { options: { archive: true, archive_till: 1.day.from_now.to_s } } })
       end
 
       include_examples 'notification sent checks', 0
@@ -156,7 +156,7 @@ RSpec.describe Channel::Filter::ImportArchive do
 
     context 'when initial ticket (import till outdated) with channel hash' do
       let(:channel_as_hash) do
-        { options: { inbound: { options: { archive: true, archive_till: (Time.zone.now - 1.day).to_s } } } }
+        { options: { inbound: { options: { archive: true, archive_till: 1.day.ago.to_s } } } }
       end
 
       include_examples 'notification sent checks', 1, true
@@ -164,7 +164,7 @@ RSpec.describe Channel::Filter::ImportArchive do
 
     context 'when initial ticket (import till matched) with channel hash' do
       let(:channel_as_hash) do
-        { options: { inbound: { options: { archive: true, archive_till: (Time.zone.now + 1.day).to_s } } } }
+        { options: { inbound: { options: { archive: true, archive_till: 1.day.from_now.to_s } } } }
       end
 
       include_examples 'notification sent checks', 0, true

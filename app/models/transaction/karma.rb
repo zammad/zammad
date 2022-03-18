@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Transaction::Karma
 
@@ -54,7 +54,7 @@ class Transaction::Karma
 
     if @item[:type] == 'reminder_reached'
       return if ticket.owner_id == 1
-      return if ticket.pending_time && ticket.pending_time > Time.zone.now - 2.days
+      return if ticket.pending_time && ticket.pending_time > 2.days.ago
 
       Karma::ActivityLog.add('ticket reminder overdue (+2 days)', ticket.owner, 'Ticket', ticket.id)
       return

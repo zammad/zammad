@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -6,44 +6,44 @@ RSpec.describe ObjectManager::Attribute, type: :model do
 
   describe 'callbacks' do
     context 'for setting default values on local data options' do
-      let(:subject) { described_class.new }
+      subject(:attr) { described_class.new }
 
       context ':null' do
         it 'sets nil values to true' do
-          expect { subject.validate }
-            .to change { subject.data_option[:null] }.to(true)
+          expect { attr.validate }
+            .to change { attr.data_option[:null] }.to(true)
         end
 
         it 'does not overwrite false values' do
-          subject.data_option[:null] = false
+          attr.data_option[:null] = false
 
-          expect { subject.validate }
-            .not_to change { subject.data_option[:null] }
+          expect { attr.validate }
+            .not_to change { attr.data_option[:null] }
         end
       end
 
       context ':maxlength' do
         context 'for data_type: select / tree_select / checkbox' do
-          let(:subject) { described_class.new(data_type: 'select') }
+          subject(:attr) { described_class.new(data_type: 'select') }
 
           it 'sets nil values to 255' do
-            expect { subject.validate }
-              .to change { subject.data_option[:maxlength] }.to(255)
+            expect { attr.validate }
+              .to change { attr.data_option[:maxlength] }.to(255)
           end
         end
       end
 
       context ':nulloption' do
         context 'for data_type: select / tree_select / checkbox' do
-          let(:subject) { described_class.new(data_type: 'select') }
+          subject(:attr) { described_class.new(data_type: 'select') }
 
           it 'sets nil values to true' do
-            expect { subject.validate }
-              .to change { subject.data_option[:nulloption] }.to(true)
+            expect { attr.validate }
+              .to change { attr.data_option[:nulloption] }.to(true)
           end
 
           it 'does not overwrite false values' do
-            subject.data_option[:nulloption] = false
+            attr.data_option[:nulloption] = false
 
             expect { subject.validate }
               .not_to change { subject.data_option[:nulloption] }
@@ -73,6 +73,22 @@ RSpec.describe ObjectManager::Attribute, type: :model do
         expect do
           described_class.add attributes_for :object_manager_attribute_text, name: reserved_word
         end.to raise_error(ActiveRecord::RecordInvalid, "Validation failed: Name can't get used because *_id and *_ids are not allowed")
+      end
+    end
+
+    %w[title tags number].each do |not_editable_attribute|
+      it "rejects '#{not_editable_attribute}' which is used" do
+        expect do
+          described_class.add attributes_for :object_manager_attribute_text, name: not_editable_attribute
+        end.to raise_error(ActiveRecord::RecordInvalid, 'Validation failed: Name Attribute not editable!')
+      end
+    end
+
+    %w[priority state note].each do |existing_attribute|
+      it "rejects '#{existing_attribute}' which is used" do
+        expect do
+          described_class.add attributes_for :object_manager_attribute_text, name: existing_attribute
+        end.to raise_error(ActiveRecord::RecordInvalid, "Validation failed: Name #{existing_attribute} already exists!")
       end
     end
 
@@ -146,6 +162,185 @@ RSpec.describe ObjectManager::Attribute, type: :model do
       let(:is_referenced) { true }
 
       it { is_expected.to be_valid }
+    end
+  end
+
+  describe 'Class methods:' do
+    describe '.attribute_to_references_hash_objects' do
+      it 'returns classes with conditions' do
+        expect(described_class.attribute_to_references_hash_objects).to match_array [Trigger, Overview, Job, Sla, Report::Profile ]
+      end
+    end
+  end
+
+  describe '#data_option_validations' do
+    context 'when maxlength is checked for non-integers' do
+      shared_examples 'tests the exception on invalid maxlength values' do |type|
+        context "when type '#{type}'" do
+          subject(:attr) { described_class.new(data_type: type, data_option: { maxlength: 'brbrbr' }) }
+
+          it 'does throw an exception' do
+            expect { attr.save! }.to raise_error(ActiveRecord::RecordInvalid, %r{Data option must have integer for :maxlength})
+          end
+        end
+      end
+
+      include_examples 'tests the exception on invalid maxlength values', 'input'
+      include_examples 'tests the exception on invalid maxlength values', 'textarea'
+      include_examples 'tests the exception on invalid maxlength values', 'richtext'
+    end
+
+    context 'when type is checked' do
+      shared_examples 'tests the exception on invalid types' do |type|
+        context "when type '#{type}'" do
+          subject(:attr) { described_class.new(data_type: type, data_option: { type: 'brbrbr' }) }
+
+          it 'does throw an exception' do
+            expect { attr.save! }.to raise_error(ActiveRecord::RecordInvalid, %r{must have one of text/password/tel/fax/email/url for :type})
+          end
+        end
+      end
+
+      include_examples 'tests the exception on invalid types', 'input'
+    end
+
+    context 'when min max values are checked' do
+      shared_examples 'tests the exception on invalid min max values' do |type|
+        context "when type '#{type}'" do
+          context 'when no integer for min' do
+            subject(:attr) { described_class.new(data_type: type, data_option: { min: 'brbrbr' }) }
+
+            it 'does throw an exception' do
+              expect { attr.save! }.to raise_error(ActiveRecord::RecordInvalid, %r{must have integer for :min})
+            end
+          end
+
+          context 'when no integer for max' do
+            subject(:attr) { described_class.new(data_type: type, data_option: { max: 'brbrbr' }) }
+
+            it 'does throw an exception' do
+              expect { attr.save! }.to raise_error(ActiveRecord::RecordInvalid, %r{must have integer for :max})
+            end
+          end
+
+          context 'when high integer for min' do
+            subject(:attr) { described_class.new(data_type: type, data_option: { min: 999_999_999_999 }) }
+
+            it 'does throw an exception' do
+              expect { attr.save! }.to raise_error(ActiveRecord::RecordInvalid, %r{min must be lower than 2147483648})
+            end
+          end
+
+          context 'when high integer for max' do
+            subject(:attr) { described_class.new(data_type: type, data_option: { max: 999_999_999_999 }) }
+
+            it 'does throw an exception' do
+              expect { attr.save! }.to raise_error(ActiveRecord::RecordInvalid, %r{max must be lower than 2147483648})
+            end
+          end
+
+          context 'when negative high integer for min' do
+            subject(:attr) { described_class.new(data_type: type, data_option: { min: -999_999_999_999 }) }
+
+            it 'does throw an exception' do
+              expect { attr.save! }.to raise_error(ActiveRecord::RecordInvalid, %r{min must be higher than -2147483648})
+            end
+          end
+
+          context 'when negative high integer for max' do
+            subject(:attr) { described_class.new(data_type: type, data_option: { max: -999_999_999_999 }) }
+
+            it 'does throw an exception' do
+              expect { attr.save! }.to raise_error(ActiveRecord::RecordInvalid, %r{max must be higher than -2147483648})
+            end
+          end
+
+          context 'when min is greater than max' do
+            subject(:attr) { described_class.new(data_type: type, data_option: { min: 5, max: 2 }) }
+
+            it 'does throw an exception' do
+              expect { attr.save! }.to raise_error(ActiveRecord::RecordInvalid, %r{min must be lower than max})
+            end
+          end
+        end
+      end
+
+      include_examples 'tests the exception on invalid min max values', 'integer'
+    end
+
+    context 'when default is checked' do
+      shared_examples 'tests the exception on missing default' do |type|
+        context "when type '#{type}'" do
+          subject(:attr) { described_class.new(data_type: type, data_option: {}) }
+
+          it 'does throw an exception' do
+            expect { attr.save! }.to raise_error(ActiveRecord::RecordInvalid, %r{must have value for :default})
+          end
+        end
+      end
+
+      include_examples 'tests the exception on missing default', 'select'
+      include_examples 'tests the exception on missing default', 'tree_select'
+      include_examples 'tests the exception on missing default', 'checkbox'
+      include_examples 'tests the exception on missing default', 'boolean'
+    end
+
+    context 'when relation is checked' do
+      shared_examples 'tests the exception on missing relation' do |type|
+        context "when type '#{type}'" do
+          subject(:attr) { described_class.new(data_type: type, data_option: {}) }
+
+          it 'does throw an exception' do
+            expect { attr.save! }.to raise_error(ActiveRecord::RecordInvalid, %r{must have non-nil value for either :options or :relation})
+          end
+        end
+      end
+
+      include_examples 'tests the exception on missing relation', 'select'
+      include_examples 'tests the exception on missing relation', 'tree_select'
+      include_examples 'tests the exception on missing relation', 'checkbox'
+    end
+
+    context 'when nil options are checked' do
+      shared_examples 'tests the exception on missing nil options' do |type|
+        context "when type '#{type}'" do
+          subject(:attr) { described_class.new(data_type: type, data_option: {}) }
+
+          it 'does throw an exception' do
+            expect { attr.save! }.to raise_error(ActiveRecord::RecordInvalid, %r{must have non-nil value for :options})
+          end
+        end
+      end
+
+      include_examples 'tests the exception on missing nil options', 'boolean'
+    end
+
+    context 'when future is checked' do
+      shared_examples 'tests the exception on missing future' do |type|
+        context "when type '#{type}'" do
+          subject(:attr) { described_class.new(data_type: type, data_option: {}) }
+
+          it 'does throw an exception' do
+            expect { attr.save! }.to raise_error(ActiveRecord::RecordInvalid, %r{must have boolean value for :future})
+          end
+        end
+      end
+
+      include_examples 'tests the exception on missing future', 'datetime'
+    end
+
+    context 'when past is checked' do
+      shared_examples 'tests the exception on missing past' do |type|
+        context "when type '#{type}'" do
+          subject(:attr) { described_class.new(data_type: type, data_option: {}) }
+
+          it 'does throw an exception' do
+            expect { attr.save! }.to raise_error(ActiveRecord::RecordInvalid, %r{must have boolean value for :past})
+          end
+        end
+      end
+
+      include_examples 'tests the exception on missing past', 'datetime'
     end
   end
 end

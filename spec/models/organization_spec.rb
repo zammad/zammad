@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 require 'models/application_model_examples'
@@ -6,7 +6,7 @@ require 'models/concerns/can_csv_import_examples'
 require 'models/concerns/has_history_examples'
 require 'models/concerns/has_search_index_backend_examples'
 require 'models/concerns/has_xss_sanitized_note_examples'
-require 'models/concerns/has_object_manager_attributes_validation_examples'
+require 'models/concerns/has_object_manager_attributes_examples'
 require 'models/concerns/has_taskbars_examples'
 
 RSpec.describe Organization, type: :model do
@@ -17,7 +17,7 @@ RSpec.describe Organization, type: :model do
   it_behaves_like 'HasHistory'
   it_behaves_like 'HasSearchIndexBackend', indexed_factory: :organization
   it_behaves_like 'HasXssSanitizedNote', model_factory: :organization
-  it_behaves_like 'HasObjectManagerAttributesValidation'
+  it_behaves_like 'HasObjectManagerAttributes'
   it_behaves_like 'HasTaskbars'
 
   describe 'Class methods:' do
@@ -40,14 +40,28 @@ RSpec.describe Organization, type: :model do
         expect(refs_organization).to eq(refs_known)
       end
 
-      it 'checks user deletion' do
-        organization.destroy
-        expect { user.reload }.to raise_exception(ActiveRecord::RecordNotFound)
+      context 'with associations' do
+        it 'checks user deletion' do
+          organization.destroy(associations: true)
+          expect { user.reload }.to raise_exception(ActiveRecord::RecordNotFound)
+        end
+
+        it 'checks ticket deletion' do
+          organization.destroy(associations: true)
+          expect { ticket.reload }.to raise_exception(ActiveRecord::RecordNotFound)
+        end
       end
 
-      it 'checks ticket deletion' do
-        organization.destroy
-        expect { ticket.reload }.to raise_exception(ActiveRecord::RecordNotFound)
+      context 'without associations' do
+        it 'checks user deletion' do
+          organization.destroy
+          expect(user.reload.organization_id).to be_nil
+        end
+
+        it 'checks ticket deletion' do
+          organization.destroy
+          expect(ticket.reload.organization_id).to be_nil
+        end
       end
 
       describe 'when changes for member_ids' do

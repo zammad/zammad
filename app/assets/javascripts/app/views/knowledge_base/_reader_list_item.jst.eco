@@ -1,7 +1,7 @@
 <a href="<%- @item.url %>">
   <span class="section-inner">
     <%- @iconWithModifier(@item, className: 'section-inner-icon-holder', iconset: @iconset, addStateClass: true) %>
-    <span class="section-label"><%= @item.title %></span>
+    <span class="title"><%= @item.title %></span>
     <% if @item.count: %>
       <span class="section-detail"><%= @T('Answers: %s', @item.count) %></span>
     <% end %>

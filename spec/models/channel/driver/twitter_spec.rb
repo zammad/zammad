@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -15,7 +15,7 @@ RSpec.describe Channel::Driver::Twitter, required_envs: %w[TWITTER_CONSUMER_KEY 
 
     let(:payload) { YAML.safe_load(File.read(payload_file), [ActiveSupport::HashWithIndifferentAccess]) }
 
-    # https://git.znuny.com/zammad/zammad/-/issues/305
+    # https://git.zammad.com/zammad/zammad/-/issues/305
     shared_examples 'for user processing' do
       let(:sender_attributes) do
         {
@@ -745,6 +745,20 @@ RSpec.describe Channel::Driver::Twitter, required_envs: %w[TWITTER_CONSUMER_KEY 
   end
 
   describe '#fetch', use_vcr: :time_sensitive do
+    context 'when ApplicationHandleInfo context' do
+      it 'gets switched to "twitter"' do
+        allow(ApplicationHandleInfo).to receive('context=')
+        channel.fetch
+        expect(ApplicationHandleInfo).to have_received('context=').with('twitter').at_least(1)
+      end
+
+      it 'reverts back to default' do
+        allow(ApplicationHandleInfo).to receive('context=')
+        channel.fetch
+        expect(ApplicationHandleInfo.context).not_to eq 'twitter'
+      end
+    end
+
     describe 'rate limiting' do
       before do
         allow(Rails.env).to receive(:test?).and_return(false)

@@ -155,8 +155,8 @@ class _taskManagerSingleton extends App.Controller
       url:       '#'
       id:        false
       iconClass: 'loading'
-      title:     App.i18n.translateInline('Loading...')
-      head:      App.i18n.translateInline('Loading...')
+      title:     App.i18n.translateInline('Loading…')
+      head:      App.i18n.translateInline('Loading…')
     worker = App.TaskManager.worker(task.key)
     if worker && worker.meta
       data = worker.meta(task)

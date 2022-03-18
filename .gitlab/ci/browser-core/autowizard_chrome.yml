@@ -1,5 +1,3 @@
 autowizard_chrome:
   extends:
-    - .template_browser-core_autowizard
-  variables:
-    BROWSER: "chrome"
+    - .template_browser-core_autowizard_chrome

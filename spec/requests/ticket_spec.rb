@@ -1,14 +1,14 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
 RSpec.describe 'Ticket', type: :request do
 
   let!(:ticket_group) do
-    create(:group, email_address: create(:email_address) )
+    create(:group, email_address: create(:email_address))
   end
   let!(:ticket_group_without_create) do
-    create(:group, email_address: create(:email_address) )
+    create(:group, email_address: create(:email_address))
   end
   let(:admin) do
     create(:admin, groups: Group.all, firstname: 'Tickets', lastname: 'Admin')
@@ -101,10 +101,43 @@ RSpec.describe 'Ticket', type: :request do
         article:     {},
       }
       authenticated_as(agent)
-      post '/api/v1/tickets', params: params, as: :json
+      expect { post '/api/v1/tickets', params: params, as: :json }.not_to change(Ticket, :count)
       expect(response).to have_http_status(:unprocessable_entity)
       expect(json_response).to be_a_kind_of(Hash)
-      expect(json_response['error']).to eq('Need at least article: { body: "some text" }')
+      expect(json_response['error']).to eq("Need at least an 'article body' field.")
+    end
+
+    it 'does ticket create with agent - article.body set to empty string (01.03)' do
+      params = {
+        title:       'a new ticket #3',
+        group:       ticket_group.name,
+        priority:    '2 normal',
+        state:       'new',
+        customer_id: customer.id,
+        article:     { body: " \n " },
+      }
+      authenticated_as(agent)
+      expect { post '/api/v1/tickets', params: params, as: :json }.not_to change(Ticket, :count)
+      expect(response).to have_http_status(:unprocessable_entity)
+      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response['error']).to eq("Need at least an 'article body' field.")
+    end
+
+    it 'does ticket create with agent - missing article (01.03)' do
+      params = {
+        title:       'a new ticket #3',
+        group:       ticket_group.name,
+        priority:    '2 normal',
+        state:       'new',
+        customer_id: customer.id
+      }
+      authenticated_as(agent)
+      expect { post '/api/v1/tickets', params: params, as: :json }.to change(Ticket, :count).by(1)
+      expect(response).to have_http_status(:created)
+      expect(json_response).to be_a_kind_of(Hash)
+
+      ticket = Ticket.find(json_response['id'])
+      expect(ticket.articles).to be_empty
     end
 
     it 'does ticket create with agent - minimal article (01.03)' do
@@ -149,30 +182,6 @@ RSpec.describe 'Ticket', type: :request do
       expect(json_response['customer_id']).to eq(customer.id)
       expect(json_response['updated_by_id']).to eq(agent.id)
       expect(json_response['created_by_id']).to eq(agent.id)
-    end
-
-    it 'does ticket create with empty article body' do
-      params = {
-        title:    'a new ticket with empty article body',
-        group:    ticket_group.name,
-        priority: '2 normal',
-        state:    'new',
-        customer: customer.email,
-        article:  { body: '' }
-      }
-      authenticated_as(agent)
-      post '/api/v1/tickets', params: params, as: :json
-      expect(response).to have_http_status(:created)
-      expect(json_response).to be_a_kind_of(Hash)
-      expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
-      expect(json_response['title']).to eq('a new ticket with empty article body')
-      expect(json_response['customer_id']).to eq(customer.id)
-      expect(json_response['updated_by_id']).to eq(agent.id)
-      expect(json_response['created_by_id']).to eq(agent.id)
-      ticket = Ticket.find(json_response['id'])
-      expect(ticket.articles.count).to eq(1)
-      article = ticket.articles.first
-      expect(article.body).to eq('')
     end
 
     it 'does ticket create with agent - wrong owner_id - 0 (01.05)' do
@@ -474,7 +483,7 @@ RSpec.describe 'Ticket', type: :request do
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:unprocessable_entity)
       expect(json_response).to be_a_kind_of(Hash)
-      expect(json_response['error']).to eq('Need at least article: { body: "some text" }')
+      expect(json_response['error']).to eq("Need at least an 'article body' field.")
     end
 
     it 'does ticket create with agent - minimal article and attachment with customer (01.13)' do
@@ -817,7 +826,7 @@ RSpec.describe 'Ticket', type: :request do
     end
 
     it 'does ticket with correct ticket id (02.04)' do
-      title = "ticket with corret ticket id testagent#{rand(999_999_999)}"
+      title = "ticket with corret ticket id testagent#{SecureRandom.uuid}"
       ticket = create(
         :ticket,
         title:       title,
@@ -870,7 +879,7 @@ RSpec.describe 'Ticket', type: :request do
       expect(article_json_response['subject']).to eq('some subject')
       expect(article_json_response['body']).to eq('some body')
       expect(article_json_response['content_type']).to eq('text/plain')
-      expect(article_json_response['internal']).to eq(false)
+      expect(article_json_response['internal']).to be(false)
       expect(article_json_response['created_by_id']).to eq(agent.id)
       expect(article_json_response['sender_id']).to eq(Ticket::Article::Sender.lookup(name: 'Agent').id)
       expect(article_json_response['type_id']).to eq(Ticket::Article::Type.lookup(name: 'note').id)
@@ -915,7 +924,7 @@ RSpec.describe 'Ticket', type: :request do
       expect(json_response['subject']).to eq('some subject')
       expect(json_response['body']).to eq('some body')
       expect(json_response['content_type']).to eq('text/plain')
-      expect(json_response['internal']).to eq(true)
+      expect(json_response['internal']).to be(true)
       expect(json_response['created_by_id']).to eq(agent.id)
       expect(json_response['sender_id']).to eq(Ticket::Article::Sender.lookup(name: 'Agent').id)
       expect(json_response['type_id']).to eq(Ticket::Article::Type.lookup(name: 'email').id)
@@ -931,7 +940,7 @@ RSpec.describe 'Ticket', type: :request do
       expect(json_response['subject']).not_to eq('new subject')
       expect(json_response['body']).to eq('some body')
       expect(json_response['content_type']).to eq('text/plain')
-      expect(json_response['internal']).to eq(true)
+      expect(json_response['internal']).to be(true)
       expect(json_response['created_by_id']).to eq(agent.id)
       expect(json_response['sender_id']).to eq(Ticket::Article::Sender.lookup(name: 'Agent').id)
       expect(json_response['type_id']).to eq(Ticket::Article::Type.lookup(name: 'email').id)
@@ -946,7 +955,7 @@ RSpec.describe 'Ticket', type: :request do
       }
       post '/api/v1/ticket_articles', params: params, as: :json
       expect(response).to have_http_status(:created)
-      expect(json_response['internal']).to eq(false)
+      expect(json_response['internal']).to be(false)
 
       delete "/api/v1/ticket_articles/#{json_response['id']}", params: {}, as: :json
       expect(response).to have_http_status(:forbidden)
@@ -1003,7 +1012,7 @@ RSpec.describe 'Ticket', type: :request do
       expect(json_response['subject']).to eq('some subject')
       expect(json_response['body']).to eq('some body')
       expect(json_response['content_type']).to eq('text/plain')
-      expect(json_response['internal']).to eq(false)
+      expect(json_response['internal']).to be(false)
       expect(json_response['created_by_id']).to eq(admin.id)
       expect(json_response['sender_id']).to eq(Ticket::Article::Sender.lookup(name: 'Agent').id)
       expect(json_response['type_id']).to eq(Ticket::Article::Type.lookup(name: 'note').id)
@@ -1020,7 +1029,7 @@ RSpec.describe 'Ticket', type: :request do
       expect(json_response['subject']).not_to eq('new subject')
       expect(json_response['body']).to eq('some body')
       expect(json_response['content_type']).to eq('text/plain')
-      expect(json_response['internal']).to eq(true)
+      expect(json_response['internal']).to be(true)
       expect(json_response['created_by_id']).to eq(admin.id)
       expect(json_response['sender_id']).to eq(Ticket::Article::Sender.lookup(name: 'Agent').id)
       expect(json_response['type_id']).to eq(Ticket::Article::Type.lookup(name: 'note').id)
@@ -1042,7 +1051,7 @@ RSpec.describe 'Ticket', type: :request do
       expect(json_response['subject']).to eq('some subject')
       expect(json_response['body']).to eq('some body')
       expect(json_response['content_type']).to eq('text/plain')
-      expect(json_response['internal']).to eq(false)
+      expect(json_response['internal']).to be(false)
       expect(json_response['created_by_id']).to eq(admin.id)
       expect(json_response['sender_id']).to eq(Ticket::Article::Sender.lookup(name: 'Agent').id)
       expect(json_response['type_id']).to eq(Ticket::Article::Type.lookup(name: 'email').id)
@@ -1055,7 +1064,7 @@ RSpec.describe 'Ticket', type: :request do
     end
 
     it 'does ticket pagination (02.05)' do
-      title = "ticket pagination #{rand(999_999_999)}"
+      title = "ticket pagination #{SecureRandom.uuid}"
       tickets = []
       (1..20).each do |count|
         ticket = create(
@@ -1222,7 +1231,7 @@ RSpec.describe 'Ticket', type: :request do
     end
 
     it 'does ticket with correct ticket id (03.05)' do
-      title = "ticket with corret ticket id testme#{rand(999_999_999)}"
+      title = "ticket with corret ticket id testme#{SecureRandom.uuid}"
       ticket = create(
         :ticket,
         title:       title,
@@ -1338,7 +1347,7 @@ RSpec.describe 'Ticket', type: :request do
       expect(json_response['subject']).to eq('some subject')
       expect(json_response['body']).to eq('some body')
       expect(json_response['content_type']).to eq('text/plain')
-      expect(json_response['internal']).to eq(false)
+      expect(json_response['internal']).to be(false)
       expect(json_response['created_by_id']).to eq(customer.id)
       expect(json_response['sender_id']).to eq(Ticket::Article::Sender.lookup(name: 'Customer').id)
       expect(json_response['type_id']).to eq(Ticket::Article::Type.lookup(name: 'web').id)
@@ -1427,7 +1436,7 @@ RSpec.describe 'Ticket', type: :request do
     end
 
     it 'does ticket show and response format (04.01)' do
-      title = "ticket testagent#{rand(999_999_999)}"
+      title = "ticket testagent#{SecureRandom.uuid}"
       ticket = create(
         :ticket,
         title:         title,
@@ -1511,7 +1520,7 @@ RSpec.describe 'Ticket', type: :request do
     end
 
     it 'does ticket index and response format (04.02)' do
-      title = "ticket testagent#{rand(999_999_999)}"
+      title = "ticket testagent#{SecureRandom.uuid}"
       ticket = create(
         :ticket,
         title:         title,
@@ -1606,7 +1615,7 @@ RSpec.describe 'Ticket', type: :request do
     end
 
     it 'does ticket create and response format (04.03)' do
-      title = "ticket testagent#{rand(999_999_999)}"
+      title = "ticket testagent#{SecureRandom.uuid}"
       params = {
         title:       title,
         group:       ticket_group.name,
@@ -1677,7 +1686,7 @@ RSpec.describe 'Ticket', type: :request do
     end
 
     it 'does ticket update and response formats (04.04)' do
-      title = "ticket testagent#{rand(999_999_999)}"
+      title = "ticket testagent#{SecureRandom.uuid}"
       ticket = create(
         :ticket,
         title:         title,
@@ -1819,70 +1828,60 @@ RSpec.describe 'Ticket', type: :request do
         content_type: 'text/html',
         ticket_id:    ticket.id,
       )
-      Store.add(
-        object:        'Ticket::Article',
-        o_id:          article.id,
-        data:          'content_file1_normally_should_be_an_image',
-        filename:      'some_file1.jpg',
-        preferences:   {
-          'Content-Type'        => 'image/jpeg',
-          'Mime-Type'           => 'image/jpeg',
-          'Content-ID'          => '15.274327094.140938@zammad.example.com',
-          'Content-Disposition' => 'inline',
-        },
-        created_by_id: 1,
-      )
-      Store.add(
-        object:        'Ticket::Article',
-        o_id:          article.id,
-        data:          'content_file2_normally_should_be_an_image',
-        filename:      'some_file2.jpg',
-        preferences:   {
-          'Content-Type'        => 'image/jpeg',
-          'Mime-Type'           => 'image/jpeg',
-          'Content-ID'          => '15.274327094.140938.2@zammad.example.com',
-          'Content-Disposition' => 'inline',
-        },
-        created_by_id: 1,
-      )
-      Store.add(
-        object:        'Ticket::Article',
-        o_id:          article.id,
-        data:          'content_file3_normally_should_be_an_image',
-        filename:      'some_file3.jpg',
-        preferences:   {
-          'Content-Type' => 'image/jpeg',
-          'Mime-Type'    => 'image/jpeg',
-          'Content-ID'   => '15.274327094.140938.3@zammad.example.com',
-        },
-        created_by_id: 1,
-      )
-      Store.add(
-        object:        'Ticket::Article',
-        o_id:          article.id,
-        data:          'content_file4_normally_should_be_an_image',
-        filename:      'some_file4.jpg',
-        preferences:   {
-          'Content-Type' => 'image/jpeg',
-          'Mime-Type'    => 'image/jpeg',
-          'Content-ID'   => '15.274327094.140938.4@zammad.example.com',
-        },
-        created_by_id: 1,
-      )
-      Store.add(
-        object:        'Ticket::Article',
-        o_id:          article.id,
-        data:          'content_file1_normally_should_be_an_pdf',
-        filename:      'Rechnung_RE-2018-200.pdf',
-        preferences:   {
-          'Content-Type'        => 'application/octet-stream; name="Rechnung_RE-2018-200.pdf"',
-          'Mime-Type'           => 'application/octet-stream',
-          'Content-ID'          => '8AB0BEC88984EE4EBEF643C79C8E0346@zammad.example.com',
-          'Content-Description' => 'Rechnung_RE-2018-200.pdf',
-          'Content-Disposition' => 'attachment',
-        },
-        created_by_id: 1,
-      )
+      create(:store,
+             object:      'Ticket::Article',
+             o_id:        article.id,
+             data:        'content_file1_normally_should_be_an_image',
+             filename:    'some_file1.jpg',
+             preferences: {
+               'Content-Type'        => 'image/jpeg',
+               'Mime-Type'           => 'image/jpeg',
+               'Content-ID'          => '15.274327094.140938@zammad.example.com',
+               'Content-Disposition' => 'inline',
+             })
+      create(:store,
+             object:      'Ticket::Article',
+             o_id:        article.id,
+             data:        'content_file2_normally_should_be_an_image',
+             filename:    'some_file2.jpg',
+             preferences: {
+               'Content-Type'        => 'image/jpeg',
+               'Mime-Type'           => 'image/jpeg',
+               'Content-ID'          => '15.274327094.140938.2@zammad.example.com',
+               'Content-Disposition' => 'inline',
+             })
+      create(:store,
+             object:      'Ticket::Article',
+             o_id:        article.id,
+             data:        'content_file3_normally_should_be_an_image',
+             filename:    'some_file3.jpg',
+             preferences: {
+               'Content-Type' => 'image/jpeg',
+               'Mime-Type'    => 'image/jpeg',
+               'Content-ID'   => '15.274327094.140938.3@zammad.example.com',
+             })
+      create(:store,
+             object:      'Ticket::Article',
+             o_id:        article.id,
+             data:        'content_file4_normally_should_be_an_image',
+             filename:    'some_file4.jpg',
+             preferences: {
+               'Content-Type' => 'image/jpeg',
+               'Mime-Type'    => 'image/jpeg',
+               'Content-ID'   => '15.274327094.140938.4@zammad.example.com',
+             })
+      create(:store,
+             object:      'Ticket::Article',
+             o_id:        article.id,
+             data:        'content_file1_normally_should_be_an_pdf',
+             filename:    'Rechnung_RE-2018-200.pdf',
+             preferences: {
+               'Content-Type'        => 'application/octet-stream; name="Rechnung_RE-2018-200.pdf"',
+               'Mime-Type'           => 'application/octet-stream',
+               'Content-ID'          => '8AB0BEC88984EE4EBEF643C79C8E0346@zammad.example.com',
+               'Content-Description' => 'Rechnung_RE-2018-200.pdf',
+               'Content-Disposition' => 'attachment',
+             })
 
       authenticated_as(customer)
       get "/api/v1/ticket_split?ticket_id=#{ticket.id}&article_id=#{article.id}&form_id=new_form_id123", params: {}, as: :json
@@ -1928,46 +1927,40 @@ RSpec.describe 'Ticket', type: :request do
         content_type: 'text/plain',
         ticket_id:    ticket.id,
       )
-      Store.add(
-        object:        'Ticket::Article',
-        o_id:          article.id,
-        data:          'content_file1_normally_should_be_an_image',
-        filename:      'some_file1.jpg',
-        preferences:   {
-          'Content-Type'        => 'image/jpeg',
-          'Mime-Type'           => 'image/jpeg',
-          'Content-ID'          => '15.274327094.140938@zammad.example.com',
-          'Content-Disposition' => 'inline',
-        },
-        created_by_id: 1,
-      )
-      Store.add(
-        object:        'Ticket::Article',
-        o_id:          article.id,
-        data:          'content_file1_normally_should_be_an_image',
-        filename:      'some_file2.jpg',
-        preferences:   {
-          'Content-Type'        => 'image/jpeg',
-          'Mime-Type'           => 'image/jpeg',
-          'Content-ID'          => '15.274327094.140938.2@zammad.example.com',
-          'Content-Disposition' => 'inline',
-        },
-        created_by_id: 1,
-      )
-      Store.add(
-        object:        'Ticket::Article',
-        o_id:          article.id,
-        data:          'content_file1_normally_should_be_an_pdf',
-        filename:      'Rechnung_RE-2018-200.pdf',
-        preferences:   {
-          'Content-Type'        => 'application/octet-stream; name="Rechnung_RE-2018-200.pdf"',
-          'Mime-Type'           => 'application/octet-stream',
-          'Content-ID'          => '8AB0BEC88984EE4EBEF643C79C8E0346@zammad.example.com',
-          'Content-Description' => 'Rechnung_RE-2018-200.pdf',
-          'Content-Disposition' => 'attachment',
-        },
-        created_by_id: 1,
-      )
+      create(:store,
+             object:      'Ticket::Article',
+             o_id:        article.id,
+             data:        'content_file1_normally_should_be_an_image',
+             filename:    'some_file1.jpg',
+             preferences: {
+               'Content-Type'        => 'image/jpeg',
+               'Mime-Type'           => 'image/jpeg',
+               'Content-ID'          => '15.274327094.140938@zammad.example.com',
+               'Content-Disposition' => 'inline',
+             })
+      create(:store,
+             object:      'Ticket::Article',
+             o_id:        article.id,
+             data:        'content_file1_normally_should_be_an_image',
+             filename:    'some_file2.jpg',
+             preferences: {
+               'Content-Type'        => 'image/jpeg',
+               'Mime-Type'           => 'image/jpeg',
+               'Content-ID'          => '15.274327094.140938.2@zammad.example.com',
+               'Content-Disposition' => 'inline',
+             })
+      create(:store,
+             object:      'Ticket::Article',
+             o_id:        article.id,
+             data:        'content_file1_normally_should_be_an_pdf',
+             filename:    'Rechnung_RE-2018-200.pdf',
+             preferences: {
+               'Content-Type'        => 'application/octet-stream; name="Rechnung_RE-2018-200.pdf"',
+               'Mime-Type'           => 'application/octet-stream',
+               'Content-ID'          => '8AB0BEC88984EE4EBEF643C79C8E0346@zammad.example.com',
+               'Content-Description' => 'Rechnung_RE-2018-200.pdf',
+               'Content-Disposition' => 'attachment',
+             })
 
       authenticated_as(agent)
       get "/api/v1/ticket_split?ticket_id=#{ticket.id}&article_id=#{article.id}&form_id=new_form_id123", params: {}, as: :json
@@ -2022,7 +2015,7 @@ RSpec.describe 'Ticket', type: :request do
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['result']).to eq('failed')
-      expect(json_response['message']).to eq('No such master ticket number!')
+      expect(json_response['message']).to eq('Could not find target ticket number!')
 
       put "/api/v1/ticket_merge/#{ticket3.id}/#{ticket1.number}", params: {}, as: :json
       expect(response).to have_http_status(:forbidden)
@@ -2040,7 +2033,7 @@ RSpec.describe 'Ticket', type: :request do
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['result']).to eq('success')
-      expect(json_response['master_ticket']['id']).to eq(ticket2.id)
+      expect(json_response['target_ticket']['id']).to eq(ticket2.id)
     end
 
     it 'does ticket merge - change permission (07.02)' do
@@ -2070,11 +2063,11 @@ RSpec.describe 'Ticket', type: :request do
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['result']).to eq('success')
-      expect(json_response['master_ticket']['id']).to eq(ticket2.id)
+      expect(json_response['target_ticket']['id']).to eq(ticket2.id)
     end
 
     it 'does ticket search sorted (08.01)' do
-      title = "ticket pagination #{rand(999_999_999)}"
+      title = "ticket pagination #{SecureRandom.uuid}"
 
       ticket1 = create(
         :ticket,
@@ -2145,7 +2138,7 @@ RSpec.describe 'Ticket', type: :request do
       expect(json_response['tickets']).to eq([ticket2.id, ticket1.id])
     end
 
-    it 'does ticket history ' do
+    it 'does ticket history' do
       ticket1 = create(
         :ticket,
         title:       'some title',

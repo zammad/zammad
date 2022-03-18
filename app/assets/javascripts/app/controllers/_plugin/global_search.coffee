@@ -27,7 +27,7 @@ class App.GlobalSearchWidget extends App.Controller
 
       $('#global-search').val(currentValue)
       delay = ->
-        $('#global-search').focus()
+        $('#global-search').trigger('focus')
       App.Delay.set(delay, 20, 'global-search-delay')
     )
 

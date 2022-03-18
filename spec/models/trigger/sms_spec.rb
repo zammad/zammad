@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -6,7 +6,7 @@ RSpec.describe Trigger do
 
   describe 'sms' do
     before do
-      Translation.fetch(locale)
+      Translation.sync_locale_from_po(locale)
       Setting.set('locale_default', locale)
       Setting.set('timezone_default', time_zone)
     end

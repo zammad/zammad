@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'net/http'
 require 'net/https'
@@ -361,7 +361,7 @@ returns
   end
 
   def self.set_headers(request, options)
-    defaults = { 'User-Agent' => 'Zammad User Agent' }
+    defaults = { 'User-Agent' => __('Zammad User Agent') }
     headers  = defaults.merge(options.fetch(:headers, {}))
 
     headers.each do |header, value|
@@ -471,7 +471,7 @@ returns
         header:  response.each_header.to_h,
       )
     when Net::HTTPRedirection
-      raise 'Too many redirections for the original URL, halting.' if count <= 0
+      raise __('Too many redirections for the original URL, halting.') if count <= 0
 
       url = response['location']
       return get(url, params, options, count - 1)

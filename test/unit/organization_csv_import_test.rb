@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'test_helper'
 
@@ -148,7 +148,7 @@ class OrganizationCsvImportTest < ActiveSupport::TestCase
   test 'simple import with members' do
     UserInfo.current_user_id = 1
 
-    name = rand(999_999_999)
+    name = SecureRandom.uuid
     customer1 = User.create_or_update(
       login:     "customer1-members#{name}@example.com",
       firstname: 'Member',

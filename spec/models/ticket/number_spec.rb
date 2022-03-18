@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -12,7 +12,7 @@ RSpec.describe Ticket::Number do
 
     it 'defers to subclass specified in "ticket_number" setting' do
       expect(Ticket::Number::Foo).to receive(:generate)
-      expect(described_class.generate).to be(nil)
+      expect(described_class.generate).to be_nil
     end
   end
 
@@ -21,7 +21,7 @@ RSpec.describe Ticket::Number do
 
     it 'defers to subclass specified in "ticket_number" setting' do
       expect(Ticket::Number::Foo).to receive(:check).with('foo')
-      expect(described_class.check('foo')).to be(nil)
+      expect(described_class.check('foo')).to be_nil
     end
   end
 

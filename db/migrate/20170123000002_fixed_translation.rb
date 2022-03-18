@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class FixedTranslation < ActiveRecord::Migration[4.2]
   def up
@@ -403,7 +403,7 @@ class FixedTranslation < ActiveRecord::Migration[4.2]
     ]
 
     settings_update.each do |setting|
-      fetched_setting = Setting.find_by(name: setting['name'] )
+      fetched_setting = Setting.find_by(name: setting['name'])
       next if !fetched_setting
 
       if setting['title']

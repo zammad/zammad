@@ -1,12 +1,11 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 # Ensures pending time is always zero-seconds.
 module Ticket::ResetsPendingTimeSeconds
   extend ActiveSupport::Concern
 
   included do
-    before_create :ticket_reset_pending_time_seconds
-    before_update :ticket_reset_pending_time_seconds
+    before_save :ticket_reset_pending_time_seconds
   end
 
   private

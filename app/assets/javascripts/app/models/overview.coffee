@@ -3,17 +3,17 @@ class App.Overview extends App.Model
   @extend Spine.Model.Ajax
   @url: @apiPath + '/overviews'
   @configure_attributes = [
-    { name: 'name',       display: 'Name',                tag: 'input',    type: 'text', limit: 100, 'null': false },
-    { name: 'link',       display: 'Link',                readonly: 1 },
-    { name: 'role_ids',   display: 'Available for the following roles',    tag: 'column_select', multiple: true, null: false, relation: 'Role', translate: true },
-    { name: 'user_ids',   display: 'Restrict to only the following users', tag: 'column_select', multiple: true, null: true,  relation: 'User', sortBy: 'firstname' },
-    { name: 'organization_shared', display: 'Only available for Users with shared Organization', tag: 'select', options: { true: 'yes', false: 'no' }, default: false, null: true },
-    { name: 'out_of_office', display: 'Only available for Users which are replacements for other users.', tag: 'select', options: { true: 'yes', false: 'no' }, default: false, null: true },
-    { name: 'condition',  display: 'Conditions for shown Tickets', tag: 'ticket_selector', null: false, out_of_office: true },
-    { name: 'prio',       display: 'Prio',                readonly: 1 },
+    { name: 'name',       display: __('Name'),                tag: 'input',    type: 'text', limit: 100, 'null': false },
+    { name: 'link',       display: __('Link'),                readonly: 1 },
+    { name: 'role_ids',   display: __('Available for the following roles'),    tag: 'column_select', multiple: true, null: false, relation: 'Role', translate: true },
+    { name: 'user_ids',   display: __('Restrict to only the following users'), tag: 'column_select', multiple: true, null: true,  relation: 'User', sortBy: 'firstname' },
+    { name: 'organization_shared', display: __('Only available for Users with shared Organizations'), tag: 'select', options: { true: 'yes', false: 'no' }, default: false, null: true },
+    { name: 'out_of_office', display: __('Only available for Users which are replacements for other users.'), tag: 'select', options: { true: 'yes', false: 'no' }, default: false, null: true },
+    { name: 'condition',  display: __('Conditions for shown Tickets'), tag: 'ticket_selector', null: false, out_of_office: true },
+    { name: 'prio',       display: __('Prio'),                readonly: 1 },
     {
       name:    'view::s'
-      display: 'Attributes'
+      display: __('Attributes')
       tag:     'checkboxTicketAttributes'
       default: ['number', 'title', 'state', 'created_at']
       null:    false
@@ -21,7 +21,7 @@ class App.Overview extends App.Model
     },
     {
       name:    'order::by',
-      display: 'Order',
+      display: __('Order'),
       tag:     'selectTicketAttributes'
       default: 'created_at'
       null:    false
@@ -29,7 +29,7 @@ class App.Overview extends App.Model
     },
     {
       name:    'order::direction'
-      display: 'Order by Direction'
+      display: __('Order by Direction')
       tag:     'select'
       default: 'down'
       null:    false
@@ -40,7 +40,7 @@ class App.Overview extends App.Model
     },
     {
       name:    'group_by'
-      display: 'Group by'
+      display: __('Group by')
       tag:     'select'
       default: ''
       null:    true
@@ -55,7 +55,7 @@ class App.Overview extends App.Model
     },
     {
       name:    'group_direction'
-      display: 'Group by Direction'
+      display: __('Group by Direction')
       tag:     'select'
       default: 'down'
       null:    false
@@ -64,11 +64,11 @@ class App.Overview extends App.Model
         ASC:   'up'
         DESC:  'down'
     },
-    { name: 'active',         display: 'Active',      tag: 'active', default: true },
-    { name: 'created_by_id',  display: 'Created by',  relation: 'User', readonly: 1 },
-    { name: 'created_at',     display: 'Created',     tag: 'datetime', readonly: 1 },
-    { name: 'updated_by_id',  display: 'Updated by',  relation: 'User', readonly: 1 },
-    { name: 'updated_at',     display: 'Updated',     tag: 'datetime', readonly: 1 },
+    { name: 'active',         display: __('Active'),      tag: 'active', default: true },
+    { name: 'created_by_id',  display: __('Created by'),  relation: 'User', readonly: 1 },
+    { name: 'created_at',     display: __('Created'),     tag: 'datetime', readonly: 1 },
+    { name: 'updated_by_id',  display: __('Updated by'),  relation: 'User', readonly: 1 },
+    { name: 'updated_at',     display: __('Updated'),     tag: 'datetime', readonly: 1 },
   ]
   @configure_delete = true
   @configure_clone = true
@@ -78,11 +78,11 @@ class App.Overview extends App.Model
     'role_ids',
   ]
 
-  @description = '''
-You can create **overviews** for your agents and your customers. These could for instance serve as a sort of work list for items for which your agents would work.
+  @description = __('''
+You can create **overviews** for your agents and your customers. These have many purposes, such as serving as a to-do list for your agents.
 
 You can also create overviews and limit them to specific agents or to groups of agents.
-'''
+''')
 
   uiUrl: ->
     "#ticket/view/#{@link}"

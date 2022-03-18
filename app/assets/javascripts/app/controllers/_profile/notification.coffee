@@ -1,6 +1,6 @@
 class ProfileNotification extends App.ControllerSubContent
   requiredPermission: 'user_preferences.notifications+ticket.agent'
-  header: 'Notifications'
+  header: __('Notifications')
   events:
     'submit form': 'update'
     'change .js-notificationSound': 'previewSound'
@@ -52,13 +52,13 @@ class ProfileNotification extends App.ControllerSubContent
 
     matrix =
       create:
-        name: 'New Ticket'
+        name: __('New Ticket')
       update:
-        name: 'Ticket update'
+        name: __('Ticket update')
       reminder_reached:
-        name: 'Ticket reminder reached'
+        name: __('Ticket reminder reached')
       escalation:
-        name: 'Ticket escalation'
+        name: __('Ticket escalation')
 
     config =
       group_ids: []
@@ -176,7 +176,7 @@ class ProfileNotification extends App.ControllerSubContent
         App.Event.trigger('ui:rerender')
         @notify(
           type: 'success'
-          msg:  App.i18n.translateContent('Successful!')
+          msg:  App.i18n.translateContent('Update successful.')
         )
       ,
       true
@@ -196,4 +196,4 @@ class ProfileNotification extends App.ControllerSubContent
     return if !params.notification_sound.file
     App.OnlineNotification.play(params.notification_sound.file)
 
-App.Config.set('Notifications', { prio: 2600, name: 'Notifications', parent: '#profile', target: '#profile/notifications', permission: ['user_preferences.notifications+ticket.agent'], controller: ProfileNotification }, 'NavBarProfile')
+App.Config.set('Notifications', { prio: 2600, name: __('Notifications'), parent: '#profile', target: '#profile/notifications', permission: ['user_preferences.notifications+ticket.agent'], controller: ProfileNotification }, 'NavBarProfile')

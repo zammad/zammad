@@ -1,9 +1,9 @@
 class Ldap extends App.ControllerIntegrationBase
   featureIntegration: 'ldap_integration'
-  featureName: 'LDAP'
+  featureName: __('LDAP')
   featureConfig: 'ldap_config'
   description: [
-    ['This service enables Zammad to connect with your LDAP server.']
+    [__('This service enables Zammad to connect with your LDAP server.')]
   ]
   events:
     'change .js-switch input': 'switch'
@@ -315,7 +315,7 @@ class ConnectionWizard extends App.ControllerWizardModal
         if !_.isEmpty(detailsRaw)
           details = JSON.parse(detailsRaw)
         @showSlide('js-discover')
-        @showAlert('js-discover', details.error || 'Unable to perform backend.')
+        @showAlert('js-discover', details.error || __('Server operation failed.'))
     )
 
 
@@ -345,12 +345,12 @@ class ConnectionWizard extends App.ControllerWizardModal
 
         if _.isEmpty(data.user_attributes)
           @showSlide('js-bind')
-          @showAlert('js-bind', 'Unable to retrive user information, please check your bind user permissions.')
+          @showAlert('js-bind', __('User information could not be retrieved, please check your bind user permissions.'))
           return
 
         if _.isEmpty(data.groups)
           @showSlide('js-bind')
-          @showAlert('js-bind', 'Unable to retrive group information, please check your bind user permissions.')
+          @showAlert('js-bind', __('Group information could not be retrieved, please check your bind user permissions.'))
           return
 
         # update config if successful
@@ -384,7 +384,7 @@ class ConnectionWizard extends App.ControllerWizardModal
         if !_.isEmpty(detailsRaw)
           details = JSON.parse(detailsRaw)
         @showSlide('js-bind')
-        @showAlert('js-bind', details.error || 'Unable to perform backend.')
+        @showAlert('js-bind', details.error || __('Server operation failed.'))
     )
 
   mappingShow: (alreadyShown) =>
@@ -479,7 +479,7 @@ class ConnectionWizard extends App.ControllerWizardModal
 
   buildRowGroupRole: (source, dest) =>
     el = $(App.view('integration/ldap_group_role_row')())
-    el.find('.js-ldapList').html(@createSelection('source', @wizardConfig.wizardData.backend_groups, source))
+    el.find('.js-ldapList').html(@createAutocompletion('source', @wizardConfig.wizardData.backend_groups, source))
     el.find('.js-roleList').html(@createSelection('dest', @wizardConfig.wizardData.roles, dest))
     el
 
@@ -495,6 +495,34 @@ class ConnectionWizard extends App.ControllerWizardModal
       unknown: unknown
       class: 'form-control--small'
     )
+
+  # LDAP with many groups (<5k) and group role relation (>50) will crash in frontend #3994
+  createAutocompletion: (name, options, selected) ->
+    return App.UiElement.autocompletion.render(
+      id: "#{name}#{Math.floor( Math.random() * 999999 ).toString()}"
+      name: name
+      multiple: false
+      null: false
+      nulloption: false
+      class: 'form-control--small'
+      minLengt: -1 # show values without any value
+      value: selected
+      source: (request, response) ->
+        data    = Object.keys(options)
+        counter = 0
+        total   = 200
+        result  = []
+        for entry in data
+          continue if !entry.includes(request.term)
+          break if counter >= total
+          result.push(
+            id: entry
+            label: entry
+            value: entry
+          )
+          counter++
+        response(result)
+    , "#{name}_autocompletion_value_shown": selected)
 
   removeRow: (e) ->
     e.preventDefault()
@@ -572,9 +600,9 @@ class ConnectionWizard extends App.ControllerWizardModal
 App.Config.set(
   'IntegrationLDAP'
   {
-    name: 'LDAP'
+    name: __('LDAP')
     target: '#system/integration/ldap'
-    description: 'LDAP integration for user management.'
+    description: __('LDAP integration for user management.')
     controller: Ldap
     state: State
     permission: ['admin.integration.ldap']

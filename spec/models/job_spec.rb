@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 require 'models/application_model_examples'
@@ -347,196 +347,18 @@ RSpec.describe Job, type: :model do
     end
 
     describe '#in_timeplan?' do
-      subject(:job) { create(:job, :never_on) }
-
-      context 'when the current day, hour, and minute all match true values in #timeplan' do
-        context 'for Symbol/Integer keys' do
-          before do
-            job.update(
-              timeplan: {
-                days:    job.timeplan[:days]
-                            .transform_keys(&:to_sym)
-                            .merge(Time.current.strftime('%a').to_sym => true),
-                hours:   job.timeplan[:hours]
-                            .transform_keys(&:to_i)
-                            .merge(Time.current.hour => true),
-                minutes: job.timeplan[:minutes]
-                            .transform_keys(&:to_i)
-                            .merge(Time.current.min.floor(-1) => true),
-              }
-            )
-          end
-
-          it 'returns true' do
-            expect(job.in_timeplan?).to be(true)
-          end
-        end
-
-        context 'for String keys' do
-          before do
-            job.update(
-              timeplan: {
-                days:    job.timeplan[:days]
-                            .transform_keys(&:to_s)
-                            .merge(Time.current.strftime('%a') => true),
-                hours:   job.timeplan[:hours]
-                            .transform_keys(&:to_s)
-                            .merge(Time.current.hour.to_s => true),
-                minutes: job.timeplan[:minutes]
-                            .transform_keys(&:to_s)
-                            .merge(Time.current.min.floor(-1).to_s => true),
-              }
-            )
-          end
-
-          it 'returns true' do
-            expect(job.in_timeplan?).to be(true)
-          end
-        end
+      before do
+        job.timeplan = { days: { Mon: true }, hours: { 0 => true }, minutes: { 0 => true } }
       end
 
-      context 'when the current day does not match a true value in #timeplan' do
-        context 'for Symbol/Integer keys' do
-          before do
-            job.update(
-              timeplan: {
-                days:    job.timeplan[:days]
-                            .transform_keys(&:to_sym)
-                            .transform_values { true }
-                            .merge(Time.current.strftime('%a').to_sym => false),
-                hours:   job.timeplan[:hours]
-                            .transform_keys(&:to_i)
-                            .merge(Time.current.hour => true),
-                minutes: job.timeplan[:minutes]
-                            .transform_keys(&:to_i)
-                            .merge(Time.current.min.floor(-1) => true),
-              }
-            )
-          end
+      it 'checks in selected time zone' do
+        Setting.set 'timezone_default', 'Europe/Vilnius'
 
-          it 'returns false' do
-            expect(job.in_timeplan?).to be(false)
-          end
-        end
-
-        context 'for String keys' do
-          before do
-            job.update(
-              timeplan: {
-                days:    job.timeplan[:days]
-                            .transform_keys(&:to_s)
-                            .transform_values { true }
-                            .merge(Time.current.strftime('%a') => false),
-                hours:   job.timeplan[:hours]
-                            .transform_keys(&:to_s)
-                            .merge(Time.current.hour.to_s => true),
-                minutes: job.timeplan[:minutes]
-                            .transform_keys(&:to_s)
-                            .merge(Time.current.min.floor(-1).to_s => true),
-              }
-            )
-          end
-
-          it 'returns false' do
-            expect(job.in_timeplan?).to be(false)
-          end
-        end
+        expect(job).to be_in_timeplan Time.zone.parse('2020-12-27 22:00')
       end
 
-      context 'when the current hour does not match a true value in #timeplan' do
-        context 'for Symbol/Integer keys' do
-          before do
-            job.update(
-              timeplan: {
-                days:    job.timeplan[:days]
-                            .transform_keys(&:to_sym)
-                            .merge(Time.current.strftime('%a').to_sym => true),
-                hours:   job.timeplan[:hours]
-                            .transform_keys(&:to_i)
-                            .transform_values { true }
-                            .merge(Time.current.hour => false),
-                minutes: job.timeplan[:minutes]
-                            .transform_keys(&:to_i)
-                            .merge(Time.current.min.floor(-1) => true),
-              }
-            )
-          end
-
-          it 'returns false' do
-            expect(job.in_timeplan?).to be(false)
-          end
-        end
-
-        context 'for String keys' do
-          before do
-            job.update(
-              timeplan: {
-                days:    job.timeplan[:days]
-                            .transform_keys(&:to_s)
-                            .merge(Time.current.strftime('%a') => true),
-                hours:   job.timeplan[:hours]
-                            .transform_keys(&:to_s)
-                            .transform_values { true }
-                            .merge(Time.current.hour.to_s => false),
-                minutes: job.timeplan[:minutes]
-                            .transform_keys(&:to_s)
-                            .merge(Time.current.min.floor(-1).to_s => true),
-              }
-            )
-          end
-
-          it 'returns false' do
-            expect(job.in_timeplan?).to be(false)
-          end
-        end
-      end
-
-      context 'when the current minute does not match a true value in #timeplan' do
-        context 'for Symbol/Integer keys' do
-          before do
-            job.update(
-              timeplan: {
-                days:    job.timeplan[:days]
-                            .transform_keys(&:to_sym)
-                            .merge(Time.current.strftime('%a').to_sym => true),
-                hours:   job.timeplan[:hours]
-                            .transform_keys(&:to_i)
-                            .merge(Time.current.hour => true),
-                minutes: job.timeplan[:minutes]
-                            .transform_keys(&:to_i)
-                            .transform_values { true }
-                            .merge(Time.current.min.floor(-1) => false),
-              }
-            )
-          end
-
-          it 'returns false' do
-            expect(job.in_timeplan?).to be(false)
-          end
-        end
-
-        context 'for String keys' do
-          before do
-            job.update(
-              timeplan: {
-                days:    job.timeplan[:days]
-                            .transform_keys(&:to_s)
-                            .merge(Time.current.strftime('%a') => true),
-                hours:   job.timeplan[:hours]
-                            .transform_keys(&:to_s)
-                            .merge(Time.current.hour.to_s => true),
-                minutes: job.timeplan[:minutes]
-                            .transform_keys(&:to_s)
-                            .transform_values { true }
-                            .merge(Time.current.min.floor(-1).to_s => false),
-              }
-            )
-          end
-
-          it 'returns false' do
-            expect(job.in_timeplan?).to be(false)
-          end
-        end
+      it 'checks in UTC' do
+        expect(job).to be_in_timeplan Time.zone.parse('2020-12-28 00:00')
       end
     end
   end
@@ -645,6 +467,24 @@ RSpec.describe Job, type: :model do
           end
         end
       end
+
+      context 'when updating #next_run_at' do
+        before do
+          travel_to Time.zone.parse('2020-12-27 00:00')
+
+          job.timeplan = { days: { Mon: true }, hours: { 0 => true }, minutes: { 0 => true } }
+        end
+
+        it 'sets #next_run_at time in selected time zone' do
+          Setting.set 'timezone_default', 'Europe/Vilnius'
+
+          expect { job.save }.to change(job, :next_run_at).to(Time.zone.parse('2020-12-27 22:00'))
+        end
+
+        it 'sets #next_run_at time in UTC' do
+          expect { job.save }.to change(job, :next_run_at).to(Time.zone.parse('2020-12-28 00:00'))
+        end
+      end
     end
 
     describe '#perform' do
@@ -677,6 +517,102 @@ RSpec.describe Job, type: :model do
           it 'fails if an empty "recipient" is given' do
             expect { create(:job, perform: perform) }.to raise_error(Exceptions::UnprocessableEntity)
           end
+        end
+      end
+    end
+  end
+
+  # when running a very large job, tickets may change during the job
+  # if tickets are fetched once, their action may be performed later on
+  # when it no longer matches the conditions
+  # https://github.com/zammad/zammad/issues/3329
+  context 'job re-checks conditions' do
+    let(:job)    { create(:job, condition: condition, perform: perform) }
+    let(:ticket) { create(:ticket, title: initial_title) }
+    let(:initial_title) { 'initial 3329'  }
+    let(:changed_title) { 'performed 3329' }
+
+    let(:condition) do
+      { 'ticket.title' => { 'value' => initial_title, 'operator' => 'is' } }
+    end
+
+    let(:perform) do
+      { 'ticket.title' => { 'value'=> changed_title } }
+    end
+
+    it 'condition matches ticket' do
+      ticket
+      expect(job.send(:start_job, Time.zone.now, true)).to eq [ticket.id]
+    end
+
+    it 'action is performed' do
+      ticket
+
+      ticket_ids = job.send(:start_job, Time.zone.now, true)
+      job.send(:run_slice, ticket_ids)
+
+      expect(ticket.reload.title).to eq changed_title
+    end
+
+    it 'checks conditions' do
+      ticket
+
+      ticket_ids = job.send(:start_job, Time.zone.now, true)
+
+      ticket.update! title: 'another title'
+
+      job.send(:run_slice, ticket_ids)
+
+      expect(ticket.reload.title).not_to eq changed_title
+    end
+  end
+
+  describe 'Scheduler ignores "disable notifications == no" #3684', sends_notification_emails: true do
+    let!(:group) { create(:group) }
+    let!(:agent) { create(:agent, groups: [group]) }
+    let!(:ticket) { create(:ticket, group: group, owner: agent) }
+    let(:perform) do
+      { 'article.note' => { 'body' => 'ccc', 'internal' => 'true', 'subject' => 'ccc' }, 'ticket.state_id' => { 'value' => 4 } }
+    end
+
+    context 'with disable_notification true' do
+      let!(:notify_job) { create(:job, :always_on) }
+
+      it 'does modify the ticket' do
+        expect { notify_job.run(true) }.to change { ticket.reload.state }
+      end
+
+      it 'does not send a notification to the owner of the ticket' do # rubocop:disable RSpec/ExampleLength
+        check_notification do
+          notify_job.run(true)
+          Scheduler.worker(true)
+
+          not_sent(
+            template: 'ticket_update',
+            user:     agent,
+            objects:  hash_including({ article: nil })
+          )
+        end
+      end
+    end
+
+    context 'with disable_notification false' do
+      let!(:notify_job) { create(:job, :always_on, disable_notification: false, perform: perform) }
+
+      it 'does modify the ticket' do
+        expect { notify_job.run(true) }.to change { ticket.reload.state }
+      end
+
+      it 'does send a notification to the owner of the ticket with trigger note in notification body' do # rubocop:disable RSpec/ExampleLength
+        check_notification do
+          notify_job.run(true)
+          Scheduler.worker(true)
+
+          sent(
+            template: 'ticket_update',
+            user:     agent,
+            objects:  hash_including({ article: ticket.reload.articles.first })
+          )
         end
       end
     end

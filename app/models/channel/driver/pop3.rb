@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'net/pop'
 
@@ -45,25 +45,23 @@ returns
 =end
 
   def fetch(options, channel, check_type = '', verify_string = '')
-    ssl  = true
-    port = 995
-    if options.key?(:ssl) && options[:ssl] == false
-      ssl  = false
-      port = 110
+    ssl = true
+    if options[:ssl] == 'off'
+      ssl = false
     end
-    if options.key?(:port) && options[:port].present?
-      port = options[:port]
 
-      # disable ssl for non ssl ports
-      if port == 110 && !options.key?(:ssl)
-        ssl = false
-      end
-    end
+    port = if options.key?(:port) && options[:port].present?
+             options[:port].to_i
+           elsif ssl == true
+             995
+           else
+             110
+           end
 
     Rails.logger.info "fetching pop3 (#{options[:host]}/#{options[:user]} port=#{port},ssl=#{ssl})"
 
     @pop = ::Net::POP3.new(options[:host], port)
-    #@pop.set_debug_output $stderr
+    # @pop.set_debug_output $stderr
 
     # on check, reduce open_timeout to have faster probing
     @pop.open_timeout = 16
@@ -152,7 +150,7 @@ returns
       if mail.match?(%r{(X-Zammad-Ignore: true|X-Zammad-Verify: true)}) && mail =~ %r{X-Zammad-Verify-Time:\s(.+?)\s}
         begin
           verify_time = Time.zone.parse($1)
-          if verify_time > Time.zone.now - 30.minutes
+          if verify_time > 30.minutes.ago
             info = "  - ignore message #{count}/#{count_all} - because it's a verify message"
             Rails.logger.info info
             next

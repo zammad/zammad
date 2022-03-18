@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class ImportFreshdeskController < ApplicationController
 
@@ -9,7 +9,7 @@ class ImportFreshdeskController < ApplicationController
     if params[:url].blank? || params[:url] !~ %r{^(http|https)://.+?$}
       render json: {
         result:  'invalid',
-        message: 'Invalid URL!',
+        message: __('Invalid URL!'),
       }
       return
     end
@@ -17,7 +17,7 @@ class ImportFreshdeskController < ApplicationController
     endpoint = "#{params[:url]}/api/v2"
     endpoint.gsub!(%r{([^:])//+}, '\\1/')
 
-    response = UserAgent.request("#{endpoint}/contacts")
+    response = UserAgent.request("#{endpoint}/contacts", verify_ssl: true)
 
     if response.header.nil? || !response.header['x-freshdesk-api-version']
       render json: {
@@ -43,22 +43,35 @@ class ImportFreshdeskController < ApplicationController
 
       render json: {
         result:        'invalid',
-        message_human: 'Incomplete credentials',
+        message_human: __('Incomplete credentials'),
       }
       return
     end
 
     Setting.set('import_freshdesk_endpoint_key', params[:token])
 
-    result = Sequencer.process('Import::Freshdesk::ConnectionTest')
+    connection_result = Sequencer.process('Import::Freshdesk::ConnectionTest')
 
-    if !result[:connected]
+    if !connection_result[:connected]
 
       Setting.set('import_freshdesk_endpoint_key', nil)
 
       render json: {
         result:        'invalid',
-        message_human: 'Invalid credentials!',
+        message_human: __('Invalid credentials!'),
+      }
+      return
+    end
+
+    permission_result = Sequencer.process('Import::Freshdesk::PermissionCheck')
+
+    if !permission_result[:permission_present]
+
+      Setting.set('import_freshdesk_endpoint_key', nil)
+
+      render json: {
+        result:        'invalid',
+        message_human: __('Missing administrator permission!'),
       }
       return
     end
@@ -116,10 +129,10 @@ class ImportFreshdeskController < ApplicationController
 
   def url_check_human_error_message(error)
     translation_map = {
-      'No such file'                                              => 'Hostname not found!',
-      'getaddrinfo: nodename nor servname provided, or not known' => 'Hostname not found!',
-      'No route to host'                                          => 'No route to host!',
-      'Connection refused'                                        => 'Connection refused!',
+      'No such file'                                              => __('Hostname not found!'),
+      'getaddrinfo: nodename nor servname provided, or not known' => __('Hostname not found!'),
+      'No route to host'                                          => __('No route to host!'),
+      'Connection refused'                                        => __('Connection refused!'),
     }
 
     message_human = ''

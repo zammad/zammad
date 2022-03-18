@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 FactoryBot.define do
   factory :'report/profile', aliases: %i[report_profile] do
@@ -6,5 +6,20 @@ FactoryBot.define do
     active { true }
     created_by_id   { 1 }
     updated_by_id   { 1 }
+
+    trait :condition_created_at do
+      transient do
+        ticket_created_at { nil }
+      end
+
+      condition do
+        {
+          'ticket.created_at' => {
+            operator: 'before (absolute)',
+            value:    ticket_created_at.iso8601
+          }
+        }
+      end
+    end
   end
 end

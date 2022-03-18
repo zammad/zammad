@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -77,7 +77,7 @@ RSpec.describe Ticket::Number::Date do
         end
 
         it 'returns nil' do
-          expect(described_class.check(check_query)).to be(nil)
+          expect(described_class.check(check_query)).to be_nil
         end
 
         context 'and "ticket_number_ignore_system_id" is true' do

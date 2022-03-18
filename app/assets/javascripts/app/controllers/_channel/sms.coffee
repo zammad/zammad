@@ -1,13 +1,13 @@
 class ChannelSms extends App.ControllerTabs
   requiredPermission: 'admin.channel_sms'
-  header: 'SMS'
+  header: __('SMS')
   constructor: ->
     super
 
-    @title 'SMS', true
+    @title __('SMS'), true
     @tabs = [
       {
-        name:       'Accounts',
+        name:       __('Accounts'),
         target:     'c-account',
         controller: ChannelSmsAccountOverview,
       },
@@ -136,11 +136,11 @@ class ChannelSmsAccountOverview extends App.Controller
     )
 
 class ChannelSmsAccount extends App.ControllerModal
-  head: 'SMS Account'
+  head: __('SMS Account')
   buttonCancel: true
   centerButtons: [
     {
-      text: 'Test'
+      text: __('Test')
       className: 'js-test'
     }
   ]
@@ -164,13 +164,13 @@ class ChannelSmsAccount extends App.ControllerModal
       el: el.find('.js-channelAdapterSelector')
       model:
         configure_attributes: [
-          { name: 'options::adapter', display: 'Provider', tag: 'select', null: false, options: options, nulloption: true }
+          { name: 'options::adapter', display: __('Provider'), tag: 'select', null: false, options: options, nulloption: true }
         ]
         className: ''
       params: @channel
     )
     @renderAdapterOptions(@channel.options?.adapter, el)
-    el.find('[name="options::adapter"]').bind('change', (e) =>
+    el.find('[name="options::adapter"]').on('change', (e) =>
       @renderAdapterOptions(e.target.value, el)
     )
     el
@@ -198,7 +198,7 @@ class ChannelSmsAccount extends App.ControllerModal
       el: el.find('.js-channelWebhook')
       model:
         configure_attributes: [
-          { name: 'options::webhook', display: 'Webhook', tag: 'input', type: 'text', limit: 200, null: false, default: webhook, disabled: true },
+          { name: 'options::webhook', display: __('Webhook'), tag: 'input', type: 'text', limit: 200, null: false, default: webhook, disabled: true },
         ]
         className: ''
       params: @channel
@@ -262,7 +262,7 @@ class ChannelSmsAccount extends App.ControllerModal
       fail: (settings, details) ->
         ui.log 'errors', details
         ui.formEnable(e)
-        ui.showAlert(details.error_human || details.error || 'Unable to update object!')
+        ui.showAlert(details.error_human || details.error || __('The object could not be updated.'))
     )
 
   onTest: (e) ->
@@ -273,11 +273,11 @@ class ChannelSmsAccount extends App.ControllerModal
     )
 
 class ChannelSmsNotification extends App.ControllerModal
-  head: 'SMS Notification'
+  head: __('SMS Notification')
   buttonCancel: true
   centerButtons: [
     {
-      text: 'Test'
+      text: __('Test')
       className: 'js-test'
     }
   ]
@@ -303,13 +303,13 @@ class ChannelSmsNotification extends App.ControllerModal
       el: el.find('.js-channelAdapterSelector')
       model:
         configure_attributes: [
-          { name: 'options::adapter', display: 'Provider', tag: 'select', null: false, options: options, nulloption: true }
+          { name: 'options::adapter', display: __('Provider'), tag: 'select', null: false, options: options, nulloption: true }
         ]
         className: ''
       params: @channel
     )
     @renderAdapterOptions(@channel.options?.adapter, el)
-    el.find('[name="options::adapter"]').bind('change', (e) =>
+    el.find('[name="options::adapter"]').on('change', (e) =>
       @renderAdapterOptions(e.target.value, el)
     )
     el
@@ -376,7 +376,7 @@ class ChannelSmsNotification extends App.ControllerModal
       fail: (settings, details) ->
         ui.log 'errors', details
         ui.formEnable(e)
-        ui.showAlert(details.error_human || details.error || 'Unable to update object!')
+        ui.showAlert(details.error_human || details.error || __('The object could not be updated.'))
     )
 
   onTest: (e) ->
@@ -387,15 +387,15 @@ class ChannelSmsNotification extends App.ControllerModal
     )
 
 class TestModal extends App.ControllerModal
-  head: 'Test SMS provider'
+  head: __('Test SMS provider')
   buttonCancel: true
 
   content: ->
     form = new App.ControllerForm(
       model:
         configure_attributes: [
-          { name: 'recipient', display: 'Recipient', tag: 'input', null: false }
-          { name: 'message', display: 'Message', tag: 'input', null: false, default: 'Test message from Zammad' }
+          { name: 'recipient', display: __('Recipient'), tag: 'input', null: false }
+          { name: 'message', display: __('Message'), tag: 'input', null: false, default: __('Test message from Zammad') }
         ]
         className: ''
     )
@@ -435,8 +435,8 @@ class TestModal extends App.ControllerModal
         data = JSON.parse(xhr.responseText)
         @formEnable(@el)
         @el.find('.js-danger')
-          .text(@T(data.error || 'Unable to perform test'))
+          .text(@T(data.error || __('SMS test failed.')))
           .removeClass('hide')
     )
 
-App.Config.set('SMS', { prio: 3100, name: 'SMS', parent: '#channels', target: '#channels/sms', controller: ChannelSms, permission: ['admin.channel_sms'] }, 'NavBarAdmin')
+App.Config.set('SMS', { prio: 3100, name: __('SMS'), parent: '#channels', target: '#channels/sms', controller: ChannelSms, permission: ['admin.channel_sms'] }, 'NavBarAdmin')

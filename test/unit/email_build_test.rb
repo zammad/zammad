@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'test_helper'
 
@@ -188,7 +188,7 @@ class EmailBuildTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
 
-    store1 = Store.add(
+    store1 = Store.create!(
       object:        'Ticket::Article',
       o_id:          article1.id,
       data:          'content_file1_normally_should_be_an_ics_calendar_file',
@@ -337,8 +337,8 @@ text
     quoted_in_one_line = Channel::EmailBuild.recipient_line('Somebody | Some Org', 'some.body@example.com')
     assert_equal('"Somebody | Some Org" <some.body@example.com>', quoted_in_one_line)
 
-    quoted_in_one_line = Channel::EmailBuild.recipient_line('Test Master Agent via Support', 'some.body@example.com')
-    assert_equal('"Test Master Agent via Support" <some.body@example.com>', quoted_in_one_line)
+    quoted_in_one_line = Channel::EmailBuild.recipient_line('Test Admin Agent via Support', 'some.body@example.com')
+    assert_equal('"Test Admin Agent via Support" <some.body@example.com>', quoted_in_one_line)
 
   end
 
@@ -376,7 +376,7 @@ text
       > Email Content
     MSG_TEXT
 
-    store1 = Store.add(
+    store1 = Store.create!(
       object:        'Ticket::Article',
       o_id:          article1.id,
       data:          'Text Content',

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 require 'lib/import/import_job_backend_examples'
@@ -38,7 +38,7 @@ RSpec.describe Import::Base do
     it 'returns false by default' do
       import_job  = create(:import_job)
       instance    = described_class.new(import_job)
-      delayed_job = double()
+      delayed_job = double
 
       expect(instance.reschedule?(delayed_job)).to be false
     end

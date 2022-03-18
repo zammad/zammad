@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class NotificationFactory::Mailer
 
@@ -28,6 +28,9 @@ returns
     map = {
       'escalation_warning' => 'escalation'
     }
+
+    type = type.split('.').first # pick parent type of a subtype. Eg. update vs update.merged_into
+
     if map[type]
       type = map[type]
     end
@@ -321,7 +324,8 @@ returns
       locale:   data[:locale],
       timezone: data[:timezone],
       template: template[:subject],
-      escape:   false
+      escape:   false,
+      trusted:  true,
     ).render
 
     # strip off the extra newline at the end of the subject to avoid =0A suffixes (see #2726)
@@ -331,7 +335,8 @@ returns
       objects:  data[:objects],
       locale:   data[:locale],
       timezone: data[:timezone],
-      template: template[:body]
+      template: template[:body],
+      trusted:  true,
     ).render
 
     if !data[:raw]
@@ -345,7 +350,8 @@ returns
         objects:  data[:objects],
         locale:   data[:locale],
         timezone: data[:timezone],
-        template: application_template
+        template: application_template,
+        trusted:  true,
       ).render
     end
     {

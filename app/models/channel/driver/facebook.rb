@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Channel::Driver::Facebook
 
@@ -56,7 +56,7 @@ class Channel::Driver::Facebook
     # only fetch once in 5 minutes
     return true if !channel.preferences
     return true if !channel.preferences[:last_fetch]
-    return false if channel.preferences[:last_fetch] > Time.zone.now - 5.minutes
+    return false if channel.preferences[:last_fetch] > 5.minutes.ago
 
     true
   end

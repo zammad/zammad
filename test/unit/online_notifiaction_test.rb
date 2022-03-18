@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'test_helper'
 
@@ -344,7 +344,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       owner_id:      User.lookup(login: '-').id,
       title:         'Unit Test 4 (äöüß)!',
       state_id:      Ticket::State.lookup(name: 'new').id,
-      priority_id:   Ticket::Priority.lookup( name: '2 normal').id,
+      priority_id:   Ticket::Priority.lookup(name: '2 normal').id,
       updated_by_id: @agent_user1.id,
       created_by_id: @agent_user1.id,
     )
@@ -560,8 +560,8 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       user_id:       @agent_user1.id,
       created_by_id: 1,
       updated_by_id: 1,
-      created_at:    Time.zone.now - 10.months,
-      updated_at:    Time.zone.now - 10.months,
+      created_at:    10.months.ago,
+      updated_at:    10.months.ago,
     )
     online_notification2 = OnlineNotification.add(
       type:          'create',
@@ -571,8 +571,8 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       user_id:       @agent_user1.id,
       created_by_id: 1,
       updated_by_id: 1,
-      created_at:    Time.zone.now - 10.months,
-      updated_at:    Time.zone.now - 10.months,
+      created_at:    10.months.ago,
+      updated_at:    10.months.ago,
     )
     online_notification3 = OnlineNotification.add(
       type:          'create',
@@ -582,8 +582,8 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       user_id:       @agent_user1.id,
       created_by_id: 1,
       updated_by_id: 1,
-      created_at:    Time.zone.now - 2.days,
-      updated_at:    Time.zone.now - 2.days,
+      created_at:    2.days.ago,
+      updated_at:    2.days.ago,
     )
     online_notification4 = OnlineNotification.add(
       type:          'create',
@@ -593,8 +593,8 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       user_id:       @agent_user1.id,
       created_by_id: @agent_user1.id,
       updated_by_id: @agent_user1.id,
-      created_at:    Time.zone.now - 2.days,
-      updated_at:    Time.zone.now - 2.days,
+      created_at:    2.days.ago,
+      updated_at:    2.days.ago,
     )
     online_notification5 = OnlineNotification.add(
       type:          'create',
@@ -604,8 +604,8 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       user_id:       @agent_user1.id,
       created_by_id: @agent_user2.id,
       updated_by_id: @agent_user2.id,
-      created_at:    Time.zone.now - 2.days,
-      updated_at:    Time.zone.now - 2.days,
+      created_at:    2.days.ago,
+      updated_at:    2.days.ago,
     )
     online_notification6 = OnlineNotification.add(
       type:          'create',
@@ -615,8 +615,8 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       user_id:       @agent_user1.id,
       created_by_id: @agent_user1.id,
       updated_by_id: @agent_user1.id,
-      created_at:    Time.zone.now - 5.minutes,
-      updated_at:    Time.zone.now - 5.minutes,
+      created_at:    5.minutes.ago,
+      updated_at:    5.minutes.ago,
     )
     online_notification7 = OnlineNotification.add(
       type:          'create',
@@ -626,8 +626,8 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       user_id:       @agent_user1.id,
       created_by_id: @agent_user2.id,
       updated_by_id: @agent_user2.id,
-      created_at:    Time.zone.now - 5.minutes,
-      updated_at:    Time.zone.now - 5.minutes,
+      created_at:    5.minutes.ago,
+      updated_at:    5.minutes.ago,
     )
 
     OnlineNotification.cleanup
@@ -652,8 +652,8 @@ class OnlineNotificationTest < ActiveSupport::TestCase
         user_id:       @agent_user1.id,
         created_by_id: 1,
         updated_by_id: 1,
-        created_at:    Time.zone.now - 10.months,
-        updated_at:    Time.zone.now - 10.months,
+        created_at:    10.months.ago,
+        updated_at:    10.months.ago,
       )
     end
     assert_raises(ActiveRecord::RecordNotFound) do
@@ -665,8 +665,8 @@ class OnlineNotificationTest < ActiveSupport::TestCase
         user_id:       @agent_user1.id,
         created_by_id: 1,
         updated_by_id: 1,
-        created_at:    Time.zone.now - 10.months,
-        updated_at:    Time.zone.now - 10.months,
+        created_at:    10.months.ago,
+        updated_at:    10.months.ago,
       )
     end
   end

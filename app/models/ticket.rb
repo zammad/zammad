@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Ticket < ApplicationModel
   include CanBeImported
@@ -13,7 +13,7 @@ class Ticket < ApplicationModel
   include HasOnlineNotifications
   include HasKarmaActivityLog
   include HasLinks
-  include HasObjectManagerAttributesValidation
+  include HasObjectManagerAttributes
   include HasTaskbars
   include Ticket::CallsStatsTicketReopenLog
   include Ticket::EnqueuesUserTicketCounterJob
@@ -37,6 +37,9 @@ class Ticket < ApplicationModel
   include Ticket::SetsLastOwnerUpdateTime
 
   include HasTransactionDispatcher
+
+  # workflow checks should run after before_create and before_update callbacks
+  include ChecksCoreWorkflow
 
   validates :group_id, presence: true
 
@@ -68,7 +71,7 @@ class Ticket < ApplicationModel
                              :article_count,
                              :preferences
 
-  history_relation_object 'Ticket::Article', 'Mention'
+  history_relation_object 'Ticket::Article', 'Mention', 'Ticket::SharedDraftZoom'
 
   sanitized_html :note
 
@@ -78,6 +81,7 @@ class Ticket < ApplicationModel
   has_many      :ticket_time_accounting, class_name: 'Ticket::TimeAccounting', dependent: :destroy, inverse_of: :ticket
   has_many      :flags,                  class_name: 'Ticket::Flag', dependent: :destroy
   has_many      :mentions,               as: :mentionable, dependent: :destroy
+  has_one       :shared_draft,           class_name: 'Ticket::SharedDraftZoom', inverse_of: :ticket, dependent: :destroy
   belongs_to    :state,                  class_name: 'Ticket::State', optional: true
   belongs_to    :priority,               class_name: 'Ticket::Priority', optional: true
   belongs_to    :owner,                  class_name: 'User', optional: true
@@ -89,46 +93,7 @@ class Ticket < ApplicationModel
 
   association_attributes_ignored :flags, :mentions
 
-  self.inheritance_column = nil
-
   attr_accessor :callback_loop
-
-=begin
-
-get user access conditions
-
-  conditions = Ticket.access_condition( User.find(1) , 'full')
-
-returns
-
-  result = [user1, user2, ...]
-
-=end
-
-  def self.access_condition(user, access)
-    sql  = []
-    bind = []
-
-    if user.permissions?('ticket.agent')
-      sql.push('group_id IN (?)')
-      bind.push(user.group_ids_access(access))
-    end
-
-    if user.permissions?('ticket.customer')
-      if !user.organization || ( !user.organization.shared || user.organization.shared == false )
-        sql.push('tickets.customer_id = ?')
-        bind.push(user.id)
-      else
-        sql.push('(tickets.customer_id = ? OR tickets.organization_id = ?)')
-        bind.push(user.id)
-        bind.push(user.organization.id)
-      end
-    end
-
-    return if sql.blank?
-
-    [ sql.join(' OR ') ].concat(bind)
-  end
 
 =begin
 
@@ -222,7 +187,7 @@ returns
     result = []
 
     # fetch all escalated and soon to be escalating tickets
-    where('escalation_at <= ?', Time.zone.now + 15.minutes).find_each(batch_size: 500) do |ticket|
+    where('escalation_at <= ?', 15.minutes.from_now).find_each(batch_size: 500) do |ticket|
 
       article_id = nil
       article = Ticket::Article.last_customer_agent_article(ticket.id)
@@ -243,7 +208,7 @@ returns
         next
       end
 
-      # check if warning need to be sent
+      # check if warning needs to be sent
       TransactionJob.perform_now(
         object:     'Ticket',
         type:       'escalation_warning',
@@ -326,10 +291,10 @@ returns
     raise Exceptions::UnprocessableEntity, 'ticket already merged, no merge into merged ticket possible' if target_ticket.state.state_type.name == 'merged'
 
     # check different ticket ids
-    raise Exceptions::UnprocessableEntity, 'Can\'t merge ticket with it self!' if id == target_ticket.id
+    raise Exceptions::UnprocessableEntity, __('Can\'t merge ticket with itself!') if id == target_ticket.id
 
     # update articles
-    Transaction.execute do
+    Transaction.execute context: 'merge' do
 
       Ticket::Article.where(ticket_id: id).each(&:touch)
 
@@ -415,6 +380,26 @@ returns
 
       # touch new ticket (to broadcast change)
       target_ticket.touch # rubocop:disable Rails/SkipsModelValidations
+
+      EventBuffer.add('transaction', {
+                        object:     target_ticket.class.name,
+                        type:       'update.received_merge',
+                        data:       target_ticket,
+                        changes:    {},
+                        id:         target_ticket.id,
+                        user_id:    UserInfo.current_user_id,
+                        created_at: Time.zone.now,
+                      })
+
+      EventBuffer.add('transaction', {
+                        object:     self.class.name,
+                        type:       'update.merged_into',
+                        data:       self,
+                        changes:    {},
+                        id:         id,
+                        user_id:    UserInfo.current_user_id,
+                        created_at: Time.zone.now,
+                      })
     end
     true
   end
@@ -502,11 +487,13 @@ get count of tickets and tickets which match on selector
         return [ticket_count, tickets]
       end
 
-      access_condition = Ticket.access_condition(current_user, access)
-      ticket_count = Ticket.distinct.where(access_condition).where(query, *bind_params).joins(tables).count
-      tickets = Ticket.distinct.where(access_condition).where(query, *bind_params).joins(tables).limit(limit)
+      tickets = "TicketPolicy::#{access.camelize}Scope".constantize
+                                                       .new(current_user).resolve
+                                                       .distinct
+                                                       .where(query, *bind_params)
+                                                       .joins(tables)
 
-      return [ticket_count, tickets]
+      return [tickets.count, tickets.limit(limit)]
     rescue ActiveRecord::StatementInvalid => e
       Rails.logger.error e
       raise ActiveRecord::Rollback
@@ -658,12 +645,12 @@ condition example
 
       if selector['operator'].include?('in working time')
         next if attributes[1] != 'calendar_id'
-        raise 'Please enable execution_time feature to use it (currently only allowed for triggers and schedulers)' if !options[:execution_time]
+        raise __('Please enable execution_time feature to use it (currently only allowed for triggers and schedulers)') if !options[:execution_time]
 
         biz = Calendar.lookup(id: selector['value'])&.biz
         next if biz.blank?
 
-        if ( selector['operator'] == 'is in working time' && !biz.in_hours?(Time.zone.now) ) || ( selector['operator'] == 'is not in working time' && biz.in_hours?(Time.zone.now) )
+        if (selector['operator'] == 'is in working time' && !biz.in_hours?(Time.zone.now)) || (selector['operator'] == 'is not in working time' && biz.in_hours?(Time.zone.now))
           no_result = true
           break
         end
@@ -698,7 +685,6 @@ condition example
         end
         next
       end
-
       if selector['operator'] == 'is'
         if selector['pre_condition'] == 'not_set'
           if attributes[1].match?(%r{^(created_by|updated_by|owner|customer|user)_id})
@@ -793,65 +779,81 @@ condition example
         query += "#{attribute} NOT #{like} (?)"
         value = "%#{selector['value']}%"
         bind_params.push value
-      elsif selector['operator'] == 'contains all' && attributes[0] == 'ticket' && attributes[1] == 'tags'
-        query += "? = (
-                                              SELECT
-                                                COUNT(*)
-                                              FROM
-                                                tag_objects,
-                                                tag_items,
-                                                tags
-                                              WHERE
-                                                tickets.id = tags.o_id AND
-                                                tag_objects.id = tags.tag_object_id AND
-                                                tag_objects.name = 'Ticket' AND
-                                                tag_items.id = tags.tag_item_id AND
-                                                tag_items.name IN (?)
-                                            )"
-        bind_params.push selector['value'].count
-        bind_params.push selector['value']
-      elsif selector['operator'] == 'contains one' && attributes[0] == 'ticket' && attributes[1] == 'tags'
-        tables += ', tag_objects, tag_items, tags'
-        query += "
-          tickets.id = tags.o_id AND
-          tag_objects.id = tags.tag_object_id AND
-          tag_objects.name = 'Ticket' AND
-          tag_items.id = tags.tag_item_id AND
-          tag_items.name IN (?)"
+      elsif selector['operator'] == 'contains all'
+        if attributes[0] == 'ticket' && attributes[1] == 'tags'
+          query += "? = (
+                                                SELECT
+                                                  COUNT(*)
+                                                FROM
+                                                  tag_objects,
+                                                  tag_items,
+                                                  tags
+                                                WHERE
+                                                  tickets.id = tags.o_id AND
+                                                  tag_objects.id = tags.tag_object_id AND
+                                                  tag_objects.name = 'Ticket' AND
+                                                  tag_items.id = tags.tag_item_id AND
+                                                  tag_items.name IN (?)
+                                              )"
+          bind_params.push selector['value'].count
+          bind_params.push selector['value']
+        elsif Ticket.column_names.include?(attributes[1])
+          query += SqlHelper.new(object: Ticket).array_contains_all(attributes[1], selector['value'])
+        end
+      elsif selector['operator'] == 'contains one' && attributes[0] == 'ticket'
+        if attributes[1] == 'tags'
+          tables += ', tag_objects, tag_items, tags'
+          query += "
+            tickets.id = tags.o_id AND
+            tag_objects.id = tags.tag_object_id AND
+            tag_objects.name = 'Ticket' AND
+            tag_items.id = tags.tag_item_id AND
+            tag_items.name IN (?)"
 
-        bind_params.push selector['value']
-      elsif selector['operator'] == 'contains all not' && attributes[0] == 'ticket' && attributes[1] == 'tags'
-        query += "0 = (
-                        SELECT
-                          COUNT(*)
-                        FROM
-                          tag_objects,
-                          tag_items,
-                          tags
-                        WHERE
-                          tickets.id = tags.o_id AND
-                          tag_objects.id = tags.tag_object_id AND
-                          tag_objects.name = 'Ticket' AND
-                          tag_items.id = tags.tag_item_id AND
-                          tag_items.name IN (?)
-                      )"
-        bind_params.push selector['value']
-      elsif selector['operator'] == 'contains one not' && attributes[0] == 'ticket' && attributes[1] == 'tags'
-        query += "(
-                    SELECT
-                      COUNT(*)
-                    FROM
-                      tag_objects,
-                      tag_items,
-                      tags
-                    WHERE
-                      tickets.id = tags.o_id AND
-                      tag_objects.id = tags.tag_object_id AND
-                      tag_objects.name = 'Ticket' AND
-                      tag_items.id = tags.tag_item_id AND
-                      tag_items.name IN (?)
-                  ) BETWEEN 0 AND 0"
-        bind_params.push selector['value']
+          bind_params.push selector['value']
+        elsif Ticket.column_names.include?(attributes[1])
+          query += SqlHelper.new(object: Ticket).array_contains_one(attributes[1], selector['value'])
+        end
+      elsif selector['operator'] == 'contains all not' && attributes[0] == 'ticket'
+        if attributes[1] == 'tags'
+          query += "0 = (
+                          SELECT
+                            COUNT(*)
+                          FROM
+                            tag_objects,
+                            tag_items,
+                            tags
+                          WHERE
+                            tickets.id = tags.o_id AND
+                            tag_objects.id = tags.tag_object_id AND
+                            tag_objects.name = 'Ticket' AND
+                            tag_items.id = tags.tag_item_id AND
+                            tag_items.name IN (?)
+                        )"
+          bind_params.push selector['value']
+        elsif Ticket.column_names.include?(attributes[1])
+          query += SqlHelper.new(object: Ticket).array_contains_all(attributes[1], selector['value'], negated: true)
+        end
+      elsif selector['operator'] == 'contains one not' && attributes[0] == 'ticket'
+        if attributes[1] == 'tags'
+          query += "(
+                      SELECT
+                        COUNT(*)
+                      FROM
+                        tag_objects,
+                        tag_items,
+                        tags
+                      WHERE
+                        tickets.id = tags.o_id AND
+                        tag_objects.id = tags.tag_object_id AND
+                        tag_objects.name = 'Ticket' AND
+                        tag_items.id = tags.tag_item_id AND
+                        tag_items.name IN (?)
+                    ) BETWEEN 0 AND 0"
+          bind_params.push selector['value']
+        elsif Ticket.column_names.include?(attributes[1])
+          query += SqlHelper.new(object: Ticket).array_contains_one(attributes[1], selector['value'], negated: true)
+        end
       elsif selector['operator'] == 'before (absolute)'
         query += "#{attribute} <= ?"
         bind_params.push selector['value']
@@ -860,113 +862,29 @@ condition example
         bind_params.push selector['value']
       elsif selector['operator'] == 'within last (relative)'
         query += "#{attribute} BETWEEN ? AND ?"
-        time = nil
-        case selector['range']
-        when 'minute'
-          time = selector['value'].to_i.minutes.ago
-        when 'hour'
-          time = selector['value'].to_i.hours.ago
-        when 'day'
-          time = selector['value'].to_i.days.ago
-        when 'month'
-          time = selector['value'].to_i.months.ago
-        when 'year'
-          time = selector['value'].to_i.years.ago
-        else
-          raise "Unknown selector attributes '#{selector.inspect}'"
-        end
+        time = range(selector).ago
         bind_params.push time
         bind_params.push Time.zone.now
       elsif selector['operator'] == 'within next (relative)'
         query += "#{attribute} BETWEEN ? AND ?"
-        time = nil
-        case selector['range']
-        when 'minute'
-          time = selector['value'].to_i.minutes.from_now
-        when 'hour'
-          time = selector['value'].to_i.hours.from_now
-        when 'day'
-          time = selector['value'].to_i.days.from_now
-        when 'month'
-          time = selector['value'].to_i.months.from_now
-        when 'year'
-          time = selector['value'].to_i.years.from_now
-        else
-          raise "Unknown selector attributes '#{selector.inspect}'"
-        end
+        time = range(selector).from_now
         bind_params.push Time.zone.now
         bind_params.push time
       elsif selector['operator'] == 'before (relative)'
         query += "#{attribute} <= ?"
-        time = nil
-        case selector['range']
-        when 'minute'
-          time = selector['value'].to_i.minutes.ago
-        when 'hour'
-          time = selector['value'].to_i.hours.ago
-        when 'day'
-          time = selector['value'].to_i.days.ago
-        when 'month'
-          time = selector['value'].to_i.months.ago
-        when 'year'
-          time = selector['value'].to_i.years.ago
-        else
-          raise "Unknown selector attributes '#{selector.inspect}'"
-        end
+        time = range(selector).ago
         bind_params.push time
       elsif selector['operator'] == 'after (relative)'
         query += "#{attribute} >= ?"
-        time = nil
-        case selector['range']
-        when 'minute'
-          time = selector['value'].to_i.minutes.from_now
-        when 'hour'
-          time = selector['value'].to_i.hours.from_now
-        when 'day'
-          time = selector['value'].to_i.days.from_now
-        when 'month'
-          time = selector['value'].to_i.months.from_now
-        when 'year'
-          time = selector['value'].to_i.years.from_now
-        else
-          raise "Unknown selector attributes '#{selector.inspect}'"
-        end
+        time = range(selector).from_now
         bind_params.push time
       elsif selector['operator'] == 'till (relative)'
         query += "#{attribute} <= ?"
-        time = nil
-        case selector['range']
-        when 'minute'
-          time = selector['value'].to_i.minutes.from_now
-        when 'hour'
-          time = selector['value'].to_i.hours.from_now
-        when 'day'
-          time = selector['value'].to_i.days.from_now
-        when 'month'
-          time = selector['value'].to_i.months.from_now
-        when 'year'
-          time = selector['value'].to_i.years.from_now
-        else
-          raise "Unknown selector attributes '#{selector.inspect}'"
-        end
+        time = range(selector).from_now
         bind_params.push time
       elsif selector['operator'] == 'from (relative)'
         query += "#{attribute} >= ?"
-        time = nil
-        case selector['range']
-        when 'minute'
-          time = selector['value'].to_i.minutes.ago
-        when 'hour'
-          time = selector['value'].to_i.hours.ago
-        when 'day'
-          time = selector['value'].to_i.days.ago
-        when 'month'
-          time = selector['value'].to_i.months.ago
-        when 'year'
-          time = selector['value'].to_i.years.ago
-        else
-          raise "Unknown selector attributes '#{selector.inspect}'"
-        end
+        time = range(selector).ago
         bind_params.push time
       else
         raise "Invalid operator '#{selector['operator']}' for '#{selector['value'].inspect}'"
@@ -1097,7 +1015,7 @@ perform changes on ticket
         if value['pre_condition'].start_with?('not_set')
           value['value'] = 1
         elsif value['pre_condition'].start_with?('current_user.')
-          raise 'Unable to use current_user, got no current_user_id for ticket.perform_changes' if !current_user_id
+          raise __("The required parameter 'current_user_id' is missing.") if !current_user_id
 
           value['value'] = current_user_id
         end
@@ -1119,7 +1037,7 @@ perform changes on ticket
     objects = build_notification_template_objects(article)
 
     perform_article.each do |key, value|
-      raise 'Unable to create article, we only support article.note' if key != 'article.note'
+      raise __("Article could not be created. An unsupported key other than 'article.note' was provided.") if key != 'article.note'
 
       add_trigger_note(id, value, objects, perform_origin)
     end
@@ -1172,6 +1090,7 @@ perform changes on ticket
       type:          Ticket::Article::Type.find_by(name: 'note'),
       preferences:   {
         perform_origin: perform_origin,
+        notification:   true,
       },
       updated_by_id: 1,
       created_by_id: 1,
@@ -1210,7 +1129,7 @@ perform active triggers on ticket
                else
                  ::Trigger.where(active: true).order(:name)
                end
-    return [true, 'No triggers active'] if triggers.blank?
+    return [true, __('No triggers active')] if triggers.blank?
 
     # check if notification should be send because of customer emails
     send_notification = true
@@ -1321,9 +1240,7 @@ perform active triggers on ticket
           user_id = article.updated_by_id
         end
 
-        user = if user_id != 1
-                 User.lookup(id: user_id)
-               end
+        user = User.lookup(id: user_id)
 
         # verify is condition is matching
         ticket_count, tickets = Ticket.selectors(condition, limit: 1, execution_time: true, current_user: user, access: 'ignore')
@@ -1362,6 +1279,12 @@ perform active triggers on ticket
       end
     end
     [true, ticket, local_options]
+  end
+
+  def self.range(selector)
+    selector['value'].to_i.send(selector['range'].pluralize)
+  rescue
+    raise 'unknown selector'
   end
 
 =begin
@@ -1782,7 +1705,7 @@ result
     )
 
     attachments_inline.each do |attachment|
-      Store.add(
+      Store.create!(
         object:      'Ticket::Article',
         o_id:        message.id,
         data:        attachment[:data],
@@ -1792,6 +1715,11 @@ result
     end
 
     original_article = objects[:article]
+
+    if ActiveModel::Type::Boolean.new.cast(value['include_attachments']) == true && original_article&.attachments.present?
+      original_article.clone_attachments('Ticket::Article', message.id, only_attached_attachments: true)
+    end
+
     if original_article&.should_clone_inline_attachments? # rubocop:disable Style/GuardClause
       original_article.clone_attachments('Ticket::Article', message.id, only_inline_attachments: true)
       original_article.should_clone_inline_attachments = false # cancel the temporary flag after cloning
@@ -1893,4 +1821,5 @@ result
     # blocked for 60 full days
     (user.preferences[:mail_delivery_failed_data].to_date - Time.zone.now.to_date).to_i + 61
   end
+
 end

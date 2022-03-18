@@ -1,9 +1,9 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require_relative './set_up'
 
 RSpec.configure do |config|
-  config.before(:each, type: :system) do
+  config.before(:each, type: :system) do |example|
 
     Capybara.register_server :puma_wrapper do |app, port, host, **_options|
 
@@ -23,10 +23,31 @@ RSpec.configure do |config|
 
     # set custom Zammad driver (e.g. zammad_chrome) for special
     # functionalities and CI requirements
-    driven_by(:"zammad_#{ENV.fetch('BROWSER', 'firefox')}")
+    browser_name = ENV.fetch('BROWSER', 'firefox')
+    driven_by(:"zammad_#{browser_name}")
 
-    browser_width  = ENV['BROWSER_WIDTH'] || 1024
-    browser_height = ENV['BROWSER_HEIGHT'] || 800
+    case example.metadata.fetch(:screen_size, :desktop)
+    when :tablet
+      browser_width  = 1020
+      browser_height = 760
+    else # :desktop
+      browser_width  = 1520
+      browser_height = 1000
+    end
+
     page.driver.browser.manage.window.resize_to(browser_width, browser_height)
   end
+
+  config.after(:each, type: :system) do
+    # Make sure additional sessions (from using_sessions) are always ended
+    #   after every test and not kept alive. Selenium will automatically close
+    #   idle sessions which can cause 404 errors later.
+    #   (see https://github.com/teamcapybara/capybara/issues/2237)
+    Capybara.send(:session_pool).reverse_each do |_mode, session|
+      if !session.eql?(Capybara.current_session)
+        session.quit
+      end
+    end
+  end
+
 end

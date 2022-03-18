@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 module CreatesTicketArticles
   extend ActiveSupport::Concern
@@ -13,7 +13,7 @@ module CreatesTicketArticles
     subtype = params.delete(:subtype)
 
     # check min. params
-    raise Exceptions::UnprocessableEntity, 'Need at least article: { body: "some text" }' if !params[:body]
+    raise Exceptions::UnprocessableEntity, __("Need at least an 'article body' field.") if params[:body].blank?
 
     # fill default values
     if params[:type_id].blank? && params[:type].blank?

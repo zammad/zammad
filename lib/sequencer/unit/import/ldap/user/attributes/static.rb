@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Sequencer
   class Unit
@@ -19,6 +19,9 @@ class Sequencer
                     # because otherwise disabled instances won't get
                     # re-activated if they should get synced again
                     active: true,
+
+                    # Set the source to 'Ldap' for the authentication handling.
+                    source: 'Ldap',
                   }
                 end
               end

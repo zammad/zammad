@@ -50,7 +50,7 @@ App.PopoverProvidable =
 
   anyPopoversDestroy: ->
     # do not remove permanent .popover--notifications widget
-    $('.popover:not(.popover--notifications)').remove()
+    $('.popover:not(.popover--notifications,.popover--richtextpopover)').remove()
 
   extended: ->
     @include InstanceMethods

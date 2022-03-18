@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class ExternalCredential::Microsoft365
 
@@ -9,7 +9,7 @@ class ExternalCredential::Microsoft365
 
   def self.request_account_to_link(credentials = {}, app_required = true)
     external_credential = ExternalCredential.find_by(name: 'microsoft365')
-    raise Exceptions::UnprocessableEntity, 'No Microsoft365 app configured!' if !external_credential && app_required
+    raise Exceptions::UnprocessableEntity, __('No Microsoft365 app configured!') if !external_credential && app_required
 
     if external_credential
       if credentials[:client_id].blank?
@@ -24,8 +24,8 @@ class ExternalCredential::Microsoft365
       end
     end
 
-    raise Exceptions::UnprocessableEntity, 'No client_id param!' if credentials[:client_id].blank?
-    raise Exceptions::UnprocessableEntity, 'No client_secret param!' if credentials[:client_secret].blank?
+    raise Exceptions::UnprocessableEntity, __('No client_id param!') if credentials[:client_id].blank?
+    raise Exceptions::UnprocessableEntity, __('No client_secret param!') if credentials[:client_secret].blank?
 
     authorize_url = generate_authorize_url(credentials)
 
@@ -36,8 +36,8 @@ class ExternalCredential::Microsoft365
 
   def self.link_account(_request_token, params)
     external_credential = ExternalCredential.find_by(name: 'microsoft365')
-    raise Exceptions::UnprocessableEntity, 'No Microsoft365 app configured!' if !external_credential
-    raise Exceptions::UnprocessableEntity, 'No code for session found!' if !params[:code]
+    raise Exceptions::UnprocessableEntity, __('No Microsoft365 app configured!') if !external_credential
+    raise Exceptions::UnprocessableEntity, __('No code for session found!') if !params[:code]
 
     response = authorize_tokens(external_credential.credentials, params[:code])
     %w[refresh_token access_token expires_in scope token_type id_token].each do |key|
@@ -45,7 +45,7 @@ class ExternalCredential::Microsoft365
     end
 
     user_data = user_info(response[:id_token])
-    raise Exceptions::UnprocessableEntity, 'Unable to extract user preferred_username from id_token!' if user_data[:preferred_username].blank?
+    raise Exceptions::UnprocessableEntity, __("The user's 'preferred_username' could not be extracted from 'id_token'.") if user_data[:preferred_username].blank?
 
     channel_options = {
       inbound:  {
@@ -53,7 +53,7 @@ class ExternalCredential::Microsoft365
         options: {
           auth_type: 'XOAUTH2',
           host:      'outlook.office365.com',
-          ssl:       true,
+          ssl:       'ssl',
           user:      user_data[:preferred_username],
         },
       },
@@ -61,7 +61,6 @@ class ExternalCredential::Microsoft365
         adapter: 'smtp',
         options: {
           host:           'smtp.office365.com',
-          domain:         'office365.com',
           port:           587,
           user:           user_data[:preferred_username],
           authentication: 'xoauth2',
@@ -90,10 +89,9 @@ class ExternalCredential::Microsoft365
 
     migrate_channel = nil
     Channel.where(area: 'Email::Account').find_each do |channel|
-      next if channel.options.dig(:inbound, :options, :user) != user_data[:email]
-      next if channel.options.dig(:inbound, :options, :host) != 'outlook.office365.com'
-      next if channel.options.dig(:outbound, :options, :user) != user_data[:email]
-      next if channel.options.dig(:outbound, :options, :host) != 'smtp.office365.com'
+      next if channel.options.dig(:inbound, :options, :host)&.downcase != 'outlook.office365.com'
+      next if channel.options.dig(:outbound, :options, :host)&.downcase != 'smtp.office365.com'
+      next if channel.options.dig(:outbound, :options, :user)&.downcase != user_data[:email].downcase && channel.options.dig(:outbound, :email)&.downcase != user_data[:email].downcase
 
       migrate_channel = channel
 
@@ -223,7 +221,7 @@ class ExternalCredential::Microsoft365
   end
 
   def self.refresh_token(token)
-    return token if token[:created_at] >= Time.zone.now - 50.minutes
+    return token if token[:created_at] >= 50.minutes.ago
 
     params = refresh_token_params(token)
     uri    = refresh_token_uri(token)

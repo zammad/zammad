@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'test_helper'
 
@@ -33,7 +33,7 @@ class TicketOverviewTest < ActiveSupport::TestCase
       password:      'agentpw',
       active:        true,
       roles:         roles,
-      #groups: groups,
+      # groups: groups,
       updated_at:    '2015-02-05 16:38:00',
       updated_by_id: 1,
       created_by_id: 1,
@@ -88,7 +88,7 @@ class TicketOverviewTest < ActiveSupport::TestCase
     UserInfo.current_user_id = 1
     overview_role = Role.find_by(name: 'Agent')
     @overview1 = Overview.create_or_update(
-      name:      'My assigned Tickets',
+      name:      'My Assigned Tickets',
       link:      'my_assigned',
       prio:      1000,
       role_ids:  [overview_role.id],
@@ -310,7 +310,7 @@ class TicketOverviewTest < ActiveSupport::TestCase
     )
 
     assert_equal(3, result.count)
-    assert_equal('My assigned Tickets', result[0].name)
+    assert_equal('My Assigned Tickets', result[0].name)
     assert_equal('Unassigned & Open', result[1].name)
     assert_equal('My Tickets only with Note', result[2].name)
 
@@ -318,7 +318,7 @@ class TicketOverviewTest < ActiveSupport::TestCase
       current_user: @agent2,
     )
     assert_equal(3, result.count)
-    assert_equal('My assigned Tickets', result[0].name)
+    assert_equal('My Assigned Tickets', result[0].name)
     assert_equal('Unassigned & Open', result[1].name)
     assert_equal('My Tickets 2', result[2].name)
 
@@ -385,7 +385,7 @@ class TicketOverviewTest < ActiveSupport::TestCase
     Ticket.destroy_all
 
     result = Ticket::Overviews.index(@agent1)
-    assert_equal(result[0][:overview][:name], 'My assigned Tickets')
+    assert_equal(result[0][:overview][:name], 'My Assigned Tickets')
     assert_equal(result[0][:overview][:view], 'my_assigned')
     assert_equal(result[0][:count], 0)
     assert_equal(result[0][:tickets].class, Array)
@@ -402,7 +402,7 @@ class TicketOverviewTest < ActiveSupport::TestCase
     assert_equal(result[2][:count], 0)
 
     result = Ticket::Overviews.index(@agent2)
-    assert_equal(result[0][:overview][:name], 'My assigned Tickets')
+    assert_equal(result[0][:overview][:name], 'My Assigned Tickets')
     assert_equal(result[0][:overview][:view], 'my_assigned')
     assert_equal(result[0][:count], 0)
     assert_equal(result[0][:tickets].class, Array)
@@ -441,7 +441,7 @@ class TicketOverviewTest < ActiveSupport::TestCase
     )
 
     result = Ticket::Overviews.index(@agent1)
-    assert_equal(result[0][:overview][:name], 'My assigned Tickets')
+    assert_equal(result[0][:overview][:name], 'My Assigned Tickets')
     assert_equal(result[0][:overview][:view], 'my_assigned')
     assert_equal(result[0][:count], 0)
     assert_equal(result[0][:tickets].class, Array)
@@ -459,7 +459,7 @@ class TicketOverviewTest < ActiveSupport::TestCase
     assert_equal(result[2][:count], 0)
 
     result = Ticket::Overviews.index(@agent2)
-    assert_equal(result[0][:overview][:name], 'My assigned Tickets')
+    assert_equal(result[0][:overview][:name], 'My Assigned Tickets')
     assert_equal(result[0][:overview][:view], 'my_assigned')
     assert_equal(result[0][:count], 0)
     assert_equal(result[0][:tickets].class, Array)
@@ -499,7 +499,7 @@ class TicketOverviewTest < ActiveSupport::TestCase
     )
 
     result = Ticket::Overviews.index(@agent1)
-    assert_equal(result[0][:overview][:name], 'My assigned Tickets')
+    assert_equal(result[0][:overview][:name], 'My Assigned Tickets')
     assert_equal(result[0][:overview][:view], 'my_assigned')
     assert_equal(result[0][:count], 0)
     assert_equal(result[0][:tickets].class, Array)
@@ -518,7 +518,7 @@ class TicketOverviewTest < ActiveSupport::TestCase
     assert_equal(result[2][:count], 0)
 
     result = Ticket::Overviews.index(@agent2)
-    assert_equal(result[0][:overview][:name], 'My assigned Tickets')
+    assert_equal(result[0][:overview][:name], 'My Assigned Tickets')
     assert_equal(result[0][:overview][:view], 'my_assigned')
     assert_equal(result[0][:count], 0)
     assert_equal(result[0][:tickets].class, Array)
@@ -537,7 +537,7 @@ class TicketOverviewTest < ActiveSupport::TestCase
     ticket2.save!
 
     result = Ticket::Overviews.index(@agent1)
-    assert_equal(result[0][:overview][:name], 'My assigned Tickets')
+    assert_equal(result[0][:overview][:name], 'My Assigned Tickets')
     assert_equal(result[0][:overview][:view], 'my_assigned')
     assert_equal(result[0][:tickets].class, Array)
     assert_equal(result[0][:tickets][0][:id], ticket2.id)
@@ -556,7 +556,7 @@ class TicketOverviewTest < ActiveSupport::TestCase
     assert_equal(result[2][:count], 1)
 
     result = Ticket::Overviews.index(@agent2)
-    assert_equal(result[0][:overview][:name], 'My assigned Tickets')
+    assert_equal(result[0][:overview][:name], 'My Assigned Tickets')
     assert_equal(result[0][:overview][:view], 'my_assigned')
     assert_equal(result[0][:count], 0)
     assert_equal(result[0][:tickets].class, Array)
@@ -598,7 +598,7 @@ class TicketOverviewTest < ActiveSupport::TestCase
 
     result = Ticket::Overviews.index(@agent1)
     assert_equal(result[0][:overview][:id], @overview1.id)
-    assert_equal(result[0][:overview][:name], 'My assigned Tickets')
+    assert_equal(result[0][:overview][:name], 'My Assigned Tickets')
     assert_equal(result[0][:overview][:view], 'my_assigned')
     assert_equal(result[0][:tickets].class, Array)
     assert_equal(result[0][:tickets][0][:id], ticket2.id)
@@ -621,7 +621,7 @@ class TicketOverviewTest < ActiveSupport::TestCase
 
     result = Ticket::Overviews.index(@agent2)
     assert_equal(result[0][:overview][:id], @overview1.id)
-    assert_equal(result[0][:overview][:name], 'My assigned Tickets')
+    assert_equal(result[0][:overview][:name], 'My Assigned Tickets')
     assert_equal(result[0][:overview][:view], 'my_assigned')
     assert_equal(result[0][:count], 0)
     assert_equal(result[0][:tickets].class, Array)
@@ -646,7 +646,7 @@ class TicketOverviewTest < ActiveSupport::TestCase
 
     result = Ticket::Overviews.index(@agent1)
     assert_equal(result[0][:overview][:id], @overview1.id)
-    assert_equal(result[0][:overview][:name], 'My assigned Tickets')
+    assert_equal(result[0][:overview][:name], 'My Assigned Tickets')
     assert_equal(result[0][:overview][:view], 'my_assigned')
     assert_equal(result[0][:tickets].class, Array)
     assert_equal(result[0][:tickets][0][:id], ticket2.id)
@@ -669,7 +669,7 @@ class TicketOverviewTest < ActiveSupport::TestCase
 
     result = Ticket::Overviews.index(@agent2)
     assert_equal(result[0][:overview][:id], @overview1.id)
-    assert_equal(result[0][:overview][:name], 'My assigned Tickets')
+    assert_equal(result[0][:overview][:name], 'My Assigned Tickets')
     assert_equal(result[0][:overview][:view], 'my_assigned')
     assert_equal(result[0][:count], 0)
     assert_equal(result[0][:tickets].class, Array)
@@ -694,7 +694,7 @@ class TicketOverviewTest < ActiveSupport::TestCase
 
     result = Ticket::Overviews.index(@agent1)
     assert_equal(result[0][:overview][:id], @overview1.id)
-    assert_equal(result[0][:overview][:name], 'My assigned Tickets')
+    assert_equal(result[0][:overview][:name], 'My Assigned Tickets')
     assert_equal(result[0][:overview][:view], 'my_assigned')
     assert_equal(result[0][:tickets].class, Array)
     assert_equal(result[0][:tickets][0][:id], ticket2.id)
@@ -717,7 +717,7 @@ class TicketOverviewTest < ActiveSupport::TestCase
 
     result = Ticket::Overviews.index(@agent2)
     assert_equal(result[0][:overview][:id], @overview1.id)
-    assert_equal(result[0][:overview][:name], 'My assigned Tickets')
+    assert_equal(result[0][:overview][:name], 'My Assigned Tickets')
     assert_equal(result[0][:overview][:view], 'my_assigned')
     assert_equal(result[0][:count], 0)
     assert_equal(result[0][:tickets].class, Array)
@@ -742,7 +742,7 @@ class TicketOverviewTest < ActiveSupport::TestCase
 
     result = Ticket::Overviews.index(@agent1)
     assert_equal(result[0][:overview][:id], @overview1.id)
-    assert_equal(result[0][:overview][:name], 'My assigned Tickets')
+    assert_equal(result[0][:overview][:name], 'My Assigned Tickets')
     assert_equal(result[0][:overview][:view], 'my_assigned')
     assert_equal(result[0][:tickets].class, Array)
     assert_equal(result[0][:tickets][0][:id], ticket2.id)
@@ -765,7 +765,7 @@ class TicketOverviewTest < ActiveSupport::TestCase
 
     result = Ticket::Overviews.index(@agent2)
     assert_equal(result[0][:overview][:id], @overview1.id)
-    assert_equal(result[0][:overview][:name], 'My assigned Tickets')
+    assert_equal(result[0][:overview][:name], 'My Assigned Tickets')
     assert_equal(result[0][:overview][:view], 'my_assigned')
     assert_equal(result[0][:count], 0)
     assert_equal(result[0][:tickets].class, Array)
@@ -790,7 +790,7 @@ class TicketOverviewTest < ActiveSupport::TestCase
 
     result = Ticket::Overviews.index(@agent1)
     assert_equal(result[0][:overview][:id], @overview1.id)
-    assert_equal(result[0][:overview][:name], 'My assigned Tickets')
+    assert_equal(result[0][:overview][:name], 'My Assigned Tickets')
     assert_equal(result[0][:overview][:view], 'my_assigned')
     assert_equal(result[0][:tickets].class, Array)
     assert_equal(result[0][:tickets][0][:id], ticket2.id)
@@ -813,7 +813,7 @@ class TicketOverviewTest < ActiveSupport::TestCase
 
     result = Ticket::Overviews.index(@agent2)
     assert_equal(result[0][:overview][:id], @overview1.id)
-    assert_equal(result[0][:overview][:name], 'My assigned Tickets')
+    assert_equal(result[0][:overview][:name], 'My Assigned Tickets')
     assert_equal(result[0][:overview][:view], 'my_assigned')
     assert_equal(result[0][:count], 0)
     assert_equal(result[0][:tickets].class, Array)
@@ -838,7 +838,7 @@ class TicketOverviewTest < ActiveSupport::TestCase
 
     result = Ticket::Overviews.index(@agent1)
     assert_equal(result[0][:overview][:id], @overview1.id)
-    assert_equal(result[0][:overview][:name], 'My assigned Tickets')
+    assert_equal(result[0][:overview][:name], 'My Assigned Tickets')
     assert_equal(result[0][:overview][:view], 'my_assigned')
     assert_equal(result[0][:tickets].class, Array)
     assert_equal(result[0][:tickets][0][:id], ticket2.id)
@@ -861,7 +861,7 @@ class TicketOverviewTest < ActiveSupport::TestCase
 
     result = Ticket::Overviews.index(@agent2)
     assert_equal(result[0][:overview][:id], @overview1.id)
-    assert_equal(result[0][:overview][:name], 'My assigned Tickets')
+    assert_equal(result[0][:overview][:name], 'My Assigned Tickets')
     assert_equal(result[0][:overview][:view], 'my_assigned')
     assert_equal(result[0][:count], 0)
     assert_equal(result[0][:tickets].class, Array)

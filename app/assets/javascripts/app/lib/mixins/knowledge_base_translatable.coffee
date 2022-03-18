@@ -34,27 +34,12 @@ InstanceMethods =
       attrs.iconFont = true
       attrs.icon     = @category_icon
       attrs.count    = @countDeepAnswers()
-
-      if options.isEditor
-        attrs.editorOnly = !@visibleInternally(kb_locale)
-      else
-        attrs.editorOnly = false
-
-      attrs.state      = @visibilityState(kb_locale)
+      attrs.state    = @visibilityState(kb_locale)
 
     if @ instanceof App.KnowledgeBaseAnswer
       attrs.icon  = 'knowledge-base-answer'
       attrs.state = @can_be_published_state()
-
-      if options.isEditor
-        attrs.editorOnly = !@is_internally_published(kb_locale)
-      else
-        attrs.editorOnly = false
-
-    # attrs.className = if attrs.missingTranslation
-    #                     'kb-item--missing-translation'
-    #                   else if attrs.editorOnly
-    #                     'kb-item--invisible'
+      attrs.tags  = @tags
 
     attrs.icons = {}
 

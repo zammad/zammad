@@ -1,10 +1,10 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 source 'https://rubygems.org'
 
 # core - base
-ruby '2.7.3'
-gem 'rails', '6.0.4'
+ruby '2.7.4'
+gem 'rails', '~> 6.0.0'
 
 # core - rails additions
 gem 'activerecord-import'
@@ -47,24 +47,27 @@ gem 'rszr', '0.5.2'
 # performance - Memcached
 gem 'dalli', require: false
 
-# asset handling - coffee-script
-gem 'coffee-rails'
-gem 'coffee-script-source'
+# Only load gems for asset compilation if they are needed to avoid
+#   having unneeded runtime dependencies like NodeJS.
+group :assets do
+  # asset handling - javascript execution for e.g. linux
+  gem 'execjs', require: false
 
-# asset handling - frontend templating
-gem 'eco'
+  # asset handling - coffee-script
+  gem 'coffee-rails', require: false
 
-# asset handling - SASS
-gem 'sassc-rails'
+  # asset handling - frontend templating
+  gem 'eco', require: false
 
-# asset handling - pipeline
-gem 'sprockets', '~> 3.7.2'
-gem 'uglifier'
+  # asset handling - SASS
+  gem 'sassc-rails', require: false
 
-gem 'autoprefixer-rails'
+  # asset handling - pipeline
+  gem 'sprockets', '~> 3.7.2', require: false
+  gem 'uglifier', require: false
 
-# asset handling - javascript execution for e.g. linux
-gem 'execjs'
+  gem 'autoprefixer-rails', require: false
+end
 
 # Don't use mini_racer any more for asset compilation.
 #   Instead, use an external node.js binary.
@@ -113,6 +116,9 @@ gem 'diffy'
 # feature - excel output
 gem 'writeexcel', require: false
 
+# feature - csv import/export
+gem 'csv', require: false
+
 # feature - device logging
 gem 'browser'
 
@@ -124,6 +130,7 @@ gem 'icalendar-recurrence'
 gem 'telephone_number'
 
 # feature - SMS
+gem 'messagebird-rest'
 gem 'twilio-ruby', require: false
 
 # feature - ordering
@@ -142,14 +149,15 @@ gem 'viewpoint', require: false
 # integrations - S/MIME
 gem 'openssl'
 
+# Translation sync
+gem 'PoParser', require: false
+
 # Gems used only for develop/test and not required
 # in production environments by default.
 group :development, :test do
 
   # app boottime improvement
   gem 'spring'
-  gem 'spring-commands-rspec'
-  gem 'spring-commands-testunit'
 
   # debugging
   gem 'byebug'
@@ -167,11 +175,6 @@ group :development, :test do
   # for testing Pundit authorisation policies in RSpec
   gem 'pundit-matchers'
 
-  # code coverage
-  gem 'coveralls', require: false
-  gem 'simplecov'
-  gem 'simplecov-rcov'
-
   # UI tests w/ Selenium
   gem 'capybara'
   gem 'selenium-webdriver'
@@ -186,16 +189,15 @@ group :development, :test do
   gem 'guard-symlink', require: false
 
   # code QA
+  gem 'brakeman', require: false
   gem 'coffeelint'
-  gem 'pre-commit'
+  gem 'overcommit'
   gem 'rubocop'
   gem 'rubocop-faker'
+  gem 'rubocop-inflector'
   gem 'rubocop-performance'
   gem 'rubocop-rails'
   gem 'rubocop-rspec'
-
-  # changelog generation
-  gem 'github_changelog_generator'
 
   # generate random test data
   gem 'factory_bot_rails'
@@ -205,7 +207,7 @@ group :development, :test do
   gem 'webmock'
 
   # record and replay TCP/HTTP transactions
-  gem 'tcr', git: 'https://github.com/zammad-deps/tcr'
+  gem 'tcr'
   gem 'vcr'
 
   # handle deprecations in core and addons
@@ -227,5 +229,5 @@ end
 #               without having your changes overwritten during upgrades.)
 # ZAMMAD DEVS:  Consult the internal wiki
 #               (or else risk pushing unwanted changes to Gemfile.lock!)
-#               https://git.znuny.com/zammad/zammad/wikis/Tips#user-content-customizing-the-gemfile
+#               https://git.zammad.com/zammad/zammad/wikis/Tips#user-content-customizing-the-gemfile
 eval_gemfile 'Gemfile.local' if File.exist?('Gemfile.local')

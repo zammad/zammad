@@ -1,0 +1,11 @@
+--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+from: IT example <example@jira.com>
+from_email: example@jira.com
+from_display_name: IT example
+to: support@example.com
+subject: "[JIRA] (SYS-422) test zammad 3"
+body: 'Incident content
+
+'
+content_type: text/plain
+attachments: []

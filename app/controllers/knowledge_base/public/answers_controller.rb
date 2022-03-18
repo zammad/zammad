@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class KnowledgeBase::Public::AnswersController < KnowledgeBase::Public::BaseController
 
@@ -13,11 +13,7 @@ class KnowledgeBase::Public::AnswersController < KnowledgeBase::Public::BaseCont
   private
 
   def render_alternative
-    @alternative = @knowledge_base
-                   .answers
-                   .eager_load(translations: :kb_locale)
-                   .check_published_unless_editor(current_user)
-                   .find_by(id: params[:answer])
+    @alternative = find_answer @knowledge_base.answers.eager_load(translations: :kb_locale), params[:answer], locale: false
 
     raise ActiveRecord::RecordNotFound if !@alternative&.translations&.any?
 

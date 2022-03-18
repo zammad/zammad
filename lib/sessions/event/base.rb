@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Sessions::Event::Base
 
@@ -141,9 +141,9 @@ class Sessions::Event::Base
     end
     # rubocop:disable Rails/Output
     puts "#{Time.now.utc.iso8601}:client(#{client_id}) #{data}"
-    #puts "#{Time.now.utc.iso8601}:#{ level }:client(#{ client_id }) #{ data }"
+    # puts "#{Time.now.utc.iso8601}:#{ level }:client(#{ client_id }) #{ data }"
     # rubocop:enable Rails/Output
-    #Rails.logger.info "#{Time.now.utc.iso8601}:client(#{client_id}) #{data}"
+    # Rails.logger.info "#{Time.now.utc.iso8601}:client(#{client_id}) #{data}"
   end
 
   def self.database_connection_required

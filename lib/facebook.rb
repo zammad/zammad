@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Facebook
 
@@ -284,7 +284,7 @@ result
       end
 
       article = {
-        #to:        @account['name'],
+        # to:        @account['name'],
         ticket_id:     ticket.id,
         internal:      false,
         sender_id:     Ticket::Article::Sender.lookup(name: 'Customer').id,
@@ -305,7 +305,7 @@ result
     ticket = nil
 
     # use transaction
-    Transaction.execute(reset_user_id: true) do
+    Transaction.execute(reset_user_id: true, context: 'facebook') do
       existing_article = Ticket::Article.find_by(message_id: post['id'])
       ticket = if existing_article
                  existing_article.ticket
@@ -334,7 +334,7 @@ result
 
   def get_state(page, post, ticket = nil)
 
-    # no changes in post is from page user it self
+    # no changes in post is from page user itself
     if post['from'] && post['from']['id'].to_s == page['id'].to_s
       if !ticket
         return Ticket::State.find_by(name: 'closed')

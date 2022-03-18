@@ -41,16 +41,32 @@ App.ViewHelpers =
     return '' if isNaN(parseInt(time))
 
     # Hours, minutes and seconds
-    hrs = ~~parseInt((time / 3600))
+    hrs  = ~~parseInt((time / 3600))
     mins = ~~parseInt(((time % 3600) / 60))
     secs = parseInt(time % 60)
 
     # Output like "1:01" or "4:03:59" or "123:03:59"
     mins = "0#{mins}" if mins < 10
     secs = "0#{secs}" if secs < 10
+
     if hrs > 0
       return "#{hrs}:#{mins}:#{secs}"
+
     "#{mins}:#{secs}"
+
+  # define time_duration / hh:mm
+  time_duration_hh_mm: (time_in_minutes) ->
+    return '' if !time_in_minutes
+    return '' if isNaN(parseInt(time_in_minutes))
+
+    # Hours, minutes and seconds
+    hrs  = ~~parseInt((time_in_minutes / 60))
+    mins = ~~parseInt((time_in_minutes % 60))
+
+    hrs  = "0#{hrs}" if hrs < 10
+    mins = "0#{mins}" if mins < 10
+
+    "#{hrs}:#{mins}"
 
   # define mask helper
   # mask an value like 'a***********yz'
@@ -130,12 +146,18 @@ App.ViewHelpers =
     App.Utils.humanFileSize(size)
 
   # define pretty/human time helper
-  humanTime: (time, escalation = false, cssClass = '') ->
+  humanTime: (time, escalation = false, cssClass = '', setTitle = true) ->
     timestamp = App.i18n.translateTimestamp(time)
     if escalation
       cssClass += ' escalation'
     humanTime = App.PrettyDate.humanTime(time, escalation)
-    "<time class=\"humanTimeFromNow #{cssClass}\" datetime=\"#{time}\" title=\"#{timestamp}\">#{humanTime}</time>"
+
+    title = " title=\"#{timestamp}\""
+    if !setTitle
+      title = ''
+      cssClass += ' noTitle'
+
+    "<time class=\"humanTimeFromNow #{cssClass}\" datetime=\"#{time}\"#{title}>#{humanTime}</time>"
 
   # Why not just use `Icon: App.Utils.icon`?
   # Because App.Utils isn't loaded until after this file.

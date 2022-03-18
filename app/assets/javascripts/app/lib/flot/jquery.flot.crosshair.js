@@ -119,8 +119,8 @@ The plugin also adds four public methods:
             if (!plot.getOptions().crosshair.mode)
                 return;
 
-            eventHolder.mouseout(onMouseOut);
-            eventHolder.mousemove(onMouseMove);
+            eventHolder.on('mouseout', onMouseOut);
+            eventHolder.on('mousemove', onMouseMove);
         });
 
         plot.hooks.drawOverlay.push(function (plot, ctx) {
@@ -153,8 +153,8 @@ The plugin also adds four public methods:
         });
 
         plot.hooks.shutdown.push(function (plot, eventHolder) {
-            eventHolder.unbind("mouseout", onMouseOut);
-            eventHolder.unbind("mousemove", onMouseMove);
+            eventHolder.off("mouseout", onMouseOut);
+            eventHolder.off("mousemove", onMouseMove);
         });
     }
     

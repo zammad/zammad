@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Sequencer
   class Unit
@@ -74,9 +74,7 @@ class Sequencer
               # Model Name
               # Model::Name
               # Model Name?
-              # rubocop:disable Style/AsciiComments
               # Mödel Nâmé
-              # rubocop:enable Style/AsciiComments
               raise 'Missing implementation for unsanitized_name method'
             end
           end

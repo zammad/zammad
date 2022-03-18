@@ -8,6 +8,9 @@ class App.KnowledgeBaseSidebarGenericList extends App.Controller
   constructor: ->
     super
 
+    @render()
+
+  render: ->
     @html App.view('knowledge_base/sidebar/generic_list')(@templateOptions())
 
   templateOptions: ->
@@ -52,3 +55,6 @@ class App.KnowledgeBaseSidebarGenericList extends App.Controller
 
   urlNew: ->
     #has to be overridden
+
+  updateIfNeeded: ->
+    @render()

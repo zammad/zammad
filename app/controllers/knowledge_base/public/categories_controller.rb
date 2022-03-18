@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class KnowledgeBase::Public::CategoriesController < KnowledgeBase::Public::BaseController
   skip_before_action :load_kb, only: :forward_root
@@ -7,30 +7,25 @@ class KnowledgeBase::Public::CategoriesController < KnowledgeBase::Public::BaseC
     @categories     = categories_filter(@knowledge_base.categories.root)
     @object_locales = find_locales(@knowledge_base)
 
-    raise ActiveRecord::RecordNotFound if !editor? && @categories.empty?
+    authorize(@categories, policy_class: Controllers::KnowledgeBase::Public::CategoriesControllerPolicy)
+  rescue Pundit::NotAuthorizedError
+    raise ActiveRecord::RecordNotFound
   end
 
   def show
     @object = find_category(params[:category])
 
-    render_alternatives && return if !@object&.visible_content_for?(current_user)
+    render_alternatives && return if @object.nil? || !policy(@object).show_public?
 
     @categories     = categories_filter(@object.children)
     @object_locales = find_locales(@object)
-
-    @answers = @object
-               .answers
-               .localed(system_locale_via_uri)
-               .check_published_unless_editor(current_user)
-               .sorted
+    @answers        = answers_filter(@object.answers)
 
     render :index
   end
 
   def forward_root
-    knowledge_base = KnowledgeBase
-                     .check_active_unless_editor(current_user)
-                     .first!
+    knowledge_base = policy_scope(KnowledgeBase).first!
 
     primary_locale = KnowledgeBase::Locale
                      .system_with_kb_locales(knowledge_base)
@@ -54,7 +49,7 @@ class KnowledgeBase::Public::CategoriesController < KnowledgeBase::Public::BaseC
                    .eager_load(translations: :kb_locale)
                    .find_by(id: params[:category])
 
-    if !@alternative&.translations&.any? || !@alternative&.visible_content_for?(current_user)
+    if @alternative.nil? || @alternative.translations.none? || !policy(@alternative).show?
       raise ActiveRecord::RecordNotFound
     end
 

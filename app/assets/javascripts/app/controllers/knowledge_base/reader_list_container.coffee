@@ -3,13 +3,13 @@ class App.KnowledgeBaseReaderListContainer extends App.Controller
     super
     @render()
 
-    @listenTo App.KnowledgeBase, 'kb_data_change_loaded', =>
-      @parentRefreshed()
+    @listenTo App.KnowledgeBase, 'kb_data_change_loaded', @parentRefreshed
+    @listenTo App.KnowledgeBase, 'kb_visibility_change_loaded', @parentRefreshed
 
   tag:       'ul'
   className: 'sections'
 
-  parentRefreshed: ->
+  parentRefreshed: =>
     newIds = @children().map (elem) -> elem.id
     oldIds = @el.children().toArray().map (elem) -> parseInt(elem.dataset.id)
 
@@ -59,7 +59,9 @@ class App.KnowledgeBaseReaderListContainer.Categories extends App.KnowledgeBaseR
               @parent.children()
             else
               []
+
     # coffeelint: enable=indentation
+    #
 
     if !@isEditor
       items = items.filter (elem) => elem.visibleInternally(@kb_locale)

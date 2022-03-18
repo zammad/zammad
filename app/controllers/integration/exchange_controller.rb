@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Integration::ExchangeController < ApplicationController
   include Integration::ImportJobBase
@@ -30,20 +30,20 @@ class Integration::ExchangeController < ApplicationController
       Sequencer.process('Import::Exchange::AvailableFolders',
                         parameters: { ews_config: ews_config })
                .tap do |res|
-                 raise 'No folders found for given user credentials.' if res[:folders].blank?
+                 raise __('No folders were found for the given user credentials.') if res[:folders].blank?
                end
     end
   end
 
   def mapping
     answer_with do
-      raise 'Please select at least one folder.' if params[:folders].blank?
+      raise __('Please select at least one folder.') if params[:folders].blank?
 
       Sequencer.process('Import::Exchange::AttributesExamples',
                         parameters: { ews_folder_ids: params[:folders],
                                       ews_config:     ews_config })
                .tap do |res|
-                 raise 'No entries found in selected folder(s).' if res[:attributes].blank?
+                 raise __('No entries were found in the selected folder(s).') if res[:attributes].blank?
                end
     end
   end

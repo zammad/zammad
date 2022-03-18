@@ -8,9 +8,11 @@ class App.UiElement.sla_times
     item = $( App.view('generic/sla_times')(
       attribute: attribute
       first_response_time: params.first_response_time
+      response_time: params.response_time
       update_time: params.update_time
       solution_time: params.solution_time
       first_response_time_in_text: @toText(params.first_response_time)
+      response_time_in_text: @toText(params.response_time)
       update_time_in_text: @toText(params.update_time)
       solution_time_in_text: @toText(params.solution_time)
     ) )
@@ -21,61 +23,100 @@ class App.UiElement.sla_times
     )
 
     # disable/enable rows
-    item.find('.js-activateRow').bind('change', (e) ->
+    item.find('.js-activateRow').on('change', (e) ->
       element = $(e.target)
       row = element.closest('tr')
       if element.prop('checked')
         row.addClass('is-active')
+
+        if row.has('.js-updateTypeSelector').length > 0 && row.has('.js-updateTypeSelector:checked').length == 0
+          row.find('.js-updateTypeSelector:first').prop('checked', true)
       else
         row.removeClass('is-active')
 
         # reset data item
         row.find('.js-timeConvertFrom').val('')
         row.find('.js-timeConvertTo').val('')
+        row.find('.js-updateTypeSelector').attr('checked', false)
         row.find('.help-inline').empty()
         row.removeClass('has-error')
     )
 
     # convert hours into minutes
-    item.find('.js-timeConvertFrom').bind('keyup focus blur', (e) =>
+    item.find('.js-timeConvertFrom').on('keyup focus blur', (e) =>
       element = $(e.target)
       inText = element.val()
 
       row = element.closest('tr')
-      row.find('.js-activateRow').prop('checked', true)
+
+      row
+        .find('.js-activateRow')
+        .prop('checked', true)
+        .trigger('change')
+
       row.addClass('is-active')
 
-      element
-        .closest('td')
-        .find('.js-timeConvertTo')
+      row
+        .find("[name='#{element.data('name')}']")
         .val(@toMinutes(inText) || '')
     )
 
     # toggle row on clicking name cell
-    item.find('.js-forward-click').bind('click', (e) ->
-      $(e.currentTarget).closest('tr').find('.checkbox-replacement').click()
+    item.find('.js-forward-click').on('click', (e) ->
+      $(e.currentTarget).closest('tr').find('.checkbox-replacement').trigger('click')
+    )
+
+    # toggle update type on clicking around the element
+    item.find('.js-forward-radio').on('click', (e) ->
+      elem = $(e.currentTarget).closest('p').find('.js-updateTypeSelector')
+
+      elem.prop('checked', true)
+      elem.trigger('change')
     )
 
     # focus time input on clicking surrounding cell
-    item.find('.js-focus-input').bind('click', (e) ->
-      $(e.currentTarget).find('.form-control').focus()
+    item.find('.js-focus-input').on('click', (e) ->
+      $(e.currentTarget)
+        .find('.form-control:visible')
+        .trigger('focus')
     )
 
     # show placeholder instead of 00:00
-    item.find('.js-timeConvertFrom').bind('changeTime.timepicker', (e) ->
+    item.find('.js-timeConvertFrom').on('changeTime.timepicker', (e) ->
       if $(e.currentTarget).val() == '00:00'
         $(e.currentTarget).val('')
+    )
+
+    # switch update/response times when type is selected accordingly
+    item.find('.js-updateTypeSelector').on('change', (e) ->
+      element = $(e.target)
+      row = element.closest('tr')
+      row.find('.js-activateRow').prop('checked', true)
+      row.addClass('is-active')
+
+      row
+        .find('.js-timeConvertFrom')
+        .addClass('hidden')
+        .val('')
+
+      row
+        .find('.js-timeConvertTo')
+        .val('')
+
+      row
+        .find("[data-name='#{element.val()}_time']")
+        .removeClass('hidden')
     )
 
     # set initial active/inactive rows
     item.find('.js-timeConvertFrom').each(->
       row = $(@).closest('tr')
       checkbox = row.find('.js-activateRow')
-      if $(@).val()
-        checkbox.prop('checked', true)
-        row.addClass('is-active')
-      else
-        checkbox.prop('checked', false)
+
+      return if !$(@).val()
+
+      checkbox.prop('checked', true)
+      row.addClass('is-active')
     )
 
     item

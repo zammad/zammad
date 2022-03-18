@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 # NOTE: Why use PG::Connection over ActiveRecord::Base.connection?
 #
@@ -12,7 +12,7 @@
 
 module Zammad
   class Application
-    class Initializer
+    module Initializer
       module DbPreflightCheck
         module Postgresql
           extend Base
@@ -58,7 +58,7 @@ module Zammad
           end
 
           def self.min_version
-            @min_version ||= '9.1'
+            @min_version ||= '9.3'
           end
 
           def self.vendor

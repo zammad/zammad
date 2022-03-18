@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 module HasGroupRelationDefinition
   extend ActiveSupport::Concern
@@ -14,8 +14,7 @@ module HasGroupRelationDefinition
     validates :access, presence: true
     validate :validate_access
 
-    after_save :touch_related
-    after_destroy :touch_related
+    after_commit :touch_related
   end
 
   private

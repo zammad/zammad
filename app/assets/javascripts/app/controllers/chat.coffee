@@ -98,7 +98,7 @@ class App.CustomerChat extends App.Controller
       @renderScreenUnauthorized(objectName: 'Chat')
       return
     if !@Config.get('chat')
-      @renderScreenError(detail: 'Feature disabled!')
+      @renderScreenError(detail: __('Feature disabled!'))
       return
 
     @html App.view('customer_chat/index')()
@@ -122,7 +122,7 @@ class App.CustomerChat extends App.Controller
 
 
   show: (params) =>
-    @title('Customer Chat', true)
+    @title(__('Customer Chat'), true)
     @navupdate('#customer_chat')
 
     if params.session_id
@@ -195,7 +195,7 @@ class App.CustomerChat extends App.Controller
 
         # if we have more chats, let decide the user
         else
-          msg = 'To be able to chat you need to select min. one chat topic below!'
+          msg = __('To be able to chat you need to select at least one chat topic from below!')
 
           # open modal settings
           @settings(
@@ -368,7 +368,7 @@ class App.CustomerChat extends App.Controller
       @switch(false)
       @notify(
         type: 'notice'
-        msg:  App.i18n.translateContent('Chat not answered, set to offline automatically.')
+        msg:  App.i18n.translateContent('Chat not answered, automatically set to offline.')
       )
     @idleTimeoutId = @delay(switchOff, @idleTimeout * 1000)
 
@@ -397,6 +397,7 @@ class ChatWindow extends App.Controller
     'click .js-info':                'toggleMeta'
     'click .js-createTicket':        'ticketCreate'
     'click .js-transferChat':        'transfer'
+    'click .chat-message img':       'imageView'
     'submit .js-metaForm':           'sendMetaForm'
 
   elements:
@@ -507,7 +508,7 @@ class ChatWindow extends App.Controller
     )
 
     @el.one('transitionend', @onTransitionend)
-    @scrollHolder.scroll(@detectScrolledtoBottom)
+    @scrollHolder.on('scroll', @detectScrolledtoBottom)
 
     # force repaint
     @el.prop('offsetHeight')
@@ -555,8 +556,8 @@ class ChatWindow extends App.Controller
     )
 
     configureAttributesOutbound = [
-      { name: 'name', display: 'Name', tag: 'input', null: true, },
-      { name: 'tags', display: 'Tags', tag: 'tag', null: true, },
+      { name: 'name', display: __('Name'), tag: 'input', null: true, },
+      { name: 'tags', display: __('Tags'), tag: 'tag', null: true, },
     ]
     new App.ControllerForm(
       el:    @$('.js-metaForm')
@@ -567,7 +568,7 @@ class ChatWindow extends App.Controller
     )
 
   focus: =>
-    @input.focus()
+    @input.trigger('focus')
 
   onTransitionend: (event) =>
     # chat window is done with animation - adjust scroll-bars
@@ -627,7 +628,7 @@ class ChatWindow extends App.Controller
     switch event.keyCode
       when TABKEY
         allChatInputs = @input.not('[disabled="disabled"]')
-        chatCount = allChatInputs.size()
+        chatCount = allChatInputs.length
         index = allChatInputs.index(@input)
 
         if chatCount > 1
@@ -799,6 +800,11 @@ class ChatWindow extends App.Controller
 
     @scrollToBottom()
 
+  imageView: (e) ->
+    e.preventDefault()
+    e.stopPropagation()
+    new App.CustomerChatImageView(image_base64: $(e.target).get(0).src)
+
   detectScrolledtoBottom: =>
     scrollBottom = @scrollHolder.scrollTop() + @scrollHolder.outerHeight()
     @scrolledToBottom = Math.abs(scrollBottom - @scrollHolder.prop('scrollHeight')) <= @scrollSnapTolerance
@@ -847,7 +853,7 @@ class ChatWindow extends App.Controller
       id: id
       prefilledParams:
         body: "#{http_type}://#{fqdn}/#{url}"
-        title: 'Chat'
+        title: __('Chat')
 
     App.TaskManager.execute(
       key:        "TicketCreateScreen-#{id}"
@@ -860,7 +866,7 @@ class Setting extends App.ControllerModal
   buttonClose: true
   buttonCancel: true
   buttonSubmit: true
-  head: 'Settings'
+  head: __('Settings')
 
   content: =>
 
@@ -947,4 +953,4 @@ class CustomerChatRouter extends App.ControllerPermanent
 App.Config.set('customer_chat', CustomerChatRouter, 'Routes')
 App.Config.set('customer_chat/session/:session_id', CustomerChatRouter, 'Routes')
 App.Config.set('CustomerChat', { controller: 'CustomerChat', permission: ['chat.agent'] }, 'permanentTask')
-App.Config.set('CustomerChat', { prio: 1200, parent: '', name: 'Customer Chat', target: '#customer_chat', key: 'CustomerChat', shown: false, permission: ['chat.agent'], class: 'chat' }, 'NavBar')
+App.Config.set('CustomerChat', { prio: 1200, parent: '', name: __('Customer Chat'), target: '#customer_chat', key: 'CustomerChat', shown: false, permission: ['chat.agent'], class: 'chat' }, 'NavBar')

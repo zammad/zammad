@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class User < ApplicationModel
   include CanBeAuthorized
@@ -11,10 +11,8 @@ class User < ApplicationModel
   include ChecksHtmlSanitized
   include HasGroups
   include HasRoles
-  include HasObjectManagerAttributesValidation
-  include ::HasTicketCreateScreenImpact
+  include HasObjectManagerAttributes
   include HasTaskbars
-  include User::HasTicketCreateScreenImpact
   include User::Assets
   include User::Avatar
   include User::Search
@@ -46,12 +44,18 @@ class User < ApplicationModel
   has_many                :data_privacy_tasks,     as: :deletable
   belongs_to              :organization,           inverse_of: :members, optional: true
 
-  before_validation :check_name, :check_email, :check_login, :ensure_uniq_email, :ensure_password, :ensure_roles, :ensure_identifier
+  before_validation :check_name, :check_email, :check_login, :ensure_password, :ensure_roles
   before_validation :check_mail_delivery_failed, on: :update
   before_create     :check_preferences_default, :validate_preferences, :validate_ooo, :domain_based_assignment, :set_locale
-  before_update     :check_preferences_default, :validate_preferences, :validate_ooo, :reset_login_failed, :validate_agent_limit_by_attributes, :last_admin_check_by_attribute
+  before_update     :check_preferences_default, :validate_preferences, :validate_ooo, :reset_login_failed_after_password_change, :validate_agent_limit_by_attributes, :last_admin_check_by_attribute
   before_destroy    :destroy_longer_required_objects, :destroy_move_dependency_ownership
   after_commit      :update_caller_id
+
+  validate :ensure_identifier, :ensure_email
+  validate :ensure_uniq_email, unless: :skip_ensure_uniq_email
+
+  # workflow checks should run after before_create and before_update callbacks
+  include ChecksCoreWorkflow
 
   store :preferences
 
@@ -195,7 +199,12 @@ returns
     return false if out_of_office_start_at.blank?
     return false if out_of_office_end_at.blank?
 
-    Time.zone.today.between?(out_of_office_start_at, out_of_office_end_at)
+    Time.use_zone(Setting.get('timezone_default').presence) do
+      start  = out_of_office_start_at.beginning_of_day
+      finish = out_of_office_end_at.end_of_day
+
+      Time.zone.now.between? start, finish
+    end
   end
 
 =begin
@@ -211,11 +220,26 @@ returns
 
 =end
 
-  def out_of_office_agent
+  def out_of_office_agent(loop_user_ids: [], stack_depth: 10)
     return if !out_of_office?
     return if out_of_office_replacement_id.blank?
 
-    User.find_by(id: out_of_office_replacement_id)
+    if stack_depth.zero?
+      Rails.logger.warn("Found more than 10 replacement levels for agent #{self}.")
+      return self
+    end
+
+    user = User.find_by(id: out_of_office_replacement_id)
+
+    # stop if users are occuring multiple times to prevent endless loops
+    return user if loop_user_ids.include?(out_of_office_replacement_id)
+
+    loop_user_ids |= [out_of_office_replacement_id]
+
+    ooo_agent = user.out_of_office_agent(loop_user_ids: loop_user_ids, stack_depth: stack_depth - 1)
+    return ooo_agent if ooo_agent.present?
+
+    user
   end
 
 =begin
@@ -232,7 +256,19 @@ returns
 =end
 
   def out_of_office_agent_of
-    User.where(active: true, out_of_office: true, out_of_office_replacement_id: id).where('out_of_office_start_at <= ? AND out_of_office_end_at >= ?', Time.zone.today, Time.zone.today)
+    User.where(id: out_of_office_agent_of_recursive(user_id: id))
+  end
+
+  def out_of_office_agent_of_recursive(user_id:, result: [])
+    User.where(active: true, out_of_office: true, out_of_office_replacement_id: user_id).where('out_of_office_start_at <= ? AND out_of_office_end_at >= ?', Time.zone.today, Time.zone.today).each do |user|
+
+      # stop if users are occuring multiple times to prevent endless loops
+      break if result.include?(user.id)
+
+      result |= [user.id]
+      result |= out_of_office_agent_of_recursive(user_id: user.id, result: result)
+    end
+    result
   end
 
 =begin
@@ -283,54 +319,6 @@ returns
 
 =begin
 
-authenticate user
-
-  result = User.authenticate(username, password)
-
-returns
-
-  result = user_model # user model if authentication was successfully
-
-=end
-
-  def self.authenticate(username, password)
-
-    # do not authenticate with nothing
-    return if username.blank? || password.blank?
-
-    user = User.identify(username)
-    return if !user
-
-    return if !Auth.can_login?(user)
-
-    return user if Auth.valid?(user, password)
-
-    sleep 1
-    user.login_failed += 1
-    user.save!
-    nil
-  end
-
-=begin
-
-checks if a user has reached the maximum of failed login tries
-
-  user = User.find(123)
-  result = user.max_login_failed?
-
-returns
-
-  result = true | false
-
-=end
-
-  def max_login_failed?
-    max_login_failed = Setting.get('password_max_login_failed').to_i || 10
-    login_failed > max_login_failed
-  end
-
-=begin
-
 tries to find the matching instance by the given identifier. Currently email and login is supported.
 
   user = User.indentify('User123')
@@ -347,6 +335,8 @@ returns
 =end
 
   def self.identify(identifier)
+    return if identifier.blank?
+
     # try to find user based on login
     user = User.find_by(login: identifier.downcase)
     return user if user
@@ -459,7 +449,7 @@ returns
       end
       next if permission_ids.blank?
 
-      Role.joins(:permissions_roles).joins(:permissions).where('permissions_roles.permission_id IN (?) AND roles.active = ? AND permissions.active = ?', permission_ids, true, true).distinct().pluck(:id).each do |role_id|
+      Role.joins(:permissions_roles).joins(:permissions).where('permissions_roles.permission_id IN (?) AND roles.active = ? AND permissions.active = ?', permission_ids, true, true).distinct.pluck(:id).each do |role_id|
         role_ids.push role_id
       end
       total_role_ids.push role_ids
@@ -500,15 +490,13 @@ returns
     # try second lookup with email
     user ||= User.find_by(email: username.downcase.strip, active: true)
 
-    # check if email address exists
-    return if !user
-    return if !user.email
+    return if !user || !user.email
 
-    # generate token
-    token = Token.create(action: 'PasswordReset', user_id: user.id)
+    # Discard any possible previous tokens for safety reasons.
+    Token.where(action: 'PasswordReset', user_id: user.id).destroy_all
 
     {
-      token: token,
+      token: Token.create(action: 'PasswordReset', user_id: user.id, persistent: false),
       user:  user,
     }
   end
@@ -877,51 +865,49 @@ try to find correct name
     preferences.fetch(:locale) { Locale.default }
   end
 
+  attr_accessor :skip_ensure_uniq_email
+
   private
 
   def check_name
-    if firstname.present?
-      firstname.strip!
-    end
-    if lastname.present?
-      lastname.strip!
-    end
+    firstname&.strip!
+    lastname&.strip!
 
-    return true if firstname.present? && lastname.present?
+    return if firstname.present? && lastname.present?
 
     if (firstname.blank? && lastname.present?) || (firstname.present? && lastname.blank?)
       used_name = firstname.presence || lastname
       (local_firstname, local_lastname) = User.name_guess(used_name, email)
-
     elsif firstname.blank? && lastname.blank? && email.present?
       (local_firstname, local_lastname) = User.name_guess('', email)
     end
 
-    self.firstname = local_firstname if local_firstname.present?
-    self.lastname = local_lastname if local_lastname.present?
+    check_name_apply(:firstname, local_firstname)
+    check_name_apply(:lastname, local_lastname)
+  end
 
-    if firstname.present? && firstname.match(%r{^[A-z]+$}) && (firstname.downcase == firstname || firstname.upcase == firstname)
-      firstname.capitalize!
-    end
-    if lastname.present? && lastname.match(%r{^[A-z]+$}) && (lastname.downcase == lastname || lastname.upcase == lastname)
-      lastname.capitalize!
-    end
-    true
+  def check_name_apply(identifier, input)
+    self[identifier] = input if input.present?
+
+    self[identifier].capitalize! if self[identifier]&.match? %r{^([[:upper:]]+|[[:lower:]]+)$}
   end
 
   def check_email
-    return true if Setting.get('import_mode')
-    return true if email.blank?
+    return if Setting.get('import_mode')
+    return if email.blank?
 
     self.email = email.downcase.strip
-    return true if id == 1
+  end
+
+  def ensure_email
+    return if email.blank?
+    return if id == 1
 
     email_address_validation = EmailAddressValidation.new(email)
-    if !email_address_validation.valid_format?
-      raise Exceptions::UnprocessableEntity, "Invalid email '#{email}'"
-    end
 
-    true
+    return if email_address_validation.valid_format?
+
+    errors.add :base, "Invalid email '#{email}'"
   end
 
   def check_login
@@ -932,27 +918,26 @@ try to find correct name
     end
 
     # if email has changed, login is old email, change also login
-    if changes && changes['email'] && changes['email'][0] == login
+    if email_changed? && email_was == login
       self.login = email
     end
 
     # generate auto login
     if login.blank?
-      self.login = "auto-#{Time.zone.now.to_i}-#{rand(999_999)}"
+      self.login = "auto-#{SecureRandom.uuid}"
     end
 
     # check if login already exists
-    self.login = login.downcase.strip
-    check      = true
-    while check
+    base_login = login.downcase.strip
+
+    alternatives = [nil] + Array(1..20) + [ SecureRandom.uuid ]
+    alternatives.each do |suffix|
+      self.login = "#{base_login}#{suffix}"
       exists = User.find_by(login: login)
-      if exists && exists.id != id
-        self.login = "#{login}#{rand(999)}"
-      else
-        check = false
-      end
+      return true if !exists || exists.id == id
     end
-    true
+
+    raise Exceptions::UnprocessableEntity, "Invalid user login generation for login #{login}!"
   end
 
   def check_mail_delivery_failed
@@ -962,27 +947,26 @@ try to find correct name
   end
 
   def ensure_roles
-    return true if role_ids.present?
+    return if role_ids.present?
 
     self.role_ids = Role.signup_role_ids
   end
 
   def ensure_identifier
-    return true if email.present? || firstname.present? || lastname.present? || phone.present?
-    return true if login.present? && !login.start_with?('auto-')
+    return if login.present? && !login.start_with?('auto-')
+    return if [email, firstname, lastname, phone].any?(&:present?)
 
-    raise Exceptions::UnprocessableEntity, 'Minimum one identifier (login, firstname, lastname, phone or email) for user is required.'
+    errors.add :base, __('At least one identifier (firstname, lastname, phone or email) for user is required.')
   end
 
   def ensure_uniq_email
-    return true if Setting.get('user_email_multiple_use')
-    return true if Setting.get('import_mode')
-    return true if email.blank?
-    return true if !changes
-    return true if !changes['email']
-    return true if !User.exists?(email: email.downcase.strip)
+    return if Setting.get('user_email_multiple_use')
+    return if Setting.get('import_mode')
+    return if email.blank?
+    return if !email_changed?
+    return if !User.exists?(email: email.downcase.strip)
 
-    raise Exceptions::UnprocessableEntity, "Email address '#{email.downcase.strip}' is already used for other user."
+    errors.add :base, "Email address '#{email.downcase.strip}' is already used for other user."
   end
 
   def validate_roles(role)
@@ -1024,7 +1008,7 @@ try to find correct name
       preferences[:notification_sound][:enabled] = false
     end
     class_name = preferences[:notification_sound][:enabled].class.to_s
-    raise Exceptions::UnprocessableEntity, "preferences.notification_sound.enabled need to be an boolean, but it was a #{class_name}" if class_name != 'TrueClass' && class_name != 'FalseClass'
+    raise Exceptions::UnprocessableEntity, "preferences.notification_sound.enabled needs to be an boolean, but it was a #{class_name}" if class_name != 'TrueClass' && class_name != 'FalseClass'
 
     true
   end
@@ -1035,7 +1019,7 @@ checks if the current user is the last one with admin permissions.
 
 Raises
 
-raise 'Minimum one user need to have admin permissions'
+raise 'At least one user need to have admin permissions'
 
 =end
 
@@ -1043,7 +1027,7 @@ raise 'Minimum one user need to have admin permissions'
     return true if !will_save_change_to_attribute?('active')
     return true if active != false
     return true if !permissions?(['admin', 'admin.user'])
-    raise Exceptions::UnprocessableEntity, 'Minimum one user needs to have admin permissions.' if last_admin_check_admin_count < 1
+    raise Exceptions::UnprocessableEntity, __('At least one user needs to have admin permissions.') if last_admin_check_admin_count < 1
 
     true
   end
@@ -1051,14 +1035,14 @@ raise 'Minimum one user need to have admin permissions'
   def last_admin_check_by_role(role)
     return true if Setting.get('import_mode')
     return true if !role.with_permission?(['admin', 'admin.user'])
-    raise Exceptions::UnprocessableEntity, 'Minimum one user needs to have admin permissions.' if last_admin_check_admin_count < 1
+    raise Exceptions::UnprocessableEntity, __('At least one user needs to have admin permissions.') if last_admin_check_admin_count < 1
 
     true
   end
 
   def last_admin_check_admin_count
     admin_role_ids = Role.joins(:permissions).where(permissions: { name: ['admin', 'admin.user'], active: true }, roles: { active: true }).pluck(:id)
-    User.joins(:roles).where(roles: { id: admin_role_ids }, users: { active: true }).distinct().count - 1
+    User.joins(:roles).where(roles: { id: admin_role_ids }, users: { active: true }).distinct.count - 1
   end
 
   def validate_agent_limit_by_attributes
@@ -1068,8 +1052,8 @@ raise 'Minimum one user need to have admin permissions'
     return true if !permissions?('ticket.agent')
 
     ticket_agent_role_ids = Role.joins(:permissions).where(permissions: { name: 'ticket.agent', active: true }, roles: { active: true }).pluck(:id)
-    count                 = User.joins(:roles).where(roles: { id: ticket_agent_role_ids }, users: { active: true }).distinct().count + 1
-    raise Exceptions::UnprocessableEntity, 'Agent limit exceeded, please check your account settings.' if count > Setting.get('system_agent_limit').to_i
+    count                 = User.joins(:roles).where(roles: { id: ticket_agent_role_ids }, users: { active: true }).distinct.count + 1
+    raise Exceptions::UnprocessableEntity, __('Agent limit exceeded, please check your account settings.') if count > Setting.get('system_agent_limit').to_i
 
     true
   end
@@ -1081,7 +1065,7 @@ raise 'Minimum one user need to have admin permissions'
     return true if !role.with_permission?('ticket.agent')
 
     ticket_agent_role_ids = Role.joins(:permissions).where(permissions: { name: 'ticket.agent', active: true }, roles: { active: true }).pluck(:id)
-    count                 = User.joins(:roles).where(roles: { id: ticket_agent_role_ids }, users: { active: true }).distinct().count
+    count                 = User.joins(:roles).where(roles: { id: ticket_agent_role_ids }, users: { active: true }).distinct.count
 
     # if new added role is a ticket.agent role
     if ticket_agent_role_ids.include?(role.id)
@@ -1100,7 +1084,7 @@ raise 'Minimum one user need to have admin permissions'
         count += 1
       end
     end
-    raise Exceptions::UnprocessableEntity, 'Agent limit exceeded, please check your account settings.' if count > Setting.get('system_agent_limit').to_i
+    raise Exceptions::UnprocessableEntity, __('Agent limit exceeded, please check your account settings.') if count > Setting.get('system_agent_limit').to_i
 
     true
   end
@@ -1185,7 +1169,6 @@ raise 'Minimum one user need to have admin permissions'
 
   def ensure_password
     self.password = ensured_password
-    true
   end
 
   def ensured_password
@@ -1203,7 +1186,7 @@ raise 'Minimum one user need to have admin permissions'
   end
 
   # reset login_failed if password is changed
-  def reset_login_failed
+  def reset_login_failed_after_password_change
     return true if !will_save_change_to_attribute?('password')
 
     self.login_failed = 0

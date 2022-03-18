@@ -2,22 +2,22 @@ class App.FirstStepsClues extends App.Controller
   clues: [
     {
       container: '.js-dashboardMenuItem'
-      headline: 'Dashboard'
-      text: 'Here you see a quick overview of your and other agents\' performance.'
+      headline: __('Dashboard')
+      text: __('Here you see a quick overview of your and other agents\' performance.')
       actions: [
         'hover'
       ]
     }
     {
       container: '.search-holder'
-      headline: 'Search'
-      text: 'Here you can search for tickets, customers and organizations. Use the wildcard §*§ to find everything. E. g. §smi*§ or §rosent*l§. You also can use ||double quotes|| for searching phrases §"some phrase"§.'
+      headline: __('Search')
+      text: __('Here you can search for tickets, customers, and organizations. Use the asterisk §*§ to find anything, e.g. §smi*§ or §rosent*l§. You also can use ||quotation marks|| for searching phrases: §"some phrase"§.')
       actions: []
     }
     {
       container: '.user-menu .add'
-      headline: 'Create'
-      text: 'Here you can create new tickets. Also if you have the permissions you can create new customers and organizations.'
+      headline: __('Create')
+      text: __('Here you can create new tickets. Also, if you have the permission, you can create new customers and organizations.')
       actions: [
         'hover .navigation',
         'hover .user-menu .add'
@@ -25,8 +25,8 @@ class App.FirstStepsClues extends App.Controller
     }
     {
       container: '.user-menu .user .dropdown-menu'
-      headline: 'Personal Settings'
-      text: 'Here you can sign out, change the frontend language and see your last viewed items.'
+      headline: __('Personal Settings')
+      text: __('Here you can sign out, change the frontend language, and see your last viewed items.')
       actions: [
         'hover .navigation',
         'click .user-menu .user .js-action',
@@ -35,8 +35,8 @@ class App.FirstStepsClues extends App.Controller
     }
     {
       container: '.js-overviewsMenuItem'
-      headline: 'Overviews'
-      text: 'Here you find your ticket overviews for open, assigned and escalated tickets.'
+      headline: __('Overviews')
+      text: __('Here you find your ticket overviews for open, assigned, and escalated tickets.')
       actions: [
         'hover'
       ]

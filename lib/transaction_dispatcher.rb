@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class TransactionDispatcher
 
@@ -203,11 +203,6 @@ class TransactionDispatcher
     real_changes = {}
     record.changes_to_save.each do |key, value|
       next if key == 'updated_at'
-      next if key == 'first_response_at'
-      next if key == 'close_at'
-      next if key == 'last_contact_agent_at'
-      next if key == 'last_contact_customer_at'
-      next if key == 'last_contact_at'
       next if key == 'article_count'
       next if key == 'create_article_type_id'
       next if key == 'create_article_sender_id'
@@ -218,7 +213,7 @@ class TransactionDispatcher
     # do not send anything if nothing has changed
     return true if real_changes.blank?
 
-    changed_by_id = if record.respond_to?('updated_by_id')
+    changed_by_id = if record.respond_to?(:updated_by_id)
                       record.updated_by_id
                     else
                       record.created_by_id

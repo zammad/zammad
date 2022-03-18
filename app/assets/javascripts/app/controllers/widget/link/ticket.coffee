@@ -39,7 +39,7 @@ class App.WidgetLink.Ticket extends App.WidgetLink
     new App.TicketLinkAdd(
       link_object:    @object_type
       link_object_id: @object.id
-      link_types:     [['normal', 'Normal'], ['child', 'Child'], ['parent', 'Parent']]
+      link_types:     [['normal', __('Normal')], ['child', __('Child')], ['parent', __('Parent')]]
       object:         @object
       parent:         @
       container:      @el.closest('.content')

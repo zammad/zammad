@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class FirstStepsController < ApplicationController
   prepend_before_action :authentication_check
@@ -7,13 +7,13 @@ class FirstStepsController < ApplicationController
 
   def index
     invite_agents = false
-    #if User.of_role('Agent').count > 2
+    # if User.of_role('Agent').count > 2
     #  invite_agents = true
-    #end
+    # end
     invite_customers = false
-    #if User.of_role('Customer').count > 2
+    # if User.of_role('Customer').count > 2
     #  invite_customers = true
-    #end
+    # end
 
     chat_active = false
     if Setting.get('chat')
@@ -48,26 +48,26 @@ class FirstStepsController < ApplicationController
 
       result = [
         {
-          name:  'Configuration',
+          name:  __('Configuration'),
           items: [
             {
-              name:     'Branding',
+              name:     __('Branding'),
               checked:  true,
               location: '#settings/branding',
             },
             {
-              name:     'Your Email Configuration',
+              name:     __('Your Email Configuration'),
               checked:  email_active,
               location: '#channels/email',
             },
             {
-              name:     'Invite agents/colleagues to help working on tickets',
+              name:     __('Invite agents/colleagues to help working on tickets'),
               checked:  invite_agents,
               location: '#',
               class:    'js-inviteAgent',
             },
             {
-              name:     'Invite customers to create issues in Zammad',
+              name:     __('Invite customers to create issues in Zammad'),
               checked:  invite_customers,
               location: '#',
               class:    'js-inviteCustomer',
@@ -75,56 +75,56 @@ class FirstStepsController < ApplicationController
           ],
         },
         {
-          name:  'How to use it',
+          name:  __('How to use it'),
           items: [
             {
-              name:     'Intro',
+              name:     __('Intro'),
               checked:  true,
               location: '#clues',
             },
             {
-              name:     'Create a Test Ticket',
+              name:     __('Create a Test Ticket'),
               checked:  false,
               location: '#',
               class:    'js-testTicket',
             },
             {
-              name:     'Create Text Modules',
+              name:     __('Create Text Modules'),
               checked:  text_module_active,
               location: '#manage/text_modules',
             },
             {
-              name:     'Create Macros',
+              name:     __('Create Macros'),
               checked:  macro_active,
               location: '#manage/macros',
             },
-            #{
+            # {
             #  name: 'Create Overviews',
             #  checked: false,
             #  location: '#manage/overviews',
-            #},
+            # },
           ],
         },
         {
-          name:  'Additional Channels',
+          name:  __('Additional Channels'),
           items: [
             {
-              name:     'Twitter',
+              name:     __('Twitter'),
               checked:  twitter_active,
               location: '#channels/twitter',
             },
             {
-              name:     'Facebook',
+              name:     __('Facebook'),
               checked:  facebook_active,
               location: '#channels/facebook',
             },
             {
-              name:     'Chat',
+              name:     __('Chat'),
               checked:  chat_active,
               location: '#channels/chat',
             },
             {
-              name:     'Online Forms',
+              name:     __('Online Forms'),
               checked:  form_active,
               location: '#channels/form',
             },
@@ -140,21 +140,21 @@ class FirstStepsController < ApplicationController
 
     result = [
       {
-        name:  'How to use it',
+        name:  __('How to use it'),
         items: [
           {
-            name:     'Intro',
+            name:     __('Intro'),
             checked:  true,
             location: '#clues',
           },
           {
-            name:     'Create a Test Ticket',
+            name:     __('Create a Test Ticket'),
             checked:  false,
             location: '#',
             class:    'js-testTicket',
           },
           {
-            name:     'Invite customers to create issues in Zammad',
+            name:     __('Invite customers to create issues in Zammad'),
             checked:  invite_customers,
             location: '#',
             class:    'js-inviteCustomer',
@@ -212,7 +212,7 @@ class FirstStepsController < ApplicationController
   private
 
   def test_overview
-    Overview.find_by(name: 'Unassigned & Open')
+    Overview.find_by(name: __('Unassigned & Open Tickets'))
   end
 
   def test_customer

@@ -1,6 +1,6 @@
 class Organization extends App.ControllerSubContent
   requiredPermission: 'admin.organization'
-  header: 'Organizations'
+  header: __('Organizations')
   constructor: ->
     super
 
@@ -16,19 +16,19 @@ class Organization extends App.ControllerSubContent
       defaultSortBy: 'name'
       pageData:
         home: 'organizations'
-        object: 'Organization'
-        objects: 'Organizations'
+        object: __('Organization')
+        objects: __('Organizations')
         pagerAjax: true
         pagerBaseUrl: '#manage/organizations/'
         pagerSelected: ( @page || 1 )
         pagerPerPage: 150
         navupdate: '#organizations'
         notes: [
-          'Organizations are for any person in the system. Agents (Owners, Resposbiles, ...) and Customers.'
+          __('Organizations are for any person in the system: agents (owners, responsibles, …) and customers.')
         ]
         buttons: [
-          { name: 'Import', 'data-type': 'import', class: 'btn' }
-          { name: 'New Organization', 'data-type': 'new', class: 'btn--success' }
+          { name: __('Import'), 'data-type': 'import', class: 'btn' }
+          { name: __('New Organization'), 'data-type': 'new', class: 'btn--success' }
         ]
       container: @el.closest('.content')
     )
@@ -41,4 +41,4 @@ class Organization extends App.ControllerSubContent
     @genericController.paginate( @page || 1 )
 
 
-App.Config.set('Organization', { prio: 2000, name: 'Organizations', parent: '#manage', target: '#manage/organizations', controller: Organization, permission: ['admin.organization'] }, 'NavBarAdmin')
+App.Config.set('Organization', { prio: 2000, name: __('Organizations'), parent: '#manage', target: '#manage/organizations', controller: Organization, permission: ['admin.organization'] }, 'NavBarAdmin')

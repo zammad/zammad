@@ -26,6 +26,7 @@
 
           <form role="form" class="ticket-create">
             <input type="hidden" name="formSenderType"/>
+            <input type="hidden" name="shared_draft_id" value="<%= @shared_draft_id %>"/>
             <input type="hidden" name="form_id" value="<%= @form_id %>"/>
             <div class="ticket-form-top"></div>
             <div class="form-group js-securityOptions hide">

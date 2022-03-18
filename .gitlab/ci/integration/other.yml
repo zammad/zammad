@@ -1,0 +1,27 @@
+"minitest:integration:other":
+  extends:
+    - .template_integration
+  script:
+    - echo -e "\\e[0Ksection_start:`date +%s`:zammad_db_unseeded[collapsed=true]\\r\\e[0Kbundle exec rake zammad:db:unseeded"
+    - bundle exec rake zammad:db:unseeded
+    - echo -e "\\e[0Ksection_end:`date +%s`:zammad_db_unseeded\\r\\e[0K"
+    - echo "email_helper_deliver tests..."
+    - bundle exec rails test test/integration/email_helper_test.rb
+    - bundle exec rails test test/integration/email_deliver_test.rb
+    - bundle exec rails test test/integration/email_keep_on_server_test.rb
+    - bundle exec rails test test/integration/email_postmaster_to_sender.rb
+    - echo "Clearbit test..."
+    - bundle exec rails test test/integration/clearbit_test.rb
+    - echo "Geo tests..."
+    - bundle exec rails test test/integration/geo_calendar_test.rb
+    - bundle exec rails test test/integration/geo_location_test.rb
+    - bundle exec rails test test/integration/geo_ip_test.rb
+    - echo "Slack test..."
+    - bundle exec rails test test/integration/slack_test.rb
+    - echo "UserAgent tests..."
+    - bundle exec rails test test/integration/user_agent_test.rb
+    - export ZAMMAD_PROXY_TEST=true
+    - bundle exec rails test test/integration/user_agent_test.rb
+
+
+  allow_failure: true

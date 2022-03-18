@@ -2,14 +2,15 @@ class App.TicketZoom extends App.Controller
   @include App.TicketNavigable
 
   elements:
-    '.main':             'main'
-    '.ticketZoom':       'ticketZoom'
-    '.scrollPageHeader': 'scrollPageHeader'
+    '.main':               'main'
+    '.ticketZoom':         'ticketZoom'
+    '.scrollPageHeader':   'scrollPageHeader'
 
   events:
     'click .js-submit':   'submit'
     'click .js-bookmark': 'bookmark'
     'click .js-reset':    'reset'
+    'click .js-draft':    'draft'
     'click .main':        'muteTask'
 
   constructor: (params) ->
@@ -128,7 +129,7 @@ class App.TicketZoom extends App.Controller
           @taskIconClass = 'diagonal-cross'
 
           if !detail
-            detail = 'General communication error, maybe internet is not available!'
+            detail = __('General communication error, maybe internet is not available!')
           @renderScreenError(
             status:     status
             detail:     detail
@@ -187,6 +188,9 @@ class App.TicketZoom extends App.Controller
       # remember mentions
       @mentions = data.mentions
 
+      if draft = App.TicketSharedDraftZoom.findByAttribute 'ticket_id', @ticket_id
+        draft.remove(clear: true)
+
       App.Collection.loadAssets(data.assets, targetModel: 'Ticket')
 
     # get ticket
@@ -200,10 +204,10 @@ class App.TicketZoom extends App.Controller
     formMeta   = data.form_meta
 
     # on the following states we want to rerender the ticket:
-    # - if the object attribute configuration has changed (attribute values, restrictions, filters)
+    # - if the object attribute configuration has changed (attribute values, dependecies, filters)
     # - if the user view has changed (agent/customer)
     # - if the ticket permission has changed (read/write/full)
-    if @view && ( !_.isEqual(@formMeta, formMeta) || @view isnt view || @readable isnt readable || @changeable isnt changeable || @fullable isnt fullable )
+    if @view && ( !_.isEqual(@formMeta.configure_attributes, formMeta.configure_attributes) || !_.isEqual(@formMeta.dependencies, formMeta.dependencies) || !_.isEqual(@formMeta.filter, formMeta.filter) || @view isnt view || @readable isnt readable || @changeable isnt changeable || @fullable isnt fullable )
       @renderDone = false
 
     @view       = view
@@ -214,6 +218,7 @@ class App.TicketZoom extends App.Controller
 
     # render page
     @render(local)
+    App.Event.trigger('ui::ticket::load', data)
 
   meta: =>
 
@@ -263,6 +268,10 @@ class App.TicketZoom extends App.Controller
     @positionPageHeaderStart()
     @autosaveStart()
     @shortcutNavigationStart()
+
+    if @articleNew
+      @articleNew.show()
+
     return if !@attributeBar
     @attributeBar.start()
 
@@ -354,16 +363,16 @@ class App.TicketZoom extends App.Controller
       article_id: undefined
 
     modifier = 'alt+ctrl+left'
-    $(document).bind("keydown.ticket_zoom#{@ticket_id}", modifier, (e) =>
+    $(document).on("keydown.ticket_zoom#{@ticket_id}", modifier, (e) =>
       @articleNavigate('up')
     )
     modifier = 'alt+ctrl+right'
-    $(document).bind("keydown.ticket_zoom#{@ticket_id}", modifier, (e) =>
+    $(document).on("keydown.ticket_zoom#{@ticket_id}", modifier, (e) =>
       @articleNavigate('down')
     )
 
   shortcutNavigationstop: =>
-    $(document).unbind("keydown.ticket_zoom#{@ticket_id}")
+    $(document).off("keydown.ticket_zoom#{@ticket_id}")
 
   articleNavigate: (direction) =>
     articleStates = []
@@ -399,13 +408,13 @@ class App.TicketZoom extends App.Controller
     @positionPageHeaderUpdate()
 
     # scroll is also fired on window resize, if element scroll is changed
-    @main.bind(
+    @main.on(
       'scroll'
       @positionPageHeaderUpdate
     )
 
   positionPageHeaderStop: =>
-    @main.unbind('scroll', @positionPageHeaderUpdate)
+    @main.off('scroll', @positionPageHeaderUpdate)
 
   @scrollHeaderPos: undefined
 
@@ -432,14 +441,28 @@ class App.TicketZoom extends App.Controller
 
     @scrollHeaderPos = scroll
 
+  pendingTimeReminderReached: =>
+    App.TaskManager.touch(@taskKey)
+
+  setPendingTimeReminderDelay: =>
+    stateType = App.TicketStateType.find @ticket?.state?.state_type_id
+    return if stateType?.name != 'pending reminder'
+
+    delay = new Date(@ticket.pending_time) - new Date()
+
+    @delay @pendingTimeReminderReached, delay, 'pendingTimeReminderDelay'
+
   render: (local) =>
+    @setPendingTimeReminderDelay()
 
     # update taskbar with new meta data
     App.TaskManager.touch(@taskKey)
 
     if !@renderDone
-      @renderDone = true
-      @autosaveLast = {}
+      @renderDone      = true
+      @autosaveLast    = {}
+      @scrollHeaderPos = undefined
+
       elLocal = $(App.view('ticket_zoom')
         ticket:         @ticket
         nav:            @nav
@@ -462,11 +485,13 @@ class App.TicketZoom extends App.Controller
       )
 
       @attributeBar = new App.TicketZoomAttributeBar(
-        ticket:      @ticket
-        el:          elLocal.find('.js-attributeBar')
-        overview_id: @overview_id
-        callback:    @submit
-        taskKey:     @taskKey
+        ticket:        @ticket
+        el:            elLocal.find('.js-attributeBar')
+        overview_id:   @overview_id
+        macroCallback: @submit
+        draftCallback: @saveDraft
+        draftState:    @draftState()
+        taskKey:       @taskKey
       )
       #if @shown
       #  @attributeBar.start()
@@ -474,16 +499,22 @@ class App.TicketZoom extends App.Controller
       @form_id = @taskGet('article').form_id || App.ControllerForm.formId()
 
       @articleNew = new App.TicketZoomArticleNew(
-        ticket:                  @ticket
-        ticket_id:               @ticket_id
-        el:                      elLocal.find('.article-new')
-        formMeta:                @formMeta
-        form_id:                 @form_id
-        defaults:                @taskGet('article')
-        taskKey:                 @taskKey
-        ui:                      @
-        callbackFileUploadStart: @submitDisable
-        callbackFileUploadStop:  @submitEnable
+        ticket:                       @ticket
+        ticket_id:                    @ticket_id
+        el:                           elLocal.find('.article-new')
+        formMeta:                     @formMeta
+        form_id:                      @form_id
+        defaults:                     @taskGet('article')
+        taskKey:                      @taskKey
+        ui:                           @
+        richTextUploadStartCallback:  @submitDisable
+        richTextUploadRenderCallback: (attachments) =>
+          @submitEnable()
+          @taskUpdateAttachments('article', attachments)
+          @delay(@markForm, 250, 'ticket-zoom-form-update')
+        richTextUploadDeleteCallback: (attachments) =>
+          @taskUpdateAttachments('article', attachments)
+          @delay(@markForm, 250, 'ticket-zoom-form-update')
       )
 
       @highligher = new App.TicketZoomHighlighter(
@@ -622,6 +653,7 @@ class App.TicketZoom extends App.Controller
     # update changes in ui
     currentStore = @currentStore()
     modelDiff = @formDiff(currentParams, currentStore)
+    return if _.isEmpty(modelDiff)
 
     # set followup state if needed
     @setDefaultFollowUpState(modelDiff, currentStore)
@@ -701,7 +733,7 @@ class App.TicketZoom extends App.Controller
     # add attachments if exist
     attachmentCount = @$('.article-add .textBubble .attachments .attachment').length
     if attachmentCount > 0
-      currentParams.article.attachments = true
+      currentParams.article.attachments = attachmentCount
     else
       delete currentParams.article.attachments
 
@@ -716,6 +748,14 @@ class App.TicketZoom extends App.Controller
 
     # do not compare null or undefined value
     if currentStore.ticket
+
+      # make sure that the compared state is same in local storage and
+      # rendered html. Else we could have race conditions of data
+      # which is not rendered yet
+      renderedUpdatedAt = @el.find('.edit').attr('data-ticket-updated-at')
+      return if !renderedUpdatedAt
+      return if currentStore.ticket.updated_at.toString() isnt renderedUpdatedAt
+
       for key, value of currentStore.ticket
         if value is null || value is undefined
           currentStore.ticket[key] = ''
@@ -856,7 +896,8 @@ class App.TicketZoom extends App.Controller
 
     # validate ticket by model
     errors = ticket.validate(
-      screen: 'edit'
+      controllerForm: @sidebarWidget?.get('100-TicketEdit')?.edit?.controllerFormSidebarTicket
+      target: e.target
     )
     if errors
       @log 'error', 'update', errors
@@ -930,6 +971,56 @@ class App.TicketZoom extends App.Controller
         @submitPost(e, ticket, macro)
     )
 
+  saveDraft: (e) =>
+    e.stopPropagation()
+    e.preventDefault()
+
+    params =
+      new_article:       @articleNew.params()
+      ticket_attributes: @ticketParams()
+
+    loaded_draft_id = params.new_article.shared_draft_id
+
+    params.form_id = params.new_article['form_id']
+    delete params.new_article['form_id']
+    delete params.new_article['shared_draft_id']
+
+    sharedDraft = @sharedDraft()
+
+    draftExists = sharedDraft?
+    isLoaded = loaded_draft_id == String(sharedDraft?.id)
+
+    matches = draftExists &&
+      _.isEqual(sharedDraft.new_article, params.new_article) &&
+      _.isEqual(sharedDraft.ticket_attributes, params.ticket_attributes)
+
+    if draftExists && !(isLoaded && matches)
+      new App.TicketSharedDraftOverwriteModal(
+        onShowDraft: @draft
+        onSaveDraft: =>
+          @draftSaveToServer(params)
+      )
+
+      return
+
+    @draftSaveToServer(params)
+
+  draftSaveToServer: (params) =>
+    @draftSaving()
+
+    @ajax
+      id: 'ticket_shared_draft_update'
+      type: 'PUT'
+      url: @apiPath + '/tickets/' + @ticket_id + '/shared_draft'
+      processData: true
+      data: JSON.stringify(params)
+      success: (data, status, xhr) =>
+        App.Collection.loadAssets(data.assets)
+        App.Event.trigger 'ui::ticket::shared_draft_saved', { ticket_id: @ticket_id, shared_draft_id: data.shared_draft_id }
+        @draftFetched()
+      error: =>
+        @draftFetched()
+
   submitPost: (e, ticket, macro) =>
     taskAction = @$('.js-secondaryActionButtonLabel').data('type')
 
@@ -949,14 +1040,13 @@ class App.TicketZoom extends App.Controller
       processData: true
       success: (data) =>
 
-        #App.SessionStorage.set(@key, data)
-        @load(data, true, true)
-
         # reset article - should not be resubmitted on next ticket update
         ticket.article = undefined
 
         # reset form after save
         @reset()
+
+        @load(data, false, true)
 
         if @sidebarWidget
           @sidebarWidget.commit()
@@ -965,8 +1055,14 @@ class App.TicketZoom extends App.Controller
           @openTicketInOverview(nextTicket)
           App.Event.trigger('overview:fetch')
           return
-
-        if taskAction is 'closeTab' || taskAction is 'next_task'
+        else if taskAction is 'closeTabOnTicketClose' || taskAction is 'next_task_on_close'
+          state_type_id = App.TicketState.find(ticket.state_id).state_type_id
+          state_type    = App.TicketStateType.find(state_type_id).name
+          if state_type is 'closed'
+            App.Event.trigger('overview:fetch')
+            @taskCloseTicket(true)
+            return
+        else if taskAction is 'closeTab' || taskAction is 'next_task'
           App.Event.trigger('overview:fetch')
           @taskCloseTicket(true)
           return
@@ -982,7 +1078,7 @@ class App.TicketZoom extends App.Controller
           error = settings.responseJSON.error
         App.Event.trigger 'notify', {
           type:    'error'
-          msg:     App.i18n.translateContent(details.error_human || details.error || error || 'Unable to update!')
+          msg:     App.i18n.translateContent(details.error_human || details.error || error || __('Saving failed.'))
           timeout: 2000
         }
         @autosaveStart()
@@ -993,6 +1089,49 @@ class App.TicketZoom extends App.Controller
 
   bookmark: (e) ->
     $(e.currentTarget).find('.bookmark.icon').toggleClass('filled')
+
+  draft: (e) =>
+    e.preventDefault()
+
+    new App.TicketSharedDraftModal(
+      container:    @el.closest('.content')
+      hasChanges:   App.TaskManager.worker(@taskKey).changed()
+      parent:       @
+      shared_draft: @sharedDraft()
+    )
+
+  fetchDraft: ->
+    @ajax(
+      id:    "ticket_#{@ticket_id}_shared_draft"
+      type: 'GET'
+      url:    "#{@apiPath}/tickets/#{@ticket_id}/shared_draft"
+      processData: true
+      success: (data, status, xhr) =>
+        App.Collection.loadAssets(data.assets)
+        @draftFetched()
+    )
+
+  draftSaving: ->
+    @updateDraftButton(true, 'saving')
+
+  updateDraftButton: (visible, state) ->
+    button = @el.find('.js-draft')
+
+    button.toggleClass('hide', !visible)
+    button.find('.attributeBar-draft--available').toggleClass('hide', state != 'available')
+    button.find('.attributeBar-draft--saving').toggleClass('hide', state != 'saving')
+    button.attr('disabled', state == 'saving')
+
+    @el.find('.js-dropdownActionSaveDraft').attr('disabled', state == 'saving')
+
+  draftFetched: ->
+    @updateDraftButton(@sharedDraft()?, 'available')
+
+  draftState: ->
+    @sharedDraft()?
+
+  sharedDraft: ->
+    App.TicketSharedDraftZoom.findByAttribute 'ticket_id', @ticket_id
 
   reset: (e) =>
     if e
@@ -1037,12 +1176,29 @@ class App.TicketZoom extends App.Controller
 
   taskUpdate: (area, data) =>
     @localTaskData[area] = data
-    App.TaskManager.update(@taskKey, { 'state': @localTaskData })
+
+    taskData = { 'state': @localTaskData }
+    if _.isArray(data.attachments)
+      taskData.attachments = data.attachments
+
+    App.TaskManager.update(@taskKey, taskData)
+
+  taskUpdateAttachments: (area, attachments) =>
+    taskData = App.TaskManager.get(@taskKey)
+    return if !taskData
+
+    taskData.attachments = attachments
+    App.TaskManager.update(@taskKey, taskData)
 
   taskUpdateAll: (data) =>
     @localTaskData = data
     @localTaskData.article['form_id'] = @form_id
-    App.TaskManager.update(@taskKey, { 'state': @localTaskData })
+
+    taskData = { 'state': @localTaskData }
+    if _.isArray(data.attachments)
+      taskData.attachments = data.attachments
+
+    App.TaskManager.update(@taskKey, taskData)
 
   # reset task state
   taskReset: =>
@@ -1056,7 +1212,7 @@ class App.TicketZoom extends App.Controller
     @localTaskData =
       ticket:  {}
       article: {}
-    App.TaskManager.update(@taskKey, { 'state': @localTaskData })
+    App.TaskManager.update(@taskKey, { 'state': @localTaskData, attachments: [] })
 
   renderOverviewNavigator: (parentEl) ->
     new App.TicketZoomOverviewNavigator(

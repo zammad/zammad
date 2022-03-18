@@ -1,9 +1,9 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class SessionsController < ApplicationController
   prepend_before_action -> { authentication_check && authorize! }, only: %i[switch_to_user list delete]
   skip_before_action :verify_csrf_token, only: %i[show destroy create_omniauth failure_omniauth]
-  skip_before_action :user_device_check, only: %i[create_sso]
+  skip_before_action :user_device_log, only: %i[create_sso]
 
   # "Create" a login, aka "log the user in"
   def create
@@ -26,7 +26,7 @@ class SessionsController < ApplicationController
       User.lookup(login: login&.downcase)
     end
 
-    raise Exceptions::NotAuthorized, 'Missing SSO ENV REMOTE_USER or X-Forwarded-User header' if login.blank?
+    raise Exceptions::NotAuthorized, __('Missing SSO ENV REMOTE_USER or X-Forwarded-User header') if login.blank?
     raise Exceptions::NotAuthorized, "No such user '#{login}' found!" if user.blank?
 
     session.delete(:switched_from_user_id)
@@ -54,6 +54,9 @@ class SessionsController < ApplicationController
 
   # "Delete" a login, aka "log the user out"
   def destroy
+    if Rails.env.test? && ENV['FAKE_SELENIUM_LOGIN_USER_ID'].present?
+      ENV['FAKE_SELENIUM_LOGIN_USER_ID'] = nil # rubocop:disable Rails/EnvironmentVariableAccess
+    end
 
     reset_session
 
@@ -213,6 +216,14 @@ class SessionsController < ApplicationController
   end
 
   private
+
+  def authenticate_with_password
+    auth = Auth.new(params[:username], params[:password])
+    raise_unified_login_error if !auth.valid?
+
+    session.delete(:switched_from_user_id)
+    authentication_check_prerequesits(auth.user, 'session', {})
+  end
 
   def initiate_session_for(user)
     request.env['rack.session.options'][:expire_after] = 1.year if params[:remember_me]

@@ -4,7 +4,7 @@ class FacebookReply
 
     if article.type.name is 'facebook feed post' || article.type.name is 'facebook feed comment'
       actions.push {
-        name: 'reply'
+        name: __('reply')
         type: 'facebookFeedReply'
         icon: 'reply'
         href: '#'

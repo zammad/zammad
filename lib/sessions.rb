@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 module Sessions
 
@@ -152,7 +152,7 @@ returns
     list_of_closed_sessions = []
     clients                 = Sessions.list
     clients.each do |client_id, client|
-      if !client[:meta] || !client[:meta][:last_ping] || ( client[:meta][:last_ping].to_i + idle_time_in_sec ) < Time.now.utc.to_i
+      if !client[:meta] || !client[:meta][:last_ping] || (client[:meta][:last_ping].to_i + idle_time_in_sec) < Time.now.utc.to_i
         list_of_closed_sessions.push client_id
         Sessions.destroy(client_id)
       end
@@ -365,20 +365,20 @@ get spool messages
   def self.spool_list(timestamp, current_user_id)
     data      = []
     to_delete = []
-    @store.each_spool do |message|
+    @store.each_spool do |message, entry|
       message_parsed = {}
       begin
         spool = JSON.parse(message)
         message_parsed = JSON.parse(spool['msg'])
       rescue => e
         log('error', "can't parse spool message: #{message}, #{e.inspect}")
-        to_delete.push message
+        to_delete.push [message, entry]
         next
       end
 
       # ignore message older then 48h
       if spool['timestamp'] + (2 * 86_400) < Time.now.utc.to_i
-        to_delete.push message
+        to_delete.push [message, entry]
         next
       end
 
@@ -421,8 +421,8 @@ get spool messages
         end
       end
     end
-    to_delete.each do |file|
-      @store.remove_from_spool(file)
+    to_delete.each do |item|
+      @store.remove_from_spool(*item)
     end
     data
   end
@@ -579,7 +579,7 @@ returns
       Sessions::Client.new(client_id, node_id)
     rescue => e
       log('error', "thread_client #{client_id} exited with error #{e.inspect}")
-      log('error', e.backtrace.join("\n  ") )
+      log('error', e.backtrace.join("\n  "))
       sleep 10
       begin
         ActiveRecord::Base.connection_pool.release_connection
@@ -591,7 +591,7 @@ returns
       try_count += 1
 
       # reset error counter if to old
-      if try_run_time + ( 60 * 5 ) < Time.now.utc
+      if try_run_time + (60 * 5) < Time.now.utc
         try_count = 0
       end
       try_run_time = Time.now.utc

@@ -3,9 +3,16 @@ class App.KnowledgeBaseReaderListController extends App.Controller
     super
     @render()
 
-    @listenTo App.KnowledgeBase, 'kb_data_change_loaded', =>
-      if !@objectVisibleInternally()
-        @parentController.renderNotAvailableAnymore()
+    @listenTo App.KnowledgeBase, 'kb_data_change_loaded', @changeLoaded
+    @listenTo App.KnowledgeBase, 'kb_visibility_may_have_changed', => @changeLoaded(true)
+
+  changeLoaded: =>
+    if !@objectVisibleInternally()
+      @parentController.renderNotAvailableAnymore()
+      return
+
+    if @renderEmptinessState != @object.isEmpty()
+      @render()
 
   elements:
     '.js-readerListContainer': 'container'
@@ -18,11 +25,13 @@ class App.KnowledgeBaseReaderListController extends App.Controller
       @parentController.renderNotFound()
       return
 
+    @renderEmptinessState = @object.isEmpty()
+
     if @object.isEmpty()
       @renderScreenPlaceholder(
         icon:   App.Utils.icon('mood-ok')
-        detail: 'This category is empty'
-        action: 'Start Editing'
+        detail: __('This category is empty')
+        action: if @parentController.isEditor() then __('Start Editing')
         actionCallback: =>
           url = @object.uiUrl(@parentController.kb_locale(), 'edit')
           @navigate url

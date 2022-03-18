@@ -104,7 +104,7 @@ class _webSocketSingleton extends App.Controller
     @connect()
 
     # send ping after visibilitychange to check if connection is open again after wakeup
-    $(document).bind('visibilitychange', =>
+    $(document).on('visibilitychange', =>
       @log 'debug', 'visibilitychange'
       return if document.hidden
       return if !@connectionEstablished
@@ -398,7 +398,7 @@ class Modal extends App.ControllerModal
   buttonSubmit: false
   backdrop: 'static'
   keyboard: false
-  head: 'Lost network connection!'
+  head: __('Lost network connection!')
 
   content: ->
-    'Trying to reconnect...'
+    __('Trying to reconnect…')

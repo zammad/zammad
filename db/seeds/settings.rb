@@ -1,42 +1,43 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 Setting.create_if_not_exists(
-  title:       'Application secret',
+  title:       __('Application secret'),
   name:        'application_secret',
   area:        'Core',
-  description: 'Defines the random application secret.',
+  description: __('Defines the random application secret.'),
   options:     {},
   state:       SecureRandom.hex(128),
   preferences: {
     permission: ['admin'],
+    protected:  true,
   },
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'System Init Done',
+  title:       __('System Init Done'),
   name:        'system_init_done',
   area:        'Core',
-  description: 'Defines if application is in init mode.',
+  description: __('Defines if application is in init mode.'),
   options:     {},
   state:       false,
   preferences: { online_service_disable: true },
   frontend:    true
 )
 Setting.create_if_not_exists(
-  title:       'App Version',
+  title:       __('App Version'),
   name:        'app_version',
   area:        'Core::WebApp',
-  description: 'Only used internally to propagate current web app version to clients.',
+  description: __('Only used internally to propagate current web app version to clients.'),
   options:     {},
   state:       '',
   preferences: { online_service_disable: true },
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Maintenance Mode',
+  title:       __('Maintenance Mode'),
   name:        'maintenance_mode',
   area:        'Core::WebApp',
-  description: 'Enable or disable the maintenance mode of Zammad. If enabled, all non-administrators get logged out and only administrators can start a new session.',
+  description: __('Enable or disable the maintenance mode of Zammad. If enabled, all non-administrators get logged out and only administrators can start a new session.'),
   options:     {},
   state:       false,
   preferences: {
@@ -45,10 +46,10 @@ Setting.create_if_not_exists(
   frontend:    true
 )
 Setting.create_if_not_exists(
-  title:       'Maintenance Login',
+  title:       __('Maintenance Login'),
   name:        'maintenance_login',
   area:        'Core::WebApp',
-  description: 'Put a message on the login page. To change it, click on the text area below and change it in-line.',
+  description: __('Put a message on the login page. To change it, click on the text area below and change it in-line.'),
   options:     {},
   state:       false,
   preferences: {
@@ -57,42 +58,42 @@ Setting.create_if_not_exists(
   frontend:    true
 )
 Setting.create_if_not_exists(
-  title:       'Maintenance Login',
+  title:       __('Maintenance Login'),
   name:        'maintenance_login_message',
   area:        'Core::WebApp',
-  description: 'Message for login page.',
+  description: __('Message for login page.'),
   options:     {},
-  state:       'Something about to share. Click here to change.',
+  state:       __('This is a default maintenance message. Click here to change.'),
   preferences: {
     permission: ['admin.maintenance'],
   },
   frontend:    true
 )
 Setting.create_if_not_exists(
-  title:       'Developer System',
+  title:       __('Developer System'),
   name:        'developer_mode',
   area:        'Core::Develop',
-  description: 'Defines if application is in developer mode (useful for developer, all users have the same password, password reset will work without email delivery).',
+  description: __('Defines if the application is in developer mode (all users have the same password and password reset will work without email delivery).'),
   options:     {},
   state:       Rails.env.development?,
   preferences: { online_service_disable: true },
   frontend:    true
 )
 Setting.create_if_not_exists(
-  title:       'Online Service',
+  title:       __('Online Service'),
   name:        'system_online_service',
   area:        'Core',
-  description: 'Defines if application is used as online service.',
+  description: __('Defines if application is used as online service.'),
   options:     {},
   state:       false,
   preferences: { online_service_disable: true },
   frontend:    true
 )
 Setting.create_if_not_exists(
-  title:       'Product Name',
+  title:       __('Product Name'),
   name:        'product_name',
   area:        'System::Branding',
-  description: 'Defines the name of the application, shown in the web interface, tabs and title bar of the web browser.',
+  description: __('Defines the name of the application, shown in the web interface, tabs, and title bar of the web browser.'),
   options:     {
     form: [
       {
@@ -109,14 +110,14 @@ Setting.create_if_not_exists(
     placeholder: true,
     permission:  ['admin.branding'],
   },
-  state:       'Zammad Helpdesk',
+  state:       __('Zammad Helpdesk'),
   frontend:    true
 )
 Setting.create_if_not_exists(
-  title:       'Logo',
+  title:       __('Logo'),
   name:        'product_logo',
   area:        'System::Branding',
-  description: 'Defines the logo of the application, shown in the web interface.',
+  description: __('Defines the logo of the application, shown in the web interface.'),
   options:     {
     form: [
       {
@@ -136,10 +137,10 @@ Setting.create_if_not_exists(
   frontend:    true
 )
 Setting.create_if_not_exists(
-  title:       'Organization',
+  title:       __('Organization'),
   name:        'organization',
   area:        'System::Branding',
-  description: 'Will be shown in the app and is included in email footers.',
+  description: __('Will be shown in the app and is included in email footers.'),
   options:     {
     form: [
       {
@@ -159,10 +160,10 @@ Setting.create_if_not_exists(
   frontend:    true
 )
 Setting.create_if_not_exists(
-  title:       'Locale',
+  title:       __('Locale'),
   name:        'locale_default',
   area:        'System::Branding',
-  description: 'Defines the system default language.',
+  description: __('Defines the default system language.'),
   options:     {
     form: [
       {
@@ -179,10 +180,10 @@ Setting.create_if_not_exists(
   frontend:    true
 )
 Setting.create_if_not_exists(
-  title:       'Timezone',
+  title:       __('Timezone'),
   name:        'timezone_default',
   area:        'System::Branding',
-  description: 'Defines the system default timezone.',
+  description: __('Defines the default system timezone.'),
   options:     {
     form: [
       {
@@ -199,10 +200,10 @@ Setting.create_if_not_exists(
   frontend:    true
 )
 Setting.create_or_update(
-  title:       'Pretty Date',
+  title:       __('Pretty Date'),
   name:        'pretty_date_format',
   area:        'System::Branding',
-  description: 'Defines pretty date format.',
+  description: __('Defines pretty date format.'),
   options:     {
     form: [
       {
@@ -230,12 +231,12 @@ options = {}
 (10..99).each do |item|
   options[item] = item
 end
-system_id = rand(10..99)
+system_id = rand(10..99) # rubocop:disable Zammad/ForbidRand
 Setting.create_if_not_exists(
-  title:       'SystemID',
+  title:       __('SystemID'),
   name:        'system_id',
   area:        'System::Base',
-  description: 'Defines the system identifier. Every ticket number contains this ID. This ensures that only tickets which belong to your system will be processed as follow-ups (useful when communicating between two instances of Zammad).',
+  description: __('Defines the system identifier. Every ticket number contains this ID. This ensures that only tickets which belong to your system will be processed as follow-ups (useful when communicating between two instances of Zammad).'),
   options:     {
     form: [
       {
@@ -257,10 +258,10 @@ Setting.create_if_not_exists(
   frontend:    true
 )
 Setting.create_if_not_exists(
-  title:       'Fully Qualified Domain Name',
+  title:       __('Fully Qualified Domain Name'),
   name:        'fqdn',
   area:        'System::Base',
-  description: 'Defines the fully qualified domain name of the system. This setting is used as a variable, #{setting.fqdn} which is found in all forms of messaging used by the application, to build links to the tickets within your system.', # rubocop:disable Lint/InterpolationCheck
+  description: __('Defines the fully qualified domain name of the system. This setting is used as a variable, #{setting.fqdn} which is found in all forms of messaging used by the application, to build links to the tickets within your system.'), # rubocop:disable Lint/InterpolationCheck
   options:     {
     form: [
       {
@@ -280,18 +281,18 @@ Setting.create_if_not_exists(
   frontend:    true
 )
 Setting.create_if_not_exists(
-  title:       'Websocket backend',
+  title:       __('Websocket backend'),
   name:        'websocket_backend',
   area:        'System::WebSocket',
-  description: 'Defines how to reach websocket server. "websocket" is default on production, "websocketPort" is for CI',
+  description: __('Defines how to reach websocket server. "websocket" is default on production, "websocketPort" is for CI'),
   state:       Rails.env.production? ? 'websocket' : 'websocketPort',
   frontend:    true
 )
 Setting.create_if_not_exists(
-  title:       'Websocket port',
+  title:       __('Websocket port'),
   name:        'websocket_port',
   area:        'System::WebSocket',
-  description: 'Defines the port of the websocket server.',
+  description: __('Defines the port of the websocket server.'),
   options:     {
     form: [
       {
@@ -307,10 +308,10 @@ Setting.create_if_not_exists(
   frontend:    true
 )
 Setting.create_if_not_exists(
-  title:       'HTTP type',
+  title:       __('HTTP type'),
   name:        'http_type',
   area:        'System::Base',
-  description: 'Define the http protocol of your instance.',
+  description: __('Defines the HTTP protocol of your instance.'),
   options:     {
     form: [
       {
@@ -335,10 +336,10 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       'Storage Mechanism',
+  title:       __('Storage Mechanism'),
   name:        'storage_provider',
   area:        'System::Storage',
-  description: '"Database" stores all attachments in the database (not recommended for storing large amounts of data). "Filesystem" stores the data in the filesystem. You can switch between the modules even on a system that is already in production without any loss of data.',
+  description: __('"Database" stores all attachments in the database (not recommended for storing large amounts of data). "Filesystem" stores the data in the filesystem. You can switch between the modules even on a system that is already in production without any loss of data.'),
   options:     {
     form: [
       {
@@ -348,8 +349,8 @@ Setting.create_if_not_exists(
         tag:      'select',
         tranlate: true,
         options:  {
-          'DB'   => 'Database',
-          'File' => 'Filesystem',
+          'DB'   => __('Database'),
+          'File' => __('Filesystem'),
         },
       },
     ],
@@ -364,10 +365,10 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       'Image Service',
+  title:       __('Image Service'),
   name:        'image_backend',
   area:        'System::Services',
-  description: 'Defines the backend for user and organization image lookups.',
+  description: __('Defines the backend for user and organization image lookups.'),
   options:     {
     form: [
       {
@@ -377,7 +378,7 @@ Setting.create_if_not_exists(
         tag:     'select',
         options: {
           ''                       => '-',
-          'Service::Image::Zammad' => 'Zammad Image Service',
+          'Service::Image::Zammad' => __('Zammad Image Service'),
         },
       },
     ],
@@ -391,10 +392,10 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       'Geo IP Service',
+  title:       __('Geo IP Service'),
   name:        'geo_ip_backend',
   area:        'System::Services',
-  description: 'Defines the backend for geo IP lookups. Shows also location of an IP address if an IP address is shown.',
+  description: __('Defines the backend for geo IP lookups. Also shows location of an IP address if it is traceable.'),
   options:     {
     form: [
       {
@@ -404,7 +405,7 @@ Setting.create_if_not_exists(
         tag:     'select',
         options: {
           ''                       => '-',
-          'Service::GeoIp::Zammad' => 'Zammad GeoIP Service',
+          'Service::GeoIp::Zammad' => __('Zammad GeoIP Service'),
         },
       },
     ],
@@ -418,10 +419,10 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       'Geo Location Service',
+  title:       __('Geo Location Service'),
   name:        'geo_location_backend',
   area:        'System::Services',
-  description: 'Defines the backend for geo location lookups to store geo locations for addresses.',
+  description: __('Defines the backend for geo location lookups to store geo locations for addresses.'),
   options:     {
     form: [
       {
@@ -431,7 +432,7 @@ Setting.create_if_not_exists(
         tag:     'select',
         options: {
           ''                            => '-',
-          'Service::GeoLocation::Gmaps' => 'Google Maps',
+          'Service::GeoLocation::Gmaps' => __('Google Maps'),
         },
       },
     ],
@@ -445,10 +446,10 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       'Geo Calendar Service',
+  title:       __('Geo Calendar Service'),
   name:        'geo_calendar_backend',
   area:        'System::Services',
-  description: 'Defines the backend for geo calendar lookups. Used for initial calendar succession.',
+  description: __('Defines the backend for geo calendar lookups. Used for initial calendar succession.'),
   options:     {
     form: [
       {
@@ -458,7 +459,7 @@ Setting.create_if_not_exists(
         tag:     'select',
         options: {
           ''                             => '-',
-          'Service::GeoCalendar::Zammad' => 'Zammad GeoCalendar Service',
+          'Service::GeoCalendar::Zammad' => __('Zammad GeoCalendar Service'),
         },
       },
     ],
@@ -472,10 +473,10 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       'Proxy Settings',
+  title:       __('Proxy Settings'),
   name:        'proxy',
   area:        'System::Network',
-  description: 'Address of the proxy server for http and https resources.',
+  description: __('Address of the proxy server for http and https resources.'),
   options:     {
     form: [
       {
@@ -497,10 +498,10 @@ Setting.create_if_not_exists(
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Proxy User',
+  title:       __('Proxy User'),
   name:        'proxy_username',
   area:        'System::Network',
-  description: 'Username for proxy connection.',
+  description: __('Username for proxy connection.'),
   options:     {
     form: [
       {
@@ -521,10 +522,10 @@ Setting.create_if_not_exists(
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Proxy Password',
+  title:       __('Proxy Password'),
   name:        'proxy_password',
   area:        'System::Network',
-  description: 'Password for proxy connection.',
+  description: __('Password for proxy connection.'),
   options:     {
     form: [
       {
@@ -545,10 +546,10 @@ Setting.create_if_not_exists(
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'No Proxy',
+  title:       __('No Proxy'),
   name:        'proxy_no',
   area:        'System::Network',
-  description: 'No proxy for the following hosts.',
+  description: __('No proxy for the following hosts.'),
   options:     {
     form: [
       {
@@ -570,10 +571,10 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       'Send client stats',
+  title:       __('Send client stats'),
   name:        'ui_send_client_stats',
   area:        'System::UI',
-  description: 'Send client stats/error message to central server to improve the usability.',
+  description: __('Send client stats/error message to central server to improve the usability.'),
   options:     {
     form: [
       {
@@ -596,10 +597,10 @@ Setting.create_if_not_exists(
   frontend:    true
 )
 Setting.create_if_not_exists(
-  title:       'Client storage',
+  title:       __('Client storage'),
   name:        'ui_client_storage',
   area:        'System::UI',
-  description: 'Use client storage to cache data to enhance performance of application.',
+  description: __('Use client storage to cache data to enhance performance of application.'),
   options:     {
     form: [
       {
@@ -622,10 +623,36 @@ Setting.create_if_not_exists(
   frontend:    true
 )
 Setting.create_if_not_exists(
-  title:       'User Organization Selector - email',
+  title:       __('Core Workflow Ajax Mode'),
+  name:        'core_workflow_ajax_mode',
+  area:        'System::UI',
+  description: __('Defines if the core workflow communication should run over ajax instead of websockets.'),
+  options:     {
+    form: [
+      {
+        display: '',
+        null:    true,
+        name:    'core_workflow_ajax_mode',
+        tag:     'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  state:       false,
+  preferences: {
+    prio:       3,
+    permission: ['admin.system'],
+  },
+  frontend:    true
+)
+Setting.create_if_not_exists(
+  title:       __('User Organization Selector - email'),
   name:        'ui_user_organization_selector_with_email',
   area:        'UI::UserOrganizatiomSelector',
-  description: 'Display of the e-mail in the result of the user/organization widget.',
+  description: __('Defines if the email should be displayed in the result of the user/organization widget.'),
   options:     {
     form: [
       {
@@ -649,10 +676,10 @@ Setting.create_if_not_exists(
   frontend:    true
 )
 Setting.create_if_not_exists(
-  title:       'Note - default visibility',
+  title:       __('Note - default visibility'),
   name:        'ui_ticket_zoom_article_note_new_internal',
   area:        'UI::TicketZoom',
-  description: 'Default visibility for new note.',
+  description: __('Defines the default visibility for new notes.'),
   options:     {
     form: [
       {
@@ -675,11 +702,39 @@ Setting.create_if_not_exists(
   },
   frontend:    true
 )
+
 Setting.create_if_not_exists(
-  title:       'Email - subject field',
+  title:       __('Article - visibility confirmation dialog'),
+  name:        'ui_ticket_zoom_article_visibility_confirmation_dialog',
+  area:        'UI::TicketZoom',
+  description: __('Defines if the agent has to accept a confirmation dialog when changing the article visibility to "public".'),
+  options:     {
+    form: [
+      {
+        display: '',
+        null:    true,
+        name:    'ui_ticket_zoom_article_visibility_confirmation_dialog',
+        tag:     'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  state:       false,
+  preferences: {
+    prio:       100,
+    permission: ['admin.ui'],
+  },
+  frontend:    true
+)
+
+Setting.create_if_not_exists(
+  title:       __('Email - subject field'),
   name:        'ui_ticket_zoom_article_email_subject',
   area:        'UI::TicketZoom',
-  description: 'Use subject field for emails. If disabled, the ticket title will be used as subject.',
+  description: __('Use subject field for emails. If disabled, the ticket title will be used as subject.'),
   options:     {
     form: [
       {
@@ -703,10 +758,10 @@ Setting.create_if_not_exists(
   frontend:    true
 )
 Setting.create_if_not_exists(
-  title:       'Email - full quote',
+  title:       __('Email - full quote'),
   name:        'ui_ticket_zoom_article_email_full_quote',
   area:        'UI::TicketZoom',
-  description: 'Enable if you want to quote the full email in your answer. The quoted email will be put at the end of your answer. If you just want to quote a certain phrase, just mark the text and press reply (this feature is always available).',
+  description: __('Enable if you want to quote the full email in your answer. The quoted email will be put at the end of your answer. If you just want to quote a certain phrase, just mark the text and press reply (this feature is always available).'),
   options:     {
     form: [
       {
@@ -730,10 +785,10 @@ Setting.create_if_not_exists(
   frontend:    true
 )
 Setting.create_if_not_exists(
-  title:       'Email - quote header',
+  title:       __('Email - quote header'),
   name:        'ui_ticket_zoom_article_email_full_quote_header',
   area:        'UI::TicketZoom',
-  description: 'Enable if you want a timestamped reply header to be automatically inserted in front of quoted messages.',
+  description: __('Enable if you want a timestamped reply header to be automatically inserted in front of quoted messages.'),
   options:     {
     form: [
       {
@@ -757,10 +812,10 @@ Setting.create_if_not_exists(
   frontend:    true
 )
 Setting.create_if_not_exists(
-  title:       'Twitter - tweet initials',
+  title:       __('Twitter - tweet initials'),
   name:        'ui_ticket_zoom_article_twitter_initials',
   area:        'UI::TicketZoom',
-  description: 'Add sender initials to end of a tweet.',
+  description: __('Add sender initials to end of a tweet.'),
   options:     {
     form: [
       {
@@ -784,10 +839,10 @@ Setting.create_if_not_exists(
   frontend:    true
 )
 Setting.create_if_not_exists(
-  title:       'Sidebar Attachments',
+  title:       __('Sidebar Attachments'),
   name:        'ui_ticket_zoom_attachments_preview',
   area:        'UI::TicketZoom::Preview',
-  description: 'Enables preview of attachments.',
+  description: __('Enables preview of attachments.'),
   options:     {
     form: [
       {
@@ -811,10 +866,10 @@ Setting.create_if_not_exists(
   frontend:    true
 )
 Setting.create_if_not_exists(
-  title:       'Sidebar Attachments',
+  title:       __('Sidebar Attachments'),
   name:        'ui_ticket_zoom_sidebar_article_attachments',
   area:        'UI::TicketZoom::Preview',
-  description: 'Enables a sidebar to show an overview of all attachments.',
+  description: __('Enables a sidebar to show an overview of all attachments.'),
   options:     {
     form: [
       {
@@ -839,13 +894,13 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       'Set notes for ticket create types.',
+  title:       __('Set notes for ticket create types.'),
   name:        'ui_ticket_create_notes',
   area:        'UI::TicketCreate',
-  description: 'Set notes for ticket create types by selecting type.',
+  description: __('Set notes for ticket create types by selecting type.'),
   options:     {},
   state:       {
-    #'email-out' => 'Attention: When creating a ticket an e-mail is sent.',
+    # 'email-out' => __('Attention: When creating a ticket an email is sent.'),
   },
   preferences: {
     permission: ['admin.ui'],
@@ -854,10 +909,10 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       'Default type for a new ticket',
+  title:       __('Default type for a new ticket'),
   name:        'ui_ticket_create_default_type',
   area:        'UI::TicketCreate',
-  description: 'Select default ticket type',
+  description: __('Select default ticket type'),
   options:     {
     form: [
       {
@@ -882,10 +937,10 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       'Available types for a new ticket',
+  title:       __('Available types for a new ticket'),
   name:        'ui_ticket_create_available_types',
   area:        'UI::TicketCreate',
-  description: 'Set available ticket types',
+  description: __('Set available ticket types'),
   options:     {
     form: [
       {
@@ -910,10 +965,10 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       'Open ticket indicator',
+  title:       __('Open ticket indicator'),
   name:        'ui_sidebar_open_ticket_indicator_colored',
   area:        'UI::Sidebar',
-  description: 'Color representation of the open ticket indicator in the sidebar.',
+  description: __('Color representation of the open ticket indicator in the sidebar.'),
   options:     {
     form: [
       {
@@ -937,10 +992,10 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       'Open ticket indicator',
+  title:       __('Open ticket indicator'),
   name:        'ui_table_group_by_show_count',
   area:        'UI::Base',
-  description: 'Total display of the number of objects in a grouping.',
+  description: __('Total display of the number of objects in a grouping.'),
   options:     {
     form: [
       {
@@ -964,10 +1019,10 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       'Priority Icons in Overviews',
+  title:       __('Priority Icons in Overviews'),
   name:        'ui_ticket_overview_priority_icon',
   area:        'UI::TicketOverview::PriorityIcons',
-  description: 'Enables priority icons in ticket overviews.',
+  description: __('Enables priority icons in ticket overviews.'),
   options:     {
     form: [
       {
@@ -992,10 +1047,10 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       'New User Accounts',
+  title:       __('New User Accounts'),
   name:        'user_create_account',
   area:        'Security::Base',
-  description: 'Enables users to create their own account via web interface.',
+  description: __('Enables users to create their own account via web interface.'),
   options:     {
     form: [
       {
@@ -1018,10 +1073,10 @@ Setting.create_if_not_exists(
   frontend:    true
 )
 Setting.create_if_not_exists(
-  title:       'Lost Password',
+  title:       __('Lost Password'),
   name:        'user_lost_password',
   area:        'Security::Base',
-  description: 'Activates lost password feature for users.',
+  description: __('Activates lost password feature for users.'),
   options:     {
     form: [
       {
@@ -1044,16 +1099,16 @@ Setting.create_if_not_exists(
   frontend:    true
 )
 
-options = [ { value: '0', name: 'disabled' }, { value: 1.hour.seconds, name: '1 hour' }, { value: 2.hours.seconds, name: '2 hours' }, { value: 1.day.seconds, name: '1 day' }, { value: 7.days.seconds, name: '1 week' }, { value: 14.days.seconds, name: '2 weeks' }, { value: 21.days.seconds, name: '3 weeks' }, { value: 28.days.seconds, name: '4 weeks' } ]
+options = [ { value: '0', name: 'disabled' }, { value: 1.hour.seconds, name: __('1 hour') }, { value: 2.hours.seconds, name: __('2 hours') }, { value: 1.day.seconds, name: __('1 day') }, { value: 7.days.seconds, name: __('1 week') }, { value: 14.days.seconds, name: __('2 weeks') }, { value: 21.days.seconds, name: __('3 weeks') }, { value: 28.days.seconds, name: __('4 weeks') } ]
 Setting.create_if_not_exists(
-  title:       'Session Timeout',
+  title:       __('Session Timeout'),
   name:        'session_timeout',
   area:        'Security::Base',
-  description: 'Defines the session timeout for inactivity of users. Based on the assigned permissions the highest timeout value will be used, otherwise the default.',
+  description: __('Defines the session timeout for inactivity of users. Based on the assigned permissions the highest timeout value will be used, otherwise the default.'),
   options:     {
     form: [
       {
-        display:   'Default',
+        display:   __('Default'),
         null:      false,
         name:      'default',
         tag:       'select',
@@ -1061,7 +1116,7 @@ Setting.create_if_not_exists(
         translate: true,
       },
       {
-        display:   'admin',
+        display:   __('admin'),
         null:      false,
         name:      'admin',
         tag:       'select',
@@ -1069,7 +1124,7 @@ Setting.create_if_not_exists(
         translate: true,
       },
       {
-        display:   'ticket.agent',
+        display:   __('ticket.agent'),
         null:      false,
         name:      'ticket.agent',
         tag:       'select',
@@ -1077,7 +1132,7 @@ Setting.create_if_not_exists(
         translate: true,
       },
       {
-        display:   'ticket.customer',
+        display:   __('ticket.customer'),
         null:      false,
         name:      'ticket.customer',
         tag:       'select',
@@ -1098,10 +1153,10 @@ Setting.create_if_not_exists(
   frontend:    true
 )
 Setting.create_if_not_exists(
-  title:       'User email for muliple users',
+  title:       __('User email for multiple users'),
   name:        'user_email_multiple_use',
   area:        'Model::User',
-  description: 'Allow to use email address for muliple users.',
+  description: __('Allow using one email address for multiple users.'),
   options:     {
     form: [
       {
@@ -1123,17 +1178,50 @@ Setting.create_if_not_exists(
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Authentication via %s',
+  title:       __('Authentication via %s'),
+  name:        'auth_internal',
+  area:        'Security::Authentication',
+  description: __('Enables user authentication via %s.'),
+  preferences: {
+    title_i18n:       ['internal database'],
+    description_i18n: ['internal database'],
+    permission:       ['admin.security'],
+  },
+  state:       {
+    priority: 1,
+    adapter:  'Auth::Backend::Internal',
+  },
+  frontend:    false
+)
+Setting.create_if_not_exists(
+  title:       __('Authentication via %s'),
+  name:        'auth_developer',
+  area:        'Security::Authentication',
+  description: __('Enables user authentication via %s.'),
+  preferences: {
+    title_i18n:       ['developer password'],
+    description_i18n: ['developer password'],
+    permission:       ['admin.security'],
+  },
+  state:       {
+    priority: 2,
+    adapter:  'Auth::Backend::Developer',
+  },
+  frontend:    false
+)
+Setting.create_if_not_exists(
+  title:       __('Authentication via %s'),
   name:        'auth_ldap',
   area:        'Security::Authentication',
-  description: 'Enables user authentication via %s.',
+  description: __('Enables user authentication via %s.'),
   preferences: {
     title_i18n:       ['LDAP'],
     description_i18n: ['LDAP'],
     permission:       ['admin.security'],
   },
   state:       {
-    adapter:       'Auth::Ldap',
+    priority:      3,
+    adapter:       'Auth::Backend::Ldap',
     host:          'localhost',
     port:          389,
     bind_dn:       'cn=Manager,dc=example,dc=org',
@@ -1153,10 +1241,10 @@ Setting.create_if_not_exists(
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Automatic account link on initial logon',
+  title:       __('Automatic account link on initial logon'),
   name:        'auth_third_party_auto_link_at_inital_login',
   area:        'Security::ThirdPartyAuthentication',
-  description: 'Enables the automatic linking of an existing account on initial login via a third party application. If this is disabled, an existing user must first log into Zammad and then link his "Third Party" account to his Zammad account via Profile -> Linked Accounts.',
+  description: __('Enables the automatic linking of an existing account on initial login via a third party application. If this is disabled, an existing user must first log into Zammad and then link his "Third Party" account to his Zammad account via Profile -> Linked Accounts.'),
   options:     {
     form: [
       {
@@ -1179,10 +1267,10 @@ Setting.create_if_not_exists(
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Authentication via %s',
+  title:       __('Authentication via %s'),
   name:        'auth_twitter',
   area:        'Security::ThirdPartyAuthentication',
-  description: 'Enables user authentication via %s. Register your app first at [%s](%s).',
+  description: __('Enables user authentication via %s. Register your app first at [%s](%s).'),
   options:     {
     form: [
       {
@@ -1201,30 +1289,37 @@ Setting.create_if_not_exists(
     controller:       'SettingsAreaSwitch',
     sub:              ['auth_twitter_credentials'],
     title_i18n:       ['Twitter'],
-    description_i18n: ['Twitter', 'Twitter Developer Site', 'https://dev.twitter.com/apps'],
+    description_i18n: ['Twitter', 'Twitter Developer Site', 'https://dev.twitter.com/apps'], # rubocop:disable Zammad/DetectTranslatableString
     permission:       ['admin.security'],
   },
   state:       false,
   frontend:    true
 )
 Setting.create_if_not_exists(
-  title:       'Twitter App Credentials',
+  title:       __('Twitter App Credentials'),
   name:        'auth_twitter_credentials',
   area:        'Security::ThirdPartyAuthentication::Twitter',
-  description: 'App credentials for Twitter.',
+  description: __('App credentials for Twitter.'),
   options:     {
     form: [
       {
-        display: 'Twitter Key',
+        display: __('Twitter Key'),
         null:    true,
         name:    'key',
         tag:     'input',
       },
       {
-        display: 'Twitter Secret',
+        display: __('Twitter Secret'),
         null:    true,
         name:    'secret',
         tag:     'input',
+      },
+      {
+        display:  __('Your callback URL'),
+        null:     true,
+        name:     'callback_url',
+        tag:      'auth_provider',
+        provider: 'auth_twitter',
       },
     ],
   },
@@ -1235,10 +1330,10 @@ Setting.create_if_not_exists(
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Authentication via %s',
+  title:       __('Authentication via %s'),
   name:        'auth_facebook',
   area:        'Security::ThirdPartyAuthentication',
-  description: 'Enables user authentication via %s. Register your app first at [%s](%s).',
+  description: __('Enables user authentication via %s. Register your app first at [%s](%s).'),
   options:     {
     form: [
       {
@@ -1257,7 +1352,7 @@ Setting.create_if_not_exists(
     controller:       'SettingsAreaSwitch',
     sub:              ['auth_facebook_credentials'],
     title_i18n:       ['Facebook'],
-    description_i18n: ['Facebook', 'Facebook Developer Site', 'https://developers.facebook.com/apps/'],
+    description_i18n: ['Facebook', 'Facebook Developer Site', 'https://developers.facebook.com/apps/'], # rubocop:disable Zammad/DetectTranslatableString
     permission:       ['admin.security'],
   },
   state:       false,
@@ -1265,23 +1360,30 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       'Facebook App Credentials',
+  title:       __('Facebook App Credentials'),
   name:        'auth_facebook_credentials',
   area:        'Security::ThirdPartyAuthentication::Facebook',
-  description: 'App credentials for Facebook.',
+  description: __('App credentials for Facebook.'),
   options:     {
     form: [
       {
-        display: 'App ID',
+        display: __('App ID'),
         null:    true,
         name:    'app_id',
         tag:     'input',
       },
       {
-        display: 'App Secret',
+        display: __('App Secret'),
         null:    true,
         name:    'app_secret',
         tag:     'input',
+      },
+      {
+        display:  __('Your callback URL'),
+        null:     true,
+        name:     'callback_url',
+        tag:      'auth_provider',
+        provider: 'auth_facebook',
       },
     ],
   },
@@ -1293,10 +1395,10 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       'Authentication via %s',
+  title:       __('Authentication via %s'),
   name:        'auth_google_oauth2',
   area:        'Security::ThirdPartyAuthentication',
-  description: 'Enables user authentication via %s. Register your app first at [%s](%s).',
+  description: __('Enables user authentication via %s. Register your app first at [%s](%s).'),
   options:     {
     form: [
       {
@@ -1315,30 +1417,37 @@ Setting.create_if_not_exists(
     controller:       'SettingsAreaSwitch',
     sub:              ['auth_google_oauth2_credentials'],
     title_i18n:       ['Google'],
-    description_i18n: ['Google', 'Google API Console Site', 'https://console.developers.google.com/apis/credentials'],
+    description_i18n: ['Google', 'Google API Console Site', 'https://console.cloud.google.com/apis/credentials'], # rubocop:disable Zammad/DetectTranslatableString
     permission:       ['admin.security'],
   },
   state:       false,
   frontend:    true
 )
 Setting.create_if_not_exists(
-  title:       'Google App Credentials',
+  title:       __('Google App Credentials'),
   name:        'auth_google_oauth2_credentials',
   area:        'Security::ThirdPartyAuthentication::Google',
-  description: 'Enables user authentication via Google.',
+  description: __('Enables user authentication via Google.'),
   options:     {
     form: [
       {
-        display: 'Client ID',
+        display: __('Client ID'),
         null:    true,
         name:    'client_id',
         tag:     'input',
       },
       {
-        display: 'Client Secret',
+        display: __('Client Secret'),
         null:    true,
         name:    'client_secret',
         tag:     'input',
+      },
+      {
+        display:  __('Your callback URL'),
+        null:     true,
+        name:     'callback_url',
+        tag:      'auth_provider',
+        provider: 'auth_google_oauth2',
       },
     ],
   },
@@ -1350,10 +1459,10 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       'Authentication via %s',
+  title:       __('Authentication via %s'),
   name:        'auth_linkedin',
   area:        'Security::ThirdPartyAuthentication',
-  description: 'Enables user authentication via %s. Register your app first at [%s](%s).',
+  description: __('Enables user authentication via %s. Register your app first at [%s](%s).'),
   options:     {
     form: [
       {
@@ -1372,30 +1481,37 @@ Setting.create_if_not_exists(
     controller:       'SettingsAreaSwitch',
     sub:              ['auth_linkedin_credentials'],
     title_i18n:       ['LinkedIn'],
-    description_i18n: ['LinkedIn', 'Linkedin Developer Site', 'https://www.linkedin.com/developer/apps'],
+    description_i18n: ['LinkedIn', 'LinkedIn Developer Site', 'https://www.linkedin.com/developer/apps'], # rubocop:disable Zammad/DetectTranslatableString
     permission:       ['admin.security'],
   },
   state:       false,
   frontend:    true
 )
 Setting.create_if_not_exists(
-  title:       'LinkedIn App Credentials',
+  title:       __('LinkedIn App Credentials'),
   name:        'auth_linkedin_credentials',
   area:        'Security::ThirdPartyAuthentication::Linkedin',
-  description: 'Enables user authentication via LinkedIn.',
+  description: __('Enables user authentication via LinkedIn.'),
   options:     {
     form: [
       {
-        display: 'App ID',
+        display: __('App ID'),
         null:    true,
         name:    'app_id',
         tag:     'input',
       },
       {
-        display: 'App Secret',
+        display: __('App Secret'),
         null:    true,
         name:    'app_secret',
         tag:     'input',
+      },
+      {
+        display:  __('Your callback URL'),
+        null:     true,
+        name:     'callback_url',
+        tag:      'auth_provider',
+        provider: 'auth_linkedin',
       },
     ],
   },
@@ -1407,10 +1523,10 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       'Authentication via %s',
+  title:       __('Authentication via %s'),
   name:        'auth_github',
   area:        'Security::ThirdPartyAuthentication',
-  description: 'Enables user authentication via %s. Register your app first at [%s](%s).',
+  description: __('Enables user authentication via %s. Register your app first at [%s](%s).'),
   options:     {
     form: [
       {
@@ -1429,30 +1545,37 @@ Setting.create_if_not_exists(
     controller:       'SettingsAreaSwitch',
     sub:              ['auth_github_credentials'],
     title_i18n:       ['Github'],
-    description_i18n: ['Github', 'Github OAuth Applications', 'https://github.com/settings/applications'],
+    description_i18n: ['Github', 'GitHub OAuth Applications', 'https://github.com/settings/applications'], # rubocop:disable Zammad/DetectTranslatableString
     permission:       ['admin.security'],
   },
   state:       false,
   frontend:    true
 )
 Setting.create_if_not_exists(
-  title:       'Github App Credentials',
+  title:       __('GitHub App Credentials'),
   name:        'auth_github_credentials',
   area:        'Security::ThirdPartyAuthentication::Github',
-  description: 'Enables user authentication via Github.',
+  description: __('Enables user authentication via GitHub.'),
   options:     {
     form: [
       {
-        display: 'App ID',
+        display: __('App ID'),
         null:    true,
         name:    'app_id',
         tag:     'input',
       },
       {
-        display: 'App Secret',
+        display: __('App Secret'),
         null:    true,
         name:    'app_secret',
         tag:     'input',
+      },
+      {
+        display:  __('Your callback URL'),
+        null:     true,
+        name:     'callback_url',
+        tag:      'auth_provider',
+        provider: 'auth_github',
       },
     ],
   },
@@ -1464,10 +1587,10 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       'Authentication via %s',
+  title:       __('Authentication via %s'),
   name:        'auth_gitlab',
   area:        'Security::ThirdPartyAuthentication',
-  description: 'Enables user authentication via %s. Register your app first at [%s](%s).',
+  description: __('Enables user authentication via %s. Register your app first at [%s](%s).'),
   options:     {
     form: [
       {
@@ -1486,37 +1609,44 @@ Setting.create_if_not_exists(
     controller:       'SettingsAreaSwitch',
     sub:              ['auth_gitlab_credentials'],
     title_i18n:       ['GitLab'],
-    description_i18n: ['GitLab', 'GitLab Applications', 'https://your-gitlab-host/admin/applications'],
+    description_i18n: ['GitLab', 'GitLab Applications', 'https://your-gitlab-host/admin/applications'], # rubocop:disable Zammad/DetectTranslatableString
     permission:       ['admin.security'],
   },
   state:       false,
   frontend:    true
 )
 Setting.create_if_not_exists(
-  title:       'GitLab App Credentials',
+  title:       __('GitLab App Credentials'),
   name:        'auth_gitlab_credentials',
   area:        'Security::ThirdPartyAuthentication::GitLab',
-  description: 'Enables user authentication via GitLab.',
+  description: __('Enables user authentication via GitLab.'),
   options:     {
     form: [
       {
-        display: 'App ID',
+        display: __('App ID'),
         null:    true,
         name:    'app_id',
         tag:     'input',
       },
       {
-        display: 'App Secret',
+        display: __('App Secret'),
         null:    true,
         name:    'app_secret',
         tag:     'input',
       },
       {
-        display:     'Site',
+        display:     __('Site'),
         null:        true,
         name:        'site',
         tag:         'input',
         placeholder: 'https://gitlab.YOURDOMAIN.com/api/v4/',
+      },
+      {
+        display:  __('Your callback URL'),
+        null:     true,
+        name:     'callback_url',
+        tag:      'auth_provider',
+        provider: 'auth_gitlab',
       },
     ],
   },
@@ -1528,10 +1658,10 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       'Authentication via %s',
+  title:       __('Authentication via %s'),
   name:        'auth_microsoft_office365',
   area:        'Security::ThirdPartyAuthentication',
-  description: 'Enables user authentication via %s. Register your app first at [%s](%s).',
+  description: __('Enables user authentication via %s. Register your app first at [%s](%s).'),
   options:     {
     form: [
       {
@@ -1549,38 +1679,45 @@ Setting.create_if_not_exists(
   preferences: {
     controller:       'SettingsAreaSwitch',
     sub:              ['auth_microsoft_office365_credentials'],
-    title_i18n:       ['Office 365'],
-    description_i18n: ['Office 365', 'Microsoft Application Registration Portal', 'https://apps.dev.microsoft.com'],
+    title_i18n:       ['Microsoft'],
+    description_i18n: ['Microsoft', __('Microsoft Application Registration Portal'), 'https://portal.azure.com'],
     permission:       ['admin.security'],
   },
   state:       false,
   frontend:    true
 )
 Setting.create_if_not_exists(
-  title:       'Office 365 App Credentials',
+  title:       __('Office 365 App Credentials'),
   name:        'auth_microsoft_office365_credentials',
   area:        'Security::ThirdPartyAuthentication::Office365',
-  description: 'Enables user authentication via Office 365.',
+  description: __('Enables user authentication via Office 365.'),
   options:     {
     form: [
       {
-        display: 'App ID',
+        display: __('App ID'),
         null:    true,
         name:    'app_id',
         tag:     'input',
       },
       {
-        display: 'App Secret',
+        display: __('App Secret'),
         null:    true,
         name:    'app_secret',
         tag:     'input',
       },
       {
-        display:     'App Tenant ID',
+        display:     __('App Tenant ID'),
         null:        true,
         name:        'app_tenant',
         tag:         'input',
         placeholder: 'common',
+      },
+      {
+        display:  __('Your callback URL'),
+        null:     true,
+        name:     'callback_url',
+        tag:      'auth_provider',
+        provider: 'auth_microsoft_office365',
       },
     ],
   },
@@ -1591,10 +1728,10 @@ Setting.create_if_not_exists(
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Authentication via %s',
+  title:       __('Authentication via %s'),
   name:        'auth_weibo',
   area:        'Security::ThirdPartyAuthentication',
-  description: 'Enables user authentication via %s. Register your app first at [%s](%s).',
+  description: __('Enables user authentication via %s. Register your app first at [%s](%s).'),
   options:     {
     form: [
       {
@@ -1613,30 +1750,37 @@ Setting.create_if_not_exists(
     controller:       'SettingsAreaSwitch',
     sub:              ['auth_weibo_credentials'],
     title_i18n:       ['Weibo'],
-    description_i18n: ['Sina Weibo', 'Sina Weibo Open Protal', 'http://open.weibo.com'],
+    description_i18n: ['Sina Weibo', 'Sina Weibo Open Portal', 'http://open.weibo.com'], # rubocop:disable Zammad/DetectTranslatableString
     permission:       ['admin.security'],
   },
   state:       false,
   frontend:    true
 )
 Setting.create_if_not_exists(
-  title:       'Weibo App Credentials',
+  title:       __('Weibo App Credentials'),
   name:        'auth_weibo_credentials',
   area:        'Security::ThirdPartyAuthentication::Weibo',
-  description: 'Enables user authentication via Weibo.',
+  description: __('Enables user authentication via Weibo.'),
   options:     {
     form: [
       {
-        display: 'App ID',
+        display: __('App ID'),
         null:    true,
         name:    'client_id',
         tag:     'input',
       },
       {
-        display: 'App Secret',
+        display: __('App Secret'),
         null:    true,
         name:    'client_secret',
         tag:     'input',
+      },
+      {
+        display:  __('Your callback URL'),
+        null:     true,
+        name:     'callback_url',
+        tag:      'auth_provider',
+        provider: 'auth_weibo',
       },
     ],
   },
@@ -1647,10 +1791,10 @@ Setting.create_if_not_exists(
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Authentication via %s',
+  title:       __('Authentication via %s'),
   name:        'auth_saml',
   area:        'Security::ThirdPartyAuthentication',
-  description: 'Enables user authentication via %s.',
+  description: __('Enables user authentication via %s.'),
   options:     {
     form: [
       {
@@ -1676,39 +1820,46 @@ Setting.create_if_not_exists(
   frontend:    true
 )
 Setting.create_if_not_exists(
-  title:       'SAML App Credentials',
+  title:       __('SAML App Credentials'),
   name:        'auth_saml_credentials',
   area:        'Security::ThirdPartyAuthentication::SAML',
-  description: 'Enables user authentication via SAML.',
+  description: __('Enables user authentication via SAML.'),
   options:     {
     form: [
       {
-        display:     'IDP SSO target URL',
+        display:     __('IDP SSO target URL'),
         null:        true,
         name:        'idp_sso_target_url',
         tag:         'input',
         placeholder: 'https://capriza.github.io/samling/samling.html',
       },
       {
-        display:     'IDP certificate',
+        display:     __('IDP certificate'),
         null:        true,
         name:        'idp_cert',
         tag:         'input',
         placeholder: '-----BEGIN CERTIFICATE-----\n...-----END CERTIFICATE-----',
       },
       {
-        display:     'IDP certificate fingerprint',
+        display:     __('IDP certificate fingerprint'),
         null:        true,
         name:        'idp_cert_fingerprint',
         tag:         'input',
         placeholder: 'E7:91:B2:E1:...',
       },
       {
-        display:     'Name Identifier Format',
+        display:     __('Name Identifier Format'),
         null:        true,
         name:        'name_identifier_format',
         tag:         'input',
         placeholder: 'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress',
+      },
+      {
+        display:  __('Your callback URL'),
+        null:     true,
+        name:     'callback_url',
+        tag:      'auth_provider',
+        provider: 'auth_saml',
       },
     ],
   },
@@ -1720,10 +1871,10 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       'Minimum length',
+  title:       __('Minimum length'),
   name:        'password_min_size',
   area:        'Security::Password',
-  description: 'Password needs to have at least a minimal number of characters.',
+  description: __('Password needs to have at least a minimal number of characters.'),
   options:     {
     form: [
       {
@@ -1760,10 +1911,10 @@ Setting.create_if_not_exists(
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       '2 lower and 2 upper characters',
+  title:       __('2 lower case and 2 upper case characters'),
   name:        'password_min_2_lower_2_upper_characters',
   area:        'Security::Password',
-  description: 'Password needs to contain 2 lower and 2 upper characters.',
+  description: __('Password needs to contain 2 lower case and 2 upper case characters.'),
   options:     {
     form: [
       {
@@ -1785,14 +1936,14 @@ Setting.create_if_not_exists(
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Digit required',
+  title:       __('Digit required'),
   name:        'password_need_digit',
   area:        'Security::Password',
-  description: 'Password needs to contain at least one digit.',
+  description: __('Password needs to contain at least one digit.'),
   options:     {
     form: [
       {
-        display: 'Needed',
+        display: __('Needed'),
         null:    true,
         name:    'password_need_digit',
         tag:     'select',
@@ -1810,14 +1961,14 @@ Setting.create_if_not_exists(
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Special character required',
+  title:       __('Special character required'),
   name:        'password_need_special_character',
   area:        'Security::Password',
-  description: 'Password needs to contain at least one special character.',
+  description: __('Password needs to contain at least one special character.'),
   options:     {
     form: [
       {
-        display: 'Needed',
+        display: __('Needed'),
         null:    true,
         name:    'password_need_special_character',
         tag:     'select',
@@ -1835,10 +1986,10 @@ Setting.create_if_not_exists(
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Maximum failed logins',
+  title:       __('Maximum failed logins'),
   name:        'password_max_login_failed',
   area:        'Security::Password',
-  description: 'Number of failed logins after account will be deactivated.',
+  description: __('Defines after how many failed logins accounts will be deactivated.'),
   options:     {
     form: [
       {
@@ -1869,16 +2020,17 @@ Setting.create_if_not_exists(
   },
   state:       5,
   preferences: {
-    permission: ['admin.security'],
+    authentication: true,
+    permission:     ['admin.security'],
   },
-  frontend:    false
+  frontend:    true
 )
 
 Setting.create_if_not_exists(
-  title:       'Ticket Hook',
+  title:       __('Ticket Hook'),
   name:        'ticket_hook',
   area:        'Ticket::Base',
-  description: 'The identifier for a ticket, e.g. Ticket#, Call#, MyTicket#. The default is Ticket#.',
+  description: __('The identifier for a ticket, e.g. Ticket#, Call#, MyTicket#. The default is Ticket#.'),
   options:     {
     form: [
       {
@@ -1899,10 +2051,10 @@ Setting.create_if_not_exists(
   frontend:    true
 )
 Setting.create_if_not_exists(
-  title:       'Ticket Hook Divider',
+  title:       __('Ticket Hook Divider'),
   name:        'ticket_hook_divider',
   area:        'Ticket::Base::Shadow',
-  description: 'The divider between TicketHook and ticket number. E. g. \': \'.',
+  description: __('The divider between TicketHook and ticket number. E. g. \': \'.'),
   options:     {
     form: [
       {
@@ -1920,13 +2072,13 @@ Setting.create_if_not_exists(
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Ticket Hook Position',
+  title:       __('Ticket Hook Position'),
   name:        'ticket_hook_position',
   area:        'Ticket::Base',
-  description: "The format of the subject.
+  description: __("The format of the subject.
 * **Right** means **Some Subject [Ticket#12345]**
 * **Left** means **[Ticket#12345] Some Subject**
-* **None** means **Some Subject** (without ticket number). In the last case you should enable *postmaster_follow_up_search_in* to recognize follow-ups based on email headers and/or body.",
+* **None** means **Some Subject** (without ticket number). In the last case you should enable *postmaster_follow_up_search_in* to recognize follow-ups based on email headers and/or body."),
   options:     {
     form: [
       {
@@ -1951,10 +2103,10 @@ Setting.create_if_not_exists(
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Ticket Last Contact Behaviour',
+  title:       __('Ticket Last Contact Behaviour'),
   name:        'ticket_last_contact_behaviour',
   area:        'Ticket::Base',
-  description: 'Sets the last customer contact based on the last contact of a customer or on the last contact of a customer to whom an agent has not yet responded.',
+  description: __('Defines how the last customer contact time of tickets should be calculated.'),
   options:     {
     form: [
       {
@@ -1964,8 +2116,8 @@ Setting.create_if_not_exists(
         tag:       'select',
         translate: true,
         options:   {
-          'based_on_customer_reaction'     => 'Last customer contact (without consideration an agent has replied to it)',
-          'check_if_agent_already_replied' => 'Last customer contact (with consideration an agent has replied to it)',
+          'based_on_customer_reaction'     => __('Use the time of the very last customer article.'),
+          'check_if_agent_already_replied' => __('Use the start time of the last customer thread (which may consist of multiple articles).'),
         },
       },
     ],
@@ -1977,12 +2129,12 @@ Setting.create_if_not_exists(
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Ticket Number Format',
+  title:       __('Ticket Number Format'),
   name:        'ticket_number',
   area:        'Ticket::Number',
-  description: "Selects the ticket number generator module.
+  description: __("Selects the ticket number generator module.
 * **Increment** increments the ticket number, the SystemID and the counter are used with SystemID.Counter format (e.g. 1010138, 1010139).
-* With **Date** the ticket numbers will be generated by the current date, the SystemID and the counter. The format looks like Year.Month.Day.SystemID.counter (e.g. 201206231010138, 201206231010139).",
+* With **Date** the ticket numbers will be generated by the current date, the SystemID and the counter. The format looks like Year.Month.Day.SystemID.counter (e.g. 201206231010138, 201206231010139)."),
   options:     {
     form: [
       {
@@ -1992,8 +2144,8 @@ Setting.create_if_not_exists(
         tag:       'select',
         translate: true,
         options:   {
-          'Ticket::Number::Increment' => 'Increment (SystemID.Counter)',
-          'Ticket::Number::Date'      => 'Date (Year.Month.Day.SystemID.Counter)',
+          'Ticket::Number::Increment' => __('Increment (SystemID.Counter)'),
+          'Ticket::Number::Date'      => __('Date (Year.Month.Day.SystemID.Counter)'),
         },
       },
     ],
@@ -2007,14 +2159,14 @@ Setting.create_if_not_exists(
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Ticket Number Increment',
+  title:       __('Ticket Number Increment'),
   name:        'ticket_number_increment',
   area:        'Ticket::Number',
   description: '-',
   options:     {
     form: [
       {
-        display: 'Checksum',
+        display: __('Checksum'),
         null:    true,
         name:    'checksum',
         tag:     'boolean',
@@ -2024,7 +2176,7 @@ Setting.create_if_not_exists(
         },
       },
       {
-        display: 'Min. size of number',
+        display: __('Min. size of number'),
         null:    true,
         name:    'min_size',
         tag:     'select',
@@ -2064,14 +2216,14 @@ Setting.create_if_not_exists(
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Ticket Number Increment Date',
+  title:       __('Ticket Number Increment Date'),
   name:        'ticket_number_date',
   area:        'Ticket::Number',
   description: '-',
   options:     {
     form: [
       {
-        display: 'Checksum',
+        display: __('Checksum'),
         null:    true,
         name:    'checksum',
         tag:     'boolean',
@@ -2093,10 +2245,10 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       'Auto Assigment',
+  title:       __('Auto Assignment'),
   name:        'ticket_auto_assignment',
   area:        'Web::Base',
-  description: 'Enable ticket auto assignment.',
+  description: __('Enable ticket auto assignment.'),
   options:     {
     form: [
       {
@@ -2119,10 +2271,10 @@ Setting.create_if_not_exists(
   frontend:    true
 )
 Setting.create_if_not_exists(
-  title:       'Time Accounting Selector',
+  title:       __('Time Accounting Selector'),
   name:        'ticket_auto_assignment_selector',
   area:        'Web::Base',
-  description: 'Enable auto assignment for following matching tickets.',
+  description: __('Enable auto assignment for following matching tickets.'),
   options:     {
     form: [
       {},
@@ -2136,10 +2288,10 @@ Setting.create_if_not_exists(
   frontend:    true
 )
 Setting.create_or_update(
-  title:       'Time Accounting Selector',
+  title:       __('Time Accounting Selector'),
   name:        'ticket_auto_assignment_user_ids_ignore',
   area:        'Web::Base',
-  description: 'Define an exception of "automatic assignment" for certain users (e.g. executives).',
+  description: __('Define an exception of "automatic assignment" for certain users (e.g. executives).'),
   options:     {
     form: [
       {},
@@ -2153,14 +2305,14 @@ Setting.create_or_update(
   frontend:    true
 )
 Setting.create_if_not_exists(
-  title:       'Ticket Number ignore system_id',
+  title:       __('Ticket Number ignore system_id'),
   name:        'ticket_number_ignore_system_id',
   area:        'Ticket::Core',
   description: '-',
   options:     {
     form: [
       {
-        display: 'Ignore system_id',
+        display: __('Ignore system_id'),
         null:    true,
         name:    'ticket_number_ignore_system_id',
         tag:     'boolean',
@@ -2180,14 +2332,14 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       'Recursive Ticket Triggers',
+  title:       __('Recursive Ticket Triggers'),
   name:        'ticket_trigger_recursive',
   area:        'Ticket::Core',
-  description: 'Activate the recursive processing of ticket triggers.',
+  description: __('Activate the recursive processing of ticket triggers.'),
   options:     {
     form: [
       {
-        display: 'Recursive Ticket Triggers',
+        display: __('Recursive Ticket Triggers'),
         null:    true,
         name:    'ticket_trigger_recursive',
         tag:     'boolean',
@@ -2206,14 +2358,14 @@ Setting.create_if_not_exists(
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Recursive Ticket Triggers Loop Max.',
+  title:       __('Recursive Ticket Triggers Loop Max.'),
   name:        'ticket_trigger_recursive_max_loop',
   area:        'Ticket::Core',
-  description: 'Maximum number of recursively executed triggers.',
+  description: __('Maximum number of recursively executed triggers.'),
   options:     {
     form: [
       {
-        display: 'Recursive Ticket Triggers',
+        display: __('Recursive Ticket Triggers'),
         null:    true,
         name:    'ticket_trigger_recursive_max_loop',
         tag:     'select',
@@ -2251,10 +2403,10 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       'Enable Ticket creation',
+  title:       __('Enable Ticket creation'),
   name:        'customer_ticket_create',
   area:        'CustomerWeb::Base',
-  description: 'Defines if a customer can create tickets via the web interface.',
+  description: __('Defines if a customer can create tickets via the web interface.'),
   options:     {
     form: [
       {
@@ -2278,10 +2430,10 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       'Group selection for Ticket creation',
+  title:       __('Group selection for Ticket creation'),
   name:        'customer_ticket_create_group_ids',
   area:        'CustomerWeb::Base',
-  description: 'Defines groups for which a customer can create tickets via web interface. "-" means all groups are available.',
+  description: __('Defines groups for which a customer can create tickets via web interface. "-" means all groups are available.'),
   options:     {
     form: [
       {
@@ -2304,10 +2456,39 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       'Enable Ticket creation',
+  title:       __('Tab behaviour after ticket action'),
+  name:        'ticket_secondary_action',
+  area:        'CustomerWeb::Base',
+  description: __('Defines the tab behaviour after a ticket action.'),
+  options:     {
+    form: [
+      {
+        display: '',
+        null:    true,
+        name:    'ticket_secondary_action',
+        tag:     'boolean',
+        options: {
+          'closeTab'              => __('Close tab'),
+          'closeTabOnTicketClose' => __('Close tab on ticket close'),
+          'closeNextInOverview'   => __('Next in overview'),
+          'stayOnTab'             => __('Stay on tab'),
+        },
+      },
+    ],
+  },
+  state:       'stayOnTab',
+  preferences: {
+    authentication: true,
+    permission:     ['admin.channel_web'],
+  },
+  frontend:    true
+)
+
+Setting.create_if_not_exists(
+  title:       __('Enable Ticket creation'),
   name:        'form_ticket_create',
   area:        'Form::Base',
-  description: 'Defines if tickets can be created via web form.',
+  description: __('Defines if tickets can be created via web form.'),
   options:     {
     form: [
       {
@@ -2338,10 +2519,10 @@ if group
   group_id = group.id
 end
 Setting.create_if_not_exists(
-  title:       'Group selection for Ticket creation',
+  title:       __('Group selection for ticket creation'),
   name:        'form_ticket_create_group_id',
   area:        'Form::Base',
-  description: 'Defines if group of created tickets via web form.',
+  description: __('Defines the group of tickets created via web form.'),
   options:     {
     form: [
       {
@@ -2361,10 +2542,10 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       'Limit tickets by ip per hour',
+  title:       __('Limit tickets by IP per hour'),
   name:        'form_ticket_create_by_ip_per_hour',
   area:        'Form::Base',
-  description: 'Defines limit of tickets by ip per hour via web form.',
+  description: __('Defines a limit for how many tickets can be created via web form from one IP address per hour.'),
   options:     {
     form: [
       {
@@ -2382,10 +2563,10 @@ Setting.create_if_not_exists(
   frontend:    false,
 )
 Setting.create_if_not_exists(
-  title:       'Limit tickets by ip per day',
+  title:       __('Limit tickets by IP per day'),
   name:        'form_ticket_create_by_ip_per_day',
   area:        'Form::Base',
-  description: 'Defines limit of tickets by ip per day via web form.',
+  description: __('Defines a limit for how many tickets can be created via web form from one IP address per day.'),
   options:     {
     form: [
       {
@@ -2403,10 +2584,10 @@ Setting.create_if_not_exists(
   frontend:    false,
 )
 Setting.create_if_not_exists(
-  title:       'Limit tickets per day',
+  title:       __('Limit tickets per day'),
   name:        'form_ticket_create_per_day',
   area:        'Form::Base',
-  description: 'Defines limit of tickets per day via web form.',
+  description: __('Defines a limit for how many tickets can be created via web form per day.'),
   options:     {
     form: [
       {
@@ -2425,10 +2606,10 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       'Ticket Subject Size',
+  title:       __('Ticket Subject Size'),
   name:        'ticket_subject_size',
   area:        'Email::Base',
-  description: 'Max. length of the subject in an email reply.',
+  description: __('Max. length of the subject in an email reply.'),
   options:     {
     form: [
       {
@@ -2441,15 +2622,15 @@ Setting.create_if_not_exists(
   },
   state:       '110',
   preferences: {
-    permission: ['admin.channel_email'],
+    permission: ['admin.channel_email', 'admin.channel_google', 'admin.channel_microsoft365'],
   },
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Ticket Subject Reply',
+  title:       __('Ticket Subject Reply'),
   name:        'ticket_subject_re',
   area:        'Email::Base',
-  description: 'The text at the beginning of the subject in an email reply, e.g. RE, AW, or AS.',
+  description: __('The text at the beginning of the subject in an email reply, e.g. RE, AW, or AS.'),
   options:     {
     form: [
       {
@@ -2462,16 +2643,16 @@ Setting.create_if_not_exists(
   },
   state:       'RE',
   preferences: {
-    permission: ['admin.channel_email'],
+    permission: ['admin.channel_email', 'admin.channel_google', 'admin.channel_microsoft365'],
   },
   frontend:    false
 )
 
 Setting.create_if_not_exists(
-  title:       'Ticket Subject Forward',
+  title:       __('Ticket Subject Forward'),
   name:        'ticket_subject_fwd',
   area:        'Email::Base',
-  description: 'The text at the beginning of the subject in an email forward, e. g. FWD.',
+  description: __('The text at the beginning of the subject in an email forward, e. g. FWD.'),
   options:     {
     form: [
       {
@@ -2484,16 +2665,16 @@ Setting.create_if_not_exists(
   },
   state:       'FWD',
   preferences: {
-    permission: ['admin.channel_email'],
+    permission: ['admin.channel_email', 'admin.channel_google', 'admin.channel_microsoft365'],
   },
   frontend:    false
 )
 
 Setting.create_if_not_exists(
-  title:       'Sender Format',
+  title:       __('Sender Format'),
   name:        'ticket_define_email_from',
   area:        'Email::Base',
-  description: 'Defines how the From field of emails (sent from answers and email tickets) should look like.',
+  description: __('Defines how the From field of emails (sent from answers and email tickets) should look like.'),
   options:     {
     form: [
       {
@@ -2502,25 +2683,25 @@ Setting.create_if_not_exists(
         name:    'ticket_define_email_from',
         tag:     'select',
         options: {
-          SystemAddressName:          'System Address Display Name',
-          AgentNameSystemAddressName: 'Agent Name + FromSeparator + System Address Display Name',
-          AgentName:                  'Agent Name',
+          SystemAddressName:          __('System Address Display Name'),
+          AgentNameSystemAddressName: __('Agent Name + FromSeparator + System Address Display Name'),
+          AgentName:                  __('Agent Name'),
         },
       },
     ],
   },
   state:       'AgentNameSystemAddressName',
   preferences: {
-    permission: ['admin.channel_email'],
+    permission: ['admin.channel_email', 'admin.channel_google', 'admin.channel_microsoft365'],
   },
   frontend:    false
 )
 
 Setting.create_if_not_exists(
-  title:       'Sender Format Separator',
+  title:       __('Sender Format Separator'),
   name:        'ticket_define_email_from_separator',
   area:        'Email::Base',
-  description: 'Defines the separator between the agent\'s real name and the given group email address.',
+  description: __('Defines the separator between the agent\'s real name and the given group email address.'),
   options:     {
     form: [
       {
@@ -2533,16 +2714,16 @@ Setting.create_if_not_exists(
   },
   state:       'via',
   preferences: {
-    permission: ['admin.channel_email'],
+    permission: ['admin.channel_email', 'admin.channel_google', 'admin.channel_microsoft365'],
   },
   frontend:    false
 )
 
 Setting.create_if_not_exists(
-  title:       'Maximum Email Size',
+  title:       __('Maximum Email Size'),
   name:        'postmaster_max_size',
   area:        'Email::Base',
-  description: 'Maximum size in MB of emails.',
+  description: __('Defines the maximum accepted email size in MB.'),
   options:     {
     form: [
       {
@@ -2583,16 +2764,16 @@ Setting.create_if_not_exists(
   state:       10,
   preferences: {
     online_service_disable: true,
-    permission:             ['admin.channel_email'],
+    permission:             ['admin.channel_email', 'admin.channel_google', 'admin.channel_microsoft365'],
   },
   frontend:    false
 )
 
 Setting.create_if_not_exists(
-  title:       'Additional follow-up detection',
+  title:       __('Additional follow-up detection'),
   name:        'postmaster_follow_up_search_in',
   area:        'Email::Base',
-  description: 'By default the follow-up check is done via the subject of an email. With this setting you can add more fields for which the follow-up check will be executed.',
+  description: __('By default, the follow-up check is done via the subject of an email. This setting lets you add more fields for which the follow-up check will be executed.'),
   options:     {
     form: [
       {
@@ -2601,25 +2782,25 @@ Setting.create_if_not_exists(
         name:    'postmaster_follow_up_search_in',
         tag:     'checkbox',
         options: {
-          'references' => 'References - Search for follow-up also in In-Reply-To or References headers.',
-          'body'       => 'Body - Search for follow-up also in mail body.',
-          'attachment' => 'Attachment - Search for follow-up also in attachments.',
+          'references' => __('References - Search for follow-up also in In-Reply-To or References headers.'),
+          'body'       => __('Body - Search for follow-up also in mail body.'),
+          'attachment' => __('Attachment - Search for follow-up also in attachments.'),
         },
       },
     ],
   },
   state:       [],
   preferences: {
-    permission: ['admin.channel_email'],
+    permission: ['admin.channel_email', 'admin.channel_google', 'admin.channel_microsoft365'],
   },
   frontend:    false
 )
 
 Setting.create_if_not_exists(
-  title:       'Sender based on Reply-To header',
+  title:       __('Sender based on Reply-To header'),
   name:        'postmaster_sender_based_on_reply_to',
   area:        'Email::Base',
-  description: 'Set/overwrite sender/from of email based on reply-to header. Useful to set correct customer if email is received from a third party system on behalf of a customer.',
+  description: __('Set/overwrite sender/from of email based on "Reply-To" header. Useful to set correct customer if email is received from a third-party system on behalf of a customer.'),
   options:     {
     form: [
       {
@@ -2629,24 +2810,24 @@ Setting.create_if_not_exists(
         tag:     'select',
         options: {
           ''                                     => '-',
-          'as_sender_of_email'                   => 'Take reply-to header as sender/from of email.',
-          'as_sender_of_email_use_from_realname' => 'Take reply-to header as sender/from of email and use realname of origin from.',
+          'as_sender_of_email'                   => __('Take Reply-To header as sender/from of email.'),
+          'as_sender_of_email_use_from_realname' => __('Take Reply-To header as sender/from of email and use the real name of origin from.'),
         },
       },
     ],
   },
   state:       [],
   preferences: {
-    permission: ['admin.channel_email'],
+    permission: ['admin.channel_email', 'admin.channel_google', 'admin.channel_microsoft365'],
   },
   frontend:    false
 )
 
 Setting.create_if_not_exists(
-  title:       'Customer selection based on sender and receiver list',
+  title:       __('Customer selection based on sender and receiver list'),
   name:        'postmaster_sender_is_agent_search_for_customer',
   area:        'Email::Base',
-  description: 'If the sender is an agent, set the first user in the recipient list as a customer.',
+  description: __('If the sender is an agent, set the first user in the recipient list as the customer.'),
   options:     {
     form: [
       {
@@ -2663,16 +2844,16 @@ Setting.create_if_not_exists(
   },
   state:       true,
   preferences: {
-    permission: ['admin.channel_email'],
+    permission: ['admin.channel_email', 'admin.channel_google', 'admin.channel_microsoft365'],
   },
   frontend:    false
 )
 
 Setting.create_if_not_exists(
-  title:       'Send postmaster mail if mail too large',
+  title:       __('Send postmaster mail if mail too large'),
   name:        'postmaster_send_reject_if_mail_too_large',
   area:        'Email::Base',
-  description: 'Send postmaster reject mail to sender of mail if mail is too large.',
+  description: __('Send postmaster reject mail to sender of mail if mail is too large.'),
   options:     {
     form: [
       {
@@ -2690,16 +2871,16 @@ Setting.create_if_not_exists(
   state:       true,
   preferences: {
     online_service_disable: true,
-    permission:             ['admin.channel_email'],
+    permission:             ['admin.channel_email', 'admin.channel_google', 'admin.channel_microsoft365'],
   },
   frontend:    false
 )
 
 Setting.create_if_not_exists(
-  title:       'Notification Sender',
+  title:       __('Notification Sender'),
   name:        'notification_sender',
   area:        'Email::Base',
-  description: 'Defines the sender of email notifications.',
+  description: __('Defines the sender of email notifications.'),
   options:     {
     form: [
       {
@@ -2710,19 +2891,19 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  state:       'Notification Master <noreply@#{config.fqdn}>', # rubocop:disable Lint/InterpolationCheck
+  state:       '#{config.product_name} <noreply@#{config.fqdn}>', # rubocop:disable Lint/InterpolationCheck
   preferences: {
     online_service_disable: true,
-    permission:             ['admin.channel_email'],
+    permission:             ['admin.channel_email', 'admin.channel_google', 'admin.channel_microsoft365'],
   },
   frontend:    false
 )
 
 Setting.create_if_not_exists(
-  title:       'Block Notifications',
+  title:       __('Block Notifications'),
   name:        'send_no_auto_response_reg_exp',
   area:        'Email::Base',
-  description: 'If this regex matches, no notification will be sent by the sender.',
+  description: __('If this regex matches, no notification will be sent by the sender.'),
   options:     {
     form: [
       {
@@ -2736,16 +2917,16 @@ Setting.create_if_not_exists(
   state:       '(mailer-daemon|postmaster|abuse|root|noreply|noreply.+?|no-reply|no-reply.+?)@.+?',
   preferences: {
     online_service_disable: true,
-    permission:             ['admin.channel_email'],
+    permission:             ['admin.channel_email', 'admin.channel_google', 'admin.channel_microsoft365'],
   },
   frontend:    false
 )
 
 Setting.create_if_not_exists(
-  title:       'Bcc address for all outgoing emails',
+  title:       __('BCC address for all outgoing emails'),
   name:        'system_bcc',
   area:        'Email::Enhanced',
-  description: 'To archive all outgoing emails from Zammad to external, you can store a bcc email address here.',
+  description: __('To archive all outgoing emails from Zammad to external, you can store a BCC email address here.'),
   options:     {},
   state:       '',
   preferences: { online_service_disable: true },
@@ -2753,10 +2934,10 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       'API Token Access',
+  title:       __('API Token Access'),
   name:        'api_token_access',
   area:        'API::Base',
-  description: 'Enable REST API using tokens (not username/email address and password). Each user needs to create its own access tokens in user profile.',
+  description: __('Enable REST API using tokens (not username/email address and password). Each user needs to create its own access tokens in user profile.'),
   options:     {
     form: [
       {
@@ -2775,13 +2956,13 @@ Setting.create_if_not_exists(
   preferences: {
     permission: ['admin.api'],
   },
-  frontend:    false
+  frontend:    true
 )
 Setting.create_if_not_exists(
-  title:       'API Password Access',
+  title:       __('API Password Access'),
   name:        'api_password_access',
   area:        'API::Base',
-  description: 'Enable REST API access using the username/email address and password for the authentication user.',
+  description: __('Enable REST API access using the username/email address and password for the authentication user.'),
   options:     {
     form: [
       {
@@ -2804,10 +2985,10 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       'Monitoring Token',
+  title:       __('Monitoring Token'),
   name:        'monitoring_token',
   area:        'HealthCheck::Base',
-  description: 'Token for monitoring.',
+  description: __('Token for monitoring.'),
   options:     {
     form: [
       {
@@ -2826,10 +3007,10 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       'Enable Chat',
+  title:       __('Enable Chat'),
   name:        'chat',
   area:        'Chat::Base',
-  description: 'Enable/disable online chat.',
+  description: __('Enable/disable online chat.'),
   options:     {
     form: [
       {
@@ -2853,10 +3034,10 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       'Agent idle timeout',
+  title:       __('Agent idle timeout'),
   name:        'chat_agent_idle_timeout',
   area:        'Chat::Extended',
-  description: 'Idle timeout in seconds until agent is set offline automatically.',
+  description: __('Idle timeout in seconds until agent is set offline automatically.'),
   options:     {
     form: [
       {
@@ -2875,10 +3056,10 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       'Defines searchable models.',
+  title:       __('Defines searchable models.'),
   name:        'models_searchable',
   area:        'Models::Base',
-  description: 'Defines the searchable models.',
+  description: __('Defines the searchable models.'),
   options:     {},
   state:       Models.searchable.map(&:to_s),
   preferences: {
@@ -2888,93 +3069,93 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       'Default Screen',
+  title:       __('Default Screen'),
   name:        'default_controller',
   area:        'Core',
-  description: 'Defines the default screen.',
+  description: __('Defines the default screen.'),
   options:     {},
   state:       '#dashboard',
   frontend:    true
 )
 
 Setting.create_if_not_exists(
-  title:       'Elasticsearch Endpoint URL',
+  title:       __('Elasticsearch Endpoint URL'),
   name:        'es_url',
   area:        'SearchIndex::Elasticsearch',
-  description: 'Defines endpoint of Elasticsearch.',
+  description: __('Defines endpoint of Elasticsearch.'),
   state:       '',
   preferences: { online_service_disable: true },
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Elasticsearch Endpoint User',
+  title:       __('Elasticsearch Endpoint User'),
   name:        'es_user',
   area:        'SearchIndex::Elasticsearch',
-  description: 'Defines HTTP basic auth user of Elasticsearch.',
+  description: __('Defines HTTP basic auth user of Elasticsearch.'),
   state:       '',
   preferences: { online_service_disable: true },
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Elasticsearch Endpoint Password',
+  title:       __('Elasticsearch Endpoint Password'),
   name:        'es_password',
   area:        'SearchIndex::Elasticsearch',
-  description: 'Defines HTTP basic auth password of Elasticsearch.',
+  description: __('Defines HTTP basic auth password of Elasticsearch.'),
   state:       '',
   preferences: { online_service_disable: true },
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Elasticsearch Endpoint Index',
+  title:       __('Elasticsearch Endpoint Index'),
   name:        'es_index',
   area:        'SearchIndex::Elasticsearch',
-  description: 'Defines Elasticsearch index name.',
+  description: __('Defines Elasticsearch index name.'),
   state:       'zammad',
   preferences: { online_service_disable: true },
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Elasticsearch Attachment Extensions',
+  title:       __('Elasticsearch Attachment Extensions'),
   name:        'es_attachment_ignore',
   area:        'SearchIndex::Elasticsearch',
-  description: 'Defines attachment extensions which will be ignored by Elasticsearch.',
+  description: __('Defines attachment extensions which will be ignored by Elasticsearch.'),
   state:       [ '.png', '.jpg', '.jpeg', '.mpeg', '.mpg', '.mov', '.bin', '.exe', '.box', '.mbox' ],
   preferences: { online_service_disable: true },
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Elasticsearch Attachment Size',
+  title:       __('Elasticsearch Attachment Size'),
   name:        'es_attachment_max_size_in_mb',
   area:        'SearchIndex::Elasticsearch',
-  description: 'Define max. attachment size for Elasticsearch.',
+  description: __('Define max. attachment size for Elasticsearch.'),
   state:       10,
   preferences: { online_service_disable: true },
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Elasticsearch Total Payload Size',
+  title:       __('Elasticsearch Total Payload Size'),
   name:        'es_total_max_size_in_mb',
   area:        'SearchIndex::Elasticsearch',
-  description: 'Define max. payload size for Elasticsearch.',
+  description: __('Define max. payload size for Elasticsearch.'),
   state:       300,
   preferences: { online_service_disable: true },
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Elasticsearch Pipeline Name',
+  title:       __('Elasticsearch Pipeline Name'),
   name:        'es_pipeline',
   area:        'SearchIndex::Elasticsearch',
-  description: 'Define pipeline name for Elasticsearch.',
+  description: __('Define pipeline name for Elasticsearch.'),
   state:       '',
   preferences: { online_service_disable: true },
   frontend:    false
 )
 
 Setting.create_if_not_exists(
-  title:       'Import Mode',
+  title:       __('Import Mode'),
   name:        'import_mode',
   area:        'Import::Base',
-  description: 'Puts Zammad into import mode (disables some triggers).',
+  description: __('Puts Zammad into import mode (disables some triggers).'),
   options:     {
     form: [
       {
@@ -2993,19 +3174,19 @@ Setting.create_if_not_exists(
   frontend:    true
 )
 Setting.create_if_not_exists(
-  title:       'Import Backend',
+  title:       __('Import Backend'),
   name:        'import_backend',
   area:        'Import::Base::Internal',
-  description: 'Set backend which is being used for import.',
+  description: __('Set backend which is being used for import.'),
   options:     {},
   state:       '',
   frontend:    true
 )
 Setting.create_if_not_exists(
-  title:       'Ignore Escalation/SLA Information',
+  title:       __('Ignore Escalation/SLA Information'),
   name:        'import_ignore_sla',
   area:        'Import::Base',
-  description: 'Ignore escalation/SLA information for import.',
+  description: __('Ignore escalation/SLA information for import.'),
   options:     {
     form: [
       {
@@ -3025,10 +3206,10 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       'Import Endpoint',
+  title:       __('Import Endpoint'),
   name:        'import_otrs_endpoint',
   area:        'Import::OTRS',
-  description: 'Defines OTRS endpoint to import users, tickets, states and articles.',
+  description: __('Defines an OTRS endpoint to import users, tickets, states, and articles.'),
   options:     {
     form: [
       {
@@ -3043,10 +3224,10 @@ Setting.create_if_not_exists(
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Import Key',
+  title:       __('Import Key'),
   name:        'import_otrs_endpoint_key',
   area:        'Import::OTRS',
-  description: 'Defines OTRS endpoint authentication key.',
+  description: __('Defines OTRS endpoint authentication key.'),
   options:     {
     form: [
       {
@@ -3062,10 +3243,10 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       'Import User for HTTP basic authentication',
+  title:       __('Import User for HTTP basic authentication'),
   name:        'import_otrs_user',
   area:        'Import::OTRS',
-  description: 'Defines HTTP basic authentication user (only if OTRS is protected via HTTP basic auth).',
+  description: __('Defines HTTP basic authentication user (only if OTRS is protected via HTTP basic auth).'),
   options:     {
     form: [
       {
@@ -3081,10 +3262,10 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       'Import Password for http basic authentication',
+  title:       __('Import Password for HTTP basic authentication'),
   name:        'import_otrs_password',
   area:        'Import::OTRS',
-  description: 'Defines http basic authentication password (only if OTRS is protected via http basic auth).',
+  description: __('Defines HTTP basic authentication password (only if OTRS is protected via HTTP basic auth).'),
   options:     {
     form: [
       {
@@ -3100,10 +3281,10 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       'Import Endpoint',
+  title:       __('Import Endpoint'),
   name:        'import_zendesk_endpoint',
   area:        'Import::Zendesk',
-  description: 'Defines Zendesk endpoint to import users, ticket, states and articles.',
+  description: __('Defines a Zendesk endpoint to import users, tickets, states, and articles.'),
   options:     {
     form: [
       {
@@ -3118,10 +3299,10 @@ Setting.create_if_not_exists(
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Import Key for requesting the Zendesk API',
+  title:       __('Import API key for requesting the Zendesk API'),
   name:        'import_zendesk_endpoint_key',
   area:        'Import::Zendesk',
-  description: 'Defines Zendesk endpoint authentication key.',
+  description: __('Defines Zendesk endpoint authentication API key.'),
   options:     {
     form: [
       {
@@ -3137,10 +3318,10 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       'Import User for requesting the Zendesk API',
+  title:       __('Import User for requesting the Zendesk API'),
   name:        'import_zendesk_endpoint_username',
   area:        'Import::Zendesk',
-  description: 'Defines Zendesk endpoint authentication user.',
+  description: __('Defines Zendesk endpoint authentication user.'),
   options:     {
     form: [
       {
@@ -3156,10 +3337,10 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       'Import Endpoint',
+  title:       __('Import Endpoint'),
   name:        'import_freshdesk_endpoint',
   area:        'Import::Freshdesk',
-  description: 'Defines Freshdesk endpoint to import users, ticket, states and articles.',
+  description: __('Defines a Freshdesk endpoint to import users, tickets, states, and articles.'),
   options:     {
     form: [
       {
@@ -3174,10 +3355,10 @@ Setting.create_if_not_exists(
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Import Key for requesting the Freshdesk API',
+  title:       __('Import API key for requesting the Freshdesk API'),
   name:        'import_freshdesk_endpoint_key',
   area:        'Import::Freshdesk',
-  description: 'Defines Freshdesk endpoint authentication key.',
+  description: __('Defines Freshdesk endpoint authentication API key.'),
   options:     {
     form: [
       {
@@ -3193,10 +3374,65 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       'Import Backends',
+  title:       __('Import Endpoint'),
+  name:        'import_kayako_endpoint',
+  area:        'Import::Kayako',
+  description: __('Defines a Kayako endpoint to import users, tickets, states, and articles.'),
+  options:     {
+    form: [
+      {
+        display: '',
+        null:    false,
+        name:    'import_kayako_endpoint',
+        tag:     'input',
+      },
+    ],
+  },
+  state:       'https://yours.kayako.com/api/v1',
+  frontend:    false
+)
+Setting.create_if_not_exists(
+  title:       __('Import User for requesting the Kayako API'),
+  name:        'import_kayako_endpoint_username',
+  area:        'Import::Kayako',
+  description: __('Defines Kayako endpoint authentication user.'),
+  options:     {
+    form: [
+      {
+        display: '',
+        null:    false,
+        name:    'import_kayako_endpoint_username',
+        tag:     'input',
+      },
+    ],
+  },
+  state:       '',
+  frontend:    false
+)
+Setting.create_if_not_exists(
+  title:       __('Import Password for requesting the Kayako API'),
+  name:        'import_kayako_endpoint_password',
+  area:        'Import::Kayako',
+  description: __('Defines Kayako endpoint authentication password.'),
+  options:     {
+    form: [
+      {
+        display: '',
+        null:    false,
+        name:    'import_kayako_endpoint_password',
+        tag:     'input',
+      },
+    ],
+  },
+  state:       '',
+  frontend:    false
+)
+
+Setting.create_if_not_exists(
+  title:       __('Import Backends'),
   name:        'import_backends',
   area:        'Import',
-  description: 'A list of active import backends that get scheduled automatically.',
+  description: __('A list of active import backends that gets scheduled automatically.'),
   options:     {},
   state:       ['Import::Ldap', 'Import::Exchange'],
   preferences: {
@@ -3206,10 +3442,10 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       'Sequencer log level',
+  title:       __('Sequencer log level'),
   name:        'sequencer_log_level',
   area:        'Core',
-  description: 'Defines the log levels for various logging actions of the Sequencer.',
+  description: __('Defines the log levels for various logging actions of the Sequencer.'),
   options:     {},
   state:       {
     sequence: {
@@ -3241,10 +3477,10 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       'Time Accounting',
+  title:       __('Time Accounting'),
   name:        'time_accounting',
   area:        'Web::Base',
-  description: 'Enable time accounting.',
+  description: __('Enable time accounting.'),
   options:     {
     form: [
       {
@@ -3268,10 +3504,10 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       'Time Accounting Selector',
+  title:       __('Time Accounting Selector'),
   name:        'time_accounting_selector',
   area:        'Web::Base',
-  description: 'Enable time accounting for these tickets.',
+  description: __('Enable time accounting for these tickets.'),
   options:     {
     form: [
       {},
@@ -3286,10 +3522,10 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       'New Tags',
+  title:       __('New Tags'),
   name:        'tag_new',
   area:        'Web::Base',
-  description: 'Allow users to create new tags.',
+  description: __('Allow users to create new tags.'),
   options:     {
     form: [
       {
@@ -3313,10 +3549,10 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       'Default calendar tickets subscriptions',
+  title:       __('Default calendar tickets subscriptions'),
   name:        'defaults_calendar_subscriptions_tickets',
   area:        'Defaults::CalendarSubscriptions',
-  description: 'Defines the default calendar tickets subscription settings.',
+  description: __('Defines the default calendar tickets subscription settings.'),
   options:     {},
   state:       {
     escalation: {
@@ -3339,218 +3575,235 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       'Defines translator identifier.',
-  name:        'translator_key',
-  area:        'i18n::translator_key',
-  description: 'Defines the translator identifier for contributions.',
-  options:     {},
-  state:       '',
-  frontend:    false
-)
-
-Setting.create_if_not_exists(
-  title:       'Defines postmaster filter.',
+  title:       __('Defines postmaster filter.'),
   name:        '0005_postmaster_filter_trusted',
   area:        'Postmaster::PreFilter',
-  description: 'Defines postmaster filter to remove X-Zammad headers from not trusted sources.',
+  description: __('Defines postmaster filter to remove X-Zammad headers from untrustworthy sources.'),
   options:     {},
   state:       'Channel::Filter::Trusted',
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Defines postmaster filter.',
+  title:       __('Defines postmaster filter.'),
   name:        '0006_postmaster_filter_auto_response_check',
   area:        'Postmaster::PreFilter',
-  description: 'Defines postmaster filter to identify auto responses to prevent auto replies from Zammad.',
+  description: __('Defines postmaster filter to identify auto responses to prevent auto replies from Zammad.'),
   options:     {},
   state:       'Channel::Filter::AutoResponseCheck',
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Defines postmaster filter.',
+  title:       __('Defines postmaster filter.'),
   name:        '0007_postmaster_filter_follow_up_check',
   area:        'Postmaster::PreFilter',
-  description: 'Defines postmaster filter to identify follow-ups (based on admin settings).',
+  description: __('Defines postmaster filter to identify follow-ups (based on admin settings).'),
   options:     {},
   state:       'Channel::Filter::FollowUpCheck',
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Defines postmaster filter.',
+  title:       __('Defines postmaster filter.'),
   name:        '0008_postmaster_filter_follow_up_merged',
   area:        'Postmaster::PreFilter',
-  description: 'Defines postmaster filter to identify follow-up ticket for merged tickets.',
+  description: __('Defines postmaster filter to identify follow-up ticket for merged tickets.'),
   options:     {},
   state:       'Channel::Filter::FollowUpMerged',
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Defines postmaster filter.',
+  title:       __('Defines postmaster filter.'),
+  name:        '0009_postmaster_filter_follow_up_assignment',
+  area:        'Postmaster::PreFilter',
+  description: __('Defines postmaster filter to set the owner (based on group follow up assignment).'),
+  options:     {},
+  state:       'Channel::Filter::FollowUpAssignment',
+  frontend:    false
+)
+Setting.create_if_not_exists(
+  title:       __('Defines postmaster filter.'),
   name:        '0011_postmaster_sender_based_on_reply_to',
   area:        'Postmaster::PreFilter',
-  description: 'Defines postmaster filter to set the sender/from of emails based on reply-to header.',
+  description: __('Defines postmaster filter to set the sender/from of emails based on reply-to header.'),
   options:     {},
   state:       'Channel::Filter::ReplyToBasedSender',
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Define postmaster filter.',
+  title:       __('Define postmaster filter.'),
   name:        '0018_postmaster_import_archive',
   area:        'Postmaster::PreFilter',
-  description: 'Define postmaster filter to import archive mailboxes.',
+  description: __('Define postmaster filter to import archive mailboxes.'),
   options:     {},
   state:       'Channel::Filter::ImportArchive',
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Defines postmaster filter.',
+  title:       __('Defines postmaster filter.'),
   name:        '0012_postmaster_filter_sender_is_system_address',
   area:        'Postmaster::PreFilter',
-  description: 'Defines postmaster filter to check if email has been created by Zammad itself and will set the article sender.',
+  description: __('Defines postmaster filter to check if email has been created by Zammad itself and will set the article sender.'),
   options:     {},
   state:       'Channel::Filter::SenderIsSystemAddress',
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Defines postmaster filter.',
+  title:       __('Defines postmaster filter.'),
   name:        '0014_postmaster_filter_own_notification_loop_detection',
   area:        'Postmaster::PreFilter',
-  description: 'Define postmaster filter to check if email is a own created notification email, then ignore it to prevent email loops.',
+  description: __('Defines postmaster filter to check if the email is a self-created notification email, then ignore it to prevent email loops.'),
   options:     {},
   state:       'Channel::Filter::OwnNotificationLoopDetection',
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Defines postmaster filter.',
+  title:       __('Defines postmaster filter.'),
   name:        '0015_postmaster_filter_identify_sender',
   area:        'Postmaster::PreFilter',
-  description: 'Defines postmaster filter to identify sender user.',
+  description: __('Defines postmaster filter to identify sender user.'),
   options:     {},
   state:       'Channel::Filter::IdentifySender',
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Defines postmaster filter.',
+  title:       __('Defines postmaster filter.'),
   name:        '0016_postmaster_filter_smime',
   area:        'Postmaster::PreFilter',
-  description: 'Defines postmaster filter to handle secure mailing.',
+  description: __('Defines postmaster filter to handle secure mailing.'),
   options:     {},
   state:       'Channel::Filter::SecureMailing',
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Defines postmaster filter.',
+  title:       __('Defines postmaster filter.'),
   name:        '0030_postmaster_filter_out_of_office_check',
   area:        'Postmaster::PreFilter',
-  description: 'Defines postmaster filter to identify out-of-office emails for follow-up detection and keeping current ticket state.',
+  description: __('Defines postmaster filter to identify out-of-office emails for follow-up detection and keeping current ticket state.'),
   options:     {},
   state:       'Channel::Filter::OutOfOfficeCheck',
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Defines postmaster filter.',
+  title:       __('Defines postmaster filter.'),
   name:        '0200_postmaster_filter_follow_up_possible_check',
   area:        'Postmaster::PreFilter',
-  description: 'Define postmaster filter to check if follow-ups get created (based on admin settings).',
+  description: __('Define postmaster filter to check if follow-ups get created (based on admin settings).'),
   options:     {},
   state:       'Channel::Filter::FollowUpPossibleCheck',
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Defines postmaster filter.',
+  title:       __('Defines postmaster filter.'),
   name:        '0900_postmaster_filter_bounce_follow_up_check',
   area:        'Postmaster::PreFilter',
-  description: 'Defines postmaster filter to identify postmaster bounced - to handle it as follow-up of the original ticket.',
+  description: __('Defines postmaster filter to identify postmaster bounces; and handles them as follow-up of the original tickets'),
   options:     {},
   state:       'Channel::Filter::BounceFollowUpCheck',
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Defines postmaster filter.',
+  title:       __('Defines postmaster filter.'),
   name:        '0950_postmaster_filter_bounce_delivery_permanent_failed',
   area:        'Postmaster::PreFilter',
-  description: 'Defines postmaster filter to identify postmaster bounced - disable sending notification on permanent deleivery failed.',
+  description: __('Defines postmaster filter to identify postmaster bounces; and disables sending notification if delivery fails permanently.'),
   options:     {},
   state:       'Channel::Filter::BounceDeliveryPermanentFailed',
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Defines postmaster filter.',
+  title:       __('Defines postmaster filter.'),
   name:        '0955_postmaster_filter_bounce_delivery_temporary_failed',
   area:        'Postmaster::PreFilter',
-  description: 'Defines postmaster filter to identify postmaster bounced - reopen ticket on permanent temporary failed.',
+  description: __('Defines postmaster filter to identify postmaster bounces; and reopens tickets if delivery fails permanently.'),
   options:     {},
   state:       'Channel::Filter::BounceDeliveryTemporaryFailed',
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Defines postmaster filter.',
+  title:       __('Defines postmaster filter.'),
   name:        '1000_postmaster_filter_database_check',
   area:        'Postmaster::PreFilter',
-  description: 'Defines postmaster filter for filters managed via admin interface.',
+  description: __('Defines postmaster filter for filters managed via admin interface.'),
   options:     {},
   state:       'Channel::Filter::Database',
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Defines postmaster filter.',
+  title:       __('Defines postmaster filter.'),
   name:        '5000_postmaster_filter_icinga',
   area:        'Postmaster::PreFilter',
-  description: 'Defines postmaster filter to manage Icinga (http://www.icinga.org) emails.',
+  description: __('Defines postmaster filter to manage Icinga (http://www.icinga.org) emails.'),
   options:     {},
   state:       'Channel::Filter::Icinga',
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Defines postmaster filter.',
+  title:       __('Defines postmaster filter.'),
   name:        '5100_postmaster_filter_nagios',
   area:        'Postmaster::PreFilter',
-  description: 'Defines postmaster filter to manage Nagios (http://www.nagios.org) emails.',
+  description: __('Defines postmaster filter to manage Nagios (http://www.nagios.org) emails.'),
   options:     {},
   state:       'Channel::Filter::Nagios',
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Defines postmaster filter.',
+  title:       __('Defines postmaster filter.'),
   name:        '5300_postmaster_filter_monit',
   area:        'Postmaster::PreFilter',
-  description: 'Defines postmaster filter to manage Monit (https://mmonit.com/monit/) emails.',
+  description: __('Defines postmaster filter to manage Monit (https://mmonit.com/monit/) emails.'),
   options:     {},
   state:       'Channel::Filter::Monit',
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Defines postmaster filter.',
+  title:       __('Defines postmaster filter.'),
   name:        '5400_postmaster_filter_service_now_check',
   area:        'Postmaster::PreFilter',
-  description: 'Defines postmaster filter to identify service now mails for correct follow-ups.',
+  description: __('Defines postmaster filter to identify ServiceNow mails for correct follow-ups.'),
   options:     {},
   state:       'Channel::Filter::ServiceNowCheck',
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Defines postmaster filter.',
+  title:       __('Defines postmaster filter.'),
   name:        '5401_postmaster_filter_service_now_check',
   area:        'Postmaster::PostFilter',
-  description: 'Defines postmaster filter to identify service now mails for correct follow-ups.',
+  description: __('Defines postmaster filter to identify ServiceNow mails for correct follow-ups.'),
   options:     {},
   state:       'Channel::Filter::ServiceNowCheck',
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Define postmaster filter.',
+  title:       __('Defines postmaster filter.'),
+  name:        '5400_postmaster_filter_jira_check',
+  area:        'Postmaster::PreFilter',
+  description: __('Defines postmaster filter to identify Jira mails for correct follow-ups.'),
+  options:     {},
+  state:       'Channel::Filter::JiraCheck',
+  frontend:    false
+)
+Setting.create_if_not_exists(
+  title:       __('Defines postmaster filter.'),
+  name:        '5401_postmaster_filter_jira_check',
+  area:        'Postmaster::PostFilter',
+  description: __('Defines postmaster filter to identify Jira mails for correct follow-ups.'),
+  options:     {},
+  state:       'Channel::Filter::JiraCheck',
+  frontend:    false
+)
+Setting.create_if_not_exists(
+  title:       __('Define postmaster filter.'),
   name:        '5500_postmaster_internal_article_check',
   area:        'Postmaster::PreFilter',
-  description: 'Defines the postmaster filter which set the article internal if a forwarded, replied or sent email also exists with the article internal received.',
+  description: __('Defines postmaster filter which sets the articles visibility to internal if it is a rely to an internal article or the last outgoing email is internal.'),
   options:     {},
   state:       'Channel::Filter::InternalArticleCheck',
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Icinga integration',
+  title:       __('Icinga integration'),
   name:        'icinga_integration',
   area:        'Integration::Switch',
-  description: 'Defines if Icinga (http://www.icinga.org) is enabled or not.',
+  description: __('Defines if Icinga (http://www.icinga.org) is enabled or not.'),
   options:     {
     form: [
       {
@@ -3573,10 +3826,10 @@ Setting.create_if_not_exists(
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Sender',
+  title:       __('Sender'),
   name:        'icinga_sender',
   area:        'Integration::Icinga',
-  description: 'Defines the sender email address of Icinga emails.',
+  description: __('Defines the sender email address of Icinga emails.'),
   options:     {
     form: [
       {
@@ -3596,10 +3849,10 @@ Setting.create_if_not_exists(
   frontend:    false,
 )
 Setting.create_if_not_exists(
-  title:       'Auto close',
+  title:       __('Auto close'),
   name:        'icinga_auto_close',
   area:        'Integration::Icinga',
-  description: 'Defines if tickets should be closed if service is recovered.',
+  description: __('Defines if tickets should be closed if service is recovered.'),
   options:     {
     form: [
       {
@@ -3622,10 +3875,10 @@ Setting.create_if_not_exists(
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Auto close state',
+  title:       __('Auto-close state'),
   name:        'icinga_auto_close_state_id',
   area:        'Integration::Icinga',
-  description: 'Defines the state of auto closed tickets.',
+  description: __('Defines the state of auto-closed tickets.'),
   options:     {
     form: [
       {
@@ -3645,10 +3898,10 @@ Setting.create_if_not_exists(
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Nagios integration',
+  title:       __('Nagios integration'),
   name:        'nagios_integration',
   area:        'Integration::Switch',
-  description: 'Defines if Nagios (http://www.nagios.org) is enabled or not.',
+  description: __('Defines if Nagios (http://www.nagios.org) is enabled or not.'),
   options:     {
     form: [
       {
@@ -3671,10 +3924,10 @@ Setting.create_if_not_exists(
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Sender',
+  title:       __('Sender'),
   name:        'nagios_sender',
   area:        'Integration::Nagios',
-  description: 'Defines the sender email address of Nagios emails.',
+  description: __('Defines the sender email address of Nagios emails.'),
   options:     {
     form: [
       {
@@ -3694,10 +3947,10 @@ Setting.create_if_not_exists(
   frontend:    false,
 )
 Setting.create_if_not_exists(
-  title:       'Auto close',
+  title:       __('Auto close'),
   name:        'nagios_auto_close',
   area:        'Integration::Nagios',
-  description: 'Defines if tickets should be closed if service is recovered.',
+  description: __('Defines if tickets should be closed if service is recovered.'),
   options:     {
     form: [
       {
@@ -3720,10 +3973,10 @@ Setting.create_if_not_exists(
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Auto close state',
+  title:       __('Auto-close state'),
   name:        'nagios_auto_close_state_id',
   area:        'Integration::Nagios',
-  description: 'Defines the state of auto closed tickets.',
+  description: __('Defines the state of auto-closed tickets.'),
   options:     {
     form: [
       {
@@ -3743,10 +3996,10 @@ Setting.create_if_not_exists(
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Checkmk integration',
+  title:       __('Checkmk integration'),
   name:        'check_mk_integration',
   area:        'Integration::Switch',
-  description: 'Defines if Checkmk (https://checkmk.com/) is enabled or not.',
+  description: __('Defines if Checkmk (https://checkmk.com/) is enabled or not.'),
   options:     {
     form: [
       {
@@ -3769,10 +4022,10 @@ Setting.create_if_not_exists(
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Group',
+  title:       __('Group'),
   name:        'check_mk_group_id',
   area:        'Integration::CheckMK',
-  description: 'Defines the group of created tickets.',
+  description: __('Defines the group of created tickets.'),
   options:     {
     form: [
       {
@@ -3792,16 +4045,16 @@ Setting.create_if_not_exists(
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Auto close',
+  title:       __('Auto close'),
   name:        'check_mk_auto_close',
   area:        'Integration::CheckMK',
-  description: 'Defines if tickets should be closed if service is recovered.',
+  description: __('Defines if tickets should be closed if service is recovered.'),
   options:     {
     form: [
       {
         display: '',
         null:    true,
-        name:    'checkmk_auto_close',
+        name:    'check_mk_auto_close',
         tag:     'boolean',
         options: {
           true  => 'yes',
@@ -3818,10 +4071,10 @@ Setting.create_if_not_exists(
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Auto close state',
+  title:       __('Auto-close state'),
   name:        'check_mk_auto_close_state_id',
   area:        'Integration::CheckMK',
-  description: 'Defines the state of auto closed tickets.',
+  description: __('Defines the state of auto-closed tickets.'),
   options:     {
     form: [
       {
@@ -3841,10 +4094,10 @@ Setting.create_if_not_exists(
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Checkmk token',
+  title:       __('Checkmk token'),
   name:        'check_mk_token',
   area:        'Core',
-  description: 'Defines the Checkmk token for allowing updates.',
+  description: __('Defines the Checkmk token for allowing updates.'),
   options:     {},
   state:       ENV['CHECK_MK_TOKEN'] || SecureRandom.hex(16),
   preferences: {
@@ -3853,10 +4106,10 @@ Setting.create_if_not_exists(
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Monit integration',
+  title:       __('Monit integration'),
   name:        'monit_integration',
   area:        'Integration::Switch',
-  description: 'Defines if Monit (https://mmonit.com/monit/) is enabled or not.',
+  description: __('Defines if Monit (https://mmonit.com/monit/) is enabled or not.'),
   options:     {
     form: [
       {
@@ -3879,10 +4132,10 @@ Setting.create_if_not_exists(
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Sender',
+  title:       __('Sender'),
   name:        'monit_sender',
   area:        'Integration::Monit',
-  description: 'Defines the sender email address of the service emails.',
+  description: __('Defines the sender email address of the service emails.'),
   options:     {
     form: [
       {
@@ -3902,10 +4155,10 @@ Setting.create_if_not_exists(
   frontend:    false,
 )
 Setting.create_if_not_exists(
-  title:       'Auto close',
+  title:       __('Auto close'),
   name:        'monit_auto_close',
   area:        'Integration::Monit',
-  description: 'Defines if tickets should be closed if service is recovered.',
+  description: __('Defines if tickets should be closed if service is recovered.'),
   options:     {
     form: [
       {
@@ -3929,10 +4182,10 @@ Setting.create_if_not_exists(
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Auto close state',
+  title:       __('Auto-close state'),
   name:        'monit_auto_close_state_id',
   area:        'Integration::Monit',
-  description: 'Defines the state of auto closed tickets.',
+  description: __('Defines the state of auto-closed tickets.'),
   options:     {
     form: [
       {
@@ -3954,10 +4207,10 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       'LDAP integration',
+  title:       __('LDAP integration'),
   name:        'ldap_integration',
   area:        'Integration::Switch',
-  description: 'Defines if LDAP is enabled or not.',
+  description: __('Defines if LDAP is enabled or not.'),
   options:     {
     form: [
       {
@@ -3981,10 +4234,10 @@ Setting.create_if_not_exists(
   frontend:    true
 )
 Setting.create_if_not_exists(
-  title:       'Exchange config',
+  title:       __('Exchange config'),
   name:        'exchange_config',
   area:        'Integration::Exchange',
-  description: 'Defines the Exchange config.',
+  description: __('Defines the Exchange config.'),
   options:     {},
   state:       {},
   preferences: {
@@ -3994,10 +4247,10 @@ Setting.create_if_not_exists(
   frontend:    false,
 )
 Setting.create_if_not_exists(
-  title:       'Exchange integration',
+  title:       __('Exchange integration'),
   name:        'exchange_integration',
   area:        'Integration::Switch',
-  description: 'Defines if Exchange is enabled or not.',
+  description: __('Defines if Exchange is enabled or not.'),
   options:     {
     form: [
       {
@@ -4021,10 +4274,10 @@ Setting.create_if_not_exists(
   frontend:    true
 )
 Setting.create_if_not_exists(
-  title:       'LDAP config',
+  title:       __('LDAP config'),
   name:        'ldap_config',
   area:        'Integration::LDAP',
-  description: 'Defines the LDAP config.',
+  description: __('Defines the LDAP config.'),
   options:     {},
   state:       {},
   preferences: {
@@ -4034,10 +4287,10 @@ Setting.create_if_not_exists(
   frontend:    false,
 )
 Setting.create_if_not_exists(
-  title:       'i-doit integration',
+  title:       __('i-doit integration'),
   name:        'idoit_integration',
   area:        'Integration::Switch',
-  description: 'Defines if i-doit (http://www.i-doit) is enabled or not.',
+  description: __('Defines if i-doit (http://www.i-doit) is enabled or not.'),
   options:     {
     form: [
       {
@@ -4061,10 +4314,10 @@ Setting.create_if_not_exists(
   frontend:    true
 )
 Setting.create_if_not_exists(
-  title:       'i-doit config',
+  title:       __('i-doit config'),
   name:        'idoit_config',
   area:        'Integration::Idoit',
-  description: 'Defines the i-doit config.',
+  description: __('Defines the i-doit config.'),
   options:     {},
   state:       {},
   preferences: {
@@ -4074,10 +4327,10 @@ Setting.create_if_not_exists(
   frontend:    false,
 )
 Setting.create_if_not_exists(
-  title:       'GitLab integration',
+  title:       __('GitLab integration'),
   name:        'gitlab_integration',
   area:        'Integration::Switch',
-  description: 'Defines if the GitLab (http://www.gitlab.com) integration is enabled or not.',
+  description: __('Defines if the GitLab (http://www.gitlab.com) integration is enabled or not.'),
   options:     {
     form: [
       {
@@ -4101,10 +4354,10 @@ Setting.create_if_not_exists(
   frontend:    true
 )
 Setting.create_if_not_exists(
-  title:       'GitLab config',
+  title:       __('GitLab config'),
   name:        'gitlab_config',
   area:        'Integration::GitLab',
-  description: 'Stores the GitLab configuration.',
+  description: __('Stores the GitLab configuration.'),
   options:     {},
   state:       {
     endpoint: 'https://gitlab.com/api/graphql',
@@ -4116,10 +4369,10 @@ Setting.create_if_not_exists(
   frontend:    false,
 )
 Setting.create_if_not_exists(
-  title:       'GitHub integration',
+  title:       __('GitHub integration'),
   name:        'github_integration',
   area:        'Integration::Switch',
-  description: 'Defines if the GitHub (http://www.github.com) integration is enabled or not.',
+  description: __('Defines if the GitHub (http://www.github.com) integration is enabled or not.'),
   options:     {
     form: [
       {
@@ -4143,10 +4396,10 @@ Setting.create_if_not_exists(
   frontend:    true
 )
 Setting.create_if_not_exists(
-  title:       'GitHub config',
+  title:       __('GitHub config'),
   name:        'github_config',
   area:        'Integration::GitHub',
-  description: 'Stores the GitHub configuration.',
+  description: __('Stores the GitHub configuration.'),
   options:     {},
   state:       {
     endpoint: 'https://api.github.com/graphql',
@@ -4158,46 +4411,46 @@ Setting.create_if_not_exists(
   frontend:    false,
 )
 Setting.create_if_not_exists(
-  title:       'Defines sync transaction backend.',
+  title:       __('Defines sync transaction backend.'),
   name:        '0100_trigger',
   area:        'Transaction::Backend::Sync',
-  description: 'Defines the transaction backend to execute triggers.',
+  description: __('Defines the transaction backend to execute triggers.'),
   options:     {},
   state:       'Transaction::Trigger',
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Defines transaction backend.',
+  title:       __('Defines transaction backend.'),
   name:        '0100_notification',
   area:        'Transaction::Backend::Async',
-  description: 'Defines the transaction backend to send agent notifications.',
+  description: __('Defines the transaction backend to send agent notifications.'),
   options:     {},
   state:       'Transaction::Notification',
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Defines transaction backend.',
+  title:       __('Defines transaction backend.'),
   name:        '1000_signature_detection',
   area:        'Transaction::Backend::Async',
-  description: 'Defines the transaction backend to detect customer signatures in emails.',
+  description: __('Defines the transaction backend to detect customer signatures in emails.'),
   options:     {},
   state:       'Transaction::SignatureDetection',
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Defines transaction backend.',
+  title:       __('Defines transaction backend.'),
   name:        '6000_slack_webhook',
   area:        'Transaction::Backend::Async',
-  description: 'Defines the transaction backend which posts messages to Slack (http://www.slack.com).',
+  description: __('Defines the transaction backend which posts messages to Slack (http://www.slack.com).'),
   options:     {},
   state:       'Transaction::Slack',
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Slack integration',
+  title:       __('Slack integration'),
   name:        'slack_integration',
   area:        'Integration::Switch',
-  description: 'Defines if Slack (http://www.slack.org) is enabled or not.',
+  description: __('Defines if Slack (http://www.slack.org) is enabled or not.'),
   options:     {
     form: [
       {
@@ -4220,10 +4473,10 @@ Setting.create_if_not_exists(
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Slack config',
+  title:       __('Slack config'),
   name:        'slack_config',
   area:        'Integration::Slack',
-  description: 'Defines the slack config.',
+  description: __('Defines the Slack config.'),
   options:     {},
   state:       {
     items: []
@@ -4235,10 +4488,10 @@ Setting.create_if_not_exists(
   frontend:    false,
 )
 Setting.create_if_not_exists(
-  title:       'sipgate.io integration',
+  title:       __('sipgate.io integration'),
   name:        'sipgate_integration',
   area:        'Integration::Switch',
-  description: 'Defines if sipgate.io (http://www.sipgate.io) is enabled or not.',
+  description: __('Defines if sipgate.io (http://www.sipgate.io) is enabled or not.'),
   options:     {
     form: [
       {
@@ -4263,10 +4516,31 @@ Setting.create_if_not_exists(
   frontend:    true
 )
 Setting.create_if_not_exists(
-  title:       'sipgate.io config',
+  title:       __('sipgate.io Token'),
+  name:        'sipgate_token',
+  area:        'Integration::Sipgate',
+  description: __('Token for Sipgate.'),
+  options:     {
+    form: [
+      {
+        display: '',
+        null:    false,
+        name:    'sipgate_token',
+        tag:     'input',
+      },
+    ],
+  },
+  state:       ENV['SIPGATE_TOKEN'] || SecureRandom.urlsafe_base64(20),
+  preferences: {
+    permission: ['admin.integration'],
+  },
+  frontend:    false
+)
+Setting.create_if_not_exists(
+  title:       __('sipgate.io config'),
   name:        'sipgate_config',
   area:        'Integration::Sipgate',
-  description: 'Defines the sipgate.io config.',
+  description: __('Defines the sipgate.io config.'),
   options:     {},
   state:       { 'outbound' => { 'routing_table' => [], 'default_caller_id' => '' }, 'inbound' => { 'block_caller_ids' => [] } },
   preferences: {
@@ -4276,10 +4550,10 @@ Setting.create_if_not_exists(
   frontend:    false,
 )
 Setting.create_if_not_exists(
-  title:       'sipgate.io alternative fqdn',
+  title:       __('sipgate.io alternative FQDN'),
   name:        'sipgate_alternative_fqdn',
   area:        'Integration::Sipgate::Expert',
-  description: 'Alternative FQDN for callbacks if you operate Zammad in internal network.',
+  description: __('Alternative FQDN for callbacks if you operate Zammad in an internal network.'),
   options:     {
     form: [
       {
@@ -4297,10 +4571,10 @@ Setting.create_if_not_exists(
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'cti integration',
+  title:       __('CTI integration'),
   name:        'cti_integration',
   area:        'Integration::Switch',
-  description: 'Defines if generic CTI is enabled or not.',
+  description: __('Defines if generic CTI integration is enabled or not.'),
   options:     {
     form: [
       {
@@ -4325,10 +4599,10 @@ Setting.create_if_not_exists(
   frontend:    true
 )
 Setting.create_if_not_exists(
-  title:       'cti config',
+  title:       __('CTI config'),
   name:        'cti_config',
   area:        'Integration::Cti',
-  description: 'Defines the cti config.',
+  description: __('Defines the CTI config.'),
   options:     {},
   state:       { 'outbound' => { 'routing_table' => [], 'default_caller_id' => '' }, 'inbound' => { 'block_caller_ids' => [] } },
   preferences: {
@@ -4338,10 +4612,10 @@ Setting.create_if_not_exists(
   frontend:    false,
 )
 Setting.create_if_not_exists(
-  title:       'CTI Token',
+  title:       __('CTI Token'),
   name:        'cti_token',
   area:        'Integration::Cti',
-  description: 'Token for cti.',
+  description: __('Token for CTI.'),
   options:     {
     form: [
       {
@@ -4359,10 +4633,10 @@ Setting.create_if_not_exists(
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'cti customer last activity',
+  title:       __('CTI customer last activity'),
   name:        'cti_customer_last_activity',
   area:        'Integration::Cti',
-  description: 'Defines the range in seconds of customer activity to trigger the user profile dialog on call.',
+  description: __('Defines the duration of customer activity (in seconds) on a call until the user profile dialog is shown.'),
   options:     {},
   state:       30.days,
   preferences: {
@@ -4372,10 +4646,10 @@ Setting.create_if_not_exists(
   frontend:    false,
 )
 Setting.create_if_not_exists(
-  title:       'Placetel integration',
+  title:       __('Placetel integration'),
   name:        'placetel_integration',
   area:        'Integration::Switch',
-  description: 'Defines if Placetel (http://www.placetel.de) is enabled or not.',
+  description: __('Defines if Placetel (http://www.placetel.de) is enabled or not.'),
   options:     {
     form: [
       {
@@ -4400,10 +4674,10 @@ Setting.create_if_not_exists(
   frontend:    true
 )
 Setting.create_if_not_exists(
-  title:       'Placetel config',
+  title:       __('Placetel config'),
   name:        'placetel_config',
   area:        'Integration::Placetel',
-  description: 'Defines the Placetel config.',
+  description: __('Defines the Placetel config.'),
   options:     {},
   state:       { 'outbound' => { 'routing_table' => [], 'default_caller_id' => '' }, 'inbound' => { 'block_caller_ids' => [] } },
   preferences: {
@@ -4414,10 +4688,10 @@ Setting.create_if_not_exists(
   frontend:    false,
 )
 Setting.create_if_not_exists(
-  title:       'PLACETEL Token',
+  title:       __('Placetel Token'),
   name:        'placetel_token',
   area:        'Integration::Placetel',
-  description: 'Token for Placetel.',
+  description: __('Defines the token for Placetel.'),
   options:     {
     form: [
       {
@@ -4435,10 +4709,10 @@ Setting.create_if_not_exists(
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Clearbit integration',
+  title:       __('Clearbit integration'),
   name:        'clearbit_integration',
   area:        'Integration::Switch',
-  description: 'Defines if Clearbit (http://www.clearbit.com) is enabled or not.',
+  description: __('Defines if Clearbit (http://www.clearbit.com) is enabled or not.'),
   options:     {
     form: [
       {
@@ -4461,10 +4735,10 @@ Setting.create_if_not_exists(
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Clearbit config',
+  title:       __('Clearbit config'),
   name:        'clearbit_config',
   area:        'Integration::Clearbit',
-  description: 'Defines the Clearbit config.',
+  description: __('Defines the Clearbit config.'),
   options:     {},
   state:       {},
   frontend:    false,
@@ -4474,76 +4748,76 @@ Setting.create_if_not_exists(
   },
 )
 Setting.create_if_not_exists(
-  title:       'Defines transaction backend.',
+  title:       __('Defines transaction backend.'),
   name:        '9000_clearbit_enrichment',
   area:        'Transaction::Backend::Async',
-  description: 'Defines the transaction backend which will enrich customer and organization information from Clearbit (http://www.clearbit.com).',
+  description: __('Defines the transaction backend which will enrich customer and organization information from Clearbit (http://www.clearbit.com).'),
   options:     {},
   state:       'Transaction::ClearbitEnrichment',
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Defines transaction backend.',
+  title:       __('Defines transaction backend.'),
   name:        '9100_cti_caller_id_detection',
   area:        'Transaction::Backend::Async',
-  description: 'Defines the transaction backend which detects caller IDs in objects and store them for CTI lookups.',
+  description: __('Defines the transaction backend which detects caller IDs in objects and stores them for CTI lookups.'),
   options:     {},
   state:       'Transaction::CtiCallerIdDetection',
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Defines transaction backend.',
+  title:       __('Defines transaction backend.'),
   name:        '9200_karma',
   area:        'Transaction::Backend::Async',
-  description: 'Defines the transaction backend which creates the karma score.',
+  description: __('Defines the transaction backend which creates the karma score.'),
   options:     {},
   state:       'Transaction::Karma',
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Defines karma levels.',
+  title:       __('Defines karma levels.'),
   name:        'karma_levels',
   area:        'Core::Karma',
-  description: 'Defines the karma levels.',
+  description: __('Defines the karma levels.'),
   options:     {},
   state:       [
     {
-      name:  'Beginner',
+      name:  __('Beginner'),
       start: 0,
       end:   499,
     },
     {
-      name:  'Newbie',
+      name:  __('Newbie'),
       start: 500,
       end:   1999,
     },
     {
-      name:  'Intermediate',
+      name:  __('Intermediate'),
       start: 2000,
       end:   4999,
     },
     {
-      name:  'Professional',
+      name:  __('Professional'),
       start: 5000,
       end:   6999,
     },
     {
-      name:  'Expert',
+      name:  __('Expert'),
       start: 7000,
       end:   8999,
     },
     {
-      name:  'Master',
+      name:  __('Master'),
       start: 9000,
       end:   18_999,
     },
     {
-      name:  'Evangelist',
+      name:  __('Evangelist'),
       start: 19_000,
       end:   49_999,
     },
     {
-      name:  'Hero',
+      name:  __('Hero'),
       start: 50_000,
       end:   nil,
     },
@@ -4551,10 +4825,10 @@ Setting.create_if_not_exists(
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       'Set limit of agents',
+  title:       __('Set agent limit'),
   name:        'system_agent_limit',
   area:        'Core::Online',
-  description: 'Defines the limit of the agents.',
+  description: __('Defines the agent limit.'),
   options:     {},
   state:       false,
   preferences: { online_service_disable: true },
@@ -4562,10 +4836,10 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       'HTML Email CSS Font',
+  title:       __('HTML Email CSS Font'),
   name:        'html_email_css_font',
   area:        'Core',
-  description: 'Defines the CSS font information for HTML Emails.',
+  description: __('Defines the CSS font information for HTML emails.'),
   options:     {},
   state:       "font-family:'Helvetica Neue', Helvetica, Arial, Geneva, sans-serif; font-size: 12px;",
   preferences: {
@@ -4576,10 +4850,10 @@ Setting.create_if_not_exists(
 
 # add the dashboard stats backend for 'Stats::TicketWaitingTime'
 Setting.create_if_not_exists(
-  title:       'Stats Backend',
+  title:       __('Stats Backend'),
   name:        'Stats::TicketWaitingTime',
   area:        'Dashboard::Stats',
-  description: 'Defines a dashboard stats backend that get scheduled automatically.',
+  description: __('Defines a dashboard stats backend that gets scheduled automatically.'),
   options:     {},
   state:       'Stats::TicketWaitingTime',
   preferences: {
@@ -4591,10 +4865,10 @@ Setting.create_if_not_exists(
 
 # add the dashboard stats backend for 'Stats::TicketEscalation'
 Setting.create_if_not_exists(
-  title:       'Stats Backend',
+  title:       __('Stats Backend'),
   name:        'Stats::TicketEscalation',
   area:        'Dashboard::Stats',
-  description: 'Defines a dashboard stats backend that get scheduled automatically.',
+  description: __('Defines a dashboard stats backend that gets scheduled automatically.'),
   options:     {},
   state:       'Stats::TicketEscalation',
   preferences: {
@@ -4606,10 +4880,10 @@ Setting.create_if_not_exists(
 
 # add the dashboard stats backend for 'Stats::TicketChannelDistribution'
 Setting.create_if_not_exists(
-  title:       'Stats Backend',
+  title:       __('Stats Backend'),
   name:        'Stats::TicketChannelDistribution',
   area:        'Dashboard::Stats',
-  description: 'Defines a dashboard stats backend that get scheduled automatically.',
+  description: __('Defines a dashboard stats backend that gets scheduled automatically.'),
   options:     {},
   state:       'Stats::TicketChannelDistribution',
   preferences: {
@@ -4621,10 +4895,10 @@ Setting.create_if_not_exists(
 
 # add the dashboard stats backend for 'Stats::TicketLoadMeasure'
 Setting.create_if_not_exists(
-  title:       'Stats Backend',
+  title:       __('Stats Backend'),
   name:        'Stats::TicketLoadMeasure',
   area:        'Dashboard::Stats',
-  description: 'Defines a dashboard stats backend that get scheduled automatically.',
+  description: __('Defines a dashboard stats backend that gets scheduled automatically.'),
   options:     {},
   state:       'Stats::TicketLoadMeasure',
   preferences: {
@@ -4636,10 +4910,10 @@ Setting.create_if_not_exists(
 
 # add the dashboard stats backend for 'Stats::TicketInProcess'
 Setting.create_if_not_exists(
-  title:       'Stats Backend',
+  title:       __('Stats Backend'),
   name:        'Stats::TicketInProcess',
   area:        'Dashboard::Stats',
-  description: 'Defines a dashboard stats backend that get scheduled automatically.',
+  description: __('Defines a dashboard stats backend that gets scheduled automatically.'),
   options:     {},
   state:       'Stats::TicketInProcess',
   preferences: {
@@ -4651,10 +4925,10 @@ Setting.create_if_not_exists(
 
 # add the dashboard stats backend for 'Stats::TicketReopen'
 Setting.create_if_not_exists(
-  title:       'Stats Backend',
+  title:       __('Stats Backend'),
   name:        'Stats::TicketReopen',
   area:        'Dashboard::Stats',
-  description: 'Defines a dashboard stats backend that get scheduled automatically.',
+  description: __('Defines a dashboard stats backend that gets scheduled automatically.'),
   options:     {},
   state:       'Stats::TicketReopen',
   preferences: {
@@ -4665,10 +4939,10 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       'Kb multi-lingual support',
+  title:       __('Knowledge Base multilingual support'),
   name:        'kb_multi_lingual_support',
   area:        'Kb::Core',
-  description: 'Support of multi-lingual Knowledge Base.',
+  description: __('Support of multilingual Knowledge Base.'),
   options:     {},
   state:       true,
   preferences: { online_service_disable: true },
@@ -4676,10 +4950,10 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       'Kb active',
+  title:       __('Knowledge Base active'),
   name:        'kb_active',
   area:        'Kb::Core',
-  description: 'Defines if KB navbar button is enabled',
+  description: __('Defines if Knowledge Base navbar button is enabled.'),
   state:       true,
   preferences: {
     prio:           1,
@@ -4691,10 +4965,10 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       'Kb active publicly',
+  title:       __('Knowledge Base active publicly'),
   name:        'kb_active_publicly',
   area:        'Kb::Core',
-  description: 'Defines if KB navbar button is enabled for users without KB permission',
+  description: __('Defines if Knowledge Base navbar button is enabled for users without Knowledge Base permission.'),
   state:       false,
   preferences: {
     prio:           1,
@@ -4706,10 +4980,10 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       'Define timeframe where a own created note can get deleted.',
+  title:       __('Defines the timeframe during which a self-created note can be deleted.'),
   name:        'ui_ticket_zoom_article_delete_timeframe',
   area:        'UI::TicketZoomArticle',
-  description: "Set timeframe in seconds. If it's set to 0 you can delete notes without time limits",
+  description: __("Set timeframe in seconds. If it's set to 0 you can delete notes without time limits"),
   options:     {},
   state:       600,
   preferences: {
@@ -4719,10 +4993,10 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       'S/MIME integration',
+  title:       __('S/MIME integration'),
   name:        'smime_integration',
   area:        'Integration::Switch',
-  description: 'Defines if S/MIME encryption is enabled or not.',
+  description: __('Defines if S/MIME encryption is enabled or not.'),
   options:     {
     form: [
       {
@@ -4747,10 +5021,10 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       'S/MIME config',
+  title:       __('S/MIME config'),
   name:        'smime_config',
   area:        'Integration::SMIME',
-  description: 'Defines the S/MIME config.',
+  description: __('Defines the S/MIME config.'),
   options:     {},
   state:       {},
   preferences: {
@@ -4761,10 +5035,10 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       'Authentication via %s',
+  title:       __('Authentication via %s'),
   name:        'auth_sso',
   area:        'Security::ThirdPartyAuthentication',
-  description: 'Enables button for user authentication via %s. The button will redirect to /auth/sso on user interaction.',
+  description: __('Enables button for user authentication via %s. The button will redirect to /auth/sso on user interaction.'),
   options:     {
     form: [
       {
@@ -4783,7 +5057,7 @@ Setting.create_if_not_exists(
     controller:       'SettingsAreaSwitch',
     sub:              {},
     title_i18n:       ['SSO'],
-    description_i18n: ['SSO', 'Button for Single Sign On.'],
+    description_i18n: ['SSO'],
     permission:       ['admin.security'],
   },
   state:       false,

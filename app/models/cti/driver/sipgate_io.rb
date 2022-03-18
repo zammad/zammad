@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Cti::Driver::SipgateIo < Cti::Driver::Base
 
@@ -47,6 +47,7 @@ class Cti::Driver::SipgateIo < Cti::Driver::Base
         open_timeout:  4,
         read_timeout:  6,
         total_timeout: 6,
+        verify_ssl:    true,
       },
     )
 

@@ -1,7 +1,7 @@
 class App.KnowledgeBaseSidebarAnswers extends App.KnowledgeBaseSidebarGenericList
   templateName: 'answers'
-  title:        'Answers'
-  emptyNote:    'No answers'
+  title:        __('Answers')
+  emptyNote:    __('No answers')
 
   urlNew: ->
     "#knowledge_base/#{@object.knowledge_base().id}/category/#{@object.id}/answers/new"

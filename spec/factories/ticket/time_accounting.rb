@@ -1,9 +1,9 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 FactoryBot.define do
   factory :'ticket/time_accounting', aliases: %i[ticket_time_accounting] do
     ticket
-    time_unit     { rand(1..100) }
+    time_unit     { Faker::Number.number(digits: 2) }
     created_by_id { 1 }
 
     trait :for_article do

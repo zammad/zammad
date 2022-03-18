@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class CalendarsController < ApplicationController
   prepend_before_action { authentication_check && authorize! }
@@ -38,6 +38,7 @@ class CalendarsController < ApplicationController
   end
 
   def destroy
+    model_references_check(Calendar, params)
     model_destroy_render(Calendar, params)
   end
 

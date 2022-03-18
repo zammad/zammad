@@ -4,11 +4,11 @@ class SidebarCustomer extends App.Controller
     @item = {
       name: 'customer'
       badgeCallback: @badgeRender
-      sidebarHead: 'Customer'
+      sidebarHead: __('Customer')
       sidebarCallback: @showCustomer
       sidebarActions: [
         {
-          title:    'Change Customer'
+          title:    __('Change Customer')
           name:     'customer-change'
           callback: @changeCustomer
         },
@@ -21,14 +21,14 @@ class SidebarCustomer extends App.Controller
       customer = App.User.find(@ticket.customer_id)
       if customer?.isAccessibleBy(App.User.current(), 'change')
         @item.sidebarActions.push {
-          title:    'Edit Customer'
+          title:    __('Edit Customer')
           name:     'customer-edit'
           callback: @editCustomer
         }
 
     if @permissionCheck('admin.data_privacy')
       @item.sidebarActions.push {
-        title:    'Delete Customer'
+        title:    __('Delete Customer')
         name:     'customer-delete'
         callback: =>
           @navigate "#system/data_privacy/#{@ticket.customer_id}"
@@ -84,9 +84,9 @@ class SidebarCustomer extends App.Controller
       genericObject: 'User'
       screen: 'edit'
       pageData:
-        title:   'Users'
-        object:  'User'
-        objects: 'Users'
+        title:   __('Users')
+        object:  __('User')
+        objects: __('Users')
       container: @elSidebar.closest('.content')
     )
 

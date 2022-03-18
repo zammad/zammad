@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -53,7 +53,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
       expect(response).to have_http_status(:created)
       expect(json_response).to be_truthy
       expect(json_response['data_option']['null']).to be_truthy
-      expect(json_response['data_option']['null']).to eq(true)
+      expect(json_response['data_option']['null']).to be(true)
       expect(json_response['name']).to eq('test1')
     end
 
@@ -99,7 +99,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
       expect(response).to have_http_status(:created)
       expect(json_response).to be_truthy
       expect(json_response['data_option']['null']).to be_truthy
-      expect(json_response['data_option']['null']).to eq(true)
+      expect(json_response['data_option']['null']).to be(true)
       expect(json_response['name']).to eq('test2')
     end
 
@@ -109,7 +109,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
       object = create(:object_manager_attribute_text)
 
       migration = ObjectManager::Attribute.migration_execute
-      expect(migration).to eq(true)
+      expect(migration).to be(true)
 
       authenticated_as(admin)
       post "/api/v1/object_manager_attributes/#{object.id}", params: {}, as: :json
@@ -202,7 +202,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
       expect(response).to have_http_status(:created)
       expect(json_response).to be_truthy
       expect(json_response['data_option']['null']).to be_truthy
-      expect(json_response['data_option']['null']).to eq(true)
+      expect(json_response['data_option']['null']).to be(true)
       expect(json_response['name']).to eq('bool2')
     end
 
@@ -261,7 +261,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
       expect(response).to have_http_status(:created)
       expect(json_response).to be_truthy
       expect(json_response['data_option']['null']).to be_truthy
-      expect(json_response['data_option']['null']).to eq(true)
+      expect(json_response['data_option']['null']).to be(true)
       expect(json_response['name']).to eq('test5')
     end
 
@@ -270,7 +270,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
       object = create(:object_manager_attribute_text, object_name: 'User')
 
       migration = ObjectManager::Attribute.migration_execute
-      expect(migration).to eq(true)
+      expect(migration).to be(true)
 
       post "/api/v1/object_manager_attributes/#{object.id}", params: {}, as: :json
 
@@ -333,9 +333,9 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
 
     it 'does converts string to boolean for default value for boolean data type with true (01)', db_strategy: :reset do
       params = {
-        name:        "customerdescription#{rand(999_999_999)}",
+        name:        "customerdescription#{SecureRandom.uuid.tr('-', '_')}",
         object:      'Ticket',
-        display:     "custom description#{rand(999_999_999)}",
+        display:     "custom description#{SecureRandom.uuid.tr('-', '_')}",
         active:      true,
         data_type:   'boolean',
         data_option: {
@@ -372,21 +372,21 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
       post '/api/v1/object_manager_attributes', params: params, as: :json
 
       migration = ObjectManager::Attribute.migration_execute
-      expect(migration).to eq(true)
+      expect(migration).to be(true)
 
       expect(response).to have_http_status(:created) # created
 
       expect(json_response).to be_truthy
       expect(json_response['data_option']['default']).to be_truthy
-      expect(json_response['data_option']['default']).to eq(true)
+      expect(json_response['data_option']['default']).to be(true)
       expect(json_response['data_type']).to eq('boolean')
     end
 
     it 'does converts string to boolean for default value for boolean data type with false (02)', db_strategy: :reset do
       params = {
-        name:        "customerdescription_#{rand(999_999_999)}",
+        name:        "customerdescription_#{SecureRandom.uuid.tr('-', '_')}",
         object:      'Ticket',
-        display:     "custom description #{rand(999_999_999)}",
+        display:     "custom description #{SecureRandom.uuid.tr('-', '_')}",
         active:      true,
         data_type:   'boolean',
         data_option: {
@@ -422,13 +422,13 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
       post '/api/v1/object_manager_attributes', params: params, as: :json
 
       migration = ObjectManager::Attribute.migration_execute
-      expect(migration).to eq(true)
+      expect(migration).to be(true)
 
       expect(response).to have_http_status(:created) # created
 
       expect(json_response).to be_truthy
       expect(json_response['data_option']['default']).to be_falsey
-      expect(json_response['data_option']['default']).to eq(false)
+      expect(json_response['data_option']['default']).to be(false)
       expect(json_response['data_type']).to eq('boolean')
     end
 
@@ -477,7 +477,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
       post '/api/v1/object_manager_attributes', params: params, as: :json
 
       migration = ObjectManager::Attribute.migration_execute
-      expect(migration).to eq(true)
+      expect(migration).to be(true)
 
       # 2. create an overview that uses the attribute
       params = {
@@ -572,7 +572,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
       post '/api/v1/object_manager_attributes', params: params, as: :json
 
       migration = ObjectManager::Attribute.migration_execute
-      expect(migration).to eq(true)
+      expect(migration).to be(true)
 
       # 2. create an trigger that uses the attribute
       params = {
@@ -658,7 +658,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
       post '/api/v1/object_manager_attributes', params: params, as: :json
 
       migration = ObjectManager::Attribute.migration_execute
-      expect(migration).to eq(true)
+      expect(migration).to be(true)
 
       # 2. create a scheduler that uses the attribute
       params = {
@@ -829,7 +829,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
       post '/api/v1/object_manager_attributes', params: params, as: :json
 
       migration = ObjectManager::Attribute.migration_execute
-      expect(migration).to eq(true)
+      expect(migration).to be(true)
 
       # 2. create an overview that uses the attribute
       params = {
@@ -888,15 +888,15 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
       expect(response.body).to include('cannot be deleted!')
 
       migration = ObjectManager::Attribute.migration_execute
-      expect(migration).to eq(true)
+      expect(migration).to be(true)
     end
 
     it 'does verify if attribute type can not be changed (07)', db_strategy: :reset do
 
       params = {
-        name:        "customerdescription_#{rand(999_999_999)}",
+        name:        "customerdescription_#{SecureRandom.uuid.tr('-', '_')}",
         object:      'Ticket',
-        display:     "custom description #{rand(999_999_999)}",
+        display:     "custom description #{SecureRandom.uuid.tr('-', '_')}",
         active:      true,
         data_type:   'boolean',
         data_option: {
@@ -935,11 +935,11 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
 
       expect(json_response).to be_truthy
       expect(json_response['data_option']['default']).to be_falsey
-      expect(json_response['data_option']['default']).to eq(false)
+      expect(json_response['data_option']['default']).to be(false)
       expect(json_response['data_type']).to eq('boolean')
 
       migration = ObjectManager::Attribute.migration_execute
-      expect(migration).to eq(true)
+      expect(migration).to be(true)
 
       params['data_type'] = 'input'
       params['data_option'] = {
@@ -958,9 +958,9 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
     it 'does verify if attribute type can be changed (08)', db_strategy: :reset do
 
       params = {
-        name:        "customerdescription_#{rand(999_999_999)}",
+        name:        "customerdescription_#{SecureRandom.uuid.tr('-', '_')}",
         object:      'Ticket',
-        display:     "custom description #{rand(999_999_999)}",
+        display:     "custom description #{SecureRandom.uuid.tr('-', '_')}",
         active:      true,
         data_type:   'input',
         data_option: {
@@ -1000,7 +1000,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
       expect(json_response['data_type']).to eq('input')
 
       migration = ObjectManager::Attribute.migration_execute
-      expect(migration).to eq(true)
+      expect(migration).to be(true)
 
       params['data_type'] = 'select'
       params['data_option'] = {
@@ -1039,11 +1039,11 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
     end
 
     context 'position handling', authenticated_as: -> { admin } do
-      let(:params) do
+      let(:base_params) do
         {
-          name:        "customerdescription_#{rand(999_999_999)}",
+          name:        "customerdescription_#{SecureRandom.uuid.tr('-', '_')}",
           object:      'Ticket',
-          display:     "custom description #{rand(999_999_999)}",
+          display:     "custom description #{SecureRandom.uuid.tr('-', '_')}",
           active:      true,
           data_type:   'input',
           data_option: {
@@ -1060,15 +1060,35 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
       before { post '/api/v1/object_manager_attributes', params: params, as: :json }
 
       context 'when creating a new attribute' do
-        it 'defaults to 1550' do
-          expect(new_attribute_object.position).to eq 1550
+        let(:params) { base_params }
+
+        context 'with no position attribute provided' do
+          let(:maximum_position) do
+            ObjectManager::Attribute
+              .for_object(params[:object])
+              .maximum(:position)
+          end
+
+          it 'defaults to the maximum available position' do
+            expect(new_attribute_object.position).to eq maximum_position
+          end
+        end
+
+        context 'with a position attribute given' do
+          let(:position) { 50 }
+          let(:params) { base_params.merge(position: position) }
+
+          it 'defaults to given position' do
+            expect(new_attribute_object.position).to eq position
+          end
         end
       end
 
       context 'when updating an existing attribute' do
         let(:alternative_position) { 123 }
         let(:alternative_display)  { 'another description' }
-        let(:alternative_params)   { params.deep_dup.update(display: alternative_display) }
+        let(:params) { base_params }
+        let(:alternative_params)   { base_params.merge(display: alternative_display) }
 
         before do
           new_attribute_object.update! position: alternative_position

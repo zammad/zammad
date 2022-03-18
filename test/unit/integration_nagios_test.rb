@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'test_helper'
 
@@ -209,7 +209,7 @@ Comment: [] =
     assert_nil(ticket_3_1.preferences['nagios']['service'])
     assert_equal('DOWN', ticket_3_1.preferences['nagios']['state'])
 
-    #Setting.set('nagios_integration', false)
+    # Setting.set('nagios_integration', false)
 
   end
 

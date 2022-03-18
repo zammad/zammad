@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'test_helper'
 
@@ -86,7 +86,7 @@ class TicketSelectorTest < ActiveSupport::TestCase
       state:         Ticket::State.lookup(name: 'new'),
       priority:      Ticket::Priority.lookup(name: '2 normal'),
       created_at:    '2015-02-05 16:37:00',
-      #updated_at: '2015-02-05 17:37:00',
+      # updated_at: '2015-02-05 17:37:00',
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -102,7 +102,7 @@ class TicketSelectorTest < ActiveSupport::TestCase
       state:         Ticket::State.lookup(name: 'new'),
       priority:      Ticket::Priority.lookup(name: '2 normal'),
       created_at:    '2015-02-05 16:37:00',
-      #updated_at: '2015-02-05 17:37:00',
+      # updated_at: '2015-02-05 17:37:00',
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -118,7 +118,7 @@ class TicketSelectorTest < ActiveSupport::TestCase
       state:         Ticket::State.lookup(name: 'open'),
       priority:      Ticket::Priority.lookup(name: '2 normal'),
       created_at:    '2015-02-05 16:37:00',
-      #updated_at: '2015-02-05 17:37:00',
+      # updated_at: '2015-02-05 17:37:00',
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -465,7 +465,7 @@ class TicketSelectorTest < ActiveSupport::TestCase
       },
       'ticket.updated_at' => {
         operator: 'before (absolute)',
-        value:    (Time.zone.now + 1.day).iso8601,
+        value:    1.day.from_now.iso8601,
       },
     }
     ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
@@ -487,7 +487,7 @@ class TicketSelectorTest < ActiveSupport::TestCase
       },
       'ticket.updated_at' => {
         operator: 'before (absolute)',
-        value:    (Time.zone.now - 1.day).iso8601,
+        value:    1.day.ago.iso8601,
       },
     }
     ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
@@ -509,7 +509,7 @@ class TicketSelectorTest < ActiveSupport::TestCase
       },
       'ticket.updated_at' => {
         operator: 'after (absolute)',
-        value:    (Time.zone.now + 1.day).iso8601,
+        value:    1.day.from_now.iso8601,
       },
     }
     ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
@@ -531,7 +531,7 @@ class TicketSelectorTest < ActiveSupport::TestCase
       },
       'ticket.updated_at' => {
         operator: 'after (absolute)',
-        value:    (Time.zone.now - 1.day).iso8601,
+        value:    1.day.ago.iso8601,
       },
     }
     ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
@@ -773,7 +773,7 @@ class TicketSelectorTest < ActiveSupport::TestCase
       'ticket.owner_id' => {
         operator:      'is',
         pre_condition: 'specific',
-        #value: @agent1.id, # value is not set, no result should be shown
+        # value: @agent1.id, # value is not set, no result should be shown
       },
     }
     ticket_count, tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)

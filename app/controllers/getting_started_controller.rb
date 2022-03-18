@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class GettingStartedController < ApplicationController
   prepend_before_action -> { authorize! }, only: [:base]
@@ -36,7 +36,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     # check it auto wizard is already done
     return if auto_wizard_enabled_response
 
-    # if master user already exists, we need to be authenticated
+    # if admin user already exists, we need to be authenticated
     return if setup_done && !authentication_check
 
     # return result
@@ -67,7 +67,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
       render json: {
         auto_wizard:         true,
         auto_wizard_success: false,
-        message:             'Invalid auto wizard file.',
+        message:             __('Invalid auto wizard file.'),
       }
       return
     end
@@ -87,7 +87,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
       render json: {
         auto_wizard:         true,
         auto_wizard_success: false,
-        message:             'Error during execution of auto wizard.',
+        message:             __('Error during execution of auto wizard.'),
       }
       return
     end
@@ -113,7 +113,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
         settings[:http_type] = result[:scheme]
         settings[:fqdn]      = result[:fqdn]
       else
-        messages[:url] = 'An URL looks like this: http://zammad.example.com'
+        messages[:url] = __('A URL looks like this: https://zammad.example.com')
       end
     end
 
@@ -128,7 +128,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     if params[:logo] && params[:logo] =~ %r{^data:image}i
       file = StaticAssets.data_url_attributes(params[:logo])
       if !file[:content] || !file[:mime_type]
-        messages[:logo] = 'Unable to process image upload.'
+        messages[:logo] = __('The uploaded image could not be processed.')
       end
     end
 
@@ -211,7 +211,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
   end
 
   def setup_done
-    #return false
+    # return false
     count = User.all.count()
     done = true
     if count <= 2

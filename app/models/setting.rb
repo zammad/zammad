@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Setting < ApplicationModel
   store         :options
@@ -140,7 +140,7 @@ reload config settings
 
   def reset_change_id
     @@current[name] = state_current[:value]
-    change_id = rand(999_999_999).to_s
+    change_id = SecureRandom.uuid
     logger.debug { "Setting.reset_change_id: set new cache, #{change_id}" }
     Cache.write('Setting::ChangeId', change_id, { expires_in: 24.hours })
     @@lookup_at = nil # rubocop:disable Style/ClassVars
@@ -159,17 +159,17 @@ reload config settings
   # check if cache is still valid
   def self.cache_valid?
     if @@lookup_at && @@lookup_at > Time.now.to_i - @@lookup_timeout
-      #logger.debug "Setting.cache_valid?: cache_id has been set within last #{@@lookup_timeout} seconds"
+      # logger.debug "Setting.cache_valid?: cache_id has been set within last #{@@lookup_timeout} seconds"
       return true
     end
 
     change_id = Cache.read('Setting::ChangeId')
     if @@change_id && change_id == @@change_id
       @@lookup_at = Time.now.to_i # rubocop:disable Style/ClassVars
-      #logger.debug "Setting.cache_valid?: cache still valid, #{@@change_id}/#{change_id}"
+      # logger.debug "Setting.cache_valid?: cache still valid, #{@@change_id}/#{change_id}"
       return true
     end
-    #logger.debug "Setting.cache_valid?: cache has changed, #{@@change_id}/#{change_id}"
+    # logger.debug "Setting.cache_valid?: cache has changed, #{@@change_id}/#{change_id}"
     false
   end
   private_class_method :cache_valid?
@@ -183,7 +183,7 @@ reload config settings
     true
   end
 
-  # notify clients about public config changes
+  # Notify clients about config changes.
   def check_broadcast
     return true if frontend != true
 
@@ -196,7 +196,7 @@ reload config settings
         event: 'config_update',
         data:  { name: name, value: value }
       },
-      'public'
+      preferences[:authentication] ? 'authenticated' : 'public'
     )
     true
   end

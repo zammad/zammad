@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Sessions::Event::ChatStatusCustomer < Sessions::Event::ChatBase
 
@@ -72,7 +72,7 @@ return is sent as message back to peer
   end
 
   def blocked_origin?
-    return false if current_chat.website_whitelisted?(origin)
+    return false if current_chat.website_allowed?(origin)
 
     send_unavailable
     true

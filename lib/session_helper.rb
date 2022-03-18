@@ -1,10 +1,10 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 module SessionHelper
   def self.json_hash(user)
     collections, assets = default_collections(user)
     {
-      session:     user.filter_attributes(user.attributes),
+      session:     user.filter_unauthorized_attributes(user.filter_attributes(user.attributes)),
       models:      models(user),
       collections: collections,
       assets:      assets,
@@ -19,7 +19,7 @@ module SessionHelper
 
     # load collections to deliver from external files
     dir = File.expand_path('..', __dir__)
-    files = Dir.glob( "#{dir}/lib/session_helper/collection_*.rb")
+    files = Dir.glob("#{dir}/lib/session_helper/collection_*.rb")
     files.each do |file|
       file =~ %r{/(session_helper/collection_.*)\.rb\z}
       (default_collection, assets) = $1.camelize.constantize.session(default_collection, assets, user)
@@ -41,10 +41,10 @@ module SessionHelper
   def self.cleanup_expired
 
     # delete temp. sessions
-    ActiveRecord::SessionStore::Session.where('persistent IS NULL AND updated_at < ?', Time.zone.now - 2.hours).delete_all
+    ActiveRecord::SessionStore::Session.where('persistent IS NULL AND updated_at < ?', 2.hours.ago).delete_all
 
     # web sessions not updated the last x days
-    ActiveRecord::SessionStore::Session.where('updated_at < ?', Time.zone.now - 60.days).delete_all
+    ActiveRecord::SessionStore::Session.where('updated_at < ?', 60.days.ago).delete_all
 
   end
 

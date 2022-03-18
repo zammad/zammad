@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Token < ApplicationModel
   include CanBeAuthorized
@@ -93,7 +93,7 @@ cleanup old token
 =end
 
   def self.cleanup
-    Token.where('persistent IS ? AND created_at < ?', nil, Time.zone.now - 30.days).delete_all
+    Token.where('persistent IS ? AND created_at < ?', nil, 30.days.ago).delete_all
     true
   end
 

@@ -125,11 +125,11 @@ class ArticleViewItem extends App.ControllerObserver
     else
       @el.removeClass('is-internal')
 
-    # check if email link need to be updated
+    # check if email link needs to be updated
     links = clone(article.preferences.links) || []
     if article.type.name is 'email'
       link =
-        name: 'Raw'
+        name: __('Raw')
         url: "#{@Config.get('api_path')}/ticket_article_plain/#{article.id}"
         target: '_blank'
       links.push link
@@ -149,7 +149,7 @@ class ArticleViewItem extends App.ControllerObserver
         if attachment && attachment.preferences && attachment.preferences['original-format'] is true
           link =
               url: "#{App.Config.get('api_path')}/ticket_attachment/#{article.ticket_id}/#{article.id}/#{attachment.id}?disposition=attachment"
-              name: 'Original Formatting'
+              name: __('Original Formatting')
               target: '_blank'
           links.push link
 
@@ -218,11 +218,11 @@ class ArticleViewItem extends App.ControllerObserver
     )
 
     @articleActions = new App.TicketZoomArticleActions(
-      el:              @$('.js-article-actions')
-      ticket:          @ticket
-      article:         article
-      lastAttributres: @lastAttributres
-      form_id:         @form_id
+      el:             @$('.js-article-actions')
+      ticket:         @ticket
+      article:        article
+      lastAttributes: @lastAttributes
+      form_id:        @form_id
     )
 
     # set see more
@@ -274,7 +274,7 @@ class ArticleViewItem extends App.ControllerObserver
       offsetTop = signatureMarker.next('div, p, br').position()
 
     # remember bubble content height
-    bubbleContentHeigth = bubbleContent.height()
+    bubbleContentHeight = bubbleContent.height()
 
     # get marker height
     if offsetTop
@@ -282,18 +282,18 @@ class ArticleViewItem extends App.ControllerObserver
 
     # if signature marker exists and height is within maxHeight
     if markerHeight && markerHeight < maxHeight
-      newHeigth = markerHeight + 30
-      if newHeigth < minHeight
-        newHeigth = minHeight
+      newHeight = markerHeight + 30
+      if newHeight < minHeight
+        newHeight = minHeight
 
-      bubbleContent.attr('data-height', bubbleContentHeigth + 30)
-      bubbleContent.attr('data-height-origin', newHeigth)
-      bubbleContent.css('height', "#{newHeigth}px")
+      bubbleContent.attr('data-height', bubbleContentHeight + 30)
+      bubbleContent.attr('data-height-origin', newHeight)
+      bubbleContent.css('height', "#{newHeight}px")
       bubbleOverflowContainer.removeClass('hide')
 
     # if height is higher then maxHeight
-    else if bubbleContentHeigth > maxHeight
-      bubbleContent.attr('data-height', bubbleContentHeigth + 30)
+    else if bubbleContentHeight > maxHeight
+      bubbleContent.attr('data-height', bubbleContentHeight + 30)
       bubbleContent.attr('data-height-origin', maxHeight)
       bubbleContent.css('height', "#{maxHeight}px")
       bubbleOverflowContainer.removeClass('hide')
@@ -305,39 +305,43 @@ class ArticleViewItem extends App.ControllerObserver
     e.stopPropagation()
 
     article_id = $(e.target).closest('.ticket-article-item').data('id')
+    article    = App.TicketArticle.find(article_id)
 
     @ajax(
       id:   'retrySecurityProcess'
       type: 'POST'
       url:  "#{@apiPath}/ticket_articles/#{article_id}/retry_security_process"
       processData: true
-      success: (data, status, xhr) =>
-        if data.sign.success
-          @notify
-            type: 'success'
-            msg:  App.i18n.translateContent('Verify sign success!')
-        else if data.sign.comment
-          comment = App.i18n.translateContent('Verify sign failed!') + ' ' + App.i18n.translateContent(data.sign.comment || '')
-          @notify
-            type: 'error'
-            msg: comment
-            timeout: 2000
+      success: (encryption_data, status, xhr) =>
+        for data in encryption_data
+          continue if article.preferences.security.type isnt data.type
 
-        if data.encryption.success
-          @notify
-            type: 'success'
-            msg:  App.i18n.translateContent('Decryption success!')
-        else if data.encryption.comment
-          comment = App.i18n.translateContent('Decryption failed!') + ' ' + App.i18n.translateContent(data.encryption.comment || '')
-          @notify
-            type: 'error'
-            msg:  comment
-            timeout: 2000
+          if data.sign.success
+            @notify
+              type: 'success'
+              msg:  App.i18n.translateContent('The signature was successfully verified.')
+          else if data.sign.comment
+            comment = App.i18n.translateContent('Signature verification failed!') + ' ' + App.i18n.translateContent(data.sign.comment || '')
+            @notify
+              type: 'error'
+              msg: comment
+              timeout: 2000
+
+          if data.encryption.success
+            @notify
+              type: 'success'
+              msg:  App.i18n.translateContent('Decryption was successful.')
+          else if data.encryption.comment
+            comment = App.i18n.translateContent('Decryption failed!') + ' ' + App.i18n.translateContent(data.encryption.comment || '')
+            @notify
+              type: 'error'
+              msg:  comment
+              timeout: 2000
 
       error: (xhr) =>
         @notify
           type: 'error'
-          msg:  App.i18n.translateContent('Retry security process failed!')
+          msg:  App.i18n.translateContent('The retried security process failed!')
     )
 
   stopPropagation: (e) ->

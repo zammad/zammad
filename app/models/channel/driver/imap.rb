@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'net/imap'
 
@@ -7,6 +7,8 @@ class Channel::Driver::Imap < Channel::EmailParser
   FETCH_METADATA_TIMEOUT = 2.minutes
   FETCH_MSG_TIMEOUT = 4.minutes
   EXPUNGE_TIMEOUT = 16.minutes
+  DEFAULT_TIMEOUT = 45.seconds
+  CHECK_ONLY_TIMEOUT = 6.seconds
 
   def fetchable?(_channel)
     true
@@ -85,9 +87,12 @@ example
       keep_on_server = true
     end
 
-    if options.key?(:ssl) && options[:ssl] == false
-      ssl  = false
-      port = 143
+    case options[:ssl]
+    when 'off'
+      ssl = false
+    when 'starttls'
+      ssl = false
+      starttls = true
     end
 
     port = if options.key?(:port) && options[:port].present?
@@ -98,11 +103,6 @@ example
              143
            end
 
-    if ssl == true && port != 993
-      ssl = false
-      starttls = true
-    end
-
     if options[:folder].present?
       folder = options[:folder]
     end
@@ -110,15 +110,12 @@ example
     Rails.logger.info "fetching imap (#{options[:host]}/#{options[:user]} port=#{port},ssl=#{ssl},starttls=#{starttls},folder=#{folder},keep_on_server=#{keep_on_server},auth_type=#{options.fetch(:auth_type, 'LOGIN')})"
 
     # on check, reduce open_timeout to have faster probing
-    check_type_timeout = 45
-    if check_type == 'check'
-      check_type_timeout = 6
-    end
+    check_type_timeout = check_type == 'check' ? CHECK_ONLY_TIMEOUT : DEFAULT_TIMEOUT
 
     timeout(check_type_timeout) do
       @imap = ::Net::IMAP.new(options[:host], port, ssl, nil, false)
       if starttls
-        @imap.starttls()
+        @imap.starttls
       end
     end
 
@@ -232,7 +229,7 @@ example
         Rails.logger.info " - verify email #{verify_string} found"
         timeout(600) do
           @imap.store(message_id, '+FLAGS', [:Deleted])
-          @imap.expunge()
+          @imap.expunge
         end
         disconnect
         return {
@@ -339,7 +336,7 @@ example
     if !keep_on_server
       begin
         timeout(EXPUNGE_TIMEOUT) do
-          @imap.expunge()
+          @imap.expunge
         end
       rescue Timeout::Error => e
         Rails.logger.error "Unable to expunge server (#{options[:host]}/#{options[:user]}): #{e.inspect}"
@@ -382,7 +379,7 @@ example
     return if !@imap
 
     timeout(1.minute) do
-      @imap.disconnect()
+      @imap.disconnect
     end
   end
 
@@ -438,7 +435,7 @@ returns
       Rails.logger.error e
       return true
     end
-    return true if verify_time < Time.zone.now - 30.minutes
+    return true if verify_time < 30.minutes.ago
 
     Rails.logger.info "  - ignore message #{count}/#{count_all} - because message has a verify message"
 

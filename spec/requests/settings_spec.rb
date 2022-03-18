@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -55,8 +55,8 @@ RSpec.describe 'Settings', type: :request do
           hit_product_name = true
         end
       end
-      expect(hit_api).to eq(true)
-      expect(hit_product_name).to eq(true)
+      expect(hit_api).to be(true)
+      expect(hit_product_name).to be(true)
 
       # show
       setting = Setting.find_by(name: 'product_name')
@@ -87,7 +87,7 @@ RSpec.describe 'Settings', type: :request do
       expect(json_response['name']).to eq('product_name')
       expect(json_response['preferences']['permission'].length).to eq(1)
       expect(json_response['preferences']['permission'][0]).to eq('admin.branding')
-      expect(json_response['preferences']['some_new_key']).to eq(true)
+      expect(json_response['preferences']['some_new_key']).to be(true)
 
       # update
       setting = Setting.find_by(name: 'api_token_access')
@@ -105,7 +105,7 @@ RSpec.describe 'Settings', type: :request do
       expect(json_response['name']).to eq('api_token_access')
       expect(json_response['preferences']['permission'].length).to eq(1)
       expect(json_response['preferences']['permission'][0]).to eq('admin.api')
-      expect(json_response['preferences']['some_new_key']).to eq(true)
+      expect(json_response['preferences']['some_new_key']).to be(true)
 
       # delete
       setting = Setting.find_by(name: 'product_name')
@@ -132,8 +132,8 @@ RSpec.describe 'Settings', type: :request do
           hit_product_name = true
         end
       end
-      expect(hit_api).to eq(true)
-      expect(hit_product_name).to eq(false)
+      expect(hit_api).to be(true)
+      expect(hit_product_name).to be(false)
 
       # show
       setting = Setting.find_by(name: 'product_name')
@@ -177,7 +177,7 @@ RSpec.describe 'Settings', type: :request do
       expect(json_response['name']).to eq('api_token_access')
       expect(json_response['preferences']['permission'].length).to eq(1)
       expect(json_response['preferences']['permission'][0]).to eq('admin.api')
-      expect(json_response['preferences']['some_new_key']).to eq(true)
+      expect(json_response['preferences']['some_new_key']).to be(true)
 
       # delete
       setting = Setting.find_by(name: 'product_name')
@@ -224,6 +224,32 @@ RSpec.describe 'Settings', type: :request do
       delete "/api/v1/settings/#{setting.id}", params: {}, as: :json
       expect(response).to have_http_status(:forbidden)
       expect(json_response['error']).to eq('Not authorized (user)!')
+    end
+
+    it 'protected setting not existing in list' do
+      authenticated_as(admin)
+      get '/api/v1/settings', params: {}, as: :json
+      expect(json_response.detect { |setting| setting['name'] == 'application_secret' }).to be_nil
+    end
+
+    it 'can not show protected setting' do
+      setting = Setting.find_by(name: 'application_secret')
+      authenticated_as(admin)
+      get "/api/v1/settings/#{setting.id}", params: {}, as: :json
+      expect(response).to have_http_status(:forbidden)
+    end
+
+    it 'can not update protected setting' do
+      setting = Setting.find_by(name: 'application_secret')
+      params = {
+        id:    setting.id,
+        state: 'Examaple'
+      }
+      put "/api/v1/settings/#{setting.id}", params: params, as: :json
+
+      authenticated_as(admin)
+      put "/api/v1/settings/#{setting.id}", params: {}, as: :json
+      expect(response).to have_http_status(:forbidden)
     end
   end
 end

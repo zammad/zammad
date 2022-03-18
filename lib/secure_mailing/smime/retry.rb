@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class SecureMailing::SMIME::Retry < SecureMailing::Backend::Handler
 
@@ -81,7 +81,7 @@ class SecureMailing::SMIME::Retry < SecureMailing::Backend::Handler
       if !filename.force_encoding('UTF-8').valid_encoding?
         filename = filename.utf8_encode(fallback: :read_as_sanitized_binary)
       end
-      Store.add(
+      Store.create!(
         object:        'Ticket::Article',
         o_id:          @article.id,
         data:          attachment[:data],

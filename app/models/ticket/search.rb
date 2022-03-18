@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 module Ticket::Search
   extend ActiveSupport::Concern
@@ -138,7 +138,7 @@ returns
           end
         end
         if current_user.permissions?('ticket.customer')
-          access_condition = if !current_user.organization || ( !current_user.organization.shared || current_user.organization.shared == false )
+          access_condition = if !current_user.organization || (!current_user.organization.shared || current_user.organization.shared == false)
                                {
                                  'query_string' => { 'default_field' => 'customer_id', 'query' => current_user.id }
                                }
@@ -190,48 +190,34 @@ returns
         return tickets
       end
 
-      # fallback do sql query
-      access_condition = Ticket.access_condition(current_user, 'read')
+      order_sql   = sql_helper.get_order(sort_by, order_by, 'tickets.updated_at DESC')
+      tickets_all = TicketPolicy::ReadScope.new(current_user).resolve
+                                           .order(Arel.sql(order_sql))
+                                           .offset(offset)
+                                           .limit(limit)
 
-      # do query
-      # - stip out * we already search for *query* -
+      ticket_ids = if query
+                     tickets_all.joins(:articles)
+                                .where(<<~SQL.squish, query: "%#{query.delete('*')}%")
+                                  tickets.title              LIKE :query
+                                  OR tickets.number          LIKE :query
+                                  OR ticket_articles.body    LIKE :query
+                                  OR ticket_articles.from    LIKE :query
+                                  OR ticket_articles.to      LIKE :query
+                                  OR ticket_articles.subject LIKE :query
+                                SQL
+                   else
+                     query_condition, bind_condition, tables = selector2sql(condition)
 
-      order_select_sql = sql_helper.get_order_select(sort_by, order_by, 'tickets.updated_at')
-      order_sql        = sql_helper.get_order(sort_by, order_by, 'tickets.updated_at DESC')
-      if query
-        query.delete! '*'
-        tickets_all = Ticket.select("DISTINCT(tickets.id), #{order_select_sql}")
-                            .where(access_condition)
-                            .where('(tickets.title LIKE ? OR tickets.number LIKE ? OR ticket_articles.body LIKE ? OR ticket_articles.from LIKE ? OR ticket_articles.to LIKE ? OR ticket_articles.subject LIKE ?)', "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%" )
-                            .joins(:articles)
-                            .order(Arel.sql(order_sql))
-                            .offset(offset)
-                            .limit(limit)
+                     tickets_all.joins(tables)
+                                .where(query_condition, *bind_condition)
+                   end.pluck(:id)
+
+      if full
+        ticket_ids.map { |id| Ticket.lookup(id: id) }
       else
-        query_condition, bind_condition, tables = selector2sql(condition)
-        tickets_all = Ticket.select("DISTINCT(tickets.id), #{order_select_sql}")
-                            .joins(tables)
-                            .where(access_condition)
-                            .where(query_condition, *bind_condition)
-                            .order(Arel.sql(order_sql))
-                            .offset(offset)
-                            .limit(limit)
+        ticket_ids
       end
-
-      # build result list
-      if !full
-        ids = []
-        tickets_all.each do |ticket|
-          ids.push ticket.id
-        end
-        return ids
-      end
-
-      tickets = []
-      tickets_all.each do |ticket|
-        tickets.push Ticket.lookup(id: ticket.id)
-      end
-      tickets
     end
   end
 

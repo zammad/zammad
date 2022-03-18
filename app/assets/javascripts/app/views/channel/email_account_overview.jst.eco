@@ -42,34 +42,16 @@
 <% else: %>
   <% for channel in @account_channels: %>
   <div class="action <% if channel.active isnt true: %>is-inactive<% end %>" data-id="<%- channel.id %>">
-    <!-- Google has postponed the authentication removal. No need to show the warning for now.
      <% if channel.active is true && channel.options.inbound && channel.options.inbound.options && channel.options.inbound.options.host == 'imap.gmail.com' && channel.options.outbound && channel.options.outbound.options && channel.options.outbound.options.host == 'smtp.gmail.com': %>
     <div class="action-alert alert alert--danger alert--square horizontal centered" role="alert">
-      <% date_migration_string = '2020-06-15' %>
-      <% date_migration_string_local = App.i18n.translateDate(date_migration_string, 0) %>
-      <% date_migration = new Date("#{date_migration_string}T00:00:00") %>
-      <% date_now = new Date() %>
-      <% if date_now > date_migration: %>
-        <%- @T('%s will only allow access via OAuth. Password-based access is no longer supported since %s.', 'G Suite', date_migration_string_local) %> <div class="flex-spacer"></div><div class="double-spacer"></div><button class="btn js-migrateGoogleMail" type="button"><%- @T('Migrate now!') %></button>
-      <% else: %>
-        <%- @T('%s will only allow access via OAuth. Password-based access will no longer be supported on %s.', 'G Suite', date_migration_string_local) %> <div class="flex-spacer"></div><div class="double-spacer"></div><button class="btn js-migrateGoogleMail" type="button"><%- @T('Migrate now!') %></button>
-      <% end %>
+      <%- @T('%s recommends using OAuth. %s announced it\'s going to drop Basic Authentication support in the future.', 'G Suite', 'Google') %> <div class="flex-spacer"></div><div class="double-spacer"></div><button class="btn js-migrateGoogleMail" type="button"><%- @T('Migrate now!') %></button>
     </div>
     <% end %>
     <% if channel.active is true && channel.options.inbound && channel.options.inbound.options && channel.options.inbound.options.host == 'outlook.office365.com' && channel.options.outbound && channel.options.outbound.options && channel.options.outbound.options.host == 'smtp.office365.com': %>
     <div class="action-alert alert alert--danger alert--square horizontal centered" role="alert">
-      <% date_migration_string = '2020-10-13' %>
-      <% date_migration_string_local = App.i18n.translateDate(date_migration_string, 0) %>
-      <% date_migration = new Date("#{date_migration_string}T00:00:00") %>
-      <% date_now = new Date() %>
-      <% if date_now > date_migration: %>
-        <%- @T('%s will only allow access via OAuth. Password-based access is no longer supported since %s.', 'Microsoft 365', date_migration_string_local) %> <div class="flex-spacer"></div><div class="double-spacer"></div><button class="btn js-migrateMicrosoft365Mail" type="button"><%- @T('Migrate now!') %></button>
-      <% else: %>
-        <%- @T('%s will only allow access via OAuth. Password-based access will no longer be supported on %s.', 'Microsoft 365', date_migration_string_local) %> <div class="flex-spacer"></div><div class="double-spacer"></div><button class="btn js-migrateMicrosoft365Mail" type="button"><%- @T('Migrate now!') %></button>
-      <% end %>
+      <%- @T('%s recommends using OAuth. %s announced it\'s going to drop Basic Authentication support in the future.', 'Microsoft 365', 'Microsoft') %> <div class="flex-spacer"></div><div class="double-spacer"></div><button class="btn js-migrateMicrosoft365Mail" type="button"><%- @T('Migrate now!') %></button>
     </div>
     <% end %>
-    -->
     <div class="action-flow" style="width: 100%;">
       <div class="action-block action-block--flex">
         <div class="horizontal">
@@ -110,7 +92,7 @@
             <% groupName = channel.group %>
           <% end %>
           <% if channel.group.active is false: %>
-            <%- @T('%s is inactive, please select a active one.', groupName) %>
+            <%- @T('%s is inactive, please select an active one.', groupName) %>
           <% else: %>
             <%= groupName %>
           <% end %>

@@ -40,6 +40,16 @@ class App.UiElement.richtext.additions.RichTextToolPopup extends App.ControllerF
 
     $(@event.currentTarget).on('hidden.bs.popover', (e) => @willClose(e))
 
+    $(document).on('click', @onClickingBackround)
+
+  onClickingBackround: (e) =>
+    return true if @el[0].contains(e.target)
+
+    e.preventDefault()
+    e.stopPropagation()
+
+    $(@event.currentTarget).popover('destroy')
+
   getAjaxAttributes: (field, attributes) ->
     @delegate?.getAjaxAttributes?(field, attributes)
 
@@ -152,5 +162,5 @@ class App.UiElement.richtext.additions.RichTextToolPopup extends App.ControllerF
         textEditor = $(@event.currentTarget).closest('.richtext.form-control').find('[contenteditable]')
         textEditor.find('span.highlight-emulator').contents().unwrap()
 
+    $(document).off('click', @onClickingBackround)
     $(@event.currentTarget).off('hidden.bs.popover')
-    $(e.currentTarget).popover('destroy')

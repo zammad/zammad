@@ -33,7 +33,7 @@
         <div class="vertical flex">
           <table style="width: 100%;">
             <tr>
-              <td style="width: 25%;"><label><%- @T('Erstellt') %></label></td><td> <%- @P(ticket, 'created_at') %></td>
+              <td style="width: 25%;"><label><%- @T('Created') %></label></td><td> <%- @P(ticket, 'created_at') %></td>
             </tr>
             <tr>
               <td><label><%- @T('Priority') %></label></td><td> <%- @P(ticket, 'priority') %></td>

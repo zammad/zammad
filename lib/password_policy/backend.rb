@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class PasswordPolicy
   class Backend
@@ -12,7 +12,7 @@ class PasswordPolicy
     end
 
     def error
-      ['Unknown error']
+      [__('Unknown error')]
     end
 
     def self.applicable?

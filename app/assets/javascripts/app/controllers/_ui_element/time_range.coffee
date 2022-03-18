@@ -2,11 +2,13 @@
 class App.UiElement.time_range
   @render: (attribute) ->
     ranges =
-      minute: 'Minute(s)'
-      hour: 'Hour(s)'
-      day: 'Day(s)'
-      month: 'Month(s)'
-      year: 'Year(s)'
+      minute: __('Minute(s)')
+      hour: __('Hour(s)')
+      day: __('Day(s)')
+      week: __('Week(s)'),
+      month: __('Month(s)')
+      year: __('Year(s)')
+      
     for key, value of ranges
       ranges[key] = App.i18n.translateInline(value)
 
@@ -17,6 +19,7 @@ class App.UiElement.time_range
       minute: [1..120]
       hour: [1..48]
       day: [1..31]
+      week: [1..53]
       month: [1..12]
       year: [1..20]
 

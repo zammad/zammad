@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'test_helper'
 
@@ -6,6 +6,15 @@ class TicketTriggerTest < ActiveSupport::TestCase
 
   setup do
     Setting.set('ticket_trigger_recursive', true)
+
+    @processing_timeout = HtmlSanitizer.const_get(:PROCESSING_TIMEOUT)
+
+    # XSS processing may run into a timeout on slow CI systems, so turn the timeout off for the test.
+    HtmlSanitizer.const_set(:PROCESSING_TIMEOUT, nil)
+  end
+
+  teardown do
+    HtmlSanitizer.const_set(:PROCESSING_TIMEOUT, @processing_timeout)
   end
 
   test '1 basic' do
@@ -973,7 +982,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('2 normal', ticket_p.priority.name, 'ticket_p.priority verify')
     assert_equal(2, ticket_p.articles.count, 'ticket_p.articles verify')
 
-    #p ticket_p.articles.last.inspect
+    # p ticket_p.articles.last.inspect
     article_p = ticket_p.articles.last
     assert_match('Owner has changed', article_p.subject)
     assert_match('Zammad <zammad@localhost>', article_p.from)
@@ -1052,7 +1061,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('3 high', ticket_p.priority.name, 'ticket_p.priority verify')
     assert_equal(2, ticket_p.articles.count, 'ticket_p.articles verify')
 
-    #p ticket_p.articles.last.inspect
+    # p ticket_p.articles.last.inspect
     article_p = ticket_p.articles.last
     assert_match('Owner has changed', article_p.subject)
     assert_match('Zammad <zammad@localhost>', article_p.from)
@@ -1135,7 +1144,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('3 high', ticket_p.priority.name, 'ticket_p.priority verify')
     assert_equal(2, ticket_p.articles.count, 'ticket_p.articles verify')
 
-    #p ticket_p.articles.last.inspect
+    # p ticket_p.articles.last.inspect
     article_p = ticket_p.articles.last
     assert_match('Owner has changed', article_p.subject)
     assert_match('Zammad <zammad@localhost>', article_p.from)
@@ -1375,7 +1384,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
 
     ticket1 = Ticket.create!(
       title:         'test 123',
-      #owner: agent,
+      # owner: agent,
       group:         Group.lookup(name: 'Users'),
       customer:      User.lookup(email: 'nicole.braun@zammad.org'),
       updated_by_id: 1,
@@ -1530,7 +1539,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal(1, ticket1.articles.count, 'ticket1.articles verify')
     assert_equal([], ticket1.tag_list)
 
-    ticket1.update!(customer: User.lookup(email: 'nicole.braun@zammad.org') )
+    ticket1.update!(customer: User.lookup(email: 'nicole.braun@zammad.org'))
 
     UserInfo.current_user_id = agent.id
     Ticket::Article.create!(
@@ -1731,7 +1740,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
 
     ticket1 = Ticket.create!(
       title:         'test 123',
-      #owner: agent,
+      # owner: agent,
       group:         Group.lookup(name: 'Users'),
       customer:      User.lookup(email: 'nicole.braun@zammad.org'),
       updated_by_id: 1,
@@ -1914,7 +1923,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
 
     ticket1 = Ticket.create!(
       title:         'test 123',
-      #owner: agent,
+      # owner: agent,
       group:         Group.lookup(name: 'Users'),
       customer:      User.lookup(email: 'nicole.braun@zammad.org'),
       updated_by_id: 1,
@@ -2625,7 +2634,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
 
     ticket1 = Ticket.create!(
       title:         'test 123',
-      #owner: agent,
+      # owner: agent,
       customer:      customer,
       group:         Group.lookup(name: 'Users'),
       updated_by_id: 1,
@@ -3589,7 +3598,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
           'value'    => Ticket::State.lookup(name: 'new').id.to_s,
         },
         'ticket.tags'     => {
-          #'operator' => 'contains one not',
+          # 'operator' => 'contains one not',
           'operator' => 'contains all not',
           'value'    => 'sender1, sender2',
         },
@@ -4596,7 +4605,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     end
   end
 
-  #2399 - Attached images are broken on trigger reply with #{article.body_as_html}
+  # 2399 - Attached images are broken on trigger reply with #{article.body_as_html}
   test 'make sure auto reply using #{article.body_as_html} copies all articles image attachments as well' do
     # make sure that this auto reply trigger only reacts to this particular test in order not to interfer with other auto reply tests
     Trigger.create!(
@@ -4641,7 +4650,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('CPG-Reklamationsmitteilung bezügl.01234567895 an Voda-28.03.2017.jpg', article1.attachments[0].filename)
   end
 
-  #2399 - Attached images are broken on trigger reply with #{article.body_as_html}
+  # 2399 - Attached images are broken on trigger reply with #{article.body_as_html}
   test 'make sure auto reply using #{article.body_as_html} does not copy any non-image attachments' do
     # make sure that this auto reply trigger only reacts to this particular test in order not to interfer with other auto reply tests
     Trigger.create!(

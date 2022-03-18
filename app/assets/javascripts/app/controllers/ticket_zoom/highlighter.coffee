@@ -9,23 +9,23 @@ class App.TicketZoomHighlighter extends App.Controller
 
   colors: [
     {
-      name: 'Yellow'
+      name: __('Yellow')
       color: '#f7e7b2'
     },
     {
-      name: 'Green'
+      name: __('Green')
       color: '#bce7b6'
     },
     {
-      name: 'Blue'
+      name: __('Blue')
       color: '#b3ddf9'
     },
     {
-      name: 'Pink'
+      name: __('Pink')
       color: '#fea9c5'
     },
     {
-      name: 'Purple'
+      name: __('Purple')
       color: '#eac5ee'
     }
   ]
@@ -212,6 +212,8 @@ class App.TicketZoomHighlighter extends App.Controller
   # - clears the selection
 
   toggleHighlightAtSelection: (article, article_id) =>
+    return if !article
+
     selection = rangy.getSelection()
 
     # activate selection background

@@ -1,6 +1,7 @@
-<p>
-  <output class="timer-output js-timerResult"></output>
-</p>
+<output class="timer-output">
+  <p class="js-timerResult"></p>
+</output>
+
 <div class="select-boxes">
   <div class="select-box select-box--vertical js-day">
     <div class="select-box-header"><%- @T('Day') %></div>

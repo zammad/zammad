@@ -1,4 +1,4 @@
-<li class="recipientList-entry js-organization" data-organization-id="<%- @organization.id %>">
+<li class="recipientList-entry js-organization<% if @organization.active is false: %> is-inactive<% end %>" data-organization-id="<%- @organization.id %>">
   <div class="recipientList-iconSpacer">
     <% if @organization.active is false: %>
     <%- @Icon('inactive-organization', 'recipientList-icon') %>

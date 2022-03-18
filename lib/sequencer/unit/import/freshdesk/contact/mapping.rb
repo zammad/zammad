@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Sequencer
   class Unit
@@ -14,7 +14,7 @@ class Sequencer
               provide_mapped do
                 {
                   firstname:       resource['name'],
-                  active:          resource['active'],
+                  active:          !resource['deleted'],
                   organization_id: organization_id,
                   email:           resource['email'],
                   mobile:          resource['mobile'],

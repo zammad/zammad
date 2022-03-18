@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'test_helper'
 
@@ -12,7 +12,7 @@ class ModelTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    assert_raises( ActiveRecord::RecordNotUnique ) do
+    assert_raises(ActiveRecord::RecordNotUnique) do
       Group.create_if_not_exists(
         name:          'model1-Create_If_Not_Exists',
         active:        true,
@@ -41,7 +41,7 @@ class ModelTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    assert_raises( ActiveRecord::RecordNotUnique ) do
+    assert_raises(ActiveRecord::RecordNotUnique) do
       Group.create_or_update(
         name:          'model1-Create_Or_Update',
         active:        true,

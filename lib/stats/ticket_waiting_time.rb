@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Stats::TicketWaitingTime
 
@@ -33,7 +33,7 @@ class Stats::TicketWaitingTime
                 percent = (handling_time.to_f - 60) / (60 * 3)
                 'good'
               elsif handling_time <= 60 * 8
-                percent = (handling_time.to_f - 60 * 4) / (60 * 4)
+                percent = (handling_time.to_f - (60 * 4)) / (60 * 4)
                 'ok'
               else
                 percent = 1.00
@@ -74,7 +74,7 @@ class Stats::TicketWaitingTime
     end
 
     if count_articles.positive?
-      average_time = average_time / count_articles
+      average_time /= count_articles
     end
 
     average_time

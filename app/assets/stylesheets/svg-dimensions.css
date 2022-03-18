@@ -48,6 +48,7 @@
 .icon-gitlab-logo { width: 24px; height: 24px; }
 .icon-google-button { width: 29px; height: 24px; }
 .icon-group { width: 24px; height: 24px; }
+.icon-hashtag { width: 28px; height: 28px; }
 .icon-help { width: 16px; height: 16px; }
 .icon-horizontal-rule { width: 12px; height: 12px; }
 .icon-important { width: 16px; height: 16px; }
@@ -74,6 +75,7 @@
 .icon-magnifier { width: 15px; height: 15px; }
 .icon-marker { width: 17px; height: 19px; }
 .icon-message { width: 24px; height: 24px; }
+.icon-microsoft-button { width: 29px; height: 24px; }
 .icon-minus-small { width: 16px; height: 16px; }
 .icon-minus { width: 20px; height: 20px; }
 .icon-mood-bad { width: 60px; height: 59px; }
@@ -85,7 +87,7 @@
 .icon-mute { width: 16px; height: 16px; }
 .icon-not-signed { width: 14px; height: 14px; }
 .icon-note { width: 16px; height: 16px; }
-.icon-office365-button { width: 29px; height: 24px; }
+.icon-oauth2-button { width: 29px; height: 24px; }
 .icon-one-ticket { width: 48px; height: 10px; }
 .icon-organization { width: 16px; height: 16px; }
 .icon-outbound-calls { width: 17px; height: 17px; }
@@ -115,7 +117,7 @@
 .icon-sms { width: 17px; height: 17px; }
 .icon-spinner-small { width: 15px; height: 15px; }
 .icon-split { width: 16px; height: 17px; }
-.icon-sso-button { width: 29px; height: 24px; }
+.icon-sso-button { width: 96.57px; height: 79.92px; }
 .icon-status-modified-outer-circle { width: 16px; height: 16px; }
 .icon-status { width: 16px; height: 16px; }
 .icon-stopwatch { width: 77px; height: 83px; }

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class PostmasterFilter < ApplicationModel
   include ChecksHtmlSanitized
@@ -13,7 +13,7 @@ class PostmasterFilter < ApplicationModel
   sanitized_html :note
 
   def validate_condition
-    raise Exceptions::UnprocessableEntity, 'Min. one match rule needed!' if match.blank?
+    raise Exceptions::UnprocessableEntity, __('Min. one match rule needed!') if match.blank?
 
     match.each_value do |meta|
       raise Exceptions::UnprocessableEntity, 'operator invalid, ony "contains" and "contains not" is supported' if meta['operator'].blank? || meta['operator'] !~ %r{^(contains|contains not)$}

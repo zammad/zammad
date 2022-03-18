@@ -1,0 +1,21 @@
+<hr/>
+<div class="horizontal two-columns">
+<% if @object.first_response_escalation_at: %>
+  <div class="column">
+    <label><%- @T('First Response Time') %></label>
+    <div class="u-textTruncate"><%- @humanTime(@object.first_response_escalation_at, true) %></div>
+  </div>
+<% end %>
+<% if @object.update_escalation_at: %>
+  <div class="column">
+    <label><%- @T('Update Time') %></label>
+    <div class="u-textTruncate"><%- @humanTime(@object.update_escalation_at, true) %></div>
+  </div>
+<% end %>
+<% if @object.close_escalation_at: %>
+  <div class="column">
+    <label><%- @T('Solution Time') %></label>
+    <div class="u-textTruncate"><%- @humanTime(@object.close_escalation_at, true) %></div>
+  </div>
+<% end %>
+</div>

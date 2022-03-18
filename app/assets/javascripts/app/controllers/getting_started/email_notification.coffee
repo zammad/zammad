@@ -12,7 +12,7 @@ class GettingStartedEmailNotification extends App.ControllerWizardFullScreen
       return
 
     # set title
-    @title 'Email Notifications'
+    @title __('Email Notifications')
 
     @channelDriver =
       email:
@@ -45,7 +45,7 @@ class GettingStartedEmailNotification extends App.ControllerWizardFullScreen
   render: =>
     @replaceWith App.view('getting_started/email_notification')()
     configureAttributesOutbound = [
-      { name: 'adapter', display: 'Send Mails via', tag: 'select', multiple: false, null: false, options: @channelDriver.email.outbound },
+      { name: 'adapter', display: __('Send Mails via'), tag: 'select', multiple: false, null: false, options: @channelDriver.email.outbound },
     ]
     new App.ControllerForm(
       el:    @$('.base-outbound-type')
@@ -64,10 +64,10 @@ class GettingStartedEmailNotification extends App.ControllerWizardFullScreen
     adapter = @$('.js-outbound [name=adapter]').val()
     if adapter is 'smtp'
       configureAttributesOutbound = [
-        { name: 'options::host',     display: 'Host',     tag: 'input', type: 'text',     limit: 120, null: false, autocapitalize: false, autofocus: true },
-        { name: 'options::user',     display: 'User',     tag: 'input', type: 'text',     limit: 120, null: true, autocapitalize: false, autocomplete: 'off' },
-        { name: 'options::password', display: 'Password', tag: 'input', type: 'password', limit: 120, null: true, autocapitalize: false, autocomplete: 'off', single: true },
-        { name: 'options::port',     display: 'Port',     tag: 'input', type: 'text',     limit: 6,   null: true, autocapitalize: false },
+        { name: 'options::host',     display: __('Host'),     tag: 'input', type: 'text',     limit: 120, null: false, autocapitalize: false, autofocus: true },
+        { name: 'options::user',     display: __('User'),     tag: 'input', type: 'text',     limit: 120, null: true, autocapitalize: false, autocomplete: 'off' },
+        { name: 'options::password', display: __('Password'), tag: 'input', type: 'password', limit: 120, null: true, autocapitalize: false, autocomplete: 'off', single: true },
+        { name: 'options::port',     display: __('Port'),     tag: 'input', type: 'text',     limit: 6,   null: true, autocapitalize: false },
       ]
       @form = new App.ControllerForm(
         el:    @$('.base-outbound-settings')

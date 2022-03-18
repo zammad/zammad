@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 module HasGroups
   extend ActiveSupport::Concern
@@ -70,7 +70,7 @@ module HasGroups
     return false if !groups_access_permission?
 
     group_id = self.class.ensure_group_id_parameter(group_id)
-    access   = self.class.ensure_group_access_list_parameter(access)
+    access   = Array(access).map(&:to_sym) | [:full]
 
     # check direct access
     return true if group_through.klass.eager_load(:group).exists?(
@@ -104,7 +104,7 @@ module HasGroups
     return [] if !active?
     return [] if !groups_access_permission?
 
-    access      = self.class.ensure_group_access_list_parameter(access)
+    access      = Array(access).map(&:to_sym) | [:full]
     foreign_key = group_through.foreign_key
     klass       = group_through.klass
 
@@ -251,7 +251,6 @@ module HasGroups
     yield
     self.group_access_buffer = nil
     cache_delete
-    push_ticket_create_screen_background_job
   end
 
   def process_group_access_buffer
@@ -316,11 +315,11 @@ module HasGroups
     # @return [Array<Class>]
     def group_access(group_id, access)
       group_id = ensure_group_id_parameter(group_id)
-      access   = ensure_group_access_list_parameter(access)
+      access   = Array(access).map(&:to_sym) | [:full]
 
       # check direct access
       instances = joins(group_through.name)
-                  .where( group_through.table_name => { group_id: group_id, access: access }, active: true )
+                  .where(group_through.table_name => { group_id: group_id, access: access }, active: true)
 
       if method_defined?(:permissions?)
         permissions = Permission.with_parents('ticket.agent')
@@ -363,12 +362,6 @@ module HasGroups
       return group_or_id if group_or_id.is_a?(Integer)
 
       group_or_id.id
-    end
-
-    def ensure_group_access_list_parameter(access)
-      access = [access] if access.is_a?(String)
-      access.push('full') if access.exclude?('full')
-      access
     end
   end
 end

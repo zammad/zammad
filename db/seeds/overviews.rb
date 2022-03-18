@@ -1,8 +1,8 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 overview_role = Role.find_by(name: 'Agent')
 Overview.create_if_not_exists(
-  name:      'My assigned Tickets',
+  name:      __('My Assigned Tickets'),
   link:      'my_assigned',
   prio:      1000,
   role_ids:  [overview_role.id],
@@ -29,7 +29,7 @@ Overview.create_if_not_exists(
 )
 
 Overview.create_if_not_exists(
-  name:      'Unassigned & Open',
+  name:      __('Unassigned & Open Tickets'),
   link:      'all_unassigned',
   prio:      1010,
   role_ids:  [overview_role.id],
@@ -56,7 +56,7 @@ Overview.create_if_not_exists(
 )
 
 Overview.create_if_not_exists(
-  name:      'My pending reached Tickets',
+  name:      __('My Pending Reached Tickets'),
   link:      'my_pending_reached',
   prio:      1020,
   role_ids:  [overview_role.id],
@@ -88,7 +88,7 @@ Overview.create_if_not_exists(
 )
 
 Overview.create_if_not_exists(
-  name:      'My subscribed Tickets',
+  name:      __('My Subscribed Tickets'),
   link:      'my_subscribed_tickets',
   prio:      1025,
   role_ids:  [overview_role.id],
@@ -106,7 +106,7 @@ Overview.create_if_not_exists(
 )
 
 Overview.create_if_not_exists(
-  name:      'Open',
+  name:      __('Open Tickets'),
   link:      'all_open',
   prio:      1030,
   role_ids:  [overview_role.id],
@@ -129,7 +129,7 @@ Overview.create_if_not_exists(
 )
 
 Overview.create_if_not_exists(
-  name:      'Pending reached',
+  name:      __('Pending Reached Tickets'),
   link:      'all_pending_reached',
   prio:      1040,
   role_ids:  [overview_role.id],
@@ -157,7 +157,7 @@ Overview.create_if_not_exists(
 )
 
 Overview.create_if_not_exists(
-  name:      'Escalated',
+  name:      __('Escalated Tickets'),
   link:      'all_escalated',
   prio:      1050,
   role_ids:  [overview_role.id],
@@ -181,7 +181,7 @@ Overview.create_if_not_exists(
 )
 
 Overview.create_if_not_exists(
-  name:          'My replacement Tickets',
+  name:          __('My Replacement Tickets'),
   link:          'my_replacement_tickets',
   prio:          1080,
   role_ids:      [overview_role.id],
@@ -210,7 +210,7 @@ Overview.create_if_not_exists(
 
 overview_role = Role.find_by(name: 'Customer')
 Overview.create_if_not_exists(
-  name:      'My Tickets',
+  name:      __('My Tickets'),
   link:      'my_tickets',
   prio:      1100,
   role_ids:  [overview_role.id],
@@ -236,7 +236,7 @@ Overview.create_if_not_exists(
   },
 )
 Overview.create_if_not_exists(
-  name:                'My Organization Tickets',
+  name:                __('My Organization Tickets'),
   link:                'my_organization_tickets',
   prio:                1200,
   role_ids:            [overview_role.id],

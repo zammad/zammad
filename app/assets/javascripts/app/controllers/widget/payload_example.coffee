@@ -2,7 +2,7 @@ class App.WidgetPayloadExample extends App.ControllerModal
   buttonClose: true
   buttonCancel: true
   buttonSubmit: false
-  head: 'Example Payload'
+  head: __('Example Payload')
   large: true
 
   content: =>
@@ -31,7 +31,6 @@ class App.WidgetPayloadExample extends App.ControllerModal
         details = data.responseJSON || {}
         @notify
           type:    'error'
-          msg:     App.i18n.translateContent(details.error_human || details.error || 'Unable to load example payload!')
+          msg:     App.i18n.translateContent(details.error_human || details.error || __('Loading failed.'))
           timeout: 6000
     )
-

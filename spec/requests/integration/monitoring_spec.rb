@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -116,13 +116,11 @@ RSpec.describe 'Monitoring', type: :request do
         string += 'Some Text Some Text Some Text Some Text Some Text Some Text Some Text Some Text'
       end
 
-      Store.add(
-        object:        'User',
-        o_id:          1,
-        data:          string,
-        filename:      'filename.txt',
-        created_by_id: 1,
-      )
+      create(:store,
+             object:   'User',
+             o_id:     1,
+             data:     string,
+             filename: 'filename.txt')
 
       # health_check
       get "/api/v1/monitoring/health_check?token=#{token}", params: {}, as: :json
@@ -131,7 +129,7 @@ RSpec.describe 'Monitoring', type: :request do
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to be_falsey
       expect(json_response['issues']).to eq([])
-      expect(json_response['healthy']).to eq(true)
+      expect(json_response['healthy']).to be(true)
       expect(json_response['message']).to eq('success')
 
       # status
@@ -159,13 +157,11 @@ RSpec.describe 'Monitoring', type: :request do
       end
 
       # save same file again
-      Store.add(
-        object:        'User',
-        o_id:          1,
-        data:          string,
-        filename:      'filename.txt',
-        created_by_id: 1,
-      )
+      create(:store,
+             object:   'User',
+             o_id:     1,
+             data:     string,
+             filename: 'filename.txt')
 
       # status
       get "/api/v1/monitoring/status?token=#{token}", params: {}, as: :json
@@ -190,13 +186,11 @@ RSpec.describe 'Monitoring', type: :request do
         expect(json_response['storage']).to be_falsey
       end
 
-      Store.add(
-        object:        'User',
-        o_id:          1,
-        data:          "#{string}123",
-        filename:      'filename2.txt',
-        created_by_id: 1,
-      )
+      create(:store,
+             object:   'User',
+             o_id:     1,
+             data:     "#{string}123",
+             filename: 'filename2.txt')
 
       # status
       get "/api/v1/monitoring/status?token=#{token}", params: {}, as: :json
@@ -240,7 +234,7 @@ RSpec.describe 'Monitoring', type: :request do
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to be_falsey
-      expect(json_response['healthy']).to eq(true)
+      expect(json_response['healthy']).to be(true)
       expect(json_response['message']).to eq('success')
 
       # status
@@ -346,7 +340,7 @@ RSpec.describe 'Monitoring', type: :request do
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['error']).to be_falsey
-      expect(json_response['healthy']).to eq(true)
+      expect(json_response['healthy']).to be(true)
       expect(json_response['message']).to eq('success')
 
       # status
@@ -388,12 +382,12 @@ RSpec.describe 'Monitoring', type: :request do
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['message']).to be_truthy
       expect(json_response['issues']).to be_truthy
-      expect(json_response['healthy']).to eq(false)
+      expect(json_response['healthy']).to be(false)
       expect(json_response['message']).to eq('Channel: Email::Notification out  ')
 
       # health_check - scheduler may not run
       scheduler = Scheduler.where(active: true).last
-      scheduler.last_run = Time.zone.now - 20.minutes
+      scheduler.last_run = 20.minutes.ago
       scheduler.period = 600
       scheduler.save!
 
@@ -403,12 +397,12 @@ RSpec.describe 'Monitoring', type: :request do
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['message']).to be_truthy
       expect(json_response['issues']).to be_truthy
-      expect(json_response['healthy']).to eq(false)
+      expect(json_response['healthy']).to be(false)
       expect(json_response['message']).to eq("Channel: Email::Notification out  ;scheduler may not run (last execution of #{scheduler.method} 10 minutes over) - please contact your system administrator")
 
       # health_check - scheduler may not run
       scheduler = Scheduler.where(active: true).last
-      scheduler.last_run = Time.zone.now - 1.day
+      scheduler.last_run = 1.day.ago
       scheduler.period = 600
       scheduler.save!
 
@@ -418,7 +412,7 @@ RSpec.describe 'Monitoring', type: :request do
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['message']).to be_truthy
       expect(json_response['issues']).to be_truthy
-      expect(json_response['healthy']).to eq(false)
+      expect(json_response['healthy']).to be(false)
       expect(json_response['message']).to eq("Channel: Email::Notification out  ;scheduler may not run (last execution of #{scheduler.method} about 24 hours over) - please contact your system administrator")
 
       # health_check - scheduler job count
@@ -438,7 +432,7 @@ RSpec.describe 'Monitoring', type: :request do
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['message']).to be_truthy
       expect(json_response['issues']).to be_truthy
-      expect(json_response['healthy']).to eq(false)
+      expect(json_response['healthy']).to be(false)
       expect(json_response['message']).to eq('Channel: Email::Notification out  ')
 
       travel 20.minutes
@@ -453,7 +447,7 @@ RSpec.describe 'Monitoring', type: :request do
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['message']).to be_truthy
       expect(json_response['issues']).to be_truthy
-      expect(json_response['healthy']).to eq(false)
+      expect(json_response['healthy']).to be(false)
       expect(json_response['message']).to eq("Channel: Email::Notification out  ;#{total_jobs} background jobs in queue")
 
       Delayed::Job.delete_all
@@ -470,7 +464,7 @@ RSpec.describe 'Monitoring', type: :request do
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['message']).to be_truthy
       expect(json_response['issues']).to be_truthy
-      expect(json_response['healthy']).to eq(false)
+      expect(json_response['healthy']).to be(false)
       expect(json_response['message']).to eq('Channel: Email::Notification out  ;unprocessable mails: 1')
 
       # health_check - ldap
@@ -490,7 +484,7 @@ RSpec.describe 'Monitoring', type: :request do
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['message']).to be_truthy
       expect(json_response['issues']).to be_truthy
-      expect(json_response['healthy']).to eq(false)
+      expect(json_response['healthy']).to be(false)
       expect(json_response['message']).to eq("Channel: Email::Notification out  ;unprocessable mails: 1;Failed to run import backend 'Import::Ldap'. Cause: Some bad error")
 
       stuck_updated_at_timestamp = 15.minutes.ago
@@ -508,7 +502,7 @@ RSpec.describe 'Monitoring', type: :request do
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['message']).to be_truthy
       expect(json_response['issues']).to be_truthy
-      expect(json_response['healthy']).to eq(false)
+      expect(json_response['healthy']).to be(false)
       expect(json_response['message']).to eq("Channel: Email::Notification out  ;unprocessable mails: 1;Failed to run import backend 'Import::Ldap'. Cause: Some bad error;Stuck import backend 'Import::Ldap' detected. Last update: #{stuck_updated_at_timestamp}")
 
       privacy_stuck_updated_at_timestamp = 30.minutes.ago
@@ -522,7 +516,7 @@ RSpec.describe 'Monitoring', type: :request do
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['message']).to be_truthy
       expect(json_response['issues']).to be_truthy
-      expect(json_response['healthy']).to eq(false)
+      expect(json_response['healthy']).to be(false)
       expect(json_response['message']).to eq("Channel: Email::Notification out  ;unprocessable mails: 1;Failed to run import backend 'Import::Ldap'. Cause: Some bad error;Stuck import backend 'Import::Ldap' detected. Last update: #{stuck_updated_at_timestamp};Stuck data privacy task (ID #{task.id}) detected. Last update: #{privacy_stuck_updated_at_timestamp}")
 
       Setting.set('ldap_integration', false)
@@ -611,8 +605,8 @@ RSpec.describe 'Monitoring', type: :request do
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['message']).to be_truthy
       expect(json_response['issues']).to be_truthy
-      expect(json_response['healthy']).to eq(false)
-      expect( json_response['message']).to eq("Failed to run background job #1 'SearchIndexAssociationsJob' 1 time(s) with 1 attempt(s).")
+      expect(json_response['healthy']).to be(false)
+      expect(json_response['message']).to eq("Failed to run background job #1 'SearchIndexAssociationsJob' 1 time(s) with 1 attempt(s).")
 
       # add another job
       manual_added = SearchIndexJob.perform_later('Ticket', 1)
@@ -625,18 +619,17 @@ RSpec.describe 'Monitoring', type: :request do
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['message']).to be_truthy
       expect(json_response['issues']).to be_truthy
-      expect(json_response['healthy']).to eq(false)
-      expect( json_response['message']).to eq("Failed to run background job #1 'SearchIndexAssociationsJob' 1 time(s) with 1 attempt(s).;Failed to run background job #2 'SearchIndexJob' 1 time(s) with 10 attempt(s).")
+      expect(json_response['healthy']).to be(false)
+      expect(json_response['message']).to eq("Failed to run background job #1 'SearchIndexAssociationsJob' 1 time(s) with 1 attempt(s).;Failed to run background job #2 'SearchIndexJob' 1 time(s) with 10 attempt(s).")
 
       # add another job
       dummy_class = Class.new(ApplicationJob) do
-
         def perform
-          puts 'work work'
+          true
         end
       end
 
-      manual_added = Delayed::Job.enqueue( dummy_class.new )
+      manual_added = Delayed::Job.enqueue(dummy_class.new)
       manual_added.update!(attempts: 5)
 
       # health_check
@@ -646,7 +639,7 @@ RSpec.describe 'Monitoring', type: :request do
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['message']).to be_truthy
       expect(json_response['issues']).to be_truthy
-      expect(json_response['healthy']).to eq(false)
+      expect(json_response['healthy']).to be(false)
       expect(json_response['message']).to eq("Failed to run background job #1 'Object' 1 time(s) with 5 attempt(s).;Failed to run background job #2 'SearchIndexAssociationsJob' 1 time(s) with 1 attempt(s).;Failed to run background job #3 'SearchIndexJob' 1 time(s) with 10 attempt(s).")
 
       # reset settings
@@ -654,7 +647,7 @@ RSpec.describe 'Monitoring', type: :request do
 
       # add some more failing job
       10.times do
-        manual_added = Delayed::Job.enqueue( dummy_class.new )
+        manual_added = Delayed::Job.enqueue(dummy_class.new)
         manual_added.update!(attempts: 5)
       end
 
@@ -665,7 +658,7 @@ RSpec.describe 'Monitoring', type: :request do
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['message']).to be_truthy
       expect(json_response['issues']).to be_truthy
-      expect(json_response['healthy']).to eq(false)
+      expect(json_response['healthy']).to be(false)
       expect(json_response['message']).to eq("13 failing background jobs;Failed to run background job #1 'Object' 8 time(s) with 40 attempt(s).;Failed to run background job #2 'SearchIndexAssociationsJob' 1 time(s) with 1 attempt(s).;Failed to run background job #3 'SearchIndexJob' 1 time(s) with 10 attempt(s).")
 
       # cleanup
@@ -680,8 +673,8 @@ RSpec.describe 'Monitoring', type: :request do
       expect(response).to have_http_status(:ok)
 
       expect(json_response).to be_a_kind_of(Hash)
-      expect(json_response.key?('state')).to eq(false)
-      expect(json_response.key?('message')).to eq(false)
+      expect(json_response.key?('state')).to be(false)
+      expect(json_response.key?('message')).to be(false)
       expect(json_response['count']).to eq(0)
 
       Ticket.destroy_all
@@ -711,7 +704,7 @@ RSpec.describe 'Monitoring', type: :request do
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['state']).to eq('ok')
-      expect(json_response.key?('message')).to eq(false)
+      expect(json_response.key?('message')).to be(false)
       expect(json_response['count']).to eq(6)
 
       (1..6).each do |i|
@@ -745,15 +738,15 @@ RSpec.describe 'Monitoring', type: :request do
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['state']).to eq('ok')
-      expect(json_response.key?('message')).to eq(false)
+      expect(json_response.key?('message')).to be(false)
       expect(json_response['count']).to eq(22)
 
       get "/api/v1/monitoring/amount_check?token=#{token}&periode=1h", params: {}, as: :json
       expect(response).to have_http_status(:ok)
 
       expect(json_response).to be_a_kind_of(Hash)
-      expect(json_response.key?('state')).to eq(false)
-      expect(json_response.key?('message')).to eq(false)
+      expect(json_response.key?('state')).to be(false)
+      expect(json_response.key?('message')).to be(false)
       expect(json_response['count']).to eq(22)
 
       travel 2.hours
@@ -763,15 +756,15 @@ RSpec.describe 'Monitoring', type: :request do
 
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['state']).to eq('ok')
-      expect(json_response.key?('message')).to eq(false)
+      expect(json_response.key?('message')).to be(false)
       expect(json_response['count']).to eq(0)
 
       get "/api/v1/monitoring/amount_check?token=#{token}&periode=1h", params: {}, as: :json
       expect(response).to have_http_status(:ok)
 
       expect(json_response).to be_a_kind_of(Hash)
-      expect(json_response.key?('state')).to eq(false)
-      expect(json_response.key?('message')).to eq(false)
+      expect(json_response.key?('state')).to be(false)
+      expect(json_response.key?('message')).to be(false)
       expect(json_response['count']).to eq(0)
     end
   end

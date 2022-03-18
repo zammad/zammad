@@ -1,9 +1,10 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class UsersController < ApplicationController
   include ChecksUserAttributesByCurrentUserPermission
+  include CanPaginate
 
-  prepend_before_action -> { authorize! }, only: %i[import_example import_start search history]
+  prepend_before_action -> { authorize! }, only: %i[import_example import_start search history unlock]
   prepend_before_action :authentication_check, except: %i[create password_reset_send password_reset_verify image email_verify email_verify_send]
   prepend_before_action :authentication_check_only, only: %i[create]
 
@@ -17,18 +18,7 @@ class UsersController < ApplicationController
   # @response_message 200 [Array<User>] List of matching User records.
   # @response_message 403               Forbidden / Invalid session.
   def index
-    offset = 0
-    per_page = 500
-    if params[:page] && params[:per_page]
-      offset = (params[:page].to_i - 1) * params[:per_page].to_i
-      per_page = params[:per_page].to_i
-    end
-
-    if per_page > 500
-      per_page = 500
-    end
-
-    users = policy_scope(User).order(id: :asc).offset(offset).limit(per_page)
+    users = policy_scope(User).order(id: :asc).offset(pagination.offset).limit(pagination.limit)
 
     if response_expand?
       list = []
@@ -130,6 +120,7 @@ class UsersController < ApplicationController
     user.with_lock do
       clean_params = User.association_name_to_id_convert(params)
       clean_params = User.param_cleanup(clean_params, true)
+      clean_params[:screen] = 'update'
       user.update!(clean_params)
 
       # presence and permissions were checked via `check_attributes_by_current_user_permission`
@@ -217,26 +208,19 @@ class UsersController < ApplicationController
   #                   The requester has to be in the role 'Admin' or 'Agent' to
   #                   be able to search for User records.
   #
-  # @parameter        query            [String]                             The search query.
-  # @parameter        limit            [Integer]                            The limit of search results.
-  # @parameter        role_ids(multi)  [Array<String>]                      A list of Role identifiers to which the Users have to be allocated to.
-  # @parameter        group_ids(multi) [Hash<String=>String,Array<String>>] A list of Group identifiers to which the Users have to be allocated to.
-  # @parameter        full             [Boolean]                            Defines if the result should be
-  #                                                                         true: { user_ids => [1,2,...], assets => {...} }
-  #                                                                         or false: [{:id => user.id, :label => "firstname lastname <email>", :value => "firstname lastname <email>"},...].
+  # @parameter        query              [String]                               The search query.
+  # @parameter        limit              [Integer]                              The limit of search results.
+  # @parameter        ids(multi)         [Array<Integer>]                       A list of User IDs which should be returned
+  # @parameter        role_ids(multi)    [Array<Integer>]                       A list of Role identifiers to which the Users have to be allocated to.
+  # @parameter        group_ids(multi)   [Hash<String=>Integer,Array<Integer>>] A list of Group identifiers to which the Users have to be allocated to.
+  # @parameter        permissions(multi) [Array<String>]                        A list of Permission identifiers to which the Users have to be allocated to.
+  # @parameter        full               [Boolean]                              Defines if the result should be
+  #                                                                             true: { user_ids => [1,2,...], assets => {...} }
+  #                                                                             or false: [{:id => user.id, :label => "firstname lastname <email>", :value => "firstname lastname <email>"},...].
   #
   # @response_message 200 [Array<User>] A list of User records matching the search term.
   # @response_message 403               Forbidden / Invalid session.
   def search
-    per_page = params[:per_page] || params[:limit] || 100
-    per_page = per_page.to_i
-    if per_page > 500
-      per_page = 500
-    end
-    page = params[:page] || 1
-    page = page.to_i
-    offset = (page - 1) * per_page
-
     query = params[:query]
     if query.respond_to?(:permit!)
       query.permit!.to_h
@@ -249,13 +233,13 @@ class UsersController < ApplicationController
 
     query_params = {
       query:        query,
-      limit:        per_page,
-      offset:       offset,
+      limit:        pagination.limit,
+      offset:       pagination.offset,
       sort_by:      params[:sort_by],
       order_by:     params[:order_by],
       current_user: current_user,
     }
-    %i[role_ids group_ids permissions].each do |key|
+    %i[ids role_ids group_ids permissions].each do |key|
       next if params[key].blank?
 
       query_params[key] = params[key]
@@ -282,7 +266,7 @@ class UsersController < ApplicationController
           realname = "#{realname} <#{user.email}>"
         end
         a = if params[:term]
-              { id: user.id, label: realname, value: user.email }
+              { id: user.id, label: realname, value: user.email, inactive: !user.active }
             else
               { id: user.id, label: realname, value: realname }
             end
@@ -338,6 +322,24 @@ class UsersController < ApplicationController
     render json: user.history_get(true)
   end
 
+  # @path       [PUT] /users/unlock/{id}
+  #
+  # @summary          Unlocks the User record matching the identifier.
+  # @notes            The requester have 'admin.user' permissions to be able to unlock a user.
+  #
+  # @parameter        id(required) [Integer] The identifier matching the requested User record.
+  #
+  # @response_message 200 Unlocked User record.
+  # @response_message 403 Forbidden / Invalid session.
+  def unlock
+    user = User.find(params[:id])
+
+    user.with_lock do
+      user.update!(login_failed: 0)
+    end
+    render json: { message: 'ok' }, status: :ok
+  end
+
 =begin
 
 Resource:
@@ -359,10 +361,10 @@ curl http://localhost/api/v1/users/email_verify -v -u #{login}:#{password} -H "C
 =end
 
   def email_verify
-    raise Exceptions::UnprocessableEntity, 'No token!' if !params[:token]
+    raise Exceptions::UnprocessableEntity, __('No token!') if !params[:token]
 
     user = User.signup_verify_via_token(params[:token], current_user)
-    raise Exceptions::UnprocessableEntity, 'Invalid token!' if !user
+    raise Exceptions::UnprocessableEntity, __('Invalid token!') if !user
 
     current_user_set(user)
 
@@ -391,7 +393,7 @@ curl http://localhost/api/v1/users/email_verify_send -v -u #{login}:#{password} 
 
   def email_verify_send
 
-    raise Exceptions::UnprocessableEntity, 'No email!' if !params[:email]
+    raise Exceptions::UnprocessableEntity, __('No email!') if !params[:email]
 
     user = User.find_by(email: params[:email].downcase)
     if !user || user.verified == true
@@ -443,7 +445,7 @@ curl http://localhost/api/v1/users/password_reset -v -u #{login}:#{password} -H 
   def password_reset_send
 
     # check if feature is enabled
-    raise Exceptions::UnprocessableEntity, 'Feature not enabled!' if !Setting.get('user_lost_password')
+    raise Exceptions::UnprocessableEntity, __('Feature not enabled!') if !Setting.get('user_lost_password')
 
     result = User.password_reset_new_token(params[:username])
     if result && result[:token]
@@ -490,7 +492,7 @@ curl http://localhost/api/v1/users/password_reset_verify -v -u #{login}:#{passwo
   def password_reset_verify
 
     # check if feature is enabled
-    raise Exceptions::UnprocessableEntity, 'Feature not enabled!' if !Setting.get('user_lost_password')
+    raise Exceptions::UnprocessableEntity, __('Feature not enabled!') if !Setting.get('user_lost_password')
     raise Exceptions::UnprocessableEntity, 'token param needed!' if params[:token].blank?
 
     # if no password is given, verify token only
@@ -556,18 +558,19 @@ curl http://localhost/api/v1/users/password_change -v -u #{login}:#{password} -H
 
     # check old password
     if !params[:password_old]
-      render json: { message: 'failed', notice: ['Current password needed!'] }, status: :ok
+      render json: { message: 'failed', notice: [__('Current password needed!')] }, status: :ok
       return
     end
-    user = User.authenticate(current_user.login, params[:password_old])
-    if !user
-      render json: { message: 'failed', notice: ['Current password is wrong!'] }, status: :ok
+
+    current_password_verified = PasswordHash.verified?(current_user.password, params[:password_old])
+    if !current_password_verified
+      render json: { message: 'failed', notice: [__('Current password is wrong!')] }, status: :ok
       return
     end
 
     # set new password
     if !params[:password_new]
-      render json: { message: 'failed', notice: ['Please supply your new password!'] }, status: :ok
+      render json: { message: 'failed', notice: [__('Please supply your new password!')] }, status: :ok
       return
     end
 
@@ -577,20 +580,19 @@ curl http://localhost/api/v1/users/password_change -v -u #{login}:#{password} -H
       return
     end
 
-    user.update!(password: params[:password_new])
+    current_user.update!(password: params[:password_new])
 
-    if user.email.present?
+    if current_user.email.present?
       NotificationFactory::Mailer.notification(
         template: 'password_change',
-        user:     user,
+        user:     current_user,
         objects:  {
-          user:         user,
-          current_user: current_user,
+          user: current_user,
         }
       )
     end
 
-    render json: { message: 'ok', user_login: user.login }, status: :ok
+    render json: { message: 'ok', user_login: current_user.login }, status: :ok
   end
 
 =begin
@@ -700,7 +702,7 @@ curl http://localhost/api/v1/users/account -v -u #{login}:#{password} -H "Conten
       provider: params[:provider],
       uid:      params[:uid],
     )
-    raise Exceptions::UnprocessableEntity, 'No record found!' if !record.first
+    raise Exceptions::UnprocessableEntity, __('No record found!') if !record.first
 
     record.destroy_all
     render json: { message: 'ok' }, status: :ok
@@ -720,31 +722,28 @@ curl http://localhost/api/v1/users/image/8d6cca1c6bdc226cf2ba131e264ca2c7 -v -u 
 =end
 
   def image
-
     # cache image
     response.headers['Expires']       = 1.year.from_now.httpdate
     response.headers['Cache-Control'] = 'cache, store, max-age=31536000, must-revalidate'
     response.headers['Pragma']        = 'cache'
 
     file = Avatar.get_by_hash(params[:hash])
+
     if file
+      file_content_type = file.preferences['Content-Type'] || file.preferences['Mime-Type']
+
+      return serve_default_image if ActiveStorage.content_types_allowed_inline.exclude?(file_content_type)
+
       send_data(
         file.content,
         filename:    file.filename,
-        type:        file.preferences['Content-Type'] || file.preferences['Mime-Type'],
+        type:        file_content_type,
         disposition: 'inline'
       )
       return
     end
 
-    # serve default image
-    image = 'R0lGODdhMAAwAOMAAMzMzJaWlr6+vqqqqqOjo8XFxbe3t7GxsZycnAAAAAAAAAAAAAAAAAAAAAAAAAAAACwAAAAAMAAwAAAEcxDISau9OOvNu/9gKI5kaZ5oqq5s675wLM90bd94ru98TwuAA+KQAQqJK8EAgBAgMEqmkzUgBIeSwWGZtR5XhSqAULACCoGCJGwlm1MGQrq9RqgB8fm4ZTUgDBIEcRR9fz6HiImKi4yNjo+QkZKTlJWWkBEAOw=='
-    send_data(
-      Base64.decode64(image),
-      filename:    'image.gif',
-      type:        'image/gif',
-      disposition: 'inline'
-    )
+    serve_default_image
   end
 
 =begin
@@ -772,14 +771,24 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
     begin
       file_full = StaticAssets.data_url_attributes(params[:avatar_full])
     rescue
-      render json: { error: 'Full size image is invalid' }, status: :unprocessable_entity
+      render json: { error: __('The full-size image is invalid.') }, status: :unprocessable_entity
+      return
+    end
+
+    if ActiveStorage::Variant::WEB_IMAGE_CONTENT_TYPES.exclude?(file_full[:mime_type])
+      render json: { error: __('The MIME type of the full-size image is invalid.') }, status: :unprocessable_entity
       return
     end
 
     begin
       file_resize = StaticAssets.data_url_attributes(params[:avatar_resize])
     rescue
-      render json: { error: 'Resized image is invalid' }, status: :unprocessable_entity
+      render json: { error: __('The resized image is invalid.') }, status: :unprocessable_entity
+      return
+    end
+
+    if ActiveStorage::Variant::WEB_IMAGE_CONTENT_TYPES.exclude?(file_resize[:mime_type])
+      render json: { error: __('The MIME type of the resized image is invalid.') }, status: :unprocessable_entity
       return
     end
 
@@ -807,7 +816,7 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
 
   def avatar_set_default
     # get & validate image
-    raise Exceptions::UnprocessableEntity, 'No id of avatar!' if !params[:id]
+    raise Exceptions::UnprocessableEntity, __("The required parameter 'id' is missing.") if !params[:id]
 
     # set as default
     avatar = Avatar.set_default('User', current_user.id, params[:id])
@@ -821,7 +830,7 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
 
   def avatar_destroy
     # get & validate image
-    raise Exceptions::UnprocessableEntity, 'No id of avatar!' if !params[:id]
+    raise Exceptions::UnprocessableEntity, __("The required parameter 'id' is missing.") if !params[:id]
 
     # remove avatar
     Avatar.remove_one('User', current_user.id, params[:id])
@@ -871,7 +880,7 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
     if string.blank? && params[:file].present?
       string = params[:file].read.force_encoding('utf-8')
     end
-    raise Exceptions::UnprocessableEntity, 'No source data submitted!' if string.blank?
+    raise Exceptions::UnprocessableEntity, __('No source data submitted!') if string.blank?
 
     result = User.csv_import(
       string:       string,
@@ -887,7 +896,7 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
   private
 
   def clean_user_params
-    User.param_cleanup(User.association_name_to_id_convert(params), true)
+    User.param_cleanup(User.association_name_to_id_convert(params), true).merge(screen: 'create')
   end
 
   # @summary          Creates a User record with the provided attribute values.
@@ -951,17 +960,17 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
   def create_signup
     # check if feature is enabled
     if !Setting.get('user_create_account')
-      raise Exceptions::UnprocessableEntity, 'Feature not enabled!'
+      raise Exceptions::UnprocessableEntity, __('Feature not enabled!')
     end
 
     # check signup option only after admin account is created
     if !params[:signup]
-      raise Exceptions::UnprocessableEntity, 'Only signup with not authenticate user possible!'
+      raise Exceptions::UnprocessableEntity, __("The required parameter 'signup' is missing.")
     end
 
     # check if user already exists
     if clean_user_params[:email].blank?
-      raise Exceptions::UnprocessableEntity, 'Attribute \'email\' required!'
+      raise Exceptions::UnprocessableEntity, __('Attribute \'email\' required!')
     end
 
     email_taken_by = User.find_by email: clean_user_params[:email].downcase.strip
@@ -978,9 +987,8 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
     user.source        = 'signup'
 
     if email_taken_by # show fake OK response to avoid leaking that email is already in use
-      User.without_callback :validation, :before, :ensure_uniq_email do # skip unique email validation
-        user.valid? # trigger errors raised in validations
-      end
+      user.skip_ensure_uniq_email = true
+      user.validate!
 
       result = User.password_reset_new_token(email_taken_by.email)
       NotificationFactory::Mailer.notification(
@@ -1016,12 +1024,12 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
   # @response_message 403        Forbidden / Invalid session.
   def create_admin
     if User.count > 2 # system and example users
-      raise Exceptions::UnprocessableEntity, 'Administrator account already created'
+      raise Exceptions::UnprocessableEntity, __('Administrator account already created')
     end
 
     # check if user already exists
     if clean_user_params[:email].blank?
-      raise Exceptions::UnprocessableEntity, 'Attribute \'email\' required!'
+      raise Exceptions::UnprocessableEntity, __('Attribute \'email\' required!')
     end
 
     # check password policy
@@ -1058,5 +1066,16 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
     end
 
     render json: { message: 'ok' }, status: :created
+  end
+
+  def serve_default_image
+    image = 'R0lGODdhMAAwAOMAAMzMzJaWlr6+vqqqqqOjo8XFxbe3t7GxsZycnAAAAAAAAAAAAAAAAAAAAAAAAAAAACwAAAAAMAAwAAAEcxDISau9OOvNu/9gKI5kaZ5oqq5s675wLM90bd94ru98TwuAA+KQAQqJK8EAgBAgMEqmkzUgBIeSwWGZtR5XhSqAULACCoGCJGwlm1MGQrq9RqgB8fm4ZTUgDBIEcRR9fz6HiImKi4yNjo+QkZKTlJWWkBEAOw=='
+
+    send_data(
+      Base64.decode64(image),
+      filename:    'image.gif',
+      type:        'image/gif',
+      disposition: 'inline'
+    )
   end
 end

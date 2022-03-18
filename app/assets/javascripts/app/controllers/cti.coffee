@@ -43,10 +43,10 @@ class App.CTI extends App.Controller
         item: @ringingCalls()
       )
       $('.js-phoneMenuItem').after(localHtml)
-      $('.call-widget').find('.js-newUser').bind('click', (e) =>
+      $('.call-widget').find('.js-newUser').on('click', (e) =>
         @newUser(e)
       )
-      $('.call-widget').find('.js-newTicket').bind('click', (e) =>
+      $('.call-widget').find('.js-newTicket').on('click', (e) =>
         user = undefined
         user_id = $(e.currentTarget).data('user-id')
         if user_id
@@ -151,17 +151,17 @@ class App.CTI extends App.Controller
       item.status_class = ''
       item.disabled = true
       if item.state is 'newCall'
-        item.state_human = 'ringing'
+        item.state_human = __('ringing')
         item.status_class = 'neutral'
       else if item.state is 'answer'
-        item.state_human = 'connected'
+        item.state_human = __('connected')
         item.status_class = 'ok'
       else if item.state is 'hangup'
         item.disabled = false
         item.state_human = switch item.comment
-          when 'cancel', 'noAnswer', 'congestion' then 'not reached'
-          when 'busy' then 'busy'
-          when 'notFound' then 'not exist'
+          when 'cancel', 'noAnswer', 'congestion' then __('not reached')
+          when 'busy' then __('busy')
+          when 'notFound' then __('not exist')
           when 'normalClearing' then ''
           else item.comment
       else
@@ -224,10 +224,10 @@ class App.CTI extends App.Controller
     phone = $(e.currentTarget).data('phone')
     new App.ControllerGenericNew(
       pageData:
-        title:     'Users'
+        title:     __('Users')
         home:      'users'
-        object:    'User'
-        objects:   'Users'
+        object:    __('User')
+        objects:   __('Users')
         navupdate: '#users'
       genericObject: 'User'
       item:
@@ -240,7 +240,7 @@ class App.CTI extends App.Controller
     @navigate "#ticket/create/customer/#{customer.id}"
 
   show: (params) =>
-    @title 'CTI', true
+    @title __('CTI'), true
     @navupdate '#cti'
 
   active: (state) =>
@@ -319,4 +319,4 @@ class CTIRouter extends App.ControllerPermanent
 
 App.Config.set('cti', CTIRouter, 'Routes')
 App.Config.set('CTI', { controller: 'CTI', permission: ['cti.agent'] }, 'permanentTask')
-App.Config.set('CTI', { prio: 1300, parent: '', name: 'Phone', target: '#cti', key: 'CTI', shown: false, permission: ['cti.agent'], class: 'phone' }, 'NavBar')
+App.Config.set('CTI', { prio: 1300, parent: '', name: __('Phone'), target: '#cti', key: 'CTI', shown: false, permission: ['cti.agent'], class: 'phone' }, 'NavBar')

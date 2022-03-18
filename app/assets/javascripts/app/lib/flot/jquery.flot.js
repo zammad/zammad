@@ -38,6 +38,11 @@
         // where series is either just the data as [ [x1, y1], [x2, y2], ... ]
         // or { data: [ [x1, y1], [x2, y2], ... ], label: "some label", ... }
         
+        // Function check
+        function _isFunction(obj){
+          return ((typeof obj) === 'function')
+        }
+
         var series = [],
             options = {
                 // the color theme used for graphs
@@ -778,7 +783,7 @@
                 octx.clearRect(0, 0, canvasWidth, canvasHeight);
                 
                 // then whack any remaining obvious garbage left
-                eventHolder.unbind();
+                eventHolder.off();
                 placeholder.children().not([canvas, overlay]).remove();
             }
 
@@ -789,12 +794,12 @@
         function bindEvents() {
             // bind events
             if (options.grid.hoverable) {
-                eventHolder.mousemove(onMouseMove);
-                eventHolder.mouseleave(onMouseLeave);
+                eventHolder.on('mousemove', onMouseMove);
+                eventHolder.on('mouseleave', onMouseLeave);
             }
 
             if (options.grid.clickable)
-                eventHolder.click(onClick);
+                eventHolder.on('click', onClick);
 
             executeHooks(hooks.bindEvents, [eventHolder]);
         }
@@ -803,9 +808,9 @@
             if (redrawTimeout)
                 clearTimeout(redrawTimeout);
             
-            eventHolder.unbind("mousemove", onMouseMove);
-            eventHolder.unbind("mouseleave", onMouseLeave);
-            eventHolder.unbind("click", onClick);
+            eventHolder.off("mousemove", onMouseMove);
+            eventHolder.off("mouseleave", onMouseLeave);
+            eventHolder.off("click", onClick);
             
             executeHooks(hooks.shutdown, [eventHolder]);
         }
@@ -1362,7 +1367,7 @@
             }
 
             axis.tickGenerator = generator;
-            if ($.isFunction(opts.tickFormatter))
+            if (_isFunction(opts.tickFormatter))
                 axis.tickFormatter = function (v, axis) { return "" + opts.tickFormatter(v, axis); };
             else
                 axis.tickFormatter = formatter;
@@ -1373,7 +1378,7 @@
             if (oticks == null || (typeof oticks == "number" && oticks > 0))
                 ticks = axis.tickGenerator(axis);
             else if (oticks) {
-                if ($.isFunction(oticks))
+                if (_isFunction(oticks))
                     // generate the ticks
                     ticks = oticks({ min: axis.min, max: axis.max });
                 else
@@ -1485,7 +1490,7 @@
             // draw markings
             var markings = options.grid.markings;
             if (markings) {
-                if ($.isFunction(markings)) {
+                if (_isFunction(markings)) {
                     var axes = plot.getAxes();
                     // xmin etc. is backwards compatibility, to be
                     // removed in the future

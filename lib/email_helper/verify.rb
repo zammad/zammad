@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class EmailHelper
   class Verify
@@ -58,7 +58,7 @@ or
     def self.email(params)
 
       # send verify email
-      subject = params[:subject].presence || "##{rand(99_999_999_999)}"
+      subject = params[:subject].presence || "##{SecureRandom.hex(10)}"
       result = EmailHelper::Probe.outbound(params[:outbound], params[:sender], subject)
       if result[:result] != 'ok'
         result[:source] = 'outbound'
@@ -105,7 +105,7 @@ or
 
       {
         result:  'invalid',
-        message: 'Verification Email not found in mailbox.',
+        message: __('Verification Email not found in mailbox.'),
         subject: subject,
       }
     end

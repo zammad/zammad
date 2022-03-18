@@ -54,7 +54,8 @@ class App.Notify extends App.Controller
     if App.Session.get() isnt undefined && window.Notification
       window.Notification.requestPermission()
 
-    $(window).focus(
+    $(window).on(
+      'focus',
       =>
         for counter, notification of @desktopNotify
           notification.close()

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 module KnowledgeBaseIconHelper
   def icon_for_object(object, iconset)
@@ -9,6 +9,8 @@ module KnowledgeBaseIconHelper
       icon 'knowledge-base-answer'
     when KnowledgeBase
       icon 'knowledge-base'
+    when Array
+      icon 'hashtag' # object[0] override while tag icon is available
     end
   end
 

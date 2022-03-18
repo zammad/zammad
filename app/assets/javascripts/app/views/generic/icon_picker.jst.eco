@@ -6,7 +6,7 @@
   <%- @Icon('arrow-down', 'dropdown-arrow') %>
 </div>
 <div class="dropdown-menu dropdown-menu-left js-dropdown">
-  <input type="search" class="dropdown-filter js-filter-icons" placeholder="<%- @T('Search...') %>">
+  <input type="search" class="dropdown-filter js-filter-icons" placeholder="<%- @T('Search…') %>">
   <ul class="js-iconGrid dropdown-grid" role="menu"></ul>
   <div class="dropdown-filter-placeholder">
     <span class="js-noMatch">¯\_(ツ)_/¯</span>

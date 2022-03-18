@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Calendar < ApplicationModel
   include ChecksClientNotification
@@ -93,9 +93,9 @@ returns
     data = YAML.load_file(Rails.root.join('config/holiday_calendars.yml'))
     url  = data['url']
 
-    data['countries'].map do |country, domain|
+    data['countries'].to_h do |country, domain|
       [format(url, domain: domain), country]
-    end.to_h
+    end
   end
 
 =begin
@@ -235,8 +235,8 @@ returns
       if event.rrule
 
         # loop till days
-        interval_frame_start = Date.parse("#{Time.zone.now - 1.year}-01-01")
-        interval_frame_end   = Date.parse("#{Time.zone.now + 3.years}-12-31")
+        interval_frame_start = Date.parse("#{1.year.ago}-01-01")
+        interval_frame_end   = Date.parse("#{3.years.from_now}-12-31")
         occurrences          = event.occurrences_between(interval_frame_start, interval_frame_end)
         if occurrences.present?
           occurrences.each do |occurrence|
@@ -247,8 +247,8 @@ returns
           end
         end
       end
-      next if event.dtstart < Time.zone.now - 1.year
-      next if event.dtstart > Time.zone.now + 3.years
+      next if event.dtstart < 1.year.ago
+      next if event.dtstart > 3.years.from_now
 
       result = Calendar.day_and_comment_by_event(event, event.dtstart)
       next if !result
@@ -373,18 +373,14 @@ returns
     end
 
     # check if sla's are refer to an existing calendar
-    default_calendar = Calendar.find_by(default: true)
-    Sla.find_each do |sla|
-      if !sla.calendar_id
-        sla.calendar_id = default_calendar.id
-        sla.save!
-        next
-      end
-      if !Calendar.exists?(id: sla.calendar_id)
+    if destroyed?
+      default_calendar = Calendar.find_by(default: true)
+      Sla.where(calendar_id: id).find_each do |sla|
         sla.calendar_id = default_calendar.id
         sla.save!
       end
     end
+
     true
   end
 
@@ -419,11 +415,11 @@ returns
     hours = business_hours_to_hash
 
     if hours.blank?
-      errors.add :base, 'No configured business hours found!'
+      errors.add :base, __('No configured business hours found!')
       return
     end
 
-    #raise Exceptions::UnprocessableEntity, 'No configured business hours found!' if hours.blank?
+    # raise Exceptions::UnprocessableEntity, 'No configured business hours found!' if hours.blank?
 
     # validate if business hours are usable by execute a try calculation
     begin

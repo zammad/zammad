@@ -81,10 +81,10 @@ class App.IconPicker extends Spine.Controller
 
   # propergate focus to our visible input
   onShadowFocus: ->
-    @input.focus()
+    @input.trigger('focus')
 
   onPickerOpen: ->
-    @filter.focus()
+    @filter.trigger('focus')
     @isOpen = true
 
   onPickerClose: ->

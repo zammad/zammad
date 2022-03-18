@@ -36,7 +36,7 @@ class App.UiElement.richtext.additions.RichTextToolPopupVideo extends App.UiElem
 
     if !markup
       new App.ControllerErrorModal(
-        message: 'Invalid video URL'
+        message: __('Invalid video URL')
       )
 
       return

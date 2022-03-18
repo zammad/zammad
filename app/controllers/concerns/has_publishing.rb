@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 module HasPublishing
   extend ActiveSupport::Concern
@@ -18,8 +18,7 @@ module HasPublishing
     params_for_update = params
       .permit(:id, :internal_at, :published_at, :archived_at)
       .to_h
-      .map { |k, v| [k.to_sym, v == '--now--' ? Time.zone.now : v] }
-      .to_h
+      .to_h { |k, v| [k.to_sym, v == '--now--' ? Time.zone.now : v] }
 
     model_update_render(klass, params_for_update)
   end

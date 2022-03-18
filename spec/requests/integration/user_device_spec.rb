@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -138,7 +138,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true do
       user_device_last = UserDevice.last
       expect(user_device_first.updated_at.to_s).to eq(user_device_last.updated_at.to_s)
 
-      ENV['USER_DEVICE_UPDATED_AT'] = (Time.zone.now - 4.hours).to_s
+      ENV['USER_DEVICE_UPDATED_AT'] = 4.hours.ago.to_s
       params = {}
       get '/api/v1/users', params: params, as: :json
       expect(response).to have_http_status(:ok)
@@ -166,7 +166,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true do
 
       ENV['TEST_REMOTE_IP'] = '195.65.29.254' # ch
 
-      #reset_notification_checks
+      # reset_notification_checks
 
       params = {}
       get '/api/v1/users', params: params, as: :json
@@ -393,7 +393,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true do
       expect(user_device_first.id).to eq(user_device_last.id)
       expect(user_device_first.updated_at.to_s).to eq(user_device_last.updated_at.to_s)
 
-      user_device_last.updated_at = Time.zone.now - 4.hours
+      user_device_last.updated_at = 4.hours.ago
       user_device_last.save!
 
       params = {}
@@ -567,7 +567,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true do
 
       expect(UserDevice.where(user_id: agent.id).count).to eq(0)
 
-      ENV['USER_DEVICE_UPDATED_AT'] = (Time.zone.now - 4.hours).to_s
+      ENV['USER_DEVICE_UPDATED_AT'] = 4.hours.ago.to_s
       params = {}
       get '/api/v1/users', params: params, as: :json
       expect(response).to have_http_status(:ok)

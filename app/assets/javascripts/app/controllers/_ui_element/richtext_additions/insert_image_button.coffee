@@ -1,14 +1,14 @@
 # coffeelint: disable=camel_case_classes
 class App.UiElement.richtext.toolButtons.insert_image extends App.UiElement.richtext.additions.RichTextToolButton
   @icon: 'web'
-  @text: 'Image'
+  @text: __('Image')
   @klass: -> App.UiElement.richtext.additions.RichTextToolPopupImage
   @initializeAttributes:
     model:
       configure_attributes: [
         {
           name: 'link'
-          display: 'Image'
+          display: __('Image')
           tag: 'input'
           type: 'file'
         }

@@ -2076,7 +2076,7 @@ qq.extend(qq.UploadHandlerXhr.prototype, {
                 xformed[prop] = {};
                 transformOptions(val, xformed[prop]);
             }
-            else if ($.isArray(val)) {
+            else if (Array.isArray(val)) {
                 arrayVals = [];
                 $.each(val, function(idx, arrayVal) {
                     if (arrayVal instanceof $) {

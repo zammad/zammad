@@ -3,9 +3,9 @@ class App.KnowledgeBaseAnswerTranslation extends App.Model
   @extend Spine.Model.Ajax
   @extend App.KnowledgeBaseTranslationable
   @configure_attributes = [
-    { name: 'title',      display: 'Name',       tag: 'input',     type: 'text', limit: 300, null: false, info: true },
-    { name: 'created_at', display: 'Created at', tag: 'datetime',  readonly: 1,  info: false },
-    { name: 'updated_at', display: 'Updated at', tag: 'datetime',  readonly: 1,  info: false },
+    { name: 'title',      display: __('Name'),       tag: 'input',     type: 'text', limit: 300, null: false, info: true },
+    { name: 'created_at', display: __('Created at'), tag: 'datetime',  readonly: 1,  info: false },
+    { name: 'updated_at', display: __('Updated at'), tag: 'datetime',  readonly: 1,  info: false },
   ]
 
   url: ->
@@ -48,7 +48,7 @@ class App.KnowledgeBaseAnswerTranslation extends App.Model
 
         App.Event.trigger 'notify', {
           type: 'error'
-          msg: xhr.responseJSON?.error || 'Unable to load'
+          msg: xhr.responseJSON?.error || __('Loading failed.')
         }
     )
 
@@ -68,7 +68,7 @@ class App.KnowledgeBaseAnswerTranslation extends App.Model
     'title', 'updated_at'
   ]
 
-  @display_name = 'Knowledge Base Answer'
+  @display_name = __('Knowledge Base Answer')
 
   linked_tickets: ->
     @linked_references
@@ -80,7 +80,7 @@ class App.KnowledgeBaseAnswerTranslationContent extends App.Model
   @extend Spine.Model.Ajax
   @url: @apiPath + '/knowledge_base/translation/content'
   @configure_attributes = [
-      { name: 'body', display: 'Body', tag: 'input' },
+      { name: 'body', display: __('Body'), tag: 'input' },
     ]
 
   attributes: ->
@@ -101,7 +101,7 @@ class App.KnowledgeBaseAnswerTranslationContent extends App.Model
   bodyWithPublicURLs: ->
     parsed = $("<div>#{@body}</div>")
 
-    for linkDom in parsed.find('a').andSelf('a').toArray()
+    for linkDom in parsed.find('a').addBack('a').toArray()
       switch $(linkDom).attr('data-target-type')
         when 'knowledge-base-answer'
           if object = App.KnowledgeBaseAnswerTranslation.find $(linkDom).attr('data-target-id')

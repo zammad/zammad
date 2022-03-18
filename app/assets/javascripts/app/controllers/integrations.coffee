@@ -1,6 +1,6 @@
 class Integrations extends App.ControllerSubContent
   requiredPermission: 'admin.integration'
-  header: 'Integrations'
+  header: __('Integrations')
   constructor: ->
     super
 
@@ -48,7 +48,7 @@ class Integrations extends App.ControllerSubContent
             integrations.push value
     integrations = _.sortBy(integrations, (item) -> return item.name)
     @html App.view('integration/index')(
-      head:         'Integrations'
+      head:         __('Integrations')
       integrations: integrations
     )
 
@@ -64,4 +64,4 @@ class Integrations extends App.ControllerSubContent
     if @subscribeId
       App.Setting.unsubscribe(@subscribeId)
 
-App.Config.set('Integration', { prio: 1000, name: 'Integrations', parent: '#system', target: '#system/integration', controller: Integrations, permission: ['admin.integration'] }, 'NavBarAdmin')
+App.Config.set('Integration', { prio: 1000, name: __('Integrations'), parent: '#system', target: '#system/integration', controller: Integrations, permission: ['admin.integration'] }, 'NavBarAdmin')

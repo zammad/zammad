@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Channel < ApplicationModel
   include Channel::Assets
@@ -164,7 +164,7 @@ stream all accounts
 
         local_delay_before_reconnect = delay_before_reconnect
         if channel.status_in == 'error'
-          local_delay_before_reconnect = local_delay_before_reconnect * 2
+          local_delay_before_reconnect *= 2
         end
         if @@channel_stream[channel_id].blank? && @@channel_stream_started_till_at[channel_id].present?
           wait_in_seconds = @@channel_stream_started_till_at[channel_id] - (Time.zone.now - local_delay_before_reconnect.seconds)
@@ -174,7 +174,7 @@ stream all accounts
           end
         end
 
-        #logger.info "thread stream for channel (#{channel.id}) already running" if @@channel_stream[channel_id].present?
+        # logger.info "thread stream for channel (#{channel.id}) already running" if @@channel_stream[channel_id].present?
         next if @@channel_stream[channel_id].present?
 
         @@channel_stream[channel_id] = {

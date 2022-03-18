@@ -19,6 +19,12 @@
   </div>
   <div class="controls js-subject"><input type="text" name="<%= @name %>::subject" value="<%= @meta.subject %>" style="width: 100%;" placeholder="<%- @T('Subject') %>" class="form-control"></div>
 </div>
+<div class="form-group">
+  <div class="formGroup-label">
+    <label><%- @T('Include attachments of the article?') %></label>
+  </div>
+  <div class="js-include_attachments"></div>
+</div>
 <% end %>
 <div class="form-group">
   <div class="formGroup-label">

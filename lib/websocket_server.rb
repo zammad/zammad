@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class WebsocketServer
 
@@ -10,7 +10,7 @@ class WebsocketServer
 
     Rails.configuration.interface = 'websocket'
     EventMachine.run do
-      EventMachine::WebSocket.start( host: @options[:b], port: @options[:p], secure: @options[:s], tls_options: @options[:tls_options] ) do |ws|
+      EventMachine::WebSocket.start(host: @options[:b], port: @options[:p], secure: @options[:s], tls_options: @options[:tls_options]) do |ws|
 
         # register client connection
         ws.onopen do |handshake|
@@ -52,7 +52,7 @@ class WebsocketServer
     headers = handshake.headers
     client_id = websocket.object_id.to_s
     log 'info', 'Client connected.', client_id
-    Sessions.create( client_id, {}, { type: 'websocket' } )
+    Sessions.create(client_id, {}, { type: 'websocket' })
 
     return if @clients.include? client_id
 
@@ -114,6 +114,8 @@ class WebsocketServer
     else
       log 'error', "unknown message '#{data.inspect}'", client_id
     end
+  ensure
+    ActiveSupport::CurrentAttributes.clear_all
   end
 
   def self.websocket_send(client_id, data)
@@ -138,7 +140,7 @@ class WebsocketServer
     # close unused web socket sessions
     @clients.each do |client_id, client|
 
-      next if ( client[:last_ping].to_i + idle_time_in_sec ) >= Time.now.utc.to_i
+      next if (client[:last_ping].to_i + idle_time_in_sec) >= Time.now.utc.to_i
 
       log 'info', 'closing idle websocket connection', client_id
 
@@ -163,7 +165,7 @@ class WebsocketServer
   def self.send_to_client
     return if @clients.size.zero?
 
-    #log 'debug', 'checking for data to send...'
+    # log 'debug', 'checking for data to send...'
     @clients.each do |client_id, client|
       next if client[:disconnect]
 
@@ -199,7 +201,7 @@ class WebsocketServer
     client_list.each_value do |client|
       next if client[:meta][:type] == 'websocket'
 
-      clients = clients + 1
+      clients += 1
     end
     log 'info', "Status: ajax clients: #{clients}"
     client_list.each do |client_id, client|
@@ -213,6 +215,6 @@ class WebsocketServer
     return if !@options[:v] && level == 'debug'
 
     puts "#{Time.now.utc.iso8601}:client(#{client_id}) #{data}" # rubocop:disable Rails/Output
-    #puts "#{Time.now.utc.iso8601}:#{ level }:client(#{ client_id }) #{ data }"
+    # puts "#{Time.now.utc.iso8601}:#{ level }:client(#{ client_id }) #{ data }"
   end
 end

@@ -4,6 +4,9 @@ class App.TicketZoomSidebar extends App.ControllerObserver
     customer_id: true
     organization_id: true
 
+  get: (key) ->
+    return @sidebarBackends[key]
+
   reload: (args) =>
     for key, backend of @sidebarBackends
       if backend && backend.reload

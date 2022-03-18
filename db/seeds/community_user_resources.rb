@@ -1,8 +1,8 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 org_community = Organization.create_if_not_exists(
   id:   1,
-  name: 'Zammad Foundation',
+  name: __('Zammad Foundation'),
 )
 user_community = User.create_or_update(
   id:              2,
@@ -22,7 +22,7 @@ if Ticket.count.zero?
   ticket = Ticket.create!(
     group_id:    Group.find_by(name: 'Users').id,
     customer_id: User.find_by(login: 'nicole.braun@zammad.org').id,
-    title:       'Welcome to Zammad!',
+    title:       __('Welcome to Zammad!'),
   )
   Ticket::Article.create!(
     ticket_id: ticket.id,

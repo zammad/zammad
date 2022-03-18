@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 # This file defines custom Capybara selectors for DRYed specs.
 
@@ -52,4 +52,20 @@ end
 
 Capybara.add_selector(:task_with) do
   css { |task_key| ".tasks .task[data-key='#{task_key}']" }
+end
+
+Capybara.add_selector(:draft_sidebar_button) do
+  css { '.tabsSidebar-tab[data-tab=shared_draft]' }
+end
+
+Capybara.add_selector(:draft_sidebar) do
+  css { '.shared-drafts-manage' }
+end
+
+Capybara.add_selector(:draft_share_button) do
+  css { '.attributeBar-draft' }
+end
+
+Capybara.add_selector(:draft_save_button) do
+  css { '.js-dropdownActionSaveDraft' }
 end

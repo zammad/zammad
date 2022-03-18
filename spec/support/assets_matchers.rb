@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 RSpec::Matchers.define :include_assets_of do
   match do |actual|
@@ -54,7 +54,9 @@ RSpec::Matchers.define :include_assets_of do
   #
   # @return [Hash, nil]
   def find_assets_of(object, actual)
-    actual.dig(object.class.name.gsub(%r{::}, ''), object.id.to_s)
+    actual
+      .deep_stringify_keys
+      .dig(object.class.name.gsub(%r{::}, ''), object.id.to_s)
   end
 end
 

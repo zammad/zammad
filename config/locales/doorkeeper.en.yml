@@ -92,7 +92,7 @@ en:
           unknown: 'The request is missing a required parameter, includes an unsupported parameter value, or is otherwise malformed.'
           missing_param: 'Missing required parameter: %{value}.'
           not_support_pkce: 'Invalid code_verifier parameter. Server does not support pkce.'
-          request_not_authorized: 'Request need to be authorized. Required parameter for authorizing request is missing or invalid.'
+          request_not_authorized: 'Request needs to be authorized. Required parameter for authorizing request is missing or invalid.'
         invalid_redirect_uri: "The requested redirect uri is malformed or doesn't match client redirect URI."
         unauthorized_client: 'The client is not authorized to perform this request using this method.'
         access_denied: 'The resource owner or authorization server denied the request.'
@@ -115,11 +115,11 @@ en:
         unsupported_grant_type: 'The authorization grant type is not supported by the authorization server.'
 
         invalid_token:
-          revoked: "The access token was revoked"
-          expired: "The access token expired"
-          unknown: "The access token is invalid"
+          revoked: 'The access token was revoked'
+          expired: 'The access token expired'
+          unknown: 'The access token is invalid'
         revoke:
-          unauthorized: "You are not authorized to revoke this token"
+          unauthorized: 'You are not authorized to revoke this token'
 
     flash:
       applications:

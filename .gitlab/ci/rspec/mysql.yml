@@ -1,11 +1,31 @@
-rspec:mysql:
+rspec:mysql:1:
   stage: test
+  variables:
+    RSPEC_EXAMPLE_MATCHES: $RSPEC_EXAMPLE_SLICE_1_OF_4
   extends:
     - .services_mysql_redis_memcached
     - .template_rspec
 
-rspec:mysql:db_reset:
+rspec:mysql:2:
   stage: test
+  variables:
+    RSPEC_EXAMPLE_MATCHES: $RSPEC_EXAMPLE_SLICE_2_OF_4
   extends:
     - .services_mysql_redis_memcached
-    - .template_rspec_db_reset
+    - .template_rspec
+
+rspec:mysql:3:
+  stage: test
+  variables:
+    RSPEC_EXAMPLE_MATCHES: $RSPEC_EXAMPLE_SLICE_3_OF_4
+  extends:
+    - .services_mysql_redis_memcached
+    - .template_rspec
+
+rspec:mysql:4:
+  stage: test
+  variables:
+    RSPEC_EXAMPLE_MATCHES: $RSPEC_EXAMPLE_SLICE_4_OF_4
+  extends:
+    - .services_mysql_redis_memcached
+    - .template_rspec

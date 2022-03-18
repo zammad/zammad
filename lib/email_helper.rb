@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class EmailHelper
 
@@ -27,22 +27,22 @@ returns
     if Setting.get('system_online_service')
       return {
         inbound:  {
-          imap: 'IMAP',
-          pop3: 'POP3',
+          imap: __('IMAP'),
+          pop3: __('POP3'),
         },
         outbound: {
-          smtp: 'SMTP - configure your own outgoing SMTP settings',
+          smtp: __('SMTP - configure your own outgoing SMTP settings'),
         },
       }
     end
     {
       inbound:  {
-        imap: 'IMAP',
-        pop3: 'POP3',
+        imap: __('IMAP'),
+        pop3: __('POP3'),
       },
       outbound: {
-        smtp:     'SMTP - configure your own outgoing SMTP settings',
-        sendmail: 'Local MTA (Sendmail/Postfix/Exim/...) - use server setup',
+        smtp:     __('SMTP - configure your own outgoing SMTP settings'),
+        sendmail: __('Local MTA (Sendmail/Postfix/Exim/…) - use server setup'),
       },
     }
   end

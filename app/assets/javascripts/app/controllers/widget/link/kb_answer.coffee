@@ -50,7 +50,7 @@ class App.WidgetLinkKbAnswer extends App.WidgetLink
       attribute:
         id:          'link_kb_answer'
         name:        'input'
-        placeholder: App.i18n.translateInline('Search...')
+        placeholder: App.i18n.translateInline('Search…')
         limit:       40
         object:      'KnowledgeBaseAnswerTranslation'
         ajax:        true
@@ -74,7 +74,7 @@ class App.WidgetLinkKbAnswer extends App.WidgetLink
     @inputField.attr('disabled', false).val('')
 
     @setInputVisible(true)
-    @inputField.focus()
+    @inputField.trigger('focus')
 
   setInputVisible: (setInputVisible) ->
     @searchableSelect.toggleClass('hidden', !setInputVisible)

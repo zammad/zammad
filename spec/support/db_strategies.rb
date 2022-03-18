@@ -1,20 +1,31 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 RSpec.configure do |config|
 
   config.around(:each, db_strategy: :reset) do |example|
-    if ActiveRecord::Base.connection.instance_values['config'][:adapter] != 'postgresql'
+    if MysqlStrategy.db?
       self.use_transactional_tests = false
     end
     example.run
-    if ActiveRecord::Base.connection.instance_values['config'][:adapter] == 'postgresql'
+    if MysqlStrategy.db?
+      MysqlStrategy.reset
+    else
       Models.all.each_key do |model|
         model.connection.schema_cache.clear!
         model.reset_column_information
       end
-    else
-      Rake::Task['zammad:db:reset'].reenable
-      Rake::Task['zammad:db:reset'].invoke
     end
   end
+
+  config.filter_run_excluding db_adapter: lambda { |adapter|
+    adapter_config = ActiveRecord::Base.connection_config[:adapter]
+    case adapter
+    when :postgresql
+      adapter_config != 'postgresql'
+    when :mysql
+      adapter_config != 'mysql2'
+    else
+      false
+    end
+  }
 end

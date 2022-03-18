@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -18,18 +18,18 @@ RSpec.describe 'System setup process', type: :system, set_up: false, authenticat
 
     visit '/'
 
-    expect(page).to have_css('.setup.wizard', text: 'Setup new System')
+    expect(page).to have_css('.setup.wizard', text: 'Set up a new system')
 
     # choose setup (over migration)
-    click_on('Setup new System')
+    click_on('Set up a new system')
 
     # admin user form
     expect(page).to have_css('.js-admin h2', text: 'Administrator Account')
 
     within('.js-admin') do
-      fill_in 'firstname',        with: 'Test Master'
+      fill_in 'firstname',        with: 'Test Admin'
       fill_in 'lastname',         with: 'Agent'
-      fill_in 'email',            with: 'master@example.com'
+      fill_in 'email',            with: 'admin@example.com'
       fill_in 'password',         with: 'TEst1234äöüß'
       fill_in 'password_confirm', with: 'TEst1234äöüß'
 
@@ -44,7 +44,7 @@ RSpec.describe 'System setup process', type: :system, set_up: false, authenticat
       # fill in wrong URL
       fill_in 'url', with: 'some host'
       click_on('Next')
-      expect(page).to have_css('.alert', text: 'An URL looks like')
+      expect(page).to have_css('.alert', text: 'A URL looks like')
 
       # fill in valild/current URL
       fill_in 'url', with: app_host
@@ -70,7 +70,7 @@ RSpec.describe 'System setup process', type: :system, set_up: false, authenticat
     end
 
     # wait for verification process to start
-    expect(page).to have_css('body', text: 'Verify sending and receiving', wait: 20)
+    expect(page).to have_css('body', text: 'Verify sending and receiving')
 
     # wait for verification process to finish
     expect(page).to have_css('.js-agent h2', text: 'Invite Colleagues', wait: 2.minutes)
@@ -95,7 +95,7 @@ RSpec.describe 'System setup process', type: :system, set_up: false, authenticat
     # expect Dashboard of a fresh system
     expect(page).to have_css('body', text: 'My Stats')
     expect_current_route 'clues'
-    find(:clues_close, wait: 4).in_fixed_position.click
+    find(:clues_close).in_fixed_position.click
 
     # verify organization and fqdn
     click(:manage)
@@ -114,12 +114,12 @@ RSpec.describe 'System setup process', type: :system, set_up: false, authenticat
   it 'Shows an error message if too weak password is filled in' do
     visit '/'
 
-    click_on('Setup new System')
+    click_on('Set up a new system')
 
     within('.js-admin') do
-      fill_in 'firstname',        with: 'Test Master'
+      fill_in 'firstname',        with: 'Test Admin'
       fill_in 'lastname',         with: 'Agent'
-      fill_in 'email',            with: 'master@example.com'
+      fill_in 'email',            with: 'admin@example.com'
       fill_in 'password',         with: 'asd'
       fill_in 'password_confirm', with: 'asd'
 

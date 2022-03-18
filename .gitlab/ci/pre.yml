@@ -6,15 +6,28 @@
     - .rules_singletest
   before_script:
     - source /etc/profile.d/rvm.sh # ensure RVM is loaded
-    - source /opt/rh/rh-nodejs12/enable # ensure Node.js is available
+    - source /opt/rh/rh-nodejs*/enable # ensure Node.js is available
 
-rubocop:
-  <<: *template_pre
-  script:
+.template_pre_rails: &template_pre_rails
+  stage: pre
+  extends:
+    - .tags_docker
+    - .rules_singletest
+    - .services_postgresql
+  before_script:
+    - source /etc/profile.d/rvm.sh # ensure RVM is loaded
+    - source /opt/rh/rh-nodejs*/enable # ensure Node.js is available
+    - echo -e "\\e[0Ksection_start:`date +%s`:bundle_install[collapsed=true]\\r\\e[0Kbundle install"
     - bundle install -j $(nproc) --path vendor
-    - bundle exec rubocop --parallel
+    - echo -e "\\e[0Ksection_end:`date +%s`:bundle_install\\r\\e[0K"
+    - bundle exec ruby .gitlab/configure_environment.rb
+    - source .gitlab/environment.env
+    - echo -e "\\e[0Ksection_start:`date +%s`:zammad_db_init[collapsed=true]\\r\\e[0Kbundle exec rake zammad:db:init"
+    - bundle exec rake zammad:db:init
+    - echo -e "\\e[0Ksection_end:`date +%s`:zammad_db_init\\r\\e[0K"
 
-shellcheck:
+# Must be a separate job because it uses a custom image.
+"lint: shellcheck":
   <<: *template_pre
   image: koalaman/shellcheck-alpine:stable
   before_script:
@@ -22,37 +35,63 @@ shellcheck:
   script:
     - shellcheck -S warning $(find . -name "*.sh" -o -name "functions" | grep -v "/vendor/")
 
-zeitwerk_check:
-  <<: *template_pre
-  extends:
-    - .tags_docker
-    - .services_postgresql
+"lint: i18n, rails & security":
+  <<: *template_pre_rails
+  artifacts:
+    expire_in: 1 week
+    paths:
+      - tmp/brakeman-report.html
+    when: on_failure
   script:
-    - bundle install -j $(nproc) --path vendor
-    - bundle exec ruby .gitlab/configure_environment.rb
-    - source .gitlab/environment.env
-    - bundle exec rake zammad:db:init
-    - bundle exec rails zeitwerk:check
-
-coffeelint:
-  <<: *template_pre
-  script:
-    - coffeelint app/
-
-bundle-audit:
-  <<: *template_pre
-  script:
+    - echo "Checking .po file syntax..."
+    - for FILE in i18n/*.pot i18n/*.po; do echo "Checking $FILE"; msgfmt -o /dev/null -c $FILE; done
+    - echo "Checking .pot catalog consistency..."
+    - bundle exec rails generate translation_catalog --check
+    - echo "Brakeman security check..."
+    - bundle exec brakeman -o /dev/stdout -o tmp/brakeman-report.html
+    - echo "bundler-audit security check..."
     - gem install bundler-audit
     - bundle-audit update
     - bundle-audit --ignore CVE-2015-9284
+    - echo "Rails zeitwerk:check autoloader check..."
+    - bundle exec rails zeitwerk:check
 
-github:
+"lint: ruby, js & css":
+  <<: *template_pre
+  script:
+    - echo "Coffeelint check..."
+    - coffeelint --rules ./.coffeelint/rules/* app/
+    - echo "Stylelint check..."
+    - yarn install
+    - yarn lint:css
+    - echo "Rubocop check..."
+    - echo -e "\\e[0Ksection_start:`date +%s`:bundle_install[collapsed=true]\\r\\e[0Kbundle install"
+    - bundle install -j $(nproc) --path vendor
+    - echo -e "\\e[0Ksection_end:`date +%s`:bundle_install\\r\\e[0K"
+    - bundle exec rubocop --parallel
+
+# Must be a separate job because it may fail and is only executed for develop.
+"lint: orphaned ruby gems":
+  <<: *template_pre_rails
+  allow_failure: true
+  rules:
+    - if: $CI_MERGE_REQUEST_ID
+      when: never
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+      when: always
+    - when: manual
+  script:
+    - bundle exec rake zammad:ci:bundle:orphaned 5
+
+# Executed on a dedicated runner.
+"push to github":
   <<: *template_pre
   tags:
     - deploy
   before_script:
-    - "" # no RVM present in deploy ENV
+    - '' # no RVM present in deploy ENV
   script:
+    - git fetch --unshallow
     - script/build/sync_repo.sh git@github.com:zammad/zammad.git
 
 global_refresh_envs:
@@ -64,9 +103,9 @@ global_refresh_envs:
   resource_group: global_refresh_envs
   # allow download via the web UI to restore ENVs in case global cache got deleted (see: `.gitlab-ci.yml`)
   artifacts:
-    expire_in: 1 day
+    expire_in: 1 week
     paths:
-    - fresh.env
+      - fresh.env
   rules:
     - if: $CI_MERGE_REQUEST_ID
       when: never

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 module CanCloneAttachments
   extend ActiveSupport::Concern
@@ -64,7 +64,7 @@ returns
       end
       next if already_added == true
 
-      file = Store.add(
+      file = Store.create!(
         object:      object_type,
         o_id:        object_id,
         data:        new_attachment.content,
@@ -75,5 +75,21 @@ returns
     end
 
     new_attachments
+  end
+
+  def attach_upload_cache(form_id, source_object_name: 'UploadCache')
+    attachments_remove_all
+
+    Store
+      .list(object: source_object_name, o_id: form_id)
+      .map do |old_attachment|
+        Store.create!(
+          object:      self.class.name,
+          o_id:        id,
+          data:        old_attachment.content,
+          filename:    old_attachment.filename,
+          preferences: old_attachment.preferences,
+        )
+      end
   end
 end

@@ -5,7 +5,7 @@ class Delete
     return actions if !status.isDeletable
 
     actions.push {
-      name: 'delete'
+      name: __('delete')
       type: 'delete'
       icon: 'trash'
       href: '#'
@@ -57,13 +57,13 @@ class Delete
           ui.log 'errors', details
           ui.notify(
             type:    'error'
-            msg:     App.i18n.translateContent(details.error_human || details.error || 'Unable to delete article!')
+            msg:     App.i18n.translateContent(details.error_human || details.error || __('Article could not be deleted.'))
             timeout: 6000
         )
       )
 
     new App.ControllerConfirm(
-      message: 'Sure?'
+      message: __('Are you sure?')
       callback: callback
       container: ui.el.closest('.content')
     )

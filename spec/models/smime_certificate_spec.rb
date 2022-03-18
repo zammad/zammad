@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -10,7 +10,7 @@ RSpec.describe SMIMECertificate, type: :model do
 
     context 'no certificate present' do
       it 'returns nil' do
-        expect(described_class.for_sender_email_address(lookup_address)).to be nil
+        expect(described_class.for_sender_email_address(lookup_address)).to be_nil
       end
     end
 
@@ -32,7 +32,7 @@ RSpec.describe SMIMECertificate, type: :model do
         end
 
         it 'returns nil' do
-          expect(described_class.for_sender_email_address(lookup_address)).to be nil
+          expect(described_class.for_sender_email_address(lookup_address)).to be_nil
         end
       end
 

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 module Channel::EmailBuild
 
@@ -158,8 +158,10 @@ generate email with S/MIME
       mail['X-Auto-Response-Suppress'] = 'All'
     end
 
+    # rubocop:disable Zammad/DetectTranslatableString
     mail['X-Powered-By'] = 'Zammad - Helpdesk/Support (https://zammad.org/)'
     mail['X-Mailer'] = 'Zammad Mail Service'
+    # rubocop:enable Zammad/DetectTranslatableString
 
     mail
   end

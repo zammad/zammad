@@ -17,9 +17,12 @@
     <% end %>
   </div>
 </div>
-<% if @organization.members: %>
+<% if @organization.member_ids: %>
 <div class="profile-section profile-memberSection">
   <label><%- @T('Members') %></label>
   <div class="userList js-userList"></div>
+  <p class="hidden">
+    <a href="#" class="js-showMoreMembers"><%- @T('show more') %></a>
+  <p>
 </div>
 <% end %>

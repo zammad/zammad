@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class TranslationsController < ApplicationController
   prepend_before_action -> { authentication_check && authorize! }, except: [:lang]
@@ -6,22 +6,6 @@ class TranslationsController < ApplicationController
   # GET /translations/lang/:locale
   def lang
     render json: Translation.lang(params[:locale])
-  end
-
-  # PUT /translations/push
-  def push
-    start = Time.zone.now
-    Translation.push(params[:locale])
-    if start > Time.zone.now - 4.seconds
-      sleep 3
-    end
-    render json: { message: 'ok' }, status: :ok
-  end
-
-  # POST /translations/sync/:locale
-  def sync
-    Translation.load(params[:locale])
-    render json: { message: 'ok' }, status: :ok
   end
 
   # POST /translations/reset

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class ObjectManagerAttributesController < ApplicationController
   prepend_before_action { authentication_check && authorize! }
@@ -29,7 +29,7 @@ class ObjectManagerAttributesController < ApplicationController
     )
     raise Exceptions::UnprocessableEntity, 'already exists' if exists
 
-    add_attribute_using_params(permitted_params.merge(position: 1550), status: :created)
+    add_attribute_using_params(permitted_params, status: :created)
   end
 
   # PUT /object_manager_attributes/1
@@ -98,7 +98,7 @@ class ObjectManagerAttributesController < ApplicationController
       if permitted[:data_option]
 
         if !permitted[:data_option].key?(:default)
-          permitted[:data_option][:default] = if permitted[:data_type].match?(%r{^(input|select|tree_select)$})
+          permitted[:data_option][:default] = if permitted[:data_type].match?(%r{^(input|select|multiselect|tree_select)$})
                                                 ''
                                               end
         end

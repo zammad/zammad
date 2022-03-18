@@ -5,8 +5,8 @@ class App.KnowledgeBaseDeleteAction
 
     if @object instanceof App.KnowledgeBaseCategory and !@object.isEmpty()
       @showCannotDelete(
-        'Cannot delete category',
-        'Delete all child categories and answers, then try again.'
+        __('Cannot delete category'),
+        __('Delete all child categories and answers, then try again.')
       )
 
       return
@@ -18,8 +18,10 @@ class App.KnowledgeBaseDeleteAction
     translation = @object.guaranteedTranslation(kb_locale.id)
 
     @dialog = new App.ControllerConfirm(
-      head:      'Delete'
-      message:   "Are you sure you want to delete \"#{translation?.title}\"?"
+      head:      __('Delete')
+      # ControllerConfirm performs another (unneeded) translateContent which does also escape special characters, so
+      #   use translatePlain here.
+      message:   App.i18n.translatePlain('Do you really want to delete "%s"?', translation?.title)
       callback:  @doDelete
       container: @parentController.el
       onSubmit: ->
@@ -34,7 +36,7 @@ class App.KnowledgeBaseDeleteAction
       contentInline: message
       container:     @parentController.el
       buttonClose:   true
-      buttonSubmit:  'Ok'
+      buttonSubmit:  __('Ok')
       onSubmit: (e) =>
         modal.close()
         @dialog = null
@@ -64,7 +66,7 @@ class App.KnowledgeBaseDeleteAction
 
   deleteFailure: (modal, xhr) ->
     modal.formEnable(modal.el)
-    modal.showAlert xhr.responseJSON?.error || 'Unable to delete.'
+    modal.showAlert xhr.responseJSON?.error || __('Deletion failed.')
 
   # simulate modal's close function
   close: ->

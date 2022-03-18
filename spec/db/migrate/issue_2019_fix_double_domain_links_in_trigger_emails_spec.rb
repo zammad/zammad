@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -8,14 +8,14 @@ RSpec.describe Issue2019FixDoubleDomainLinksInTriggerEmails, type: :db_migration
   # rubocop:disable Lint/InterpolationCheck
   let(:faulty_link) do
     '<a href="https://example.com/#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}">' \
-    'View ticket' \
-    '</a>'
+      'View ticket' \
+      '</a>'
   end
 
   let(:fixed_link) do
     '<a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}">' \
-    'View ticket' \
-    '</a>'
+      'View ticket' \
+      '</a>'
   end
   # rubocop:enable Lint/InterpolationCheck
 

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rake'
 
@@ -10,7 +10,7 @@ module SearchindexBackendHelper
     # Execute in RSpec class context
     base.class_exec do
 
-      after(:each) do
+      after do
         next if ENV['ES_URL'].blank?
 
         Rake::Task['searchindex:drop'].execute
@@ -43,9 +43,9 @@ prepares elasticsearch
     # Setting.set('es_password', 'zammad')
 
     if ENV['ES_INDEX_RAND'].present?
-      rand_id          = ENV.fetch('CI_JOB_ID', "r#{rand(999)}")
+      rand_id          = ENV.fetch('CI_JOB_ID', SecureRandom.uuid)
       test_method_name = self.class.description.gsub(%r{[^\w]}, '_')
-      ENV['ES_INDEX']  = "es_index_#{test_method_name.downcase}_#{rand_id}_#{rand(999_999_999)}"
+      ENV['ES_INDEX']  = "es_index_#{test_method_name.downcase}_#{rand_id.downcase}"
     end
     if ENV['ES_INDEX'].blank?
       raise "Need ES_INDEX - hint ES_INDEX='estest.local_zammad'"

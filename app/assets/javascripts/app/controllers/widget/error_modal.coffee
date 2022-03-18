@@ -1,9 +1,9 @@
 class App.ErrorModal extends App.ControllerModal
   buttonClose: true
   buttonCancel: false
-  buttonSubmit: 'Close'
+  buttonSubmit: __('Close')
   #buttonClass: 'btn--danger'
-  head: 'Error'
+  head: __('Error')
   #small: true
   #shown: true
   showTrySupport: true

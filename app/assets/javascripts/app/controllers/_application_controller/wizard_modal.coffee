@@ -20,7 +20,7 @@ class App.ControllerWizardModal extends App.ControllerFullPage
     @hideAlert(name)
     @$('.setup.wizard').addClass('hide')
     @$(".setup.wizard.#{name}").removeClass('hide')
-    @$(".setup.wizard.#{name} input, .setup.wizard.#{name} select").first().focus()
+    @$(".setup.wizard.#{name} input, .setup.wizard.#{name} select").first().trigger('focus')
 
   showAlert: (screen, message) =>
     @$(".#{screen}").find('.alert').first().removeClass('hide').text(App.i18n.translatePlain(message))

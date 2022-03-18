@@ -1,18 +1,46 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
 RSpec.describe Tag, type: :request do
 
-  describe 'request handling' do
+  describe 'request handling', authenticated_as: :agent do
 
     let(:agent) { create(:agent) }
 
-    context 'tag search' do
-      before do
-        authenticated_as(agent)
+    context 'tag adding' do
+      it 'returns created' do
+        post '/api/v1/tags/add', params: { object: 'Foo', item: 'bar', o_id: 1 }
+
+        expect(response).to have_http_status(:created)
       end
 
+      it 'deletes tag' do
+        post '/api/v1/tags/add', params: { object: 'Foo', item: 'bar', o_id: 1 }
+
+        expect(described_class.tag_list({ object: 'Foo', item: 'bar', o_id: 1 })).to be_present
+      end
+    end
+
+    context 'tag removal', authenticated_as: :agent do
+      before do
+        described_class.tag_add(object: 'Foo', item: 'bar', o_id: 1, created_by_id: 1)
+      end
+
+      it 'returns ok' do
+        delete '/api/v1/tags/remove', params: { object: 'Foo', item: 'bar', o_id: 1 }
+
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'deletes tag' do
+        delete '/api/v1/tags/remove', params: { object: 'Foo', item: 'bar', o_id: 1 }
+
+        expect(described_class.tag_list({ object: 'Foo', item: 'bar', o_id: 1 })).to be_empty
+      end
+    end
+
+    context 'tag search' do
       let!(:tags) do
         [
           Tag::Item.lookup_by_name_and_create('foobar'),
@@ -25,18 +53,18 @@ RSpec.describe Tag, type: :request do
       let(:foobar_tag) { tags.first }
 
       shared_examples 'foobar tag found using' do |search_term:|
-        it "found  1  tag  using search term '#{search_term}'" do
+        it "found 1 tag using search term '#{search_term}'" do
           get '/api/v1/tag_search', params: { term: search_term }
           expect(response).to have_http_status(:ok)
-          expect(json_response).to contain_exactly( 'id' => foobar_tag.id, 'value' => foobar_tag.name )
+          expect(json_response).to contain_exactly('id' => foobar_tag.id, 'value' => foobar_tag.name)
         end
       end
 
       shared_examples 'no tag found using' do |search_term:|
-        it "found  0  tags using search term '#{search_term}'" do
+        it "found 0 tags using search term '#{search_term}'" do
           get '/api/v1/tag_search', params: { term: search_term }
           expect(response).to have_http_status(:ok)
-          expect(json_response).to contain_exactly()
+          expect(json_response).to contain_exactly
         end
       end
 

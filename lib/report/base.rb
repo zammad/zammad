@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Report::Base
 
@@ -242,8 +242,8 @@ class Report::Base
       #          puts 'FR:' + first_response.to_s
       #          puts 'CT:' + ticket.created_at.to_s
       diff = timestamp - ticket.created_at
-      #puts 'DIFF:' + diff.to_s
-      time_total = time_total + diff
+      # puts 'DIFF:' + diff.to_s
+      time_total += diff
       tickets += 1
     end
     if time_total.zero? || tickets.zero?
@@ -275,7 +275,7 @@ class Report::Base
       #          puts 'FR:' + first_response.to_s
       #          puts 'CT:' + ticket.created_at.to_s
       diff = timestamp - ticket.created_at
-      #puts 'DIFF:' + diff.to_s
+      # puts 'DIFF:' + diff.to_s
       if !time_min
         time_min = diff
       end
@@ -313,7 +313,7 @@ class Report::Base
       #          puts 'FR:' + ticket.first_response.to_s
       #          puts 'CT:' + ticket.created_at.to_s
       diff = timestamp - ticket.created_at
-      #puts 'DIFF:' + diff.to_s
+      # puts 'DIFF:' + diff.to_s
       if !time_max
         time_max = diff
       end
@@ -333,7 +333,7 @@ class Report::Base
   end
 
   def self.ticket_condition(ticket_id, condition)
-    ticket = Ticket.lookup( id: ticket_id )
+    ticket = Ticket.lookup(id: ticket_id)
     condition.each do |key, value|
       if ticket[key.to_sym] != value
         return false

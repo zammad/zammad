@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 # Adds certain (missing) meta data when creating email articles.
 module Ticket::Article::AddsMetadataEmail
@@ -45,7 +45,7 @@ module Ticket::Article::AddsMetadataEmail
     # generate message id, force it in production, in test allow to set it for testing reasons
     if !message_id || Rails.env.production?
       fqdn = Setting.get('fqdn')
-      self.message_id = "<#{DateTime.current.to_s(:number)}.#{ticket_id}.#{rand(999_999_999_999)}@#{fqdn}>"
+      self.message_id = "<#{DateTime.current.to_s(:number)}.#{ticket_id}.#{SecureRandom.uuid}@#{fqdn}>"
     end
 
     # generate message_id_md5

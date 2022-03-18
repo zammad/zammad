@@ -6,7 +6,7 @@ class App.KnowledgeBaseAddForm extends App.ControllerModal
     @head = @object.objectActionName()
     super(params)
 
-  buttonSubmit: 'Create'
+  buttonSubmit: __('Create')
 
   content: ->
     kb_locale = @parentController.kb_locale()

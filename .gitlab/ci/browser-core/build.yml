@@ -13,5 +13,7 @@ browser:build:
   variables:
     RAILS_ENV: "production"
   script:
+    - echo -e "\\e[0Ksection_start:`date +%s`:zammad_db_unseeded[collapsed=true]\\r\\e[0Kbundle exec rake zammad:db:unseeded"
     - bundle exec rake zammad:db:unseeded
+    - echo -e "\\e[0Ksection_end:`date +%s`:zammad_db_unseeded\\r\\e[0K"
     - bundle exec rake assets:precompile

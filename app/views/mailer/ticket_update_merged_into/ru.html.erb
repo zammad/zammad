@@ -1,0 +1,11 @@
+Тикет (#{ticket.title}) был слит с другим тикетом
+
+<div>Hi #{recipient.firstname},</div>
+<br>
+<div>
+Тикет (#{ticket.title}) был слит с другим тикетом пользователем "<b>#{current_user.longname}</b>".
+</div>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">#{t('View this in Zammad')}</a>
+</div>

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class TicketOnlineNotificationSeenJob < ApplicationJob
   include HasActiveJobLock
@@ -9,7 +9,7 @@ class TicketOnlineNotificationSeenJob < ApplicationJob
   end
 
   def perform(ticket_id, user_id)
-    user_id = user_id || 1
+    user_id ||= 1
 
     # set all online notifications to seen
     Transaction.execute do

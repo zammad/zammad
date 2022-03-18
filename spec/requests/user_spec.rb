@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -62,6 +62,18 @@ RSpec.describe 'User', type: :request do
         firstname:    'Rest',
         lastname:     'Customer2',
         email:        'rest-customer2@example.com',
+      )
+    end
+
+    let!(:customer_inactive) do
+      create(
+        :customer,
+        organization: organization,
+        login:        'rest-customer_inactive@example.com',
+        firstname:    'Rest',
+        lastname:     'CustomerInactive',
+        email:        'rest-customer_inactive@example.com',
+        active:       false,
       )
     end
 
@@ -224,7 +236,7 @@ RSpec.describe 'User', type: :request do
       get '/api/v1/users/me', params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_truthy
-      expect('rest-admin@example.com').to eq(json_response['email'])
+      expect(json_response['email']).to eq('rest-admin@example.com')
 
       # index
       get '/api/v1/users', params: {}, as: :json
@@ -243,13 +255,13 @@ RSpec.describe 'User', type: :request do
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_truthy
       expect(Hash).to eq(json_response.class)
-      expect('rest-agent@example.com').to eq(json_response['email'])
+      expect(json_response['email']).to eq('rest-agent@example.com')
 
       get "/api/v1/users/#{customer.id}", params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_truthy
       expect(Hash).to eq(json_response.class)
-      expect('rest-customer1@example.com').to eq(json_response['email'])
+      expect(json_response['email']).to eq('rest-customer1@example.com')
 
       # create user with admin role
       role = Role.lookup(name: 'Admin')
@@ -303,7 +315,7 @@ RSpec.describe 'User', type: :request do
       post '/api/v1/users', params: params, as: :json
       expect(response).to have_http_status(:unprocessable_entity)
       expect(json_response).to be_truthy
-      expect(json_response['error']).to eq('Minimum one identifier (login, firstname, lastname, phone or email) for user is required.')
+      expect(json_response['error']).to eq('At least one identifier (firstname, lastname, phone or email) for user is required.')
 
       # invalid email
       params = { firstname: 'newfirstname123', email: 'some_what', note: 'some note' }
@@ -332,7 +344,7 @@ RSpec.describe 'User', type: :request do
       get '/api/v1/users/me', params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_truthy
-      expect('rest-agent@example.com').to eq(json_response['email'])
+      expect(json_response['email']).to eq('rest-agent@example.com')
 
       # index
       get '/api/v1/users', params: {}, as: :json
@@ -363,7 +375,7 @@ RSpec.describe 'User', type: :request do
       expect(json_response.count).to eq(2)
 
       # create user with admin role
-      firstname = "First test#{rand(999_999_999)}"
+      firstname = "First test#{SecureRandom.uuid}"
       role = Role.lookup(name: 'Admin')
       params = { firstname: "Admin#{firstname}", lastname: 'Admin Last', email: 'new_admin_by_agent@example.com', role_ids: [ role.id ] }
       post '/api/v1/users', params: params, as: :json
@@ -442,8 +454,14 @@ RSpec.describe 'User', type: :request do
       expect(json_response[0]['id']).to eq(json_response1['id'])
       expect(json_response[0]['label']).to eq("Customer#{firstname} Customer Last <new_customer_by_agent@example.com>")
       expect(json_response[0]['value']).to eq('new_customer_by_agent@example.com')
+      expect(json_response[0]['inactive']).to be(false)
       expect(json_response[0]['role_ids']).to be_falsey
       expect(json_response[0]['roles']).to be_falsey
+
+      get "/api/v1/users/search?term=#{CGI.escape('CustomerInactive')}", params: {}, as: :json
+      expect(response).to have_http_status(:ok)
+      expect(json_response).to be_a_kind_of(Array)
+      expect(json_response[0]['inactive']).to be(true)
 
       # Regression test for issue #2539 - search pagination broken in users_controller.rb
       # Get the total number of users N, then search with one result per page, so there should N pages with one result each
@@ -494,19 +512,19 @@ RSpec.describe 'User', type: :request do
       get '/api/v1/users/me', params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_truthy
-      expect('rest-customer1@example.com').to eq(json_response['email'])
+      expect(json_response['email']).to eq('rest-customer1@example.com')
 
       # index
       get '/api/v1/users', params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(Array).to eq(json_response.class)
-      expect(1).to eq(json_response.length)
+      expect(json_response.length).to eq(1)
 
       # show/:id
       get "/api/v1/users/#{customer.id}", params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(Hash).to eq(json_response.class)
-      expect('rest-customer1@example.com').to eq(json_response['email'])
+      expect(json_response['email']).to eq('rest-customer1@example.com')
 
       get "/api/v1/users/#{customer2.id}", params: {}, as: :json
       expect(response).to have_http_status(:forbidden)
@@ -536,19 +554,19 @@ RSpec.describe 'User', type: :request do
       get '/api/v1/users/me', params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_truthy
-      expect('rest-customer2@example.com').to eq(json_response['email'])
+      expect(json_response['email']).to eq('rest-customer2@example.com')
 
       # index
       get '/api/v1/users', params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(Array).to eq(json_response.class)
-      expect(1).to eq(json_response.length)
+      expect(json_response.length).to eq(1)
 
       # show/:id
       get "/api/v1/users/#{customer2.id}", params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(Hash).to eq(json_response.class)
-      expect('rest-customer2@example.com').to eq(json_response['email'])
+      expect(json_response['email']).to eq('rest-customer2@example.com')
 
       get "/api/v1/users/#{customer.id}", params: {}, as: :json
       expect(response).to have_http_status(:forbidden)
@@ -879,7 +897,7 @@ RSpec.describe 'User', type: :request do
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
 
-      expect(json_response['try']).to eq(true)
+      expect(json_response['try']).to be(true)
       expect(json_response['records']).to be_empty
       expect(json_response['result']).to eq('failed')
       expect(json_response['errors'].count).to eq(2)
@@ -892,7 +910,7 @@ RSpec.describe 'User', type: :request do
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
 
-      expect(json_response['try']).to eq(true)
+      expect(json_response['try']).to be(true)
       expect(json_response['records'].count).to eq(2)
       expect(json_response['result']).to eq('success')
 
@@ -905,7 +923,7 @@ RSpec.describe 'User', type: :request do
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
 
-      expect(json_response['try']).to eq(false)
+      expect(json_response['try']).to be(false)
       expect(json_response['records'].count).to eq(2)
       expect(json_response['result']).to eq('success')
 
@@ -915,14 +933,14 @@ RSpec.describe 'User', type: :request do
       expect(user1.firstname).to eq('firstname-simple-import1')
       expect(user1.lastname).to eq('lastname-simple-import1')
       expect(user1.email).to eq('user-simple-import1@example.com')
-      expect(user1.active).to eq(true)
+      expect(user1.active).to be(true)
       user2 = User.find_by(login: 'user-simple-import2')
       expect(user2).to be_truthy
       expect(user2.login).to eq('user-simple-import2')
       expect(user2.firstname).to eq('firstname-simple-import2')
       expect(user2.lastname).to eq('lastname-simple-import2')
       expect(user2.email).to eq('user-simple-import2@example.com')
-      expect(user2.active).to eq(false)
+      expect(user2.active).to be(false)
 
       user1.destroy!
       user2.destroy!
@@ -948,7 +966,7 @@ RSpec.describe 'User', type: :request do
     end
 
     it 'does user search sortable' do
-      firstname = "user_search_sortable #{rand(999_999_999)}"
+      firstname = "user_search_sortable #{SecureRandom.uuid}"
 
       user1 = create(
         :customer,
@@ -1150,8 +1168,8 @@ RSpec.describe 'User', type: :request do
     end
 
     let(:successful_params)  { { email: attributes_for(:admin)[:email] } }
-    let(:params_with_role)   { successful_params.merge({ role_ids: [Role.find_by(name: 'Admin').id] } ) }
-    let(:params_with_invite) { successful_params.merge({ invite: true } ) }
+    let(:params_with_role)   { successful_params.merge({ role_ids: [Role.find_by(name: 'Admin').id] }) }
+    let(:params_with_invite) { successful_params.merge({ invite: true }) }
 
     it 'succeeds' do
       make_request successful_params
@@ -1207,7 +1225,7 @@ RSpec.describe 'User', type: :request do
 
     it 'requires at least one identifier' do
       make_request({ web: 'example.com' })
-      expect(json_response['error']).to start_with('Minimum one identifier')
+      expect(json_response['error']).to start_with('At least one identifier')
     end
 
     it 'takes first name as identifier' do
@@ -1403,6 +1421,12 @@ RSpec.describe 'User', type: :request do
         make_request(query: '9U7Z', group_ids: { 999 => 'read' })
         expect(json_response.count).to eq(0)
       end
+
+      it 'does not list user with id 1' do
+        make_request(query: '')
+        not_in_response = json_response.none? { |item| item['id'] == 1 }
+        expect(not_in_response).to be(true)
+      end
     end
 
     describe 'with searchindex', searchindex: true do
@@ -1430,6 +1454,12 @@ RSpec.describe 'User', type: :request do
       it 'does find none' do
         make_request(query: '9U7Z', group_ids: { 999 => 'read' })
         expect(json_response.count).to eq(0)
+      end
+
+      it 'does not list user with id 1' do
+        make_request(query: '')
+        not_in_response = json_response.none? { |item| item['id'] == 1 }
+        expect(not_in_response).to be(true)
       end
     end
   end
@@ -1475,17 +1505,161 @@ RSpec.describe 'User', type: :request do
 
     it 'returns verbose error when full image is missing' do
       make_request(avatar_full: '')
-      expect(json_response).to include('error' => match(%r{Full}).and(match(%r{is invalid})))
+      expect(json_response).to include('error' => match(%r{full}).and(match(%r{is invalid})))
     end
 
     it 'returns verbose error when resized image is missing' do
       make_request(avatar_full: base64)
-      expect(json_response).to include('error' => match(%r{Resized}).and(match(%r{is invalid})))
+      expect(json_response).to include('error' => match(%r{resized}).and(match(%r{is invalid})))
     end
 
     it 'successfully changes avatar' do
       expect { make_request(avatar_full: base64, avatar_resize: base64) }
         .to change { Avatar.list('User', user.id) }
+    end
+
+    context 'with a not allowed mime-type' do
+      let(:base64) { 'data:image/svg+xml;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==' }
+
+      it 'returns verbose error for a not allowed mime-type' do
+        make_request(avatar_full: base64)
+        expect(json_response).to include('error' => 'The MIME type of the full-size image is invalid.')
+      end
+    end
+
+    context 'with a not allowed resized image mime-type' do
+      let(:resized_base64) { 'data:image/svg+xml;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==' }
+
+      it 'returns verbose error for a not allowed mime-type' do
+        make_request(avatar_full: base64, avatar_resize: resized_base64)
+        expect(json_response).to include('error' => 'The MIME type of the resized image is invalid.')
+      end
+    end
+  end
+
+  describe 'GET /api/v1/users/image/:hash', authenticated_as: :user do
+    let(:user) { create(:user) }
+    let(:avatar_mime_type) { 'image/png' }
+    let(:avatar) do
+      file = File.open('test/data/image/1000x1000.png', 'rb')
+      contents = file.read
+      Avatar.add(
+        object:        'User',
+        o_id:          user.id,
+        default:       true,
+        resize:        {
+          content:   contents,
+          mime_type: avatar_mime_type,
+        },
+        source:        'web',
+        deletable:     true,
+        updated_by_id: 1,
+        created_by_id: 1,
+      )
+    end
+    let(:avatar_content) { Avatar.get_by_hash(avatar.store_hash).content }
+
+    before do
+      user.update!(image: avatar.store_hash)
+    end
+
+    def make_request(image_hash, params: {})
+      get "/api/v1/users/image/#{image_hash}", params: params, as: :json
+    end
+
+    it 'returns verbose error when full image is missing' do
+      make_request(avatar.store_hash)
+      expect(response.body).to eq(avatar_content)
+    end
+
+    context 'with a not allowed inline mime-type' do
+      let(:avatar_mime_type) { 'image/svg+xml' }
+
+      it 'returns the default image' do
+        make_request(avatar.store_hash)
+        expect(response.headers['Content-Type']).to include('image/gif')
+      end
+    end
+  end
+
+  describe 'GET /api/v1/users/search, checks usage of the ids parameter', authenticated_as: :agent do
+    let(:agent) { create(:agent) }
+
+    let(:search_agents) { create_list(:agent, 3, firstname: 'Nick') }
+
+    shared_examples 'ids requests' do
+
+      before do
+        post '/api/v1/users/search', params: { query: 'Nick', ids: search_ids, sort_by: ['created_at'], order_by: ['ASC'] }, as: :json
+      end
+
+      shared_examples 'result check' do
+
+        it 'returns only agents matching search parameter ids' do
+          expect(json_response.map { |row| row['id'] }).to eq(search_ids)
+        end
+      end
+
+      context 'when searching for first two agents' do
+        let(:search_ids) { search_agents.first(2).map(&:id) }
+
+        include_examples 'result check'
+      end
+
+      context 'when searching for last two agents' do
+        let(:search_ids) { search_agents.last(2).map(&:id) }
+
+        include_examples 'result check'
+      end
+    end
+
+    context 'with elasticsearch', searchindex: true do
+      include_examples 'ids requests' do
+        before do
+          configure_elasticsearch(required: true, rebuild: true)
+        end
+      end
+    end
+
+    context 'without elasticsearch' do
+      include_examples 'ids requests'
+    end
+  end
+
+  describe 'PUT /api/v1/users/unlock/{id}' do
+    let(:admin) { create(:admin) }
+    let(:agent) { create(:agent) }
+    let(:customer) { create(:customer, login_failed: 2) }
+
+    def make_request(id)
+      put "/api/v1/users/unlock/#{id}", params: {}, as: :json
+    end
+
+    context 'with authenticated admin user', authenticated_as: :admin do
+      it 'returns success' do
+        make_request(customer.id)
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'check that login failed was reseted' do
+        expect { make_request(customer.id) }.to change { customer.reload.login_failed }.from(2).to(0)
+      end
+
+      it 'fail with not existing user id' do
+        make_request(99_999)
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+
+    context 'with authenticated agent user', authenticated_as: :agent do
+      it 'fail without admin permission' do
+        make_request(customer.id)
+        expect(response).to have_http_status(:forbidden)
+      end
+
+      it 'check that login failed was not changed' do
+        expect { make_request(customer.id) }.not_to change { customer.reload.login_failed }
+      end
     end
   end
 end

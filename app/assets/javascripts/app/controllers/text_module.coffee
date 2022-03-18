@@ -1,6 +1,6 @@
 class TextModule extends App.ControllerSubContent
   requiredPermission: 'admin.text_module'
-  header: 'Text modules'
+  header: __('Text modules')
   constructor: ->
     super
 
@@ -17,19 +17,19 @@ class TextModule extends App.ControllerSubContent
         )
       pageData:
         home:      'text_modules'
-        object:    'TextModule'
-        objects:   'Text modules'
+        object:    __('Text module')
+        objects:   __('Text modules')
         pagerAjax: true
         pagerBaseUrl: '#manage/text_modules/'
         pagerSelected: ( @page || 1 )
         pagerPerPage: 150
         navupdate: '#text_modules'
         notes:     [
-          'Text modules are ...'
+          __('Text modules are …')
         ]
         buttons: [
-          { name: 'Import',          'data-type': 'import', class: 'btn' }
-          { name: 'New text module', 'data-type': 'new',    class: 'btn--success' }
+          { name: __('Import'),          'data-type': 'import', class: 'btn' }
+          { name: __('New text module'), 'data-type': 'new',    class: 'btn--success' }
         ]
       container: @el.closest('.content')
     )
@@ -41,4 +41,4 @@ class TextModule extends App.ControllerSubContent
 
     @genericController.paginate( @page || 1 )
 
-App.Config.set('TextModule', { prio: 2300, name: 'Text modules', parent: '#manage', target: '#manage/text_modules', controller: TextModule, permission: ['admin.text_module'] }, 'NavBarAdmin')
+App.Config.set('TextModule', { prio: 2300, name: __('Text modules'), parent: '#manage', target: '#manage/text_modules', controller: TextModule, permission: ['admin.text_module'] }, 'NavBarAdmin')

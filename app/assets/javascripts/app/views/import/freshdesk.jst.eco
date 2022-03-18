@@ -8,7 +8,7 @@
           <%- @T('Enter the Subdomain of your %s system', 'Freshdesk') %>:
         </p>
         <div class="form-group">
-          <label for="freshdesk-subdomain"><%- @T('%s Subdomain', 'Freshdesk') %></label>
+          <label for="freshdesk-subdomain"><%- @T('%s subdomain', 'Freshdesk') %></label>
           <div class="u-positionOrigin">
             <div class="input-group">
               <input type="text" id="freshdesk-subdomain" class="form-control" placeholder="example" name="freshdesk-subdomain" aria-describedby="freshdesk-subdomain-addon">
@@ -36,7 +36,7 @@
           <a class="js-freshdeskUrlApiToken" href="https://support.freshdesk.com/support/solutions/articles/215517-how-to-find-your-api-key" target="_blank"><%- @T('Enter your %s API token gained from your account profile settings.', 'Freshdesk') %></a>
         </p>
         <p>
-          <%- @T('Attention: These will be your login password after the import is completed.') %>
+          <%- @T('Attention: These will be your login and password after the import is completed.') %>
         </p>
         <div class="form-group">
           <label for="freshdesk-api-token"><%- @T('API token') %></label>

@@ -1,8 +1,0 @@
-user_agent:
-  extends:
-    - .template_integration
-  script:
-    - bundle exec rake zammad:db:unseeded
-    - bundle exec rails test test/integration/user_agent_test.rb
-    - export ZAMMAD_PROXY_TEST=true
-    - bundle exec rails test test/integration/user_agent_test.rb

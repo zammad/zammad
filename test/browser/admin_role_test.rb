@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'browser_test_helper'
 
@@ -6,13 +6,13 @@ class AdminRoleTest < TestCase
   def test_role_device
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
-    rand      = rand(99_999_999).to_s
+    rand      = SecureRandom.uuid
     login     = "agent-role-#{rand}"
     firstname = "Role#{rand}"
     lastname  = "Module#{rand}"
@@ -42,14 +42,14 @@ class AdminRoleTest < TestCase
       }
     )
 
-    logout()
+    logout
     # flanky
     login(
       username: email,
       password: password,
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
     click(css: 'a[href="#current_user"]')
     click(css: 'a[href="#profile"]')
     match(
@@ -77,9 +77,9 @@ class AdminRoleTest < TestCase
       value: 'Devices',
     )
 
-    logout()
+    logout
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
@@ -90,13 +90,13 @@ class AdminRoleTest < TestCase
       }
     )
 
-    logout()
+    logout
     login(
       username: email,
       password: password,
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
     click(css: 'a[href="#current_user"]')
     click(css: 'a[href="#profile"]')
     match(
@@ -137,15 +137,15 @@ class AdminRoleTest < TestCase
 
     # check if admin exists
     exists_not(css: '[href="#manage"]')
-    logout()
+    logout
 
     # add admin.user to agent role
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     role_edit(
       data: {
@@ -160,7 +160,7 @@ class AdminRoleTest < TestCase
         },
       }
     )
-    logout()
+    logout
 
     # check if admin exists
     login(
@@ -168,14 +168,14 @@ class AdminRoleTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     # create user
-    random = rand(999_999_999)
-    user_email = "admin.user.#{rand}@example.com"
+    random = SecureRandom.uuid
+    user_email = "admin.user.#{random}@example.com"
     user_create(
       data: {
-        #login:    "some login #{random}",
+        # login:    "some login #{random}",
         firstname: "Admin.User Firstname #{random}",
         lastname:  "Admin.User Lastname #{random}",
         email:     user_email,
@@ -194,13 +194,13 @@ class AdminRoleTest < TestCase
     )
 
     # revoke admin.user
-    logout()
+    logout
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     role_edit(
       data: {
@@ -215,7 +215,7 @@ class AdminRoleTest < TestCase
         },
       }
     )
-    logout()
+    logout
 
     login(
       username: 'agent1@example.com',
@@ -230,15 +230,15 @@ class AdminRoleTest < TestCase
 
   # regression test for issue #2332 - Role-Filter shows inactive Roles
   def test_inactive_roles_do_not_show_in_role_filter
-    name = "some role #{rand(99_999_999)}"
+    name = "some role #{SecureRandom.uuid}"
 
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     role_create(
       data: {

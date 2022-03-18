@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Stats::TicketResponseTime
 
@@ -22,7 +22,7 @@ class Stats::TicketResponseTime
   end
 
   def self.generate(user)
-    items = StatsStore.where('created_at > ? AND created_at < ?', Time.zone.now - 7.days, Time.zone.now).where(key: 'ticket:response_time')
+    items = StatsStore.where('created_at > ? AND created_at < ?', 7.days.ago, Time.zone.now).where(key: 'ticket:response_time')
     total = 0
     count_own = 0
     own = 0
@@ -54,7 +54,7 @@ class Stats::TicketResponseTime
       return result
     end
 
-    in_percent = ( result[:used_for_average].to_f / (result[:total].to_f / 100) ).round(1)
+    in_percent = (result[:used_for_average].to_f / (result[:total].to_f / 100)).round(1)
     result[:state] = if in_percent >= 90
                        'supergood'
                      elsif in_percent >= 65

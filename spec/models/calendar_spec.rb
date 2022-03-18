@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -42,6 +42,19 @@ RSpec.describe Calendar, type: :model do
         it 'sets default: true on earliest-created remaining calendar' do
           expect { described_class.first.destroy }
             .to change { calendar.reload.default }.to(true)
+        end
+
+        context 'when sla has destroyed calendar set' do
+          let(:sla) { create(:sla, calendar: described_class.first) }
+
+          before do
+            sla
+          end
+
+          it 'sets the new default calendar to the sla' do
+            expect { described_class.first.destroy }
+              .to change { sla.reload.calendar }.to(calendar)
+          end
         end
       end
     end
@@ -96,7 +109,7 @@ RSpec.describe Calendar, type: :model do
 
     context 'when called explicitly after creation' do
       it 'writes #public_holidays to the cache (valid for 1 day)' do
-        expect(Cache.read("CalendarIcal::#{calendar.id}")).to be(nil)
+        expect(Cache.read("CalendarIcal::#{calendar.id}")).to be_nil
 
         expect { calendar.sync }
           .to change { Cache.read("CalendarIcal::#{calendar.id}") }
@@ -303,7 +316,7 @@ RSpec.describe Calendar, type: :model do
              })
     end
 
-    let(:sla) { create(:sla, condition: {}, calendar: calendar, first_response_time: 60, update_time: 120, solution_time: nil) }
+    let(:sla) { create(:sla, condition: {}, calendar: calendar, first_response_time: 60, response_time: 120, solution_time: nil) }
 
     before do
       queue_adapter.perform_enqueued_jobs = true
@@ -400,7 +413,7 @@ RSpec.describe Calendar, type: :model do
              calendar:            calendar,
              condition:           {},
              first_response_time: 120,
-             update_time:         180,
+             response_time:       180,
              solution_time:       240)
     end
 

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'test_helper'
 
@@ -52,8 +52,8 @@ class KarmaTest < ActiveSupport::TestCase
       priority:      Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: agent1.id,
       created_by_id: agent1.id,
-      updated_at:    Time.zone.now - 10.hours,
-      created_at:    Time.zone.now - 10.hours,
+      updated_at:    10.hours.ago,
+      created_at:    10.hours.ago,
     )
     Ticket::Article.create!(
       ticket_id:     ticket1.id,
@@ -67,8 +67,8 @@ class KarmaTest < ActiveSupport::TestCase
       type:          Ticket::Article::Type.lookup(name: 'phone'),
       updated_by_id: agent1.id,
       created_by_id: agent1.id,
-      updated_at:    Time.zone.now - 10.hours,
-      created_at:    Time.zone.now - 10.hours,
+      updated_at:    10.hours.ago,
+      created_at:    10.hours.ago,
     )
     assert(ticket1)
 
@@ -90,8 +90,8 @@ class KarmaTest < ActiveSupport::TestCase
 
     ticket1.state = Ticket::State.lookup(name: 'pending reminder')
     ticket1.updated_by_id = agent1.id
-    ticket1.updated_at = Time.zone.now - 9.hours
-    ticket1.created_at = Time.zone.now - 9.hours
+    ticket1.updated_at = 9.hours.ago
+    ticket1.created_at = 9.hours.ago
     ticket1.save!
 
     # execute object transaction
@@ -112,8 +112,8 @@ class KarmaTest < ActiveSupport::TestCase
 
     ticket1.state = Ticket::State.lookup(name: 'pending close')
     ticket1.updated_by_id = agent1.id
-    ticket1.updated_at = Time.zone.now - 9.hours
-    ticket1.created_at = Time.zone.now - 9.hours
+    ticket1.updated_at = 9.hours.ago
+    ticket1.created_at = 9.hours.ago
     ticket1.save!
 
     # execute object transaction
@@ -126,8 +126,8 @@ class KarmaTest < ActiveSupport::TestCase
 
     ticket1.state = Ticket::State.lookup(name: 'closed')
     ticket1.updated_by_id = agent2.id
-    ticket1.updated_at = Time.zone.now - 9.hours
-    ticket1.created_at = Time.zone.now - 9.hours
+    ticket1.updated_at = 9.hours.ago
+    ticket1.created_at = 9.hours.ago
     ticket1.save!
 
     # execute object transaction
@@ -192,8 +192,8 @@ class KarmaTest < ActiveSupport::TestCase
       type:          Ticket::Article::Type.lookup(name: 'phone'),
       updated_by_id: customer1.id,
       created_by_id: customer1.id,
-      updated_at:    Time.zone.now - 8.hours,
-      created_at:    Time.zone.now - 8.hours,
+      updated_at:    8.hours.ago,
+      created_at:    8.hours.ago,
     )
 
     # execute object transaction
@@ -264,8 +264,8 @@ class KarmaTest < ActiveSupport::TestCase
       type:          Ticket::Article::Type.lookup(name: 'phone'),
       updated_by_id: customer1.id,
       created_by_id: customer1.id,
-      updated_at:    Time.zone.now - 7.hours,
-      created_at:    Time.zone.now - 7.hours,
+      updated_at:    7.hours.ago,
+      created_at:    7.hours.ago,
     )
 
     # execute object transaction
@@ -325,7 +325,7 @@ class KarmaTest < ActiveSupport::TestCase
     assert_equal(0, Karma.score_by_user(customer1))
 
     ticket1.tag_add('Tag1', agent1.id)
-    #travel 5.seconds
+    # travel 5.seconds
     ticket1.tag_add('Tag2', agent1.id)
 
     # execute object transaction
@@ -356,8 +356,8 @@ class KarmaTest < ActiveSupport::TestCase
       priority:      Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: agent1.id,
       created_by_id: agent1.id,
-      updated_at:    Time.zone.now - 10.hours,
-      created_at:    Time.zone.now - 10.hours,
+      updated_at:    10.hours.ago,
+      created_at:    10.hours.ago,
     )
     Ticket::Article.create!(
       ticket_id:     ticket2.id,
@@ -371,8 +371,8 @@ class KarmaTest < ActiveSupport::TestCase
       type:          Ticket::Article::Type.lookup(name: 'phone'),
       updated_by_id: agent1.id,
       created_by_id: agent1.id,
-      updated_at:    Time.zone.now - 2.hours,
-      created_at:    Time.zone.now - 2.hours,
+      updated_at:    2.hours.ago,
+      created_at:    2.hours.ago,
     )
     assert(ticket2)
 
@@ -385,7 +385,7 @@ class KarmaTest < ActiveSupport::TestCase
     assert_equal(0, Karma.score_by_user(customer1))
 
     ticket2.state = Ticket::State.lookup(name: 'pending reminder')
-    ticket2.pending_time = Time.zone.now - 1.day
+    ticket2.pending_time = 1.day.ago
     ticket2.save!
 
     Ticket.process_pending
@@ -395,7 +395,7 @@ class KarmaTest < ActiveSupport::TestCase
     assert_equal(0, Karma.score_by_user(customer1))
 
     ticket2.state = Ticket::State.lookup(name: 'pending reminder')
-    ticket2.pending_time = Time.zone.now - 3.days
+    ticket2.pending_time = 3.days.ago
     ticket2.save!
 
     Ticket.process_pending
@@ -465,8 +465,8 @@ class KarmaTest < ActiveSupport::TestCase
     TransactionDispatcher.commit
     Scheduler.worker(true)
 
-    #Scheduler.worker(true)
-    #Ticket::Escalation.rebuild_all
+    # Scheduler.worker(true)
+    # Ticket::Escalation.rebuild_all
     Ticket.process_escalation
 
     assert_equal(10 + 2 + 25 + 4 + 10 - 5 - 5, Karma.score_by_user(agent1))

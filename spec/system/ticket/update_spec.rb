@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -35,7 +35,7 @@ RSpec.describe 'Ticket Update', type: :system do
 
         select('closed', from: 'state_id')
         click('.js-attributeBar .js-submit')
-        expect(page).to have_no_css('.js-submitDropdown .js-submit[disabled]', wait: 10)
+        expect(page).to have_no_css('.js-submitDropdown .js-submit[disabled]')
       end
 
       # the update should have failed and thus the ticket is still in the new state
@@ -45,12 +45,62 @@ RSpec.describe 'Ticket Update', type: :system do
         # update should work now
         find(".edit [name=#{attribute.name}]").select('name 2')
         click('.js-attributeBar .js-submit')
-        expect(page).to have_no_css('.js-submitDropdown .js-submit[disabled]', wait: 10)
+        expect(page).to have_no_css('.js-submitDropdown .js-submit[disabled]')
       end
 
       ticket.reload
       expect(ticket[attribute.name]).to eq('name 2')
       expect(ticket.state.name).to eq('closed')
+    end
+  end
+
+  context 'when updating a ticket date attribute', db_strategy: :reset do
+    let!(:date_attribute) do
+      create_attribute(
+        :object_manager_attribute_date,
+        name:        'example_date',
+        screens:     {
+          create: {
+            'ticket.agent' => {
+              shown: true
+            },
+          },
+          edit:   {
+            'ticket.agent' => {
+              shown: true
+            }
+          },
+          view:   {
+            'ticket.agent' => {
+              shown: true
+            },
+          }
+        },
+        data_option: {
+          'future' => true,
+          'past'   => false,
+          'diff'   => 0,
+          'null'   => true,
+        }
+      )
+    end
+
+    let(:ticket) { create(:ticket, group: group, "#{date_attribute.name}": '2018-02-28') }
+
+    it 'set date attribute to empty' do
+      visit "#ticket/zoom/#{ticket.id}"
+
+      within(:active_content) do
+        check_date_field_value(date_attribute.name, '02/28/2018')
+
+        set_date_field_value(date_attribute.name, '')
+
+        click('.js-attributeBar .js-submit')
+        expect(page).to have_no_css('.js-submitDropdown .js-submit[disabled]')
+
+        ticket.reload
+        expect(ticket[date_attribute.name]).to be_nil
+      end
     end
   end
 
@@ -167,7 +217,7 @@ RSpec.describe 'Ticket Update', type: :system do
         expect(article).to be_present
         expect(article.body).to eq('test body')
         expect(article.subject).to eq('test sub')
-        expect(article.internal).to eq(true)
+        expect(article.internal).to be(true)
       end
     end
   end
@@ -185,21 +235,21 @@ RSpec.describe 'Ticket Update', type: :system do
     it 'tickets history of both tickets should show the merge event' do
       visit "#ticket/zoom/#{origin_ticket.id}"
       within(:active_content) do
-        expect(page).to have_css('.js-actions .dropdown-toggle', wait: 10)
+        expect(page).to have_css('.js-actions .dropdown-toggle')
         click '.js-actions .dropdown-toggle'
         click '.js-actions .dropdown-menu [data-type="ticket-history"]'
 
-        expect(page).to have_css('.modal', wait: 3)
+        expect(page).to have_css('.modal')
         modal = find('.modal')
         expect(modal).to have_content "This ticket was merged into ticket ##{target_ticket.number}"
         expect(modal).to have_link "##{target_ticket.number}", href: "#ticket/zoom/#{target_ticket.id}"
 
         visit "#ticket/zoom/#{target_ticket.id}"
-        expect(page).to have_css('.js-actions .dropdown-toggle', wait: 3)
+        expect(page).to have_css('.js-actions .dropdown-toggle')
         click '.js-actions .dropdown-toggle'
         click '.js-actions .dropdown-menu [data-type="ticket-history"]'
 
-        expect(page).to have_css('.modal', wait: 3)
+        expect(page).to have_css('.modal')
         modal = find('.modal')
         expect(modal).to have_content("Ticket ##{origin_ticket.number} was merged into this ticket")
         expect(modal).to have_link "##{origin_ticket.number}", href: "#ticket/zoom/#{origin_ticket.id}"
@@ -215,7 +265,7 @@ RSpec.describe 'Ticket Update', type: :system do
       it 'shows the target ticket history' do
         visit "#ticket/zoom/#{target_ticket.id}"
         within(:active_content) do
-          expect(page).to have_css('.js-actions .dropdown-toggle', wait: 3)
+          expect(page).to have_css('.js-actions .dropdown-toggle')
           click '.js-actions .dropdown-toggle'
           click '.js-actions .dropdown-menu [data-type="ticket-history"]'
         end
@@ -237,7 +287,7 @@ RSpec.describe 'Ticket Update', type: :system do
       it 'shows the origin history' do
         visit "#ticket/zoom/#{origin_ticket.id}"
         within(:active_content) do
-          expect(page).to have_css('.js-actions .dropdown-toggle', wait: 3)
+          expect(page).to have_css('.js-actions .dropdown-toggle')
           click '.js-actions .dropdown-toggle'
           click '.js-actions .dropdown-menu [data-type="ticket-history"]'
         end
@@ -251,11 +301,38 @@ RSpec.describe 'Ticket Update', type: :system do
     end
   end
 
+  context 'when closing taskbar tab for ticket' do
+    it 'close task bar entry after some changes in ticket update form' do
+      visit "#ticket/zoom/#{ticket.id}"
+
+      within(:active_content) do
+        find('.js-textarea').send_keys('some note')
+      end
+
+      taskbar_tab_close("Ticket-#{ticket.id}")
+    end
+  end
+
   context 'when using text modules' do
     include_examples 'text modules', path: "#ticket/zoom/#{Ticket.first.id}"
   end
 
   context 'when using macros' do
     include_examples 'macros', path: "#ticket/zoom/#{Ticket.first.id}"
+  end
+
+  context 'when group will be changed' do
+    let(:user) { User.find_by(email: 'agent1@example.com') }
+    let(:ticket) { create(:ticket, group: group, owner: user) }
+
+    it 'check that owner resets after group change' do
+      visit "#ticket/zoom/#{ticket.id}"
+
+      expect(page).to have_field('owner_id', with: user.id)
+
+      find('[name=group_id]').select '-'
+
+      expect(page).to have_field('owner_id', with: '')
+    end
   end
 end

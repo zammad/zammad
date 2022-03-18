@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -155,5 +155,33 @@ RSpec.describe Tag, type: :model do
           .to match_array(%w[fooöäüß baröäüß BARöäüß])
       end
     end
+  end
+
+  describe '.tag_references' do
+    context 'with objects with a tag', current_user_id: 1 do
+      before do
+        [object_1, object_2].each do |elem|
+          described_class.tag_add object: elem.class.name, o_id: elem.id, item: tag
+        end
+      end
+
+      let(:object_1) { create(:ticket) }
+      let(:object_2) { create(:knowledge_base_answer) }
+      let(:tag)      { 'foo' }
+
+      it 'returns references' do
+        expect(described_class.tag_references(tag: tag)).to match_array [
+          [object_1.class.name, object_1.id],
+          [object_2.class.name, object_2.id]
+        ]
+      end
+
+      it 'returns references for the given object type' do
+        expect(described_class.tag_references(tag: tag, object: 'Ticket')).to match_array [
+          [object_1.class.name, object_1.id]
+        ]
+      end
+    end
+
   end
 end

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class ChannelsSmsController < ApplicationController
   prepend_before_action -> { authentication_check && authorize! }, except: [:webhook]
@@ -42,7 +42,7 @@ class ChannelsSmsController < ApplicationController
   end
 
   def test
-    raise 'Missing parameter options.adapter' if params[:options][:adapter].blank?
+    raise __('Missing parameter options.adapter') if params[:options][:adapter].blank?
 
     driver = Channel.driver_class(params[:options][:adapter])
     resp   = driver.new.send(params[:options], test_options)
@@ -55,22 +55,24 @@ class ChannelsSmsController < ApplicationController
   def webhook
     raise Exceptions::UnprocessableEntity, 'token param missing' if params['token'].blank?
 
-    channel = nil
-    Channel.where(active: true, area: 'Sms::Account').each do |local_channel|
-      next if local_channel.options[:webhook_token] != params['token']
+    ApplicationHandleInfo.in_context('sms') do
+      channel = nil
+      Channel.where(active: true, area: 'Sms::Account').each do |local_channel|
+        next if local_channel.options[:webhook_token] != params['token']
 
-      channel = local_channel
-    end
-    if !channel
-      render(
-        json:   { message: 'channel not found' },
-        status: :not_found
-      )
-      return
-    end
+        channel = local_channel
+      end
+      if !channel
+        render(
+          json:   { message: 'channel not found' },
+          status: :not_found
+        )
+        return
+      end
 
-    conten_type, content = channel.process(params.permit!.to_h)
-    send_data content, type: conten_type
+      content_type, content = channel.process(params.permit!.to_h)
+      send_data content, type: content_type
+    end
   end
 
   private
@@ -84,12 +86,12 @@ class ChannelsSmsController < ApplicationController
   end
 
   def channel_params
-    raise 'Missing area params' if params[:area].blank?
+    raise __('Missing area params') if params[:area].blank?
     if ['Sms::Notification', 'Sms::Account'].exclude?(params[:area])
       raise "Invalid area '#{params[:area]}'!"
     end
-    raise 'Missing options params' if params[:options].blank?
-    raise 'Missing options.adapter params' if params[:options][:adapter].blank?
+    raise __('Missing options params') if params[:options].blank?
+    raise __('Missing options.adapter params') if params[:options][:adapter].blank?
 
     params
   end
@@ -98,6 +100,8 @@ class ChannelsSmsController < ApplicationController
     list = []
     Dir.glob(Rails.root.join('app/models/channel/driver/sms/*.rb')).each do |path|
       filename = File.basename(path)
+      next if !Channel.driver_class("sms/#{filename}").const_defined?(:NAME)
+
       list.push Channel.driver_class("sms/#{filename}").definition
     end
     list

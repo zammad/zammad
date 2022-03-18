@@ -5,7 +5,7 @@ class SidebarCustomer extends App.Controller
     @item = {
       name: 'customer'
       badgeCallback: @badgeRender
-      sidebarHead: 'Customer'
+      sidebarHead: __('Customer')
       sidebarCallback: @showCustomer
       sidebarActions: []
     }
@@ -13,7 +13,7 @@ class SidebarCustomer extends App.Controller
       customer = App.User.find(@params.customer_id)
       if customer.isAccessibleBy(App.User.current(), 'change')
         @item.sidebarActions.push {
-          title:    'Edit Customer'
+          title:    __('Edit Customer')
           name:     'customer-edit'
           callback: @editCustomer
         }
@@ -68,9 +68,9 @@ class SidebarCustomer extends App.Controller
       genericObject: 'User'
       screen: 'edit'
       pageData:
-        title:   'Users'
-        object:  'User'
-        objects: 'Users'
+        title:   __('Users')
+        object:  __('User')
+        objects: __('Users')
       container: @elSidebar.closest('.content')
     )
 

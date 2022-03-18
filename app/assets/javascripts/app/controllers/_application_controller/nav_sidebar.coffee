@@ -64,10 +64,15 @@ class App.ControllerNavSidbar extends App.Controller
           groupsUnsorted.push item
         else
           match = false
-          for permissionName in item.permission
-            if !match && @permissionCheck(permissionName)
-              match = true
+          if typeof item.permission is 'function'
+            match = item.permission(@)
+            if match
               groupsUnsorted.push item
+          else
+            for permissionName in item.permission
+              if !match && @permissionCheck(permissionName)
+                match = true
+                groupsUnsorted.push item
     _.sortBy(groupsUnsorted, (item) -> return item.prio)
 
   selectedItem: (groups) =>
@@ -83,10 +88,15 @@ class App.ControllerNavSidbar extends App.Controller
               itemsUnsorted.push item
             else
               match = false
-              for permissionName in item.permission
-                if !match && @permissionCheck(permissionName)
-                  match = true
+              if typeof item.permission is 'function'
+                match = item.permission(@)
+                if match
                   itemsUnsorted.push item
+              else
+                for permissionName in item.permission
+                  if !match && @permissionCheck(permissionName)
+                    match = true
+                    itemsUnsorted.push item
 
       group.items = _.sortBy(itemsUnsorted, (item) -> return item.prio)
 

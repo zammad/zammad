@@ -3,6 +3,7 @@ class App.KnowledgeBaseAnswer extends App.Model
   @extend Spine.Model.Ajax
   @extend App.KnowledgeBaseActions
   @extend App.KnowledgeBaseCanBePublished
+  @extend App.KnowledgeBaseAccess
 
   @serverClassName: 'KnowledgeBase::Answer'
 
@@ -25,7 +26,7 @@ class App.KnowledgeBaseAnswer extends App.Model
       {
         name:       'translation::title'
         model:      'translation'
-        display:    'Title'
+        display:    __('Title')
         tag:        'input'
         grid_width: '1/2'
       },
@@ -36,7 +37,7 @@ class App.KnowledgeBaseAnswer extends App.Model
       {
         name:       'translation::title'
         model:      'translation'
-        display:    'Title'
+        display:    __('Title')
         tag:        'input'
         grid_width: '1/2'
         null:       false
@@ -47,7 +48,7 @@ class App.KnowledgeBaseAnswer extends App.Model
       {
         name:       'category_id'
         model:      'answer'
-        display:    'Category'
+        display:    __('Category')
         tag:        'select'
         null:       false
         options:    @knowledge_base().categoriesForDropdown(kb_locale: kb_locale)
@@ -67,7 +68,7 @@ class App.KnowledgeBaseAnswer extends App.Model
           'insert_image'
           'embed_video'
         ]
-        display: 'Content'
+        display: __('Content')
         tag:     'richtext'
         null:    true
       }
@@ -95,4 +96,7 @@ class App.KnowledgeBaseAnswer extends App.Model
     'Answer'
 
   visibleInternally: (kb_locale) =>
-    @is_internally_published(kb_locale)
+    (@is_internally_published(kb_locale) && @access(kb_locale) != 'none') || @is_published(kb_locale)
+
+  visiblePublicly: (kb_locale) =>
+    @is_published(kb_locale)

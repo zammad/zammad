@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class OnlineNotification < ApplicationModel
   include OnlineNotification::Assets
@@ -225,7 +225,7 @@ with dedicated times
 
 =end
 
-  def self.cleanup(max_age = Time.zone.now - 9.months, max_own_seen = Time.zone.now - 10.minutes, max_auto_seen = Time.zone.now - 8.hours)
+  def self.cleanup(max_age = 9.months.ago, max_own_seen = 10.minutes.ago, max_auto_seen = 8.hours.ago)
     OnlineNotification.where('created_at < ?', max_age).delete_all
     OnlineNotification.where('seen = ? AND updated_at < ?', true, max_own_seen).each do |notification|
 

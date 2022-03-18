@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 # Be sure to restart your server when you modify this file.
 
@@ -37,7 +37,7 @@ Rails.application.config.content_security_policy do |policy|
   policy.font_src    :self, :data
   policy.img_src     '*', :data
   policy.object_src  :none
-  policy.script_src  :self, :unsafe_eval, :unsafe_inline, :strict_dynamic
+  policy.script_src  :self, :unsafe_eval, :strict_dynamic
   policy.style_src   :self, :unsafe_inline
   policy.frame_src   'www.youtube.com', 'player.vimeo.com'
 end

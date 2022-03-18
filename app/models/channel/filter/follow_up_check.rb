@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 module Channel::Filter::FollowUpCheck
 
@@ -55,7 +55,7 @@ module Channel::Filter::FollowUpCheck
     end
 
     # get ticket# from references
-    return true if ( setting.include?('references') || (mail[:'x-zammad-is-auto-response'] == true || Setting.get('ticket_hook_position') == 'none') ) && follow_up_by_md5(mail)
+    return true if (setting.include?('references') || (mail[:'x-zammad-is-auto-response'] == true || Setting.get('ticket_hook_position') == 'none')) && follow_up_by_md5(mail)
 
     # get ticket# from references current email has same subject as initial article
     if mail[:subject].present?
@@ -123,7 +123,7 @@ module Channel::Filter::FollowUpCheck
       article = message_id_article(message_id)
       next if article.blank?
 
-      Rails.logger.debug "Follow up for '##{article.ticket.number}' in references."
+      Rails.logger.debug { "Follow up for '##{article.ticket.number}' in references." }
       mail[:'x-zammad-ticket-id'] = article.ticket_id
       return true
     end

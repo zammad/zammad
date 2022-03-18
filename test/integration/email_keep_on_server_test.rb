@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'test_helper'
 require 'net/imap'
@@ -16,11 +16,11 @@ class EmailKeepOnServerTest < ActiveSupport::TestCase
     @server_login = ENV['KEEP_ON_MAIL_SERVER_ACCOUNT'].split(':')[0]
     @server_password = ENV['KEEP_ON_MAIL_SERVER_ACCOUNT'].split(':')[1]
 
-    @folder = "keep_on_mail_server_#{rand(999_999_999)}"
+    @folder = "keep_on_mail_server_#{SecureRandom.uuid}"
 
     email_address = EmailAddress.create!(
       realname:      'me Helpdesk',
-      email:         "me#{rand(999_999_999)}@example.com",
+      email:         "me#{SecureRandom.uuid}@example.com",
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -44,7 +44,7 @@ class EmailKeepOnServerTest < ActiveSupport::TestCase
             password: @server_password,
             ssl:      true,
             folder:   @folder,
-            #keep_on_server: true,
+            # keep_on_server: true,
           }
         },
         outbound: {

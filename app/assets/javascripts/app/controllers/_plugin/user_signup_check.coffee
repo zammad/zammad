@@ -31,18 +31,18 @@ class UserSignupCheck extends App.Controller
 class Modal extends App.ControllerModal
   backdrop: false
   keyboard: false
-  head: 'Account not verified'
+  head: __('Account not verified')
   small: true
   buttonClose: false
   buttonCancel: false
-  buttonSubmit: 'Resend verification email'
+  buttonSubmit: __('Resend verification email')
 
   constructor: ->
     super
 
   content: =>
     if !@sent
-      return App.i18n.translateContent('Your account has not been verified. Please click the link in the verification email.')
+      return App.i18n.translateContent('Your account has not been verified. Please click on the link in the verification email.')
     content = App.i18n.translateContent('We\'ve sent an email to _%s_. Click the link in the email to verify your account.', @user.email)
     content += '<br><br>'
     content += App.i18n.translateContent('If you don\'t see the email, check other places it might be, like your junk, spam, social, or other folders.')
@@ -64,7 +64,7 @@ class Modal extends App.ControllerModal
     @update()
 
   error: =>
-    @contentInline = App.i18n.translateContent('Unable to send verify email.')
+    @contentInline = App.i18n.translateContent('Verification email could not be sent.')
     @update()
 
 App.Config.set('user_signup', UserSignupCheck, 'Plugins')

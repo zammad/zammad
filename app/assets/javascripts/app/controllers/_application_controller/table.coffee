@@ -111,8 +111,9 @@ class App.ControllerTable extends App.Controller
   groupBy:            undefined
   groupDirection:     undefined
 
-  shownPerPage: 150
-  shownPage: 0
+  pagerEnabled: true
+  pagerItemsPerPage: 150
+  pagerShownPage: 0
 
   destroy: false
   customActions: []
@@ -197,6 +198,8 @@ class App.ControllerTable extends App.Controller
     App.QueueManager.run('tableRender')
 
   renderPager: (el, find = false) =>
+    return if !@pagerEnabled
+
     if @pagerAjax
       @renderPagerAjax(el, find)
     else
@@ -220,7 +223,7 @@ class App.ControllerTable extends App.Controller
       el.filter('.js-pager').html(pager)
 
   renderPagerStatic: (el, find = false) =>
-    pages = parseInt(((@objects.length - 1)  / @shownPerPage))
+    pages = parseInt(((@objects.length - 1)  / @pagerItemsPerPage))
     if pages < 1
       if find
         el.find('.js-pager').html('')
@@ -228,7 +231,7 @@ class App.ControllerTable extends App.Controller
         el.filter('.js-pager').html('')
       return
     pager = App.view('generic/table_pager')(
-      page:  @shownPage
+      page:  @pagerShownPage
       pages: pages
     )
     if find
@@ -403,7 +406,7 @@ class App.ControllerTable extends App.Controller
       if @bindCheckbox.events
         for event, callback of @bindCheckbox.events
           do (table, event, callback) ->
-            table.delegate('input[name="bulk"]', event, (e) ->
+            table.on(event, 'input[name="bulk"]', (e) ->
               e.stopPropagation()
               id      = $(e.currentTarget).parents('tr').data('id')
               checked = $(e.currentTarget).prop('checked')
@@ -421,12 +424,12 @@ class App.ControllerTable extends App.Controller
     if @checkbox
 
       # click first tr>td, catch click
-      table.delegate('tr > td:nth-child(1)', 'click', (e) ->
+      table.on('click', 'tr > td:nth-child(1)', (e) ->
         e.stopPropagation()
       )
 
       # bind on full bulk click
-      table.delegate('input[name="bulk_all"]', 'change', (e) =>
+      table.on('change', 'input[name="bulk_all"]', (e) =>
         e.stopPropagation()
         clicks = []
         if $(e.currentTarget).prop('checked')
@@ -490,6 +493,15 @@ class App.ControllerTable extends App.Controller
       sortable:   @dndCallback
     ))
 
+  sortObjectKeys: (objects, direction) ->
+    sorted = Object.keys(objects).sort()
+
+    switch direction
+      when 'DESC'
+        sorted.reverse()
+      else
+        sorted
+
   renderTableRows: (sort = false) =>
     if sort is true
       @sortList()
@@ -500,16 +512,34 @@ class App.ControllerTable extends App.Controller
     groupLast = ''
     groupLastName = ''
     tableBody = []
-    objectsToShow = @objectsOfPage(@shownPage)
-    for object in objectsToShow
-      if object
-        position++
-        if @groupBy
-          groupByName = @groupObjectName(object, @groupBy)
-          if groupLastName isnt groupByName
-            groupLastName = groupByName
-            tableBody.push @renderTableGroupByRow(object, position, groupByName)
-        tableBody.push @renderTableRow(object, position)
+    objectsToShow = @objectsOfPage(@pagerShownPage)
+    if @groupBy
+      # group by raw (and not printable) value so dates work also
+      objectsGrouped = _.groupBy(objectsToShow, (object) => @groupObjectName(object, @groupBy, excludeTags: ['date', 'datetime']))
+    else
+      objectsGrouped = { '': objectsToShow }
+
+    for groupValue in @sortObjectKeys(objectsGrouped, @groupDirection)
+      groupObjects = objectsGrouped[groupValue]
+
+      for object in groupObjects
+        objectActions = []
+
+        if object
+          position++
+          if @groupBy
+            groupByName = @groupObjectName(object, @groupBy)
+            if groupLastName isnt groupByName
+              groupLastName = groupByName
+              tableBody.push @renderTableGroupByRow(object, position, groupByName)
+          for action in @actions
+            # Check if the available key is used, it can be a Boolean or a function which should be called.
+            if !action.available? || action.available == true
+              objectActions.push action
+            else if typeof action.available is 'function' && action.available(object) == true
+              objectActions.push action
+
+          tableBody.push @renderTableRow(object, position, objectActions)
     tableBody
 
   renderTableGroupByRow: (object, position, groupByName) =>
@@ -531,7 +561,7 @@ class App.ControllerTable extends App.Controller
       columnsLength: @columnsLength
     )
 
-  renderTableRow: (object, position) =>
+  renderTableRow: (object, position, actions) =>
     App.view('generic/table_row')(
       headers:    @headers
       attributes: @attributesList
@@ -541,7 +571,7 @@ class App.ControllerTable extends App.Controller
       sortable:   @dndCallback
       position:   position
       object:     object
-      actions:    @actions
+      actions:    actions
     )
 
   tableHeadersHasChanged: =>
@@ -601,7 +631,7 @@ class App.ControllerTable extends App.Controller
     if @clone
       @actions.push
         name: 'clone'
-        display: 'Clone'
+        display: __('Clone')
         icon: 'clipboard'
         class: 'create  js-clone'
         callback: (id) =>
@@ -620,7 +650,7 @@ class App.ControllerTable extends App.Controller
     if @destroy
       @actions.push
         name: 'delete'
-        display: 'Delete'
+        display: __('Delete')
         icon: 'trash'
         class: 'danger js-delete'
         callback: (id) =>
@@ -632,7 +662,7 @@ class App.ControllerTable extends App.Controller
     if @actions.length
       @headers.push
         name:         'action'
-        display:      'Action'
+        display:      __('Action')
         width:        '50px'
         displayWidth: 50
         align:        'right'
@@ -654,13 +684,17 @@ class App.ControllerTable extends App.Controller
     ['new headers', @headers]
 
   setMaxPage: =>
-    pages = parseInt(((@objects.length - 1)  / @shownPerPage))
-    if parseInt(@shownPage) > pages
-      @shownPage = pages
+    return if !@pagerEnabled
+
+    pages = parseInt(((@objects.length - 1)  / @pagerItemsPerPage))
+    if parseInt(@pagerShownPage) > pages
+      @pagerShownPage = pages
 
   objectsOfPage: (page = 0) =>
+    return @objects if !@pagerEnabled
+
     page = parseInt(page)
-    @objects.slice(page * @shownPerPage, (page + 1) * @shownPerPage)
+    @objects.slice(page * @pagerItemsPerPage, (page + 1) * @pagerItemsPerPage)
 
   paginate: (e) =>
     e.stopPropagation()
@@ -669,7 +703,7 @@ class App.ControllerTable extends App.Controller
       @navigate "#{@pagerBaseUrl}#{(parseInt(page) + 1)}"
     else
       render = =>
-        @shownPage = page
+        @pagerShownPage = page
         @renderTableFull()
       App.QueueManager.add('tableRender', render)
       App.QueueManager.run('tableRender')
@@ -821,11 +855,15 @@ class App.ControllerTable extends App.Controller
     @objects = localObjects
     @lastSortedobjects = localObjects
 
-  groupObjectName: (object, key = undefined) ->
+  groupObjectName: (object, key = undefined, options = {}) ->
     group = object
     if key
       if key not of object
         key += '_id'
+
+      # return internal value if needed
+      return object[key] if options.excludeTags && _.find(@attributesList, (attr) -> attr.name == key && _.contains(options.excludeTags, attr.tag))
+
       group = App.viewPrint(object, key, @attributesList)
     if _.isEmpty(group)
       group = ''

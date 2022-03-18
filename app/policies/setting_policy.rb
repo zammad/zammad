@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class SettingPolicy < ApplicationPolicy
 
@@ -13,6 +13,7 @@ class SettingPolicy < ApplicationPolicy
   private
 
   def permitted?
+    return false if record.preferences[:protected]
     return true if !record.preferences[:permission]
 
     user.permissions?(record.preferences[:permission])

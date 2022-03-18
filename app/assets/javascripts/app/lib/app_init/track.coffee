@@ -46,7 +46,7 @@ class _trackSingleton
 
     # log clicks
     if @logClick
-      $(document).bind(
+      $(document).on(
         'click'
         (e) =>
           w = window.screen.width
@@ -70,7 +70,7 @@ class _trackSingleton
 
     # log ajax calls
     if @logAjax
-      $(document).bind( 'ajaxComplete', ( e, request, settings ) =>
+      $(document).on( 'ajaxComplete', ( e, request, settings ) =>
 
         # do not log ui requests
         if settings.url && settings.url.substr(settings.url.length-3,3) isnt '/ui'
@@ -105,7 +105,7 @@ class _trackSingleton
           )
       )
 
-    $(window).bind(
+    $(window).on(
       'beforeunload'
       =>
         @log('good bye', 'notice', {})

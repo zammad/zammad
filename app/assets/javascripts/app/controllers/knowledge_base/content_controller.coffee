@@ -71,7 +71,7 @@ class App.KnowledgeBaseContentController extends App.Controller
     @rerenderIfConfirmed()
 
   rerenderIfConfirmed: ->
-    text = App.i18n.translatePlain('Changes were made. Do you want to reload? You\'ll loose your changes')
+    text = App.i18n.translatePlain('Are you sure you want to reload? You have unsaved changes that will get lost')
     if confirm(text)
       @render()
 
@@ -81,7 +81,7 @@ class App.KnowledgeBaseContentController extends App.Controller
 
     new App.WidgetButtonWithDropdown(
       el:              @submitContainer
-      mainActionLabel: 'Update'
+      mainActionLabel: __('Update')
       actions:         @quickActions()
     )
 
@@ -103,8 +103,8 @@ class App.KnowledgeBaseContentController extends App.Controller
       return
 
     new App.ControllerConfirm(
-      head:    'Content was changed since loading'
-      message: 'Your changes may override someone else\'s changes. Are you sure to save?'
+      head:    __('Content was changed since loading')
+      message: __('Your changes may override someone else\'s changes. Do you really want to save?')
       callback: =>
         @parentController.coordinator.saveChanges(@object, paramsForSaving, @)
     )
