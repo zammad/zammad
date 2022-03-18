@@ -745,12 +745,16 @@ RSpec.describe 'Ticket zoom', type: :system do
 
         it "security defaults sign: #{sign}, encrypt: #{encrypt}" do
           within(:active_content) do
-            encrypt_button = find('.js-securityEncrypt')
-            sign_button    = find('.js-securitySign')
-
-            active_button_class = '.btn--active'
-            expect(encrypt_button.matches_css?(active_button_class)).to be(encrypt)
-            expect(sign_button.matches_css?(active_button_class)).to be(sign)
+            if sign
+              expect(page).to have_css('.js-securitySign.btn--active')
+            else
+              expect(page).to have_no_css('.js-securitySign.btn--active')
+            end
+            if encrypt
+              expect(page).to have_css('.js-securityEncrypt.btn--active')
+            else
+              expect(page).to have_no_css('.js-securityEncrypt.btn--active')
+            end
           end
         end
       end
@@ -2278,6 +2282,7 @@ RSpec.describe 'Ticket zoom', type: :system do
     end
 
     it 'does open and close by usage' do
+      find('.js-writeArea').click
       find('.js-textarea').send_keys(' ')
       expect(page).to have_selector('form.article-add.is-open')
       find('input#global-search').click

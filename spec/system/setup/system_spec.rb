@@ -66,7 +66,7 @@ RSpec.describe 'System setup process', type: :system, set_up: false, authenticat
       fill_in 'email',    with: mailbox_user
       fill_in 'password', with: mailbox_password
 
-      click_on('Connect')
+      page.element.click_on('Connect')
     end
 
     # wait for verification process to start

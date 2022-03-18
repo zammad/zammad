@@ -202,12 +202,16 @@ RSpec.describe 'Ticket Create', type: :system do
 
             it "security defaults sign: #{sign}, encrypt: #{encrypt}" do
               within(:active_content) do
-                encrypt_button = find('.js-securityEncrypt')
-                sign_button    = find('.js-securitySign')
-
-                active_button_class = '.btn--active'
-                expect(encrypt_button.matches_css?(active_button_class)).to be(encrypt)
-                expect(sign_button.matches_css?(active_button_class)).to be(sign)
+                if sign
+                  expect(page).to have_css('.js-securitySign.btn--active')
+                else
+                  expect(page).to have_no_css('.js-securitySign.btn--active')
+                end
+                if encrypt
+                  expect(page).to have_css('.js-securityEncrypt.btn--active')
+                else
+                  expect(page).to have_no_css('.js-securityEncrypt.btn--active')
+                end
               end
             end
           end
