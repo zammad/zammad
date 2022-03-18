@@ -16,7 +16,7 @@
 <%= canonical_link_tag @knowledge_base, @category, @object %>
 
 <div class="wrapper js-wrapper">
-  <%= render 'knowledge_base/public/top_banner', object: @object || @knowledge_base if editor? %>
+  <%= render_top_bar_if_needed @object, @knowledge_base %>
 
   <header class="header js-header">
     <div class="container">
@@ -35,7 +35,7 @@
       <div class="search">
         <div class="search-field">
           <%= icon 'magnifier' %>
-          <input class="js-search-input" type="search" placeholder="<%= zt('How can we help you? Search for an answer or a topic...') %>">
+          <input class="js-search-input" type="search" placeholder="<%= zt('How can we help you? Search for an answer or a topic…') %>">
         </div>
         <ul class="search-results js-search-results" data-empty-placeholder="<%= zt('No results were found.') %>"></ul>
       </div>

@@ -26,7 +26,7 @@ class App.UiElement.permission extends App.UiElement.ApplicationUiElement
     ) )
 
     # show/hide trees
-    item.find('[name=permission_ids]').bind('change', (e) =>
+    item.find('[name=permission_ids]').on('change', (e) =>
       @checkUncheck($(e.currentTarget), permissions, item)
     )
     item.find('[name=permission_ids]').trigger('change')

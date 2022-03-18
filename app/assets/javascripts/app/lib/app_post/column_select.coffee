@@ -100,7 +100,7 @@ class App.ColumnSelect extends Spine.Controller
 
     @placeholder.addClass('is-hidden')
 
-    if @search.val() and @poolOptions.not('.is-filtered').not('.is-hidden').size() is 0
+    if @search.val() and @poolOptions.not('.is-filtered').not('.is-hidden').length is 0
       @clear()
 
   onRemove: (event) ->

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Integration::CheckMkController < ApplicationController
   skip_before_action :verify_csrf_token
@@ -140,11 +140,11 @@ UserAgent: #{request.env['HTTP_USER_AGENT'] || '-'}
     http_log_config facility: 'check_mk'
 
     if !Setting.get('check_mk_integration')
-      raise Exceptions::UnprocessableEntity, 'Feature is disable, please contact your admin to enable it!'
+      raise Exceptions::UnprocessableEntity, __('Feature is disabled, please contact your administrator!')
     end
 
     if Setting.get('check_mk_token') != params[:token]
-      raise Exceptions::UnprocessableEntity, 'Invalid token!'
+      raise Exceptions::UnprocessableEntity, __('Invalid token!')
     end
 
     true

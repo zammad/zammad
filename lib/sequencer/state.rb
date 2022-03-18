@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Sequencer
   class State
@@ -32,7 +32,7 @@ class Sequencer
     #
     # @example
     #  state.provide(:sum) do
-    #    some_value = rand(100)
+    #    some_value = ...
     #    some_value * 3
     #  end
     #

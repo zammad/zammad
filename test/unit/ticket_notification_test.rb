@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'test_helper'
 
@@ -1015,8 +1015,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
       group:         Group.lookup(name: 'TicketNotificationTest'),
       customer:      @customer,
       owner_id:      @agent2.id,
-      #state: Ticket::State.lookup(name: 'new'),
-      #priority: Ticket::Priority.lookup(name: '2 normal'),
+      # state: Ticket::State.lookup(name: 'new'),
+      # priority: Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: @customer.id,
       created_by_id: @customer.id,
     )
@@ -1058,8 +1058,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
       group:         Group.lookup(name: 'TicketNotificationTest'),
       customer:      @customer,
       owner_id:      @agent2.id,
-      #state: Ticket::State.lookup(name: 'new'),
-      #priority: Ticket::Priority.lookup(name: '2 normal'),
+      # state: Ticket::State.lookup(name: 'new'),
+      # priority: Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: @customer.id,
       created_by_id: @customer.id,
     )
@@ -1122,7 +1122,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     # verify notifications to @agent1 + @agent2
     assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket2, @agent1, 'email'), ticket2.id)
     assert_equal(3, NotificationFactory::Mailer.already_sent?(ticket2, @agent2, 'email'), ticket2.id)
-    assert_equal(3, NotificationFactory::Mailer.already_sent?(ticket2, @agent3, 'email'), ticket2.id)
+    assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket2, @agent3, 'email'), ticket2.id)
     assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket2, @agent4, 'email'), ticket2.id)
 
   end
@@ -1194,7 +1194,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     assert_match(%r{1 low}, result[:body])
     assert_match(%r{2 normal}, result[:body])
     assert_match(%r{Pending till}, result[:body])
-    assert_match('01/11/2015 19:33 (America/St_Lucia)', result[:body])
+    assert_match('01/11/2015  7:33 pm (America/St_Lucia)', result[:body])
     assert_match(%r{update}, result[:body])
     assert_no_match(%r{pending_till}, result[:body])
     assert_no_match(%r{i18n}, result[:body])
@@ -1322,7 +1322,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     )
 
     assert_match('Ticket is escalated (some notification template test 1 Bobs\'s resumé', result[:subject])
-    assert_match('is escalated since "04/01/2019 06:00 (America/St_Lucia)"!', result[:body])
+    assert_match('is escalated since "04/01/2019  6:00 am (America/St_Lucia)"!', result[:body])
 
   end
 

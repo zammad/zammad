@@ -1,11 +1,31 @@
-rspec:postgresql:
+rspec:postgresql:1:
   stage: test
+  variables:
+    RSPEC_EXAMPLE_MATCHES: $RSPEC_EXAMPLE_SLICE_1_OF_4
   extends:
     - .services_postgresql_redis_memcached
     - .template_rspec
 
-rspec:postgresql:db_reset:
+rspec:postgresql:2:
   stage: test
+  variables:
+    RSPEC_EXAMPLE_MATCHES: $RSPEC_EXAMPLE_SLICE_2_OF_4
   extends:
     - .services_postgresql_redis_memcached
-    - .template_rspec_db_reset
+    - .template_rspec
+
+rspec:postgresql:3:
+  stage: test
+  variables:
+    RSPEC_EXAMPLE_MATCHES: $RSPEC_EXAMPLE_SLICE_3_OF_4
+  extends:
+    - .services_postgresql_redis_memcached
+    - .template_rspec
+
+rspec:postgresql:4:
+  stage: test
+  variables:
+    RSPEC_EXAMPLE_MATCHES: $RSPEC_EXAMPLE_SLICE_4_OF_4
+  extends:
+    - .services_postgresql_redis_memcached
+    - .template_rspec

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -36,18 +36,11 @@ RSpec.describe DataPrivacyTask, type: :model do
       expect(create(:data_privacy_task, deletable: admin)).to be_truthy
     end
 
-    it 'sets the failed state when task failed' do
+    it 'sets no error message when user is already deleted' do
       task = create(:data_privacy_task, deletable: user)
       user.destroy
       task.perform
-      expect(task.reload.state).to eq('failed')
-    end
-
-    it 'sets an error message when task failed' do
-      task = create(:data_privacy_task, deletable: user)
-      user.destroy
-      task.perform
-      expect(task.reload.preferences[:error]).to eq("ERROR: #<ActiveRecord::RecordNotFound: Couldn't find User with 'id'=#{user.id}>")
+      expect(task.reload.state).to eq('completed')
     end
   end
 

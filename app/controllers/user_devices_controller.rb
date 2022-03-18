@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class UserDevicesController < ApplicationController
   prepend_before_action { authentication_check && authorize! }
@@ -17,7 +17,7 @@ class UserDevicesController < ApplicationController
       attributes.delete('fingerprint')
 
       # mark current device to prevent killing own session via user preferences device management
-      if session[:user_device_fingerprint] == device.fingerprint && device.updated_at > Time.zone.now - 30.minutes
+      if session[:user_device_fingerprint] == device.fingerprint && device.updated_at > 30.minutes.ago
         attributes['current'] = true
       end
       devices_full.push attributes
@@ -37,7 +37,7 @@ class UserDevicesController < ApplicationController
         next if !session.data['user_device_id']
         next if session.data['user_device_id'] != user_device.id
 
-        SessionHelper.destroy( session.id )
+        SessionHelper.destroy(session.id)
       end
       user_device.destroy
     end

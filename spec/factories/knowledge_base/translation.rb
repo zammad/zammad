@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 FactoryBot.define do
   factory 'knowledge_base/translation', aliases: %i[knowledge_base_translation] do

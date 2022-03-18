@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -28,15 +28,15 @@ RSpec.describe Channel::Driver::Sms::Twilio do
   private
 
   def create_channel
-    FactoryBot.create(:channel,
-                      options:       {
-                        account_id: account_id,
-                        adapter:    'sms/twilio',
-                        sender:     sender_number,
-                        token:      token
-                      },
-                      created_by_id: 1,
-                      updated_by_id: 1)
+    create(:channel,
+           options:       {
+             account_id: account_id,
+             adapter:    'sms/twilio',
+             sender:     sender_number,
+             token:      token
+           },
+           created_by_id: 1,
+           updated_by_id: 1)
   end
 
   # api parameters

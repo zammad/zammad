@@ -4,16 +4,17 @@ class App.UiElement.textarea
     fileUploaderId = 'file-uploader-' + new Date().getTime() + '-' + Math.floor( Math.random() * 99999 )
     item = $( App.view('generic/textarea')( attribute: attribute ) + '<div class="file-uploader ' + attribute.class + '" id="' + fileUploaderId + '"></div>' )
 
-    a = ->
-      visible = $( item[0] ).is(':visible')
-      if visible && !$( item[0] ).expanding('active')
-        $( item[0] ).expanding()
-      $( item[0] ).on('focus', ->
+    if attribute.expanding isnt false
+      a = ->
         visible = $( item[0] ).is(':visible')
         if visible && !$( item[0] ).expanding('active')
-          $( item[0] ).expanding().focus()
-      )
-    App.Delay.set(a, 80)
+          $( item[0] ).expanding()
+        $( item[0] ).on('focus', ->
+          visible = $( item[0] ).is(':visible')
+          if visible && !$( item[0] ).expanding('active')
+            $( item[0] ).expanding().trigger('focus')
+        )
+      App.Delay.set(a, 80)
 
     if attribute.upload
 

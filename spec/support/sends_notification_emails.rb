@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 module SendsNotificationEmailsHelper
 
@@ -39,7 +39,7 @@ module SendsNotificationEmailsHelper
   # @return [nil]
   def not_sent(args)
     check_in_progress!
-    expect(NotificationFactory::Mailer).to_not have_received(:notification).with(
+    expect(NotificationFactory::Mailer).not_to have_received(:notification).with(
       hash_including(args)
     )
   end

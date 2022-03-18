@@ -66,6 +66,9 @@
       <% if header.raw: %>
         <%- header.raw %>
       <% else: %>
+        <% if header.prefixIcon: %>
+          <span class="prefix-icon"><%- @Icon(header.prefixIcon) %></span>
+        <% end %>
         <% if header.class || header.data: %>
         <span <% if header.class: %>class="<%= header.class %>"<% end %> <% if header.data: %><% for data_key, data_header of header.data: %>data-<%- data_key %>="<%= data_header %>" <% end %><% end %>>
         <% end %>

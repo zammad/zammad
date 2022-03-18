@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 require 'models/application_model_examples'
@@ -8,9 +8,8 @@ require 'models/concerns/has_roles_examples'
 require 'models/concerns/has_groups_permissions_examples'
 require 'models/concerns/has_xss_sanitized_note_examples'
 require 'models/concerns/can_be_imported_examples'
-require 'models/concerns/has_object_manager_attributes_validation_examples'
+require 'models/concerns/has_object_manager_attributes_examples'
 require 'models/user/can_lookup_search_index_attributes_examples'
-require 'models/user/has_ticket_create_screen_impact_examples'
 require 'models/user/performs_geo_lookup_examples'
 require 'models/concerns/has_taskbars_examples'
 
@@ -28,161 +27,12 @@ RSpec.describe User, type: :model do
   it_behaves_like 'HasXssSanitizedNote', model_factory: :user
   it_behaves_like 'HasGroups and Permissions', group_access_no_permission_factory: :user
   it_behaves_like 'CanBeImported'
-  it_behaves_like 'HasObjectManagerAttributesValidation'
-  it_behaves_like 'User::HasTicketCreateScreenImpact'
+  it_behaves_like 'HasObjectManagerAttributes'
   it_behaves_like 'CanLookupSearchIndexAttributes'
   it_behaves_like 'HasTaskbars'
   it_behaves_like 'UserPerformsGeoLookup'
 
   describe 'Class methods:' do
-    describe '.authenticate' do
-      subject(:user) { create(:user, password: password) }
-
-      let(:password) { Faker::Internet.password }
-
-      context 'with valid credentials' do
-        context 'using #login' do
-          it 'returns the matching user' do
-            expect(described_class.authenticate(user.login, password))
-              .to eq(user)
-          end
-
-          it 'is not case-sensitive' do
-            expect(described_class.authenticate(user.login.upcase, password))
-              .to eq(user)
-          end
-        end
-
-        context 'using #email' do
-          it 'returns the matching user' do
-            expect(described_class.authenticate(user.email, password))
-              .to eq(user)
-          end
-
-          it 'is not case-sensitive' do
-            expect(described_class.authenticate(user.email.upcase, password))
-              .to eq(user)
-          end
-        end
-
-        context 'but exceeding failed login limit' do
-          before { user.update(login_failed: 999) }
-
-          it 'returns nil' do
-            expect(described_class.authenticate(user.login, password))
-              .to be(nil)
-          end
-        end
-
-        context 'when previous login was' do
-          context 'never' do
-            it 'updates #last_login and #updated_at' do
-              expect { described_class.authenticate(user.login, password) }
-                .to change { user.reload.last_login }
-                .and change { user.reload.updated_at }
-            end
-          end
-
-          context 'less than 10 minutes ago' do
-            before do
-              described_class.authenticate(user.login, password)
-              travel 9.minutes
-            end
-
-            it 'does not update #last_login and #updated_at' do
-              expect { described_class.authenticate(user.login, password) }
-                .to not_change { user.reload.last_login }
-                .and not_change { user.reload.updated_at }
-            end
-          end
-
-          context 'more than 10 minutes ago' do
-            before do
-              described_class.authenticate(user.login, password)
-              travel 11.minutes
-            end
-
-            it 'updates #last_login and #updated_at' do
-              expect { described_class.authenticate(user.login, password) }
-                .to change { user.reload.last_login }
-                .and change { user.reload.updated_at }
-            end
-          end
-        end
-      end
-
-      context 'with valid user and invalid password' do
-        it 'increments failed login count' do
-          expect(described_class).to receive(:sleep).with(1)
-          expect { described_class.authenticate(user.login, password.next) }
-            .to change { user.reload.login_failed }.by(1)
-        end
-
-        it 'returns nil' do
-          expect(described_class).to receive(:sleep).with(1)
-          expect(described_class.authenticate(user.login, password.next)).to be(nil)
-        end
-      end
-
-      context 'with inactive user’s login' do
-        before { user.update(active: false) }
-
-        it 'returns nil' do
-          expect(described_class.authenticate(user.login, password)).to be(nil)
-        end
-      end
-
-      context 'with non-existent user login' do
-        it 'returns nil' do
-          expect(described_class.authenticate('john.doe', password)).to be(nil)
-        end
-      end
-
-      context 'with empty login string' do
-        it 'returns nil' do
-          expect(described_class.authenticate('', password)).to be(nil)
-        end
-      end
-
-      context 'with empty password string' do
-        it 'returns nil' do
-          expect(described_class.authenticate(user.login, '')).to be(nil)
-        end
-      end
-
-      context 'with empty password string when the stored password is an empty string' do
-        before { user.update_column(:password, '') }
-
-        context 'when password is an empty string' do
-          it 'returns nil' do
-            expect(described_class.authenticate(user.login, '')).to be(nil)
-          end
-        end
-
-        context 'when password is nil' do
-          it 'returns nil' do
-            expect(described_class.authenticate(user.login, nil)).to be(nil)
-          end
-        end
-      end
-
-      context 'with empty password string when the stored hash represents an empty string' do
-        before { user.update(password: PasswordHash.crypt('')) }
-
-        context 'when password is an empty string' do
-          it 'returns nil' do
-            expect(described_class.authenticate(user.login, '')).to be(nil)
-          end
-        end
-
-        context 'when password is nil' do
-          it 'returns nil' do
-            expect(described_class.authenticate(user.login, nil)).to be(nil)
-          end
-        end
-      end
-    end
-
     describe '.identify' do
       it 'returns users by given login' do
         expect(described_class.identify(user.login)).to eq(user)
@@ -191,37 +41,14 @@ RSpec.describe User, type: :model do
       it 'returns users by given email' do
         expect(described_class.identify(user.email)).to eq(user)
       end
+
+      it 'returns nil for empty username' do
+        expect(described_class.identify('')).to be_nil
+      end
     end
   end
 
   describe 'Instance methods:' do
-    describe '#max_login_failed?' do
-      it { is_expected.to respond_to(:max_login_failed?) }
-
-      context 'with "password_max_login_failed" setting' do
-        before do
-          Setting.set('password_max_login_failed', 5)
-          user.update(login_failed: 5)
-        end
-
-        it 'returns true once user’s #login_failed count exceeds the setting' do
-          expect { user.update(login_failed: 6) }
-            .to change(user, :max_login_failed?).to(true)
-        end
-      end
-
-      context 'without password_max_login_failed setting' do
-        before do
-          Setting.set('password_max_login_failed', nil)
-          user.update(login_failed: 0)
-        end
-
-        it 'defaults to 0' do
-          expect { user.update(login_failed: 1) }
-            .to change(user, :max_login_failed?).to(true)
-        end
-      end
-    end
 
     describe '#out_of_office?' do
       context 'without any out_of_office_* attributes set' do
@@ -264,6 +91,84 @@ RSpec.describe User, type: :model do
           end
         end
       end
+
+      context 'date range is inclusive' do
+        before do
+          freeze_time
+
+          agent.update(
+            out_of_office:                true,
+            out_of_office_start_at:       1.day.from_now.to_date,
+            out_of_office_end_at:         1.week.from_now.to_date,
+            out_of_office_replacement_id: 1
+          )
+        end
+
+        it 'today in office' do
+          expect(agent).not_to be_out_of_office
+        end
+
+        it 'tomorrow not in office' do
+          travel 1.day
+          expect(agent).to be_out_of_office
+        end
+
+        it 'after 7 days not in office' do
+          travel 7.days
+          expect(agent).to be_out_of_office
+        end
+
+        it 'after 8 days in office' do
+          travel 8.days
+          expect(agent).not_to be_out_of_office
+        end
+      end
+
+      # https://github.com/zammad/zammad/issues/3590
+      context 'when setting the same date' do
+        before do
+          freeze_time
+
+          target_date = 1.day.from_now.to_date
+          agent.update(
+            out_of_office:                true,
+            out_of_office_start_at:       target_date,
+            out_of_office_end_at:         target_date,
+            out_of_office_replacement_id: 1
+          )
+        end
+
+        it 'agent is out of office tomorrow' do
+          travel 1.day
+          expect(agent).to be_out_of_office
+        end
+
+        it 'agent is not out of office the day after tomorrow' do
+          travel 2.days
+          expect(agent).not_to be_out_of_office
+        end
+
+        it 'agent is not out of office today' do
+          expect(agent).not_to be_out_of_office
+        end
+
+        context 'given it respects system time zone' do
+          before do
+            travel_to Time.current.end_of_day
+          end
+
+          it 'agent is in office if in UTC' do
+            expect(agent).not_to be_out_of_office
+          end
+
+          it 'agent is out of office if ahead of UTC' do
+            travel_to Time.current.end_of_day
+            Setting.set('timezone_default', 'Europe/Vilnius')
+
+            expect(agent).to be_out_of_office
+          end
+        end
+      end
     end
 
     describe '#out_of_office_agent' do
@@ -271,7 +176,7 @@ RSpec.describe User, type: :model do
 
       context 'when user has no designated substitute' do
         it 'returns nil' do
-          expect(user.out_of_office_agent).to be(nil)
+          expect(user.out_of_office_agent).to be_nil
         end
       end
 
@@ -290,7 +195,7 @@ RSpec.describe User, type: :model do
           let(:out_of_office) { false }
 
           it 'returns nil' do
-            expect(user.out_of_office_agent).to be(nil)
+            expect(user.out_of_office_agent).to be_nil
           end
         end
 
@@ -299,6 +204,104 @@ RSpec.describe User, type: :model do
 
           it 'returns the designated substitute' do
             expect(user.out_of_office_agent).to eq(substitute)
+          end
+        end
+
+        context 'with recursive out of office structure' do
+          let(:out_of_office) { true }
+          let(:substitute) do
+            create(:user,
+                   out_of_office:                out_of_office,
+                   out_of_office_start_at:       Time.zone.yesterday,
+                   out_of_office_end_at:         Time.zone.tomorrow,
+                   out_of_office_replacement_id: user_active.id,)
+          end
+          let!(:user_active) { create(:user) }
+
+          it 'returns the designated substitute recursive' do
+            expect(user.out_of_office_agent).to eq(user_active)
+          end
+        end
+
+        context 'with recursive out of office structure with a endless loop' do
+          let(:out_of_office) { true }
+          let(:substitute) do
+            create(:user,
+                   out_of_office:                out_of_office,
+                   out_of_office_start_at:       Time.zone.yesterday,
+                   out_of_office_end_at:         Time.zone.tomorrow,
+                   out_of_office_replacement_id: user_active.id,)
+          end
+          let!(:user_active) do
+            create(:user,
+                   out_of_office:                out_of_office,
+                   out_of_office_start_at:       Time.zone.yesterday,
+                   out_of_office_end_at:         Time.zone.tomorrow,
+                   out_of_office_replacement_id: agent.id,)
+          end
+
+          before do
+            user_active.update(out_of_office_replacement_id: substitute.id)
+          end
+
+          it 'returns the designated substitute recursive with a endless loop' do
+            expect(user.out_of_office_agent).to eq(substitute)
+          end
+        end
+
+        context 'with stack depth exceeding limit' do
+          let(:replacement_chain) do
+            user = create(:agent)
+
+            14
+              .times
+              .each_with_object([user]) do |_, memo|
+                memo << create(:agent, :ooo, ooo_agent: memo.last)
+              end
+              .reverse
+          end
+
+          let(:ids_executed) { [] }
+
+          before do
+            allow_any_instance_of(described_class).to receive(:out_of_office_agent).and_wrap_original do |method, *args| # rubocop:disable RSpec/AnyInstance
+              ids_executed << method.receiver.id
+              method.call(*args)
+            end
+
+            allow(Rails.logger).to receive(:warn)
+          end
+
+          it 'returns the last agent at the limit' do
+            expect(replacement_chain.first.out_of_office_agent).to eq replacement_chain[10]
+          end
+
+          it 'does not evaluate element beyond the limit' do
+            user_beyond_limit = replacement_chain[11]
+
+            replacement_chain.first.out_of_office_agent
+
+            expect(ids_executed).not_to include(user_beyond_limit.id)
+          end
+
+          it 'does evaluate element within the limit' do
+            user_within_limit = replacement_chain[5]
+
+            replacement_chain.first.out_of_office_agent
+
+            expect(ids_executed).to include(user_within_limit.id)
+          end
+
+          it 'logs error below the limit' do
+            replacement_chain.first.out_of_office_agent
+
+            expect(Rails.logger).to have_received(:warn).with(%r{#{Regexp.escape('Found more than 10 replacement levels for agent')}})
+          end
+
+          it 'does not logs warn within the limit' do
+            replacement_chain[10].out_of_office_agent
+
+            expect(Rails.logger).not_to have_received(:warn)
           end
         end
       end
@@ -342,6 +345,55 @@ RSpec.describe User, type: :model do
               .to match_array([agent_on_holiday])
           end
         end
+
+        context 'when inherited' do
+          let(:out_of_office) { true }
+          let!(:agent_on_holiday_sub) do
+            create(
+              :agent,
+              out_of_office_start_at:       Time.current.yesterday,
+              out_of_office_end_at:         Time.current.tomorrow,
+              out_of_office_replacement_id: agent_on_holiday.id,
+              out_of_office:                out_of_office
+            )
+          end
+
+          it 'returns an ActiveRecord::Relation including both agents' do
+            expect(agent.out_of_office_agent_of)
+              .to match_array([agent_on_holiday, agent_on_holiday_sub])
+          end
+        end
+
+        context 'when inherited endless loop' do
+          let(:out_of_office) { true }
+          let!(:agent_on_holiday_sub) do
+            create(
+              :agent,
+              out_of_office_start_at:       Time.current.yesterday,
+              out_of_office_end_at:         Time.current.tomorrow,
+              out_of_office_replacement_id: agent_on_holiday.id,
+              out_of_office:                out_of_office
+            )
+          end
+          let!(:agent_on_holiday_sub2) do
+            create(
+              :agent,
+              out_of_office_start_at:       Time.current.yesterday,
+              out_of_office_end_at:         Time.current.tomorrow,
+              out_of_office_replacement_id: agent_on_holiday_sub.id,
+              out_of_office:                out_of_office
+            )
+          end
+
+          before do
+            agent_on_holiday_sub.update(out_of_office_replacement_id: agent_on_holiday_sub2.id)
+          end
+
+          it 'returns an ActiveRecord::Relation including both agents referencing each other' do
+            expect(agent_on_holiday_sub.out_of_office_agent_of)
+              .to match_array([agent_on_holiday_sub, agent_on_holiday_sub2])
+          end
+        end
       end
     end
 
@@ -358,7 +410,7 @@ RSpec.describe User, type: :model do
 
       context 'with an invalid token' do
         it 'returns nil' do
-          expect(described_class.by_reset_token('not-existing')).to be(nil)
+          expect(described_class.by_reset_token('not-existing')).to be_nil
         end
       end
     end
@@ -575,6 +627,46 @@ RSpec.describe User, type: :model do
         end
       end
     end
+
+    describe '#check_login' do
+      let(:agent) { create(:agent) }
+
+      it 'does use the origin login' do
+        new_agent = create(:agent)
+        expect(new_agent.login).not_to end_with('1')
+      end
+
+      it 'does number up agent logins (1)' do
+        new_agent = create(:agent, login: agent.login)
+        expect(new_agent.login).to eq("#{agent.login}1")
+      end
+
+      it 'does number up agent logins (5)' do
+        new_agent = create(:agent, login: agent.login)
+        4.times do
+          new_agent = create(:agent, login: agent.login)
+        end
+
+        expect(new_agent.login).to eq("#{agent.login}5")
+      end
+
+      it 'does backup with uuid in cases of many duplicates' do
+        new_agent = create(:agent, login: agent.login)
+        20.times do
+          new_agent = create(:agent, login: agent.login)
+        end
+
+        expect(new_agent.login.sub!(agent.login, '')).to be_a_uuid
+      end
+    end
+
+    describe '#check_name' do
+      it 'guesses user first/last name with non-ASCII characters' do
+        user = create(:user, firstname: 'perkūnas ąžuolas', lastname: '')
+
+        expect(user).to have_attributes(firstname: 'Perkūnas', lastname: 'Ąžuolas')
+      end
+    end
   end
 
   describe 'Attributes:' do
@@ -684,7 +776,7 @@ RSpec.describe User, type: :model do
           let(:another_user) { create(:user, password: '') }
 
           it 'sets password to nil' do
-            expect(another_user.password).to eq(nil)
+            expect(another_user.password).to be_nil
           end
         end
 
@@ -692,7 +784,7 @@ RSpec.describe User, type: :model do
           let(:another_user) { create(:user, password: nil) }
 
           it 'sets password to nil' do
-            expect(another_user.password).to eq(nil)
+            expect(another_user.password).to be_nil
           end
         end
       end
@@ -838,17 +930,46 @@ RSpec.describe User, type: :model do
         let(:escaped) { Regexp.escape(value) }
 
         it 'valid create' do
-          expect(create(:user, image_source: 'https://zammad.org/avatar.png').image_source).not_to eq(nil)
+          expect(create(:user, image_source: 'https://zammad.org/avatar.png').image_source).not_to be_nil
         end
 
         it 'removes invalid image source of create' do
-          expect(create(:user, image_source: value).image_source).to eq(nil)
+          expect(create(:user, image_source: value).image_source).to be_nil
         end
 
         it 'removes invalid image source of update' do
           user = create(:user)
           user.update!(image_source: value)
-          expect(user.image_source).to eq(nil)
+          expect(user.image_source).to be_nil
+        end
+      end
+    end
+
+    describe 'fetch_avatar_for_email', performs_jobs: true do
+      it 'enqueues avatar job when creating a user with email' do
+        expect { create(:user) }.to have_enqueued_job AvatarCreateJob
+      end
+
+      it 'does not enqueue avatar job when creating a user without email' do
+        expect { create(:user, :without_email) }.not_to have_enqueued_job AvatarCreateJob
+      end
+
+      context 'with an existing user' do
+        before do
+          agent
+          clear_jobs
+        end
+
+        it 'enqueues avatar job when updating a user with email' do
+          expect { agent.update! email: 'avatar@example.com' }.to have_enqueued_job AvatarCreateJob
+        end
+
+        it 'does not enqueue avatar job when updating a user without email' do
+          expect { agent.update! login: 'avatar_login', email: nil }.not_to have_enqueued_job AvatarCreateJob
+        end
+
+        it 'does not enqueue avatar job when updating a user having email' do
+          expect { agent.update! firstname: 'no avatar update' }.not_to have_enqueued_job AvatarCreateJob
         end
       end
     end
@@ -869,6 +990,8 @@ RSpec.describe User, type: :model do
                      'Ticket::Article::Type'              => { 'created_by_id' => 0, 'updated_by_id' => 0 },
                      'Ticket::Article::Flag'              => { 'created_by_id' => 0 },
                      'Ticket::Priority'                   => { 'created_by_id' => 0, 'updated_by_id' => 0 },
+                     'Ticket::SharedDraftStart'           => { 'created_by_id' => 1, 'updated_by_id' => 0 },
+                     'Ticket::SharedDraftZoom'            => { 'created_by_id' => 1, 'updated_by_id' => 0 },
                      'Ticket::TimeAccounting'             => { 'created_by_id' => 0 },
                      'Ticket::State'                      => { 'created_by_id' => 0, 'updated_by_id' => 0 },
                      'Ticket::Flag'                       => { 'created_by_id' => 0 },
@@ -908,10 +1031,11 @@ RSpec.describe User, type: :model do
                      'User'                               => { 'created_by_id' => 1, 'out_of_office_replacement_id' => 1, 'updated_by_id' => 1 },
                      'Organization'                       => { 'created_by_id' => 0, 'updated_by_id' => 0 },
                      'Macro'                              => { 'created_by_id' => 0, 'updated_by_id' => 0 },
+                     'CoreWorkflow'                       => { 'created_by_id' => 0, 'updated_by_id' => 0 },
                      'Mention'                            => { 'created_by_id' => 1, 'updated_by_id' => 0, 'user_id' => 1 },
                      'Channel'                            => { 'created_by_id' => 0, 'updated_by_id' => 0 },
                      'Role'                               => { 'created_by_id' => 0, 'updated_by_id' => 0 },
-                     'History'                            => { 'created_by_id' => 4 },
+                     'History'                            => { 'created_by_id' => 5 },
                      'Webhook'                            => { 'created_by_id' => 0, 'updated_by_id' => 0 },
                      'Overview'                           => { 'created_by_id' => 1, 'updated_by_id' => 0 },
                      'ActivityStream'                     => { 'created_by_id' => 0 },
@@ -939,6 +1063,8 @@ RSpec.describe User, type: :model do
       chat_session        = create(:'chat/session', user: user)
       chat_message        = create(:'chat/message', chat_session: chat_session)
       chat_message2       = create(:'chat/message', chat_session: chat_session, created_by: user)
+      draft_start         = create(:ticket_shared_draft_start, created_by: user)
+      draft_zoom          = create(:ticket_shared_draft_zoom, created_by: user)
       expect(overview.reload.user_ids).to eq([user.id])
 
       # create a chat agent for admin user (id=1) before agent user
@@ -999,6 +1125,8 @@ RSpec.describe User, type: :model do
         .to change(user_created_by, :created_by_id).to(1)
         .and change(user_created_by, :updated_by_id).to(1)
         .and change(user_created_by, :out_of_office_replacement_id).to(1)
+      expect { draft_start.reload }.to change(draft_start, :created_by_id).to(1)
+      expect { draft_zoom.reload }.to change(draft_zoom, :created_by_id).to(1)
     end
 
     it 'does delete cache after user deletion' do

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 # NOTE: Why use Mysql2::Client over ActiveRecord::Base.connection?
 #
@@ -12,7 +12,7 @@
 
 module Zammad
   class Application
-    class Initializer
+    module Initializer
       module DbPreflightCheck
         module Mysql2
           extend Base
@@ -66,9 +66,9 @@ module Zammad
           def self.min_version
             case vendor
             when 'MySQL'
-              '5.6'
+              '5.7'
             when 'MariaDB'
-              '10.0'
+              '10.3'
             end
           end
 

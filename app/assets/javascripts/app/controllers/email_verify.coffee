@@ -32,7 +32,7 @@ class Success extends App.ControllerAppContent
 
   render: =>
     @renderScreenSuccess(
-      detail: 'Woo hoo! Your email address has been verified!'
+      detail: __('Woo hoo! Your email address has been verified!')
     )
     delay = =>
       @navigate '#'
@@ -50,7 +50,7 @@ class Fail extends App.ControllerAppContent
 
   render: =>
     @renderScreenError(
-      detail: 'Unable to verify email. Please contact your administrator.'
+      detail: __('Email could not be verified. Please contact your administrator.')
     )
 
 App.Config.set('email_verify/:token', EmailVerify, 'Routes')

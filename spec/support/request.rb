@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 module ZammadSpecSupportRequest
 
@@ -70,17 +70,11 @@ module ZammadSpecSupportRequest
     password = options[:password] || user.password.to_s
     login    = options[:login] || user.login
 
-    # mock authentication otherwise login won't
-    # if user has no password (which is expensive to create)
-    if password.blank?
-      allow(User).to receive(:authenticate).with(login, '') { user.update_last_login }.and_return(user)
-    end
-
     case via
     when :api_client
       # ensure that always the correct header value is set
       # otherwise previous header configurations will be re-used
-      add_headers('X-On-Behalf-Of' => options[:on_behalf_of])
+      add_headers('From' => options[:from])
 
       # if we want to authenticate by token
       credentials = if options[:token].present?

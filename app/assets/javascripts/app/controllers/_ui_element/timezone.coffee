@@ -24,5 +24,5 @@ class App.UiElement.timezone extends App.UiElement.ApplicationUiElement
     @selectedOptions(attribute, params)
 
     attribute.tag =        'searchable_select'
-    attribute.placeholder = App.i18n.translateInline('Enter timezone...')
+    attribute.placeholder = App.i18n.translateInline('Enter time zone')
     App.UiElement.searchable_select.render(attribute)

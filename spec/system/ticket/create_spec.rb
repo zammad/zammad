@@ -1,7 +1,8 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
+require 'system/examples/core_workflow_examples'
 require 'system/examples/text_modules_examples'
 
 RSpec.describe 'Ticket Create', type: :system do
@@ -54,8 +55,8 @@ RSpec.describe 'Ticket Create', type: :system do
           expect(page).to have_no_css('span', text: 'Encrypted')
 
           security_result = Ticket::Article.last.preferences['security']
-          expect(security_result['encryption']['success']).to be nil
-          expect(security_result['sign']['success']).to be nil
+          expect(security_result['encryption']['success']).to be_nil
+          expect(security_result['sign']['success']).to be_nil
         end
       end
     end
@@ -90,8 +91,8 @@ RSpec.describe 'Ticket Create', type: :system do
             use_template(template)
 
             # wait till S/MIME check AJAX call is ready
-            expect(page).to have_css('div.js-securityEncrypt.btn--active', wait: 5)
-            expect(page).to have_css('div.js-securitySign.btn--active', wait: 5)
+            expect(page).to have_css('div.js-securityEncrypt.btn--active')
+            expect(page).to have_css('div.js-securitySign.btn--active')
 
             # deactivate encryption and signing
             click '.js-securityEncrypt'
@@ -107,8 +108,8 @@ RSpec.describe 'Ticket Create', type: :system do
             expect(page).to have_no_css('span', text: 'Encrypted')
 
             security_result = Ticket::Article.last.preferences['security']
-            expect(security_result['encryption']['success']).to be nil
-            expect(security_result['sign']['success']).to be nil
+            expect(security_result['encryption']['success']).to be_nil
+            expect(security_result['sign']['success']).to be_nil
           end
         end
 
@@ -119,8 +120,8 @@ RSpec.describe 'Ticket Create', type: :system do
             use_template(template)
 
             # wait till S/MIME check AJAX call is ready
-            expect(page).to have_css('div.js-securityEncrypt.btn--active', wait: 5)
-            expect(page).to have_css('div.js-securitySign.btn--active', wait: 5)
+            expect(page).to have_css('div.js-securityEncrypt.btn--active')
+            expect(page).to have_css('div.js-securitySign.btn--active')
 
             # deactivate encryption
             click '.js-securityEncrypt'
@@ -135,7 +136,7 @@ RSpec.describe 'Ticket Create', type: :system do
             expect(page).to have_no_css('span', text: 'Encrypted')
 
             security_result = Ticket::Article.last.preferences['security']
-            expect(security_result['encryption']['success']).to be nil
+            expect(security_result['encryption']['success']).to be_nil
             expect(security_result['sign']['success']).to be true
           end
         end
@@ -147,8 +148,8 @@ RSpec.describe 'Ticket Create', type: :system do
             use_template(template)
 
             # wait till S/MIME check AJAX call is ready
-            expect(page).to have_css('div.js-securityEncrypt.btn--active', wait: 5)
-            expect(page).to have_css('div.js-securitySign.btn--active', wait: 5)
+            expect(page).to have_css('div.js-securityEncrypt.btn--active')
+            expect(page).to have_css('div.js-securitySign.btn--active')
 
             # deactivate signing
             click '.js-securitySign'
@@ -164,7 +165,7 @@ RSpec.describe 'Ticket Create', type: :system do
 
             security_result = Ticket::Article.last.preferences['security']
             expect(security_result['encryption']['success']).to be true
-            expect(security_result['sign']['success']).to be nil
+            expect(security_result['sign']['success']).to be_nil
           end
         end
 
@@ -175,8 +176,8 @@ RSpec.describe 'Ticket Create', type: :system do
             use_template(template)
 
             # wait till S/MIME check AJAX call is ready
-            expect(page).to have_css('div.js-securityEncrypt.btn--active', wait: 5)
-            expect(page).to have_css('div.js-securitySign.btn--active', wait: 5)
+            expect(page).to have_css('div.js-securityEncrypt.btn--active')
+            expect(page).to have_css('div.js-securitySign.btn--active')
 
             click '.js-submit'
 
@@ -201,12 +202,12 @@ RSpec.describe 'Ticket Create', type: :system do
 
             it "security defaults sign: #{sign}, encrypt: #{encrypt}" do
               within(:active_content) do
-                encrypt_button = find('.js-securityEncrypt', wait: 5)
-                sign_button    = find('.js-securitySign', wait: 5)
+                encrypt_button = find('.js-securityEncrypt')
+                sign_button    = find('.js-securitySign')
 
                 active_button_class = '.btn--active'
-                expect(encrypt_button.matches_css?(active_button_class, wait: 2)).to be(encrypt)
-                expect(sign_button.matches_css?(active_button_class, wait: 2)).to be(sign)
+                expect(encrypt_button.matches_css?(active_button_class)).to be(encrypt)
+                expect(sign_button.matches_css?(active_button_class)).to be(sign)
               end
             end
           end
@@ -430,6 +431,19 @@ RSpec.describe 'Ticket Create', type: :system do
     end
   end
 
+  describe 'Core Workflow' do
+    include_examples 'core workflow' do
+      let(:object_name) { 'Ticket' }
+      let(:before_it) do
+        lambda {
+          ensure_websocket(check_if_pinged: false) do
+            visit 'ticket/create'
+          end
+        }
+      end
+    end
+  end
+
   # https://github.com/zammad/zammad/issues/2669
   context 'when canceling new ticket creation' do
     it 'closes the dialog' do
@@ -454,6 +468,444 @@ RSpec.describe 'Ticket Create', type: :system do
       end
 
       expect(page).to have_no_selector(:task_with, task_key)
+    end
+
+    it 'asks for confirmation if attachment was added' do
+      visit 'ticket/create'
+
+      within :active_content do
+        page.find('input#fileUpload_1', visible: :all).set(Rails.root.join('test/data/mail/mail001.box'))
+        await_empty_ajax_queue
+
+        find('.js-cancel').click
+      end
+
+      in_modal disappears: false do
+        expect(page).to have_text 'Tab has changed'
+      end
+    end
+  end
+
+  context 'when uploading attachment' do
+    it 'shows an error if server throws an error' do
+      allow(Store).to receive(:create!) { raise 'Error' }
+      visit 'ticket/create'
+
+      within :active_content do
+        page.find('input#fileUpload_1', visible: :all).set(Rails.root.join('test/data/mail/mail001.box'))
+      end
+
+      in_modal disappears: false do
+        expect(page).to have_text 'Error'
+      end
+    end
+  end
+
+  context 'when closing taskbar tab for new ticket creation' do
+    it 'close task bar entry after some changes in ticket create form' do
+      visit 'ticket/create'
+
+      within(:active_content) do
+        find('[name=title]').fill_in with: 'Title'
+      end
+
+      taskbar_tab_close(find(:task_active)['data-key'])
+    end
+  end
+
+  describe 'customer selection to check the field search' do
+    before do
+      create(:customer, active: true)
+      create(:customer, active: false)
+    end
+
+    it 'check for inactive customer in customer/organization selection' do
+      visit 'ticket/create'
+
+      within(:active_content) do
+        find('[name=customer_id] ~ .user-select.token-input').fill_in with: '**'
+        expect(page).to have_css('ul.recipientList > li.recipientList-entry', minimum: 2)
+        expect(page).to have_css('ul.recipientList > li.recipientList-entry.is-inactive', count: 1)
+      end
+    end
+  end
+
+  context 'when agent and customer user login after another' do
+    let(:agent) { create(:agent, password: 'test') }
+    let(:customer) { create(:customer, password: 'test') }
+
+    it 'customer user should not have agent object attributes', authenticated_as: :agent do
+      # Log out again, so that we can execute the next login.
+      logout
+
+      # Re-create agent session and fetch object attributes.
+      login(
+        username: agent.login,
+        password: 'test'
+      )
+      visit 'ticket/create'
+
+      # Re-remove local object attributes bound to the session
+      # there was an issue (#1856) where the old attribute values
+      # persisted and were stored as the original attributes.
+      logout
+
+      # Create customer session and fetch object attributes.
+      login(
+        username: customer.login,
+        password: 'test'
+      )
+
+      visit 'customer_ticket_new'
+
+      expect(page).to have_no_css('.newTicket input[name="customer_id"]')
+    end
+  end
+
+  context 'when state options have a special translation', authenticated_as: :authenticate do
+    let(:admin_de) { create(:admin, preferences: { locale: 'de-de' }) }
+
+    context 'when translated state option has a single quote' do
+      def authenticate
+        open_tranlation = Translation.where(locale: 'de-de', source: 'open')
+        open_tranlation.update(target: "off'en")
+
+        admin_de
+      end
+
+      it 'shows the translated state options correctly' do
+        visit 'ticket/create'
+
+        expect(page).to have_select('state_id', with_options: ["off'en"])
+      end
+    end
+  end
+
+  describe 'It should be possible to show attributes which are configured shown false #3726', authenticated_as: :authenticate, db_strategy: :reset do
+    let(:field_name) { SecureRandom.uuid }
+    let(:field) do
+      create :object_manager_attribute_text, name: field_name, display: field_name, screens: {
+        'create_middle' => {
+          'ticket.agent' => {
+            'shown'    => false,
+            'required' => false,
+          }
+        }
+      }
+      ObjectManager::Attribute.migration_execute
+    end
+
+    before do
+      visit 'ticket/create'
+    end
+
+    context 'when field visible' do
+      let(:workflow) do
+        create(:core_workflow,
+               object:  'Ticket',
+               perform: { "ticket.#{field_name}" => { 'operator' => 'show', 'show' => 'true' } })
+      end
+
+      def authenticate
+        field
+        workflow
+        true
+      end
+
+      it 'does show up the field' do
+        expect(page).to have_css("div[data-attribute-name='#{field_name}']")
+      end
+    end
+
+    context 'when field hidden' do
+      def authenticate
+        field
+        true
+      end
+
+      it 'does not show the field' do
+        expect(page).to have_css("div[data-attribute-name='#{field_name}'].is-hidden.is-removed", visible: :hidden)
+      end
+    end
+  end
+
+  describe 'Support workflow mechanism to do pending reminder state hide pending time use case #3790', authenticated_as: :authenticate do
+    let(:template) { create(:template, :dummy_data) }
+
+    def add_state
+      Ticket::State.create_or_update(
+        name:              'pending customer feedback',
+        state_type:        Ticket::StateType.find_by(name: 'pending reminder'),
+        ignore_escalation: true,
+        created_by_id:     1,
+        updated_by_id:     1,
+      )
+    end
+
+    def update_screens
+      attribute = ObjectManager::Attribute.get(
+        object: 'Ticket',
+        name:   'state_id',
+      )
+      attribute.data_option[:filter] = Ticket::State.by_category(:viewable).pluck(:id)
+      attribute.screens[:create_middle]['ticket.agent'][:filter] = Ticket::State.by_category(:viewable_agent_new).pluck(:id)
+      attribute.screens[:create_middle]['ticket.customer'][:filter] = Ticket::State.by_category(:viewable_customer_new).pluck(:id)
+      attribute.screens[:edit]['ticket.agent'][:filter] = Ticket::State.by_category(:viewable_agent_edit).pluck(:id)
+      attribute.screens[:edit]['ticket.customer'][:filter] = Ticket::State.by_category(:viewable_customer_edit).pluck(:id)
+      attribute.save!
+    end
+
+    def create_flow
+      create(:core_workflow,
+             object:             'Ticket',
+             condition_selected: { 'ticket.state_id'=>{ 'operator' => 'is', 'value' => Ticket::State.find_by(name: 'pending customer feedback').id.to_s } },
+             perform:            { 'ticket.pending_time'=> { 'operator' => 'remove', 'remove' => 'true' } })
+    end
+
+    def authenticate
+      add_state
+      update_screens
+      create_flow
+      template
+      true
+    end
+
+    before do
+      visit 'ticket/create'
+      use_template(template)
+    end
+
+    it 'does make it possible to create pending states where the pending time is optional and not visible' do
+      select 'pending customer feedback', from: 'state_id'
+      click '.js-submit'
+      expect(current_url).to include('ticket/zoom')
+      expect(Ticket.last.state_id).to eq(Ticket::State.find_by(name: 'pending customer feedback').id)
+      expect(Ticket.last.pending_time).to be_nil
+    end
+  end
+
+  context 'default priority', authenticated_as: :authenticate do
+    let(:template)        { create(:template, :dummy_data) }
+    let(:ticket_priority) { create(:ticket_priority, default_create: true) }
+    let(:another_priority) { Ticket::Priority.find(1) }
+    let(:priority_field)   { find('[name=priority_id]') }
+
+    def authenticate
+      template
+      ticket_priority
+      true
+    end
+
+    it 'shows default priority on load' do
+      visit 'ticket/create'
+
+      expect(priority_field.value).to eq ticket_priority.id.to_s
+    end
+
+    it 'does not reset to default priority on reload' do
+      visit 'ticket/create'
+
+      taskbar_timestamp = Taskbar.last.updated_at
+
+      priority_field.select another_priority.name
+
+      wait.until { Taskbar.last.updated_at != taskbar_timestamp }
+
+      refresh
+
+      expect(priority_field.reload.value).to eq another_priority.id.to_s
+    end
+
+    it 'saves default priority' do
+      visit 'ticket/create'
+      use_template template
+      click '.js-submit'
+
+      expect(Ticket.last).to have_attributes(priority: ticket_priority)
+    end
+
+    it 'saves different priority if overriden' do
+      visit 'ticket/create'
+      use_template template
+      priority_field.select another_priority.name
+      click '.js-submit'
+
+      expect(Ticket.last).to have_attributes(priority: another_priority)
+    end
+  end
+
+  describe 'When looking for customers, it is no longer possible to change into organizations #3815' do
+    before do
+      visit 'ticket/create'
+
+      # modal reaper ;)
+      sleep 3
+    end
+
+    context 'when less than 10 customers' do
+      let(:organization) { Organization.first }
+
+      it 'has no show more option' do
+        find('[name=customer_id_completion]').fill_in with: 'zam'
+        expect(page).to have_selector("li.js-organization[data-organization-id='#{organization.id}']")
+        page.find("li.js-organization[data-organization-id='#{organization.id}']").click
+        expect(page).to have_selector("ul.recipientList-organizationMembers[organization-id='#{organization.id}'] li.js-showMoreMembers.hidden", visible: :all)
+      end
+    end
+
+    context 'when more than 10 customers', authenticated_as: :authenticate do
+      def authenticate
+        customers
+        true
+      end
+
+      let(:organization) { create(:organization, name: 'Zammed') }
+      let(:customers) do
+        create_list(:customer, 50, organization: organization)
+      end
+
+      it 'does paginate through organization' do
+        find('[name=customer_id_completion]').fill_in with: 'zam'
+        expect(page).to have_selector("li.js-organization[data-organization-id='#{organization.id}']")
+        page.find("li.js-organization[data-organization-id='#{organization.id}']").click
+        wait.until { page.all("ul.recipientList-organizationMembers[organization-id='#{organization.id}'] li", visible: :all).count == 12 } # 10 users + back + show more button
+
+        expect(page).to have_selector("ul.recipientList-organizationMembers[organization-id='#{organization.id}'] li.js-showMoreMembers[organization-member-limit='10']")
+        scroll_into_view('li.js-showMoreMembers')
+        page.find("ul.recipientList-organizationMembers[organization-id='#{organization.id}'] li.js-showMoreMembers").click
+        wait.until { page.all("ul.recipientList-organizationMembers[organization-id='#{organization.id}'] li", visible: :all).count == 27 } # 25 users + back + show more button
+
+        expect(page).to have_selector("ul.recipientList-organizationMembers[organization-id='#{organization.id}'] li.js-showMoreMembers[organization-member-limit='25']")
+        scroll_into_view('li.js-showMoreMembers')
+        page.find("ul.recipientList-organizationMembers[organization-id='#{organization.id}'] li.js-showMoreMembers").click
+        wait.until { page.all("ul.recipientList-organizationMembers[organization-id='#{organization.id}'] li", visible: :all).count == 52 } # 50 users + back + show more button
+
+        scroll_into_view('li.js-showMoreMembers')
+        expect(page).to have_selector("ul.recipientList-organizationMembers[organization-id='#{organization.id}'] li.js-showMoreMembers.hidden", visible: :all)
+      end
+    end
+  end
+
+  describe 'Ticket create screen will loose attachments by time #3827' do
+    before do
+      visit 'ticket/create'
+    end
+
+    it 'does not loose attachments on rerender of the ui' do
+      # upload two files
+      await_empty_ajax_queue
+      page.find('input#fileUpload_1', visible: :all).set(Rails.root.join('test/data/mail/mail001.box'))
+      await_empty_ajax_queue
+      wait.until { page.all('div.attachment-delete.js-delete', visible: :all).count == 1 }
+      expect(page).to have_text('mail001.box')
+      page.find('input#fileUpload_1', visible: :all).set(Rails.root.join('test/data/mail/mail002.box'))
+      await_empty_ajax_queue
+      wait.until { page.all('div.attachment-delete.js-delete', visible: :all).count == 2 }
+      expect(page).to have_text('mail002.box')
+
+      # remove last file
+      begin
+        page.evaluate_script("$('div.attachment-delete.js-delete:last').trigger('click')") # not interactable
+      rescue # Lint/SuppressedException
+        # because its not interactable it also
+        # returns this weird exception for the jquery
+        # even tho it worked fine
+      end
+      await_empty_ajax_queue
+      wait.until { page.all('div.attachment-delete.js-delete', visible: :all).count == 1 }
+      expect(page).to have_text('mail001.box')
+      expect(page).to have_no_text('mail002.box')
+
+      # simulate rerender b
+      page.evaluate_script("App.Event.trigger('ui:rerender')")
+      expect(page).to have_text('mail001.box')
+      expect(page).to have_no_text('mail002.box')
+    end
+  end
+
+  describe 'Invalid group and owner list for tickets created via customer profile #3835' do
+    let(:invalid_ticket) { create(:ticket) }
+
+    before do
+      visit "#ticket/create/id/#{invalid_ticket.id}/customer/#{User.find_by(firstname: 'Nicole').id}"
+    end
+
+    it 'does show an empty list of owners' do
+      wait.until { page.all('select[name=owner_id] option').count == 1 }
+      expect(page.all('select[name=owner_id] option').count).to eq(1)
+    end
+  end
+
+  # https://github.com/zammad/zammad/issues/3825
+  describe 'CC token field' do
+    before do
+      visit 'ticket/create'
+
+      find('[data-type=email-out]').click
+    end
+
+    it 'can be cleared by cutting out text' do
+      add_email 'asd@example.com'
+      add_email 'def@example.com'
+
+      find('.token', text: 'def@example.com').double_click
+
+      meta_key = Gem::Platform.local.os == 'darwin' ? :command : :control
+      send_keys([meta_key, 'x'])
+
+      find('.token').click # trigger blur
+
+      expect(find('[name="cc"]', visible: :all).value).to eq 'asd@example.com'
+    end
+
+    def add_email(input)
+      fill_in 'CC', with: input
+      send_keys(:enter) # trigger blur
+      find '.token', text: input # wait for email to tokenize
+    end
+  end
+
+  describe 'No signature on new ticket if email is default message type #3844', authenticated_as: :authenticate do
+    def authenticate
+      Setting.set('ui_ticket_create_default_type', 'email-out')
+      Group.where.not(name: 'Users').each { |g| g.update(active: false) }
+      true
+    end
+
+    before do
+      visit 'ticket/create'
+    end
+
+    it 'does render the create screen with an initial core workflow state to set signatures and other defaults properly' do
+      expect(page.find('.richtext-content')).to have_text('Support')
+    end
+  end
+
+  describe 'Zammad 5 mail template double signature #3816', authenticated_as: :authenticate do
+    let(:agent_template) { create(:agent) }
+    let!(:template) do
+      create(
+        :template,
+        :dummy_data,
+        group: Group.first, owner: agent_template,
+        body: 'Content dummy.<br><br><div data-signature="true" data-signature-id="1">  Test Other Agent<br><br>--<br> Super Support - Waterford Business Park<br> 5201 Blue Lagoon Drive - 8th Floor &amp; 9th Floor - Miami, 33126 USA<br> Email: hot@example.com - Web: <a href="http://www.example.com/" rel="nofollow noreferrer noopener" target="_blank">http://www.example.com/</a><br>--</div>'
+      )
+    end
+
+    def authenticate
+      Group.first.update(signature: Signature.first)
+      true
+    end
+
+    before do
+      visit 'ticket/create'
+      find('[data-type=email-out]').click
+    end
+
+    it 'does not show double signature on template usage' do
+      select Group.first.name, from: 'group_id'
+      use_template(template)
+      expect(page).to have_no_text('Test Other Agent')
     end
   end
 end

@@ -1,7 +1,7 @@
 <div class="login branding centered darkBackground vertical">
   <% if @maintananceChange: %>
     <% if @C('maintenance_mode'): %>
-      <div class="hero-unit alert alert--danger"><%- @T('Zammad is currently in maintenance mode. Only administrators can login. Please wait until the maintenance window is over.') %></div>
+      <div class="hero-unit alert alert--danger"><%- @T('Zammad is currently in maintenance mode. Only administrators can log in. Please wait until the maintenance window is over.') %></div>
     <% end %>
 
     <% if !@logoChange || @C('maintenance_login'): %>

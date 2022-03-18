@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Sequencer
   class Unit
@@ -15,9 +15,11 @@ class Sequencer
               return response if response.is_a? Net::HTTPOK
 
               handle_error response, iteration
-            rescue => e
+            rescue Net::HTTPClientError => e
               handle_exception e, iteration
             end
+
+            nil
           end
 
           def handle_error(response, iteration)
@@ -34,7 +36,7 @@ class Sequencer
 
           def handle_exception(e, iteration)
             logger.error e
-            logger.info "Sleeping 10 seconds after #{e.name} and retry (##{iteration + 1}/10)."
+            logger.info "Sleeping 10 seconds after #{e.class.name} and retry (##{iteration + 1}/10)."
             sleep 10
           end
 

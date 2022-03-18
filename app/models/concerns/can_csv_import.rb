@@ -1,6 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
-
-require 'csv'
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 module CanCsvImport
   extend ActiveSupport::Concern
@@ -59,6 +57,7 @@ returns
         raise Exceptions::UnprocessableEntity, "Unable to read file '#{data[:file]}': #{e.inspect}"
       end
 
+      require 'csv' # Only load it when it's really needed to save memory.
       header, *rows = ::CSV.parse(data[:string], **data[:parse_params])
 
       header&.each do |column|
@@ -246,20 +245,20 @@ returns
       records.each do |record|
         record_attributes_with_association_names = record.attributes_with_association_names
         records_attributes_with_association_names.push record_attributes_with_association_names
-        record_attributes_with_association_names.each do |key, value|
-          next if value.instance_of?(ActiveSupport::HashWithIndifferentAccess)
-          next if value.instance_of?(Hash)
-          next if csv_attributes_ignored&.include?(key.to_sym)
-          next if key.end_with?('_id')
-          next if key.end_with?('_ids')
-          next if key == 'created_by'
-          next if key == 'updated_by'
-          next if key == 'created_at'
-          next if key == 'updated_at'
-          next if header.include?(key)
+      end
+      new.attributes_with_association_names(empty_keys: true).each do |key, value|
+        next if value.instance_of?(ActiveSupport::HashWithIndifferentAccess)
+        next if value.instance_of?(Hash)
+        next if csv_attributes_ignored&.include?(key.to_sym)
+        next if key.end_with?('_id')
+        next if key.end_with?('_ids')
+        next if key == 'created_by'
+        next if key == 'updated_by'
+        next if key == 'created_at'
+        next if key == 'updated_at'
+        next if header.include?(key)
 
-          header.push key
-        end
+        header.push key
       end
 
       rows = []
@@ -296,6 +295,8 @@ returns
         end
         rows_to_add = []
       end
+
+      require 'csv' # Only load it when it's really needed to save memory.
       ::CSV.generate(**params) do |csv|
         csv << header
         rows.each do |row|

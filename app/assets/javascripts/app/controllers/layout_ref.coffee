@@ -8,7 +8,7 @@ class LayoutRef extends App.ControllerAppContent
 
 App.Config.set('layout_ref', LayoutRef, 'Routes')
 
-
+# coffeelint: disable=detect_translatable_string
 class Content extends App.ControllerAppContent
   events:
     'hide.bs.dropdown .js-recipientDropdown': 'hideOrganizationMembers'
@@ -652,7 +652,7 @@ class ReferenceSetupWizard extends App.ControllerWizard
     }
 
     @agentEmail.add(@agentFirstName).add(@agentLastName).val('')
-    @agentFirstName.focus()
+    @agentFirstName.trigger('focus')
 
 App.Config.set( 'layout_ref/setup', ReferenceSetupWizard, 'Routes' )
 
@@ -709,7 +709,7 @@ class RichText extends App.ControllerAppContent
         App.Utils.htmlCleanup(textarea)
 
         # remove marker for cursor
-        textarea.find('[data-cursor=1]').focus()
+        textarea.find('[data-cursor=1]').trigger('focus')
         textarea.find('[data-cursor=1]').remove()
       @delay( execute, 1)
 
@@ -953,11 +953,11 @@ class TicketZoomRef extends App.ControllerAppContent
       @closeDropdown()
     else
       @buttonDropdown.addClass 'is-open'
-      $(document).bind 'click.buttonDropdown', @closeDropdown
+      $(document).on 'click.buttonDropdown', @closeDropdown
 
   closeDropdown: =>
     @buttonDropdown.removeClass 'is-open'
-    $(document).unbind 'click.buttonDropdown'
+    $(document).off 'click.buttonDropdown'
 
   performTicketMacro: (event) =>
     console.log 'perform action', @$(event.currentTarget).text()
@@ -1364,7 +1364,7 @@ class SlaRef extends App.ControllerAppContent
       head: 'Service Level Agreement (SLA)'
       headPrefox: 'New'
       contentInline: App.view('layout_ref/sla_modal')()
-      buttonSubmit: 'Create SLA'
+      buttonSubmit: __('Create SLA')
       shown: true
       buttonCancel: true
       container: @el
@@ -1403,7 +1403,7 @@ class SchedulersRef extends App.ControllerAppContent
     new App.ControllerModal
       head: 'Scheduler'
       headPrefix: 'New'
-      buttonSubmit: 'Create'
+      buttonSubmit: __('Create')
       buttonCancel: true
       contentInline: App.view('layout_ref/scheduler_modal')()
       shown: true
@@ -1414,7 +1414,7 @@ class SchedulersRef extends App.ControllerAppContent
 
     if target.hasClass('is-selected')
       # prevent zero selections
-      if target.siblings('.is-selected').size() > 0
+      if target.siblings('.is-selected').length > 0
         target.removeClass('is-selected')
     else
       target.addClass('is-selected')
@@ -1473,7 +1473,7 @@ class InputsRef extends App.ControllerAppContent
       attribute:
         name:        'project-name'
         id:          'project-name-123'
-        placeholder: 'Enter Project Name'
+        placeholder: __('Enter Project Name')
         options:     [{value:0,name:'Apple',selected:true},
         {value:1,name:'Microsoft',selected:true},
         {value:2,name:'Google'},
@@ -1500,7 +1500,7 @@ class InputsRef extends App.ControllerAppContent
       attribute:
         name:        'user'
         id:          'user-123'
-        placeholder: 'Enter User'
+        placeholder: __('Enter User')
         limt:        10
         object:      'User'
 
@@ -1510,7 +1510,7 @@ class InputsRef extends App.ControllerAppContent
     userOrganizationAutocomplete = new App.UserOrganizationAutocompletion
       attribute:
         name: 'customer_id'
-        display: 'Customer'
+        display: __('Customer')
         tag: 'user_autocompletion'
         type: 'text'
         limit: 200
@@ -1533,7 +1533,7 @@ class InputsRef extends App.ControllerAppContent
     @$('.js-datepicker3').datepicker(
       todayHighlight: true
       startDate: new Date()
-      format: App.i18n.timeFormat().date
+      format: App.i18n.timeFormat()['FORMAT_DATE']
       rtl: App.i18n.dir() is 'rtl'
       container: @$('.js-datepicker3').parent()
     )
@@ -1542,7 +1542,7 @@ class InputsRef extends App.ControllerAppContent
     @$('.js-datepicker4').datepicker(
       todayHighlight: true
       startDate: new Date()
-      format: App.i18n.timeFormat().date
+      format: App.i18n.timeFormat()['FORMAT_DATE']
       rtl: App.i18n.dir() is 'rtl'
       container: @$('.js-datepicker4').parent()
     )
@@ -1737,7 +1737,7 @@ class MergeCustomerRef extends App.ControllerAppContent
       head: "#{@mergeSource.firstname} #{@mergeSource.lastname}"
       headPrefix: 'Merge'
       contentInline: App.view('layout_ref/merge_customer')()
-      buttonSubmit: 'Merge'
+      buttonSubmit: __('Merge')
       buttonCancel: true
       container: @el
 
@@ -2053,7 +2053,7 @@ class ChatWindowRef extends Spine.Controller
     switch event.keyCode
       when TABKEY
         allChatInputs = $('.js-customerChatInput').not('[disabled="disabled"]')
-        chatCount = allChatInputs.size()
+        chatCount = allChatInputs.length
         index = allChatInputs.index(@input)
 
         if chatCount > 1
@@ -2333,7 +2333,7 @@ class KnowledgeBaseAgentReaderRef extends App.ControllerAppContent
     if $(event.currentTarget).is('.btn--primary')
       @el.find('.main[data-level]').addClass('hidden')
       @el.find('[data-level~="search"]').removeClass('hidden')
-      @searchInput.focus()
+      @searchInput.trigger('focus')
     else
       @el.find("[data-level~=\"#{@currentLevel}\"]").removeClass('hidden')
       @el.find('[data-level~="search"]').addClass('hidden')
@@ -2405,14 +2405,14 @@ class KnowledgeBaseLinkAnswerToAnswerRef extends App.ControllerAppContent
           {
             name: 'translation::title'
             model: 'translation'
-            display: 'Title'
+            display: __('Title')
             tag: 'input'
             grid_width: '1/2'
           }
           {
             name: 'category_id'
             model: 'answer'
-            display: 'Category'
+            display: __('Category')
             tag: 'select'
             null: true
             options: [
@@ -2430,7 +2430,7 @@ class KnowledgeBaseLinkAnswerToAnswerRef extends App.ControllerAppContent
           {
             name: 'translation::content::body'
             model: 'translation'
-            display: 'Content'
+            display: __('Content')
             tag: 'richtext'
             buttons: [
               'link'

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'test_helper'
 
@@ -58,7 +58,7 @@ class NotificationFactoryRendererTest < ActiveSupport::TestCase
       timezone: 'Europe/Berlin',
       template: template,
     ).render
-    assert_equal('11/12/2016 13:00 (Europe/Berlin)', result)
+    assert_equal('11/12/2016  1:00 pm (Europe/Berlin)', result)
 
     template = "\#{ticket.created_by.firstname}"
     result = described_class.new(
@@ -80,7 +80,7 @@ class NotificationFactoryRendererTest < ActiveSupport::TestCase
       timezone: 'Europe/Berlin',
       template: template,
     ).render
-    assert_equal('11/12/2016 15:00 (Europe/Berlin)', result)
+    assert_equal('11/12/2016  3:00 pm (Europe/Berlin)', result)
 
     template = "\#{ticket.updated_by.firstname}"
     result = described_class.new(
@@ -246,7 +246,7 @@ class NotificationFactoryRendererTest < ActiveSupport::TestCase
 
   test 'translation' do
 
-    #template = "<%= t 'new' %>"
+    # template = "<%= t 'new' %>"
     template = "\#{t('new')}"
     result = described_class.new(
       objects:  {

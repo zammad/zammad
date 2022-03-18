@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Cti::Driver::Base
 
@@ -32,7 +32,7 @@ class Cti::Driver::Base
       return result
     end
 
-    # set caller id of outbound call
+    # set caller ID of outbound call
     result = caller_id_rewrite(@params)
     if result.present? && result[:action] == 'set_caller_id'
       @params['from'] = result[:params][:from_caller_id]
@@ -41,12 +41,14 @@ class Cti::Driver::Base
     end
 
     log = Cti::Log.process(@params)
+    if log.present?
 
-    # push new call notification
-    push_incoming_call(log)
+      # push new call notification
+      push_incoming_call(log)
 
-    # open screen if call got answered
-    push_open_ticket_screen(log)
+      # open screen if call got answered
+      push_open_ticket_screen(log)
+    end
 
     result || {}
   end
@@ -71,7 +73,7 @@ class Cti::Driver::Base
     config_inbound = @config[:inbound] || {}
     block_caller_ids = config_inbound[:block_caller_ids] || []
 
-    # check if call need to be blocked
+    # check if call needs to be blocked
     block_caller_ids.each do |item|
       next if item[:caller_id] != @params['from']
 
@@ -154,7 +156,7 @@ class Cti::Driver::Base
       end
     end
 
-    id = rand(999_999_999)
+    id = SecureRandom.uuid
     PushMessages.send_to(user.id, {
                            event: 'remote_task',
                            data:  {

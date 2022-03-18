@@ -1,19 +1,19 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'browser_test_helper'
 
 class AgentTicketActionLevel0Test < TestCase
 
   def test_aaa_agent_ticket_create_with_one_group
-    agent = "bob.smith_one_group#{rand(99_999_999)}"
+    agent = "bob.smith_one_group#{SecureRandom.uuid}"
 
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     # create new ticket
     ticket_create(
@@ -35,7 +35,7 @@ class AgentTicketActionLevel0Test < TestCase
       },
     )
 
-    tasks_close_all()
+    tasks_close_all
 
     # invite agent (with one group)
     click(css: '#navigation a[href="#dashboard"]')
@@ -45,7 +45,7 @@ class AgentTicketActionLevel0Test < TestCase
       value: 'Configuration',
     )
     click(css: '.active.content .js-inviteAgent')
-    modal_ready()
+    modal_ready
     set(
       css:   '.modal [name="firstname"]',
       value: 'Bob',
@@ -58,16 +58,11 @@ class AgentTicketActionLevel0Test < TestCase
       css:   '.modal [name="email"]',
       value: "#{agent}@example.com",
     )
-    exists(
-      displayed: false,
-      css:       '.modal .js-groupList',
-    )
-    exists(
-      css: '.modal .js-groupListItem[value=full]:checked',
-    )
+    check(css: '.modal .js-groupListItem[value=full]')
     click(
       css:  '.modal button.btn.btn--primary',
       fast: true,
+      ajax: false,
     )
     watch_for(
       css:   'body div.modal',
@@ -85,7 +80,7 @@ class AgentTicketActionLevel0Test < TestCase
       value: 'Configuration',
     )
     click(css: '.active.content .js-inviteAgent')
-    modal_ready()
+    modal_ready
     set(
       css:   '.modal [name="firstname"]',
       value: 'Bob2',
@@ -99,35 +94,12 @@ class AgentTicketActionLevel0Test < TestCase
       value: "#{agent}2@example.com",
     )
 
-    # disable agent role
-    uncheck(
-      css: '.modal [name="role_ids"][value=2]',
-    )
-
-    exists(
-      displayed: false,
-      css:       '.modal .js-groupList',
-    )
-    exists_not(
-      css: '.modal .js-groupListItem[value=full]:checked',
-    )
-
-    # enable agent role
-    check(
-      css: '.modal [name="role_ids"][value=2]',
-    )
-
-    exists(
-      displayed: false,
-      css:       '.modal .js-groupList',
-    )
-    exists(
-      css: '.modal .js-groupListItem[value=full]:checked',
-    )
+    check(css: '.modal .js-groupListItem[value=full]')
 
     click(
       css:  '.modal button.btn.btn--primary',
       fast: true,
+      ajax: false,
     )
     watch_for(
       css:   'body div.modal',
@@ -138,7 +110,7 @@ class AgentTicketActionLevel0Test < TestCase
       value: 'Sending',
     )
 
-    tasks_close_all()
+    tasks_close_all
 
   end
 
@@ -198,7 +170,7 @@ class AgentTicketActionLevel0Test < TestCase
       value: 'one group - some body 1234 äöüß',
     )
 
-    tasks_close_all()
+    tasks_close_all
 
   end
 
@@ -206,18 +178,18 @@ class AgentTicketActionLevel0Test < TestCase
 
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     group_create(
       data: {
-        name:   "some group #{rand(999_999_999)}",
+        name:   "some group #{SecureRandom.uuid}",
         member: [
           {
-            login:  'master@example.com',
+            login:  'admin@example.com',
             access: 'full',
           },
           {
@@ -250,7 +222,7 @@ class AgentTicketActionLevel0Test < TestCase
       },
     )
 
-    tasks_close_all()
+    tasks_close_all
 
   end
 

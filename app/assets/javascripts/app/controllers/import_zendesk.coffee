@@ -23,9 +23,9 @@ class ImportZendesk extends App.ControllerWizardFullScreen
     super
 
     # set title
-    @title 'Import'
+    @title __('Import')
 
-    # redirect to login if master user already exists
+    # redirect to login if admin user already exists
     if @Config.get('system_init_done')
       @navigate '#login'
       return
@@ -163,7 +163,7 @@ class ImportZendesk extends App.ControllerWizardFullScreen
           @$('.js-error').addClass('hide')
 
         if !_.isEmpty(data.finished_at) && _.isEmpty(data.result['error'])
-          window.location.reload()
+          @redirectToLogin()
           return
 
         if !_.isEmpty(data.result)
@@ -188,8 +188,8 @@ class ImportZendesk extends App.ControllerWizardFullScreen
 
 App.Config.set('import/zendesk', ImportZendesk, 'Routes')
 App.Config.set('zendesk', {
-  title: 'Zendesk'
-  name:  'Zendesk'
+  title: __('Zendesk')
+  name:  __('Zendesk')
   class: 'js-zendesk'
   url:   '#import/zendesk'
 }, 'ImportPlugins')

@@ -20,14 +20,14 @@ class PasswordReset extends App.ControllerFullPage
       return
 
     # set title
-    @title 'Reset Password'
+    @title __('Reset Password')
     @navupdate '#password_reset'
 
     @render()
 
   render: (params) ->
     configure_attributes = [
-      { name: 'username', display: 'Enter your username or email address', tag: 'input', type: 'text', limit: 100, null: false, class: 'input span4' }
+      { name: 'username', display: __('Enter your username or email address'), tag: 'input', type: 'text', limit: 100, null: false, class: 'input span4' }
     ]
 
     @replaceWith(App.view('password/reset')(params))

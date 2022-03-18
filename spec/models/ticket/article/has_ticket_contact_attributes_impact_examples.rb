@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 RSpec.shared_examples 'Ticket::Article::HasTicketContactAttributesImpact' do
 
@@ -39,7 +39,7 @@ RSpec.shared_examples 'Ticket::Article::HasTicketContactAttributesImpact' do
                },
              })
     end
-    let(:sla) { create(:sla, calendar: calendar, first_response_time: 60, update_time: 120, solution_time: 180) }
+    let(:sla) { create(:sla, calendar: calendar, first_response_time: 60, response_time: 120, solution_time: 180) }
 
     before do
       sla
@@ -174,7 +174,7 @@ RSpec.shared_examples 'Ticket::Article::HasTicketContactAttributesImpact' do
                })
       end
 
-      let(:sla) { create(:sla, condition: {}, calendar: calendar, first_response_time: 60, update_time: 120, solution_time: nil) }
+      let(:sla) { create(:sla, condition: {}, calendar: calendar, first_response_time: 60, response_time: 120, solution_time: nil) }
 
       before do
         sla
@@ -252,7 +252,7 @@ RSpec.shared_examples 'Ticket::Article::HasTicketContactAttributesImpact' do
                })
       end
 
-      let(:sla) { create(:sla, condition: {}, calendar: calendar, first_response_time: 60, update_time: 120, solution_time: nil) }
+      let(:sla) { create(:sla, condition: {}, calendar: calendar, first_response_time: 60, response_time: 120, solution_time: nil) }
 
       before do
         Setting.set('ticket_last_contact_behaviour', 'based_on_customer_reaction')

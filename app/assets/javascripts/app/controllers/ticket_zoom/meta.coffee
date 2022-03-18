@@ -1,4 +1,7 @@
 class App.TicketZoomMeta extends App.ControllerObserver
+  @extend App.PopoverProvidable
+  @registerPopovers 'Escalation'
+
   model: 'Ticket'
   observe:
     number: true
@@ -10,3 +13,4 @@ class App.TicketZoomMeta extends App.ControllerObserver
       ticket:     ticket
       isCustomer: ticket.currentView() is 'customer'
     )
+    @renderPopovers()

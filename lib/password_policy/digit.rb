@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class PasswordPolicy
   class Digit < PasswordPolicy::Backend
@@ -10,7 +10,7 @@ class PasswordPolicy
     end
 
     def error
-      ['Invalid password, it must contain at least 1 digit!']
+      [__('Invalid password, it must contain at least 1 digit!')]
     end
 
     def self.applicable?

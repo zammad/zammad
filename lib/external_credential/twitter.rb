@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class ExternalCredential::Twitter
 
@@ -8,7 +8,7 @@ class ExternalCredential::Twitter
 
   def self.request_account_to_link(credentials = {}, app_required = true)
     external_credential = ExternalCredential.find_by(name: 'twitter')
-    raise Exceptions::UnprocessableEntity, 'No twitter app configured!' if !external_credential && app_required
+    raise Exceptions::UnprocessableEntity, __('No Twitter app configured!') if !external_credential && app_required
 
     if external_credential
       if credentials[:consumer_key].blank?
@@ -19,8 +19,8 @@ class ExternalCredential::Twitter
       end
     end
 
-    raise Exceptions::UnprocessableEntity, 'No consumer_key param!' if credentials[:consumer_key].blank?
-    raise Exceptions::UnprocessableEntity, 'No consumer_secret param!' if credentials[:consumer_secret].blank?
+    raise Exceptions::UnprocessableEntity, __('No consumer_key param!') if credentials[:consumer_key].blank?
+    raise Exceptions::UnprocessableEntity, __('No consumer_secret param!') if credentials[:consumer_secret].blank?
 
     consumer = OAuth::Consumer.new(
       credentials[:consumer_key],
@@ -49,9 +49,9 @@ class ExternalCredential::Twitter
 
   def self.link_account(request_token, params)
     external_credential = ExternalCredential.find_by(name: 'twitter')
-    raise Exceptions::UnprocessableEntity, 'No twitter app configured!' if !external_credential
-    raise Exceptions::UnprocessableEntity, 'No request_token for session found!' if !request_token
-    raise Exceptions::UnprocessableEntity, 'Invalid oauth_token given!' if request_token.params[:oauth_token] != params[:oauth_token]
+    raise Exceptions::UnprocessableEntity, __('No Twitter app configured!') if !external_credential
+    raise Exceptions::UnprocessableEntity, __('No request_token for session found!') if !request_token
+    raise Exceptions::UnprocessableEntity, __('Invalid oauth_token given!') if request_token.params[:oauth_token] != params[:oauth_token]
 
     access_token = request_token.get_access_token(oauth_verifier: params[:oauth_verifier])
     client = TwitterSync.new(
@@ -132,10 +132,10 @@ class ExternalCredential::Twitter
   def self.register_webhook(params)
     request_account_to_link(params, false)
 
-    raise Exceptions::UnprocessableEntity, 'No consumer_key param!' if params[:consumer_key].blank?
-    raise Exceptions::UnprocessableEntity, 'No consumer_secret param!' if params[:consumer_secret].blank?
-    raise Exceptions::UnprocessableEntity, 'No oauth_token param!' if params[:oauth_token].blank?
-    raise Exceptions::UnprocessableEntity, 'No oauth_token_secret param!' if params[:oauth_token_secret].blank?
+    raise Exceptions::UnprocessableEntity, __('No consumer_key param!') if params[:consumer_key].blank?
+    raise Exceptions::UnprocessableEntity, __('No consumer_secret param!') if params[:consumer_secret].blank?
+    raise Exceptions::UnprocessableEntity, __('No oauth_token param!') if params[:oauth_token].blank?
+    raise Exceptions::UnprocessableEntity, __('No oauth_token_secret param!') if params[:oauth_token_secret].blank?
 
     return if params[:env].blank?
 

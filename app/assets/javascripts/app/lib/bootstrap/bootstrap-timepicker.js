@@ -1008,7 +1008,7 @@
     },
 
     updateElement: function() {
-      this.$element.val(this.getTime()).change();
+      this.$element.val(this.getTime()).trigger('change');
     },
 
     updateFromElementVal: function(silent) {

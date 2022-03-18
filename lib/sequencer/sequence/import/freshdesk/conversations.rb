@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Sequencer
   class Sequence
@@ -8,7 +8,7 @@ class Sequencer
 
           def self.sequence
             [
-              'Sequencer::Unit::Import::Freshdesk::Request',
+              'Import::Freshdesk::Request',
               'Import::Freshdesk::Resources',
               'Import::Freshdesk::ModelClass',
               'Import::Freshdesk::Perform',

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Capybara::Node::Element
 
@@ -54,6 +54,12 @@ module ZammadCapybarActionDelegator
     end
   end
 
+  def click_link(...)
+    super.tap do
+      await_empty_ajax_queue
+    end
+  end
+
   def click_link_or_button(...)
     super.tap do
       await_empty_ajax_queue
@@ -76,6 +82,18 @@ module ZammadCapybarActionDelegator
     super.tap do
       await_empty_ajax_queue
     end
+  end
+
+  def hot_keys
+    mac_platform? ? %i[control alt] : %i[control shift]
+  end
+
+  def magic_key
+    mac_platform? ? :command : :control
+  end
+
+  def mac_platform?
+    Gem::Platform.local.os.eql? 'darwin'
   end
 end
 

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class SecureMailing
   include ::Mixin::HasBackends
@@ -10,9 +10,11 @@ class SecureMailing
   end
 
   def self.retry(article)
+    result = []
     active_backends.each do |backend|
-      "#{backend}::Retry".constantize.process(article)
+      result << "#{backend}::Retry".constantize.process(article)
     end
+    result
   end
 
   def self.outgoing(mail, security)

@@ -8,8 +8,8 @@ class App.UiElement.active extends App.UiElement.ApplicationUiElement
 
     # build options list
     attribute.options = [
-      { name: 'active', value: true }
-      { name: 'inactive', value: false }
+      { name: __('active'), value: true }
+      { name: __('inactive'), value: false }
     ]
 
     # build options list based on config

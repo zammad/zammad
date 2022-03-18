@@ -1,11 +1,11 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 require 'models/application_model_examples'
 require 'models/concerns/can_be_imported_examples'
 require 'models/concerns/can_csv_import_examples'
 require 'models/concerns/has_history_examples'
-require 'models/concerns/has_object_manager_attributes_validation_examples'
+require 'models/concerns/has_object_manager_attributes_examples'
 require 'models/ticket/article/has_ticket_contact_attributes_impact_examples'
 
 RSpec.describe Ticket::Article, type: :model do
@@ -15,7 +15,7 @@ RSpec.describe Ticket::Article, type: :model do
   it_behaves_like 'CanBeImported'
   it_behaves_like 'CanCsvImport'
   it_behaves_like 'HasHistory'
-  it_behaves_like 'HasObjectManagerAttributesValidation'
+  it_behaves_like 'HasObjectManagerAttributes'
 
   it_behaves_like 'Ticket::Article::HasTicketContactAttributesImpact'
 
@@ -85,13 +85,18 @@ RSpec.describe Ticket::Article, type: :model do
     describe 'XSS protection:' do
       subject(:article) { create(:ticket_article, body: body, content_type: 'text/html') }
 
+      before do
+        # XSS processing may run into a timeout on slow CI systems, so turn the timeout off for the test.
+        stub_const("#{HtmlSanitizer}::PROCESSING_TIMEOUT", nil)
+      end
+
       context 'when body contains only injected JS' do
         let(:body) { <<~RAW.chomp }
-          <script type="text/javascript">alert("XSS!");</script>
+          <script type="text/javascript">alert("XSS!");</script> some other text
         RAW
 
         it 'removes <script> tags' do
-          expect(article.body).to eq('alert("XSS!");')
+          expect(article.body).to eq(' some other text')
         end
       end
 
@@ -102,7 +107,7 @@ RSpec.describe Ticket::Article, type: :model do
 
         it 'removes <script> tags' do
           expect(article.body).to eq(<<~SANITIZED.chomp)
-            please tell me this doesn't work: alert("XSS!");
+            please tell me this doesn't work:#{' '}
           SANITIZED
         end
       end
@@ -514,44 +519,38 @@ RSpec.describe Ticket::Article, type: :model do
                                   type:         Ticket::Article::Type.find_by(name: 'email'),
                                   content_type: 'text/html',
                                   body:         '<img src="cid:15.274327094.140938@zammad.example.com"> some text',)
-          Store.add(
-            object:        'Ticket::Article',
-            o_id:          article_parent.id,
-            data:          'content_file1_normally_should_be_an_image',
-            filename:      'some_file1.jpg',
-            preferences:   {
-              'Content-Type'        => 'image/jpeg',
-              'Mime-Type'           => 'image/jpeg',
-              'Content-ID'          => '15.274327094.140938@zammad.example.com',
-              'Content-Disposition' => 'inline',
-            },
-            created_by_id: 1,
-          )
-          Store.add(
-            object:        'Ticket::Article',
-            o_id:          article_parent.id,
-            data:          'content_file2_normally_should_be_an_image',
-            filename:      'some_file2.jpg',
-            preferences:   {
-              'Content-Type'        => 'image/jpeg',
-              'Mime-Type'           => 'image/jpeg',
-              'Content-ID'          => '15.274327094.140938_not_reffered@zammad.example.com',
-              'Content-Disposition' => 'inline',
-            },
-            created_by_id: 1,
-          )
-          Store.add(
-            object:        'Ticket::Article',
-            o_id:          article_parent.id,
-            data:          'content_file3_normally_should_be_an_image',
-            filename:      'some_file3.jpg',
-            preferences:   {
-              'Content-Type'        => 'image/jpeg',
-              'Mime-Type'           => 'image/jpeg',
-              'Content-Disposition' => 'attached',
-            },
-            created_by_id: 1,
-          )
+          create(:store,
+                 object:      'Ticket::Article',
+                 o_id:        article_parent.id,
+                 data:        'content_file1_normally_should_be_an_image',
+                 filename:    'some_file1.jpg',
+                 preferences: {
+                   'Content-Type'        => 'image/jpeg',
+                   'Mime-Type'           => 'image/jpeg',
+                   'Content-ID'          => '15.274327094.140938@zammad.example.com',
+                   'Content-Disposition' => 'inline',
+                 })
+          create(:store,
+                 object:      'Ticket::Article',
+                 o_id:        article_parent.id,
+                 data:        'content_file2_normally_should_be_an_image',
+                 filename:    'some_file2.jpg',
+                 preferences: {
+                   'Content-Type'        => 'image/jpeg',
+                   'Mime-Type'           => 'image/jpeg',
+                   'Content-ID'          => '15.274327094.140938_not_reffered@zammad.example.com',
+                   'Content-Disposition' => 'inline',
+                 })
+          create(:store,
+                 object:      'Ticket::Article',
+                 o_id:        article_parent.id,
+                 data:        'content_file3_normally_should_be_an_image',
+                 filename:    'some_file3.jpg',
+                 preferences: {
+                   'Content-Type'        => 'image/jpeg',
+                   'Mime-Type'           => 'image/jpeg',
+                   'Content-Disposition' => 'attached',
+                 })
           article_new = create(:ticket_article)
           UserInfo.current_user_id = 1
 
@@ -571,51 +570,45 @@ RSpec.describe Ticket::Article, type: :model do
                                   type:         Ticket::Article::Type.find_by(name: 'email'),
                                   content_type: 'text/html',
                                   body:         '<img src="cid:15.274327094.140938@zammad.example.com"> some text',)
-          Store.add(
-            object:        'Ticket::Article',
-            o_id:          article_parent.id,
-            data:          'content_file1_normally_should_be_an_image',
-            filename:      'some_file1.jpg',
-            preferences:   {
-              'Content-Type'        => 'image/jpeg',
-              'Mime-Type'           => 'image/jpeg',
-              'Content-ID'          => '15.274327094.140938@zammad.example.com',
-              'Content-Disposition' => 'inline',
-            },
-            created_by_id: 1,
-          )
-          Store.add(
-            object:        'Ticket::Article',
-            o_id:          article_parent.id,
-            data:          'content_file2_normally_should_be_an_image',
-            filename:      'some_file2.jpg',
-            preferences:   {
-              'Content-Type'        => 'image/jpeg',
-              'Mime-Type'           => 'image/jpeg',
-              'Content-ID'          => '15.274327094.140938_not_reffered@zammad.example.com',
-              'Content-Disposition' => 'inline',
-            },
-            created_by_id: 1,
-          )
+          create(:store,
+                 object:      'Ticket::Article',
+                 o_id:        article_parent.id,
+                 data:        'content_file1_normally_should_be_an_image',
+                 filename:    'some_file1.jpg',
+                 preferences: {
+                   'Content-Type'        => 'image/jpeg',
+                   'Mime-Type'           => 'image/jpeg',
+                   'Content-ID'          => '15.274327094.140938@zammad.example.com',
+                   'Content-Disposition' => 'inline',
+                 })
+          create(:store,
+                 object:      'Ticket::Article',
+                 o_id:        article_parent.id,
+                 data:        'content_file2_normally_should_be_an_image',
+                 filename:    'some_file2.jpg',
+                 preferences: {
+                   'Content-Type'        => 'image/jpeg',
+                   'Mime-Type'           => 'image/jpeg',
+                   'Content-ID'          => '15.274327094.140938_not_reffered@zammad.example.com',
+                   'Content-Disposition' => 'inline',
+                 })
 
           # #2483 - #{article.body_as_html} now includes attachments (e.g. PDFs)
           # Regular attachments do not get assigned a Content-ID, and should not be copied in this use case
-          Store.add(
-            object:        'Ticket::Article',
-            o_id:          article_parent.id,
-            data:          'content_file3_with_no_content_id',
-            filename:      'some_file3.jpg',
-            preferences:   {
-              'Content-Type' => 'image/jpeg',
-              'Mime-Type'    => 'image/jpeg',
-            },
-            created_by_id: 1,
-          )
+          create(:store,
+                 object:      'Ticket::Article',
+                 o_id:        article_parent.id,
+                 data:        'content_file3_with_no_content_id',
+                 filename:    'some_file3.jpg',
+                 preferences: {
+                   'Content-Type' => 'image/jpeg',
+                   'Mime-Type'    => 'image/jpeg',
+                 })
 
           article_new = create(:ticket_article)
           UserInfo.current_user_id = 1
 
-          attachments = article_parent.clone_attachments(article_new.class.name, article_new.id, only_inline_attachments: true )
+          attachments = article_parent.clone_attachments(article_new.class.name, article_new.id, only_inline_attachments: true)
 
           expect(attachments.count).to eq(1)
           expect(attachments[0].filename).to eq('some_file1.jpg')

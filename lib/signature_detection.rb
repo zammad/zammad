@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 module SignatureDetection
 
@@ -46,6 +46,9 @@ returns
       match_content = diff_lines[sig_range.first..sig_range.last]
                         .map { |l| l.sub(%r{^.}, '') }
                         .first(10).join("\n")
+
+      # Invalid html signature detection for exchange warning boxes #3571
+      next if match_content.include?('CAUTION:')
 
       # Add this substring to the signature_candidates hash and increment its match score
       signature_candidates[match_content] += 1

@@ -1,7 +1,7 @@
-# Artifacts are stored for failed jobs for 2 days
+# Artifacts are stored for failed jobs
 .artifacts_error: &artifacts_error
   artifacts:
-    expire_in: 2 days
+    expire_in: 1 week
     when: on_failure
     paths:
     - tmp/screenshot*
@@ -13,9 +13,40 @@
     ES_INDEX_RAND: "true"
     ES_URL: "http://elasticsearch:9200"
 
+.variables_redis_memcached: &variables_redis_memcached
+  variables:
+    REDIS_URL: "redis://redis:6379"
+    MEMCACHE_SERVERS: "memcached"
+
+.variables_selenium_firefox: &variables_selenium_firefox
+  variables:
+    REMOTE_URL: "http://selenium-firefox:4444/wd/hub"
+    BROWSER: "firefox"
+    BROWSER_HEADLESS: "true"
+    START_XVFB: "false" # not needed for headless mode
+    SE_NODE_MAX_SESSIONS: "5"
+    SE_NODE_OVERRIDE_MAX_SESSIONS: "true"
+
+.variables_selenium_chrome: &variables_selenium_chrome
+  variables:
+    REMOTE_URL: "http://selenium-chrome:4444/wd/hub"
+    BROWSER: chrome
+    BROWSER_HEADLESS: "true"
+    START_XVFB: "false" # not needed for headless mode
+    SE_NODE_MAX_SESSIONS: "5"
+    SE_NODE_OVERRIDE_MAX_SESSIONS: "true"
+
 .variables_app_restart_cmd: &variables_app_restart_cmd
   variables:
     APP_RESTART_CMD: "bundle exec rake environment zammad:ci:app:restart"
+
+.variables_rspec_slicing: &variables_rspec_slicing
+  variables:
+    RSPEC_EXAMPLE_MATCHES: "."      # Default: all. Set this to one of the slices in a job to run only that slice.
+    RSPEC_EXAMPLE_SLICE_1_OF_4: "^[A-H]"
+    RSPEC_EXAMPLE_SLICE_2_OF_4: "^[I-P]"
+    RSPEC_EXAMPLE_SLICE_3_OF_4: "^[Q-S]"
+    RSPEC_EXAMPLE_SLICE_4_OF_4: "^[^A-S]" # Rest, including lower case and other characters like '#'
 
 .rules_singletest: &rules_singletest
   rules:
@@ -33,6 +64,11 @@
   tags:
     - docker
 
+.tags_docker_low_concurrency: &tags_docker_low_concurrency
+  tags:
+    - docker
+    - low_concurrency
+
 # Workaround for blocked port 25 access on cloud provider infrastructure
 .tags_mail: &tags_mail
   tags:
@@ -45,31 +81,35 @@
 
 # DB Docker
 .docker_mysql: &docker_mysql
-  name: registry.znuny.com/docker/zammad-mysql:stable
+  name: $CI_REGISTRY/docker/zammad-mysql:stable
   alias: mysql
 
 .docker_postgresql: &docker_postgresql
-  name: registry.znuny.com/docker/zammad-postgresql:stable
+  name: $CI_REGISTRY/docker/zammad-postgresql:stable
   alias: postgresql
 
 .docker_elasticsearch: &docker_elasticsearch
-  name: registry.znuny.com/docker/zammad-elasticsearch:$ELASTICSEARCH_TAG
+  name: $CI_REGISTRY/docker/zammad-elasticsearch:$ELASTICSEARCH_TAG
   alias: elasticsearch
 
-.docker_selenium: &docker_selenium
-  name: registry.znuny.com/docker/zammad-selenium:stable
-  alias: selenium
+.docker_selenium_chrome: &docker_selenium_chrome
+  name: $CI_REGISTRY/docker/zammad-selenium-chrome:stable
+  alias: selenium-chrome
+
+.docker_selenium_firefox: &docker_selenium_firefox
+  name: $CI_REGISTRY/docker/zammad-selenium-firefox:stable
+  alias: selenium-firefox
 
 .docker_imap: &docker_imap
-  name: registry.znuny.com/docker/zammad-imap:stable
+  name: $CI_REGISTRY/docker/zammad-imap:stable
   alias: mail
 
 .docker_redis: &docker_redis
-  name: redis:latest
+  name: $CI_REGISTRY/docker/zammad-redis:stable
   alias: redis
 
 .docker_memcached: &docker_memcached
-  name: memcached:latest
+  name: $CI_REGISTRY/docker/zammad-memcached:stable
   alias: memcached
   command: ["memcached", "-m", "256M"]
 
@@ -79,9 +119,8 @@
     - <<: *docker_mysql
 
 .services_mysql_redis_memcached: &services_mysql_redis_memcached
-  variables:
-    REDIS_URL: "redis://redis:6379"
-    MEMCACHE_SERVERS: "memcached"
+  extends:
+    - .variables_redis_memcached
   services:
     - <<: *docker_mysql
     - <<: *docker_redis
@@ -92,33 +131,35 @@
     - <<: *docker_postgresql
 
 .services_postgresql_redis_memcached: &services_postgresql_redis_memcached
-  variables:
-    REDIS_URL: "redis://redis:6379"
-    MEMCACHE_SERVERS: "memcached"
+  extends:
+    - .variables_redis_memcached
   services:
     - <<: *docker_postgresql
     - <<: *docker_redis
     - <<: *docker_memcached
-
-.services_mysql_postgresql: &services_mysql_postgresql
-  services:
-    - <<: *docker_mysql
-    - <<: *docker_postgresql
 
 .services_mysql_postgresql_redis_memcached: &services_mysql_postgresql_redis_memcached
-  variables:
-    REDIS_URL: "redis://redis:6379"
-    MEMCACHE_SERVERS: "memcached"
+  extends:
+    - .variables_redis_memcached
   services:
     - <<: *docker_mysql
     - <<: *docker_postgresql
     - <<: *docker_redis
     - <<: *docker_memcached
 
-.services_postgresql_selenium: &services_postgresql_selenium
+.services_postgresql_selenium_chrome: &services_postgresql_selenium_chrome
+  extends:
+    - .variables_selenium_chrome
   services:
     - <<: *docker_postgresql
-    - <<: *docker_selenium
+    - <<: *docker_selenium_chrome
+
+.services_postgresql_selenium_firefox: &services_postgresql_selenium_firefox
+  extends:
+    - .variables_selenium_firefox
+  services:
+    - <<: *docker_postgresql
+    - <<: *docker_selenium_firefox
 
 .services_mysql_postgresql_imap: &services_mysql_postgresql_imap
   services:
@@ -134,29 +175,60 @@
     - <<: *docker_postgresql
     - <<: *docker_elasticsearch
 
-.services_mysql_postgresql_elasticsearch_selenium_imap: &services_mysql_postgresql_elasticsearch_selenium_imap
+.services_mysql_postgresql_elasticsearch_selenium_chrome_imap: &services_mysql_postgresql_elasticsearch_selenium_chrome_imap
+  extends:
+    - .variables_selenium_chrome
   variables:
     ELASTICSEARCH_TAG: 'stable'
   services:
     - <<: *docker_mysql
     - <<: *docker_postgresql
     - <<: *docker_elasticsearch
-    - <<: *docker_selenium
+    - <<: *docker_selenium_chrome
     - <<: *docker_imap
 
-.services_mysql_postgresql_elasticsearch_selenium_imap_redis_memcached: &services_mysql_postgresql_elasticsearch_selenium_imap_redis_memcached
+.services_mysql_postgresql_elasticsearch_selenium_firefox_imap: &services_mysql_postgresql_elasticsearch_selenium_firefox_imap
+  extends:
+    - .variables_selenium_firefox
   variables:
     ELASTICSEARCH_TAG: 'stable'
-    REDIS_URL: "redis://redis:6379"
-    MEMCACHE_SERVERS: "memcached"
   services:
     - <<: *docker_mysql
     - <<: *docker_postgresql
     - <<: *docker_elasticsearch
-    - <<: *docker_selenium
+    - <<: *docker_selenium_firefox
+    - <<: *docker_imap
+
+.services_mysql_postgresql_elasticsearch_selenium_chrome_imap_redis_memcached: &services_mysql_postgresql_elasticsearch_selenium_chrome_imap_redis_memcached
+  extends:
+    - .variables_selenium_chrome
+    - .variables_redis_memcached
+  variables:
+    ELASTICSEARCH_TAG: 'stable'
+  services:
+    - <<: *docker_mysql
+    - <<: *docker_postgresql
+    - <<: *docker_elasticsearch
+    - <<: *docker_selenium_chrome
     - <<: *docker_imap
     - <<: *docker_redis
     - <<: *docker_memcached
+
+.services_mysql_postgresql_elasticsearch_selenium_firefox_imap_redis_memcached: &services_mysql_postgresql_elasticsearch_selenium_firefox_imap_redis_memcached
+  extends:
+    - .variables_selenium_firefox
+    - .variables_redis_memcached
+  variables:
+    ELASTICSEARCH_TAG: 'stable'
+  services:
+    - <<: *docker_mysql
+    - <<: *docker_postgresql
+    - <<: *docker_elasticsearch
+    - <<: *docker_selenium_firefox
+    - <<: *docker_imap
+    - <<: *docker_redis
+    - <<: *docker_memcached
+
 
 .rules_integration_manual_start: &rules_integration_manual_start
   rules:

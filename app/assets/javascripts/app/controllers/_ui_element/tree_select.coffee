@@ -8,6 +8,35 @@ class App.UiElement.tree_select extends App.UiElement.ApplicationUiElement
       if child.children
         @optionsSelect(child.children, value)
 
+  @filterTreeOptions: (values, valueDepth, options, nullExists) ->
+    newOptions = []
+    nullFound = false
+    for option, index in options
+      enabled = false
+      for value in values
+        valueArray  = value.split('::')
+        optionArray = option['value'].split('::')
+        continue if valueArray[valueDepth] isnt optionArray[valueDepth]
+        enabled = true
+        break
+
+      if nullExists && !option.value && !nullFound
+        nullFound = true
+        enabled   = true
+
+      if !enabled
+        continue
+
+      if option['children'] && option['children'].length
+        option['children'] = @filterTreeOptions(values, valueDepth + 1, option['children'], nullExists)
+
+      newOptions.push(option)
+
+    return newOptions
+
+  @filterOptionArray: (attribute) ->
+    attribute.options = @filterTreeOptions(attribute.filter, 0, attribute.options, attribute.null)
+
   @render: (attribute, params) ->
 
     # set multiple option

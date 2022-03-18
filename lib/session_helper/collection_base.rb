@@ -1,10 +1,10 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 module SessionHelper::CollectionBase
 
   module_function
 
-  def session( collections, assets, user )
+  def session(collections, assets, user)
 
     # all base stuff
     collections[ Locale.to_app_model ] = Locale.where(active: true)
@@ -44,6 +44,10 @@ module SessionHelper::CollectionBase
       Organization.where(id: user.organization_id).each do |item|
         assets = item.assets(assets)
       end
+    end
+
+    if user.permissions?(['admin.core_workflow'])
+      collections['CoreWorkflowCustomModule'] = CoreWorkflow::Custom.list.map { |m| { name: m } }
     end
 
     [collections, assets]

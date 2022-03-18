@@ -1,6 +1,6 @@
 class App.KnowledgeBaseAgentController extends App.Controller
   className: 'knowledge-base vertical'
-  name:      'Knowledge Base'
+  name:      __('Knowledge Base')
 
   elements:
     '.js-body':       'body'
@@ -10,6 +10,10 @@ class App.KnowledgeBaseAgentController extends App.Controller
   constructor: (params) ->
     super
     @controllerBind('config_update_local', (data) => @configUpdated(data))
+
+    @listenTo App.User.current(), 'refresh', @visibilityMayHaveChanged
+
+    App.Event.bind 'kb_visibility_may_have_changed', @visibilityMayHaveChanged
 
     if @permissionCheck('knowledge_base.*') and App.Config.get('kb_active')
       @updateNavMenu()
@@ -51,15 +55,8 @@ class App.KnowledgeBaseAgentController extends App.Controller
         @loadChange(pushed_data)
       , 1000, key, 'kb_data_changed_loading')
     )
-    @listenTo App.KnowledgeBase, 'kb_data_change_loaded', =>
-      return if !@displayingError
-
-      object = @constructor.pickObjectUsing(@lastParams, @)
-
-      if !@objectVisibleInternally(object)
-        return
-
-      @renderControllers(@lastParams)
+    @listenTo App.KnowledgeBase, 'kb_data_change_loaded', @renderAfterChangeLoaded
+    @listenTo App.KnowledgeBase, 'kb_visibility_change_loaded', @renderAfterChangeLoaded
 
     @checkForUpdates()
 
@@ -112,6 +109,19 @@ class App.KnowledgeBaseAgentController extends App.Controller
   notifyChangeLoaded: ->
     App.KnowledgeBase.trigger('kb_data_change_loaded')
 
+  notifyVisibilityChangeLoaded: ->
+    App.KnowledgeBase.trigger('kb_visibility_change_loaded')
+
+  renderAfterChangeLoaded: =>
+    return if !@displayingError
+
+    object = @constructor.pickObjectUsing(@lastParams, @)
+
+    if !@objectVisibleInternally(object)
+      return
+
+    @renderControllers(@lastParams)
+
   active: (state) ->
     return @shown if state is undefined
     @shown = state
@@ -136,6 +146,10 @@ class App.KnowledgeBaseAgentController extends App.Controller
     @bodyModal = null
 
     if !@permissionCheckRedirect("knowledge_base.#{@requiredPermissionSuffix(params)}")
+      return
+
+    if @loaded && @requiredPermissionSuffix(params) == 'editor' && @access(params) != 'editor'
+      @navigate params.match[0].replace(/\/edit$/, ''), { hideCurrentLocationFromHistory: true }
       return
 
     if @loaded && @rendered && @lastParams && !params.knowledge_base_id && @contentController && @kb_locale()?
@@ -164,11 +178,12 @@ class App.KnowledgeBaseAgentController extends App.Controller
         if (kb = App.KnowledgeBase.all()[0])
           @navigate kb.uiUrl(App.KnowledgeBaseLocale.detect(kb)), { hideCurrentLocationFromHistory: true }
         else
-          @renderScreenErrorInContent('No Knowledge Base created')
+          @renderScreenErrorInContent(__('No Knowledge Base created'))
     else
       @pendingParams = params
 
   renderScreenErrorInContent: (text) ->
+    @contentController?.releaseController()
     @contentController = undefined
     @renderScreenError(detail: text, el: @$('.page-content'))
     @displayingError = true
@@ -225,12 +240,12 @@ class App.KnowledgeBaseAgentController extends App.Controller
     title = App.i18n.translateInline('Not Found')
     @updateTitle(title)
     @navigationController?.show(undefined, title)
-    @renderScreenErrorInContent('The page was not found')
+    @renderScreenErrorInContent(__('The page was not found'))
     @sidebarController?.hide()
 
   renderNotAvailableAnymore: ->
     @updateTitle(App.i18n.translateInline('Not Available'))
-    @renderScreenErrorInContent('The page is not available anymore')
+    @renderScreenErrorInContent(__('The page is not available anymore'))
 
   renderError: ->
     @bodyModal?.close()
@@ -238,7 +253,7 @@ class App.KnowledgeBaseAgentController extends App.Controller
     url = App.Utils.joinUrlComponents @lastParams.effectivePath, @getKnowledgeBase().primaryKbLocale().urlSuffix()
 
     @bodyModal = new App.ControllerModal(
-      head:          'Locale not found'
+      head:          __('Locale not found')
       contentInline: "<a href='#{url}'>Open in primary locale</a>"
       buttonClose:   false
       buttonSubmit: false
@@ -255,12 +270,12 @@ class App.KnowledgeBaseAgentController extends App.Controller
       kb.kb_locales().filter((elem) =>  elem.system_locale_id == @lastParams.selectedSystemLocale.id)[0]
 
   getKnowledgeBase: ->
-    App.KnowledgeBase.find(@lastParams.knowledge_base_id)
+    App.KnowledgeBase.find(@lastParams?.knowledge_base_id)
 
   fetchAndRender: =>
     @fetch(true, true)
 
-  fetch: (showLoader, processLoaded) ->
+  fetch: (showLoader, processLoaded, notifyVisibilityChangeLoaded) ->
     if showLoader
       @startLoading()
 
@@ -278,6 +293,9 @@ class App.KnowledgeBaseAgentController extends App.Controller
 
         if processLoaded
           @processLoaded()
+
+        if notifyVisibilityChangeLoaded
+          @notifyVisibilityChangeLoaded()
       ,
       error: (xhr) =>
         if showLoader
@@ -308,10 +326,11 @@ class App.KnowledgeBaseAgentController extends App.Controller
         App[elem.modelName].find(id)?.remove(clear: true)
 
   calculateIdsToDelete: (data) ->
-    Object
-      .keys(data)
-      .filter (elem) -> elem.match(/^KnowledgeBase/)
+    App.KnowledgeBase
+      .allKbModelNames()
       .map (model) ->
+        return {ids : []} if !data[model]
+
         newIds = Object.keys data[model]
         oldIds = App[model].all().map (elem) -> elem.id
         diff   = oldIds.filter (elem) -> !_.includes(newIds, String(elem))
@@ -339,8 +358,13 @@ class App.KnowledgeBaseAgentController extends App.Controller
       parentController: @
     )
 
+  access: (params) =>
+    @constructor
+      .pickObjectUsing(params, @)
+      ?.access(@kb_locale())
+
   isEditor: ->
-    App.User.current().permission('knowledge_base.editor')
+    @access(@lastParams) == 'editor'
 
   checkForUpdates: ->
     @interval(@checkUpdatesAction, 10 * 60 * 1000, 'kb_interval_check')
@@ -371,6 +395,27 @@ class App.KnowledgeBaseAgentController extends App.Controller
   clicked: ->
     window.open(App.KnowledgeBase.first().publicBaseUrl(), '_blank')
 
+  visibilityMayHaveChanged: =>
+    kb = @getKnowledgeBase()
+
+    return if !kb
+
+    @ajax
+      id:         'kb_pull_visibility'
+      type:       'GET'
+      url:         @apiPath + '/knowledge_bases/visible_ids'
+      processData: true
+      success:     (data, status, xhr) =>
+        didRemove       = kb.removeAssetsIfNeeded(data)
+        hasAssetsToLoad = kb.hasAssetsToLoad(data)
+
+        if hasAssetsToLoad
+          @fetch(false, false, true)
+          return
+
+        if didRemove
+          @notifyVisibilityChangeLoaded()
+
   @pickObjectUsing: (params, parentController) ->
     kb = parentController.getKnowledgeBase()
     return if !kb
@@ -383,4 +428,4 @@ class App.KnowledgeBaseAgentController extends App.Controller
       kb
 
 App.Config.set('KnowledgeBase', { controller: 'KnowledgeBaseAgentController' }, 'permanentTask')
-App.Config.set('KnowledgeBase', { prio: 1150, parent: '', name: 'Knowledge Base', target: '#knowledge_base', key: 'KnowledgeBase', class: 'knowledge-base', shown: false}, 'NavBar')
+App.Config.set('KnowledgeBase', { prio: 1150, parent: '', name: __('Knowledge Base'), target: '#knowledge_base', key: 'KnowledgeBase', class: 'knowledge-base', shown: false}, 'NavBar')

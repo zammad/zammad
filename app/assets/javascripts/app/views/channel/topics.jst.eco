@@ -1,10 +1,10 @@
 <table class="settings-list">
   <thead>
     <tr>
-      <th style="white-space: nowrap;"><%- @T('chatId') %></th>
+      <th style="white-space: nowrap;"><%- @T('Chat ID') %></th>
       <th style="white-space: nowrap;"><%- @T('Name') %></th>
       <th style="white-space: nowrap;"><%- @T('Note') %></th>
-      <th style="white-space: nowrap;"><%- @T('Max. clients in waitlist') %></th>
+      <th style="white-space: nowrap;"><%- @T('Max. clients on waitlist') %></th>
       <th style="white-space: nowrap;"><%- @T('Delete') %></th>
     </tr>
   </thead>

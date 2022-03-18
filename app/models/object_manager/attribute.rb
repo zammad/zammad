@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class ObjectManager::Attribute < ApplicationModel
   include ChecksClientNotification
@@ -9,6 +9,7 @@ class ObjectManager::Attribute < ApplicationModel
     user_autocompletion
     checkbox
     select
+    multiselect
     tree_select
     datetime
     date
@@ -21,6 +22,10 @@ class ObjectManager::Attribute < ApplicationModel
     user_permission
     active
   ].freeze
+
+  VALIDATE_INTEGER_MIN    = -2_147_483_647
+  VALIDATE_INTEGER_MAX    = 2_147_483_647
+  VALIDATE_INTEGER_REGEXP = %r{^-?\d+$}.freeze
 
   self.table_name = 'object_manager_attributes'
 
@@ -37,6 +42,16 @@ class ObjectManager::Attribute < ApplicationModel
   store :data_option_new
 
   before_validation :set_base_options
+
+  before_create :ensure_multiselect
+  before_update :ensure_multiselect
+
+  scope :active,     -> { where(active:   true) }
+  scope :editable,   -> { where(editable: true) }
+  scope :for_object, lambda { |name_or_klass|
+    id = ObjectLookup.lookup(name: name_or_klass.to_s)
+    where(object_lookup_id: id)
+  }
 
 =begin
 
@@ -85,7 +100,7 @@ add a new attribute entry for an object
   ObjectManager::Attribute.add(
     object: 'Ticket',
     name: 'group_id',
-    display: 'Group',
+    display: __('Group'),
     data_type: 'select',
     data_option: {
       relation: 'Group',
@@ -356,6 +371,12 @@ possible types
       return record
     end
 
+    # add maximum position only for new records with blank position
+    if !record && data[:position].blank?
+      maximum_position = where(object_lookup_id: data[:object_lookup_id]).maximum(:position)
+      data[:position] = maximum_position.present? ? maximum_position + 1 : 1
+    end
+
     # do not allow to overwrite certain attributes
     if !force
       data[:editable] = true
@@ -571,11 +592,17 @@ to send no browser reload event, pass false
 
       data_type = nil
       case attribute.data_type
-      when %r{^input|select|tree_select|richtext|textarea|checkbox$}
+      when %r{^(input|select|tree_select|richtext|textarea|checkbox)$}
         data_type = :string
-      when %r{^integer|user_autocompletion$}
+      when %r{^(multiselect)$}
+        data_type = if Rails.application.config.db_column_array
+                      :string
+                    else
+                      :json
+                    end
+      when %r{^(integer|user_autocompletion)$}
         data_type = :integer
-      when %r{^boolean|active$}
+      when %r{^(boolean|active)$}
         data_type = :boolean
       when %r{^datetime$}
         data_type = :datetime
@@ -586,7 +613,7 @@ to send no browser reload event, pass false
       # change field
       if model.column_names.include?(attribute.name)
         case attribute.data_type
-        when %r{^input|select|tree_select|richtext|textarea|checkbox$}
+        when %r{^(input|select|tree_select|richtext|textarea|checkbox)$}
           ActiveRecord::Migration.change_column(
             model.table_name,
             attribute.name,
@@ -594,7 +621,21 @@ to send no browser reload event, pass false
             limit: attribute.data_option[:maxlength],
             null:  true
           )
-        when %r{^integer|user_autocompletion|datetime|date$}, %r{^boolean|active$}
+        when 'multiselect'
+          options = {
+            null: true,
+          }
+          if Rails.application.config.db_column_array
+            options[:array] = true
+          end
+
+          ActiveRecord::Migration.change_column(
+            model.table_name,
+            attribute.name,
+            data_type,
+            options,
+          )
+        when %r{^(integer|user_autocompletion|datetime|date)$}, %r{^(boolean|active)$}
           ActiveRecord::Migration.change_column(
             model.table_name,
             attribute.name,
@@ -618,7 +659,7 @@ to send no browser reload event, pass false
 
       # create field
       case attribute.data_type
-      when %r{^input|select|tree_select|richtext|textarea|checkbox$}
+      when %r{^(input|select|tree_select|richtext|textarea|checkbox)$}
         ActiveRecord::Migration.add_column(
           model.table_name,
           attribute.name,
@@ -626,7 +667,21 @@ to send no browser reload event, pass false
           limit: attribute.data_option[:maxlength],
           null:  true
         )
-      when %r{^integer|user_autocompletion$}, %r{^boolean|active$}, %r{^datetime|date$}
+      when 'multiselect'
+        options = {
+          null: true,
+        }
+        if Rails.application.config.db_column_array
+          options[:array] = true
+        end
+
+        ActiveRecord::Migration.add_column(
+          model.table_name,
+          attribute.name,
+          data_type,
+          options,
+        )
+      when %r{^(integer|user_autocompletion)$}, %r{^(boolean|active)$}, %r{^(datetime|date)$}
         ActiveRecord::Migration.add_column(
           model.table_name,
           attribute.name,
@@ -667,7 +722,7 @@ to send no browser reload event, pass false
 
 =begin
 
-where attributes are used by triggers, overviews or schedulers
+where attributes are used in conditions
 
   result = ObjectManager::Attribute.attribute_to_references_hash
 
@@ -685,18 +740,32 @@ where attributes are used by triggers, overviews or schedulers
 =end
 
   def self.attribute_to_references_hash
-    objects = Trigger.select(:name, :condition) + Overview.select(:name, :condition) + Job.select(:name, :condition)
     attribute_list = {}
-    objects.each do |item|
-      item.condition.each do |condition_key, _condition_attributes|
-        attribute_list[condition_key] ||= {}
-        attribute_list[condition_key][item.class.name] ||= []
-        next if attribute_list[condition_key][item.class.name].include?(item.name)
 
-        attribute_list[condition_key][item.class.name].push item.name
+    attribute_to_references_hash_objects
+      .map { |elem| elem.select(:name, :condition) }
+      .flatten
+      .each do |item|
+        item.condition.each do |condition_key, _condition_attributes|
+          attribute_list[condition_key] ||= {}
+          attribute_list[condition_key][item.class.name] ||= []
+          next if attribute_list[condition_key][item.class.name].include?(item.name)
+
+          attribute_list[condition_key][item.class.name].push item.name
+        end
       end
-    end
+
     attribute_list
+  end
+
+=begin
+
+models that may reference attributes
+
+=end
+
+  def self.attribute_to_references_hash_objects
+    Models.all.keys.select { |elem| elem.include? ChecksConditionValidation }
   end
 
 =begin
@@ -789,10 +858,10 @@ is certain attribute used by triggers, overviews or schedulers
       errors.add(:name, 'spaces are not allowed')
     end
     if !name.match?(%r{^[a-z0-9_]+$})
-      errors.add(:name, 'Only letters from a-z because numbers from 0-9 and _ are allowed')
+      errors.add(:name, __("Only lowercase letters, numbers, and '_' are allowed"))
     end
     if !name.match?(%r{[a-z]})
-      errors.add(:name, 'At least one letters is needed')
+      errors.add(:name, __('At least one letter is required'))
     end
 
     # do not allow model method names as attributes
@@ -809,7 +878,7 @@ is certain attribute used by triggers, overviews or schedulers
     end
 
     record = object_lookup.name.constantize.new
-    if record.respond_to?(name.to_sym) && record.attributes.key?(name) && new_record?
+    if new_record? && (record.respond_to?(name.to_sym) || record.attributes.key?(name))
       errors.add(:name, "#{name} already exists!")
     end
 
@@ -823,7 +892,7 @@ is certain attribute used by triggers, overviews or schedulers
   def check_editable
     return if editable
 
-    errors.add(:name, 'Attribute not editable!')
+    errors.add(:name, __('Attribute not editable!'))
     raise ActiveRecord::RecordInvalid, self
   end
 
@@ -835,7 +904,7 @@ is certain attribute used by triggers, overviews or schedulers
     local_data_option[:null] = true if local_data_option[:null].nil?
 
     case data_type
-    when %r{^((tree_)?select|checkbox)$}
+    when %r{^((multi|tree_)?select|checkbox)$}
       local_data_option[:nulloption] = true if local_data_option[:nulloption].nil?
       local_data_option[:maxlength] ||= 255
     end
@@ -858,7 +927,7 @@ is certain attribute used by triggers, overviews or schedulers
   end
 
   def data_type_must_not_change
-    allowable_changes = %w[tree_select select input checkbox]
+    allowable_changes = %w[tree_select select multiselect input checkbox]
 
     return if !data_type_changed?
     return if (data_type_change - allowable_changes).empty?
@@ -879,43 +948,72 @@ is certain attribute used by triggers, overviews or schedulers
     send("#{local_data_attr}=", val)
   end
 
+  def data_option_maxlength_check
+    [{ failed: !local_data_option[:maxlength].to_s.match?(%r{^\d+$}), message: 'must have integer for :maxlength' }]
+  end
+
+  def data_option_type_check
+    [{ failed: %w[text password tel fax email url].exclude?(local_data_option[:type]), message: 'must have one of text/password/tel/fax/email/url for :type' }]
+  end
+
+  def data_option_min_max_check
+    min = local_data_option[:min]
+    max = local_data_option[:max]
+
+    [
+      { failed:  !VALIDATE_INTEGER_REGEXP.match?(min.to_s), message: 'must have integer for :min' },
+      { failed:  !VALIDATE_INTEGER_REGEXP.match?(max.to_s), message: 'must have integer for :max' },
+      { failed:  !(min.is_a?(Integer) && min >= VALIDATE_INTEGER_MIN), message: 'min must be higher than -2147483648' },
+      { failed:  !(min.is_a?(Integer) && min <= VALIDATE_INTEGER_MAX), message: 'min must be lower than 2147483648' },
+      { failed:  !(max.is_a?(Integer) && max >= VALIDATE_INTEGER_MIN), message: 'max must be higher than -2147483648' },
+      { failed:  !(max.is_a?(Integer) && max <= VALIDATE_INTEGER_MAX), message: 'max must be lower than 2147483648' },
+      { failed:  !(max.is_a?(Integer) && min.is_a?(Integer) && min <= max), message: 'min must be lower than max' }
+    ]
+  end
+
+  def data_option_default_check
+    [{ failed: !local_data_option.key?(:default), message: 'must have value for :default' }]
+  end
+
+  def data_option_relation_check
+    [{ failed: local_data_option[:options].nil? && local_data_option[:relation].nil?, message: 'must have non-nil value for either :options or :relation' }]
+  end
+
+  def data_option_nil_check
+    [{ failed: local_data_option[:options].nil?, message: 'must have non-nil value for :options' }]
+  end
+
+  def data_option_future_check
+    [{ failed: local_data_option[:future].nil?, message: 'must have boolean value for :future' }]
+  end
+
+  def data_option_past_check
+    [{ failed: local_data_option[:past].nil?, message: 'must have boolean value for :past' }]
+  end
+
   def data_option_validations
     case data_type
     when 'input'
-      [{ failed:  %w[text password tel fax email url].exclude?(local_data_option[:type]),
-         message: 'must have one of text/password/tel/fax/email/url for :type' },
-       { failed:  !local_data_option[:maxlength].to_s.match?(%r{^\d+$}),
-         message: 'must have integer for :maxlength' }]
-    when 'richtext'
-      [{ failed:  !local_data_option[:maxlength].to_s.match?(%r{^\d+$}),
-         message: 'must have integer for :maxlength' }]
+      data_option_type_check + data_option_maxlength_check
+    when %r{^(textarea|richtext)$}
+      data_option_maxlength_check
     when 'integer'
-      [{ failed:  !local_data_option[:min].to_s.match?(%r{^\d+$}),
-         message: 'must have integer for :min' },
-       { failed:  !local_data_option[:max].to_s.match?(%r{^\d+$}),
-         message: 'must have integer for :max' }]
-    when %r{^((tree_)?select|checkbox)$}
-      [{ failed:  !local_data_option.key?(:default),
-         message: 'must have value for :default' },
-       { failed:  local_data_option[:options].nil? && local_data_option[:relation].nil?,
-         message: 'must have non-nil value for either :options or :relation' }]
+      data_option_min_max_check
+    when %r{^((multi|tree_)?select|checkbox)$}
+      data_option_default_check + data_option_relation_check
     when 'boolean'
-      [{ failed:  !local_data_option.key?(:default),
-         message: 'must have boolean/undefined value for :default' },
-       { failed:  local_data_option[:options].nil?,
-         message: 'must have non-nil value for :options' }]
+      data_option_default_check + data_option_nil_check
     when 'datetime'
-      [{ failed:  local_data_option[:future].nil?,
-         message: 'must have boolean value for :future' },
-       { failed:  local_data_option[:past].nil?,
-         message: 'must have boolean value for :past' },
-       { failed:  local_data_option[:diff].nil?,
-         message: 'must have integer value for :diff (in hours)' }]
-    when 'date'
-      [{ failed:  local_data_option[:diff].nil?,
-         message: 'must have integer value for :diff (in days)' }]
+      data_option_future_check + data_option_past_check
     else
       []
     end
+  end
+
+  def ensure_multiselect
+    return if data_type != 'multiselect'
+    return if data_option && data_option[:multiple] == true
+
+    data_option[:multiple] = true
   end
 end

@@ -46,7 +46,7 @@
     <div class="modal-body">
       <div class="wizard-body vertical justified">
         <p class="wizard-loadingText">
-          <span class="loading icon"></span> <%- @T('Connecting ...') %>
+          <span class="loading icon"></span> <%- @T('Connecting …') %>
         </p>
       </div>
     </div>
@@ -132,7 +132,7 @@
     <div class="modal-body">
       <div class="wizard-body vertical justified">
         <p class="wizard-loadingText">
-          <span class="loading icon"></span> <%- @T('Analyzing structure...') %>
+          <span class="loading icon"></span> <%- @T('Analyzing structure…') %>
         </p>
       </div>
     </div>
@@ -203,7 +203,7 @@
         </div>
         <div class="js-analyzing hide">
           <p class="wizard-loadingText">
-            <%- @T('Analyzing entries with given configuration...') %>
+            <%- @T('Analyzing entries with given configuration…') %>
           </p>
           <div class="centered js-progress">
             <progress max="" value=""></progress>

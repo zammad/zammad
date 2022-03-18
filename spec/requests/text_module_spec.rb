@@ -1,8 +1,13 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
 RSpec.describe 'Text Module', type: :request do
+
+  before do
+    # XSS processing may run into a timeout on slow CI systems, so turn the timeout off for the test.
+    stub_const("#{HtmlSanitizer}::PROCESSING_TIMEOUT", nil)
+  end
 
   let(:admin) do
     create(:admin)
@@ -81,7 +86,7 @@ RSpec.describe 'Text Module', type: :request do
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
 
-      expect(json_response['try']).to eq(false)
+      expect(json_response['try']).to be(false)
       expect(json_response['records'].count).to eq(2)
       expect(json_response['result']).to eq('success')
 

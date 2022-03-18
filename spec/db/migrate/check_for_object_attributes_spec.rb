@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -28,6 +28,13 @@ RSpec.describe CheckForObjectAttributes, type: :db_migration do
 
     it 'does not change tree_select attribute' do
       attribute = create(:object_manager_attribute_tree_select)
+
+      expect { migrate }
+        .not_to change { attribute.reload.data_option }
+    end
+
+    it 'does not change multiselect attribute' do
+      attribute = create(:object_manager_attribute_multiselect)
 
       expect { migrate }
         .not_to change { attribute.reload.data_option }

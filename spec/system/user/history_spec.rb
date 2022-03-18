@@ -1,11 +1,11 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
-RSpec.describe 'Ticket history', type: :system, authenticated_as: true, time_zone: 'Europe/London' do
+RSpec.describe 'Ticket history', type: :system, time_zone: 'Europe/London' do
   let(:group) { Group.find_by(name: 'Users') }
   let(:customer) { create(:customer) }
-  let!(:session_user) { User.find_by(login: 'master@example.com') }
+  let!(:session_user) { User.find_by(login: 'admin@example.com') }
 
   before do
     freeze_time
@@ -30,9 +30,13 @@ RSpec.describe 'Ticket history', type: :system, authenticated_as: true, time_zon
     session_user.preferences[:locale] = 'de-de'
     session_user.save!
 
+    # Suppress the modal dialog that invites to contributions for translations that are < 90% as this breaks the tests for de-de.
+    page.evaluate_script "App.LocalStorage.set('translation_support_no', true, App.Session.get('id'))"
+
     refresh
 
     visit "#user/profile/#{customer.id}"
+
     find('#userAction').click
     click('[data-type="history"]')
   end
@@ -42,6 +46,7 @@ RSpec.describe 'Ticket history', type: :system, authenticated_as: true, time_zon
   end
 
   it 'does not include time with UTC format' do
+    # sleep 5
     expect(page).to have_no_text(%r{ UTC})
   end
 

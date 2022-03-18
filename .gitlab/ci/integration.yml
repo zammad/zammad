@@ -1,17 +1,12 @@
 include:
-  - local: '/.gitlab/ci/integration/clearbit.yml'
-  - local: '/.gitlab/ci/integration/email_helper_deliver.yml'
   - local: '/.gitlab/ci/integration/es.yml'
-  - local: '/.gitlab/ci/integration/geo.yml'
+  - local: '/.gitlab/ci/integration/other.yml'
   - local: '/.gitlab/ci/integration/otrs.yml'
-  - local: '/.gitlab/ci/integration/slack.yml'
-  - local: '/.gitlab/ci/integration/user_agent.yml'
-  - local: '/.gitlab/ci/integration/zendesk.yml'
 
 .template_integration: &template_integration
   extends:
     - .env_base
-    - .services_mysql_postgresql
+    - .services_mysql_postgresql_imap
     - .rules_integration_manual_start
   tags:
     - integration

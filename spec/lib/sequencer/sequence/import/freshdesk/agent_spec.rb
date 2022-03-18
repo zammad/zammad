@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -22,7 +22,7 @@ RSpec.describe ::Sequencer::Sequence::Import::Freshdesk::Agent, sequencer: :sequ
         'available_since' => nil,
         'type'            => 'support_agent',
         'contact'         => {
-          'active'        => true,
+          'active'        => false,
           'email'         => 'freshdesk@example.com',
           'job_title'     => nil,
           'language'      => 'en',
@@ -59,20 +59,28 @@ RSpec.describe ::Sequencer::Sequence::Import::Freshdesk::Agent, sequencer: :sequ
       }
     end
 
-    it 'imports user correctly' do # rubocop:disable RSpec/MultipleExpectations, RSpec/ExampleLength
-      expect { process(process_payload) }.to change(User, :count).by(1)
-      expect(User.last).to have_attributes(
+    let(:imported_user) do
+      {
         firstname:  'John',
         lastname:   'Doe',
         login:      'freshdesk@example.com',
         email:      'freshdesk@example.com',
         active:     true,
         last_login: DateTime.parse('2021-05-10T07:52:58Z'),
-      )
+      }
+    end
+
+    it 'imports user correctly (increased user count)' do
+      expect { process(process_payload) }.to change(User, :count).by(1)
+    end
+
+    it 'imports user data correctly' do
+      process(process_payload)
+      expect(User.last).to have_attributes(imported_user)
     end
 
     it 'sets user roles correctly for admin user' do
-      allow( Sequencer::Unit::Import::Freshdesk::Agent::Mapping).to receive(:admin_id).and_return(1001)
+      allow(Sequencer::Unit::Import::Freshdesk::Agent::Mapping).to receive(:admin_id).and_return(1001)
       process(process_payload)
       expect(User.last.roles.sort.map(&:name)).to eq %w[Admin Agent]
     end
@@ -82,10 +90,21 @@ RSpec.describe ::Sequencer::Sequence::Import::Freshdesk::Agent, sequencer: :sequ
       expect(User.last.roles.sort.map(&:name)).to eq ['Agent']
     end
 
-    it 'sets user groups correctly ' do
+    it 'sets user groups correctly' do
       process(process_payload)
       expect(User.last.groups_access('full').sort).to eq groups
     end
 
+    context 'with deleted flag in resource' do
+      before do
+        resource['contact']['deleted'] = true
+        imported_user[:active] = false
+      end
+
+      it 'imports user data correctly' do
+        process(process_payload)
+        expect(User.last).to have_attributes(imported_user)
+      end
+    end
   end
 end

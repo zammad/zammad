@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Sequencer
   class Sequence
@@ -12,7 +12,7 @@ class Sequencer
               'Import::Freshdesk::Contact::Mapping',
               'Import::Freshdesk::Mapping::CustomFields',
               'Import::Common::Model::Attributes::AddByIds',
-              'Import::Common::Model::FindBy::Name',
+              'Import::Common::Model::FindBy::UserAttributes',
               'Import::Common::Model::Update',
               'Import::Common::Model::Create',
               'Import::Common::Model::Save',

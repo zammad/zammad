@@ -1,0 +1,72 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://reallybadexample.zendesk.com/api/v2/users/me
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Zammad User Agent
+      Host:
+      - reallybadexample.zendesk.com
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Date:
+      - Fri, 20 Aug 2021 13:25:22 GMT
+      Content-Type:
+      - application/json; charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Strict-Transport-Security:
+      - max-age=0;
+      Cache-Control:
+      - no-cache
+      X-Zendesk-Origin-Server:
+      - classic-app-server-687bcbddf6-thrh8
+      X-Request-Id:
+      - 681bf27f9911dfe3-FRA
+      - 681bf27f9911dfe3-FRA
+      X-Runtime:
+      - '0.013831'
+      X-Zendesk-Zorg:
+      - 'yes'
+      Cf-Cache-Status:
+      - DYNAMIC
+      Expect-Ct:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Set-Cookie:
+      - __cf_bm=a7f835bb234b38bfc60b856171221a38404366dc-1629465922-1800-AXfdmkG4tiWbLv6YOmgNJw0zp7sMKZurLIa0h/dPedp8qQd+5exVovRZO25rrHNZXnxm8LVadLpPxLYGO5WCXzrwoqVimHeyNRwLvV1AGcDN;
+        path=/; expires=Fri, 20-Aug-21 13:55:22 GMT; domain=.zendesk.com; HttpOnly;
+        Secure; SameSite=None
+      - __cfruid=adb8a84aaa2e97ae23ba7001b3ed6d3f495e8165-1629465922; path=/; domain=.zendesk.com;
+        HttpOnly; Secure; SameSite=None
+      Report-To:
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=LNVzHYTBH8fWiM2jiWF7B4mIqaHP3B2OeB8AhB6FhS7c0rN%2BA%2B9DAhJ%2FqDdKQ2t0Xk%2B%2FGwhkIsKvBGk1JKqU3ZamMtlqgp9qKbqAwTiCOcX1fenrU2jXHIeILZjl%2BDUhboztaA4agu9IiQauN88%3D"}],"group":"cf-nel","max_age":604800}'
+      Nel:
+      - '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 681bf27f9911dfe3-FRA
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "error": {
+            "title": "No help desk at reallybadexample.zendesk.com",
+            "message": "There is no help desk configured at this address. This means that the address is available and that you can claim it at http://www.zendesk.com/signup"
+          }
+        }
+  recorded_at: Fri, 20 Aug 2021 13:25:22 GMT
+recorded_with: VCR 6.0.0

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 module KnowledgeBaseRichTextHelper
   def prepare_rich_text(input)
@@ -33,8 +33,7 @@ module KnowledgeBaseRichTextHelper
       settings = match
         .slice(1...-1)
         .split(',')
-        .map { |pair| pair.split(':').map(&:strip) }
-        .to_h
+        .to_h { |pair| pair.split(':').map(&:strip) }
         .symbolize_keys
 
       url = case settings[:provider]

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class KnowledgeBase::Answer::Translation < ApplicationModel
   include HasAgentAllowedParams
@@ -19,7 +19,6 @@ class KnowledgeBase::Answer::Translation < ApplicationModel
   accepts_nested_attributes_for :content, update_only: true
 
   validates :title,        presence: true, length: { maximum: 250 }
-  validates :content,      presence: true
   validates :kb_locale_id, uniqueness: { case_sensitive: true, scope: :answer_id }
 
   scope :neighbours_of, ->(translation) { joins(:answer).where(knowledge_base_answers: { category_id: translation.answer&.category_id }) }
@@ -56,12 +55,13 @@ class KnowledgeBase::Answer::Translation < ApplicationModel
   def search_index_attribute_lookup(include_references: true)
     attrs = super
 
-    attrs['title']      = ActionController::Base.helpers.strip_tags attrs['title']
-    attrs['content']    = content.search_index_attribute_lookup if content
-    attrs['scope_id']   = answer.category_id
-    attrs['attachment'] = answer.attachments_for_search_index_attribute_lookup
-
-    attrs
+    attrs.merge({
+                  title:      ActionController::Base.helpers.strip_tags(attrs['title']),
+                  content:    content&.search_index_attribute_lookup,
+                  scope_id:   answer.category_id,
+                  attachment: answer.attachments_for_search_index_attribute_lookup,
+                  tags:       answer.tag_list
+                })
   end
 
   def linked_references

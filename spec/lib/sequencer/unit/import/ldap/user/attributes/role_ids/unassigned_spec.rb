@@ -1,9 +1,9 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
 RSpec.describe Sequencer::Unit::Import::Ldap::User::Attributes::RoleIds::Unassigned, sequencer: :unit do
-  let(:subject) { process(parameters) }
+  subject(:unit) { process(parameters) }
 
   let(:parameters) do
     { resource:    resource,
@@ -44,7 +44,7 @@ RSpec.describe Sequencer::Unit::Import::Ldap::User::Attributes::RoleIds::Unassig
       before { instance.update(active: true) }
 
       it 'deactivates user (with action: :deactivated)' do
-        expect(subject).to include(action: :deactivated)
+        expect(unit).to include(action: :deactivated)
         expect(instance.reload.active).to be(false)
       end
     end
@@ -53,7 +53,7 @@ RSpec.describe Sequencer::Unit::Import::Ldap::User::Attributes::RoleIds::Unassig
       before { instance.update(active: false) }
 
       it 'skips user (with action: :skipped)' do
-        expect(subject).to include(action: :skipped)
+        expect(unit).to include(action: :skipped)
         expect(instance.reload.active).to be(false)
       end
     end
@@ -63,7 +63,7 @@ RSpec.describe Sequencer::Unit::Import::Ldap::User::Attributes::RoleIds::Unassig
     let(:instance) { nil }
 
     it 'skips user (with action: :skipped)' do
-      expect(subject).to include(action: :skipped)
+      expect(unit).to include(action: :skipped)
     end
   end
 
@@ -74,7 +74,7 @@ RSpec.describe Sequencer::Unit::Import::Ldap::User::Attributes::RoleIds::Unassig
       before { parameters[:dn_roles].clear }
 
       it 'skips user (with NO action)' do
-        expect(subject).to include(action: nil)
+        expect(unit).to include(action: nil)
         expect(instance).not_to have_received(:update)
       end
     end
@@ -83,7 +83,7 @@ RSpec.describe Sequencer::Unit::Import::Ldap::User::Attributes::RoleIds::Unassig
       before { parameters[:mapped].merge!(role_ids: [2]) }
 
       it 'skips user (with NO action)' do
-        expect(subject).to include(action: nil)
+        expect(unit).to include(action: nil)
         expect(instance).not_to have_received(:update)
       end
     end
@@ -92,7 +92,7 @@ RSpec.describe Sequencer::Unit::Import::Ldap::User::Attributes::RoleIds::Unassig
       before { parameters[:ldap_config].merge!(unassigned_users: 'sigup_roles') }
 
       it 'skips user (with NO action)' do
-        expect(subject).to include(action: nil)
+        expect(unit).to include(action: nil)
         expect(instance).not_to have_received(:update)
       end
     end

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class KnowledgeBase::MenuItem < ApplicationModel
   belongs_to :kb_locale, class_name: 'KnowledgeBase::Locale', inverse_of: :menu_items, touch: true
@@ -10,7 +10,7 @@ class KnowledgeBase::MenuItem < ApplicationModel
   acts_as_list scope: %i[kb_locale_id location], top_of_list: 0
 
   scope :sorted,       ->           { order(position: :asc) }
-  scope :using_locale, ->(locale)   { locale.present? ? joins(:kb_locale).where(knowledge_base_locales: { system_locale_id: locale.id } ) : none }
+  scope :using_locale, ->(locale)   { locale.present? ? joins(:kb_locale).where(knowledge_base_locales: { system_locale_id: locale.id }) : none }
   scope :location,     ->(location) { sorted.where(location: location) }
 
   scope :location_header, -> { location(:header) }

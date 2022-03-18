@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Sessions::Event::ChatBase < Sessions::Event::Base
   database_connection_required
@@ -25,7 +25,7 @@ class Sessions::Event::ChatBase < Sessions::Event::Base
       error = {
         event: 'chat_error',
         data:  {
-          state: 'Need session_id.',
+          state: __('Need session_id.'),
         },
       }
       Sessions.send(@client_id, error)

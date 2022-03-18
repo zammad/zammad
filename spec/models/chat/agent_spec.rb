@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -58,7 +58,7 @@ RSpec.describe Chat::Agent, type: :model do
       end
 
       it 'returns false' do
-        expect(described_class.state(record.updated_by_id, record.active)).to eq(false)
+        expect(described_class.state(record.updated_by_id, record.active)).to be(false)
       end
     end
 
@@ -77,7 +77,7 @@ RSpec.describe Chat::Agent, type: :model do
       end
 
       it 'returns true' do
-        expect(described_class.state(record.updated_by_id, !record.active)).to eq(true)
+        expect(described_class.state(record.updated_by_id, !record.active)).to be(true)
       end
     end
   end

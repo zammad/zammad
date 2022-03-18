@@ -82,35 +82,15 @@ class App.Model extends Spine.Model
     ''
 
   @validate: (data = {}) ->
+    screen = data?.controllerForm?.screen
 
     # based on model attributes
     if App[ data['model'] ] && App[ data['model'] ].attributesGet
-      attributes = App[ data['model'] ].attributesGet(data['screen'])
+      attributes = App[ data['model'] ].attributesGet(screen)
 
     # based on custom attributes
     else if data['model'].configure_attributes
-      attributes = App.Model.attributesGet(data['screen'], data['model'].configure_attributes)
-
-    # check required_if attributes
-    for attributeName, attribute of attributes
-      if attribute['required_if']
-
-        for key, values of attribute['required_if']
-
-          localValues = data['params'][key]
-          if !_.isArray( localValues )
-            localValues = [ localValues ]
-
-          match = false
-          for value in values
-            if localValues
-              for localValue in localValues
-                if value && localValue && value.toString() is localValue.toString()
-                  match = true
-          if match is true
-            attribute['null'] = false
-          else
-            attribute['null'] = true
+      attributes = App.Model.attributesGet(screen, data['model'].configure_attributes)
 
     # check attributes/each attribute of object
     errors = {}
@@ -120,7 +100,7 @@ class App.Model extends Spine.Model
       if !attribute.readonly
 
         # check required // if null is defined && null is false
-        if 'null' of attribute && !attribute['null']
+        if data.controllerForm && data.controllerForm.attributeIsMandatory(attribute.name)
 
           # check :: fields
           parts = attribute.name.split '::'
@@ -128,13 +108,13 @@ class App.Model extends Spine.Model
 
             # key exists not in hash || value is '' || value is undefined
             if !( attributeName of data['params'] ) || data['params'][attributeName] is '' || data['params'][attributeName] is undefined || data['params'][attributeName] is null
-              errors[attributeName] = 'is required'
+              errors[attributeName] = __('is required')
 
           else if parts[0] && parts[1] && !parts[2]
 
             # key exists not in hash || value is '' || value is undefined
             if !data.params[parts[0]] || !( parts[1] of data.params[parts[0]] ) || data.params[parts[0]][parts[1]] is '' || data.params[parts[0]][parts[1]] is undefined || data.params[parts[0]][parts[1]] is null
-              errors[attributeName] = 'is required'
+              errors[attributeName] = __('is required')
 
           else
             throw "can't parse '#{attribute.name}'"
@@ -168,9 +148,13 @@ class App.Model extends Spine.Model
 
           # validate value
 
+    if data?.controllerForm && App.FormHandlerCoreWorkflow.requestsRunning(data.controllerForm)
+      errors['_core_workflow'] = { target: data.target, controllerForm: data.controllerForm }
+
     # return error object
     if !_.isEmpty(errors)
-      App.Log.error('Model', 'validation failed', errors)
+      if !errors['_core_workflow']
+        App.Log.error('Model', 'validation failed', errors)
       return errors
 
     # return no errors
@@ -209,7 +193,7 @@ set new attributes of model (remove already available attributes)
     {
       'name': {
         name:    'name'
-        display: 'Name'
+        display: __('Name')
         tag:     'input'
         type:    'text'
         limit:   100
@@ -217,7 +201,7 @@ set new attributes of model (remove already available attributes)
       },
       'assignment_timeout': {
         name:    'assignment_timeout'
-        display: 'Assignment Timeout'
+        display: __('Assignment timeout')
         tag:     'input'
         type:    'text'
         limit:   100
@@ -227,9 +211,12 @@ set new attributes of model (remove already available attributes)
 
   ###
 
-  @attributesGet: (screen = undefined, attributes = false, noDefaultAttributes = false) ->
+  @attributesGet: (screen = undefined, attributes = false, noDefaultAttributes = false, className = undefined) ->
+    if !className
+      className = @.className
+
     if !attributes
-      attributes = clone(App[@.className].configure_attributes, true)
+      attributes = clone(App[className].configure_attributes, true)
     else
       attributes = clone(attributes, true)
 
@@ -240,7 +227,7 @@ set new attributes of model (remove already available attributes)
     attributesNew = {}
     if screen
       for attribute in attributes
-        if attribute && attribute.screen && attribute.screen[screen] && (!_.isEmpty(attribute.screen[screen]) && (attribute.screen[screen].shown is true || attribute.screen[screen].shown is undefined))
+        if attribute && attribute.screen && attribute.screen[screen] && (!_.isEmpty(attribute.screen[screen]) && (attribute.screen[screen].shown is true || attribute.screen[screen].shown is undefined || App.FormHandlerCoreWorkflow.checkScreen(className, screen)))
           for item, value of attribute.screen[screen]
             attribute[item] = value
           attributesNew[ attribute.name ] = attribute
@@ -256,7 +243,8 @@ set new attributes of model (remove already available attributes)
     App.Model.validate(
       model:  @constructor.className
       params: @
-      screen: params.screen
+      controllerForm: params.controllerForm
+      target: params.target
     )
 
   isOnline: ->
@@ -708,7 +696,7 @@ set new attributes of model (remove already available attributes)
       # lookup relations
       if attribute.relation
 
-        # relations - not calling object it self, to prevent loops
+        # relations - not calling object itself, to prevent loops
         if !_.contains(classNames, @className)
 
           # only if relation model exists
@@ -928,20 +916,25 @@ set new attributes of model (remove already available attributes)
 
       # use jquery instead of ._clone() because we need a deep copy of the obj
       @org_configure_attributes = $.extend(true, [], @configure_attributes)
+    configure_attributes = $.extend(true, [], @configure_attributes)
+    allAttributes = []
     for attribute in attributes
       @attributes.push attribute.name
 
       found = false
-      for attribute_model, index in @configure_attributes
+      for attribute_model, index in configure_attributes
         continue if attribute_model.name != attribute.name
 
-        @configure_attributes[index] = _.extend(attribute_model, attribute)
+        allAttributes.push $.extend(true, attribute_model, attribute)
+        configure_attributes.splice(index, 1) # remove found attribute
 
         found = true
         break
 
       if !found
-        @configure_attributes.push attribute
+        allAttributes.push $.extend(true, {}, attribute)
+
+    @configure_attributes = $.extend(true, [], allAttributes.concat(configure_attributes))
 
   @resetAttributes: ->
     return if _.isEmpty(@org_configure_attributes)

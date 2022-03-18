@@ -3,7 +3,7 @@ class App.Mention extends App.Model
   @extend Spine.Model.Ajax
   @url: @apiPath + '/mentions'
   @configure_attributes = [
-    { name: 'user_id', display: 'User', tag: 'select',   multiple: false, limit: 100, null: true, relation: 'User', width: '12%', edit: true },
+    { name: 'user_id', display: __('User'), tag: 'select',   multiple: false, limit: 100, null: true, relation: 'User', width: '12%', edit: true },
   ]
 
   @searchUser: (query, group_id, callback) ->

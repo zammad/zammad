@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Sequencer
   class Unit
@@ -13,10 +13,6 @@ class Sequencer
             skip_action :skipped, :failed
 
             uses :resource
-
-            def object
-              'Conversation'
-            end
 
             def sequence_name
               'Sequencer::Sequence::Import::Freshdesk::Conversations'.freeze

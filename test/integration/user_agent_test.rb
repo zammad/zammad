@@ -1,10 +1,10 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'integration_test_helper'
 
 class UserAgentTest < ActiveSupport::TestCase
   host = 'https://web-test.dc.zammad.com'
-  #host = 'http://127.0.0.1:3003'
+  # host = 'http://127.0.0.1:3003'
 
   setup do
     if ENV['ZAMMAD_PROXY_TEST'] == 'true'
@@ -358,7 +358,7 @@ class UserAgentTest < ActiveSupport::TestCase
 
     # ftp / 200
     result = UserAgent.request(
-      #'ftp://root.cern.ch/pub/README-root-build.txt',
+      # 'ftp://root.cern.ch/pub/README-root-build.txt',
       'ftp://ftp.gwdg.de/pub/rfc/rfc-index.txt',
     )
     assert(result)
@@ -369,7 +369,7 @@ class UserAgentTest < ActiveSupport::TestCase
 
     # ftp / 401
     result = UserAgent.request(
-      #'ftp://root.cern.ch/pub/not_existing.msg',
+      # 'ftp://root.cern.ch/pub/not_existing.msg',
       'ftp://ftp.gwdg.de/pub/rfc/not_existing.txt',
     )
     assert(result)

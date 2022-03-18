@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Report
 
@@ -12,14 +12,14 @@ class Report
 
     config[:metric][:count] = {
       name:    'count',
-      display: 'Ticket Count',
+      display: __('Ticket Count'),
       default: true,
       prio:    10_000,
     }
     backend = [
       {
         name:         'created',
-        display:      'Created',
+        display:      __('Created'),
         selected:     true,
         dataDownload: true,
         adapter:      Report::TicketGenericTime,
@@ -27,7 +27,7 @@ class Report
       },
       {
         name:         'closed',
-        display:      'Closed',
+        display:      __('Closed'),
         selected:     true,
         dataDownload: true,
         adapter:      Report::TicketGenericTime,
@@ -35,28 +35,28 @@ class Report
       },
       {
         name:         'backlog',
-        display:      'Backlog',
+        display:      __('Backlog'),
         selected:     true,
         dataDownload: false,
         adapter:      Report::TicketBacklog
       },
       {
         name:         'first_solution',
-        display:      'First Solution',
+        display:      __('First Solution'),
         selected:     false,
         dataDownload: true,
         adapter:      Report::TicketFirstSolution
       },
       {
         name:         'reopened',
-        display:      'Reopened',
+        display:      __('Reopened'),
         selected:     false,
         dataDownload: true,
         adapter:      Report::TicketReopened
       },
       {
         name:         'movedin',
-        display:      'Moved in',
+        display:      __('Moved in'),
         selected:     false,
         dataDownload: true,
         adapter:      Report::TicketMoved,
@@ -64,7 +64,7 @@ class Report
       },
       {
         name:         'movedout',
-        display:      'Moved out',
+        display:      __('Moved out'),
         selected:     false,
         dataDownload: true,
         adapter:      Report::TicketMoved,
@@ -75,13 +75,13 @@ class Report
 
     config[:metric][:create_channels] = {
       name:    'create_channels',
-      display: 'Create Channels',
+      display: __('Create Channels'),
       prio:    9000,
     }
     backend = [
       {
         name:         'phone_in',
-        display:      'Phone (in)',
+        display:      __('Phone (in)'),
         selected:     true,
         dataDownload: true,
         adapter:      Report::TicketGenericTime,
@@ -101,7 +101,7 @@ class Report
       },
       {
         name:         'phone_out',
-        display:      'Phone (out)',
+        display:      __('Phone (out)'),
         selected:     true,
         dataDownload: true,
         adapter:      Report::TicketGenericTime,
@@ -121,7 +121,7 @@ class Report
       },
       {
         name:         'email_in',
-        display:      'Email (in)',
+        display:      __('Email (in)'),
         selected:     true,
         dataDownload: true,
         adapter:      Report::TicketGenericTime,
@@ -141,7 +141,7 @@ class Report
       },
       {
         name:         'email_out',
-        display:      'Email (out)',
+        display:      __('Email (out)'),
         selected:     true,
         dataDownload: true,
         adapter:      Report::TicketGenericTime,
@@ -161,7 +161,7 @@ class Report
       },
       {
         name:         'web_in',
-        display:      'Web (in)',
+        display:      __('Web (in)'),
         selected:     true,
         dataDownload: true,
         adapter:      Report::TicketGenericTime,
@@ -181,7 +181,7 @@ class Report
       },
       {
         name:         'twitter_in',
-        display:      'Twitter (in)',
+        display:      __('Twitter (in)'),
         selected:     true,
         dataDownload: true,
         adapter:      Report::TicketGenericTime,
@@ -201,7 +201,7 @@ class Report
       },
       {
         name:         'twitter_out',
-        display:      'Twitter (out)',
+        display:      __('Twitter (out)'),
         selected:     true,
         dataDownload: true,
         adapter:      Report::TicketGenericTime,
@@ -224,13 +224,13 @@ class Report
 
     config[:metric][:communication] = {
       name:    'communication',
-      display: 'Communication',
+      display: __('Communication'),
       prio:    7000,
     }
     backend = [
       {
         name:         'phone_in',
-        display:      'Phone (in)',
+        display:      __('Phone (in)'),
         selected:     true,
         dataDownload: false,
         adapter:      Report::ArticleByTypeSender,
@@ -241,7 +241,7 @@ class Report
       },
       {
         name:         'phone_out',
-        display:      'Phone (out)',
+        display:      __('Phone (out)'),
         selected:     true,
         dataDownload: false,
         adapter:      Report::ArticleByTypeSender,
@@ -252,7 +252,7 @@ class Report
       },
       {
         name:         'email_in',
-        display:      'Email (in)',
+        display:      __('Email (in)'),
         selected:     true,
         dataDownload: false,
         adapter:      Report::ArticleByTypeSender,
@@ -263,7 +263,7 @@ class Report
       },
       {
         name:         'email_out',
-        display:      'Email (out)',
+        display:      __('Email (out)'),
         selected:     true,
         dataDownload: false,
         adapter:      Report::ArticleByTypeSender,
@@ -274,7 +274,7 @@ class Report
       },
       {
         name:         'web_in',
-        display:      'Web (in)',
+        display:      __('Web (in)'),
         selected:     true,
         dataDownload: false,
         adapter:      Report::ArticleByTypeSender,
@@ -285,7 +285,7 @@ class Report
       },
       {
         name:         'twitter_in',
-        display:      'Twitter (in)',
+        display:      __('Twitter (in)'),
         selected:     true,
         dataDownload: false,
         adapter:      Report::ArticleByTypeSender,
@@ -296,7 +296,7 @@ class Report
       },
       {
         name:         'twitter_out',
-        display:      'Twitter (out)',
+        display:      __('Twitter (out)'),
         selected:     true,
         dataDownload: false,
         adapter:      Report::ArticleByTypeSender,

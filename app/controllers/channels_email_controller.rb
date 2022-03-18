@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class ChannelsEmailController < ApplicationController
   prepend_before_action { authentication_check && authorize! }
@@ -257,7 +257,7 @@ class ChannelsEmailController < ApplicationController
 
       render json: {
         result:  'duplicate',
-        message: 'Account already exists!',
+        message: __('Account already exists!'),
       }
       return true
     end

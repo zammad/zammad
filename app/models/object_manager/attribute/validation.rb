@@ -1,10 +1,10 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class ObjectManager::Attribute::Validation < ActiveModel::Validator
   include ::Mixin::HasBackends
 
   def validate(record)
-    return if validation_unneeded?
+    return if !validation_needed?
 
     @record = record
     sanitize_memory_cache
@@ -20,10 +20,12 @@ class ObjectManager::Attribute::Validation < ActiveModel::Validator
 
   attr_reader :record
 
-  def validation_unneeded?
-    return true if Setting.get('import_mode')
+  def validation_needed?
+    return false if Setting.get('import_mode')
 
-    ApplicationHandleInfo.current != 'application_server'
+    return false if ApplicationHandleInfo.context_without_custom_attributes?
+
+    ApplicationHandleInfo.current == 'application_server'
   end
 
   def attributes_unchanged?

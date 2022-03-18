@@ -1,6 +1,6 @@
 class ProfileAvatar extends App.ControllerSubContent
   requiredPermission: 'user_preferences.avatar'
-  header: 'Avatar'
+  header: __('Avatar')
   elements:
     '.js-upload':      'fileInput'
     '.avatar-gallery': 'avatarGallery'
@@ -145,13 +145,13 @@ class ProfileAvatar extends App.ControllerSubContent
 
       reader.readAsDataURL(@)
 
-App.Config.set('Avatar', { prio: 1100, name: 'Avatar', parent: '#profile', target: '#profile/avatar', controller: ProfileAvatar, permission: ['user_preferences.avatar'] }, 'NavBarProfile')
+App.Config.set('Avatar', { prio: 1100, name: __('Avatar'), parent: '#profile', target: '#profile/avatar', controller: ProfileAvatar, permission: ['user_preferences.avatar'] }, 'NavBarProfile')
 
 class ImageCropper extends App.ControllerModal
   buttonClose: true
   buttonCancel: true
-  buttonSubmit: 'Save'
-  head: 'Crop Image'
+  buttonSubmit: __('Save')
+  head: __('Crop Image')
 
   elements:
     '.imageCropper-image': 'image'
@@ -229,13 +229,13 @@ class ImageCropper extends App.ControllerModal
 class Camera extends App.ControllerModal
   buttonClose: true
   buttonCancel: true
-  buttonSubmit: 'Save'
+  buttonSubmit: __('Save')
   buttonClass: 'btn--success is-disabled'
   centerButtons: [{
     className: 'btn--success js-shoot is-disabled',
-    text: 'Shoot'
+    text: __('Shoot')
   }]
-  head: 'Camera'
+  head: __('Camera')
 
   elements:
     '.js-shoot':       'shootButton'

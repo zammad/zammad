@@ -1,9 +1,9 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 RSpec.configure do |config|
   # Cache setup must be the first before hook
   # Otherwise authenticated_as hook fails with random errors
-  config.prepend_before(:each) do
+  config.prepend_before do
     # clear the cache otherwise it won't
     # be able to recognize the rollbacks
     # done by RSpec

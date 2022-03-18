@@ -62,7 +62,7 @@ class App.WidgetUser extends App.Controller
           url: @getAdvancedSearchUrl(@user_id, states_open)
           name: 'open'
           count: user.preferences.tickets_open
-          title: 'Open Tickets'
+          title: __('Open Tickets')
           class: 'user-tickets'
           data:  'open'
         items.push item
@@ -72,21 +72,21 @@ class App.WidgetUser extends App.Controller
           url: @getAdvancedSearchUrl(@user_id, states_closed)
           name: 'closed'
           count: user.preferences.tickets_closed
-          title: 'Closed Tickets'
+          title: __('Closed Tickets')
           class: 'user-tickets'
           data:  'closed'
         items.push item
 
       if items[0]
         topic =
-          title: 'Tickets'
+          title: __('Tickets')
           items: items
         user['links'] = []
         user['links'].push topic
 
     # insert userData
     @html App.view('widget/user')(
-      header:   'Customer'
+      header:   __('Customer')
       edit:     true
       user:     user
       userData: userData

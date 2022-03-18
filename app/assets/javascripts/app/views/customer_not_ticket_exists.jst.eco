@@ -3,11 +3,19 @@
   <div class="container">
     <div class="row">
       <div class="span12">
-        <p><%- @T('You have not created a ticket yet.') %></p>
-        <p><%- @T('The way to communicate with us is this thing called "ticket".') %></p>
-        <p><%- @T('Please click the button below to create your first one.') %></p>
+        <% if @has_any_tickets: %>
+          <p><%- @T('You have no tickets to display in this overview.') %></p>
+        <% else: %>
+          <% if @is_allowed_to_create_ticket: %>
+            <p><%- @T('You have not created a ticket yet.') %></p>
+            <p><%- @T('The way to communicate with us is this thing called "ticket".') %></p>
+            <p><%- @T('Please click on the button below to create your first one.') %></p>
 
-        <p><a class="btn btn--primary" href="#customer_ticket_new"><%- @T('Create your first ticket') %></a></p>
+            <p><a class="btn btn--primary" href="#customer_ticket_new"><%- @T('Create your first ticket') %></a></p>
+          <% else: %>
+            <p><%- @T('You currently don\'t have any tickets.') %></p>
+          <% end %>
+        <% end %>
       </div>
     </div>
   </div>

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -14,7 +14,7 @@ RSpec.describe TriggerWebhookJob::RecordPayload do
       let(:backend) { TriggerWebhookJob::RecordPayload::Ticket }
 
       it 'initializes backend instance and sends generate' do
-        instance = double()
+        instance = double
         allow(instance).to receive(:generate)
         allow(backend).to receive(:new).and_return(instance)
 

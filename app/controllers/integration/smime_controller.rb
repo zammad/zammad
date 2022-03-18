@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Integration::SMIMEController < ApplicationController
   prepend_before_action { authentication_check && authorize! }
@@ -42,9 +42,7 @@ class Integration::SMIMEController < ApplicationController
       string = params[:file].read.force_encoding('utf-8')
     end
 
-    items = string.scan(%r{.+?-+END(?: TRUSTED)? CERTIFICATE-+}mi).each_with_object([]) do |cert, result|
-      result << SMIMECertificate.create!(public_key: cert)
-    end
+    items = SMIMECertificate.create_certificates(string)
 
     render json: {
       result:   'ok',
@@ -71,16 +69,10 @@ class Integration::SMIMEController < ApplicationController
       string = params[:file].read.force_encoding('utf-8')
     end
 
-    raise "Parameter 'data' or 'file' required." if string.blank?
+    raise __("Parameter 'data' or 'file' required.") if string.blank?
 
-    private_key = OpenSSL::PKey.read(string, params[:secret])
-    modulus     = private_key.public_key.n.to_s(16)
-
-    certificate = SMIMECertificate.find_by(modulus: modulus)
-
-    raise Exceptions::UnprocessableEntity, 'Unable for find certificate for this private key.' if !certificate
-
-    certificate.update!(private_key: string, private_key_secret: params[:secret])
+    SMIMECertificate.create_certificates(string)
+    SMIMECertificate.create_private_keys(string, params[:secret])
 
     render json: {
       result: 'ok',

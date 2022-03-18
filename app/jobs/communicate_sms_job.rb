@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class CommunicateSmsJob < ApplicationJob
 
@@ -107,6 +107,6 @@ class CommunicateSmsJob < ApplicationJob
   end
 
   def log_error_prefix
-    'Unable to send sms message'
+    'Unable to send SMS message' # rubocop:disable Zammad/DetectTranslatableString
   end
 end

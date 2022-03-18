@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Ldap
 
@@ -6,7 +6,7 @@ class Ldap
   class User
     include Ldap::FilterLookup
 
-    BLACKLISTED = %i[
+    IGNORED_ATTRIBUTES = %i[
       admincount
       accountexpires
       badpasswordtime
@@ -95,7 +95,7 @@ class Ldap
     def valid?(username, password)
       bind_success = @ldap.connection.bind_as(
         base:     @ldap.base_dn,
-        filter:   "(#{login_attribute}=#{username})",
+        filter:   @user_filter ? "(&(#{login_attribute}=#{username})#{@user_filter})" : "(#{login_attribute}=#{username})",
         password: password
       )
 
@@ -124,7 +124,7 @@ class Ldap
           pre_merge_count = attributes.count
 
           attributes.reverse_merge!(entry.to_h
-                                         .except(*BLACKLISTED)
+                                         .except(*IGNORED_ATTRIBUTES)
                                          .transform_values(&:first)
                                          .compact)
 
@@ -179,6 +179,7 @@ class Ldap
 
       @uid_attribute = config[:uid_attribute]
       @filter        = config[:filter]
+      @user_filter   = config[:user_filter]
     end
   end
 end

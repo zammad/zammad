@@ -2,6 +2,7 @@ class App.KnowledgeBaseCategory extends App.Model
   @configure 'KnowledgeBaseCategory', 'category_icon', 'parent_id', 'child_ids', 'translation_ids'
   @extend Spine.Model.Ajax
   @extend App.KnowledgeBaseActions
+  @extend App.KnowledgeBaseAccess
 
   url: ->
     @knowledge_base().generateURL('categories')
@@ -59,7 +60,7 @@ class App.KnowledgeBaseCategory extends App.Model
       {
         name:       'category_icon'
         model:      'category'
-        display:    'Icon'
+        display:    __('Icon')
         tag:        'icon_picker'
         iconset:    @knowledge_base().iconset
         grid_width: '1/5'
@@ -72,7 +73,7 @@ class App.KnowledgeBaseCategory extends App.Model
       {
         name:       'translation::title'
         model:      'translation'
-        display:    'Title'
+        display:    __('Title')
         tag:        'input'
         grid_width: '4/5'
         null:       false
@@ -83,7 +84,7 @@ class App.KnowledgeBaseCategory extends App.Model
       {
         name:       'parent_id'
         model:      'category'
-        display:    'Parent'
+        display:    __('Parent')
         tag:        'select'
         null:       true
         options:    @knowledge_base().categoriesForDropdown(includeRoot: true, kb_locale: kb_locale)

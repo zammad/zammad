@@ -17,7 +17,7 @@ class Modal extends App.ControllerModal
   buttonClose: true
   buttonCancel: true
   buttonSubmit: false
-  head: 'Settings'
+  head: __('Settings')
 
   constructor: ->
     super

@@ -1,8 +1,9 @@
 ## What does this MR do?
 
-<!-- Is there a lot to say? Consider creating an issue. -->
+<!--Insert the link to a GitHub issue in (), or describe the changes if there is no issue -->
+[Issue Link]()
 
-## Screenshots  <!-- Optional -->
+## Screenshots  <!-- Optional, very helpful for the reviewer colleagues from other teams -->
 
 ### Before
 
@@ -12,7 +13,7 @@
 
 ![alt text](https://example.com/after.png)
 
-## Notes
+## Code Changes
 
 * This MR
   **does**  <!-- KEEP ONLY ONE -->
@@ -58,9 +59,36 @@ How do your performance changes scale on a system of this size?
 they are really big customers, and we want to keep their business!)
 -->
 
-### Follow-up Required  <!-- Optional -->
+### Documentation Follow-up Required?
+
+<!-- Keep one of the two sections -->
 
 <!--
-Does your MR require coordination with the documentation/support teams?
-If so, apply the label and explain here.
+If this MR does change:
+- How the user experiences or uses the application
+  - Visual appearance
+  - Screen flow
+  - Texts
+- How the application is deployed an maintained
+  - Deployment process
+  - System requirements
+  - Command line interfaces
+ -->
+This MR may require follow-up by the documentation team.
+/label ~Documentation
+
+<!--
+Otherwise
 -->
+This MR does not require any follow-up.
+
+## QA Checklist (to be filled by the reviewer)
+
+- [ ] Implementation satisfies specification
+- [ ] Changes confirmed by manual testing
+- [ ] [Code style](https://git.zammad.com/zammad/zammad/-/wikis/Coding-style-guide) is appropriate
+- [ ] Performance will not degrade
+- [ ] Code is properly covered with tests
+- If follow-up by the documentation team is needed:
+  - [ ] Add a comment with this text
+> @<!-- don't treat this as a mention until copied -->MrGeneration please check if this MR requires changes to the documentation. Thanks!

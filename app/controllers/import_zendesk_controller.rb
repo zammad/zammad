@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class ImportZendeskController < ApplicationController
 
@@ -9,21 +9,21 @@ class ImportZendeskController < ApplicationController
     if params[:url].blank? || params[:url] !~ %r{^(http|https)://.+?$}
       render json: {
         result:  'invalid',
-        message: 'Invalid URL!',
+        message: __('Invalid URL!'),
       }
       return
     end
 
     # connection test
     translation_map = {
-      'No such file'                                              => 'Hostname not found!',
-      'getaddrinfo: nodename nor servname provided, or not known' => 'Hostname not found!',
-      '503 Service Temporarily Unavailable'                       => 'Hostname not found!',
-      'No route to host'                                          => 'No route to host!',
-      'Connection refused'                                        => 'Connection refused!',
+      'No such file'                                              => __('Hostname not found!'),
+      'getaddrinfo: nodename nor servname provided, or not known' => __('Hostname not found!'),
+      '503 Service Temporarily Unavailable'                       => __('Hostname not found!'),
+      'No route to host'                                          => __('No route to host!'),
+      'Connection refused'                                        => __('Connection refused!'),
     }
 
-    response = UserAgent.request(params[:url])
+    response = UserAgent.request(URI.join(params[:url], '/api/v2/users/me').to_s, verify_ssl: true)
 
     if !response.success?
       message_human = ''
@@ -40,11 +40,10 @@ class ImportZendeskController < ApplicationController
       return
     end
 
-    # since 2016-10-15 a redirect to a marketing page has been implemented
-    if !response.body.match?(%r{#{params[:url]}})
+    if response.header['x-zendesk-api-version'].blank?
       render json: {
         result:        'invalid',
-        message_human: 'Hostname not found!',
+        message_human: __('Hostname not found!'),
       }
       return
     end
@@ -67,7 +66,7 @@ class ImportZendeskController < ApplicationController
 
       render json: {
         result:        'invalid',
-        message_human: 'Incomplete credentials',
+        message_human: __('Incomplete credentials'),
       }
       return
     end
@@ -84,7 +83,7 @@ class ImportZendeskController < ApplicationController
 
       render json: {
         result:        'invalid',
-        message_human: 'Invalid credentials!',
+        message_human: __('Invalid credentials!'),
       }
       return
     end

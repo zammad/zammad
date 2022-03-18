@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class FixedTranslation2 < ActiveRecord::Migration[4.2]
   def up
@@ -29,7 +29,7 @@ class FixedTranslation2 < ActiveRecord::Migration[4.2]
       fetched_setting.save!
     end
 
-    Translation.load
+    Translation.sync
 
   end
 end

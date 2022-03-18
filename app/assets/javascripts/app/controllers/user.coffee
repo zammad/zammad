@@ -1,6 +1,6 @@
 class User extends App.ControllerSubContent
   requiredPermission: 'admin.user'
-  header: 'Users'
+  header: __('Users')
   elements:
     '.js-search': 'searchInput'
   events:
@@ -9,6 +9,7 @@ class User extends App.ControllerSubContent
 
   constructor: ->
     super
+
     @render()
 
   show: =>
@@ -23,10 +24,10 @@ class User extends App.ControllerSubContent
 
   render: ->
     @html App.view('user')(
-      head: 'Users'
+      head: __('Users')
       buttons: [
-        { name: 'Import', 'data-type': 'import', class: 'btn' }
-        { name: 'New User', 'data-type': 'new', class: 'btn--success' }
+        { name: __('Import'), 'data-type': 'import', class: 'btn' }
+        { name: __('New User'), 'data-type': 'new', class: 'btn--success' }
       ]
       roles: App.Role.findAllByAttribute('active', true)
     )
@@ -42,7 +43,7 @@ class User extends App.ControllerSubContent
     )
 
     # start search
-    @searchInput.bind( 'keyup', (e) =>
+    @searchInput.on( 'keyup', (e) =>
       query = @searchInput.val().trim()
       return if query is @query
       @query = query
@@ -85,15 +86,26 @@ class User extends App.ControllerSubContent
       new App.ControllerGenericEdit(
         id: item.id
         pageData:
-          title:     'Users'
+          title:     __('Users')
           home:      'users'
-          object:    'User'
-          objects:   'Users'
+          object:    __('User')
+          objects:   __('Users')
           navupdate: '#users'
         genericObject: 'User'
         callback: rerender
         container: @el.closest('.content')
       )
+
+
+    callbackLoginAttribute = (value, object, attribute, attributes) ->
+      attribute.prefixIcon = null
+      attribute.title = null
+
+      if object.maxLoginFailedReached()
+        attribute.title = App.i18n.translateContent('This user is currently blocked because of too many failed login attempts.')
+        attribute.prefixIcon = 'lock'
+
+      value
 
     users = []
     for user_id in user_ids
@@ -110,7 +122,7 @@ class User extends App.ControllerSubContent
       customActions: [
         {
           name: 'switchTo'
-          display: 'View from user\'s perspective'
+          display: __('View from user\'s perspective')
           icon: 'switchView '
           class: 'create js-switchTo'
           callback: (id) =>
@@ -129,16 +141,42 @@ class User extends App.ControllerSubContent
                 )
               800
             )
-        }
+        },
         {
           name: 'delete'
-          display: 'Delete'
+          display: __('Delete')
           icon: 'trash'
           class: 'delete'
           callback: (id) =>
             @navigate "#system/data_privacy/#{id}"
         },
+        {
+          name: 'unlock'
+          display: __('Unlock')
+          icon: 'lock-open'
+          class: 'unlock'
+          available: (user) ->
+            user.maxLoginFailedReached()
+          callback: (id) =>
+            @ajax(
+              id: "user_unlock_#{id}"
+              type:  'PUT'
+              url:   "#{@apiPath}/users/unlock/#{id}"
+              success: =>
+                App.User.full(id,
+                => @notify(
+                  type: 'success'
+                  msg:  App.i18n.translateContent('User successfully unlocked!')
+
+                  @renderResult(user_ids)
+                ),
+                true)
+            )
+        }
       ]
+      callbackAttributes: {
+        login: [ callbackLoginAttribute ]
+      }
       bindRow:
         events:
           'click': edit
@@ -172,10 +210,10 @@ class User extends App.ControllerSubContent
     e.preventDefault()
     new App.ControllerGenericNew(
       pageData:
-        title:     'Users'
+        title:     __('Users')
         home:      'users'
-        object:    'User'
-        objects:   'Users'
+        object:    __('User')
+        objects:   __('Users')
         navupdate: '#users'
       genericObject: 'User'
       container: @el.closest('.content')
@@ -201,4 +239,4 @@ class User extends App.ControllerSubContent
       container: @el.closest('.content')
     )
 
-App.Config.set( 'User', { prio: 1000, name: 'Users', parent: '#manage', target: '#manage/users', controller: User, permission: ['admin.user'] }, 'NavBarAdmin' )
+App.Config.set( 'User', { prio: 1000, name: __('Users'), parent: '#manage', target: '#manage/users', controller: User, permission: ['admin.user'] }, 'NavBarAdmin' )

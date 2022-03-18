@@ -1,6 +1,6 @@
 # coffeelint: disable=camel_case_classes,no_interpolation_in_single_quotes
 class App.UiElement.autocompletion
-  @render: (attribute, params) ->
+  @render: (attribute, params = {}) ->
 
     if params[ attribute.name + '_autocompletion_value_shown' ]
       attribute.valueShown = params[ attribute.name + '_autocompletion_value_shown' ]
@@ -48,5 +48,11 @@ class App.UiElement.autocompletion
         select: (event, ui) ->
           b(event, ui.item)
       )
+      $(local_attribute_full).on('click', -> $(@).autocomplete('search', $(local_attribute_full).val()))
+      if attribute.value
+        $(local_attribute).val(attribute.value)
+      if attribute.valueShown
+        $(local_attribute_full).val(attribute.valueShown)
+
     App.Delay.set(a, 280, undefined, 'form_autocompletion')
     item

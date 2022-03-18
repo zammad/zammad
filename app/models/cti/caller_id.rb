@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 module Cti
   class CallerId < ApplicationModel
@@ -41,7 +41,7 @@ module Cti
 
 =begin
 
-get items (users) for a certain caller id
+get items (users) for a certain caller ID
 
   caller_id_records = Cti::CallerId.lookup('49123456789')
 
@@ -114,7 +114,7 @@ returns
       end
       return if !user_id
 
-      # get caller ids
+      # get caller IDs
       caller_ids = []
       attributes = record.attributes
       attributes.each_value do |value|
@@ -127,7 +127,7 @@ returns
         caller_ids.concat(local_caller_ids)
       end
 
-      # search for caller ids to keep
+      # search for caller IDs to keep
       caller_ids_to_add = []
       existing_record_ids = Cti::CallerId.where(object: model.to_s, o_id: record.id).pluck(:id)
       caller_ids.uniq.each do |caller_id|
@@ -145,12 +145,12 @@ returns
         caller_ids_to_add.push caller_id
       end
 
-      # delete not longer existing caller ids
+      # delete not longer existing caller IDs
       existing_record_ids.each do |record_id|
         Cti::CallerId.destroy(record_id)
       end
 
-      # create new caller ids
+      # create new caller IDs
       caller_ids_to_add.each do |caller_id|
         Cti::CallerId.maybe_add(
           caller_id: caller_id,

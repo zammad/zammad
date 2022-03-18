@@ -1,13 +1,13 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class HtmlSanitizer
   LINKABLE_URL_SCHEMES = URI.scheme_list.keys.map(&:downcase) - ['mailto'] + ['tel']
   PROCESSING_TIMEOUT = 20
-  UNPROCESSABLE_HTML_MSG = 'This message cannot be displayed due to HTML processing issues. Download the raw message below and open it via an Email client if you still wish to view it.'.freeze
+  UNPROCESSABLE_HTML_MSG = __('This message cannot be displayed due to HTML processing issues. Download the raw message below and open it via an Email client if you still wish to view it.').freeze
 
 =begin
 
-satinize html string based on whiltelist
+sanitize html string based on whiltelist
 
   string = HtmlSanitizer.strict(string, external)
 
@@ -22,14 +22,14 @@ satinize html string based on whiltelist
       # config
       tags_remove_content = Rails.configuration.html_sanitizer_tags_remove_content
       tags_quote_content = Rails.configuration.html_sanitizer_tags_quote_content
-      tags_whitelist = Rails.configuration.html_sanitizer_tags_whitelist
-      attributes_whitelist = Rails.configuration.html_sanitizer_attributes_whitelist
-      css_properties_whitelist = Rails.configuration.html_sanitizer_css_properties_whitelist
-      css_values_blacklist = Rails.application.config.html_sanitizer_css_values_backlist
+      tags_allowlist = Rails.configuration.html_sanitizer_tags_allowlist
+      attributes_allowlist = Rails.configuration.html_sanitizer_attributes_allowlist
+      css_properties_allowlist = Rails.configuration.html_sanitizer_css_properties_allowlist
+      css_values_blocklist = Rails.application.config.html_sanitizer_css_values_blocklist
 
-      # We whitelist yahoo_quoted because Yahoo Mail marks quoted email content using
+      # We allowlist yahoo_quoted because Yahoo Mail marks quoted email content using
       # <div class='yahoo_quoted'> and we rely on this class to identify quoted messages
-      classes_whitelist = %w[js-signatureMarker yahoo_quoted]
+      classes_allowlist = %w[js-signatureMarker yahoo_quoted]
       attributes_2_css = %w[width height]
 
       # remove tags with subtree
@@ -56,7 +56,7 @@ satinize html string based on whiltelist
       scrubber_wipe = Loofah::Scrubber.new do |node|
 
         # replace tags, keep subtree
-        if tags_whitelist.exclude?(node.name)
+        if tags_allowlist.exclude?(node.name)
           node.replace node.children.to_s
           Loofah::Scrubber::STOP
         end
@@ -75,7 +75,7 @@ satinize html string based on whiltelist
           classes = node['class'].gsub(%r{\t|\n|\r}, '').split
           class_new = ''
           classes.each do |local_class|
-            next if classes_whitelist.exclude?(local_class.to_s.strip)
+            next if classes_allowlist.exclude?(local_class.to_s.strip)
 
             if class_new != ''
               class_new += ' '
@@ -115,9 +115,9 @@ satinize html string based on whiltelist
             next if !prop[0]
 
             key = prop[0].strip
-            next if css_properties_whitelist.exclude?(node.name)
-            next if css_properties_whitelist[node.name].exclude?(key)
-            next if css_values_blacklist[node.name]&.include?(local_pear.gsub(%r{[[:space:]]}, '').strip)
+            next if css_properties_allowlist.exclude?(node.name)
+            next if css_properties_allowlist[node.name].exclude?(key)
+            next if css_values_blocklist[node.name]&.include?(local_pear.gsub(%r{[[:space:]]}, '').strip)
 
             style += "#{local_pear};"
           end
@@ -137,10 +137,10 @@ satinize html string based on whiltelist
           node.delete(attribute_name)
         end
 
-        # remove attributes if not whitelisted
+        # remove attributes if not allowlisted
         node.each do |attribute, _value|
           attribute_name = attribute.downcase
-          next if attributes_whitelist[:all].include?(attribute_name) || attributes_whitelist[node.name]&.include?(attribute_name)
+          next if attributes_allowlist[:all].include?(attribute_name) || attributes_allowlist[node.name]&.include?(attribute_name)
 
           node.delete(attribute)
         end
@@ -161,8 +161,8 @@ satinize html string based on whiltelist
         # wrap plain-text URLs in <a> tags
         if node.is_a?(Nokogiri::XML::Text) && node.content.present? && node.content.include?(':') && node.ancestors.map(&:name).exclude?('a')
           urls = URI.extract(node.content, LINKABLE_URL_SCHEMES)
-                    .map { |u| u.sub(%r{[,.]$}, '') }      # URI::extract captures trailing dots/commas
-                    .reject { |u| u.match?(%r{^[^:]+:$}) } # URI::extract will match, e.g., 'tel:'
+                    .map { |u| u.sub(%r{[,.]$}, '') } # URI::extract captures trailing dots/commas
+                    .grep_v(%r{^[^:]+:$}) # URI::extract will match, e.g., 'tel:'
 
           next if urls.blank?
 
@@ -409,13 +409,13 @@ cleanup html string:
 
 =begin
 
-reolace inline images with cid images
+replace inline images with cid images
 
   string = HtmlSanitizer.replace_inline_images(article.body)
 
 =end
 
-  def self.replace_inline_images(string, prefix = rand(999_999_999))
+  def self.replace_inline_images(string, prefix = SecureRandom.uuid)
     fqdn = Setting.get('fqdn')
     attachments_inline = []
     filename_counter = 0
@@ -424,7 +424,7 @@ reolace inline images with cid images
         if node['src'] && node['src'] =~ %r{^(data:image/(jpeg|png);base64,.+?)$}i
           filename_counter += 1
           file_attributes = StaticAssets.data_url_attributes($1)
-          cid = "#{prefix}.#{rand(999_999_999)}@#{fqdn}"
+          cid = "#{prefix}.#{SecureRandom.uuid}@#{fqdn}"
           filename = cid
           if file_attributes[:file_extention].present?
             filename = "image#{filename_counter}.#{file_attributes[:file_extention]}"
@@ -450,7 +450,7 @@ reolace inline images with cid images
 
 =begin
 
-satinize style of img tags
+sanitize style of img tags
 
   string = HtmlSanitizer.dynamic_image_size(article.body)
 

@@ -1,29 +1,29 @@
 class App.ChannelGoogle extends App.ControllerTabs
   requiredPermission: 'admin.channel_google'
-  header: 'Google'
+  header: __('Google')
   constructor: ->
     super
 
-    @title 'Google', true
+    @title __('Google'), true
 
     @tabs = [
       {
-        name:       'Accounts',
+        name:       __('Accounts'),
         target:     'c-account',
         controller: ChannelAccountOverview,
       },
       {
-        name:       'Filter',
+        name:       __('Filter'),
         target:     'c-filter',
         controller: App.ChannelEmailFilter,
       },
       {
-        name:       'Signatures',
+        name:       __('Signatures'),
         target:     'c-signature',
         controller: App.ChannelEmailSignature,
       },
       {
-        name:       'Settings',
+        name:       __('Settings'),
         target:     'c-setting',
         controller: App.SettingsArea,
         params:     { area: 'Email::Base' },
@@ -145,7 +145,7 @@ class ChannelAccountOverview extends App.ControllerSubContent
     e.preventDefault()
     id   = $(e.target).closest('.action').data('id')
     new App.ControllerConfirm(
-      message: 'Sure?'
+      message: __('Are you sure?')
       callback: =>
         @ajax(
           id:   'google_delete'
@@ -215,11 +215,11 @@ class ChannelAccountOverview extends App.ControllerSubContent
         @load()
         @notify
           type: 'success'
-          msg:  'Rollback of channel migration succeeded!'
+          msg:  __('Rollback of channel migration succeeded!')
       error: (data) =>
         @notify
           type: 'error'
-          msg:  'Failed to rollback migration of the channel!'
+          msg:  __('Failed to roll back the migration of the channel!')
     )
 
   groupChange: (e) =>
@@ -237,7 +237,7 @@ class ChannelAccountOverview extends App.ControllerSubContent
     channel_id = $(e.target).closest('.action').data('id')
     new App.ControllerGenericNew(
       pageData:
-        object: 'Email Address'
+        object: __('Email Address')
       genericObject: 'EmailAddress'
       container: @el.closest('.content')
       item:
@@ -250,7 +250,7 @@ class ChannelAccountOverview extends App.ControllerSubContent
     id = $(e.target).closest('li').data('id')
     new App.ControllerGenericEdit(
       pageData:
-        object: 'Email Address'
+        object: __('Email Address')
       genericObject: 'EmailAddress'
       container: @el.closest('.content')
       id: id
@@ -271,12 +271,12 @@ class ChannelInboundEdit extends App.ControllerModal
   buttonClose: true
   buttonCancel: true
   buttonSubmit: true
-  head: 'Channel'
+  head: __('Channel')
 
   content: =>
     configureAttributesBase = [
-      { name: 'options::folder',          display: 'Folder',   tag: 'input',  type: 'text', limit: 120, null: true, autocapitalize: false, placeholder: 'optional' },
-      { name: 'options::keep_on_server',  display: 'Keep messages on server', tag: 'boolean', null: true, options: { true: 'yes', false: 'no' }, translate: true, default: false },
+      { name: 'options::folder',          display: __('Folder'),   tag: 'input',  type: 'text', limit: 120, null: true, autocapitalize: false, placeholder: __('optional') },
+      { name: 'options::keep_on_server',  display: __('Keep messages on server'), tag: 'boolean', null: true, options: { true: 'yes', false: 'no' }, translate: true, default: false },
     ]
     @form = new App.ControllerForm(
       model:
@@ -323,7 +323,7 @@ class ChannelInboundEdit extends App.ControllerModal
         details = xhr.responseJSON || {}
         @notify
           type:    'error'
-          msg:     App.i18n.translateContent(details.error_human || details.error || 'Unable to save changes.')
+          msg:     App.i18n.translateContent(details.error_human || details.error || __('The changes could not be saved.'))
           timeout: 6000
     )
 
@@ -331,11 +331,11 @@ class ChannelGroupEdit extends App.ControllerModal
   buttonClose: true
   buttonCancel: true
   buttonSubmit: true
-  head: 'Channel'
+  head: __('Channel')
 
   content: =>
     configureAttributesBase = [
-      { name: 'group_id', display: 'Destination Group', tag: 'select', null: false, relation: 'Group', nulloption: true, filter: { active: true } },
+      { name: 'group_id', display: __('Destination Group'), tag: 'select', null: false, relation: 'Group', nulloption: true, filter: { active: true } },
     ]
     @form = new App.ControllerForm(
       model:
@@ -375,11 +375,11 @@ class ChannelGroupEdit extends App.ControllerModal
       error: (xhr) =>
         data = JSON.parse(xhr.responseText)
         @formEnable(e)
-        @el.find('.alert').removeClass('hidden').text(data.error || 'Unable to save changes.')
+        @el.find('.alert').removeClass('hidden').text(data.error || __('The changes could not be saved.'))
     )
 
 class AppConfig extends App.ControllerModal
-  head: 'Connect Google App'
+  head: __('Connect Google App')
   shown: true
   button: 'Connect'
   buttonCancel: true
@@ -421,11 +421,11 @@ class AppConfig extends App.ControllerModal
               @isChanged = true
               @close()
             fail: =>
-              @el.find('.alert').removeClass('hidden').text('Unable to create entry.')
+              @el.find('.alert').removeClass('hidden').text(__('The entry could not be created.'))
           )
           return
         @formEnable(e)
-        @el.find('.alert').removeClass('hidden').text(data.error || 'Unable to verify App.')
+        @el.find('.alert').removeClass('hidden').text(data.error || __('App could not be verified.'))
     )
 
-App.Config.set('google', { prio: 5000, name: 'Google', parent: '#channels', target: '#channels/google', controller: App.ChannelGoogle, permission: ['admin.channel_google'] }, 'NavBarAdmin')
+App.Config.set('google', { prio: 5000, name: __('Google'), parent: '#channels', target: '#channels/google', controller: App.ChannelGoogle, permission: ['admin.channel_google'] }, 'NavBarAdmin')

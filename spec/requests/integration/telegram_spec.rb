@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -396,6 +396,20 @@ RSpec.describe 'Telegram Webhook Integration', type: :request do
 
         expect(ticket2.articles.first.from).to eq('Test Firstname2 Test Lastname2')
         expect(ticket2.articles.first.to).to eq('@ChrispressoBot2')
+      end
+
+      context 'when ApplicationHandleInfo context' do
+        it 'gets switched to "telegram"' do
+          allow(ApplicationHandleInfo).to receive('context=')
+          post callback_url, params: read_message('private', 'text'), as: :json
+          expect(ApplicationHandleInfo).to have_received('context=').with('telegram').at_least(1)
+        end
+
+        it 'reverts back to default' do
+          allow(ApplicationHandleInfo).to receive('context=')
+          post callback_url, params: read_message('private', 'text'), as: :json
+          expect(ApplicationHandleInfo.context).not_to eq 'telegram'
+        end
       end
 
     end

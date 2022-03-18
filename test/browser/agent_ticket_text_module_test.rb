@@ -1,19 +1,19 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'browser_test_helper'
 
 class AgentTicketTextModuleTest < TestCase
   def test_text_modules
-    random  = "text_module_test_#{rand(99_999_999)}"
-    random2 = "text_module_test_#{rand(99_999_999)}"
+    random  = "text_module_test_#{SecureRandom.uuid}"
+    random2 = "text_module_test_#{SecureRandom.uuid}"
 
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     # create new text modules
     text_module_create(
@@ -54,12 +54,12 @@ class AgentTicketTextModuleTest < TestCase
       css:   '.active div[data-name=body]',
       value: "some content#{random}",
     )
-    tasks_close_all()
+    tasks_close_all
 
     # test with two browser windows
-    random = "text_II_module_test_#{rand(99_999_999)}"
+    random = "text_II_module_test_#{SecureRandom.uuid}"
 
-    user_rand = rand(99_999_999).to_s
+    user_rand = SecureRandom.uuid
     login     = "agent-text-module-#{user_rand}"
     firstname = "Text#{user_rand}"
     lastname  = "Module#{user_rand}"

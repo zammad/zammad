@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'browser_test_helper'
 
@@ -11,7 +11,7 @@ class AgentTicketMacroTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     ticket = ticket_create(
       data: {
@@ -45,11 +45,11 @@ class AgentTicketMacroTest < TestCase
   def test_ux_flow_next_up_stay_on_tab
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     ux_flow_next_up = 'Stay on tab'
     macro_name      = "Test #{ux_flow_next_up}"
@@ -90,11 +90,11 @@ class AgentTicketMacroTest < TestCase
   def test_ux_flow_next_up_close_tab
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     ux_flow_next_up = 'Close tab'
     macro_name      = "Test #{ux_flow_next_up}"
@@ -123,11 +123,11 @@ class AgentTicketMacroTest < TestCase
   def test_ux_flow_next_up_advance_to_next_ticket_from_overview
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     ux_flow_next_up = 'Advance to next ticket from overview'
     macro_name      = "Test #{ux_flow_next_up}"
@@ -158,7 +158,7 @@ class AgentTicketMacroTest < TestCase
     # we need to close all open ticket tasks because
     # otherwise the Zoom view won't change in "Overview"-mode
     # when we re-enter the Zoom view for a ticket via the overview
-    tasks_close_all()
+    tasks_close_all
 
     overview_open(
       link: '#ticket/view/all_unassigned',

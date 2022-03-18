@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Webhook < ApplicationModel
   include ChecksClientNotification
@@ -18,9 +18,9 @@ class Webhook < ApplicationModel
   def validate_endpoint
     uri = URI.parse(endpoint)
 
-    errors.add(:endpoint, 'Invalid endpoint (no http/https)!') if !uri.is_a?(URI::HTTP)
-    errors.add(:endpoint, 'Invalid endpoint (no hostname)!') if uri.host.nil?
+    errors.add(:endpoint, __('Invalid endpoint (no http/https)!')) if !uri.is_a?(URI::HTTP)
+    errors.add(:endpoint, __('Invalid endpoint (no hostname)!')) if uri.host.nil?
   rescue URI::InvalidURIError
-    errors.add :endpoint, 'Invalid endpoint!'
+    errors.add :endpoint, __('Invalid endpoint!')
   end
 end

@@ -1,9 +1,14 @@
 <li role="presentation" class="<%= @class %>" data-value="<%= @option.value %>" title="<%= @option.name %><% if @detail: %><%= @detail %><% end %>">
   <% if @option.category: %><small><%= @option.category %></small><br><% end %>
-  <span class="searchableSelect-option-text">
+  <span class="searchableSelect-option-text<% if @option.inactive is true: %> is-inactive<% end %>">
     <%= @option.name %><% if @detail: %><span class="dropdown-detail"><%= @detail %></span><% end %>
   </span>
   <% if @option.children: %>
     <%- @Icon('arrow-right', 'recipientList-arrow') %>
+  <% end %>
+  <% if @option.inactive is true: %>
+    <span>
+      <%- @Ti('inactive') %>
+    </span>
   <% end %>
 </li>

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require_relative 'boot'
 
@@ -11,6 +11,14 @@ Bundler.setup
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
+
+# Only load gems for asset compilation if they are needed to avoid
+#   having unneeded runtime dependencies like NodeJS.
+if ARGV.include?('assets:precompile') || Rails.groups.exclude?('production')
+  Bundler.load.current_dependencies.select do |dep|
+    require dep.name if dep.groups.include?(:assets)
+  end
+end
 
 module Zammad
   class Application < Rails::Application
@@ -35,8 +43,11 @@ module Zammad
 
     # Custom directories with classes and modules you want to be autoloadable.
     config.add_autoload_paths_to_load_path = false
-    config.autoload_paths   += %W[#{config.root}/lib]
-    config.eager_load_paths += %W[#{config.root}/lib]
+    config.autoload_paths += %W[#{config.root}/lib]
+
+    # zeitwerk:check will only check preloaded paths. To make sure that also lib/ gets validated,
+    #   add it to the eager_load_paths only if zeitwerk:check is running.
+    config.eager_load_paths += %W[#{config.root}/lib] if ARGV[0].eql? 'zeitwerk:check'
 
     config.active_job.queue_adapter = :delayed_job
 

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -45,7 +45,7 @@ RSpec.describe AutoWizard do
           Users: [
             {
               login:     'master_unit_test01@example.com',
-              firstname: 'Test Master',
+              firstname: 'Test Admin',
               lastname:  'Agent',
               email:     'master_unit_test01@example.com',
               password:  'test',
@@ -60,10 +60,10 @@ RSpec.describe AutoWizard do
           .to change(User, :count).by(1)
           .and change { User.last.roles }.to(Role.where(name: 'Agent'))
           .and change { User.last.login }.to('master_unit_test01@example.com')
-          .and change { User.last.firstname }.to('Test Master')
+          .and change { User.last.firstname }.to('Test Admin')
           .and change { User.last.lastname }.to('Agent')
           .and change { User.last.email }.to('master_unit_test01@example.com')
-          .and change { User.authenticate(User.last.email, 'test') }.from(nil)
+          .and change { Auth.new(User.last.email, 'test').valid? }.from(false)
       end
     end
 
@@ -73,7 +73,7 @@ RSpec.describe AutoWizard do
           Users: [
             {
               login:     'master_unit_test01@example.com',
-              firstname: 'Test Master',
+              firstname: 'Test Admin',
               lastname:  'Agent',
               email:     'master_unit_test01@example.com',
               password:  'test'
@@ -87,10 +87,10 @@ RSpec.describe AutoWizard do
           .to change(User, :count).by(1)
           .and change { User.last.roles }.to(Role.where(name: %w[Admin Agent]))
           .and change { User.last.login }.to('master_unit_test01@example.com')
-          .and change { User.last.firstname }.to('Test Master')
+          .and change { User.last.firstname }.to('Test Admin')
           .and change { User.last.lastname }.to('Agent')
           .and change { User.last.email }.to('master_unit_test01@example.com')
-          .and change { User.authenticate(User.last.email, 'test') }.from(nil)
+          .and change { Auth.new(User.last.email, 'test').valid? }.from(false)
       end
     end
 
@@ -188,7 +188,7 @@ RSpec.describe AutoWizard do
                     host:     'mx1.example.com',
                     user:     'not_existing',
                     password: 'some_pass',
-                    ssl:      true
+                    ssl:      'ssl'
                   }
                 },
                 outbound: {
@@ -227,7 +227,7 @@ RSpec.describe AutoWizard do
                     host:     'mx1.example.com',
                     user:     'not_existing',
                     password: 'some_pass',
-                    ssl:      true
+                    ssl:      'ssl'
                   }
                 },
                 outbound: {

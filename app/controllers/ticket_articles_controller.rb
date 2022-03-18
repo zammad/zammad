@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class TicketArticlesController < ApplicationController
   include CreatesTicketArticles
@@ -159,7 +159,7 @@ class TicketArticlesController < ApplicationController
 
       # check if requested ticket got merged
       if ticket.state.state_type.name != 'merged'
-        raise Exceptions::Forbidden, 'No access, article_id/ticket_id is not matching.'
+        raise Exceptions::Forbidden, __('The article does not belong to the specified ticket.')
       end
 
       ticket = article.ticket
@@ -173,31 +173,13 @@ class TicketArticlesController < ApplicationController
         access = true
       end
     end
-    raise Exceptions::Forbidden, 'Requested file id is not linked with article_id.' if !access
-
-    # find file
-    file = Store.find(params[:id])
-
-    disposition = sanitized_disposition
-
-    content = nil
-    if params[:view].present? && file.preferences[:resizable] == true
-      if file.preferences[:content_inline] == true && params[:view] == 'inline'
-        content = file.content_inline
-      elsif file.preferences[:content_preview] == true && params[:view] == 'preview'
-        content = file.content_preview
-      end
-    end
-
-    if content.blank?
-      content = file.content
-    end
+    raise Exceptions::Forbidden, __('The file does not belong to the specified article.') if !access
 
     send_data(
-      content,
-      filename:    file.filename,
-      type:        file.preferences['Content-Type'] || file.preferences['Mime-Type'] || 'application/octet-stream',
-      disposition: disposition
+      download_file.content(params[:view]),
+      filename:    download_file.filename,
+      type:        download_file.content_type,
+      disposition: download_file.disposition
     )
   end
 
@@ -251,14 +233,14 @@ class TicketArticlesController < ApplicationController
   # @response_message 403 Forbidden / Invalid session.
   def import_start
     if Setting.get('import_mode') != true
-      raise 'Only can import tickets if system is in import mode.'
+      raise __('Tickets can only be imported if system is in import mode.')
     end
 
     string = params[:data]
     if string.blank? && params[:file].present?
       string = params[:file].read.force_encoding('utf-8')
     end
-    raise Exceptions::UnprocessableEntity, 'No source data submitted!' if string.blank?
+    raise Exceptions::UnprocessableEntity, __('No source data submitted!') if string.blank?
 
     result = Ticket::Article.csv_import(
       string:       string,
@@ -277,15 +259,5 @@ class TicketArticlesController < ApplicationController
     result = SecureMailing.retry(article)
 
     render json: result
-  end
-
-  private
-
-  def sanitized_disposition
-    disposition = params.fetch(:disposition, 'inline')
-    valid_disposition = %w[inline attachment]
-    return disposition if valid_disposition.include?(disposition)
-
-    raise Exceptions::Forbidden, "Invalid disposition #{disposition} requested. Only #{valid_disposition.join(', ')} are valid."
   end
 end

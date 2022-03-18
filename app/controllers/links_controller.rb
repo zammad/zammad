@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class LinksController < ApplicationController
   prepend_before_action :authentication_check
@@ -31,7 +31,7 @@ class LinksController < ApplicationController
              end
 
     if !object
-      render json: { error: 'No such object!' }, status: :unprocessable_entity
+      render json: { error: __('Could not find object!') }, status: :unprocessable_entity
       return
     end
 

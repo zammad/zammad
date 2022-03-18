@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'http/uri'
 
@@ -362,7 +362,7 @@ class TwitterSync
     )
 
     attachments.each do |attachment|
-      Store.add(
+      Store.create!(
         object:      'Ticket::Article',
         o_id:        article.id,
         data:        attachment[:content],
@@ -450,7 +450,7 @@ class TwitterSync
     Rails.logger.debug { 'import tweet' }
 
     ticket = nil
-    Transaction.execute(reset_user_id: true) do
+    Transaction.execute(reset_user_id: true, context: 'twitter') do
 
       # check if parent exists
       user = to_user(tweet)
@@ -501,11 +501,9 @@ create a tweet or direct message from an article
 
       Rails.logger.debug { 'Create tweet from article...' }
 
-      # rubocop:disable Style/AsciiComments
       # workaround for https://github.com/sferik/twitter/issues/677
       # https://github.com/zammad/zammad/issues/2873 - unable to post
       # tweets with * - replace `*` with the wide-asterisk `＊`.
-      # rubocop:enable Style/AsciiComments
       article[:body].tr!('*', '＊') if article[:body].present?
       tweet = @client.update(
         article[:body],
@@ -533,7 +531,7 @@ create a tweet or direct message from an article
                 user(tweet).id
               end
 
-    # no changes in post is from page user it self
+    # no changes in post is from page user itself
     if channel.options[:user][:id].to_s == user_id.to_s
       if !ticket
         return Ticket::State.find_by(name: 'closed')
@@ -551,9 +549,9 @@ create a tweet or direct message from an article
 
   def tweet_limit_reached(tweet, factor = 1)
     max_count = 120
-    max_count = max_count * factor
+    max_count *= factor
     type_id = Ticket::Article::Type.lookup(name: 'twitter status').id
-    created_at = Time.zone.now - 15.minutes
+    created_at = 15.minutes.ago
     created_count = Ticket::Article.where('created_at > ? AND type_id = ?', created_at, type_id).count
     if created_count > max_count
       Rails.logger.info "Tweet limit of #{created_count}/#{max_count} reached, ignored tweed id (#{tweet.id})"
@@ -779,6 +777,7 @@ download public media file from twitter
       {
         open_timeout: 20,
         read_timeout: 40,
+        verify_ssl:   true,
       },
     )
   end

@@ -1,5 +1,5 @@
 class App.ControllerForm extends App.Controller
-  fullFormSubmitLabel: 'Submit'
+  fullFormSubmitLabel: __('Submit')
   fullFormSubmitAdditionalClasses: ''
   fullFormButtonsContainerClass: ''
   fullFormAdditionalButtons: [] # [{className: 'js-class', text: 'Label'}]
@@ -10,15 +10,12 @@ class App.ControllerForm extends App.Controller
       @[key] = value
 
     if !@handlers
-      @handlers = []
+      @handlers = [ App.FormHandlerCoreWorkflow.run ]
 
     if @handlersConfig
       for key, value of @handlersConfig
         if value && value.run
           @handlers.push value.run
-
-    @handlers.push @showHideToggle
-    @handlers.push @requiredMandantoryToggle
 
     if !@model
       @model = {}
@@ -37,11 +34,8 @@ class App.ControllerForm extends App.Controller
     @form.prepend('<div class="alert alert--danger js-danger js-alert hide" role="alert"></div>')
     @form.prepend('<div class="alert alert--success js-success hide" role="alert"></div>')
 
-    # Fix for Issue #2510 - Zammad Customers shown as Agents in IE
-    # Previously the handlers are called directly, before the DOM elements are ready, thereby causing a race condition under IE11.
-    # Now we only dispatch the handlers after the DOM is ready.
     if @handlers.length
-      $(@dispatchHandlers)
+      @dispatchHandlers()
 
     # if element is given, prepend form to it
     if @el
@@ -95,7 +89,7 @@ class App.ControllerForm extends App.Controller
     if @model.attributesGet
       attributesClean = @model.attributesGet(@screen)
     else
-      attributesClean = App.Model.attributesGet(@screen, @model.configure_attributes)
+      attributesClean = App.Model.attributesGet(@screen, @model.configure_attributes, undefined, @model.className)
 
     for attributeName, attribute of attributesClean
 
@@ -163,7 +157,7 @@ class App.ControllerForm extends App.Controller
       for eventSelector, callback of @events
         do (eventSelector, callback) ->
           evs = eventSelector.split(' ')
-          fieldset.find(evs[1]).bind(evs[0], (e) -> callback(e))
+          fieldset.find(evs[1]).on(evs[0], (e) -> callback(e))
 
     # bind tool tips
     fieldset.find('.js-helpMessage').tooltip()
@@ -176,7 +170,7 @@ class App.ControllerForm extends App.Controller
   # input text field with max. 100 size
   attribute_config = {
     name:     'subject'
-    display:  'Subject'
+    display:  __('Subject')
     tag:      'input'
     type:     'text'
     limit:    100
@@ -188,7 +182,7 @@ class App.ControllerForm extends App.Controller
   # colection as relation with auto completion
   attribute_config = {
     name:           'customer_id'
-    display:        'Customer'
+    display:        __('Customer')
     tag:            'autocompletion'
     # auto completion params, endpoints, ui,...
     type:           'text'
@@ -196,7 +190,7 @@ class App.ControllerForm extends App.Controller
     null:           false
     relation:       'User'
     autocapitalize: false
-    help:           'Select the customer of the ticket or create one.'
+    help:           __('Select the customer of the ticket or create one.')
     helpLink:       '<a href="" class="customer_new">&raquo;</a>'
     callback:       @userInfo
     class:          'span7'
@@ -205,7 +199,7 @@ class App.ControllerForm extends App.Controller
   # colection as relation
   attribute_config = {
     name:       'priority_id'
-    display:    'Priority'
+    display:    __('Priority')
     tag:        'select'
     multiple:   false
     null:       false
@@ -219,7 +213,7 @@ class App.ControllerForm extends App.Controller
   # colection as options
   attribute_config = {
     name:       'priority_id'
-    display:    'Priority'
+    display:    __('Priority')
     tag:        'select'
     multiple:   false
     null:       false
@@ -281,7 +275,7 @@ class App.ControllerForm extends App.Controller
       attribute.autocomplete = 'autocomplete="' + attribute.autocomplete + '"'
 
     # set default values
-    if attribute.value is undefined && 'default' of attribute
+    if attribute.value is undefined && 'default' of attribute && !@params?.id
       attribute.value = attribute.default
 
     # set params value
@@ -312,50 +306,19 @@ class App.ControllerForm extends App.Controller
     else
       throw "Invalid UiElement.#{attribute.tag}"
 
-    if attribute.only_shown_if_selectable
-      count = Object.keys(attribute.options).length
-      if !attribute.null && (attribute.nulloption && count is 2) || (!attribute.nulloption && count is 1)
-        attribute.transparent = true
-        attributesNew = clone(attribute)
-        attributesNew.type = 'hidden'
-        attributesNew.value = ''
-        for item in attribute.options
-          if item.value && item.value isnt ''
-            attributesNew.value = item.value
-        item = $( App.view('generic/input')(attribute: attributesNew) )
-
     if @handlers
-      item.bind('change', (e) =>
-        params = App.ControllerForm.params($(e.target))
+      item_bind  = item
+      item_event = 'change'
+      if item.find('.richtext-content').length > 0
+        item_bind  = item.find('.richtext-content')
+        item_event = 'blur'
+
+      item_bind.on(item_event, (e) =>
+        @lastChangedAttribute = attribute.name
+        params = App.ControllerForm.params(@form)
         for handler in @handlers
           handler(params, attribute, @attributes, idPrefix, form, @)
       )
-
-    # bind dependency
-    if @dependency
-      for action in @dependency
-
-        # bind on element if name is matching
-        if action.bind && action.bind.name is attribute.name
-          ui = @
-          do (action, attribute) ->
-            item.bind('change', ->
-              value = $(@).val()
-              if !value
-                value = $(@).find('select, input').val()
-
-              # lookup relation if needed
-              if action.bind.relation
-                data = App[action.bind.relation].find(value)
-                value = data.name
-
-              # check if value is used in condition
-              if _.contains(action.bind.value, value)
-                if action.change.action is 'hide'
-                  ui.hide(action.change.name)
-                else
-                  ui.show(action.change.name)
-            )
 
     if !attribute.display || attribute.transparent
 
@@ -387,82 +350,127 @@ class App.ControllerForm extends App.Controller
 
       return fullItem
 
+  @findFieldByName: (key, el) ->
+    return el.find('[name="' + key + '"]')
+
+  @findFieldByData: (key, el) ->
+    return el.find('[data-name="' + key + '"]')
+
+  @findFieldByGroup: (key, el) ->
+    return el.find('.form-group[data-attribute-name="' + key + '"]')
+
+  @fieldIsShown: (field) ->
+    return !field.closest('.form-group').hasClass('is-hidden')
+
+  @fieldIsMandatory: (field) ->
+    return field.closest('.form-group').hasClass('is-required')
+
+  @fieldIsRemoved: (field) ->
+    return field.closest('.form-group').hasClass('is-removed')
+
+  @fieldIsReadonly: (field) ->
+    return field.closest('.form-group').hasClass('is-readonly')
+
+  attributeIsMandatory: (name) ->
+    field_by_name = @constructor.findFieldByName(name, @form)
+    if field_by_name.length > 0
+      return @constructor.fieldIsMandatory(field_by_name)
+
+    field_by_data = @constructor.findFieldByData(name, @form)
+    if field_by_data.length > 0
+      return @constructor.fieldIsMandatory(field_by_data)
+
+    return false
+
   show: (name, el = @form) ->
     if !_.isArray(name)
       name = [name]
     for key in name
-      el.find('[name="' + key + '"]').closest('.form-group').removeClass('hide')
-      el.find('[name="' + key + '"]').removeClass('is-hidden')
-      el.find('[data-name="' + key + '"]').closest('.form-group').removeClass('hide')
-      el.find('[data-name="' + key + '"]').removeClass('is-hidden')
+      field_by_group = @constructor.findFieldByGroup(key, el)
+      field_by_group.removeClass('hide')
+      field_by_group.removeClass('is-hidden')
+      field_by_group.removeClass('is-removed')
 
     # hide old validation states
     if el
       el.find('.has-error').removeClass('has-error')
       el.find('.help-inline').html('')
 
-  hide: (name, el = @form) ->
+  hide: (name, el = @form, remove = false) ->
     if !_.isArray(name)
       name = [name]
     for key in name
-      el.find('[name="' + key + '"]').closest('.form-group').addClass('hide')
-      el.find('[name="' + key + '"]').addClass('is-hidden')
-      el.find('[data-name="' + key + '"]').closest('.form-group').addClass('hide')
-      el.find('[data-name="' + key + '"]').addClass('is-hidden')
+      field_by_group = @constructor.findFieldByGroup(key, el)
+      field_by_group.addClass('hide')
+      field_by_group.addClass('is-hidden')
+      if remove
+        field_by_group.addClass('is-removed')
 
   mandantory: (name, el = @form) ->
     if !_.isArray(name)
       name = [name]
     for key in name
-      el.find('[name="' + key + '"]').attr('required', true)
-      el.find('[name="' + key + '"]').parents('.form-group').find('label span').html('*')
+      field_by_name = @constructor.findFieldByName(key, el)
+      field_by_data = @constructor.findFieldByData(key, el)
+
+      if !@constructor.fieldIsMandatory(field_by_name)
+        field_by_name.attr('required', true)
+        field_by_name.closest('.form-group').find('label span').html('*')
+        field_by_name.closest('.form-group').addClass('is-required')
+      if !@constructor.fieldIsMandatory(field_by_data)
+        field_by_data.attr('required', true)
+        field_by_data.closest('.form-group').find('label span').html('*')
+        field_by_data.closest('.form-group').addClass('is-required')
 
   optional: (name, el = @form) ->
     if !_.isArray(name)
       name = [name]
     for key in name
-      el.find('[name="' + key + '"]').attr('required', false)
-      el.find('[name="' + key + '"]').parents('.form-group').find('label span').html('')
+      field_by_name = @constructor.findFieldByName(key, el)
+      field_by_data = @constructor.findFieldByData(key, el)
 
-  showHideToggle: (params, changedAttribute, attributes, _classname, form, ui) ->
-    for attribute in attributes
-      if attribute.shown_if
-        hit = false
-        for refAttribute, refValue of attribute.shown_if
-          if params[refAttribute]
-            if _.isArray(refValue)
-              for item in refValue
-                if params[refAttribute].toString() is item.toString()
-                  hit = true
-            else if params[refAttribute].toString() is refValue.toString()
-              hit = true
-        if hit
-          ui.show(attribute.name, form)
-        else
-          ui.hide(attribute.name, form)
+      if @constructor.fieldIsMandatory(field_by_name)
+        field_by_name.attr('required', false)
+        field_by_name.closest('.form-group').find('label span').html('')
+        field_by_name.closest('.form-group').removeClass('is-required')
+      if @constructor.fieldIsMandatory(field_by_data)
+        field_by_data.attr('required', false)
+        field_by_data.closest('.form-group').find('label span').html('')
+        field_by_data.closest('.form-group').removeClass('is-required')
 
-  requiredMandantoryToggle: (params, changedAttribute, attributes, _classname, form, ui) ->
-    for attribute in attributes
-      if attribute.required_if
-        hit = false
-        for refAttribute, refValue of attribute.required_if
-          if params[refAttribute]
-            if _.isArray(refValue)
-              for item in refValue
-                if params[refAttribute].toString() is item.toString()
-                  hit = true
-            else if params[refAttribute].toString() is refValue.toString()
-              hit = true
-        if hit
-          ui.mandantory(attribute.name, form)
-        else
-          ui.optional(attribute.name, form)
+  readonly: (name, el = @form) ->
+    if !_.isArray(name)
+      name = [name]
+    for key in name
+      field_by_name = @constructor.findFieldByName(key, el)
+      field_by_data = @constructor.findFieldByData(key, el)
+
+      if !@constructor.fieldIsReadonly(field_by_name)
+        field_by_name.closest('.form-group').find('input, select').attr('readonly', true)
+        field_by_name.closest('.form-group').addClass('is-readonly')
+      if !@constructor.fieldIsReadonly(field_by_data)
+        field_by_data.closest('.form-group').find('input, select').attr('readonly', true)
+        field_by_data.closest('.form-group').addClass('is-readonly')
+
+  changeable: (name, el = @form) ->
+    if !_.isArray(name)
+      name = [name]
+    for key in name
+      field_by_name = @constructor.findFieldByName(key, el)
+      field_by_data = @constructor.findFieldByData(key, el)
+
+      if @constructor.fieldIsReadonly(field_by_name)
+        field_by_name.closest('.form-group').find('input, select').attr('readonly', false)
+        field_by_name.closest('.form-group').removeClass('is-readonly')
+      if @constructor.fieldIsReadonly(field_by_data)
+        field_by_data.closest('.form-group').find('input, select').attr('readonly', false)
+        field_by_data.closest('.form-group').removeClass('is-readonly')
 
   validate: (params) ->
     App.Model.validate(
       model:  @model
       params: params
-      screen: @screen
+      controllerForm: @
     )
 
   # get all params of the form
@@ -488,9 +496,10 @@ class App.ControllerForm extends App.Controller
 
     # array to names
     for item in array
+      field = @findFieldByName(item.name, lookupForm)
 
-      # check if item is-hidden and should not be used
-      if lookupForm.find('[name="' + item.name + '"]').hasClass('is-hidden') || lookupForm.find('div[data-name="' + item.name + '"]').hasClass('is-hidden')
+      # check if item is-removed and should not be used
+      if @fieldIsRemoved(field)
         delete param[item.name]
         continue
 
@@ -510,7 +519,7 @@ class App.ControllerForm extends App.Controller
           value = false
       if item.type is 'integer'
         if value is ''
-          value = undefined
+          value = null
         else
           value = parseInt(value)
       if param[item.name] isnt undefined
@@ -519,7 +528,10 @@ class App.ControllerForm extends App.Controller
         else
           param[item.name].push value
       else
-        param[item.name] = value
+        if item.multiselect && typeof value is 'string'
+          param[item.name] = new Array(value)
+        else
+          param[item.name] = value
 
     # verify if we have not checked checkboxes
     uncheckParam = {}
@@ -562,7 +574,7 @@ class App.ControllerForm extends App.Controller
       # get {date}
       if key.substr(0,6) is '{date}'
         newKey = key.substr(6, key.length)
-        if lookupForm.find("[data-name=\"#{newKey}\"]").hasClass('is-hidden')
+        if lookupForm.find("[data-name=\"#{newKey}\"]").hasClass('is-removed')
           param[newKey] = null
         else if param[key]
           try
@@ -584,7 +596,7 @@ class App.ControllerForm extends App.Controller
       # get {datetime}
       else if key.substr(0,10) is '{datetime}'
         newKey = key.substr(10, key.length)
-        if lookupForm.find("[data-name=\"#{newKey}\"]").hasClass('is-hidden')
+        if lookupForm.find("[data-name=\"#{newKey}\"]").hasClass('is-removed')
           param[newKey] = null
         else if param[key]
           try
@@ -606,6 +618,9 @@ class App.ControllerForm extends App.Controller
       if parts[0] && parts[1] isnt undefined
         if parts[1] isnt undefined && !inputSelectObject[ parts[0] ]
           inputSelectObject[ parts[0] ] = {}
+          if parts[1] is ''
+            delete param[ key ]
+            continue
         if parts[2] isnt undefined && !inputSelectObject[ parts[0] ][ parts[1] ]
           inputSelectObject[ parts[0] ][ parts[1] ] = {}
         if parts[3] isnt undefined && !inputSelectObject[ parts[0] ][ parts[1] ][ parts[2] ]
@@ -631,7 +646,7 @@ class App.ControllerForm extends App.Controller
       # get {business_hours}
       if key.substr(0,16) is '{business_hours}'
         newKey = key.substr(16, key.length)
-        if lookupForm.find("[data-name=\"#{newKey}\"]").hasClass('is-hidden')
+        if lookupForm.find("[data-name=\"#{newKey}\"]").hasClass('is-removed')
           param[newKey] = null
         else if param[key]
           newParams = {}
@@ -737,6 +752,9 @@ class App.ControllerForm extends App.Controller
       form.prop('disabled', false)
 
   @validate: (data) ->
+    if data.errors && Object.keys(data.errors).length == 1 && data.errors._core_workflow isnt undefined
+      App.FormHandlerCoreWorkflow.delaySubmit(data.errors._core_workflow.controllerForm, data.errors._core_workflow.target || data.form)
+      return
 
     lookupForm = @findForm(data.form)
 
@@ -766,7 +784,7 @@ class App.ControllerForm extends App.Controller
     # set autofocus by delay to make validation testable
     App.Delay.set(
       ->
-        lookupForm.find('.has-error').find('input, textarea, select').first().focus()
+        lookupForm.find('.has-error').find('input, textarea, select').first().trigger('focus')
       200
       'validate'
     )

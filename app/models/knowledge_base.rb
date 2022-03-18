@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class KnowledgeBase < ApplicationModel
   include HasTranslations
@@ -16,7 +16,7 @@ class KnowledgeBase < ApplicationModel
 
   accepts_nested_attributes_for :kb_locales, allow_destroy: true
   validates                     :kb_locales, presence: true
-  validates                     :kb_locales, length: { maximum: 1, message: 'System supports only one locale for knowledge base. Upgrade your plan to use more locales.' }, unless: :multi_lingual_support?
+  validates                     :kb_locales, length: { maximum: 1, message: __('System supports only one locale for knowledge base. Upgrade your plan to use more locales.') }, unless: :multi_lingual_support?
 
   has_many :categories, class_name: 'KnowledgeBase::Category',
                         inverse_of: :knowledge_base,
@@ -24,21 +24,21 @@ class KnowledgeBase < ApplicationModel
 
   has_many :answers, through: :categories
 
+  has_many :permissions, class_name: 'KnowledgeBase::Permission',
+                         as:         :permissionable,
+                         autosave:   true,
+                         dependent:  :destroy
+
   validates :category_layout, inclusion: { in: KnowledgeBase::LAYOUTS }
   validates :homepage_layout, inclusion: { in: KnowledgeBase::LAYOUTS }
 
-  validates :color_highlight, presence: true, color: true
-  validates :color_header,    presence: true, color: true
+  validates :color_highlight,   presence: true, color: true
+  validates :color_header,      presence: true, color: true
+  validates :color_header_link, presence: true, color: true
 
   validates :iconset, inclusion: { in: KnowledgeBase::ICONSETS }
 
   scope :active, -> { where(active: true) }
-
-  scope :check_active_unless_editor, lambda { |user|
-    return if user&.permissions? 'knowledge_base.editor'
-
-    active
-  }
 
   alias assets_essential assets
 
@@ -97,7 +97,7 @@ class KnowledgeBase < ApplicationModel
   def custom_address_prefix(request)
     host        = custom_address_uri.host || request.headers.env['SERVER_NAME']
     port        = request.headers.env['SERVER_PORT']
-    port_silent = request.ssl? && port == '443' || !request.ssl? && port == '80'
+    port_silent = (request.ssl? && port == '443') || (!request.ssl? && port == '80')
     port_string = port_silent ? '' : ":#{port}"
 
     "#{custom_address_uri.scheme}://#{host}#{port_string}"
@@ -161,6 +161,32 @@ class KnowledgeBase < ApplicationModel
       .any? { |e| e > 1 }
   end
 
+  def permissions_effective
+    cache_key = KnowledgeBase::Permission.cache_key self
+
+    Rails.cache.fetch cache_key do
+      permissions
+    end
+  end
+
+  def attributes_with_association_ids
+    attrs = super
+    attrs[:permissions_effective] = permissions_effective
+    attrs
+  end
+
+  def self.granular_permissions?
+    KnowledgeBase::Permission.any?
+  end
+
+  def public_content?(kb_locale = nil)
+    scope = answers.published
+
+    scope = scope.localed(kb_locale.system_locale) if kb_locale
+
+    scope.any?
+  end
+
   private
 
   def set_defaults
@@ -196,7 +222,7 @@ class KnowledgeBase < ApplicationModel
     end
 
     if custom_address == '/' # rubocop:disable Style/GuardClause
-      errors.add(:custom_address, 'Please enter valid path or domain')
+      errors.add(:custom_address, __('Please enter valid path or domain'))
     end
   end
 

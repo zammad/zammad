@@ -1,9 +1,9 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
 RSpec.describe Sessions::Event::ChatSessionStart do
-  let(:client_id) { rand(123_456_789) }
+  let(:client_id) { SecureRandom.uuid }
   let(:chat) { Chat.first }
   let(:chat_session) do
     Sessions.create('customer_session_id', { 'id' => customer.id }, {})
@@ -75,7 +75,7 @@ RSpec.describe Sessions::Event::ChatSessionStart do
 
     context 'without chat.agent permissions' do
       it 'send out no_permission event to user' do
-        expect(subject_as_customer.run).to eq(nil)
+        expect(subject_as_customer.run).to be_nil
         messages = Sessions.queue(client_id)
         expect(messages.count).to eq(1)
         expect(messages).to eq([
@@ -112,7 +112,7 @@ RSpec.describe Sessions::Event::ChatSessionStart do
 
   context 'when starting a chat session as agent' do
     it 'send out chat_session_start to customer and agent' do
-      expect(subject_as_agent.run).to eq(nil)
+      expect(subject_as_agent.run).to be_nil
 
       messages_to_customer = Sessions.queue('customer_session_id')
       expect(messages_to_customer.count).to eq(1)
@@ -156,7 +156,7 @@ RSpec.describe Sessions::Event::ChatSessionStart do
       agent.preferences[:chat][:alternative_name] = 'some name'
       agent.preferences[:chat][:avatar_state] = 'disabled'
       agent.save!
-      expect(subject_as_agent.run).to eq(nil)
+      expect(subject_as_agent.run).to be_nil
 
       messages_to_customer = Sessions.queue('customer_session_id')
       expect(messages_to_customer.count).to eq(1)
@@ -194,10 +194,10 @@ RSpec.describe Sessions::Event::ChatSessionStart do
     end
   end
 
-  context 'when starting a chat session as agent with transfered conversation' do
+  context 'when starting a chat session as agent with transferred conversation' do
     it 'send out chat_session_start to customer and agent with already created messages' do
       chat_message_history
-      expect(subject_as_agent.run).to eq(nil)
+      expect(subject_as_agent.run).to be_nil
       messages_to_customer = Sessions.queue('customer_session_id')
       expect(messages_to_customer.count).to eq(0)
 

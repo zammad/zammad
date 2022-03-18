@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'browser_test_helper'
 
@@ -11,7 +11,7 @@ class AgentTicketAttachmentTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     #
     # attachment checks - new ticket
@@ -147,13 +147,13 @@ class AgentTicketAttachmentTest < TestCase
     click(css: '.content.active .js-submit')
 
     # check warning
-    modal_ready()
+    modal_ready
     match(
       css:   '.content.active .modal',
       value: 'missing',
     )
     click(css: '.content.active .modal .js-cancel')
-    modal_disappear()
+    modal_disappear
 
     ticket_update(
       data:          {
@@ -195,7 +195,7 @@ class AgentTicketAttachmentTest < TestCase
     browser2 = browser_instance
     login(
       browser:  browser2,
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
@@ -203,7 +203,7 @@ class AgentTicketAttachmentTest < TestCase
       browser: browser2,
     )
 
-    random     = "ticket-actions-6-test-#{rand(999_999)}"
+    random     = "ticket-actions-6-test-#{SecureRandom.uuid}"
     user_email = "#{random}@example.com"
     user_create(
       browser: browser2,
@@ -298,7 +298,7 @@ class AgentTicketAttachmentTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     ticket_create(
       data:          {

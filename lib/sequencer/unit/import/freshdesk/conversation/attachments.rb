@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Sequencer
   class Unit
@@ -43,6 +43,7 @@ class Sequencer
                 {
                   open_timeout: 20,
                   read_timeout: 240,
+                  verify_ssl:   true,
                 },
               )
 
@@ -60,7 +61,7 @@ class Sequencer
             def store_attachment(attachment, response)
 
               self.class.mutex.synchronize do
-                ::Store.add(
+                ::Store.create!(
                   object:        model_class.name,
                   o_id:          instance.id,
                   data:          response.body,

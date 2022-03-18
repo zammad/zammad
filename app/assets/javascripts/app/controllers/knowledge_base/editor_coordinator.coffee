@@ -15,6 +15,12 @@ class App.KnowledgeBaseEditorCoordinator
       parentController: @parentController
     )
 
+  clickedPermissions: (object) ->
+    new App.KnowledgeBasePermissionsDialog(
+      object:    object
+      container: @parentController.el
+    )
+
   # built-in Spine's function doesn't work when object has no ID set and includes "undefined" in URL
   urlFor: (object) ->
     if object.id
@@ -40,5 +46,5 @@ class App.KnowledgeBaseEditorCoordinator
       error: (xhr) ->
         data = JSON.parse(xhr.responseText)
         App.ControllerForm.enable(formController.form)
-        formController.showAlert(data.error || 'Unable to save changes.')
+        formController.showAlert(data.error || __('The changes could not be saved.'))
     )

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -79,7 +79,7 @@ RSpec.describe Cti::Log do
       before { travel(-10.seconds) }
 
       it 'return false' do
-        expect(described_class.push_caller_list_update?(log)).to eq false
+        expect(described_class.push_caller_list_update?(log)).to be false
       end
     end
 
@@ -87,7 +87,7 @@ RSpec.describe Cti::Log do
       before { travel(10.seconds) }
 
       it 'return true' do
-        expect(described_class.push_caller_list_update?(log)).to eq true
+        expect(described_class.push_caller_list_update?(log)).to be true
       end
     end
   end
@@ -277,7 +277,7 @@ RSpec.describe Cti::Log do
 
       context 'with now related customer' do
         it 'gives no caller information' do
-          expect(log.preferences[:from]).to eq(nil)
+          expect(log.preferences[:from]).to be_nil
         end
       end
 

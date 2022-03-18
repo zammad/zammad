@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -201,7 +201,7 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.comment).to be_nil
       expect(log.queue).to eq('4930777000000')
       expect(log.state).to eq('newCall')
-      expect(log.done).to eq(true)
+      expect(log.done).to be(true)
       expect(log.initialized_at).to be_truthy
       expect(log.start_at).to be_nil
       expect(log.end_at).to be_nil
@@ -228,7 +228,7 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.comment).to eq('cancel')
       expect(log.queue).to eq('4930777000000')
       expect(log.state).to eq('hangup')
-      expect(log.done).to eq(true)
+      expect(log.done).to be(true)
       expect(log.initialized_at).to be_truthy
       expect(log.start_at).to be_nil
       expect(log.end_at).to be_truthy
@@ -255,7 +255,7 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.comment).to be_nil
       expect(log.queue).to eq('4930777000000')
       expect(log.state).to eq('newCall')
-      expect(log.done).to eq(true)
+      expect(log.done).to be(true)
       expect(log.initialized_at).to be_truthy
       expect(log.start_at).to be_nil
       expect(log.end_at).to be_nil
@@ -283,7 +283,7 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.comment).to be_nil
       expect(log.queue).to eq('4930777000000')
       expect(log.state).to eq('answer')
-      expect(log.done).to eq(true)
+      expect(log.done).to be(true)
       expect(log.initialized_at).to be_truthy
       expect(log.start_at).to be_truthy
       expect(log.end_at).to be_nil
@@ -312,7 +312,7 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.comment).to eq('normalClearing')
       expect(log.queue).to eq('4930777000000')
       expect(log.state).to eq('hangup')
-      expect(log.done).to eq(true)
+      expect(log.done).to be(true)
       expect(log.initialized_at).to be_truthy
       expect(log.start_at).to be_truthy
       expect(log.end_at).to be_truthy
@@ -341,7 +341,7 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.comment).to be_nil
       expect(log.queue).to eq('4930600000000')
       expect(log.state).to eq('newCall')
-      expect(log.done).to eq(false)
+      expect(log.done).to be(false)
       expect(log.initialized_at).to be_truthy
       expect(log.start_at).to be_nil
       expect(log.end_at).to be_nil
@@ -369,7 +369,7 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.comment).to be_nil
       expect(log.queue).to eq('4930600000000')
       expect(log.state).to eq('answer')
-      expect(log.done).to eq(true)
+      expect(log.done).to be(true)
       expect(log.initialized_at).to be_truthy
       expect(log.start_at).to be_truthy
       expect(log.end_at).to be_nil
@@ -398,12 +398,24 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.comment).to eq('normalClearing')
       expect(log.queue).to eq('4930600000000')
       expect(log.state).to eq('hangup')
-      expect(log.done).to eq(true)
+      expect(log.done).to be(true)
       expect(log.initialized_at).to be_truthy
       expect(log.start_at).to be_truthy
       expect(log.end_at).to be_truthy
       expect(log.duration_waiting_time).to be_truthy
       expect(log.duration_talking_time).to be_truthy
+
+      travel 1.second
+
+      # inbound - I - answer for hangup by customer
+      post "/api/v1/cti/#{token}", params: {
+        event:     'answer',
+        direction: 'in',
+        call_id:   '1234567890-3',
+        to:        '4930600000000',
+        from:      '4912347114711',
+      }, as: :json
+      expect(response).to have_http_status(:ok)
 
       travel 1.second
 
@@ -427,7 +439,7 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.comment).to be_nil
       expect(log.queue).to eq('4930600000000')
       expect(log.state).to eq('newCall')
-      expect(log.done).to eq(false)
+      expect(log.done).to be(false)
       expect(log.initialized_at).to be_truthy
       expect(log.start_at).to be_nil
       expect(log.end_at).to be_nil
@@ -456,7 +468,7 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.comment).to be_nil
       expect(log.queue).to eq('4930600000000')
       expect(log.state).to eq('answer')
-      expect(log.done).to eq(true)
+      expect(log.done).to be(true)
       expect(log.initialized_at).to be_truthy
       expect(log.start_at).to be_truthy
       expect(log.end_at).to be_nil
@@ -485,7 +497,7 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.comment).to eq('normalClearing')
       expect(log.queue).to eq('4930600000000')
       expect(log.state).to eq('hangup')
-      expect(log.done).to eq(false)
+      expect(log.done).to be(false)
       expect(log.initialized_at).to be_truthy
       expect(log.start_at).to be_truthy
       expect(log.end_at).to be_truthy
@@ -514,7 +526,7 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.comment).to be_nil
       expect(log.queue).to eq('4930600000000')
       expect(log.state).to eq('newCall')
-      expect(log.done).to eq(false)
+      expect(log.done).to be(false)
       expect(log.initialized_at).to be_truthy
       expect(log.start_at).to be_nil
       expect(log.end_at).to be_nil
@@ -543,7 +555,7 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.comment).to eq('normalClearing')
       expect(log.queue).to eq('4930600000000')
       expect(log.state).to eq('hangup')
-      expect(log.done).to eq(false)
+      expect(log.done).to be(false)
       expect(log.initialized_at).to be_truthy
       expect(log.start_at).to be_nil
       expect(log.end_at).to be_truthy
@@ -574,7 +586,7 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.comment).to be_nil
       expect(log.queue).to eq('4930600000000')
       expect(log.state).to eq('newCall')
-      expect(log.done).to eq(false)
+      expect(log.done).to be(false)
       expect(log.initialized_at).to be_truthy
       expect(log.start_at).to be_nil
       expect(log.end_at).to be_nil
@@ -606,7 +618,7 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.comment).to be_nil
       expect(log.queue).to eq('some_queue_name')
       expect(log.state).to eq('newCall')
-      expect(log.done).to eq(false)
+      expect(log.done).to be(false)
       expect(log.initialized_at).to be_truthy
       expect(log.start_at).to be_nil
       expect(log.end_at).to be_nil
@@ -685,7 +697,7 @@ RSpec.describe 'Integration CTI', type: :request do
       get '/api/v1/cti/log', as: :json
 
       expect(response).to have_http_status(:ok)
-      expect(json_response.dig('assets', 'User')).not_to be(nil)
+      expect(json_response.dig('assets', 'User')).not_to be_nil
       expect(json_response['list'].map { |x| x['call_id'] }).to match_array(%w[1234567890-1 1234567890-2])
     end
 
@@ -759,7 +771,7 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.comment).to be_nil
       expect(log.queue).to eq('some_queue_name')
       expect(log.state).to eq('newCall')
-      expect(log.done).to eq(false)
+      expect(log.done).to be(false)
       expect(log.initialized_at).to be_truthy
       expect(log.start_at).to be_nil
       expect(log.end_at).to be_nil
@@ -789,7 +801,7 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.comment).to be_nil
       expect(log.queue).to eq('some_queue_name')
       expect(log.state).to eq('newCall')
-      expect(log.done).to eq(false)
+      expect(log.done).to be(false)
       expect(log.initialized_at).to be_truthy
       expect(log.start_at).to be_nil
       expect(log.end_at).to be_nil
@@ -802,7 +814,7 @@ RSpec.describe 'Integration CTI', type: :request do
 
       cti_log1 = create(:cti_log)
       log = Cti::Log.find(cti_log1.id)
-      expect(log.done).to eq(false)
+      expect(log.done).to be(false)
 
       authenticated_as(agent)
       post "/api/v1/cti/done/#{cti_log1.id}", params: {
@@ -811,7 +823,7 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(response).to have_http_status(:ok)
 
       log = Cti::Log.find(cti_log1.id)
-      expect(log.done).to eq(true)
+      expect(log.done).to be(true)
     end
 
     it 'flags all caller_logs as done via done_bulk' do
@@ -820,7 +832,7 @@ RSpec.describe 'Integration CTI', type: :request do
       cti_log2 = create(:cti_log)
 
       log = Cti::Log.find(cti_log1.id)
-      expect(log.done).to eq(false)
+      expect(log.done).to be(false)
 
       authenticated_as(agent)
       post '/api/v1/cti/done/bulk', params: {
@@ -829,10 +841,10 @@ RSpec.describe 'Integration CTI', type: :request do
 
       expect(response).to have_http_status(:ok)
       log1 = Cti::Log.find(cti_log1.id)
-      expect(log1.done).to eq(true)
+      expect(log1.done).to be(true)
 
       log2 = Cti::Log.find(cti_log2.id)
-      expect(log2.done).to eq(true)
+      expect(log2.done).to be(true)
     end
   end
 end

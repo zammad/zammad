@@ -27,6 +27,7 @@
     this.collection = []
     this.active     = false
     this.buffer     = ''
+    this.oldElementText = ''
 
     // check if ce exists
     if ( $.data(element, 'plugin_ce') ) {
@@ -55,10 +56,11 @@
   }
 
   Plugin.prototype.onKeydown = function (e) {
-    //console.log("onKeydown", this.isActive())
+    // Saves the old element text for some special situations.
+    this.oldElementText = this.$element.text()
+
     // navigate through item
     if (this.isActive()) {
-
       // esc
       if (e.keyCode === 27) {
         e.preventDefault()
@@ -100,10 +102,10 @@
         var active = this.$widget.find('.dropdown-menu li.is-active')
         active.removeClass('is-active')
 
-        if (e.keyCode == 38 && active.prev().size()) {
+        if (e.keyCode == 38 && active.prev().length) {
           active = active.prev()
         }
-        else if (e.keyCode == 40 && active.next().size()) {
+        else if (e.keyCode == 40 && active.next().length) {
           active = active.next()
         }
 
@@ -133,7 +135,7 @@
 
     // reduce buffer, in case close it
     // backspace
-    if (e.keyCode === 8 && this.buffer) {
+    if (e.keyCode === 8 && !( e.ctrlKey || e.metaKey ) && this.buffer) {
 
       var trigger = this.findTrigger(this.buffer)
       // backspace + buffer === :: -> close textmodule
@@ -162,19 +164,47 @@
 
   Plugin.prototype.onKeypress = function (e) {
     this.log('BUFF', this.buffer, e.keyCode, String.fromCharCode(e.which))
-
     // gets the character and keycode from event
     // this event does not have keyCode and which value set
     // so we take char and set those values to not break the flow
     // if originalEvent.data is null that means a non char key is pressed like delete, space
     if(e.originalEvent && e.originalEvent.data) {
-      var char = e.originalEvent.data;
-      var keyCode = char.charCodeAt(0);
-      e.keyCode = e.which = keyCode;
+      var char = e.originalEvent.data
+      var keyCode = char.charCodeAt(0)
+      e.keyCode = e.which = keyCode
     }
 
     // ignore invalid key codes if search is opened (issue #3637)
-    if (this.isActive() && e.keyCode === undefined) return
+    if (this.isActive() && e.keyCode === undefined) {
+
+      // Check if the trigger still exists in the new text, after a special key was pressed, otherwise
+      //  close the collection.
+      var indexOfBuffer = this.oldElementText.indexOf(this.buffer)
+      var trigger = this.findTrigger(this.buffer)
+
+      if (this.buffer && indexOfBuffer !== -1 && trigger) {
+        foundCurrentBuffer = this.$element.text().substr(indexOfBuffer, this.buffer.length)
+
+        if ( this.$element.text().substr(indexOfBuffer, trigger.trigger.length) !== trigger.trigger ) {
+          this.close(true)
+        }
+
+        // Check on how many characters the trigger needs to be reduced, in the case it's not the same.
+        else if ( foundCurrentBuffer !== this.buffer ) {
+          var existingLength = 0
+          for (var i = 0; i < this.buffer.length; i++) {
+            if (this.buffer.charAt(i) !== foundCurrentBuffer.charAt(i)) {
+              existingLength = i
+              break
+            }
+          }
+
+          this.buffer = this.buffer.substr(0, existingLength)
+          this.result(trigger)
+        }
+      }
+      return
+    }
 
     // skip on shift + arrow_keys
     if (_.contains([16, 37, 38, 39, 40], e.keyCode)) return
@@ -186,7 +216,6 @@
     }
 
     var newChar = String.fromCharCode(e.which)
-
     // observe other keys
     if (this.hasAvailableTriggers(this.buffer)) {
       if(this.hasAvailableTriggers(this.buffer + newChar)) {
@@ -339,7 +368,16 @@
           nnode.innerHTML = string
     }
     else {
-      document.execCommand('insertHTML', false, string)
+      var sel = rangy.getSelection();
+      if (!sel.rangeCount) return
+
+      var range = sel.getRangeAt(0);
+      range.collapse(false);
+      $('<div>').append(string).contents().each(function() {
+        range.insertNode($(this).get(0));
+        range.collapseAfter($(this).get(0));
+      })
+      sel.setSingleRange(range);
     }
   }
 
@@ -362,26 +400,10 @@
       start = 0
     }
 
-    // for chrome, remove also leading space, add it later - otherwice space will be tropped
-    if (start) {
-      clone.setStart(range.startContainer, start-1)
-      clone.setEnd(range.startContainer, start)
-      var spacerChar = clone.toString()
-      if (spacerChar === ' ') {
-        start = start - 1
-      }
-    }
     //this.log('CUT FOR', string, "-"+clone.toString()+"-", start, range.startOffset)
     clone.setStart(range.startContainer, start)
     clone.setEnd(range.startContainer, range.startOffset)
     clone.deleteContents()
-
-    // for chrome, insert space again
-    if (start) {
-      if (spacerChar === ' ') {
-        this.paste('&nbsp;')
-      }
-    }
   }
 
   Plugin.prototype.onMouseEnter = function(event) {
@@ -532,7 +554,7 @@
   KbAnswer.renderValue = function(textmodule, elem, callback) {
     textmodule.emptyResultsContainer()
 
-    var element = $('<li>').text(App.i18n.translateInline('Please wait...'))
+    var element = $('<li>').text(App.i18n.translateInline('Please wait…'))
     textmodule.appendResults(element)
 
     var form_id = textmodule.$element.closest('form').find('[name=form_id]').val()
@@ -577,13 +599,13 @@
     textmodule.emptyResultsContainer()
 
     if(!term) {
-      var element = $('<li>').text(App.i18n.translateInline('Start typing to search in Knowledge Base...'))
+      var element = $('<li>').text(App.i18n.translateInline('Start typing to search in Knowledge Base…'))
       textmodule.appendResults(element)
 
       return
     }
 
-    var element = $('<li>').text(App.i18n.translateInline('Loading...'))
+    var element = $('<li>').text(App.i18n.translateInline('Loading…'))
     textmodule.appendResults(element)
 
     App.Delay.set(function() {
@@ -650,7 +672,7 @@
   Mention.renderValue = function(textmodule, elem, callback) {
     textmodule.emptyResultsContainer()
 
-    var element = $('<li>').text(App.i18n.translateInline('Please wait...'))
+    var element = $('<li>').text(App.i18n.translateInline('Please wait…'))
     textmodule.appendResults(element)
 
     var form_id = textmodule.$element.closest('form').find('[name=form_id]').val()
@@ -677,13 +699,13 @@
     textmodule.emptyResultsContainer()
 
     if(!term) {
-      var element = $('<li>').text(App.i18n.translateInline('Start typing to search for users...'))
+      var element = $('<li>').text(App.i18n.translateInline('Start typing to search for users…'))
       textmodule.appendResults(element)
 
       return
     }
 
-    var element = $('<li>').text(App.i18n.translateInline('Loading...'))
+    var element = $('<li>').text(App.i18n.translateInline('Loading…'))
     textmodule.appendResults(element)
 
     App.Delay.set(function() {
@@ -720,7 +742,7 @@
       }
       else {
         textmodule.emptyResultsContainer()
-        items.push($('<li>').text(App.i18n.translateInline('Please select a group first, before you mention a user!')))
+        items.push($('<li>').text(App.i18n.translateInline('Before you mention a user, please select a group.')))
         textmodule.appendResults(items)
       }
     }, 200, 'textmoduleMentionDelay', 'textmodule')

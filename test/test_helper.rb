@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 ENV['RAILS_ENV'] = 'test'
 require File.expand_path('../config/environment', __dir__)
@@ -62,7 +62,7 @@ class ActiveSupport::TestCase
     # read config file and count type & recipients
     file = Rails.root.join('log', "#{Rails.env}.log")
     lines = []
-    IO.foreach(file) do |line|
+    File.foreach(file) do |line|
       lines.push line
     end
     count = 0

@@ -17,9 +17,9 @@ class ImportOtrs extends App.ControllerWizardFullScreen
     super
 
     # set title
-    @title 'Import'
+    @title __('Import')
 
-    # redirect to login if master user already exists
+    # redirect to login if admin user already exists
     if @Config.get('system_init_done')
       @navigate '#login'
       return
@@ -172,8 +172,8 @@ class ImportOtrs extends App.ControllerWizardFullScreen
 
 App.Config.set('import/otrs', ImportOtrs, 'Routes')
 App.Config.set('otrs', {
-  title: 'OTRS'
-  name:  'OTRS'
+  title: __('OTRS')
+  name:  __('OTRS')
   class: 'js-otrs'
   url:   '#import/otrs'
 }, 'ImportPlugins')

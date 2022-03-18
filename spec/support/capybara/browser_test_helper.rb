@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 module BrowserTestHelper
 
@@ -32,6 +32,21 @@ module BrowserTestHelper
     sleep wait_time
   end
 
+  # Get the current cookies from the browser with the driver object.
+  #
+  def cookies
+    page.driver.browser.manage.all_cookies
+  end
+
+  # Get a single cookie by the given name (regex possible)
+  #
+  # @example
+  #  cookie('cookie-name')
+  #
+  def cookie(name)
+    cookies.find { |cookie| cookie[:name].match?(name) }
+  end
+
   # Finds an element and clicks it - wrapped in one method.
   #
   # @example
@@ -48,7 +63,7 @@ module BrowserTestHelper
   # @see BrowserTestHelper::Waiter
   #
   # @example
-  #  wait(5).until { ... }
+  #  wait.until { ... }
   #
   # @example
   #  wait(5, interval: 0.5).until { ... }
@@ -68,8 +83,14 @@ module BrowserTestHelper
   #  await_empty_ajax_queue
   #
   def await_empty_ajax_queue
+    # page.evaluate_script silently discards any present alerts, which is not desired.
+    begin
+      return if page.driver.browser.switch_to.alert
+    rescue Selenium::WebDriver::Error::NoSuchAlertError # rubocop:disable Lint/SuppressedException
+    end
+
     wait(5, interval: 0.1).until_constant do
-      page.evaluate_script('App.Ajax.queue().length').zero?
+      page.evaluate_script('App.Ajax.queue().length === 0 && $.active === 0 && Object.keys(App.FormHandlerCoreWorkflow.getRequests()).length === 0').present?
     end
   rescue
     nil
@@ -112,10 +133,12 @@ module BrowserTestHelper
   # overview section.
   #
   # @example
-  # display_macro_batches(ticket)
-  # display_macro_batches(tr[data-id='1'])
+  # display_macro_batches(Ticket.first)
   #
-  def display_macro_batches(element)
+  def display_macro_batches(ticket)
+    # get DOM element
+    element = page.find(:table_row, ticket.id).native
+    # get element moving
     click_and_hold(element)
     # move element to y -ticket.location.y
     move_mouse_by(0, -element.location.y + 5)
@@ -140,7 +163,7 @@ module BrowserTestHelper
     # in the given block.
     #
     # @example
-    #  wait(5).until_exists { find('[data-title="example"]') }
+    #  wait.until_exists { find('[data-title="example"]') }
     #
     def until_exists
       self.until do
@@ -149,7 +172,7 @@ module BrowserTestHelper
       rescue Capybara::ElementNotFound
         # doesn't exist yet
       end
-    rescue Selenium::WebDriver::Error::TimeOutError => e
+    rescue Selenium::WebDriver::Error::TimeoutError => e
       # cleanup backtrace
       e.set_backtrace(e.backtrace.drop(3))
       raise e
@@ -160,7 +183,7 @@ module BrowserTestHelper
     # in the given block.
     #
     # @example
-    #  wait(5).until_disappear { find('[data-title="example"]') }
+    #  wait.until_disappear { find('[data-title="example"]') }
     #
     def until_disappears
       self.until do
@@ -170,7 +193,7 @@ module BrowserTestHelper
       rescue Capybara::ElementNotFound
         true
       end
-    rescue Selenium::WebDriver::Error::TimeOutError => e
+    rescue Selenium::WebDriver::Error::TimeoutError => e
       # cleanup backtrace
       e.set_backtrace(e.backtrace.drop(3))
       raise e
@@ -179,7 +202,7 @@ module BrowserTestHelper
     # This method loops a given block until the result of it is constant.
     #
     # @example
-    #  wait(5).until_constant { find('.total').text }
+    #  wait.until_constant { find('.total').text }
     #
     def until_constant
       previous = nil

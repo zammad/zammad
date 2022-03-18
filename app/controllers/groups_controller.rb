@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class GroupsController < ApplicationController
   prepend_before_action { authentication_check && authorize! }
@@ -149,6 +149,7 @@ curl http://localhost/api/v1/groups/{id} -v -u #{login}:#{password} -H "Content-
 =end
 
   def destroy
+    model_references_check(Group, params)
     model_destroy_render(Group, params)
   end
 end

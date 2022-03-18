@@ -5,15 +5,15 @@ class App.UiElement.ticket_perform_action
 
     groups =
       ticket:
-        name: 'Ticket'
+        name: __('Ticket')
         model: 'Ticket'
       article:
-        name: 'Article'
+        name: __('Article')
         model: 'Article'
 
     if attribute.notification
       groups.notification =
-        name: 'Notification'
+        name: __('Notification')
         model: 'Notification'
 
     # merge config
@@ -21,11 +21,11 @@ class App.UiElement.ticket_perform_action
     for groupKey, groupMeta of groups
       if !groupMeta.model || !App[groupMeta.model]
         if groupKey is 'notification'
-          elements["#{groupKey}.email"] = { name: 'email', display: 'Email' }
-          elements["#{groupKey}.sms"] = { name: 'sms', display: 'SMS' }
-          elements["#{groupKey}.webhook"] = { name: 'webhook', display: 'Webhook' }
+          elements["#{groupKey}.email"] = { name: 'email', display: __('Email') }
+          elements["#{groupKey}.sms"] = { name: 'sms', display: __('SMS') }
+          elements["#{groupKey}.webhook"] = { name: 'webhook', display: __('Webhook') }
         else if groupKey is 'article'
-          elements["#{groupKey}.note"] = { name: 'note', display: 'Note' }
+          elements["#{groupKey}.note"] = { name: 'note', display: __('Note') }
       else
 
         for row in App[groupMeta.model].configure_attributes
@@ -49,7 +49,7 @@ class App.UiElement.ticket_perform_action
     if attribute.ticket_delete
       elements['ticket.action'] =
         name: 'action'
-        display: 'Action'
+        display: __('Action')
         tag: 'select'
         null: false
         translate: true
@@ -163,7 +163,7 @@ class App.UiElement.ticket_perform_action
   @updateAttributeSelectors: (elementFull) ->
 
     # enable all
-    elementFull.find('.js-attributeSelector select option').removeAttr('disabled')
+    elementFull.find('.js-attributeSelector select option').prop('disabled', false)
 
     # disable all used attributes
     elementFull.find('.js-attributeSelector select').each(->
@@ -292,7 +292,7 @@ class App.UiElement.ticket_perform_action
     elementRow.find('.js-preCondition').closest('.controls').removeClass('hide')
     elementRow.find('.js-preCondition select').replaceWith(selection)
 
-    elementRow.find('.js-preCondition select').bind('change', (e) ->
+    elementRow.find('.js-preCondition select').on('change', (e) ->
       toggleValue()
     )
 
@@ -362,10 +362,10 @@ class App.UiElement.ticket_perform_action
     elementRow.find('.js-setNotification').empty()
 
     options =
-      'article_last_sender': 'Article Last Sender'
-      'ticket_owner': 'Owner'
-      'ticket_customer': 'Customer'
-      'ticket_agents': 'All Agents'
+      'article_last_sender': __('Sender of last article')
+      'ticket_owner': __('Owner')
+      'ticket_customer': __('Customer')
+      'ticket_agents': __('All agents')
 
     name = "#{attribute.name}::notification.#{notificationType}"
 
@@ -399,11 +399,11 @@ class App.UiElement.ticket_perform_action
         name:    "#{name}::recipient"
         options: [
           {
-            label: 'Variables',
+            label: __('Variables'),
             group: columnSelectOptions
           },
           {
-            label: 'User',
+            label: __('User'),
             group: columnSelectRecipientUserOptions
           },
         ]
@@ -455,11 +455,21 @@ class App.UiElement.ticket_perform_action
         translate: true
       )
 
+      includeAttachmentsCheckbox = App.UiElement.select.render(
+        name: "#{name}::include_attachments"
+        multiple: false
+        null: false
+        options: { true: __('Yes'), false: __('No') }
+        value: meta.include_attachments || 'false'
+        translate: true
+      )
+
       notificationElement.find('.js-internal').html(visibilitySelection)
+      notificationElement.find('.js-include_attachments').html(includeAttachmentsCheckbox)
 
       notificationElement.find('.js-body div[contenteditable="true"]').ce(
         mode: 'richtext'
-        placeholder: 'message'
+        placeholder: __('message')
         maxlength: messageLength
       )
       new App.WidgetPlaceholder(
@@ -468,17 +478,17 @@ class App.UiElement.ticket_perform_action
           {
             prefix: 'ticket'
             object: 'Ticket'
-            display: 'Ticket'
+            display: __('Ticket')
           },
           {
             prefix: 'article'
             object: 'TicketArticle'
-            display: 'Article'
+            display: __('Article')
           },
           {
             prefix: 'user'
             object: 'User'
-            display: 'Current User'
+            display: __('Current User')
           },
         ]
       )
@@ -490,9 +500,9 @@ class App.UiElement.ticket_perform_action
         name: "#{name}::sign"
         multiple: false
         options: {
-          'no': 'Do not sign email'
-          'discard': 'Sign email (if not possible, discard notification)'
-          'always': 'Sign email (if not possible, send notification anyway)'
+          'no': __('Do not sign email')
+          'discard': __('Sign email (if not possible, discard notification)')
+          'always': __('Sign email (if not possible, send notification anyway)')
         }
         value: meta.sign
         translate: true
@@ -504,9 +514,9 @@ class App.UiElement.ticket_perform_action
         name: "#{name}::encryption"
         multiple: false
         options: {
-          'no': 'Do not encrypt email'
-          'discard': 'Encrypt email (if not possible, discard notification)'
-          'always': 'Encrypt email (if not possible, send notification anyway)'
+          'no': __('Do not encrypt email')
+          'discard': __('Encrypt email (if not possible, discard notification)')
+          'always': __('Encrypt email (if not possible, send notification anyway)')
         }
         value: meta.encryption
         translate: true
@@ -525,7 +535,7 @@ class App.UiElement.ticket_perform_action
       name: "#{name}::internal"
       multiple: false
       null: false
-      label: 'Visibility'
+      label: __('Visibility')
       options: { true: 'internal', false: 'public' }
       value: meta.internal
       translate: true
@@ -539,7 +549,7 @@ class App.UiElement.ticket_perform_action
     articleElement.find('.js-internal').html(selection)
     articleElement.find('.js-body div[contenteditable="true"]').ce(
       mode: 'richtext'
-      placeholder: 'message'
+      placeholder: __('message')
       maxlength: 200000
     )
     new App.WidgetPlaceholder(
@@ -548,17 +558,17 @@ class App.UiElement.ticket_perform_action
         {
           prefix: 'ticket'
           object: 'Ticket'
-          display: 'Ticket'
+          display: __('Ticket')
         },
         {
           prefix: 'article'
           object: 'TicketArticle'
-          display: 'Article'
+          display: __('Article')
         },
         {
           prefix: 'user'
           object: 'User'
-          display: 'Current User'
+          display: __('Current User')
         },
       ]
     )

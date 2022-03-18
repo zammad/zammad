@@ -4,7 +4,7 @@ class GettingStartedFinish extends App.ControllerWizardFullScreen
     @authenticateCheckRedirect()
 
     # set title
-    @title 'Setup Finished'
+    @title __('Setup Finished')
     @render()
 
   render: ->

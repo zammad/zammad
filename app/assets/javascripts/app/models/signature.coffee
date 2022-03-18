@@ -4,8 +4,8 @@ class App.Signature extends App.Model
   @url: @apiPath + '/signatures'
 
   @configure_attributes = [
-    { name: 'name',           display: 'Name',          tag: 'input',    type: 'text', limit: 100, 'null': false },
-    { name: 'body',           display: 'Text',          tag: 'richtext',               limit: 500, 'null': true, plugins: [
+    { name: 'name',           display: __('Name'),          tag: 'input',    type: 'text', limit: 100, 'null': false },
+    { name: 'body',           display: __('Text'),          tag: 'richtext',               limit: 500, 'null': true, plugins: [
       {
         controller: 'WidgetPlaceholder'
         params:
@@ -13,22 +13,22 @@ class App.Signature extends App.Model
             {
               prefix: 'ticket'
               object: 'Ticket'
-              display: 'Ticket'
+              display: __('Ticket')
             },
             {
               prefix: 'user'
               object: 'User'
-              display: 'Current User'
+              display: __('Current User')
             },
           ]
       },
     ]},
-    { name: 'note',           display: 'Note',          tag: 'textarea', note: 'Notes are visible to agents only, never to customers.', limit: 250, 'null': true },
-    { name: 'active',         display: 'Active',        tag: 'active',    default: true },
-    { name: 'created_by_id',  display: 'Created by',    relation: 'User', readonly: 1 },
-    { name: 'created_at',     display: 'Created',       tag: 'datetime', readonly: 1 },
-    { name: 'updated_by_id',  display: 'Updated by',    relation: 'User', readonly: 1 },
-    { name: 'updated_at',     display: 'Updated',       tag: 'datetime', readonly: 1 },
+    { name: 'note',           display: __('Note'),          tag: 'textarea', note: __('Notes are visible to agents only, never to customers.'), limit: 250, 'null': true },
+    { name: 'active',         display: __('Active'),        tag: 'active',    default: true },
+    { name: 'created_by_id',  display: __('Created by'),    relation: 'User', readonly: 1 },
+    { name: 'created_at',     display: __('Created'),       tag: 'datetime', readonly: 1 },
+    { name: 'updated_by_id',  display: __('Updated by'),    relation: 'User', readonly: 1 },
+    { name: 'updated_at',     display: __('Updated'),       tag: 'datetime', readonly: 1 },
   ]
   @configure_overview = [
     'name',

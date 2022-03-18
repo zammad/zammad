@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class SearchIndexBackend
 
@@ -20,10 +20,12 @@ info about used search index machine
       installed_version = response.data.dig('version', 'number')
       raise "Unable to get elasticsearch version from response: #{response.inspect}" if installed_version.blank?
 
-      version_supported = Gem::Version.new(installed_version) < Gem::Version.new('8')
+      installed_version_parsed = Gem::Version.new(installed_version)
+
+      version_supported = installed_version_parsed < Gem::Version.new('8')
       raise "Version #{installed_version} of configured elasticsearch is not supported." if !version_supported
 
-      version_supported = Gem::Version.new(installed_version) > Gem::Version.new('2.3')
+      version_supported = installed_version_parsed >= Gem::Version.new('7.8')
       raise "Version #{installed_version} of configured elasticsearch is not supported." if !version_supported
 
       return response.data
@@ -335,22 +337,24 @@ remove whole data from index
   end
 
   def self.search_by_index_sort(sort_by = nil, order_by = nil)
-    result = []
+    result = (sort_by || [])
+      .map(&:to_s)
+      .each_with_object([])
+      .each_with_index do |(elem, memo), index|
+        next if elem.blank?
+        next if order_by&.at(index).blank?
 
-    sort_by&.each_with_index do |value, index|
-      next if value.blank?
-      next if order_by&.at(index).blank?
+        # for sorting values use .keyword values (no analyzer is used - plain values)
+        if elem !~ %r{\.} && elem !~ %r{_(time|date|till|id|ids|at)$} && elem != 'id'
+          elem += '.keyword'
+        end
 
-      # for sorting values use .keyword values (no analyzer is used - plain values)
-      if value !~ %r{\.} && value !~ %r{_(time|date|till|id|ids|at)$}
-        value += '.keyword'
+        memo.push(
+          elem => {
+            order: order_by[index],
+          },
+        )
       end
-      result.push(
-        value => {
-          order: order_by[index],
-        },
-      )
-    end
 
     if result.blank?
       result.push(
@@ -433,6 +437,8 @@ example for aggregations within one year
     return if url.blank?
 
     data = selector2query(selectors, options, aggs_interval)
+
+    verify_date_range(url, data)
 
     response = make_request(url, data: data)
 
@@ -825,12 +831,12 @@ generate url for index or document access (only for internal use)
       suffix += "Payload:\n#{payload.inspect}"
     end
 
-    message = if response&.error&.match?('Connection refused')
-                "Elasticsearch is not reachable, probably because it's not running or even installed."
+    message = if response&.error&.match?(__('Connection refused'))
+                __("Elasticsearch is not reachable. It's possible that it's not running. Please check whether it is installed.")
               elsif url.end_with?('pipeline/zammad-attachment', 'pipeline=zammad-attachment') && response.code == 400
-                'The installed attachment plugin could not handle the request payload. Ensure that the correct attachment plugin is installed (ingest-attachment).'
+                __('The installed attachment plugin could not handle the request payload. Ensure that the correct attachment plugin is installed (ingest-attachment).')
               else
-                'Check the response and payload for detailed information: '
+                __('Check the response and payload for detailed information:')
               end
 
     result = "#{prefix} #{message}#{suffix}"
@@ -1136,7 +1142,7 @@ helper method for making HTTP calls and raising error if response was not succes
   def self.pipeline(create: false)
     pipeline = Setting.get('es_pipeline')
     if create && pipeline.blank?
-      pipeline = "zammad#{rand(999_999_999_999)}"
+      pipeline = "zammad#{SecureRandom.uuid}"
       Setting.set('es_pipeline', pipeline)
     end
     pipeline
@@ -1157,7 +1163,7 @@ helper method for making HTTP calls and raising error if response was not succes
         },
         {
           action:      'create',
-          description: 'Extract zammad-attachment information from arrays',
+          description: __('Extract zammad-attachment information from arrays'),
           processors:  [
             {
               foreach: {
@@ -1204,4 +1210,87 @@ helper method for making HTTP calls and raising error if response was not succes
     )
   end
 
+  # verifies date range ElasticSearch payload
+  #
+  # @param url [String] of ElasticSearch
+  # @param payload [Hash] Elasticsearch query payload
+  #
+  # @return [Boolean] or raises error
+  def self.verify_date_range(url, payload)
+    ranges_payload = payload.dig(:query, :bool, :must)
+
+    return true if ranges_payload.nil?
+
+    ranges = ranges_payload
+      .select { |elem| elem.key? :range }
+      .map    { |elem| [elem[:range].keys.first, convert_es_date_range(elem)] }
+      .each_with_object({}) { |elem, sum| (sum[elem.first] ||= []) << elem.last }
+
+    return true if ranges.all? { |_, ranges_by_key| verify_single_key_range(ranges_by_key) }
+
+    error_prefix  = "Unable to process request to elasticsearch URL '#{url}'."
+    error_suffix  = "Payload:\n#{payload.to_json}"
+    error_message = __('Conflicting date ranges')
+
+    result = "#{error_prefix} #{error_message} #{error_suffix}"
+    Rails.logger.error result.first(40_000)
+
+    raise result
+  end
+
+  # checks if all ranges are overlaping
+  #
+  # @param ranges [Array<Range<DateTime>>] to use in search
+  #
+  # @return [Boolean]
+  def self.verify_single_key_range(ranges)
+    ranges
+      .each_with_index
+      .all? do |range, i|
+        ranges
+          .slice((i + 1)..)
+          .all? { |elem| elem.overlaps? range }
+      end
+  end
+
+  # Converts paylaod component to dates range
+  #
+  # @param elem [Hash] payload component
+  #
+  # @return [Range<DateTime>]
+  def self.convert_es_date_range(elem)
+    range = elem[:range].first.last
+    from  = parse_es_range_date range[:from] || range[:gt] || '-9999-01-01'
+    to    = parse_es_range_date range[:to] || range[:lt] || '9999-01-01'
+
+    from..to
+  end
+
+  # Parses absolute date or converts relative date
+  #
+  # @param input [String] string representation of date
+  #
+  # @return [Range<DateTime>]
+  def self.parse_es_range_date(input)
+    match = input.match(%r{^now(-|\+)(\d+)(\w{1})$})
+
+    return DateTime.parse input if !match
+
+    map = {
+      d: 'day',
+      y: 'year',
+      M: 'month',
+      h: 'hour',
+      m: 'minute',
+    }
+
+    range = match.captures[1].to_i.send map[match.captures[2].to_sym]
+
+    case match.captures[0]
+    when '-'
+      range.ago
+    when '+'
+      range.from_now
+    end
+  end
 end

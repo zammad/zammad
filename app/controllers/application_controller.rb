@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class ApplicationController < ActionController::Base
   include ApplicationController::HandlesErrors
@@ -10,8 +10,8 @@ class ApplicationController < ActionController::Base
   include ApplicationController::RendersModels
   include ApplicationController::HasUser
   include ApplicationController::HasResponseExtentions
+  include ApplicationController::HasDownload
   include ApplicationController::PreventsCsrf
-  include ApplicationController::HasSecureContentSecurityPolicyForDownloads
   include ApplicationController::LogsHttpAccess
   include ApplicationController::Authorizes
 end

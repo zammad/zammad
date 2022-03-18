@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 # We need a special UserContext when authorizing in controller context
 # because of Token authentication which has it's own permissions
@@ -17,12 +17,12 @@ class UserContext < Delegator
   end
 
   def permissions!(permissions)
-    raise Exceptions::Forbidden, 'Authentication required' if !@user
-    raise Exceptions::Forbidden, 'Not authorized (user)!' if !@user.permissions?(permissions)
+    raise Exceptions::Forbidden, __('Authentication required') if !@user
+    raise Exceptions::Forbidden, __('Not authorized (user)!') if !@user.permissions?(permissions)
     return if !@token
     return if @token.with_context(user: @user) { permissions?(permissions) }
 
-    raise Exceptions::Forbidden, 'Not authorized (token)!'
+    raise Exceptions::Forbidden, __('Not authorized (token)!')
   end
 
   def permissions?(permissions)

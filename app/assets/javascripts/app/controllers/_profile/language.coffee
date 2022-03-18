@@ -1,6 +1,6 @@
 class ProfileLanguage extends App.ControllerSubContent
   requiredPermission: 'user_preferences.language'
-  header: 'Language'
+  header: __('Language')
   events:
     'submit form': 'update'
 
@@ -55,7 +55,7 @@ class ProfileLanguage extends App.ControllerSubContent
         App.Event.trigger('ui:rerender')
         @notify(
           type: 'success'
-          msg:  App.i18n.translateContent('Successful!')
+          msg:  App.i18n.translateContent('Update successful.')
         )
       ,
       true
@@ -69,4 +69,4 @@ class ProfileLanguage extends App.ControllerSubContent
       msg:  App.i18n.translateContent(data.message)
     )
 
-App.Config.set('Language', { prio: 1000, name: 'Language', parent: '#profile', target: '#profile/language', controller: ProfileLanguage, permission: ['user_preferences.language'] }, 'NavBarProfile')
+App.Config.set('Language', { prio: 1000, name: __('Language'), parent: '#profile', target: '#profile/language', controller: ProfileLanguage, permission: ['user_preferences.language'] }, 'NavBarProfile')

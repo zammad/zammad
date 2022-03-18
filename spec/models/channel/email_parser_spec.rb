@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -902,6 +902,28 @@ RSpec.describe Channel::EmailParser, type: :model do
           expect { described_class.new.process({}, raw_mail) }
             .to change { ticket.reload.state.name }.to('open')
         end
+
+        context 'when group has follow_up_assignment true' do
+          let(:group) { create(:group, follow_up_assignment: true) }
+          let(:agent) { create(:agent, groups: [group]) }
+          let(:ticket) { create(:ticket, state_name: 'closed', owner: agent, group: group) }
+
+          it 'does not change the owner' do
+            expect { described_class.new.process({}, raw_mail) }
+              .not_to change { ticket.reload.owner.login }
+          end
+        end
+
+        context 'when group has follow_up_assignment false' do
+          let(:group) { create(:group, follow_up_assignment: false) }
+          let(:agent) { create(:agent, groups: [group]) }
+          let(:ticket) { create(:ticket, state_name: 'closed', owner: agent, group: group) }
+
+          it 'does change the owner' do
+            expect { described_class.new.process({}, raw_mail) }
+              .to change { ticket.reload.owner.login }.to eq(User.find(1).login)
+          end
+        end
       end
     end
 
@@ -1169,7 +1191,57 @@ RSpec.describe Channel::EmailParser, type: :model do
       end
     end
 
+    describe 'Jira handling' do
+
+      context 'new Ticket' do
+        let(:mail_file) { Rails.root.join('test/data/mail/mail103.box') }
+
+        it 'creates an ExternalSync reference' do
+          described_class.new.process({}, raw_mail)
+
+          expect(ExternalSync.last).to have_attributes(
+            source:    'Jira-example@jira.com',
+            source_id: 'SYS-422',
+            object:    'Ticket',
+            o_id:      Ticket.last.id,
+          )
+        end
+      end
+
+      context 'follow up' do
+
+        let(:mail_file) { Rails.root.join('test/data/mail/mail104.box') }
+        let(:ticket) { create(:ticket) }
+        let!(:external_sync) do
+          create(:external_sync,
+                 source:    'Jira-example@jira.com',
+                 source_id: 'SYS-422',
+                 object:    'Ticket',
+                 o_id:      ticket.id,)
+        end
+
+        it 'adds Article to existing Ticket' do
+          expect { described_class.new.process({}, raw_mail) }.to change { ticket.reload.articles.count }
+        end
+
+        context 'key insensitive sender address' do
+
+          let(:raw_mail) { super().gsub('example@service-now.com', 'Example@Service-Now.com') }
+
+          it 'adds Article to existing Ticket' do
+            expect { described_class.new.process({}, raw_mail) }.to change { ticket.reload.articles.count }
+          end
+        end
+      end
+    end
+
     describe 'XSS protection' do
+
+      before do
+        # XSS processing may run into a timeout on slow CI systems, so turn the timeout off for the test.
+        stub_const("#{HtmlSanitizer}::PROCESSING_TIMEOUT", nil)
+      end
+
       let(:article) { described_class.new.process({}, raw_mail).second }
 
       let(:raw_mail) { <<~RAW.chomp }
@@ -1186,7 +1258,7 @@ RSpec.describe Channel::EmailParser, type: :model do
         let(:content_type) { 'text/html' }
 
         it 'removes injected <script> tags from body' do
-          expect(article.body).to eq("no HTML alert('XSS')")
+          expect(article.body).to eq('no HTML')
         end
       end
 

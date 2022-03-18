@@ -1,28 +1,34 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class KnowledgeBase::Category < ApplicationModel
   include HasTranslations
   include HasAgentAllowedParams
   include ChecksKbClientNotification
+  include ChecksKbClientVisibility
 
   AGENT_ALLOWED_ATTRIBUTES       = %i[knowledge_base_id parent_id category_icon].freeze
   AGENT_ALLOWED_NESTED_RELATIONS = %i[translations].freeze
 
   belongs_to :knowledge_base, inverse_of: :categories
 
-  has_many   :answers,  class_name: 'KnowledgeBase::Answer',
-                        inverse_of: :category,
-                        dependent:  :restrict_with_exception
+  has_many   :answers,   class_name: 'KnowledgeBase::Answer',
+                         inverse_of: :category,
+                         dependent:  :restrict_with_exception
 
-  has_many   :children, class_name:  'KnowledgeBase::Category',
-                        foreign_key: :parent_id,
-                        inverse_of:  :parent,
-                        dependent:   :restrict_with_exception
+  has_many   :children,  class_name:  'KnowledgeBase::Category',
+                         foreign_key: :parent_id,
+                         inverse_of:  :parent,
+                         dependent:   :restrict_with_exception
 
-  belongs_to :parent,   class_name: 'KnowledgeBase::Category',
-                        inverse_of: :children,
-                        touch:      true,
-                        optional:   true
+  belongs_to :parent,    class_name: 'KnowledgeBase::Category',
+                         inverse_of: :children,
+                         touch:      true,
+                         optional:   true
+
+  has_many :permissions, class_name: 'KnowledgeBase::Permission',
+                         as:         :permissionable,
+                         autosave:   true,
+                         dependent:  :destroy
 
   validates :category_icon, presence: true
 
@@ -40,13 +46,7 @@ class KnowledgeBase::Category < ApplicationModel
     data = knowledge_base.assets(data)
 
     # include all siblings to make sure ordering is always up to date
-    siblings = sibling_categories
-
-    if !User.lookup(id: UserInfo.current_user_id)&.permissions?('knowledge_base.editor')
-      siblings = siblings.select(&:internal_content?)
-    end
-
-    data = ApplicationModel::CanAssets.reduce(siblings, data)
+    data = ApplicationModel::CanAssets.reduce(assets_siblings, data)
     data = ApplicationModel::CanAssets.reduce(translations, data)
 
     # include parent category or KB for root to have full path
@@ -115,17 +115,50 @@ class KnowledgeBase::Category < ApplicationModel
     public_content?(kb_locale)
   end
 
-  def visible_content_for?(user)
-    return true if user&.permissions? 'knowledge_base.editor'
-
-    public_content?
-  end
-
   def api_url
     Rails.application.routes.url_helpers.knowledge_base_category_path(knowledge_base, self)
   end
 
+  def permissions_effective
+    cache_key = KnowledgeBase::Permission.cache_key self
+
+    Rails.cache.fetch cache_key do
+      KnowledgeBase::Category::Permission.new(self).permissions_effective
+    end
+  end
+
+  def attributes_with_association_ids
+    attrs = super
+    attrs[:permissions_effective] = permissions_effective
+    attrs
+  end
+
   private
+
+  def assets_siblings(siblings: sibling_categories, current_user: User.lookup(id: UserInfo.current_user_id))
+    granular = KnowledgeBase.granular_permissions?
+
+    if !granular && !current_user&.permissions?('knowledge_base.editor')
+      siblings.select(&:internal_content?)
+    elsif granular
+      siblings.select { |elem| assets_siblings_applicable?(elem, current_user) }
+    else
+      siblings
+    end
+  end
+
+  def assets_siblings_applicable?(elem, current_user)
+    ep = KnowledgeBase::EffectivePermission.new(current_user, elem)
+
+    case ep.access_effective
+    when 'none'
+      false
+    when 'reader'
+      elem.internal_content?
+    else
+      true
+    end
+  end
 
   def cannot_be_child_of_parent
     errors.add(:parent_id, 'cannot be a child of the parent') if self_parent?(self)

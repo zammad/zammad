@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class SettingsController < ApplicationController
   prepend_before_action { authentication_check && authorize! }
@@ -21,7 +21,7 @@ class SettingsController < ApplicationController
 
   # POST /settings
   def create
-    raise Exceptions::Forbidden, 'Not authorized (feature not possible)'
+    raise Exceptions::Forbidden, __('Not authorized (feature not possible)')
   end
 
   # PUT /settings/1
@@ -37,7 +37,7 @@ class SettingsController < ApplicationController
     if !clean_params[:logo]
       render json: {
         result:  'invalid',
-        message: 'Need logo param',
+        message: __('Need logo param'),
       }
       return
     end
@@ -46,7 +46,7 @@ class SettingsController < ApplicationController
     if !clean_params[:logo].match?(%r{^data:image}i)
       render json: {
         result:  'invalid',
-        message: 'Invalid payload, need data:image in logo param',
+        message: __('Invalid payload, need data:image in logo param'),
       }
       return
     end
@@ -56,7 +56,7 @@ class SettingsController < ApplicationController
     if !file[:content] || !file[:mime_type]
       render json: {
         result:  'invalid',
-        message: 'Unable to process image upload.',
+        message: __('The uploaded image could not be processed.'),
       }
       return
     end
@@ -84,7 +84,7 @@ class SettingsController < ApplicationController
 
   # DELETE /settings/1
   def destroy
-    raise Exceptions::Forbidden, 'Not authorized (feature not possible)'
+    raise Exceptions::Forbidden, __('Not authorized (feature not possible)')
   end
 
   private

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -42,7 +42,7 @@ RSpec.describe CommunicateTwitterJob, type: :job, required_envs: %w[TWITTER_CONS
 
         expect(WebMock)
           .to have_requested(:post, 'https://api.twitter.com/1.1/statuses/update.json')
-          .with(body: "in_reply_to_status_id&status=#{CGI.escape(article.body)}" )
+          .with(body: "in_reply_to_status_id&status=#{CGI.escape(article.body)}")
       end
 
       it 'updates the article with tweet attributes' do
@@ -152,7 +152,7 @@ RSpec.describe CommunicateTwitterJob, type: :job, required_envs: %w[TWITTER_CONS
 
             expect(WebMock)
               .to have_requested(:post, 'https://api.twitter.com/1.1/statuses/update.json')
-              .with(body: "in_reply_to_status_id&status=#{CGI.escape(article.body)}" )
+              .with(body: "in_reply_to_status_id&status=#{CGI.escape(article.body)}")
           end
         end
       end

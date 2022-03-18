@@ -1,9 +1,9 @@
 class GitHub extends App.ControllerIntegrationBase
   featureIntegration: 'github_integration'
-  featureName: 'GitHub'
+  featureName: __('GitHub')
   featureConfig: 'github_config'
   description: [
-    ['This service allows you to connect %s with %s.', 'GitHub', 'Zammad']
+    [__('This service allows you to connect %s with %s.'), 'GitHub', 'Zammad']
   ]
   events:
     'change .js-switch input': 'switch'
@@ -60,7 +60,7 @@ class Form extends App.Controller
         details = data.responseJSON || {}
         App.Event.trigger 'notify', {
           type: 'error'
-          msg:  App.i18n.translateContent(details.error_human || details.error || 'Unable to save!')
+          msg:  App.i18n.translateContent(details.error_human || details.error || __('Saving failed.'))
         }
     )
 
@@ -71,9 +71,9 @@ class State
 App.Config.set(
   'IntegrationGitHub'
   {
-    name: 'GitHub'
+    name: __('GitHub')
     target: '#system/integration/github'
-    description: 'Link GitHub issues to your tickets.'
+    description: __('Link GitHub issues to your tickets.')
     controller: GitHub
     state: State
   }

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class CtiController < ApplicationController
   prepend_before_action { authentication_check && authorize! }
@@ -8,7 +8,7 @@ class CtiController < ApplicationController
   def index
     backends = [
       {
-        name:    'CTI (generic)',
+        name:    __('CTI (generic)'),
         enabled: Setting.get('cti_integration'),
         url:     '#system/integration/cti',
       },
@@ -18,7 +18,7 @@ class CtiController < ApplicationController
         url:     '#system/integration/sipgate',
       },
       {
-        name:    'Placetel',
+        name:    __('Placetel'),
         enabled: Setting.get('placetel_integration'),
         url:     '#system/integration/placetel',
       }

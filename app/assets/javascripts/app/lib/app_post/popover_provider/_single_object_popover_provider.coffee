@@ -8,7 +8,7 @@ class App.SingleObjectPopoverProvider extends App.PopoverProvider
     "div.#{@cssClass()}, span.#{@cssClass()}"
 
   bind: ->
-    @params.parentController.$(@fullCssSelector()).bind('click', (e) =>
+    @params.parentController.$(@fullCssSelector()).on('click', (e) =>
       id = @objectIdFor(e.target)
       return if !id
       object = @constructor.klass.find(id)
@@ -20,11 +20,15 @@ class App.SingleObjectPopoverProvider extends App.PopoverProvider
 
   buildTitleFor: (elem) ->
     object = @constructor.klass.find(@objectIdFor(elem))
-    App.Utils.htmlEscape(@displayTitleUsing(object))
+    title = App.Utils.htmlEscape(@displayTitleUsing(object))
+    if object.active is false
+      title = '<span class="is-inactive">' + title + '</span>'
+    title
 
   buildContentFor: (elem) ->
     id = @objectIdFor(elem)
     object = @constructor.klass.fullLocal(id)
+    ignoredAttributes = @constructor.ignoredAttributes
 
     # get display data
     data = _.values(@constructor.klass.attributesGet('view'))
@@ -37,7 +41,7 @@ class App.SingleObjectPopoverProvider extends App.PopoverProvider
 
         # add to show if value exists
         # do not show ignroed attributes
-        object[name] && attr.shown && !_.include(@constructor.ignoredAttributes, name)
+        object[name] && attr.shown && !_.include(ignoredAttributes, name)
 
     @buildHtmlContent(
       object: object

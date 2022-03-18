@@ -21,6 +21,10 @@ class App.UiElement.richtext.additions.RichTextToolPopupAnswer extends App.UiEle
   apply: (callback) ->
     id = @el.find('input').val()
     object = App.KnowledgeBaseAnswerTranslation.find(id)
+
+    if !object
+      return
+
     textEditor = $(@event.currentTarget).closest('.richtext.form-control').find('[contenteditable]')
 
     switch @selection.type
@@ -33,8 +37,15 @@ class App.UiElement.richtext.additions.RichTextToolPopupAnswer extends App.UiEle
       when 'caret'
         newElem = $('<a>')
         @applyOnto(newElem, object, object.title)
-        @selection.dom[0].splitText(@selection.offset)
-        newElem.insertAfter(@selection.dom)
+
+        selectionElem = @selection.dom[0]
+
+        if selectionElem.splitText
+          @selection.dom[0].splitText(@selection.offset)
+          newElem.insertAfter(@selection.dom)
+        else
+          newElem.prependTo(@selection.dom)
+
       when 'range'
         placeholder = textEditor.find('span.highlight-emulator')
         newElem = $('<a>')

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Chat::Session < ApplicationModel
   include HasSearchIndexBackend
@@ -40,7 +40,7 @@ class Chat::Session < ApplicationModel
   end
 
   def generate_session_id
-    self.session_id = Digest::MD5.hexdigest(Time.zone.now.to_s + rand(99_999_999_999_999).to_s)
+    self.session_id = Digest::MD5.hexdigest(SecureRandom.uuid)
   end
 
   def add_recipient(client_id, store = false)

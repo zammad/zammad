@@ -1,8 +1,8 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 module KnowledgeBaseVisibilityClassHelper
   def visibility_class_name(object)
-    return if !current_user&.permissions?('knowledge_base.editor')
+    return if !can_preview?
 
     suffix = case object
              when CanBePublished

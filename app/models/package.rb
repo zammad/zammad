@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Package < ApplicationModel
   @@root = Rails.root.to_s # rubocop:disable Style/ClassVars
@@ -263,32 +263,37 @@ subsequently in a separate step.
       )
     end
 
-    # store package
-    if !data[:reinstall]
-      package_db = Package.create(meta)
-      Store.add(
-        object:        'Package',
-        o_id:          package_db.id,
-        data:          package.to_json,
-        filename:      "#{meta[:name]}-#{meta[:version]}.zpm",
-        preferences:   {},
-        created_by_id: UserInfo.current_user_id || 1,
-      )
-    end
+    Transaction.execute do
+      # store package
+      if !data[:reinstall]
+        package_db = Package.create(meta)
+        Store.create!(
+          object:        'Package',
+          o_id:          package_db.id,
+          data:          package.to_json,
+          filename:      "#{meta[:name]}-#{meta[:version]}.zpm",
+          preferences:   {},
+          created_by_id: UserInfo.current_user_id || 1,
+        )
+      end
 
-    # write files
-    package['files'].each do |file|
-      permission = file['permission'] || '644'
-      content    = Base64.decode64(file['content'])
-      _write_file(file['location'], permission, content)
-    end
+      # write files
+      package['files'].each do |file|
+        if !allowed_file_path?(file['location'])
+          raise "Can't create file, because of not allowed file location: #{file['location']}!"
+        end
 
-    # update package state
-    package_db.state = 'installed'
-    package_db.save
+        permission = file['permission'] || '644'
+        content    = Base64.decode64(file['content'])
+        _write_file(file['location'], permission, content)
+      end
+
+      # update package state
+      package_db.state = 'installed'
+      package_db.save
+    end
 
     # prebuild assets
-
     package_db
   end
 
@@ -440,7 +445,7 @@ execute all pending package migrations at once
 
     # check if directories need to be created
     directories = location.split '/'
-    (0..(directories.length - 2) ).each do |position|
+    (0..(directories.length - 2)).each do |position|
       tmp_path = ''
       (1..position).each do |count|
         tmp_path = "#{tmp_path}/#{directories[count]}"
@@ -483,4 +488,9 @@ execute all pending package migrations at once
 
     true
   end
+
+  def self.allowed_file_path?(file)
+    file.exclude?('..') && file.exclude?('%2e%2e')
+  end
+  private_class_method :allowed_file_path?
 end

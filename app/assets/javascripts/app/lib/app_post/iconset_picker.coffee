@@ -2,23 +2,23 @@
 class App.IconsetPicker extends Spine.Controller
   sets:
     FontAwesome:
-      name: 'Font Awesome'
+      name: __('Font Awesome')
       version: '4.7'
       website: 'https://fontawesome.com/v4.7.0/'
     anticon:
-      name: 'Anticon'
+      name: __('Anticon')
       version: '2.10'
       website: 'https://2x.ant.design/components/icon/'
     material:
-      name: 'Material'
+      name: __('Material')
       version: '2.2.0'
       website: 'https://material.io/icons/'
     ionicons:
-      name: 'Ionicons'
+      name: __('Ionicons')
       version: '2.0.1'
       website: 'https://ionicons.com/v2/'
     'Simple-Line-Icons':
-      name: 'Simple Line Icons'
+      name: __('Simple Line Icons')
       version: '0.0.1'
       website: 'https://simplelineicons.github.io/'
 

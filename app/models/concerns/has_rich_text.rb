@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 module HasRichText
   extend ActiveSupport::Concern
@@ -80,7 +80,7 @@ Checks if file is used inline
     return if has_rich_text_attachments_cache.blank?
 
     has_rich_text_attachments_cache.each do |attachment_cache|
-      Store.add(
+      Store.create!(
         object:      self.class.name,
         o_id:        id,
         data:        attachment_cache[:data],

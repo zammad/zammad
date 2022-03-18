@@ -30,11 +30,12 @@ class App.UiElement.richtext.additions.RichTextToolButton
       html:      true
       animation: false
       delay:     0
-      placement: 'auto'
+      placement: 'top'
       theme:     'dark'
       content:   content
-      container: 'body'
-      template:  '<div class="popover popover--has-horizontal-form" role="tooltip"><div class="arrow"></div><h2 class="popover-title"></h2><div class="popover-content"></div></div>'
+      container: '.page-content .main'
+      viewport:  { selector: '.page-content .main', padding: 10 }
+      template:  '<div class="popover popover--has-horizontal-form popover--richtextpopover" role="tooltip"><div class="arrow"></div><h2 class="popover-title"></h2><div class="popover-content"></div></div>'
 
     hash
 

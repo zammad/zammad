@@ -120,6 +120,20 @@ class Base
     @queue request
     promise
 
+  ajaxQueueOptions: (options, defaultUrl = null, defaultMethod = Ajax.config.loadMethod, jsonObject = null) ->
+    hash = {
+      type:                  options.method || defaultMethod
+      url:                   options.url || defaultUrl
+      parallel:              options.parallel
+      failResponseNoTrigger: options.failResponseNoTrigger
+    }
+
+    if jsonObject
+      hash.data        = jsonObject.toJSON()
+      hash.contentType = 'application/json'
+
+    hash
+
   ajaxSettings: (params, defaults) ->
     $.extend({}, @defaults, defaults, params)
 
@@ -128,23 +142,13 @@ class Collection extends Base
 
   find: (id, params, options = {}) ->
     record = new @model(id: id)
-    @ajaxQueue(
-      params, {
-        type: options.method or Ajax.config.loadMethod
-        url: options.url or Ajax.getURL(record)
-        parallel: options.parallel
-      }
-    ).done(@recordsResponse(options))
+    @ajaxQueue(params, @ajaxQueueOptions(options, Ajax.getURL(record)))
+      .done(@recordsResponse(options))
       .fail(@failResponse(options))
 
   all: (params, options = {}) ->
-    @ajaxQueue(
-      params, {
-        type: options.method or Ajax.config.loadMethod
-        url: options.url or Ajax.getURL(@model)
-        parallel: options.parallel
-      }
-    ).done(@recordsResponse(options))
+    @ajaxQueue(params, @ajaxQueueOptions(options, Ajax.getURL(@model)))
+      .done(@recordsResponse(options))
       .fail(@failResponse(options))
 
   fetch: (params = {}, options = {}) ->
@@ -180,47 +184,23 @@ class Singleton extends Base
     @model = @record.constructor
 
   reload: (params, options = {}) ->
-    @ajaxQueue(
-      params, {
-        type: options.method or Ajax.config.loadMethod
-        url: options.url
-        parallel: options.parallel
-      }, @record
-    ).done(@recordResponse(options))
+    @ajaxQueue(params, @ajaxQueueOptions(options), @record)
+      .done(@recordResponse(options))
       .fail(@failResponse(options))
 
   create: (params, options = {}) ->
-    @ajaxQueue(
-      params, {
-        type: options.method or Ajax.config.createMethod
-        contentType: 'application/json'
-        data: @record.toJSON()
-        url: options.url or Ajax.getCollectionURL(@record)
-        parallel: options.parallel
-      }
-    ).done(@recordResponse(options))
+    @ajaxQueue(params, @ajaxQueueOptions(options, Ajax.getCollectionURL(@record), Ajax.config.createMethod, @record))
+      .done(@recordResponse(options))
       .fail(@failResponse(options))
 
   update: (params, options = {}) ->
-    @ajaxQueue(
-      params, {
-        type: options.method or Ajax.config.updateMethod
-        contentType: 'application/json'
-        data: @record.toJSON()
-        url: options.url
-        parallel: options.parallel
-      }, @record
-    ).done(@recordResponse(options))
+    @ajaxQueue(params, @ajaxQueueOptions(options, null, Ajax.config.updateMethod, @record), @record)
+      .done(@recordResponse(options))
       .fail(@failResponse(options))
 
   destroy: (params, options = {}) ->
-    @ajaxQueue(
-      params, {
-        type: options.method or Ajax.config.destroyMethod
-        url: options.url
-        parallel: options.parallel
-      }, @record
-    ).done(@recordResponse(options))
+    @ajaxQueue(params, @ajaxQueueOptions(options, null, Ajax.config.destroyMethod), @record)
+      .done(@recordResponse(options))
       .fail(@failResponse(options))
 
   # Private
@@ -239,11 +219,13 @@ class Singleton extends Base
         when 'DELETE' then @destroyFailed()
       # add errors to calllback
       @record.trigger('ajaxError', @record, xhr, statusText, error, settings)
+
       #options.fail?.call(@record, settings)
       detailsRaw = xhr.responseText
       if !_.isEmpty(detailsRaw)
         details = JSON.parse(detailsRaw)
       options.fail?.call(@record, settings, details)
+
       @record.trigger('destroy', @record)
       # /add errors to calllback
 

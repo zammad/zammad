@@ -1,9 +1,8 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class KnowledgeBase::Answer::Translation::Content < ApplicationModel
   include HasAgentAllowedParams
   include HasRichText
-  include HasKnowledgeBaseAttachmentPermissions
 
   AGENT_ALLOWED_ATTRIBUTES = %i[body].freeze
 
@@ -28,7 +27,7 @@ class KnowledgeBase::Answer::Translation::Content < ApplicationModel
     add_attachments_to_attributes(attrs)
   end
 
-  def attributes_with_association_names
+  def attributes_with_association_names(empty_keys: false)
     attrs = super
     add_attachments_to_attributes(attrs)
   end

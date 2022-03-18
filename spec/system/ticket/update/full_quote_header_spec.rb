@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -8,6 +8,7 @@ RSpec.describe 'Ticket > Update > Full Quote Header', current_user_id: -> { curr
   let(:ticket_article) { create(:ticket_article, ticket: ticket, from: 'Example Name <asdf1@example.com>') }
   let(:customer) { create(:customer) }
   let(:current_user) { customer }
+  let(:selection) { '' }
 
   prepend_before do
     Setting.set 'ui_ticket_zoom_article_email_full_quote_header', full_quote_header_setting
@@ -20,7 +21,7 @@ RSpec.describe 'Ticket > Update > Full Quote Header', current_user_id: -> { curr
   context 'when "ui_ticket_zoom_article_email_full_quote_header" is enabled' do
     let(:full_quote_header_setting) { true }
 
-    it 'includes OP when forwarding' do
+    it 'includes sender when forwarding' do
       within(:active_content) do
         click_forward
 
@@ -30,7 +31,7 @@ RSpec.describe 'Ticket > Update > Full Quote Header', current_user_id: -> { curr
       end
     end
 
-    it 'includes OP when replying' do
+    it 'includes sender when replying' do
       within(:active_content) do
         highlight_and_click_reply
 
@@ -40,7 +41,7 @@ RSpec.describe 'Ticket > Update > Full Quote Header', current_user_id: -> { curr
       end
     end
 
-    it 'includes OP when article visibility toggled' do
+    it 'includes sender when article visibility toggled' do
       within(:active_content) do
         set_internal
         highlight_and_click_reply
@@ -54,12 +55,31 @@ RSpec.describe 'Ticket > Update > Full Quote Header', current_user_id: -> { curr
     context 'when customer is agent' do
       let(:customer) { create(:agent) }
 
-      it 'includes OP without email when forwarding' do
+      it 'includes sender without email when forwarding' do
         within(:active_content) do
           click_forward
 
           within(:richtext) do
             expect(page).to contain_full_quote(ticket_article).formatted_for(:forward).ensuring_privacy(true)
+          end
+        end
+      end
+    end
+
+    # https://github.com/zammad/zammad/issues/3824
+    context 'when TO contains multiple senders and one of them is a known Zammad user' do
+      let(:customer) { create(:customer) }
+      let(:to_1) { "#{customer.fullname} <#{customer.email}>" }
+      let(:to_2) { 'Example Two <two@example.org>' }
+
+      let(:ticket_article) { create(:ticket_article, ticket: ticket, to: [to_1, to_2].join(', ')) }
+
+      it 'includes all TO email address' do
+        within(:active_content) do
+          click_forward
+
+          within(:richtext) do
+            expect(page).to have_text(to_1).and(have_text(to_2))
           end
         end
       end
@@ -71,7 +91,7 @@ RSpec.describe 'Ticket > Update > Full Quote Header', current_user_id: -> { curr
       let(:ticket)         { create(:ticket, group: group, title: 'Created by agent on behalf of a customer', customer: customer) }
       let(:ticket_article) { create(:ticket_article, ticket: ticket, from: 'Created by agent on behalf of a customer', origin_by_id: customer.id) }
 
-      it 'includes OP without email when replying' do
+      it 'includes sender without email when replying' do
         within(:active_content) do
           highlight_and_click_reply
 
@@ -81,12 +101,34 @@ RSpec.describe 'Ticket > Update > Full Quote Header', current_user_id: -> { curr
         end
       end
     end
+
+    # https://github.com/zammad/zammad/issues/3855
+    context 'when ticket article has no recipient' do
+      shared_examples 'when recipient is set to' do |recipient:, recipient_human:|
+        context "when recipient is set to #{recipient_human}" do
+          let(:ticket_article) { create(:ticket_article, :inbound_web, ticket: ticket, to: recipient) }
+
+          it 'allows to forward without original recipient present' do
+            within(:active_content) do
+              click_forward
+
+              within(:richtext) do
+                expect(page).to contain_full_quote(ticket_article).formatted_for(:forward)
+              end
+            end
+          end
+        end
+      end
+
+      include_examples 'when recipient is set to', recipient: '', recipient_human: 'empty string'
+      include_examples 'when recipient is set to', recipient: nil, recipient_human: 'nil'
+    end
   end
 
   context 'when "ui_ticket_zoom_article_email_full_quote_header" is disabled' do
     let(:full_quote_header_setting) { false }
 
-    it 'does not include OP when forwarding' do
+    it 'does not include sender when forwarding' do
       within(:active_content) do
         click_forward
 
@@ -96,12 +138,109 @@ RSpec.describe 'Ticket > Update > Full Quote Header', current_user_id: -> { curr
       end
     end
 
-    it 'does not include OP when replying' do
+    it 'does not include sender when replying' do
       within(:active_content) do
         highlight_and_click_reply
 
         within(:richtext) do
           expect(page).not_to contain_full_quote(ticket_article).formatted_for(:reply)
+        end
+      end
+    end
+  end
+
+  context 'when text is selected on page while replying' do
+    let(:full_quote_header_setting) { false }
+    let(:before_article_content_selector) { '.ticketZoom-header' }
+    let(:after_article_content_selector) { '.ticket-article-item .humanTimeFromNow' }
+    let(:article_content_selector) { '.ticket-article-item .richtext-content' }
+
+    it 'does not quote article when bits other than the article are selected' do
+      within(:active_content) do
+        selection = highlight_and_get_selection(before_article_content_selector, '')
+        click_reply
+
+        within(:richtext) do
+          expect(page).to have_no_text(selection)
+        end
+      end
+    end
+
+    it 'quotes article when bits inside the article are selected' do
+      within(:active_content) do
+        selection = highlight_and_get_selection(article_content_selector, '')
+        click_reply
+
+        within(:richtext) do
+          expect(page).to have_text(selection)
+        end
+      end
+    end
+
+    it 'quotes only article when bits before the article are selected as well' do
+      within(:active_content) do
+        selection = highlight_and_get_selection(before_article_content_selector, article_content_selector)
+        expected_text = find(article_content_selector).text
+
+        click_reply
+
+        within(:richtext) do
+          expect(page).to have_no_text(selection)
+          expect(page).to have_text(expected_text)
+        end
+      end
+    end
+
+    it 'quotes only article when bits after the article are selected as well' do
+      within(:active_content) do
+        selection = highlight_and_get_selection(article_content_selector, after_article_content_selector)
+        expected_text = find(article_content_selector).text
+
+        click_reply
+
+        within(:richtext) do
+          expect(page).to have_no_text(selection)
+          expect(page).to have_text(expected_text)
+        end
+      end
+    end
+
+    it 'quotes only article when bits both before and after the article are selected as well' do
+      within(:active_content) do
+        selection = highlight_and_get_selection(before_article_content_selector, after_article_content_selector)
+        expected_text = find(article_content_selector).text
+
+        click_reply
+
+        within(:richtext) do
+          expect(page).to have_no_text(selection)
+          expect(page).to have_text(expected_text)
+        end
+      end
+    end
+
+    context 'when full quote header setting is enabled' do
+      let(:full_quote_header_setting) { true }
+
+      it 'can breakout with enter from quote block' do
+        within(:active_content) do
+          highlight_and_click_reply
+
+          within(:richtext) do
+            blockquote_empty_line = first('blockquote br:nth-child(2)', visible: :all)
+            page.driver.browser.action.move_to_location(blockquote_empty_line.native.location.x, blockquote_empty_line.native.location.y).click.perform
+          end
+
+          # Special handling for firefox, because the cursor is at the wrong location after the move to with click.
+          if Capybara.current_driver == :zammad_firefox
+            find(:richtext).send_keys(:down)
+          end
+
+          find(:richtext).send_keys(:enter)
+
+          within(:richtext) do
+            expect(page).to have_css('blockquote', count: 2)
+          end
         end
       end
     end
@@ -115,8 +254,30 @@ RSpec.describe 'Ticket > Update > Full Quote Header', current_user_id: -> { curr
     click '.js-ArticleAction[data-type=internal]'
   end
 
+  def click_reply
+    click '.js-ArticleAction[data-type=emailReply]'
+  end
+
+  def highlight_and_get_selection(start_selector, end_selector)
+    find(start_selector)
+      .execute_script(<<~JAVASCRIPT, end_selector)
+        let [ end_selector ] = arguments
+        let end_node = $(end_selector)[0]
+        if(!end_node) {
+          end_node = this.nextSibling
+        }
+        window.getSelection().removeAllRanges()
+        var range = window.document.createRange()
+        range.setStart(this, 0)
+        range.setEnd(end_node, end_node.childNodes.length)
+        window.getSelection().addRange(range)
+      JAVASCRIPT
+
+    find(start_selector).evaluate_script 'window.getSelection().toString().trim()'
+  end
+
   def highlight_and_click_reply
-    find('.ticket-article-item .textBubble')
+    find('.ticket-article-item .richtext-content')
       .execute_script <<~JAVASCRIPT
         window.getSelection().removeAllRanges()
         var range = window.document.createRange()
@@ -125,7 +286,7 @@ RSpec.describe 'Ticket > Update > Full Quote Header', current_user_id: -> { curr
         window.getSelection().addRange(range)
       JAVASCRIPT
 
-    click '.js-ArticleAction[data-type=emailReply]'
+    click_reply
   end
 
   define :contain_full_quote do
@@ -214,7 +375,7 @@ RSpec.describe 'Ticket > Update > Full Quote Header', current_user_id: -> { curr
       expected
         .created_at
         .in_time_zone('Europe/London')
-        .strftime('%m/%d/%Y %H:%M')
+        .strftime('%m/%d/%Y %1I:%M %P')
     end
   end
 end

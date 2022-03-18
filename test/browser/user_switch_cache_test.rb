@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'browser_test_helper'
 
@@ -12,7 +12,7 @@ class UserSwitchCache < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
     ticket_create(
       data: {
         customer: 'nico',
@@ -22,7 +22,7 @@ class UserSwitchCache < TestCase
       },
     )
 
-    logout()
+    logout
 
     # login as customer and verify ticket create screen
     login(
@@ -51,7 +51,7 @@ class UserSwitchCache < TestCase
       value: 'State',
     )
 
-    logout()
+    logout
 
     # login again as customer and verify ticket create screen
     login(

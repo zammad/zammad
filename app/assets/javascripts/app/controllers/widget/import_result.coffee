@@ -1,16 +1,16 @@
 class App.ImportResult extends App.ControllerModal
   buttonClose: true
   buttonCancel: true
-  buttonSubmit: 'Close'
+  buttonSubmit: __('Close')
   autoFocusOnFirstInput: false
-  head: 'Import'
+  head: __('Import')
   large: true
   templateDirectory: 'generic/object_import/'
 
   content: =>
 
     content = $(App.view("#{@templateDirectory}/imported")(
-      head: 'Imported'
+      head: __('Imported')
       result: @result
     ))
     content

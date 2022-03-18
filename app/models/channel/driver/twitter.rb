@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Channel::Driver::Twitter
 
@@ -80,7 +80,7 @@ returns
     # only fetch once in 30 minutes
     return true if !channel.preferences
     return true if !channel.preferences[:last_fetch]
-    return false if channel.preferences[:last_fetch] > Time.zone.now - 20.minutes
+    return false if channel.preferences[:last_fetch] > 20.minutes.ago
 
     true
   end

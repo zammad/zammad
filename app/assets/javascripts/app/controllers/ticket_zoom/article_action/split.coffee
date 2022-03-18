@@ -3,7 +3,7 @@ class Split
     return actions if ticket.currentView() is 'customer'
 
     actions.push {
-      name: 'split'
+      name: __('split')
       type: 'split'
       icon: 'split'
       href: "#ticket/create/#{article.ticket_id}/#{article.id}"

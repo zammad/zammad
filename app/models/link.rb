@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Link < ApplicationModel
 
@@ -23,7 +23,7 @@ class Link < ApplicationModel
 =end
 
   def self.list(data)
-    linkobject = link_object_get( name: data[:link_object] )
+    linkobject = link_object_get(name: data[:link_object])
     return if !linkobject
 
     items = []
@@ -35,8 +35,8 @@ class Link < ApplicationModel
 
     list.each do |item|
       link = {}
-      link['link_type']         = @map[ Link::Type.find( item.link_type_id ).name ]
-      link['link_object']       = Link::Object.find( item.link_object_target_id ).name
+      link['link_type']         = @map[ Link::Type.find(item.link_type_id).name ]
+      link['link_object']       = Link::Object.find(item.link_object_target_id).name
       link['link_object_value'] = item.link_object_target_value
       items.push link
     end
@@ -47,8 +47,8 @@ class Link < ApplicationModel
     )
     list.each do |item|
       link = {}
-      link['link_type']         = Link::Type.find( item.link_type_id ).name
-      link['link_object']       = Link::Object.find( item.link_object_source_id ).name
+      link['link_type']         = Link::Type.find(item.link_type_id).name
+      link['link_object']       = Link::Object.find(item.link_object_source_id).name
       link['link_object_value'] = item.link_object_source_value
       items.push link
     end

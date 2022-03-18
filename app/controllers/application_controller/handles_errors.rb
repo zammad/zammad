@@ -1,11 +1,11 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 module ApplicationController::HandlesErrors
   extend ActiveSupport::Concern
 
   included do
     rescue_from StandardError, with: :internal_server_error
-    rescue_from ExecJS::RuntimeError, with: :internal_server_error
+    rescue_from 'ExecJS::RuntimeError', with: :internal_server_error
     rescue_from ActiveRecord::RecordNotFound, with: :not_found
     rescue_from ActiveRecord::StatementInvalid, with: :unprocessable_entity
     rescue_from ActiveRecord::RecordInvalid, with: :unprocessable_entity
@@ -56,7 +56,7 @@ module ApplicationController::HandlesErrors
     # check if a special authorization_error should be shown in the result payload
     # which was raised in one of the policies. Fall back to a simple "Not authorized"
     # error to hide actual cause for security reasons.
-    exeption = e.policy&.custom_exception || Exceptions::Forbidden.new('Not authorized')
+    exeption = e.policy&.custom_exception || Exceptions::Forbidden.new(__('Not authorized'))
     forbidden(exeption)
   end
 
@@ -84,17 +84,19 @@ module ApplicationController::HandlesErrors
       error: e.message
     }
 
-    if e.message =~ %r{Validation failed: (.+?)(,|$)}i
-      data[:error_human] = $1
+    if (base_error = e.try(:record)&.errors&.messages&.find { |key, _| key.match? %r{[\w+.]?base} }&.last&.last)
+      data[:error_human] = base_error
+    elsif (first_error = e.try(:record)&.errors&.full_messages&.first)
+      data[:error_human] = first_error
     elsif e.message.match?(%r{(already exists|duplicate key|duplicate entry)}i)
-      data[:error_human] = 'Object already exists!'
+      data[:error_human] = __('Object already exists!')
     elsif e.message =~ %r{null value in column "(.+?)" violates not-null constraint}i || e.message =~ %r{Field '(.+?)' doesn't have a default value}i
       data[:error_human] = "Attribute '#{$1}' required!"
     elsif e.message == 'Exceptions::Forbidden'
-      data[:error]       = 'Not authorized'
+      data[:error]       = __('Not authorized')
       data[:error_human] = data[:error]
     elsif e.message == 'Exceptions::NotAuthorized'
-      data[:error]       = 'Authorization failed'
+      data[:error]       = __('Authorization failed')
       data[:error_human] = data[:error]
     elsif [ActionController::RoutingError, ActiveRecord::RecordNotFound, Exceptions::UnprocessableEntity, Exceptions::NotAuthorized, Exceptions::Forbidden].include?(e.class)
       data[:error_human] = data[:error]
@@ -102,11 +104,7 @@ module ApplicationController::HandlesErrors
 
     if data[:error_human].present?
       data[:error] = data[:error_human]
-    elsif !current_user&.permissions?('admin')
-      # We want to avoid leaking of internal information but also want the user
-      # to give the administrator a reference to find the cause of the error.
-      # Therefore we generate a one time unique error ID that can be used to
-      # search the logs and find the actual error message.
+    elsif !policy(Exceptions).view_details?
       error_code_prefix = "Error ID #{SecureRandom.urlsafe_base64(6)}:"
       Rails.logger.error "#{error_code_prefix} #{data[:error]}"
       data[:error] = "#{error_code_prefix} Please contact your administrator."

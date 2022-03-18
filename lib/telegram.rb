@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Telegram
 
@@ -15,7 +15,7 @@ check token and return bot attributes of token
   def self.check_token(token)
     api = TelegramAPI.new(token)
     begin
-      bot = api.getMe()
+      bot = api.getMe
     rescue
       raise Exceptions::UnprocessableEntity, 'invalid api token'
     end
@@ -43,7 +43,7 @@ returns
     begin
       api.setWebhook(callback_url)
     rescue
-      raise Exceptions::UnprocessableEntity, 'Unable to set webhook at Telegram, seems to be a invalid url.'
+      raise Exceptions::UnprocessableEntity, __('The webhook could not be saved by Telegram, seems to be an invalid URL.')
     end
     true
   end
@@ -66,16 +66,16 @@ returns
     bot = Telegram.check_token(token)
 
     if !channel && Telegram.bot_duplicate?(bot['id'])
-      raise Exceptions::UnprocessableEntity, 'Bot already exists!'
+      raise Exceptions::UnprocessableEntity, __('Bot already exists!')
     end
 
     if params[:group_id].blank?
-      raise Exceptions::UnprocessableEntity, 'Group needed!'
+      raise Exceptions::UnprocessableEntity, __('Group needed!')
     end
 
     group = Group.find_by(id: params[:group_id])
     if !group
-      raise Exceptions::UnprocessableEntity, 'Group invalid!'
+      raise Exceptions::UnprocessableEntity, __('Group invalid!')
     end
 
     # generate random callback token
@@ -325,7 +325,7 @@ returns
     ticket           = possible_tickets.find_each.find { |possible_ticket| possible_ticket.preferences[:channel_id] == channel.id }
 
     if ticket
-      # check if title need to be updated
+      # check if title needs to be updated
       if ticket.title == '-'
         ticket.title = title
       end
@@ -461,7 +461,7 @@ returns
         object: 'Ticket::Article',
         o_id:   article.id,
       )
-      Store.add(
+      Store.create!(
         object:      'Ticket::Article',
         o_id:        article.id,
         data:        document_result.body,
@@ -502,7 +502,7 @@ returns
 
       # get video type
       type = video[:mime_type].gsub(%r{(.+/)}, '')
-      Store.add(
+      Store.create!(
         object:      'Ticket::Article',
         o_id:        article.id,
         data:        video_result.body,
@@ -533,7 +533,7 @@ returns
         object: 'Ticket::Article',
         o_id:   article.id,
       )
-      Store.add(
+      Store.create!(
         object:      'Ticket::Article',
         o_id:        article.id,
         data:        document_result.body,
@@ -574,7 +574,7 @@ returns
           object: 'Ticket::Article',
           o_id:   article.id,
         )
-        Store.add(
+        Store.create!(
           object:      'Ticket::Article',
           o_id:        article.id,
           data:        document_result.body,
@@ -718,7 +718,7 @@ returns
     # send welcome message and don't create ticket
     text = params[:message][:text]
     if text.present? && text.start_with?('/start')
-      message(params[:message][:chat][:id], channel.options[:welcome] || 'You are welcome! Just ask me something!', params[:message][:from][:language_code])
+      message(params[:message][:chat][:id], channel.options[:welcome] || __('Welcome! Feel free to ask me a question!'), params[:message][:from][:language_code])
       return
 
     # find ticket and close it
@@ -744,7 +744,7 @@ returns
     ticket = nil
 
     # use transaction
-    Transaction.execute(reset_user_id: true) do
+    Transaction.execute(reset_user_id: true, context: 'telegram') do
       user   = to_user(params)
       ticket = to_ticket(params, user, group_id, channel)
       to_article(params, user, ticket, channel)
@@ -770,7 +770,7 @@ returns
     # telegram bot files are limited up to 20MB
     # https://core.telegram.org/bots/api#getfile
     if !validate_file_size(file)
-      message_text = 'Telegram file is to big. (Maximum 20mb)'
+      message_text = __('The Telegram file is larger than the allowed 20 MB.')
       message(params[:message][:chat][:id], "Sorry, we could not handle your message. #{message_text}", params[:message][:from][:language_code])
       raise Exceptions::UnprocessableEntity, message_text
     end
@@ -778,7 +778,7 @@ returns
     result = download_file(file[:file_id])
 
     if !validate_download(result)
-      message_text = 'Unable to get you file from bot.'
+      message_text = __('The file could not be retrieved from the bot.')
       message(params[:message][:chat][:id], "Sorry, we could not handle your message. #{message_text}", params[:message][:from][:language_code])
       raise Exceptions::UnprocessableEntity, message_text
     end
@@ -795,6 +795,7 @@ returns
       {
         open_timeout: 20,
         read_timeout: 40,
+        verify_ssl:   true,
       },
     )
   end

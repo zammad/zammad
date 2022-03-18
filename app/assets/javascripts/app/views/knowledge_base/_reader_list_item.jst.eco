@@ -1,6 +1,6 @@
 <a href="<%- @item.url %>">
   <span class="section-inner">
     <%- @iconWithModifier(@item, className: 'section-inner-icon-holder', iconset: @iconset, addStateClass: true) %>
-    <span><%= @item.title %></span>
+    <span class="title"><%= @item.title %></span>
   </span>
 </a>

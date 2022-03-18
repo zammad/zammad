@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 module KnowledgeBaseHelper
   def effective_layout_name(knowledge_base, object)
@@ -67,13 +67,13 @@ module KnowledgeBaseHelper
   def canonical_link_tag(knowledge_base, *objects)
     path = kb_public_system_path(*objects)
 
-    tag :link, rel: 'canonical', href: knowledge_base.canonical_url(path)
+    tag.link(rel: 'canonical', href: knowledge_base.canonical_url(path))
   end
 
   def kb_public_system_path(*objects)
     objects
       .compact
-      .map { |elem| elem.translation.to_param }
+      .map { |elem| elem.is_a?(HasTranslations) ? elem.translation.to_param : elem }
       .unshift(help_root_path)
       .join('/')
   end

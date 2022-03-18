@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 module Import
   module OTRS
@@ -16,13 +16,13 @@ module Import
         Title:         :title,
         TicketID:      :id,
         FirstResponse: :first_response_at,
-        #FirstResponseTimeDestinationDate: :first_response_escalation_at,
-        #FirstResponseInMin: :first_response_in_min,
-        #FirstResponseDiffInMin: :first_response_diff_in_min,
+        # FirstResponseTimeDestinationDate: :first_response_escalation_at,
+        # FirstResponseInMin: :first_response_in_min,
+        # FirstResponseDiffInMin: :first_response_diff_in_min,
         Closed:        :close_at,
-        #SoltutionTimeDestinationDate: :close_escalation_at,
-        #CloseTimeInMin: :close_in_min,
-        #CloseTimeDiffInMin: :close_diff_in_min,
+        # SoltutionTimeDestinationDate: :close_escalation_at,
+        # CloseTimeInMin: :close_in_min,
+        # CloseTimeDiffInMin: :close_diff_in_min,
       }.freeze
 
       def initialize(ticket)
@@ -98,7 +98,7 @@ module Import
 
           dynamic_field_name = key_string[13, key_string.length]
 
-          next if Import::OTRS::DynamicFieldFactory.skip_field?( dynamic_field_name )
+          next if Import::OTRS::DynamicFieldFactory.skip_field?(dynamic_field_name)
 
           dynamic_field_name = Import::OTRS::DynamicField.convert_name(dynamic_field_name)
 

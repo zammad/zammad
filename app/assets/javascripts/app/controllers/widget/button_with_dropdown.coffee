@@ -9,7 +9,7 @@ class App.WidgetButtonWithDropdown extends App.Controller
     super
     @render()
 
-  mainActionLabel:            'Submit'
+  mainActionLabel:            __('Submit')
   mainActionIdentifier:       'js-submit'
   accessoryActionsIdentifier: 'js-submit-action'
 
@@ -28,4 +28,4 @@ class App.WidgetButtonWithDropdown extends App.Controller
       @preventDefaultAndStopPropagation(e)
       return
 
-    @accessoriesContainer.blur()
+    @accessoriesContainer.trigger('blur')

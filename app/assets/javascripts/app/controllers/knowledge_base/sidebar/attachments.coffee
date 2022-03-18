@@ -19,9 +19,9 @@ class App.KnowledgeBaseSidebarAttachments extends App.Controller
     super
 
     @render()
-    @listenTo @object, 'refresh', @needsUpdate
+    @listenTo @object, 'refresh', @updateIfNeeded
 
-  needsUpdate: =>
+  updateIfNeeded: =>
     @render()
 
   render: ->
@@ -110,9 +110,7 @@ class App.KnowledgeBaseSidebarAttachments extends App.Controller
 
 class DeleteConfirm extends App.ControllerConfirm
   content: ->
-    sentence = App.i18n.translateContent('Are you sure to delete')
-    "#{sentence} #{@attachment.filename}?"
-  buttonSubmit: 'delete'
+    App.i18n.translateContent('Do you really want to delete "%s"?', @attachment.filename)
   onSubmit: ->
     @formDisable(@el)
 
@@ -132,4 +130,4 @@ class DeleteConfirm extends App.ControllerConfirm
 
   error: (xhr) =>
     @formEnable(@el)
-    @showAlert(xhr.responseJSON?.error || 'Unable to save changes')
+    @showAlert(xhr.responseJSON?.error || __('The changes could not be saved.'))

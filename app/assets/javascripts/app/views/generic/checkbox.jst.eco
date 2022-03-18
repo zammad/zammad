@@ -1,6 +1,6 @@
 <div class="<%= @attribute.class %> checkbox checkbox--list">
 <% for row in @attribute.options: %>
-  <label class="checkbox-replacement<%= ' is-disabled' if row.disabled %>">
+  <label class="checkbox-replacement<%= ' is-disabled' if row.disabled %> <%= row.class %>">
     <input type="checkbox" value="<%= row.value %>" name="<%= @attribute.name %>" <%= row.checked %> <%= row.disabled %> <% if @attribute.disabled: %> disabled<% end %>>
     <%- @Icon('checkbox', 'icon-unchecked') %>
     <%- @Icon('checkbox-checked', 'icon-checked') %>

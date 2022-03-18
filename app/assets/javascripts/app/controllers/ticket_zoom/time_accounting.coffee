@@ -1,13 +1,13 @@
 class App.TicketZoomTimeAccounting extends App.ControllerModal
   buttonClose: true
   buttonCancel: false
-  buttonSubmit: 'Account Time'
+  buttonSubmit: __('Account Time')
   buttonClass: 'btn--success'
   leftButtons: [{
-    className: 'btn--text btn--subtle js-skip',
-    text: 'skip'
+    className: 'js-skip',
+    text: __('skip')
   }]
-  head: 'Time Accounting'
+  head: __('Time Accounting')
   small: true
 
   events:

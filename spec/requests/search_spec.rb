@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -65,14 +65,11 @@ RSpec.describe 'Search', type: :request, searchindex: true do
   let!(:article_nested) do
     article = create(:ticket_article, ticket_id: ticket_nested.id)
 
-    Store.add(
-      object:        'Ticket::Article',
-      o_id:          article.id,
-      data:          File.binread(Rails.root.join('test/data/elasticsearch/es-normal.txt')),
-      filename:      'es-normal.txt',
-      preferences:   {},
-      created_by_id: 1,
-    )
+    create(:store,
+           object:   'Ticket::Article',
+           o_id:     article.id,
+           data:     File.binread(Rails.root.join('test/data/elasticsearch/es-normal.txt')),
+           filename: 'es-normal.txt')
 
     article
   end

@@ -1,9 +1,9 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
 RSpec.describe Sessions::Event::ChatTransfer do
-  let(:client_id) { rand(123_456_789) }
+  let(:client_id) { SecureRandom.uuid }
   let(:chat) { Chat.first }
   let(:chat_transfer_into) { Chat.create!(name: 'chat 2', updated_by_id: 1, created_by_id: 1) }
   let(:chat_session) do
@@ -36,7 +36,7 @@ RSpec.describe Sessions::Event::ChatTransfer do
     Setting.set('chat', true)
   end
 
-  context 'when transfering a chat session as customer' do
+  context 'when transferring a chat session as customer' do
     let(:subject_as_customer) do
       Sessions.create(client_id, { 'id' => customer.id }, {})
       Sessions.queue(client_id)
@@ -51,7 +51,7 @@ RSpec.describe Sessions::Event::ChatTransfer do
 
     context 'without chat.agent permissions' do
       it 'send out no_permission event to user' do
-        expect(subject_as_customer.run).to eq(nil)
+        expect(subject_as_customer.run).to be_nil
         messages = Sessions.queue(client_id)
         expect(messages.count).to eq(1)
         expect(messages).to eq([
@@ -64,16 +64,16 @@ RSpec.describe Sessions::Event::ChatTransfer do
     end
   end
 
-  context 'when transfering a chat session as agent' do
+  context 'when transferring a chat session as agent' do
     it 'send out chat_session_notice to customer and agent and set chat session to waiting' do
-      expect(subject_as_agent.run).to eq(nil)
+      expect(subject_as_agent.run).to be_nil
 
       messages_to_customer = Sessions.queue('customer_session_id')
       expect(messages_to_customer.count).to eq(1)
       expect(messages_to_customer[0]).to eq(
         'event' => 'chat_session_notice',
         'data'  => {
-          'message'    => 'Conversation transfered into other chat. Please stay tuned.',
+          'message'    => 'Conversation is transferred into another chat. Please stay tuned.',
           'session_id' => chat_session.session_id,
         },
       )

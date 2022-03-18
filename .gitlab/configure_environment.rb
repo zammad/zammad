@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'yaml'
 require 'resolv'
@@ -15,11 +15,11 @@ require 'resolv'
 
 class ConfigureEnvironment
 
-  @env_file_content = <<~EOF
-  #!/bin/bash
-  FRESHENVFILE=fresh.env && test -f $FRESHENVFILE && source $FRESHENVFILE
-  true
-  EOF
+  @env_file_content = <<~ENV_FILE_CONTENT
+    #!/bin/bash
+    FRESHENVFILE=fresh.env && test -f $FRESHENVFILE && source $FRESHENVFILE
+    true
+  ENV_FILE_CONTENT
 
   def self.configure_redis
     if ENV['REDIS_URL'].nil? || ENV['REDIS_URL'].empty? # rubocop:disable Rails/Blank

@@ -1,13 +1,18 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class PackagesController < ApplicationController
   prepend_before_action { authentication_check && authorize! }
 
   # GET /api/v1/packages
   def index
-    packages = Package.all().order('name')
+    packages = Package.all.order('name')
+    commands = ['rails zammad:package:migrate', 'rails assets:precompile']
+    if File.exist?('/usr/bin/zammad')
+      commands.map! { |s| "zammad run #{s}" }
+    end
     render json: {
-      packages: packages
+      packages: packages,
+      commands: commands
     }
   end
 

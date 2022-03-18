@@ -1,0 +1,40 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://reallybadexample.kayako.com/api/v1/teams
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Zammad User Agent
+      Host:
+      - reallybadexample.kayako.com
+  response:
+    status:
+      code: 490
+      message:
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Fri, 01 Oct 2021 16:05:08 GMT
+      Content-Type:
+      - text/html; charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains preload
+    body:
+      encoding: UTF-8
+      string: Either this Kayako instance does not exist or we are facing temporary
+        problems. Please try again in a few minutes
+  recorded_at: Fri, 01 Oct 2021 16:05:08 GMT
+recorded_with: VCR 6.0.0

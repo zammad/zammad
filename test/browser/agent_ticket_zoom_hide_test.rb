@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'browser_test_helper'
 
@@ -54,14 +54,14 @@ class AgentTicketZoomHideTest < TestCase
       css: '.attachment-icon img',
     )
 
-    modal_ready()
+    modal_ready
 
     # Now go to a previous ticket and confirm that the modal disappears
     location(
       url: "#{browser_url}/#ticket/zoom/1",
     )
     sleep 2
-    modal_disappear()
+    modal_disappear
   end
 
   def teardown

@@ -1,5 +1,5 @@
 class App.ManageKnowledgeBase extends App.ControllerTabs
-  header: 'Knowledge Base'
+  header: __('Knowledge Base')
   headerSwitchName: 'kb-activate'
 
   events:
@@ -59,7 +59,7 @@ class App.ManageKnowledgeBase extends App.ControllerTabs
       @renderNonExistant()
 
   renderNonExistant: ->
-    @renderScreenError(detail: 'No Knowledge Base. Please create first Knowledge Base', el: @$('.page-content'))
+    @renderScreenError(detail: __('There is no Knowledge Base yet. Please create one.'), el: @$('.page-content'))
     @headerSwitchInput.prop('checked', false)
 
     @modal = new App.KnowledgeBaseNewModal(
@@ -96,22 +96,22 @@ class App.ManageKnowledgeBase extends App.ControllerTabs
 
     @tabs = [
       {
-        name:       'Theme'
+        name:       __('Theme')
         target:     'style'
         controller: App.KnowledgeBaseForm
         params:     _.extend({}, params, { screen: 'style', split: true })
       },{
-        name:       'Languages'
+        name:       __('Languages')
         target:     'languages'
         controller: App.KnowledgeBaseForm
         params:     _.extend({}, params, { screen: 'languages' })
       },{
-        name:       'Public Menu'
+        name:       __('Public Menu')
         target:     'public_menu'
         controller: App.KnowledgeBasePublicMenuManager
         params:     _.extend({}, params, { screen: 'public_menu' })
       },{
-        name:       'Delete'
+        name:       __('Delete')
         target:     'delete'
         controller: App.KnowledgeBaseDelete
         params:     params
@@ -120,7 +120,7 @@ class App.ManageKnowledgeBase extends App.ControllerTabs
 
     if !App.Config.get('system_online_service')
       @tabs.splice(-1, 0, {
-        name:       'Custom URL'
+        name:       __('Custom URL')
         target:     'custom_address'
         controller: App.KnowledgeBaseCustomAddressForm,
         params:     _.extend({}, params, { screen: 'custom_address' })
@@ -130,4 +130,4 @@ class App.ManageKnowledgeBase extends App.ControllerTabs
 
     @headerSwitchInput.prop('checked', App.KnowledgeBase.find(@knowledge_base_id).active)
 
-App.Config.set('KnowledgeBase', { prio: 10000, name: 'Knowledge Base', parent: '#manage', target: '#manage/knowledge_base', controller: App.ManageKnowledgeBase, permission: ['admin.knowledge_base'] }, 'NavBarAdmin')
+App.Config.set('KnowledgeBase', { prio: 10000, name: __('Knowledge Base'), parent: '#manage', target: '#manage/knowledge_base', controller: App.ManageKnowledgeBase, permission: ['admin.knowledge_base'] }, 'NavBarAdmin')

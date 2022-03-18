@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Sessions::Event::ChatSessionStart < Sessions::Event::ChatBase
 
@@ -34,7 +34,7 @@ return is sent as message back to peer
         event: 'chat_session_start',
         data:  {
           state:   'failed',
-          message: 'No session available.',
+          message: __('No session available.'),
         },
       }
     end

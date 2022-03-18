@@ -5,20 +5,17 @@ include:
 .template_rspec: &template_rspec
   extends:
     - .env_base
-  variables:
-    RAILS_ENV: "test"
+    - .variables_rspec_slicing
   script:
+    - echo -e "\\e[0Ksection_start:`date +%s`:zammad_db_init[collapsed=true]\\r\\e[0Kbundle exec rake zammad:db:init"
     - bundle exec rake zammad:db:init
-    - bundle exec rspec --exclude-pattern "spec/{system,integration}/**/*_spec.rb" -t ~searchindex -t ~db_strategy:reset
+    - echo -e "\\e[0Ksection_end:`date +%s`:zammad_db_init\\r\\e[0K"
+    - echo "RSpec filter:" "$RSPEC_EXAMPLE_MATCHES"
+    - bundle exec rspec --require ./spec/rspec_extensions.rb --example-matches "$RSPEC_EXAMPLE_MATCHES" --exclude-pattern "spec/{system,integration}/**/*_spec.rb" -t ~searchindex --profile 10
 
-.template_rspec_db_reset: &template_rspec_db_reset
-  extends:
-    - .env_base
-  variables:
-    RAILS_ENV: "test"
-  script:
-    - bundle exec rake zammad:db:init
-    - bundle exec rspec --exclude-pattern "spec/{system,integration}/**/*_spec.rb" -t ~searchindex -t db_strategy:reset
+# RSpec 3rd party integration tests are independent of the database
+# therefore we need only one job and choose a random database for each run
+# Optionally pass INTEGRATION_TESTS=enabled to run them in private- branch
 
 rspec:integration:
   stage: test
@@ -29,5 +26,7 @@ rspec:integration:
   variables:
     RAILS_ENV: "test"
   script:
+    - echo -e "\\e[0Ksection_start:`date +%s`:zammad_db_init[collapsed=true]\\r\\e[0Kbundle exec rake zammad:db:init"
     - bundle exec rake zammad:db:init
-    - bundle exec rspec -t type:integration
+    - echo -e "\\e[0Ksection_end:`date +%s`:zammad_db_init\\r\\e[0K"
+    - bundle exec rspec -t type:integration --profile 10

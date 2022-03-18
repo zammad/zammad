@@ -13,7 +13,7 @@
   <button type="submit" class="btn" data-type="text_module_delete"><%- @T( 'Delete' ) %></button>
 -->
 <!--
-  <%- @T( 'Preview ') %>
+  <%- @T( 'Preview') %>
   <br>
   <textarea id="text-module-preview-content" class="span2"></textarea>
 -->

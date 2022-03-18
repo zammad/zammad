@@ -12,15 +12,27 @@ data-available-locales='<%= @object_locales.map(&:locale).join(',') %>'>
       </div>
 
       <% if (attachments = @object.attachments_sorted) && attachments.present? %>
-        <div class="attachments">
+        <div class="attachments article-accessories">
           <%= icon 'paperclip' %>
-          <div class="attachments-title"><%= zt('Attached Files') %></div>
+          <div class="article-accessories-title"><%= zt('Attached Files') %></div>
           <% attachments.each do |attachment| %>
             <%= link_to custom_path_if_needed(attachment_path(attachment), @knowledge_base), class: 'attachment', download: true do %>
               <span class="attachment-name u-highlight"><%= attachment.filename %></span>
               <div class="attachment-size">404kb</div>
             <% end %>
           <% end %>
+        </div>
+      <% end %>
+
+      <% if (tags = @object.tag_list) && tags.present? %>
+        <div class="tags article-accessories">
+          <%= icon 'hashtag' %>
+          <div class="article-accessories-title"><%= zt('Tags') %></div>
+          <div class="tags-content">
+            <% tags.each do |tag| %>
+              <%= link_to tag, custom_path_if_needed(help_tag_path(tag, locale: params[:locale]), @knowledge_base), class: 'tag' %>
+            <% end %>
+          </div>
         </div>
       <% end %>
     </div>

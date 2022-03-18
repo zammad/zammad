@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Sessions::Store::Redis
   SESSIONS_KEY = 'sessions'.freeze
@@ -10,7 +10,7 @@ class Sessions::Store::Redis
     # Only load redis if it is really used.
     require 'redis'
     require 'hiredis'
-    @redis = Redis.new( driver: :hiredis )
+    @redis = Redis.new(driver: :hiredis)
   end
 
   def create(client_id, data)
@@ -79,11 +79,13 @@ class Sessions::Store::Redis
     @redis.rpush SPOOL_KEY, data.to_json
   end
 
-  def each_spool(&block)
-    @redis.lrange(SPOOL_KEY, 0, -1).each(&block)
+  def each_spool()
+    @redis.lrange(SPOOL_KEY, 0, -1).each do |message|
+      yield message, nil
+    end
   end
 
-  def remove_from_spool(message)
+  def remove_from_spool(message, _entry)
     @redis.lrem SPOOL_KEY, 1, message
   end
 

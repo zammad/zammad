@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Sequencer
   class Unit
@@ -6,6 +6,9 @@ class Sequencer
       module Freshdesk
         class ObjectCount < Sequencer::Unit::Common::Provider::Attribute
           include ::Sequencer::Unit::Import::Common::Model::Statistics::Mixin::EmptyDiff
+          prepend ::Sequencer::Unit::Import::Common::Model::Mixin::Skip::Action
+
+          skip_action :skipped, :failed
 
           uses :model_class, :resources
 

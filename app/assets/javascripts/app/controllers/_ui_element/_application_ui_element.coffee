@@ -46,7 +46,7 @@ class App.UiElement.ApplicationUiElement
     result = []
     for row in selection
       if attribute.translate
-        row.name = App.i18n.translateInline(row.name)
+        row.name = App.i18n.translatePlain(row.name)
         if !_.isEmpty(row.children)
           row.children = @getConfigOptionListArray(attribute, row.children)
       result.push row
@@ -65,12 +65,33 @@ class App.UiElement.ApplicationUiElement
       for key in order
         name_new = selection[key]
         if attribute.translate
-          name_new = App.i18n.translateInline(name_new)
+          name_new = App.i18n.translatePlain(name_new)
         attribute.options.push {
           name:  name_new
           value: key
         }
     attribute.sortBy = null
+
+  @getConfigCustomSortOptionList: (attribute) ->
+    if attribute.customsort && attribute.customsort is 'on'
+      if !_.isEmpty(attribute.options)
+        selection = attribute.options
+        attribute.options = []
+        if _.isArray(selection)
+          attribute.options = @getConfigOptionListArray(attribute, selection)
+        else
+          keys = _.keys(selection)
+          for key in keys
+            name_new = selection[key]
+            if attribute.translate
+              name_new = App.i18n.translatePlain(name_new)
+            attribute.options.push {
+              name:  name_new
+              value: key
+            }
+        attribute.sortBy = null
+    else
+      @getConfigOptionList(attribute)
 
   @getRelationOptionList: (attribute, params) ->
 
@@ -162,7 +183,7 @@ class App.UiElement.ApplicationUiElement
           nameNew = item.name
 
         if attribute.translate
-          nameNew = App.i18n.translateInline(nameNew)
+          nameNew = App.i18n.translatePlain(nameNew)
 
         row =
           value: item.id,
@@ -186,10 +207,20 @@ class App.UiElement.ApplicationUiElement
     return if !attribute.filter
     return if _.isEmpty(attribute.options)
 
-    return if typeof attribute.filter isnt 'function'
-    App.Log.debug 'ControllerForm', '_filterOption:filter-function'
+    if typeof attribute.filter is 'function'
+      App.Log.debug 'ControllerForm', '_filterOption:filter-function'
+      attribute.options = attribute.filter(attribute.options, attribute)
+    else if !attribute.relation && attribute.filter && _.isArray(attribute.filter)
+      @filterOptionArray(attribute)
 
-    attribute.options = attribute.filter(attribute.options, attribute)
+  @filterOptionArray: (attribute) ->
+    result = []
+    for option in attribute.options
+      for value in attribute.filter
+        if value.toString() == option.value.toString()
+          result.push(option)
+
+    attribute.options = result
 
   # set selected attributes
   @selectedOptions: (attribute) ->

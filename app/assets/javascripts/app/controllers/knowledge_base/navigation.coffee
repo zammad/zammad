@@ -13,8 +13,8 @@ class App.KnowledgeBaseNavigation extends App.Controller
 
     @controllerBind('knowledge_base::navigation::rerender', => @needsUpdate())
 
-    @listenTo App.KnowledgeBase, 'kb_data_change_loaded', =>
-      @needsUpdate()
+    @listenTo App.KnowledgeBase, 'kb_data_change_loaded', @needsUpdate
+    @listenTo App.KnowledgeBase, 'kb_visibility_change_loaded', @needsUpdate
 
   buildCrumbsForRendering: (array, kb_locale, action) ->
     if action is 'search'
@@ -73,7 +73,7 @@ class App.KnowledgeBaseNavigation extends App.Controller
     else
       false
 
-  needsUpdate: ->
+  needsUpdate: =>
     @show(@savedParams, @savedAction)
 
   selectedLocaleDisplay: ->

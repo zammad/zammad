@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'browser_test_helper'
 
@@ -12,7 +12,7 @@ class AgentTicketMergeTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     # create new ticket
     ticket1 = ticket_create(
@@ -32,7 +32,7 @@ class AgentTicketMergeTest < TestCase
       },
     )
 
-    tasks_close_all()
+    tasks_close_all
 
     # create second ticket to merge
     ticket_create(
@@ -57,16 +57,16 @@ class AgentTicketMergeTest < TestCase
     )
 
     # merge tickets
-    click( css: '.active div[data-tab="ticket"] .js-actions .icon-arrow-down' )
-    click( css: '.active div[data-tab="ticket"] .js-actions [data-type="ticket-merge"]' )
+    click(css: '.active div[data-tab="ticket"] .js-actions .icon-arrow-down')
+    click(css: '.active div[data-tab="ticket"] .js-actions [data-type="ticket-merge"]')
 
-    modal_ready()
+    modal_ready
     set(
-      css:   '.modal input[name="master_ticket_number"]',
+      css:   '.modal input[name="target_ticket_number"]',
       value: ticket1[:number],
     )
 
-    click( css: '.modal button[type="submit"]' )
+    click(css: '.modal button[type="submit"]')
 
     # check if merged to ticket is shown now
     watch_for(
@@ -89,7 +89,7 @@ class AgentTicketMergeTest < TestCase
     )
 
     # close task/cleanup
-    tasks_close_all()
+    tasks_close_all
 
     # merge ticket with open tabs
     ticket3 = ticket_create(
@@ -111,15 +111,15 @@ class AgentTicketMergeTest < TestCase
     )
 
     # merge tickets
-    click( css: '.active div[data-tab="ticket"] .js-actions .icon-arrow-down' )
-    click( css: '.active div[data-tab="ticket"] .js-actions [data-type="ticket-merge"]' )
+    click(css: '.active div[data-tab="ticket"] .js-actions .icon-arrow-down')
+    click(css: '.active div[data-tab="ticket"] .js-actions [data-type="ticket-merge"]')
 
-    modal_ready()
+    modal_ready
     set(
-      css:   '.modal input[name="master_ticket_number"]',
+      css:   '.modal input[name="target_ticket_number"]',
       value: ticket3[:number],
     )
-    click( css: '.modal button[type="submit"]' )
+    click(css: '.modal button[type="submit"]')
 
     # check if merged to ticket is shown now
     watch_for(

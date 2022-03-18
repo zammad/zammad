@@ -18,7 +18,10 @@ class App.KnowledgeBaseReaderListItem extends App.Controller
 
     @sort_order = @item.position
 
-    attrs = @item.attributesForRendering(@kb_locale, isEditor: @isEditor)
+    try
+      attrs = @item.attributesForRendering(@kb_locale, isEditor: @isEditor)
+    catch e
+      attrs = {}
 
     @el
       .prop('className')

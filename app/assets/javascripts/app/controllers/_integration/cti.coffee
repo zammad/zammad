@@ -1,10 +1,10 @@
 class Cti extends App.ControllerIntegrationBase
   featureIntegration: 'cti_integration'
-  featureName: 'CTI (generic)'
+  featureName: __('CTI (generic)')
   featureConfig: 'cti_config'
   description: [
-    ['This service shows you contacts of incoming calls and a caller list in realtime.']
-    ['Also caller id of outbound calls can be changed.']
+    [__('This service shows you contacts of incoming calls and a caller list in realtime.')]
+    [__('Caller ID of outbound calls can be changed as well.')]
   ]
   events:
     'click .js-select': 'selectAll'
@@ -135,7 +135,7 @@ class Form extends App.Controller
       }
     )
 
-    # blocked caller ids
+    # blocked caller IDs
     config.inbound.block_caller_ids = []
     @$('.js-inboundBlockCallerId .js-row').each(->
       caller_id = $(@).find('input[name="caller_id"]').val()
@@ -259,9 +259,9 @@ class State
 App.Config.set(
   'IntegrationCti'
   {
-    name: 'CTI (generic)'
+    name: __('CTI (generic)')
     target: '#system/integration/cti'
-    description: 'Generic API to integrate VoIP service provider with realtime push.'
+    description: __('Generic API to integrate VoIP service provider with real-time push.')
     controller: Cti
     state: State
   }

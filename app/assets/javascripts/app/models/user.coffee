@@ -5,15 +5,15 @@ class App.User extends App.Model
 
 #  @hasMany 'roles', 'App.Role'
   @configure_attributes = [
-    { name: 'login',            display: 'Login',         tag: 'input',    type: 'text',     limit: 100, null: false, autocapitalize: false, signup: false, quick: false },
-    { name: 'firstname',        display: 'Firstname',     tag: 'input',    type: 'text',     limit: 100, null: false, signup: true, info: true, invite_agent: true, invite_customer: true },
-    { name: 'lastname',         display: 'Lastname',      tag: 'input',    type: 'text',     limit: 100, null: false, signup: true, info: true, invite_agent: true, invite_customer: true },
-    { name: 'email',            display: 'Email',         tag: 'input',    type: 'email',    limit: 100, null: false, signup: true, info: true, invite_agent: true, invite_customer: true },
-    { name: 'organization_id',  display: 'Organization',  tag: 'select',   multiple: false, nulloption: true, null: true, relation: 'Organization', signup: false, info: true, invite_customer: true },
-    { name: 'created_by_id',    display: 'Created by',    relation: 'User', readonly: 1 },
-    { name: 'created_at',       display: 'Created at',    tag: 'datetime',  readonly: 1 },
-    { name: 'updated_by_id',    display: 'Updated by',    relation: 'User', readonly: 1 },
-    { name: 'updated_at',       display: 'Updated at',    tag: 'datetime',  readonly: 1 },
+    { name: 'login',            display: __('Login'),         tag: 'input',    type: 'text',     limit: 100, null: false, autocapitalize: false, signup: false, quick: false },
+    { name: 'firstname',        display: __('First name'),     tag: 'input',    type: 'text',     limit: 100, null: true, signup: true, info: true, invite_agent: true, invite_customer: true },
+    { name: 'lastname',         display: __('Last name'),      tag: 'input',    type: 'text',     limit: 100, null: true, signup: true, info: true, invite_agent: true, invite_customer: true },
+    { name: 'email',            display: __('Email'),         tag: 'input',    type: 'email',    limit: 100, null: true, signup: true, info: true, invite_agent: true, invite_customer: true },
+    { name: 'organization_id',  display: __('Organization'),  tag: 'select',   multiple: false, nulloption: true, null: true, relation: 'Organization', signup: false, info: true, invite_customer: true },
+    { name: 'created_by_id',    display: __('Created by'),    relation: 'User', readonly: 1 },
+    { name: 'created_at',       display: __('Created at'),    tag: 'datetime',  readonly: 1 },
+    { name: 'updated_by_id',    display: __('Updated by'),    relation: 'User', readonly: 1 },
+    { name: 'updated_at',       display: __('Updated at'),    tag: 'datetime',  readonly: 1 },
   ]
   @configure_overview = [
 #    'login', 'firstname', 'lastname', 'email', 'updated_at',
@@ -121,6 +121,9 @@ class App.User extends App.Model
       return true
     false
 
+  maxLoginFailedReached: ->
+    return @login_failed > (parseInt(App.Config.get('password_max_login_failed')))
+
   imageUrl: ->
     return if !@image
     # set image url
@@ -156,20 +159,27 @@ class App.User extends App.Model
     data
 
   searchResultAttributes: ->
+    classList = ['user', 'user-popover']
+    icon = 'user'
+
+    if @active is false
+      classList.push 'is-inactive'
+      icon = 'inactive-' + icon
+
     display: "#{@displayName()}"
     id:      @id
-    class:   'user user-popover'
+    class:   classList.join(' ')
     url:     @uiUrl()
-    icon:    'user'
+    icon:    icon
 
   activityMessage: (item) ->
     return if !item
     return if !item.created_by
 
     if item.type is 'create'
-      return App.i18n.translateContent('%s created User |%s|', item.created_by.displayName(), item.title)
+      return App.i18n.translateContent('%s created user |%s|', item.created_by.displayName(), item.title)
     else if item.type is 'update'
-      return App.i18n.translateContent('%s updated User |%s|', item.created_by.displayName(), item.title)
+      return App.i18n.translateContent('%s updated user |%s|', item.created_by.displayName(), item.title)
     else if item.type is 'session started'
       return App.i18n.translateContent('%s started a new session', item.created_by.displayName())
     else if item.type is 'switch to'
@@ -334,9 +344,12 @@ class App.User extends App.Model
     @sameOrganization?(requester)
 
   isChangeableBy: (requester) ->
+    # full access for admins
     return true if requester.permission('admin.user')
-    # allow agents to change customers
+    # forbid non-agents to change users
     return false if !requester.permission('ticket.agent')
+    # allow agents to change customers only
+    return false if @permission(['admin.user', 'ticket.agent'])
     @permission('ticket.customer')
 
   isDeleteableBy: (requester) ->
@@ -349,6 +362,9 @@ class App.User extends App.Model
     return false if @organization_id is null
     return false if requester.organization_id is null
     @organization_id == requester.organization_id
+
+  lifetimeCustomerTicketsCount: ->
+    (@preferences.tickets_closed || 0) + (@preferences.tickets_open || 0)
 
   # Do NOT modify the return value of this method!
   # It is a direct reference to a value in the App.User.irecords object.

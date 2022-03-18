@@ -1,0 +1,115 @@
+---
+- name: cnr - I could not reach you...
+  keywords: ''
+  content:
+    I could not reach you by phone. Could you please send me a short email and
+    let me know when you will be available again?
+  note: ''
+- name: iq - If you have any questions...
+  keywords: ''
+  content: If you have any questions, do not hesitate to contact me
+  note: ''
+- name: ifq - in case of further questions...
+  keywords: ''
+  content: In case of further questions do not hesitate to contact me
+  note: ''
+- name: kr - Kind regards,
+  keywords: ''
+  content: Kind regards,
+  note: ''
+- name: 'Hello - Hello #{ticket.customer.firstname},'
+  keywords: ''
+  content: 'Hello #{ticket.customer.firstname},'
+  note: ''
+- name: 'hello - Hello Ms. #{ticket.customer.firstname},'
+  keywords: ''
+  content: 'Hello Ms. #{ticket.customer.firstname},'
+  note: ''
+- name: ilf - I look forward to hearing from you
+  keywords: ''
+  content: I look forward to hearing from you
+  note: ''
+- name: 'dms- Dear Ms. #{ticket.customer.lastname},'
+  keywords: ''
+  content: 'Dear Ms. #{ticket.customer.lastname},'
+  note: ''
+- name: 'dmr - Dear Mr. #{ticket.customer.lastname},'
+  keywords: ''
+  content: 'Dear Mr. #{ticket.customer.lastname},'
+  note: ''
+- name: tfqr - Thank you for your quick reply.
+  keywords: ''
+  content: Thank you for your quick reply.
+  note: ''
+- name: tff - Thank you for the feedback
+  keywords: ''
+  content: Thank you for the feedback.
+  note: ''
+- name: tfyr - Thank you for your request.
+  keywords: ''
+  content: Thank you for your request.
+  note: ''
+- name: ilff - I look forward to your feedback
+  keywords: ''
+  content: I look forward to your feedback.
+  note: ''
+- name: fs - I look forward to your feedback regarding further steps
+  keywords: ''
+  content: I look forward to your feedback regarding further steps.
+  note: ''
+- name: br - Best regards,
+  keywords: ''
+  content: Best regards,
+  note: ''
+- name: sg - Sunny greetings,
+  keywords: ''
+  content: With sunny greetings,
+  note: ''
+- name: sug - Summer greetings,
+  keywords: ''
+  content: ' With summer greetings,'
+  note: ''
+- name: wg - Winter greetings,
+  keywords: ''
+  content: With winter greetings,
+  note: ''
+- name: tybr - Thank you and best regards,
+  keywords: ''
+  content: Thank you and best regards,
+  note: ''
+- name: ifqp - In case of further questions...phone
+  keywords: ''
+  content: If you have any questions, do not hesitate to contact me by phone.
+  note: ''
+- name: ai - Analyse issue
+  keywords: ''
+  content:
+    '<p>Thank you for your request.</p><p>We will analyse the issue and get back
+    to you as soon as possible.</p>'
+  note: ''
+- name: tya - Thank you in advance
+  keywords: ''
+  content: Kind regards and thank you in advance,
+  note: ''
+- name: iwlk - I would like to know
+  keywords: ''
+  content: I would like to know,
+  note: ''
+- name: wrt - With reference to
+  keywords: ''
+  content: With reference to
+  note: ''
+- name: mdi - more detailed information
+  keywords: ''
+  content:
+    We would appreciate it if you could send us more detailed information about
+    ...
+  note: ''
+- name: fa - further assistance
+  keywords: ''
+  content: If you need any additional assistance, please contact me
+  note: ''
+- name: reg - Regards
+  keywords: ''
+  content: Regards
+  note: ''

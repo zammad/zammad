@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 require 'ostruct'
@@ -11,7 +11,7 @@ RSpec.describe NotificationFactory::Mailer do
       let(:parsed_incoming_mail) { Channel::EmailParser.new.parse raw_incoming_mail }
 
       let(:incoming_mail) do
-        mail = OpenStruct.new
+        mail = Channel::EmailParser::MESSAGE_STRUCT.new
         mail.from_display_name = parsed_incoming_mail[:from_display_name]
         mail.subject = parsed_incoming_mail[:subject]
         mail.msg_size = format('%<MB>.2f', MB: raw_incoming_mail.size.to_f / 1024 / 1024)
@@ -106,7 +106,7 @@ RSpec.describe NotificationFactory::Mailer do
       let(:user) { create(:agent, email: 'somebody@example.com') }
 
       it 'returns a Mail::Message' do
-        expect( result ).to be_kind_of(Mail::Message)
+        expect(result).to be_kind_of(Mail::Message)
       end
     end
 

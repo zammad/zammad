@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Role < ApplicationModel
   include CanBeImported
@@ -8,18 +8,18 @@ class Role < ApplicationModel
   include ChecksLatestChangeObserved
   include HasGroups
   include HasCollectionUpdate
-  include HasTicketCreateScreenImpact
 
   include Role::Assets
 
   has_and_belongs_to_many :users, after_add: :cache_update, after_remove: :cache_update
   has_and_belongs_to_many :permissions,
                           before_add:    %i[validate_agent_limit_by_permission validate_permissions],
-                          after_add:     :cache_update,
+                          after_add:     %i[cache_update cache_add_kb_permission],
                           before_remove: :last_admin_check_by_permission,
-                          after_remove:  :cache_update
+                          after_remove:  %i[cache_update cache_remove_kb_permission]
   validates               :name, presence: true
   store                   :preferences
+  has_many                :knowledge_base_permissions, class_name: 'KnowledgeBase::Permission', dependent: :destroy
 
   before_create  :check_default_at_signup_permissions
   before_update  :last_admin_check_by_attribute, :validate_agent_limit_by_attributes, :check_default_at_signup_permissions
@@ -118,7 +118,7 @@ returns
     permission_ids = Role.permission_ids_by_name(keys)
     Role.joins(:permissions_roles).joins(:permissions).where(
       'permissions_roles.permission_id IN (?) AND roles.active = ? AND permissions.active = ?', permission_ids, true, true
-    ).distinct()
+    ).distinct
   end
 
 =begin
@@ -142,7 +142,7 @@ returns
     permission_ids = Role.permission_ids_by_name(keys)
     return true if Role.joins(:permissions_roles).joins(:permissions).where(
       'roles.id = ? AND permissions_roles.permission_id IN (?) AND permissions.active = ?', id, permission_ids, true
-    ).distinct().count.nonzero?
+    ).distinct.count.nonzero?
 
     false
   end
@@ -177,7 +177,7 @@ returns
     return true if !will_save_change_to_attribute?('active')
     return true if active != false
     return true if !with_permission?(['admin', 'admin.user'])
-    raise Exceptions::UnprocessableEntity, 'Minimum one user needs to have admin permissions.' if last_admin_check_admin_count < 1
+    raise Exceptions::UnprocessableEntity, __('At least one user needs to have admin permissions.') if last_admin_check_admin_count < 1
 
     true
   end
@@ -185,14 +185,14 @@ returns
   def last_admin_check_by_permission(permission)
     return true if Setting.get('import_mode')
     return true if permission.name != 'admin' && permission.name != 'admin.user'
-    raise Exceptions::UnprocessableEntity, 'Minimum one user needs to have admin permissions.' if last_admin_check_admin_count < 1
+    raise Exceptions::UnprocessableEntity, __('At least one user needs to have admin permissions.') if last_admin_check_admin_count < 1
 
     true
   end
 
   def last_admin_check_admin_count
     admin_role_ids = Role.joins(:permissions).where(permissions: { name: ['admin', 'admin.user'], active: true }, roles: { active: true }).where.not(id: id).pluck(:id)
-    User.joins(:roles).where(roles: { id: admin_role_ids }, users: { active: true }).distinct().count
+    User.joins(:roles).where(roles: { id: admin_role_ids }, users: { active: true }).distinct.count
   end
 
   def validate_agent_limit_by_attributes
@@ -202,10 +202,10 @@ returns
     return true if !with_permission?('ticket.agent')
 
     ticket_agent_role_ids = Role.joins(:permissions).where(permissions: { name: 'ticket.agent', active: true }, roles: { active: true }).pluck(:id)
-    currents = User.joins(:roles).where(roles: { id: ticket_agent_role_ids }, users: { active: true }).distinct().pluck(:id)
-    news = User.joins(:roles).where(roles: { id: id }, users: { active: true }).distinct().pluck(:id)
+    currents = User.joins(:roles).where(roles: { id: ticket_agent_role_ids }, users: { active: true }).distinct.pluck(:id)
+    news = User.joins(:roles).where(roles: { id: id }, users: { active: true }).distinct.pluck(:id)
     count = currents.concat(news).uniq.count
-    raise Exceptions::UnprocessableEntity, 'Agent limit exceeded, please check your account settings.' if count > Setting.get('system_agent_limit').to_i
+    raise Exceptions::UnprocessableEntity, __('Agent limit exceeded, please check your account settings.') if count > Setting.get('system_agent_limit').to_i
 
     true
   end
@@ -218,8 +218,8 @@ returns
 
     ticket_agent_role_ids = Role.joins(:permissions).where(permissions: { name: 'ticket.agent' }, roles: { active: true }).pluck(:id)
     ticket_agent_role_ids.push(id)
-    count = User.joins(:roles).where(roles: { id: ticket_agent_role_ids }, users: { active: true }).distinct().count
-    raise Exceptions::UnprocessableEntity, 'Agent limit exceeded, please check your account settings.' if count > Setting.get('system_agent_limit').to_i
+    count = User.joins(:roles).where(roles: { id: ticket_agent_role_ids }, users: { active: true }).distinct.count
+    raise Exceptions::UnprocessableEntity, __('Agent limit exceeded, please check your account settings.') if count > Setting.get('system_agent_limit').to_i
 
     true
   end
@@ -233,4 +233,31 @@ returns
     raise Exceptions::UnprocessableEntity, "Cannot set default at signup when role has #{forbidden_permissions.join(', ')} permissions."
   end
 
+  def cache_add_kb_permission(permission)
+    return if !permission.name.starts_with? 'knowledge_base.'
+    return if !KnowledgeBase.granular_permissions?
+
+    KnowledgeBase::Category.all.each(&:touch)
+  end
+
+  def cache_remove_kb_permission(permission)
+    return if !permission.name.starts_with? 'knowledge_base.'
+    return if !KnowledgeBase.granular_permissions?
+
+    has_editor = permissions.where(name: 'knowledge_base.editor').any?
+    has_reader = permissions.where(name: 'knowledge_base.reader').any?
+
+    KnowledgeBase::Permission
+      .where(role: self)
+      .each do |elem|
+        if !has_editor && !has_reader
+          elem.destroy!
+        elsif !has_editor && has_reader
+          elem.update!(access: 'reader') if permission.access == 'editor'
+        end
+
+      end
+
+    KnowledgeBase::Category.all.each(&:touch)
+  end
 end

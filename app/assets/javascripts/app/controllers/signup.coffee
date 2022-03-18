@@ -15,7 +15,7 @@ class Signup extends App.ControllerFullPage
       return
 
     # set title
-    @title 'Sign up'
+    @title __('Sign up')
     @navupdate '#signup'
 
     @render()
@@ -50,7 +50,7 @@ class Signup extends App.ControllerFullPage
     user.load(@params)
 
     errors = user.validate(
-      screen: 'signup'
+      controllerForm: @form
     )
 
     if errors
@@ -74,7 +74,7 @@ class Signup extends App.ControllerFullPage
         ))
       fail: (settings, details) =>
         @formEnable(e)
-        @form.showAlert(details.error_human || details.error || 'Unable to create user!')
+        @form.showAlert(details.error_human || details.error || __('User could not be created.'))
     )
 
   resend: (e) =>
@@ -94,7 +94,7 @@ class Signup extends App.ControllerFullPage
         # add notify
         @notify(
           type:      'success'
-          msg:       App.i18n.translateContent('Email sent to "%s". Please verify your email address.', @params.email)
+          msg:       App.i18n.translateContent('Email sent to "%s". Please verify your email account.', @params.email)
           removeAll: true
         )
 

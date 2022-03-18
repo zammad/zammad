@@ -9,6 +9,6 @@
 </form>
 <div class="controls-label">
 <% for mention in @mentions: %>
-  <a href="#user/profile/<%= mention.user_id %>"<% if !mention.access: %> title="<%- @T('User has no access and will not recieve notifications.') %>"<% end %>><%- mention.avatar %></a>
+  <a href="#user/profile/<%= mention.user_id %>"<% if !mention.access: %> title="<%- @T('This user has no access and will not receive notifications.') %>"<% end %>><%- mention.avatar %></a>
 <% end %>
 </div>

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 require 'system/examples/pagination_examples'
@@ -14,7 +14,7 @@ RSpec.describe 'Manage > Organizations', type: :system do
         it 'creates record', db_strategy: :reset do
 
           # required to edit attribute in admin interface
-          screens = { edit:  { 'admin.organization': { shown: true, required: false } } }
+          screens = { create: { 'admin.organization': { shown: true, required: false } } }
 
           attribute = create(:object_manager_attribute_text,
                              object_name:             'Organization',
@@ -33,7 +33,7 @@ RSpec.describe 'Manage > Organizations', type: :system do
 
           modal_ready
 
-          name = "Organization #{rand(999_999)}"
+          name = "Organization #{SecureRandom.uuid}"
 
           within '.modal-dialog' do
             fill_in 'name', with: name

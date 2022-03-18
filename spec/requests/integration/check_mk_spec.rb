@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -311,7 +311,7 @@ RSpec.describe 'Integration Check MK', type: :request do
 
         expect(json_response).to be_a_kind_of(Hash)
         expect(json_response['result']).to eq('no open tickets found, ignore action')
-        expect(json_response['ticket_ids']).to eq(nil)
+        expect(json_response['ticket_ids']).to be_nil
 
         ticket.reload
         expect(ticket.state.name).to eq('new')
@@ -500,7 +500,7 @@ RSpec.describe 'Integration Check MK', type: :request do
 
         expect(json_response).to be_a_kind_of(Hash)
         expect(json_response['result']).to eq('no open tickets found, ignore action')
-        expect(json_response['ticket_ids']).to eq(nil)
+        expect(json_response['ticket_ids']).to be_nil
 
         ticket.reload
         expect(ticket.state.name).to eq('new')

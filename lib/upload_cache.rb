@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 # A wrapper class around Store that handles temporary attachment uploads
 # and provides an interface for those.
@@ -19,7 +19,7 @@ class UploadCache
 
   # Adds a Store item with the given attributes for the form_id.
   #
-  # @see Store#add
+  # @see Store#create!
   #
   # @example
   #   cache = UploadCache.new(form_id)
@@ -33,7 +33,7 @@ class UploadCache
   #
   # @return [Store] the created Store item
   def add(args)
-    Store.add(
+    Store.create!(
       args.merge(
         object: store_object,
         o_id:   id,

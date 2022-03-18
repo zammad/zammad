@@ -4,29 +4,29 @@ class App.Ticket extends App.Model
   @url: @apiPath + '/tickets'
   @configure_attributes = [
       { name: 'number',                   display: '#',            tag: 'input',    type: 'text', limit: 100, null: true, readonly: 1, width: '68px' },
-      { name: 'title',                    display: 'Title',        tag: 'input',    type: 'text', limit: 100, null: false },
-      { name: 'customer_id',              display: 'Customer',     tag: 'input',    type: 'text', limit: 100, null: false, autocapitalize: false, relation: 'User' },
-      { name: 'organization_id',          display: 'Organization', tag: 'select',   relation: 'Organization', readonly: 1 },
-      { name: 'group_id',                 display: 'Group',        tag: 'select',   multiple: false, limit: 100, null: false, relation: 'Group', width: '10%', edit: true },
-      { name: 'owner_id',                 display: 'Owner',        tag: 'select',   multiple: false, limit: 100, null: true, relation: 'User', width: '12%', edit: true },
-      { name: 'state_id',                 display: 'State',        tag: 'select',   multiple: false, null: false, relation: 'TicketState', default: 'new', width: '12%', edit: true, customer: true },
-      { name: 'pending_time',             display: 'Pending till', tag: 'datetime', null: true, width: '130px' },
-      { name: 'priority_id',              display: 'Priority',     tag: 'select',   multiple: false, null: false, relation: 'TicketPriority', default: '2 normal', width: '54px', edit: true, customer: true },
-      { name: 'article_count',            display: 'Article#',     readonly: 1, width: '12%' },
-      { name: 'time_unit',                display: 'Accounted Time',          readonly: 1, width: '12%' },
-      { name: 'escalation_at',            display: 'Escalation at',           tag: 'datetime', null: true, readonly: 1, width: '110px', class: 'escalation' },
-      { name: 'first_response_escalation_at', display: 'Escalation at (First Response Time)', tag: 'datetime', null: true, readonly: 1, width: '110px', class: 'escalation' },
-      { name: 'update_escalation_at', display: 'Escalation at (Update Time)', tag: 'datetime', null: true, readonly: 1, width: '110px', class: 'escalation' },
-      { name: 'close_escalation_at', display: 'Escalation at (Close Time)', tag: 'datetime', null: true, readonly: 1, width: '110px', class: 'escalation' },
-      { name: 'last_contact_at',          display: 'Last contact',            tag: 'datetime', null: true, readonly: 1, width: '110px' },
-      { name: 'last_contact_agent_at',    display: 'Last contact (agent)',    tag: 'datetime', null: true, readonly: 1, width: '110px' },
-      { name: 'last_contact_customer_at', display: 'Last contact (customer)', tag: 'datetime', null: true, readonly: 1, width: '110px' },
-      { name: 'first_response_at',        display: 'First response',          tag: 'datetime', null: true, readonly: 1, width: '110px' },
-      { name: 'close_at',                 display: 'Closing time',              tag: 'datetime', null: true, readonly: 1, width: '110px' },
-      { name: 'created_by_id',            display: 'Created by',   relation: 'User', readonly: 1 },
-      { name: 'created_at',               display: 'Created at',   tag: 'datetime', width: '110px', align: 'right', readonly: 1 },
-      { name: 'updated_by_id',            display: 'Updated by',   relation: 'User', readonly: 1 },
-      { name: 'updated_at',               display: 'Updated at',   tag: 'datetime', width: '110px', align: 'right', readonly: 1 },
+      { name: 'title',                    display: __('Title'),        tag: 'input',    type: 'text', limit: 100, null: false },
+      { name: 'customer_id',              display: __('Customer'),     tag: 'input',    type: 'text', limit: 100, null: false, autocapitalize: false, relation: 'User' },
+      { name: 'organization_id',          display: __('Organization'), tag: 'select',   relation: 'Organization', readonly: 1 },
+      { name: 'group_id',                 display: __('Group'),        tag: 'select',   multiple: false, limit: 100, null: false, relation: 'Group', width: '10%', edit: true },
+      { name: 'owner_id',                 display: __('Owner'),        tag: 'select',   multiple: false, limit: 100, null: true, relation: 'User', width: '12%', edit: true },
+      { name: 'state_id',                 display: __('State'),        tag: 'select',   multiple: false, null: false, relation: 'TicketState', default: 'new', width: '12%', edit: true, customer: true },
+      { name: 'pending_time',             display: __('Pending till'), tag: 'datetime', null: true, width: '130px' },
+      { name: 'priority_id',              display: __('Priority'),     tag: 'select',   multiple: false, null: false, relation: 'TicketPriority', width: '54px', edit: true, customer: true },
+      { name: 'article_count',            display: __('Article#'),     readonly: 1, width: '12%' },
+      { name: 'time_unit',                display: __('Accounted Time'),          readonly: 1, width: '12%' },
+      { name: 'escalation_at',            display: __('Escalation at'),           tag: 'datetime', null: true, readonly: 1, width: '110px', class: 'escalation' },
+      { name: 'first_response_escalation_at', display: __('Escalation at (First Response Time)'), tag: 'datetime', null: true, readonly: 1, width: '110px', class: 'escalation' },
+      { name: 'update_escalation_at', display: __('Escalation at (Update Time)'), tag: 'datetime', null: true, readonly: 1, width: '110px', class: 'escalation' },
+      { name: 'close_escalation_at', display: __('Escalation at (Close Time)'), tag: 'datetime', null: true, readonly: 1, width: '110px', class: 'escalation' },
+      { name: 'last_contact_at',          display: __('Last contact'),            tag: 'datetime', null: true, readonly: 1, width: '110px' },
+      { name: 'last_contact_agent_at',    display: __('Last contact (agent)'),    tag: 'datetime', null: true, readonly: 1, width: '110px' },
+      { name: 'last_contact_customer_at', display: __('Last contact (customer)'), tag: 'datetime', null: true, readonly: 1, width: '110px' },
+      { name: 'first_response_at',        display: __('First response'),          tag: 'datetime', null: true, readonly: 1, width: '110px' },
+      { name: 'close_at',                 display: __('Closing time'),              tag: 'datetime', null: true, readonly: 1, width: '110px' },
+      { name: 'created_by_id',            display: __('Created by'),   relation: 'User', readonly: 1 },
+      { name: 'created_at',               display: __('Created at'),   tag: 'datetime', width: '110px', align: 'right', readonly: 1 },
+      { name: 'updated_by_id',            display: __('Updated by'),   relation: 'User', readonly: 1 },
+      { name: 'updated_at',               display: __('Updated at'),   tag: 'datetime', width: '110px', align: 'right', readonly: 1 },
     ]
 
   uiUrl: ->
@@ -103,17 +103,23 @@ class App.Ticket extends App.Model
     return if !item
     return if !item.created_by
 
-    if item.type is 'create'
-      return App.i18n.translateContent('%s created Ticket |%s|', item.created_by.displayName(), item.title)
-    else if item.type is 'update'
-      return App.i18n.translateContent('%s updated Ticket |%s|', item.created_by.displayName(), item.title)
-    else if item.type is 'reminder_reached'
-      return App.i18n.translateContent('Pending reminder reached for Ticket |%s|', item.title)
-    else if item.type is 'escalation'
-      return App.i18n.translateContent('Ticket |%s| is escalated!', item.title)
-    else if item.type is 'escalation_warning'
-      return App.i18n.translateContent('Ticket |%s| will escalate soon!', item.title)
-    return "Unknow action for (#{@objectDisplayName()}/#{item.type}), extend activityMessage() of model."
+    switch item.type
+      when 'create'
+        App.i18n.translateContent('%s created ticket |%s|', item.created_by.displayName(), item.title)
+      when 'update'
+        App.i18n.translateContent('%s updated ticket |%s|', item.created_by.displayName(), item.title)
+      when 'reminder_reached'
+        App.i18n.translateContent('Pending reminder reached for ticket |%s|', item.title)
+      when 'escalation'
+        App.i18n.translateContent('Ticket |%s| has escalated!', item.title)
+      when 'escalation_warning'
+        App.i18n.translateContent('Ticket |%s| will escalate soon!', item.title)
+      when 'update.merged_into'
+        App.i18n.translateContent('Ticket |%s| was merged into another ticket', item.title)
+      when 'update.received_merge'
+        App.i18n.translateContent('Another ticket was merged into ticket |%s|', item.title)
+      else
+        "Unknow action for (#{@objectDisplayName()}/#{item.type}), extend activityMessage() of model."
 
   # apply macro
   @macro: (params) ->
@@ -368,3 +374,11 @@ class App.Ticket extends App.Model
     return false if !user.permission('ticket.agent')
     return true if @isAccessibleByOwner(user)
     return @isAccessibleByGroup(user, permission)
+
+  attributes: ->
+    attrs = super
+
+    if @shared_draft_id
+      attrs.shared_draft_id = @shared_draft_id
+
+    attrs

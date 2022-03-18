@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -131,7 +131,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['subject']).to be_nil
       expect(json_response['body']).to eq('some body')
-      expect(json_response['internal']).to eq(false)
+      expect(json_response['internal']).to be(false)
       expect(json_response['content_type']).to eq('text/plain')
       expect(json_response['updated_by_id']).to eq(agent.id)
       expect(json_response['created_by_id']).to eq(agent.id)
@@ -152,7 +152,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['subject']).to be_nil
       expect(json_response['body']).not_to eq('some body 2')
-      expect(json_response['internal']).to eq(true)
+      expect(json_response['internal']).to be(true)
       expect(json_response['content_type']).to eq('text/plain')
       expect(json_response['updated_by_id']).to eq(agent.id)
       expect(json_response['created_by_id']).to eq(agent.id)
@@ -214,7 +214,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
       ticket = Ticket.find(json_response['ticket_id'])
       expect(ticket.articles.count).to eq(3)
       expect(ticket.articles[2].sender.name).to eq('Customer')
-      expect(ticket.articles[2].internal).to eq(false)
+      expect(ticket.articles[2].internal).to be(false)
       expect(ticket.articles[0].attachments.count).to eq(0)
       expect(ticket.articles[1].attachments.count).to eq(0)
       expect(ticket.articles[2].attachments.count).to eq(0)
@@ -239,7 +239,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
       ticket = Ticket.find(json_response['ticket_id'])
       expect(ticket.articles.count).to eq(4)
       expect(ticket.articles[3].sender.name).to eq('Customer')
-      expect(ticket.articles[3].internal).to eq(false)
+      expect(ticket.articles[3].internal).to be(false)
       expect(ticket.articles[0].attachments.count).to eq(0)
       expect(ticket.articles[1].attachments.count).to eq(0)
       expect(ticket.articles[2].attachments.count).to eq(0)
@@ -332,70 +332,60 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
         body:         '<b>test</b> <img src="cid:15.274327094.140938@ZAMMAD.example.com"/> test <img src="cid:15.274327094.140938.3@ZAMMAD.example.com"/>',
         content_type: 'text/html',
       )
-      Store.add(
-        object:        'Ticket::Article',
-        o_id:          article.id,
-        data:          'content_file1_normally_should_be_an_image',
-        filename:      'some_file1.jpg',
-        preferences:   {
-          'Content-Type'        => 'image/jpeg',
-          'Mime-Type'           => 'image/jpeg',
-          'Content-ID'          => '15.274327094.140938@zammad.example.com',
-          'Content-Disposition' => 'inline',
-        },
-        created_by_id: 1,
-      )
-      Store.add(
-        object:        'Ticket::Article',
-        o_id:          article.id,
-        data:          'content_file2_normally_should_be_an_image',
-        filename:      'some_file2.jpg',
-        preferences:   {
-          'Content-Type'        => 'image/jpeg',
-          'Mime-Type'           => 'image/jpeg',
-          'Content-ID'          => '15.274327094.140938.2@zammad.example.com',
-          'Content-Disposition' => 'inline',
-        },
-        created_by_id: 1,
-      )
-      Store.add(
-        object:        'Ticket::Article',
-        o_id:          article.id,
-        data:          'content_file3_normally_should_be_an_image',
-        filename:      'some_file3.jpg',
-        preferences:   {
-          'Content-Type' => 'image/jpeg',
-          'Mime-Type'    => 'image/jpeg',
-          'Content-ID'   => '15.274327094.140938.3@zammad.example.com',
-        },
-        created_by_id: 1,
-      )
-      Store.add(
-        object:        'Ticket::Article',
-        o_id:          article.id,
-        data:          'content_file4_normally_should_be_an_image',
-        filename:      'some_file4.jpg',
-        preferences:   {
-          'Content-Type' => 'image/jpeg',
-          'Mime-Type'    => 'image/jpeg',
-          'Content-ID'   => '15.274327094.140938.4@zammad.example.com',
-        },
-        created_by_id: 1,
-      )
-      Store.add(
-        object:        'Ticket::Article',
-        o_id:          article.id,
-        data:          'content_file1_normally_should_be_an_pdf',
-        filename:      'Rechnung_RE-2018-200.pdf',
-        preferences:   {
-          'Content-Type'        => 'application/octet-stream; name="Rechnung_RE-2018-200.pdf"',
-          'Mime-Type'           => 'application/octet-stream',
-          'Content-ID'          => '8AB0BEC88984EE4EBEF643C79C8E0346@zammad.example.com',
-          'Content-Description' => 'Rechnung_RE-2018-200.pdf',
-          'Content-Disposition' => 'attachment',
-        },
-        created_by_id: 1,
-      )
+      create(:store,
+             object:      'Ticket::Article',
+             o_id:        article.id,
+             data:        'content_file1_normally_should_be_an_image',
+             filename:    'some_file1.jpg',
+             preferences: {
+               'Content-Type'        => 'image/jpeg',
+               'Mime-Type'           => 'image/jpeg',
+               'Content-ID'          => '15.274327094.140938@zammad.example.com',
+               'Content-Disposition' => 'inline',
+             })
+      create(:store,
+             object:      'Ticket::Article',
+             o_id:        article.id,
+             data:        'content_file2_normally_should_be_an_image',
+             filename:    'some_file2.jpg',
+             preferences: {
+               'Content-Type'        => 'image/jpeg',
+               'Mime-Type'           => 'image/jpeg',
+               'Content-ID'          => '15.274327094.140938.2@zammad.example.com',
+               'Content-Disposition' => 'inline',
+             })
+      create(:store,
+             object:      'Ticket::Article',
+             o_id:        article.id,
+             data:        'content_file3_normally_should_be_an_image',
+             filename:    'some_file3.jpg',
+             preferences: {
+               'Content-Type' => 'image/jpeg',
+               'Mime-Type'    => 'image/jpeg',
+               'Content-ID'   => '15.274327094.140938.3@zammad.example.com',
+             })
+      create(:store,
+             object:      'Ticket::Article',
+             o_id:        article.id,
+             data:        'content_file4_normally_should_be_an_image',
+             filename:    'some_file4.jpg',
+             preferences: {
+               'Content-Type' => 'image/jpeg',
+               'Mime-Type'    => 'image/jpeg',
+               'Content-ID'   => '15.274327094.140938.4@zammad.example.com',
+             })
+      create(:store,
+             object:      'Ticket::Article',
+             o_id:        article.id,
+             data:        'content_file1_normally_should_be_an_pdf',
+             filename:    'Rechnung_RE-2018-200.pdf',
+             preferences: {
+               'Content-Type'        => 'application/octet-stream; name="Rechnung_RE-2018-200.pdf"',
+               'Mime-Type'           => 'application/octet-stream',
+               'Content-ID'          => '8AB0BEC88984EE4EBEF643C79C8E0346@zammad.example.com',
+               'Content-Description' => 'Rechnung_RE-2018-200.pdf',
+               'Content-Disposition' => 'attachment',
+             })
 
       params = {
         form_id: 'new_form_id123',
@@ -431,46 +421,40 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
         updated_by_id: 1,
         created_by_id: 1,
       )
-      Store.add(
-        object:        'Ticket::Article',
-        o_id:          article.id,
-        data:          'content_file1_normally_should_be_an_image',
-        filename:      'some_file1.jpg',
-        preferences:   {
-          'Content-Type'        => 'image/jpeg',
-          'Mime-Type'           => 'image/jpeg',
-          'Content-ID'          => '15.274327094.140938@zammad.example.com',
-          'Content-Disposition' => 'inline',
-        },
-        created_by_id: 1,
-      )
-      Store.add(
-        object:        'Ticket::Article',
-        o_id:          article.id,
-        data:          'content_file1_normally_should_be_an_image',
-        filename:      'some_file2.jpg',
-        preferences:   {
-          'Content-Type'        => 'image/jpeg',
-          'Mime-Type'           => 'image/jpeg',
-          'Content-ID'          => '15.274327094.140938.2@zammad.example.com',
-          'Content-Disposition' => 'inline',
-        },
-        created_by_id: 1,
-      )
-      Store.add(
-        object:        'Ticket::Article',
-        o_id:          article.id,
-        data:          'content_file1_normally_should_be_an_pdf',
-        filename:      'Rechnung_RE-2018-200.pdf',
-        preferences:   {
-          'Content-Type'        => 'application/octet-stream; name="Rechnung_RE-2018-200.pdf"',
-          'Mime-Type'           => 'application/octet-stream',
-          'Content-ID'          => '8AB0BEC88984EE4EBEF643C79C8E0346@zammad.example.com',
-          'Content-Description' => 'Rechnung_RE-2018-200.pdf',
-          'Content-Disposition' => 'attachment',
-        },
-        created_by_id: 1,
-      )
+      create(:store,
+             object:      'Ticket::Article',
+             o_id:        article.id,
+             data:        'content_file1_normally_should_be_an_image',
+             filename:    'some_file1.jpg',
+             preferences: {
+               'Content-Type'        => 'image/jpeg',
+               'Mime-Type'           => 'image/jpeg',
+               'Content-ID'          => '15.274327094.140938@zammad.example.com',
+               'Content-Disposition' => 'inline',
+             })
+      create(:store,
+             object:      'Ticket::Article',
+             o_id:        article.id,
+             data:        'content_file1_normally_should_be_an_image',
+             filename:    'some_file2.jpg',
+             preferences: {
+               'Content-Type'        => 'image/jpeg',
+               'Mime-Type'           => 'image/jpeg',
+               'Content-ID'          => '15.274327094.140938.2@zammad.example.com',
+               'Content-Disposition' => 'inline',
+             })
+      create(:store,
+             object:      'Ticket::Article',
+             o_id:        article.id,
+             data:        'content_file1_normally_should_be_an_pdf',
+             filename:    'Rechnung_RE-2018-200.pdf',
+             preferences: {
+               'Content-Type'        => 'application/octet-stream; name="Rechnung_RE-2018-200.pdf"',
+               'Mime-Type'           => 'application/octet-stream',
+               'Content-ID'          => '8AB0BEC88984EE4EBEF643C79C8E0346@zammad.example.com',
+               'Content-Description' => 'Rechnung_RE-2018-200.pdf',
+               'Content-Disposition' => 'attachment',
+             })
 
       params = {
         form_id: 'new_form_id123',
@@ -530,25 +514,25 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
     let(:article_communication) do
       create(:ticket_article,
              sender_name: 'Agent', type_name: 'email', ticket: ticket,
-             updated_by_id: agent.id, created_by_id: agent.id )
+             updated_by_id: agent.id, created_by_id: agent.id)
     end
 
     let(:article_note_self) do
       create(:ticket_article,
              sender_name: 'Agent', internal: true, type_name: 'note', ticket: ticket,
-             updated_by_id: user.id, created_by_id: user.id )
+             updated_by_id: user.id, created_by_id: user.id)
     end
 
     let(:article_note_other) do
       create(:ticket_article,
              sender_name: 'Agent', internal: true, type_name: 'note', ticket: ticket,
-             updated_by_id: other_agent.id, created_by_id: other_agent.id )
+             updated_by_id: other_agent.id, created_by_id: other_agent.id)
     end
 
     let(:article_note_customer) do
       create(:ticket_article,
              sender_name: 'Customer', internal: false, type_name: 'note', ticket: ticket,
-             updated_by_id: customer.id, created_by_id: customer.id )
+             updated_by_id: customer.id, created_by_id: customer.id)
     end
 
     let(:article_note_communication_self) do
@@ -556,7 +540,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
 
       create(:ticket_article,
              sender_name: 'Agent', internal: true, type_name: 'note_communication', ticket: ticket,
-             updated_by_id: user.id, created_by_id: user.id )
+             updated_by_id: user.id, created_by_id: user.id)
     end
 
     let(:article_note_communication_other) do
@@ -564,7 +548,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
 
       create(:ticket_article,
              sender_name: 'Agent', internal: true, type_name: 'note_communication', ticket: ticket,
-             updated_by_id: other_agent.id, created_by_id: other_agent.id )
+             updated_by_id: other_agent.id, created_by_id: other_agent.id)
     end
 
     def delete_article_via_rest(article)

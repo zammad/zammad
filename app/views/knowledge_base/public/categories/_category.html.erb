@@ -2,8 +2,10 @@
   <%= link_to custom_path_if_needed help_category_path(category.translation, locale: params[:locale]), @knowledge_base do %>
     <span class="section-inner">
       <%= icon(category.category_icon, knowledge_base.iconset) %>
-      <span><%= category.translation.title %></span>
-      <%= visibility_note(category) %>
+      <span>
+        <span class="title"><%= category.translation.title %></span>
+        <%= visibility_note(category) %>
+      </span>
     </span>
   <% end %>
 </li>

@@ -1,48 +1,6 @@
-ValidUsersForTicketSelectionMethods =
-  validUsersForTicketSelection: ->
-    items = $('.content.active .table-overview .table').find('[name="bulk"]:checked')
-
-    # we want to display all users for which we can assign the tickets directly
-    # for this we need to get the groups of all selected tickets
-    # after we got those we need to check which users are available in all groups
-    # users that are not in all groups can't get the tickets assigned
-    ticket_ids       = _.map(items, (el) -> $(el).val() )
-    ticket_group_ids = _.map(App.Ticket.findAll(ticket_ids), (ticket) -> ticket.group_id)
-    users            = @usersInGroups(ticket_group_ids)
-
-    # get the list of possible groups for the current user
-    # from the TicketCreateCollection
-    # (filled for e.g. the TicketCreation or TicketZoom assignment)
-    # and order them by name
-    group_ids     = _.keys(@formMeta?.dependencies?.group_id)
-    groups        = App.Group.findAll(group_ids)
-    groups_sorted = _.sortBy(groups, (group) -> group.name)
-
-    # get the number of visible users per group
-    # from the TicketCreateCollection
-    # (filled for e.g. the TicketCreation or TicketZoom assignment)
-    for group in groups
-      group.valid_users_count = @formMeta?.dependencies?.group_id?[group.id]?.owner_id.length || 0
-
-    {
-      users: users
-      groups: groups_sorted
-    }
-
-  usersInGroups: (group_ids) ->
-    ids_by_group = _.chain(@formMeta?.dependencies?.group_id)
-      .pick(group_ids)
-      .values()
-      .map( (e) -> e.owner_id)
-      .value()
-
-    # Underscore's intersection doesn't work when chained
-    ids_in_all_groups = _.intersection(ids_by_group...)
-
-    users = App.User.findAll(ids_in_all_groups)
-    _.sortBy(users, (user) -> user.firstname)
-
 class App.TicketOverview extends App.Controller
+  @extend App.TicketMassUpdatable
+
   className: 'overviews'
   activeFocus: 'nav'
   mouse:
@@ -69,7 +27,7 @@ class App.TicketOverview extends App.Controller
     'mouseenter .js-batch-hover-target': 'highlightBatchEntry'
     'mouseleave .js-batch-hover-target': 'unhighlightBatchEntry'
 
-  @include ValidUsersForTicketSelectionMethods
+  @include App.ValidUsersForTicketSelectionMethods
 
   constructor: ->
     super
@@ -83,7 +41,7 @@ class App.TicketOverview extends App.Controller
     load = (data) =>
       App.Collection.loadAssets(data.assets)
       @formMeta = data.form_meta
-    @bindId = App.TicketCreateCollection.bind(load)
+    @bindId = App.TicketOverviewCollection.bind(load)
 
   startDragItem: (event) =>
     return if !@batchSupport
@@ -236,65 +194,35 @@ class App.TicketOverview extends App.Controller
         duration: 300
 
   performBatchAction: (items, action, id, groupId) ->
-    if action is 'macro'
-      @batchCount = items.length
-      @batchCountIndex = 0
-      macro = App.Macro.find(id)
-      for item in items
-        #console.log "perform action #{action} with id #{id} on ", $(item).val()
-        ticket = App.Ticket.find($(item).val())
-        article = {}
-        App.Ticket.macro(
-          macro: macro.perform
-          ticket: ticket
-          article: article
-        )
-        ticket.article = article
-        ticket.save(
-          done: (r) =>
-            @batchCountIndex++
+    ticket_ids = items.toArray().map (item) -> $(item).val()
 
-            # refresh view after all tickets are proceeded
-            if @batchCountIndex == @batchCount
-              App.Event.trigger('overview:fetch')
-        )
-      return
+    switch action
+      when 'macro'
+        path = 'macro'
+        data =
+          ticket_ids: ticket_ids
+          macro_id:   id
 
-    if action is 'user_assign'
-      @batchCount = items.length
-      @batchCountIndex = 0
-      for item in items
-        #console.log "perform action #{action} with id #{id} on ", $(item).val()
-        ticket = App.Ticket.find($(item).val())
-        ticket.owner_id = id
+      when 'user_assign'
+        path = 'update'
+
+        data =
+          ticket_ids: ticket_ids
+          attributes:
+            owner_id: id
+
         if !_.isEmpty(groupId)
-          ticket.group_id = groupId
-        ticket.save(
-          done: (r) =>
-            @batchCountIndex++
+          data.attributes.group_id = groupId
 
-            # refresh view after all tickets are proceeded
-            if @batchCountIndex == @batchCount
-              App.Event.trigger('overview:fetch')
-        )
-      return
+      when 'group_assign'
+        path = 'update'
 
-    if action is 'group_assign'
-      @batchCount = items.length
-      @batchCountIndex = 0
-      for item in items
-        #console.log "perform action #{action} with id #{id} on ", $(item).val()
-        ticket = App.Ticket.find($(item).val())
-        ticket.group_id = id
-        ticket.save(
-          done: (r) =>
-            @batchCountIndex++
+        data =
+          ticket_ids: ticket_ids
+          attributes:
+            group_id: id
 
-            # refresh view after all tickets are proceeded
-            if @batchCountIndex == @batchCount
-              App.Event.trigger('overview:fetch')
-        )
-      return
+    @ajax_mass(path, data)
 
   showBatchOverlay: ->
     @batchOverlay.addClass('is-visible')
@@ -717,6 +645,8 @@ class App.TicketOverview extends App.Controller
         @contentController.show()
       return
 
+    App.TicketOverviewCollection.fetch()
+
     # remember last view
     @viewLast = @view
 
@@ -751,7 +681,7 @@ class App.TicketOverview extends App.Controller
   release: =>
     @keyboardOff()
     super
-    App.TicketCreateCollection.unbindById(@bindId)
+    App.TicketOverviewCollection.unbindById(@bindId)
 
   keyboardOn: =>
     $(window).off 'keydown.overview_navigation'
@@ -776,7 +706,7 @@ class App.TicketOverview extends App.Controller
     else if e.keyCode is 32 # space
       e.preventDefault()
       if @activeFocus is 'overview'
-        @$('.table-overview table tbody tr.is-hover td.js-checkbox-field label input').first().click()
+        @$('.table-overview table tbody tr.is-hover td.js-checkbox-field label input').first().trigger('click')
     else if e.keyCode is 9 # tab
       e.preventDefault()
       if @activeFocus is 'nav'
@@ -796,18 +726,18 @@ class App.TicketOverview extends App.Controller
       items = @$('.table-overview table tbody')
       current = items.find('tr.is-hover')
 
-      if !current.size()
+      if !current.length
         items.find('tr').first().addClass('is-hover')
         return
 
       if position is 1
         next = current.next('tr')
-        if next.size()
+        if next.length
           current.removeClass('is-hover')
           next.addClass('is-hover')
       else
         prev = current.prev('tr')
-        if prev.size()
+        if prev.length
           current.removeClass('is-hover')
           prev.addClass('is-hover')
 
@@ -821,7 +751,7 @@ class App.TicketOverview extends App.Controller
       items = @$('.sidebar')
       current = items.find('li.active')
 
-      if !current.size()
+      if !current.length
         location = items.find('li a').first().attr('href')
         if location
           @navigate location
@@ -829,11 +759,11 @@ class App.TicketOverview extends App.Controller
 
       if position is 1
         next = current.next('li')
-        if next.size()
+        if next.length
           @navigate next.find('a').attr('href')
       else
         prev = current.prev('li')
-        if prev.size()
+        if prev.length
           @navigate prev.find('a').attr('href')
 
       if next
@@ -901,7 +831,7 @@ class Navbar extends App.Controller
 
     # if all tabs are visible
     # remove dropdown and dropdown button
-    if @dropdownItem.not('.hide').size() is 0
+    if @dropdownItem.not('.hide').length is 0
       @dropdown.remove()
       @dropdownToggle.remove()
 
@@ -922,7 +852,7 @@ class Navbar extends App.Controller
       content.find('.js-error').removeClass('hide')
       @renderScreenError(
         el: @el.closest('.content').find('.js-error')
-        detail:     'Currently no overview is assigned to your roles. Please contact your administrator.'
+        detail:     __('Currently no overview is assigned to your roles. Please contact your administrator.')
         objectName: 'Ticket'
       )
       return
@@ -1057,9 +987,7 @@ class Table extends App.Controller
       ticketListShow.push App.Ticket.find(ticket.id)
 
     # if customer and no ticket exists, show the following message only
-    if !ticketListShow[0] && !@permissionCheck('ticket.agent')
-      @html App.view('customer_not_ticket_exists')()
-      return
+    return if @renderCustomerNotTicketExistIfNeeded(ticketListShow)
 
     # set page title
     @overview = App.Overview.find(overview.id)
@@ -1103,7 +1031,7 @@ class Table extends App.Controller
         checkbox: checkbox
       )
       table = $(table)
-      table.delegate('[name="bulk_all"]', 'change', (e) ->
+      table.on('change', '[name="bulk_all"]', (e) ->
         if $(e.currentTarget).prop('checked')
           $(e.currentTarget).closest('table').find('[name="bulk"]').prop('checked', true)
         else
@@ -1179,6 +1107,8 @@ class Table extends App.Controller
           items.slice(startId+1, endId).find('[name="bulk"]').prop('checked', (-> !@checked))
 
         @lastChecked = e.currentTarget
+
+        @updateTicketIdsBulkForm()
 
       callbackIconHeader = (headers) ->
         attribute =
@@ -1282,18 +1212,19 @@ class Table extends App.Controller
 
     @renderPopovers()
 
-    @bulkForm = new BulkForm(
+    @bulkForm = new App.TicketBulkForm(
       holder: @el
       view: @view
     )
 
     # start bulk action observ
     @el.append(@bulkForm.el)
-    if @$('.table-overview').find('input[name="bulk"]:checked').length isnt 0
+    localElement = @$('.table-overview')
+    if localElement.find('input[name="bulk"]:checked').length isnt 0
       @bulkForm.show()
 
     # show/hide bulk action
-    @$('.table-overview').delegate('input[name="bulk"], input[name="bulk_all"]', 'change', (e) =>
+    localElement.on('change', 'input[name="bulk"], input[name="bulk_all"]', (e) =>
       if @shouldShowBulkForm()
         @bulkForm.show()
       else
@@ -1302,10 +1233,10 @@ class Table extends App.Controller
     )
 
     # deselect bulk_all if one item is uncheck observ
-    @$('.table-overview').delegate('[name="bulk"]', 'change', (e) =>
-      bulkAll = @$('.table-overview').find('[name="bulk_all"]')
-      checkedCount = @$('.table-overview').find('input[name="bulk"]:checked').length
-      checkboxCount = @$('.table-overview').find('input[name="bulk"]').length
+    localElement.on('change', '[name="bulk"]', (e) ->
+      bulkAll = localElement.find('[name="bulk_all"]')
+      checkedCount = localElement.find('input[name="bulk"]:checked').length
+      checkboxCount = localElement.find('input[name="bulk"]').length
       if checkedCount is 0
         bulkAll.prop('indeterminate', false)
         bulkAll.prop('checked', false)
@@ -1317,6 +1248,28 @@ class Table extends App.Controller
           bulkAll.prop('checked', false)
           bulkAll.prop('indeterminate', true)
     )
+
+  updateTicketIdsBulkForm: =>
+    items      = $('.content.active .table-overview .table').find('[name="bulk"]:checked')
+    ticket_ids = _.map(items, (el) -> $(el).val() )
+    @bulkForm.el.find('input[name=ticket_ids]').val(ticket_ids.join(',')).trigger('change')
+
+  renderCustomerNotTicketExistIfNeeded: (ticketListShow) =>
+    user = App.User.current()
+    @stopListening user, 'refresh'
+
+    return if ticketListShow[0] || @permissionCheck('ticket.agent')
+
+    tickets_count = user.lifetimeCustomerTicketsCount()
+    @html App.view('customer_not_ticket_exists')(has_any_tickets: tickets_count > 0, is_allowed_to_create_ticket: @Config.get('customer_ticket_create'))
+
+    if tickets_count == 0
+      @listenTo user, 'refresh', =>
+        return if tickets_count == user.lifetimeCustomerTicketsCount()
+
+        @renderCustomerNotTicketExistIfNeeded([])
+
+    return true
 
   shouldShowBulkForm: =>
     items = @$('table').find('input[name="bulk"]:checked')
@@ -1347,282 +1300,6 @@ class Table extends App.Controller
       onCloseCallback: @keyboardOn
     )
 
-class BulkForm extends App.Controller
-  className: 'bulkAction hide'
-
-  events:
-    'submit form':       'submit'
-    'click .js-submit':  'submit'
-    'click .js-confirm': 'confirm'
-    'click .js-cancel':  'reset'
-
-  @include ValidUsersForTicketSelectionMethods
-
-  constructor: ->
-    super
-
-    @configure_attributes_ticket = []
-    used_attributes = ['state_id', 'pending_time', 'priority_id', 'group_id', 'owner_id']
-    attributesClean = App.Ticket.attributesGet('edit')
-    for attributeName, attribute of attributesClean
-      if _.contains(used_attributes, attributeName)
-        localAttribute = clone(attribute)
-        localAttribute.nulloption = true
-        localAttribute.default = ''
-        localAttribute.null = true
-        @configure_attributes_ticket.push localAttribute
-
-    time_attribute = _.findWhere(@configure_attributes_ticket, {'name': 'pending_time'})
-    if time_attribute
-      time_attribute.orientation = 'top'
-      time_attribute.disableScroll = true
-
-    @holder = @options.holder
-    @visible = false
-
-    load = (data) =>
-      App.Collection.loadAssets(data.assets)
-      @formMeta = data.form_meta
-      @render()
-    @bindId = App.TicketCreateCollection.bind(load)
-
-  release: =>
-    App.TicketCreateCollection.unbind(@bindId)
-
-  render: ->
-    @el.css('right', App.Utils.getScrollBarWidth())
-
-    @html(App.view('agent_ticket_view/bulk')())
-
-    handlers = @Config.get('TicketZoomFormHandler')
-
-    for attribute in @configure_attributes_ticket
-      continue if attribute.name != 'owner_id'
-      {users, groups} = @validUsersForTicketSelection()
-      options = _.map(users, (user) -> {value: user.id, name: user.displayName()} )
-      attribute.possible_groups_owners = options
-
-    new App.ControllerForm(
-      el: @$('#form-ticket-bulk')
-      model:
-        configure_attributes: @configure_attributes_ticket
-        className:            'create'
-        labelClass:           'input-group-addon'
-      handlersConfig: handlers
-      params:     {}
-      filter:     @formMeta.filter
-      formMeta:   @formMeta
-      noFieldset: true
-    )
-
-    new App.ControllerForm(
-      el: @$('#form-ticket-bulk-comment')
-      model:
-        configure_attributes: [{ name: 'body', display: 'Comment', tag: 'textarea', rows: 4, null: true, upload: false, item_class: 'flex' }]
-        className:            'create'
-        labelClass:           'input-group-addon'
-      noFieldset: true
-    )
-
-    @confirm_attributes = [
-      { name: 'type_id',  display: 'Type',       tag: 'select', multiple: false, null: true, relation: 'TicketArticleType', filter: @articleTypeFilter, default: '9', translate: true, class: 'medium' }
-      { name: 'internal', display: 'Visibility', tag: 'select', null: true, options: { true: 'internal', false: 'public' }, class: 'medium', item_class: '', default: false }
-    ]
-
-    new App.ControllerForm(
-      el: @$('#form-ticket-bulk-typeVisibility')
-      model:
-        configure_attributes: @confirm_attributes
-        className:            'create'
-        labelClass:           'input-group-addon'
-      noFieldset: true
-    )
-
-  articleTypeFilter: (items) ->
-    for item in items
-      if item.name is 'note'
-        return [item]
-    items
-
-  confirm: =>
-    @$('.js-action-step').addClass('hide')
-    @$('.js-confirm-step').removeClass('hide')
-
-    @makeSpaceForTableRows()
-
-    # need a delay because of the click event
-    setTimeout ( => @$('.textarea.form-group textarea').focus() ), 0
-
-  reset: =>
-    @cancel()
-
-    if @visible
-      @makeSpaceForTableRows()
-
-  cancel: =>
-    @$('.js-action-step').removeClass('hide')
-    @$('.js-confirm-step').addClass('hide')
-
-  show: =>
-    @el.removeClass('hide')
-    @visible = true
-    @makeSpaceForTableRows()
-
-  hide: =>
-    @el.addClass('hide')
-    @visible = false
-    @removeSpaceForTableRows()
-
-  makeSpaceForTableRows: =>
-    height = @el.height()
-    scrollParent = @holder.scrollParent()
-    isScrolledToBottom = scrollParent.prop('scrollHeight') is scrollParent.scrollTop() + scrollParent.outerHeight()
-
-    @holder.css('margin-bottom', height)
-
-    if isScrolledToBottom
-      scrollParent.scrollTop scrollParent.prop('scrollHeight') - scrollParent.outerHeight()
-
-  removeSpaceForTableRows: =>
-    @holder.css('margin-bottom', 0)
-
-  ticketMergeParams: (params) ->
-    ticketUpdate = {}
-    for item of params
-      if params[item] != '' && params[item] != null
-        ticketUpdate[item] = params[item]
-
-    # in case if a group is selected, set also the selected owner (maybe nobody)
-    if params.group_id != '' && params.group_id != null
-      ticketUpdate.owner_id = params.owner_id
-    ticketUpdate
-
-  submit: (e) =>
-    e.preventDefault()
-
-    @bulkCount = @holder.find('.table-overview').find('[name="bulk"]:checked').length
-
-    if @bulkCount is 0
-      App.Event.trigger('notify', {
-        type: 'error'
-        msg: App.i18n.translateContent('At least one object must be selected.')
-      })
-      return
-
-    ticket_ids = []
-    @holder.find('.table-overview').find('[name="bulk"]:checked').each( (index, element) ->
-      ticket_id = $(element).val()
-      ticket_ids.push ticket_id
-    )
-
-    params = @formParam(e.target)
-
-    for ticket_id in ticket_ids
-      ticket = App.Ticket.find(ticket_id)
-
-      ticketUpdate = @ticketMergeParams(params)
-      ticket.load(ticketUpdate)
-
-      # if title is empty - ticket can't processed, set ?
-      if _.isEmpty(ticket.title)
-        ticket.title = '-'
-
-      # validate ticket
-      errors = ticket.validate(
-        screen: 'edit'
-      )
-      if errors
-        @log 'error', 'update', errors
-        errorString = ''
-        for key, error of errors
-          errorString += "#{key}: #{error}"
-
-        @formValidate(
-          form:   e.target
-          errors: errors
-          screen: 'edit'
-        )
-
-        App.Event.trigger('notify', {
-          type: 'error'
-          msg: App.i18n.translateContent('Bulk action stopped %s!', errorString)
-        })
-        @cancel()
-        return
-
-    @bulkCountIndex = 0
-    for ticket_id in ticket_ids
-      ticket = App.Ticket.find(ticket_id)
-
-      # update ticket
-      ticketUpdate = @ticketMergeParams(params)
-
-      # validate article
-      if params['body']
-        article = new App.TicketArticle
-        params.from      = @Session.get().displayName()
-        params.ticket_id = ticket.id
-        params.form_id   = @form_id
-
-        sender           = App.TicketArticleSender.findByAttribute('name', 'Agent')
-        type             = App.TicketArticleType.find(params['type_id'])
-        params.sender_id = sender.id
-
-        if !params['internal']
-          params['internal'] = false
-
-        @log 'notice', 'update article', params, sender
-        article.load(params)
-        errors = article.validate()
-        if errors
-          @log 'error', 'update article', errors
-          @formEnable(e)
-          return
-
-      ticket.load(ticketUpdate)
-
-      # if title is empty - ticket can't processed, set ?
-      if _.isEmpty(ticket.title)
-        ticket.title = '-'
-
-      @saveTicketArticle(ticket, article)
-
-    @holder.find('.table-overview').find('[name="bulk"]:checked').prop('checked', false)
-    App.Event.trigger('notify', {
-      type: 'success'
-      msg: App.i18n.translateContent('Bulk action executed!')
-    })
-
-  saveTicketArticle: (ticket, article) =>
-    ticket.save(
-      done: (r) =>
-        @bulkCountIndex++
-
-        # reset form after save
-        if article
-          article.save(
-            fail: (r) =>
-              @log 'error', 'update article', r
-          )
-
-        # refresh view after all tickets are proceeded
-        if @bulkCountIndex == @bulkCount
-          @render()
-          @hide()
-
-          # fetch overview data again
-          App.Event.trigger('overview:fetch')
-
-      fail: (r) =>
-        @bulkCountIndex++
-        @log 'error', 'update ticket', r
-        App.Event.trigger 'notify', {
-          type: 'error'
-          msg: App.i18n.translateContent('Can\'t update Ticket %s!', ticket.number)
-        }
-    )
-
-
 class App.OverviewSettings extends App.ControllerModal
   buttonClose: true
   buttonCancel: true
@@ -1637,7 +1314,7 @@ class App.OverviewSettings extends App.ControllerModal
     if @view_mode is 'd'
       @configure_attributes_article.push({
         name:     'view::per_page'
-        display:  'Items per page'
+        display:  __('Items per page')
         tag:      'select'
         multiple: false
         null:     false
@@ -1653,7 +1330,7 @@ class App.OverviewSettings extends App.ControllerModal
 
     @configure_attributes_article.push({
       name:      "view::#{@view_mode}"
-      display:   'Attributes'
+      display:   __('Attributes')
       tag:       'checkboxTicketAttributes'
       default:   @overview.view[@view_mode]
       null:      false
@@ -1662,7 +1339,7 @@ class App.OverviewSettings extends App.ControllerModal
     },
     {
       name:      'order::by'
-      display:   'Order'
+      display:   __('Order')
       tag:       'selectTicketAttributes'
       default:   @overview.order.by
       null:      false
@@ -1671,7 +1348,7 @@ class App.OverviewSettings extends App.ControllerModal
     },
     {
       name:      'order::direction'
-      display:   'Order by Direction'
+      display:   __('Order by Direction')
       tag:       'select'
       default:   @overview.order.direction
       null:      false
@@ -1682,7 +1359,7 @@ class App.OverviewSettings extends App.ControllerModal
     },
     {
       name:       'group_by'
-      display:    'Group by'
+      display:    __('Group by')
       tag:        'select'
       default:    @overview.group_by
       null:       true
@@ -1692,7 +1369,7 @@ class App.OverviewSettings extends App.ControllerModal
     },
     {
       name:    'group_direction'
-      display: 'Group by Direction'
+      display: __('Group by Direction')
       tag:     'select'
       default: @overview.group_direction
       null:    false
@@ -1770,4 +1447,4 @@ class TicketOverviewRouter extends App.ControllerPermanent
 App.Config.set('ticket/view', TicketOverviewRouter, 'Routes')
 App.Config.set('ticket/view/:view', TicketOverviewRouter, 'Routes')
 App.Config.set('TicketOverview', { controller: 'TicketOverview', permission: ['ticket.agent', 'ticket.customer'] }, 'permanentTask')
-App.Config.set('TicketOverview', { prio: 1000, parent: '', name: 'Overviews', target: '#ticket/view', key: 'TicketOverview', permission: ['ticket.agent', 'ticket.customer'], class: 'overviews' }, 'NavBar')
+App.Config.set('TicketOverview', { prio: 1000, parent: '', name: __('Overviews'), target: '#ticket/view', key: 'TicketOverview', permission: ['ticket.agent', 'ticket.customer'], class: 'overviews' }, 'NavBar')

@@ -1,19 +1,19 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 # content of this tags will also be removed
 Rails.application.config.html_sanitizer_tags_remove_content = %w[
   style
   comment
   meta
+  script
 ]
 
 # content of this tags will will be inserted html quoted
 Rails.application.config.html_sanitizer_tags_quote_content = %w[
-  script
 ]
 
 # only this tags are allowed
-Rails.application.config.html_sanitizer_tags_whitelist = %w[
+Rails.application.config.html_sanitizer_tags_allowlist = %w[
   a abbr acronym address area article aside audio
   b bdi bdo big blockquote br
   canvas caption center cite code col colgroup command
@@ -26,7 +26,7 @@ Rails.application.config.html_sanitizer_tags_whitelist = %w[
 ]
 
 # attributes allowed for tags
-Rails.application.config.html_sanitizer_attributes_whitelist = {
+Rails.application.config.html_sanitizer_attributes_allowlist = {
   :all         => %w[class dir lang title translate data-signature data-signature-id],
   'a'          => %w[href hreflang name rel data-target-id data-target-type data-mention-user-id],
   'abbr'       => %w[title],
@@ -52,7 +52,7 @@ Rails.application.config.html_sanitizer_attributes_whitelist = {
 }
 
 # only this css properties are allowed
-Rails.application.config.html_sanitizer_css_properties_whitelist = {
+Rails.application.config.html_sanitizer_css_properties_allowlist = {
   'img'   => %w[
     width height
     max-width min-width
@@ -110,7 +110,7 @@ Rails.application.config.html_sanitizer_css_properties_whitelist = {
   ],
 }
 
-Rails.application.config.html_sanitizer_css_values_backlist = {
+Rails.application.config.html_sanitizer_css_values_blocklist = {
   'div'   => [
     'color:white',
     'color:black',

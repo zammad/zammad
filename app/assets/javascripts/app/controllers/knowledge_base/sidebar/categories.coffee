@@ -1,7 +1,7 @@
 class App.KnowledgeBaseSidebarCategories extends App.KnowledgeBaseSidebarGenericList
   templateName: 'categories'
-  title:        'Categories'
-  emptyNote:    'No categories'
+  title:        __('Categories')
+  emptyNote:    __('No categories')
 
   constructor: ->
     super

@@ -65,7 +65,6 @@ class App.KnowledgeBaseForm extends App.Controller
   submit: (e) ->
     @preventDefaultAndStopPropagation(e)
 
-    #debuggerj
     formController = @formControllers.filter((elem) -> (elem.form[0] is e.currentTarget) or (e.currentTarget.contains(elem.form[0])))[0]
     params         = @formParam(formController.form)
 
@@ -85,7 +84,7 @@ class App.KnowledgeBaseForm extends App.Controller
         @scrollTop()
       error: (xhr) =>
         @formEnable(@el)
-        formController.showAlert(xhr.responseJSON?.error || 'Unable to  save changes')
+        formController.showAlert(xhr.responseJSON?.error || __('Changes could not be saved.'))
         @scrollTop()
     )
 
@@ -98,7 +97,7 @@ class App.KnowledgeBaseCustomAddressForm extends App.KnowledgeBaseForm
 
   additionalButtons: [
     className: 'js-snippets'
-    text: 'Web Server Configuration'
+    text: __('Web Server Configuration')
   ]
 
   formEnable: (el) ->

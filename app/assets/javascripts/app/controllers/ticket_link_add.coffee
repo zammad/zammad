@@ -2,7 +2,7 @@ class App.TicketLinkAdd extends App.ControllerModal
   buttonClose: true
   buttonCancel: true
   buttonSubmit: true
-  head: 'Link'
+  head: __('Link')
   shown: false
 
   constructor: ->
@@ -45,11 +45,11 @@ class App.TicketLinkAdd extends App.ControllerModal
     if @ticketIdsRecentViewed
       @buildContentTable(content, @ticketIdsRecentViewed, 'ticket-merge-recent-tickets')
 
-    content.delegate('[name="ticket_number"]', 'focus', (e) ->
+    content.on('focus', '[name="ticket_number"]', (e) ->
       $(e.target).parents().find('[name="radio"]').prop('checked', false)
     )
 
-    content.delegate('[name="radio"]', 'click', (e) ->
+    content.on('click', '[name="radio"]', (e) ->
       if $(e.target).prop('checked')
         ticket_id = $(e.target).val()
         ticket    = App.Ticket.fullLocal( ticket_id )
@@ -73,10 +73,10 @@ class App.TicketLinkAdd extends App.ControllerModal
     params = @formParam(e.target)
 
     if !params['ticket_number']
-      alert('Ticket# is needed!')
+      alert(__('Ticket# is needed!'))
       return
     if !params['link_type']
-      alert('Link type is needed!')
+      alert(__('Link type is needed!'))
       return
 
     # get data

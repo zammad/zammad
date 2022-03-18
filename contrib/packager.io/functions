@@ -181,6 +181,9 @@ function update_database_yml () {
     -e "s/.*username:.*/  username: ${DB_USER}/" \
     -e "s/.*password:.*/  password: ${DB_PASS}/" \
     -e "s/.*database:.*/  database: ${DB}/" < ${ZAMMAD_DIR}/contrib/packager.io/database.yml.pkgr > ${ZAMMAD_DIR}/config/database.yml
+
+  echo "# ... Fixing permission database.yml"
+  chown zammad:zammad ${ZAMMAD_DIR}/config/database.yml
 }
 
 function initialise_database () {
@@ -228,7 +231,7 @@ function create_webserver_config () {
 function setup_elasticsearch () {
   echo "# Configuring Elasticsearch..."
 
-  ES_CONNECTION="$(zammad run rails r "puts Setting.get('es_url')"| tail -n 1 2>> /dev/null)"
+  ES_CONNECTION="$(zammad run rails r "puts '',Setting.get('es_url')"| tail -n 1 2>> /dev/null)"
 
   if [ -z "${ES_CONNECTION}" ]; then
     echo "-- Nevermind, no es_url is set, leaving Elasticsearch untouched ...!"
@@ -274,6 +277,10 @@ function elasticsearch_searchindex_rebuild () {
 function update_or_install () {
 
   if [ -f ${ZAMMAD_DIR}/config/database.yml ]; then
+
+    echo "# Clear cache..."
+    zammad run rails r Cache.clear
+
     update_database
 
     update_translations
@@ -297,6 +304,9 @@ function update_or_install () {
   setup_elasticsearch
 
   elasticsearch_searchindex_rebuild
+
+  echo "# Enforcing 0600 on database.yml ..."
+  chmod 600 ${ZAMMAD_DIR}/config/database.yml
 }
 
 function set_env_vars () {

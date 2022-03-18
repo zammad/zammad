@@ -59,7 +59,9 @@ class App.ControllerModal extends App.Controller
     false
 
   content: ->
-    'You need to implement a one @content()!'
+    # coffeelint: disable=detect_translatable_string
+    "You need to implement a '@content()' method!"
+    # coffeelint: enable=detect_translatable_string
 
   update: =>
     if @message
@@ -106,7 +108,7 @@ class App.ControllerModal extends App.Controller
     if @buttonSubmit is true
       @buttonSubmit = 'Submit'
     if @buttonCancel is true
-      @buttonCancel = 'Cancel & Go Back'
+      @buttonCancel = __('Cancel & Go Back')
 
     @update()
 
@@ -179,7 +181,7 @@ class App.ControllerModal extends App.Controller
         form = @el
 
       # focus first input, select or textarea
-      form.find('input:not([disabled]):not([type="hidden"]):not(".btn"), select:not([disabled]), textarea:not([disabled])').first().focus()
+      form.find('input:not([disabled]):not([type="hidden"]):not(".btn"), select:not([disabled]), textarea:not([disabled])').first().trigger('focus')
 
     @initalFormParams = @formParams()
 

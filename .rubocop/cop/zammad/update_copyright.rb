@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2021 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 module RuboCop
   module Cop
@@ -9,7 +9,7 @@ module RuboCop
         extend AutoCorrector
 
         MSG = 'Copyright update required (use auto-correct to rectify this).'.freeze
-        COPYRIGHT = "# Copyright (C) 2012-#{Date.today.year} Zammad Foundation, http://zammad-foundation.org/".freeze # rubocop:disable Rails/Date
+        COPYRIGHT = "# Copyright (C) 2012-#{Date.today.year} Zammad Foundation, https://zammad-foundation.org/".freeze # rubocop:disable Rails/Date
 
         def on_new_investigation
           if processed_source.raw_source.include? '# Copyright (C) 2012-'

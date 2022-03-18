@@ -97,4 +97,4 @@ class App.KnowledgeBasePublicMenuFormItem extends App.Controller
     if @findEmptyFields().length == 0
       return false
 
-    'Please fill in all fields'
+    __('Please fill in all fields')
