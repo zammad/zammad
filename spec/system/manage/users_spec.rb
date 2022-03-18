@@ -3,14 +3,15 @@
 require 'rails_helper'
 
 RSpec.describe 'Manage > Users', type: :system do
-  describe 'switching to an alternative user', authentication_type: :form, authenticated_as: -> { original_user } do
+  describe 'switching to an alternative user', authentication_type: :form, authenticated_as: :authenticate do
     let(:original_user) { create(:admin) }
     let(:alternative_one_user) { create(:admin) }
     let(:alternative_two_user) { create(:admin) }
 
-    before do
+    def authenticate
       alternative_one_user
       alternative_two_user
+      original_user
     end
 
     it 'starts as original user' do
@@ -91,9 +92,14 @@ RSpec.describe 'Manage > Users', type: :system do
     end
   end
 
-  describe 'show/unlock a user', authenticated_as: -> { user } do
+  describe 'show/unlock a user', authenticated_as: :authenticate do
     let(:user) { create(:admin) }
-    let!(:locked_user) { create(:user, login_failed: 6) }
+    let(:locked_user) { create(:user, login_failed: 6) }
+
+    def authenticate
+      locked_user
+      user
+    end
 
     it 'check marked locked user and execute unlock action' do
       visit '#manage/users'
@@ -241,5 +247,24 @@ RSpec.describe 'Manage > Users', type: :system do
       include_examples 'user permission', false
     end
 
+  end
+
+  describe 'UI is not updated right after importing users csv file #3919' do
+    before do
+      visit '#manage/users'
+      ensure_websocket
+      User.csv_import(
+        string:       File.read(Rails.root.join('spec/fixtures/csv_import/user/simple.csv')),
+        parse_params: {
+          col_sep: ';',
+        },
+        try:          false,
+        delete:       false,
+      )
+    end
+
+    it 'does update the user list after import of new users' do
+      expect(page).to have_text('firstname-simple-import1')
+    end
   end
 end

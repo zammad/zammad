@@ -182,6 +182,9 @@ class User extends App.ControllerSubContent
           'click': edit
     )
 
+    if !@subscribeId
+      @subscribeId = App.User.subscribe(=> @delay(@search, 220, 'search'))
+
   search: =>
     role_ids = []
     @$('.tab.active').each( (i,d) ->
@@ -238,5 +241,9 @@ class User extends App.ControllerSubContent
       baseUrl: '/api/v1/users'
       container: @el.closest('.content')
     )
+
+  release: =>
+    if @subscribeId
+      App.User.unsubscribe(@subscribeId)
 
 App.Config.set( 'User', { prio: 1000, name: __('Users'), parent: '#manage', target: '#manage/users', controller: User, permission: ['admin.user'] }, 'NavBarAdmin' )
