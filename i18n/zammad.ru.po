@@ -2,17 +2,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-03-18 07:58+0000\n"
+"PO-Revision-Date: 2022-03-01 03:30+0000\n"
 "Last-Translator: Вячеслав Карпов <pvd86@mail.ru>\n"
 "Language-Team: Russian <https://translations.zammad.org/projects/zammad/"
-"zammad-stable/ru/>\n"
+"zammad-development/ru/>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.11.2\n"
+"X-Generator: Weblate 4.10.1\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -1015,10 +1015,6 @@ msgstr "Вы уверены?"
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
 msgid "Article"
 msgstr "Статья"
-
-#: db/seeds/settings.rb
-msgid "Article - visibility confirmation dialog"
-msgstr ""
 
 #: lib/excel_sheet/ticket.rb
 msgid "Article Count"
@@ -2335,7 +2331,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
 msgid "Core Workflows"
-msgstr "Основные процессы"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
 #: app/assets/javascripts/app/models/core_workflow.coffee
@@ -6008,7 +6004,6 @@ msgstr ""
 
 #: app/controllers/integration/cti_controller.rb
 #: app/controllers/integration/placetel_controller.rb
-#: app/controllers/integration/sipgate_controller.rb
 msgid "Invalid token, please contact your admin!"
 msgstr ""
 
@@ -7444,6 +7439,10 @@ msgstr "Заметка"
 #: db/seeds/settings.rb
 msgid "Note - default visibility"
 msgstr "Заметка - видимость по-умолчанию"
+
+#: db/seeds/settings.rb
+msgid "Note - visibility confirmation dialog"
+msgstr ""
 
 #: app/assets/javascripts/app/models/email_address.coffee
 #: app/assets/javascripts/app/models/group.coffee
@@ -10201,7 +10200,7 @@ msgstr "Уже существует!"
 
 #: app/assets/javascripts/app/views/version.jst.eco
 msgid "This is Zammad version %s"
-msgstr "Версия Zammad %s"
+msgstr "Версия Zammsd %s"
 
 #: db/seeds/settings.rb
 msgid "This is a default maintenance message. Click here to change."
@@ -10637,10 +10636,6 @@ msgstr "Доступ к токенам"
 
 #: db/seeds/settings.rb
 msgid "Token for CTI."
-msgstr ""
-
-#: db/seeds/settings.rb
-msgid "Token for Sipgate."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -12734,12 +12729,6 @@ msgstr "показывать"
 #: app/assets/javascripts/app/views/widget/organization.jst.eco
 msgid "show more"
 msgstr ""
-
-#: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Placetel"
-msgid "sipgate.io Token"
-msgstr "Placetel"
 
 #: db/seeds/settings.rb
 msgid "sipgate.io alternative FQDN"

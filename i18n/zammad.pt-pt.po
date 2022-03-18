@@ -2,16 +2,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-03-16 03:30+0000\n"
-"Last-Translator: Denilson Silva <hebert.denilson@gmail.com>\n"
-"Language-Team: Portuguese (Portugal) <https://translations.zammad.org/"
-"projects/zammad/zammad-stable/pt_PT/>\n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
 "Language: pt-pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.11.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -994,10 +991,6 @@ msgstr "Tem certeza?"
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
 msgid "Article"
 msgstr "Article"
-
-#: db/seeds/settings.rb
-msgid "Article - visibility confirmation dialog"
-msgstr ""
 
 #: lib/excel_sheet/ticket.rb
 msgid "Article Count"
@@ -5972,7 +5965,6 @@ msgstr ""
 
 #: app/controllers/integration/cti_controller.rb
 #: app/controllers/integration/placetel_controller.rb
-#: app/controllers/integration/sipgate_controller.rb
 msgid "Invalid token, please contact your admin!"
 msgstr ""
 
@@ -6561,9 +6553,8 @@ msgid "Maximum failed logins"
 msgstr "Maximum failed logins"
 
 #: db/seeds/settings.rb
-#, fuzzy
 msgid "Maximum number of recursively executed triggers."
-msgstr "Número Máximo de \"triggers\" executados recursivamente."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Maxlength"
@@ -6608,9 +6599,8 @@ msgid "Message after sending form"
 msgstr "Mensagem após envio de formulário"
 
 #: db/seeds/settings.rb
-#, fuzzy
 msgid "Message for login page."
-msgstr "Mensagem para tela de Login."
+msgstr ""
 
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 msgid "Messages"
@@ -7411,6 +7401,10 @@ msgstr "Note"
 #: db/seeds/settings.rb
 msgid "Note - default visibility"
 msgstr "Nota - visualização padrão"
+
+#: db/seeds/settings.rb
+msgid "Note - visibility confirmation dialog"
+msgstr ""
 
 #: app/assets/javascripts/app/models/email_address.coffee
 #: app/assets/javascripts/app/models/group.coffee
@@ -10612,10 +10606,6 @@ msgid "Token for CTI."
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Token for Sipgate."
-msgstr ""
-
-#: db/seeds/settings.rb
 msgid "Token for monitoring."
 msgstr ""
 
@@ -12708,12 +12698,6 @@ msgstr "Mostrar"
 #: app/assets/javascripts/app/views/widget/organization.jst.eco
 msgid "show more"
 msgstr ""
-
-#: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Placetel"
-msgid "sipgate.io Token"
-msgstr "Placetel"
 
 #: db/seeds/settings.rb
 msgid "sipgate.io alternative FQDN"

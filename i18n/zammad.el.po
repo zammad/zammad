@@ -1006,10 +1006,6 @@ msgstr "Είστε σίγουρος/η;"
 msgid "Article"
 msgstr "Αρθρο"
 
-#: db/seeds/settings.rb
-msgid "Article - visibility confirmation dialog"
-msgstr ""
-
 #: lib/excel_sheet/ticket.rb
 msgid "Article Count"
 msgstr "Article Count"
@@ -6002,7 +5998,6 @@ msgstr ""
 
 #: app/controllers/integration/cti_controller.rb
 #: app/controllers/integration/placetel_controller.rb
-#: app/controllers/integration/sipgate_controller.rb
 msgid "Invalid token, please contact your admin!"
 msgstr ""
 
@@ -7443,6 +7438,10 @@ msgstr "Σημείωση"
 #: db/seeds/settings.rb
 msgid "Note - default visibility"
 msgstr "σημείωση"
+
+#: db/seeds/settings.rb
+msgid "Note - visibility confirmation dialog"
+msgstr ""
 
 #: app/assets/javascripts/app/models/email_address.coffee
 #: app/assets/javascripts/app/models/group.coffee
@@ -10540,10 +10539,6 @@ msgid "Token for CTI."
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Token for Sipgate."
-msgstr ""
-
-#: db/seeds/settings.rb
 msgid "Token for monitoring."
 msgstr ""
 
@@ -12506,12 +12501,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/organization.jst.eco
 msgid "show more"
 msgstr ""
-
-#: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Placetel"
-msgid "sipgate.io Token"
-msgstr "Πλακέτα"
 
 #: db/seeds/settings.rb
 msgid "sipgate.io alternative FQDN"
