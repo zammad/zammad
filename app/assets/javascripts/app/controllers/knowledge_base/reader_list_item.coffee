@@ -23,6 +23,8 @@ class App.KnowledgeBaseReaderListItem extends App.Controller
     catch e
       attrs = {}
 
+    knowledge_base = App.KnowledgeBase.find(@kb_locale.knowledge_base_id)
+
     @el
       .prop('className')
       .split(' ')
@@ -34,4 +36,5 @@ class App.KnowledgeBaseReaderListItem extends App.Controller
     @html App.view('knowledge_base/_reader_list_item')(
       item:    attrs
       iconset: @iconset
+      deep_answers_counter: knowledge_base.deep_answers_counter
     )

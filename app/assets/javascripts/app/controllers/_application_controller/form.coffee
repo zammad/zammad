@@ -92,7 +92,6 @@ class App.ControllerForm extends App.Controller
       attributesClean = App.Model.attributesGet(@screen, @model.configure_attributes, undefined, @model.className)
 
     for attributeName, attribute of attributesClean
-
       # ignore read only or not rendered attributes attributes
       if !attribute.readonly && !attribute.skipRendering
 

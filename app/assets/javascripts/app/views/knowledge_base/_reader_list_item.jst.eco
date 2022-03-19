@@ -2,7 +2,7 @@
   <span class="section-inner">
     <%- @iconWithModifier(@item, className: 'section-inner-icon-holder', iconset: @iconset, addStateClass: true) %>
     <span class="title"><%= @item.title %></span>
-    <% if @item.count: %>
+    <% if @deep_answers_counter is true && @item.count: %>
       <span class="section-detail"><%= @T('Answers: %s', @item.count) %></span>
     <% end %>
   </span>

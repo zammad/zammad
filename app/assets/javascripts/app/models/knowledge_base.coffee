@@ -1,5 +1,5 @@
 class App.KnowledgeBase extends App.Model
-  @configure 'KnowledgeBase', 'iconset', 'color_highlight', 'color_header', 'color_header_link', 'translation_ids', 'locale_ids', 'homepage_layout', 'category_layout', 'custom_address'
+  @configure 'KnowledgeBase', 'iconset', 'color_highlight', 'color_header', 'color_header_link', 'translation_ids', 'locale_ids', 'homepage_layout', 'category_layout', 'custom_address', 'deep_answers_counter'
   @extend Spine.Model.Ajax
   @extend App.KnowledgeBaseActions
   @extend App.KnowledgeBaseAccess
@@ -271,6 +271,20 @@ class App.KnowledgeBase extends App.Model
       help:    __('The default URL for your knowledge base is e.g. example.com or example.com/help. To serve it from a custom URL instead, enter the destination below (e.g., "/support", "example.com", or "example.com/support"). Then, follow the directions under "Web Server Configuration" to complete the process.')
       screen:
         admin_custom_address:
+          shown: true
+    }, {
+      name: 'deep_answers_counter'
+      tag: 'checkbox'
+      style: 'block'
+      null: false
+      options:  [
+        {
+          value:   true,
+          name: __('Display answers counter under category title')
+        }
+      ]
+      screen:
+        admin_view_deep_answers_counter:
           shown: true
     }
   ]
