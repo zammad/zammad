@@ -103,7 +103,7 @@ translate strings in Ruby context, e. g. for notifications
 =end
 
   def self.translate(locale, string)
-    find_source(locale, string)&.target || find_source('en', string)&.target || string
+    find_source(locale, string)&.target || string
   end
 
 =begin
