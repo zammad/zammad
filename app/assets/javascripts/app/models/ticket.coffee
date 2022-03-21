@@ -164,7 +164,7 @@ class App.Ticket extends App.Model
           params.ticket[attributes[1]] = pendtil.toISOString()
 
         # apply user changes
-        else if attributes[1] is 'owner_id'
+        else if attributes[1] is 'owner_id' || attributes[1] is 'customer_id'
           if content.pre_condition is 'current_user.id'
             params.ticket[attributes[1]] = App.Session.get('id')
           else
