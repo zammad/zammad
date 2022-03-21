@@ -1,6 +1,5 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import FieldEditorInner from '@common/components/form/field/FieldEditor/FieldEditorInner.vue'
 import { getNode } from '@formkit/core'
 import { FormKit } from '@formkit/vue'
 import { getVMFromWrapper, getWrapper } from '@tests/support/components'
@@ -62,10 +61,9 @@ describe('Form - Field - Editor (TipTap)', () => {
   it('check for the input event', async () => {
     expect.assertions(2)
 
-    // We need to set the new content with the editor object, because contenteditable is currently
-    // not supported in JSDom.
+    // We need to use the cloned inner schema component, to use some functionality directly from the component.
     const innerEditorWrapper = wrapper.getComponent(
-      FieldEditorInner,
+      getVMFromWrapper(wrapper).node.props.definition.library.SchemaComponent1,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ) as VueWrapper<ComponentPublicInstance<any>>
 

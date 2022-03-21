@@ -89,6 +89,7 @@ const initializeStore = () => {
 let formInitialized = false
 
 const initializeForm = () => {
+  // TODO: needs to be extended, when we have app specific plugins/fields
   plugins.push([formPlugin, buildFormKitPluginConfig()])
   defaultWrapperOptions.shallow = false
 

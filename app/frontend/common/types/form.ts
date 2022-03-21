@@ -4,6 +4,7 @@ import type { App } from 'vue'
 import type {
   FormKitClasses,
   FormKitFrameworkContext,
+  FormKitGroupValue,
   FormKitPlugin,
   FormKitSchemaAttributes,
   FormKitSchemaCondition,
@@ -15,11 +16,19 @@ import type {
   FormKitValidationMessages,
   FormKitValidationRules,
 } from '@formkit/validation'
+import { ImportGlobEagerOutput } from '@common/types/utils'
 
 export type InitializeAppForm = (app: App) => void
 
 export type FormFieldsTypeDefinition = Record<string, FormKitTypeDefinition>
 export type FormValidationRules = Record<string, FormKitValidationRule>
+
+export type FormThemeClasses = Record<string, Record<string, string>>
+export type FormThemeExtension = (classes: FormThemeClasses) => FormThemeClasses
+export interface FormAppSpecificTheme {
+  coreClasses?: FormThemeExtension
+  extensions?: ImportGlobEagerOutput<FormThemeExtension>
+}
 
 export interface FormFieldType {
   fieldType: string
@@ -101,10 +110,11 @@ export interface ReactiveFormSchemData {
   fields: Record<string, FormSchemaField>
 }
 
-export type FormFieldContext<
-  TFieldProps extends FormFieldAdditionalProps = FormFieldAdditionalProps,
-> = FormKitFrameworkContext & FormDefaultProps & TFieldProps
+export type FormFieldContext<TFieldProps = FormFieldAdditionalProps> =
+  FormKitFrameworkContext & FormDefaultProps & TFieldProps
 
 export interface FormValues {
   [index: string]: unknown
 }
+
+export type FormData<TFormValues = FormValues> = FormKitGroupValue & TFormValues

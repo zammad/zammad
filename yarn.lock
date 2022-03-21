@@ -1346,7 +1346,12 @@
     "@formkit/utils" "1.0.0-beta.6"
     "@formkit/validation" "1.0.0-beta.6"
 
-"@formkit/utils@1.0.0-beta.6":
+"@formkit/tailwindcss@^1.0.0-beta.6":
+  version "1.0.0-beta.6"
+  resolved "https://registry.yarnpkg.com/@formkit/tailwindcss/-/tailwindcss-1.0.0-beta.6.tgz#3a482944db28f6a38043a9a0c1ad87b8ee53bc43"
+  integrity sha512-1JGXrULBzVVQgZuy4++mdouuOTZcEukPV2069BOLSUrGfsWPVQ9wFVG12fAhvm0H5TsLhNajE9ZoDCeNFGdyaA==
+
+"@formkit/utils@1.0.0-beta.6", "@formkit/utils@^1.0.0-beta.6":
   version "1.0.0-beta.6"
   resolved "https://registry.yarnpkg.com/@formkit/utils/-/utils-1.0.0-beta.6.tgz#1e697aef4b68aab1ccbc3f2b76dd723b47c1c350"
   integrity sha512-Xox4XxfDgOucUXugXPZsmZt+2aV3a/z850LNykw9+Xi2iw4D4cxe7/GKqWQdu2Rg+aZkxJWhRPoe+nv81zLs7A==

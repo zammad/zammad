@@ -15,7 +15,7 @@
           <template v-if="applicationConfig.value.maintenance_login">
             <!-- eslint-disable vue/no-v-html -->
             <div
-              class="my-1 flex items-center rounded bg-green py-2 px-4 text-white"
+              class="my-1 flex items-center rounded-xl bg-green py-2 px-4 text-white"
               v-html="applicationConfig.value.maintenance_login_message"
             ></div>
           </template>
@@ -35,7 +35,7 @@
               </div>
               <FormKit
                 wrapper-class="mx-8 mt-8 flex grow justify-center items-center"
-                input-class="py-2 px-4 w-full h-14 text-xl font-semibold text-black bg-yellow rounded select-none"
+                input-class="py-2 px-4 w-full h-14 text-xl font-semibold text-black bg-yellow rounded-xl select-none"
                 type="submit"
               >
                 {{ i18n.t('Sign in') }}
@@ -80,8 +80,8 @@ import { NotificationTypes } from '@common/types/notification'
 import CommonLogo from '@common/components/common/CommonLogo.vue'
 import useApplicationConfigStore from '@common/stores/application/config'
 import { i18n } from '@common/utils/i18n'
-import { FormKitGroupValue } from '@formkit/core'
 import Form from '@common/components/form/Form.vue'
+import { FormData } from '@common/types/form'
 
 interface Props {
   invalidatedSession?: string
@@ -104,30 +104,12 @@ const authentication = useAuthenticationStore()
 
 const router = useRouter()
 
-const forFloatingLabel = {
-  wrapper: {
-    attrs: {
-      'data-has-value': {
-        if: '$_value != "" && $fns.string($_value) !== "undefined"',
-        then: 'true',
-        else: undefined,
-      },
-    },
-  },
-}
-
 const formSchema = [
   {
     type: 'text',
     name: 'login',
     label: __('Username / Email'),
     placeholder: __('Username / Email'),
-    wrapperClass: 'relative floating-input',
-    inputClass:
-      'block mt-1 w-full h-14 text-sm bg-gray-500 rounded border-none focus:outline-none placeholder:text-transparent',
-    labelClass:
-      'absolute top-0 left-0 py-5 px-3 h-full text-base transition-all duration-100 ease-in-out origin-left pointer-events-none',
-    sectionsSchema: forFloatingLabel,
     validation: 'required',
   },
   {
@@ -135,19 +117,13 @@ const formSchema = [
     label: __('Password'),
     name: 'password',
     placeholder: __('Password'),
-    wrapperClass: 'relative floating-input',
-    inputClass:
-      'block mt-1 w-full h-14 text-sm bg-gray-500 rounded border-none focus:outline-none placeholder:text-transparent',
-    labelClass:
-      'absolute top-0 left-0 py-5 px-3 h-full text-base transition-all duration-100 ease-in-out origin-left pointer-events-none',
-    sectionsSchema: forFloatingLabel,
     validation: 'required',
   },
   {
     isLayout: true,
     element: 'div',
     attrs: {
-      class: 'mt-2 flex grow items-center justify-between text-white',
+      class: 'mt-2.5 flex grow items-center justify-between text-white',
     },
     children: [
       {
@@ -172,15 +148,15 @@ const formSchema = [
   },
 ]
 
-interface FormData {
-  login: string
-  password: string
+interface LoginFormData {
+  login?: string
+  password?: string
+  remember_me?: boolean
 }
 
-const login = (formData: FormKitGroupValue): void => {
-  const data = formData as unknown as FormData
+const login = (formData: FormData<LoginFormData>): void => {
   authentication
-    .login(data.login, data.password)
+    .login(formData.login as string, formData.password as string)
     .then(() => {
       router.replace('/')
     })
@@ -195,15 +171,3 @@ const login = (formData: FormKitGroupValue): void => {
 
 const applicationConfig = useApplicationConfigStore()
 </script>
-
-<style lang="postcss">
-.floating-input > .formkit-inner > input:focus,
-.floating-input > .formkit-inner > input:not(:placeholder-shown) {
-  @apply pt-8;
-}
-
-.floating-input:focus-within > label,
-.floating-input[data-has-value] > label {
-  @apply -translate-y-3 translate-x-1 scale-75 opacity-75;
-}
-</style>

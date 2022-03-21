@@ -9,7 +9,7 @@ import {
 } from '@vue/apollo-composable'
 import apolloClient from '@common/server/apollo/client'
 import useSessionIdStore from '@common/stores/session/id'
-import '@common/styles/main.css'
+import '@mobile/styles/main.css'
 import initializeStore from '@common/stores'
 import initializeStoreSubscriptions from '@common/initializer/storeSubscriptions'
 import initializeRouter from '@common/router/index'

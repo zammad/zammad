@@ -3,21 +3,29 @@
 import mainInitializeForm, { getFormPlugins } from '@common/form'
 import type {
   FormFieldTypeImportModules,
+  FormThemeExtension,
   InitializeAppForm,
 } from '@common/types/form'
 import type { ImportGlobEagerOutput } from '@common/types/utils'
 import type { FormKitPlugin } from '@formkit/core'
+import getCoreClasses from '@mobile/form/theme/global'
 import { App } from 'vue'
 
 const pluginModules: ImportGlobEagerOutput<FormKitPlugin> =
-  import.meta.globEager('./plugins/*.ts')
+  import.meta.globEager('./plugins/global/*.ts')
 const fieldModules: ImportGlobEagerOutput<FormFieldTypeImportModules> =
   import.meta.globEager('../components/form/field/**/*.ts')
+const themeExtensionModules: ImportGlobEagerOutput<FormThemeExtension> =
+  import.meta.globEager('../theme/global/extensions/*.ts')
 
 const initializeForm: InitializeAppForm = (app: App) => {
   const plugins = getFormPlugins(pluginModules)
+  const theme = {
+    coreClasses: getCoreClasses,
+    extensions: themeExtensionModules,
+  }
 
-  mainInitializeForm(app, fieldModules, plugins)
+  mainInitializeForm(app, undefined, fieldModules, plugins, theme)
 }
 
 export default initializeForm

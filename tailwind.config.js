@@ -3,6 +3,8 @@
 const colors = require('tailwindcss/colors')
 const formsPlugin = require('@tailwindcss/forms')
 const lineClampPlugin = require('@tailwindcss/line-clamp')
+const formKitPlugin = require('@formkit/tailwindcss')
+const plugin = require('tailwindcss/plugin')
 
 // Add the moment we can use one tailwind config for the mobile app, but later we need to check
 // how this works with different apps.
@@ -45,5 +47,16 @@ module.exports = {
     },
     extend: {},
   },
-  plugins: [formsPlugin, lineClampPlugin],
+  plugins: [
+    formsPlugin,
+    lineClampPlugin,
+    formKitPlugin.default,
+    plugin(({ addVariant }) => {
+      addVariant('formkit-populated', [
+        '&[data-populated]',
+        '[data-populated] &',
+        '[data-populated]&',
+      ])
+    }),
+  ],
 }

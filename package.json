@@ -77,6 +77,8 @@
     "@formkit/i18n": "^1.0.0-beta.6",
     "@formkit/inputs": "^1.0.0-beta.6",
     "@formkit/rules": "^1.0.0-beta.6",
+    "@formkit/tailwindcss": "^1.0.0-beta.6",
+    "@formkit/utils": "^1.0.0-beta.6",
     "@formkit/validation": "^1.0.0-beta.6",
     "@formkit/vue": "^1.0.0-beta.6",
     "@rails/actioncable": "6.0.4",

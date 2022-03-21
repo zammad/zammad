@@ -5638,6 +5638,7 @@ msgid "Login"
 msgstr ""
 
 #: app/controllers/application_controller/authenticates.rb
+#: app/graphql/gql/mutations/login.rb
 msgid "Login failed. Have you double-checked your credentials and completed the email verification step?"
 msgstr ""
 
@@ -10675,10 +10676,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
 msgid "Workflows"
-msgstr ""
-
-#: app/graphql/gql/mutations/login.rb
-msgid "Wrong login or password combination."
 msgstr ""
 
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco

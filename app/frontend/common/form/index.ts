@@ -2,16 +2,20 @@
 
 import type { App } from 'vue'
 import { plugin as formPlugin, bindings as bindingsPlugin } from '@formkit/vue'
-import type { FormKitPlugin } from '@formkit/core'
+import type { FormKitConfig, FormKitPlugin } from '@formkit/core'
 import type {
   ImportGlobEagerOutput,
   ImportGlobEagerDefault,
 } from '@common/types/utils'
 import createFieldPlugin from '@common/form/core/createFieldPlugin'
-import type { FormFieldTypeImportModules } from '@common/types/form'
+import type {
+  FormAppSpecificTheme,
+  FormFieldTypeImportModules,
+} from '@common/types/form'
 import createValidationPlugin from '@common/form/core/createValidationPlugin'
 import createI18nPlugin from '@common/form/core/createI18nPlugin'
 import '@formkit/dev'
+import createTailwindClasses from '@common/form/core/createTailwindClasses'
 
 export const getFormPlugins = (
   modules: ImportGlobEagerOutput<FormKitPlugin>,
@@ -29,12 +33,14 @@ export const getFormPlugins = (
 }
 
 const pluginModules: ImportGlobEagerOutput<FormKitPlugin> =
-  import.meta.globEager('./plugins/*.ts')
+  import.meta.globEager('./plugins/global/*.ts')
 const plugins = getFormPlugins(pluginModules)
 
 export const buildFormKitPluginConfig = (
+  config?: FormKitConfig,
   appSpecificFieldModules: ImportGlobEagerOutput<FormFieldTypeImportModules> = {},
   appSpecificPlugins: FormKitPlugin[] = [],
+  appSpecificTheme: FormAppSpecificTheme = {},
 ) => {
   return {
     plugins: [
@@ -46,16 +52,27 @@ export const buildFormKitPluginConfig = (
       ...appSpecificPlugins,
     ],
     locale: 'staticLocale',
+    config: {
+      classes: createTailwindClasses(appSpecificTheme),
+      ...config,
+    },
   }
 }
 
 export default function initializeForm(
   app: App,
+  appSpecificConfig?: FormKitConfig,
   appSpecificFieldModules: ImportGlobEagerOutput<FormFieldTypeImportModules> = {},
   appSpecificPlugins: FormKitPlugin[] = [],
+  appSpecificTheme: FormAppSpecificTheme = {},
 ) {
   app.use(
     formPlugin,
-    buildFormKitPluginConfig(appSpecificFieldModules, appSpecificPlugins),
+    buildFormKitPluginConfig(
+      appSpecificConfig,
+      appSpecificFieldModules,
+      appSpecificPlugins,
+      appSpecificTheme,
+    ),
   )
 }

@@ -17,7 +17,7 @@ module Gql::Mutations
       authenticate(...)
 
       if !context[:current_user]
-        return error_response(__('Wrong login or password combination.'))
+        return error_response(__('Login failed. Have you double-checked your credentials and completed the email verification step?'))
       end
 
       { session_id: context[:controller].session.id }

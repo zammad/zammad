@@ -84,7 +84,7 @@
     "node_modules",
     "public",
     "vendor",
-    // This needs to be added, because otherwise some JSX types from react will be triggered.
+    // This needs to be added, because otherwise some JSX types from react will be triggered."
     "app/frontend/stories/**/*.stories.ts"
   ]
 }

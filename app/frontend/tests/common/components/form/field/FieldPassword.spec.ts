@@ -111,7 +111,7 @@ describe('Form - Field - Password (Formkit-BuildIn)', () => {
     await waitForNextTick(true)
 
     expect(wrapper.find('input').attributes().type).toBe('text')
-    expect(wrapper.find('svg').classes()).contains('icon-cog')
+    expect(wrapper.find('svg').classes()).contains('icon-eye-off')
   })
 
   it('can hide password', async () => {

@@ -4,7 +4,6 @@
   <FormKit
     v-if="Object.keys(schemaData.fields).length > 0 || $slots.fields"
     v-bind:id="formId"
-    v-model="values"
     type="form"
     v-bind:config="formConfig"
     v-bind:form-class="localClass"
@@ -60,6 +59,7 @@ import type {
   FormKitClasses,
   FormKitSchemaDOMNode,
   FormKitSchemaComponent,
+  FormKitFrameworkContext,
 } from '@formkit/core'
 import getUuid from '@common/utils/getUuid'
 
@@ -97,7 +97,7 @@ const props = withDefaults(defineProps<Props>(), {
     return {}
   },
   staticSchema: false,
-  validationVisibility: FormValidationVisibility.blur,
+  validationVisibility: FormValidationVisibility.submit,
 })
 
 // Rename prop 'class' for usage in the template, because of reserved word
@@ -109,11 +109,21 @@ const emit = defineEmits<{
 }>()
 
 let formNode: FormKitNode
+const formNodeContext = ref<FormKitFrameworkContext | undefined>(undefined)
 const setFormNode = (node: FormKitNode) => {
   formNode = node
+  formNodeContext.value = formNode.context
 
   // TODO: maybe we should also emit the node one level above to have the node available without a own getNode-call...
 }
+
+// Use the node context value, instead of the v-model, because of performance reason.
+const values = computed<FormValues>(() => {
+  if (!formNodeContext.value) {
+    return {}
+  }
+  return formNodeContext.value.value
+})
 
 const onSubmit = (values: FormKitGroupValue) => {
   const emitValues = {
@@ -144,8 +154,6 @@ const formConfig = computed(() => {
 const additionalComponentLibrary = {
   FormLayout: markRaw(FormLayout) as ConcreteComponent,
 }
-
-const values = ref<FormValues>({})
 
 // Define the static schema, which will be filled with the real fields from the `schemaData`.
 const staticSchema: FormKitSchemaNode[] = []

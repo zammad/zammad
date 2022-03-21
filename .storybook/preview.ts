@@ -10,7 +10,12 @@ import initializeStore from '@common/stores'
 import initializeForm, { getFormPlugins } from '@common/form'
 import type { ImportGlobEagerOutput } from '@common/types/utils'
 import type { FormKitPlugin } from '@formkit/core'
+import getMobileCoreClasses from '@mobile/form/theme/global'
 import { createRouter, createWebHashHistory, type Router } from 'vue-router'
+import type {
+  FormFieldTypeImportModules,
+  FormThemeExtension,
+} from '@common/types/form'
 
 // Adds the translations to storybook.
 app.config.globalProperties.i18n = i18n
@@ -21,13 +26,24 @@ initializeStore(app)
 
 // Initialize the FormKit plugin witht he needed fields ands internal FormKit plugins.
 const mobilePluginModules: ImportGlobEagerOutput<FormKitPlugin> =
-  import.meta.globEager('../app/frontend/apps/mobile/form/plugins/*.ts')
+  import.meta.globEager('../app/frontend/apps/mobile/form/plugins/global/*.ts')
 const mobileFieldModules: ImportGlobEagerOutput<FormFieldTypeImportModules> =
   import.meta.globEager(
     '../app/frontend/apps/mobile/components/form/field/**/*.ts',
   )
+const themeExtensionModules: ImportGlobEagerOutput<FormThemeExtension> =
+  import.meta.globEager(
+    '../app/frontend/apps/mobile/form/theme/global/extensions/*.ts',
+  )
+
 const plugins = getFormPlugins(mobilePluginModules)
-initializeForm(app, mobileFieldModules, plugins)
+
+const appTheme = {
+  coreClasses: getMobileCoreClasses,
+  extensions: themeExtensionModules,
+}
+
+initializeForm(app, undefined, mobileFieldModules, plugins, appTheme)
 
 const router: Router = createRouter({
   history: createWebHashHistory(),

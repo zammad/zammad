@@ -27,7 +27,6 @@ const switchPasswordVisibility = (node: FormKitNode) => {
           {
             $cmp: 'CommonIcon',
             props: {
-              // TODO: we need to add the new icon from figma.
               name: '$passwordVisibilityIcon',
               key: node.name,
               class: 'absolute top-1/2 transform -translate-y-1/2 right-3',
@@ -47,7 +46,7 @@ const switchPasswordVisibility = (node: FormKitNode) => {
 
   node.on('prop:type', ({ payload, origin }) => {
     const { props } = origin
-    props.passwordVisibilityIcon = payload === 'password' ? 'eye' : 'cog' // TODO: align icon name to eye-off?
+    props.passwordVisibilityIcon = payload === 'password' ? 'eye' : 'eye-off'
   })
 }
 
