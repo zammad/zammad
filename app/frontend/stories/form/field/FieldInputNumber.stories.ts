@@ -3,6 +3,7 @@
 import { Story } from '@storybook/vue3'
 import { FormKit } from '@formkit/vue'
 import defaultArgTypes from '@/stories/support/form/field/defaultArgTypes'
+import { FieldArgs } from '@/stories/types/form'
 
 export default {
   title: 'Form/Field/Inputs/Number',
@@ -67,7 +68,7 @@ export default {
   },
 }
 
-const Template: Story = (args) => ({
+const Template: Story<FieldArgs> = (args: FieldArgs) => ({
   components: { FormKit },
   setup() {
     return { args }

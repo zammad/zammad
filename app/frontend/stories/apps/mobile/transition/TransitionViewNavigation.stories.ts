@@ -5,7 +5,12 @@
 import { Story } from '@storybook/vue3'
 import TransitionViewNavigation from '@mobile/components/transition/TransitionViewNavigation.vue'
 import useViewTransition from '@mobile/composables/useViewTransition'
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
+import ViewTransitions from '@mobile/types/transition'
+
+interface Args {
+  newViewTransition: ViewTransitions
+}
 
 const { setViewTransition } = useViewTransition()
 
@@ -22,20 +27,22 @@ export default {
   component: TransitionViewNavigation,
 }
 
-const Template: Story = (args) => ({
+const Template: Story<Args> = (args: Args) => ({
   components: { TransitionViewNavigation },
   setup() {
-    return { args, component: FirstView }
-  },
-  methods: {
-    switchView() {
+    const component = ref(FirstView)
+
+    const switchView = () => {
       setViewTransition(args.newViewTransition)
-      this.component = SecondView
-    },
-    resetView() {
-      setViewTransition('replace')
-      this.component = FirstView
-    },
+      component.value = SecondView
+    }
+
+    const resetView = () => {
+      setViewTransition(ViewTransitions.REPLACE)
+      component.value = FirstView
+    }
+
+    return { args, switchView, resetView, component }
   },
   template: `<button class="bg-white hover:bg-gray-300 text-gray-800 py-2 px-4 border border-gray-600 rounded text-sm mr-5" v-on:click="switchView()">Switch View</button>
     <button class="bg-white hover:bg-gray-300 text-gray-600 py-2 px-4 border border-gray-600 rounded text-sm mb-10" v-on:click="resetView()">Reset View</button>

@@ -93,7 +93,8 @@ yarn-error.log
 /node_modules
 
 # Eslint
-.eslint/node_modules
+.eslint-plugin-zammad/node_modules
 
 # Storybook
-storybook-static
+.storybook/storybook-static
+.storybook/node_modules

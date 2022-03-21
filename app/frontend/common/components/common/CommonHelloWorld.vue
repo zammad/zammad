@@ -12,6 +12,11 @@
 import { i18n } from '@common/utils/i18n'
 import { computed } from 'vue'
 
+export interface Props {
+  msg: string
+  show: boolean
+}
+
 defineProps<{
   msg: string
   show: boolean

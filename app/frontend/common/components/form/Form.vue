@@ -71,7 +71,7 @@ import getUuid from '@common/utils/getUuid'
 // - ...
 
 // TODO:
-interface Props {
+export interface Props {
   schema?: FormSchemaNode[]
   formName?: string
   changeFields?: Record<string, FormSchemaField>

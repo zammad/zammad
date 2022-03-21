@@ -1,9 +1,12 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import CommonNotifications from '@common/components/common/CommonNotifications.vue'
-import { Story } from '@storybook/vue3'
+import type { Story } from '@storybook/vue3'
 import useNotifications from '@common/composables/useNotifications'
-import { NotificationTypes } from '@common/types/notification'
+import {
+  type Notification,
+  NotificationTypes,
+} from '@common/types/notification'
 
 export default {
   title: 'Common/Notifications',
@@ -32,7 +35,7 @@ export default {
 
 const { notify } = useNotifications()
 
-const Template: Story = (args) => ({
+const Template: Story<Notification> = (args: Notification) => ({
   components: { CommonNotifications },
   setup() {
     return { args }

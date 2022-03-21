@@ -3,3 +3,4 @@
 # Skip auto generated files.
 app/frontend/**/graphql/api.ts
 app/frontend/common/graphql/types.ts
+.storybook/storybook-static/**

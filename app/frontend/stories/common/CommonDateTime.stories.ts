@@ -1,7 +1,9 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import CommonDateTime from '@common/components/common/CommonDateTime.vue'
-import { Story } from '@storybook/vue3'
+import CommonDateTime, {
+  type Props,
+} from '@common/components/common/CommonDateTime.vue'
+import type { Story } from '@storybook/vue3'
 
 export default {
   title: 'Common/DateTime',
@@ -23,7 +25,7 @@ export default {
   },
 }
 
-const Template: Story = (args) => ({
+const Template: Story<Props> = (args: Props) => ({
   components: { CommonDateTime },
   setup() {
     return { args }

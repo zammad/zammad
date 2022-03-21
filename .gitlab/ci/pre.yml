@@ -81,7 +81,10 @@
     - yarn install
     - yarn lint:css
     - echo "ESLint check..."
+    - yarn install --cwd .storybook
     - yarn lint
+    - echo "Storybook build..."
+    - yarn storybook:build
     - echo "Rubocop check..."
     - echo -e "\\e[0Ksection_start:`date +%s`:bundle_install[collapsed=true]\\r\\e[0Kbundle install"
     - bundle config set --local frozen 'true'

@@ -37,7 +37,7 @@
 
 <script setup lang="ts">
 import useNotifications from '@common/composables/useNotifications'
-import { NotificationInterface } from '@common/types/notification'
+import type { Notification } from '@common/types/notification'
 
 const notificationTypeClassMap = {
   warn: 'bg-yellow text-white',
@@ -55,11 +55,11 @@ const iconNameMap = {
 
 const { notifications, removeNotification } = useNotifications()
 
-const getClassName = (notification: NotificationInterface) => {
+const getClassName = (notification: Notification) => {
   return notificationTypeClassMap[notification.type]
 }
 
-const clickHandler = (notification: NotificationInterface) => {
+const clickHandler = (notification: Notification) => {
   const { callback } = notification
   removeNotification(notification.id)
   if (callback) callback()

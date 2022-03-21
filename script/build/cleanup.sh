@@ -26,7 +26,7 @@ rm .rubocop.yml
 rm coffeelint.json
 rm .overcommit.yml
 rm .prettierrc.json
-# Since the .eslint folder is a dependency in package.json (requied by assets:precompile),
+# Since the .eslint-plugin-zammad folder is a dependency in package.json (requied by assets:precompile),
 #   it cannot be removed.
 
 # misc

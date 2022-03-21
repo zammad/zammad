@@ -109,10 +109,16 @@ module.exports = {
       },
     },
     {
+      files: ['.storybook/config/*'],
+      rules: {
+        'import/no-extraneous-dependencies': 'off',
+      },
+    },
+    {
       files: [
         'app/frontend/tests/**',
         'app/frontend/stories/**',
-        '.eslint/**',
+        '.eslint-plugin-zammad/**',
         '.eslintrc.js',
       ],
       rules: {
@@ -133,6 +139,7 @@ module.exports = {
       },
       node: {
         extensions: ['.js', '.jsx', '.ts', '.tsx', '.vue'],
+        paths: [path.resolve(__dirname, '.storybook/node_modules/')],
       },
     },
     // Adding typescript file types, because airbnb doesn't allow this by default.

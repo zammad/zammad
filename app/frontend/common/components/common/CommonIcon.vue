@@ -15,7 +15,7 @@
   </svg>
 </template>
 
-<script setup lang="ts">
+<script lang="ts">
 import { computed } from 'vue'
 
 const animationClassMap = {
@@ -34,8 +34,10 @@ const sizeMap = {
 } as const
 
 type Sizes = keyof typeof sizeMap
+</script>
 
-interface Props {
+<script setup lang="ts">
+export interface Props {
   size?: Sizes
   fixedSize?: { width: number; height: number }
   name: string

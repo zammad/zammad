@@ -9,15 +9,15 @@
 
 <script setup lang="ts">
 import useApplicationConfigStore from '@common/stores/application/config'
+import { DateTimeFormat } from '@common/types/dateTime'
 import { computed, ComputedRef } from 'vue'
 
-type Format = 'configured' | 'absolute' | 'relative'
-type OutputFormat = Exclude<Format, 'configured'>
-
-interface Props {
+export interface Props {
   dateTime: string
-  format?: Format
+  format?: DateTimeFormat
 }
+
+type OutputFormat = Exclude<DateTimeFormat, 'configured'>
 
 const props = withDefaults(defineProps<Props>(), {
   format: 'configured',

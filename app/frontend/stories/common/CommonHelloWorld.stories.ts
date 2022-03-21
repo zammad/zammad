@@ -1,7 +1,9 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { Story } from '@storybook/vue3'
-import CommonHelloWorld from '@common/components/common/CommonHelloWorld.vue'
+import type { Story } from '@storybook/vue3'
+import CommonHelloWorld, {
+  type Props,
+} from '@common/components/common/CommonHelloWorld.vue'
 
 export default {
   title: 'Common/HelloWorld',
@@ -9,7 +11,7 @@ export default {
 }
 
 // TODO: Figure out a way to import props definition for components here.
-const Template: Story = (args) => ({
+const Template: Story<Props> = (args: Props) => ({
   components: { CommonHelloWorld },
   setup() {
     return { args }
@@ -21,6 +23,7 @@ export const WithoutMessage = Template.bind({})
 WithoutMessage.args = {
   show: true,
   msg: '',
+  wrong: true,
 }
 
 export const WithMessage = Template.bind({})

@@ -1,14 +1,14 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { Story } from '@storybook/vue3'
-import Form from '@common/components/form/Form.vue'
+import type { Story } from '@storybook/vue3'
+import Form, { type Props } from '@common/components/form/Form.vue'
 
 export default {
   title: 'Form/Form',
   component: Form,
 }
 
-const Template: Story = (args) => ({
+const Template: Story<Props> = (args: Props) => ({
   components: { Form },
   setup() {
     return { args }

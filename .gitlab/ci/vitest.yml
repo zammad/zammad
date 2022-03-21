@@ -8,6 +8,6 @@ vitest:
   script:
     - yarn test
     - echo "Also test eslint-plugin-zammad..."
-    - cd .eslint
+    - cd .eslint-plugin-zammad
     - yarn install
     - yarn test

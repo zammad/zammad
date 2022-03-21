@@ -31,7 +31,7 @@ import isRouteLink from '@common/router/utils/isRouteLink'
 import { computed } from 'vue'
 import stopEvent from '@common/utils/events'
 
-interface Props {
+export interface Props {
   link: Link
   isExternal?: boolean
   isRoute?: boolean

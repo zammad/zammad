@@ -9,7 +9,7 @@ export enum NotificationTypes {
   INFO = 'info',
 }
 
-export interface NotificationInterface {
+export interface Notification {
   id: string
   message: string
   messagePlaceholder?: string[]
@@ -19,4 +19,4 @@ export interface NotificationInterface {
   callback?: () => void
 }
 
-export type NewNotificationInterface = SetOptional<NotificationInterface, 'id'>
+export type NewNotification = SetOptional<Notification, 'id'>

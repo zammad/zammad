@@ -1,10 +1,12 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { Story } from '@storybook/vue3'
-import CommonIcon from '@common/components/common/CommonIcon.vue'
+import type { Story } from '@storybook/vue3'
+import CommonIcon, {
+  type Props,
+} from '@common/components/common/CommonIcon.vue'
 import ids from 'virtual:svg-icons-names' // eslint-disable-line import/no-unresolved
 
-const iconsList = ids.map((item) => item.substring(5))
+const iconsList = ids.map((item: string) => item.substring(5))
 
 export default {
   title: 'Common/Icon',
@@ -25,7 +27,7 @@ export default {
   },
 }
 
-const Template: Story = (args) => ({
+const Template: Story<Props> = (args: Props) => ({
   components: { CommonIcon },
   setup() {
     return { args }

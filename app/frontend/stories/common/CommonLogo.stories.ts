@@ -4,12 +4,16 @@ import CommonLogo from '@common/components/common/CommonLogo.vue'
 import useApplicationConfigStore from '@common/stores/application/config'
 import { Story } from '@storybook/vue3'
 
+interface Args {
+  isCustomLogo: boolean
+}
+
 export default {
   title: 'Common/Logo',
   component: CommonLogo,
 }
 
-const Template: Story = (args) => ({
+const Template: Story<Args> = (args: Args) => ({
   components: { CommonLogo },
   setup() {
     const configStore = useApplicationConfigStore()

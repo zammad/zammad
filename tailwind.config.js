@@ -5,11 +5,12 @@ const formsPlugin = require('@tailwindcss/forms')
 const lineClampPlugin = require('@tailwindcss/line-clamp')
 const formKitPlugin = require('@formkit/tailwindcss')
 const plugin = require('tailwindcss/plugin')
+const path = require('path')
 
 // Add the moment we can use one tailwind config for the mobile app, but later we need to check
 // how this works with different apps.
 module.exports = {
-  content: ['./app/frontend/**/*.{js,jsx,ts,tsx,vue}'],
+  content: [`${path.resolve(__dirname)}/app/frontend/**/*.{js,jsx,ts,tsx,vue}`],
   theme: {
     fontFamily: {
       sans: [

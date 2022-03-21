@@ -49,12 +49,16 @@
       "@mobile/*": ["app/frontend/apps/mobile/*"],
       "@common/*": ["app/frontend/common/*"],
       "@tests/*": ["app/frontend/tests/*"],
-      "@/*": ["app/frontend/*"]
+      "@/*": ["app/frontend/*"],
+      "*": ["node_modules/*", ".storybook/node_modules/*"],
+      // Suppress loading of react types from storybook, as it would break with our code.
+      "react": [".storybook/config/types__react"]
     },
     // "rootDirs": [],                              /* List of root folders whose combined content represents the structure of the project at runtime. */
     // "typeRoots": [],                             /* List of folders to include type definitions from. */
     "types": [
       "vite/client",
+      "vite-plugin-svg-icons/client",
       "vitest/globals",
       "node"
     ] /* Type declaration files to be included in compilation. */,
@@ -79,12 +83,6 @@
 
     "resolveJsonModule": true /* Allow using json files in imports */
   },
-  "include": ["app/frontend/**/*"],
-  "exclude": [
-    "node_modules",
-    "public",
-    "vendor",
-    // This needs to be added, because otherwise some JSX types from react will be triggered."
-    "app/frontend/stories/**/*.stories.ts"
-  ]
+  "include": ["app/frontend/**/*", ".storybook/config/**/*"],
+  "exclude": ["node_modules", "public", "vendor"]
 }

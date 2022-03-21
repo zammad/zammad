@@ -1,14 +1,16 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import CommonLink from '@common/components/common/CommonLink.vue'
-import { Story } from '@storybook/vue3'
+import CommonLink, {
+  type Props,
+} from '@common/components/common/CommonLink.vue'
+import type { Story } from '@storybook/vue3'
 
 export default {
   title: 'Common/Link',
   component: CommonLink,
 }
 
-const Template: Story = (args) => ({
+const Template: Story<Props> = (args: Props) => ({
   components: { CommonLink },
   setup() {
     return { args }

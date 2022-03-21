@@ -5,7 +5,7 @@
 import { defineConfig } from 'vite'
 import RubyPlugin from 'vite-plugin-ruby'
 import VuePlugin from '@vitejs/plugin-vue'
-import viteSvgIcons from 'vite-plugin-svg-icons'
+import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 import type { OptimizeOptions } from 'svgo'
 import * as path from 'path'
 
@@ -31,11 +31,18 @@ export default defineConfig(({ mode }) => ({
   },
   plugins: [
     // Ruby plugin is not needed inside of the vitest context and has some side effects.
-    mode !== 'test' ? RubyPlugin() : [],
+    ['test', 'storybook'].includes(mode) ? [] : RubyPlugin(),
     VuePlugin(),
-    viteSvgIcons({
+    createSvgIconsPlugin({
       // Specify the icon folder to be cached
-      iconDirs: [path.resolve(process.cwd(), 'public/assets/images/icons')],
+      iconDirs: [
+        path.resolve(
+          process.cwd(),
+          `${
+            mode === 'storybook' ? '../public' : 'public'
+          }/assets/images/icons`,
+        ),
+      ],
       // Specify symbolId format
       symbolId: 'icon-[dir]-[name]',
       svgoOptions: {

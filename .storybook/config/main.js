@@ -1,11 +1,13 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 const { loadConfigFromFile, mergeConfig } = require('vite')
-const path = require('path')
 const postcss = require('postcss')
 
 module.exports = {
-  stories: ['../app/**/*.stories.mdx', '../app/**/*.stories.@(js|jsx|ts|tsx)'],
+  stories: [
+    '../../app/**/*.stories.mdx',
+    '../../app/**/*.stories.@(js|jsx|ts|tsx)',
+  ],
   addons: [
     '@storybook/addon-links',
     '@storybook/addon-essentials',
@@ -30,11 +32,19 @@ module.exports = {
   },
   async viteFinal(storybookViteConfig) {
     const { config } = await loadConfigFromFile(
-      path.resolve(__dirname, '../vite.config.ts'),
+      { mode: 'storybook' }, // env
+      '../vite.config.ts', // config path, relative to root
     )
-
     return mergeConfig(storybookViteConfig, {
       ...config,
+
+      server: {
+        fs: {
+          // Allow serving files from one level up to the project root
+          allow: ['..'],
+        },
+      },
+      publicDir: '../public',
 
       // Manually specify plugins to avoid conflicts.
       plugins: [

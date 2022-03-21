@@ -2,18 +2,18 @@
 
 import { ref } from 'vue'
 import {
-  NewNotificationInterface,
-  NotificationInterface,
+  NewNotification,
+  Notification,
   NotificationTypes,
 } from '@common/types/notification'
 import getUuid from '@common/utils/getUuid'
 
-const notifications = ref<NotificationInterface[]>([])
+const notifications = ref<Notification[]>([])
 const defaultNotificationDurationMS = 5000
 
 function removeNotification(id: string) {
   notifications.value = notifications.value.filter(
-    (notification: NotificationInterface) => notification.id !== id,
+    (notification: Notification) => notification.id !== id,
   )
 }
 
@@ -22,13 +22,13 @@ function clearAllNotifications() {
 }
 
 export default function useNotifications() {
-  function notify(notification: NewNotificationInterface): string {
+  function notify(notification: NewNotification): string {
     let { id } = notification
     if (!id) {
       id = getUuid()
     }
 
-    const newNotification: NotificationInterface = { id, ...notification }
+    const newNotification: Notification = { id, ...notification }
 
     notifications.value.push(newNotification)
 
