@@ -2590,4 +2590,25 @@ RSpec.describe 'Ticket zoom', type: :system do
       expect(page).to have_selector('.sidebar-content', text: 'mail001.box')
     end
   end
+
+  describe 'Error “customer_id required” on Macro execution #4022', authenticated_as: :authenticate do
+    let(:ticket) { create(:ticket, group: Group.first) }
+    let(:macro) { create(:macro, perform: { 'ticket.customer_id'=>{ 'pre_condition' => 'current_user.id', 'value' => nil, 'value_completion' => '' } }) }
+
+    def authenticate
+      ticket && macro
+
+      true
+    end
+
+    before do
+      visit "#ticket/zoom/#{ticket.id}"
+    end
+
+    it 'does set the agent as customer via macro' do
+      click '.js-openDropdownMacro'
+      page.find(:macro, macro.id).click
+      expect(ticket.reload.customer_id).to eq(User.find_by(email: 'admin@example.com').id)
+    end
+  end
 end
