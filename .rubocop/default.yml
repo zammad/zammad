@@ -171,6 +171,10 @@ Rails/HasAndBelongsToMany:
 #  StyleGuide: 'https://github.com/bbatsov/rails-style-guide#has-many-through'
   Enabled: false
 
+Rails/I18nLocaleTexts:
+  Description: 'Enforces use of I18n and locale files instead of locale specific strings.'
+  Enabled: false
+
 Rails/MatchRoute:
   Description: >-
                   Don't use `match` to define any routes unless there is a need to map multiple request types
