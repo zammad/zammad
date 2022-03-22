@@ -85,7 +85,7 @@ module ZammadCapybarActionDelegator
   end
 
   def hot_keys
-    mac_platform? ? %i[control alt] : %i[control shift]
+    mac_platform? ? %i[control alt] : %i[shift control]
   end
 
   def magic_key

@@ -18,7 +18,7 @@
 
   <div class="box box--message">
     <h2><%- @T('Inline translation') %></h2>
-    <p><%- @T('To make translations easier you can enable and disable the inline translation feature by pressing "%s".', 'ctrl+alt+t') %></p>
+    <p><%- @T('To make translations easier you can enable and disable the inline translation feature by pressing "%s".', @inlineTranslationKey ) %></p>
     <p><%- @T('Text with disabled inline translations looks like') %> <button class="btn btn-primary"><%- @Ti('Some Text') %></button></p>
     <p><%- @T('Text with enabled inline translations looks like') %> <button class="btn btn-primary"><span class="translation" contenteditable="true"><%- @Ti('Some Text') %></button></span></p>
     <p><%- @T('Just click into the highlighted area and update the words right there. Enjoy!') %></p>
