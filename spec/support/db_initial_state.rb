@@ -2,8 +2,11 @@
 
 require_relative './rake'
 
-# Reset database to be ready for tests
-Rake::Task['zammad:db:reset'].execute
+if !ENV['CI_SKIP_DB_RESET']
 
-# make sure that all migrations of linked packages are executed
-Package::Migration.linked
+  # Reset database to be ready for tests
+  Rake::Task['zammad:db:reset'].execute
+
+  # make sure that all migrations of linked packages are executed
+  Package::Migration.linked
+end
