@@ -14,7 +14,7 @@ module Zammad
         end
 
         def self.adapter
-          @adapter ||= const_get(ActiveRecord::Base.connection_config[:adapter].capitalize)
+          @adapter ||= const_get(ActiveRecord::Base.connection_db_config.configuration_hash[:adapter].capitalize)
         end
       end
     end

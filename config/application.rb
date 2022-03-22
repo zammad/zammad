@@ -72,9 +72,6 @@ module Zammad
                                        :file
                                      end
 
-    # Rails 6.1 returns false when the enqueuing is aborted.
-    config.active_job.return_false_on_aborted_enqueue = true
-
     # default preferences by permission
     config.preferences_default_by_permission = {
       'ticket.agent' => {

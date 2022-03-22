@@ -144,7 +144,7 @@ RSpec.describe 'Monitoring', type: :request do
       expect(json_response).to be_key('last_created_at')
 
       first_json_response_kb = 0
-      if ActiveRecord::Base.connection_config[:adapter] == 'postgresql'
+      if ActiveRecord::Base.connection_db_config.configuration_hash[:adapter] == 'postgresql'
         expect(json_response['storage']).to be_truthy
         expect(json_response['storage']).to be_key('kB')
         expect(json_response['storage']['kB']).to be > 0
@@ -174,7 +174,7 @@ RSpec.describe 'Monitoring', type: :request do
       expect(json_response).to be_key('counts')
       expect(json_response).to be_key('last_created_at')
 
-      if ActiveRecord::Base.connection_config[:adapter] == 'postgresql'
+      if ActiveRecord::Base.connection_db_config.configuration_hash[:adapter] == 'postgresql'
         expect(json_response['storage']).to be_truthy
         expect(json_response['storage']).to be_key('kB')
 
@@ -203,7 +203,7 @@ RSpec.describe 'Monitoring', type: :request do
       expect(json_response).to be_key('counts')
       expect(json_response).to be_key('last_created_at')
 
-      if ActiveRecord::Base.connection_config[:adapter] == 'postgresql'
+      if ActiveRecord::Base.connection_db_config.configuration_hash[:adapter] == 'postgresql'
         expect(json_response['storage']).to be_truthy
         expect(json_response['storage']).to be_key('kB')
 

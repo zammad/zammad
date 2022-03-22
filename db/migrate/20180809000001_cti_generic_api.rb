@@ -75,7 +75,7 @@ class CtiGenericApi < ActiveRecord::Migration[5.1]
     add_column :cti_logs, :duration_talking_time, :integer, null: true     if !column_exists?(:cti_logs, :duration_talking_time)
 
     # fixes issue #2183 - Mysql2::Error: Invalid default value for 'start_at'
-    if ActiveRecord::Base.connection_config[:adapter] == 'mysql2'
+    if ActiveRecord::Base.connection_db_config.configuration_hash[:adapter] == 'mysql2'
       # disable the MySQL strict_mode for the current connection
       execute("SET sql_mode = ''")
 

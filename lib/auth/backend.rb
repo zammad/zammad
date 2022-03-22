@@ -34,7 +34,7 @@ class Auth
     def configs
       Setting.where(area: 'Security::Authentication')
       .map { |setting| setting.state_current[:value] } # extract current Setting value as config
-      .reject(&:blank?)
+      .compact_blank
       .sort { |a, b| a.fetch(:priority, 999) <=> b.fetch(:priority, 999) } # sort by priority and fallback to append if not set
     end
   end

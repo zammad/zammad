@@ -399,7 +399,7 @@ RSpec.describe 'Chat Handling', type: :system do
     let(:chat_session) { create(:'chat/session', user: chat_user, chat: chat) }
 
     before do
-      file     = File.binread(Rails.root.join('spec/fixtures/image/squares.png'))
+      file     = File.binread(Rails.root.join('spec/fixtures/files/image/squares.png'))
       base64   = Base64.encode64(file).delete("\n")
 
       create(

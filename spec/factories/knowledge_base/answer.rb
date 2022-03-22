@@ -55,7 +55,7 @@ FactoryBot.define do
 
     trait :with_attachment do
       transient do
-        attachment { File.open('spec/fixtures/upload/hello_world.txt') }
+        attachment { File.open('spec/fixtures/files/upload/hello_world.txt') }
       end
 
       after(:create) do |answer, context|

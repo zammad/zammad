@@ -5,7 +5,7 @@ class ApplicationJob < ActiveJob::Base
   include ApplicationJob::HasQueuingPriority
   include ApplicationJob::HasCustomLogging
 
-  ActiveJob::Logging::LogSubscriber.detach_from :active_job
+  ActiveJob::LogSubscriber.detach_from :active_job
 
   # See config/initializers/delayed_jobs_timeout_per_job.rb for details.
   def self.max_run_time

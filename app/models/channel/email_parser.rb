@@ -379,7 +379,7 @@ returns
   def self.sender_attributes(from)
     if from.is_a?(HashWithIndifferentAccess)
       from = SENDER_FIELDS.filter_map { |f| from[f] }
-                          .map(&:to_utf8).reject(&:blank?)
+                          .map(&:to_utf8).compact_blank
                           .partition { |address| address.match?(EMAIL_REGEX) }
                           .flatten.first
     end
@@ -696,7 +696,7 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
       'original-format'     => message.mime_type.eql?('text/html'),
       'Mime-Type'           => message.mime_type,
       'Charset'             => message.charset,
-    }.reject { |_, v| v.blank? }
+    }.compact_blank
 
     [{
       data:        body_text(message),

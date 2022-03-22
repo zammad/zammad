@@ -775,7 +775,9 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
       return
     end
 
-    if ActiveStorage::Variant::WEB_IMAGE_CONTENT_TYPES.exclude?(file_full[:mime_type])
+    web_image_content_types = Rails.application.config.active_storage.web_image_content_types
+
+    if web_image_content_types.exclude?(file_full[:mime_type])
       render json: { error: __('The MIME type of the full-size image is invalid.') }, status: :unprocessable_entity
       return
     end
@@ -787,7 +789,7 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
       return
     end
 
-    if ActiveStorage::Variant::WEB_IMAGE_CONTENT_TYPES.exclude?(file_resize[:mime_type])
+    if web_image_content_types.exclude?(file_resize[:mime_type])
       render json: { error: __('The MIME type of the resized image is invalid.') }, status: :unprocessable_entity
       return
     end

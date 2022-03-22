@@ -52,7 +52,7 @@ module Zammad
           end
 
           def self.db_config
-            @db_config ||= ActiveRecord::Base.connection_config
+            @db_config ||= ActiveRecord::Base.connection_db_config.configuration_hash
                                              .symbolize_keys
                                              .except(:database)
           end

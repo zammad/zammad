@@ -55,7 +55,7 @@ class TicketsMassController < ApplicationController
 
     clean_params = Ticket.association_name_to_id_convert(params.require(:attributes))
     clean_params = Ticket.param_cleanup(clean_params, true)
-    clean_params.reject! { |_k, v| v.blank? }
+    clean_params.compact_blank!
 
     clean_params[:screen] = 'edit'
     clean_params.delete('number')

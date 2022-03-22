@@ -10,7 +10,7 @@ class ApplicationJob
     # The custom version comes with two changes:
     # - Don't log info level lines
     # - Log (info) that an ActiveJob was not enqueued in case there is already one queued with the same ActiveJobLock
-    class LogSubscriber < ActiveJob::Logging::LogSubscriber
+    class LogSubscriber < ActiveJob::LogSubscriber
 
       # ATTENTION: Uncomment this line to enable info logging again
       def info(...); end

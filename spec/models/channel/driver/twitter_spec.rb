@@ -813,7 +813,7 @@ RSpec.describe Channel::Driver::Twitter, required_envs: %w[TWITTER_CONSUMER_KEY 
           let(:thread) do
             Ticket.joins(articles: :type).where(ticket_article_types: { name: 'twitter status' })
               .group('tickets.id').having(
-                case ActiveRecord::Base.connection_config[:adapter]
+                case ActiveRecord::Base.connection_db_config.configuration_hash[:adapter]
                 when 'mysql2'
                   'COUNT("ticket_articles.*") > 1'
                 when 'postgresql'

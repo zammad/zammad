@@ -6,7 +6,7 @@ RSpec.describe 'KnowledgeBase attachments', type: :request, authenticated_as: :c
   include_context 'basic Knowledge Base'
 
   let(:attachment) do
-    attachment_file = File.open 'spec/fixtures/upload/hello_world.txt'
+    attachment_file = File.open 'spec/fixtures/files/upload/hello_world.txt'
 
     create(:store,
            object:        object.class.to_s,

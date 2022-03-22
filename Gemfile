@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 
 # core - base
 ruby '2.7.4'
-gem 'rails', '~> 6.0.0'
+gem 'rails', '~> 6.1.0'
 
 # core - rails additions
 gem 'activerecord-import'
@@ -20,7 +20,7 @@ gem 'unicorn', group: :unicorn
 # core - supported ORMs
 gem 'activerecord-nulldb-adapter', group: :nulldb
 gem 'mysql2', group: :mysql
-gem 'pg', '0.21.0', group: :postgres
+gem 'pg', '~> 1.2.0', group: :postgres
 
 # core - asynchrous task execution
 gem 'daemons'

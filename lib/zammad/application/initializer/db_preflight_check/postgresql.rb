@@ -33,7 +33,7 @@ module Zammad
             alternate_dbs = %w[template0 template1 postgres]
 
             @connection ||= begin
-              PG.connect(db_config)
+              PG.connect(**db_config)
             rescue PG::ConnectionBad
               db_config[:dbname] = alternate_dbs.pop
               retry if db_config[:dbname].present?
@@ -42,7 +42,7 @@ module Zammad
 
           # Adapted from ActiveRecord::ConnectionHandling#postgresql_connection
           def self.db_config
-            @db_config ||= ActiveRecord::Base.connection_config.dup.tap do |config|
+            @db_config ||= ActiveRecord::Base.connection_db_config.configuration_hash.dup.tap do |config|
               config.symbolize_keys!
               config[:user] = config.delete(:username)
               config[:dbname] = config.delete(:database)

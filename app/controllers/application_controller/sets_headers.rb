@@ -46,3 +46,12 @@ module ApplicationController::SetsHeaders
     render plain: ''
   end
 end
+
+module ActionDispatch
+  class Response
+    def merge_and_normalize_cache_control!(...)
+      # Mutilate this Rails 6.1 method which does not allow us to specify
+      #   our custom Cache-Control header.
+    end
+  end
+end

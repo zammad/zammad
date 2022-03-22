@@ -249,7 +249,7 @@ curl http://localhost/api/v1/monitoring/status?token=XXX
       status[:last_created_at][key] = last&.created_at
     end
 
-    if ActiveRecord::Base.connection_config[:adapter] == 'postgresql'
+    if ActiveRecord::Base.connection_db_config.configuration_hash[:adapter] == 'postgresql'
       sql = 'SELECT SUM(CAST(coalesce(size, \'0\') AS INTEGER)) FROM stores'
       records_array = ActiveRecord::Base.connection.exec_query(sql)
       if records_array[0] && records_array[0]['sum']

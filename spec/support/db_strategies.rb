@@ -18,7 +18,7 @@ RSpec.configure do |config|
   end
 
   config.filter_run_excluding db_adapter: lambda { |adapter|
-    adapter_config = ActiveRecord::Base.connection_config[:adapter]
+    adapter_config = ActiveRecord::Base.connection_db_config.configuration_hash[:adapter]
     case adapter
     when :postgresql
       adapter_config != 'postgresql'

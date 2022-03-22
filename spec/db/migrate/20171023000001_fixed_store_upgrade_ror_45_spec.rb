@@ -28,7 +28,7 @@ RSpec.describe FixedStoreUpgradeRor45, type: :db_migration do
       SQL
     end
 
-    let(:mysql?) { ActiveRecord::Base.connection_config[:adapter] == 'mysql2' }
+    let(:mysql?) { ActiveRecord::Base.connection_db_config.configuration_hash[:adapter] == 'mysql2' }
     let(:user) { User.last }
     let(:last_contact) { '2017-09-01 10:10:00' }
     let(:state) { ActionController::Parameters.new('ticket' => {}, 'article' => {}) }

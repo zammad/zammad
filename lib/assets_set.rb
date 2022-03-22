@@ -46,7 +46,7 @@ class AssetsSet < SimpleDelegator
   # This method is used to convert the AssetsSet into a regular Hash which then can be send to the client.
   # It cleans up empty Model sub structures in the internal structure.
   def to_h
-    super.delete_if { |_model, assets| assets.blank? }.transform_values!(&:to_h)
+    super.compact_blank!.transform_values!(&:to_h)
   end
 
   private

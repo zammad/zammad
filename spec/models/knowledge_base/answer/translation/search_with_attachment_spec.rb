@@ -14,7 +14,7 @@ RSpec.describe KnowledgeBase::Answer::Translation, type: :model, current_user_id
   context 'search with attachment' do
     before do
       configure_elasticsearch(required: true, rebuild: true) do
-        published_answer.add_attachment File.open "spec/fixtures/upload/#{filename}"
+        published_answer.add_attachment File.open "spec/fixtures/files/upload/#{filename}"
       end
     end
 

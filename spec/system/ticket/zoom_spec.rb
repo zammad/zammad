@@ -914,7 +914,7 @@ RSpec.describe 'Ticket zoom', type: :system do
   describe 'forwarding article with an image' do
     let(:ticket_article_body) do
       filename = 'squares.png'
-      file     = File.binread(Rails.root.join("spec/fixtures/image/#{filename}"))
+      file     = File.binread(Rails.root.join("spec/fixtures/files/image/#{filename}"))
       ext      = File.extname(filename)[1...]
       base64   = Base64.encode64(file).delete("\n")
 

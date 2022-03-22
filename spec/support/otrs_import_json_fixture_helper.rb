@@ -2,7 +2,7 @@
 
 module OtrsImportJsonFixtureHelper
   def json_fixture(file)
-    JSON.parse(File.read("spec/fixtures/#{file}.json"))
+    JSON.parse(File.read("spec/fixtures/files/#{file}.json"))
   end
 end
 
