@@ -12,6 +12,7 @@
   variables:
     ES_INDEX_RAND: "true"
     ES_URL: "http://elasticsearch:9200"
+    ELASTICSEARCH_TAG: '7.16'
 
 .variables_redis_memcached: &variables_redis_memcached
   variables:
@@ -168,8 +169,6 @@
     - <<: *docker_imap
 
 .services_mysql_postgresql_elasticsearch: &services_mysql_postgresql_elasticsearch
-  variables:
-    ELASTICSEARCH_TAG: 'stable'
   services:
     - <<: *docker_mysql
     - <<: *docker_postgresql
@@ -178,8 +177,6 @@
 .services_mysql_postgresql_elasticsearch_selenium_chrome_imap: &services_mysql_postgresql_elasticsearch_selenium_chrome_imap
   extends:
     - .variables_selenium_chrome
-  variables:
-    ELASTICSEARCH_TAG: 'stable'
   services:
     - <<: *docker_mysql
     - <<: *docker_postgresql
@@ -190,8 +187,6 @@
 .services_mysql_postgresql_elasticsearch_selenium_firefox_imap: &services_mysql_postgresql_elasticsearch_selenium_firefox_imap
   extends:
     - .variables_selenium_firefox
-  variables:
-    ELASTICSEARCH_TAG: 'stable'
   services:
     - <<: *docker_mysql
     - <<: *docker_postgresql
@@ -203,8 +198,6 @@
   extends:
     - .variables_selenium_chrome
     - .variables_redis_memcached
-  variables:
-    ELASTICSEARCH_TAG: 'stable'
   services:
     - <<: *docker_mysql
     - <<: *docker_postgresql
@@ -218,8 +211,6 @@
   extends:
     - .variables_selenium_firefox
     - .variables_redis_memcached
-  variables:
-    ELASTICSEARCH_TAG: 'stable'
   services:
     - <<: *docker_mysql
     - <<: *docker_postgresql
