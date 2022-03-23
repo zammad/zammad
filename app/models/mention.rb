@@ -30,6 +30,7 @@ class Mention < ApplicationModel
     {
       related_o_id:           mentionable_id,
       related_history_object: mentionable_type,
+      value_to:               user.id,
     }
   end
 

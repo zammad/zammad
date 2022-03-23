@@ -1381,6 +1381,7 @@ RSpec.describe 'Ticket zoom', type: :system do
     context 'when logged in as agent' do
       let(:ticket) { create(:ticket, group: Group.find_by(name: 'Users')) }
       let!(:other_agent) { create(:agent, groups: [Group.find_by(name: 'Users')]) }
+      let!(:admin) { User.find_by(email: 'admin@example.com') }
 
       it 'can subscribe and unsubscribe' do
         ensure_websocket do
@@ -1400,8 +1401,9 @@ RSpec.describe 'Ticket zoom', type: :system do
           # check history for mention entries
           click 'h2.sidebar-header-headline.js-headline'
           click 'li[data-type=ticket-history] a'
-          expect(page).to have_text('created Mention')
-          expect(page).to have_text('removed Mention')
+          expect(page).to have_text("created Mention → '#{admin.firstname} #{admin.lastname}'")
+          expect(page).to have_text("removed Mention → '#{admin.firstname} #{admin.lastname}'")
+          expect(page).to have_text("created Mention → '#{other_agent.firstname} #{other_agent.lastname}'")
         end
       end
     end
