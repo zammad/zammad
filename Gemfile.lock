@@ -461,7 +461,7 @@ GEM
       rspec-mocks (~> 3.10)
       rspec-support (~> 3.10)
     rspec-support (3.11.0)
-    rszr (0.5.2)
+    rszr (1.2.1)
     rubocop (1.26.1)
       parallel (~> 1.10)
       parser (>= 3.1.0.0)
@@ -674,7 +674,7 @@ DEPENDENCIES
   rchardet (>= 1.8.0)
   redis
   rspec-rails
-  rszr (= 0.5.2)
+  rszr
   rubocop
   rubocop-faker
   rubocop-inflector
