@@ -100,7 +100,7 @@ class App.GenericHistory extends App.ControllerModal
           content += " '#{ @translateItemValue(item, item.value_from) }'"
 
         if item.value_to
-          if item.value_from
+          if item.value_from || item.object is 'Mention'
             content += ' &rarr;'
           content += " '#{ @translateItemValue(item, item.value_to) }'"
         else if item.value_from
@@ -114,6 +114,14 @@ class App.GenericHistory extends App.ControllerModal
     newItems
 
   translateItemValue: ({object, attribute}, value) ->
+    if object is 'Mention'
+      result = '-'
+      if value
+        user = App.User.find(value)
+        if user
+          result = user.displayName()
+      return result
+
     localAttribute = @objectAttribute(object, attribute)
     if localAttribute && localAttribute.tag is 'datetime'
       return App.i18n.translateTimestamp(value)
