@@ -13,7 +13,6 @@
 3_firefox:
   extends:
     - .template_browser-core_firefox
-    - .tags_mail
   variables:
     TEST_SLICE: "3"
 

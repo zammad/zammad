@@ -70,11 +70,6 @@
     - docker
     - low_concurrency
 
-# Workaround for blocked port 25 access on cloud provider infrastructure
-.tags_mail: &tags_mail
-  tags:
-    - mail
-
 .env_base: &env_base
   <<: *tags_docker
   <<: *artifacts_error
