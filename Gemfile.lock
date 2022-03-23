@@ -700,7 +700,10 @@ DEPENDENCIES
   rchardet (>= 1.8.0)
   redis
   rspec-rails
+<<<<<<< HEAD
   rspec-retry
+=======
+>>>>>>> ba2ed2375 (Maintenance: Bump rszr to newest version (1.2.1).)
   rszr
   rubocop
   rubocop-faker
