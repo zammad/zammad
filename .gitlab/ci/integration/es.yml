@@ -14,14 +14,16 @@
     - bundle exec rails test test/integration/elasticsearch_test.rb
     - bundle exec rspec --tag searchindex --tag ~type:system --profile 10
 
-"rspec:es:7":
-  <<: *template_integration_es
-  variables:
-    ELASTICSEARCH_TAG: '7'
-    RAILS_ENV: "test"
-
+# Lowest supported version
 "rspec:es:7.8":
   <<: *template_integration_es
   variables:
     ELASTICSEARCH_TAG: '7.8.1'
+    RAILS_ENV: "test"
+
+# Highest supported version (except for newer releases that are not yet in CI)
+"rspec:es:7.16":
+  <<: *template_integration_es
+  variables:
+    ELASTICSEARCH_TAG: '7.16'
     RAILS_ENV: "test"
