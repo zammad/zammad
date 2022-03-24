@@ -5,10 +5,10 @@ require 'rails_helper'
 RSpec.describe ::Sequencer::Sequence::Import::Freshdesk::Conversation, sequencer: :sequence do
 
   context 'when importing conversations from Freshdesk' do
-
+    let(:inline_image_url) { 'https://eucattachment.freshdesk.com/inline/attachment?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6ODAwMTIyMjY4NTMsImRvbWFpbiI6InphbW1hZC5mcmVzaGRlc2suY29tIiwiYWNjb3VudF9pZCI6MTg5MDU2MH0.705lNehzm--aO36CGFg0SW73j0NG3UWcRcN1_DXgtwc' }
     let(:resource) do
       {
-        'body' => "<div style=\"font-family:-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif; font-size:14px\">\n<div dir=\"ltr\">Let's see if inline images work in a subsequent article:</div>\n<div dir=\"ltr\"><img src=\"https://eucattachment.freshdesk.com/inline/attachment?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6ODAwMTIyMjY4NTMsImRvbWFpbiI6InphbW1hZC5mcmVzaGRlc2suY29tIiwiYWNjb3VudF9pZCI6MTg5MDU2MH0.705lNehzm--aO36CGFg0SW73j0NG3UWcRcN1_DXgtwc\" style=\"width: auto\" class=\"fr-fil fr-dib\" data-id=\"80012226853\"></div>\n</div>", 'body_text' => "Let's see if inline images work in a subsequent article:",
+        'body' => "<div style=\"font-family:-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif; font-size:14px\">\n<div dir=\"ltr\">Let's see if inline images work in a subsequent article:</div>\n<div dir=\"ltr\"><img src=\"#{inline_image_url}\" style=\"width: auto\" class=\"fr-fil fr-dib\" data-id=\"80012226853\"></div>\n</div>", 'body_text' => "Let's see if inline images work in a subsequent article:",
         'id' => 80_027_218_656,
         'incoming' => false,
         'private' => true,
@@ -76,17 +76,21 @@ RSpec.describe ::Sequencer::Sequence::Import::Freshdesk::Conversation, sequencer
       end
     end
 
-    it 'adds article with inline image' do
-      expect { process(process_payload) }.to change(Ticket::Article, :count).by(1)
+    shared_examples 'import article' do
+      it 'adds article with inline image' do
+        expect { process(process_payload) }.to change(Ticket::Article, :count).by(1)
+      end
+
+      it 'correct attributes for added article' do
+        process(process_payload)
+        expect(Ticket::Article.last).to have_attributes(
+          to:   'info@zammad.org',
+          body: "\n<div>\n<div dir=\"ltr\">Let's see if inline images work in a subsequent article:</div>\n<div dir=\"ltr\"><img src=\"data:image/png;base64,MTIz\" style=\"width: auto;\"></div>\n</div>\n",
+        )
+      end
     end
 
-    it 'correct attributes for added article' do
-      process(process_payload)
-      expect(Ticket::Article.last).to have_attributes(
-        to:   'info@zammad.org',
-        body: "\n<div>\n<div dir=\"ltr\">Let's see if inline images work in a subsequent article:</div>\n<div dir=\"ltr\"><img src=\"data:image/png;base64,MTIz\" style=\"width: auto;\"></div>\n</div>\n",
-      )
-    end
+    include_examples 'import article'
 
     it 'updates already existing article' do
       expect do
@@ -110,6 +114,30 @@ RSpec.describe ::Sequencer::Sequence::Import::Freshdesk::Conversation, sequencer
           'resizable'    => false,
         }
       )
+    end
+
+    context 'when handling special inline images' do
+      context 'when inline image source contains special urls (e.g. "cid:https://...")' do
+        let(:inline_image_url) { 'cid:https://eucattachment.freshdesk.com/inline/attachment?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6ODAwMTIyMjY4NTMsImRvbWFpbiI6InphbW1hZC5mcmVzaGRlc2suY29tIiwiYWNjb3VudF9pZCI6MTg5MDU2MH0.705lNehzm--aO36CGFg0SW73j0NG3UWcRcN1_DXgtwc' }
+
+        include_examples 'import article'
+      end
+
+      context 'when inline image source contains broken urls' do
+        let(:inline_image_url) { 'broken_image_url' }
+
+        it 'skips image download with broken inline image url' do
+          expect { process(process_payload) }.to change(Ticket::Article, :count).by(1)
+        end
+
+        it 'correct attributes for added article' do
+          process(process_payload)
+          expect(Ticket::Article.last).to have_attributes(
+            to:   'info@zammad.org',
+            body: "<div>\n<div dir=\"ltr\">Let's see if inline images work in a subsequent article:</div>\n<div dir=\"ltr\"><img src=\"broken_image_url\" style=\"width: auto;\"></div>\n</div>",
+          )
+        end
+      end
     end
   end
 end

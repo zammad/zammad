@@ -21,14 +21,17 @@ class Sequencer
             end
 
             def self.inline_data(freshdesk_url)
-              @cache ||= {}
-              return @cache[freshdesk_url] if @cache[freshdesk_url]
+              clean_freshdesk_url = freshdesk_url.gsub(%r{^cid:}, '')
+              return if !%r{^(http|https)://.+?$}.match?(clean_freshdesk_url)
 
-              image_data = download(freshdesk_url)
+              @cache ||= {}
+              return @cache[clean_freshdesk_url] if @cache[clean_freshdesk_url]
+
+              image_data = download(clean_freshdesk_url)
               return if image_data.blank?
 
-              @cache[freshdesk_url] = "data:image/png;base64,#{Base64.strict_encode64(image_data)}"
-              @cache[freshdesk_url]
+              @cache[clean_freshdesk_url] = "data:image/png;base64,#{Base64.strict_encode64(image_data)}"
+              @cache[clean_freshdesk_url]
             end
 
             def self.download(freshdesk_url)
