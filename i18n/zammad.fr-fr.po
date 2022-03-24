@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-03-17 03:30+0000\n"
+"PO-Revision-Date: 2022-03-23 03:30+0000\n"
 "Last-Translator: Ben RUBSON <ben.rubson@gmx.com>\n"
 "Language-Team: French <https://translations.zammad.org/projects/zammad/"
 "zammad-development/fr/>\n"
@@ -52,31 +52,36 @@ msgid ""
 "filesystem. You can switch between the modules even on a system that is "
 "already in production without any loss of data."
 msgstr ""
+"\"Base de données\" toutes les pièces jointes sont stocké dans la base de "
+"données (non recommandé pour stocker de grandes quantités de données). "
+"\"Filesystem\" stocke les données dans le système de fichiers. Vous pouvez "
+"passer d'un module à l'autre même sur un système déjà en production sans "
+"aucune perte de données."
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
 msgid "%s API Token"
-msgstr "%s Token d'API"
+msgstr "Token API %s"
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "%s Attribute"
-msgstr ""
+msgstr "Attribut %s"
 
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "%s Group"
-msgstr ""
+msgstr "Groupe %s"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
 msgid "%s Migration"
-msgstr "%s Migration"
+msgstr "Migration %s"
 
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "%s Role"
-msgstr "%s Role"
+msgstr "Rôle %s"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
@@ -112,7 +117,7 @@ msgstr "%s a créé la société |%s|"
 
 #: app/assets/javascripts/app/models/role.coffee
 msgid "%s created role |%s|"
-msgstr "%s a créé le groupe |%s|"
+msgstr "%s a créé le rôle |%s|"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "%s created ticket |%s|"
@@ -126,7 +131,7 @@ msgstr "%s a créé l'utilisateur |%s|"
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
 msgid "%s credentials"
-msgstr "%s identifiants"
+msgstr "identifiants %s"
 
 #: app/assets/javascripts/app/models/user.coffee
 msgid "%s ended switch to |%s|!"
@@ -135,7 +140,7 @@ msgstr "fin de la bascule de %s vers |%s| !"
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco
 msgid "%s folders"
-msgstr "% répertoires"
+msgstr "dossiers %s"
 
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco
@@ -175,7 +180,7 @@ msgstr "%s objet(s) seront mis à jour."
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco
 msgid "%s of my tickets are currently in process."
-msgstr "%s de mes tickets sont en cours de traitement."
+msgstr "%s de mes tickets sont en cours."
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_escalation.jst.eco
 msgid "%s of my tickets escalated."
@@ -217,8 +222,8 @@ msgstr "%s Article créé pour |%s|"
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 msgid "%s updated data privacy task to delete user ID |%s|"
 msgstr ""
-"%s a mis à jour la tâche de confidentialité pour supprimer l'utilisateur ID "
-"|%s|"
+"%s a mis à jour la tâche de confidentialité pour supprimer l'utilisateur ID |"
+"%s|"
 
 #: app/assets/javascripts/app/models/group.coffee
 msgid "%s updated group |%s|"
@@ -253,7 +258,7 @@ msgstr "%s utilisateur à %s utilisateur"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco
 msgid "%s% are currently in process"
-msgstr "%s sont actuellement en cours de traitement"
+msgstr "%s% sont en cours"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_reopen.jst.eco
 msgid "%s% have been reopened"
@@ -6822,10 +6827,8 @@ msgid "My handling time: %s minutes"
 msgstr "Mon temps passé : %s minutes"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco
-#, fuzzy
-#| msgid "Your tickets in process"
 msgid "My tickets in process"
-msgstr "VOS TICKETS EN COURS de TRAITEMENT"
+msgstr "Mes tickets en cours"
 
 #: app/assets/javascripts/app/controllers/_integration/nagios.coffee
 msgid "Nagios"
@@ -7350,7 +7353,6 @@ msgid "Not configured"
 msgstr "Non configurés"
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
-#: app/assets/javascripts/app/models/calendar.coffee
 #: app/assets/javascripts/app/models/chat.coffee
 #: app/assets/javascripts/app/models/email_address.coffee
 #: app/assets/javascripts/app/models/group.coffee

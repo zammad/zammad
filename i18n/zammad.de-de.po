@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-03-16 06:13+0000\n"
-"Last-Translator: Martin Gruner <mg@zammad.com>\n"
+"PO-Revision-Date: 2022-03-24 19:15+0000\n"
+"Last-Translator: Gerrit <github@gmail.arghs.de>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
 "zammad-development/de/>\n"
 "Language: de-de\n"
@@ -975,10 +975,8 @@ msgid "Article"
 msgstr "Artikel"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Note - visibility confirmation dialog"
 msgid "Article - visibility confirmation dialog"
-msgstr "Notiz - Bestätigungsdialog zur Sichtbarkeit"
+msgstr "Artikel - Bestätigungsdialog zur Sichtbarkeit"
 
 #: lib/excel_sheet/ticket.rb
 msgid "Article Count"
@@ -3404,7 +3402,7 @@ msgstr "Definiert das zufällige Applikations-Secret."
 
 #: db/seeds/settings.rb
 msgid "Defines the searchable models."
-msgstr ""
+msgstr "Definiert die durchsuchbare Modelle."
 
 #: db/seeds/settings.rb
 msgid "Defines the sender email address of Icinga emails."
@@ -6174,7 +6172,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/attribute_bar.coffee
 msgid "Last change %s %s by %s"
-msgstr ""
+msgstr "Letzte Änderung %s %s durch %s"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "Last contact"
@@ -6738,7 +6736,7 @@ msgstr "Monitoring"
 
 #: db/seeds/settings.rb
 msgid "Monitoring Token"
-msgstr ""
+msgstr "Monitoring-Token"
 
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco
 msgid "Month"
@@ -7345,7 +7343,6 @@ msgid "Not configured"
 msgstr "Nicht konfiguriert"
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
-#: app/assets/javascripts/app/models/calendar.coffee
 #: app/assets/javascripts/app/models/chat.coffee
 #: app/assets/javascripts/app/models/email_address.coffee
 #: app/assets/javascripts/app/models/group.coffee
@@ -8981,6 +8978,8 @@ msgid ""
 "Set timeframe in seconds. If it's set to 0 you can delete notes without time "
 "limits"
 msgstr ""
+"Zeitrahmen in Sekunden setzen. Wenn auf 0 gesetzt, können Sie Notizen "
+"dauerhaft ohne Zeitlimit löschen"
 
 #: app/assets/javascripts/app/views/getting_started/intro.jst.eco
 msgid "Set up a new system"
@@ -9160,7 +9159,7 @@ msgstr "Signiert"
 
 #: app/assets/javascripts/app/lib/app_post/iconset_picker.coffee
 msgid "Simple Line Icons"
-msgstr ""
+msgstr "Simple Line Icons"
 
 #: public/assets/chat/views/customer_timeout.eco
 msgid ""
@@ -10093,6 +10092,8 @@ msgid ""
 "This permission level is not available based on the current roles "
 "permissions."
 msgstr ""
+"Dieses Berechtigungs-Level ist mit den aktuellen Rollen-Berechtigungen nicht "
+"verfügbar."
 
 #: app/assets/javascripts/app/controllers/_integration/github.coffee
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee
@@ -10493,14 +10494,12 @@ msgid "Token for CTI."
 msgstr "Token für CTI."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Token for CTI."
 msgid "Token for Sipgate."
-msgstr "Token für CTI."
+msgstr "Token für Sipgate."
 
 #: db/seeds/settings.rb
 msgid "Token for monitoring."
-msgstr ""
+msgstr "Token fürs Monitoring."
 
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee
 msgid "Token is invalid!"
@@ -12507,7 +12506,7 @@ msgstr "Option entfernen"
 
 #: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
 msgid "removed"
-msgstr "zurück gezogen"
+msgstr "zurückgezogen"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/facebook_reply.coffee
@@ -12578,10 +12577,8 @@ msgid "show more"
 msgstr "mehr anzeigen"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "sipgate.io config"
 msgid "sipgate.io Token"
-msgstr "sipgate.io-Konfiguration"
+msgstr "sipgate.io-Token"
 
 #: db/seeds/settings.rb
 msgid "sipgate.io alternative FQDN"
