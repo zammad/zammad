@@ -2,16 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2021-12-10 03:30+0000\n"
+"PO-Revision-Date: 2022-03-24 19:16+0000\n"
 "Last-Translator: kirkkak <kirkka.kivilo@gmail.com>\n"
 "Language-Team: Estonian <https://translations.zammad.org/projects/zammad/"
-"zammad-development/et/>\n"
+"zammad-stable/et/>\n"
 "Language: et\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.9.1\n"
+"X-Generator: Weblate 4.11.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -948,6 +948,10 @@ msgstr "Oled sa kindel?"
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
 msgid "Article"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Article - visibility confirmation dialog"
 msgstr ""
 
 #: lib/excel_sheet/ticket.rb
@@ -5599,6 +5603,7 @@ msgstr ""
 
 #: app/controllers/integration/cti_controller.rb
 #: app/controllers/integration/placetel_controller.rb
+#: app/controllers/integration/sipgate_controller.rb
 msgid "Invalid token, please contact your admin!"
 msgstr ""
 
@@ -5963,10 +5968,8 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee
 #: app/assets/javascripts/app/controllers/widget/payload_example.coffee
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee
-#, fuzzy
-#| msgid "Loading..."
 msgid "Loading failed."
-msgstr "Laadimine..."
+msgstr "Laadimine ebaõnnestus."
 
 #: app/assets/javascripts/app/lib/app_post/task_manager.coffee
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
@@ -6994,7 +6997,6 @@ msgid "Not configured"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
-#: app/assets/javascripts/app/models/calendar.coffee
 #: app/assets/javascripts/app/models/chat.coffee
 #: app/assets/javascripts/app/models/email_address.coffee
 #: app/assets/javascripts/app/models/group.coffee
@@ -7015,10 +7017,6 @@ msgstr "Märkus"
 
 #: db/seeds/settings.rb
 msgid "Note - default visibility"
-msgstr ""
-
-#: db/seeds/settings.rb
-msgid "Note - visibility confirmation dialog"
 msgstr ""
 
 #: app/assets/javascripts/app/models/email_address.coffee
@@ -10061,6 +10059,10 @@ msgid "Token for CTI."
 msgstr ""
 
 #: db/seeds/settings.rb
+msgid "Token for Sipgate."
+msgstr ""
+
+#: db/seeds/settings.rb
 msgid "Token for monitoring."
 msgstr ""
 
@@ -12014,6 +12016,10 @@ msgstr "näita"
 #: app/assets/javascripts/app/views/organization_profile/object.jst.eco
 #: app/assets/javascripts/app/views/widget/organization.jst.eco
 msgid "show more"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "sipgate.io Token"
 msgstr ""
 
 #: db/seeds/settings.rb

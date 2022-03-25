@@ -971,6 +971,10 @@ msgstr "확실한가요?"
 msgid "Article"
 msgstr "조"
 
+#: db/seeds/settings.rb
+msgid "Article - visibility confirmation dialog"
+msgstr ""
+
 #: lib/excel_sheet/ticket.rb
 msgid "Article Count"
 msgstr "제 개수"
@@ -5834,6 +5838,7 @@ msgstr ""
 
 #: app/controllers/integration/cti_controller.rb
 #: app/controllers/integration/placetel_controller.rb
+#: app/controllers/integration/sipgate_controller.rb
 msgid "Invalid token, please contact your admin!"
 msgstr ""
 
@@ -7242,7 +7247,6 @@ msgid "Not configured"
 msgstr "구성되지 않음"
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
-#: app/assets/javascripts/app/models/calendar.coffee
 #: app/assets/javascripts/app/models/chat.coffee
 #: app/assets/javascripts/app/models/email_address.coffee
 #: app/assets/javascripts/app/models/group.coffee
@@ -7264,10 +7268,6 @@ msgstr "노트"
 #: db/seeds/settings.rb
 msgid "Note - default visibility"
 msgstr "주 - 기본 가시성"
-
-#: db/seeds/settings.rb
-msgid "Note - visibility confirmation dialog"
-msgstr ""
 
 #: app/assets/javascripts/app/models/email_address.coffee
 #: app/assets/javascripts/app/models/group.coffee
@@ -10423,6 +10423,10 @@ msgid "Token for CTI."
 msgstr ""
 
 #: db/seeds/settings.rb
+msgid "Token for Sipgate."
+msgstr ""
+
+#: db/seeds/settings.rb
 msgid "Token for monitoring."
 msgstr ""
 
@@ -12485,6 +12489,10 @@ msgstr ""
 #: app/assets/javascripts/app/views/organization_profile/object.jst.eco
 #: app/assets/javascripts/app/views/widget/organization.jst.eco
 msgid "show more"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "sipgate.io Token"
 msgstr ""
 
 #: db/seeds/settings.rb

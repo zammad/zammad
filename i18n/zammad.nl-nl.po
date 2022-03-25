@@ -2,13 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: \n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2022-03-24 03:30+0000\n"
+"Last-Translator: Rowdy van der Veen <rowdy@rowdyengeesje.nl>\n"
+"Language-Team: Dutch <https://translations.zammad.org/projects/zammad/"
+"zammad-stable/nl/>\n"
 "Language: nl-nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.11.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -49,6 +52,10 @@ msgid ""
 "filesystem. You can switch between the modules even on a system that is "
 "already in production without any loss of data."
 msgstr ""
+"\"Database\" slaat alle bijlagen op in de database (niet aanbevolen voor "
+"grote hoeveelheden gegevens). \"Filesystem\" slaat de gegevens op in het "
+"bestandssysteem. Je kunt wisselen tussen deze modules, zelfs op een systeem "
+"dat al in productie is, zonder verlies van gegevens."
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
@@ -150,7 +157,7 @@ msgstr "%s beëindigde de wisseling naar |%s|!"
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco
 msgid "%s folders"
-msgstr ""
+msgstr "%s mappen"
 
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco
@@ -162,7 +169,7 @@ msgstr "%s groepen naar %s rollen toewijzingen"
 #: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 msgid "%s is inactive, please select an active one."
-msgstr ""
+msgstr "%s is inactief, selecteer een actieve."
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
 #, fuzzy
@@ -219,6 +226,8 @@ msgid ""
 "%s recommends using OAuth. %s announced it's going to drop Basic "
 "Authentication support in the future."
 msgstr ""
+"%s beveelt het gebruik van OAuth aan. %s heeft aangekondigd Basic "
+"Authentication in de toekomst niet meer te gaan ondersteunen."
 
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee
 msgid "%s required!"
@@ -231,7 +240,7 @@ msgstr "%s begon een nieuwe sessie"
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 msgid "%s subdomain"
-msgstr ""
+msgstr "%s subdomein"
 
 #: app/assets/javascripts/app/models/user.coffee
 msgid "%s switched to |%s|!"
@@ -244,17 +253,12 @@ msgid "%s updated article for |%s|"
 msgstr "%s werkte artikel voor |%s| bij"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
-#, fuzzy
-#| msgid "%s created data privacy task to delete user id |%s|"
 msgid "%s updated data privacy task to delete user ID |%s|"
-msgstr ""
-"%s heeft de data privacy taak gestart om gebruiker [%s] te verwijderen."
+msgstr "%s heeft de data privacy taak gestart om gebruiker [%s] te verwijderen"
 
 #: app/assets/javascripts/app/models/group.coffee
-#, fuzzy
-#| msgid "%s updated Group |%s|"
 msgid "%s updated group |%s|"
-msgstr "%s heeft de groep |%s| geupdate"
+msgstr "%s heeft de groep |%s| geüpdatet"
 
 #: app/assets/javascripts/app/models/organization.coffee
 #, fuzzy
@@ -263,10 +267,8 @@ msgid "%s updated organization |%s|"
 msgstr "%s bijgewerkte Organisatie |%s|"
 
 #: app/assets/javascripts/app/models/role.coffee
-#, fuzzy
-#| msgid "%s updated Role |%s|"
 msgid "%s updated role |%s|"
-msgstr "%s updated Rol |%s|"
+msgstr "%s werkte rol |%s| bij"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 #, fuzzy
@@ -995,6 +997,10 @@ msgstr "Weet je het zeker?"
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
 msgid "Article"
 msgstr "Artikel"
+
+#: db/seeds/settings.rb
+msgid "Article - visibility confirmation dialog"
+msgstr ""
 
 #: lib/excel_sheet/ticket.rb
 msgid "Article Count"
@@ -5959,6 +5965,7 @@ msgstr ""
 
 #: app/controllers/integration/cti_controller.rb
 #: app/controllers/integration/placetel_controller.rb
+#: app/controllers/integration/sipgate_controller.rb
 msgid "Invalid token, please contact your admin!"
 msgstr ""
 
@@ -7373,7 +7380,6 @@ msgid "Not configured"
 msgstr "Niet geconfigureerd"
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
-#: app/assets/javascripts/app/models/calendar.coffee
 #: app/assets/javascripts/app/models/chat.coffee
 #: app/assets/javascripts/app/models/email_address.coffee
 #: app/assets/javascripts/app/models/group.coffee
@@ -7395,10 +7401,6 @@ msgstr "Notitie"
 #: db/seeds/settings.rb
 msgid "Note - default visibility"
 msgstr "Notitie - standaard zichtbaar"
-
-#: db/seeds/settings.rb
-msgid "Note - visibility confirmation dialog"
-msgstr ""
 
 #: app/assets/javascripts/app/models/email_address.coffee
 #: app/assets/javascripts/app/models/group.coffee
@@ -10595,6 +10597,10 @@ msgid "Token for CTI."
 msgstr ""
 
 #: db/seeds/settings.rb
+msgid "Token for Sipgate."
+msgstr ""
+
+#: db/seeds/settings.rb
 msgid "Token for monitoring."
 msgstr ""
 
@@ -12687,6 +12693,12 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/organization.jst.eco
 msgid "show more"
 msgstr ""
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Placetel"
+msgid "sipgate.io Token"
+msgstr "Placetel"
 
 #: db/seeds/settings.rb
 msgid "sipgate.io alternative FQDN"

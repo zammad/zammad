@@ -2,16 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-03-04 03:30+0000\n"
-"Last-Translator: Jean-Etienne Castagnede <jecastagnede@vivaldi.net>\n"
+"PO-Revision-Date: 2022-03-24 03:30+0000\n"
+"Last-Translator: Ben RUBSON <ben.rubson@gmx.com>\n"
 "Language-Team: French <https://translations.zammad.org/projects/zammad/"
-"zammad-development/fr/>\n"
+"zammad-stable/fr/>\n"
 "Language: fr-fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.11\n"
+"X-Generator: Weblate 4.11.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -27,7 +27,7 @@ msgstr ""
 #. - 'l' - hour (12h)
 #. - 'P' - Meridian indicator ('am' or 'pm')
 msgid "FORMAT_DATE"
-msgstr "dd.mm.yyyy"
+msgstr "dd/mm/yyyy"
 
 #. Default date/time format to use for the current locale.
 #. These placeholders are supported:
@@ -43,7 +43,7 @@ msgstr "dd.mm.yyyy"
 #. - 'l' - hour (12h)
 #. - 'P' - Meridian indicator ('am' or 'pm')
 msgid "FORMAT_DATETIME"
-msgstr "dd.mm.yyyy HH:MM"
+msgstr "dd/mm/yyyy HH:MM"
 
 #: db/seeds/settings.rb
 msgid ""
@@ -52,31 +52,36 @@ msgid ""
 "filesystem. You can switch between the modules even on a system that is "
 "already in production without any loss of data."
 msgstr ""
+"\"Base de données\" toutes les pièces jointes sont stocké dans la base de "
+"données (non recommandé pour stocker de grandes quantités de données). "
+"\"Filesystem\" stocke les données dans le système de fichiers. Vous pouvez "
+"passer d'un module à l'autre même sur un système déjà en production sans "
+"aucune perte de données."
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
 msgid "%s API Token"
-msgstr "%s Token d'API"
+msgstr "Token API %s"
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "%s Attribute"
-msgstr ""
+msgstr "Attribut %s"
 
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "%s Group"
-msgstr ""
+msgstr "Groupe %s"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
 msgid "%s Migration"
-msgstr "%s Migration"
+msgstr "Migration %s"
 
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "%s Role"
-msgstr ""
+msgstr "Rôle %s"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
@@ -86,53 +91,39 @@ msgstr "URL %s"
 
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
 msgid "%s ago"
-msgstr "Il y a %s"
+msgstr "il y a %s"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
-#, fuzzy
-#| msgid "%s created data privacy task to delete user id |%s|"
 msgid "%s completed data privacy task to delete user ID |%s|"
-msgstr "%s created data privacy task to delete user id |%s|"
+msgstr ""
+"%s a terminé la tâche de confidentialité pour supprimer l'utilisateur ID |%s|"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee
-#, fuzzy
-#| msgid "%s created Article for |%s|"
 msgid "%s created article for |%s|"
-msgstr "%s Article créé pour |%s|"
+msgstr "%s a créé l'article pour |%s|"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
-#, fuzzy
-#| msgid "%s created data privacy task to delete user id |%s|"
 msgid "%s created data privacy task to delete user ID |%s|"
-msgstr "%s created data privacy task to delete user id |%s|"
+msgstr ""
+"%s a créé la tâche de confidentialité pour supprimer l'utilisateur ID |%s|"
 
 #: app/assets/javascripts/app/models/group.coffee
-#, fuzzy
-#| msgid "%s created Group |%s|"
 msgid "%s created group |%s|"
 msgstr "%s a créé le groupe |%s|"
 
 #: app/assets/javascripts/app/models/organization.coffee
-#, fuzzy
-#| msgid "%s created Organization |%s|"
 msgid "%s created organization |%s|"
 msgstr "%s a créé la société |%s|"
 
 #: app/assets/javascripts/app/models/role.coffee
-#, fuzzy
-#| msgid "%s created Group |%s|"
 msgid "%s created role |%s|"
-msgstr "%s a créé le groupe |%s|"
+msgstr "%s a créé le rôle |%s|"
 
 #: app/assets/javascripts/app/models/ticket.coffee
-#, fuzzy
-#| msgid "%s created Ticket |%s|"
 msgid "%s created ticket |%s|"
-msgstr "%s Ticket créé |%s|"
+msgstr "%s a créé le ticket |%s|"
 
 #: app/assets/javascripts/app/models/user.coffee
-#, fuzzy
-#| msgid "%s created User |%s|"
 msgid "%s created user |%s|"
 msgstr "%s a créé l'utilisateur |%s|"
 
@@ -140,7 +131,7 @@ msgstr "%s a créé l'utilisateur |%s|"
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
 msgid "%s credentials"
-msgstr "%s identifiants"
+msgstr "identifiants %s"
 
 #: app/assets/javascripts/app/models/user.coffee
 msgid "%s ended switch to |%s|!"
@@ -149,7 +140,7 @@ msgstr "fin de la bascule de %s vers |%s| !"
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco
 msgid "%s folders"
-msgstr ""
+msgstr "dossiers %s"
 
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco
@@ -200,10 +191,8 @@ msgid "%s object(s) will be updated."
 msgstr "%s objet(s) mis à jour."
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco
-#, fuzzy
-#| msgid "%s of your tickets are currently in process."
 msgid "%s of my tickets are currently in process."
-msgstr "%s de vos tickets sont en cours de traitement."
+msgstr "%s de mes tickets sont en cours."
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_escalation.jst.eco
 msgid "%s of my tickets escalated."
@@ -287,7 +276,7 @@ msgstr "%s utilisateur à %s utilisateur"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco
 msgid "%s% are currently in process"
-msgstr "%s sont actuellement en cours de traitement"
+msgstr "%s% sont en cours"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_reopen.jst.eco
 msgid "%s% have been reopened"
@@ -594,7 +583,7 @@ msgstr "Agents Actifs"
 
 #: app/assets/javascripts/app/views/dashboard.jst.eco
 msgid "Activity Stream"
-msgstr "Flux Activité"
+msgstr "Flux d'activité"
 
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 msgid "Adapter"
@@ -987,6 +976,10 @@ msgstr "Êtes-vous sûr ?"
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
 msgid "Article"
 msgstr "Article"
+
+#: db/seeds/settings.rb
+msgid "Article - visibility confirmation dialog"
+msgstr ""
 
 #: lib/excel_sheet/ticket.rb
 msgid "Article Count"
@@ -5968,6 +5961,7 @@ msgstr ""
 
 #: app/controllers/integration/cti_controller.rb
 #: app/controllers/integration/placetel_controller.rb
+#: app/controllers/integration/sipgate_controller.rb
 msgid "Invalid token, please contact your admin!"
 msgstr ""
 
@@ -6832,7 +6826,7 @@ msgstr "Mes tickets de remplacement"
 
 #: app/assets/javascripts/app/views/dashboard.jst.eco
 msgid "My Stats"
-msgstr "Mes Stats"
+msgstr "Mes statistiques"
 
 #: db/seeds/overviews.rb
 #, fuzzy
@@ -6851,10 +6845,8 @@ msgid "My handling time: %s minutes"
 msgstr "Mon temps passé : %s minutes"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco
-#, fuzzy
-#| msgid "Your tickets in process"
 msgid "My tickets in process"
-msgstr "VOS TICKETS EN COURS de TRAITEMENT"
+msgstr "Mes tickets en cours"
 
 #: app/assets/javascripts/app/controllers/_integration/nagios.coffee
 msgid "Nagios"
@@ -7379,7 +7371,6 @@ msgid "Not configured"
 msgstr "Non configurés"
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
-#: app/assets/javascripts/app/models/calendar.coffee
 #: app/assets/javascripts/app/models/chat.coffee
 #: app/assets/javascripts/app/models/email_address.coffee
 #: app/assets/javascripts/app/models/group.coffee
@@ -7401,10 +7392,6 @@ msgstr "Note"
 #: db/seeds/settings.rb
 msgid "Note - default visibility"
 msgstr "Note - visibilité par défaut"
-
-#: db/seeds/settings.rb
-msgid "Note - visibility confirmation dialog"
-msgstr ""
 
 #: app/assets/javascripts/app/models/email_address.coffee
 #: app/assets/javascripts/app/models/group.coffee
@@ -10618,6 +10605,10 @@ msgid "Token for CTI."
 msgstr ""
 
 #: db/seeds/settings.rb
+msgid "Token for Sipgate."
+msgstr ""
+
+#: db/seeds/settings.rb
 msgid "Token for monitoring."
 msgstr ""
 
@@ -11124,7 +11115,7 @@ msgstr "Nom d'utilisateur pour la connexion proxy."
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco
 #: db/seeds/groups.rb db/seeds/permissions.rb
 msgid "Users"
-msgstr "Usagers"
+msgstr "Utilisateurs"
 
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "Users without assigned LDAP groups"
@@ -12720,6 +12711,12 @@ msgstr "montrer"
 #: app/assets/javascripts/app/views/widget/organization.jst.eco
 msgid "show more"
 msgstr ""
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Placetel"
+msgid "sipgate.io Token"
+msgstr "Placetel"
 
 #: db/seeds/settings.rb
 msgid "sipgate.io alternative FQDN"
