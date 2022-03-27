@@ -47,5 +47,5 @@ class App.KnowledgeBasePublicMenuManager extends App.Controller
     new App.KnowledgeBasePublicMenuForm(
       location:          location,
       knowledge_base_id: @knowledge_base_id
-      container:         @el.closest('.main')
+      container:         @el.closest('.content')
     )

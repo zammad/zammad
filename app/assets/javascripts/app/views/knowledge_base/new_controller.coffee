@@ -1,27 +1,28 @@
-class App.KnowledgeBaseNewModal extends App.ControllerModal
-  head:   __('Create Knowledge Base')
-  screen: 'admin_create'
-
-  buttonClose:   false
-  buttonCancel:  false
-  backdrop:      'static'
-  keyboard:      false
+class App.KnowledgeBaseNewController extends App.Controller
+  events:
+    'submit form': 'submit'
 
   constructor: ->
-    @formController = new App.ControllerForm(
-      model:     App.KnowledgeBase
-      params:    @item
-      screen:    @screen
-      autofocus: false
-    )
-
     super
 
-  content: ->
-    @formController.form
+    @render()
+
+  render: ->
+    @formController = new App.ControllerForm(
+      model:                           App.KnowledgeBase
+      screen:                          'admin_create'
+      autofocus:                       false
+      formClass:                       'settings-entry'
+      fullForm:                        true
+      fullFormSubmitLabel:             __('Create Knowledge Base')
+      fullFormButtonsContainerClass:   'justify-end'
+      fullFormSubmitAdditionalClasses: 'btn--success'
+    )
+
+    @el.html @formController.form
 
   prepareParams: (params) ->
-    for key, attribute of App.KnowledgeBase.attributesGet(@screen)
+    for key, attribute of App.KnowledgeBase.attributesGet(@formController.screen)
       dom = @$(".#{attribute.tag}[data-attribute-name=#{attribute.name}]")
       App.UiElement[attribute.tag].prepareParams?(attribute, dom, params)
 
@@ -33,8 +34,10 @@ class App.KnowledgeBaseNewModal extends App.ControllerModal
     params['homepage_layout']   = 'grid'
     params['category_layout']   = 'grid'
 
-  onSubmit: (e) ->
-    params = @formParams(@el)
+  submit: (e) ->
+    @preventDefaultAndStopPropagation(e)
+
+    params = @formParam(@el)
     @prepareParams(params)
     @applyDefaults(params)
 
@@ -47,8 +50,6 @@ class App.KnowledgeBaseNewModal extends App.ControllerModal
 
       success: (data) =>
         @parentVC.fetchAndRender()
-        @parentVC.modal = undefined
-        @close()
 
       error: (xhr) =>
         @formEnable(@el)
