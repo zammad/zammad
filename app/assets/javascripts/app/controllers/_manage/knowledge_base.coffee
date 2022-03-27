@@ -49,9 +49,6 @@ class App.ManageKnowledgeBase extends App.ControllerTabs
     App.KnowledgeBase.find(@knowledge_base_id).remove(clear: true)
     @fetchAndRender()
 
-  release: ->
-    @modal?.el.remove()
-
   processLoaded: ->
     if @knowledge_base_id
       @renderLoaded()
@@ -59,13 +56,18 @@ class App.ManageKnowledgeBase extends App.ControllerTabs
       @renderNonExistant()
 
   renderNonExistant: ->
-    @renderScreenError(detail: __('There is no Knowledge Base yet. Please create one.'), el: @$('.page-content'))
-    @headerSwitchInput.prop('checked', false)
+    @headerSwitchInput.attr('disabled', true)
 
-    @modal = new App.KnowledgeBaseNewModal(
-      parentVC:  @
-      container: @el.closest('.main')
-    )
+    @tabs =[
+      {
+        name:       __('Theme')
+        target:     'style'
+        controller: App.KnowledgeBaseNewController
+        params:     { parentVC: @ }
+      }
+    ]
+
+    @render()
 
   didChangeHeaderSwitch: ->
     @headerSwitchInput.prop('disabled', true)
@@ -89,6 +91,8 @@ class App.ManageKnowledgeBase extends App.ControllerTabs
     )
 
   renderLoaded: ->
+    @headerSwitchInput.attr('disabled', false)
+
     params = {
       knowledge_base_id: @knowledge_base_id
       parentVC:          @

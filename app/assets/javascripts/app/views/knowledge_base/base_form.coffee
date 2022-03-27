@@ -127,7 +127,7 @@ class App.KnowledgeBaseCustomAddressForm extends App.KnowledgeBaseForm
         button.disabled = false
 
         new App.KnowledgeBaseServerSnippet(
-          container:    @el.closest('.main')
+          container:    @el.closest('.content')
           snippets:     data.snippets
           address:      data.address
           address_type: data.address_type
@@ -140,6 +140,6 @@ class App.KnowledgeBaseCustomAddressForm extends App.KnowledgeBaseForm
 
         new App.ControllerErrorModal(
           message: xhr.responseJSON.error
-          container: @el.closest('.main')
+          container: @el.closest('.content')
         )
     )

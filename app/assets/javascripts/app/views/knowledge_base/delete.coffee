@@ -16,7 +16,7 @@ class App.KnowledgeBaseDelete extends App.KnowledgeBaseForm
     formController.hideAlert()
 
     loader = new App.ControllerModalLoading(
-      container: @parentVC.el
+      container: @parentVC.el.closest('.content')
     )
 
     @ajax(
