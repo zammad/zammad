@@ -912,4 +912,42 @@ RSpec.describe 'Ticket Create', type: :system do
       expect(page).to have_no_text('Test Other Agent')
     end
   end
+
+  describe 'Tree select value cannot be set to "-" (empty) with Trigger/Scheduler/Core workflow #4024', authenticated_as: :authenticate, db_strategy: :reset do
+    let(:field_name) { SecureRandom.uuid }
+    let(:field) do
+      create :object_manager_attribute_tree_select, name: field_name, display: field_name, screens: attributes_for(:required_screen)
+      ObjectManager::Attribute.migration_execute
+    end
+    let(:workflow) do
+      create(:core_workflow,
+             object:             'Ticket',
+             condition_selected: { 'ticket.priority_id'=>{ 'operator' => 'is', 'value' => Ticket::Priority.find_by(name: '3 high').id.to_s } },
+             perform:            { "ticket.#{field_name}" => { 'operator' => 'select', 'select' => 'Incident' } })
+    end
+    let(:workflow2) do
+      create(:core_workflow,
+             object:             'Ticket',
+             condition_selected: { 'ticket.priority_id'=>{ 'operator' => 'is', 'value' => Ticket::Priority.find_by(name: '2 normal').id.to_s } },
+             perform:            { "ticket.#{field_name}" => { 'operator' => 'select', 'select' => '' } })
+    end
+
+    def authenticate
+      field
+      workflow
+      workflow2
+      true
+    end
+
+    before do
+      visit 'ticket/create'
+    end
+
+    it 'does select the field value properly' do
+      page.find('[name=priority_id]').select '3 high'
+      wait.until { page.find("input[name='#{field_name}']", visible: :all).value == 'Incident' }
+      page.find('[name=priority_id]').select '2 normal'
+      wait.until { page.find("input[name='#{field_name}']", visible: :all).value == '' }
+    end
+  end
 end

@@ -113,7 +113,7 @@ class App.UiElement.ApplicationSelector
                 config.operator = operator
               elements["#{groupKey}.#{config.name}"] = config
 
-            if config.tag == 'select'
+            if /^(tree_|multi)?select$/.test(config.tag)
               config.multiple = true
 
     if attribute.out_of_office

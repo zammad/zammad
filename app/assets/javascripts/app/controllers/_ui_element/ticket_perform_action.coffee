@@ -319,6 +319,8 @@ class App.UiElement.ticket_perform_action
         config['value'] = _.clone(attribute.value[groupAndAttribute]['value'])
       config.multiple = false
       config.nulloption = config.null
+      if config.tag is 'multiselect'
+        config.multiple = true
       if config.tag is 'checkbox'
         config.tag = 'select'
       tagSearch = "#{config.tag}_search"

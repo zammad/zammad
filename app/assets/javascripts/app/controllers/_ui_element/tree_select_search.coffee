@@ -6,7 +6,13 @@ class App.UiElement.tree_select_search extends App.UiElement.ApplicationUiElemen
     attribute = clone(localAttribute)
 
     # set multiple option
-    attribute.multiple = 'multiple'
+    if attribute.multiple
+      attribute.multiple = 'multiple'
+    else
+      attribute.multiple = ''
+
+    # add null selection if needed
+    @addNullOption(attribute, params)
 
     # sort attribute.options
     @sortOptions(attribute, params)
