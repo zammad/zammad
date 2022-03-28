@@ -1631,3 +1631,23 @@ QUnit.test("Fixes #3909 - Wrong size for textareas in triggers and core workflow
   })
   .finally(done)
 });
+
+QUnit.test("Fixes #4024 - Tree select value cannot be set to \"-\" (empty) with Trigger/Scheduler/Core workflow.", assert => {
+  $('#qunit').append('<hr><h1>Fixes #4024 - Tree select value cannot be set to "-" (empty) with Trigger/Scheduler/Core workflow.</h1><form id="form22"></form>')
+  var el = $('#form22')
+  new App.ControllerForm({
+    el:        el,
+    model:     {
+      configure_attributes: [
+        { name: '4042_select', display: '4042_select', tag: 'select_search', null: true, nulloption: true, multiple: true, options: { 'a': 'a', 'b': 'b' } },
+        { name: '4042_multiselect', display: '4042_multiselect', tag: 'multiselect_search', null: true, nulloption: true, multiple: true, options: { 'a': 'a', 'b': 'b' } },
+        { name: '4042_tree_select', display: '4042_tree_select', tag: 'tree_select_search', null: true, nulloption: true, multiple: true, options: [{ 'value': 'a', 'name': 'a'}, { 'value': 'b', 'name': 'b'}] },
+      ],
+    },
+    autofocus: true
+  });
+
+  assert.equal(el.find('select[name="4042_select"] option[value=""]').text(), '-', '4042_select has nulloption')
+  assert.equal(el.find('select[name="4042_multiselect"] option[value=""]').text(), '-', '4042_multiselect has nulloption')
+  assert.equal(el.find('select[name="4042_tree_select"] option[value=""]').text(), '-', '4042_tree_select has nulloption')
+});

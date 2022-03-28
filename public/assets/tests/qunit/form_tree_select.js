@@ -203,6 +203,7 @@ QUnit.test("form elements check", assert => {
           "tag": "tree_select_search",
           "null": true,
           "translate": true,
+          "multiple": true,
           "value": ['aa::aab', 'bb', 'aa::aac::33'],
           "options": [
             {

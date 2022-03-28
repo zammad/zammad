@@ -73,7 +73,7 @@ class App.UiElement.core_workflow_perform extends App.UiElement.ApplicationSelec
           config = _.clone(row)
           if config.tag is 'boolean'
             config.tag = 'select'
-          if /^((multi)?select)$/.test(config.tag)
+          if /^(tree_|multi)?select$/.test(config.tag)
             config.multiple = true
             config.default  = undefined
           if config.type is 'email' || config.type is 'tel'
@@ -121,14 +121,14 @@ class App.UiElement.core_workflow_perform extends App.UiElement.ApplicationSelec
     currentOperator = elementRow.find('.js-operator option:selected').attr('value')
     name            = @buildValueName(elementFull, elementRow, groupAndAttribute, elements, meta, attribute)
 
-    if !_.contains(['add_option', 'remove_option', 'set_fixed_to', 'select', 'multiselect', 'execute', 'fill_in', 'fill_in_empty'], currentOperator)
+    if !_.contains(['add_option', 'remove_option', 'set_fixed_to', 'select', 'execute', 'fill_in', 'fill_in_empty'], currentOperator)
       elementRow.find('.js-value').addClass('hide').html('<input type="hidden" name="' + name + '" value="true" />')
       return
 
     super(elementFull, elementRow, groupAndAttribute, elements, meta, attribute)
 
   @buildValueConfigMultiple: (config, meta) ->
-    if _.contains(['add_option', 'remove_option', 'set_fixed_to', 'select', 'multiselect'], meta.operator)
+    if _.contains(['add_option', 'remove_option', 'set_fixed_to', 'select'], meta.operator)
       config.multiple = true
       config.nulloption = true
     else

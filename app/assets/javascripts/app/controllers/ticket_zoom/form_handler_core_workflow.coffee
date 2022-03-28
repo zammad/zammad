@@ -191,7 +191,11 @@ class App.FormHandlerCoreWorkflow
     return if _.isEmpty(data)
 
     for field, values of data
-      form.find('[name="' + field + '"]').val(data[field])
+      fieldElement = $("div[data-attribute-name='" + field + "']")
+      if fieldElement.hasClass('tree_select')
+        fieldElement.find(".js-option[data-value='" + data[field] + "']").trigger('click')
+      else
+        form.find('[name="' + field + '"]').val(data[field])
       coreWorkflowParams[classname][field] = data[field]
 
   # fill in data in input fields
