@@ -128,6 +128,14 @@ RSpec.describe 'Macro', type: :request, authenticated_as: :user do
         expect(json_response.map { |elem| elem['id'] }).to eq [Macro.first.id]
       end
     end
+
+    context 'when user is admin only' do
+      let(:user) { create(:admin_only) }
+
+      it 'returns array of macros' do
+        expect(json_response.map { |elem| elem['id'] }).to eq [Macro.first.id]
+      end
+    end
   end
 
   describe '#show' do
@@ -158,6 +166,14 @@ RSpec.describe 'Macro', type: :request, authenticated_as: :user do
         it 'returns macro when user has access to related group' do
           expect(response).to have_http_status(:ok)
         end
+      end
+    end
+
+    context 'when user is admin only' do
+      let(:user) { create(:admin_only) }
+
+      it 'returns array of macros' do
+        expect(response).to have_http_status(:ok)
       end
     end
   end
