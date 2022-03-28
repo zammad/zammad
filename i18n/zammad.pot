@@ -7615,10 +7615,6 @@ msgstr ""
 msgid "Response"
 msgstr ""
 
-#: app/assets/javascripts/app/views/sla/index.jst.eco
-msgid "Response Time"
-msgstr ""
-
 #: app/assets/javascripts/app/views/monitoring.jst.eco
 msgid "Restart failed jobs"
 msgstr ""
@@ -10772,6 +10768,7 @@ msgid "before (relative)"
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
+#: app/assets/javascripts/app/views/sla/index.jst.eco
 msgid "between agent updates"
 msgstr ""
 
@@ -10974,6 +10971,7 @@ msgid "fill in empty"
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
+#: app/assets/javascripts/app/views/sla/index.jst.eco
 msgid "for an agent to respond"
 msgstr ""
 
