@@ -48,6 +48,10 @@ FactoryBot.define do
       roles { Role.where(name: %w[Admin Agent]) }
     end
 
+    factory :admin_only do
+      roles { Role.where(name: %w[Admin]) }
+    end
+
     trait :with_valid_password do
       password { generate :password_valid }
     end
