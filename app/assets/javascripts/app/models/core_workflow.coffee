@@ -1,5 +1,5 @@
 class App.CoreWorkflow extends App.Model
-  @configure 'CoreWorkflow', 'name', 'object', 'preferences', 'condition_saved', 'condition_selected', 'perform', 'priority', 'active'
+  @configure 'CoreWorkflow', 'name', 'object', 'preferences', 'condition_saved', 'condition_selected', 'perform', 'stop_after_match', 'priority', 'active'
   @extend Spine.Model.Ajax
   @url: @apiPath + '/core_workflows'
   @configure_attributes = [
