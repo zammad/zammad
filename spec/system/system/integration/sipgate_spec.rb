@@ -10,7 +10,7 @@ RSpec.describe 'Manage > Integration > sipgate.io', type: :system do
     visit 'system/integration/sipgate'
 
     # enable sipgate
-    check 'setting-switch', { allow_label_click: true }
+    check 'setting-switch', allow_label_click: true
   end
 
   context 'for Blocked caller ids based on sender caller id' do

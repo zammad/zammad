@@ -103,8 +103,8 @@ module DbMigrationHelper
   #  remove_foreign_key(:online_notifications, :users)
   #
   # @return [nil]
-  def method_missing(method, *args, &blk)
-    ActiveRecord::Migration.send(method, *args, &blk)
+  def method_missing(method, ...)
+    ActiveRecord::Migration.send(method, ...)
   rescue NoMethodError
     super
   end

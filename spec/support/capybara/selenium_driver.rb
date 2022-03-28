@@ -19,27 +19,27 @@ Capybara.register_driver(:zammad_chrome) do |app|
     excludeSwitches: ['enable-automation'],
   )
 
-  options = {
-    browser: :chrome,
-    options: chrome_options
+  driver_args = {
+    browser:      :chrome,
+    capabilities: chrome_options
   }
 
   if ENV['REMOTE_URL'].present?
-    options[:browser] = :remote
-    options[:url]     = ENV['REMOTE_URL']
-    options[:http_client] = Selenium::WebDriver::Remote::Http::Default.new(
+    driver_args[:browser] = :remote
+    driver_args[:url]     = ENV['REMOTE_URL']
+    driver_args[:http_client] = Selenium::WebDriver::Remote::Http::Default.new(
       open_timeout: 120,
       read_timeout: 120
     )
   end
 
   if ENV['BROWSER_HEADLESS'].present?
-    options[:options].headless!
+    driver_args[:capabilities].headless!
   end
 
   ENV['FAKE_SELENIUM_LOGIN_USER_ID'] = nil
 
-  Capybara::Selenium::Driver.new(app, **options).tap do |driver|
+  Capybara::Selenium::Driver.new(app, **driver_args).tap do |driver|
     # Selenium 4 installs a default file_detector which finds wrong files/directories such as zammad/test.
     driver.browser.file_detector = nil if ENV['REMOTE_URL'].present?
   end
@@ -53,27 +53,27 @@ Capybara.register_driver(:zammad_firefox) do |app|
   profile['general.useragent.locale'] = 'en-US'
   profile['permissions.default.desktop-notification'] = 1 # ALLOW notifications
 
-  options = {
-    browser: :firefox,
-    options: Selenium::WebDriver::Firefox::Options.new(profile: profile),
+  driver_args = {
+    browser:      :firefox,
+    capabilities: Selenium::WebDriver::Firefox::Options.new(profile: profile),
   }
 
   if ENV['REMOTE_URL'].present?
-    options[:browser] = :remote
-    options[:url]     = ENV['REMOTE_URL']
-    options[:http_client] = Selenium::WebDriver::Remote::Http::Default.new(
+    driver_args[:browser] = :remote
+    driver_args[:url]     = ENV['REMOTE_URL']
+    driver_args[:http_client] = Selenium::WebDriver::Remote::Http::Default.new(
       open_timeout: 120,
       read_timeout: 120
     )
   end
 
   if ENV['BROWSER_HEADLESS'].present?
-    options[:options].headless!
+    driver_args[:capabilities].headless!
   end
 
   ENV['FAKE_SELENIUM_LOGIN_USER_ID'] = nil
 
-  Capybara::Selenium::Driver.new(app, **options).tap do |driver|
+  Capybara::Selenium::Driver.new(app, **driver_args).tap do |driver|
     # Selenium 4 installs a default file_detector which finds wrong files/directories such as zammad/test.
     driver.browser.file_detector = nil if ENV['REMOTE_URL'].present?
   end

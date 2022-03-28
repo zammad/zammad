@@ -3,8 +3,8 @@
 class SecureMailing::SMIME::Incoming < SecureMailing::Backend::Handler
   attr_accessor :mail, :content_type
 
-  EXPRESSION_MIME      = %r{application/(x-pkcs7|pkcs7)-mime}i.freeze
-  EXPRESSION_SIGNATURE = %r{(application/(x-pkcs7|pkcs7)-signature|signed-data)}i.freeze
+  EXPRESSION_MIME      = %r{application/(x-pkcs7|pkcs7)-mime}i
+  EXPRESSION_SIGNATURE = %r{(application/(x-pkcs7|pkcs7)-signature|signed-data)}i
 
   OPENSSL_PKCS7_VERIFY_FLAGS = OpenSSL::PKCS7::NOVERIFY | OpenSSL::PKCS7::NOINTERN
 

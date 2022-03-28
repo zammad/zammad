@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 
 # core - base
-ruby '2.7.4'
+ruby '3.0.3'
 gem 'rails', '~> 6.1.0'
 
 # core - rails additions
@@ -97,11 +97,13 @@ gem 'omniauth-weibo-oauth2'
 # channels
 gem 'gmail_xoauth'
 gem 'koala'
-gem 'telegramAPI'
+# TODO: remove git information after https://github.com/bennesp/telegramAPI/pull/8 is merged
+gem 'telegramAPI', git: 'https://github.com/zammad-deps/telegramAPI', branch: 'uri-escape-warning'
 gem 'twitter'
 
 # channels - email additions
 gem 'htmlentities'
+# TODO: remove git information once v2.8 is released and works with Zammad
 gem 'mail', git: 'https://github.com/zammad-deps/mail', branch: '2-7-stable'
 gem 'mime-types'
 gem 'rchardet', '>= 1.8.0'
@@ -194,7 +196,9 @@ group :development, :test do
   gem 'overcommit'
   gem 'rubocop'
   gem 'rubocop-faker'
-  gem 'rubocop-inflector'
+  # TODO: remove git branch information for rubocop-inflector after
+  #   Ruby 3 support was added: https://github.com/aeroastro/rubocop-inflector/pull/2
+  gem 'rubocop-inflector', git: 'https://github.com/zammad-deps/rubocop-inflector', branch: 'fix-ruby3-compat'
   gem 'rubocop-performance'
   gem 'rubocop-rails'
   gem 'rubocop-rspec'

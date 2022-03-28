@@ -1,5 +1,5 @@
 default:
-  image: $CI_REGISTRY/docker/zammad-ci:2.7.4
+  image: $CI_REGISTRY/docker/zammad-ci:3.0.3
 
 include:
   - local: '/.gitlab/ci/base.yml'
@@ -39,9 +39,9 @@ variables:
 # Cache gems in between jobs and pipelines
 # ATTENTION: We use a combination of the Ruby major and minor version number
 # as a key for the cache to avoid cache growth and incompatibilities between
-# the gems. Search hook: 2.7.4 (change it when updating the Ruby version too)
+# the gems. Search hook: 3.0.3 (change it when updating the Ruby version too)
 cache:
-  key: "centos7ruby274"
+  key: "centos7ruby303"
   paths:
     - vendor/ruby
     # ATTENTION: This should be a dedicated cache only used in the job "TODO".

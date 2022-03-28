@@ -4,7 +4,7 @@
 
 class Channel::EmailParser
   PROZESS_TIME_MAX = 180
-  EMAIL_REGEX = %r{.+@.+}.freeze
+  EMAIL_REGEX = %r{.+@.+}
   RECIPIENT_FIELDS = %w[to cc delivered-to x-original-to envelope-to].freeze
   SENDER_FIELDS = %w[from reply-to return-path sender].freeze
   EXCESSIVE_LINKS_MSG = __('This message cannot be displayed because it contains over 5,000 links. Download the raw message below and open it via an Email client if you still wish to view it.').freeze
@@ -540,7 +540,7 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
     part.body = force_japanese_encoding part.body.encoded.unpack1('M')
   end
 
-  ISO2022JP_REGEXP = %r{=\?ISO-2022-JP\?B\?(.+?)\?=}.freeze
+  ISO2022JP_REGEXP = %r{=\?ISO-2022-JP\?B\?(.+?)\?=}
 
   # https://github.com/zammad/zammad/issues/3115
   def header_field_unpack_japanese(field)

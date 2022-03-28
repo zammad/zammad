@@ -11,7 +11,7 @@ RSpec.describe 'Manage > Integration > Slack', type: :system do
     visit 'system/integration/slack'
 
     # enable slack
-    check 'setting-switch', { allow_label_click: true }
+    check 'setting-switch', allow_label_click: true
   end
 
   context 'for slack config' do

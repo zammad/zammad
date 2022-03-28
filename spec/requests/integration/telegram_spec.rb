@@ -56,7 +56,7 @@ RSpec.describe 'Telegram Webhook Integration', type: :request do
         stub_request(:post, "https://api.telegram.org:443/bot#{token}/getMe")
           .to_return(status: 200, body: "{\"ok\":true,\"result\":{\"id\":#{bot_id},\"first_name\":\"Chrispresso Customer Service\",\"username\":\"ChrispressoBot\"}}", headers: {})
         stub_request(:post, "https://api.telegram.org:443/bot#{token}/setWebhook")
-          .with(body: { 'url' => "https://somehost.example.com:12345/api/v1/channels_telegram_webhook/callback_token?bid=#{bot_id}" })
+          .with(body: { 'url' => URI.encode_www_form(["https://somehost.example.com:12345/api/v1/channels_telegram_webhook/callback_token?bid=#{bot_id}"]) })
           .to_return(status: 400, body: '{"ok":false,"error_code":400,"description":"Bad Request: bad webhook: Webhook can be set up only on ports 80, 88, 443 or 8443"}', headers: {})
 
         expect do
@@ -73,7 +73,7 @@ RSpec.describe 'Telegram Webhook Integration', type: :request do
           .to_return(status: 200, body: "{\"ok\":true,\"result\":{\"id\":#{bot_id},\"first_name\":\"Chrispresso Customer Service\",\"username\":\"ChrispressoBot\"}}", headers: {})
 
         stub_request(:post, "https://api.telegram.org:443/bot#{token}/setWebhook")
-          .with(body: { 'url' => "https://somehost.example.com/api/v1/channels_telegram_webhook/callback_token?bid=#{bot_id}" })
+          .with(body: { 'url' => URI.encode_www_form(["https://somehost.example.com/api/v1/channels_telegram_webhook/callback_token?bid=#{bot_id}"]) })
           .to_return(status: 400, body: '{"ok":false,"error_code":400,"description":"Bad Request: bad webhook: getaddrinfo: Name or service not known"}', headers: {})
 
         expect do
@@ -87,11 +87,11 @@ RSpec.describe 'Telegram Webhook Integration', type: :request do
         Setting.set('fqdn', 'example.com')
         UserInfo.current_user_id = 1
 
-        stub_request(:post, "https://api.telegram.org:443/bot#{token}/getMe")
+        stub_request(:post, "https://api.telegram.org/bot#{token}/getMe")
           .to_return(status: 200, body: "{\"ok\":true,\"result\":{\"id\":#{bot_id},\"first_name\":\"Chrispresso Customer Service\",\"username\":\"ChrispressoBot\"}}", headers: {})
 
-        stub_request(:post, "https://api.telegram.org:443/bot#{token}/setWebhook")
-          .with(body: { 'url' => "https://example.com/api/v1/channels_telegram_webhook/callback_token?bid=#{bot_id}" })
+        stub_request(:post, "https://api.telegram.org/bot#{token}/setWebhook")
+          .with(body: { 'url' => URI.encode_www_form(["https://example.com/api/v1/channels_telegram_webhook/callback_token?bid=#{bot_id}"]) })
           .to_return(status: 200, body: '{"ok":true,"result":true,"description":"Webhook was set"}', headers: {})
 
         channel = Telegram.create_or_update_channel(token, { group_id: group_id, welcome: 'hi!', goodbye: 'goodbye' })
@@ -110,14 +110,14 @@ RSpec.describe 'Telegram Webhook Integration', type: :request do
           .to_return(status: 200, body: "{\"ok\":true,\"result\":{\"id\":#{bot_id},\"first_name\":\"Chrispresso Customer Service\",\"username\":\"ChrispressoBot\"}}", headers: {})
 
         stub_request(:post, "https://api.telegram.org:443/bot#{token}/setWebhook")
-          .with(body: { 'url' => "https://example.com/api/v1/channels_telegram_webhook/callback_token?bid=#{bot_id}" })
+          .with(body: { 'url' => URI.encode_www_form(["https://example.com/api/v1/channels_telegram_webhook/callback_token?bid=#{bot_id}"]) })
           .to_return(status: 200, body: '{"ok":true,"result":true,"description":"Webhook was set"}', headers: {})
 
         stub_request(:post, "https://api.telegram.org:443/bot#{token2}/getMe")
           .to_return(status: 200, body: "{\"ok\":true,\"result\":{\"id\":#{bot_id2},\"first_name\":\"Chrispresso Customer Service\",\"username\":\"ChrispressoBot2\"}}", headers: {})
 
         stub_request(:post, "https://api.telegram.org:443/bot#{token2}/setWebhook")
-          .with(body: { 'url' => "https://example.com/api/v1/channels_telegram_webhook/callback_token?bid=#{bot_id2}" })
+          .with(body: { 'url' => URI.encode_www_form(["https://example.com/api/v1/channels_telegram_webhook/callback_token?bid=#{bot_id2}"]) })
           .to_return(status: 200, body: '{"ok":true,"result":true,"description":"Webhook was set"}', headers: {})
       end
 

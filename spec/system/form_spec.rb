@@ -97,7 +97,7 @@ RSpec.describe 'Form', type: :system, authenticated_as: true do
 
       before do
         visit path
-        uncheck 'Start modal dialog for form.', { allow_label_click: true }
+        uncheck 'Start modal dialog for form.', allow_label_click: true
       end
 
       it_behaves_like 'validating form fields'
@@ -119,7 +119,7 @@ RSpec.describe 'Form', type: :system, authenticated_as: true do
 
     it 'shows an inline form' do
       visit path
-      uncheck 'Start modal dialog for form.', { allow_label_click: true }
+      uncheck 'Start modal dialog for form.', allow_label_click: true
       expect(page).to have_selector('.js-formInline').and have_no_selector('.js-formInline.hide')
     end
   end
@@ -132,7 +132,7 @@ RSpec.describe 'Form', type: :system, authenticated_as: true do
     context 'when feature is enabled' do
       before do
         visit 'channels/form'
-        check 'form_ticket_create', { allow_label_click: true }
+        check 'form_ticket_create', allow_label_click: true
         wait.until { Setting.get('form_ticket_create') == true }
       end
 
@@ -167,7 +167,7 @@ RSpec.describe 'Form', type: :system, authenticated_as: true do
     context 'when feature is disabled' do
       before do
         visit 'channels/form'
-        uncheck 'form_ticket_create', { allow_label_click: true }
+        uncheck 'form_ticket_create', allow_label_click: true
         wait.until { Setting.get('form_ticket_create') == false }
         visit path
       end

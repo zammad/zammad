@@ -1,4 +1,21 @@
 GIT
+  remote: https://github.com/pippokairos/telegramAPI
+  revision: fb62dd5b48b0c41169ab69fc89069969ab4705b2
+  branch: uri-escape-warning
+  specs:
+    telegramAPI (1.4)
+      rest-client (~> 2.0, >= 2.0.2)
+
+GIT
+  remote: https://github.com/splitwise/rubocop-inflector
+  revision: 0de158833bbb27b19b0643561bef52ffaf422fa0
+  specs:
+    rubocop-inflector (0.2.0)
+      activesupport
+      rubocop
+      rubocop-rspec
+
+GIT
   remote: https://github.com/zammad-deps/autodiscover
   revision: ee9b53dfa797ce6d4f970b82beea7fbdd2df56bb
   specs:
@@ -476,10 +493,6 @@ GEM
     rubocop-faker (1.1.0)
       faker (>= 2.12.0)
       rubocop (>= 0.82.0)
-    rubocop-inflector (0.1.1)
-      activesupport
-      rubocop
-      rubocop-rspec
     rubocop-performance (1.13.3)
       rubocop (>= 1.7.0, < 2.0)
       rubocop-ast (>= 0.4.0)
@@ -530,8 +543,6 @@ GEM
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
     tcr (0.2.2)
-    telegramAPI (1.4.2)
-      rest-client (~> 2.0, >= 2.0.2)
     telephone_number (1.4.14)
     test-unit (3.5.3)
       power_assert
@@ -677,7 +688,7 @@ DEPENDENCIES
   rszr
   rubocop
   rubocop-faker
-  rubocop-inflector
+  rubocop-inflector!
   rubocop-performance
   rubocop-rails
   rubocop-rspec
@@ -689,7 +700,7 @@ DEPENDENCIES
   spring
   sprockets (~> 3.7.2)
   tcr
-  telegramAPI
+  telegramAPI!
   telephone_number
   test-unit
   twilio-ruby
@@ -704,7 +715,7 @@ DEPENDENCIES
   zendesk_api
 
 RUBY VERSION
-   ruby 2.7.4p191
+   ruby 3.0.3p157
 
 BUNDLED WITH
-   2.2.20
+   2.2.32

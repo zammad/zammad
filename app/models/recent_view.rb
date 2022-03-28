@@ -81,7 +81,7 @@ class RecentView < ApplicationModel
   def self.access(object, o_id, user)
     record = object.to_s
               .safe_constantize
-              .try(:lookup, { id: o_id })
+              .try(:lookup, id: o_id)
 
     Pundit.policy(user, record).try(:show?)
   end

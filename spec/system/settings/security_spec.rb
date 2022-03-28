@@ -39,7 +39,7 @@ RSpec.describe 'Manage > Settings > Security', type: :system do
               click 'a[href="#third_party_auth"]'
             end
 
-            check app_checkbox, { allow_label_click: true }
+            check app_checkbox, allow_label_click: true
             await_empty_ajax_queue
           end
 
@@ -57,7 +57,7 @@ RSpec.describe 'Manage > Settings > Security', type: :system do
               click 'a[href="#third_party_auth"]'
             end
 
-            uncheck app_checkbox, { allow_label_click: true }
+            uncheck app_checkbox, allow_label_click: true
             await_empty_ajax_queue
           end
 

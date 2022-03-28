@@ -1324,7 +1324,7 @@ RSpec.describe 'Ticket zoom', type: :system do
       # click in the upper most upper left corner of the article create textbox
       # (that works for both Firefox and Chrome)
       # to avoid clicking on attachment upload
-      find('.js-writeArea').click({ x: 5, y: 5 })
+      find('.js-writeArea').click(x: 5, y: 5)
 
       # wait for propagateOpenTextarea to be completed
       find('.attachmentPlaceholder-label').in_fixed_position
@@ -1440,14 +1440,14 @@ RSpec.describe 'Ticket zoom', type: :system do
     context 'when clicking timepicker component' do
       it 'in the first half, hours selected' do
         within :active_content do
-          elem.click({ x: 10, y: 20 })
+          elem.click(x: 10, y: 20)
           expect(elem).to have_selection(0..2)
         end
       end
 
       it 'in the second half, minutes selected' do
         within :active_content do
-          elem.click({ x: 35, y: 20 })
+          elem.click(x: 35, y: 20)
           expect(elem).to have_selection(3..5)
         end
       end
@@ -2479,7 +2479,7 @@ RSpec.describe 'Ticket zoom', type: :system do
       end
 
       it 'does set the article internal and external for new article' do
-        page.find('.js-writeArea').click({ x: 5, y: 5 })
+        page.find('.js-writeArea').click(x: 5, y: 5)
         expect(page).to have_css('.article-new .icon-internal')
         expect(page).to have_no_css('.article-new .icon-public')
 
@@ -2507,7 +2507,7 @@ RSpec.describe 'Ticket zoom', type: :system do
       end
 
       it 'does set the article internal and external for new article' do
-        page.find('.js-writeArea').click({ x: 5, y: 5 })
+        page.find('.js-writeArea').click(x: 5, y: 5)
         expect(page).to have_css('.article-new .icon-internal')
         expect(page).to have_no_css('.article-new .icon-public')
 

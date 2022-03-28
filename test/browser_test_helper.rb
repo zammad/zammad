@@ -95,7 +95,7 @@ class TestCase < ActiveSupport::TestCase
   def browser_instance
     @browsers ||= {}
     if ENV['REMOTE_URL'].blank?
-      local_browser = Selenium::WebDriver.for(browser.to_sym, options: browser_options)
+      local_browser = Selenium::WebDriver.for(browser.to_sym, capabilities: browser_options)
       @browsers[local_browser.hash] = local_browser
       browser_instance_preferences(local_browser)
       return local_browser
@@ -124,9 +124,9 @@ class TestCase < ActiveSupport::TestCase
 
     local_browser = Selenium::WebDriver.for(
       :remote,
-      url:         ENV['REMOTE_URL'],
-      http_client: http_client,
-      options:     browser_options,
+      url:          ENV['REMOTE_URL'],
+      http_client:  http_client,
+      capabilities: browser_options,
     )
     @browsers[local_browser.hash] = local_browser
     browser_instance_preferences(local_browser)

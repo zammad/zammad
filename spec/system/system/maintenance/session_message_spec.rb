@@ -59,7 +59,7 @@ RSpec.describe 'System > Maintenance - Session Message', type: :system do
       within :active_content do
         fill_in 'head', with: "#{message_title} #2"
         find('.js-Message .js-textarea[data-name="message"]').send_keys("#{message_text} #2")
-        check 'reload', { allow_label_click: true }
+        check 'reload', allow_label_click: true
 
         click '.js-Message button.js-submit'
       end

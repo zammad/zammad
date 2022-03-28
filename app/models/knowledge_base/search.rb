@@ -45,8 +45,8 @@ class KnowledgeBase
         sql_helper = ::SqlHelper.new(object: self)
         order_sql  = sql_helper.get_order(options[:sort_by], options[:order_by], "#{table_name}.updated_at ASC")
 
-        # - stip out * we already search for *query* -
-        query.delete! '*'
+        # - strip out * we already search for *query* -
+        query = query.delete '*'
 
         search_fallback("%#{query}%", options: options)
           .where(kb_locale: kb_locales)

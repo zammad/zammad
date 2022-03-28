@@ -11,7 +11,7 @@ RSpec.describe 'Manage > Integration > Clearbit', type: :system do
     visit 'system/integration/clearbit'
 
     # enable clearbit
-    check 'setting-switch', { allow_label_click: true }
+    check 'setting-switch', allow_label_click: true
   end
 
   context 'for clearbit config' do
@@ -71,7 +71,7 @@ RSpec.describe 'Manage > Integration > Clearbit', type: :system do
     context 'when disabled with changed config' do
       before do
         # disable clearbit
-        uncheck 'setting-switch', { allow_label_click: true }
+        uncheck 'setting-switch', allow_label_click: true
       end
 
       let(:api_key) { '-empty-' }

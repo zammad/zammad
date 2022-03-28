@@ -25,7 +25,7 @@ class ObjectManager::Attribute < ApplicationModel
 
   VALIDATE_INTEGER_MIN    = -2_147_483_647
   VALIDATE_INTEGER_MAX    = 2_147_483_647
-  VALIDATE_INTEGER_REGEXP = %r{^-?\d+$}.freeze
+  VALIDATE_INTEGER_REGEXP = %r{^-?\d+$}
 
   self.table_name = 'object_manager_attributes'
 
@@ -679,7 +679,7 @@ to send no browser reload event, pass false
           model.table_name,
           attribute.name,
           data_type,
-          options,
+          **options,
         )
       when %r{^(integer|user_autocompletion)$}, %r{^(boolean|active)$}, %r{^(datetime|date)$}
         ActiveRecord::Migration.add_column(

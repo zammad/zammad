@@ -193,7 +193,7 @@ returns
     slice :id, :store_file_id, :filename, :size, :preferences
   end
 
-  RESIZABLE_MIME_REGEXP = %r{image/(jpeg|jpg|png)}i.freeze
+  RESIZABLE_MIME_REGEXP = %r{image/(jpeg|jpg|png)}i
 
   def self.resizable_mime?(input)
     input.match? RESIZABLE_MIME_REGEXP

@@ -6,7 +6,7 @@ class Channel::Filter::BaseExternalCheck
   MAIL_HEADER        = 'x-example-header'.freeze
 
   # regex to detect the id in the subject of the email
-  SOURCE_ID_REGEX    = %r{\s(EXAMPLE-MATCH\d+)\s}.freeze
+  SOURCE_ID_REGEX    = %r{\s(EXAMPLE-MATCH\d+)\s}
 
   # External sync references source name prefix
   SOURCE_NAME_PREFIX = 'Example'.freeze
