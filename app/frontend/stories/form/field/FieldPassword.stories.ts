@@ -48,7 +48,7 @@ export default {
     docs: {
       description: {
         component:
-          '[FormKit Built-In - Password](https://formkit.com/inputs/password)',
+          'Base: [FormKit Built-In - Password](https://formkit.com/inputs/password) + Show/Hide current value',
       },
     },
   },

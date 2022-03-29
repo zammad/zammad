@@ -2,6 +2,7 @@
 
 import { cloneDeep } from '@apollo/client/utilities'
 import { FormKitNode, FormKitExtendableSchemaRoot } from '@formkit/core'
+import { isEmpty } from 'lodash-es'
 
 const addValuePopulatedDataAttribute = (node: FormKitNode) => {
   const { props, context } = node
@@ -9,7 +10,11 @@ const addValuePopulatedDataAttribute = (node: FormKitNode) => {
   if (!props.definition || !context || node.type !== 'input') return
 
   // Adds a helper function to check the existing value inside of the context.
-  context.fns.hasValue = (value) => !!value
+  context.fns.hasValue = (value) => {
+    if (typeof value === 'object') return !isEmpty(value)
+
+    return !!value
+  }
 
   const definition = cloneDeep(props.definition)
 

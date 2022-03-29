@@ -268,22 +268,26 @@ const localChangeFields = computed(() => {
 })
 
 // If something changed in the change fields, we need to update the current schemaData
-watch(localChangeFields, (newChangeFields) => {
-  Object.keys(newChangeFields).forEach((fieldName) => {
-    const field = {
-      ...newChangeFields[fieldName],
-      name: fieldName,
-    }
-
-    updateSchemaDataField(field)
-
-    nextTick(() => {
-      if (field.value !== values.value[fieldName]) {
-        formNode.at(fieldName)?.input(field.value)
+watch(
+  localChangeFields,
+  (newChangeFields) => {
+    Object.keys(newChangeFields).forEach((fieldName) => {
+      const field = {
+        ...newChangeFields[fieldName],
+        name: fieldName,
       }
+
+      updateSchemaDataField(field)
+
+      nextTick(() => {
+        if (field.value !== values.value[fieldName]) {
+          formNode.at(fieldName)?.input(field.value)
+        }
+      })
     })
-  })
-})
+  },
+  { deep: true },
+)
 
 // TODO: maybe we should react on schema changes and rebuild the static schema with a new form-id and re-rendering of
 // the complete form (= use the formId as the key for the whole form to trigger the re-rendering of the component...)

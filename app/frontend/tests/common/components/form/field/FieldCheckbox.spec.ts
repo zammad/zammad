@@ -1,9 +1,10 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
+import CheckboxVariant from '@common/types/form/fields'
 import { getNode } from '@formkit/core'
 import { FormKit } from '@formkit/vue'
 import { getWrapper } from '@tests/support/components'
-import { waitForTimeout } from '@tests/support/utils'
+import { waitForNextTick, waitForTimeout } from '@tests/support/utils'
 import { nextTick } from 'vue'
 
 const wrapperParameters = {
@@ -17,6 +18,7 @@ let wrapper = getWrapper(FormKit, {
     name: 'checkbox',
     type: 'checkbox',
     id: 'checkbox',
+    variant: CheckboxVariant.default,
   },
 })
 
@@ -105,6 +107,18 @@ describe('Form - Field - Checkbox (Formkit-BuildIn)', () => {
     expect(wrapper.emitted('input')).toBeTruthy()
     emittedInput = wrapper.emitted().input as Array<Array<InputEvent>>
     expect(emittedInput[0][0]).toBe('no')
+  })
+
+  it('can use variant', async () => {
+    expect.assertions(1)
+
+    wrapper.setProps({
+      variant: CheckboxVariant.switch,
+    })
+    await waitForNextTick(true)
+
+    // Normal checkbox should not be visible.
+    expect(wrapper.find('input').classes()).contains('sr-only')
   })
 
   it('can be disabled', async () => {

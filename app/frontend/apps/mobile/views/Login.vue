@@ -130,10 +130,6 @@ const formSchema = [
         type: 'checkbox',
         label: __('Remember me'),
         name: 'remember_me',
-        wrapperClass: 'inline-flex items-center',
-        inputClass:
-          'appearance-none h-4 w-4 border-[1.5px] border-white rounded-sm bg-transparent',
-        innerClass: 'mr-2',
       },
       {
         isLayout: true,

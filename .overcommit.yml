@@ -15,7 +15,12 @@ PreCommit:
     on_warn: fail
   CoffeeLint:
     # .coffeelint/rules/* not supported in YAML, specify all rules separately.
-    flags: ['--reporter=csv', '--rules', './.coffeelint/rules/detect_translatable_string.coffee']
+    flags:
+      [
+        '--reporter=csv',
+        '--rules',
+        './.coffeelint/rules/detect_translatable_string.coffee',
+      ]
     enabled: true
     on_warn: fail
     exclude: public/assets/chat/**/*

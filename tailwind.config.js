@@ -58,6 +58,11 @@ module.exports = {
         '[data-populated] &',
         '[data-populated]&',
       ])
+      addVariant('formkit-is-checked', [
+        '&[data-is-checked]',
+        '[data-is-checked] &',
+        '[data-is-checked]&',
+      ])
     }),
   ],
 }

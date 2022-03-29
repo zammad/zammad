@@ -3,7 +3,7 @@
 import type { FormThemeClasses } from '@common/types/form'
 
 const defaultTextInput: Record<string, string> = {
-  input: 'block',
+  input: 'block focus:outline-none focus:ring-0',
 }
 
 const classes: FormThemeClasses = {
@@ -24,6 +24,12 @@ const classes: FormThemeClasses = {
   'datetime-local': defaultTextInput,
   textarea: defaultTextInput,
   password: defaultTextInput,
+  checkbox: {
+    wrapper: 'inline-flex items-center cursor-pointer',
+    inner: 'mr-2',
+    input:
+      'appearance-none focus:outline-none focus:ring-0 focus:ring-offset-0',
+  },
 }
 
 export default classes
