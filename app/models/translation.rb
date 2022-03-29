@@ -5,6 +5,8 @@ class Translation < ApplicationModel
 
   before_create :set_initial
 
+  validates :locale, presence: true
+
 =begin
 
 reset translations to origin
