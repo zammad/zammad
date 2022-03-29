@@ -18,7 +18,9 @@
     - source /etc/profile.d/rvm.sh # ensure RVM is loaded
     - source /opt/rh/rh-nodejs*/enable # ensure Node.js is available
     - echo -e "\\e[0Ksection_start:`date +%s`:bundle_install[collapsed=true]\\r\\e[0Kbundle install"
-    - bundle install -j $(nproc) --path vendor
+    - bundle config set --local frozen 'true'
+    - bundle config set --local path 'vendor'
+    - bundle install -j $(nproc)
     - echo -e "\\e[0Ksection_end:`date +%s`:bundle_install\\r\\e[0K"
     - bundle exec ruby .gitlab/configure_environment.rb
     - source .gitlab/environment.env
@@ -66,7 +68,9 @@
     - yarn lint:css
     - echo "Rubocop check..."
     - echo -e "\\e[0Ksection_start:`date +%s`:bundle_install[collapsed=true]\\r\\e[0Kbundle install"
-    - bundle install -j $(nproc) --path vendor
+    - bundle config set --local frozen 'true'
+    - bundle config set --local path 'vendor'
+    - bundle install -j $(nproc)
     - echo -e "\\e[0Ksection_end:`date +%s`:bundle_install\\r\\e[0K"
     - bundle exec rubocop --parallel
 

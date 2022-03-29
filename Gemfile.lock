@@ -1,21 +1,4 @@
 GIT
-  remote: https://github.com/pippokairos/telegramAPI
-  revision: fb62dd5b48b0c41169ab69fc89069969ab4705b2
-  branch: uri-escape-warning
-  specs:
-    telegramAPI (1.4)
-      rest-client (~> 2.0, >= 2.0.2)
-
-GIT
-  remote: https://github.com/splitwise/rubocop-inflector
-  revision: 0de158833bbb27b19b0643561bef52ffaf422fa0
-  specs:
-    rubocop-inflector (0.2.0)
-      activesupport
-      rubocop
-      rubocop-rspec
-
-GIT
   remote: https://github.com/zammad-deps/autodiscover
   revision: ee9b53dfa797ce6d4f970b82beea7fbdd2df56bb
   specs:
@@ -32,6 +15,24 @@ GIT
   specs:
     mail (2.7.2.edge)
       mini_mime (>= 0.1.1)
+
+GIT
+  remote: https://github.com/zammad-deps/rubocop-inflector
+  revision: 0de158833bbb27b19b0643561bef52ffaf422fa0
+  branch: fix-ruby3-compat
+  specs:
+    rubocop-inflector (0.2.0)
+      activesupport
+      rubocop
+      rubocop-rspec
+
+GIT
+  remote: https://github.com/zammad-deps/telegramAPI
+  revision: fb62dd5b48b0c41169ab69fc89069969ab4705b2
+  branch: uri-escape-warning
+  specs:
+    telegramAPI (1.4)
+      rest-client (~> 2.0, >= 2.0.2)
 
 GEM
   remote: https://rubygems.org/
