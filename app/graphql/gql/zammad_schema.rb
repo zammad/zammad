@@ -62,3 +62,16 @@ class Gql::ZammadSchema < GraphQL::Schema
     raise GraphQL::ExecutionError.new(err.message, extensions: extensions)
   end
 end
+
+# Temporary Hack: only process trigger events if ActionCable is enabled.
+# TODO: Remove when this switch is not needed any more.
+module GraphQL
+  class Subscriptions
+    alias orig_trigger trigger
+    def trigger(...)
+      return if ENV['ENABLE_EXPERIMENTAL_MOBILE_FRONTEND'] != 'true'
+
+      orig_trigger(...)
+    end
+  end
+end

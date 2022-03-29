@@ -5,6 +5,12 @@ require 'rails_helper'
 # Login and logout work only via controller, so use type: request.
 RSpec.describe Gql::Mutations::Logout, type: :request do
 
+  # Temporary Hack: skip tests if ENABLE_EXPERIMENTAL_MOBILE_FRONTEND is not set.
+  # TODO: Remove when this switch is not needed any more.
+  around do |example|
+    example.run if ENV['ENABLE_EXPERIMENTAL_MOBILE_FRONTEND'] == 'true'
+  end
+
   context 'when logging out' do
     let(:agent) { create(:agent) }
     let(:query) { File.read(Rails.root.join('app/frontend/common/graphql/mutations/logout.graphql')) }

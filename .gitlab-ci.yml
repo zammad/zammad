@@ -36,6 +36,8 @@ variables:
   MAIL_SERVER_EMAIL: "zammad@mail.test.dc.zammad.com"
   KEEP_ON_MAIL_SERVER: "mail"
   KEEP_ON_MAIL_SERVER_ACCOUNT: "zammad@mail.test.dc.zammad.com:zammad"
+  # Temporary switch to enable the mobile front end for testing.
+  ENABLE_EXPERIMENTAL_MOBILE_FRONTEND: 'true'
 
 # Cache gems in between jobs and pipelines
 # ATTENTION: We use a combination of the Ruby major and minor version number

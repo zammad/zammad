@@ -85,8 +85,9 @@ class ConfigureEnvironment
     File.write(File.join(__dir__, '../config/database.yml'), Psych.dump(cnf))
   end
 
-  def self.configure_redis
-    if ENV['REDIS_URL'].nil? || ENV['REDIS_URL'].empty? # rubocop:disable Rails/Blank
+  def self.configure_redis # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity
+    puts 'ENABLING THE NEW EXPERIMENTAL MOBILE FRONTEND.' if ENV['ENABLE_EXPERIMENTAL_MOBILE_FRONTEND'] == 'true'
+    if ENV['ENABLE_EXPERIMENTAL_MOBILE_FRONTEND'] == 'true' && (ENV['REDIS_URL'].nil? || ENV['REDIS_URL'].empty?) # rubocop:disable Rails/Blank
       if database_type == 'mysql'
         raise 'Redis was not found, but is required for ActionCable on MySQL based systems.'
       end
