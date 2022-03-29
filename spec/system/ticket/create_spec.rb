@@ -345,6 +345,81 @@ RSpec.describe 'Ticket Create', type: :system do
     end
   end
 
+  describe 'object manager attributes default date', time_zone: 'Europe/London' do
+    before :all do # rubocop:disable RSpec/BeforeAfterAll
+      screens = {
+        'create_top' => {
+          '-all-' => {
+            'null' => true
+          }
+        },
+      }
+
+      create(:object_manager_attribute_date, name: 'date_test', display: 'date_test', default: 24, screens: screens)
+      create(:object_manager_attribute_datetime, name: 'datetime_test', display: 'datetime_test', default: 100, screens: screens)
+      ObjectManager::Attribute.migration_execute # rubocop:disable Zammad/ExistsDbStrategy
+    end
+
+    after :all do # rubocop:disable RSpec/BeforeAfterAll
+      ObjectManager::Attribute.where(name: %i[object_manager_attribute_date object_manager_attribute_datetime]).destroy_all
+    end
+
+    around do |example|
+      Time.use_zone('Europe/London') { example.run }
+    end
+
+    before do
+      template = create(:template, :dummy_data)
+      visit 'ticket/create'
+      freeze_time
+      use_template template
+    end
+
+    let(:field_date) { find 'input[name="{date}date_test"]', visible: :all }
+    let(:field_time) { find 'input[name="{datetime}datetime_test"]', visible: :all }
+
+    it 'prefills date' do
+      expect(field_date.value).to eq 1.day.from_now.to_date.to_s
+    end
+
+    it 'prefills datetime' do
+      expect(Time.zone.parse(field_time.value)).to eq 100.minutes.from_now.change(sec: 0, usec: 0)
+    end
+
+    it 'saves dates' do
+      click '.js-submit'
+
+      date = 1.day.from_now.to_date
+      time = 100.minutes.from_now.change(sec: 0)
+
+      expect(Ticket.last).to have_attributes date_test: date, datetime_test: time
+    end
+
+    it 'allows to save with different values' do
+      date = 2.days.from_now.to_date
+      time = 200.minutes.from_now.change(sec: 0)
+
+      field_date.sibling('[data-item=date]').set date.strftime('%m/%d/%Y')
+      field_time.sibling('[data-item=date]').set time.strftime('%m/%d/%Y')
+      field_time.sibling('[data-item=time]').set time.strftime('%H:%M')
+
+      click '.js-submit'
+
+      expect(Ticket.last).to have_attributes date_test: date, datetime_test: time
+    end
+
+    it 'allows to save with cleared value' do
+      field_date.sibling('[data-item=date]').click
+      find('.datepicker .clear').click
+      field_time.sibling('[data-item=date]').click
+      find('.datepicker .clear').click
+
+      click '.js-submit'
+
+      expect(Ticket.last).to have_attributes date_test: nil, datetime_test: nil
+    end
+  end
+
   describe 'GitLab Integration', :integration, authenticated_as: :authenticate, required_envs: %w[GITLAB_ENDPOINT GITLAB_APITOKEN] do
     let(:customer) { create(:customer) }
     let(:agent) { create(:agent, groups: [Group.find_by(name: 'Users')]) }

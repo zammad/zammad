@@ -237,6 +237,19 @@ set new attributes of model (remove already available attributes)
       for attribute in attributes
         attributesNew[ attribute.name ] = attribute
 
+    for key, attribute of attributesNew
+      if attribute.diff
+        current_time = new Date().getTime()
+        switch attribute.tag
+          when 'date'
+            date = new Date(current_time + attribute.diff * 3600 * 1000)
+            attribute.default = App.i18n.convert(date, 0, 'yyyy-mm-dd')
+          when 'datetime'
+            date = new Date(current_time + attribute.diff * 60 * 1000)
+            date.setSeconds(0)
+            date.setMilliseconds(0)
+            attribute.default = date.toISOString()
+
     attributesNew
 
   validate: (params = {}) ->

@@ -289,7 +289,7 @@ ObjectManager::Attribute.add(
   data_option: {
     future:     true,
     past:       false,
-    diff:       24,
+    diff:       nil,
     null:       true,
     translate:  true,
     permission: %w[ticket.agent],

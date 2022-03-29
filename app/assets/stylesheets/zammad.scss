@@ -11403,7 +11403,8 @@ output {
     }
   }
 
-  .today {
+  .today,
+  .clear {
     text-align: center;
     padding: 2px 0 0;
 
@@ -11411,6 +11412,24 @@ output {
 
     &.hidden {
       display: none;
+    }
+  }
+
+  .datepicker-footer-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    align-items: stretch;
+    height: 31px;
+    margin-top: 15px;
+
+    div {
+      flex-grow: 1;
+      border: 1px solid #56575e;
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
   }
 }

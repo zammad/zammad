@@ -110,6 +110,9 @@ class App.i18n
     return if !resolvedOptions.timeZone
     resolvedOptions.timeZone
 
+  @convert: (time, offset, format) ->
+    _instance.convert(time, offset, format)
+
 class _i18nSingleton extends Spine.Module
   @include App.LogInclude
 

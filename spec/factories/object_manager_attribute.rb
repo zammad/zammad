@@ -58,6 +58,7 @@ FactoryBot.define do
   end
 
   factory :object_manager_attribute_textarea, parent: :object_manager_attribute do
+    default { '' }
     data_type { 'textarea' }
     data_option do
       {

@@ -29,11 +29,30 @@ class ObjectManager
       end
 
       def build_value_date(config)
-        config[:diff]&.days&.from_now
+        diff = config[:diff]
+
+        return if !diff
+
+        Time.use_zone(Setting.get('timezone_default').presence) do
+          diff
+            .days
+            .from_now
+            .to_date
+        end
       end
 
       def build_value_datetime(config)
-        config[:diff]&.hours&.from_now&.change(usec: 0, sec: 0)
+        diff = config[:diff]
+
+        return if !diff
+
+        Time.use_zone(Setting.get('timezone_default').presence) do
+          diff
+            .hours
+            .from_now
+            .change(usec: 0, sec: 0)
+            .utc
+        end
       end
 
       def attributes_for(record)

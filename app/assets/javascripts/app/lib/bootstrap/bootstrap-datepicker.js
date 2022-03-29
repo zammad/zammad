@@ -1150,7 +1150,7 @@
 		click: function(e){
 			e.preventDefault();
 			e.stopPropagation();
-			var target = $(e.target).closest('span, td, th'),
+			var target = $(e.target).closest('td > div.datepicker-footer-buttons > div, span, td, th'),
 				year, month, day;
 			if (target.length === 1){
 				switch (target[0].nodeName.toLowerCase()){
@@ -1176,6 +1176,21 @@
 								}
 								this.fill();
 								break;
+							case 'today':
+								var date = new Date();
+								date = UTCDate(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0);
+
+								this.showMode(-2);
+								var which = this.o.todayBtn === 'linked' ? null : 'view';
+								this._setDate(date, which);
+								break;
+							case 'clear':
+								this.clearDates();
+								break;
+						}
+						break;
+					case 'div':
+						switch (target[0].className){
 							case 'today':
 								var date = new Date();
 								date = UTCDate(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0);

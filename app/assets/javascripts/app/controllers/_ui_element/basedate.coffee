@@ -29,6 +29,7 @@ class App.UiElement.basedate
 
   @applyPickers: (item, attribute) ->
     item.find('.js-datepicker').datepicker(
+      clearBtn: attribute.null
       weekStart: 1
       autoclose: true
       todayBtn: 'linked'

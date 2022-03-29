@@ -12,7 +12,7 @@ DEFAULT_VALUES = {
   select:   'key_1'
 }.freeze
 
-RSpec.describe ObjectManager::Attribute::SetDefaults, type: :model do
+RSpec.describe ObjectManager::Attribute::SetDefaults, type: :model, time_zone: 'Europe/London' do
   describe 'setting default', db_strategy: :reset_all do
     before :all do # rubocop:disable RSpec/BeforeAfterAll
       DEFAULT_VALUES.each do |key, value|
@@ -91,6 +91,22 @@ RSpec.describe ObjectManager::Attribute::SetDefaults, type: :model do
 
       it 'select value is set' do
         expect(example.rspec_select).to eq 'key_1'
+      end
+
+      context 'when system uses different time zone' do
+        before do
+          Setting.set('timezone_default', 'Europe/Vilnius')
+
+          travel_to Time.current.change(hour: 23, usec: 0, sec: 0)
+        end
+
+        it 'date is set' do
+          expect(example.rspec_date).to eq 2.days.from_now.to_date
+        end
+
+        it 'datetime is set' do
+          expect(example.rspec_datetime).to eq 12.hours.from_now
+        end
       end
     end
 
