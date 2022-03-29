@@ -19,11 +19,11 @@ class Socket
     #   end
     # end
 
-    def tcp(host, port, **socket_opts)
+    def tcp(host, port, ...)
       if TCR.configuration.hook_tcp_ports.include?(port)
         TCR::RecordableTCPSocket.new(host, port, TCR.cassette)
       else
-        real_tcp(host, port, **socket_opts)
+        real_tcp(host, port, ...)
       end
     end
   end
