@@ -391,6 +391,8 @@ GEM
       rspec-rails (>= 3.0.0)
     racc (1.6.0)
     rack (2.2.3)
+    rack-attack (6.6.0)
+      rack (>= 1.0, < 3)
     rack-livereload (0.3.17)
       rack
     rack-test (1.1.0)
@@ -663,6 +665,7 @@ DEPENDENCIES
   puma (~> 4)
   pundit
   pundit-matchers
+  rack-attack
   rack-livereload
   rails (~> 6.0.0)
   rails-controller-testing
