@@ -67,7 +67,7 @@ module ZammadSpecSupportRequest
   #
   # @return nil
   def authenticated_as(user, via: :api_client, **options)
-    password = options[:password] || user.password.to_s
+    password = options[:password] || user.try(:password_plain) || user.password.to_s
     login    = options[:login] || user.login
 
     case via

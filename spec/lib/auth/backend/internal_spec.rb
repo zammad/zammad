@@ -21,6 +21,30 @@ RSpec.describe Auth::Backend::Internal do
       end
     end
 
+    context 'when very long password is given' do
+      let(:password) { Faker::Lorem.characters(number: 1_111) }
+      let(:user)     do
+        # temporary override constant to create a test user with a very long password
+        initial = PasswordPolicy::MaxLength::MAX_LENGTH
+        stub_const 'PasswordPolicy::MaxLength::MAX_LENGTH', 99_999
+        user = create(:user, password: password)
+        stub_const 'PasswordPolicy::MaxLength::MAX_LENGTH', initial
+        user
+      end
+
+      it 'does not try to verify it' do
+        allow(PasswordHash).to receive(:verified?)
+
+        instance.valid?
+
+        expect(PasswordHash).not_to have_received(:verified?)
+      end
+
+      it 'returns false even though password is matching' do
+        expect(instance).not_to be_valid
+      end
+    end
+
     context 'when given password matches stored hash' do
 
       let(:password) { user.password }

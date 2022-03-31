@@ -1169,6 +1169,11 @@ raise 'At least one user need to have admin permissions'
     # don't re-hash passwords
     return password if PasswordHash.crypted?(password)
 
+    if !PasswordPolicy::MaxLength.valid? password
+      errors.add :base, PasswordPolicy::MaxLength.error
+      return nil
+    end
+
     # hash the plaintext password
     PasswordHash.crypt(password)
   end

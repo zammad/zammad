@@ -3,7 +3,7 @@
 require 'rails_helper'
 require 'lib/password_policy/error_examples'
 
-RSpec.describe PasswordPolicy::Length do
+RSpec.describe PasswordPolicy::MinLength do
   it_behaves_like 'declaring an error'
 
   describe '.applicable?' do

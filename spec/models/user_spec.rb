@@ -814,6 +814,16 @@ RSpec.describe User, type: :model do
           expect(user.password).not_to eq(another_user.password)
         end
       end
+
+      context 'when saving a very long password' do
+        let(:long_string) { "asd1ASDasd!#{Faker::Lorem.characters(number: 1_000)}" }
+
+        it 'marks object as invalid by adding error' do
+          user.update(password: long_string)
+
+          expect(user.errors).to satisfy { |errors| errors.any? { |error| error.message.first.include?('Invalid password') } }
+        end
+      end
     end
 
     describe '#phone' do

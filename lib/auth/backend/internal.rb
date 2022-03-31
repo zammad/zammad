@@ -27,6 +27,12 @@ class Auth
       end
 
       def hash_matches?
+        # makes sure that very long strings supplied as password
+        # rejected early and not even tried to match to password
+        if !PasswordPolicy::MaxLength.valid? password
+          return false
+        end
+
         # Because of legacy reason a special check exists and afterwards the
         # password will be saved in the current format.
         if PasswordHash.legacy?(user.password, password)

@@ -35,7 +35,7 @@ RSpec.describe 'Overviews', type: :request do
 
       agent = create(:agent, password: 'we need a password here')
 
-      authenticated_as(agent)
+      authenticated_as(agent, password: 'wrong password')
       post '/api/v1/overviews', params: params, as: :json
       expect(response).to have_http_status(:unauthorized)
       expect(json_response).to be_a_kind_of(Hash)

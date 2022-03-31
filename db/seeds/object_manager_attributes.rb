@@ -1166,7 +1166,10 @@ ObjectManager::Attribute.add(
   data_type:   'input',
   data_option: {
     type:         'password',
-    maxlength:    100,
+    # password length is capped at 1000 in PasswordPolicy::MaxLength::MAX_LENGTH
+    # if user copy-pastes a very long string
+    # this ensures that max length check is triggered preventing saving of truncated password
+    maxlength:    1001,
     null:         true,
     autocomplete: 'new-password',
     item_class:   'formGroup--halfSize',
