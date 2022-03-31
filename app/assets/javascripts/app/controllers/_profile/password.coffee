@@ -56,26 +56,32 @@ class ProfilePassword extends App.ControllerSubContent
       data:        JSON.stringify(params)
       processData: true
       success:     @success
+      error:       @error
     )
 
-  success: (data) =>
-    if data.message is 'ok'
-      @render()
-      @notify(
-        type: 'success'
-        msg:  App.i18n.translateContent( 'Password changed successfully!' )
-      )
-    else
-      if data.notice
-        @notify
-          type:      'error'
-          msg:       App.i18n.translateContent( data.notice[0], data.notice[1] )
-          removeAll: true
-      else
-        @notify
-          type:      'error'
-          msg:       __('The password could not be set. Please contact your administrator.')
-          removeAll: true
-      @formEnable( @$('form') )
+  success: =>
+    @render()
+
+    @notify(
+      type: 'success'
+      msg:  App.i18n.translateContent( 'Password changed successfully!' )
+    )
+
+  error: (xhr, status, error) =>
+    return if xhr.status != 422
+
+    data = xhr.responseJSON
+
+    message = if data.notice
+                App.i18n.translateContent( data.notice[0], data.notice[1] )
+              else
+                __('The password could not be set. Please contact your administrator.')
+
+    @notify
+      type:      'error'
+      msg:       message
+      removeAll: true
+
+    @formEnable( @$('form') )
 
 App.Config.set('Password', { prio: 2000, name: __('Password'), parent: '#profile', target: '#profile/password', controller: ProfilePassword, permission: ['user_preferences.password'] }, 'NavBarProfile')

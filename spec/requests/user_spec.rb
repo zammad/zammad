@@ -77,8 +77,8 @@ RSpec.describe 'User', type: :request do
       )
     end
 
-    before do
-      configure_elasticsearch(rebuild: true)
+    before do |example|
+      configure_elasticsearch(rebuild: true) if example.metadata[:searchindex]
     end
 
     it 'does user create tests - no user' do
@@ -1158,6 +1158,31 @@ RSpec.describe 'User', type: :request do
           expect(json_response).to be_a_kind_of(Hash)
           expect(json_response['message']).to eq('ok')
         end
+      end
+    end
+
+    context 'ultra long password', authenticated_as: :user, searchindex: false do
+      let(:user)        { create :agent, :with_valid_password }
+      let(:long_string) { "asd1ASDasd!#{Faker::Lorem.characters(number: 1_000)}" }
+
+      it 'does not reach verifying when old password is too long' do
+        allow(PasswordHash).to receive(:verified?).and_call_original
+
+        post '/api/v1/users/password_change', params: { password_old: long_string, password_new: long_string }, as: :json
+
+        expect(PasswordHash).not_to have_received(:verified?).with(any_args, long_string)
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(json_response['message']).to eq('failed')
+      end
+
+      it 'does not reach hashing when saving' do
+        allow(PasswordHash).to receive(:crypt).and_call_original
+
+        post '/api/v1/users/password_change', params: { password_old: user.password_plain, password_new: long_string }, as: :json
+
+        expect(PasswordHash).not_to have_received(:crypt)
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(json_response['message']).to eq('failed')
       end
     end
   end

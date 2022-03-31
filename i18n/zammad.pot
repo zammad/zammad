@@ -5176,6 +5176,10 @@ msgstr ""
 msgid "Invalid password, it must be at least %s characters long!"
 msgstr ""
 
+#: lib/password_policy/max_length.rb
+msgid "Invalid password, it must be shorter than %s characters!"
+msgstr ""
+
 #: lib/password_policy/digit.rb
 msgid "Invalid password, it must contain at least 1 digit!"
 msgstr ""

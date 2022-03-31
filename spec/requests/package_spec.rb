@@ -46,7 +46,7 @@ RSpec.describe 'Packages', type: :request do
     it 'does packages index with inactive admin' do
       admin = create(:admin, active: false, password: 'we need a password here')
 
-      authenticated_as(admin)
+      authenticated_as(admin, password: 'wrong password')
       get '/api/v1/packages', as: :json
 
       expect(response).to have_http_status(:unauthorized)
