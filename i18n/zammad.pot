@@ -2035,6 +2035,11 @@ msgstr ""
 msgid "Conversion of retweets into tickets is turned off."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/ticket_zoom.coffee
+#: app/assets/javascripts/app/controllers/ticket_zoom/meta.coffee
+msgid "Copied to clipboard!"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
 msgid "Copy"
 msgstr ""

@@ -7,11 +7,14 @@ class App.TicketZoom extends App.Controller
     '.scrollPageHeader':   'scrollPageHeader'
 
   events:
-    'click .js-submit':   'submit'
-    'click .js-bookmark': 'bookmark'
-    'click .js-reset':    'reset'
-    'click .js-draft':    'draft'
-    'click .main':        'muteTask'
+    'click .js-submit':                  'submit'
+    'click .js-bookmark':                'bookmark'
+    'click .js-reset':                   'reset'
+    'click .js-draft':                   'draft'
+    'click .main':                       'muteTask'
+    'click .ticket-number-copy-header':  'copyTicketNumber'
+
+  tooltipCopied = undefined
 
   constructor: (params) ->
     super
@@ -339,6 +342,7 @@ class App.TicketZoom extends App.Controller
     @positionPageHeaderStop()
     @autosaveStop()
     @shortcutNavigationstop()
+    tooltipCopied.tooltip('hide') if tooltipCopied
     return if !@attributeBar
     @attributeBar.stop()
 
@@ -1220,6 +1224,26 @@ class App.TicketZoom extends App.Controller
       ticket_id:   @ticket_id
       overview_id: @overview_id
     )
+
+  copyTicketNumber: =>
+    text = $('.active.content .js-objectNumber').first().data('number') || ''
+    if text
+      clipboard.copy(text)
+
+      tooltipCopied = @el.find('.ticket-number-copy-header').tooltip(
+        trigger:    'manual'
+        html:       true
+        animation:  true
+        delay:      0
+        placement:  'bottom'
+        container:  'body' # place in body do prevent it from animating
+        title: ->
+          App.i18n.translateContent('Copied to clipboard!')
+      )
+      tooltipCopied.tooltip('show')
+      @delay( ->
+        tooltipCopied.tooltip('hide')
+      , 1500)
 
 class TicketZoomRouter extends App.ControllerPermanent
   requiredPermission: ['ticket.agent', 'ticket.customer']
