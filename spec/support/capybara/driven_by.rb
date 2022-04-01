@@ -50,4 +50,12 @@ RSpec.configure do |config|
     end
   end
 
+  config.around(:each, type: :system) do |example|
+    # WebMock makes it impossible to have persistent http connections to Selenium,
+    #    which may cause overhead and Net::OpenTimeout errors.
+    WebMock.disable!
+    example.run
+    WebMock.enable!
+  end
+
 end
