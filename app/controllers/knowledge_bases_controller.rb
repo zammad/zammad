@@ -6,7 +6,7 @@ class KnowledgeBasesController < KnowledgeBase::BaseController
   end
 
   def visible_ids
-    render json: KnowledgeBase::InternalAssets.new(current_user).visible_ids
+    render json: calculate_visible_ids
   end
 
   private
@@ -20,6 +20,20 @@ class KnowledgeBasesController < KnowledgeBase::BaseController
     end
 
     public_assets
+  end
+
+  def calculate_visible_ids
+    if KnowledgeBase.granular_permissions? && kb_permissions?
+      return KnowledgeBase::InternalAssets.new(current_user).visible_ids
+    end
+
+    if kb_permission_editor?
+      editor_assets_visible_ids
+    elsif kb_permission_reader?
+      reader_assets_visible_ids
+    else
+      {}
+    end
   end
 
   def kb_permissions?
@@ -63,6 +77,13 @@ class KnowledgeBasesController < KnowledgeBase::BaseController
     assets
   end
 
+  def editor_assets_visible_ids
+    {
+      answer_ids:   KnowledgeBase::Answer.pluck(:id),
+      category_ids: KnowledgeBase::Category.pluck(:id)
+    }
+  end
+
   def reader_assets(answer_translation_content_ids)
     assets = [
       KnowledgeBase,
@@ -94,6 +115,13 @@ class KnowledgeBasesController < KnowledgeBase::BaseController
     end
 
     assets
+  end
+
+  def reader_assets_visible_ids
+    {
+      answer_ids:   KnowledgeBase::Answer.internal.pluck(:id),
+      category_ids: KnowledgeBase::Category.pluck(:id)
+    }
   end
 
   # assets for users who don't have KB permissions

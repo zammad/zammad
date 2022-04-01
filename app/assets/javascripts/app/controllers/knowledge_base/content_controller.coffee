@@ -58,6 +58,10 @@ class App.KnowledgeBaseContentController extends App.Controller
     App.KnowledgeBaseFormController.compareParams(remoteParams, @startingParams)
 
   objectRefreshed: ->
+    if !@object.exists()
+      @parentController.renderNotAvailableAnymore()
+      return
+
     @renderAvailabilityWidgets()
 
     if @remoteDidntChangeSinceStart()

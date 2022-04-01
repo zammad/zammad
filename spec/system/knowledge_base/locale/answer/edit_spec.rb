@@ -124,4 +124,50 @@ RSpec.describe 'Knowledge Base Locale Answer Edit', type: :system do
       end
     end
   end
+
+  context 'deleted by another user' do
+    before do
+      visit "#knowledge_base/#{knowledge_base.id}/locale/#{primary_locale.system_locale.locale}/answer/#{published_answer.id}/edit"
+    end
+
+    it 'shows not available', performs_jobs: true do
+      find(:active_content, text: published_answer.translations.first.title)
+
+      perform_enqueued_jobs do
+        ActiveRecord::Base.transaction do
+          published_answer.destroy
+        end
+      end
+
+      within :active_content do
+        expect(page).to have_text('The page is not available anymore')
+      end
+    end
+  end
+
+  context 'updated by another user' do
+    before do
+      ensure_websocket do
+        visit "#knowledge_base/#{knowledge_base.id}/locale/#{primary_locale.system_locale.locale}/answer/#{published_answer.id}/edit"
+      end
+
+      travel 1.minute
+    end
+
+    it 'shows new content', performs_jobs: true do
+      find(:active_content, text: published_answer.translations.first.title)
+
+      accept_prompt do
+        perform_enqueued_jobs do
+          Transaction.execute do
+            published_answer.translations.first.update! title: 'new title'
+          end
+        end
+      end
+
+      within :active_content do
+        expect(page).to have_text('new title')
+      end
+    end
+  end
 end
