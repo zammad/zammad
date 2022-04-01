@@ -5,7 +5,7 @@ RSpec.shared_examples 'ChecksKbClientNotification' do
     before { subject }
 
     it 'on creation' do
-      expect(ChecksKbClientNotificationJob).to have_been_enqueued.at_least(:once) # some object have associations that triggers touch job after creation
+      expect(ChecksKbClientNotificationJob).to have_been_enqueued.with(subject.class.name, subject.id)
     end
 
     context 'after initial notifications are cleared' do
@@ -13,17 +13,17 @@ RSpec.shared_examples 'ChecksKbClientNotification' do
 
       it 'on update' do
         subject.update(updated_at: Time.zone.now)
-        expect(ChecksKbClientNotificationJob).to have_been_enqueued.at_least(:once) # some object have associations that triggers touch job after creation
+        expect(ChecksKbClientNotificationJob).to have_been_enqueued.with(subject.class.name, subject.id)
       end
 
       it 'on touch' do
         subject.touch
-        expect(ChecksKbClientNotificationJob).to have_been_enqueued.at_least(:once) # some object have associations that triggers touch job after creation
+        expect(ChecksKbClientNotificationJob).to have_been_enqueued.with(subject.class.name, subject.id)
       end
 
       it 'on destroy' do
         subject.destroy
-        expect(ChecksKbClientNotificationJob).to have_been_enqueued.at_least(:once) # some object have associations that triggers touch job after creation
+        expect(ChecksKbClientNotificationJob).not_to have_been_enqueued.with(subject.class.name, subject.id)
       end
 
       it 'notifications be disabled' do

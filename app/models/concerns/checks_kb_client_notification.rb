@@ -30,6 +30,10 @@ module ChecksKbClientNotification
   def notify_kb_clients_after
     return if self.class.notify_kb_clients_suspend?
 
+    # do not leak details about deleted items. See ChecksKbClientVisibilityJob
+    # after_commit does not allow on: :touch
+    return if destroyed?
+
     ChecksKbClientNotificationJob.perform_later(self.class.name, id)
   end
 end
