@@ -14,9 +14,9 @@ module Tasks
         ARGUMENT_COUNT = 1
 
         def self.task_handler
-          name = ARGV[1]
+          name = ArgvHelper.argv[1]
           if name.blank?
-            abort "Error: please provide a package name: #{ARGV[0]} MyPackage"
+            abort "Error: please provide a package name: #{ArgvHelper.argv[0]} MyPackage"
           end
           # Find the package so that we don't need to require the version from the command line.
           package = ::Package.find_by(name: name)

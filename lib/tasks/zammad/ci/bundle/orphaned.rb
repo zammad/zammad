@@ -31,7 +31,7 @@ module Tasks
           end
 
           def self.validate_age
-            age = ARGV[1]
+            age = ArgvHelper.argv[1]
             if age.to_i.to_s != age
               abort "Please provide a valid number for 'age_in_years'.\n#{usage}"
             end

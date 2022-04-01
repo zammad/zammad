@@ -7,9 +7,4 @@ end
 APP_PATH = File.expand_path('../config/application', __dir__)
 require_relative '../config/boot'
 
-# Unfortunately, Rails removes all Rake commands from ARGV, so remember it now.
-if ARGV.include? 'assets:precompile'
-  ENV['IN_ASSETS_PRECOMPILE'] = 'true'
-end
-
 require 'rails/commands'
