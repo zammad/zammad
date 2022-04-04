@@ -282,3 +282,37 @@ class App.UiElement.ApplicationUiElement
         record.disabled = 'disabled'
       else
         record.disabled = ''
+
+  @findOption: (options, value) ->
+    return if !_.isArray(options)
+    for option in options
+      return option if option.value is value
+      if option.children
+        result = @findOption(option.children, value)
+        return result if result
+
+  # 1. If attribute.value is not among the current options, then search within historical options
+  # 2. If attribute.value is not among current and historical options, then add the value itself as an option
+  @addDeletedOptions: (attribute) ->
+    return if !_.isEmpty(attribute.relation) # do not apply for attributes with relation, relations will fill options automatically
+    return if attribute.rejectNonExistentValues
+    value = attribute.value
+    return if !value
+    return if !attribute.options
+
+    values = value
+    if !_.isArray(value)
+      values = [value]
+
+    attribute.historical_options ||= {}
+    if _.isArray(attribute.options)
+      for value in values
+        continue if @findOption(attribute.options, value)
+        attribute.options.push(
+          value: value
+          name: attribute.historical_options[value] || value
+        )
+    else
+      for value in values
+        continue if attribute.options[value]
+        attribute.options[value] = attribute.historical_options[value] || value

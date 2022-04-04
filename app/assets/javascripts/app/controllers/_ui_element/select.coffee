@@ -59,7 +59,7 @@ class App.UiElement.select extends App.UiElement.ApplicationUiElement
   @shouldDisplayWarn: (selectedVal, attribute, params) ->
     return if !selectedVal
     return if !params
-    
+
     params[attribute.name + '_is_display_warning'](selectedVal)
 
   @toggleDisplayWarn: (warn_visible, attribute, item) ->
@@ -73,30 +73,3 @@ class App.UiElement.select extends App.UiElement.ApplicationUiElement
     warn_elem.html(attribute.warn)
     item.append(warn_elem)
 
-  # 1. If attribute.value is not among the current options, then search within historical options
-  # 2. If attribute.value is not among current and historical options, then add the value itself as an option
-  @addDeletedOptions: (attribute) ->
-    return if !_.isEmpty(attribute.relation) # do not apply for attributes with relation, relations will fill options automatically
-    return if attribute.rejectNonExistentValues
-    value = attribute.value
-    return if !value
-    return if _.isArray(value)
-    return if !attribute.options
-    return if !_.isObject(attribute.options)
-    return if value of attribute.options
-    return if value in (temp for own prop, temp of attribute.options)
-
-    if _.isArray(attribute.options)
-      # Array of Strings (value)
-      return if value of attribute.options
-
-      # Array of Objects (for ordering purposes)
-      return if attribute.options.filter((elem) -> elem.value == value) isnt null
-    else
-      # regular Object
-      return if value in (temp for own prop, temp of attribute.options)
-
-    if attribute.historical_options && value of attribute.historical_options
-      attribute.options[value] = attribute.historical_options[value]
-    else
-      attribute.options[value] = value

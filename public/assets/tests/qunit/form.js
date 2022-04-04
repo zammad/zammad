@@ -1639,15 +1639,39 @@ QUnit.test("Fixes #4024 - Tree select value cannot be set to \"-\" (empty) with 
     el:        el,
     model:     {
       configure_attributes: [
-        { name: '4042_select', display: '4042_select', tag: 'select_search', null: true, nulloption: true, multiple: true, options: { 'a': 'a', 'b': 'b' } },
-        { name: '4042_multiselect', display: '4042_multiselect', tag: 'multiselect_search', null: true, nulloption: true, multiple: true, options: { 'a': 'a', 'b': 'b' } },
-        { name: '4042_tree_select', display: '4042_tree_select', tag: 'tree_select_search', null: true, nulloption: true, multiple: true, options: [{ 'value': 'a', 'name': 'a'}, { 'value': 'b', 'name': 'b'}] },
+        { name: '4024_select', display: '4024_select', tag: 'select_search', null: true, nulloption: true, multiple: true, options: { 'a': 'a', 'b': 'b' } },
+        { name: '4024_multiselect', display: '4024_multiselect', tag: 'multiselect_search', null: true, nulloption: true, multiple: true, options: { 'a': 'a', 'b': 'b' } },
+        { name: '4024_tree_select', display: '4024_tree_select', tag: 'tree_select_search', null: true, nulloption: true, multiple: true, options: [{ 'value': 'a', 'name': 'a'}, { 'value': 'b', 'name': 'b'}] },
       ],
     },
     autofocus: true
   });
 
-  assert.equal(el.find('select[name="4042_select"] option[value=""]').text(), '-', '4042_select has nulloption')
-  assert.equal(el.find('select[name="4042_multiselect"] option[value=""]').text(), '-', '4042_multiselect has nulloption')
-  assert.equal(el.find('select[name="4042_tree_select"] option[value=""]').text(), '-', '4042_tree_select has nulloption')
+  assert.equal(el.find('select[name="4024_select"] option[value=""]').text(), '-', '4024_select has nulloption')
+  assert.equal(el.find('select[name="4024_multiselect"] option[value=""]').text(), '-', '4024_multiselect has nulloption')
+  assert.equal(el.find('select[name="4024_tree_select"] option[value=""]').text(), '-', '4024_tree_select has nulloption')
+});
+
+QUnit.test("Fixes #4027 - undefined method `to_hash` on editing select fields in the admin interface after migration to 5.1.", assert => {
+  $('#qunit').append('<hr><h1>Fixes #4027 - undefined method `to_hash` on editing select fields in the admin interface after migration to 5.1.</h1><form id="form23"></form>')
+  var el = $('#form23')
+  new App.ControllerForm({
+    el:        el,
+    model:     {
+      configure_attributes: [
+        { name: '4027_selcet_hash', display: '4027_selcet_hash', tag: 'select', null: true, nulloption: true, options: { 'a': 'a', 'b': 'b' }, value: 'c', historical_options: { c: 'C' } },
+        { name: '4027_selcet_array', display: '4027_selcet_array', tag: 'select', null: true, nulloption: true, options: [{ value: 'a', name: 'a' }, { value: 'b', name: 'b' } ], value: 'c', historical_options: { c: 'C' } },
+        { name: '4027_multiselect_hash', display: '4027_multiselect_hash', tag: 'multiselect', null: true, nulloption: true, options: { 'a': 'a', 'b': 'b' }, value: ['c'], historical_options: { c: 'C' } },
+        { name: '4027_multiselect_array', display: '4027_multiselect_array', tag: 'multiselect', null: true, nulloption: true, options: [{ value: 'a', name: 'a' }, { value: 'b', name: 'b' } ], value: ['c', 'd'], historical_options: { c: 'C', d: 'D' } },
+        { name: '4027_tree_select_array', display: '4027_tree_select_array', tag: 'tree_select', null: true, nulloption: true, options: [{ value: 'a', name: 'a' }, { value: 'b', name: 'b' } ], value: 'b::c', historical_options: { 'b::c': 'C' } },
+      ],
+    },
+    autofocus: true
+  });
+
+  assert.equal(el.find('select[name="4027_selcet_hash"] option[selected]').text(), 'C', '4027_select has historic text')
+  assert.equal(el.find('select[name="4027_selcet_array"] option[selected]').text(), 'C', '4027_selcet_array has historic text')
+  assert.equal(el.find('select[name="4027_multiselect_hash"] option[selected]').text(), 'C', '4027_multiselect_hash has historic text')
+  assert.equal(el.find('select[name="4027_multiselect_array"] option[selected]').text(), 'CD', '4027_multiselect_array has historic text')
+  assert.equal(el.find('div[data-attribute-name="4027_tree_select_array"] .js-input').val(), 'C', '4027_tree_select_array has historic text')
 });
