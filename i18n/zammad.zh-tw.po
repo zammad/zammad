@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-02-15 10:46+0000\n"
+"PO-Revision-Date: 2022-04-01 03:30+0000\n"
 "Last-Translator: Jc <dottdot.dev@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <https://translations.zammad.org/"
 "projects/zammad/zammad-development/zh_Hant/>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.10.1\n"
+"X-Generator: Weblate 4.11.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -410,14 +410,21 @@ msgid ""
 "If you have customers with different business hours, you can create multiple "
 "calendars. Tickets are linked to calendars using **SLAs**."
 msgstr ""
+"**日曆** 需要根據上班時間計算升級並發送升級通知。\n"
+"\n"
+"定義一個在系統範圍內有效的 **“標準”** "
+"日曆。只有在定義好的工作時間內，升級通知才會發送給您的客服人員。\n"
+"\n"
+"若您有不同於營業時間的客戶，您可以建立多個日曆。工單會使用 **SLAs** "
+"連結到日曆。"
 
 #: app/controllers/getting_started_controller.rb
 msgid "A URL looks like this: https://zammad.example.com"
-msgstr ""
+msgstr "類似如此的 URL：https://zammad.example.com"
 
 #: db/seeds/settings.rb
 msgid "A list of active import backends that gets scheduled automatically."
-msgstr ""
+msgstr "自動排程的活動列表導入系統後台。"
 
 #: app/assets/javascripts/app/controllers/_plugin/session_taken_over.coffee
 msgid ""
@@ -450,7 +457,7 @@ msgstr "測試工單已建立，您可以在工單總覽 “%s” ％l 中找到
 
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee
 msgid "A user is required!"
-msgstr ""
+msgstr "需要一個使用者！"
 
 #: app/assets/javascripts/app/controllers/api.coffee
 #: app/assets/javascripts/app/views/api.jst.eco db/seeds/permissions.rb
@@ -459,19 +466,19 @@ msgstr "API"
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee
 msgid "API Key"
-msgstr ""
+msgstr "API Key"
 
 #: db/seeds/settings.rb
 msgid "API Password Access"
-msgstr ""
+msgstr "API 密碼存取"
 
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 msgid "API Token"
-msgstr ""
+msgstr "API Token"
 
 #: db/seeds/settings.rb
 msgid "API Token Access"
-msgstr ""
+msgstr "API Token 存取"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
@@ -495,11 +502,11 @@ msgstr "根據目前使用者和機構存取客戶工單"
 
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 msgid "Account"
-msgstr ""
+msgstr "帳戶"
 
 #: app/models/channel/driver/sms/twilio.rb
 msgid "Account SID"
-msgstr ""
+msgstr "帳戶 SID"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee
 msgid "Account Time"
@@ -509,7 +516,7 @@ msgstr "計算時間"
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
 #: app/controllers/channels_email_controller.rb
 msgid "Account already exists!"
-msgstr ""
+msgstr "帳戶已經存在！"
 
 #: app/assets/javascripts/app/controllers/_plugin/user_signup_check.coffee
 msgid "Account not verified"
@@ -2339,7 +2346,7 @@ msgstr ""
 msgid "Could not read raw logo!"
 msgstr ""
 
-#: app/assets/javascripts/app/views/knowledge_base/new_modal.coffee
+#: app/assets/javascripts/app/views/knowledge_base/new_controller.coffee
 msgid "Couldn't create Knowledge Base"
 msgstr ""
 
@@ -2388,7 +2395,7 @@ msgstr ""
 msgid "Create Channels"
 msgstr "建立通訊管道"
 
-#: app/assets/javascripts/app/views/knowledge_base/new_modal.coffee
+#: app/assets/javascripts/app/views/knowledge_base/new_controller.coffee
 msgid "Create Knowledge Base"
 msgstr ""
 
@@ -8383,11 +8390,6 @@ msgstr "重置所有更動"
 msgid "Response"
 msgstr ""
 
-#: app/assets/javascripts/app/views/sla/index.jst.eco
-#, fuzzy
-msgid "Response Time"
-msgstr "第一次回應時間"
-
 #: app/assets/javascripts/app/views/monitoring.jst.eco
 msgid "Restart failed jobs"
 msgstr ""
@@ -9990,10 +9992,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
 msgid "There is existing content. Do you want to overwrite it?"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
-msgid "There is no Knowledge Base yet. Please create one."
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
@@ -11958,6 +11956,7 @@ msgid "before (relative)"
 msgstr "之前 (相對)"
 
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
+#: app/assets/javascripts/app/views/sla/index.jst.eco
 #, fuzzy
 msgid "between agent updates"
 msgstr "最後更新"
@@ -12161,6 +12160,7 @@ msgid "fill in empty"
 msgstr "填空"
 
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
+#: app/assets/javascripts/app/views/sla/index.jst.eco
 msgid "for an agent to respond"
 msgstr ""
 
@@ -12737,6 +12737,10 @@ msgstr "...整個文字區域"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ 今日等待時間"
+
+#, fuzzy
+#~ msgid "Response Time"
+#~ msgstr "第一次回應時間"
 
 #, fuzzy
 #~| msgid "Sure to delete this object?"

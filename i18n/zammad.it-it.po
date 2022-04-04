@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-03-17 03:30+0000\n"
-"Last-Translator: albertoarmida <alberto.armida@gmail.com>\n"
+"PO-Revision-Date: 2022-04-01 03:30+0000\n"
+"Last-Translator: Lorenzo Milesi <lorenzo.milesi@yetopen.com>\n"
 "Language-Team: Italian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/it/>\n"
 "Language: it-it\n"
@@ -2320,7 +2320,7 @@ msgstr "Impossibile trovare il numero ticket di destinazione!"
 msgid "Could not read raw logo!"
 msgstr "Impossibile leggere il logo in formato raw!"
 
-#: app/assets/javascripts/app/views/knowledge_base/new_modal.coffee
+#: app/assets/javascripts/app/views/knowledge_base/new_controller.coffee
 msgid "Couldn't create Knowledge Base"
 msgstr "Impossibile creare la Knowledge Base"
 
@@ -2369,7 +2369,7 @@ msgstr "Crea canale"
 msgid "Create Channels"
 msgstr "Crea canali"
 
-#: app/assets/javascripts/app/views/knowledge_base/new_modal.coffee
+#: app/assets/javascripts/app/views/knowledge_base/new_controller.coffee
 msgid "Create Knowledge Base"
 msgstr "Crea Knowledge Base"
 
@@ -2432,10 +2432,8 @@ msgid "Create a Test Ticket"
 msgstr "Crea un ticket di test"
 
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
-#, fuzzy
-#| msgid "Created at"
 msgid "Create a shared draft"
-msgstr "Data/ora di creazione"
+msgstr "Crea una bozza condivisa"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/reader_controller.coffee
 msgid "Create a translation"
@@ -3874,10 +3872,8 @@ msgid "Do you really want to delete \"%s\"?"
 msgstr "Vuoi eliminare questo oggetto?"
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
-#, fuzzy
-#| msgid "Sure to delete this object?"
 msgid "Do you really want to delete this draft?"
-msgstr "Vuoi eliminare questo oggetto?"
+msgstr "Vuoi davvero eliminare questa bozza?"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_destroy_confirm.coffee
 #: app/assets/javascripts/app/controllers/tag.coffee
@@ -7859,7 +7855,7 @@ msgstr "Le panoramiche sono…"
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_overwrite_modal.coffee
 msgid "Overwrite Draft"
-msgstr ""
+msgstr "Sovrascrivi bozza"
 
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
@@ -8578,11 +8574,6 @@ msgstr "Ripristino modifiche…"
 msgid "Response"
 msgstr ""
 
-#: app/assets/javascripts/app/views/sla/index.jst.eco
-#, fuzzy
-msgid "Response Time"
-msgstr "Primo tempo di risposta"
-
 #: app/assets/javascripts/app/views/monitoring.jst.eco
 msgid "Restart failed jobs"
 msgstr ""
@@ -8792,10 +8783,8 @@ msgid "Save"
 msgstr "Salva"
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_overwrite_modal.coffee
-#, fuzzy
-#| msgid "Draft"
 msgid "Save Draft"
-msgstr "Bozza"
+msgstr "Salva bozza"
 
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 msgid "Save as"
@@ -8936,7 +8925,7 @@ msgstr "Seleziona il file CSV"
 
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
 msgid "Select Shared Draft"
-msgstr ""
+msgstr "Seleziona bozza condivisa"
 
 #: app/assets/javascripts/app/views/widget/template.jst.eco
 msgid "Select Template"
@@ -9215,14 +9204,12 @@ msgstr "Condiviso"
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_shared_draft.coffee
 #: app/assets/javascripts/app/models/group.coffee
 #: db/seeds/object_manager_attributes.rb
-#, fuzzy
-#| msgid "Shared"
 msgid "Shared Drafts"
-msgstr "Condiviso"
+msgstr "Bozze condivise"
 
 #: app/controllers/tickets_controller.rb
 msgid "Shared draft cannot be selected for this ticket."
-msgstr ""
+msgstr "Le bozze condivise non possono essere utilizzate per questo ticket."
 
 #: app/assets/javascripts/app/models/organization.coffee
 #: db/seeds/object_manager_attributes.rb
@@ -9230,10 +9217,8 @@ msgid "Shared organization"
 msgstr "Azienda condivisa"
 
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
-#, fuzzy
-#| msgid "Shared"
 msgid "Sharing draft…"
-msgstr "Condiviso"
+msgstr "Condivisione bozza…"
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
 msgid "Shoot"
@@ -9253,10 +9238,8 @@ msgid "Show"
 msgstr "Mostra"
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_overwrite_modal.coffee
-#, fuzzy
-#| msgid "Draft"
 msgid "Show Draft"
-msgstr "Bozza"
+msgstr "Mostra bozza"
 
 #: app/assets/javascripts/app/views/navigation.jst.eco
 msgid "Show Search Details"
@@ -10195,14 +10178,10 @@ msgstr "Ci sono troppe persone in coda per la chat."
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_overwrite_modal.coffee
 msgid "There is an existing draft. Do you want to overwrite it?"
-msgstr ""
+msgstr "Esiste già un bozza. La vuoi sovrascrivere?"
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
 msgid "There is existing content. Do you want to overwrite it?"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
-msgid "There is no Knowledge Base yet. Please create one."
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
@@ -12191,6 +12170,7 @@ msgid "before (relative)"
 msgstr "prima (relativo)"
 
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
+#: app/assets/javascripts/app/views/sla/index.jst.eco
 #, fuzzy
 msgid "between agent updates"
 msgstr "Ultimo aggiornamento"
@@ -12394,6 +12374,7 @@ msgid "fill in empty"
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
+#: app/assets/javascripts/app/views/sla/index.jst.eco
 msgid "for an agent to respond"
 msgstr ""
 
@@ -12970,6 +12951,10 @@ msgstr "... dell'intera area di testo"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Tempi di attesa - Oggi"
+
+#, fuzzy
+#~ msgid "Response Time"
+#~ msgstr "Primo tempo di risposta"
 
 #~ msgid "Area"
 #~ msgstr "Area"
