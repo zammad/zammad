@@ -171,6 +171,97 @@ RSpec.describe ObjectManager::Attribute, type: :model do
         expect(described_class.attribute_to_references_hash_objects).to match_array [Trigger, Overview, Job, Sla, Report::Profile ]
       end
     end
+
+    describe '.data_options_hash' do
+      context 'when hash' do
+        let(:check) do
+          {
+            'a' => 'A',
+            'b' => 'B',
+            'c' => 'c',
+          }
+        end
+
+        it 'does return the options as hash' do
+          expect(described_class.data_options_hash(check)).to eq({
+                                                                   'a' => 'A',
+                                                                   'b' => 'B',
+                                                                   'c' => 'c',
+                                                                 })
+        end
+      end
+
+      context 'when array' do
+        let(:check) do
+          [
+            {
+              value: 'a',
+              name:  'A',
+            },
+            {
+              value: 'b',
+              name:  'B',
+            },
+            {
+              value: 'c',
+              name:  'c',
+            },
+          ]
+        end
+
+        it 'does return the options as hash' do
+          expect(described_class.data_options_hash(check)).to eq({
+                                                                   'a' => 'A',
+                                                                   'b' => 'B',
+                                                                   'c' => 'c',
+                                                                 })
+        end
+      end
+
+      context 'when tree array' do
+        let(:check) do
+          [
+            {
+              value: 'a',
+              name:  'A',
+            },
+            {
+              value: 'b',
+              name:  'B',
+            },
+            {
+              value:    'c',
+              name:     'c',
+              children: [
+                {
+                  value: 'c::a',
+                  name:  'c sub a',
+                },
+                {
+                  value: 'c::b',
+                  name:  'c sub b',
+                },
+                {
+                  value: 'c::c',
+                  name:  'c sub c',
+                },
+              ],
+            },
+          ]
+        end
+
+        it 'does return the options as hash' do
+          expect(described_class.data_options_hash(check)).to eq({
+                                                                   'a'    => 'A',
+                                                                   'b'    => 'B',
+                                                                   'c'    => 'c',
+                                                                   'c::a' => 'c sub a',
+                                                                   'c::b' => 'c sub b',
+                                                                   'c::c' => 'c sub c',
+                                                                 })
+        end
+      end
+    end
   end
 
   describe '#data_option_validations' do
@@ -341,6 +432,46 @@ RSpec.describe ObjectManager::Attribute, type: :model do
       end
 
       include_examples 'tests the exception on missing past', 'datetime'
+    end
+  end
+
+  describe 'undefined method `to_hash` on editing select fields in the admin interface after migration to 5.1 #4027', db_strategy: :reset do
+    let(:select_field) { create(:object_manager_attribute_select) }
+
+    before do
+      described_class.migration_execute
+    end
+
+    it 'does save the attribute with sorted options' do
+      add = select_field.attributes.deep_symbolize_keys
+      add[:data_option_new] = add[:data_option]
+      add[:data_option_new][:options] = [
+        {
+          name:  'a',
+          value: 'a',
+        },
+        {
+          name:  'b',
+          value: 'b',
+        },
+        {
+          name:  'c',
+          value: 'c',
+        },
+      ]
+
+      described_class.add(add)
+      described_class.migration_execute
+
+      expect_result = {
+        'key_1' => 'value_1',
+        'key_2' => 'value_2',
+        'key_3' => 'value_3',
+        'a'     => 'a',
+        'b'     => 'b',
+        'c'     => 'c'
+      }
+      expect(select_field.reload.data_option[:historical_options]).to eq(expect_result)
     end
   end
 end

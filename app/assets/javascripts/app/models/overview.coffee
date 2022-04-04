@@ -31,7 +31,7 @@ class App.Overview extends App.Model
       name:    'order::direction'
       display: __('Order by Direction')
       tag:     'select'
-      default: 'down'
+      default: 'DESC'
       null:    false
       translate: true
       options:
@@ -57,7 +57,7 @@ class App.Overview extends App.Model
       name:    'group_direction'
       display: __('Group by Direction')
       tag:     'select'
-      default: 'down'
+      default: 'DESC'
       null:    false
       translate: true
       options:

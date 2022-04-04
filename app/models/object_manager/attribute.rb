@@ -535,6 +535,31 @@ returns
     ObjectManager::Attribute.where('to_create = ? OR to_migrate = ? OR to_delete = ? OR to_config = ?', true, true, true, true)
   end
 
+  def self.attribute_historic_options(attribute)
+    historical_options = attribute.data_option[:historical_options] || {}
+    if attribute.data_option[:options].present?
+      historical_options = historical_options.merge(data_options_hash(attribute.data_option[:options]))
+    end
+    if attribute.data_option_new[:options].present?
+      historical_options = historical_options.merge(data_options_hash(attribute.data_option_new[:options]))
+    end
+    historical_options
+  end
+
+  def self.data_options_hash(options, result = {})
+    return options if options.is_a?(Hash)
+    return {} if !options.is_a?(Array)
+
+    options.each do |option|
+      result[ option[:value] ] = option[:name]
+      if option[:children].present?
+        data_options_hash(option[:children], result)
+      end
+    end
+
+    result
+  end
+
 =begin
 
 start migration of pending attribute migrations
@@ -573,11 +598,8 @@ to send no browser reload event, pass false
       # config changes
       if attribute.to_config
         execute_config_count += 1
-        if attribute.data_type == 'select' && attribute.data_option[:options]
-          historical_options = attribute.data_option[:historical_options] || {}
-          historical_options.update(attribute.data_option[:options])
-          historical_options.update(attribute.data_option_new[:options])
-          attribute.data_option_new[:historical_options] = historical_options
+        if attribute.data_type =~ %r{^(multi|tree_)?select$} && attribute.data_option[:options]
+          attribute.data_option_new[:historical_options] = attribute_historic_options(attribute)
         end
         attribute.data_option = attribute.data_option_new
         attribute.data_option_new = {}
@@ -586,8 +608,8 @@ to send no browser reload event, pass false
         next if !attribute.to_create && !attribute.to_migrate && !attribute.to_delete
       end
 
-      if attribute.data_type == 'select' && attribute.data_option[:options]
-        attribute.data_option[:historical_options] = attribute.data_option[:options]
+      if %r{^(multi|tree_)?select$}.match?(attribute.data_type)
+        attribute.data_option[:historical_options] = attribute_historic_options(attribute)
       end
 
       data_type = nil
