@@ -394,6 +394,7 @@ Metrics/BlockLength:
     - 'app/models/ticket/search_index.rb'
     - 'app/models/transaction/notification.rb'
     - 'app/models/transaction/slack.rb'
+    - 'app/models/translation.rb'
     - 'app/models/user/search.rb'
     - 'config/environments/development.rb'
     - 'config/initializers/omniauth.rb'

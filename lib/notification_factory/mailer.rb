@@ -38,11 +38,11 @@ returns
     # this cache will optimize the preference catch performance
     # because of the yaml deserialization its pretty slow
     # on many tickets you we cache it.
-    user_preferences = Cache.read("NotificationFactory::Mailer.notification_settings::#{user.id}")
+    user_preferences = Rails.cache.read("NotificationFactory::Mailer.notification_settings::#{user.id}")
     if user_preferences.blank?
       user_preferences = user.preferences
 
-      Cache.write("NotificationFactory::Mailer.notification_settings::#{user.id}", user_preferences, expires_in: 20.seconds)
+      Rails.cache.write("NotificationFactory::Mailer.notification_settings::#{user.id}", user_preferences, expires_in: 20.seconds)
     end
 
     return if !user_preferences

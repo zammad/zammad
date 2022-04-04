@@ -3,7 +3,7 @@
 class Sessions::Backend::TicketOverviewList < Sessions::Backend::Base
 
   def self.reset(user_id)
-    Cache.write("TicketOverviewPull::#{user_id}", { needed: true })
+    Rails.cache.write("TicketOverviewPull::#{user_id}", { needed: true })
   end
 
   def initialize(user, asset_lookup, client = nil, client_id = nil, ttl = 7) # rubocop:disable Lint/MissingSuper
@@ -21,7 +21,7 @@ class Sessions::Backend::TicketOverviewList < Sessions::Backend::Base
 
   def self.overview_history_append(overview, user_id)
     key = "TicketOverviewHistory::#{user_id}"
-    history = Cache.read(key) || []
+    history = Rails.cache.read(key) || []
 
     history.prepend overview
     history.uniq!
@@ -29,11 +29,11 @@ class Sessions::Backend::TicketOverviewList < Sessions::Backend::Base
       history.pop
     end
 
-    Cache.write(key, history)
+    Rails.cache.write(key, history)
   end
 
   def self.overview_history_get(user_id)
-    Cache.read("TicketOverviewHistory::#{user_id}")
+    Rails.cache.read("TicketOverviewHistory::#{user_id}")
   end
 
   def load
@@ -95,8 +95,8 @@ class Sessions::Backend::TicketOverviewList < Sessions::Backend::Base
   end
 
   def pull_overview?
-    result = Cache.read("TicketOverviewPull::#{@user.id}")
-    Cache.delete("TicketOverviewPull::#{@user.id}") if result
+    result = Rails.cache.read("TicketOverviewPull::#{@user.id}")
+    Rails.cache.delete("TicketOverviewPull::#{@user.id}") if result
     return true if result
 
     false

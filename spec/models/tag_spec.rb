@@ -55,7 +55,7 @@ RSpec.describe Tag, type: :model do
         end
       end
 
-      context 'but the name is a case-sensitive variant of an existing Tag::Item' do
+      context 'but the name is a case-sensitive variant of an existing Tag::Item', if: Rails.application.config.db_case_sensitive do
         let!(:tag_item) { create(:'tag/item', name: 'foo') }
 
         it 'creates it and assigns it to a new Tag' do

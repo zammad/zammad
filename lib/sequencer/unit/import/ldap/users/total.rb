@@ -22,13 +22,13 @@ class Sequencer
 
             def total
               if !dry_run
-                result = Cache.read(cache_key)
+                result = Rails.cache.read(cache_key)
               end
 
               result ||= ldap_connection.count(ldap_config[:user_filter])
 
               if !dry_run
-                Cache.write(cache_key, result, { expires_in: 1.hour })
+                Rails.cache.write(cache_key, result, { expires_in: 1.hour })
               end
 
               result

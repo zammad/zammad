@@ -3,7 +3,6 @@
 class Webhook < ApplicationModel
   include ChecksClientNotification
   include ChecksHtmlSanitized
-  include ChecksLatestChangeObserved
   include HasCollectionUpdate
 
   before_destroy Webhook::EnsureNoRelatedObjects

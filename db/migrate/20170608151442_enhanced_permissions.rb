@@ -22,6 +22,6 @@ class EnhancedPermissions < ActiveRecord::Migration[4.2]
     add_index :roles_groups, [:group_id]
     add_index :roles_groups, [:access]
 
-    Cache.clear
+    Rails.cache.clear
   end
 end

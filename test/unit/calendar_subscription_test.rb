@@ -233,7 +233,7 @@ class CalendarSubscriptionTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
     ticket12.update_columns(escalation_at: '2016-02-08 18:38:00')
-    Cache.clear # set escalation_at manually, to clear cache to have correct content later
+    Rails.cache.clear # set escalation_at manually, to clear cache to have correct content later
 
     # check agent 1
     calendar_subscriptions = CalendarSubscriptions.new(agent1)

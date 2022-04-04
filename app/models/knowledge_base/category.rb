@@ -165,14 +165,6 @@ class KnowledgeBase::Category < ApplicationModel
   end
   validate :cannot_be_child_of_parent
 
-  def reordering_callback
-    return if !parent_id_changed? && !position_changed?
-
-    # drop siblings cache to make sure ordering is always up to date
-    sibling_categories.each(&:cache_delete)
-  end
-  before_save :reordering_callback
-
   def sibling_categories
     parent&.children || knowledge_base.categories.root
   end

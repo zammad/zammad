@@ -220,3 +220,12 @@ Scheduler.create_if_not_exists(
   updated_by_id: 1,
   created_by_id: 1,
 )
+Scheduler.create_if_not_exists(
+  name:          __('Clean up cache.'),
+  method:        'CacheClearJob.perform_now',
+  period:        1.day,
+  prio:          2,
+  active:        true,
+  updated_by_id: 1,
+  created_by_id: 1,
+)

@@ -126,7 +126,7 @@ reload config settings
       end
     end
 
-    @@change_id = Cache.read('Setting::ChangeId') # rubocop:disable Style/ClassVars
+    @@change_id = Rails.cache.read('Setting::ChangeId') # rubocop:disable Style/ClassVars
     @@lookup_at = Time.now.to_i # rubocop:disable Style/ClassVars
     true
   end
@@ -142,7 +142,7 @@ reload config settings
     @@current[name] = state_current[:value]
     change_id = SecureRandom.uuid
     logger.debug { "Setting.reset_change_id: set new cache, #{change_id}" }
-    Cache.write('Setting::ChangeId', change_id, { expires_in: 24.hours })
+    Rails.cache.write('Setting::ChangeId', change_id, { expires_in: 24.hours })
     @@lookup_at = nil # rubocop:disable Style/ClassVars
     true
   end
@@ -151,7 +151,7 @@ reload config settings
     return true if preferences[:cache].blank?
 
     preferences[:cache].each do |key|
-      Cache.delete(key)
+      Rails.cache.delete(key)
     end
     true
   end
@@ -163,7 +163,7 @@ reload config settings
       return true
     end
 
-    change_id = Cache.read('Setting::ChangeId')
+    change_id = Rails.cache.read('Setting::ChangeId')
     if @@change_id && change_id == @@change_id
       @@lookup_at = Time.now.to_i # rubocop:disable Style/ClassVars
       # logger.debug "Setting.cache_valid?: cache still valid, #{@@change_id}/#{change_id}"

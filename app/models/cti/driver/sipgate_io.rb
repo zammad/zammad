@@ -29,7 +29,7 @@ class Cti::Driver::SipgateIo < Cti::Driver::Base
   def load_voip_users
     return {} if @config.blank? || @config[:api_user].blank? || @config[:api_password].blank?
 
-    list = Cache.read('sipgateUserList')
+    list = Rails.cache.read('sipgateUserList')
     return list if list
 
     url = 'https://api.sipgate.com/v2/users'
@@ -53,28 +53,28 @@ class Cti::Driver::SipgateIo < Cti::Driver::Base
 
     if !response.success?
       Rails.logger.error "Can't fetch users from '#{url}', http code: #{response.code}"
-      Cache.write('sipgateUserList', {}, { expires_in: 1.hour })
+      Rails.cache.write('sipgateUserList', {}, { expires_in: 1.hour })
       return {}
     end
     result = response.data
     if result.blank?
       Rails.logger.error "Can't fetch users from '#{url}', result: #{response.inspect}"
-      Cache.write('sipgateUserList', {}, { expires_in: 1.hour })
+      Rails.cache.write('sipgateUserList', {}, { expires_in: 1.hour })
       return {}
     end
     if result.is_a?(Array) && (result['result'] == '-1' || result['result_code'] == 'error')
       Rails.logger.error "Can't fetch users from '#{url}', result: #{result.inspect}"
-      Cache.write('sipgateUserList', {}, { expires_in: 1.hour })
+      Rails.cache.write('sipgateUserList', {}, { expires_in: 1.hour })
       return {}
     end
     if !result.is_a?(Hash)
       Rails.logger.error "Can't fetch users from '#{url}', result: #{result.inspect}"
-      Cache.write('sipgateUserList', {}, { expires_in: 1.hour })
+      Rails.cache.write('sipgateUserList', {}, { expires_in: 1.hour })
       return {}
     end
     if result['items'].blank?
       Rails.logger.error "Can't fetch users from '#{url}', no items found, result: #{result.inspect}"
-      Cache.write('sipgateUserList', {}, { expires_in: 1.hour })
+      Rails.cache.write('sipgateUserList', {}, { expires_in: 1.hour })
       return {}
     end
 
@@ -93,7 +93,7 @@ class Cti::Driver::SipgateIo < Cti::Driver::Base
 
       list[entry['id']] = name
     end
-    Cache.write('sipgateUserList', list, { expires_in: 24.hours })
+    Rails.cache.write('sipgateUserList', list, { expires_in: 24.hours })
     list
   end
 

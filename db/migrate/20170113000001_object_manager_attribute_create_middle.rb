@@ -19,6 +19,6 @@ class ObjectManagerAttributeCreateMiddle < ActiveRecord::Migration[4.2]
     attribute.data_option['nulloption'] = false
     attribute.save!
 
-    Cache.clear
+    Rails.cache.clear
   end
 end

@@ -9,7 +9,7 @@ namespace :zammad do
       Package::Migration.linked
       ActiveRecord::Base.connection.reconnect!
       ActiveRecord::Base.descendants.each(&:reset_column_information)
-      Cache.clear
+      Rails.cache.clear
       Setting.reload
     end
   end

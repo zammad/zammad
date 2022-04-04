@@ -1066,6 +1066,7 @@ RSpec.describe Ticket, type: :model do
           before { original_owner.roles = [create(:role)] }
 
           it 'resets to default user (id: 1)' do
+            Rails.cache.clear
             expect { create(:ticket_article, ticket: ticket) }
               .to change { ticket.reload.owner }.to(User.first)
           end

@@ -18,7 +18,7 @@ module Import
               data:   current_state,
               result: 'in_progress',
             }
-            Cache.write('import:state', result, expires_in: 10.minutes)
+            Rails.cache.write('import:state', result, expires_in: 10.minutes)
             sleep 8
           end
         end
@@ -35,7 +35,7 @@ module Import
             message: e.message,
             result:  'error',
           }
-          Cache.write('import:state', result, expires_in: 10.hours)
+          Rails.cache.write('import:state', result, expires_in: 10.hours)
           return false
         end
         sleep 16 # wait until new finished import state is on client
@@ -45,14 +45,14 @@ module Import
         result = {
           result: 'import_done',
         }
-        Cache.write('import:state', result, expires_in: 10.hours)
+        Rails.cache.write('import:state', result, expires_in: 10.hours)
 
         Setting.set('system_init_done', true)
         Setting.set('import_mode', false)
       end
 
       def status_bg
-        state = Cache.read('import:state')
+        state = Rails.cache.read('import:state')
         return state if state
 
         {

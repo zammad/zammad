@@ -22,6 +22,6 @@ class AddTicketTimeAccounting373 < ActiveRecord::Migration[4.2]
     add_column :tickets, :time_unit, :decimal, precision: 6, scale: 2, null: true
     add_index :tickets, [:time_unit]
 
-    Cache.clear
+    Rails.cache.clear
   end
 end

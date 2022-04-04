@@ -3,7 +3,6 @@
 class Ticket::StateType < ApplicationModel
   include CanBeImported
   include ChecksHtmlSanitized
-  include ChecksLatestChangeObserved
 
   has_many :states, class_name: 'Ticket::State', inverse_of: :state_type
 

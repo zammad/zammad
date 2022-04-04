@@ -28,7 +28,7 @@ class LastOwnerUpdate2 < ActiveRecord::Migration[5.1]
       updated_by_id: 1,
       created_by_id: 1,
     )
-    Cache.clear
+    Rails.cache.clear
   end
 
 end

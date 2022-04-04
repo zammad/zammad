@@ -118,11 +118,6 @@ returns
 =end
 
   def attributes_with_association_ids
-
-    key = "#{self.class}::aws::#{id}"
-    cache = Cache.read(key)
-    return filter_unauthorized_attributes(cache) if cache
-
     attributes = self.attributes
     relevant   = %i[has_and_belongs_to_many has_many]
     eager_load = []
@@ -158,8 +153,6 @@ returns
     end
 
     filter_attributes(attributes)
-
-    Cache.write(key, attributes)
     filter_unauthorized_attributes(attributes)
   end
 

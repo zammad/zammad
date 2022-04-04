@@ -42,19 +42,12 @@ returns
       data[ app_model ][ id ] = local_attributes
 
       # get linked accounts
-      local_attributes['accounts'] = {}
-      key = "User::authorizations::#{id}"
-      local_accounts = Cache.read(key)
-      if !local_accounts
-        local_accounts = {}
-        authorizations = self.authorizations()
-        authorizations.each do |authorization|
-          local_accounts[authorization.provider] = {
-            uid:      authorization[:uid],
-            username: authorization[:username]
-          }
-        end
-        Cache.write(key, local_accounts)
+      local_accounts = {}
+      authorizations.each do |authorization|
+        local_accounts[authorization.provider] = {
+          uid:      authorization[:uid],
+          username: authorization[:username]
+        }
       end
       local_attributes['accounts'] = local_accounts
 

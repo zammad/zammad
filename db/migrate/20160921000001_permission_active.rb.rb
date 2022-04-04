@@ -7,6 +7,6 @@ class PermissionActive < ActiveRecord::Migration[4.2]
 
     add_column :permissions, :active, :boolean, null: false, default: true
 
-    Cache.clear
+    Rails.cache.clear
   end
 end

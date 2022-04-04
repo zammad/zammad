@@ -3,7 +3,6 @@
 class Organization < ApplicationModel
   include HasActivityStreamLog
   include ChecksClientNotification
-  include ChecksLatestChangeObserved
   include HasHistory
   include HasSearchIndexBackend
   include CanCsvImport

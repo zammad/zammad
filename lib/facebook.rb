@@ -107,7 +107,7 @@ result
     return if !item['from']['id']
 
     cache_key = "FB:User:Lookup:#{item['from']['id']}"
-    cache = Cache.read(cache_key)
+    cache = Rails.cache.read(cache_key)
     return cache if cache
 
     begin
@@ -116,7 +116,7 @@ result
       result = @client.get_object(item['from']['id'], fields: 'name')
     end
     if result
-      Cache.write(cache_key, result, { expires_in: 15.minutes })
+      Rails.cache.write(cache_key, result, { expires_in: 15.minutes })
     end
     result
   end

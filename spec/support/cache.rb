@@ -7,7 +7,7 @@ RSpec.configure do |config|
     # clear the cache otherwise it won't
     # be able to recognize the rollbacks
     # done by RSpec
-    Cache.clear
+    Rails.cache.clear
 
     # clear Setting cache to prevent leaking
     # of Setting changes from previous test examples

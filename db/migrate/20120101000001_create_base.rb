@@ -4,7 +4,7 @@ class CreateBase < ActiveRecord::Migration[4.2]
   def up
 
     # clear old caches to start from scratch
-    Cache.clear
+    Rails.cache.clear
 
     create_table :sessions do |t|
       t.string :session_id,  null: false

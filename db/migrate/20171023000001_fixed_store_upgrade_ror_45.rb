@@ -6,7 +6,7 @@ class FixedStoreUpgradeRor45 < ActiveRecord::Migration[5.0]
     # return if it's a new setup
     return if !Setting.exists?(name: 'system_init_done')
 
-    Cache.clear
+    Rails.cache.clear
     [Macro, Taskbar, Calendar, Trigger, Channel, Job, PostmasterFilter, Report::Profile, Setting, Sla, Template].each do |class_name|
       class_name.all.each do |record|
 

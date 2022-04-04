@@ -85,7 +85,7 @@ class Cti::Driver::Placetel < Cti::Driver::Base
   def load_voip_users
     return {} if @config.blank? || @config[:api_token].blank?
 
-    list = Cache.read('placetelGetVoipUsers')
+    list = Rails.cache.read('placetelGetVoipUsers')
     return list if list
 
     response = UserAgent.get(
@@ -108,23 +108,23 @@ class Cti::Driver::Placetel < Cti::Driver::Base
 
     if !response.success?
       Rails.logger.error "Can't fetch getVoipUsers from '#{url}', http code: #{response.code}"
-      Cache.write('placetelGetVoipUsers', {}, { expires_in: 1.hour })
+      Rails.cache.write('placetelGetVoipUsers', {}, { expires_in: 1.hour })
       return {}
     end
     result = response.data
     if result.blank?
       Rails.logger.error "Can't fetch getVoipUsers from '#{url}', result: #{response.inspect}"
-      Cache.write('placetelGetVoipUsers', {}, { expires_in: 1.hour })
+      Rails.cache.write('placetelGetVoipUsers', {}, { expires_in: 1.hour })
       return {}
     end
     if result.is_a?(Hash) && (result['result'] == '-1' || result['result_code'] == 'error')
       Rails.logger.error "Can't fetch getVoipUsers from '#{url}', result: #{result.inspect}"
-      Cache.write('placetelGetVoipUsers', {}, { expires_in: 1.hour })
+      Rails.cache.write('placetelGetVoipUsers', {}, { expires_in: 1.hour })
       return {}
     end
     if !result.is_a?(Array)
       Rails.logger.error "Can't fetch getVoipUsers from '#{url}', result: #{result.inspect}"
-      Cache.write('placetelGetVoipUsers', {}, { expires_in: 1.hour })
+      Rails.cache.write('placetelGetVoipUsers', {}, { expires_in: 1.hour })
       return {}
     end
 
@@ -135,7 +135,7 @@ class Cti::Driver::Placetel < Cti::Driver::Base
 
       list[entry['sipuid']] = entry['name']
     end
-    Cache.write('placetelGetVoipUsers', list, { expires_in: 24.hours })
+    Rails.cache.write('placetelGetVoipUsers', list, { expires_in: 24.hours })
     list
   end
 

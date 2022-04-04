@@ -250,7 +250,6 @@ module HasGroups
 
     yield
     self.group_access_buffer = nil
-    cache_delete
   end
 
   def process_group_access_buffer

@@ -2,7 +2,6 @@
 
 class Ticket::Article::Type < ApplicationModel
   include ChecksHtmlSanitized
-  include ChecksLatestChangeObserved
   include HasCollectionUpdate
 
   validates :name, presence: true

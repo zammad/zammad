@@ -3,7 +3,6 @@
 class Permission < ApplicationModel
   include ChecksClientNotification
   include ChecksHtmlSanitized
-  include ChecksLatestChangeObserved
   include HasCollectionUpdate
 
   has_and_belongs_to_many :roles

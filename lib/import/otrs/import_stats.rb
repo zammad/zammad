@@ -25,14 +25,14 @@ module Import
       def statistic
 
         # check cache
-        cache = Cache.read('import_otrs_stats')
+        cache = Rails.cache.read('import_otrs_stats')
         return cache if cache
 
         # retrieve statistic
         statistic = Import::OTRS::Requester.list
         return statistic if !statistic
 
-        Cache.write('import_otrs_stats', statistic)
+        Rails.cache.write('import_otrs_stats', statistic)
         statistic
       end
 

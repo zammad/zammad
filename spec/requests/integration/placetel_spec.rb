@@ -592,7 +592,7 @@ RSpec.describe 'Integration Placetel', type: :request do
       expect(log.duration_talking_time).to be_nil
 
       # check if cache is filled
-      expect(Cache.read('placetelGetVoipUsers')['777008478072@example.com']).to eq('Bob Smith')
+      expect(Rails.cache.read('placetelGetVoipUsers')['777008478072@example.com']).to eq('Bob Smith')
 
       params = 'event=IncomingCall&direction=in&to=030600000000&from=012345&call_id=1234567890-3&peer=777008478072@example.com'
       post "/api/v1/placetel/#{token}", params: params
@@ -614,7 +614,7 @@ RSpec.describe 'Integration Placetel', type: :request do
       expect(log.duration_talking_time).to be_nil
 
       # check if cache is filled
-      expect(Cache.read('placetelGetVoipUsers')['777008478072@example.com']).to eq('Bob Smith')
+      expect(Rails.cache.read('placetelGetVoipUsers')['777008478072@example.com']).to eq('Bob Smith')
     end
   end
 end

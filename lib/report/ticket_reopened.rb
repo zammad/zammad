@@ -114,7 +114,7 @@ returns
 
   def self.ticket_ids
     key = 'Report::TicketReopened::StateList'
-    ticket_state_ids = Cache.read(key)
+    ticket_state_ids = Rails.cache.read(key)
     return ticket_state_ids if ticket_state_ids
 
     ticket_state_types = Ticket::StateType.where(name: %w[closed merged removed])
@@ -124,7 +124,7 @@ returns
         ticket_state_ids.push ticket_state.id
       end
     end
-    Cache.write(key, ticket_state_ids, { expires_in: 2.days })
+    Rails.cache.write(key, ticket_state_ids, { expires_in: 2.days })
     ticket_state_ids
   end
 end

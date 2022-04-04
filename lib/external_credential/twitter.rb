@@ -149,12 +149,12 @@ class ExternalCredential::Twitter
     )
 
     # needed for verify callback
-    Cache.write('external_credential_twitter', {
-                  consumer_key:        params[:consumer_key],
-                  consumer_secret:     params[:consumer_secret],
-                  access_token:        params[:oauth_token],
-                  access_token_secret: params[:oauth_token_secret],
-                })
+    Rails.cache.write('external_credential_twitter', {
+                        consumer_key:        params[:consumer_key],
+                        consumer_secret:     params[:consumer_secret],
+                        access_token:        params[:oauth_token],
+                        access_token_secret: params[:oauth_token_secret],
+                      })
 
     # verify if webhook is already registered
     begin

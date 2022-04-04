@@ -7,7 +7,7 @@ class Service::GeoIp::Zammad
 
     # check cache
     cache_key = "zammadgeoip::#{address}"
-    cache = ::Cache.read(cache_key)
+    cache = ::Rails.cache.read(cache_key)
     return cache if cache
 
     # do lookup
@@ -37,10 +37,10 @@ class Service::GeoIp::Zammad
         data['country_code'] = data['country_code2']
       end
 
-      ::Cache.write(cache_key, data, { expires_in: 90.days })
+      ::Rails.cache.write(cache_key, data, { expires_in: 90.days })
     rescue => e
       Rails.logger.error "#{host}#{url}: #{e.inspect}"
-      ::Cache.write(cache_key, data, { expires_in: 60.minutes })
+      ::Rails.cache.write(cache_key, data, { expires_in: 60.minutes })
     end
     data
   end

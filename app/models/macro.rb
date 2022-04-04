@@ -3,7 +3,6 @@
 class Macro < ApplicationModel
   include ChecksClientNotification
   include ChecksHtmlSanitized
-  include ChecksLatestChangeObserved
   include CanSeed
   include HasCollectionUpdate
 

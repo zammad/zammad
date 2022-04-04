@@ -26,16 +26,8 @@ class KnowledgeBase::Answer::Translation < ApplicationModel
   alias assets_essential assets
 
   def attributes_with_association_ids
-    key = "#{self.class}::aws::#{id}"
-
-    cache = Cache.read(key)
-    return cache if cache
-
     attrs = super
     attrs[:linked_references] = linked_references
-
-    Cache.write(key, attrs)
-
     attrs
   end
 

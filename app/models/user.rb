@@ -787,18 +787,6 @@ returns
     true
   end
 
-  def cache_delete
-    super
-
-    # delete asset caches
-    key = "User::authorizations::#{id}"
-    Cache.delete(key)
-
-    # delete permission cache
-    key = "User::permissions?:local_key:::#{id}"
-    Cache.delete(key)
-  end
-
 =begin
 
 try to find correct name

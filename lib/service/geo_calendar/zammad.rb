@@ -5,7 +5,7 @@ class Service::GeoCalendar::Zammad
 
     # check cache
     cache_key = "zammadgeocalendar::#{address}"
-    cache = ::Cache.read(cache_key)
+    cache = ::Rails.cache.read(cache_key)
     return cache if cache
 
     # do lookup
@@ -34,10 +34,10 @@ class Service::GeoCalendar::Zammad
 
       data = response.data
 
-      ::Cache.write(cache_key, data, { expires_in: 30.minutes })
+      ::Rails.cache.write(cache_key, data, { expires_in: 30.minutes })
     rescue => e
       Rails.logger.error "#{host}#{url}: #{e.inspect}"
-      ::Cache.write(cache_key, data, { expires_in: 1.minute })
+      ::Rails.cache.write(cache_key, data, { expires_in: 1.minute })
     end
     data
   end

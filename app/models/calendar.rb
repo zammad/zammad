@@ -35,10 +35,10 @@ returns calendar object
     end
 
     # prevent multiple setups for same ip
-    cache = Cache.read('Calendar.init_setup.done')
+    cache = Rails.cache.read('Calendar.init_setup.done')
     return if cache && cache[:ip] == ip
 
-    Cache.write('Calendar.init_setup.done', { ip: ip }, { expires_in: 1.hour })
+    Rails.cache.write('Calendar.init_setup.done', { ip: ip }, { expires_in: 1.hour })
 
     # call for calendar suggestion
     calendar_details = Service::GeoCalendar.location(ip)
@@ -159,7 +159,7 @@ returns
     # only sync every 5 days
     if id
       cache_key = "CalendarIcal::#{id}"
-      cache = Cache.read(cache_key)
+      cache = Rails.cache.read(cache_key)
       return if !last_log && cache && cache[:ical_url] == ical_url
     end
 
@@ -199,7 +199,7 @@ returns
       end
       self.last_log = nil
       if id
-        Cache.write(
+        Rails.cache.write(
           cache_key,
           { public_holidays: public_holidays, ical_url: ical_url },
           { expires_in: 1.day },

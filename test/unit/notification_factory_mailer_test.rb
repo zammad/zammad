@@ -283,7 +283,7 @@ class NotificationFactoryMailerTest < ActiveSupport::TestCase
 
     if Rails.application.config.cache_store.first.eql? :mem_cache_store
       # External memcached does not support time travel, so clear the cache to avoid an outdated match.
-      Cache.clear
+      Rails.cache.clear
     end
 
     result = NotificationFactory::Mailer.notification_settings(agent1, ticket1, 'create')

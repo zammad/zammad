@@ -47,7 +47,7 @@ class ChannelsTwitterController < ApplicationController
   end
 
   def webhook_verify
-    external_credential = Cache.read('external_credential_twitter')
+    external_credential = Rails.cache.read('external_credential_twitter')
     if !external_credential && ExternalCredential.exists?(name: 'twitter')
       external_credential = ExternalCredential.find_by(name: 'twitter').credentials
     end

@@ -25,11 +25,11 @@ RSpec.describe Setting, type: :model do
     context 'when #preferences hash includes a :cache key' do
       subject(:setting) { create(:setting, preferences: { cache: ['foo'] }) }
 
-      before { Cache.write('foo', 'bar') }
+      before { Rails.cache.write('foo', 'bar') }
 
       it 'resets the cache key' do
         expect { described_class.set(setting.name, 'baz') }
-          .to change { Cache.read('foo') }.to(nil)
+          .to change { Rails.cache.read('foo') }.to(nil)
       end
     end
   end

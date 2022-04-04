@@ -26,7 +26,7 @@ add karma activity log of an object
     # to skip the time loss of the transaction
     # to increase performance
     if !force
-      cache = Cache.read("Karma::ActivityLog.add::#{activity.once_ttl.seconds}::#{action}::#{user.id}::#{object}::#{o_id}")
+      cache = Rails.cache.read("Karma::ActivityLog.add::#{activity.once_ttl.seconds}::#{action}::#{user.id}::#{object}::#{o_id}")
       return cache if cache
     end
 
@@ -62,7 +62,7 @@ add karma activity log of an object
       )
 
       if !force
-        Cache.write("Karma::ActivityLog.add::#{activity.once_ttl.seconds}::#{action}::#{user.id}::#{object}::#{o_id}", true, expires_in: activity.once_ttl.seconds)
+        Rails.cache.write("Karma::ActivityLog.add::#{activity.once_ttl.seconds}::#{action}::#{user.id}::#{object}::#{o_id}", true, expires_in: activity.once_ttl.seconds)
       end
 
       # set new karma level

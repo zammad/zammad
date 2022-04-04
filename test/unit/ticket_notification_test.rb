@@ -668,7 +668,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     travel 1.minute # to skip loopup cache in Transaction::Notification
     if Rails.application.config.cache_store.first.eql? :mem_cache_store
       # External memcached does not support time travel, so clear the cache to avoid an outdated match.
-      Cache.clear
+      Rails.cache.clear
     end
 
     # create ticket in group
@@ -738,7 +738,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     travel 1.minute # to skip loopup cache in Transaction::Notification
     if Rails.application.config.cache_store.first.eql? :mem_cache_store
       # External memcached does not support time travel, so clear the cache to avoid an outdated match.
-      Cache.clear
+      Rails.cache.clear
     end
 
     # create ticket in group
@@ -808,7 +808,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     travel 1.minute # to skip loopup cache in Transaction::Notification
     if Rails.application.config.cache_store.first.eql? :mem_cache_store
       # External memcached does not support time travel, so clear the cache to avoid an outdated match.
-      Cache.clear
+      Rails.cache.clear
     end
 
     # create ticket in group
@@ -891,7 +891,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     travel 1.minute # to skip loopup cache in Transaction::Notification
     if Rails.application.config.cache_store.first.eql? :mem_cache_store
       # External memcached does not support time travel, so clear the cache to avoid an outdated match.
-      Cache.clear
+      Rails.cache.clear
     end
 
     # create ticket in group

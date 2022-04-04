@@ -4,12 +4,22 @@ require 'rails_helper'
 
 RSpec.describe Cache do
   describe '.get' do
-    before { allow(Rails.cache).to receive(:read) }
+    before do
+      allow(ActiveSupport::Deprecation).to receive(:warn)
+    end
 
     it 'alias of Rails.cache.read' do
+      allow(Rails.cache).to receive(:read)
+
       described_class.read('foo')
 
       expect(Rails.cache).to have_received(:read).with('foo')
+    end
+
+    it 'throws deprecation warning' do
+      described_class.read('foo')
+
+      expect(ActiveSupport::Deprecation).to have_received(:warn)
     end
   end
 end

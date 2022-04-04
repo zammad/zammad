@@ -179,14 +179,6 @@ RSpec.describe Translation do
         expect(described_class.find_source('de-de', 'yes')).to have_attributes(source: 'yes', target_initial: 'ja', target: 'ja', is_synchronized_from_codebase: true, synchronized_from_translation_file: 'i18n/zammad.de-de.po')
       end
     end
-
-    it 'clear cache after sync' do
-      allow(Cache).to receive(:delete)
-
-      described_class.sync_locale_from_po('de-de')
-
-      expect(Cache).to have_received(:delete).with('TranslationMapOnlyContent::de-de')
-    end
   end
 
   context 'when synchronizing strings for CI locales' do

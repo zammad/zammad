@@ -42,7 +42,7 @@ class TicketStatePriorityDefaults < ActiveRecord::Migration[4.2]
       ticket_priority.save!
     end
 
-    Cache.clear
+    Rails.cache.clear
   end
 
   def down
@@ -54,6 +54,6 @@ class TicketStatePriorityDefaults < ActiveRecord::Migration[4.2]
     remove_index  :ticket_priorities, :default_create
     remove_column :ticket_priorities, :default_create, :boolean
 
-    Cache.clear
+    Rails.cache.clear
   end
 end

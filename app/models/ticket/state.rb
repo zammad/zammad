@@ -3,7 +3,6 @@
 class Ticket::State < ApplicationModel
   include CanBeImported
   include ChecksHtmlSanitized
-  include ChecksLatestChangeObserved
   include HasCollectionUpdate
   include HasSearchIndexBackend
 

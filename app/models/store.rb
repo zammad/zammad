@@ -233,32 +233,26 @@ returns
   def image_resize(content, width)
     local_sha = Digest::SHA256.hexdigest(content)
 
-    cache_key = "image-resize-#{local_sha}_#{width}"
-    image = Cache.read(cache_key)
-    return image if image
+    Rails.cache.fetch("#{self.class}/image-resize-#{local_sha}_#{width}", expires_in: 6.months) do
+      temp_file = ::Tempfile.new
+      temp_file.binmode
+      temp_file.write(content)
+      temp_file.close
+      image = Rszr::Image.load(temp_file.path)
 
-    temp_file = ::Tempfile.new
-    temp_file.binmode
-    temp_file.write(content)
-    temp_file.close
-    image = Rszr::Image.load(temp_file.path)
+      # do not resize image if image is smaller or already same size
+      return if image.width <= width
 
-    # do not resize image if image is smaller or already same size
-    return if image.width <= width
+      # do not resize image if new height is smaller then 7px (images
+      # with small height are usually useful to resize)
+      ratio = image.width / width
+      return if image.height / ratio <= 6
 
-    # do not resize image if new height is smaller then 7px (images
-    # with small height are usually useful to resize)
-    ratio = image.width / width
-    return if image.height / ratio <= 6
-
-    image.resize!(width, :auto)
-    temp_file_resize = ::Tempfile.new.path
-    image.save(temp_file_resize)
-    image_resized = ::File.binread(temp_file_resize)
-
-    Cache.write(cache_key, image_resized, { expires_in: 6.months })
-
-    image_resized
+      image.resize!(width, :auto)
+      temp_file_resize = ::Tempfile.new.path
+      image.save(temp_file_resize)
+      ::File.binread(temp_file_resize)
+    end
   end
 
   def oversized_preferences_check

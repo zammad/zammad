@@ -9,7 +9,7 @@
 #   Mayor.create(:name => 'Emanuel', :city => cities.first)
 
 # clear old caches to start from scratch
-Cache.clear
+Rails.cache.clear
 
 # this is the __ordered__ list of seed files
 # extend only if needed - try to add your changes

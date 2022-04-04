@@ -5,7 +5,6 @@ class Role < ApplicationModel
   include HasActivityStreamLog
   include ChecksClientNotification
   include ChecksHtmlSanitized
-  include ChecksLatestChangeObserved
   include HasGroups
   include HasCollectionUpdate
 

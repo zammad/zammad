@@ -169,7 +169,5 @@ RSpec.describe 'Knowledge Base Locale Category Permissions', type: :system do
     visit "knowledge_base/#{knowledge_base.id}/locale/#{Locale.first.locale}/category/#{category.id}/edit"
 
     find('[data-action=permissions]').click
-
-    travel_to 1.hour.from_now
   end
 end

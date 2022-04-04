@@ -1,11 +1,9 @@
 # Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
-require 'models/application_model_examples'
 require 'models/concerns/can_be_imported_examples'
 
 RSpec.describe History, type: :model do
-  it_behaves_like 'ApplicationModel', can_assets: { own_attributes: false }
   it_behaves_like 'CanBeImported'
 
   describe '.list' do
@@ -190,59 +188,5 @@ RSpec.describe History, type: :model do
         end
       end
     end
-  end
-
-  shared_examples 'lookup and create if needed' do |prefix|
-    let(:prefix)       { prefix }
-    let(:value_string) { Faker::Lorem.word }
-    let(:value_symbol) { value_string.to_sym }
-    let(:method_name)  { "#{prefix}_lookup" }
-    let(:cache_key)    { "#{described_class}::#{prefix.capitalize}::#{value_string}" }
-
-    context 'when object does not exist' do
-      it 'creates with a given String' do
-        expect(described_class.send(method_name, value_string)).to be_present
-      end
-
-      it 'creates with a given Symbol' do
-        expect(described_class.send(method_name, value_symbol)).to be_present
-      end
-    end
-
-    context 'when object exists' do
-      before do
-        described_class.send(method_name, value_string)
-      end
-
-      it 'retrieves object with a given String' do
-        expect(described_class.send(method_name, value_string)).to be_present
-      end
-
-      it 'hits cache with a given String' do
-        allow(Rails.cache).to receive(:read)
-        described_class.send(method_name, value_string)
-        expect(Rails.cache).to have_received(:read).with(cache_key)
-      end
-
-      it 'retrieves object with a given Symbol' do
-        expect(described_class.send(method_name, value_symbol)).to be_present
-      end
-
-      it 'hits cache with a given Symbol' do
-        allow(Rails.cache).to receive(:read)
-        described_class.send(method_name, value_symbol)
-        expect(Rails.cache).to have_received(:read).with(cache_key)
-      end
-    end
-  end
-
-  # https://github.com/zammad/zammad/issues/3121
-  describe '.type_lookup' do
-    include_examples 'lookup and create if needed', 'type'
-  end
-
-  # https://github.com/zammad/zammad/issues/3121
-  describe '.object_lookup' do
-    include_examples 'lookup and create if needed', 'object'
   end
 end

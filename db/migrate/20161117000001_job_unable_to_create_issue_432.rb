@@ -40,7 +40,7 @@ class JobUnableToCreateIssue432 < ActiveRecord::Migration[4.2]
       t.change :data, :string, limit: 5000
     end
 
-    Cache.clear
+    Rails.cache.clear
 
   end
 end

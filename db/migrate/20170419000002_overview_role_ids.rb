@@ -22,7 +22,7 @@ class OverviewRoleIds < ActiveRecord::Migration[4.2]
     end
     remove_column :overviews, :role_id
 
-    Cache.clear
+    Rails.cache.clear
   end
 
 end

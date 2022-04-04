@@ -385,11 +385,6 @@ class AgentTicketTagTest < TestCase
     click(css: '.content.active .js-create .js-submit')
     set(
       css:   '.content.active .js-create input[name="name"]',
-      value: "#{tag_prefix} a",
-    )
-    click(css: '.content.active .js-create .js-submit')
-    set(
-      css:   '.content.active .js-create input[name="name"]',
       value: "#{tag_prefix} B",
     )
     click(css: '.content.active .js-create .js-submit')
@@ -413,13 +408,6 @@ class AgentTicketTagTest < TestCase
     set(
       css:   '.active .ticket-form-bottom .token-input',
       value: "#{tag_prefix} A",
-    )
-    sleep 2
-    sendkey(value: :tab)
-    sleep 1
-    set(
-      css:   '.active .ticket-form-bottom .token-input',
-      value: "#{tag_prefix} a",
     )
     sleep 2
     sendkey(value: :tab)
@@ -451,7 +439,6 @@ class AgentTicketTagTest < TestCase
     tags_verify(
       tags: {
         "#{tag_prefix} A" => true,
-        "#{tag_prefix} a" => true,
         "#{tag_prefix} B" => true,
         'NOT EXISTING'    => false,
       }
@@ -479,14 +466,6 @@ class AgentTicketTagTest < TestCase
     click(css: '.active .sidebar .js-newTagLabel')
     set(
       css:   '.active .sidebar .js-newTagInput',
-      value: "#{tag_prefix} a",
-    )
-    sleep 2
-    sendkey(value: :tab)
-    sleep 1
-    click(css: '.active .sidebar .js-newTagLabel')
-    set(
-      css:   '.active .sidebar .js-newTagInput',
       value: "#{tag_prefix} B",
     )
     sleep 2
@@ -505,7 +484,6 @@ class AgentTicketTagTest < TestCase
     tags_verify(
       tags: {
         "#{tag_prefix} A" => true,
-        "#{tag_prefix} a" => true,
         "#{tag_prefix} B" => true,
         'NOT EXISTING'    => false,
       }
@@ -517,7 +495,6 @@ class AgentTicketTagTest < TestCase
     tags_verify(
       tags: {
         "#{tag_prefix} A" => true,
-        "#{tag_prefix} a" => true,
         "#{tag_prefix} B" => true,
         'NOT EXISTING'    => false,
       }

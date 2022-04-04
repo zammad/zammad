@@ -8,6 +8,6 @@ class AddTaskbarMeta < ActiveRecord::Migration[4.2]
     add_column :taskbars, :preferences, :text, limit: 5.megabytes + 1, null: true
     add_index :taskbars, [:key]
 
-    Cache.clear
+    Rails.cache.clear
   end
 end

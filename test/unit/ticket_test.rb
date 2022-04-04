@@ -223,48 +223,6 @@ class TicketTest < ActiveSupport::TestCase
     travel_back
   end
 
-  test 'ticket latest change' do
-    ticket1 = Ticket.create!(
-      title:         'latest change 1',
-      group:         Group.lookup(name: 'Users'),
-      customer_id:   2,
-      state:         Ticket::State.lookup(name: 'new'),
-      priority:      Ticket::Priority.lookup(name: '2 normal'),
-      updated_by_id: 1,
-      created_by_id: 1,
-    )
-    assert_equal(Ticket.latest_change.to_s, ticket1.updated_at.to_s)
-
-    travel 1.minute
-
-    ticket2 = Ticket.create!(
-      title:         'latest change 2',
-      group:         Group.lookup(name: 'Users'),
-      customer_id:   2,
-      state:         Ticket::State.lookup(name: 'new'),
-      priority:      Ticket::Priority.lookup(name: '2 normal'),
-      updated_by_id: 1,
-      created_by_id: 1,
-    )
-    assert_equal(Ticket.latest_change.to_s, ticket2.updated_at.to_s)
-
-    travel 1.minute
-
-    ticket1.title = 'latest change 1 - 1'
-    ticket1.save
-    assert_equal(Ticket.latest_change.to_s, ticket1.updated_at.to_s)
-
-    travel 1.minute
-
-    ticket1.touch
-    assert_equal(Ticket.latest_change.to_s, ticket1.updated_at.to_s)
-
-    ticket1.destroy
-    assert_equal(Ticket.latest_change.to_s, ticket2.updated_at.to_s)
-    ticket2.destroy
-    travel_back
-  end
-
   test 'ticket process_pending' do
 
     # close all other pending close tickets first

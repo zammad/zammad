@@ -5,7 +5,6 @@ class Group < ApplicationModel
   include HasActivityStreamLog
   include ChecksClientNotification
   include ChecksHtmlSanitized
-  include ChecksLatestChangeObserved
   include HasHistory
   include HasObjectManagerAttributes
   include HasCollectionUpdate

@@ -3,7 +3,6 @@
 ENV['RAILS_ENV'] = 'test'
 require File.expand_path('../config/environment', __dir__)
 require 'rails/test_help'
-require 'cache'
 
 require 'test_support_helper'
 
@@ -13,7 +12,7 @@ class ActiveSupport::TestCase
   ActiveRecord::Base.logger.level = Logger::INFO
 
   # clear cache
-  Cache.clear
+  Rails.cache.clear
 
   # load seeds
   load Rails.root.join('db/seeds.rb')
@@ -33,7 +32,7 @@ class ActiveSupport::TestCase
     end
 
     # clear cache
-    Cache.clear
+    Rails.cache.clear
 
     # reload settings
     Setting.reload

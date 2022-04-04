@@ -84,6 +84,6 @@ class OrganizationDomainBasedAssignment < ActiveRecord::Migration[4.2]
       created_by_id: 1,
     )
 
-    Cache.clear
+    Rails.cache.clear
   end
 end

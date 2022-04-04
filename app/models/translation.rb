@@ -40,60 +40,50 @@ get list of translations
 =end
 
   def self.lang(locale, admin = false)
+    Rails.cache.fetch("#{self}/#{latest_change}/lang/#{locale}/#{admin}") do
 
-    # use cache if not admin page is requested
-    if !admin
-      data = lang_cache_get(locale)
-      return data if data
-    end
-
-    # show total translations as reference count
-    data = {
-      'total' => Translation.where(locale: 'de-de').count,
-    }
-    list = []
-    translations = if admin
-                     Translation.where(locale: locale.downcase).order(:source)
-                   else
-                     Translation.where(locale: locale.downcase).where.not(target: '').order(:source)
-                   end
-    translations.each do |item|
-      translation_item = if admin
-                           [
-                             item.id,
-                             item.source,
-                             item.target,
-                             item.target_initial,
-                           ]
-                         else
-                           [
-                             item.id,
-                             item.source,
-                             item.target,
-                           ]
-                         end
-      list.push translation_item
-    end
-
-    # add presorted on top
-    presorted_list = []
-    %w[yes no or Year Years Month Months Day Days Hour Hours Minute Minutes Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec January February March April May June July August September October November December Mon Tue Wed Thu Fri Sat Sun Monday Tuesday Wednesday Thursday Friday Saturday Sunday].each do |presort|
-      list.each do |item|
-        next if item[1] != presort
-
-        presorted_list.push item
-        list.delete item
-        # list.unshift presort
+      # show total translations as reference count
+      data = {
+        'total' => Translation.where(locale: 'de-de').count,
+      }
+      list = []
+      translations = if admin
+                       Translation.where(locale: locale.downcase).order(:source)
+                     else
+                       Translation.where(locale: locale.downcase).where.not(target: '').order(:source)
+                     end
+      translations.each do |item|
+        translation_item = if admin
+                             [
+                               item.id,
+                               item.source,
+                               item.target,
+                               item.target_initial,
+                             ]
+                           else
+                             [
+                               item.id,
+                               item.source,
+                               item.target,
+                             ]
+                           end
+        list.push translation_item
       end
-    end
-    data['list'] = presorted_list.concat list
 
-    # set cache
-    if !admin
-      lang_cache_set(locale, data)
-    end
+      # add presorted on top
+      presorted_list = []
+      %w[yes no or Year Years Month Months Day Days Hour Hours Minute Minutes Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec January February March April May June July August September October November December Mon Tue Wed Thu Fri Sat Sun Monday Tuesday Wednesday Thursday Friday Saturday Sunday].each do |presort|
+        list.each do |item|
+          next if item[1] != presort
 
-    data
+          presorted_list.push item
+          list.delete item
+          # list.unshift presort
+        end
+      end
+      data['list'] = presorted_list.concat list
+      data
+    end
   end
 
 =begin
@@ -219,23 +209,6 @@ or
     [true, nil]
   end
 
-  def self.import(locale, translations)
-    bulk_import translations
-    lang_cache_clear(locale)
-  end
-
-  def self.lang_cache_clear(locale)
-    Cache.delete lang_cache_key(locale)
-  end
-
-  def self.lang_cache_set(locale, data)
-    Cache.write lang_cache_key(locale), data
-  end
-
-  def self.lang_cache_get(locale)
-    Cache.read lang_cache_key(locale)
-  end
-
   private
 
   def set_initial
@@ -245,14 +218,4 @@ or
     self.target_initial = target
     true
   end
-
-  def cache_delete
-    super
-    self.class.lang_cache_clear(locale) # delete whole lang cache as well
-  end
-
-  def self.lang_cache_key(locale)
-    "TranslationMapOnlyContent::#{locale.downcase}"
-  end
-  private_class_method :lang_cache_key
 end

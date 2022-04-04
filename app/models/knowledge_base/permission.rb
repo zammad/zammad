@@ -12,7 +12,7 @@ class KnowledgeBase::Permission < ApplicationModel
   # @param permissionable [KnowledgeBase::Category, KnowledgeBase]
   # @return [String]
   def self.cache_key(permissionable)
-    "#{permissionable.class}::aws::#{permissionable.id}::permission::#{permissionable.updated_at}"
+    "#{self}/#{latest_change}/#{permissionable.class}/#{permissionable.class.latest_change}/permission/#{permissionable.id}"
   end
 
   private

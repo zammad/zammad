@@ -353,11 +353,8 @@ class Transaction::Notification
   end
 
   def possible_recipients_of_group(group_id)
-    cache = Cache.read("Transaction::Notification.group_access.full::#{group_id}")
-    return cache if cache
-
-    possible_recipients = User.group_access(group_id, 'full').sort_by(&:login)
-    Cache.write("Transaction::Notification.group_access.full::#{group_id}", possible_recipients, expires_in: 20.seconds)
-    possible_recipients
+    Rails.cache.fetch("User/notification/possible_recipients_of_group/#{group_id}", expires_in: 20.seconds) do
+      User.group_access(group_id, 'full').sort_by(&:login)
+    end
   end
 end

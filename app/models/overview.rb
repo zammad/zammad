@@ -2,7 +2,6 @@
 
 class Overview < ApplicationModel
   include ChecksClientNotification
-  include ChecksLatestChangeObserved
   include ChecksConditionValidation
   include CanSeed
 

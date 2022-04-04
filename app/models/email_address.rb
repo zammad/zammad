@@ -2,7 +2,6 @@
 
 class EmailAddress < ApplicationModel
   include ChecksHtmlSanitized
-  include ChecksLatestChangeObserved
   include HasCollectionUpdate
 
   has_many        :groups, after_add: :cache_update, after_remove: :cache_update
