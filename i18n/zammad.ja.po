@@ -2307,7 +2307,7 @@ msgstr ""
 msgid "Could not read raw logo!"
 msgstr ""
 
-#: app/assets/javascripts/app/views/knowledge_base/new_modal.coffee
+#: app/assets/javascripts/app/views/knowledge_base/new_controller.coffee
 msgid "Couldn't create Knowledge Base"
 msgstr ""
 
@@ -2356,7 +2356,7 @@ msgstr ""
 msgid "Create Channels"
 msgstr "チャンネル作成"
 
-#: app/assets/javascripts/app/views/knowledge_base/new_modal.coffee
+#: app/assets/javascripts/app/views/knowledge_base/new_controller.coffee
 msgid "Create Knowledge Base"
 msgstr ""
 
@@ -8340,11 +8340,6 @@ msgstr "変更のリセット"
 msgid "Response"
 msgstr ""
 
-#: app/assets/javascripts/app/views/sla/index.jst.eco
-#, fuzzy
-msgid "Response Time"
-msgstr "初回応答期限"
-
 #: app/assets/javascripts/app/views/monitoring.jst.eco
 msgid "Restart failed jobs"
 msgstr ""
@@ -9939,10 +9934,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
 msgid "There is existing content. Do you want to overwrite it?"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
-msgid "There is no Knowledge Base yet. Please create one."
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
@@ -11908,6 +11899,7 @@ msgid "before (relative)"
 msgstr "前 (比較)"
 
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
+#: app/assets/javascripts/app/views/sla/index.jst.eco
 #, fuzzy
 msgid "between agent updates"
 msgstr "最近のアップデート"
@@ -12111,6 +12103,7 @@ msgid "fill in empty"
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
+#: app/assets/javascripts/app/views/sla/index.jst.eco
 msgid "for an agent to respond"
 msgstr ""
 
@@ -12687,6 +12680,10 @@ msgstr "... テキストエリア全体の"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Waiting time today"
+
+#, fuzzy
+#~ msgid "Response Time"
+#~ msgstr "初回応答期限"
 
 #, fuzzy
 #~| msgid "Sure to delete this object?"

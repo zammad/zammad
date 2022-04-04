@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-03-22 03:30+0000\n"
-"Last-Translator: Georgy Bobrov <gbobrov@gmail.com>\n"
+"PO-Revision-Date: 2022-04-01 03:30+0000\n"
+"Last-Translator: Андриан Галкин <galandrix@gmail.com>\n"
 "Language-Team: Russian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/ru/>\n"
 "Language: ru\n"
@@ -974,7 +974,7 @@ msgstr "Статья"
 
 #: db/seeds/settings.rb
 msgid "Article - visibility confirmation dialog"
-msgstr ""
+msgstr "Диалоговое окно подтверждения видимости статьи"
 
 #: lib/excel_sheet/ticket.rb
 msgid "Article Count"
@@ -2217,7 +2217,7 @@ msgstr "Копировать в буфер: Ctrl+C, Enter"
 
 #: db/seeds/permissions.rb
 msgid "Core Workflow"
-msgstr ""
+msgstr "Основной Рабочий процесс"
 
 #: db/seeds/settings.rb
 msgid "Core Workflow Ajax Mode"
@@ -2237,11 +2237,11 @@ msgstr ""
 
 #: app/controllers/reports_controller.rb
 msgid "Could not find active reporting profile."
-msgstr ""
+msgstr "Не удалось найти активный профиль отчетности."
 
 #: app/controllers/channels_twitter_controller.rb
 msgid "Could not find external_credential 'twitter'!"
-msgstr ""
+msgstr "Не удалось найти external_credential 'twitter'!"
 
 #: app/controllers/channels_twitter_controller.rb
 msgid "Could not find external_credential in cache!"
@@ -2261,15 +2261,15 @@ msgstr "Не удалось найти исходную заявку!"
 
 #: app/controllers/tickets_controller.rb
 msgid "Could not find target ticket number!"
-msgstr ""
+msgstr "Не удалось найти целевой номер билета!"
 
 #: lib/static_assets.rb
 msgid "Could not read raw logo!"
-msgstr ""
+msgstr "Не удалось прочитать необработанный логотип!"
 
-#: app/assets/javascripts/app/views/knowledge_base/new_modal.coffee
+#: app/assets/javascripts/app/views/knowledge_base/new_controller.coffee
 msgid "Couldn't create Knowledge Base"
-msgstr ""
+msgstr "Не удалось создать Базу знаний"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/public_menu_form.coffee
 #, fuzzy
@@ -2311,15 +2311,15 @@ msgstr "Создать администратора"
 
 #: lib/excel_sheet/ticket.rb
 msgid "Create Channel"
-msgstr ""
+msgstr "Создать канал"
 
 #: app/models/report.rb
 msgid "Create Channels"
 msgstr "Создать канал"
 
-#: app/assets/javascripts/app/views/knowledge_base/new_modal.coffee
+#: app/assets/javascripts/app/views/knowledge_base/new_controller.coffee
 msgid "Create Knowledge Base"
-msgstr ""
+msgstr "Создать Базу Знаний"
 
 #: app/controllers/first_steps_controller.rb
 msgid "Create Macros"
@@ -2362,7 +2362,7 @@ msgstr "Создать тестовый тикет"
 #, fuzzy
 #| msgid "Created at"
 msgid "Create a shared draft"
-msgstr "Создано в"
+msgstr "Создать общий шаблон"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/reader_controller.coffee
 msgid "Create a translation"
@@ -2384,7 +2384,7 @@ msgstr "Создать нового клиента"
 
 #: app/assets/javascripts/app/lib/app_post/_object_organization_autocompletion.coffee
 msgid "Create new object"
-msgstr ""
+msgstr "Создать новый объект"
 
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
 msgid "Create new records"
@@ -2430,7 +2430,7 @@ msgstr "Создан/а"
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
 #: lib/excel_sheet/ticket.rb
 msgid "Created At"
-msgstr ""
+msgstr "Созданный на"
 
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee
 #: app/assets/javascripts/app/models/organization.coffee
@@ -2465,7 +2465,7 @@ msgstr "Маска создания"
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
 msgid "Crop Image"
-msgstr ""
+msgstr "Обрезать Изображение"
 
 #: app/assets/javascripts/app/views/monitoring.jst.eco
 msgid "Current Status"
@@ -2487,11 +2487,11 @@ msgstr "Текущий пароль"
 
 #: app/controllers/users_controller.rb
 msgid "Current password is wrong!"
-msgstr ""
+msgstr "Текущий пароль неверен!"
 
 #: app/controllers/users_controller.rb
 msgid "Current password needed!"
-msgstr ""
+msgstr "Требуется текущий пароль!"
 
 #: app/controllers/application_controller/has_user.rb
 msgid "Current user has no permission to use 'From'/'X-On-Behalf-Of'!"
@@ -2744,15 +2744,16 @@ msgstr ""
 #: db/seeds/settings.rb
 #, fuzzy
 msgid "Defines Freshdesk endpoint authentication API key."
-msgstr "Определяет отправителя уведомлений по электронной почте."
+msgstr "Определяет ключ API аутентификации конечной точки Freshdesk."
 
 #: db/seeds/settings.rb
+#, fuzzy
 msgid "Defines HTTP basic auth password of Elasticsearch."
-msgstr ""
+msgstr "Defines HTTP basic auth password of Elasticsearch."
 
 #: db/seeds/settings.rb
 msgid "Defines HTTP basic auth user of Elasticsearch."
-msgstr ""
+msgstr "Определяет пользователя Elasticsearch с базовой HTTP-аутентификацией."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -8342,7 +8343,7 @@ msgstr "Профиль отчета"
 #: app/assets/javascripts/app/controllers/report_profile.coffee
 #: db/seeds/permissions.rb
 msgid "Report Profiles"
-msgstr "Оповещения"
+msgstr "Профили отчета"
 
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/views/report/main.jst.eco
@@ -8411,11 +8412,6 @@ msgstr "Сбросить изменения"
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
 msgid "Response"
 msgstr ""
-
-#: app/assets/javascripts/app/views/sla/index.jst.eco
-#, fuzzy
-msgid "Response Time"
-msgstr "Время первого ответа"
 
 #: app/assets/javascripts/app/views/monitoring.jst.eco
 msgid "Restart failed jobs"
@@ -10047,10 +10043,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
 msgid "There is existing content. Do you want to overwrite it?"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
-msgid "There is no Knowledge Base yet. Please create one."
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
@@ -12069,6 +12061,7 @@ msgid "before (relative)"
 msgstr "before (relative)"
 
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
+#: app/assets/javascripts/app/views/sla/index.jst.eco
 #, fuzzy
 msgid "between agent updates"
 msgstr "Последние обновления"
@@ -12272,6 +12265,7 @@ msgid "fill in empty"
 msgstr "заполнить пустой"
 
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
+#: app/assets/javascripts/app/views/sla/index.jst.eco
 msgid "for an agent to respond"
 msgstr ""
 
@@ -12843,6 +12837,10 @@ msgstr "всего текста"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Сегодня время ожидания"
+
+#, fuzzy
+#~ msgid "Response Time"
+#~ msgstr "Время первого ответа"
 
 #, fuzzy
 #~| msgid "Are you sure to delete"
