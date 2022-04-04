@@ -1212,13 +1212,14 @@ class Table extends App.Controller
 
     @renderPopovers()
 
+    @bulkForm.releaseController() if @bulkForm
     @bulkForm = new App.TicketBulkForm(
+      el:     @el.find('.bulkAction')
       holder: @el
-      view: @view
+      view:   @view
     )
 
     # start bulk action observ
-    @el.append(@bulkForm.el)
     localElement = @$('.table-overview')
     if localElement.find('input[name="bulk"]:checked').length isnt 0
       @bulkForm.show()

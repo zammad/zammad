@@ -150,7 +150,7 @@ class App.Search extends App.Controller
     tabModel = $(e.currentTarget).data('tab-content')
     tabs.find('.js-tab').removeClass('active')
     $(e.currentTarget).addClass('active')
-    @renderTab(tabModel, @result[tabModel] || [])
+    @renderTab(tabModel, @result?[tabModel] || [])
 
   renderTab: (model, localList) =>
 
@@ -231,15 +231,16 @@ class App.Search extends App.Controller
           @search(true)
         @delay(callback, 100)
 
+      @bulkForm.releaseController() if @bulkForm
       @bulkForm = new App.TicketBulkForm(
-        holder: localeEl
-        view: @view
-        callback: updateSearch
+        el:        @el.find('.bulkAction')
+        holder:    localeEl
+        view:      @view
+        callback:  updateSearch
         noSidebar: true
       )
 
       # start bulk action observ
-      @el.append(@bulkForm.el)
       localElement = @$('.js-content')
       if localElement.find('input[name="bulk"]:checked').length isnt 0
         @bulkForm.show()
