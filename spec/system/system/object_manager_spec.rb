@@ -228,13 +228,22 @@ RSpec.describe 'System > Objects', type: :system do
           # use drag and drop to reverse sort the options
           within '.modal form' do
             within '.js-dataMap table.js-Table .table-sortable' do
-              rows = all('tr.input-data-row td.table-draggable')
-              target = rows.last
-              pos = rows.size - 1
+              wait.until do
+                all('tr.input-data-row td.table-draggable').size == options.size
+              end
+
+              rows        = all('tr.input-data-row td.table-draggable')
+              keys_target = all('tr.input-data-row td:nth-child(2) input').map(&:value).reverse
+              target      = rows.last
+              pos         = rows.size - 1
               rows.each do |row|
                 next if pos <= 0
 
                 row.drag_to target
+                wait.until do
+                  find("tr.input-data-row:nth-child(#{pos + 1}) td:nth-child(2) input").value == keys_target[pos]
+                end
+
                 pos -= 1
               end
             end
