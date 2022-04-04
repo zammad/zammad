@@ -4,6 +4,8 @@
     - .services_mysql_postgresql_elasticsearch
     - .variables_es
   stage: test
+  variables:
+    RAILS_ENV: "test"
   tags:
     - integration
   script:
@@ -19,11 +21,14 @@
   <<: *template_integration_es
   variables:
     ELASTICSEARCH_TAG: '7.8.1'
-    RAILS_ENV: "test"
 
 # Highest supported version (except for newer releases that are not yet in CI)
 "rspec:es:7.16":
   <<: *template_integration_es
   variables:
     ELASTICSEARCH_TAG: '7.16'
-    RAILS_ENV: "test"
+
+"rspec:es:8.1":
+  <<: *template_integration_es
+  variables:
+    ELASTICSEARCH_TAG: '8.1'

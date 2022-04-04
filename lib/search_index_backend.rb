@@ -22,7 +22,7 @@ info about used search index machine
 
       installed_version_parsed = Gem::Version.new(installed_version)
 
-      version_supported = installed_version_parsed < Gem::Version.new('8')
+      version_supported = installed_version_parsed < Gem::Version.new('9')
       raise "Version #{installed_version} of configured elasticsearch is not supported." if !version_supported
 
       version_supported = installed_version_parsed >= Gem::Version.new('7.8')
@@ -280,7 +280,7 @@ remove whole data from index
   def self.search_by_index(query, index, options = {})
     return [] if query.blank?
 
-    url = build_url(type: index, action: '_search', with_pipeline: false, with_document_type: true)
+    url = build_url(type: index, action: '_search', with_pipeline: false, with_document_type: false)
     return [] if url.blank?
 
     # real search condition
@@ -433,7 +433,7 @@ example for aggregations within one year
   def self.selectors(index, selectors = nil, options = {}, aggs_interval = nil)
     raise 'no selectors given' if !selectors
 
-    url = build_url(type: index, action: '_search', with_pipeline: false, with_document_type: true)
+    url = build_url(type: index, action: '_search', with_pipeline: false, with_document_type: false)
     return if url.blank?
 
     data = selector2query(selectors, options, aggs_interval)
@@ -692,8 +692,8 @@ example for aggregations within one year
         data[:aggs] = {
           time_buckets: {
             date_histogram: {
-              field:    aggs_interval[:field],
-              interval: aggs_interval[:interval],
+              field:             aggs_interval[:field],
+              calendar_interval: aggs_interval[:interval],
             }
           }
         }
