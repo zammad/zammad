@@ -547,7 +547,7 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
         distance:             15
         opacity:              0.6
         forcePlaceholderSize: true
-        items:                'tr'
+        items:                'tr.input-data-row'
         helper: (e, tr) ->
           originals = tr.children()
           helper = tr.clone()
