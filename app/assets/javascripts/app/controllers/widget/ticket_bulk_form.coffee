@@ -14,6 +14,8 @@ class App.TicketBulkForm extends App.Controller
   constructor: ->
     super
 
+    return if !@permissionCheck('ticket.agent')
+
     @configure_attributes_ticket = []
 
     used_attributes = ['state_id', 'pending_time', 'priority_id', 'group_id', 'owner_id']
