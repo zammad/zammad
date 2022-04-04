@@ -9,7 +9,8 @@ RSpec.describe Transaction::Notification, type: :model do
     let(:ticket) { create(:ticket, owner: user, state_name: 'open', pending_time: Time.current) }
 
     before do
-      travel_to Time.current.noon
+      travel_to Time.use_zone('UTC') { Time.current.noon }
+
       user.groups << group
       ticket
 
@@ -19,7 +20,7 @@ RSpec.describe Transaction::Notification, type: :model do
     end
 
     it 'notification not sent at UTC midnight' do
-      travel_to Time.current.end_of_day + 1.minute
+      travel_to Time.use_zone('UTC') { Time.current.end_of_day + 1.minute }
 
       expect { run(ticket, user, 'reminder_reached') }.not_to change(OnlineNotification, :count)
     end
