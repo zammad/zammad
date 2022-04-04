@@ -4,6 +4,7 @@
   extends:
     - .tags_docker
     - .rules_singletest
+    - .artifacts_error
   before_script:
     - source /etc/profile.d/rvm.sh # ensure RVM is loaded
     - source /opt/rh/rh-nodejs*/enable # ensure Node.js is available
@@ -14,6 +15,7 @@
     - .tags_docker
     - .rules_singletest
     - .services_postgresql
+    - .artifacts_error
   before_script:
     - source /etc/profile.d/rvm.sh # ensure RVM is loaded
     - source /opt/rh/rh-nodejs*/enable # ensure Node.js is available
@@ -36,6 +38,8 @@
     - echo "Disable default before_script."
   script:
     - shellcheck -S warning $(find . -name "*.sh" -o -name "functions" | grep -v "/vendor/")
+  after_script:
+    - echo "Disable default before_script."
 
 "lint: i18n, rails & security":
   <<: *template_pre_rails

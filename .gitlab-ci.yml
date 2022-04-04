@@ -63,3 +63,6 @@ before_script:
   - echo -e "\\e[0Ksection_end:`date +%s`:bundle_install\\r\\e[0K"
   - bundle exec ruby .gitlab/configure_environment.rb
   - source .gitlab/environment.env
+
+after_script:
+  - .gitlab/environment_info.sh > log/environment_info.log
