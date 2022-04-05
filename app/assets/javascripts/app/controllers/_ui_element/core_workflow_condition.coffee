@@ -50,16 +50,16 @@ class App.UiElement.core_workflow_condition extends App.UiElement.ApplicationSel
 
     operatorsType =
       'active$': [__('is')]
-      'boolean$': [__('is'), __('is not'), __('is set'), __('not set'), _('has changed'), __('changed to')]
-      'integer$': [__('is'), __('is not'), __('is set'), __('not set'), _('has changed'), __('changed to')]
-      '^select$': [__('is'), __('is not'), __('is set'), __('not set'), _('has changed'), __('changed to')]
+      'boolean$': [__('is'), __('is not'), __('is set'), __('not set'), __('has changed'), __('changed to')]
+      'integer$': [__('is'), __('is not'), __('is set'), __('not set'), __('has changed'), __('changed to')]
+      '^select$': [__('is'), __('is not'), __('is set'), __('not set'), __('has changed'), __('changed to')]
       '^multiselect$': [__('contains'), __('contains not'), __('contains all'), __('contains all not'), __('is set'), __('not set'), __('has changed'), __('changed to')]
-      '^tree_select$': [__('is'), __('is not'), __('is set'), __('not set'), _('has changed'), __('changed to')]
-      '^(input|textarea|richtext)$': [__('is'), __('is not'), __('is set'), __('not set'), _('has changed'), __('changed to'), __('regex match'), __('regex mismatch')]
+      '^tree_select$': [__('is'), __('is not'), __('is set'), __('not set'), __('has changed'), __('changed to')]
+      '^(input|textarea|richtext)$': [__('is'), __('is not'), __('is set'), __('not set'), __('has changed'), __('changed to'), __('regex match'), __('regex mismatch')]
 
     operatorsName =
-      '_id$': [__('is'), __('is not'), __('is set'), __('not set'), _('has changed'), __('changed to')]
-      '_ids$': [__('is'), __('is not'), __('is set'), __('not set'), _('has changed'), __('changed to')]
+      '_id$': [__('is'), __('is not'), __('is set'), __('not set'), __('has changed'), __('changed to')]
+      '_ids$': [__('is'), __('is not'), __('is set'), __('not set'), __('has changed'), __('changed to')]
 
     # merge config
     elements = {}
