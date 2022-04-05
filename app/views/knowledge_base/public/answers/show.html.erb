@@ -35,6 +35,12 @@ data-available-locales='<%= @object_locales.map(&:locale).join(',') %>'>
           </div>
         </div>
       <% end %>
+
+      <% if @object.visible? %>
+        <div class="article-meta">
+          <%= raw zt 'Published %s', human_time_tag([@object.published_at, @object.translation.updated_at].max) %>
+        </div>
+      <% end %>
     </div>
   </article>
 </main>

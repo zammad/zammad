@@ -89,6 +89,10 @@ App.ViewHelpers =
   Ti: (item, args...) ->
     App.i18n.translateInline(item, args...)
 
+  # define translation plain helper
+  Tp: (item, args...) ->
+    App.i18n.translatePlain(item, args...)
+
   # define translation for date helper
   Tdate: (item, args...) ->
     App.i18n.translateDate(item, args...)

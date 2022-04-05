@@ -94,8 +94,12 @@ translate strings in Ruby context, e. g. for notifications
 
 =end
 
-  def self.translate(locale, string)
-    find_source(locale, string)&.target || string
+  def self.translate(locale, string, *args)
+    translated = find_source(locale, string)&.target || string
+
+    translated = translated % args if args.any?
+
+    translated
   end
 
 =begin
@@ -122,7 +126,7 @@ or
 
 =end
 
-  def self.timestamp(locale, timezone, timestamp)
+  def self.timestamp(locale, timezone, timestamp, append_timezone: true)
 
     if timestamp.instance_of?(String)
       begin
@@ -155,7 +159,10 @@ or
     record.sub!('HH', format('%<hour>02d', hour: timestamp.hour.to_s))
     record.sub!('l', timestamp.strftime('%l'))
     record.sub!('P', timestamp.strftime('%P'))
-    "#{record} (#{timezone})"
+
+    record += " (#{timezone})" if append_timezone
+
+    record
   end
 
 =begin

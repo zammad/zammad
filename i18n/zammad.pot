@@ -7381,6 +7381,10 @@ msgstr ""
 msgid "Publish Article"
 msgstr ""
 
+#: app/views/knowledge_base/public/answers/show.html.erb
+msgid "Published %s"
+msgstr ""
+
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco
 msgid "Published at"
 msgstr ""
@@ -10778,10 +10782,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/cti.coffee
 msgid "busy"
-msgstr ""
-
-#: app/assets/javascripts/app/views/knowledge_base/_reader_answer_meta.jst.eco
-msgid "by"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee

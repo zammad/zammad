@@ -31,6 +31,9 @@ RSpec.describe Translation do
       expect(described_class.translate('de-de', 'Some Not Existing Word')).to eq('Some Not Existing Word')
     end
 
+    it 'format string with given arguments' do
+      expect(described_class.translate('en', 'a %s string', 'given')).to eq('a given string')
+    end
   end
 
   context 'when using find_source' do

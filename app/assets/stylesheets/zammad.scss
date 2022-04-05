@@ -555,7 +555,7 @@ pre code {
     }
 
     .icon:only-child {
-      margin: 0;
+      margin: 0 !important;
     }
 
     &.btn--slim {
@@ -13686,6 +13686,20 @@ span.is-disabled {
   &-meta {
     display: block;
     text-align: center;
+
+    > * {
+      &:first-child {
+        text-transform: capitalize;
+      }
+
+      &::after {
+        content: ' · ';
+      }
+
+      &:last-child::after {
+        display: none;
+      }
+    }
   }
 
   &-body {

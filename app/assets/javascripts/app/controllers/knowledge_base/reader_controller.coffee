@@ -87,7 +87,9 @@ class App.KnowledgeBaseReaderController extends App.Controller
     @renderBody(answer_translation)
 
     @answerMeta.html App.view('knowledge_base/_reader_answer_meta')(
-      answer: answer
+      answer:      answer,
+      translation: answer_translation,
+      isEditor:    @parentController.isEditor()
     )
 
     @renderPopovers()

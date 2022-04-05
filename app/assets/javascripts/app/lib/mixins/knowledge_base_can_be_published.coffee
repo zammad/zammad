@@ -28,6 +28,16 @@ InstanceMethods =
 
     @["#{state}_at"]
 
+  can_be_published_internal_by: ->
+    return if !@is_internally_published_object()
+
+    App.User.find(@internal_by_id || @published_by_id)
+
+  can_be_published_internal_at: ->
+    return if !@is_internally_published_object()
+
+    @internal_at || @published_at
+
   can_be_published_state_css: ->
     "state-#{@can_be_published_state()}"
 
@@ -62,11 +72,11 @@ InstanceMethods =
   can_be_published_internal_in_future: ->
     @date(@internal_at) > (new Date()).getTime()
 
-  is_internally_published: (kb_locale) ->
-    state = @can_be_published_state()
-    object_published = state == 'internal' || state == 'published'
+  is_internally_published_object: (state = @can_be_published_state()) ->
+    state == 'internal' || state == 'published'
 
-    if !object_published
+  is_internally_published: (kb_locale) ->
+    if !@is_internally_published_object()
       return false
 
     if !@translation(kb_locale.id)
@@ -82,7 +92,6 @@ InstanceMethods =
       return false
 
     true
-
 
   date: (string) ->
     return undefined if !string
