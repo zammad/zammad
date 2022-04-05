@@ -16,4 +16,4 @@ echo "Last 100 lines from kernel log"
 dmesg | tail -n 100
 echo
 echo "Last 1000 lines from system log (journalctl)"
-journalctl | tail -n 1000
+journalctl -n 1000
