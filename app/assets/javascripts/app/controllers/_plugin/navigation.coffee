@@ -322,7 +322,6 @@ class Navigation extends App.Controller
   andClose: =>
     @searchContainer.removeClass('focused filled open no-match loading')
     @globalSearch.close()
-    @delayedRemoveAnyPopover()
 
   search: (delay) =>
     query = @searchInput.val().trim()

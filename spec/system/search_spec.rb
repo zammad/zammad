@@ -128,7 +128,6 @@ RSpec.describe 'Search', type: :system, authenticated: true, searchindex: true d
     end
 
     before do
-      sleep 3 # wait for popover killer to pass
       fill_in id: 'global-search', with: organization.name.to_s
     end
 

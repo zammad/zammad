@@ -26,8 +26,6 @@ RSpec.describe 'Knowledge Base Locale Answer Edit', type: :system do
     def open_editor_and_add_link(input)
       visit "#knowledge_base/#{knowledge_base.id}/locale/#{primary_locale.system_locale.locale}/answer/#{draft_answer.id}/edit"
 
-      sleep 3 # wait for popover killer to pass
-
       find('a[data-action="link"]').click
 
       within('.popover-content') do
@@ -65,8 +63,6 @@ RSpec.describe 'Knowledge Base Locale Answer Edit', type: :system do
 
     it 'has adding functionality' do
       visit "#knowledge_base/#{knowledge_base.id}/locale/#{primary_locale.system_locale.locale}/answer/#{published_answer.id}/edit"
-
-      sleep 3 # wait for popover killer to pass
 
       find('a[data-action="embed_video"]').click
 

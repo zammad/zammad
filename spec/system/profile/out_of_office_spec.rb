@@ -5,7 +5,6 @@ require 'rails_helper'
 RSpec.describe 'Profile > Out of Office', type: :system do
   before do
     visit 'profile/out_of_office'
-    sleep 3 # wait for popover killer to pass
   end
 
   it 'does find agents' do

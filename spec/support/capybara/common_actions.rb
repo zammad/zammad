@@ -279,10 +279,7 @@ module CommonActions
   #
   # @example
   # popover_on_hover(page.find('button.hover_me'))
-  def popover_on_hover(element, wait_for_popover_killer: true)
-    # wait for popover killer to pass
-    sleep 3 if wait_for_popover_killer
-
+  def popover_on_hover(element)
     move_mouse_to(element)
     move_mouse_by(5, 5)
   end

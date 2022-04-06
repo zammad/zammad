@@ -37,9 +37,6 @@ InstanceMethods =
 
     @initializedPopovers = undefined
 
-  delayedRemoveAnyPopover: ->
-    @delay(@constructor.anyPopoversDestroy, 100, 'removePopovers')
-
 App.PopoverProvidable =
   registerPopovers: (klasses...) ->
     @allPopovers = undefined

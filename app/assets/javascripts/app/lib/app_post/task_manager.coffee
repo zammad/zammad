@@ -410,8 +410,6 @@ class _taskManagerSingleton extends App.Controller
     if controller.hide && _.isFunction(controller.hide)
       controller.hide()
 
-    @delayedRemoveAnyPopover()
-
     true
 
   # get task

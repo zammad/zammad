@@ -1428,7 +1428,6 @@ RSpec.describe 'Ticket zoom', type: :system do
       ticket.update(pending_time: 1.day.from_now, state: Ticket::State.lookup(name: 'pending reminder'))
 
       visit "ticket/zoom/#{ticket.id}"
-      sleep 3 # wait for popover killer to pass
     end
 
     let(:ticket) { Ticket.first }
@@ -2538,7 +2537,6 @@ RSpec.describe 'Ticket zoom', type: :system do
     end
 
     it 'does show the extended escalation information' do
-      sleep 4 # wait for popup killer
       page.find('.escalation-popover').hover
       expect(page).to have_text('FIRST RESPONSE TIME')
       expect(page).to have_text('UPDATE TIME')

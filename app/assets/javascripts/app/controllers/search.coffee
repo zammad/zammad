@@ -113,8 +113,6 @@ class App.Search extends App.Controller
     @updateFilledClass()
     @updateTask()
 
-    @delayedRemoveAnyPopover()
-
   search: (delay, force = false) =>
     query = @searchInput.val().trim()
     if !force
