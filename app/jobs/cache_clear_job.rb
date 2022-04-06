@@ -4,9 +4,10 @@ class CacheClearJob < ApplicationJob
   include HasActiveJobLock
 
   def perform
-    # cleanup is not supported by every backend so
-    # try only if exists
-    Rails.cache.try(:cleanup)
+    # Memcached does not support clean-up, so only perform it for filesystem cache.
+    return if !Rails.cache.is_a? ActiveSupport::Cache::FileStore
+
+    Rails.cache.cleanup
   rescue => e
     Rails.logger.error "Scheduled cache cleanup failed! #{e.inspect}"
   end
