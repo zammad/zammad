@@ -74,6 +74,7 @@
   <<: *tags_docker
   <<: *artifacts_error
   <<: *rules_singletest
+  interruptible: true
 
 # DB Docker
 .docker_mysql: &docker_mysql

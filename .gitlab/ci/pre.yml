@@ -1,6 +1,7 @@
 # Workaround to enable usage of mixed SSH and Docker GitLab CI runners
 .template_pre: &template_pre
   stage: pre
+  interruptible: true
   extends:
     - .tags_docker
     - .rules_singletest
@@ -11,6 +12,7 @@
 
 .template_pre_rails: &template_pre_rails
   stage: pre
+  interruptible: true
   extends:
     - .tags_docker
     - .rules_singletest
@@ -107,6 +109,7 @@ global_refresh_envs:
     - .tags_docker
     - .services_postgresql
   stage: pre
+  interruptible: true
   # ensure that only one Job runs in the whole project (branches etc.)
   resource_group: global_refresh_envs
   # allow download via the web UI to restore ENVs in case global cache got deleted (see: `.gitlab-ci.yml`)

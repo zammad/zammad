@@ -3,6 +3,7 @@ browser:build:
   extends:
     - .tags_docker
     - .services_postgresql
+  interruptible: true
   artifacts:
     expire_in: 1 week
     paths:
