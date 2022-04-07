@@ -11,6 +11,7 @@
     v-bind:incomplete-message="false"
     v-bind:plugins="localFormKitPlugins"
     v-bind:sections-schema="formKitSectionsSchema"
+    v-bind:disabled="localDisabled"
     v-on:node="setFormNode"
     v-on:submit="onSubmit"
   >
@@ -27,6 +28,12 @@
     </template>
     <slot name="after-fields" />
   </FormKit>
+  <div
+    v-else-if="showInitialLoadingAnimation"
+    class="flex items-center justify-center"
+  >
+    <CommonIcon name="loader" animation="spin" />
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -41,17 +48,19 @@ import {
   markRaw,
   ConcreteComponent,
   nextTick,
+  Ref,
 } from 'vue'
 import {
+  type FormData,
   type FormSchemaField,
   type FormSchemaLayout,
   type FormSchemaNode,
   type FormValues,
   type ReactiveFormSchemData,
   FormValidationVisibility,
+  FormSchemaGroupOrList,
 } from '@common/types/form'
 import type {
-  FormKitGroupValue,
   FormKitPlugin,
   FormKitSchemaNode,
   FormKitSchemaCondition,
@@ -59,18 +68,17 @@ import type {
   FormKitClasses,
   FormKitSchemaDOMNode,
   FormKitSchemaComponent,
-  FormKitFrameworkContext,
 } from '@formkit/core'
 import getUuid from '@common/utils/getUuid'
+import { useTimeoutFn } from '@vueuse/shared'
+import UserError from '@common/errors/UserError'
 
 // TODO:
-// - Do we need a loading animation?
 // - Maybe some default buttons inside the components with loading cycle on submit?
-// - Disabled form on submit? (i think it's the default of FormKit)
+// (- Disabled form on submit? (i think it's the default of FormKit, but only when a promise will be returned from the submit handler))
 // - Reset/Clear form handling?
 // - ...
 
-// TODO:
 export interface Props {
   schema?: FormSchemaNode[]
   formName?: string
@@ -81,10 +89,15 @@ export interface Props {
     Partial<FormKitSchemaNode> | FormKitSchemaCondition
   >
   class?: FormKitClasses | string | Record<string, boolean>
+
   // Can be used to define initial values on frontend side and fetched schema from the server.
   initialValues?: Partial<FormValues>
   queryParams?: Record<string, unknown>
   validationVisibility?: FormValidationVisibility
+  disabled?: boolean
+
+  // Implement the submit in this way, because we need to react on async usage of the submit function.
+  onSubmit?: (values: FormData) => Promise<void> | void
 }
 
 const formId = `form-${getUuid()}`
@@ -96,26 +109,30 @@ const props = withDefaults(defineProps<Props>(), {
   changeFields: () => {
     return {}
   },
-  staticSchema: false,
   validationVisibility: FormValidationVisibility.submit,
+  disabled: false,
 })
 
 // Rename prop 'class' for usage in the template, because of reserved word
 const localClass = toRef(props, 'class')
 
 const emit = defineEmits<{
-  (e: 'submit', values: FormKitGroupValue): void
   (e: 'changed', fieldName: string, newValue: unknown): void
+  (e: 'node', node: FormKitNode): void
 }>()
 
-let formNode: FormKitNode
-const formNodeContext = ref<FormKitFrameworkContext | undefined>(undefined)
+const formNode: Ref<FormKitNode | undefined> = ref()
 const setFormNode = (node: FormKitNode) => {
-  formNode = node
-  formNodeContext.value = formNode.context
+  formNode.value = node
 
-  // TODO: maybe we should also emit the node one level above to have the node available without a own getNode-call...
+  emit('node', node)
 }
+
+const formNodeContext = computed(() => formNode.value?.context)
+
+defineExpose({
+  formNode,
+})
 
 // Use the node context value, instead of the v-model, because of performance reason.
 const values = computed<FormValues>(() => {
@@ -125,17 +142,48 @@ const values = computed<FormValues>(() => {
   return formNodeContext.value.value
 })
 
-const onSubmit = (values: FormKitGroupValue) => {
+const updateSchemaProcessing = ref(false)
+
+const onSubmit = (values: FormData): Promise<void> | void => {
+  // Needs to be checked, because the 'onSubmit' function is not required.
+  if (!props.onSubmit) return undefined
+
   const emitValues = {
     ...values,
     formId,
   }
 
-  emit('submit', emitValues)
+  const submitResult = props.onSubmit(emitValues)
+
+  // TODO: maybe we need to handle the disabled state on submit on our own. In clarification with FormKit.
+  if (submitResult instanceof Promise) {
+    return submitResult.catch((errors: UserError) => {
+      formNode.value?.setErrors(
+        errors.generalErrors as string[],
+        errors.getFieldErrorList(),
+      )
+    })
+  }
+
+  return submitResult
 }
+
+const coreWorkflowActive = ref(false)
+const coreWorkflowChanges = ref<Record<string, FormSchemaField>>({})
 
 const changedValuePlugin = (node: FormKitNode) => {
   node.on('input', ({ payload: value, origin: node }) => {
+    // TODO: trigger update form check (e.g. core workflow)
+    // Or maybe also some "update"-flag on field level?
+    if (coreWorkflowActive.value) {
+      updateSchemaProcessing.value = true
+      setTimeout(() => {
+        // TODO: ... do some needed stuff
+        coreWorkflowChanges.value = {}
+        updateSchemaProcessing.value = false
+      }, 2000)
+    }
+
     emit('changed', value, node.name)
   })
 }
@@ -163,18 +211,23 @@ const schemaData = reactive<ReactiveFormSchemData>({
 })
 
 const updateSchemaDataField = (field: FormSchemaField) => {
-  const newField = {
-    ...field,
-    show: field.show ?? true,
-  }
+  const { show, props: specificProps, ...fieldProps } = field
+  const showField = show ?? true
 
   if (schemaData.fields[field.name]) {
-    schemaData.fields[field.name] = Object.assign(
-      schemaData.fields[field.name],
-      newField,
-    )
+    schemaData.fields[field.name] = {
+      show: showField,
+      props: Object.assign(
+        schemaData.fields[field.name].props,
+        fieldProps,
+        specificProps,
+      ),
+    }
   } else {
-    schemaData.fields[field.name] = newField
+    schemaData.fields[field.name] = {
+      show: showField,
+      props: Object.assign(fieldProps, specificProps),
+    }
   }
 }
 
@@ -185,10 +238,11 @@ const buildStaticSchema = (schema: FormSchemaNode[]) => {
     return {
       $cmp: 'FormKit',
       if: `$fields.${field.name}.show`,
-      bind: `$fields.${field.name}`,
+      bind: `$fields.${field.name}.props`,
       props: {
         type: field.type,
         key: field.name,
+        id: field.id,
         formId,
         value: props.initialValues?.[field.name] ?? field.value,
       },
@@ -226,9 +280,11 @@ const buildStaticSchema = (schema: FormSchemaNode[]) => {
             return childNode
           }
           if ((childNode as FormSchemaLayout).isLayout) {
+            const layoutItemChildNode = childNode as FormSchemaLayout
+
             return {
-              ...getLayoutType(childNode as FormSchemaLayout),
-              children: childNode.children as
+              ...getLayoutType(layoutItemChildNode),
+              children: layoutItemChildNode.children as
                 | string
                 | FormKitSchemaNode[]
                 | FormKitSchemaCondition,
@@ -244,22 +300,37 @@ const buildStaticSchema = (schema: FormSchemaNode[]) => {
           children: childrens,
         })
       }
+    }
+    // At the moment we support only one level of group/list fields, no recursive implementation.
+    else if (
+      (node as FormSchemaGroupOrList).type === 'group' ||
+      (node as FormSchemaGroupOrList).type === 'list'
+    ) {
+      const groupOrListField = node as FormSchemaGroupOrList
+
+      const childrenStaticSchema: FormKitSchemaComponent[] = []
+      groupOrListField.children.forEach((childField) => {
+        childrenStaticSchema.push(buildFormKitField(childField))
+        updateSchemaDataField(childField)
+      })
+
+      staticSchema.push({
+        $cmp: 'FormKit',
+        props: {
+          type: groupOrListField.type,
+          name: groupOrListField.name,
+          key: groupOrListField.name,
+        },
+        children: childrenStaticSchema,
+      })
     } else {
       const field = node as FormSchemaField
 
-      // TODO: maybe we can also add better support for Group and List fields, when this bug is fixed:
-      // https://github.com/formkit/formkit/issues/91
-
       staticSchema.push(buildFormKitField(field))
-
       updateSchemaDataField(field)
     }
   })
 }
-
-const coreWorkflowChanges = ref<Record<string, FormSchemaField>>({})
-
-// TODO: coreWorkflowChanges should be filled from the server call...
 
 const localChangeFields = computed(() => {
   if (props.formName) return coreWorkflowChanges.value
@@ -267,7 +338,6 @@ const localChangeFields = computed(() => {
   return props.changeFields
 })
 
-// If something changed in the change fields, we need to update the current schemaData
 watch(
   localChangeFields,
   (newChangeFields) => {
@@ -281,7 +351,7 @@ watch(
 
       nextTick(() => {
         if (field.value !== values.value[fieldName]) {
-          formNode.at(fieldName)?.input(field.value)
+          formNode.value?.at(fieldName)?.input(field.value)
         }
       })
     })
@@ -289,13 +359,38 @@ watch(
   { deep: true },
 )
 
+const localDisabled = computed(() => {
+  if (props.disabled) return props.disabled
+
+  return updateSchemaProcessing.value
+})
+
+const showInitialLoadingAnimation = ref(false)
+const {
+  start: startLoadingAnimationTimeout,
+  stop: stopLoadingAnimationTimeout,
+} = useTimeoutFn(
+  () => {
+    showInitialLoadingAnimation.value = !showInitialLoadingAnimation.value
+  },
+  300,
+  { immediate: false },
+)
+
+const toggleInitialLoadingAnimation = () => {
+  stopLoadingAnimationTimeout()
+  startLoadingAnimationTimeout()
+}
+
 // TODO: maybe we should react on schema changes and rebuild the static schema with a new form-id and re-rendering of
 // the complete form (= use the formId as the key for the whole form to trigger the re-rendering of the component...)
 if (props.formName) {
   // TODO: call the GraphQL-Query to fetch the schema.
+  toggleInitialLoadingAnimation()
   setTimeout(() => {
     buildStaticSchema(toRef(props, 'schema').value)
-  }, 4000)
+    toggleInitialLoadingAnimation()
+  }, 2000)
 } else if (props.schema) {
   // localSchema.value = toRef(props, 'schema').value
   buildStaticSchema(toRef(props, 'schema').value)

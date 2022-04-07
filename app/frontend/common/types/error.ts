@@ -1,6 +1,8 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import type { GraphQLErrorExtensions } from 'graphql'
+import type { UserError } from '@common/graphql/types'
+import type { Except, SetRequired } from 'type-fest'
 
 export enum GraphQLErrorTypes {
   UnkownError = 'Exceptions::UnkownError',
@@ -30,3 +32,10 @@ export enum ErrorStatusCodes {
   'Forbidden' = 403,
   'NotFound' = 404,
 }
+
+export type UserErrors = Except<UserError, '__typename'>[]
+export interface UserFieldError {
+  field: string
+  message: string
+}
+export type UserFieldErrors = UserFieldError[]

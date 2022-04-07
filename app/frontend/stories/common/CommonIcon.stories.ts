@@ -52,3 +52,14 @@ BaseIconDecorative.args = {
   name: 'dashboard',
   decorative: true,
 }
+
+const ListTemplate: Story<Props> = (args: Props) => ({
+  components: { CommonIcon },
+  setup() {
+    return { args, iconsList }
+  },
+  template:
+    '<div class="grid grid-cols-12 max-w-full"><div class="border p-2 items-center align-middle" v-for="iconName in iconsList" v-bind:title="iconName"><CommonIcon v-bind:name="iconName" v-bind="args" /><span>{{ iconName }}</span></div></div>',
+})
+
+export const AllIcons = ListTemplate.bind({})

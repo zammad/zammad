@@ -1,6 +1,8 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import Form from '@common/components/form/Form.vue'
+import UserError from '@common/errors/UserError'
+import { FormValues } from '@common/types/form'
 import { FormKitNode, getNode } from '@formkit/core'
 import { getVMFromWrapper, getWrapper } from '@tests/support/components'
 import { waitForTimeout, waitForNextTick } from '@tests/support/utils'
@@ -80,8 +82,14 @@ describe('Form.vue', () => {
     })
   })
 
-  it('implements submit event', async () => {
+  it('implements submit event/handler', async () => {
     expect.assertions(2)
+
+    const submitCallbackSpy = vi.fn()
+
+    wrapper.setProps({
+      onSubmit: (data: FormValues) => submitCallbackSpy(data),
+    })
 
     const { formId } = getVMFromWrapper(wrapper)
 
@@ -92,15 +100,41 @@ describe('Form.vue', () => {
 
     expect(wrapper.emitted('submit')).toBeTruthy()
 
-    const emittedSubmit = wrapper.emitted().submit as Array<
-      Array<Record<string, unknown>>
-    >
-
-    expect(emittedSubmit[0][0]).toStrictEqual({
+    expect(submitCallbackSpy).toHaveBeenCalledWith({
       title: 'Example title',
       text: 'Some text',
       formId,
     })
+  })
+
+  it('handles promise error messages in submit event/handler', async () => {
+    expect.assertions(2)
+
+    wrapper.setProps({
+      onSubmit: (): Promise<void> => {
+        return new Promise((resolve, reject) => {
+          const userErrors = new UserError([
+            {
+              field: 'title',
+              message: 'Title should be different.',
+            },
+          ])
+          reject(userErrors)
+        })
+      },
+    })
+
+    const { formId } = getVMFromWrapper(wrapper)
+
+    const formNode = getNode(formId) as FormKitNode
+    formNode.submit()
+
+    await waitForNextTick(true)
+
+    expect(wrapper.find('[data-errors="true"]')).toBeTruthy()
+    expect(wrapper.find('[data-message-type="error"]').text()).toBe(
+      'Title should be different.',
+    )
   })
 
   it('implements changed event', async () => {
@@ -256,6 +290,38 @@ describe('Form.vue', () => {
     expect(wrapper.find('a').text()).toBe('Example Link')
   })
 
+  it('can use list/group fields in form schema', () => {
+    wrapper = getWrapper(Form, {
+      ...wrapperParameters,
+      props: {
+        schema: [
+          {
+            type: 'group',
+            name: 'adress',
+            children: [
+              {
+                type: 'text',
+                name: 'street',
+                label: 'Street',
+              },
+              {
+                type: 'text',
+                name: 'city',
+                label: 'City',
+              },
+            ],
+          },
+        ],
+      },
+    })
+
+    expect(wrapper.html()).toContain('form')
+    expect(wrapper.html()).toContain('Street')
+    expect(wrapper.html()).toContain('City')
+  })
+
+  // TODO: add test case for loading animation, when real query call is availabe (can then be mocked).
+
   it('can use fields slot instead of a form schema', () => {
     wrapper = getWrapper(Form, {
       ...wrapperParameters,
@@ -271,5 +337,41 @@ describe('Form.vue', () => {
     expect(wrapper.find('div[data-type="text"] label').text()).toContain(
       'Example',
     )
+  })
+
+  it('exposes the form node', () => {
+    wrapper = getWrapper(
+      {
+        template: `<div><Form ref="form" v-bind:schema="schema" /></div>`,
+        components: {
+          Form,
+        },
+        setup() {
+          const schema = [
+            {
+              type: 'text',
+              name: 'title',
+              label: 'Title',
+            },
+            {
+              type: 'textarea',
+              name: 'text',
+              label: 'Text',
+              value: 'Some text',
+            },
+          ]
+
+          return { schema }
+        },
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } as any,
+      {
+        form: true,
+      },
+    )
+
+    const formNode = getVMFromWrapper(wrapper).$refs.form
+      .formNode as FormKitNode
+    expect(formNode.props.type).toBe('form')
   })
 })

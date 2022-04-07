@@ -56,6 +56,17 @@ const argTypes = {
       type: 'text',
     },
   },
+  help: {
+    name: 'help',
+    type: { name: 'string', required: false },
+    description: '',
+    table: {
+      type: { summary: 'string' },
+    },
+    control: {
+      type: 'text',
+    },
+  },
   disabled: {
     name: 'disabled',
     type: { name: 'boolean', required: false },

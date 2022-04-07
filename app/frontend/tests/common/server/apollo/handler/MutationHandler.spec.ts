@@ -10,15 +10,17 @@ import {
 } from '@tests/fixtures/graphqlSampleTypes'
 import useNotifications from '@common/composables/useNotifications'
 import { GraphQLErrorTypes } from '@common/types/error'
+import UserError from '@common/errors/UserError'
 
 const mutationFunctionCallSpy = vi.fn()
 
-const mutationSampleResult = {
+let mutationSampleResult: Record<string, unknown> = {
   Sample: {
     __typename: 'Sample',
     id: 1,
     title: 'Test Title',
     text: 'Test Text',
+    errors: null,
   },
 }
 
@@ -116,7 +118,7 @@ describe('MutationHandler', () => {
     })
   })
 
-  describe('result', () => {
+  describe('send', () => {
     beforeEach(() => {
       mockClient()
     })
@@ -127,6 +129,39 @@ describe('MutationHandler', () => {
       const result = await mutationHandlerObject.send({ id: 1, Sample: {} })
 
       expect(result).toEqual(result)
+    })
+
+    it('result with user error', async (done) => {
+      expect.assertions(1)
+
+      const userErrors = [
+        {
+          field: null,
+          message: 'Example error message',
+        },
+        {
+          field: 'id',
+          message: 'Id field is wrong',
+        },
+      ]
+      const userErrorObject = new UserError(userErrors)
+
+      mutationSampleResult = {
+        Sample: {
+          id: null,
+          title: null,
+          text: null,
+          errors: userErrors,
+        },
+      }
+
+      const mutationHandlerObject = new MutationHandler(sampleMutation())
+      mutationHandlerObject
+        .send({ id: 1, Sample: {} })
+        .catch((errors: UserError) => {
+          expect(errors).toEqual(userErrorObject)
+          done()
+        })
     })
   })
 

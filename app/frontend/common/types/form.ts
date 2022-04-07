@@ -16,7 +16,8 @@ import type {
   FormKitValidationMessages,
   FormKitValidationRules,
 } from '@formkit/validation'
-import { ImportGlobEagerOutput } from '@common/types/utils'
+import type { ImportGlobEagerOutput } from '@common/types/utils'
+import type { Except } from 'type-fest'
 
 export type InitializeAppForm = (app: App) => void
 
@@ -60,17 +61,18 @@ export interface FormDefaultProps {
   labelPlaceholder: string[]
 }
 
-export interface FormSchemaField extends FormFieldAdditionalProps {
+export interface FormSchemaField {
+  show?: boolean
   type: string
   name: string
   value?: unknown
-  label: string
-  config?: Record<string, unknown>
-  classes?: Record<string, string | Record<string, boolean> | FormKitClasses>
+  label?: string
+  placeholder?: string
+  help?: string
+  disabled?: boolean
   delay?: number
   errors?: string[]
   id?: string
-  plugins?: FormKitPlugin[]
   sectionsSchema?: Record<
     string,
     Partial<FormKitSchemaNode> | FormKitSchemaCondition
@@ -78,11 +80,21 @@ export interface FormSchemaField extends FormFieldAdditionalProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   validation?: string | Array<[rule: string, ...args: any]>
   validationMessages?: FormKitValidationMessages
-  validationRules?: FormKitValidationRules
   validationVisibility?: Exclude<
     FormValidationVisibility,
     FormValidationVisibility.submit
   >
+  validationRules?: FormKitValidationRules
+  config?: Record<string, unknown>
+  plugins?: FormKitPlugin[]
+  classes?: Record<string, string | Record<string, boolean> | FormKitClasses>
+  props?: FormFieldAdditionalProps
+}
+
+export interface FormSchemaGroupOrList {
+  type: string
+  name: string
+  children: FormSchemaField[]
 }
 
 interface FormSchemaLayoutBase {
@@ -105,9 +117,18 @@ export type FormSchemaLayout = (FormSchemaComponent | FormSchemaDOMElement) & {
   children: (FormSchemaLayout | FormSchemaField | string)[] | string
 }
 
-export type FormSchemaNode = FormSchemaLayout | FormSchemaField
+export type FormSchemaNode =
+  | FormSchemaLayout
+  | FormSchemaField
+  | FormSchemaGroupOrList
 export interface ReactiveFormSchemData {
-  fields: Record<string, FormSchemaField>
+  fields: Record<
+    string,
+    {
+      show: boolean
+      props: Except<FormSchemaField, 'show' | 'props'>
+    }
+  >
 }
 
 export type FormFieldContext<TFieldProps = FormFieldAdditionalProps> =

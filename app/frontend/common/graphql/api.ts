@@ -4,6 +4,12 @@ import gql from 'graphql-tag';
 import * as VueApolloComposable from '@vue/apollo-composable';
 import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
+export const ErrorsFragmentDoc = gql`
+    fragment errors on UserError {
+  message
+  field
+}
+    `;
 export const ObjectAttributeValuesFragmentDoc = gql`
     fragment objectAttributeValues on ObjectAttributeValue {
   attribute {
@@ -22,10 +28,12 @@ export const LoginDocument = gql`
     mutation login($login: String!, $password: String!, $fingerprint: String!) {
   login(login: $login, password: $password, fingerprint: $fingerprint) {
     sessionId
-    errors
+    errors {
+      ...errors
+    }
   }
 }
-    `;
+    ${ErrorsFragmentDoc}`;
 
 /**
  * __useLoginMutation__

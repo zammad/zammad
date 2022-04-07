@@ -15,7 +15,8 @@ RSpec.describe Gql::Mutations::Login, type: :request do
     let(:agent_password) { 'some_test_password' }
     let(:agent) { create(:agent, password: agent_password) }
     let(:query) do
-      File.read(Rails.root.join('app/frontend/common/graphql/mutations/login.graphql'))
+      File.read(Rails.root.join('app/frontend/common/graphql/mutations/login.graphql')) +
+        File.read(Rails.root.join('app/frontend/common/graphql/fragments/errors.graphql'))
     end
     let(:password) { agent_password }
     let(:fingerprint) { Faker::Number.number(digits: 6).to_s }
@@ -51,7 +52,10 @@ RSpec.describe Gql::Mutations::Login, type: :request do
       let(:password) { 'wrong' }
 
       it 'fails with error message' do
-        expect(graphql_response['data']['login']['errors']).to eq(['Login failed. Have you double-checked your credentials and completed the email verification step?'])
+        expect(graphql_response['data']['login']['errors']).to eq([{
+                                                                    'message' => 'Login failed. Have you double-checked your credentials and completed the email verification step?',
+                                                                    'field'   => nil
+                                                                  }])
       end
     end
 
@@ -64,6 +68,5 @@ RSpec.describe Gql::Mutations::Login, type: :request do
 
       # No error type available for GraphQL::ExecutionErrors.
     end
-
   end
 end

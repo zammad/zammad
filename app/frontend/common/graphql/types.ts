@@ -94,7 +94,7 @@ export type Locale = Node & {
 export type LoginPayload = {
   __typename?: 'LoginPayload';
   /** Errors encountered during execution of the mutation. */
-  errors?: Maybe<Array<Scalars['String']>>;
+  errors?: Maybe<Array<UserError>>;
   /** The current session */
   sessionId?: Maybe<Scalars['String']>;
 };
@@ -103,7 +103,7 @@ export type LoginPayload = {
 export type LogoutPayload = {
   __typename?: 'LogoutPayload';
   /** Errors encountered during execution of the mutation. */
-  errors?: Maybe<Array<Scalars['String']>>;
+  errors?: Maybe<Array<UserError>>;
   /** Was the logout successful? */
   success: Scalars['Boolean'];
 };
@@ -639,6 +639,13 @@ export type UserEdge = {
   node?: Maybe<User>;
 };
 
+/** Represents an error in the input of a mutation. */
+export type UserError = {
+  __typename?: 'UserError';
+  field?: Maybe<Scalars['String']>;
+  message: Scalars['String'];
+};
+
 export type ObjectAttributeValuesFragment = { __typename?: 'ObjectAttributeValue', value?: string | null, attribute: { __typename?: 'ObjectManagerAttribute', name: string, display: string, dataType: string, dataOption?: any | null, screens?: any | null, editable: boolean, active: boolean } };
 
 export type TicketsByIdQueryVariables = Exact<{
@@ -662,6 +669,8 @@ export type TicketsByOverviewQueryVariables = Exact<{
 
 export type TicketsByOverviewQuery = { __typename?: 'Queries', ticketsByOverview: { __typename?: 'TicketConnection', totalCount: number, edges?: Array<{ __typename?: 'TicketEdge', cursor: string, node?: { __typename?: 'Ticket', id: string, number: string, title: string, createdAt: any, updatedAt: any, owner: { __typename?: 'User', firstname?: string | null, lastname?: string | null }, customer: { __typename?: 'User', firstname?: string | null, lastname?: string | null }, organization?: { __typename?: 'Organization', name: string } | null, state: { __typename?: 'TicketState', name: string, stateType: { __typename?: 'TicketStateType', name: string } }, group: { __typename?: 'Group', name: string }, priority: { __typename?: 'TicketPriority', name: string }, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: string | null, attribute: { __typename?: 'ObjectManagerAttribute', name: string, display: string, dataType: string, dataOption?: any | null, screens?: any | null, editable: boolean, active: boolean } }> } | null } | null> | null, pageInfo: { __typename?: 'PageInfo', endCursor?: string | null, hasNextPage: boolean } } };
 
+export type ErrorsFragment = { __typename?: 'UserError', message: string, field?: string | null };
+
 export type LoginMutationVariables = Exact<{
   login: Scalars['String'];
   password: Scalars['String'];
@@ -669,7 +678,7 @@ export type LoginMutationVariables = Exact<{
 }>;
 
 
-export type LoginMutation = { __typename?: 'Mutations', login?: { __typename?: 'LoginPayload', sessionId?: string | null, errors?: Array<string> | null } | null };
+export type LoginMutation = { __typename?: 'Mutations', login?: { __typename?: 'LoginPayload', sessionId?: string | null, errors?: Array<{ __typename?: 'UserError', message: string, field?: string | null }> | null } | null };
 
 export type LogoutMutationVariables = Exact<{ [key: string]: never; }>;
 

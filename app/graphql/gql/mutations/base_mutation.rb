@@ -10,7 +10,7 @@ module Gql::Mutations
     object_class   Gql::Types::BaseObject
     # input_object_class Gql::Types::BaseInputObject
 
-    field :errors, [String], description: 'Errors encountered during execution of the mutation.'
+    field :errors, [Gql::Types::UserErrorType], description: 'Errors encountered during execution of the mutation.'
 
     # Override this for mutations that don't need CSRF verification.
     def self.requires_csrf_verification?

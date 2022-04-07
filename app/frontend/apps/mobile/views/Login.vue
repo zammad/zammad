@@ -1,7 +1,7 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <template>
-  <!-- TODO: Only a dummy implementation for the login... -->
+  <!-- TODO: Only a "first" dummy implementation for the login... -->
   <div class="flex h-full min-h-screen flex-col items-center px-7 pt-7 pb-4">
     <div class="m-auto w-full max-w-md">
       <div class="flex grow flex-col justify-center">
@@ -20,6 +20,7 @@
             ></div>
           </template>
           <Form
+            ref="form"
             v-bind:schema="formSchema"
             class="text-left"
             v-on:submit="login"
@@ -82,6 +83,7 @@ import useApplicationConfigStore from '@common/stores/application/config'
 import { i18n } from '@common/utils/i18n'
 import Form from '@common/components/form/Form.vue'
 import { FormData } from '@common/types/form'
+import UserError from '@common/errors/UserError'
 
 interface Props {
   invalidatedSession?: string
@@ -123,7 +125,7 @@ const formSchema = [
     isLayout: true,
     element: 'div',
     attrs: {
-      class: 'mt-2.5 flex grow items-center justify-between text-white',
+      class: 'mt-2.5 flex grow justify-between text-white',
     },
     children: [
       {
@@ -150,16 +152,16 @@ interface LoginFormData {
   remember_me?: boolean
 }
 
-const login = (formData: FormData<LoginFormData>): void => {
+const login = (formData: FormData<LoginFormData>) => {
   authentication
     .login(formData.login as string, formData.password as string)
     .then(() => {
       router.replace('/')
     })
-    .catch((errors) => {
+    .catch((errors: UserError) => {
       const { notify } = useNotifications()
       notify({
-        message: errors[0],
+        message: errors.generalErrors[0],
         type: NotificationTypes.ERROR,
       })
     })

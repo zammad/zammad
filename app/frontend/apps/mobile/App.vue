@@ -24,7 +24,7 @@ import useApplicationConfigStore from '@common/stores/application/config'
 import useSessionUserStore from '@common/stores/session/user'
 import usePushMessages from '@common/composables/usePushMessages'
 import useLocaleStore from '@common/stores/locale'
-import useFormKitConfig from '@common/composables/useFormKitConfig'
+import useFormKitConfig from '@common/composables/form/useFormKitConfig'
 
 const router = useRouter()
 const route = useRoute()

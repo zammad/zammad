@@ -56,15 +56,15 @@ export default defineConfig(({ mode }) => ({
                   selector: "[fill='#50E3C2']",
                   attributes: 'fill',
                 },
-                {
-                  selector: "[fill='#BD0FE1']",
-                  attributes: 'fill',
-                },
-                {
-                  selector: "[fill='#BD10E0']",
-                  attributes: 'fill',
-                },
+                // TODO: we need to add a own plugin or add some identifier to the svg files, to add the same functionality
+                // like we have in the old gulp script (fill='#50E3C2'] + parent fill='none' should be removed).
               ],
+            },
+          },
+          {
+            name: 'convertColors',
+            params: {
+              currentColor: /(#BD0FE1|#BD10E0)/,
             },
           },
         ],

@@ -21,6 +21,20 @@ export const SampleDocument = gql`
   }
 `
 
+export const SampleMutationDocument = gql`
+  query getSample($id: ID!) {
+    Sample(id: $id) {
+      id
+      title
+      text
+      errors {
+        message
+        field
+      }
+    }
+  }
+`
+
 export const SampleSubscriptionDocument = gql`
   subscription subscribeSample($id: ID!) {
     sampleUpdated(id: $id) {
@@ -81,7 +95,7 @@ export const SampleTypedQueryDocument: TypedDocumentNode<
 export const SampleTypedMutationDocument: TypedDocumentNode<
   SampleUpdateMutation,
   SampleUpdateMutationVariables
-> = SampleDocument
+> = SampleMutationDocument
 
 export const SampleTypedSubscriptionDocument: TypedDocumentNode<
   SampleUpdatedSubscription,

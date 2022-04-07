@@ -1,0 +1,38 @@
+// Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
+import type { UserErrors, UserFieldError } from '@common/types/error'
+
+export default class UserError extends Error {
+  public errors: UserErrors
+
+  public generalErrors: ReadonlyArray<string>
+
+  public fieldErrors: ReadonlyArray<UserFieldError>
+
+  constructor(errors: UserErrors) {
+    super()
+
+    this.errors = errors
+    this.generalErrors = errors
+      .filter((error) => !error.field)
+      .map((error) => error.message)
+    this.fieldErrors = errors.filter(
+      (error) => error.field,
+    ) as ReadonlyArray<UserFieldError>
+
+    // Set the prototype explicitly.
+    Object.setPrototypeOf(this, new.target.prototype)
+  }
+
+  public getFieldErrorList(): Record<string, string> {
+    return this.fieldErrors.reduce(
+      (fieldErrorList: Record<string, string>, fieldError) => {
+        // eslint-disable-next-line no-param-reassign
+        fieldErrorList[fieldError.field] = fieldError.message
+
+        return fieldErrorList
+      },
+      {},
+    )
+  }
+}
