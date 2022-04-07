@@ -169,6 +169,7 @@ class App.ControllerModal extends App.Controller
 
   localOnShown: (e) =>
     @onShown(e)
+    @el.addClass('modal--ready')
 
   onShown: (e) =>
     if @autoFocusOnFirstInput

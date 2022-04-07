@@ -362,7 +362,10 @@ class ChannelEmailAccountWizard extends App.ControllerWizardModal
         if @callback
           @callback()
         @el.remove()
+      'shown.bs.modal': =>
+        @el.addClass('modal--ready')
     )
+
     if @slide
       @showSlide(@slide)
 
@@ -821,7 +824,9 @@ class ChannelEmailNotificationWizard extends App.ControllerWizardModal
       container: @container
     ).on(
       'show.bs.modal':   @onShow
-      'shown.bs.modal':  @onShown
+      'shown.bs.modal': =>
+        @el.addClass('modal--ready')
+        @onShown()
       'hidden.bs.modal': =>
         if @callback
           @callback()

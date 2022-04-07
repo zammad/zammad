@@ -17,6 +17,8 @@ class App.ControllerModalLoading extends App.Controller
       container: @container
     ).on(
       'hidden.bs.modal': @localOnClosed
+      'shown.bs.modal': =>
+        @el.addClass('modal--ready')
     )
 
   render: ->

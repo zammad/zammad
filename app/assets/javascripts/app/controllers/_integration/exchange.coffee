@@ -211,7 +211,9 @@ class ConnectionWizard extends App.ControllerWizardModal
       container: @container
     .on
       'show.bs.modal':   @onShow
-      'shown.bs.modal':  @onShown
+      'shown.bs.modal': =>
+        @el.addClass('modal--ready')
+        @onShown()
       'hidden.bs.modal': =>
         @el.remove()
 

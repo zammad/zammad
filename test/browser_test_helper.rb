@@ -626,7 +626,7 @@ class TestCase < ActiveSupport::TestCase
 
     watch_for(
       browser: instance,
-      css:     '.modal.in',
+      css:     '.modal.in.modal--ready',
       timeout: params[:timeout] || 4,
     )
   end

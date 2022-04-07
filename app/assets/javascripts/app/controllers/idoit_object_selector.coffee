@@ -94,6 +94,13 @@ class App.IdoitObjectSelector extends App.ControllerModal
       options: options
     )
 
+  render: =>
+    super
+    # this model is re-rendered multiple times
+    # which breaks modal--ready class marking that modal is now available
+    # thus re-adding that class here once again
+    @el.addClass('modal--ready')
+
   onSubmit: (e) =>
     form = @el.find('.js-result')
     params = @formParam(form)

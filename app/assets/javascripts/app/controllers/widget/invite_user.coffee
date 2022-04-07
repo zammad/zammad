@@ -22,6 +22,9 @@ class App.InviteUser extends App.ControllerWizardModal
         if @callback
           @callback()
         @el.remove()
+      'shown.bs.modal': =>
+        @el.addClass('modal--ready')
+
 
   render: =>
     modal = $(App.view('widget/invite_user')(
