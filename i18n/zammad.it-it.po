@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-04-01 03:30+0000\n"
-"Last-Translator: Lorenzo Milesi <lorenzo.milesi@yetopen.com>\n"
+"PO-Revision-Date: 2022-04-07 05:42+0000\n"
+"Last-Translator: Andres Eloy Rivera Garcia <andres.degozaru@gmail.com>\n"
 "Language-Team: Italian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/it/>\n"
 "Language: it-it\n"
@@ -201,11 +201,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee
 msgid "%s required!"
-msgstr "% obbligatorio!"
+msgstr "%s obbligatorio!"
 
 #: app/assets/javascripts/app/models/user.coffee
 msgid "%s started a new session"
-msgstr "% ha iniziato una nuova sessione"
+msgstr "%s ha iniziato una nuova sessione"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
