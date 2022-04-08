@@ -699,10 +699,9 @@ RSpec.describe 'System > Objects', type: :system do
 
             # Update Database
             click 'div.js-execute'
-            # Reload browser
-            refresh
-
-            expect(attribute['data_option']).to include('customsort' => 'on')
+            wait.until do
+              attribute['data_option'] && attribute['data_option']['customsort'] == 'on'
+            end
           end
         end
 
@@ -715,10 +714,10 @@ RSpec.describe 'System > Objects', type: :system do
 
             # Update Database
             click 'div.js-execute'
-            # Reload browser
-            refresh
 
-            expect(attribute['data_option']).not_to include('customsort' => 'on')
+            wait.until do
+              attribute['data_option'] && attribute['data_option']['customsort'].nil?
+            end
           end
         end
       end
