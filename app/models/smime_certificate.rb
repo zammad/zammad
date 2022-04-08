@@ -1,6 +1,8 @@
 # Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class SMIMECertificate < ApplicationModel
+  default_scope { order('not_after_at DESC, not_before_at DESC, id DESC') }
+
   validates :fingerprint, uniqueness: { case_sensitive: true }
 
   def self.parts(raw)
@@ -38,8 +40,8 @@ class SMIMECertificate < ApplicationModel
   # @return [SMIMECertificate, nil] The found certificate record or nil
   def self.for_sender_email_address(address)
     downcased_address = address.downcase
-    where.not(private_key: nil).find_each.detect do |certificate|
-      certificate.email_addresses.include?(downcased_address)
+    where.not(private_key: nil).all.as_batches do |certificate|
+      return certificate if certificate.email_addresses.include?(downcased_address)
     end
   end
 
@@ -55,7 +57,7 @@ class SMIMECertificate < ApplicationModel
   def self.for_recipipent_email_addresses!(addresses)
     certificates        = []
     remaining_addresses = addresses.map(&:downcase)
-    find_each do |certificate|
+    all.as_batches do |certificate|
 
       # intersection of both lists
       cerfiticate_for = certificate.email_addresses & remaining_addresses
