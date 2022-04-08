@@ -94,10 +94,11 @@ class App.UiElement.ApplicationSelector
             operator: [__('is in working time'), __('is not in working time')]
 
       else
-        for row in App[groupMeta.model].configure_attributes
+        attributesByObject = App.ObjectManagerAttribute.selectorAttributesByObject()
+        configureAttributes = attributesByObject[groupMeta.model] || []
+        for config in configureAttributes
           # ignore passwords and relations
-          if row.type isnt 'password' && row.name.substr(row.name.length-4,4) isnt '_ids' && row.searchable isnt false
-            config = _.clone(row)
+          if config.type isnt 'password' && config.name.substr(config.name.length-4,4) isnt '_ids' && config.searchable isnt false
             if config.tag is 'textarea'
               config.expanding = false
             if config.type is 'email' || config.type is 'tel'
