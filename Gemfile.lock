@@ -545,7 +545,7 @@ GEM
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
     tcr (0.2.2)
-    telephone_number (1.4.14)
+    telephone_number (1.4.15)
     test-unit (3.5.3)
       power_assert
     thor (1.2.1)
