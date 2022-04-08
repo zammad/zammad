@@ -107,7 +107,7 @@ RSpec.describe SMIMECertificate, type: :model do
       end
 
       it 'returns certificates' do
-        expect(described_class.for_recipipent_email_addresses!(lookup_addresses)).to eq(certificates)
+        expect(described_class.for_recipipent_email_addresses!(lookup_addresses)).to include(*certificates)
       end
     end
 
@@ -195,5 +195,26 @@ RSpec.describe SMIMECertificate, type: :model do
 
   it 'ensures uniqueness of records' do
     expect { create_list(:smime_certificate, 2, fixture: 'smime1@example.com') }.to raise_error(ActiveRecord::RecordInvalid, %r{Validation failed})
+  end
+
+  describe 'Cannot encrypt if multiple S/MIME certificates exist and one is expired #4029' do
+    let(:lookup_address) { 'smime1@example.com' }
+
+    before do
+      create(:smime_certificate, :with_private, fixture: lookup_address, not_before_at: '2021-04-07', not_after_at: '2021-04-07', fingerprint: 'A')
+      create(:smime_certificate, :with_private, fixture: lookup_address, not_before_at: '2022-04-07', not_after_at: '2042-04-07', fingerprint: 'B')
+    end
+
+    describe '.for_sender_email_address' do
+      it 'does return the latest certificate when there is also an old expired certificate' do
+        expect(described_class.for_sender_email_address('smime1@example.com').fingerprint).to eq('B')
+      end
+    end
+
+    describe '.for_recipipent_email_addresses!' do
+      it 'does return the latest certificate when there is also an old expired certificate' do
+        expect(described_class.for_recipipent_email_addresses!(['smime1@example.com']).first.fingerprint).to eq('B')
+      end
+    end
   end
 end
