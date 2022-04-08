@@ -11,3 +11,30 @@ class App.ObjectManagerAttribute extends App.Model
     { name: 'updated_at', display: __('Updated'),  tag: 'datetime',  readonly: 1 },
     { name: 'position',   display: __('Position'), tag: 'integer', type: 'number', limit: 100, null: true },
   ]
+
+  # This function will return all attributes
+  # based on the frontend model attributes combined
+  # with object manager attributes which are merged like
+  # in app/models/object_manager/element/backend.rb.
+  @selectorAttributesByObject: ->
+    result = {}
+    for row in @all()
+      continue if !row.object
+
+      config     = _.clone(row)
+      config.tag = config.data_type
+      config     = Object.assign({}, config, config.data_option) if config.data_option
+
+      result[config.object] ||= []
+      result[config.object].push(config)
+
+    for object in Object.keys(result)
+      continue if !App[object]
+      continue if !App[object].configure_attributes
+
+      names = _.map(result[object], (row) -> row.name)
+      for row in App[object].configure_attributes
+        continue if _.contains(names, row.name)
+        result[object].push(_.clone(row))
+
+    result

@@ -147,13 +147,14 @@ class App.UiElement.core_workflow_condition extends App.UiElement.ApplicationSel
           multiple: true
         }
 
-      for row in App[groupMeta.model].configure_attributes
-        continue if !_.contains(['input', 'textarea', 'richtext', 'multiselect', 'select', 'integer', 'boolean', 'active', 'tree_select', 'autocompletion_ajax'], row.tag)
-        continue if groupKey is 'ticket' && _.contains(['number', 'title'], row.name)
+      attributesByObject = App.ObjectManagerAttribute.selectorAttributesByObject()
+      configureAttributes = attributesByObject[groupMeta.model] || []
+      for config in configureAttributes
+        continue if !_.contains(['input', 'textarea', 'richtext', 'multiselect', 'select', 'integer', 'boolean', 'active', 'tree_select', 'autocompletion_ajax'], config.tag)
+        continue if groupKey is 'ticket' && _.contains(['number', 'title'], config.name)
 
         # ignore passwords and relations
-        if row.type isnt 'password' && row.name.substr(row.name.length-4,4) isnt '_ids' && row.searchable isnt false
-          config = _.clone(row)
+        if config.type isnt 'password' && config.name.substr(config.name.length-4,4) isnt '_ids' && config.searchable isnt false
           if config.tag is 'textarea'
             config.expanding = false
           if /^((multi)?select)$/.test(config.tag)

@@ -23,5 +23,9 @@ FactoryBot.define do
     trait :admin do
       permissions { Permission.where(name: 'admin') }
     end
+
+    trait :admin_core_workflow do
+      permissions { Permission.where(name: 'admin.core_workflow') }
+    end
   end
 end
