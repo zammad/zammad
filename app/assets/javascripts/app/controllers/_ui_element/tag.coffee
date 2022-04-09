@@ -11,7 +11,7 @@ class App.UiElement.tag
         createTokensOnBlur: true
         autocomplete: {
           source: source
-          minLength: 2
+          minLength: 1
           response: (e, ui) ->
             return if !ui
             return if !ui.content
