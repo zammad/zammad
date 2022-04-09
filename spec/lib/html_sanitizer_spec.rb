@@ -138,6 +138,19 @@ RSpec.describe HtmlSanitizer do
         end
       end
     end
+
+    context 'correctly processing of pre elements' do
+      let(:html) do
+        '<pre><code>apt-get update
+Get:1 http://security.ubuntu.com/ubuntu focal-security InRelease [114 kB]
+Hit:2 http://de.archive.ubuntu.com/ubuntu focal InRelease
+Building dependency tree...</code></pre>'
+      end
+
+      it 'does not convert links' do
+        expect(body).to eq(html)
+      end
+    end
   end
 
   describe '.dynamic_image_size' do
