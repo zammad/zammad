@@ -163,5 +163,59 @@ test 123
     assert_equal(HtmlSanitizer.strict("<a href=\"#{attachment_url_evil_other}\">Evil link</a>"), "<a href=\"#{attachment_url_good}\" rel=\"nofollow noreferrer noopener\" target=\"_blank\" title=\"#{attachment_url_good}\">Evil link</a>")
 
     assert_equal(HtmlSanitizer.strict('<a href="mailto:testäöü@example.com" id="123">test</a>'), '<a href="mailto:test%C3%A4%C3%B6%C3%BC@example.com">test</a>')
+
+    assert_equal(HtmlSanitizer.strict('<pre><code>apt-get update
+Get:1 http://security.ubuntu.com/ubuntu focal-security InRelease [114 kB]
+Hit:2 http://de.archive.ubuntu.com/ubuntu focal InRelease
+Hit:3 http://de.archive.ubuntu.com/ubuntu focal-updates InRelease
+Get:4 http://10.10.21.205:3207/dprepo/ubuntu experimental/20.04_x86_64/ InR=
+elease [3820 B]
+Hit:5 http://de.archive.ubuntu.com/ubuntu focal-backports InRelease
+Get:6 http://10.10.21.205:3207/dprepo/ubuntu 20.04_x86_64/ InRelease [3781 =
+B]
+Get:7 http://10.10.21.205:3207/dprepo/ubuntu experimental/20.04_x86_64/ Sou=
+rces [2710 B]
+Get:8 http://10.10.21.205:3207/dprepo/ubuntu experimental/20.04_x86_64/ Pac=
+kages [6507 B]
+Get:9 http://10.10.21.205:3207/dprepo/ubuntu 20.04_x86_64/ Sources [9066 B]
+Get:10 http://10.10.21.205:3207/dprepo/ubuntu 20.04_x86_64/ Packages [23.8 =
+kB]
+Get:11 http://security.ubuntu.com/ubuntu focal-security/main amd64 DEP-11 M=
+etadata [40.6 kB]
+Get:12 http://security.ubuntu.com/ubuntu focal-security/universe amd64 DEP-=
+11 Metadata [66.3 kB]
+Get:13 http://security.ubuntu.com/ubuntu focal-security/multiverse amd64 DE=
+P-11 Metadata [2464 B]
+Fetched 273 kB in 1s (288 kB/s)
+Reading package lists...
+Batterie-Status pr&uuml;fen
+Reading package lists...
+Building dependency tree...</code></pre>'), '<pre><code>apt-get update
+Get:1 http://security.ubuntu.com/ubuntu focal-security InRelease [114 kB]
+Hit:2 http://de.archive.ubuntu.com/ubuntu focal InRelease
+Hit:3 http://de.archive.ubuntu.com/ubuntu focal-updates InRelease
+Get:4 http://10.10.21.205:3207/dprepo/ubuntu experimental/20.04_x86_64/ InR=
+elease [3820 B]
+Hit:5 http://de.archive.ubuntu.com/ubuntu focal-backports InRelease
+Get:6 http://10.10.21.205:3207/dprepo/ubuntu 20.04_x86_64/ InRelease [3781 =
+B]
+Get:7 http://10.10.21.205:3207/dprepo/ubuntu experimental/20.04_x86_64/ Sou=
+rces [2710 B]
+Get:8 http://10.10.21.205:3207/dprepo/ubuntu experimental/20.04_x86_64/ Pac=
+kages [6507 B]
+Get:9 http://10.10.21.205:3207/dprepo/ubuntu 20.04_x86_64/ Sources [9066 B]
+Get:10 http://10.10.21.205:3207/dprepo/ubuntu 20.04_x86_64/ Packages [23.8 =
+kB]
+Get:11 http://security.ubuntu.com/ubuntu focal-security/main amd64 DEP-11 M=
+etadata [40.6 kB]
+Get:12 http://security.ubuntu.com/ubuntu focal-security/universe amd64 DEP-=
+11 Metadata [66.3 kB]
+Get:13 http://security.ubuntu.com/ubuntu focal-security/multiverse amd64 DE=
+P-11 Metadata [2464 B]
+Fetched 273 kB in 1s (288 kB/s)
+Reading package lists...
+Batterie-Status prüfen
+Reading package lists...
+Building dependency tree...</code></pre>')
   end
 end

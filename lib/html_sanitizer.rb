@@ -159,14 +159,17 @@ sanitize html string based on whiltelist
       scrubber_link = Loofah::Scrubber.new do |node|
 
         # wrap plain-text URLs in <a> tags
-        if node.is_a?(Nokogiri::XML::Text) && node.content.present? && node.content.include?(':') && node.ancestors.map(&:name).exclude?('a')
-          urls = URI.extract(node.content, LINKABLE_URL_SCHEMES)
+        if node.is_a?(Nokogiri::XML::Text) && node.content.present? && node.content.include?(':')
+          node_ancestor_names = node.ancestors.map(&:name)
+          if node_ancestor_names.exclude?('a') && node_ancestor_names.exclude?('pre')
+            urls = URI.extract(node.content, LINKABLE_URL_SCHEMES)
                     .map { |u| u.sub(%r{[,.]$}, '') } # URI::extract captures trailing dots/commas
                     .grep_v(%r{^[^:]+:$}) # URI::extract will match, e.g., 'tel:'
 
-          next if urls.blank?
+            next if urls.blank?
 
-          add_link(node.content, urls, node)
+            add_link(node.content, urls, node)
+          end
         end
 
         # prepare links
