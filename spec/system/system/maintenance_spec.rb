@@ -80,9 +80,10 @@ RSpec.describe 'System > Maintenance', type: :system do
         visit 'system/maintenance'
 
         click '.js-modeSetting label'
-        modal_ready
-        click '.content.active .modal .js-submit'
-        modal_disappear
+
+        in_modal do
+          click '.js-submit'
+        end
 
         wait.until { expect(Setting.get('maintenance_mode')).to be true }
       end

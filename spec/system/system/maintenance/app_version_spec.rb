@@ -9,9 +9,7 @@ RSpec.describe 'System > Maintenance - App Version', type: :system do
     AppVersion.set(false, 'app_version')
     AppVersion.set(true,  'app_version')
 
-    modal_ready timeout: 30
-
-    within '.modal-dialog' do
+    in_modal timeout: 30, disappears: false do
       expect(page).to have_text('new version')
     end
   end

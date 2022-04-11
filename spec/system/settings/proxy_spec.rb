@@ -44,8 +44,11 @@ RSpec.describe 'Manage > Settings > System > Network', type: :system do
           fill_in 'proxy_password',   with: proxy_password
           click_on 'Test Connection'
 
-          expect(page).to have_css('h1.modal-title', text: 'Error')
-          expect(page).to have_css('div.modal-body', text: %r{Invalid proxy address})
+          in_modal disappears: false do
+            expect(page).to have_css('h1', text: 'Error')
+            expect(page).to have_css('div', text: %r{Invalid proxy address})
+          end
+
           expect(page).to have_button('Test Connection', visible: :visible)
           expect(page).to have_button('Submit', visible: :hidden)
 
@@ -62,8 +65,11 @@ RSpec.describe 'Manage > Settings > System > Network', type: :system do
           fill_in 'proxy_password',   with: proxy_password
           click_on 'Test Connection'
 
-          expect(page).to have_css('h1.modal-title', text: 'Error')
-          expect(page).to have_css('div.modal-body', text: %r{Failed to open TCP connection})
+          in_modal disappears: false do
+            expect(page).to have_css('h1', text: 'Error')
+            expect(page).to have_css('div', text: %r{Failed to open TCP connection})
+          end
+
           expect(page).to have_button('Test Connection', visible: :visible)
           expect(page).to have_button('Submit', visible: :hidden)
 
@@ -80,8 +86,11 @@ RSpec.describe 'Manage > Settings > System > Network', type: :system do
           fill_in 'proxy_password',   with: proxy_password
           click_on 'Test Connection'
 
-          expect(page).to have_css('h1.modal-title', text: 'Error')
-          expect(page).to have_css('div.modal-body', text: %r{Access Denied})
+          in_modal disappears: false do
+            expect(page).to have_css('h1', text: 'Error')
+            expect(page).to have_css('div', text: %r{Access Denied})
+          end
+
           expect(page).to have_button('Test Connection', visible: :visible)
           expect(page).to have_button('Submit', visible: :hidden)
 
@@ -98,8 +107,11 @@ RSpec.describe 'Manage > Settings > System > Network', type: :system do
           fill_in 'proxy_password',   with: 'invalid_password'
           click_on 'Test Connection'
 
-          expect(page).to have_css('h1.modal-title', text: 'Error')
-          expect(page).to have_css('div.modal-body', text: %r{Access Denied})
+          in_modal disappears: false do
+            expect(page).to have_css('h1', text: 'Error')
+            expect(page).to have_css('div', text: %r{Access Denied})
+          end
+
           expect(page).to have_button('Test Connection', visible: :visible)
           expect(page).to have_button('Submit', visible: :hidden)
 

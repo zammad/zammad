@@ -31,18 +31,14 @@ RSpec.describe 'Manage > Organizations', type: :system do
             click '[data-type="new"]'
           end
 
-          modal_ready
-
           name = "Organization #{SecureRandom.uuid}"
 
-          within '.modal-dialog' do
+          in_modal do
             fill_in 'name', with: name
             fill_in attribute.name, with: 'value'
 
             click '.js-submit'
           end
-
-          modal_disappear
 
           within(:active_content) do
             expect(page).to have_text name

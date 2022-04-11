@@ -42,9 +42,8 @@ RSpec.describe 'Manage > Channels > Email', type: :system do
 
         click 'a[href="#c-account"]'
         click '.js-channelNew'
-        modal_ready
 
-        within '.modal' do
+        in_modal disappears: false do
           fill_in 'realname', with: 'My System'
           fill_in 'email',    with: "unknown_user.#{mailbox_user}"
           fill_in 'password', with: mailbox_password
@@ -59,17 +58,14 @@ RSpec.describe 'Manage > Channels > Email', type: :system do
 
         click 'a[href="#c-account"]'
         click '.js-channelNew'
-        modal_ready
 
-        within '.modal' do
+        in_modal timeout: 2.minutes do
           fill_in 'realname', with: 'My System'
           fill_in 'email',    with: mailbox_user
           fill_in 'password', with: mailbox_password
           select 'Users', from: 'group_id'
           click '.js-submit'
         end
-
-        modal_disappear timeout: 2.minutes
 
         within :active_content do
           expect(page).to have_text(mailbox_user)
@@ -89,21 +85,20 @@ RSpec.describe 'Manage > Channels > Email', type: :system do
         click 'a[href="#c-filter"]'
         click '.content.active a[data-type="new"]'
 
-        modal_ready
-        within '.modal' do
+        in_modal do
           fill_in 'name', with: filter_name
           fill_in 'match::from::value', with: 'target'
           click '.js-submit'
         end
-        modal_disappear
 
         expect(page).to have_text(filter_name)
+
         click '.content.active .table .dropdown .btn--table'
         click '.content.active .table .dropdown .js-clone'
 
-        modal_ready
-        click '.modal .js-submit'
-        modal_disappear
+        in_modal do
+          click '.js-submit'
+        end
 
         expect(page).to have_text("Clone: #{filter_name}")
       end
@@ -136,6 +131,7 @@ RSpec.describe 'Manage > Channels > Email', type: :system do
 
     it 'one can switch between default and expert forms' do
       click '.js-channelNew'
+
       in_modal do
         click '.js-expert'
         expect(page).to have_text 'ORGANIZATION & DEPARTMENT NAME'
@@ -147,6 +143,7 @@ RSpec.describe 'Manage > Channels > Email', type: :system do
 
     it 'in the expert form, the port for SSL/NoSSL is set automatically only when it is default' do
       click '.js-channelNew'
+
       in_modal do
         click '.js-expert'
         expect(find('input[name="options::port"]').value).to eq('993')
@@ -171,6 +168,7 @@ RSpec.describe 'Manage > Channels > Email', type: :system do
 
     it 'entered values on the default form are copied to the expert form' do
       click '.js-channelNew'
+
       in_modal do
         name = 'Area53'
         email = 'dont@ask.com'
@@ -193,11 +191,11 @@ RSpec.describe 'Manage > Channels > Email', type: :system do
       visit '#channels/email'
       click '.js-channelEnable'
       click '.js-editInbound'
-      in_modal do
+
+      in_modal disappears: false do
         expect(page).to have_no_text 'ORGANIZATION & DEPARTMENT NAME'
         expect(page).to have_no_text 'ORGANIZATION SUPPORT'
         expect(page).to have_no_text 'EMAIL'
-        click '.js-close'
       end
     end
   end

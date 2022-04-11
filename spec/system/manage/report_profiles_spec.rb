@@ -15,7 +15,8 @@ RSpec.describe 'Manage > Report Profiles', type: :system do
 
       within :active_content do
         click 'a[data-type=new]'
-        within '.modal' do
+
+        in_modal do
           fill_in 'name', with: name
           select profile_active, from: 'active'
 

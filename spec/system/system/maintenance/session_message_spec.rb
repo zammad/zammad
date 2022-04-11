@@ -33,15 +33,11 @@ RSpec.describe 'System > Maintenance - Session Message', type: :system do
       end
 
       using_session(:second_browser) do
-        modal_ready
-
-        within '.modal-dialog' do
+        in_modal do
           check_sesion_message_content(session_message_title, session_message_text)
 
-          click 'div.modal-header .js-close'
+          click '.js-close'
         end
-
-        modal_disappear
       end
 
       within :active_content do
@@ -65,9 +61,7 @@ RSpec.describe 'System > Maintenance - Session Message', type: :system do
       end
 
       using_session(:second_browser) do
-        modal_ready
-
-        within '.modal-dialog' do
+        in_modal disappears: false do
           check_sesion_message_content(message_title, message_text)
 
           expect(page).to have_text('Continue session')

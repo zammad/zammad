@@ -296,12 +296,10 @@ RSpec.describe 'Chat Handling', type: :system do
 
       click '.active .js-settings'
 
-      modal_ready
-
-      find('.modal [name="chat::phrase::1"]').send_keys('Hi Stranger!;My Greeting')
-      click '.modal .js-submit'
-
-      modal_disappear
+      in_modal do
+        find('[name="chat::phrase::1"]').send_keys('Hi Stranger!;My Greeting')
+        click '.js-submit'
+      end
 
       using_session :customer do
 
@@ -415,9 +413,9 @@ RSpec.describe 'Chat Handling', type: :system do
 
         click '.chat-body .chat-message img'
 
-        modal_ready
-
-        expect(page).to have_css('.js-submit', text: 'Download')
+        in_modal disappears: false do
+          expect(page).to have_css('.js-submit', text: 'Download')
+        end
       end
     end
   end

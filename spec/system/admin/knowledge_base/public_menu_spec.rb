@@ -46,43 +46,40 @@ RSpec.describe 'Admin Panel > Knowledge Base > Public Menu', type: :system do
       visit '/#manage/knowledge_base'
       find('a', text: 'Public Menu').click
       find_location('Header Menu').find('a', text: 'Edit').click
-
-      modal_ready
     end
 
     it 'edit menu item' do
-      find('input') { |elem| elem.value == menu_item_1.title }.fill_in with: 'test menu'
-      find('button', text: 'Submit').click
-
-      modal_disappear
+      in_modal do
+        find('input') { |elem| elem.value == menu_item_1.title }.fill_in with: 'test menu'
+        find('button', text: 'Submit').click
+      end
 
       expect(find_locale('Header Menu', primary_locale).text).to include 'test menu'
     end
 
     it 'adds menu item' do
-      container = find(:css, '.modal-body h2', text: alternative_locale.system_locale.name).find(:xpath, '..')
-      container.find('a', text: 'Add').click
+      in_modal do
+        container = find(:css, 'h2', text: alternative_locale.system_locale.name).find(:xpath, '..')
+        container.find('a', text: 'Add').click
 
-      container.find('input') { |elem| elem['data-name'] == 'title' }.fill_in with: 'new item'
-      container.find('input') { |elem| elem['data-name'] == 'url' }.fill_in with: '/new_item'
+        container.find('input') { |elem| elem['data-name'] == 'title' }.fill_in with: 'new item'
+        container.find('input') { |elem| elem['data-name'] == 'url' }.fill_in with: '/new_item'
 
-      find('button', text: 'Submit').click
-
-      modal_disappear
+        find('button', text: 'Submit').click
+      end
 
       expect(find_locale('Header Menu', alternative_locale).text).to include 'new item'
     end
 
     it 'deletes menu item' do
-      find(:css, '.modal-body')
-        .find('input') { |elem| elem.value == menu_item_1.title }
-        .ancestor('tr')
-        .find('.js-remove')
-        .click
+      in_modal do
+        find('input') { |elem| elem.value == menu_item_1.title }
+          .ancestor('tr')
+          .find('.js-remove')
+          .click
 
-      find('button', text: 'Submit').click
-
-      modal_disappear
+        find('button', text: 'Submit').click
+      end
 
       expect(find_locale('Header Menu', alternative_locale).text).not_to include menu_item_1.title
     end

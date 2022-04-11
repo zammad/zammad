@@ -22,29 +22,34 @@ RSpec.describe 'Profile > Token Access', type: :system do
       visit 'profile/token_access'
 
       within :active_content do
-        find('.content.active .js-create').click
+        find('.js-create').click
+      end
 
-        within '.modal' do
-          fill_in 'label', with: label
-          checkbox = find(checkbox_input, visible: :all)
-          checkbox.check allow_label_click: true
-          find('.js-datepicker').fill_in with: expiry_date
-          send_keys(:tab)
-          click_button
-        end
+      # modal closes but it is swiftly replaced by another modal
+      in_modal disappears: false do
+        fill_in 'label', with: label
+        checkbox = find(checkbox_input, visible: :all)
+        checkbox.check allow_label_click: true
+        find('.js-datepicker').fill_in with: expiry_date
+        send_keys(:tab)
+        click_button
       end
     end
 
     context 'with expire date' do
       it 'generates a new personal token' do
-        expect(page).to have_selector('.form-control.input.js-select')
-          .and have_text('Your New Personal Access Token')
+        in_modal disappears: false do
+          expect(page).to have_selector('.form-control.input.js-select')
+            .and have_text('Your New Personal Access Token')
+        end
       end
 
       it 'shows active report profile' do
-        within :active_content do
+        in_modal do
           click_button
+        end
 
+        within :active_content do
           expect(token_list).to have_text(label)
             .and have_text(expiry_date)
         end
@@ -55,14 +60,18 @@ RSpec.describe 'Profile > Token Access', type: :system do
       let(:expiry_date) { nil }
 
       it 'generates a new personal token' do
-        expect(page).to have_selector('.form-control.input.js-select')
-          .and have_text('Your New Personal Access Token')
+        in_modal disappears: false do
+          expect(page).to have_selector('.form-control.input.js-select')
+            .and have_text('Your New Personal Access Token')
+        end
       end
 
       it 'shows active report profile' do
-        within :active_content do
+        in_modal do
           click_button
+        end
 
+        within :active_content do
           expect(token_list).to have_text(label)
         end
       end
@@ -76,7 +85,7 @@ RSpec.describe 'Profile > Token Access', type: :system do
       within :active_content do
         find('.content.active .js-create').click
 
-        within '.modal' do
+        in_modal disappears: false do
           fill_in 'label', with: label
           send_keys(:tab)
         end
@@ -128,7 +137,7 @@ RSpec.describe 'Profile > Token Access', type: :system do
       token_delete_button = find('.js-tokenList tr .js-delete')
       token_delete_button.click
 
-      within '.modal' do
+      in_modal do
         click_button
       end
 

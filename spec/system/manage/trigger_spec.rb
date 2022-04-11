@@ -8,8 +8,6 @@ RSpec.describe 'Manage > Trigger', type: :system do
   def open_new_trigger_dialog
     visit '/#manage/trigger'
     click_on 'New Trigger'
-
-    modal_ready
   end
 
   context 'Selector' do
@@ -32,10 +30,12 @@ RSpec.describe 'Manage > Trigger', type: :system do
 
         open_new_trigger_dialog
 
-        within '.modal .ticket_selector' do
-          find('.js-attributeSelector select').select(attribute.display)
+        in_modal disappears: false do
+          within '.ticket_selector' do
+            find('.js-attributeSelector select').select(attribute.display)
 
-          expect(find('.js-value select')).to be_multiple
+            expect(find('.js-value select')).to be_multiple
+          end
         end
       end
 
@@ -55,10 +55,12 @@ RSpec.describe 'Manage > Trigger', type: :system do
 
         open_new_trigger_dialog
 
-        within '.modal .ticket_selector' do
-          find('.js-attributeSelector select').select(attribute.display)
+        in_modal disappears: false do
+          within '.ticket_selector' do
+            find('.js-attributeSelector select').select(attribute.display)
 
-          expect(find('.js-value select')).to be_multiple
+            expect(find('.js-value select')).to be_multiple
+          end
         end
       end
     end
@@ -67,13 +69,13 @@ RSpec.describe 'Manage > Trigger', type: :system do
       visit '/#manage/trigger'
 
       click '.page-header-meta .btn--success'
-      modal_ready
 
-      find(".js-attributeSelector select option[value='customer.email']").select_option
-      fill_in 'condition::customer.email::value', with: 'zammad.com'
-      fill_in 'Name', with: 'trigger 1'
-      click '.js-submit'
-      modal_disappear
+      in_modal do
+        find(".js-attributeSelector select option[value='customer.email']").select_option
+        fill_in 'condition::customer.email::value', with: 'zammad.com'
+        fill_in 'Name', with: 'trigger 1'
+        click '.js-submit'
+      end
     end
   end
 
@@ -86,11 +88,13 @@ RSpec.describe 'Manage > Trigger', type: :system do
 
         open_new_trigger_dialog
 
-        within '.modal .ticket_perform_action' do
-          find('.js-attributeSelector select').select('Tags')
+        in_modal disappears: false do
+          within '.ticket_perform_action' do
+            find('.js-attributeSelector select').select('Tags')
 
-          input = find('.js-value .token-input')
-          input.fill_in with: tag_item.name.slice(0, 3)
+            input = find('.js-value .token-input')
+            input.fill_in with: tag_item.name.slice(0, 3)
+          end
         end
 
         expect(page).to have_css('.ui-autocomplete.ui-widget-content') { |elem| !elem.obscured? }
@@ -106,20 +110,24 @@ RSpec.describe 'Manage > Trigger', type: :system do
     it "check 'created_at' element" do
       open_new_trigger_dialog
 
-      within '.modal .ticket_selector' do
-        find(".js-attributeSelector select option[value='ticket.created_at']").select_option
+      in_modal disappears: false do
+        within '.ticket_selector' do
+          find(".js-attributeSelector select option[value='ticket.created_at']").select_option
 
-        expect(page).to have_no_css('select[name="condition::ticket.created_at::operator"] option[value="has changed"]')
+          expect(page).to have_no_css('select[name="condition::ticket.created_at::operator"] option[value="has changed"]')
+        end
       end
     end
 
     it "check 'updated_at' element" do
       open_new_trigger_dialog
 
-      within '.modal .ticket_selector' do
-        find(".js-attributeSelector select option[value='ticket.updated_at']").select_option
+      in_modal disappears: false do
+        within '.ticket_selector' do
+          find(".js-attributeSelector select option[value='ticket.updated_at']").select_option
 
-        expect(page).to have_no_css('select[name="condition::ticket.updated_at::operator"] option[value="has changed"]')
+          expect(page).to have_no_css('select[name="condition::ticket.updated_at::operator"] option[value="has changed"]')
+        end
       end
     end
   end
@@ -159,9 +167,7 @@ RSpec.describe 'Manage > Trigger', type: :system do
       visit '/#manage/trigger'
       click_on 'New Trigger'
 
-      modal_ready
-
-      within '.modal' do
+      in_modal do
         fill_in 'Name',	with: 'Test Trigger'
         within '.ticket_selector' do
           find('.js-attributeSelector select').select attribute.display

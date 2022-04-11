@@ -12,9 +12,7 @@ RSpec.describe 'Manage > Calendars', type: :system do
 
       click '.js-new'
 
-      modal_ready
-
-      within '.modal-dialog' do
+      in_modal do
         fill_in 'name', with: calendar_title
 
         click '.dropdown-toggle'
@@ -25,17 +23,17 @@ RSpec.describe 'Manage > Calendars', type: :system do
         click '.js-submit'
       end
 
-      modal_disappear
-
       within :active_content do
         within '.action', text: calendar_title do
           find('.js-edit').click
         end
       end
 
-      # Check that holidays were imported by looking at the first entry.
-      expect(find('.modal-dialog .holiday_selector tbody tr:first-child td:nth-child(2)').text).to match(%r{^\d{4}-\d{2}-\d{2}$})
-      expect(find('.modal-dialog .holiday_selector tbody tr:first-child td input.js-summary').value).to be_present
+      in_modal disappears: false do
+        # Check that holidays were imported by looking at the first entry.
+        expect(find('.holiday_selector tbody tr:first-child td:nth-child(2)').text).to match(%r{^\d{4}-\d{2}-\d{2}$})
+        expect(find('.holiday_selector tbody tr:first-child td input.js-summary').value).to be_present
+      end
     end
   end
 

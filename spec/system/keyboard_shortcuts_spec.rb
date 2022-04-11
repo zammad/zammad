@@ -89,7 +89,7 @@ RSpec.describe 'Keyboard Shortcuts', type: :system do
 
       it 'shows list of shortcuts' do
         in_modal disappears: false do
-          expect(page).to have_selector('h1.modal-title', text: 'Keyboard Shortcuts')
+          expect(page).to have_selector('h1', text: 'Keyboard Shortcuts')
         end
       end
 

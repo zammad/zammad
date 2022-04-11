@@ -13,12 +13,13 @@ RSpec.describe 'Manage > Channels > Twitter', :use_vcr, type: :system do
         within(:active_content) do
           find('.js-configApp').click
 
-          modal_ready
-          fill_in 'Twitter Consumer Key *',    with: 'some_key',    exact: true
-          fill_in 'Twitter Consumer Secret *', with: 'some_secret', exact: true
-          click_on 'Submit'
+          in_modal disappears: false do
+            fill_in 'Twitter Consumer Key *',    with: 'some_key',    exact: true
+            fill_in 'Twitter Consumer Secret *', with: 'some_secret', exact: true
+            click_on 'Submit'
 
-          expect(page).to have_css('.modal .alert', text: '401 Unauthorized (Invalid credentials may be to blame.)')
+            expect(page).to have_css('.alert', text: '401 Unauthorized (Invalid credentials may be to blame.)')
+          end
         end
       end
     end
@@ -28,15 +29,16 @@ RSpec.describe 'Manage > Channels > Twitter', :use_vcr, type: :system do
         within(:active_content) do
           find('.js-configApp').click
 
-          modal_ready
-          fill_in 'Twitter Consumer Key *',          with: 'some_key',                exact: true
-          fill_in 'Twitter Consumer Secret *',       with: 'some_secret',             exact: true
-          fill_in 'Twitter Access Token *',          with: 'some_oauth_token',        exact: true
-          fill_in 'Twitter Access Token Secret *',   with: 'some_oauth_token_secret', exact: true
-          fill_in 'Twitter Dev environment label *', with: 'some_env',                exact: true
-          click_on 'Submit'
+          in_modal disappears: false do
+            fill_in 'Twitter Consumer Key *',          with: 'some_key',                exact: true
+            fill_in 'Twitter Consumer Secret *',       with: 'some_secret',             exact: true
+            fill_in 'Twitter Access Token *',          with: 'some_oauth_token',        exact: true
+            fill_in 'Twitter Access Token Secret *',   with: 'some_oauth_token_secret', exact: true
+            fill_in 'Twitter Dev environment label *', with: 'some_env',                exact: true
+            click_on 'Submit'
 
-          expect(page).to have_css('.modal .alert', text: '401 Unauthorized (Invalid credentials may be to blame.)')
+            expect(page).to have_css('.alert', text: '401 Unauthorized (Invalid credentials may be to blame.)')
+          end
         end
       end
     end

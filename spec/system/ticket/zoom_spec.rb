@@ -2501,8 +2501,10 @@ RSpec.describe 'Ticket zoom', type: :system do
       it 'does set the article internal and external for existing articles' do
         expect { page.find('.js-ArticleAction[data-type=internal]').click }.to change { article.reload.internal }.to(true)
         page.find('.js-ArticleAction[data-type=public]').click
-        expect(page).to have_css('.modal-dialog')
-        expect { find('.modal-dialog button[type=submit]').click }.to change { article.reload.internal }.to(false)
+
+        in_modal disappears: false do
+          expect { find('button[type=submit]').click }.to change { article.reload.internal }.to(false)
+        end
       end
 
       it 'does set the article internal and external for new article' do
@@ -2511,8 +2513,11 @@ RSpec.describe 'Ticket zoom', type: :system do
         expect(page).to have_no_css('.article-new .icon-public')
 
         page.find('.article-new .icon-internal').click
-        expect(page).to have_css('.modal-dialog')
-        find('.modal-dialog button[type=submit]').click
+
+        in_modal do
+          find('button[type=submit]').click
+        end
+
         expect(page).to have_no_css('.article-new .icon-internal')
         expect(page).to have_css('.article-new .icon-public')
 

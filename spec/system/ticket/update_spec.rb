@@ -239,20 +239,20 @@ RSpec.describe 'Ticket Update', type: :system do
         click '.js-actions .dropdown-toggle'
         click '.js-actions .dropdown-menu [data-type="ticket-history"]'
 
-        expect(page).to have_css('.modal')
-        modal = find('.modal')
-        expect(modal).to have_content "This ticket was merged into ticket ##{target_ticket.number}"
-        expect(modal).to have_link "##{target_ticket.number}", href: "#ticket/zoom/#{target_ticket.id}"
+        in_modal disappears: false do
+          expect(page).to have_content "This ticket was merged into ticket ##{target_ticket.number}"
+          expect(page).to have_link "##{target_ticket.number}", href: "#ticket/zoom/#{target_ticket.id}"
+        end
 
         visit "#ticket/zoom/#{target_ticket.id}"
         expect(page).to have_css('.js-actions .dropdown-toggle')
         click '.js-actions .dropdown-toggle'
         click '.js-actions .dropdown-menu [data-type="ticket-history"]'
 
-        expect(page).to have_css('.modal')
-        modal = find('.modal')
-        expect(modal).to have_content("Ticket ##{origin_ticket.number} was merged into this ticket")
-        expect(modal).to have_link "##{origin_ticket.number}", href: "#ticket/zoom/#{origin_ticket.id}"
+        in_modal disappears: false do
+          expect(page).to have_content("Ticket ##{origin_ticket.number} was merged into this ticket")
+          expect(page).to have_link "##{origin_ticket.number}", href: "#ticket/zoom/#{origin_ticket.id}"
+        end
       end
     end
 
@@ -270,9 +270,7 @@ RSpec.describe 'Ticket Update', type: :system do
           click '.js-actions .dropdown-menu [data-type="ticket-history"]'
         end
 
-        modal_ready
-
-        within('.modal-body') do
+        in_modal disappears: false do
           expect(page).to have_text "##{origin_ticket.number} #{origin_ticket.title}"
         end
       end
@@ -292,9 +290,7 @@ RSpec.describe 'Ticket Update', type: :system do
           click '.js-actions .dropdown-menu [data-type="ticket-history"]'
         end
 
-        modal_ready
-
-        within('.modal-body') do
+        in_modal disappears: false do
           expect(page).to have_text "##{target_ticket.number} #{target_ticket.title}"
         end
       end

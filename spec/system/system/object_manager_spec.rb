@@ -13,7 +13,7 @@ RSpec.describe 'System > Objects', type: :system do
         end
 
         it "fails with '#{error_message}'" do
-          within '.modal' do
+          in_modal disappears: false do
             fill_in 'name', with: name || 'fallback'
             fill_in 'display', with: 'Not allowed'
             click '.js-submit'
@@ -36,7 +36,7 @@ RSpec.describe 'System > Objects', type: :system do
     end
 
     it 'has the position feild with no default value' do
-      within '.modal' do
+      in_modal disappears: false do
         expect(page).to have_field('position', with: '')
       end
     end
@@ -49,11 +49,13 @@ RSpec.describe 'System > Objects', type: :system do
 
     it 'discards the changes again' do
       page.find('.js-new').click
-      within '.modal' do
+
+      in_modal do
         fill_in 'name', with: 'new_field'
         fill_in 'display', with: 'New field'
         click '.js-submit'
       end
+
       click '.js-discard'
       expect(page).to have_no_css('.js-discard')
     end
@@ -69,12 +71,14 @@ RSpec.describe 'System > Objects', type: :system do
         it 'creates and removes the field correctly' do
           # Create
           page.find('.js-new').click
-          within '.modal' do
+
+          in_modal do
             fill_in 'name', with: 'new_field'
             fill_in 'display', with: 'New field'
             select data_type, from: 'data_type'
             click '.js-submit'
           end
+
           expect(page).to have_text('New field')
           expect(page).to have_text('Database Update Required')
           click '.js-execute', wait: 7.minutes
@@ -83,15 +87,20 @@ RSpec.describe 'System > Objects', type: :system do
 
           # Update
           click 'tbody tr:last-child'
-          within '.modal' do
+
+          in_modal do
             fill_in 'display', with: 'New field updated'
             click '.js-submit'
           end
+
           expect(page).to have_text('New field updated')
           expect(page).to have_text('Database Update Required')
           click '.js-execute', wait: 7.minutes
           expect(page).to have_text('please reload your browser')
-          click '.modal-content button.js-submit'
+
+          in_modal do
+            click '.js-submit'
+          end
 
           # Delete
           click 'tbody tr:last-child .js-delete'
@@ -128,17 +137,22 @@ RSpec.describe 'System > Objects', type: :system do
       page.refresh
       click 'tbody tr:last-child'
 
-      # Add two new attributes to the field.
-      2.times do |i|
-        click '.modal tbody tr:last-child .js-addRow'
-        find('.modal tbody tr:last-child .js-key').fill_in(with: "new tree option #{i}")
+      in_modal do
+        # Add two new attributes to the field.
+        2.times do |i|
+          click 'tbody tr:last-child .js-addRow'
+          find('tbody tr:last-child .js-key').fill_in(with: "new tree option #{i}")
+        end
+        click '.js-submit'
       end
-      click '.js-submit'
 
       expect(page).to have_text('Database Update Required')
       click '.js-execute', wait: 7.minutes
       expect(page).to have_text('please reload your browser')
-      click '.modal-content button.js-submit'
+
+      in_modal do
+        click 'button.js-submit'
+      end
 
       # Check that the attributes were correctly saved.
       expect(ObjectManager::Attribute.last.data_option[:options][-2..]).to eq([{ 'name' => 'new tree option 0', 'value' => 'new tree option 0' }, { 'name' => 'new tree option 1', 'value' => 'new tree option 1' }])
@@ -305,14 +319,17 @@ RSpec.describe 'System > Objects', type: :system do
       # Remove 'delete' and 'dog' options from field via GUI to make sure that the :historical_options attribute is saved.
       visit '/#system/object_manager'
       click 'tbody tr:last-child'
-      within '.modal' do
+      in_modal do
         2.times { find('tr:nth-child(3) .icon-trash').click }
         click '.js-submit'
       end
       expect(page).to have_text('Database Update Required')
       click '.js-execute', wait: 7.minutes
       expect(page).to have_text('please reload your browser')
-      click '.modal-content button.js-submit'
+
+      in_modal do
+        click '.js-submit'
+      end
 
       # Make sure option is still available in already saved ticket, even though the option was removed from the object attribute.
       # This is done via the :historical_options.
@@ -667,14 +684,14 @@ RSpec.describe 'System > Objects', type: :system do
 
     shared_examples 'having a custom sort option' do
       it 'has a custom option checkbox' do
-        within '.modal-dialog form' do
+        in_modal disappears: false do
           expect(page).to have_field('data_option::customsort', type: 'checkbox', visible: :all)
         end
       end
 
       context 'a context' do
         before do
-          within '.modal-dialog form' do
+          in_modal disappears: false do
             within 'tr.input-add-row' do
               5.times.each { first('div.js-add').click }
             end
@@ -692,7 +709,7 @@ RSpec.describe 'System > Objects', type: :system do
 
         context 'with custom checkbox checked' do
           it 'saves a customsort data option attribute' do
-            within '.modal-dialog form' do
+            in_modal do
               check 'data_option::customsort', allow_label_click: true
               click_button
             end
@@ -707,7 +724,7 @@ RSpec.describe 'System > Objects', type: :system do
 
         context 'with custom checkbox unchecked' do
           it 'does not have a customsort data option attribute' do
-            within '.modal-dialog form' do
+            in_modal do
               uncheck 'data_option::customsort', allow_label_click: true
               click_button
             end
