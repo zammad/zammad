@@ -29,7 +29,7 @@ class Sequencer
             private
 
             def organization_id
-              id_map['Organization'][resource['company_id']]
+              id_map.dig('Organization', resource['company_id'])
             end
           end
         end
