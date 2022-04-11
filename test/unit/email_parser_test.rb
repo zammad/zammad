@@ -16,7 +16,7 @@ File.write('test/data/mail/mailXXX.yml', Channel::EmailParser.new.parse(File.rea
     msg_files = Dir.glob(Rails.root.join('test', 'data', 'mail', 'mail*.box')).sort
     messages = []
     msg_files.each do |f|
-      next if !File.exists?(f.ext('yml'))
+      next if !File.exist?(f.ext('yml'))
       item = {
         source:  File.basename(f),
         content: YAML.load(File.read(f.ext('yml'))),
