@@ -717,7 +717,9 @@ RSpec.describe 'System > Objects', type: :system do
             # Update Database
             click 'div.js-execute'
             wait.until do
-              attribute['data_option'] && attribute['data_option']['customsort'] == 'on'
+              attribute &&
+                attribute['data_option'] &&
+                attribute['data_option']['customsort'] == 'on'
             end
           end
         end
@@ -733,7 +735,9 @@ RSpec.describe 'System > Objects', type: :system do
             click 'div.js-execute'
 
             wait.until do
-              attribute['data_option'] && attribute['data_option']['customsort'].nil?
+              attribute &&
+                attribute['data_option'] &&
+                attribute['data_option']['customsort'].nil?
             end
           end
         end
