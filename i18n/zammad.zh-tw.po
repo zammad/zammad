@@ -412,11 +412,11 @@ msgid ""
 msgstr ""
 "**日曆** 需要根據上班時間計算升級並發送升級通知。\n"
 "\n"
-"定義一個在系統範圍內有效的 **“標準”** "
-"日曆。只有在定義好的工作時間內，升級通知才會發送給您的客服人員。\n"
+"定義一個在系統範圍內有效的 **“標準”** 日曆。只有在定義好的工作時間內，升級通"
+"知才會發送給您的客服人員。\n"
 "\n"
-"若您有不同於營業時間的客戶，您可以建立多個日曆。工單會使用 **SLAs** "
-"連結到日曆。"
+"若您有不同於營業時間的客戶，您可以建立多個日曆。工單會使用 **SLAs** 連結到日"
+"曆。"
 
 #: app/controllers/getting_started_controller.rb
 msgid "A URL looks like this: https://zammad.example.com"
@@ -1934,6 +1934,12 @@ msgstr ""
 #: db/seeds/schedulers.rb
 msgid "Clean up ActiveJob locks."
 msgstr ""
+
+#: db/seeds/schedulers.rb
+#, fuzzy
+#| msgid "Continue session"
+msgid "Clean up cache."
+msgstr "繼續原工作階段"
 
 #: db/seeds/schedulers.rb
 msgid "Clean up closed sessions."
@@ -8139,6 +8145,12 @@ msgstr "發布"
 msgid "Publish Article"
 msgstr "文章"
 
+#: app/views/knowledge_base/public/answers/show.html.erb
+#, fuzzy
+#| msgid "published"
+msgid "Published %s"
+msgstr "已發佈的"
+
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco
 msgid "Published at"
 msgstr ""
@@ -11965,10 +11977,6 @@ msgstr "最後更新"
 msgid "busy"
 msgstr "忙碌"
 
-#: app/assets/javascripts/app/views/knowledge_base/_reader_answer_meta.jst.eco
-msgid "by"
-msgstr "由"
-
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #, fuzzy
 msgid "changed to"
@@ -12737,6 +12745,9 @@ msgstr "...整個文字區域"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ 今日等待時間"
+
+#~ msgid "by"
+#~ msgstr "由"
 
 #, fuzzy
 #~ msgid "Response Time"

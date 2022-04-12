@@ -1901,6 +1901,12 @@ msgid "Clean up ActiveJob locks."
 msgstr ""
 
 #: db/seeds/schedulers.rb
+#, fuzzy
+#| msgid "Continue session"
+msgid "Clean up cache."
+msgstr "Продовжити сесію"
+
+#: db/seeds/schedulers.rb
 msgid "Clean up closed sessions."
 msgstr ""
 
@@ -8138,6 +8144,10 @@ msgstr ""
 msgid "Publish Article"
 msgstr "Нотатка"
 
+#: app/views/knowledge_base/public/answers/show.html.erb
+msgid "Published %s"
+msgstr ""
+
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco
 msgid "Published at"
 msgstr ""
@@ -12038,10 +12048,6 @@ msgstr "Останні оновлення"
 #: app/assets/javascripts/app/controllers/cti.coffee
 msgid "busy"
 msgstr "зайнятий"
-
-#: app/assets/javascripts/app/views/knowledge_base/_reader_answer_meta.jst.eco
-msgid "by"
-msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #, fuzzy

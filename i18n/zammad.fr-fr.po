@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-04-04 05:32+0000\n"
-"Last-Translator: lencell <despotik@free.fr>\n"
+"PO-Revision-Date: 2022-04-09 03:30+0000\n"
+"Last-Translator: occirol <developer@nordan.ch>\n"
 "Language-Team: French <https://translations.zammad.org/projects/zammad/"
 "zammad-development/fr/>\n"
 "Language: fr-fr\n"
@@ -27,7 +27,7 @@ msgstr ""
 #. - 'l' - hour (12h)
 #. - 'P' - Meridian indicator ('am' or 'pm')
 msgid "FORMAT_DATE"
-msgstr "dd/mm/yyyy"
+msgstr "dd.mm.yyyy"
 
 #. Default date/time format to use for the current locale.
 #. These placeholders are supported:
@@ -43,7 +43,7 @@ msgstr "dd/mm/yyyy"
 #. - 'l' - hour (12h)
 #. - 'P' - Meridian indicator ('am' or 'pm')
 msgid "FORMAT_DATETIME"
-msgstr "dd/mm/yyyy HH:MM"
+msgstr "dd.mm.yyyy HH:MM"
 
 #: db/seeds/settings.rb
 msgid ""
@@ -222,8 +222,8 @@ msgstr "%s a mis à jour l'article : |%s|"
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 msgid "%s updated data privacy task to delete user ID |%s|"
 msgstr ""
-"%s a mis à jour la tâche de confidentialité pour supprimer l'utilisateur ID "
-"|%s|"
+"%s a mis à jour la tâche de confidentialité pour supprimer l'utilisateur ID |"
+"%s|"
 
 #: app/assets/javascripts/app/models/group.coffee
 msgid "%s updated group |%s|"
@@ -309,9 +309,9 @@ msgstr ""
 "Vous pouvez définir les objectifs avec trois métriques différentes : ** "
 "temps de réponse ** (le temps passé entre la création d'un ticket et la "
 "première intervention d'un agent dessus), ** temps de mise à jour ** (le "
-"temps passé entre la requête d'un client et l'intervention d'un agent), et **"
-" temps de résolution ** (le temps passé entre la création d'un ticket et sa "
-"résolution)\n"
+"temps passé entre la requête d'un client et l'intervention d'un agent), et "
+"** temps de résolution ** (le temps passé entre la création d'un ticket et "
+"sa résolution)\n"
 "\n"
 "Tout les tickets escaladés (par ex : les tickets ayant raté un objectif "
 "défini) sont affichés dans une vue séparée de vos aperçus. Vous pouvez aussi "
@@ -988,8 +988,8 @@ msgid ""
 "Article could not be created. An unsupported key other than 'article.note' "
 "was provided."
 msgstr ""
-"L'article n'a pas pu être créé. Une clé non supportée autre que "
-"'article.note' à été fournie."
+"L'article n'a pas pu être créé. Une clé non supportée autre que 'article."
+"note' à été fournie."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/delete.coffee
 #, fuzzy
@@ -1071,7 +1071,8 @@ msgstr "Au moins un objet doit être séléctionné."
 
 #: app/models/role.rb app/models/user.rb
 msgid "At least one user needs to have admin permissions."
-msgstr "Au moins un utilisateur doit disposer des permissions d'administration."
+msgstr ""
+"Au moins un utilisateur doit disposer des permissions d'administration."
 
 #: app/assets/javascripts/app/views/generic/attachments.jst.eco
 #: app/views/knowledge_base/public/answers/show.html.erb
@@ -1933,6 +1934,12 @@ msgid "Clean up ActiveJob locks."
 msgstr "Supprimer les verrous(locks) ActiveJob."
 
 #: db/seeds/schedulers.rb
+#, fuzzy
+#| msgid "Clean up dead sessions."
+msgid "Clean up cache."
+msgstr "Retirer les sessions mortes."
+
+#: db/seeds/schedulers.rb
 msgid "Clean up closed sessions."
 msgstr "Supprimer les sessions fermées."
 
@@ -2432,8 +2439,8 @@ msgid ""
 msgstr ""
 "Créez des Modules de Texte pour **passer moins de temps à écrire des "
 "réponses**. Les Modules de Texte peuvent inclurent des variables "
-"intelligentes telles que le nom de l'utilisateur ou son adresse de courriel."
-"\n"
+"intelligentes telles que le nom de l'utilisateur ou son adresse de "
+"courriel.\n"
 "\n"
 "Voici quelques exemples de modules :\n"
 "\n"
@@ -2862,7 +2869,8 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Defines HTTP basic auth user of Elasticsearch."
-msgstr "Définit l'utilisateur de l'authentification basique pour Elasticsearch."
+msgstr ""
+"Définit l'utilisateur de l'authentification basique pour Elasticsearch."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -3392,7 +3400,8 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Defines the default calendar tickets subscription settings."
-msgstr "Définit le calendrier par défaut des paramètres de souscription ticket."
+msgstr ""
+"Définit le calendrier par défaut des paramètres de souscription ticket."
 
 #: db/seeds/settings.rb
 msgid "Defines the default screen."
@@ -3588,8 +3597,8 @@ msgid ""
 "Defines the transaction backend which posts messages to Slack (http://www."
 "slack.com)."
 msgstr ""
-"Définit le backend de transaction qui poste les messages sur Slack "
-"(http://www.slack.com)."
+"Définit le backend de transaction qui poste les messages sur Slack (http://"
+"www.slack.com)."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -3953,7 +3962,8 @@ msgstr "En raison d'inactivité, vous êtes automatiquement déconnecté."
 msgid ""
 "Due to inactivity, you will be automatically logged out within the next 30 "
 "seconds."
-msgstr "Vous êtes inactif et serez automatiquement déconnecté dans 30 secondes."
+msgstr ""
+"Vous êtes inactif et serez automatiquement déconnecté dans 30 secondes."
 
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco
 msgid "Duration"
@@ -4370,7 +4380,8 @@ msgstr "Chiffre le courriel (si impossible, n'envoie pas de notification)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
 msgid "Encrypt email (if not possible, send notification anyway)"
-msgstr "Chiffre le courriel (si impossible, envoi tout de même la notification)"
+msgstr ""
+"Chiffre le courriel (si impossible, envoi tout de même la notification)"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 msgid "Encrypted"
@@ -8339,6 +8350,12 @@ msgstr "Publier"
 msgid "Publish Article"
 msgstr "Article"
 
+#: app/views/knowledge_base/public/answers/show.html.erb
+#, fuzzy
+#| msgid "published"
+msgid "Published %s"
+msgstr "publié"
+
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco
 msgid "Published at"
 msgstr ""
@@ -12215,10 +12232,6 @@ msgstr "entre deux mises à jour d'un agent"
 msgid "busy"
 msgstr "occupé"
 
-#: app/assets/javascripts/app/views/knowledge_base/_reader_answer_meta.jst.eco
-msgid "by"
-msgstr "de"
-
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #, fuzzy
 msgid "changed to"
@@ -12664,11 +12677,11 @@ msgstr "action en suspens"
 
 #: db/seeds/ticket_states.rb
 msgid "pending close"
-msgstr "clôture en suspens"
+msgstr "clôture en attente"
 
 #: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
 msgid "pending reminder"
-msgstr "rappel en suspens"
+msgstr "rappel en attente"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/phone_reply.coffee
 #: db/seeds/ticket_article_types.rb
@@ -12981,6 +12994,9 @@ msgstr "... de toute la zone de texte"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ TEMPS D'ATTENTE AUJOURD'HUI"
+
+#~ msgid "by"
+#~ msgstr "de"
 
 #, fuzzy
 #~ msgid "Response Time"

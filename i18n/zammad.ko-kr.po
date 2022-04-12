@@ -1899,6 +1899,12 @@ msgid "Clean up ActiveJob locks."
 msgstr ""
 
 #: db/seeds/schedulers.rb
+#, fuzzy
+#| msgid "Continue session"
+msgid "Clean up cache."
+msgstr "세션을 계속"
+
+#: db/seeds/schedulers.rb
 msgid "Clean up closed sessions."
 msgstr ""
 
@@ -8075,6 +8081,12 @@ msgstr "게시"
 msgid "Publish Article"
 msgstr "조"
 
+#: app/views/knowledge_base/public/answers/show.html.erb
+#, fuzzy
+#| msgid "published"
+msgid "Published %s"
+msgstr "게시된"
+
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco
 msgid "Published at"
 msgstr ""
@@ -11925,10 +11937,6 @@ msgstr "최신 업데이트"
 msgid "busy"
 msgstr "바쁜"
 
-#: app/assets/javascripts/app/views/knowledge_base/_reader_answer_meta.jst.eco
-msgid "by"
-msgstr "작성"
-
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #, fuzzy
 msgid "changed to"
@@ -12695,6 +12703,9 @@ msgstr "... 전체 텍스트 영역의"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ 오늘 대기 시간"
+
+#~ msgid "by"
+#~ msgstr "작성"
 
 #, fuzzy
 #~ msgid "Response Time"

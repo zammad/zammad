@@ -1806,6 +1806,12 @@ msgid "Clean up ActiveJob locks."
 msgstr "清除活动任务锁定。"
 
 #: db/seeds/schedulers.rb
+#, fuzzy
+#| msgid "Clean up dead sessions."
+msgid "Clean up cache."
+msgstr "清除死会话。"
+
+#: db/seeds/schedulers.rb
 msgid "Clean up closed sessions."
 msgstr "清除关闭的会话。"
 
@@ -7965,6 +7971,12 @@ msgstr "發布"
 msgid "Publish Article"
 msgstr "文章"
 
+#: app/views/knowledge_base/public/answers/show.html.erb
+#, fuzzy
+#| msgid "published"
+msgid "Published %s"
+msgstr "發布"
+
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco
 msgid "Published at"
 msgstr ""
@@ -11760,10 +11772,6 @@ msgstr "客服更新之间"
 msgid "busy"
 msgstr "忙碌"
 
-#: app/assets/javascripts/app/views/knowledge_base/_reader_answer_meta.jst.eco
-msgid "by"
-msgstr "由"
-
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "changed to"
 msgstr "已修改"
@@ -12528,6 +12536,9 @@ msgstr "...整个文本区域"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅轮候时间"
+
+#~ msgid "by"
+#~ msgstr "由"
 
 #~ msgid "Response Time"
 #~ msgstr "响应时间"

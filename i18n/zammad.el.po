@@ -1952,6 +1952,12 @@ msgid "Clean up ActiveJob locks."
 msgstr ""
 
 #: db/seeds/schedulers.rb
+#, fuzzy
+#| msgid "Continue session"
+msgid "Clean up cache."
+msgstr "Συνέχεια συνεδρίας"
+
+#: db/seeds/schedulers.rb
 msgid "Clean up closed sessions."
 msgstr ""
 
@@ -8261,6 +8267,12 @@ msgstr "Δημοσίευσε"
 msgid "Publish Article"
 msgstr "Αρθρο"
 
+#: app/views/knowledge_base/public/answers/show.html.erb
+#, fuzzy
+#| msgid "Publish"
+msgid "Published %s"
+msgstr "Δημοσίευσε"
+
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco
 msgid "Published at"
 msgstr ""
@@ -11940,10 +11952,6 @@ msgstr "Τελευταίες ενημερώσεις"
 msgid "busy"
 msgstr "απασχολημένος"
 
-#: app/assets/javascripts/app/views/knowledge_base/_reader_answer_meta.jst.eco
-msgid "by"
-msgstr "με"
-
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #, fuzzy
 msgid "changed to"
@@ -12698,6 +12706,9 @@ msgstr "... ολόκληρης της περιοχής κειμένου"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ μεσος χρονοσ αναμονησ σημερα"
+
+#~ msgid "by"
+#~ msgstr "με"
 
 #, fuzzy
 #~ msgid "Response Time"

@@ -1935,6 +1935,12 @@ msgid "Clean up ActiveJob locks."
 msgstr ""
 
 #: db/seeds/schedulers.rb
+#, fuzzy
+#| msgid "Continue session"
+msgid "Clean up cache."
+msgstr "Nadaljuj z sejo"
+
+#: db/seeds/schedulers.rb
 msgid "Clean up closed sessions."
 msgstr ""
 
@@ -7967,6 +7973,10 @@ msgstr ""
 msgid "Publish Article"
 msgstr "Člen"
 
+#: app/views/knowledge_base/public/answers/show.html.erb
+msgid "Published %s"
+msgstr ""
+
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco
 msgid "Published at"
 msgstr ""
@@ -11647,10 +11657,6 @@ msgstr "Zadnje posodobitve"
 msgid "busy"
 msgstr "zaseden"
 
-#: app/assets/javascripts/app/views/knowledge_base/_reader_answer_meta.jst.eco
-msgid "by"
-msgstr "od"
-
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #, fuzzy
 msgid "changed to"
@@ -12402,6 +12408,9 @@ msgstr "...celotnega tekstovnega polja"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "Današnji čakalni čas"
+
+#~ msgid "by"
+#~ msgstr "od"
 
 #, fuzzy
 #~ msgid "Response Time"

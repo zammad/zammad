@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-04-02 03:30+0000\n"
-"Last-Translator: Martin Gruner <mg@zammad.com>\n"
+"PO-Revision-Date: 2022-04-08 03:30+0000\n"
+"Last-Translator: Frederic <frederic.rupfle@landkreis-lindau.de>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
 "zammad-development/de/>\n"
 "Language: de-de\n"
@@ -120,7 +120,7 @@ msgstr "%s erstellte Rolle |%s|"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "%s created ticket |%s|"
-msgstr "%s erstelltes Ticket |%s|"
+msgstr "%s erstellte Ticket |%s|"
 
 #: app/assets/javascripts/app/models/user.coffee
 msgid "%s created user |%s|"
@@ -1881,6 +1881,12 @@ msgstr "'HttpLog' aufräumen."
 #: db/seeds/schedulers.rb
 msgid "Clean up ActiveJob locks."
 msgstr "ActiveJob-Sperren bereinigen."
+
+#: db/seeds/schedulers.rb
+#, fuzzy
+#| msgid "Clean up dead sessions."
+msgid "Clean up cache."
+msgstr "Tote Sitzungen aufräumen."
 
 #: db/seeds/schedulers.rb
 msgid "Clean up closed sessions."
@@ -8165,6 +8171,12 @@ msgstr "Veröffentlichen"
 msgid "Publish Article"
 msgstr "Artikel veröffentlichen"
 
+#: app/views/knowledge_base/public/answers/show.html.erb
+#, fuzzy
+#| msgid "Published at"
+msgid "Published %s"
+msgstr "Veröffentlicht um"
+
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco
 msgid "Published at"
 msgstr "Veröffentlicht um"
@@ -12027,10 +12039,6 @@ msgstr "zwischen Updates von Agenten"
 msgid "busy"
 msgstr "besetzt"
 
-#: app/assets/javascripts/app/views/knowledge_base/_reader_answer_meta.jst.eco
-msgid "by"
-msgstr "von"
-
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "changed to"
 msgstr "geändert zu"
@@ -12779,6 +12787,9 @@ msgstr "…des gesamten Textfelds"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Wartezeit heute"
+
+#~ msgid "by"
+#~ msgstr "von"
 
 #~ msgid "Response Time"
 #~ msgstr "Reaktionszeit"

@@ -1909,6 +1909,12 @@ msgid "Clean up ActiveJob locks."
 msgstr ""
 
 #: db/seeds/schedulers.rb
+#, fuzzy
+#| msgid "Continue session"
+msgid "Clean up cache."
+msgstr "ikiciro gikomeza"
+
+#: db/seeds/schedulers.rb
 msgid "Clean up closed sessions."
 msgstr ""
 
@@ -8149,6 +8155,12 @@ msgstr "gutangaza"
 msgid "Publish Article"
 msgstr "Ingingo"
 
+#: app/views/knowledge_base/public/answers/show.html.erb
+#, fuzzy
+#| msgid "published"
+msgid "Published %s"
+msgstr "byatangajwe"
+
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco
 msgid "Published at"
 msgstr ""
@@ -12035,10 +12047,6 @@ msgstr "Amakuru agezweho"
 msgid "busy"
 msgstr "guhuga"
 
-#: app/assets/javascripts/app/views/knowledge_base/_reader_answer_meta.jst.eco
-msgid "by"
-msgstr "na"
-
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #, fuzzy
 msgid "changed to"
@@ -12807,6 +12815,9 @@ msgstr "umwandiko wose"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "igihe cyo gutegereza uyu munsi"
+
+#~ msgid "by"
+#~ msgstr "na"
 
 #, fuzzy
 #~ msgid "Response Time"

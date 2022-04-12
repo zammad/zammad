@@ -1879,6 +1879,12 @@ msgid "Clean up ActiveJob locks."
 msgstr ""
 
 #: db/seeds/schedulers.rb
+#, fuzzy
+#| msgid "Continue session"
+msgid "Clean up cache."
+msgstr "המשך מופע"
+
+#: db/seeds/schedulers.rb
 msgid "Clean up closed sessions."
 msgstr ""
 
@@ -8025,6 +8031,12 @@ msgstr "פרסם"
 msgid "Publish Article"
 msgstr "מאמר"
 
+#: app/views/knowledge_base/public/answers/show.html.erb
+#, fuzzy
+#| msgid "published"
+msgid "Published %s"
+msgstr "פורסם"
+
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco
 msgid "Published at"
 msgstr ""
@@ -11818,10 +11830,6 @@ msgstr "עדכונים אחרונים"
 msgid "busy"
 msgstr "תפוס"
 
-#: app/assets/javascripts/app/views/knowledge_base/_reader_answer_meta.jst.eco
-msgid "by"
-msgstr "על ידי"
-
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #, fuzzy
 msgid "changed to"
@@ -12588,6 +12596,9 @@ msgstr "... של כל איזור הטקסט"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ זמן המתנה היום"
+
+#~ msgid "by"
+#~ msgstr "על ידי"
 
 #, fuzzy
 #~ msgid "Response Time"

@@ -2,13 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: \n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2022-04-09 03:30+0000\n"
+"Last-Translator: hrmtc <vampolka@pm.me>\n"
+"Language-Team: Spanish (Mexico) <https://translations.zammad.org/projects/"
+"zammad/zammad-development/es_MX/>\n"
 "Language: es-mx\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.11.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -75,7 +78,7 @@ msgstr "%s Migración"
 
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "%s Role"
-msgstr ""
+msgstr "Rol"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
@@ -1946,6 +1949,12 @@ msgstr ""
 #: db/seeds/schedulers.rb
 msgid "Clean up ActiveJob locks."
 msgstr ""
+
+#: db/seeds/schedulers.rb
+#, fuzzy
+#| msgid "Continue session"
+msgid "Clean up cache."
+msgstr "Continuar sesión"
 
 #: db/seeds/schedulers.rb
 msgid "Clean up closed sessions."
@@ -8248,6 +8257,12 @@ msgstr "Publicar"
 msgid "Publish Article"
 msgstr "Artículo"
 
+#: app/views/knowledge_base/public/answers/show.html.erb
+#, fuzzy
+#| msgid "published"
+msgid "Published %s"
+msgstr "publicado"
+
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco
 msgid "Published at"
 msgstr ""
@@ -12170,10 +12185,6 @@ msgstr "Últimas actualizaciones"
 msgid "busy"
 msgstr "ocupado"
 
-#: app/assets/javascripts/app/views/knowledge_base/_reader_answer_meta.jst.eco
-msgid "by"
-msgstr "por"
-
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #, fuzzy
 msgid "changed to"
@@ -12943,6 +12954,9 @@ msgstr "...del área de texto completo"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Tiempo de espera hoy"
+
+#~ msgid "by"
+#~ msgstr "por"
 
 #, fuzzy
 #~ msgid "Response Time"

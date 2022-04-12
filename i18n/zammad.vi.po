@@ -1868,6 +1868,10 @@ msgid "Clean up ActiveJob locks."
 msgstr ""
 
 #: db/seeds/schedulers.rb
+msgid "Clean up cache."
+msgstr ""
+
+#: db/seeds/schedulers.rb
 msgid "Clean up closed sessions."
 msgstr ""
 
@@ -7859,6 +7863,10 @@ msgstr ""
 msgid "Publish Article"
 msgstr "Bài viết"
 
+#: app/views/knowledge_base/public/answers/show.html.erb
+msgid "Published %s"
+msgstr ""
+
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco
 msgid "Published at"
 msgstr ""
@@ -11522,10 +11530,6 @@ msgstr ""
 msgid "busy"
 msgstr "bận"
 
-#: app/assets/javascripts/app/views/knowledge_base/_reader_answer_meta.jst.eco
-msgid "by"
-msgstr "bởi"
-
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #, fuzzy
 msgid "changed to"
@@ -12275,6 +12279,9 @@ msgstr ""
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Thời gian chờ hôm nay"
+
+#~ msgid "by"
+#~ msgstr "bởi"
 
 #, fuzzy
 #~| msgid "Reset changes"
