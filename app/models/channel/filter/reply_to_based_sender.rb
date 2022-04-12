@@ -4,7 +4,9 @@ module Channel::Filter::ReplyToBasedSender
 
   def self.run(_channel, mail, _transaction_params)
 
-    reply_to = mail[:'reply-to']
+    return if mail[:'reply-to'].blank?
+
+    reply_to = mail[:'reply-to'].gsub('<>', '').strip
     return if reply_to.blank?
 
     setting = Setting.get('postmaster_sender_based_on_reply_to')
