@@ -171,6 +171,7 @@ group :development, :test do
   # test frameworks
   gem 'rails-controller-testing'
   gem 'rspec-rails'
+  gem 'rspec-retry'
   gem 'shoulda-matchers'
   gem 'test-unit'
 

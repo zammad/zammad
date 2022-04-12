@@ -479,6 +479,8 @@ GEM
       rspec-expectations (~> 3.10)
       rspec-mocks (~> 3.10)
       rspec-support (~> 3.10)
+    rspec-retry (0.6.2)
+      rspec-core (> 3.3)
     rspec-support (3.11.0)
     rszr (1.2.1)
     rubocop (1.27.0)
@@ -687,6 +689,7 @@ DEPENDENCIES
   rchardet (>= 1.8.0)
   redis
   rspec-rails
+  rspec-retry
   rszr
   rubocop
   rubocop-faker
