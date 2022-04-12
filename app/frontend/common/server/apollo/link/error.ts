@@ -8,7 +8,7 @@ import {
   GraphQLErrorTypes,
 } from '@common/types/error'
 import emitter from '@common/utils/emitter'
-import useApplicationConnectedStore from '@common/stores/application/connected'
+import useApplicationStore from '@common/stores/application'
 
 const errorLink = onError(({ graphQLErrors, networkError, operation }) => {
   const errorContext = getErrorContext(operation)
@@ -45,7 +45,7 @@ const errorLink = onError(({ graphQLErrors, networkError, operation }) => {
     errorMessages.push(`[Network error]: ${networkError}`)
     // Network error implies application connection problems.
     // TODO: what's missing here is a detection of web socket disconnects.
-    useApplicationConnectedStore().takeDown()
+    useApplicationStore().takeConnectionDown()
   }
 
   if (errorContext.logLevel === 'silent') return

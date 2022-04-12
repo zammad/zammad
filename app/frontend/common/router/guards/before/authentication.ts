@@ -1,8 +1,9 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import useApplicationLoadedStore from '@common/stores/application/loaded'
-import useAuthenticatedStore from '@common/stores/authenticated'
+import useApplicationStore from '@common/stores/application'
+import useAuthenticationStore from '@common/stores/authentication'
 import log from '@common/utils/log'
+import { watch } from 'vue'
 import type {
   NavigationGuard,
   RouteLocationNormalized,
@@ -13,14 +14,14 @@ const checkAuthenticated = (
   to: RouteLocationNormalized,
   next: NavigationGuardNext,
 ) => {
-  const authenticated = useAuthenticatedStore()
+  const { authenticated } = useAuthenticationStore()
 
-  if (to.name !== 'Login' && to.meta.requiresAuth && !authenticated.value) {
+  if (to.name !== 'Login' && to.meta.requiresAuth && !authenticated) {
     log.debug(
       `Route guard for '${to.path}': authentication - forbidden - unauthenticated.`,
     )
     next('login')
-  } else if (to.name === 'Login' && authenticated.value) {
+  } else if (to.name === 'Login' && authenticated) {
     // Use the default route here.
     log.debug(
       `Route guard for '${to.path}': authentication - forbidden - authenticated.`,
@@ -39,17 +40,20 @@ const authenticationGuard: NavigationGuard = (
   from: RouteLocationNormalized,
   next: NavigationGuardNext,
 ) => {
-  let unsubscribe: (() => void) | undefined
-  const loaded = useApplicationLoadedStore()
+  let unwatch: (() => void) | undefined
+  const application = useApplicationStore()
 
-  if (loaded.loading) {
-    unsubscribe = loaded.$subscribe(() => {
-      checkAuthenticated(to, next)
-    })
+  if (application.loading) {
+    unwatch = watch(
+      () => application.loaded,
+      () => {
+        checkAuthenticated(to, next)
+      },
+    )
   } else {
-    if (unsubscribe) {
-      unsubscribe()
-      unsubscribe = undefined
+    if (unwatch) {
+      unwatch()
+      unwatch = undefined
     }
     checkAuthenticated(to, next)
   }

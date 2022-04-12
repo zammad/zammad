@@ -43,7 +43,7 @@ describe('Translations Store', () => {
   const locale = useLocaleStore()
 
   it('is empty by default', () => {
-    expect(locale.value).toBe(null)
+    expect(locale.localeData).toBe(null)
   })
 
   it('sets rtl correctly', async () => {

@@ -5,7 +5,7 @@ import { createTestingPinia } from '@pinia/testing'
 import { RouteLocationNormalized } from 'vue-router'
 import { nextTick } from 'vue'
 import useMetaTitle from '@common/composables/useMetaTitle'
-import useApplicationConfigStore from '@common/stores/application/config'
+import useApplicationStore from '@common/stores/application'
 
 vi.mock('@common/server/apollo/client', () => {
   return {}
@@ -13,7 +13,7 @@ vi.mock('@common/server/apollo/client', () => {
 
 describe('headerTitle', () => {
   createTestingPinia({ createSpy: vi.fn })
-  useApplicationConfigStore().value.product_name = 'Zammad'
+  useApplicationStore().config.product_name = 'Zammad'
 
   const from = {} as RouteLocationNormalized
 

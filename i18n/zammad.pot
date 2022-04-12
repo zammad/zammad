@@ -8887,7 +8887,7 @@ msgstr ""
 msgid "The configuration of Zammad has changed. Please reload at your earliest."
 msgstr ""
 
-#: app/frontend/common/stores/application/connected.ts
+#: app/frontend/common/stores/application.ts
 msgid "The connection to the server was lost."
 msgstr ""
 

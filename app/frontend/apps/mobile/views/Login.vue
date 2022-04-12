@@ -2,11 +2,11 @@
 
 <script setup lang="ts">
 import useNotifications from '@common/composables/useNotifications'
-import useAuthenticationStore from '@common/stores/authenticated'
+import useAuthenticationStore from '@common/stores/authentication'
 import { useRouter } from 'vue-router'
 import { NotificationTypes } from '@common/types/notification'
 import CommonLogo from '@common/components/common/CommonLogo.vue'
-import useApplicationConfigStore from '@common/stores/application/config'
+import useApplicationStore from '@common/stores/application'
 import { i18n } from '@common/i18n'
 import Form from '@common/components/form/Form.vue'
 import { FormData } from '@common/types/form'
@@ -55,7 +55,7 @@ const login = (formData: FormData<LoginFormData>) => {
     })
 }
 
-const applicationConfig = useApplicationConfigStore()
+const application = useApplicationStore()
 </script>
 
 <template>
@@ -68,13 +68,13 @@ const applicationConfig = useApplicationConfigStore()
             <CommonLogo />
           </div>
           <div class="mb-6 flex justify-center p-2 text-2xl font-extrabold">
-            {{ applicationConfig.value.product_name }}
+            {{ application.config.product_name }}
           </div>
-          <template v-if="applicationConfig.value.maintenance_login">
+          <template v-if="application.config.maintenance_login">
             <!-- eslint-disable vue/no-v-html -->
             <div
               class="my-1 flex items-center rounded-xl bg-green py-2 px-4 text-white"
-              v-html="applicationConfig.value.maintenance_login_message"
+              v-html="application.config.maintenance_login_message"
             ></div>
           </template>
           <Form

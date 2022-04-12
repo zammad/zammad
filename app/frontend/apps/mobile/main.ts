@@ -8,18 +8,17 @@ import {
   provideApolloClient,
 } from '@vue/apollo-composable'
 import apolloClient from '@common/server/apollo/client'
-import useSessionIdStore from '@common/stores/session/id'
+import useSessionStore from '@common/stores/session'
 import '@mobile/styles/main.css'
 import initializeStore from '@common/stores'
 import initializeStoreSubscriptions from '@common/initializer/storeSubscriptions'
 import initializeRouter from '@common/router/index'
 import initializeGlobalComponents from '@common/initializer/globalComponents'
 import routes from '@mobile/router'
-import useApplicationConfigStore from '@common/stores/application/config'
+import useApplicationStore from '@common/stores/application'
 import { i18n } from '@common/i18n'
 import useLocaleStore from '@common/stores/locale'
-import useSessionUserStore from '@common/stores/session/user'
-import useAuthenticatedStore from '@common/stores/authenticated'
+import useAuthenticationStore from '@common/stores/authentication'
 import 'virtual:svg-icons-register' // eslint-disable-line import/no-unresolved
 import transitionViewGuard from '@mobile/router/guards/before/viewTransition'
 import initializeForm from '@mobile/form'
@@ -41,25 +40,24 @@ export default async function mountApp(): Promise<void> {
 
   initializeStoreSubscriptions()
 
-  const sessionId = useSessionIdStore()
-  await sessionId.checkSession()
+  const session = useSessionStore()
+  await session.checkSession()
 
-  const applicationConfig = useApplicationConfigStore()
-  const sessionUser = useSessionUserStore()
+  const application = useApplicationStore()
 
   const initalizeAfterSessionCheck: Array<Promise<unknown>> = [
-    applicationConfig.getConfig(),
+    application.getConfig(),
   ]
 
-  if (sessionId.value) {
-    useAuthenticatedStore().value = true
-    initalizeAfterSessionCheck.push(sessionUser.getCurrentUser())
+  if (session.id) {
+    useAuthenticationStore().authenticated = true
+    initalizeAfterSessionCheck.push(session.getCurrentUser())
   }
   await Promise.all(initalizeAfterSessionCheck)
 
   const locale = useLocaleStore()
 
-  if (!locale.value) {
+  if (!locale.localeData) {
     await locale.updateLocale()
   }
 

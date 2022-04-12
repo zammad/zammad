@@ -1,14 +1,14 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import useApplicationConfigStore from '@common/stores/application/config'
+import useApplicationStore from '@common/stores/application'
 import { computed } from 'vue'
 
 const assetsPath = '/assets/images'
-const config = useApplicationConfigStore()
+const application = useApplicationStore()
 
 const logoUrl = computed(() => {
-  const productLogo = config.get('product_logo') as string
+  const productLogo = application.config.product_logo as string
   if (!productLogo) {
     return `${assetsPath}/logo.svg`
   }
@@ -20,6 +20,6 @@ const logoUrl = computed(() => {
   <img
     class="h-40 w-40"
     v-bind:src="logoUrl"
-    v-bind:alt="(config.get('product_name') as string)"
+    v-bind:alt="(application.config.product_name as string)"
   />
 </template>

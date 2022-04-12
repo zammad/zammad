@@ -5,8 +5,8 @@ import type {
   RouteLocationNormalized,
   NavigationGuardNext,
 } from 'vue-router'
-import useAuthenticationStore from '@common/stores/authenticated'
-import useSessionUserStore from '@common/stores/session/user'
+import useAuthenticationStore from '@common/stores/authentication'
+import useSessionStore from '@common/stores/session'
 import { ErrorStatusCodes } from '@common/types/error'
 import log from '@common/utils/log'
 
@@ -17,14 +17,14 @@ const permissionGuard: NavigationGuard = (
 ) => {
   // When no required permission are defined or no authentication
   // exists, the permission check can be skipped.
-  if (!to.meta.requiredPermission || !useAuthenticationStore().value) {
+  if (!to.meta.requiredPermission || !useAuthenticationStore().authenticated) {
     log.debug(`Route guard for '${to.path}': permission - skip.`)
     next()
     return
   }
 
   // TODO check the permission for the current user...
-  const hasPermission = useSessionUserStore().hasPermission(
+  const hasPermission = useSessionStore().hasPermission(
     to.meta.requiredPermission,
   )
   if (!hasPermission) {

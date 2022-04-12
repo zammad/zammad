@@ -2,11 +2,11 @@
 
 <script setup lang="ts">
 import useNotifications from '@common/composables/useNotifications'
-import useAuthenticatedStore from '@common/stores/authenticated'
-import useSessionUserStore from '@common/stores/session/user'
+import useAuthenticationStore from '@common/stores/authentication'
+import useSessionStore from '@common/stores/session'
 import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
-import useApplicationConfigStore from '@common/stores/application/config'
+import useApplicationStore from '@common/stores/application'
 import { useCurrentUserQuery } from '@common/graphql/api'
 import { NotificationTypes } from '@common/types/notification'
 import useViewTransition from '@mobile/composables/useViewTransition'
@@ -29,25 +29,25 @@ notify({
 
 const logAction = console.log
 
-const sessionUser = useSessionUserStore()
+const session = useSessionStore()
 
-const { value: userData } = storeToRefs(sessionUser)
+const { user: userData } = storeToRefs(session)
 
-const authenticated = useAuthenticatedStore()
+const authentication = useAuthenticationStore()
 
 const router = useRouter()
 
 const logout = (): void => {
   clearAllNotifications()
-  authenticated.logout().then(() => {
+  authentication.logout().then(() => {
     router.push('/login')
   })
 }
 
-const config = useApplicationConfigStore()
+const application = useApplicationStore()
 
 const refetchConfig = async (): Promise<void> => {
-  await config.getConfig()
+  await application.getConfig()
 }
 
 const fetchCurrentUser = () => {

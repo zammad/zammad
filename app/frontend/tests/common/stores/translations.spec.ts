@@ -56,10 +56,8 @@ describe('Translations Store', () => {
   mockClient()
 
   it('is empty by default', () => {
-    expect(translations.value).toStrictEqual({
-      cacheKey: 'CACHE_EMPTY',
-      translations: {},
-    })
+    expect(translations.cacheKey).toBe('CACHE_EMPTY')
+    expect(translations.translationData).toStrictEqual({})
     expect(i18n.t('Login')).toBe('Login')
   })
 
@@ -67,8 +65,8 @@ describe('Translations Store', () => {
     expect.assertions(4)
     await translations.load('de-de')
     expect(lastQueryResult.isCacheStillValid).toBe(false)
-    expect(translations.value.cacheKey.length).toBeGreaterThan(5)
-    expect(translations.value.translations).toHaveProperty('Login', 'Anmeldung')
+    expect(translations.cacheKey.length).toBeGreaterThan(5)
+    expect(translations.translationData).toHaveProperty('Login', 'Anmeldung')
     expect(i18n.t('Login')).toBe('Anmeldung')
   })
 
@@ -76,8 +74,8 @@ describe('Translations Store', () => {
     expect.assertions(3)
     await translations.load('en-us')
     expect(lastQueryResult.isCacheStillValid).toBe(false)
-    expect(translations.value.cacheKey.length).toBeGreaterThan(5)
-    expect(translations.value.translations).toHaveProperty(
+    expect(translations.cacheKey.length).toBeGreaterThan(5)
+    expect(translations.translationData).toHaveProperty(
       'Login',
       'Login (translated)',
     )
@@ -88,8 +86,8 @@ describe('Translations Store', () => {
     await translations.load('de-de')
     expect(lastQueryResult.isCacheStillValid).toBe(true)
     expect(lastQueryResult.translations).toStrictEqual({})
-    expect(translations.value.cacheKey.length).toBeGreaterThan(5)
-    expect(translations.value.translations).toHaveProperty('Login', 'Anmeldung')
+    expect(translations.cacheKey.length).toBeGreaterThan(5)
+    expect(translations.translationData).toHaveProperty('Login', 'Anmeldung')
     expect(i18n.t('Login')).toBe('Anmeldung')
   })
 })

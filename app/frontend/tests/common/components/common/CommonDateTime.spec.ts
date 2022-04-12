@@ -5,7 +5,7 @@ vi.useFakeTimers().setSystemTime(new Date('2020-10-11T10:10:10Z'))
 
 import CommonDateTime from '@common/components/common/CommonDateTime.vue'
 import { renderComponent } from '@tests/support/components'
-import useApplicationConfigStore from '@common/stores/application/config'
+import useApplicationStore from '@common/stores/application'
 import { nextTick } from 'vue'
 
 describe('CommonDateTime.vue', () => {
@@ -22,15 +22,15 @@ describe('CommonDateTime.vue', () => {
     expect(wrapper.container).toHaveTextContent('1 day ago')
 
     await wrapper.rerender({ format: 'configured' })
-    useApplicationConfigStore().value.pretty_date_format = 'absolute'
+    useApplicationStore().config.pretty_date_format = 'absolute'
     await nextTick()
     expect(wrapper.container).toHaveTextContent('2020-10-10 10:10')
 
-    useApplicationConfigStore().value.pretty_date_format = 'timestamp'
+    useApplicationStore().config.pretty_date_format = 'timestamp'
     await nextTick()
     expect(wrapper.container).toHaveTextContent('2020-10-10 10:10')
 
-    useApplicationConfigStore().value.pretty_date_format = 'relative'
+    useApplicationStore().config.pretty_date_format = 'relative'
     await nextTick()
     expect(wrapper.container).toHaveTextContent('1 day ago')
   })

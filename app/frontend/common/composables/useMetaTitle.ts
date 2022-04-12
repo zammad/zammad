@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import useApplicationConfigStore from '@common/stores/application/config'
+import useApplicationStore from '@common/stores/application'
 import { computed, reactive, watch } from 'vue'
 import { isString } from 'lodash-es'
 import { i18n } from '@common/i18n'
@@ -11,8 +11,8 @@ const viewMetaHeader = reactive({
 })
 
 const currentTitle = computed(() => {
-  const config = useApplicationConfigStore()
-  const productName = config.get('product_name') as string
+  const application = useApplicationStore()
+  const productName = application.config.product_name as string
 
   if (!viewMetaHeader.title) return productName
 

@@ -1,8 +1,8 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import permissionGuard from '@common/router/guards/before/permission'
-import useAuthenticatedStore from '@common/stores/authenticated'
-import useSessionUserStore from '@common/stores/session/user'
+import useAuthenticationStore from '@common/stores/authentication'
+import useSessionStore from '@common/stores/session'
 import { createTestingPinia } from '@pinia/testing'
 import { RouteLocationNormalized } from 'vue-router'
 
@@ -52,7 +52,7 @@ describe('permissionGuard', () => {
     } as RouteLocationNormalized
     const next = vi.fn()
 
-    useAuthenticatedStore().value = true
+    useAuthenticationStore().authenticated = true
 
     permissionGuard(to, from, next)
 
@@ -71,8 +71,8 @@ describe('permissionGuard', () => {
     } as RouteLocationNormalized
     const next = vi.fn()
 
-    useAuthenticatedStore().value = true
-    useSessionUserStore().value = {
+    useAuthenticationStore().authenticated = true
+    useSessionStore().user = {
       permissions: {
         names: ['example.view'],
       },
@@ -96,8 +96,8 @@ describe('permissionGuard', () => {
     } as RouteLocationNormalized
     const next = vi.fn()
 
-    useAuthenticatedStore().value = true
-    useSessionUserStore().value = {
+    useAuthenticationStore().authenticated = true
+    useSessionStore().user = {
       permissions: {
         names: ['ticket.agent'],
       },

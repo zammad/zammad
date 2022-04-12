@@ -2,16 +2,14 @@
 
 <script setup lang="ts">
 import CommonNotifications from '@common/components/common/CommonNotifications.vue'
-import useApplicationLoadedStore from '@common/stores/application/loaded'
-import useAuthenticatedStore from '@common/stores/authenticated'
-import useSessionIdStore from '@common/stores/session/id'
+import useApplicationStore from '@common/stores/application'
+import useAuthenticationStore from '@common/stores/authentication'
+import useSessionStore from '@common/stores/session'
 import useMetaTitle from '@common/composables/useMetaTitle'
 import { useRoute, useRouter } from 'vue-router'
 import emitter from '@common/utils/emitter'
 import { onBeforeUnmount, onMounted, watch } from 'vue'
 import useAppMaintenanceCheck from '@common/composables/useAppMaintenanceCheck'
-import useApplicationConfigStore from '@common/stores/application/config'
-import useSessionUserStore from '@common/stores/session/user'
 import usePushMessages from '@common/composables/usePushMessages'
 import useLocaleStore from '@common/stores/locale'
 import useFormKitConfig from '@common/composables/form/useFormKitConfig'
@@ -19,47 +17,47 @@ import useFormKitConfig from '@common/composables/form/useFormKitConfig'
 const router = useRouter()
 const route = useRoute()
 
-const sessionId = useSessionIdStore()
-const authenticated = useAuthenticatedStore()
+const session = useSessionStore()
+const authentication = useAuthenticationStore()
 
 useMetaTitle().initializeMetaTitle()
 
-const applicationLoaded = useApplicationLoadedStore()
+const application = useApplicationStore()
 onMounted(() => {
-  applicationLoaded.setLoaded()
+  application.setLoaded()
 })
 
 useAppMaintenanceCheck()
 usePushMessages()
 
 // Add a watcher for authenticated changes (e.g. login/logout in a other browser tab).
-authenticated.$subscribe(async (mutation, state) => {
-  if (state.value && !sessionId.value) {
-    sessionId.checkSession().then(async (sessionId) => {
+authentication.$subscribe(async (mutation, state) => {
+  if (state.authenticated && !session.id) {
+    session.checkSession().then(async (sessionId) => {
       if (sessionId) {
-        await authenticated.refreshAfterAuthentication()
+        await authentication.refreshAfterAuthentication()
       }
 
       if (route.name === 'Login') {
         router.replace('/')
       }
     })
-  } else if (!state.value && sessionId.value) {
-    await authenticated.clearAuthentication()
+  } else if (!state.authenticated && session.id) {
+    await authentication.clearAuthentication()
     router.replace('login')
   }
 })
 
 watch(
-  () => useApplicationConfigStore().value.maintenance_mode,
+  () => application.config.maintenance_mode,
   async (newValue, oldValue) => {
     if (
       !oldValue &&
       newValue &&
-      useAuthenticatedStore().value &&
-      !useSessionUserStore().hasPermission(['admin.maintenance', 'maintenance'])
+      authentication.authenticated &&
+      !session.hasPermission(['admin.maintenance', 'maintenance'])
     ) {
-      await useAuthenticatedStore().logout()
+      await authentication.logout()
       router.replace('login')
     }
   },
@@ -74,8 +72,8 @@ useLocaleStore().$subscribe(() => {
 // The handling for invalid sessions. The event will be emitted, when from the server a "NotAuthorized"
 // response is received.
 emitter.on('sessionInvalid', async () => {
-  if (authenticated.value) {
-    await authenticated.clearAuthentication()
+  if (authentication.authenticated) {
+    await authentication.clearAuthentication()
 
     router.replace({
       name: 'Login',
@@ -92,9 +90,9 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <CommonNotifications v-if="applicationLoaded.value" />
+  <CommonNotifications v-if="application.loaded" />
   <div
-    v-if="applicationLoaded.value"
+    v-if="application.loaded"
     class="min-h-screen min-w-full select-none bg-black font-sans text-sm text-white antialiased"
   >
     <router-view />

@@ -1,16 +1,16 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import CommonLogo from '@common/components/common/CommonLogo.vue'
-import useApplicationConfigStore from '@common/stores/application/config'
+import useApplicationStore from '@common/stores/application'
 import { renderComponent } from '@tests/support/components'
 import { nextTick } from 'vue'
 
 describe('CommonLogo.vue', () => {
   it('renders custom logo', async () => {
     const wrapper = renderComponent(CommonLogo, { store: true })
-    const configStore = useApplicationConfigStore()
+    const application = useApplicationStore()
 
-    configStore.value.product_name = 'Zammad Custom Logo'
+    application.config.product_name = 'Zammad Custom Logo'
 
     await nextTick()
 
@@ -22,10 +22,10 @@ describe('CommonLogo.vue', () => {
 
   it('renders default zammad logo', async () => {
     const wrapper = renderComponent(CommonLogo, { store: true })
-    const configStore = useApplicationConfigStore()
+    const application = useApplicationStore()
 
-    configStore.value.product_logo = 'icons/logotype.svg'
-    configStore.value.product_name = undefined
+    application.config.product_logo = 'icons/logotype.svg'
+    application.config.product_name = undefined
 
     await nextTick()
 

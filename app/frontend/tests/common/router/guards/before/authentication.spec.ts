@@ -1,8 +1,8 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import authenticationGuard from '@common/router/guards/before/authentication'
-import useApplicationLoadedStore from '@common/stores/application/loaded'
-import useAuthenticatedStore from '@common/stores/authenticated'
+import useApplicationStore from '@common/stores/application'
+import useAuthenticationStore from '@common/stores/authentication'
 import { createTestingPinia } from '@pinia/testing'
 import { RouteLocationNormalized } from 'vue-router'
 
@@ -12,7 +12,7 @@ vi.mock('@common/server/apollo/client', () => {
 
 describe('authenticationGuard', () => {
   createTestingPinia({ createSpy: vi.fn })
-  useApplicationLoadedStore().value = true
+  useApplicationStore().loaded = true
 
   const from = {} as RouteLocationNormalized
 
@@ -41,7 +41,7 @@ describe('authenticationGuard', () => {
     } as RouteLocationNormalized
     const next = vi.fn()
 
-    useAuthenticatedStore().value = true
+    useAuthenticationStore().authenticated = true
 
     authenticationGuard(to, from, next)
 
@@ -58,7 +58,7 @@ describe('authenticationGuard', () => {
     } as RouteLocationNormalized
     const next = vi.fn()
 
-    useAuthenticatedStore().value = true
+    useAuthenticationStore().authenticated = true
 
     authenticationGuard(to, from, next)
 

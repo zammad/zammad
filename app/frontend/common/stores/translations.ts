@@ -1,10 +1,6 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import { defineStore } from 'pinia'
-import type {
-  SingleValueStore,
-  TranslationsStoreValue,
-} from '@common/types/store'
 import { i18n } from '@common/i18n'
 import log from '@common/utils/log'
 import { useTranslationsQuery } from '@common/graphql/api'
@@ -13,14 +9,19 @@ import type {
   TranslationsQuery,
   TranslationsQueryVariables,
 } from '@common/graphql/types'
-import { reactive } from 'vue'
+import { reactive, ref } from 'vue'
 import type { ReactiveFunction } from '@common/types/utils'
+
+interface TranslationsCacheValue {
+  cacheKey: string
+  translations: Record<string, string>
+}
 
 function localStorageKey(locale: string): string {
   return `translationsStoreCache::${locale}`
 }
 
-function loadCache(locale: string): TranslationsStoreValue {
+function loadCache(locale: string): TranslationsCacheValue {
   const cached = JSON.parse(
     window.localStorage.getItem(localStorageKey(locale)) || '{}',
   )
@@ -31,7 +32,7 @@ function loadCache(locale: string): TranslationsStoreValue {
   }
 }
 
-function setCache(locale: string, value: TranslationsStoreValue): void {
+function setCache(locale: string, value: TranslationsCacheValue): void {
   const serialized = JSON.stringify(value)
   window.localStorage.setItem(localStorageKey(locale), serialized)
   log.debug('translations.setCache()', locale, value)
@@ -56,51 +57,53 @@ const getTranslationsQuery = () => {
   return translationsQuery
 }
 
-const useTranslationsStore = defineStore('translations', {
-  state: (): SingleValueStore<TranslationsStoreValue> => {
-    return {
-      value: {
-        cacheKey: 'CACHE_EMPTY',
-        translations: {},
-      },
+const useTranslationsStore = defineStore('translations', () => {
+  const cacheKey = ref<string>('CACHE_EMPTY')
+  const translationData = ref<Record<string, string>>({})
+
+  const load = async (locale: string): Promise<void> => {
+    log.debug('translations.load()', locale)
+
+    const cachedData = loadCache(locale)
+
+    Object.assign(translationsQueryVariables, {
+      cacheKey: cachedData.cacheKey,
+      locale,
+    })
+
+    const query = getTranslationsQuery()
+
+    const result = await query.loadedResult()
+    if (!result?.translations) {
+      return
     }
-  },
-  actions: {
-    async load(locale: string): Promise<void> {
-      log.debug('translations.load()', locale)
 
-      const cachedData = loadCache(locale)
+    if (result.translations.isCacheStillValid) {
+      cacheKey.value = cachedData.cacheKey
+      translationData.value = cachedData.translations
+    } else {
+      cacheKey.value = result.translations.cacheKey || 'CACHE_EMPTY'
+      translationData.value = result.translations.translations
 
-      Object.assign(translationsQueryVariables, {
-        cacheKey: cachedData.cacheKey,
-        locale,
+      setCache(locale, {
+        cacheKey: cacheKey.value,
+        translations: translationData.value,
       })
+    }
 
-      const query = getTranslationsQuery()
+    log.debug(
+      'translations.load() setting new translation map',
+      locale,
+      translationData.value,
+    )
+    i18n.setTranslationMap(new Map(Object.entries(translationData.value)))
+  }
 
-      const result = await query.loadedResult()
-      if (!result?.translations) {
-        return
-      }
-
-      if (result.translations.isCacheStillValid) {
-        this.value = cachedData
-      } else {
-        this.value = {
-          cacheKey: result.translations.cacheKey || 'CACHE_EMPTY',
-          translations: result.translations.translations,
-        }
-        setCache(locale, this.value)
-      }
-
-      log.debug(
-        'translations.load() setting new translation map',
-        locale,
-        this.value.translations,
-      )
-      i18n.setTranslationMap(new Map(Object.entries(this.value.translations)))
-    },
-  },
+  return {
+    cacheKey,
+    translationData,
+    load,
+  }
 })
 
 export default useTranslationsStore

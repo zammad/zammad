@@ -1,35 +1,35 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import useAuthenticatedStore from '@common/stores/authenticated'
 import useLocaleStore from '@common/stores/locale'
-import useSessionIdStore from '@common/stores/session/id'
-import useSessionUserStore from '@common/stores/session/user'
-import useApplicationLoadedStore from '@common/stores/application/loaded'
+import useSessionStore from '@common/stores/session'
+import useApplicationStore from '@common/stores/application'
 import consumer from '@common/server/action_cable/consumer'
+import { watch } from 'vue'
 
 export default function initializeStoreSubscriptions(): void {
-  const sessionId = useSessionIdStore()
-  const authenticated = useAuthenticatedStore()
-  const sessionUser = useSessionUserStore()
+  const session = useSessionStore()
   const locale = useLocaleStore()
-  const applicationLoaded = useApplicationLoadedStore()
+  const application = useApplicationStore()
 
-  applicationLoaded.$subscribe(() => {
-    sessionId.$subscribe((mutation, state) => {
-      if (state.value) {
-        authenticated.value = true
-      } else {
-        authenticated.value = false
-        sessionUser.value = null
-      }
-      // Reopen WS connection to reflect authentication state.
-      consumer.connection.reopen()
-    })
+  watch(
+    () => application.loaded,
+    () => {
+      watch(
+        () => session.id,
+        () => {
+          // Reopen WS connection to reflect authentication state.
+          consumer.connection.reopen()
+        },
+      )
 
-    sessionUser.$subscribe((mutation, state) => {
-      if (!state.value) {
-        locale.updateLocale()
-      }
-    })
-  })
+      watch(
+        () => session.user,
+        (newValue) => {
+          if (!newValue) {
+            locale.updateLocale()
+          }
+        },
+      )
+    },
+  )
 }
