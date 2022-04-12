@@ -197,9 +197,7 @@ group :development, :test do
   gem 'overcommit'
   gem 'rubocop'
   gem 'rubocop-faker'
-  # TODO: remove git branch information for rubocop-inflector after
-  #   Ruby 3 support was added: https://github.com/aeroastro/rubocop-inflector/pull/2
-  gem 'rubocop-inflector', git: 'https://github.com/zammad-deps/rubocop-inflector', branch: 'fix-ruby3-compat'
+  gem 'rubocop-inflector'
   gem 'rubocop-performance'
   gem 'rubocop-rails'
   gem 'rubocop-rspec'

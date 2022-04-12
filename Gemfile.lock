@@ -17,16 +17,6 @@ GIT
       mini_mime (>= 0.1.1)
 
 GIT
-  remote: https://github.com/zammad-deps/rubocop-inflector
-  revision: 0de158833bbb27b19b0643561bef52ffaf422fa0
-  branch: fix-ruby3-compat
-  specs:
-    rubocop-inflector (0.2.0)
-      activesupport
-      rubocop
-      rubocop-rspec
-
-GIT
   remote: https://github.com/zammad-deps/telegramAPI
   revision: fb62dd5b48b0c41169ab69fc89069969ab4705b2
   branch: uri-escape-warning
@@ -497,6 +487,10 @@ GEM
     rubocop-faker (1.1.0)
       faker (>= 2.12.0)
       rubocop (>= 0.82.0)
+    rubocop-inflector (0.2.1)
+      activesupport
+      rubocop
+      rubocop-rspec
     rubocop-performance (1.13.3)
       rubocop (>= 1.7.0, < 2.0)
       rubocop-ast (>= 0.4.0)
@@ -693,7 +687,7 @@ DEPENDENCIES
   rszr
   rubocop
   rubocop-faker
-  rubocop-inflector!
+  rubocop-inflector
   rubocop-performance
   rubocop-rails
   rubocop-rspec
