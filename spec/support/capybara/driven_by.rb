@@ -61,7 +61,8 @@ RSpec.configure do |config|
     # WebMock makes it impossible to have persistent http connections to Selenium,
     #    which may cause overhead and Net::OpenTimeout errors.
     WebMock.disable! if !use_vcr
-    example.run
+    # rspec-retry
+    example.run_with_retry retry: 3, exceptions_to_retry: [Net::OpenTimeout, Net::ReadTimeout]
     WebMock.enable! if !use_vcr
   end
 end
