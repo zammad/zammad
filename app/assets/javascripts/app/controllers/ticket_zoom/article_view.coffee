@@ -483,6 +483,10 @@ class ArticleViewItem extends App.ControllerObserver
     @el.remove()
 
   imageView: (e) ->
+    # take care of images surrounded by a link
+    if e.target && e.target.parentNode && e.target.parentNode.nodeName.toLowerCase() == 'a'
+      return false
+
     e.preventDefault()
     e.stopPropagation()
     new App.TicketZoomArticleImageView(image: $(e.target).get(0).outerHTML, parentElement: $(e.currentTarget))

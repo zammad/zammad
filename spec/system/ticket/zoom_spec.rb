@@ -2615,4 +2615,56 @@ RSpec.describe 'Ticket zoom', type: :system do
       expect(ticket.reload.customer_id).to eq(User.find_by(email: 'admin@example.com').id)
     end
   end
+
+  describe 'Image preview #4044' do
+    let(:ticket) { create(:ticket, group: Group.find_by(name: 'Users')) }
+
+    let(:image_as_base64) do
+      file = File.binread(Rails.root.join('spec/fixtures/files/image/squares.png'))
+      Base64.encode64(file).delete("\n")
+    end
+
+    let(:body) do
+      "<img style='width: 1004px; max-width: 100%;' src=\\\"data:image/png;base64,#{image_as_base64}\\\"><br>"
+    end
+
+    let(:article) { create(:ticket_article, ticket: ticket, body: body, content_type: 'text/html') }
+
+    before do
+      visit "#ticket/zoom/#{ticket.id}"
+    end
+
+    it 'does open the image preview for a common image' do
+      within :active_ticket_article, article do
+        find('img').click
+      end
+
+      in_modal do
+        expect(page).to have_css('div.imagePreview img')
+        expect(page).to have_css('.js-cancel')
+        expect(page).to have_css('.js-submit')
+
+        page.find('.js-cancel').click
+      end
+    end
+
+    context 'with image and embedded link' do
+      let(:body) do
+        "<a href='https://zammad.com' title='Zammad' target='_blank'>
+<img style='width: 1004px; max-width: 100%;' src=\\\"data:image/png;base64,#{image_as_base64}\\\">
+</a><br>"
+      end
+
+      it 'does open the link for an image with an embedded link' do
+        within :active_ticket_article, article do
+          find('img').click
+        end
+
+        within_window switch_to_window_index(2) do
+          expect(page).to have_css('a.logo')
+        end
+        close_window_index(2)
+      end
+    end
+  end
 end
