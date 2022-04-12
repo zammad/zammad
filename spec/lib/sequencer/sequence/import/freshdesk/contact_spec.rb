@@ -104,5 +104,15 @@ RSpec.describe ::Sequencer::Sequence::Import::Freshdesk::Contact, sequencer: :se
         expect(User.last).to have_attributes(imported_user)
       end
     end
+
+    context 'without organizations' do
+      let(:id_map) do
+        {}
+      end
+
+      it 'imports customer correctly (increased user count)' do
+        expect { process(process_payload) }.to change(User, :count).by(1)
+      end
+    end
   end
 end
