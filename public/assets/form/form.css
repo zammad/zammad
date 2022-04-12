@@ -7,25 +7,25 @@
   margin-top: 0;
 }
 
-.zammad-form .form-group {
+.zammad-form-group {
   margin-bottom: 15px;
 }
 
-.zammad-form .form-control {
+.zammad-form-control {
   display: block;
   width: 100%;
   box-sizing: border-box;
 }
 
-.zammad-form .has-error .form-control {
+.zammad-form-group--has-error .zammad-form-control {
   border-color: #a94442;
 }
 
-.zammad-form .has-error label {
+.zammad-form-group--has-error label {
   color: #a94442;
 }
 
-.zammad-form .js-thankyou {
+.zammad-form-thankyou {
   text-align: center;
 }
 

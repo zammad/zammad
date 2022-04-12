@@ -122,7 +122,7 @@
       <div class="browser-body js-browserBody">
         <div class="browser-website centered vertical fit">
           <div class="btn js-formBtn"><%- @T('Feedback') %></div>
-          <div class="js-formInline" style="width: 300px;"></div>
+          <div class="js-formInline browser-inline-form"></div>
           <script id="zammad_form_script" src="/assets/form/form.js"></script>
         </div>
       </div>
@@ -134,26 +134,26 @@
 
   <p><%- @T('You need to add the following Javascript code snippet to your web page') %>:</p>
 
-  <pre class="js-modal"><code class="language-html js-code js-paramsBlock">&lt;button id="feedback-form"&gt;Feedback&lt;/button&gt;
+  <pre class="js-modal"><code class="language-html js-code js-paramsBlock">&lt;button id="zammad-feedback-form"&gt;Feedback&lt;/button&gt;
 
 &lt;script id="zammad_form_script" src="<%= @baseurl %>/assets/form/form.js"&gt;&lt;/script&gt;
 
 &lt;script&gt;
 $(function() {
-  $('#feedback-form').ZammadForm({
+  $('#zammad-feedback-form').ZammadForm({
 <span class="js-modal-params"></span>
   });
 });
 &lt;/script&gt;</code></pre>
 </div>
 
-  <pre class="js-inlineForm"><code class="language-html js-code js-paramsBlock">&lt;div id="feedback-form"&gt;form will be placed in here&lt;/div&gt;
+  <pre class="js-inlineForm"><code class="language-html js-code js-paramsBlock">&lt;div id="zammad-feedback-form"&gt;form will be placed in here&lt;/div&gt;
 
 &lt;script id="zammad_form_script" src="<%= @baseurl %>/assets/form/form.js"&gt;&lt;/script&gt;
 
 &lt;script&gt;
 $(function() {
-  $('#feedback-form').ZammadForm({
+  $('#zammad-feedback-form').ZammadForm({
 <span class="js-modal-params"></span>
   });
 });

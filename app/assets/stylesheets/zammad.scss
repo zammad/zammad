@@ -11989,6 +11989,33 @@ output {
   }
 }
 
+.browser-inline-form {
+  width: 300px;
+
+  &.no-css {
+    all: initial;
+
+    * {
+      all: unset;
+    }
+
+    input,
+    textarea,
+    button {
+      padding: 2px;
+      background: white;
+      border: 1px solid;
+      font: 400 11px system-ui;
+    }
+
+    button {
+      padding: 2px 6px 3px;
+      background-color: buttonface;
+      border: 2px outset buttonface;
+    }
+  }
+}
+
 .chat-demo {
   .zammad-chat {
     position: absolute;

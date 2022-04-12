@@ -5,12 +5,12 @@
 *  provides feedback form for zammad
 *
 
-<button id="feedback-form">Feedback</button>
+<button id="zammad-feedback-form">Feedback</button>
 
 <script id="zammad_form_script" src="http://localhost:3000/assets/form/form.js"></script>
 <script>
 $(function() {
-  $('#feedback-form').ZammadForm({
+  $('#zammad-feedback-form').ZammadForm({
     messageTitle: 'Feedback Form', // optional
     messageSubmit: 'Submit', // optional
     messageThankYou: 'Thank you for your inquiry (#%s)! We\'ll contact you as soon as possible.', // optional
@@ -333,12 +333,16 @@ $(function() {
       processData: false,
     }).done(function(data) {
 
-      // removed errors
+      // Remove the errors from the form.
+      _this.$form.find('.zammad-form-group--has-error').removeClass('zammad-form-group--has-error')
+      // Deprecated code, can be removed in future versions:
       _this.$form.find('.has-error').removeClass('has-error')
 
       // set errors
       if (data.errors) {
         $.each(data.errors, function( key, value ) {
+          _this.$form.find('[name=' + key + ']').closest('.'+ _this.options.prefixCSS +'group').addClass('zammad-form-group--has-error')
+          // Deprecated code, can be removed in future versions:
           _this.$form.find('[name=' + key + ']').closest('.form-group').addClass('has-error')
         })
         if (data.errors.token) {
@@ -414,14 +418,17 @@ $(function() {
     }
     $.each(this.options.attributes, function(index, value) {
       var valueId = _this.options.modal ? value.id + '-modal' : value.id + '-inline'
-      var item = $('<div class="form-group"><label for="' + valueId +'"> ' + _this.T(value.display) + '</label></div>');
+      // Deprecated class "form-group" can be removed in future versions.
+      var item = $('<div class="form-group '+ _this.options.prefixCSS +'group"><label for="' + valueId +'"> ' + _this.T(value.display) + '</label></div>');
       var defaultValue = (typeof value.defaultValue === 'function') ? value.defaultValue() : value.defaultValue;
       for (var i=0; i < (value.repeat ? value.repeat : 1); i++) {
         if (value.tag == 'input') {
-          item.append('<input class="form-control" id="' + valueId + '" name="' + value.name + '" type="' + value.type + '" placeholder="' + _this.T(value.placeholder) + '" value="' + (defaultValue || '') + '"' + (value.required === true ? ' required' : '') + '>')
+          // Deprecated class "form-control" can be removed in future versions.
+          item.append('<input class="form-control '+ _this.options.prefixCSS +'control" id="' + valueId + '" name="' + value.name + '" type="' + value.type + '" placeholder="' + _this.T(value.placeholder) + '" value="' + (defaultValue || '') + '"' + (value.required === true ? ' required' : '') + '>')
         }
         else if (value.tag == 'textarea') {
-          item.append('<textarea class="form-control" id="' + valueId + '" name="' + value.name + '" placeholder="' + _this.T(value.placeholder) + '" rows="' + value.rows + '"' + (value.required === true ? ' required' : '') + '>' + (defaultValue || '') + '</textarea>')
+          // Deprecated class "form-control" can be removed in future versions.
+          item.append('<textarea class="form-control '+ _this.options.prefixCSS +'control" id="' + valueId + '" name="' + value.name + '" placeholder="' + _this.T(value.placeholder) + '" rows="' + value.rows + '"' + (value.required === true ? ' required' : '') + '>' + (defaultValue || '') + '</textarea>')
         }
       }
       $form.append(item)
@@ -463,7 +470,7 @@ $(function() {
     if (data.ticket && data.ticket.number) {
       thankYou = thankYou.replace('%s', data.ticket.number)
     }
-    var message = $('<div class="js-thankyou">' + thankYou + '</div>')
+    var message = $('<div class="js-thankyou zammad-form-thankyou">' + thankYou + '</div>')
     this.$form.html(message)
   }
 
