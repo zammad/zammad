@@ -671,7 +671,6 @@ RSpec.describe 'System > Objects', type: :system do
       find('input[name=display]').set attribute_name
     end
 
-    let(:attribute) { ObjectManager::Attribute.find_by(name: attribute_name) }
     let(:data_options) do
       {
         '1' => 'one',
@@ -680,6 +679,10 @@ RSpec.describe 'System > Objects', type: :system do
         '4' => 'four',
         '5' => 'five'
       }
+    end
+
+    def find_attribute
+      ObjectManager::Attribute.find_by(name: attribute_name)
     end
 
     shared_examples 'having a custom sort option' do
@@ -716,11 +719,8 @@ RSpec.describe 'System > Objects', type: :system do
 
             # Update Database
             click 'div.js-execute'
-            wait.until do
-              attribute &&
-                attribute['data_option'] &&
-                attribute['data_option']['customsort'] == 'on'
-            end
+            wait.until { find_attribute }
+            expect(find_attribute['data_option']['customsort']).to eq('on')
           end
         end
 
@@ -734,11 +734,8 @@ RSpec.describe 'System > Objects', type: :system do
             # Update Database
             click 'div.js-execute'
 
-            wait.until do
-              attribute &&
-                attribute['data_option'] &&
-                attribute['data_option']['customsort'].nil?
-            end
+            wait.until { find_attribute }
+            expect(find_attribute['data_option']['customsort']).to be_nil
           end
         end
       end
