@@ -918,7 +918,6 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
     user.save!
 
     if params[:invite].present?
-      sleep 5 if ENV['REMOTE_URL'].present?
       token = Token.create(action: 'PasswordReset', user_id: user.id)
       NotificationFactory::Mailer.notification(
         template: 'user_invite',

@@ -35,8 +35,9 @@ RSpec.describe 'First Steps', type: :system do
       click('button')
     end
 
-    wait.until { expect(User.last).to have_attributes(firstname: 'Bob', lastname: 'Smith', group_ids: [target_group.id]) }
     expect(page).to have_no_text 'Sending'
+
+    expect(User.last).to have_attributes(firstname: 'Bob', lastname: 'Smith', group_ids: [target_group.id])
   end
 
   it 'invites customer' do

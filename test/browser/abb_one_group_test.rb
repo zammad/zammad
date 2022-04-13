@@ -64,10 +64,6 @@ class AgentTicketActionLevel0Test < TestCase
       fast: true,
       ajax: false,
     )
-    watch_for(
-      css:   'body div.modal',
-      value: 'Sending',
-    )
     watch_for_disappear(
       css:   'body div.modal',
       value: 'Sending',
@@ -100,10 +96,6 @@ class AgentTicketActionLevel0Test < TestCase
       css:  '.modal button.btn.btn--primary',
       fast: true,
       ajax: false,
-    )
-    watch_for(
-      css:   'body div.modal',
-      value: 'Sending',
     )
     watch_for_disappear(
       css:   'body div.modal',
