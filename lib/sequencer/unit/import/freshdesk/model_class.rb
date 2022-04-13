@@ -5,6 +5,9 @@ class Sequencer
     module Import
       module Freshdesk
         class ModelClass < Sequencer::Unit::Common::Provider::Named
+          prepend ::Sequencer::Unit::Import::Common::Model::Mixin::Skip::Action
+
+          skip_action :skipped, :failed
 
           uses :object
 

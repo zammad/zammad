@@ -6,6 +6,9 @@ class Sequencer
       module Freshdesk
         class Request < Sequencer::Unit::Common::Provider::Attribute
           extend ::Sequencer::Unit::Import::Freshdesk::Requester
+          prepend ::Sequencer::Unit::Import::Common::Model::Mixin::Skip::Action
+
+          skip_action :skipped, :failed
 
           uses :object, :request_params
           provides :response
@@ -13,7 +16,6 @@ class Sequencer
           private
 
           def response
-
             builder = backend.new(
               object:         object,
               request_params: request_params

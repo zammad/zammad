@@ -11,6 +11,7 @@ class Sequencer
               'Import::Common::ImportMode::Check',
               'Import::Common::SystemInitDone::Check',
               'Import::Common::ImportJob::DryRun',
+              'Import::Freshdesk::TimeEntry::Available',
               'Import::Freshdesk::IdMap',
               'Import::Freshdesk::Groups',
               'Import::Freshdesk::FieldMap',

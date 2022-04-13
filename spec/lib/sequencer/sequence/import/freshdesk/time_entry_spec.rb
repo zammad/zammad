@@ -10,7 +10,7 @@ RSpec.describe ::Sequencer::Sequence::Import::Freshdesk::TimeEntry, sequencer: :
       {
         'id'            => 80_027_218_656,
         'billable'      => true,
-        'note'          => 'Example Prepartion',
+        'note'          => 'Example Preparation',
         'timer_running' => false,
         'agent_id'      => 80_014_400_475,
         'ticket_id'     => 1001,
@@ -57,6 +57,7 @@ RSpec.describe ::Sequencer::Sequence::Import::Freshdesk::TimeEntry, sequencer: :
 
     it 'correct attributes for added time entry' do
       process(process_payload)
+      Rails.logger.debug Ticket::TimeAccounting.last
       expect(Ticket::TimeAccounting.last).to have_attributes(imported_time_entry)
     end
 

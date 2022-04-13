@@ -7,7 +7,7 @@ class Sequencer
         module SubSequence
           class Generic < Sequencer::Unit::Base
 
-            uses :dry_run, :import_job, :field_map, :id_map
+            uses :dry_run, :import_job, :field_map, :id_map, :time_entry_available
 
             attr_accessor :iteration, :result
 
@@ -18,13 +18,14 @@ class Sequencer
                 @iteration = iteration
                 @result = ::Sequencer.process(sequence_name,
                                               parameters: {
-                                                request_params:      request_params,
-                                                import_job:          import_job,
-                                                dry_run:             dry_run,
-                                                object:              object,
-                                                field_map:           field_map,
-                                                id_map:              id_map,
-                                                skipped_resource_id: skipped_resource_id,
+                                                request_params:       request_params,
+                                                import_job:           import_job,
+                                                dry_run:              dry_run,
+                                                object:               object,
+                                                field_map:            field_map,
+                                                id_map:               id_map,
+                                                skipped_resource_id:  skipped_resource_id,
+                                                time_entry_available: time_entry_available,
                                               },
                                               expecting:  self.class.const_get(:EXPECTING))
                 break if iteration_should_stop?
@@ -56,7 +57,7 @@ class Sequencer
             end
 
             def iteration_should_stop?
-              return true if result[:action] == :failed
+              return true if result[:action] == :failed || result[:action] == :skipped
               return true if result[:response].header['link'].blank?
 
               false
