@@ -132,7 +132,7 @@ RSpec.describe 'Manage > Users', type: :system do
     end
 
     it 'handles permission checkboxes correctly' do
-      in_modal disappears: false do
+      in_modal do
         scroll_into_view 'table.settings-list'
         within 'table.settings-list tbody tr:first-child' do
           click 'input[value="full"]', visible: :all
@@ -166,7 +166,7 @@ RSpec.describe 'Manage > Users', type: :system do
       let(:user) { create(:admin, login: "auto-#{SecureRandom.uuid}") }
 
       it 'does not allow to update a user with no email/first/last/phone' do
-        in_modal disappears: false do
+        in_modal do
           fill_in 'firstname', with: ''
           fill_in 'lastname', with: ''
           fill_in 'Email', with: ''

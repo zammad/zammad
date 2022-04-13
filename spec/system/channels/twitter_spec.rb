@@ -13,7 +13,7 @@ RSpec.describe 'Manage > Channels > Twitter', :use_vcr, type: :system do
         within(:active_content) do
           find('.js-configApp').click
 
-          in_modal disappears: false do
+          in_modal do
             fill_in 'Twitter Consumer Key *',    with: 'some_key',    exact: true
             fill_in 'Twitter Consumer Secret *', with: 'some_secret', exact: true
             click_on 'Submit'
@@ -29,7 +29,7 @@ RSpec.describe 'Manage > Channels > Twitter', :use_vcr, type: :system do
         within(:active_content) do
           find('.js-configApp').click
 
-          in_modal disappears: false do
+          in_modal do
             fill_in 'Twitter Consumer Key *',          with: 'some_key',                exact: true
             fill_in 'Twitter Consumer Secret *',       with: 'some_secret',             exact: true
             fill_in 'Twitter Access Token *',          with: 'some_oauth_token',        exact: true

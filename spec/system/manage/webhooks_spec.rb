@@ -13,7 +13,7 @@ RSpec.describe 'Manage > Webhook', type: :system do
         click 'a[data-type="payload"]'
       end
 
-      in_modal disappears: false do
+      in_modal do
         expect(page).to have_text('X-Zammad-Trigger:')
       end
     end
@@ -31,7 +31,7 @@ RSpec.describe 'Manage > Webhook', type: :system do
         click '.js-delete'
       end
 
-      in_modal disappears: false do
+      in_modal do
         click '.js-submit'
 
         expect(page).to have_text('Cannot delete').and(have_text("##{trigger.id}"))

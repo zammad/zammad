@@ -413,7 +413,7 @@ RSpec.describe 'Chat Handling', type: :system do
 
         click '.chat-body .chat-message img'
 
-        in_modal disappears: false do
+        in_modal do
           expect(page).to have_css('.js-submit', text: 'Download')
         end
       end

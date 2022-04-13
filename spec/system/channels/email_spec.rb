@@ -43,7 +43,7 @@ RSpec.describe 'Manage > Channels > Email', type: :system do
         click 'a[href="#c-account"]'
         click '.js-channelNew'
 
-        in_modal disappears: false do
+        in_modal do
           fill_in 'realname', with: 'My System'
           fill_in 'email',    with: "unknown_user.#{mailbox_user}"
           fill_in 'password', with: mailbox_password
@@ -192,7 +192,7 @@ RSpec.describe 'Manage > Channels > Email', type: :system do
       click '.js-channelEnable'
       click '.js-editInbound'
 
-      in_modal disappears: false do
+      in_modal do
         expect(page).to have_no_text 'ORGANIZATION & DEPARTMENT NAME'
         expect(page).to have_no_text 'ORGANIZATION SUPPORT'
         expect(page).to have_no_text 'EMAIL'

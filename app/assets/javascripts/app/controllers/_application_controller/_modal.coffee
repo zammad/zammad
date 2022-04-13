@@ -89,7 +89,8 @@ class App.ControllerModal extends App.Controller
       @initRenderingDone = true
       @html(modal)
     else
-      @$('.modal-dialog').replaceWith(modal)
+      @$('.modal-dialog').empty().append(modal[0].childNodes)
+
     @post()
 
   post: ->

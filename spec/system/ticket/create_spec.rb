@@ -559,7 +559,7 @@ RSpec.describe 'Ticket Create', type: :system do
         find('.js-cancel').click
       end
 
-      in_modal disappears: false do
+      in_modal do
         expect(page).to have_text 'Tab has changed'
       end
     end
@@ -574,7 +574,7 @@ RSpec.describe 'Ticket Create', type: :system do
         page.find('input#fileUpload_1', visible: :all).set(Rails.root.join('test/data/mail/mail001.box'))
       end
 
-      in_modal disappears: false do
+      in_modal do
         expect(page).to have_text 'Error'
       end
     end

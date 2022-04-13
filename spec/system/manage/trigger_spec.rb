@@ -30,7 +30,7 @@ RSpec.describe 'Manage > Trigger', type: :system do
 
         open_new_trigger_dialog
 
-        in_modal disappears: false do
+        in_modal do
           within '.ticket_selector' do
             find('.js-attributeSelector select').select(attribute.display)
 
@@ -55,7 +55,7 @@ RSpec.describe 'Manage > Trigger', type: :system do
 
         open_new_trigger_dialog
 
-        in_modal disappears: false do
+        in_modal do
           within '.ticket_selector' do
             find('.js-attributeSelector select').select(attribute.display)
 
@@ -97,6 +97,7 @@ RSpec.describe 'Manage > Trigger', type: :system do
           end
         end
 
+        # widget is shown within modal, but placed outside of modal in DOM tree.
         expect(page).to have_css('.ui-autocomplete.ui-widget-content') { |elem| !elem.obscured? }
       end
     end
@@ -110,7 +111,7 @@ RSpec.describe 'Manage > Trigger', type: :system do
     it "check 'created_at' element" do
       open_new_trigger_dialog
 
-      in_modal disappears: false do
+      in_modal do
         within '.ticket_selector' do
           find(".js-attributeSelector select option[value='ticket.created_at']").select_option
 
@@ -122,7 +123,7 @@ RSpec.describe 'Manage > Trigger', type: :system do
     it "check 'updated_at' element" do
       open_new_trigger_dialog
 
-      in_modal disappears: false do
+      in_modal do
         within '.ticket_selector' do
           find(".js-attributeSelector select option[value='ticket.updated_at']").select_option
 

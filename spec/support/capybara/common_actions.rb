@@ -249,30 +249,49 @@ module CommonActions
     end
   end
 
-  # Checks if modal is ready
+  # Checks if modal is ready.
+  # Returns modal DOM element or raises an error
   #
   # @param timeout [Integer] seconds to wait
+  #
+  # @return [Capybara::Element] modal DOM element
   def modal_ready(timeout: Capybara.default_max_wait_time)
-    wait(timeout).until_exists { find('.modal.in.modal--ready', wait: 0) }
-  end
-
-  # Checks if modal has disappeared
-  #
-  # @param timeout [Integer] seconds to wait
-  def modal_disappear(timeout: Capybara.default_max_wait_time)
-    wait(timeout).until_disappears { find('.modal', wait: 0) }
+    find('.modal.in.modal--ready', wait: timeout)
+  rescue Capybara::ElementNotFound
+    raise "Modal did not appear in #{timeout} seconds"
   end
 
   # Executes action inside of modal. Makes sure modal has opened and closes
+  # Given block is executed within modal element
+  # If RSpec's expect clause is present in the block, it does not wait for modal to close
   #
   # @param timeout [Integer] seconds to wait
-  # @param wait_for_disappear [Bool] wait for modal to close
-  def in_modal(timeout: Capybara.default_max_wait_time, disappears: true, &block)
-    modal_ready(timeout: timeout)
+  # @param disappears: [Boolean] wait for modal to close because of action taken in the block. Defaults to yes.
+  # @yield [] A block to be executed scoped to the modal element
+  def in_modal(timeout: Capybara.default_max_wait_time, disappears: nil, &block)
+    elem = modal_ready(timeout: timeout)
 
-    within('.modal', &block)
+    # check traces for RSpec's #expect
+    trace = TracePoint.new(:call) do |tp|
+      next if !(tp.method_id == :expect && tp.defined_class == RSpec::Matchers)
 
-    modal_disappear(timeout: timeout) if disappears
+      # set disappers to false only if it was not set explicitly in method arguments
+      disappears = false if disappears.nil?
+    end
+
+    trace.enable do
+      within(elem, &block)
+    end
+
+    # return and don't wait for modal to disappear if disappears is not nil and falsey
+    # if disappears is nill, default behavior is to wait
+    return if !disappears.nil? && !disappears
+
+    wait(timeout, message: "Modal did not disappear in #{timeout} seconds").until do
+      elem.base.obscured?
+    rescue *page.driver.invalid_element_errors
+      true
+    end
   end
 
   # Show the popover on hover

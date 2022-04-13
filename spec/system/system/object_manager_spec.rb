@@ -13,7 +13,7 @@ RSpec.describe 'System > Objects', type: :system do
         end
 
         it "fails with '#{error_message}'" do
-          in_modal disappears: false do
+          in_modal do
             fill_in 'name', with: name || 'fallback'
             fill_in 'display', with: 'Not allowed'
             click '.js-submit'
@@ -36,7 +36,7 @@ RSpec.describe 'System > Objects', type: :system do
     end
 
     it 'has the position feild with no default value' do
-      in_modal disappears: false do
+      in_modal do
         expect(page).to have_field('position', with: '')
       end
     end
@@ -543,7 +543,7 @@ RSpec.describe 'System > Objects', type: :system do
     end
 
     it 'verifies max value does not go above limit' do
-      in_modal disappears: false do
+      in_modal do
         fill_in 'Maximal', with: '999999999999'
 
         page.find('.js-submit').click
@@ -553,7 +553,7 @@ RSpec.describe 'System > Objects', type: :system do
     end
 
     it 'verifies max value does not go below limit' do
-      in_modal disappears: false do
+      in_modal do
         fill_in 'Maximal', with: '-999999999999'
 
         page.find('.js-submit').click
@@ -584,7 +584,7 @@ RSpec.describe 'System > Objects', type: :system do
     end
 
     it 'verifies min value does not go above limit' do
-      in_modal disappears: false do
+      in_modal do
         fill_in 'Minimal', with: '999999999999'
 
         page.find('.js-submit').click
@@ -594,7 +594,7 @@ RSpec.describe 'System > Objects', type: :system do
     end
 
     it 'verifies min value does not go below limit' do
-      in_modal disappears: false do
+      in_modal do
         fill_in 'Minimal', with: '-999999999999'
 
         page.find('.js-submit').click
@@ -624,7 +624,7 @@ RSpec.describe 'System > Objects', type: :system do
     end
 
     it 'verifies min value must be lower than max' do
-      in_modal disappears: false do
+      in_modal do
         fill_in 'Minimal', with: '128'
         fill_in 'Maximal', with: '-128'
 
@@ -647,17 +647,21 @@ RSpec.describe 'System > Objects', type: :system do
     end
 
     it 'date attribute' do
-      page.find('select[name=data_type]').select('Date')
-      fill_in 'Default time diff (hours)', with: ''
+      in_modal do
+        page.find('select[name=data_type]').select('Date')
+        fill_in 'Default time diff (hours)', with: ''
 
-      expect { page.find('.js-submit').click }.to change(ObjectManager::Attribute, :count).by(1)
+        expect { page.find('.js-submit').click }.to change(ObjectManager::Attribute, :count).by(1)
+      end
     end
 
     it 'datetime attribute' do
-      page.find('select[name=data_type]').select('Datetime')
-      fill_in 'Default time diff (minutes)', with: ''
+      in_modal do
+        page.find('select[name=data_type]').select('Datetime')
+        fill_in 'Default time diff (minutes)', with: ''
 
-      expect { page.find('.js-submit').click }.to change(ObjectManager::Attribute, :count).by(1)
+        expect { page.find('.js-submit').click }.to change(ObjectManager::Attribute, :count).by(1)
+      end
     end
   end
 
@@ -687,7 +691,7 @@ RSpec.describe 'System > Objects', type: :system do
 
     shared_examples 'having a custom sort option' do
       it 'has a custom option checkbox' do
-        in_modal disappears: false do
+        in_modal do
           expect(page).to have_field('data_option::customsort', type: 'checkbox', visible: :all)
         end
       end

@@ -110,13 +110,13 @@ RSpec.describe 'Ticket Shared Draft Zoom', type: :system, authenticated_as: :aut
     end
 
     it 'shows content' do
-      in_modal disappears: false do
+      in_modal do
         expect(page).to have_text draft_body
       end
     end
 
     it 'shows author' do
-      in_modal disappears: false do
+      in_modal do
         expect(page).to have_text(User.find(draft.created_by_id).fullname)
       end
     end

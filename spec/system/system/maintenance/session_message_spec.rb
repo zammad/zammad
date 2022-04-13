@@ -61,7 +61,7 @@ RSpec.describe 'System > Maintenance - Session Message', type: :system do
       end
 
       using_session(:second_browser) do
-        in_modal disappears: false do
+        in_modal do
           check_sesion_message_content(message_title, message_text)
 
           expect(page).to have_text('Continue session')

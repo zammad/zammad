@@ -2502,7 +2502,7 @@ RSpec.describe 'Ticket zoom', type: :system do
         expect { page.find('.js-ArticleAction[data-type=internal]').click }.to change { article.reload.internal }.to(true)
         page.find('.js-ArticleAction[data-type=public]').click
 
-        in_modal disappears: false do
+        in_modal do
           expect { find('button[type=submit]').click }.to change { article.reload.internal }.to(false)
         end
       end

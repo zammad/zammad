@@ -29,7 +29,7 @@ RSpec.describe 'Manage > Calendars', type: :system do
         end
       end
 
-      in_modal disappears: false do
+      in_modal do
         # Check that holidays were imported by looking at the first entry.
         expect(find('.holiday_selector tbody tr:first-child td:nth-child(2)').text).to match(%r{^\d{4}-\d{2}-\d{2}$})
         expect(find('.holiday_selector tbody tr:first-child td input.js-summary').value).to be_present
@@ -53,7 +53,7 @@ RSpec.describe 'Manage > Calendars', type: :system do
 
       click '.js-new'
 
-      in_modal disappears: false do
+      in_modal do
         expect(all('.ical_feed select option').map(&:text)).to eq ['-', 'Argentinien', 'Australien', 'Chile', 'Kanada', 'Österreich', 'Weißrussland']
       end
     end

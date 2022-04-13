@@ -12,7 +12,7 @@ RSpec.describe 'Knowledge Base Locale Knowledge Base Permissions', type: :system
   it 'shows roles with has KB permissions only' do
     open_page
 
-    in_modal disappears: false do
+    in_modal do
       expect(page)
         .to have_text(%r{Admin}i)
         .and(have_text(%r{Agent}i))
@@ -24,7 +24,7 @@ RSpec.describe 'Knowledge Base Locale Knowledge Base Permissions', type: :system
     it 'shows existing permissions when KB has no permissions' do
       open_page
 
-      in_modal disappears: false do
+      in_modal do
         expect(page)
           .to have_css("input[name='#{role_editor.id}'][value='editor'][checked]:not([disabled])", visible: :all)
           .and(have_css("input[name='#{role_editor.id}'][value='reader']:not([disabled])", visible: :all))
@@ -37,7 +37,7 @@ RSpec.describe 'Knowledge Base Locale Knowledge Base Permissions', type: :system
 
       open_page
 
-      in_modal disappears: false do
+      in_modal do
         expect(page)
           .to have_css("input[name='#{role_another_editor.id}'][value='reader'][checked]:not([disabled])", visible: :all)
           .and(have_css("input[name='#{role_another_editor.id}'][value='editor']:not([disabled])", visible: :all))
@@ -48,7 +48,7 @@ RSpec.describe 'Knowledge Base Locale Knowledge Base Permissions', type: :system
     it 'shows reader permissions limited by role itself' do
       open_page
 
-      in_modal disappears: false do
+      in_modal do
         expect(page)
           .to have_css("input[name='#{role_reader.id}'][value='none']:not([disabled])", visible: :all)
           .and(have_css("input[name='#{role_reader.id}'][value='reader'][checked]:not([disabled])", visible: :all))
@@ -103,7 +103,7 @@ RSpec.describe 'Knowledge Base Locale Knowledge Base Permissions', type: :system
     it 'does not allow to lock user himself' do
       open_page
 
-      in_modal disappears: false do
+      in_modal do
         find("input[name='#{role_editor.id}'][value='reader']", visible: :all)
           .ancestor('label')
           .click

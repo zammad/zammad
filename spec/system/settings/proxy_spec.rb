@@ -44,7 +44,7 @@ RSpec.describe 'Manage > Settings > System > Network', type: :system do
           fill_in 'proxy_password',   with: proxy_password
           click_on 'Test Connection'
 
-          in_modal disappears: false do
+          in_modal do
             expect(page).to have_css('h1', text: 'Error')
             expect(page).to have_css('div', text: %r{Invalid proxy address})
           end
@@ -65,7 +65,7 @@ RSpec.describe 'Manage > Settings > System > Network', type: :system do
           fill_in 'proxy_password',   with: proxy_password
           click_on 'Test Connection'
 
-          in_modal disappears: false do
+          in_modal do
             expect(page).to have_css('h1', text: 'Error')
             expect(page).to have_css('div', text: %r{Failed to open TCP connection})
           end
@@ -86,7 +86,7 @@ RSpec.describe 'Manage > Settings > System > Network', type: :system do
           fill_in 'proxy_password',   with: proxy_password
           click_on 'Test Connection'
 
-          in_modal disappears: false do
+          in_modal do
             expect(page).to have_css('h1', text: 'Error')
             expect(page).to have_css('div', text: %r{Access Denied})
           end
@@ -107,7 +107,7 @@ RSpec.describe 'Manage > Settings > System > Network', type: :system do
           fill_in 'proxy_password',   with: 'invalid_password'
           click_on 'Test Connection'
 
-          in_modal disappears: false do
+          in_modal do
             expect(page).to have_css('h1', text: 'Error')
             expect(page).to have_css('div', text: %r{Access Denied})
           end

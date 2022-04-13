@@ -38,7 +38,7 @@ RSpec.describe 'Profile > Token Access', type: :system do
 
     context 'with expire date' do
       it 'generates a new personal token' do
-        in_modal disappears: false do
+        in_modal do
           expect(page).to have_selector('.form-control.input.js-select')
             .and have_text('Your New Personal Access Token')
         end
@@ -60,7 +60,7 @@ RSpec.describe 'Profile > Token Access', type: :system do
       let(:expiry_date) { nil }
 
       it 'generates a new personal token' do
-        in_modal disappears: false do
+        in_modal do
           expect(page).to have_selector('.form-control.input.js-select')
             .and have_text('Your New Personal Access Token')
         end
@@ -84,11 +84,11 @@ RSpec.describe 'Profile > Token Access', type: :system do
 
       within :active_content do
         find('.content.active .js-create').click
+      end
 
-        in_modal disappears: false do
-          fill_in 'label', with: label
-          send_keys(:tab)
-        end
+      in_modal disappears: false do
+        fill_in 'label', with: label
+        send_keys(:tab)
       end
     end
 
@@ -97,9 +97,11 @@ RSpec.describe 'Profile > Token Access', type: :system do
       let(:error_message) { 'Need label!' }
 
       before do
-        checkbox = find(checkbox_input, visible: :all)
-        checkbox.check allow_label_click: true
-        click_button
+        in_modal disappears: false do
+          checkbox = find(checkbox_input, visible: :all)
+          checkbox.check allow_label_click: true
+          click_button
+        end
       end
 
       it_behaves_like 'having an error notification message'

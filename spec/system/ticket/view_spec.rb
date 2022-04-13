@@ -101,7 +101,7 @@ RSpec.describe 'Ticket views', type: :system, authenticated_as: :authenticate do
           move_mouse_to find(:macro_batch, macro_priority.id)
           release_mouse
 
-          in_modal disappears: false do
+          in_modal do
             expect(page).to have_text(ticket.title)
           end
         end
@@ -276,7 +276,7 @@ RSpec.describe 'Ticket views', type: :system, authenticated_as: :authenticate do
           click '.js-confirm'
           click '.js-submit'
 
-          in_modal disappears: false do
+          in_modal do
             expect(page).to have_text(ticket1.title)
           end
         end
