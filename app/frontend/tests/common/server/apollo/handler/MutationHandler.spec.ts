@@ -124,16 +124,14 @@ describe('MutationHandler', () => {
     })
 
     it('result is available', async () => {
-      expect.assertions(1)
       const mutationHandlerObject = new MutationHandler(sampleMutation())
-      const result = await mutationHandlerObject.send({ id: 1, Sample: {} })
 
-      expect(result).toEqual(result)
+      await expect(
+        mutationHandlerObject.send({ id: 1, Sample: {} }),
+      ).resolves.toEqual(mutationSampleResult)
     })
 
-    it('result with user error', async (done) => {
-      expect.assertions(1)
-
+    it('result with user error', async () => {
       const userErrors = [
         {
           field: null,
@@ -156,12 +154,10 @@ describe('MutationHandler', () => {
       }
 
       const mutationHandlerObject = new MutationHandler(sampleMutation())
-      mutationHandlerObject
-        .send({ id: 1, Sample: {} })
-        .catch((errors: UserError) => {
-          expect(errors).toEqual(userErrorObject)
-          done()
-        })
+
+      await expect(mutationHandlerObject.send()).rejects.toEqual(
+        userErrorObject,
+      )
     })
   })
 
@@ -233,7 +229,9 @@ describe('MutationHandler', () => {
       const mutationHandlerObject = new MutationHandler(sampleMutation())
 
       expect(mutationHandlerObject.called().value).toBe(false)
-      mutationHandlerObject.send()
+      mutationHandlerObject.send().catch(() => {
+        return null
+      })
       expect(mutationHandlerObject.called().value).toBe(true)
     })
   })

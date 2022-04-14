@@ -32,8 +32,6 @@ const subscriptionSampleErrorResult = {
   ],
 }
 
-// const querySampleNetworkErrorResult = new Error('GraphQL Network Error')
-
 let mockSubscription: IMockSubscription
 
 const mockClient = () => {
@@ -103,6 +101,7 @@ describe('SubscriptionHandler', () => {
 
     it('loading state will be updated', async () => {
       expect.assertions(2)
+
       const subscriptionHandlerObject = new SubscriptionHandler(
         sampleSubscription({ id: 1 }),
       )
@@ -173,6 +172,7 @@ describe('SubscriptionHandler', () => {
 
     it('register onResult callback', async () => {
       expect.assertions(1)
+
       const subscriptionHandlerObject = new SubscriptionHandler(
         sampleSubscription({ id: 1 }),
       )
@@ -208,7 +208,6 @@ describe('SubscriptionHandler', () => {
       })
 
       it('notification is triggerd', () => {
-        expect.assertions(2)
         const subscriptionHandlerObject = new SubscriptionHandler(
           sampleSubscription({ id: 1 }),
         )
@@ -222,8 +221,6 @@ describe('SubscriptionHandler', () => {
       })
 
       it('use error callback', () => {
-        expect.assertions(2)
-
         const errorCallbackSpy = vi.fn()
 
         const subscriptionHandlerObject = new SubscriptionHandler(

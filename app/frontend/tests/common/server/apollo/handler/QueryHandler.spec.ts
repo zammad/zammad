@@ -100,8 +100,10 @@ describe('QueryHandler', () => {
 
     it('loading state will be updated', async () => {
       expect.assertions(2)
+
       const queryHandlerObject = new QueryHandler(sampleQuery({ id: 1 }))
       expect(queryHandlerObject.loading().value).toBe(true)
+
       await queryHandlerObject.onLoaded()
 
       expect(queryHandlerObject.loading().value).toBe(false)
@@ -114,26 +116,28 @@ describe('QueryHandler', () => {
     })
 
     it('result is available', async () => {
-      expect.assertions(1)
       const queryHandlerObject = new QueryHandler(sampleQuery({ id: 1 }))
 
-      const result = await queryHandlerObject.loadedResult()
-      expect(result).toEqual(querySampleResult)
+      await expect(queryHandlerObject.loadedResult()).resolves.toEqual(
+        querySampleResult,
+      )
     })
 
     it('loaded result is also resolved after additional result call with active trigger refetch', async () => {
-      expect.assertions(2)
       const queryHandlerObject = new QueryHandler(sampleQuery({ id: 1 }))
 
-      let result = await queryHandlerObject.loadedResult()
-      expect(result).toEqual(querySampleResult)
+      await expect(queryHandlerObject.loadedResult()).resolves.toEqual(
+        querySampleResult,
+      )
 
-      result = await queryHandlerObject.loadedResult(true)
-      expect(result).toEqual(querySampleResult)
+      await expect(queryHandlerObject.loadedResult(true)).resolves.toEqual(
+        querySampleResult,
+      )
     })
 
     it('watch on result change', async () => {
       expect.assertions(1)
+
       const queryHandlerObject = new QueryHandler(sampleQuery({ id: 1 }))
 
       queryHandlerObject.watchOnResult((result) => {
@@ -151,6 +155,7 @@ describe('QueryHandler', () => {
 
       it('notification is triggerd', async () => {
         expect.assertions(1)
+
         const queryHandlerObject = new QueryHandler(sampleQuery({ id: 1 }))
 
         await queryHandlerObject.loadedResult()
@@ -228,17 +233,11 @@ describe('QueryHandler', () => {
     })
 
     it('use fetchMore query function', async () => {
-      expect.assertions(1)
-
       const queryHandlerObject = new QueryHandler(sampleQuery({ id: 1 }))
 
-      const resultCallbackSpy = vi.fn()
-
-      await queryHandlerObject.fetchMore({}).then((result) => {
-        resultCallbackSpy(result)
-      })
-
-      expect(resultCallbackSpy).toHaveBeenCalledWith(querySampleResult)
+      await expect(queryHandlerObject.fetchMore({})).resolves.toEqual(
+        querySampleResult,
+      )
     })
   })
 })

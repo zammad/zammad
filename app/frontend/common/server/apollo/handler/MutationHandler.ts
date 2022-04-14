@@ -25,6 +25,7 @@ export default class MutationHandler<
 
             if (errors) {
               const userErrors = new UserError(errors)
+
               return reject(userErrors)
             }
           }
