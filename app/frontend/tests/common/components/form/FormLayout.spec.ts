@@ -1,13 +1,16 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import FormLayout from '@common/components/form/FormLayout.vue'
-import { ExtendedRenderResult, getWrapper } from '@tests/support/components'
+import {
+  ExtendedRenderResult,
+  renderComponent,
+} from '@tests/support/components'
 
 describe('FormLayout.vue', () => {
   let wrapper: ExtendedRenderResult
 
   beforeAll(() => {
-    wrapper = getWrapper(FormLayout, {
+    wrapper = renderComponent(FormLayout, {
       props: {},
       slots: {
         default: 'Should be a field',

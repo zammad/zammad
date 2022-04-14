@@ -3,7 +3,7 @@
 import Form from '@common/components/form/Form.vue'
 import useForm from '@common/composables/form/useForm'
 import { getNode, type FormKitNode } from '@formkit/core'
-import { getWrapper } from '@tests/support/components'
+import { renderComponent } from '@tests/support/components'
 
 const wrapperParameters = {
   form: true,
@@ -12,7 +12,7 @@ const wrapperParameters = {
 }
 
 // Initialize a form component.
-getWrapper(Form, {
+renderComponent(Form, {
   ...wrapperParameters,
   attrs: {
     id: 'test-form',

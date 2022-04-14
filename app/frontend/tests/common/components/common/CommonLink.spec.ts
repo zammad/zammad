@@ -3,7 +3,7 @@
 import CommonLink, {
   type Props,
 } from '@common/components/common/CommonLink.vue'
-import { getWrapper } from '@tests/support/components'
+import { renderComponent } from '@tests/support/components'
 import { MountingOptions } from '@vue/test-utils'
 
 const wrapperParameters = {
@@ -14,7 +14,7 @@ const wrapperParameters = {
 }
 
 const renderCommonLink = (options: MountingOptions<Props> = {}) => {
-  const view = getWrapper(CommonLink, {
+  const view = renderComponent(CommonLink, {
     ...wrapperParameters,
     props: {
       link: 'https://www.zammad.org',

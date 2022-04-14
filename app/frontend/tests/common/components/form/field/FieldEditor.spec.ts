@@ -2,14 +2,14 @@
 
 import { getNode } from '@formkit/core'
 import { FormKit } from '@formkit/vue'
-import { getWrapper } from '@tests/support/components'
+import { renderComponent } from '@tests/support/components'
 
 const wrapperParameters = {
   form: true,
   formField: true,
 }
 
-const wrapper = getWrapper(FormKit, {
+const wrapper = renderComponent(FormKit, {
   ...wrapperParameters,
   props: {
     name: 'editor',

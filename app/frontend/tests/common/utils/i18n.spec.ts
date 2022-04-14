@@ -2,8 +2,8 @@
 
 import { i18n } from '@common/utils/i18n'
 import CommonHelloWorld from '@common/components/common/CommonHelloWorld.vue'
-import { shallowMount } from '@vue/test-utils'
 import { nextTick } from 'vue'
+import { renderComponent } from '@tests/support/components'
 
 describe('i18n', () => {
   it('starts with empty state', () => {
@@ -43,7 +43,7 @@ describe('i18n', () => {
   it('updates (reactive) translations automatically', async () => {
     expect.assertions(4)
     const msg = 'Hello world!'
-    const wrapper = shallowMount(CommonHelloWorld, {
+    const { container } = renderComponent(CommonHelloWorld, {
       props: { msg, show: true },
       global: {
         mocks: {
@@ -51,11 +51,11 @@ describe('i18n', () => {
         },
       },
     })
-    expect(wrapper.text()).toMatch('Hallo Welt!')
-    expect(wrapper.text()).toMatch('Die zweite Komponente.')
+    expect(container).toHaveTextContent('Hallo Welt!')
+    expect(container).toHaveTextContent('Die zweite Komponente.')
     i18n.setTranslationMap(new Map())
     await nextTick()
-    expect(wrapper.text()).toMatch('Hello world!')
-    expect(wrapper.text()).toMatch('The second component.')
+    expect(container).toHaveTextContent('Hello world!')
+    expect(container).toHaveTextContent('The second component.')
   })
 })

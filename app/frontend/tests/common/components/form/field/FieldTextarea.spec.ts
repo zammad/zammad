@@ -3,7 +3,10 @@
 import { i18n } from '@common/utils/i18n'
 import { getNode } from '@formkit/core'
 import { FormKit } from '@formkit/vue'
-import { ExtendedRenderResult, getWrapper } from '@tests/support/components'
+import {
+  ExtendedRenderResult,
+  renderComponent,
+} from '@tests/support/components'
 import { waitForTimeout } from '@tests/support/utils'
 import { nextTick } from 'vue'
 
@@ -16,7 +19,7 @@ describe('Form - Field - Textarea (Formkit-BuildIn)', () => {
   let wrapper: ExtendedRenderResult
 
   beforeAll(() => {
-    wrapper = getWrapper(FormKit, {
+    wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
         name: 'textarea',
@@ -97,7 +100,7 @@ describe('Form - Field - Textarea (Formkit-BuildIn)', () => {
 
 describe('Form - Field - Textarea (Formkit-BuildIn) - Translations', () => {
   it('can translate placeholder attribute', async () => {
-    const wrapper = getWrapper(FormKit, {
+    const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
         label: 'Body',
@@ -123,7 +126,7 @@ describe('Form - Field - Textarea (Formkit-BuildIn) - Translations', () => {
   })
 
   it('can translate label with label placeholder', () => {
-    const wrapper = getWrapper(FormKit, {
+    const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
         label: 'Body %s %s',

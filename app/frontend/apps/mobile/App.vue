@@ -4,7 +4,7 @@
   <CommonNotifications v-if="applicationLoaded.value" />
   <div
     v-if="applicationLoaded.value"
-    class="min-h-screen min-w-full select-none bg-black text-center font-sans text-sm text-white antialiased"
+    class="min-h-screen min-w-full select-none bg-black font-sans text-sm text-white antialiased"
   >
     <router-view />
   </div>

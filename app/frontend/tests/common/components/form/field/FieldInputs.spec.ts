@@ -2,7 +2,7 @@
 
 import { getNode } from '@formkit/core'
 import { FormKit } from '@formkit/vue'
-import { getWrapper } from '@tests/support/components'
+import { renderComponent } from '@tests/support/components'
 import { waitForTimeout } from '@tests/support/utils'
 
 const wrapperParameters = {
@@ -12,7 +12,7 @@ const wrapperParameters = {
 }
 
 describe('Form - Field - Inputs (Text) (Formkit-BuildIn)', () => {
-  const wrapper = getWrapper(FormKit, {
+  const wrapper = renderComponent(FormKit, {
     ...wrapperParameters,
     props: {
       name: 'text',
@@ -91,7 +91,7 @@ describe('Form - Field - Inputs (Text) (Formkit-BuildIn)', () => {
 })
 
 describe('Form - Field - Email (Formkit-BuildIn)', () => {
-  const wrapper = getWrapper(FormKit, {
+  const wrapper = renderComponent(FormKit, {
     ...wrapperParameters,
     props: {
       name: 'email',
@@ -116,7 +116,7 @@ describe('Form - Field - Email (Formkit-BuildIn)', () => {
 })
 
 describe('Form - Field - Color (Formkit-BuildIn)', () => {
-  const wrapper = getWrapper(FormKit, {
+  const wrapper = renderComponent(FormKit, {
     ...wrapperParameters,
     props: {
       name: 'color',
@@ -136,7 +136,7 @@ describe('Form - Field - Color (Formkit-BuildIn)', () => {
 })
 
 describe('Form - Field - Tel (Formkit-BuildIn)', () => {
-  const wrapper = getWrapper(FormKit, {
+  const wrapper = renderComponent(FormKit, {
     ...wrapperParameters,
     props: {
       name: 'tel',
@@ -156,7 +156,7 @@ describe('Form - Field - Tel (Formkit-BuildIn)', () => {
 })
 
 describe('Form - Field - Search (Formkit-BuildIn)', () => {
-  const wrapper = getWrapper(FormKit, {
+  const wrapper = renderComponent(FormKit, {
     ...wrapperParameters,
     props: {
       name: 'search',
@@ -176,7 +176,7 @@ describe('Form - Field - Search (Formkit-BuildIn)', () => {
 })
 
 describe('Form - Field - Number (Formkit-BuildIn)', () => {
-  const wrapper = getWrapper(FormKit, {
+  const wrapper = renderComponent(FormKit, {
     ...wrapperParameters,
     props: {
       name: 'number',
@@ -205,7 +205,7 @@ describe('Form - Field - Number (Formkit-BuildIn)', () => {
 })
 
 describe('Form - Field - Time (Formkit-BuildIn)', () => {
-  const wrapper = getWrapper(FormKit, {
+  const wrapper = renderComponent(FormKit, {
     ...wrapperParameters,
     props: {
       name: 'time',
@@ -226,7 +226,7 @@ describe('Form - Field - Time (Formkit-BuildIn)', () => {
 })
 
 describe('Form - Field - Date (Formkit-BuildIn)', () => {
-  const wrapper = getWrapper(FormKit, {
+  const wrapper = renderComponent(FormKit, {
     ...wrapperParameters,
     props: {
       name: 'date',
@@ -247,7 +247,7 @@ describe('Form - Field - Date (Formkit-BuildIn)', () => {
 })
 
 describe('Form - Field - Datetime (Formkit-BuildIn)', () => {
-  const wrapper = getWrapper(FormKit, {
+  const wrapper = renderComponent(FormKit, {
     ...wrapperParameters,
     props: {
       name: 'datetimeLocal',

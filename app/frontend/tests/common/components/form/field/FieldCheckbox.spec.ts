@@ -4,7 +4,10 @@ import CheckboxVariant from '@common/types/form/fields'
 import { getNode } from '@formkit/core'
 import { FormKit } from '@formkit/vue'
 import { getAllByRole } from '@testing-library/vue'
-import { ExtendedMountingOptions, getWrapper } from '@tests/support/components'
+import {
+  ExtendedMountingOptions,
+  renderComponent,
+} from '@tests/support/components'
 import { waitForTimeout } from '@tests/support/utils'
 
 const wrapperParameters = {
@@ -13,7 +16,7 @@ const wrapperParameters = {
 }
 
 const renderButton = (options: ExtendedMountingOptions<unknown> = {}) =>
-  getWrapper(FormKit, {
+  renderComponent(FormKit, {
     ...wrapperParameters,
     props: {
       name: 'checkbox',

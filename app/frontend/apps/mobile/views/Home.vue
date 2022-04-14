@@ -9,6 +9,21 @@
     <br />
     <p v-on:click="goToTickets">Go to Tickets</p>
     <br />
+    <CommonSectionMenu
+      header-title="Lorem"
+      action-title="Edit"
+      v-on:action-click="logAction"
+    >
+      <CommonSectionMenuLink
+        title="hello welcome allo"
+        icon="tickets"
+        link="/"
+      />
+      <CommonSectionMenuLink title="kb" icon="knowledge-base" link="/" />
+      <CommonSectionMenuLink title="empty" link="/" />
+      <CommonSectionMenuLink title="not-a-link" v-on:click="logAction" />
+    </CommonSectionMenu>
+    <CommonSectionMenu v-bind:items="menu" />
     <CommonLink v-bind:link="{ name: 'TicketOverview' }">
       <span>Test Route Link</span>
     </CommonLink>
@@ -23,13 +38,13 @@
     <br />
     <p v-on:click="fetchCurrentUser">fetchCurrentUser</p>
     <br /><br />
-    <h1 class="mb-4 text-lg">Configs:</h1>
+    <!-- <h1 class="mb-4 text-lg">Configs:</h1>
     <template v-if="config.value">
       <p v-for="(value, key) in config.value" v-bind:key="(key as string)">
         Key: {{ key }}<br />
         Value: {{ value }} <br /><br />
       </p>
-    </template>
+    </template> -->
   </div>
 </template>
 
@@ -44,15 +59,23 @@ import { useCurrentUserQuery } from '@common/graphql/api'
 import { NotificationTypes } from '@common/types/notification'
 import useViewTransition from '@mobile/composables/useViewTransition'
 import ViewTransitions from '@mobile/types/transition'
+import CommonSectionMenu, {
+  type MenuItem,
+} from '@mobile/components/section/CommonSectionMenu.vue'
+import CommonSectionMenuLink from '@mobile/components/section/CommonSectionMenuLink.vue'
 
 // TODO: Only testing for the notifications...
 const { notify, clearAllNotifications } = useNotifications()
+
+const menu: MenuItem[] = [{ type: 'link', link: '/', title: 'Link' }]
 
 notify({
   message: __('Hello Home!!!'),
   type: NotificationTypes.WARN,
   durationMS: 10000,
 })
+
+const logAction = console.log
 
 const sessionUser = useSessionUserStore()
 

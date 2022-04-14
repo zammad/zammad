@@ -2,12 +2,12 @@
 
 import CommonLogo from '@common/components/common/CommonLogo.vue'
 import useApplicationConfigStore from '@common/stores/application/config'
-import { getWrapper } from '@tests/support/components'
+import { renderComponent } from '@tests/support/components'
 import { nextTick } from 'vue'
 
 describe('CommonLogo.vue', () => {
   it('renders custom logo', async () => {
-    const wrapper = getWrapper(CommonLogo, { store: true })
+    const wrapper = renderComponent(CommonLogo, { store: true })
     const configStore = useApplicationConfigStore()
 
     configStore.value.product_name = 'Zammad Custom Logo'
@@ -21,7 +21,7 @@ describe('CommonLogo.vue', () => {
   })
 
   it('renders default zammad logo', async () => {
-    const wrapper = getWrapper(CommonLogo, { store: true })
+    const wrapper = renderComponent(CommonLogo, { store: true })
     const configStore = useApplicationConfigStore()
 
     configStore.value.product_logo = 'icons/logotype.svg'

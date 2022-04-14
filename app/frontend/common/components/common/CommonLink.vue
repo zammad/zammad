@@ -18,8 +18,8 @@
     v-else
     v-bind:href="(link as string)"
     v-bind:target="target"
-    v-bind:rel="rel"
     v-bind:class="linkClass"
+    v-bind:rel="rel"
     data-test-id="common-link"
     v-on:click="onClick"
   >
@@ -74,13 +74,11 @@ const target = computed(() => {
 
 // TODO: Correct styling is currently missing.
 const linkClass = computed(() => {
-  let classes = 'text-blue hover:underline'
-
   if (props.disabled) {
-    classes += ' pointer-events-none text-gray-300/75'
+    return 'pointer-events-none'
   }
 
-  return classes
+  return ''
 })
 
 const onClick = (event: MouseEvent) => {

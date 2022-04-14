@@ -1,7 +1,10 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import { FormKit } from '@formkit/vue'
-import { ExtendedMountingOptions, getWrapper } from '@tests/support/components'
+import {
+  ExtendedMountingOptions,
+  renderComponent,
+} from '@tests/support/components'
 
 const wrapperParameters = {
   form: true,
@@ -10,7 +13,7 @@ const wrapperParameters = {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const renderButton = (options: ExtendedMountingOptions<any> = {}) => {
-  return getWrapper(FormKit, {
+  return renderComponent(FormKit, {
     ...wrapperParameters,
     props: {
       name: 'button',

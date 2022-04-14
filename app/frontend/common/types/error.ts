@@ -2,7 +2,7 @@
 
 import type { GraphQLErrorExtensions } from 'graphql'
 import type { UserError } from '@common/graphql/types'
-import type { Except, SetRequired } from 'type-fest'
+import type { Except } from 'type-fest'
 
 export enum GraphQLErrorTypes {
   UnkownError = 'Exceptions::UnkownError',

@@ -2,7 +2,10 @@
 
 import { getNode } from '@formkit/core'
 import { FormKit } from '@formkit/vue'
-import { ExtendedRenderResult, getWrapper } from '@tests/support/components'
+import {
+  ExtendedRenderResult,
+  renderComponent,
+} from '@tests/support/components'
 import { waitForNextTick, waitForTimeout } from '@tests/support/utils'
 
 const wrapperParameters = {
@@ -15,7 +18,7 @@ describe('Form - Field - Password (Formkit-BuildIn)', () => {
   let wrapper: ExtendedRenderResult
 
   beforeAll(() => {
-    wrapper = getWrapper(FormKit, {
+    wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
         name: 'password',
@@ -94,7 +97,7 @@ describe('toggling visibility', () => {
   let wrapper: ExtendedRenderResult
 
   beforeAll(() => {
-    wrapper = getWrapper(FormKit, {
+    wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
         type: 'password',

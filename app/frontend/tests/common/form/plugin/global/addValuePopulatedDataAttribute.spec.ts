@@ -7,7 +7,7 @@ import {
   FormKitFrameworkContext,
 } from '@formkit/core'
 import { FormKit } from '@formkit/vue'
-import { getWrapper } from '@tests/support/components'
+import { renderComponent } from '@tests/support/components'
 
 const wrapperParameters = {
   form: true,
@@ -15,7 +15,7 @@ const wrapperParameters = {
 }
 
 const renderKit = () => {
-  const kit = getWrapper(FormKit, {
+  const kit = renderComponent(FormKit, {
     ...wrapperParameters,
     props: {
       name: 'text',

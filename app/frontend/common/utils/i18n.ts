@@ -13,7 +13,9 @@ window.setInterval(() => {
 export class I18N {
   private translator = new Translator()
 
-  t(source: string, ...args: Array<string | number>): string {
+  t(source: string | undefined, ...args: Array<string | number>): string {
+    if (typeof source === 'undefined') return ''
+
     return this.translator.translate(source, ...args)
   }
 

@@ -127,7 +127,7 @@ afterEach(() => {
   })
 })
 
-const getWrapper = <Props>(
+const renderComponent = <Props>(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   component: any,
   wrapperOptions?: ExtendedMountingOptions<Props>,
@@ -170,4 +170,4 @@ const getWrapper = <Props>(
   return view
 }
 
-export default getWrapper
+export default renderComponent

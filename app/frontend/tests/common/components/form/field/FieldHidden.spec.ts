@@ -2,7 +2,7 @@
 
 import { getNode } from '@formkit/core'
 import { FormKit } from '@formkit/vue'
-import { getWrapper } from '@tests/support/components'
+import { renderComponent } from '@tests/support/components'
 
 const wrapperParameters = {
   form: true,
@@ -11,7 +11,7 @@ const wrapperParameters = {
 
 describe('Form - Field - Hidden (Formkit-BuildIn)', () => {
   it('can render a input', () => {
-    const wrapper = getWrapper(FormKit, {
+    const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
         name: 'hidden',

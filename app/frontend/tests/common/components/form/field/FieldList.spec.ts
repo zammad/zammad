@@ -3,7 +3,7 @@
 import { getNode } from '@formkit/core'
 import { FormKit } from '@formkit/vue'
 import { getAllByRole } from '@testing-library/vue'
-import { getWrapper } from '@tests/support/components'
+import { renderComponent } from '@tests/support/components'
 
 const wrapperParameters = {
   form: true,
@@ -12,7 +12,7 @@ const wrapperParameters = {
 
 describe('Form - Field - List (Formkit-BuildIn)', () => {
   it('empty content without childrens', () => {
-    const wrapper = getWrapper(FormKit, {
+    const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
         name: 'list',
@@ -26,7 +26,7 @@ describe('Form - Field - List (Formkit-BuildIn)', () => {
 
   it('render some fields and check values', () => {
     const html = String.raw
-    const wrapper = getWrapper(FormKit, {
+    const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
         name: 'list',

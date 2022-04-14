@@ -5,7 +5,10 @@ import UserError from '@common/errors/UserError'
 import { FormValues } from '@common/types/form'
 import { FormKitNode } from '@formkit/core'
 import { within } from '@testing-library/vue'
-import { ExtendedRenderResult, getWrapper } from '@tests/support/components'
+import {
+  ExtendedRenderResult,
+  renderComponent,
+} from '@tests/support/components'
 import { waitForNextTick } from '@tests/support/utils'
 import { nextTick, onMounted, ref } from 'vue'
 
@@ -18,7 +21,7 @@ describe('Form.vue', () => {
   let wrapper: ExtendedRenderResult
 
   beforeAll(() => {
-    wrapper = getWrapper(Form, {
+    wrapper = renderComponent(Form, {
       ...wrapperParameters,
       props: {
         schema: [
@@ -169,7 +172,7 @@ describe('Form.vue', () => {
 
 describe('Form.vue - Edge Cases', () => {
   it('can use initial values', () => {
-    const wrapper = getWrapper(Form, {
+    const wrapper = renderComponent(Form, {
       ...wrapperParameters,
       props: {
         schema: [
@@ -195,7 +198,7 @@ describe('Form.vue - Edge Cases', () => {
   })
 
   it('can use form layout in schema', () => {
-    const wrapper = getWrapper(Form, {
+    const wrapper = renderComponent(Form, {
       ...wrapperParameters,
       props: {
         schema: [
@@ -234,7 +237,7 @@ describe('Form.vue - Edge Cases', () => {
   })
 
   it('can use DOM elements and other components inside of the schema', () => {
-    const wrapper = getWrapper(Form, {
+    const wrapper = renderComponent(Form, {
       ...wrapperParameters,
       router: true,
       props: {
@@ -275,7 +278,7 @@ describe('Form.vue - Edge Cases', () => {
   })
 
   it('can use list/group fields in form schema', () => {
-    const wrapper = getWrapper(Form, {
+    const wrapper = renderComponent(Form, {
       ...wrapperParameters,
       props: {
         schema: [
@@ -309,7 +312,7 @@ describe('Form.vue - Edge Cases', () => {
   // TODO: add test case for loading animation, when real query call is availabe (can then be mocked).
 
   it('can use fields slot instead of a form schema', () => {
-    const wrapper = getWrapper(Form, {
+    const wrapper = renderComponent(Form, {
       ...wrapperParameters,
       slots: {
         fields: '<FormKit type="text" name="example" label="Example" />',
@@ -327,7 +330,7 @@ describe('Form.vue - Edge Cases', () => {
     expect.assertions(2)
 
     return new Promise((resolve) => {
-      getWrapper(
+      renderComponent(
         {
           template: `<div><Form ref="form" v-bind:schema="schema" /></div>`,
           components: {
@@ -371,7 +374,7 @@ describe('Form.vue - Edge Cases', () => {
 
 describe('Form.vue - Empty', () => {
   it('check for no form output without a schema with fields', () => {
-    const wrapper = getWrapper(Form, {
+    const wrapper = renderComponent(Form, {
       ...wrapperParameters,
       props: {},
     })

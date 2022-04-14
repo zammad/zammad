@@ -5,7 +5,7 @@ import CommonNotifications from '@common/components/common/CommonNotifications.v
 import { NotificationTypes } from '@common/types/notification'
 import useNotifications from '@common/composables/useNotifications'
 import {
-  getWrapper,
+  renderComponent,
   type ExtendedRenderResult,
 } from '@tests/support/components'
 import { waitForTimeout } from '@tests/support/utils'
@@ -17,7 +17,7 @@ beforeEach(() => {
   const { clearAllNotifications } = useNotifications()
   clearAllNotifications()
 
-  wrapper = getWrapper(CommonNotifications, { shallow: false })
+  wrapper = renderComponent(CommonNotifications, { shallow: false })
 })
 
 describe('CommonNotifications.vue', () => {

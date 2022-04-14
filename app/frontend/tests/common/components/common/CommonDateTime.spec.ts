@@ -4,13 +4,13 @@
 vi.useFakeTimers().setSystemTime(new Date('2020-10-11T10:10:10Z'))
 
 import CommonDateTime from '@common/components/common/CommonDateTime.vue'
-import { getWrapper } from '@tests/support/components'
+import { renderComponent } from '@tests/support/components'
 import useApplicationConfigStore from '@common/stores/application/config'
 import { nextTick } from 'vue'
 
 describe('CommonDateTime.vue', () => {
   it('renders DateTime', async () => {
-    const wrapper = getWrapper(CommonDateTime, {
+    const wrapper = renderComponent(CommonDateTime, {
       props: {
         dateTime: '2020-10-10T10:10:10Z',
         format: 'absolute',
