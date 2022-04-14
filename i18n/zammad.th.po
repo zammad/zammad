@@ -11709,6 +11709,12 @@ msgstr "ยังไม่ได้แปล"
 msgid "note"
 msgstr "บันทึก"
 
+#: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
+#, fuzzy
+#| msgid "no"
+msgid "now"
+msgstr "ไม่"
+
 #: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
 msgid "open"
 msgstr "เปิด"

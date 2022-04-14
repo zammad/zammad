@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-04-02 03:30+0000\n"
+"PO-Revision-Date: 2022-04-14 07:14+0000\n"
 "Last-Translator: Martin Gruner <mg@zammad.com>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/de/>\n"
@@ -120,7 +120,7 @@ msgstr "%s erstellte Rolle |%s|"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "%s created ticket |%s|"
-msgstr "%s erstelltes Ticket |%s|"
+msgstr "%s erstellte Ticket |%s|"
 
 #: app/assets/javascripts/app/models/user.coffee
 msgid "%s created user |%s|"
@@ -10243,14 +10243,12 @@ msgid "Ticket Selector"
 msgstr "Ticket-Auswahl"
 
 #: db/seeds/settings.rb
-#, fuzzy
 msgid "Ticket Subject Forward"
-msgstr "Weiterleitungs-Präfix im Ticket-Betreff"
+msgstr "Ticket-Betreff Weiterleitung"
 
 #: db/seeds/settings.rb
-#, fuzzy
 msgid "Ticket Subject Reply"
-msgstr "Ticket Betreff Antwort"
+msgstr "Ticket-Betreff Antwort"
 
 #: db/seeds/settings.rb
 msgid "Ticket Subject Size"
@@ -10269,9 +10267,8 @@ msgid "Ticket failed to save: %s"
 msgstr "Ticket konnte nicht gespeichert werden: %s"
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
-#, fuzzy
 msgid "Ticket reminder reached"
-msgstr "Ticket warten auf Erinnerung erreicht"
+msgstr "Ticket-Erinnerung erreicht"
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 msgid "Ticket update"
@@ -12446,6 +12443,10 @@ msgstr "nicht übersetzt"
 #: db/seeds/ticket_article_types.rb
 msgid "note"
 msgstr "Notiz"
+
+#: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
+msgid "now"
+msgstr "jetzt"
 
 #: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
 msgid "open"

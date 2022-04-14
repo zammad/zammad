@@ -12330,6 +12330,12 @@ msgstr "未翻訳"
 msgid "note"
 msgstr "備考"
 
+#: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
+#, fuzzy
+#| msgid "no"
+msgid "now"
+msgstr "いいえ"
+
 #: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
 msgid "open"
 msgstr "対応中"

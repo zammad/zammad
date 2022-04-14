@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-04-04 05:32+0000\n"
-"Last-Translator: lencell <despotik@free.fr>\n"
+"PO-Revision-Date: 2022-04-14 07:11+0000\n"
+"Last-Translator: occirol <developer@nordan.ch>\n"
 "Language-Team: French <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/fr/>\n"
 "Language: fr-fr\n"
@@ -27,7 +27,7 @@ msgstr ""
 #. - 'l' - hour (12h)
 #. - 'P' - Meridian indicator ('am' or 'pm')
 msgid "FORMAT_DATE"
-msgstr "dd/mm/yyyy"
+msgstr "dd.mm.yyyy"
 
 #. Default date/time format to use for the current locale.
 #. These placeholders are supported:
@@ -43,7 +43,7 @@ msgstr "dd/mm/yyyy"
 #. - 'l' - hour (12h)
 #. - 'P' - Meridian indicator ('am' or 'pm')
 msgid "FORMAT_DATETIME"
-msgstr "dd/mm/yyyy HH:MM"
+msgstr "dd.mm.yyyy HH:MM"
 
 #: db/seeds/settings.rb
 msgid ""
@@ -3394,7 +3394,8 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Defines the default calendar tickets subscription settings."
-msgstr "Définit le calendrier par défaut des paramètres de souscription ticket."
+msgstr ""
+"Définit le calendrier par défaut des paramètres de souscription ticket."
 
 #: db/seeds/settings.rb
 msgid "Defines the default screen."
@@ -3590,8 +3591,8 @@ msgid ""
 "Defines the transaction backend which posts messages to Slack (http://www."
 "slack.com)."
 msgstr ""
-"Définit le backend de transaction qui poste les messages sur Slack "
-"(http://www.slack.com)."
+"Définit le backend de transaction qui poste les messages sur Slack (http://"
+"www.slack.com)."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -3955,7 +3956,8 @@ msgstr "En raison d'inactivité, vous êtes automatiquement déconnecté."
 msgid ""
 "Due to inactivity, you will be automatically logged out within the next 30 "
 "seconds."
-msgstr "Vous êtes inactif et serez automatiquement déconnecté dans 30 secondes."
+msgstr ""
+"Vous êtes inactif et serez automatiquement déconnecté dans 30 secondes."
 
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco
 msgid "Duration"
@@ -4372,7 +4374,8 @@ msgstr "Chiffre le courriel (si impossible, n'envoie pas de notification)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
 msgid "Encrypt email (if not possible, send notification anyway)"
-msgstr "Chiffre le courriel (si impossible, envoi tout de même la notification)"
+msgstr ""
+"Chiffre le courriel (si impossible, envoi tout de même la notification)"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 msgid "Encrypted"
@@ -12639,6 +12642,12 @@ msgstr " Non traduit"
 msgid "note"
 msgstr "note"
 
+#: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
+#, fuzzy
+#| msgid "no"
+msgid "now"
+msgstr "non"
+
 #: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
 msgid "open"
 msgstr "ouvert"
@@ -12666,11 +12675,11 @@ msgstr "action en suspens"
 
 #: db/seeds/ticket_states.rb
 msgid "pending close"
-msgstr "clôture en suspens"
+msgstr "clôture en attente"
 
 #: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
 msgid "pending reminder"
-msgstr "rappel en suspens"
+msgstr "rappel en attente"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/phone_reply.coffee
 #: db/seeds/ticket_article_types.rb

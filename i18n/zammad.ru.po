@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-04-01 03:30+0000\n"
-"Last-Translator: Андриан Галкин <galandrix@gmail.com>\n"
+"PO-Revision-Date: 2022-04-14 07:11+0000\n"
+"Last-Translator: Zhilin Ruslan <x-th-unicorn@hotmail.com>\n"
 "Language-Team: Russian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/ru/>\n"
 "Language: ru\n"
@@ -2217,15 +2217,15 @@ msgstr "Копировать в буфер: Ctrl+C, Enter"
 
 #: db/seeds/permissions.rb
 msgid "Core Workflow"
-msgstr "Основной Рабочий процесс"
+msgstr "Основной рабочий процесс"
 
 #: db/seeds/settings.rb
 msgid "Core Workflow Ajax Mode"
-msgstr ""
+msgstr "Основной рабочий процесс в режиме Ajax"
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
 msgid "Core Workflows"
-msgstr ""
+msgstr "Основные рабочие процессы"
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
 #: app/assets/javascripts/app/models/core_workflow.coffee
@@ -2234,6 +2234,9 @@ msgid ""
 "on an action, it is possible to hide or restrict fields or to change the "
 "obligation to fill them in."
 msgstr ""
+"Основные рабочие процессы — это действия или ограничения выбора в формах. В "
+"зависимости от действия можно скрыть или ограничить поля или изменить "
+"обязательность их заполнения."
 
 #: app/controllers/reports_controller.rb
 msgid "Could not find active reporting profile."
@@ -2245,11 +2248,11 @@ msgstr "Не удалось найти external_credential 'twitter'!"
 
 #: app/controllers/channels_twitter_controller.rb
 msgid "Could not find external_credential in cache!"
-msgstr ""
+msgstr "Не удалось найти external_credential в кеше!"
 
 #: app/controllers/channels_twitter_controller.rb
 msgid "Could not find external_credential[:consumer_secret] in cache!"
-msgstr ""
+msgstr "Не удалось найти external_credential[:consumer_secret] в кеше!"
 
 #: app/controllers/links_controller.rb
 msgid "Could not find object!"
@@ -2272,7 +2275,6 @@ msgid "Couldn't create Knowledge Base"
 msgstr "Не удалось создать Базу знаний"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/public_menu_form.coffee
-#, fuzzy
 msgid "Couldn't save changes"
 msgstr "Не удалось сохранить изменения"
 
@@ -2285,7 +2287,7 @@ msgstr "Количество"
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "Counting entries. This may take a while."
-msgstr "Подсчет записей. Это может требовать времени. "
+msgstr "Подсчет записей. Это может занять некоторое время."
 
 #: db/seeds/object_manager_attributes.rb
 msgid "Country"
@@ -2353,26 +2355,44 @@ msgid ""
 "\n"
 "To select placeholders from a list, just enter \"::\"."
 msgstr ""
+"Создайте текстовые модули, чтобы **тратить меньше времени на написание "
+"ответов**. Текстовые модули могут включать интеллектуальные переменные, "
+"такие как имя пользователя или адрес электронной почты.\n"
+"\n"
+"Примеры фрагментов:\n"
+"\n"
+"* Здравствуйте, миссис #{ticket.customer.lastname},\n"
+"* Здравствуйте, мистер #{ticket.customer.lastname},\n"
+"* Здравствуйте #{ticket.customer.firstname},\n"
+"* Меня зовут #{user.firstname},\n"
+"\n"
+"Конечно, вы также можете использовать многострочные фрагменты.\n"
+"\n"
+"Доступные объекты:\n"
+"* ticket (например, ticket.state, ticket.group)\n"
+"* ticket.customer (например, ticket.customer.firstname, ticket.customer."
+"lastname)\n"
+"* ticket.owner (например, ticket.owner.firstname, ticket.owner.lastname)\n"
+"* ticket.organization (например, ticket.organization.name)\n"
+"* user (например, user.firstname, user.email)\n"
+"\n"
+"Чтобы выбрать заполнители из списка, просто введите «::»."
 
 #: app/controllers/first_steps_controller.rb
 msgid "Create a Test Ticket"
 msgstr "Создать тестовый тикет"
 
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
-#, fuzzy
-#| msgid "Created at"
 msgid "Create a shared draft"
-msgstr "Создать общий шаблон"
+msgstr "Создать общий черновик"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/reader_controller.coffee
 msgid "Create a translation"
 msgstr "Создать перевод"
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Create and setup %s"
 msgid "Create and set up %s"
-msgstr "Создать и установиться %s"
+msgstr "Создать и настроить %s"
 
 #: app/assets/javascripts/app/views/signup.jst.eco
 msgid "Create my account"
@@ -2496,16 +2516,20 @@ msgstr "Требуется текущий пароль!"
 #: app/controllers/application_controller/has_user.rb
 msgid "Current user has no permission to use 'From'/'X-On-Behalf-Of'!"
 msgstr ""
+"Текущий пользователь не имеет разрешения на использование 'From'/'X-On-"
+"Behalf-Of'!"
 
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 msgid ""
 "Currently no overview is assigned to your roles. Please contact your "
 "administrator."
 msgstr ""
+"В настоящее время нет обзора, назначенного вашим ролям. Пожалуйста, "
+"свяжитесь с администратором."
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "Custom"
-msgstr ""
+msgstr "Пользовательский"
 
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
 #: app/assets/javascripts/app/models/knowledge_base.coffee
@@ -2514,7 +2538,7 @@ msgstr "Пользовательский URL"
 
 #: lib/knowledge_base/server_snippet.rb
 msgid "Custom address is not set"
-msgstr ""
+msgstr "Пользовательский адрес не задан"
 
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
@@ -2555,14 +2579,12 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/organization.coffee
 #: db/seeds/object_manager_attributes.rb
-#, fuzzy
-#| msgid "Customers in the organization can view each other items."
 msgid "Customers in the organization can view each other's items."
-msgstr "Сотрудники одной организации могут просматривать друг друга записи"
+msgstr "Сотрудники одной организации могут просматривать заявки друг друга."
 
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
 msgid "Cut"
-msgstr ""
+msgstr "Вырезать"
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
@@ -2579,19 +2601,17 @@ msgstr "Защита информации"
 
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
 msgid "DataPrivacyTask"
-msgstr ""
+msgstr "ЗадачаОбеспеченияЗащитыИнформации"
 
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
 msgid "DataPrivacyTasks"
-msgstr ""
+msgstr "ЗадачиОбеспеченияЗащитыИнформации"
 
 #: db/seeds/settings.rb
 msgid "Database"
-msgstr ""
+msgstr "База данных"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
-#, fuzzy
-#| msgid "Database Update required"
 msgid "Database Update Required"
 msgstr "Требуется обновление базы данных"
 
@@ -2607,11 +2627,11 @@ msgstr "Время и дата"
 
 #: db/seeds/settings.rb
 msgid "Date (Year.Month.Day.SystemID.Counter)"
-msgstr ""
+msgstr "Дата (Год.Месяц.День.СистемныйИдентификатор.Счетчик)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Datetime"
-msgstr ""
+msgstr "Дата и время"
 
 #: app/assets/javascripts/app/views/generic/timer.jst.eco
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco
@@ -2638,13 +2658,11 @@ msgstr "Декабрь"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 msgid "Decryption failed!"
-msgstr ""
+msgstr "Ошибка расшифровки!"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
-#, fuzzy
-#| msgid "Registration successful!"
 msgid "Decryption was successful."
-msgstr "Регистрация прошла успешно!"
+msgstr "Расшифровка прошла успешно."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
@@ -2659,11 +2677,11 @@ msgstr "По умолчанию"
 
 #: app/assets/javascripts/app/views/integration/smime.jst.eco
 msgid "Default Behavior"
-msgstr ""
+msgstr "Поведение по умолчанию"
 
 #: db/seeds/settings.rb
 msgid "Default Screen"
-msgstr ""
+msgstr "Экран по умолчанию"
 
 #: app/assets/javascripts/app/models/role.coffee
 msgid "Default at Signup"
@@ -2671,27 +2689,25 @@ msgstr "По умолчанию при регистрации"
 
 #: db/seeds/settings.rb
 msgid "Default calendar tickets subscriptions"
-msgstr ""
+msgstr "Расписание по умолчанию для подписки на заявки"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
-#, fuzzy
-#| msgid "Default caller id for outbound calls."
 msgid "Default caller ID for outbound calls."
 msgstr "Номер по умолчанию для исходящих вызовов."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Default time diff (hours)"
-msgstr ""
+msgstr "Разница во времени по умолчанию (часы)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Default time diff (minutes)"
-msgstr ""
+msgstr "Разница во времени по умолчанию (минуты)"
 
 #: db/seeds/settings.rb
 msgid "Default type for a new ticket"
-msgstr ""
+msgstr "Тип по умолчанию для новой заявки"
 
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco
 #: db/seeds/settings.rb
@@ -2699,36 +2715,37 @@ msgid ""
 "Define an exception of \"automatic assignment\" for certain users (e.g. "
 "executives)."
 msgstr ""
-"Определите исключение \"автоматического присвоения\" для определенных "
-"пользователей (например, руководители). "
+"Определите исключение «автоматического назначения» для определенных "
+"пользователей (например, руководителей)."
 
 #: db/seeds/settings.rb
 msgid "Define max. attachment size for Elasticsearch."
-msgstr ""
+msgstr "Определите максимальный размер вложения для Elasticsearch."
 
 #: db/seeds/settings.rb
 msgid "Define max. payload size for Elasticsearch."
-msgstr ""
+msgstr "Определите максимальный размер полезной нагрузки для Elasticsearch."
 
 #: db/seeds/settings.rb
 msgid "Define pipeline name for Elasticsearch."
-msgstr ""
+msgstr "Определите имя конвейера для Elasticsearch."
 
 #: db/seeds/settings.rb
 msgid ""
 "Define postmaster filter to check if follow-ups get created (based on admin "
 "settings)."
 msgstr ""
-"Определите основной фильтр сообщений, чтобы проверить, создаются ли "
+"Определите фильтр почтового мастера, чтобы проверить, создаются ли "
 "отслеживания (на основе настроек администратора)."
 
 #: db/seeds/settings.rb
 msgid "Define postmaster filter to import archive mailboxes."
 msgstr ""
+"Определите фильтр почтового мастера для импорта архива почтовых ящиков."
 
 #: db/seeds/settings.rb
 msgid "Define postmaster filter."
-msgstr ""
+msgstr "Определите фильтр почтового мастера."
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 msgid ""
@@ -2736,20 +2753,22 @@ msgid ""
 "agents to it. By this, Zammad can support your agents by showing them only "
 "relevant call entries and notifications."
 msgstr ""
+"Определите очереди или назначения вызовов (все, что подходит для вашей АТС) "
+"и сопоставьте с ними своих агентов. Таким образом, Zammad может поддерживать "
+"ваших агентов, показывая им только соответствующие записи вызовов и "
+"уведомления."
 
 #: db/seeds/settings.rb
 msgid "Defines Elasticsearch index name."
-msgstr ""
+msgstr "Определяет имя индекса Elasticsearch."
 
 #: db/seeds/settings.rb
-#, fuzzy
 msgid "Defines Freshdesk endpoint authentication API key."
-msgstr "Определяет ключ API аутентификации конечной точки Freshdesk."
+msgstr "Определяет API-ключ аутентификации конечной точки Freshdesk."
 
 #: db/seeds/settings.rb
-#, fuzzy
 msgid "Defines HTTP basic auth password of Elasticsearch."
-msgstr "Defines HTTP basic auth password of Elasticsearch."
+msgstr "Определяет пароль базовой аутентификации HTTP Elasticsearch."
 
 #: db/seeds/settings.rb
 msgid "Defines HTTP basic auth user of Elasticsearch."
@@ -2760,269 +2779,305 @@ msgid ""
 "Defines HTTP basic authentication password (only if OTRS is protected via "
 "HTTP basic auth)."
 msgstr ""
+"Определяет пароль базовой аутентификации HTTP (только в том случае, если "
+"OTRS защищен с помощью базовой аутентификации HTTP)."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines HTTP basic authentication user (only if OTRS is protected via HTTP "
 "basic auth)."
 msgstr ""
+"Определяет пользователя для базовой аутентификацией HTTP (только если OTRS "
+"защищен базовой аутентификацией HTTP)."
 
 #: db/seeds/settings.rb
 msgid "Defines Kayako endpoint authentication password."
-msgstr ""
+msgstr "Определяет пароль аутентификации конечной точки Kayako."
 
 #: db/seeds/settings.rb
-#, fuzzy
 msgid "Defines Kayako endpoint authentication user."
-msgstr "Определяет отправителя уведомлений по электронной почте."
+msgstr "Определяет пользователя аутентификации конечной точки Kayako."
 
 #: db/seeds/settings.rb
 msgid "Defines OTRS endpoint authentication key."
-msgstr ""
+msgstr "Определяет ключ аутентификации конечной точки OTRS."
 
 #: db/seeds/settings.rb
-#, fuzzy
 msgid "Defines Zendesk endpoint authentication API key."
-msgstr "Определяет отправителя уведомлений по электронной почте."
+msgstr "Определяет API-ключ аутентификации конечной точки Zendesk."
 
 #: db/seeds/settings.rb
 msgid "Defines Zendesk endpoint authentication user."
-msgstr ""
+msgstr "Определяет пользователя аутентификации конечной точки Zendesk."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines a Freshdesk endpoint to import users, tickets, states, and articles."
 msgstr ""
+"Определяет конечную точку Freshdesk для импорта пользователей, заявок, "
+"состояний и статей."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines a Kayako endpoint to import users, tickets, states, and articles."
 msgstr ""
+"Определяет конечную точку Kayako для импорта пользователей, заявок, "
+"состояний и статей."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines a Zendesk endpoint to import users, tickets, states, and articles."
 msgstr ""
+"Определяет конечную точку Zendesk для импорта пользователей, заявок, "
+"состояний и статей."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "A list of active import backends that get scheduled automatically."
 msgid "Defines a dashboard stats backend that gets scheduled automatically."
 msgstr ""
-"Список активных процессов импорта, которые автоматически запланированы."
+"Определяет серверную часть статистики панели мониторинга, которая "
+"запускается автоматически."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines a limit for how many tickets can be created via web form from one IP "
 "address per day."
 msgstr ""
+"Определяет ограничение на количество заявок, которые могут быть созданы "
+"через веб-форму с одного IP-адреса за день."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines a limit for how many tickets can be created via web form from one IP "
 "address per hour."
 msgstr ""
+"Определяет ограничение на количество заявок, которые могут быть созданы "
+"через веб-форму с одного IP-адреса за час."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines a limit for how many tickets can be created via web form per day."
 msgstr ""
+"Определяет ограничение на количество заявок, которые могут быть созданы "
+"через веб-форму за день."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Number of failed logins after account will be deactivated."
 msgid "Defines after how many failed logins accounts will be deactivated."
 msgstr ""
-"Количество неудачных попыток входа в систему. После чего доступ блокируется"
+"Определяет, после скольких неудачных входов в систему учетные записи будут "
+"деактивированы."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines an OTRS endpoint to import users, tickets, states, and articles."
 msgstr ""
+"Определяет конечную точку OTRS для импорта пользователей, заявок, состояний "
+"и статей."
 
 #: db/seeds/settings.rb
 msgid "Defines attachment extensions which will be ignored by Elasticsearch."
 msgstr ""
+"Определяет расширения вложений, которые Elasticsearch будет игнорировать."
 
 #: db/seeds/settings.rb
 msgid "Defines endpoint of Elasticsearch."
-msgstr ""
+msgstr "Определяет конечную точку Elasticsearch."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines groups for which a customer can create tickets via web interface. \"-"
 "\" means all groups are available."
 msgstr ""
-"Определяет группы, для которых клиент может создать тикеты через веб-"
-"интерфейс. \"-\" означает, что все группы доступны. "
+"Определяет группы, для которых клиент может создать заявки через веб-"
+"интерфейс. \"-\" означает, что все группы доступны."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines how the From field of emails (sent from answers and email tickets) "
 "should look like."
 msgstr ""
-"Определяет, как поле From (от кого) электронных писем (отправленный от "
-"ответов и почтовых тикетов) должно быть выглядеть. "
+"Определяет, как поле From (от кого) электронных писем (отправленных из "
+"ответов и заявок по электронной почте) должно быть выглядеть."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Defines if a customer can create tickets via the web interface."
 msgid ""
 "Defines how the last customer contact time of tickets should be calculated."
-msgstr "Определяет возможность создания тикетов через веб-интерфейс.."
+msgstr ""
+"Определяет, как должно рассчитываться время последнего контакта с клиентом "
+"для заявки."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines how to reach websocket server. \"websocket\" is default on "
 "production, \"websocketPort\" is for CI"
 msgstr ""
+"Определяет, как получить доступ к серверу веб-сокетов. «websocket» "
+"используется по умолчанию для производства, «websocketPort» — для CI"
 
 #: db/seeds/settings.rb
 msgid "Defines if Checkmk (https://checkmk.com/) is enabled or not."
-msgstr ""
+msgstr "Определяет, включен Checkmk (https://checkmk.com/) или нет."
 
 #: db/seeds/settings.rb
 msgid "Defines if Clearbit (http://www.clearbit.com) is enabled or not."
-msgstr ""
+msgstr "Определяет, включен Clearbit (http://www.clearbit.com) или нет."
 
 #: db/seeds/settings.rb
 msgid "Defines if Exchange is enabled or not."
-msgstr ""
+msgstr "Определяет, включен Exchange или нет."
 
 #: db/seeds/settings.rb
 msgid "Defines if Icinga (http://www.icinga.org) is enabled or not."
-msgstr ""
+msgstr "Определяет, включен Icinga (http://www.icinga.org) или нет."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines if Knowledge Base navbar button is enabled for users without "
 "Knowledge Base permission."
 msgstr ""
+"Определяет, включена ли на панели навигации кнопка Базы знаний, для "
+"пользователей без прав доступа к Базе знаний."
 
 #: db/seeds/settings.rb
 msgid "Defines if Knowledge Base navbar button is enabled."
-msgstr ""
+msgstr "Определяет, включена ли на панели навигации кнопка Базы знаний."
 
 #: db/seeds/settings.rb
 msgid "Defines if LDAP is enabled or not."
-msgstr ""
+msgstr "Определяет, включен LDAP или нет."
 
 #: db/seeds/settings.rb
 msgid "Defines if Monit (https://mmonit.com/monit/) is enabled or not."
-msgstr ""
+msgstr "Определяет, включен Monit (https://mmonit.com/monit /) или нет."
 
 #: db/seeds/settings.rb
 msgid "Defines if Nagios (http://www.nagios.org) is enabled or not."
-msgstr ""
+msgstr "Определяет, включен Nagios (http://www.nagios.org) или нет."
 
 #: db/seeds/settings.rb
 msgid "Defines if Placetel (http://www.placetel.de) is enabled or not."
-msgstr ""
+msgstr "Определяет, включен Placetel (http://www.placetel.de) или нет."
 
 #: db/seeds/settings.rb
 msgid "Defines if S/MIME encryption is enabled or not."
-msgstr ""
+msgstr "Определяет, включено шифрование S/MIME или нет."
 
 #: db/seeds/settings.rb
 msgid "Defines if Slack (http://www.slack.org) is enabled or not."
-msgstr ""
+msgstr "Определяет, включен Slack (http://www.slack.org) или нет."
 
 #: db/seeds/settings.rb
 msgid "Defines if a customer can create tickets via the web interface."
-msgstr "Определяет возможность создания тикетов через веб-интерфейс.."
+msgstr "Определяет возможность создания заявок через веб-интерфейс."
 
 #: db/seeds/settings.rb
 msgid "Defines if application is in init mode."
-msgstr ""
+msgstr "Определяет, находится ли приложение в режиме инициализации."
 
 #: db/seeds/settings.rb
 msgid "Defines if application is used as online service."
-msgstr ""
+msgstr "Определяет, используется ли приложение в качестве онлайн-сервиса."
 
 #: db/seeds/settings.rb
 msgid "Defines if generic CTI integration is enabled or not."
-msgstr ""
+msgstr "Определяет, включена универсальная интеграция CTI или нет."
 
 #: db/seeds/settings.rb
 msgid "Defines if i-doit (http://www.i-doit) is enabled or not."
-msgstr ""
+msgstr "Определяет, включен i-doit (http://www.i-doit) или нет."
 
 #: db/seeds/settings.rb
 msgid "Defines if sipgate.io (http://www.sipgate.io) is enabled or not."
-msgstr ""
+msgstr "Определяет, включен sipgate.io (http://www.sipgate.io) или нет."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines if the GitHub (http://www.github.com) integration is enabled or not."
 msgstr ""
+"Определяет, включена интеграция GitHub (http://www.github.com) или нет."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines if the GitLab (http://www.gitlab.com) integration is enabled or not."
 msgstr ""
+"Определяет, включена интеграция GitLab (http://www.gitlab.com) или нет."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines if the agent has to accept a confirmation dialog when changing the "
 "article visibility to \"public\"."
 msgstr ""
+"Определяет, должен ли агент получать диалоговое окно подтверждения при "
+"изменении видимости статьи на \"общедоступную\"."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines if the application is in developer mode (all users have the same "
 "password and password reset will work without email delivery)."
 msgstr ""
+"Определяет, находится ли приложение в режиме разработчика (у всех "
+"пользователей один и тот же пароль, и сброс пароля будет работать без "
+"отправки электронной почты)."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines if the core workflow communication should run over ajax instead of "
 "websockets."
 msgstr ""
+"Определяет, должна ли связь основного рабочего процесса выполняться через "
+"ajax вместо веб-сокетов."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines if the email should be displayed in the result of the user/"
 "organization widget."
 msgstr ""
+"Определяет, должно ли электронное письмо отображаться в результатах виджета "
+"пользователя/организации."
 
 #: db/seeds/settings.rb
 msgid "Defines if tickets can be created via web form."
-msgstr ""
+msgstr "Определяет, можно ли создавать заявки с помощью веб-формы."
 
 #: db/seeds/settings.rb
 msgid "Defines if tickets should be closed if service is recovered."
-msgstr ""
-"Определяет, должны ли  быть закрыты тикеты, если сервис восстанавливается."
+msgstr "Определяет, должны ли заявки быть закрыты, если служба восстановлена."
 
 #: db/seeds/settings.rb
 msgid "Defines karma levels."
-msgstr ""
+msgstr "Определяет уровни кармы."
 
 #: db/seeds/settings.rb
 msgid "Defines postmaster filter for filters managed via admin interface."
 msgstr ""
+"Определяет фильтр почтового мастера для фильтров, управляемых через "
+"интерфейс администратора."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines postmaster filter to check if email has been created by Zammad "
 "itself and will set the article sender."
 msgstr ""
+"Определяет фильтр почтового мастера для проверки того, было ли электронное "
+"письмо создано Zammad, и устанавливает отправителя сообщений."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines postmaster filter to check if the email is a self-created "
 "notification email, then ignore it to prevent email loops."
 msgstr ""
+"Определяет фильтр почтового мастера, чтобы проверить, является ли "
+"электронное письмо самосозданным уведомлением, а затем игнорирует его, чтобы "
+"предотвратить зацикливание электронной почты."
 
 #: db/seeds/settings.rb
 msgid "Defines postmaster filter to handle secure mailing."
-msgstr ""
+msgstr "Определяет фильтр почтового мастера для обработки защищенной рассылки."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines postmaster filter to identify Jira mails for correct follow-ups."
 msgstr ""
-"Определите основной фильтр сообщений, для идентификации и правильного "
+"Определите фильтр почтового мастера, для идентификации и правильного "
 "отслеживания писем Jira."
 
 #: db/seeds/settings.rb
@@ -3030,7 +3085,7 @@ msgid ""
 "Defines postmaster filter to identify ServiceNow mails for correct follow-"
 "ups."
 msgstr ""
-"Определите основной фильтр сообщений, для идентификации и правильного "
+"Определите фильтр почтового мастера, для идентификации и правильного "
 "отслеживания писем ServiceNow."
 
 #: db/seeds/settings.rb
@@ -3038,19 +3093,21 @@ msgid ""
 "Defines postmaster filter to identify auto responses to prevent auto replies "
 "from Zammad."
 msgstr ""
+"Определяет фильтр почтового мастера для определения автоответов, чтобы "
+"предотвратить автоответы от Zammad."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines postmaster filter to identify follow-up ticket for merged tickets."
 msgstr ""
-"Определите основной фильтр сообщений, для идентификации и отслеживания "
+"Определите фильтр почтового мастера, для идентификации и отслеживания "
 "объединенных заявок."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines postmaster filter to identify follow-ups (based on admin settings)."
 msgstr ""
-"Определите основной фильтр сообщений, для идентификации и отслеживания (на "
+"Определите фильтр почтового мастера, для идентификации и отслеживания (на "
 "основе настроек администратора)."
 
 #: db/seeds/settings.rb
@@ -3058,12 +3115,18 @@ msgid ""
 "Defines postmaster filter to identify out-of-office emails for follow-up "
 "detection and keeping current ticket state."
 msgstr ""
+"Определяет фильтр почтового мастера для идентификации писем, отправленных "
+"вне офиса, для последующего отслеживания и сохранения текущего состояния "
+"заявки."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines postmaster filter to identify postmaster bounces; and disables "
 "sending notification if delivery fails permanently."
 msgstr ""
+"Определяет фильтр почтового мастера для идентификации отказов почтового "
+"мастера; и отключает отправку уведомления, если доставка завершается "
+"необратимым сбоем."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -12491,6 +12554,12 @@ msgstr "не переведены"
 #: db/seeds/ticket_article_types.rb
 msgid "note"
 msgstr "заметка"
+
+#: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
+#, fuzzy
+#| msgid "no"
+msgid "now"
+msgstr "нет"
 
 #: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
 msgid "open"

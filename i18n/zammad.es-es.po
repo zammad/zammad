@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-03-29 01:01+0000\n"
-"Last-Translator: salvolp <s.salvo17@gmail.com>\n"
+"PO-Revision-Date: 2022-04-14 07:11+0000\n"
+"Last-Translator: Ales Zabala Alava <shagi@gisa-elkartea.org>\n"
 "Language-Team: Spanish <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/es/>\n"
 "Language: es-es\n"
@@ -60,10 +60,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
-#, fuzzy
-#| msgid "%s Api Token"
 msgid "%s API Token"
-msgstr "%s Api Token"
+msgstr "%s API Token"
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
@@ -101,10 +99,8 @@ msgstr ""
 "%s tarea de privacidad de datos completada para eliminar ID de usuario |%s|"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee
-#, fuzzy
-#| msgid "%s created Article for |%s|"
 msgid "%s created article for |%s|"
-msgstr "%s Artículo creado para |%s|"
+msgstr "%s creó un artículo para |%s|"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 msgid "%s created data privacy task to delete user ID |%s|"
@@ -112,32 +108,24 @@ msgstr ""
 "%s tarea de privacidad de datos creada para eliminar la ID de usuario  |%s|"
 
 #: app/assets/javascripts/app/models/group.coffee
-#, fuzzy
-#| msgid "%s created Group |%s|"
 msgid "%s created group |%s|"
-msgstr "%s Grupo creado |%s|"
+msgstr "%s creo el grupo |%s|"
 
 #: app/assets/javascripts/app/models/organization.coffee
-#, fuzzy
-#| msgid "%s created Organization |%s|"
 msgid "%s created organization |%s|"
-msgstr "%s Organización creada |%s|"
+msgstr "%s creó la organización |%s|"
 
 #: app/assets/javascripts/app/models/role.coffee
 msgid "%s created role |%s|"
 msgstr "%s Rol creado |%s|"
 
 #: app/assets/javascripts/app/models/ticket.coffee
-#, fuzzy
-#| msgid "%s created Ticket |%s|"
 msgid "%s created ticket |%s|"
-msgstr "%s Ticket creado |%s|"
+msgstr "%s creó el ticket |%s|"
 
 #: app/assets/javascripts/app/models/user.coffee
-#, fuzzy
-#| msgid "%s created User |%s|"
 msgid "%s created user |%s|"
-msgstr "%s Usuario creado |%s|"
+msgstr "%s creó el usuario |%s|"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
@@ -167,22 +155,16 @@ msgid "%s is inactive, please select an active one."
 msgstr "&s está inactivo, por favor seleccione alguno activo."
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
-#, fuzzy
-#| msgid "%s Object(s) have been created."
 msgid "%s object(s) have been created."
-msgstr "%s Objecto(s) han sido creados."
+msgstr "Se han creado %s objeto(s)."
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
-#, fuzzy
-#| msgid "%s Object(s) have been updated."
 msgid "%s object(s) have been updated."
-msgstr "%s Objecto(s) han sido actualizados."
+msgstr "Se han actualizado %s objeto(s)."
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
-#, fuzzy
-#| msgid "%s Object(s) were deleted."
 msgid "%s object(s) were deleted."
-msgstr "%s Objecto(s) fueron borrados."
+msgstr "Se han borrado %s objeto(s)."
 
 #: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
 msgid "%s object(s) will be created."
@@ -244,34 +226,24 @@ msgstr ""
 "%s|"
 
 #: app/assets/javascripts/app/models/group.coffee
-#, fuzzy
-#| msgid "%s updated Group |%s|"
 msgid "%s updated group |%s|"
-msgstr "%s Grupo actualizado |%s|"
+msgstr "%s actualizó el grupo |%s|"
 
 #: app/assets/javascripts/app/models/organization.coffee
-#, fuzzy
-#| msgid "%s updated Organization |%s|"
 msgid "%s updated organization |%s|"
-msgstr "%s Organización actualizada |%s|"
+msgstr "%s actualizó la organización |%s|"
 
 #: app/assets/javascripts/app/models/role.coffee
-#, fuzzy
-#| msgid "%s updated Role |%s|"
 msgid "%s updated role |%s|"
-msgstr "%s Rol actualizado |%s|"
+msgstr "%s actualizó el rol |%s|"
 
 #: app/assets/javascripts/app/models/ticket.coffee
-#, fuzzy
-#| msgid "%s updated Ticket |%s|"
 msgid "%s updated ticket |%s|"
-msgstr "%s Ticket actualizado |%s|"
+msgstr "%s actualizó el ticket |%s|"
 
 #: app/assets/javascripts/app/models/user.coffee
-#, fuzzy
-#| msgid "%s updated User |%s|"
 msgid "%s updated user |%s|"
-msgstr "%s Usuario actualizado |%s|"
+msgstr "%s actualizó el usuario |%s|"
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco
@@ -365,10 +337,8 @@ msgid "2 hours"
 msgstr "2 horas"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "2 lower and 2 upper characters"
 msgid "2 lower case and 2 upper case characters"
-msgstr "2 caracteres inferiores y 2 caracteres superiores"
+msgstr "2 caracteres en minúscula y 2 caracteres en mayúscula"
 
 #: db/seeds/ticket_priorities.rb
 msgid "2 normal"
@@ -875,17 +845,13 @@ msgstr "Una herramienta de monitoreo de código abierto"
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
-#, fuzzy
-#| msgid "Analyzing entries with given configuration..."
 msgid "Analyzing entries with given configuration…"
-msgstr "Analizando entradas con esta configuración"
+msgstr "Analizando entradas con esta configuración…"
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
-#, fuzzy
-#| msgid "Analyzing structure..."
 msgid "Analyzing structure…"
-msgstr "Analizando estructura"
+msgstr "Analizando estructura…"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "Another ticket was merged into ticket |%s|"
@@ -904,8 +870,6 @@ msgid "Anticon"
 msgstr "Anticon"
 
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee
-#, fuzzy
-#| msgid "Any Recipient"
 msgid "Any recipient"
 msgstr "Cualquier destinatario"
 
@@ -7630,7 +7594,7 @@ msgstr "Abierto el Ticket# %s"
 #: app/assets/javascripts/app/controllers/widget/user.coffee
 #: db/seeds/overviews.rb
 msgid "Open Tickets"
-msgstr "Abrir Tickets"
+msgstr "Tickets Abiertos"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Open macro selection"
@@ -7749,7 +7713,7 @@ msgstr "Fuera de oficina"
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_load_measure.coffee
 msgid "Out of all open tickets (company-wide), how many are assigned to you?"
 msgstr ""
-"De todos los boletos abiertos (para toda la compañía), ¿cuántos se asignan a "
+"De todos los tickets abiertos (para toda la compañía), ¿cuántos se asignan a "
 "usted?"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
@@ -11912,13 +11876,6 @@ msgstr ""
 "continuar?"
 
 #: app/assets/javascripts/app/views/karma/index.jst.eco
-#, fuzzy
-#| msgid ""
-#| "You |accumulate positive Karma| when you regularly answer and close "
-#| "tickets on time and when you use advanced features such as text modules, "
-#| "ticket reminders or tagging tickets. Zammad |Karma will decrease| when "
-#| "you have re-opend tickets, escalated tickets or tickets that are two or "
-#| "more days overdue."
 msgid ""
 "You |accumulate positive Karma| when you regularly answer and close tickets "
 "on time and when you use advanced features such as text modules, ticket "
@@ -11926,11 +11883,11 @@ msgid ""
 "opened tickets, escalated tickets, or tickets that are two or more days "
 "overdue."
 msgstr ""
-"Acumula Karma| positivo cuando contesta y cierra los tickets regularmente a "
+"|Acumula Karma positivo| cuando contesta y cierra los tickets regularmente a "
 "tiempo y cuando utiliza funciones avanzadas como módulos de texto, "
 "recordatorios de tickets o tickets de etiquetado. Zammad |Karma disminuirá| "
-"cuando usted haya reabierto entradas, entradas escaladas o entradas con dos "
-"o más días de retraso."
+"cuando usted haya reabierto tickets, escalado tickets o tiene tickets con "
+"dos o más días de retraso."
 
 #: app/assets/javascripts/app/views/login.jst.eco
 #, fuzzy
@@ -12609,6 +12566,12 @@ msgstr "no traducidas"
 #: db/seeds/ticket_article_types.rb
 msgid "note"
 msgstr "nota"
+
+#: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
+#, fuzzy
+#| msgid "no"
+msgid "now"
+msgstr "no"
 
 #: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
 msgid "open"

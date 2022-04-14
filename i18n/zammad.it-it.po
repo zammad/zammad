@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-04-07 05:42+0000\n"
-"Last-Translator: Andres Eloy Rivera Garcia <andres.degozaru@gmail.com>\n"
+"PO-Revision-Date: 2022-04-14 07:11+0000\n"
+"Last-Translator: PIetro Sacchi <sacchi.pietro@gmail.com>\n"
 "Language-Team: Italian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/it/>\n"
 "Language: it-it\n"
@@ -971,7 +971,7 @@ msgstr "Articolo"
 
 #: db/seeds/settings.rb
 msgid "Article - visibility confirmation dialog"
-msgstr ""
+msgstr "Articolo - Finestra Conferma visibilità"
 
 #: lib/excel_sheet/ticket.rb
 msgid "Article Count"
@@ -1454,20 +1454,16 @@ msgid "CTI Token"
 msgstr "Token CTI"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Config"
 msgid "CTI config"
-msgstr "Config"
+msgstr "Configurazione CTI"
 
 #: db/seeds/settings.rb
 msgid "CTI customer last activity"
-msgstr ""
+msgstr "Ultima attività utente su CTI"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Integrations"
 msgid "CTI integration"
-msgstr "Integrazioni"
+msgstr "Integrazioni CTI"
 
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
@@ -1487,10 +1483,8 @@ msgstr "Calendari"
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
-#, fuzzy
-#| msgid "Settings"
 msgid "Call Settings"
-msgstr "Impostazioni"
+msgstr "Impostazioni Chiamata"
 
 #: app/assets/javascripts/app/controllers/cti.coffee
 msgid "Call from %s for %s"
@@ -1622,10 +1616,8 @@ msgid "Category page layout"
 msgstr "Disposizione pagina categorie"
 
 #: lib/secure_mailing/smime/incoming.rb
-#, fuzzy
-#| msgid "When notification is being sent."
 msgid "Certificate for verification could not be found."
-msgstr "Quanto la notifica viene inviata."
+msgstr "Certificato di verifica non trovato."
 
 #: app/assets/javascripts/app/views/integration/smime.jst.eco
 msgid "Certificates & Private Keys"
@@ -1679,17 +1671,13 @@ msgid "Changes"
 msgstr "Modifiche"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee
-#, fuzzy
-#| msgid "%s object(s) are created."
 msgid "Changes could not be loaded."
-msgstr "%s oggetto(i) creato(i)."
+msgstr "Le modifiche non possono essere caricate."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee
 #: app/assets/javascripts/app/views/knowledge_base/base_form.coffee
-#, fuzzy
-#| msgid "%s object(s) are created."
 msgid "Changes could not be saved."
-msgstr "%s oggetto(i) creato(i)."
+msgstr "Le modifiche non possono essere salvate."
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Changes were made that require a database update."
@@ -1764,10 +1752,8 @@ msgid "Chat"
 msgstr "Chat"
 
 #: app/assets/javascripts/app/views/channel/topics.jst.eco
-#, fuzzy
-#| msgid "Chat"
 msgid "Chat ID"
-msgstr "Chat"
+msgstr "Identificativo Chat"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Chat Title"
@@ -1808,7 +1794,7 @@ msgstr "Controlla canali"
 msgid "Check the response and payload for detailed information:"
 msgstr ""
 "Controlla la risposta e il contenuto del messaggio per informazioni "
-"dettagliate: "
+"dettagliate:"
 
 #: app/assets/javascripts/app/views/object_manager/attribute/multiselect.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco
@@ -12600,6 +12586,12 @@ msgstr "non tradotte"
 #: db/seeds/ticket_article_types.rb
 msgid "note"
 msgstr "note"
+
+#: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
+#, fuzzy
+#| msgid "no"
+msgid "now"
+msgstr "no"
 
 #: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
 msgid "open"
