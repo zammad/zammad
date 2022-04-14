@@ -31,12 +31,14 @@ class Sequencer
             else
               logger.info "Unknown response: #{response.inspect}. Sleeping 10 seconds and retry (##{iteration + 1}/10)."
             end
+
             sleep sleep_for
           end
 
           def handle_exception(e, iteration)
             logger.error e
             logger.info "Sleeping 10 seconds after #{e.class.name} and retry (##{iteration + 1}/10)."
+
             sleep 10
           end
 

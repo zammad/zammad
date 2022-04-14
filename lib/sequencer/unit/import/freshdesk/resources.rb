@@ -6,6 +6,9 @@ class Sequencer
       module Freshdesk
         class Resources < Sequencer::Unit::Common::Provider::Named
           include ::Sequencer::Unit::Import::Common::Model::Mixin::HandleFailure
+          prepend ::Sequencer::Unit::Import::Common::Model::Mixin::Skip::Action
+
+          skip_action :skipped, :failed
 
           uses :response, :skipped_resource_id
 

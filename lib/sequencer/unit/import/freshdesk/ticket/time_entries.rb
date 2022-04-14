@@ -8,8 +8,6 @@ class Sequencer
           class TimeEntries < Sequencer::Unit::Import::Freshdesk::SubSequence::Generic
             prepend ::Sequencer::Unit::Import::Common::Model::Mixin::Skip::Action
 
-            optional :action
-
             skip_action :skipped, :failed
 
             uses :resource

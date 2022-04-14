@@ -9,7 +9,6 @@ class Sequencer
             include ::Sequencer::Unit::Import::Common::Mapping::Mixin::ProvideMapped
 
             uses :resource, :id_map
-            provides :action
 
             def process
               provide_mapped do
@@ -21,14 +20,6 @@ class Sequencer
                   updated_at:    resource['updated_at'],
                 }
               end
-            rescue TypeError => e
-              # TimeTracking is not available in the plans: Sprout, Blossom
-              # In this case `resource`s value is `["code", "require_feature"]`
-              # See:
-              # - Ticket# 1077135
-              # - https://support.freshdesk.com/support/solutions/articles/37583-keeping-track-of-time-spent
-              logger.debug { e }
-              state.provide(:action, :skipped)
             end
 
             private
