@@ -119,7 +119,7 @@ class App.KnowledgeBaseContentCanBePublishedForm extends App.ControllerForm
         default: 'now'
         options: [
             value: 'now'
-            name:  'now'
+            name:  __('now')
           ,
             value: 'scheduled'
             name:  __('Schedule for')
