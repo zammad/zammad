@@ -9,25 +9,23 @@ const wrapperParameters = {
   formField: true,
 }
 
-const wrapper = getWrapper(FormKit, {
-  ...wrapperParameters,
-  props: {
-    name: 'hidden',
-    type: 'hidden',
-    id: 'hidden',
-    value: 'example-value',
-  },
-})
-
 describe('Form - Field - Hidden (Formkit-BuildIn)', () => {
-  it('mounts successfully', () => {
-    expect(wrapper.exists()).toBe(true)
-  })
-
   it('can render a input', () => {
-    expect(wrapper.html()).toContain('<input')
-    expect(wrapper.find('input').attributes().id).toBe('hidden')
-    expect(wrapper.find('input').attributes().type).toBe('hidden')
+    const wrapper = getWrapper(FormKit, {
+      ...wrapperParameters,
+      props: {
+        name: 'hidden',
+        type: 'hidden',
+        id: 'hidden',
+        value: 'example-value',
+      },
+    })
+
+    const input = wrapper.getByDisplayValue('example-value')
+
+    expect(input).toBeInTheDocument()
+    expect(input).toHaveAttribute('id', 'hidden')
+    expect(input).toHaveAttribute('type', 'hidden')
 
     const node = getNode('hidden')
     expect(node?.value).toBe('example-value')

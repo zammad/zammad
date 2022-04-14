@@ -8,7 +8,11 @@
         enter-class="opacity-0"
         leave-active-class="transition-opacity duration-1000 opacity-0"
       >
-        <div v-for="notification in notifications" v-bind:key="notification.id">
+        <div
+          v-for="notification in notifications"
+          v-bind:key="notification.id"
+          data-test-id="notification"
+        >
           <div class="flex justify-center">
             <div
               class="m-1 flex cursor-pointer items-center rounded py-2 px-4"

@@ -2,6 +2,7 @@
 
 import { getNode } from '@formkit/core'
 import { FormKit } from '@formkit/vue'
+import { getAllByRole } from '@testing-library/vue'
 import { getWrapper } from '@tests/support/components'
 
 const wrapperParameters = {
@@ -9,26 +10,23 @@ const wrapperParameters = {
   formField: true,
 }
 
-let wrapper = getWrapper(FormKit, {
-  ...wrapperParameters,
-  props: {
-    name: 'list',
-    type: 'list',
-    id: 'list',
-  },
-})
-
 describe('Form - Field - List (Formkit-BuildIn)', () => {
-  it('mounts successfully', () => {
-    expect(wrapper.exists()).toBe(true)
-  })
-
   it('empty content without childrens', () => {
-    expect(wrapper.html()).toContain('')
+    const wrapper = getWrapper(FormKit, {
+      ...wrapperParameters,
+      props: {
+        name: 'list',
+        type: 'list',
+        id: 'list',
+      },
+    })
+
+    expect(wrapper.html()).toBe('')
   })
 
   it('render some fields and check values', () => {
-    wrapper = getWrapper(FormKit, {
+    const html = String.raw
+    const wrapper = getWrapper(FormKit, {
       ...wrapperParameters,
       props: {
         name: 'list',
@@ -36,14 +34,29 @@ describe('Form - Field - List (Formkit-BuildIn)', () => {
         id: 'list',
       },
       slots: {
-        default: `<fieldset><FormKit type="text" name="email-adress" id="text" value="admin@example.com" />
-          <FormKit type="text" name="email-adress" id="text" value="admin2@example.com" /></fieldset>`,
+        default: html`
+          <fieldset>
+            <FormKit
+              type="text"
+              name="email-adress"
+              id="text"
+              value="admin@example.com"
+            />
+            <FormKit
+              type="text"
+              name="email-adress"
+              id="text"
+              value="admin2@example.com"
+            />
+          </fieldset>
+        `,
       },
     })
 
-    // TODO - Remove the .get() here when @vue/test-utils > rc.19
-    const inputs = wrapper.get('fieldset').findAll('input')
-    expect(inputs.length).toBe(2)
+    const group = wrapper.getByRole('group')
+    const inputs = getAllByRole(group, 'textbox')
+
+    expect(inputs).toHaveLength(2)
 
     const node = getNode('list')
     expect(node?.value).toStrictEqual([

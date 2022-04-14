@@ -1,60 +1,91 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import * as pluginModule from '@common/form/plugins/global/addValuePopulatedDataAttribute'
-import { createNode } from '@formkit/core'
+import addValuePopulatedDataAttribute from '@common/form/plugins/global/addValuePopulatedDataAttribute'
+import {
+  createNode,
+  FormKitExtendableSchemaRoot,
+  FormKitFrameworkContext,
+} from '@formkit/core'
 import { FormKit } from '@formkit/vue'
 import { getWrapper } from '@tests/support/components'
-import { waitForTimeout } from '@tests/support/utils'
-
-vi.spyOn(pluginModule, 'default')
-
-const addValuePopulatedDataAttribute = pluginModule.default
 
 const wrapperParameters = {
   form: true,
   formField: true,
 }
 
+const renderKit = () => {
+  const kit = getWrapper(FormKit, {
+    ...wrapperParameters,
+    props: {
+      name: 'text',
+      type: 'text',
+      id: 'text',
+      label: 'text',
+    },
+  })
+  return {
+    ...kit,
+    getOuterKit: () => kit.container.querySelector('.formkit-outer'),
+  }
+}
+
 describe('addValuePopulatedDataAttribute', () => {
-  it('check that the plugin can be called with a node', () => {
+  describe('renders on output', () => {
+    const originalSchema = vi.fn()
     const inputNode = createNode({
       type: 'input',
       value: 'Test node',
-    })
-
-    addValuePopulatedDataAttribute(inputNode)
-
-    expect(addValuePopulatedDataAttribute).toHaveBeenCalledWith(inputNode)
-  })
-
-  describe('check output', () => {
-    const wrapper = getWrapper(FormKit, {
-      ...wrapperParameters,
       props: {
-        name: 'text',
-        type: 'text',
-        id: 'text',
+        definition: { type: 'input', schema: originalSchema },
       },
     })
 
+    inputNode.context = {
+      fns: {},
+    } as FormKitFrameworkContext
+
+    beforeEach(() => {
+      originalSchema.mockReset()
+    })
+
+    test('applies schema on input', () => {
+      addValuePopulatedDataAttribute(inputNode)
+
+      const schema = (inputNode.props.definition?.schema ||
+        (() => ({}))) as FormKitExtendableSchemaRoot
+
+      schema({})
+
+      expect(originalSchema.mock.calls[0][0]).toHaveProperty(
+        'outer.attrs.data-populated',
+      )
+    })
+
+    test('skips non-inputs', () => {
+      addValuePopulatedDataAttribute({
+        ...inputNode,
+        type: 'list',
+      })
+
+      expect(originalSchema).not.toHaveBeenCalled()
+    })
+  })
+
+  describe('check output', () => {
     it('adds value populate data attribute', () => {
-      expect(addValuePopulatedDataAttribute).toHaveBeenCalledTimes(1)
-      expect(
-        wrapper.find('.formkit-outer').attributes()['data-populated'],
-      ).toBeUndefined()
+      const kit = renderKit()
+      expect(kit.getOuterKit()).not.toHaveAttribute('data-populated')
     })
 
     it('is data attribute true when input has a value', async () => {
-      expect.assertions(1)
-      const input = wrapper.find('input')
-      input.setValue('Example title')
-      input.trigger('input')
+      const kit = renderKit()
 
-      await waitForTimeout()
+      const input = kit.getByLabelText('text')
+      await kit.events.clear(input)
+      await kit.events.type(input, 'input')
 
-      expect(
-        wrapper.find('.formkit-outer').attributes()['data-populated'],
-      ).toBe('true')
+      expect(kit.getOuterKit()).toHaveAttribute('data-populated')
     })
   })
 })

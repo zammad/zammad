@@ -1,44 +1,40 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import { FormKit } from '@formkit/vue'
-import { getWrapper } from '@tests/support/components'
-import { nextTick } from 'vue'
+import { ExtendedMountingOptions, getWrapper } from '@tests/support/components'
 
 const wrapperParameters = {
   form: true,
   formField: true,
 }
 
-let wrapper = getWrapper(FormKit, {
-  ...wrapperParameters,
-  props: {
-    name: 'button',
-    type: 'button',
-    id: 'button',
-  },
-  slots: {
-    default: 'Sign In',
-  },
-})
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const renderButton = (options: ExtendedMountingOptions<any> = {}) => {
+  return getWrapper(FormKit, {
+    ...wrapperParameters,
+    props: {
+      name: 'button',
+      type: 'button',
+      id: 'button',
+    },
+    slots: {
+      default: 'Sign In',
+    },
+    ...options,
+  })
+}
 
 describe('Form - Field - Button (Formkit-BuildIn)', () => {
-  it('mounts successfully', () => {
-    expect(wrapper.exists()).toBe(true)
-  })
-
   it('can render a button', () => {
-    expect(wrapper.html()).toContain('formkit-outer')
-    expect(wrapper.html()).toContain('formkit-wrapper')
-    expect(wrapper.html()).toContain('<button')
+    const view = renderButton()
 
-    const button = wrapper.find('button')
-    expect(button.attributes().id).toBe('button')
-    expect(button.text()).toBe('Sign In')
+    const button = view.getByText('Sign In')
+
+    expect(button).toHaveAttribute('id', 'button')
   })
 
   it('can render a button with a label instead of slot', () => {
-    wrapper = getWrapper(FormKit, {
-      ...wrapperParameters,
+    const view = renderButton({
       props: {
         name: 'button',
         type: 'button',
@@ -47,34 +43,41 @@ describe('Form - Field - Button (Formkit-BuildIn)', () => {
       },
     })
 
-    expect(wrapper.find('button').text()).toBe('Sign In')
+    expect(view.getByText('Sign In')).toBeInTheDocument()
   })
 
   it('can be disabled', async () => {
-    expect.assertions(3)
-    expect(wrapper.find('button').attributes().disabled).toBe(undefined)
+    const view = renderButton({
+      props: {
+        name: 'button',
+        type: 'button',
+        id: 'button',
+        label: 'Sign In',
+      },
+    })
 
-    wrapper.setProps({
+    const button = view.getByText('Sign In')
+
+    expect(button).not.toHaveAttribute('disabled')
+
+    await view.rerender({
       disabled: true,
     })
-    await nextTick()
 
-    expect(wrapper.find('button').attributes().disabled).toBeDefined()
+    expect(button).toHaveAttribute('disabled')
 
     // Rest the disabled state again and check if it's enabled again.
-    wrapper.setProps({
+    await view.rerender({
       disabled: false,
     })
-    await nextTick()
 
-    expect(wrapper.find('button').attributes().disabled).toBe(undefined)
+    expect(button).not.toHaveAttribute('disabled')
   })
 })
 
 describe('Form - Field - Submit-Button (Formkit-BuildIn)', () => {
-  it('mounts successfully', () => {
-    wrapper = getWrapper(FormKit, {
-      ...wrapperParameters,
+  it('can render a button', () => {
+    const view = renderButton({
       props: {
         name: 'submit',
         type: 'submit',
@@ -84,18 +87,11 @@ describe('Form - Field - Submit-Button (Formkit-BuildIn)', () => {
         default: 'Sign In',
       },
     })
-    expect(wrapper.exists()).toBe(true)
-  })
 
-  it('can render a button', () => {
-    expect(wrapper.html()).toContain('formkit-outer')
-    expect(wrapper.html()).toContain('formkit-wrapper')
-    expect(wrapper.html()).toContain('<button')
-
-    const button = wrapper.find('button')
-    expect(button.attributes().id).toBe('submit')
-    expect(button.attributes().type).toBe('submit')
-    expect(button.text()).toBe('Sign In')
+    const button = view.getByText('Sign In')
+    expect(button).toBeInTheDocument()
+    expect(button).toHaveAttribute('id', 'submit')
+    expect(button).toHaveAttribute('type', 'submit')
   })
 })
 

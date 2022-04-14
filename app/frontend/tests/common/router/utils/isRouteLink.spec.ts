@@ -4,6 +4,7 @@
 // Add a mocked router resolve function for the success case.
 vi.mock('vue-router', () => ({
   useRouter: vi.fn(() => ({
+    hasRoute: () => true,
     resolve: () => {
       return {
         name: 'RouteName',
@@ -24,27 +25,12 @@ describe('isRouteLink', () => {
     expect(isRouteLink('ticket/12')).toEqual(true)
   })
 
-  it('is not a correct route link, because error route was resolved', () => {
+  it('is not a correct route link, because there is no such route', () => {
     router.mockImplementationOnce(() => ({
-      resolve: () => {
-        return {
-          name: 'Error',
-          matched: ['Error'],
-        }
-      },
+      hasRoute: () => false,
     }))
 
     expect(isRouteLink('not-existing')).toEqual(false)
-  })
-
-  it('is not a correct route link, because nothing was resolved', () => {
-    router.mockImplementationOnce(() => ({
-      resolve: () => {
-        return null
-      },
-    }))
-
-    expect(isRouteLink('not-working')).toEqual(false)
   })
 
   it('link object is always a route link', () => {

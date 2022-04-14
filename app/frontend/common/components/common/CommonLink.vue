@@ -9,6 +9,7 @@
     v-bind:active-class="activeClass"
     v-bind:exact-active-class="exactActiveClass"
     v-bind:target="target"
+    data-test-id="common-link"
     v-on:click="onClick"
   >
     <slot></slot>
@@ -19,6 +20,7 @@
     v-bind:target="target"
     v-bind:rel="rel"
     v-bind:class="linkClass"
+    data-test-id="common-link"
     v-on:click="onClick"
   >
     <slot></slot>

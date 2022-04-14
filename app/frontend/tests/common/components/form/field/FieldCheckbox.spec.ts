@@ -3,76 +3,77 @@
 import CheckboxVariant from '@common/types/form/fields'
 import { getNode } from '@formkit/core'
 import { FormKit } from '@formkit/vue'
-import { getWrapper } from '@tests/support/components'
-import { waitForNextTick, waitForTimeout } from '@tests/support/utils'
-import { nextTick } from 'vue'
+import { getAllByRole } from '@testing-library/vue'
+import { ExtendedMountingOptions, getWrapper } from '@tests/support/components'
+import { waitForTimeout } from '@tests/support/utils'
 
 const wrapperParameters = {
   form: true,
   formField: true,
 }
 
-let wrapper = getWrapper(FormKit, {
-  ...wrapperParameters,
-  props: {
-    name: 'checkbox',
-    type: 'checkbox',
-    id: 'checkbox',
-    variant: CheckboxVariant.default,
-  },
-})
-
-describe('Form - Field - Checkbox (Formkit-BuildIn)', () => {
-  it('mounts successfully', () => {
-    expect(wrapper.exists()).toBe(true)
+const renderButton = (options: ExtendedMountingOptions<unknown> = {}) =>
+  getWrapper(FormKit, {
+    ...wrapperParameters,
+    props: {
+      name: 'checkbox',
+      type: 'checkbox',
+      id: 'checkbox',
+      label: 'Checkbox',
+      variant: CheckboxVariant.default,
+    },
+    ...options,
   })
 
+describe('Form - Field - Checkbox (Formkit-BuildIn)', () => {
   it('can render a checkbox', () => {
-    expect(wrapper.html()).toContain('formkit-outer')
-    expect(wrapper.html()).toContain('formkit-wrapper')
-    expect(wrapper.html()).toContain('formkit-inner')
-    expect(wrapper.html()).toContain('<input')
-    expect(wrapper.find('input').attributes().id).toBe('checkbox')
-    expect(wrapper.find('input').attributes().type).toBe('checkbox')
-    expect(wrapper.find('span.formkit-label').exists()).toBe(false)
+    const view = renderButton()
+
+    const checkbox = view.getByLabelText('Checkbox')
+
+    expect(checkbox).toHaveAttribute('id', 'checkbox')
+    expect(checkbox).toHaveAttribute('type', 'checkbox')
 
     const node = getNode('checkbox')
     expect(node?.value).toBe(undefined)
   })
 
   it('set some props', async () => {
-    expect.assertions(2)
-
-    wrapper.setProps({
-      label: 'Checkbox',
-      help: 'This is the help text',
+    const view = renderButton({
+      props: {
+        label: 'Checkbox',
+        type: 'checkbox',
+        help: 'This is the help text',
+      },
     })
 
-    await nextTick()
-
-    expect(wrapper.find('span.formkit-label').text()).toBe('Checkbox')
-    expect(wrapper.find('.formkit-help').text()).toBe('This is the help text')
+    expect(view.getByLabelText('Checkbox')).toBeInTheDocument()
+    expect(view.getByText(/This is the help text/)).toBeInTheDocument()
   })
 
   it('check for the input event', async () => {
-    expect.assertions(2)
-    const checkbox = wrapper.find('input')
-    checkbox.element.checked = true
-    checkbox.trigger('input')
+    const view = renderButton({
+      props: {
+        label: 'Checkbox',
+        type: 'checkbox',
+        help: 'This is the help text',
+      },
+    })
+
+    const checkbox = view.getByLabelText('Checkbox')
+    await view.events.click(checkbox)
 
     await waitForTimeout()
 
-    expect(wrapper.emitted('input')).toBeTruthy()
+    expect(view.emitted().input).toBeTruthy()
 
-    const emittedInput = wrapper.emitted().input as Array<Array<InputEvent>>
+    const emittedInput = view.emitted().input as Array<Array<InputEvent>>
 
     expect(emittedInput[0][0]).toBe(true)
   })
 
   it('check for the input value when on-value and off-value is used', async () => {
-    expect.assertions(4)
-
-    wrapper = getWrapper(FormKit, {
+    const view = renderButton({
       ...wrapperParameters,
       props: {
         label: 'Checkbox',
@@ -84,67 +85,73 @@ describe('Form - Field - Checkbox (Formkit-BuildIn)', () => {
       },
     })
 
-    const checkbox = wrapper.find('input')
-    checkbox.element.checked = true
-    checkbox.trigger('input')
+    const checkbox = view.getByLabelText('Checkbox')
+    await view.events.click(checkbox)
 
     await waitForTimeout()
 
-    expect(wrapper.emitted('input')).toBeTruthy()
+    expect(view.emitted().input).toBeTruthy()
 
-    let emittedInput = wrapper.emitted().input as Array<Array<InputEvent>>
+    let emittedInput = view.emitted().input as Array<Array<InputEvent>>
 
     expect(emittedInput[0][0]).toBe('yes')
 
-    // Reset the first input event.
-    delete wrapper.emitted().input
-
-    checkbox.element.checked = false
-    checkbox.trigger('input')
+    await view.events.click(checkbox)
 
     await waitForTimeout()
 
-    expect(wrapper.emitted('input')).toBeTruthy()
-    emittedInput = wrapper.emitted().input as Array<Array<InputEvent>>
-    expect(emittedInput[0][0]).toBe('no')
+    emittedInput = view.emitted().input as Array<Array<InputEvent>>
+    expect(emittedInput[1][0]).toBe('no')
   })
 
   it('can use variant', async () => {
-    expect.assertions(1)
-
-    wrapper.setProps({
-      variant: CheckboxVariant.switch,
+    const view = renderButton({
+      ...wrapperParameters,
+      props: {
+        label: 'Checkbox',
+        name: 'checkbox',
+        type: 'checkbox',
+        id: 'checkbox',
+        onValue: 'yes',
+        offValue: 'no',
+        variant: CheckboxVariant.switch,
+      },
     })
-    await waitForNextTick(true)
 
-    // Normal checkbox should not be visible.
-    expect(wrapper.find('input').classes()).contains('sr-only')
+    expect(view.getByLabelText('Checkbox')).toHaveClass('sr-only')
   })
 
   it('can be disabled', async () => {
-    expect.assertions(4)
-    expect(wrapper.find('input').attributes().disabled).toBe(undefined)
+    const view = renderButton({
+      props: {
+        label: 'Checkbox',
+        name: 'checkbox',
+        type: 'checkbox',
+        id: 'checkbox',
+        variant: CheckboxVariant.switch,
+      },
+    })
 
-    wrapper.setProps({
+    const checklist = view.getByLabelText('Checkbox')
+
+    expect(checklist).not.toHaveAttribute('disabled')
+
+    await view.rerender({
       disabled: true,
     })
-    await nextTick()
 
-    expect(wrapper.find('input').attributes().disabled).toBeDefined()
-    expect(wrapper.find('.formkit-wrapper[data-disabled]').exists()).toBe(true)
+    expect(checklist).toHaveAttribute('disabled')
 
     // Rest the disabled state again and check if it's enabled again.
-    wrapper.setProps({
+    await view.rerender({
       disabled: false,
     })
-    await nextTick()
 
-    expect(wrapper.find('input').attributes().disabled).toBe(undefined)
+    expect(checklist).not.toHaveAttribute('disabled')
   })
 
   it('options for multiple checkboxes can be used', () => {
-    wrapper = getWrapper(FormKit, {
-      ...wrapperParameters,
+    const view = renderButton({
       props: {
         label: 'Multiple Checkbox',
         name: 'checkbox-multiple',
@@ -154,32 +161,39 @@ describe('Form - Field - Checkbox (Formkit-BuildIn)', () => {
       },
     })
 
-    // TODO - Remove the .get() here when @vue/test-utils > rc.19
-    const inputs = wrapper.get('fieldset').findAll('input')
-    expect(inputs.length).toBe(3)
-    expect(wrapper.find('legend').text()).toBe('Multiple Checkbox')
+    const fieldset = view.getByRole('group', { name: /Multiple Checkbox/ })
+
+    expect(fieldset).toBeInTheDocument()
+
+    const inputs = getAllByRole(fieldset, 'checkbox')
+
+    expect(inputs).toHaveLength(3)
 
     const node = getNode('checkbox-multiple')
     expect(node?.value).toStrictEqual([])
   })
 
   it('check for the multiple checkbox input event', async () => {
-    expect.assertions(3)
-    const checkboxes = wrapper.get('fieldset').findAll('input')
-    checkboxes[0].element.checked = true
-    checkboxes[0].trigger('input')
+    const view = renderButton({
+      props: {
+        label: 'Multiple Checkbox',
+        name: 'checkbox-multiple',
+        type: 'checkbox',
+        id: 'checkbox-multiple',
+        options: ['one', 'two', 'three'],
+      },
+    })
 
+    await view.events.click(view.getByLabelText(/one/))
     await waitForTimeout()
 
-    expect(wrapper.emitted('input')).toBeTruthy()
+    expect(view.emitted().input).toBeTruthy()
 
-    const emittedInput = wrapper.emitted().input as Array<Array<InputEvent>>
+    const emittedInput = view.emitted().input as Array<Array<InputEvent>>
 
     expect(emittedInput[0][0]).toStrictEqual(['one'])
 
-    checkboxes[2].element.checked = true
-    checkboxes[2].trigger('input')
-
+    await view.events.click(view.getByLabelText(/three/))
     await waitForTimeout()
 
     expect(emittedInput[1][0]).toStrictEqual(['one', 'three'])

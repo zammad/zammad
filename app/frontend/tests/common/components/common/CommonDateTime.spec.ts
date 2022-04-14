@@ -10,7 +10,6 @@ import { nextTick } from 'vue'
 
 describe('CommonDateTime.vue', () => {
   it('renders DateTime', async () => {
-    expect.assertions(5)
     const wrapper = getWrapper(CommonDateTime, {
       props: {
         dateTime: '2020-10-10T10:10:10Z',
@@ -18,22 +17,21 @@ describe('CommonDateTime.vue', () => {
       },
       store: true,
     })
-    expect(wrapper.find('span').text()).toBe('2020-10-10 10:10')
-    wrapper.setProps({ format: 'relative' })
-    await nextTick()
-    expect(wrapper.find('span').text()).toBe('1 day ago')
+    expect(wrapper.container).toHaveTextContent('2020-10-10 10:10')
+    await wrapper.rerender({ format: 'relative' })
+    expect(wrapper.container).toHaveTextContent('1 day ago')
 
-    wrapper.setProps({ format: 'configured' })
+    await wrapper.rerender({ format: 'configured' })
     useApplicationConfigStore().value.pretty_date_format = 'absolute'
     await nextTick()
-    expect(wrapper.find('span').text()).toBe('2020-10-10 10:10')
+    expect(wrapper.container).toHaveTextContent('2020-10-10 10:10')
 
     useApplicationConfigStore().value.pretty_date_format = 'timestamp'
     await nextTick()
-    expect(wrapper.find('span').text()).toBe('2020-10-10 10:10')
+    expect(wrapper.container).toHaveTextContent('2020-10-10 10:10')
 
     useApplicationConfigStore().value.pretty_date_format = 'relative'
     await nextTick()
-    expect(wrapper.find('span').text()).toBe('1 day ago')
+    expect(wrapper.container).toHaveTextContent('1 day ago')
   })
 })

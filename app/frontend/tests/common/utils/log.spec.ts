@@ -1,15 +1,22 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-vi.spyOn(console, 'error')
-vi.spyOn(console, 'warn')
-vi.spyOn(console, 'info')
-vi.spyOn(console, 'log')
-vi.spyOn(console, 'trace')
+// eslint-disable-next-line @typescript-eslint/no-empty-function
+const noop = () => {}
+
+vi.spyOn(console, 'error').mockImplementation(noop)
+vi.spyOn(console, 'warn').mockImplementation(noop)
+vi.spyOn(console, 'info').mockImplementation(noop)
+vi.spyOn(console, 'log').mockImplementation(noop)
+vi.spyOn(console, 'trace').mockImplementation(noop)
 
 // eslint-disable-next-line import/first
 import log from '@common/utils/log'
 
 describe('log', () => {
+  afterAll(() => {
+    vi.restoreAllMocks()
+  })
+
   it('logs with default log level', () => {
     log.error('error')
     log.warn('warn')
@@ -29,7 +36,7 @@ describe('log', () => {
     log.debug('debug')
     log.trace('trace')
     // It seems trace also calls error().
-    expect(console.error).toHaveBeenCalledTimes(3)
+    expect(console.error).toHaveBeenCalledTimes(2)
     expect(console.warn).toHaveBeenCalledTimes(2)
     expect(console.info).toHaveBeenCalledTimes(2)
     expect(console.log).toHaveBeenCalledTimes(1)

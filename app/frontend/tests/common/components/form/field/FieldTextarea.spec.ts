@@ -3,7 +3,7 @@
 import { i18n } from '@common/utils/i18n'
 import { getNode } from '@formkit/core'
 import { FormKit } from '@formkit/vue'
-import { getWrapper } from '@tests/support/components'
+import { ExtendedRenderResult, getWrapper } from '@tests/support/components'
 import { waitForTimeout } from '@tests/support/utils'
 import { nextTick } from 'vue'
 
@@ -12,38 +12,38 @@ const wrapperParameters = {
   formField: true,
 }
 
-let wrapper = getWrapper(FormKit, {
-  ...wrapperParameters,
-  props: {
-    name: 'textarea',
-    type: 'textarea',
-    id: 'textarea',
-  },
-})
-
 describe('Form - Field - Textarea (Formkit-BuildIn)', () => {
-  it('mounts successfully', () => {
-    expect(wrapper.exists()).toBe(true)
+  let wrapper: ExtendedRenderResult
+
+  beforeAll(() => {
+    wrapper = getWrapper(FormKit, {
+      ...wrapperParameters,
+      props: {
+        name: 'textarea',
+        type: 'textarea',
+        id: 'textarea',
+        label: 'Body',
+      },
+      unmount: false,
+    })
+  })
+
+  afterAll(() => {
+    wrapper.unmount()
   })
 
   it('can render a textarea', () => {
-    expect(wrapper.html()).toContain('formkit-outer')
-    expect(wrapper.html()).toContain('formkit-wrapper')
-    expect(wrapper.html()).toContain('formkit-inner')
-    expect(wrapper.html()).toContain('<textarea')
-    expect(wrapper.find('textarea').attributes().id).toBe('textarea')
-    expect(wrapper.find('textarea').attributes().placeholder).toBeUndefined()
-    expect(wrapper.find('label').exists()).toBe(false)
+    const textarea = wrapper.getByLabelText('Body')
+
+    expect(textarea).toHaveAttribute('id', 'textarea')
+    expect(textarea).not.toHaveAttribute('placeholder')
 
     const node = getNode('textarea')
     expect(node?.value).toBe(undefined)
   })
 
   it('set some props', async () => {
-    expect.assertions(7)
-
-    wrapper.setProps({
-      label: 'Body',
+    await wrapper.rerender({
       help: 'This is the help text',
       placeholder: 'Enter your body',
       cols: 10,
@@ -52,58 +52,52 @@ describe('Form - Field - Textarea (Formkit-BuildIn)', () => {
       rows: 5,
     })
 
-    await nextTick()
+    expect(wrapper.getByText('This is the help text')).toBeInTheDocument()
 
-    expect(wrapper.find('label').text()).toBe('Body')
-    expect(wrapper.find('.formkit-help').text()).toBe('This is the help text')
+    const textarea = wrapper.getByLabelText('Body')
 
-    const attributes = wrapper.find('textarea').attributes()
-    expect(attributes.placeholder).toBe('Enter your body')
-    expect(attributes.cols).toBe('10')
-    expect(attributes.rows).toBe('5')
-    expect(attributes.maxlength).toBe('100')
-    expect(attributes.minlength).toBe('10')
+    expect(textarea).toHaveAttribute('placeholder', 'Enter your body')
+    expect(textarea).toHaveAttribute('cols', '10')
+    expect(textarea).toHaveAttribute('rows', '5')
+    expect(textarea).toHaveAttribute('maxlength', '100')
+    expect(textarea).toHaveAttribute('minlength', '10')
   })
 
   it('check for the input event', async () => {
-    expect.assertions(2)
-    const textarea = wrapper.find('textarea')
-    textarea.setValue('example body')
-    textarea.trigger('input')
+    const textarea = wrapper.getByLabelText('Body')
+
+    await wrapper.events.type(textarea, 'example body')
 
     await waitForTimeout()
 
-    expect(wrapper.emitted('input')).toBeTruthy()
-
     const emittedInput = wrapper.emitted().input as Array<Array<InputEvent>>
 
-    expect(emittedInput[0][0]).toBe('example body')
+    expect(emittedInput[11][0]).toBe('example body')
   })
 
   it('can be disabled', async () => {
-    expect.assertions(3)
-    expect(wrapper.find('textarea').attributes().disabled).toBe(undefined)
+    const textarea = wrapper.getByLabelText('Body')
 
-    wrapper.setProps({
+    expect(textarea).toBeEnabled()
+
+    await wrapper.rerender({
       disabled: true,
     })
-    await nextTick()
 
-    expect(wrapper.find('textarea').attributes().disabled).toBeDefined()
+    expect(textarea).toBeDisabled()
 
     // Rest the disabled state again and check if it's enabled again.
-    wrapper.setProps({
+    await wrapper.rerender({
       disabled: false,
     })
-    await nextTick()
 
-    expect(wrapper.find('textarea').attributes().disabled).toBe(undefined)
+    expect(textarea).toBeEnabled()
   })
+})
 
+describe('Form - Field - Textarea (Formkit-BuildIn) - Translations', () => {
   it('can translate placeholder attribute', async () => {
-    expect.assertions(2)
-
-    wrapper = getWrapper(FormKit, {
+    const wrapper = getWrapper(FormKit, {
       ...wrapperParameters,
       props: {
         label: 'Body',
@@ -115,9 +109,9 @@ describe('Form - Field - Textarea (Formkit-BuildIn)', () => {
       },
     })
 
-    expect(wrapper.find('textarea').attributes().placeholder).toBe(
-      'Enter your body',
-    )
+    const textarea = wrapper.getByLabelText('Body')
+
+    expect(textarea).toHaveAttribute('placeholder', 'Enter your body')
 
     const map = new Map([['Enter your body', 'Gib deinen Text ein']])
 
@@ -125,13 +119,11 @@ describe('Form - Field - Textarea (Formkit-BuildIn)', () => {
 
     await nextTick()
 
-    expect(wrapper.find('textarea').attributes().placeholder).toBe(
-      'Gib deinen Text ein',
-    )
+    expect(textarea).toHaveAttribute('placeholder', 'Gib deinen Text ein')
   })
 
   it('can translate label with label placeholder', () => {
-    wrapper = getWrapper(FormKit, {
+    const wrapper = getWrapper(FormKit, {
       ...wrapperParameters,
       props: {
         label: 'Body %s %s',
@@ -142,9 +134,8 @@ describe('Form - Field - Textarea (Formkit-BuildIn)', () => {
       },
     })
 
-    expect(wrapper.find('label').exists()).toBe(true)
-    expect(wrapper.find('label').element.textContent).toBe(
-      'Body Example Placeholder',
-    )
+    expect(
+      wrapper.getByLabelText('Body Example Placeholder'),
+    ).toBeInTheDocument()
   })
 })

@@ -3,31 +3,21 @@
 import Form from '@common/components/form/Form.vue'
 import UserError from '@common/errors/UserError'
 import { FormValues } from '@common/types/form'
-import { FormKitNode, getNode } from '@formkit/core'
-import { getVMFromWrapper, getWrapper } from '@tests/support/components'
-import { waitForTimeout, waitForNextTick } from '@tests/support/utils'
-import { nextTick } from 'vue'
+import { FormKitNode } from '@formkit/core'
+import { within } from '@testing-library/vue'
+import { ExtendedRenderResult, getWrapper } from '@tests/support/components'
+import { waitForNextTick } from '@tests/support/utils'
+import { nextTick, onMounted, ref } from 'vue'
 
 const wrapperParameters = {
   form: true,
   attachTo: document.body,
 }
 
-let wrapper = getWrapper(Form, {
-  ...wrapperParameters,
-  props: {},
-})
-
 describe('Form.vue', () => {
-  it('mounts successfully', () => {
-    expect(wrapper.exists()).toBe(true)
-  })
+  let wrapper: ExtendedRenderResult
 
-  it('check for no form output without a schema with fields', () => {
-    expect(wrapper.html()).not.toContain('form')
-  })
-
-  it('set a schema with fields', () => {
+  beforeAll(() => {
     wrapper = getWrapper(Form, {
       ...wrapperParameters,
       props: {
@@ -35,82 +25,72 @@ describe('Form.vue', () => {
           {
             type: 'text',
             name: 'title',
-            label: 'Title',
+            label: 'Text',
           },
           {
             type: 'textarea',
             name: 'text',
-            label: 'Text',
+            label: 'Textarea',
             value: 'Some text',
           },
         ],
       },
+      unmount: false,
     })
+  })
 
+  afterAll(() => {
+    wrapper.unmount()
+  })
+
+  it('set a schema with fields', () => {
     expect(wrapper.html()).toContain('form')
 
-    // Check for some field ouput.
-    expect(wrapper.html()).toContain('<input')
-    expect(wrapper.find('div[data-type="text"] label').text()).toContain(
-      'Title',
-    )
-    expect(wrapper.html()).toContain('<textarea')
-    expect(wrapper.find('div[data-type="textarea"] label').text()).toContain(
-      'Text',
-    )
+    const text = wrapper.getByLabelText('Text')
+    expect(text).toBeInTheDocument()
+    // wrapped in a div with data-type
+    expect(text.closest('div[data-type="text"]')).toBeInTheDocument()
+
+    const textarea = wrapper.getByLabelText('Textarea')
+    expect(textarea).toBeInTheDocument()
+    // wrapped in a div with data-type
+    expect(textarea.closest('div[data-type="textarea"]')).toBeInTheDocument()
   })
 
   it('check for current initial field values', () => {
-    expect(getVMFromWrapper(wrapper).values).toStrictEqual({
-      title: undefined,
-      text: 'Some text',
-    })
+    const textarea = wrapper.getByLabelText('Textarea')
+
+    expect(textarea).toHaveDisplayValue('Some text')
   })
 
   it('check for changed field values', async () => {
-    expect.assertions(1)
+    const text = wrapper.getByLabelText('Text')
 
-    const input = wrapper.find('input')
-    input.setValue('Example title')
-    input.trigger('input')
+    await wrapper.events.type(text, 'Example title')
 
-    await waitForTimeout()
-
-    expect(getVMFromWrapper(wrapper).values).toStrictEqual({
-      title: 'Example title',
-      text: 'Some text',
-    })
+    expect(text).toHaveDisplayValue('Example title')
   })
 
   it('implements submit event/handler', async () => {
-    expect.assertions(2)
-
     const submitCallbackSpy = vi.fn()
 
-    wrapper.setProps({
+    await wrapper.rerender({
       onSubmit: (data: FormValues) => submitCallbackSpy(data),
     })
 
-    const { formId } = getVMFromWrapper(wrapper)
+    await wrapper.events.type(wrapper.getByLabelText('Text'), '{Enter}')
 
-    const formNode = getNode(formId) as FormKitNode
-    formNode.submit()
-
-    await nextTick()
-
-    expect(wrapper.emitted('submit')).toBeTruthy()
+    expect(wrapper.emitted().submit).toBeTruthy()
 
     expect(submitCallbackSpy).toHaveBeenCalledWith({
       title: 'Example title',
       text: 'Some text',
-      formId,
+      formId: expect.any(String),
     })
   })
 
   it('handles promise error messages in submit event/handler', async () => {
-    expect.assertions(2)
-
-    wrapper.setProps({
+    await wrapper.rerender({
       onSubmit: (): Promise<void> => {
         return new Promise((resolve, reject) => {
           const userErrors = new UserError([
@@ -124,37 +104,34 @@ describe('Form.vue', () => {
       },
     })
 
-    const { formId } = getVMFromWrapper(wrapper)
-
-    const formNode = getNode(formId) as FormKitNode
-    formNode.submit()
+    await wrapper.events.type(wrapper.getByLabelText('Text'), '{Enter}')
 
     await waitForNextTick(true)
 
-    expect(wrapper.find('[data-errors="true"]')).toBeTruthy()
-    expect(wrapper.find('[data-message-type="error"]').text()).toBe(
-      'Title should be different.',
-    )
+    const error = wrapper.getByText('Title should be different.')
+
+    expect(error).toBeInTheDocument()
+    // we depend on this attributes, so we test it
+    expect(error).toHaveAttribute('data-message-type', 'error')
+    expect(error.closest('[data-errors="true"]')).toBeInTheDocument()
   })
 
   it('implements changed event', async () => {
-    expect.assertions(2)
+    const text = wrapper.getByLabelText('Text')
 
-    const input = wrapper.find('input')
-    input.setValue('Other title')
-    input.trigger('input')
-
-    expect(wrapper.emitted('changed')).toBeTruthy()
+    await wrapper.events.clear(text)
+    await wrapper.events.type(text, 'Other title')
 
     const emittedChange = wrapper.emitted().changed as Array<Array<string>>
 
-    expect(emittedChange[1]).toStrictEqual(['Other title', 'title'])
+    expect(emittedChange[emittedChange.length - 1]).toStrictEqual([
+      'Other title',
+      'title',
+    ])
   })
 
   it('can change field information - hide title field', async () => {
-    expect.assertions(1)
-
-    wrapper.setProps({
+    await wrapper.rerender({
       changeFields: {
         title: {
           show: false,
@@ -164,13 +141,11 @@ describe('Form.vue', () => {
 
     await nextTick()
 
-    expect(wrapper.html()).not.toContain('<input')
+    expect(wrapper.queryByLabelText('Text')).not.toBeInTheDocument()
   })
 
   it('can change field information - show title again and change values', async () => {
-    expect.assertions(2)
-
-    wrapper.setProps({
+    await wrapper.rerender({
       changeFields: {
         title: {
           show: true,
@@ -184,15 +159,17 @@ describe('Form.vue', () => {
 
     await waitForNextTick(true)
 
-    const input = wrapper.find('input')
-    expect(input.element.value).toBe('Changed title')
+    const input = wrapper.getByLabelText('Text')
+    expect(input).toHaveDisplayValue('Changed title')
 
-    const textarea = wrapper.find('textarea')
-    expect(textarea.element.value).toBe('A other text.')
+    const textarea = wrapper.getByLabelText('Textarea')
+    expect(textarea).toHaveDisplayValue('A other text.')
   })
+})
 
+describe('Form.vue - Edge Cases', () => {
   it('can use initial values', () => {
-    wrapper = getWrapper(Form, {
+    const wrapper = getWrapper(Form, {
       ...wrapperParameters,
       props: {
         schema: [
@@ -213,12 +190,12 @@ describe('Form.vue', () => {
       },
     })
 
-    const input = wrapper.find('input')
-    expect(input.element.value).toBe('Initial title')
+    const input = wrapper.getByLabelText('Title')
+    expect(input).toHaveDisplayValue('Initial title')
   })
 
   it('can use form layout in schema', () => {
-    wrapper = getWrapper(Form, {
+    const wrapper = getWrapper(Form, {
       ...wrapperParameters,
       props: {
         schema: [
@@ -245,14 +222,19 @@ describe('Form.vue', () => {
       },
     })
 
-    expect(wrapper.html()).toContain('<form')
-    expect(wrapper.html()).toContain('<fieldset')
-    expect(wrapper.html()).toContain('<input')
-    expect(wrapper.html()).toContain('<textarea')
+    const fieldset = wrapper.getByRole('group')
+
+    // children are inside a form
+    expect(fieldset.closest('form')).toBeInTheDocument()
+
+    const group = within(fieldset)
+
+    expect(group.getByLabelText('Title')).toBeInTheDocument()
+    expect(group.getByLabelText('Text')).toBeInTheDocument()
   })
 
   it('can use DOM elements and other components inside of the schema', () => {
-    wrapper = getWrapper(Form, {
+    const wrapper = getWrapper(Form, {
       ...wrapperParameters,
       router: true,
       props: {
@@ -284,14 +266,16 @@ describe('Form.vue', () => {
       },
     })
 
-    expect(wrapper.html()).toContain('form')
-    expect(wrapper.html()).toContain('<input')
-    expect(wrapper.find('div.example-class')).toBeTruthy()
-    expect(wrapper.find('a').text()).toBe('Example Link')
+    expect(
+      wrapper.container.querySelector('div.example-class'),
+    ).toBeInTheDocument()
+
+    expect(wrapper.getByText('Example Link')).toBeInTheDocument()
+    expect(wrapper.getByLabelText('Title')).toBeInTheDocument()
   })
 
   it('can use list/group fields in form schema', () => {
-    wrapper = getWrapper(Form, {
+    const wrapper = getWrapper(Form, {
       ...wrapperParameters,
       props: {
         schema: [
@@ -315,63 +299,82 @@ describe('Form.vue', () => {
       },
     })
 
-    expect(wrapper.html()).toContain('form')
-    expect(wrapper.html()).toContain('Street')
-    expect(wrapper.html()).toContain('City')
+    const group = wrapper.getByRole('form')
+    const view = within(group)
+
+    expect(view.getByLabelText('Street')).toBeInTheDocument()
+    expect(view.getByLabelText('City')).toBeInTheDocument()
   })
 
   // TODO: add test case for loading animation, when real query call is availabe (can then be mocked).
 
   it('can use fields slot instead of a form schema', () => {
-    wrapper = getWrapper(Form, {
+    const wrapper = getWrapper(Form, {
       ...wrapperParameters,
       slots: {
         fields: '<FormKit type="text" name="example" label="Example" />',
       },
     })
 
-    expect(wrapper.html()).toContain('form')
+    expect(wrapper.getByRole('form')).toBeInTheDocument()
 
-    // Check for some field ouput.
-    expect(wrapper.html()).toContain('<input')
-    expect(wrapper.find('div[data-type="text"] label').text()).toContain(
-      'Example',
-    )
+    const input = wrapper.getByLabelText('Example')
+
+    expect(input).toBeInTheDocument()
   })
 
   it('exposes the form node', () => {
-    wrapper = getWrapper(
-      {
-        template: `<div><Form ref="form" v-bind:schema="schema" /></div>`,
-        components: {
-          Form,
-        },
-        setup() {
-          const schema = [
-            {
-              type: 'text',
-              name: 'title',
-              label: 'Title',
-            },
-            {
-              type: 'textarea',
-              name: 'text',
-              label: 'Text',
-              value: 'Some text',
-            },
-          ]
+    expect.assertions(2)
 
-          return { schema }
-        },
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      } as any,
-      {
-        form: true,
-      },
-    )
+    return new Promise((resolve) => {
+      getWrapper(
+        {
+          template: `<div><Form ref="form" v-bind:schema="schema" /></div>`,
+          components: {
+            Form,
+          },
+          setup() {
+            const schema = [
+              {
+                type: 'text',
+                name: 'title',
+                label: 'Title',
+              },
+              {
+                type: 'textarea',
+                name: 'text',
+                label: 'Text',
+                value: 'Some text',
+              },
+            ]
 
-    const formNode = getVMFromWrapper(wrapper).$refs.form
-      .formNode as FormKitNode
-    expect(formNode.props.type).toBe('form')
+            const form = ref<{ formNode: FormKitNode }>()
+
+            onMounted(() => {
+              expect(form.value).toBeDefined()
+              expect(form.value?.formNode.props.type).toBe('form')
+
+              resolve()
+            })
+
+            return { schema, form }
+          },
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } as any,
+        {
+          form: true,
+        },
+      )
+    })
+  })
+})
+
+describe('Form.vue - Empty', () => {
+  it('check for no form output without a schema with fields', () => {
+    const wrapper = getWrapper(Form, {
+      ...wrapperParameters,
+      props: {},
+    })
+    expect(wrapper.html()).not.toContain('form')
   })
 })

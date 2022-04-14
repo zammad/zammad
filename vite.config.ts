@@ -1,4 +1,5 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+/* eslint-disable no-restricted-imports */
 
 /// <reference types="vitest" />
 
@@ -9,9 +10,12 @@ import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 import type { OptimizeOptions } from 'svgo'
 import * as path from 'path'
 
+import tsconfig from './tsconfig.json'
+import TransformTestId from './app/frontend/tests/transforms/transformTestId'
+
 export default defineConfig(({ mode }) => ({
   esbuild: {
-    target: 'es2020', // Must stay in sync with tsconfig.json.
+    target: tsconfig.compilerOptions.target,
   },
   resolve: {
     alias: {
@@ -32,7 +36,15 @@ export default defineConfig(({ mode }) => ({
   plugins: [
     // Ruby plugin is not needed inside of the vitest context and has some side effects.
     ['test', 'storybook'].includes(mode) ? [] : RubyPlugin(),
-    VuePlugin(),
+    VuePlugin({
+      template: {
+        compilerOptions: {
+          nodeTransforms: ['test', 'storybook'].includes(mode)
+            ? []
+            : [TransformTestId],
+        },
+      },
+    }),
     createSvgIconsPlugin({
       // Specify the icon folder to be cached
       iconDirs: [

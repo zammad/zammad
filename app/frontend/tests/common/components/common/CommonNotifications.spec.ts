@@ -1,14 +1,16 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { VueWrapper } from '@vue/test-utils'
-import { ComponentPublicInstance, nextTick } from 'vue'
+import { nextTick } from 'vue'
 import CommonNotifications from '@common/components/common/CommonNotifications.vue'
 import { NotificationTypes } from '@common/types/notification'
 import useNotifications from '@common/composables/useNotifications'
-import { getWrapper } from '@tests/support/components'
+import {
+  getWrapper,
+  type ExtendedRenderResult,
+} from '@tests/support/components'
 import { waitForTimeout } from '@tests/support/utils'
 
-let wrapper: VueWrapper<ComponentPublicInstance>
+let wrapper: ExtendedRenderResult
 
 const message = 'Test Notification'
 beforeEach(() => {
@@ -20,20 +22,17 @@ beforeEach(() => {
 
 describe('CommonNotifications.vue', () => {
   it('renders notification with passed message', async () => {
-    expect.assertions(2)
     const { notify } = useNotifications()
     await notify({
       message,
       type: NotificationTypes.WARN,
     })
 
-    expect(wrapper.find('span').exists()).toBeTruthy()
-    expect(wrapper.get('span').text()).toBe(message)
+    expect(wrapper.getByTestId('notification')).toBeInTheDocument()
+    expect(wrapper.getByTestId('notification')).toHaveTextContent(message)
   })
 
   it('automatically removes notification after timeout', async () => {
-    expect.assertions(1)
-
     const { notify } = useNotifications()
 
     await notify({
@@ -44,12 +43,10 @@ describe('CommonNotifications.vue', () => {
 
     await waitForTimeout(20)
 
-    expect(wrapper.find('span').exists()).toBeFalsy()
+    expect(wrapper.queryByTestId('notification')).not.toBeInTheDocument()
   })
 
   it('does not remove persistent notifications', async () => {
-    expect.assertions(1)
-
     const { notify } = useNotifications()
 
     await notify({
@@ -61,11 +58,11 @@ describe('CommonNotifications.vue', () => {
 
     await waitForTimeout(20)
 
-    expect(wrapper.find('span').exists()).toBeTruthy()
+    expect(wrapper.getByTestId('notification')).toBeInTheDocument()
   })
 
   it('executes a callback on click', async () => {
-    expect.assertions(1)
+    expect.assertions(2)
 
     const { notify } = useNotifications()
 
@@ -75,16 +72,15 @@ describe('CommonNotifications.vue', () => {
       message,
       type: NotificationTypes.WARN,
       callback: () => {
+        expect(test).toBe(false)
         test = true
       },
     })
-    wrapper.find('span').trigger('click')
+    await wrapper.events.click(wrapper.getByText(message))
     expect(test).toBe(true)
   })
 
   it('renders multiple notifications at the same time', async () => {
-    expect.assertions(1)
-
     const { notify, notifications } = useNotifications()
 
     await notify({
@@ -102,11 +98,10 @@ describe('CommonNotifications.vue', () => {
       type: NotificationTypes.WARN,
     })
 
-    expect(wrapper.findAll('span')).toHaveLength(3)
+    expect(wrapper.getAllByTestId('notification')).toHaveLength(3)
   })
 
   it('clears all notifications', async () => {
-    expect.assertions(2)
     const { notify, notifications, clearAllNotifications } = useNotifications()
 
     await notify({
@@ -126,18 +121,17 @@ describe('CommonNotifications.vue', () => {
 
     clearAllNotifications()
     await nextTick()
-    expect(notifications.value.length).toBe(0)
-    expect(wrapper.find('span').exists()).toBeFalsy()
+    expect(notifications.value).toHaveLength(0)
+    expect(wrapper.queryAllByTestId('notification')).toHaveLength(0)
   })
 
   it('renders notification with icon', async () => {
-    expect.assertions(1)
     const { notify } = useNotifications()
     await notify({
       message,
       type: NotificationTypes.WARN,
     })
 
-    expect(wrapper.find('.icon').exists()).toBeTruthy()
+    expect(wrapper.getIconByName('info')).toBeInTheDocument()
   })
 })

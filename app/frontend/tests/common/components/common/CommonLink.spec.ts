@@ -1,8 +1,10 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import CommonLink from '@common/components/common/CommonLink.vue'
-import { nextTick } from 'vue'
-import { getVMFromWrapper, getWrapper } from '@tests/support/components'
+import CommonLink, {
+  type Props,
+} from '@common/components/common/CommonLink.vue'
+import { getWrapper } from '@tests/support/components'
+import { MountingOptions } from '@vue/test-utils'
 
 const wrapperParameters = {
   router: true,
@@ -11,28 +13,38 @@ const wrapperParameters = {
   },
 }
 
-describe('CommonLink.vue', () => {
-  let wrapper = getWrapper(CommonLink, {
+const renderCommonLink = (options: MountingOptions<Props> = {}) => {
+  const view = getWrapper(CommonLink, {
     ...wrapperParameters,
     props: {
       link: 'https://www.zammad.org',
     },
+    ...options,
   })
 
-  it('mounted successfully', () => {
-    expect(wrapper.exists()).toBe(true)
-  })
+  return {
+    ...view,
+    getLink: () => view.getByTestId('common-link'),
+  }
+}
 
+describe('CommonLink.vue', () => {
   it('renders external link element with attributes', () => {
-    expect(wrapper.find('a').text()).toBe('A test link')
-    expect(wrapper.attributes().href).toBe('https://www.zammad.org')
-    expect(wrapper.attributes().target).toBeUndefined()
+    const { getLink } = renderCommonLink()
+    const link = getLink()
+    expect(link).toHaveTextContent('A test link')
+    expect(link).toHaveAttribute('href', 'https://www.zammad.org')
+    expect(link).not.toHaveAttribute('target')
   })
 
-  it('supports click event', () => {
-    wrapper.find('a').trigger('click')
+  it('supports click event', async () => {
+    const { getLink, ...wrapper } = renderCommonLink()
 
-    expect(wrapper.emitted('click')).toBeTruthy()
+    const link = getLink()
+
+    await wrapper.events.click(link)
+
+    expect(wrapper.emitted().click).toBeTruthy()
 
     const emittedClick = wrapper.emitted().click as Array<Array<MouseEvent>>
 
@@ -40,28 +52,26 @@ describe('CommonLink.vue', () => {
   })
 
   it('supports disabled prop', async () => {
-    expect.assertions(2)
-    wrapper = getWrapper(CommonLink, {
-      ...wrapperParameters,
+    const { getLink, ...wrapper } = renderCommonLink({
       props: {
         link: 'https://www.zammad.org',
         disabled: true,
       },
     })
-    await nextTick()
 
-    expect(wrapper.attributes().class).toContain('pointer-events-none')
+    const link = getLink()
 
-    wrapper.find('a').trigger('click')
+    expect(link).toHaveClass('pointer-events-none')
 
-    expect(wrapper.emitted('click')).toBeFalsy()
+    await wrapper.events.click(link)
+
+    expect(wrapper.emitted().click).toBeFalsy()
   })
 
-  it('title attribute can be used without a real prop', () => {
+  it('title attribute can be used without a real prop', async () => {
     const title = 'a link title'
 
-    wrapper = getWrapper(CommonLink, {
-      ...wrapperParameters,
+    const { getLink, ...wrapper } = renderCommonLink({
       props: {
         link: 'https://www.zammad.org',
       },
@@ -69,80 +79,45 @@ describe('CommonLink.vue', () => {
         title,
       },
     })
+    expect(getLink()).toHaveAttribute('title', title)
 
-    expect(wrapper.attributes().title).toBe(title)
-  })
-
-  it('open link in a new tab', async () => {
-    expect.assertions(1)
-
-    wrapper.setProps({
+    await wrapper.rerender({
       openInNewTab: true,
     })
-    await nextTick()
 
-    expect(wrapper.attributes().target).toBe('_blank')
-  })
+    expect(getLink()).toHaveAttribute('target', '_blank')
 
-  it('supports isExternal prop', async () => {
-    expect.assertions(1)
-
-    wrapper.setProps({
-      isExternal: true,
-    })
-    await nextTick()
-
-    expect(getVMFromWrapper(wrapper).isInternalLink).toBe(false)
-  })
-
-  it('supports isRoute prop', async () => {
-    expect.assertions(1)
-
-    wrapper.setProps({
-      isExternal: false,
-      isRoute: true,
-    })
-    await nextTick()
-
-    expect(getVMFromWrapper(wrapper).isInternalLink).toBe(true)
-  })
-
-  it('direct setting of a target', async () => {
-    expect.assertions(1)
-
-    wrapper.setProps({
+    await wrapper.rerender({
       target: '_self',
     })
-    await nextTick()
 
-    expect(wrapper.attributes().target).toBe('_self')
+    expect(getLink()).toHaveAttribute('target', '_self')
   })
 
   it('link route detection', async () => {
-    expect.assertions(4)
-
-    wrapper = getWrapper(CommonLink, {
-      ...wrapperParameters,
+    const { getLink, ...wrapper } = renderCommonLink({
       props: {
         link: '/example',
       },
     })
 
-    expect(getVMFromWrapper(wrapper).isInternalLink).toBe(true)
-    expect(wrapper.attributes().href).toBe('/example')
+    expect(getLink()).toHaveAttribute('href', '/example')
 
-    wrapper.setProps({
-      link: '/external-path',
+    await wrapper.rerender({
+      link: 'https://www.zammad.org',
     })
-    await nextTick()
 
-    expect(getVMFromWrapper(wrapper).isInternalLink).toBe(false)
-    expect(wrapper.attributes().href).toBe('/external-path')
+    expect(getLink()).toHaveAttribute('href', 'https://www.zammad.org')
+
+    await wrapper.rerender({
+      link: '/#hello-world',
+    })
+
+    expect(getLink()).toHaveAttribute('href', '/#hello-world')
   })
 
   it('supports link prop with route object', () => {
-    wrapper = getWrapper(CommonLink, {
-      ...wrapperParameters,
+    const { getLink } = renderCommonLink({
       props: {
         link: {
           name: 'Example',
@@ -150,7 +125,9 @@ describe('CommonLink.vue', () => {
       },
     })
 
-    expect(wrapper.find('a').text()).toBe('A test link')
-    expect(wrapper.attributes().href).toBe('/example')
+    const link = getLink()
+
+    expect(link).toHaveTextContent('A test link')
+    expect(link).toHaveAttribute('href', '/example')
   })
 })

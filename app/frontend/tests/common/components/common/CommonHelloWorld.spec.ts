@@ -19,6 +19,6 @@ describe('CommonHelloWorld.vue', () => {
         },
       },
     })
-    expect(wrapper.text()).toMatch(msg)
+    expect(wrapper.container).toHaveTextContent(msg)
   })
 })

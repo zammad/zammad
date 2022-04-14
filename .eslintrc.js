@@ -123,6 +123,7 @@ module.exports = {
       ],
       rules: {
         'zammad/zammad-detect-translatable-string': 'off',
+        '@typescript-eslint/no-non-null-assertion': 'off',
       },
     },
   ],

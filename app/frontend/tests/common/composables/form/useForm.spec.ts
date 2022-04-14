@@ -8,6 +8,7 @@ import { getWrapper } from '@tests/support/components'
 const wrapperParameters = {
   form: true,
   attachTo: document.body,
+  unmount: false,
 }
 
 // Initialize a form component.

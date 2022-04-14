@@ -7,6 +7,6 @@ describe('TransitionViewNavigation.vue', () => {
   it('renders the component', () => {
     const wrapper = getWrapper(TransitionViewNavigation)
 
-    expect(wrapper.exists()).toBe(true)
+    expect(wrapper.container).toBeInTheDocument()
   })
 })

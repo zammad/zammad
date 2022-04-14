@@ -1,13 +1,14 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <template>
-  <EditorContent v-bind:id="context.id" v-bind:editor="editor" />
+  <EditorContent v-bind:editor="editor" />
 </template>
 
 <script setup lang="ts">
 import type { FormFieldContext } from '@common/types/form'
 import { useEditor, EditorContent } from '@tiptap/vue-3'
 import StarterKit from '@tiptap/starter-kit'
+import { watch } from 'vue'
 
 interface Props {
   context: FormFieldContext
@@ -19,12 +20,32 @@ const props = defineProps<Props>()
 
 const editor = useEditor({
   extensions: [StarterKit],
+  editorProps: {
+    attributes: {
+      role: 'textbox',
+      'aria-labelledby': props.context.id,
+    },
+  },
   // eslint-disable-next-line no-underscore-dangle
   content: props.context._value,
   onUpdate: ({ editor }) => {
     props.context.node.input(editor.getHTML())
   },
 })
+
+watch(
+  () => props.context.id,
+  (id) => {
+    editor.value?.setOptions({
+      editorProps: {
+        attributes: {
+          role: 'textbox',
+          'aria-labelledby': id,
+        },
+      },
+    })
+  },
+)
 
 // Set the new editor value, when it was changed from outside (e.G. form schema update).
 props.context.node.on('input', ({ payload: value }) => {

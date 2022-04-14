@@ -8,35 +8,36 @@ describe('CommonIcon.vue', () => {
     const wrapper = getWrapper(CommonIcon, {
       props: { name: 'arrow-left' },
     })
-    expect(wrapper.classes()).toContain('icon')
+    expect(wrapper.getIconByName('arrow-left')).toHaveClass('icon')
   })
   it('renders icon with animation', () => {
     const wrapper = getWrapper(CommonIcon, {
       props: { name: 'cog', animation: 'spin' },
     })
-    expect(wrapper.classes()).toContain('animate-spin')
+    expect(wrapper.getIconByName('cog')).toHaveClass('animate-spin')
   })
   it('renders icon with small size', () => {
     const wrapper = getWrapper(CommonIcon, {
       props: { name: 'cog', size: 'small' },
     })
 
-    expect(wrapper.attributes().width).toEqual('20')
-    expect(wrapper.attributes().height).toEqual('20')
+    expect(wrapper.getIconByName('cog')).toHaveAttribute('width', '20')
+    expect(wrapper.getIconByName('cog')).toHaveAttribute('height', '20')
   })
   it('renders a decorative icon', () => {
     const wrapper = getWrapper(CommonIcon, {
       props: { name: 'cog', decorative: true },
     })
 
-    expect(wrapper.attributes()['aria-hidden']).toEqual('true')
+    expect(wrapper.getIconByName('cog')).toHaveAttribute('aria-hidden', 'true')
   })
-  it('triggers click handler of icon', () => {
+  it('triggers click handler of icon', async () => {
     const wrapper = getWrapper(CommonIcon, {
       props: { name: 'dashboard' },
     })
 
-    wrapper.trigger('click')
-    expect(wrapper.emitted('click')).toHaveLength(1)
+    await wrapper.events.click(wrapper.getIconByName('dashboard'))
+
+    expect(wrapper.emitted().click).toHaveLength(1)
   })
 })

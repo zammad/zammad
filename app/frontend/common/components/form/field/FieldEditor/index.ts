@@ -2,8 +2,39 @@
 
 import FieldEditorInner from '@common/components/form/field/FieldEditor/FieldEditorInner.vue'
 import createInput from '@common/form/core/createInput'
+import { FormKitExtendableSchemaRoot, FormKitNode } from '@formkit/core'
+import { cloneDeep } from 'lodash-es'
 
-const fieldDefinition = createInput(FieldEditorInner)
+function addAriaLabel(node: FormKitNode) {
+  const { props } = node
+
+  if (!props.definition) return
+
+  const definition = cloneDeep(props.definition)
+
+  const originalSchema = definition.schema as FormKitExtendableSchemaRoot
+
+  // Specification doesn't allow accessing non-labeled elements, which Editor is (<div />)
+  // (https://html.spec.whatwg.org/multipage/forms.html#category-label)
+  // So, editor has `aria-labelledby` attribute and a label with the same ID
+  definition.schema = (definition) => {
+    const localDefinition = {
+      ...definition,
+      label: {
+        attrs: {
+          id: props.id,
+        },
+      },
+    }
+    return originalSchema(localDefinition)
+  }
+
+  props.definition = definition
+}
+
+const fieldDefinition = createInput(FieldEditorInner, [], {
+  features: [addAriaLabel],
+})
 
 export default {
   fieldType: 'editor',

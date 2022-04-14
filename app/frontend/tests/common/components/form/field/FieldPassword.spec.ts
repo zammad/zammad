@@ -2,47 +2,47 @@
 
 import { getNode } from '@formkit/core'
 import { FormKit } from '@formkit/vue'
-import { getWrapper } from '@tests/support/components'
+import { ExtendedRenderResult, getWrapper } from '@tests/support/components'
 import { waitForNextTick, waitForTimeout } from '@tests/support/utils'
-import { nextTick } from 'vue'
 
 const wrapperParameters = {
   form: true,
   formField: true,
+  unmount: false,
 }
 
-let wrapper = getWrapper(FormKit, {
-  ...wrapperParameters,
-  props: {
-    name: 'password',
-    type: 'password',
-    id: 'password',
-  },
-})
-
 describe('Form - Field - Password (Formkit-BuildIn)', () => {
-  it('mounts successfully', () => {
-    expect(wrapper.exists()).toBe(true)
+  let wrapper: ExtendedRenderResult
+
+  beforeAll(() => {
+    wrapper = getWrapper(FormKit, {
+      ...wrapperParameters,
+      props: {
+        name: 'password',
+        type: 'password',
+        id: 'password',
+        label: 'Password',
+      },
+    })
   })
 
-  it('can render a input', () => {
-    expect(wrapper.html()).toContain('formkit-outer')
-    expect(wrapper.html()).toContain('formkit-wrapper')
-    expect(wrapper.html()).toContain('formkit-inner')
-    expect(wrapper.html()).toContain('<input')
-    expect(wrapper.find('input').attributes().id).toBe('password')
-    expect(wrapper.find('input').attributes().type).toBe('password')
-    expect(wrapper.find('input').attributes().placeholder).toBeUndefined()
-    expect(wrapper.find('label').exists()).toBe(false)
+  afterAll(() => {
+    wrapper.unmount()
+  })
+
+  it('can render an input', () => {
+    const input = wrapper.getByLabelText('Password')
+
+    expect(input).toHaveAttribute('id', 'password')
+    expect(input).toHaveAttribute('type', 'password')
+    expect(input).not.toHaveAttribute('placeholder')
 
     const node = getNode('password')
     expect(node?.value).toBe(undefined)
   })
 
   it('set some props', async () => {
-    expect.assertions(5)
-
-    wrapper.setProps({
+    await wrapper.rerender({
       label: 'Password',
       help: 'This is the help text',
       placeholder: 'Enter your password',
@@ -50,78 +50,86 @@ describe('Form - Field - Password (Formkit-BuildIn)', () => {
       minlength: 8,
     })
 
-    await nextTick()
+    expect(wrapper.getByText('This is the help text')).toBeInTheDocument()
 
-    expect(wrapper.find('label').text()).toBe('Password')
-    expect(wrapper.find('.formkit-help').text()).toBe('This is the help text')
+    const input = wrapper.getByLabelText('Password')
 
-    const attributes = wrapper.find('input').attributes()
-    expect(attributes.placeholder).toBe('Enter your password')
-    expect(attributes.maxlength).toBe('32')
-    expect(attributes.minlength).toBe('8')
+    expect(input).toHaveAttribute('placeholder', 'Enter your password')
+    expect(input).toHaveAttribute('maxlength', '32')
+    expect(input).toHaveAttribute('minlength', '8')
   })
 
   it('check for the input event', async () => {
-    expect.assertions(2)
-    const input = wrapper.find('input')
-    input.setValue('Test1234!')
-    input.trigger('input')
+    const input = wrapper.getByLabelText('Password')
 
+    await wrapper.events.type(input, 'Test1234!')
     await waitForTimeout()
-
-    expect(wrapper.emitted('input')).toBeTruthy()
 
     const emittedInput = wrapper.emitted().input as Array<Array<InputEvent>>
 
-    expect(emittedInput[0][0]).toBe('Test1234!')
+    expect(emittedInput[8][0]).toBe('Test1234!')
   })
 
   it('can be disabled', async () => {
-    expect.assertions(3)
-    expect(wrapper.find('input').attributes().disabled).toBe(undefined)
+    const input = wrapper.getByLabelText('Password')
 
-    wrapper.setProps({
+    expect(input).toBeEnabled()
+
+    await wrapper.rerender({
       disabled: true,
     })
-    await nextTick()
 
-    expect(wrapper.find('input').attributes().disabled).toBeDefined()
+    expect(input).toBeDisabled()
 
     // Rest the disabled state again and check if it's enabled again.
-    wrapper.setProps({
+    await wrapper.rerender({
       disabled: false,
     })
-    await nextTick()
 
-    expect(wrapper.find('input').attributes().disabled).toBe(undefined)
+    expect(input).toBeEnabled()
   })
+})
 
-  it('can show password', async () => {
-    expect.assertions(2)
+describe('toggling visibility', () => {
+  let wrapper: ExtendedRenderResult
 
+  beforeAll(() => {
     wrapper = getWrapper(FormKit, {
       ...wrapperParameters,
       props: {
         type: 'password',
+        label: 'Password',
       },
     })
+  })
 
-    wrapper.find('svg').trigger('click')
+  afterAll(() => {
+    wrapper.unmount()
+  })
 
+  it('can show password', async () => {
+    const input = wrapper.getByLabelText('Password')
+
+    const iconToggle = wrapper.getIconByName('eye')
+
+    await wrapper.events.click(iconToggle)
     await waitForNextTick(true)
 
-    expect(wrapper.find('input').attributes().type).toBe('text')
-    expect(wrapper.find('svg').classes()).contains('icon-eye-off')
+    expect(input).toHaveAttribute('type', 'text')
+    expect(wrapper.getIconByName('eye-off')).toBeInTheDocument()
   })
 
   it('can hide password', async () => {
-    expect.assertions(2)
+    const input = wrapper.getByLabelText('Password')
 
-    wrapper.find('svg').trigger('click')
+    const iconToggle = wrapper.getIconByName('eye-off')
+
+    await wrapper.events.click(iconToggle)
+    await waitForNextTick(true)
 
     await waitForNextTick(true)
 
-    expect(wrapper.find('input').attributes().type).toBe('password')
-    expect(wrapper.find('svg').classes()).contains('icon-eye')
+    expect(input).toHaveAttribute('type', 'password')
+    expect(wrapper.getIconByName('eye')).toBeInTheDocument()
   })
 })
