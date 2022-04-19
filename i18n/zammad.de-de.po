@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-04-08 03:30+0000\n"
-"Last-Translator: Frederic <frederic.rupfle@landkreis-lindau.de>\n"
+"PO-Revision-Date: 2022-04-19 17:01+0000\n"
+"Last-Translator: Martin Gruner <mg@zammad.com>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
 "zammad-development/de/>\n"
 "Language: de-de\n"
@@ -1883,10 +1883,8 @@ msgid "Clean up ActiveJob locks."
 msgstr "ActiveJob-Sperren bereinigen."
 
 #: db/seeds/schedulers.rb
-#, fuzzy
-#| msgid "Clean up dead sessions."
 msgid "Clean up cache."
-msgstr "Tote Sitzungen aufräumen."
+msgstr "Cache aufräumen."
 
 #: db/seeds/schedulers.rb
 msgid "Clean up closed sessions."
@@ -8172,10 +8170,8 @@ msgid "Publish Article"
 msgstr "Artikel veröffentlichen"
 
 #: app/views/knowledge_base/public/answers/show.html.erb
-#, fuzzy
-#| msgid "Published at"
 msgid "Published %s"
-msgstr "Veröffentlicht um"
+msgstr "Veröffentlicht %s"
 
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco
 msgid "Published at"
@@ -10255,14 +10251,12 @@ msgid "Ticket Selector"
 msgstr "Ticket-Auswahl"
 
 #: db/seeds/settings.rb
-#, fuzzy
 msgid "Ticket Subject Forward"
-msgstr "Weiterleitungs-Präfix im Ticket-Betreff"
+msgstr "Ticket-Betreff Weiterleitung"
 
 #: db/seeds/settings.rb
-#, fuzzy
 msgid "Ticket Subject Reply"
-msgstr "Ticket Betreff Antwort"
+msgstr "Ticket-Betreff Antwort"
 
 #: db/seeds/settings.rb
 msgid "Ticket Subject Size"
@@ -10281,9 +10275,8 @@ msgid "Ticket failed to save: %s"
 msgstr "Ticket konnte nicht gespeichert werden: %s"
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
-#, fuzzy
 msgid "Ticket reminder reached"
-msgstr "Ticket warten auf Erinnerung erreicht"
+msgstr "Ticket-Erinnerung erreicht"
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 msgid "Ticket update"
@@ -12454,6 +12447,10 @@ msgstr "nicht übersetzt"
 #: db/seeds/ticket_article_types.rb
 msgid "note"
 msgstr "Notiz"
+
+#: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
+msgid "now"
+msgstr "jetzt"
 
 #: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
 msgid "open"

@@ -12650,6 +12650,12 @@ msgstr " Non traduit"
 msgid "note"
 msgstr "note"
 
+#: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
+#, fuzzy
+#| msgid "no"
+msgid "now"
+msgstr "non"
+
 #: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
 msgid "open"
 msgstr "ouvert"

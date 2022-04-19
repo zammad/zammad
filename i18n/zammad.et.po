@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-03-24 19:15+0000\n"
+"PO-Revision-Date: 2022-04-19 17:01+0000\n"
 "Last-Translator: kirkkak <kirkka.kivilo@gmail.com>\n"
 "Language-Team: Estonian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/et/>\n"
@@ -61,18 +61,18 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "%s Attribute"
-msgstr ""
+msgstr "%s Atribuut"
 
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "%s Group"
-msgstr ""
+msgstr "%s Grupp"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
 msgid "%s Migration"
-msgstr ""
+msgstr "%s Migratsioon"
 
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "%s Role"
@@ -82,7 +82,7 @@ msgstr "% Roll"
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
 msgid "%s URL"
-msgstr ""
+msgstr "%s URL"
 
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
 msgid "%s ago"
@@ -93,50 +93,38 @@ msgid "%s completed data privacy task to delete user ID |%s|"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket_article.coffee
-#, fuzzy
-#| msgid "%s created Ticket |%s|"
 msgid "%s created article for |%s|"
-msgstr "%s lõi Pileti |%s|"
+msgstr "%s lõi artikli |%s|"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 msgid "%s created data privacy task to delete user ID |%s|"
 msgstr ""
 
 #: app/assets/javascripts/app/models/group.coffee
-#, fuzzy
-#| msgid "%s created Group |%s|"
 msgid "%s created group |%s|"
-msgstr "%s lõi Grupi |%s|"
+msgstr "%s lõi grupi |%s|"
 
 #: app/assets/javascripts/app/models/organization.coffee
-#, fuzzy
-#| msgid "%s created Organization |%s|"
 msgid "%s created organization |%s|"
-msgstr "%s lõi Organisatsiooni |%s|"
+msgstr "%s lõi organisatsiooni |%s|"
 
 #: app/assets/javascripts/app/models/role.coffee
-#, fuzzy
-#| msgid "%s created Role |%s|"
 msgid "%s created role |%s|"
-msgstr "%s lõi Rolli |%s|"
+msgstr "%s lõi rolli |%s|"
 
 #: app/assets/javascripts/app/models/ticket.coffee
-#, fuzzy
-#| msgid "%s created Ticket |%s|"
 msgid "%s created ticket |%s|"
-msgstr "%s lõi Pileti |%s|"
+msgstr "%s lõi pileti |%s|"
 
 #: app/assets/javascripts/app/models/user.coffee
-#, fuzzy
-#| msgid "%s created User |%s|"
 msgid "%s created user |%s|"
-msgstr "% lõi Kasutaja |%s|"
+msgstr "% lõi kasutaja |%s|"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
 msgid "%s credentials"
-msgstr ""
+msgstr "%s kasutajaandmed"
 
 #: app/assets/javascripts/app/models/user.coffee
 msgid "%s ended switch to |%s|!"
@@ -145,7 +133,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco
 msgid "%s folders"
-msgstr ""
+msgstr "%s kaustad"
 
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco
@@ -160,52 +148,40 @@ msgid "%s is inactive, please select an active one."
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
-#, fuzzy
-#| msgid "%s% have been reopened"
 msgid "%s object(s) have been created."
-msgstr "%s% on taasavatud"
+msgstr "%s objekt(i) on loodud."
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
-#, fuzzy
-#| msgid "%s% have been reopened"
 msgid "%s object(s) have been updated."
-msgstr "%s% on taasavatud"
+msgstr "%s objekt(i) on uuendatud."
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
 msgid "%s object(s) were deleted."
-msgstr ""
+msgstr "%s objekt(i) kustutatud."
 
 #: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
-#, fuzzy
-#| msgid "%s% have been reopened"
 msgid "%s object(s) will be created."
-msgstr "%s% on taasavatud"
+msgstr "%s objekt(i) luuakse."
 
 #: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
-#, fuzzy
-#| msgid "%s% have been reopened"
 msgid "%s object(s) will be deleted."
-msgstr "%s% on taasavatud"
+msgstr "%s objekt(i) kustutatakse."
 
 #: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
-#, fuzzy
-#| msgid "%s% have been reopened"
 msgid "%s object(s) will be updated."
-msgstr "%s% on taasavatud"
+msgstr "%s objekt(i) uuendatakse."
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco
-#, fuzzy
-#| msgid "%s of your tickets are currently in process."
 msgid "%s of my tickets are currently in process."
-msgstr "%s sinu piletitest on hetkel töös"
+msgstr "%s minu piletitest on hetkel töös."
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_escalation.jst.eco
 msgid "%s of my tickets escalated."
-msgstr "%s minu teemadest on lappama läinud."
+msgstr "%s minu piletitest on eskaleeritud."
 
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay_user_group.jst.eco
 msgid "%s people"
-msgstr ""
+msgstr "%s inimesi"
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 msgid ""
@@ -215,67 +191,55 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee
 msgid "%s required!"
-msgstr ""
+msgstr "%s vajalik!"
 
 #: app/assets/javascripts/app/models/user.coffee
 msgid "%s started a new session"
-msgstr "%s started a n%s started a new session 18.02.2020 17:18ew session"
+msgstr "%s alustas uut sessiooni"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 msgid "%s subdomain"
-msgstr ""
+msgstr "%s alamdomeen"
 
 #: app/assets/javascripts/app/models/user.coffee
 msgid "%s switched to |%s|!"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket_article.coffee
-#, fuzzy
-#| msgid "%s updated Ticket |%s|"
 msgid "%s updated article for |%s|"
-msgstr "% uuendas Piletit |%s|"
+msgstr "% uuendas artiklit |%s|"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 msgid "%s updated data privacy task to delete user ID |%s|"
 msgstr ""
 
 #: app/assets/javascripts/app/models/group.coffee
-#, fuzzy
-#| msgid "%s updated Group |%s|"
 msgid "%s updated group |%s|"
-msgstr "%s uuendas Gruppi |%s|"
+msgstr "%s uuendas gruppi |%s|"
 
 #: app/assets/javascripts/app/models/organization.coffee
-#, fuzzy
-#| msgid "%s updated Organization |%s|"
 msgid "%s updated organization |%s|"
-msgstr "%s uuendas Organisatsiooni |%s|"
+msgstr "%s uuendas organisatsiooni |%s|"
 
 #: app/assets/javascripts/app/models/role.coffee
-#, fuzzy
-#| msgid "%s updated Role |%s|"
 msgid "%s updated role |%s|"
-msgstr "%s uuendas Rolli |%s|"
+msgstr "%s uuendas rolli |%s|"
 
 #: app/assets/javascripts/app/models/ticket.coffee
-#, fuzzy
-#| msgid "%s updated Ticket |%s|"
 msgid "%s updated ticket |%s|"
-msgstr "% uuendas Piletit |%s|"
+msgstr "%s uuendas piletit |%s|"
 
 #: app/assets/javascripts/app/models/user.coffee
-#, fuzzy
-#| msgid "%s updated User |%s|"
 msgid "%s updated user |%s|"
-msgstr "%s uuendas Kasutajat |%s|"
+msgstr "%s uuendas kasutajat |%s|"
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco
 msgid "%s user to %s user"
-msgstr ""
+msgstr "%s kasutaja %s kasutajale"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco
 msgid "%s% are currently in process"
@@ -386,6 +350,8 @@ msgid ""
 "A new session was created with your account. This session will be stopped to "
 "prevent a conflict."
 msgstr ""
+"Uus sessioon loodi sinu kontoga, Antud sessioon lõpetatakse vältimaks "
+"konflikte."
 
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee
 msgid "A new version of Zammad is available, please reload your browser."
@@ -417,7 +383,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/api.coffee
 #: app/assets/javascripts/app/views/api.jst.eco db/seeds/permissions.rb
 msgid "API"
-msgstr ""
+msgstr "API"
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee
 msgid "API Key"
@@ -457,7 +423,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 msgid "Account"
-msgstr ""
+msgstr "Konto"
 
 #: app/models/channel/driver/sms/twilio.rb
 msgid "Account SID"
@@ -495,7 +461,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/twitter/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
 msgid "Accounts"
-msgstr ""
+msgstr "Kontod"
 
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
@@ -561,8 +527,9 @@ msgstr "Aktiivne"
 
 #: app/assets/javascripts/app/controllers/chat.coffee
 #: app/assets/javascripts/app/views/customer_chat/chat_header.jst.eco
+#, fuzzy
 msgid "Active Agents"
-msgstr ""
+msgstr "Aktiivsed Töötajad"
 
 #: app/assets/javascripts/app/views/dashboard.jst.eco
 msgid "Activity Stream"
@@ -604,16 +571,17 @@ msgstr "Lisa"
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
 msgid "Add Account"
-msgstr ""
+msgstr "Lisa Konto"
 
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
+#, fuzzy
 msgid "Add Bot"
-msgstr ""
+msgstr "Lisa Bot"
 
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee
 #: app/assets/javascripts/app/views/integration/smime.jst.eco
 msgid "Add Certificate"
-msgstr ""
+msgstr "Lisa Sertifikaat"
 
 #: app/assets/javascripts/app/views/link/ticket/list.jst.eco
 msgid "Add Link"
@@ -622,7 +590,7 @@ msgstr "Lisa Link"
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee
 #: app/assets/javascripts/app/views/integration/smime.jst.eco
 msgid "Add Private Key"
-msgstr ""
+msgstr "Lisa Privaatvõti"
 
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/tags.jst.eco
 #: app/assets/javascripts/app/views/widget/tag.jst.eco
@@ -630,8 +598,9 @@ msgid "Add Tag"
 msgstr "Lisa Silt"
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
+#, fuzzy
 msgid "Add Telegram Bot"
-msgstr ""
+msgstr "Lisa Telegrami Bot"
 
 #: app/assets/javascripts/app/views/organization_profile/object.jst.eco
 #: app/assets/javascripts/app/views/user_profile/object.jst.eco
@@ -684,15 +653,15 @@ msgstr "Haldamine"
 
 #: db/seeds/permissions.rb
 msgid "Admin Interface"
-msgstr ""
+msgstr "Haldus Liides"
 
 #: app/assets/javascripts/app/views/getting_started/admin.jst.eco
 msgid "Administrator Account"
-msgstr ""
+msgstr "Administraatori Konto"
 
 #: app/controllers/users_controller.rb
 msgid "Administrator account already created"
-msgstr ""
+msgstr "Administraatori konto on juba loodud"
 
 #: app/assets/javascripts/app/models/macro.coffee
 msgid "Advance to next ticket from overview"
@@ -716,7 +685,7 @@ msgstr "Töötaja"
 
 #: db/seeds/settings.rb
 msgid "Agent Name"
-msgstr ""
+msgstr "Töötaja Nimi"
 
 #: db/seeds/settings.rb
 msgid "Agent Name + FromSeparator + System Address Display Name"
@@ -740,13 +709,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
 msgid "All Tickets"
-msgstr "Kõik Intsidendid"
+msgstr "Kõik Piletid"
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
-#, fuzzy
-#| msgid "All Agents"
 msgid "All agents"
-msgstr "Kõik Töötajad"
+msgstr "Kõik töötajad"
 
 #: public/assets/chat/views/waiting.eco
 msgid "All colleagues are busy."
@@ -766,11 +733,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/tag/index.jst.eco
 msgid "Allow users to add new tags."
-msgstr ""
+msgstr "Luba kasutajatel lisada uusi silte."
 
 #: db/seeds/settings.rb
 msgid "Allow users to create new tags."
-msgstr ""
+msgstr "Luba kasutajatel lisada uusi silte."
 
 #: db/seeds/settings.rb
 msgid "Allow using one email address for multiple users."
@@ -830,7 +797,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/link_answer_button.coffee
 msgid "Answer"
-msgstr ""
+msgstr "Vastus"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/answers.coffee
 msgid "Answers"
@@ -864,10 +831,8 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee
-#, fuzzy
-#| msgid "%s% have been reopened"
 msgid "App could not be verified."
-msgstr "%s% on taasavatud"
+msgstr "Rakendust ei ole võimalik verifitseerida."
 
 #: db/seeds/settings.rb
 msgid "App credentials for Facebook."
@@ -894,14 +859,12 @@ msgid "Apply"
 msgstr "Rakenda"
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
-#, fuzzy
-#| msgid "Apply"
 msgid "Apply Draft"
-msgstr "Rakenda"
+msgstr "Rakenda Mustand"
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
 msgid "Apply Shared Draft"
-msgstr ""
+msgstr "Rakenda Jagatud Mustand"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
@@ -919,7 +882,7 @@ msgstr "Arhiiv"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 msgid "Archived"
-msgstr ""
+msgstr "Arhiveeritud"
 
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco
 msgid "Archived at"
@@ -948,7 +911,7 @@ msgstr "Oled sa kindel?"
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
 msgid "Article"
-msgstr ""
+msgstr "Artikkel"
 
 #: db/seeds/settings.rb
 msgid "Article - visibility confirmation dialog"
@@ -956,7 +919,7 @@ msgstr ""
 
 #: lib/excel_sheet/ticket.rb
 msgid "Article Count"
-msgstr ""
+msgstr "Artiklite Arv"
 
 #: app/models/ticket.rb
 msgid ""
@@ -965,14 +928,12 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/delete.coffee
-#, fuzzy
-#| msgid "%s% have been reopened"
 msgid "Article could not be deleted."
-msgstr "%s% on taasavatud"
+msgstr "Artiklit ei saa kustutada."
 
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "Article#"
-msgstr ""
+msgstr "Artikkel#"
 
 #: db/seeds/object_manager_attributes.rb
 msgid "Assign Follow-Ups"
@@ -997,7 +958,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_load_measure.jst.eco
 msgid "Assigned"
-msgstr "omistatud"
+msgstr "Omistatud"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_git_issue.jst.eco
 msgid "Assignee"
@@ -1067,7 +1028,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/object_manager.coffee
 msgid "Attribute"
-msgstr ""
+msgstr "Atribuut"
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 msgid "Attribute '%s' is required in the mapping"
@@ -1084,7 +1045,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 msgid "Attributes"
-msgstr ""
+msgstr "Atribuudid"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
@@ -1102,7 +1063,7 @@ msgstr "Autentimine"
 
 #: app/controllers/import_otrs_controller.rb lib/email_helper/probe.rb
 msgid "Authentication failed!"
-msgstr ""
+msgstr "Autentimine ebaõnnestus!"
 
 #: lib/email_helper/probe.rb
 msgid "Authentication failed, invalid credentials!"
@@ -1110,7 +1071,7 @@ msgstr ""
 
 #: lib/email_helper/probe.rb
 msgid "Authentication failed, username incorrect!"
-msgstr ""
+msgstr "Autentimine ebaõnnestus, ebakorrektne kasutajanimi!"
 
 #: lib/email_helper/probe.rb
 msgid "Authentication not possible (not offered by the service)"
@@ -1206,7 +1167,7 @@ msgstr "Tagasi"
 
 #: app/assets/javascripts/app/views/widget/switch_back_to_user.jst.eco
 msgid "Back to my view"
-msgstr ""
+msgstr "Tagasi minu vaatesse"
 
 #: app/assets/javascripts/app/views/knowledge_base/reader.jst.eco
 msgid "Back to search results"
@@ -1383,7 +1344,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: db/seeds/object_manager_attributes.rb
 msgid "CC"
-msgstr ""
+msgstr "CC"
 
 #: app/assets/javascripts/app/controllers/_integration/idoit.coffee
 msgid "CMDB to document complex relations of your network components."
@@ -1409,20 +1370,16 @@ msgid "CTI Token"
 msgstr ""
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Config"
 msgid "CTI config"
-msgstr "Seadistus"
+msgstr "CTI seadistus"
 
 #: db/seeds/settings.rb
 msgid "CTI customer last activity"
 msgstr ""
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Integrations"
 msgid "CTI integration"
-msgstr "Integratsioonid"
+msgstr "CTI integratsioon"
 
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
@@ -1442,10 +1399,8 @@ msgstr "Kalendrid"
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
-#, fuzzy
-#| msgid "Settings"
 msgid "Call Settings"
-msgstr "Seaded"
+msgstr "Kõne Seaded"
 
 #: app/assets/javascripts/app/controllers/cti.coffee
 msgid "Call from %s for %s"
@@ -1534,12 +1489,12 @@ msgstr "Katkesta"
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco
 #: app/assets/javascripts/app/views/signup.jst.eco
 msgid "Cancel & Go Back"
-msgstr "Tühista ja mine tagasi."
+msgstr "Katkesta ja Mine Tagasi"
 
 #: app/assets/javascripts/app/views/generic/attachment.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 msgid "Cancel Upload"
-msgstr ""
+msgstr "Katkesta Üleslaadimine"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee
 msgid "Cannot delete category"
@@ -1559,7 +1514,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/categories.coffee
 msgid "Categories"
-msgstr ""
+msgstr "Kategooriad"
 
 #: app/assets/javascripts/app/models/knowledge_base_answer.coffee
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco
@@ -1586,7 +1541,7 @@ msgstr "Muuda"
 
 #: db/seeds/permissions.rb
 msgid "Change %s"
-msgstr ""
+msgstr "Muuda %s"
 
 #: app/assets/javascripts/app/controllers/ticket_customer.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee
@@ -1596,18 +1551,16 @@ msgstr "Vaheta Klient"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee
 msgid "Change Objects"
-msgstr ""
+msgstr "Muuda Objekte"
 
 #: app/assets/javascripts/app/views/profile/password.jst.eco
-#, fuzzy
-#| msgid "Change Customer"
 msgid "Change Your Password"
-msgstr "Vaheta Klient"
+msgstr "Vaheta Parool"
 
 #: app/assets/javascripts/app/views/generic/history.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/generic_list.jst.eco
 msgid "Change order"
-msgstr ""
+msgstr "Muuda järjestust"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Changed"
@@ -1625,20 +1578,16 @@ msgstr "Muudetud"
 #: app/views/mailer/ticket_update/zh-cn.html.erb
 #: app/views/mailer/ticket_update/zh-tw.html.erb
 msgid "Changes"
-msgstr "Muutused"
+msgstr "Muudatused"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee
-#, fuzzy
-#| msgid "%s% have been reopened"
 msgid "Changes could not be loaded."
-msgstr "%s% on taasavatud"
+msgstr "Muudatusi ei ole võimalik laadida."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee
 #: app/assets/javascripts/app/views/knowledge_base/base_form.coffee
-#, fuzzy
-#| msgid "%s% have been reopened"
 msgid "Changes could not be saved."
-msgstr "%s% on taasavatud"
+msgstr "Muudatusi ei ole võimalik salvestada."
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Changes were made that require a database update."
@@ -1667,38 +1616,36 @@ msgid "Channel - Facebook"
 msgstr ""
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Channel"
 msgid "Channel - Form"
-msgstr "Kanal"
+msgstr "Kanal - Vorm"
 
 #: db/seeds/permissions.rb
 msgid "Channel - Google"
-msgstr ""
+msgstr "Kanal - Google"
 
 #: db/seeds/permissions.rb
 msgid "Channel - Microsoft 365"
-msgstr ""
+msgstr "Kanal - Microsoft 365"
 
 #: db/seeds/permissions.rb
 msgid "Channel - SMS"
-msgstr ""
+msgstr "Kanal - SMS"
 
 #: db/seeds/permissions.rb
 msgid "Channel - Telegram"
-msgstr ""
+msgstr "Kanal - Telegram"
 
 #: db/seeds/permissions.rb
 msgid "Channel - Twitter"
-msgstr ""
+msgstr "Kanal - Twitter"
 
 #: db/seeds/permissions.rb
 msgid "Channel - Web"
-msgstr ""
+msgstr "Kanal - Veeb"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_channel_distribution.jst.eco
 msgid "Channel Distribution"
-msgstr "meediumi graafik"
+msgstr "Kanalite Jaotus"
 
 #: app/assets/javascripts/app/controllers/manage.coffee
 msgid "Channels"
@@ -1712,10 +1659,8 @@ msgid "Chat"
 msgstr "Vestlus"
 
 #: app/assets/javascripts/app/views/channel/topics.jst.eco
-#, fuzzy
-#| msgid "Chat"
 msgid "Chat ID"
-msgstr "Vestlus"
+msgstr "Vestluse ID"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Chat Title"
@@ -1743,10 +1688,8 @@ msgid "Check 'Channel' streams."
 msgstr ""
 
 #: db/seeds/schedulers.rb
-#, fuzzy
-#| msgid "Channels"
 msgid "Check channels."
-msgstr "Kanalid"
+msgstr "Kontrolli kanaleid."
 
 #: lib/search_index_backend.rb
 msgid "Check the response and payload for detailed information:"
@@ -1839,18 +1782,17 @@ msgid "Clean up cache."
 msgstr "Continue session"
 
 #: db/seeds/schedulers.rb
+#, fuzzy
 msgid "Clean up closed sessions."
-msgstr ""
+msgstr "Kustuta suletud sessioonid."
 
 #: db/seeds/schedulers.rb
-#, fuzzy
-#| msgid "Continue session"
 msgid "Clean up dead sessions."
-msgstr "Continue session"
+msgstr "Kustuta surnud sessioonid."
 
 #: db/seeds/schedulers.rb
 msgid "Clean up expired sessions."
-msgstr ""
+msgstr "Kustuta aegunud sessioonid."
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco
@@ -1933,7 +1875,7 @@ msgstr "Sulge sakk"
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 #: db/seeds/settings.rb
 msgid "Close tab on ticket close"
-msgstr ""
+msgstr "Sulge sakk pileti sulgemisel"
 
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco
 #: app/models/report.rb
@@ -1948,7 +1890,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/widget/ticket_stats.coffee
 #: app/assets/javascripts/app/controllers/widget/user.coffee
 msgid "Closed Tickets"
-msgstr "suletud teemad"
+msgstr "Suletud Piletid"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "Closing time"
@@ -2037,10 +1979,8 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/tag.coffee
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee
 #: app/assets/javascripts/app/views/agent_ticket_view/bulk.jst.eco
-#, fuzzy
-#| msgid "Configuration"
 msgid "Confirmation"
-msgstr "Seadistus"
+msgstr "Kinnitus"
 
 #: app/assets/javascripts/app/views/knowledge_base/delete.coffee
 msgid "Confirmation failed."
@@ -2126,16 +2066,12 @@ msgid "Content"
 msgstr "Sisu"
 
 #: app/assets/javascripts/app/controllers/idoit_object_selector.coffee
-#, fuzzy
-#| msgid "%s% have been reopened"
 msgid "Content could not be loaded."
-msgstr "%s% on taasavatud"
+msgstr "Sisu ei ole võimalik laadida."
 
 #: app/models/store.rb
-#, fuzzy
-#| msgid "%s% have been reopened"
 msgid "Content preview could not be generated."
-msgstr "%s% on taasavatud"
+msgstr "Sisu eelvaadet ei ole võimalik genereerida."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee
 msgid "Content was changed since loading"
@@ -2332,20 +2268,16 @@ msgid "Create a Test Ticket"
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
-#, fuzzy
-#| msgid "Created at"
 msgid "Create a shared draft"
-msgstr "Loodud"
+msgstr "Loo jagatud visand"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/reader_controller.coffee
 msgid "Create a translation"
 msgstr "Loo tõlge"
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Create new Customer"
 msgid "Create and set up %s"
-msgstr "Loo uus Klient"
+msgstr "Loo ja seadista %s"
 
 #: app/assets/javascripts/app/views/signup.jst.eco
 msgid "Create my account"
@@ -2429,7 +2361,7 @@ msgstr "Loodud"
 #: app/assets/javascripts/app/models/ticket_article.coffee
 #: app/assets/javascripts/app/models/user.coffee
 msgid "Created by"
-msgstr "Loonud:"
+msgstr "Loonud"
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
 msgid "Creation mask"
@@ -2608,10 +2540,8 @@ msgid "Decryption failed!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
-#, fuzzy
-#| msgid "Update successful!"
 msgid "Decryption was successful."
-msgstr "Uuendus edukas!"
+msgstr "Dekrüpteerimine oli edukas."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
@@ -3410,17 +3340,15 @@ msgstr "Kustutatud Organisatsioon"
 
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
 msgid "Deleted tickets (%s in total)"
-msgstr "Kustutatud pileteid (% kokku)"
+msgstr "Kustutatud pileteid (%s kokku)"
 
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
 msgid "Deletion Task"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee
-#, fuzzy
-#| msgid "Delete File"
 msgid "Deletion failed."
-msgstr "Kustuta Fail"
+msgstr "Kustutamine ebaõnnestus."
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view_delivery_failed.jst.eco
 msgid "Delivery failed"
@@ -4071,7 +3999,7 @@ msgstr ""
 #, fuzzy
 #| msgid "Enter Title..."
 msgid "Enter Title…"
-msgstr "Sisesta Pealkiri..."
+msgstr "Sisesta Pealkiri…"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
@@ -4095,10 +4023,8 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/timezone.coffee
-#, fuzzy
-#| msgid "Enter timezone..."
 msgid "Enter time zone"
-msgstr "Sisesta ajavöönd..."
+msgstr "Sisesta ajavöönd"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 msgid "Enter your %s API token gained from your account profile settings."
@@ -4127,7 +4053,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/password_reset.coffee
 msgid "Enter your username or email address"
-msgstr ""
+msgstr "Sisesta oma kasutajanimi või e-posti aadress"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_error_modal.coffee
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee
@@ -4142,10 +4068,8 @@ msgid "Error during execution of auto wizard."
 msgstr ""
 
 #: db/seeds/overviews.rb
-#, fuzzy
-#| msgid "Closed Tickets"
 msgid "Escalated Tickets"
-msgstr "suletud teemad"
+msgstr "Eskaleeritud Piletid"
 
 #: lib/excel_sheet/ticket.rb
 msgid "Escalation At"
@@ -4451,7 +4375,7 @@ msgstr "Kaust"
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 msgid "Folders"
-msgstr ""
+msgstr "Kaustad"
 
 #: app/assets/javascripts/app/models/group.coffee
 #: db/seeds/object_manager_attributes.rb
@@ -4847,10 +4771,8 @@ msgid "Groups"
 msgstr "Rühmad"
 
 #: app/assets/javascripts/app/controllers/group.coffee
-#, fuzzy
-#| msgid "Groups"
 msgid "Groups are …"
-msgstr "Rühmad"
+msgstr "Grupid on …"
 
 #: app/assets/javascripts/app/models/webhook.coffee
 msgid "HMAC SHA1 Signature Token"
@@ -5417,10 +5339,8 @@ msgid "Information"
 msgstr ""
 
 #: app/models/store.rb
-#, fuzzy
-#| msgid "%s% have been reopened"
 msgid "Inline content could not be generated."
-msgstr "%s% on taasavatud"
+msgstr "Sisu ei ole võimalik genereerida."
 
 #: app/assets/javascripts/app/views/translation/index.jst.eco
 msgid "Inline translation"
@@ -5446,10 +5366,8 @@ msgid "Inserts knowledge base answer"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
-#, fuzzy
-#| msgid "Text modules"
 msgid "Inserts text module"
-msgstr "Tekstimoodulid"
+msgstr "Sisestab teksti mooduli"
 
 #: app/assets/javascripts/app/views/package.jst.eco
 msgid "Install Package"
@@ -5983,7 +5901,7 @@ msgstr "Laadimine ebaõnnestus."
 #, fuzzy
 #| msgid "Loading..."
 msgid "Loading…"
-msgstr "Laadimine..."
+msgstr "Laadimine…"
 
 #: lib/email_helper.rb
 msgid "Local MTA (Sendmail/Postfix/Exim/…) - use server setup"
@@ -6091,7 +6009,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/tag/index.jst.eco
 msgid "Manage Tags"
-msgstr ""
+msgstr "Halda Silte"
 
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid ""
@@ -6243,10 +6161,8 @@ msgid "Method (AJAX endpoint)"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
-#, fuzzy
-#| msgid "Macros"
 msgid "Microsoft"
-msgstr "Makrod"
+msgstr "Microsoft"
 
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 #: app/assets/javascripts/app/views/microsoft365/index.jst.eco
@@ -6427,58 +6343,48 @@ msgid "Moved out"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
-#, fuzzy
-#| msgid "select"
 msgid "Multiselect"
-msgstr "vali"
+msgstr "Mitmikvalik"
 
 #: db/seeds/overviews.rb
-#, fuzzy
-#| msgid "My assigned Tickets"
 msgid "My Assigned Tickets"
-msgstr "Minule suunatud piletid"
+msgstr "Minule suunatud Piletid"
 
 #: db/seeds/overviews.rb
 msgid "My Organization Tickets"
 msgstr "Minu Organisatsiooni Piletid"
 
 #: db/seeds/overviews.rb
-#, fuzzy
-#| msgid "My assigned Tickets"
 msgid "My Pending Reached Tickets"
-msgstr "Minule suunatud piletid"
+msgstr "Minu üle ooteaja Piletid"
 
 #: db/seeds/overviews.rb
 #, fuzzy
 #| msgid "Open Tickets"
 msgid "My Replacement Tickets"
-msgstr "Avatud piletid"
+msgstr "Minu Asendus Piletid"
 
 #: app/assets/javascripts/app/views/dashboard.jst.eco
 msgid "My Stats"
 msgstr "Minu Statistika"
 
 #: db/seeds/overviews.rb
-#, fuzzy
-#| msgid "My assigned Tickets"
 msgid "My Subscribed Tickets"
-msgstr "Minule suunatud piletid"
+msgstr "Minu Tellitud Piletid"
 
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
 #: db/seeds/overviews.rb
 msgid "My Tickets"
-msgstr "Minu teemad"
+msgstr "Minu Piletid"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "My handling time: %s minutes"
 msgstr "Minu käsitlusaeg: %s minutit"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco
-#, fuzzy
-#| msgid "Your tickets in process"
 msgid "My tickets in process"
-msgstr "sinu töös olevad teemad"
+msgstr "Minu töös olevad piletid"
 
 #: app/assets/javascripts/app/controllers/_integration/nagios.coffee
 msgid "Nagios"
@@ -6662,7 +6568,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/tag/index.jst.eco db/seeds/settings.rb
 msgid "New Tags"
-msgstr ""
+msgstr "Uued Sildid"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
@@ -6672,7 +6578,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/customer_ticket_create.jst.eco
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco
 msgid "New Ticket"
-msgstr "Uus intsident"
+msgstr "Uus Pilet"
 
 #: app/assets/javascripts/app/controllers/trigger.coffee
 msgid "New Trigger"
@@ -7202,7 +7108,7 @@ msgstr "Ava Pilet# %s"
 #: app/assets/javascripts/app/controllers/widget/user.coffee
 #: db/seeds/overviews.rb
 msgid "Open Tickets"
-msgstr "Avatud piletid"
+msgstr "Avatud Piletid"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Open macro selection"
@@ -7305,10 +7211,8 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
-#, fuzzy
-#| msgid "Settings"
 msgid "Other Settings"
-msgstr "Seaded"
+msgstr "Teised Seaded"
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
@@ -7357,10 +7261,8 @@ msgid "Overviews"
 msgstr "Ülevaated"
 
 #: app/assets/javascripts/app/controllers/overview.coffee
-#, fuzzy
-#| msgid "Overview"
 msgid "Overviews are …"
-msgstr "Ülevaade"
+msgstr "Ülevaated on …"
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_overwrite_modal.coffee
 msgid "Overwrite Draft"
@@ -7495,10 +7397,8 @@ msgid "Paste in CSV data"
 msgstr ""
 
 #: db/seeds/overviews.rb
-#, fuzzy
-#| msgid "Linked Tickets"
 msgid "Pending Reached Tickets"
-msgstr "Lingitud Piletid"
+msgstr "Ooteaja ületanud Piletid"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "Pending reminder reached for ticket |%s|"
@@ -7630,7 +7530,7 @@ msgstr ""
 
 #: app/controllers/integration/exchange_controller.rb
 msgid "Please select at least one folder."
-msgstr ""
+msgstr "Palun vali vähemalt üks kaust."
 
 #: app/controllers/knowledge_base/manage_controller.rb
 msgid "Please submit custom address before generating the snippet"
@@ -7684,11 +7584,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/data_privacy/preview.jst.eco
 msgid "Preview customer tickets"
-msgstr ""
+msgstr "Eelvaade kliendi piletid"
 
 #: app/assets/javascripts/app/views/data_privacy/preview.jst.eco
 msgid "Preview owner tickets"
-msgstr ""
+msgstr "Eelvaade omaniku piletid"
 
 #: app/assets/javascripts/app/views/dashboard/first_steps_clues_content.jst.eco
 msgid "Previous"
@@ -7745,10 +7645,8 @@ msgid "Process pending tickets."
 msgstr ""
 
 #: db/seeds/schedulers.rb
-#, fuzzy
-#| msgid "Ticket escalation"
 msgid "Process ticket escalations."
-msgstr "Pileti eskalatsioon"
+msgstr "Pileti eskalatsioon."
 
 #: db/seeds/settings.rb
 msgid "Product Name"
@@ -7872,10 +7770,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/agent_ticket_merge.jst.eco
 #: app/assets/javascripts/app/views/link/ticket/add.jst.eco
-#, fuzzy
-#| msgid "Recently viewed"
 msgid "Recently Viewed Tickets"
-msgstr "Viimati vaadatud"
+msgstr "Viimati vaadatud Piletid"
 
 #: app/assets/javascripts/app/controllers/_plugin/navigation.coffee
 msgid "Recently viewed"
@@ -8215,10 +8111,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
-#, fuzzy
-#| msgid "SLA"
 msgid "SSL"
-msgstr "SLA"
+msgstr "SSL"
 
 #: app/assets/javascripts/app/models/webhook.coffee
 msgid "SSL Verify"
@@ -8269,10 +8163,8 @@ msgid "Save"
 msgstr "Salvesta"
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_overwrite_modal.coffee
-#, fuzzy
-#| msgid "Draft"
 msgid "Save Draft"
-msgstr "Mustand"
+msgstr "Salvesta Mustand"
 
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 msgid "Save as"
@@ -8320,10 +8212,8 @@ msgid "Schedulers"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/job.coffee
-#, fuzzy
-#| msgid "Text modules"
 msgid "Schedulers are …"
-msgstr "Tekstimoodulid"
+msgstr "Planeerijad on …"
 
 #: app/assets/javascripts/app/views/object_manager/screens.jst.eco
 msgid "Screen"
@@ -8357,15 +8247,13 @@ msgstr "Otsingu Tingimused"
 
 #: app/assets/javascripts/app/views/user.jst.eco
 msgid "Search for users"
-msgstr ""
+msgstr "Otsi kasutajaid"
 
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax.coffee
 #: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee
 #: app/assets/javascripts/app/views/generic/icon_picker.jst.eco
-#, fuzzy
-#| msgid "Search"
 msgid "Search…"
-msgstr "Otsi"
+msgstr "Otsi…"
 
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco
@@ -8403,15 +8291,15 @@ msgstr "Vali"
 
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
 msgid "Select All"
-msgstr ""
+msgstr "Vali Kõik"
 
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
 msgid "Select CSV file"
-msgstr ""
+msgstr "Vali CSV fail"
 
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
 msgid "Select Shared Draft"
-msgstr ""
+msgstr "Vali Jagatud Mustand"
 
 #: app/assets/javascripts/app/views/widget/template.jst.eco
 msgid "Select Template"
@@ -8419,17 +8307,15 @@ msgstr "Vali Mall"
 
 #: db/seeds/settings.rb
 msgid "Select default ticket type"
-msgstr ""
+msgstr "Vali vaikimisi pileti tüüp"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Select item"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/multi_locales_row.coffee
-#, fuzzy
-#| msgid "Select Template"
 msgid "Select locale…"
-msgstr "Vali Mall"
+msgstr "Vali tõlge…"
 
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee
 msgid "Select the customer of the ticket or create one."
@@ -8515,10 +8401,8 @@ msgid "Sender of last article"
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco
-#, fuzzy
-#| msgid "pending"
 msgid "Sending…"
-msgstr "ootel"
+msgstr "Saadan…"
 
 #: app/assets/javascripts/app/controllers/maintenance.coffee
 msgid "Sent successfully!"
@@ -8690,10 +8574,8 @@ msgid "Shared organization"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
-#, fuzzy
-#| msgid "Shared"
 msgid "Sharing draft…"
-msgstr "Jagatud"
+msgstr "Jagan mustandit…"
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
 msgid "Shoot"
@@ -8722,10 +8604,8 @@ msgstr "Näita Otsingu Detaile"
 
 #: app/assets/javascripts/app/views/generic/ticket_list.jst.eco
 #: app/assets/javascripts/app/views/widget/ticket_stats_list.jst.eco
-#, fuzzy
-#| msgid "Show all..."
 msgid "Show all…"
-msgstr "Näita kõiki..."
+msgstr "Näita kõiki…"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Show chat automatically"
@@ -9060,7 +8940,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
 msgid "Subscribed Tickets"
-msgstr ""
+msgstr "Tellitud Piletid"
 
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 msgid "Subscription Settings"
@@ -9239,10 +9119,8 @@ msgstr "Tekstimoodulid"
 
 #: app/assets/javascripts/app/controllers/macro.coffee
 #: app/assets/javascripts/app/controllers/text_module.coffee
-#, fuzzy
-#| msgid "Text modules"
 msgid "Text modules are …"
-msgstr "Tekstimoodulid"
+msgstr "Tekstimoodulid on …"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 msgid "Text needed"
@@ -9284,10 +9162,8 @@ msgid "The MIME type of the resized image is invalid."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
-#, fuzzy
-#| msgid "%s% have been reopened"
 msgid "The Telegram bot could not be saved."
-msgstr "%s% on taasavatud"
+msgstr "Telegrami bot'i ei õnnestunud salvestada."
 
 #: lib/telegram.rb
 msgid "The Telegram file is larger than the allowed 20 MB."
@@ -9437,10 +9313,8 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee
-#, fuzzy
-#| msgid "%s% have been reopened"
 msgid "The issue could not be saved."
-msgstr "%s% on taasavatud"
+msgstr "Probleemi ei õnnestunud lahendada."
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_new.coffee
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee
@@ -9449,10 +9323,8 @@ msgstr "%s% on taasavatud"
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
 #: app/assets/javascripts/app/controllers/object_manager.coffee
 #: app/assets/javascripts/app/lib/app_post/user_organization_autocompletion.coffee
-#, fuzzy
-#| msgid "%s% have been reopened"
 msgid "The object could not be created."
-msgstr "%s% on taasavatud"
+msgstr "Objekti ei õnnestunud luua."
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_edit.coffee
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee
@@ -9462,10 +9334,8 @@ msgstr "%s% on taasavatud"
 #: app/assets/javascripts/app/controllers/object_manager.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee
 #: app/assets/javascripts/app/models/setting.coffee
-#, fuzzy
-#| msgid "%s% have been reopened"
 msgid "The object could not be updated."
-msgstr "%s% on taasavatud"
+msgstr "Objekti ei ole võimalik uuendada."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 msgid "The page is not available anymore"
@@ -9561,17 +9431,13 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee
-#, fuzzy
-#| msgid "%s% have been reopened"
 msgid "The tickets could not be merged."
-msgstr "%s% on taasavatud"
+msgstr "Pileteid ei ole võimalik liita."
 
 #: app/controllers/getting_started_controller.rb
 #: app/controllers/settings_controller.rb
-#, fuzzy
-#| msgid "%s% have been reopened"
 msgid "The uploaded image could not be processed."
-msgstr "%s% on taasavatud"
+msgstr "Üleslaetud pilti ei ole võimalik töödelda."
 
 #: lib/external_credential/microsoft365.rb
 msgid "The user's 'preferred_username' could not be extracted from 'id_token'."
@@ -9764,21 +9630,19 @@ msgstr "Neljapäev"
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 #: db/seeds/permissions.rb
 msgid "Ticket"
-msgstr "Intsidendid"
+msgstr "Piletid"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
 msgid "Ticket %s created!"
 msgstr "Pilet %s loodud!"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee
-#, fuzzy
-#| msgid "Ticket %s merged!"
 msgid "Ticket %s merged."
-msgstr "Piletite %s liitumine!"
+msgstr "Piletit %s liidetud."
 
 #: app/models/report.rb
 msgid "Ticket Count"
-msgstr ""
+msgstr "Piletite Arv"
 
 #: db/seeds/settings.rb
 msgid "Ticket Hook"
@@ -9841,10 +9705,8 @@ msgid "Ticket escalation"
 msgstr "Pileti eskalatsioon"
 
 #: app/assets/javascripts/app/lib/mixins/ticket_mass_updatable.coffee
-#, fuzzy
-#| msgid "Tickets assigned to me: %s of %s"
 msgid "Ticket failed to save: %s"
-msgstr "Mulle omistatud teemad: %s (kokku %s)"
+msgstr "Pileti salvestamine ebaõnnestus: %s"
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 msgid "Ticket reminder reached"
@@ -9862,23 +9724,24 @@ msgstr "Pilet |%s| eskaleeritud!"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "Ticket |%s| was merged into another ticket"
-msgstr ""
+msgstr "Pilet %s| ühendati teise piletiga"
 
 #: app/assets/javascripts/app/models/ticket.coffee
+#, fuzzy
 msgid "Ticket |%s| will escalate soon!"
-msgstr ""
+msgstr "Pilet |%s| eskalatsioon saabub!"
 
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
 msgid "Ticket#"
-msgstr ""
+msgstr "Pilet#"
 
 #: app/assets/javascripts/app/controllers/ticket_link_add.coffee
 msgid "Ticket# is needed!"
-msgstr ""
+msgstr "Pilet# vajalik!"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee
 msgid "TicketID"
-msgstr ""
+msgstr "PiletID"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/widget/user.coffee
@@ -9887,7 +9750,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
 msgid "Tickets"
-msgstr "Intsidendid"
+msgstr "Piletid"
 
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco
 msgid ""
@@ -9895,8 +9758,9 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_load_measure.jst.eco
+#, fuzzy
 msgid "Tickets assigned to me: %s of %s"
-msgstr "Mulle omistatud teemad: %s (kokku %s)"
+msgstr "Mulle omistatud piletid: %s (kokku %s)"
 
 #: app/controllers/ticket_articles_controller.rb
 #: app/controllers/tickets_controller.rb
@@ -10125,10 +9989,8 @@ msgid "Triggers"
 msgstr "Päästikud"
 
 #: app/assets/javascripts/app/controllers/trigger.coffee
-#, fuzzy
-#| msgid "Triggers"
 msgid "Triggers are …"
-msgstr "Päästikud"
+msgstr "Päästikud on …"
 
 #: app/assets/javascripts/app/lib/app_post/websocket.coffee
 msgid "Trying to reconnect…"
@@ -10228,10 +10090,8 @@ msgid "URL (AJAX endpoint)"
 msgstr ""
 
 #: app/controllers/first_steps_controller.rb db/seeds/overviews.rb
-#, fuzzy
-#| msgid "Unassigned & Open"
 msgid "Unassigned & Open Tickets"
-msgstr "Suunamata ja avatud"
+msgstr "Suunamata ja Avatud Piletid"
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
@@ -10506,10 +10366,8 @@ msgstr "Kasutaja Eelistused"
 
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee
 #: app/assets/javascripts/app/controllers/signup.coffee
-#, fuzzy
-#| msgid "%s% have been reopened"
 msgid "User could not be created."
-msgstr "%s% on taasavatud"
+msgstr "Kasutajat ei ole võimalik luua."
 
 #: lib/external_credential/google.rb
 msgid "User email could not be extracted from 'id_token'."
@@ -11435,8 +11293,9 @@ msgid "archived"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay.jst.eco
+#, fuzzy
 msgid "assign tickets"
-msgstr ""
+msgstr "suuna piletid"
 
 #: app/assets/javascripts/app/views/generic/datetime.jst.eco
 msgid "at"
@@ -11880,6 +11739,12 @@ msgstr "tõlkimata"
 msgid "note"
 msgstr "märkus"
 
+#: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
+#, fuzzy
+#| msgid "no"
+msgid "now"
+msgstr "ei"
+
 #: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
 msgid "open"
 msgstr "avatud"
@@ -11973,10 +11838,8 @@ msgstr "vali"
 
 #: app/assets/javascripts/app/views/generic/attachment.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
-#, fuzzy
-#| msgid "select attachment..."
 msgid "select attachment…"
-msgstr "vali manus..."
+msgstr "vali manus…"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 msgid "sent to"
@@ -12073,19 +11936,19 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 #: lib/calendar_subscriptions/tickets.rb
 msgid "ticket"
-msgstr ""
+msgstr "pilet"
 
 #: lib/calendar_subscriptions/tickets.rb
 msgid "ticket escalation"
-msgstr ""
+msgstr "pileti eskaleerimine"
 
 #: db/seeds/settings.rb
 msgid "ticket.agent"
-msgstr ""
+msgstr "ticket.agent"
 
 #: db/seeds/settings.rb
 msgid "ticket.customer"
-msgstr ""
+msgstr "ticket.customer"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 msgid "till (relative)"

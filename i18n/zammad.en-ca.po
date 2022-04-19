@@ -11687,6 +11687,10 @@ msgstr ""
 msgid "note"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
+msgid "now"
+msgstr ""
+
 #: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
 msgid "open"
 msgstr ""

@@ -12188,6 +12188,12 @@ msgstr "未翻译"
 msgid "note"
 msgstr "備註"
 
+#: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
+#, fuzzy
+#| msgid "no"
+msgid "now"
+msgstr "未设置"
+
 #: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
 msgid "open"
 msgstr "处理中"

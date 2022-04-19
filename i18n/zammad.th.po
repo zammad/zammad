@@ -2,10 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-03-28 03:30+0000\n"
+"PO-Revision-Date: 2022-04-19 17:01+0000\n"
 "Last-Translator: LAO <sumonchai@gmail.com>\n"
-"Language-Team: Thai <https://translations.zammad.org/projects/zammad/zammad-"
-"development/th/>\n"
+"Language-Team: Thai <https://translations.zammad.org/projects/zammad/"
+"zammad-development/th/>\n"
 "Language: th\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -43,7 +43,7 @@ msgstr "dd/mm/yyyy"
 #. - 'l' - hour (12h)
 #. - 'P' - Meridian indicator ('am' or 'pm')
 msgid "FORMAT_DATETIME"
-msgstr "dd/mm/yyyy HH:MM"
+msgstr "dd/mm/yyyy l:MM P"
 
 #: db/seeds/settings.rb
 msgid ""
@@ -290,6 +290,19 @@ msgid ""
 "displayed in a separate view in your overviews. You can also configure ** "
 "email notifications **."
 msgstr ""
+"** ข้อตกลงระดับการให้บริการ ** ตัวย่อ ** SLA ** "
+"ช่วยให้คุณมีเวลาตอบสนองที่เฉพาะเจาะจงสำหรับคำขอของลูกค้าของคุณ "
+"วิธีนี้ทำให้คุณสามารถกำหนดเป้าหมาย เช่น ตอบคำถามทุกข้อภายในแปดชั่วโมง "
+"หากคุณเสี่ยงที่จะพลาดเป้าหมายนี้ Zammad จะแจ้งเตือนคุณ\n"
+"\n"
+"คุณสามารถกำหนดเป้าหมายสำหรับตัวชี้วัดที่แตกต่างกันสามตัว: ** เวลาตอบสนอง ** "
+"(เวลาระหว่างการสร้างตั๋วและปฏิกิริยาแรกของตัวแทน) ** เวลาอัปเดต ** "
+"(เวลาระหว่างคำขอของลูกค้ากับปฏิกิริยาของตัวแทน) และ ** เวลาแก้ปัญหา ** "
+"(เวลาระหว่างการสร้างและปิด ticket )\n"
+"\n"
+"ticket ที่ส่งต่อ (เช่น ticket ที่พลาดเป้าหมายที่กำหนดไว้) "
+"จะแสดงในมุมมองที่แยกต่างหากในภาพรวมของคุณ คุณยังสามารถกำหนดค่า ** "
+"การแจ้งเตือนทางอีเมล **"
 
 #: db/seeds/settings.rb
 msgid "1 day"
@@ -347,6 +360,15 @@ msgid ""
 "If you have customers with different business hours, you can create multiple "
 "calendars. Tickets are linked to calendars using **SLAs**."
 msgstr ""
+"**ปฏิทิน** "
+"เป็นสิ่งจำเป็นในการคำนวณการส่งต่อตามเวลาทำการและเพื่อส่งการแจ้งเตือนการยกระดั"
+"บ\n"
+"\n"
+"กำหนดปฏิทิน **\"มาตรฐาน\"** ที่ถูกต้องสำหรับทั้งระบบ การแจ้งเตือนการเลื่อนระด"
+"ับจะถูกส่งไปยังตัวแทนของคุณในช่วงเวลาทำการที่กำหนดเท่านั้น\n"
+"\n"
+"หากคุณมีลูกค้าที่มีเวลาทำการต่างกัน คุณสามารถสร้างปฏิทินได้หลายปฏิทิน "
+"Tickets เชื่อมโยงกับปฏิทินโดยใช้ **SLA**"
 
 #: app/controllers/getting_started_controller.rb
 msgid "A URL looks like this: https://zammad.example.com"
@@ -1532,24 +1554,24 @@ msgstr "ยกเลิกอัพโหลดไฟล์"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/categories.coffee
 msgid "Categories"
-msgstr ""
+msgstr "หมวดหมู่"
 
 #: app/assets/javascripts/app/models/knowledge_base_answer.coffee
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco
 msgid "Category"
-msgstr ""
+msgstr "หมวดหมู่"
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee
 msgid "Category page layout"
-msgstr ""
+msgstr "เค้าโครงหน้าหมวดหมู่"
 
 #: lib/secure_mailing/smime/incoming.rb
 msgid "Certificate for verification could not be found."
-msgstr ""
+msgstr "ไม่พบใบรับรองสำหรับการตรวจสอบ"
 
 #: app/assets/javascripts/app/views/integration/smime.jst.eco
 msgid "Certificates & Private Keys"
-msgstr ""
+msgstr "ใบรับรอง & กุญแจส่วนตัว"
 
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
@@ -1559,26 +1581,26 @@ msgstr "เปลี่ยน"
 
 #: db/seeds/permissions.rb
 msgid "Change %s"
-msgstr ""
+msgstr "เปลี่ยน %s"
 
 #: app/assets/javascripts/app/controllers/ticket_customer.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee
 msgid "Change Customer"
-msgstr ""
+msgstr "เปลี่ยนลูกค้า"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee
 msgid "Change Objects"
-msgstr ""
+msgstr "เปลี่ยนวัตถุ"
 
 #: app/assets/javascripts/app/views/profile/password.jst.eco
 msgid "Change Your Password"
-msgstr ""
+msgstr "เปลี่ยนรหัสผ่านของคุณ"
 
 #: app/assets/javascripts/app/views/generic/history.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/generic_list.jst.eco
 msgid "Change order"
-msgstr ""
+msgstr "การเปลี่ยนแปลงการสั่งซื้อ"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Changed"
@@ -1596,7 +1618,7 @@ msgstr "เปลี่ยน"
 #: app/views/mailer/ticket_update/zh-cn.html.erb
 #: app/views/mailer/ticket_update/zh-tw.html.erb
 msgid "Changes"
-msgstr ""
+msgstr "การเปลี่ยนแปลง"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee
 msgid "Changes could not be loaded."
@@ -1605,11 +1627,11 @@ msgstr "ไม่สามารถโหลดเนื้อหาได้"
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee
 #: app/assets/javascripts/app/views/knowledge_base/base_form.coffee
 msgid "Changes could not be saved."
-msgstr ""
+msgstr "ไม่สามารถบันทึกการเปลี่ยนแปลงได้"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Changes were made that require a database update."
-msgstr ""
+msgstr "มีการเปลี่ยนแปลงที่จำเป็นต้องมีการอัพเดทฐานข้อมูล."
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
@@ -1627,27 +1649,27 @@ msgstr "ช่องทางสื่อสาร - แชต"
 
 #: db/seeds/permissions.rb
 msgid "Channel - Email"
-msgstr ""
+msgstr "ช่องทาง - อีเมล์"
 
 #: db/seeds/permissions.rb
 msgid "Channel - Facebook"
-msgstr ""
+msgstr "ช่องทาง - เฟคบุ๊ค"
 
 #: db/seeds/permissions.rb
 msgid "Channel - Form"
-msgstr ""
+msgstr "ช่องทาง - แบบฟอร์ม"
 
 #: db/seeds/permissions.rb
 msgid "Channel - Google"
-msgstr ""
+msgstr "ช่องทาง - กูเกิล"
 
 #: db/seeds/permissions.rb
 msgid "Channel - Microsoft 365"
-msgstr ""
+msgstr "ช่องทาง - ไมโครซอพท์ 365"
 
 #: db/seeds/permissions.rb
 msgid "Channel - SMS"
-msgstr ""
+msgstr "ช่องทาง - SMS"
 
 #: db/seeds/permissions.rb
 msgid "Channel - Telegram"
@@ -1655,11 +1677,11 @@ msgstr "ช่องทางสื่อสาร - Telegram"
 
 #: db/seeds/permissions.rb
 msgid "Channel - Twitter"
-msgstr ""
+msgstr "ช่องทาง - ทวิสเตอร์"
 
 #: db/seeds/permissions.rb
 msgid "Channel - Web"
-msgstr ""
+msgstr "ช่องทาง - เวป"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_channel_distribution.jst.eco
 msgid "Channel Distribution"
@@ -1686,11 +1708,11 @@ msgstr "ชื่อแชท"
 
 #: public/assets/chat/chat-no-jquery.coffee public/assets/chat/chat.coffee
 msgid "Chat closed by %s"
-msgstr ""
+msgstr "ปิดแชทโดย %s"
 
 #: app/assets/javascripts/app/controllers/chat.coffee
 msgid "Chat not answered, automatically set to offline."
-msgstr ""
+msgstr "แชทไม่ตอบ ตั้งค่าเป็นออฟไลน์โดยอัตโนมัติ"
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
 msgid "Chats"
@@ -1699,11 +1721,11 @@ msgstr "แชต"
 #: app/assets/javascripts/app/controllers/chat.coffee
 #: app/assets/javascripts/app/views/customer_chat/chat_header.jst.eco
 msgid "Chatting Customers"
-msgstr ""
+msgstr "แชทลูกค้า"
 
 #: db/seeds/schedulers.rb
 msgid "Check 'Channel' streams."
-msgstr ""
+msgstr "ตรวจสอบกิจกรรม 'ช่องทาง'"
 
 #: db/seeds/schedulers.rb
 msgid "Check channels."
@@ -1711,7 +1733,7 @@ msgstr "ตรวจสอบช่องทางสื่อสาร"
 
 #: lib/search_index_backend.rb
 msgid "Check the response and payload for detailed information:"
-msgstr ""
+msgstr "ตรวจสอบการตอบสนองและเพย์โหลดสำหรับข้อมูลโดยละเอียด:"
 
 #: app/assets/javascripts/app/views/object_manager/attribute/multiselect.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco
@@ -4422,6 +4444,8 @@ msgid ""
 "For security reasons, the API token is shown only once. You'll need to save "
 "it somewhere secure before continuing."
 msgstr ""
+"ด้วยเหตุผลด้านความปลอดภัย โทเค็น API จะแสดงเพียงครั้งเดียว "
+"คุณจะต้องบันทึกไว้ในที่ที่ปลอดภัยก่อนดำเนินการต่อ"
 
 #: app/assets/javascripts/app/views/login.jst.eco
 msgid "Forgot password?"
@@ -7974,7 +7998,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 msgid "Retry security process"
-msgstr ""
+msgstr "ลองกระบวนการรักษาความปลอดภัยอีกครั้ง"
 
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
@@ -8259,11 +8283,11 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: db/seeds/permissions.rb
 msgid "Security"
-msgstr ""
+msgstr "ความปลอดภัย"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 msgid "Security Error"
-msgstr ""
+msgstr "ข้อผิดพลาดด้านความปลอดภัย"
 
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
@@ -9291,6 +9315,8 @@ msgid ""
 "The installation of packages comes with security implications, because "
 "arbitrary code will be executed in the context of the Zammad application."
 msgstr ""
+"การติดตั้งแพ็คเกจมาพร้อมกับความปลอดภัย "
+"เนื่องจากรหัสที่กำหนดเองจะถูกดำเนินการในบริบทของแอปพลิเคชัน Zammad"
 
 #: lib/search_index_backend.rb
 msgid ""
@@ -10667,6 +10693,13 @@ msgid ""
 "an HTTP(S) endpoint and relevant security settings, then configure a trigger "
 "to perform it."
 msgstr ""
+"Webhooks ทำให้ง่ายต่อการส่งข้อมูลเกี่ยวกับเหตุการณ์ภายใน Zammad "
+"ไปยังระบบของบุคคลที่สามผ่าน HTTP(S)\n"
+"\n"
+"คุณสามารถใช้เว็บฮุคใน Zammad เพื่อส่ง Ticket บทความ "
+"และข้อมูลไฟล์แนบได้ทุกเมื่อที่ทริกเกอร์ "
+"เพียงสร้างและกำหนดค่าเว็บฮุคของคุณด้วยจุดสิ้นสุด HTTP(S) "
+"และการตั้งค่าความปลอดภัยที่เกี่ยวข้อง จากนั้นกำหนดค่าทริกเกอร์เพื่อดำเนินการ"
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/link_button.coffee
 msgid "Weblink"
@@ -11716,6 +11749,12 @@ msgstr "ยังไม่ได้แปล"
 #: db/seeds/ticket_article_types.rb
 msgid "note"
 msgstr "บันทึก"
+
+#: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
+#, fuzzy
+#| msgid "no"
+msgid "now"
+msgstr "ไม่"
 
 #: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
 msgid "open"

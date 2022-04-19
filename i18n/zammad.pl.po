@@ -12515,6 +12515,12 @@ msgstr "nie przetłumaczone"
 msgid "note"
 msgstr "notatka"
 
+#: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
+#, fuzzy
+#| msgid "no"
+msgid "now"
+msgstr "nie"
+
 #: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
 msgid "open"
 msgstr "otwarte"
@@ -12814,8 +12820,8 @@ msgid ""
 "|Increment| increases the ticket number. The SystemID and the counter are "
 "used with \"SystemID.Counter\" format (e.g. 1010138, 1010139)."
 msgstr ""
-"Zwiększa numer zgłoszenia, SystemID i licznik w formacie \"SystemID.Counter\""
-" (np. 1010138, 1010139)."
+"Zwiększa numer zgłoszenia, SystemID i licznik w formacie \"SystemID.Counter"
+"\" (np. 1010138, 1010139)."
 
 #: app/assets/javascripts/app/views/settings/ticket_hook_position.jst.eco
 msgid "|Left| means |[Ticket#12345] Some Subject|"
