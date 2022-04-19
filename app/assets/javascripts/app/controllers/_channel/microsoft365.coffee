@@ -95,10 +95,14 @@ class ChannelAccountOverview extends App.ControllerSubContent
 
       channels.push channel
 
-    # auto redirect to gmail account linking if we have no account
-    if @channel_id && channels.length < 1
-      @new()
-      return
+    # on a channel migration we need to auto redirect
+    # the user to the "Add Account" functionality after
+    # the filled up the external credentials
+    if @channel_id
+      item = App.Channel.find(@channel_id)
+      if item && item.area != 'Microsoft365::Account'
+        @new()
+        return
 
     # get all unlinked email addresses
     not_used_email_addresses = []
@@ -111,9 +115,14 @@ class ChannelAccountOverview extends App.ControllerSubContent
       not_used_email_addresses: not_used_email_addresses
     )
 
+    # on a channel creation we will auto open the edit
+    # dialog after the redirect back to zammad to optional
+    # change the inbound configuration, but not for
+    # migrated channel because we guess that the inbound configuration
+    # is already correct for them.
     if @channel_id
       item = App.Channel.find(@channel_id)
-      if item && item.options && item.options.backup_imap_classic is undefined
+      if item && item.area == 'Microsoft365::Account' && item.options && item.options.backup_imap_classic is undefined
         @editInbound(undefined, @channel_id, true)
         @channel_id = undefined
 
