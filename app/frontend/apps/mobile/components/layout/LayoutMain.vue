@@ -1,5 +1,17 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
+<script setup lang="ts">
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
+import TransitionViewNavigation from '@mobile/components/transition/TransitionViewNavigation.vue'
+
+const route = useRoute()
+
+const showBottomNavigation = computed(() => {
+  return route.meta.hasBottomNavigation
+})
+</script>
+
 <template>
   <div class="flex h-screen flex-col overflow-hidden">
     <main class="flex-1 overflow-y-scroll">
@@ -17,15 +29,3 @@
     </footer>
   </div>
 </template>
-
-<script setup lang="ts">
-import { computed } from 'vue'
-import { useRoute } from 'vue-router'
-import TransitionViewNavigation from '@mobile/components/transition/TransitionViewNavigation.vue'
-
-const route = useRoute()
-
-const showBottomNavigation = computed(() => {
-  return route.meta.hasBottomNavigation
-})
-</script>

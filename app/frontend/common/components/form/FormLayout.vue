@@ -1,11 +1,5 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
-<template>
-  <fieldset class="flex flex-wrap" v-bind:class="columnClass">
-    <slot />
-  </fieldset>
-</template>
-
 <script setup lang="ts">
 import { computed } from 'vue'
 
@@ -21,6 +15,12 @@ const columnClass = computed(() => {
   return `column-${props.columns}`
 })
 </script>
+
+<template>
+  <fieldset class="flex flex-wrap" v-bind:class="columnClass">
+    <slot />
+  </fieldset>
+</template>
 
 <style lang="postcss">
 fieldset.column-1 > .formkit-outer {

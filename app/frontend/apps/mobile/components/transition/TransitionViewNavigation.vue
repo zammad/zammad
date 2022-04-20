@@ -1,5 +1,11 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
+<script setup lang="ts">
+import useViewTransition from '@mobile/composables/useViewTransition'
+
+const { viewTransition } = useViewTransition()
+</script>
+
 <template>
   <main class="grid min-h-screen flex-1 overflow-hidden">
     <transition class="z-10 flex-auto" v-bind:name="viewTransition">
@@ -7,12 +13,6 @@
     </transition>
   </main>
 </template>
-
-<script setup lang="ts">
-import useViewTransition from '@mobile/composables/useViewTransition'
-
-const { viewTransition } = useViewTransition()
-</script>
 
 <style scoped>
 /* TODO: Styles needs to be aligned/beautified. */

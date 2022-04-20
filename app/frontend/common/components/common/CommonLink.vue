@@ -1,32 +1,5 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
-<template>
-  <router-link
-    v-if="isInternalLink"
-    v-bind:to="link"
-    v-bind:replace="replace"
-    v-bind:class="linkClass"
-    v-bind:active-class="activeClass"
-    v-bind:exact-active-class="exactActiveClass"
-    v-bind:target="target"
-    data-test-id="common-link"
-    v-on:click="onClick"
-  >
-    <slot></slot>
-  </router-link>
-  <a
-    v-else
-    v-bind:href="(link as string)"
-    v-bind:target="target"
-    v-bind:class="linkClass"
-    v-bind:rel="rel"
-    data-test-id="common-link"
-    v-on:click="onClick"
-  >
-    <slot></slot>
-  </a>
-</template>
-
 <script setup lang="ts">
 import type { Link } from '@common/types/router'
 import isRouteLink from '@common/router/utils/isRouteLink'
@@ -94,3 +67,30 @@ const onClick = (event: MouseEvent) => {
   }
 }
 </script>
+
+<template>
+  <router-link
+    v-if="isInternalLink"
+    v-bind:to="link"
+    v-bind:replace="replace"
+    v-bind:class="linkClass"
+    v-bind:active-class="activeClass"
+    v-bind:exact-active-class="exactActiveClass"
+    v-bind:target="target"
+    data-test-id="common-link"
+    v-on:click="onClick"
+  >
+    <slot></slot>
+  </router-link>
+  <a
+    v-else
+    v-bind:href="(link as string)"
+    v-bind:target="target"
+    v-bind:class="linkClass"
+    v-bind:rel="rel"
+    data-test-id="common-link"
+    v-on:click="onClick"
+  >
+    <slot></slot>
+  </a>
+</template>

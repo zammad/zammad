@@ -1,9 +1,5 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
-<template>
-  <EditorContent v-bind:editor="editor" />
-</template>
-
 <script setup lang="ts">
 import type { FormFieldContext } from '@common/types/form'
 import { useEditor, EditorContent } from '@tiptap/vue-3'
@@ -54,3 +50,7 @@ props.context.node.on('input', ({ payload: value }) => {
   }
 })
 </script>
+
+<template>
+  <EditorContent v-bind:editor="editor" />
+</template>

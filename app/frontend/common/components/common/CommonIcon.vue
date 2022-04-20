@@ -1,20 +1,5 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
-<template>
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    class="icon fill-current"
-    v-bind:class="iconClass"
-    v-bind:width="finalSize.width"
-    v-bind:height="finalSize.height"
-    v-bind:aria-labelledby="name"
-    v-bind:aria-hidden="decorative"
-    v-on:click="onClick"
-  >
-    <use v-bind:xlink:href="`#icon-${name}`" />
-  </svg>
-</template>
-
 <script lang="ts">
 import { computed } from 'vue'
 
@@ -75,3 +60,18 @@ const finalSize = computed(() => {
   }
 })
 </script>
+
+<template>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    class="icon fill-current"
+    v-bind:class="iconClass"
+    v-bind:width="finalSize.width"
+    v-bind:height="finalSize.height"
+    v-bind:aria-labelledby="name"
+    v-bind:aria-hidden="decorative"
+    v-on:click="onClick"
+  >
+    <use v-bind:xlink:href="`#icon-${name}`" />
+  </svg>
+</template>

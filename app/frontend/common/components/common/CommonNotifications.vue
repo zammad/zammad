@@ -1,5 +1,36 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
+<script setup lang="ts">
+import useNotifications from '@common/composables/useNotifications'
+import type { Notification } from '@common/types/notification'
+
+const notificationTypeClassMap = {
+  warn: 'bg-yellow text-white',
+  success: 'bg-green text-white',
+  error: 'bg-red text-white',
+  info: 'bg-white text-black',
+}
+
+const iconNameMap = {
+  warn: 'info',
+  success: 'checkmark',
+  error: 'danger',
+  info: 'info',
+}
+
+const { notifications, removeNotification } = useNotifications()
+
+const getClassName = (notification: Notification) => {
+  return notificationTypeClassMap[notification.type]
+}
+
+const clickHandler = (notification: Notification) => {
+  const { callback } = notification
+  removeNotification(notification.id)
+  if (callback) callback()
+}
+</script>
+
 <template>
   <div id="Notifications" class="flex w-full justify-center">
     <div class="fixed top-0 z-50 ltr:right-0 rtl:left-0">
@@ -38,34 +69,3 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import useNotifications from '@common/composables/useNotifications'
-import type { Notification } from '@common/types/notification'
-
-const notificationTypeClassMap = {
-  warn: 'bg-yellow text-white',
-  success: 'bg-green text-white',
-  error: 'bg-red text-white',
-  info: 'bg-white text-black',
-}
-
-const iconNameMap = {
-  warn: 'info',
-  success: 'checkmark',
-  error: 'danger',
-  info: 'info',
-}
-
-const { notifications, removeNotification } = useNotifications()
-
-const getClassName = (notification: Notification) => {
-  return notificationTypeClassMap[notification.type]
-}
-
-const clickHandler = (notification: Notification) => {
-  const { callback } = notification
-  removeNotification(notification.id)
-  if (callback) callback()
-}
-</script>

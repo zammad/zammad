@@ -1,41 +1,5 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
-<template>
-  <FormKit
-    v-if="Object.keys(schemaData.fields).length > 0 || $slots.fields"
-    v-bind:id="formId"
-    type="form"
-    v-bind:config="formConfig"
-    v-bind:form-class="localClass"
-    v-bind:actions="false"
-    v-bind:incomplete-message="false"
-    v-bind:plugins="localFormKitPlugins"
-    v-bind:sections-schema="formKitSectionsSchema"
-    v-bind:disabled="localDisabled"
-    v-on:node="setFormNode"
-    v-on:submit="onSubmit"
-  >
-    <slot name="before-fields" />
-    <template v-if="!$slots.fields">
-      <FormKitSchema
-        v-bind:schema="staticSchema"
-        v-bind:data="schemaData"
-        v-bind:library="additionalComponentLibrary"
-      />
-    </template>
-    <template v-else>
-      <slot name="fields" />
-    </template>
-    <slot name="after-fields" />
-  </FormKit>
-  <div
-    v-else-if="showInitialLoadingAnimation"
-    class="flex items-center justify-center"
-  >
-    <CommonIcon name="loader" animation="spin" />
-  </div>
-</template>
-
 <script setup lang="ts">
 import { FormKit, FormKitSchema } from '@formkit/vue'
 import FormLayout from '@common/components/form/FormLayout.vue'
@@ -396,3 +360,39 @@ if (props.formName) {
   buildStaticSchema(toRef(props, 'schema').value)
 }
 </script>
+
+<template>
+  <FormKit
+    v-if="Object.keys(schemaData.fields).length > 0 || $slots.fields"
+    v-bind:id="formId"
+    type="form"
+    v-bind:config="formConfig"
+    v-bind:form-class="localClass"
+    v-bind:actions="false"
+    v-bind:incomplete-message="false"
+    v-bind:plugins="localFormKitPlugins"
+    v-bind:sections-schema="formKitSectionsSchema"
+    v-bind:disabled="localDisabled"
+    v-on:node="setFormNode"
+    v-on:submit="onSubmit"
+  >
+    <slot name="before-fields" />
+    <template v-if="!$slots.fields">
+      <FormKitSchema
+        v-bind:schema="staticSchema"
+        v-bind:data="schemaData"
+        v-bind:library="additionalComponentLibrary"
+      />
+    </template>
+    <template v-else>
+      <slot name="fields" />
+    </template>
+    <slot name="after-fields" />
+  </FormKit>
+  <div
+    v-else-if="showInitialLoadingAnimation"
+    class="flex items-center justify-center"
+  >
+    <CommonIcon name="loader" animation="spin" />
+  </div>
+</template>

@@ -1,5 +1,17 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
+<script setup lang="ts">
+export interface Props {
+  title?: string
+  link?: string
+  icon?: string
+  // TODO maybe change the name based on the usage
+  information?: string
+}
+
+defineProps<Props>()
+</script>
+
 <template>
   <component
     v-bind:is="link ? 'CommonLink' : 'div'"
@@ -27,15 +39,3 @@
     </div>
   </component>
 </template>
-
-<script setup lang="ts">
-export interface Props {
-  title?: string
-  link?: string
-  icon?: string
-  // TODO maybe change the name based on the usage
-  information?: string
-}
-
-defineProps<Props>()
-</script>

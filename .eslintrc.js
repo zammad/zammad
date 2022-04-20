@@ -28,7 +28,7 @@ module.exports = {
     'vue/component-tags-order': [
       'error',
       {
-        order: ['template', 'script', 'style'],
+        order: ['script', 'template', 'style'],
       },
     ],
     // Not allow the usage of relative imports, because we want always use the path aliases.

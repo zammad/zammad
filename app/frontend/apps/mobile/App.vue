@@ -1,15 +1,5 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
-<template>
-  <CommonNotifications v-if="applicationLoaded.value" />
-  <div
-    v-if="applicationLoaded.value"
-    class="min-h-screen min-w-full select-none bg-black font-sans text-sm text-white antialiased"
-  >
-    <router-view />
-  </div>
-</template>
-
 <script setup lang="ts">
 import CommonNotifications from '@common/components/common/CommonNotifications.vue'
 import useApplicationLoadedStore from '@common/stores/application/loaded'
@@ -100,3 +90,13 @@ onBeforeUnmount(() => {
   emitter.off('sessionInvalid')
 })
 </script>
+
+<template>
+  <CommonNotifications v-if="applicationLoaded.value" />
+  <div
+    v-if="applicationLoaded.value"
+    class="min-h-screen min-w-full select-none bg-black font-sans text-sm text-white antialiased"
+  >
+    <router-view />
+  </div>
+</template>

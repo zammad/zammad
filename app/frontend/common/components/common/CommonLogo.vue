@@ -1,13 +1,5 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
-<template>
-  <img
-    class="h-40 w-40"
-    v-bind:src="logoUrl"
-    v-bind:alt="(config.get('product_name') as string)"
-  />
-</template>
-
 <script setup lang="ts">
 import useApplicationConfigStore from '@common/stores/application/config'
 import { computed } from 'vue'
@@ -23,3 +15,11 @@ const logoUrl = computed(() => {
   return `${assetsPath}/${productLogo}`
 })
 </script>
+
+<template>
+  <img
+    class="h-40 w-40"
+    v-bind:src="logoUrl"
+    v-bind:alt="(config.get('product_name') as string)"
+  />
+</template>

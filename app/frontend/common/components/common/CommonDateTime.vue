@@ -1,12 +1,5 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
-<template>
-  <span v-if="outputFormat === 'absolute'">{{ i18n.dateTime(dateTime) }}</span>
-  <span v-else v-bind:title="i18n.dateTime(dateTime)">{{
-    i18n.relativeDateTime(dateTime)
-  }}</span>
-</template>
-
 <script setup lang="ts">
 import useApplicationConfigStore from '@common/stores/application/config'
 import { DateTimeFormat } from '@common/types/dateTime'
@@ -33,3 +26,10 @@ const outputFormat: ComputedRef<OutputFormat> = computed(() => {
     : 'absolute'
 })
 </script>
+
+<template>
+  <span v-if="outputFormat === 'absolute'">{{ i18n.dateTime(dateTime) }}</span>
+  <span v-else v-bind:title="i18n.dateTime(dateTime)">{{
+    i18n.relativeDateTime(dateTime)
+  }}</span>
+</template>
