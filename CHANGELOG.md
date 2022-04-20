@@ -1,5 +1,39 @@
 # Change Log
 
+## [5.1.1](https://github.com/zammad/zammad/tree/5.1.1) (2022-04-20)
+[Full Changelog](https://github.com/zammad/zammad/compare/5.1.0...5.1.1)
+
+**Implemented enhancements:**
+
+- Allow reauthentication of Google / Microsoft 365 accounts [3240](https://github.com/zammad/zammad/issues/3240) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)] [[channel](https://github.com/zammad/zammad/labels/channel)]
+
+**Fixed bugs:**
+
+- Error on second migration of an microsoft365 channel undefined method `options' for nil:NilClass [4060](https://github.com/zammad/zammad/issues/4060) [[bug](https://github.com/zammad/zammad/labels/bug)] [[channel](https://github.com/zammad/zammad/labels/channel)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised%20by%20payment)]
+- Freshdesk migration which doesn't support time entries runs in unwanted behaviour [4052](https://github.com/zammad/zammad/issues/4052) [[bug](https://github.com/zammad/zammad/labels/bug)] [[import](https://github.com/zammad/zammad/labels/import)]
+- Freshdesk-Migration does not like no Companies / Organisations within the source [4051](https://github.com/zammad/zammad/issues/4051) [[bug](https://github.com/zammad/zammad/labels/bug)] [[import](https://github.com/zammad/zammad/labels/import)]
+- Cannot encrypt if multiple S/MIME certificates exist and one is expired [4029](https://github.com/zammad/zammad/issues/4029) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Core Workflow: Does show wrong field list if you only have admin permissions and not ticket.agent permissions [4035](https://github.com/zammad/zammad/issues/4035) [[bug](https://github.com/zammad/zammad/labels/bug)] [[admin area](https://github.com/zammad/zammad/labels/admin%20area)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised%20by%20payment)]
+- Can't delete smime certificate - ERROR:  duplicate key value violates unique constraint [4049](https://github.com/zammad/zammad/issues/4049) [[bug](https://github.com/zammad/zammad/labels/bug)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised%20by%20payment)]
+- Knowledge Base on-the-fly updating does not work [4026](https://github.com/zammad/zammad/issues/4026) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Core Workflow - Unable to select "has changed" logic when creating new workflow. It is also replaced with "is" in previously created workflows. [4046](https://github.com/zammad/zammad/issues/4046) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- undefined method `to_hash` on editing select fields in the admin interface after migration to 5.1 [4027](https://github.com/zammad/zammad/issues/4027) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- KB Public menus scroll bar positioning incorrect [4008](https://github.com/zammad/zammad/issues/4008) [[bug](https://github.com/zammad/zammad/labels/bug)] [[UX/UI](https://github.com/zammad/zammad/labels/UX%2FUI)] [[knowledge base](https://github.com/zammad/zammad/labels/knowledge%20base)]
+- Problems with duplicate records in Translations table [4020](https://github.com/zammad/zammad/issues/4020) [[bug](https://github.com/zammad/zammad/labels/bug)] [[translation](https://github.com/zammad/zammad/labels/translation)]
+- Tree select value cannot be set to "-" (empty) with Trigger/Scheduler/Core workflow [4024](https://github.com/zammad/zammad/issues/4024) [[bug](https://github.com/zammad/zammad/labels/bug)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised%20by%20payment)]
+- Admin macros are not usable with admin permissions only [4032](https://github.com/zammad/zammad/issues/4032) [[bug](https://github.com/zammad/zammad/labels/bug)] [[admin area](https://github.com/zammad/zammad/labels/admin%20area)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised%20by%20payment)]
+- Admin SLA index view does not show update time if "for agent respond" is selected [4033](https://github.com/zammad/zammad/issues/4033) [[bug](https://github.com/zammad/zammad/labels/bug)] [[admin area](https://github.com/zammad/zammad/labels/admin%20area)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised%20by%20payment)]
+- Core Workflow: Stop after match is not saved  [4034](https://github.com/zammad/zammad/issues/4034) [[bug](https://github.com/zammad/zammad/labels/bug)] [[admin area](https://github.com/zammad/zammad/labels/admin%20area)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised%20by%20payment)] [[core workflows](https://github.com/zammad/zammad/labels/core%20workflows)]
+- Freshdesk import error when a inline image source attribute contains no clean url [4028](https://github.com/zammad/zammad/issues/4028) [[bug](https://github.com/zammad/zammad/labels/bug)] [[import](https://github.com/zammad/zammad/labels/import)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised%20by%20payment)]
+- Mention history does not show properly who got added [3984](https://github.com/zammad/zammad/issues/3984) [[bug](https://github.com/zammad/zammad/labels/bug)] [[UX/UI](https://github.com/zammad/zammad/labels/UX%2FUI)] [[history](https://github.com/zammad/zammad/labels/history)]
+- Obsolete notice field in admin calendar view [4023](https://github.com/zammad/zammad/issues/4023) [[bug](https://github.com/zammad/zammad/labels/bug)] [[admin area](https://github.com/zammad/zammad/labels/admin%20area)]
+- Error “customer_id required” on Macro execution [4022](https://github.com/zammad/zammad/issues/4022) [[bug](https://github.com/zammad/zammad/labels/bug)] [[UX/UI](https://github.com/zammad/zammad/labels/UX%2FUI)] [[macros](https://github.com/zammad/zammad/labels/macros)]
+- Translations are not available in API after syncing [4016](https://github.com/zammad/zammad/issues/4016) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Upgraded to 5.1.0: pending time doesn’t show a date [4018](https://github.com/zammad/zammad/issues/4018) [[bug](https://github.com/zammad/zammad/labels/bug)] [[translation](https://github.com/zammad/zammad/labels/translation)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised%20by%20payment)]
+- UI is not updated right after importing users csv file [3919](https://github.com/zammad/zammad/issues/3919) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- LDAP with many groups (<5k) and group role relation (>50) will crash in frontend [3994](https://github.com/zammad/zammad/issues/3994) [[bug](https://github.com/zammad/zammad/labels/bug)] [[UX/UI](https://github.com/zammad/zammad/labels/UX%2FUI)] [[LDAP](https://github.com/zammad/zammad/labels/LDAP)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised%20by%20payment)]
+
+
 ## [5.1.0](https://github.com/zammad/zammad/tree/5.1.0) (2022-03-14)
 [Full Changelog](https://github.com/zammad/zammad/compare/5.0.0...5.1.0)
 
