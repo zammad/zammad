@@ -42,7 +42,7 @@ class ChannelsSmsController < ApplicationController
   end
 
   def test
-    raise __('Missing parameter options.adapter') if params[:options][:adapter].blank?
+    raise __("The required parameter 'options.adapter' is missing.") if params[:options][:adapter].blank?
 
     driver = Channel.driver_class(params[:options][:adapter])
     resp   = driver.new.send(params[:options], test_options)
@@ -86,12 +86,12 @@ class ChannelsSmsController < ApplicationController
   end
 
   def channel_params
-    raise __('Missing area params') if params[:area].blank?
+    raise __("The required parameter 'area' is missing.") if params[:area].blank?
     if ['Sms::Notification', 'Sms::Account'].exclude?(params[:area])
-      raise "Invalid area '#{params[:area]}'!"
+      raise "The parameter 'area' has the invalid value '#{params[:area]}'!"
     end
-    raise __('Missing options params') if params[:options].blank?
-    raise __('Missing options.adapter params') if params[:options][:adapter].blank?
+    raise __("The required parameter 'params' is missing.") if params[:options].blank?
+    raise __("The required parameter 'options.adapter' is missing.") if params[:options][:adapter].blank?
 
     params
   end

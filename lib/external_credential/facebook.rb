@@ -20,8 +20,8 @@ class ExternalCredential::Facebook
       end
     end
 
-    raise Exceptions::UnprocessableEntity, __('No application_id param!') if credentials[:application_id].blank?
-    raise Exceptions::UnprocessableEntity, __('No application_secret param!') if credentials[:application_secret].blank?
+    raise Exceptions::UnprocessableEntity, __("The required parameter 'application_id' is missing.") if credentials[:application_id].blank?
+    raise Exceptions::UnprocessableEntity, __("The required parameter 'application_secret' is missing.") if credentials[:application_secret].blank?
 
     oauth = Koala::Facebook::OAuth.new(
       credentials[:application_id],

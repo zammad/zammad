@@ -312,7 +312,7 @@ RSpec.describe ExternalCredential::Microsoft365 do
           }
         end
         let(:app_required) { false }
-        let(:exception_message) { 'No client_id param!' }
+        let(:exception_message) { "The required parameter 'client_id' is missing." }
 
         include_examples 'failed attempt'
       end
@@ -324,7 +324,7 @@ RSpec.describe ExternalCredential::Microsoft365 do
           }
         end
         let(:app_required) { false }
-        let(:exception_message) { 'No client_secret param!' }
+        let(:exception_message) { "The required parameter 'client_secret' is missing." }
 
         include_examples 'failed attempt'
       end

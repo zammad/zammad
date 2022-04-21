@@ -86,7 +86,7 @@ RSpec.describe 'External Credentials', type: :request do
               post '/api/v1/external_credentials/facebook/app_verify', as: :json
 
               expect(response).to have_http_status(:ok)
-              expect(json_response).to include('error' => 'No application_id param!')
+              expect(json_response).to include('error' => "The required parameter 'application_id' is missing.")
             end
           end
 
@@ -217,7 +217,7 @@ RSpec.describe 'External Credentials', type: :request do
         context 'with no credentials' do
           include_examples 'for failure cases' do
             let(:status) { :ok }
-            let(:error_message) { 'No consumer_key param!' }
+            let(:error_message) { "The required parameter 'consumer_key' is missing." }
           end
         end
 

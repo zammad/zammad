@@ -5906,36 +5906,8 @@ msgstr ""
 msgid "Missing 'for_user_id' in payload!"
 msgstr ""
 
-#: app/controllers/sessions_controller.rb
-msgid "Missing SSO ENV REMOTE_USER or X-Forwarded-User header"
-msgstr ""
-
 #: app/controllers/import_freshdesk_controller.rb
 msgid "Missing administrator permission!"
-msgstr ""
-
-#: app/controllers/channels_sms_controller.rb
-msgid "Missing area params"
-msgstr ""
-
-#: app/controllers/channels_sms_controller.rb
-msgid "Missing options params"
-msgstr ""
-
-#: app/controllers/channels_sms_controller.rb
-msgid "Missing options.adapter params"
-msgstr ""
-
-#: app/controllers/channels_sms_controller.rb
-msgid "Missing parameter options.adapter"
-msgstr ""
-
-#: app/models/store/file.rb
-msgid "Missing storage_provider setting option"
-msgstr ""
-
-#: app/models/ticket/number.rb
-msgid "Missing ticket_number setting option"
 msgstr ""
 
 #: db/seeds/object_manager_attributes.rb
@@ -6174,6 +6146,10 @@ msgstr ""
 msgid "Needed"
 msgstr ""
 
+#: app/controllers/sessions_controller.rb
+msgid "Neither an SSO environment variable 'REMOTE_USER' nor a 'X-Forwarded-User' header could be found."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_manage/system.coffee
 msgid "Network"
 msgstr ""
@@ -6373,14 +6349,6 @@ msgstr ""
 msgid "No answers"
 msgstr ""
 
-#: lib/external_credential/facebook.rb
-msgid "No application_id param!"
-msgstr ""
-
-#: lib/external_credential/facebook.rb
-msgid "No application_secret param!"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
 msgid "No camera found."
 msgstr ""
@@ -6391,29 +6359,11 @@ msgstr ""
 
 #: lib/external_credential/google.rb
 #: lib/external_credential/microsoft365.rb
-msgid "No client_id param!"
-msgstr ""
-
-#: lib/external_credential/google.rb
-#: lib/external_credential/microsoft365.rb
-msgid "No client_secret param!"
-msgstr ""
-
-#: lib/external_credential/google.rb
-#: lib/external_credential/microsoft365.rb
 msgid "No code for session found!"
 msgstr ""
 
 #: app/models/calendar.rb
 msgid "No configured business hours found!"
-msgstr ""
-
-#: lib/external_credential/twitter.rb
-msgid "No consumer_key param!"
-msgstr ""
-
-#: lib/external_credential/twitter.rb
-msgid "No consumer_secret param!"
 msgstr ""
 
 #: app/views/knowledge_base/public/categories/index.html.erb
@@ -6440,14 +6390,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee
 msgid "No linked issues"
-msgstr ""
-
-#: lib/external_credential/twitter.rb
-msgid "No oauth_token param!"
-msgstr ""
-
-#: lib/external_credential/twitter.rb
-msgid "No oauth_token_secret param!"
 msgstr ""
 
 #: app/assets/javascripts/app/views/settings/proxy.jst.eco
@@ -8981,6 +8923,36 @@ msgstr ""
 msgid "The required field 'endpoint' is missing from the config."
 msgstr ""
 
+#: lib/external_credential/facebook.rb
+msgid "The required parameter 'application_id' is missing."
+msgstr ""
+
+#: lib/external_credential/facebook.rb
+msgid "The required parameter 'application_secret' is missing."
+msgstr ""
+
+#: app/controllers/channels_sms_controller.rb
+msgid "The required parameter 'area' is missing."
+msgstr ""
+
+#: lib/external_credential/google.rb
+#: lib/external_credential/microsoft365.rb
+msgid "The required parameter 'client_id' is missing."
+msgstr ""
+
+#: lib/external_credential/google.rb
+#: lib/external_credential/microsoft365.rb
+msgid "The required parameter 'client_secret' is missing."
+msgstr ""
+
+#: lib/external_credential/twitter.rb
+msgid "The required parameter 'consumer_key' is missing."
+msgstr ""
+
+#: lib/external_credential/twitter.rb
+msgid "The required parameter 'consumer_secret' is missing."
+msgstr ""
+
 #: app/controllers/channels_twitter_controller.rb
 msgid "The required parameter 'crc_token' is missing from the Twitter verify payload!"
 msgstr ""
@@ -8991,6 +8963,22 @@ msgstr ""
 
 #: app/controllers/users_controller.rb
 msgid "The required parameter 'id' is missing."
+msgstr ""
+
+#: lib/external_credential/twitter.rb
+msgid "The required parameter 'oauth_token' is missing."
+msgstr ""
+
+#: lib/external_credential/twitter.rb
+msgid "The required parameter 'oauth_token_secret' is missing."
+msgstr ""
+
+#: app/controllers/channels_sms_controller.rb
+msgid "The required parameter 'options.adapter' is missing."
+msgstr ""
+
+#: app/controllers/channels_sms_controller.rb
+msgid "The required parameter 'params' is missing."
 msgstr ""
 
 #: app/models/core_workflow/result.rb
@@ -9016,6 +9004,14 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
 msgid "The server settings could not be automatically detected. Please configure them manually."
+msgstr ""
+
+#: app/models/store/file.rb
+msgid "The setting 'storage_provider' was not configured."
+msgstr ""
+
+#: app/models/ticket/number.rb
+msgid "The setting 'ticket_number' was not configured."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee

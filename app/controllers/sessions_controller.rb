@@ -26,8 +26,8 @@ class SessionsController < ApplicationController
       User.lookup(login: login&.downcase)
     end
 
-    raise Exceptions::NotAuthorized, __('Missing SSO ENV REMOTE_USER or X-Forwarded-User header') if login.blank?
-    raise Exceptions::NotAuthorized, "No such user '#{login}' found!" if user.blank?
+    raise Exceptions::NotAuthorized, __("Neither an SSO environment variable 'REMOTE_USER' nor a 'X-Forwarded-User' header could be found.") if login.blank?
+    raise Exceptions::NotAuthorized, "Uuser '#{login}' could not be found." if user.blank?
 
     session.delete(:switched_from_user_id)
     authentication_check_prerequesits(user, 'SSO', {})

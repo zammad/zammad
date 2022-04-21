@@ -43,6 +43,6 @@ returns
   # load backend based on config
   def self.adapter
     Setting.get('ticket_number')&.constantize ||
-      raise(__('Missing ticket_number setting option'))
+      raise(__("The setting 'ticket_number' was not configured."))
   end
 end

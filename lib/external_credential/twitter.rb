@@ -19,8 +19,8 @@ class ExternalCredential::Twitter
       end
     end
 
-    raise Exceptions::UnprocessableEntity, __('No consumer_key param!') if credentials[:consumer_key].blank?
-    raise Exceptions::UnprocessableEntity, __('No consumer_secret param!') if credentials[:consumer_secret].blank?
+    raise Exceptions::UnprocessableEntity, __("The required parameter 'consumer_key' is missing.") if credentials[:consumer_key].blank?
+    raise Exceptions::UnprocessableEntity, __("The required parameter 'consumer_secret' is missing.") if credentials[:consumer_secret].blank?
 
     consumer = OAuth::Consumer.new(
       credentials[:consumer_key],
@@ -132,10 +132,10 @@ class ExternalCredential::Twitter
   def self.register_webhook(params)
     request_account_to_link(params, false)
 
-    raise Exceptions::UnprocessableEntity, __('No consumer_key param!') if params[:consumer_key].blank?
-    raise Exceptions::UnprocessableEntity, __('No consumer_secret param!') if params[:consumer_secret].blank?
-    raise Exceptions::UnprocessableEntity, __('No oauth_token param!') if params[:oauth_token].blank?
-    raise Exceptions::UnprocessableEntity, __('No oauth_token_secret param!') if params[:oauth_token_secret].blank?
+    raise Exceptions::UnprocessableEntity, __("The required parameter 'consumer_key' is missing.") if params[:consumer_key].blank?
+    raise Exceptions::UnprocessableEntity, __("The required parameter 'consumer_secret' is missing.") if params[:consumer_secret].blank?
+    raise Exceptions::UnprocessableEntity, __("The required parameter 'oauth_token' is missing.") if params[:oauth_token].blank?
+    raise Exceptions::UnprocessableEntity, __("The required parameter 'oauth_token_secret' is missing.") if params[:oauth_token_secret].blank?
 
     return if params[:env].blank?
 
