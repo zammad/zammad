@@ -33,7 +33,7 @@ RSpec.describe 'Exchange integration endpoint', type: :request do
   describe 'autodiscovery' do
     # see https://github.com/zammad/zammad/issues/2065
     context 'when Autodiscover gem raises Errno::EADDRNOTAVAIL (#2065)' do
-      let(:client) { instance_double('Autodiscover::Client') }
+      let(:client) { instance_double(Autodiscover::Client) }
 
       it 'rescues and responds with an empty hash (to proceed to manual configuration)' do
         allow(Autodiscover::Client).to receive(:new).with(any_args).and_return(client)

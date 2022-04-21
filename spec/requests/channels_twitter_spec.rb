@@ -114,7 +114,7 @@ RSpec.describe 'Twitter channel API endpoints', type: :request do
         allow(twitter_sync).to receive(:process_webhook)
       end
 
-      let(:twitter_sync) { instance_double('TwitterSync') }
+      let(:twitter_sync) { instance_double(TwitterSync) }
 
       it 'delegates to TwitterSync#process_webhook' do
         post '/api/v1/channels_twitter_webhook', params: params, headers: headers, as: :json

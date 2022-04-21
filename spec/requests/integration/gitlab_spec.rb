@@ -65,7 +65,7 @@ RSpec.describe 'GitLab', type: :request, required_envs: %w[GITLAB_ENDPOINT GITLA
       expect(json_response['error']).to eq('Not authorized (user)!')
 
       authenticated_as(admin)
-      instance = instance_double('GitLab')
+      instance = instance_double(GitLab)
       expect(GitLab).to receive(:new).with(endpoint, token).and_return instance
       expect(instance).to receive(:verify!).and_return(true)
 
@@ -81,7 +81,7 @@ RSpec.describe 'GitLab', type: :request, required_envs: %w[GITLAB_ENDPOINT GITLA
         links: [ ENV['GITLAB_ISSUE_LINK'] ],
       }
       authenticated_as(agent)
-      instance = instance_double('GitLab')
+      instance = instance_double(GitLab)
       expect(GitLab).to receive(:new).and_return instance
       expect(instance).to receive(:issues_by_urls).and_return([issue_data])
 

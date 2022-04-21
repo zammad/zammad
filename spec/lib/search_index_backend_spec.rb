@@ -904,7 +904,7 @@ RSpec.describe SearchIndexBackend do
         allow(described_class).to receive(:convert_es_date_range).and_return(mock_range)
       end
 
-      let(:mock_range) { instance_double('Range', overlaps?: true) }
+      let(:mock_range) { instance_double(Range, overlaps?: true) }
 
       it 'checks overlap once for 2 ranges' do
         described_class.verify_date_range 'url', build_payload(range_1, range_2)

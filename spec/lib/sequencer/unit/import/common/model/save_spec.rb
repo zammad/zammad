@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Sequencer::Unit::Import::Common::Model::Save, sequencer: :unit do
-  let(:user) { instance_double('User') }
+  let(:user) { instance_double(User) }
 
   before { allow(user).to receive(:save!) }
 

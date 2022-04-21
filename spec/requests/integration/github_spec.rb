@@ -60,7 +60,7 @@ RSpec.describe 'GitHub', type: :request, required_envs: %w[GITHUB_ENDPOINT GITHU
       expect(json_response['error']).to eq('Not authorized (user)!')
 
       authenticated_as(admin)
-      instance = instance_double('GitHub')
+      instance = instance_double(GitHub)
       expect(GitHub).to receive(:new).with(endpoint, token).and_return instance
       expect(instance).to receive(:verify!).and_return(true)
 
@@ -76,7 +76,7 @@ RSpec.describe 'GitHub', type: :request, required_envs: %w[GITHUB_ENDPOINT GITHU
         links: [ ENV['GITHUB_ISSUE_LINK'] ],
       }
       authenticated_as(agent)
-      instance = instance_double('GitHub')
+      instance = instance_double(GitHub)
       expect(GitHub).to receive(:new).and_return instance
       expect(instance).to receive(:issues_by_urls).and_return([issue_data])
 
