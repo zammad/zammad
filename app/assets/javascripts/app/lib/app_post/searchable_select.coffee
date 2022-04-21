@@ -160,6 +160,8 @@ class App.SearchableSelect extends Spine.Controller
     if !@input.val() && !@attribute.multiple
       @updateAttributeValueName()
       @input.val(@attribute.valueName)
+    @input.trigger('change')
+    @shadowInput.trigger('change')
 
   onKeyUp: =>
     return if @input.val().trim() isnt '' || @attribute.multiple
@@ -278,9 +280,7 @@ class App.SearchableSelect extends Spine.Controller
       @addValueToShadowInput(currentText, dataId)
     else
       @input.val currentText
-      @input.trigger('change')
       @shadowInput.val dataId
-      @shadowInput.trigger('change')
 
   navigateIn: (event) ->
     event.stopPropagation()
