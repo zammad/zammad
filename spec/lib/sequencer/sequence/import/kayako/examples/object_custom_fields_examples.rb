@@ -232,4 +232,76 @@ RSpec.shared_examples 'Object custom fields' do |klass:|
 
     include_examples 'import valid custom field', 'custom_tree_select'
   end
+
+  context "when custom field type is 'CHECKBOX'" do
+    let(:resource) do
+      {
+        'id'                        => 80_000_387_409,
+        'fielduuid'                 => 'ff7093f3-ad44-4519-80b0-f9b1a9988ac0',
+        'title'                     => 'Multichoice',
+        'type'                      => 'CHECKBOX',
+        'key'                       => 'custom_multichoice',
+        'is_visible_to_customers'   => false,
+        'is_customer_editable'      => false,
+        'is_required_for_customers' => false,
+        'regular_expression'        => nil,
+        'sort_order'                => 2,
+        'is_enabled'                => true,
+        'options'                   => [
+          {
+            'id'         => 1,
+            'fielduuid'  => 'ff7093f3-ad44-4519-80b0-f9b1a9988ac0',
+            'values'     => [
+              {
+                'id'          => 26,
+                'locale'      => 'en-us',
+                'translation' => 'one',
+                'created_at'  => '2021-08-16T19:35:02+00:00',
+                'updated_at'  => '2021-08-16T19:35:02+00:00',
+              }
+            ],
+            'sort_order' => 0,
+            'created_at' => '2021-08-16T19:35:02+00:00',
+            'updated_at' => '2021-08-16T19:35:02+00:00',
+          },
+          {
+            'id'         => 2,
+            'fielduuid'  => 'ff7093f3-ad44-4519-80b0-f9b1a9988ac0',
+            'values'     => [
+              {
+                'id'          => 27,
+                'locale'      => 'en-us',
+                'translation' => 'two',
+                'created_at'  => '2021-08-16T19:35:02+00:00',
+                'updated_at'  => '2021-08-16T19:35:02+00:00',
+              }
+            ],
+            'sort_order' => 0,
+            'created_at' => '2021-08-16T19:35:02+00:00',
+            'updated_at' => '2021-08-16T19:35:02+00:00',
+          },
+          {
+            'id'         => 3,
+            'fielduuid'  => 'ff7093f3-ad44-4519-80b0-f9b1a9988ac0',
+            'values'     => [
+              {
+                'id'          => 25,
+                'locale'      => 'en-us',
+                'translation' => 'three',
+                'created_at'  => '2021-08-16T19:35:01+00:00',
+                'updated_at'  => '2021-08-16T19:35:01+00:00',
+              }
+            ],
+            'sort_order' => 0,
+            'created_at' => '2021-08-16T19:35:01+00:00',
+            'updated_at' => '2021-08-16T19:35:01+00:00',
+          },
+        ],
+        'created_at'                => '2021-08-16T19:35:01+00:00',
+        'updated_at'                => '2021-08-17T14:32:50+00:00',
+      }
+    end
+
+    include_examples 'import valid custom field', 'custom_multichoice'
+  end
 end
