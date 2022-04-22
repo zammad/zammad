@@ -670,9 +670,11 @@ RSpec.describe 'System > Objects', type: :system do
       visit '/#system/object_manager'
       page.find('.js-new').click
 
-      page.find('select[name=data_type]').select data_type
-      fill_in 'Name', with: attribute_name
-      find('input[name=display]').set attribute_name
+      in_modal disappears: false do
+        page.find('select[name=data_type]').select data_type
+        fill_in 'Name', with: attribute_name
+        find('input[name=display]').set attribute_name
+      end
     end
 
     let(:data_options) do
