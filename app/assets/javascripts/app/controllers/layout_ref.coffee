@@ -1502,7 +1502,7 @@ class InputsRef extends App.ControllerAppContent
         id:          'user-123'
         placeholder: __('Enter User')
         limt:        10
-        object:      'User'
+        relation:    'User'
 
     @$('.searchableAjaxSelectPlaceholder').replaceWith( searchableAjaxSelectObject.element() )
 
