@@ -15,7 +15,7 @@ class App.UiElement.autocompletion_ajax
         id:          params.organization_id || attribute.id
         placeholder: App.i18n.translateInline('Search…')
         limit:       40
-        object:      attribute.relation
+        relation:    attribute.relation
         ajax:        true
         multiple:    attribute.multiple
     )

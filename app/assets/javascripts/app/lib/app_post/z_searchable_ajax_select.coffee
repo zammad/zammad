@@ -10,7 +10,7 @@ class App.SearchableAjaxSelect extends App.SearchableSelect
 
     # convert requested object
     # e.g. Ticket to ticket or AnotherObject to another_object
-    objectString = underscored(@options.attribute.object)
+    objectString = underscored(@options.attribute.relation)
 
     query = @input.val()
 
