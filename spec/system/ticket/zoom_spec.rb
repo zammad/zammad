@@ -2618,7 +2618,7 @@ RSpec.describe 'Ticket zoom', type: :system do
     let(:ticket) { create(:ticket, group: Group.find_by(name: 'Users')) }
 
     let(:image_as_base64) do
-      file = File.binread(Rails.root.join('spec/fixtures/files/image/squares.png'))
+      file = File.binread(Rails.root.join('spec/fixtures/image/squares.png'))
       Base64.encode64(file).delete("\n")
     end
 
