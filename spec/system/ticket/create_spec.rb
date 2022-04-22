@@ -370,7 +370,10 @@ RSpec.describe 'Ticket Create', type: :system do
 
     before do
       template = create(:template, :dummy_data)
-      freeze_time
+
+      travel 1.month
+      browser_travel_to Time.current
+
       visit 'ticket/create'
       use_template template
     end
