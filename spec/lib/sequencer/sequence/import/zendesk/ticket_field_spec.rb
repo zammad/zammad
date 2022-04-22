@@ -171,6 +171,47 @@ RSpec.describe ::Sequencer::Sequence::Import::Zendesk::TicketField, sequencer: :
       end
     end
 
+    context 'when field is a multiselect' do
+      let(:resource) do
+        ZendeskAPI::TicketField.new(
+          nil,
+          base_resource.merge(
+            {
+              'title'                => 'Custom Multiselect',
+              'type'                 => 'multiselect',
+              'custom_field_options' => [
+                {
+                  'id'       => 28_353_445,
+                  'name'     => 'Another Value',
+                  'raw_name' => 'Another Value',
+                  'value'    => 'anotherkey',
+                  'default'  => false
+                },
+                {
+                  'id'       => 28_353_425,
+                  'name'     => 'Value 1',
+                  'raw_name' => 'Value 1',
+                  'value'    => 'key1',
+                  'default'  => false
+                },
+                {
+                  'id'       => 28_353_435,
+                  'name'     => 'Value 2',
+                  'raw_name' => 'Value 2',
+                  'value'    => 'key2',
+                  'default'  => false
+                }
+              ]
+            }
+          )
+        )
+      end
+
+      it 'adds a custom field' do
+        expect { process(process_payload) }.to change(Ticket, :column_names).by(['custom_multiselect'])
+      end
+    end
+
     context 'when field is unknown' do
       let(:resource) do
         ZendeskAPI::TicketField.new(

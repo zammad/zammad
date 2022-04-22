@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: "<IMPORT_ZENDESK_ENDPOINT>/users/me"
+    uri: https://<IMPORT_ZENDESK_ENDPOINT_HOSTNAME>/api/v2/users/me
     body:
       encoding: US-ASCII
       string: ''
@@ -21,17 +21,19 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 20 Aug 2021 13:25:32 GMT
+      - Thu, 21 Apr 2022 06:41:42 GMT
       Content-Type:
       - application/json; charset=UTF-8
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Zendesk-Api-Version:
+      - '2022-01-01'
       X-Zendesk-Api-Version:
       - v2
       X-Zendesk-Application-Version:
-      - v9449
+      - v12002
       X-Frame-Options:
       - SAMEORIGIN
       Access-Control-Expose-Headers:
@@ -45,16 +47,25 @@ http_interactions:
       Strict-Transport-Security:
       - max-age=31536000;
       Etag:
-      - W/"3c0256d85244a27a8ce7b6f5873ccd20"
+      - W/"5262879dbab8653d2b708c0695470dae"
       Cache-Control:
       - max-age=0, private, must-revalidate
       X-Zendesk-Origin-Server:
-      - classic-app-server-5d8ffc66d-4qfvw
+      - classic-app-server-5fd77bc484-58sd4
+      Set-Cookie:
+      - __cfruid=3c9d7ccf2e697016db455aa1d0c0066dd7b78dac-1650523302; path=/; domain=.<IMPORT_ZENDESK_ENDPOINT_HOSTNAME>;
+        HttpOnly; Secure; SameSite=None
+      - _zendesk_cookie=BAhJIhl7ImRldmljZV90b2tlbnMiOnt9fQY6BkVU--459ed01949a36415c1716b5711271c3d08918307;
+        path=/; expires=Fri, 21 Apr 2023 05:10:04 GMT; secure; HttpOnly; SameSite=None
       X-Request-Id:
-      - 681bf2ba78d91456-FRA
-      - 681bf2ba78d91456-FRA
+      - 6ff422ae4c06917a-FRA
+      - 6ff422ae4c06917a-FRA
       X-Runtime:
-      - '0.062649'
+      - '0.073449'
+      X-Envoy-Upstream-Service-Time:
+      - '75'
+      X-Envoy-Decorator-Operation:
+      - classic.classic.svc.cluster.local:80/*
       X-Zendesk-Zorg:
       - 'yes'
       X-Content-Type-Options:
@@ -64,23 +75,20 @@ http_interactions:
       Expect-Ct:
       - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
       Report-To:
-      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=zoYPc%2BRXmsDxXz60KgGj6HbcHwUVl2DMdXJDLG7Puadk819LSODyeTWQVmq%2BWNr6dPfLjl%2BbjgadmjuMkEMh3%2FagyesmlXY6%2FmIE7h7ufqhaf3WDEHy54jYUlnSVDOZsFcaoMYbL0w%3D%3D"}],"group":"cf-nel","max_age":604800}'
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=ChTPako7BNzlx1t4o5S%2Bzub5muS2kwPRrLS6ZDtwmWXaiXVGCtMTte0%2Fwho9CJBhh%2BHYbGXoRacit7qKxf2bT%2BfhSpyqhSJikx0My71X6QecFJrEep1tXZ5yvXmaxwfWCxhg3k%2FLqg%3D%3D"}],"group":"cf-nel","max_age":604800}'
       Nel:
-      - '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
-      Set-Cookie:
-      - __cfruid=da46982ffcca5ea958f4e4ca167a32ad2a9f96b7-1629465932; path=/; domain=.<IMPORT_ZENDESK_ENDPOINT_HOSTNAME>;
-        HttpOnly; Secure; SameSite=None
+      - '{"success_fraction":0.01,"report_to":"cf-nel","max_age":604800}'
       Server:
       - cloudflare
       Cf-Ray:
-      - 681bf2ba78d91456-FRA
+      - 6ff422ae4c06917a-FRA
     body:
       encoding: ASCII-8BIT
-      string: '{"user":{"id":null,"url":null,"name":"Nicht registrierter Benutzer","email":"invalid@example.com","created_at":null,"updated_at":null,"time_zone":"Berlin","iana_time_zone":"Europe/Berlin","phone":null,"shared_phone_number":null,"photo":null,"locale_id":8,"locale":"de","organization_id":null,"role":"end-user","verified":false,"authenticity_token":"K4wyhBU1oaZc51Iy3A0wE4iBxJxbFdcdiGbGTfCiML1zJpFFy6QhSMHp+lzp2PvYoyUtVqunySi7wRpOtrywzg=="}}'
-  recorded_at: Fri, 20 Aug 2021 13:25:31 GMT
+      string: '{"user":{"id":null,"url":null,"name":"Nicht registrierter Benutzer","email":"invalid@example.com","created_at":null,"updated_at":null,"time_zone":"Berlin","iana_time_zone":"Europe/Berlin","phone":null,"shared_phone_number":null,"photo":null,"locale_id":8,"locale":"de","organization_id":null,"role":"end-user","verified":false,"authenticity_token":"YxLq8C5kqK9wlxcPpn7sMg7vz/cebWCx2ad6WSAQSJzfN5/foCWTT1g8wAqSBag9ZvnwXpddicF3vsXOJSRLBA=="}}'
+  recorded_at: Thu, 21 Apr 2022 06:41:42 GMT
 - request:
     method: get
-    uri: "<IMPORT_ZENDESK_ENDPOINT>/users/me"
+    uri: https://<IMPORT_ZENDESK_ENDPOINT_HOSTNAME>/api/v2/users/me
     body:
       encoding: US-ASCII
       string: ''
@@ -90,7 +98,7 @@ http_interactions:
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       User-Agent:
-      - ZendeskAPI Ruby 1.32.0
+      - ZendeskAPI Ruby 1.35.0
       Authorization:
       - Basic <IMPORT_ZENDESK_ENDPOINT_BASIC_AUTH>
   response:
@@ -99,17 +107,19 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 20 Aug 2021 13:25:33 GMT
+      - Thu, 21 Apr 2022 06:41:43 GMT
       Content-Type:
       - application/json; charset=UTF-8
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Zendesk-Api-Version:
+      - '2022-01-01'
       X-Zendesk-Api-Version:
       - v2
       X-Zendesk-Application-Version:
-      - v9449
+      - v12002
       X-Frame-Options:
       - SAMEORIGIN
       Access-Control-Expose-Headers:
@@ -123,16 +133,25 @@ http_interactions:
       Strict-Transport-Security:
       - max-age=31536000;
       Etag:
-      - W/"f14a46f2e02be3ac54793639fc4a2bab"
+      - W/"0e26f80afd79359c95ef7eb387576889"
       Cache-Control:
       - max-age=0, private, must-revalidate
       X-Zendesk-Origin-Server:
-      - classic-app-server-5d8ffc66d-tlbz4
+      - classic-app-server-5fd77bc484-hpl7r
+      Set-Cookie:
+      - __cfruid=b43edaabc5d3557e6f0ccf3dce44c9295421c11c-1650523303; path=/; domain=.<IMPORT_ZENDESK_ENDPOINT_HOSTNAME>;
+        HttpOnly; Secure; SameSite=None
+      - _zendesk_cookie=BAhJIhl7ImRldmljZV90b2tlbnMiOnt9fQY6BkVU--459ed01949a36415c1716b5711271c3d08918307;
+        path=/; expires=Fri, 21 Apr 2023 05:34:37 GMT; secure; HttpOnly; SameSite=None
       X-Request-Id:
-      - 681bf2c5282d42f7-FRA
-      - 681bf2c5282d42f7-FRA
+      - 6ff422b66ad59110-FRA
+      - 6ff422b66ad59110-FRA
       X-Runtime:
-      - '0.211401'
+      - '0.106433'
+      X-Envoy-Upstream-Service-Time:
+      - '108'
+      X-Envoy-Decorator-Operation:
+      - classic.classic.svc.cluster.local:80/*
       X-Zendesk-Zorg:
       - 'yes'
       Content-Encoding:
@@ -144,19 +163,16 @@ http_interactions:
       Expect-Ct:
       - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
       Report-To:
-      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=lptF1lImDKX46TfzAwSGsGGPe8vCgQJGykBIRA%2B%2B%2F50MYmNlyuNV9bqDghfiMLyqZFABSRwpO57DlW8WMoXvCCLngFo7MyPCmxwsWF9DGqdu0uyoB1hRY9CgaDRzPz1yfiwKO8kfkg%3D%3D"}],"group":"cf-nel","max_age":604800}'
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=RYkOq%2FySJmCFdUJL1K4RhSrL822ORqz7mknBGUgO%2FcISZ9Bea84DtyMcNDdpjKrOBsno2TgicFUnVCzCujrzvIsNK18pn1EviQQcvGtA1FW7YC%2F5sQk7luStiJ%2BK1KUsbswEpR2sBg%3D%3D"}],"group":"cf-nel","max_age":604800}'
       Nel:
-      - '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
-      Set-Cookie:
-      - __cfruid=194b2ee3473a1a1f8f7c192193f8c8d8240c03b8-1629465933; path=/; domain=.<IMPORT_ZENDESK_ENDPOINT_HOSTNAME>;
-        HttpOnly; Secure; SameSite=None
+      - '{"success_fraction":0.01,"report_to":"cf-nel","max_age":604800}'
       Server:
       - cloudflare
       Cf-Ray:
-      - 681bf2c5282d42f7-FRA
+      - 6ff422b66ad59110-FRA
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        H4sIAAAAAAAAA21T7WrbMBR9laHfSfxRu0kMhW39WDvYYDSlJWMIxb5x1MiSK125TUrfZm+yF9uVk7QdDPIjlo7OPefo6Jl5B5YVz0xWrEiSPB4fZeOjZMC8VaxgK8TWFVG01V5vVqDa0RZ0BW49Kk0TiVZGXRoFChe9HR7dO6PZgGnRAHF8NosP143EFS1BI2TgXZjFyIW1jz1zYKPd0oJAqLhAgqRxkg/j8TCZztK0yBL6zQnj2+o9Jk2G8WSYxrPkqEjGRToJGJQN8K3R/XSwSgY1UmjB3++ce2taiF4B7Wp3Io6TJEvSjM64lbCkp9/h2jeLkBVaDwNGa2hYob1SA6ZMKRTwPsPDF80GPby5Jhpja6HlVqA0egfKs3Ge58cEtkYFmaJqepUdWLmUQES7McLjCjTKUuKGo1mDJvCpz9cSl8mndn7V2ondCHfTfYmO8wf3/XEVx7fusrs7W2utHlT3sMavAJN6fG9mJoovmqu7bC5vz8q5TKeX02/mdHZxfnd+++PkJFzQE4LVQvUyd+ZQ1I4VP1nKfg2YUFLQFyOoKFF2pH0ndBcVK5ZCOYpnn5yoSfzrohIOuTK11Icr/v/1PRq+JHZjebDPQYuFCpEcuGWtBXobciMdFSCVai9KG4T935Asx01LsJ2R0js0De/X3+w1pgIraNjBCYW9BuQWHFpJHqnLewKj1Ya3VnbUQE6VbcgcDdvLOhwIBf7HtvOuDa/mzUEFS+EV8toa3/Za0izPs2l4eBZaY5GXrjsICu+LUylURcOe2d5GRe2tzGPoQ0opKAkLKnrtUIaSskuvqz+/2cvLy1+xR8KQ5AMAAA==
-  recorded_at: Fri, 20 Aug 2021 13:25:33 GMT
-recorded_with: VCR 6.0.0
+        H4sIAAAAAAAAA21T227TQBD9FbSvJPG9qS1VAipKqYQq0rRSQWi1tif2Nutds5ekTtW/4U/4MWadpBQJyw/2zNmZM2fOPhFnQJPiifCaFFGUhfMknSfRhDgtSEFaa3tTBMFOOjm0IPrZDmQNZj2rVBewngebOPAlTPD38OzBKEkmRLIOsMYHVb656bhtMQQd475uqcqZ8bF3Y2VfDbOVBmahpswiJA6jbBrOp1G+jOMijfD9hhjX168xcTwN02kcLcOTIkmL5NRjLO+A7pQcu4MW3LPhTDL6OvPRadVD8ALo2/2JMIyiNIpTPGNappHPmKHSdaXXasWEgQnBoFWkkE6ICRGqYgLoKOLxD5uDnN7eYB2lGyb5jlmu5B6UpfMsy04QrJXwPFndjTQ3oPmKAxay2mEb5mwL0vKK24FatQaJ4OTzcnmRJlfN9SLY6U/rt0PDt6eL1NkguBu6225RDvK+clv+OJx3V/laZHf3oskXD6dh9vP6Slx/2eX3t1t5Gbyf64ch7M7bi69nZ35Djxa0ZGKkuR/OssaQ4juJyQ/kIzjDP4JQVlm+Qe57onutXuQ5SMcaJP8SFMxYKlTD5XHH/9/fVtEVVlea+vEpSFYKL8lBesMbyazTXjfkUYNFVx1ISWXh8OmVpXboEZaiuZyxqqNjcNxTHvonicMsx3SnatAMWx7nQcnXYKkGYzXHSdHSBz2UFAPtNd+gESk6t8MRseWB3PGA9/E/wxtnen95/s5Rw4o5YWmjletHUnGaZWnu75+GXmlLK7M5EvLXjKI1RI3Nno7z1GjiWm29K2LUQnAo0e+Nsdx7lVw6Wf/+RZ6fn/8AC1q1LOsDAAA=
+  recorded_at: Thu, 21 Apr 2022 06:41:43 GMT
+recorded_with: VCR 6.1.0

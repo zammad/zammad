@@ -95,20 +95,70 @@ RSpec.shared_examples 'Object custom field values', db_strategy: :reset do |obje
         {
           'field' => {
             'id'                        => 4,
-            'fielduuid'                 => '9586e37c-b561-4119-8673-726787ceb79d',
-            'title'                     => 'Checkbox',
+            'fielduuid'                 => 'ff7093f3-ad44-4519-80b0-f9b1a9988ac0',
+            'title'                     => 'Multiselection',
             'type'                      => 'CHECKBOX',
-            'key'                       => 'custom_checkbox',
+            'key'                       => 'custom_multiselection',
             'is_visible_to_customers'   => false,
             'is_customer_editable'      => false,
             'is_required_for_customers' => false,
             'regular_expression'        => nil,
-            'sort_order'                => 4,
+            'sort_order'                => 2,
             'is_enabled'                => true,
-            'created_at'                => '2021-08-16T19:35:32+00:00',
-            'updated_at'                => '2021-08-16T20:00:47+00:00',
+            'options'                   => [
+              {
+                'id'         => 1,
+                'fielduuid'  => 'ff7093f3-ad44-4519-80b0-f9b1a9988ac0',
+                'values'     => [
+                  {
+                    'id'          => 26,
+                    'locale'      => 'en-us',
+                    'translation' => 'one',
+                    'created_at'  => '2021-08-16T19:35:02+00:00',
+                    'updated_at'  => '2021-08-16T19:35:02+00:00',
+                  }
+                ],
+                'sort_order' => 0,
+                'created_at' => '2021-08-16T19:35:02+00:00',
+                'updated_at' => '2021-08-16T19:35:02+00:00',
+              },
+              {
+                'id'         => 2,
+                'fielduuid'  => 'ff7093f3-ad44-4519-80b0-f9b1a9988ac0',
+                'values'     => [
+                  {
+                    'id'          => 27,
+                    'locale'      => 'en-us',
+                    'translation' => 'two',
+                    'created_at'  => '2021-08-16T19:35:02+00:00',
+                    'updated_at'  => '2021-08-16T19:35:02+00:00',
+                  }
+                ],
+                'sort_order' => 0,
+                'created_at' => '2021-08-16T19:35:02+00:00',
+                'updated_at' => '2021-08-16T19:35:02+00:00',
+              },
+              {
+                'id'         => 3,
+                'fielduuid'  => 'ff7093f3-ad44-4519-80b0-f9b1a9988ac0',
+                'values'     => [
+                  {
+                    'id'          => 25,
+                    'locale'      => 'en-us',
+                    'translation' => 'three',
+                    'created_at'  => '2021-08-16T19:35:01+00:00',
+                    'updated_at'  => '2021-08-16T19:35:01+00:00',
+                  }
+                ],
+                'sort_order' => 0,
+                'created_at' => '2021-08-16T19:35:01+00:00',
+                'updated_at' => '2021-08-16T19:35:01+00:00',
+              },
+            ],
+            'created_at'                => '2021-08-16T19:35:01+00:00',
+            'updated_at'                => '2021-08-17T14:32:50+00:00',
           },
-          'value' => '5,6',
+          'value' => '2,3',
         },
         {
           'field' => {
@@ -405,6 +455,7 @@ RSpec.shared_examples 'Object custom field values', db_strategy: :reset do |obje
       object_name => {
         'custom_textfield'       => 'custom_textfield',
         'custom_singleselection' => 'custom_singleselection',
+        'custom_multiselection'  => 'custom_multiselection',
         'custom_boolean'         => 'custom_boolean',
         'custom_radio'           => 'custom_radio',
         'custom_text_regex'      => 'custom_text_regex',
@@ -427,6 +478,7 @@ RSpec.shared_examples 'Object custom field values', db_strategy: :reset do |obje
     {
       custom_textfield:       'Testing',
       custom_singleselection: 'two',
+      custom_multiselection:  %w[two three],
       custom_boolean:         true,
       custom_radio:           'third',
       custom_text_regex:      '999',
@@ -441,6 +493,7 @@ RSpec.shared_examples 'Object custom field values', db_strategy: :reset do |obje
   before do
     create :object_manager_attribute_text, object_name: object_name, name: 'custom_textfield'
     create :object_manager_attribute_select, object_name: object_name, name: 'custom_singleselection'
+    create :object_manager_attribute_multiselect, object_name: object_name, name: 'custom_multiselection'
     create :object_manager_attribute_boolean, object_name: object_name, name: 'custom_boolean'
     create :object_manager_attribute_select, object_name: object_name, name: 'custom_radio'
     create :object_manager_attribute_text, object_name: object_name, name: 'custom_text_regex'

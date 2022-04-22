@@ -65,18 +65,14 @@ RSpec.describe ::Sequencer::Sequence::Import::Zendesk::Ticket, sequencer: :seque
           ],
           'custom_fields'         => [
             { 'id'    => 1001,
-              'value' => '1.6' },
+              'value' => 'key_1' },
             { 'id'    => 1002,
               'value' => true },
+            { 'id'    => 1003,
+              'value' => %w[key_1 key_2] },
           ],
           'satisfaction_rating'   => nil,
           'sharing_agreement_ids' => [],
-          'fields'                => [
-            { 'id'    => 1001,
-              'value' => '1.6' },
-            { 'id'    => 1002,
-              'value' => true },
-          ],
           'followup_ids'          => [],
           'brand_id'              => 670_701,
           'allow_channelback'     => false,
@@ -107,6 +103,7 @@ RSpec.describe ::Sequencer::Sequence::Import::Zendesk::Ticket, sequencer: :seque
       {
         1001 => 'custom_dropdown',
         1002 => 'custom_checkbox',
+        1003 => 'custom_multiselect',
       }
     end
 
@@ -134,14 +131,16 @@ RSpec.describe ::Sequencer::Sequence::Import::Zendesk::Ticket, sequencer: :seque
         priority_id:              3,
         owner_id:                 owner.id,
         customer_id:              customer.id,
-        custom_dropdown:          '1.6',
+        custom_dropdown:          'key_1',
         custom_checkbox:          true,
+        custom_multiselect:       %w[key_1 key_2],
       }
     end
 
     before do
       create :object_manager_attribute_select, object_name: 'Ticket', name: 'custom_dropdown'
       create :object_manager_attribute_boolean, object_name: 'Ticket', name: 'custom_checkbox'
+      create :object_manager_attribute_multiselect, object_name: 'Ticket', name: 'custom_multiselect'
       ObjectManager::Attribute.migration_execute
 
       # We only want to test here the Ticket API, so disable other modules in the sequence

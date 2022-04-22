@@ -23,7 +23,7 @@ class Sequencer
             end
 
             def backend_class
-              "Import::Zendesk::ObjectAttribute::#{resource.type.capitalize}".constantize
+              "Sequencer::Unit::Import::Zendesk::ObjectAttribute::AttributeType::#{resource.type.capitalize}".constantize
             end
           end
         end

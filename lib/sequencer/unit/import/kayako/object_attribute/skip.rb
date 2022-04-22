@@ -19,7 +19,7 @@ class Sequencer
             private
 
             def skip_attribute_types
-              @skip_attribute_types ||= %w[FILE CHECKBOX]
+              @skip_attribute_types ||= %w[FILE]
             end
 
             def allowed_system_attributes

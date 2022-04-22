@@ -8,7 +8,7 @@ class Sequencer
           class Case < Sequencer::Unit::Import::Kayako::Request::Generic
             def params
               super.merge(
-                include: 'user,case_priority,case_status,channel,tag,case_type',
+                include: 'user,case_priority,case_status,channel,tag,case_type,case_field,field_option,locale_field',
                 fields:  '+tags',
               )
             end
