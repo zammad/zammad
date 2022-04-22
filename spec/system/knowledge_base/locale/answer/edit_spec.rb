@@ -108,6 +108,16 @@ RSpec.describe 'Knowledge Base Locale Answer Edit', type: :system do
       end
     end
 
+    it 'triggers autocomplete after one character' do
+      within :active_content do
+        click '.js-newTagLabel'
+
+        elem = find('.js-newTagInput')
+        elem.fill_in with: 'e'
+        expect(page).to have_css('ul.ui-autocomplete > li.ui-menu-item', minimum: 1)
+      end
+    end
+
     it 'shows an existing tag' do
       within :active_content do
         expect(page).to have_css('a.js-tag', text: published_answer_tag_name)
