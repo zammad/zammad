@@ -254,6 +254,10 @@ Style/RedundantBegin:
   Description: 'This cop checks for redundant `begin` blocks.'
   Enabled: false
 
+Style/FetchEnvVar:
+  Description: 'This cop suggests `ENV.fetch` for the replacement of `ENV[]`.'
+  Enabled: false
+
 Rails/EnvironmentVariableAccess:
   Description: 'This cop looks for direct access to environment variables through the ENV variable within the application code.'
   Enabled: true
