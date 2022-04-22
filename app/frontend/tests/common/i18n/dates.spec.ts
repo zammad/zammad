@@ -3,9 +3,9 @@
 import {
   absoluteDateTime as absDT,
   relativeDateTime as relDT,
-} from '@common/utils/i18n/dates'
+} from '@common/i18n/dates'
 import timezoneMock from 'timezone-mock'
-import { Translator } from '@common/utils/i18n/translator'
+import { Translator } from '@common/i18n/translator'
 
 describe('Dates', () => {
   const dateUS = 'mm/dd/yyyy'

@@ -5,7 +5,7 @@ import type {
   SingleValueStore,
   TranslationsStoreValue,
 } from '@common/types/store'
-import { i18n } from '@common/utils/i18n'
+import { i18n } from '@common/i18n'
 import log from '@common/utils/log'
 import { useTranslationsQuery } from '@common/graphql/api'
 import { QueryHandler } from '@common/server/apollo/handler'

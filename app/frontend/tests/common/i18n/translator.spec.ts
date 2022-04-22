@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { Translator } from '@common/utils/i18n/translator'
+import { Translator } from '@common/i18n/translator'
 
 describe('Translator', () => {
   const t = new Translator()

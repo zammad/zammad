@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { i18n } from '@common/utils/i18n'
+import { i18n } from '@common/i18n'
 import CommonHelloWorld from '@common/components/common/CommonHelloWorld.vue'
 import { nextTick } from 'vue'
 import { renderComponent } from '@tests/support/components'

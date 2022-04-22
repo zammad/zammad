@@ -3,7 +3,7 @@
 import '@common/initializer/translatableMarker'
 import initializeGlobalComponents from '@common/initializer/globalComponents'
 import '@common/styles/main.css'
-import { i18n } from '@common/utils/i18n'
+import { i18n } from '@common/i18n'
 import { app } from '@storybook/vue3'
 import 'virtual:svg-icons-register' // eslint-disable-line import/no-unresolved
 import initializeStore from '@common/stores'

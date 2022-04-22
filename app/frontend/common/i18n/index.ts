@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import * as dates from '@common/utils/i18n/dates'
-import { TranslationMap, Translator } from '@common/utils/i18n/translator'
+import * as dates from '@common/i18n/dates'
+import { TranslationMap, Translator } from '@common/i18n/translator'
 import { reactive, ref } from 'vue'
 
 const reactiveNow = ref(new Date())

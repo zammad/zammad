@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import useTranslationsStore from '@common/stores/translations'
-import { i18n } from '@common/utils/i18n'
+import { i18n } from '@common/i18n'
 import { createTestingPinia } from '@pinia/testing'
 import { createMockClient } from 'mock-apollo-client'
 import { provideApolloClient } from '@vue/apollo-composable'

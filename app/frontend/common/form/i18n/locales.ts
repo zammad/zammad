@@ -2,7 +2,7 @@
 
 import type { FormKitValidationMessages } from '@formkit/validation'
 import { FormKitLocale } from '@formkit/i18n'
-import { i18n } from '@common/utils/i18n'
+import { i18n } from '@common/i18n'
 import { commaSeparatedList, order } from '@common/utils/formatter'
 
 interface FormKitLocaleExtended extends FormKitLocale {

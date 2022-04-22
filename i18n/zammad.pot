@@ -119,7 +119,7 @@ msgstr ""
 msgid "%s credentials"
 msgstr ""
 
-#: app/frontend/common/utils/i18n/dates.ts
+#: app/frontend/common/i18n/dates.ts
 msgid "%s days ago"
 msgstr ""
 
@@ -137,7 +137,7 @@ msgstr ""
 msgid "%s groups to %s roles assignments"
 msgstr ""
 
-#: app/frontend/common/utils/i18n/dates.ts
+#: app/frontend/common/i18n/dates.ts
 msgid "%s hours ago"
 msgstr ""
 
@@ -148,11 +148,11 @@ msgstr ""
 msgid "%s is inactive, please select an active one."
 msgstr ""
 
-#: app/frontend/common/utils/i18n/dates.ts
+#: app/frontend/common/i18n/dates.ts
 msgid "%s minutes ago"
 msgstr ""
 
-#: app/frontend/common/utils/i18n/dates.ts
+#: app/frontend/common/i18n/dates.ts
 msgid "%s months ago"
 msgstr ""
 
@@ -248,11 +248,11 @@ msgstr ""
 msgid "%s user to %s user"
 msgstr ""
 
-#: app/frontend/common/utils/i18n/dates.ts
+#: app/frontend/common/i18n/dates.ts
 msgid "%s weeks ago"
 msgstr ""
 
-#: app/frontend/common/utils/i18n/dates.ts
+#: app/frontend/common/i18n/dates.ts
 msgid "%s years ago"
 msgstr ""
 
@@ -276,7 +276,7 @@ msgstr ""
 msgid "1 day"
 msgstr ""
 
-#: app/frontend/common/utils/i18n/dates.ts
+#: app/frontend/common/i18n/dates.ts
 msgid "1 day ago"
 msgstr ""
 
@@ -284,7 +284,7 @@ msgstr ""
 msgid "1 hour"
 msgstr ""
 
-#: app/frontend/common/utils/i18n/dates.ts
+#: app/frontend/common/i18n/dates.ts
 msgid "1 hour ago"
 msgstr ""
 
@@ -292,11 +292,11 @@ msgstr ""
 msgid "1 low"
 msgstr ""
 
-#: app/frontend/common/utils/i18n/dates.ts
+#: app/frontend/common/i18n/dates.ts
 msgid "1 minute ago"
 msgstr ""
 
-#: app/frontend/common/utils/i18n/dates.ts
+#: app/frontend/common/i18n/dates.ts
 msgid "1 month ago"
 msgstr ""
 
@@ -304,11 +304,11 @@ msgstr ""
 msgid "1 week"
 msgstr ""
 
-#: app/frontend/common/utils/i18n/dates.ts
+#: app/frontend/common/i18n/dates.ts
 msgid "1 week ago"
 msgstr ""
 
-#: app/frontend/common/utils/i18n/dates.ts
+#: app/frontend/common/i18n/dates.ts
 msgid "1 year ago"
 msgstr ""
 
@@ -11318,51 +11318,51 @@ msgstr ""
 msgid "in %s"
 msgstr ""
 
-#: app/frontend/common/utils/i18n/dates.ts
+#: app/frontend/common/i18n/dates.ts
 msgid "in %s days"
 msgstr ""
 
-#: app/frontend/common/utils/i18n/dates.ts
+#: app/frontend/common/i18n/dates.ts
 msgid "in %s hours"
 msgstr ""
 
-#: app/frontend/common/utils/i18n/dates.ts
+#: app/frontend/common/i18n/dates.ts
 msgid "in %s minutes"
 msgstr ""
 
-#: app/frontend/common/utils/i18n/dates.ts
+#: app/frontend/common/i18n/dates.ts
 msgid "in %s months"
 msgstr ""
 
-#: app/frontend/common/utils/i18n/dates.ts
+#: app/frontend/common/i18n/dates.ts
 msgid "in %s weeks"
 msgstr ""
 
-#: app/frontend/common/utils/i18n/dates.ts
+#: app/frontend/common/i18n/dates.ts
 msgid "in %s years"
 msgstr ""
 
-#: app/frontend/common/utils/i18n/dates.ts
+#: app/frontend/common/i18n/dates.ts
 msgid "in 1 day"
 msgstr ""
 
-#: app/frontend/common/utils/i18n/dates.ts
+#: app/frontend/common/i18n/dates.ts
 msgid "in 1 hour"
 msgstr ""
 
-#: app/frontend/common/utils/i18n/dates.ts
+#: app/frontend/common/i18n/dates.ts
 msgid "in 1 minute"
 msgstr ""
 
-#: app/frontend/common/utils/i18n/dates.ts
+#: app/frontend/common/i18n/dates.ts
 msgid "in 1 month"
 msgstr ""
 
-#: app/frontend/common/utils/i18n/dates.ts
+#: app/frontend/common/i18n/dates.ts
 msgid "in 1 week"
 msgstr ""
 
-#: app/frontend/common/utils/i18n/dates.ts
+#: app/frontend/common/i18n/dates.ts
 msgid "in 1 year"
 msgstr ""
 

@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import localeForBrowserLanguage from '@common/utils/i18n/localeForBrowserLanguage'
+import localeForBrowserLanguage from '@common/i18n/localeForBrowserLanguage'
 import { TextDirection } from '@common/graphql/types'
 
 describe('localeFinder', () => {

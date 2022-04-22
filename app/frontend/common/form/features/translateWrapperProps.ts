@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { i18n } from '@common/utils/i18n'
+import { i18n } from '@common/i18n'
 import type { FormKitNode } from '@formkit/core'
 import { isEmpty } from 'lodash-es'
 import { computed, ComputedRef } from 'vue'
