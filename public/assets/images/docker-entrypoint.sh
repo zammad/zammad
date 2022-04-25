@@ -4,4 +4,4 @@ cd "${GULP_DIR}" || exit
 
 yarn
 
-gulp svgstore
+npx gulp svgstore

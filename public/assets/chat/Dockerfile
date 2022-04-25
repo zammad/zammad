@@ -5,7 +5,6 @@ ENV GULP_DIR "/tmp/gulp"
 RUN apk update && apk add bash
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 CMD bash # If you want to override CMD
-RUN npm install -g gulp
 
 COPY docker-entrypoint.sh /
 

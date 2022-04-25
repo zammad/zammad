@@ -36,6 +36,7 @@
   },
   "ignoreFiles": [
     "public/assets/*.css",
+    "public/assets/chat/chat.css",
     "public/assets/doorkeeper/**",
     "**/reset*.css",
     "**/bootstrap*.css",

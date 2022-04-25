@@ -4,4 +4,4 @@ cd "${GULP_DIR}" || exit
 
 yarn
 
-gulp js css no-jquery
+npx gulp js css no-jquery
