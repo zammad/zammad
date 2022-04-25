@@ -111,12 +111,14 @@ RSpec.describe 'Chat Handling', type: :system do
       expect(page).to have_no_css('.active .chat-window .chat-status.is-modified')
 
       # Keep focus outside of chat window to check .chat-status.is-modified later.
-      click '#global-search'
+      click_on 'Dashboard'
 
       using_session :customer do
         check_content('.zammad-chat .zammad-chat-agent-status', 'Online')
         send_customer_message('my name is customer')
       end
+
+      click 'a[href="#customer_chat"]'
 
       expect(page).to have_css('.active .chat-window .chat-status.is-modified')
       check_content('.active .chat-window', 'my name is customer')
@@ -411,7 +413,8 @@ RSpec.describe 'Chat Handling', type: :system do
       it 'use image preview' do
         visit "#customer_chat/session/#{chat_session.id}"
 
-        click '.chat-body .chat-message img'
+        find('.chat-body .chat-message img') { |elem| ActiveModel::Type::Boolean.new.cast elem[:complete] }
+          .click
 
         in_modal do
           expect(page).to have_css('.js-submit', text: 'Download')
