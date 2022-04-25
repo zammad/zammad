@@ -102,7 +102,7 @@ class Modal extends App.ControllerModal
   buttonSubmit: false
   backdrop: false
   keyboard: false
-  head: __('Browser too old!')
+  head: __('Outdated Browser')
 
   content: ->
     "Your Browser is not supported (#{@data.browser.name} #{@data.browser.major} on #{@data.os.name}). Please use a newer one (e. g. #{@data.browser.name} #{@version} or higher)."

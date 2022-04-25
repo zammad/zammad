@@ -39,7 +39,7 @@ RSpec.describe 'Import Zendesk', type: :system, set_up: false, authenticated_as:
       email_field.fill_in with: ENV['IMPORT_ZENDESK_ENDPOINT_USERNAME']
       token_field.fill_in with: '1nv4l1dT0K3N'
 
-      expect(page).to have_css('.zendesk-api-token-error', text: 'Invalid credentials!')
+      expect(page).to have_css('.zendesk-api-token-error', text: 'The provided credentials are invalid.')
     end
 
     it 'valid credentials' do
@@ -49,11 +49,11 @@ RSpec.describe 'Import Zendesk', type: :system, set_up: false, authenticated_as:
       token_field.fill_in with: '1nv4l1dT0K3N'
 
       # wait for error to appear to validate it's hidden successfully
-      expect(page).to have_css('.zendesk-api-token-error', text: 'Invalid credentials!')
+      expect(page).to have_css('.zendesk-api-token-error', text: 'The provided credentials are invalid.')
 
       token_field.fill_in with: ENV['IMPORT_ZENDESK_ENDPOINT_KEY']
 
-      expect(page).to have_no_css('.zendesk-api-token-error', text: 'Invalid credentials!')
+      expect(page).to have_no_css('.zendesk-api-token-error', text: 'The provided credentials are invalid.')
     end
 
     it 'shows start button' do

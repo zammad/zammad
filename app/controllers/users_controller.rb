@@ -364,7 +364,7 @@ curl http://localhost/api/v1/users/email_verify -v -u #{login}:#{password} -H "C
     raise Exceptions::UnprocessableEntity, __('No token!') if !params[:token]
 
     user = User.signup_verify_via_token(params[:token], current_user)
-    raise Exceptions::UnprocessableEntity, __('Invalid token!') if !user
+    raise Exceptions::UnprocessableEntity, __('The provided token is invalid.') if !user
 
     current_user_set(user)
 

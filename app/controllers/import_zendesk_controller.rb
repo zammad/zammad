@@ -9,7 +9,7 @@ class ImportZendeskController < ApplicationController
     if params[:url].blank? || params[:url] !~ %r{^(http|https)://.+?$}
       render json: {
         result:  'invalid',
-        message: __('Invalid URL!'),
+        message: __('The provided URL is invalid.'),
       }
       return
     end
@@ -83,7 +83,7 @@ class ImportZendeskController < ApplicationController
 
       render json: {
         result:        'invalid',
-        message_human: __('Invalid credentials!'),
+        message_human: __('The provided credentials are invalid.'),
       }
       return
     end

@@ -128,7 +128,7 @@ module ApplicationController::Authenticates
       logger.debug { "OAuth2 token auth check '#{token}'" }
       access_token = Doorkeeper::AccessToken.by_token(token)
 
-      raise Exceptions::NotAuthorized, __('Invalid token!') if !access_token
+      raise Exceptions::NotAuthorized, __('The provided token is invalid.') if !access_token
 
       # check expire
       if access_token.expires_in && (access_token.created_at + access_token.expires_in) < Time.zone.now

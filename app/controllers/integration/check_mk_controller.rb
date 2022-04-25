@@ -144,7 +144,7 @@ UserAgent: #{request.env['HTTP_USER_AGENT'] || '-'}
     end
 
     if Setting.get('check_mk_token') != params[:token]
-      raise Exceptions::UnprocessableEntity, __('Invalid token!')
+      raise Exceptions::UnprocessableEntity, __('The provided token is invalid.')
     end
 
     true

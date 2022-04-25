@@ -9,7 +9,7 @@ class ImportOtrsController < ApplicationController
     if !params[:url] || params[:url] !~ %r{^(http|https)://.+?$}
       render json: {
         result:  'invalid',
-        message: __('Invalid URL!'),
+        message: __('The provided URL is invalid.'),
       }
       return
     end

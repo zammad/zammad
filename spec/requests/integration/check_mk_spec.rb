@@ -28,7 +28,7 @@ RSpec.describe 'Integration Check MK', type: :request do
       expect(response).to have_http_status(:unprocessable_entity)
 
       expect(json_response).to be_a_kind_of(Hash)
-      expect(json_response['error']).to eq('Invalid token!')
+      expect(json_response['error']).to eq('The provided token is invalid.')
     end
 
     context 'service check' do

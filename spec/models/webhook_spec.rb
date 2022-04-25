@@ -20,7 +20,7 @@ RSpec.describe Webhook, type: :model do
       it { is_expected.not_to be_valid }
 
       it 'has an error' do
-        expect(endpoint_errors).to include 'Invalid endpoint (no http/https)!'
+        expect(endpoint_errors).to include 'The provided endpoint is invalid, no http or https protocol was specified.'
       end
     end
 
@@ -30,7 +30,7 @@ RSpec.describe Webhook, type: :model do
       it { is_expected.not_to be_valid }
 
       it 'has an error' do
-        expect(endpoint_errors).to include 'Invalid endpoint!'
+        expect(endpoint_errors).to include 'The provided endpoint is invalid.'
       end
     end
 
@@ -40,7 +40,7 @@ RSpec.describe Webhook, type: :model do
       it { is_expected.not_to be_valid }
 
       it 'has an error' do
-        expect(endpoint_errors).to include 'Invalid endpoint (no hostname)!'
+        expect(endpoint_errors).to include 'The provided endpoint is invalid, no hostname was specified.'
       end
     end
 
@@ -50,7 +50,7 @@ RSpec.describe Webhook, type: :model do
       it { is_expected.not_to be_valid }
 
       it 'has an error' do
-        expect(endpoint_errors).to include 'Invalid endpoint!'
+        expect(endpoint_errors).to include 'The provided endpoint is invalid.'
       end
     end
 
