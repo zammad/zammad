@@ -14,6 +14,7 @@
       "@mobile/*": ["app/frontend/apps/mobile/*"],
       "@common/*": ["app/frontend/common/*"],
       "@tests/*": ["app/frontend/tests/*"],
+      "@stories/*": ["app/frontend/stories/*"],
       "@/*": ["app/frontend/*"],
       "*": ["node_modules/*", ".storybook/node_modules/*"],
       "react": [".storybook/config/types__react"]

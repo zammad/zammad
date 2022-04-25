@@ -135,6 +135,7 @@ module.exports = {
           ['@mobile', path.resolve(__dirname, './app/frontend/apps/mobile')],
           ['@common', path.resolve(__dirname, './app/frontend/common')],
           ['@tests', path.resolve(__dirname, './app/frontend/tests')],
+          ['@stories', path.resolve(__dirname, './app/frontend/stories')],
         ],
         extensions: ['.js', '.jsx', '.ts', '.tsx', '.vue'],
       },

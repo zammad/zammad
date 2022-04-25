@@ -34,3 +34,21 @@ export function order(
 ): [smaller: number | string, larger: number | string] {
   return Number(first) >= Number(second) ? [second, first] : [first, second]
 }
+
+/**
+ * Returns user's initials based on their first name, last name and email, if any present.
+ * @param firstname - user's first name
+ * @param lastname - user's last name
+ * @param email - user's email address
+ */
+export function getInitials(
+  firstname?: string,
+  lastname?: string,
+  email?: string,
+) {
+  if (firstname && lastname) {
+    return firstname[0] + lastname[0]
+  }
+
+  return (firstname || lastname || email)?.substring(0, 2).toUpperCase() || '??'
+}

@@ -16,6 +16,7 @@ const sizeMap = {
   small: 20,
   medium: 30,
   large: 40,
+  tiny: 15,
 } as const
 
 type Sizes = keyof typeof sizeMap
