@@ -207,6 +207,9 @@ class Index extends App.ControllerSubContent
               el:         form.find('.js-previewTableCustomer')
               ticket_ids: dataCustomer.ticket_ids
             )
+
+            return if !form.find('.js-previewTableOwner').length
+
             new App.TicketList(
               tableId:    'ticket-selector'
               el:         form.find('.js-previewTableOwner')

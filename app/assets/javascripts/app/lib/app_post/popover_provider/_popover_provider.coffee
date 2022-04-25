@@ -60,6 +60,10 @@ class App.PopoverProvider
     return if !@popovers
     @popovers.popover('destroy')
 
+  hide: ->
+    return if !@popovers
+    @popovers.popover('hide')
+
   buildTitleFor: (elem) ->
     'title'
 
@@ -76,4 +80,3 @@ class App.PopoverProvider
 
   displayTitleUsing: (object) ->
     throw 'please override'
-
