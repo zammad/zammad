@@ -81,37 +81,35 @@ RSpec.describe ExternalCredential::Microsoft365 do
 
         channel = described_class.link_account(request_token, authorization_payload)
 
-        expect(channel.options).to match(
-          a_hash_including(
-            'inbound'  => a_hash_including(
-              'options' => a_hash_including(
-                'auth_type' => 'XOAUTH2',
-                'host'      => 'outlook.office365.com',
-                'ssl'       => 'ssl',
-                'user'      => email_address,
-              )
-            ),
-            'outbound' => a_hash_including(
-              'options' => a_hash_including(
-                'authentication' => 'xoauth2',
-                'host'           => 'smtp.office365.com',
-                'port'           => 587,
-                'user'           => email_address,
-              )
-            ),
-            'auth'     => a_hash_including(
-              'access_token'  => access_token,
-              'expires_in'    => token_ttl,
-              'refresh_token' => refresh_token,
-              'scope'         => scope_stub,
-              'token_type'    => 'Bearer',
-              'id_token'      => id_token,
-              'created_at'    => Time.zone.now,
-              'type'          => 'XOAUTH2',
-              'client_id'     => client_id,
-              'client_secret' => client_secret,
-            ),
-          )
+        expect(channel.options).to include(
+          'inbound'  => include(
+            'options' => include(
+              'auth_type' => 'XOAUTH2',
+              'host'      => 'outlook.office365.com',
+              'ssl'       => 'ssl',
+              'user'      => email_address,
+            )
+          ),
+          'outbound' => include(
+            'options' => include(
+              'authentication' => 'xoauth2',
+              'host'           => 'smtp.office365.com',
+              'port'           => 587,
+              'user'           => email_address,
+            )
+          ),
+          'auth'     => include(
+            'access_token'  => access_token,
+            'expires_in'    => token_ttl,
+            'refresh_token' => refresh_token,
+            'scope'         => scope_stub,
+            'token_type'    => 'Bearer',
+            'id_token'      => id_token,
+            'created_at'    => Time.zone.now,
+            'type'          => 'XOAUTH2',
+            'client_id'     => client_id,
+            'client_secret' => client_secret,
+          ),
         )
       end
     end
@@ -231,7 +229,7 @@ RSpec.describe ExternalCredential::Microsoft365 do
         it 'refreshes token' do
           expect do
             channel.refresh_xoauth2!
-          end.to change { channel.options['auth'] }.to a_hash_including(
+          end.to change { channel.options['auth'] }.to include(
             'created_at'   => Time.zone.now,
             'access_token' => refreshed_access_token,
           )

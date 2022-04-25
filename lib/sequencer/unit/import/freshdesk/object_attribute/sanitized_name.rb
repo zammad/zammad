@@ -15,7 +15,6 @@ class Sequencer
             private
 
             def unsanitized_name
-              # active_customer
               resource['name']
             end
           end

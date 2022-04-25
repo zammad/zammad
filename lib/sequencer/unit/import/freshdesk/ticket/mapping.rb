@@ -40,6 +40,7 @@ class Sequencer
                   state_id:    state_map[resource['status']],
                   owner_id:    owner_id,
                   customer_id: customer_id,
+                  type:        resource['type'],
                   created_at:  resource['created_at'],
                   updated_at:  resource['updated_at'],
                 }

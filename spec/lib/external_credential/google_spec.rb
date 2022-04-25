@@ -115,38 +115,36 @@ RSpec.describe ExternalCredential::Google do
 
         channel = described_class.link_account(request_token, authorization_payload)
 
-        expect(channel.options).to match(
-          a_hash_including(
-            'inbound'  => a_hash_including(
-              'options' => a_hash_including(
-                'auth_type' => 'XOAUTH2',
-                'host'      => 'imap.gmail.com',
-                'ssl'       => 'ssl',
-                'user'      => primary_email,
-              )
-            ),
-            'outbound' => a_hash_including(
-              'options' => a_hash_including(
-                'authentication' => 'xoauth2',
-                'host'           => 'smtp.gmail.com',
-                'port'           => 465,
-                'ssl'            => true,
-                'user'           => primary_email,
-              )
-            ),
-            'auth'     => a_hash_including(
-              'access_token'  => access_token,
-              'expires_in'    => token_ttl,
-              'refresh_token' => refresh_token,
-              'scope'         => scope_stub,
-              'token_type'    => 'Bearer',
-              'id_token'      => id_token,
-              'created_at'    => Time.zone.now,
-              'type'          => 'XOAUTH2',
-              'client_id'     => client_id,
-              'client_secret' => client_secret,
-            ),
-          )
+        expect(channel.options).to include(
+          'inbound'  => include(
+            'options' => include(
+              'auth_type' => 'XOAUTH2',
+              'host'      => 'imap.gmail.com',
+              'ssl'       => 'ssl',
+              'user'      => primary_email,
+            )
+          ),
+          'outbound' => include(
+            'options' => include(
+              'authentication' => 'xoauth2',
+              'host'           => 'smtp.gmail.com',
+              'port'           => 465,
+              'ssl'            => true,
+              'user'           => primary_email,
+            )
+          ),
+          'auth'     => include(
+            'access_token'  => access_token,
+            'expires_in'    => token_ttl,
+            'refresh_token' => refresh_token,
+            'scope'         => scope_stub,
+            'token_type'    => 'Bearer',
+            'id_token'      => id_token,
+            'created_at'    => Time.zone.now,
+            'type'          => 'XOAUTH2',
+            'client_id'     => client_id,
+            'client_secret' => client_secret,
+          ),
         )
       end
     end
@@ -267,7 +265,7 @@ RSpec.describe ExternalCredential::Google do
         it 'refreshes token' do
           expect do
             channel.refresh_xoauth2!
-          end.to change { channel.options['auth'] }.to a_hash_including(
+          end.to change { channel.options['auth'] }.to include(
             'created_at'   => Time.zone.now,
             'access_token' => refreshed_access_token,
           )
