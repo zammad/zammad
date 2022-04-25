@@ -47,7 +47,7 @@ RSpec.describe ::Sequencer::Sequence::Import::Kayako::CaseField, sequencer: :seq
 
       it "import the fixed option list for the ticket 'type' field" do
         process(process_payload)
-        expect(ObjectManager::Attribute.get(object: 'Ticket', name: 'type').data_option[:options]).to a_hash_including(imported_type_options)
+        expect(ObjectManager::Attribute.get(object: 'Ticket', name: 'type').data_option[:options]).to include(imported_type_options)
       end
     end
   end

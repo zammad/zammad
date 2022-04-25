@@ -194,5 +194,37 @@ RSpec.describe ::Sequencer::Sequence::Import::Freshdesk::TicketField, sequencer:
         expect { process(process_payload) }.to raise_error(RuntimeError, "The custom field type 'custom_unknown' cannot be mapped to an internal field, aborting.")
       end
     end
+
+    context 'when importing default fields' do
+      let(:resource) do
+        base_resource.merge(
+          {
+            'name'    => 'ticket_type',
+            'label'   => 'Type',
+            'type'    => 'default_ticket_type',
+            'default' => true,
+            'choices' => [
+              'Question',
+              'Incident',
+              'Problem',
+              'Feature Request',
+              'Refunds and Returns',
+              'Bulk orders',
+              'Refund',
+              'Request',
+            ]
+          }
+        )
+      end
+
+      it "activate the already existing ticket 'type' field" do
+        expect { process(process_payload) }.to change { ObjectManager::Attribute.get(object: 'Ticket', name: 'type').active }.from(false).to(true)
+      end
+
+      it "import the fixed option list for the ticket 'type' field" do
+        process(process_payload)
+        expect(ObjectManager::Attribute.get(object: 'Ticket', name: 'type').data_option[:options]).to include(resource['choices'].to_h { |choice| [choice, choice] })
+      end
+    end
   end
 end

@@ -29,7 +29,7 @@ RSpec.describe ::Sequencer::Sequence::Import::Freshdesk::Ticket, sequencer: :seq
         'to_emails' => ['info@zammad.org'],
         'product_id' => nil,
         'id' => 13,
-        'type' => nil,
+        'type' => 'Incident',
         'due_by' => '2021-05-17T12:29:27Z',
         'fr_due_by' => '2021-05-15T12:29:27Z',
         'is_escalated' => false,
@@ -116,6 +116,7 @@ RSpec.describe ::Sequencer::Sequence::Import::Freshdesk::Ticket, sequencer: :seq
         priority_id:              1,
         owner_id:                 owner.id,
         customer_id:              User.last.id,
+        type:                     'Incident',
         cf_custom_dropdown:       'key_2',
         cf_custom_integer:        999,
         cf_test_checkbox:         true,
@@ -205,6 +206,24 @@ RSpec.describe ::Sequencer::Sequence::Import::Freshdesk::Ticket, sequencer: :seq
       it 'correct tags for added ticket' do
         process(process_payload)
         expect(Ticket.last.tag_list).to eq(%w[example test])
+      end
+    end
+
+    context 'when importing without a type' do
+      let(:resource) do
+        super().merge(
+          'type' => nil
+        )
+      end
+      let(:imported_ticket) do
+        super().merge(
+          type: nil
+        )
+      end
+
+      it 'correct attributes for added ticket' do
+        process(process_payload)
+        expect(Ticket.last).to have_attributes(imported_ticket)
       end
     end
   end

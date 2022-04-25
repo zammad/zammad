@@ -23,7 +23,7 @@ RSpec.describe Channel::Filter::AutoResponseCheck, type: :channel_filter do
 
     it 'check filter result' do
       filter(mail)
-      expect(mail).to match(a_hash_including(mail_auto_response))
+      expect(mail).to include(mail_auto_response)
     end
   end
 

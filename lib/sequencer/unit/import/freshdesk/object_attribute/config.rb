@@ -17,7 +17,7 @@ class Sequencer
               state.provide(:config) do
                 {
                   object:        model_class.to_s,
-                  name:          sanitized_name,
+                  name:          DEFAULT_FIELD_NAME_MAP[resource['name']] || sanitized_name,
                   display:       resource['label'],
                   data_type:     data_type,
                   data_option:   data_option,
@@ -43,6 +43,11 @@ class Sequencer
               'custom_decimal'      => 'input', # Don't use 'integer' as it would cut off the fractional part.
               'custom_url'          => 'input',
               'custom_phone_number' => 'input',
+              'default_ticket_type' => 'select',
+            }.freeze
+
+            DEFAULT_FIELD_NAME_MAP = {
+              'ticket_type' => 'type',
             }.freeze
 
             def data_type
