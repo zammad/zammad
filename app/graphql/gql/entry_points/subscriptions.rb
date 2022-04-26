@@ -8,12 +8,9 @@ module Gql::EntryPoints
 
     description 'All available subscriptions'
 
-    # Load all available Gql::Subscriptions so that they can be iterated.
-    Dir.glob('**/*.rb', base: "#{__dir__}/../subscriptions/").each do |file|
-      subclass = file.sub(%r{.rb$}, '').camelize
-      next if subclass.starts_with? 'Base' # Ignore base classes.
-
-      "Gql::Subscriptions::#{subclass}".constantize.register_in_schema(self)
+    Mixin::RequiredSubPaths.eager_load_recursive Gql::Subscriptions, "#{__dir__}/../subscriptions/"
+    Gql::Subscriptions::BaseSubscription.descendants.reject { |klass| klass.name.include?('::Base') }.each do |klass|
+      klass.register_in_schema(self)
     end
   end
 end

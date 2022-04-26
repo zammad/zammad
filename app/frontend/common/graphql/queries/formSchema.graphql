@@ -1,0 +1,3 @@
+query formSchema($formSchemaId: FormSchemaId!) {
+  formSchema(formSchemaId: $formSchemaId)
+}

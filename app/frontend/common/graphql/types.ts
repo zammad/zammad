@@ -44,6 +44,11 @@ export type ConfigUpdatesPayload = {
   setting?: Maybe<KeyComplexValue>;
 };
 
+/** All available form schemas */
+export enum FormSchemaId {
+  FormSchemaFormMobileLogin = 'FormSchema__Form__Mobile__Login'
+}
+
 /** Groups */
 export type Group = Node & {
   __typename?: 'Group';
@@ -288,6 +293,8 @@ export type Queries = {
   applicationConfig: Array<KeyComplexValue>;
   /** Information about the authenticated user */
   currentUser: User;
+  /** Return FormKit schema definition for a given form. */
+  formSchema: Scalars['JSON'];
   /** Locales available in the system */
   locales: Array<Locale>;
   /** Fetches an object given its ID. */
@@ -304,6 +311,12 @@ export type Queries = {
   ticketsByOverview: TicketConnection;
   /** Translations for a given locale */
   translations?: Maybe<TranslationsPayload>;
+};
+
+
+/** All available queries */
+export type QueriesFormSchemaArgs = {
+  formSchemaId: FormSchemaId;
 };
 
 
@@ -699,6 +712,13 @@ export type CurrentUserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type CurrentUserQuery = { __typename?: 'Queries', currentUser: { __typename?: 'User', firstname?: string | null, lastname?: string | null, preferences?: any | null, objectAttributeValues: Array<{ __typename?: 'ObjectAttributeValue', value?: string | null, attribute: { __typename?: 'ObjectManagerAttribute', name: string, display: string, dataType: string, dataOption?: any | null, screens?: any | null, editable: boolean, active: boolean } }>, organization?: { __typename?: 'Organization', name: string, objectAttributeValues: Array<{ __typename?: 'ObjectAttributeValue', value?: string | null, attribute: { __typename?: 'ObjectManagerAttribute', name: string, display: string, dataType: string, dataOption?: any | null, screens?: any | null, editable: boolean, active: boolean } }> } | null, permissions?: { __typename?: 'Permission', names: Array<string> } | null } };
+
+export type FormSchemaQueryVariables = Exact<{
+  formSchemaId: FormSchemaId;
+}>;
+
+
+export type FormSchemaQuery = { __typename?: 'Queries', formSchema: any };
 
 export type LocalesQueryVariables = Exact<{ [key: string]: never; }>;
 

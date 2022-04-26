@@ -36,6 +36,9 @@ import type {
 import getUuid from '@common/utils/getUuid'
 import { useTimeoutFn } from '@vueuse/shared'
 import UserError from '@common/errors/UserError'
+import { FormSchemaId } from '@common/graphql/types'
+import { QueryHandler } from '@common/server/apollo/handler'
+import { useFormSchemaQuery } from '@common/graphql/api'
 
 // TODO:
 // - Maybe some default buttons inside the components with loading cycle on submit?
@@ -45,7 +48,7 @@ import UserError from '@common/errors/UserError'
 
 export interface Props {
   schema?: FormSchemaNode[]
-  formName?: string
+  formSchemaId?: FormSchemaId
   changeFields?: Record<string, FormSchemaField>
   formKitPlugins?: FormKitPlugin[]
   formKitSectionsSchema?: Record<
@@ -297,7 +300,7 @@ const buildStaticSchema = (schema: FormSchemaNode[]) => {
 }
 
 const localChangeFields = computed(() => {
-  if (props.formName) return coreWorkflowChanges.value
+  if (props.formSchemaId) return coreWorkflowChanges.value
 
   return props.changeFields
 })
@@ -348,13 +351,17 @@ const toggleInitialLoadingAnimation = () => {
 
 // TODO: maybe we should react on schema changes and rebuild the static schema with a new form-id and re-rendering of
 // the complete form (= use the formId as the key for the whole form to trigger the re-rendering of the component...)
-if (props.formName) {
+if (props.formSchemaId) {
   // TODO: call the GraphQL-Query to fetch the schema.
   toggleInitialLoadingAnimation()
-  setTimeout(() => {
-    buildStaticSchema(toRef(props, 'schema').value)
-    toggleInitialLoadingAnimation()
-  }, 2000)
+  new QueryHandler(
+    useFormSchemaQuery({ formSchemaId: props.formSchemaId }),
+  ).watchOnResult((queryResult) => {
+    if (queryResult?.formSchema) {
+      buildStaticSchema(queryResult.formSchema)
+      toggleInitialLoadingAnimation()
+    }
+  })
 } else if (props.schema) {
   // localSchema.value = toRef(props, 'schema').value
   buildStaticSchema(toRef(props, 'schema').value)

@@ -8,12 +8,9 @@ module Gql::EntryPoints
 
     description 'All available queries'
 
-    # Load all available Gql::Queries so that they can be iterated.
-    Dir.glob('**/*.rb', base: "#{__dir__}/../queries/").each do |file|
-      subclass = file.sub(%r{.rb$}, '').camelize
-      next if subclass.starts_with? 'Base' # Ignore base classes.
-
-      "Gql::Queries::#{subclass}".constantize.register_in_schema(self)
+    Mixin::RequiredSubPaths.eager_load_recursive Gql::Queries, "#{__dir__}/../queries/"
+    Gql::Queries::BaseQuery.descendants.reject { |klass| klass.name.include?('::Base') }.each do |klass|
+      klass.register_in_schema(self)
     end
   end
 end

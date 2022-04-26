@@ -10,6 +10,7 @@ import useApplicationConfigStore from '@common/stores/application/config'
 import { i18n } from '@common/i18n'
 import Form from '@common/components/form/Form.vue'
 import { FormData } from '@common/types/form'
+import { FormSchemaId } from '@common/graphql/types'
 import UserError from '@common/errors/UserError'
 
 interface Props {
@@ -32,46 +33,6 @@ if (props.invalidatedSession === '1') {
 const authentication = useAuthenticationStore()
 
 const router = useRouter()
-
-const formSchema = [
-  {
-    type: 'text',
-    name: 'login',
-    label: __('Username / Email'),
-    placeholder: __('Username / Email'),
-    validation: 'required',
-  },
-  {
-    type: 'password',
-    label: __('Password'),
-    name: 'password',
-    placeholder: __('Password'),
-    validation: 'required',
-  },
-  {
-    isLayout: true,
-    element: 'div',
-    attrs: {
-      class: 'mt-2.5 flex grow justify-between text-white',
-    },
-    children: [
-      {
-        type: 'checkbox',
-        label: __('Remember me'),
-        name: 'remember_me',
-      },
-      {
-        isLayout: true,
-        component: 'CommonLink',
-        props: {
-          class: 'text-right !text-white',
-          link: 'TODO',
-        },
-        children: i18n.t('Forgot password?'),
-      },
-    ],
-  },
-]
 
 interface LoginFormData {
   login?: string
@@ -118,7 +79,7 @@ const applicationConfig = useApplicationConfigStore()
           </template>
           <Form
             ref="form"
-            v-bind:schema="formSchema"
+            v-bind:form-schema-id="FormSchemaId.FormSchemaFormMobileLogin"
             class="text-left"
             v-on:submit="login"
           >

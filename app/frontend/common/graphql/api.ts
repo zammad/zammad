@@ -177,6 +177,34 @@ export function useCurrentUserLazyQuery(options: VueApolloComposable.UseQueryOpt
   return VueApolloComposable.useLazyQuery<Types.CurrentUserQuery, Types.CurrentUserQueryVariables>(CurrentUserDocument, {}, options);
 }
 export type CurrentUserQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<Types.CurrentUserQuery, Types.CurrentUserQueryVariables>;
+export const FormSchemaDocument = gql`
+    query formSchema($formSchemaId: FormSchemaId!) {
+  formSchema(formSchemaId: $formSchemaId)
+}
+    `;
+
+/**
+ * __useFormSchemaQuery__
+ *
+ * To run a query within a Vue component, call `useFormSchemaQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFormSchemaQuery` returns an object from Apollo Client that contains result, loading and error properties
+ * you can use to render your UI.
+ *
+ * @param variables that will be passed into the query
+ * @param options that will be passed into the query, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/query.html#options;
+ *
+ * @example
+ * const { result, loading, error } = useFormSchemaQuery({
+ *   formSchemaId: // value for 'formSchemaId'
+ * });
+ */
+export function useFormSchemaQuery(variables: Types.FormSchemaQueryVariables | VueCompositionApi.Ref<Types.FormSchemaQueryVariables> | ReactiveFunction<Types.FormSchemaQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.FormSchemaQuery, Types.FormSchemaQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.FormSchemaQuery, Types.FormSchemaQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.FormSchemaQuery, Types.FormSchemaQueryVariables>> = {}) {
+  return VueApolloComposable.useQuery<Types.FormSchemaQuery, Types.FormSchemaQueryVariables>(FormSchemaDocument, variables, options);
+}
+export function useFormSchemaLazyQuery(variables: Types.FormSchemaQueryVariables | VueCompositionApi.Ref<Types.FormSchemaQueryVariables> | ReactiveFunction<Types.FormSchemaQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.FormSchemaQuery, Types.FormSchemaQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.FormSchemaQuery, Types.FormSchemaQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.FormSchemaQuery, Types.FormSchemaQueryVariables>> = {}) {
+  return VueApolloComposable.useLazyQuery<Types.FormSchemaQuery, Types.FormSchemaQueryVariables>(FormSchemaDocument, variables, options);
+}
+export type FormSchemaQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<Types.FormSchemaQuery, Types.FormSchemaQueryVariables>;
 export const LocalesDocument = gql`
     query locales {
   locales {

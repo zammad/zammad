@@ -22,7 +22,7 @@ export default {
       },
     },
     minlength: {
-      name: 'maxlength',
+      name: 'minlength',
       type: { name: 'number', required: false },
       desciption: '',
       table: {

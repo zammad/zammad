@@ -89,6 +89,31 @@ export interface FormSchemaField {
   plugins?: FormKitPlugin[]
   classes?: Record<string, string | Record<string, boolean> | FormKitClasses>
   props?: FormFieldAdditionalProps
+  outerClass?: Record<string, string | Record<string, boolean> | FormKitClasses>
+  wrapperClass?: Record<
+    string,
+    string | Record<string, boolean> | FormKitClasses
+  >
+  labelClass?: Record<string, string | Record<string, boolean> | FormKitClasses>
+  prefixClass?: Record<
+    string,
+    string | Record<string, boolean> | FormKitClasses
+  >
+  innerClass?: Record<string, string | Record<string, boolean> | FormKitClasses>
+  suffixClass?: Record<
+    string,
+    string | Record<string, boolean> | FormKitClasses
+  >
+  inputClass?: Record<string, string | Record<string, boolean> | FormKitClasses>
+  helpClass?: Record<string, string | Record<string, boolean> | FormKitClasses>
+  messagesClass?: Record<
+    string,
+    string | Record<string, boolean> | FormKitClasses
+  >
+  messageClass?: Record<
+    string,
+    string | Record<string, boolean> | FormKitClasses
+  >
 }
 
 export interface FormSchemaGroupOrList {

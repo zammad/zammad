@@ -67,11 +67,13 @@ end
 # TODO: Remove when this switch is not needed any more.
 module GraphQL
   class Subscriptions
-    alias orig_trigger trigger
-    def trigger(...)
-      return if ENV['ENABLE_EXPERIMENTAL_MOBILE_FRONTEND'] != 'true'
+    if !method_defined?(:orig_trigger)
+      alias orig_trigger trigger
+      def trigger(...)
+        return if ENV['ENABLE_EXPERIMENTAL_MOBILE_FRONTEND'] != 'true'
 
-      orig_trigger(...)
+        orig_trigger(...)
+      end
     end
   end
 end

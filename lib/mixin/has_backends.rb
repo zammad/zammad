@@ -12,7 +12,7 @@ module Mixin
       self_path     = ActiveSupport::Dependencies.search_for_file name.underscore
       backends_path = self_path.delete_suffix File.extname(self_path)
 
-      Mixin::RequiredSubPaths.eager_load_recursive backends_path
+      Mixin::RequiredSubPaths.eager_load_recursive name, backends_path
 
       backends = "#{name}::Backend".constantize.descendants
 
