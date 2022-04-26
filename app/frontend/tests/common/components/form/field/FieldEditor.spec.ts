@@ -21,8 +21,8 @@ const wrapper = renderComponent(FormKit, {
 })
 
 describe('Form - Field - Editor (TipTap)', () => {
-  it('can render a editor', () => {
-    const editor = wrapper.getByLabelText('Editor')
+  it('can render a editor', async () => {
+    const editor = await wrapper.findByLabelText('Editor')
 
     expect(editor).toHaveAttribute('contenteditable')
 

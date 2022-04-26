@@ -2,7 +2,7 @@
 
 import { provideApolloClient } from '@vue/apollo-composable'
 import { InMemoryCache } from '@apollo/client/core'
-import { DocumentNode } from 'graphql'
+import type { DocumentNode } from 'graphql'
 import {
   createMockClient as createMockedClient,
   RequestHandler,

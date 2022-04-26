@@ -1,13 +1,12 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import TicketOverview from '@mobile/views/TicketOverview.vue'
 import type { RouteRecordRaw } from 'vue-router'
 
 const route: RouteRecordRaw = {
   path: '/tickets',
   name: 'TicketOverview',
   props: true,
-  component: TicketOverview,
+  component: () => import('@mobile/views/TicketOverview.vue'),
   meta: {
     title: __('Ticket Overviews'),
     requiresAuth: true,

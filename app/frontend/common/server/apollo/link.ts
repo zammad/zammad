@@ -14,7 +14,7 @@ import ActionCableLink from 'graphql-ruby-client/subscriptions/ActionCableLink'
 import consumer from '@common/server/action_cable/consumer'
 import { getMainDefinition } from '@apollo/client/utilities'
 import { BatchHttpLink } from '@apollo/client/link/batch-http'
-import { FragmentDefinitionNode, OperationDefinitionNode } from 'graphql'
+import type { FragmentDefinitionNode, OperationDefinitionNode } from 'graphql'
 import connectedStateLink from '@common/server/apollo/link/connectedState'
 
 // Should subsequent HTTP calls be batched together?

@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import FieldEditorInput from '@common/components/form/field/FieldEditor/FieldEditorInput.vue'
+import FieldEditorWrapper from '@common/components/form/field/FieldEditor/FieldEditorWrapper.vue'
 import createInput from '@common/form/core/createInput'
 import { FormKitExtendableSchemaRoot, FormKitNode } from '@formkit/core'
 import { cloneDeep } from 'lodash-es'
@@ -32,7 +32,7 @@ function addAriaLabel(node: FormKitNode) {
   props.definition = definition
 }
 
-const fieldDefinition = createInput(FieldEditorInput, [], {
+const fieldDefinition = createInput(FieldEditorWrapper, [], {
   features: [addAriaLabel],
 })
 
