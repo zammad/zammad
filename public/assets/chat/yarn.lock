@@ -1095,7 +1095,7 @@ gulp-cli@^2.2.0:
     v8flags "^3.2.0"
     yargs "^7.1.0"
 
-gulp-coffee@^2.3.4:
+gulp-coffee@^2.3.5:
   version "2.3.5"
   resolved "https://registry.yarnpkg.com/gulp-coffee/-/gulp-coffee-2.3.5.tgz#8c64e9ac884e1bab4e20b66ac7c386a816859041"
   integrity sha512-PbgPGZVyYFnBTYtfYkVN6jcK8Qsuh3BxycPzvu8y5lZroCw3/x1m25KeyEDX110KsVLDmJxoULjscR21VEN4wA==
