@@ -1,5 +1,25 @@
-# Zammad Chat build
+# Recreating the Static Zammad Chat Build
 
-This folder contains a `docker` image and the required files to build the Zammad Chat from coffeescript and eco files. This workaround is required for now because of the outdated NodeJS 8 dependency.
+```
+$ yarn install
+$ npx gulp build
+[11:13:03] Using gulpfile zammad/public/assets/chat/gulpfile.js
+[11:13:03] Starting 'build'...
+[11:13:03] Starting 'js'...
+[11:13:03] Starting 'no_jquery'...
+[11:13:03] Starting 'css'...
+[11:13:03] Finished 'js' after 6.21 ms
+[11:13:03] Finished 'no_jquery' after 7.75 ms
+[11:13:03] Finished 'css' after 8.81 ms
+[11:13:03] Finished 'build' after 9.8 ms
+```
 
-The build process can easily be started by executing the `build.sh` file. There is nothing more to it except of having `docker` installed and running.
+# Development Mode
+
+This is useful when developing. Gulp will watch the files for changes and start rebuilds automatically.
+
+```
+npx gulp
+[11:14:46] Using gulpfile ~/wz/zammad/public/assets/chat/gulpfile.js
+[11:14:46] Starting 'default'...
+```

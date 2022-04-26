@@ -1,17 +1,14 @@
 {
-  "name": "Zammad",
-  "version": "1.0.0",
+  "private": true,
+  "description": "Zammad SVG Icon Store",
   "devDependencies": {
-    "gulp": "^3.8.11",
-    "gulp-cheerio": "^0.6.2",
-    "gulp-rename": "^1.2.2",
-    "gulp-svgmin": "^1.1.2",
-    "gulp-svgstore": "^5.0.1",
-    "gulp-util": "^3.0.4",
-    "gulp-watch": "^4.2.4",
-    "through2": "^0.6.5"
-  },
-  "resolutions": {
-    "graceful-fs": "^4.2.9"
+    "gulp": "^4.0.2",
+    "gulp-cheerio": "^1.0.0",
+    "gulp-rename": "^2.0.0",
+    "gulp-svgmin": "^4.1.0",
+    "gulp-svgstore": "^9.0.0",
+    "gulp-util": "^3.0.8",
+    "gulp-watch": "^5.0.1",
+    "through2": "^4.0.2"
   }
 }
