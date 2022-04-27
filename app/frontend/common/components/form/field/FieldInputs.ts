@@ -4,8 +4,6 @@ import initializeFieldDefinition from '@common/form/core/initializeFieldDefiniti
 import { FormFieldsTypeDefinition, FormFieldType } from '@common/types/form'
 import {
   color as inputColorDefinition,
-  date as inputDateDefinition,
-  datetimeLocal as inputDatetimeLocalDefinition,
   email as inputEmailDefinition,
   number as inputCNumberDefinition,
   search as inputSearchDefinition,
@@ -17,8 +15,6 @@ import {
 const inputFieldDefinitionList: FormFieldsTypeDefinition = {
   text: inputTextDefinition,
   color: inputColorDefinition,
-  date: inputDateDefinition,
-  datetimeLocal: inputDatetimeLocalDefinition,
   email: inputEmailDefinition,
   number: inputCNumberDefinition,
   search: inputSearchDefinition,

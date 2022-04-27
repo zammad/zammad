@@ -2,9 +2,9 @@
 
 import * as dates from '@common/i18n/dates'
 import { TranslationMap, Translator } from '@common/i18n/translator'
-import { reactive, ref } from 'vue'
+import { reactive, shallowRef } from 'vue'
 
-const reactiveNow = ref(new Date())
+const reactiveNow = shallowRef(new Date())
 
 window.setInterval(() => {
   reactiveNow.value = new Date()
@@ -28,6 +28,13 @@ export class I18N {
     const template =
       this.translator.lookup('FORMAT_DATETIME') || 'yyyy-mm-dd HH:MM'
     return dates.absoluteDateTime(dateTimeString, template)
+  }
+
+  timeFormat() {
+    const datetimeFormat =
+      this.translator.lookup('FORMAT_DATETIME') || 'yyyy-mm-dd HH:MM'
+    const time24hour = !datetimeFormat.includes('P') // P means AM/PM
+    return time24hour ? '24hour' : '12hour'
   }
 
   relativeDateTime(dateTimeString: string, baseDate?: Date): string {

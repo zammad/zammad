@@ -15,6 +15,26 @@ import CommonSectionMenu, {
   type MenuItem,
 } from '@mobile/components/section/CommonSectionMenu.vue'
 import CommonSectionMenuLink from '@mobile/components/section/CommonSectionMenuLink.vue'
+import Form from '@common/components/form/Form.vue'
+import { reactive } from 'vue'
+
+const schema = reactive([
+  {
+    type: 'date',
+    label: 'Date',
+    futureOnly: true,
+    name: 'date',
+  },
+  {
+    type: 'datetimeLocal',
+    label: 'Datetime',
+    name: 'datetimeLocal',
+  },
+  {
+    type: 'submit',
+    name: 'submit',
+  },
+])
 
 // TODO: Only testing for the notifications...
 const { notify, clearAllNotifications } = useNotifications()
@@ -70,6 +90,7 @@ const goToTickets = () => {
     <br />
     <p v-on:click="goToTickets">Go to Tickets</p>
     <br />
+    <Form v-bind:schema="schema" v-on:submit="logAction" />
     <CommonSectionMenu
       header-title="Lorem"
       action-title="Edit"

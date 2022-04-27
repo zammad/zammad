@@ -21,47 +21,38 @@ export default {
         type: 'date',
       },
     },
-    min: {
-      name: 'min',
-      type: { name: 'number', required: false },
+    futureOnly: {
+      name: 'futureOnly',
+      type: { name: 'boolean', required: false },
       desciption: '',
       table: {
-        type: { summary: 'number' },
+        type: { summary: 'false' },
       },
       control: {
-        type: 'number',
+        type: 'boolean',
       },
+      description: 'Disables all days before tomorrow.',
     },
-    max: {
-      name: 'max',
-      type: { name: 'number', required: false },
+    minDate: {
+      name: 'minDate',
+      type: { name: 'string', required: false },
       desciption: '',
       table: {
-        type: { summary: 'number' },
+        type: { summary: 'string' },
       },
       control: {
-        type: 'number',
+        type: 'text',
       },
     },
-    step: {
-      name: 'step',
-      type: { name: 'number', required: false },
+    maxDate: {
+      name: 'maxDate',
+      type: { name: 'string', required: false },
       desciption: '',
       table: {
-        type: { summary: 'number' },
-        defaultValue: {
-          summary: 'auto',
-        },
+        type: { summary: 'string' },
       },
       control: {
-        type: 'number',
-      },
-    },
-  },
-  parameters: {
-    docs: {
-      description: {
-        component: '[FormKit Built-In - Date](https://formkit.com/inputs/date)',
+        type: 'text',
       },
     },
   },

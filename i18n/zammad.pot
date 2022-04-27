@@ -42,6 +42,10 @@ msgstr "mm/dd/yyyy"
 msgid "FORMAT_DATETIME"
 msgstr "mm/dd/yyyy l:MM P"
 
+#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
+msgid " to "
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "\"Database\" stores all attachments in the database (not recommended for storing large amounts of data). \"Filesystem\" stores the data in the filesystem. You can switch between the modules even on a system that is already in production without any loss of data."
 msgstr ""
@@ -875,10 +879,12 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
+#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
 msgid "Apr"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
+#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
 msgid "April"
 msgstr ""
 
@@ -1046,10 +1052,12 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
+#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
 msgid "Aug"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
+#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
 msgid "August"
 msgstr ""
 
@@ -1761,6 +1769,10 @@ msgstr ""
 
 #: db/seeds/schedulers.rb
 msgid "Clean up expired sessions."
+msgstr ""
+
+#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
+msgid "Clear"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee
@@ -2478,10 +2490,12 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
+#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
 msgid "Dec"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
+#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
 msgid "December"
 msgstr ""
 
@@ -4066,10 +4080,12 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
+#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
 msgid "Feb"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
+#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
 msgid "February"
 msgstr ""
 
@@ -4273,6 +4289,7 @@ msgid "Freshdesk"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
+#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
 msgid "Fri"
 msgstr ""
 
@@ -4280,6 +4297,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
+#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
 msgid "Friday"
 msgstr ""
 
@@ -5287,10 +5305,12 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
+#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
 msgid "Jan"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
+#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
 msgid "January"
 msgstr ""
 
@@ -5310,20 +5330,24 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
+#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
 msgid "Jul"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
+#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
 msgid "July"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
+#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
 msgid "Jun"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
+#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
 msgid "June"
 msgstr ""
 
@@ -5744,10 +5768,12 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
+#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
 msgid "Mar"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
+#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
 msgid "March"
 msgstr ""
 
@@ -5807,6 +5833,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
+#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
 msgid "May"
 msgstr ""
 
@@ -5953,6 +5980,7 @@ msgid "Module"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
+#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
 msgid "Mon"
 msgstr ""
 
@@ -5960,6 +5988,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
+#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
 msgid "Monday"
 msgstr ""
 
@@ -6643,10 +6672,12 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
+#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
 msgid "Nov"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
+#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
 msgid "November"
 msgstr ""
 
@@ -6690,10 +6721,12 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
+#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
 msgid "Oct"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
+#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
 msgid "October"
 msgstr ""
 
@@ -7818,6 +7851,7 @@ msgid "STARTTLS"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
+#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
 msgid "Sat"
 msgstr ""
 
@@ -7825,6 +7859,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
+#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
 msgid "Saturday"
 msgstr ""
 
@@ -8087,6 +8122,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
+#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
 msgid "Sep"
 msgstr ""
 
@@ -8095,6 +8131,7 @@ msgid "Separate multiple values by ;"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
+#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
 msgid "September"
 msgstr ""
 
@@ -8620,6 +8657,7 @@ msgid "Summer holiday"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
+#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
 msgid "Sun"
 msgstr ""
 
@@ -8627,6 +8665,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
+#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
 msgid "Sunday"
 msgstr ""
 
@@ -9449,6 +9488,7 @@ msgid "This user is currently blocked because of too many failed login attempts.
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
+#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
 msgid "Thu"
 msgstr ""
 
@@ -9456,6 +9496,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
+#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
 msgid "Thursday"
 msgstr ""
 
@@ -9737,6 +9778,7 @@ msgstr ""
 msgid "To work on Tickets."
 msgstr ""
 
+#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
 #: public/assets/chat/chat-no-jquery.coffee
 #: public/assets/chat/chat.coffee
 msgid "Today"
@@ -9831,6 +9873,7 @@ msgid "Trying to reconnect…"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
+#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
 msgid "Tue"
 msgstr ""
 
@@ -9838,6 +9881,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
+#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
 msgid "Tuesday"
 msgstr ""
 
@@ -10511,6 +10555,7 @@ msgid "Websocket port"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
+#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
 msgid "Wed"
 msgstr ""
 
@@ -10518,6 +10563,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
+#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
 msgid "Wednesday"
 msgstr ""
 
