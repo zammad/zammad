@@ -2,6 +2,7 @@
 
 class Scheduler < ApplicationModel
   include ChecksHtmlSanitized
+  include HasTimeplan
 
   extend ::Mixin::StartFinishLogger
 
@@ -43,15 +44,8 @@ class Scheduler < ApplicationModel
       # read/load jobs and check if each has already been started
       jobs = Scheduler.where(active: true).order(prio: :asc)
       jobs.each do |job|
+        _try_job(job)
 
-        # ignore job is still running
-        next if skip_job?(job)
-
-        # check job.last_run
-        next if job.last_run && job.period && job.last_run > (Time.zone.now - job.period)
-
-        # run job as own thread
-        @@jobs_started[ job.id ] = start_job(job)
         sleep 10
       end
       sleep 60
@@ -276,6 +270,20 @@ class Scheduler < ApplicationModel
 
       ActiveRecord::Base.connection.close
     end
+  end
+
+  def self._try_job(job)
+    # ignore job is still running
+    return if skip_job?(job)
+
+    # check job.last_run
+    return if job.last_run && job.period && job.last_run > (Time.zone.now - job.period)
+
+    # timeplan is optional
+    # but if timeplan is present
+    return if job.timeplan.present? && !job.in_timeplan?(Time.zone.now)
+
+    @@jobs_started[ job.id ] = start_job(job)
   end
 
   def self._start_job(job, try_count = 0, try_run_time = Time.zone.now)

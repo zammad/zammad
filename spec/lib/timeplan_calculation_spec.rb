@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Job::TimeplanCalculation do
+RSpec.describe TimeplanCalculation do
   subject(:instance) { described_class.new(timeplan, timezone) }
 
   let(:timezone) { nil }

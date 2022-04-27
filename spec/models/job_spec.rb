@@ -3,12 +3,14 @@
 require 'rails_helper'
 require 'models/application_model_examples'
 require 'models/concerns/has_xss_sanitized_note_examples'
+require 'models/concerns/has_timeplan_examples'
 
 RSpec.describe Job, type: :model do
   subject(:job) { create(:job) }
 
   it_behaves_like 'ApplicationModel', can_assets: { selectors: %i[condition perform] }
   it_behaves_like 'HasXssSanitizedNote', model_factory: :job
+  it_behaves_like 'HasTimeplan'
 
   describe 'Class methods:' do
     describe '.run' do
@@ -343,22 +345,6 @@ RSpec.describe Job, type: :model do
             end
           end
         end
-      end
-    end
-
-    describe '#in_timeplan?' do
-      before do
-        job.timeplan = { days: { Mon: true }, hours: { 0 => true }, minutes: { 0 => true } }
-      end
-
-      it 'checks in selected time zone' do
-        Setting.set 'timezone_default', 'Europe/Vilnius'
-
-        expect(job).to be_in_timeplan Time.zone.parse('2020-12-27 22:00')
-      end
-
-      it 'checks in UTC' do
-        expect(job).to be_in_timeplan Time.zone.parse('2020-12-28 00:00')
       end
     end
   end

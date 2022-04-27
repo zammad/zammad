@@ -223,9 +223,26 @@ Scheduler.create_if_not_exists(
 Scheduler.create_if_not_exists(
   name:          __('Clean up cache.'),
   method:        'CacheClearJob.perform_now',
-  period:        1.day,
+  period:        10.minutes,
   prio:          2,
   active:        true,
+  timeplan:      {
+    'days'    => {
+      'Mon' => true,
+      'Tue' => true,
+      'Wed' => true,
+      'Thu' => true,
+      'Fri' => true,
+      'Sat' => true,
+      'Sun' => true
+    },
+    'hours'   => {
+      '23' => true
+    },
+    'minutes' => {
+      '0' => true
+    }
+  },
   updated_by_id: 1,
   created_by_id: 1,
 )

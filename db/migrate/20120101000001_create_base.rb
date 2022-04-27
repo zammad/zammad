@@ -530,6 +530,7 @@ class CreateBase < ActiveRecord::Migration[4.2]
       t.string :error_message,                          null: true
       t.string :status,                                 null: true
       t.boolean :active,                                null: false, default: false
+      t.string :timeplan,                 limit: 2500,  null: true
       t.integer :updated_by_id,                         null: false
       t.integer :created_by_id,                         null: false
       t.timestamps limit: 3, null: false

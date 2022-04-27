@@ -5,10 +5,10 @@ class Job < ApplicationModel
   include ChecksConditionValidation
   include ChecksHtmlSanitized
   include ChecksPerformValidation
+  include HasTimeplan
 
   include Job::Assets
 
-  store     :timeplan
   store     :condition
   store     :perform
   validates :name, presence: true
@@ -78,10 +78,6 @@ job.run(true)
     return false if last_run_at && last_run_at > start_at - 10.minutes
 
     true
-  end
-
-  def in_timeplan?(time = Time.zone.now)
-    timeplan_calculation.contains?(time)
   end
 
   def matching_count
@@ -183,11 +179,5 @@ job.run(true)
           ticket.perform_changes(self, 'job')
         end
     end
-  end
-
-  def timeplan_calculation
-    timezone = Setting.get('timezone_default').presence || 'UTC'
-
-    Job::TimeplanCalculation.new(timeplan, timezone)
   end
 end

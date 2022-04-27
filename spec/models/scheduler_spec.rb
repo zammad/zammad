@@ -2,6 +2,7 @@
 
 require 'rails_helper'
 require 'models/concerns/has_xss_sanitized_note_examples'
+require 'models/concerns/has_timeplan_examples'
 
 RSpec.describe Scheduler do
 
@@ -29,6 +30,7 @@ RSpec.describe Scheduler do
   end
 
   it_behaves_like 'HasXssSanitizedNote', model_factory: :scheduler
+  it_behaves_like 'HasTimeplan'
 
   describe '.failed_jobs' do
 
@@ -203,6 +205,160 @@ RSpec.describe Scheduler do
         end.not_to change {
           job.reload
         }
+      end
+    end
+  end
+
+  describe '#timeplan_match?' do
+    let(:job) do
+      create(:scheduler,
+             method:   'Ticket.first.touch',
+             period:   10.minutes,
+             prio:     2,
+             active:   true,
+             last_run: nil,
+             timeplan: {
+               'days'    => {
+                 'Mon' => true,
+                 'Tue' => true,
+                 'Wed' => true,
+                 'Thu' => true,
+                 'Fri' => true,
+                 'Sat' => true,
+                 'Sun' => true
+               },
+               'hours'   => {
+                 '0'  => true,
+                 '1'  => true,
+                 '2'  => true,
+                 '3'  => false,
+                 '4'  => false,
+                 '5'  => false,
+                 '6'  => false,
+                 '7'  => false,
+                 '8'  => false,
+                 '9'  => false,
+                 '10' => false,
+                 '11' => false,
+                 '12' => false,
+                 '13' => false,
+                 '14' => false,
+                 '15' => false,
+                 '16' => false,
+                 '17' => false,
+                 '18' => false,
+                 '19' => false,
+                 '20' => false,
+                 '21' => false,
+                 '22' => false,
+                 '23' => false
+               },
+               'minutes' => {
+                 '0'  => true,
+                 '10' => false,
+                 '20' => false,
+                 '30' => false,
+                 '40' => false,
+                 '50' => false
+               }
+             })
+    end
+
+    def run_job
+      travel 1.minute
+
+      described_class._try_job(job)
+    end
+
+    before do
+      allow(described_class).to receive(:start_job)
+    end
+
+    context 'when it is mid-day' do
+      before do
+        travel_to Time.current.change(hour: 12)
+      end
+
+      context 'when the job has no last_run' do
+        it 'handles the job based on the timeplan' do
+          run_job
+          expect(described_class).not_to have_received(:start_job)
+        end
+      end
+
+      context 'when the job has outdated last_run' do
+        before do
+          job.last_run = 2.days.ago
+        end
+
+        it 'handles the job based on the timeplan' do
+          run_job
+          expect(described_class).not_to have_received(:start_job)
+        end
+      end
+
+      context 'when the job has last_run' do
+        before do
+          job.last_run = Time.zone.now
+        end
+
+        it 'handles the job based on the timeplan' do
+          run_job
+          expect(described_class).not_to have_received(:start_job)
+        end
+      end
+    end
+
+    context 'when it is night' do
+      before do
+        travel_to Time.current.change(hour: 0)
+      end
+
+      context 'when the job has no last_run' do
+        it 'handles the job based on the timeplan' do
+          run_job
+          expect(described_class).to have_received(:start_job)
+        end
+      end
+
+      context 'when the job has outdated last_run' do
+        before do
+          job.last_run = 2.days.ago
+        end
+
+        it 'handles the job based on the timeplan' do
+          run_job
+          expect(described_class).to have_received(:start_job)
+        end
+      end
+
+      context 'when the job has last_run' do
+        before do
+          job.last_run = Time.zone.now
+        end
+
+        it 'handles the job based on the timeplan' do
+          run_job
+          expect(described_class).not_to have_received(:start_job)
+        end
+      end
+    end
+
+    context 'Clean up cache job' do
+      let(:job) { described_class.find_by method: 'CacheClearJob.perform_now' }
+
+      it 'runs at 23-ish' do
+        travel_to Time.current.change(hour: 23, minute: 5)
+
+        run_job
+        expect(described_class).to have_received(:start_job)
+      end
+
+      it 'does not run at 11-ish' do
+        travel_to Time.current.change(hour: 11, minute: 5)
+
+        run_job
+        expect(described_class).not_to have_received(:start_job)
       end
     end
   end

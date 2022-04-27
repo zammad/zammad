@@ -1,6 +1,6 @@
 # Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-class Job::TimeplanCalculation
+class TimeplanCalculation
   DAY_MAP = {
     0 => 'Sun',
     1 => 'Mon',
