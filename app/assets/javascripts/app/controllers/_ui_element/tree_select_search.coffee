@@ -1,9 +1,7 @@
 # coffeelint: disable=camel_case_classes
 class App.UiElement.tree_select_search extends App.UiElement.ApplicationUiElement
-  @render: (localAttribute, params) ->
-
-    # clone original attribute
-    attribute = clone(localAttribute)
+  @render: (attributeConfig, params) ->
+    attribute = $.extend({}, attributeConfig)
 
     # set multiple option
     if attribute.multiple
