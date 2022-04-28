@@ -272,7 +272,7 @@ GEM
     inflection (1.0.0)
     iniparse (1.5.0)
     interception (0.5)
-    json (2.6.1)
+    json (2.5.1)
     jwt (2.3.0)
     kgio (2.11.4)
     koala (3.1.0)
@@ -648,7 +648,7 @@ DEPENDENCIES
   htmlentities
   icalendar
   icalendar-recurrence
-  json
+  json (~> 2.5.1)
   koala
   libv8
   mail!
@@ -717,7 +717,7 @@ DEPENDENCIES
   zendesk_api
 
 RUBY VERSION
-   ruby 3.0.3p157
+   ruby 3.0.4p208
 
 BUNDLED WITH
-   2.2.32
+   2.2.33
