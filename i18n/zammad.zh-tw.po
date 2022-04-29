@@ -1396,10 +1396,6 @@ msgstr "品牌"
 msgid "Browser"
 msgstr "瀏覽器"
 
-#: app/assets/javascripts/app/lib/app_post/browser.coffee
-msgid "Browser too old!"
-msgstr ""
-
 #: app/assets/javascripts/app/lib/mixins/ticket_mass_updatable.coffee
 msgid "Bulk action executed!"
 msgstr "批量操作已執行！"
@@ -5807,13 +5803,6 @@ msgstr ""
 msgid "Invalid GitLab issue link format"
 msgstr "GitLab 問題的連結格式無效"
 
-#: app/controllers/import_freshdesk_controller.rb
-#: app/controllers/import_kayako_controller.rb
-#: app/controllers/import_otrs_controller.rb
-#: app/controllers/import_zendesk_controller.rb
-msgid "Invalid URL!"
-msgstr ""
-
 #: app/controllers/getting_started_controller.rb
 msgid "Invalid auto wizard file."
 msgstr ""
@@ -5824,24 +5813,6 @@ msgstr ""
 
 #: app/controllers/long_polling_controller.rb
 msgid "Invalid client_id received!"
-msgstr ""
-
-#: app/controllers/import_freshdesk_controller.rb
-#: app/controllers/import_kayako_controller.rb
-#: app/controllers/import_zendesk_controller.rb
-msgid "Invalid credentials!"
-msgstr ""
-
-#: app/models/webhook.rb
-msgid "Invalid endpoint (no hostname)!"
-msgstr ""
-
-#: app/models/webhook.rb
-msgid "Invalid endpoint (no http/https)!"
-msgstr ""
-
-#: app/models/webhook.rb
-msgid "Invalid endpoint!"
 msgstr ""
 
 #: app/controllers/tickets_controller.rb
@@ -5856,16 +5827,18 @@ msgstr ""
 msgid "Invalid link structure (Object)"
 msgstr ""
 
-#: app/controllers/mentions_controller.rb
-msgid "Invalid mentionable_type!"
-msgstr ""
-
 #: lib/external_credential/twitter.rb
 msgid "Invalid oauth_token given!"
 msgstr ""
 
-#: lib/password_policy/length.rb
+#: lib/password_policy/min_length.rb
 msgid "Invalid password, it must be at least %s characters long!"
+msgstr "無效密碼，長度至少要 %s 個字符！"
+
+#: lib/password_policy/max_length.rb
+#, fuzzy
+#| msgid "Invalid password, it must be at least %s characters long!"
+msgid "Invalid password, it must be shorter than %s characters!"
 msgstr "無效密碼，長度至少要 %s 個字符！"
 
 #: lib/password_policy/digit.rb
@@ -5893,12 +5866,6 @@ msgstr ""
 #: app/models/concerns/checks_condition_validation.rb
 msgid "Invalid ticket selector conditions"
 msgstr "無效的工單選擇條件"
-
-#: app/controllers/application_controller/authenticates.rb
-#: app/controllers/integration/check_mk_controller.rb
-#: app/controllers/users_controller.rb
-msgid "Invalid token!"
-msgstr ""
 
 #: app/controllers/integration/cti_controller.rb
 #: app/controllers/integration/placetel_controller.rb
@@ -6622,36 +6589,8 @@ msgstr "分鐘"
 msgid "Missing 'for_user_id' in payload!"
 msgstr ""
 
-#: app/controllers/sessions_controller.rb
-msgid "Missing SSO ENV REMOTE_USER or X-Forwarded-User header"
-msgstr ""
-
 #: app/controllers/import_freshdesk_controller.rb
 msgid "Missing administrator permission!"
-msgstr ""
-
-#: app/controllers/channels_sms_controller.rb
-msgid "Missing area params"
-msgstr ""
-
-#: app/controllers/channels_sms_controller.rb
-msgid "Missing options params"
-msgstr ""
-
-#: app/controllers/channels_sms_controller.rb
-msgid "Missing options.adapter params"
-msgstr ""
-
-#: app/controllers/channels_sms_controller.rb
-msgid "Missing parameter options.adapter"
-msgstr ""
-
-#: app/models/store/file.rb
-msgid "Missing storage_provider setting option"
-msgstr ""
-
-#: app/models/ticket/number.rb
-msgid "Missing ticket_number setting option"
 msgstr ""
 
 #: db/seeds/object_manager_attributes.rb
@@ -6901,6 +6840,12 @@ msgstr ""
 msgid "Needed"
 msgstr "需要"
 
+#: app/controllers/sessions_controller.rb
+msgid ""
+"Neither an SSO environment variable 'REMOTE_USER' nor a 'X-Forwarded-User' "
+"header could be found."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_manage/system.coffee
 msgid "Network"
 msgstr "網路"
@@ -7103,14 +7048,6 @@ msgstr "未配置"
 msgid "No answers"
 msgstr ""
 
-#: lib/external_credential/facebook.rb
-msgid "No application_id param!"
-msgstr ""
-
-#: lib/external_credential/facebook.rb
-msgid "No application_secret param!"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
 msgid "No camera found."
 msgstr ""
@@ -7120,27 +7057,11 @@ msgid "No categories"
 msgstr "無分類。"
 
 #: lib/external_credential/google.rb lib/external_credential/microsoft365.rb
-msgid "No client_id param!"
-msgstr ""
-
-#: lib/external_credential/google.rb lib/external_credential/microsoft365.rb
-msgid "No client_secret param!"
-msgstr ""
-
-#: lib/external_credential/google.rb lib/external_credential/microsoft365.rb
 msgid "No code for session found!"
 msgstr ""
 
 #: app/models/calendar.rb
 msgid "No configured business hours found!"
-msgstr ""
-
-#: lib/external_credential/twitter.rb
-msgid "No consumer_key param!"
-msgstr ""
-
-#: lib/external_credential/twitter.rb
-msgid "No consumer_secret param!"
 msgstr ""
 
 #: app/views/knowledge_base/public/categories/index.html.erb
@@ -7168,14 +7089,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee
 msgid "No linked issues"
 msgstr "沒有連結的問題"
-
-#: lib/external_credential/twitter.rb
-msgid "No oauth_token param!"
-msgstr ""
-
-#: lib/external_credential/twitter.rb
-msgid "No oauth_token_secret param!"
-msgstr ""
 
 #: app/assets/javascripts/app/views/settings/proxy.jst.eco db/seeds/settings.rb
 msgid "No proxy for the following hosts."
@@ -7653,6 +7566,12 @@ msgstr "外送"
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
 msgid "Outbound Call"
 msgstr "致電客戶"
+
+#: app/assets/javascripts/app/lib/app_post/browser.coffee
+#, fuzzy
+#| msgid "Browser"
+msgid "Outdated Browser"
+msgstr "瀏覽器"
 
 #: app/assets/javascripts/app/controllers/overview.coffee
 msgid "Overview"
@@ -9859,12 +9778,48 @@ msgstr ""
 msgid "The page you were looking for does not exist."
 msgstr ""
 
+#: app/controllers/mentions_controller.rb
+msgid "The parameter 'mentionable_type' is invalid."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee
 #, fuzzy
 #| msgid "Unable to verify email. Please contact your administrator."
 msgid "The password could not be set. Please contact your administrator."
 msgstr "無法驗證電子郵件。請與您的管理員聯繫。"
+
+#: app/controllers/import_freshdesk_controller.rb
+#: app/controllers/import_kayako_controller.rb
+#: app/controllers/import_otrs_controller.rb
+#: app/controllers/import_zendesk_controller.rb
+msgid "The provided URL is invalid."
+msgstr ""
+
+#: app/controllers/import_freshdesk_controller.rb
+#: app/controllers/import_kayako_controller.rb
+#: app/controllers/import_zendesk_controller.rb
+msgid "The provided credentials are invalid."
+msgstr ""
+
+#: app/models/webhook.rb
+msgid "The provided endpoint is invalid, no hostname was specified."
+msgstr ""
+
+#: app/models/webhook.rb
+msgid ""
+"The provided endpoint is invalid, no http or https protocol was specified."
+msgstr ""
+
+#: app/models/webhook.rb
+msgid "The provided endpoint is invalid."
+msgstr ""
+
+#: app/controllers/application_controller/authenticates.rb
+#: app/controllers/integration/check_mk_controller.rb
+#: app/controllers/users_controller.rb
+msgid "The provided token is invalid."
+msgstr ""
 
 #: app/assets/javascripts/app/views/knowledge_base/delete.coffee
 msgid "The request could not be processed."
@@ -9876,6 +9831,34 @@ msgstr ""
 
 #: lib/idoit.rb
 msgid "The required field 'endpoint' is missing from the config."
+msgstr ""
+
+#: lib/external_credential/facebook.rb
+msgid "The required parameter 'application_id' is missing."
+msgstr ""
+
+#: lib/external_credential/facebook.rb
+msgid "The required parameter 'application_secret' is missing."
+msgstr ""
+
+#: app/controllers/channels_sms_controller.rb
+msgid "The required parameter 'area' is missing."
+msgstr ""
+
+#: lib/external_credential/google.rb lib/external_credential/microsoft365.rb
+msgid "The required parameter 'client_id' is missing."
+msgstr ""
+
+#: lib/external_credential/google.rb lib/external_credential/microsoft365.rb
+msgid "The required parameter 'client_secret' is missing."
+msgstr ""
+
+#: lib/external_credential/twitter.rb
+msgid "The required parameter 'consumer_key' is missing."
+msgstr ""
+
+#: lib/external_credential/twitter.rb
+msgid "The required parameter 'consumer_secret' is missing."
 msgstr ""
 
 #: app/controllers/channels_twitter_controller.rb
@@ -9890,6 +9873,22 @@ msgstr ""
 
 #: app/controllers/users_controller.rb
 msgid "The required parameter 'id' is missing."
+msgstr ""
+
+#: lib/external_credential/twitter.rb
+msgid "The required parameter 'oauth_token' is missing."
+msgstr ""
+
+#: lib/external_credential/twitter.rb
+msgid "The required parameter 'oauth_token_secret' is missing."
+msgstr ""
+
+#: app/controllers/channels_sms_controller.rb
+msgid "The required parameter 'options.adapter' is missing."
+msgstr ""
+
+#: app/controllers/channels_sms_controller.rb
+msgid "The required parameter 'params' is missing."
 msgstr ""
 
 #: app/models/core_workflow/result.rb
@@ -9917,6 +9916,14 @@ msgstr ""
 msgid ""
 "The server settings could not be automatically detected. Please configure "
 "them manually."
+msgstr ""
+
+#: app/models/store/file.rb
+msgid "The setting 'storage_provider' was not configured."
+msgstr ""
+
+#: app/models/ticket/number.rb
+msgid "The setting 'ticket_number' was not configured."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee

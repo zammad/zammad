@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-01-11 13:09+0000\n"
-"Last-Translator: Baran Sekin <baransekin@gmail.com>\n"
+"PO-Revision-Date: 2022-04-26 03:30+0000\n"
+"Last-Translator: Sezgin KOC <sezgink059@outlook.com.tr>\n"
 "Language-Team: Turkish <https://translations.zammad.org/projects/zammad/"
 "zammad-development/tr/>\n"
 "Language: tr\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.10.1\n"
+"X-Generator: Weblate 4.11.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -52,22 +52,24 @@ msgid ""
 "filesystem. You can switch between the modules even on a system that is "
 "already in production without any loss of data."
 msgstr ""
+"\"Veritabanı\", tüm ekleri veritabanında saklar (büyük miktarda veri "
+"depolamak için önerilmez). \"Dosya sistemi\", verileri dosya sisteminde "
+"saklar. Halihazırda üretimde olan bir sistemde bile modüller arasında "
+"herhangi bir veri kaybı olmadan geçiş yapabilirsiniz."
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
-#, fuzzy
-#| msgid "%s Api Token"
 msgid "%s API Token"
-msgstr "% Api Jetonu"
+msgstr "% Api Belirteci"
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "%s Attribute"
-msgstr ""
+msgstr "%s Öznitelik"
 
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "%s Group"
-msgstr ""
+msgstr "%s Grup"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
@@ -78,7 +80,7 @@ msgstr "%s Aktarıldı "
 
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "%s Role"
-msgstr ""
+msgstr "%s Rol"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
@@ -91,17 +93,13 @@ msgid "%s ago"
 msgstr "%s önce"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
-#, fuzzy
-#| msgid "%s created data privacy task to delete user id |%s|"
 msgid "%s completed data privacy task to delete user ID |%s|"
 msgstr ""
 "%s, kullanıcı kimliğini silmek için veri gizliliği görevi oluşturdu |%s|"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee
-#, fuzzy
-#| msgid "%s created Article for |%s|"
 msgid "%s created article for |%s|"
-msgstr "%s created Article for |%s|"
+msgstr "%s için makale oluşturuldu |%s|"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 #, fuzzy
@@ -111,34 +109,24 @@ msgstr ""
 "%s, kullanıcı kimliğini silmek için veri gizliliği görevi oluşturdu |%s|"
 
 #: app/assets/javascripts/app/models/group.coffee
-#, fuzzy
-#| msgid "%s created Group |%s|"
 msgid "%s created group |%s|"
-msgstr "%s created Group |%s|"
+msgstr "%s oluşturulan grup |%s|"
 
 #: app/assets/javascripts/app/models/organization.coffee
-#, fuzzy
-#| msgid "%s created Organization |%s|"
 msgid "%s created organization |%s|"
-msgstr "%s created Organization |%s|"
+msgstr "%s oluşturulan organizasyon|%s|"
 
 #: app/assets/javascripts/app/models/role.coffee
-#, fuzzy
-#| msgid "%s created Group |%s|"
 msgid "%s created role |%s|"
-msgstr "%s created Group |%s|"
+msgstr "%s oluşturulan grup |%s|"
 
 #: app/assets/javascripts/app/models/ticket.coffee
-#, fuzzy
-#| msgid "%s created Ticket |%s|"
 msgid "%s created ticket |%s|"
-msgstr "%s created Ticket |%s|"
+msgstr "%s oluşturulan bilet |%s|"
 
 #: app/assets/javascripts/app/models/user.coffee
-#, fuzzy
-#| msgid "%s created User |%s|"
 msgid "%s created user |%s|"
-msgstr "%s created User |%s|"
+msgstr "%s oluşturulan kullanıcı |%s|"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
@@ -153,7 +141,7 @@ msgstr "%s ended switch to |%s|!"
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco
 msgid "%s folders"
-msgstr ""
+msgstr "%s klasörler"
 
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco
@@ -165,49 +153,35 @@ msgstr "%s groups to %s roles assignments"
 #: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 msgid "%s is inactive, please select an active one."
-msgstr ""
+msgstr "%s çevrımdışı, lütfen aktif bir tane seçin."
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
-#, fuzzy
-#| msgid "%s Object(s) have been created."
 msgid "%s object(s) have been created."
-msgstr "%s Object(s) have been created."
+msgstr "%s nesneler oluşturuldu."
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
-#, fuzzy
-#| msgid "%s Object(s) have been updated."
 msgid "%s object(s) have been updated."
-msgstr "%s Object(s) have been updated."
+msgstr "%s nesneler güncellendi."
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
-#, fuzzy
-#| msgid "%s Object(s) were deleted."
 msgid "%s object(s) were deleted."
-msgstr "%s Object(s) were deleted."
+msgstr "%s nesne(ler) silindi."
 
 #: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
-#, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "%s object(s) will be created."
-msgstr "%s Object(s) are created."
+msgstr "%s nesne(ler) oluşturuldu."
 
 #: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
-#, fuzzy
-#| msgid "%s Object(s) were deleted."
 msgid "%s object(s) will be deleted."
-msgstr "%s Object(s) were deleted."
+msgstr "%s nesne(ler) silinecek."
 
 #: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
-#, fuzzy
-#| msgid "%s Object(s) are updated."
 msgid "%s object(s) will be updated."
-msgstr "%s Object(s) are updated."
+msgstr "%s nesne(ler) güncellenecektir."
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco
-#, fuzzy
-#| msgid "%s of your tickets are currently in process."
 msgid "%s of my tickets are currently in process."
-msgstr "%s of your tickets are currently in process."
+msgstr "%s biletleriniz şuanda işlemde."
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_escalation.jst.eco
 msgid "%s of my tickets escalated."
@@ -222,6 +196,8 @@ msgid ""
 "%s recommends using OAuth. %s announced it's going to drop Basic "
 "Authentication support in the future."
 msgstr ""
+"%s, Auth'un kullanılmasını önerir. %s, gelecekte Temel Kimlik Doğrulama "
+"desteğini bırakacağını duyurdu."
 
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee
 msgid "%s required!"
@@ -234,7 +210,7 @@ msgstr "%s yeni bir oturum başlattı"
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 msgid "%s subdomain"
-msgstr ""
+msgstr "%s alt etki alanı"
 
 #: app/assets/javascripts/app/models/user.coffee
 msgid "%s switched to |%s|!"
@@ -247,11 +223,9 @@ msgid "%s updated article for |%s|"
 msgstr "%s created Article for |%s|"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
-#, fuzzy
-#| msgid "%s created data privacy task to delete user id |%s|"
 msgid "%s updated data privacy task to delete user ID |%s|"
 msgstr ""
-"%s, kullanıcı kimliğini silmek için veri gizliliği görevi oluşturdu |%s|"
+"%s, kullanıcı kimliğini silmek için veri gizliliği görevini güncelledi. |%s|"
 
 #: app/assets/javascripts/app/models/group.coffee
 #, fuzzy
@@ -266,10 +240,8 @@ msgid "%s updated organization |%s|"
 msgstr "%s |%s| kurumunu güncelledi"
 
 #: app/assets/javascripts/app/models/role.coffee
-#, fuzzy
-#| msgid "%s updated Role |%s|"
 msgid "%s updated role |%s|"
-msgstr "%s Rolü Güncellendi |%s|"
+msgstr "%s |%s| Rolü'nü Güncellendi"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 #, fuzzy
@@ -278,8 +250,6 @@ msgid "%s updated ticket |%s|"
 msgstr "%s |%s| konusunu güncelledi"
 
 #: app/assets/javascripts/app/models/user.coffee
-#, fuzzy
-#| msgid "%s updated User |%s|"
 msgid "%s updated user |%s|"
 msgstr "%s |%s| kullanıcısını güncelledi"
 
@@ -299,17 +269,6 @@ msgid "%s% have been reopened"
 msgstr "%s%'sı yeniden açıldı"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
-#, fuzzy
-#| msgid ""
-#| "** Data Privacy **, helps you to delete and verify the removal of "
-#| "existing data of the system.\n"
-#| "\n"
-#| "It can be used to delete tickets, organizations and users. The owner "
-#| "assignment will be unset in case the deleted user is an agent.\n"
-#| "\n"
-#| "Data Privacy tasks will be executed every 10 minutes. The execution might "
-#| "take some additional time depending of the number of objects that should "
-#| "get deleted."
 msgid ""
 "** Data Privacy ** helps you to delete and verify the removal of existing "
 "data from the system.\n"
@@ -345,6 +304,20 @@ msgid ""
 "displayed in a separate view in your overviews. You can also configure ** "
 "email notifications **."
 msgstr ""
+"** Hizmet Düzeyi Sözleşmeleri **, kısaltılmış ** SLA'lar **, "
+"müşterilerinizin istekleri için belirli yanıt sürelerini karşılamanıza "
+"yardımcı olur. Bu şekilde, her soruyu sekiz saat içinde yanıtlamak gibi "
+"hedefler tanımlayabilirsiniz. Bu hedefi kaçırma riskiniz varsa, Zammad sizi "
+"uyaracaktır.\n"
+"\n"
+"Üç farklı metrik için hedefler tanımlayabilirsiniz: ** yanıt süresi ** "
+"(bilet oluşturma ile temsilcinin ilk tepkisi arasındaki süre), ** güncelleme "
+"süresi ** (müşterinin talebi ile temsilcinin tepkisi arasındaki süre), ve ** "
+"çözüm süresi ** (bilet oluşturma ve kapatma arasındaki süre).\n"
+"\n"
+"Yükseltilmiş tüm biletler (yani, tanımlanan hedefi kaçıran biletler), genel "
+"bakışlarınızda ayrı bir görünümde görüntülenir. Ayrıca ** e-posta "
+"bildirimlerini ** yapılandırabilirsiniz."
 
 #: db/seeds/settings.rb
 msgid "1 day"
@@ -367,8 +340,6 @@ msgid "2 hours"
 msgstr "2 Saat"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "2 lower and 2 upper characters"
 msgid "2 lower case and 2 upper case characters"
 msgstr "2 küçük ve 2 büyük harf"
 
@@ -404,14 +375,23 @@ msgid ""
 "If you have customers with different business hours, you can create multiple "
 "calendars. Tickets are linked to calendars using **SLAs**."
 msgstr ""
+"İş saatlerine göre eskalasyonları hesaplamak ve eskalasyon bildirimleri "
+"göndermek için bir **takvim** gereklidir.\n"
+"\n"
+"Sistem genelinde geçerli olan bir **\"standart\"** takvim tanımlayın. "
+"Eskalasyon bildirimleri, yalnızca tanımlanan çalışma saatleri içinde "
+"temsilcilerinize gönderilecektir.\n"
+"\n"
+"Farklı çalışma saatlerine sahip müşterileriniz varsa birden fazla takvim "
+"oluşturabilirsiniz. Biletler, **SLA'lar** kullanılarak takvimlere bağlanır."
 
 #: app/controllers/getting_started_controller.rb
 msgid "A URL looks like this: https://zammad.example.com"
-msgstr ""
+msgstr "Bir URL şuna benzer: https://zammad.example.com"
 
 #: db/seeds/settings.rb
 msgid "A list of active import backends that gets scheduled automatically."
-msgstr ""
+msgstr "Otomatik olarak zamanlanan etkin içe aktarma arka uçlarının listesi."
 
 #: app/assets/javascripts/app/controllers/_plugin/session_taken_over.coffee
 msgid ""
@@ -431,7 +411,7 @@ msgstr "Müşterilerinizle ilgili daha fazla bilgi almak için güçlü bir serv
 
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee
 msgid "A queue is required!"
-msgstr ""
+msgstr "Sıra gerekli!"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 msgid ""
@@ -447,7 +427,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee
 msgid "A user is required!"
-msgstr ""
+msgstr "Kullanıcı gerekli!"
 
 #: app/assets/javascripts/app/controllers/api.coffee
 #: app/assets/javascripts/app/views/api.jst.eco db/seeds/permissions.rb
@@ -456,7 +436,7 @@ msgstr "API"
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee
 msgid "API Key"
-msgstr ""
+msgstr "API Anahtarı"
 
 #: db/seeds/settings.rb
 msgid "API Password Access"
@@ -1392,10 +1372,6 @@ msgstr "Branding"
 #: app/assets/javascripts/app/views/session.jst.eco
 msgid "Browser"
 msgstr "Browser"
-
-#: app/assets/javascripts/app/lib/app_post/browser.coffee
-msgid "Browser too old!"
-msgstr ""
 
 #: app/assets/javascripts/app/lib/mixins/ticket_mass_updatable.coffee
 msgid "Bulk action executed!"
@@ -5860,13 +5836,6 @@ msgstr ""
 msgid "Invalid GitLab issue link format"
 msgstr "Geçersiz GitHub issue bağlantı formatı"
 
-#: app/controllers/import_freshdesk_controller.rb
-#: app/controllers/import_kayako_controller.rb
-#: app/controllers/import_otrs_controller.rb
-#: app/controllers/import_zendesk_controller.rb
-msgid "Invalid URL!"
-msgstr ""
-
 #: app/controllers/getting_started_controller.rb
 msgid "Invalid auto wizard file."
 msgstr ""
@@ -5877,24 +5846,6 @@ msgstr ""
 
 #: app/controllers/long_polling_controller.rb
 msgid "Invalid client_id received!"
-msgstr ""
-
-#: app/controllers/import_freshdesk_controller.rb
-#: app/controllers/import_kayako_controller.rb
-#: app/controllers/import_zendesk_controller.rb
-msgid "Invalid credentials!"
-msgstr ""
-
-#: app/models/webhook.rb
-msgid "Invalid endpoint (no hostname)!"
-msgstr ""
-
-#: app/models/webhook.rb
-msgid "Invalid endpoint (no http/https)!"
-msgstr ""
-
-#: app/models/webhook.rb
-msgid "Invalid endpoint!"
 msgstr ""
 
 #: app/controllers/tickets_controller.rb
@@ -5909,16 +5860,18 @@ msgstr ""
 msgid "Invalid link structure (Object)"
 msgstr ""
 
-#: app/controllers/mentions_controller.rb
-msgid "Invalid mentionable_type!"
-msgstr ""
-
 #: lib/external_credential/twitter.rb
 msgid "Invalid oauth_token given!"
 msgstr ""
 
-#: lib/password_policy/length.rb
+#: lib/password_policy/min_length.rb
 msgid "Invalid password, it must be at least %s characters long!"
+msgstr "Geçersiz parola, en az %s karakter uzunluğunda olmalıdır!"
+
+#: lib/password_policy/max_length.rb
+#, fuzzy
+#| msgid "Invalid password, it must be at least %s characters long!"
+msgid "Invalid password, it must be shorter than %s characters!"
 msgstr "Geçersiz parola, en az %s karakter uzunluğunda olmalıdır!"
 
 #: lib/password_policy/digit.rb
@@ -5946,12 +5899,6 @@ msgstr ""
 #: app/models/concerns/checks_condition_validation.rb
 msgid "Invalid ticket selector conditions"
 msgstr "Invalid ticket selector conditions"
-
-#: app/controllers/application_controller/authenticates.rb
-#: app/controllers/integration/check_mk_controller.rb
-#: app/controllers/users_controller.rb
-msgid "Invalid token!"
-msgstr ""
 
 #: app/controllers/integration/cti_controller.rb
 #: app/controllers/integration/placetel_controller.rb
@@ -6678,36 +6625,8 @@ msgstr "Dakika"
 msgid "Missing 'for_user_id' in payload!"
 msgstr ""
 
-#: app/controllers/sessions_controller.rb
-msgid "Missing SSO ENV REMOTE_USER or X-Forwarded-User header"
-msgstr ""
-
 #: app/controllers/import_freshdesk_controller.rb
 msgid "Missing administrator permission!"
-msgstr ""
-
-#: app/controllers/channels_sms_controller.rb
-msgid "Missing area params"
-msgstr ""
-
-#: app/controllers/channels_sms_controller.rb
-msgid "Missing options params"
-msgstr ""
-
-#: app/controllers/channels_sms_controller.rb
-msgid "Missing options.adapter params"
-msgstr ""
-
-#: app/controllers/channels_sms_controller.rb
-msgid "Missing parameter options.adapter"
-msgstr ""
-
-#: app/models/store/file.rb
-msgid "Missing storage_provider setting option"
-msgstr ""
-
-#: app/models/ticket/number.rb
-msgid "Missing ticket_number setting option"
 msgstr ""
 
 #: db/seeds/object_manager_attributes.rb
@@ -6957,6 +6876,12 @@ msgstr ""
 msgid "Needed"
 msgstr "Needed"
 
+#: app/controllers/sessions_controller.rb
+msgid ""
+"Neither an SSO environment variable 'REMOTE_USER' nor a 'X-Forwarded-User' "
+"header could be found."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_manage/system.coffee
 msgid "Network"
 msgstr "Network"
@@ -7159,14 +7084,6 @@ msgstr "Not configured"
 msgid "No answers"
 msgstr ""
 
-#: lib/external_credential/facebook.rb
-msgid "No application_id param!"
-msgstr ""
-
-#: lib/external_credential/facebook.rb
-msgid "No application_secret param!"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
 msgid "No camera found."
 msgstr ""
@@ -7176,27 +7093,11 @@ msgid "No categories"
 msgstr "No categories"
 
 #: lib/external_credential/google.rb lib/external_credential/microsoft365.rb
-msgid "No client_id param!"
-msgstr ""
-
-#: lib/external_credential/google.rb lib/external_credential/microsoft365.rb
-msgid "No client_secret param!"
-msgstr ""
-
-#: lib/external_credential/google.rb lib/external_credential/microsoft365.rb
 msgid "No code for session found!"
 msgstr ""
 
 #: app/models/calendar.rb
 msgid "No configured business hours found!"
-msgstr ""
-
-#: lib/external_credential/twitter.rb
-msgid "No consumer_key param!"
-msgstr ""
-
-#: lib/external_credential/twitter.rb
-msgid "No consumer_secret param!"
 msgstr ""
 
 #: app/views/knowledge_base/public/categories/index.html.erb
@@ -7224,14 +7125,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee
 msgid "No linked issues"
 msgstr "Bağlantılı issue yok"
-
-#: lib/external_credential/twitter.rb
-msgid "No oauth_token param!"
-msgstr ""
-
-#: lib/external_credential/twitter.rb
-msgid "No oauth_token_secret param!"
-msgstr ""
 
 #: app/assets/javascripts/app/views/settings/proxy.jst.eco db/seeds/settings.rb
 msgid "No proxy for the following hosts."
@@ -7709,6 +7602,12 @@ msgstr "Giden"
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
 msgid "Outbound Call"
 msgstr "Giden Arama"
+
+#: app/assets/javascripts/app/lib/app_post/browser.coffee
+#, fuzzy
+#| msgid "Browser"
+msgid "Outdated Browser"
+msgstr "Browser"
 
 #: app/assets/javascripts/app/controllers/overview.coffee
 msgid "Overview"
@@ -9943,12 +9842,48 @@ msgstr ""
 msgid "The page you were looking for does not exist."
 msgstr ""
 
+#: app/controllers/mentions_controller.rb
+msgid "The parameter 'mentionable_type' is invalid."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee
 #, fuzzy
 #| msgid "Unable to verify email. Please contact your administrator."
 msgid "The password could not be set. Please contact your administrator."
 msgstr "Unable to verify email. Please contact your administrator."
+
+#: app/controllers/import_freshdesk_controller.rb
+#: app/controllers/import_kayako_controller.rb
+#: app/controllers/import_otrs_controller.rb
+#: app/controllers/import_zendesk_controller.rb
+msgid "The provided URL is invalid."
+msgstr ""
+
+#: app/controllers/import_freshdesk_controller.rb
+#: app/controllers/import_kayako_controller.rb
+#: app/controllers/import_zendesk_controller.rb
+msgid "The provided credentials are invalid."
+msgstr ""
+
+#: app/models/webhook.rb
+msgid "The provided endpoint is invalid, no hostname was specified."
+msgstr ""
+
+#: app/models/webhook.rb
+msgid ""
+"The provided endpoint is invalid, no http or https protocol was specified."
+msgstr ""
+
+#: app/models/webhook.rb
+msgid "The provided endpoint is invalid."
+msgstr ""
+
+#: app/controllers/application_controller/authenticates.rb
+#: app/controllers/integration/check_mk_controller.rb
+#: app/controllers/users_controller.rb
+msgid "The provided token is invalid."
+msgstr ""
 
 #: app/assets/javascripts/app/views/knowledge_base/delete.coffee
 msgid "The request could not be processed."
@@ -9960,6 +9895,34 @@ msgstr ""
 
 #: lib/idoit.rb
 msgid "The required field 'endpoint' is missing from the config."
+msgstr ""
+
+#: lib/external_credential/facebook.rb
+msgid "The required parameter 'application_id' is missing."
+msgstr ""
+
+#: lib/external_credential/facebook.rb
+msgid "The required parameter 'application_secret' is missing."
+msgstr ""
+
+#: app/controllers/channels_sms_controller.rb
+msgid "The required parameter 'area' is missing."
+msgstr ""
+
+#: lib/external_credential/google.rb lib/external_credential/microsoft365.rb
+msgid "The required parameter 'client_id' is missing."
+msgstr ""
+
+#: lib/external_credential/google.rb lib/external_credential/microsoft365.rb
+msgid "The required parameter 'client_secret' is missing."
+msgstr ""
+
+#: lib/external_credential/twitter.rb
+msgid "The required parameter 'consumer_key' is missing."
+msgstr ""
+
+#: lib/external_credential/twitter.rb
+msgid "The required parameter 'consumer_secret' is missing."
 msgstr ""
 
 #: app/controllers/channels_twitter_controller.rb
@@ -9974,6 +9937,22 @@ msgstr ""
 
 #: app/controllers/users_controller.rb
 msgid "The required parameter 'id' is missing."
+msgstr ""
+
+#: lib/external_credential/twitter.rb
+msgid "The required parameter 'oauth_token' is missing."
+msgstr ""
+
+#: lib/external_credential/twitter.rb
+msgid "The required parameter 'oauth_token_secret' is missing."
+msgstr ""
+
+#: app/controllers/channels_sms_controller.rb
+msgid "The required parameter 'options.adapter' is missing."
+msgstr ""
+
+#: app/controllers/channels_sms_controller.rb
+msgid "The required parameter 'params' is missing."
 msgstr ""
 
 #: app/models/core_workflow/result.rb
@@ -10001,6 +9980,14 @@ msgstr ""
 msgid ""
 "The server settings could not be automatically detected. Please configure "
 "them manually."
+msgstr ""
+
+#: app/models/store/file.rb
+msgid "The setting 'storage_provider' was not configured."
+msgstr ""
+
+#: app/models/ticket/number.rb
+msgid "The setting 'ticket_number' was not configured."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee

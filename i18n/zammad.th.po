@@ -4,8 +4,8 @@ msgstr ""
 "POT-Creation-Date: \n"
 "PO-Revision-Date: 2022-04-19 17:01+0000\n"
 "Last-Translator: LAO <sumonchai@gmail.com>\n"
-"Language-Team: Thai <https://translations.zammad.org/projects/zammad/"
-"zammad-development/th/>\n"
+"Language-Team: Thai <https://translations.zammad.org/projects/zammad/zammad-"
+"development/th/>\n"
 "Language: th\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -301,8 +301,8 @@ msgstr ""
 "(เวลาระหว่างการสร้างและปิด ticket )\n"
 "\n"
 "ticket ที่ส่งต่อ (เช่น ticket ที่พลาดเป้าหมายที่กำหนดไว้) "
-"จะแสดงในมุมมองที่แยกต่างหากในภาพรวมของคุณ คุณยังสามารถกำหนดค่า ** "
-"การแจ้งเตือนทางอีเมล **"
+"จะแสดงในมุมมองที่แยกต่างหากในภาพรวมของคุณ คุณยังสามารถกำหนดค่า ** การแจ้งเตือนทางอีเมล "
+"**"
 
 #: db/seeds/settings.rb
 msgid "1 day"
@@ -360,15 +360,13 @@ msgid ""
 "If you have customers with different business hours, you can create multiple "
 "calendars. Tickets are linked to calendars using **SLAs**."
 msgstr ""
-"**ปฏิทิน** "
-"เป็นสิ่งจำเป็นในการคำนวณการส่งต่อตามเวลาทำการและเพื่อส่งการแจ้งเตือนการยกระดั"
-"บ\n"
+"**ปฏิทิน** เป็นสิ่งจำเป็นในการคำนวณการส่งต่อตามเวลาทำการและเพื่อส่งการแจ้งเตือนการยกระดับ\n"
 "\n"
-"กำหนดปฏิทิน **\"มาตรฐาน\"** ที่ถูกต้องสำหรับทั้งระบบ การแจ้งเตือนการเลื่อนระด"
-"ับจะถูกส่งไปยังตัวแทนของคุณในช่วงเวลาทำการที่กำหนดเท่านั้น\n"
+"กำหนดปฏิทิน **\"มาตรฐาน\"** ที่ถูกต้องสำหรับทั้งระบบ "
+"การแจ้งเตือนการเลื่อนระดับจะถูกส่งไปยังตัวแทนของคุณในช่วงเวลาทำการที่กำหนดเท่านั้น\n"
 "\n"
-"หากคุณมีลูกค้าที่มีเวลาทำการต่างกัน คุณสามารถสร้างปฏิทินได้หลายปฏิทิน "
-"Tickets เชื่อมโยงกับปฏิทินโดยใช้ **SLA**"
+"หากคุณมีลูกค้าที่มีเวลาทำการต่างกัน คุณสามารถสร้างปฏิทินได้หลายปฏิทิน Tickets "
+"เชื่อมโยงกับปฏิทินโดยใช้ **SLA**"
 
 #: app/controllers/getting_started_controller.rb
 msgid "A URL looks like this: https://zammad.example.com"
@@ -1318,10 +1316,6 @@ msgstr "การสร้างแบรนด์"
 #: app/assets/javascripts/app/views/session.jst.eco
 msgid "Browser"
 msgstr "เบราว์เซอร์"
-
-#: app/assets/javascripts/app/lib/app_post/browser.coffee
-msgid "Browser too old!"
-msgstr "เบราว์เซอร์เก่าเกินไป!"
 
 #: app/assets/javascripts/app/lib/mixins/ticket_mass_updatable.coffee
 msgid "Bulk action executed!"
@@ -5466,13 +5460,6 @@ msgstr ""
 msgid "Invalid GitLab issue link format"
 msgstr ""
 
-#: app/controllers/import_freshdesk_controller.rb
-#: app/controllers/import_kayako_controller.rb
-#: app/controllers/import_otrs_controller.rb
-#: app/controllers/import_zendesk_controller.rb
-msgid "Invalid URL!"
-msgstr ""
-
 #: app/controllers/getting_started_controller.rb
 msgid "Invalid auto wizard file."
 msgstr ""
@@ -5483,24 +5470,6 @@ msgstr ""
 
 #: app/controllers/long_polling_controller.rb
 msgid "Invalid client_id received!"
-msgstr ""
-
-#: app/controllers/import_freshdesk_controller.rb
-#: app/controllers/import_kayako_controller.rb
-#: app/controllers/import_zendesk_controller.rb
-msgid "Invalid credentials!"
-msgstr ""
-
-#: app/models/webhook.rb
-msgid "Invalid endpoint (no hostname)!"
-msgstr ""
-
-#: app/models/webhook.rb
-msgid "Invalid endpoint (no http/https)!"
-msgstr ""
-
-#: app/models/webhook.rb
-msgid "Invalid endpoint!"
 msgstr ""
 
 #: app/controllers/tickets_controller.rb
@@ -5515,16 +5484,16 @@ msgstr ""
 msgid "Invalid link structure (Object)"
 msgstr ""
 
-#: app/controllers/mentions_controller.rb
-msgid "Invalid mentionable_type!"
-msgstr ""
-
 #: lib/external_credential/twitter.rb
 msgid "Invalid oauth_token given!"
 msgstr ""
 
-#: lib/password_policy/length.rb
+#: lib/password_policy/min_length.rb
 msgid "Invalid password, it must be at least %s characters long!"
+msgstr ""
+
+#: lib/password_policy/max_length.rb
+msgid "Invalid password, it must be shorter than %s characters!"
 msgstr ""
 
 #: lib/password_policy/digit.rb
@@ -5551,12 +5520,6 @@ msgstr ""
 
 #: app/models/concerns/checks_condition_validation.rb
 msgid "Invalid ticket selector conditions"
-msgstr ""
-
-#: app/controllers/application_controller/authenticates.rb
-#: app/controllers/integration/check_mk_controller.rb
-#: app/controllers/users_controller.rb
-msgid "Invalid token!"
 msgstr ""
 
 #: app/controllers/integration/cti_controller.rb
@@ -6257,36 +6220,8 @@ msgstr ""
 msgid "Missing 'for_user_id' in payload!"
 msgstr ""
 
-#: app/controllers/sessions_controller.rb
-msgid "Missing SSO ENV REMOTE_USER or X-Forwarded-User header"
-msgstr ""
-
 #: app/controllers/import_freshdesk_controller.rb
 msgid "Missing administrator permission!"
-msgstr ""
-
-#: app/controllers/channels_sms_controller.rb
-msgid "Missing area params"
-msgstr ""
-
-#: app/controllers/channels_sms_controller.rb
-msgid "Missing options params"
-msgstr ""
-
-#: app/controllers/channels_sms_controller.rb
-msgid "Missing options.adapter params"
-msgstr ""
-
-#: app/controllers/channels_sms_controller.rb
-msgid "Missing parameter options.adapter"
-msgstr ""
-
-#: app/models/store/file.rb
-msgid "Missing storage_provider setting option"
-msgstr ""
-
-#: app/models/ticket/number.rb
-msgid "Missing ticket_number setting option"
 msgstr ""
 
 #: db/seeds/object_manager_attributes.rb
@@ -6524,6 +6459,12 @@ msgstr ""
 msgid "Needed"
 msgstr ""
 
+#: app/controllers/sessions_controller.rb
+msgid ""
+"Neither an SSO environment variable 'REMOTE_USER' nor a 'X-Forwarded-User' "
+"header could be found."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_manage/system.coffee
 msgid "Network"
 msgstr ""
@@ -6722,14 +6663,6 @@ msgstr ""
 msgid "No answers"
 msgstr ""
 
-#: lib/external_credential/facebook.rb
-msgid "No application_id param!"
-msgstr ""
-
-#: lib/external_credential/facebook.rb
-msgid "No application_secret param!"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
 msgid "No camera found."
 msgstr ""
@@ -6739,27 +6672,11 @@ msgid "No categories"
 msgstr ""
 
 #: lib/external_credential/google.rb lib/external_credential/microsoft365.rb
-msgid "No client_id param!"
-msgstr ""
-
-#: lib/external_credential/google.rb lib/external_credential/microsoft365.rb
-msgid "No client_secret param!"
-msgstr ""
-
-#: lib/external_credential/google.rb lib/external_credential/microsoft365.rb
 msgid "No code for session found!"
 msgstr ""
 
 #: app/models/calendar.rb
 msgid "No configured business hours found!"
-msgstr ""
-
-#: lib/external_credential/twitter.rb
-msgid "No consumer_key param!"
-msgstr ""
-
-#: lib/external_credential/twitter.rb
-msgid "No consumer_secret param!"
 msgstr ""
 
 #: app/views/knowledge_base/public/categories/index.html.erb
@@ -6786,14 +6703,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee
 msgid "No linked issues"
-msgstr ""
-
-#: lib/external_credential/twitter.rb
-msgid "No oauth_token param!"
-msgstr ""
-
-#: lib/external_credential/twitter.rb
-msgid "No oauth_token_secret param!"
 msgstr ""
 
 #: app/assets/javascripts/app/views/settings/proxy.jst.eco db/seeds/settings.rb
@@ -7264,6 +7173,12 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
 msgid "Outbound Call"
 msgstr ""
+
+#: app/assets/javascripts/app/lib/app_post/browser.coffee
+#, fuzzy
+#| msgid "Browser"
+msgid "Outdated Browser"
+msgstr "เบราว์เซอร์"
 
 #: app/assets/javascripts/app/controllers/overview.coffee
 msgid "Overview"
@@ -9361,10 +9276,56 @@ msgstr ""
 msgid "The page you were looking for does not exist."
 msgstr ""
 
+#: app/controllers/mentions_controller.rb
+#, fuzzy
+#| msgid "The resized image is invalid."
+msgid "The parameter 'mentionable_type' is invalid."
+msgstr "ภาพที่ปรับขนาดไม่ถูกต้อง"
+
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee
 msgid "The password could not be set. Please contact your administrator."
 msgstr ""
+
+#: app/controllers/import_freshdesk_controller.rb
+#: app/controllers/import_kayako_controller.rb
+#: app/controllers/import_otrs_controller.rb
+#: app/controllers/import_zendesk_controller.rb
+#, fuzzy
+#| msgid "The resized image is invalid."
+msgid "The provided URL is invalid."
+msgstr "ภาพที่ปรับขนาดไม่ถูกต้อง"
+
+#: app/controllers/import_freshdesk_controller.rb
+#: app/controllers/import_kayako_controller.rb
+#: app/controllers/import_zendesk_controller.rb
+#, fuzzy
+#| msgid "The resized image is invalid."
+msgid "The provided credentials are invalid."
+msgstr "ภาพที่ปรับขนาดไม่ถูกต้อง"
+
+#: app/models/webhook.rb
+msgid "The provided endpoint is invalid, no hostname was specified."
+msgstr ""
+
+#: app/models/webhook.rb
+msgid ""
+"The provided endpoint is invalid, no http or https protocol was specified."
+msgstr ""
+
+#: app/models/webhook.rb
+#, fuzzy
+#| msgid "The resized image is invalid."
+msgid "The provided endpoint is invalid."
+msgstr "ภาพที่ปรับขนาดไม่ถูกต้อง"
+
+#: app/controllers/application_controller/authenticates.rb
+#: app/controllers/integration/check_mk_controller.rb
+#: app/controllers/users_controller.rb
+#, fuzzy
+#| msgid "The resized image is invalid."
+msgid "The provided token is invalid."
+msgstr "ภาพที่ปรับขนาดไม่ถูกต้อง"
 
 #: app/assets/javascripts/app/views/knowledge_base/delete.coffee
 msgid "The request could not be processed."
@@ -9376,6 +9337,34 @@ msgstr ""
 
 #: lib/idoit.rb
 msgid "The required field 'endpoint' is missing from the config."
+msgstr ""
+
+#: lib/external_credential/facebook.rb
+msgid "The required parameter 'application_id' is missing."
+msgstr ""
+
+#: lib/external_credential/facebook.rb
+msgid "The required parameter 'application_secret' is missing."
+msgstr ""
+
+#: app/controllers/channels_sms_controller.rb
+msgid "The required parameter 'area' is missing."
+msgstr ""
+
+#: lib/external_credential/google.rb lib/external_credential/microsoft365.rb
+msgid "The required parameter 'client_id' is missing."
+msgstr ""
+
+#: lib/external_credential/google.rb lib/external_credential/microsoft365.rb
+msgid "The required parameter 'client_secret' is missing."
+msgstr ""
+
+#: lib/external_credential/twitter.rb
+msgid "The required parameter 'consumer_key' is missing."
+msgstr ""
+
+#: lib/external_credential/twitter.rb
+msgid "The required parameter 'consumer_secret' is missing."
 msgstr ""
 
 #: app/controllers/channels_twitter_controller.rb
@@ -9390,6 +9379,22 @@ msgstr ""
 
 #: app/controllers/users_controller.rb
 msgid "The required parameter 'id' is missing."
+msgstr ""
+
+#: lib/external_credential/twitter.rb
+msgid "The required parameter 'oauth_token' is missing."
+msgstr ""
+
+#: lib/external_credential/twitter.rb
+msgid "The required parameter 'oauth_token_secret' is missing."
+msgstr ""
+
+#: app/controllers/channels_sms_controller.rb
+msgid "The required parameter 'options.adapter' is missing."
+msgstr ""
+
+#: app/controllers/channels_sms_controller.rb
+msgid "The required parameter 'params' is missing."
 msgstr ""
 
 #: app/models/core_workflow/result.rb
@@ -9418,6 +9423,14 @@ msgid ""
 "The server settings could not be automatically detected. Please configure "
 "them manually."
 msgstr "ไม่สามารถตรวจพบการตั้งค่าเซิร์ฟเวอร์โดยอัตโนมัติ โปรดกำหนดค่าด้วยตนเอง"
+
+#: app/models/store/file.rb
+msgid "The setting 'storage_provider' was not configured."
+msgstr ""
+
+#: app/models/ticket/number.rb
+msgid "The setting 'ticket_number' was not configured."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee
 msgid "The sign-in failed. Please contact the Support team."
@@ -10693,13 +10706,12 @@ msgid ""
 "an HTTP(S) endpoint and relevant security settings, then configure a trigger "
 "to perform it."
 msgstr ""
-"Webhooks ทำให้ง่ายต่อการส่งข้อมูลเกี่ยวกับเหตุการณ์ภายใน Zammad "
-"ไปยังระบบของบุคคลที่สามผ่าน HTTP(S)\n"
+"Webhooks ทำให้ง่ายต่อการส่งข้อมูลเกี่ยวกับเหตุการณ์ภายใน Zammad ไปยังระบบของบุคคลที่สามผ่าน "
+"HTTP(S)\n"
 "\n"
-"คุณสามารถใช้เว็บฮุคใน Zammad เพื่อส่ง Ticket บทความ "
-"และข้อมูลไฟล์แนบได้ทุกเมื่อที่ทริกเกอร์ "
-"เพียงสร้างและกำหนดค่าเว็บฮุคของคุณด้วยจุดสิ้นสุด HTTP(S) "
-"และการตั้งค่าความปลอดภัยที่เกี่ยวข้อง จากนั้นกำหนดค่าทริกเกอร์เพื่อดำเนินการ"
+"คุณสามารถใช้เว็บฮุคใน Zammad เพื่อส่ง Ticket บทความ และข้อมูลไฟล์แนบได้ทุกเมื่อที่ทริกเกอร์ "
+"เพียงสร้างและกำหนดค่าเว็บฮุคของคุณด้วยจุดสิ้นสุด HTTP(S) และการตั้งค่าความปลอดภัยที่เกี่ยวข้อง "
+"จากนั้นกำหนดค่าทริกเกอร์เพื่อดำเนินการ"
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/link_button.coffee
 msgid "Weblink"
@@ -12082,6 +12094,9 @@ msgstr ""
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ รอเวลาวันนี้"
+
+#~ msgid "Browser too old!"
+#~ msgstr "เบราว์เซอร์เก่าเกินไป!"
 
 #~ msgid "Area"
 #~ msgstr "พื้นที่"

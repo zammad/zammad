@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-04-19 17:01+0000\n"
+"PO-Revision-Date: 2022-04-26 05:47+0000\n"
 "Last-Translator: Martin Gruner <mg@zammad.com>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
 "zammad-development/de/>\n"
@@ -1365,10 +1365,6 @@ msgstr "Branding"
 #: app/assets/javascripts/app/views/session.jst.eco
 msgid "Browser"
 msgstr "Browser"
-
-#: app/assets/javascripts/app/lib/app_post/browser.coffee
-msgid "Browser too old!"
-msgstr "Browser ist zu alt!"
 
 #: app/assets/javascripts/app/lib/mixins/ticket_mass_updatable.coffee
 msgid "Bulk action executed!"
@@ -5007,7 +5003,7 @@ msgstr "Google Maps"
 
 #: app/models/text_module.rb
 msgid "Got no locale"
-msgstr "Kein Gebietsschema vorhanden"
+msgstr "Keine Sprache vorhanden"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/highlighter.coffee
 msgid "Green"
@@ -5865,13 +5861,6 @@ msgstr "Ungültiges GraphQL-API-Token für GitLab"
 msgid "Invalid GitLab issue link format"
 msgstr "Ungültiges Format für GitLab Issue-Link"
 
-#: app/controllers/import_freshdesk_controller.rb
-#: app/controllers/import_kayako_controller.rb
-#: app/controllers/import_otrs_controller.rb
-#: app/controllers/import_zendesk_controller.rb
-msgid "Invalid URL!"
-msgstr "Falsche URL!"
-
 #: app/controllers/getting_started_controller.rb
 msgid "Invalid auto wizard file."
 msgstr "Datei für automatischen Assistenten ist fehlerhaft."
@@ -5883,24 +5872,6 @@ msgstr "Ungültige client_id in Empfangsschleife!"
 #: app/controllers/long_polling_controller.rb
 msgid "Invalid client_id received!"
 msgstr "Ungültige client_id empfangen!"
-
-#: app/controllers/import_freshdesk_controller.rb
-#: app/controllers/import_kayako_controller.rb
-#: app/controllers/import_zendesk_controller.rb
-msgid "Invalid credentials!"
-msgstr "Falsche Zugangsdaten!"
-
-#: app/models/webhook.rb
-msgid "Invalid endpoint (no hostname)!"
-msgstr "Endpunkt fehlerhaft (kein Hostname)!"
-
-#: app/models/webhook.rb
-msgid "Invalid endpoint (no http/https)!"
-msgstr "Endpunkt fehlerhaft (kein HTTP/HTTPs)!"
-
-#: app/models/webhook.rb
-msgid "Invalid endpoint!"
-msgstr "Fehlerhafter Endpunkt!"
 
 #: app/controllers/tickets_controller.rb
 msgid "Invalid link structure"
@@ -5914,17 +5885,17 @@ msgstr "Ungültige Linkstruktur (Objekt → LinkType)"
 msgid "Invalid link structure (Object)"
 msgstr "Ungültige Link-Struktur (Objekt)"
 
-#: app/controllers/mentions_controller.rb
-msgid "Invalid mentionable_type!"
-msgstr "Falscher mentionable_type!"
-
 #: lib/external_credential/twitter.rb
 msgid "Invalid oauth_token given!"
 msgstr "Ungültiges oauth_token angegeben!"
 
-#: lib/password_policy/length.rb
+#: lib/password_policy/min_length.rb
 msgid "Invalid password, it must be at least %s characters long!"
 msgstr "Ungültiges Passwort, es muss mindestens %s Zeichen lang sein!"
+
+#: lib/password_policy/max_length.rb
+msgid "Invalid password, it must be shorter than %s characters!"
+msgstr "Ungültiges Passwort, es muss kürzer als %s Zeichen sein!"
 
 #: lib/password_policy/digit.rb
 msgid "Invalid password, it must contain at least 1 digit!"
@@ -5954,12 +5925,6 @@ msgstr "Ungültige Berechtigungen! Sperren Sie sich nicht aus."
 #: app/models/concerns/checks_condition_validation.rb
 msgid "Invalid ticket selector conditions"
 msgstr "Ungültige Bedingungen für die Ticket-Auswahl"
-
-#: app/controllers/application_controller/authenticates.rb
-#: app/controllers/integration/check_mk_controller.rb
-#: app/controllers/users_controller.rb
-msgid "Invalid token!"
-msgstr "Token ungültig!"
 
 #: app/controllers/integration/cti_controller.rb
 #: app/controllers/integration/placetel_controller.rb
@@ -6098,15 +6063,15 @@ msgstr "Knowledge Base"
 
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee
 msgid "Knowledge Base Answer"
-msgstr "Wissensdatenbank-Antwort"
+msgstr "Knowledge Base-Antwort"
 
 #: db/seeds/permissions.rb
 msgid "Knowledge Base Editor"
-msgstr "Editor der Wissensdatenbank"
+msgstr "Knowledge Base-Bearbeiter"
 
 #: db/seeds/permissions.rb
 msgid "Knowledge Base Reader"
-msgstr "Wissensdatenbank-Reader"
+msgstr "Knowledge Base-Leser"
 
 #: db/seeds/settings.rb
 msgid "Knowledge Base active"
@@ -6118,7 +6083,7 @@ msgstr "Knowledge Base öffentlich aktiv"
 
 #: db/seeds/settings.rb
 msgid "Knowledge Base multilingual support"
-msgstr "Mehrsprachige Unterstützung der Wissensdatenbank"
+msgstr "Mehrsprachige Unterstützung der Knowledge Base"
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
@@ -6169,7 +6134,7 @@ msgstr "Letzter Kontakt (Agent) um"
 
 #: lib/excel_sheet/ticket.rb
 msgid "Last Contact At"
-msgstr "Letzter Kontakt um"
+msgstr "Letzter Kontakt am"
 
 #: lib/excel_sheet/ticket.rb
 msgid "Last Contact Customer At"
@@ -6340,7 +6305,7 @@ msgstr "Sprache"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 msgid "Locale not found"
-msgstr "Gebietsschema nicht gefunden"
+msgstr "Sprache nicht gefunden"
 
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
 #: app/assets/javascripts/app/views/session.jst.eco
@@ -6670,37 +6635,9 @@ msgstr "Minuten"
 msgid "Missing 'for_user_id' in payload!"
 msgstr "Fehlende 'for_user_id' in der Payload!"
 
-#: app/controllers/sessions_controller.rb
-msgid "Missing SSO ENV REMOTE_USER or X-Forwarded-User header"
-msgstr "Fehlender SSO ENV REMOTE_USER oder X-Forwarded-User Header"
-
 #: app/controllers/import_freshdesk_controller.rb
 msgid "Missing administrator permission!"
 msgstr "Fehlende Administratorrechte!"
-
-#: app/controllers/channels_sms_controller.rb
-msgid "Missing area params"
-msgstr "Fehlender area-Parameter"
-
-#: app/controllers/channels_sms_controller.rb
-msgid "Missing options params"
-msgstr "Fehlende Optionsparameter"
-
-#: app/controllers/channels_sms_controller.rb
-msgid "Missing options.adapter params"
-msgstr "Fehlende options.adapter-Parameter"
-
-#: app/controllers/channels_sms_controller.rb
-msgid "Missing parameter options.adapter"
-msgstr "Fehlender Parameter options.adapter"
-
-#: app/models/store/file.rb
-msgid "Missing storage_provider setting option"
-msgstr "Fehlende Einstellungsoption storage_provider"
-
-#: app/models/ticket/number.rb
-msgid "Missing ticket_number setting option"
-msgstr "Fehlende ticket_number-Einstellungsoption"
 
 #: db/seeds/object_manager_attributes.rb
 msgid "Mobile"
@@ -6903,7 +6840,7 @@ msgstr "Mindestens ein Feld \"Artikeltext\" ist erforderlich."
 
 #: app/controllers/application_controller/handles_devices.rb
 msgid "Need fingerprint param!"
-msgstr "Benötige Fingerabdruck-Parameter!"
+msgstr "Benötige fingerprint-Parameter!"
 
 #: app/controllers/user_access_token_controller.rb
 msgid "Need label!"
@@ -6911,7 +6848,7 @@ msgstr "Label wird benötigt!"
 
 #: app/controllers/settings_controller.rb
 msgid "Need logo param"
-msgstr "Logoparameter benötigt"
+msgstr "Benötige logo-Parameter"
 
 #: app/models/application_model/can_creates_and_updates.rb
 msgid "Need name, login, email or locale for create_or_update()"
@@ -6936,6 +6873,14 @@ msgstr "Benötigt user_id oder organization_id als Parameter"
 #: db/seeds/settings.rb
 msgid "Needed"
 msgstr "erforderlich"
+
+#: app/controllers/sessions_controller.rb
+msgid ""
+"Neither an SSO environment variable 'REMOTE_USER' nor a 'X-Forwarded-User' "
+"header could be found."
+msgstr ""
+"Es konnte weder eine SSO-Umgebungsvariable 'REMOTE_USER' noch eine 'X"
+"-Forwarded-User'-Kopfzeile gefunden werden."
 
 #: app/assets/javascripts/app/controllers/_manage/system.coffee
 msgid "Network"
@@ -7108,7 +7053,7 @@ msgstr "Keine Google-App konfiguriert!"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 msgid "No Knowledge Base created"
-msgstr "Keine Wissensdatenbank erstellt"
+msgstr "Keine Knowledge Base erstellt"
 
 #: lib/external_credential/microsoft365.rb
 msgid "No Microsoft365 app configured!"
@@ -7135,14 +7080,6 @@ msgstr "Keine Twitter-App konfiguriert!"
 msgid "No answers"
 msgstr "Keine Antworten"
 
-#: lib/external_credential/facebook.rb
-msgid "No application_id param!"
-msgstr "Kein Parameter 'application_id'!"
-
-#: lib/external_credential/facebook.rb
-msgid "No application_secret param!"
-msgstr "Kein Parameter 'application_secret'!"
-
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
 msgid "No camera found."
 msgstr "Keine Kamera gefunden."
@@ -7152,28 +7089,12 @@ msgid "No categories"
 msgstr "Keine Kategorien"
 
 #: lib/external_credential/google.rb lib/external_credential/microsoft365.rb
-msgid "No client_id param!"
-msgstr "Kein client_id-Parameter!"
-
-#: lib/external_credential/google.rb lib/external_credential/microsoft365.rb
-msgid "No client_secret param!"
-msgstr "Kein client_secret Parameter!"
-
-#: lib/external_credential/google.rb lib/external_credential/microsoft365.rb
 msgid "No code for session found!"
 msgstr "Kein Sitzungscode gefunden!"
 
 #: app/models/calendar.rb
 msgid "No configured business hours found!"
 msgstr "Keine konfigurierten Geschäftszeiten gefunden!"
-
-#: lib/external_credential/twitter.rb
-msgid "No consumer_key param!"
-msgstr "Kein Paramter 'consumer_key'!"
-
-#: lib/external_credential/twitter.rb
-msgid "No consumer_secret param!"
-msgstr "Kein Parameter 'consumer_secret'!"
 
 #: app/views/knowledge_base/public/categories/index.html.erb
 #: app/views/knowledge_base/public/tags/show.html.erb
@@ -7200,14 +7121,6 @@ msgstr "Keine Ordner für die übermittelten Benutzer-Zugangsdaten gefunden."
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee
 msgid "No linked issues"
 msgstr "Keine verknüpften Issues"
-
-#: lib/external_credential/twitter.rb
-msgid "No oauth_token param!"
-msgstr "Kein Parameter 'oauth_token'!"
-
-#: lib/external_credential/twitter.rb
-msgid "No oauth_token_secret param!"
-msgstr "Kein Parameter 'oauth_token_secret'!"
 
 #: app/assets/javascripts/app/views/settings/proxy.jst.eco db/seeds/settings.rb
 msgid "No proxy for the following hosts."
@@ -7692,6 +7605,10 @@ msgstr "Ausgehend"
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
 msgid "Outbound Call"
 msgstr "Ausgehender Anruf"
+
+#: app/assets/javascripts/app/lib/app_post/browser.coffee
+msgid "Outdated Browser"
+msgstr "Veralteter Browser"
 
 #: app/assets/javascripts/app/controllers/overview.coffee
 msgid "Overview"
@@ -8371,7 +8288,7 @@ msgstr "Anfrage zur Änderung"
 
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid "Requesting the Grant"
-msgstr "Angeforderte Rechte"
+msgstr "Rechteanforderung"
 
 #: app/controllers/reports_controller.rb
 msgid "Required parameter 'downloadBackendSelected' is missing."
@@ -9453,7 +9370,7 @@ msgstr "Sonntag"
 
 #: db/seeds/settings.rb
 msgid "Support of multilingual Knowledge Base."
-msgstr "Unterstützung einer mehrsprachigen Wissensdatenbank."
+msgstr "Unterstützung einer mehrsprachigen Knowledge Base."
 
 #: db/seeds/schedulers.rb
 msgid "Sync calendars with iCal feeds."
@@ -9482,7 +9399,7 @@ msgid ""
 "System supports only one locale for knowledge base. Upgrade your plan to use "
 "more locales."
 msgstr ""
-"Das System unterstützt nur ein Gebietsschema für die Wissensdatenbank. "
+"Das System unterstützt nur eine Sprache für die Knowledge Base. "
 "Aktualisieren Sie Ihren Plan, um mehr Sprachversionen zu verwenden."
 
 #: db/seeds/settings.rb
@@ -9872,12 +9789,51 @@ msgstr "Die Seite wurde nicht gefunden"
 msgid "The page you were looking for does not exist."
 msgstr "Die Seite nach der Sie gesucht haben existiert nicht."
 
+#: app/controllers/mentions_controller.rb
+msgid "The parameter 'mentionable_type' is invalid."
+msgstr "Der Parameter 'mentionable_type' ist ungültig."
+
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee
 msgid "The password could not be set. Please contact your administrator."
 msgstr ""
 "Das Passwort konnte nicht gesetzt werden. Bitte kontaktieren Sie Ihren "
 "Administrator."
+
+#: app/controllers/import_freshdesk_controller.rb
+#: app/controllers/import_kayako_controller.rb
+#: app/controllers/import_otrs_controller.rb
+#: app/controllers/import_zendesk_controller.rb
+msgid "The provided URL is invalid."
+msgstr "Die angegebene URL ist ungültig."
+
+#: app/controllers/import_freshdesk_controller.rb
+#: app/controllers/import_kayako_controller.rb
+#: app/controllers/import_zendesk_controller.rb
+msgid "The provided credentials are invalid."
+msgstr "Die angegebenen Zugangsdaten sind ungültig."
+
+#: app/models/webhook.rb
+msgid "The provided endpoint is invalid, no hostname was specified."
+msgstr ""
+"Der angegebene Endpunkt ist ungültig, es wurde kein Hostname spezifiziert."
+
+#: app/models/webhook.rb
+msgid ""
+"The provided endpoint is invalid, no http or https protocol was specified."
+msgstr ""
+"Der angegebene Endpunkt ist ungültig, es wurde kein HTTP- oder HTTPS-"
+"Protokoll angegeben."
+
+#: app/models/webhook.rb
+msgid "The provided endpoint is invalid."
+msgstr "Der angegebene Endpunkt ist ungültig."
+
+#: app/controllers/application_controller/authenticates.rb
+#: app/controllers/integration/check_mk_controller.rb
+#: app/controllers/users_controller.rb
+msgid "The provided token is invalid."
+msgstr "Das angegebene Token ist ungültig."
 
 #: app/assets/javascripts/app/views/knowledge_base/delete.coffee
 msgid "The request could not be processed."
@@ -9890,6 +9846,34 @@ msgstr "Das erforderliche Feld 'api_token' fehlt in der Konfiguration."
 #: lib/idoit.rb
 msgid "The required field 'endpoint' is missing from the config."
 msgstr "Das erforderliche Feld 'endpoint' fehlt in der Konfiguration."
+
+#: lib/external_credential/facebook.rb
+msgid "The required parameter 'application_id' is missing."
+msgstr "Der erforderliche Parameter 'application_id' fehlt."
+
+#: lib/external_credential/facebook.rb
+msgid "The required parameter 'application_secret' is missing."
+msgstr "Der erforderliche Parameter 'application_secret' fehlt."
+
+#: app/controllers/channels_sms_controller.rb
+msgid "The required parameter 'area' is missing."
+msgstr "Der erforderliche Parameter 'area' fehlt."
+
+#: lib/external_credential/google.rb lib/external_credential/microsoft365.rb
+msgid "The required parameter 'client_id' is missing."
+msgstr "Der erforderliche Parameter 'client_id' fehlt."
+
+#: lib/external_credential/google.rb lib/external_credential/microsoft365.rb
+msgid "The required parameter 'client_secret' is missing."
+msgstr "Der erforderliche Parameter 'client_secret' fehlt."
+
+#: lib/external_credential/twitter.rb
+msgid "The required parameter 'consumer_key' is missing."
+msgstr "Der erforderliche Parameter 'current_key' fehlt."
+
+#: lib/external_credential/twitter.rb
+msgid "The required parameter 'consumer_secret' is missing."
+msgstr "Der erforderliche Parameter 'consumer_secret' fehlt."
 
 #: app/controllers/channels_twitter_controller.rb
 msgid ""
@@ -9905,6 +9889,22 @@ msgstr "Der erforderliche Parameter 'current_user_id' fehlt."
 #: app/controllers/users_controller.rb
 msgid "The required parameter 'id' is missing."
 msgstr "Der erforderliche Parameter 'id' fehlt."
+
+#: lib/external_credential/twitter.rb
+msgid "The required parameter 'oauth_token' is missing."
+msgstr "Der erforderliche Parameter 'oauth_token' fehlt."
+
+#: lib/external_credential/twitter.rb
+msgid "The required parameter 'oauth_token_secret' is missing."
+msgstr "Der erforderliche Parameter 'oauth_token_secret' fehlt."
+
+#: app/controllers/channels_sms_controller.rb
+msgid "The required parameter 'options.adapter' is missing."
+msgstr "Der erforderliche Parameter 'options.adapter' fehlt."
+
+#: app/controllers/channels_sms_controller.rb
+msgid "The required parameter 'params' is missing."
+msgstr "Der erforderliche Parameter 'params' fehlt."
 
 #: app/models/core_workflow/result.rb
 msgid "The required parameter 'payload->class_name' is missing."
@@ -9934,6 +9934,14 @@ msgid ""
 msgstr ""
 "Die Servereinstellungen konnten nicht automatisch erkannt werden. Bitte "
 "konfigurieren Sie diese manuell."
+
+#: app/models/store/file.rb
+msgid "The setting 'storage_provider' was not configured."
+msgstr "Die Einstellung 'storage_provider' wurde nicht konfiguriert."
+
+#: app/models/ticket/number.rb
+msgid "The setting 'ticket_number' was not configured."
+msgstr "Die Einstellung 'ticket_number' wurde nicht konfiguriert."
 
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee
 msgid "The sign-in failed. Please contact the Support team."
@@ -10236,7 +10244,7 @@ msgstr "Ticket-Nummer-Format"
 
 #: db/seeds/settings.rb
 msgid "Ticket Number Increment"
-msgstr "Erhöhung der Ticket-Anzahl"
+msgstr "Ticket-Nummer Inkrement"
 
 #: db/seeds/settings.rb
 msgid "Ticket Number Increment Date"
@@ -10792,7 +10800,7 @@ msgstr "Aktualisiert"
 
 #: lib/excel_sheet/ticket.rb
 msgid "Updated At"
-msgstr "Aktualisiert um"
+msgstr "Aktualisiert am"
 
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee
 #: app/assets/javascripts/app/models/organization.coffee
@@ -12727,15 +12735,15 @@ msgstr "wird erstellt"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "will be deleted"
-msgstr "wird gelöscht werden"
+msgstr "wird gelöscht"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 msgid "within last (relative)"
-msgstr "innerhalb letzter (relative)\t"
+msgstr "innerhalb letzter (relativ)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 msgid "within next (relative)"
-msgstr "innerhalb nächster (relative)"
+msgstr "innerhalb nächster (relativ)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/boolean.coffee
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco
@@ -12784,6 +12792,66 @@ msgstr "…des gesamten Textfelds"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Wartezeit heute"
+
+#~ msgid "Browser too old!"
+#~ msgstr "Browser ist zu alt!"
+
+#~ msgid "Invalid URL!"
+#~ msgstr "Falsche URL!"
+
+#~ msgid "Invalid credentials!"
+#~ msgstr "Falsche Zugangsdaten!"
+
+#~ msgid "Invalid endpoint (no hostname)!"
+#~ msgstr "Endpunkt fehlerhaft (kein Hostname)!"
+
+#~ msgid "Invalid endpoint (no http/https)!"
+#~ msgstr "Endpunkt fehlerhaft (kein HTTP/HTTPs)!"
+
+#~ msgid "Invalid endpoint!"
+#~ msgstr "Fehlerhafter Endpunkt!"
+
+#~ msgid "Invalid mentionable_type!"
+#~ msgstr "Falscher mentionable_type!"
+
+#~ msgid "Invalid token!"
+#~ msgstr "Token ungültig!"
+
+#~ msgid "Missing area params"
+#~ msgstr "Fehlende area-Parameter"
+
+#~ msgid "Missing options params"
+#~ msgstr "Fehlende options-Parameter"
+
+#~ msgid "Missing options.adapter params"
+#~ msgstr "Fehlende options.adapter-Parameter"
+
+#~ msgid "Missing parameter options.adapter"
+#~ msgstr "Fehlender Parameter options.adapter"
+
+#~ msgid "No application_id param!"
+#~ msgstr "Kein Parameter 'application_id'!"
+
+#~ msgid "No application_secret param!"
+#~ msgstr "Kein Parameter 'application_secret'!"
+
+#~ msgid "No client_id param!"
+#~ msgstr "Kein client_id-Parameter!"
+
+#~ msgid "No client_secret param!"
+#~ msgstr "Kein client_secret Parameter!"
+
+#~ msgid "No consumer_key param!"
+#~ msgstr "Kein Paramter 'consumer_key'!"
+
+#~ msgid "No consumer_secret param!"
+#~ msgstr "Kein Parameter 'consumer_secret'!"
+
+#~ msgid "No oauth_token param!"
+#~ msgstr "Kein Parameter 'oauth_token'!"
+
+#~ msgid "No oauth_token_secret param!"
+#~ msgstr "Kein Parameter 'oauth_token_secret'!"
 
 #~ msgid "by"
 #~ msgstr "von"
