@@ -4,8 +4,8 @@ msgstr ""
 "POT-Creation-Date: \n"
 "PO-Revision-Date: 2022-04-19 13:18+0000\n"
 "Last-Translator: Petr Daniel Ambrož <paces@paces.cz>\n"
-"Language-Team: Czech <https://translations.zammad.org/projects/zammad/"
-"zammad-stable/cs/>\n"
+"Language-Team: Czech <https://translations.zammad.org/projects/zammad/zammad-"
+"stable/cs/>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -5779,6 +5779,10 @@ msgstr ""
 
 #: lib/password_policy/length.rb
 msgid "Invalid password, it must be at least %s characters long!"
+msgstr ""
+
+#: lib/password_policy/max_length.rb
+msgid "Invalid password, it must be shorter than %s characters!"
 msgstr ""
 
 #: lib/password_policy/digit.rb

@@ -2,16 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-02-09 03:30+0000\n"
-"Last-Translator: Marcos Aurélio Silvério <maureliosilverio@gmail.com>\n"
+"PO-Revision-Date: 2022-04-28 03:30+0000\n"
+"Last-Translator: Victor Cezario <victorhcezario@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translations.zammad.org/projects/"
-"zammad/zammad-development/pt_BR/>\n"
+"zammad/zammad-stable/pt_BR/>\n"
 "Language: pt-br\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.10.1\n"
+"X-Generator: Weblate 4.12\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -195,6 +195,8 @@ msgid ""
 "%s recommends using OAuth. %s announced it's going to drop Basic "
 "Authentication support in the future."
 msgstr ""
+"%s é recomendado fazer uso do OAuth. %s anunciou que vai encerrar o suporte "
+"de autenticação básica no em breve."
 
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee
 msgid "%s required!"
@@ -5695,6 +5697,12 @@ msgstr ""
 
 #: lib/password_policy/length.rb
 msgid "Invalid password, it must be at least %s characters long!"
+msgstr "Senha inválida, é necessário ter pelo menos %s caracteres!"
+
+#: lib/password_policy/max_length.rb
+#, fuzzy
+#| msgid "Invalid password, it must be at least %s characters long!"
+msgid "Invalid password, it must be shorter than %s characters!"
 msgstr "Senha inválida, é necessário ter pelo menos %s caracteres!"
 
 #: lib/password_policy/digit.rb
@@ -12375,19 +12383,19 @@ msgstr "mensagem pessoal do telegram"
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 #: lib/calendar_subscriptions/tickets.rb
 msgid "ticket"
-msgstr ""
+msgstr "ticket"
 
 #: lib/calendar_subscriptions/tickets.rb
 msgid "ticket escalation"
-msgstr ""
+msgstr "escalonamento de ticket"
 
 #: db/seeds/settings.rb
 msgid "ticket.agent"
-msgstr ""
+msgstr "ticket.agent"
 
 #: db/seeds/settings.rb
 msgid "ticket.customer"
-msgstr ""
+msgstr "ticket.customer"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 msgid "till (relative)"
@@ -12399,7 +12407,7 @@ msgstr "para"
 
 #: app/views/knowledge_base/public/not_found.html.erb
 msgid "to go to the homepage."
-msgstr ""
+msgstr "ir para a pagina inicial"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/chat.coffee
@@ -12409,7 +12417,7 @@ msgstr "hoje"
 
 #: app/assets/javascripts/app/views/password/reset_failed.jst.eco
 msgid "try again"
-msgstr ""
+msgstr "tentar novamente"
 
 #: db/seeds/ticket_article_types.rb
 msgid "twitter direct-message"
@@ -12443,23 +12451,23 @@ msgstr "atualizado"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 msgid "was merged into this ticket"
-msgstr ""
+msgstr "foi mesclado neste ticket"
 
 #: db/seeds/ticket_article_types.rb
 msgid "web"
-msgstr ""
+msgstr "web"
 
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
 msgid "welcome message"
-msgstr ""
+msgstr "mensagem de boas vindas"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "will be created"
-msgstr ""
+msgstr "será criado"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "will be deleted"
-msgstr ""
+msgstr "será deletado"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 msgid "within last (relative)"
@@ -12487,11 +12495,6 @@ msgid "|Left| means |[Ticket#12345] Some Subject|"
 msgstr "|Esquerda| resulta |[Ticket#12345] Assunto qualquer|"
 
 #: app/assets/javascripts/app/views/settings/ticket_hook_position.jst.eco
-#, fuzzy
-#| msgid ""
-#| "|None| means |Some Subject| (without ticket number). In the last case you "
-#| "should enable \"postmaster___follow___up___search___in\" to recognize "
-#| "followups based on email headers and/or body."
 msgid ""
 "|None| means |Some Subject| (without ticket number), in which case you "
 "should enable \"postmaster___follow___up___search___in\" to recognize follow-"
@@ -12506,20 +12509,14 @@ msgid "|Right| means |Some Subject [Ticket#12345]|"
 msgstr "|Direita| resulta |Assunto qualquer [Chamado#12345]|"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
-#, fuzzy
-#| msgid "...add object link URL"
 msgid "…add object link URL"
 msgstr "...adiciona à Url"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
-#, fuzzy
-#| msgid "...add object title"
 msgid "…add object title"
 msgstr "...adiciona ao título"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
-#, fuzzy
-#| msgid "...of whole textarea"
 msgid "…of whole text area"
 msgstr "...da area de texto"
 

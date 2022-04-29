@@ -5869,6 +5869,12 @@ msgstr ""
 msgid "Invalid password, it must be at least %s characters long!"
 msgstr "Ijambo ry'ibanga ritemewe, rigomba kuba byibuze inyuguti %s!"
 
+#: lib/password_policy/max_length.rb
+#, fuzzy
+#| msgid "Invalid password, it must be at least %s characters long!"
+msgid "Invalid password, it must be shorter than %s characters!"
+msgstr "Ijambo ry'ibanga ritemewe, rigomba kuba byibuze inyuguti %s!"
+
 #: lib/password_policy/digit.rb
 msgid "Invalid password, it must contain at least 1 digit!"
 msgstr "ijambo ry'ibanga ritemewe, rigomba kugira byibuze umubare 1"

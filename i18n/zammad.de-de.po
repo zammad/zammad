@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-04-14 07:14+0000\n"
+"PO-Revision-Date: 2022-04-22 03:30+0000\n"
 "Last-Translator: Martin Gruner <mg@zammad.com>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/de/>\n"
@@ -5003,7 +5003,7 @@ msgstr "Google Maps"
 
 #: app/models/text_module.rb
 msgid "Got no locale"
-msgstr "Kein Gebietsschema vorhanden"
+msgstr "Keine Sprache vorhanden"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/highlighter.coffee
 msgid "Green"
@@ -5922,6 +5922,10 @@ msgstr "Ungültiges oauth_token angegeben!"
 msgid "Invalid password, it must be at least %s characters long!"
 msgstr "Ungültiges Passwort, es muss mindestens %s Zeichen lang sein!"
 
+#: lib/password_policy/max_length.rb
+msgid "Invalid password, it must be shorter than %s characters!"
+msgstr "Ungültiges Passwort, es muss kürzer als %s Zeichen sein!"
+
 #: lib/password_policy/digit.rb
 msgid "Invalid password, it must contain at least 1 digit!"
 msgstr "Ungültiges Passwort, es muss mindestens eine Zahl enthalten!"
@@ -6094,15 +6098,15 @@ msgstr "Knowledge Base"
 
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee
 msgid "Knowledge Base Answer"
-msgstr "Wissensdatenbank-Antwort"
+msgstr "Knowledge Base-Antwort"
 
 #: db/seeds/permissions.rb
 msgid "Knowledge Base Editor"
-msgstr "Editor der Wissensdatenbank"
+msgstr "Knowledge Base-Bearbeiter"
 
 #: db/seeds/permissions.rb
 msgid "Knowledge Base Reader"
-msgstr "Wissensdatenbank-Reader"
+msgstr "Knowledge Base-Leser"
 
 #: db/seeds/settings.rb
 msgid "Knowledge Base active"
@@ -6114,7 +6118,7 @@ msgstr "Knowledge Base öffentlich aktiv"
 
 #: db/seeds/settings.rb
 msgid "Knowledge Base multilingual support"
-msgstr "Mehrsprachige Unterstützung der Wissensdatenbank"
+msgstr "Mehrsprachige Unterstützung der Knowledge Base"
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
@@ -6165,7 +6169,7 @@ msgstr "Letzter Kontakt (Agent) um"
 
 #: lib/excel_sheet/ticket.rb
 msgid "Last Contact At"
-msgstr "Letzter Kontakt um"
+msgstr "Letzter Kontakt am"
 
 #: lib/excel_sheet/ticket.rb
 msgid "Last Contact Customer At"
@@ -6336,7 +6340,7 @@ msgstr "Sprache"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 msgid "Locale not found"
-msgstr "Gebietsschema nicht gefunden"
+msgstr "Sprache nicht gefunden"
 
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
 #: app/assets/javascripts/app/views/session.jst.eco
@@ -6676,11 +6680,11 @@ msgstr "Fehlende Administratorrechte!"
 
 #: app/controllers/channels_sms_controller.rb
 msgid "Missing area params"
-msgstr "Fehlender area-Parameter"
+msgstr "Fehlende area-Parameter"
 
 #: app/controllers/channels_sms_controller.rb
 msgid "Missing options params"
-msgstr "Fehlende Optionsparameter"
+msgstr "Fehlende options-Parameter"
 
 #: app/controllers/channels_sms_controller.rb
 msgid "Missing options.adapter params"
@@ -6899,7 +6903,7 @@ msgstr "Mindestens ein Feld \"Artikeltext\" ist erforderlich."
 
 #: app/controllers/application_controller/handles_devices.rb
 msgid "Need fingerprint param!"
-msgstr "Benötige Fingerabdruck-Parameter!"
+msgstr "Benötige fingerprint-Parameter!"
 
 #: app/controllers/user_access_token_controller.rb
 msgid "Need label!"
@@ -6907,7 +6911,7 @@ msgstr "Label wird benötigt!"
 
 #: app/controllers/settings_controller.rb
 msgid "Need logo param"
-msgstr "Logoparameter benötigt"
+msgstr "Benötige logo-Parameter"
 
 #: app/models/application_model/can_creates_and_updates.rb
 msgid "Need name, login, email or locale for create_or_update()"
@@ -7104,7 +7108,7 @@ msgstr "Keine Google-App konfiguriert!"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 msgid "No Knowledge Base created"
-msgstr "Keine Wissensdatenbank erstellt"
+msgstr "Keine Knowledge Base erstellt"
 
 #: lib/external_credential/microsoft365.rb
 msgid "No Microsoft365 app configured!"
@@ -8363,7 +8367,7 @@ msgstr "Anfrage zur Änderung"
 
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid "Requesting the Grant"
-msgstr "Angeforderte Rechte"
+msgstr "Rechteanforderung"
 
 #: app/controllers/reports_controller.rb
 msgid "Required parameter 'downloadBackendSelected' is missing."
@@ -9445,7 +9449,7 @@ msgstr "Sonntag"
 
 #: db/seeds/settings.rb
 msgid "Support of multilingual Knowledge Base."
-msgstr "Unterstützung einer mehrsprachigen Wissensdatenbank."
+msgstr "Unterstützung einer mehrsprachigen Knowledge Base."
 
 #: db/seeds/schedulers.rb
 msgid "Sync calendars with iCal feeds."
@@ -9474,7 +9478,7 @@ msgid ""
 "System supports only one locale for knowledge base. Upgrade your plan to use "
 "more locales."
 msgstr ""
-"Das System unterstützt nur ein Gebietsschema für die Wissensdatenbank. "
+"Das System unterstützt nur eine Sprache für die Knowledge Base. "
 "Aktualisieren Sie Ihren Plan, um mehr Sprachversionen zu verwenden."
 
 #: db/seeds/settings.rb
@@ -10228,7 +10232,7 @@ msgstr "Ticket-Nummer-Format"
 
 #: db/seeds/settings.rb
 msgid "Ticket Number Increment"
-msgstr "Erhöhung der Ticket-Anzahl"
+msgstr "Ticket-Nummer Inkrement"
 
 #: db/seeds/settings.rb
 msgid "Ticket Number Increment Date"
@@ -10784,7 +10788,7 @@ msgstr "Aktualisiert"
 
 #: lib/excel_sheet/ticket.rb
 msgid "Updated At"
-msgstr "Aktualisiert um"
+msgstr "Aktualisiert am"
 
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee
 #: app/assets/javascripts/app/models/organization.coffee
@@ -12723,15 +12727,15 @@ msgstr "wird erstellt"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "will be deleted"
-msgstr "wird gelöscht werden"
+msgstr "wird gelöscht"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 msgid "within last (relative)"
-msgstr "innerhalb letzter (relative)\t"
+msgstr "innerhalb letzter (relativ)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 msgid "within next (relative)"
-msgstr "innerhalb nächster (relative)"
+msgstr "innerhalb nächster (relativ)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/boolean.coffee
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco

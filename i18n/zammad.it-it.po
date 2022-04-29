@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-04-14 07:11+0000\n"
-"Last-Translator: PIetro Sacchi <sacchi.pietro@gmail.com>\n"
+"PO-Revision-Date: 2022-04-20 09:06+0000\n"
+"Last-Translator: Lorenzo Milesi <lorenzo.milesi@yetopen.com>\n"
 "Language-Team: Italian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/it/>\n"
 "Language: it-it\n"
@@ -1391,18 +1391,13 @@ msgid "But it's only available in these languages:"
 msgstr "Ma è disponibile solamente in queste lingue:"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid ""
-#| "By default the follow-up check is done via the subject of an email. With "
-#| "this setting you can add more fields for which the follow-up check will "
-#| "be executed."
 msgid ""
 "By default, the follow-up check is done via the subject of an email. This "
 "setting lets you add more fields for which the follow-up check will be "
 "executed."
 msgstr ""
 "Per impostazione predefinita, il controllo di follow-up viene effettuato "
-"tramite l'oggetto di un'e-mail. Con questa impostazione è possibile "
+"tramite l'oggetto dell'e-mail. Con questa impostazione è possibile "
 "aggiungere più campi per i quali verrà eseguito il controllo di follow-up."
 
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
@@ -6027,6 +6022,12 @@ msgstr ""
 msgid "Invalid password, it must be at least %s characters long!"
 msgstr "Password non valida, deve essere lunga almeno %s caratteri!"
 
+#: lib/password_policy/max_length.rb
+#, fuzzy
+#| msgid "Invalid password, it must be at least %s characters long!"
+msgid "Invalid password, it must be shorter than %s characters!"
+msgstr "Password non valida, deve essere lunga almeno %s caratteri!"
+
 #: lib/password_policy/digit.rb
 msgid "Invalid password, it must contain at least 1 digit!"
 msgstr "Password non valida, deve contenere almeno una cifra!"
@@ -8155,7 +8156,7 @@ msgstr "Powered by"
 
 #: db/seeds/settings.rb
 msgid "Pretty Date"
-msgstr "Data Graziosa"
+msgstr "Data relativa"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #: app/assets/javascripts/app/views/channel/form.jst.eco

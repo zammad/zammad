@@ -5724,6 +5724,13 @@ msgid "Invalid password, it must be at least %s characters long!"
 msgstr ""
 "Ógilt lykilorð, það verður að vera að minnsta kosti %s stafir að lengd!"
 
+#: lib/password_policy/max_length.rb
+#, fuzzy
+#| msgid "Invalid password, it must be at least %s characters long!"
+msgid "Invalid password, it must be shorter than %s characters!"
+msgstr ""
+"Ógilt lykilorð, það verður að vera að minnsta kosti %s stafir að lengd!"
+
 #: lib/password_policy/digit.rb
 msgid "Invalid password, it must contain at least 1 digit!"
 msgstr "Ógilt lykilorð, það verður að innihalda að minnsta kosti 1 tölustaf!"

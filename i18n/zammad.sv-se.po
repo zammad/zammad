@@ -5921,6 +5921,12 @@ msgstr ""
 msgid "Invalid password, it must be at least %s characters long!"
 msgstr "Ogiltigt lösenord, det måste vara minst %s tecken långt!"
 
+#: lib/password_policy/max_length.rb
+#, fuzzy
+#| msgid "Invalid password, it must be at least %s characters long!"
+msgid "Invalid password, it must be shorter than %s characters!"
+msgstr "Ogiltigt lösenord, det måste vara minst %s tecken långt!"
+
 #: lib/password_policy/digit.rb
 msgid "Invalid password, it must contain at least 1 digit!"
 msgstr "Ogiltigt lösenord, det måste innehålla minst en siffra!"

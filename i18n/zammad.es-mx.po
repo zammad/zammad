@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-04-18 10:04+0000\n"
+"PO-Revision-Date: 2022-04-22 03:30+0000\n"
 "Last-Translator: Marlon Baez <marlon.baez@barolit.com>\n"
 "Language-Team: Spanish (Mexico) <https://translations.zammad.org/projects/"
 "zammad/zammad-stable/es_MX/>\n"
@@ -42,8 +42,9 @@ msgstr "FORMAT_DATE"
 #. - 'HH' - 2-digit hour (24h)
 #. - 'l' - hour (12h)
 #. - 'P' - Meridian indicator ('am' or 'pm')
+#, fuzzy
 msgid "FORMAT_DATETIME"
-msgstr "dd/mm/yyyy HH:MM"
+msgstr "FORMAT_DATETIME"
 
 #: db/seeds/settings.rb
 msgid ""
@@ -52,8 +53,8 @@ msgid ""
 "filesystem. You can switch between the modules even on a system that is "
 "already in production without any loss of data."
 msgstr ""
-"\"Base de datos\" almacena todos los archivos adjuntos en la base de datos ("
-"no recomendado para almacenar grandes cantidades de datos). \"Sistema de "
+"\"Base de datos\" almacena todos los archivos adjuntos en la base de datos "
+"(no recomendado para almacenar grandes cantidades de datos). \"Sistema de "
 "archivos\" almacena los datos en el sistema de archivos. Puede cambiar entre "
 "los módulos incluso en un sistema que ya está en producción sin pérdida de "
 "datos."
@@ -96,8 +97,8 @@ msgstr "hace %s"
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 msgid "%s completed data privacy task to delete user ID |%s|"
 msgstr ""
-"%s completó la tarea de privacidad de datos para eliminar el ID de usuario "
-"|%s|"
+"%s completó la tarea de privacidad de datos para eliminar el ID de usuario |"
+"%s|"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee
 msgid "%s created article for |%s|"
@@ -223,8 +224,8 @@ msgstr "%s artículo actualizado para |%s|"
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 msgid "%s updated data privacy task to delete user ID |%s|"
 msgstr ""
-"%s actualizó la tarea de privacidad de datos para eliminar el ID de usuario "
-"|%s|"
+"%s actualizó la tarea de privacidad de datos para eliminar el ID de usuario |"
+"%s|"
 
 #: app/assets/javascripts/app/models/group.coffee
 msgid "%s updated group |%s|"
@@ -1140,16 +1141,16 @@ msgstr "¡La autenticación falló, las credenciales no son válidas!"
 
 #: lib/email_helper/probe.rb
 msgid "Authentication failed, username incorrect!"
-msgstr ""
+msgstr "¡La autenticación falló, el nombre de usuario es incorrecto!"
 
 #: lib/email_helper/probe.rb
 msgid "Authentication not possible (not offered by the service)"
-msgstr ""
+msgstr "La autenticación no es posible (no ofrecido por el servicio)"
 
 #: app/controllers/application_controller/authenticates.rb
 #: app/policies/pundit_policy.rb lib/user_context.rb
 msgid "Authentication required"
-msgstr ""
+msgstr "Autenticacion requerida"
 
 #: db/seeds/settings.rb
 msgid "Authentication via %s"
@@ -1157,7 +1158,7 @@ msgstr "Autenticación vía %s"
 
 #: app/controllers/application_controller/handles_errors.rb
 msgid "Authorization failed"
-msgstr ""
+msgstr "Autorización fallida"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket.coffee
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco
@@ -1208,7 +1209,7 @@ msgstr "Disponible para los siguientes roles"
 
 #: db/seeds/settings.rb
 msgid "Available types for a new ticket"
-msgstr ""
+msgstr "Tipos disponibles para un nuevo ticket"
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
 #: app/assets/javascripts/app/views/customer_chat/setting.jst.eco
@@ -1259,6 +1260,8 @@ msgid ""
 "Background process did not start or has not finished! Please contact your "
 "support."
 msgstr ""
+"¡El proceso en segundo plano no comenzó o no finalizó! Póngase en contacto "
+"con su soporte."
 
 #: app/models/report.rb
 msgid "Backlog"
@@ -1286,7 +1289,7 @@ msgstr "Configuración Básica"
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 msgid "Before you mention a user, please select a group."
-msgstr ""
+msgstr "Antes de mencionar a un usuario, seleccione un grupo."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 msgid "Begin forwarded message"
@@ -1377,7 +1380,7 @@ msgstr "La acción masiva falló"
 
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee
 msgid "Bulk action stopped by error(s): %s!"
-msgstr ""
+msgstr "Acción masiva detenida por error(es): %s!"
 
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
 msgid "Bulk import allows you to create and update many records at once."
@@ -1392,7 +1395,7 @@ msgstr "Horas de Trabajo"
 
 #: app/views/knowledge_base/public/show_alternatives.html.erb
 msgid "But it's only available in these languages:"
-msgstr ""
+msgstr "Pero solo está disponible en estos idiomas:"
 
 #: db/seeds/settings.rb
 msgid ""
@@ -1410,6 +1413,9 @@ msgid ""
 "Zammad can support your agents by opening either a new ticket dialogue or "
 "the user profile upon picking up a new call."
 msgstr ""
+"Al asignar los usuarios SIP de Placetel de sus agentes a sus cuentas Zammad "
+"de usuario, Zammad puede ayudar a sus agentes abriendo un nuevo diálogo de "
+"ticket o el perfil de usuario al atender una nueva llamada."
 
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 msgid ""
@@ -1417,6 +1423,9 @@ msgid ""
 "can support your agents by opening either a new ticket dialogue or the user "
 "profile upon picking up a new call."
 msgstr ""
+"Al asignar los usuarios de SIPgate de sus agentes a sus cuentas Zammad de "
+"usuario, Zammad puede ayudar a sus agentes abriendo un nuevo diálogo de "
+"ticket o el perfil de usuario al atender una nueva llamada."
 
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
@@ -1425,7 +1434,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: db/seeds/object_manager_attributes.rb
 msgid "CC"
-msgstr ""
+msgstr "CC"
 
 #: app/assets/javascripts/app/controllers/_integration/idoit.coffee
 msgid "CMDB to document complex relations of your network components."
@@ -1451,7 +1460,7 @@ msgstr "CTI (generic)"
 
 #: db/seeds/settings.rb
 msgid "CTI Token"
-msgstr ""
+msgstr "CTI Token"
 
 #: db/seeds/settings.rb
 msgid "CTI config"
@@ -1459,7 +1468,7 @@ msgstr "CTI configuración"
 
 #: db/seeds/settings.rb
 msgid "CTI customer last activity"
-msgstr ""
+msgstr "Última actividad del cliente CTI"
 
 #: db/seeds/settings.rb
 msgid "CTI integration"
@@ -1554,6 +1563,8 @@ msgstr ""
 msgid ""
 "Can't update password, your entered passwords do not match. Please try again!"
 msgstr ""
+"No se puede actualizar la contraseña, las contraseñas ingresadas no "
+"coinciden. ¡Inténtalo de nuevo!"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/twitter_reply.coffee
@@ -1589,10 +1600,12 @@ msgstr ""
 #: app/policies/ticket_policy.rb
 msgid "Cannot follow-up on a closed ticket. Please create a new ticket."
 msgstr ""
+"No se puede realizar el seguimiento de un ticket cerrado. Por favor crea un "
+"nuevo ticket."
 
 #: app/assets/javascripts/app/controllers/report.coffee
 msgid "Cannot generate report"
-msgstr ""
+msgstr "No se puede generar informe"
 
 #: app/assets/javascripts/app/lib/app_post/html5_upload.coffee
 msgid "Cannot upload file"
@@ -5029,8 +5042,8 @@ msgid ""
 "quotation marks|| for searching phrases: §\"some phrase\"§."
 msgstr ""
 "Aquí puede buscar entradas, clientes y organizaciones. Use el asterisco §*§ "
-"para encontrar cualquier cosa, p. §smi*§ o §rosent*l§. También puede usar "
-"||comillas|| para buscar frases: §\"alguna frase\"§."
+"para encontrar cualquier cosa, p. §smi*§ o §rosent*l§. También puede usar ||"
+"comillas|| para buscar frases: §\"alguna frase\"§."
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
 msgid ""
@@ -5287,8 +5300,8 @@ msgid ""
 "If you want to open the chat by clicking a button, set the option §show§ to "
 "§false§ and add the class §open-zammad-chat§ to the button."
 msgstr ""
-"Si desea abrir el chat haciendo clic en un botón, establezca la opción §show§"
-" en §false§ y agregue la clase §open-zammad-chat§ al botón."
+"Si desea abrir el chat haciendo clic en un botón, establezca la opción "
+"§show§ en §false§ y agregue la clase §open-zammad-chat§ al botón."
 
 #: app/assets/javascripts/app/views/translation/index.jst.eco
 msgid ""
@@ -5705,6 +5718,10 @@ msgstr ""
 #: lib/password_policy/length.rb
 msgid "Invalid password, it must be at least %s characters long!"
 msgstr "Contraseña no válida, ¡debe tener al menos% s caracteres de longitud!"
+
+#: lib/password_policy/max_length.rb
+msgid "Invalid password, it must be shorter than %s characters!"
+msgstr "¡Contraseña no válida, debe tener menos de %s caracteres!"
 
 #: lib/password_policy/digit.rb
 msgid "Invalid password, it must contain at least 1 digit!"
@@ -9642,6 +9659,8 @@ msgid ""
 "The server settings could not be automatically detected. Please configure "
 "them manually."
 msgstr ""
+"La configuración del servidor no se pudo detectar automáticamente. "
+"Configúrelos manualmente."
 
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee
 msgid "The sign-in failed. Please contact the Support team."
@@ -9681,7 +9700,7 @@ msgstr "No se pudo procesar la imagen cargada."
 
 #: lib/external_credential/microsoft365.rb
 msgid "The user's 'preferred_username' could not be extracted from 'id_token'."
-msgstr ""
+msgstr "El 'preferred_username' del usuario no se pudo extraer de 'id_token'."
 
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
@@ -9720,11 +9739,11 @@ msgstr "Hay demasiadas personas en la cola de chat."
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_overwrite_modal.coffee
 msgid "There is an existing draft. Do you want to overwrite it?"
-msgstr ""
+msgstr "Hay un borrador existente. ¿Quieres sobreescribirlo?"
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
 msgid "There is existing content. Do you want to overwrite it?"
-msgstr ""
+msgstr "Hay contenido existente. ¿Quieres sobreescribirlo?"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "There is no agent online."
@@ -9769,6 +9788,8 @@ msgstr "Esta es la versión Zammad %s"
 #: db/seeds/settings.rb
 msgid "This is a default maintenance message. Click here to change."
 msgstr ""
+"Este es un mensaje de mantenimiento predeterminado. Haga clic aquí para "
+"cambiar."
 
 #: app/models/channel/email_parser.rb
 msgid ""
@@ -9776,6 +9797,9 @@ msgid ""
 "Download the raw message below and open it via an Email client if you still "
 "wish to view it."
 msgstr ""
+"Este mensaje no se puede mostrar porque contiene más de 5,000 enlaces. "
+"Descargue el mensaje sin procesar a continuación y ábralo a través de un "
+"cliente de correo electrónico si aún desea verlo."
 
 #: lib/html_sanitizer.rb
 msgid ""
@@ -9783,6 +9807,9 @@ msgid ""
 "raw message below and open it via an Email client if you still wish to view "
 "it."
 msgstr ""
+"Este mensaje no se puede mostrar debido a problemas de procesamiento de "
+"HTML. Descargue el mensaje sin procesar a continuación y ábralo a través de "
+"un cliente de correo electrónico si aún desea verlo."
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "This might take some time during which the system can't be used."
@@ -11397,8 +11424,8 @@ msgid ""
 "You used %s in the text but no attachment could be found. Do you want to "
 "continue?"
 msgstr ""
-"Usó %s en el texto pero no se pudo encontrar ningún archivo adjunto. ¿"
-"Quieres continuar?"
+"Usó %s en el texto pero no se pudo encontrar ningún archivo adjunto. "
+"¿Quieres continuar?"
 
 #: app/assets/javascripts/app/views/karma/index.jst.eco
 msgid ""
