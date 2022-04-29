@@ -81,6 +81,7 @@
     "@formkit/utils": "^1.0.0-beta.6",
     "@formkit/validation": "^1.0.0-beta.6",
     "@formkit/vue": "^1.0.0-beta.6",
+    "@headlessui/vue": "^1.5.0",
     "@rails/actioncable": "6.0.4",
     "@tiptap/starter-kit": "^2.0.0-beta.183",
     "@tiptap/vue-3": "^2.0.0-beta.90",

@@ -4,18 +4,18 @@ import type { FormThemeClasses, FormThemeExtension } from '@common/types/form'
 
 type Classes = Record<string, string>
 
-const addFloatingLabel = (classes: Classes): Classes => {
+export const addFloatingLabel = (classes: Classes): Classes => {
   const inputClass = classes.input || ''
   const labelClass = classes.label || ''
   return {
     outer: `${classes.outer || ''} floating-input`,
     wrapper: `${classes.wrapper || ''} relative`,
     input: `${inputClass} w-full h-14 text-sm bg-gray-500 rounded-xl border-none focus:outline-none placeholder:text-transparent focus-within:pt-8 formkit-populated:pt-8`,
-    label: `${labelClass} absolute top-0 left-0 py-5 px-3 h-14 text-base transition-all duration-100 ease-in-out origin-left pointer-events-none formkit-populated:-translate-y3 formkit-populated:translate-x-1 formkit-populated:scale-75 formkit-populated:opacity-75`,
+    label: `${labelClass} absolute top-0 left-0 py-5 px-3 h-14 text-base transition-all duration-100 ease-in-out origin-left pointer-events-none formkit-populated:-translate-y-3 formkit-populated:translate-x-1 formkit-populated:scale-75 formkit-populated:opacity-75`,
   }
 }
 
-const addDateLabel = (classes: Classes): Classes => {
+export const addDateLabel = (classes: Classes): Classes => {
   const newClasses = addFloatingLabel(classes)
   return {
     ...newClasses,
@@ -36,6 +36,14 @@ const getCoreClasses: FormThemeExtension = (classes: FormThemeClasses) => {
     datetimeLocal: addDateLabel(classes['datetime-local']),
     textarea: addFloatingLabel(classes.textarea),
     password: addFloatingLabel(classes.password),
+    select: addFloatingLabel({
+      ...(classes.select || {}),
+      outer: `${classes.select && classes.select.outer} field-select`,
+    }),
+    treeselect: addFloatingLabel({
+      ...(classes.select || {}),
+      outer: `${classes.select && classes.select.outer} field-treeselect`,
+    }),
   }
 }
 

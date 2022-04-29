@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>check</title>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="checked-yes" fill="#50E3C2">
+            <path d="M7 4C5.34315 4 4 5.34315 4 7V17C4 18.6569 5.34315 20 7 20H17C18.6569 20 20 18.6569 20 17V7C20 5.34315 18.6569 4 17 4H7ZM16.4697 8.46967L10.7998 14.1396L7.82794 11.1677L6.76728 12.2284L10.2694 15.7306L10.7998 16.2609L11.3301 15.7306L17.5303 9.53033L16.4697 8.46967Z" id="Checked-Yes"></path>
+        </g>
+    </g>
+</svg>

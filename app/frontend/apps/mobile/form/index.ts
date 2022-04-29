@@ -16,7 +16,7 @@ const pluginModules: ImportGlobEagerOutput<FormKitPlugin> =
 const fieldModules: ImportGlobEagerOutput<FormFieldTypeImportModules> =
   import.meta.globEager('../components/form/field/**/*.ts')
 const themeExtensionModules: ImportGlobEagerOutput<FormThemeExtension> =
-  import.meta.globEager('../theme/global/extensions/*.ts')
+  import.meta.globEager('./theme/global/extensions/*.ts')
 
 const initializeForm: InitializeAppForm = (app: App) => {
   const plugins = getFormPlugins(pluginModules)

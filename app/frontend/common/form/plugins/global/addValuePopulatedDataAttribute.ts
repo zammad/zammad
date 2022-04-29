@@ -12,6 +12,7 @@ const addValuePopulatedDataAttribute = (node: FormKitNode) => {
   // Adds a helper function to check the existing value inside of the context.
   context.fns.hasValue = (value) => {
     if (typeof value === 'object') return !isEmpty(value)
+    if (typeof value === 'number') return value !== undefined && value !== null
 
     return !!value
   }

@@ -1775,6 +1775,15 @@ msgstr ""
 msgid "Clear"
 msgstr ""
 
+#: app/frontend/common/components/form/field/FieldTreeSelect/FieldTreeSelectInput.vue
+msgid "Clear Search"
+msgstr ""
+
+#: app/frontend/common/components/form/field/FieldSelect/FieldSelectInput.vue
+#: app/frontend/common/components/form/field/FieldTreeSelect/FieldTreeSelectInput.vue
+msgid "Clear Selection"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco
 msgid "Clearbit"
@@ -3388,6 +3397,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 msgid "Don't synchronize"
+msgstr ""
+
+#: app/frontend/common/components/form/field/FieldTreeSelect/FieldTreeSelectInput.vue
+msgid "Done"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_image_view.coffee
@@ -6480,6 +6493,7 @@ msgid "No request_token for session found!"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
+#: app/frontend/common/components/form/field/FieldTreeSelect/FieldTreeSelectInput.vue
 msgid "No results found"
 msgstr ""
 
@@ -7950,6 +7964,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/idoit_object_selector.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/search_field_widget.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
+#: app/frontend/common/components/form/field/FieldTreeSelect/FieldTreeSelectInput.vue
 msgid "Search"
 msgstr ""
 
@@ -8030,6 +8045,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee
 msgid "Select the customer of the ticket or create one."
+msgstr ""
+
+#: app/frontend/common/components/form/field/FieldSelect/FieldSelectInput.vue
+#: app/frontend/common/components/form/field/FieldTreeSelect/FieldTreeSelectInput.vue
+msgid "Select..."
 msgstr ""
 
 #: app/assets/javascripts/app/models/core_workflow.coffee

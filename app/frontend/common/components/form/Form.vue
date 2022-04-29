@@ -84,7 +84,7 @@ const props = withDefaults(defineProps<Props>(), {
 const localClass = toRef(props, 'class')
 
 const emit = defineEmits<{
-  (e: 'changed', fieldName: string, newValue: unknown): void
+  (e: 'changed', newValue: unknown, fieldName: string): void
   (e: 'node', node: FormKitNode): void
 }>()
 
@@ -384,16 +384,18 @@ if (props.formSchemaId) {
     v-on:submit="onSubmit"
   >
     <slot name="before-fields" />
-    <template v-if="!$slots.fields">
+    <slot
+      name="fields"
+      v-bind:schema="staticSchema"
+      v-bind:data="schemaData"
+      v-bind:library="additionalComponentLibrary"
+    >
       <FormKitSchema
         v-bind:schema="staticSchema"
         v-bind:data="schemaData"
         v-bind:library="additionalComponentLibrary"
       />
-    </template>
-    <template v-else>
-      <slot name="fields" />
-    </template>
+    </slot>
     <slot name="after-fields" />
   </FormKit>
   <div
