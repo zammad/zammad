@@ -72,6 +72,13 @@ const initializeRouter = (routes?: RouteRecordRaw[]) => {
         template: 'This is a example page.',
       },
     },
+    {
+      name: 'Error',
+      path: '/:pathMatch(.*)*',
+      component: {
+        template: 'Error page',
+      },
+    },
   ]
 
   // Use only the default routes, if nothing was given.

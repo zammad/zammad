@@ -2,9 +2,9 @@
 
 <script setup lang="ts">
 import type { Link } from '@common/types/router'
-import isRouteLink from '@common/router/utils/isRouteLink'
-import { computed } from 'vue'
+import { computed, toRef } from 'vue'
 import stopEvent from '@common/utils/events'
+import { useLink } from 'vue-router'
 
 export interface Props {
   link: Link
@@ -26,18 +26,13 @@ const props = withDefaults(defineProps<Props>(), {
   append: false,
   openInNewTab: false,
   disabled: false,
+  activeClass: 'router-link-active',
+  exactActiveClass: 'router-link-exact-active',
 })
 
 const emit = defineEmits<{
   (e: 'click', event: MouseEvent): void
 }>()
-
-const isInternalLink = computed(() => {
-  if (props.isExternal) return false
-  if (props.isRoute) return true
-
-  return isRouteLink(props.link)
-})
 
 const target = computed(() => {
   if (props.target) return props.target
@@ -54,12 +49,27 @@ const linkClass = computed(() => {
   return ''
 })
 
+const { href, route, navigate, isActive, isExactActive } = useLink({
+  to: toRef(props, 'link'),
+  replace: toRef(props, 'replace'),
+})
+
+const isInternalLink = computed(() => {
+  if (props.isExternal) return false
+  if (props.isRoute) return true
+  return route.value.matched.length > 0 && route.value.name !== 'Error'
+})
+
 const onClick = (event: MouseEvent) => {
   if (props.disabled) {
     stopEvent(event, { immediatePropagation: true })
     return
   }
   emit('click', event)
+
+  if (isInternalLink.value) {
+    navigate(event)
+  }
 
   // Stop the scroll-to-top behavior or navigation on regular links when href is just '#'.
   if (!isInternalLink.value && props.link === '#') {
@@ -69,26 +79,18 @@ const onClick = (event: MouseEvent) => {
 </script>
 
 <template>
-  <router-link
-    v-if="isInternalLink"
-    v-bind:to="link"
-    v-bind:replace="replace"
-    v-bind:class="linkClass"
-    v-bind:active-class="activeClass"
-    v-bind:exact-active-class="exactActiveClass"
-    v-bind:target="target"
-    data-test-id="common-link"
-    v-on:click="onClick"
-  >
-    <slot></slot>
-  </router-link>
   <a
-    v-else
-    v-bind:href="(link as string)"
-    v-bind:target="target"
-    v-bind:class="linkClass"
-    v-bind:rel="rel"
     data-test-id="common-link"
+    v-bind:href="isInternalLink ? href : (link as string)"
+    v-bind:target="target"
+    v-bind:rel="rel"
+    v-bind:class="[
+      linkClass,
+      {
+        [activeClass]: isActive,
+        [exactActiveClass]: isExactActive,
+      },
+    ]"
     v-on:click="onClick"
   >
     <slot></slot>
