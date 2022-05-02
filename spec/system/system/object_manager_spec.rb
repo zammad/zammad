@@ -113,12 +113,12 @@ RSpec.describe 'System > Objects', type: :system do
       end
     end
 
-    ['Text', 'Select', 'Integer', 'Datetime', 'Date', 'Boolean', 'Tree Select'].each do |data_type|
+    ['Text field', 'Single selection field', 'Integer field', 'Date & time field', 'Date field', 'Boolean field', 'Single tree selection field'].each do |data_type|
       include_examples 'create and remove field with migration', data_type
     end
 
     context 'with Multiselect' do
-      include_examples 'create and remove field with migration', 'Multiselect'
+      include_examples 'create and remove field with migration', 'Multiple selection field'
     end
   end
 
@@ -390,7 +390,7 @@ RSpec.describe 'System > Objects', type: :system do
       # set meta information
       fill_in 'Name', with: 'tree1'
       fill_in 'Display', with: 'tree1'
-      page.find('select[name=data_type]').select('Tree Select')
+      page.find('select[name=data_type]').select('Single tree selection field')
 
       # create 3 childs
       first_add_child = page.first('div.js-addChild')
@@ -444,7 +444,7 @@ RSpec.describe 'System > Objects', type: :system do
       fill_in 'Name', with: 'select1'
       find('input[name=display]').set('select1')
 
-      page.find('select[name=data_type]').select('Select')
+      page.find('select[name=data_type]').select('Single selection field')
 
       page.first('div.js-add').click
       page.first('div.js-add').click
@@ -472,7 +472,7 @@ RSpec.describe 'System > Objects', type: :system do
       fill_in 'Name', with: 'multiselect1'
       find('input[name=display]').set('multiselect1')
 
-      page.find('select[name=data_type]').select('Multiselect')
+      page.find('select[name=data_type]').select('Multiple selection field')
 
       page.first('div.js-add').click
       page.first('div.js-add').click
@@ -500,7 +500,7 @@ RSpec.describe 'System > Objects', type: :system do
       fill_in 'Name', with: 'bool1'
       find('input[name=display]').set('bool1')
 
-      page.find('select[name=data_type]').select('Boolean')
+      page.find('select[name=data_type]').select('Boolean field')
       page.find('.js-valueFalse').set('HELL NOO')
       page.find('.js-submit').click
 
@@ -516,7 +516,7 @@ RSpec.describe 'System > Objects', type: :system do
       fill_in 'Name', with: 'bool1'
       find('input[name=display]').set('Bool 1')
 
-      page.find('select[name=data_type]').select('Boolean')
+      page.find('select[name=data_type]').select('Boolean field')
       choose('data_option::default', option: 'true')
       page.find('.js-submit').click
 
@@ -538,7 +538,7 @@ RSpec.describe 'System > Objects', type: :system do
       in_modal disappears: false do
         fill_in 'Name', with: 'integer1'
         fill_in 'Display', with: 'Integer1'
-        page.find('select[name=data_type]').select('Integer')
+        page.find('select[name=data_type]').select('Integer field')
       end
     end
 
@@ -648,7 +648,7 @@ RSpec.describe 'System > Objects', type: :system do
 
     it 'date attribute' do
       in_modal do
-        page.find('select[name=data_type]').select('Date')
+        page.find('select[name=data_type]').select('Date field')
         fill_in 'Default time diff (hours)', with: ''
 
         expect { page.find('.js-submit').click }.to change(ObjectManager::Attribute, :count).by(1)
@@ -657,7 +657,7 @@ RSpec.describe 'System > Objects', type: :system do
 
     it 'datetime attribute' do
       in_modal do
-        page.find('select[name=data_type]').select('Datetime')
+        page.find('select[name=data_type]').select('Date & time field')
         fill_in 'Default time diff (minutes)', with: ''
 
         expect { page.find('.js-submit').click }.to change(ObjectManager::Attribute, :count).by(1)
@@ -748,14 +748,14 @@ RSpec.describe 'System > Objects', type: :system do
     end
 
     context 'when attribute is multiselect' do
-      let(:data_type) { 'Multiselect' }
+      let(:data_type) { 'Multiple selection field' }
       let(:attribute_name) { 'multiselect_test' }
 
       it_behaves_like 'having a custom sort option'
     end
 
     context 'when attribute is select' do
-      let(:data_type) { 'Select' }
+      let(:data_type) { 'Single selection field' }
       let(:attribute_name) { 'select_test' }
 
       it_behaves_like 'having a custom sort option'

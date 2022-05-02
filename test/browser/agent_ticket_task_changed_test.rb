@@ -27,7 +27,7 @@ class AgentTicketTaskChangedTest < TestCase
       data: {
         name:      'text_test',
         display:   'text_test',
-        data_type: 'Text',
+        data_type: 'Text field',
       },
     )
     object_manager_attribute_migrate

@@ -1,6 +1,7 @@
 # coffeelint: disable=camel_case_classes
 class App.UiElement.checkbox extends App.UiElement.ApplicationUiElement
-  @render: (attribute, params) ->
+  @render: (attributeConfig, params) ->
+    attribute = $.extend({}, attributeConfig)
 
     # build options list based on config
     @getConfigOptionList( attribute, params )

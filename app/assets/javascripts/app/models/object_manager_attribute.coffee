@@ -21,7 +21,7 @@ class App.ObjectManagerAttribute extends App.Model
     for row in @all()
       continue if !row.object
 
-      config     = _.clone(row)
+      config     = $.extend(true, {}, row)
       config.tag = config.data_type
       config     = Object.assign({}, config, config.data_option) if config.data_option
 

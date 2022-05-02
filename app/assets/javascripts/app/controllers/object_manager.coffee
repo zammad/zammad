@@ -48,7 +48,7 @@ multiselectParams = (params) ->
 
 setSelectDefaults = (el) ->
   data_type = el.find('select[name=data_type]').val()
-  return if !/^((multi)?select)$/.test(data_type) && data_type isnt 'boolean'
+  return if !/^((multi)?select|multi_tree_select)$/.test(data_type) && data_type isnt 'boolean'
 
   el.find('.js-value, .js-valueTrue, .js-valueFalse').each(->
     element = $(@)

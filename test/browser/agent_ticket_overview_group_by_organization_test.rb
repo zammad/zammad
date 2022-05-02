@@ -57,6 +57,9 @@ class AgentTicketOverviewGroupByOrganizationTest < TestCase
         name:     overview_name,
         roles:    %w[Agent Admin Customer],
         group_by: 'Organization',
+        selector: {
+          'State' => %w[new open],
+        },
       }
     )
 

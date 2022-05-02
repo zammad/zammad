@@ -31,6 +31,7 @@ class App.UiElement.ApplicationSelector
       '^select$': [__('is'), __('is not')]
       '^multiselect$': [__('contains all'), __('contains one'), __('contains all not'), __('contains one not')]
       '^tree_select$': [__('is'), __('is not')]
+      '^multi_tree_select$': [__('contains all'), __('contains one'), __('contains all not'), __('contains one not')]
       '^input$': [__('contains'), __('contains not')]
       '^richtext$': [__('contains'), __('contains not')]
       '^textarea$': [__('contains'), __('contains not')]
@@ -47,6 +48,7 @@ class App.UiElement.ApplicationSelector
         '^select$': [__('is'), __('is not'), __('has changed')]
         '^multiselect$': [__('contains all'), __('contains one'), __('contains all not'), __('contains one not')]
         '^tree_select$': [__('is'), __('is not'), __('has changed')]
+        '^multi_tree_select$': [__('contains all'), __('contains one'), __('contains all not'), __('contains one not')]
         '^input$': [__('contains'), __('contains not'), __('has changed')]
         '^richtext$': [__('contains'), __('contains not'), __('has changed')]
         '^textarea$': [__('contains'), __('contains not'), __('has changed')]
@@ -99,6 +101,7 @@ class App.UiElement.ApplicationSelector
         for config in configureAttributes
           # ignore passwords and relations
           if config.type isnt 'password' && config.name.substr(config.name.length-4,4) isnt '_ids' && config.searchable isnt false
+            config.default  = undefined
             if config.tag is 'textarea'
               config.expanding = false
             if config.type is 'email' || config.type is 'tel'
@@ -113,9 +116,6 @@ class App.UiElement.ApplicationSelector
               if config.name && config.name.match(myRegExp)
                 config.operator = operator
               elements["#{groupKey}.#{config.name}"] = config
-
-            if /^(tree_|multi)?select$/.test(config.tag)
-              config.multiple = true
 
     if attribute.out_of_office
       elements['ticket.out_of_office_replacement_id'] =

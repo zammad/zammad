@@ -227,7 +227,7 @@ jQuery.fn.removeAttrs = function(regex) {
 // changes
 // - set type based on data('field-type')
 // - also catch [disabled] params
-// - return multiselect type to make sure that the data is always array
+// - return multiple type to make sure that the data is always array
 jQuery.fn.extend( {
   serializeArrayWithType: function() {
     var r20 = /%20/g,
@@ -255,7 +255,6 @@ jQuery.fn.extend( {
       var val         = $elem.val();
       var type        = $elem.data('field-type');
       var multiple    = $elem.prop('multiple');
-      var multiselect = multiple && $elem.hasClass('multiselect');
 
       // in jQuery 3,  select-multiple with nothing selected returns an empty array
       // https://jquery.com/upgrade-guide/3.0/#breaking-change-select-multiple-with-nothing-selected-returns-an-empty-array
@@ -268,18 +267,18 @@ jQuery.fn.extend( {
         // be sure that also null values are transferred
         // https://github.com/zammad/zammad/issues/944
         if ($elem.prop('multiple')) {
-          result = { name: elem.name, value: null, type: type, multiselect: multiselect }
+          result = { name: elem.name, value: null, type: type, multiple: multiple }
         } else {
           result = null
         }
       }
-      else if ( Array.isArray( val ) ) {
+      else if ( Array.isArray( val ) || multiple) {
         result = jQuery.map( val, function( val ) {
-          return { name: elem.name, value: val.replace( rCRLF, "\r\n" ), type: type, multiselect: multiselect };
+          return { name: elem.name, value: val.replace( rCRLF, "\r\n" ), type: type, multiple: multiple };
         } );
       }
       else {
-        result = { name: elem.name, value: val.replace( rCRLF, "\r\n" ), type: type, multiselect: multiselect };
+        result = { name: elem.name, value: val.replace( rCRLF, "\r\n" ), type: type, multiple: multiple };
       }
       return result;
     } ).get();

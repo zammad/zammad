@@ -11,6 +11,7 @@ class ObjectManager::Attribute < ApplicationModel
     select
     multiselect
     tree_select
+    multi_tree_select
     datetime
     date
     tag
@@ -616,7 +617,7 @@ to send no browser reload event, pass false
       case attribute.data_type
       when %r{^(input|select|tree_select|richtext|textarea|checkbox)$}
         data_type = :string
-      when %r{^(multiselect)$}
+      when %r{^(multiselect|multi_tree_select)$}
         data_type = if Rails.application.config.db_column_array
                       :string
                     else
@@ -643,7 +644,7 @@ to send no browser reload event, pass false
             limit: attribute.data_option[:maxlength],
             null:  true
           )
-        when 'multiselect'
+        when %r{^(multiselect|multi_tree_select)$}
           options = {
             null: true,
           }
@@ -689,7 +690,7 @@ to send no browser reload event, pass false
           limit: attribute.data_option[:maxlength],
           null:  true
         )
-      when 'multiselect'
+      when %r{^(multiselect|multi_tree_select)$}
         options = {
           null: true,
         }
@@ -949,7 +950,7 @@ is certain attribute used by triggers, overviews or schedulers
   end
 
   def data_type_must_not_change
-    allowable_changes = %w[tree_select select multiselect input checkbox]
+    allowable_changes = %w[tree_select multi_tree_select select multiselect input checkbox]
 
     return if !data_type_changed?
     return if (data_type_change - allowable_changes).empty?
@@ -1021,7 +1022,7 @@ is certain attribute used by triggers, overviews or schedulers
       data_option_maxlength_check
     when 'integer'
       data_option_min_max_check
-    when %r{^((multi|tree_)?select|checkbox)$}
+    when %r{^((multi_)?tree_select|(multi)?select|checkbox)$}
       data_option_default_check + data_option_relation_check
     when 'boolean'
       data_option_default_check + data_option_nil_check
@@ -1033,7 +1034,7 @@ is certain attribute used by triggers, overviews or schedulers
   end
 
   def ensure_multiselect
-    return if data_type != 'multiselect'
+    return if data_type != 'multiselect' && data_type != 'multi_tree_select'
     return if data_option && data_option[:multiple] == true
 
     data_option[:multiple] = true

@@ -1,7 +1,7 @@
 # coffeelint: disable=camel_case_classes
 class App.UiElement.user_autocompletion_search
-  @render: (attributeOrig, params = {}) ->
-    attribute = _.clone(attributeOrig)
+  @render: (attributeConfig, params) ->
+    attribute = $.extend({}, attributeConfig)
     attribute.disableCreateObject = true
     attribute.multiple = true
     new App.UserOrganizationAutocompletion(attribute: attribute, params: params).element()

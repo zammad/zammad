@@ -49,13 +49,23 @@ class App.SearchableSelect extends Spine.Controller
 
       # create tokens and attribute values
       values = []
-      for dataId in @attribute.value
-        if App[relation].exists dataId
-          name = App[relation].find(dataId).displayName()
-          value = dataId
-          values.push({name: name, value: value})
+      if relation
+        for dataId in @attribute.value
+          if App[relation].exists dataId
+            name = App[relation].find(dataId).displayName()
+            value = dataId
+            values.push({name: name, value: value})
+            tokens += App.view('generic/token')(
+              name: name
+              value: value
+              object: relation
+            )
+
+      else
+        for value in @attribute.value
+          values.push({name: value, value: value})
           tokens += App.view('generic/token')(
-            name: name
+            name: value
             value: value
           )
 
@@ -434,10 +444,18 @@ class App.SearchableSelect extends Spine.Controller
         option.selected = (option.value + '') == value # makes sure option value is always a string
 
   createToken: ({name, value}) =>
-    @input.before App.view('generic/token')(
-      name: name
-      value: value
-    )
+    content = {}
+    if @attribute.relation
+      content =
+        name: name
+        value: value
+        object: @attribute.relation
+    else
+      content =
+        name: value
+        value: value
+
+    @input.before App.view('generic/token')(content)
 
   removeThisToken: (e) =>
     @removeToken $(e.currentTarget).parents('.token')
@@ -451,7 +469,7 @@ class App.SearchableSelect extends Spine.Controller
         token = which
 
     id = token.data('value')
-    @shadowInput.find("[value=#{id}]").remove()
+    @shadowInput.find("[value=\"#{id}\"]").remove()
     @shadowInput.trigger('change')
     token.remove()
 
@@ -493,7 +511,7 @@ class App.SearchableSelect extends Spine.Controller
     if @shadowInput.val()
       return if @shadowInput.val().includes("#{dataId}")  # cast dataId to string before check
     @shadowInput.append($('<option/>').attr('selected', true).attr('value', @currentData.value).text(@currentData.name))
-    @shadowInput.trigger('change')
+    @onShadowChange()
 
   highlightFirst: (autocomplete) ->
     @unhighlightCurrentItem()

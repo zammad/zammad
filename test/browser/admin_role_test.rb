@@ -242,8 +242,12 @@ class AdminRoleTest < TestCase
 
     role_create(
       data: {
-        name:   name,
-        active: false
+        name:       name,
+        permission: [
+          'admin.group',
+          'user_preferences.device',
+        ],
+        active:     false
       }
     )
 

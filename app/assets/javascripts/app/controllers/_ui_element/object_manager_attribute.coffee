@@ -7,7 +7,7 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
     if params.data_option_new && !_.isEmpty(params.data_option_new)
       params.data_option = params.data_option_new
 
-    if /^((multi)?select)$/.test(attribute.value) && params.data_option? && params.data_option.options?
+    if /^(multi)?select$/.test(attribute.value) && params.data_option? && params.data_option.options?
       params.data_option.mapped = @mapDataOptions(params.data_option)
 
     item = $(App.view('object_manager/attribute')(attribute: attribute))
@@ -22,24 +22,58 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
       localItem = localForm.closest('.js-data')
       localItem.find('.js-dataMap').html(element)
       localItem.find('.js-dataScreens').html(@dataScreens(attribute, localParams, params))
-      @addDragAndDrop(localItem)
+      callback = undefined
+      if @["#{localParams.data_type}_callback"]
+        callback = @["#{localParams.data_type}_callback"]
 
-    options =
-      datetime: __('Datetime')
-      date: __('Date')
-      input: __('Text')
-      textarea: __('Textarea')
-      select: __('Select')
-      tree_select: __('Tree Select')
-      boolean: __('Boolean')
-      integer: __('Integer')
-      multiselect: __('Multiselect')
+      @addDragAndDrop(localItem, callback)
+
+    options = [
+      {
+        name: __('Text field'),
+        value: 'input',
+      },
+      {
+        name: __('Textarea field'),
+        value: 'textarea',
+      },
+      {
+        name: __('Boolean field'),
+        value: 'boolean',
+      },
+      {
+        name: __('Integer field'),
+        value: 'integer',
+      },
+      {
+        name: __('Date field'),
+        value: 'date',
+      },
+      {
+        name: __('Date & time field'),
+        value: 'datetime',
+      },
+      {
+        name: __('Single selection field'),
+        value: 'select',
+      },
+      {
+        name: __('Multiple selection field'),
+        value: 'multiselect',
+      },
+      {
+        name: __('Single tree selection field'),
+        value: 'tree_select',
+      },
+      {
+        name: __('Multiple tree selection field'),
+        value: 'multi_tree_select',
+      },
+    ]
 
     # if attribute already exists, do not allow to change it anymore
     if params.data_type
-      for key, value of options
-        if key isnt params.data_type
-          delete options[key]
+      options = _.filter(options, (option) -> option.value is params.data_type)
 
     configureAttributes = [
       { name: attribute.name, display: '', tag: 'select', null: false, options: options, translate: true, default: 'input', disabled: attribute.disabled },
@@ -419,11 +453,18 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
     )
     item.find('.js-inputLinkTemplate').html(inputLinkTemplate.form)
 
+  @setRowLevel: (element, level) ->
+    reorderElement = element.find('td:nth-child(1)')
+    reorderElement.css('padding-left', "#{(level * 20) + 10}px")
+    reorderElement.closest('tr').attr('level', level)
+    element.find('.js-key').attr('level', level)
+    element.find('td:nth-child(2)').first().css('padding-left', "#{(level * 20) + 10}px")
+
   @buildRow: (element, child, level = 0, parentElement) ->
     newRow = element.find('.js-template').clone().removeClass('js-template')
     newRow.find('.js-key').attr('level', level)
     newRow.find('.js-key').val(child.name)
-    newRow.find('td').first().css('padding-left', "#{(level * 20) + 10}px")
+    @setRowLevel(newRow, level)
     if level is 5
       newRow.find('.js-addChild').addClass('hide')
 
@@ -450,7 +491,15 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
 
     return parent
 
+  @multi_tree_select: (item, localParams, params, attribute) =>
+    @tree_select(item, localParams, params, attribute)
+
+  @multi_tree_select_callback: (event, ui) =>
+    @tree_select_callback(event, ui)
+
   @tree_select: (item, localParams, params, attribute) ->
+    item.find('td.table-draggable').attr('title', App.i18n.translateInline('Use double click to change level of the row.'))
+
     params.data_option ||= {}
     params.data_option.options ||= []
     if _.isEmpty(params.data_option.options)
@@ -494,6 +543,63 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
       return if subElements isnt 0 && !confirm("Delete #{subElements} sub elements?")
       for element in elementsToDelete
         element.remove()
+    )
+
+    if item.find('.js-addChild').length > 0
+      setRowLevel      = @setRowLevel
+      fixUnalignedRows = @fixUnalignedRows
+      item.on('dblclick', '.icon-draggable', ->
+        row       = $(@).closest('tr')
+        itemLevel = parseInt(row.attr('level'))        || 0
+        prevLevel = parseInt(row.prev().attr('level')) || 0
+
+        if itemLevel + 1 <= prevLevel + 1
+          nextLevel = itemLevel + 1
+        else
+          nextLevel = 0
+
+        setRowLevel(row, nextLevel)
+        fixUnalignedRows(item.find('tbody.table-sortable tr'))
+      )
+
+  @tree_select_callback: (event, ui) =>
+
+    # align row with the last element
+    row = ui.item.first()
+    rowPrevLevel = parseInt(row.prev().attr('level')) || 0
+    @setRowLevel(row, rowPrevLevel)
+
+    # fix unaligned elements
+    items = row.closest('tbody').find('tr')
+    @fixUnalignedRows(items)
+
+  @fixUnalignedRows: (items) =>
+    setRowLevel  = @setRowLevel
+    allowedLevel = [0]
+    items.each(->
+      itemLevel = parseInt($(@).attr('level')) || 0
+      prevRow   = $(@).prev()
+      prevLevel = parseInt(prevRow.attr('level')) || 0
+
+      # always fix first row to 0
+      return setRowLevel($(@), 0) if prevRow.length == 0
+
+      # allow all upper levels which happend before and the next depth level
+      if itemLevel == 0 || itemLevel == allowedLevel[allowedLevel.length - 1] + 1 || _.contains(allowedLevel, itemLevel)
+
+        # reset allowed levels if the depth goes up
+        if itemLevel < prevLevel
+          allowedLevel = _.range(itemLevel + 1)
+
+        # add item level if not set
+        if !_.contains(allowedLevel, itemLevel)
+          allowedLevel.push(itemLevel)
+
+        # goto next element (row level is allowed)
+        return true
+
+      # row level is not allowed, so set the level of th previous row
+      setRowLevel($(@), Math.max(prevLevel, Math.min(prevLevel + 1, itemLevel)))
     )
 
   @boolean: (item, localParams, params) ->
@@ -541,7 +647,7 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
     item.find('.js-autocompletionUrl').html(autocompletionUrl.form)
     item.find('.js-autocompletionMethod').html(autocompletionMethod.form)
 
-  @addDragAndDrop: (item) ->
+  @addDragAndDrop: (item, callback) ->
     dndOptions =
         tolerance:            'pointer'
         distance:             15
@@ -555,7 +661,9 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
             # Set helper cell sizes to match the original sizes
             $(@).width( originals.eq(index).outerWidth() )
           return helper
-      item.find('tbody.table-sortable').sortable(dndOptions)
+        stop: callback
+
+    item.find('tbody.table-sortable').sortable(dndOptions)
 
   @mapDataOptions: ({options, customsort}) ->
     if _.isArray(options)

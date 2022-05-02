@@ -1,6 +1,7 @@
 # coffeelint: disable=camel_case_classes,no_interpolation_in_single_quotes
 class App.UiElement.autocompletion
-  @render: (attribute, params = {}) ->
+  @render: (attributeConfig, params = {}) ->
+    attribute = $.extend({}, attributeConfig)
 
     if params[ attribute.name + '_autocompletion_value_shown' ]
       attribute.valueShown = params[ attribute.name + '_autocompletion_value_shown' ]

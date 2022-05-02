@@ -155,7 +155,7 @@ QUnit.test( "ticket_perform_action check", assert => {
       'notification.email': {
         body: 'some body',
         internal: 'false',
-        recipient: 'ticket_owner',
+        recipient: ['ticket_owner'],
         subject: 'some subject',
         include_attachments: 'false',
       },
@@ -180,7 +180,7 @@ QUnit.test( "ticket_perform_action check", assert => {
       'notification.email': {
         body: 'some body',
         internal: 'false',
-        recipient: 'ticket_customer',
+        recipient: ['ticket_customer'],
         subject: 'some subject',
         include_attachments: 'false',
       },
@@ -195,7 +195,7 @@ QUnit.test( "ticket_perform_action check", assert => {
       'notification.email': {
         body: 'some body',
         internal: 'false',
-        recipient: 'ticket_owner',
+        recipient: ['ticket_owner'],
         subject: 'some subject',
         include_attachments: 'false',
       },
@@ -220,7 +220,7 @@ QUnit.test( "ticket_perform_action check", assert => {
       'notification.email': {
         body: 'some body',
         internal: 'true',
-        recipient: 'ticket_customer',
+        recipient: ['ticket_customer'],
         subject: 'some subject',
         include_attachments: 'false',
       },
@@ -235,7 +235,7 @@ QUnit.test( "ticket_perform_action check", assert => {
       'notification.email': {
         body: 'some body',
         internal: 'false',
-        recipient: 'ticket_owner',
+        recipient: ['ticket_owner'],
         subject: 'some subject',
         include_attachments: 'false',
       },
@@ -269,7 +269,7 @@ QUnit.test( "ticket_perform_action check", assert => {
       'notification.email': {
         body: 'some body',
         internal: 'true',
-        recipient: 'ticket_customer',
+        recipient: ['ticket_customer'],
         subject: 'some subject',
         include_attachments: 'false',
       },
@@ -284,7 +284,7 @@ QUnit.test( "ticket_perform_action check", assert => {
       'notification.email': {
         body: 'some body',
         internal: 'false',
-        recipient: 'ticket_owner',
+        recipient: ['ticket_owner'],
         subject: 'some subject',
         include_attachments: 'false',
       },
@@ -323,7 +323,7 @@ QUnit.test( "ticket_perform_action check", assert => {
       'notification.email': {
         body: 'some body',
         internal: 'true',
-        recipient: 'ticket_customer',
+        recipient: ['ticket_customer'],
         subject: 'some subject',
         include_attachments: 'false',
       },
@@ -338,7 +338,7 @@ QUnit.test( "ticket_perform_action check", assert => {
       'notification.email': {
         body: 'some body',
         internal: 'false',
-        recipient: 'ticket_owner',
+        recipient: ['ticket_owner'],
         subject: 'some subject',
         include_attachments: 'false',
       },
@@ -595,7 +595,7 @@ QUnit.test( "ticket_perform_action check possible owner selection", assert => {
     ticket_perform_action5: {
       'ticket.owner_id': {
         pre_condition: 'not_set',
-        value: null,
+        value: '',
         value_completion: ''
       }
     }
@@ -610,7 +610,7 @@ QUnit.test( "ticket_perform_action check possible owner selection", assert => {
     ticket_perform_action5: {
       'ticket.owner_id': {
         pre_condition: 'specific',
-        value: null,
+        value: '',
         value_completion: ''
       }
     }

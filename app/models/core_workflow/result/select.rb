@@ -19,7 +19,10 @@ class CoreWorkflow::Result::Select < CoreWorkflow::Result::Backend
   end
 
   def select_value
-    @select_value ||= Array(@perform_config['select']).reject { |v| @result_object.result[:restrict_values][field].exclude?(v) }.first
+    @select_value ||= Array(@perform_config['select']).reject { |v| @result_object.result[:restrict_values][field].exclude?(v) }
+    return @select_value if @result_object.attributes.object_elements_hash[field][:multiple]
+
+    @select_value.first
   end
 
   def params_set?

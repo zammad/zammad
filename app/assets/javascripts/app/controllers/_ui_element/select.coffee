@@ -1,8 +1,9 @@
 # coffeelint: disable=camel_case_classes
 class App.UiElement.select extends App.UiElement.ApplicationUiElement
-  @render: (attribute, params, form = {}) ->
+  @render: (attributeConfig, params, form = {}) ->
 
     # set multiple option
+    attribute = $.extend({}, attributeConfig)
     if attribute.multiple
       attribute.multiple = 'multiple'
     else

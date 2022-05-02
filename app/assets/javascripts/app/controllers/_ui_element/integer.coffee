@@ -1,6 +1,7 @@
 # coffeelint: disable=camel_case_classes
 class App.UiElement.integer
-  @render: (attribute) ->
+  @render: (attributeConfig, params) ->
+    attribute = $.extend({}, attributeConfig)
     attribute.type = 'number'
     attribute.step = '1'
     item = $( App.view('generic/input')(attribute: attribute) )

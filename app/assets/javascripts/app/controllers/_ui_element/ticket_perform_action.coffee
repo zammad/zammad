@@ -247,7 +247,7 @@ class App.UiElement.ticket_perform_action
         @buildValue(elementFull, elementRow, groupAndAttribute, elements, meta, attribute)
 
     # force to use auto complition on user lookup
-    attribute = _.clone(attributeConfig)
+    attribute = clone(attributeConfig, true)
 
     name = "#{attribute.name}::#{groupAndAttribute}::value"
     attributeSelected = elements[groupAndAttribute]
@@ -304,7 +304,7 @@ class App.UiElement.ticket_perform_action
 
     # build new item
     attributeConfig = elements[groupAndAttribute]
-    config = _.clone(attributeConfig)
+    config = clone(attributeConfig, true)
 
     if config.relation is 'User'
       config.tag = 'user_autocompletion'
@@ -318,18 +318,15 @@ class App.UiElement.ticket_perform_action
       if attribute.value && attribute.value[groupAndAttribute]
         config['value'] = _.clone(attribute.value[groupAndAttribute]['value'])
       config.multiple = false
+      config.default = undefined
       config.nulloption = config.null
-      if config.tag is 'multiselect'
+      if config.tag is 'multiselect' || config.tag is 'multi_tree_select'
         config.multiple = true
       if config.tag is 'checkbox'
         config.tag = 'select'
-      tagSearch = "#{config.tag}_search"
       if config.tag is 'datetime'
         config.validationContainer = 'self'
-      if App.UiElement[tagSearch]
-        item = App.UiElement[tagSearch].render(config, {})
-      else
-        item = App.UiElement[config.tag].render(config, {})
+      item = App.UiElement[config.tag].render(config, {})
 
     relative_operators = [
       'before (relative)',

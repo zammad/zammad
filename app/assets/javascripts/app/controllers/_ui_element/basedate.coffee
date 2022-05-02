@@ -4,8 +4,8 @@ class App.UiElement.basedate
   @templateName: ->
     throw 'Must override in a subclass'
 
-  @render: (attributeOrig) ->
-    attribute = _.clone(attributeOrig)
+  @render: (attributeConfig) ->
+    attribute = $.extend({}, attributeConfig)
     attribute.nameRaw = attribute.name
     attribute.name = "{#{@templateName()}}#{attribute.name}"
 

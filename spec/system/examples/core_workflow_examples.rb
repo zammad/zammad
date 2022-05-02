@@ -1180,6 +1180,206 @@ RSpec.shared_examples 'core workflow' do
     end
   end
 
+  describe 'modify multi tree select attribute', authenticated_as: :authenticate, db_strategy: :reset do
+    def authenticate
+      create(:object_manager_attribute_multi_tree_select, object_name: object_name, name: field_name, display: field_name, screens: screens)
+      ObjectManager::Attribute.migration_execute
+      true
+    end
+
+    describe 'action - show' do
+      before do
+        create(:core_workflow,
+               object:  object_name,
+               perform: {
+                 "#{object_name.downcase}.#{field_name}": {
+                   operator: 'show',
+                   show:     'true'
+                 },
+               })
+      end
+
+      it 'does perform' do
+        before_it.call
+        expect(page).to have_selector("input[name='#{field_name}_completion']", visible: :all)
+      end
+    end
+
+    describe 'action - hide' do
+      before do
+        create(:core_workflow,
+               object:  object_name,
+               perform: {
+                 "#{object_name.downcase}.#{field_name}": {
+                   operator: 'hide',
+                   hide:     'true'
+                 },
+               })
+      end
+
+      it 'does perform' do
+        before_it.call
+        expect(page).to have_selector(".form-group[data-attribute-name='#{field_name}'].is-hidden", visible: :all)
+      end
+    end
+
+    describe 'action - remove' do
+      before do
+        create(:core_workflow,
+               object:  object_name,
+               perform: {
+                 "#{object_name.downcase}.#{field_name}": {
+                   operator: 'remove',
+                   remove:   'true'
+                 },
+               })
+      end
+
+      it 'does perform' do
+        before_it.call
+        expect(page).to have_selector(".form-group[data-attribute-name='#{field_name}'].is-removed", visible: :hidden)
+      end
+    end
+
+    describe 'action - set_optional' do
+      before do
+        create(:core_workflow,
+               object:  object_name,
+               perform: {
+                 "#{object_name.downcase}.#{field_name}": {
+                   operator:     'set_optional',
+                   set_optional: 'true'
+                 },
+               })
+      end
+
+      it 'does perform' do
+        before_it.call
+        expect(page.find("div[data-attribute-name='#{field_name}'] div.formGroup-label label")).to have_no_text('*')
+      end
+    end
+
+    describe 'action - set_mandatory' do
+      before do
+        create(:core_workflow,
+               object:  object_name,
+               perform: {
+                 "#{object_name.downcase}.#{field_name}": {
+                   operator:      'set_mandatory',
+                   set_mandatory: 'true'
+                 },
+               })
+      end
+
+      it 'does perform' do
+        before_it.call
+        expect(page.find("div[data-attribute-name='#{field_name}'] div.formGroup-label label")).to have_text('*')
+      end
+    end
+
+    describe 'action - unset_readonly' do
+      before do
+        create(:core_workflow,
+               object:  object_name,
+               perform: {
+                 "#{object_name.downcase}.#{field_name}": {
+                   operator:       'unset_readonly',
+                   unset_readonly: 'true'
+                 },
+               })
+      end
+
+      it 'does perform' do
+        before_it.call
+        expect(page).to have_no_selector("div[data-attribute-name='#{field_name}'].is-readonly")
+      end
+    end
+
+    describe 'action - set_readonly' do
+      before do
+        create(:core_workflow,
+               object:  object_name,
+               perform: {
+                 "#{object_name.downcase}.#{field_name}": {
+                   operator:     'set_readonly',
+                   set_readonly: 'true'
+                 },
+               })
+      end
+
+      it 'does perform' do
+        before_it.call
+        expect(page).to have_selector("div[data-attribute-name='#{field_name}'].is-readonly")
+      end
+    end
+
+    describe 'action - restrict values' do
+      before do
+        create(:core_workflow,
+               object:  object_name,
+               perform: {
+                 "#{object_name.downcase}.#{field_name}": {
+                   operator:     'set_fixed_to',
+                   set_fixed_to: ['Incident', 'Incident::Hardware', 'Incident::Hardware::Monitor']
+                 },
+               })
+      end
+
+      it 'does perform' do
+        before_it.call
+        expect(page).to have_selector('span.searchableSelect-option-text', text: 'Incident', visible: :all)
+        expect(page).to have_selector('span.searchableSelect-option-text', text: 'Hardware', visible: :all)
+        expect(page).to have_selector('span.searchableSelect-option-text', text: 'Monitor', visible: :all)
+        expect(page).to have_no_selector('span.searchableSelect-option-text', text: 'Mouse', visible: :all)
+        expect(page).to have_no_selector('span.searchableSelect-option-text', text: 'Softwareproblem', visible: :all)
+      end
+    end
+
+    describe 'action - select' do
+      before do
+        create(:core_workflow,
+               object:  object_name,
+               perform: {
+                 "#{object_name.downcase}.#{field_name}": {
+                   operator: 'select',
+                   select:   ['Incident::Hardware::Monitor']
+                 },
+               })
+      end
+
+      it 'does perform' do
+        before_it.call
+        expect(page).to have_selector('span.token-label', text: 'Incident › Hardware › Monitor')
+      end
+    end
+
+    describe 'action - auto select' do
+      before do
+        create(:core_workflow,
+               object:  object_name,
+               perform: {
+                 "#{object_name.downcase}.#{field_name}": {
+                   operator:     'set_fixed_to',
+                   set_fixed_to: ['', 'Incident'],
+                 },
+               })
+        create(:core_workflow,
+               object:  object_name,
+               perform: {
+                 "#{object_name.downcase}.#{field_name}": {
+                   operator:    'auto_select',
+                   auto_select: 'true',
+                 },
+               })
+      end
+
+      it 'does perform' do
+        before_it.call
+        expect(page).to have_selector('span.token-label', text: 'Incident')
+      end
+    end
+  end
+
   describe 'modify date attribute', authenticated_as: :authenticate, db_strategy: :reset do
     def authenticate
       create(:object_manager_attribute_date, object_name: object_name, name: field_name, display: field_name, screens: screens)

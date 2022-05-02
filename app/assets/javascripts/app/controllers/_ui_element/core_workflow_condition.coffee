@@ -55,6 +55,7 @@ class App.UiElement.core_workflow_condition extends App.UiElement.ApplicationSel
       '^select$': [__('is'), __('is not'), __('is set'), __('not set'), __('has changed'), __('changed to')]
       '^multiselect$': [__('contains'), __('contains not'), __('contains all'), __('contains all not'), __('is set'), __('not set'), __('has changed'), __('changed to')]
       '^tree_select$': [__('is'), __('is not'), __('is set'), __('not set'), __('has changed'), __('changed to')]
+      '^multi_tree_select$': [__('contains'), __('contains not'), __('contains all'), __('contains all not'), __('is set'), __('not set'), __('has changed'), __('changed to')]
       '^(input|textarea|richtext)$': [__('is'), __('is not'), __('is set'), __('not set'), __('has changed'), __('changed to'), __('regex match'), __('regex mismatch')]
 
     operatorsName =
@@ -150,16 +151,14 @@ class App.UiElement.core_workflow_condition extends App.UiElement.ApplicationSel
       attributesByObject = App.ObjectManagerAttribute.selectorAttributesByObject()
       configureAttributes = attributesByObject[groupMeta.model] || []
       for config in configureAttributes
-        continue if !_.contains(['input', 'textarea', 'richtext', 'multiselect', 'select', 'integer', 'boolean', 'active', 'tree_select', 'autocompletion_ajax'], config.tag)
+        continue if !_.contains(['input', 'textarea', 'richtext', 'multiselect', 'select', 'integer', 'boolean', 'active', 'multi_tree_select', 'tree_select', 'autocompletion_ajax'], config.tag)
         continue if groupKey is 'ticket' && _.contains(['number', 'title'], config.name)
 
         # ignore passwords and relations
         if config.type isnt 'password' && config.name.substr(config.name.length-4,4) isnt '_ids' && config.searchable isnt false
+          config.default  = undefined
           if config.tag is 'textarea'
             config.expanding = false
-          if /^((multi)?select)$/.test(config.tag)
-            config.multiple = true
-            config.default  = undefined
           if config.type is 'email' || config.type is 'tel'
             config.type = 'text'
           for operatorRegEx, operator of operatorsType

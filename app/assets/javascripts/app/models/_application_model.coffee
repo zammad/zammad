@@ -106,14 +106,14 @@ class App.Model extends Spine.Model
           parts = attribute.name.split '::'
           if parts[0] && !parts[1]
 
-            # key exists not in hash || value is '' || value is undefined
-            if !( attributeName of data['params'] ) || data['params'][attributeName] is '' || data['params'][attributeName] is undefined || data['params'][attributeName] is null
+            # key exists not in hash || value is ''|null|undefined
+            if !( attributeName of data['params'] ) || @_validate_is_empty(data['params'][attributeName])
               errors[attributeName] = __('is required')
 
           else if parts[0] && parts[1] && !parts[2]
 
             # key exists not in hash || value is '' || value is undefined
-            if !data.params[parts[0]] || !( parts[1] of data.params[parts[0]] ) || data.params[parts[0]][parts[1]] is '' || data.params[parts[0]][parts[1]] is undefined || data.params[parts[0]][parts[1]] is null
+            if !data.params[parts[0]] || !( parts[1] of data.params[parts[0]] ) || @_validate_is_empty(data.params[parts[0]][parts[1]])
               errors[attributeName] = __('is required')
 
           else
@@ -159,6 +159,14 @@ class App.Model extends Spine.Model
 
     # return no errors
     return
+
+  @_validate_is_empty: (value) ->
+    return true if value is ''
+    return true if value is null
+    return true if value is undefined
+    return true if _.isArray(value) is true && value.length is 0
+    return true if _.isArray(value) is true && value.length is 1 && value[0] is ''
+    false
 
   ###
 

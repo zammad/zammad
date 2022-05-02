@@ -191,12 +191,16 @@ class App.FormHandlerCoreWorkflow
     return if _.isEmpty(data)
 
     for field, values of data
-      fieldElement = $("div[data-attribute-name='" + field + "']")
-      if fieldElement.hasClass('tree_select')
-        fieldElement.find(".js-option[data-value='" + data[field] + "']").trigger('click')
-      else
-        form.find('[name="' + field + '"]').val(data[field])
-      coreWorkflowParams[classname][field] = data[field]
+      if !_.isArray(values)
+        values = [values]
+
+      for value in values
+        fieldElement = $("div[data-attribute-name='" + field + "']")
+        if fieldElement.hasClass('tree_select') || fieldElement.hasClass('multi_tree_select')
+          fieldElement.find(".js-option[data-value='" + value + "'] span").trigger('click')
+        else
+          form.find('[name="' + field + '"]').val(value)
+      coreWorkflowParams[classname][field] = values
 
   # fill in data in input fields
   @fillIn: (classname, form, ui, attributes, params, data) ->
