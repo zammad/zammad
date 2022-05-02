@@ -2,7 +2,11 @@
 
 import type { RouteRecordRaw } from 'vue-router'
 import LayoutMain from '@mobile/components/layout/LayoutMain.vue'
+import transitionViewGuard from '@mobile/router/guards/before/viewTransition'
 import type { ImportGlobEagerDefault } from '@common/types/utils'
+import type { App } from 'vue'
+import type { InitializeAppRouter } from '@common/types/router'
+import mainInitializeRouter from '@common/router'
 
 const routeModules = import.meta.globEager('./routes/*.ts')
 
@@ -22,7 +26,7 @@ Object.values(routeModules).forEach(
   },
 )
 
-const routes: Array<RouteRecordRaw> = [
+export const routes: Array<RouteRecordRaw> = [
   {
     path: '/login',
     name: 'Login',
@@ -52,4 +56,14 @@ const routes: Array<RouteRecordRaw> = [
   },
 ]
 
-export default routes
+const initializeRouter: InitializeAppRouter = (app: App) => {
+  return mainInitializeRouter(
+    app,
+    routes,
+    [transitionViewGuard],
+    undefined,
+    'mobile',
+  )
+}
+
+export default initializeRouter

@@ -3,38 +3,27 @@
 import { createApp } from 'vue'
 import '@common/initializer/translatableMarker'
 import App from '@mobile/App.vue'
-import {
-  DefaultApolloClient,
-  provideApolloClient,
-} from '@vue/apollo-composable'
-import apolloClient from '@common/server/apollo/client'
 import useSessionStore from '@common/stores/session'
 import '@mobile/styles/main.css'
+import initializeApolloClient from '@mobile/server/apollo'
 import initializeStore from '@common/stores'
 import initializeStoreSubscriptions from '@common/initializer/storeSubscriptions'
-import initializeRouter from '@common/router/index'
 import initializeGlobalComponents from '@common/initializer/globalComponents'
-import routes from '@mobile/router'
+import initializeRouter from '@mobile/router'
 import useApplicationStore from '@common/stores/application'
 import { i18n } from '@common/i18n'
 import useLocaleStore from '@common/stores/locale'
 import useAuthenticationStore from '@common/stores/authentication'
 import 'virtual:svg-icons-register' // eslint-disable-line import/no-unresolved
-import transitionViewGuard from '@mobile/router/guards/before/viewTransition'
 import initializeForm from '@mobile/form'
 
 export default async function mountApp(): Promise<void> {
   const app = createApp(App)
 
-  app.provide(DefaultApolloClient, apolloClient)
-
-  provideApolloClient(apolloClient)
+  initializeApolloClient(app)
 
   initializeStore(app)
-  const router = initializeRouter(app, routes)
-
-  // Add app custom specific guards.
-  router.beforeEach(transitionViewGuard)
+  initializeRouter(app)
 
   initializeGlobalComponents(app)
 

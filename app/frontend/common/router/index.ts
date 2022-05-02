@@ -5,8 +5,10 @@ import type { App } from 'vue'
 import {
   createRouter,
   createWebHistory,
-  Router,
-  RouteRecordRaw,
+  type NavigationGuard,
+  type NavigationHookAfter,
+  type Router,
+  type RouteRecordRaw,
 } from 'vue-router'
 import type { RouteRecordMeta } from '@common/types/router'
 import permissionGuard from '@common/router/guards/before/permission'
@@ -20,16 +22,23 @@ declare module 'vue-router' {
 export default function initializeRouter(
   app: App,
   routes: Array<RouteRecordRaw>,
+  beforeGuards?: NavigationGuard[],
+  afterGuards?: NavigationHookAfter[],
+  historyBase?: string,
 ): Router {
   const router: Router = createRouter({
-    history: createWebHistory('mobile'),
+    history: createWebHistory(historyBase),
     routes,
   })
 
   router.beforeEach(authenticationGuard)
   router.beforeEach(permissionGuard)
 
+  beforeGuards?.forEach((guard) => router.beforeEach(guard))
+
   router.afterEach(headerTitleGuard)
+
+  afterGuards?.forEach((guard) => router.afterEach(guard))
 
   app.use(router)
 

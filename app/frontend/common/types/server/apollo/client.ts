@@ -1,8 +1,17 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
+import type { App } from 'vue'
 import type { FetchResult } from '@apollo/client/core'
+import type { InMemoryCacheConfig } from '@apollo/client/cache/inmemory/types'
+import type { ImportGlobEagerOutput } from '@common/types/utils'
 import type { DocumentNode } from 'graphql'
 
+export type RegisterInMemoryCacheConfig = (
+  config: InMemoryCacheConfig,
+) => InMemoryCacheConfig
+
+export type CacheInitializerModules =
+  ImportGlobEagerOutput<RegisterInMemoryCacheConfig>
 export interface ClientErrorContext {
   logLevel: LogLevel
 }
@@ -18,3 +27,5 @@ export interface DebugLinkResponseOutput {
   data: FetchResult
   responseHeaders?: Record<string, string>
 }
+
+export type InitializeAppApolloClient = (app: App) => void

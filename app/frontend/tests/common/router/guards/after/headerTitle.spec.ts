@@ -7,10 +7,6 @@ import { nextTick } from 'vue'
 import useMetaTitle from '@common/composables/useMetaTitle'
 import useApplicationStore from '@common/stores/application'
 
-vi.mock('@common/server/apollo/client', () => {
-  return {}
-})
-
 describe('headerTitle', () => {
   createTestingPinia({ createSpy: vi.fn })
   useApplicationStore().config.product_name = 'Zammad'

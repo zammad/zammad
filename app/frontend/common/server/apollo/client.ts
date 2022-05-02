@@ -2,12 +2,29 @@
 
 import { ApolloClient, NormalizedCacheObject } from '@apollo/client/core'
 import link from '@common/server/apollo/link'
-import cache from '@common/server/apollo/cache'
+import createCache from '@common/server/apollo/cache'
+import type { CacheInitializerModules } from '@common/types/server/apollo/client'
 
-const apolloClient: ApolloClient<NormalizedCacheObject> = new ApolloClient({
-  connectToDevTools: true,
-  link,
-  cache,
-})
+let apolloClient: ApolloClient<NormalizedCacheObject>
 
-export default apolloClient
+export const createApolloClient = (
+  cacheInitializerModules: CacheInitializerModules = {},
+) => {
+  const cache = createCache(cacheInitializerModules)
+
+  apolloClient = new ApolloClient({
+    connectToDevTools: true,
+    link,
+    cache,
+  })
+
+  return apolloClient
+}
+
+export const getApolloClient = () => {
+  return apolloClient
+}
+
+export const clearApolloClientStore = async () => {
+  await apolloClient.clearStore()
+}

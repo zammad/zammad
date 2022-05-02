@@ -4,7 +4,7 @@ import { MutationHandler } from '@common/server/apollo/handler'
 import { defineStore } from 'pinia'
 import { useLoginMutation, useLogoutMutation } from '@common/graphql/api'
 import useSessionStore from '@common/stores/session'
-import apolloClient from '@common/server/apollo/client'
+import { clearApolloClientStore } from '@common/server/apollo/client'
 import useApplicationStore from '@common/stores/application'
 import { ref } from 'vue'
 
@@ -14,7 +14,7 @@ const useAuthenticationStore = defineStore(
     const authenticated = ref(false)
 
     const clearAuthentication = async (): Promise<void> => {
-      await apolloClient.clearStore()
+      await clearApolloClientStore
 
       const session = useSessionStore()
       session.id = null
