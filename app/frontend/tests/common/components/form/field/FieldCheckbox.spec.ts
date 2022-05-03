@@ -15,7 +15,7 @@ const wrapperParameters = {
   formField: true,
 }
 
-const renderButton = (options: ExtendedMountingOptions<unknown> = {}) =>
+const renderCheckbox = (options: ExtendedMountingOptions<unknown> = {}) =>
   renderComponent(FormKit, {
     ...wrapperParameters,
     props: {
@@ -30,7 +30,7 @@ const renderButton = (options: ExtendedMountingOptions<unknown> = {}) =>
 
 describe('Form - Field - Checkbox (Formkit-BuildIn)', () => {
   it('can render a checkbox', () => {
-    const view = renderButton()
+    const view = renderCheckbox()
 
     const checkbox = view.getByLabelText('Checkbox')
 
@@ -42,7 +42,7 @@ describe('Form - Field - Checkbox (Formkit-BuildIn)', () => {
   })
 
   it('set some props', async () => {
-    const view = renderButton({
+    const view = renderCheckbox({
       props: {
         label: 'Checkbox',
         type: 'checkbox',
@@ -55,7 +55,7 @@ describe('Form - Field - Checkbox (Formkit-BuildIn)', () => {
   })
 
   it('check for the input event', async () => {
-    const view = renderButton({
+    const view = renderCheckbox({
       props: {
         label: 'Checkbox',
         type: 'checkbox',
@@ -76,7 +76,7 @@ describe('Form - Field - Checkbox (Formkit-BuildIn)', () => {
   })
 
   it('check for the input value when on-value and off-value is used', async () => {
-    const view = renderButton({
+    const view = renderCheckbox({
       ...wrapperParameters,
       props: {
         label: 'Checkbox',
@@ -108,7 +108,7 @@ describe('Form - Field - Checkbox (Formkit-BuildIn)', () => {
   })
 
   it('can use variant', async () => {
-    const view = renderButton({
+    const view = renderCheckbox({
       ...wrapperParameters,
       props: {
         label: 'Checkbox',
@@ -125,7 +125,7 @@ describe('Form - Field - Checkbox (Formkit-BuildIn)', () => {
   })
 
   it('can be disabled', async () => {
-    const view = renderButton({
+    const view = renderCheckbox({
       props: {
         label: 'Checkbox',
         name: 'checkbox',
@@ -154,7 +154,7 @@ describe('Form - Field - Checkbox (Formkit-BuildIn)', () => {
   })
 
   it('options for multiple checkboxes can be used', () => {
-    const view = renderButton({
+    const view = renderCheckbox({
       props: {
         label: 'Multiple Checkbox',
         name: 'checkbox-multiple',
@@ -177,7 +177,7 @@ describe('Form - Field - Checkbox (Formkit-BuildIn)', () => {
   })
 
   it('check for the multiple checkbox input event', async () => {
-    const view = renderButton({
+    const view = renderCheckbox({
       props: {
         label: 'Multiple Checkbox',
         name: 'checkbox-multiple',

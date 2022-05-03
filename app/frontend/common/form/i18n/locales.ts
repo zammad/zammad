@@ -16,6 +16,10 @@ const loadLocales = (): FormKitLocaleExtended => {
   return {
     ui: {
       /**
+       * Shown on a button for adding additional items.
+       */
+      add: () => i18n.t('Add'),
+      /**
        * Shown when a button to remove items is visible.
        */
       remove: () => i18n.t('Remove'),
