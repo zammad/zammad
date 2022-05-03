@@ -33,7 +33,6 @@ import type {
   FormKitSchemaDOMNode,
   FormKitSchemaComponent,
 } from '@formkit/core'
-import getUuid from '@common/utils/getUuid'
 import { useTimeoutFn } from '@vueuse/shared'
 import UserError from '@common/errors/UserError'
 import { FormSchemaId } from '@common/graphql/types'
@@ -67,7 +66,12 @@ export interface Props {
   onSubmit?: (values: FormData) => Promise<void> | void
 }
 
-const formId = `form-${getUuid()}`
+// Zammad currently expects formIds to be BigInts. Maybe convert to UUIDs later.
+// const formId = `form-${getUuid()}`
+
+// This is the formId generation logic from the legacy desktop app.
+let formId = new Date().getTime() + Math.floor(Math.random() * 99999).toString()
+formId = formId.substr(formId.length - 9, 9)
 
 const props = withDefaults(defineProps<Props>(), {
   schema: () => {

@@ -31,6 +31,14 @@ const schema = reactive([
     name: 'datetimeLocal',
   },
   {
+    type: 'file',
+    name: 'testFile',
+    label: 'UploadFiles',
+    props: {
+      multiple: true,
+    },
+  },
+  {
     type: 'submit',
     name: 'submit',
   },

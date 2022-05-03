@@ -38,7 +38,7 @@ RSpec.describe(FormSchema::Field::Entity::Group) do
 
       it 'returns fields' do
         expected_attributes[:options].each do |option|
-          option[:value] = Gql::ZammadSchema.id_from_object(Group.find(option[:value]), nil, nil)
+          option[:value] = Gql::ZammadSchema.id_from_object(Group.find(option[:value]))
         end
         expect(schema).to eq(base_attributes.merge(type: type).merge({ props: expected_attributes }))
       end

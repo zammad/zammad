@@ -15,7 +15,7 @@ module Gql::Queries
     type Gql::Types::TicketType, null: false
 
     def resolve(ticket_id: nil)
-      Gql::ZammadSchema.object_from_id(ticket_id, context) || raise("Cannot find ticket #{ticket_id}")
+      Gql::ZammadSchema.object_from_id(ticket_id) || raise("Cannot find ticket #{ticket_id}")
     end
   end
 end

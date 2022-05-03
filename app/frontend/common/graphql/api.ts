@@ -24,6 +24,70 @@ export const ObjectAttributeValuesFragmentDoc = gql`
   value
 }
     `;
+export const FormUploadCacheAddDocument = gql`
+    mutation formUploadCacheAdd($formId: FormId!, $files: [UploadFileInput!]!) {
+  formUploadCacheAdd(formId: $formId, files: $files) {
+    uploadedFiles {
+      id
+      name
+      type
+    }
+  }
+}
+    `;
+
+/**
+ * __useFormUploadCacheAddMutation__
+ *
+ * To run a mutation, you first call `useFormUploadCacheAddMutation` within a Vue component and pass it any options that fit your needs.
+ * When your component renders, `useFormUploadCacheAddMutation` returns an object that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
+ *
+ * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
+ *
+ * @example
+ * const { mutate, loading, error, onDone } = useFormUploadCacheAddMutation({
+ *   variables: {
+ *     formId: // value for 'formId'
+ *     files: // value for 'files'
+ *   },
+ * });
+ */
+export function useFormUploadCacheAddMutation(options: VueApolloComposable.UseMutationOptions<Types.FormUploadCacheAddMutation, Types.FormUploadCacheAddMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.FormUploadCacheAddMutation, Types.FormUploadCacheAddMutationVariables>>) {
+  return VueApolloComposable.useMutation<Types.FormUploadCacheAddMutation, Types.FormUploadCacheAddMutationVariables>(FormUploadCacheAddDocument, options);
+}
+export type FormUploadCacheAddMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.FormUploadCacheAddMutation, Types.FormUploadCacheAddMutationVariables>;
+export const FormUploadCacheRemoveDocument = gql`
+    mutation formUploadCacheRemove($formId: FormId!, $fileIds: [ID!]!) {
+  formUploadCacheRemove(formId: $formId, fileIds: $fileIds) {
+    success
+  }
+}
+    `;
+
+/**
+ * __useFormUploadCacheRemoveMutation__
+ *
+ * To run a mutation, you first call `useFormUploadCacheRemoveMutation` within a Vue component and pass it any options that fit your needs.
+ * When your component renders, `useFormUploadCacheRemoveMutation` returns an object that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
+ *
+ * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
+ *
+ * @example
+ * const { mutate, loading, error, onDone } = useFormUploadCacheRemoveMutation({
+ *   variables: {
+ *     formId: // value for 'formId'
+ *     fileIds: // value for 'fileIds'
+ *   },
+ * });
+ */
+export function useFormUploadCacheRemoveMutation(options: VueApolloComposable.UseMutationOptions<Types.FormUploadCacheRemoveMutation, Types.FormUploadCacheRemoveMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.FormUploadCacheRemoveMutation, Types.FormUploadCacheRemoveMutationVariables>>) {
+  return VueApolloComposable.useMutation<Types.FormUploadCacheRemoveMutation, Types.FormUploadCacheRemoveMutationVariables>(FormUploadCacheRemoveDocument, options);
+}
+export type FormUploadCacheRemoveMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.FormUploadCacheRemoveMutation, Types.FormUploadCacheRemoveMutationVariables>;
 export const LoginDocument = gql`
     mutation login($login: String!, $password: String!, $fingerprint: String!) {
   login(login: $login, password: $password, fingerprint: $fingerprint) {

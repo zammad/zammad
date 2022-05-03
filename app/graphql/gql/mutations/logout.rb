@@ -6,12 +6,15 @@ module Gql::Mutations
 
     field :success, Boolean, null: false, description: 'Was the logout successful?'
 
+    # Don't require an authenticated user, because that is not present in maintenance_mode,
+    #   when users still need to be correctly logged out.
+    def self.authorize(...)
+      true
+    end
+
     def self.requires_csrf_verification?
       false
     end
-
-    # Don't require an authenticated user, because that is not present in maintenance_mode,
-    #   when users still need to be correctly logged out.
 
     def resolve(...)
 

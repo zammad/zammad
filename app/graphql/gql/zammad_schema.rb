@@ -14,25 +14,27 @@ class Gql::ZammadSchema < GraphQL::Schema
   # Set maximum page size and depth to protect the system.
   #   Values may need to be adjusted in future.
   default_max_page_size 1000
-  max_depth 10
+
+  # The GraphQL introspection query has a depth of 13, so allow that in the development env.
+  max_depth Rails.env.eql?('development') ? 13 : 10
 
   # Union and Interface Resolution
   def self.resolve_type(_abstract_type, obj, _ctx)
     "Gql::Types::#{obj.class.name}Type".constantize
   rescue
-    raise(GraphQL::RequiredImplementationMissingError)
+    raise GraphQL::RequiredImplementationMissingError, "Cannot resolve type for '#{obj.class.name}'."
   end
 
   # Relay-style Object Identification:
 
   # Return a string UUID for `object`
-  def self.id_from_object(object, _type_definition, _query_ctx)
-    object.to_gid.to_param
+  def self.id_from_object(object, _type_definition = nil, _query_ctx = nil)
+    object.to_gid_param
   end
 
   # Given a string UUID, find the object
-  def self.object_from_id(id, _query_ctx)
-    GlobalID.find(id)
+  def self.object_from_id(id, _query_ctx = nil)
+    GlobalID.find(id, only: [ActiveRecord::Base])
   end
 
   def self.unauthorized_object(error)

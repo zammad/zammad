@@ -23,8 +23,16 @@ module Gql::Mutations
       verify_csrf_token(ctx) if requires_csrf_verification?
     end
 
+    # Require authentication by default for mutations.
+    def self.authorize(_obj, ctx)
+      ctx.current_user
+    end
+
     def self.verify_csrf_token(ctx)
       return true if ctx[:is_graphql_introspection_generator]
+      # Support :graphql type tests that don't use HTTP.
+      return true if Rails.env.test? && !ctx[:controller]
+      # Support developer workflows that need to turn off CSRF.
       return true if Rails.env.development? && ctx[:controller].request.headers['SkipAuthenticityTokenCheck'] == 'true'
 
       ctx[:controller].send(:verify_csrf_token) # verify_csrf_token is private :(

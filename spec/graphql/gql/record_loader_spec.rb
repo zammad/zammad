@@ -64,7 +64,7 @@ RSpec.describe Gql::RecordLoader, type: :graphql do
         },
       }
       overview = create(:overview, condition: condition)
-      Gql::ZammadSchema.id_from_object(overview, Gql::Types::OverviewType, {})
+      Gql::ZammadSchema.id_from_object(overview)
     end
 
     it 'performs only the expected amount of DB queries', authenticated_as: :agent do # rubocop:disable RSpec/ExampleLength, RSpec/MultipleExpectations
@@ -122,7 +122,7 @@ RSpec.describe Gql::RecordLoader, type: :graphql do
     let(:loops) { 1 }
     let(:tickets_per_loop) { 1 }
     let(:articles_per_ticket) { 100 }
-    let(:ticket_id) { Gql::ZammadSchema.id_from_object(Ticket.last, Gql::Types::TicketType, {}) }
+    let(:ticket_id) { Gql::ZammadSchema.id_from_object(Ticket.last) }
 
     it 'performs only the expected amount of DB queries', authenticated_as: :agent do # rubocop:disable RSpec/ExampleLength, RSpec/MultipleExpectations
       query = read_graphql_file('apps/mobile/graphql/fragments/objectAttributeValues.graphql') +

@@ -1,0 +1,9 @@
+mutation formUploadCacheAdd($formId: FormId!, $files: [UploadFileInput!]!) {
+  formUploadCacheAdd(formId: $formId, files: $files) {
+    uploadedFiles {
+      id
+      name
+      type
+    }
+  }
+}

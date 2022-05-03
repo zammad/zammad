@@ -59,7 +59,7 @@ class FormSchema::Field
 
   # If the context responds to :schema, use it to map the ids to GraphQL::ID strings.
   def id_from_object(object)
-    context.try(:schema)&.id_from_object(object, nil, nil) || object.id
+    context.try(:schema)&.id_from_object(object) || object.id
   end
 
   def schema
