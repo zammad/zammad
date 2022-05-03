@@ -214,7 +214,7 @@ group :development, :test do
   gem 'webmock'
 
   # record and replay TCP/HTTP transactions
-  gem 'tcr'
+  gem 'tcr', require: false
   gem 'vcr'
 
   # handle deprecations in core and addons
