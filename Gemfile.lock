@@ -311,7 +311,7 @@ GEM
     multi_json (1.15.0)
     multi_xml (0.6.0)
     multipart-post (2.1.1)
-    mysql2 (0.5.3)
+    mysql2 (0.5.4)
     naught (1.1.0)
     nenv (0.3.0)
     nestful (1.1.4)
