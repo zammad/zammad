@@ -8,7 +8,6 @@
     - .artifacts_error
   before_script:
     - source /etc/profile.d/rvm.sh # ensure RVM is loaded
-    - source /opt/rh/rh-nodejs*/enable # ensure Node.js is available
 
 .template_pre_rails: &template_pre_rails
   stage: pre
@@ -20,7 +19,6 @@
     - .artifacts_error
   before_script:
     - source /etc/profile.d/rvm.sh # ensure RVM is loaded
-    - source /opt/rh/rh-nodejs*/enable # ensure Node.js is available
     - echo -e "\\e[0Ksection_start:`date +%s`:bundle_install[collapsed=true]\\r\\e[0Kbundle install"
     - bundle config set --local frozen 'true'
     - bundle config set --local path 'vendor'
