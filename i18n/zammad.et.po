@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-04-19 13:18+0000\n"
+"PO-Revision-Date: 2022-05-04 07:32+0000\n"
 "Last-Translator: kirkkak <kirkka.kivilo@gmail.com>\n"
 "Language-Team: Estonian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/et/>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.11.2\n"
+"X-Generator: Weblate 4.12\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -2161,11 +2161,11 @@ msgstr ""
 
 #: app/controllers/tickets_controller.rb
 msgid "Could not find source ticket!"
-msgstr ""
+msgstr "Ei leia algset piletit!"
 
 #: app/controllers/tickets_controller.rb
 msgid "Could not find target ticket number!"
-msgstr ""
+msgstr "Ei leia valitud pileti numbrit!"
 
 #: lib/static_assets.rb
 msgid "Could not read raw logo!"
@@ -2259,7 +2259,7 @@ msgstr ""
 
 #: app/controllers/first_steps_controller.rb
 msgid "Create a Test Ticket"
-msgstr ""
+msgstr "Loo Test Pilet"
 
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
 msgid "Create a shared draft"
@@ -2300,7 +2300,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
 msgid "Create your first ticket"
-msgstr ""
+msgstr "Loo oma esimene pilet"
 
 #: app/assets/javascripts/app/models/application.coffee
 #: app/assets/javascripts/app/models/calendar.coffee
@@ -2580,7 +2580,7 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Default type for a new ticket"
-msgstr ""
+msgstr "Vaike väärtus uuele piletile"
 
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco
 #: db/seeds/settings.rb
