@@ -4803,7 +4803,7 @@ msgid "If you want to translate it via the translation table, just go ahead belo
 msgstr ""
 
 #: app/assets/javascripts/app/views/getting_started/email_pre_configured.jst.eco
-msgid "If you want to use more email adresses, you can configure them later."
+msgid "If you want to use additional email addresses, you can configure them later."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -5721,6 +5721,10 @@ msgstr ""
 msgid "Max. concurrent chats"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+msgid "Max. length"
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "Max. length of the subject in an email reply."
 msgstr ""
@@ -5739,10 +5743,6 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Maximum number of recursively executed triggers."
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
-msgid "Maxlength"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
@@ -6295,7 +6295,7 @@ msgid "No Knowledge Base created"
 msgstr ""
 
 #: lib/external_credential/microsoft365.rb
-msgid "No Microsoft365 app configured!"
+msgid "No Microsoft 365 app configured!"
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -6669,7 +6669,7 @@ msgid "Only lowercase letters, numbers, and '_' are allowed"
 msgstr ""
 
 #: app/assets/javascripts/app/views/package.jst.eco
-msgid "Only packages from known, trusted, and verfied sources should be installed."
+msgid "Only packages from known, trusted, and verified sources should be installed."
 msgstr ""
 
 #: db/seeds/settings.rb

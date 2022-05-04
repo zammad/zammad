@@ -222,7 +222,7 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
       params: params
     )
     configureAttributes = [
-      { name: 'data_option::maxlength', display: __('Maxlength'), tag: 'integer', null: false, default: 120 },
+      { name: 'data_option::maxlength', display: __('Max. length'), tag: 'integer', null: false, default: 120 },
     ]
     inputMaxlength = new App.ControllerForm(
       model:
@@ -266,7 +266,7 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
       params: params
     )
     configureAttributes = [
-      { name: 'data_option::maxlength', display: __('Maxlength'), tag: 'integer', null: false, default: 500 },
+      { name: 'data_option::maxlength', display: __('Max. length'), tag: 'integer', null: false, default: 500 },
     ]
     inputMaxlength = new App.ControllerForm(
       model:

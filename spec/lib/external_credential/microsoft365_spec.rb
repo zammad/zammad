@@ -298,7 +298,7 @@ RSpec.describe ExternalCredential::Microsoft365 do
       context 'missing credentials' do
         let(:credentials) { nil }
         let(:app_required) { true }
-        let(:exception_message) { 'No Microsoft365 app configured!' }
+        let(:exception_message) { 'No Microsoft 365 app configured!' }
 
         include_examples 'failed attempt'
       end

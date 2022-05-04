@@ -6,7 +6,7 @@
   <p>
     <%- @T('The installation of packages comes with security implications, because arbitrary code will be executed in the context of the Zammad application.') %>
     <br>
-    <%- @T('Only packages from known, trusted, and verfied sources should be installed.') %>
+    <%- @T('Only packages from known, trusted, and verified sources should be installed.') %>
   </p>
   <p>
     <%- @T('After installing, updating, or uninstalling packages the following commands need to be executed on the server:') %>
