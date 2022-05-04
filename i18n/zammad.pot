@@ -1740,10 +1740,6 @@ msgstr ""
 msgid "Client Secret"
 msgstr ""
 
-#: db/seeds/settings.rb
-msgid "Client storage"
-msgstr ""
-
 #: app/assets/javascripts/app/models/application.coffee
 msgid "Clients"
 msgstr ""
@@ -2689,10 +2685,6 @@ msgid "Defines if generic CTI integration is enabled or not."
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Defines if i-doit (http://www.i-doit) is enabled or not."
-msgstr ""
-
-#: db/seeds/settings.rb
 msgid "Defines if sipgate.io (http://www.sipgate.io) is enabled or not."
 msgstr ""
 
@@ -2718,6 +2710,10 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Defines if the email should be displayed in the result of the user/organization widget."
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Defines if the i-doit (https://www.i-doit.org/) integration is enabled or not."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -3688,7 +3684,7 @@ msgid "Enables user authentication via LinkedIn."
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Enables user authentication via Office 365."
+msgid "Enables user authentication via Microsoft 365."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -5810,6 +5806,10 @@ msgid "Microsoft 365"
 msgstr ""
 
 #: db/seeds/settings.rb
+msgid "Microsoft 365 App Credentials"
+msgstr ""
+
+#: db/seeds/settings.rb
 msgid "Microsoft Application Registration Portal"
 msgstr ""
 
@@ -6618,10 +6618,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 msgid "October"
-msgstr ""
-
-#: db/seeds/settings.rb
-msgid "Office 365 App Credentials"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee
@@ -9839,10 +9835,6 @@ msgstr ""
 
 #: db/seeds/karma_activities.rb
 msgid "Usage of advanced features"
-msgstr ""
-
-#: db/seeds/settings.rb
-msgid "Use client storage to cache data to enhance performance of application."
 msgstr ""
 
 #: app/assets/javascripts/app/views/object_manager/attribute/multiselect.jst.eco

@@ -597,32 +597,6 @@ Setting.create_if_not_exists(
   frontend:    true
 )
 Setting.create_if_not_exists(
-  title:       __('Client storage'),
-  name:        'ui_client_storage',
-  area:        'System::UI',
-  description: __('Use client storage to cache data to enhance performance of application.'),
-  options:     {
-    form: [
-      {
-        display: '',
-        null:    true,
-        name:    'ui_client_storage',
-        tag:     'boolean',
-        options: {
-          true  => 'yes',
-          false => 'no',
-        },
-      },
-    ],
-  },
-  state:       false,
-  preferences: {
-    prio:       2,
-    permission: ['admin.system'],
-  },
-  frontend:    true
-)
-Setting.create_if_not_exists(
   title:       __('Core Workflow Ajax Mode'),
   name:        'core_workflow_ajax_mode',
   area:        'System::UI',
@@ -1687,10 +1661,10 @@ Setting.create_if_not_exists(
   frontend:    true
 )
 Setting.create_if_not_exists(
-  title:       __('Office 365 App Credentials'),
+  title:       __('Microsoft 365 App Credentials'),
   name:        'auth_microsoft_office365_credentials',
   area:        'Security::ThirdPartyAuthentication::Office365',
-  description: __('Enables user authentication via Office 365.'),
+  description: __('Enables user authentication via Microsoft 365.'),
   options:     {
     form: [
       {
@@ -4290,7 +4264,7 @@ Setting.create_if_not_exists(
   title:       __('i-doit integration'),
   name:        'idoit_integration',
   area:        'Integration::Switch',
-  description: __('Defines if i-doit (http://www.i-doit) is enabled or not.'),
+  description: __('Defines if the i-doit (https://www.i-doit.org/) integration is enabled or not.'),
   options:     {
     form: [
       {
