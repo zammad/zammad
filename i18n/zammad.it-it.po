@@ -528,6 +528,7 @@ msgstr "Accounts"
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
+#: app/assets/javascripts/app/views/object_manager/attribute/multi_tree_select.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/multiselect.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/tree_select.jst.eco
@@ -1339,7 +1340,9 @@ msgid "Body - Search for follow-up also in mail body."
 msgstr "Corpo - Cerca risposte anche nel corpo del messaggio."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
-msgid "Boolean"
+#, fuzzy
+#| msgid "Boolean"
+msgid "Boolean field"
 msgstr "Booleano"
 
 #: lib/telegram.rb
@@ -2656,7 +2659,6 @@ msgstr "Database"
 msgid "Database Update Required"
 msgstr "aggiornamento database richiesto"
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco
 msgid "Date"
@@ -2666,13 +2668,21 @@ msgstr "Data"
 msgid "Date & Time"
 msgstr "Data & Ora"
 
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+#, fuzzy
+#| msgid "Date & Time"
+msgid "Date & time field"
+msgstr "Data & Ora"
+
 #: db/seeds/settings.rb
 msgid "Date (Year.Month.Day.SystemID.Counter)"
 msgstr "Data (Anno.Mese.Giorno.IDSistema.Contatore)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
-msgid "Datetime"
-msgstr "Data ora"
+#, fuzzy
+#| msgid "Date & Time"
+msgid "Date field"
+msgstr "Data & Ora"
 
 #: app/assets/javascripts/app/views/generic/timer.jst.eco
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco
@@ -5909,7 +5919,9 @@ msgid "Installed"
 msgstr "Installato"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
-msgid "Integer"
+#, fuzzy
+#| msgid "Integer"
+msgid "Integer field"
 msgstr "Intero"
 
 #: app/assets/javascripts/app/controllers/integrations.coffee
@@ -6147,6 +6159,7 @@ msgid "Keep messages on server"
 msgstr "Tieni messaggi sul server"
 
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco
+#: app/assets/javascripts/app/views/object_manager/attribute/multi_tree_select.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/multiselect.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/tree_select.jst.eco
@@ -6835,8 +6848,12 @@ msgstr "Sposta fuori"
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #, fuzzy
 #| msgid "auto select"
-msgid "Multiselect"
+msgid "Multiple selection field"
 msgstr "auto selezione"
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+msgid "Multiple tree selection field"
+msgstr ""
 
 #: db/seeds/overviews.rb
 #, fuzzy
@@ -8823,10 +8840,6 @@ msgstr ""
 "Visualizza i tuoi ticket dall'interno del tuo calendario preferito "
 "aggiungendo il seguente URL all'app calendario."
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
-msgid "Select"
-msgstr "Seleziona"
-
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
 msgid "Select All"
 msgstr ""
@@ -9258,6 +9271,18 @@ msgid ""
 "<strong>%s</strong> got closed."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+#, fuzzy
+#| msgid "Nothing selected"
+msgid "Single selection field"
+msgstr "Non è stato selezionato nulla"
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+#, fuzzy
+#| msgid "Resend verification email"
+msgid "Single tree selection field"
+msgstr "Invia nuovamente email di verifica"
+
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 msgid "Sipgate"
 msgstr ""
@@ -9658,6 +9683,12 @@ msgstr ""
 msgid "Text editing"
 msgstr "Modifica del testo"
 
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+#, fuzzy
+#| msgid "Text editing"
+msgid "Text field"
+msgstr "Modifica del testo"
+
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/twitter_reply.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
@@ -9694,7 +9725,7 @@ msgstr "Il testo per cui è abilitata la traduzione in linea appare come"
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #, fuzzy
 #| msgid "Text"
-msgid "Textarea"
+msgid "Textarea field"
 msgstr "Testo"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
@@ -10713,10 +10744,6 @@ msgstr ""
 msgid "Translations"
 msgstr "Traduzioni"
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
-msgid "Tree Select"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 #: app/assets/javascripts/app/controllers/trigger.coffee
 msgid "Trigger"
@@ -11020,6 +11047,10 @@ msgstr ""
 #: app/assets/javascripts/app/views/object_manager/attribute/multiselect.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco
 msgid "Use custom option sort"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+msgid "Use double click to change level of the row."
 msgstr ""
 
 #: app/assets/javascripts/app/models/application.coffee
@@ -12188,6 +12219,7 @@ msgstr "Modificato"
 msgid "chat"
 msgstr "chat"
 
+#: app/assets/javascripts/app/views/object_manager/attribute/multi_tree_select.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/tree_select.jst.eco
 msgid "children"
 msgstr ""
@@ -12682,6 +12714,7 @@ msgstr "rispondi"
 msgid "ringing"
 msgstr "sta squillando"
 
+#: app/assets/javascripts/app/views/object_manager/attribute/multi_tree_select.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/tree_select.jst.eco
 msgid "row"
 msgstr ""
@@ -12953,6 +12986,12 @@ msgstr "... dell'intera area di testo"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Tempi di attesa - Oggi"
+
+#~ msgid "Datetime"
+#~ msgstr "Data ora"
+
+#~ msgid "Select"
+#~ msgstr "Seleziona"
 
 #~ msgid "Browser too old!"
 #~ msgstr "Browser troppo vecchio!"

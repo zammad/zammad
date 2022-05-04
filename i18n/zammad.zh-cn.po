@@ -499,6 +499,7 @@ msgstr "帐号"
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
+#: app/assets/javascripts/app/views/object_manager/attribute/multi_tree_select.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/multiselect.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/tree_select.jst.eco
@@ -1287,7 +1288,9 @@ msgid "Body - Search for follow-up also in mail body."
 msgstr "正文 - 也在邮件正文中搜索后续。"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
-msgid "Boolean"
+#, fuzzy
+#| msgid "Boolean"
+msgid "Boolean field"
 msgstr "布尔值"
 
 #: lib/telegram.rb
@@ -2537,7 +2540,6 @@ msgstr ""
 msgid "Database Update Required"
 msgstr "資料庫需要更新"
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco
 msgid "Date"
@@ -2547,13 +2549,21 @@ msgstr "日期"
 msgid "Date & Time"
 msgstr "日期和时间"
 
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+#, fuzzy
+#| msgid "Date & Time"
+msgid "Date & time field"
+msgstr "日期和时间"
+
 #: db/seeds/settings.rb
 msgid "Date (Year.Month.Day.SystemID.Counter)"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
-msgid "Datetime"
-msgstr ""
+#, fuzzy
+#| msgid "Date & Time"
+msgid "Date field"
+msgstr "日期和时间"
 
 #: app/assets/javascripts/app/views/generic/timer.jst.eco
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco
@@ -5591,7 +5601,9 @@ msgid "Installed"
 msgstr "已安装"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
-msgid "Integer"
+#, fuzzy
+#| msgid "Integer"
+msgid "Integer field"
 msgstr "Integer"
 
 #: app/assets/javascripts/app/controllers/integrations.coffee
@@ -5824,6 +5836,7 @@ msgid "Keep messages on server"
 msgstr "将邮件保留在服务器上"
 
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco
+#: app/assets/javascripts/app/views/object_manager/attribute/multi_tree_select.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/multiselect.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/tree_select.jst.eco
@@ -6511,8 +6524,12 @@ msgstr "移出"
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #, fuzzy
 #| msgid "auto select"
-msgid "Multiselect"
+msgid "Multiple selection field"
 msgstr "自动选择"
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+msgid "Multiple tree selection field"
+msgstr ""
 
 #: db/seeds/overviews.rb
 #, fuzzy
@@ -8478,10 +8495,6 @@ msgid ""
 "URL to your calendar app."
 msgstr "在您的個人行事曆讀取工單 ex: iCal, Google Calendar"
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
-msgid "Select"
-msgstr "选择"
-
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
 msgid "Select All"
 msgstr ""
@@ -8907,6 +8920,18 @@ msgid ""
 "<strong>%s</strong> got closed."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+#, fuzzy
+#| msgid "Nothing selected"
+msgid "Single selection field"
+msgstr "还没有选中"
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+#, fuzzy
+#| msgid "Signature verification failed!"
+msgid "Single tree selection field"
+msgstr "签名验证失败！"
+
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 msgid "Sipgate"
 msgstr ""
@@ -9307,6 +9332,12 @@ msgstr ""
 msgid "Text editing"
 msgstr "编辑"
 
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+#, fuzzy
+#| msgid "Text editing"
+msgid "Text field"
+msgstr "编辑"
+
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/twitter_reply.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
@@ -9343,7 +9374,7 @@ msgstr "打开内文翻译时的文字看起来像这样"
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #, fuzzy
 #| msgid "Text"
-msgid "Textarea"
+msgid "Textarea field"
 msgstr "正文"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
@@ -10336,10 +10367,6 @@ msgstr ""
 msgid "Translations"
 msgstr "语言"
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
-msgid "Tree Select"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 #: app/assets/javascripts/app/controllers/trigger.coffee
 msgid "Trigger"
@@ -10638,6 +10665,10 @@ msgstr "使用客戶端存儲來緩存數據以增強應用程序的性能"
 #: app/assets/javascripts/app/views/object_manager/attribute/multiselect.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco
 msgid "Use custom option sort"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+msgid "Use double click to change level of the row."
 msgstr ""
 
 #: app/assets/javascripts/app/models/application.coffee
@@ -11787,6 +11818,7 @@ msgstr "已修改"
 msgid "chat"
 msgstr "文字對話"
 
+#: app/assets/javascripts/app/views/object_manager/attribute/multi_tree_select.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/tree_select.jst.eco
 msgid "children"
 msgstr ""
@@ -12280,6 +12312,7 @@ msgstr "回复"
 msgid "ringing"
 msgstr "鈴響"
 
+#: app/assets/javascripts/app/views/object_manager/attribute/multi_tree_select.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/tree_select.jst.eco
 msgid "row"
 msgstr ""
@@ -12549,6 +12582,9 @@ msgstr "...整个文本区域"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅轮候时间"
+
+#~ msgid "Select"
+#~ msgstr "选择"
 
 #~ msgid "Browser too old!"
 #~ msgstr "浏览器太旧了！"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-04-19 17:01+0000\n"
+"PO-Revision-Date: 2022-05-04 03:30+0000\n"
 "Last-Translator: kirkkak <kirkka.kivilo@gmail.com>\n"
 "Language-Team: Estonian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/et/>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.11.2\n"
+"X-Generator: Weblate 4.12\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -476,6 +476,7 @@ msgstr "Kontod"
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
+#: app/assets/javascripts/app/views/object_manager/attribute/multi_tree_select.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/multiselect.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/tree_select.jst.eco
@@ -1267,7 +1268,7 @@ msgid "Body - Search for follow-up also in mail body."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
-msgid "Boolean"
+msgid "Boolean field"
 msgstr ""
 
 #: lib/telegram.rb
@@ -2163,11 +2164,11 @@ msgstr ""
 
 #: app/controllers/tickets_controller.rb
 msgid "Could not find source ticket!"
-msgstr ""
+msgstr "Ei leia algset piletit!"
 
 #: app/controllers/tickets_controller.rb
 msgid "Could not find target ticket number!"
-msgstr ""
+msgstr "Ei leia valitud pileti numbrit!"
 
 #: lib/static_assets.rb
 msgid "Could not read raw logo!"
@@ -2261,7 +2262,7 @@ msgstr ""
 
 #: app/controllers/first_steps_controller.rb
 msgid "Create a Test Ticket"
-msgstr ""
+msgstr "Loo Test Pilet"
 
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
 msgid "Create a shared draft"
@@ -2302,7 +2303,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
 msgid "Create your first ticket"
-msgstr ""
+msgstr "Loo oma esimene pilet"
 
 #: app/assets/javascripts/app/models/application.coffee
 #: app/assets/javascripts/app/models/calendar.coffee
@@ -2490,7 +2491,6 @@ msgstr ""
 msgid "Database Update Required"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco
 msgid "Date"
@@ -2500,12 +2500,16 @@ msgstr "Kuupäev"
 msgid "Date & Time"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+msgid "Date & time field"
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "Date (Year.Month.Day.SystemID.Counter)"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
-msgid "Datetime"
+msgid "Date field"
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/timer.jst.eco
@@ -2582,7 +2586,7 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Default type for a new ticket"
-msgstr ""
+msgstr "Vaike väärtus uuele piletile"
 
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco
 #: db/seeds/settings.rb
@@ -5374,7 +5378,7 @@ msgid "Installed"
 msgstr "Paigaldatud"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
-msgid "Integer"
+msgid "Integer field"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/integrations.coffee
@@ -5602,6 +5606,7 @@ msgid "Keep messages on server"
 msgstr ""
 
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco
+#: app/assets/javascripts/app/views/object_manager/attribute/multi_tree_select.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/multiselect.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/tree_select.jst.eco
@@ -6280,8 +6285,14 @@ msgid "Moved out"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
-msgid "Multiselect"
+#, fuzzy
+#| msgid "Multiselect"
+msgid "Multiple selection field"
 msgstr "Mitmikvalik"
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+msgid "Multiple tree selection field"
+msgstr ""
 
 #: db/seeds/overviews.rb
 msgid "My Assigned Tickets"
@@ -8200,10 +8211,6 @@ msgid ""
 "URL to your calendar app."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
-msgid "Select"
-msgstr "Vali"
-
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
 msgid "Select All"
 msgstr "Vali Kõik"
@@ -8616,6 +8623,16 @@ msgid ""
 "<strong>%s</strong> got closed."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+#, fuzzy
+#| msgid "Deletion failed."
+msgid "Single selection field"
+msgstr "Kustutamine ebaõnnestus."
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+msgid "Single tree selection field"
+msgstr ""
+
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 msgid "Sipgate"
 msgstr ""
@@ -9016,6 +9033,10 @@ msgstr ""
 msgid "Text editing"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+msgid "Text field"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/twitter_reply.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
@@ -9052,7 +9073,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #, fuzzy
 #| msgid "Text"
-msgid "Textarea"
+msgid "Textarea field"
 msgstr "Tekst"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
@@ -9977,10 +9998,6 @@ msgstr ""
 msgid "Translations"
 msgstr "Tõlked"
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
-msgid "Tree Select"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 #: app/assets/javascripts/app/controllers/trigger.coffee
 msgid "Trigger"
@@ -10277,6 +10294,10 @@ msgstr ""
 #: app/assets/javascripts/app/views/object_manager/attribute/multiselect.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco
 msgid "Use custom option sort"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+msgid "Use double click to change level of the row."
 msgstr ""
 
 #: app/assets/javascripts/app/models/application.coffee
@@ -11334,6 +11355,7 @@ msgstr "Muudetud"
 msgid "chat"
 msgstr "vestlus"
 
+#: app/assets/javascripts/app/views/object_manager/attribute/multi_tree_select.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/tree_select.jst.eco
 msgid "children"
 msgstr ""
@@ -11827,6 +11849,7 @@ msgstr "vasta"
 msgid "ringing"
 msgstr ""
 
+#: app/assets/javascripts/app/views/object_manager/attribute/multi_tree_select.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/tree_select.jst.eco
 msgid "row"
 msgstr ""
@@ -12074,6 +12097,9 @@ msgstr ""
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Tänane ooteaeg"
+
+#~ msgid "Select"
+#~ msgstr "Vali"
 
 #, fuzzy
 #~ msgid "Response Time"
