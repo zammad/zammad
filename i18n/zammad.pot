@@ -9191,10 +9191,6 @@ msgstr ""
 msgid "This signature is inactive, it won't be included in the reply. Change state <a href=\"#channels/email\">here</a>"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
-msgid "This ticket was merged into"
-msgstr ""
-
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
 msgid "This user has no access and will not receive notifications."
 msgstr ""
@@ -9214,7 +9210,6 @@ msgstr ""
 msgid "Thursday"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 #: app/assets/javascripts/app/controllers/_manage/ticket.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
@@ -10948,6 +10943,10 @@ msgstr ""
 msgid "email"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
+msgid "email sent to '%s'"
+msgstr ""
+
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "escalated"
 msgstr ""
@@ -11222,6 +11221,10 @@ msgstr ""
 msgid "note"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
+msgid "notification sent to '%s'"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 msgid "now"
 msgstr ""
@@ -11326,10 +11329,6 @@ msgstr ""
 msgid "select attachment…"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
-msgid "sent to"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "set fixed to"
 msgstr ""
@@ -11419,8 +11418,15 @@ msgid "telegram personal-message"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
+msgid "this ticket was merged into ticket %s"
+msgstr ""
+
 #: lib/calendar_subscriptions/tickets.rb
 msgid "ticket"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
+msgid "ticket %s was merged into this ticket"
 msgstr ""
 
 #: lib/calendar_subscriptions/tickets.rb
@@ -11485,10 +11491,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco
 msgid "updated"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
-msgid "was merged into this ticket"
 msgstr ""
 
 #: db/seeds/ticket_article_types.rb

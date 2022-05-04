@@ -240,7 +240,7 @@ RSpec.describe 'Ticket Update', type: :system do
         click '.js-actions .dropdown-menu [data-type="ticket-history"]'
 
         in_modal do
-          expect(page).to have_content "This ticket was merged into ticket ##{target_ticket.number}"
+          expect(page).to have_content "this ticket was merged into ticket ##{target_ticket.number}"
           expect(page).to have_link "##{target_ticket.number}", href: "#ticket/zoom/#{target_ticket.id}"
         end
 
@@ -250,7 +250,7 @@ RSpec.describe 'Ticket Update', type: :system do
         click '.js-actions .dropdown-menu [data-type="ticket-history"]'
 
         in_modal do
-          expect(page).to have_content("Ticket ##{origin_ticket.number} was merged into this ticket")
+          expect(page).to have_content("ticket ##{origin_ticket.number} was merged into this ticket")
           expect(page).to have_link "##{origin_ticket.number}", href: "#ticket/zoom/#{origin_ticket.id}"
         end
       end

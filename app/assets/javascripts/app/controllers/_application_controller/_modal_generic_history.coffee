@@ -66,22 +66,24 @@ class App.GenericHistory extends App.ControllerModal
 
       # build content
       content = ''
-      if item.type is 'notification' || item.type is 'email'
-        content = "#{ @T( item.type ) } #{ @T( 'sent to' ) } '#{ item.value_to }'"
+      if item.type is 'notification'
+        content = App.i18n.translateContent( "notification sent to '%s'", item.value_to )
+      if item.type is 'email'
+        content = App.i18n.translateContent( "email sent to '%s'", item.value_to )
       else if item.type is 'received_merge'
         ticket = App.Ticket.find( item.id_from )
         ticket_link = if ticket
                         "<a href=\"#ticket/zoom/#{ item.id_from }\">##{ ticket.number }</a>"
                       else
                         item.value_from
-        content = "#{ @T( 'Ticket' ) } #{ ticket_link } #{ @T( 'was merged into this ticket' ) }"
+        content = App.i18n.translatePlain( 'ticket %s was merged into this ticket', ticket_link )
       else if item.type is 'merged_into'
         ticket = App.Ticket.find( item.id_to )
         ticket_link = if ticket
                         "<a href=\"#ticket/zoom/#{ item.id_to }\">##{ ticket.number }</a>"
                       else
                         item.value_to
-        content = "#{ @T( 'This ticket was merged into' ) } #{ @T( 'ticket' ) } #{ ticket_link }"
+        content = App.i18n.translatePlain( 'this ticket was merged into ticket %s', ticket_link)
       else
         content = "#{ @T( item.type ) } #{ @T(item.object) } "
         if item.attribute
