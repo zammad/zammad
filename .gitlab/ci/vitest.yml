@@ -3,7 +3,6 @@ vitest:
   extends:
     - .env_base
   before_script:
-    - source /opt/rh/rh-nodejs*/enable
     - yarn install
   script:
     - yarn test

@@ -1,4 +1,5 @@
 {
+  "private": true,
   "scripts": {
     "generate-graphql-api": "bundle exec rails generate graphql_introspection > tmp/graphql_introspection.json && npx graphql-codegen -c .graphql_code_generator.yml",
     "lint": "vue-tsc --noEmit && eslint --cache --cache-location ./tmp/eslintcache.js -c .eslintrc.js --ext .js,.ts,.vue app/frontend/ .eslint-plugin-zammad/ .storybook/",
@@ -10,6 +11,9 @@
     "storybook": "yarn --cwd ./.storybook start",
     "storybook:build": "yarn --cwd ./.storybook build",
     "storybook:install": "yarn --cwd ./.storybook install"
+  },
+  "engines": {
+    "node": ">=16"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^2.6.2",
