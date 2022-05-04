@@ -144,10 +144,6 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.12.2)
-    coffeelint (1.16.1)
-      coffee-script
-      execjs
-      json
     composite_primary_keys (13.0.3)
       activerecord (~> 6.1.0)
     concurrent-ruby (1.1.10)
@@ -624,7 +620,6 @@ DEPENDENCIES
   chunky_png
   clearbit
   coffee-rails
-  coffeelint
   composite_primary_keys
   csv
   daemons

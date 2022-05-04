@@ -197,7 +197,6 @@ group :development, :test do
 
   # code QA
   gem 'brakeman', require: false
-  gem 'coffeelint'
   gem 'overcommit'
   gem 'rubocop'
   gem 'rubocop-faker'
