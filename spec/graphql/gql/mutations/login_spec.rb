@@ -15,8 +15,8 @@ RSpec.describe Gql::Mutations::Login, type: :request do
     let(:agent_password) { 'some_test_password' }
     let(:agent) { create(:agent, password: agent_password) }
     let(:query) do
-      File.read(Rails.root.join('app/frontend/common/graphql/mutations/login.graphql')) +
-        File.read(Rails.root.join('app/frontend/common/graphql/fragments/errors.graphql'))
+      File.read(Rails.root.join('app/frontend/shared/graphql/mutations/login.graphql')) +
+        File.read(Rails.root.join('app/frontend/shared/graphql/fragments/errors.graphql'))
     end
     let(:password) { agent_password }
     let(:fingerprint) { Faker::Number.number(digits: 6).to_s }

@@ -1,4 +1,4 @@
-@import '@common/styles/main.css';
+@import '@shared/styles/main.css';
 
 @layer components {
   .floating-input:focus-within label,

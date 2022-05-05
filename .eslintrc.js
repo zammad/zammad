@@ -59,9 +59,10 @@ module.exports = {
         devDependencies: [
           'tailwind.config.js',
           'vite.config.ts',
-          'app/frontend/common/build/**',
+          'app/frontend/build/**',
+          'app/frontend/**/*.spec.*',
           'app/frontend/tests/**/*',
-          'app/frontend/stories/**/*',
+          'app/frontend/**/*.stories.ts',
           '.storybook/**/*',
         ],
       },
@@ -118,7 +119,9 @@ module.exports = {
     {
       files: [
         'app/frontend/tests/**',
+        'app/frontend/**/*.spec.*',
         'app/frontend/stories/**',
+        'app/frontend/**/*.stories.ts',
         '.eslint-plugin-zammad/**',
         '.eslintrc.js',
       ],
@@ -134,7 +137,7 @@ module.exports = {
         map: [
           ['@', path.resolve(__dirname, './app/frontend')],
           ['@mobile', path.resolve(__dirname, './app/frontend/apps/mobile')],
-          ['@common', path.resolve(__dirname, './app/frontend/common')],
+          ['@shared', path.resolve(__dirname, './app/frontend/shared')],
           ['@tests', path.resolve(__dirname, './app/frontend/tests')],
           ['@stories', path.resolve(__dirname, './app/frontend/stories')],
         ],

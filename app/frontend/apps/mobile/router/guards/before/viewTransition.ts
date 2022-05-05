@@ -1,7 +1,9 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import useViewTransition from '@mobile/composables/useViewTransition'
-import ViewTransitions from '@mobile/types/transition'
+import {
+  useViewTransition,
+  ViewTransitions,
+} from '@mobile/components/transition/TransitionViewNavigation'
 import type {
   NavigationGuard,
   RouteLocationNormalized,

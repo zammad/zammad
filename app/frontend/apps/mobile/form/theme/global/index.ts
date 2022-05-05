@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import type { FormThemeClasses, FormThemeExtension } from '@common/types/form'
+import type { FormThemeClasses, FormThemeExtension } from '@shared/types/form'
 
 type Classes = Record<string, string>
 

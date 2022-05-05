@@ -2,27 +2,20 @@ overwrite: true
 schema: tmp/graphql_introspection.json
 config:
   vueCompositionApiImportFrom: vue
+  addDocBlocks: false
+documents:
+  ['app/frontend/shared/**/*.graphql', 'app/frontend/apps/**/*.graphql']
 generates:
-  ./app/frontend/common/graphql/types.ts:
-    documents:
-      [
-        'app/frontend/common/graphql/**/*.graphql',
-        'app/frontend/apps/mobile/graphql/**/*.graphql',
-      ]
-    plugins:
-      - typescript
-      - typescript-operations
-  ./app/frontend/common/graphql/api.ts:
-    documents: 'app/frontend/common/graphql/**/*.graphql'
-    preset: import-types
+  ./app/frontend/shared/graphql/types.ts:
+    - typescript
+    - typescript-operations
+  ./app/frontend/:
+    preset: near-operation-file
     presetConfig:
-      typesPath: './types'
+      baseTypesPath: 'shared/graphql/types.ts'
+      importTypesNamespace: ''
+      extension: .api.ts
     plugins:
       - typescript-vue-apollo
-  ./app/frontend/apps/mobile/graphql/api.ts:
-    documents: 'app/frontend/apps/mobile/graphql/**/*.graphql'
-    preset: import-types
-    presetConfig:
-      typesPath: '@common/graphql/types'
-    plugins:
-      - typescript-vue-apollo
+    config:
+      importOperationTypesFrom: Types

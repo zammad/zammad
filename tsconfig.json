@@ -12,7 +12,7 @@
     "baseUrl": ".",
     "paths": {
       "@mobile/*": ["app/frontend/apps/mobile/*"],
-      "@common/*": ["app/frontend/common/*"],
+      "@shared/*": ["app/frontend/shared/*"],
       "@tests/*": ["app/frontend/tests/*"],
       "@stories/*": ["app/frontend/stories/*"],
       "@/*": ["app/frontend/*"],

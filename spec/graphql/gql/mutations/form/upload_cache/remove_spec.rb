@@ -6,7 +6,7 @@ RSpec.describe Gql::Mutations::Form::UploadCache::Remove, type: :graphql do
 
   context 'when uploading files for a form', authenticated_as: :agent do
     let(:agent) { create(:agent) }
-    let(:query) { read_graphql_file('common/graphql/mutations/form/uploadCache/remove.graphql') }
+    let(:query) { read_graphql_file('shared/components/Form/fields/FieldFile/graphql/mutations/uploadCache/remove.graphql') }
     let(:form_id) { 12_345 }
     let(:upload_cache_file) { UploadCache.new(form_id).add(filename: file_name, data: file_content, created_by_id: 1) }
     let(:file_name) { 'my_testfile.pdf' }

@@ -6,7 +6,7 @@ RSpec.describe Gql::Queries::SessionId, type: :graphql do
 
   context 'when checking the SessionID' do
     let(:agent) { create(:agent) }
-    let(:query) { read_graphql_file('common/graphql/queries/sessionId.graphql') }
+    let(:query) { read_graphql_file('shared/graphql/queries/sessionId.graphql') }
 
     before do
       graphql_execute(query)

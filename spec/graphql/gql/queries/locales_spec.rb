@@ -6,7 +6,7 @@ RSpec.describe Gql::Queries::Locales, type: :graphql do
 
   context 'when fetching locales' do
     let(:agent) { create(:agent) }
-    let(:query) { read_graphql_file('common/graphql/queries/locales.graphql') }
+    let(:query) { read_graphql_file('shared/graphql/queries/locales.graphql') }
     let(:target_locale) do
       {
         'locale' => 'de-de',

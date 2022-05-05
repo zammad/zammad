@@ -1,58 +1,44 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import type { RouteRecordRaw } from 'vue-router'
-import LayoutMain from '@mobile/components/layout/LayoutMain.vue'
+import LayoutMain from '@mobile/components/layout/LayoutMain/LayoutMain.vue'
 import transitionViewGuard from '@mobile/router/guards/before/viewTransition'
-import type { ImportGlobEagerDefault } from '@common/types/utils'
 import type { App } from 'vue'
-import type { InitializeAppRouter } from '@common/types/router'
-import mainInitializeRouter from '@common/router'
+import type { InitializeAppRouter, RoutesModule } from '@shared/types/router'
+import mainInitializeRouter from '@shared/router'
 
-const routeModules = import.meta.globEager('./routes/*.ts')
-
-const mainRoutes: Array<RouteRecordRaw> = []
-
-Object.values(routeModules).forEach(
-  (module: ImportGlobEagerDefault<RouteRecordRaw | Array<RouteRecordRaw>>) => {
-    const defaultExport = module.default as
-      | RouteRecordRaw
-      | Array<RouteRecordRaw>
-
-    if (Array.isArray(defaultExport)) {
-      mainRoutes.push(...defaultExport)
-    } else {
-      mainRoutes.push(defaultExport)
-    }
-  },
+const routeModules: Record<string, RoutesModule> = import.meta.globEager(
+  '../modules/*/routes.ts',
 )
 
+const mainRoutes: Array<RouteRecordRaw> = []
+const childRoutes: Array<RouteRecordRaw> = []
+
+const handleRoutes = (routes: Array<RouteRecordRaw>, isMainRoute = false) => {
+  if (isMainRoute) {
+    mainRoutes.push(...routes)
+  } else {
+    childRoutes.push(...routes)
+  }
+}
+
+Object.values(routeModules).forEach((module: RoutesModule) => {
+  const defaultExport = module.default
+  const { isMainRoute } = module
+
+  handleRoutes(
+    Array.isArray(defaultExport) ? defaultExport : [defaultExport],
+    isMainRoute,
+  )
+})
+
 export const routes: Array<RouteRecordRaw> = [
-  {
-    path: '/login',
-    name: 'Login',
-    component: () => import('@mobile/views/Login.vue'),
-    meta: {
-      title: __('Sign in'),
-      requiresAuth: false,
-      requiredPermission: null,
-    },
-  },
-  {
-    path: '/error',
-    alias: '/:pathMatch(.*)*',
-    name: 'Error',
-    props: true,
-    component: () => import('@mobile/views/Error.vue'),
-    meta: {
-      requiresAuth: false,
-      requiredPermission: null,
-    },
-  },
+  ...mainRoutes,
   {
     path: '/',
     props: true,
     component: LayoutMain,
-    children: mainRoutes,
+    children: childRoutes,
   },
 ]
 

@@ -11,8 +11,8 @@ import type { OptimizeOptions } from 'svgo'
 import * as path from 'path'
 
 import tsconfig from './tsconfig.json'
-import TransformTestId from './app/frontend/tests/transforms/transformTestId'
-import ManualChunks from './app/frontend/common/build/manual-chunks.mjs'
+import TransformTestId from './app/frontend/build/transforms/transformTestId'
+import ManualChunks from './app/frontend/build/manual-chunks.mjs'
 
 export default defineConfig(({ mode }) => {
   const isTesting = ['test', 'storybook'].includes(mode)
@@ -24,7 +24,7 @@ export default defineConfig(({ mode }) => {
     resolve: {
       alias: {
         '@mobile': path.resolve(__dirname, 'app/frontend/apps/mobile'),
-        '@common': path.resolve(__dirname, 'app/frontend/common'),
+        '@shared': path.resolve(__dirname, 'app/frontend/shared'),
         '@tests': path.resolve(__dirname, 'app/frontend/tests'),
         '@stories': path.resolve(__dirname, 'app/frontend/stories'),
         '@': path.resolve(__dirname, 'app/frontend'),

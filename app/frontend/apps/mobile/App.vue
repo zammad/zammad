@@ -1,18 +1,18 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import CommonNotifications from '@common/components/common/CommonNotifications.vue'
-import useApplicationStore from '@common/stores/application'
-import useAuthenticationStore from '@common/stores/authentication'
-import useSessionStore from '@common/stores/session'
-import useMetaTitle from '@common/composables/useMetaTitle'
+import CommonNotifications from '@shared/components/CommonNotifications/CommonNotifications.vue'
+import useApplicationStore from '@shared/stores/application'
+import useAuthenticationStore from '@shared/stores/authentication'
+import useSessionStore from '@shared/stores/session'
+import useMetaTitle from '@shared/composables/useMetaTitle'
 import { useRoute, useRouter } from 'vue-router'
-import emitter from '@common/utils/emitter'
+import emitter from '@shared/utils/emitter'
 import { onBeforeUnmount, onMounted, watch } from 'vue'
-import useAppMaintenanceCheck from '@common/composables/useAppMaintenanceCheck'
-import usePushMessages from '@common/composables/usePushMessages'
-import useLocaleStore from '@common/stores/locale'
-import useFormKitConfig from '@common/composables/form/useFormKitConfig'
+import useAppMaintenanceCheck from '@shared/composables/useAppMaintenanceCheck'
+import usePushMessages from '@shared/composables/usePushMessages'
+import useLocaleStore from '@shared/stores/locale'
+import useFormKitConfig from '@shared/composables/form/useFormKitConfig'
 
 const router = useRouter()
 const route = useRoute()

@@ -37,15 +37,11 @@ class Generators::TranslationCatalog::Extractor::Frontend < Generators::Translat
 
   def find_files(base_path)
     files = []
-    ['app/assets/**', 'public/assets/chat', 'public/assets/chat/views', 'public/assets/form'].each do |dir|
-      files += Dir.glob("#{base_path}/#{dir}/*.js")
-      files += Dir.glob("#{base_path}/#{dir}/*.eco")
-      files += Dir.glob("#{base_path}/#{dir}/*.coffee")
+
+    ['app/assets/**', 'public/assets/{chat,chat/views,form}'].each do |dir|
+      files += Dir.glob("#{base_path}/#{dir}/*.{js,eco,coffee}").reject { |f| f.include?('layout_ref') }
     end
-    ['app/frontend/apps/**', 'app/frontend/common/**', 'app/frontend/entry_points/**'].each do |dir|
-      files += Dir.glob("#{base_path}/#{dir}/*.ts")
-      files += Dir.glob("#{base_path}/#{dir}/*.vue")
-    end
-    files.reject { |d| d.include?('layout_ref') }
+
+    files += Dir.glob("#{base_path}/app/frontend/{apps,shared}/**/*.{ts,vue}").reject { |f| f.include? '/__tests__/' }
   end
 end

@@ -42,7 +42,7 @@ msgstr "mm/dd/yyyy"
 msgid "FORMAT_DATETIME"
 msgstr "mm/dd/yyyy l:MM P"
 
-#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid " to "
 msgstr ""
 
@@ -123,7 +123,7 @@ msgstr ""
 msgid "%s credentials"
 msgstr ""
 
-#: app/frontend/common/i18n/dates.ts
+#: app/frontend/shared/i18n/dates.ts
 msgid "%s days ago"
 msgstr ""
 
@@ -141,7 +141,7 @@ msgstr ""
 msgid "%s groups to %s roles assignments"
 msgstr ""
 
-#: app/frontend/common/i18n/dates.ts
+#: app/frontend/shared/i18n/dates.ts
 msgid "%s hours ago"
 msgstr ""
 
@@ -152,11 +152,11 @@ msgstr ""
 msgid "%s is inactive, please select an active one."
 msgstr ""
 
-#: app/frontend/common/i18n/dates.ts
+#: app/frontend/shared/i18n/dates.ts
 msgid "%s minutes ago"
 msgstr ""
 
-#: app/frontend/common/i18n/dates.ts
+#: app/frontend/shared/i18n/dates.ts
 msgid "%s months ago"
 msgstr ""
 
@@ -252,11 +252,11 @@ msgstr ""
 msgid "%s user to %s user"
 msgstr ""
 
-#: app/frontend/common/i18n/dates.ts
+#: app/frontend/shared/i18n/dates.ts
 msgid "%s weeks ago"
 msgstr ""
 
-#: app/frontend/common/i18n/dates.ts
+#: app/frontend/shared/i18n/dates.ts
 msgid "%s years ago"
 msgstr ""
 
@@ -280,7 +280,7 @@ msgstr ""
 msgid "1 day"
 msgstr ""
 
-#: app/frontend/common/i18n/dates.ts
+#: app/frontend/shared/i18n/dates.ts
 msgid "1 day ago"
 msgstr ""
 
@@ -288,7 +288,7 @@ msgstr ""
 msgid "1 hour"
 msgstr ""
 
-#: app/frontend/common/i18n/dates.ts
+#: app/frontend/shared/i18n/dates.ts
 msgid "1 hour ago"
 msgstr ""
 
@@ -296,11 +296,11 @@ msgstr ""
 msgid "1 low"
 msgstr ""
 
-#: app/frontend/common/i18n/dates.ts
+#: app/frontend/shared/i18n/dates.ts
 msgid "1 minute ago"
 msgstr ""
 
-#: app/frontend/common/i18n/dates.ts
+#: app/frontend/shared/i18n/dates.ts
 msgid "1 month ago"
 msgstr ""
 
@@ -308,11 +308,11 @@ msgstr ""
 msgid "1 week"
 msgstr ""
 
-#: app/frontend/common/i18n/dates.ts
+#: app/frontend/shared/i18n/dates.ts
 msgid "1 week ago"
 msgstr ""
 
-#: app/frontend/common/i18n/dates.ts
+#: app/frontend/shared/i18n/dates.ts
 msgid "1 year ago"
 msgstr ""
 
@@ -364,7 +364,7 @@ msgstr ""
 msgid "A new version of Zammad is available, please reload your browser."
 msgstr ""
 
-#: app/frontend/common/composables/useAppMaintenanceCheck.ts
+#: app/frontend/shared/composables/useAppMaintenanceCheck.ts
 msgid "A newer version of the app is available. Please reload at your earliest."
 msgstr ""
 
@@ -572,7 +572,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco
 #: app/assets/javascripts/app/views/profile/linked_accounts.jst.eco
 #: app/assets/javascripts/app/views/tag/index.jst.eco
-#: app/frontend/common/form/i18n/locales.ts
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "Add"
 msgstr ""
 
@@ -776,7 +776,7 @@ msgstr ""
 msgid "Alternatively, you can use the Zammad API to import data."
 msgstr ""
 
-#: app/frontend/common/server/apollo/handler/BaseHandler.ts
+#: app/frontend/shared/server/apollo/handler/BaseHandler.ts
 msgid "An error occured during the operation. Please contact your administrator."
 msgstr ""
 
@@ -880,12 +880,12 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
-#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Apr"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "April"
 msgstr ""
 
@@ -1053,12 +1053,12 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
-#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Aug"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "August"
 msgstr ""
 
@@ -1772,16 +1772,16 @@ msgstr ""
 msgid "Clean up expired sessions."
 msgstr ""
 
-#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Clear"
 msgstr ""
 
-#: app/frontend/common/components/form/field/FieldTreeSelect/FieldTreeSelectInput.vue
+#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 msgid "Clear Search"
 msgstr ""
 
-#: app/frontend/common/components/form/field/FieldSelect/FieldSelectInput.vue
-#: app/frontend/common/components/form/field/FieldTreeSelect/FieldTreeSelectInput.vue
+#: app/frontend/shared/components/Form/fields/FieldSelect/FieldSelectInput.vue
+#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 msgid "Clear Selection"
 msgstr ""
 
@@ -2091,7 +2091,7 @@ msgstr ""
 msgid "Continue session"
 msgstr ""
 
-#: app/frontend/apps/mobile/views/Login.vue
+#: app/frontend/apps/mobile/modules/login/views/Login.vue
 msgid "Continue to desktop app"
 msgstr ""
 
@@ -2296,7 +2296,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/popover/ticket.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco
-#: app/frontend/apps/mobile/components/ticket/TicketList.vue
+#: app/frontend/apps/mobile/modules/ticket/components/TicketList/TicketList.vue
 #: app/models/report.rb
 msgid "Created"
 msgstr ""
@@ -2404,7 +2404,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 #: app/controllers/time_accountings_controller.rb
-#: app/frontend/apps/mobile/components/ticket/TicketList.vue
+#: app/frontend/apps/mobile/modules/ticket/components/TicketList/TicketList.vue
 #: db/seeds/object_manager_attributes.rb
 #: db/seeds/roles.rb
 #: db/seeds/ticket_article_senders.rb
@@ -2500,12 +2500,12 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
-#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Dec"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "December"
 msgstr ""
 
@@ -3400,7 +3400,7 @@ msgstr ""
 msgid "Don't synchronize"
 msgstr ""
 
-#: app/frontend/common/components/form/field/FieldTreeSelect/FieldTreeSelectInput.vue
+#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 msgid "Done"
 msgstr ""
 
@@ -3900,7 +3900,7 @@ msgstr ""
 msgid "Error"
 msgstr ""
 
-#: app/frontend/apps/mobile/views/Error.vue
+#: app/frontend/apps/mobile/modules/error/views/Error.vue
 msgid "Error - %s"
 msgstr ""
 
@@ -4094,12 +4094,12 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
-#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Feb"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "February"
 msgstr ""
 
@@ -4236,7 +4236,7 @@ msgstr ""
 msgid "For security reasons, the API token is shown only once. You'll need to save it somewhere secure before continuing."
 msgstr ""
 
-#: app/frontend/common/router/guards/before/permission.ts
+#: app/frontend/shared/router/guards/before/permission.ts
 msgid "Forbidden"
 msgstr ""
 
@@ -4303,7 +4303,7 @@ msgid "Freshdesk"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Fri"
 msgstr ""
 
@@ -4311,7 +4311,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
-#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Friday"
 msgstr ""
 
@@ -4649,7 +4649,7 @@ msgstr ""
 msgid "Health information can be retrieved as JSON using:"
 msgstr ""
 
-#: app/frontend/apps/mobile/views/Home.vue
+#: app/frontend/apps/mobile/modules/home/views/Home.vue
 msgid "Hello Home!!!"
 msgstr ""
 
@@ -4725,8 +4725,8 @@ msgstr ""
 msgid "Holidays iCalendar Feed"
 msgstr ""
 
-#: app/frontend/apps/mobile/router/routes/home.ts
-#: app/frontend/apps/mobile/views/Home.vue
+#: app/frontend/apps/mobile/modules/home/routes.ts
+#: app/frontend/apps/mobile/modules/home/views/Home.vue
 msgid "Home"
 msgstr ""
 
@@ -5319,12 +5319,12 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
-#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Jan"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "January"
 msgstr ""
 
@@ -5344,24 +5344,24 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
-#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Jul"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "July"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
-#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Jun"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "June"
 msgstr ""
 
@@ -5686,7 +5686,7 @@ msgid "Logo"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
-#: app/frontend/apps/mobile/views/Home.vue
+#: app/frontend/apps/mobile/modules/home/views/Home.vue
 msgid "Logout"
 msgstr ""
 
@@ -5782,12 +5782,12 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
-#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Mar"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "March"
 msgstr ""
 
@@ -5847,7 +5847,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
-#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "May"
 msgstr ""
 
@@ -5994,7 +5994,7 @@ msgid "Module"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Mon"
 msgstr ""
 
@@ -6002,7 +6002,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
-#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Monday"
 msgstr ""
 
@@ -6347,7 +6347,7 @@ msgstr ""
 msgid "New text module"
 msgstr ""
 
-#: app/frontend/apps/mobile/views/Login.vue
+#: app/frontend/apps/mobile/modules/login/views/Login.vue
 msgid "New user?"
 msgstr ""
 
@@ -6459,11 +6459,11 @@ msgstr ""
 msgid "No entries were found in the selected folder(s)."
 msgstr ""
 
-#: app/frontend/common/form/i18n/locales.ts
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "No file chosen."
 msgstr ""
 
-#: app/frontend/common/form/i18n/locales.ts
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "No file formats allowed."
 msgstr ""
 
@@ -6494,7 +6494,7 @@ msgid "No request_token for session found!"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
-#: app/frontend/common/components/form/field/FieldTreeSelect/FieldTreeSelectInput.vue
+#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 msgid "No results found"
 msgstr ""
 
@@ -6574,7 +6574,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee
-#: app/frontend/apps/mobile/views/Error.vue
+#: app/frontend/apps/mobile/modules/error/views/Error.vue
 #: app/helpers/knowledge_base_public_page_title_helper.rb
 msgid "Not Found"
 msgstr ""
@@ -6687,18 +6687,18 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
-#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Nov"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "November"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/ticket.coffee
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco
-#: app/frontend/apps/mobile/components/ticket/TicketList.vue
+#: app/frontend/apps/mobile/modules/ticket/components/TicketList/TicketList.vue
 msgid "Number"
 msgstr ""
 
@@ -6736,12 +6736,12 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
-#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Oct"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "October"
 msgstr ""
 
@@ -7051,6 +7051,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/shared/components/Form/Form.stories.ts
 #: app/models/form_schema/form/mobile/login.rb
 #: db/seeds/object_manager_attributes.rb
 #: db/seeds/permissions.rb
@@ -7200,7 +7201,7 @@ msgstr ""
 msgid "Play user interface sound effects"
 msgstr ""
 
-#: app/frontend/common/form/i18n/locales.ts
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "Please accept the %s."
 msgstr ""
 
@@ -7228,7 +7229,7 @@ msgstr ""
 msgid "Please enter a text."
 msgstr ""
 
-#: app/frontend/common/form/i18n/locales.ts
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "Please enter a valid email address."
 msgstr ""
 
@@ -7248,7 +7249,7 @@ msgstr ""
 msgid "Please fill in all fields"
 msgstr ""
 
-#: app/frontend/common/form/i18n/locales.ts
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "Please include a valid url."
 msgstr ""
 
@@ -7286,7 +7287,7 @@ msgid "Postmaster Filter"
 msgstr ""
 
 #: app/assets/javascripts/app/views/login.jst.eco
-#: app/frontend/apps/mobile/views/Login.vue
+#: app/frontend/apps/mobile/modules/login/views/Login.vue
 msgid "Powered by"
 msgstr ""
 
@@ -7521,7 +7522,7 @@ msgstr ""
 msgid "References - Search for follow-up also in In-Reply-To or References headers."
 msgstr ""
 
-#: app/frontend/apps/mobile/views/Login.vue
+#: app/frontend/apps/mobile/modules/login/views/Login.vue
 msgid "Register"
 msgstr ""
 
@@ -7569,11 +7570,11 @@ msgstr ""
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
 #: app/assets/javascripts/app/views/twitter/search_term.jst.eco
-#: app/frontend/common/form/i18n/locales.ts
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "Remove"
 msgstr ""
 
-#: app/frontend/common/form/i18n/locales.ts
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "Remove all"
 msgstr ""
 
@@ -7866,7 +7867,7 @@ msgid "STARTTLS"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Sat"
 msgstr ""
 
@@ -7874,7 +7875,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
-#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Saturday"
 msgstr ""
 
@@ -7965,7 +7966,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/idoit_object_selector.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/search_field_widget.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
-#: app/frontend/common/components/form/field/FieldTreeSelect/FieldTreeSelectInput.vue
+#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 msgid "Search"
 msgstr ""
 
@@ -8048,8 +8049,8 @@ msgstr ""
 msgid "Select the customer of the ticket or create one."
 msgstr ""
 
-#: app/frontend/common/components/form/field/FieldSelect/FieldSelectInput.vue
-#: app/frontend/common/components/form/field/FieldTreeSelect/FieldTreeSelectInput.vue
+#: app/frontend/shared/components/Form/fields/FieldSelect/FieldSelectInput.vue
+#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 msgid "Select..."
 msgstr ""
 
@@ -8143,7 +8144,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
-#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Sep"
 msgstr ""
 
@@ -8152,7 +8153,7 @@ msgid "Separate multiple values by ;"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "September"
 msgstr ""
 
@@ -8375,8 +8376,8 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/login.coffee
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
-#: app/frontend/apps/mobile/router/index.ts
-#: app/frontend/apps/mobile/views/Login.vue
+#: app/frontend/apps/mobile/modules/login/routes.ts
+#: app/frontend/apps/mobile/modules/login/views/Login.vue
 msgid "Sign in"
 msgstr ""
 
@@ -8474,7 +8475,7 @@ msgstr ""
 msgid "Something went wrong. Please contact your administrator."
 msgstr ""
 
-#: app/frontend/common/form/i18n/locales.ts
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "Sorry, not all fields are filled out correctly."
 msgstr ""
 
@@ -8572,7 +8573,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/idoit_object_result.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_idoit.jst.eco
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
-#: app/frontend/apps/mobile/components/ticket/TicketList.vue
+#: app/frontend/apps/mobile/modules/ticket/components/TicketList/TicketList.vue
 msgid "Status"
 msgstr ""
 
@@ -8648,7 +8649,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/settings/switch.jst.eco
 #: app/assets/javascripts/app/views/settings/ticket_hook_position.jst.eco
 #: app/assets/javascripts/app/views/settings/ticket_number.jst.eco
-#: app/frontend/common/form/i18n/locales.ts
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "Submit"
 msgstr ""
 
@@ -8678,7 +8679,7 @@ msgid "Summer holiday"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Sun"
 msgstr ""
 
@@ -8686,7 +8687,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
-#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Sunday"
 msgstr ""
 
@@ -8943,11 +8944,11 @@ msgstr ""
 msgid "The configuration of Zammad has changed, please reload your browser."
 msgstr ""
 
-#: app/frontend/common/composables/useAppMaintenanceCheck.ts
+#: app/frontend/shared/composables/useAppMaintenanceCheck.ts
 msgid "The configuration of Zammad has changed. Please reload at your earliest."
 msgstr ""
 
-#: app/frontend/common/stores/application.ts
+#: app/frontend/shared/stores/application.ts
 msgid "The connection to the server was lost."
 msgstr ""
 
@@ -8980,10 +8981,6 @@ msgstr ""
 
 #: app/controllers/ticket_articles_controller.rb
 msgid "The file does not belong to the specified article."
-msgstr ""
-
-#: app/frontend/common/components/common/CommonHelloWorld.vue
-msgid "The first component."
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
@@ -9211,16 +9208,12 @@ msgstr ""
 msgid "The retried security process failed!"
 msgstr ""
 
-#: app/frontend/common/components/common/CommonHelloWorld.vue
-msgid "The second component."
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
 msgid "The server settings could not be automatically detected. Please configure them manually."
 msgstr ""
 
-#: app/frontend/apps/mobile/views/Login.vue
+#: app/frontend/apps/mobile/modules/login/views/Login.vue
 msgid "The session is no longer valid. Please log in again."
 msgstr ""
 
@@ -9330,107 +9323,107 @@ msgstr ""
 msgid "This entry already exists!"
 msgstr ""
 
-#: app/frontend/common/form/i18n/locales.ts
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "This field can only contain alphabetical characters."
 msgstr ""
 
-#: app/frontend/common/form/i18n/locales.ts
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "This field can only contain letters and numbers."
 msgstr ""
 
-#: app/frontend/common/form/i18n/locales.ts
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "This field can only contain letters and spaces."
 msgstr ""
 
-#: app/frontend/common/form/i18n/locales.ts
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "This field can't contain the value \"%s\"."
 msgstr ""
 
-#: app/frontend/common/form/i18n/locales.ts
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "This field can't have less than %s entries."
 msgstr ""
 
-#: app/frontend/common/form/i18n/locales.ts
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "This field can't have more than %s entries."
 msgstr ""
 
-#: app/frontend/common/form/i18n/locales.ts
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "This field doesn't contain an allowed value."
 msgstr ""
 
-#: app/frontend/common/form/i18n/locales.ts
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "This field doesn't correspond to the expected value."
 msgstr ""
 
-#: app/frontend/common/form/i18n/locales.ts
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "This field doesn't end with \"%s\"."
 msgstr ""
 
-#: app/frontend/common/form/i18n/locales.ts
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "This field doesn't start with \"%s\"."
 msgstr ""
 
-#: app/frontend/common/form/i18n/locales.ts
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "This field is required."
 msgstr ""
 
-#: app/frontend/common/form/i18n/locales.ts
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "This field isn't a valid date, please use the format \"%s\"."
 msgstr ""
 
-#: app/frontend/common/form/i18n/locales.ts
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must be of the type \"%s\"."
 msgstr ""
 
-#: app/frontend/common/form/i18n/locales.ts
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must contain a number."
 msgstr ""
 
-#: app/frontend/common/form/i18n/locales.ts
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must contain at least %s characters."
 msgstr ""
 
-#: app/frontend/common/form/i18n/locales.ts
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must contain at least one character."
 msgstr ""
 
-#: app/frontend/common/form/i18n/locales.ts
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must contain between %s and %s characters."
 msgstr ""
 
-#: app/frontend/common/form/i18n/locales.ts
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must have a value that is after %s."
 msgstr ""
 
-#: app/frontend/common/form/i18n/locales.ts
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must have a value that is at least %s."
 msgstr ""
 
-#: app/frontend/common/form/i18n/locales.ts
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must have a value that is at most %s."
 msgstr ""
 
-#: app/frontend/common/form/i18n/locales.ts
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must have a value that is before %s."
 msgstr ""
 
-#: app/frontend/common/form/i18n/locales.ts
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must have a value that is between %s and %s."
 msgstr ""
 
-#: app/frontend/common/form/i18n/locales.ts
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must have a value that is in the future."
 msgstr ""
 
-#: app/frontend/common/form/i18n/locales.ts
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must have a value that is in the past."
 msgstr ""
 
-#: app/frontend/common/form/i18n/locales.ts
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "This field must not contain more than %s characters."
 msgstr ""
 
-#: app/frontend/common/form/i18n/locales.ts
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "This field was configured incorrectly and can't be submitted."
 msgstr ""
 
@@ -9509,7 +9502,7 @@ msgid "This user is currently blocked because of too many failed login attempts.
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Thu"
 msgstr ""
 
@@ -9517,7 +9510,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
-#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Thursday"
 msgstr ""
 
@@ -9581,11 +9574,11 @@ msgstr ""
 msgid "Ticket Number ignore system_id"
 msgstr ""
 
-#: app/frontend/apps/mobile/views/TicketOverview.vue
+#: app/frontend/apps/mobile/modules/ticket/views/TicketOverview.vue
 msgid "Ticket Overview"
 msgstr ""
 
-#: app/frontend/apps/mobile/router/routes/ticketOverview.ts
+#: app/frontend/apps/mobile/modules/ticket/routes.ts
 msgid "Ticket Overviews"
 msgstr ""
 
@@ -9748,7 +9741,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/maintenance.jst.eco
 #: app/assets/javascripts/app/views/settings/form.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
-#: app/frontend/apps/mobile/components/ticket/TicketList.vue
+#: app/frontend/apps/mobile/modules/ticket/components/TicketList/TicketList.vue
 #: db/seeds/object_manager_attributes.rb
 #: lib/excel_sheet/ticket.rb
 msgid "Title"
@@ -9799,7 +9792,7 @@ msgstr ""
 msgid "To work on Tickets."
 msgstr ""
 
-#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 #: public/assets/chat/chat-no-jquery.coffee
 #: public/assets/chat/chat.coffee
 msgid "Today"
@@ -9894,7 +9887,7 @@ msgid "Trying to reconnect…"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Tue"
 msgstr ""
 
@@ -9902,7 +9895,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
-#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Tuesday"
 msgstr ""
 
@@ -10506,7 +10499,7 @@ msgstr ""
 msgid "We support"
 msgstr ""
 
-#: app/frontend/apps/mobile/views/Error.vue
+#: app/frontend/apps/mobile/modules/error/views/Error.vue
 msgid "We're sorry, but this page doesn't exist."
 msgstr ""
 
@@ -10576,7 +10569,7 @@ msgid "Websocket port"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
-#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Wed"
 msgstr ""
 
@@ -10584,7 +10577,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
-#: app/frontend/common/components/form/field/FieldDate/FieldDateInput.vue
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Wednesday"
 msgstr ""
 
@@ -10843,7 +10836,7 @@ msgstr ""
 msgid "You currently don't have any tickets."
 msgstr ""
 
-#: app/frontend/common/router/guards/before/permission.ts
+#: app/frontend/shared/router/guards/before/permission.ts
 msgid "You don't have the necessary permissions to access this page."
 msgstr ""
 
@@ -11385,51 +11378,51 @@ msgstr ""
 msgid "in %s"
 msgstr ""
 
-#: app/frontend/common/i18n/dates.ts
+#: app/frontend/shared/i18n/dates.ts
 msgid "in %s days"
 msgstr ""
 
-#: app/frontend/common/i18n/dates.ts
+#: app/frontend/shared/i18n/dates.ts
 msgid "in %s hours"
 msgstr ""
 
-#: app/frontend/common/i18n/dates.ts
+#: app/frontend/shared/i18n/dates.ts
 msgid "in %s minutes"
 msgstr ""
 
-#: app/frontend/common/i18n/dates.ts
+#: app/frontend/shared/i18n/dates.ts
 msgid "in %s months"
 msgstr ""
 
-#: app/frontend/common/i18n/dates.ts
+#: app/frontend/shared/i18n/dates.ts
 msgid "in %s weeks"
 msgstr ""
 
-#: app/frontend/common/i18n/dates.ts
+#: app/frontend/shared/i18n/dates.ts
 msgid "in %s years"
 msgstr ""
 
-#: app/frontend/common/i18n/dates.ts
+#: app/frontend/shared/i18n/dates.ts
 msgid "in 1 day"
 msgstr ""
 
-#: app/frontend/common/i18n/dates.ts
+#: app/frontend/shared/i18n/dates.ts
 msgid "in 1 hour"
 msgstr ""
 
-#: app/frontend/common/i18n/dates.ts
+#: app/frontend/shared/i18n/dates.ts
 msgid "in 1 minute"
 msgstr ""
 
-#: app/frontend/common/i18n/dates.ts
+#: app/frontend/shared/i18n/dates.ts
 msgid "in 1 month"
 msgstr ""
 
-#: app/frontend/common/i18n/dates.ts
+#: app/frontend/shared/i18n/dates.ts
 msgid "in 1 week"
 msgstr ""
 
-#: app/frontend/common/i18n/dates.ts
+#: app/frontend/shared/i18n/dates.ts
 msgid "in 1 year"
 msgstr ""
 

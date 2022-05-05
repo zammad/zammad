@@ -31,7 +31,7 @@
     - echo -e "\\e[0Ksection_end:`date +%s`:zammad_db_init\\r\\e[0K"
 
 # Must be a separate job because it uses a custom image.
-"lint: shellcheck":
+'lint: shellcheck':
   <<: *template_pre
   image: koalaman/shellcheck-alpine:stable
   before_script:
@@ -41,7 +41,7 @@
   after_script:
     - echo "Disable default before_script."
 
-"lint: i18n, rails & security":
+'lint: i18n, rails & security':
   <<: *template_pre_rails
   artifacts:
     expire_in: 1 week
@@ -62,17 +62,9 @@
     - bundle-audit --ignore CVE-2015-9284
     - echo "Rails zeitwerk:check autoloader check..."
     - bundle exec rails zeitwerk:check
-    - echo "Checking if auto-generated GraphQL API is up-to-date..."
-    - echo "Use the command 'yarn run generate-graphql-api' to re-generate it, if required."
-    - cp app/frontend/common/graphql/api.ts app/frontend/common/graphql/api.ts.bak
-    - cp app/frontend/apps/mobile/graphql/api.ts app/frontend/apps/mobile/graphql/api.ts.bak
-    - cp app/frontend/common/graphql/types.ts app/frontend/common/graphql/types.ts.bak
-    - yarn run generate-graphql-api
-    - cmp -s app/frontend/common/graphql/types.ts app/frontend/common/graphql/types.ts.bak
-    - cmp -s app/frontend/common/graphql/api.ts app/frontend/common/graphql/api.ts.bak
-    - cmp -s app/frontend/apps/mobile/graphql/api.ts app/frontend/apps/mobile/graphql/api.ts.bak
+    - .gitlab/check_graphql_api_consistency.sh
 
-"lint: ruby, js & css":
+'lint: ruby, js & css':
   <<: *template_pre
   script:
     - echo "Coffeelint check..."
@@ -94,7 +86,7 @@
     - bundle exec rubocop --parallel
 
 # Must be a separate job because it may fail and is only executed for develop.
-"lint: orphaned ruby gems":
+'lint: orphaned ruby gems':
   <<: *template_pre_rails
   allow_failure: true
   rules:
@@ -107,7 +99,7 @@
     - bundle exec rake zammad:ci:bundle:orphaned 5
 
 # Executed on a dedicated runner.
-"push to github":
+'push to github':
   <<: *template_pre
   tags:
     - deploy
