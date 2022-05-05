@@ -293,7 +293,6 @@ subsequently in a separate step.
       package_db.save
     end
 
-    # prebuild assets
     package_db
   end
 
@@ -382,6 +381,9 @@ execute all pending package migrations at once
       package   = JSON.parse(json_file)
       Package::Migration.migrate(package['name'])
     end
+
+    # sync package po files
+    Translation.sync
   end
 
   def self._get_bin(name, version)
