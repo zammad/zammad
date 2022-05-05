@@ -10751,6 +10751,22 @@ msgstr ""
 msgid "archived"
 msgstr ""
 
+#: app/models/transaction/notification.rb
+msgid "are assigned"
+msgstr ""
+
+#: app/models/transaction/notification.rb
+msgid "are in group"
+msgstr ""
+
+#: app/models/transaction/notification.rb
+msgid "are subscribed"
+msgstr ""
+
+#: app/models/transaction/notification.rb
+msgid "are the out-of-office replacement of the owner"
+msgstr ""
+
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay.jst.eco
 msgid "assign tickets"
 msgstr ""
