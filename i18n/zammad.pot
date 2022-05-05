@@ -1206,10 +1206,6 @@ msgstr ""
 msgid "Boolean field"
 msgstr ""
 
-#: lib/telegram.rb
-msgid "Bot already exists!"
-msgstr ""
-
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 msgid "Bots"
 msgstr ""
@@ -1425,10 +1421,6 @@ msgstr ""
 
 #: app/policies/ticket_policy.rb
 msgid "Cannot follow-up on a closed ticket. Please create a new ticket."
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/report.coffee
-msgid "Cannot generate report"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/html5_upload.coffee
@@ -1883,7 +1875,7 @@ msgid "Configure App"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/getting_started/base.coffee
-msgid "Configure Base"
+msgid "Configure Basic Settings"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
@@ -4379,10 +4371,6 @@ msgstr ""
 msgid "Google Maps"
 msgstr ""
 
-#: app/models/text_module.rb
-msgid "Got no locale"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/ticket_zoom/highlighter.coffee
 msgid "Green"
 msgstr ""
@@ -4469,20 +4457,12 @@ msgstr ""
 msgid "Group information could not be retrieved, please check your bind user permissions."
 msgstr ""
 
-#: lib/telegram.rb
-msgid "Group invalid!"
-msgstr ""
-
 #: app/models/channel/driver/sms/base.rb
 msgid "Group is invalid!"
 msgstr ""
 
 #: app/models/channel/driver/sms/base.rb
 msgid "Group needed in channel definition!"
-msgstr ""
-
-#: lib/telegram.rb
-msgid "Group needed!"
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
@@ -8924,6 +8904,10 @@ msgstr ""
 msgid "The provided token is invalid."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/report.coffee
+msgid "The report could not be generated"
+msgstr ""
+
 #: app/assets/javascripts/app/views/knowledge_base/delete.coffee
 msgid "The request could not be processed."
 msgstr ""
@@ -8974,8 +8958,20 @@ msgstr ""
 msgid "The required parameter 'current_user_id' is missing."
 msgstr ""
 
+#: lib/telegram.rb
+msgid "The required parameter 'group_id' is invalid."
+msgstr ""
+
+#: lib/telegram.rb
+msgid "The required parameter 'group_id' is missing."
+msgstr ""
+
 #: app/controllers/users_controller.rb
 msgid "The required parameter 'id' is missing."
+msgstr ""
+
+#: app/models/text_module.rb
+msgid "The required parameter 'locale' is missing."
 msgstr ""
 
 #: lib/external_credential/twitter.rb
@@ -9107,6 +9103,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
 msgid "Third-party Applications"
+msgstr ""
+
+#: lib/telegram.rb
+msgid "This bot already exists."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/reader_list_controller.coffee

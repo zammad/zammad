@@ -66,16 +66,16 @@ returns
     bot = Telegram.check_token(token)
 
     if !channel && Telegram.bot_duplicate?(bot['id'])
-      raise Exceptions::UnprocessableEntity, __('Bot already exists!')
+      raise Exceptions::UnprocessableEntity, __('This bot already exists.')
     end
 
     if params[:group_id].blank?
-      raise Exceptions::UnprocessableEntity, __('Group needed!')
+      raise Exceptions::UnprocessableEntity, __("The required parameter 'group_id' is missing.")
     end
 
     group = Group.find_by(id: params[:group_id])
     if !group
-      raise Exceptions::UnprocessableEntity, __('Group invalid!')
+      raise Exceptions::UnprocessableEntity, __("The required parameter 'group_id' is invalid.")
     end
 
     # generate random callback token

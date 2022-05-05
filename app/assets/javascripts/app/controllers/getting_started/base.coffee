@@ -15,7 +15,7 @@ class GettingStartedBase extends App.ControllerWizardFullScreen
       return
 
     # set title
-    @title __('Configure Base')
+    @title __('Configure Basic Settings')
 
     @fetch()
 

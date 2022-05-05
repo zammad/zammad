@@ -175,7 +175,7 @@ class Graph extends App.Controller
         return if !_.include([401, 403, 404, 422, 502], xhr.status)
 
         @bodyModal = new App.ControllerTechnicalErrorModal(
-          head:        __('Cannot generate report')
+          head:        __('The report could not be generated')
           contentCode: xhr.responseJSON.error
         )
       success: (data) =>
