@@ -8,11 +8,15 @@ class HtmlSanitizerTest < ActiveSupport::TestCase
     @processing_timeout = HtmlSanitizer.const_get(:PROCESSING_TIMEOUT)
 
     # XSS processing may run into a timeout on slow CI systems, so turn the timeout off for the test.
-    HtmlSanitizer.const_set(:PROCESSING_TIMEOUT, nil)
+    silence_warnings do
+      HtmlSanitizer.const_set(:PROCESSING_TIMEOUT, nil)
+    end
   end
 
   teardown do
-    HtmlSanitizer.const_set(:PROCESSING_TIMEOUT, @processing_timeout)
+    silence_warnings do
+      HtmlSanitizer.const_set(:PROCESSING_TIMEOUT, @processing_timeout)
+    end
   end
 
   test 'xss' do
@@ -76,8 +80,8 @@ tt  p://6 6.000146.0x7.147/">XSS</A>', true), '<a href="http://h%0Att%20%20p://6
     assert_equal(HtmlSanitizer.strict('<a xlink:href="javascript:alert(2)">CLICKME</a>'), 'CLICKME')
     assert_equal(HtmlSanitizer.strict('<a xlink:href="javascript:alert(2)">CLICKME</a>', true), 'CLICKME')
     assert_equal(HtmlSanitizer.strict('<!--<img src="--><img src=x onerror=alert(1)//">'), '<img src="x">')
-    assert_equal(HtmlSanitizer.strict('<![><img src="]><img src=x onerror=alert(1)//">'), '<img src="%5D&gt;&lt;img%20src=x%20onerror=alert(1)//">')
-    assert_equal(HtmlSanitizer.strict('<svg><![CDATA[><image xlink:href="]]><img src=xx:x onerror=alert(2)//"></svg>'), '')
+    assert_equal(HtmlSanitizer.strict('<![><img src="]><img src=x onerror=alert(1)//">'), '&lt;![&gt;<img src="%5D&gt;&lt;img%20src=x%20onerror=alert(1)//">')
+    assert_equal(HtmlSanitizer.strict('<svg><![CDATA[><image xlink:href="]]><img src=xx:x onerror=alert(2)//"></svg>'), '&lt;![CDATA[&gt;')
     assert_equal(HtmlSanitizer.strict('<abc><img src="</abc><img src=x onerror=alert(1)//">'), '<img src="&lt;/abc&gt;&lt;img%20src=x%20onerror=alert(1)//">')
     assert_equal(HtmlSanitizer.strict('<object data="data:text/html;base64,PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg=="></object>'), '')
     assert_equal(HtmlSanitizer.strict('<embed src="data:text/html;base64,PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg=="></embed>'), '')

@@ -10,11 +10,15 @@ class TicketTriggerTest < ActiveSupport::TestCase
     @processing_timeout = HtmlSanitizer.const_get(:PROCESSING_TIMEOUT)
 
     # XSS processing may run into a timeout on slow CI systems, so turn the timeout off for the test.
-    HtmlSanitizer.const_set(:PROCESSING_TIMEOUT, nil)
+    silence_warnings do
+      HtmlSanitizer.const_set(:PROCESSING_TIMEOUT, nil)
+    end
   end
 
   teardown do
-    HtmlSanitizer.const_set(:PROCESSING_TIMEOUT, @processing_timeout)
+    silence_warnings do
+      HtmlSanitizer.const_set(:PROCESSING_TIMEOUT, @processing_timeout)
+    end
   end
 
   test '1 basic' do
