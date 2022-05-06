@@ -80,8 +80,7 @@ class GettingStartedEmailNotification extends App.ControllerWizardFullScreen
     e.preventDefault()
 
     # get params
-    params          = @formParam(e.target)
-    params['email'] = 'me@localhost'
+    params = @formParam(e.target)
     @disable(e)
 
     @showSlide('js-test')
