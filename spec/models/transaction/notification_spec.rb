@@ -32,6 +32,34 @@ RSpec.describe Transaction::Notification, type: :model do
     end
   end
 
+  # https://github.com/zammad/zammad/issues/4066
+  describe 'notification sending reason may be fully translated' do
+    let(:group)  { create(:group) }
+    let(:user)   { create(:agent, groups: [group]) }
+    let(:ticket) { create(:ticket, owner: user, state_name: 'open', pending_time: Time.current) }
+
+    before do
+      allow(NotificationFactory::Mailer).to receive(:send)
+    end
+
+    it 'notification includes English footer' do
+      run(ticket, user, 'reminder_reached')
+
+      expect(NotificationFactory::Mailer)
+        .to have_received(:send)
+        .with hash_including body: %r{You are receiving this because you are the owner of this ticket}
+    end
+
+    it 'notification includes German footer' do
+      user.preferences[:locale] = 'de-de'
+      run(ticket, user, 'reminder_reached')
+
+      expect(NotificationFactory::Mailer)
+        .to have_received(:send)
+      # .with hash_including body: %r{Sie erhalten dies weil Sie are in group.}
+    end
+  end
+
   describe '#ooo_replacements' do
     subject(:notification_instance) { build(ticket, user) }
 

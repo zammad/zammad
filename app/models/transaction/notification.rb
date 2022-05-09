@@ -62,14 +62,14 @@ class Transaction::Notification
         next if !mention_user.group_access?(ticket.group_id, 'read')
 
         possible_recipients.push mention_user
-        recipients_reason[mention_user.id] = 'are subscribed'
+        recipients_reason[mention_user.id] = __('You are receiving this because you were mentioned in this ticket.')
       end
     end
 
     # apply owner
     if ticket.owner_id != 1
       possible_recipients.push ticket.owner
-      recipients_reason[ticket.owner_id] = 'are assigned'
+      recipients_reason[ticket.owner_id] = __('You are receiving this because you are the owner of this ticket.')
     end
 
     # apply out of office agents
@@ -98,7 +98,7 @@ class Transaction::Notification
       recipients_and_channels.push result
       next if recipients_reason[user.id]
 
-      recipients_reason[user.id] = 'are in group'
+      recipients_reason[user.id] = __('You are receiving this because you are a member of the group of this ticket.')
     end
 
     # send notifications
@@ -349,7 +349,7 @@ class Transaction::Notification
 
     return if !replacements.add?(replacement)
 
-    reasons[replacement.id] = 'are the out-of-office replacement of the owner'
+    reasons[replacement.id] = __('You are receiving this because you are out-of-office replacement for a participant of this ticket.')
   end
 
   def possible_recipients_of_group(group_id)
