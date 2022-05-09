@@ -151,7 +151,6 @@ class App.FormHandlerCoreWorkflow
             item.default  = obj[item.name]
             item.newValue = obj[item.name]
         else
-          item.default  = ''
           item.newValue = ''
 
         if attribute.relation
