@@ -8,7 +8,7 @@ class Channel::Driver::Imap < Channel::EmailParser
   FETCH_MSG_TIMEOUT = 4.minutes
   EXPUNGE_TIMEOUT = 16.minutes
   DEFAULT_TIMEOUT = 45.seconds
-  CHECK_ONLY_TIMEOUT = 6.seconds
+  CHECK_ONLY_TIMEOUT = 8.seconds
 
   def fetchable?(_channel)
     true

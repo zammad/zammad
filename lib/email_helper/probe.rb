@@ -310,7 +310,7 @@ returns on fail
              else
                {
                  from:    email,
-                 to:      'emailtrytest@znuny.com',
+                 to:      'verify-external-smtp-sending@discard.zammad.org',
                  subject: 'This is a Test Email',
                  body:    "This is a test email from Zammad to verify if Zammad can send emails to an external address.\n\nIf you see this email, you can ignore or delete it.",
                }

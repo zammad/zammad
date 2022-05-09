@@ -125,7 +125,7 @@ returns
           adapter: 'smtp',
           options: {
             host:      'smtp.gmail.com',
-            port:      25,
+            port:      587,
             start_tls: true,
             user:      email,
             password:  password,
@@ -148,7 +148,7 @@ returns
           adapter: 'smtp',
           options: {
             host:      'smtp-mail.outlook.com',
-            port:      25,
+            port:      587,
             start_tls: true,
             user:      email,
             password:  password,
@@ -171,7 +171,7 @@ returns
           adapter: 'smtp',
           options: {
             host:      'smtp.gmail.com',
-            port:      25,
+            port:      587,
             start_tls: true,
             user:      email,
             password:  password,
@@ -420,26 +420,6 @@ returns
           adapter: 'smtp',
           options: {
             host:      domain,
-            port:      25,
-            start_tls: true,
-            user:      user,
-            password:  password,
-          },
-        },
-        {
-          adapter: 'smtp',
-          options: {
-            host:      domain,
-            port:      25,
-            start_tls: true,
-            user:      email,
-            password:  password,
-          },
-        },
-        {
-          adapter: 'smtp',
-          options: {
-            host:      domain,
             port:      465,
             start_tls: true,
             user:      user,
@@ -472,6 +452,26 @@ returns
             port:     587,
             user:     email,
             password: password,
+          },
+        },
+        {
+          adapter: 'smtp',
+          options: {
+            host:      domain,
+            port:      25,
+            start_tls: true,
+            user:      user,
+            password:  password,
+          },
+        },
+        {
+          adapter: 'smtp',
+          options: {
+            host:      domain,
+            port:      25,
+            start_tls: true,
+            user:      email,
+            password:  password,
           },
         },
       ]
@@ -518,26 +518,6 @@ returns
         adapter: 'smtp',
         options: {
           host:      "mail.#{domain}",
-          port:      25,
-          start_tls: true,
-          user:      user,
-          password:  password,
-        },
-      },
-      {
-        adapter: 'smtp',
-        options: {
-          host:      "mail.#{domain}",
-          port:      25,
-          start_tls: true,
-          user:      email,
-          password:  password,
-        },
-      },
-      {
-        adapter: 'smtp',
-        options: {
-          host:      "mail.#{domain}",
           port:      465,
           start_tls: true,
           user:      user,
@@ -558,7 +538,7 @@ returns
         adapter: 'smtp',
         options: {
           host:      "smtp.#{domain}",
-          port:      25,
+          port:      465,
           start_tls: true,
           user:      user,
           password:  password,
@@ -568,6 +548,66 @@ returns
         adapter: 'smtp',
         options: {
           host:      "smtp.#{domain}",
+          port:      465,
+          start_tls: true,
+          user:      email,
+          password:  password,
+        },
+      },
+      {
+        adapter: 'smtp',
+        options: {
+          host:      "mail.#{domain}",
+          port:      587,
+          start_tls: true,
+          user:      user,
+          password:  password,
+        },
+      },
+      {
+        adapter: 'smtp',
+        options: {
+          host:      "mail.#{domain}",
+          port:      587,
+          start_tls: true,
+          user:      email,
+          password:  password,
+        },
+      },
+      {
+        adapter: 'smtp',
+        options: {
+          host:      "smtp.#{domain}",
+          port:      587,
+          start_tls: true,
+          user:      user,
+          password:  password,
+        },
+      },
+      {
+        adapter: 'smtp',
+        options: {
+          host:      "smtp.#{domain}",
+          port:      587,
+          start_tls: true,
+          user:      email,
+          password:  password,
+        },
+      },
+      {
+        adapter: 'smtp',
+        options: {
+          host:      "mail.#{domain}",
+          port:      25,
+          start_tls: true,
+          user:      user,
+          password:  password,
+        },
+      },
+      {
+        adapter: 'smtp',
+        options: {
+          host:      "mail.#{domain}",
           port:      25,
           start_tls: true,
           user:      email,
@@ -578,7 +618,7 @@ returns
         adapter: 'smtp',
         options: {
           host:      "smtp.#{domain}",
-          port:      465,
+          port:      25,
           start_tls: true,
           user:      user,
           password:  password,
@@ -588,7 +628,7 @@ returns
         adapter: 'smtp',
         options: {
           host:      "smtp.#{domain}",
-          port:      465,
+          port:      25,
           start_tls: true,
           user:      email,
           password:  password,

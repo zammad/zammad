@@ -41,7 +41,7 @@ class EmailHelperTest < ActiveSupport::TestCase
 
     assert_equal('smtp', map[:google_imap][:outbound][:adapter])
     assert_equal('smtp.gmail.com', map[:google_imap][:outbound][:options][:host])
-    assert_equal(25, map[:google_imap][:outbound][:options][:port])
+    assert_equal(587, map[:google_imap][:outbound][:options][:port])
     assert_equal(true, map[:google_imap][:outbound][:options][:start_tls])
     assert_equal(email, map[:google_imap][:outbound][:options][:user])
     assert_equal(password, map[:google_imap][:outbound][:options][:password])
@@ -89,6 +89,17 @@ class EmailHelperTest < ActiveSupport::TestCase
     assert_equal(email, map[1][:options][:user])
     assert_equal(password, map[1][:options][:password])
 
+    assert_equal('imap', map[2][:adapter])
+    assert_equal('imap.zammad.com', map[2][:options][:host])
+    assert_equal(993, map[2][:options][:port])
+    assert_equal(user, map[2][:options][:user])
+    assert_equal(password, map[2][:options][:password])
+
+    assert_equal('imap', map[3][:adapter])
+    assert_equal('imap.zammad.com', map[3][:options][:host])
+    assert_equal(993, map[3][:options][:port])
+    assert_equal(email, map[3][:options][:user])
+    assert_equal(password, map[3][:options][:password])
   end
 
   test 'provider_outbound_mx' do
@@ -101,18 +112,31 @@ class EmailHelperTest < ActiveSupport::TestCase
 
     assert_equal('smtp', map[0][:adapter])
     assert_equal('mx2.zammad.com', map[0][:options][:host])
-    assert_equal(25, map[0][:options][:port])
+    assert_equal(465, map[0][:options][:port])
     assert_equal(true, map[0][:options][:start_tls])
     assert_equal(user, map[0][:options][:user])
     assert_equal(password, map[0][:options][:password])
 
     assert_equal('smtp', map[1][:adapter])
     assert_equal('mx2.zammad.com', map[1][:options][:host])
-    assert_equal(25, map[1][:options][:port])
+    assert_equal(465, map[1][:options][:port])
     assert_equal(true, map[1][:options][:start_tls])
     assert_equal(email, map[1][:options][:user])
     assert_equal(password, map[1][:options][:password])
 
+    assert_equal('smtp', map[2][:adapter])
+    assert_equal('mx2.zammad.com', map[2][:options][:host])
+    assert_equal(587, map[2][:options][:port])
+    assert_nil(map[2][:options][:start_tls])
+    assert_equal(user, map[2][:options][:user])
+    assert_equal(password, map[2][:options][:password])
+
+    assert_equal('smtp', map[3][:adapter])
+    assert_equal('mx2.zammad.com', map[3][:options][:host])
+    assert_equal(587, map[3][:options][:port])
+    assert_nil(map[3][:options][:start_tls])
+    assert_equal(email, map[3][:options][:user])
+    assert_equal(password, map[3][:options][:password])
   end
 
   test 'provider_outbound_guess' do
@@ -124,18 +148,31 @@ class EmailHelperTest < ActiveSupport::TestCase
 
     assert_equal('smtp', map[0][:adapter])
     assert_equal('mail.zammad.com', map[0][:options][:host])
-    assert_equal(25, map[0][:options][:port])
+    assert_equal(465, map[0][:options][:port])
     assert_equal(true, map[0][:options][:start_tls])
     assert_equal(user, map[0][:options][:user])
     assert_equal(password, map[0][:options][:password])
 
     assert_equal('smtp', map[1][:adapter])
     assert_equal('mail.zammad.com', map[1][:options][:host])
-    assert_equal(25, map[1][:options][:port])
+    assert_equal(465, map[1][:options][:port])
     assert_equal(true, map[1][:options][:start_tls])
     assert_equal(email, map[1][:options][:user])
     assert_equal(password, map[1][:options][:password])
 
+    assert_equal('smtp', map[2][:adapter])
+    assert_equal('smtp.zammad.com', map[2][:options][:host])
+    assert_equal(465, map[2][:options][:port])
+    assert_equal(true, map[2][:options][:start_tls])
+    assert_equal(user, map[2][:options][:user])
+    assert_equal(password, map[2][:options][:password])
+
+    assert_equal('smtp', map[3][:adapter])
+    assert_equal('smtp.zammad.com', map[3][:options][:host])
+    assert_equal(465, map[3][:options][:port])
+    assert_equal(true, map[3][:options][:start_tls])
+    assert_equal(email, map[3][:options][:user])
+    assert_equal(password, map[3][:options][:password])
   end
 
   test 'z probe_inbound' do
@@ -525,7 +562,7 @@ class EmailHelperTest < ActiveSupport::TestCase
         adapter: 'smtp',
         options: {
           host:      'smtp.gmail.com',
-          port:      25,
+          port:      587,
           start_tls: true,
           user:      mailbox_user,
           password:  mailbox_password,
