@@ -71,7 +71,7 @@ class AaaGettingStartedTest < TestCase
     )
     set(
       css:   '.js-base input[name="url"]',
-      value: browser_url,
+      value: browser_url.sub(%r{(:\d+)$}, ''), # drop port part
     )
     click(
       css: '.js-base .btn--primary',
@@ -84,6 +84,27 @@ class AaaGettingStartedTest < TestCase
     )
     location_check(
       url: '#getting_started/email_notification',
+    )
+
+    select(
+      css:   '.js-outbound select[name="adapter"]',
+      value: 'SMTP - configure your own outgoing SMTP settings',
+    )
+
+    # uses zammad-imap docker container
+    set(
+      css:   '.js-outbound input[name="options::host"]',
+      value: 'mail',
+    )
+
+    set(
+      css:   '.js-outbound input[name="options::user"]',
+      value: mailbox_user,
+    )
+
+    set(
+      css:   '.js-outbound input[name="options::password"]',
+      value: mailbox_password,
     )
     click(
       css: '.js-outbound .btn--primary',
