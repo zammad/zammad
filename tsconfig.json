@@ -16,8 +16,7 @@
       "@tests/*": ["app/frontend/tests/*"],
       "@stories/*": ["app/frontend/stories/*"],
       "@/*": ["app/frontend/*"],
-      "*": ["node_modules/*", ".storybook/node_modules/*"],
-      "react": [".storybook/config/types__react"]
+      "*": ["node_modules/*", ".storybook/node_modules/*"]
     },
     "types": [
       "vite/client",
