@@ -30,7 +30,7 @@ end
 module Zammad
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 6.0
+    config.load_defaults 6.1
 
     Rails.autoloaders.each do |autoloader|
       autoloader.do_not_eager_load "#{config.root}/lib/core_ext"
