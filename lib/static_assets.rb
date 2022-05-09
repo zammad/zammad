@@ -146,18 +146,19 @@ generate filename based on Store model
 
   def self.filename(file)
     hash = Digest::MD5.hexdigest(file.content)
-    extention = ''
-    case file.preferences['Content-Type']
-    when %r{jpg|jpeg}i
-      extention = '.jpg'
-    when %r{png}i
-      extention = '.png'
-    when %r{gif}i
-      extention = '.gif'
-    when %r{svg}i
-      extention = '.svg'
-    end
-    "#{hash}#{extention}"
+    extension = case file.preferences['Content-Type']
+                when %r{jpg|jpeg}i
+                  '.jpg'
+                when %r{png}i
+                  '.png'
+                when %r{gif}i
+                  '.gif'
+                when %r{svg}i
+                  '.svg'
+                else
+                  ''
+                end
+    "#{hash}#{extension}"
   end
 
 =begin
