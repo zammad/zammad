@@ -24,7 +24,7 @@ RSpec.describe Import::OTRS::DynamicField::Multiselect do
       position:      '4',
       created_by_id: 1,
       updated_by_id: 1,
-      data_type:     'select',
+      data_type:     'multiselect',
       data_option:   {
         default:    '',
         multiple:   true,
@@ -41,5 +41,15 @@ RSpec.describe Import::OTRS::DynamicField::Multiselect do
     }
 
     dynamic_field_from_json('multiselect/default', zammad_structure)
+  end
+
+  context 'without possible values' do
+    it 'imports no field without possible value' do
+      allow(ObjectManager::Attribute).to receive(:add)
+
+      described_class.new(load_dynamic_field_json('multiselect/without_possible_values'))
+
+      expect(ObjectManager::Attribute).not_to have_received(:add)
+    end
   end
 end

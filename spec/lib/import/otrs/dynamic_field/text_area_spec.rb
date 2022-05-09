@@ -26,9 +26,10 @@ RSpec.describe Import::OTRS::DynamicField::TextArea do
       updated_by_id: 1,
       data_type:     'textarea',
       data_option:   {
-        default: '',
-        rows:    '20',
-        null:    true
+        default:   '',
+        rows:      '20',
+        null:      true,
+        maxlength: 3000,
       }
     }
 

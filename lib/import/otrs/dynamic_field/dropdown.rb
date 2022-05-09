@@ -17,6 +17,12 @@ module Import
             }
           )
         end
+
+        private
+
+        def skip?(dynamic_field)
+          !dynamic_field['Config']['PossibleValues']
+        end
       end
     end
   end

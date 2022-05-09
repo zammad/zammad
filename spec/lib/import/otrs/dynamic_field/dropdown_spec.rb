@@ -42,4 +42,14 @@ RSpec.describe Import::OTRS::DynamicField::Dropdown do
 
     dynamic_field_from_json('dropdown/default', zammad_structure)
   end
+
+  context 'without possible values' do
+    it 'imports no field without possible value' do
+      allow(ObjectManager::Attribute).to receive(:add)
+
+      described_class.new(load_dynamic_field_json('dropdown/without_possible_values'))
+
+      expect(ObjectManager::Attribute).not_to have_received(:add)
+    end
+  end
 end
