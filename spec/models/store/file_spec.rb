@@ -17,7 +17,7 @@ RSpec.describe Store::File, type: :model do
     context 'with a preconfigured storage provider' do
       before { Setting.set('storage_provider', 'File') }
 
-      after { Store::Provider::File.delete(Digest::SHA256.hexdigest('foo')) }
+      after { Store::Provider::File.delete(described_class.checksum('foo')) }
 
       it 'defaults to the "DB" provider' do
         expect(file.provider).to eq('File')
@@ -57,7 +57,7 @@ RSpec.describe Store::File, type: :model do
   describe '.move' do
     before { Setting.set('storage_provider', nil) }
 
-    after { Store::Provider::File.delete(Digest::SHA256.hexdigest('foo')) }
+    after { Store::Provider::File.delete(described_class.checksum('foo')) }
 
     let(:storage_path) { Rails.root.join('storage/fs') }
 

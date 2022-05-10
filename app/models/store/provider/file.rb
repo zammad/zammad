@@ -28,7 +28,7 @@ class Store::Provider::File
 
     Rails.logger.debug { "read from fs #{location}" }
     content   = File.binread(location)
-    local_sha = Digest::SHA256.hexdigest(content)
+    local_sha = Store::File.checksum(content)
 
     # check sha
     raise "File corrupted: path #{location} does not match SHA digest (#{local_sha})" if local_sha != sha

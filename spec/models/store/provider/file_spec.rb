@@ -8,7 +8,7 @@ RSpec.describe Store::Provider::File do
   after { FileUtils.rm_rf(Rails.root.join('storage/fs', sha[0, 4])) }
 
   let(:data) { 'foo' }
-  let(:sha) { Digest::SHA256.hexdigest(data) }
+  let(:sha) { Store::File.checksum(data) }
   let(:filepath) { Rails.root.join('storage/fs/2c26/b46b/68ffc/68ff9/9b453c1/d304134/13422d706483bfa0f98a5e886266e7ae') }
 
   describe '.get_location' do

@@ -18,7 +18,7 @@ do also verify of written data
 =end
 
     def self.add(data, verify = true)
-      sha = Digest::SHA256.hexdigest(data)
+      sha = checksum(data)
 
       file = Store::File.find_by(sha: sha)
       if file.nil?
@@ -39,7 +39,7 @@ do also verify of written data
         # verify
         if verify
           read_data = adapter.get(sha)
-          read_sha = Digest::SHA256.hexdigest(read_data)
+          read_sha = checksum(read_data)
           if sha != read_sha
             raise "Content not written correctly (provider #{adapter_name})."
           end
@@ -79,7 +79,7 @@ in case of fixing sha hash use:
     def self.verify(fix_it = nil)
       success = true
       Store::File.find_each(batch_size: 10) do |item|
-        sha = Digest::SHA256.hexdigest(item.content)
+        sha = checksum(item.content)
         logger.info "CHECK: Store::File.find(#{item.id})"
         next if sha == item.sha
 
@@ -125,6 +125,18 @@ nice move to keep system responsive
       end
 
       true
+    end
+
+=begin
+
+generate a checksum for the given content
+
+  Store::File.checksum(binary_data)
+
+=end
+
+    def self.checksum(content)
+      Digest::SHA256.hexdigest(content)
     end
 
     private
