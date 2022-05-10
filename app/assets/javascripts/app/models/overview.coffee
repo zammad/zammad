@@ -35,8 +35,8 @@ class App.Overview extends App.Model
       null:    false
       translate: true
       options:
-        ASC:   'up'
-        DESC:  'down'
+        ASC:   __('up')
+        DESC:  __('down')
     },
     {
       name:    'group_by'
@@ -61,8 +61,8 @@ class App.Overview extends App.Model
       null:    false
       translate: true
       options:
-        ASC:   'up'
-        DESC:  'down'
+        ASC:   __('up')
+        DESC:  __('down')
     },
     { name: 'active',         display: __('Active'),      tag: 'active', default: true },
     { name: 'created_by_id',  display: __('Created by'),  relation: 'User', readonly: 1 },
