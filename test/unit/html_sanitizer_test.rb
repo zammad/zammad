@@ -134,6 +134,7 @@ test 123
 <a href="#DAB4FAD8-2DD7-40BB-A1B8-4E2AA1F9FDF2">abc</a>')
     assert_equal(HtmlSanitizer.strict('<table><tr style="font-size: 0"><td>123</td></tr></table>'), '<table><tr><td>123</td></tr></table>')
     assert_equal(HtmlSanitizer.strict('<table><tr style="font-size: 0px"><td>123</td></tr></table>'), '<table><tr><td>123</td></tr></table>')
+    assert_equal(HtmlSanitizer.strict('<table><tr style="font-size: 0pt"><td>123</td></tr></table>'), '<table><tr><td>123</td></tr></table>')
     assert_equal(HtmlSanitizer.strict('<table><tr style="font-size:0"><td>123</td></tr></table>'), '<table><tr><td>123</td></tr></table>')
     assert_equal(HtmlSanitizer.strict('<table><tr style="font-Size:0px"><td>123</td></tr></table>'), '<table><tr><td>123</td></tr></table>')
     assert_equal(HtmlSanitizer.strict('<table><tr style="font-size:0em"><td>123</td></tr></table>'), '<table><tr><td>123</td></tr></table>')
