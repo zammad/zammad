@@ -1,9 +1,30 @@
 class App.WidgetLink.Ticket extends App.WidgetLink
   @registerPopovers 'Ticket'
 
-  render: =>
-    return if @lastLocalLinks && _.isEqual(@lastLocalLinks, @localLinks)
+  subscribeTicket: (ticket) =>
+    @ticketSubscriberIDs ||= {}
+    return if @ticketSubscriberIDs[ticket.id]
+
+    handler = ticket.subscribe(=>
+      @render(true)
+    )
+    @ticketSubscriberIDs[ticket.id] = handler
+
+  unsubscribeTickets: =>
+    return if !@ticketSubscriberIDs
+
+    for id, handler of @ticketSubscriberIDs
+      ticket = App.Ticket.find(id)
+      continue if !ticket
+      ticket.unsubscribe(handler)
+
+    @ticketSubscriberIDs = {}
+
+  render: (force = false) =>
+    return if !force && @lastLocalLinks && _.isEqual(@lastLocalLinks, @localLinks)
     @lastLocalLinks = _.clone(@localLinks)
+
+    @unsubscribeTickets()
 
     list = {}
 
@@ -18,6 +39,7 @@ class App.WidgetLink.Ticket extends App.WidgetLink
         if ticket.state.name is 'merged'
           ticket.css = 'merged'
         list[ item['link_type'] ].tickets.push ticket
+        @subscribeTicket(ticket)
 
     # create ticket lists
     for type of list
@@ -44,3 +66,7 @@ class App.WidgetLink.Ticket extends App.WidgetLink
       parent:         @
       container:      @el.closest('.content')
     )
+
+  release: =>
+    super
+    @unsubscribeTickets()

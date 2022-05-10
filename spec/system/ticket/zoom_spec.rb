@@ -1599,6 +1599,32 @@ RSpec.describe 'Ticket zoom', type: :system do
     end
   end
 
+  describe 'Update of ticket links', authenticated_as: :authenticate do
+    let(:ticket1) { create(:ticket, group: Group.find_by(name: 'Users')) }
+    let(:ticket2) { create(:ticket, group: Group.find_by(name: 'Users')) }
+
+    def authenticate
+      ticket1
+      ticket2
+      create(:link, from: ticket1, to: ticket2)
+      true
+    end
+
+    it 'does update the state of the ticket links' do
+      visit "ticket/zoom/#{ticket1.id}"
+
+      # check title changes
+      expect(page).to have_text(ticket2.title)
+      ticket2.update(title: 'super new title')
+      expect(page).to have_text(ticket2.reload.title)
+
+      # check state changes
+      expect(page).to have_css('div.links .tasks svg.open')
+      ticket2.update(state: Ticket::State.find_by(name: 'closed'))
+      expect(page).to have_css('div.links .tasks svg.closed')
+    end
+  end
+
   describe 'GitLab Integration', :integration, authenticated_as: :authenticate, required_envs: %w[GITLAB_ENDPOINT GITLAB_APITOKEN] do
     let!(:ticket) { create(:ticket, group: Group.find_by(name: 'Users')) }
 

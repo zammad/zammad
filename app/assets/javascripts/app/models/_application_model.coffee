@@ -454,6 +454,9 @@ set new attributes of model (remove already available attributes)
     # remember record id and callback
     App[ @constructor.className ].subscribeItem(@id, callback)
 
+  unsubscribe: (key) ->
+    App[ @constructor.className ].unsubscribeItem(@id, key)
+
   @subscribeItem: (id, callback) ->
 
     # init bind
@@ -544,6 +547,13 @@ set new attributes of model (remove already available attributes)
     key = @className + '-' + Math.floor( Math.random() * 99999 )
     @SUBSCRIPTION_ITEM[id][key] = callback
     key
+
+  @unsubscribeItem: (id, key) ->
+    return if !@SUBSCRIPTION_ITEM
+    return if !@SUBSCRIPTION_ITEM[id]
+    return if !@SUBSCRIPTION_ITEM[id][key]
+
+    delete @SUBSCRIPTION_ITEM[id][key]
 
   ###
 
