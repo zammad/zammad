@@ -306,7 +306,6 @@ possible types
 =end
 
   def self.add(data)
-
     force = data[:force]
     data.delete(:force)
 

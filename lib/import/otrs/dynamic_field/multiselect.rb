@@ -6,7 +6,7 @@ module Import
       class Multiselect < Import::OTRS::DynamicField
         def init_callback(dynamic_field)
           @attribute_config.merge!(
-            data_type:   'select',
+            data_type:   'multiselect',
             data_option: {
               default:    '',
               multiple:   true,
@@ -16,6 +16,12 @@ module Import
               translate:  dynamic_field['Config']['TranslatableValues'] == '1',
             }
           )
+        end
+
+        private
+
+        def skip?(dynamic_field)
+          !dynamic_field['Config']['PossibleValues']
         end
       end
     end

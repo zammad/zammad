@@ -8,6 +8,7 @@ module Import
         @internal_name = self.class.convert_name(dynamic_field['Name'])
 
         return if already_imported?(dynamic_field)
+        return if skip?(dynamic_field)
 
         initialize_attribute_config(dynamic_field)
 
@@ -52,6 +53,10 @@ module Import
           created_by_id: 1,
           updated_by_id: 1,
         }
+      end
+
+      def skip?(_dynamic_field)
+        false
       end
 
       def add

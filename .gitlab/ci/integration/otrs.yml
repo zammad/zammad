@@ -7,11 +7,11 @@
     - echo -e "\\e[0Ksection_end:`date +%s`:zammad_db_unseeded\\r\\e[0K"
     - bundle exec rails test test/integration/otrs_import_test.rb
   variables:
-    FF_NETWORK_PER_BUILD: 1   # https://docs.gitlab.com/runner/configuration/feature-flags.html
-    IMPORT_OTRS_ENDPOINT: "http://zammad-ci-otrsimport-app/otrs/public.pl?Action=ZammadMigrator"
-    TZ: "Europe/Berlin"       # Required for the zammad-ci-otrsimport-app containers
+    FF_NETWORK_PER_BUILD: 1 # https://docs.gitlab.com/runner/configuration/feature-flags.html
+    IMPORT_OTRS_ENDPOINT: 'http://zammad-ci-otrsimport-app/otrs/public.pl?Action=ZammadMigrator'
+    TZ: 'Europe/Berlin' # Required for the zammad-ci-otrsimport-app containers
 
-"minitest:integration:otrs:6":
+'minitest:integration:otrs:6':
   <<: *template_integration_otrs
   services:
     - name: $CI_REGISTRY/docker/zammad-mysql:stable
@@ -23,7 +23,7 @@
     - name: $CI_REGISTRY/docker/zammad-ci-otrsimport-app:otrs6
       alias: zammad-ci-otrsimport-app
 
-"minitest:integration:otrs:5":
+'minitest:integration:otrs:5':
   <<: *template_integration_otrs
   services:
     - name: $CI_REGISTRY/docker/zammad-mysql:stable
@@ -35,7 +35,7 @@
     - name: $CI_REGISTRY/docker/zammad-ci-otrsimport-app:otrs5
       alias: zammad-ci-otrsimport-app
 
-"minitest:integration:otrs:4":
+'minitest:integration:otrs:4':
   <<: *template_integration_otrs
   services:
     - name: $CI_REGISTRY/docker/zammad-mysql:stable
@@ -47,7 +47,7 @@
     - name: $CI_REGISTRY/docker/zammad-ci-otrsimport-app:otrs4
       alias: zammad-ci-otrsimport-app
 
-"minitest:integration:otrs:33":
+'minitest:integration:otrs:33':
   <<: *template_integration_otrs
   services:
     - name: $CI_REGISTRY/docker/zammad-mysql:stable
@@ -59,7 +59,7 @@
     - name: $CI_REGISTRY/docker/zammad-ci-otrsimport-app:otrs33
       alias: zammad-ci-otrsimport-app
 
-"minitest:integration:otrs:32":
+'minitest:integration:otrs:32':
   <<: *template_integration_otrs
   services:
     - name: $CI_REGISTRY/docker/zammad-mysql:stable
@@ -71,7 +71,7 @@
     - name: $CI_REGISTRY/docker/zammad-ci-otrsimport-app:otrs32
       alias: zammad-ci-otrsimport-app
 
-"minitest:integration:otrs:31":
+'minitest:integration:otrs:31':
   <<: *template_integration_otrs
   services:
     - name: $CI_REGISTRY/docker/zammad-mysql:stable

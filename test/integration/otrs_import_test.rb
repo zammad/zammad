@@ -36,7 +36,7 @@ class OtrsImportTest < ActiveSupport::TestCase
     end.collect do |local_object|
       local_object['name']
     end
-    expected_object_attribute_names = %w[vertriebsweg te_test number sugar_crm_remote_no sugar_crm_company_selected_no sugar_crm_company_selection combine title itsm_criticality customer_id itsm_impact itsm_review_required itsm_decision_result organization_id itsm_repair_start_time itsm_recovery_start_time itsm_decision_date itsm_due_date topic_no open_exchange_ticket_number hostname ticket_free_key11 type ticket_free_text11 open_exchange_tn topic zarafa_tn group_id scom_hostname checkbox_example scom_uuid scom_state scom_service location owner_id department customer_location state_id pending_time priority_id tags]
+    expected_object_attribute_names = %w[vertriebsweg te_test number sugar_crm_remote_no sugar_crm_company_selected_no sugar_crm_company_selection combine title itsm_criticality customer_id itsm_impact itsm_review_required itsm_decision_result organization_id itsm_repair_start_time itsm_recovery_start_time itsm_decision_date itsm_due_date topic_no open_exchange_ticket_number hostname ticket_free_key11 type ticket_free_text11 open_exchange_tn topic zarafa_tn group_id scom_hostname checkbox_example scom_uuid scom_state scom_service location owner_id department customer_location textfeld state_id pending_time priority_id tags]
 
     assert_equal(expected_object_attribute_names, object_attribute_names, 'dynamic field names')
   end
@@ -109,7 +109,7 @@ class OtrsImportTest < ActiveSupport::TestCase
     assert_equal('invalid-temp', user4.firstname)
     assert_equal('invalid-temp', user4.lastname)
     assert_equal('invalid-temp', user4.login)
-    assert_equal('invalid-temp@example.com', user4.email)
+
     assert_equal(false, user4.active)
 
     assert(user4.roles.include?(role_agent))
@@ -217,10 +217,10 @@ class OtrsImportTest < ActiveSupport::TestCase
     ticket = Ticket.find(591)
     assert_equal('Some other smart subject!', ticket.title)
     assert_equal('488', ticket.vertriebsweg)
-    assert_equal('["193"]', ticket.te_test) # TODO: multiselect
+    assert_equal(%w[193 194], ticket.te_test)
     assert_equal('358', ticket.sugar_crm_remote_no)
     assert_equal('69', ticket.sugar_crm_company_selected_no)
-    assert_equal('["382"]', ticket.sugar_crm_company_selection) # TODO: multiselect
+    assert_equal(['382'], ticket.sugar_crm_company_selection)
     assert_equal('310', ticket.topic_no)
     assert_equal('495', ticket.open_exchange_ticket_number)
     assert_equal('208', ticket.hostname)

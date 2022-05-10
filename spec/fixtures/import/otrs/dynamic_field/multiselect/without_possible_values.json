@@ -1,0 +1,20 @@
+{
+  "ID": "40",
+  "ChangeTime": "2016-05-25 11:14:06",
+  "InternalField": "0",
+  "ValidID": "1",
+  "CreateTime": "2014-08-21 14:54:15",
+  "Label": "Multiselect Example Without PossibleValues",
+  "FieldOrder": "30",
+  "Config": {
+    "TranslatableValues": "0",
+    "PossibleValues": null,
+    "TreeView": "0",
+    "DefaultValue": "",
+    "Link": "",
+    "PossibleNone": "1"
+  },
+  "FieldType": "Multiselect",
+  "Name": "MultiselectExampleWithoutPossibleValues",
+  "ObjectType": "Ticket"
+}
