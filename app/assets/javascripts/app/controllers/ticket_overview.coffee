@@ -1355,8 +1355,8 @@ class App.OverviewSettings extends App.ControllerModal
       null:      false
       translate: true
       options:
-        ASC:  'up'
-        DESC: 'down'
+        ASC:  __('up')
+        DESC: __('down')
     },
     {
       name:       'group_by'
@@ -1376,8 +1376,8 @@ class App.OverviewSettings extends App.ControllerModal
       null:    false
       translate: true
       options:
-        ASC:   'up'
-        DESC:  'down'
+        ASC:   __('up')
+        DESC:  __('down')
     },)
 
     controller = new App.ControllerForm(
