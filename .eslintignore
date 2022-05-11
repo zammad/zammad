@@ -4,3 +4,6 @@
 app/frontend/**/graphql/**/*.api.ts
 app/frontend/shared/graphql/types.ts
 .storybook/storybook-static/**
+
+# Skip legacy qunit tests
+public/assets/tests/**/*.js
