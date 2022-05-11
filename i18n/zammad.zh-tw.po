@@ -11941,6 +11941,30 @@ msgstr "和"
 msgid "archived"
 msgstr ""
 
+#: app/models/transaction/notification.rb
+#, fuzzy
+#| msgid "Assigned"
+msgid "are assigned"
+msgstr "已指派"
+
+#: app/models/transaction/notification.rb
+#, fuzzy
+#| msgid "Mentions Group"
+msgid "are in group"
+msgstr "發言群組"
+
+#: app/models/transaction/notification.rb
+#, fuzzy
+#| msgid "Unsubscribe"
+msgid "are subscribed"
+msgstr "取消關注"
+
+#: app/models/transaction/notification.rb
+#, fuzzy
+#| msgid "Out of office replacement"
+msgid "are the out-of-office replacement of the owner"
+msgstr "外出代理人"
+
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay.jst.eco
 msgid "assign tickets"
 msgstr "指派工單"
@@ -12094,6 +12118,11 @@ msgstr "斷開"
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco
 msgid "done"
 msgstr "完成"
+
+#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/models/overview.coffee
+msgid "down"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 msgid "draft"
@@ -12652,6 +12681,11 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco
 msgid "untouched"
 msgstr "原封不動的"
+
+#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/models/overview.coffee
+msgid "up"
+msgstr ""
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco

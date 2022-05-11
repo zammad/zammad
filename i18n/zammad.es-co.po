@@ -2218,7 +2218,8 @@ msgstr "copie"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Copy current object number (e. g. Ticket#) to clipboard"
-msgstr "Copie el número de objeto actual (por ejemplo, Ticket#) al portapapeles"
+msgstr ""
+"Copie el número de objeto actual (por ejemplo, Ticket#) al portapapeles"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_base.coffee
 msgid "Copy to clipboard: Ctrl+C, Enter"
@@ -2386,8 +2387,8 @@ msgstr ""
 "* ticket.organización (por ejemplo, ticket.organization.name)\n"
 "* usuario (por ejemplo, usuario.nombre, usuario.correo electrónico)\n"
 "\n"
-"Para seleccionar marcadores de posición de una lista, simplemente ingrese \""
-"::\"."
+"Para seleccionar marcadores de posición de una lista, simplemente ingrese "
+"\"::\"."
 
 #: app/controllers/first_steps_controller.rb
 msgid "Create a Test Ticket"
@@ -3372,7 +3373,8 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Defines the logo of the application, shown in the web interface."
-msgstr "Define el logotipo de la aplicación, que se muestra en la interfaz web."
+msgstr ""
+"Define el logotipo de la aplicación, que se muestra en la interfaz web."
 
 #: db/seeds/settings.rb
 msgid "Defines the maximum accepted email size in MB."
@@ -3458,7 +3460,8 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Defines the tab behaviour after a ticket action."
-msgstr "Define el comportamiento de la pestaña después de una acción de ticket."
+msgstr ""
+"Define el comportamiento de la pestaña después de una acción de ticket."
 
 #: db/seeds/settings.rb
 msgid "Defines the timeframe during which a self-created note can be deleted."
@@ -5231,8 +5234,8 @@ msgid ""
 "quotation marks|| for searching phrases: §\"some phrase\"§."
 msgstr ""
 "Aquí puede buscar entradas, clientes y organizaciones. Use el asterisco §*§ "
-"para encontrar cualquier cosa, p. §smi*§ o §rosent*l§. También puede usar "
-"||comillas|| para buscar frases: §\"alguna frase\"§."
+"para encontrar cualquier cosa, p. §smi*§ o §rosent*l§. También puede usar ||"
+"comillas|| para buscar frases: §\"alguna frase\"§."
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
 msgid ""
@@ -5491,8 +5494,8 @@ msgid ""
 "If you want to open the chat by clicking a button, set the option §show§ to "
 "§false§ and add the class §open-zammad-chat§ to the button."
 msgstr ""
-"Si desea abrir el chat haciendo clic en un botón, establezca la opción §show§"
-" en §false§ y agregue la clase §open-zammad-chat§ al botón."
+"Si desea abrir el chat haciendo clic en un botón, establezca la opción "
+"§show§ en §false§ y agregue la clase §open-zammad-chat§ al botón."
 
 #: app/assets/javascripts/app/views/translation/index.jst.eco
 msgid ""
@@ -6329,7 +6332,8 @@ msgstr "Cargando…"
 
 #: lib/email_helper.rb
 msgid "Local MTA (Sendmail/Postfix/Exim/…) - use server setup"
-msgstr "MTA local (Sendmail/Postfix/Exim/…) - use la configuración del servidor"
+msgstr ""
+"MTA local (Sendmail/Postfix/Exim/…) - use la configuración del servidor"
 
 #: db/seeds/settings.rb
 msgid "Locale"
@@ -7641,8 +7645,8 @@ msgid ""
 "Organizations are for any person in the system: agents (owners, "
 "responsibles, …) and customers."
 msgstr ""
-"Las organizaciones son para cualquier persona del sistema: agentes ("
-"propietarios, responsables,…) y clientes."
+"Las organizaciones son para cualquier persona del sistema: agentes "
+"(propietarios, responsables,…) y clientes."
 
 #: app/assets/javascripts/app/models/ticket_article.coffee
 msgid "Origin By"
@@ -8239,8 +8243,8 @@ msgid ""
 "Records that exist in the import data (but not in Zammad) will always be "
 "created."
 msgstr ""
-"Siempre se crearán los registros que existen en los datos de importación ("
-"pero no en Zammad)."
+"Siempre se crearán los registros que existen en los datos de importación "
+"(pero no en Zammad)."
 
 #: db/seeds/settings.rb
 msgid "Recursive Ticket Triggers"
@@ -8986,7 +8990,8 @@ msgstr "Configurar un nuevo sistema"
 
 #: app/assets/javascripts/app/views/getting_started/channel.jst.eco
 msgid "Set up the communication channels you want to use with your Zammad."
-msgstr "Configure los canales de comunicación que desea utilizar con su Zammad."
+msgstr ""
+"Configure los canales de comunicación que desea utilizar con su Zammad."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -9172,8 +9177,8 @@ msgid ""
 "Since you didn't respond in the last %s minutes your conversation with "
 "<strong>%s</strong> got closed."
 msgstr ""
-"Como no respondiste en los últimos %s minutos, tu conversación con "
-"<strong>%s</strong> se cerró."
+"Como no respondiste en los últimos %s minutos, tu conversación con <strong>"
+"%s</strong> se cerró."
 
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 msgid "Sipgate"
@@ -10449,8 +10454,8 @@ msgstr ""
 #: app/assets/javascripts/app/models/text_module.coffee
 msgid "To select placeholders from a list, just enter \"::\"."
 msgstr ""
-"Para seleccionar marcadores de posición de una lista, simplemente ingrese \""
-"::\"."
+"Para seleccionar marcadores de posición de una lista, simplemente ingrese "
+"\"::\"."
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 msgid ""
@@ -11748,8 +11753,8 @@ msgid ""
 "You used %s in the text but no attachment could be found. Do you want to "
 "continue?"
 msgstr ""
-"Usó %s en el texto pero no se pudo encontrar ningún archivo adjunto. ¿"
-"Quieres continuar?"
+"Usó %s en el texto pero no se pudo encontrar ningún archivo adjunto. "
+"¿Quieres continuar?"
 
 #: app/assets/javascripts/app/views/karma/index.jst.eco
 msgid ""
@@ -11982,6 +11987,30 @@ msgstr "y"
 msgid "archived"
 msgstr "archivado"
 
+#: app/models/transaction/notification.rb
+#, fuzzy
+#| msgid "Assigned"
+msgid "are assigned"
+msgstr "Asignados"
+
+#: app/models/transaction/notification.rb
+#, fuzzy
+#| msgid "Mentions Group"
+msgid "are in group"
+msgstr "Grupo de menciones"
+
+#: app/models/transaction/notification.rb
+#, fuzzy
+#| msgid "Unsubscribe"
+msgid "are subscribed"
+msgstr "Darse de baja"
+
+#: app/models/transaction/notification.rb
+#, fuzzy
+#| msgid "Out of office replacement"
+msgid "are the out-of-office replacement of the owner"
+msgstr "Reemplazo fuera de la oficina"
+
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay.jst.eco
 msgid "assign tickets"
 msgstr "asignar tickets"
@@ -12133,6 +12162,11 @@ msgstr "desconectar"
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco
 msgid "done"
 msgstr "hecho"
+
+#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/models/overview.coffee
+msgid "down"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 msgid "draft"
@@ -12684,6 +12718,11 @@ msgstr "desarmar solo lectura"
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco
 msgid "untouched"
 msgstr "intacto"
+
+#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/models/overview.coffee
+msgid "up"
+msgstr ""
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco

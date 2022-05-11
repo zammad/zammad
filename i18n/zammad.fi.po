@@ -11612,6 +11612,28 @@ msgstr "ja"
 msgid "archived"
 msgstr ""
 
+#: app/models/transaction/notification.rb
+#, fuzzy
+#| msgid "Assigned"
+msgid "are assigned"
+msgstr "Liitetty"
+
+#: app/models/transaction/notification.rb
+msgid "are in group"
+msgstr ""
+
+#: app/models/transaction/notification.rb
+#, fuzzy
+#| msgid "Unsubscribe"
+msgid "are subscribed"
+msgstr "Peruuta tilaus"
+
+#: app/models/transaction/notification.rb
+#, fuzzy
+#| msgid "Out of office replacement"
+msgid "are the out-of-office replacement of the owner"
+msgstr "Poissaolon sijainen"
+
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay.jst.eco
 msgid "assign tickets"
 msgstr "Liitetyt tiketit"
@@ -11765,6 +11787,11 @@ msgstr "katkaise yhteys"
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco
 msgid "done"
 msgstr "valmis"
+
+#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/models/overview.coffee
+msgid "down"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 msgid "draft"
@@ -12323,6 +12350,11 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco
 msgid "untouched"
 msgstr "koskematon"
+
+#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/models/overview.coffee
+msgid "up"
+msgstr ""
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco

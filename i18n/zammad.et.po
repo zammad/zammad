@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-05-04 07:32+0000\n"
+"PO-Revision-Date: 2022-05-06 03:30+0000\n"
 "Last-Translator: kirkkak <kirkka.kivilo@gmail.com>\n"
 "Language-Team: Estonian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/et/>\n"
@@ -118,7 +118,7 @@ msgstr "%s lõi pileti |%s|"
 
 #: app/assets/javascripts/app/models/user.coffee
 msgid "%s created user |%s|"
-msgstr "% lõi kasutaja |%s|"
+msgstr "%s lõi kasutaja |%s|"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
@@ -649,7 +649,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_default_navbar.coffee
 #: db/seeds/roles.rb
 msgid "Admin"
-msgstr "Haldamine"
+msgstr "Administreerimine"
 
 #: db/seeds/permissions.rb
 msgid "Admin Interface"
@@ -11286,6 +11286,24 @@ msgstr "ja"
 msgid "archived"
 msgstr ""
 
+#: app/models/transaction/notification.rb
+#, fuzzy
+#| msgid "Assigned"
+msgid "are assigned"
+msgstr "Omistatud"
+
+#: app/models/transaction/notification.rb
+msgid "are in group"
+msgstr ""
+
+#: app/models/transaction/notification.rb
+msgid "are subscribed"
+msgstr ""
+
+#: app/models/transaction/notification.rb
+msgid "are the out-of-office replacement of the owner"
+msgstr ""
+
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay.jst.eco
 #, fuzzy
 msgid "assign tickets"
@@ -11438,6 +11456,11 @@ msgstr ""
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco
 msgid "done"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/models/overview.coffee
+msgid "down"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
@@ -11991,6 +12014,11 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco
 msgid "untouched"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/models/overview.coffee
+msgid "up"
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco

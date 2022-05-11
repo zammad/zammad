@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-04-22 03:30+0000\n"
+"PO-Revision-Date: 2022-05-11 05:23+0000\n"
 "Last-Translator: Martin Gruner <mg@zammad.com>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/de/>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.11.2\n"
+"X-Generator: Weblate 4.12.1\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -7506,7 +7506,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/overview.coffee
 msgid "Only available for Users which are replacements for other users."
-msgstr "Nur für Benutzer verfügbar, die Ersatz für andere Benutzer sind."
+msgstr "Nur für Benutzer verfügbar, die Vertreter für andere Benutzer sind."
 
 #: app/assets/javascripts/app/models/overview.coffee
 msgid "Only available for Users with shared Organizations"
@@ -9959,7 +9959,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee
 msgid "The tickets could not be merged."
-msgstr "Die Tickets konnten nicht zusammengeführt werden."
+msgstr "Die Tickets konnten nicht zusammengefasst werden."
 
 #: app/controllers/getting_started_controller.rb
 #: app/controllers/settings_controller.rb
@@ -10200,7 +10200,7 @@ msgstr "Ticket %s erstellt!"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee
 msgid "Ticket %s merged."
-msgstr "Ticket %s zusammengeführt."
+msgstr "Ticket %s zusammengefasst."
 
 #: app/models/report.rb
 msgid "Ticket Count"
@@ -10284,7 +10284,7 @@ msgstr "Ticket |%s| ist eskaliert!"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "Ticket |%s| was merged into another ticket"
-msgstr "Ticket |%s| wurde mit einem anderen Ticket zusammengeführt"
+msgstr "Ticket |%s| wurde zu einem anderen Ticket zusammengefasst"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "Ticket |%s| will escalate soon!"
@@ -11999,6 +11999,22 @@ msgstr "und"
 msgid "archived"
 msgstr "archiviert"
 
+#: app/models/transaction/notification.rb
+msgid "are assigned"
+msgstr "zugewiesen sind"
+
+#: app/models/transaction/notification.rb
+msgid "are in group"
+msgstr "Gruppenmitglied sind"
+
+#: app/models/transaction/notification.rb
+msgid "are subscribed"
+msgstr "abonniert haben"
+
+#: app/models/transaction/notification.rb
+msgid "are the out-of-office replacement of the owner"
+msgstr "Vertreter in Abwesenheit sind"
+
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay.jst.eco
 msgid "assign tickets"
 msgstr "Tickets zuweisen"
@@ -12150,6 +12166,11 @@ msgstr "trennen"
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco
 msgid "done"
 msgstr "erledigt"
+
+#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/models/overview.coffee
+msgid "down"
+msgstr "absteigend"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 msgid "draft"
@@ -12373,7 +12394,7 @@ msgstr "vielleicht"
 
 #: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
 msgid "merged"
-msgstr "zusammengefügt"
+msgstr "zusammengefasst"
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
 msgid "message"
@@ -12701,6 +12722,11 @@ msgstr "als änderbar festlegen"
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco
 msgid "untouched"
 msgstr "nicht verändert"
+
+#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/models/overview.coffee
+msgid "up"
+msgstr "aufsteigend"
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco

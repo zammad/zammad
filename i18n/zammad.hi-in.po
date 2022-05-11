@@ -11657,6 +11657,26 @@ msgstr "और"
 msgid "archived"
 msgstr ""
 
+#: app/models/transaction/notification.rb
+#, fuzzy
+#| msgid "Not Assigned"
+msgid "are assigned"
+msgstr " सौंपा नहीं गया है"
+
+#: app/models/transaction/notification.rb
+msgid "are in group"
+msgstr ""
+
+#: app/models/transaction/notification.rb
+msgid "are subscribed"
+msgstr ""
+
+#: app/models/transaction/notification.rb
+#, fuzzy
+#| msgid "Out of office replacement"
+msgid "are the out-of-office replacement of the owner"
+msgstr " कार्यालय प्रतिस्थापन से बाहर"
+
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay.jst.eco
 msgid "assign tickets"
 msgstr ""
@@ -11808,6 +11828,11 @@ msgstr "डिस्कनेक्ट"
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco
 msgid "done"
 msgstr "किया हुआ"
+
+#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/models/overview.coffee
+msgid "down"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 msgid "draft"
@@ -12362,6 +12387,11 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco
 msgid "untouched"
 msgstr "अछूता"
+
+#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/models/overview.coffee
+msgid "up"
+msgstr ""
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco

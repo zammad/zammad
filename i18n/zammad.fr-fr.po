@@ -12148,6 +12148,30 @@ msgstr "et"
 msgid "archived"
 msgstr "archivé"
 
+#: app/models/transaction/notification.rb
+#, fuzzy
+#| msgid "Assigned"
+msgid "are assigned"
+msgstr "ASSIGNÉS"
+
+#: app/models/transaction/notification.rb
+#, fuzzy
+#| msgid "Mentions Group"
+msgid "are in group"
+msgstr "Groupe des mentions"
+
+#: app/models/transaction/notification.rb
+#, fuzzy
+#| msgid "Unsubscribe"
+msgid "are subscribed"
+msgstr "Se désinscrire"
+
+#: app/models/transaction/notification.rb
+#, fuzzy
+#| msgid "Out of office replacement"
+msgid "are the out-of-office replacement of the owner"
+msgstr "Remplacement en absence"
+
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay.jst.eco
 msgid "assign tickets"
 msgstr "affecter les tickets"
@@ -12300,6 +12324,11 @@ msgstr "déconnecter"
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco
 msgid "done"
 msgstr "fait"
+
+#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/models/overview.coffee
+msgid "down"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 msgid "draft"
@@ -12856,6 +12885,11 @@ msgstr "Désactiver la lecture seule"
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco
 msgid "untouched"
 msgstr "non modifié"
+
+#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/models/overview.coffee
+msgid "up"
+msgstr ""
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco

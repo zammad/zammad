@@ -2,10 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-05-04 07:32+0000\n"
-"Last-Translator: Laurens Bijker <laurens@laurensbijker-ict.nl>\n"
-"Language-Team: Dutch <https://translations.zammad.org/projects/zammad/"
-"zammad-stable/nl/>\n"
+"PO-Revision-Date: 2022-05-10 03:30+0000\n"
+"Last-Translator: Jeroen Baten <jbaten@i2rs.nl>\n"
+"Language-Team: Dutch <https://translations.zammad.org/projects/zammad/zammad-"
+"stable/nl/>\n"
 "Language: nl-nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -744,7 +744,8 @@ msgstr "Behandelaar idle time-out"
 
 #: app/models/role.rb app/models/user.rb
 msgid "Agent limit exceeded, please check your account settings."
-msgstr "Het Behandelaar-limiet overschreden, controleer uw accountinstellingen."
+msgstr ""
+"Het Behandelaar-limiet overschreden, controleer uw accountinstellingen."
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 msgid "Agents"
@@ -2880,8 +2881,8 @@ msgid ""
 "Defines how the From field of emails (sent from answers and email tickets) "
 "should look like."
 msgstr ""
-"Bepaalt hoe het Van-veld van e-mails (verzonden uit antwoorden en "
-"e-mailtickets) eruit moet zien."
+"Bepaalt hoe het Van-veld van e-mails (verzonden uit antwoorden en e-"
+"mailtickets) eruit moet zien."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -9037,7 +9038,8 @@ msgstr "E-mail ondertekenen (indien niet mogelijk, notificatie verwijderen)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
 msgid "Sign email (if not possible, send notification anyway)"
-msgstr "E-mail ondertekenen (indien niet mogelijk, toch een notificatie sturen)"
+msgstr ""
+"E-mail ondertekenen (indien niet mogelijk, toch een notificatie sturen)"
 
 #: app/assets/javascripts/app/controllers/login.coffee
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
@@ -9962,7 +9964,7 @@ msgstr "Dit is Zammad versie %s"
 
 #: db/seeds/settings.rb
 msgid "This is a default maintenance message. Click here to change."
-msgstr "Dit is een standaard-onderhoudsbericht. Klik hier om dit te wijzigen."
+msgstr "Dit is een standaard onderhoudsbericht. Klik hier om dit te wijzigen."
 
 #: app/models/channel/email_parser.rb
 msgid ""
@@ -10006,11 +10008,12 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee
 #: app/assets/javascripts/app/controllers/_integration/idoit.coffee
 msgid "This service allows you to connect %s with %s."
-msgstr "Met deze service kunt u% s met% s verbinden."
+msgstr "Met deze service kunt u %s met %s verbinden."
 
 #: app/assets/javascripts/app/controllers/_integration/exchange.coffee
 msgid "This service enables Zammad to connect with your Exchange server."
-msgstr "This service enables Zammad to connect with your Exchange server."
+msgstr ""
+"Deze service maakt het mogelijk Zammad te verbinden met uw Exchange server."
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 msgid "This service enables Zammad to connect with your LDAP server."
@@ -10031,11 +10034,11 @@ msgid ""
 "This service receives emails from %s and creates tickets with host and "
 "service."
 msgstr ""
-"Deze service ontvangt e-mails van% s en maakt tickets met host en service."
+"Deze service ontvangt e-mails van %s en maakt tickets met host en service."
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 msgid "This service sends notifications to your %s channel."
-msgstr "Deze service verzendt meldingen naar uw% s-kanaal."
+msgstr "Deze service verzendt meldingen naar uw %s-kanaal."
 
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee
 #: app/assets/javascripts/app/controllers/_integration/placetel.coffee
@@ -10053,7 +10056,7 @@ msgid ""
 "<a href=\"#channels/email\">here</a>"
 msgstr ""
 "Deze handtekening is inactief, deze zal niet in het antwoord worden "
-"opgenomen. Wijzig de staat <a href=\"#channels/email\"> hier </a>"
+"opgenomen. Wijzig de status <a href=\"#channels/email\">hier</a>"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 msgid "This ticket was merged into"
@@ -10061,7 +10064,7 @@ msgstr "Dit ticket is samengevoegd met"
 
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
 msgid "This user has no access and will not receive notifications."
-msgstr "Deze gebruiker heeft geen toegang en ontvangt geen notificaties."
+msgstr "Deze gebruiker heeft geen toegang en zal geen notificaties ontvangen."
 
 #: app/assets/javascripts/app/controllers/user.coffee
 msgid ""
@@ -10104,7 +10107,7 @@ msgstr "Ticket %s samengevoegd."
 
 #: app/models/report.rb
 msgid "Ticket Count"
-msgstr "Ticket aantal"
+msgstr "Ticket-aantal"
 
 #: db/seeds/settings.rb
 msgid "Ticket Hook"
@@ -10488,7 +10491,8 @@ msgstr "Verander chat in ticket"
 
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
 msgid "Tweets containing search terms are automatically turned into tickets."
-msgstr "Tweets die zoektermen bevatten worden automatisch omgezet naar Tickets."
+msgstr ""
+"Tweets die zoektermen bevatten worden automatisch omgezet naar Tickets."
 
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
@@ -11884,6 +11888,22 @@ msgstr "en"
 msgid "archived"
 msgstr "gearchiveerd"
 
+#: app/models/transaction/notification.rb
+msgid "are assigned"
+msgstr "zijn toegewezen"
+
+#: app/models/transaction/notification.rb
+msgid "are in group"
+msgstr "zijn in groep"
+
+#: app/models/transaction/notification.rb
+msgid "are subscribed"
+msgstr "zijn geabonneerd"
+
+#: app/models/transaction/notification.rb
+msgid "are the out-of-office replacement of the owner"
+msgstr "zijn de out-of-office vervanger van de eigenaar"
+
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay.jst.eco
 msgid "assign tickets"
 msgstr "wijs tickets toe"
@@ -12035,6 +12055,11 @@ msgstr "verbreken"
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco
 msgid "done"
 msgstr "klaar"
+
+#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/models/overview.coffee
+msgid "down"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 msgid "draft"
@@ -12586,6 +12611,11 @@ msgstr "maak aanpasbaar"
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco
 msgid "untouched"
 msgstr "ongewijzigd"
+
+#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/models/overview.coffee
+msgid "up"
+msgstr ""
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco
