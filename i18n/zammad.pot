@@ -996,6 +996,10 @@ msgstr ""
 msgid "At least one letter is required"
 msgstr ""
 
+#: app/models/postmaster_filter.rb
+msgid "At least one match rule is required, but none was provided."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee
 msgid "At least one object must be selected."
 msgstr ""
@@ -2213,10 +2217,6 @@ msgstr ""
 msgid "Create Channel"
 msgstr ""
 
-#: app/models/report.rb
-msgid "Create Channels"
-msgstr ""
-
 #: app/assets/javascripts/app/views/knowledge_base/new_controller.coffee
 msgid "Create Knowledge Base"
 msgstr ""
@@ -2331,6 +2331,10 @@ msgstr ""
 #: app/assets/javascripts/app/models/ticket_article.coffee
 #: app/assets/javascripts/app/models/user.coffee
 msgid "Created by"
+msgstr ""
+
+#: app/models/report.rb
+msgid "Creation Channels"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
@@ -3366,6 +3370,10 @@ msgstr ""
 msgid "Do not sign email"
 msgstr ""
 
+#: app/assets/javascripts/app/views/settings/proxy.jst.eco
+msgid "Do not use the proxy for the following hosts."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/attachments.coffee
 msgid "Do you really want to delete \"%s\"?"
@@ -3967,7 +3975,7 @@ msgid "Examples"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_auto_assignment.coffee
-msgid "Exception users"
+msgid "Excepted users"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/exchange.coffee
@@ -5940,10 +5948,6 @@ msgstr ""
 msgid "Milestone"
 msgstr ""
 
-#: app/models/postmaster_filter.rb
-msgid "Min. one match rule needed!"
-msgstr ""
-
 #: db/seeds/settings.rb
 msgid "Min. size of number"
 msgstr ""
@@ -6468,8 +6472,7 @@ msgid "No file formats allowed."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
-msgid "No filter."
+msgid "No filter was configured."
 msgstr ""
 
 #: app/controllers/integration/exchange_controller.rb
@@ -6480,7 +6483,6 @@ msgstr ""
 msgid "No linked issues"
 msgstr ""
 
-#: app/assets/javascripts/app/views/settings/proxy.jst.eco
 #: db/seeds/settings.rb
 msgid "No proxy for the following hosts."
 msgstr ""
@@ -7067,6 +7069,9 @@ msgid "Password changed successfully!"
 msgstr ""
 
 #: app/assets/javascripts/app/views/settings/proxy.jst.eco
+msgid "Password for proxy connection"
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "Password for proxy connection."
 msgstr ""
@@ -7417,7 +7422,7 @@ msgid "Proxy User"
 msgstr ""
 
 #: app/assets/javascripts/app/views/settings/proxy.jst.eco
-msgid "Proxy address."
+msgid "Proxy address"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
@@ -8193,10 +8198,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/session.jst.eco
 #: db/seeds/permissions.rb
 msgid "Sessions"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
-msgid "Set"
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -9096,6 +9097,10 @@ msgstr ""
 msgid "The provided endpoint is invalid."
 msgstr ""
 
+#: app/models/postmaster_filter.rb
+msgid "The provided match operator is missing or invalid."
+msgstr ""
+
 #: app/controllers/application_controller/authenticates.rb
 #: app/controllers/integration/check_mk_controller.rb
 #: app/controllers/users_controller.rb
@@ -9116,6 +9121,10 @@ msgstr ""
 
 #: lib/idoit.rb
 msgid "The required field 'endpoint' is missing from the config."
+msgstr ""
+
+#: app/models/postmaster_filter.rb
+msgid "The required match value is missing."
 msgstr ""
 
 #: lib/external_credential/facebook.rb
@@ -10289,6 +10298,9 @@ msgid "Username / email"
 msgstr ""
 
 #: app/assets/javascripts/app/views/settings/proxy.jst.eco
+msgid "Username for proxy connection"
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "Username for proxy connection."
 msgstr ""
@@ -11248,6 +11260,10 @@ msgstr ""
 msgid "disconnect"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/cti.coffee
+msgid "does not exist"
+msgstr ""
+
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
@@ -11524,7 +11540,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/data_privacy/preview.jst.eco
 #: app/assets/javascripts/app/views/generic/application_selector.jst.eco
-msgid "matches"
+msgid "matches found"
 msgstr ""
 
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco
@@ -11585,10 +11601,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 #: app/assets/javascripts/app/views/widget/ticket_stats_list.jst.eco
 msgid "none"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/cti.coffee
-msgid "not exist"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/cti.coffee
@@ -11834,10 +11846,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 msgid "till (relative)"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
-msgid "to"
 msgstr ""
 
 #: app/views/knowledge_base/public/not_found.html.erb

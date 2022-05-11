@@ -75,7 +75,7 @@ class Report
 
     config[:metric][:create_channels] = {
       name:    'create_channels',
-      display: __('Create Channels'),
+      display: __('Creation Channels'),
       prio:    9000,
     }
     backend = [

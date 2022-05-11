@@ -36,7 +36,7 @@ class App.SettingTicketAutoAssignment extends App.ControllerSubContent
     )
 
     configure_attributes = [
-      { name: 'user_ids', display: __('Exception users'), tag: 'column_select', multiple: true, null: true, relation: 'User', sortBy: 'firstname' },
+      { name: 'user_ids', display: __('Excepted users'), tag: 'column_select', multiple: true, null: true, relation: 'User', sortBy: 'firstname' },
     ]
 
     ticket_auto_assignment_user_ids_ignore = App.Setting.get('ticket_auto_assignment_user_ids_ignore')

@@ -161,7 +161,7 @@ class App.CTI extends App.Controller
         item.state_human = switch item.comment
           when 'cancel', 'noAnswer', 'congestion' then __('not reached')
           when 'busy' then __('busy')
-          when 'notFound' then __('not exist')
+          when 'notFound' then __('does not exist')
           when 'normalClearing' then ''
           else item.comment
       else

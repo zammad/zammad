@@ -13,11 +13,11 @@ class PostmasterFilter < ApplicationModel
   sanitized_html :note
 
   def validate_condition
-    raise Exceptions::UnprocessableEntity, __('Min. one match rule needed!') if match.blank?
+    raise Exceptions::UnprocessableEntity, __('At least one match rule is required, but none was provided.') if match.blank?
 
     match.each_value do |meta|
-      raise Exceptions::UnprocessableEntity, 'operator invalid, ony "contains" and "contains not" is supported' if meta['operator'].blank? || meta['operator'] !~ %r{^(contains|contains not)$}
-      raise Exceptions::UnprocessableEntity, 'value invalid/empty' if meta['value'].blank?
+      raise Exceptions::UnprocessableEntity, __('The provided match operator is missing or invalid.') if meta['operator'].blank? || meta['operator'] !~ %r{^(contains|contains not)$}
+      raise Exceptions::UnprocessableEntity, __('The required match value is missing.') if meta['value'].blank?
 
       begin
         Channel::Filter::Match::EmailRegex.match(value: 'test content', match_rule: meta['value'], check_mode: true)

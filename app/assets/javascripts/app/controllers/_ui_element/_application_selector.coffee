@@ -529,7 +529,7 @@ class App.UiElement.ApplicationSelector
     return config
 
   @humanText: (condition) ->
-    none = App.i18n.translateContent('No filter.')
+    none = App.i18n.translateContent('No filter was configured.')
     return [none] if _.isEmpty(condition)
     [defaults, groups, elements] = @defaults()
     rules = []
