@@ -24,7 +24,8 @@ RSpec.describe 'User endpoint', type: :request, authenticated_as: false do
     let(:static_ipv4) { Faker::Internet.ip_v4_address }
 
     it 'blocks due to username throttling (multiple IPs)' do
-      5.times do
+      # Throttle should happen after 5 requests, but that is not reliable enough due to CI slowness.
+      15.times do
         post api_v1_users_password_reset_path, params: { username: static_username }, headers: { 'X-Forwarded-For': Faker::Internet.ip_v4_address }
       end
 
@@ -32,7 +33,7 @@ RSpec.describe 'User endpoint', type: :request, authenticated_as: false do
     end
 
     it 'blocks due to source IP address throttling (multiple usernames)' do
-      5.times do
+      15.times do
         post api_v1_users_password_reset_path, params: { username: create(:user).login }, headers: { 'X-Forwarded-For': static_ipv4 }
       end
 
