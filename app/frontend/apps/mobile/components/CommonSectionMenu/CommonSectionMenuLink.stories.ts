@@ -13,7 +13,11 @@ export default {
 
 const html = String.raw
 
-const Template: Story<Props> = (args: Props) => ({
+interface Actions {
+  onClick(): void
+}
+
+const Template: Story<Props & Actions> = (args: Props & Actions) => ({
   components: { CommonSectionMenuLink, CommonSectionMenu },
   setup() {
     return { args }

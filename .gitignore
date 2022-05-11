@@ -92,11 +92,14 @@
 yarn-error.log
 /public/vite
 /public/vite-dev
-/node_modules
 
-# Eslint
-.eslint-plugin-zammad/node_modules
+# Node
+**/node_modules
 
 # Storybook
 .storybook/storybook-static
-.storybook/node_modules
+
+# Cypress
+.cypress/screenshots/*
+.cypress/videos/*
+.cypress/**/__diff_output__/**

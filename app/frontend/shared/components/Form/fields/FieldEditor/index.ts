@@ -1,9 +1,10 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import FieldEditorWrapper from '@shared/components/Form/fields/FieldEditor/FieldEditorWrapper.vue'
 import createInput from '@shared/form/core/createInput'
 import { FormKitExtendableSchemaRoot, FormKitNode } from '@formkit/core'
 import { cloneDeep } from 'lodash-es'
+
+import FieldEditorWrapper from './FieldEditorWrapper.vue'
 
 function addAriaLabel(node: FormKitNode) {
   const { props } = node

@@ -20,17 +20,21 @@ export default {
   },
 }
 
+const html = String.raw
+
 const Template: Story<FieldArgs> = (args: FieldArgs) => ({
   components: { FormKit },
   setup() {
     return { args }
   },
-  template: '<FormKit type="editor" v-bind="args"/>',
+  template: html`<div class="relative h-[200px] bg-black text-white">
+    <FormKit type="editor" v-bind="args" />
+  </div>`,
 })
 
 export const Default = Template.bind({})
 Default.args = {
-  label: 'Body',
+  label: 'Click text',
   name: 'body',
-  value: '<p>Hello World! 🎉</p>',
+  value: '<p>Hello <b>World</b>! 🎉</p>',
 }

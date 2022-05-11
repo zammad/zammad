@@ -32,18 +32,7 @@ module.exports = {
       },
     ],
     // Not allow the usage of relative imports, because we want always use the path aliases.
-    'no-restricted-imports': [
-      'error',
-      {
-        patterns: [
-          {
-            group: ['.*'],
-            message:
-              'Usage of relative imports is not allowed. Always path aliases should be used.',
-          },
-        ],
-      },
-    ],
+    'no-restricted-imports': 'off',
     // Loosen AirBnB's strict rules a bit to allow 'for .. of'
     'no-restricted-syntax': [
       'error',
@@ -64,6 +53,7 @@ module.exports = {
           'app/frontend/tests/**/*',
           'app/frontend/**/*.stories.ts',
           '.storybook/**/*',
+          'app/frontend/cypress/**/*',
         ],
       },
     ],
@@ -121,6 +111,7 @@ module.exports = {
         'app/frontend/tests/**',
         'app/frontend/**/*.spec.*',
         'app/frontend/stories/**',
+        'app/frontend/cypress/**',
         'app/frontend/**/*.stories.ts',
         '.eslint-plugin-zammad/**',
         '.eslintrc.js',
@@ -140,6 +131,7 @@ module.exports = {
           ['@shared', path.resolve(__dirname, './app/frontend/shared')],
           ['@tests', path.resolve(__dirname, './app/frontend/tests')],
           ['@stories', path.resolve(__dirname, './app/frontend/stories')],
+          ['@cy', path.resolve(__dirname, './.cypress')],
         ],
         extensions: ['.js', '.jsx', '.ts', '.tsx', '.vue'],
       },

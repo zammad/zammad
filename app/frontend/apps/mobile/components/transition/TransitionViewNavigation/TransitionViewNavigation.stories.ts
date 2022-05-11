@@ -57,10 +57,10 @@ const Template: Story<Args> = (args: Args) => ({
 })
 
 export const NextViewTransition = Template.bind({})
-NextViewTransition.args = { newViewTransition: 'next' }
+NextViewTransition.args = { newViewTransition: ViewTransitions.NEXT }
 
 export const PrevViewTransition = Template.bind({})
-PrevViewTransition.args = { newViewTransition: 'prev' }
+PrevViewTransition.args = { newViewTransition: ViewTransitions.PREV }
 
 export const ReplaceViewTransition = Template.bind({})
-ReplaceViewTransition.args = { newViewTransition: 'replace' }
+ReplaceViewTransition.args = { newViewTransition: ViewTransitions.REPLACE }

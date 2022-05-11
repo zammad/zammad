@@ -23,15 +23,9 @@ import { reactive } from 'vue'
 
 const schema = reactive([
   {
-    type: 'date',
-    label: 'Date',
-    futureOnly: true,
-    name: 'date',
-  },
-  {
-    type: 'datetimeLocal',
-    label: 'Datetime',
-    name: 'datetimeLocal',
+    type: 'editor',
+    label: 'editor',
+    name: 'editor',
   },
   {
     type: 'file',

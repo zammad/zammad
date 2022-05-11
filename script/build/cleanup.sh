@@ -7,7 +7,7 @@ rm -rf app/assets/javascripts/app/views/layout_ref/
 rm app/assets/javascripts/app/controllers/karma.coffee
 
 # tests
-rm -rf test spec app/frontend/tests
+rm -rf test spec app/frontend/tests .cypress
 find app/frontend/ -type d -name __tests__ -exec rm -rf {} +
 rm .rspec
 

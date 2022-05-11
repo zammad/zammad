@@ -10,7 +10,11 @@ export default {
   component: CommonSectionMenu,
 }
 
-const Template: Story<Props> = (args: Props) => ({
+interface Actions {
+  onActionClick(): void
+}
+
+const Template: Story<Props & Actions> = (args: Props & Actions) => ({
   components: { CommonSectionMenu },
   setup() {
     return { args }

@@ -52,3 +52,60 @@ export function getInitials(
 
   return (firstname || lastname || email)?.substring(0, 2).toUpperCase() || '??'
 }
+
+/**
+ * Replaces code inside `#{obj.key}` with the value of the corresponding object.
+ * @param template - string to replace
+ * @param objects - reference object
+ * @param encodeLink - should result be encoded
+ */
+export function replaceTags(
+  template: string,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  objects: any,
+  encodeLink = false,
+): string {
+  return template.replace(/#\{\s{0,2}(.+?)\s{0,2}\}/g, (index, key) => {
+    const levels = key.replace(/<.+?>/g, '').split(/\./)
+    let dataRef = objects
+    for (const level of levels) {
+      if (typeof dataRef === 'object' && level in dataRef) {
+        dataRef = dataRef[level]
+      } else {
+        dataRef = ''
+        break
+      }
+    }
+
+    let value
+
+    // if value is a function, execute function
+    if (typeof dataRef === 'function') {
+      value = dataRef()
+    }
+    // if value has content
+    else if (dataRef != null && dataRef.toString) {
+      // in case if we have a references object, check what datatype the attribute has
+      // and e. g. convert timestamps/dates to browser locale
+      // if dataRefLast?.constructor?.className
+      //   localClassRef = App[dataRefLast.constructor.className]
+      //   if localClassRef?.attributesGet
+      //     attributes = localClassRef.attributesGet()
+      //     if attributes?[level]
+      //       if attributes[level]['tag'] is 'datetime'
+      //         value = App.i18n.translateTimestamp(dataRef)
+      //       else if attributes[level]['tag'] is 'date'
+      //         value = App.i18n.translateDate(dataRef)
+
+      // as fallback use value of toString()
+      if (!value) value = dataRef.toString()
+    } else {
+      value = ''
+    }
+
+    if (value === '') value = '-'
+    if (encodeLink) value = encodeURIComponent(value)
+
+    return value
+  })
+}

@@ -33,6 +33,7 @@ module Zammad
     config.load_defaults 6.1
 
     Rails.autoloaders.each do |autoloader|
+      autoloader.ignore            "#{config.root}/app/frontend"
       autoloader.do_not_eager_load "#{config.root}/lib/core_ext"
       autoloader.collapse          "#{config.root}/lib/omniauth"
       autoloader.inflector.inflect(

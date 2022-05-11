@@ -10,12 +10,12 @@ import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 import type { OptimizeOptions } from 'svgo'
 import * as path from 'path'
 
-import tsconfig from './tsconfig.json'
+import tsconfig from './tsconfig.base.json'
 import TransformTestId from './app/frontend/build/transforms/transformTestId'
 import ManualChunks from './app/frontend/build/manual-chunks.mjs'
 
 export default defineConfig(({ mode }) => {
-  const isTesting = ['test', 'storybook'].includes(mode)
+  const isTesting = ['test', 'storybook', 'cypress'].includes(mode)
 
   return {
     esbuild: {
@@ -27,6 +27,7 @@ export default defineConfig(({ mode }) => {
         '@shared': path.resolve(__dirname, 'app/frontend/shared'),
         '@tests': path.resolve(__dirname, 'app/frontend/tests'),
         '@stories': path.resolve(__dirname, 'app/frontend/stories'),
+        '@cy': path.resolve(__dirname, '.cypress'),
         '@': path.resolve(__dirname, 'app/frontend'),
       },
     },

@@ -6,6 +6,7 @@ import { InputHTMLAttributes, ref, Ref } from 'vue'
 import { useFormUploadCacheAddMutation } from '@shared/components/Form/fields/FieldFile/graphql/mutations/uploadCache/add.api'
 import { useFormUploadCacheRemoveMutation } from '@shared/components/Form/fields/FieldFile/graphql/mutations/uploadCache/remove.api'
 import { MutationHandler } from '@shared/server/apollo/handler'
+import { convertFileList } from '@shared/utils/files'
 
 // TODO: First proof of concept, this needs to be finalized during the first real usage.
 // TODO: Add a test + story for this component.
@@ -20,31 +21,14 @@ export interface Props {
 
 const props = defineProps<Props>()
 
-const blobToBase64 = async (blob: Blob) =>
-  new Promise((resolve, reject) => {
-    const reader = new FileReader()
-    reader.onload = () => resolve(reader.result)
-    reader.onerror = () => reject(reader.error)
-    reader.readAsDataURL(blob)
-  })
-
 const uploadFiles: Ref<UploadedFile[]> = ref([])
 
 const addFileMutation = new MutationHandler(useFormUploadCacheAddMutation({}))
 const addFileLoading = addFileMutation.loading()
 
 const onFileChanged = async ($event: Event) => {
-  const element = $event.target as HTMLInputElement
-  const files = element.files as FileList
-  const uploads = []
-  for (const file of files) {
-    uploads.push({
-      name: file.name,
-      type: file.type,
-      // eslint-disable-next-line no-await-in-loop
-      content: await blobToBase64(file),
-    })
-  }
+  const { files } = $event.target as HTMLInputElement
+  const uploads = await convertFileList(files)
 
   addFileMutation
     .send({ formId: props.context.formId, files: uploads })

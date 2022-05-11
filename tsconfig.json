@@ -1,35 +1,8 @@
 {
+  "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "target": "es2020",
-    "module": "esnext",
-    "jsx": "preserve",
-    "sourceMap": true,
-    "removeComments": true,
-    "noEmit": true,
-    "importHelpers": true,
-    "strict": true,
-    "moduleResolution": "node",
-    "baseUrl": ".",
-    "paths": {
-      "@mobile/*": ["app/frontend/apps/mobile/*"],
-      "@shared/*": ["app/frontend/shared/*"],
-      "@tests/*": ["app/frontend/tests/*"],
-      "@stories/*": ["app/frontend/stories/*"],
-      "@/*": ["app/frontend/*"],
-      "*": ["node_modules/*", ".storybook/node_modules/*"]
-    },
-    "types": [
-      "vite/client",
-      "vite-plugin-svg-icons/client",
-      "vitest/globals",
-      "node"
-    ],
-    "esModuleInterop": true,
-    "experimentalDecorators": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true
+    "types": ["vitest/globals", "vite/client", "vite-plugin-svg-icons/client"]
   },
   "include": ["app/frontend/**/*", ".storybook/config/**/*"],
-  "exclude": ["node_modules", "public", "vendor"]
+  "exclude": ["app/frontend/cypress/**/*", "node_modules", "public", "vendor"]
 }

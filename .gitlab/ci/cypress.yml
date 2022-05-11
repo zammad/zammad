@@ -1,0 +1,17 @@
+cypress:
+  stage: test
+  extends:
+    - .env_base
+  before_script:
+    - yarn install
+    - yarn cypress:install
+  script:
+    - sysctl -w fs.inotify.max_user_watches=524288 # see https://github.com/cypress-io/cypress/issues/6960
+    - yarn test:ci:ct
+  artifacts:
+    expire_in: 1 week
+    when: on_failure
+    paths:
+      - .cypress/**/__diff_output__/*
+      - .cypress/videos/**/*
+      - .cypress/screenshots/**/*

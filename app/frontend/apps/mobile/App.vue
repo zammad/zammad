@@ -93,7 +93,7 @@ onBeforeUnmount(() => {
   <CommonNotifications v-if="application.loaded" />
   <div
     v-if="application.loaded"
-    class="min-h-screen min-w-full select-none bg-black font-sans text-sm text-white antialiased"
+    class="min-h-screen min-w-full bg-black font-sans text-sm text-white antialiased"
   >
     <router-view />
   </div>
