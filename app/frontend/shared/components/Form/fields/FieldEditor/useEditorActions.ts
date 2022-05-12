@@ -169,7 +169,7 @@ export default function useEditorActions(
     {
       name: 'mention-text',
       text: '::',
-      label: i18n.t('Insert text from Text article'),
+      label: i18n.t('Insert text from text module'),
       command: focused((c) => c.openTextMention()),
     },
   ]

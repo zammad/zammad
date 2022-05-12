@@ -5168,7 +5168,7 @@ msgid "Insert text from Knowledge Base article"
 msgstr ""
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
-msgid "Insert text from Text article"
+msgid "Insert text from text module"
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
