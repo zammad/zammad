@@ -1,9 +1,9 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { i18n } from '@shared/i18n'
-import translateWrapperProps from '@shared/form/features/translateWrapperProps'
 import { createNode } from '@formkit/core'
 import { createLibraryPlugin } from '@formkit/inputs'
+import { i18n } from '@shared/i18n'
+import translateWrapperProps from '../translateWrapperProps'
 
 const map = new Map([
   ['example', 'Beispiel'],

@@ -1,9 +1,9 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import useApplicationStore from '@shared/stores/application'
-import type { DateTimeFormat } from '@shared/components/CommonDateTime/types'
 import { computed, ComputedRef } from 'vue'
+import useApplicationStore from '@shared/stores/application'
+import type { DateTimeFormat } from './types'
 
 export interface Props {
   dateTime: string
@@ -29,7 +29,7 @@ const outputFormat: ComputedRef<OutputFormat> = computed(() => {
 
 <template>
   <span v-if="outputFormat === 'absolute'">{{ i18n.dateTime(dateTime) }}</span>
-  <span v-else v-bind:title="i18n.dateTime(dateTime)">{{
+  <span v-else :title="i18n.dateTime(dateTime)">{{
     i18n.relativeDateTime(dateTime)
   }}</span>
 </template>

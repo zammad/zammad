@@ -1,16 +1,12 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-// eslint-disable-next-line @typescript-eslint/no-empty-function
-const noop = () => {}
+vi.spyOn(console, 'error').mockReturnValue()
+vi.spyOn(console, 'warn').mockReturnValue()
+vi.spyOn(console, 'info').mockReturnValue()
+vi.spyOn(console, 'log').mockReturnValue()
+vi.spyOn(console, 'trace').mockReturnValue()
 
-vi.spyOn(console, 'error').mockImplementation(noop)
-vi.spyOn(console, 'warn').mockImplementation(noop)
-vi.spyOn(console, 'info').mockImplementation(noop)
-vi.spyOn(console, 'log').mockImplementation(noop)
-vi.spyOn(console, 'trace').mockImplementation(noop)
-
-// eslint-disable-next-line import/first
-import log from '@shared/utils/log'
+import log from '../log'
 
 describe('log', () => {
   afterAll(() => {

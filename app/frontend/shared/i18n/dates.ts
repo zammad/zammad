@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { Translator } from '@shared/i18n/translator'
+import { Translator } from './translator'
 
 function formatNumber(num: number, digits: number): string {
   let result = num.toString()

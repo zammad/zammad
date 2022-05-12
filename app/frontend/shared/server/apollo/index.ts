@@ -1,12 +1,12 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { createApolloClient } from '@shared/server/apollo/client'
+import type { App } from 'vue'
 import {
   DefaultApolloClient,
   provideApolloClient,
 } from '@vue/apollo-composable'
 import type { CacheInitializerModules } from '@shared/types/server/apollo/client'
-import type { App } from 'vue'
+import { createApolloClient } from './client'
 
 const initializeApolloClient = (
   app: App,

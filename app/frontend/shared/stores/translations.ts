@@ -1,5 +1,6 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
+import { reactive, ref } from 'vue'
 import { defineStore } from 'pinia'
 import { i18n } from '@shared/i18n'
 import log from '@shared/utils/log'
@@ -9,7 +10,6 @@ import type {
   TranslationsQuery,
   TranslationsQueryVariables,
 } from '@shared/graphql/types'
-import { reactive, ref } from 'vue'
 import type { ReactiveFunction } from '@shared/types/utils'
 
 interface TranslationsCacheValue {

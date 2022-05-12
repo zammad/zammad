@@ -11,7 +11,6 @@ const wrapperParameters = {
   formField: true,
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const renderButton = (options: ExtendedMountingOptions<any> = {}) => {
   return renderComponent(FormKit, {
     ...wrapperParameters,

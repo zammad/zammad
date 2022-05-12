@@ -1,9 +1,7 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import CommonDateTime, {
-  type Props,
-} from '@shared/components/CommonDateTime/CommonDateTime.vue'
 import type { Story } from '@storybook/vue3'
+import CommonDateTime, { type Props } from './CommonDateTime.vue'
 
 export default {
   title: 'Shared/DateTime',

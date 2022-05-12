@@ -123,7 +123,11 @@ useEventListener('click', (e) => {
 </script>
 
 <template>
-  <EditorContent class="editor-content px-4 py-2" v-bind:editor="editor" />
+  <EditorContent
+    data-test-id="field-editor"
+    class="editor-content px-4 py-2"
+    :editor="editor"
+  />
   <div
     v-show="showActionBar"
     ref="actionBar"
@@ -132,28 +136,24 @@ useEventListener('click', (e) => {
   >
     <button
       v-for="action in actions"
-      v-bind:key="action.name"
-      v-bind:class="[
-        'p-2 min-w-[30px] rounded lg:hover:bg-gray-300',
+      :key="action.name"
+      :class="[
+        'min-w-[30px] rounded p-2 lg:hover:bg-gray-300',
         action.class,
         { '!bg-gray-300': isActive(action.name, action.attributes) },
       ]"
-      v-bind:aria-label="action.label || action.name"
-      v-on:click="action.command"
+      :aria-label="action.label || action.name"
+      @click="action.command"
     >
       <component
-        v-bind:is="action.component"
+        :is="action.component"
         v-if="action.component"
-        v-bind:editor="editor"
+        :editor="editor"
       />
       <template v-else-if="action.text">
         {{ action.text }}
       </template>
-      <CommonIcon
-        v-else-if="action.icon"
-        v-bind:name="action.icon"
-        size="small"
-      />
+      <CommonIcon v-else-if="action.icon" :name="action.icon" size="small" />
     </button>
   </div>
 </template>

@@ -3,7 +3,6 @@
 import { useSubscription } from '@vue/apollo-composable'
 import { createMockSubscription, IMockSubscription } from 'mock-apollo-client'
 import createMockClient from '@tests/support/mock-apollo-client'
-import SubscriptionHandler from '@shared/server/apollo/handler/SubscriptionHandler'
 import {
   SampleTypedSubscriptionDocument,
   SampleUpdatedSubscription,
@@ -11,6 +10,7 @@ import {
 } from '@tests/fixtures/graphqlSampleTypes'
 import { useNotifications } from '@shared/components/CommonNotifications'
 import { NetworkStatus } from '@apollo/client/core'
+import SubscriptionHandler from '../SubscriptionHandler'
 
 const subscriptionFunctionCallSpy = vi.fn()
 

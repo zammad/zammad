@@ -1,13 +1,13 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { MutationHandler } from '@shared/server/apollo/handler'
+import { ref } from 'vue'
 import { defineStore } from 'pinia'
+import { MutationHandler } from '@shared/server/apollo/handler'
 import { useLoginMutation } from '@shared/graphql/mutations/login.api'
 import { useLogoutMutation } from '@shared/graphql/mutations/logout.api'
-import useSessionStore from '@shared/stores/session'
 import { clearApolloClientStore } from '@shared/server/apollo/client'
-import useApplicationStore from '@shared/stores/application'
-import { ref } from 'vue'
+import useSessionStore from './session'
+import useApplicationStore from './application'
 
 const useAuthenticationStore = defineStore(
   'authentication',

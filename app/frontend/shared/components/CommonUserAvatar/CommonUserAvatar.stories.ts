@@ -1,9 +1,7 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import CommonUserAvatar, {
-  type Props,
-} from '@shared/components/CommonUserAvatar/CommonUserAvatar.vue'
 import createTemplate from '@stories/support/createTemplate'
+import CommonUserAvatar, { type Props } from './CommonUserAvatar.vue'
 
 export default {
   title: 'Shared/UserAvatar',

@@ -1,11 +1,11 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
+import { ref } from 'vue'
 import { OrderDirection, TicketOrderBy } from '@shared/graphql/types'
 import { QueryHandler } from '@shared/server/apollo/handler'
 import usePagination from '@mobile/composables/usePagination'
-import { useTicketsByOverviewQuery } from '@mobile/modules/ticket/graphql/queries/ticketsByOverview.api'
-import { ref } from 'vue'
+import { useTicketsByOverviewQuery } from '../../graphql/queries/ticketsByOverview.api'
 
 interface Props {
   overviewId: string
@@ -47,7 +47,7 @@ const pagination = usePagination(ticketsQuery, 'ticketsByOverview')
   <!-- TODO: Only a first dumy implementation for a list -->
   <table>
     <thead>
-      <th v-on:click="switchOrder(TicketOrderBy.Title)">
+      <th @click="switchOrder(TicketOrderBy.Title)">
         {{ i18n.t('Title') }}
         <span v-if="orderBy == TicketOrderBy.Title">
           <span v-if="orderDirection == OrderDirection.Ascending">⇑</span>
@@ -55,7 +55,7 @@ const pagination = usePagination(ticketsQuery, 'ticketsByOverview')
         </span>
       </th>
       <th>{{ i18n.t('Status') }}</th>
-      <th v-on:click="switchOrder(TicketOrderBy.Number)">
+      <th @click="switchOrder(TicketOrderBy.Number)">
         {{ i18n.t('Number') }}
         <span v-if="orderBy == TicketOrderBy.Number">
           <span v-if="orderDirection == OrderDirection.Ascending">⇑</span>
@@ -70,7 +70,7 @@ const pagination = usePagination(ticketsQuery, 'ticketsByOverview')
         v-for="ticket in tickets?.ticketsByOverview?.edges?.map(
           (edge) => edge?.node,
         )"
-        v-bind:key="ticket?.number"
+        :key="ticket?.number"
       >
         <td>{{ ticket?.title }}</td>
         <td>{{ ticket?.state.name }}</td>
@@ -79,12 +79,12 @@ const pagination = usePagination(ticketsQuery, 'ticketsByOverview')
           {{ ticket?.customer.firstname }} {{ ticket?.customer.lastname }}
         </td>
         <td>
-          <CommonDateTime v-bind:date-time="ticket?.createdAt" />
+          <CommonDateTime :date-time="ticket?.createdAt" />
         </td>
       </tr>
     </tbody>
   </table>
   <p v-if="pagination.hasNextPage">
-    <a v-on:click="pagination.fetchNextPage()">Load more...</a>
+    <a @click="pagination.fetchNextPage()">Load more...</a>
   </p>
 </template>

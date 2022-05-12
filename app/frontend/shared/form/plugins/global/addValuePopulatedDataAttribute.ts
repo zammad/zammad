@@ -1,8 +1,7 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { cloneDeep } from '@apollo/client/utilities'
+import { cloneDeep, isEmpty } from 'lodash-es'
 import { FormKitNode, FormKitExtendableSchemaRoot } from '@formkit/core'
-import { isEmpty } from 'lodash-es'
 
 const addValuePopulatedDataAttribute = (node: FormKitNode) => {
   const { props, context } = node

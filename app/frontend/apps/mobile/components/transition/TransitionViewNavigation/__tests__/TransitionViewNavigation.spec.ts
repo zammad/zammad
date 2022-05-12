@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import TransitionViewNavigation from '@mobile/components/transition/TransitionViewNavigation/TransitionViewNavigation.vue'
 import { renderComponent } from '@tests/support/components'
+import TransitionViewNavigation from '../TransitionViewNavigation.vue'
 
 describe('TransitionViewNavigation.vue', () => {
   it('renders the component', () => {

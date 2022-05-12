@@ -1,10 +1,10 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import permissionGuard from '@shared/router/guards/before/permission'
+import { RouteLocationNormalized } from 'vue-router'
+import { createTestingPinia } from '@pinia/testing'
 import useAuthenticationStore from '@shared/stores/authentication'
 import useSessionStore from '@shared/stores/session'
-import { createTestingPinia } from '@pinia/testing'
-import { RouteLocationNormalized } from 'vue-router'
+import permissionGuard from '../permission'
 
 vi.mock('@shared/server/apollo/client', () => {
   return {}

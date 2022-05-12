@@ -1,14 +1,14 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import {
-  useViewTransition,
-  ViewTransitions,
-} from '@mobile/components/transition/TransitionViewNavigation'
 import type {
   NavigationGuard,
   RouteLocationNormalized,
   NavigationGuardNext,
 } from 'vue-router'
+import {
+  useViewTransition,
+  ViewTransitions,
+} from '@mobile/components/transition/TransitionViewNavigation'
 
 const transitionViewGuard: NavigationGuard = (
   to: RouteLocationNormalized,

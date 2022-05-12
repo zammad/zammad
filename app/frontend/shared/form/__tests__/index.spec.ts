@@ -1,13 +1,12 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import initializeForm, { getFormPlugins } from '@shared/form'
+import { createApp } from 'vue'
 import type { ImportGlobEagerOutput } from '@shared/types/utils'
 import type { FormKitPlugin } from '@formkit/core'
-import { createApp } from 'vue'
+import initializeForm, { getFormPlugins } from '..'
 
 describe('getFormPlugins', () => {
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  const examplePlugin = (): void => {}
+  const examplePlugin = vi.fn()
   const pluginModules: ImportGlobEagerOutput<FormKitPlugin> = {
     'common/test/plugins/test.ts': {
       default: examplePlugin,

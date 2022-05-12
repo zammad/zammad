@@ -4,7 +4,7 @@
 import { computed } from 'vue'
 import type { TicketState } from '@shared/entities/ticket/types'
 
-// TODO add test and story
+// TODO: Add a test and story for this common component.
 
 export interface Props {
   status: TicketState
@@ -21,7 +21,7 @@ const statusIndicator = computed(() => `state-${props.status}`)
 
 <template>
   <div
-    v-bind:class="{
+    :class="{
       'status-pill': pill,
       [`status-${status}`]: pill,
     }"
@@ -29,10 +29,10 @@ const statusIndicator = computed(() => `state-${props.status}`)
     role="group"
   >
     <img
-      v-bind:src="`/assets/images/icons/${statusIndicator}.svg`"
-      v-bind:alt="label"
-      v-bind:width="pill ? 12 : 24"
-      v-bind:height="pill ? 12 : 24"
+      :src="`/assets/images/icons/${statusIndicator}.svg`"
+      :alt="label"
+      :width="pill ? 12 : 24"
+      :height="pill ? 12 : 24"
     />
     <div v-if="pill" class="ml-[2px] text-xs uppercase leading-[14px]">
       {{ label }}

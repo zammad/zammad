@@ -1,5 +1,11 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
+import type { FormKitPlugin } from '@formkit/core'
+import * as defaultRules from '@formkit/rules'
+import {
+  createValidationPlugin as formKitCreateValidationPlugin,
+  type FormKitValidationMessages,
+} from '@formkit/validation'
 import type {
   FormValidationRules,
   FormValidationRuleType,
@@ -8,12 +14,6 @@ import type {
   ImportGlobEagerDefault,
   ImportGlobEagerOutput,
 } from '@shared/types/utils'
-import type { FormKitPlugin } from '@formkit/core'
-import * as defaultRules from '@formkit/rules'
-import {
-  createValidationPlugin as formKitCreateValidationPlugin,
-  type FormKitValidationMessages,
-} from '@formkit/validation'
 
 const ruleModules: ImportGlobEagerOutput<FormValidationRuleType> =
   import.meta.globEager('../validation/rules/*.ts')

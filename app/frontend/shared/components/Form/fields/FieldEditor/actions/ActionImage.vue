@@ -23,13 +23,13 @@ const insertImage = async (e: Event) => {
 
 <template>
   <!-- TODO change icon-->
-  <CommonIcon name="document" size="small" v-on:click="inputRef?.click()" />
+  <CommonIcon name="document" size="small" @click="inputRef?.click()" />
   <input
     ref="inputRef"
     class="hidden"
     type="file"
     multiple
     accept="image/*"
-    v-on:change="insertImage"
+    @change="insertImage"
   />
 </template>

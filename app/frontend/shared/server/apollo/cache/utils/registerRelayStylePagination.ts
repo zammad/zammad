@@ -8,7 +8,6 @@ export default function registerRelayStylePagination(
   queryName: string,
   fields: string[],
 ): InMemoryCacheConfig {
-  /* eslint-disable no-param-reassign */
   config.typePolicies ||= {}
   config.typePolicies.Query ||= {}
   config.typePolicies.Query.fields ||= {}

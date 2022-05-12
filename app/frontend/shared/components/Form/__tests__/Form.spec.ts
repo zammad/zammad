@@ -332,7 +332,7 @@ describe('Form.vue - Edge Cases', () => {
     return new Promise((resolve) => {
       renderComponent(
         {
-          template: `<div><Form ref="form" v-bind:schema="schema" /></div>`,
+          template: `<div><Form ref="form" :schema="schema" /></div>`,
           components: {
             Form,
           },
@@ -362,7 +362,6 @@ describe('Form.vue - Edge Cases', () => {
 
             return { schema, form }
           },
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } as any,
         {
           form: true,

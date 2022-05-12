@@ -1,6 +1,5 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import addValuePopulatedDataAttribute from '@shared/form/plugins/global/addValuePopulatedDataAttribute'
 import {
   createNode,
   FormKitExtendableSchemaRoot,
@@ -8,6 +7,7 @@ import {
 } from '@formkit/core'
 import { FormKit } from '@formkit/vue'
 import { renderComponent } from '@tests/support/components'
+import addValuePopulatedDataAttribute from '../global/addValuePopulatedDataAttribute'
 
 const wrapperParameters = {
   form: true,

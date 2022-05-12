@@ -1,5 +1,6 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
+import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
 import {
   useNotifications,
@@ -18,7 +19,6 @@ import {
   SubscriptionHandler,
 } from '@shared/server/apollo/handler'
 import testFlags from '@shared/utils/testFlags'
-import { computed, ref } from 'vue'
 
 let configUpdatesSubscriptionInitialized = false
 

@@ -1,10 +1,8 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import CommonLink, {
-  type Props,
-} from '@shared/components/CommonLink/CommonLink.vue'
 import { renderComponent } from '@tests/support/components'
 import { MountingOptions } from '@vue/test-utils'
+import CommonLink, { type Props } from '../CommonLink.vue'
 
 const wrapperParameters = {
   router: true,

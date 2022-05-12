@@ -1,9 +1,9 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import initializeFieldDefinition from '@shared/form/core/initializeFieldDefinition'
+import { cloneDeep } from 'lodash-es'
 import { FormKitExtendableSchemaRoot, FormKitNode } from '@formkit/core'
 import { password as passwordDefinition } from '@formkit/inputs'
-import { cloneDeep } from 'lodash-es'
+import initializeFieldDefinition from '@shared/form/core/initializeFieldDefinition'
 
 const localPasswordDefinition = cloneDeep(passwordDefinition)
 

@@ -3,7 +3,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
-import TransitionViewNavigation from '@mobile/components/transition/TransitionViewNavigation/TransitionViewNavigation.vue'
+import TransitionViewNavigation from '../../transition/TransitionViewNavigation/TransitionViewNavigation.vue'
 
 const route = useRoute()
 
@@ -15,9 +15,9 @@ const showBottomNavigation = computed(() => {
 <template>
   <div class="flex h-full flex-col overflow-hidden">
     <main class="flex-1 overflow-y-scroll">
-      <router-view v-slot:default="{ Component }">
+      <router-view v-slot="{ Component }">
         <TransitionViewNavigation>
-          <component v-bind:is="Component" />
+          <component :is="Component" />
         </TransitionViewNavigation>
       </router-view>
     </main>

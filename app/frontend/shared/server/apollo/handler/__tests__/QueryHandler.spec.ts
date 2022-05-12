@@ -2,7 +2,6 @@
 
 import { useQuery } from '@vue/apollo-composable'
 import createMockClient from '@tests/support/mock-apollo-client'
-import QueryHandler from '@shared/server/apollo/handler/QueryHandler'
 import {
   SampleTypedQueryDocument,
   SampleQuery,
@@ -11,6 +10,7 @@ import {
 import { useNotifications } from '@shared/components/CommonNotifications'
 import { NetworkStatus } from '@apollo/client/core'
 import { GraphQLErrorTypes } from '@shared/types/error'
+import QueryHandler from '../QueryHandler'
 
 const queryFunctionCallSpy = vi.fn()
 

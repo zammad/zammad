@@ -59,8 +59,7 @@ describe('initializeFieldDefinition', () => {
   })
 
   it('add additional props and features', () => {
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    const featureExample = () => {}
+    const featureExample = vi.fn()
 
     const definition = cloneDeep(inputTextDefinition)
     initializeFieldDefinition(definition, {

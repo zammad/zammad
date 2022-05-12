@@ -5,10 +5,10 @@ import type {
   RouteLocationNormalized,
   NavigationGuardNext,
 } from 'vue-router'
+import log from '@shared/utils/log'
 import useAuthenticationStore from '@shared/stores/authentication'
 import useSessionStore from '@shared/stores/session'
 import { ErrorStatusCodes } from '@shared/types/error'
-import log from '@shared/utils/log'
 
 const permissionGuard: NavigationGuard = (
   to: RouteLocationNormalized,

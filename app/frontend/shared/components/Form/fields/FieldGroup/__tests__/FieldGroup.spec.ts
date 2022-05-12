@@ -40,7 +40,7 @@ describe('Form - Field - Group (Formkit-BuildIn)', () => {
               type="checkbox"
               name="checkbox"
               id="checkbox"
-              v-bind:value="true"
+              :value="true"
             />
           </fieldset>
         `,

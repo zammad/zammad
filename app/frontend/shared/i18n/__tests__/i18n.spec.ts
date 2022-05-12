@@ -1,9 +1,9 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { i18n } from '@shared/i18n'
 import { nextTick } from 'vue'
 import { renderComponent } from '@tests/support/components'
-import CommonSectionMenu from '@mobile/components/CommonSectionMenu/CommonSectionMenu.vue'
+import { i18n } from '@shared/i18n'
+import CommonSectionMenu from '@mobile/components/CommonSectionMenu/CommonSectionMenu.vue' // TODO: switch to shared component example
 
 describe('i18n', () => {
   it('starts with empty state', () => {

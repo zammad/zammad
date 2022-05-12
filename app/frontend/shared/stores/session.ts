@@ -1,11 +1,11 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
+import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { useSessionIdQuery } from '@shared/graphql/queries/sessionId.api'
 import { useCurrentUserQuery } from '@shared/graphql/queries/currentUser.api'
 import { QueryHandler } from '@shared/server/apollo/handler'
 import type { UserData } from '@shared/types/store'
-import useLocaleStore from '@shared/stores/locale'
 import hasPermission from '@shared/utils/hasPermission'
 import type {
   CurrentUserQuery,
@@ -14,7 +14,7 @@ import type {
   SessionIdQueryVariables,
 } from '@shared/graphql/types'
 import testFlags from '@shared/utils/testFlags'
-import { ref } from 'vue'
+import useLocaleStore from './locale'
 
 let sessionIdQuery: QueryHandler<SessionIdQuery, SessionIdQueryVariables>
 

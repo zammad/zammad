@@ -1,9 +1,9 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import useApplicationStore from '@shared/stores/application'
 import { computed, reactive, watch } from 'vue'
 import { isString } from 'lodash-es'
 import { i18n } from '@shared/i18n'
+import useApplicationStore from '@shared/stores/application'
 
 const viewMetaHeader = reactive({
   title: '',

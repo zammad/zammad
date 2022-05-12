@@ -1,14 +1,14 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
+import { Ref, watch } from 'vue'
 import { FetchResult, OperationVariables } from '@apollo/client/core'
-import BaseHandler from '@shared/server/apollo/handler/BaseHandler'
 import {
   OperationSubscriptionOptionsReturn,
   OperationSubscriptionsResult,
   WatchResultCallback,
 } from '@shared/types/server/apollo/handler'
 import { UseSubscriptionReturn } from '@vue/apollo-composable'
-import { Ref, watch } from 'vue'
+import BaseHandler from './BaseHandler'
 
 export default class SubscriptionHandler<
   TResult = OperationSubscriptionsResult,

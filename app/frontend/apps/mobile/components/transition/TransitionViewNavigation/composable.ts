@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { ViewTransitions } from '@mobile/components/transition/TransitionViewNavigation/types'
 import { ref } from 'vue'
+import { ViewTransitions } from './types'
 
 const viewTransition = ref<ViewTransitions>(ViewTransitions.REPLACE)
 

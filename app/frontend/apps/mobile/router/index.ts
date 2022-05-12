@@ -1,11 +1,11 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import type { RouteRecordRaw } from 'vue-router'
-import LayoutMain from '@mobile/components/layout/LayoutMain/LayoutMain.vue'
-import transitionViewGuard from '@mobile/router/guards/before/viewTransition'
 import type { App } from 'vue'
-import type { InitializeAppRouter, RoutesModule } from '@shared/types/router'
+import type { RouteRecordRaw } from 'vue-router'
 import mainInitializeRouter from '@shared/router'
+import type { InitializeAppRouter, RoutesModule } from '@shared/types/router'
+import LayoutMain from '@mobile/components/layout/LayoutMain/LayoutMain.vue'
+import transitionViewGuard from './guards/before/viewTransition'
 
 const routeModules: Record<string, RoutesModule> = import.meta.globEager(
   '../modules/*/routes.ts',

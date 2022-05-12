@@ -1,12 +1,12 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 <script setup lang="ts">
-import type { FormFieldContext } from '@shared/components/Form/types/field'
-import type { Scalars, UploadedFile } from '@shared/graphql/types'
 import { InputHTMLAttributes, ref, Ref } from 'vue'
-import { useFormUploadCacheAddMutation } from '@shared/components/Form/fields/FieldFile/graphql/mutations/uploadCache/add.api'
-import { useFormUploadCacheRemoveMutation } from '@shared/components/Form/fields/FieldFile/graphql/mutations/uploadCache/remove.api'
+import type { FormFieldContext } from '@shared/components/Form/types/field'
 import { MutationHandler } from '@shared/server/apollo/handler'
 import { convertFileList } from '@shared/utils/files'
+import type { Scalars, UploadedFile } from '@shared/graphql/types'
+import { useFormUploadCacheAddMutation } from './graphql/mutations/uploadCache/add.api'
+import { useFormUploadCacheRemoveMutation } from './graphql/mutations/uploadCache/remove.api'
 
 // TODO: First proof of concept, this needs to be finalized during the first real usage.
 // TODO: Add a test + story for this component.
@@ -59,16 +59,16 @@ const removeFile = async (fileId: Scalars['ID']) => {
 <template>
   <div v-if="addFileLoading">LOADING, PLEASE WAIT...</div>
   <ul v-if="uploadFiles.length">
-    <li v-for="uploadFile in uploadFiles" v-bind:key="uploadFile.id">
+    <li v-for="uploadFile in uploadFiles" :key="uploadFile.id">
       {{ uploadFile.name }}
-      <span v-on:click="removeFile(uploadFile.id)">REMOVE THIS FILE</span>
+      <span @click="removeFile(uploadFile.id)">REMOVE THIS FILE</span>
     </li>
   </ul>
   <input
     type="file"
-    v-bind:accept="props.context.accept"
-    v-bind:capture="props.context.capture"
-    v-bind:multiple="props.context.multiple"
-    v-on:change="onFileChanged($event)"
+    :accept="props.context.accept"
+    :capture="props.context.capture"
+    :multiple="props.context.multiple"
+    @change="onFileChanged($event)"
   />
 </template>

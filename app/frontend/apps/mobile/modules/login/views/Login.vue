@@ -1,12 +1,12 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
+import { useRouter } from 'vue-router'
 import {
   useNotifications,
   NotificationTypes,
 } from '@shared/components/CommonNotifications'
 import useAuthenticationStore from '@shared/stores/authentication'
-import { useRouter } from 'vue-router'
 import CommonLogo from '@shared/components/CommonLogo/CommonLogo.vue'
 import useApplicationStore from '@shared/stores/application'
 import { i18n } from '@shared/i18n'
@@ -81,15 +81,15 @@ const application = useApplicationStore()
           </template>
           <Form
             ref="form"
-            v-bind:form-schema-id="FormSchemaId.FormSchemaFormMobileLogin"
+            :form-schema-id="FormSchemaId.FormSchemaFormMobileLogin"
             class="text-left"
-            v-on:submit="login"
+            @submit="login"
           >
-            <template v-slot:after-fields>
+            <template #after-fields>
               <div class="mt-4 flex grow items-center justify-center">
                 <span class="ltr:mr-1 rtl:ml-1">{{ i18n.t('New user?') }}</span>
                 <CommonLink
-                  v-bind:link="'TODO'"
+                  :link="'TODO'"
                   class="cursor-pointer select-none !text-yellow underline"
                   >{{ i18n.t('Register') }}</CommonLink
                 >
@@ -118,7 +118,7 @@ const application = useApplicationStore()
         open-in-new-tab
         class="ltr:mr-1 rtl:ml-1"
       >
-        <CommonIcon name="logo" v-bind:fixed-size="{ width: 24, height: 24 }" />
+        <CommonIcon name="logo" :fixed-size="{ width: 24, height: 24 }" />
       </CommonLink>
       <span class="ltr:mr-1 rtl:ml-1">{{ i18n.t('Powered by') }}</span>
       <CommonLink

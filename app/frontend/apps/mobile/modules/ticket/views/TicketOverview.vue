@@ -1,15 +1,15 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { useOverviewsQuery } from '@shared/entities/ticket/graphql/queries/overviews.api'
 import {
   useViewTransition,
   ViewTransitions,
 } from '@mobile/components/transition/TransitionViewNavigation'
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
-import TicketList from '@mobile/modules/ticket/components/TicketList/TicketList.vue'
 import { QueryHandler } from '@shared/server/apollo/handler'
+import TicketList from '../components/TicketList/TicketList.vue'
 
 const router = useRouter()
 
@@ -38,23 +38,23 @@ const selectedOverview = ref('')
   <!-- TODO: Only a first dummy implementation for testing -->
   <div>
     <h1>{{ i18n.t('Ticket Overview') }}</h1>
-    <p v-on:click="goTo">Go to link Home</p>
-    <p v-on:click="goBack">Go Back</p>
+    <p @click="goTo">Go to link Home</p>
+    <p @click="goBack">Go Back</p>
 
     <select v-model="selectedOverview" class="text-black">
       <option
         v-for="overview in overviews?.overviews.edges?.map(
           (edge) => edge?.node,
         )"
-        v-bind:key="overview?.id"
-        v-bind:value="overview?.id"
+        :key="overview?.id"
+        :value="overview?.id"
       >
         {{ overview?.name }} ({{ overview?.ticketCount }})
       </option>
     </select>
     <TicketList
       v-if="selectedOverview.length"
-      v-bind:overview-id="selectedOverview"
+      :overview-id="selectedOverview"
     />
   </div>
 </template>

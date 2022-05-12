@@ -1,8 +1,8 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import type { Animations, Sizes } from '@shared/components/CommonIcon/types'
 import { computed } from 'vue'
+import type { Animations, Sizes } from './types'
 
 export interface Props {
   size?: Sizes
@@ -61,13 +61,13 @@ const finalSize = computed(() => {
   <svg
     xmlns="http://www.w3.org/2000/svg"
     class="icon fill-current"
-    v-bind:class="iconClass"
-    v-bind:width="finalSize.width"
-    v-bind:height="finalSize.height"
-    v-bind:aria-labelledby="name"
-    v-bind:aria-hidden="decorative"
-    v-on:click="onClick"
+    :class="iconClass"
+    :width="finalSize.width"
+    :height="finalSize.height"
+    :aria-labelledby="name"
+    :aria-hidden="decorative"
+    @click="onClick"
   >
-    <use v-bind:xlink:href="`#icon-${name}`" />
+    <use :xlink:href="`#icon-${name}`" />
   </svg>
 </template>

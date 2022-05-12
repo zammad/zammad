@@ -3,6 +3,7 @@
 import { getNode } from '@formkit/core'
 import { FormKit } from '@formkit/vue'
 import { renderComponent } from '@tests/support/components'
+import { nextTick } from 'vue'
 
 const wrapperParameters = {
   form: true,
@@ -20,11 +21,14 @@ const wrapper = renderComponent(FormKit, {
   unmount: false,
 })
 
+// Only some small initialize test, because the real editor testing is inside of cypress.
 describe('Form - Field - Editor (TipTap)', () => {
   it('can render a editor', async () => {
-    const editor = await wrapper.findByLabelText('Editor')
+    const editor = await wrapper.findByTestId('field-editor')
 
-    expect(editor).toHaveAttribute('contenteditable')
+    await nextTick()
+
+    expect(editor.children[0]).toHaveAttribute('contenteditable')
 
     const node = getNode('editor')
     expect(node?.value).toBe(undefined)
@@ -36,13 +40,5 @@ describe('Form - Field - Editor (TipTap)', () => {
     })
 
     expect(wrapper.getByText('This is the help text')).toBeInTheDocument()
-  })
-
-  // TODO editing with userEvent leads to errors
-  it.todo('check for the input event', async () => {
-    const editor = wrapper.getByLabelText('Editor')
-    await wrapper.events.type(editor, 'H')
-
-    expect(editor).toHaveTextContent('H')
   })
 })

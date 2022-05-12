@@ -1,9 +1,8 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import CommonSectionMenuLink from '@mobile/components/CommonSectionMenu/CommonSectionMenuLink.vue'
 import { renderComponent } from '@tests/support/components'
+import CommonSectionMenuLink from '../CommonSectionMenuLink.vue'
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const renderMenuItem = (props: any = {}, slots: any = {}) => {
   return renderComponent(CommonSectionMenuLink, {
     props,

@@ -1,14 +1,14 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { useViewTransition } from '@mobile/components/transition/TransitionViewNavigation'
+import useViewTransition from './composable'
 
 const { viewTransition } = useViewTransition()
 </script>
 
 <template>
-  <main class="grid h-full flex-1">
-    <transition class="z-10 flex-auto" v-bind:name="viewTransition">
+  <main class="grid min-h-screen flex-1 overflow-hidden">
+    <transition class="z-10 flex-auto" :name="viewTransition">
       <slot></slot>
     </transition>
   </main>

@@ -1,9 +1,9 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
+import { watch } from 'vue'
 import { BroadcastChannel } from 'broadcast-channel'
 import type { PiniaPluginContext, Store } from 'pinia'
 import type { ShareStateOptions } from '@shared/types/stores/plugins'
-import { watch } from 'vue'
 
 declare module 'pinia' {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -43,7 +43,6 @@ const shareState = <T extends Store>(store: T): void => {
     externalUpdate = true
     timestamp = evt.timestamp
 
-    // eslint-disable-next-line no-param-reassign
     store.$state = JSON.parse(evt.state)
   }
 }

@@ -41,18 +41,18 @@ const clickHandler = (notification: Notification) => {
       >
         <div
           v-for="notification in notifications"
-          v-bind:key="notification.id"
+          :key="notification.id"
           data-test-id="notification"
         >
           <div class="flex justify-center">
             <div
               class="m-1 flex cursor-pointer items-center rounded py-2 px-4"
-              v-bind:class="getClassName(notification)"
-              v-on:click="clickHandler(notification)"
+              :class="getClassName(notification)"
+              @click="clickHandler(notification)"
             >
               <CommonIcon
-                v-bind:name="iconNameMap[notification.type]"
-                v-bind:fixed-size="{ width: 10, height: 10 }"
+                :name="iconNameMap[notification.type]"
+                :fixed-size="{ width: 10, height: 10 }"
               />
               <span class="text-sm ltr:ml-2 rtl:mr-2">{{
                 notification.messagePlaceholder

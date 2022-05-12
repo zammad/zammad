@@ -3,19 +3,19 @@
 import type { App } from 'vue'
 import { plugin as formPlugin, bindings as bindingsPlugin } from '@formkit/vue'
 import type { FormKitConfig, FormKitPlugin } from '@formkit/core'
-import type {
-  ImportGlobEagerOutput,
-  ImportGlobEagerDefault,
-} from '@shared/types/utils'
-import createFieldPlugin from '@shared/form/core/createFieldPlugin'
+import '@formkit/dev'
 import type {
   FormAppSpecificTheme,
   FormFieldTypeImportModules,
 } from '@shared/types/form'
-import createValidationPlugin from '@shared/form/core/createValidationPlugin'
-import createI18nPlugin from '@shared/form/core/createI18nPlugin'
-import '@formkit/dev'
-import createTailwindClasses from '@shared/form/core/createTailwindClasses'
+import type {
+  ImportGlobEagerOutput,
+  ImportGlobEagerDefault,
+} from '@shared/types/utils'
+import createFieldPlugin from './core/createFieldPlugin'
+import createValidationPlugin from './core/createValidationPlugin'
+import createI18nPlugin from './core/createI18nPlugin'
+import createTailwindClasses from './core/createTailwindClasses'
 
 export const getFormPlugins = (
   modules: ImportGlobEagerOutput<FormKitPlugin>,

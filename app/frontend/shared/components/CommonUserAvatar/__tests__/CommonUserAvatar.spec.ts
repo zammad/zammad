@@ -1,9 +1,7 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import CommonUserAvatar, {
-  type Props,
-} from '@shared/components/CommonUserAvatar/CommonUserAvatar.vue'
 import { renderComponent } from '@tests/support/components'
+import CommonUserAvatar, { type Props } from '../CommonUserAvatar.vue'
 
 describe('CommonUserAvatar', () => {
   it('renders user avatar', async () => {

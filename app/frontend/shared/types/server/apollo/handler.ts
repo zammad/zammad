@@ -8,9 +8,9 @@ import type {
   UseSubscriptionOptions,
 } from '@vue/apollo-composable'
 import type { Ref } from 'vue'
-import type { GraphQLHandlerError } from '@shared/types/error'
 import { NotificationTypes } from '@shared/components/CommonNotifications'
 import { PageInfo } from '@shared/graphql/types'
+import type { GraphQLHandlerError } from '../../error'
 
 export type OperationReturn<TResult, TVariables> =
   | UseQueryReturn<TResult, TVariables>

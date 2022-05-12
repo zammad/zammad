@@ -1,11 +1,11 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 /* eslint-disable import/first */
 
-import { i18n } from '@shared/i18n'
 import { FormKit } from '@formkit/vue'
 import { waitFor } from '@testing-library/vue'
-import { renderComponent } from '@tests/support/components'
 import flatpickr from 'flatpickr'
+import { i18n } from '@shared/i18n'
+import { renderComponent } from '@tests/support/components'
 
 const renderDateField = (props: Record<string, unknown> = {}) => {
   return renderComponent(FormKit, {

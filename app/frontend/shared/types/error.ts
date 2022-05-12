@@ -1,8 +1,8 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import type { GraphQLErrorExtensions } from 'graphql'
-import type { UserError } from '@shared/graphql/types'
 import type { Except } from 'type-fest'
+import type { UserError } from '@shared/graphql/types'
 
 export enum GraphQLErrorTypes {
   UnkownError = 'Exceptions::UnkownError',

@@ -1,10 +1,9 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import localeForBrowserLanguage from '@shared/i18n/localeForBrowserLanguage'
 import { TextDirection } from '@shared/graphql/types'
+import localeForBrowserLanguage from '../localeForBrowserLanguage'
 
 describe('localeFinder', () => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let windowSpy: any
 
   beforeEach(() => {

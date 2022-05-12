@@ -1,8 +1,8 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import defaulfFieldDefinition from '@shared/form/core/defaultFieldDefinition'
-import { mergeArray } from '@shared/utils/helpers'
 import type { FormKitTypeDefinition } from '@formkit/core'
+import { mergeArray } from '@shared/utils/helpers'
+import defaulfFieldDefinition from './defaultFieldDefinition'
 
 const initializeFieldDefinition = (
   definition: FormKitTypeDefinition,

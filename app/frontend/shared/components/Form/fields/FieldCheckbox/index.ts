@@ -2,10 +2,10 @@
 
 import { cloneDeep } from '@apollo/client/utilities'
 import initializeFieldDefinition from '@shared/form/core/initializeFieldDefinition'
-import { CheckboxVariant } from '@shared/components/Form/fields/FieldCheckbox/types'
 import { FormKitExtendableSchemaRoot, FormKitNode } from '@formkit/core'
 import { checkbox as checkboxDefinition } from '@formkit/inputs'
 import { has } from '@formkit/utils'
+import { CheckboxVariant } from './types'
 
 const addOptionCheckedDataAttribute = (node: FormKitNode) => {
   const { props } = node

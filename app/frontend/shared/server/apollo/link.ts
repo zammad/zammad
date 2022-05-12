@@ -6,16 +6,16 @@ import {
   from,
   Operation,
 } from '@apollo/client/core'
-import csrfLink from '@shared/server/apollo/link/csrf'
-import errorLink from '@shared/server/apollo/link/error'
-import debugLink from '@shared/server/apollo/link/debug'
-import setAuthorizationLink from '@shared/server/apollo/link/setAuthorization'
-import ActionCableLink from 'graphql-ruby-client/subscriptions/ActionCableLink'
-import consumer from '@shared/server/action_cable/consumer'
-import { getMainDefinition } from '@apollo/client/utilities'
-import { BatchHttpLink } from '@apollo/client/link/batch-http'
 import type { FragmentDefinitionNode, OperationDefinitionNode } from 'graphql'
-import connectedStateLink from '@shared/server/apollo/link/connectedState'
+import consumer from '@shared/server/action_cable/consumer'
+import { BatchHttpLink } from '@apollo/client/link/batch-http'
+import { getMainDefinition } from '@apollo/client/utilities'
+import ActionCableLink from 'graphql-ruby-client/subscriptions/ActionCableLink'
+import csrfLink from './link/csrf'
+import errorLink from './link/error'
+import debugLink from './link/debug'
+import setAuthorizationLink from './link/setAuthorization'
+import connectedStateLink from './link/connectedState'
 
 // Should subsequent HTTP calls be batched together?
 const enableBatchLink = false

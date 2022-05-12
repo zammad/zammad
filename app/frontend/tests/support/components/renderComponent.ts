@@ -1,20 +1,20 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
+import { Plugin } from 'vue'
+import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import { MountingOptions } from '@vue/test-utils'
 import { Matcher, render, RenderResult } from '@testing-library/vue'
 import userEvent from '@testing-library/user-event'
-import { merge } from 'lodash-es'
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
+import { merge, cloneDeep } from 'lodash-es'
+import { createTestingPinia } from '@pinia/testing'
 import { plugin as formPlugin } from '@formkit/vue'
 import { buildFormKitPluginConfig } from '@shared/form'
 import CommonIcon from '@shared/components/CommonIcon/CommonIcon.vue'
 import CommonLink from '@shared/components/CommonLink/CommonLink.vue'
-import { Plugin } from 'vue'
-import { createTestingPinia } from '@pinia/testing'
+import CommonDateTime from '@shared/components/CommonDateTime/CommonDateTime.vue'
 import { i18n } from '@shared/i18n'
-import { cloneDeep } from '@apollo/client/utilities'
-import buildIconsQueries from '@tests/support/components/iconQueries'
-import buildLinksQueries from '@tests/support/components/linkQueries'
+import buildIconsQueries from './iconQueries'
+import buildLinksQueries from './linkQueries'
 
 // TODO: some things can be handled differently: https://test-utils.vuejs.org/api/#config-global
 
@@ -45,6 +45,7 @@ const defaultWrapperOptions: ExtendedMountingOptions<unknown> = {
     components: {
       CommonIcon,
       CommonLink,
+      CommonDateTime,
     },
     mocks: {
       i18n,
@@ -118,10 +119,7 @@ const initializeForm = () => {
   formInitialized = true
 }
 
-const wrappers = new Set<
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [ExtendedMountingOptions<any>, ExtendedRenderResult]
->()
+const wrappers = new Set<[ExtendedMountingOptions<any>, ExtendedRenderResult]>()
 
 afterEach(() => {
   wrappers.forEach((wrapper) => {
@@ -135,7 +133,6 @@ afterEach(() => {
 })
 
 const renderComponent = <Props>(
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   component: any,
   wrapperOptions?: ExtendedMountingOptions<Props>,
 ): ExtendedRenderResult => {

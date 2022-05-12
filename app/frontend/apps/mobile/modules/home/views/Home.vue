@@ -1,11 +1,11 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import CommonSectionMenu from '@mobile/components/CommonSectionMenu/CommonSectionMenu.vue'
-import { MenuItem } from '@mobile/components/CommonSectionMenu'
-import useAuthenticationStore from '@shared/stores/authentication'
 import { useRouter } from 'vue-router'
+import useAuthenticationStore from '@shared/stores/authentication'
 import { useNotifications } from '@shared/components/CommonNotifications'
+import { MenuItem } from '@mobile/components/CommonSectionMenu'
+import CommonSectionMenu from '@mobile/components/CommonSectionMenu/CommonSectionMenu.vue'
 
 const menu: MenuItem[] = [
   { type: 'link', link: '/tickets', title: __('All Tickets') },
@@ -63,12 +63,12 @@ const logoutMenu: MenuItem[] = [
     <div class="flex w-full items-center justify-center text-3xl font-bold">
       {{ i18n.t('Home') }}
     </div>
-    <CommonSectionMenu v-bind:items="menu" action-title="Edit" />
+    <CommonSectionMenu :items="menu" action-title="Edit" />
     <CommonSectionMenu
-      v-bind:items="ticketOverview"
+      :items="ticketOverview"
       header-title="Ticket overviews"
       action-title="Edit"
     />
-    <CommonSectionMenu v-bind:items="logoutMenu" />
+    <CommonSectionMenu :items="logoutMenu" />
   </div>
 </template>

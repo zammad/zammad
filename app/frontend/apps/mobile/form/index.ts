@@ -1,5 +1,7 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
+import { App } from 'vue'
+import type { FormKitPlugin } from '@formkit/core'
 import mainInitializeForm, { getFormPlugins } from '@shared/form'
 import type {
   FormFieldTypeImportModules,
@@ -7,9 +9,7 @@ import type {
   InitializeAppForm,
 } from '@shared/types/form'
 import type { ImportGlobEagerOutput } from '@shared/types/utils'
-import type { FormKitPlugin } from '@formkit/core'
-import getCoreClasses from '@mobile/form/theme/global'
-import { App } from 'vue'
+import getCoreClasses from './theme/global'
 
 const pluginModules: ImportGlobEagerOutput<FormKitPlugin> =
   import.meta.globEager('./plugins/global/*.ts')

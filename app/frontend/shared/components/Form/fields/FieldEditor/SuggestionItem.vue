@@ -3,7 +3,6 @@
 <script setup lang="ts">
 import { toRef } from 'vue'
 import type { SuggestionKeyDownProps } from '@tiptap/suggestion'
-// eslint-disable-next-line no-restricted-imports
 import useNavigateOptions from './useNavigateOptions'
 import type {
   CommandKnowledgeBaseProps,
@@ -68,14 +67,14 @@ defineExpose({
 <template>
   <div
     class="max-h-64 overflow-auto rounded bg-gray-300 text-white"
-    v-bind:data-test-id="`mention-${type}`"
+    :data-test-id="`mention-${type}`"
   >
     <div
       v-for="(item, index) in items"
-      v-bind:key="item.id"
+      :key="item.id"
       class="cursor-pointer py-2 px-6 hover:bg-gray-400"
-      v-bind:class="{ 'bg-gray-400': selectedIndex === index }"
-      v-on:click="selectItem(index)"
+      :class="{ 'bg-gray-400': selectedIndex === index }"
+      @click="selectItem(index)"
     >
       <template v-if="isKnowledgeBaseItem(item)">
         <div class="text-sm">{{ item.category }}</div>

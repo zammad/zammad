@@ -1,8 +1,8 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import FieldSelectInput from '@shared/components/Form/fields/FieldSelect/FieldSelectInput.vue'
-import createInput from '@shared/form/core/createInput'
 import type { FormKitNode } from '@formkit/core'
+import createInput from '@shared/form/core/createInput'
+import FieldSelectInput from './FieldSelectInput.vue'
 
 const hideLabelForSmallSelects = (node: FormKitNode) => {
   const { props } = node
@@ -41,7 +41,4 @@ export default {
   definition: fieldDefinition,
 }
 
-export type {
-  SelectOption,
-  SelectOptionSorting,
-} from '@shared/components/Form/fields/FieldSelect/types'
+export type { SelectOption, SelectOptionSorting } from './types'

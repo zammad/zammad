@@ -31,8 +31,7 @@ module.exports = {
         order: ['script', 'template', 'style'],
       },
     ],
-    // Not allow the usage of relative imports, because we want always use the path aliases.
-    'no-restricted-imports': 'off',
+
     // Loosen AirBnB's strict rules a bit to allow 'for .. of'
     'no-restricted-syntax': [
       'error',
@@ -41,6 +40,11 @@ module.exports = {
       'LabeledStatement',
       'WithStatement',
     ],
+
+    'no-param-reassign': 'off',
+
+    'no-restricted-imports': 'off',
+
     // Disable the following rule, because it's not relevant for the tool chain and test envoirment.
     'import/no-extraneous-dependencies': [
       'error',
@@ -57,6 +61,7 @@ module.exports = {
         ],
       },
     ],
+
     // Adding typescript file types, because airbnb doesn't allow this by default.
     'import/extensions': [
       'error',
@@ -70,6 +75,10 @@ module.exports = {
       },
     ],
 
+    'import/prefer-default-export': 'off',
+
+    // TODO: Add import rule to not allow that "app/**/modules/**" can import from each other and also add a rule that apps/** can not import from other apps.
+
     /* We strongly recommend that you do not use the no-undef lint rule on TypeScript projects. The checks it provides are already provided by TypeScript without the need for configuration - TypeScript just does this significantly better (Source: https://github.com/typescript-eslint/typescript-eslint/blob/master/docs/getting-started/linting/FAQ.md#i-get-errors-from-the-no-undef-rule-about-global-variables-not-being-defined-even-though-there-are-no-typescript-errors). */
     'no-undef': 'off',
 
@@ -78,14 +87,7 @@ module.exports = {
     'no-shadow': 'off',
     '@typescript-eslint/no-shadow': 'off',
 
-    // Enforce v-bind directive usage in long form.
-    'vue/v-bind-style': ['error', 'longform'],
-
-    // Enforce v-on directive usage in long form.
-    'vue/v-on-style': ['error', 'longform'],
-
-    // Enforce v-slot directive usage in long form.
-    'vue/v-slot-style': ['error', 'longform'],
+    '@typescript-eslint/no-explicit-any': ['error', { ignoreRestArgs: true }],
 
     // Don't require a default value for the props.
     'vue/require-default-prop': 'off',
@@ -119,6 +121,8 @@ module.exports = {
       rules: {
         'zammad/zammad-detect-translatable-string': 'off',
         '@typescript-eslint/no-non-null-assertion': 'off',
+        '@typescript-eslint/no-explicit-any': 'off',
+        'import/first': 'off',
       },
     },
   ],

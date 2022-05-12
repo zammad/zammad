@@ -1,12 +1,8 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import CommonNotifications from '@shared/components/CommonNotifications/CommonNotifications.vue'
 import type { Story } from '@storybook/vue3'
-import {
-  useNotifications,
-  NotificationTypes,
-  type Notification,
-} from '@shared/components/CommonNotifications'
+import { useNotifications, NotificationTypes, type Notification } from '.'
+import CommonNotifications from './CommonNotifications.vue'
 
 export default {
   title: 'Shared/Notifications',

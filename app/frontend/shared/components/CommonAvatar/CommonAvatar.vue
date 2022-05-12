@@ -2,7 +2,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import type { AvatarSize } from '@shared/components/CommonAvatar/types'
+import type { AvatarSize } from './types'
 
 export interface Props {
   initials?: string
@@ -33,11 +33,11 @@ const iconSize = computed(() => {
 
 <template>
   <span
-    v-bind:style="{
+    :style="{
       backgroundImage: image ? `url(${image})` : undefined,
     }"
-    v-bind:class="[
-      'text-white relative inline-flex h-10 w-10 shrink-0',
+    :class="[
+      'relative inline-flex h-10 w-10 shrink-0 text-white',
       'items-center justify-center rounded-full bg-cover bg-center',
       `size-${size}`,
     ]"
@@ -48,7 +48,7 @@ const iconSize = computed(() => {
       class="vip absolute left-1/2 -top-[15px] -ml-4 w-8"
       name="crown"
     />
-    <CommonIcon v-if="icon" v-bind:name="icon" v-bind:size="iconSize" />
+    <CommonIcon v-if="icon" :name="icon" :size="iconSize" />
     <slot v-else>
       {{ image ? '' : initials }}
     </slot>

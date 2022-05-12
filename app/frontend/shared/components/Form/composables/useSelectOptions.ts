@@ -3,13 +3,11 @@
 import { computed, type ComputedRef, ref, type Ref } from 'vue'
 import { cloneDeep } from 'lodash-es'
 import { i18n } from '@shared/i18n'
-import type { FormFieldContext } from '@shared/components/Form/types/field'
-import type {
-  SelectOption,
-  SelectOptionSorting,
-} from '@shared/components/Form/fields/FieldSelect'
-import type { FlatSelectOption } from '@shared/components/Form/fields/FieldTreeSelect'
 import type { TicketState } from '@shared/entities/ticket/types'
+import type { SelectOptionSorting, SelectOption } from '../fields/FieldSelect'
+import type { FormFieldContext } from '../types/field'
+import type { FlatSelectOption } from '../fields/FieldTreeSelect'
+import useValue from './useValue'
 
 const useSelectOptions = (
   options: Ref<SelectOption[] | FlatSelectOption[]>,
@@ -30,6 +28,8 @@ const useSelectOptions = (
   ) => void,
 ) => {
   const dialog = ref(null)
+
+  const { currentValue } = useValue(context)
 
   const hasStatusProperty = computed(
     () => options.value && options.value.some((option) => option.status),
@@ -97,8 +97,7 @@ const useSelectOptions = (
 
   const selectOption = (option: SelectOption | FlatSelectOption) => {
     if (context.value.multiple) {
-      // eslint-disable-next-line no-underscore-dangle
-      const selectedValue = context.value._value ?? []
+      const selectedValue = currentValue.value ?? []
       const optionIndex = selectedValue.indexOf(option.value)
       if (optionIndex !== -1) selectedValue.splice(optionIndex, 1)
       else selectedValue.push(option.value)

@@ -3,8 +3,8 @@
 import type { App } from 'vue'
 import type { FetchResult } from '@apollo/client/core'
 import type { InMemoryCacheConfig } from '@apollo/client/cache/inmemory/types'
-import type { ImportGlobEagerOutput } from '@shared/types/utils'
 import type { DocumentNode } from 'graphql'
+import type { ImportGlobEagerOutput } from '../../utils'
 
 export type RegisterInMemoryCacheConfig = (
   config: InMemoryCacheConfig,

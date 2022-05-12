@@ -1,5 +1,11 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
+import type { FormKitPlugin } from '@formkit/core'
+import {
+  createLibraryPlugin as formKitCreateLibraryPlugin,
+  form as formFieldDefinition,
+} from '@formkit/inputs'
+import { isArray } from 'lodash-es'
 import type {
   FormFieldTypeImportModules,
   FormFieldsTypeDefinition,
@@ -8,12 +14,6 @@ import type {
   ImportGlobEagerDefault,
   ImportGlobEagerOutput,
 } from '@shared/types/utils'
-import type { FormKitPlugin } from '@formkit/core'
-import {
-  createLibraryPlugin as formKitCreateLibraryPlugin,
-  form as formFieldDefinition,
-} from '@formkit/inputs'
-import { isArray } from 'lodash-es'
 
 const fieldModules: ImportGlobEagerOutput<FormFieldTypeImportModules> =
   import.meta.globEager('../../components/Form/fields/**/index.ts')

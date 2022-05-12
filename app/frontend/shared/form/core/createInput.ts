@@ -1,10 +1,10 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import initializeFieldDefinition from '@shared/form/core/initializeFieldDefinition'
+import type { Component } from 'vue'
 import type { FormKitTypeDefinition } from '@formkit/core'
 import type { FormKitInputSchema } from '@formkit/inputs'
 import { createInput as createFormKitInput } from '@formkit/vue'
-import type { Component } from 'vue'
+import initializeFieldDefinition from './initializeFieldDefinition'
 
 /**
  * Wrapper around the formkit createInput function. This function adds the default initilization of the

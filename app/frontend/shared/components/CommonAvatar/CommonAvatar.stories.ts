@@ -1,9 +1,7 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import CommonAvatar, {
-  type Props,
-} from '@shared/components/CommonAvatar/CommonAvatar.vue'
 import type { Story } from '@storybook/vue3'
+import CommonAvatar, { type Props } from './CommonAvatar.vue'
 
 export default {
   title: 'Shared/Avatar',

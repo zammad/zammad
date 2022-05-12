@@ -4,7 +4,7 @@ import { Story } from '@storybook/vue3'
 import { FormKit } from '@formkit/vue'
 import defaultArgTypes from '@stories/support/form/field/defaultArgTypes'
 import { FieldArgs } from '@stories/types/form'
-import { CheckboxVariant } from '@shared/components/Form/fields/FieldCheckbox'
+import { CheckboxVariant } from './types'
 
 export default {
   title: 'Form/Field/Checkbox',

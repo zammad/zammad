@@ -1,9 +1,9 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import CommonLogo from '@shared/components/CommonLogo/CommonLogo.vue'
-import useApplicationStore from '@shared/stores/application'
-import { renderComponent } from '@tests/support/components'
 import { nextTick } from 'vue'
+import { renderComponent } from '@tests/support/components'
+import useApplicationStore from '@shared/stores/application'
+import CommonLogo from '../CommonLogo.vue'
 
 describe('CommonLogo.vue', () => {
   it('renders custom logo', async () => {

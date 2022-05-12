@@ -1,8 +1,8 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import { renderComponent } from '@tests/support/components'
-import CommonSectionMenu from '@mobile/components/CommonSectionMenu/CommonSectionMenu.vue'
-import type { MenuItem } from '@mobile/components/CommonSectionMenu'
+import CommonSectionMenu from '../CommonSectionMenu.vue'
+import type { MenuItem } from '../types'
 
 describe('rendering section', () => {
   it('if have header prop, renders header', () => {

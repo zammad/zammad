@@ -1,6 +1,5 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import authenticationGuard from '@shared/router/guards/before/authentication'
 import type { App } from 'vue'
 import {
   createRouter,
@@ -11,8 +10,9 @@ import {
   type RouteRecordRaw,
 } from 'vue-router'
 import type { RouteRecordMeta } from '@shared/types/router'
-import permissionGuard from '@shared/router/guards/before/permission'
-import headerTitleGuard from '@shared/router/guards/after/headerTitle'
+import authenticationGuard from './guards/before/authentication'
+import permissionGuard from './guards/before/permission'
+import headerTitleGuard from './guards/after/headerTitle'
 
 declare module 'vue-router' {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface

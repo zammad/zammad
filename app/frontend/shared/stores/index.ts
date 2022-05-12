@@ -2,7 +2,7 @@
 
 import type { App } from 'vue'
 import { createPinia, Pinia } from 'pinia'
-import PiniaSharedState from '@shared/stores/plugins/sharedState'
+import PiniaSharedState from './plugins/sharedState'
 
 const store: Pinia = createPinia()
 store.use(PiniaSharedState({ enabled: false }))

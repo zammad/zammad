@@ -1,11 +1,11 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import CommonAvatar from '@shared/components/CommonAvatar/CommonAvatar.vue'
-import type { AvatarSize } from '@shared/components/CommonAvatar'
-import type { AvatarUser } from '@shared/components/CommonUserAvatar/types'
-import { getInitials } from '@shared/utils/formatter'
 import { computed } from 'vue'
+import { getInitials } from '@shared/utils/formatter'
+import CommonAvatar from '../CommonAvatar/CommonAvatar.vue'
+import type { AvatarSize } from '../CommonAvatar'
+import type { AvatarUser } from './types'
 
 export interface Props {
   entity: AvatarUser
@@ -79,11 +79,11 @@ const className = computed(() => {
 
 <template>
   <CommonAvatar
-    v-bind:initials="initials"
-    v-bind:size="size"
-    v-bind:icon="icon"
-    v-bind:class="className"
-    v-bind:image="image"
-    v-bind:vip="isVip"
+    :initials="initials"
+    :size="size"
+    :icon="icon"
+    :class="className"
+    :image="image"
+    :vip="isVip"
   />
 </template>

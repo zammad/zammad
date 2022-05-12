@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import { en } from '@formkit/i18n'
-import loadLocales from '@shared/form/i18n/locales'
+import loadLocales from '../locales'
 
 const staticLocale = loadLocales()
 const staticLocaleUI = staticLocale.ui

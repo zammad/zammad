@@ -1,8 +1,6 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { FormKit, FormKitSchema } from '@formkit/vue'
-import FormLayout from '@shared/components/Form/FormLayout.vue'
 import {
   computed,
   ref,
@@ -14,16 +12,7 @@ import {
   nextTick,
   Ref,
 } from 'vue'
-import {
-  type FormData,
-  type FormSchemaField,
-  type FormSchemaLayout,
-  type FormSchemaNode,
-  type FormValues,
-  type ReactiveFormSchemData,
-  FormValidationVisibility,
-  FormSchemaGroupOrList,
-} from '@shared/components/Form/types'
+import { FormKit, FormKitSchema } from '@formkit/vue'
 import type {
   FormKitPlugin,
   FormKitSchemaNode,
@@ -37,7 +26,18 @@ import { useTimeoutFn } from '@vueuse/shared'
 import UserError from '@shared/errors/UserError'
 import { FormSchemaId } from '@shared/graphql/types'
 import { QueryHandler } from '@shared/server/apollo/handler'
-import { useFormSchemaQuery } from '@shared/components/Form/graphql/queries/formSchema.api'
+import { useFormSchemaQuery } from './graphql/queries/formSchema.api'
+import {
+  type FormData,
+  type FormSchemaField,
+  type FormSchemaLayout,
+  type FormSchemaNode,
+  type FormValues,
+  type ReactiveFormSchemData,
+  FormValidationVisibility,
+  FormSchemaGroupOrList,
+} from './types'
+import FormLayout from './FormLayout.vue'
 
 // TODO:
 // - Maybe some default buttons inside the components with loading cycle on submit?
@@ -375,29 +375,29 @@ if (props.formSchemaId) {
 <template>
   <FormKit
     v-if="Object.keys(schemaData.fields).length > 0 || $slots.fields"
-    v-bind:id="formId"
+    :id="formId"
     type="form"
-    v-bind:config="formConfig"
-    v-bind:form-class="localClass"
-    v-bind:actions="false"
-    v-bind:incomplete-message="false"
-    v-bind:plugins="localFormKitPlugins"
-    v-bind:sections-schema="formKitSectionsSchema"
-    v-bind:disabled="localDisabled"
-    v-on:node="setFormNode"
-    v-on:submit="onSubmit"
+    :config="formConfig"
+    :form-class="localClass"
+    :actions="false"
+    :incomplete-message="false"
+    :plugins="localFormKitPlugins"
+    :sections-schema="formKitSectionsSchema"
+    :disabled="localDisabled"
+    @node="setFormNode"
+    @submit="onSubmit"
   >
     <slot name="before-fields" />
     <slot
       name="fields"
-      v-bind:schema="staticSchema"
-      v-bind:data="schemaData"
-      v-bind:library="additionalComponentLibrary"
+      :schema="staticSchema"
+      :data="schemaData"
+      :library="additionalComponentLibrary"
     >
       <FormKitSchema
-        v-bind:schema="staticSchema"
-        v-bind:data="schemaData"
-        v-bind:library="additionalComponentLibrary"
+        :schema="staticSchema"
+        :data="schemaData"
+        :library="additionalComponentLibrary"
       />
     </slot>
     <slot name="after-fields" />

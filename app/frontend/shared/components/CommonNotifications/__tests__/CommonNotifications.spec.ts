@@ -1,16 +1,13 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import { nextTick } from 'vue'
-import CommonNotifications from '@shared/components/CommonNotifications/CommonNotifications.vue'
-import {
-  useNotifications,
-  NotificationTypes,
-} from '@shared/components/CommonNotifications'
 import {
   renderComponent,
   type ExtendedRenderResult,
 } from '@tests/support/components'
 import { waitForTimeout } from '@tests/support/utils'
+import { useNotifications, NotificationTypes } from '..'
+import CommonNotifications from '../CommonNotifications.vue'
 
 let wrapper: ExtendedRenderResult
 

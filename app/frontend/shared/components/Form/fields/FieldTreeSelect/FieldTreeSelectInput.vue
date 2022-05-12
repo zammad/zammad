@@ -6,19 +6,13 @@ import { escapeRegExp } from 'lodash-es'
 import { Dialog, TransitionRoot, TransitionChild } from '@headlessui/vue'
 import { i18n } from '@shared/i18n'
 import CommonTicketStateIndicator from '@shared/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue'
-import useValue from '@shared/components/Form/composables/useValue'
-import useSelectDialog from '@shared/components/Form/composables/useSelectDialog'
-import useSelectOptions from '@shared/components/Form/composables/useSelectOptions'
-import useSelectAutoselect from '@shared/components/Form/composables/useSelectAutoselect'
-import type { FormFieldContext } from '@shared/components/Form/types/field'
-import type {
-  SelectOption,
-  SelectOptionSorting,
-} from '@shared/components/Form/fields/FieldSelect'
-import type {
-  TreeSelectOption,
-  FlatSelectOption,
-} from '@shared/components/Form/fields/FieldTreeSelect/types'
+import useValue from '../../composables/useValue'
+import useSelectDialog from '../../composables/useSelectDialog'
+import useSelectOptions from '../../composables/useSelectOptions'
+import useSelectAutoselect from '../../composables/useSelectAutoselect'
+import type { FormFieldContext } from '../../types/field'
+import type { SelectOption, SelectOptionSorting } from '../FieldSelect'
+import type { TreeSelectOption, FlatSelectOption } from './types'
 
 interface Props {
   context: FormFieldContext<{
@@ -222,33 +216,33 @@ useSelectAutoselect(flatOptions, toRef(props, 'context'))
 
 <template>
   <div
-    v-bind:class="{
+    :class="{
       [context.classes.input]: true,
     }"
     class="flex h-auto min-h-[3.5rem] rounded-none bg-transparent focus-within:bg-blue-highlight focus-within:pt-0 formkit-populated:pt-0"
     data-test-id="field-treeselect"
   >
     <output
-      v-bind:id="context.id"
-      v-bind:name="context.node.name"
+      :id="context.id"
+      :name="context.node.name"
       class="flex grow cursor-pointer items-center px-3 focus:outline-none formkit-disabled:pointer-events-none"
-      v-bind:aria-disabled="context.disabled"
-      v-bind:aria-label="i18n.t('Select...')"
-      v-bind:tabindex="context.disabled ? '-1' : '0'"
+      :aria-disabled="context.disabled"
+      :aria-label="i18n.t('Select...')"
+      :tabindex="context.disabled ? '-1' : '0'"
       v-bind="context.attrs"
       role="list"
-      v-on:click="toggleDialog(true)"
-      v-on:keypress.space="toggleDialog(true)"
-      v-on:blur="context.handlers.blur"
+      @click="toggleDialog(true)"
+      @keypress.space="toggleDialog(true)"
+      @blur="context.handlers.blur"
     >
       <div class="flex grow translate-y-2 flex-wrap gap-1">
         <template v-if="hasValue && hasStatusProperty">
           <CommonTicketStateIndicator
             v-for="selectedValue in valueContainer"
-            v-bind:key="selectedValue"
-            v-bind:status="getSelectedOptionStatus(selectedValue)"
-            v-bind:label="getSelectedOptionFullPath(selectedValue)"
-            v-bind:data-test-status="getSelectedOptionStatus(selectedValue)"
+            :key="selectedValue"
+            :status="getSelectedOptionStatus(selectedValue)"
+            :label="getSelectedOptionFullPath(selectedValue)"
+            :data-test-status="getSelectedOptionStatus(selectedValue)"
             role="listitem"
             pill
           />
@@ -256,14 +250,14 @@ useSelectAutoselect(flatOptions, toRef(props, 'context'))
         <template v-else-if="hasValue">
           <div
             v-for="selectedValue in valueContainer"
-            v-bind:key="selectedValue"
+            :key="selectedValue"
             class="flex items-center text-base leading-[19px] after:content-[','] last:after:content-none"
             role="listitem"
           >
             <CommonIcon
               v-if="getSelectedOptionIcon(selectedValue)"
-              v-bind:name="getSelectedOptionIcon(selectedValue)"
-              v-bind:fixed-size="{ width: 12, height: 12 }"
+              :name="getSelectedOptionIcon(selectedValue)"
+              :fixed-size="{ width: 12, height: 12 }"
               class="mr-1"
             />
             {{ getSelectedOptionFullPath(selectedValue) }}
@@ -272,27 +266,27 @@ useSelectAutoselect(flatOptions, toRef(props, 'context'))
       </div>
       <CommonIcon
         v-if="context.clearable && hasValue && !context.disabled"
-        v-bind:aria-label="i18n.t('Clear Selection')"
-        v-bind:fixed-size="{ width: 16, height: 16 }"
+        :aria-label="i18n.t('Clear Selection')"
+        :fixed-size="{ width: 16, height: 16 }"
         class="mr-2 shrink-0"
         name="close-small"
         role="button"
         tabindex="0"
-        v-on:click.stop="clearValue"
-        v-on:keypress.space.prevent.stop="clearValue"
+        @click.stop="clearValue"
+        @keypress.space.prevent.stop="clearValue"
       />
       <CommonIcon
-        v-bind:fixed-size="{ width: 24, height: 24 }"
+        :fixed-size="{ width: 24, height: 24 }"
         class="shrink-0"
         name="chevron-right"
         decorative
       />
     </output>
-    <TransitionRoot v-bind:show="isOpen" as="template" appear>
+    <TransitionRoot :show="isOpen" as="template" appear>
       <Dialog
         class="fixed inset-0 z-10 flex overflow-y-auto"
         role="dialog"
-        v-on:close="toggleDialog(false)"
+        @close="toggleDialog(false)"
       >
         <TransitionChild
           class="h-full grow"
@@ -320,9 +314,9 @@ useSelectAutoselect(flatOptions, toRef(props, 'context'))
                   class="grow cursor-pointer text-blue"
                   tabindex="0"
                   role="button"
-                  v-on:click="toggleDialog(false)"
-                  v-on:keypress.space="toggleDialog(false)"
-                  v-on:keydown="advanceDialogFocus"
+                  @click="toggleDialog(false)"
+                  @keypress.space="toggleDialog(false)"
+                  @keydown="advanceDialogFocus"
                 >
                   {{ i18n.t('Done') }}
                 </div>
@@ -336,7 +330,7 @@ useSelectAutoselect(flatOptions, toRef(props, 'context'))
                 class="relative flex items-center self-stretch p-4"
               >
                 <CommonIcon
-                  v-bind:fixed-size="{ width: 24, height: 24 }"
+                  :fixed-size="{ width: 24, height: 24 }"
                   class="absolute left-6 shrink-0 text-gray"
                   name="search"
                   decorative
@@ -344,34 +338,34 @@ useSelectAutoselect(flatOptions, toRef(props, 'context'))
                 <input
                   ref="filterInput"
                   v-model="filter"
-                  v-bind:placeholder="i18n.t('Search')"
+                  :placeholder="i18n.t('Search')"
                   class="h-12 grow rounded-xl bg-gray-500 px-9 placeholder:text-gray focus:border-white focus:outline-none focus:ring-0"
                   type="text"
                   role="searchbox"
                 />
                 <CommonIcon
                   v-if="filter.length"
-                  v-bind:aria-label="i18n.t('Clear Search')"
-                  v-bind:fixed-size="{ width: 24, height: 24 }"
+                  :aria-label="i18n.t('Clear Search')"
+                  :fixed-size="{ width: 24, height: 24 }"
                   class="absolute right-6 shrink-0 text-gray"
                   name="close-small"
-                  v-on:click.stop="clearFilter"
+                  @click.stop="clearFilter"
                 />
               </div>
               <div
                 v-if="currentPath.length"
-                v-bind:class="{
+                :class="{
                   'px-6': !context.noFiltering,
                 }"
                 class="flex h-[58px] cursor-pointer items-center self-stretch py-5 px-4 text-base leading-[19px] text-white focus:bg-blue-highlight focus:outline-none"
                 tabindex="0"
                 role="button"
-                v-on:click="goToPreviousPage()"
-                v-on:keypress.space="goToPreviousPage()"
-                v-on:keydown="advanceDialogFocus"
+                @click="goToPreviousPage()"
+                @keypress.space="goToPreviousPage()"
+                @keydown="advanceDialogFocus"
               >
                 <CommonIcon
-                  v-bind:fixed-size="{ width: 24, height: 24 }"
+                  :fixed-size="{ width: 24, height: 24 }"
                   class="mr-3"
                   name="chevron-left"
                 />
@@ -380,7 +374,7 @@ useSelectAutoselect(flatOptions, toRef(props, 'context'))
                 </span>
               </div>
               <div
-                v-bind:class="{
+                :class="{
                   'border-t border-white/30': currentPath.length,
                 }"
                 class="flex grow flex-col items-start self-stretch overflow-y-auto"
@@ -390,22 +384,22 @@ useSelectAutoselect(flatOptions, toRef(props, 'context'))
                   v-for="(option, index) in filter
                     ? filteredOptions
                     : currentOptions"
-                  v-bind:key="option.value"
-                  v-bind:class="{
+                  :key="option.value"
+                  :class="{
                     'px-6': !context.noFiltering,
                     'pointer-events-none': option.disabled,
                   }"
-                  v-bind:tabindex="option.disabled ? '-1' : '0'"
-                  v-bind:aria-selected="isCurrentValue(option.value)"
+                  :tabindex="option.disabled ? '-1' : '0'"
+                  :aria-selected="isCurrentValue(option.value)"
                   class="relative flex h-[58px] cursor-pointer items-center self-stretch py-5 px-4 text-base leading-[19px] text-white focus:bg-blue-highlight focus:outline-none"
                   role="option"
-                  v-on:click="select(option as FlatSelectOption)"
-                  v-on:keypress.space="select(option as FlatSelectOption)"
-                  v-on:keydown="advanceDialogFocus($event, option)"
+                  @click="select(option as FlatSelectOption)"
+                  @keypress.space="select(option as FlatSelectOption)"
+                  @keydown="advanceDialogFocus($event, option)"
                 >
                   <div
                     v-if="index !== 0"
-                    v-bind:class="{
+                    :class="{
                       'left-4': !context.multiple,
                       'left-14': context.multiple,
                     }"
@@ -413,12 +407,12 @@ useSelectAutoselect(flatOptions, toRef(props, 'context'))
                   />
                   <CommonIcon
                     v-if="context.multiple"
-                    v-bind:class="{
+                    :class="{
                       '!text-white': isCurrentValue(option.value),
                       'opacity-30': option.disabled,
                     }"
-                    v-bind:fixed-size="{ width: 24, height: 24 }"
-                    v-bind:name="
+                    :fixed-size="{ width: 24, height: 24 }"
+                    :name="
                       isCurrentValue(option.value)
                         ? 'checked-yes'
                         : 'checked-no'
@@ -427,25 +421,25 @@ useSelectAutoselect(flatOptions, toRef(props, 'context'))
                   />
                   <CommonTicketStateIndicator
                     v-if="option.status"
-                    v-bind:status="option.status"
-                    v-bind:label="option.label"
-                    v-bind:class="{
+                    :status="option.status"
+                    :label="option.label"
+                    :class="{
                       'opacity-30': option.disabled,
                     }"
                     class="mr-[11px]"
                   />
                   <CommonIcon
                     v-else-if="option.icon"
-                    v-bind:name="option.icon"
-                    v-bind:fixed-size="{ width: 16, height: 16 }"
-                    v-bind:class="{
+                    :name="option.icon"
+                    :fixed-size="{ width: 16, height: 16 }"
+                    :class="{
                       '!text-white': isCurrentValue(option.value),
                       'opacity-30': option.disabled,
                     }"
                     class="mr-[11px] text-white/80"
                   />
                   <span
-                    v-bind:class="{
+                    :class="{
                       'font-semibold !text-white': isCurrentValue(option.value),
                       'opacity-30': option.disabled,
                     }"
@@ -455,7 +449,7 @@ useSelectAutoselect(flatOptions, toRef(props, 'context'))
                     <template v-if="filter">
                       <span
                         v-for="parentValue in (option as FlatSelectOption).parents"
-                        v-bind:key="parentValue"
+                        :key="parentValue"
                         class="opacity-50"
                       >
                         —
@@ -465,20 +459,20 @@ useSelectAutoselect(flatOptions, toRef(props, 'context'))
                   </span>
                   <CommonIcon
                     v-if="!context.multiple && isCurrentValue(option.value)"
-                    v-bind:class="{
+                    :class="{
                       'opacity-30': option.disabled,
                       'mr-3': (option as FlatSelectOption).hasChildren,
                     }"
-                    v-bind:fixed-size="{ width: 16, height: 16 }"
+                    :fixed-size="{ width: 16, height: 16 }"
                     name="check"
                   />
                   <CommonIcon
                     v-if="(option as FlatSelectOption).hasChildren && !filter"
                     class="pointer-events-auto"
-                    v-bind:fixed-size="{ width: 24, height: 24 }"
+                    :fixed-size="{ width: 24, height: 24 }"
                     name="chevron-right"
                     role="link"
-                    v-on:click.stop="goToNextPage(option as FlatSelectOption)"
+                    @click.stop="goToNextPage(option as FlatSelectOption)"
                   />
                 </div>
                 <div

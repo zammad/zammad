@@ -8,11 +8,7 @@ vi.spyOn(document, 'querySelector').mockImplementation((): Element => {
   return metaElement
 })
 
-// eslint-disable-next-line import/first
-import {
-  getCSRFToken,
-  setCSRFToken,
-} from '@shared/server/apollo/utils/csrfToken'
+import { getCSRFToken, setCSRFToken } from '../csrfToken'
 
 describe('csrfToken handling', () => {
   it('get initial token', () => {

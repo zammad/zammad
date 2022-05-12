@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import testFlags from '@shared/utils/testFlags'
 import { waitForTimeout } from '@tests/support/utils'
+import testFlags from '../testFlags'
 
 describe('TestFlags', () => {
   it('handles test flags properly', async () => {

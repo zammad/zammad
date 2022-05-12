@@ -31,7 +31,6 @@ export default function buildMentionExtension<T>(
       const overrideSpace = nodeAfter?.text?.startsWith(' ')
 
       if (overrideSpace) {
-        // eslint-disable-next-line no-param-reassign
         range.to += 1
       }
 

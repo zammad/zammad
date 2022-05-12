@@ -1,9 +1,9 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
+import createTemplate from '@stories/support/createTemplate'
 import CommonOrganizationAvatar, {
   type Props,
-} from '@shared/components/CommonOrganizationAvatar/CommonOrganizationAvatar.vue'
-import createTemplate from '@stories/support/createTemplate'
+} from './CommonOrganizationAvatar.vue'
 
 export default {
   title: 'Shared/OrganizationAvatar',

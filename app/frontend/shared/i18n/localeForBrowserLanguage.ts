@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { LocalesQuery, TextDirection } from '@shared/graphql/types'
 import type { LastArrayElement } from 'type-fest'
+import { LocalesQuery, TextDirection } from '@shared/graphql/types'
 
 export default function localeForBrowserLanguage(
   locales: LocalesQuery['locales'],

@@ -1,11 +1,11 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import useLocaleStore from '@shared/stores/locale'
 import { createTestingPinia } from '@pinia/testing'
 import { createMockClient } from 'mock-apollo-client'
 import { provideApolloClient } from '@vue/apollo-composable'
 import { LocalesDocument } from '@shared/graphql/queries/locales.api'
 import { LocalesQuery, TextDirection } from '@shared/graphql/types'
+import useLocaleStore from '../locale'
 
 const mockQueryResult = (): LocalesQuery => {
   return {

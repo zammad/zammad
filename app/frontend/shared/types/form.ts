@@ -6,7 +6,7 @@ import type {
   FormKitValidationRule,
   FormKitValidationMessages,
 } from '@formkit/validation'
-import type { ImportGlobEagerOutput } from '@shared/types/utils'
+import type { ImportGlobEagerOutput } from './utils'
 
 export type InitializeAppForm = (app: App) => void
 

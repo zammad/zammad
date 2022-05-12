@@ -1,11 +1,8 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import {
-  absoluteDateTime as absDT,
-  relativeDateTime as relDT,
-} from '@shared/i18n/dates'
 import timezoneMock from 'timezone-mock'
-import { Translator } from '@shared/i18n/translator'
+import { absoluteDateTime as absDT, relativeDateTime as relDT } from '../dates'
+import { Translator } from '../translator'
 
 describe('Dates', () => {
   const dateUS = 'mm/dd/yyyy'

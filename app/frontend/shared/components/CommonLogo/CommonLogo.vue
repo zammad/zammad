@@ -1,8 +1,8 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import useApplicationStore from '@shared/stores/application'
 import { computed } from 'vue'
+import useApplicationStore from '@shared/stores/application'
 
 const assetsPath = '/assets/images'
 const application = useApplicationStore()
@@ -19,7 +19,7 @@ const logoUrl = computed(() => {
 <template>
   <img
     class="h-40 w-40"
-    v-bind:src="logoUrl"
-    v-bind:alt="(application.config.product_name as string)"
+    :src="logoUrl"
+    :alt="(application.config.product_name as string)"
   />
 </template>

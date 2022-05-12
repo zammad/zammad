@@ -2,7 +2,6 @@
 
 import { useMutation } from '@vue/apollo-composable'
 import createMockClient from '@tests/support/mock-apollo-client'
-import MutationHandler from '@shared/server/apollo/handler/MutationHandler'
 import {
   SampleUpdateMutation,
   SampleUpdateMutationVariables,
@@ -11,6 +10,7 @@ import {
 import { useNotifications } from '@shared/components/CommonNotifications'
 import { GraphQLErrorTypes } from '@shared/types/error'
 import UserError from '@shared/errors/UserError'
+import MutationHandler from '../MutationHandler'
 
 const mutationFunctionCallSpy = vi.fn()
 

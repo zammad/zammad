@@ -17,7 +17,7 @@ const columnClass = computed(() => {
 </script>
 
 <template>
-  <fieldset class="flex flex-wrap" v-bind:class="columnClass">
+  <fieldset class="flex flex-wrap" :class="columnClass">
     <slot />
   </fieldset>
 </template>

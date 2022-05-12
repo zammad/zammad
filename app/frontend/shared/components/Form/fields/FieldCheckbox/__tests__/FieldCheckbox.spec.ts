@@ -1,6 +1,5 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { CheckboxVariant } from '@shared/components/Form/fields/FieldCheckbox'
 import { getNode } from '@formkit/core'
 import { FormKit } from '@formkit/vue'
 import { getAllByRole } from '@testing-library/vue'
@@ -9,6 +8,7 @@ import {
   renderComponent,
 } from '@tests/support/components'
 import { waitForTimeout } from '@tests/support/utils'
+import { CheckboxVariant } from '../types'
 
 const wrapperParameters = {
   form: true,

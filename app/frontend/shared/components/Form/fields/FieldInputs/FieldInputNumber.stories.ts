@@ -2,8 +2,8 @@
 
 import { Story } from '@storybook/vue3'
 import { FormKit } from '@formkit/vue'
-import defaultArgTypes from '@/stories/support/form/field/defaultArgTypes'
-import { FieldArgs } from '@/stories/types/form'
+import defaultArgTypes from '@stories/support/form/field/defaultArgTypes'
+import { FieldArgs } from '@stories/types/form'
 
 export default {
   title: 'Form/Field/Inputs/Number',

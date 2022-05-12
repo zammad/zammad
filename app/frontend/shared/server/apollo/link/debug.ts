@@ -1,14 +1,14 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
+import { capitalize, isEmpty } from 'lodash-es'
 import { ApolloLink } from '@apollo/client/core'
 import { getMainDefinition } from '@apollo/client/utilities'
+import { print } from 'graphql/language/printer'
 import {
   DebugLinkRequestOutput,
   DebugLinkResponseOutput,
 } from '@shared/types/server/apollo/client'
 import log from '@shared/utils/log'
-import { print } from 'graphql/language/printer'
-import { capitalize, isEmpty } from 'lodash-es'
 
 const debugLink = new ApolloLink((operation, forward) => {
   if (log.getLevel() < log.levels.DEBUG) return forward(operation)

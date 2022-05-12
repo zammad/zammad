@@ -27,7 +27,6 @@ export default class UserError extends Error {
   public getFieldErrorList(): Record<string, string> {
     return this.fieldErrors.reduce(
       (fieldErrorList: Record<string, string>, fieldError) => {
-        // eslint-disable-next-line no-param-reassign
         fieldErrorList[fieldError.field] = fieldError.message
 
         return fieldErrorList

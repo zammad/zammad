@@ -1,9 +1,10 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import { type Ref, onMounted } from 'vue'
-import type { FormFieldContext } from '@shared/components/Form/types/field'
-import type { SelectOption } from '@shared/components/Form/fields/FieldSelect'
-import type { FlatSelectOption } from '@shared/components/Form/fields/FieldTreeSelect'
+import type { FormFieldContext } from '../types/field'
+import type { SelectOption } from '../fields/FieldSelect'
+import type { FlatSelectOption } from '../fields/FieldTreeSelect'
+import useValue from './useValue'
 
 const useSelectAutoselect = (
   options: Ref<SelectOption[] | FlatSelectOption[]>,
@@ -14,12 +15,13 @@ const useSelectAutoselect = (
     }>
   >,
 ) => {
+  const { currentValue } = useValue(context)
+
   onMounted(() => {
     // Auto-select last option when and only when option list length equals one.
     if (
       context.value.autoselect &&
-      // eslint-disable-next-line no-underscore-dangle
-      !context.value._value &&
+      !currentValue.value &&
       !context.value.disabled &&
       !context.value.multiple &&
       options.value &&

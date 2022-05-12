@@ -1,10 +1,10 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import type { Link } from '@shared/types/router'
 import { computed, toRef } from 'vue'
-import stopEvent from '@shared/utils/events'
 import { useLink } from 'vue-router'
+import stopEvent from '@shared/utils/events'
+import type { Link } from '@shared/types/router'
 
 export interface Props {
   link: Link
@@ -81,17 +81,17 @@ const onClick = (event: MouseEvent) => {
 <template>
   <a
     data-test-id="common-link"
-    v-bind:href="isInternalLink ? href : (link as string)"
-    v-bind:target="target"
-    v-bind:rel="rel"
-    v-bind:class="[
+    :href="isInternalLink ? href : (link as string)"
+    :target="target"
+    :rel="rel"
+    :class="[
       linkClass,
       {
         [activeClass]: isActive,
         [exactActiveClass]: isExactActive,
       },
     ]"
-    v-on:click="onClick"
+    @click="onClick"
   >
     <slot></slot>
   </a>

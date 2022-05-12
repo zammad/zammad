@@ -14,8 +14,8 @@ defineProps<Props>()
 
 <template>
   <Suspense>
-    <FieldEditor v-bind:context="context" v-bind="$attrs" />
+    <FieldEditor :context="context" v-bind="$attrs" />
     <!-- TODO make a placeholder that looks like a disabled editor with a spinner inside -->
-    <template v-slot:fallback> Loading Editor... </template>
+    <template #fallback> Loading Editor... </template>
   </Suspense>
 </template>

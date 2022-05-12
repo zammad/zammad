@@ -1,8 +1,8 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import * as dates from '@shared/i18n/dates'
-import { TranslationMap, Translator } from '@shared/i18n/translator'
 import { reactive, shallowRef } from 'vue'
+import { TranslationMap, Translator } from './translator'
+import * as dates from './dates'
 
 const reactiveNow = shallowRef(new Date())
 

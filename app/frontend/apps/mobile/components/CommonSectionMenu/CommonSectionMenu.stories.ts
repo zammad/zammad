@@ -1,9 +1,7 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import type { Story } from '@storybook/vue3'
-import CommonSectionMenu, {
-  type Props,
-} from '@mobile/components/CommonSectionMenu/CommonSectionMenu.vue'
+import CommonSectionMenu, { type Props } from './CommonSectionMenu.vue'
 
 export default {
   title: 'Apps/Mobile/CommonSectionMenu/CommonSectionMenu',

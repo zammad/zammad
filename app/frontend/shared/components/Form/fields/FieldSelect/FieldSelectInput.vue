@@ -10,16 +10,12 @@ import {
 } from '@headlessui/vue'
 import { i18n } from '@shared/i18n'
 import CommonTicketStateIndicator from '@shared/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue'
-import useValue from '@shared/components/Form/composables/useValue'
-import useSelectDialog from '@shared/components/Form/composables/useSelectDialog'
-import useSelectOptions from '@shared/components/Form/composables/useSelectOptions'
-import useSelectAutoselect from '@shared/components/Form/composables/useSelectAutoselect'
-import type { FormFieldContext } from '@shared/components/Form/types/field'
-import type {
-  SelectOption,
-  SelectOptionSorting,
-  SelectSize,
-} from '@shared/components/Form/fields/FieldSelect/types'
+import useValue from '../../composables/useValue'
+import useSelectDialog from '../../composables/useSelectDialog'
+import useSelectOptions from '../../composables/useSelectOptions'
+import useSelectAutoselect from '../../composables/useSelectAutoselect'
+import type { FormFieldContext } from '../../types/field'
+import type { SelectOption, SelectOptionSorting, SelectSize } from './types'
 
 interface Props {
   context: FormFieldContext<{
@@ -65,44 +61,44 @@ useSelectAutoselect(sortedOptions, toRef(props, 'context'))
 
 <template>
   <div
-    v-bind:class="{
+    :class="{
       [context.classes.input]: true,
-      'min-h-[3.5rem] bg-transparent rounded-none': !isSizeSmall,
-      'bg-gray-600 rounded-lg w-auto': isSizeSmall,
+      'min-h-[3.5rem] rounded-none bg-transparent': !isSizeSmall,
+      'w-auto rounded-lg bg-gray-600': isSizeSmall,
     }"
     class="flex h-auto focus-within:bg-blue-highlight focus-within:pt-0 formkit-populated:pt-0"
     data-test-id="field-select"
   >
     <output
-      v-bind:id="context.id"
-      v-bind:name="context.node.name"
-      v-bind:class="{
-        'px-3 grow': !isSizeSmall,
+      :id="context.id"
+      :name="context.node.name"
+      :class="{
+        'grow px-3': !isSizeSmall,
         'px-2 py-1': isSizeSmall,
       }"
       class="flex cursor-pointer items-center focus:outline-none formkit-disabled:pointer-events-none"
-      v-bind:aria-disabled="context.disabled"
-      v-bind:aria-label="i18n.t('Select...')"
-      v-bind:tabindex="context.disabled ? '-1' : '0'"
+      :aria-disabled="context.disabled"
+      :aria-label="i18n.t('Select...')"
+      :tabindex="context.disabled ? '-1' : '0'"
       v-bind="context.attrs"
       role="list"
-      v-on:click="setIsOpen(true)"
-      v-on:keypress.space="setIsOpen(true)"
-      v-on:blur="context.handlers.blur"
+      @click="setIsOpen(true)"
+      @keypress.space="setIsOpen(true)"
+      @blur="context.handlers.blur"
     >
       <div
-        v-bind:class="{
-          'translate-y-2 grow': !isSizeSmall,
+        :class="{
+          'grow translate-y-2': !isSizeSmall,
         }"
         class="flex flex-wrap gap-1"
       >
         <template v-if="hasValue && hasStatusProperty">
           <CommonTicketStateIndicator
             v-for="selectedValue in valueContainer"
-            v-bind:key="selectedValue"
-            v-bind:status="getSelectedOptionStatus(selectedValue)"
-            v-bind:label="getSelectedOptionLabel(selectedValue)"
-            v-bind:data-test-status="getSelectedOptionStatus(selectedValue)"
+            :key="selectedValue"
+            :status="getSelectedOptionStatus(selectedValue)"
+            :label="getSelectedOptionLabel(selectedValue)"
+            :data-test-status="getSelectedOptionStatus(selectedValue)"
             role="listitem"
             pill
           />
@@ -110,8 +106,8 @@ useSelectAutoselect(sortedOptions, toRef(props, 'context'))
         <template v-else-if="hasValue">
           <div
             v-for="selectedValue in valueContainer"
-            v-bind:key="selectedValue"
-            v-bind:class="{
+            :key="selectedValue"
+            :class="{
               'text-base leading-[19px]': !isSizeSmall,
               'mr-1 text-sm leading-[17px]': isSizeSmall,
             }"
@@ -120,8 +116,8 @@ useSelectAutoselect(sortedOptions, toRef(props, 'context'))
           >
             <CommonIcon
               v-if="getSelectedOptionIcon(selectedValue)"
-              v-bind:name="getSelectedOptionIcon(selectedValue)"
-              v-bind:fixed-size="{ width: 12, height: 12 }"
+              :name="getSelectedOptionIcon(selectedValue)"
+              :fixed-size="{ width: 12, height: 12 }"
               class="mr-1"
             />
             {{ getSelectedOptionLabel(selectedValue) || selectedValue }}
@@ -135,27 +131,27 @@ useSelectAutoselect(sortedOptions, toRef(props, 'context'))
       </div>
       <CommonIcon
         v-if="context.clearable && hasValue && !context.disabled"
-        v-bind:aria-label="i18n.t('Clear Selection')"
-        v-bind:fixed-size="{ width: 16, height: 16 }"
+        :aria-label="i18n.t('Clear Selection')"
+        :fixed-size="{ width: 16, height: 16 }"
         class="mr-2 shrink-0"
         name="close-small"
         role="button"
         tabindex="0"
-        v-on:click.stop="clearValue"
-        v-on:keypress.space.prevent.stop="clearValue"
+        @click.stop="clearValue"
+        @keypress.space.prevent.stop="clearValue"
       />
       <CommonIcon
-        v-bind:fixed-size="{ width: 16, height: 16 }"
+        :fixed-size="{ width: 16, height: 16 }"
         class="shrink-0"
         name="caret-down"
         decorative
       />
     </output>
-    <TransitionRoot v-bind:show="isOpen" as="template" appear>
+    <TransitionRoot :show="isOpen" as="template" appear>
       <Dialog
         class="fixed inset-0 z-10 flex overflow-y-auto py-6"
         role="dialog"
-        v-on:close="setIsOpen(false)"
+        @close="setIsOpen(false)"
       >
         <TransitionChild
           enter="duration-300 ease-out"
@@ -186,51 +182,51 @@ useSelectAutoselect(sortedOptions, toRef(props, 'context'))
           >
             <div
               v-for="option in sortedOptions"
-              v-bind:key="option.value"
-              v-bind:class="{
+              :key="option.value"
+              :class="{
                 'pointer-events-none': option.disabled,
               }"
-              v-bind:tabindex="option.disabled ? '-1' : '0'"
-              v-bind:aria-selected="isCurrentValue(option.value)"
+              :tabindex="option.disabled ? '-1' : '0'"
+              :aria-selected="isCurrentValue(option.value)"
               class="flex h-[58px] cursor-pointer items-center self-stretch py-5 px-4 text-base leading-[19px] text-white first:rounded-t-xl last:rounded-b-xl focus:bg-blue-highlight focus:outline-none"
               role="option"
-              v-on:click="select(option)"
-              v-on:keypress.space="select(option)"
-              v-on:keydown="advanceDialogFocus"
+              @click="select(option)"
+              @keypress.space="select(option)"
+              @keydown="advanceDialogFocus"
             >
               <CommonIcon
                 v-if="context.multiple"
-                v-bind:class="{
+                :class="{
                   '!text-white': isCurrentValue(option.value),
                   'opacity-30': option.disabled,
                 }"
-                v-bind:fixed-size="{ width: 24, height: 24 }"
-                v-bind:name="
+                :fixed-size="{ width: 24, height: 24 }"
+                :name="
                   isCurrentValue(option.value) ? 'checked-yes' : 'checked-no'
                 "
                 class="mr-3 text-white/50"
               />
               <CommonTicketStateIndicator
                 v-if="option.status"
-                v-bind:status="option.status"
-                v-bind:label="option.label"
-                v-bind:class="{
+                :status="option.status"
+                :label="option.label"
+                :class="{
                   'opacity-30': option.disabled,
                 }"
                 class="mr-[11px]"
               />
               <CommonIcon
                 v-else-if="option.icon"
-                v-bind:name="option.icon"
-                v-bind:fixed-size="{ width: 16, height: 16 }"
-                v-bind:class="{
+                :name="option.icon"
+                :fixed-size="{ width: 16, height: 16 }"
+                :class="{
                   '!text-white': isCurrentValue(option.value),
                   'opacity-30': option.disabled,
                 }"
                 class="mr-[11px] text-white/80"
               />
               <span
-                v-bind:class="{
+                :class="{
                   'font-semibold !text-white': isCurrentValue(option.value),
                   'opacity-30': option.disabled,
                 }"
@@ -240,10 +236,10 @@ useSelectAutoselect(sortedOptions, toRef(props, 'context'))
               </span>
               <CommonIcon
                 v-if="!context.multiple && isCurrentValue(option.value)"
-                v-bind:class="{
+                :class="{
                   'opacity-30': option.disabled,
                 }"
-                v-bind:fixed-size="{ width: 16, height: 16 }"
+                :fixed-size="{ width: 16, height: 16 }"
                 name="check"
               />
             </div>

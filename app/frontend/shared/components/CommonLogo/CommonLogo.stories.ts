@@ -1,8 +1,8 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import CommonLogo from '@shared/components/CommonLogo/CommonLogo.vue'
-import useApplicationStore from '@shared/stores/application'
 import { Story } from '@storybook/vue3'
+import useApplicationStore from '@shared/stores/application'
+import CommonLogo from './CommonLogo.vue'
 
 interface Args {
   isCustomLogo: boolean

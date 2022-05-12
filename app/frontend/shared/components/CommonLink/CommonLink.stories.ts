@@ -1,9 +1,7 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import CommonLink, {
-  type Props,
-} from '@shared/components/CommonLink/CommonLink.vue'
 import type { Story } from '@storybook/vue3'
+import CommonLink, { type Props } from './CommonLink.vue'
 
 export default {
   title: 'Shared/Link',

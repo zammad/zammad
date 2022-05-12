@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { getInitials } from '@shared/utils/formatter'
+import { getInitials } from '../formatter'
 
 describe('getInitials', () => {
   it('returns ?? initials, if no arguments are present', () => {

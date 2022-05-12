@@ -1,8 +1,6 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import type { FormFieldContext } from '@shared/components/Form/types/field'
-import useValue from '@shared/components/Form/composables/useValue'
 import { i18n } from '@shared/i18n'
 import flatpickr from 'flatpickr'
 import 'flatpickr/dist/themes/dark.css'
@@ -16,6 +14,8 @@ import {
   watchEffect,
 } from 'vue'
 import { useEventListener } from '@vueuse/core'
+import type { FormFieldContext } from '../../types/field'
+import useValue from '../../composables/useValue'
 
 export interface Props {
   context: FormFieldContext<{
@@ -170,7 +170,6 @@ const createFlatpickr = () => {
     // otherwise everything after input will actually appear after calendar
     appendTo: pickerNode.value.parentNode as HTMLElement,
     // The primary input element should display the current value of the input using context._value
-    // eslint-disable-next-line no-underscore-dangle
     defaultDate: currentValue.value,
     maxDate: props.context.maxDate,
     minDate: getMinDate(),
@@ -263,13 +262,13 @@ onBeforeUnmount(() => {
 <template>
   <!-- TODO add placeholder support when styling will be finished -->
   <input
-    v-bind:id="props.context.id"
+    :id="props.context.id"
     ref="pickerNode"
     class="border-b border-gray-200"
-    v-bind:class="props.context.classes.input"
-    v-bind:disabled="(props.context.disabled as boolean)"
-    v-on:blur="context.handlers.blur"
-    v-on:focus="showPicker = true"
+    :class="props.context.classes.input"
+    :disabled="(props.context.disabled as boolean)"
+    @blur="context.handlers.blur"
+    @focus="showPicker = true"
   />
   <div v-show="showPicker" class="mx-2 w-full px-2">
     <div class="h-[1px] w-full bg-gray-300"></div>

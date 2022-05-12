@@ -1,8 +1,8 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import QueryHandler from '@shared/server/apollo/handler/QueryHandler'
-import MutationHandler from '@shared/server/apollo/handler/MutationHandler'
-import SubscriptionHandler from '@shared/server/apollo/handler/SubscriptionHandler'
+import QueryHandler from './QueryHandler'
+import MutationHandler from './MutationHandler'
+import SubscriptionHandler from './SubscriptionHandler'
 
 export { QueryHandler }
 export { MutationHandler }

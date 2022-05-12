@@ -1,14 +1,14 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
+import { onBeforeUnmount, onMounted, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import CommonNotifications from '@shared/components/CommonNotifications/CommonNotifications.vue'
 import useApplicationStore from '@shared/stores/application'
 import useAuthenticationStore from '@shared/stores/authentication'
 import useSessionStore from '@shared/stores/session'
 import useMetaTitle from '@shared/composables/useMetaTitle'
-import { useRoute, useRouter } from 'vue-router'
 import emitter from '@shared/utils/emitter'
-import { onBeforeUnmount, onMounted, watch } from 'vue'
 import useAppMaintenanceCheck from '@shared/composables/useAppMaintenanceCheck'
 import usePushMessages from '@shared/composables/usePushMessages'
 import useLocaleStore from '@shared/stores/locale'

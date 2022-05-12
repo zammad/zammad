@@ -5,6 +5,6 @@ export {
   FormSchemaNode,
   FormValues,
   FormData,
-} from '@shared/components/Form/types'
+} from './types'
 
-export { default as useForm } from '@shared/components/Form/composable'
+export { default as useForm } from './composable'

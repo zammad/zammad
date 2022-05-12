@@ -1,13 +1,13 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
+import { ref } from 'vue'
 import { defineStore } from 'pinia'
+import type { LastArrayElement } from 'type-fest'
 import log from '@shared/utils/log'
 import localeForBrowserLanguage from '@shared/i18n/localeForBrowserLanguage'
 import getAvailableLocales from '@shared/i18n/availableLocales'
-import useTranslationsStore from '@shared/stores/translations'
 import { LocalesQuery } from '@shared/graphql/types'
-import type { LastArrayElement } from 'type-fest'
-import { ref } from 'vue'
+import useTranslationsStore from './translations'
 
 type Locale = LastArrayElement<LocalesQuery['locales']>
 

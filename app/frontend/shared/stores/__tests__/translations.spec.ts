@@ -1,12 +1,12 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import useTranslationsStore from '@shared/stores/translations'
-import { i18n } from '@shared/i18n'
 import { createTestingPinia } from '@pinia/testing'
 import { createMockClient } from 'mock-apollo-client'
 import { provideApolloClient } from '@vue/apollo-composable'
+import { i18n } from '@shared/i18n'
 import { TranslationsDocument } from '@shared/graphql/queries/translations.api'
 import { TranslationsPayload } from '@shared/graphql/types'
+import useTranslationsStore from '../translations'
 
 const mockQueryResult = (
   locale: string,

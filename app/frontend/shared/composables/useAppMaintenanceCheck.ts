@@ -1,5 +1,7 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
+import { onMounted, reactive, watch } from 'vue'
+import { useRouteQuery } from '@vueuse/router'
 import {
   useNotifications,
   NotificationTypes,
@@ -17,8 +19,6 @@ import {
   QueryHandler,
   SubscriptionHandler,
 } from '@shared/server/apollo/handler'
-import { onMounted, reactive, watch } from 'vue'
-import { useRouteQuery } from '@vueuse/router'
 import testFlags from '@shared/utils/testFlags'
 
 let query: QueryHandler<

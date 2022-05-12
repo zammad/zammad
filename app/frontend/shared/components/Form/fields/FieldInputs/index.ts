@@ -1,7 +1,5 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import initializeFieldDefinition from '@shared/form/core/initializeFieldDefinition'
-import { FormFieldsTypeDefinition, FormFieldType } from '@shared/types/form'
 import {
   color as inputColorDefinition,
   email as inputEmailDefinition,
@@ -11,6 +9,8 @@ import {
   text as inputTextDefinition,
   time as inputTimeDefinition,
 } from '@formkit/inputs'
+import initializeFieldDefinition from '@shared/form/core/initializeFieldDefinition'
+import { FormFieldsTypeDefinition, FormFieldType } from '@shared/types/form'
 
 const inputFieldDefinitionList: FormFieldsTypeDefinition = {
   text: inputTextDefinition,

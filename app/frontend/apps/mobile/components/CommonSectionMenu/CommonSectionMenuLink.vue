@@ -14,8 +14,8 @@ defineProps<Props>()
 
 <template>
   <component
-    v-bind:is="link ? 'CommonLink' : 'div'"
-    v-bind:link="link"
+    :is="link ? 'CommonLink' : 'div'"
+    :link="link"
     class="cursor-pointer border-b border-gray-300 last:border-0"
     data-test-id="section-menu-link"
   >
@@ -24,7 +24,7 @@ defineProps<Props>()
       class="flex items-center justify-between border-b border-gray-300 last:border-0"
     >
       <div class="flex min-h-[54px] items-center">
-        <CommonIcon v-if="icon" v-bind:name="icon" class="mr-2" />
+        <CommonIcon v-if="icon" :name="icon" class="mr-2" />
         <slot>{{ i18n.t(title) }}</slot>
       </div>
 
@@ -33,7 +33,7 @@ defineProps<Props>()
         <CommonIcon
           name="arrow-right"
           class="ml-2 text-gray-300"
-          v-bind:fixed-size="{ width: 12, height: 12 }"
+          :fixed-size="{ width: 12, height: 12 }"
         />
       </div>
     </div>

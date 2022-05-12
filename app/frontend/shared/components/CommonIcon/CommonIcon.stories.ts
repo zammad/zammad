@@ -1,10 +1,8 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import type { Story } from '@storybook/vue3'
-import CommonIcon, {
-  type Props,
-} from '@shared/components/CommonIcon/CommonIcon.vue'
 import ids from 'virtual:svg-icons-names' // eslint-disable-line import/no-unresolved
+import type { Story } from '@storybook/vue3'
+import CommonIcon, { type Props } from './CommonIcon.vue'
 
 const iconsList = ids.map((item: string) => item.substring(5))
 
@@ -59,7 +57,7 @@ const ListTemplate: Story<Props> = (args: Props) => ({
     return { args, iconsList }
   },
   template:
-    '<div class="grid grid-cols-12 max-w-full"><div class="border p-2 items-center align-middle" v-for="iconName in iconsList" v-bind:title="iconName"><CommonIcon v-bind:name="iconName" v-bind="args" /><span>{{ iconName }}</span></div></div>',
+    '<div class="grid grid-cols-12 max-w-full"><div class="border p-2 items-center align-middle" v-for="iconName in iconsList" :title="iconName"><CommonIcon :name="iconName" v-bind="args" /><span>{{ iconName }}</span></div></div>',
 })
 
 export const AllIcons = ListTemplate.bind({})

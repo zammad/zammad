@@ -1,10 +1,10 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import authenticationGuard from '@shared/router/guards/before/authentication'
-import useApplicationStore from '@shared/stores/application'
-import useAuthenticationStore from '@shared/stores/authentication'
 import { createTestingPinia } from '@pinia/testing'
 import { RouteLocationNormalized } from 'vue-router'
+import useAuthenticationStore from '@shared/stores/authentication'
+import useApplicationStore from '@shared/stores/application'
+import authenticationGuard from '../authentication'
 
 vi.mock('@shared/server/apollo/client', () => {
   return {}

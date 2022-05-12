@@ -1,5 +1,5 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-export { ViewTransitions } from '@mobile/components/transition/TransitionViewNavigation/types'
+export { ViewTransitions } from './types'
 
-export { default as useViewTransition } from '@mobile/components/transition/TransitionViewNavigation/composable'
+export { default as useViewTransition } from './composable'

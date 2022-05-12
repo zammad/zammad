@@ -1,12 +1,12 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
+import { Ref, watch } from 'vue'
 import {
   FetchMoreOptions,
   FetchMoreQueryOptions,
   OperationVariables,
   SubscribeToMoreOptions,
 } from '@apollo/client/core'
-import BaseHandler from '@shared/server/apollo/handler/BaseHandler'
 import {
   OperationQueryOptionsReturn,
   OperationQueryResult,
@@ -14,7 +14,7 @@ import {
 } from '@shared/types/server/apollo/handler'
 import { ReactiveFunction } from '@shared/types/utils'
 import { UseQueryReturn } from '@vue/apollo-composable'
-import { Ref, watch } from 'vue'
+import BaseHandler from './BaseHandler'
 
 export default class QueryHandler<
   TResult = OperationQueryResult,

@@ -43,7 +43,6 @@ export default function buildIconsQueries(container: HTMLElement) {
     queryAllIconsByName,
   } as const
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return getQueriesForElement(container, queryFns as any) as BoundFunctions<
     typeof queryFns
   >
