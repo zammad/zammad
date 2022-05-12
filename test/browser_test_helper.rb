@@ -1773,7 +1773,7 @@ wait untill text in selector disabppears
       selector: {
         'Priority': '1 low',
       },
-      'order::direction' => 'down',
+      'order::direction' => 'descending',
     }
   )
 
@@ -1931,7 +1931,7 @@ wait untill text in selector disabppears
       selector: {
         'Priority': '1 low',
       },
-      'order::direction' => 'down',
+      'order::direction' => 'descending',
     }
   )
 

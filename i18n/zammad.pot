@@ -4583,16 +4583,6 @@ msgstr ""
 msgid "Group Filter"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee
-#: app/assets/javascripts/app/models/overview.coffee
-msgid "Group by"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee
-#: app/assets/javascripts/app/models/overview.coffee
-msgid "Group by Direction"
-msgstr ""
-
 #: app/policies/ticket_policy.rb
 msgid "Group can't be blank"
 msgstr ""
@@ -4616,6 +4606,16 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Group selection for ticket creation"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/models/overview.coffee
+msgid "Grouping by"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/models/overview.coffee
+msgid "Grouping order"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/group.coffee
@@ -6887,16 +6887,6 @@ msgstr ""
 msgid "Or migrate from another system."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee
-#: app/assets/javascripts/app/models/overview.coffee
-msgid "Order"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee
-#: app/assets/javascripts/app/models/overview.coffee
-msgid "Order by Direction"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_organization.coffee
@@ -8526,6 +8516,16 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/cti/not_configured.jst.eco
 msgid "Sorry, there is currently no CTI backend enabled."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/models/overview.coffee
+msgid "Sorting by"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/models/overview.coffee
+msgid "Sorting order"
 msgstr ""
 
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
@@ -11161,6 +11161,11 @@ msgstr ""
 msgid "archived"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/models/overview.coffee
+msgid "ascending"
+msgstr ""
+
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay.jst.eco
 msgid "assign tickets"
 msgstr ""
@@ -11300,6 +11305,11 @@ msgstr ""
 msgid "delete"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/models/overview.coffee
+msgid "descending"
+msgstr ""
+
 #: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco
 msgid "disconnect"
 msgstr ""
@@ -11314,11 +11324,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco
 msgid "done"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee
-#: app/assets/javascripts/app/models/overview.coffee
-msgid "down"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
@@ -11927,11 +11932,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco
 msgid "untouched"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee
-#: app/assets/javascripts/app/models/overview.coffee
-msgid "up"
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco

@@ -21,7 +21,7 @@ class App.Overview extends App.Model
     },
     {
       name:    'order::by',
-      display: __('Order'),
+      display: __('Sorting by'),
       tag:     'selectTicketAttributes'
       default: 'created_at'
       null:    false
@@ -29,18 +29,18 @@ class App.Overview extends App.Model
     },
     {
       name:    'order::direction'
-      display: __('Order by Direction')
+      display: __('Sorting order')
       tag:     'select'
       default: 'DESC'
       null:    false
       translate: true
       options:
-        ASC:   __('up')
-        DESC:  __('down')
+        ASC:   __('ascending')
+        DESC:  __('descending')
     },
     {
       name:    'group_by'
-      display: __('Group by')
+      display: __('Grouping by')
       tag:     'select'
       default: ''
       null:    true
@@ -55,14 +55,14 @@ class App.Overview extends App.Model
     },
     {
       name:    'group_direction'
-      display: __('Group by Direction')
+      display: __('Grouping order')
       tag:     'select'
       default: 'DESC'
       null:    false
       translate: true
       options:
-        ASC:   __('up')
-        DESC:  __('down')
+        ASC:   __('ascending')
+        DESC:  __('descending')
     },
     { name: 'active',         display: __('Active'),      tag: 'active', default: true },
     { name: 'created_by_id',  display: __('Created by'),  relation: 'User', readonly: 1 },

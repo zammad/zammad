@@ -1340,7 +1340,7 @@ class App.OverviewSettings extends App.ControllerModal
     },
     {
       name:      'order::by'
-      display:   __('Order')
+      display:   __('Sorting by')
       tag:       'selectTicketAttributes'
       default:   @overview.order.by
       null:      false
@@ -1349,18 +1349,18 @@ class App.OverviewSettings extends App.ControllerModal
     },
     {
       name:      'order::direction'
-      display:   __('Order by Direction')
+      display:   __('Sorting order')
       tag:       'select'
       default:   @overview.order.direction
       null:      false
       translate: true
       options:
-        ASC:  __('up')
-        DESC: __('down')
+        ASC:  __('ascending')
+        DESC: __('descending')
     },
     {
       name:       'group_by'
-      display:    __('Group by')
+      display:    __('Grouping by')
       tag:        'select'
       default:    @overview.group_by
       null:       true
@@ -1370,14 +1370,14 @@ class App.OverviewSettings extends App.ControllerModal
     },
     {
       name:    'group_direction'
-      display: __('Group by Direction')
+      display: __('Grouping order')
       tag:     'select'
       default: @overview.group_direction
       null:    false
       translate: true
       options:
-        ASC:   __('up')
-        DESC:  __('down')
+        ASC:   __('ascending')
+        DESC:  __('descending')
     },)
 
     controller = new App.ControllerForm(

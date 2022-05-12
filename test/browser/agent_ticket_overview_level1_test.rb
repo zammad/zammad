@@ -34,7 +34,7 @@ class AgentTicketOverviewLevel1Test < TestCase
         selector: {
           'Priority' => '1 low',
         },
-        'order::direction' => 'down',
+        'order::direction' => 'descending',
       }
     )
     overview_create(
@@ -45,7 +45,7 @@ class AgentTicketOverviewLevel1Test < TestCase
         selector: {
           'Priority' => '3 high',
         },
-        'order::direction' => 'down',
+        'order::direction' => 'descending',
       }
     )
 

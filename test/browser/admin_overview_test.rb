@@ -22,7 +22,7 @@ class AdminOverviewTest < TestCase
         selector: {
           'Priority' => '1 low',
         },
-        'order::direction' => 'down',
+        'order::direction' => 'descending',
       }
     )
 
@@ -34,7 +34,7 @@ class AdminOverviewTest < TestCase
         selector: {
           'State' => 'new',
         },
-        'order::direction' => 'up',
+        'order::direction' => 'ascending',
       }
     )
   end
@@ -89,9 +89,9 @@ class AdminOverviewTest < TestCase
         selector: {
           'State' => 'open',
         },
-        'order::direction' => 'down',
+        'order::direction' => 'descending',
         group_by: 'Priority',
-        group_direction: 'down',
+        group_direction: 'descending',
       }
     )
 
@@ -105,7 +105,7 @@ class AdminOverviewTest < TestCase
     overview_update(
       data: {
         name:            name,
-        group_direction: 'up',
+        group_direction: 'ascending',
       }
     )
 
