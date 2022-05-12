@@ -29,9 +29,9 @@ describe('testing actions', () => {
   testAction('bold', (text) => `<strong>${text}</strong>`)
   testAction('italic', (text) => `<em>${text}</em>`)
   testAction('strike', (text) => `<s>${text}</s>`)
-  testAction('Add 1st level header', (text) => `<h1>${text}</h1>`)
-  testAction('Add 2nd level header', (text) => `<h2>${text}</h2>`)
-  testAction('Add 3d level header', (text) => `<h3>${text}</h3>`)
+  testAction('Add first level heading', (text) => `<h1>${text}</h1>`)
+  testAction('Add second level heading', (text) => `<h2>${text}</h2>`)
+  testAction('Add third level heading', (text) => `<h3>${text}</h3>`)
   testAction('Add ordered list', (text) => `<ol><li><p>${text}</p></li></ol>`)
   testAction('Add bullet list', (text) => `<ul><li><p>${text}</p></li></ul>`)
 

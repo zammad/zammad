@@ -100,7 +100,7 @@ export default function useEditorActions(
       name: 'heading',
       class: 'text-sm',
       text: 'H1',
-      label: i18n.t('Add 1st level header'),
+      label: i18n.t('Add first level heading'),
       attributes: {
         level: 1,
       },
@@ -110,7 +110,7 @@ export default function useEditorActions(
       name: 'heading',
       class: 'text-sm',
       text: 'H2',
-      label: i18n.t('Add 2nd level header'),
+      label: i18n.t('Add second level heading'),
       attributes: {
         level: 2,
       },
@@ -120,7 +120,7 @@ export default function useEditorActions(
       name: 'heading',
       class: 'text-sm',
       text: 'H3',
-      label: i18n.t('Add 3d level header'),
+      label: i18n.t('Add third level heading'),
       attributes: {
         level: 3,
       },

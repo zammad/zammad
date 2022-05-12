@@ -576,18 +576,6 @@ msgstr ""
 msgid "Add"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
-msgid "Add 1st level header"
-msgstr ""
-
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
-msgid "Add 2nd level header"
-msgstr ""
-
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
-msgid "Add 3d level header"
-msgstr ""
-
 #: app/assets/javascripts/app/views/facebook/list.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
@@ -647,6 +635,10 @@ msgid "Add bullet list"
 msgstr ""
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
+msgid "Add first level heading"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Add image"
 msgstr ""
 
@@ -658,8 +650,16 @@ msgstr ""
 msgid "Add ordered list"
 msgstr ""
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
+msgid "Add second level heading"
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "Add sender initials to end of a tweet."
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
+msgid "Add third level heading"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
@@ -4687,10 +4687,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/monitoring.jst.eco
 msgid "Health information can be retrieved as JSON using:"
-msgstr ""
-
-#: app/frontend/apps/mobile/modules/home/views/Home.vue
-msgid "Hello Home!!!"
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco

@@ -47,7 +47,8 @@ const { notify, clearAllNotifications } = useNotifications()
 const menu: MenuItem[] = [{ type: 'link', link: '/', title: 'Link' }]
 
 notify({
-  message: __('Hello Home!!!'),
+  // eslint-disable-next-line zammad/zammad-detect-translatable-string
+  message: 'Hello Home!!!',
   type: NotificationTypes.WARN,
   durationMS: 10000,
 })
