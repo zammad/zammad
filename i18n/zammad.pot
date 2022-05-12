@@ -744,6 +744,7 @@ msgid "Alarm"
 msgstr ""
 
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
+#: app/frontend/apps/mobile/modules/home/views/Home.vue
 msgid "All Tickets"
 msgstr ""
 
@@ -1668,6 +1669,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/chat.coffee
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #: app/controllers/first_steps_controller.rb
+#: app/frontend/apps/mobile/modules/home/views/Home.vue
 #: db/seeds/permissions.rb
 msgid "Chat"
 msgstr ""
@@ -5448,6 +5450,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 #: app/assets/javascripts/app/models/knowledge_base.coffee
+#: app/frontend/apps/mobile/modules/home/views/Home.vue
 #: app/models/knowledge_base.rb
 #: db/seeds/permissions.rb
 msgid "Knowledge Base"
@@ -6112,6 +6115,7 @@ msgstr ""
 msgid "Multiple tree selection field"
 msgstr ""
 
+#: app/frontend/apps/mobile/modules/home/views/Home.vue
 #: db/seeds/overviews.rb
 msgid "My Assigned Tickets"
 msgstr ""
@@ -6120,6 +6124,7 @@ msgstr ""
 msgid "My Organization Tickets"
 msgstr ""
 
+#: app/frontend/apps/mobile/modules/home/views/Home.vue
 #: db/seeds/overviews.rb
 msgid "My Pending Reached Tickets"
 msgstr ""
@@ -6132,6 +6137,7 @@ msgstr ""
 msgid "My Stats"
 msgstr ""
 
+#: app/frontend/apps/mobile/modules/home/views/Home.vue
 #: db/seeds/overviews.rb
 msgid "My Subscribed Tickets"
 msgstr ""
@@ -10035,6 +10041,7 @@ msgid "URL (AJAX endpoint)"
 msgstr ""
 
 #: app/controllers/first_steps_controller.rb
+#: app/frontend/apps/mobile/modules/home/views/Home.vue
 #: db/seeds/overviews.rb
 msgid "Unassigned & Open Tickets"
 msgstr ""

@@ -15,7 +15,7 @@ const useAuthenticationStore = defineStore(
     const authenticated = ref(false)
 
     const clearAuthentication = async (): Promise<void> => {
-      await clearApolloClientStore
+      await clearApolloClientStore()
 
       const session = useSessionStore()
       session.id = null

@@ -37,7 +37,7 @@ const clickOnAction = (event: MouseEvent) => {
     </div>
   </div>
   <div
-    class="w-fill m-2 flex flex-col rounded-xl bg-gray-500 px-2 py-1 text-white"
+    class="w-fill m-2 mb-6 flex flex-col rounded-xl bg-gray-500 px-2 py-1 text-white"
   >
     <slot>
       <template v-for="(item, idx) in items" v-bind:key="idx">

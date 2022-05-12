@@ -7,7 +7,7 @@ const { viewTransition } = useViewTransition()
 </script>
 
 <template>
-  <main class="grid min-h-screen flex-1 overflow-hidden">
+  <main class="grid h-full flex-1">
     <transition class="z-10 flex-auto" v-bind:name="viewTransition">
       <slot></slot>
     </transition>
