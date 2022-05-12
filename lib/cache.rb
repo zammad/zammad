@@ -4,7 +4,7 @@ Cache = Class.new do
   def method_missing(method, ...)
     super if !respond_to_missing? method
 
-    ActiveSupport::Deprecation.warn("Method 'Cache.#{method}' is deprecated. 'Rails.cache.#{method}' instead.")
+    ActiveSupport::Deprecation.warn("The method 'Cache.#{method}' is deprecated. Use 'Rails.cache.#{method}' instead.")
     Rails.cache.send(method, ...)
   end
 
