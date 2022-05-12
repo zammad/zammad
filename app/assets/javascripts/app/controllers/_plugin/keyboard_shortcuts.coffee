@@ -173,7 +173,7 @@ App.Config.set(
             {
               key: 'tab'
               hotkeys: true
-              description: __('Next in tab')
+              description: __('Show next tab')
               globalEvent: 'next-in-tab'
               callback: ->
                 App.Event.trigger('keyboard_shortcuts_close')
@@ -196,7 +196,7 @@ App.Config.set(
             {
               key: 'shift+tab'
               hotkeys: true
-              description: __('Previous tab')
+              description: __('Show previous tab')
               globalEvent: 'previous-in-tab'
               callback: ->
                 App.Event.trigger('keyboard_shortcuts_close')
