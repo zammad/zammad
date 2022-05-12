@@ -169,6 +169,25 @@ describe('Form - Field - TreeSelect - Dialog', () => {
     expect(wrapper.queryByRole('dialog')).not.toBeInTheDocument()
   })
 
+  it('shows full path of selected options', async () => {
+    const wrapper = renderComponent(FormKit, {
+      ...wrapperParameters,
+      props: {
+        type: 'treeselect',
+        options: testOptions,
+        value: testOptions[0].children![0].children![0].value,
+      },
+    })
+
+    const selectedLabel = wrapper.getByRole('listitem')
+
+    expect(selectedLabel).toHaveTextContent(
+      `${testOptions[0].label} \u203A ${
+        testOptions[0].children![0].label
+      } \u203A ${testOptions[0].children![0].children![0].label}`,
+    )
+  })
+
   it('supports tree paging', async () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,

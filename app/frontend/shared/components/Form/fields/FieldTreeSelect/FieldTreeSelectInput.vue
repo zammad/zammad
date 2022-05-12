@@ -125,6 +125,7 @@ const nextPageCallback = (
 const {
   dialog,
   hasStatusProperty,
+  optionValueLookup,
   sortedOptions,
   getSelectedOptionIcon,
   getSelectedOptionLabel,
@@ -138,6 +139,17 @@ const {
   previousPageCallback,
   nextPageCallback,
 )
+
+const getSelectedOptionParents = (selectedValue: string | number) =>
+  (optionValueLookup.value[selectedValue] &&
+    (optionValueLookup.value[selectedValue] as FlatSelectOption).parents) ||
+  []
+
+const getSelectedOptionFullPath = (selectedValue: string | number) =>
+  getSelectedOptionParents(selectedValue)
+    .map((parentValue) => `${getSelectedOptionLabel(parentValue)} \u203A `)
+    .join('') +
+  (getSelectedOptionLabel(selectedValue) || selectedValue.toString())
 
 const goToPreviousPage = () => {
   previousPageCallback(undefined, getDialogFocusTargets)
@@ -235,7 +247,7 @@ useSelectAutoselect(flatOptions, toRef(props, 'context'))
             v-for="selectedValue in valueContainer"
             v-bind:key="selectedValue"
             v-bind:status="getSelectedOptionStatus(selectedValue)"
-            v-bind:label="getSelectedOptionLabel(selectedValue)"
+            v-bind:label="getSelectedOptionFullPath(selectedValue)"
             v-bind:data-test-status="getSelectedOptionStatus(selectedValue)"
             role="listitem"
             pill
@@ -254,7 +266,7 @@ useSelectAutoselect(flatOptions, toRef(props, 'context'))
               v-bind:fixed-size="{ width: 12, height: 12 }"
               class="mr-1"
             />
-            {{ getSelectedOptionLabel(selectedValue) || selectedValue }}
+            {{ getSelectedOptionFullPath(selectedValue) }}
           </div>
         </template>
       </div>
