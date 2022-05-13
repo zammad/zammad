@@ -35,7 +35,7 @@ class ChannelsTwitterController < ApplicationController
 
   def hmac_signature_by_app(content)
     external_credential = ExternalCredential.find_by(name: 'twitter')
-    raise Exceptions::UnprocessableEntity, __("Could not find external_credential 'twitter'!") if !external_credential
+    raise Exceptions::UnprocessableEntity, __("The required 'ExternalCredential' 'twitter' could not be found.") if !external_credential
 
     hmac_signature_gen(external_credential.credentials[:consumer_secret], content)
   end
@@ -51,8 +51,8 @@ class ChannelsTwitterController < ApplicationController
     if !external_credential && ExternalCredential.exists?(name: 'twitter')
       external_credential = ExternalCredential.find_by(name: 'twitter').credentials
     end
-    raise Exceptions::UnprocessableEntity, __('Could not find external_credential in cache!') if external_credential.blank?
-    raise Exceptions::UnprocessableEntity, __('Could not find external_credential[:consumer_secret] in cache!') if external_credential[:consumer_secret].blank?
+    raise Exceptions::UnprocessableEntity, __('The required value external_credential could not be found in the cache.') if external_credential.blank?
+    raise Exceptions::UnprocessableEntity, __("The required value 'external_credential[:consumer_secret]' could not be found in the cache.") if external_credential[:consumer_secret].blank?
     raise Exceptions::UnprocessableEntity, __("The required parameter 'crc_token' is missing from the Twitter verify payload!") if params['crc_token'].blank?
 
     render json: {

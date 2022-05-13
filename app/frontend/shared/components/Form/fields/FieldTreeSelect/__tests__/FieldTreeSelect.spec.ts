@@ -932,7 +932,7 @@ describe('Form - Field - TreeSelect - Accessibility', () => {
       },
     })
 
-    expect(wrapper.getByRole('list')).toHaveAttribute('aria-label', 'Select...')
+    expect(wrapper.getByRole('list')).toHaveAttribute('aria-label', 'Select…')
 
     expect(wrapper.getByRole('button')).toHaveAttribute(
       'aria-label',

@@ -78,7 +78,7 @@ useSelectAutoselect(sortedOptions, toRef(props, 'context'))
       }"
       class="flex cursor-pointer items-center focus:outline-none formkit-disabled:pointer-events-none"
       :aria-disabled="context.disabled"
-      :aria-label="i18n.t('Select...')"
+      :aria-label="i18n.t('Select…')"
       :tabindex="context.disabled ? '-1' : '0'"
       v-bind="context.attrs"
       role="list"

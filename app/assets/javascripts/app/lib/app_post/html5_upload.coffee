@@ -82,7 +82,7 @@ class App.Html5Upload extends App.Controller
       buttonCancel: 'Cancel'
       buttonCancelClass: 'btn--danger'
       buttonSubmit: false
-      message: message || __('Cannot upload file')
+      message: message || __('The file could not be uploaded.')
       shown: true
       small: true
       container: @inputField.closest('.content')

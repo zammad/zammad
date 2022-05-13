@@ -31,7 +31,7 @@ class LinksController < ApplicationController
              end
 
     if !object
-      render json: { error: __('Could not find object!') }, status: :unprocessable_entity
+      render json: { error: __('The object could not be found.') }, status: :unprocessable_entity
       return
     end
 

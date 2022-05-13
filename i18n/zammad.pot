@@ -1436,13 +1436,13 @@ msgid "Caller ID of outbound calls can be changed as well."
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
-msgid "Caller Log Filter"
+#: app/assets/javascripts/app/views/integration/placetel.jst.eco
+#: app/assets/javascripts/app/views/integration/sipgate.jst.eco
+msgid "Caller ID to block"
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
-#: app/assets/javascripts/app/views/integration/placetel.jst.eco
-#: app/assets/javascripts/app/views/integration/sipgate.jst.eco
-msgid "Caller id to block"
+msgid "Caller Log Filter"
 msgstr ""
 
 #: app/assets/javascripts/app/views/cti/index.jst.eco
@@ -1520,10 +1520,6 @@ msgstr ""
 
 #: app/policies/ticket_policy.rb
 msgid "Cannot follow-up on a closed ticket. Please create a new ticket."
-msgstr ""
-
-#: app/assets/javascripts/app/lib/app_post/html5_upload.coffee
-msgid "Cannot upload file"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/categories.coffee
@@ -2168,46 +2164,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Core Workflows are actions or constraints on selections in forms. Depending on an action, it is possible to hide or restrict fields or to change the obligation to fill them in."
-msgstr ""
-
-#: app/controllers/reports_controller.rb
-msgid "Could not find active reporting profile."
-msgstr ""
-
-#: app/controllers/channels_twitter_controller.rb
-msgid "Could not find external_credential 'twitter'!"
-msgstr ""
-
-#: app/controllers/channels_twitter_controller.rb
-msgid "Could not find external_credential in cache!"
-msgstr ""
-
-#: app/controllers/channels_twitter_controller.rb
-msgid "Could not find external_credential[:consumer_secret] in cache!"
-msgstr ""
-
-#: app/controllers/links_controller.rb
-msgid "Could not find object!"
-msgstr ""
-
-#: app/controllers/tickets_controller.rb
-msgid "Could not find source ticket!"
-msgstr ""
-
-#: app/controllers/tickets_controller.rb
-msgid "Could not find target ticket number!"
-msgstr ""
-
-#: lib/static_assets.rb
-msgid "Could not read raw logo!"
-msgstr ""
-
-#: app/assets/javascripts/app/views/knowledge_base/new_controller.coffee
-msgid "Couldn't create Knowledge Base"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/knowledge_base/public_menu_form.coffee
-msgid "Couldn't save changes"
 msgstr ""
 
 #: app/assets/javascripts/app/views/tag/table.jst.eco
@@ -4583,10 +4539,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 msgid "Group Filter"
-msgstr ""
-
-#: app/policies/ticket_policy.rb
-msgid "Group can't be blank"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
@@ -7279,7 +7231,7 @@ msgid "Please enter valid path or domain"
 msgstr ""
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
-msgid "Please execute database changes only in a maintenance time-slot."
+msgid "Please execute database changes only in a maintenance window."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/public_menu_form_item.coffee
@@ -8086,11 +8038,6 @@ msgstr ""
 msgid "Select the customer of the ticket or create one."
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldSelect/FieldSelectInput.vue
-#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
-msgid "Select..."
-msgstr ""
-
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Selected conditions"
 msgstr ""
@@ -8101,6 +8048,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/settings/ticket_number.jst.eco
 msgid "Selects the ticket number generator module."
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldSelect/FieldSelectInput.vue
+#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
+msgid "Select…"
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
@@ -8931,6 +8883,10 @@ msgstr ""
 msgid "The API token could not be found."
 msgstr ""
 
+#: app/assets/javascripts/app/views/knowledge_base/new_controller.coffee
+msgid "The Knowledge Base could not be created."
+msgstr ""
+
 #: app/controllers/users_controller.rb
 msgid "The MIME type of the full-size image is invalid."
 msgstr ""
@@ -8949,6 +8905,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 msgid "The URL to this installation of Zammad."
+msgstr ""
+
+#: app/controllers/reports_controller.rb
+msgid "The active reporting profile could not be found."
 msgstr ""
 
 #: app/controllers/ticket_articles_controller.rb
@@ -8979,6 +8939,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_dialog.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/editor_coordinator.coffee
+#: app/assets/javascripts/app/controllers/knowledge_base/public_menu_form.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/attachments.coffee
 msgid "The changes could not be saved."
 msgstr ""
@@ -9028,6 +8989,10 @@ msgstr ""
 
 #: lib/telegram.rb
 msgid "The file could not be retrieved from the bot."
+msgstr ""
+
+#: app/assets/javascripts/app/lib/app_post/html5_upload.coffee
+msgid "The file could not be uploaded."
 msgstr ""
 
 #: app/controllers/ticket_articles_controller.rb
@@ -9088,6 +9053,10 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/object_manager.coffee
 #: app/assets/javascripts/app/lib/app_post/user_organization_autocompletion.coffee
 msgid "The object could not be created."
+msgstr ""
+
+#: app/controllers/links_controller.rb
+msgid "The object could not be found."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_edit.coffee
@@ -9157,12 +9126,20 @@ msgstr ""
 msgid "The provided token is invalid."
 msgstr ""
 
+#: lib/static_assets.rb
+msgid "The raw logo could not be read."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/report.coffee
 msgid "The report could not be generated"
 msgstr ""
 
 #: app/assets/javascripts/app/views/knowledge_base/delete.coffee
 msgid "The request could not be processed."
+msgstr ""
+
+#: app/controllers/channels_twitter_controller.rb
+msgid "The required 'ExternalCredential' 'twitter' could not be found."
 msgstr ""
 
 #: lib/idoit.rb
@@ -9259,6 +9236,18 @@ msgstr ""
 msgid "The required parameter 'signup' is missing."
 msgstr ""
 
+#: app/controllers/channels_twitter_controller.rb
+msgid "The required value 'external_credential[:consumer_secret]' could not be found in the cache."
+msgstr ""
+
+#: app/policies/ticket_policy.rb
+msgid "The required value 'group_id' is missing."
+msgstr ""
+
+#: app/controllers/channels_twitter_controller.rb
+msgid "The required value external_credential could not be found in the cache."
+msgstr ""
+
 #: app/controllers/users_controller.rb
 msgid "The resized image is invalid."
 msgstr ""
@@ -9290,6 +9279,14 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 msgid "The signature was successfully verified."
+msgstr ""
+
+#: app/controllers/tickets_controller.rb
+msgid "The source ticket could not be found."
+msgstr ""
+
+#: app/controllers/tickets_controller.rb
+msgid "The target ticket number could not be found."
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco

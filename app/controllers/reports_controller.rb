@@ -139,7 +139,7 @@ class ReportsController < ApplicationController
       end
     end
     if !profile
-      raise Exceptions::UnprocessableEntity, __('Could not find active reporting profile.')
+      raise Exceptions::UnprocessableEntity, __('The active reporting profile could not be found.')
     end
 
     local_config = Report.config

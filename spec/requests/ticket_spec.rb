@@ -49,7 +49,7 @@ RSpec.describe 'Ticket', type: :request do
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:unprocessable_entity)
       expect(json_response).to be_a_kind_of(Hash)
-      expect(json_response['error_human']).to eq('Group can\'t be blank')
+      expect(json_response['error_human']).to eq("The required value 'group_id' is missing.")
     end
 
     it 'does ticket create with agent - wrong group (01.02)' do
@@ -2015,7 +2015,7 @@ RSpec.describe 'Ticket', type: :request do
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response['result']).to eq('failed')
-      expect(json_response['message']).to eq('Could not find target ticket number!')
+      expect(json_response['message']).to eq('The target ticket number could not be found.')
 
       put "/api/v1/ticket_merge/#{ticket3.id}/#{ticket1.number}", params: {}, as: :json
       expect(response).to have_http_status(:forbidden)

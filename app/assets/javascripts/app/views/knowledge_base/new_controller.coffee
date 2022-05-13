@@ -53,5 +53,5 @@ class App.KnowledgeBaseNewController extends App.Controller
 
       error: (xhr) =>
         @formEnable(@el)
-        @formController.showAlert(xhr.responseJSON?.error || __("Couldn't create Knowledge Base"))
+        @formController.showAlert(xhr.responseJSON?.error || __('The Knowledge Base could not be created.'))
     )
