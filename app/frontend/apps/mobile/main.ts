@@ -20,6 +20,9 @@ import initializeForm from '@mobile/form'
 export default async function mountApp(): Promise<void> {
   const app = createApp(App)
 
+  // TODO remove when Vue 3.3 released
+  app.config.unwrapInjectedRef = true
+
   initializeApolloClient(app)
 
   initializeStore(app)

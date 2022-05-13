@@ -11,3 +11,5 @@ global.__ = (source) => {
 configure({
   testIdAttribute: 'data-test-id',
 })
+
+require.extensions['.css'] = () => ({})

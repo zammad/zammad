@@ -7694,6 +7694,11 @@ vue-tsc@^0.34.13:
   dependencies:
     "@volar/vue-typescript" "0.34.13"
 
+vue3-draggable-resizable@^1.6.3:
+  version "1.6.3"
+  resolved "https://registry.yarnpkg.com/vue3-draggable-resizable/-/vue3-draggable-resizable-1.6.3.tgz#e4c66474b4b7c2c97140c6bdf6d8c43d26858e80"
+  integrity sha512-gUV03H4w6YkOxZJ/FKRAgJ+CPydHZedTG5edPU2kkztyof1rVFzJmKVJIE2RBChKQtCGPiMRMIPDXyFWTQK0pg==
+
 vue@^3.2.33:
   version "3.2.33"
   resolved "https://registry.yarnpkg.com/vue/-/vue-3.2.33.tgz#7867eb16a3293a28c4d190a837bc447878bd64c2"

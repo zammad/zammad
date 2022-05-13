@@ -122,6 +122,7 @@
     "tippy.js": "^6.3.7",
     "uuid": "^8.3.2",
     "vue": "^3.2.33",
-    "vue-router": "^4.0.15"
+    "vue-router": "^4.0.15",
+    "vue3-draggable-resizable": "^1.6.3"
   }
 }

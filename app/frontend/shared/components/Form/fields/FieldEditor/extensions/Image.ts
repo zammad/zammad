@@ -1,9 +1,43 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import Image from '@tiptap/extension-image'
+import { VueNodeViewRenderer } from '@tiptap/vue-3'
+import ImageResizable from '../ImageResizable.vue'
 
-// TODO images should be resizable
 export default Image.extend({
+  addAttributes() {
+    return {
+      ...this.parent?.(),
+
+      width: {
+        default: '100%',
+        renderHTML: (attributes) => {
+          return {
+            width: attributes.width,
+          }
+        },
+      },
+
+      height: {
+        default: 'auto',
+        renderHTML: (attributes) => {
+          return {
+            height: attributes.height,
+          }
+        },
+      },
+
+      isDraggable: {
+        default: true,
+        renderHTML: () => {
+          return {}
+        },
+      },
+    }
+  },
+  addNodeView() {
+    return VueNodeViewRenderer(ImageResizable)
+  },
   addCommands() {
     return {
       setImages:
