@@ -10,7 +10,6 @@ class FormController < ApplicationController
 
   def configuration
     return if !fingerprint_exists?
-    return if limit_reached?
 
     api_path  = Rails.configuration.api_path
     http_type = Setting.get('http_type')
@@ -34,7 +33,6 @@ class FormController < ApplicationController
   def submit
     return if !fingerprint_exists?
     return if !token_valid?(params[:token], params[:fingerprint])
-    return if limit_reached?
 
     # validate input
     errors = {}
@@ -197,28 +195,6 @@ class FormController < ApplicationController
       raise Exceptions::NotAuthorized
     end
     true
-  end
-
-  def limit_reached?
-    return false if !SearchIndexBackend.enabled?
-
-    # quote ipv6 ip'
-    remote_ip = request.remote_ip.gsub(':', '\\:')
-
-    # in elasticsearch7 "created_at:>now-1h" is not working. Needed to catch -2h
-    form_limit_by_ip_per_hour = Setting.get('form_ticket_create_by_ip_per_hour') || 20
-    result = SearchIndexBackend.search("preferences.form.remote_ip:'#{remote_ip}' AND created_at:>now-2h", 'Ticket', limit: form_limit_by_ip_per_hour)
-    raise Exceptions::Forbidden if result.count >= form_limit_by_ip_per_hour.to_i
-
-    form_limit_by_ip_per_day = Setting.get('form_ticket_create_by_ip_per_day') || 240
-    result = SearchIndexBackend.search("preferences.form.remote_ip:'#{remote_ip}' AND created_at:>now-1d", 'Ticket', limit: form_limit_by_ip_per_day)
-    raise Exceptions::Forbidden if result.count >= form_limit_by_ip_per_day.to_i
-
-    form_limit_per_day = Setting.get('form_ticket_create_per_day') || 5000
-    result = SearchIndexBackend.search('preferences.form.remote_ip:* AND created_at:>now-1d', 'Ticket', limit: form_limit_per_day)
-    raise Exceptions::Forbidden if result.count >= form_limit_per_day.to_i
-
-    false
   end
 
   def fingerprint_exists?

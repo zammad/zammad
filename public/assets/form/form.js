@@ -316,7 +316,7 @@ $(function() {
       _this.log('debug', 'modalOpenTime', _this.modalOpenTime.getTime())
       _this.log('debug', 'diffTime', diff)
       if (diff < 1000*10) {
-        alert('Sorry, you look like an robot!')
+        alert('Sorry, you look like a robot!')
         return
       }
     }
@@ -357,7 +357,7 @@ $(function() {
 
     }).fail(function() {
       _this.$form.find('button').prop('disabled', false)
-      alert('Faild to submit form!')
+      alert('The form could not be submitted!')
     });
   }
 

@@ -7,7 +7,7 @@ RSpec.describe 'Form', type: :system, authenticated_as: true do
   shared_examples 'validating form fields' do
     it 'validate name input' do
       within form_context do
-        fill_in 'Email', with: 'discard@znuny.com'
+        fill_in 'Email', with: 'discard@discard.zammad.org'
         fill_in 'Message', with: 'message here'
         click_on 'Submit'
 
@@ -28,7 +28,7 @@ RSpec.describe 'Form', type: :system, authenticated_as: true do
     it 'validate message input' do
       within form_context do
         fill_in 'Name', with: 'some sender'
-        fill_in 'Email', with: 'discard@znuny.com'
+        fill_in 'Email', with: 'discard@discard.zammad.org'
         click_on 'Submit'
 
         expect(page).to have_validation_message_for(body_input)
@@ -66,7 +66,7 @@ RSpec.describe 'Form', type: :system, authenticated_as: true do
       within form_context do
         fill_in 'Name', with: 'some sender'
         fill_in 'Message', with: 'message here'
-        fill_in 'Email', with: 'discard@znuny.com'
+        fill_in 'Email', with: 'discard@discard.zammad.org'
         sleep 10
         click_on 'Submit'
 
@@ -78,9 +78,23 @@ RSpec.describe 'Form', type: :system, authenticated_as: true do
       within form_context do
         fill_in 'Name', with: 'some sender'
         fill_in 'Message', with: 'message here'
-        fill_in 'Email', with: 'discard@znuny.com'
+        fill_in 'Email', with: 'discard@discard.zammad.org'
         click_on 'Submit'
-        accept_alert('Sorry, you look like an robot!')
+        accept_alert('Sorry, you look like a robot!')
+      end
+    end
+  end
+
+  shared_examples 'submitting fails due to throttling' do
+    it 'rejects form submission due to throttling' do
+      within form_context do
+        fill_in 'Name', with: 'some sender'
+        fill_in 'Message', with: 'message here'
+        fill_in 'Email', with: 'discard@discard.zammad.org'
+        sleep 10
+        # Avoid await_empty_ajax_queue.
+        execute_script('$("button:submit").trigger("click")')
+        accept_alert('The form could not be submitted!')
       end
     end
   end
@@ -161,6 +175,20 @@ RSpec.describe 'Form', type: :system, authenticated_as: true do
 
         it_behaves_like 'validating form fields'
         it_behaves_like 'submitting valid form fields'
+      end
+
+      context 'when form is throttled with :too_many_requests' do
+        before do
+          Setting.set('form_ticket_create_by_ip_per_hour', 0)
+          visit path
+        end
+
+        let(:form_context) { form_inline_selector }
+        let(:name_input) { '#zammad-form-name-inline' }
+        let(:body_input) { '#zammad-form-body-inline' }
+        let(:email_input) { '#zammad-form-email-inline' }
+
+        it_behaves_like 'submitting fails due to throttling'
       end
     end
 
