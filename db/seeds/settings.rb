@@ -207,15 +207,16 @@ Setting.create_or_update(
   options:     {
     form: [
       {
-        display: '',
-        null:    false,
-        name:    'pretty_date_format',
-        tag:     'select',
-        options: {
-          relative:  'relative - e. g. "2 hours ago" or "2 days and 15 minutes ago"',
-          absolute:  'absolute - e. g. "Monday 09:30" or "Tuesday 23. Feb 14:20"',
-          timestamp: 'timestamp - e. g. "2018-08-30 14:30"',
+        display:   '',
+        null:      false,
+        name:      'pretty_date_format',
+        tag:       'select',
+        options:   {
+          relative:  __('relative - e. g. "2 hours ago" or "2 days and 15 minutes ago"'),
+          absolute:  __('absolute - e. g. "Monday 09:30" or "Tuesday 23. Feb 14:20"'),
+          timestamp: __('timestamp - e. g. "2018-08-30 14:30"'),
         },
+        translate: true,
       },
     ],
   },
@@ -343,15 +344,16 @@ Setting.create_if_not_exists(
   options:     {
     form: [
       {
-        display:  '',
-        null:     true,
-        name:     'storage_provider',
-        tag:      'select',
-        tranlate: true,
-        options:  {
+        display:   '',
+        null:      true,
+        name:      'storage_provider',
+        tag:       'select',
+        tranlate:  true,
+        options:   {
           'DB'   => __('Database'),
           'File' => __('Filesystem'),
         },
+        translate: true,
       },
     ],
   },
@@ -1918,14 +1920,15 @@ Setting.create_if_not_exists(
   options:     {
     form: [
       {
-        display: '',
-        null:    true,
-        name:    'password_min_2_lower_2_upper_characters',
-        tag:     'select',
-        options: {
+        display:   '',
+        null:      true,
+        name:      'password_min_2_lower_2_upper_characters',
+        tag:       'select',
+        options:   {
           1 => 'yes',
           0 => 'no',
         },
+        translate: true,
       },
     ],
   },
@@ -1943,14 +1946,15 @@ Setting.create_if_not_exists(
   options:     {
     form: [
       {
-        display: __('Needed'),
-        null:    true,
-        name:    'password_need_digit',
-        tag:     'select',
-        options: {
+        display:   __('Needed'),
+        null:      true,
+        name:      'password_need_digit',
+        tag:       'select',
+        options:   {
           1 => 'yes',
           0 => 'no',
         },
+        translate: true,
       },
     ],
   },
@@ -1968,14 +1972,15 @@ Setting.create_if_not_exists(
   options:     {
     form: [
       {
-        display: __('Needed'),
-        null:    true,
-        name:    'password_need_special_character',
-        tag:     'select',
-        options: {
+        display:   __('Needed'),
+        null:      true,
+        name:      'password_need_special_character',
+        tag:       'select',
+        options:   {
           1 => 'yes',
           0 => 'no',
         },
+        translate: true,
       },
     ],
   },
@@ -2088,9 +2093,9 @@ Setting.create_if_not_exists(
         tag:       'select',
         translate: true,
         options:   {
-          'left'  => 'left',
-          'right' => 'right',
-          'none'  => 'none',
+          'left'  => __('left'),
+          'right' => __('right'),
+          'none'  => __('none'),
         },
       },
     ],
@@ -2678,15 +2683,16 @@ Setting.create_if_not_exists(
   options:     {
     form: [
       {
-        display: '',
-        null:    true,
-        name:    'ticket_define_email_from',
-        tag:     'select',
-        options: {
+        display:   '',
+        null:      true,
+        name:      'ticket_define_email_from',
+        tag:       'select',
+        options:   {
           SystemAddressName:          __('System Address Display Name'),
           AgentNameSystemAddressName: __('Agent Name + FromSeparator + System Address Display Name'),
           AgentName:                  __('Agent Name'),
         },
+        translate: true,
       },
     ],
   },
@@ -2777,15 +2783,16 @@ Setting.create_if_not_exists(
   options:     {
     form: [
       {
-        display: '',
-        null:    true,
-        name:    'postmaster_follow_up_search_in',
-        tag:     'checkbox',
-        options: {
+        display:   '',
+        null:      true,
+        name:      'postmaster_follow_up_search_in',
+        tag:       'checkbox',
+        options:   {
           'references' => __('References - Search for follow-up also in In-Reply-To or References headers.'),
           'body'       => __('Body - Search for follow-up also in mail body.'),
           'attachment' => __('Attachment - Search for follow-up also in attachments.'),
         },
+        translate: true,
       },
     ],
   },
@@ -2804,15 +2811,16 @@ Setting.create_if_not_exists(
   options:     {
     form: [
       {
-        display: '',
-        null:    true,
-        name:    'postmaster_sender_based_on_reply_to',
-        tag:     'select',
-        options: {
+        display:   '',
+        null:      true,
+        name:      'postmaster_sender_based_on_reply_to',
+        tag:       'select',
+        options:   {
           ''                                     => '-',
           'as_sender_of_email'                   => __('Take Reply-To header as sender/from of email.'),
           'as_sender_of_email_use_from_realname' => __('Take Reply-To header as sender/from of email and use the real name of origin from.'),
         },
+        translate: true,
       },
     ],
   },

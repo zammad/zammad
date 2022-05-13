@@ -39,11 +39,11 @@ class App.Group extends App.Model
       cssClass: cssClass.join(' ')
 
   @accesses: ->
-    read: 'Read'
-    create: 'Create'
-    change: 'Change'
-    overview: 'Overview'
-    full: 'Full'
+    read: __('Read')
+    create: __('Create')
+    change: __('Change')
+    overview: __('Overview')
+    full: __('Full')
 
   signature_id_is_display_warning: (signature_id) ->
     !App.Signature.find(signature_id).active
