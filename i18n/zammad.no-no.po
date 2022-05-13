@@ -1667,6 +1667,7 @@ msgstr "Når varsel skal sendes."
 msgid "Certificates & Private Keys"
 msgstr ""
 
+#: app/assets/javascripts/app/models/group.coffee
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
@@ -2370,6 +2371,7 @@ msgstr "Land"
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/add_form.coffee
+#: app/assets/javascripts/app/models/group.coffee
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco
 #: app/assets/javascripts/app/views/agent_user_create.jst.eco
 #: app/assets/javascripts/app/views/customer_ticket_create.jst.eco
@@ -4805,6 +4807,12 @@ msgstr "Fra"
 #: app/assets/javascripts/app/controllers/_manage/system.coffee
 msgid "Frontend"
 msgstr "Frontend"
+
+#: app/assets/javascripts/app/models/group.coffee
+#, fuzzy
+#| msgid "Full Name"
+msgid "Full"
+msgstr "Fullt Navn"
 
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 msgid "Full Name"
@@ -7698,6 +7706,7 @@ msgid "Outbound Call"
 msgstr "Utgående samtale"
 
 #: app/assets/javascripts/app/controllers/overview.coffee
+#: app/assets/javascripts/app/models/group.coffee
 msgid "Overview"
 msgstr "Oversikt"
 
@@ -8218,6 +8227,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 msgid "Raw"
+msgstr ""
+
+#: app/assets/javascripts/app/models/group.coffee
+msgid "Read"
 msgstr ""
 
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco
@@ -12020,6 +12033,10 @@ msgstr ""
 msgid "Zip"
 msgstr "Postnr"
 
+#: db/seeds/settings.rb
+msgid "absolute - e. g. \"Monday 09:30\" or \"Tuesday 23. Feb 14:20\""
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ui_element/active.coffee
 msgid "active"
 msgstr "aktiv"
@@ -12381,6 +12398,7 @@ msgstr "under behandling"
 msgid "inactive"
 msgstr "inaktiv"
 
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 msgid "internal"
 msgstr "Intern"
@@ -12425,6 +12443,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/karma/index.jst.eco
 msgid "last week"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "left"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
@@ -12503,6 +12525,7 @@ msgstr "ingen problemer"
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 #: app/assets/javascripts/app/views/widget/ticket_stats_list.jst.eco
+#: db/seeds/settings.rb
 msgid "none"
 msgstr "ingen"
 
@@ -12575,6 +12598,12 @@ msgstr "ventende påminnelse"
 msgid "phone"
 msgstr "telefon"
 
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
+#, fuzzy
+#| msgid "Public"
+msgid "public"
+msgstr "Offentlig"
+
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 msgid "published"
 msgstr "publisert"
@@ -12589,6 +12618,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "regex mismatch"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "relative - e. g. \"2 hours ago\" or \"2 days and 15 minutes ago\""
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
@@ -12611,6 +12644,10 @@ msgstr "fjernet"
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/twitter_reply.coffee
 msgid "reply"
 msgstr "svar"
+
+#: db/seeds/settings.rb
+msgid "right"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/cti.coffee
 msgid "ringing"
@@ -12748,6 +12785,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 msgid "till (relative)"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "timestamp - e. g. \"2018-08-30 14:30\""
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee

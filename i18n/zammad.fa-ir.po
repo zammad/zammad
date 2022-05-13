@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-05-11 05:23+0000\n"
+"PO-Revision-Date: 2022-05-13 11:42+0000\n"
 "Last-Translator: payman Zafar <p.moghadam@asredanesh.com>\n"
 "Language-Team: Persian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/fa/>\n"
@@ -243,11 +243,11 @@ msgstr "%s کاربر برای %s کاربر"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco
 msgid "%s% are currently in process"
-msgstr "s%% دردست اقدام است"
+msgstr "s% درصد دردست اقدام است"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_reopen.jst.eco
 msgid "%s% have been reopened"
-msgstr "s%% بازگشایی شد"
+msgstr "s% درصد بازگشایی شد"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 msgid ""
@@ -817,7 +817,7 @@ msgstr "آی‌دی اپلیکیشن"
 
 #: db/seeds/settings.rb
 msgid "App Secret"
-msgstr "App Secret"
+msgstr "رمز اپلیکیشن"
 
 #: db/seeds/settings.rb
 msgid "App Tenant ID"
@@ -848,7 +848,7 @@ msgstr "اپلیکیشن"
 
 #: db/seeds/settings.rb
 msgid "Application secret"
-msgstr ""
+msgstr "رمز اپلیکیشن"
 
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid "Applications"
@@ -1536,6 +1536,7 @@ msgstr "گواهینامه برای راستی‌آزمایی یافت نشد."
 msgid "Certificates & Private Keys"
 msgstr "گواهینامه‌ها و کلیدهای خصوصی"
 
+#: app/assets/javascripts/app/models/group.coffee
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
@@ -1814,11 +1815,11 @@ msgstr "آی‌دی مشتری"
 
 #: db/seeds/settings.rb
 msgid "Client Secret"
-msgstr "راز مشتری"
+msgstr "رمز مشتری"
 
 #: db/seeds/settings.rb
 msgid "Client storage"
-msgstr ""
+msgstr "ذخیره‌سازی سمت کاربر"
 
 #: app/assets/javascripts/app/models/application.coffee
 msgid "Clients"
@@ -2199,6 +2200,7 @@ msgstr "کشور"
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/add_form.coffee
+#: app/assets/javascripts/app/models/group.coffee
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco
 #: app/assets/javascripts/app/views/agent_user_create.jst.eco
 #: app/assets/javascripts/app/views/customer_ticket_create.jst.eco
@@ -2220,7 +2222,7 @@ msgstr "ایجاد کانال"
 
 #: app/models/report.rb
 msgid "Create Channels"
-msgstr "ایجاد کانال جدید"
+msgstr "کانال ایجاد تیکت"
 
 #: app/assets/javascripts/app/views/knowledge_base/new_controller.coffee
 msgid "Create Knowledge Base"
@@ -3076,15 +3078,15 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Defines the default system language."
-msgstr ""
+msgstr "تعیین زبان پیش‌فرض سیستم."
 
 #: db/seeds/settings.rb
 msgid "Defines the default system timezone."
-msgstr ""
+msgstr "تعیین منظقه زمانی پیش‌فرض سیستم."
 
 #: db/seeds/settings.rb
 msgid "Defines the default visibility for new notes."
-msgstr "قابلیت مشاهده پیش فرض برای یادداشت جدید."
+msgstr "تعیین قابلیت مشاهده پیش‌فرض برای یادداشت جدید."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -3121,17 +3123,17 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Defines the logo of the application, shown in the web interface."
-msgstr ""
+msgstr "تعیین لوگوی شرکت که در صفحه ورود به سایت نمایش داده می‌شود."
 
 #: db/seeds/settings.rb
 msgid "Defines the maximum accepted email size in MB."
-msgstr ""
+msgstr "تعیین حداکثر حجم ایمیل دریافتی به مگابایت."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines the name of the application, shown in the web interface, tabs, and "
 "title bar of the web browser."
-msgstr ""
+msgstr "تعیین نام اپلیکیشن که در سایت٬ برگه‌ها و عنوان مرورگر نمایش داده می‌شود."
 
 #: db/seeds/settings.rb
 msgid "Defines the port of the websocket server."
@@ -3159,7 +3161,7 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Defines the sender of email notifications."
-msgstr ""
+msgstr "تعیین فرستنده اعلان‌ از طریق ایمیل."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -3290,7 +3292,7 @@ msgstr "حذف کاربر"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee
 msgid "Delete all child categories and answers, then try again."
-msgstr ""
+msgstr "تمام زیردسته‌ها و پاسخ‌ها را حذف و مجددا امتحان کنید."
 
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
 msgid "Delete all existing records first."
@@ -3446,11 +3448,11 @@ msgstr "جهت"
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
 msgid "Disable"
-msgstr "غیرفعال"
+msgstr "غیرفعال کردن"
 
 #: app/assets/javascripts/app/models/job.coffee
 msgid "Disable Notifications"
-msgstr "غیر فعال سازی اطلاع رسانی ها"
+msgstr "غیر فعال‌سازی اطلاع رسانی ها"
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
 msgid "Discard"
@@ -3792,7 +3794,7 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Enable Ticket creation"
-msgstr "فعالسازی ساخت تیکت"
+msgstr "فعالسازی ایجاد تیکت"
 
 #: db/seeds/settings.rb
 msgid "Enable auto assignment for following matching tickets."
@@ -3800,7 +3802,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco
 msgid "Enable automatic assignment the first time an agent opens a ticket."
-msgstr ""
+msgstr "اختصاص خودکار تیکت به کارشناس پس از اولین بازکردن."
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Enable debugging for implementation."
@@ -3967,7 +3969,7 @@ msgstr "رمزگذاری"
 #: app/assets/javascripts/app/views/integration/idoit.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 msgid "Endpoint"
-msgstr ""
+msgstr "دستگاه کاربر"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
@@ -3977,7 +3979,7 @@ msgstr "تنظیمات دستگاه کاربر"
 
 #: db/seeds.rb
 msgid "English (United States)"
-msgstr ""
+msgstr "انگلیسی (ایالات متحده)"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 msgid "Enter Note or"
@@ -3991,7 +3993,7 @@ msgstr "نام شخص یا سازمان/شرکت را وارد کنید"
 
 #: app/assets/javascripts/app/views/integration/smime_private_key_add.jst.eco
 msgid "Enter Private Key Secret"
-msgstr ""
+msgstr "رمز کلید خصوصی را وارد کنید"
 
 #: app/assets/javascripts/app/views/ticket_zoom/title.jst.eco
 msgid "Enter Title…"
@@ -4061,7 +4063,7 @@ msgstr "خطا"
 
 #: app/controllers/getting_started_controller.rb
 msgid "Error during execution of auto wizard."
-msgstr ""
+msgstr "خطا هنگام اجرای ویزارد خودکار."
 
 #: db/seeds/overviews.rb
 msgid "Escalated Tickets"
@@ -4145,11 +4147,11 @@ msgstr "کاربران استثناء"
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 msgid "Exchange"
-msgstr ""
+msgstr "سیستم ایمیل (اکس‌چنج)"
 
 #: db/seeds/settings.rb
 msgid "Exchange config"
-msgstr ""
+msgstr "تنظیمات سیستم ایمیل (اکس‌چنج)"
 
 #: db/seeds/settings.rb
 msgid "Exchange integration"
@@ -4187,7 +4189,7 @@ msgstr "تنظیمات پیشرفته"
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 msgid "Experts"
-msgstr "Experten"
+msgstr "پیشرفته"
 
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
@@ -4235,7 +4237,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/user_profile.coffee
 msgid "Failed to send email to \"%s\". Please contact an administrator."
-msgstr ""
+msgstr "ارسال ایمیل به \"%s\" ناموفق بود. لطفا با ادمین سیستم تماس بگیرید."
 
 #: db/seeds/object_manager_attributes.rb
 msgid "Fax"
@@ -4287,7 +4289,7 @@ msgstr "حجم فایل زیاد است٬ حداکثر %s مگابایت مجا�
 
 #: db/seeds/settings.rb
 msgid "Filesystem"
-msgstr ""
+msgstr "سیستم فایل"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
@@ -4391,7 +4393,7 @@ msgstr "اندازه فونت"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/public_menu_manager.coffee
 msgid "Footer Menu"
-msgstr "پانویس"
+msgstr "منوی پایین صفحه"
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee
 msgid "Footer Note"
@@ -4485,11 +4487,17 @@ msgstr "جمعه"
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 msgid "From"
-msgstr "فرستنده"
+msgstr "از تاریخ"
 
 #: app/assets/javascripts/app/controllers/_manage/system.coffee
 msgid "Frontend"
-msgstr "Frontend"
+msgstr "سمت کاربر"
+
+#: app/assets/javascripts/app/models/group.coffee
+#, fuzzy
+#| msgid "Full Name"
+msgid "Full"
+msgstr "نام کامل"
 
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 msgid "Full Name"
@@ -4550,7 +4558,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/getting_started.coffee
 msgid "Get Started"
-msgstr ""
+msgstr "شروع به کار"
 
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid "Getting an Access Token"
@@ -4624,7 +4632,7 @@ msgstr "بازگشت به عقب"
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
 msgid "Goodbye message"
-msgstr ""
+msgstr "پیام خداحافظی"
 
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
@@ -4708,7 +4716,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 msgid "Group Filter"
-msgstr ""
+msgstr "فیلتر گروه"
 
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
@@ -4722,7 +4730,7 @@ msgstr "جهت گروه‌بندی"
 
 #: app/policies/ticket_policy.rb
 msgid "Group can't be blank"
-msgstr ""
+msgstr "گروه نباید خالی باشد"
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 msgid ""
@@ -4732,19 +4740,19 @@ msgstr ""
 
 #: lib/telegram.rb
 msgid "Group invalid!"
-msgstr ""
+msgstr "گروه نامعتبر!"
 
 #: app/models/channel/driver/sms/base.rb
 msgid "Group is invalid!"
-msgstr ""
+msgstr "گروه نامعتبر است!"
 
 #: app/models/channel/driver/sms/base.rb
 msgid "Group needed in channel definition!"
-msgstr ""
+msgstr "هنگام تعریف کانال٬ گروه موردنیاز است!"
 
 #: lib/telegram.rb
 msgid "Group needed!"
-msgstr ""
+msgstr "گروه موردنیاز است!"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco db/seeds/settings.rb
 msgid "Group selection for Ticket creation"
@@ -4778,11 +4786,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/http_log.coffee
 msgid "HTTP Log"
-msgstr ""
+msgstr "لاگ HTTP"
 
 #: db/seeds/settings.rb
 msgid "HTTP type"
-msgstr "HTTP type"
+msgstr "نوع HTTP"
 
 #: db/seeds/schedulers.rb
 msgid "Handle data privacy tasks."
@@ -4799,7 +4807,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
 msgid "Have a nice day."
-msgstr ""
+msgstr "روز خوبی داشته باشید."
 
 #: app/assets/javascripts/app/views/widget/payload_example.jst.eco
 msgid "Header"
@@ -4831,7 +4839,7 @@ msgstr "سلام! من درباره محصول شما به کمک نیاز دا�
 
 #: app/assets/javascripts/app/views/customer_chat/setting.jst.eco
 msgid "Hello, my name is %s, what can I do for you?"
-msgstr ""
+msgstr "سلام. من %s هستم. چطور میتوانم به شما کمک کنم؟"
 
 #: app/assets/javascripts/app/controllers/_plugin/translation_support.coffee
 msgid "Help to improve Zammad!"
@@ -4902,7 +4910,7 @@ msgstr "در این قسمت آخرین رخدادهای سیستم را مشا�
 
 #: db/seeds/settings.rb
 msgid "Hero"
-msgstr "Held"
+msgstr "قهرمان"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Hi! Which one of our products?"
@@ -4946,14 +4954,14 @@ msgstr ""
 
 #: lib/email_helper/probe.rb
 msgid "Host not reachable!"
-msgstr ""
+msgstr "سرور میزبان دردسترس نیست!"
 
 #: app/controllers/import_freshdesk_controller.rb
 #: app/controllers/import_kayako_controller.rb
 #: app/controllers/import_otrs_controller.rb
 #: app/controllers/import_zendesk_controller.rb lib/email_helper/probe.rb
 msgid "Hostname not found!"
-msgstr ""
+msgstr "نام سرور میزبان یافت نشد!"
 
 #: app/assets/javascripts/app/views/generic/timer.jst.eco
 msgid "Hour"
@@ -4975,7 +4983,7 @@ msgstr "چگونه می‌توانیم به شما کمک کنیم؟ جستجو 
 msgid ""
 "How long did each customer have to wait, on average, to get a response from "
 "you today?"
-msgstr ""
+msgstr "بطور میانگین امروز هر مشتری چقدر منتظر پاسخ شما بوده است؟"
 
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_escalation.coffee
 msgid ""
@@ -4988,11 +4996,12 @@ msgid ""
 "How many of your tickets are coming from email, phone, Twitter, or Facebook? "
 "(Shows percentages for both inbound and outbound tickets.)"
 msgstr ""
+"چه تعدادی از تیکت‌های شما از طریق ایمیل٬ تماس تلفنی یا ... ایجاد شده‌اند؟"
 
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_reopen.coffee
 msgid ""
 "How many of your tickets have been re-opened after being marked “closed”?"
-msgstr ""
+msgstr "چه تعدادی از تیکت‌های شما پس از بسته شدن مجددا بازگشایی شدند؟"
 
 #: app/controllers/first_steps_controller.rb
 msgid "How to use it"
@@ -5001,7 +5010,7 @@ msgstr "چطور از سیستم استفاده کنیم"
 #: app/assets/javascripts/app/views/integration/idoit_object_result.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_idoit.jst.eco
 msgid "ID"
-msgstr ""
+msgstr "شناسه"
 
 #: db/seeds/settings.rb
 msgid "IDP SSO target URL"
@@ -5119,7 +5128,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee
 msgid "Ignore Message"
-msgstr ""
+msgstr "صرف‌نظر از پیام"
 
 #: db/seeds/settings.rb
 msgid "Ignore escalation/SLA information for import."
@@ -5152,7 +5161,7 @@ msgstr "ورود اطلاعات"
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 msgid "Import %s"
-msgstr ""
+msgstr "ورود %s"
 
 #: app/controllers/import_otrs_controller.rb
 msgid "Import API key could not be extracted from URL."
@@ -5180,7 +5189,7 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Import Key"
-msgstr ""
+msgstr "وارد کردن کلید"
 
 #: db/seeds/settings.rb
 msgid "Import Mode"
@@ -5283,7 +5292,7 @@ msgstr ""
 #: app/controllers/import_kayako_controller.rb
 #: app/controllers/import_zendesk_controller.rb
 msgid "Incomplete credentials"
-msgstr ""
+msgstr "نام‌کاربری و رمزعبور ناقص"
 
 #: db/seeds/settings.rb
 msgid "Increment (SystemID.Counter)"
@@ -5375,7 +5384,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Inserts knowledge base answer"
-msgstr ""
+msgstr "افزودن پاسخ از پایگاه دانش"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Inserts text module"
@@ -5449,7 +5458,7 @@ msgstr ""
 #: app/controllers/import_otrs_controller.rb
 #: app/controllers/import_zendesk_controller.rb
 msgid "Invalid URL!"
-msgstr ""
+msgstr "آدرس لینک نامعتبر!"
 
 #: app/controllers/getting_started_controller.rb
 msgid "Invalid auto wizard file."
@@ -5467,7 +5476,7 @@ msgstr ""
 #: app/controllers/import_kayako_controller.rb
 #: app/controllers/import_zendesk_controller.rb
 msgid "Invalid credentials!"
-msgstr ""
+msgstr "نام‌کاربری یا رمزعبور نامعتبر!"
 
 #: app/models/webhook.rb
 msgid "Invalid endpoint (no hostname)!"
@@ -5511,17 +5520,17 @@ msgstr "رمز عبور نامعتبر. بایستی کوتاهتر از %s کا
 
 #: lib/password_policy/digit.rb
 msgid "Invalid password, it must contain at least 1 digit!"
-msgstr ""
+msgstr "رمز عبور نامعتبر. بایستی شامل حداقل یک رقم باشد!"
 
 #: lib/password_policy/special_character.rb
 msgid "Invalid password, it must contain at least 1 special character!"
-msgstr ""
+msgstr "رمز عبور نامعتبر. بایستی شامل حداقل یک کاراکتر خاص (@, $, ...) باشد!"
 
 #: lib/password_policy/upper_and_lower_case_characters.rb
 msgid ""
 "Invalid password, it must contain at least 2 lowercase and 2 uppercase "
 "characters!"
-msgstr ""
+msgstr "رمز عبور نامعتبر. بایستی شامل حداقل ۲ حرف کوچک و ۲ حرف بزرگ باشد!"
 
 #: app/controllers/settings_controller.rb
 msgid "Invalid payload, need data:image in logo param"
@@ -5539,17 +5548,17 @@ msgstr ""
 #: app/controllers/integration/check_mk_controller.rb
 #: app/controllers/users_controller.rb
 msgid "Invalid token!"
-msgstr ""
+msgstr "توکن نامعتبر!"
 
 #: app/controllers/integration/cti_controller.rb
 #: app/controllers/integration/placetel_controller.rb
 #: app/controllers/integration/sipgate_controller.rb
 msgid "Invalid token, please contact your admin!"
-msgstr ""
+msgstr "توکن نامعتبر. لطفا با ادمین سیستم تماس بگیرید!"
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee
 msgid "Invalid video URL"
-msgstr ""
+msgstr "آدرس لینک ویدئو نامعتبر است"
 
 #: app/assets/javascripts/app/controllers/getting_started/agent.coffee
 msgid "Invitation sent!"
@@ -5606,7 +5615,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "John Smith"
-msgstr "John Smith"
+msgstr "جان اسمیت"
 
 #: app/assets/javascripts/app/views/signup.jst.eco
 msgid "Join %s"
@@ -5697,21 +5706,21 @@ msgstr "فعالسازی مرکز دانش بصورت عمومی"
 
 #: db/seeds/settings.rb
 msgid "Knowledge Base multilingual support"
-msgstr ""
+msgstr "پایگاه دانش چندزبانه"
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "LDAP"
-msgstr ""
+msgstr "LDAP"
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 msgid "LDAP Host"
-msgstr "LDAP Host"
+msgstr "سرور میزبان LDAP"
 
 #: db/seeds/settings.rb
 msgid "LDAP config"
-msgstr ""
+msgstr "تنظیمات LDAP"
 
 #: db/seeds/settings.rb
 msgid "LDAP integration"
@@ -5740,7 +5749,7 @@ msgstr "زبان"
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
 #: app/assets/javascripts/app/models/knowledge_base.coffee
 msgid "Languages"
-msgstr "زبان ها"
+msgstr "زبان‌ها"
 
 #: lib/excel_sheet/ticket.rb
 msgid "Last Contact Agent At"
@@ -5752,7 +5761,7 @@ msgstr "آخرین تماس در"
 
 #: lib/excel_sheet/ticket.rb
 msgid "Last Contact Customer At"
-msgstr ""
+msgstr "آخرین تماس با مشتری در"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/attribute_bar.coffee
 msgid "Last change %s %s by %s"
@@ -5782,11 +5791,11 @@ msgstr "آخرین اجرا"
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
 msgid "Last sync"
-msgstr "آخرین همسان سازی"
+msgstr "آخرین همسان‌سازی"
 
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
 msgid "Last sync at"
-msgstr "آخرین همسان سازی در"
+msgstr "آخرین همسان‌سازی در"
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 msgid "Last used"
@@ -5932,13 +5941,13 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/login.jst.eco
 msgid "Log in to %s"
-msgstr ""
+msgstr "ورود به %s"
 
 #: app/assets/javascripts/app/models/user.coffee
 #: app/assets/javascripts/app/views/maintenance.jst.eco
 #: db/seeds/object_manager_attributes.rb
 msgid "Login"
-msgstr "ورود به سیستم"
+msgstr "نام کاربری"
 
 #: app/controllers/application_controller/authenticates.rb
 msgid ""
@@ -5993,7 +6002,7 @@ msgstr "نگهداری"
 
 #: db/seeds/settings.rb
 msgid "Maintenance Login"
-msgstr ""
+msgstr "ورود به حالت نگهداری سیستم"
 
 #: db/seeds/settings.rb
 msgid "Maintenance Mode"
@@ -6001,7 +6010,7 @@ msgstr "وضعیت نگهداری"
 
 #: app/controllers/application_controller/authenticates.rb
 msgid "Maintenance mode enabled!"
-msgstr ""
+msgstr "وضعیت نگهداری سیستم فعال شد!"
 
 #: app/assets/javascripts/app/controllers/manage.coffee
 msgid "Manage"
@@ -6071,7 +6080,7 @@ msgstr "Master"
 
 #: app/assets/javascripts/app/models/postmaster_filter.coffee
 msgid "Match all of the following"
-msgstr ""
+msgstr "تطابق با تمام موارد زیر"
 
 #: app/assets/javascripts/app/lib/app_post/iconset_picker.coffee
 msgid "Material"
@@ -6096,7 +6105,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Maximal"
-msgstr ""
+msgstr "حداکثری"
 
 #: db/seeds/settings.rb
 msgid "Maximum Email Size"
@@ -6112,7 +6121,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Maxlength"
-msgstr ""
+msgstr "حداکثر طول"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
@@ -6215,7 +6224,7 @@ msgstr "حداقل اندازه عدد"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Minimal"
-msgstr ""
+msgstr "حداقلی"
 
 #: db/seeds/settings.rb
 msgid "Minimum length"
@@ -6223,7 +6232,7 @@ msgstr "حداقل طول"
 
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 msgid "Minimum of one permission is needed!"
-msgstr "حداقل یک اجازه لازم است!"
+msgstr "حداقل یک مجوز لازم است!"
 
 #: app/assets/javascripts/app/views/generic/timer.jst.eco
 msgid "Minute"
@@ -6352,7 +6361,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Multiselect"
-msgstr ""
+msgstr "چند انتخابی"
 
 #: db/seeds/overviews.rb
 msgid "My Assigned Tickets"
@@ -6368,7 +6377,7 @@ msgstr "تیکتهای منتظر دردسترس قرارگرفتن من"
 
 #: db/seeds/overviews.rb
 msgid "My Replacement Tickets"
-msgstr "تیکت‌های جایگزین من"
+msgstr "تیکت‌های جانشین من"
 
 #: app/assets/javascripts/app/views/dashboard.jst.eco
 msgid "My Stats"
@@ -6478,7 +6487,7 @@ msgstr ""
 
 #: app/controllers/user_access_token_controller.rb
 msgid "Need label!"
-msgstr ""
+msgstr "برچسب لازم است!"
 
 #: app/controllers/settings_controller.rb
 msgid "Need logo param"
@@ -6490,11 +6499,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 msgid "Need recipient in \"TO\" or \"CC\"."
-msgstr ""
+msgstr "در قسمت \"TO\" یا \"CC\" ایمیل دریافت‌کننده لازم است."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/twitter_reply.coffee
 msgid "Need recipient in \"To\"."
-msgstr ""
+msgstr "در قسمت \"To\" ایمیل دریافت‌کننده لازم است."
 
 #: lib/sessions/event/chat_base.rb
 msgid "Need session_id."
@@ -6522,7 +6531,7 @@ msgstr "جدید"
 
 #: app/assets/javascripts/app/controllers/api.coffee
 msgid "New Access Token is"
-msgstr ""
+msgstr "توکن دسترسی جدید عبارتست از"
 
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid "New Application"
@@ -6614,7 +6623,7 @@ msgstr "جریان کاری جدید"
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee
 msgid "New organizations are shared."
-msgstr ""
+msgstr "سازمان‌های جدید اشتراکی هستند."
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
 msgid "New password"
@@ -6622,7 +6631,7 @@ msgstr "رمز عبور جدید"
 
 #: app/assets/javascripts/app/views/knowledge_base/public_menu_form_item_row.jst.eco
 msgid "New tab"
-msgstr ""
+msgstr "برگه جدید"
 
 #: app/assets/javascripts/app/controllers/text_module.coffee
 msgid "New text module"
@@ -6630,7 +6639,7 @@ msgstr "ماژول متن جدید"
 
 #: db/seeds/settings.rb
 msgid "Newbie"
-msgstr "Newbie"
+msgstr "تازه‌کار"
 
 #: app/assets/javascripts/app/views/dashboard/first_steps_clues_content.jst.eco
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
@@ -6687,16 +6696,16 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "No Proxy"
-msgstr ""
+msgstr "بدون پراکسی"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
 msgid "No SSL"
-msgstr ""
+msgstr "بدون SSL"
 
 #: app/assets/javascripts/app/controllers/_plugin/translation_support.coffee
 msgid "No Thanks!"
-msgstr ""
+msgstr "نه متشکرم!"
 
 #: lib/external_credential/twitter.rb
 msgid "No Twitter app configured!"
@@ -6716,7 +6725,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
 msgid "No camera found."
-msgstr ""
+msgstr "دوربین یافت نشد."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/categories.coffee
 msgid "No categories"
@@ -6749,15 +6758,15 @@ msgstr ""
 #: app/views/knowledge_base/public/categories/index.html.erb
 #: app/views/knowledge_base/public/tags/show.html.erb
 msgid "No content to show"
-msgstr ""
+msgstr "محتوایی برای نمایش وجود ندارد"
 
 #: app/controllers/users_controller.rb
 msgid "No email!"
-msgstr ""
+msgstr "بدون ایمیل!"
 
 #: app/controllers/integration/exchange_controller.rb
 msgid "No entries were found in the selected folder(s)."
-msgstr ""
+msgstr "در پوشه(ها)ی انتخاب شده فایلی وجود ندارد."
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
@@ -6808,7 +6817,7 @@ msgstr ""
 
 #: lib/sessions/event/chat_session_start.rb lib/sessions/event/chat_transfer.rb
 msgid "No session available."
-msgstr ""
+msgstr "هیچ نشستی وجود ندارد."
 
 #: lib/stats.rb
 msgid "No settings with area 'Dashboard::Stats' defined"
@@ -7204,7 +7213,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/ticket_article.coffee
 msgid "Origin By"
-msgstr ""
+msgstr "از مبدا"
 
 #: app/assets/javascripts/app/views/translation/list.jst.eco
 msgid "Original"
@@ -7224,15 +7233,15 @@ msgstr "سایر تنظیمات"
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
 #: db/seeds/permissions.rb
 msgid "Out of Office"
-msgstr "بیرون از دفتر"
+msgstr "مرخصی"
 
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_load_measure.coffee
 msgid "Out of all open tickets (company-wide), how many are assigned to you?"
-msgstr ""
+msgstr "از بین تمام تیکت‌های باز٬ چه تعدادی به شما اختصاص داده شده است؟"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 msgid "Out of office replacement"
-msgstr ""
+msgstr "جانشین هنگام مرخصی"
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
@@ -7250,6 +7259,7 @@ msgid "Outbound Call"
 msgstr "تماس گرفته شده"
 
 #: app/assets/javascripts/app/controllers/overview.coffee
+#: app/assets/javascripts/app/models/group.coffee
 msgid "Overview"
 msgstr "پیش نمایش"
 
@@ -7376,7 +7386,7 @@ msgstr "رمز عبور می‌بایست حداقل یک کاراکتر خاص 
 
 #: db/seeds/settings.rb
 msgid "Password needs to have at least a minimal number of characters."
-msgstr ""
+msgstr "رمز عبور بایستی شامل حداقل این تعداد کاراکتر باشد."
 
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
 msgid "Paste"
@@ -7607,7 +7617,7 @@ msgstr "قبلی در نگاه کلی"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Previous tab"
-msgstr "تب قبلی"
+msgstr "برگه قبلی"
 
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
 msgid "Previously owned tickets (%s in total)"
@@ -7747,6 +7757,10 @@ msgstr "صف قبلا وجود دارد!"
 msgid "Raw"
 msgstr "خام"
 
+#: app/assets/javascripts/app/models/group.coffee
+msgid "Read"
+msgstr ""
+
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco
 msgid "Real-time"
 msgstr "بصورت لحظه‌ای"
@@ -7870,7 +7884,7 @@ msgstr "نرخ بازگشایی مجدد"
 
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
 msgid "Replacement"
-msgstr "جایگزین"
+msgstr "فرد جانشین"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Reply to last article"
@@ -9490,7 +9504,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
 msgid "Third-party Applications"
-msgstr ""
+msgstr "اپلیکیشن‌های ثالث"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/reader_list_controller.coffee
 msgid "This category is empty"
@@ -9766,7 +9780,7 @@ msgstr "تیکتهای کاربر"
 
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
 msgid "Till"
-msgstr "تا"
+msgstr "تا تاریخ"
 
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
@@ -10036,7 +10050,7 @@ msgstr "Twitter App Credentials"
 
 #: db/seeds/settings.rb
 msgid "Twitter Key"
-msgstr "Twitter Key"
+msgstr "کلید توییتر"
 
 #: db/seeds/settings.rb
 msgid "Twitter Secret"
@@ -10755,6 +10769,7 @@ msgid ""
 "What percentage of your tickets have you responded to, updated, or modified "
 "in some way today?"
 msgstr ""
+"امروز چند درصد از تیکت‌های شما بنحوی پاسخ داده شدند٬ به‌روز شدند یا اصلاح شدند؟"
 
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco
 msgid "What values of %s should be synced to organization."
@@ -10815,7 +10830,7 @@ msgstr "منتشر خواهد شد در"
 
 #: db/seeds/settings.rb
 msgid "Will be shown in the app and is included in email footers."
-msgstr ""
+msgstr "در داخل اپلیکیشن و همچنین پانویس ایمیل‌ها نمایش داده خواهد شد."
 
 #: app/assets/javascripts/app/models/job.coffee
 msgid "Will process"
@@ -11151,7 +11166,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/twitter/app_config.jst.eco
 #: db/seeds/settings.rb
 msgid "Your callback URL"
-msgstr ""
+msgstr "آدرس لینک بازگشتی"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee
 msgid ""
@@ -11256,6 +11271,10 @@ msgstr ""
 msgid "Zip"
 msgstr "کد پستی"
 
+#: db/seeds/settings.rb
+msgid "absolute - e. g. \"Monday 09:30\" or \"Tuesday 23. Feb 14:20\""
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ui_element/active.coffee
 msgid "active"
 msgstr "فعال"
@@ -11302,7 +11321,7 @@ msgstr "آبونه شده‌اند"
 
 #: app/models/transaction/notification.rb
 msgid "are the out-of-office replacement of the owner"
-msgstr "جانشین مسئول تیکت هستند"
+msgstr "هنگام مرخصی٬ جانشین مسئول تیکت هستند"
 
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay.jst.eco
 msgid "assign tickets"
@@ -11369,12 +11388,12 @@ msgstr "وصل شد"
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "contains"
-msgstr "شامل"
+msgstr "شامل باشد"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "contains all"
-msgstr "شامل همه"
+msgstr "شامل همه باشد"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
@@ -11388,7 +11407,7 @@ msgstr "شامل نباشد"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 msgid "contains one"
-msgstr "شامل یکی"
+msgstr "شامل یکی باشد"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 msgid "contains one not"
@@ -11541,7 +11560,7 @@ msgstr "از"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 msgid "from (relative)"
-msgstr ""
+msgstr "از (نسبی)"
 
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
 msgid "h"
@@ -11608,6 +11627,7 @@ msgstr "در حال پردازش"
 msgid "inactive"
 msgstr "غیرفعال"
 
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 msgid "internal"
 msgstr "داخلی"
@@ -11653,6 +11673,10 @@ msgstr "ماه گذشته"
 #: app/assets/javascripts/app/views/karma/index.jst.eco
 msgid "last week"
 msgstr "هفته گذشته"
+
+#: db/seeds/settings.rb
+msgid "left"
+msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
 msgid "m"
@@ -11730,6 +11754,7 @@ msgstr "بدون مشکل"
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 #: app/assets/javascripts/app/views/widget/ticket_stats_list.jst.eco
+#: db/seeds/settings.rb
 msgid "none"
 msgstr "هیچکدام"
 
@@ -11800,6 +11825,12 @@ msgstr "در انتظار یادآوری"
 msgid "phone"
 msgstr "تلفن"
 
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
+#, fuzzy
+#| msgid "Public"
+msgid "public"
+msgstr "عمومی"
+
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 msgid "published"
 msgstr "منتشر شده"
@@ -11814,6 +11845,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "regex mismatch"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "relative - e. g. \"2 hours ago\" or \"2 days and 15 minutes ago\""
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
@@ -11836,6 +11871,10 @@ msgstr "حذف شده"
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/twitter_reply.coffee
 msgid "reply"
 msgstr "پاسخ"
+
+#: db/seeds/settings.rb
+msgid "right"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/cti.coffee
 msgid "ringing"
@@ -11970,6 +12009,10 @@ msgstr "مشتری ایجاد‌کننده تیکت"
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 msgid "till (relative)"
 msgstr "تا (نسبی)"
+
+#: db/seeds/settings.rb
+msgid "timestamp - e. g. \"2018-08-30 14:30\""
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
 msgid "to"

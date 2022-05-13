@@ -1643,6 +1643,7 @@ msgstr "Le certificat de vérification n'a pas pu être trouvé."
 msgid "Certificates & Private Keys"
 msgstr "Certificats & clés privées"
 
+#: app/assets/javascripts/app/models/group.coffee
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
@@ -2323,6 +2324,7 @@ msgstr "Pays"
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/add_form.coffee
+#: app/assets/javascripts/app/models/group.coffee
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco
 #: app/assets/javascripts/app/views/agent_user_create.jst.eco
 #: app/assets/javascripts/app/views/customer_ticket_create.jst.eco
@@ -4891,6 +4893,12 @@ msgstr "De"
 #: app/assets/javascripts/app/controllers/_manage/system.coffee
 msgid "Frontend"
 msgstr "Interface utilisateur"
+
+#: app/assets/javascripts/app/models/group.coffee
+#, fuzzy
+#| msgid "Full Name"
+msgid "Full"
+msgstr "Nom Complet"
 
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 msgid "Full Name"
@@ -7814,6 +7822,7 @@ msgid "Outbound Call"
 msgstr "Appel sortant"
 
 #: app/assets/javascripts/app/controllers/overview.coffee
+#: app/assets/javascripts/app/models/group.coffee
 msgid "Overview"
 msgstr "Vue d'ensemble"
 
@@ -8331,6 +8340,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 msgid "Raw"
+msgstr ""
+
+#: app/assets/javascripts/app/models/group.coffee
+msgid "Read"
 msgstr ""
 
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco
@@ -12116,6 +12129,10 @@ msgstr "Zendesk"
 msgid "Zip"
 msgstr "Code postal"
 
+#: db/seeds/settings.rb
+msgid "absolute - e. g. \"Monday 09:30\" or \"Tuesday 23. Feb 14:20\""
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ui_element/active.coffee
 msgid "active"
 msgstr "actif"
@@ -12478,6 +12495,7 @@ msgstr "en cours"
 msgid "inactive"
 msgstr "inactif"
 
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 msgid "internal"
 msgstr "interne"
@@ -12523,6 +12541,10 @@ msgstr "Le mois dernier"
 #: app/assets/javascripts/app/views/karma/index.jst.eco
 msgid "last week"
 msgstr "La semaine dernière"
+
+#: db/seeds/settings.rb
+msgid "left"
+msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
 msgid "m"
@@ -12600,6 +12622,7 @@ msgstr "Pas de tickets"
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 #: app/assets/javascripts/app/views/widget/ticket_stats_list.jst.eco
+#: db/seeds/settings.rb
 msgid "none"
 msgstr "aucun"
 
@@ -12672,6 +12695,12 @@ msgstr "rappel en attente"
 msgid "phone"
 msgstr "téléphone"
 
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
+#, fuzzy
+#| msgid "Public"
+msgid "public"
+msgstr "Public"
+
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 msgid "published"
 msgstr "publié"
@@ -12687,6 +12716,10 @@ msgstr "la regex correspond"
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "regex mismatch"
 msgstr "la regex ne correspond pas"
+
+#: db/seeds/settings.rb
+msgid "relative - e. g. \"2 hours ago\" or \"2 days and 15 minutes ago\""
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 #: app/assets/javascripts/app/views/profile/linked_accounts.jst.eco
@@ -12708,6 +12741,10 @@ msgstr "supprimé"
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/twitter_reply.coffee
 msgid "reply"
 msgstr "Répondre"
+
+#: db/seeds/settings.rb
+msgid "right"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/cti.coffee
 msgid "ringing"
@@ -12844,6 +12881,10 @@ msgstr "ticket.customer"
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 msgid "till (relative)"
 msgstr "jusqu'à (relatif)"
+
+#: db/seeds/settings.rb
+msgid "timestamp - e. g. \"2018-08-30 14:30\""
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
 msgid "to"
