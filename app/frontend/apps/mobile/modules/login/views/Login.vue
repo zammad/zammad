@@ -81,8 +81,8 @@ const application = useApplicationStore()
           </template>
           <Form
             ref="form"
-            :form-schema-id="FormSchemaId.FormSchemaFormMobileLogin"
             class="text-left"
+            :form-schema-id="FormSchemaId.FormSchemaFormMobileLogin"
             @submit="login"
           >
             <template #after-fields>

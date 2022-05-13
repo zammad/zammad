@@ -17,6 +17,7 @@
     "function-calc-no-unspaced-operator": null,
     "function-comma-space-after": null,
     "hue-degree-notation": null,
+    "function-no-unknown": null,
     "keyframes-name-pattern": null,
     "max-empty-lines": null,
     "no-descending-specificity": null,

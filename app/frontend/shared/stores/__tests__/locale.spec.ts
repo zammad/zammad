@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { createTestingPinia } from '@pinia/testing'
+import { createPinia, setActivePinia } from 'pinia'
 import { createMockClient } from 'mock-apollo-client'
 import { provideApolloClient } from '@vue/apollo-composable'
 import { LocalesDocument } from '@shared/graphql/queries/locales.api'
@@ -38,7 +38,7 @@ const mockClient = () => {
 }
 
 describe('Translations Store', () => {
-  createTestingPinia({ createSpy: vi.fn })
+  setActivePinia(createPinia())
   mockClient()
   const locale = useLocaleStore()
 

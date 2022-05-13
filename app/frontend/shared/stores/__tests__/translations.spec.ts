@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { createTestingPinia } from '@pinia/testing'
+import { createPinia, setActivePinia } from 'pinia'
 import { createMockClient } from 'mock-apollo-client'
 import { provideApolloClient } from '@vue/apollo-composable'
 import { i18n } from '@shared/i18n'
@@ -44,6 +44,7 @@ const mockClient = () => {
 
   mockApolloClient.setRequestHandler(TranslationsDocument, (variables) => {
     lastQueryResult = mockQueryResult(variables.locale, variables.cacheKey)
+
     return Promise.resolve({ data: { translations: lastQueryResult } })
   })
 
@@ -51,7 +52,7 @@ const mockClient = () => {
 }
 
 describe('Translations Store', () => {
-  createTestingPinia({ createSpy: vi.fn })
+  setActivePinia(createPinia())
   const translations = useTranslationsStore()
   mockClient()
 

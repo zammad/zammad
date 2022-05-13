@@ -10,6 +10,8 @@ const localPasswordDefinition = cloneDeep(passwordDefinition)
 const switchPasswordVisibility = (node: FormKitNode) => {
   const { props } = node
 
+  node.addProps(['passwordVisibilityIcon'])
+
   if (!props.definition) return
 
   const definition = cloneDeep(props.definition)
@@ -51,7 +53,6 @@ const switchPasswordVisibility = (node: FormKitNode) => {
 }
 
 initializeFieldDefinition(localPasswordDefinition, {
-  props: ['passwordVisibilityIcon'],
   features: [switchPasswordVisibility],
 })
 

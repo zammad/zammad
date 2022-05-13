@@ -68,7 +68,7 @@ describe('Form - Field - Password (Formkit-BuildIn)', () => {
     await wrapper.events.type(input, 'Test1234!')
     await waitForTimeout()
 
-    const emittedInput = wrapper.emitted().input as Array<Array<InputEvent>>
+    const emittedInput = wrapper.emitted().inputRaw as Array<Array<InputEvent>>
 
     expect(emittedInput[8][0]).toBe('Test1234!')
   })

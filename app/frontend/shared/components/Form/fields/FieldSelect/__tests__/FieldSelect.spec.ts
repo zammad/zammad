@@ -98,10 +98,10 @@ describe('Form - Field - Select - Dialog', () => {
     wrapper.events.click(wrapper.getAllByRole('option')[0])
 
     await waitFor(() => {
-      expect(wrapper.emitted().input).toBeTruthy()
+      expect(wrapper.emitted().inputRaw).toBeTruthy()
     })
 
-    const emittedInput = wrapper.emitted().input as Array<Array<InputEvent>>
+    const emittedInput = wrapper.emitted().inputRaw as Array<Array<InputEvent>>
 
     expect(emittedInput[0][0]).toBe(testOptions[0].value)
 
@@ -342,10 +342,10 @@ describe('Form - Field - Select - Features', () => {
     await wrapper.events.click(wrapper.getByRole('button'))
 
     await waitFor(() => {
-      expect(wrapper.emitted().input).toBeTruthy()
+      expect(wrapper.emitted().inputRaw).toBeTruthy()
     })
 
-    const emittedInput = wrapper.emitted().input as Array<Array<InputEvent>>
+    const emittedInput = wrapper.emitted().inputRaw as Array<Array<InputEvent>>
 
     expect(emittedInput[0][0]).toBe(undefined)
 
@@ -374,10 +374,10 @@ describe('Form - Field - Select - Features', () => {
     wrapper.events.click(selectOptions[0])
 
     await waitFor(() => {
-      expect(wrapper.emitted().input).toBeTruthy()
+      expect(wrapper.emitted().inputRaw).toBeTruthy()
     })
 
-    const emittedInput = wrapper.emitted().input as Array<Array<InputEvent>>
+    const emittedInput = wrapper.emitted().inputRaw as Array<Array<InputEvent>>
 
     expect(emittedInput[0][0]).toStrictEqual([testOptions[0].value])
     expect(wrapper.queryAllIconsByName('checked-no')).toHaveLength(2)
@@ -570,10 +570,10 @@ describe('Form - Field - Select - Features', () => {
     })
 
     await waitFor(() => {
-      expect(wrapper.emitted().input).toBeTruthy()
+      expect(wrapper.emitted().inputRaw).toBeTruthy()
     })
 
-    const emittedInput = wrapper.emitted().input as Array<Array<InputEvent>>
+    const emittedInput = wrapper.emitted().inputRaw as Array<Array<InputEvent>>
 
     expect(emittedInput[0][0]).toBe(1)
 
@@ -699,19 +699,17 @@ describe('Form - Field - Select - Accessibility', () => {
     wrapper.events.type(selectOptions[0], '{Space}')
 
     await waitFor(() => {
-      expect(wrapper.emitted().input).toBeTruthy()
+      expect(wrapper.emitted().inputRaw).toBeTruthy()
     })
 
-    const emittedInput = wrapper.emitted().input as Array<Array<InputEvent>>
+    const emittedInput = wrapper.emitted().inputRaw as Array<Array<InputEvent>>
 
     expect(emittedInput[0][0]).toBe(testOptions[0].value)
-
-    await waitForElementToBeRemoved(() => wrapper.queryByRole('dialog'))
 
     wrapper.events.type(wrapper.getByRole('button'), '{Space}')
 
     await waitFor(() => {
-      expect(emittedInput[0][1]).toBe(undefined)
+      expect(emittedInput[1][0]).toBe(undefined)
     })
   })
 })
@@ -783,10 +781,10 @@ describe('Form - Field - Select - Input Checklist', () => {
     wrapper.events.click(wrapper.getAllByRole('option')[1])
 
     await waitFor(() => {
-      expect(wrapper.emitted().input).toBeTruthy()
+      expect(wrapper.emitted().inputRaw).toBeTruthy()
     })
 
-    const emittedInput = wrapper.emitted().input as Array<Array<InputEvent>>
+    const emittedInput = wrapper.emitted().inputRaw as Array<Array<InputEvent>>
 
     expect(emittedInput[0][0]).toBe(testOptions[1].value)
   })

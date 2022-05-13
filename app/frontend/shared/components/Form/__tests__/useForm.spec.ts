@@ -59,8 +59,8 @@ describe('useForm', () => {
     }
 
     expect(isValid.value).toBe(true)
-    expect(isDirty.value).toBe(true)
-    expect(isComplete.value).toBe(true)
+    expect(isDirty.value).toBe(false)
+    expect(isComplete.value).toBe(false)
     expect(isSubmitted.value).toBe(false)
   })
 })

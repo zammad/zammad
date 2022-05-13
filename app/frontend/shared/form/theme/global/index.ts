@@ -21,7 +21,7 @@ const classes: FormThemeClasses = {
   tel: defaultTextInput,
   time: defaultTextInput,
   date: defaultTextInput,
-  'datetime-local': defaultTextInput,
+  datetime: defaultTextInput,
   textarea: defaultTextInput,
   password: defaultTextInput,
   checkbox: {

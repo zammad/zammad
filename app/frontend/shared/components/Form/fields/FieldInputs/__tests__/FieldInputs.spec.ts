@@ -63,9 +63,9 @@ describe('Form - Field - Inputs (Text) (Formkit-BuildIn)', () => {
 
     await waitForTimeout()
 
-    expect(wrapper.emitted().input).toBeTruthy()
+    expect(wrapper.emitted().inputRaw).toBeTruthy()
 
-    const emittedInput = wrapper.emitted().input as Array<Array<InputEvent>>
+    const emittedInput = wrapper.emitted().inputRaw as Array<Array<InputEvent>>
 
     expect(emittedInput[6][0]).toBe('Example')
   })

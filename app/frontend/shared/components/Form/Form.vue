@@ -43,7 +43,7 @@ import FormLayout from './FormLayout.vue'
 // - Maybe some default buttons inside the components with loading cycle on submit?
 // (- Disabled form on submit? (i think it's the default of FormKit, but only when a promise will be returned from the submit handler))
 // - Reset/Clear form handling?
-// - ...
+// - Add usage of "clearErrors(true)"?
 
 export interface Props {
   schema?: FormSchemaNode[]
@@ -304,7 +304,7 @@ const buildStaticSchema = (schema: FormSchemaNode[]) => {
 }
 
 const localChangeFields = computed(() => {
-  if (props.formSchemaId) return coreWorkflowChanges.value
+  // if (props.formSchemaId) return coreWorkflowChanges.value
 
   return props.changeFields
 })

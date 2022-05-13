@@ -33,7 +33,7 @@ const getCoreClasses: FormThemeExtension = (classes: FormThemeClasses) => {
     tel: addFloatingLabel(classes.tel),
     time: addFloatingLabel(classes.time),
     date: addDateLabel(classes.date),
-    datetimeLocal: addDateLabel(classes['datetime-local']),
+    datetime: addDateLabel(classes.datetime),
     textarea: addFloatingLabel(classes.textarea),
     password: addFloatingLabel(classes.password),
     select: addFloatingLabel({

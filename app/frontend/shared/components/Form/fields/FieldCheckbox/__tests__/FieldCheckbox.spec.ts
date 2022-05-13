@@ -68,9 +68,9 @@ describe('Form - Field - Checkbox (Formkit-BuildIn)', () => {
 
     await waitForTimeout()
 
-    expect(view.emitted().input).toBeTruthy()
+    expect(view.emitted().inputRaw).toBeTruthy()
 
-    const emittedInput = view.emitted().input as Array<Array<InputEvent>>
+    const emittedInput = view.emitted().inputRaw as Array<Array<InputEvent>>
 
     expect(emittedInput[0][0]).toBe(true)
   })
@@ -93,9 +93,9 @@ describe('Form - Field - Checkbox (Formkit-BuildIn)', () => {
 
     await waitForTimeout()
 
-    expect(view.emitted().input).toBeTruthy()
+    expect(view.emitted().inputRaw).toBeTruthy()
 
-    let emittedInput = view.emitted().input as Array<Array<InputEvent>>
+    let emittedInput = view.emitted().inputRaw as Array<Array<InputEvent>>
 
     expect(emittedInput[0][0]).toBe('yes')
 
@@ -103,7 +103,7 @@ describe('Form - Field - Checkbox (Formkit-BuildIn)', () => {
 
     await waitForTimeout()
 
-    emittedInput = view.emitted().input as Array<Array<InputEvent>>
+    emittedInput = view.emitted().inputRaw as Array<Array<InputEvent>>
     expect(emittedInput[1][0]).toBe('no')
   })
 
@@ -190,9 +190,9 @@ describe('Form - Field - Checkbox (Formkit-BuildIn)', () => {
     await view.events.click(view.getByLabelText(/one/))
     await waitForTimeout()
 
-    expect(view.emitted().input).toBeTruthy()
+    expect(view.emitted().inputRaw).toBeTruthy()
 
-    const emittedInput = view.emitted().input as Array<Array<InputEvent>>
+    const emittedInput = view.emitted().inputRaw as Array<Array<InputEvent>>
 
     expect(emittedInput[0][0]).toStrictEqual(['one'])
 

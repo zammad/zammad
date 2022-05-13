@@ -268,14 +268,14 @@ describe('Fields - FieldDate - visuals', () => {
   })
 })
 
-describe('Fields - FieldDate - type "datetimelocal"', () => {
+describe('Fields - FieldDate - type "datetime"', () => {
   afterAll(() => {
     i18n.setTranslationMap(new Map())
   })
 
   it('renders time inputs and allows to change it (24 hour)', async () => {
     const view = renderDateField({
-      type: 'datetime-local',
+      type: 'datetime',
     })
 
     const input = view.getByLabelText('Date')
@@ -302,7 +302,7 @@ describe('Fields - FieldDate - type "datetimelocal"', () => {
     i18n.setTranslationMap(new Map([['FORMAT_DATETIME', 'mm/dd/yyyy l:MM P']]))
 
     const view = renderDateField({
-      type: 'datetime-local',
+      type: 'datetime',
     })
 
     const hour = view.getByLabelText('Hour')

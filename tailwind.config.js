@@ -3,7 +3,7 @@
 const colors = require('tailwindcss/colors')
 const formsPlugin = require('@tailwindcss/forms')
 const lineClampPlugin = require('@tailwindcss/line-clamp')
-const formKitPlugin = require('@formkit/tailwindcss')
+const formKitTailwind = require('@formkit/themes/tailwindcss')
 const plugin = require('tailwindcss/plugin')
 const path = require('path')
 const fs = require('fs')
@@ -91,7 +91,7 @@ module.exports = {
   plugins: [
     formsPlugin,
     lineClampPlugin,
-    formKitPlugin.default,
+    formKitTailwind,
     plugin(({ addVariant }) => {
       addVariant('formkit-populated', [
         '&[data-populated]',

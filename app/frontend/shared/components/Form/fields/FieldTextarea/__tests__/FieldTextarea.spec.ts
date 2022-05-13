@@ -73,7 +73,7 @@ describe('Form - Field - Textarea (Formkit-BuildIn)', () => {
 
     await waitForTimeout()
 
-    const emittedInput = wrapper.emitted().input as Array<Array<InputEvent>>
+    const emittedInput = wrapper.emitted().inputRaw as Array<Array<InputEvent>>
 
     expect(emittedInput[11][0]).toBe('example body')
   })
@@ -125,7 +125,11 @@ describe('Form - Field - Textarea (Formkit-BuildIn) - Translations', () => {
     expect(textarea).toHaveAttribute('placeholder', 'Gib deinen Text ein')
   })
 
-  it('can translate label with label placeholder', () => {
+  it('can translate label with label placeholder (simulate language switch)', async () => {
+    i18n.setTranslationMap(new Map([['Body %s %s', 'Text %s %s']]))
+
+    await nextTick()
+
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
@@ -138,7 +142,49 @@ describe('Form - Field - Textarea (Formkit-BuildIn) - Translations', () => {
     })
 
     expect(
-      wrapper.getByLabelText('Body Example Placeholder'),
+      wrapper.getByLabelText('Text Example Placeholder'),
+    ).toBeInTheDocument()
+
+    i18n.setTranslationMap(new Map([['Body %s %s', 'Other Language %s %s']]))
+
+    await nextTick()
+
+    expect(
+      wrapper.getByLabelText('Other Language Example Placeholder'),
+    ).toBeInTheDocument()
+  })
+
+  it('can change translated label', async () => {
+    const map = new Map([
+      ['Body %s %s', 'Text %s %s'],
+      ['Other Body %s %s', 'Anderer Text %s %s'],
+    ])
+
+    i18n.setTranslationMap(map)
+
+    await nextTick()
+
+    const wrapper = renderComponent(FormKit, {
+      ...wrapperParameters,
+      props: {
+        label: 'Body %s %s',
+        labelPlaceholder: ['Example', 'Placeholder'],
+        name: 'textarea',
+        type: 'textarea',
+        id: 'textarea',
+      },
+    })
+
+    expect(
+      wrapper.getByLabelText('Text Example Placeholder'),
+    ).toBeInTheDocument()
+
+    await wrapper.rerender({
+      label: 'Other Body %s %s',
+    })
+
+    expect(
+      wrapper.getByLabelText('Anderer Text Example Placeholder'),
     ).toBeInTheDocument()
   })
 })

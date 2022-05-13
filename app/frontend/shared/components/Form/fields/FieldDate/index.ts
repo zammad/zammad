@@ -23,7 +23,7 @@ export default [
     definition: dateFieldDefinition,
   },
   {
-    fieldType: 'datetimeLocal',
+    fieldType: 'datetime',
     definition: dateTimeFieldDefinition,
   },
 ]

@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import { extend } from '@formkit/utils'
-import { generateClasses } from '@formkit/tailwindcss'
+import { generateClasses } from '@formkit/themes'
 import type {
   ImportGlobEagerOutput,
   ImportGlobEagerDefault,

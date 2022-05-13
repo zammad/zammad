@@ -63,11 +63,11 @@ const Template: Story<FieldArgs> = (args: FieldArgs) => ({
   setup() {
     return { args }
   },
-  template: '<FormKit type="datetimeLocal" v-bind="args"/>',
+  template: '<FormKit type="datetime" v-bind="args"/>',
 })
 
 export const Default = Template.bind({})
 Default.args = {
-  label: 'Datetime (local)',
-  name: 'datetime-local',
+  label: 'Datetime',
+  name: 'datetime',
 }
