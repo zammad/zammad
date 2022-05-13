@@ -34,7 +34,8 @@ class App.MultiLocalesRow extends App.Controller
         name:        name
         value:       value
         null:        false
-        placeholder: __('Select locale…')
+        translate:   true
+        placeholder: App.i18n.translatePlain('Select locale…')
         options:     [] #formattedLocales
         class:       'form-control--small'
     )

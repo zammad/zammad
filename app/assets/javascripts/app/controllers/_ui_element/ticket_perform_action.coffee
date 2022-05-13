@@ -449,7 +449,7 @@ class App.UiElement.ticket_perform_action
         name: "#{name}::internal"
         multiple: false
         null: false
-        options: { true: 'internal', false: 'public' }
+        options: { true: __('internal'), false: __('public') }
         value: meta.internal || 'false'
         translate: true
       )

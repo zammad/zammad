@@ -6,7 +6,7 @@ class App.Webhook extends App.Model
     { name: 'name',             display: __('Name'),                      tag: 'input',     type: 'text', limit: 100, null: false },
     { name: 'endpoint',         display: __('Endpoint'),                  tag: 'input',     type: 'text', limit: 300, null: false, placeholder: 'https://target.example.com/webhook' },
     { name: 'signature_token',  display: __('HMAC SHA1 Signature Token'), tag: 'input',     type: 'text', limit: 100, null: true },
-    { name: 'ssl_verify',       display: __('SSL Verify'),                tag: 'boolean',   null: true, options: { true: 'yes', false: 'no'  }, default: true },
+    { name: 'ssl_verify',       display: __('SSL Verify'),                tag: 'boolean',   null: true, translate: true, options: { true: 'yes', false: 'no'  }, default: true },
     { name: 'note',             display: __('Note'),                      tag: 'textarea', note: '', limit: 250, null: true },
     { name: 'active',           display: __('Active'),                    tag: 'active',    default: true },
     { name: 'updated_at',       display: __('Updated'),                   tag: 'datetime',  readonly: 1 },
