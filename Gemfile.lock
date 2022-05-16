@@ -273,7 +273,7 @@ GEM
     inflection (1.0.0)
     iniparse (1.5.0)
     interception (0.5)
-    json (2.5.1)
+    json (2.6.2)
     jwt (2.3.0)
     kgio (2.11.4)
     koala (3.1.0)
@@ -662,7 +662,7 @@ DEPENDENCIES
   htmlentities
   icalendar
   icalendar-recurrence
-  json (~> 2.5.1)
+  json
   koala
   libv8
   mail!

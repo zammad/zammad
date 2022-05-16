@@ -11,8 +11,7 @@ gem 'activerecord-import'
 gem 'activerecord-session_store'
 gem 'bootsnap', require: false
 gem 'composite_primary_keys'
-# TODO: lift version restriction once https://github.com/flori/json/issues/495 is solved.
-gem 'json', '~> 2.5.1'
+gem 'json'
 
 # core - application servers
 gem 'puma', '~> 4', group: :puma
