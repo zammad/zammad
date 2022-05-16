@@ -40,6 +40,6 @@ RSpec.describe Gql::Mutations::Form::UploadCache::Add, type: :graphql do
       expect(graphql_response['data']['formUploadCacheAdd']['uploadedFiles']).to eq(expected_response)
     end
 
-    include_examples 'graphql responds with error if unauthenticated'
+    it_behaves_like 'graphql responds with error if unauthenticated'
   end
 end

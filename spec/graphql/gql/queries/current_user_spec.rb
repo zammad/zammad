@@ -35,7 +35,7 @@ RSpec.describe Gql::Queries::CurrentUser, type: :graphql do
       end
     end
 
-    include_examples 'graphql responds with error if unauthenticated'
+    it_behaves_like 'graphql responds with error if unauthenticated'
 
   end
 end
