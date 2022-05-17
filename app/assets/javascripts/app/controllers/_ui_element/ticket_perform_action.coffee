@@ -64,7 +64,8 @@ class App.UiElement.ticket_perform_action
     item.find('.js-attributeSelector').prepend(selector)
     item
 
-  @render: (attribute, params = {}) ->
+  @render: (attributeConfig, params = {}) ->
+    attribute = $.extend(true, {}, attributeConfig)
 
     [defaults, groups, elements] = @defaults(attribute)
 

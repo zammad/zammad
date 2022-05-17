@@ -50,7 +50,7 @@ class App.SearchableSelect extends Spine.Controller
       # create tokens and attribute values
       values = []
       for dataId in @attribute.value
-        if App[relation].exists dataId
+        if App[relation] && App[relation].exists(dataId)
           name = App[relation].find(dataId).displayName()
           value = dataId
           values.push({name: name, value: value})

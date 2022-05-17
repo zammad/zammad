@@ -1,6 +1,8 @@
 # coffeelint: disable=camel_case_classes
 class App.UiElement.time_range
-  @render: (attribute) ->
+  @render: (attributeConfig, params) ->
+    attribute = $.extend(true, {}, attributeConfig)
+
     ranges =
       minute: __('Minute(s)')
       hour: __('Hour(s)')
