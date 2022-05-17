@@ -18,23 +18,16 @@ class EmailAddressValidation
   # Checks if the email address has a valid format.
   # Reports email addresses without dot in domain as valid (zammad@localhost).
   #
+  # @param mx [Boolean] check only syntax or MX as well
+  #
   # @return [true]  if email address has valid format
   # @return [false] if email address has no valid format
-  def valid_format?
-    # NOTE: Don't use ValidEmail2::Address.valid? here because it requires the
-    # email address to have a dot in its domain.
-    @valid_format ||= email_address.match?(URI::MailTo::EMAIL_REGEXP)
+  def valid?(check_mx: false)
+    EmailAddressValidator.valid? email_address,
+                                 host_validation:  (check_mx ? :mx : :syntax),
+                                 local_encoding:   :unicode,
+                                 host_local:       true,
+                                 host_fqdn:        false,
+                                 host_auto_append: false
   end
-
-  # Checks if the domain of the email address has a valid MX record.
-  #
-  # @return [true]  if email address domain has an MX record
-  # @return [false] if email address domain has no MX record
-  def valid_mx?
-    return @valid_mx if @valid_mx
-
-    validated_email_address = ValidEmail2::Address.new(email_address)
-    @valid_mx               = validated_email_address&.valid_mx?
-  end
-
 end

@@ -106,7 +106,7 @@ class TicketsController < ApplicationController
       if clean_params[:customer_id].is_a?(String) && clean_params[:customer_id] =~ %r{^guess:(.+?)$}
         email_address = $1
         email_address_validation = EmailAddressValidation.new(email_address)
-        if !email_address_validation.valid_format?
+        if !email_address_validation.valid?
           render json: { error: "Invalid email '#{email_address}' of customer" }, status: :unprocessable_entity
           return
         end

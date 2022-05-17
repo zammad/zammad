@@ -9,7 +9,7 @@ class Channel::Driver::Sendmail
     # set system_bcc of config if defined
     system_bcc = Setting.get('system_bcc')
     email_address_validation = EmailAddressValidation.new(system_bcc)
-    if system_bcc.present? && email_address_validation.valid_format?
+    if system_bcc.present? && email_address_validation.valid?
       attr[:bcc] ||= ''
       attr[:bcc] += ', ' if attr[:bcc].present?
       attr[:bcc] += system_bcc

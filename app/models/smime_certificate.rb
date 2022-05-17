@@ -128,7 +128,7 @@ class SMIMECertificate < ApplicationModel
       # ["email:jd@example.com", "emailAddress:jd@example.com", "rfc822:jd@example.com", "rfc822Name:jd@example.com"]
       next if identifier.exclude?('email') && identifier.exclude?('rfc822')
 
-      if !EmailAddressValidation.new(email_address).valid_format?
+      if !EmailAddressValidation.new(email_address).valid?
         Rails.logger.warn <<~TEXT.squish
           SMIMECertificate with ID #{id} has the malformed email address "#{email_address}"
           stored as "#{identifier}" in the subjectAltName extension.

@@ -42,7 +42,7 @@ class User
       return if email.blank?
 
       email_address_validation = EmailAddressValidation.new(email)
-      return if !email_address_validation.valid_format?
+      return if !email_address_validation.valid?
 
       true
     end

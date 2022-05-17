@@ -19,6 +19,11 @@ Bundler.setup
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+# EmailAddress gem clashes with EmailAddress model.
+# https://github.com/afair/email_address#namespace-conflict-resolution
+EmailAddressValidator = EmailAddress
+Object.send(:remove_const, :EmailAddress)
+
 # Only load gems for asset compilation if they are needed to avoid
 #   having unneeded runtime dependencies like NodeJS.
 if ArgvHelper.argv.include?('assets:precompile') || Rails.groups.exclude?('production')

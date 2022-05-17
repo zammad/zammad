@@ -964,10 +964,10 @@ class UserTest < ActiveSupport::TestCase
     )
     roles = Role.where(name: 'Agent')
     User.create_or_update(
-      login:         "agent-default-valid_agent_group_permission-1#{name}@example.com",
+      login:         "valid_agent_permission-1#{name}@example.com",
       firstname:     'valid_agent_group_permission-1',
       lastname:      "Agent#{name}",
-      email:         "agent-default-valid_agent_group_permission-1#{name}@example.com",
+      email:         "valid_agent_permission-1#{name}@example.com",
       password:      'agentpw',
       active:        true,
       roles:         roles,
@@ -976,10 +976,10 @@ class UserTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
     agent2 = User.create_or_update(
-      login:         "agent-default-valid_agent_group_permission-2#{name}@example.com",
+      login:         "valid_agent_permission-2#{name}@example.com",
       firstname:     'valid_agent_group_permission-2',
       lastname:      "Agent#{name}",
-      email:         "agent-default-valid_agent_group_permission-2#{name}@example.com",
+      email:         "valid_agent_permission-2#{name}@example.com",
       password:      'agentpw',
       active:        true,
       roles:         roles,

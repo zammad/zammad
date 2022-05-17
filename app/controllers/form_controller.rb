@@ -51,7 +51,7 @@ class FormController < ApplicationController
     else
       begin
         email_address_validation = EmailAddressValidation.new(params[:email])
-        if !email_address_validation.valid_format? || !email_address_validation.valid_mx?
+        if !email_address_validation.valid?(check_mx: true)
           errors['email'] = 'invalid'
         end
       rescue => e

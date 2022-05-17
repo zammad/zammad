@@ -177,6 +177,8 @@ GEM
     em-websocket (0.5.3)
       eventmachine (>= 0.12.9)
       http_parser.rb (~> 0)
+    email_address (0.2.3)
+      simpleidn
     equalizer (0.0.11)
     erubi (1.10.0)
     eventmachine (1.2.7)
@@ -532,6 +534,8 @@ GEM
       activesupport (>= 5.2.0)
     simple_oauth (0.3.1)
     simple_po_parser (1.1.6)
+    simpleidn (0.2.1)
+      unf (~> 0.1.4)
     slack-notifier (2.4.0)
     slack-ruby-client (1.0.0)
       faraday (>= 1.0)
@@ -581,9 +585,6 @@ GEM
     unicorn (6.1.0)
       kgio (~> 2.6)
       raindrops (~> 0.7)
-    valid_email2 (4.0.3)
-      activemodel (>= 3.2)
-      mail (~> 2.5)
     vcr (6.1.0)
     viewpoint (1.1.1)
       httpclient
@@ -648,6 +649,7 @@ DEPENDENCIES
   dotenv
   eco
   em-websocket
+  email_address
   eventmachine
   execjs
   factory_bot_rails
@@ -724,7 +726,6 @@ DEPENDENCIES
   twitter
   uglifier
   unicorn
-  valid_email2
   vcr
   viewpoint
   vite_rails

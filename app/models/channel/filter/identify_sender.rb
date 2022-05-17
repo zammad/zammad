@@ -103,7 +103,7 @@ module Channel::Filter::IdentifySender
           next if email_address.blank?
 
           email_address_validation = EmailAddressValidation.new(email_address)
-          next if !email_address_validation.valid_format?
+          next if !email_address_validation.valid?
 
           user_create(
             firstname: address_data.display_name,
@@ -135,7 +135,7 @@ module Channel::Filter::IdentifySender
           address = sanitize_email(address)
 
           email_address_validation = EmailAddressValidation.new(address)
-          next if !email_address_validation.valid_format?
+          next if !email_address_validation.valid?
 
           user_create(
             firstname: display_name,

@@ -1512,7 +1512,7 @@ result
         Mail::AddressList.new(recipient_email).addresses.each do |address|
           recipient_email = address.address
           email_address_validation = EmailAddressValidation.new(recipient_email)
-          break if recipient_email.present? && email_address_validation.valid_format?
+          break if recipient_email.present? && email_address_validation.valid?
         end
       rescue
         if recipient_email.present?
@@ -1525,7 +1525,7 @@ result
       end
 
       email_address_validation = EmailAddressValidation.new(recipient_email)
-      next if !email_address_validation.valid_format?
+      next if !email_address_validation.valid?
 
       # do not send notification if system address
       next if EmailAddress.exists?(email: recipient_email.downcase)

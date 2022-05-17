@@ -900,7 +900,7 @@ try to find correct name
 
     email_address_validation = EmailAddressValidation.new(email)
 
-    return if email_address_validation.valid_format?
+    return if email_address_validation.valid?
 
     errors.add :base, "Invalid email '#{email}'"
   end
