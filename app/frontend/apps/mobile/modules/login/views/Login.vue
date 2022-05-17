@@ -72,6 +72,17 @@ const application = useApplicationStore()
           <div class="mb-6 flex justify-center p-2 text-2xl font-extrabold">
             {{ application.config.product_name }}
           </div>
+          <template v-if="application.config.maintenance_mode">
+            <div
+              class="my-1 flex items-center rounded-xl bg-red py-2 px-4 text-white"
+            >
+              {{
+                i18n.t(
+                  'Zammad is currently in maintenance mode. Only administrators can log in. Please wait until the maintenance window is over.',
+                )
+              }}
+            </div>
+          </template>
           <template v-if="application.config.maintenance_login">
             <!-- eslint-disable vue/no-v-html -->
             <div

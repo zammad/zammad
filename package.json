@@ -3,6 +3,7 @@
   "scripts": {
     "generate-graphql-api": "bundle exec rails generate graphql_introspection > tmp/graphql_introspection.json && npx graphql-codegen -c .graphql_code_generator.yml && rm tmp/graphql_introspection.json",
     "dev": "forego start -f Procfile.dev",
+    "i18n": "rails generate translation_catalog",
     "lint": "vue-tsc --noEmit && eslint --cache --cache-location ./tmp/eslintcache.js -c .eslintrc.js --ext .js,.ts,.vue app/frontend/ .eslint-plugin-zammad/ .storybook/",
     "lint:fix": "yarn lint -- --fix",
     "lint:css": "stylelint **/*.{css,vue,scss}",

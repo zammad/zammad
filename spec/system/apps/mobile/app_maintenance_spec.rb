@@ -64,6 +64,7 @@ RSpec.describe 'Mobile > App Update Check', type: :system, app: :mobile do
 
         Setting.set('maintenance_login', true)
         Setting.set('maintenance_login_message', 'Custom maintenance login message.')
+        expect(page).to have_text('Zammad is currently in maintenance mode')
         expect(page).to have_text('Custom maintenance login message.')
       end
     end
