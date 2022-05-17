@@ -1,9 +1,9 @@
 # coffeelint: disable=camel_case_classes
 class App.UiElement.select_search extends App.UiElement.ApplicationUiElement
   @render: (attributeConfig, params) ->
+    attribute = $.extend(true, {}, attributeConfig)
 
     # set multiple option
-    attribute = $.extend({}, attributeConfig)
     attribute.multiple = 'multiple'
 
     delete attribute.filter

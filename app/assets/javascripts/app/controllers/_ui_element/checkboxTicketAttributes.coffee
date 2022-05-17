@@ -1,7 +1,7 @@
 # coffeelint: disable=camel_case_classes
 class App.UiElement.checkboxTicketAttributes extends App.UiElement.ApplicationUiElement
   @render: (attributeConfig, params) ->
-    attribute = $.extend({}, attributeConfig)
+    attribute = $.extend(true, {}, attributeConfig)
 
     attributeOptionsArray = []
     for name, row of App.Ticket.attributesGet()

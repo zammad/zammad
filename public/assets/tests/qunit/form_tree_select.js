@@ -1,5 +1,5 @@
 QUnit.test("form elements check", assert => {
-  $('#forms').append('<hr><h1>form elements check</h1><form id="form1"></form>')
+  $('#forms').append('<hr><h1>form elements check 1</h1><form id="form1"></form>')
   var el = $('#form1')
   new App.ControllerForm({
     el:        el,
@@ -62,7 +62,7 @@ QUnit.test("form elements check", assert => {
   }
   assert.deepEqual(params, test_params, 'form param check')
 
-  $('#forms').append('<hr><h1>form elements check</h1><form id="form2"></form>')
+  $('#forms').append('<hr><h1>form elements check 2</h1><form id="form2"></form>')
   var el = $('#form2')
   new App.ControllerForm({
     el:        el,
@@ -127,7 +127,7 @@ QUnit.test("form elements check", assert => {
   }
   assert.deepEqual(params, test_params, 'form param check')
 
-  $('#forms').append('<hr><h1>form elements check</h1><form id="form3"></form>')
+  $('#forms').append('<hr><h1>form elements check 3</h1><form id="form3"></form>')
   var el = $('#form3')
   new App.ControllerForm({
     el:        el,
@@ -191,7 +191,7 @@ QUnit.test("form elements check", assert => {
   }
   assert.deepEqual(params, test_params, 'form param check')
 
-  $('#forms').append('<hr><h1>form elements check</h1><form id="form4"></form>')
+  $('#forms').append('<hr><h1>form elements check 4</h1><form id="form4"></form>')
   var el = $('#form4')
   new App.ControllerForm({
     el:        el,
@@ -425,10 +425,94 @@ QUnit.test("form elements check", assert => {
   assert.deepEqual(params, test_params, 'form param check')
 });
 
+QUnit.test("ui elements check", assert => {
+
+  attribute =  {
+    "name": "tree_select_search",
+    "display": "tree_select_search",
+    "tag": "tree_select_search",
+    "null": true,
+    "translate": true,
+    "value": ['bb::bba', 'bb::bbb'],
+    "multiple": true,
+    "options": [
+      {
+        "value": "aa",
+        "name": "yes",
+        "children": [
+            {
+              "value": "aa::aaa",
+              "name": "yes1",
+            },
+            {
+              "value": "aa::aab",
+              "name": "yes2",
+            },
+        ]
+      },
+      {
+        "value": "bb",
+        "name": "bb (comment)",
+        "children": [
+            {
+              "value": "bb::bba",
+              "name": "yes11",
+            },
+            {
+              "value": "bb::bbb",
+              "name": "yes22",
+            },
+        ]
+      },
+    ],
+  };
+
+  options = [
+    {
+      "value": "aa",
+      "name": "yes",
+      "children": [
+          {
+            "value": "aa::aaa",
+            "name": "yes1",
+          },
+          {
+            "value": "aa::aab",
+            "name": "yes2",
+          },
+      ]
+    },
+    {
+      "value": "bb",
+      "name": "bb (comment)",
+      "children": [
+          {
+            "value": "bb::bba",
+            "name": "yes11",
+          },
+          {
+            "value": "bb::bbb",
+            "name": "yes22",
+          },
+      ]
+    }
+  ]
+
+  element = App.UiElement.tree_select_search.render(attribute)
+  assert.deepEqual(attribute.options, options, 'options tree_select_search')
+
+  attribute.name = 'tree_select'
+  attribute.display = 'tree_select'
+  attribute.tag = 'tree_select'
+
+  element = App.UiElement.tree_select.render(attribute)
+  assert.deepEqual(attribute.options, options, 'options tree_select')
+});
+
 QUnit.test("searchable_select submenu and option list check", assert => {
   var done = assert.async()
 
-  $('#forms').append('<hr><h1>form elements check</h1><form id="form5"></form>')
+  $('#forms').append('<hr><h1>form elements check 5</h1><form id="form5"></form>')
   var el = $('#form5')
   new App.ControllerForm({
     el:        el,

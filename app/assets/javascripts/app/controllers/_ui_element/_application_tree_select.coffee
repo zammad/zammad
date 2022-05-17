@@ -37,7 +37,8 @@ class App.UiElement.ApplicationTreeSelect extends App.UiElement.ApplicationUiEle
   @filterOptionArray: (attribute) ->
     attribute.options = @filterTreeOptions(attribute.filter, 0, attribute.options, attribute.null)
 
-  @render: (attribute, params) ->
+  @render: (attributeConfig, params) ->
+    attribute = $.extend(true, {}, attributeConfig)
 
     # set multiple option
     if attribute.multiple

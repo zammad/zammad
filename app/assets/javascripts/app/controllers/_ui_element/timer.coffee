@@ -1,6 +1,8 @@
 # coffeelint: disable=camel_case_classes
 class App.UiElement.timer
-  @render: (attribute) ->
+  @render: (attributeConfig) ->
+    attribute = $.extend(true, {}, attributeConfig)
+
     days =
       Mon: __('Monday')
       Tue: __('Tuesday')

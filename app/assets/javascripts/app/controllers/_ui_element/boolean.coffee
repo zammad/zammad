@@ -1,7 +1,7 @@
 # coffeelint: disable=camel_case_classes
 class App.UiElement.boolean extends App.UiElement.ApplicationUiElement
   @render: (attributeConfig, params) ->
-    attribute = $.extend({}, attributeConfig)
+    attribute = $.extend(true, {}, attributeConfig)
 
     # build options list
     if _.isEmpty(attribute.options)

@@ -3,7 +3,7 @@ class App.UiElement.radio extends App.UiElement.ApplicationUiElement
   @template_name: 'radio'
 
   @render: (attributeConfig, params) ->
-    attribute = $.extend({}, attributeConfig)
+    attribute = $.extend(true, {}, attributeConfig)
 
     # build options list based on config
     @getConfigOptionList(attribute, params)

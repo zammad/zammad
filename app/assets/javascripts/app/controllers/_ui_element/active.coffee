@@ -1,7 +1,7 @@
 # coffeelint: disable=camel_case_classes
 class App.UiElement.active extends App.UiElement.ApplicationUiElement
   @render: (attributeConfig, params) ->
-    attribute = $.extend({}, attributeConfig)
+    attribute = $.extend(true, {}, attributeConfig)
 
     # set attributes
     attribute.null = false

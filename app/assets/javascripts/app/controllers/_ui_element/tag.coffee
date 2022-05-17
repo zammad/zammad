@@ -1,7 +1,8 @@
 # coffeelint: disable=camel_case_classes
 class App.UiElement.tag
   @render: (attributeConfig) ->
-    attribute = $.extend({}, attributeConfig)
+    attribute = $.extend(true, {}, attributeConfig)
+
     if !attribute.id
       attribute.id = 'tag-' + new Date().getTime() + '-' + Math.floor(Math.random() * 999999)
     item = $( App.view('generic/input')(attribute: attribute) )
