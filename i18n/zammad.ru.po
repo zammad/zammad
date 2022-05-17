@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-05-13 11:42+0000\n"
+"PO-Revision-Date: 2022-05-17 03:39+0000\n"
 "Last-Translator: Zhilin Ruslan <x-th-unicorn@hotmail.com>\n"
 "Language-Team: Russian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/ru/>\n"
@@ -1455,7 +1455,7 @@ msgstr "CTI (Компьютерная телефония)"
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee
 #: app/controllers/cti_controller.rb
 msgid "CTI (generic)"
-msgstr "CTI (общий)"
+msgstr "Компьютерная телефония (универсальная)"
 
 #: db/seeds/settings.rb
 msgid "CTI Token"
@@ -1492,7 +1492,7 @@ msgstr "Календари"
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 msgid "Call Settings"
-msgstr "Настройки вызова"
+msgstr "Настройки звонков"
 
 #: app/assets/javascripts/app/controllers/cti.coffee
 msgid "Call from %s for %s"
@@ -2501,7 +2501,7 @@ msgstr "Текущее состояние"
 
 #: app/assets/javascripts/app/views/monitoring.jst.eco
 msgid "Current Token"
-msgstr "Текущий токен"
+msgstr "Текущий ключ"
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
 #: app/assets/javascripts/app/models/signature.coffee
@@ -2989,7 +2989,9 @@ msgstr "Определяет, используется ли приложение
 
 #: db/seeds/settings.rb
 msgid "Defines if generic CTI integration is enabled or not."
-msgstr "Определяет, включена универсальная интеграция с CTI или нет."
+msgstr ""
+"Определяет, включена универсальная интеграция с компьютерной телефонией "
+"(CTI) или нет."
 
 #: db/seeds/settings.rb
 msgid "Defines if i-doit (http://www.i-doit) is enabled or not."
@@ -3221,7 +3223,7 @@ msgstr "Определяет фильтр почтового мастера."
 
 #: db/seeds/settings.rb
 msgid "Defines pretty date format."
-msgstr "Определяет желаемый формат даты."
+msgstr "Определяет удобный формат дат."
 
 #: db/seeds/settings.rb
 msgid "Defines searchable models."
@@ -3743,7 +3745,7 @@ msgstr "Отмените ваши несохраненные изменения.
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Display"
-msgstr "Отобразить"
+msgstr "Отображать"
 
 #: app/assets/javascripts/app/models/email_address.coffee
 msgid "Display name"
@@ -4352,7 +4354,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
 #: app/assets/javascripts/app/views/twitter/app_config.jst.eco
 msgid "Enter your %s App Keys"
-msgstr "Введите ваш ключ приложения (App Keys) %s"
+msgstr "Введите ваши ключи приложения (App Keys) %s"
 
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 msgid ""
@@ -4838,10 +4840,8 @@ msgid "Frontend"
 msgstr "Внешний интерфейс"
 
 #: app/assets/javascripts/app/models/group.coffee
-#, fuzzy
-#| msgid "Full Name"
 msgid "Full"
-msgstr "Полное имя"
+msgstr "Полные"
 
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 msgid "Full Name"
@@ -5138,7 +5138,7 @@ msgstr "Журнал HTTP"
 
 #: db/seeds/settings.rb
 msgid "HTTP type"
-msgstr "тип HTTP"
+msgstr "Тип HTTP"
 
 #: db/seeds/schedulers.rb
 msgid "Handle data privacy tasks."
@@ -6346,7 +6346,7 @@ msgstr "Локализация не найдена"
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
 #: app/assets/javascripts/app/views/session.jst.eco
 msgid "Location"
-msgstr "Местоположение"
+msgstr "Расположение"
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
 msgid "Location of an external chat.css file."
@@ -6381,7 +6381,7 @@ msgstr "Выход"
 
 #: db/seeds/settings.rb
 msgid "Lost Password"
-msgstr "Пароль утерян"
+msgstr "Забытый пароль"
 
 #: app/assets/javascripts/app/lib/app_post/websocket.coffee
 msgid "Lost network connection!"
@@ -6955,7 +6955,7 @@ msgstr "Сеть"
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 msgid "New"
-msgstr "Новое"
+msgstr "Новый(ая/ое)"
 
 #: app/assets/javascripts/app/controllers/api.coffee
 msgid "New Access Token is"
@@ -7092,7 +7092,7 @@ msgstr "Нет"
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 msgid "No %s configured."
-msgstr "Не %s настроено."
+msgstr "%s не настроен(а/о)."
 
 #: app/assets/javascripts/app/views/generic/admin/empty.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
@@ -8031,7 +8031,7 @@ msgstr "Работает на"
 
 #: db/seeds/settings.rb
 msgid "Pretty Date"
-msgstr "Формат Даты"
+msgstr "Удобный формат даты"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #: app/assets/javascripts/app/views/channel/form.jst.eco
@@ -8206,7 +8206,7 @@ msgstr "Необработанные данные"
 
 #: app/assets/javascripts/app/models/group.coffee
 msgid "Read"
-msgstr ""
+msgstr "Только чтение"
 
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco
 msgid "Real-time"
@@ -8374,7 +8374,7 @@ msgstr "Запрос на изменение"
 
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid "Requesting the Grant"
-msgstr "Запрос о предоставлении субсидии"
+msgstr "Запрос подтверждения выдачи прав"
 
 #: app/controllers/reports_controller.rb
 msgid "Required parameter 'downloadBackendSelected' is missing."
@@ -8937,7 +8937,7 @@ msgstr "Время ожидания сеанса"
 #: app/assets/javascripts/app/controllers/session.coffee
 #: app/assets/javascripts/app/views/session.jst.eco db/seeds/permissions.rb
 msgid "Sessions"
-msgstr "Сессии подключения"
+msgstr "Сеансы"
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
 msgid "Set"
@@ -8949,7 +8949,7 @@ msgstr "Установить ограничение агента"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Set article to internal/public"
-msgstr "Установить для внутреннего/публичного"
+msgstr "Сделать статью внутренней/публичной"
 
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
 msgid "Set as Default"
@@ -9494,7 +9494,7 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "SystemID"
-msgstr "SystemID"
+msgstr "Системный идентификатор (SystemID)"
 
 #: db/seeds/settings.rb
 msgid "Tab behaviour after ticket action"
@@ -10501,7 +10501,7 @@ msgstr "Ключ"
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 #: db/seeds/permissions.rb
 msgid "Token Access"
-msgstr "Доступ к токенам"
+msgstr "Доступ по ключу"
 
 #: db/seeds/settings.rb
 msgid "Token for CTI."
@@ -11637,8 +11637,8 @@ msgid ""
 "You can generate a personal access token for each application you use that "
 "needs access to the Zammad API."
 msgstr ""
-"Вы можете создать личный токен доступа для каждого приложения, которое вы "
-"используете, которому необходим доступ к Zammad API."
+"Вы можете создать личный ключ доступа для каждого приложения, которое вы "
+"используете, которому необходим доступ к API Zammad."
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee
 msgid ""
@@ -11753,7 +11753,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 msgid "You need to configure the Zammad endpoints in the %s"
-msgstr "Вам нужно сконфигурировать Zammad endpoins в %s"
+msgstr "Вам необходимо настроить конечные точки (endpoints) Zammad в %s"
 
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
@@ -11811,7 +11811,7 @@ msgstr "Ваш логотип"
 
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 msgid "Your New Personal Access Token"
-msgstr "Ваш новый токен персонального доступа"
+msgstr "Ваш новый персональный ключ доступа"
 
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
 msgid ""
@@ -11851,7 +11851,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/twitter/app_config.jst.eco
 #: db/seeds/settings.rb
 msgid "Your callback URL"
-msgstr "Ваш обратный URL"
+msgstr "Ваш URL-адрес обратного вызова (callback)"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee
 msgid ""
@@ -11972,6 +11972,7 @@ msgstr "Индекс"
 #: db/seeds/settings.rb
 msgid "absolute - e. g. \"Monday 09:30\" or \"Tuesday 23. Feb 14:20\""
 msgstr ""
+"абсолютное - например, «Понедельник, 09:30» или «Вторник, 23 февраля, 14:20»"
 
 #: app/assets/javascripts/app/controllers/_ui_element/active.coffee
 msgid "active"
@@ -12374,7 +12375,7 @@ msgstr "на прошлой неделе"
 
 #: db/seeds/settings.rb
 msgid "left"
-msgstr ""
+msgstr "слева"
 
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
 msgid "m"
@@ -12440,7 +12441,7 @@ msgstr "нет"
 
 #: app/assets/javascripts/app/views/monitoring.jst.eco
 msgid "no issues"
-msgstr "без изменений"
+msgstr "никаких проблем"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_article_attachments.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee
@@ -12524,10 +12525,8 @@ msgid "phone"
 msgstr "телефон"
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
-#, fuzzy
-#| msgid "Public"
 msgid "public"
-msgstr "Общий"
+msgstr "публичный"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 msgid "published"
@@ -12547,7 +12546,7 @@ msgstr "несоответствие регулярного выражения\t
 
 #: db/seeds/settings.rb
 msgid "relative - e. g. \"2 hours ago\" or \"2 days and 15 minutes ago\""
-msgstr ""
+msgstr "относительное - например, «2 часа назад» или «2 дня 15 минут назад»"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 #: app/assets/javascripts/app/views/profile/linked_accounts.jst.eco
@@ -12572,7 +12571,7 @@ msgstr "Ответить"
 
 #: db/seeds/settings.rb
 msgid "right"
-msgstr ""
+msgstr "справа"
 
 #: app/assets/javascripts/app/controllers/cti.coffee
 msgid "ringing"
@@ -12617,12 +12616,12 @@ msgstr "установить только для чтения"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 msgid "set to internal"
-msgstr "закрытый доступ"
+msgstr "сделать внутренней(-им)"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/internal.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 msgid "set to public"
-msgstr "открытый доступ"
+msgstr "сделать публичной(-ым)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "show"
@@ -12710,7 +12709,7 @@ msgstr "до (родственник)"
 
 #: db/seeds/settings.rb
 msgid "timestamp - e. g. \"2018-08-30 14:30\""
-msgstr ""
+msgstr "метка времени - например, «30.08.2018 14:30»"
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
 msgid "to"
@@ -12803,7 +12802,7 @@ msgid ""
 "|Increment| increases the ticket number. The SystemID and the counter are "
 "used with \"SystemID.Counter\" format (e.g. 1010138, 1010139)."
 msgstr ""
-"|Увеличить| увеличивает номер заявки. Идентификатор системы (SystemID) и "
+"|Увеличение| увеличивает номер заявки. Идентификатор системы (SystemID) и "
 "счетчик используются в формате «ИдентификаторСистемы.Счетчик» (например, "
 "1010138, 1010139)."
 
@@ -12846,17 +12845,14 @@ msgstr "∅ Сегодня время ожидания"
 #~ msgstr "Время первого ответа"
 
 #, fuzzy
-#~| msgid "Are you sure to delete"
 #~ msgid "Are you sure to delete this draft?"
 #~ msgstr "Вы уверены, что хотите удалить"
 
 #, fuzzy
-#~| msgid "Unable to save changes."
 #~ msgid "Unable to load changes"
 #~ msgstr "Невозможно сохранить изменения."
 
 #, fuzzy
-#~| msgid "Unable to save changes."
 #~ msgid "Unable to save changes"
 #~ msgstr "Невозможно сохранить изменения."
 
@@ -12900,10 +12896,6 @@ msgstr "∅ Сегодня время ожидания"
 #~ msgstr "Отложенные просроченные"
 
 #, fuzzy
-#~| msgid ""
-#~| "Sets the last customer contact based on the last contact of a customer "
-#~| "or on the last contact of a customer to whom an agent has not yet "
-#~| "responded."
 #~ msgid ""
 #~ "Sets the last customer contact based on either the last contact of the "
 #~ "customer in general or on the last contact of the customer that has not "
@@ -12926,7 +12918,6 @@ msgstr "∅ Сегодня время ожидания"
 #~ msgstr "Максимальный размер письма в мегабайтах"
 
 #, fuzzy
-#~| msgid "Unable to load data..."
 #~ msgid "Unable to load data…"
 #~ msgstr "Не удалось загрузить данные ..."
 
@@ -12953,12 +12944,10 @@ msgstr "∅ Сегодня время ожидания"
 #~ "Пожалуйста, сначала выберите группу, прежде чем упоминать пользователя!"
 
 #, fuzzy
-#~| msgid "%s Object(s) are deleted."
 #~ msgid "%s object(s) are deleted."
 #~ msgstr "%s Объекта(тов) удалено."
 
 #, fuzzy
-#~| msgid "Attention: When creating a ticket an e-mail is sent."
 #~ msgid "Attention: When creating a ticket an email is sent."
 #~ msgstr "Внимание: При создании билета будет отправлено электронное письмо."
 

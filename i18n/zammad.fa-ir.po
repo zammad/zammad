@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-05-13 11:42+0000\n"
+"PO-Revision-Date: 2022-05-17 03:05+0000\n"
 "Last-Translator: payman Zafar <p.moghadam@asredanesh.com>\n"
 "Language-Team: Persian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/fa/>\n"
@@ -447,7 +447,7 @@ msgstr "حساب کاربری تایید نشد"
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/time_unit.jst.eco
 msgid "Accounted Time"
-msgstr "Accounted Time"
+msgstr "زمان صرف‌شده"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
@@ -1811,7 +1811,7 @@ msgstr "اینجا کلیک نمایید"
 #: app/assets/javascripts/app/views/integration/idoit.jst.eco
 #: db/seeds/settings.rb
 msgid "Client ID"
-msgstr "آی‌دی مشتری"
+msgstr "شناسه مشتری"
 
 #: db/seeds/settings.rb
 msgid "Client Secret"
@@ -1856,11 +1856,11 @@ msgstr ""
 
 #: db/seeds/schedulers.rb
 msgid "Close chat sessions where participants are offline."
-msgstr ""
+msgstr "بستن چت زمانی‌که حضار آفلاین هستند."
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Close current tab"
-msgstr "بستن برگه جاری"
+msgstr "بستن برگه کنونی"
 
 #: app/assets/javascripts/app/models/macro.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
@@ -1895,7 +1895,7 @@ msgstr "زمان بستن"
 
 #: db/seeds/settings.rb
 msgid "Color representation of the open ticket indicator in the sidebar."
-msgstr ""
+msgstr "استفاده از نمایشگر رنگی برای تیکت باز در پنجره کتاری."
 
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee
 msgid "Comment"
@@ -2404,6 +2404,8 @@ msgid ""
 "Currently no overview is assigned to your roles. Please contact your "
 "administrator."
 msgstr ""
+"درحال حاضر هیچ گزینه‌ای از پنجره مرورکلی به نقش شما اختصاص نیافته است. لطفا "
+"با ادمین سیستم تماس بگیرید."
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "Custom"
@@ -4080,19 +4082,19 @@ msgstr "زمان‌های دگرسپاری"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "Escalation at"
-msgstr "دگرسپاری شده در تاریخ"
+msgstr "زمان دگرسپاری‌"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "Escalation at (Close Time)"
-msgstr ""
+msgstr "زمان دگرسپاری‌ (زمان بسته شدن)"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "Escalation at (First Response Time)"
-msgstr ""
+msgstr "زمان دگرسپاری‌ (زمان اولین پاسخ)"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "Escalation at (Update Time)"
-msgstr ""
+msgstr "زمان دگرسپاری‌ (زمان به‌روزرسانی)"
 
 #: db/seeds/settings.rb
 msgid "Evangelist"
@@ -4128,7 +4130,7 @@ msgstr "مثال"
 
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
 msgid "Example CSV file for download."
-msgstr ""
+msgstr "نمونه فایل CSV برای دانلود."
 
 #: app/assets/javascripts/app/controllers/webhook.coffee
 #: app/assets/javascripts/app/controllers/widget/payload_example.coffee
@@ -5635,11 +5637,11 @@ msgstr "جولای"
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
 msgid "Jun"
-msgstr "ژون"
+msgstr "ژوئن"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 msgid "June"
-msgstr "ژون"
+msgstr "ژوئن"
 
 #: app/assets/javascripts/app/views/translation/index.jst.eco
 msgid ""
@@ -5675,7 +5677,7 @@ msgstr "میانبر های کیبرد برای استفاده سریع از س�
 
 #: app/assets/javascripts/app/models/text_module.coffee
 msgid "Keywords"
-msgstr "Keywords"
+msgstr "کلمات کلیدی"
 
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
@@ -6365,7 +6367,7 @@ msgstr "چند انتخابی"
 
 #: db/seeds/overviews.rb
 msgid "My Assigned Tickets"
-msgstr "تیکت‌های تخصیص داده‌شده من"
+msgstr "تیکت‌های من"
 
 #: db/seeds/overviews.rb
 msgid "My Organization Tickets"
@@ -6373,11 +6375,11 @@ msgstr "تیکت‌های سازمان من"
 
 #: db/seeds/overviews.rb
 msgid "My Pending Reached Tickets"
-msgstr "تیکتهای منتظر دردسترس قرارگرفتن من"
+msgstr "تیکتهای با اتمام زمان انتظار من"
 
 #: db/seeds/overviews.rb
 msgid "My Replacement Tickets"
-msgstr "تیکت‌های جانشین من"
+msgstr "تیکت‌های من بعنوان جانشین"
 
 #: app/assets/javascripts/app/views/dashboard.jst.eco
 msgid "My Stats"
@@ -6917,7 +6919,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/reader_controller.coffee
 msgid "Not available in selected language"
-msgstr ""
+msgstr "در زبان‌های انتخاب‌شده در دسترس نیست"
 
 #: app/assets/javascripts/app/views/cti/not_configured.jst.eco
 msgid "Not configured"
@@ -7410,7 +7412,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
 msgid "Paste in CSV data"
-msgstr ""
+msgstr "محتوای فایل CSV را اینجا کپی کنید"
 
 #: db/seeds/overviews.rb
 msgid "Pending Reached Tickets"
@@ -7621,7 +7623,7 @@ msgstr "برگه قبلی"
 
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
 msgid "Previously owned tickets (%s in total)"
-msgstr ""
+msgstr "تیکت‌های قبلی این کاربر (جمعا %s عدد)"
 
 #: app/assets/javascripts/app/models/overview.coffee
 msgid "Prio"
@@ -7759,7 +7761,7 @@ msgstr "خام"
 
 #: app/assets/javascripts/app/models/group.coffee
 msgid "Read"
-msgstr ""
+msgstr "خواندن"
 
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco
 msgid "Real-time"
@@ -7802,6 +7804,8 @@ msgid ""
 "Records that exist in the import data (but not in Zammad) will always be "
 "created."
 msgstr ""
+"رکوردهایی که در فایل ورودی وجود دارد (اما در سیستم موجود نیست) ایجاد خواهند "
+"شد."
 
 #: db/seeds/settings.rb
 msgid "Recursive Ticket Triggers"
@@ -8240,7 +8244,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco
 msgid "Scroll down to see new messages"
-msgstr ""
+msgstr "برای دیدن پیام‌های جدید به سمت پایین حرکت کنید"
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
@@ -9258,7 +9262,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee
 msgid "The entry could not be created."
-msgstr ""
+msgstr "امکان ایجاداین ورودی وجود ندارد."
 
 #: lib/telegram.rb
 msgid "The file could not be retrieved from the bot."
@@ -9482,11 +9486,11 @@ msgstr "افراد زیادی در صف چت هستند."
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_overwrite_modal.coffee
 msgid "There is an existing draft. Do you want to overwrite it?"
-msgstr ""
+msgstr "یک پیش‌نویس وجود دارد. آیا تمایل دارید آن را بازنویسی کنید؟"
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
 msgid "There is existing content. Do you want to overwrite it?"
-msgstr ""
+msgstr "یک محتوا وجود دارد. آیا تمایل دارید آن را بازنویسی کنید؟"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "There is no agent online."
@@ -9501,6 +9505,8 @@ msgid ""
 "There is no rollback of this deletion possible. If you are sure that you "
 "wish to proceed, please type \"%s\" into the input."
 msgstr ""
+"پس از این حذف٬ امکان بازگشت وجود ندارد. اگر از ادامه کار اطمینان دارید لطفا "
+"کلمه \"%s\" را وارد نمایید."
 
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
 msgid "Third-party Applications"
@@ -9518,7 +9524,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/holiday_selector.coffee
 msgid "This entry already exists!"
-msgstr ""
+msgstr "این ورودی قبلا ایجاد شده است!"
 
 #: app/assets/javascripts/app/views/version.jst.eco
 msgid "This is Zammad version %s"
@@ -9568,7 +9574,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 msgid "This service enables Zammad to connect with your LDAP server."
-msgstr ""
+msgstr "این سرویس امکان ارتباط سیستم با سرور LDAP را فراهم می‌نماید."
 
 #: app/assets/javascripts/app/controllers/_integration/check_mk.coffee
 msgid ""
@@ -9709,7 +9715,7 @@ msgstr "اشتراکهای تیکت"
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 msgid "Ticket escalation"
-msgstr "ارجاع تیکتها"
+msgstr "دگرسپاری تیکتها"
 
 #: app/assets/javascripts/app/lib/mixins/ticket_mass_updatable.coffee
 msgid "Ticket failed to save: %s"
@@ -10167,7 +10173,7 @@ msgstr "بروزرسانی رکوردهای موجود"
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
 msgid ""
 "Update existing records with the attributes specified in the import data."
-msgstr ""
+msgstr "بروزرسانی رکوردهای موجود با اطلاعات فایل ورودی."
 
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee
 #: app/assets/javascripts/app/controllers/_profile/language.coffee
@@ -10211,14 +10217,14 @@ msgstr "به روز شد"
 
 #: lib/excel_sheet/ticket.rb
 msgid "Updated At"
-msgstr "به‌روز شده در تاریخ"
+msgstr "زمان به‌روزرسانی"
 
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee
 #: app/assets/javascripts/app/models/organization.coffee
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/assets/javascripts/app/models/user.coffee
 msgid "Updated at"
-msgstr "به‌روز شده در تاریخ"
+msgstr "به‌روز شده در"
 
 #: app/assets/javascripts/app/models/calendar.coffee
 #: app/assets/javascripts/app/models/chat.coffee
@@ -11478,7 +11484,7 @@ msgstr "انجام شد"
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 msgid "down"
-msgstr ""
+msgstr "پایین"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 msgid "draft"

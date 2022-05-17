@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-05-13 11:42+0000\n"
+"PO-Revision-Date: 2022-05-17 03:05+0000\n"
 "Last-Translator: MBekspert <michal.bosak@ekspert.biz>\n"
 "Language-Team: Polish <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/pl/>\n"
@@ -4649,10 +4649,8 @@ msgid "Frontend"
 msgstr "Frontend"
 
 #: app/assets/javascripts/app/models/group.coffee
-#, fuzzy
-#| msgid "Full Name"
 msgid "Full"
-msgstr "Pełna Nazwa"
+msgstr "Pełny"
 
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 msgid "Full Name"
@@ -5824,14 +5822,11 @@ msgid "June"
 msgstr "Czerwiec"
 
 #: app/assets/javascripts/app/views/translation/index.jst.eco
-#, fuzzy
-#| msgid ""
-#| "Just click into the marker and update the words just in place. Enjoy!"
 msgid ""
 "Just click into the highlighted area and update the words right there. Enjoy!"
 msgstr ""
-"Po prostu kliknij w oznaczony tekst i już możesz wstawiać tłumaczenie. Miłej "
-"pracy!"
+"Po prostu kliknij podświetlony obszar i od razu zaktualizuj słowa. "
+"Powodzenia!"
 
 #: app/assets/javascripts/app/views/karma/index.jst.eco
 msgid "Karma Level"
@@ -5884,16 +5879,12 @@ msgid "Knowledge Base Reader"
 msgstr ""
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Knowledge Base"
 msgid "Knowledge Base active"
-msgstr "Baza wiedzy"
+msgstr "Baza wiedzy aktywna"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Knowledge Base"
 msgid "Knowledge Base active publicly"
-msgstr "Baza wiedzy"
+msgstr "Baza wiedzy aktywna publicznie"
 
 #: db/seeds/settings.rb
 msgid "Knowledge Base multilingual support"
@@ -5972,8 +5963,6 @@ msgstr "Ostatni kontakt (klient)"
 
 #: app/assets/javascripts/app/models/user.coffee
 #: db/seeds/object_manager_attributes.rb
-#, fuzzy
-#| msgid "Lastname"
 msgid "Last name"
 msgstr "Nazwisko"
 
@@ -6054,10 +6043,8 @@ msgid "Link Related Answer"
 msgstr "Link Powiązana odpowiedź"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
-#, fuzzy
-#| msgid "Templates"
 msgid "Link Template"
-msgstr "Szablony"
+msgstr "Szablon łącza"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee
 msgid "Link issue"
@@ -6232,10 +6219,8 @@ msgstr ""
 "oraz aplikacjami, które są autoryzowane do korzystania z konta."
 
 #: app/views/mailer/application.html.erb
-#, fuzzy
-#| msgid "Manage your notifications settings"
 msgid "Manage your notification settings"
-msgstr "Zarządzaj swoimi powiadomieniami"
+msgstr "Zarządzaj ustawieniami powiadomień"
 
 #: app/assets/javascripts/app/views/api.jst.eco
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
