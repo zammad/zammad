@@ -37,6 +37,12 @@ RSpec.describe Transaction::Notification, type: :model do
     let(:group)  { create(:group) }
     let(:user)   { create(:agent, groups: [group]) }
     let(:ticket) { create(:ticket, owner: user, state_name: 'open', pending_time: Time.current) }
+    let(:reason_en) { 'You are receiving this because you are the owner of this ticket.' }
+    let(:reason_de) do
+      Translation.translate('de-de', reason_en).tap do |translated|
+        expect(translated).not_to eq(reason_en)
+      end
+    end
 
     before do
       allow(NotificationFactory::Mailer).to receive(:send)
@@ -47,16 +53,22 @@ RSpec.describe Transaction::Notification, type: :model do
 
       expect(NotificationFactory::Mailer)
         .to have_received(:send)
-        .with hash_including body: %r{You are receiving this because you are the owner of this ticket}
+        .with hash_including body: %r{#{reason_en}}
     end
 
-    it 'notification includes German footer' do
-      user.preferences[:locale] = 'de-de'
-      run(ticket, user, 'reminder_reached')
+    context 'when locale set to Deutsch' do
+      before do
+        user.preferences[:locale] = 'de-de'
+        user.save
+      end
 
-      expect(NotificationFactory::Mailer)
-        .to have_received(:send)
-      # .with hash_including body: %r{Sie erhalten dies weil Sie are in group.}
+      it 'notification includes German footer' do
+        run(ticket, user, 'reminder_reached')
+
+        expect(NotificationFactory::Mailer)
+          .to have_received(:send)
+          .with hash_including body: %r{#{reason_de}}
+      end
     end
   end
 
