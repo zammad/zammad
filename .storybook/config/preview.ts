@@ -10,7 +10,7 @@ import initializeStore from '@shared/stores'
 import initializeForm, { getFormPlugins } from '@shared/form'
 import type { ImportGlobEagerOutput } from '@shared/types/utils'
 import type { FormKitPlugin } from '@formkit/core'
-import getMobileCoreClasses from '@mobile/form/theme/global'
+import getMobileCoreClasses from '@mobile/form/theme/global/getCoreClasses'
 import { createRouter, createWebHashHistory, type Router } from 'vue-router'
 import type {
   FormFieldTypeImportModules,

@@ -6,6 +6,53 @@ import useAuthenticationStore from '@shared/stores/authentication'
 import { useNotifications } from '@shared/components/CommonNotifications'
 import { MenuItem } from '@mobile/components/CommonSectionMenu'
 import CommonSectionMenu from '@mobile/components/CommonSectionMenu/CommonSectionMenu.vue'
+import Form from '@shared/components/Form/Form.vue'
+import { FormSchemaNode } from '@shared/components/Form'
+
+const schema: FormSchemaNode[] = [
+  {
+    type: 'text',
+    name: 'input',
+    label: 'Some_Input',
+    props: {
+      link: '/tickets',
+    },
+  },
+  {
+    type: 'tel',
+    name: 'input2',
+    props: {
+      link: '/tickets',
+    },
+    label: 'Another_Input',
+  },
+  {
+    type: 'date',
+    name: 'date',
+    label: 'Date_Input',
+    props: {
+      link: '/tickets',
+    },
+  },
+  {
+    type: 'select',
+    name: 'select',
+    label: 'Select',
+    props: {
+      link: '/tickets',
+      options: [{ label: 'Label', value: 1 }],
+    },
+  },
+  {
+    type: 'treeselect',
+    name: 'treeselect',
+    label: 'Treeselect',
+    props: {
+      options: [{ label: 'Label', value: 1 }],
+      link: '/tickets',
+    },
+  },
+]
 
 const menu: MenuItem[] = [
   { type: 'link', link: '/tickets', title: __('All Tickets') },
@@ -60,6 +107,9 @@ const logoutMenu: MenuItem[] = [
 
 <template>
   <div class="pt-10">
+    <div class="p-4">
+      <Form :schema="schema" />
+    </div>
     <div class="flex w-full items-center justify-center text-3xl font-bold">
       {{ i18n.t('Home') }}
     </div>

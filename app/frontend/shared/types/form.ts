@@ -6,6 +6,7 @@ import type {
   FormKitValidationRule,
   FormKitValidationMessages,
 } from '@formkit/validation'
+import { RouteLocationRaw } from 'vue-router'
 import type { ImportGlobEagerOutput } from './utils'
 
 export type InitializeAppForm = (app: App) => void
@@ -35,5 +36,6 @@ export type FormFieldTypeImportModules = FormFieldType | FormFieldType[]
 
 export interface FormDefaultProps {
   formId: string
+  link: RouteLocationRaw
   labelPlaceholder: string[]
 }

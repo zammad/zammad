@@ -11,6 +11,7 @@ import {
 } from '@formkit/inputs'
 import initializeFieldDefinition from '@shared/form/core/initializeFieldDefinition'
 import { FormFieldsTypeDefinition, FormFieldType } from '@shared/types/form'
+import addLink from '@shared/form/features/addLink'
 
 const inputFieldDefinitionList: FormFieldsTypeDefinition = {
   text: inputTextDefinition,
@@ -25,7 +26,9 @@ const inputFieldDefinitionList: FormFieldsTypeDefinition = {
 const inputFields: FormFieldType[] = []
 
 Object.keys(inputFieldDefinitionList).forEach((inputType) => {
-  initializeFieldDefinition(inputFieldDefinitionList[inputType])
+  initializeFieldDefinition(inputFieldDefinitionList[inputType], {
+    features: [addLink()],
+  })
 
   inputFields.push({
     fieldType: inputType,

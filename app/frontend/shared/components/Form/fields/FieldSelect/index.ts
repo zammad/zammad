@@ -2,6 +2,7 @@
 
 import type { FormKitNode } from '@formkit/core'
 import createInput from '@shared/form/core/createInput'
+import addLink from '@shared/form/features/addLink'
 import FieldSelectInput from './FieldSelectInput.vue'
 
 const hideLabelForSmallSelects = (node: FormKitNode) => {
@@ -32,7 +33,7 @@ const fieldDefinition = createInput(
     'sorting',
   ],
   {
-    features: [hideLabelForSmallSelects],
+    features: [hideLabelForSmallSelects, addLink()],
   },
 )
 
