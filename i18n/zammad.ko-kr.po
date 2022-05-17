@@ -45,6 +45,10 @@ msgstr "yyyy. m. d."
 msgid "FORMAT_DATETIME"
 msgstr "yyyy. m. d. HH:MM"
 
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
+msgid " to "
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid ""
 "\"Database\" stores all attachments in the database (not recommended for "
@@ -142,6 +146,12 @@ msgstr "%s 생성 사용자 |%s|"
 msgid "%s credentials"
 msgstr "%s 자격 증명"
 
+#: app/frontend/shared/i18n/dates.ts
+#, fuzzy
+#| msgid "%s ago"
+msgid "%s days ago"
+msgstr "%s 전"
+
 #: app/assets/javascripts/app/models/user.coffee
 msgid "%s ended switch to |%s|!"
 msgstr "%에의 종료 스위치 |%s|!"
@@ -156,12 +166,30 @@ msgstr ""
 msgid "%s groups to %s roles assignments"
 msgstr "%s 역할 할당에 %s 그룹"
 
+#: app/frontend/shared/i18n/dates.ts
+#, fuzzy
+#| msgid "%s ago"
+msgid "%s hours ago"
+msgstr "%s 전"
+
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 msgid "%s is inactive, please select an active one."
 msgstr ""
+
+#: app/frontend/shared/i18n/dates.ts
+#, fuzzy
+#| msgid "minutes"
+msgid "%s minutes ago"
+msgstr "의사록"
+
+#: app/frontend/shared/i18n/dates.ts
+#, fuzzy
+#| msgid "%s ago"
+msgid "%s months ago"
+msgstr "%s 전"
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
 #, fuzzy
@@ -283,6 +311,18 @@ msgstr "%s에 업데이트 된 사용자 |%s|"
 msgid "%s user to %s user"
 msgstr "%s 사용자의 사용자 %"
 
+#: app/frontend/shared/i18n/dates.ts
+#, fuzzy
+#| msgid "%s ago"
+msgid "%s weeks ago"
+msgstr "%s 전"
+
+#: app/frontend/shared/i18n/dates.ts
+#, fuzzy
+#| msgid "%s ago"
+msgid "%s years ago"
+msgstr "%s 전"
+
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco
 msgid "%s% are currently in process"
 msgstr "%s %는 과정에있다"
@@ -326,17 +366,49 @@ msgstr ""
 msgid "1 day"
 msgstr "1일"
 
+#: app/frontend/shared/i18n/dates.ts
+#, fuzzy
+#| msgid "1 day"
+msgid "1 day ago"
+msgstr "1일"
+
 #: db/seeds/settings.rb
 msgid "1 hour"
+msgstr "1시간"
+
+#: app/frontend/shared/i18n/dates.ts
+#, fuzzy
+#| msgid "1 hour"
+msgid "1 hour ago"
 msgstr "1시간"
 
 #: db/seeds/ticket_priorities.rb
 msgid "1 low"
 msgstr "1 low"
 
+#: app/frontend/shared/i18n/dates.ts
+#, fuzzy
+#| msgid "minute"
+msgid "1 minute ago"
+msgstr "분"
+
+#: app/frontend/shared/i18n/dates.ts
+msgid "1 month ago"
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "1 week"
 msgstr "일주일"
+
+#: app/frontend/shared/i18n/dates.ts
+#, fuzzy
+#| msgid "1 week"
+msgid "1 week ago"
+msgstr "일주일"
+
+#: app/frontend/shared/i18n/dates.ts
+msgid "1 year ago"
+msgstr ""
 
 #: db/seeds/settings.rb
 msgid "2 hours"
@@ -399,6 +471,13 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee
 msgid "A new version of Zammad is available, please reload your browser."
+msgstr "Zammad의 새 버전을 사용할 수, 브라우저를 다시로드하십시오."
+
+#: app/frontend/shared/composables/useAppMaintenanceCheck.ts
+#, fuzzy
+#| msgid "A new version of Zammad is available, please reload your browser."
+msgid ""
+"A newer version of the app is available. Please reload at your earliest."
 msgstr "Zammad의 새 버전을 사용할 수, 브라우저를 다시로드하십시오."
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee
@@ -609,6 +688,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco
 #: app/assets/javascripts/app/views/profile/linked_accounts.jst.eco
 #: app/assets/javascripts/app/views/tag/index.jst.eco
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "Add"
 msgstr "더하다"
 
@@ -666,9 +746,43 @@ msgstr "알림 및 에스컬레이션 Ticket 보류에 알람을 추가합니다
 msgid "Add attachment option to upload."
 msgstr "업로드 첨부 파일 옵션을 추가합니다."
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
+msgid "Add bullet list"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
+msgid "Add first level heading"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
+#, fuzzy
+#| msgid "Add Tag"
+msgid "Add image"
+msgstr "태그 추가"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
+#, fuzzy
+#| msgid "Add Link"
+msgid "Add link"
+msgstr "링크 추가"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
+#, fuzzy
+#| msgid "Format as ordered list"
+msgid "Add ordered list"
+msgstr "정렬 된 목록과 같은 형식"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
+msgid "Add second level heading"
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "Add sender initials to end of a tweet."
 msgstr "트윗의 마지막에 보낸 사람의 이니셜을 추가합니다."
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
+msgid "Add third level heading"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
 msgid "Add this class to a button on your page that should open the chat."
@@ -753,6 +867,7 @@ msgid "Alarm"
 msgstr ""
 
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
+#: app/frontend/apps/mobile/modules/home/views/Home.vue
 msgid "All Tickets"
 msgstr "모든 Ticket"
 
@@ -815,6 +930,13 @@ msgstr "대체 이름"
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
 msgid "Alternatively, you can use the Zammad API to import data."
 msgstr "다른 방법으로는 데이터를 가져올 Zammad API를 사용할 수 있습니다."
+
+#: app/frontend/shared/server/apollo/handler/BaseHandler.ts
+#, fuzzy
+#| msgid "Unable to verify email. Please contact your administrator."
+msgid ""
+"An error occured during the operation. Please contact your administrator."
+msgstr "이메일을 확인할 수 없습니다. 관리자에게 문의하시기 바랍니다."
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
@@ -928,10 +1050,12 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Apr"
 msgstr "4월"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "April"
 msgstr "4월"
 
@@ -1057,6 +1181,10 @@ msgstr ""
 msgid "At least one letter is required"
 msgstr ""
 
+#: app/models/postmaster_filter.rb
+msgid "At least one match rule is required, but none was provided."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee
 msgid "At least one object must be selected."
 msgstr ""
@@ -1122,10 +1250,12 @@ msgstr "속성"
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Aug"
 msgstr "8월"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "August"
 msgstr "8월"
 
@@ -1150,7 +1280,8 @@ msgid "Authentication not possible (not offered by the service)"
 msgstr ""
 
 #: app/controllers/application_controller/authenticates.rb
-#: app/policies/pundit_policy.rb lib/user_context.rb
+#: app/graphql/gql/context/current_user_aware.rb app/policies/pundit_policy.rb
+#: lib/user_context.rb
 msgid "Authentication required"
 msgstr ""
 
@@ -1350,10 +1481,6 @@ msgstr ""
 msgid "Boolean field"
 msgstr ""
 
-#: lib/telegram.rb
-msgid "Bot already exists!"
-msgstr ""
-
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 msgid "Bots"
 msgstr "봇"
@@ -1517,16 +1644,18 @@ msgid "Caller ID of outbound calls can be changed as well."
 msgstr "또한 아웃 바운드 통화의 발신자 ID는 변경 될 수 있습니다."
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
+#: app/assets/javascripts/app/views/integration/placetel.jst.eco
+#: app/assets/javascripts/app/views/integration/sipgate.jst.eco
+#, fuzzy
+#| msgid "Caller id to block"
+msgid "Caller ID to block"
+msgstr "블록에 발신자 ID"
+
+#: app/assets/javascripts/app/views/integration/cti.jst.eco
 #, fuzzy
 #| msgid "Caller log"
 msgid "Caller Log Filter"
 msgstr "발신자 로그"
-
-#: app/assets/javascripts/app/views/integration/cti.jst.eco
-#: app/assets/javascripts/app/views/integration/placetel.jst.eco
-#: app/assets/javascripts/app/views/integration/sipgate.jst.eco
-msgid "Caller id to block"
-msgstr "블록에 발신자 ID"
 
 #: app/assets/javascripts/app/views/cti/index.jst.eco
 msgid "Caller log"
@@ -1606,14 +1735,6 @@ msgstr ""
 msgid "Cannot follow-up on a closed ticket. Please create a new ticket."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/report.coffee
-msgid "Cannot generate report"
-msgstr ""
-
-#: app/assets/javascripts/app/lib/app_post/html5_upload.coffee
-msgid "Cannot upload file"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/categories.coffee
 msgid "Categories"
 msgstr "카테고리"
@@ -1637,6 +1758,7 @@ msgstr "알림이 전송 될 때."
 msgid "Certificates & Private Keys"
 msgstr ""
 
+#: app/assets/javascripts/app/models/group.coffee
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
@@ -1766,7 +1888,8 @@ msgstr "채널"
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
 #: app/assets/javascripts/app/controllers/chat.coffee
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
-#: app/controllers/first_steps_controller.rb db/seeds/permissions.rb
+#: app/controllers/first_steps_controller.rb
+#: app/frontend/apps/mobile/modules/home/views/Home.vue db/seeds/permissions.rb
 msgid "Chat"
 msgstr "채팅"
 
@@ -1915,6 +2038,25 @@ msgstr "세션을 계속"
 msgid "Clean up expired sessions."
 msgstr ""
 
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
+#, fuzzy
+#| msgid "clear"
+msgid "Clear"
+msgstr "명확한"
+
+#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
+#, fuzzy
+#| msgid "Search"
+msgid "Clear Search"
+msgstr "검색"
+
+#: app/frontend/shared/components/Form/fields/FieldSelect/FieldSelectInput.vue
+#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
+#, fuzzy
+#| msgid "Selector"
+msgid "Clear Selection"
+msgstr "선택자"
+
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco
 msgid "Clearbit"
@@ -1940,10 +2082,6 @@ msgstr ""
 #: db/seeds/settings.rb
 msgid "Client Secret"
 msgstr "클라이언트의 비밀"
-
-#: db/seeds/settings.rb
-msgid "Client storage"
-msgstr "클라이언트 저장"
 
 #: app/assets/javascripts/app/models/application.coffee
 msgid "Clients"
@@ -2092,8 +2230,10 @@ msgid "Configure App"
 msgstr "앱 설정"
 
 #: app/assets/javascripts/app/controllers/getting_started/base.coffee
-msgid "Configure Base"
-msgstr "구성 자료"
+#, fuzzy
+#| msgid "Basic Settings"
+msgid "Configure Basic Settings"
+msgstr "기본설정"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Confirm/submit dialog"
@@ -2234,6 +2374,12 @@ msgstr "어쨌든 계속"
 msgid "Continue session"
 msgstr "세션을 계속"
 
+#: app/frontend/apps/mobile/modules/login/views/Login.vue
+#, fuzzy
+#| msgid "Continue session"
+msgid "Continue to desktop app"
+msgstr "세션을 계속"
+
 #: app/assets/javascripts/app/views/translation/index.jst.eco
 msgid "Contributing Translations"
 msgstr ""
@@ -2278,46 +2424,6 @@ msgid ""
 "obligation to fill them in."
 msgstr ""
 
-#: app/controllers/reports_controller.rb
-msgid "Could not find active reporting profile."
-msgstr ""
-
-#: app/controllers/channels_twitter_controller.rb
-msgid "Could not find external_credential 'twitter'!"
-msgstr ""
-
-#: app/controllers/channels_twitter_controller.rb
-msgid "Could not find external_credential in cache!"
-msgstr ""
-
-#: app/controllers/channels_twitter_controller.rb
-msgid "Could not find external_credential[:consumer_secret] in cache!"
-msgstr ""
-
-#: app/controllers/links_controller.rb
-msgid "Could not find object!"
-msgstr ""
-
-#: app/controllers/tickets_controller.rb
-msgid "Could not find source ticket!"
-msgstr ""
-
-#: app/controllers/tickets_controller.rb
-msgid "Could not find target ticket number!"
-msgstr ""
-
-#: lib/static_assets.rb
-msgid "Could not read raw logo!"
-msgstr ""
-
-#: app/assets/javascripts/app/views/knowledge_base/new_controller.coffee
-msgid "Couldn't create Knowledge Base"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/knowledge_base/public_menu_form.coffee
-msgid "Couldn't save changes"
-msgstr ""
-
 #: app/assets/javascripts/app/views/tag/table.jst.eco
 msgid "Count"
 msgstr "카운트"
@@ -2336,6 +2442,7 @@ msgstr "국가"
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/add_form.coffee
+#: app/assets/javascripts/app/models/group.coffee
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco
 #: app/assets/javascripts/app/views/agent_user_create.jst.eco
 #: app/assets/javascripts/app/views/customer_ticket_create.jst.eco
@@ -2354,10 +2461,6 @@ msgstr "관리자 만들기"
 #: lib/excel_sheet/ticket.rb
 msgid "Create Channel"
 msgstr ""
-
-#: app/models/report.rb
-msgid "Create Channels"
-msgstr "채널 생성"
 
 #: app/assets/javascripts/app/views/knowledge_base/new_controller.coffee
 msgid "Create Knowledge Base"
@@ -2464,6 +2567,7 @@ msgstr "첫 번째 표를 작성"
 #: app/assets/javascripts/app/views/popover/ticket.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco
+#: app/frontend/apps/mobile/modules/ticket/components/TicketList/TicketList.vue
 #: app/models/report.rb
 msgid "Created"
 msgstr "생성완료"
@@ -2499,6 +2603,12 @@ msgstr "에서 만든"
 #: app/assets/javascripts/app/models/user.coffee
 msgid "Created by"
 msgstr "만든 사람"
+
+#: app/models/report.rb
+#, fuzzy
+#| msgid "Create Channels"
+msgid "Creation Channels"
+msgstr "채널 생성"
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
 msgid "Creation mask"
@@ -2573,6 +2683,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 #: app/controllers/time_accountings_controller.rb
+#: app/frontend/apps/mobile/modules/ticket/components/TicketList/TicketList.vue
 #: db/seeds/object_manager_attributes.rb db/seeds/roles.rb
 #: db/seeds/ticket_article_senders.rb lib/excel_sheet/ticket.rb
 msgid "Customer"
@@ -2676,10 +2787,12 @@ msgstr "일"
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Dec"
 msgstr "12월"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "December"
 msgstr "12월"
 
@@ -2982,10 +3095,6 @@ msgid "Defines if generic CTI integration is enabled or not."
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Defines if i-doit (http://www.i-doit) is enabled or not."
-msgstr ""
-
-#: db/seeds/settings.rb
 msgid "Defines if sipgate.io (http://www.sipgate.io) is enabled or not."
 msgstr ""
 
@@ -3021,6 +3130,12 @@ msgstr ""
 msgid ""
 "Defines if the email should be displayed in the result of the user/"
 "organization widget."
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid ""
+"Defines if the i-doit (https://www.i-doit.org/) integration is enabled or "
+"not."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -3694,6 +3809,12 @@ msgstr ""
 msgid "Do not sign email"
 msgstr ""
 
+#: app/assets/javascripts/app/views/settings/proxy.jst.eco
+#, fuzzy
+#| msgid "No proxy for the following hosts."
+msgid "Do not use the proxy for the following hosts."
+msgstr "다음 호스트에 대한 프록시 없습니다."
+
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/attachments.coffee
 #, fuzzy
@@ -3736,6 +3857,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 msgid "Don't synchronize"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
+msgid "Done"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_image_view.coffee
@@ -4154,8 +4279,10 @@ msgid "Enables user authentication via LinkedIn."
 msgstr "사용자인증 활성화"
 
 #: db/seeds/settings.rb
-msgid "Enables user authentication via Office 365."
-msgstr ""
+#, fuzzy
+#| msgid "Enables user authentication via Google."
+msgid "Enables user authentication via Microsoft 365."
+msgstr "사용자인증 활성화"
 
 #: db/seeds/settings.rb
 msgid "Enables user authentication via SAML."
@@ -4241,6 +4368,10 @@ msgstr "제목을 입력 ..."
 msgid "Enter credentials"
 msgstr "자격 증명을 입력"
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
+msgid "Enter link URL"
+msgstr ""
+
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 msgid "Enter the Subdomain of your %s system"
@@ -4299,6 +4430,10 @@ msgstr "사용자 이름 또는 이메일 주소를 입력"
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee
 #: app/assets/javascripts/app/controllers/widget/error_modal.coffee
 msgid "Error"
+msgstr ""
+
+#: app/frontend/apps/mobile/modules/error/views/Error.vue
+msgid "Error - %s"
 msgstr ""
 
 #: app/controllers/getting_started_controller.rb
@@ -4388,7 +4523,9 @@ msgid "Examples"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_auto_assignment.coffee
-msgid "Exception users"
+#, fuzzy
+#| msgid "Exception users"
+msgid "Excepted users"
 msgstr "예외 사용자"
 
 #: app/assets/javascripts/app/controllers/_integration/exchange.coffee
@@ -4521,10 +4658,12 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Feb"
 msgstr "2월"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "February"
 msgstr "2월"
 
@@ -4677,7 +4816,12 @@ msgstr ""
 "보안상의 이유로 API 토큰은 한 번만 표시됩니다. 계속하기 전에 안전한 곳에 복사"
 "해야합니다."
 
+#: app/frontend/shared/router/guards/before/permission.ts
+msgid "Forbidden"
+msgstr ""
+
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/models/form_schema/form/mobile/login.rb
 msgid "Forgot password?"
 msgstr "비밀번호를 잊으 셨나요?"
 
@@ -4739,6 +4883,7 @@ msgid "Freshdesk"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Fri"
 msgstr "금"
 
@@ -4746,6 +4891,7 @@ msgstr "금"
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Friday"
 msgstr "금요일"
 
@@ -4760,6 +4906,12 @@ msgstr "에서"
 #: app/assets/javascripts/app/controllers/_manage/system.coffee
 msgid "Frontend"
 msgstr "프런트 엔드"
+
+#: app/assets/javascripts/app/models/group.coffee
+#, fuzzy
+#| msgid "Full Name"
+msgid "Full"
+msgstr "전체 이름"
 
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 msgid "Full Name"
@@ -4913,10 +5065,6 @@ msgstr "구글앱 인증"
 msgid "Google Maps"
 msgstr ""
 
-#: app/models/text_module.rb
-msgid "Got no locale"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/ticket_zoom/highlighter.coffee
 msgid "Green"
 msgstr "녹색"
@@ -4984,28 +5132,10 @@ msgstr ""
 msgid "Group Filter"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee
-#: app/assets/javascripts/app/models/overview.coffee
-msgid "Group by"
-msgstr "그룹에 의해"
-
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee
-#: app/assets/javascripts/app/models/overview.coffee
-msgid "Group by Direction"
-msgstr ""
-
-#: app/policies/ticket_policy.rb
-msgid "Group can't be blank"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 msgid ""
 "Group information could not be retrieved, please check your bind user "
 "permissions."
-msgstr ""
-
-#: lib/telegram.rb
-msgid "Group invalid!"
 msgstr ""
 
 #: app/models/channel/driver/sms/base.rb
@@ -5014,10 +5144,6 @@ msgstr ""
 
 #: app/models/channel/driver/sms/base.rb
 msgid "Group needed in channel definition!"
-msgstr ""
-
-#: lib/telegram.rb
-msgid "Group needed!"
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco db/seeds/settings.rb
@@ -5029,6 +5155,20 @@ msgstr "Ticket 생성을위한 그룹 선택"
 #| msgid "Group selection for Ticket creation"
 msgid "Group selection for ticket creation"
 msgstr "Ticket 생성을위한 그룹 선택"
+
+#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/models/overview.coffee
+#, fuzzy
+#| msgid "Group by"
+msgid "Grouping by"
+msgstr "그룹에 의해"
+
+#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/models/overview.coffee
+#, fuzzy
+#| msgid "Change order"
+msgid "Grouping order"
+msgstr "주문 변경"
 
 #: app/assets/javascripts/app/controllers/group.coffee
 #: app/assets/javascripts/app/models/macro.coffee
@@ -5207,6 +5347,11 @@ msgstr "휴일"
 #: app/assets/javascripts/app/models/calendar.coffee
 msgid "Holidays iCalendar Feed"
 msgstr "휴일을 iCalendar 피드"
+
+#: app/frontend/apps/mobile/modules/home/routes.ts
+#: app/frontend/apps/mobile/modules/home/views/Home.vue
+msgid "Home"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
@@ -5413,7 +5558,8 @@ msgid ""
 msgstr "당신은 변환 테이블을 통해 번역하고 싶다면, 그냥 앞서 아래 이동합니다."
 
 #: app/assets/javascripts/app/views/getting_started/email_pre_configured.jst.eco
-msgid "If you want to use more email adresses, you can configure them later."
+msgid ""
+"If you want to use additional email addresses, you can configure them later."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -5663,6 +5809,18 @@ msgstr "%s 객체 (들)이 생성된다."
 msgid "Inline translation"
 msgstr "인라인 번역"
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
+#, fuzzy
+#| msgid "Delete Knowledge Base"
+msgid "Insert text from Knowledge Base article"
+msgstr "지식 삭제"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
+#, fuzzy
+#| msgid "New text module"
+msgid "Insert text from text module"
+msgstr "새로운 텍스트 모듈"
+
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid ""
 "Insert the widget code into the source code of every page the chat shall be "
@@ -5868,10 +6026,12 @@ msgstr "페이지 당 항목"
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Jan"
 msgstr "월"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "January"
 msgstr "1월"
 
@@ -5893,20 +6053,24 @@ msgstr "%s 가입"
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Jul"
 msgstr "7월"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "July"
 msgstr "7월"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Jun"
 msgstr "6월"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "June"
 msgstr "6월"
 
@@ -5953,6 +6117,7 @@ msgstr "키워드"
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 #: app/assets/javascripts/app/models/knowledge_base.coffee
+#: app/frontend/apps/mobile/modules/home/views/Home.vue
 #: app/models/knowledge_base.rb db/seeds/permissions.rb
 msgid "Knowledge Base"
 msgstr "지식"
@@ -6235,6 +6400,7 @@ msgid "Login"
 msgstr "로그인"
 
 #: app/controllers/application_controller/authenticates.rb
+#: app/graphql/gql/mutations/login.rb
 msgid ""
 "Login failed. Have you double-checked your credentials and completed the "
 "email verification step?"
@@ -6246,6 +6412,7 @@ msgid "Logo"
 msgstr "심벌 마크"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
+#: app/frontend/apps/mobile/modules/home/views/Home.vue
 msgid "Logout"
 msgstr "로그 아웃"
 
@@ -6350,10 +6517,12 @@ msgstr "지도 제작"
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Mar"
 msgstr "월"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "March"
 msgstr "3월"
 
@@ -6388,6 +6557,12 @@ msgstr "최대. 대기자 명단에있는 클라이언트"
 msgid "Max. concurrent chats"
 msgstr "최대. 동시 채팅"
 
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+#, fuzzy
+#| msgid "Minimum length"
+msgid "Max. length"
+msgstr "최소 길이"
+
 #: db/seeds/settings.rb
 msgid "Max. length of the subject in an email reply."
 msgstr "최대. 이메일 회신 피사체의 길이."
@@ -6408,13 +6583,10 @@ msgstr "최대 로그인 실패"
 msgid "Maximum number of recursively executed triggers."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
-msgid "Maxlength"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "May"
 msgstr "5월"
 
@@ -6423,6 +6595,12 @@ msgstr "5월"
 #: app/assets/javascripts/app/views/widget/organization.jst.eco
 msgid "Members"
 msgstr "회원"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
+#, fuzzy
+#| msgid "Mentions"
+msgid "Mention user"
+msgstr "언급"
 
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
 msgid "Mentions"
@@ -6479,6 +6657,12 @@ msgid "Microsoft 365"
 msgstr ""
 
 #: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Twitter App Credentials"
+msgid "Microsoft 365 App Credentials"
+msgstr "트위터 앱 자격 증명"
+
+#: db/seeds/settings.rb
 msgid "Microsoft Application Registration Portal"
 msgstr ""
 
@@ -6503,10 +6687,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_git_issue.jst.eco
 msgid "Milestone"
-msgstr ""
-
-#: app/models/postmaster_filter.rb
-msgid "Min. one match rule needed!"
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -6559,6 +6739,7 @@ msgid "Module"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Mon"
 msgstr "월"
 
@@ -6566,6 +6747,7 @@ msgstr "월"
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Monday"
 msgstr "월요일"
 
@@ -6632,7 +6814,7 @@ msgstr "대량 작업 실행!"
 msgid "Multiple tree selection field"
 msgstr ""
 
-#: db/seeds/overviews.rb
+#: app/frontend/apps/mobile/modules/home/views/Home.vue db/seeds/overviews.rb
 #, fuzzy
 #| msgid "My assigned Tickets"
 msgid "My Assigned Tickets"
@@ -6642,7 +6824,7 @@ msgstr "내 할당 된 Ticket"
 msgid "My Organization Tickets"
 msgstr "내 조직 Ticket"
 
-#: db/seeds/overviews.rb
+#: app/frontend/apps/mobile/modules/home/views/Home.vue db/seeds/overviews.rb
 #, fuzzy
 #| msgid "My pending reached Tickets"
 msgid "My Pending Reached Tickets"
@@ -6658,7 +6840,7 @@ msgstr "내 교체 Ticket"
 msgid "My Stats"
 msgstr "내 통계"
 
-#: db/seeds/overviews.rb
+#: app/frontend/apps/mobile/modules/home/views/Home.vue db/seeds/overviews.rb
 #, fuzzy
 #| msgid "My assigned Tickets"
 msgid "My Subscribed Tickets"
@@ -6922,6 +7104,12 @@ msgstr ""
 msgid "New text module"
 msgstr "새로운 텍스트 모듈"
 
+#: app/frontend/apps/mobile/modules/login/views/Login.vue
+#, fuzzy
+#| msgid "New User"
+msgid "New user?"
+msgstr "새로운 사용자"
+
 #: db/seeds/settings.rb
 msgid "Newbie"
 msgstr "신참"
@@ -6937,10 +7125,6 @@ msgstr "다음 것"
 #: db/seeds/settings.rb
 msgid "Next in overview"
 msgstr "Overview에서 다음"
-
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
-msgid "Next in tab"
-msgstr "탭에서 다음"
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
 msgid "No"
@@ -6978,8 +7162,10 @@ msgid "No Knowledge Base created"
 msgstr ""
 
 #: lib/external_credential/microsoft365.rb
-msgid "No Microsoft365 app configured!"
-msgstr ""
+#, fuzzy
+#| msgid "No %s configured."
+msgid "No Microsoft 365 app configured!"
+msgstr "없음 %s이 (가) 구성되지."
 
 #: db/seeds/settings.rb
 msgid "No Proxy"
@@ -7033,10 +7219,21 @@ msgstr ""
 msgid "No entries were found in the selected folder(s)."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
-msgid "No filter."
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "No filter."
+msgid "No file chosen."
 msgstr "필터 없음."
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "No file formats allowed."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#, fuzzy
+#| msgid "Not configured"
+msgid "No filter was configured."
+msgstr "구성되지 않음"
 
 #: app/controllers/integration/exchange_controller.rb
 msgid "No folders were found for the given user credentials."
@@ -7046,7 +7243,7 @@ msgstr ""
 msgid "No linked issues"
 msgstr ""
 
-#: app/assets/javascripts/app/views/settings/proxy.jst.eco db/seeds/settings.rb
+#: db/seeds/settings.rb
 msgid "No proxy for the following hosts."
 msgstr "다음 호스트에 대한 프록시 없습니다."
 
@@ -7059,6 +7256,7 @@ msgid "No request_token for session found!"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
+#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 msgid "No results found"
 msgstr ""
 
@@ -7137,6 +7335,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee
+#: app/frontend/apps/mobile/modules/error/views/Error.vue
 #: app/helpers/knowledge_base_public_page_title_helper.rb
 msgid "Not Found"
 msgstr ""
@@ -7248,15 +7447,18 @@ msgstr "알림"
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Nov"
 msgstr "11월"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "November"
 msgstr "11월"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket.coffee
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco
+#: app/frontend/apps/mobile/modules/ticket/components/TicketList/TicketList.vue
 msgid "Number"
 msgstr "번호"
 
@@ -7294,16 +7496,14 @@ msgstr "사물"
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Oct"
 msgstr "10월"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "October"
 msgstr "10월"
-
-#: db/seeds/settings.rb
-msgid "Office 365 App Credentials"
-msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee
 msgid "Ok"
@@ -7355,7 +7555,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/package.jst.eco
 msgid ""
-"Only packages from known, trusted, and verfied sources should be installed."
+"Only packages from known, trusted, and verified sources should be installed."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -7411,16 +7611,6 @@ msgstr "옵션"
 #| msgid "migrate from another system"
 msgid "Or migrate from another system."
 msgstr "다른 시스템에서 마이그레이션"
-
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee
-#: app/assets/javascripts/app/models/overview.coffee
-msgid "Order"
-msgstr "주문"
-
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee
-#: app/assets/javascripts/app/models/overview.coffee
-msgid "Order by Direction"
-msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
@@ -7528,6 +7718,7 @@ msgid "Outdated Browser"
 msgstr "브라우저"
 
 #: app/assets/javascripts/app/controllers/overview.coffee
+#: app/assets/javascripts/app/models/group.coffee
 msgid "Overview"
 msgstr "Overview"
 
@@ -7626,6 +7817,8 @@ msgstr "부모의"
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/shared/components/Form/Form.stories.ts
+#: app/models/form_schema/form/mobile/login.rb
 #: db/seeds/object_manager_attributes.rb db/seeds/permissions.rb
 msgid "Password"
 msgstr "암호"
@@ -7638,7 +7831,13 @@ msgstr "암호 액세스"
 msgid "Password changed successfully!"
 msgstr ""
 
-#: app/assets/javascripts/app/views/settings/proxy.jst.eco db/seeds/settings.rb
+#: app/assets/javascripts/app/views/settings/proxy.jst.eco
+#, fuzzy
+#| msgid "Password for proxy connection."
+msgid "Password for proxy connection"
+msgstr "프록시 연결을위한 암호입니다."
+
+#: db/seeds/settings.rb
 msgid "Password for proxy connection."
 msgstr "프록시 연결을위한 암호입니다."
 
@@ -7779,6 +7978,10 @@ msgstr ""
 msgid "Play user interface sound effects"
 msgstr "사용자 인터페이스 사운드 효과를 재생"
 
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "Please accept the %s."
+msgstr ""
+
 #: app/views/knowledge_base/public/categories/index.html.erb
 msgid "Please add categories and/or answers"
 msgstr ""
@@ -7811,6 +8014,10 @@ msgstr ""
 msgid "Please enter a text."
 msgstr ""
 
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "Please enter a valid email address."
+msgstr ""
+
 #: app/assets/javascripts/app/views/ticket_zoom/time_accounting.jst.eco
 msgid "Please enter the time you want to record."
 msgstr ""
@@ -7820,11 +8027,17 @@ msgid "Please enter valid path or domain"
 msgstr ""
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
-msgid "Please execute database changes only in a maintenance time-slot."
+#, fuzzy
+#| msgid "Please execute database changes only in a maintenance time-slot."
+msgid "Please execute database changes only in a maintenance window."
 msgstr "단지 유지 보수 시간 슬롯에 데이터베이스 변경을 실행하십시오."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/public_menu_form_item.coffee
 msgid "Please fill in all fields"
+msgstr ""
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "Please include a valid url."
 msgstr ""
 
 #: app/controllers/integration/exchange_controller.rb
@@ -7861,6 +8074,7 @@ msgid "Postmaster Filter"
 msgstr ""
 
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/apps/mobile/modules/login/views/Login.vue
 msgid "Powered by"
 msgstr "에 의해 구동"
 
@@ -7896,10 +8110,6 @@ msgstr "너무 이른"
 #: app/assets/javascripts/app/views/ticket_zoom/overview_navigator.jst.eco
 msgid "Previous in overview"
 msgstr "Overview에 이전"
-
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
-msgid "Previous tab"
-msgstr "이전 탭"
 
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
 msgid "Previously owned tickets (%s in total)"
@@ -7993,7 +8203,9 @@ msgid "Proxy User"
 msgstr ""
 
 #: app/assets/javascripts/app/views/settings/proxy.jst.eco
-msgid "Proxy address."
+#, fuzzy
+#| msgid "Proxy address."
+msgid "Proxy address"
 msgstr "프록시 주소를 입력합니다."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
@@ -8051,6 +8263,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 msgid "Raw"
+msgstr ""
+
+#: app/assets/javascripts/app/models/group.coffee
+msgid "Read"
 msgstr ""
 
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco
@@ -8114,6 +8330,10 @@ msgid ""
 "References - Search for follow-up also in In-Reply-To or References headers."
 msgstr ""
 
+#: app/frontend/apps/mobile/modules/login/views/Login.vue
+msgid "Register"
+msgstr ""
+
 #: app/assets/javascripts/app/views/login.jst.eco
 msgid "Register as a new customer"
 msgstr "새로운 고객으로 등록"
@@ -8132,6 +8352,7 @@ msgstr "다시로드 응용 프로그램"
 
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/models/form_schema/form/mobile/login.rb
 msgid "Remember me"
 msgstr "날 기억해"
 
@@ -8157,8 +8378,21 @@ msgstr ""
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
 #: app/assets/javascripts/app/views/twitter/search_term.jst.eco
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "Remove"
 msgstr "풀다"
+
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "Remove"
+msgid "Remove all"
+msgstr "풀다"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
+#, fuzzy
+#| msgid "Removes the formatting"
+msgid "Remove formatting"
+msgstr "서식을 제거합니다"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Removes any hyperlink"
@@ -8456,6 +8690,7 @@ msgid "STARTTLS"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Sat"
 msgstr "토"
 
@@ -8463,6 +8698,7 @@ msgstr "토"
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Saturday"
 msgstr "토요일"
 
@@ -8558,6 +8794,7 @@ msgstr "새 메시지를 볼 수 아래로 스크롤"
 #: app/assets/javascripts/app/views/integration/idoit_object_selector.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/search_field_widget.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
+#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 msgid "Search"
 msgstr "검색"
 
@@ -8660,6 +8897,13 @@ msgstr "선택자"
 msgid "Selects the ticket number generator module."
 msgstr "Ticket 번호 생성기 모듈을 선택합니다."
 
+#: app/frontend/shared/components/Form/fields/FieldSelect/FieldSelectInput.vue
+#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
+#, fuzzy
+#| msgid "Select Template"
+msgid "Select…"
+msgstr "템플릿 선택"
+
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco
 #: public/assets/chat/views/chat.eco
@@ -8743,6 +8987,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Sep"
 msgstr "9월"
 
@@ -8751,6 +8996,7 @@ msgid "Separate multiple values by ;"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "September"
 msgstr "9월"
 
@@ -8792,10 +9038,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/session.jst.eco db/seeds/permissions.rb
 msgid "Sessions"
 msgstr "세션"
-
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
-msgid "Set"
-msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Set agent limit"
@@ -8962,6 +9204,16 @@ msgstr ""
 msgid "Show less"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
+msgid "Show next tab"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
+#, fuzzy
+#| msgid "Previous tab"
+msgid "Show previous tab"
+msgstr "이전 탭"
+
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
 msgid "Show the chat when ready."
 msgstr "준비가되면 채팅을 표시합니다."
@@ -9002,6 +9254,8 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/login.coffee
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/apps/mobile/modules/login/routes.ts
+#: app/frontend/apps/mobile/modules/login/views/Login.vue
 msgid "Sign in"
 msgstr "로그인"
 
@@ -9113,9 +9367,27 @@ msgstr ""
 msgid "Something went wrong. Please contact your administrator."
 msgstr ""
 
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "Sorry, not all fields are filled out correctly."
+msgstr ""
+
 #: app/assets/javascripts/app/views/cti/not_configured.jst.eco
 msgid "Sorry, there is currently no CTI backend enabled."
 msgstr ""
+
+#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/models/overview.coffee
+#, fuzzy
+#| msgid "Reporting"
+msgid "Sorting by"
+msgstr "보고"
+
+#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/models/overview.coffee
+#, fuzzy
+#| msgid "Change order"
+msgid "Sorting order"
+msgstr "주문 변경"
 
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
 msgid "Sounds"
@@ -9212,6 +9484,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/idoit_object_result.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_idoit.jst.eco
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
+#: app/frontend/apps/mobile/modules/ticket/components/TicketList/TicketList.vue
 msgid "Status"
 msgstr "지위"
 
@@ -9287,6 +9560,7 @@ msgstr "제목"
 #: app/assets/javascripts/app/views/settings/switch.jst.eco
 #: app/assets/javascripts/app/views/settings/ticket_hook_position.jst.eco
 #: app/assets/javascripts/app/views/settings/ticket_number.jst.eco
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "Submit"
 msgstr "제출"
 
@@ -9316,6 +9590,7 @@ msgid "Summer holiday"
 msgstr "여름 휴가"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Sun"
 msgstr "일"
 
@@ -9323,6 +9598,7 @@ msgstr "일"
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Sunday"
 msgstr "일요일"
 
@@ -9526,6 +9802,12 @@ msgstr "등록해주셔서 감사합니다. 이메일을 \"%s\"로 보넸습니�
 msgid "The API token could not be found."
 msgstr ""
 
+#: app/assets/javascripts/app/views/knowledge_base/new_controller.coffee
+#, fuzzy
+#| msgid "%s Object(s) are created."
+msgid "The Knowledge Base could not be created."
+msgstr "%s 객체 (들)이 생성된다."
+
 #: app/controllers/users_controller.rb
 msgid "The MIME type of the full-size image is invalid."
 msgstr ""
@@ -9547,6 +9829,12 @@ msgstr ""
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 msgid "The URL to this installation of Zammad."
 msgstr "Zammad이 설치 URL입니다."
+
+#: app/controllers/reports_controller.rb
+#, fuzzy
+#| msgid "When notification is being sent."
+msgid "The active reporting profile could not be found."
+msgstr "알림이 전송 될 때."
 
 #: app/controllers/ticket_articles_controller.rb
 msgid "The article does not belong to the specified ticket."
@@ -9587,6 +9875,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_dialog.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/editor_coordinator.coffee
+#: app/assets/javascripts/app/controllers/knowledge_base/public_menu_form.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/attachments.coffee
 msgid "The changes could not be saved."
 msgstr ""
@@ -9609,6 +9898,17 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee
 msgid "The configuration of Zammad has changed, please reload your browser."
+msgstr ""
+
+#: app/frontend/shared/composables/useAppMaintenanceCheck.ts
+#, fuzzy
+#| msgid "A new version of Zammad is available, please reload your browser."
+msgid ""
+"The configuration of Zammad has changed. Please reload at your earliest."
+msgstr "Zammad의 새 버전을 사용할 수, 브라우저를 다시로드하십시오."
+
+#: app/frontend/shared/stores/application.ts
+msgid "The connection to the server was lost."
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
@@ -9646,6 +9946,12 @@ msgstr ""
 #: lib/telegram.rb
 msgid "The file could not be retrieved from the bot."
 msgstr ""
+
+#: app/assets/javascripts/app/lib/app_post/html5_upload.coffee
+#, fuzzy
+#| msgid "%s Object(s) are created."
+msgid "The file could not be uploaded."
+msgstr "%s 객체 (들)이 생성된다."
 
 #: app/controllers/ticket_articles_controller.rb
 msgid "The file does not belong to the specified article."
@@ -9726,6 +10032,12 @@ msgstr "%s 객체 (들)이 생성된다."
 msgid "The object could not be created."
 msgstr "%s 객체 (들)이 생성된다."
 
+#: app/controllers/links_controller.rb
+#, fuzzy
+#| msgid "%s Object(s) are updated."
+msgid "The object could not be found."
+msgstr "%s 객체 (들) 업데이트됩니다."
+
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_edit.coffee
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee
 #: app/assets/javascripts/app/controllers/_settings/area_switch.coffee
@@ -9788,14 +10100,34 @@ msgstr ""
 msgid "The provided endpoint is invalid."
 msgstr ""
 
+#: app/models/postmaster_filter.rb
+msgid "The provided match operator is missing or invalid."
+msgstr ""
+
 #: app/controllers/application_controller/authenticates.rb
 #: app/controllers/integration/check_mk_controller.rb
 #: app/controllers/users_controller.rb
 msgid "The provided token is invalid."
 msgstr ""
 
+#: lib/static_assets.rb
+#, fuzzy
+#| msgid "%s Object(s) are created."
+msgid "The raw logo could not be read."
+msgstr "%s 객체 (들)이 생성된다."
+
+#: app/assets/javascripts/app/controllers/report.coffee
+#, fuzzy
+#| msgid "%s Object(s) are created."
+msgid "The report could not be generated"
+msgstr "%s 객체 (들)이 생성된다."
+
 #: app/assets/javascripts/app/views/knowledge_base/delete.coffee
 msgid "The request could not be processed."
+msgstr ""
+
+#: app/controllers/channels_twitter_controller.rb
+msgid "The required 'ExternalCredential' 'twitter' could not be found."
 msgstr ""
 
 #: lib/idoit.rb
@@ -9804,6 +10136,10 @@ msgstr ""
 
 #: lib/idoit.rb
 msgid "The required field 'endpoint' is missing from the config."
+msgstr ""
+
+#: app/models/postmaster_filter.rb
+msgid "The required match value is missing."
 msgstr ""
 
 #: lib/external_credential/facebook.rb
@@ -9844,8 +10180,20 @@ msgstr ""
 msgid "The required parameter 'current_user_id' is missing."
 msgstr ""
 
+#: lib/telegram.rb
+msgid "The required parameter 'group_id' is invalid."
+msgstr ""
+
+#: lib/telegram.rb
+msgid "The required parameter 'group_id' is missing."
+msgstr ""
+
 #: app/controllers/users_controller.rb
 msgid "The required parameter 'id' is missing."
+msgstr ""
+
+#: app/models/text_module.rb
+msgid "The required parameter 'locale' is missing."
 msgstr ""
 
 #: lib/external_credential/twitter.rb
@@ -9876,6 +10224,20 @@ msgstr ""
 msgid "The required parameter 'signup' is missing."
 msgstr ""
 
+#: app/controllers/channels_twitter_controller.rb
+msgid ""
+"The required value 'external_credential[:consumer_secret]' could not be "
+"found in the cache."
+msgstr ""
+
+#: app/policies/ticket_policy.rb
+msgid "The required value 'group_id' is missing."
+msgstr ""
+
+#: app/controllers/channels_twitter_controller.rb
+msgid "The required value external_credential could not be found in the cache."
+msgstr ""
+
 #: app/controllers/users_controller.rb
 msgid "The resized image is invalid."
 msgstr ""
@@ -9889,6 +10251,10 @@ msgstr ""
 msgid ""
 "The server settings could not be automatically detected. Please configure "
 "them manually."
+msgstr ""
+
+#: app/frontend/apps/mobile/modules/login/views/Login.vue
+msgid "The session is no longer valid. Please log in again."
 msgstr ""
 
 #: app/models/store/file.rb
@@ -9908,6 +10274,18 @@ msgstr ""
 #| msgid "The test run was successful."
 msgid "The signature was successfully verified."
 msgstr "테스트 실행 성공했습니다."
+
+#: app/controllers/tickets_controller.rb
+#, fuzzy
+#| msgid "%s Object(s) are created."
+msgid "The source ticket could not be found."
+msgstr "%s 객체 (들)이 생성된다."
+
+#: app/controllers/tickets_controller.rb
+#, fuzzy
+#| msgid "%s Object(s) are created."
+msgid "The target ticket number could not be found."
+msgstr "%s 객체 (들)이 생성된다."
 
 #: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
 msgid "The test run was successful."
@@ -10006,6 +10384,10 @@ msgstr ""
 msgid "Third-party Applications"
 msgstr "타사 응용 프로그램"
 
+#: lib/telegram.rb
+msgid "This bot already exists."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/knowledge_base/reader_list_controller.coffee
 msgid "This category is empty"
 msgstr ""
@@ -10023,6 +10405,116 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/holiday_selector.coffee
 msgid "This entry already exists!"
+msgstr ""
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "This field can only contain alphabetical characters."
+msgstr ""
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "This field can only contain letters and numbers."
+msgstr ""
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "This field can only contain letters and spaces."
+msgstr ""
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "This field can't contain the value \"%s\"."
+msgstr ""
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "This field can't have less than %s entries."
+msgstr ""
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "This field can't have more than %s entries."
+msgstr ""
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "This field doesn't contain an allowed value."
+msgstr ""
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "This field doesn't correspond to the expected value."
+msgstr ""
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "This field doesn't end with \"%s\"."
+msgstr ""
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "This field doesn't start with \"%s\"."
+msgstr ""
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "This field is required."
+msgstr ""
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "This field isn't a valid date, please use the format \"%s\"."
+msgstr ""
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "This field must be of the type \"%s\"."
+msgstr ""
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "This field must contain a number."
+msgstr ""
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "This field must contain at least %s characters."
+msgstr ""
+
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "Password needs to contain at least one digit."
+msgid "This field must contain at least one character."
+msgstr "비밀번호에는 적어도 하나의 숫자가 포함 할 필요가있다."
+
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "Password needs to contain 2 lower and 2 upper characters."
+msgid "This field must contain between %s and %s characters."
+msgstr "비밀번호 낮은 2 개, 2 위 문자를 포함 할 필요가있다."
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "This field must have a value that is after %s."
+msgstr ""
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "This field must have a value that is at least %s."
+msgstr ""
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "This field must have a value that is at most %s."
+msgstr ""
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "This field must have a value that is before %s."
+msgstr ""
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "This field must have a value that is between %s and %s."
+msgstr ""
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "This field must have a value that is in the future."
+msgstr ""
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "This field must have a value that is in the past."
+msgstr ""
+
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "Password needs to contain 2 lower and 2 upper characters."
+msgid "This field must not contain more than %s characters."
+msgstr "비밀번호 낮은 2 개, 2 위 문자를 포함 할 필요가있다."
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "This field was configured incorrectly and can't be submitted."
 msgstr ""
 
 #: app/assets/javascripts/app/views/version.jst.eco
@@ -10117,10 +10609,6 @@ msgid ""
 "<a href=\"#channels/email\">here</a>"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
-msgid "This ticket was merged into"
-msgstr ""
-
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
 msgid "This user has no access and will not receive notifications."
 msgstr ""
@@ -10131,6 +10619,7 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Thu"
 msgstr "목"
 
@@ -10138,10 +10627,10 @@ msgstr "목"
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Thursday"
 msgstr "목요일"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 #: app/assets/javascripts/app/controllers/_manage/ticket.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
@@ -10203,6 +10692,18 @@ msgstr ""
 #: db/seeds/settings.rb
 msgid "Ticket Number ignore system_id"
 msgstr ""
+
+#: app/frontend/apps/mobile/modules/ticket/views/TicketOverview.vue
+#, fuzzy
+#| msgid "New Overview"
+msgid "Ticket Overview"
+msgstr "새로운 Overview"
+
+#: app/frontend/apps/mobile/modules/ticket/routes.ts
+#, fuzzy
+#| msgid "Overviews"
+msgid "Ticket Overviews"
+msgstr "Overviews"
 
 #: app/assets/javascripts/app/models/sla.coffee
 msgid "Ticket Selector"
@@ -10366,6 +10867,7 @@ msgstr "타이밍"
 #: app/assets/javascripts/app/views/maintenance.jst.eco
 #: app/assets/javascripts/app/views/settings/form.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
+#: app/frontend/apps/mobile/modules/ticket/components/TicketList/TicketList.vue
 #: db/seeds/object_manager_attributes.rb lib/excel_sheet/ticket.rb
 msgid "Title"
 msgstr "제목"
@@ -10438,6 +10940,7 @@ msgstr ""
 msgid "To work on Tickets."
 msgstr "Ticket에서 작동합니다."
 
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 #: public/assets/chat/chat-no-jquery.coffee public/assets/chat/chat.coffee
 msgid "Today"
 msgstr "오늘"
@@ -10533,6 +11036,7 @@ msgid "Trying to reconnect…"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Tue"
 msgstr "화"
 
@@ -10540,6 +11044,7 @@ msgstr "화"
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Tuesday"
 msgstr "화요일"
 
@@ -10625,7 +11130,8 @@ msgstr "URL"
 msgid "URL (AJAX endpoint)"
 msgstr ""
 
-#: app/controllers/first_steps_controller.rb db/seeds/overviews.rb
+#: app/controllers/first_steps_controller.rb
+#: app/frontend/apps/mobile/modules/home/views/Home.vue db/seeds/overviews.rb
 #, fuzzy
 #| msgid "Unassigned & Open"
 msgid "Unassigned & Open Tickets"
@@ -10805,12 +11311,6 @@ msgstr "용법"
 msgid "Usage of advanced features"
 msgstr "고급 기능 사용"
 
-#: db/seeds/settings.rb
-msgid "Use client storage to cache data to enhance performance of application."
-msgstr ""
-"응용 프로그램의 성능을 향상시키기 위해 데이터를 캐시 클라이언트 스토리지를 사"
-"용합니다."
-
 #: app/assets/javascripts/app/views/object_manager/attribute/multiselect.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco
 msgid "Use custom option sort"
@@ -10943,12 +11443,24 @@ msgstr ""
 msgid "Username"
 msgstr "사용자 이름"
 
+#: app/models/form_schema/form/mobile/login.rb
+#, fuzzy
+#| msgid "Username / email"
+msgid "Username / Email"
+msgstr "사용자 이름 / 이메일"
+
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
 msgid "Username / email"
 msgstr "사용자 이름 / 이메일"
 
-#: app/assets/javascripts/app/views/settings/proxy.jst.eco db/seeds/settings.rb
+#: app/assets/javascripts/app/views/settings/proxy.jst.eco
+#, fuzzy
+#| msgid "Username for proxy connection."
+msgid "Username for proxy connection"
+msgstr "프록시 연결을위한 사용자 이름."
+
+#: db/seeds/settings.rb
 msgid "Username for proxy connection."
 msgstr "프록시 연결을위한 사용자 이름."
 
@@ -11203,6 +11715,10 @@ msgstr ""
 msgid "We support"
 msgstr ""
 
+#: app/frontend/apps/mobile/modules/error/views/Error.vue
+msgid "We're sorry, but this page doesn't exist."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_plugin/user_signup_check.coffee
 msgid ""
 "We've sent an email to _%s_. Click the link in the email to verify your "
@@ -11280,6 +11796,7 @@ msgid "Websocket port"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Wed"
 msgstr "금"
 
@@ -11287,6 +11804,7 @@ msgstr "금"
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Wednesday"
 msgstr "수요일"
 
@@ -11511,8 +12029,23 @@ msgstr "|%s| 당신은이다."
 msgid "You are on waiting list position <strong>%s</strong>."
 msgstr ""
 
-#: app/views/mailer/application.html.erb
-msgid "You are receiving this because you \"%s\"."
+#: app/models/transaction/notification.rb
+msgid ""
+"You are receiving this because you are a member of the group of this ticket."
+msgstr ""
+
+#: app/models/transaction/notification.rb
+msgid ""
+"You are receiving this because you are out-of-office replacement for a "
+"participant of this ticket."
+msgstr ""
+
+#: app/models/transaction/notification.rb
+msgid "You are receiving this because you are the owner of this ticket."
+msgstr ""
+
+#: app/models/transaction/notification.rb
+msgid "You are receiving this because you were mentioned in this ticket."
 msgstr ""
 
 #: app/assets/javascripts/app/views/facebook/index.jst.eco
@@ -11615,6 +12148,10 @@ msgstr "당신은 %s 데이터를 게시하려면 다음 스크립트를 사용�
 
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
 msgid "You currently don't have any tickets."
+msgstr ""
+
+#: app/frontend/shared/router/guards/before/permission.ts
+msgid "You don't have the necessary permissions to access this page."
 msgstr ""
 
 #: db/seeds/karma_activities.rb
@@ -11911,6 +12448,10 @@ msgstr ""
 msgid "Zip"
 msgstr "지퍼"
 
+#: db/seeds/settings.rb
+msgid "absolute - e. g. \"Monday 09:30\" or \"Tuesday 23. Feb 14:20\""
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ui_element/active.coffee
 msgid "active"
 msgstr "유효한"
@@ -11942,6 +12483,13 @@ msgstr "과"
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 msgid "archived"
 msgstr ""
+
+#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/models/overview.coffee
+#, fuzzy
+#| msgid "pending"
+msgid "ascending"
+msgstr "대기"
 
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay.jst.eco
 msgid "assign tickets"
@@ -12082,9 +12630,22 @@ msgstr ""
 msgid "delete"
 msgstr "지우다"
 
+#: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/assets/javascripts/app/models/overview.coffee
+#, fuzzy
+#| msgid "pending"
+msgid "descending"
+msgstr "대기"
+
 #: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco
 msgid "disconnect"
 msgstr "분리"
+
+#: app/assets/javascripts/app/controllers/cti.coffee
+#, fuzzy
+#| msgid "not exist"
+msgid "does not exist"
+msgstr "존재하지"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
@@ -12118,6 +12679,10 @@ msgstr ""
 #: db/seeds/ticket_article_types.rb
 msgid "email"
 msgstr "이메일"
+
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
+msgid "email sent to '%s'"
+msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "escalated"
@@ -12225,6 +12790,72 @@ msgstr "구글에서 iCalendar는 링크는 하루에 한 번 인출 얻을 것�
 msgid "in %s"
 msgstr "%s에서"
 
+#: app/frontend/shared/i18n/dates.ts
+#, fuzzy
+#| msgid "in %s"
+msgid "in %s days"
+msgstr "%s에서"
+
+#: app/frontend/shared/i18n/dates.ts
+#, fuzzy
+#| msgid "in hours"
+msgid "in %s hours"
+msgstr "시간"
+
+#: app/frontend/shared/i18n/dates.ts
+#, fuzzy
+#| msgid "minutes"
+msgid "in %s minutes"
+msgstr "의사록"
+
+#: app/frontend/shared/i18n/dates.ts
+msgid "in %s months"
+msgstr ""
+
+#: app/frontend/shared/i18n/dates.ts
+#, fuzzy
+#| msgid "2 weeks"
+msgid "in %s weeks"
+msgstr "2주"
+
+#: app/frontend/shared/i18n/dates.ts
+#, fuzzy
+#| msgid "in %s"
+msgid "in %s years"
+msgstr "%s에서"
+
+#: app/frontend/shared/i18n/dates.ts
+#, fuzzy
+#| msgid "1 day"
+msgid "in 1 day"
+msgstr "1일"
+
+#: app/frontend/shared/i18n/dates.ts
+#, fuzzy
+#| msgid "in hours"
+msgid "in 1 hour"
+msgstr "시간"
+
+#: app/frontend/shared/i18n/dates.ts
+#, fuzzy
+#| msgid "minute"
+msgid "in 1 minute"
+msgstr "분"
+
+#: app/frontend/shared/i18n/dates.ts
+msgid "in 1 month"
+msgstr ""
+
+#: app/frontend/shared/i18n/dates.ts
+#, fuzzy
+#| msgid "1 week"
+msgid "in 1 week"
+msgstr "일주일"
+
+#: app/frontend/shared/i18n/dates.ts
+msgid "in 1 year"
+msgstr ""
+
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
 msgid "in hours"
 msgstr "시간"
@@ -12242,6 +12873,7 @@ msgstr "진행 중"
 msgid "inactive"
 msgstr "비활성"
 
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 msgid "internal"
 msgstr "내부의"
@@ -12288,6 +12920,10 @@ msgstr ""
 msgid "last week"
 msgstr ""
 
+#: db/seeds/settings.rb
+msgid "left"
+msgstr ""
+
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
 msgid "m"
 msgstr ""
@@ -12306,7 +12942,9 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/data_privacy/preview.jst.eco
 #: app/assets/javascripts/app/views/generic/application_selector.jst.eco
-msgid "matches"
+#, fuzzy
+#| msgid "matches"
+msgid "matches found"
 msgstr "성냥"
 
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco
@@ -12364,12 +13002,9 @@ msgstr "아무 문제 없습니다"
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 #: app/assets/javascripts/app/views/widget/ticket_stats_list.jst.eco
+#: db/seeds/settings.rb
 msgid "none"
 msgstr "없음"
-
-#: app/assets/javascripts/app/controllers/cti.coffee
-msgid "not exist"
-msgstr "존재하지"
 
 #: app/assets/javascripts/app/controllers/cti.coffee
 msgid "not reached"
@@ -12391,6 +13026,12 @@ msgstr "번역되지"
 #: db/seeds/ticket_article_types.rb
 msgid "note"
 msgstr "노트"
+
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
+#, fuzzy
+#| msgid "Notification Sender"
+msgid "notification sent to '%s'"
+msgstr "알림 발신자"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 #, fuzzy
@@ -12436,6 +13077,12 @@ msgstr "대기중인 알림"
 msgid "phone"
 msgstr "전화"
 
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
+#, fuzzy
+#| msgid "Public"
+msgid "public"
+msgstr "공개"
+
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 msgid "published"
 msgstr "게시된"
@@ -12450,6 +13097,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "regex mismatch"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "relative - e. g. \"2 hours ago\" or \"2 days and 15 minutes ago\""
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
@@ -12472,6 +13123,10 @@ msgstr "삭제 완료"
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/twitter_reply.coffee
 msgid "reply"
 msgstr "댓글"
+
+#: db/seeds/settings.rb
+msgid "right"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/cti.coffee
 msgid "ringing"
@@ -12496,10 +13151,6 @@ msgstr ""
 #| msgid "select attachment..."
 msgid "select attachment…"
 msgstr "선택 첨부 ..."
-
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
-msgid "sent to"
-msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "set fixed to"
@@ -12590,8 +13241,15 @@ msgid "telegram personal-message"
 msgstr "텔레그램 개인 메세지"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
+msgid "this ticket was merged into ticket %s"
+msgstr ""
+
 #: lib/calendar_subscriptions/tickets.rb
 msgid "ticket"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
+msgid "ticket %s was merged into this ticket"
 msgstr ""
 
 #: lib/calendar_subscriptions/tickets.rb
@@ -12610,9 +13268,9 @@ msgstr ""
 msgid "till (relative)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
-msgid "to"
-msgstr "에"
+#: db/seeds/settings.rb
+msgid "timestamp - e. g. \"2018-08-30 14:30\""
+msgstr ""
 
 #: app/views/knowledge_base/public/not_found.html.erb
 msgid "to go to the homepage."
@@ -12657,10 +13315,6 @@ msgstr "손대지 않은"
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco
 msgid "updated"
 msgstr "변경 완료"
-
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
-msgid "was merged into this ticket"
-msgstr ""
 
 #: db/seeds/ticket_article_types.rb
 msgid "web"
@@ -12748,8 +13402,34 @@ msgstr "... 전체 텍스트 영역의"
 msgid "∅ Waiting time today"
 msgstr "∅ 오늘 대기 시간"
 
-#~ msgid "Select"
+#, fuzzy
+#~| msgid "Select"
+#~ msgid "Select..."
 #~ msgstr "고르다"
+
+#~ msgid "Next in tab"
+#~ msgstr "탭에서 다음"
+
+#~ msgid "Order"
+#~ msgstr "주문"
+
+#~ msgid "No filter."
+#~ msgstr "필터 없음."
+
+#~ msgid "to"
+#~ msgstr "에"
+
+#~ msgid "Configure Base"
+#~ msgstr "구성 자료"
+
+#~ msgid "Client storage"
+#~ msgstr "클라이언트 저장"
+
+#~ msgid ""
+#~ "Use client storage to cache data to enhance performance of application."
+#~ msgstr ""
+#~ "응용 프로그램의 성능을 향상시키기 위해 데이터를 캐시 클라이언트 스토리지"
+#~ "를 사용합니다."
 
 #~ msgid "by"
 #~ msgstr "작성"
