@@ -83,6 +83,7 @@
     - bundle config set --local path 'vendor'
     - bundle install -j $(nproc)
     - echo -e "\\e[0Ksection_end:`date +%s`:bundle_install\\r\\e[0K"
+    - bundle exec .rubocop/validate_todos.rb
     - bundle exec rubocop --parallel
 
 # Must be a separate job because it may fail and is only executed for develop.
