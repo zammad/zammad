@@ -4,7 +4,7 @@ import type { FormThemeClasses, FormThemeExtension } from '@shared/types/form'
 
 type Classes = Record<string, string>
 
-export const addFloatingLabel = (classes: Classes): Classes => {
+export const addFloatingLabel = (classes: Classes = {}): Classes => {
   const inputClass = classes.input || ''
   const labelClass = classes.label || ''
   return {
@@ -16,11 +16,20 @@ export const addFloatingLabel = (classes: Classes): Classes => {
   }
 }
 
-export const addDateLabel = (classes: Classes): Classes => {
+export const addDateLabel = (classes: Classes = {}): Classes => {
   const newClasses = addFloatingLabel(classes)
   return {
     ...newClasses,
     inner: 'flex flex-col items-center bg-gray-500 rounded-xl',
+  }
+}
+
+export const addButtonVariants = (classes: Classes = {}): Classes => {
+  return {
+    wrapper: `${classes.wrapper || ''} relative`,
+    input: `${
+      classes.input || ''
+    } formkit-variant-primary:bg-blue formkit-variant-secondary:bg-transparent`,
   }
 }
 
@@ -45,6 +54,8 @@ const getCoreClasses: FormThemeExtension = (classes: FormThemeClasses) => {
       ...(classes.select || {}),
       outer: `${classes.select && classes.select.outer} field-treeselect`,
     }),
+    button: addButtonVariants(classes.button),
+    submit: addButtonVariants(classes.submit),
   }
 }
 

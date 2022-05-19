@@ -33,6 +33,7 @@ describe('Form - Field - Button (Formkit-BuildIn)', () => {
     const button = view.getByText('Sign In')
 
     expect(button).toHaveAttribute('id', 'button')
+    expect(button.closest('div')).toHaveAttribute('data-variant', 'primary')
   })
 
   it('can render a button with a label instead of slot', () => {
@@ -46,6 +47,23 @@ describe('Form - Field - Button (Formkit-BuildIn)', () => {
     })
 
     expect(view.getByText('Sign In')).toBeInTheDocument()
+  })
+
+  it('can use different variant', () => {
+    const view = renderButton({
+      props: {
+        name: 'button',
+        type: 'button',
+        id: 'button',
+        label: 'Sign In',
+        variant: 'secondary',
+      },
+    })
+
+    expect(view.getByText('Sign In').closest('div')).toHaveAttribute(
+      'data-variant',
+      'secondary',
+    )
   })
 
   it('can be disabled', async () => {
@@ -75,6 +93,43 @@ describe('Form - Field - Button (Formkit-BuildIn)', () => {
 
     expect(button).not.toHaveAttribute('disabled')
   })
+
+  it('can use icons', async () => {
+    const view = renderButton({
+      props: {
+        name: 'button',
+        type: 'button',
+        id: 'button',
+        label: 'Sign In',
+        icon: 'arrow-right',
+      },
+    })
+
+    const icon = view.getIconByName('arrow-right')
+
+    expect(icon).toBeInTheDocument()
+  })
+
+  it('can trigger action on icon', async () => {
+    const iconClickSpy = vi.fn()
+
+    const view = renderButton({
+      props: {
+        name: 'button',
+        type: 'button',
+        id: 'button',
+        label: 'Sign In',
+        icon: 'arrow-right',
+        onIconClick: iconClickSpy,
+      },
+    })
+
+    const icon = view.getIconByName('arrow-right')
+
+    await view.events.click(icon)
+
+    expect(iconClickSpy).toHaveBeenCalledTimes(1)
+  })
 })
 
 describe('Form - Field - Submit-Button (Formkit-BuildIn)', () => {
@@ -96,5 +151,3 @@ describe('Form - Field - Submit-Button (Formkit-BuildIn)', () => {
     expect(button).toHaveAttribute('type', 'submit')
   })
 })
-
-// TODO: Add test cases for new functionality, e.g. some loading state.

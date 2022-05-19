@@ -126,7 +126,7 @@ const onSubmit = (values: FormData): Promise<void> | void => {
 
   const submitResult = props.onSubmit(emitValues)
 
-  // TODO: maybe we need to handle the disabled state on submit on our own. In clarification with FormKit.
+  // TODO: Maybe we need to handle the disabled state on submit on our own. In clarification with FormKit (https://github.com/formkit/formkit/issues/236).
   if (submitResult instanceof Promise) {
     return submitResult.catch((errors: UserError) => {
       formNode.value?.setErrors(

@@ -1,7 +1,8 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { cloneDeep, isEmpty } from 'lodash-es'
-import { FormKitNode, FormKitExtendableSchemaRoot } from '@formkit/core'
+import { isEmpty } from 'lodash-es'
+import { FormKitNode } from '@formkit/core'
+import extendSchemaDefinition from '@shared/form/utils/extendSchemaDefinition'
 
 const extendDataAttribues = (node: FormKitNode) => {
   const { props, context } = node
@@ -30,32 +31,20 @@ const extendDataAttribues = (node: FormKitNode) => {
       .some((r) => r.includes(rule))
   }
 
-  const definition = cloneDeep(props.definition)
-
-  const originalSchema = definition.schema as FormKitExtendableSchemaRoot
-
-  definition.schema = (extensions) => {
-    const localExtensions = {
-      ...extensions,
-      outer: {
-        attrs: {
-          'data-populated': {
-            if: '$fns.hasValue($_value)',
-            then: 'true',
-            else: undefined,
-          },
-          'data-required': {
-            if: '$fns.hasRule("required", $node.props.validation)',
-            then: 'true',
-            else: undefined,
-          },
-        },
+  extendSchemaDefinition(node, 'outer', {
+    attrs: {
+      'data-populated': {
+        if: '$fns.hasValue($_value)',
+        then: 'true',
+        else: undefined,
       },
-    }
-    return originalSchema(localExtensions)
-  }
-
-  props.definition = definition
+      'data-required': {
+        if: '$fns.hasRule("required", $node.props.validation)',
+        then: 'true',
+        else: undefined,
+      },
+    },
+  })
 }
 
 export default extendDataAttribues

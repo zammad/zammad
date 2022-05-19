@@ -108,6 +108,14 @@ module.exports = {
         '[data-is-checked] &',
         '[data-is-checked]&',
       ])
+      addVariant('formkit-variant-primary', [
+        '[data-variant="primary"] &',
+        '[data-variant="primary"]&',
+      ])
+      addVariant('formkit-variant-secondary', [
+        '[data-variant="secondary"] &',
+        '[data-variant="secondary"]&',
+      ])
     }),
   ],
   safelist: [...safelist.values()],

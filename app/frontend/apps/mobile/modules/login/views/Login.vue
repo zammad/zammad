@@ -43,7 +43,7 @@ interface LoginFormData {
 }
 
 const login = (formData: FormData<LoginFormData>) => {
-  authentication
+  return authentication
     .login(formData.login as string, formData.password as string)
     .then(() => {
       router.replace('/')
@@ -107,7 +107,7 @@ const application = useApplicationStore()
               </div>
               <FormKit
                 wrapper-class="mx-8 mt-8 flex grow justify-center items-center"
-                input-class="py-2 px-4 w-full h-14 text-xl font-semibold text-black bg-yellow rounded-xl select-none"
+                input-class="py-2 px-4 w-full h-14 text-xl font-semibold text-black formkit-variant-primary:bg-yellow rounded-xl select-none"
                 type="submit"
               >
                 {{ i18n.t('Sign in') }}

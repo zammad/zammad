@@ -1,46 +1,32 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { cloneDeep } from '@apollo/client/utilities'
-import initializeFieldDefinition from '@shared/form/core/initializeFieldDefinition'
-import { FormKitExtendableSchemaRoot, FormKitNode } from '@formkit/core'
+import { FormKitNode } from '@formkit/core'
 import { checkbox as checkboxDefinition } from '@formkit/inputs'
 import { has } from '@formkit/utils'
+import initializeFieldDefinition from '@shared/form/core/initializeFieldDefinition'
+import extendSchemaDefinition from '@shared/form/utils/extendSchemaDefinition'
 import { CheckboxVariant } from './types'
 
 const addOptionCheckedDataAttribute = (node: FormKitNode) => {
-  const { props } = node
+  node.addProps(['variant'])
 
-  if (!props.definition) return
-
-  const definition = cloneDeep(props.definition)
-
-  const originalSchema = definition.schema as FormKitExtendableSchemaRoot
-
-  definition.schema = (extensions) => {
-    const localExtensions = {
-      ...extensions,
-      wrapper: {
-        attrs: {
-          'data-is-checked': {
-            if: '$options.length',
-            then: {
-              if: '$fns.isChecked($option.value)',
-              then: 'true',
-              else: undefined,
-            },
-            else: {
-              if: '$_value',
-              then: 'true',
-              else: undefined,
-            },
-          },
+  extendSchemaDefinition(node, 'wrapper', {
+    attrs: {
+      'data-is-checked': {
+        if: '$options.length',
+        then: {
+          if: '$fns.isChecked($option.value)',
+          then: 'true',
+          else: undefined,
+        },
+        else: {
+          if: '$_value',
+          then: 'true',
+          else: undefined,
         },
       },
-    }
-    return originalSchema(localExtensions)
-  }
-
-  props.definition = definition
+    },
+  })
 }
 
 const handleVariant = (node: FormKitNode) => {
@@ -73,7 +59,6 @@ const handleVariant = (node: FormKitNode) => {
 }
 
 initializeFieldDefinition(checkboxDefinition, {
-  props: ['variant'],
   features: [addOptionCheckedDataAttribute, handleVariant],
 })
 
