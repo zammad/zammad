@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-04-20 09:07+0000\n"
-"Last-Translator: Lorenzo Milesi <lorenzo.milesi@yetopen.com>\n"
+"PO-Revision-Date: 2022-05-19 08:49+0000\n"
+"Last-Translator: Marco Badan <info@marcobadan.com>\n"
 "Language-Team: Italian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/it/>\n"
 "Language: it-it\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.11.2\n"
+"X-Generator: Weblate 4.12.1\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -279,7 +279,7 @@ msgstr "%s ha modificato l'utente |%s|"
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco
 msgid "%s user to %s user"
-msgstr "%s utente verso utente %s"
+msgstr "%s utente a utente %s"
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
@@ -579,7 +579,7 @@ msgstr "Account non verificato"
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/time_unit.jst.eco
 msgid "Accounted Time"
-msgstr "Gestione del tempo"
+msgstr "Tempo contabilizzato"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
@@ -634,7 +634,7 @@ msgstr "Avvia l'elaborazione ricorsiva dei trigger dei ticket."
 
 #: db/seeds/settings.rb
 msgid "Activates lost password feature for users."
-msgstr "Attiva la funzionalità \"Passoword Dimenticata\" per gli utenti."
+msgstr "Attiva la funzionalità \"Password Dimenticata\" per gli utenti."
 
 #: app/assets/javascripts/app/models/chat.coffee
 #: app/assets/javascripts/app/models/core_workflow.coffee
@@ -744,7 +744,7 @@ msgstr "Aggiungi nota"
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 msgid "Add a Personal Access Token"
-msgstr "Aggiungi un Tocket di accesso personale"
+msgstr "Aggiungi un token di accesso personale"
 
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 msgid "Add alarm to pending reminder and escalated tickets."
@@ -8117,10 +8117,8 @@ msgid "Paste in CSV data"
 msgstr "Incolla qui dentro i dati CSV"
 
 #: db/seeds/overviews.rb
-#, fuzzy
-#| msgid "My pending reached Tickets"
 msgid "Pending Reached Tickets"
-msgstr "Miei ticket aggiunti in attesa"
+msgstr "Ticket in sospeso con promemoria passato"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "Pending reminder reached for ticket |%s|"
@@ -8129,7 +8127,7 @@ msgstr "Promemoria raggiunto per il ticket |%s|"
 #: app/assets/javascripts/app/models/ticket.coffee
 #: db/seeds/object_manager_attributes.rb
 msgid "Pending till"
-msgstr "In attesa fino a"
+msgstr "In sospeso fino a"
 
 #: db/seeds/roles.rb
 msgid "People who create Tickets ask for help."
@@ -8385,10 +8383,8 @@ msgid "Process automatic ticket unassignments."
 msgstr "Abilita l'assegnamento automatico dei ticket."
 
 #: db/seeds/schedulers.rb
-#, fuzzy
-#| msgid "assign tickets"
 msgid "Process pending tickets."
-msgstr "assegna ticket"
+msgstr "Processa ticket in sospeso."
 
 #: db/seeds/schedulers.rb
 #, fuzzy
@@ -12673,6 +12669,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/apps/mobile/modules/login/views/Login.vue
 #, fuzzy
 #| msgid ""
 #| "Zammad is currently in maintenance mode. Only administrators can login. "
@@ -13314,7 +13311,7 @@ msgstr "o effettua l'accesso usando"
 
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee
 msgid "pending"
-msgstr "pendente"
+msgstr "in sospeso"
 
 #: db/seeds/ticket_state_types.rb
 msgid "pending action"

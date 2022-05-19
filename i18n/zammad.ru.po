@@ -3066,8 +3066,8 @@ msgstr "Определяет, используется ли приложение
 #: db/seeds/settings.rb
 msgid "Defines if generic CTI integration is enabled or not."
 msgstr ""
-"Определяет, включена универсальная интеграция с компьютерной телефонией (CTI)"
-" или нет."
+"Определяет, включена универсальная интеграция с компьютерной телефонией "
+"(CTI) или нет."
 
 #: db/seeds/settings.rb
 msgid "Defines if sipgate.io (http://www.sipgate.io) is enabled or not."
@@ -12395,6 +12395,7 @@ msgstr "Пользовательский агент (User Agent) Zammad"
 
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/apps/mobile/modules/login/views/Login.vue
 msgid ""
 "Zammad is currently in maintenance mode. Only administrators can log in. "
 "Please wait until the maintenance window is over."
