@@ -11,6 +11,7 @@ describe('rendering section', () => {
         headerTitle: 'Test Header',
       },
       router: true,
+      store: true,
     })
 
     expect(view.getByText('Test Header')).not.toBeNull()

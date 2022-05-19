@@ -1,6 +1,8 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
+import useLocaleStore from '@shared/stores/locale'
+
 export interface Props {
   title?: string
   link?: string
@@ -10,6 +12,8 @@ export interface Props {
 }
 
 defineProps<Props>()
+
+const locale = useLocaleStore()
 </script>
 
 <template>
@@ -31,8 +35,8 @@ defineProps<Props>()
       <div class="mr-1 flex items-center">
         <slot name="right">{{ i18n.t(information) }}</slot>
         <CommonIcon
-          name="arrow-right"
-          class="ml-2 text-gray-300"
+          class="text-gray-300 ltr:ml-2 rtl:mr-2"
+          :name="`arrow-${locale.localeData?.dir === 'rtl' ? 'left' : 'right'}`"
           :fixed-size="{ width: 12, height: 12 }"
         />
       </div>

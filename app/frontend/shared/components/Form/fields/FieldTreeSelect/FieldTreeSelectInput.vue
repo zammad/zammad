@@ -6,6 +6,7 @@ import { escapeRegExp } from 'lodash-es'
 import { Dialog, TransitionRoot, TransitionChild } from '@headlessui/vue'
 import { i18n } from '@shared/i18n'
 import CommonTicketStateIndicator from '@shared/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue'
+import useLocaleStore from '@shared/stores/locale'
 import useValue from '../../composables/useValue'
 import useSelectDialog from '../../composables/useSelectDialog'
 import useSelectOptions from '../../composables/useSelectOptions'
@@ -212,6 +213,8 @@ const filteredOptions = computed(() => {
 })
 
 useSelectAutoselect(flatOptions, toRef(props, 'context'))
+
+const locale = useLocaleStore()
 </script>
 
 <template>
@@ -278,7 +281,7 @@ useSelectAutoselect(flatOptions, toRef(props, 'context'))
       <CommonIcon
         :fixed-size="{ width: 24, height: 24 }"
         class="shrink-0"
-        name="chevron-right"
+        :name="`chevron-${locale.localeData?.dir === 'rtl' ? 'left' : 'right'}`"
         decorative
       />
     </output>

@@ -25,12 +25,12 @@ const clickOnAction = (event: MouseEvent) => {
 
 <template>
   <div class="flex flex-row justify-between">
-    <div class="pl-4">
+    <div class="ltr:pl-4 rtl:pr-4">
       <slot name="header">{{ i18n.t(headerTitle) }}</slot>
     </div>
     <div
       v-if="actionTitle"
-      class="cursor-pointer pr-4 text-blue"
+      class="cursor-pointer text-blue ltr:pr-4 rtl:pl-4"
       @click="clickOnAction"
     >
       {{ i18n.t(actionTitle) }}

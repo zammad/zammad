@@ -80,6 +80,7 @@ const testOptions = [
 const wrapperParameters = {
   form: true,
   formField: true,
+  store: true,
 
   // NB: Dialog component from the Headless UI library uses a built-in Vue Teleport mechanism in order to "teleport" a
   //   part of the dialog's template into a DOM node that exists outside the DOM hierarchy of the dialog. Vitest does

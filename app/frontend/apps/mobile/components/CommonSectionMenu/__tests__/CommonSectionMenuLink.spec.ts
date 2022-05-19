@@ -9,6 +9,7 @@ const renderMenuItem = (props: any = {}, slots: any = {}) => {
     slots,
     shallow: false,
     router: true,
+    store: true,
   })
 }
 
