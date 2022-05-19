@@ -190,12 +190,15 @@ curl http://localhost/api/v1/organization/{id} -v -u #{login}:#{password} -H "Co
       order_by:     params[:order_by],
       current_user: current_user,
     }
-    if params[:role_ids].present?
-      query_params[:role_ids] = params[:role_ids]
+    %i[ids role_ids].each do |key|
+      next if params[key].blank?
+
+      query_params[key] = params[key]
     end
 
     # do query
     organization_all = Organization.search(query_params)
+    Rails.logger.error "organization_all #{query_params.inspect} #{organization_all.count}"
 
     if response_expand?
       list = []

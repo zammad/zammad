@@ -1,11 +1,11 @@
 class SidebarOrganization extends App.Controller
   sidebarItem: =>
     return if !@permissionCheck('ticket.agent')
-    return if !@params.customer_id
-    return if !App.User.exists(@params.customer_id)
-    customer = App.User.find(@params.customer_id)
-    @organization_id = customer.organization_id
+
+    # use ticket organization id or customer user organization id as fallback
+    @organization_id = @params.organization_id || App.User.find(@params.customer_id)?.organization_id
     return if !@organization_id
+
     @item = {
       name: 'organization'
       badgeIcon: 'group'

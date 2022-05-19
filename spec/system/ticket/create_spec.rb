@@ -1028,4 +1028,81 @@ RSpec.describe 'Ticket Create', type: :system do
       wait.until { page.find("input[name='#{field_name}']", visible: :all).value == '' }
     end
   end
+
+  describe 'Assign user to multiple organizations #1573' do
+    let(:organization1) { create(:organization) }
+    let(:organization2) { create(:organization) }
+    let(:organization3) { create(:organization) }
+    let(:organization4) { create(:organization) }
+    let(:user1) { create(:agent, organization: organization1, organizations: [organization2, organization3]) }
+    let(:user2) { create(:agent, organization: organization4) }
+    let(:customer1) { create(:customer, organization: organization1, organizations: [organization2, organization3]) }
+    let(:customer2) { create(:customer, organization: organization4) }
+
+    context 'when agent', authenticated_as: :authenticate do
+      def authenticate
+        user1
+        user2
+        true
+      end
+
+      before do
+        visit 'ticket/create'
+      end
+
+      it 'does not show the organization field for user 1' do
+        find('[name=customer_id_completion]').fill_in with: user1.firstname
+        find("li.recipientList-entry.js-object[data-object-id='#{user1.id}']").click
+        expect(page).to have_css("div[data-attribute-name='organization_id']")
+      end
+
+      it 'does show the organization field for user 2' do
+        find('[name=customer_id_completion]').fill_in with: user2.firstname
+        find("li.recipientList-entry.js-object[data-object-id='#{user2.id}']").click
+        expect(page).to have_no_css("div[data-attribute-name='organization_id']")
+      end
+
+      it 'can create tickets for secondary organizations' do
+        fill_in 'Title', with: 'test'
+        find('.richtext-content').send_keys 'test'
+        select Group.first.name, from: 'group_id'
+
+        find('[name=customer_id_completion]').fill_in with: user1.firstname
+        wait.until { page.all("li.recipientList-entry.js-object[data-object-id='#{user1.id}']").present? }
+        find("li.recipientList-entry.js-object[data-object-id='#{user1.id}']").click
+
+        find('div[data-attribute-name=organization_id] .js-input').fill_in with: user1.organizations[0].name, fill_options: { clear: :backspace }
+        wait.until { page.all("div[data-attribute-name=organization_id] .js-option[data-value='#{user1.organizations[0].id}']").present? }
+        page.find("div[data-attribute-name=organization_id] .js-option[data-value='#{user1.organizations[0].id}'] span").click
+
+        click '.js-submit'
+        wait.until { Ticket.last.organization_id == user1.organizations[0].id }
+      end
+    end
+
+    context 'when customer' do
+      before do
+        visit 'customer_ticket_new'
+      end
+
+      it 'does not show the organization field for user 1', authenticated_as: :customer1 do
+        expect(page).to have_css("div[data-attribute-name='organization_id']")
+      end
+
+      it 'does show the organization field for user 2', authenticated_as: :customer2 do
+        expect(page).to have_no_css("div[data-attribute-name='organization_id']")
+      end
+
+      it 'can create tickets for secondary organizations', authenticated_as: :customer1 do
+        fill_in 'Title', with: 'test'
+        find('.richtext-content').send_keys 'test'
+        select Group.first.name, from: 'group_id'
+        find('div[data-attribute-name=organization_id] .js-input').fill_in with: customer1.organizations[0].name, fill_options: { clear: :backspace }
+        wait.until { page.all("div[data-attribute-name=organization_id] .js-option[data-value='#{customer1.organizations[0].id}']").present? }
+        page.find("div[data-attribute-name=organization_id] .js-option[data-value='#{customer1.organizations[0].id}'] span").click
+        click '.js-submit'
+        wait.until { Ticket.last.organization_id == customer1.organizations[0].id }
+      end
+    end
+  end
 end

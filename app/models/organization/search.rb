@@ -27,12 +27,18 @@ returns if user has no permissions to search
 =end
 
       def search_preferences(current_user)
-        return false if !current_user.permissions?('ticket.agent') && !current_user.permissions?('admin.organization')
+        return false if !current_user.permissions?('ticket.agent') && !current_user.permissions?('ticket.customer') && !current_user.permissions?('admin.organization')
 
         {
           prio:                1500,
           direct_search_index: true,
         }
+      end
+
+      def customer_only?(current_user)
+        return true if current_user.permissions?('ticket.customer') && !current_user.permissions?('admin.organization') && !current_user.permissions?('ticket.agent')
+
+        false
       end
 
 =begin
@@ -79,12 +85,18 @@ returns
         # enable search only for agents and admins
         return [] if !search_preferences(current_user)
 
+        # make sure customers always only can search their own organizations
+        if customer_only?(current_user)
+          params[:ids] = current_user.all_organization_ids
+        end
+
         # try search index backend
         if SearchIndexBackend.enabled?
           items = SearchIndexBackend.search(query, 'Organization', limit:    limit,
                                                                    from:     offset,
                                                                    sort_by:  sort_by,
-                                                                   order_by: order_by)
+                                                                   order_by: order_by,
+                                                                   ids:      params[:ids])
           organizations = []
           items.each do |item|
             organization = Organization.lookup(id: item[:id])
@@ -105,7 +117,12 @@ returns
                                     .order(Arel.sql(order_sql))
                                     .offset(offset)
                                     .limit(limit)
-                                    .to_a
+
+        if params[:ids].present?
+          organizations = organizations.where(id: params[:ids])
+        end
+
+        organizations = organizations.to_a
 
         # use result independent of size if an explicit offset is given
         # this is the case for e.g. paginated searches
@@ -118,6 +135,10 @@ returns
                                             .where(User.or_cis(%i[firstname lastname email], "%#{query}%"))
                                             .order(Arel.sql(order_sql))
                                             .limit(limit)
+
+        if params[:ids].present?
+          organizations_by_user = organizations_by_user.where(id: params[:ids])
+        end
 
         organizations_by_user.each do |organization_by_user|
 

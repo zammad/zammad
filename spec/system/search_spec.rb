@@ -231,4 +231,41 @@ RSpec.describe 'Search', type: :system, authenticated: true, searchindex: true d
       end
     end
   end
+
+  context 'Assign user to multiple organizations #1573', authenticated_as: :authenticate do
+    let(:organizations) { create_list(:organization, 20) }
+    let(:customer) { create(:customer, organization: organizations[0], organizations: organizations[1..]) }
+
+    context 'when agent' do
+      def authenticate
+        customer
+        true
+      end
+
+      before do
+        fill_in id: 'global-search', with: customer.firstname.to_s
+      end
+
+      it 'shows only first 3 organizations' do
+        expect(page).to have_text(customer.firstname)
+        popover_on_hover(first('a.nav-tab.user'))
+        within '.popover' do
+          expect(page).to have_text(organizations[2].name, wait: 30)
+          expect(page).to have_no_text(organizations[10].name)
+        end
+      end
+    end
+
+    context 'when customer', authenticated_as: :customer do
+      before do
+        fill_in id: 'global-search', with: organizations[0].name.to_s
+      end
+
+      it 'does not show any organizations in global search because only agents have access to it' do
+        within '.global-search-result' do
+          expect(page).to have_no_text(organizations[0].name)
+        end
+      end
+    end
+  end
 end

@@ -36,7 +36,7 @@ RSpec.describe CanPaginate::Pagination do
 
     it 'capped by limit' do
       instance = described_class.new({ per_page: 9999 })
-      expect(instance.limit).to be 500
+      expect(instance.limit).to be 1000
     end
 
     it 'capped by custom default' do

@@ -157,6 +157,7 @@ window.onload = function() {
     "city": "",
     "country": "",
     "organization_id": 6,
+    "organization_ids": [7,8],
     "department": "",
     "note": "",
     "role_ids": [
@@ -1115,4 +1116,12 @@ window.onload = function() {
     testPreConditionUser(assert, 'ticket.mention_user_ids', '6', ticket, sessionData);
   });
 
+  QUnit.test("test multi organization support for current_user.organization_id", assert => {
+    ticket = new App.Ticket();
+    ticket.load(ticketData);
+    testPreConditionOrganization(assert, 'ticket.organization_id', '6', ticket, sessionData);
+
+    ticket.organization_id = 7;
+    testPreConditionOrganization(assert, 'ticket.organization_id', '7', ticket, sessionData);
+  });
 }

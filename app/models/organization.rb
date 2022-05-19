@@ -17,6 +17,7 @@ class Organization < ApplicationModel
   include HasTransactionDispatcher
 
   has_many :members, class_name: 'User'
+  has_and_belongs_to_many :secondary_members, class_name: 'User'
   has_many :tickets, class_name: 'Ticket'
   belongs_to :created_by,  class_name: 'User'
   belongs_to :updated_by,  class_name: 'User'
@@ -30,7 +31,9 @@ class Organization < ApplicationModel
   validates :name,   presence: true
   validates :domain, presence: { message: 'required when Domain Based Assignment is enabled' }, if: :domain_assignment
 
-  association_attributes_ignored :tickets, :created_by, :updated_by
+  # secondary_members will break eager_load of attributes_with_association_ids because it mixes up with the members relation.
+  # so it will get added afterwards
+  association_attributes_ignored :secondary_members, :tickets, :created_by, :updated_by
 
   activity_stream_permission 'admin.role'
 
@@ -43,6 +46,12 @@ class Organization < ApplicationModel
       unset_associations
     end
     super()
+  end
+
+  def attributes_with_association_ids
+    attributes = super
+    attributes['secondary_member_ids'] = secondary_member_ids
+    attributes
   end
 
   private

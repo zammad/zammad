@@ -120,23 +120,26 @@ class TimeAccountingsController < ApplicationController
       ticket = Ticket.lookup(id: ticket_id)
       next if !ticket
 
-      if !customers[ticket.customer_id]
+      customers[ticket.customer_id] ||= {}
+      if !customers[ticket.customer_id][ticket.organization_id]
         organization = nil
         if ticket.organization_id
           organization = Organization.lookup(id: ticket.organization_id).attributes
         end
-        customers[ticket.customer_id] = {
+        customers[ticket.customer_id][ticket.organization_id] = {
           customer:     User.lookup(id: ticket.customer_id).attributes,
           organization: organization,
           time_unit:    local_time_unit[:time_unit],
         }
         next
       end
-      customers[ticket.customer_id][:time_unit] += local_time_unit[:time_unit]
+      customers[ticket.customer_id][ticket.organization_id][:time_unit] += local_time_unit[:time_unit]
     end
     results = []
-    customers.each_value do |content|
-      results.push content
+    customers.each_value do |organizations|
+      organizations.each_value do |content|
+        results.push content
+      end
     end
 
     if params[:download]

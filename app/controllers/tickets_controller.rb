@@ -95,7 +95,7 @@ class TicketsController < ApplicationController
 
       # overwrite params
       if !current_user.permissions?('ticket.agent')
-        %i[owner owner_id customer customer_id organization organization_id preferences].each do |key|
+        %i[owner owner_id customer customer_id preferences].each do |key|
           clean_params.delete(key)
         end
         clean_params[:customer_id] = current_user.id
@@ -574,10 +574,13 @@ class TicketsController < ApplicationController
 
     # lookup open org tickets
     org_tickets = {}
-    if params[:organization_id].present?
-      organization = Organization.lookup(id: params[:organization_id])
-      if !organization
-        raise "No such organization with id #{params[:organization_id]}"
+    organization_ids = Array(params[:organization_id])
+    if organization_ids.present?
+      organization_ids.each do |organization_id|
+        organization = Organization.lookup(id: organization_id)
+        if !organization
+          raise "No such organization with id #{organization_id}"
+        end
       end
 
       conditions = {
@@ -588,7 +591,7 @@ class TicketsController < ApplicationController
           },
           'ticket.organization_id' => {
             operator: 'is',
-            value:    organization.id,
+            value:    organization_ids,
           },
         },
         open_ids:   {
@@ -598,7 +601,7 @@ class TicketsController < ApplicationController
           },
           'ticket.organization_id' => {
             operator: 'is',
-            value:    organization.id,
+            value:    organization_ids,
           },
         },
       }
@@ -608,7 +611,7 @@ class TicketsController < ApplicationController
 
       # generate stats by org
       condition = {
-        'tickets.organization_id' => organization.id,
+        'tickets.organization_id' => organization_ids,
       }
       org_tickets[:volume_by_year] = ticket_stats_last_year(condition)
     end

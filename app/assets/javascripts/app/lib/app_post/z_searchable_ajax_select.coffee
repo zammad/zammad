@@ -5,17 +5,40 @@ class App.SearchableAjaxSelect extends App.SearchableSelect
     # create cache
     @searchResultCache = {}
 
+  objectString: =>
+    # convert requested object
+    # e.g. Ticket to ticket or AnotherObject to another_object
+    return underscored(@options.attribute.relation)
+
+  cacheKey: =>
+    objectString = @objectString()
+    query        = @input.val()
+
+    # create cache key
+    return "#{objectString}+#{query}"
+
+  ajaxAttributes: =>
+    objectString = @objectString()
+    query        = @input.val()
+    cacheKey     = @cacheKey()
+
+    {
+      id:   @options.attribute.id
+      type: 'POST'
+      url:  "#{App.Config.get('api_path')}/search/#{objectString}"
+      data: JSON.stringify(query: query, limit: @options.attribute.limit)
+      processData: true
+      success:     (data, status, xhr) =>
+        # cache search result
+        @searchResultCache[cacheKey] = data
+        @renderResponse(data, query)
+    }
+
   onInput: (event) =>
     super
 
-    # convert requested object
-    # e.g. Ticket to ticket or AnotherObject to another_object
-    objectString = underscored(@options.attribute.relation)
-
-    query = @input.val()
-
-    # create cache key
-    cacheKey = "#{objectString}+#{query}"
+    query    = @input.val()
+    cacheKey = @cacheKey()
 
     # use cache for search result
     if @searchResultCache[cacheKey]
@@ -27,18 +50,7 @@ class App.SearchableAjaxSelect extends App.SearchableSelect
     if !@loaderTimeoutId
       @loaderTimeoutId = setTimeout @showLoader, 1000
 
-    attributes =
-      id:   @options.attribute.id
-      type: 'GET'
-      url:  "#{App.Config.get('api_path')}/search/#{objectString}"
-      data:
-        query: query
-        limit: @options.attribute.limit
-      processData: true
-      success:     (data, status, xhr) =>
-        # cache search result
-        @searchResultCache[cacheKey] = data
-        @renderResponse(data, query)
+    attributes = @ajaxAttributes()
 
     # if delegate is given and provides getAjaxAttributes method, try to extend ajax call
     # this is needed for autocompletion field in KB answer-to-answer linking to submit search context

@@ -59,6 +59,12 @@ class App extends Spine.Controller
     if _.isArray(item)
       items = item
 
+    hasMoreItems = false
+    if attributeConfig.display_limit
+      if items.length > attributeConfig.display_limit
+        hasMoreItems = true
+      items = items.slice(0, attributeConfig.display_limit)
+
     # lookup relation
     for item in items
       resultLocal = item
@@ -162,6 +168,9 @@ class App extends Spine.Controller
       if !_.isEmpty(result)
         result += ', '
       result += resultLocal
+
+    if hasMoreItems
+      result += ', …'
 
     result
 

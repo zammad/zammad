@@ -361,10 +361,52 @@ class App.User extends App.Model
   sameOrganization: (requester) ->
     return false if @organization_id is null
     return false if requester.organization_id is null
-    @organization_id == requester.organization_id
+    @isInOrganization(requester.organization_id)
 
   lifetimeCustomerTicketsCount: ->
     (@preferences.tickets_closed || 0) + (@preferences.tickets_open || 0)
+
+  isInOrganization: (organization_id) ->
+    _.contains(@allOrganizationIds(), organization_id)
+
+  allOrganizationIds: ->
+    result = []
+    if @organization_id
+      result.push(@organization_id)
+    if _.isArray(@organization_ids)
+      result = result.concat(@organization_ids)
+    _.uniq(result)
+
+  secondaryOrganizations: (offset, limit, callback) ->
+    organization_ids         = @organization_ids.slice(offset, limit)
+    missing_organization_ids = _.filter(organization_ids, (id) -> !App.Organization.findNative(id))
+
+    organizationResult = ->
+      organizations = []
+      for organization_id in organization_ids
+        organization = App.Organization.fullLocal(organization_id)
+        continue if !organization
+        organizations.push(organization)
+      return organizations
+
+    return callback(organizationResult()) if missing_organization_ids.length < 1
+
+    App.Ajax.request(
+      type: 'POST'
+      url: "#{@constructor.apiPath}/organizations/search"
+      data: JSON.stringify(
+        query: '*'
+        ids: missing_organization_ids
+        limit: limit
+        full:  true
+      )
+      processData: true,
+      success: (data, status, xhr) ->
+        App.Collection.loadAssets(data.assets)
+        callback(organizationResult())
+      error: (data, status) ->
+        callback([])
+    )
 
   # Do NOT modify the return value of this method!
   # It is a direct reference to a value in the App.User.irecords object.

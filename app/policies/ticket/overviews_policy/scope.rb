@@ -15,7 +15,7 @@ class Ticket::OverviewsPolicy < ApplicationPolicy
     private
 
     def customer_scope
-      if user.organization&.shared
+      if user.shared_organizations?
         base_query
       else
         base_query.where(organization_shared: false)

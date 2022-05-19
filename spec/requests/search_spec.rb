@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Search', type: :request, searchindex: true do
+RSpec.describe 'Search', type: :request do
 
   let(:group) { create(:group) }
   let!(:admin) do
@@ -74,21 +74,20 @@ RSpec.describe 'Search', type: :request, searchindex: true do
     article
   end
 
-  before do
-    configure_elasticsearch do
+  describe 'request handling', searchindex: true do
+    before do
+      configure_elasticsearch do
 
-      travel 1.minute
+        travel 1.minute
 
-      rebuild_searchindex
+        rebuild_searchindex
 
-      # execute background jobs
-      Scheduler.worker(true)
+        # execute background jobs
+        Scheduler.worker(true)
 
-      sleep 6
+        sleep 6
+      end
     end
-  end
-
-  describe 'request handling' do
 
     it 'does settings index with nobody' do
       params = {
@@ -512,6 +511,47 @@ RSpec.describe 'Search', type: :request, searchindex: true do
       expect(json_response).to be_a_kind_of(Hash)
       expect(json_response).to be_truthy
       expect(json_response['assets']['Ticket'][ticket_nested.id.to_s]).to be_truthy
+    end
+  end
+
+  describe 'Assign user to multiple organizations #1573' do
+    shared_examples 'search for organization ids' do
+      it 'does return all organizations' do
+        params = {
+          query: 'Rest',
+          limit: 10,
+        }
+        authenticated_as(admin)
+        post '/api/v1/search/Organization', params: params, as: :json
+        expect(json_response['result']).to include({ 'id' => organization1.id, 'type' => 'Organization' })
+        expect(json_response['result']).to include({ 'id' => organization2.id, 'type' => 'Organization' })
+        expect(json_response['result']).to include({ 'id' => organization3.id, 'type' => 'Organization' })
+      end
+
+      it 'does return organization specific ids' do
+        params = {
+          query: 'Rest',
+          ids:   [organization1.id],
+          limit: 10,
+        }
+        authenticated_as(admin)
+        post '/api/v1/search/Organization', params: params, as: :json
+        expect(json_response['result']).to include({ 'id' => organization1.id, 'type' => 'Organization' })
+        expect(json_response['result']).not_to include({ 'id' => organization2.id, 'type' => 'Organization' })
+        expect(json_response['result']).not_to include({ 'id' => organization3.id, 'type' => 'Organization' })
+      end
+    end
+
+    context 'with elasticsearch', searchindex: true do
+      before do
+        configure_elasticsearch(required: true, rebuild: true)
+      end
+
+      include_examples 'search for organization ids'
+    end
+
+    context 'with db only', searchindex: false do
+      include_examples 'search for organization ids'
     end
   end
 end

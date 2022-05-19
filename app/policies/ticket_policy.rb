@@ -80,7 +80,7 @@ class TicketPolicy < ApplicationPolicy
   def shared_organization?
     return false if record.organization_id.blank?
     return false if user.organization_id.blank?
-    return false if record.organization_id != user.organization_id
+    return false if !user.organization_id?(record.organization_id)
 
     record.organization.shared?
   end

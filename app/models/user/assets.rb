@@ -72,7 +72,7 @@ returns
       end
 
       # get organizations
-      local_attributes['organization_ids']&.each do |organization_id|
+      Array(local_attributes['organization_ids'])[0, 3].each do |organization_id|
         next if data[:Organization] && data[:Organization][organization_id]
 
         organization = Organization.lookup(id: organization_id)

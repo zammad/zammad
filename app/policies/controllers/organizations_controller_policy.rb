@@ -8,6 +8,6 @@ class Controllers::OrganizationsControllerPolicy < Controllers::ApplicationContr
   def show?
     return true if user.permissions?(['ticket.agent', 'admin.organization'])
 
-    record.params[:id].to_i == user.organization_id
+    user.organization_id?(record.params[:id].to_i)
   end
 end

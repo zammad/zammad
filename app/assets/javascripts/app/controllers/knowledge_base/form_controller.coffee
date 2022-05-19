@@ -19,17 +19,19 @@ class App.KnowledgeBaseFormController extends App.ControllerForm
   getAjaxAttributes: (field, attributes) ->
     @apiPath = App.Config.get('api_path')
 
-    attributes.type = 'POST'
     attributes.url  =  "#{@apiPath}/knowledge_bases/search"
 
-    attributes.data.flavor            = 'agent'
-    attributes.data.knowledge_base_id = @object.knowledge_base().id
-    attributes.data.exclude_ids       = [@object.translation(@kb_locale.id)?.id]
-    attributes.data.index             = 'KnowledgeBase::Answer::Translation'
-    attributes.data.locale            = @kb_locale.systemLocale().locale
-    attributes.data.highlight_enabled = false
+    data                   = {}
+    data.query             = field.input.val()
+    data.limit             = field.options.attribute.limit
+    data.flavor            = 'agent'
+    data.knowledge_base_id = @object.knowledge_base().id
+    data.exclude_ids       = [@object.translation(@kb_locale.id)?.id]
+    data.index             = 'KnowledgeBase::Answer::Translation'
+    data.locale            = @kb_locale.systemLocale().locale
+    data.highlight_enabled = false
 
-    attributes.data = JSON.stringify(attributes.data)
+    attributes.data = JSON.stringify(data)
 
     attributes
 

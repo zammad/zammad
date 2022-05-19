@@ -6,7 +6,7 @@ class App.Ticket extends App.Model
       { name: 'number',                   display: '#',            tag: 'input',    type: 'text', limit: 100, null: true, readonly: 1, width: '68px' },
       { name: 'title',                    display: __('Title'),        tag: 'input',    type: 'text', limit: 100, null: false },
       { name: 'customer_id',              display: __('Customer'),     tag: 'input',    type: 'text', limit: 100, null: false, autocapitalize: false, relation: 'User' },
-      { name: 'organization_id',          display: __('Organization'), tag: 'select',   relation: 'Organization', readonly: 1 },
+      { name: 'organization_id',          display: __('Organization'), tag: 'select',   relation: 'Organization' },
       { name: 'group_id',                 display: __('Group'),        tag: 'select',   multiple: false, limit: 100, null: false, relation: 'Group', width: '10%', edit: true },
       { name: 'owner_id',                 display: __('Owner'),        tag: 'select',   multiple: false, limit: 100, null: true, relation: 'User', width: '12%', edit: true },
       { name: 'state_id',                 display: __('State'),        tag: 'select',   multiple: false, null: false, relation: 'TicketState', default: 'new', width: '12%', edit: true, customer: true },
@@ -215,6 +215,15 @@ class App.Ticket extends App.Model
             condition.operator = 'contains one'
           else if condition.operator is 'is not'
             condition.operator = 'contains all not'
+
+      # multi organization support for current_user.organization_id
+      if condition.pre_condition is 'current_user.organization_id'
+        if condition.operator is 'is'
+          condition.operator = 'contains one'
+        else
+          condition.operator = 'contains all not'
+        condition.pre_condition = 'specific'
+        condition.value = App.Session.get().allOrganizationIds()
 
       # for new articles there is no created_by_id so we set the current user
       # if no id is given

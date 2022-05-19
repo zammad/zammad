@@ -44,7 +44,7 @@ class User < ApplicationModel
   has_many                :data_privacy_tasks,     as: :deletable
   belongs_to              :organization,           inverse_of: :members, optional: true
 
-  before_validation :check_name, :check_email, :check_login, :ensure_password, :ensure_roles
+  before_validation :check_name, :check_email, :check_login, :ensure_password, :ensure_roles, :ensure_organizations, :ensure_organizations_limit
   before_validation :check_mail_delivery_failed, on: :update
   before_create     :check_preferences_default, :validate_preferences, :validate_ooo, :domain_based_assignment, :set_locale
   before_update     :check_preferences_default, :validate_preferences, :validate_ooo, :reset_login_failed_after_password_change, :validate_agent_limit_by_attributes, :last_admin_check_by_attribute
@@ -91,7 +91,6 @@ class User < ApplicationModel
                          :image_source,
                          :image,
                          :authorizations,
-                         :organizations,
                          :groups,
                          :user_groups
 
@@ -862,6 +861,18 @@ try to find correct name
 
   attr_accessor :skip_ensure_uniq_email
 
+  def shared_organizations?
+    Organization.where(id: all_organization_ids).any?(&:shared)
+  end
+
+  def all_organization_ids
+    ([organization_id] + organization_ids).uniq
+  end
+
+  def organization_id?(organization_id)
+    all_organization_ids.include?(organization_id)
+  end
+
   private
 
   def check_name
@@ -962,6 +973,19 @@ try to find correct name
     return if !User.exists?(email: email.downcase.strip)
 
     errors.add :base, "Email address '#{email.downcase.strip}' is already used for other user."
+  end
+
+  def ensure_organizations
+    return if organization_ids.blank?
+    return if organization_id.present?
+
+    errors.add :base, __('Secondary organizations are only allowed when the primary organization is given.')
+  end
+
+  def ensure_organizations_limit
+    return if organization_ids.size <= 250
+
+    errors.add :base, __('More than 250 secondary organizations are not allowed.')
   end
 
   def permissions_with_child_elements

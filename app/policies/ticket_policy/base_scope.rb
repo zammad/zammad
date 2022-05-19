@@ -27,12 +27,14 @@ class TicketPolicy < ApplicationPolicy
       end
 
       if user.permissions?('ticket.customer')
-        if user.organization&.shared
-          sql.push('(tickets.customer_id = ? OR tickets.organization_id = ?)')
-          bind.push(user.id, user.organization.id)
-        else
-          sql.push('tickets.customer_id = ?')
-          bind.push(user.id)
+        sql.push('tickets.customer_id = ?')
+        bind.push(user.id)
+
+        if user.all_organization_ids.present?
+          Organization.where(id: user.all_organization_ids).select(&:shared).each do |organization|
+            sql.push('tickets.organization_id = ?')
+            bind.push(organization.id)
+          end
         end
       end
 

@@ -38,6 +38,6 @@ class UserPolicy < ApplicationPolicy
     return false if record.organization_id.blank?
     return false if user.organization_id.blank?
 
-    record.organization_id == user.organization_id
+    user.organization_id?(record.organization_id)
   end
 end

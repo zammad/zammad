@@ -1,19 +1,23 @@
 class SidebarOrganization extends App.Controller
   sidebarItem: =>
-    return if @ticket.currentView() isnt 'agent'
     return if !@ticket.organization_id
-    @item = {
-      name: 'organization'
-      badgeIcon: 'group'
-      sidebarHead: __('Organization')
-      sidebarCallback: @showOrganization
-      sidebarActions: [
+
+    actions = []
+    if @permissionCheck('ticket.agent')
+      actions = [
         {
           title:    __('Edit Organization')
           name:     'organization-edit'
           callback: @editOrganization
         },
       ]
+
+    @item = {
+      name: 'organization'
+      badgeIcon: 'group'
+      sidebarHead: __('Organization')
+      sidebarCallback: @showOrganization
+      sidebarActions: actions
     }
     @item
 

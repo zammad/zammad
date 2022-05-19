@@ -43,12 +43,12 @@ class App.TicketStats extends App.Controller
       ajaxKey = "user_#{@user.id}"
       data =
         user_id:         @user.id
-        organization_id: @user.organization_id
+        organization_id: @user.allOrganizationIds()
     @ajax(
       id:          "ticket_stats_#{ajaxKey}"
-      type:        'GET'
+      type:        'POST'
       url:         "#{@apiPath}/ticket_stats"
-      data:        data
+      data:        JSON.stringify(data)
       processData: true
       success:     (data) =>
         App.Collection.loadAssets(data.assets)

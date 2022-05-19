@@ -33,9 +33,15 @@ returns
 
     data[ app_model_ticket ][ id ] = attributes_with_association_ids
 
-    app_model_user = User.to_app_model
     group.assets(data)
+    organization&.assets(data)
+    assets_user(data)
 
+    data
+  end
+
+  def assets_user(data)
+    app_model_user = User.to_app_model
     %w[created_by_id updated_by_id owner_id customer_id].each do |local_user_id|
       next if !self[ local_user_id ]
       next if data[ app_model_user ] && data[ app_model_user ][ self[ local_user_id ] ]
@@ -45,6 +51,5 @@ returns
 
       data = user.assets(data)
     end
-    data
   end
 end

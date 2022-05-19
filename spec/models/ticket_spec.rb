@@ -69,6 +69,36 @@ RSpec.describe Ticket, type: :model do
             .to match_array([2, tickets.to_a])
         end
       end
+
+      context 'when customer has multiple organizations' do
+        let(:organization1) { create(:organization) }
+        let(:organization2) { create(:organization) }
+        let(:organization3) { create(:organization) }
+        let(:customer) { create(:customer, organization: organization1, organizations: [organization2, organization3]) }
+        let(:ticket1) { create(:ticket, customer: customer, organization: organization1) }
+        let(:ticket2) { create(:ticket, customer: customer, organization: organization2) }
+        let(:ticket3) { create(:ticket, customer: customer, organization: organization3) }
+
+        before do
+          ticket1 && ticket2 && ticket3
+        end
+
+        context 'when current user organization is used' do
+          let(:condition) do
+            {
+              'ticket.organization_id' => {
+                operator:      'is', # is not
+                pre_condition: 'current_user.organization_id',
+              },
+            }
+          end
+
+          it 'returns the customer tickets' do
+            expect(described_class.selectors(condition, limit: 100, access: 'full', current_user: customer))
+              .to match_array([3, include(ticket1, ticket2, ticket3)])
+          end
+        end
+      end
     end
   end
 

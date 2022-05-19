@@ -43,6 +43,8 @@ class App.GlobalSearch extends App.Controller
           App.Collection.loadAssets(data.assets)
           result = {}
           for item in data.result
+            continue if item.type isnt 'Ticket' && !@permissionCheck('ticket.agent')
+
             if App[item.type] && App[item.type].find
               if !result[item.type]
                 result[item.type] = []

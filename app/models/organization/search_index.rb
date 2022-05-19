@@ -11,8 +11,8 @@ class Organization
 
         # add org members for search index data
         attributes['members'] = []
-        users = User.where(organization_id: id)
-        users.each do |user|
+        users = members | secondary_members
+        users.sort.each do |user|
           attributes['members'].push user.search_index_attribute_lookup(include_references: false)
         end
       end

@@ -2719,6 +2719,32 @@ RSpec.describe 'Ticket zoom', type: :system do
     end
   end
 
+  context 'Assign user to multiple organizations #1573', authenticated_as: :authenticate do
+    let(:organizations) { create_list(:organization, 20) }
+    let(:customer) { create(:customer, organization: organizations[0], organizations: organizations[1..]) }
+    let(:ticket) { create(:ticket, group: Group.first, customer: customer) }
+
+    def authenticate
+      customer
+      true
+    end
+
+    before do
+      visit "#ticket/zoom/#{ticket.id}"
+      click '.tabsSidebar-tab[data-tab=customer]'
+    end
+
+    it 'shows only first 3 organizations and loads more on demand' do
+      expect(page).to have_text(organizations[1].name)
+      expect(page).to have_text(organizations[2].name)
+      expect(page).to have_no_text(organizations[10].name)
+
+      click '.js-showMoreOrganizations a'
+
+      expect(page).to have_text(organizations[10].name)
+    end
+  end
+
   describe 'Image preview #4044' do
     let(:ticket) { create(:ticket, group: Group.find_by(name: 'Users')) }
 

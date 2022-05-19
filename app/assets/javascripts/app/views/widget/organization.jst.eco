@@ -1,4 +1,5 @@
 <div class="sidebar-block">
+  <% if @customer isnt true: %>
     <div class="avatar organizationInfo-avatar size-50">
       <a href="<%- @organization.uiUrl() %>">
         <% if @organization.active is true: %>
@@ -8,6 +9,7 @@
         <% end %>
       </a>
     </div>
+  <% end %>
     <h3 title="<%- @Ti( 'Name') %>"><%= @organization.displayName() %></h3>
 </div>
 
@@ -25,7 +27,7 @@
   <% end %>
 <% end %>
 
-<% if @organization.member_ids: %>
+<% if @organization.member_ids && @customer isnt true: %>
 <hr>
 <div class="sidebar-block">
   <label><%- @T('Members') %></label>

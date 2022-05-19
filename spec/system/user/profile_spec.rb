@@ -6,7 +6,8 @@ require 'system/examples/core_workflow_examples'
 require 'system/examples/text_modules_examples'
 
 RSpec.describe 'User Profile', type: :system do
-  let(:customer) { create(:customer) }
+  let(:organizations) { create_list(:organization, 20) }
+  let(:customer) { create(:customer, organization: organizations[0], organizations: organizations[1..]) }
 
   describe 'object manager attributes maxlength', authenticated_as: :authenticate, db_strategy: :reset do
     def authenticate
@@ -57,6 +58,27 @@ RSpec.describe 'User Profile', type: :system do
 
     popover_on_hover(find('.nav-tab--search.user'))
 
-    expect(page).to have_css('.popover label', count: 1)
+    expect(page).to have_css('.popover label', count: 2)
+  end
+
+  context 'Assign user to multiple organizations #1573', authenticated_as: :authenticate do
+    def authenticate
+      customer
+      true
+    end
+
+    before do
+      visit "#user/profile/#{customer.id}"
+    end
+
+    it 'shows only first 3 organizations and loads more on demand' do
+      expect(page).to have_text(organizations[1].name)
+      expect(page).to have_text(organizations[2].name)
+      expect(page).to have_no_text(organizations[10].name)
+
+      click '.js-showMoreOrganizations a'
+
+      expect(page).to have_text(organizations[10].name)
+    end
   end
 end

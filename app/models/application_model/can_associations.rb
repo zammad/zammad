@@ -57,7 +57,11 @@ returns
 
         list.push item_id
       end
+
+      next if Array(list).sort == Array(send(real_ids)).sort
+
       send("#{real_ids}=", list)
+      self.updated_at = Time.zone.now
     end
 
     # set relations by name/lookup
@@ -81,6 +85,8 @@ returns
       list = []
       class_object = assoc.klass
       params[real_values].each do |value|
+        next if value.blank?
+
         lookup = nil
         if class_object == User
           if !lookup
@@ -100,7 +106,11 @@ returns
 
         list.push lookup.id
       end
+
+      next if Array(list).sort == Array(send(real_ids)).sort
+
       send("#{real_ids}=", list)
+      self.updated_at = Time.zone.now
     end
   end
 
@@ -405,6 +415,8 @@ returns
         class_object = assoc.klass
         lookup_ids = []
         value.each do |item|
+          next if item.blank?
+
           lookup = nil
           if class_object == User
             if !item.instance_of?(String)

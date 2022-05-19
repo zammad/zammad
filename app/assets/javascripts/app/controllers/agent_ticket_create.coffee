@@ -397,6 +397,7 @@ class App.TicketCreate extends App.Controller
       screen:         'create_top'
       events:
         'change [name=customer_id]': @localUserInfo
+        'change [data-attribute-name=organization_id] .js-input': @localUserInfo
       handlersConfig: handlersTunnel
       autofocus:      true
       params:         params
@@ -456,10 +457,8 @@ class App.TicketCreate extends App.Controller
       query:        @query
     )
 
-    if @formDefault.customer_id
-      callback = (customer) =>
-        @localUserInfoCallback(@formDefault, customer)
-      App.User.full(@formDefault.customer_id, callback)
+    if @formDefault.customer_id || @formDefault.organization_id
+      @localUserInfo(undefined, @formDefault)
 
     # update taskbar with new meta data
     App.TaskManager.touch(@taskKey)
@@ -472,18 +471,33 @@ class App.TicketCreate extends App.Controller
   tokanice: ->
     App.Utils.tokanice('.content.active input[name=cc]', 'email')
 
-  localUserInfo: (e) =>
+  localUserInfo: (e, params = {}) =>
     return if !@sidebarWidget
-    params = App.ControllerForm.params($(e.target).closest('form'))
 
-    if params.customer_id
-      callback = (customer) =>
-        @localUserInfoCallback(params, customer)
-      App.User.full(params.customer_id, callback)
-      return
-    @localUserInfoCallback(params)
+    # get params by event if given
+    params = App.ControllerForm.params($(e.target).closest('form')) if e
 
-  localUserInfoCallback: (params, customer = {}) =>
+    return if @localUserInfoCustomerId is params.customer_id && @localUserInfoOrganizationId is params.organization_id
+    @localUserInfoCustomerId     = params.customer_id
+    @localUserInfoOrganizationId = params.organization_id
+
+    callbackOrganization = =>
+      if params.organization_id
+        App.Organization.full(params.organization_id, => @localUserInfoCallback(params))
+      else
+        @localUserInfoCallback(params)
+
+    callbackUser = ->
+      if params.customer_id
+        App.User.full(params.customer_id, callbackOrganization)
+      else
+        callbackOrganization()
+
+    callbackUser()
+
+  localUserInfoCallback: (params) =>
+    customer = App.User.find(params.customer_id) || {}
+
     @sidebarWidget.render(params)
     @textModule.reload(
       config: App.Config.all()

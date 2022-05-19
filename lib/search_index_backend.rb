@@ -888,6 +888,10 @@ generate url for index or document access (only for internal use)
 
     data[:query][:bool][:must].push condition
 
+    if options[:ids].present?
+      data[:query][:bool][:must].push({ ids: { values: options[:ids] } })
+    end
+
     data
   end
 

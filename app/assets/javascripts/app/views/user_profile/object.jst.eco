@@ -5,6 +5,15 @@
         <label><%- @T(row.display) %></label>
         <div contenteditable="true" data-name="<%= row.name %>" data-type="update" data-placeholder="<%- @Ti('Add a Note') %>"><%- @user[row.name] %></div>
       </div>
+    <% else if row.name is 'organization_ids': %>
+      <% if @user[row.name] && @user[row.name].length > 0: %>
+        <div class="profile-detailsEntry">
+          <label><%- @T(row.display) %></label>
+          <ul class="js-organizationList">
+            <li class="hidden list-item-none js-showMoreOrganizations"><a href="#"><%- @T('show more') %></a></li>
+          </ul>
+        </div>
+      <% end %>
     <% else: %>
       <% if @user[row.name]: %>
         <div class="profile-detailsEntry">

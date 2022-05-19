@@ -83,19 +83,20 @@ class User extends App.ControllerSubContent
         App.Group.fetch()
         @renderResult(user_ids)
 
-      new App.ControllerGenericEdit(
-        id: item.id
-        pageData:
-          title:     __('Users')
-          home:      'users'
-          object:    __('User')
-          objects:   __('Users')
-          navupdate: '#users'
-        genericObject: 'User'
-        callback: rerender
-        container: @el.closest('.content')
+      item.secondaryOrganizations(0, 1000, =>
+        new App.ControllerGenericEdit(
+          id: item.id
+          pageData:
+            title:     __('Users')
+            home:      'users'
+            object:    __('User')
+            objects:   __('Users')
+            navupdate: '#users'
+          genericObject: 'User'
+          callback: rerender
+          container: @el.closest('.content')
+        )
       )
-
 
     callbackLoginAttribute = (value, object, attribute, attributes) ->
       attribute.prefixIcon = null

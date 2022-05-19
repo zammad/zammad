@@ -38,12 +38,7 @@ class App.WidgetOrganization extends App.Controller
     else
       @el.find('.js-showMoreMembers').parent().removeClass('hidden')
 
-  render: (organization) =>
-    if organization
-      @organization = organization
-    else if !@organization
-      @organization = @u
-
+  organizationData: ->
     # get display data
     organizationData = []
     for attributeName, attributeConfig of App.Organization.attributesGet('view')
@@ -68,6 +63,31 @@ class App.WidgetOrganization extends App.Controller
 
       # add to show if all checks passed
       organizationData.push attributeConfig
+    return organizationData
+
+  render: (organization) =>
+    if organization
+      @organization = organization
+    else if !@organization
+      @organization = @u
+
+    return @renderAgent(organization) if @permissionCheck('ticket.agent')
+    @renderCustomer(organization)
+
+  renderCustomer: (organization) ->
+    # get display data
+    organizationData = @organizationData()
+
+    # insert userData
+    @html $(App.view('widget/organization')(
+      organization:     @organization
+      organizationData: organizationData
+      customer: true
+    ))
+
+  renderAgent: (organization) =>
+    # get display data
+    organizationData = @organizationData()
 
     # insert userData
     elLocal = $(App.view('widget/organization')(

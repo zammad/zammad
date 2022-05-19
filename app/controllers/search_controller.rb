@@ -40,6 +40,7 @@ class SearchController < ApplicationController
       query:        query,
       limit:        limit,
       current_user: current_user,
+      ids:          params[:ids],
     }
 
     # try search index backend
@@ -63,7 +64,7 @@ class SearchController < ApplicationController
 
       # do only one query to index search backend
       if objects_with_direct_search_index.present?
-        items = SearchIndexBackend.search(query, objects_with_direct_search_index, limit: limit)
+        items = SearchIndexBackend.search(query, objects_with_direct_search_index, limit: limit, ids: params[:ids])
         items.each do |item|
           local_class = item[:type].constantize
           record = local_class.lookup(id: item[:id])

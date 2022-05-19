@@ -706,7 +706,7 @@ condition example
 
           query += "#{attribute} IN (?)"
           user = User.find_by(id: current_user_id)
-          bind_params.push user.organization_id
+          bind_params.push user.all_organization_ids
         else
           # rubocop:disable Style/IfInsideElse
           if selector['value'].nil?
@@ -1380,7 +1380,7 @@ result
 
     customer = User.find_by(id: customer_id)
     return true if !customer
-    return true if organization_id == customer.organization_id
+    return true if organization_id.present? && customer.organization_id?(organization_id)
 
     self.organization_id = customer.organization_id
     true

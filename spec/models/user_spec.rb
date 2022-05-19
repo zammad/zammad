@@ -1548,4 +1548,55 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe 'Assign user to multiple organizations #1573' do
+    context 'when importing users via csv' do
+      let(:organization1) { create(:organization) }
+      let(:organization2) { create(:organization) }
+      let(:organization3) { create(:organization) }
+      let(:organization4) { create(:organization) }
+      let(:user) { create(:agent, organization: organization1, organizations: [organization2, organization3]) }
+
+      def csv_import(string)
+        User.csv_import(
+          string:       string,
+          parse_params: {
+            col_sep: ',',
+          },
+          try:          false,
+          delete:       false,
+        )
+      end
+
+      before do
+        user
+      end
+
+      it 'does not change user on re-import' do
+        expect { csv_import(described_class.csv_example) }.not_to change { user.reload.updated_at }
+      end
+
+      it 'does not change user on different organization order' do
+        string = described_class.csv_example
+        string.sub!(organization3.name, organization2.name)
+        string.sub!(organization2.name, organization3.name)
+        expect { csv_import(string) }.not_to change { user.reload.updated_at }
+      end
+
+      it 'does change user on different organizations' do
+        string = described_class.csv_example
+        string.sub!(organization2.name, organization4.name)
+        expect { csv_import(string) }.to change { user.reload.updated_at }
+      end
+    end
+
+    context 'when creating users' do
+      it 'does not allow creation without primary organization but secondary organizations' do
+        expect { create(:agent, organization: nil, organizations: [create(:organization)]) }.to raise_error(ActiveRecord::RecordInvalid, 'Validation failed: Secondary organizations are only allowed when the primary organization is given.')
+      end
+
+      it 'does not allow creation with more than 250 organizations' do
+        expect { create(:agent, organization: create(:organization), organizations: create_list(:organization, 251)) }.to raise_error(ActiveRecord::RecordInvalid, 'Validation failed: More than 250 secondary organizations are not allowed.')
+      end
+    end
+  end
 end

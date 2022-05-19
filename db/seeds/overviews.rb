@@ -256,9 +256,9 @@ Overview.create_if_not_exists(
     direction: 'DESC',
   },
   view:                {
-    d:                 %w[title customer state created_at],
-    s:                 %w[number title customer state created_at],
-    m:                 %w[number title customer state created_at],
+    d:                 %w[title customer organization state created_at],
+    s:                 %w[number title customer organization state created_at],
+    m:                 %w[number title customer organization state created_at],
     view_mode_default: 's',
   },
 )

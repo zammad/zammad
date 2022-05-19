@@ -8122,6 +8122,10 @@ a.list-group-item.active > .badge,
   fill: hsl(1, 77%, 47%);
 }
 
+li.list-item-none {
+  list-style-type: none;
+}
+
 .ticket-id {
   color: white;
   background: hsl(198, 19%, 72%);

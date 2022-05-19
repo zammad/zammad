@@ -2423,4 +2423,26 @@ RSpec.describe 'Ticket', type: :request do
       end
     end
   end
+
+  describe 'Assign user to multiple organizations #1573' do
+    let(:organizations) { create_list(:organization, 3) }
+    let(:customer) { create(:customer, organization: organizations[0], organizations: organizations[1..]) }
+    let(:ticket1) { create(:ticket, customer: customer, organization: organizations[0], group: Group.first) }
+    let(:ticket2) { create(:ticket, customer: customer, organization: organizations[1], group: Group.first) }
+
+    before do
+      ticket1 && ticket2
+    end
+
+    it 'does return multi organization tickets' do
+      authenticated_as(agent)
+      post '/api/v1/ticket_stats', params: { organization_id: customer.all_organization_ids, user_id: customer.id }, as: :json
+
+      expect(response).to have_http_status(:ok)
+      expect(json_response)
+        .to be_a_kind_of(Hash)
+        .and include('user' => hash_including('open_ids' => [ticket2.id, ticket1.id]))
+        .and include('organization' => hash_including('open_ids' => [ticket2.id, ticket1.id]))
+    end
+  end
 end

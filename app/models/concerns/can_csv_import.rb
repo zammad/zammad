@@ -93,8 +93,12 @@ returns
         else
           header.zip(row).to_h
                 .compact.transform_values(&:strip)
-                .except(nil).transform_keys(&:to_sym)
-                .each { |col, val| payload.last[col] = [*payload.last[col], val] }
+                .except(nil).except('').transform_keys(&:to_sym)
+                .each do |col, val|
+                  next if val.blank?
+
+                  payload.last[col] = [*payload.last[col], val]
+                end
         end
       end
 

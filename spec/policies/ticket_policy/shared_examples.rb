@@ -207,4 +207,38 @@ RSpec.shared_examples 'for customer user' do
       expect(scope.resolve).to match_array(user_tickets | teammate_tickets)
     end
   end
+
+  context 'with a multi #organization (shared false)' do
+    let(:user) { create(:customer, organization: organization, organizations: [secondary_organization]) }
+    let(:organization) { create(:organization, shared: true) }
+
+    let(:secondary_organization) { create(:organization, shared: false) }
+    let(:secondarymate) { create(:customer, organization: secondary_organization) }
+    let(:secondarymate_tickets) { create_list(:ticket, 2, customer: secondarymate) }
+
+    before do
+      secondarymate_tickets
+    end
+
+    it 'returns only the customer’s or organization’s tickets' do
+      expect(scope.resolve).to match_array(user_tickets | teammate_tickets)
+    end
+  end
+
+  context 'with a multi #organization (shared true)' do
+    let(:user) { create(:customer, organization: organization, organizations: [secondary_organization]) }
+    let(:organization) { create(:organization, shared: false) }
+
+    let(:secondary_organization) { create(:organization, shared: true) }
+    let(:secondarymate) { create(:customer, organization: secondary_organization) }
+    let(:secondarymate_tickets) { create_list(:ticket, 2, customer: secondarymate) }
+
+    before do
+      secondarymate_tickets
+    end
+
+    it 'returns only the customer’s or organization’s tickets' do
+      expect(scope.resolve).to match_array(user_tickets | secondarymate_tickets)
+    end
+  end
 end

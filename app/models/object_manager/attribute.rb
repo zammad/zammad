@@ -19,6 +19,7 @@ class ObjectManager::Attribute < ApplicationModel
     textarea
     integer
     autocompletion_ajax
+    autocompletion_ajax_customer_organization
     boolean
     user_permission
     active

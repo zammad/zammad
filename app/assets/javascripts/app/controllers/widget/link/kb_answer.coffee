@@ -14,14 +14,17 @@ class App.WidgetLinkKbAnswer extends App.WidgetLink
   getAjaxAttributes: (field, attributes) ->
     @apiPath = App.Config.get('api_path')
 
-    attributes.type                   = 'POST'
-    attributes.url                    =  "#{@apiPath}/knowledge_bases/search"
-    attributes.data.flavor            = 'agent'
-    attributes.data.include_locale    = true
-    attributes.data.index             = 'KnowledgeBase::Answer::Translation'
-    attributes.data.highlight_enabled = false
+    attributes.url = "#{@apiPath}/knowledge_bases/search"
 
-    attributes.data = JSON.stringify(attributes.data)
+    data                   = {}
+    data.query             = field.input.val()
+    data.limit             = field.options.attribute.limit
+    data.flavor            = 'agent'
+    data.include_locale    = true
+    data.index             = 'KnowledgeBase::Answer::Translation'
+    data.highlight_enabled = false
+
+    attributes.data = JSON.stringify(data)
 
     attributes
 

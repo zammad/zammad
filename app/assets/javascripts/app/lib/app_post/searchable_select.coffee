@@ -77,6 +77,8 @@ class App.SearchableSelect extends Spine.Controller
       submenus: @renderSubmenus(@attribute.options)
       tokens: tokens
 
+    @input.get(0).selectValue = @selectValue
+
     # initial data
     @currentMenu = @findMenuContainingValue(@attribute.value)
     @level = @getIndex(@currentMenu)
@@ -281,6 +283,10 @@ class App.SearchableSelect extends Spine.Controller
     @visiblePart.text('')
     @invisiblePart.text('')
 
+  selectValue: (key, value) =>
+    @input.val value
+    @shadowInput.val key
+
   selectItem: (event) ->
     currentText = event.currentTarget.querySelector('span.searchableSelect-option-text').textContent.trim()
     return if !currentText
@@ -289,8 +295,7 @@ class App.SearchableSelect extends Spine.Controller
     if @attribute.multiple
       @addValueToShadowInput(currentText, dataId)
     else
-      @input.val currentText
-      @shadowInput.val dataId
+      @selectValue(dataId, currentText)
 
   navigateIn: (event) ->
     event.stopPropagation()

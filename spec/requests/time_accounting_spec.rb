@@ -65,4 +65,34 @@ RSpec.describe 'Time Accounting API endpoints', type: :request do
     end
 
   end
+
+  describe 'Assign user to multiple organizations #1573' do
+    let(:organization1) { create(:organization) }
+    let(:organization2) { create(:organization) }
+    let(:customer) { create(:customer, organization: organization1, organizations: [organization2]) }
+    let(:ticket1) do
+      ticket  = create(:ticket, state: Ticket::State.lookup(name: 'open'), customer: customer, organization: organization1)
+      article = create(:ticket_article, ticket: ticket, type: Ticket::Article::Type.lookup(name: 'note'))
+      create(:ticket_time_accounting, ticket_id: ticket.id, ticket_article_id: article.id)
+    end
+    let(:ticket2) do
+      ticket  = create(:ticket, state: Ticket::State.lookup(name: 'open'), customer: customer, organization: organization2)
+      article = create(:ticket_article, ticket: ticket, type: Ticket::Article::Type.lookup(name: 'note'))
+      create(:ticket_time_accounting, ticket_id: ticket.id, ticket_article_id: article.id)
+    end
+
+    before do
+      ticket1 && ticket2
+    end
+
+    it 'does return results group by organization and customer so multi organization support is given' do
+      authenticated_as(admin)
+      get "/api/v1/time_accounting/log/by_customer/#{year}/#{month}", as: :json
+      expect(json_response.count).to eq(2)
+      expect(json_response[0]['organization']['id']).to eq(organization1.id)
+      expect(json_response[0]['time_unit']).to eq(ticket1.time_unit.to_s)
+      expect(json_response[1]['organization']['id']).to eq(organization2.id)
+      expect(json_response[1]['time_unit']).to eq(ticket2.time_unit.to_s)
+    end
+  end
 end

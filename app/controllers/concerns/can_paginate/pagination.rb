@@ -5,7 +5,7 @@ class CanPaginate::Pagination
   def initialize(params, default: nil, max: nil)
     @params  = params
     @default = default.presence || 100
-    @max     = max.presence || 500
+    @max     = max.presence || 1000
   end
 
   def limit

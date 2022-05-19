@@ -92,15 +92,14 @@ ObjectManager::Attribute.add(
   object:      'Ticket',
   name:        'organization_id',
   display:     'Organization',
-  data_type:   'autocompletion_ajax',
+  data_type:   'autocompletion_ajax_customer_organization',
   data_option: {
     relation:       'Organization',
     autocapitalize: false,
     multiple:       false,
     null:           true,
     translate:      false,
-    permission:     ['ticket.agent'],
-    readonly:       1,
+    permission:     ['ticket.agent', 'ticket.customer'],
   },
   editable:    false,
   active:      true,
@@ -922,6 +921,52 @@ ObjectManager::Attribute.add(
 ObjectManager::Attribute.add(
   force:       true,
   object:      'User',
+  name:        'organization_ids',
+  display:     __('Secondary organizations'),
+  data_type:   'autocompletion_ajax',
+  data_option: {
+    multiple:      true,
+    nulloption:    true,
+    null:          true,
+    relation:      'Organization',
+    item_class:    'formGroup--halfSize',
+    display_limit: 3,
+  },
+  editable:    false,
+  active:      true,
+  screens:     {
+    signup:          {},
+    invite_agent:    {},
+    invite_customer: {
+      '-all-' => {
+        null: true,
+      },
+    },
+    edit:            {
+      '-all-' => {
+        null: true,
+      },
+    },
+    create:          {
+      '-all-' => {
+        null: true,
+      },
+    },
+    view:            {
+      '-all-' => {
+        shown: true,
+      },
+    },
+  },
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    901,
+)
+
+ObjectManager::Attribute.add(
+  force:       true,
+  object:      'User',
   name:        'department',
   display:     __('Department'),
   data_type:   'input',
@@ -1397,7 +1442,10 @@ ObjectManager::Attribute.add(
       },
     },
     view:   {
-      '-all-' => {
+      'ticket.agent'    => {
+        shown: true,
+      },
+      'ticket.customer' => {
         shown: true,
       },
     },
@@ -1440,8 +1488,11 @@ ObjectManager::Attribute.add(
       },
     },
     view:   {
-      '-all-' => {
+      'ticket.agent'    => {
         shown: true,
+      },
+      'ticket.customer' => {
+        shown: false,
       },
     },
   },
@@ -1483,8 +1534,11 @@ ObjectManager::Attribute.add(
       },
     },
     view:   {
-      '-all-' => {
+      'ticket.agent'    => {
         shown: true,
+      },
+      'ticket.customer' => {
+        shown: false,
       },
     },
   },
@@ -1520,8 +1574,11 @@ ObjectManager::Attribute.add(
       },
     },
     view:   {
-      '-all-' => {
+      'ticket.agent'    => {
         shown: true,
+      },
+      'ticket.customer' => {
+        shown: false,
       },
     },
   },
@@ -1557,8 +1614,11 @@ ObjectManager::Attribute.add(
       },
     },
     view:   {
-      '-all-' => {
+      'ticket.agent'    => {
         shown: true,
+      },
+      'ticket.customer' => {
+        shown: false,
       },
     },
   },
@@ -1593,7 +1653,10 @@ ObjectManager::Attribute.add(
       },
     },
     view:   {
-      '-all-' => {
+      'ticket.agent'    => {
+        shown: true,
+      },
+      'ticket.customer' => {
         shown: false,
       },
     },

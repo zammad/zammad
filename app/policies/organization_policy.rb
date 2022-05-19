@@ -4,7 +4,7 @@ class OrganizationPolicy < ApplicationPolicy
 
   def show?
     return true if user.permissions?(['admin', 'ticket.agent'])
-    return true if record.id == user.organization_id
+    return true if user.organization_id?(record.id)
 
     false
   end
