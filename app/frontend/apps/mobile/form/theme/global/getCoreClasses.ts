@@ -12,7 +12,7 @@ export const addFloatingLabel = (classes: Classes): Classes => {
     wrapper: `${classes.wrapper || ''} relative`,
     inner: 'flex',
     input: `${inputClass} w-full h-14 text-sm bg-gray-500 rounded-xl border-none focus:outline-none placeholder:text-transparent focus-within:pt-8 formkit-populated:pt-8`,
-    label: `${labelClass} absolute top-0 left-0 py-5 px-3 h-14 text-base transition-all duration-100 ease-in-out origin-left pointer-events-none formkit-populated:-translate-y-3 formkit-populated:translate-x-1 formkit-populated:scale-75 formkit-populated:opacity-75`,
+    label: `${labelClass} absolute top-0 left-0 py-5 px-3 h-14 text-base transition-all duration-100 ease-in-out origin-left pointer-events-none formkit-populated:-translate-y-3 formkit-populated:translate-x-1 formkit-populated:scale-75 formkit-populated:opacity-75 formkit-required:required`,
   }
 }
 

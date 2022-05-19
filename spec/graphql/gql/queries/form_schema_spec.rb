@@ -10,20 +10,20 @@ RSpec.describe Gql::Queries::FormSchema, type: :graphql do
     let(:expected) do
       [
         {
-          type:       'text',
-          name:       'login',
-          label:      __('Username / Email'),
-          validation: 'required',
-          props:      {
+          type:     'text',
+          name:     'login',
+          label:    __('Username / Email'),
+          required: true,
+          props:    {
             placeholder: __('Username / Email'),
           },
         },
         {
-          type:       'password',
-          label:      __('Password'),
-          name:       'password',
-          validation: 'required',
-          props:      {
+          type:     'password',
+          label:    __('Password'),
+          name:     'password',
+          required: true,
+          props:    {
             placeholder: __('Password'),
           },
         },

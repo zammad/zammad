@@ -20,14 +20,14 @@ class FormSchema::Form::Mobile::Login < FormSchema::Form
         name:        'login',
         label:       __('Username / Email'),
         placeholder: __('Username / Email'),
-        validation:  'required',
+        required:    true,
       ).schema,
       FormSchema::Field::Password.new(
         context:     context,
         name:        'password',
         label:       __('Password'),
         placeholder: __('Password'),
-        validation:  'required',
+        required:    true,
       ).schema,
       # *object_attribute_fields,
       {

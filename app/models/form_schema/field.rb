@@ -16,7 +16,7 @@ class FormSchema::Field
   end
 
   # Add base attributes
-  attribute :show, :type, :name, :label, :labelPlaceholder, :value, :help, :id, :disabled, :delay, :errors, :sectionsSchema, :classes, :validation, :validationMessage, :validationVisibility, :outerClass, :wrapperClass, :labelClass, :prefixClass, :innerClass, :suffixClass, :inputClass, :helpClass, :messagesClass, :messageClass
+  attribute :show, :type, :name, :label, :labelPlaceholder, :value, :help, :id, :disabled, :delay, :errors, :sectionsSchema, :classes, :validation, :validationMessage, :validationVisibility, :outerClass, :wrapperClass, :labelClass, :prefixClass, :innerClass, :suffixClass, :inputClass, :helpClass, :messagesClass, :messageClass, :required
 
   # Type of the current field object. By default, this is inferred from the
   #   class name; override if needed.

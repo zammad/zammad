@@ -7,14 +7,14 @@ import {
 } from '@formkit/core'
 import { FormKit } from '@formkit/vue'
 import { renderComponent } from '@tests/support/components'
-import addValuePopulatedDataAttribute from '../global/addValuePopulatedDataAttribute'
+import extendDataAttribues from '../global/extendDataAttributes'
 
 const wrapperParameters = {
   form: true,
   formField: true,
 }
 
-const renderKit = () => {
+const renderKit = (props: any = {}) => {
   const kit = renderComponent(FormKit, {
     ...wrapperParameters,
     props: {
@@ -22,6 +22,7 @@ const renderKit = () => {
       type: 'text',
       id: 'text',
       label: 'text',
+      ...props,
     },
   })
   return {
@@ -30,7 +31,7 @@ const renderKit = () => {
   }
 }
 
-describe('addValuePopulatedDataAttribute', () => {
+describe('extendDataAttributes - data-populated', () => {
   describe('renders on output', () => {
     const originalSchema = vi.fn()
     const inputNode = createNode({
@@ -50,7 +51,7 @@ describe('addValuePopulatedDataAttribute', () => {
     })
 
     test('applies schema on input', () => {
-      addValuePopulatedDataAttribute(inputNode)
+      extendDataAttribues(inputNode)
 
       const schema = (inputNode.props.definition?.schema ||
         (() => ({}))) as FormKitExtendableSchemaRoot
@@ -63,7 +64,7 @@ describe('addValuePopulatedDataAttribute', () => {
     })
 
     test('skips non-inputs', () => {
-      addValuePopulatedDataAttribute({
+      extendDataAttribues({
         ...inputNode,
         type: 'list',
       })
@@ -87,5 +88,14 @@ describe('addValuePopulatedDataAttribute', () => {
 
       expect(kit.getOuterKit()).toHaveAttribute('data-populated')
     })
+  })
+})
+
+describe('extendDataAttributes - data-required', () => {
+  it('has data-required if field is required', () => {
+    const kit = renderKit({
+      required: true,
+    })
+    expect(kit.getOuterKit()).toHaveAttribute('data-required')
   })
 })

@@ -51,7 +51,6 @@ const addLink = (settings?: AddLinkExtensionOptions) => (node: FormKitNode) => {
         ],
       },
     }
-    console.log(extensions, localExtensions)
     return originalSchema(localExtensions)
   }
 

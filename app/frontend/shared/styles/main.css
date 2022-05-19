@@ -4,6 +4,13 @@
 
 @tailwind utilities;
 
+@layer components {
+  .required::after {
+    content: '•';
+    @apply ml-1 font-extrabold text-yellow;
+  }
+}
+
 @layer base {
   @font-face {
     font-family: 'Fira Sans';

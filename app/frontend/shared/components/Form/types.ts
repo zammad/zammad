@@ -39,6 +39,7 @@ export interface FormSchemaField {
   placeholder?: string
   help?: string
   disabled?: boolean
+  required?: boolean
   delay?: number
   errors?: string[]
   id?: string
