@@ -142,6 +142,25 @@ class App.KnowledgeBaseReaderController extends App.Controller
       attachments: attachments
     )
 
+    @answerAttachments.on('click', '.file-image .js-preview', (e) =>
+      @imageView(e)
+    )
+
+    @answerAttachments.on('click', '.file-calendar .js-preview', (e) =>
+      @calendarView(e)
+    )
+
+  imageView: (e) ->
+    e.preventDefault()
+    e.stopPropagation()
+    new App.TicketZoomArticleImageView(image: $(e.target).get(0).outerHTML)
+
+  calendarView: (e) ->
+    e.preventDefault()
+    e.stopPropagation()
+    parentElement = $(e.target).closest('.attachment.file-calendar')
+    new App.TicketZoomArticleCalendarView(calendar: parentElement.get(0).outerHTML)
+
   renderTags: (tags) ->
     @answerTags.html App.view('knowledge_base/_reader_tags')(
       tags: tags

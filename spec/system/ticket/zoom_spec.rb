@@ -173,6 +173,75 @@ RSpec.describe 'Ticket zoom', type: :system do
     end
   end
 
+  context 'when ticket has a calendar attachment' do
+    let(:group) { Group.find_by(name: 'Users') }
+    let(:store_file_content_name) do
+      File.read(Rails.root.join('spec/fixtures/files/calendar/basic.ics'))
+    end
+    let(:store_file_name) { 'basic.ics' }
+    let(:expected_event) do
+      {
+        'title'       => 'Test Summary',
+        'location'    => 'https://us.zoom.us/j/example?pwd=test',
+        'attendees'   => ['M.bob@example.com', 'J.doe@example.com'],
+        'organizer'   => 'f.sample@example.com',
+        'description' => 'Test description'
+      }
+    end
+    let(:ticket)          { create(:ticket, group: group) }
+    let(:article)         { create(:ticket_article, ticket: ticket) }
+
+    before do
+      create(:store,
+             object:      'Ticket::Article',
+             o_id:        article.id,
+             data:        store_file_content_name,
+             filename:    store_file_name,
+             preferences: {
+               'Content-Type' => 'text/calendar',
+             })
+
+      visit "#ticket/zoom/#{ticket.id}"
+    end
+
+    it 'has an attached calendar file' do
+      within :active_ticket_article, article do
+        within '.attachment.file-calendar' do
+          expect(page).to have_text(store_file_name)
+        end
+      end
+    end
+
+    it 'shows a preview button for the calendar file' do
+      within :active_ticket_article, article do
+        within '.attachment.file-calendar' do
+          expect(page).to have_button('PREVIEW')
+        end
+      end
+    end
+
+    context 'when calendar preview button is clicked' do
+      before do
+        within :active_ticket_article, article do
+          within '.attachment.file-calendar' do
+            click_button 'PREVIEW'
+          end
+        end
+      end
+
+      it 'shows calender data in the model' do
+        in_modal do
+          expect(page).to have_text expected_event['title']
+          expect(page).to have_text expected_event['location']
+          expected_event['attendees'].each { |attendee| expect(page).to have_text attendee }
+          expect(page).to have_text expected_event['organizer']
+          expect(page).to have_text expected_event['description']
+        end
+        click '.js-cancel'
+      end
+    end
+  end
+
   context 'replying' do
 
     context 'Group without signature' do

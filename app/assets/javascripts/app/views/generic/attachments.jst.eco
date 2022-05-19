@@ -10,8 +10,8 @@
         </div>
       <% else: %>
         <% content_type = @ContentOrMimeType(attachment) %>
-        <a class="attachment attachment--preview" href="<%= attachment.url %>" data-type="attachment"<% if @canDownload(content_type): %> download<% else: %>target="_blank"<% end %>>
-          <div class="attachment-icon">
+        <a class="attachment attachment--preview <%- @ContentTypeIcon(content_type) if @ContentTypeIcon(content_type) %>" href="<%= attachment.url %>" data-type="attachment" data-preview-url="<%= attachment.preview_url %>" data-id="<%= attachment.id %>" <% if @canDownload(content_type): %> download<% else: %>target="_blank"<% end %>>
+          <div class="attachment-icon js-preview">
           <% if attachment.preferences && content_type && @ContentTypeIcon(content_type): %>
             <% if @canPreview(content_type): %>
               <img src="<%= attachment.preview_url %>">
@@ -22,8 +22,13 @@
             <%- @Icon('file-unknown') %>
           <% end %>
           </div>
-          <span class="attachment-name u-highlight"><%= attachment.filename %></span>
-          <div class="attachment-size"><%- @humanFileSize(attachment.size) %></div>
+          <div class="attachment-text">
+            <span class="attachment-name u-highlight"><%= attachment.filename %></span>
+            <div class="attachment-size"><%- @humanFileSize(attachment.size) %></div>
+          </div>
+          <% if @ContentTypeIcon(content_type) is 'file-calendar': %>
+            <button class="btn js-preview" type="button"><%- @T('PREVIEW') %></button>
+          <% end %>
         </a>
       <% end %>
     <% end %>

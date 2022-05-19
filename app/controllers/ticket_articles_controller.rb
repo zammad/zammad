@@ -3,6 +3,7 @@
 class TicketArticlesController < ApplicationController
   include CreatesTicketArticles
   include ClonesTicketArticleAttachments
+  include CalendarPreview
 
   prepend_before_action -> { authorize! }, only: %i[index import_example import_start]
   prepend_before_action :authentication_check
@@ -175,8 +176,12 @@ class TicketArticlesController < ApplicationController
     end
     raise Exceptions::Forbidden, __('The file does not belong to the specified article.') if !access
 
+    # preview calendar attachments
+    return render_calendar_preview if params[:view] == 'preview' && params[:type] == 'calendar'
+
+    content = download_file.content(params[:view])
     send_data(
-      download_file.content(params[:view]),
+      content,
       filename:    download_file.filename,
       type:        download_file.content_type,
       disposition: download_file.disposition
@@ -259,5 +264,15 @@ class TicketArticlesController < ApplicationController
     result = SecureMailing.retry(article)
 
     render json: result
+  end
+
+  private
+
+  def render_calendar_preview
+    data = parse_calendar(download_file)
+    render json: data, status: :ok
+  rescue => e
+    logger.error e
+    render json: { error: __('The preview cannot be generated. The format is corrupted or not supported.') }, status: :unprocessable_entity
   end
 end

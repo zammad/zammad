@@ -1,13 +1,16 @@
 # Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class AttachmentsController < ApplicationController
+  include CalendarPreview
+
   prepend_before_action :authorize!, only: %i[show destroy]
   prepend_before_action :authentication_check, except: %i[show destroy]
   prepend_before_action :authentication_check_only, only: %i[show destroy]
 
   def show
-    view_type = params[:preview] ? 'preview' : nil
+    return render_calendar_preview if params[:preview].present? && params[:type] == 'calendar'
 
+    view_type = params[:preview] ? 'preview' : nil
     send_data(
       download_file.content(view_type),
       filename:    download_file.filename,
@@ -70,6 +73,14 @@ class AttachmentsController < ApplicationController
   end
 
   private
+
+  def render_calendar_preview
+    data = parse_calendar(download_file)
+    render json: data, status: :ok
+  rescue => e
+    logger.error e
+    render json: { error: e.message }, status: :unprocessable_entity
+  end
 
   def authorize!
     record = download_file&.store_object&.name&.safe_constantize&.find(download_file.o_id)

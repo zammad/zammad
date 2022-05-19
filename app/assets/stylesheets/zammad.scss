@@ -7451,13 +7451,13 @@ a.list-group-item.active > .badge,
 }
 
 .attachment.attachment--preview {
-  display: block;
+  display: flex;
   font-size: 13px;
-  padding: 9px 4px 9px 43px;
+  padding: 9px 4px;
   position: relative;
   min-height: 42px;
   color: inherit;
-  align-items: center;
+  align-items: flex-start;
   border-bottom: 1px solid hsl(0, 0%, 96%);
 
   &:last-child {
@@ -7466,9 +7466,6 @@ a.list-group-item.active > .badge,
 }
 
 .attachment-icon {
-  position: absolute;
-  left: 0;
-  top: 9px;
   width: 38px;
   text-align: center;
 
@@ -7480,6 +7477,18 @@ a.list-group-item.active > .badge,
     width: 30px;
     height: 30px;
     object-fit: cover;
+  }
+}
+
+.attachment--preview {
+  .attachment-text {
+    margin: 0 4px;
+  }
+
+  .btn {
+    padding: 4px;
+    color: $ghost-color;
+    font-size: 11px;
   }
 }
 
@@ -13951,5 +13960,47 @@ span.is-disabled {
   .sla_radio_container {
     padding-top: 0.5em;
     padding-left: 0.5em;
+  }
+}
+
+.calendar-preview {
+  .calendar-events {
+    margin-top: 12px;
+
+    p {
+      margin: 0;
+    }
+
+    h2 {
+      margin-bottom: 24px;
+    }
+
+    h4 {
+      margin-bottom: 4px;
+    }
+
+    section.description {
+      margin: 24px 0 0;
+      padding: 4px;
+    }
+
+    .event-row {
+      display: flex;
+
+      div {
+        width: 50%;
+        margin-bottom: 4px;
+      }
+    }
+  }
+
+  div.divider {
+    margin-top: 18px;
+    margin-bottom: 6px;
+    border-top: 1px solid #dfdfdf;
+
+    &:last-of-type {
+      display: none;
+    }
   }
 }

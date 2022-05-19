@@ -164,6 +164,11 @@
         "url": "",
         "license": "MIT"
     },
+    "file-calendar.svg": {
+        "author": "Felix Niklas",
+        "url": "",
+        "license": "MIT"
+    },
     "file-code.svg": {
         "author": "Felix Niklas",
         "url": "",
@@ -231,6 +236,11 @@
     },
     "gitlab-button.svg": {
         "author": "GitLab",
+        "url": "",
+        "license": ""
+    },
+    "gitlab-logo.svg": {
+        "author": "",
         "url": "",
         "license": ""
     },

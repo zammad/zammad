@@ -48,13 +48,19 @@ class SidebarArticleAttachments extends App.Controller
     )
 
     @el.html(html)
-    @el.on('click', '.js-attachments img', (e) =>
-      @imageView(e)
-    )
+    @el.find('.js-attachments img').click(@imageView)
+    @el.find('.file-calendar .js-preview').click(@calendarView)
 
   imageView: (e) ->
     e.preventDefault()
     e.stopPropagation()
     new App.TicketZoomArticleImageView(image: $(e.target).get(0).outerHTML)
+
+  calendarView: (e) ->
+    e.preventDefault()
+    e.stopPropagation()
+    parentElement = $(e.target).closest('.attachment.file-calendar')
+    console.log({ parentElement })
+    new App.TicketZoomArticleCalendarView(calendar: parentElement.get(0).outerHTML)
 
 App.Config.set('900-ArticleAttachments', SidebarArticleAttachments, 'TicketZoomSidebar')

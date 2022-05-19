@@ -216,6 +216,7 @@ App.ViewHelpers =
       # text
       'text/plain': 'file-text'
       'text/rtf': 'file-text'
+      'text/calendar': 'file-calendar'
       # archives
       'application/gzip': 'file-archive'
       'application/zip': 'file-archive'

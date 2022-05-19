@@ -89,6 +89,7 @@ class ArticleViewItem extends App.ControllerObserver
     'click .js-toggleFold':           'toggleFold'
     'click .richtext-content img':    'imageView'
     'click .attachments img':         'imageView'
+    'click .file-calendar .js-preview':  'calendarView'
     'click .js-securityRetryProcess': 'retrySecurityProcess'
 
   constructor: ->
@@ -490,6 +491,12 @@ class ArticleViewItem extends App.ControllerObserver
     e.preventDefault()
     e.stopPropagation()
     new App.TicketZoomArticleImageView(image: $(e.target).get(0).outerHTML, parentElement: $(e.currentTarget))
+
+  calendarView: (e) ->
+    e.preventDefault()
+    e.stopPropagation()
+    parentElement = $(e.target).closest('.attachment.file-calendar')
+    new App.TicketZoomArticleCalendarView(calendar: parentElement.get(0).outerHTML)
 
   updateFormId: (newFormId) ->
     @articleActions?.form_id = newFormId

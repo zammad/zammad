@@ -6,6 +6,7 @@ var svgmin = require('gulp-svgmin');
 var cheerio = require('cheerio');
 var gcheerio = require('gulp-cheerio');
 var through2 = require('through2');
+var path = require('path');
 
 var iconsource = 'icons/*.svg'
 
@@ -13,16 +14,26 @@ function build(cb) {
   gulp
     .src(iconsource)
     .pipe(rename({prefix: 'icon-'}))
-    .pipe(svgmin({
-      js2svg: {
-        pretty: true
-      },
-      plugins: [
-        {
-          removeViewBox: false,
-          removeTitle: false,
+    .pipe(svgmin(function getOptions(file){
+      var prefix = path.basename(
+        file.relative,
+        path.extname(file.relative)
+      );
+      return {
+        plugins: [
+          {
+            removeViewBox: false,
+            removeTitle: false,
+            cleanupIDs: {
+              prefix: prefix + '-',
+              minify: true
+            }
+          },
+        ],
+        js2svg: {
+          pretty: true,
         },
-      ]
+      }
     }))
     .pipe(gcheerio({
       run: function ($) {

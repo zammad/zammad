@@ -18,12 +18,14 @@ RSpec.describe 'Ticket Article Attachments', type: :request, authenticated_as: -
       let(:article2) { create(:ticket_article, ticket: ticket2) }
 
       let(:store_file_content_type) { 'text/plain' }
+      let(:store_file_content) { 'some content' }
+      let(:store_file_name) { 'some_file.txt' }
       let!(:store_file) do
         create(:store,
                object:      'Ticket::Article',
                o_id:        article1.id,
-               data:        'some content',
-               filename:    'some_file.txt',
+               data:        store_file_content,
+               filename:    store_file_name,
                preferences: {
                  'Content-Type' => store_file_content_type,
                })
@@ -102,6 +104,35 @@ RSpec.describe 'Ticket Article Attachments', type: :request, authenticated_as: -
           it 'disposition is inline' do
             get "/api/v1/ticket_attachment/#{ticket1.id}/#{article1.id}/#{store_file.id}?disposition=inline", params: {}
             expect(response.headers['Content-Disposition']).to include('inline')
+          end
+        end
+
+        context 'with calendar preview' do
+          let(:store_file_content) do
+            File.read(Rails.root.join('spec/fixtures/files/calendar/basic.ics'))
+          end
+          let(:store_file_name) { 'basic.ics' }
+          let(:store_file_content_type) { 'text/calendar' }
+
+          let(:expected_event) do
+            {
+              'title'       => 'Test Summary',
+              'location'    => 'https://us.zoom.us/j/example?pwd=test',
+              'start_date'  => '2021-07-27T10:30:00.000+02:00',
+              'end_date'    => '2021-07-27T12:00:00.000+02:00',
+              'attendees'   => ['M.bob@example.com', 'J.doe@example.com'],
+              'organizer'   => 'f.sample@example.com',
+              'description' => 'Test description'
+            }
+          end
+
+          it 'renders a parsed calender data' do
+            get "/api/v1/ticket_attachment/#{ticket1.id}/#{article1.id}/#{store_file.id}?view=preview&type=calendar", params: {}
+
+            expect(response).to have_http_status(:ok)
+            expect(json_response).to be_a_kind_of(Hash)
+            expect(json_response['filename']).to eq store_file_name
+            expect(json_response['events'].first).to include(expected_event)
           end
         end
       end

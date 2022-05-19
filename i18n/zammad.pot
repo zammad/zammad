@@ -805,6 +805,10 @@ msgstr ""
 msgid "Alternatively, you can use the Zammad API to import data."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_calendar_view.coffee
+msgid "An error has occurred"
+msgstr ""
+
 #: app/frontend/shared/server/apollo/handler/BaseHandler.ts
 msgid "An error occured during the operation. Please contact your administrator."
 msgstr ""
@@ -1051,6 +1055,10 @@ msgstr ""
 #: app/assets/javascripts/app/views/knowledge_base/_answer_attachments.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/attachments.jst.eco
 msgid "Attachments"
+msgstr ""
+
+#: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
+msgid "Attendees"
 msgstr ""
 
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
@@ -4318,6 +4326,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee
 #: app/assets/javascripts/app/models/ticket_article.coffee
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco
+#: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 msgid "From"
@@ -5661,6 +5670,7 @@ msgstr ""
 msgid "Locale not found"
 msgstr ""
 
+#: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
 #: app/assets/javascripts/app/views/session.jst.eco
 msgid "Location"
@@ -6385,6 +6395,7 @@ msgid "No %s configured."
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/admin/empty.jst.eco
+#: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_group.jst.eco
@@ -6896,6 +6907,10 @@ msgstr ""
 msgid "Organizations are for any person in the system: agents (owners, responsibles, …) and customers."
 msgstr ""
 
+#: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
+msgid "Organizer"
+msgstr ""
+
 #: app/assets/javascripts/app/models/ticket_article.coffee
 msgid "Origin By"
 msgstr ""
@@ -7003,6 +7018,10 @@ msgstr ""
 
 #: lib/email_helper.rb
 msgid "POP3"
+msgstr ""
+
+#: app/assets/javascripts/app/views/generic/attachments.jst.eco
+msgid "PREVIEW"
 msgstr ""
 
 #: app/assets/javascripts/app/views/package.jst.eco
@@ -9102,6 +9121,10 @@ msgstr ""
 msgid "The password could not be set. Please contact your administrator."
 msgstr ""
 
+#: app/controllers/ticket_articles_controller.rb
+msgid "The preview cannot be generated. The format is corrupted or not supported."
+msgstr ""
+
 #: app/controllers/import_freshdesk_controller.rb
 #: app/controllers/import_kayako_controller.rb
 #: app/controllers/import_otrs_controller.rb
@@ -9739,6 +9762,7 @@ msgstr ""
 msgid "Tickets of User"
 msgstr ""
 
+#: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
 msgid "Till"
 msgstr ""
