@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-05-17 03:05+0000\n"
+"PO-Revision-Date: 2022-05-19 08:49+0000\n"
 "Last-Translator: MBekspert <michal.bosak@ekspert.biz>\n"
 "Language-Team: Polish <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/pl/>\n"
@@ -273,7 +273,7 @@ msgstr ""
 "** Prywatność danych ** pomaga usunąć i zweryfikować usunięcie istniejących "
 "danych z systemu. \n"
 "\n"
-"Może być używany do usuwania biletów, organizacji i użytkowników. "
+"Może być używany do usuwania zgłoszeń, organizacji i użytkowników. "
 "Przypisanie właściciela zostanie anulowane, jeśli usunięty użytkownik jest "
 "agentem. \n"
 "\n"
@@ -661,7 +661,7 @@ msgstr "Dodaj Osobisty Token dostępowy"
 
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 msgid "Add alarm to pending reminder and escalated tickets."
-msgstr "Dodaj alarm dla przetwarzanych i przeterminowanych Zgłoszeń."
+msgstr "Dodaj alarm do oczekujących na przypomnienie i eskalowanych zgłoszeń."
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Add attachment option to upload."
@@ -2227,6 +2227,9 @@ msgid ""
 "on an action, it is possible to hide or restrict fields or to change the "
 "obligation to fill them in."
 msgstr ""
+"Podstawowe przepływy pracy to czynności lub ograniczenia dotyczące wyborów w "
+"formularzach. W zależności od akcji możliwe jest ukrycie lub ograniczenie "
+"pól lub zmiana obowiązku ich wypełniania."
 
 #: app/controllers/reports_controller.rb
 msgid "Could not find active reporting profile."
@@ -4273,6 +4276,20 @@ msgid ""
 "Whatever it is, you can do it with triggers: actions that watch tickets for "
 "certain changes, and then fire off whenever those changes occur."
 msgstr ""
+"Za każdym razem, gdy klient tworzy nowe zgłoszenie, automatycznie otrzymuje "
+"wiadomość e-mail z potwierdzeniem, aby upewnić się, że jego problem został "
+"pomyślnie przesłany. To zachowanie jest wbudowane w Zammad, ale jest również "
+"wysoce konfigurowalne i możesz skonfigurować inne automatyczne działania, "
+"takie jak to.\n"
+"\n"
+"Może chcesz nadać wyższy priorytet dla dowolnego zgłoszenia ze słowem „pilne”"
+" w tytule. Być może chcesz uniknąć wysyłania automatycznych odpowiedzi do "
+"klientów z niektórych organizacji. Może chcesz oznaczyć zgłoszenie jako "
+"„oczekujące”, gdy ktoś doda do zgłoszenia wewnętrzną notatkę.\n"
+"\n"
+"Cokolwiek to jest, możesz to zrobić za pomocą wyzwalaczy: akcji, które "
+"obserwują zgłoszenia na określone zmiany, a następnie uruchamiają się, gdy "
+"te zmiany wystąpią."
 
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid "Example"
@@ -6276,10 +6293,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/chat.coffee
 #: app/assets/javascripts/app/views/channel/topics.jst.eco
-#, fuzzy
-#| msgid "Max. clients in waitlist"
 msgid "Max. clients on waitlist"
-msgstr "Max. ILOść klientów w poczekalni"
+msgstr "Maks. ilość klientów na liście oczekujących"
 
 #: app/assets/javascripts/app/views/customer_chat/setting.jst.eco
 msgid "Max. concurrent chats"
@@ -6364,10 +6379,8 @@ msgid "Method (AJAX endpoint)"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
-#, fuzzy
-#| msgid "Macros"
 msgid "Microsoft"
-msgstr "Macra"
+msgstr "Microsoft"
 
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 #: app/assets/javascripts/app/views/microsoft365/index.jst.eco
@@ -6548,40 +6561,30 @@ msgid "Moved out"
 msgstr "Przeniesione z"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
-#, fuzzy
-#| msgid "auto select"
 msgid "Multiselect"
-msgstr "autowybór"
+msgstr "Wielokrotny wybór"
 
 #: db/seeds/overviews.rb
-#, fuzzy
-#| msgid "My assigned Tickets"
 msgid "My Assigned Tickets"
-msgstr "Moje przydzielone Zgłoszenia"
+msgstr "Moje przypisane Zgłoszenia"
 
 #: db/seeds/overviews.rb
 msgid "My Organization Tickets"
 msgstr "Zgłoszenia Mojej Organizacji"
 
 #: db/seeds/overviews.rb
-#, fuzzy
-#| msgid "My pending reached Tickets"
 msgid "My Pending Reached Tickets"
-msgstr "Moje Oczekujące"
+msgstr "Moje Zgłoszenia czas oczekiwania minął"
 
 #: db/seeds/overviews.rb
-#, fuzzy
-#| msgid "My replacement Tickets"
 msgid "My Replacement Tickets"
-msgstr "Mój bilet zastępczy"
+msgstr "Moje zgłoszenia w zastępstwie"
 
 #: app/assets/javascripts/app/views/dashboard.jst.eco
 msgid "My Stats"
 msgstr "Moje Statystyki"
 
 #: db/seeds/overviews.rb
-#, fuzzy
-#| msgid "My subscribed Tickets"
 msgid "My Subscribed Tickets"
 msgstr "Moje obserwowane"
 
@@ -7281,10 +7284,8 @@ msgid "Only available for Users which are replacements for other users."
 msgstr "Dostępne tylko dla użytkowników, którzy zastępują innych użytkowników."
 
 #: app/assets/javascripts/app/models/overview.coffee
-#, fuzzy
-#| msgid "Only available for Users with shared Organization"
 msgid "Only available for Users with shared Organizations"
-msgstr "dostępny tylko dla użytkowników współdzielących oragnizację"
+msgstr "Dostępne tylko dla użytkowników ze współdzielonymi organizacjami"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 msgid "Only for these groups."
@@ -7426,10 +7427,8 @@ msgstr "Oryginalne formatowanie"
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
-#, fuzzy
-#| msgid "Expert Settings"
 msgid "Other Settings"
-msgstr "Ustawienia zaawansowane"
+msgstr "Inne ustawienia"
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
@@ -7578,10 +7577,8 @@ msgid "Password for proxy connection."
 msgstr "Hasło dla połączenia proxy."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Password needs to contain 2 lower and 2 upper characters."
 msgid "Password needs to contain 2 lower case and 2 upper case characters."
-msgstr "Hasło wymaga 2 małych i 2 dużych znaków."
+msgstr "Hasło musi zawierać 2 małe litery i 2 duże litery."
 
 #: db/seeds/settings.rb
 msgid "Password needs to contain at least one digit."
@@ -7620,19 +7617,17 @@ msgid "Paste in CSV data"
 msgstr "Wklej zawartość pliku CSV"
 
 #: db/seeds/overviews.rb
-#, fuzzy
-#| msgid "My pending reached Tickets"
 msgid "Pending Reached Tickets"
-msgstr "Moje Oczekujące"
+msgstr "Czas oczekiwania minął"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "Pending reminder reached for ticket |%s|"
-msgstr "Przypomnienie dla zgłoszenia |%s|"
+msgstr "Osiągnięto czas oczekiwania na przypomnienie dla zgłoszenia |%s|"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 #: db/seeds/object_manager_attributes.rb
 msgid "Pending till"
-msgstr "Oczekuje do"
+msgstr "Oczekujące do"
 
 #: db/seeds/roles.rb
 msgid "People who create Tickets ask for help."
@@ -7696,10 +7691,8 @@ msgid "Placetel"
 msgstr "Placetel"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Placetel"
 msgid "Placetel Token"
-msgstr "Placetel"
+msgstr "Token Placetel"
 
 #: db/seeds/settings.rb
 msgid "Placetel config"
@@ -7718,8 +7711,6 @@ msgid "Please add categories and/or answers"
 msgstr ""
 
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
-#, fuzzy
-#| msgid "Please click the button below to create your first one."
 msgid "Please click on the button below to create your first one."
 msgstr "Kliknij poniższy przycisk, aby utworzyć swoje pierwsze."
 
@@ -7742,8 +7733,6 @@ msgid "Please enter a text."
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/time_accounting.jst.eco
-#, fuzzy
-#| msgid "Please enter your time which you want to account."
 msgid "Please enter the time you want to record."
 msgstr "Podaj swój czas, który chcesz rozliczyć."
 
@@ -7940,10 +7929,8 @@ msgid "Publish"
 msgstr "Opublikuj"
 
 #: app/assets/javascripts/app/controllers/_application_controller/article_public_confirm.coffee
-#, fuzzy
-#| msgid "Article"
 msgid "Publish Article"
-msgstr "Artykuł"
+msgstr "Opublikuj artykuł"
 
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco
 msgid "Published at"
@@ -7982,10 +7969,8 @@ msgid "Read"
 msgstr ""
 
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco
-#, fuzzy
-#| msgid "Realtime"
 msgid "Real-time"
-msgstr "Prawdziwy czas"
+msgstr "Czas rzeczywisty"
 
 #: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
@@ -8002,15 +7987,11 @@ msgid "Recent Customer Tickets"
 msgstr "Ostatnie Zgłoszenia Klienta"
 
 #: app/assets/javascripts/app/views/widget/http_log.jst.eco
-#, fuzzy
-#| msgid "Recent logs"
 msgid "Recent Logs"
-msgstr "Ostatnie logi"
+msgstr "Najnowsze dzienniki"
 
 #: app/assets/javascripts/app/views/agent_ticket_merge.jst.eco
 #: app/assets/javascripts/app/views/link/ticket/add.jst.eco
-#, fuzzy
-#| msgid "Recent viewed Tickets"
 msgid "Recently Viewed Tickets"
 msgstr "Ostatnio oglądanie Zgłoszenia"
 
@@ -8355,10 +8336,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
-#, fuzzy
-#| msgid "SLA"
 msgid "SSL"
-msgstr "SLA"
+msgstr "SSL"
 
 #: app/assets/javascripts/app/models/webhook.coffee
 msgid "SSL Verify"
@@ -8409,10 +8388,8 @@ msgid "Save"
 msgstr "Zapisz"
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_overwrite_modal.coffee
-#, fuzzy
-#| msgid "Draft"
 msgid "Save Draft"
-msgstr "Szkic"
+msgstr "Zapisz Szkic"
 
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 msgid "Save as"
@@ -8649,10 +8626,8 @@ msgid "Sender based on Reply-To header"
 msgstr "Nadawca na podstawie nagłówka Odpowiedz-Do"
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
-#, fuzzy
-#| msgid "Reply to last article"
 msgid "Sender of last article"
-msgstr "Odpowiedź na ostatni artykuł"
+msgstr "Nadawca ostatniego artykułu"
 
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco
 msgid "Sending…"
@@ -8740,12 +8715,10 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
-#, fuzzy
-#| msgid "Set caller id of outbound calls based on destination caller id."
 msgid "Set caller ID of outbound calls based on destination caller ID."
 msgstr ""
-"Ustaw id dzwoniącego dla połączeń wychodzących na podstawie identyfikatora "
-"dzwoniącego docelowego."
+"Ustaw identyfikator dzwoniącego połączeń wychodzących na podstawie "
+"identyfikatora dzwoniącego docelowego."
 
 #: db/seeds/settings.rb
 msgid "Set notes for ticket create types by selecting type."
@@ -8768,10 +8741,8 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/views/getting_started/intro.jst.eco
-#, fuzzy
-#| msgid "Setup new System"
 msgid "Set up a new system"
-msgstr "Konfiguruj nowy System"
+msgstr "Skonfiguruj nowy system"
 
 #: app/assets/javascripts/app/views/getting_started/channel.jst.eco
 msgid "Set up the communication channels you want to use with your Zammad."
@@ -8819,10 +8790,8 @@ msgstr "Współdzielony"
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_shared_draft.coffee
 #: app/assets/javascripts/app/models/group.coffee
 #: db/seeds/object_manager_attributes.rb
-#, fuzzy
-#| msgid "Shared"
 msgid "Shared Drafts"
-msgstr "Współdzielony"
+msgstr "Udostępnione wersje robocze"
 
 #: app/controllers/tickets_controller.rb
 msgid "Shared draft cannot be selected for this ticket."
@@ -8855,10 +8824,8 @@ msgid "Show"
 msgstr "Pokaż"
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_overwrite_modal.coffee
-#, fuzzy
-#| msgid "Draft"
 msgid "Show Draft"
-msgstr "Szkic"
+msgstr "Pokaż Szkic"
 
 #: app/assets/javascripts/app/views/navigation.jst.eco
 msgid "Show Search Details"
@@ -9374,10 +9341,8 @@ msgid "Text missing"
 msgstr "Brak tekstu"
 
 #: app/assets/javascripts/app/controllers/text_module.coffee
-#, fuzzy
-#| msgid "Text modules"
 msgid "Text module"
-msgstr "Moduły tekstowe"
+msgstr "Moduł tekstowy"
 
 #: app/assets/javascripts/app/controllers/text_module.coffee
 msgid "Text modules"
@@ -9401,10 +9366,8 @@ msgid "Text with enabled inline translations looks like"
 msgstr "Tekst z włączoną funkcją wstawiania tłumaczenia wygląda tak"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
-#, fuzzy
-#| msgid "Text"
 msgid "Textarea"
-msgstr "Treść"
+msgstr "Obszar tekstowy"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid ""
@@ -9429,10 +9392,8 @@ msgid "The MIME type of the resized image is invalid."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
-#, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "The Telegram bot could not be saved."
-msgstr "%s Obiekt(y) utworzono."
+msgstr "Nie udało się zapisać bota Telegrama."
 
 #: lib/telegram.rb
 msgid "The Telegram file is larger than the allowed 20 MB."
@@ -9489,15 +9450,12 @@ msgid "The chat is turned off."
 msgstr "Czat jest wyłączony."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
-#, fuzzy
-#| msgid ""
-#| "The chat will show up once the connection to the server got established "
-#| "and if there is someone online to chat with."
 msgid ""
 "The chat will show up once the connection to the server got established and "
 "if there is an operator online to chat with."
 msgstr ""
-"Czat pojawi się w momencie połączenia z serwerem i gdy będzie dostępny agent."
+"Czat pojawi się po nawiązaniu połączenia z serwerem i jeśli jest operator "
+"online, z którym można rozmawiać."
 
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee
 msgid "The configuration of Zammad has changed, please reload your browser."
@@ -12268,7 +12226,7 @@ msgstr "lub podpisać się używając"
 
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee
 msgid "pending"
-msgstr "w trakcie"
+msgstr "aż do"
 
 #: db/seeds/ticket_state_types.rb
 msgid "pending action"
@@ -12276,11 +12234,11 @@ msgstr "oczekujące działanie"
 
 #: db/seeds/ticket_states.rb
 msgid "pending close"
-msgstr "w trakcie zamykania"
+msgstr "oczekujące na zamknięcie"
 
 #: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
 msgid "pending reminder"
-msgstr "w trakcie przypominania"
+msgstr "oczekujące na przypomnienie"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/phone_reply.coffee
 #: db/seeds/ticket_article_types.rb
