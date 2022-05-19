@@ -18,8 +18,6 @@ class App.TicketZoomAttributeBar extends App.Controller
   constructor: ->
     super
 
-    @secondaryAction = @getAction()
-
     @subscribeId = App.Macro.subscribe(@checkMacroChanges)
     @render()
 
@@ -97,7 +95,7 @@ class App.TicketZoomAttributeBar extends App.Controller
       sharedDraftButtonShown: sharedDraftButtonShown
     ))
 
-    @setSecondaryAction(@secondaryAction, localeEl)
+    @setSecondaryAction(@getAction(), localeEl)
 
     if @ticket.currentView() is 'agent'
       @taskbarWatcher = new App.TaskbarWatcher(

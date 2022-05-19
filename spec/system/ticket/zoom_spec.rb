@@ -1868,6 +1868,14 @@ RSpec.describe 'Ticket zoom', type: :system do
       expect(User.find_by(email: 'admin@example.com').preferences[:secondaryAction]).to eq('stayOnTab')
     end
 
+    it 'does show the correct tab state after update of the ticket (#4094)' do
+      select 'closed', from: 'State'
+      click '.js-attributeBar .dropup div'
+      click 'span[data-type=stayOnTab]'
+      click '.js-submit'
+      expect(page.find('.js-secondaryActionButtonLabel')).to have_text('Stay on tab')
+    end
+
     context 'Tab behaviour - Close tab on ticket close' do
       it 'does not close the tab without any action' do
         click '.js-submit'
