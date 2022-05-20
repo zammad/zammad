@@ -10,11 +10,6 @@ class History < ApplicationModel
   belongs_to :history_object,    class_name: 'History::Object', optional: true
   belongs_to :history_attribute, class_name: 'History::Attribute', optional: true
 
-  # the noop is needed since Layout/EmptyLines detects
-  # the block commend below wrongly as the measurement of
-  # the wanted indentation of the rubocop re-enabling above
-  def noop; end
-
 =begin
 
 add a new history entry for an object

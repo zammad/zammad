@@ -7,11 +7,6 @@ class Tag < ApplicationModel
   belongs_to :tag_object, class_name: 'Tag::Object', optional: true
   belongs_to :tag_item,   class_name: 'Tag::Item', optional: true
 
-  # the noop is needed since Layout/EmptyLines detects
-  # the block commend below wrongly as the measurement of
-  # the wanted indentation of the rubocop re-enabling above
-  def noop; end
-
 =begin
 
 add tags for certain object
