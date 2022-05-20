@@ -3433,6 +3433,7 @@ msgid "Download and install the %s Migration Plugin on your %s instance."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
+#: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 msgid "Draft"
 msgstr ""
 
@@ -5722,6 +5723,7 @@ msgid "Macro group restrictions do not cover all tickets"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/macro.coffee
+#: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 #: db/seeds/permissions.rb
 msgid "Macros"
 msgstr ""
@@ -7919,6 +7921,7 @@ msgid "Save"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_overwrite_modal.coffee
+#: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 msgid "Save Draft"
 msgstr ""
 
