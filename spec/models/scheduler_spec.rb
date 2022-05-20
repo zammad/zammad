@@ -112,9 +112,7 @@ RSpec.describe Scheduler do
 
         expect do
           simulate_threads_call
-        end.not_to change {
-          Delayed::Job.count
-        }
+        end.not_to change(Delayed::Job, :count)
       end
 
       context 'locked' do
@@ -129,9 +127,7 @@ RSpec.describe Scheduler do
 
           expect do
             simulate_threads_call
-          end.to change {
-            Delayed::Job.count
-          }.by(-1)
+          end.to change(Delayed::Job, :count).by(-1)
         end
 
         context 'respond to reschedule?' do
@@ -163,9 +159,7 @@ RSpec.describe Scheduler do
 
             expect do
               simulate_threads_call
-            end.to change {
-              Delayed::Job.count
-            }.by(-1)
+            end.to change(Delayed::Job, :count).by(-1)
           end
         end
       end

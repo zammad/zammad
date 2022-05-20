@@ -60,7 +60,7 @@ RSpec.describe ::Sequencer::Sequence::Import::Freshdesk::GenericObject, sequence
       end
 
       it 'check that a failing response do not raise a hard error' do
-        expect { process(process_payload) }.to change(Group, :count).by(0)
+        expect { process(process_payload) }.not_to change(Group, :count)
       end
     end
   end

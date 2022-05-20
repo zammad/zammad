@@ -102,7 +102,7 @@ RSpec.describe 'Ticket Shared Draft Start', type: :system, authenticated_as: :au
         find('.js-name').fill_in with: 'Draft Name'
 
         expect { click '.js-create' }
-          .to change { Ticket::SharedDraftStart.count }
+          .to change(Ticket::SharedDraftStart, :count)
           .by 1
       end
     end
@@ -165,7 +165,7 @@ RSpec.describe 'Ticket Shared Draft Start', type: :system, authenticated_as: :au
     it 'saves as copy' do
       within :draft_sidebar do
         expect { click '.js-create' }
-          .to change { Ticket::SharedDraftStart.count }
+          .to change(Ticket::SharedDraftStart, :count)
           .by 1
       end
     end

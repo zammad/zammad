@@ -231,7 +231,7 @@ RSpec.describe Trigger, type: :model do
         it 'fires (without altering ticket state)' do
           expect { Channel::EmailParser.new.process({}, raw_email) }
             .to change(Ticket, :count).by(1)
-            .and change { Ticket::Article.count }.by(2)
+            .and change(Ticket::Article, :count).by(2)
 
           expect(Ticket.last.state.name).to eq('new')
         end
@@ -245,7 +245,7 @@ RSpec.describe Trigger, type: :model do
         it 'fires (without altering ticket state)' do
           expect { Channel::EmailParser.new.process({}, raw_email) }
             .to change(Ticket, :count).by(1)
-            .and change { Ticket::Article.count }.by(2)
+            .and change(Ticket::Article, :count).by(2)
 
           expect(Ticket.last.state.name).to eq('new')
 
@@ -477,7 +477,7 @@ RSpec.describe Trigger, type: :model do
 
               it 'does not fire' do
                 expect { TransactionDispatcher.commit }
-                  .to change(Ticket::Article, :count).by(0)
+                  .not_to change(Ticket::Article, :count)
               end
             end
           end
@@ -495,7 +495,7 @@ RSpec.describe Trigger, type: :model do
 
               it 'does not fire' do
                 expect { TransactionDispatcher.commit }
-                  .to change(Ticket::Article, :count).by(0)
+                  .not_to change(Ticket::Article, :count)
               end
             end
           end
@@ -516,7 +516,7 @@ RSpec.describe Trigger, type: :model do
 
                 it 'does not fire' do
                   expect { TransactionDispatcher.commit }
-                    .to change(Ticket::Article, :count).by(0)
+                    .not_to change(Ticket::Article, :count)
                 end
               end
             end
@@ -535,7 +535,7 @@ RSpec.describe Trigger, type: :model do
 
                 it 'does not fire' do
                   expect { TransactionDispatcher.commit }
-                    .to change(Ticket::Article, :count).by(0)
+                    .not_to change(Ticket::Article, :count)
                 end
               end
             end
@@ -682,7 +682,7 @@ RSpec.describe Trigger, type: :model do
         end
 
         it 'does not trigger because of the last article is created my system address' do
-          expect { TransactionDispatcher.commit }.to change { ticket.reload.articles.count }.by(0)
+          expect { TransactionDispatcher.commit }.not_to change { ticket.reload.articles.count }
           expect(Ticket::Article.where(ticket: ticket).last.subject).not_to eq('foo last sender')
           expect(Ticket::Article.where(ticket: ticket).last.to).not_to eq(system_address.email)
         end
@@ -697,7 +697,7 @@ RSpec.describe Trigger, type: :model do
         end
 
         it 'does not trigger because of the last article is created my system address' do
-          expect { TransactionDispatcher.commit }.to change { ticket.reload.articles.count }.by(0)
+          expect { TransactionDispatcher.commit }.not_to change { ticket.reload.articles.count }
           expect(Ticket::Article.where(ticket: ticket).last.subject).not_to eq('foo last sender')
           expect(Ticket::Article.where(ticket: ticket).last.to).not_to eq(system_address.email)
         end

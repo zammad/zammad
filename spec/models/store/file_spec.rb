@@ -66,7 +66,7 @@ RSpec.describe Store::File, type: :model do
 
       expect { described_class.move('DB', 'File') }
         .to change { file.reload.provider }.to('File')
-        .and change { Store::Provider::DB.count }.by(-1)
+        .and change(Store::Provider::DB, :count).by(-1)
         .and change { Dir[storage_path.join('**', '*')].select { |entry| File.file?(entry) }.count }.by(1)
     end
 
@@ -87,7 +87,7 @@ RSpec.describe Store::File, type: :model do
 
         expect { described_class.move('File', 'DB') }
           .to change { file.reload.provider }.to('DB')
-          .and change { Store::Provider::DB.count }.by(1)
+          .and change(Store::Provider::DB, :count).by(1)
           .and change { Dir[storage_path.join('*')].count }.by(-1)
       end
     end

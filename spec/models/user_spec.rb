@@ -885,7 +885,7 @@ RSpec.describe User, type: :model do
             .to eq(0)
 
           expect { user.update(phone: new_number) }
-            .to change { Cti::CallerId.where(object: 'User', o_id: user.id).count }.by(0)
+            .not_to change { Cti::CallerId.where(object: 'User', o_id: user.id).count }
 
           expect(Cti::CallerId).not_to have_received(:build)
         end
@@ -1292,7 +1292,7 @@ RSpec.describe User, type: :model do
 
               expect { create(:agent) }
                 .to raise_error(Exceptions::UnprocessableEntity)
-                .and change(current_agents, :count).by(0)
+                .and not_change(current_agents, :count)
             end
 
             it 'prevents role change' do
@@ -1302,7 +1302,7 @@ RSpec.describe User, type: :model do
 
               expect { future_agent.roles = [agent_role] }
                 .to raise_error(Exceptions::UnprocessableEntity)
-                .and change(current_agents, :count).by(0)
+                .and not_change(current_agents, :count)
             end
           end
         end
@@ -1351,7 +1351,7 @@ RSpec.describe User, type: :model do
 
               expect { create(:agent) }
                 .to raise_error(Exceptions::UnprocessableEntity)
-                .and change(current_agents, :count).by(0)
+                .and not_change(current_agents, :count)
             end
 
             it 'prevents role change' do
@@ -1361,7 +1361,7 @@ RSpec.describe User, type: :model do
 
               expect { future_agent.roles = [agent_role] }
                 .to raise_error(Exceptions::UnprocessableEntity)
-                .and change(current_agents, :count).by(0)
+                .and not_change(current_agents, :count)
             end
           end
         end
@@ -1377,7 +1377,7 @@ RSpec.describe User, type: :model do
 
               expect { inactive_agent.update!(active: true) }
                 .to raise_error(Exceptions::UnprocessableEntity)
-                .and change(current_agents, :count).by(0)
+                .and not_change(current_agents, :count)
             end
           end
         end
@@ -1391,7 +1391,7 @@ RSpec.describe User, type: :model do
 
               expect { inactive_agent.update!(active: true) }
                 .to raise_error(Exceptions::UnprocessableEntity)
-                .and change(current_agents, :count).by(0)
+                .and not_change(current_agents, :count)
             end
           end
         end
@@ -1433,7 +1433,7 @@ RSpec.describe User, type: :model do
           user.save
 
           expect { user.destroy }
-            .to change { Cti::CallerId.count }.by(-1)
+            .to change(Cti::CallerId, :count).by(-1)
         end
       end
     end

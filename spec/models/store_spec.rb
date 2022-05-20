@@ -132,7 +132,7 @@ RSpec.describe Store, type: :model do
 
       it 'destroys the associated Store::File record' do
         expect { described_class.remove(object: 'Test', o_id: 1) }
-          .to change { described_class::File.count }.by(-1)
+          .to change(described_class::File, :count).by(-1)
       end
 
       context 'with the same file stored under multiple o_ids' do
@@ -145,7 +145,7 @@ RSpec.describe Store, type: :model do
 
         it 'does not destroy the associated Store::File record (because it is referenced by another Store)' do
           expect { described_class.remove(object: 'Test', o_id: 1) }
-            .not_to change { Store::File.count }
+            .not_to change(Store::File, :count)
         end
       end
 
@@ -159,7 +159,7 @@ RSpec.describe Store, type: :model do
 
         it 'destroys all associated Store::File records' do
           expect { described_class.remove(object: 'Test', o_id: 1) }
-            .to change { Store::File.count }.by(-2)
+            .to change(Store::File, :count).by(-2)
         end
       end
     end

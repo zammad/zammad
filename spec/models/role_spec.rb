@@ -75,13 +75,13 @@ RSpec.describe Role do
         it 'cannot be created' do
           expect { create(:role, permissions: [permission]) }
             .to raise_error(%r{is disabled})
-            .and change(described_class, :count).by(0)
+            .and not_change(described_class, :count)
         end
 
         it 'cannot be added' do
           expect { role.permissions << permission }
             .to raise_error(%r{is disabled})
-            .and change { role.permissions.count }.by(0)
+            .and not_change { role.permissions.count }
         end
       end
 
@@ -91,7 +91,7 @@ RSpec.describe Role do
         it 'cannot be created' do
           expect { create(:role, permissions: [Permission.first, permission]) }
             .to raise_error(%r{conflicts with})
-            .and change(described_class, :count).by(0)
+            .and not_change(described_class, :count)
         end
 
         it 'cannot be added' do
@@ -99,7 +99,7 @@ RSpec.describe Role do
 
           expect { role.permissions << permission }
             .to raise_error(%r{conflicts with})
-            .and change { role.permissions.count }.by(0)
+            .and not_change { role.permissions.count }
         end
       end
 
@@ -135,7 +135,7 @@ RSpec.describe Role do
             it 'fails and raises an error' do
               expect { role.update!(active: true) }
                 .to raise_error(Exceptions::UnprocessableEntity)
-                .and change(agents, :count).by(0)
+                .and not_change(agents, :count)
             end
           end
         end

@@ -77,7 +77,7 @@ RSpec.describe ::Sequencer::Sequence::Import::Kayako::TimeEntry, sequencer: :seq
       end
 
       it 'skip time entry' do
-        expect { process(process_payload) }.to change(Ticket::TimeAccounting, :count).by(0)
+        expect { process(process_payload) }.not_to change(Ticket::TimeAccounting, :count)
       end
     end
   end

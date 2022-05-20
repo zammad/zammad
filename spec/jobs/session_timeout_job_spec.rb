@@ -27,7 +27,7 @@ RSpec.describe SessionTimeoutJob, type: :job do
 
     it 'does not kill the session' do
       travel_to 1.minute.from_now
-      expect { described_class.perform_now }.to change(ActiveRecord::SessionStore::Session, :count).by(0)
+      expect { described_class.perform_now }.not_to change(ActiveRecord::SessionStore::Session, :count)
     end
   end
 
@@ -45,7 +45,7 @@ RSpec.describe SessionTimeoutJob, type: :job do
 
     it 'does not kill the session' do
       travel_to 1.minute.from_now
-      expect { described_class.perform_now }.to change(ActiveRecord::SessionStore::Session, :count).by(0)
+      expect { described_class.perform_now }.not_to change(ActiveRecord::SessionStore::Session, :count)
     end
   end
 
@@ -63,7 +63,7 @@ RSpec.describe SessionTimeoutJob, type: :job do
 
     it 'does not kill the session' do
       travel_to 1.minute.from_now
-      expect { described_class.perform_now }.to change(ActiveRecord::SessionStore::Session, :count).by(0)
+      expect { described_class.perform_now }.not_to change(ActiveRecord::SessionStore::Session, :count)
     end
   end
 
@@ -81,7 +81,7 @@ RSpec.describe SessionTimeoutJob, type: :job do
 
     it 'does not kill the session' do
       travel_to 1.hour.from_now
-      expect { described_class.perform_now }.to change(ActiveRecord::SessionStore::Session, :count).by(0)
+      expect { described_class.perform_now }.not_to change(ActiveRecord::SessionStore::Session, :count)
     end
   end
 
@@ -99,7 +99,7 @@ RSpec.describe SessionTimeoutJob, type: :job do
 
     it 'does not kill the session' do
       travel_to 1.minute.from_now
-      expect { described_class.perform_now }.to change(ActiveRecord::SessionStore::Session, :count).by(0)
+      expect { described_class.perform_now }.not_to change(ActiveRecord::SessionStore::Session, :count)
     end
   end
 
@@ -123,7 +123,7 @@ RSpec.describe SessionTimeoutJob, type: :job do
 
     it 'does not kill the session' do
       travel_to 1.minute.from_now
-      expect { described_class.perform_now }.to change(ActiveRecord::SessionStore::Session, :count).by(0)
+      expect { described_class.perform_now }.not_to change(ActiveRecord::SessionStore::Session, :count)
     end
   end
 
@@ -136,7 +136,7 @@ RSpec.describe SessionTimeoutJob, type: :job do
 
     it 'does not kill the session because all timeouts are disabled in 1 hour' do
       travel_to 1.hour.from_now
-      expect { described_class.perform_now }.to change(ActiveRecord::SessionStore::Session, :count).by(0)
+      expect { described_class.perform_now }.not_to change(ActiveRecord::SessionStore::Session, :count)
     end
 
     it 'does also kill the session of deleted users' do
@@ -147,7 +147,7 @@ RSpec.describe SessionTimeoutJob, type: :job do
 
     it 'does not kill the session because all timeouts are disabled in 1 minute' do
       travel_to 1.minute.from_now
-      expect { described_class.perform_now }.to change(ActiveRecord::SessionStore::Session, :count).by(0)
+      expect { described_class.perform_now }.not_to change(ActiveRecord::SessionStore::Session, :count)
     end
   end
 

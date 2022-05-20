@@ -237,7 +237,7 @@ RSpec.describe 'Api Auth From', type: :request do
         expect(response).to have_http_status(:created)
         expect(customer.id).to eq(json_response['created_by_id'])
 
-        expect { Scheduler.worker(true) }.to change(UserDevice, :count).by(0)
+        expect { Scheduler.worker(true) }.not_to change(UserDevice, :count)
       end
     end
   end

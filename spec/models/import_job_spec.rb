@@ -43,9 +43,7 @@ RSpec.describe ImportJob do
           name:    test_backend_name,
           payload: {}
         )
-      end.to change {
-        Delayed::Job.count
-      }.by(1)
+      end.to change(Delayed::Job, :count).by(1)
     end
 
     it 'starts dry run import job immediately' do
@@ -55,9 +53,7 @@ RSpec.describe ImportJob do
           payload: {},
           delay:   false
         )
-      end.not_to change {
-        Delayed::Job.count
-      }
+      end.not_to change(Delayed::Job, :count)
     end
 
     it "doesn't start job if one exists" do
@@ -69,9 +65,7 @@ RSpec.describe ImportJob do
           name:    test_backend_name,
           payload: {},
         )
-      end.not_to change {
-        Delayed::Job.count
-      }
+      end.not_to change(Delayed::Job, :count)
     end
 
   end

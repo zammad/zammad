@@ -200,7 +200,7 @@ RSpec.describe ::Sequencer::Sequence::Import::Freshdesk::Ticket, sequencer: :seq
       end
 
       it 'updates first article for already existing ticket' do
-        expect { process(process_payload) }.to change(Ticket::Article, :count).by(0)
+        expect { process(process_payload) }.not_to change(Ticket::Article, :count)
       end
 
       it 'correct tags for added ticket' do

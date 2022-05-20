@@ -1834,8 +1834,8 @@ RSpec.describe Ticket, type: :model do
         it 'adds attachments to the Store{::File,::Provider::DB} tables' do
           expect { ticket }
             .to change(Store, :count).by(2)
-            .and change { Store::File.count }.by(2)
-            .and change { Store::Provider::DB.count }.by(2)
+            .and change(Store::File, :count).by(2)
+            .and change(Store::Provider::DB, :count).by(2)
         end
 
         context 'and subsequently destroyed' do
@@ -1844,8 +1844,8 @@ RSpec.describe Ticket, type: :model do
 
             expect { ticket.destroy }
               .to change(Store, :count).by(-2)
-              .and change { Store::File.count }.by(-2)
-              .and change { Store::Provider::DB.count }.by(-2)
+              .and change(Store::File, :count).by(-2)
+              .and change(Store::Provider::DB, :count).by(-2)
           end
         end
 
@@ -1857,8 +1857,8 @@ RSpec.describe Ticket, type: :model do
           it 'adds duplicate attachments to the Store table only' do
             expect { duplicate }
               .to change(Store, :count).by(2)
-              .and change { Store::File.count }.by(0)
-              .and change { Store::Provider::DB.count }.by(0)
+              .and not_change(Store::File, :count)
+              .and not_change(Store::Provider::DB, :count)
           end
 
           context 'when only the duplicate ticket is destroyed' do
@@ -1867,8 +1867,8 @@ RSpec.describe Ticket, type: :model do
 
               expect { duplicate.destroy }
                 .to change(Store, :count).by(-2)
-                .and change { Store::File.count }.by(0)
-                .and change { Store::Provider::DB.count }.by(0)
+                .and not_change(Store::File, :count)
+                .and not_change(Store::Provider::DB, :count)
             end
 
             it 'deletes all related attachments' do
@@ -1876,8 +1876,8 @@ RSpec.describe Ticket, type: :model do
 
               expect { ticket.destroy }
                 .to change(Store, :count).by(-2)
-                .and change { Store::File.count }.by(-2)
-                .and change { Store::Provider::DB.count }.by(-2)
+                .and change(Store::File, :count).by(-2)
+                .and change(Store::Provider::DB, :count).by(-2)
             end
           end
         end

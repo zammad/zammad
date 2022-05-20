@@ -25,7 +25,7 @@ RSpec.describe Ticket::Priority, type: :model do
       it 'cannot be true for more than one record at a time' do
         expect { create(:'ticket/priority', default_create: true) }
           .to change { described_class.find_by(default_create: true).id }
-          .and change { described_class.where(default_create: true).count }.by(0)
+          .and not_change { described_class.where(default_create: true).count }
       end
 
       it 'cannot be false for all records' do
@@ -33,7 +33,7 @@ RSpec.describe Ticket::Priority, type: :model do
 
         expect { described_class.find_by(default_create: true).destroy }
           .to change { described_class.find_by(default_create: true).id }
-          .and change { described_class.where(default_create: true).count }.by(0)
+          .and not_change { described_class.where(default_create: true).count }
       end
 
       it 'is not automatically set to the last-created record' do

@@ -88,7 +88,7 @@ RSpec.describe ::Sequencer::Sequence::Import::Freshdesk::TimeEntries, sequencer:
       let(:resources_payloud) { [] }
 
       it 'do not change time entry for ticket' do
-        expect { process(process_payload) }.to change(Ticket::TimeAccounting, :count).by(0)
+        expect { process(process_payload) }.not_to change(Ticket::TimeAccounting, :count)
       end
     end
   end
@@ -97,7 +97,7 @@ RSpec.describe ::Sequencer::Sequence::Import::Freshdesk::TimeEntries, sequencer:
     let(:time_entry_available) { false }
 
     it 'add time entry for ticket' do
-      expect { process(process_payload) }.to change(Ticket::TimeAccounting, :count).by(0)
+      expect { process(process_payload) }.not_to change(Ticket::TimeAccounting, :count)
     end
   end
 end

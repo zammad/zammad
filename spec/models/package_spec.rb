@@ -66,8 +66,8 @@ RSpec.describe Package, type: :model do
       it 'installation should raise a error and package/store should not be present, because of not allowed file location' do
         expect { described_class.install(string: package_zpm_json) }
           .to raise_error(RuntimeError)
-          .and change(described_class, :count).by(0)
-          .and change(Store, :count).by(0)
+          .and not_change(described_class, :count)
+          .and not_change(Store, :count)
       end
     end
 

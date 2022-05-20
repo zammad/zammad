@@ -35,7 +35,7 @@ RSpec.describe 'Admin Knowledge Base Public Menu', type: :request, authenticated
 
     params = build_params([attrs])
 
-    expect { make_request(params) }.to change { KnowledgeBase::MenuItem.count }.by(-1)
+    expect { make_request(params) }.to change(KnowledgeBase::MenuItem, :count).by(-1)
   end
 
   it 'add item' do
@@ -47,7 +47,7 @@ RSpec.describe 'Admin Knowledge Base Public Menu', type: :request, authenticated
 
     params = build_params([to_params(menu_item), new_item])
 
-    expect { make_request(params) }.to change { KnowledgeBase::MenuItem.count }.by(1)
+    expect { make_request(params) }.to change(KnowledgeBase::MenuItem, :count).by(1)
   end
 
   def to_params(item)

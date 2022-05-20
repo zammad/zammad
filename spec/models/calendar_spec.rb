@@ -142,7 +142,7 @@ RSpec.describe Calendar, type: :model do
 
         it 'does not create a background job for escalation rebuild' do
           expect { calendar.sync }
-            .not_to change { Delayed::Job.count }
+            .not_to change(Delayed::Job, :count)
         end
       end
 
