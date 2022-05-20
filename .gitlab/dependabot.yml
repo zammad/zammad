@@ -11,8 +11,6 @@ updates:
       prefix: "Maintenance:"
     assignees:
       - mg
-    reviewers:
-      - mg
   - package-ecosystem: "npm"
     directory: "/"
     # Always increase the version requirement to match the new version.
@@ -23,6 +21,4 @@ updates:
     commit-message:
       prefix: "Maintenance:"
     assignees:
-      - dk
-    reviewers:
       - dk
