@@ -92,17 +92,19 @@ class ObjectManager extends App.ControllerTabs
     )
 
   build: (objects) =>
-    @tabs = []
-    for object in objects
-      item =
-        name:       object
-        target:     "c-#{object}"
-        controller: Items
-        params:
-          object: object
-      @tabs.push item
+    App.ObjectManagerAttribute.fetchFull(=>
+      @tabs = []
+      for object in objects
+        item =
+          name:       object
+          target:     "c-#{object}"
+          controller: Items
+          params:
+            object: object
+        @tabs.push item
 
-    @render()
+      @render()
+    )
 
 class Items extends App.ControllerSubContent
   header: __('Object Manager')
@@ -116,7 +118,7 @@ class Items extends App.ControllerSubContent
   constructor: ->
     super
     @subscribeId = App.ObjectManagerAttribute.subscribe(@render)
-    App.ObjectManagerAttribute.fetch()
+    @render()
 
   release: =>
     if @subscribeId
