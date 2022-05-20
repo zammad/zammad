@@ -509,6 +509,8 @@ class _taskManagerSingleton extends App.Controller
 
   # reset while tasks
   reset: =>
+    # clear loading tasks
+    App.Delay.clearLevel('task')
 
     # release touch tasks
     for key, task of @allTasksByKey
