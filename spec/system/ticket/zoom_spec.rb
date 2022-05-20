@@ -1500,7 +1500,6 @@ RSpec.describe 'Ticket zoom', type: :system do
     end
 
     let(:ticket) { Ticket.first }
-    let(:elem)   { find('.js-timepicker') }
 
     # has to run asynchronously to keep both Firefox and Safari
     # https://github.com/zammad/zammad/issues/3414
@@ -1508,15 +1507,18 @@ RSpec.describe 'Ticket zoom', type: :system do
     context 'when clicking timepicker component' do
       it 'in the first half, hours selected' do
         within :active_content do
-          elem.click(x: 10, y: 20)
-          expect(elem).to have_selection(0..2)
+          # timepicker messes with the dom, so don't cache the element and wait a bit after clicking.
+          find('.js-timepicker').click(x: 10, y: 20)
+          sleep 0.5
+          expect(find('.js-timepicker')).to have_selection(0..2)
         end
       end
 
       it 'in the second half, minutes selected' do
         within :active_content do
-          elem.click(x: 35, y: 20)
-          expect(elem).to have_selection(3..5)
+          find('.js-timepicker').click(x: 35, y: 20)
+          sleep 0.5
+          expect(find('.js-timepicker')).to have_selection(3..5)
         end
       end
     end
