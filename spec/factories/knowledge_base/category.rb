@@ -35,7 +35,7 @@ FactoryBot.define do
       level2 = create(:knowledge_base_category, parent: obj)
       create_list(:knowledge_base_category, 2, parent: level2)
 
-      level3 = level2.children.reload.first
+      level3 = level2.children.reload.sorted.first
       create_list(:knowledge_base_category, 2, parent: level3)
 
       obj.reload

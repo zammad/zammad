@@ -24,8 +24,8 @@ RSpec.describe KnowledgeBase::Category, type: :model, current_user_id: 1 do
     subject(:kb_category_with_tree) { create(:kb_category_with_tree) }
 
     let(:knowledge_base) { kb_category_with_tree.knowledge_base }
-    let(:child_category) { kb_category_with_tree.children.order(position: :asc).last }
-    let(:grandchild_category) { child_category.children.order(position: :asc).first }
+    let(:child_category) { kb_category_with_tree.children.sorted.last }
+    let(:grandchild_category) { child_category.children.sorted.first }
 
     it 'tests to fetch all categories in KB' do
       expect(knowledge_base.categories.count).to eq(7)
