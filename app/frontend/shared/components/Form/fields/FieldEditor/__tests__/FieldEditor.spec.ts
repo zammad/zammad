@@ -10,21 +10,25 @@ const wrapperParameters = {
   formField: true,
 }
 
-const wrapper = renderComponent(FormKit, {
-  ...wrapperParameters,
-  props: {
-    name: 'editor',
-    type: 'editor',
-    id: 'editor',
-    label: 'Editor',
-  },
-  unmount: false,
-})
-
 // Only some small initialize test, because the real editor testing is inside of cypress.
 describe('Form - Field - Editor (TipTap)', () => {
-  it('can render a editor', async () => {
-    const editor = await wrapper.findByTestId('field-editor')
+  const wrapper = renderComponent(FormKit, {
+    ...wrapperParameters,
+    props: {
+      name: 'editor',
+      type: 'editor',
+      id: 'editor',
+      label: 'Editor',
+    },
+    unmount: false,
+  })
+
+  it('can render an editor', async () => {
+    const editor = await wrapper.findByTestId(
+      'field-editor',
+      {},
+      { timeout: 5000 },
+    )
 
     await nextTick()
 
@@ -32,7 +36,7 @@ describe('Form - Field - Editor (TipTap)', () => {
 
     const node = getNode('editor')
     expect(node?.value).toBe(undefined)
-  })
+  }, 5000)
 
   it('set some props', async () => {
     await wrapper.rerender({
