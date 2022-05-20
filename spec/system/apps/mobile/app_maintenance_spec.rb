@@ -6,6 +6,7 @@ RSpec.describe 'Mobile > App Update Check', type: :system, app: :mobile do
   context 'when checking application rebuild notification', authenticated_as: false do
     before do
       visit '/mobile/login?ApplicationRebuildCheckInterval=500'
+      wait_for_test_flag('useApplicationBuildChecksumQuery.firstResult')
       wait_for_test_flag('useAppMaintenanceSubscription.subscribed')
     end
 

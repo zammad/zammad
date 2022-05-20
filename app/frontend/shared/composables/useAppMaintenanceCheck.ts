@@ -72,6 +72,7 @@ export default function useAppMaintenanceCheck() {
       if (!queryResult?.applicationBuildChecksum.length) return
       if (!previousChecksum) {
         previousChecksum = queryResult?.applicationBuildChecksum
+        testFlags.set('useApplicationBuildChecksumQuery.firstResult')
       }
       if (queryResult?.applicationBuildChecksum !== previousChecksum) {
         notify(notificationMessage)
