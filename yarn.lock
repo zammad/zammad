@@ -1304,12 +1304,12 @@
   resolved "https://registry.yarnpkg.com/@tiptap/extension-underline/-/extension-underline-2.0.0-beta.23.tgz#050a31ac55b7ad63e8abf57ac941c62e255f57b8"
   integrity sha512-pMjFH/NpFWLd2XQQa5rG9rGVQ9mu3ygdtu6VGfJ3aAjzBiyLXDKhE4biIFWyFsr8zLpp7DjwbrmLV0UGvbG1WQ==
 
-"@tiptap/starter-kit@^2.0.0-beta.184":
-  version "2.0.0-beta.184"
-  resolved "https://registry.yarnpkg.com/@tiptap/starter-kit/-/starter-kit-2.0.0-beta.184.tgz#c621d51d9cb8a1b18cbec7af6080ce8288bdce72"
-  integrity sha512-FgF94i5RQzXiGAIkaubnXEaYwJfiZRbMPZcmarwNo8IyqPnLT34Q1yjw/qZ3nv7rDehWV5l/zenbrrNtPYVCkA==
+"@tiptap/starter-kit@^2.0.0-beta.185":
+  version "2.0.0-beta.185"
+  resolved "https://registry.yarnpkg.com/@tiptap/starter-kit/-/starter-kit-2.0.0-beta.185.tgz#a14e2de102bce662f499de82253c2621dce982ef"
+  integrity sha512-UN7GfYpenav9osAhUYfUnYxtGOYxq6i+k/rDEil/LsFKiRgWW7LrddX6X99TW66dmKohNXU4PaCy5RJ7IfoMdg==
   dependencies:
-    "@tiptap/core" "^2.0.0-beta.175"
+    "@tiptap/core" "^2.0.0-beta.176"
     "@tiptap/extension-blockquote" "^2.0.0-beta.26"
     "@tiptap/extension-bold" "^2.0.0-beta.26"
     "@tiptap/extension-bullet-list" "^2.0.0-beta.26"

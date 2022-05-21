@@ -101,7 +101,7 @@
     "@tiptap/extension-paragraph": "^2.0.0-beta.23",
     "@tiptap/extension-strike": "^2.0.0-beta.27",
     "@tiptap/extension-underline": "^2.0.0-beta.23",
-    "@tiptap/starter-kit": "^2.0.0-beta.184",
+    "@tiptap/starter-kit": "^2.0.0-beta.185",
     "@tiptap/suggestion": "^2.0.0-beta.91",
     "@tiptap/vue-3": "^2.0.0-beta.91",
     "@vue/apollo-composable": "^4.0.0-alpha.17",
