@@ -1135,10 +1135,10 @@
     "@testing-library/dom" "^8.5.0"
     "@vue/test-utils" "^2.0.0-rc.18"
 
-"@tiptap/core@^2.0.0-beta.175":
-  version "2.0.0-beta.175"
-  resolved "https://registry.yarnpkg.com/@tiptap/core/-/core-2.0.0-beta.175.tgz#d23f6e60308cde192451121e21df83c256bdcd92"
-  integrity sha512-dDf+2GtifskNLysn49kaCIz0o5hf6VDZ8J7jSQAfoPDEkEkfw9OKhWrR7NzWW6J34CSJreFDRiWkGt8Qz283Vg==
+"@tiptap/core@^2.0.0-beta.175", "@tiptap/core@^2.0.0-beta.176":
+  version "2.0.0-beta.176"
+  resolved "https://registry.yarnpkg.com/@tiptap/core/-/core-2.0.0-beta.176.tgz#a8bb9b57d2ecf77b6cd02340324626ef3e336a15"
+  integrity sha512-Gs/+yUYTNpt8PnclEHbfBnY56D/9PpKTyzrg8VZwCFK9S69aVD2dqLsYs/Gn+EjzKImXRAiqSe1/FWcNEDkmCg==
   dependencies:
     "@types/prosemirror-commands" "^1.0.4"
     "@types/prosemirror-keymap" "^1.0.4"
