@@ -956,10 +956,10 @@
   resolved "https://registry.yarnpkg.com/@graphql-typed-document-node/core/-/core-3.1.1.tgz#076d78ce99822258cf813ecc1e7fa460fa74d052"
   integrity sha512-NQ17ii0rK1b34VZonlmT2QMJFI70m0TRwbknO/ihlbatXyaktDhN/98vBiUU6kNBPljqGqyIrl2T4nY2RpFANg==
 
-"@headlessui/vue@^1.6.1":
-  version "1.6.1"
-  resolved "https://registry.yarnpkg.com/@headlessui/vue/-/vue-1.6.1.tgz#772dde92ec3a3a494c827b1643a6d5538baabd29"
-  integrity sha512-fccGN1hsFvS0P73NplZoOdX1rhyaH5jIQE9IUKNaaJC72mQjR3lVvZldo+iiLF5X1bqgl6pDixWdqS2kMGfFxA==
+"@headlessui/vue@^1.6.2":
+  version "1.6.2"
+  resolved "https://registry.yarnpkg.com/@headlessui/vue/-/vue-1.6.2.tgz#7f00d1f1042636ee00beed8eecb873ead65174d3"
+  integrity sha512-xKNPfQya1uKUWaz75klSlg/dqDFNn8/wbY1Kzj0RxEM5t85SiGzs8CG7E8hvsq0Fdx1KRCagCTi6vmGHmK51Dw==
 
 "@humanwhocodes/config-array@^0.9.2":
   version "0.9.5"
