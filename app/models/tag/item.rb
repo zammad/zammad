@@ -4,6 +4,10 @@ class Tag::Item < ApplicationModel
   validates   :name, presence: true
   before_save :fill_namedowncase
 
+  has_many :tags, foreign_key: 'tag_item_id',
+                  inverse_of:  :tag_item,
+                  dependent:   :destroy
+
 =begin
 
 lookup by name and create tag item

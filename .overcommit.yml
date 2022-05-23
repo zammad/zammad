@@ -23,7 +23,7 @@ PreCommit:
       ]
     enabled: true
     on_warn: fail
-    exclude: public/assets/chat/**/*
+    exclude: 'public/assets/chat/**/*'
   CustomScript:
     enabled: true
     description: 'Check if translation catalog is up-to-date'
@@ -35,6 +35,9 @@ PreCommit:
     required_executable: 'yarn'
     enabled: true
     command: ['yarn', 'lint']
+    exclude:
+      - 'app/assets/**/*'
+      - 'public/assets/chat/**/*'
 
 PostCheckout:
   ALL:

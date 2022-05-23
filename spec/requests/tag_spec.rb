@@ -100,6 +100,18 @@ RSpec.describe Tag, type: :request do
         include_examples 'no tag found using', search_term: '1foobar'
         include_examples 'no tag found using', search_term: 'foobar2'
       end
+
+      context 'without search term' do
+        before do
+          create_list(:tag, 2, tag_item: tags.last)
+          create_list(:tag, 1, tag_item: tags.first)
+        end
+
+        it 'most used is on first place without search term' do
+          get '/api/v1/tag_search', params: { term: '' }
+          expect(json_response.first['value']).to eq(tags.last.name)
+        end
+      end
     end
   end
 end

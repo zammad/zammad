@@ -6,7 +6,8 @@ class TagsController < ApplicationController
 
   # GET /api/v1/tag_search?term=abc
   def search
-    list = Tag::Item.where('name_downcase LIKE ?', "%#{params[:term].strip.downcase}%").order(name: :asc).limit(params[:limit] || 10)
+    list = get_tag_list(params[:term], params[:limit] || 10)
+
     results = []
     list.each do |item|
       result = {
@@ -95,4 +96,13 @@ class TagsController < ApplicationController
     render json: {}
   end
 
+  private
+
+  def get_tag_list(term, limit)
+    if term.blank?
+      return Tag::Item.left_outer_joins(:tags).group(:id).order('COUNT(tags.tag_item_id) DESC, name ASC').limit(limit)
+    end
+
+    Tag::Item.where('name_downcase LIKE ?', "%#{term.strip.downcase}%").order(name: :asc).limit(limit)
+  end
 end
