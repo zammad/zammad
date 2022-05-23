@@ -540,6 +540,10 @@ msgstr ""
 msgid "Active Agents"
 msgstr ""
 
+#: app/assets/javascripts/app/views/time_accounting/index.jst.eco
+msgid "Activity"
+msgstr ""
+
 #: app/assets/javascripts/app/views/dashboard.jst.eco
 msgid "Activity Stream"
 msgstr ""
@@ -712,7 +716,9 @@ msgid "Age"
 msgstr ""
 
 #: app/assets/javascripts/app/views/popover/ticket.jst.eco
+#: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
+#: app/controllers/time_accountings_controller.rb
 #: db/seeds/roles.rb
 #: db/seeds/ticket_article_senders.rb
 msgid "Agent"
@@ -2297,6 +2303,7 @@ msgstr ""
 msgid "Created"
 msgstr ""
 
+#: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
 #: lib/excel_sheet/ticket.rb
 msgid "Created At"
@@ -2309,6 +2316,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco
 #: app/assets/javascripts/app/views/widget/http_log.jst.eco
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
+#: app/controllers/time_accountings_controller.rb
 msgid "Created at"
 msgstr ""
 
@@ -2400,6 +2408,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco
 #: app/assets/javascripts/app/views/popover/ticket.jst.eco
+#: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
@@ -5687,6 +5696,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/user.coffee
 #: app/assets/javascripts/app/views/maintenance.jst.eco
+#: app/controllers/time_accountings_controller.rb
 #: db/seeds/object_manager_attributes.rb
 msgid "Login"
 msgstr ""
@@ -6182,6 +6192,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/tag/table.jst.eco
 #: app/assets/javascripts/app/views/widget/organization.jst.eco
 #: app/assets/javascripts/app/views/widget/user.jst.eco
+#: app/controllers/time_accountings_controller.rb
 #: db/seeds/object_manager_attributes.rb
 msgid "Name"
 msgstr ""
@@ -6406,6 +6417,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_group.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
+#: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_organization.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
@@ -6875,6 +6887,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/user.coffee
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
+#: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_organization.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
@@ -9737,7 +9750,9 @@ msgstr ""
 msgid "Ticket |%s| will escalate soon!"
 msgstr ""
 
+#: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
+#: app/controllers/time_accountings_controller.rb
 msgid "Ticket#"
 msgstr ""
 
@@ -9801,6 +9816,7 @@ msgstr ""
 msgid "Time Accounting Selector"
 msgstr ""
 
+#: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_organization.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
@@ -9848,7 +9864,9 @@ msgstr ""
 #: app/assets/javascripts/app/views/knowledge_base/public_menu_form_item.jst.eco
 #: app/assets/javascripts/app/views/maintenance.jst.eco
 #: app/assets/javascripts/app/views/settings/form.jst.eco
+#: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
+#: app/controllers/time_accountings_controller.rb
 #: app/frontend/apps/mobile/modules/ticket/components/TicketList/TicketList.vue
 #: db/seeds/object_manager_attributes.rb
 #: lib/excel_sheet/ticket.rb

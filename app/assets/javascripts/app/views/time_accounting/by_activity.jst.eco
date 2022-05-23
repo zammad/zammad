@@ -1,0 +1,31 @@
+<% if !@rows.length: %>
+  <table class="settings-list settings-list--stretch settings-list--placeholder">
+    <thead><tr><th><%- @T('No Entries') %>
+  </table>
+<% else: %>
+<table class="table table-striped table-hover">
+  <thead>
+  <tr>
+    <th><%- @T('Ticket#') %>
+    <th><%- @T('Title') %>
+    <th><%- @T('Customer') %>
+    <th><%- @T('Organization') %>
+    <th><%- @T('Agent') %>
+    <th><%- @T('Time Units') %>
+    <th><%- @T('Created At') %>
+  </thead>
+  <tbody>
+  <% for row in @rows: %>
+  <tr>
+    <td><a href="#ticket/zoom/<%- row.ticket.id %>"><%= row.ticket.number %></a>
+    <td title="<%= row.ticket.title %>"><%= row.ticket.title || '-' %>
+    <td><%= row.customer %>
+    <td><%= row.organization %>
+    <td><%= row.agent %>
+    <td><%= row.time_unit %>
+    <td><%- @humanTime(row.ticket.created_at) %>
+  <% end %>
+  </tbody>
+</table>
+</div>
+<% end %>

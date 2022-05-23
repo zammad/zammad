@@ -115,6 +115,12 @@ class TimeAccounting extends App.ControllerSubContent
       autofocus: true
     )
 
+    new ByActivity(
+      el: @$('.js-tableActivity')
+      year: @year
+      month: @month
+    )
+
     new ByTicket(
       el: @$('.js-tableTicket')
       year: @year
@@ -161,6 +167,26 @@ class TimeAccounting extends App.ControllerSubContent
     e.preventDefault()
     @month = $(e.target).data('type')
     @render()
+
+class ByActivity extends App.Controller
+  constructor: ->
+    super
+    @load()
+
+  load: =>
+    @ajax(
+      id:    'by_activity'
+      type:  'GET'
+      url:   "#{@apiPath}/time_accounting/log/by_activity/#{@year}/#{@month}"
+      processData: true
+      success: (data, status, xhr) =>
+        @render(data)
+    )
+
+  render: (rows) =>
+    @html App.view('time_accounting/by_activity')(
+      rows: rows
+    )
 
 class ByTicket extends App.Controller
   constructor: ->

@@ -3,6 +3,112 @@
 class TimeAccountingsController < ApplicationController
   prepend_before_action { authentication_check && authorize! }
 
+  def by_activity
+
+    year = params[:year] || Time.zone.now.year
+    month = params[:month] || Time.zone.now.month
+
+    start_periode = Time.zone.parse("#{year}-#{month}-01")
+    end_periode = start_periode.end_of_month
+
+    records = []
+    Ticket::TimeAccounting.where('created_at >= ? AND created_at <= ?', start_periode, end_periode).pluck(:ticket_id, :ticket_article_id, :time_unit, :created_by_id, :created_at).each do |record|
+      records.push record
+    end
+
+    customers     = {}
+    organizations = {}
+    agents        = {}
+    results       = []
+    records.each do |record|
+      ticket = Ticket.lookup(id: record[0])
+      next if !ticket
+
+      customers[ticket.customer_id]         ||= User.lookup(id: ticket.customer_id).fullname
+      organizations[ticket.organization_id] ||= Organization.lookup(id: ticket.organization_id)&.name
+      agents[record[3]]                     ||= User.lookup(id: record[3])
+
+      result = if params[:download]
+                 [
+                   ticket.number,
+                   ticket.title,
+                   customers[ticket.customer_id] || '-',
+                   organizations[ticket.organization_id] || '-',
+                   agents[record[3]].fullname,
+                   agents[record[3]].login,
+                   record[2],
+                   record[4]
+                 ]
+               else
+                 {
+                   ticket:       ticket.attributes,
+                   time_unit:    record[2],
+                   customer:     customers[ticket.customer_id] || '-',
+                   organization: organizations[ticket.organization_id] || '-',
+                   agent:        agents[record[3]].fullname,
+                   created_at:   record[4],
+                 }
+               end
+
+      results.push result
+    end
+
+    if !params[:download]
+      render json: results
+      return
+    end
+
+    header = [
+      {
+        name:  __('Ticket#'),
+        width: 20,
+      },
+      {
+        name:  __('Title'),
+        width: 20,
+      },
+      {
+        name:  "#{__('Customer')} - #{__('Name')}",
+        width: 20,
+      },
+      {
+        name:  __('Organization'),
+        width: 20,
+      },
+      {
+        name:  "#{__('Agent')} - #{__('Name')}",
+        width: 20,
+      },
+      {
+        name:  "#{__('Agent')} - #{__('Login')}",
+        width: 20,
+      },
+      {
+        name:      __('Time Units'),
+        width:     10,
+        data_type: 'float'
+      },
+      {
+        name:  __('Created at'),
+        width: 20,
+      },
+    ]
+
+    excel = ExcelSheet.new(
+      title:    "By Activity #{year}-#{month}",
+      header:   header,
+      records:  results,
+      timezone: params[:timezone],
+      locale:   current_user.locale,
+    )
+    send_data(
+      excel.content,
+      filename:    "by_activity-#{year}-#{month}.xls",
+      type:        'application/vnd.ms-excel',
+      disposition: 'attachment'
+    )
+  end
+
   def by_ticket
 
     year = params[:year] || Time.zone.now.year
@@ -31,35 +137,15 @@ class TimeAccountingsController < ApplicationController
         ticket = Ticket.lookup(id: ticket_id)
         next if !ticket
 
-        if !customers[ticket.customer_id]
-          customers[ticket.customer_id] = '-'
-          if ticket.customer_id
-            customer_user = User.lookup(id: ticket.customer_id)
-            if customer_user
-              customers[ticket.customer_id] = customer_user.fullname
-            end
-          end
-        end
-        if !organizations[ticket.organization_id]
-          organizations[ticket.organization_id] = '-'
-          if ticket.organization_id
-            organization = Organization.lookup(id: ticket.organization_id)
-            if organization
-              organizations[ticket.organization_id] = organization.name
-            end
-          end
-        end
-        if !agents[local_time_unit[:agent_id]]
-          agent_user = User.lookup(id: local_time_unit[:agent_id])
-          if agent_user
-            agents[local_time_unit[:agent_id]] = agent_user.fullname
-          end
-        end
+        customers[ticket.customer_id]         ||= User.lookup(id: ticket.customer_id).fullname
+        organizations[ticket.organization_id] ||= Organization.lookup(id: ticket.organization_id)&.name
+        agents[local_time_unit[:agent_id]]    ||= User.lookup(id: local_time_unit[:agent_id]).fullname
+
         result = {
           ticket:       ticket.attributes,
           time_unit:    local_time_unit[:time_unit],
-          customer:     customers[ticket.customer_id],
-          organization: organizations[ticket.organization_id],
+          customer:     customers[ticket.customer_id] || '-',
+          organization: organizations[ticket.organization_id] || '-',
           agent:        agents[local_time_unit[:agent_id]],
         }
         results.push result
@@ -106,12 +192,10 @@ class TimeAccountingsController < ApplicationController
 
     time_unit = {}
     Ticket::TimeAccounting.where('created_at >= ? AND created_at <= ?', start_periode, end_periode).pluck(:ticket_id, :time_unit, :created_by_id).each do |record|
-      if !time_unit[record[0]]
-        time_unit[record[0]] = {
-          time_unit: 0,
-          agent_id:  record[2],
-        }
-      end
+      time_unit[record[0]] ||= {
+        time_unit: 0,
+        agent_id:  record[2],
+      }
       time_unit[record[0]][:time_unit] += record[1]
     end
 
@@ -121,18 +205,11 @@ class TimeAccountingsController < ApplicationController
       next if !ticket
 
       customers[ticket.customer_id] ||= {}
-      if !customers[ticket.customer_id][ticket.organization_id]
-        organization = nil
-        if ticket.organization_id
-          organization = Organization.lookup(id: ticket.organization_id).attributes
-        end
-        customers[ticket.customer_id][ticket.organization_id] = {
-          customer:     User.lookup(id: ticket.customer_id).attributes,
-          organization: organization,
-          time_unit:    local_time_unit[:time_unit],
-        }
-        next
-      end
+      customers[ticket.customer_id][ticket.organization_id] ||= {
+        customer:     User.lookup(id: ticket.customer_id).attributes,
+        organization: Organization.lookup(id: ticket.organization_id)&.attributes,
+        time_unit:    0,
+      }
       customers[ticket.customer_id][ticket.organization_id][:time_unit] += local_time_unit[:time_unit]
     end
     results = []
@@ -198,12 +275,10 @@ class TimeAccountingsController < ApplicationController
 
     time_unit = {}
     Ticket::TimeAccounting.where('created_at >= ? AND created_at <= ?', start_periode, end_periode).pluck(:ticket_id, :time_unit, :created_by_id).each do |record|
-      if !time_unit[record[0]]
-        time_unit[record[0]] = {
-          time_unit: 0,
-          agent_id:  record[2],
-        }
-      end
+      time_unit[record[0]] ||= {
+        time_unit: 0,
+        agent_id:  record[2],
+      }
       time_unit[record[0]][:time_unit] += record[1]
     end
 
@@ -213,13 +288,10 @@ class TimeAccountingsController < ApplicationController
       next if !ticket
       next if !ticket.organization_id
 
-      if !organizations[ticket.organization_id]
-        organizations[ticket.organization_id] = {
-          organization: Organization.lookup(id: ticket.organization_id).attributes,
-          time_unit:    local_time_unit[:time_unit],
-        }
-        next
-      end
+      organizations[ticket.organization_id] ||= {
+        organization: Organization.lookup(id: ticket.organization_id).attributes,
+        time_unit:    0,
+      }
       organizations[ticket.organization_id][:time_unit] += local_time_unit[:time_unit]
     end
     results = []
