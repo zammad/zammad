@@ -33,7 +33,7 @@ const fieldDefinition = createInput(
     'sorting',
   ],
   {
-    features: [hideLabelForSmallSelects, addLink()],
+    features: [hideLabelForSmallSelects, addLink],
   },
 )
 

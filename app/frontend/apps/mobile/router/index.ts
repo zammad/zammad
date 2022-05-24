@@ -14,12 +14,29 @@ const routeModules: Record<string, RoutesModule> = import.meta.globEager(
 const mainRoutes: Array<RouteRecordRaw> = []
 const childRoutes: Array<RouteRecordRaw> = []
 
+const names = new Set<string | symbol>()
+
 const handleRoutes = (routes: Array<RouteRecordRaw>, isMainRoute = false) => {
   if (isMainRoute) {
     mainRoutes.push(...routes)
   } else {
     childRoutes.push(...routes)
   }
+
+  if (import.meta.env.PROD) return
+
+  // for debugging routes, vue-router doesn't do this automatically
+  routes.forEach((route) => {
+    if (!route.name) return
+
+    if (names.has(route.name)) {
+      console.error(
+        `Duplicate route name: ${String(route.name)} for ${route.path}`,
+      )
+    } else {
+      names.add(route.name)
+    }
+  })
 }
 
 Object.values(routeModules).forEach((module: RoutesModule) => {

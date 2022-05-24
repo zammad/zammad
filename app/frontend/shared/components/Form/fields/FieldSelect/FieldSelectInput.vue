@@ -73,7 +73,7 @@ useSelectAutoselect(sortedOptions, toRef(props, 'context'))
       :id="context.id"
       :name="context.node.name"
       :class="{
-        'grow px-3': !isSizeSmall,
+        'grow pr-3': !isSizeSmall,
         'px-2 py-1': isSizeSmall,
       }"
       class="flex cursor-pointer items-center focus:outline-none formkit-disabled:pointer-events-none"

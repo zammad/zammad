@@ -9,6 +9,7 @@ import type {
   InitializeAppForm,
 } from '@shared/types/form'
 import type { ImportGlobEagerOutput } from '@shared/types/utils'
+import FormGroup from '@mobile/components/Form/FormGroup.vue'
 import getCoreClasses from './theme/global/getCoreClasses'
 
 const pluginModules: ImportGlobEagerOutput<FormKitPlugin> =
@@ -24,6 +25,9 @@ const initializeForm: InitializeAppForm = (app: App) => {
     coreClasses: getCoreClasses,
     extensions: themeExtensionModules,
   }
+
+  // TODO figure out a way to put in inside "additionalComponentLibrary" in Form.vue
+  app.component('FormGroup', FormGroup)
 
   mainInitializeForm(app, undefined, fieldModules, plugins, theme)
 }

@@ -9,10 +9,32 @@ export const addFloatingLabel = (classes: Classes = {}): Classes => {
   const labelClass = classes.label || ''
   return {
     outer: `${classes.outer || ''} floating-input`,
-    wrapper: `${classes.wrapper || ''} relative`,
+    wrapper: `${classes.wrapper || ''} relative px-3`,
     inner: 'flex',
-    input: `${inputClass} w-full h-14 text-sm bg-gray-500 rounded-xl border-none focus:outline-none placeholder:text-transparent focus-within:pt-8 formkit-populated:pt-8`,
-    label: `${labelClass} absolute top-0 ltr:left-0 rtl:right-0 py-5 px-3 h-14 text-base transition-all duration-100 ease-in-out origin-left pointer-events-none formkit-populated:-translate-y-3 rtl:formkit-populated:translate-x-1 rtl:formkit-populated:translate-x-6 formkit-populated:scale-75 formkit-populated:opacity-75 formkit-required:required`,
+    input: `
+      ${inputClass}
+      w-full
+      px-0
+      h-14
+      text-sm
+      bg-transparent
+      border-none
+      focus:outline-none
+      placeholder:text-transparent
+      focus-within:pt-8
+      formkit-populated:pt-8
+    `,
+    label: `
+      ${labelClass}
+      absolute top-0 ltr:left-0 rtl:right-0
+      py-5 px-3 h-14
+      text-base
+      transition-all duration-100 ease-in-out origin-left
+      pointer-events-none
+      formkit-populated:-translate-y-3 formkit-populated:translate-x-6
+      formkit-populated:scale-75 formkit-populated:opacity-75
+      formkit-required:required
+    `,
   }
 }
 
@@ -20,7 +42,7 @@ export const addDateLabel = (classes: Classes = {}): Classes => {
   const newClasses = addFloatingLabel(classes)
   return {
     ...newClasses,
-    inner: 'flex flex-col items-center bg-gray-500 rounded-xl',
+    inner: 'flex flex-col items-center',
   }
 }
 

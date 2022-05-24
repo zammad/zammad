@@ -3,14 +3,10 @@
 import { cloneDeep } from 'lodash-es'
 import { FormKitNode, FormKitExtendableSchemaRoot } from '@formkit/core'
 
-export const externalLinkClass =
-  'flex justify-center items-center p-2 rounded-xl border-none focus:outline-none bg-gray-500 ml-2 w-14 h-14'
+import FormFieldLink from '@shared/components/Form/FormFieldLink.vue'
+import { markRaw } from 'vue'
 
-interface AddLinkExtensionOptions {
-  class?: string
-}
-
-const addLink = (settings?: AddLinkExtensionOptions) => (node: FormKitNode) => {
+const addLink = (node: FormKitNode) => {
   const { props } = node
 
   if (!props.definition) return
@@ -27,26 +23,12 @@ const addLink = (settings?: AddLinkExtensionOptions) => (node: FormKitNode) => {
       suffix: {
         $el: 'div',
         if: '$link',
-        attrs: {
-          class: settings?.class,
-        },
         children: [
           {
-            $cmp: 'CommonLink',
+            $cmp: markRaw(FormFieldLink),
             props: {
               link: '$link',
-              openInNewTab: true,
-              class: externalLinkClass,
             },
-            children: [
-              {
-                $cmp: 'CommonIcon',
-                props: {
-                  name: 'external',
-                  size: 'small',
-                },
-              },
-            ],
           },
         ],
       },

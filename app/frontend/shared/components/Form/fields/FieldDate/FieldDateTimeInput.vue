@@ -14,6 +14,8 @@ import {
   watchEffect,
 } from 'vue'
 import { useEventListener } from '@vueuse/core'
+import { RouteLocationRaw } from 'vue-router'
+import FormFieldLink from '../../FormFieldLink.vue'
 import type { FormFieldContext } from '../../types/field'
 import useValue from '../../composables/useValue'
 
@@ -22,6 +24,7 @@ export interface Props {
     futureOnly?: boolean
     maxDate?: flatpickr.Options.DateOption
     minDate?: flatpickr.Options.DateOption
+    link?: RouteLocationRaw
   }>
   time?: boolean
 }
@@ -168,7 +171,7 @@ const createFlatpickr = () => {
     allowInput: true,
     // append calendar to parent, so we can add our own elements after input
     // otherwise everything after input will actually appear after calendar
-    appendTo: pickerNode.value.parentNode as HTMLElement,
+    appendTo: pickerNode.value.parentNode?.parentNode as HTMLElement,
     // The primary input element should display the current value of the input using context._value
     defaultDate: currentValue.value,
     maxDate: props.context.maxDate,
@@ -261,17 +264,21 @@ onBeforeUnmount(() => {
 
 <template>
   <!-- TODO add placeholder support when styling will be finished -->
-  <input
-    :id="props.context.id"
-    ref="pickerNode"
-    class="border-b border-gray-200"
-    :class="props.context.classes.input"
-    :disabled="(props.context.disabled as boolean)"
-    @blur="context.handlers.blur"
-    @focus="showPicker = true"
-  />
-  <div v-show="showPicker" class="mx-2 w-full px-2">
-    <div class="h-[1px] w-full bg-gray-300"></div>
+  <div class="flex w-full">
+    <input
+      :id="props.context.id"
+      ref="pickerNode"
+      :class="props.context.classes.input"
+      :disabled="(props.context.disabled as boolean)"
+      @blur="context.handlers.blur"
+      @focus="showPicker = true"
+    />
+    <div>
+      <FormFieldLink v-if="context.link" :link="context.link" />
+    </div>
+  </div>
+  <div v-show="showPicker" class="mx-2 w-full">
+    <div class="h-[1px] w-full bg-white/10"></div>
   </div>
 </template>
 
@@ -280,13 +287,17 @@ onBeforeUnmount(() => {
 .flatpickr-current-month .flatpickr-monthDropdown-months,
 .flatpickr-months .flatpickr-month,
 span.flatpickr-weekday {
-  @apply bg-gray-500;
+  @apply bg-transparent;
 }
 
 .flatpickr-calendar {
   box-shadow: none;
   transition: height 0.5s;
   overflow: hidden;
+}
+
+.flatpickr-calendar:not([aria-hidden]) {
+  @apply mb-2;
 }
 
 span.flatpickr-weekday {

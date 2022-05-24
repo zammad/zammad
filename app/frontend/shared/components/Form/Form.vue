@@ -172,6 +172,7 @@ const formConfig = computed(() => {
 // Define the additional component library for the used components which are not form fields.
 const additionalComponentLibrary = {
   FormLayout: markRaw(FormLayout) as ConcreteComponent,
+  // somehow add mobile libraries, like FormGroup instead of app.component
 }
 
 // Define the static schema, which will be filled with the real fields from the `schemaData`.

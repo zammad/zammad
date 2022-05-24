@@ -27,7 +27,7 @@ const inputFields: FormFieldType[] = []
 
 Object.keys(inputFieldDefinitionList).forEach((inputType) => {
   initializeFieldDefinition(inputFieldDefinitionList[inputType], {
-    features: [addLink()],
+    features: [addLink],
   })
 
   inputFields.push({

@@ -54,7 +54,7 @@ describe('createTailwindClasses', () => {
     }) as unknown as FormThemeClasses
 
     expect(classes.global.outer).toContain(
-      'mb-2 formkit-disabled:opacity-30 custom-class',
+      'formkit-disabled:opacity-30 custom-class',
     )
     expect(classes.customField).toEqual(customFieldClasses)
   })
