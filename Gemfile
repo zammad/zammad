@@ -215,7 +215,7 @@ group :development, :test do
 
   # record and replay TCP/HTTP transactions
   gem 'tcr', require: false
-  gem 'vcr'
+  gem 'vcr', require: false
 
   # handle deprecations in core and addons
   gem 'deprecation_toolkit'
