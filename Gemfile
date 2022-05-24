@@ -171,6 +171,9 @@ group :development, :test do
   # app boottime improvement
   gem 'spring'
 
+  # watch file changes
+  gem 'listen'
+
   # debugging
   gem 'byebug'
   gem 'pry-rails'
@@ -191,15 +194,6 @@ group :development, :test do
   # UI tests w/ Selenium
   gem 'capybara'
   gem 'selenium-webdriver'
-
-  # livereload on template changes (html, js, css)
-  gem 'guard',             require: false
-  gem 'guard-livereload',  require: false
-  gem 'rack-livereload',   require: false
-  gem 'rb-fsevent',        require: false
-
-  # auto symlinking
-  gem 'guard-symlink', require: false
 
   # code QA
   gem 'brakeman', require: false
