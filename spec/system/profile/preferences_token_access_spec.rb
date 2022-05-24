@@ -109,7 +109,7 @@ RSpec.describe 'Profile > Token Access', type: :system do
 
     context 'without permission' do
       let(:label) { nil }
-      let(:error_message) { 'Minimum of one permission is needed!' }
+      let(:error_message) { "The required parameter 'permission' is missing." }
 
       before { click_button }
 

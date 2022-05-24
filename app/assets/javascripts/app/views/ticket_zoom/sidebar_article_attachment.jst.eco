@@ -18,7 +18,7 @@
         <div class="attachment-size"><%- @humanTime(data.article.created_at) %> (<%- @humanFileSize(data.attachment.size) %>)</div>
       </div>
       <% if @ContentTypeIcon(content_type) is 'file-calendar': %>
-        <button class="btn js-preview" type="button">PREVIEW</button>
+        <button class="btn js-preview" type="button">Preview</button>
       <% end %>
     </a>
   <% end %>

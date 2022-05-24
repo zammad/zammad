@@ -178,7 +178,7 @@ class App.KnowledgeBaseAgentController extends App.Controller
         if (kb = App.KnowledgeBase.all()[0])
           @navigate kb.uiUrl(App.KnowledgeBaseLocale.detect(kb)), { hideCurrentLocationFromHistory: true }
         else
-          @renderScreenErrorInContent(__('No Knowledge Base created'))
+          @renderScreenErrorInContent(__('There was no Knowledge Base created.'))
     else
       @pendingParams = params
 

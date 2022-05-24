@@ -5617,10 +5617,6 @@ msgstr ""
 msgid "Link issue"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_link_add.coffee
-msgid "Link type is needed!"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
 #: app/assets/javascripts/app/views/popover/user.jst.eco
 #: app/assets/javascripts/app/views/widget/user.jst.eco
@@ -5983,10 +5979,6 @@ msgstr ""
 msgid "Minimum length"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_profile/token_access.coffee
-msgid "Minimum of one permission is needed!"
-msgstr ""
-
 #: app/assets/javascripts/app/views/generic/timer.jst.eco
 msgid "Minute"
 msgstr ""
@@ -5997,14 +5989,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/generic/timeplan.jst.eco
 msgid "Minutes"
-msgstr ""
-
-#: app/controllers/channels_twitter_controller.rb
-msgid "Missing 'for_user_id' in payload!"
-msgstr ""
-
-#: app/controllers/import_freshdesk_controller.rb
-msgid "Missing administrator permission!"
 msgstr ""
 
 #: db/seeds/object_manager_attributes.rb
@@ -6431,10 +6415,6 @@ msgstr ""
 
 #: lib/external_credential/google.rb
 msgid "No Google app configured!"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
-msgid "No Knowledge Base created"
 msgstr ""
 
 #: lib/external_credential/microsoft365.rb
@@ -7040,10 +7020,6 @@ msgstr ""
 msgid "POP3"
 msgstr ""
 
-#: app/assets/javascripts/app/views/generic/attachments.jst.eco
-msgid "PREVIEW"
-msgstr ""
-
 #: app/assets/javascripts/app/views/package.jst.eco
 msgid "Package"
 msgstr ""
@@ -7333,6 +7309,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 #: app/assets/javascripts/app/views/generic/application_selector.jst.eco
+#: app/assets/javascripts/app/views/generic/attachments.jst.eco
 #: app/assets/javascripts/app/views/profile/imageCropper.jst.eco
 #: app/assets/javascripts/app/views/settings/ticket_number.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
@@ -9248,6 +9225,10 @@ msgstr ""
 msgid "The required parameter 'current_user_id' is missing."
 msgstr ""
 
+#: app/controllers/channels_twitter_controller.rb
+msgid "The required parameter 'for_user_id' is missing."
+msgstr ""
+
 #: lib/telegram.rb
 msgid "The required parameter 'group_id' is invalid."
 msgstr ""
@@ -9258,6 +9239,10 @@ msgstr ""
 
 #: app/controllers/users_controller.rb
 msgid "The required parameter 'id' is missing."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/ticket_link_add.coffee
+msgid "The required parameter 'link_type' is missing."
 msgstr ""
 
 #: app/models/text_module.rb
@@ -9288,8 +9273,16 @@ msgstr ""
 msgid "The required parameter 'payload->screen' is missing."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_profile/token_access.coffee
+msgid "The required parameter 'permission' is missing."
+msgstr ""
+
 #: app/controllers/users_controller.rb
 msgid "The required parameter 'signup' is missing."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/ticket_link_add.coffee
+msgid "The required parameter 'ticket_number' is missing."
 msgstr ""
 
 #: app/controllers/channels_twitter_controller.rb
@@ -9413,6 +9406,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/data_privacy/preview.jst.eco
 msgid "There is no rollback of this deletion possible. If you are sure that you wish to proceed, please type \"%s\" into the input."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
+msgid "There was no Knowledge Base created."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
@@ -9746,10 +9743,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
 #: app/controllers/time_accountings_controller.rb
 msgid "Ticket#"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/ticket_link_add.coffee
-msgid "Ticket# is needed!"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket_article.coffee
@@ -10968,6 +10961,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
 msgid "You currently don't have any tickets."
+msgstr ""
+
+#: app/controllers/import_freshdesk_controller.rb
+msgid "You do not have administrator permission."
 msgstr ""
 
 #: app/frontend/shared/router/guards/before/permission.ts

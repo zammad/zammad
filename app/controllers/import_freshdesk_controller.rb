@@ -71,7 +71,7 @@ class ImportFreshdeskController < ApplicationController
 
       render json: {
         result:        'invalid',
-        message_human: __('Missing administrator permission!'),
+        message_human: __('You do not have administrator permission.'),
       }
       return
     end

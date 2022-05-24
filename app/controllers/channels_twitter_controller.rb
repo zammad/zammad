@@ -18,7 +18,7 @@ class ChannelsTwitterController < ApplicationController
 
     calculated_signature = hmac_signature_by_app(request.raw_post)
     raise Exceptions::NotAuthorized if calculated_signature != given_signature
-    raise Exceptions::UnprocessableEntity, __("Missing 'for_user_id' in payload!") if params[:for_user_id].blank?
+    raise Exceptions::UnprocessableEntity, __("The required parameter 'for_user_id' is missing.") if params[:for_user_id].blank?
 
     @channel = nil
     Channel.where(area: 'Twitter::Account', active: true).each do |channel|

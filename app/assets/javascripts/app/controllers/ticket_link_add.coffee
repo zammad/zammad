@@ -73,10 +73,10 @@ class App.TicketLinkAdd extends App.ControllerModal
     params = @formParam(e.target)
 
     if !params['ticket_number']
-      alert(__('Ticket# is needed!'))
+      alert(__("The required parameter 'ticket_number' is missing."))
       return
     if !params['link_type']
-      alert(__('Link type is needed!'))
+      alert(__("The required parameter 'link_type' is missing."))
       return
 
     # get data

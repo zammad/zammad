@@ -215,7 +215,7 @@ RSpec.describe 'Ticket zoom', type: :system do
     it 'shows a preview button for the calendar file' do
       within :active_ticket_article, article do
         within '.attachment.file-calendar' do
-          expect(page).to have_button('PREVIEW')
+          expect(page).to have_button('Preview')
         end
       end
     end
@@ -224,7 +224,7 @@ RSpec.describe 'Ticket zoom', type: :system do
       before do
         within :active_ticket_article, article do
           within '.attachment.file-calendar' do
-            click_button 'PREVIEW'
+            click_button 'Preview'
           end
         end
       end

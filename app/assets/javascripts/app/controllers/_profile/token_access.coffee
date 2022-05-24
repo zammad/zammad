@@ -99,7 +99,7 @@ class Create extends App.ControllerModal
     if _.isEmpty(params['permission'])
       @notify(
         type: 'error'
-        msg:  App.i18n.translateContent('Minimum of one permission is needed!')
+        msg:  App.i18n.translateContent("The required parameter 'permission' is missing.")
       )
       return
 
