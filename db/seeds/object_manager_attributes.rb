@@ -1887,7 +1887,7 @@ ObjectManager::Attribute.add(
     default:    true,
     permission: ['admin.group'],
   },
-  editable:    true,
+  editable:    false,
   active:      true,
   screens:     {
     create: {
