@@ -38,7 +38,7 @@
     "@types/svgo": "^2.6.3",
     "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^5.26.0",
-    "@typescript-eslint/parser": "^5.25.0",
+    "@typescript-eslint/parser": "^5.26.0",
     "@vitejs/plugin-vue": "^2.3.3",
     "@vue/eslint-config-prettier": "^7.0.0",
     "@vue/eslint-config-typescript": "^10.0.0",
