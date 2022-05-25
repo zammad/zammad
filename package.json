@@ -124,6 +124,6 @@
     "uuid": "^8.3.2",
     "vue": "^3.2.36",
     "vue-router": "^4.0.15",
-    "vue3-draggable-resizable": "^1.6.3"
+    "vue3-draggable-resizable": "^1.6.4"
   }
 }
