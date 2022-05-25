@@ -79,6 +79,11 @@ class App.SettingsAreaTicketNumber extends App.Controller
       el = $(App.view("settings/#{preferences_setting}")(
         setting: setting
       ))
+
+      for form_entry in setting.options['form']
+        if form_entry['tag'] is 'boolean'
+          form_entry['translate'] = true
+
       new App.ControllerForm(
         el: el.find('.js-formItem'),
         model: { configure_attributes: setting.options['form'], className: '' }
