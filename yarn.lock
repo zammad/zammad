@@ -2270,15 +2270,15 @@ braces@^3.0.2, braces@~3.0.2:
   dependencies:
     fill-range "^7.0.1"
 
-broadcast-channel@^4.11.0:
-  version "4.11.0"
-  resolved "https://registry.yarnpkg.com/broadcast-channel/-/broadcast-channel-4.11.0.tgz#b9ebc7ce1326120088e61d2197477496908a1a9e"
-  integrity sha512-4FS1Zk+ttekfXHq5I2R7KhN9AsnZUFVV5SczrTtnZPuf5w+jw+fqM1PJHuHzwEXJezJeCbJxoZMDcFqsIN2c1Q==
+broadcast-channel@^4.12.0:
+  version "4.12.0"
+  resolved "https://registry.yarnpkg.com/broadcast-channel/-/broadcast-channel-4.12.0.tgz#891876c5262376ab714b33a0d9e9d87a894b5bcb"
+  integrity sha512-hfb0L2P2CEsdM5nSqlRiZ2gQFHPdJNs1VU4rTLnFPYtq5vQAnyOdjIx+04KCWfFfRhfP3OEbxxQmnouSi8WCbQ==
   dependencies:
     "@babel/runtime" "^7.16.0"
     detect-node "^2.1.0"
     microtime "3.0.0"
-    oblivious-set "1.0.0"
+    oblivious-set "1.1.1"
     p-queue "6.6.2"
     rimraf "3.0.2"
     unload "2.3.1"
@@ -5662,10 +5662,10 @@ object.values@^1.1.5:
     define-properties "^1.1.3"
     es-abstract "^1.19.1"
 
-oblivious-set@1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/oblivious-set/-/oblivious-set-1.0.0.tgz#c8316f2c2fb6ff7b11b6158db3234c49f733c566"
-  integrity sha512-z+pI07qxo4c2CulUHCDf9lcqDlMSo72N/4rLUpRXf6fu+q8vjt8y0xS+Tlf8NTJDdTXHbdeO1n3MlbctwEoXZw==
+oblivious-set@1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/oblivious-set/-/oblivious-set-1.1.1.tgz#d9d38e9491d51f27a5c3ec1681d2ba40aa81e98b"
+  integrity sha512-Oh+8fK09mgGmAshFdH6hSVco6KZmd1tTwNFWj35OvzdmJTMZtAkbn05zar2iG3v6sDs1JLEtOiBGNb6BHwkb2w==
 
 once@^1.3.0, once@^1.3.1, once@^1.4.0:
   version "1.4.0"
