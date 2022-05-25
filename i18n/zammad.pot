@@ -8136,14 +8136,6 @@ msgid "Send a message to all logged in users."
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Send client stats"
-msgstr ""
-
-#: db/seeds/settings.rb
-msgid "Send client stats/error message to central server to improve the usability."
-msgstr ""
-
-#: db/seeds/settings.rb
 msgid "Send postmaster mail if mail too large"
 msgstr ""
 

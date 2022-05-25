@@ -571,33 +571,6 @@ Setting.create_if_not_exists(
   },
   frontend:    false
 )
-
-Setting.create_if_not_exists(
-  title:       __('Send client stats'),
-  name:        'ui_send_client_stats',
-  area:        'System::UI',
-  description: __('Send client stats/error message to central server to improve the usability.'),
-  options:     {
-    form: [
-      {
-        display: '',
-        null:    true,
-        name:    'ui_send_client_stats',
-        tag:     'boolean',
-        options: {
-          true  => 'yes',
-          false => 'no',
-        },
-      },
-    ],
-  },
-  state:       false,
-  preferences: {
-    prio:       1,
-    permission: ['admin.system'],
-  },
-  frontend:    true
-)
 Setting.create_if_not_exists(
   title:       __('Core Workflow Ajax Mode'),
   name:        'core_workflow_ajax_mode',
