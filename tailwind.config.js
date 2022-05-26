@@ -4,6 +4,7 @@ const colors = require('tailwindcss/colors')
 const formsPlugin = require('@tailwindcss/forms')
 const lineClampPlugin = require('@tailwindcss/line-clamp')
 const formKitTailwind = require('@formkit/themes/tailwindcss')
+const headlessUiTailwind = require('@headlessui/tailwindcss')
 const plugin = require('tailwindcss/plugin')
 const path = require('path')
 const fs = require('fs')
@@ -117,6 +118,7 @@ module.exports = {
         '[data-variant="secondary"]&',
       ])
     }),
+    headlessUiTailwind,
   ],
   safelist: [...safelist.values()],
 }
