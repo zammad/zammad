@@ -95,6 +95,7 @@ const initializeRouter = (routes?: RouteRecordRaw[]) => {
   plugins.push(router)
 
   defaultWrapperOptions.global ||= {}
+  defaultWrapperOptions.global.stubs ||= {}
   Object.assign(defaultWrapperOptions.global.stubs, {
     RouterLink: false,
   })
