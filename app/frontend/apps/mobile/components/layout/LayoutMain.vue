@@ -3,7 +3,8 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
-import TransitionViewNavigation from '../../transition/TransitionViewNavigation/TransitionViewNavigation.vue'
+import TransitionViewNavigation from '../transition/TransitionViewNavigation/TransitionViewNavigation.vue'
+import LayoutBottomNavigation from './LayoutBottomNavigation.vue'
 
 const route = useRoute()
 
@@ -14,18 +15,13 @@ const showBottomNavigation = computed(() => {
 
 <template>
   <div class="flex h-full flex-col overflow-hidden">
-    <main class="flex-1 overflow-y-scroll">
+    <main class="overflow-y-scroll" :class="{ 'pb-14': showBottomNavigation }">
       <router-view v-slot="{ Component }">
         <TransitionViewNavigation>
           <component :is="Component" />
         </TransitionViewNavigation>
       </router-view>
     </main>
-    <footer
-      v-if="showBottomNavigation"
-      class="w-full border-t bg-black p-4 text-center"
-    >
-      Bottom-Navigation
-    </footer>
+    <LayoutBottomNavigation v-if="showBottomNavigation" />
   </div>
 </template>

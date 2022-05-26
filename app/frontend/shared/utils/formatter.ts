@@ -42,9 +42,9 @@ export function order(
  * @param email - user's email address
  */
 export function getInitials(
-  firstname?: string,
-  lastname?: string,
-  email?: string,
+  firstname?: Maybe<string>,
+  lastname?: Maybe<string>,
+  email?: Maybe<string>,
 ) {
   if (firstname && lastname) {
     return firstname[0] + lastname[0]

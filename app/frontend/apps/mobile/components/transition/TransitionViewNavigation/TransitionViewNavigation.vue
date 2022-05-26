@@ -7,7 +7,7 @@ const { viewTransition } = useViewTransition()
 </script>
 
 <template>
-  <main class="grid min-h-screen flex-1 overflow-hidden">
+  <main class="grid flex-1 overflow-hidden">
     <transition class="z-10 flex-auto" :name="viewTransition">
       <slot></slot>
     </transition>

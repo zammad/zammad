@@ -4,7 +4,7 @@ import type { App } from 'vue'
 import type { RouteRecordRaw } from 'vue-router'
 import mainInitializeRouter from '@shared/router'
 import type { InitializeAppRouter, RoutesModule } from '@shared/types/router'
-import LayoutMain from '@mobile/components/layout/LayoutMain/LayoutMain.vue'
+import LayoutMain from '@mobile/components/layout/LayoutMain.vue'
 import transitionViewGuard from './guards/before/viewTransition'
 
 const routeModules: Record<string, RoutesModule> = import.meta.globEager(

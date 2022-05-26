@@ -13,6 +13,7 @@ import useAppMaintenanceCheck from '@shared/composables/useAppMaintenanceCheck'
 import usePushMessages from '@shared/composables/usePushMessages'
 import useLocaleStore from '@shared/stores/locale'
 import useFormKitConfig from '@shared/composables/form/useFormKitConfig'
+import { useAppTheme } from '@shared/composables/useAppTheme'
 
 const router = useRouter()
 const route = useRoute()
@@ -29,6 +30,7 @@ onMounted(() => {
 
 useAppMaintenanceCheck()
 usePushMessages()
+useAppTheme()
 
 // Add a watcher for authenticated changes (e.g. login/logout in a other browser tab).
 authentication.$subscribe(async (mutation, state) => {
@@ -44,7 +46,7 @@ authentication.$subscribe(async (mutation, state) => {
     })
   } else if (!state.authenticated && session.id) {
     await authentication.clearAuthentication()
-    router.replace('login')
+    router.replace('/login')
   }
 })
 
@@ -58,7 +60,7 @@ watch(
       !session.hasPermission(['admin.maintenance', 'maintenance'])
     ) {
       await authentication.logout()
-      router.replace('login')
+      router.replace('/login')
     }
   },
 )
