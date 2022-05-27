@@ -27,9 +27,14 @@ RSpec.describe Gql::Mutations::Login, type: :request do
         fingerprint: fingerprint,
       }
     end
+
     let(:graphql_response) do
-      post '/graphql', params: { query: query, variables: variables }, as: :json
+      execute_graphql_query
       json_response
+    end
+
+    def execute_graphql_query
+      post '/graphql', params: { query: query, variables: variables }, as: :json
     end
 
     context 'with correct credentials' do
@@ -67,6 +72,24 @@ RSpec.describe Gql::Mutations::Login, type: :request do
       end
 
       # No error type available for GraphQL::ExecutionErrors.
+    end
+
+    context 'with fingerprint' do
+      let(:fingerprint) { 'my_finger_print' }
+
+      it 'exists in controller session' do
+        execute_graphql_query
+
+        expect(controller.session[:user_device_fingerprint]).to eq('my_finger_print')
+      end
+
+      it 'added user device log entry', :performs_jobs do
+        perform_enqueued_jobs only: UserDeviceLogJob do
+          execute_graphql_query
+        end
+
+        expect(UserDevice.where(user_id: agent.id).count).to eq(1)
+      end
     end
   end
 end

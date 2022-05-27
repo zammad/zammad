@@ -6,6 +6,7 @@ import { MutationHandler } from '@shared/server/apollo/handler'
 import { useLoginMutation } from '@shared/graphql/mutations/login.api'
 import { useLogoutMutation } from '@shared/graphql/mutations/logout.api'
 import { clearApolloClientStore } from '@shared/server/apollo/client'
+import useFingerprint from '@shared/composables/useFingerprint'
 import useSessionStore from './session'
 import useApplicationStore from './application'
 
@@ -13,6 +14,7 @@ const useAuthenticationStore = defineStore(
   'authentication',
   () => {
     const authenticated = ref(false)
+    const { fingerprint } = useFingerprint()
 
     const clearAuthentication = async (): Promise<void> => {
       await clearApolloClientStore()
@@ -51,7 +53,7 @@ const useAuthenticationStore = defineStore(
           variables: {
             login,
             password,
-            fingerprint: '123456', // TODO ...use the real value
+            fingerprint: fingerprint.value,
           },
         }),
       )
