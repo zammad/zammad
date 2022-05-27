@@ -5,8 +5,8 @@ import { ViewTransitions } from './types'
 
 const viewTransition = ref<ViewTransitions>(ViewTransitions.REPLACE)
 
-export default function useViewTransition() {
-  function setViewTransition(newViewTransition: ViewTransitions) {
+export const useViewTransition = () => {
+  const setViewTransition = (newViewTransition: ViewTransitions) => {
     viewTransition.value = newViewTransition
   }
 

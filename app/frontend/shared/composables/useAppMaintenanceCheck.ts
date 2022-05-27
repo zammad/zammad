@@ -31,8 +31,8 @@ let subscription: SubscriptionHandler<
   AppMaintenanceSubscriptionVariables
 >
 
-export default function useAppMaintenanceCheck() {
-  function notify(message: string) {
+const useAppMaintenanceCheck = () => {
+  const notify = (message: string) => {
     useNotifications().notify({
       message,
       type: NotificationTypes.WARN,
@@ -103,3 +103,5 @@ export default function useAppMaintenanceCheck() {
     })
   })
 }
+
+export default useAppMaintenanceCheck

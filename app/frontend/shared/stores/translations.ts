@@ -17,11 +17,11 @@ interface TranslationsCacheValue {
   translations: Record<string, string>
 }
 
-function localStorageKey(locale: string): string {
+const localStorageKey = (locale: string): string => {
   return `translationsStoreCache::${locale}`
 }
 
-function loadCache(locale: string): TranslationsCacheValue {
+const loadCache = (locale: string): TranslationsCacheValue => {
   const cached = JSON.parse(
     window.localStorage.getItem(localStorageKey(locale)) || '{}',
   )
@@ -32,7 +32,7 @@ function loadCache(locale: string): TranslationsCacheValue {
   }
 }
 
-function setCache(locale: string, value: TranslationsCacheValue): void {
+const setCache = (locale: string, value: TranslationsCacheValue): void => {
   const serialized = JSON.stringify(value)
   window.localStorage.setItem(localStorageKey(locale), serialized)
   log.debug('translations.setCache()', locale, value)

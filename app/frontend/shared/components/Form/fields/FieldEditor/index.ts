@@ -5,7 +5,7 @@ import createInput from '@shared/form/core/createInput'
 import extendSchemaDefinition from '@shared/form/utils/extendSchemaDefinition'
 import FieldEditorWrapper from './FieldEditorWrapper.vue'
 
-function addAriaLabel(node: FormKitNode) {
+const addAriaLabel = (node: FormKitNode) => {
   const { props } = node
 
   // Specification doesn't allow accessing non-labeled elements, which Editor is (<div />)

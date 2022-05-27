@@ -14,9 +14,9 @@ export const blobToBase64 = async (blob: Blob) =>
     reader.readAsDataURL(blob)
   })
 
-export async function convertFileList(
+export const convertFileList = async (
   filesList: FileList | null,
-): Promise<ImageData[]> {
+): Promise<ImageData[]> => {
   const files = Array.from(filesList || [])
 
   const promises = files.map(async (file) => {

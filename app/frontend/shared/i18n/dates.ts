@@ -2,7 +2,7 @@
 
 import { Translator } from './translator'
 
-function formatNumber(num: number, digits: number): string {
+const formatNumber = (num: number, digits: number): string => {
   let result = num.toString()
   while (result.length < digits) {
     result = `0${result}`
@@ -10,10 +10,10 @@ function formatNumber(num: number, digits: number): string {
   return result
 }
 
-export function absoluteDateTime(
+export const absoluteDateTime = (
   dateTimeString: string,
   template: string,
-): string {
+): string => {
   let date = new Date(dateTimeString)
   // On firefox the Date constructor does not recongise date format that
   // ends with UTC, instead it returns a NaN (Invalid Date Format) this
@@ -114,11 +114,11 @@ const durations: durationMessages[] = [
   },
 ]
 
-export function relativeDateTime(
+export const relativeDateTime = (
   dateTimeString: string,
   baseDate: Date,
   translator: Translator,
-): string {
+): string => {
   const date = new Date(dateTimeString)
   let diffSeconds = (baseDate.getTime() - date.getTime()) / 1000
 

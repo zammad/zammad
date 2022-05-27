@@ -2,4 +2,4 @@
 
 export { ViewTransitions } from './types'
 
-export { default as useViewTransition } from './composable'
+export { useViewTransition } from './composable'

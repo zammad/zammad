@@ -6,10 +6,10 @@
  * @param conjunction - in: x, y, and z "and" is the conjunction to use
  * @returns
  */
-export function commaSeparatedList(
+export const commaSeparatedList = (
   items: string[],
   conjunction = 'or',
-): string {
+): string => {
   return items.reduce((oxford, item, index) => {
     let oxfordList = oxford + item
     if (index <= items.length - 2 && items.length > 2) {
@@ -28,10 +28,10 @@ export function commaSeparatedList(
  * @param second - Second argument
  * @returns
  */
-export function order(
+export const order = (
   first: string | number,
   second: string | number,
-): [smaller: number | string, larger: number | string] {
+): [smaller: number | string, larger: number | string] => {
   return Number(first) >= Number(second) ? [second, first] : [first, second]
 }
 
@@ -41,11 +41,11 @@ export function order(
  * @param lastname - user's last name
  * @param email - user's email address
  */
-export function getInitials(
+export const getInitials = (
   firstname?: Maybe<string>,
   lastname?: Maybe<string>,
   email?: Maybe<string>,
-) {
+) => {
   if (firstname && lastname) {
     return firstname[0] + lastname[0]
   }
@@ -59,12 +59,12 @@ export function getInitials(
  * @param objects - reference object
  * @param encodeLink - should result be encoded
  */
-export function replaceTags(
+export const replaceTags = (
   template: string,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   objects: any,
   encodeLink = false,
-): string {
+): string => {
   return template.replace(/#\{\s{0,2}(.+?)\s{0,2}\}/g, (index, key) => {
     const levels = key.replace(/<.+?>/g, '').split(/\./)
     let dataRef = objects

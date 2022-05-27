@@ -22,15 +22,8 @@ module.exports = {
   rules: {
     'zammad/zammad-copyright': 'error',
     'zammad/zammad-detect-translatable-string': 'error',
-    'vue/script-setup-uses-vars': 'error',
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    'vue/component-tags-order': [
-      'error',
-      {
-        order: ['script', 'template', 'style'],
-      },
-    ],
 
     // Loosen AirBnB's strict rules a bit to allow 'for .. of'
     'no-restricted-syntax': [
@@ -42,6 +35,8 @@ module.exports = {
     ],
 
     'no-param-reassign': 'off',
+
+    'func-style': ['error', 'expression'],
 
     'no-restricted-imports': 'off',
 
@@ -89,11 +84,29 @@ module.exports = {
 
     '@typescript-eslint/no-explicit-any': ['error', { ignoreRestArgs: true }],
 
+    'vue/component-tags-order': [
+      'error',
+      {
+        order: ['script', 'template', 'style'],
+      },
+    ],
+
+    'vue/script-setup-uses-vars': 'error',
+
     // Don't require a default value for the props.
     'vue/require-default-prop': 'off',
 
     // Don't require multi word component names.
     'vue/multi-word-component-names': 'off',
+
+    // Enforce v-bind directive usage in short form as error instead of warning
+    'vue/v-bind-style': ['error', 'shorthand'],
+
+    // Enforce v-on directive usage in short form as error instead of warning
+    'vue/v-on-style': ['error', 'shorthand'],
+
+    // Enforce v-slot directive usage in short form as error instead of warning
+    'vue/v-slot-style': ['error', 'shorthand'],
   },
   overrides: [
     {

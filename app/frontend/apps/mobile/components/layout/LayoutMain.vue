@@ -16,7 +16,7 @@ const showBottomNavigation = computed(() => {
 <template>
   <div class="flex h-full flex-col overflow-hidden">
     <main class="overflow-y-scroll" :class="{ 'pb-14': showBottomNavigation }">
-      <router-view v-slot="{ Component }">
+      <router-view #default="{ Component }">
         <TransitionViewNavigation>
           <component :is="Component" />
         </TransitionViewNavigation>

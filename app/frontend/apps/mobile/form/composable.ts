@@ -2,7 +2,9 @@
 
 import { FormSchemaNode } from '@shared/components/Form'
 
-export function defineFormSchema(schema: FormSchemaNode[]): FormSchemaNode[] {
+export const defineFormSchema = (
+  schema: FormSchemaNode[],
+): FormSchemaNode[] => {
   const needGroup = schema.every((node) => !('isLayout' in node))
   if (!needGroup) return schema
   return [

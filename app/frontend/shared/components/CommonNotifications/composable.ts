@@ -7,18 +7,18 @@ import { NewNotification, type Notification, NotificationTypes } from './types'
 const notifications = ref<Notification[]>([])
 const defaultNotificationDurationMS = 5000
 
-function removeNotification(id: string) {
+const removeNotification = (id: string) => {
   notifications.value = notifications.value.filter(
     (notification: Notification) => notification.id !== id,
   )
 }
 
-function clearAllNotifications() {
+const clearAllNotifications = () => {
   notifications.value = []
 }
 
-export default function useNotifications() {
-  function notify(notification: NewNotification): string {
+const useNotifications = () => {
+  const notify = (notification: NewNotification): string => {
     let { id } = notification
     if (!id) {
       id = getUuid()
@@ -37,7 +37,7 @@ export default function useNotifications() {
     return newNotification.id
   }
 
-  function hasErrors() {
+  const hasErrors = () => {
     return notifications.value.some((notification) => {
       return notification.type === NotificationTypes.ERROR
     })
@@ -51,3 +51,5 @@ export default function useNotifications() {
     hasErrors,
   }
 }
+
+export default useNotifications

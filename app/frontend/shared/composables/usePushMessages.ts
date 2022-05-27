@@ -18,8 +18,8 @@ let subscription: SubscriptionHandler<
   PushMessagesSubscriptionVariables
 >
 
-export default function usePushMessages() {
-  function notify(message: string) {
+const usePushMessages = () => {
+  const notify = (message: string) => {
     useNotifications().notify({
       message,
       type: NotificationTypes.WARN,
@@ -41,3 +41,5 @@ export default function usePushMessages() {
     })
   })
 }
+
+export default usePushMessages

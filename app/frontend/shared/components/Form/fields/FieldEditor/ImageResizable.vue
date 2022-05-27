@@ -60,33 +60,33 @@ const wrapperStyle = computed(() => {
 </script>
 
 <template>
-  <NodeViewWrapper as="div" class="inline-block" v-bind:style="wrapperStyle">
+  <NodeViewWrapper as="div" class="inline-block" :style="wrapperStyle">
     <img
       v-if="!isResizing"
       class="inline-block"
-      v-bind:style="style"
-      v-bind:src="node.attrs.src"
-      v-bind:alt="node.attrs.alt"
-      v-bind:title="node.attrs.title"
-      v-bind:draggable="isDraggable"
-      v-on:load="onLoadImage"
-      v-on:click="isResizing = true"
+      :style="style"
+      :src="node.attrs.src"
+      :alt="node.attrs.alt"
+      :title="node.attrs.title"
+      :draggable="isDraggable"
+      @load="onLoadImage"
+      @click="isResizing = true"
     />
     <DraggableResizable
       v-else
       v-model:active="isResizing"
-      v-bind:h="dimensions.height"
-      v-bind:w="dimensions.width"
-      v-bind:draggable="false"
+      :h="dimensions.height"
+      :w="dimensions.width"
+      :draggable="false"
       lock-aspect-ratio
       parent
       class="!relative !inline-block"
-      v-on:resize-end="stopResizing"
+      @resize-end="stopResizing"
     >
       <img
         class="inline-block"
-        v-bind:src="node.attrs.src"
-        v-bind:draggable="isDraggable"
+        :src="node.attrs.src"
+        :draggable="isDraggable"
       />
     </DraggableResizable>
   </NodeViewWrapper>

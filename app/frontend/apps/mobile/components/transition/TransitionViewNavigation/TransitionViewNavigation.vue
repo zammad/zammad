@@ -1,7 +1,7 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import useViewTransition from './composable'
+import { useViewTransition } from './composable'
 
 const { viewTransition } = useViewTransition()
 </script>

@@ -3,9 +3,9 @@
 import type { LastArrayElement } from 'type-fest'
 import { LocalesQuery, TextDirection } from '@shared/graphql/types'
 
-export default function localeForBrowserLanguage(
+const localeForBrowserLanguage = (
   locales: LocalesQuery['locales'],
-): LastArrayElement<LocalesQuery['locales']> {
+): LastArrayElement<LocalesQuery['locales']> => {
   const userLanguages = window.navigator.languages || [
     window.navigator.language,
   ]
@@ -31,3 +31,5 @@ export default function localeForBrowserLanguage(
     active: true,
   }
 }
+
+export default localeForBrowserLanguage

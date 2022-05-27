@@ -2,7 +2,7 @@
 
 // TODO add light color, if we have light theme
 // TODO toggle color, if we have light theme
-export function useAppTheme() {
+export const useAppTheme = () => {
   const meta =
     document.head.querySelector('meta[name="theme-color"]') ||
     document.createElement('meta')
