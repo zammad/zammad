@@ -5,12 +5,12 @@ import type { RouteRecordRaw } from 'vue-router'
 
 const routes: RouteRecordRaw[] = [
   {
-    path: '/test',
-    name: 'TestOverview',
+    path: '/playground',
+    name: 'PlaygroundOverview',
     props: true,
-    component: () => import('./views/TestOverview.vue'),
+    component: () => import('./views/PlaygroundOverview.vue'),
     meta: {
-      title: 'Home',
+      title: 'Playground',
       requiresAuth: true,
       requiredPermission: ['*'],
       hasBottomNavigation: true,

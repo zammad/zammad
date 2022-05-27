@@ -15,6 +15,9 @@ class Generators::TranslationCatalog::Extractor::Frontend < Generators::Translat
     # i18n.t
     i18n_t_regex = %r{i18n\.t\(\s*#{literal_string_regex},?}
 
+    # $t
+    global_t_regex = %r{\$t\(\s*#{literal_string_regex},?}
+
     # __()
     underscore_regex = %r{__\(\s*#{literal_string_regex},?\s*\)}
 
@@ -22,7 +25,7 @@ class Generators::TranslationCatalog::Extractor::Frontend < Generators::Translat
     multiline_string_regex = %r{(''')\n((?:\n|.)*?)\n'''}m
     underscore_multiline_regex = %r{__\(\s*#{multiline_string_regex}\s*\)}
 
-    [t_regex, translate_regex, i18n_t_regex, underscore_regex, underscore_multiline_regex].each do |r|
+    [t_regex, translate_regex, i18n_t_regex, global_t_regex, underscore_regex, underscore_multiline_regex].each do |r|
       string.scan(r) do |match|
         result = match[1].gsub(%r{\\'}, "'")
         next if match[0].eql?('"') && result.include?('#{')

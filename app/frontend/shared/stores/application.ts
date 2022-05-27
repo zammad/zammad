@@ -144,3 +144,9 @@ const useApplicationLoadedStore = defineStore('applicationLoaded', () => {
 })
 
 export default useApplicationLoadedStore
+
+declare module '@vue/runtime-core' {
+  export interface ComponentCustomProperties {
+    $c: ConfigList
+  }
+}

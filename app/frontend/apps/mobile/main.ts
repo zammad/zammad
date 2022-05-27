@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { createApp } from 'vue'
+import { createApp, unref } from 'vue'
 import '@shared/initializer/translatableMarker'
 import App from '@mobile/App.vue'
 import useSessionStore from '@shared/stores/session'
@@ -16,6 +16,7 @@ import useLocaleStore from '@shared/stores/locale'
 import useAuthenticationStore from '@shared/stores/authentication'
 import 'virtual:svg-icons-register' // eslint-disable-line import/no-unresolved
 import initializeForm from '@mobile/form'
+import { storeToRefs } from 'pinia'
 
 export default async function mountApp(): Promise<void> {
   const app = createApp(App)
@@ -36,6 +37,7 @@ export default async function mountApp(): Promise<void> {
   await session.checkSession()
 
   const application = useApplicationStore()
+  const { config } = storeToRefs(application)
 
   const initalizeAfterSessionCheck: Array<Promise<unknown>> = [
     application.getConfig(),
@@ -54,6 +56,11 @@ export default async function mountApp(): Promise<void> {
   }
 
   app.config.globalProperties.i18n = i18n
+  app.config.globalProperties.$t = i18n.t.bind(i18n)
+  Object.defineProperty(app.config.globalProperties, '$c', {
+    enumerable: true,
+    get: () => unref(config),
+  })
 
   initializeForm(app)
 

@@ -60,8 +60,8 @@ const logoutMenu: MenuItem[] = [
 const testingMenu: MenuItem[] = [
   {
     type: 'link',
-    link: '/test',
-    title: 'Testing',
+    link: '/playground',
+    title: 'Playground',
   },
 ]
 </script>

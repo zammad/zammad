@@ -5,6 +5,7 @@ export {
   FormSchemaNode,
   FormValues,
   FormData,
+  AllowedClasses,
 } from './types'
 
 export { default as useForm } from './composable'

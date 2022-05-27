@@ -55,5 +55,6 @@ export const i18n = reactive(new I18N())
 declare module '@vue/runtime-core' {
   export interface ComponentCustomProperties {
     i18n: I18N
+    $t: I18N['t']
   }
 }

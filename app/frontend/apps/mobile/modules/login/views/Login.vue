@@ -8,12 +8,11 @@ import {
 } from '@shared/components/CommonNotifications'
 import useAuthenticationStore from '@shared/stores/authentication'
 import CommonLogo from '@shared/components/CommonLogo/CommonLogo.vue'
-import useApplicationStore from '@shared/stores/application'
-import { i18n } from '@shared/i18n'
 import Form from '@shared/components/Form/Form.vue'
 import { FormData } from '@shared/components/Form'
-import { FormSchemaId } from '@shared/graphql/types'
 import UserError from '@shared/errors/UserError'
+import { defineFormSchema } from '@mobile/form/composable'
+import useApplicationLoadedStore from '@shared/stores/application'
 
 interface Props {
   invalidatedSession?: string
@@ -21,8 +20,8 @@ interface Props {
 
 const props = defineProps<Props>()
 
-// Output a hint when the session is longer valid.
-// This could happen because because the session was deleted on the server.
+// Output a hint when the session is no longer valid.
+// This could happen because the session was deleted on the server.
 if (props.invalidatedSession === '1') {
   const { notify } = useNotifications()
 
@@ -35,6 +34,55 @@ if (props.invalidatedSession === '1') {
 const authentication = useAuthenticationStore()
 
 const router = useRouter()
+
+const application = useApplicationLoadedStore()
+
+const loginScheme = defineFormSchema([
+  {
+    name: 'login',
+    type: 'text',
+    label: __('Username / Email'),
+    placeholder: __('Username / Email'),
+    required: true,
+    wrapperClass: 'mb-4 rounded-xl bg-gray-500',
+  },
+  {
+    name: 'password',
+    label: __('Password'),
+    placeholder: __('Password'),
+    type: 'password',
+    required: true,
+    wrapperClass: 'mb-4 rounded-xl bg-gray-500',
+  },
+  {
+    isLayout: true,
+    element: 'div',
+    attrs: {
+      class: 'mt-2.5 flex grow items-center justify-between text-white',
+    },
+    children: [
+      {
+        type: 'checkbox',
+        name: 'remember_me',
+        label: __('Remember me'),
+      },
+      // TODO support if/then in form-schema
+      ...(application.config.user_lost_password
+        ? [
+            {
+              isLayout: true,
+              component: 'CommonLink',
+              props: {
+                class: 'text-right text-white',
+                link: '/#password_reset',
+              },
+              children: __('Forgot password?'),
+            },
+          ]
+        : []),
+    ],
+  },
+])
 
 interface LoginFormData {
   login?: string
@@ -56,12 +104,10 @@ const login = (formData: FormData<LoginFormData>) => {
       })
     })
 }
-
-const application = useApplicationStore()
 </script>
 
 <template>
-  <!-- TODO: Only a "first" dummy implementation for the login... -->
+  <!-- TODO: Only a "second" dummy implementation for the login... -->
   <div class="flex h-full min-h-screen flex-col items-center px-7 pt-7 pb-4">
     <div class="m-auto w-full max-w-md">
       <div class="flex grow flex-col justify-center">
@@ -70,47 +116,51 @@ const application = useApplicationStore()
             <CommonLogo />
           </div>
           <div class="mb-6 flex justify-center p-2 text-2xl font-extrabold">
-            {{ application.config.product_name }}
+            {{ $c.product_name }}
           </div>
-          <template v-if="application.config.maintenance_mode">
+          <template v-if="$c.maintenance_mode">
             <div
               class="my-1 flex items-center rounded-xl bg-red py-2 px-4 text-white"
             >
               {{
-                i18n.t(
+                $t(
                   'Zammad is currently in maintenance mode. Only administrators can log in. Please wait until the maintenance window is over.',
                 )
               }}
             </div>
           </template>
-          <template v-if="application.config.maintenance_login">
+          <template v-if="$c.maintenance_login && $c.maintenance_login_message">
             <!-- eslint-disable vue/no-v-html -->
             <div
               class="my-1 flex items-center rounded-xl bg-green py-2 px-4 text-white"
-              v-html="application.config.maintenance_login_message"
+              v-html="$c.maintenance_login_message"
             ></div>
           </template>
           <Form
             ref="form"
             class="text-left"
-            :form-schema-id="FormSchemaId.FormSchemaFormMobileLogin"
+            :schema="loginScheme"
             @submit="login"
           >
             <template #after-fields>
-              <div class="mt-4 flex grow items-center justify-center">
-                <span class="ltr:mr-1 rtl:ml-1">{{ i18n.t('New user?') }}</span>
+              <div
+                v-if="$c.user_create_account"
+                class="mt-4 flex grow items-center justify-center"
+              >
+                <span class="ltr:mr-1 rtl:ml-1">{{ $t('New user?') }}</span>
                 <CommonLink
-                  :link="'TODO'"
+                  link="/#signup"
                   class="cursor-pointer select-none !text-yellow underline"
-                  >{{ i18n.t('Register') }}</CommonLink
                 >
+                  {{ $t('Register') }}
+                </CommonLink>
               </div>
               <FormKit
-                wrapper-class="mx-8 mt-8 flex grow justify-center items-center"
+                wrapper-class="mt-4 flex grow justify-center items-center"
                 input-class="py-2 px-4 w-full h-14 text-xl font-semibold text-black formkit-variant-primary:bg-yellow rounded-xl select-none"
                 type="submit"
               >
-                {{ i18n.t('Sign in') }}
+                {{ $t('Sign in') }}
               </FormKit>
             </template>
           </Form>
@@ -118,8 +168,8 @@ const application = useApplicationStore()
       </div>
     </div>
     <div class="mb-6 flex items-center justify-center">
-      <CommonLink link="TODO" class="!text-gray underline">
-        {{ i18n.t('Continue to desktop app') }}
+      <CommonLink link="/#login" class="!text-gray underline">
+        {{ $t('Continue to desktop app') }}
       </CommonLink>
     </div>
     <div class="flex items-center justify-center align-middle text-gray-200">
@@ -131,7 +181,7 @@ const application = useApplicationStore()
       >
         <CommonIcon name="logo" :fixed-size="{ width: 24, height: 24 }" />
       </CommonLink>
-      <span class="ltr:mr-1 rtl:ml-1">{{ i18n.t('Powered by') }}</span>
+      <span class="ltr:mr-1 rtl:ml-1">{{ $t('Powered by') }}</span>
       <CommonLink
         link="https://zammad.org"
         is-external

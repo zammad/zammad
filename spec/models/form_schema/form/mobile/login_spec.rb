@@ -44,7 +44,7 @@ RSpec.describe(FormSchema::Form::Mobile::Login) do
             component: 'CommonLink',
             props:     {
               class: 'text-right !text-white',
-              link:  'TODO',
+              link:  '/#password_reset',
             },
             children:  __('Forgot password?'),
           },

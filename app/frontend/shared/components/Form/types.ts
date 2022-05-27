@@ -26,9 +26,7 @@ export enum FormValidationVisibility {
   'submit' = 'submit',
 }
 
-type AllowedClasses =
-  | Record<string, string | Record<string, boolean> | FormKitClasses>
-  | string
+export type AllowedClasses = string | Record<string, boolean> | FormKitClasses
 
 export interface FormSchemaField {
   show?: boolean
@@ -79,6 +77,7 @@ export interface FormSchemaGroupOrList {
 
 interface FormSchemaLayoutBase {
   isLayout: boolean
+  hidden?: string
 }
 
 export interface FormSchemaComponent extends FormSchemaLayoutBase {

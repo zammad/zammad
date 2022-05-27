@@ -39,15 +39,21 @@ const linkSchemas = defineFormSchema(linkSchemaRaw)
 const schema = defineFormSchema([
   {
     isLayout: true,
-    component: 'FormGroup',
+    component: 'FormLayout',
     props: {
       columns: 2,
     },
     children: [
       {
-        type: 'text',
-        name: 'text22',
-        label: 'Some_Label',
+        isLayout: true,
+        component: 'FormGroup',
+        children: [
+          {
+            type: 'text',
+            name: 'text22',
+            label: 'Some_Label',
+          },
+        ],
       },
       {
         type: 'text',
@@ -55,11 +61,6 @@ const schema = defineFormSchema([
         label: 'Some Label3',
       },
     ],
-  },
-  {
-    isLayout: true,
-    component: 'FormGroup',
-    children: linkSchemaRaw,
   },
 ])
 </script>

@@ -57,6 +57,8 @@ const { href, route, navigate, isActive, isExactActive } = useLink({
 const isInternalLink = computed(() => {
   if (props.isExternal) return false
   if (props.isRoute) return true
+  // zammad desktop urls
+  if (route.value.fullPath.startsWith('/#')) return false
   return route.value.matched.length > 0 && route.value.name !== 'Error'
 })
 

@@ -7,9 +7,10 @@ type Classes = Record<string, string>
 export const addFloatingLabel = (classes: Classes = {}): Classes => {
   const inputClass = classes.input || ''
   const labelClass = classes.label || ''
+
   return {
     outer: `${classes.outer || ''} floating-input`,
-    wrapper: `${classes.wrapper || ''} relative px-3`,
+    wrapper: `${classes.wrapper || ''} formkit-invalid:bg-red/10 relative px-3`,
     inner: 'flex',
     input: `
       ${inputClass}
@@ -34,6 +35,7 @@ export const addFloatingLabel = (classes: Classes = {}): Classes => {
       formkit-populated:-translate-y-3 formkit-populated:translate-x-6
       formkit-populated:scale-75 formkit-populated:opacity-75
       formkit-required:required
+      formkit-invalid:text-red
     `,
   }
 }

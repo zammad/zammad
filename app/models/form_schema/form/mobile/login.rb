@@ -42,12 +42,13 @@ class FormSchema::Form::Mobile::Login < FormSchema::Form
             label:   __('Remember me'),
             name:    'remember_me',
           ).schema,
+          # TODO: this is only visible if config "user_lost_password" is true
           {
             isLayout:  true,
             component: 'CommonLink',
             props:     {
               class: 'text-right !text-white',
-              link:  'TODO',
+              link:  '/#password_reset',
             },
             children:  __('Forgot password?'),
           },
