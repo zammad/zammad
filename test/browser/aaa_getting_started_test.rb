@@ -5,8 +5,8 @@ require 'browser_test_helper'
 class AaaGettingStartedTest < TestCase
   def test_a_getting_started
     if !ENV['MAILBOX_INIT']
-      # raise "Need MAILBOX_INIT as ENV variable like export MAILBOX_INIT='unittest01@znuny.com:somepass'"
-      puts "NOTICE: Need MAILBOX_INIT as ENV variable like export MAILBOX_INIT='unittest01@znuny.com:somepass'"
+      # raise "Need MAILBOX_INIT as ENV variable like export MAILBOX_INIT='unittest01@zammad.com:somepass'"
+      puts "NOTICE: Need MAILBOX_INIT as ENV variable like export MAILBOX_INIT='unittest01@zammad.com:somepass'"
       return
     end
     mailbox_user     = ENV['MAILBOX_INIT'].split(':')[0]

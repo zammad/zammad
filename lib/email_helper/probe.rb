@@ -8,7 +8,7 @@ class EmailHelper
 get result of probe
 
   result = EmailHelper::Probe.full(
-    email: 'znuny@example.com',
+    email: 'zammad@example.com',
     password: 'somepassword',
     folder: 'some_folder', # optional im imap
   )

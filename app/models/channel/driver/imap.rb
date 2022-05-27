@@ -56,7 +56,7 @@ example
 
   params = {
     host: 'outlook.office365.com',
-    user: 'xxx@znuny.onmicrosoft.com',
+    user: 'xxx@zammad.onmicrosoft.com',
     password: 'xxx',
     keep_on_server: true,
   }

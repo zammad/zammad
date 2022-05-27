@@ -299,7 +299,7 @@ RSpec.describe Channel::EmailParser, type: :model do
             Content-Type: multipart/mixed; boundary="Apple-Mail=_ED77AC8D-FB6F-40E5-8FBE-D41FF5E1BAF2"
             Subject: no reference
             Date: Sun, 30 Aug 2015 23:20:54 +0200
-            To: Martin Edenhofer <me@znuny.com>
+            To: Martin Edenhofer <me@zammad.com>
             Mime-Version: 1.0 (Mac OS X Mail 8.2 \(2104\))
             X-Mailer: Apple Mail (2.2104)
 
@@ -329,7 +329,7 @@ RSpec.describe Channel::EmailParser, type: :model do
             Content-Type: multipart/mixed; boundary="Apple-Mail=_ED77AC8D-FB6F-40E5-8FBE-D41FF5E1BAF2"
             Subject: no reference
             Date: Sun, 30 Aug 2015 23:20:54 +0200
-            To: Martin Edenhofer <me@znuny.com>
+            To: Martin Edenhofer <me@zammad.com>
             Mime-Version: 1.0 (Mac OS X Mail 8.2 \(2104\))
             X-Mailer: Apple Mail (2.2104)
 
@@ -359,7 +359,7 @@ RSpec.describe Channel::EmailParser, type: :model do
             Content-Type: multipart/mixed; boundary="Apple-Mail=_ED77AC8D-FB6F-40E5-8FBE-D41FF5E1BAF2"
             Subject: no reference
             Date: Sun, 30 Aug 2015 23:20:54 +0200
-            To: Martin Edenhofer <me@znuny.com>
+            To: Martin Edenhofer <me@zammad.com>
             Mime-Version: 1.0 (Mac OS X Mail 8.2 \(2104\))
             X-Mailer: Apple Mail (2.2104)
 
@@ -389,7 +389,7 @@ RSpec.describe Channel::EmailParser, type: :model do
             Content-Type: multipart/mixed; boundary="Apple-Mail=_ED77AC8D-FB6F-40E5-8FBE-D41FF5E1BAF2"
             Subject: no reference
             Date: Sun, 30 Aug 2015 23:20:54 +0200
-            To: Martin Edenhofer <me@znuny.com>
+            To: Martin Edenhofer <me@zammad.com>
             Mime-Version: 1.0 (Mac OS X Mail 8.2 \(2104\))
             X-Mailer: Apple Mail (2.2104)
 
@@ -431,7 +431,7 @@ RSpec.describe Channel::EmailParser, type: :model do
             From: me@example.com
             To: customer@example.com
             Subject: no reference
-            References: <DA918CD1-BE9A-4262-ACF6-5001E59291B6@znuny.com> #{article.message_id} <DA918CD1-BE9A-4262-ACF6-5001E59291XX@znuny.com>
+            References: <DA918CD1-BE9A-4262-ACF6-5001E59291B6@zammad.com> #{article.message_id} <DA918CD1-BE9A-4262-ACF6-5001E59291XX@zammad.com>
 
             Lorem ipsum dolor
           RAW

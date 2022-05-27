@@ -6,7 +6,7 @@ class OtrsImportBrowserTest < TestCase
   def test_import
 
     if !ENV['IMPORT_OTRS_ENDPOINT']
-      raise "ERROR: Need IMPORT_OTRS_ENDPOINT - hint IMPORT_OTRS_ENDPOINT='http://vz305.demo.znuny.com/otrs/public.pl?Action=ZammadMigrator'"
+      raise "ERROR: Need IMPORT_OTRS_ENDPOINT - hint IMPORT_OTRS_ENDPOINT='http://vz305.demo.zammad.com/otrs/public.pl?Action=ZammadMigrator'"
     end
     if !ENV['IMPORT_OTRS_ENDPOINT_KEY']
       raise "ERROR: Need IMPORT_OTRS_ENDPOINT_KEY - hint IMPORT_OTRS_ENDPOINT_KEY='01234567899876543210'"

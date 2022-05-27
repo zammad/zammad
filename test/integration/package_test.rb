@@ -12,9 +12,9 @@ class PackageTest < ActiveSupport::TestCase
         zpm:    '{
   "name": "UnitTestSample",
   "version": "1.0.1",
-  "vendor": "Znuny GmbH",
+  "vendor": "Zammad GmbH",
   "license": "ABC",
-  "url": "http://znuny.org/",
+  "url": "http://zammad.org/",
   "description": [
     {
       "language": "en",
@@ -95,9 +95,9 @@ class PackageTest < ActiveSupport::TestCase
         zpm:    '{
   "name": "UnitTestSample",
   "version": "1.0.1",
-  "vendor": "Znuny GmbH",
+  "vendor": "Zammad GmbH",
   "license": "ABC",
-  "url": "http://znuny.org/",
+  "url": "http://zammad.org/",
   "description": [
     {
       "language": "en",
@@ -121,9 +121,9 @@ class PackageTest < ActiveSupport::TestCase
         zpm:    '{
   "name": "UnitTestSample",
   "version": "1.0.0",
-  "vendor": "Znuny GmbH",
+  "vendor": "Zammad GmbH",
   "license": "ABC",
-  "url": "http://znuny.org/",
+  "url": "http://zammad.org/",
   "description": [
     {
       "language": "en",
@@ -147,9 +147,9 @@ class PackageTest < ActiveSupport::TestCase
         zpm:    '{
   "name": "UnitTestSample",
   "version": "1.0.2",
-  "vendor": "Znuny GmbH",
+  "vendor": "Zammad GmbH",
   "license": "ABC",
-  "url": "http://znuny.org/",
+  "url": "http://zammad.org/",
   "description": [
     {
       "language": "en",
@@ -227,9 +227,9 @@ class PackageTest < ActiveSupport::TestCase
         zpm:    '{
   "name": "UnitTestSample",
   "version": "1.0.2",
-  "vendor": "Znuny GmbH",
+  "vendor": "Zammad GmbH",
   "license": "ABC",
-  "url": "http://znuny.org/",
+  "url": "http://zammad.org/",
   "description": [
     {
       "language": "en",

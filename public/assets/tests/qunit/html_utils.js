@@ -173,8 +173,8 @@ QUnit.test("html2text", assert => {
   result = App.Utils.html2text(source)
   assert.equal(result, should, source)
 
-  source = "<div>1<br><br><br><br><br><br><br><br><br><br></div><div>Von: Martin Edenhofer via Znuny Support [<a href=\"mailto:support@znuny.inc\" title=\"mailto:support@znuny.inc\" target=\"_blank\">mailto:support@znuny.inc</a>]</div>\n<div>Gesendet: Donnerstag, 2. April 2015 11:32</div>"
-  should = "1\n\nVon: Martin Edenhofer via Znuny Support [mailto:support@znuny.inc]\nGesendet: Donnerstag, 2. April 2015 11:32"
+  source = "<div>1<br><br><br><br><br><br><br><br><br><br></div><div>Von: Martin Edenhofer via Zammad Support [<a href=\"mailto:support@zammad.inc\" title=\"mailto:support@zammad.inc\" target=\"_blank\">mailto:support@zammad.inc</a>]</div>\n<div>Gesendet: Donnerstag, 2. April 2015 11:32</div>"
+  should = "1\n\nVon: Martin Edenhofer via Zammad Support [mailto:support@zammad.inc]\nGesendet: Donnerstag, 2. April 2015 11:32"
   result = App.Utils.html2text(source)
   assert.equal(result, should, source)
 
@@ -897,44 +897,44 @@ QUnit.test("identify signature by plaintext", assert => {
 
   // ms
   // en
-  message = "<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/>From: Martin Edenhofer via Znuny Support [mailto:support@znuny.inc]<br/>Sent: Donnerstag, 2. April 2015 10:00<br/>lalala</div>"
-  should  = '<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/>From: Martin Edenhofer via Znuny Support [mailto:support@znuny.inc]<br/>Sent: Donnerstag, 2. April 2015 10:00<br/>lalala</div>'
+  message = "<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/>From: Martin Edenhofer via Zammad Support [mailto:support@zammad.inc]<br/>Sent: Donnerstag, 2. April 2015 10:00<br/>lalala</div>"
+  should  = '<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/>From: Martin Edenhofer via Zammad Support [mailto:support@zammad.inc]<br/>Sent: Donnerstag, 2. April 2015 10:00<br/>lalala</div>'
   result  = App.Utils.signatureIdentifyByPlaintext(message, true)
   assert.equal(result, should)
 
-  message = "<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/>From: Martin Edenhofer via Znuny Support [mailto:support@znuny.inc]<br/>Sent: Donnerstag, 2. April 2015 10:00<br/>Subject: lalala</div>"
-  should  = '<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/><span class="js-signatureMarker"></span>From: Martin Edenhofer via Znuny Support [mailto:support@znuny.inc]<br/>Sent: Donnerstag, 2. April 2015 10:00<br/>Subject: lalala</div>'
+  message = "<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/>From: Martin Edenhofer via Zammad Support [mailto:support@zammad.inc]<br/>Sent: Donnerstag, 2. April 2015 10:00<br/>Subject: lalala</div>"
+  should  = '<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/><span class="js-signatureMarker"></span>From: Martin Edenhofer via Zammad Support [mailto:support@zammad.inc]<br/>Sent: Donnerstag, 2. April 2015 10:00<br/>Subject: lalala</div>'
   result  = App.Utils.signatureIdentifyByPlaintext(message, true)
   assert.equal(result, should)
 
-  message = "<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/>From: Martin Edenhofer via Znuny Support [mailto:support@znuny.inc]<br/>Sent: Donnerstag, 2. April 2015 10:00<br/>1<br/>2<br/>3<br/>4<br/>4<br/>Subject: lalala</div>"
-  should  = '<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/>From: Martin Edenhofer via Znuny Support [mailto:support@znuny.inc]<br/>Sent: Donnerstag, 2. April 2015 10:00<br/>1<br/>2<br/>3<br/>4<br/>4<br/>Subject: lalala</div>'
+  message = "<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/>From: Martin Edenhofer via Zammad Support [mailto:support@zammad.inc]<br/>Sent: Donnerstag, 2. April 2015 10:00<br/>1<br/>2<br/>3<br/>4<br/>4<br/>Subject: lalala</div>"
+  should  = '<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/>From: Martin Edenhofer via Zammad Support [mailto:support@zammad.inc]<br/>Sent: Donnerstag, 2. April 2015 10:00<br/>1<br/>2<br/>3<br/>4<br/>4<br/>Subject: lalala</div>'
   result  = App.Utils.signatureIdentifyByPlaintext(message, true)
   assert.equal(result, should)
 
   // de
-  message = "<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/>Von: Martin Edenhofer via Znuny Support [mailto:support@znuny.inc]<br/>Gesendet: Donnerstag, 2. April 2015 10:00<br/>Betreff: lalala</div>"
-  should  = '<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/><span class="js-signatureMarker"></span>Von: Martin Edenhofer via Znuny Support [mailto:support@znuny.inc]<br/>Gesendet: Donnerstag, 2. April 2015 10:00<br/>Betreff: lalala</div>'
+  message = "<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/>Von: Martin Edenhofer via Zammad Support [mailto:support@zammad.inc]<br/>Gesendet: Donnerstag, 2. April 2015 10:00<br/>Betreff: lalala</div>"
+  should  = '<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/><span class="js-signatureMarker"></span>Von: Martin Edenhofer via Zammad Support [mailto:support@zammad.inc]<br/>Gesendet: Donnerstag, 2. April 2015 10:00<br/>Betreff: lalala</div>'
   result  = App.Utils.signatureIdentifyByPlaintext(message, true)
   assert.equal(result, should)
 
-  message = "<div>1<br><br></div><div>Von: Martin Edenhofer via Znuny Support [<a href=\"mailto:support@znuny.inc\" title=\"mailto:support@znuny.inc\" target=\"_blank\">mailto:support@znuny.inc</a>]</div>\n<div>Gesendet: Donnerstag, 2. April 2015 11:32</div>"
-  should  = "<div>1<br><br></div><div>Von: Martin Edenhofer via Znuny Support [<a href=\"mailto:support@znuny.inc\" title=\"mailto:support@znuny.inc\" target=\"_blank\">mailto:support@znuny.inc</a>]</div>\n<div>Gesendet: Donnerstag, 2. April 2015 11:32</div>"
+  message = "<div>1<br><br></div><div>Von: Martin Edenhofer via Zammad Support [<a href=\"mailto:support@zammad.inc\" title=\"mailto:support@zammad.inc\" target=\"_blank\">mailto:support@zammad.inc</a>]</div>\n<div>Gesendet: Donnerstag, 2. April 2015 11:32</div>"
+  should  = "<div>1<br><br></div><div>Von: Martin Edenhofer via Zammad Support [<a href=\"mailto:support@zammad.inc\" title=\"mailto:support@zammad.inc\" target=\"_blank\">mailto:support@zammad.inc</a>]</div>\n<div>Gesendet: Donnerstag, 2. April 2015 11:32</div>"
   result  = App.Utils.signatureIdentifyByPlaintext(message, true)
   assert.equal(result, should)
 
-  message = "<div>1<br><br></div><div>Von: Martin Edenhofer via Znuny Support [<a href=\"mailto:support@znuny.inc\" title=\"mailto:support@znuny.inc\" target=\"_blank\">mailto:support@znuny.inc</a>]</div>\n<div>Gesendet: Donnerstag, 2. April 2015 11:32</div><div>Betreff: lalala</div>"
-  should  = "<div>1<br><br></div><div><span class=\"js-signatureMarker\"></span>Von: Martin Edenhofer via Znuny Support [<a href=\"mailto:support@znuny.inc\" title=\"mailto:support@znuny.inc\" target=\"_blank\">mailto:support@znuny.inc</a>]</div>\n<div>Gesendet: Donnerstag, 2. April 2015 11:32</div><div>Betreff: lalala</div>"
+  message = "<div>1<br><br></div><div>Von: Martin Edenhofer via Zammad Support [<a href=\"mailto:support@zammad.inc\" title=\"mailto:support@zammad.inc\" target=\"_blank\">mailto:support@zammad.inc</a>]</div>\n<div>Gesendet: Donnerstag, 2. April 2015 11:32</div><div>Betreff: lalala</div>"
+  should  = "<div>1<br><br></div><div><span class=\"js-signatureMarker\"></span>Von: Martin Edenhofer via Zammad Support [<a href=\"mailto:support@zammad.inc\" title=\"mailto:support@zammad.inc\" target=\"_blank\">mailto:support@zammad.inc</a>]</div>\n<div>Gesendet: Donnerstag, 2. April 2015 11:32</div><div>Betreff: lalala</div>"
   result  = App.Utils.signatureIdentifyByPlaintext(message, true)
   assert.equal(result, should)
 
-  message = "<div>1<br><br></div><div>Von: Martin Edenhofer via Znuny Support &lt;<a href=\"mailto:support@znuny.inc\" title=\"mailto:support@znuny.inc\" target=\"_blank\">mailto:support@znuny.inc</a>&gt;</div>\n<div>An: somebody</div><div>Datum: Donnerstag, 2. April 2015 11:32</div><div>Betreff: lalala</div>"
-  should  = "<div>1<br><br></div><div><span class=\"js-signatureMarker\"></span>Von: Martin Edenhofer via Znuny Support &lt;<a href=\"mailto:support@znuny.inc\" title=\"mailto:support@znuny.inc\" target=\"_blank\">mailto:support@znuny.inc</a>&gt;</div>\n<div>An: somebody</div><div>Datum: Donnerstag, 2. April 2015 11:32</div><div>Betreff: lalala</div>"
+  message = "<div>1<br><br></div><div>Von: Martin Edenhofer via Zammad Support &lt;<a href=\"mailto:support@zammad.inc\" title=\"mailto:support@zammad.inc\" target=\"_blank\">mailto:support@zammad.inc</a>&gt;</div>\n<div>An: somebody</div><div>Datum: Donnerstag, 2. April 2015 11:32</div><div>Betreff: lalala</div>"
+  should  = "<div>1<br><br></div><div><span class=\"js-signatureMarker\"></span>Von: Martin Edenhofer via Zammad Support &lt;<a href=\"mailto:support@zammad.inc\" title=\"mailto:support@zammad.inc\" target=\"_blank\">mailto:support@zammad.inc</a>&gt;</div>\n<div>An: somebody</div><div>Datum: Donnerstag, 2. April 2015 11:32</div><div>Betreff: lalala</div>"
   result  = App.Utils.signatureIdentifyByPlaintext(message, true)
   assert.equal(result, should)
 
-  message = "<div>Von: &quot;Johannes Nickel via Znuny Projects&quot; &lt;<a href=\"mailto:projects@znuny.inc\" title=\"mailto:projects@znuny.inc\">projects@znuny.inc</a>&gt;</div><div>An: \"Lisa Smith\" &lt;<a href=\"mailto:lisa.smith@example.com\" title=\"mailto:lisa.smith@example.com\">lisa.smith@example.com</a>&gt;</div><div>Gesendet: Donnerstag, 2. April 2015 10:11:12</div><div>Betreff: Angebot Redundanz / Paket mit Silver Subscription [Ticket#424242]</div><div><br></div><div>Hallo Frau Smith,</div>"
-  should  = "<div><span class=\"js-signatureMarker\"></span>Von: &quot;Johannes Nickel via Znuny Projects&quot; &lt;<a href=\"mailto:projects@znuny.inc\" title=\"mailto:projects@znuny.inc\">projects@znuny.inc</a>&gt;</div><div>An: \"Lisa Smith\" &lt;<a href=\"mailto:lisa.smith@example.com\" title=\"mailto:lisa.smith@example.com\">lisa.smith@example.com</a>&gt;</div><div>Gesendet: Donnerstag, 2. April 2015 10:11:12</div><div>Betreff: Angebot Redundanz / Paket mit Silver Subscription [Ticket#424242]</div><div><br></div><div>Hallo Frau Smith,</div>"
+  message = "<div>Von: &quot;Johannes Nickel via Zammad Projects&quot; &lt;<a href=\"mailto:projects@zammad.inc\" title=\"mailto:projects@zammad.inc\">projects@zammad.inc</a>&gt;</div><div>An: \"Lisa Smith\" &lt;<a href=\"mailto:lisa.smith@example.com\" title=\"mailto:lisa.smith@example.com\">lisa.smith@example.com</a>&gt;</div><div>Gesendet: Donnerstag, 2. April 2015 10:11:12</div><div>Betreff: Angebot Redundanz / Paket mit Silver Subscription [Ticket#424242]</div><div><br></div><div>Hallo Frau Smith,</div>"
+  should  = "<div><span class=\"js-signatureMarker\"></span>Von: &quot;Johannes Nickel via Zammad Projects&quot; &lt;<a href=\"mailto:projects@zammad.inc\" title=\"mailto:projects@zammad.inc\">projects@zammad.inc</a>&gt;</div><div>An: \"Lisa Smith\" &lt;<a href=\"mailto:lisa.smith@example.com\" title=\"mailto:lisa.smith@example.com\">lisa.smith@example.com</a>&gt;</div><div>Gesendet: Donnerstag, 2. April 2015 10:11:12</div><div>Betreff: Angebot Redundanz / Paket mit Silver Subscription [Ticket#424242]</div><div><br></div><div>Hallo Frau Smith,</div>"
   result  = App.Utils.signatureIdentifyByPlaintext(message, true)
   assert.equal(result, should)
 
@@ -943,8 +943,8 @@ QUnit.test("identify signature by plaintext", assert => {
   result  = App.Utils.signatureIdentifyByPlaintext(message, true)
   assert.equal(result, should)
 
-  message = "Dear Mr. Smith,<div><br></div><div>it seems to be, dass Sie den AutoIncrement Nummerngenerator für Ihre ITSMChangeManagement Installation verwenden. Seit ABC 3.2 wird führend vor der sich in der Datei&nbsp;<span style=\"line-height: 1.45; background-color: initial;\">&lt;ABC_CONFIG_Home&gt;/war/log/ITSMChangeCounter.log &nbsp;befindenden Zahl die SystemID (SysConfig) geschrieben. Dies ist ein Standardverhalten, dass auch bei der Ticketnummer verwendet wird.<br><br>Please ask me if you have questions.</span></div><div><span style=\"line-height: 1.45; background-color: initial;\"><br></span></div><div><span style=\"line-height: 1.45; background-color: initial;\">Viele Grüße,</span></div><div><div data-signature=\"true\" data-signature-id=\"1\">&nbsp; Thorsten Smith\n<br>\n<br>--\n<br>Enterprise Services for ABC\n<br>\n<br>Znuny GmbH // Marienstraße 11 // 10117 Berlin // Germany\n<br>\n<br>P: +49 (0) 30 111 111 111-0\n<br>F: +49 (0) 30 111 111 111-8\n<br>W: http://znuny.com \n<br>\n<br>Location: Berlin - HRB 12345678 B Amtsgericht Berlin-Charlottenburg\n<br>Managing Director: Martin Edenhofer\n<br></div></div>"
-  should  = "Dear Mr. Smith,<div><br></div><div>it seems to be, dass Sie den AutoIncrement Nummerngenerator für Ihre ITSMChangeManagement Installation verwenden. Seit ABC 3.2 wird führend vor der sich in der Datei&nbsp;<span style=\"line-height: 1.45; background-color: initial;\">&lt;ABC_CONFIG_Home&gt;/war/log/ITSMChangeCounter.log &nbsp;befindenden Zahl die SystemID (SysConfig) geschrieben. Dies ist ein Standardverhalten, dass auch bei der Ticketnummer verwendet wird.<br><br>Please ask me if you have questions.</span></div><div><span style=\"line-height: 1.45; background-color: initial;\"><br></span></div><div><span style=\"line-height: 1.45; background-color: initial;\">Viele Grüße,</span></div><div><span class=\"js-signatureMarker\"></span><div data-signature=\"true\" data-signature-id=\"1\">&nbsp; Thorsten Smith\n<br>\n<br>--\n<br>Enterprise Services for ABC\n<br>\n<br>Znuny GmbH // Marienstraße 11 // 10117 Berlin // Germany\n<br>\n<br>P: +49 (0) 30 111 111 111-0\n<br>F: +49 (0) 30 111 111 111-8\n<br>W: http://znuny.com \n<br>\n<br>Location: Berlin - HRB 12345678 B Amtsgericht Berlin-Charlottenburg\n<br>Managing Director: Martin Edenhofer\n<br></div></div>"
+  message = "Dear Mr. Smith,<div><br></div><div>it seems to be, dass Sie den AutoIncrement Nummerngenerator für Ihre ITSMChangeManagement Installation verwenden. Seit ABC 3.2 wird führend vor der sich in der Datei&nbsp;<span style=\"line-height: 1.45; background-color: initial;\">&lt;ABC_CONFIG_Home&gt;/war/log/ITSMChangeCounter.log &nbsp;befindenden Zahl die SystemID (SysConfig) geschrieben. Dies ist ein Standardverhalten, dass auch bei der Ticketnummer verwendet wird.<br><br>Please ask me if you have questions.</span></div><div><span style=\"line-height: 1.45; background-color: initial;\"><br></span></div><div><span style=\"line-height: 1.45; background-color: initial;\">Viele Grüße,</span></div><div><div data-signature=\"true\" data-signature-id=\"1\">&nbsp; Thorsten Smith\n<br>\n<br>--\n<br>Enterprise Services for ABC\n<br>\n<br>Zammad GmbH // Marienstraße 11 // 10117 Berlin // Germany\n<br>\n<br>P: +49 (0) 30 111 111 111-0\n<br>F: +49 (0) 30 111 111 111-8\n<br>W: http://zammad.com \n<br>\n<br>Location: Berlin - HRB 12345678 B Amtsgericht Berlin-Charlottenburg\n<br>Managing Director: Martin Edenhofer\n<br></div></div>"
+  should  = "Dear Mr. Smith,<div><br></div><div>it seems to be, dass Sie den AutoIncrement Nummerngenerator für Ihre ITSMChangeManagement Installation verwenden. Seit ABC 3.2 wird führend vor der sich in der Datei&nbsp;<span style=\"line-height: 1.45; background-color: initial;\">&lt;ABC_CONFIG_Home&gt;/war/log/ITSMChangeCounter.log &nbsp;befindenden Zahl die SystemID (SysConfig) geschrieben. Dies ist ein Standardverhalten, dass auch bei der Ticketnummer verwendet wird.<br><br>Please ask me if you have questions.</span></div><div><span style=\"line-height: 1.45; background-color: initial;\"><br></span></div><div><span style=\"line-height: 1.45; background-color: initial;\">Viele Grüße,</span></div><div><span class=\"js-signatureMarker\"></span><div data-signature=\"true\" data-signature-id=\"1\">&nbsp; Thorsten Smith\n<br>\n<br>--\n<br>Enterprise Services for ABC\n<br>\n<br>Zammad GmbH // Marienstraße 11 // 10117 Berlin // Germany\n<br>\n<br>P: +49 (0) 30 111 111 111-0\n<br>F: +49 (0) 30 111 111 111-8\n<br>W: http://zammad.com \n<br>\n<br>Location: Berlin - HRB 12345678 B Amtsgericht Berlin-Charlottenburg\n<br>Managing Director: Martin Edenhofer\n<br></div></div>"
   result  = App.Utils.signatureIdentifyByPlaintext(message, true, true)
   assert.equal(result, should)
 
@@ -959,15 +959,15 @@ QUnit.test("identify signature by plaintext", assert => {
   assert.equal(result, should)
 
   // fr
-  message = "<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/>De : Martin Edenhofer via Znuny Support [mailto:support@znuny.inc]<br/>Envoyé : mercredi 29 avril 2015 17:31<br/>Objet : lalala</div>"
-  should  = '<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/><span class="js-signatureMarker"></span>De : Martin Edenhofer via Znuny Support [mailto:support@znuny.inc]<br/>Envoyé : mercredi 29 avril 2015 17:31<br/>Objet : lalala</div>'
+  message = "<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/>De : Martin Edenhofer via Zammad Support [mailto:support@zammad.inc]<br/>Envoyé : mercredi 29 avril 2015 17:31<br/>Objet : lalala</div>"
+  should  = '<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/><span class="js-signatureMarker"></span>De : Martin Edenhofer via Zammad Support [mailto:support@zammad.inc]<br/>Envoyé : mercredi 29 avril 2015 17:31<br/>Objet : lalala</div>'
   result  = App.Utils.signatureIdentifyByPlaintext(message, true)
   assert.equal(result, should)
 
   // thunderbird
   // de
-  message = "<div><br></div><div>Viele Grüße,</div><div>Christian</div><div><br></div><div>Am 04.03.2015 um 12:47 schrieb Martin Edenhofer via Znuny Sales:</div><div>&gt; Hallo Christian,</div>"
-  should  = "<div><br></div><div>Viele Grüße,</div><div>Christian</div><div><br></div><div><span class=\"js-signatureMarker\"></span>Am 04.03.2015 um 12:47 schrieb Martin Edenhofer via Znuny Sales:</div><div>&gt; Hallo Christian,</div>"
+  message = "<div><br></div><div>Viele Grüße,</div><div>Christian</div><div><br></div><div>Am 04.03.2015 um 12:47 schrieb Martin Edenhofer via Zammad Sales:</div><div>&gt; Hallo Christian,</div>"
+  should  = "<div><br></div><div>Viele Grüße,</div><div>Christian</div><div><br></div><div><span class=\"js-signatureMarker\"></span>Am 04.03.2015 um 12:47 schrieb Martin Edenhofer via Zammad Sales:</div><div>&gt; Hallo Christian,</div>"
   result  = App.Utils.signatureIdentifyByPlaintext(message, true)
   assert.equal(result, should)
 
@@ -996,8 +996,8 @@ QUnit.test("identify signature by plaintext", assert => {
   result  = App.Utils.signatureIdentifyByPlaintext(message, true)
   assert.equal(result, should)
 
-  message = "<div>test 123 <br/><br/></div><div>24.02.2015 14:20 - Roy Kaldung via Znuny Sales schrieb: &nbsp;</div>"
-  should  = "<div>test 123 <br/><br/></div><div><span class=\"js-signatureMarker\"></span>24.02.2015 14:20 - Roy Kaldung via Znuny Sales schrieb: &nbsp;</div>"
+  message = "<div>test 123 <br/><br/></div><div>24.02.2015 14:20 - Roy Kaldung via Zammad Sales schrieb: &nbsp;</div>"
+  should  = "<div>test 123 <br/><br/></div><div><span class=\"js-signatureMarker\"></span>24.02.2015 14:20 - Roy Kaldung via Zammad Sales schrieb: &nbsp;</div>"
   result  = App.Utils.signatureIdentifyByPlaintext(message, true)
   assert.equal(result, should)
 

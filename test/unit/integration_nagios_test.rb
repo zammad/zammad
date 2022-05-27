@@ -20,7 +20,7 @@ Subject: ** PROBLEM Service Alert: host.internal.loc/CPU Load is WARNING **
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <20160131094621.29ECD400F29C-nagios-2@monitoring.znuny.com>
+Message-Id: <20160131094621.29ECD400F29C-nagios-2@monitoring.zammad.com>
 From: nagios2@monitoring.example.com (nagios)
 
 ***** Nagios *****
@@ -52,7 +52,7 @@ Subject: ** PROBLEM Service Alert: host.internal.loc/Disk Usage 123 is WARNING *
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <20160131094621.29ECD400F29C-nagios-3@monitoring.znuny.com>
+Message-Id: <20160131094621.29ECD400F29C-nagios-3@monitoring.zammad.com>
 From: nagios2@monitoring.example.com (nagios)
 
 ***** Nagios *****
@@ -85,7 +85,7 @@ Subject: ** PROBLEM Service Alert: host.internal.loc/CPU Load is WARNING **
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <20160131094621.29ECD400F29C-nagios-4@monitoring.znuny.com>
+Message-Id: <20160131094621.29ECD400F29C-nagios-4@monitoring.zammad.com>
 From: nagios2@monitoring.example.com (nagios)
 
 ***** Nagios *****
@@ -118,7 +118,7 @@ Subject: ** PROBLEM Service Alert: host.internal.loc/CPU Load is WARNING **
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <20160131094621.29ECD400F29C-nagios-5@monitoring.znuny.com>
+Message-Id: <20160131094621.29ECD400F29C-nagios-5@monitoring.zammad.com>
 From: nagios2@monitoring.example.com (nagios)
 
 ***** Nagios *****
@@ -150,7 +150,7 @@ User-Agent: Heirloom mailx 12.5 7/5/10
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <20160131094621.29ECD400F29C-nagios-5@monitoring.znuny.com>
+Message-Id: <20160131094621.29ECD400F29C-nagios-5@monitoring.zammad.com>
 From: nagios2@monitoring.example.com (nagios)
 
 ***** Nagios *****
@@ -183,7 +183,7 @@ User-Agent: Heirloom mailx 12.5 7/5/10
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <20160131094621.29ECD400F29C-nagios-5@monitoring.znuny.com>
+Message-Id: <20160131094621.29ECD400F29C-nagios-5@monitoring.zammad.com>
 From: nagios2@monitoring.example.com (nagios)
 
 ***** Nagios *****
@@ -221,7 +221,7 @@ Subject: ** PROBLEM Service Alert: host.internal.loc/CPU Load is WARNING **
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <20160131094621.29ECD400F29C-nagios-1@monitoring.znuny.com>
+Message-Id: <20160131094621.29ECD400F29C-nagios-1@monitoring.zammad.com>
 From: nagios_not_matching@monitoring.example.com (nagios)
 
 ***** Nagios *****
@@ -252,7 +252,7 @@ Subject: ** PROBLEM Service Alert: host.internal.loc/CPU Load is WARNING **
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <20160131094621.29ECD400F29C-nagios-1@monitoring.znuny.com>
+Message-Id: <20160131094621.29ECD400F29C-nagios-1@monitoring.zammad.com>
 From: nagios_not_matching@monitoring.example.com (nagios)
 
 ***** Nagios *****
@@ -281,7 +281,7 @@ Subject: ** PROBLEM Service Alert: host.internal.loc/CPU Load is WARNING **
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <20160131094621.29ECD400F29C-nagios-1@monitoring.znuny.com>
+Message-Id: <20160131094621.29ECD400F29C-nagios-1@monitoring.zammad.com>
 Return-Path: bob@example.com
 
 ***** Nagios *****
@@ -313,7 +313,7 @@ Subject: ** PROBLEM Service Alert: host.internal.loc/CPU Load is WARNING **
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <20160131094621.29ECD400F29C-nagios-2@monitoring.znuny.com>
+Message-Id: <20160131094621.29ECD400F29C-nagios-2@monitoring.zammad.com>
 From: nagios2@monitoring.example.com (nagios)
 
 ***** Nagios *****
@@ -347,7 +347,7 @@ Subject: ** PROBLEM Service Alert: host.internal.loc/CPU Load is WARNING **
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <20160131094621.29ECD400F29C-nagios-2@monitoring.znuny.com>
+Message-Id: <20160131094621.29ECD400F29C-nagios-2@monitoring.zammad.com>
 From: nagios2@monitoring.example.com (nagios)
 
 ***** Nagios *****
@@ -381,7 +381,7 @@ Subject: ** PROBLEM Service Alert: host.internal.loc/CPU Load is WARNING **
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <20160131094621.29ECD400F29C-nagios-2@monitoring.znuny.com>
+Message-Id: <20160131094621.29ECD400F29C-nagios-2@monitoring.zammad.com>
 From: nagios2@monitoring.example.com (nagios)
 
 ***** Nagios *****
@@ -418,7 +418,7 @@ User-Agent: Heirloom mailx 12.5 7/5/10
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <20160131094621.29ECD400F29C-nagios-5@monitoring.znuny.com>
+Message-Id: <20160131094621.29ECD400F29C-nagios-5@monitoring.zammad.com>
 From: nagios2@monitoring.example.com (nagios)
 
 ***** Nagios *****

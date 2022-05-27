@@ -137,12 +137,12 @@ Some Text"
     assert_equal(2, article_p.ticket.articles.count)
 
     email_raw_string = "Return-Path: <XX@XX.XX>
-X-Original-To: sales@znuny.com
+X-Original-To: sales@zammad.com
 Received: from mail-qk0-f170.example.com (mail-qk0-f170.example.com [209.1.1.1])
-    by arber.znuny.com (Postfix) with ESMTPS id C3AED5FE2E
-    for <sales@znuny.com>; Mon, 22 Aug 2016 19:03:15 +0200 (CEST)
+    by mail.zammad.com (Postfix) with ESMTPS id C3AED5FE2E
+    for <sales@zammad.com>; Mon, 22 Aug 2016 19:03:15 +0200 (CEST)
 Received: by mail-qk0-f170.example.com with SMTP id t7so87721720qkh.1
-        for <sales@znuny.com>; Mon, 22 Aug 2016 10:03:15 -0700 (PDT)
+        for <sales@zammad.com>; Mon, 22 Aug 2016 10:03:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=XX.XX; s=example;
         h=to:from:date:message-id:subject:mime-version:precedence
@@ -166,7 +166,7 @@ X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
 X-Gm-Message-State: AE9vXwMCTnihGiG/tc7xNNlhFLcEK6DPp7otypJg5e4alD3xGK2R707BP29druIi/mcdNyaHg1vP5lSZ8EvrwvOF8iA0HNFhECGjBTJ40YrSJAR8E89xVwxFv/er+U3vEpqmPmt+hL4QhxK/+D2gKOcHSxku
 X-Received: by 10.1.1.1 with SMTP id 17mr25015996qkf.279.1471885393931;
         Mon, 22 Aug 2016 10:03:13 -0700 (PDT)
-To: sales@znuny.com
+To: sales@zammad.com
 From: \"XXX\" <XX@XX.XX>
 Date: Mon, 22 Aug 2016 10:03:13 -0700
 Message-ID: <CA+kqV8PH1DU+zcSx3M00Hrm_oJedRLjbgAUdoi9p0+sMwYsyUg@mail.gmail.com>
@@ -474,12 +474,12 @@ Some Text"
     assert_equal(2, article_p.ticket.articles.count)
 
     email_raw_string = "Return-Path: <XX@XX.XX>
-X-Original-To: sales@znuny.com
+X-Original-To: sales@zammad.com
 Received: from mail-qk0-f170.example.com (mail-qk0-f170.example.com [209.1.1.1])
-    by arber.znuny.com (Postfix) with ESMTPS id C3AED5FE2E
-    for <sales@znuny.com>; Mon, 22 Aug 2016 19:03:15 +0200 (CEST)
+    by mail.zammad.com (Postfix) with ESMTPS id C3AED5FE2E
+    for <sales@zammad.com>; Mon, 22 Aug 2016 19:03:15 +0200 (CEST)
 Received: by mail-qk0-f170.example.com with SMTP id t7so87721720qkh.1
-        for <sales@znuny.com>; Mon, 22 Aug 2016 10:03:15 -0700 (PDT)
+        for <sales@zammad.com>; Mon, 22 Aug 2016 10:03:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=XX.XX; s=example;
         h=to:from:date:message-id:subject:mime-version:precedence
@@ -503,7 +503,7 @@ X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
 X-Gm-Message-State: AE9vXwMCTnihGiG/tc7xNNlhFLcEK6DPp7otypJg5e4alD3xGK2R707BP29druIi/mcdNyaHg1vP5lSZ8EvrwvOF8iA0HNFhECGjBTJ40YrSJAR8E89xVwxFv/er+U3vEpqmPmt+hL4QhxK/+D2gKOcHSxku
 X-Received: by 10.1.1.1 with SMTP id 17mr25015996qkf.279.1471885393931;
         Mon, 22 Aug 2016 10:03:13 -0700 (PDT)
-To: sales@znuny.com
+To: sales@zammad.com
 From: \"XXX\" <XX@XX.XX>
 Date: Mon, 22 Aug 2016 10:03:13 -0700
 Message-ID: <CA+kqV8PH1DU+zcSx3M00Hrm_oJedRLjbgAUdoi9p0+sMwYsyUg@mail.gmail.com>

@@ -49,7 +49,7 @@ RSpec.describe Cti::CallerId do
         expect(described_class.extract_numbers(<<~INPUT.chomp)).to eq(%w[19494310000 19494310001])
           P: +1 (949) 431 0000
           F: +1 (949) 431 0001
-          W: http://znuny
+          W: https://zammad.com
         INPUT
       end
     end

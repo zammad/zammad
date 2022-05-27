@@ -1491,7 +1491,7 @@ class InputsRef extends App.ControllerAppContent
         {value:14,name:'ChariTea'},
         {value:15,name:'fritz-kola'},
         {value:16,name:'Vitamin Water'},
-        {value:17,name:'Znuny'},
+        {value:17,name:'Zammad'},
         {value:18,name:'Max & Moritz'}]
     @$('.searchableSelectPlaceholder').replaceWith( searchableSelectObject.element() )
 
@@ -1574,7 +1574,7 @@ class InputsRef extends App.ControllerAppContent
             {value:14,name:'ChariTea'},
             {value:15,name:'fritz-kola'},
             {value:16,name:'Vitamin Water'},
-            {value:17,name:'Znuny'},
+            {value:17,name:'Zammad'},
             {value:18,name:'Max & Moritz'},
             {value:19,name:'Telefónica Deutschland Holding GmbH'}
           ]}

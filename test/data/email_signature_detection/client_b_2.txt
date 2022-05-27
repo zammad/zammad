@@ -29,7 +29,7 @@ Example. Zusammen für eine bessere Welt.
 Sitz der Gesellschaft: Max City, Amtsgericht Max City HRB Nr. 1234
 Geschäftsführer: Bob Smith
 Vorsitzender des Aufsichtsrats: Alex Marx
-Von: Werner Smith via Znuny Projects [mailto:projects@example.com]
+Von: Werner Smith via Zammad Projects [mailto:projects@example.com]
 Gesendet: Freitag, 4. September 2015 09:33
 An: Günter Lässig
 Betreff: Texte einpflegen [Ticket#1114881]
@@ -48,7 +48,7 @@ Werner Smith
 --
 Enterprise Services for OTRS
 
-Znuny GmbH // Marienstraße 14 // 10117 Berlin // Germany
+Zammad GmbH // Marienstraße 14 // 10117 Berlin // Germany
 
 P: +49 (0) 30 60 98 54 18-0
 F: +49 (0) 30 60 98 54 18-8

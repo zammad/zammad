@@ -396,7 +396,7 @@ class String
     # On 01/04/15 10:55, Bob Smith wrote:
     map['apple-en'] = '^(On)[[:space:]].{6,20}[[:space:]].{3,10}[[:space:]].{1,250}[[:space:]](wrote):'
 
-    # Am 03.04.2015 um 20:58 schrieb Martin Edenhofer <me@znuny.ink>:
+    # Am 03.04.2015 um 20:58 schrieb Martin Edenhofer <me@zammad.ink>:
     map['apple-de'] = '^(Am)[[:space:]].{6,20}[[:space:]](um)[[:space:]].{3,10}[[:space:]](schrieb)[[:space:]].{1,250}:'
 
     # Thunderbird
@@ -417,7 +417,7 @@ class String
     map['otrs-en-de'] = '^.{6,10}[[:space:]].{3,10}[[:space:]]-[[:space:]].{1,250}[[:space:]](wrote|schrieb):'
 
     # Ms
-    # From: Martin Edenhofer via Znuny Support [mailto:support@znuny.inc]
+    # From: Martin Edenhofer via Zammad Support [mailto:support@zammad.inc]
     # Send: Donnerstag, 2. April 2015 10:00
     # To/Cc/Bcc: xxx
     # Subject: xxx

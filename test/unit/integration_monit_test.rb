@@ -15,7 +15,7 @@ class IntegrationMonitTest < ActiveSupport::TestCase
   test 'base tests' do
 
     # Service
-    email_raw_string = "Message-Id: <20160131094621.29ECD400F29C-monit-1-1@monitoring.znuny.com>
+    email_raw_string = "Message-Id: <20160131094621.29ECD400F29C-monit-1-1@monitoring.zammad.com>
 From: monit@monitoring.example.com
 To: admin@example
 Subject: monit alert --  Timeout php-fpm
@@ -46,7 +46,7 @@ Monit
     assert_equal('php-fpm', ticket_0.preferences['monit']['service'])
     assert_equal('CRITICAL', ticket_0.preferences['monit']['state'])
 
-    email_raw_string = "Message-Id: <20160131094621.29ECD400F29C-monit-1-2@monitoring.znuny.com>
+    email_raw_string = "Message-Id: <20160131094621.29ECD400F29C-monit-1-2@monitoring.zammad.com>
 From: monit@monitoring.example.com
 To: admin@example
 Subject: monit alert --  Action done php-fpm
@@ -78,7 +78,7 @@ Monit"
     assert_equal(ticket_0_1.id, ticket_0.id)
 
     # Service
-    email_raw_string = "Message-Id: <20160131094621.29ECD400F29C-monit-2-1@monitoring.znuny.com>
+    email_raw_string = "Message-Id: <20160131094621.29ECD400F29C-monit-2-1@monitoring.zammad.com>
 From: monit@monitoring.example.com
 To: admin@example
 Subject: monit alert --  Connection failed host.example
@@ -109,7 +109,7 @@ Monit"
     assert_equal('host.example', ticket_1.preferences['monit']['service'])
     assert_equal('CRITICAL', ticket_1.preferences['monit']['state'])
 
-    email_raw_string = "Message-Id: <20160131094621.29ECD400F29C-monit-2-2@monitoring.znuny.com>
+    email_raw_string = "Message-Id: <20160131094621.29ECD400F29C-monit-2-2@monitoring.zammad.com>
 From: monit@monitoring.example.com
 To: admin@example
 Subject: monit alert --  Connection succeeded host.example
@@ -141,7 +141,7 @@ Monit"
     assert_equal(ticket_1_1.id, ticket_1.id)
 
     # Resource Limit
-    email_raw_string = "Message-Id: <20160131094621.29ECD400F29C-monit-3-1@monitoring.znuny.com>
+    email_raw_string = "Message-Id: <20160131094621.29ECD400F29C-monit-3-1@monitoring.zammad.com>
 From: monit@monitoring.example.com
 To: admin@example
 Subject: monit alert --  Resource limit matched web5.example.net
@@ -172,7 +172,7 @@ Monit"
     assert_equal('web5.example.net', ticket_2.preferences['monit']['service'])
     assert_equal('CRITICAL', ticket_2.preferences['monit']['state'])
 
-    email_raw_string = "Message-Id: <20160131094621.29ECD400F29C-monit-3-2@monitoring.znuny.com>
+    email_raw_string = "Message-Id: <20160131094621.29ECD400F29C-monit-3-2@monitoring.zammad.com>
 From: monit@monitoring.example.com
 To: admin@example
 Subject: monit alert --  Resource limit succeeded web5.example.net

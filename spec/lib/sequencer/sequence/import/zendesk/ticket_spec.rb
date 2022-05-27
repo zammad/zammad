@@ -61,7 +61,7 @@ RSpec.describe ::Sequencer::Sequence::Import::Zendesk::Ticket, sequencer: :seque
             key2
             newtag
             otrs
-            znuny
+            zammad
           ],
           'custom_fields'         => [
             { 'id'    => 1001,

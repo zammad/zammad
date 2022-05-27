@@ -625,7 +625,7 @@ class App.Utils
           markers.push marker
           return
 
-        # Am 03.04.2015 um 20:58 schrieb Martin Edenhofer <me@znuny.ink>:
+        # Am 03.04.2015 um 20:58 schrieb Martin Edenhofer <me@zammad.ink>:
         if line && line.match( /^(Am)\s.{6,20}\s(um)\s.{3,10}\s(schrieb)\s.{1,250}:/ )
           marker =
             line:      cleanup(line)
@@ -652,7 +652,7 @@ class App.Utils
     searchForOtrs(textToSearchInLines, markers)
 
     # search for Ms
-    # From: Martin Edenhofer via Znuny Support [mailto:support@znuny.inc]
+    # From: Martin Edenhofer via Zammad Support [mailto:support@zammad.inc]
     # Send: Donnerstag, 2. April 2015 10:00
     # To/Cc/Bcc: xxx
     # Subject: xxx

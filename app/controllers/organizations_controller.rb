@@ -14,7 +14,7 @@ JSON
 Example:
 {
   "id":1,
-  "name":"Znuny GmbH",
+  "name":"Zammad GmbH",
   "note":"",
   "active":true,
   "shared":true,
