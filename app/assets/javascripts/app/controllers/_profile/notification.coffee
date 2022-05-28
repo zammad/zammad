@@ -94,6 +94,7 @@ class ProfileNotification extends App.ControllerSubContent
       groups: groups
       config: config
       sounds: @sounds
+      soundVolume: App.LocalStorage.get('notification_sound_volume', @Session.get('id')) || 1
       notificationSoundEnabled: App.OnlineNotification.soundEnabled()
 
   update: (e) =>
@@ -158,6 +159,9 @@ class ProfileNotification extends App.ControllerSubContent
     else
       params.notification_sound.enabled = true
 
+    if params.notification_sound.volume
+      App.LocalStorage.set('notification_sound_volume', params.notification_sound.volume, App.Session.get('id'))
+
     # get data
     @ajax(
       id:          'preferences'
@@ -194,6 +198,7 @@ class ProfileNotification extends App.ControllerSubContent
     params = @formParam(e.target)
     return if !params.notification_sound
     return if !params.notification_sound.file
-    App.OnlineNotification.play(params.notification_sound.file)
+    return if !params.notification_sound.volume
+    App.OnlineNotification.play(params.notification_sound.file, params.notification_sound.volume)
 
 App.Config.set('Notifications', { prio: 2600, name: __('Notifications'), parent: '#profile', target: '#profile/notifications', permission: ['user_preferences.notifications+ticket.agent'], controller: ProfileNotification }, 'NavBarProfile')

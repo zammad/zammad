@@ -108,6 +108,12 @@
       <%- @T('Play user interface sound effects') %>
     </label>
   </div>
+  <div class="form-group">
+    <div class="formGroup-label">
+      <label for="notification-sound-volume"><%- @T('Notification Volume') %></label>
+    </div>
+     <input class="range-horizontal js-notificationSound" type="range" id="notification-sound-volume" name="notification_sound::volume" min="0.01" max="1" step="0.01" value="<%= @soundVolume %>">
+  </div>
 
   <button type="submit" class="btn btn--primary"><%- @T( 'Submit' ) %></button>
 </form>

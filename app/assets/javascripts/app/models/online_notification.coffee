@@ -7,13 +7,16 @@ class App.OnlineNotification extends App.Model
 
   App.OnlineNotification.play()
 
-  App.OnlineNotification.play('bell.mp3')
+  App.OnlineNotification.play('Bell.mp3')
+
+  App.OnlineNotification.play('Bell.mp3', 0.5)
 
   ###
 
-  @play: (file) ->
+  @play: (file, soundVolume) ->
     if file
       sound = new Audio("assets/sounds/#{file}")
+      sound.volume = soundVolume if soundVolume
       sound.play()
       return
     preferences = App.Session.get('preferences')
@@ -23,6 +26,7 @@ class App.OnlineNotification extends App.Model
     return if sound && !sound.ended
     file = App.OnlineNotification.soundFile()
     sound = new Audio("assets/sounds/#{file}")
+    sound.volume = App.LocalStorage.get('notification_sound_volume', App.Session.get('id')) || 1
     App.Config.set('latest_online_notification_sond', sound)
     sound.play()
 

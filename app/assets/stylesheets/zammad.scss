@@ -14008,3 +14008,11 @@ span.is-disabled {
     }
   }
 }
+
+input[type='range'] {
+  accent-color: hsl(203, 53%, 49%);
+
+  &.range-horizontal {
+    max-width: 360px;
+  }
+}
