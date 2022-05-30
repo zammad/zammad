@@ -6,21 +6,30 @@ class Auth
 
       private
 
-      # Validation against the configured ldap integration.
-      #
-      # @returns [Boolean] true if the validation works, otherwise false.
-      def authenticated?
-        ldap_user = ::Ldap::User.new
+      def source
+        LdapSource.by_user(user)
+      end
 
+      def login_valid?(ldap_user)
         # get from config or fallback to login
         # for a list of user attributes which should
         # be used for logging in
         login_attributes = config[:login_attributes] || %w[login]
 
-        authed = login_attributes.any? do |attribute|
+        login_attributes.any? do |attribute|
           ldap_user.valid?(user[attribute], password)
         end
+      end
 
+      # Validation against the configured ldap integration.
+      #
+      # @returns [Boolean] true if the validation works, otherwise false.
+      def authenticated?
+        return if !source
+
+        ldap_user = ::Ldap::User.new(source.preferences)
+
+        authed = login_valid?(ldap_user)
         log_auth_result(authed)
         authed
       rescue => e
@@ -38,7 +47,7 @@ class Auth
       #
       # @returns [Boolean] true if the ldap integration is active and the default behaviour matches.
       def perform?
-        user.source == 'Ldap' && Setting.get('ldap_integration')
+        user.source =~ %r{^Ldap::(\d+)$} && Setting.get('ldap_integration')
       end
 
       # Logs the auth result

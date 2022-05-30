@@ -876,11 +876,11 @@ class App.ControllerTable extends App.Controller
   onActionButtonClicked: (e) =>
     id = $(e.currentTarget).parents('tr').data('id')
     name = e.currentTarget.getAttribute('data-table-action')
-    @runAction(name, id)
+    @runAction(name, id, e)
 
-  runAction: (name, id) =>
+  runAction: (name, id, e = undefined) =>
     action = _.findWhere @actions, name: name
-    action.callback(id)
+    action.callback(id, e)
 
   toggleActionDropdown: (id, e, td) =>
     e.stopPropagation()
@@ -902,7 +902,7 @@ class App.ControllerTable extends App.Controller
     else
       # only one action - directly fire that action
       name = $(td).find('[data-table-action]').attr('data-table-action')
-      @runAction(name, id)
+      @runAction(name, id, e)
 
   calculateHeaderWidths: ->
     return if !@tableId

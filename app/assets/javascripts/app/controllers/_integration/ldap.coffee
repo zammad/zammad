@@ -1,25 +1,59 @@
 class Ldap extends App.ControllerIntegrationBase
   featureIntegration: 'ldap_integration'
   featureName: __('LDAP')
-  featureConfig: 'ldap_config'
   description: [
-    [__('This service enables Zammad to connect with your LDAP server.')]
+    [__('Use this switch to start synchronization of your ldap sources. ')]
+    [__('If a user is found in two (or more) configured LDAP sources, the last synchronisation will win.')]
+    [__('In order to be able to influence the desired behaviour in this regard, you can influence the order of the LDAP sources via drag & drop.')]
   ]
   events:
     'change .js-switch input': 'switch'
 
   render: =>
     super
-    new Form(
-      el: @$('.js-form')
+
+    @index.releaseController() if @index
+    @index = new LdapSourceIndex(
+      el: @$('.js-list')
+      id: @id
+      genericObject: 'LdapSource'
+      defaultSortBy: 'prio'
+      pageData:
+        home: 'ldap'
+        object: __('Source')
+        objects: __('Sources')
+        navupdate: '#system/integration/ldap'
+        notes: []
+        buttons: [
+          { name: __('New Source'), 'data-type': 'new', class: 'btn--success' }
+        ]
+      container: @el.closest('.content')
+      veryLarge: true
+      dndCallback: (e, item) =>
+        items = @$('.js-list').find('table > tbody > tr')
+        prios = []
+        prio = 0
+        for item in items
+          prio += 1
+          id = $(item).data('id')
+          prios.push [id, prio]
+
+        @ajax(
+          id:          'ldap_sources_prio'
+          type:        'POST'
+          url:         "#{@apiPath}/ldap_sources_prio"
+          processData: true
+          data:        JSON.stringify(prios: prios)
+        )
+      )
+
+    @importResult.releaseController() if @importResult
+    @importResult = new ImportResult(
+      el: @$('.js-state')
     )
 
-    #new App.ImportJob(
-    #  el: @$('.js-importJob')
-    #  facility: 'ldap'
-    #)
-
-    new App.HttpLog(
+    @httpLog.releaseController() if @httpLog
+    @httpLog = new App.HttpLog(
       el: @$('.js-log')
       facility: 'ldap'
     )
@@ -44,26 +78,117 @@ class Ldap extends App.ControllerIntegrationBase
         'job_start',
       )
 
-class Form extends App.Controller
+class ImportResult extends App.Controller
   elements:
     '.js-lastImport': 'lastImport'
-    '.js-wizard': 'wizardButton'
   events:
-    'click .js-wizard': 'startWizard'
     'click .js-start-sync': 'startSync'
 
   constructor: ->
     super
     @render()
-    @lastResult()
+
+  render: =>
+    @ajax(
+      id:   'jobs_start_index'
+      type: 'GET'
+      url:  "#{@apiPath}/integration/ldap/job_start"
+      processData: true
+      success: (job, status, xhr) =>
+        if !_.isEmpty(job)
+          if !@lastResultShowJob || @lastResultShowJob.updated_at != job.updated_at
+            @lastResultShowJob = job
+            @lastResultShow(job)
+            App.Event.trigger('LDAP::ImportJob::WizardState', !job.finished_at)
+        @delay(@render, 5000, 'ImportResultRender')
+    )
+
+    if !@renderBind
+      @renderBind = App.Event.bind('LDAP::ImportJob::Render', @render)
+    if !@startSyncBind
+      @startSyncBind = App.Event.bind('LDAP::ImportJob::StartSync', @startSync)
+
+  lastResultShow: (job) =>
+    if !job.result.roles
+      job.result.roles = {}
+    for role_id, statistic of job.result.role_ids
+      if App.Role.exists(role_id)
+        role = App.Role.find(role_id)
+        job.result.roles[role.displayName()] = statistic
+
+    @html App.view('integration/ldap_last_import')(job: job)
+
+  startSync: =>
+    @ajax(
+      id:   'jobs_config'
+      type: 'POST'
+      url:  "#{@apiPath}/integration/ldap/job_start"
+      processData: true
+      success: (data, status, xhr) =>
+        @render()
+    )
+
+class Form extends App.Controller
+  elements:
+    '.js-wizard': 'wizardButton'
+  events:
+    'click .js-wizard': 'startWizard'
+    'click .js-back': 'showIndex'
+
+  constructor: ->
+    super
+
+    @hideIndex()
+    @render()
+
+    App.Event.bind('LDAP::ImportJob::WizardState', (state) =>
+      @wizardButton.attr('disabled', state)
+    )
+    App.Event.bind('LDAP::Form::Render', @render)
+
+    App.Event.trigger('LDAP::ImportJob::Render')
     @activeDryRun()
 
+  hideIndex: (e = undefined) =>
+    @el.closest('.main').find('.page-content').children().each(->
+      return true if $(@).hasClass('js-state')
+
+      if $(@).hasClass('js-form')
+        $(@).removeClass('hidden')
+      else
+        $(@).addClass('hidden')
+    )
+
+  showIndex: (e = undefined) ->
+    if e
+      e.preventDefault()
+
+    @el.closest('.main').find('.page-content').children().each(->
+      return true if $(@).hasClass('js-state')
+
+      if $(@).hasClass('js-form')
+        $(@).addClass('hidden')
+      else
+        $(@).removeClass('hidden')
+    )
+
   currentConfig: ->
-    App.Setting.get('ldap_config') || {}
+    config        = _.clone(@item.preferences)
+    config.id     = @item.id
+    config.name   = @item.name
+    config.active = @item.active
+    config
 
   setConfig: (value) =>
-    App.Setting.set('ldap_config', value, {notify: true})
-    @startSync()
+    @item.name = value.name
+    @item.active = value.active
+    @item.preferences = _.omit(value, ['id', 'name', 'active'])
+    @item.save(
+      done: =>
+        @showIndex()
+        App.Event.trigger('LDAP::ImportJob::StartSync')
+        App.Event.trigger('LDAP::Form::Render')
+    )
 
   render: (top = false) =>
     @config = @currentConfig()
@@ -76,10 +201,11 @@ class Form extends App.Controller
       ).join ', '
 
     @html App.view('integration/ldap')(
-      config: @config,
+      item: @item
+      config: @config
       group_role_map: group_role_map
     )
-    if _.isEmpty(@config)
+    if _.isEmpty(@config.host_url)
       @$('.js-notConfigured').removeClass('hide')
       @$('.js-summary').addClass('hide')
     else
@@ -91,17 +217,6 @@ class Form extends App.Controller
         @scrollToIfNeeded($('.content.active .page-header'))
       @delay(a, 500)
 
-  startSync: =>
-    @ajax(
-      id:   'jobs_config'
-      type: 'POST'
-      url:  "#{@apiPath}/integration/ldap/job_start"
-      processData: true
-      success: (data, status, xhr) =>
-        @render(true)
-        @lastResult()
-    )
-
   startWizard: (e) =>
     e.preventDefault()
     new ConnectionWizard(
@@ -110,37 +225,6 @@ class Form extends App.Controller
       callback: (config) =>
         @setConfig(config)
     )
-
-  lastResult: =>
-    @ajax(
-      id:   'jobs_start_index'
-      type: 'GET'
-      url:  "#{@apiPath}/integration/ldap/job_start"
-      processData: true
-      success: (job, status, xhr) =>
-        if !_.isEmpty(job)
-          if !@lastResultShowJob || @lastResultShowJob.updated_at != job.updated_at
-            @lastResultShowJob = job
-            @lastResultShow(job)
-            if job.finished_at
-              @wizardButton.attr('disabled', false)
-            else
-              @wizardButton.attr('disabled', true)
-        @delay(@lastResult, 5000)
-    )
-
-  lastResultShow: (job) =>
-    if _.isEmpty(job)
-      @lastImport.html('')
-      return
-    if !job.result.roles
-      job.result.roles = {}
-    for role_id, statistic of job.result.role_ids
-      if App.Role.exists(role_id)
-        role = App.Role.find(role_id)
-        job.result.roles[role.displayName()] = statistic
-    el = $(App.view('integration/ldap_last_import')(job: job))
-    @lastImport.html(el)
 
   activeDryRun: =>
     @ajax(
@@ -159,10 +243,10 @@ class Form extends App.Controller
           config: job.payload
           start: 'tryLoop'
           callback: (config) =>
-            @wizardButton.attr('disabled', false)
+            App.Event.trigger('LDAP::ImportJob::WizardState', false)
             @setConfig(config)
         )
-        @wizardButton.attr('disabled', true)
+        App.Event.trigger('LDAP::ImportJob::WizardState', true)
     )
 
 class State
@@ -170,7 +254,6 @@ class State
     App.Setting.get('ldap_integration')
 
 class ConnectionWizard extends App.ControllerWizardModal
-  wizardConfig: {}
   slideMethod:
     'js-bind': 'bindShow'
     'js-mapping': 'mappingShow'
@@ -185,6 +268,7 @@ class ConnectionWizard extends App.ControllerWizardModal
     'click .js-userMappingForm .js-add': 'addUserMapping'
     'click .js-groupRoleForm .js-add':   'addGroupRoleMapping'
     'click .js-goToSlide':               'goToSlide'
+    'click .js-saveQuit':                'saveQuit'
     'input .js-hostUrl':                 'sslVerifyChange'
 
   elements:
@@ -196,8 +280,7 @@ class ConnectionWizard extends App.ControllerWizardModal
   constructor: ->
     super
 
-    if !_.isEmpty(@config)
-      @wizardConfig = @config
+    @wizardConfig = @config || {}
 
     if @container
       @el.addClass('modal--local')
@@ -210,10 +293,8 @@ class ConnectionWizard extends App.ControllerWizardModal
       backdrop:  true
       container: @container
     .on
-      'show.bs.modal':   @onShow
       'shown.bs.modal': =>
         @el.addClass('modal--ready')
-        @onShown()
       'hidden.bs.modal': =>
         @el.remove()
 
@@ -226,7 +307,29 @@ class ConnectionWizard extends App.ControllerWizardModal
       @[@start]()
 
   render: =>
-    @html App.view('integration/ldap_wizard')()
+    nameHtml = App.UiElement.input.render({ name: 'name', display: __('Name'), tag: 'input', class: 'form-control--small', required: 'required', value: @config.name })[0].outerHTML
+    activeHtml = App.UiElement.boolean.render({ name: 'active', display: __('Active'), tag: 'active', value: @config.active, required: 'required', class: 'form-control--small' })[0].outerHTML
+
+    @html App.view('integration/ldap_wizard')(
+      newConnection: @newConnection
+      nameHtml: nameHtml
+      activeHtml: activeHtml
+    )
+
+  saveQuit: (e) =>
+    e.preventDefault()
+
+    element = $(e.target).closest('form').get(0)
+    return if element && element.reportValidity && !element.reportValidity()
+
+    params                   = @formParam(e.target)
+    @wizardConfig.host_url   = params.host_url
+    @wizardConfig.ssl_verify = params.ssl_verify
+    @wizardConfig.name       = params.name
+    @wizardConfig.active     = params.active
+
+    @callback(@wizardConfig)
+    @hide(e)
 
   save: (e) =>
     e.preventDefault()
@@ -257,7 +360,7 @@ class ConnectionWizard extends App.ControllerWizardModal
     if exists && disabled
       el.parent().remove()
     else if !exists && !disabled
-      @$('.js-discover tbody tr').last().after(@buildRowSslVerify())
+      @$('.js-hostUrl').closest('tr').after(@buildRowSslVerify())
 
   buildRowSslVerify: =>
     el = $(App.view('integration/ldap_ssl_verify_row')())
@@ -279,6 +382,10 @@ class ConnectionWizard extends App.ControllerWizardModal
 
   discover: (e) =>
     e.preventDefault()
+
+    element = $(e.target).closest('form').get(0)
+    return if element && element.reportValidity && !element.reportValidity()
+
     @showSlide('js-connect')
     params = @formParam(e.target)
     @ajax(
@@ -295,6 +402,8 @@ class ConnectionWizard extends App.ControllerWizardModal
 
         @wizardConfig.host_url   = params.host_url
         @wizardConfig.ssl_verify = params.ssl_verify
+        @wizardConfig.name       = params.name
+        @wizardConfig.active     = params.active
 
         option = ''
         options = {}
@@ -598,6 +707,47 @@ class ConnectionWizard extends App.ControllerWizardModal
     @showSlide('js-try')
     el = $(App.view('integration/ldap_summary')(job: job))
     @el.find('.js-summary').html(el)
+
+
+class LdapSourceIndex extends App.ControllerGenericIndex
+  constructor: ->
+    super
+    App.Event.bind('LdapSource:destroy', (item) =>
+      return if !@ldapForm
+      return if item.id != @ldapForm.item.id
+
+      @ldapForm.releaseController()
+    )
+
+  new: (e) ->
+    e.preventDefault()
+
+    new ConnectionWizard(
+      container: @el.closest('.content')
+      config: {}
+      newConnection: true
+      callback: (config) ->
+        item = new App.LdapSource(
+          name: config.name
+          active: config.active
+          preferences: _.omit(config, ['id', 'name', 'active'])
+        )
+        item.save(
+          done: ->
+            App.Event.trigger('LDAP::ImportJob::StartSync')
+            App.Event.trigger('LDAP::Form::Render')
+        )
+    )
+
+  edit: (id, e) =>
+    e.preventDefault()
+    item = App[ @genericObject ].find(id)
+
+    @ldapForm.releaseController() if @ldapForm
+    @ldapForm = new Form(
+      el: @el.closest('.main').find('.js-form')
+      item: item
+    )
 
 App.Config.set(
   'IntegrationLDAP'

@@ -5,13 +5,14 @@ class Sequencer
     module Import
       module Ldap
         class Users < Sequencer::Sequence::Base
+          def self.expecting
+            [:found_ids]
+          end
 
           def self.sequence
             [
               'Common::ModelClass::User',
-              'Import::Ldap::Users::ExternalSyncSource',
-              'Import::Common::ImportJob::DryRun',
-              'Import::Ldap::Users::DryRun::Payload',
+              'Ldap::ExternalSyncSource',
               'Ldap::Config',
               'Ldap::Connection',
               'Import::Ldap::Users::UserRoles',
@@ -19,9 +20,6 @@ class Sequencer
               'Import::Common::ImportJob::Statistics::Update',
               'Import::Common::ImportJob::Statistics::Store',
               'Import::Ldap::Users::SubSequence',
-              'Import::Ldap::Users::Lost::Ids',
-              'Import::Ldap::Users::Lost::StatisticsDiff',
-              'Import::Ldap::Users::Lost::Deactivate',
             ]
           end
         end

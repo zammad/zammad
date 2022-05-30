@@ -5,12 +5,13 @@ class Sequencer
     module Ldap
       class Config < Sequencer::Unit::Common::Provider::Fallback
 
+        uses :resource
         provides :ldap_config
 
         private
 
         def ldap_config
-          ::Import::Ldap.config
+          resource
         end
       end
     end

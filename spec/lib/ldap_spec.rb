@@ -187,22 +187,6 @@ RSpec.describe Ldap do
         expected: expected,
       )
     end
-
-    it "uses 'ldap_config' Setting as fallback" do
-
-      config = {
-        host: 'localhost',
-        port: 1337,
-      }
-
-      allow(Setting).to receive(:get)
-      allow(Setting).to receive(:get).with('ldap_config').and_return(config)
-
-      mock_initialization(
-        given:    nil,
-        expected: config,
-      )
-    end
   end
 
   describe 'instance methods' do

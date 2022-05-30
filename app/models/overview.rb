@@ -4,6 +4,7 @@ class Overview < ApplicationModel
   include ChecksClientNotification
   include ChecksConditionValidation
   include CanSeed
+  include CanPriorization
 
   include Overview::Assets
 
@@ -15,64 +16,10 @@ class Overview < ApplicationModel
   validates :name, presence: true
   validates :roles, presence: true
 
-  before_create :fill_link_on_create, :fill_prio
-  before_update :fill_link_on_update, :rearrangement
-
-  def self.calculate_prio
-    existing_maximum = Overview.maximum(:prio)
-
-    return 0 if !existing_maximum
-
-    existing_maximum + 1
-  end
+  before_create :fill_link_on_create
+  before_update :fill_link_on_update
 
   private
-
-  def rearrangement
-    # rearrange only in case of changed prio
-    return true if !changes['prio']
-
-    previous_ordered_ids = self.class.all.order(
-      prio:       :asc,
-      updated_at: :desc
-    ).pluck(:id)
-
-    rearranged_prio = 0
-    previous_ordered_ids.each do |overview_id|
-
-      # don't process currently updated overview
-      next if id == overview_id
-
-      rearranged_prio += 1
-
-      # increase rearranged prio by one to avoid a collition
-      # with the changed prio of current instance
-      if rearranged_prio == prio
-        rearranged_prio += 1
-      end
-
-      # don't start rearranging logic for overviews that have already been rearranged
-      self.class.without_callback(:update, :before, :rearrangement) do
-        # fetch and update overview only if prio needs to change
-        overview = self.class.where(
-          id: overview_id
-        ).where.not(
-          prio: rearranged_prio
-        ).take
-
-        next if overview.blank?
-
-        overview.update!(prio: rearranged_prio)
-      end
-    end
-  end
-
-  def fill_prio
-    return true if prio.present?
-
-    self.prio = self.class.calculate_prio
-    true
-  end
 
   def fill_link_on_create
     self.link = if link.present?

@@ -13,7 +13,7 @@ class Ldap
 
   # Initializes a LDAP connection.
   #
-  # @param [Hash] config the configuration for establishing a LDAP connection. Default is Setting 'ldap_config'.
+  # @param [Hash] config the configuration for establishing a LDAP connection.
   # @option config [String] :host_url The LDAP host URL in the format '*protocol*://*host*:*port*'.
   # @option config [String] :host The LDAP explicit host. May contain the port. Gets overwritten by host_url if given.
   # @option config [Number] :port The LDAP port. Default is 389 LDAP or 636 for LDAPS. Gets overwritten by host_url if given.
@@ -26,12 +26,8 @@ class Ldap
   #  ldap = Ldap.new
   #
   # @return [nil]
-  def initialize(config = nil)
+  def initialize(config)
     @config = config
-
-    if @config.blank?
-      @config = Setting.get('ldap_config')
-    end
 
     # connect on initialization
     connection

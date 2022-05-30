@@ -12,6 +12,8 @@ class Sequencer
 
               skip_any_action
 
+              uses :ldap_config
+
               def process
                 provide_mapped do
                   {
@@ -21,7 +23,7 @@ class Sequencer
                     active: true,
 
                     # Set the source to 'Ldap' for the authentication handling.
-                    source: 'Ldap',
+                    source: "Ldap::#{ldap_config[:id]}",
                   }
                 end
               end

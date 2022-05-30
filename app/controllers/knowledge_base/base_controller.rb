@@ -20,10 +20,6 @@ class KnowledgeBase::BaseController < ApplicationController
     model_destroy_render(klass, params_for_permission)
   end
 
-  def klass
-    @klass ||= controller_path.classify.constantize
-  end
-
   private
 
   def params_for_permission

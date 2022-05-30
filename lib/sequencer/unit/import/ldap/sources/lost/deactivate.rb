@@ -4,7 +4,7 @@ class Sequencer
   class Unit
     module Import
       module Ldap
-        module Users
+        module Sources
           module Lost
             class Deactivate < Sequencer::Unit::Base
               uses :dry_run, :lost_ids

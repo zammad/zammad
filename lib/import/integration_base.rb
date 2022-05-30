@@ -128,8 +128,6 @@ module Import
 
       if !active?
         message = "Sync cancelled. #{display_name} integration deactivated. Activate via the switch."
-      elsif config.blank? && @import_job.payload.blank?
-        message = "Sync cancelled. #{display_name} configration or ImportJob payload missing."
       end
 
       return true if !message

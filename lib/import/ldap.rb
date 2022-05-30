@@ -7,7 +7,7 @@ module Import
     private
 
     def sequence_name
-      'Import::Ldap::Users'
+      'Import::Ldap::Sources'
     end
   end
 end

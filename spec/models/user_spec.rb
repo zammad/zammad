@@ -1049,6 +1049,7 @@ RSpec.describe User, type: :model do
                      'RecentView'                         => { 'created_by_id' => 1 },
                      'KnowledgeBase::Answer::Translation' =>
                                                              { 'created_by_id' => 0, 'updated_by_id' => 0 },
+                     'LdapSource'                         => { 'created_by_id' => 0, 'updated_by_id' => 0 },
                      'KnowledgeBase::Answer'              =>
                                                              { 'archived_by_id' => 1, 'published_by_id' => 1, 'internal_by_id' => 1 },
                      'Report::Profile'                    => { 'created_by_id' => 0, 'updated_by_id' => 0 },

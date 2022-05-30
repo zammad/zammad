@@ -8,7 +8,7 @@ RSpec.describe ::Sequencer::Sequence::Import::Ldap::Users, sequencer: :sequence 
 
     context 'config "unassigned_users": "skip_sync"' do
 
-      it 'disables user', last_admin_check: false do
+      it 'returns found ids based on ldap search', last_admin_check: false do
 
         user_entry                   = build(:ldap_entry)
         user_entry['objectguid']     = ['user1337']
@@ -18,22 +18,21 @@ RSpec.describe ::Sequencer::Sequence::Import::Ldap::Users, sequencer: :sequence 
         group_entry           = build(:ldap_entry)
         group_entry['member'] = [user_entry.dn]
 
-        payload = {
-          ldap_config: {
-            user_filter:      'user=filter',
-            group_role_map:   {
-              group_entry.dn => [1, 2]
-            },
-            user_attributes:  {
-              'samaccountname' => 'login',
-              'first_name'     => 'firstname',
-            },
-            user_uid:         'objectguid',
-            unassigned_users: 'skip_sync',
-          }
+        ldap_config = {
+          id:               999,
+          user_filter:      'user=filter',
+          group_role_map:   {
+            group_entry.dn => [1, 2]
+          },
+          user_attributes:  {
+            'samaccountname' => 'login',
+            'first_name'     => 'firstname',
+          },
+          user_uid:         'objectguid',
+          unassigned_users: 'skip_sync',
         }
 
-        import_job = build_stubbed(:import_job, name: 'Import::Ldap', payload: payload)
+        import_job = build_stubbed(:import_job, name: 'Import::Ldap')
 
         connection = double(
           host:    'example.com',
@@ -52,16 +51,18 @@ RSpec.describe ::Sequencer::Sequence::Import::Ldap::Users, sequencer: :sequence 
         # Sequencer::Unit::Import::Ldap::Users::SubSequence
         allow(connection).to receive(:search).and_yield(user_entry)
 
-        expect do
-          process(
-            ldap_connection: connection,
-            import_job:      import_job,
-          )
-        end.to change(User, :count).by(1)
+        result = process(
+          dry_run:         false,
+          resource:        ldap_config,
+          ldap_connection: connection,
+          import_job:      import_job,
+        )
+        expect(result[:found_ids]).to eq([User.last.id])
 
         imported_user = User.last
 
         expect(imported_user.active).to be true
+        expect(imported_user.source).to eq('Ldap::999')
 
         connection = double(
           host:    'example.com',
@@ -76,16 +77,13 @@ RSpec.describe ::Sequencer::Sequence::Import::Ldap::Users, sequencer: :sequence 
         allow(connection).to receive(:search).and_yield(group_entry)
         allow(connection).to receive(:entries?).and_return(true)
 
-        expect do
-          process(
-            ldap_connection: connection,
-            import_job:      import_job,
-          )
-        end.not_to change(User, :count)
-
-        imported_user.reload
-
-        expect(imported_user.active).to be false
+        result = process(
+          dry_run:         false,
+          resource:        ldap_config,
+          ldap_connection: connection,
+          import_job:      import_job,
+        )
+        expect(result[:found_ids]).to eq([])
       end
     end
 
@@ -103,21 +101,19 @@ RSpec.describe ::Sequencer::Sequence::Import::Ldap::Users, sequencer: :sequence 
 
         agent_admin_role_ids = [1, 2]
 
-        payload = {
-          ldap_config: {
-            user_filter:     'user=filter',
-            group_role_map:  {
-              group_entry.dn => agent_admin_role_ids
-            },
-            user_attributes: {
-              'samaccountname' => 'login',
-              'first_name'     => 'firstname',
-            },
-            user_uid:        'objectguid',
-          }
+        ldap_config = {
+          user_filter:     'user=filter',
+          group_role_map:  {
+            group_entry.dn => agent_admin_role_ids
+          },
+          user_attributes: {
+            'samaccountname' => 'login',
+            'first_name'     => 'firstname',
+          },
+          user_uid:        'objectguid',
         }
 
-        import_job = build_stubbed(:import_job, name: 'Import::Ldap', payload: payload)
+        import_job = build_stubbed(:import_job, name: 'Import::Ldap')
 
         connection = double(
           host:    'example.com',
@@ -135,6 +131,8 @@ RSpec.describe ::Sequencer::Sequence::Import::Ldap::Users, sequencer: :sequence 
 
         expect do
           process(
+            dry_run:         false,
+            resource:        ldap_config,
             ldap_connection: connection,
             import_job:      import_job,
           )
@@ -166,6 +164,8 @@ RSpec.describe ::Sequencer::Sequence::Import::Ldap::Users, sequencer: :sequence 
 
         expect do
           process(
+            dry_run:         false,
+            resource:        ldap_config,
             ldap_connection: connection,
             import_job:      import_job,
           )

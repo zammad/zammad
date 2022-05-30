@@ -41,7 +41,7 @@ RSpec.describe Ldap::User do
 
     it 'reuses given Ldap instance if given' do
       expect(Ldap).not_to receive(:new)
-      described_class.new(ldap: mocked_ldap)
+      described_class.new(create(:ldap_source), ldap: mocked_ldap)
     end
 
     it 'takes optional filter' do
@@ -71,7 +71,7 @@ RSpec.describe Ldap::User do
     it 'creates own Ldap instance if none given' do
       expect(Ldap).to receive(:new)
 
-      described_class.new
+      described_class.new(create(:ldap_source))
     end
   end
 
@@ -257,9 +257,10 @@ RSpec.describe Ldap::User do
       # ActiveRecord::Store would convert them to binary (ASCII-8BIT) strings,
       # which would then break #to_json with an Encoding::UndefinedConversion error.
       it 'skips binary attributes (#2140)' do
-        Setting.set('ldap_config', user.attributes)
+        source = create(:ldap_source)
+        source.update(preferences: user.attributes)
 
-        expect { Setting.get('ldap_config').to_json }
+        expect { source.preferences.to_json }
           .not_to raise_error
       end
     end

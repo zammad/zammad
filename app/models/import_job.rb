@@ -13,7 +13,7 @@ class ImportJob < ApplicationModel
   # exceptions into result if they happen.
   #
   # @example
-  #  import = ImportJob.new(name: 'Import::Ldap', payload: Setting.get('ldap_config'))
+  #  import = ImportJob.new(name: 'Import::Ldap', payload: LdapSource.first.preferences)
   #  import.start
   #
   # return [nil]
@@ -67,7 +67,7 @@ class ImportJob < ApplicationModel
   # @option params [Boolean] :delay Defines if job should get executed delayed. Default is true.
 
   # @example
-  #  import = ImportJob.dry_run(name: 'Import::Ldap', payload: Setting.get('ldap_config'), delay: false)
+  #  import = ImportJob.dry_run(name: 'Import::Ldap', payload: LdapSource.first.preferences, delay: false)
   #
   # return [nil]
   def self.dry_run(params)

@@ -18,13 +18,27 @@
           </thead>
           <tbody>
             <tr>
-              <td class="settings-list-row-control"><%- @T('Host') %>
-              <td class="settings-list-control-cell"><input type="text" name="host_url" class="form-control form-control--small js-hostUrl" value="" placeholder="ldaps://ldap.example.com" autocomplete="off">
+              <td class="settings-list-row-control">
+                <%- @T('Name') %> <span>*</span>
+              <td class="settings-list-control-cell"><%- @nameHtml %>
+            <tr>
+              <td class="settings-list-row-control">
+                <%- @T('Host') %> <span>*</span>
+              <td class="settings-list-control-cell"><input type="text" name="host_url" class="form-control form-control--small js-hostUrl" value="" placeholder="ldaps://ldap.example.com" autocomplete="off" required>
+            <tr>
+              <td class="settings-list-row-control"><%- @T('Active') %>
+              <td class="settings-list-control-cell">
+                <%- @activeHtml %>
           </tbody>
         </table>
       </div>
     </div>
     <div class="modal-footer">
+    <% if !@newConnection: %>
+      <div class="modal-leftFooter align-left">
+        <div class="btn  btn--primary align-left js-saveQuit"><%- @T('Save') %></div>
+      </div>
+    <% end %>
       <div class="modal-rightFooter">
         <button class="btn btn--primary align-right js-submit"><%- @T('Connect') %></button>
       </div>

@@ -36,5 +36,4 @@ class ActivityStreamController < ApplicationController
     end
     render json: all, status: :ok
   end
-
 end

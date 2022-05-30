@@ -4229,19 +4229,6 @@ Setting.create_if_not_exists(
   frontend:    true
 )
 Setting.create_if_not_exists(
-  title:       __('LDAP config'),
-  name:        'ldap_config',
-  area:        'Integration::LDAP',
-  description: __('Defines the LDAP config.'),
-  options:     {},
-  state:       {},
-  preferences: {
-    prio:       2,
-    permission: ['admin.integration'],
-  },
-  frontend:    false,
-)
-Setting.create_if_not_exists(
   title:       __('i-doit integration'),
   name:        'idoit_integration',
   area:        'Integration::Switch',

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Sequencer::Unit::Import::Ldap::Users::Lost::Deactivate, sequencer: :unit do
+RSpec.describe Sequencer::Unit::Import::Ldap::Sources::Lost::Deactivate, sequencer: :unit do
   let!(:lost_users) { create_list(:user, sample_length, attributes) }
   let(:sample_length) { 2 }
 

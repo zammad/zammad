@@ -193,7 +193,8 @@ RSpec.describe Auth do
       end
 
       context 'with a ldap user without internal password' do
-        let(:user) { create(:user, source: 'Ldap') }
+        let(:ldap_source) { create(:ldap_source) }
+        let(:user) { create(:user, source: "Ldap::#{ldap_source.id}") }
         let(:password) { password_ldap }
 
         context 'with valid credentials' do

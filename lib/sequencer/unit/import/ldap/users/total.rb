@@ -13,7 +13,7 @@ class Sequencer
             def process
               state.provide(:statistics_diff) do
                 diff.merge(
-                  total: total
+                  total: ((diff[:total] || 0) + total)
                 )
               end
             end

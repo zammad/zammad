@@ -4,7 +4,7 @@ class Sequencer
   class Unit
     module Import
       module Ldap
-        module Users
+        module Sources
           module Lost
             class Ids < Sequencer::Unit::Base
               uses :found_ids, :external_sync_source, :model_class

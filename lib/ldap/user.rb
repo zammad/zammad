@@ -75,8 +75,8 @@ class Ldap
     #  ldap_user = Ldap::User.new
     #
     # @return [nil]
-    def initialize(config = nil, ldap: nil)
-      @config = config || Setting.get('ldap_config')
+    def initialize(config, ldap: nil)
+      @config = config
       @ldap   = ldap || ::Ldap.new(@config)
 
       handle_config

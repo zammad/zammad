@@ -21,7 +21,7 @@ rspec:integration:
   stage: test
   extends:
     - .env_base
-    - .services_mysql_postgresql_redis_memcached
+    - .services_mysql_postgresql_imap_redis_memcached
     - .rules_integration_manual_start
   variables:
     RAILS_ENV: "test"

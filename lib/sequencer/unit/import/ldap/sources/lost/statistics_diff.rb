@@ -4,7 +4,7 @@ class Sequencer
   class Unit
     module Import
       module Ldap
-        module Users
+        module Sources
           module Lost
             class StatisticsDiff < Sequencer::Unit::Base
               include ::Sequencer::Unit::Import::Common::Model::Statistics::Mixin::EmptyDiff
