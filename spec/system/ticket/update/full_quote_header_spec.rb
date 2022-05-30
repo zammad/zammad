@@ -286,6 +286,10 @@ RSpec.describe 'Ticket > Update > Full Quote Header', current_user_id: -> { curr
         window.getSelection().addRange(range)
       JAVASCRIPT
 
+    wait.until_constant do
+      find('.ticket-article-item .richtext-content').evaluate_script('window.getSelection().toString().trim()')
+    end
+
     click_reply
   end
 
