@@ -963,10 +963,10 @@
   dependencies:
     tailwindcss "^0.0.0-insiders.83b4811"
 
-"@headlessui/vue@^1.6.3":
-  version "1.6.3"
-  resolved "https://registry.yarnpkg.com/@headlessui/vue/-/vue-1.6.3.tgz#c1fe5d088a903eaac2e9929cfe126f095ccc43eb"
-  integrity sha512-9wVPPKS0f5ue26/cml+/ZlyHFPna3eJL/gEuWib8e1IBRhh2jUUKr7urmgIB87G1A2sRAK7GiF0VDdZoLEtFQw==
+"@headlessui/vue@^1.6.4":
+  version "1.6.4"
+  resolved "https://registry.yarnpkg.com/@headlessui/vue/-/vue-1.6.4.tgz#8492bbb044a9b19ee92bef9cd4d0c3d8feed8588"
+  integrity sha512-axZMcfRLNuwHESPMgDb0Vj7xxlNPmsPl77pvoRZGzJh7lRdRic9kC/qbVM8G36OpIJRZzqrlADLQ2JIObhQjBg==
 
 "@humanwhocodes/config-array@^0.9.2":
   version "0.9.5"
