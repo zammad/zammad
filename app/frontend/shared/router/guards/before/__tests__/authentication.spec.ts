@@ -20,6 +20,7 @@ describe('authenticationGuard', () => {
     const to = {
       name: 'TicketOverview',
       path: '/tickets',
+      fullPath: '/tickets',
       meta: {
         requiresAuth: true,
       },
@@ -28,7 +29,12 @@ describe('authenticationGuard', () => {
 
     authenticationGuard(to, from, next)
 
-    expect(next).toHaveBeenCalledWith('login')
+    expect(next).toHaveBeenCalledWith({
+      path: '/login',
+      query: {
+        redirect: '/tickets',
+      },
+    })
   })
 
   it('should give access to route for authenticated user', () => {

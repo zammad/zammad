@@ -20,7 +20,7 @@ const checkAuthenticated = (
     log.debug(
       `Route guard for '${to.path}': authentication - forbidden - unauthenticated.`,
     )
-    next('login')
+    next({ path: '/login', query: { redirect: to.fullPath } })
   } else if (to.name === 'Login' && authenticated) {
     // Use the default route here.
     log.debug(

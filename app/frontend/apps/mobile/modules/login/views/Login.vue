@@ -1,7 +1,7 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import {
   useNotifications,
   NotificationTypes,
@@ -34,6 +34,7 @@ if (props.invalidatedSession === '1') {
 const authentication = useAuthenticationStore()
 
 const router = useRouter()
+const route = useRoute()
 
 const application = useApplicationLoadedStore()
 
@@ -94,7 +95,12 @@ const login = (formData: FormData<LoginFormData>) => {
   return authentication
     .login(formData.login as string, formData.password as string)
     .then(() => {
-      router.replace('/')
+      const { redirect: redirectUrl } = route.query
+      if (typeof redirectUrl === 'string') {
+        router.replace(redirectUrl)
+      } else {
+        router.replace('/')
+      }
     })
     .catch((errors: UserError) => {
       const { notify } = useNotifications()
