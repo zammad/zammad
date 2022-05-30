@@ -63,7 +63,7 @@ const getCoreClasses: FormThemeExtension = (classes: FormThemeClasses) => {
     text: addFloatingLabel(classes.text),
     email: addFloatingLabel(classes.email),
     number: addFloatingLabel(classes.number),
-    search: addFloatingLabel(classes.search),
+    search: { inner: 'flex', wrapper: 'px-3' },
     tel: addFloatingLabel(classes.tel),
     time: addFloatingLabel(classes.time),
     date: addDateLabel(classes.date),

@@ -34,6 +34,33 @@ describe('rendering item for section', () => {
     expect(view.getIconByName('home')).toBeInTheDocument()
   })
 
+  it('has an icon with a background', () => {
+    const view = renderMenuItem({
+      link: '/',
+      iconBg: 'bg-red',
+      icon: 'home',
+    })
+
+    const icon = view.getByTestId('wrapper-icon')
+
+    expect(icon).toHaveClass('bg-red')
+    expect(icon).toHaveClass('rounded-lg')
+  })
+
+  it('accepts icon as object', () => {
+    const view = renderMenuItem({
+      link: '/',
+      icon: { name: 'home', fixedSize: { width: 40, height: 40 } },
+    })
+
+    const icon = view.getIconByName('home')
+
+    expect(icon).toBeInTheDocument()
+
+    expect(icon).toHaveAttribute('width', '40')
+    expect(icon).toHaveAttribute('height', '40')
+  })
+
   it("draws information, if it's provided", () => {
     const view = renderMenuItem({
       link: '/',

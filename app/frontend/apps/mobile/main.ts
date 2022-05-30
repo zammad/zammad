@@ -61,6 +61,8 @@ export default async function mountApp(): Promise<void> {
     enumerable: true,
     get: () => unref(config),
   })
+  // eslint-disable-next-line no-underscore-dangle
+  app.config.globalProperties.__ = window.__
 
   initializeForm(app)
 

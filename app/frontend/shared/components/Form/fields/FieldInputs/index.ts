@@ -4,7 +4,6 @@ import {
   color as inputColorDefinition,
   email as inputEmailDefinition,
   number as inputCNumberDefinition,
-  search as inputSearchDefinition,
   tel as inputTelDefinition,
   text as inputTextDefinition,
   time as inputTimeDefinition,
@@ -18,7 +17,6 @@ const inputFieldDefinitionList: FormFieldsTypeDefinition = {
   color: inputColorDefinition,
   email: inputEmailDefinition,
   number: inputCNumberDefinition,
-  search: inputSearchDefinition,
   tel: inputTelDefinition,
   time: inputTimeDefinition,
 }

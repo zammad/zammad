@@ -10,7 +10,7 @@ const { user } = storeToRefs(useSessionStore())
 
 <template>
   <footer
-    class="fixed bottom-0 z-10 flex h-14 w-full items-center border-t bg-black/30 text-center backdrop-blur-lg"
+    class="fixed bottom-0 z-10 flex h-14 w-full items-center bg-gray-light text-center backdrop-blur-lg"
   >
     <CommonLink
       link="/"

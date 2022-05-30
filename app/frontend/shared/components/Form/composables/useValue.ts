@@ -25,7 +25,15 @@ const useValue = (context: Ref<FormFieldContext<{ multiple?: boolean }>>) => {
     context.value.node.input(undefined)
   }
 
+  const localValue = computed({
+    get: () => currentValue.value,
+    set: (value) => {
+      context.value.node.input(value)
+    },
+  })
+
   return {
+    localValue,
     currentValue,
     hasValue,
     valueContainer,

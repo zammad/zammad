@@ -16,56 +16,50 @@ export default {
 
 const Template = createTemplate<Props>(CommonUserAvatar)
 
-export const SystemUser = Template.clone()
-SystemUser.args = {
+export const SystemUser = Template.create({
   entity: {
     id: '1',
   },
-}
+})
 
-export const UserWithoutIcon = Template.clone()
-UserWithoutIcon.args = {
+export const UserWithoutIcon = Template.create({
   entity: {
     id: '2',
     firstname: 'John',
     lastname: 'Doe',
   },
-}
+})
 
-export const FacebookUser = Template.clone()
-FacebookUser.args = {
+export const FacebookUser = Template.create({
   entity: {
     id: '2',
     source: 'facebook',
   },
-}
+})
 
-export const VipUser = Template.clone()
-VipUser.args = {
+export const VipUser = Template.create({
   entity: {
     id: '2',
     vip: true,
     email: 'jd@email.com',
   },
   personal: false,
-}
+})
 
-export const InactiveUser = Template.clone()
-InactiveUser.args = {
+export const InactiveUser = Template.create({
   entity: {
     id: '2',
     active: false,
     firstname: 'John',
     lastname: 'Doe',
   },
-}
+})
 
-export const UserOnVacation = Template.clone()
-UserOnVacation.args = {
+export const UserOnVacation = Template.create({
   entity: {
     id: '2',
     outOfOffice: true,
     firstname: 'John',
     lastname: 'Doe',
   },
-}
+})

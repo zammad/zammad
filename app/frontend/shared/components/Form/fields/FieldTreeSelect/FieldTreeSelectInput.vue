@@ -6,6 +6,7 @@ import { escapeRegExp } from 'lodash-es'
 import { Dialog, TransitionRoot, TransitionChild } from '@headlessui/vue'
 import { i18n } from '@shared/i18n'
 import CommonTicketStateIndicator from '@shared/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue'
+import CommonInputSearch from '@shared/components/CommonInputSearch/CommonInputSearch.vue'
 import useLocaleStore from '@shared/stores/locale'
 import useValue from '../../composables/useValue'
 import useSelectDialog from '../../composables/useSelectDialog'
@@ -328,33 +329,12 @@ const locale = useLocaleStore()
             <div
               class="flex grow flex-col items-start overflow-y-auto bg-black text-white"
             >
-              <div
+              <CommonInputSearch
                 v-if="!context.noFiltering"
-                class="relative flex items-center self-stretch p-4"
-              >
-                <CommonIcon
-                  :fixed-size="{ width: 24, height: 24 }"
-                  class="absolute left-6 shrink-0 text-gray"
-                  name="search"
-                  decorative
-                />
-                <input
-                  ref="filterInput"
-                  v-model="filter"
-                  :placeholder="i18n.t('Search')"
-                  class="h-12 grow rounded-xl bg-gray-500 px-9 placeholder:text-gray focus:border-white focus:outline-none focus:ring-0"
-                  type="text"
-                  role="searchbox"
-                />
-                <CommonIcon
-                  v-if="filter.length"
-                  :aria-label="i18n.t('Clear Search')"
-                  :fixed-size="{ width: 24, height: 24 }"
-                  class="absolute right-6 shrink-0 text-gray"
-                  name="close-small"
-                  @click.stop="clearFilter"
-                />
-              </div>
+                ref="filterInput"
+                v-model="filter"
+                wrapper-class="m-4"
+              />
               <div
                 v-if="currentPath.length"
                 :class="{

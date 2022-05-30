@@ -1,7 +1,6 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import { computed, type ComputedRef, ref, type Ref } from 'vue'
-import { cloneDeep } from 'lodash-es'
 import { i18n } from '@shared/i18n'
 import type { TicketState } from '@shared/entities/ticket/types'
 import type { SelectOptionSorting, SelectOption } from '../fields/FieldSelect'
@@ -74,7 +73,7 @@ const useSelectOptions = (
       return translatedOptions.value
     }
 
-    return cloneDeep(translatedOptions.value)?.sort((a, b) => {
+    return [...translatedOptions.value]?.sort((a, b) => {
       const aLabelOrValue =
         a[context.value.sorting as SelectOptionSorting] || a.value
       const bLabelOrValue =

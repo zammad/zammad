@@ -16,8 +16,12 @@ export default function createTemplate<Props>(StoryComponent: Component) {
     template: '<StoryComponent v-bind="args"/>',
   })
 
-  fn.clone = (): StoryTemplate<Props> => {
-    return fn.bind({})
+  fn.create = (args?: Props): StoryTemplate<Props> => {
+    const cloned = fn.bind({}) as StoryTemplate<Props>
+    if (args) {
+      cloned.args = args
+    }
+    return cloned
   }
 
   return fn

@@ -18,7 +18,7 @@ export default {
 
 const Template = createTemplate<Props>(CommonOrganizationAvatar)
 
-export const ActiveOrganization = Template.clone()
+export const ActiveOrganization = Template.create()
 ActiveOrganization.args = {
   entity: {
     name: 'Active Organization',
@@ -26,7 +26,7 @@ ActiveOrganization.args = {
   },
 }
 
-export const InactiveOrganization = Template.clone()
+export const InactiveOrganization = Template.create()
 InactiveOrganization.args = {
   entity: {
     name: 'Inactive Organization',

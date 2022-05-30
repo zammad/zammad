@@ -24,8 +24,8 @@ const clickOnAction = (event: MouseEvent) => {
 </script>
 
 <template>
-  <div class="flex flex-row justify-between">
-    <div class="ltr:pl-4 rtl:pr-4">
+  <div class="mb-2 flex flex-row justify-between">
+    <div class="text-white/80 ltr:pl-4 rtl:pr-4">
       <slot name="header">{{ i18n.t(headerTitle) }}</slot>
     </div>
     <div
@@ -37,7 +37,7 @@ const clickOnAction = (event: MouseEvent) => {
     </div>
   </div>
   <div
-    class="w-fill m-2 mb-6 flex flex-col rounded-xl bg-gray-500 px-2 py-1 text-white"
+    class="w-fill mb-6 flex flex-col rounded-xl bg-gray-500 px-2 py-1 text-white"
   >
     <slot>
       <template v-for="(item, idx) in items" :key="idx">

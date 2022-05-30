@@ -20,10 +20,11 @@ const animationClassMap: Record<Animations, string> = {
 }
 
 const sizeMap: Record<Sizes, number> = {
+  tiny: 15,
   small: 20,
+  base: 25,
   medium: 30,
   large: 40,
-  tiny: 15,
 }
 
 const props = withDefaults(defineProps<Props>(), {

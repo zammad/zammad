@@ -65,6 +65,7 @@ module.exports = {
         500: '#282829',
         600: '#262627',
         highlight: '#99999926',
+        light: '#25262D99',
       },
       blue: {
         DEFAULT: '#23A2CD',

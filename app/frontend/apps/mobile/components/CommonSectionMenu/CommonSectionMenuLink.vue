@@ -1,19 +1,32 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
+import { computed, type HTMLAttributes } from 'vue'
+import { type Props as IconProps } from '@shared/components/CommonIcon/CommonIcon.vue'
 import useLocaleStore from '@shared/stores/locale'
 
 export interface Props {
   title?: string
   link?: string
-  icon?: string
+  icon?: string | (IconProps & HTMLAttributes)
+  iconBg?: string
   // TODO maybe change the name based on the usage
   information?: string
 }
 
-defineProps<Props>()
+const props = defineProps<Props>()
 
 const locale = useLocaleStore()
+
+const iconProps = computed<IconProps | null>(() => {
+  if (!props.icon) return null
+
+  if (typeof props.icon === 'string') {
+    return { name: props.icon }
+  }
+
+  return props.icon
+})
 </script>
 
 <template>
@@ -28,7 +41,16 @@ const locale = useLocaleStore()
       class="flex items-center justify-between border-b border-gray-300 last:border-0"
     >
       <div class="flex min-h-[54px] items-center">
-        <CommonIcon v-if="icon" :name="icon" class="mr-2" />
+        <div
+          v-if="iconProps"
+          class="flex h-8 w-8 items-center justify-center ltr:mr-2 rtl:ml-2"
+          data-test-id="wrapper-icon"
+          :class="{
+            [`rounded-lg ${iconBg}`]: iconBg,
+          }"
+        >
+          <CommonIcon v-bind="iconProps" />
+        </div>
         <slot>{{ i18n.t(title) }}</slot>
       </div>
 

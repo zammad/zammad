@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { Plugin } from 'vue'
+import { Plugin, Ref, ref, watchEffect } from 'vue'
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import { MountingOptions } from '@vue/test-utils'
 import { Matcher, render, RenderResult } from '@testing-library/vue'
@@ -25,6 +25,9 @@ export interface ExtendedMountingOptions<Props> extends MountingOptions<Props> {
   form?: boolean
   formField?: boolean
   unmount?: boolean
+  vModel?: {
+    [prop: string]: unknown
+  }
 }
 
 export interface ExtendedRenderResult extends RenderResult {
@@ -49,6 +52,8 @@ const defaultWrapperOptions: ExtendedMountingOptions<unknown> = {
     },
     mocks: {
       i18n,
+      $: (source: string) => source,
+      __: (source: string) => source,
     },
     stubs: {},
     plugins,
@@ -135,7 +140,7 @@ afterEach(() => {
 
 const renderComponent = <Props>(
   component: any,
-  wrapperOptions?: ExtendedMountingOptions<Props>,
+  wrapperOptions: ExtendedMountingOptions<Props> = {},
 ): ExtendedRenderResult => {
   // Store and Router needs only to be initalized once for a test suit.
   if (wrapperOptions?.router && !routerInitialized) {
@@ -155,6 +160,22 @@ const renderComponent = <Props>(
     defaultWrapperOptions.props.delay = 0
   }
 
+  const vModelProps: [string, Ref][] = []
+  const vModelOptions = Object.entries(wrapperOptions?.vModel || {})
+
+  for (const [prop, propDefault] of vModelOptions) {
+    const reactiveValue = ref(propDefault)
+    const props = (wrapperOptions.props ?? {}) as Record<string, unknown>
+    props[prop] = propDefault
+    props[`onUpdate:${prop}`] = (value: unknown) => {
+      reactiveValue.value = value
+    }
+
+    vModelProps.push([prop, reactiveValue])
+
+    wrapperOptions.props = props as Props
+  }
+
   const localWrapperOptions: ExtendedMountingOptions<Props> = merge(
     cloneDeep(defaultWrapperOptions),
     wrapperOptions,
@@ -171,6 +192,17 @@ const renderComponent = <Props>(
   Object.assign(view, buildLinksQueries(view.container as HTMLElement))
 
   wrappers.add([localWrapperOptions, view])
+
+  if (vModelProps.length) {
+    watchEffect(() => {
+      const propsValues = vModelProps.reduce((acc, [prop, reactiveValue]) => {
+        acc[prop] = reactiveValue.value
+        return acc
+      }, {} as Record<string, unknown>)
+
+      view.rerender(propsValues)
+    })
+  }
 
   return view
 }

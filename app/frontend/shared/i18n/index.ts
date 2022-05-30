@@ -56,5 +56,6 @@ declare module '@vue/runtime-core' {
   export interface ComponentCustomProperties {
     i18n: I18N
     $t: I18N['t']
+    __(source: string): string
   }
 }

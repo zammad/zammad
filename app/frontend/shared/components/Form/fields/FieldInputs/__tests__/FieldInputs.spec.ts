@@ -155,26 +155,6 @@ describe('Form - Field - Tel (Formkit-BuildIn)', () => {
   })
 })
 
-describe('Form - Field - Search (Formkit-BuildIn)', () => {
-  const wrapper = renderComponent(FormKit, {
-    ...wrapperParameters,
-    props: {
-      name: 'search',
-      type: 'search',
-      id: 'search',
-      label: 'Search',
-    },
-  })
-
-  afterAll(() => {
-    wrapper.unmount()
-  })
-
-  it('can render a search input', () => {
-    expect(wrapper.getByLabelText('Search')).toHaveAttribute('type', 'search')
-  })
-})
-
 describe('Form - Field - Number (Formkit-BuildIn)', () => {
   const wrapper = renderComponent(FormKit, {
     ...wrapperParameters,

@@ -16,6 +16,14 @@ const linkSchemaRaw = [
     },
   },
   {
+    type: 'search',
+    name: 'search',
+    // label: 'Date_Input',
+    props: {
+      link: '/tickets',
+    },
+  },
+  {
     type: 'select',
     name: 'select',
     label: 'Select',
