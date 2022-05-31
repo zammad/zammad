@@ -291,6 +291,12 @@ RSpec.describe 'Ticket > Update > Full Quote Header', current_user_id: -> { curr
     end
 
     click_reply
+
+    within(:richtext) do
+      wait.until do
+        find('blockquote', visible: :all)
+      end
+    end
   end
 
   define :contain_full_quote do
