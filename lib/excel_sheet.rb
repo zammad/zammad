@@ -156,10 +156,11 @@ class ExcelSheet
               record
             end
     case object[:data_type]
-    when 'boolean', 'select'
-      if object[:data_option] && object[:data_option]['options'] && object[:data_option]['options'][value]
-        value = object[:data_option]['options'][value]
+    when 'boolean', %r{^(multi|tree_)?select$}
+      if object[:data_option].present? && object[:data_option]['options'].present?
+        value = ObjectManager::Attribute.data_options_hash(object[:data_option]['options'])[value]
       end
+
       @worksheet.write_string(@current_row, @current_column, value) if value.present?
     when 'datetime'
       @worksheet.write_date_time(@current_row, @current_column, timestamp_in_localtime(value), @format_time) if value.present?
