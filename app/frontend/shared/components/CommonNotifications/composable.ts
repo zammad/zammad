@@ -39,7 +39,7 @@ const useNotifications = () => {
 
   const hasErrors = () => {
     return notifications.value.some((notification) => {
-      return notification.type === NotificationTypes.ERROR
+      return notification.type === NotificationTypes.Error
     })
   }
 

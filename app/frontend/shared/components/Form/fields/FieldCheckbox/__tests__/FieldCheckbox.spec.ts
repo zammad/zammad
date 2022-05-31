@@ -23,7 +23,7 @@ const renderCheckbox = (options: ExtendedMountingOptions<unknown> = {}) =>
       type: 'checkbox',
       id: 'checkbox',
       label: 'Checkbox',
-      variant: CheckboxVariant.default,
+      variant: CheckboxVariant.Default,
     },
     ...options,
   })
@@ -117,7 +117,7 @@ describe('Form - Field - Checkbox (Formkit-BuildIn)', () => {
         id: 'checkbox',
         onValue: 'yes',
         offValue: 'no',
-        variant: CheckboxVariant.switch,
+        variant: CheckboxVariant.Switch,
       },
     })
 
@@ -131,7 +131,7 @@ describe('Form - Field - Checkbox (Formkit-BuildIn)', () => {
         name: 'checkbox',
         type: 'checkbox',
         id: 'checkbox',
-        variant: CheckboxVariant.switch,
+        variant: CheckboxVariant.Switch,
       },
     })
 

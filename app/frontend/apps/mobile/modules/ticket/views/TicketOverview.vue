@@ -15,14 +15,14 @@ const router = useRouter()
 
 const goTo = () => {
   const { setViewTransition } = useViewTransition()
-  setViewTransition(ViewTransitions.REPLACE)
+  setViewTransition(ViewTransitions.Replace)
 
   router.replace('/')
 }
 
 const goBack = () => {
   const { setViewTransition } = useViewTransition()
-  setViewTransition(ViewTransitions.PREV)
+  setViewTransition(ViewTransitions.Prev)
 
   router.go(-1)
 }

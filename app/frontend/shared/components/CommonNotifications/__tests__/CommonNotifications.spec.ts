@@ -25,7 +25,7 @@ describe('CommonNotifications.vue', () => {
     const { notify } = useNotifications()
     await notify({
       message,
-      type: NotificationTypes.WARN,
+      type: NotificationTypes.Warn,
     })
 
     expect(wrapper.getByTestId('notification')).toBeInTheDocument()
@@ -37,7 +37,7 @@ describe('CommonNotifications.vue', () => {
 
     await notify({
       message,
-      type: NotificationTypes.WARN,
+      type: NotificationTypes.Warn,
       durationMS: 10,
     })
 
@@ -51,7 +51,7 @@ describe('CommonNotifications.vue', () => {
 
     await notify({
       message,
-      type: NotificationTypes.WARN,
+      type: NotificationTypes.Warn,
       durationMS: 10,
       persistent: true,
     })
@@ -70,7 +70,7 @@ describe('CommonNotifications.vue', () => {
 
     await notify({
       message,
-      type: NotificationTypes.WARN,
+      type: NotificationTypes.Warn,
       callback: () => {
         expect(test).toBe(false)
         test = true
@@ -85,17 +85,17 @@ describe('CommonNotifications.vue', () => {
 
     await notify({
       message: `${message} - ${notifications.value.length}`,
-      type: NotificationTypes.WARN,
+      type: NotificationTypes.Warn,
     })
 
     await notify({
       message: `${message} - ${notifications.value.length}`,
-      type: NotificationTypes.WARN,
+      type: NotificationTypes.Warn,
     })
 
     await notify({
       message: `${message} - ${notifications.value.length}`,
-      type: NotificationTypes.WARN,
+      type: NotificationTypes.Warn,
     })
 
     expect(wrapper.getAllByTestId('notification')).toHaveLength(3)
@@ -106,17 +106,17 @@ describe('CommonNotifications.vue', () => {
 
     await notify({
       message: `${message} - ${notifications.value.length}`,
-      type: NotificationTypes.WARN,
+      type: NotificationTypes.Warn,
     })
 
     await notify({
       message: `${message} - ${notifications.value.length}`,
-      type: NotificationTypes.WARN,
+      type: NotificationTypes.Warn,
     })
 
     await notify({
       message: `${message} - ${notifications.value.length}`,
-      type: NotificationTypes.WARN,
+      type: NotificationTypes.Warn,
     })
 
     clearAllNotifications()
@@ -129,7 +129,7 @@ describe('CommonNotifications.vue', () => {
     const { notify } = useNotifications()
     await notify({
       message,
-      type: NotificationTypes.WARN,
+      type: NotificationTypes.Warn,
     })
 
     expect(wrapper.getIconByName('info')).toBeInTheDocument()

@@ -15,10 +15,10 @@ export default {
       control: { type: 'select' },
       table: {
         defaultValue: {
-          summary: CheckboxVariant.default,
+          summary: CheckboxVariant.Default,
         },
       },
-      options: [CheckboxVariant.default, CheckboxVariant.switch],
+      options: [CheckboxVariant.Default, CheckboxVariant.Switch],
     },
     options: {
       name: 'options',
@@ -94,5 +94,5 @@ export const VariantSwitch = Template.bind({})
 VariantSwitch.args = {
   label: 'Checkbox',
   name: 'checkbox',
-  variant: CheckboxVariant.switch,
+  variant: CheckboxVariant.Switch,
 }

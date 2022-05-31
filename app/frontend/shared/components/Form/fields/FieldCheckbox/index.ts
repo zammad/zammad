@@ -33,7 +33,7 @@ const handleVariant = (node: FormKitNode) => {
   const { props } = node
 
   const setVariantClasses = (variant: CheckboxVariant) => {
-    if (CheckboxVariant.switch === variant) {
+    if (CheckboxVariant.Switch === variant) {
       props.innerClass =
         'bg-gray-300 relative inline-flex flex-shrink-0 h-6 w-10 border border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus-within:ring-1 focus-within:ring-white focus-within:ring-opacity-75 formkit-is-checked:bg-blue formkit-invalid:border-red formkit-invalid:border-solid'
       props.decoratorClass =
@@ -47,7 +47,7 @@ const handleVariant = (node: FormKitNode) => {
 
   node.on('created', () => {
     if (!has(props, 'variant')) {
-      props.variant = CheckboxVariant.default
+      props.variant = CheckboxVariant.Default
     }
 
     setVariantClasses(props.variant)

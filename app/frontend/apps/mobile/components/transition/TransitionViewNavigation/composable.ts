@@ -3,7 +3,7 @@
 import { ref } from 'vue'
 import { ViewTransitions } from './types'
 
-const viewTransition = ref<ViewTransitions>(ViewTransitions.REPLACE)
+const viewTransition = ref<ViewTransitions>(ViewTransitions.Replace)
 
 export const useViewTransition = () => {
   const setViewTransition = (newViewTransition: ViewTransitions) => {

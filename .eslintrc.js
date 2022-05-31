@@ -84,6 +84,18 @@ module.exports = {
 
     '@typescript-eslint/no-explicit-any': ['error', { ignoreRestArgs: true }],
 
+    '@typescript-eslint/naming-convention': [
+      'error',
+      {
+        selector: 'enumMember',
+        format: ['StrictPascalCase'],
+      },
+      {
+        selector: 'typeLike',
+        format: ['PascalCase'],
+      },
+    ],
+
     'vue/component-tags-order': [
       'error',
       {

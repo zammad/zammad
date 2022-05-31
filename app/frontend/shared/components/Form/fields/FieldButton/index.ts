@@ -32,7 +32,7 @@ const setVariantDefault = (node: FormKitNode) => {
 
   node.on('created', () => {
     if (!has(props, 'variant')) {
-      props.variant = ButtonVariant.primary
+      props.variant = ButtonVariant.Primary
     }
   })
 }

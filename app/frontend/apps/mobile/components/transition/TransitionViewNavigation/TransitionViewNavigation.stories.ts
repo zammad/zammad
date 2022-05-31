@@ -44,7 +44,7 @@ const Template: Story<Args> = (args: Args) => ({
     }
 
     const resetView = () => {
-      setViewTransition(ViewTransitions.REPLACE)
+      setViewTransition(ViewTransitions.Replace)
       component.value = FirstView
     }
 
@@ -57,10 +57,10 @@ const Template: Story<Args> = (args: Args) => ({
 })
 
 export const NextViewTransition = Template.bind({})
-NextViewTransition.args = { newViewTransition: ViewTransitions.NEXT }
+NextViewTransition.args = { newViewTransition: ViewTransitions.Next }
 
 export const PrevViewTransition = Template.bind({})
-PrevViewTransition.args = { newViewTransition: ViewTransitions.PREV }
+PrevViewTransition.args = { newViewTransition: ViewTransitions.Prev }
 
 export const ReplaceViewTransition = Template.bind({})
-ReplaceViewTransition.args = { newViewTransition: ViewTransitions.REPLACE }
+ReplaceViewTransition.args = { newViewTransition: ViewTransitions.Replace }

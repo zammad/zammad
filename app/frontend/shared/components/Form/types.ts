@@ -20,10 +20,10 @@ export interface FormFieldAdditionalProps {
 
 // https://formkit.com/essentials/validation#showing-errors
 export enum FormValidationVisibility {
-  'blur' = 'blur',
-  'live' = 'live',
-  'dirty' = 'dirty',
-  'submit' = 'submit',
+  Blur = 'blur',
+  Live = 'live',
+  Dirty = 'dirty',
+  Submit = 'submit',
 }
 
 export type AllowedClasses = string | Record<string, boolean> | FormKitClasses
@@ -50,7 +50,7 @@ export interface FormSchemaField {
   validationMessages?: FormKitValidationMessages
   validationVisibility?: Exclude<
     FormValidationVisibility,
-    FormValidationVisibility.submit
+    FormValidationVisibility.Submit
   >
   validationRules?: FormKitValidationRules
   config?: Record<string, unknown>

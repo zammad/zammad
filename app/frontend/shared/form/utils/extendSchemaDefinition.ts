@@ -14,7 +14,7 @@ const extendSchemaDefinition = (
   node: FormKitNode,
   sectionKey: string,
   schemaExtension: FormKitSchemaCondition | Partial<FormKitSchemaNode>,
-  extendType: FormSchemaExtendType = FormSchemaExtendType.replace,
+  extendType: FormSchemaExtendType = FormSchemaExtendType.Replace,
   cloneDefinition = true,
 ) => {
   const { props } = node
@@ -32,7 +32,7 @@ const extendSchemaDefinition = (
       | FormKitSchemaCondition
       | Partial<FormKitSchemaNode>
 
-    if (extendType === FormSchemaExtendType.replace) {
+    if (extendType === FormSchemaExtendType.Replace) {
       sectionSchemaExtension = schemaExtension
     } else {
       const currentExtension = extensions[sectionKey]
@@ -52,7 +52,7 @@ const extendSchemaDefinition = (
       if (currentChildren) {
         sectionSchemaExtension = {
           children:
-            extendType === FormSchemaExtendType.append
+            extendType === FormSchemaExtendType.Append
               ? [...currentChildren, schemaExtension]
               : [schemaExtension, ...currentChildren],
         } as Partial<FormKitSchemaNode>

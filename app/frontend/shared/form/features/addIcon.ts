@@ -59,7 +59,7 @@ const addIcon = (node: FormKitNode) => {
         },
       ],
     },
-    FormSchemaExtendType.prepend,
+    FormSchemaExtendType.Prepend,
   )
 }
 

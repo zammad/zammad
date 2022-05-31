@@ -80,7 +80,7 @@ const props = withDefaults(defineProps<Props>(), {
   changeFields: () => {
     return {}
   },
-  validationVisibility: FormValidationVisibility.submit,
+  validationVisibility: FormValidationVisibility.Submit,
   disabled: false,
 })
 

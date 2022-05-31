@@ -35,9 +35,9 @@ export interface FormValidationRuleType {
 export type FormFieldTypeImportModules = FormFieldType | FormFieldType[]
 
 export enum FormSchemaExtendType {
-  'append' = 'append',
-  'prepend' = 'prepend',
-  'replace' = 'replace',
+  Append = 'append',
+  Prepend = 'prepend',
+  Replace = 'replace',
 }
 
 export interface FormDefaultProps {

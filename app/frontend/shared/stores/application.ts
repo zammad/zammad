@@ -87,7 +87,7 @@ const useApplicationLoadedStore = defineStore('applicationLoaded', () => {
 
     connectionNotificationId = notifications.notify({
       message: __('The connection to the server was lost.'),
-      type: NotificationTypes.ERROR,
+      type: NotificationTypes.Error,
       persistent: true,
     })
     connected.value = false

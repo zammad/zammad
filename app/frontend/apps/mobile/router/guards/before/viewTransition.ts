@@ -19,7 +19,7 @@ const transitionViewGuard: NavigationGuard = (
   // until the following feature was added: https://github.com/vuejs/vue-router/issues/3453.
   const { setViewTransition } = useViewTransition()
 
-  let newViewTransition: ViewTransitions = ViewTransitions.REPLACE
+  let newViewTransition: ViewTransitions = ViewTransitions.Replace
 
   // In the case that the 'To'-Route has no level, we use the replace transition.
   if (to.meta?.level) {
@@ -28,8 +28,8 @@ const transitionViewGuard: NavigationGuard = (
     if (previousLevel !== to.meta.level) {
       newViewTransition =
         previousLevel < to.meta.level
-          ? ViewTransitions.NEXT
-          : ViewTransitions.PREV
+          ? ViewTransitions.Next
+          : ViewTransitions.Prev
     }
   }
 

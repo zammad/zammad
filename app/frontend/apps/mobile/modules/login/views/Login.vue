@@ -27,7 +27,7 @@ if (props.invalidatedSession === '1') {
 
   notify({
     message: __('The session is no longer valid. Please log in again.'),
-    type: NotificationTypes.WARN,
+    type: NotificationTypes.Warn,
   })
 }
 
@@ -106,7 +106,7 @@ const login = (formData: FormData<LoginFormData>) => {
       const { notify } = useNotifications()
       notify({
         message: errors.generalErrors[0],
-        type: NotificationTypes.ERROR,
+        type: NotificationTypes.Error,
       })
     })
 }

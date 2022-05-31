@@ -17,10 +17,10 @@ export default {
     type: {
       control: { type: 'select' },
       options: [
-        NotificationTypes.ERROR,
-        NotificationTypes.WARN,
-        NotificationTypes.SUCCESS,
-        NotificationTypes.INFO,
+        NotificationTypes.Error,
+        NotificationTypes.Warn,
+        NotificationTypes.Success,
+        NotificationTypes.Info,
       ],
     },
   },
@@ -51,20 +51,20 @@ const Template: Story<Notification> = (args: Notification) => ({
 })
 
 export const WarnNotification = Template.bind({})
-WarnNotification.args = { type: NotificationTypes.WARN }
+WarnNotification.args = { type: NotificationTypes.Warn }
 
 export const ErrorNotification = Template.bind({})
-ErrorNotification.args = { type: NotificationTypes.ERROR }
+ErrorNotification.args = { type: NotificationTypes.Error }
 
 export const SuccessNotification = Template.bind({})
-SuccessNotification.args = { type: NotificationTypes.SUCCESS }
+SuccessNotification.args = { type: NotificationTypes.Success }
 
 export const InfoNotification = Template.bind({})
-InfoNotification.args = { type: NotificationTypes.INFO }
+InfoNotification.args = { type: NotificationTypes.Info }
 
 export const CallbackNotification = Template.bind({})
 CallbackNotification.args = {
-  type: NotificationTypes.INFO,
+  type: NotificationTypes.Info,
   persistent: true,
   callback: () => {
     // eslint-disable-next-line no-alert

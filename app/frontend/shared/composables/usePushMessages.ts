@@ -22,7 +22,7 @@ const usePushMessages = () => {
   const notify = (message: string) => {
     useNotifications().notify({
       message,
-      type: NotificationTypes.WARN,
+      type: NotificationTypes.Warn,
       persistent: true,
     })
   }

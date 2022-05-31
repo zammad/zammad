@@ -57,11 +57,11 @@ const durationMonth = 30 * durationDay
 const durationYear = 356 * durationDay
 
 enum Direction {
-  past,
-  future,
+  Past,
+  Future,
 }
 
-type durationMessages = {
+type DurationMessages = {
   duration: number
   pastSingular: string
   pastPlural: string
@@ -69,7 +69,7 @@ type durationMessages = {
   futurePlural: string
 }
 
-const durations: durationMessages[] = [
+const durations: DurationMessages[] = [
   {
     duration: durationYear,
     pastSingular: __('1 year ago'),
@@ -123,14 +123,14 @@ export const relativeDateTime = (
   let diffSeconds = (baseDate.getTime() - date.getTime()) / 1000
 
   const direction: Direction =
-    diffSeconds > -1 ? Direction.past : Direction.future
+    diffSeconds > -1 ? Direction.Past : Direction.Future
 
   diffSeconds = Math.abs(diffSeconds)
 
   for (const duration of durations) {
     if (diffSeconds >= duration.duration) {
       const count = Math.floor(diffSeconds / duration.duration)
-      if (direction === Direction.past) {
+      if (direction === Direction.Past) {
         return count === 1
           ? translator.translate(duration.pastSingular)
           : translator.translate(duration.pastPlural, count)

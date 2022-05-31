@@ -35,7 +35,7 @@ export default abstract class BaseHandler<
     errorNotificationMessage: __(
       'An error occured during the operation. Please contact your administrator.',
     ),
-    errorNotificationType: NotificationTypes.ERROR,
+    errorNotificationType: NotificationTypes.Error,
   }
 
   public handlerOptions!: CommonHandlerOptions<THandlerOptions>

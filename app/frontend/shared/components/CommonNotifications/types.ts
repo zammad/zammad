@@ -3,10 +3,10 @@
 import type { SetOptional } from 'type-fest'
 
 export enum NotificationTypes {
-  WARN = 'warn',
-  SUCCESS = 'success',
-  ERROR = 'error',
-  INFO = 'info',
+  Warn = 'warn',
+  Success = 'success',
+  Error = 'error',
+  Info = 'info',
 }
 
 export interface Notification {
