@@ -40,21 +40,20 @@ variables:
   # Temporary switch to enable the mobile front end for testing.
   ENABLE_EXPERIMENTAL_MOBILE_FRONTEND: 'true'
 
-# Cache gems in between jobs and pipelines
-# ATTENTION: We use a combination of the Ruby major and minor version number
-# as a key for the cache to avoid cache growth and incompatibilities between
-# the gems. Search hook: 3.0.4 (change it when updating the Ruby version too)
 cache:
-  key: "centos7ruby304"
-  paths:
-    - vendor/ruby
-    # ATTENTION: This should be a dedicated cache only used in the job "TODO".
-    # ATTENTION: Remember to update the global CI ENV setting with the latest
-    #   version of the ENV from an artifact of the "TODO" job to use a valid key.
-    # A dedicated cache should be used because the ENVs are not bound to the Ruby version and OS.
-    # Unfortunately GitLab is not yet capable of having multiple cache-s per job
-    # See: https://gitlab.com/gitlab-org/gitlab/-/issues/32814
-    - fresh.env
+  # Cache gems in between jobs and pipelines
+  - key:
+      files:
+        - Gemfile.lock
+    paths:
+      - vendor/ruby
+      - fresh.env
+  # Cache node_modules likewise
+  - key:
+      files:
+        - yarn.lock
+    paths:
+      - .yarn/cache
 
 # Initialize application env
 before_script:

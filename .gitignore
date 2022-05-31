@@ -89,12 +89,13 @@
 *~
 
 # Vite Ruby
-yarn-error.log
 /public/vite
 /public/vite-dev
 
 # Node
 **/node_modules
+yarn-error.log
+.yarn/cache
 
 # Storybook
 .storybook/storybook-static
