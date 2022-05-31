@@ -37,7 +37,7 @@
   before_script:
     - echo "Disable default before_script."
   script:
-    - shellcheck -S warning $(find . -name "*.sh" -o -name "functions" | grep -v "/vendor/")
+    - shellcheck -S warning $(find . -name "*.sh" -o -name "functions" | egrep -v "/vendor|node_modules/")
   after_script:
     - echo "Disable default before_script."
 
