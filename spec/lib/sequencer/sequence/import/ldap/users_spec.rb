@@ -3,6 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe ::Sequencer::Sequence::Import::Ldap::Users, sequencer: :sequence do
+  let(:ldap_source) { create(:ldap_source) }
 
   context 'lost group assignment' do
 
@@ -19,7 +20,7 @@ RSpec.describe ::Sequencer::Sequence::Import::Ldap::Users, sequencer: :sequence 
         group_entry['member'] = [user_entry.dn]
 
         ldap_config = {
-          id:               999,
+          id:               ldap_source.id,
           user_filter:      'user=filter',
           group_role_map:   {
             group_entry.dn => [1, 2]
@@ -62,7 +63,7 @@ RSpec.describe ::Sequencer::Sequence::Import::Ldap::Users, sequencer: :sequence 
         imported_user = User.last
 
         expect(imported_user.active).to be true
-        expect(imported_user.source).to eq('Ldap::999')
+        expect(imported_user.source).to eq("Ldap::#{ldap_source.id}")
 
         connection = double(
           host:    'example.com',

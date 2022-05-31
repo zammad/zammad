@@ -16,7 +16,7 @@ class Sequencer
                 direction:     'out',
                 facility:      facility,
                 method:        'tcp',
-                url:           "#{action} -> #{remote_id}",
+                url:           url,
                 status:        status,
                 ip:            nil,
                 request:       {
@@ -31,6 +31,10 @@ class Sequencer
             end
 
             private
+
+            def url
+              "#{action} -> #{remote_id}"
+            end
 
             def status
               @status ||= begin
