@@ -2,6 +2,9 @@
 
 class SearchIndexBackend
 
+  SUPPORTED_ES_VERSION_MINIMUM = '7.8'.freeze
+  SUPPORTED_ES_VERSION_MAXIMUM = '8'.freeze
+
 =begin
 
 info about used search index machine
@@ -22,11 +25,10 @@ info about used search index machine
 
       installed_version_parsed = Gem::Version.new(installed_version)
 
-      version_supported = installed_version_parsed < Gem::Version.new('9')
-      raise "Version #{installed_version} of configured elasticsearch is not supported." if !version_supported
-
-      version_supported = installed_version_parsed >= Gem::Version.new('7.8')
-      raise "Version #{installed_version} of configured elasticsearch is not supported." if !version_supported
+      if (installed_version_parsed > Gem::Version.new(SUPPORTED_ES_VERSION_MAXIMUM)) ||
+         (installed_version_parsed < Gem::Version.new(SUPPORTED_ES_VERSION_MINIMUM))
+        raise "Version #{installed_version} of configured elasticsearch is not supported."
+      end
 
       return response.data
     end
@@ -1058,51 +1060,16 @@ helper method for making HTTP calls and raising error if response was not succes
       }
     end
 
-    return result if type_in_mapping?
-
     result[name]
   end
 
   # get es version
   def self.version
-    @version ||= begin
-      info = SearchIndexBackend.info
-      number = nil
-      if info.present?
-        number = info['version']['number'].to_s
-      end
-      number
-    end
+    @version ||= SearchIndexBackend.info&.dig('version', 'number')
   end
 
-  def self.version_int
-    number = version
-    return 0 if !number
-
-    number_split = version.split('.')
-    "#{number_split[0]}#{format('%<minor>03d', minor: number_split[1])}#{format('%<patch>03d', patch: number_split[2])}".to_i
-  end
-
-  def self.version_supported?
-
-    # only versions greater/equal than 6.5.0 are supported
-    return if version_int < 6_005_000
-
-    true
-  end
-
-  # no type in mapping
-  def self.type_in_mapping?
-    return true if version_int < 7_000_000
-
-    false
-  end
-
-  # is es configured?
   def self.configured?
-    return false if Setting.get('es_url').blank?
-
-    true
+    Setting.get('es_url').present?
   end
 
   def self.settings

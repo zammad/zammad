@@ -11,7 +11,7 @@ module SearchindexHelper
     base.teardown do
       next if ENV['ES_URL'].blank?
 
-      Rake::Task['searchindex:drop'].execute
+      Rake::Task['zammad:searchindex:drop'].execute
     end
   end
 
@@ -63,8 +63,8 @@ prepares elasticsearch
   def rebuild_searchindex
     Rake::Task.clear
     Zammad::Application.load_tasks
-    Rake::Task['searchindex:rebuild'].execute
-    Rake::Task['searchindex:refresh'].execute
+    Rake::Task['zammad:searchindex:rebuild'].execute
+    Rake::Task['zammad:searchindex:refresh'].execute
   end
 
 end

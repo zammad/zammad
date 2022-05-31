@@ -243,7 +243,7 @@ function setup_elasticsearch () {
     REBUILD_ES_SEARCHINDEX="yes"
 
     echo "# Deleting old elasticsearch index..."
-    zammad run rake searchindex:drop
+    zammad run rake zammad:searchindex:drop
 
     yes | /usr/share/elasticsearch/bin/elasticsearch-plugin -s remove mapper-attachments
 
@@ -261,7 +261,7 @@ function setup_elasticsearch () {
     echo -e "\n Please get sure to install the 'ingest-attachment' plugin on your Elasticsearch server by:"
     echo -e "/usr/share/elasticsearch/bin/elasticsearch-plugin -s install ingest-attachment"
     echo -e "\nAfter this you might need to rebuild the searchindex by:"
-    echo -e "zammad run rake searchindex:rebuild"
+    echo -e "zammad run rake zammad:searchindex:rebuild"
   fi
 }
 
@@ -270,7 +270,7 @@ function elasticsearch_searchindex_rebuild () {
 
   if [ "${REBUILD_ES_SEARCHINDEX}" == "yes" ]; then
     echo "# (Re)building Elasticsearch searchindex..."
-    nohup zammad run rake searchindex:rebuild &> ${ZAMMAD_DIR}/log/searchindex-rebuild.log &
+    nohup zammad run rake zammad:searchindex:rebuild &> ${ZAMMAD_DIR}/log/searchindex-rebuild.log &
   fi
 }
 

@@ -324,6 +324,11 @@ Layout/MultilineMethodCallIndentation:
 Lint/UnusedMethodArgument:
   AllowUnusedKeywordArguments: true
 
+RSpec/DescribeMethod:
+  # We want to be able to split tests into subfolders, where several cases are grouped together.
+  Description: 'Checks that the second argument to the top level describe is the tested method name.'
+  Enabled: false
+
 RSpec/NestedGroups:
   Max: 6
 

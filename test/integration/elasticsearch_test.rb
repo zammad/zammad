@@ -502,7 +502,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
     assert_not(result[0], 'record 1')
 
     # cleanup
-    Rake::Task['searchindex:drop'].execute
+    Rake::Task['zammad:searchindex:drop'].execute
   end
 
 end

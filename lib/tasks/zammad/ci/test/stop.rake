@@ -20,7 +20,7 @@ namespace :zammad do
 
         next if !SearchIndexBackend.enabled?
 
-        Rake::Task['searchindex:drop'].invoke
+        Rake::Task['zammad:searchindex:drop'].invoke
       end
     end
   end
