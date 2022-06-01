@@ -107,7 +107,7 @@
     "@tiptap/suggestion": "^2.0.0-beta.92",
     "@tiptap/vue-3": "^2.0.0-beta.91",
     "@vue/apollo-composable": "^4.0.0-alpha.17",
-    "@vueuse/core": "^8.5.0",
+    "@vueuse/core": "^8.6.0",
     "@vueuse/router": "^8.5.0",
     "@vueuse/shared": "^8.5.0",
     "async-mutex": "^0.3.2",
