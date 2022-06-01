@@ -264,7 +264,6 @@ GEM
       faraday (< 2)
       json (>= 1.8)
       rexml
-    libv8 (8.4.255.0)
     listen (3.7.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
@@ -287,8 +286,6 @@ GEM
     mime-types-data (3.2022.0105)
     mini_mime (1.1.2)
     mini_portile2 (2.8.0)
-    mini_racer (0.2.9)
-      libv8 (>= 6.9.411)
     minitest (5.15.0)
     msgpack (1.5.2)
     multi_json (1.15.0)
@@ -638,12 +635,10 @@ DEPENDENCIES
   icalendar-recurrence
   json
   koala
-  libv8
   listen
   mail!
   messagebird-rest
   mime-types
-  mini_racer (= 0.2.9)
   mysql2
   net-ldap
   oauth2

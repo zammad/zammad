@@ -76,13 +76,6 @@ group :assets do
   gem 'autoprefixer-rails', require: false
 end
 
-# Don't use mini_racer any more for asset compilation.
-#   Instead, use an external node.js binary.
-group :mini_racer, optional: true do
-  gem 'libv8'
-  gem 'mini_racer', '0.2.9' # Newer versions require libv8-node instead which does not compile on older platforms.
-end
-
 # authentication - provider
 gem 'doorkeeper'
 gem 'oauth2'
