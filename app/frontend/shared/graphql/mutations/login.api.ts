@@ -7,8 +7,8 @@ import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
 
 export const LoginDocument = gql`
-    mutation login($login: String!, $password: String!, $fingerprint: String!) {
-  login(login: $login, password: $password, fingerprint: $fingerprint) {
+    mutation login($input: LoginInput!) {
+  login(input: $input) {
     sessionId
     errors {
       ...errors

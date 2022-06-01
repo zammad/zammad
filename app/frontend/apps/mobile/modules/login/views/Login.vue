@@ -66,7 +66,7 @@ const loginScheme = defineFormSchema([
     children: [
       {
         type: 'checkbox',
-        name: 'remember_me',
+        name: 'rememberMe',
         label: __('Remember me'),
       },
       // TODO support if/then in form-schema
@@ -90,7 +90,7 @@ const loginScheme = defineFormSchema([
 interface LoginFormData {
   login?: string
   password?: string
-  remember_me?: boolean
+  rememberMe?: boolean
 }
 
 // TODO: workaround for disabled button state, will be changed in formkit.
@@ -103,7 +103,7 @@ const login = (formData: FormData<LoginFormData>) => {
   clearAllNotifications()
 
   return authentication
-    .login(formData.login as string, formData.password as string)
+    .login(formData.login!, formData.password!, formData.rememberMe!)
     .then(() => {
       const { redirect: redirectUrl } = route.query
       if (typeof redirectUrl === 'string') {

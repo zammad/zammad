@@ -4,21 +4,18 @@ module Gql::Mutations
   class Login < BaseMutation
     description 'Performs a user login to create a session'
 
-    field :session_id, String, description: 'The current session'
+    argument :input, Gql::Types::Input::LoginInputType, 'Login input fields.'
 
-    argument :login, String, required: true, description: 'User name'
-    argument :password, String, required: true, description: 'Password'
-    argument :fingerprint, String, required: true, description: 'Device fingerprint - a string identifying the device used for the login'
+    field :session_id, String, description: 'The current session'
 
     def self.authorize(...)
       true
     end
 
     # reimplementation of `authenticate_with_password`
-    def resolve(...)
-
+    def resolve(input:)
       # Register user for subsequent auth checks.
-      authenticate(...)
+      authenticate(**input)
 
       if !context[:current_user]
         return error_response({
@@ -31,7 +28,7 @@ module Gql::Mutations
 
     private
 
-    def authenticate(login:, password:, fingerprint:) # rubocop:disable Metrics/AbcSize
+    def authenticate(login:, password:, fingerprint:, remember_me: false) # rubocop:disable Metrics/AbcSize
       auth = Auth.new(login, password)
       if !auth.valid?
         return
@@ -45,6 +42,11 @@ module Gql::Mutations
       # authentication_check_prerequesits is private
       context[:controller].send(:authentication_check_prerequesits, user, 'session', {})
       context[:current_user] = user
+
+      # TODO: Check if this can be moved to a central place, because it's also the same code in the sessions controller.
+      context[:controller].request.env['rack.session.options'][:expire_after] = 1.year if remember_me
+      context[:controller].session[:persistent] = true
+      user.activity_stream_log('session started', user.id, true)
     end
   end
 end

@@ -282,6 +282,9 @@ GraphQL/ExtractType:
 
 GraphQL/ExtractInputType:
   MaxArguments: 3
+  # Run cop only for mutations: https://github.com/DmitryTsepelev/rubocop-graphql/issues/47
+  Include:
+    - 'app/graphql/gql/mutations/**/*.rb'
 
 # Enforcing field descriptions for all model fields will be too verbose/redundant.
 GraphQL/FieldDescription:

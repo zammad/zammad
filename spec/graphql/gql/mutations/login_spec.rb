@@ -22,9 +22,11 @@ RSpec.describe Gql::Mutations::Login, type: :request do
     let(:fingerprint) { Faker::Number.number(digits: 6).to_s }
     let(:variables) do
       {
-        login:       agent.login,
-        password:    password,
-        fingerprint: fingerprint,
+        input: {
+          login:       agent.login,
+          password:    password,
+          fingerprint: fingerprint,
+        }
       }
     end
 
@@ -40,6 +42,46 @@ RSpec.describe Gql::Mutations::Login, type: :request do
     context 'with correct credentials' do
       it 'returns session data' do
         expect(graphql_response['data']['login']['sessionId']).to be_present
+      end
+
+      it 'sets the :persistent session parameter' do
+        expect { execute_graphql_query }.to change { request&.session&.fetch(:persistent) }.to(true)
+      end
+
+      it 'adds an activity stream entry for the user’s session' do
+        # Create the user before the GraphQL query execution, so that we have only the activity stream
+        # change from the login.
+        agent
+
+        expect { execute_graphql_query }.to change(ActivityStream, :count).by(1)
+      end
+
+      context 'with remember me' do
+        let(:remember_me) { true }
+        let(:variables) do
+          {
+            input: {
+              login:       agent.login,
+              password:    password,
+              fingerprint: fingerprint,
+              rememberMe:  remember_me,
+            }
+          }
+        end
+
+        it 'adds an activity stream entry for the user’s session' do
+          execute_graphql_query
+          expect(request.env['rack.session.options'][:expire_after]).to eq(1.year)
+        end
+
+        context 'with not activated remember me' do
+          let(:remember_me) { false }
+
+          it 'adds an activity stream entry for the user’s session' do
+            execute_graphql_query
+            expect(request.env['rack.session.options'][:expire_after]).to be_nil
+          end
+        end
       end
     end
 
@@ -68,7 +110,7 @@ RSpec.describe Gql::Mutations::Login, type: :request do
       let(:fingerprint) { nil }
 
       it 'fails with error message' do
-        expect(graphql_response['errors'][0]).to include('message' => 'Variable $fingerprint of type String! was provided invalid value')
+        expect(graphql_response['errors'][0]).to include('message' => 'Variable $input of type LoginInput! was provided invalid value for fingerprint (Expected value to not be null)')
       end
 
       # No error type available for GraphQL::ExecutionErrors.

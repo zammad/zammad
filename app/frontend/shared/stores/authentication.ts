@@ -47,13 +47,20 @@ const useAuthenticationStore = defineStore(
       }
     }
 
-    const login = async (login: string, password: string): Promise<void> => {
+    const login = async (
+      login: string,
+      password: string,
+      rememberMe: boolean,
+    ): Promise<void> => {
       const loginMutation = new MutationHandler(
         useLoginMutation({
           variables: {
-            login,
-            password,
-            fingerprint: fingerprint.value,
+            input: {
+              login,
+              password,
+              rememberMe,
+              fingerprint: fingerprint.value,
+            },
           },
         }),
       )
