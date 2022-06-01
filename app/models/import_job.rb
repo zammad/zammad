@@ -1,6 +1,7 @@
 # Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class ImportJob < ApplicationModel
+  extend ::Mixin::StartFinishLogger
 
   store :payload
   store :result
@@ -160,5 +161,32 @@ class ImportJob < ApplicationModel
 
       true
     end || []
+  end
+
+  # Checks for killed import jobs and marks them as finished and adds a note.
+  #
+  # @param [ActiveSupport::TimeWithZone] after the time the cleanup was started
+  #
+  # @example
+  #   Scheduler.cleanup_import_jobs(TimeZone.now)
+  #
+  # return [nil]
+  def self.cleanup_import_jobs(after)
+    log_start_finish(:info, "Cleanup of left over import jobs #{after}") do
+      error = __('Interrupted by scheduler restart. Please restart manually or wait until the next execution time.').freeze
+
+      # we need to exclude jobs that were updated at or since we started
+      # cleaning up (via the #reschedule? call) because they might
+      # were started `.delay`-ed and are flagged for restart
+      ImportJob.running.where('updated_at < ?', after).each do |job|
+
+        job.update!(
+          finished_at: after,
+          result:      {
+            error: error
+          }
+        )
+      end
+    end
   end
 end

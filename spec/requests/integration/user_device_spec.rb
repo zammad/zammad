@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'User Device', type: :request, sends_notification_emails: true do
+RSpec.describe 'User Device', type: :request, sends_notification_emails: true, performs_jobs: true do
 
   let!(:admin) do
     create(:admin, login: 'user-device-admin', password: 'adminpw', groups: Group.all)
@@ -30,7 +30,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true do
       expect(json_response['config']).to be_truthy
       expect(controller.session[:user_device_fingerprint]).to be_falsey
 
-      Scheduler.worker(true)
+      perform_enqueued_jobs
     end
 
     it 'does login index with admin without fingerprint (02)' do
@@ -46,7 +46,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true do
 
       check_notification do
 
-        Scheduler.worker(true)
+        perform_enqueued_jobs
 
         not_sent(
           template: 'user_device_new',
@@ -72,7 +72,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true do
 
       check_notification do
 
-        Scheduler.worker(true)
+        perform_enqueued_jobs
 
         not_sent(
           template: 'user_device_new',
@@ -96,7 +96,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true do
 
       check_notification do
 
-        Scheduler.worker(true)
+        perform_enqueued_jobs
 
         not_sent(
           template: 'user_device_new',
@@ -122,7 +122,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true do
 
       check_notification do
 
-        Scheduler.worker(true)
+        perform_enqueued_jobs
 
         not_sent(
           template: 'user_device_new',
@@ -147,7 +147,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true do
 
       check_notification do
 
-        Scheduler.worker(true)
+        perform_enqueued_jobs
 
         not_sent(
           template: 'user_device_new',
@@ -174,7 +174,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true do
 
       check_notification do
 
-        Scheduler.worker(true)
+        perform_enqueued_jobs
 
         not_sent(
           template: 'user_device_new',
@@ -207,7 +207,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true do
 
       check_notification do
 
-        Scheduler.worker(true)
+        perform_enqueued_jobs
 
         sent(
           template: 'user_device_new',
@@ -231,7 +231,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true do
 
       check_notification do
 
-        Scheduler.worker(true)
+        perform_enqueued_jobs
 
         not_sent(
           template: 'user_device_new',
@@ -255,7 +255,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true do
 
       check_notification do
 
-        Scheduler.worker(true)
+        perform_enqueued_jobs
 
         not_sent(
           template: 'user_device_new',
@@ -277,7 +277,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true do
 
       check_notification do
 
-        Scheduler.worker(true)
+        perform_enqueued_jobs
 
         not_sent(
           template: 'user_device_new',
@@ -313,7 +313,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true do
 
       check_notification do
 
-        Scheduler.worker(true)
+        perform_enqueued_jobs
 
         not_sent(
           template: 'user_device_new',
@@ -352,7 +352,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true do
 
       check_notification do
 
-        Scheduler.worker(true)
+        perform_enqueued_jobs
 
         sent(
           template: 'user_device_new',
@@ -375,7 +375,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true do
 
       check_notification do
 
-        Scheduler.worker(true)
+        perform_enqueued_jobs
 
         not_sent(
           template: 'user_device_new',
@@ -402,7 +402,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true do
 
       check_notification do
 
-        Scheduler.worker(true)
+        perform_enqueued_jobs
 
         not_sent(
           template: 'user_device_new',
@@ -442,7 +442,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true do
 
       check_notification do
 
-        Scheduler.worker(true)
+        perform_enqueued_jobs
 
         not_sent(
           template: 'user_device_new',
@@ -469,7 +469,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true do
 
       check_notification do
 
-        Scheduler.worker(true)
+        perform_enqueued_jobs
 
         not_sent(
           template: 'user_device_new',
@@ -506,7 +506,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true do
 
       check_notification do
 
-        Scheduler.worker(true)
+        perform_enqueued_jobs
 
         not_sent(
           template: 'user_device_new',
@@ -534,7 +534,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true do
 
       check_notification do
 
-        Scheduler.worker(true)
+        perform_enqueued_jobs
 
         not_sent(
           template: 'user_device_new',
@@ -553,7 +553,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true do
 
       check_notification do
 
-        Scheduler.worker(true)
+        perform_enqueued_jobs
 
         not_sent(
           template: 'user_device_new',
@@ -575,7 +575,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true do
 
       check_notification do
 
-        Scheduler.worker(true)
+        perform_enqueued_jobs
 
         not_sent(
           template: 'user_device_new',
@@ -597,7 +597,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true do
 
       check_notification do
 
-        Scheduler.worker(true)
+        perform_enqueued_jobs
 
         not_sent(
           template: 'user_device_new',
@@ -627,7 +627,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true do
 
       check_notification do
 
-        Scheduler.worker(true)
+        perform_enqueued_jobs
 
         not_sent(
           template: 'user_device_new',
@@ -650,7 +650,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true do
 
       check_notification do
 
-        Scheduler.worker(true)
+        perform_enqueued_jobs
 
         not_sent(
           template: 'user_device_new',
@@ -684,7 +684,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true do
 
       check_notification do
 
-        Scheduler.worker(true)
+        perform_enqueued_jobs
 
         not_sent(
           template: 'user_device_new',

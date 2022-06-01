@@ -221,7 +221,7 @@ RSpec.describe 'Api Auth From', type: :request do
         create(:customer, firstname: 'Behalf of', role_ids: Role.signup_role_ids.push(customer_user_devices_role.id))
       end
 
-      it 'creates Ticket because of behalf of customer user, which should not trigger a new user device' do
+      it 'creates Ticket because of behalf of customer user, which should not trigger a new user device', performs_jobs: true do
         params = {
           title:       'a new ticket #3',
           group:       'Users',
@@ -237,7 +237,7 @@ RSpec.describe 'Api Auth From', type: :request do
         expect(response).to have_http_status(:created)
         expect(customer.id).to eq(json_response['created_by_id'])
 
-        expect { Scheduler.worker(true) }.not_to change(UserDevice, :count)
+        expect { perform_enqueued_jobs }.not_to change(UserDevice, :count)
       end
     end
   end

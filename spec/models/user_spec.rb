@@ -1440,7 +1440,7 @@ RSpec.describe User, type: :model do
     end
 
     describe 'Cti::Log syncing:' do
-      context 'with existing Log records' do
+      context 'with existing Log records', performs_jobs: true do
         context 'for incoming calls from an unknown number' do
           let!(:log) { create(:'cti/log', :with_preferences, from: '1234567890', direction: 'in') }
 
@@ -1450,8 +1450,7 @@ RSpec.describe User, type: :model do
             it 'populates #preferences[:from] hash in all associated Log records (in a bg job)' do
               expect do
                 user.save
-                TransactionDispatcher.commit
-                Scheduler.worker(true)
+                perform_enqueued_jobs commit_transaction: true
               end.to change { log.reload.preferences[:from]&.first }
                 .to(hash_including('caller_id' => user.phone))
             end
@@ -1463,8 +1462,7 @@ RSpec.describe User, type: :model do
             it 'populates #preferences[:from] hash in all associated Log records (in a bg job)' do
               expect do
                 user.update(phone: log.from)
-                TransactionDispatcher.commit
-                Scheduler.worker(true)
+                perform_enqueued_jobs commit_transaction: true
               end.to change { log.reload.preferences[:from]&.first }
                 .to(hash_including('object' => 'User', 'o_id' => user.id))
             end
@@ -1476,8 +1474,7 @@ RSpec.describe User, type: :model do
             it 'does not modify any Log records' do
               expect do
                 user.save
-                TransactionDispatcher.commit
-                Scheduler.worker(true)
+                perform_enqueued_jobs commit_transaction: true
               end.not_to change { log.reload.attributes }
             end
           end
@@ -1488,8 +1485,7 @@ RSpec.describe User, type: :model do
             it 'does not modify any Log records' do
               expect do
                 user.save
-                TransactionDispatcher.commit
-                Scheduler.worker(true)
+                perform_enqueued_jobs commit_transaction: true
               end.not_to change { log.reload.attributes }
             end
           end
@@ -1505,8 +1501,7 @@ RSpec.describe User, type: :model do
               it 'empties #preferences[:from] hash in all associated Log records (in a bg job)' do
                 expect do
                   user.update(phone: '0123456789')
-                  TransactionDispatcher.commit
-                  Scheduler.worker(true)
+                  perform_enqueued_jobs commit_transaction: true
                 end.to change { logs.map(&:reload).map { |log| log.preferences[:from] } }
                   .to(Array.new(5) { nil })
               end
@@ -1516,8 +1511,7 @@ RSpec.describe User, type: :model do
               it 'empties #preferences[:from] hash in all associated Log records (in a bg job)' do
                 expect do
                   user.update(phone: '')
-                  TransactionDispatcher.commit
-                  Scheduler.worker(true)
+                  perform_enqueued_jobs commit_transaction: true
                 end.to change { logs.map(&:reload).map { |log| log.preferences[:from] } }
                   .to(Array.new(5) { nil })
               end
@@ -1527,8 +1521,7 @@ RSpec.describe User, type: :model do
               it 'empties #preferences[:from] hash in all associated Log records (in a bg job)' do
                 expect do
                   user.update(phone: nil)
-                  TransactionDispatcher.commit
-                  Scheduler.worker(true)
+                  perform_enqueued_jobs commit_transaction: true
                 end.to change { logs.map(&:reload).map { |log| log.preferences[:from] } }
                   .to(Array.new(5) { nil })
               end
@@ -1539,8 +1532,7 @@ RSpec.describe User, type: :model do
             it 'does not modify any Log records' do
               expect do
                 user.update(mobile: '2345678901')
-                TransactionDispatcher.commit
-                Scheduler.worker(true)
+                perform_enqueued_jobs commit_transaction: true
               end.not_to change { logs.map(&:reload).map(&:attributes) }
             end
           end

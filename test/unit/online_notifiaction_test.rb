@@ -3,6 +3,7 @@
 require 'test_helper'
 
 class OnlineNotificationTest < ActiveSupport::TestCase
+  include BackgroundJobsHelper
 
   setup do
     role = Role.lookup(name: 'Agent')
@@ -119,9 +120,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     tickets = []
     tickets.push ticket1
 
-    # execute object transaction
-    TransactionDispatcher.commit
-    Scheduler.worker(true)
+    perform_enqueued_jobs commit_transaction: true
 
     # because it's already closed
     assert(OnlineNotification.all_seen?('Ticket', ticket1.id))
@@ -137,9 +136,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       updated_by_id: @customer_user.id,
     )
 
-    # execute object transaction
-    TransactionDispatcher.commit
-    Scheduler.worker(true)
+    perform_enqueued_jobs commit_transaction: true
 
     # because it's already open
     assert_not(OnlineNotification.all_seen?('Ticket', ticket1.id))
@@ -174,9 +171,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     tickets = []
     tickets.push ticket2
 
-    # execute object transaction
-    TransactionDispatcher.commit
-    Scheduler.worker(true)
+    perform_enqueued_jobs commit_transaction: true
 
     # because it's already closed
     assert_not(OnlineNotification.all_seen?('Ticket', ticket2.id))
@@ -192,9 +187,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       updated_by_id: @customer_user.id,
     )
 
-    # execute object transaction
-    TransactionDispatcher.commit
-    Scheduler.worker(true)
+    perform_enqueued_jobs commit_transaction: true
 
     # because it's already open
     assert_not(OnlineNotification.all_seen?('Ticket', ticket2.id))
@@ -228,9 +221,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     # remember ticket
     tickets.push ticket3
 
-    # execute object transaction
-    TransactionDispatcher.commit
-    Scheduler.worker(true)
+    perform_enqueued_jobs commit_transaction: true
 
     # because it's already new
     assert_not(OnlineNotification.all_seen?('Ticket', ticket3.id))
@@ -246,9 +237,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       updated_by_id: @customer_user.id,
     )
 
-    # execute object transaction
-    TransactionDispatcher.commit
-    Scheduler.worker(true)
+    perform_enqueued_jobs commit_transaction: true
 
     # because it's already closed
     assert(OnlineNotification.all_seen?('Ticket', ticket3.id))
@@ -270,9 +259,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       internal:      false
     )
 
-    # execute object transaction
-    TransactionDispatcher.commit
-    Scheduler.worker(true)
+    perform_enqueued_jobs commit_transaction: true
 
     # because it's already closed but an follow-up arrived later
     assert_not(OnlineNotification.all_seen?('Ticket', ticket3.id))
@@ -308,9 +295,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     # remember ticket
     tickets.push ticket4
 
-    # execute object transaction
-    TransactionDispatcher.commit
-    Scheduler.worker(true)
+    perform_enqueued_jobs commit_transaction: true
 
     # because it's already new
     assert_not(OnlineNotification.all_seen?('Ticket', ticket4.id))
@@ -326,9 +311,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       updated_by_id: @customer_user.id,
     )
 
-    # execute object transaction
-    TransactionDispatcher.commit
-    Scheduler.worker(true)
+    perform_enqueued_jobs commit_transaction: true
 
     # because it's already open
     assert_not(OnlineNotification.all_seen?('Ticket', ticket4.id))
@@ -362,9 +345,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     # remember ticket
     tickets.push ticket5
 
-    # execute object transaction
-    TransactionDispatcher.commit
-    Scheduler.worker(true)
+    perform_enqueued_jobs commit_transaction: true
 
     # because it's already new
     assert_not(OnlineNotification.all_seen?('Ticket', ticket5.id))
@@ -380,9 +361,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       updated_by_id: @customer_user.id,
     )
 
-    # execute object transaction
-    TransactionDispatcher.commit
-    Scheduler.worker(true)
+    perform_enqueued_jobs commit_transaction: true
 
     # because it's already open
     assert_not(OnlineNotification.all_seen?('Ticket', ticket5.id))
@@ -396,7 +375,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       ticket_id: tickets[1].id,
       user_id:   1,
     )
-    Scheduler.worker(true)
+    perform_enqueued_jobs
 
     notifications = OnlineNotification.list_by_object('Ticket', tickets[0].id)
     assert(notifications.present?, 'should have notifications')
@@ -414,7 +393,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       assert_not(found, 'Ticket destroyed')
 
       # check if notifications for ticket still exist
-      Scheduler.worker(true)
+      perform_enqueued_jobs
       notifications = OnlineNotification.list_by_object('Ticket', ticket_id)
       assert(notifications.blank?, 'still notifications for destroyed ticket available')
     end

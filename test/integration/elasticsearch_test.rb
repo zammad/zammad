@@ -3,6 +3,7 @@
 require 'test_helper'
 
 class ElasticsearchTest < ActiveSupport::TestCase
+  include BackgroundJobsHelper
   include SearchindexHelper
 
   setup do
@@ -75,7 +76,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
     )
 
     # execute background jobs to index created/changed objects
-    Scheduler.worker(true)
+    perform_enqueued_jobs
     SearchIndexBackend.refresh
 
   end
@@ -163,7 +164,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
     ticket1.destroy!
 
     # execute background jobs
-    Scheduler.worker(true)
+    perform_enqueued_jobs
     SearchIndexBackend.refresh
 
     ticket1 = Ticket.create!(
@@ -285,7 +286,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
     )
 
     # execute background jobs
-    Scheduler.worker(true)
+    perform_enqueued_jobs
     SearchIndexBackend.refresh
 
     # search as @agent
@@ -423,7 +424,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
     )
 
     # execute background jobs
-    Scheduler.worker(true)
+    perform_enqueued_jobs
     SearchIndexBackend.refresh
 
     # search for tags

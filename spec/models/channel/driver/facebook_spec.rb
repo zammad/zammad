@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Channel::Driver::Facebook, use_vcr: true, required_envs: %w[FACEBOOK_ADMIN_USER_ID FACEBOOK_ADMIN_FIRSTNAME FACEBOOK_ADMIN_LASTNAME FACEBOOK_PAGE_1_ACCCESS_TOKEN FACEBOOK_PAGE_1_ID FACEBOOK_PAGE_1_NAME FACEBOOK_PAGE_1_POST_ID FACEBOOK_PAGE_1_POST_COMMENT_ID FACEBOOK_PAGE_2_ACCCESS_TOKEN FACEBOOK_PAGE_2_ID FACEBOOK_PAGE_2_NAME FACEBOOK_CUSTOMER_ID FACEBOOK_CUSTOMER_FIRSTNAME FACEBOOK_CUSTOMER_LASTNAME] do
+RSpec.describe Channel::Driver::Facebook, use_vcr: true, performs_jobs: true, required_envs: %w[FACEBOOK_ADMIN_USER_ID FACEBOOK_ADMIN_FIRSTNAME FACEBOOK_ADMIN_LASTNAME FACEBOOK_PAGE_1_ACCCESS_TOKEN FACEBOOK_PAGE_1_ID FACEBOOK_PAGE_1_NAME FACEBOOK_PAGE_1_POST_ID FACEBOOK_PAGE_1_POST_COMMENT_ID FACEBOOK_PAGE_2_ACCCESS_TOKEN FACEBOOK_PAGE_2_ID FACEBOOK_PAGE_2_NAME FACEBOOK_CUSTOMER_ID FACEBOOK_CUSTOMER_FIRSTNAME FACEBOOK_CUSTOMER_LASTNAME] do
 
   before do
     travel_to '2021-02-13 13:37 +0100'
@@ -57,7 +57,7 @@ RSpec.describe Channel::Driver::Facebook, use_vcr: true, required_envs: %w[FACEB
       created_by_id: 1,
     )
 
-    Scheduler.worker(true)
+    perform_enqueued_jobs
     expect(ticket.reload.state.name).to eq 'open'
 
     outbound_article = Ticket::Article.find(outbound_article.id)

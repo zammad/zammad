@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Twilio SMS', type: :request do
+RSpec.describe 'Twilio SMS', type: :request, performs_jobs: true do
 
   describe 'request handling' do
 
@@ -161,8 +161,7 @@ RSpec.describe 'Twilio SMS', type: :request do
       expect(article.preferences[:delivery_retry]).to be_nil
       expect(article.preferences[:delivery_status]).to be_nil
 
-      TransactionDispatcher.commit
-      Scheduler.worker(true)
+      perform_enqueued_jobs commit_transaction: true
 
       article = Ticket::Article.find(json_response['id'])
       expect(article.preferences[:delivery_retry]).to eq(1)
@@ -177,8 +176,8 @@ RSpec.describe 'Twilio SMS', type: :request do
         email:  'me@example.com',
         mobile: '01710000000',
       )
-      TransactionDispatcher.commit
-      Scheduler.worker(true)
+
+      perform_enqueued_jobs commit_transaction: true
 
       UserInfo.current_user_id = 1
       create(

@@ -553,7 +553,7 @@ RSpec.describe Job, type: :model do
     end
   end
 
-  describe 'Scheduler ignores "disable notifications == no" #3684', sends_notification_emails: true do
+  describe 'Scheduler ignores "disable notifications == no" #3684', sends_notification_emails: true, performs_jobs: true do
     let!(:group) { create(:group) }
     let!(:agent) { create(:agent, groups: [group]) }
     let!(:ticket) { create(:ticket, group: group, owner: agent) }
@@ -571,7 +571,7 @@ RSpec.describe Job, type: :model do
       it 'does not send a notification to the owner of the ticket' do # rubocop:disable RSpec/ExampleLength
         check_notification do
           notify_job.run(true)
-          Scheduler.worker(true)
+          perform_enqueued_jobs
 
           not_sent(
             template: 'ticket_update',
@@ -592,7 +592,7 @@ RSpec.describe Job, type: :model do
       it 'does send a notification to the owner of the ticket with trigger note in notification body' do # rubocop:disable RSpec/ExampleLength
         check_notification do
           notify_job.run(true)
-          Scheduler.worker(true)
+          perform_enqueued_jobs
 
           sent(
             template: 'ticket_update',

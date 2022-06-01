@@ -3,6 +3,7 @@
 require 'test_helper'
 
 class ClearbitTest < ActiveSupport::TestCase
+  include BackgroundJobsHelper
 
   # check
   test 'base' do
@@ -48,8 +49,7 @@ class ClearbitTest < ActiveSupport::TestCase
     )
     assert(customer1)
 
-    TransactionDispatcher.commit
-    Scheduler.worker(true)
+    perform_enqueued_jobs commit_transaction: true
 
     assert(ExternalSync.find_by(source: 'clearbit', object: 'User', o_id: customer1.id))
 
@@ -76,8 +76,7 @@ class ClearbitTest < ActiveSupport::TestCase
     )
     assert(customer2)
 
-    TransactionDispatcher.commit
-    Scheduler.worker(true)
+    perform_enqueued_jobs commit_transaction: true
 
     assert(ExternalSync.find_by(source: 'clearbit', object: 'User', o_id: customer2.id))
 
@@ -99,8 +98,7 @@ class ClearbitTest < ActiveSupport::TestCase
       note:      'changed by my self',
     )
 
-    TransactionDispatcher.commit
-    Scheduler.worker(true)
+    perform_enqueued_jobs commit_transaction: true
 
     assert(ExternalSync.find_by(source: 'clearbit', object: 'User', o_id: customer2.id))
 
@@ -113,7 +111,7 @@ class ClearbitTest < ActiveSupport::TestCase
 
     customer2_enrichment = Enrichment::Clearbit::User.new(customer2)
     customer2_enrichment.synced?
-    Scheduler.worker(true)
+    perform_enqueued_jobs
 
     customer2.reload
 
@@ -130,7 +128,7 @@ class ClearbitTest < ActiveSupport::TestCase
 
     customer2_enrichment = Enrichment::Clearbit::User.new(customer2)
     customer2_enrichment.synced?
-    Scheduler.worker(true)
+    perform_enqueued_jobs
 
     customer2.reload
 
@@ -146,7 +144,7 @@ class ClearbitTest < ActiveSupport::TestCase
 
     customer2_enrichment = Enrichment::Clearbit::User.new(customer2)
     customer2_enrichment.synced?
-    Scheduler.worker(true)
+    perform_enqueued_jobs
 
     customer2.reload
 
@@ -171,8 +169,7 @@ class ClearbitTest < ActiveSupport::TestCase
     )
     assert(customer3)
 
-    TransactionDispatcher.commit
-    Scheduler.worker(true)
+    perform_enqueued_jobs commit_transaction: true
 
     assert_not(ExternalSync.find_by(source: 'clearbit', object: 'User', o_id: customer3.id))
 
@@ -201,8 +198,7 @@ class ClearbitTest < ActiveSupport::TestCase
     )
     assert(customer4)
 
-    TransactionDispatcher.commit
-    Scheduler.worker(true)
+    perform_enqueued_jobs commit_transaction: true
 
     assert(ExternalSync.find_by(source: 'clearbit', object: 'User', o_id: customer4.id))
 
@@ -229,8 +225,7 @@ class ClearbitTest < ActiveSupport::TestCase
     )
     assert(customer5)
 
-    TransactionDispatcher.commit
-    Scheduler.worker(true)
+    perform_enqueued_jobs commit_transaction: true
 
     assert(ExternalSync.find_by(source: 'clearbit', object: 'User', o_id: customer5.id))
 
@@ -259,8 +254,7 @@ class ClearbitTest < ActiveSupport::TestCase
     )
     assert(customer6)
 
-    TransactionDispatcher.commit
-    Scheduler.worker(true)
+    perform_enqueued_jobs commit_transaction: true
 
     assert_not(ExternalSync.find_by(source: 'clearbit', object: 'User', o_id: customer6.id))
 
@@ -328,8 +322,7 @@ class ClearbitTest < ActiveSupport::TestCase
     )
     assert(customer1)
 
-    TransactionDispatcher.commit
-    Scheduler.worker(true)
+    perform_enqueued_jobs commit_transaction: true
 
     assert(ExternalSync.find_by(source: 'clearbit', object: 'User', o_id: customer1.id))
 

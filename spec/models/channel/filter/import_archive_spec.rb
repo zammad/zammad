@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Channel::Filter::ImportArchive do
+RSpec.describe Channel::Filter::ImportArchive, performs_jobs: true do
 
   let!(:agent1) { create(:agent, groups: Group.all) }
 
@@ -93,7 +93,7 @@ RSpec.describe Channel::Filter::ImportArchive do
     before do
       ticket1_p, article1_p, _user1_p = email_hash(parse_hash)
 
-      Scheduler.worker(true)
+      perform_enqueued_jobs
       ticket1_p.reload
       article1_p.reload
     end
@@ -177,7 +177,7 @@ RSpec.describe Channel::Filter::ImportArchive do
       context 'with scheduler run' do
         before do
           ticket1_p, article1_p, _user1_p = email_parse_mail001
-          Scheduler.worker(true)
+          perform_enqueued_jobs
           ticket1_p.reload
           article1_p.reload
         end
@@ -208,7 +208,7 @@ RSpec.describe Channel::Filter::ImportArchive do
           context 'with scheduler run' do
             before do
               ticket2_p, article2_p, _user2_p = email_parse_mail001_answer
-              Scheduler.worker(true)
+              perform_enqueued_jobs
               ticket2_p.reload
               article2_p.reload
             end

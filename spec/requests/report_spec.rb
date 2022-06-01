@@ -45,10 +45,7 @@ RSpec.describe 'Report', type: :request, searchindex: true do
   end
 
   before do
-    configure_elasticsearch do
-
-      travel 1.minute
-
+    configure_elasticsearch rebuild: true do
       travel_to today.midday
       Ticket.destroy_all
       create(:ticket, title: 'ticket for report #1', created_at: today.midday)
@@ -61,13 +58,6 @@ RSpec.describe 'Report', type: :request, searchindex: true do
       create(:ticket, title: 'ticket for report #8', created_at: Time.zone.parse('2019-03-01T00:30:00Z'))
       create(:ticket, title: 'ticket for report #9', created_at: Time.zone.parse('2019-03-31T23:30:00Z'))
       create(:ticket, title: 'ticket for report #10', created_at: Time.zone.parse('2019-04-01T00:30:00Z'))
-
-      rebuild_searchindex
-
-      # execute background jobs
-      Scheduler.worker(true)
-
-      sleep 6
     end
   end
 

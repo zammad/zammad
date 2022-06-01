@@ -5212,8 +5212,8 @@ msgstr ""
 msgid "Internal"
 msgstr ""
 
-#: app/models/scheduler.rb
-msgid "Interrupted by scheduler restart. Please restart manually or wait till next execution time."
+#: app/models/import_job.rb
+msgid "Interrupted by scheduler restart. Please restart manually or wait until the next execution time."
 msgstr ""
 
 #: app/controllers/first_steps_controller.rb

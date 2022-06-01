@@ -26,7 +26,7 @@ class AgentTicketOverviewPendingTil < TestCase
           title:        "pending til ticket #{i}",
           body:         'test ticket',
           state:        i.odd? ? 'pending close' : 'open',
-          pending_date: '11/24/2018',
+          pending_date: '11/24/2028',
           pending_time: '08:00',
         }
       )

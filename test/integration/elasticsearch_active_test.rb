@@ -3,6 +3,7 @@
 require 'test_helper'
 
 class ElasticsearchActiveTest < ActiveSupport::TestCase
+  include BackgroundJobsHelper
   include SearchindexHelper
 
   setup do
@@ -48,7 +49,7 @@ class ElasticsearchActiveTest < ActiveSupport::TestCase
     end
 
     # execute background jobs to index created/changed objects
-    Scheduler.worker(true)
+    perform_enqueued_jobs
     sleep 2 # for ES to come ready/indexed
   end
 
@@ -121,8 +122,7 @@ class ElasticsearchActiveTest < ActiveSupport::TestCase
       travel 10.seconds
     end
 
-    # execute background jobs to index created/changed objects
-    Scheduler.worker(true)
+    perform_enqueued_jobs
     sleep 2 # for ES to come ready/indexed
   end
 end

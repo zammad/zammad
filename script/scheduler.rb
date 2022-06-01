@@ -13,6 +13,9 @@ Dir.chdir dir
 require 'bundler'
 require 'daemons'
 
+DEPRECATION_WARNING = "'script/scheduler.rb' is deprecated and will be removed with Zammad 6. Please use 'script/background-services.rb' instead - note that this will not daemonize but always stay in the foreground.".freeze
+warn "DEPRECATION WARNING: #{DEPRECATION_WARNING}"
+
 def before_fork
   # remember open file handles
   @files_to_reopen = []
@@ -59,6 +62,7 @@ Daemons.run_proc('scheduler', daemon_options) do
   require File.join(dir, 'config', 'environment')
 
   Rails.logger.info 'Scheduler started.'
+  ActiveSupport::Deprecation.warn DEPRECATION_WARNING
   at_exit do
 
     # use process title for stop log entry
@@ -72,7 +76,8 @@ Daemons.run_proc('scheduler', daemon_options) do
   end
 
   begin
-    Scheduler.threads
+    config = BackgroundServices::ServiceConfig.configuration_from_env(ENV)
+    BackgroundServices.new(config).run
   rescue Interrupt
     nil
   end

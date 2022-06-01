@@ -4,6 +4,7 @@ require 'integration_test_helper'
 require 'slack-ruby-client' # Only load this gem when it is really used.
 
 class SlackTest < ActiveSupport::TestCase
+  include BackgroundJobsHelper
 
   # needed to check correct behavior
   slack_group = Group.create_if_not_exists(
@@ -69,8 +70,7 @@ class SlackTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
 
-    TransactionDispatcher.commit
-    Scheduler.worker(true)
+    perform_enqueued_jobs commit_transaction: true
 
     # check if message exists
     assert_equal(0, slack_check(channel, hash))
@@ -78,8 +78,7 @@ class SlackTest < ActiveSupport::TestCase
     ticket1.state = Ticket::State.find_by(name: 'open')
     ticket1.save
 
-    TransactionDispatcher.commit
-    Scheduler.worker(true)
+    perform_enqueued_jobs commit_transaction: true
 
     # check if message exists
     assert_equal(0, slack_check(channel, hash))
@@ -107,8 +106,7 @@ class SlackTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
 
-    TransactionDispatcher.commit
-    Scheduler.worker(true)
+    perform_enqueued_jobs commit_transaction: true
 
     # check if message exists
     assert_equal(1, slack_check(channel, hash))
@@ -119,8 +117,7 @@ class SlackTest < ActiveSupport::TestCase
     ticket2.title = text
     ticket2.save
 
-    TransactionDispatcher.commit
-    Scheduler.worker(true)
+    perform_enqueued_jobs commit_transaction: true
 
     # check if message exists
     assert_equal(1, slack_check(channel, hash))
@@ -129,24 +126,21 @@ class SlackTest < ActiveSupport::TestCase
     ticket2.pending_time = 2.days.ago
     ticket2.save
 
-    TransactionDispatcher.commit
-    Scheduler.worker(true)
+    perform_enqueued_jobs commit_transaction: true
 
     # check if message exists
     assert_equal(2, slack_check(channel, hash))
 
     Ticket.process_pending
 
-    TransactionDispatcher.commit
-    Scheduler.worker(true)
+    perform_enqueued_jobs commit_transaction: true
 
     # check if message exists
     assert_equal(3, slack_check(channel, hash))
 
     Ticket.process_pending
 
-    TransactionDispatcher.commit
-    Scheduler.worker(true)
+    perform_enqueued_jobs commit_transaction: true
 
     # check if message exists
     assert_equal(3, slack_check(channel, hash))
@@ -188,8 +182,7 @@ class SlackTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
 
-    TransactionDispatcher.commit
-    Scheduler.worker(true)
+    perform_enqueued_jobs commit_transaction: true
 
     # check if message exists
     assert_equal(0, slack_check(channel, hash))
@@ -197,8 +190,7 @@ class SlackTest < ActiveSupport::TestCase
     ticket3.state = Ticket::State.find_by(name: 'open')
     ticket3.save
 
-    TransactionDispatcher.commit
-    Scheduler.worker(true)
+    perform_enqueued_jobs commit_transaction: true
 
     # check if message exists
     assert_equal(0, slack_check(channel, hash))
@@ -226,8 +218,7 @@ class SlackTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
 
-    TransactionDispatcher.commit
-    Scheduler.worker(true)
+    perform_enqueued_jobs commit_transaction: true
 
     # check if message exists
     assert_equal(1, slack_check(channel, hash))
@@ -238,8 +229,7 @@ class SlackTest < ActiveSupport::TestCase
     ticket4.title = text
     ticket4.save
 
-    TransactionDispatcher.commit
-    Scheduler.worker(true)
+    perform_enqueued_jobs commit_transaction: true
 
     # check if message exists
     assert_equal(0, slack_check(channel, hash))

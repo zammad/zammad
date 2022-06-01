@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'User Organization', type: :request, searchindex: true do
+RSpec.describe 'User Organization', type: :request, searchindex: true, performs_jobs: true do
 
   let!(:admin) do
     create(:admin, groups: Group.all)
@@ -27,17 +27,7 @@ RSpec.describe 'User Organization', type: :request, searchindex: true do
   end
 
   before do
-    configure_elasticsearch do
-
-      travel 1.minute
-
-      rebuild_searchindex
-
-      # execute background jobs
-      Scheduler.worker(true)
-
-      sleep 6
-    end
+    configure_elasticsearch rebuild: true
   end
 
   describe 'request handling' do
@@ -87,7 +77,7 @@ RSpec.describe 'User Organization', type: :request, searchindex: true do
       expect('Rest Org #2').to eq(json_response['name'])
 
       # search as agent
-      Scheduler.worker(true)
+      perform_enqueued_jobs
       get "/api/v1/organizations/search?query=#{CGI.escape('Zammad')}", params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response.class).to eq(Array)
@@ -133,7 +123,7 @@ RSpec.describe 'User Organization', type: :request, searchindex: true do
       expect(json_response['name']).to be_nil
 
       # search
-      Scheduler.worker(true)
+      perform_enqueued_jobs
       get "/api/v1/organizations/search?query=#{CGI.escape('Zammad')}", params: {}, as: :json
       expect(response).to have_http_status(:forbidden)
     end
@@ -157,7 +147,7 @@ RSpec.describe 'User Organization', type: :request, searchindex: true do
       expect(json_response['name']).to be_nil
 
       # search
-      Scheduler.worker(true)
+      perform_enqueued_jobs
       get "/api/v1/organizations/search?query=#{CGI.escape('Zammad')}", params: {}, as: :json
       expect(response).to have_http_status(:forbidden)
     end

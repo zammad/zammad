@@ -3,6 +3,8 @@
 require 'test_helper'
 
 class TicketNotificationTest < ActiveSupport::TestCase
+  include BackgroundJobsHelper
+
   setup do
     Setting.set('timezone_default', 'Europe/Berlin')
     Trigger.create_or_update(
@@ -170,9 +172,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     )
     assert(ticket1)
 
-    # execute object transaction
-    TransactionDispatcher.commit
-    Scheduler.worker(true)
+    perform_enqueued_jobs commit_transaction: true
 
     # verify notifications to @agent1 + @agent2
     assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket1, @agent1, 'email'), ticket1.id)
@@ -204,9 +204,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     )
     assert(ticket1)
 
-    # execute object transaction
-    TransactionDispatcher.commit
-    Scheduler.worker(true)
+    perform_enqueued_jobs commit_transaction: true
 
     # verify notifications to @agent1 + @agent2
     assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket1, @agent1, 'email'), ticket1.id)
@@ -241,9 +239,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     )
     assert(ticket1, 'ticket created - ticket notification simple')
 
-    # execute object transaction
-    TransactionDispatcher.commit
-    Scheduler.worker(true)
+    perform_enqueued_jobs commit_transaction: true
 
     # verify notifications to @agent1 + @agent2
     assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket1, @agent1, 'email'), ticket1.id)
@@ -254,9 +250,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     ticket1.priority = Ticket::Priority.lookup(name: '3 high')
     ticket1.save!
 
-    # execute object transaction
-    TransactionDispatcher.commit
-    Scheduler.worker(true)
+    perform_enqueued_jobs commit_transaction: true
 
     # verify notifications to @agent1 + @agent2
     assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket1, @agent1, 'email'), ticket1.id)
@@ -275,9 +269,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
       created_by_id: @agent1.id,
     )
 
-    # execute object transaction
-    TransactionDispatcher.commit
-    Scheduler.worker(true)
+    perform_enqueued_jobs commit_transaction: true
 
     # verify notifications to not to @agent1 but to @agent2
     assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket1, @agent1, 'email'), ticket1.id)
@@ -299,9 +291,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
       created_by_id: @agent1.id,
     )
 
-    # execute object transaction
-    TransactionDispatcher.commit
-    Scheduler.worker(true)
+    perform_enqueued_jobs commit_transaction: true
 
     # verify notifications to not to @agent1 but to @agent2
     assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket1, @agent1, 'email'), ticket1.id)
@@ -332,9 +322,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
       created_by_id: @agent1.id,
     )
 
-    # execute object transaction
-    TransactionDispatcher.commit
-    Scheduler.worker(true)
+    perform_enqueued_jobs commit_transaction: true
     assert(ticket2, 'ticket created')
 
     # verify notifications to no one
@@ -347,9 +335,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     ticket2.priority      = Ticket::Priority.lookup(name: '3 high')
     ticket2.save!
 
-    # execute object transaction
-    TransactionDispatcher.commit
-    Scheduler.worker(true)
+    perform_enqueued_jobs commit_transaction: true
 
     # verify notifications to none
     assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket2, @agent1, 'email'), ticket2.id)
@@ -361,9 +347,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     ticket2.priority      = Ticket::Priority.lookup(name: '2 normal')
     ticket2.save!
 
-    # execute object transaction
-    TransactionDispatcher.commit
-    Scheduler.worker(true)
+    perform_enqueued_jobs commit_transaction: true
 
     # verify notifications to @agent1 and not to @agent2
     assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket2, @agent1, 'email'), ticket2.id)
@@ -394,9 +378,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
       created_by_id: @agent2.id,
     )
 
-    # execute object transaction
-    TransactionDispatcher.commit
-    Scheduler.worker(true)
+    perform_enqueued_jobs commit_transaction: true
     assert(ticket3, 'ticket created')
 
     # verify notifications to @agent1 and not to @agent2
@@ -409,9 +391,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     ticket3.priority      = Ticket::Priority.lookup(name: '3 high')
     ticket3.save!
 
-    # execute object transaction
-    TransactionDispatcher.commit
-    Scheduler.worker(true)
+    perform_enqueued_jobs commit_transaction: true
 
     # verify notifications to no one
     assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket3, @agent1, 'email'), ticket3.id)
@@ -423,9 +403,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     ticket3.priority      = Ticket::Priority.lookup(name: '2 normal')
     ticket3.save!
 
-    # execute object transaction
-    TransactionDispatcher.commit
-    Scheduler.worker(true)
+    perform_enqueued_jobs commit_transaction: true
 
     # verify notifications to @agent1 and not to @agent2
     assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket3, @agent1, 'email'), ticket3.id)
@@ -435,9 +413,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     article_inbound.internal = true
     article_inbound.save!
 
-    # execute object transaction
-    TransactionDispatcher.commit
-    Scheduler.worker(true)
+    perform_enqueued_jobs commit_transaction: true
 
     # verify notifications not to @agent1 and not to @agent2
     assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket3, @agent1, 'email'), ticket3.id)
@@ -481,9 +457,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     )
     assert(ticket1, 'ticket created - ticket no notification')
 
-    # execute object transaction
-    TransactionDispatcher.commit(disable_notification: true)
-    Scheduler.worker(true)
+    perform_enqueued_jobs commit_transaction: true, disable_notification: true
 
     # verify notifications to @agent1 + @agent2
     assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket1, @agent1, 'email'), ticket1.id)
@@ -534,9 +508,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
       created_by_id: @customer.id,
     )
 
-    # execute object transaction
-    TransactionDispatcher.commit
-    Scheduler.worker(true)
+    perform_enqueued_jobs commit_transaction: true
 
     # verify notifications to @agent1 + @agent2
     assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket1, @agent1, 'email'), ticket1.id)
@@ -547,9 +519,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     ticket1.priority = Ticket::Priority.lookup(name: '3 high')
     ticket1.save!
 
-    # execute object transaction
-    TransactionDispatcher.commit
-    Scheduler.worker(true)
+    perform_enqueued_jobs commit_transaction: true
 
     # verify notifications to @agent1 + @agent2
     assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket1, @agent1, 'email'), ticket1.id)
@@ -580,9 +550,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
       created_by_id: @customer.id,
     )
 
-    # execute object transaction
-    TransactionDispatcher.commit
-    Scheduler.worker(true)
+    perform_enqueued_jobs commit_transaction: true
 
     # verify notifications to @agent1 + @agent2
     assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket2, @agent1, 'email'), ticket2.id)
@@ -593,9 +561,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     ticket2.priority = Ticket::Priority.lookup(name: '3 high')
     ticket2.save!
 
-    # execute object transaction
-    TransactionDispatcher.commit
-    Scheduler.worker(true)
+    perform_enqueued_jobs commit_transaction: true
 
     # verify notifications to @agent1 + @agent2
     assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket2, @agent1, 'email'), ticket2.id)
@@ -626,9 +592,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
       created_by_id: @customer.id,
     )
 
-    # execute object transaction
-    TransactionDispatcher.commit
-    Scheduler.worker(true)
+    perform_enqueued_jobs commit_transaction: true
 
     # verify notifications to @agent1 + @agent2
     assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket3, @agent1, 'email'), ticket3.id)
@@ -639,9 +603,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     ticket3.priority = Ticket::Priority.lookup(name: '3 high')
     ticket3.save!
 
-    # execute object transaction
-    TransactionDispatcher.commit
-    Scheduler.worker(true)
+    perform_enqueued_jobs commit_transaction: true
 
     # verify notifications to @agent1 + @agent2
     assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket3, @agent1, 'email'), ticket3.id)
@@ -696,9 +658,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
       created_by_id: @customer.id,
     )
 
-    # execute object transaction
-    TransactionDispatcher.commit
-    Scheduler.worker(true)
+    perform_enqueued_jobs commit_transaction: true
 
     # verify notifications to @agent1 + @agent2
     assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket4, @agent1, 'email'), ticket4.id)
@@ -709,9 +669,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     ticket4.priority = Ticket::Priority.lookup(name: '3 high')
     ticket4.save!
 
-    # execute object transaction
-    TransactionDispatcher.commit
-    Scheduler.worker(true)
+    perform_enqueued_jobs commit_transaction: true
 
     # verify notifications to @agent1 + @agent2
     assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket4, @agent1, 'email'), ticket4.id)
@@ -766,9 +724,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
       created_by_id: @customer.id,
     )
 
-    # execute object transaction
-    TransactionDispatcher.commit
-    Scheduler.worker(true)
+    perform_enqueued_jobs commit_transaction: true
 
     # verify notifications to @agent1 + @agent2
     assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket5, @agent1, 'email'), ticket5.id)
@@ -779,9 +735,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     ticket5.priority = Ticket::Priority.lookup(name: '3 high')
     ticket5.save!
 
-    # execute object transaction
-    TransactionDispatcher.commit
-    Scheduler.worker(true)
+    perform_enqueued_jobs commit_transaction: true
 
     # verify notifications to @agent1 + @agent2
     assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket5, @agent1, 'email'), ticket5.id)
@@ -837,9 +791,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
       created_by_id: @customer.id,
     )
 
-    # execute object transaction
-    TransactionDispatcher.commit
-    Scheduler.worker(true)
+    perform_enqueued_jobs commit_transaction: true
 
     # verify notifications to @agent1 + @agent2
     assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket6, @agent1, 'email'), ticket6.id)
@@ -852,9 +804,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     ticket6.priority = Ticket::Priority.lookup(name: '3 high')
     ticket6.save!
 
-    # execute object transaction
-    TransactionDispatcher.commit
-    Scheduler.worker(true)
+    perform_enqueued_jobs commit_transaction: true
 
     # verify notifications to @agent1 + @agent2
     assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket6, @agent1, 'email'), ticket6.id)
@@ -920,9 +870,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
       created_by_id: @customer.id,
     )
 
-    # execute object transaction
-    TransactionDispatcher.commit
-    Scheduler.worker(true)
+    perform_enqueued_jobs commit_transaction: true
 
     # verify notifications to @agent1 + @agent2
     assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket7, @agent1, 'email'), ticket7.id)
@@ -935,9 +883,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     ticket7.priority = Ticket::Priority.lookup(name: '3 high')
     ticket7.save!
 
-    # execute object transaction
-    TransactionDispatcher.commit
-    Scheduler.worker(true)
+    perform_enqueued_jobs commit_transaction: true
 
     # verify notifications to @agent1 + @agent2
     assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket7, @agent1, 'email'), ticket7.id)
@@ -1035,9 +981,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     )
     assert(ticket1, 'ticket created - ticket notification simple')
 
-    # execute object transaction
-    TransactionDispatcher.commit
-    Scheduler.worker(true)
+    perform_enqueued_jobs commit_transaction: true
 
     # verify notifications to @agent1 + @agent2
     assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket1, @agent1, 'email'), ticket1.id)
@@ -1078,9 +1022,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     )
     assert(ticket2, 'ticket created - ticket notification simple')
 
-    # execute object transaction
-    TransactionDispatcher.commit
-    Scheduler.worker(true)
+    perform_enqueued_jobs commit_transaction: true
 
     # verify notifications to @agent1 + @agent2
     assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket2, @agent1, 'email'), ticket2.id)
@@ -1093,9 +1035,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     ticket2.priority = Ticket::Priority.lookup(name: '3 high')
     ticket2.save!
 
-    # execute object transaction
-    TransactionDispatcher.commit
-    Scheduler.worker(true)
+    perform_enqueued_jobs commit_transaction: true
 
     # verify notifications to @agent1 + @agent2
     assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket2, @agent1, 'email'), ticket2.id)
@@ -1115,9 +1055,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     ticket2.priority = Ticket::Priority.lookup(name: '3 high')
     ticket2.save!
 
-    # execute object transaction
-    TransactionDispatcher.commit
-    Scheduler.worker(true)
+    perform_enqueued_jobs commit_transaction: true
 
     # verify notifications to @agent1 + @agent2
     assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket2, @agent1, 'email'), ticket2.id)

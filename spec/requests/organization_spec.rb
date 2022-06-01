@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Organization', type: :request, searchindex: true do
+RSpec.describe 'Organization', type: :request, searchindex: true, performs_jobs: true do
 
   let!(:admin) do
     create(:admin, groups: Group.all)
@@ -94,7 +94,7 @@ RSpec.describe 'Organization', type: :request, searchindex: true do
       expect('Rest Org #2').to eq(json_response['name'])
 
       # search as agent
-      Scheduler.worker(true)
+      perform_enqueued_jobs
       get "/api/v1/organizations/search?query=#{CGI.escape('Zammad')}", params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Array)
@@ -142,7 +142,7 @@ RSpec.describe 'Organization', type: :request, searchindex: true do
       expect(json_response['name']).to be_nil
 
       # search
-      Scheduler.worker(true)
+      perform_enqueued_jobs
       get "/api/v1/organizations/search?query=#{CGI.escape('Zammad')}", params: {}, as: :json
       expect(response).to have_http_status(:forbidden)
     end
@@ -168,7 +168,7 @@ RSpec.describe 'Organization', type: :request, searchindex: true do
       expect(json_response['name']).to be_nil
 
       # search
-      Scheduler.worker(true)
+      perform_enqueued_jobs
       get "/api/v1/organizations/search?query=#{CGI.escape('Zammad')}", params: {}, as: :json
       expect(response).to have_http_status(:forbidden)
     end

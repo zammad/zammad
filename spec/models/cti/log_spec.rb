@@ -251,16 +251,16 @@ RSpec.describe Cti::Log do
       end
     end
 
-    context 'for preferences.from verification' do
+    context 'for preferences.from verification', performs_jobs: true do
       subject(:log) do
         described_class.process(attributes)
       end
 
       let(:customer_of_ticket) { create(:customer) }
       let(:ticket_sample) do
-        create(:ticket_article, created_by_id: customer_of_ticket.id, body: 'some text 0123457')
-        TransactionDispatcher.commit
-        Scheduler.worker(true)
+        ticket_article = create(:ticket_article, created_by_id: customer_of_ticket.id, body: 'some text 0123457')
+        perform_enqueued_jobs commit_transaction: true
+        ticket_article
       end
       let(:caller_id) { '0123456' }
       let(:attributes) do

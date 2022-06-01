@@ -825,7 +825,7 @@ RSpec.describe 'Ticket', type: :request do
       expect(json_response['error']).to eq('Not authorized')
     end
 
-    it 'does ticket with correct ticket id (02.04)' do
+    it 'does ticket with correct ticket id (02.04)', performs_jobs: true do
       title = "ticket with corret ticket id testagent#{SecureRandom.uuid}"
       ticket = create(
         :ticket,
@@ -884,7 +884,7 @@ RSpec.describe 'Ticket', type: :request do
       expect(article_json_response['sender_id']).to eq(Ticket::Article::Sender.lookup(name: 'Agent').id)
       expect(article_json_response['type_id']).to eq(Ticket::Article::Type.lookup(name: 'note').id)
 
-      Scheduler.worker(true)
+      perform_enqueued_jobs
       get "/api/v1/tickets/search?query=#{CGI.escape(title)}", params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)
@@ -1230,7 +1230,7 @@ RSpec.describe 'Ticket', type: :request do
       expect(json_response['error']).to eq('Not authorized')
     end
 
-    it 'does ticket with correct ticket id (03.05)' do
+    it 'does ticket with correct ticket id (03.05)', performs_jobs: true do
       title = "ticket with corret ticket id testme#{SecureRandom.uuid}"
       ticket = create(
         :ticket,
@@ -1279,7 +1279,7 @@ RSpec.describe 'Ticket', type: :request do
       expect(article_json_response['sender_id']).to eq(Ticket::Article::Sender.lookup(name: 'Customer').id)
       expect(article_json_response['type_id']).to eq(Ticket::Article::Type.lookup(name: 'note').id)
 
-      Scheduler.worker(true)
+      perform_enqueued_jobs
       get "/api/v1/tickets/search?query=#{CGI.escape(title)}", params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a_kind_of(Hash)

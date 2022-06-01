@@ -3,6 +3,7 @@
 require 'test_helper'
 
 class TicketTriggerExtendedTest < ActiveSupport::TestCase
+  include BackgroundJobsHelper
 
   setup do
     Setting.set('ticket_trigger_recursive', true)
@@ -550,8 +551,7 @@ Some Text'
     # verfiy if agent2 got no notifcation
     assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket1, user2, 'email'), ticket1.id)
 
-    TransactionDispatcher.commit
-    Scheduler.worker(true)
+    perform_enqueued_jobs commit_transaction: true
 
     ticket1.reload
     assert_equal('123', ticket1.title)
@@ -666,8 +666,7 @@ Some Text'
       created_by_id: 1,
     )
 
-    TransactionDispatcher.commit
-    Scheduler.worker(true)
+    perform_enqueued_jobs commit_transaction: true
 
     ticket1.reload
     assert_equal('123', ticket1.title)
@@ -706,8 +705,7 @@ Some Text'
       created_by_id: 1,
     )
 
-    TransactionDispatcher.commit
-    Scheduler.worker(true)
+    perform_enqueued_jobs commit_transaction: true
 
     ticket1.reload
     assert_equal('123', ticket1.title)

@@ -3,6 +3,8 @@
 require 'test_helper'
 
 class EmailDeliverTest < ActiveSupport::TestCase
+  include BackgroundJobsHelper
+
   test 'basic check' do
     travel_to DateTime.current
 
@@ -210,7 +212,7 @@ class EmailDeliverTest < ActiveSupport::TestCase
     ticket1.save
 
     assert(Delayed::Job.where(attempts: 1).none?)
-    Scheduler.worker(true)
+    perform_enqueued_jobs
     assert(Delayed::Job.exists?(attempts: 1))
     ticket1.reload
 
@@ -221,7 +223,7 @@ class EmailDeliverTest < ActiveSupport::TestCase
     assert(article2_lookup.preferences['delivery_status_date'])
     assert(article2_lookup.preferences['delivery_status_message'])
 
-    Scheduler.worker(true)
+    perform_enqueued_jobs
     ticket1.reload
 
     article2_lookup = Ticket::Article.find(article2.id)
@@ -234,7 +236,7 @@ class EmailDeliverTest < ActiveSupport::TestCase
 
     travel 26.seconds
     assert(Delayed::Job.where(attempts: 2).none?)
-    Scheduler.worker(true)
+    perform_enqueued_jobs
     assert(Delayed::Job.exists?(attempts: 2))
     ticket1.reload
 
@@ -246,7 +248,7 @@ class EmailDeliverTest < ActiveSupport::TestCase
     assert(article2_lookup.preferences['delivery_status_message'])
     assert_equal('closed', ticket1.state.name)
 
-    Scheduler.worker(true)
+    perform_enqueued_jobs
     ticket1.reload
 
     article2_lookup = Ticket::Article.find(article2.id)
@@ -259,7 +261,7 @@ class EmailDeliverTest < ActiveSupport::TestCase
 
     travel 51.seconds
     assert(Delayed::Job.where(attempts: 3).none?)
-    Scheduler.worker(true)
+    perform_enqueued_jobs
     assert(Delayed::Job.exists?(attempts: 3))
     ticket1.reload
 
@@ -274,7 +276,7 @@ class EmailDeliverTest < ActiveSupport::TestCase
     travel 76.seconds
     assert(Delayed::Job.where(attempts: 4).none?)
     assert_raises(RuntimeError) do
-      Scheduler.worker(true)
+      perform_enqueued_jobs
     end
     assert(Delayed::Job.none?)
     ticket1.reload

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'User', type: :request do
+RSpec.describe 'User', type: :request, performs_jobs: true do
 
   describe 'request handling', searchindex: true do
     let!(:admin) do
@@ -418,7 +418,7 @@ RSpec.describe 'User', type: :request do
       expect(json_response1['email']).to eq('new_customer_by_agent@example.com')
 
       # search as agent
-      Scheduler.worker(true)
+      perform_enqueued_jobs
       sleep 2 # let es time to come ready
       get "/api/v1/users/search?query=#{CGI.escape("Customer#{firstname}")}", params: {}, as: :json
       expect(response).to have_http_status(:ok)
@@ -544,7 +544,7 @@ RSpec.describe 'User', type: :request do
       expect(response).to have_http_status(:forbidden)
 
       # search
-      Scheduler.worker(true)
+      perform_enqueued_jobs
       get "/api/v1/users/search?query=#{CGI.escape('First')}", params: {}, as: :json
       expect(response).to have_http_status(:forbidden)
     end
@@ -574,7 +574,7 @@ RSpec.describe 'User', type: :request do
       expect(json_response['error']).to be_truthy
 
       # search
-      Scheduler.worker(true)
+      perform_enqueued_jobs
       get "/api/v1/users/search?query=#{CGI.escape('First')}", params: {}, as: :json
       expect(response).to have_http_status(:forbidden)
     end
@@ -995,7 +995,7 @@ RSpec.describe 'User', type: :request do
         out_of_office:                true,
         created_at:                   '2016-02-05 19:42:00',
       )
-      Scheduler.worker(true)
+      perform_enqueued_jobs
       sleep 2 # let es time to come ready
 
       authenticated_as(admin)

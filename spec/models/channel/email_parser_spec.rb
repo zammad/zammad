@@ -1002,7 +1002,7 @@ RSpec.describe Channel::EmailParser, type: :model do
       end
     end
 
-    describe 'signature detection' do
+    describe 'signature detection', performs_jobs: true do
       let(:raw_mail) { header + File.read(message_file) }
 
       let(:header) { <<~HEADER }
@@ -1018,7 +1018,7 @@ RSpec.describe Channel::EmailParser, type: :model do
         it 'does not detect signatures' do
           described_class.new.process({}, raw_mail)
 
-          expect { Scheduler.worker(true) }
+          expect { perform_enqueued_jobs }
             .to not_change { Ticket.last.customer.preferences[:signature_detection] }.from(nil)
             .and not_change { Ticket.last.articles.first.preferences[:signature_detection] }.from(nil)
         end
@@ -1036,14 +1036,14 @@ RSpec.describe Channel::EmailParser, type: :model do
         it 'sets detected signature on user (in a background job)' do
           described_class.new.process({}, raw_mail)
 
-          expect { Scheduler.worker(true) }
+          expect { perform_enqueued_jobs }
             .to change { Ticket.last.customer.preferences[:signature_detection] }
         end
 
         it 'sets line of detected signature on article (in a background job)' do
           described_class.new.process({}, raw_mail)
 
-          expect { Scheduler.worker(true) }
+          expect { perform_enqueued_jobs }
             .to change { Ticket.last.articles.first.preferences[:signature_detection] }.to(20)
         end
       end
