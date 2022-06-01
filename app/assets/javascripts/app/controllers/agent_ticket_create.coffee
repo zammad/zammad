@@ -246,7 +246,7 @@ class App.TicketCreate extends App.Controller
 
     if _.isEmpty(params.ticket_id) && _.isEmpty(params.article_id)
       if !_.isEmpty(params.customer_id)
-        @renderQueue(options: params)
+        @renderQueue(options: _.omit(params, 'id'))
         return
       @renderQueue()
       return
