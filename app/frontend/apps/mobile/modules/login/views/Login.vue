@@ -9,7 +9,7 @@ import {
 import useAuthenticationStore from '@shared/stores/authentication'
 import CommonLogo from '@shared/components/CommonLogo/CommonLogo.vue'
 import Form from '@shared/components/Form/Form.vue'
-import { FormData } from '@shared/components/Form'
+import { type FormData, useForm } from '@shared/components/Form'
 import UserError from '@shared/errors/UserError'
 import { defineFormSchema } from '@mobile/form/composable'
 import useApplicationLoadedStore from '@shared/stores/application'
@@ -45,7 +45,8 @@ const loginScheme = defineFormSchema([
     label: __('Username / Email'),
     placeholder: __('Username / Email'),
     required: true,
-    wrapperClass: 'mb-4 rounded-xl bg-gray-500',
+    outerClass: 'mb-2',
+    wrapperClass: 'rounded-xl bg-gray-500',
   },
   {
     name: 'password',
@@ -53,7 +54,8 @@ const loginScheme = defineFormSchema([
     placeholder: __('Password'),
     type: 'password',
     required: true,
-    wrapperClass: 'mb-4 rounded-xl bg-gray-500',
+    outerClass: 'mb-2',
+    wrapperClass: 'rounded-xl bg-gray-500',
   },
   {
     isLayout: true,
@@ -91,7 +93,15 @@ interface LoginFormData {
   remember_me?: boolean
 }
 
+// TODO: workaround for disabled button state, will be changed in formkit.
+const { form, isDisabled } = useForm()
+
 const login = (formData: FormData<LoginFormData>) => {
+  const { notify, clearAllNotifications } = useNotifications()
+
+  // Clear notifications to avoid duplicated error messages.
+  clearAllNotifications()
+
   return authentication
     .login(formData.login as string, formData.password as string)
     .then(() => {
@@ -103,7 +113,6 @@ const login = (formData: FormData<LoginFormData>) => {
       }
     })
     .catch((errors: UserError) => {
-      const { notify } = useNotifications()
       notify({
         message: errors.generalErrors[0],
         type: NotificationTypes.Error,
@@ -114,7 +123,7 @@ const login = (formData: FormData<LoginFormData>) => {
 
 <template>
   <!-- TODO: Only a "second" dummy implementation for the login... -->
-  <div class="flex h-full min-h-screen flex-col items-center px-7 pt-7 pb-4">
+  <div class="flex h-full min-h-screen flex-col items-center px-6 pt-6 pb-4">
     <div class="m-auto w-full max-w-md">
       <div class="flex grow flex-col justify-center">
         <div class="my-5 grow">
@@ -165,6 +174,7 @@ const login = (formData: FormData<LoginFormData>) => {
                 wrapper-class="mt-4 flex grow justify-center items-center"
                 input-class="py-2 px-4 w-full h-14 text-xl font-semibold text-black formkit-variant-primary:bg-yellow rounded-xl select-none"
                 type="submit"
+                :disabled="isDisabled"
               >
                 {{ $t('Sign in') }}
               </FormKit>

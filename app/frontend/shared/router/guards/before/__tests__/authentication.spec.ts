@@ -37,6 +37,24 @@ describe('authenticationGuard', () => {
     })
   })
 
+  it('should redirect not authenticated user to login (without a redirect path)', () => {
+    const to = {
+      name: 'Home',
+      path: '/',
+      fullPath: '/',
+      meta: {
+        requiresAuth: true,
+      },
+    } as RouteLocationNormalized
+    const next = vi.fn()
+
+    authenticationGuard(to, from, next)
+
+    expect(next).toHaveBeenCalledWith({
+      path: '/login',
+    })
+  })
+
   it('should give access to route for authenticated user', () => {
     const to = {
       name: 'TicketOverview',

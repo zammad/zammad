@@ -38,6 +38,7 @@ import {
   FormSchemaGroupOrList,
 } from './types'
 import FormLayout from './FormLayout.vue'
+import FormGroup from './FormGroup.vue'
 
 // TODO:
 // - Maybe some default buttons inside the components with loading cycle on submit?
@@ -172,7 +173,7 @@ const formConfig = computed(() => {
 // Define the additional component library for the used components which are not form fields.
 const additionalComponentLibrary = {
   FormLayout: markRaw(FormLayout) as ConcreteComponent,
-  // somehow add mobile libraries, like FormGroup instead of app.component
+  FormGroup: markRaw(FormGroup) as ConcreteComponent,
 }
 
 // Define the static schema, which will be filled with the real fields from the `schemaData`.

@@ -41,7 +41,7 @@ const handleVariant = (node: FormKitNode) => {
       props.inputClass = '$reset peer sr-only'
     } else {
       props.inputClass =
-        'h-4 w-4 border-[1.5px] border-white rounded-sm bg-transparent checked:focus:color-blue checked:bg-blue checked:border-blue checked:focus:bg-blue checked:hover:bg-blue'
+        'h-4 w-4 border-[1.5px] border-white rounded-sm bg-transparent focus:border-blue focus:bg-blue-highlight checked:focus:color-blue checked:bg-blue checked:border-blue checked:focus:bg-blue checked:hover:bg-blue'
     }
   }
 

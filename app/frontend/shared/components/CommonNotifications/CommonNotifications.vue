@@ -7,7 +7,7 @@ import type { Notification } from '@shared/components/CommonNotifications/types'
 const notificationTypeClassMap = {
   warn: 'bg-yellow text-white',
   success: 'bg-green text-white',
-  error: 'bg-red text-white',
+  error: 'bg-red/60 text-white',
   info: 'bg-white text-black',
 }
 
@@ -46,14 +46,11 @@ const clickHandler = (notification: Notification) => {
         >
           <div class="flex justify-center">
             <div
-              class="m-1 flex cursor-pointer items-center rounded py-2 px-4"
+              class="m-3 flex cursor-pointer items-center rounded py-2 px-4"
               :class="getClassName(notification)"
               @click="clickHandler(notification)"
             >
-              <CommonIcon
-                :name="iconNameMap[notification.type]"
-                :fixed-size="{ width: 10, height: 10 }"
-              />
+              <CommonIcon :name="iconNameMap[notification.type]" size="small" />
               <span class="text-sm ltr:ml-2 rtl:mr-2">{{
                 notification.messagePlaceholder
                   ? i18n.t(

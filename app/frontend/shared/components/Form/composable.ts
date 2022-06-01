@@ -25,6 +25,8 @@ const useForm = () => {
 
   const isSubmitted = computed(() => !!state.value?.submitted)
 
+  const isDisabled = computed(() => !!context.value?.disabled)
+
   const formReset = () => {
     node.value?.reset()
   }
@@ -38,6 +40,7 @@ const useForm = () => {
     isDirty,
     isComplete,
     isSubmitted,
+    isDisabled,
     formReset,
   }
 }

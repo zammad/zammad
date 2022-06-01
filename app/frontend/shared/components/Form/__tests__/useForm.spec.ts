@@ -52,7 +52,8 @@ describe('useForm', () => {
   })
 
   it('use different states', () => {
-    const { form, isValid, isDirty, isComplete, isSubmitted } = useForm()
+    const { form, isValid, isDirty, isComplete, isSubmitted, isDisabled } =
+      useForm()
 
     form.value = {
       formNode: getNode('test-form') as FormKitNode,
@@ -62,5 +63,6 @@ describe('useForm', () => {
     expect(isDirty.value).toBe(false)
     expect(isComplete.value).toBe(false)
     expect(isSubmitted.value).toBe(false)
+    expect(isDisabled.value).toBe(false)
   })
 })
