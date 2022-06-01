@@ -1894,12 +1894,12 @@
   resolved "https://registry.yarnpkg.com/@vueuse/metadata/-/metadata-8.6.0.tgz#34771443a72ee891ae001a70aa05dd9a1d799372"
   integrity sha512-F+CKPvaExsm7QgRr8y+ZNJFwXasn89rs5wth/HeX9lJ1q8XEt+HJ16Q5Sxh4rfG5YSKXrStveVge8TKvPjMjFA==
 
-"@vueuse/router@^8.5.0":
-  version "8.5.0"
-  resolved "https://registry.yarnpkg.com/@vueuse/router/-/router-8.5.0.tgz#3a400fb4d71e1a0979e4a04948708395e0e7f349"
-  integrity sha512-2znMTInQoptBEgXdZzxjBR0yppVnZdVO5alCVMzy4TTVIOdT481zrhrNhp2CuXrZFTcgWZFioCG6KM+4OHwG1g==
+"@vueuse/router@^8.6.0":
+  version "8.6.0"
+  resolved "https://registry.yarnpkg.com/@vueuse/router/-/router-8.6.0.tgz#f3a7c3379fa5232a3bb20f45cfce0f6272872ca3"
+  integrity sha512-5xkVV7l45RmgdpIK+zwAnhLffQ/eFrU169b6fiM+UV48Ji5cHHnHXHk/1ivQNg5qW0Sr4xcou98FFcYhmnl4HA==
   dependencies:
-    "@vueuse/shared" "8.5.0"
+    "@vueuse/shared" "8.6.0"
     vue-demi "*"
 
 "@vueuse/shared@8.5.0":
