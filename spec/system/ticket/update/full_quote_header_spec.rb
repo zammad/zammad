@@ -227,6 +227,9 @@ RSpec.describe 'Ticket > Update > Full Quote Header', current_user_id: -> { curr
           highlight_and_click_reply
 
           within(:richtext) do
+            wait.until do
+              first('blockquote br:nth-child(2)', visible: :all)
+            end
             blockquote_empty_line = first('blockquote br:nth-child(2)', visible: :all)
             page.driver.browser.action.move_to_location(blockquote_empty_line.native.location.x, blockquote_empty_line.native.location.y).click.perform
           end
