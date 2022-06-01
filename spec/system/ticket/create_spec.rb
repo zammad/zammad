@@ -1105,4 +1105,16 @@ RSpec.describe 'Ticket Create', type: :system do
       end
     end
   end
+
+  describe 'Wrong default values in ticket create when creating from user profile #4088' do
+    let(:customer) { create(:customer) }
+
+    before do
+      visit "ticket/create/customer/#{customer.id}"
+    end
+
+    it 'does show the default state when creating a ticket from a user profile' do
+      expect(page).to have_select('state_id', selected: 'open')
+    end
+  end
 end
