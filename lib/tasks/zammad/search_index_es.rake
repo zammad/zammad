@@ -49,11 +49,12 @@ namespace :zammad do
     task reload: %i[zammad:searchindex:version_supported] do
       puts 'Reloading data... '
       Models.indexable.each do |model_class|
-        print "  - #{model_class}... "
+        puts "  - #{model_class}... "
         time_spent = Benchmark.realtime do
           model_class.search_index_reload
         end
-        puts "done in #{time_spent.to_i} seconds."
+        # Add whitespace at the end to overwrite text from progress indicator line.
+        puts "\r    done in #{time_spent.to_i} seconds.#{' ' * 20}"
       end
     end
 

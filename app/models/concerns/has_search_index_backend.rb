@@ -234,7 +234,7 @@ reload search index with full data
 
         record_count += 1
         if (record_count % batch_size).zero? || record_count == total
-          print "#{record_count}/#{total} " # rubocop:disable Rails/Output
+          print "\r    #{record_count}/#{total}" # rubocop:disable Rails/Output
         end
       end
     end
