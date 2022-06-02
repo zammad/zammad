@@ -53,7 +53,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-prettier-vue": "^3.1.0",
     "eslint-plugin-storybook": "^0.5.12",
-    "eslint-plugin-vue": "^9.0.1",
+    "eslint-plugin-vue": "^9.1.0",
     "eslint-plugin-zammad": "file:.eslint-plugin-zammad",
     "jsdom": "^19.0.0",
     "mock-apollo-client": "^1.2.0",
