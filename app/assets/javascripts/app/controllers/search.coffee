@@ -205,6 +205,7 @@ class App.Search extends App.Controller
           items.slice(startId+1, endId).find('[name="bulk"]').prop('checked', (-> !@checked))
 
         @lastChecked = e.currentTarget
+        @bulkForm.updateTicketIdsBulkForm(e)
 
       ticket_ids = []
       for item in localList

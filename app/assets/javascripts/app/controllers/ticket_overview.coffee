@@ -1107,8 +1107,7 @@ class Table extends App.Controller
           items.slice(startId+1, endId).find('[name="bulk"]').prop('checked', (-> !@checked))
 
         @lastChecked = e.currentTarget
-
-        @updateTicketIdsBulkForm()
+        @bulkForm.updateTicketIdsBulkForm(e)
 
       callbackIconHeader = (headers) ->
         attribute =
@@ -1249,11 +1248,6 @@ class Table extends App.Controller
           bulkAll.prop('checked', false)
           bulkAll.prop('indeterminate', true)
     )
-
-  updateTicketIdsBulkForm: =>
-    items      = $('.content.active .table-overview .table').find('[name="bulk"]:checked')
-    ticket_ids = _.map(items, (el) -> $(el).val() )
-    @bulkForm.el.find('input[name=ticket_ids]').val(ticket_ids.join(',')).trigger('change')
 
   renderCustomerNotTicketExistIfNeeded: (ticketListShow) =>
     user = App.User.current()

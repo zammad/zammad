@@ -243,3 +243,8 @@ class App.TicketBulkForm extends App.Controller
       @render()
       @hide()
     )
+
+  updateTicketIdsBulkForm: (e) ->
+    items      = $(e.target).closest('table').find('input[name="bulk"]:checked')
+    ticket_ids = _.map(items, (el) -> $(el).val() )
+    @el.find('input[name=ticket_ids]').val(ticket_ids.join(',')).trigger('change')
