@@ -16,5 +16,19 @@ FactoryBot.define do
     created_at             { 1 }
     updated_at             { 1 }
     add_attribute(:method) { 'test' }
+
+    trait :timeplan do
+      timeplan do
+        { days:    { Mon: true,
+                     Tue: true,
+                     Wed: true,
+                     Thu: true,
+                     Fri: true,
+                     Sat: true,
+                     Sun: true },
+          hours:   { 23 => true },
+          minutes: { 0  => true } }
+      end
+    end
   end
 end
