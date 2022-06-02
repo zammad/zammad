@@ -3,6 +3,7 @@
 import { getNode } from '@formkit/core'
 import { FormKit } from '@formkit/vue'
 import { renderComponent } from '@tests/support/components'
+import { flushPromises } from '@vue/test-utils'
 import { nextTick } from 'vue'
 
 const wrapperParameters = {
@@ -11,7 +12,7 @@ const wrapperParameters = {
 }
 
 // Only some small initialize test, because the real editor testing is inside of cypress.
-describe('Form - Field - Editor (TipTap)', () => {
+describe('Form - Field - Editor (TipTap)', async () => {
   const wrapper = renderComponent(FormKit, {
     ...wrapperParameters,
     props: {
@@ -23,12 +24,15 @@ describe('Form - Field - Editor (TipTap)', () => {
     unmount: false,
   })
 
+  afterAll(() => {
+    wrapper.unmount()
+  })
+
+  await flushPromises()
+  await vi.dynamicImportSettled()
+
   it('can render an editor', async () => {
-    const editor = await wrapper.findByTestId(
-      'field-editor',
-      {},
-      { timeout: 5000 },
-    )
+    const editor = wrapper.getByTestId('field-editor')
 
     await nextTick()
 
