@@ -232,4 +232,69 @@ RSpec.describe 'Search', type: :system, authenticated: true, searchindex: true d
       end
     end
   end
+
+  describe 'Searches display all groups and owners on bulk selections #4054', authenticated_as: :authenticate do
+    let(:group1) { create(:group) }
+    let(:group2) { create(:group) }
+    let(:agent1) { create(:agent, groups: [group1]) }
+    let(:agent2) { create(:agent, groups: [group2]) }
+    let(:agent_all) { create(:agent, groups: [group1, group2]) }
+    let(:ticket1) { create(:ticket, group: group1, title: '4054 group 1') }
+    let(:ticket2) { create(:ticket, group: group2, title: '4054 group 2') }
+
+    def authenticate
+      agent1 && agent2 && agent_all
+      ticket1 && ticket2
+      agent_all
+    end
+
+    def check_owner_empty
+      expect(page).to have_select('owner_id', text: '-', visible: :all)
+      expect(page).to have_no_select('owner_id', text: agent1.fullname, visible: :all)
+      expect(page).to have_no_select('owner_id', text: agent2.fullname, visible: :all)
+    end
+
+    def click_ticket(ticket)
+      page.find(".js-tableBody tr.item[data-id='#{ticket.id}'] td.js-checkbox-field").click
+    end
+
+    def check_owner_agent1_shown
+      expect(page).to have_select('owner_id', text: agent1.fullname)
+      expect(page).to have_no_select('owner_id', text: agent2.fullname)
+    end
+
+    def check_owner_agent2_shown
+      expect(page).to have_no_select('owner_id', text: agent1.fullname)
+      expect(page).to have_select('owner_id', text: agent2.fullname)
+    end
+
+    def check_owner_field
+      check_owner_empty
+      click_ticket(ticket1)
+      check_owner_agent1_shown
+      click_ticket(ticket1)
+      click_ticket(ticket2)
+      check_owner_agent2_shown
+    end
+
+    context 'when search is used' do
+      before do
+        visit '#search/4054'
+      end
+
+      it 'does show the correct owner selection for each bulk action' do
+        check_owner_field
+      end
+    end
+
+    context 'when ticket overview is used' do
+      before do
+        visit '#ticket/view/all_unassigned'
+      end
+
+      it 'does show the correct owner selection for each bulk action' do
+        check_owner_field
+      end
+    end
+  end
 end

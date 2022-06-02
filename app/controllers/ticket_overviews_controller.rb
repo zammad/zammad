@@ -9,6 +9,7 @@ class TicketOverviewsController < ApplicationController
     # get attributes to update
     attributes_to_change = Ticket::ScreenOptions.attributes_to_change(
       view:         'ticket_overview',
+      screen:       'overview_bulk',
       current_user: current_user,
     )
     render json: attributes_to_change
