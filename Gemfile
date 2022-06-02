@@ -26,6 +26,9 @@ gem 'pg', '~> 1.2.0', group: :postgres
 gem 'daemons'
 gem 'delayed_job_active_record'
 
+# core - command line interface
+gem 'thor'
+
 # core - websocket
 gem 'em-websocket'
 gem 'eventmachine'

@@ -688,6 +688,7 @@ DEPENDENCIES
   telegramAPI!
   telephone_number
   test-unit
+  thor
   twilio-ruby
   twitter
   uglifier
