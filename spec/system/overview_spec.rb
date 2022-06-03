@@ -324,4 +324,36 @@ RSpec.describe 'Overview', type: :system do
       end
     end
   end
+
+  context 'when only one attribute is visible', authenticated_as: :user do
+    let(:user) { create(:agent, groups: [group]) }
+    let(:group) { create(:group, name: 'aaa') }
+    let(:ticket) { create(:ticket, group: group, customer: user) }
+
+    let(:view) { { 's' => %w[title] } }
+    let(:condition) do
+      {
+        'ticket.customer_id' => {
+          operator: 'is',
+          value:    user.id
+        }
+      }
+    end
+    let(:overview) { create(:overview, condition: condition, view: view) }
+
+    let(:overview_table_head_selector) { 'div.table-overview table.table thead' }
+    let(:expected_header_text) { 'TITLE' }
+
+    before do
+      ticket
+
+      visit "ticket/view/#{overview.link}"
+    end
+
+    it 'shows only the title column' do
+      within :active_content, overview_table_head_selector do
+        expect(page).to have_css('th.js-tableHead[data-column-key="title"]', text: expected_header_text)
+      end
+    end
+  end
 end

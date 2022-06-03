@@ -959,7 +959,7 @@ class Table extends App.Controller
       ticketListShow.push App.Ticket.find(ticket.id)
     @overview = App.Overview.find(overview.id)
     @table.update(
-      overviewAttributes: @overview.view.s
+      overviewAttributes: @convertOverviewAttributesToArray(@overview.view.s)
       objects:            ticketListShow
       groupBy:            @overview.group_by
       groupDirection:     @overview.group_direction
@@ -977,7 +977,6 @@ class Table extends App.Controller
     return if !overview && !tickets
 
     @view_mode = App.LocalStorage.get("mode:#{@view}", @Session.get('id')) || 's'
-    console.log 'notice', 'view:', @view, @view_mode
 
     App.WebSocket.send(event:'ticket_overview_select', data: { view: @view })
 
@@ -1177,7 +1176,7 @@ class Table extends App.Controller
 
       tableArguments =
         tableId:        "ticket_overview_#{@overview.id}"
-        overview:       @overview.view.s
+        overview:       @convertOverviewAttributesToArray(@overview.view.s)
         el:             @$('.table-overview')
         model:          App.Ticket
         objects:        ticketListShow
@@ -1248,6 +1247,15 @@ class Table extends App.Controller
           bulkAll.prop('checked', false)
           bulkAll.prop('indeterminate', true)
     )
+
+  convertOverviewAttributesToArray: (overviewAttributes) ->
+    # Ensure that the given attributes for the overview is an array,
+    #   otherwise some data might not be displayed.
+    # For more details, see https://github.com/zammad/zammad/issues/3943.
+    if !Array.isArray(overviewAttributes)
+      overviewAttributes = [overviewAttributes]
+
+    overviewAttributes
 
   renderCustomerNotTicketExistIfNeeded: (ticketListShow) =>
     user = App.User.current()
