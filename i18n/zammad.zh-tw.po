@@ -267,6 +267,13 @@ msgstr "%s 子域"
 msgid "%s switched to |%s|!"
 msgstr "%s 切換為 |%s|！"
 
+#: app/frontend/apps/mobile/components/Organization/OrganizationItem.vue
+#: app/frontend/apps/mobile/components/User/UserItem.vue
+#, fuzzy
+#| msgid "assign tickets"
+msgid "%s tickets"
+msgstr "指派工單"
+
 #: app/assets/javascripts/app/models/ticket_article.coffee
 #, fuzzy
 #| msgid "%s created Article for |%s|"
@@ -661,11 +668,13 @@ msgstr ""
 msgid "Activates lost password feature for users."
 msgstr "啟用使用者的自行重置密碼功能。"
 
+#: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 #: app/assets/javascripts/app/models/chat.coffee
 #: app/assets/javascripts/app/models/core_workflow.coffee
 #: app/assets/javascripts/app/models/email_address.coffee
 #: app/assets/javascripts/app/models/group.coffee
 #: app/assets/javascripts/app/models/job.coffee
+#: app/assets/javascripts/app/models/ldap_source.coffee
 #: app/assets/javascripts/app/models/macro.coffee
 #: app/assets/javascripts/app/models/object_manager_attribute.coffee
 #: app/assets/javascripts/app/models/overview.coffee
@@ -680,6 +689,7 @@ msgstr "啟用使用者的自行重置密碼功能。"
 #: app/assets/javascripts/app/models/webhook.coffee
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
+#: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 #: db/seeds/object_manager_attributes.rb
 msgid "Active"
 msgstr "啟用"
@@ -688,6 +698,12 @@ msgstr "啟用"
 #: app/assets/javascripts/app/views/customer_chat/chat_header.jst.eco
 msgid "Active Agents"
 msgstr "可供指派的客服專員"
+
+#: app/assets/javascripts/app/views/time_accounting/index.jst.eco
+#, fuzzy
+#| msgid "Active"
+msgid "Activity"
+msgstr "啟用"
 
 #: app/assets/javascripts/app/views/dashboard.jst.eco
 msgid "Activity Stream"
@@ -869,8 +885,10 @@ msgid "Age"
 msgstr "總時長"
 
 #: app/assets/javascripts/app/views/popover/ticket.jst.eco
+#: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
-#: db/seeds/roles.rb db/seeds/ticket_article_senders.rb
+#: app/controllers/time_accountings_controller.rb db/seeds/roles.rb
+#: db/seeds/ticket_article_senders.rb
 msgid "Agent"
 msgstr "客服人員"
 
@@ -962,6 +980,10 @@ msgstr "替代名稱"
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
 msgid "Alternatively, you can use the Zammad API to import data."
 msgstr "另外，您可以使用 Zammad API 匯入資料。"
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_calendar_view.coffee
+msgid "An error has occurred"
+msgstr ""
 
 #: app/frontend/shared/server/apollo/handler/BaseHandler.ts
 #, fuzzy
@@ -1242,6 +1264,10 @@ msgstr ""
 msgid "Attachments"
 msgstr "附件"
 
+#: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
+msgid "Attendees"
+msgstr ""
+
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #, fuzzy
 msgid ""
@@ -1406,6 +1432,12 @@ msgstr "返回"
 
 #: app/assets/javascripts/app/views/widget/switch_back_to_user.jst.eco
 msgid "Back to my view"
+msgstr "返回我的視圖"
+
+#: app/assets/javascripts/app/views/integration/ldap.jst.eco
+#, fuzzy
+#| msgid "Back to my view"
+msgid "Back to overview"
 msgstr "返回我的視圖"
 
 #: app/assets/javascripts/app/views/knowledge_base/reader.jst.eco
@@ -1737,6 +1769,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/scheduled_widget.jst.eco
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco
+#: app/frontend/apps/mobile/modules/search/views/SearchOverview.vue
 msgid "Cancel"
 msgstr "取消"
 
@@ -1917,8 +1950,7 @@ msgstr "通訊管道"
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
 #: app/assets/javascripts/app/controllers/chat.coffee
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
-#: app/controllers/first_steps_controller.rb
-#: app/frontend/apps/mobile/modules/home/views/Home.vue db/seeds/permissions.rb
+#: app/controllers/first_steps_controller.rb db/seeds/permissions.rb
 msgid "Chat"
 msgstr "文字對談"
 
@@ -2081,7 +2113,7 @@ msgstr ""
 msgid "Clear"
 msgstr "清除"
 
-#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
+#: app/frontend/shared/components/CommonInputSearch/CommonInputSearch.vue
 #, fuzzy
 #| msgid "Search"
 msgid "Clear Search"
@@ -2593,6 +2625,7 @@ msgstr "建立您的第一筆工單"
 #: app/assets/javascripts/app/models/chat_sessions.coffee
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 #: app/assets/javascripts/app/models/job.coffee
+#: app/assets/javascripts/app/models/ldap_source.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 #: app/assets/javascripts/app/models/postmaster_filter.coffee
 #: app/assets/javascripts/app/models/role.coffee
@@ -2611,6 +2644,7 @@ msgstr "建立您的第一筆工單"
 msgid "Created"
 msgstr "建立於"
 
+#: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
 #: lib/excel_sheet/ticket.rb
 msgid "Created At"
@@ -2623,6 +2657,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco
 #: app/assets/javascripts/app/views/widget/http_log.jst.eco
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
+#: app/controllers/time_accountings_controller.rb
 msgid "Created at"
 msgstr "建立在"
 
@@ -2631,6 +2666,7 @@ msgstr "建立在"
 #: app/assets/javascripts/app/models/chat_sessions.coffee
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 #: app/assets/javascripts/app/models/job.coffee
+#: app/assets/javascripts/app/models/ldap_source.coffee
 #: app/assets/javascripts/app/models/organization.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 #: app/assets/javascripts/app/models/postmaster_filter.coffee
@@ -2718,11 +2754,13 @@ msgstr ""
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco
 #: app/assets/javascripts/app/views/popover/ticket.jst.eco
+#: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 #: app/controllers/time_accountings_controller.rb
 #: app/frontend/apps/mobile/modules/ticket/components/TicketList/TicketList.vue
+#: app/frontend/apps/mobile/modules/user/routes.ts
 #: db/seeds/object_manager_attributes.rb db/seeds/roles.rb
 #: db/seeds/ticket_article_senders.rb lib/excel_sheet/ticket.rb
 msgid "Customer"
@@ -3343,10 +3381,6 @@ msgid "Defines the HTTP protocol of your instance."
 msgstr "定義系統的 HTTP 協議。"
 
 #: db/seeds/settings.rb
-msgid "Defines the LDAP config."
-msgstr ""
-
-#: db/seeds/settings.rb
 msgid "Defines the Placetel config."
 msgstr ""
 
@@ -3917,6 +3951,7 @@ msgid "Download and install the %s Migration Plugin on your %s instance."
 msgstr "在您的 %s 系統上下載並安裝 %s 遷移插件。"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
+#: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 msgid "Draft"
 msgstr "草稿"
 
@@ -3972,6 +4007,7 @@ msgstr "復活節假期"
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
+#: app/frontend/apps/mobile/modules/home/views/Home.vue
 msgid "Edit"
 msgstr "編輯"
 
@@ -4851,6 +4887,7 @@ msgid "Forbidden"
 msgstr ""
 
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/apps/mobile/modules/login/views/Login.vue
 #: app/models/form_schema/form/mobile/login.rb
 msgid "Forgot password?"
 msgstr "忘記密碼？"
@@ -4928,6 +4965,7 @@ msgstr "星期五"
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee
 #: app/assets/javascripts/app/models/ticket_article.coffee
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco
+#: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 msgid "From"
@@ -5524,6 +5562,12 @@ msgstr "chat-topic 的識別代碼。"
 msgid "Idle timeout in seconds until agent is set offline automatically."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_integration/ldap.coffee
+msgid ""
+"If a user is found in two (or more) configured LDAP sources, the last "
+"synchronisation will win."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
 msgid ""
 "If left empty, the host gets auto-detected - in this case %s. The auto-"
@@ -5756,6 +5800,12 @@ msgstr ""
 msgid "In order for Zammad to access %s, the %s API token must be stored here"
 msgstr "為了讓 Zammad 存取 %s，%s API token 必須保存在這裏"
 
+#: app/assets/javascripts/app/controllers/_integration/ldap.coffee
+msgid ""
+"In order to be able to influence the desired behaviour in this regard, you "
+"can influence the order of the LDAP sources via drag & drop."
+msgstr ""
+
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_channel_distribution.jst.eco
@@ -5935,10 +5985,10 @@ msgstr "中間"
 msgid "Internal"
 msgstr "內部"
 
-#: app/models/scheduler.rb
+#: app/models/import_job.rb
 msgid ""
-"Interrupted by scheduler restart. Please restart manually or wait till next "
-"execution time."
+"Interrupted by scheduler restart. Please restart manually or wait until the "
+"next execution time."
 msgstr ""
 
 #: app/controllers/first_steps_controller.rb
@@ -6177,7 +6227,6 @@ msgstr "關鍵字"
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 #: app/assets/javascripts/app/models/knowledge_base.coffee
-#: app/frontend/apps/mobile/modules/home/views/Home.vue
 #: app/models/knowledge_base.rb db/seeds/permissions.rb
 msgid "Knowledge Base"
 msgstr "知識庫"
@@ -6219,10 +6268,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 msgid "LDAP Host"
 msgstr "LDAP 主機"
-
-#: db/seeds/settings.rb
-msgid "LDAP config"
-msgstr ""
 
 #: db/seeds/settings.rb
 msgid "LDAP integration"
@@ -6291,6 +6336,12 @@ msgstr "姓氏"
 #: app/assets/javascripts/app/models/job.coffee
 msgid "Last run"
 msgstr "上次執行"
+
+#: app/frontend/apps/mobile/modules/search/views/SearchOverview.vue
+#, fuzzy
+#| msgid "Last sync"
+msgid "Last searches"
+msgstr "上次同步"
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
@@ -6374,10 +6425,6 @@ msgstr "模板"
 msgid "Link issue"
 msgstr "連結問題"
 
-#: app/assets/javascripts/app/controllers/ticket_link_add.coffee
-msgid "Link type is needed!"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
 #: app/assets/javascripts/app/views/popover/user.jst.eco
 #: app/assets/javascripts/app/views/widget/user.jst.eco db/seeds/permissions.rb
@@ -6440,6 +6487,7 @@ msgstr "本地語系環境"
 msgid "Locale not found"
 msgstr ""
 
+#: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
 #: app/assets/javascripts/app/views/session.jst.eco
 msgid "Location"
@@ -6455,6 +6503,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/user.coffee
 #: app/assets/javascripts/app/views/maintenance.jst.eco
+#: app/controllers/time_accountings_controller.rb
 #: db/seeds/object_manager_attributes.rb
 msgid "Login"
 msgstr "登入"
@@ -6472,7 +6521,7 @@ msgid "Logo"
 msgstr "Logo"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
-#: app/frontend/apps/mobile/modules/home/views/Home.vue
+#: app/frontend/apps/mobile/modules/user/views/UserOverview.vue
 msgid "Logout"
 msgstr "登出"
 
@@ -6492,7 +6541,9 @@ msgstr "巨集"
 msgid "Macro group restrictions do not cover all tickets"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/macro.coffee db/seeds/permissions.rb
+#: app/assets/javascripts/app/controllers/macro.coffee
+#: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
+#: db/seeds/permissions.rb
 msgid "Macros"
 msgstr "巨集"
 
@@ -6760,10 +6811,6 @@ msgstr ""
 msgid "Minimum length"
 msgstr "最小長度"
 
-#: app/assets/javascripts/app/controllers/_profile/token_access.coffee
-msgid "Minimum of one permission is needed!"
-msgstr ""
-
 #: app/assets/javascripts/app/views/generic/timer.jst.eco
 msgid "Minute"
 msgstr "分鐘"
@@ -6775,14 +6822,6 @@ msgstr "分鐘"
 #: app/assets/javascripts/app/views/generic/timeplan.jst.eco
 msgid "Minutes"
 msgstr "分鐘"
-
-#: app/controllers/channels_twitter_controller.rb
-msgid "Missing 'for_user_id' in payload!"
-msgstr ""
-
-#: app/controllers/import_freshdesk_controller.rb
-msgid "Missing administrator permission!"
-msgstr ""
 
 #: db/seeds/object_manager_attributes.rb
 msgid "Mobile"
@@ -6838,6 +6877,10 @@ msgstr "月"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_escalation.jst.eco
 msgid "Mood"
 msgstr "心情"
+
+#: app/models/user.rb
+msgid "More than 250 secondary organizations are not allowed."
+msgstr ""
 
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
 msgid "Most recent activity"
@@ -6930,6 +6973,7 @@ msgid "Nagios integration"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/reorder_modal.coffee
+#: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 #: app/assets/javascripts/app/controllers/chat.coffee
 #: app/assets/javascripts/app/models/_application_model.coffee
 #: app/assets/javascripts/app/models/application.coffee
@@ -6941,6 +6985,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/group.coffee
 #: app/assets/javascripts/app/models/job.coffee
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee
+#: app/assets/javascripts/app/models/ldap_source.coffee
 #: app/assets/javascripts/app/models/macro.coffee
 #: app/assets/javascripts/app/models/object_manager_attribute.coffee
 #: app/assets/javascripts/app/models/organization.coffee
@@ -6973,6 +7018,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/tag/table.jst.eco
 #: app/assets/javascripts/app/views/widget/organization.jst.eco
 #: app/assets/javascripts/app/views/widget/user.jst.eco
+#: app/controllers/time_accountings_controller.rb
 #: db/seeds/object_manager_attributes.rb
 msgid "Name"
 msgstr "名稱"
@@ -7107,6 +7153,12 @@ msgstr "新增 SLA"
 msgid "New Scheduler"
 msgstr "新增自動行程"
 
+#: app/assets/javascripts/app/controllers/_integration/ldap.coffee
+#, fuzzy
+#| msgid "Source"
+msgid "New Source"
+msgstr "原文"
+
 #: app/assets/javascripts/app/views/tag/index.jst.eco db/seeds/settings.rb
 msgid "New Tags"
 msgstr "新增標籤"
@@ -7190,15 +7242,16 @@ msgid "No"
 msgstr "否"
 
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
-#: app/assets/javascripts/app/views/integration/ldap.jst.eco
 msgid "No %s configured."
 msgstr "未配置 %s。"
 
 #: app/assets/javascripts/app/views/generic/admin/empty.jst.eco
+#: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_group.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
+#: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_organization.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
@@ -7214,10 +7267,6 @@ msgstr "未配置 %s。"
 
 #: lib/external_credential/google.rb
 msgid "No Google app configured!"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
-msgid "No Knowledge Base created"
 msgstr ""
 
 #: lib/external_credential/microsoft365.rb
@@ -7261,6 +7310,12 @@ msgstr "無分類。"
 msgid "No code for session found!"
 msgstr ""
 
+#: app/assets/javascripts/app/views/integration/ldap.jst.eco
+#, fuzzy
+#| msgid "Save configuration"
+msgid "No configuration set."
+msgstr "儲存配置"
+
 #: app/models/calendar.rb
 msgid "No configured business hours found!"
 msgstr ""
@@ -7301,6 +7356,12 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee
 msgid "No linked issues"
 msgstr "沒有連結的問題"
+
+#: app/frontend/apps/mobile/modules/search/views/SearchOverview.vue
+#, fuzzy
+#| msgid "Previous tab"
+msgid "No previous searches"
+msgstr "上一頁籤"
 
 #: db/seeds/settings.rb
 msgid "No proxy for the following hosts."
@@ -7678,11 +7739,13 @@ msgstr "從另一個系統遷移"
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_organization.coffee
 #: app/assets/javascripts/app/controllers/organization.coffee
 #: app/assets/javascripts/app/controllers/organization_profile.coffee
+#: app/assets/javascripts/app/controllers/ticket_customer.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_organization.coffee
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/assets/javascripts/app/models/user.coffee
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
+#: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_organization.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
@@ -7713,6 +7776,7 @@ msgstr "機構支援"
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
+#: app/frontend/apps/mobile/modules/search/plugins/organization.ts
 #: db/seeds/permissions.rb
 msgid "Organizations"
 msgstr "機構"
@@ -7722,6 +7786,12 @@ msgid ""
 "Organizations are for any person in the system: agents (owners, "
 "responsibles, …) and customers."
 msgstr ""
+
+#: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
+#, fuzzy
+#| msgid "Organization"
+msgid "Organizer"
+msgstr "組織"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee
 msgid "Origin By"
@@ -7878,6 +7948,7 @@ msgstr "父"
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/apps/mobile/modules/login/views/Login.vue
 #: app/frontend/shared/components/Form/Form.stories.ts
 #: app/models/form_schema/form/mobile/login.rb
 #: db/seeds/object_manager_attributes.rb db/seeds/permissions.rb
@@ -8149,6 +8220,7 @@ msgstr "優雅的日期"
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 #: app/assets/javascripts/app/views/generic/application_selector.jst.eco
+#: app/assets/javascripts/app/views/generic/attachments.jst.eco
 #: app/assets/javascripts/app/views/profile/imageCropper.jst.eco
 #: app/assets/javascripts/app/views/settings/ticket_number.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
@@ -8415,6 +8487,7 @@ msgstr "重載應用程式"
 
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/apps/mobile/modules/login/views/Login.vue
 #: app/models/form_schema/form/mobile/login.rb
 msgid "Remember me"
 msgstr "記住我 (請不要在公共電腦勾選此選項)"
@@ -8773,6 +8846,7 @@ msgstr "星期六"
 #: app/assets/javascripts/app/views/integration/github.jst.eco
 #: app/assets/javascripts/app/views/integration/gitlab.jst.eco
 #: app/assets/javascripts/app/views/integration/idoit.jst.eco
+#: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco
@@ -8783,6 +8857,7 @@ msgid "Save"
 msgstr "儲存"
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_overwrite_modal.coffee
+#: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 #, fuzzy
 #| msgid "Draft"
 msgid "Save Draft"
@@ -8859,7 +8934,8 @@ msgstr "向下滾動以查看新訊息"
 #: app/assets/javascripts/app/views/integration/idoit_object_selector.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/search_field_widget.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
-#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
+#: app/frontend/apps/mobile/modules/search/routes.ts
+#: app/frontend/shared/components/CommonInputSearch/CommonInputSearch.vue
 msgid "Search"
 msgstr "搜尋"
 
@@ -8877,12 +8953,26 @@ msgid "Search for users"
 msgstr "搜尋使用者"
 
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax_customer_organization.coffee
 #: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee
 #: app/assets/javascripts/app/views/generic/icon_picker.jst.eco
+#: app/frontend/apps/mobile/modules/search/views/SearchOverview.vue
 #, fuzzy
 #| msgid "Search"
 msgid "Search…"
 msgstr "搜尋"
+
+#: db/seeds/object_manager_attributes.rb
+#, fuzzy
+#| msgid "Shared organization"
+msgid "Secondary organizations"
+msgstr "共享的機構"
+
+#: app/models/user.rb
+msgid ""
+"Secondary organizations are only allowed when the primary organization is "
+"given."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco
@@ -8986,15 +9076,6 @@ msgstr "寄送郵件透過"
 #: app/assets/javascripts/app/views/maintenance.jst.eco
 msgid "Send a message to all logged in users."
 msgstr "傳送一條訊息給所有登入的使用者。"
-
-#: db/seeds/settings.rb
-msgid "Send client stats"
-msgstr "寄送客戶端統計"
-
-#: db/seeds/settings.rb
-msgid ""
-"Send client stats/error message to central server to improve the usability."
-msgstr "將客戶端統計訊息/錯誤訊息發送到中央服務器以提高可用性。"
 
 #: db/seeds/settings.rb
 msgid "Send postmaster mail if mail too large"
@@ -9188,10 +9269,15 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/github.jst.eco
 #: app/assets/javascripts/app/views/integration/gitlab.jst.eco
 #: app/assets/javascripts/app/views/integration/idoit.jst.eco
-#: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
 msgid "Settings"
+msgstr "設定"
+
+#: app/assets/javascripts/app/views/integration/ldap.jst.eco
+#, fuzzy
+#| msgid "Settings"
+msgid "Settings %s"
 msgstr "設定"
 
 #: app/assets/javascripts/app/controllers/getting_started/finish.coffee
@@ -9455,9 +9541,16 @@ msgstr "更動順序"
 msgid "Sounds"
 msgstr "聲音"
 
+#: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 #: app/assets/javascripts/app/views/translation/list.jst.eco
 #: app/assets/javascripts/app/views/translation/todo.jst.eco
 msgid "Source"
+msgstr "原文"
+
+#: app/assets/javascripts/app/controllers/_integration/ldap.coffee
+#, fuzzy
+#| msgid "Source"
+msgid "Sources"
 msgstr "原文"
 
 #: db/seeds/settings.rb
@@ -10130,6 +10223,11 @@ msgstr ""
 msgid "The password could not be set. Please contact your administrator."
 msgstr "無法驗證電子郵件。請與您的管理員聯繫。"
 
+#: app/controllers/ticket_articles_controller.rb
+msgid ""
+"The preview cannot be generated. The format is corrupted or not supported."
+msgstr ""
+
 #: app/controllers/import_freshdesk_controller.rb
 #: app/controllers/import_kayako_controller.rb
 #: app/controllers/import_otrs_controller.rb
@@ -10236,6 +10334,10 @@ msgstr ""
 msgid "The required parameter 'current_user_id' is missing."
 msgstr ""
 
+#: app/controllers/channels_twitter_controller.rb
+msgid "The required parameter 'for_user_id' is missing."
+msgstr ""
+
 #: lib/telegram.rb
 msgid "The required parameter 'group_id' is invalid."
 msgstr ""
@@ -10246,6 +10348,10 @@ msgstr ""
 
 #: app/controllers/users_controller.rb
 msgid "The required parameter 'id' is missing."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/ticket_link_add.coffee
+msgid "The required parameter 'link_type' is missing."
 msgstr ""
 
 #: app/models/text_module.rb
@@ -10276,8 +10382,16 @@ msgstr ""
 msgid "The required parameter 'payload->screen' is missing."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_profile/token_access.coffee
+msgid "The required parameter 'permission' is missing."
+msgstr ""
+
 #: app/controllers/users_controller.rb
 msgid "The required parameter 'signup' is missing."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/ticket_link_add.coffee
+msgid "The required parameter 'ticket_number' is missing."
 msgstr ""
 
 #: app/controllers/channels_twitter_controller.rb
@@ -10437,6 +10551,12 @@ msgid ""
 "There is no rollback of this deletion possible. If you are sure that you "
 "wish to proceed, please type \"%s\" into the input."
 msgstr "無法回溯此删除操作。如果確定要進行，請在輸入欄中鍵入 \"%s\"。"
+
+#: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
+#, fuzzy
+#| msgid "%s Object(s) are created."
+msgid "There was no Knowledge Base created."
+msgstr "%s 個物件已建立。"
 
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
 msgid "Third-party Applications"
@@ -10628,10 +10748,6 @@ msgstr "此服務使您可以將 %s 與 %s 連接。"
 msgid "This service enables Zammad to connect with your Exchange server."
 msgstr "此服務使 Zammad 與 Exchange 服務器連接。"
 
-#: app/assets/javascripts/app/controllers/_integration/ldap.coffee
-msgid "This service enables Zammad to connect with your LDAP server."
-msgstr "此服務使 Zammad 與您的 LDAP 服務器連接。"
-
 #: app/assets/javascripts/app/controllers/_integration/check_mk.coffee
 #, fuzzy
 #| msgid ""
@@ -10754,6 +10870,7 @@ msgstr ""
 msgid "Ticket Number ignore system_id"
 msgstr ""
 
+#: app/frontend/apps/mobile/modules/home/views/Home.vue
 #: app/frontend/apps/mobile/modules/ticket/views/TicketOverview.vue
 #, fuzzy
 #| msgid "New Overview"
@@ -10818,12 +10935,10 @@ msgstr ""
 msgid "Ticket |%s| will escalate soon!"
 msgstr "工單 |%s| 即將提升層級！"
 
+#: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
+#: app/controllers/time_accountings_controller.rb
 msgid "Ticket#"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/ticket_link_add.coffee
-msgid "Ticket# is needed!"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket_article.coffee
@@ -10836,6 +10951,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
+#: app/frontend/apps/mobile/modules/search/plugins/ticket.ts
 msgid "Tickets"
 msgstr "工單"
 
@@ -10861,6 +10977,7 @@ msgstr "機構中的工單"
 msgid "Tickets of User"
 msgstr "使用者的工單"
 
+#: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
 msgid "Till"
 msgstr "直到"
@@ -10881,6 +10998,7 @@ msgstr "工時"
 msgid "Time Accounting Selector"
 msgstr ""
 
+#: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_organization.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
@@ -10927,7 +11045,9 @@ msgstr "時間點"
 #: app/assets/javascripts/app/views/knowledge_base/public_menu_form_item.jst.eco
 #: app/assets/javascripts/app/views/maintenance.jst.eco
 #: app/assets/javascripts/app/views/settings/form.jst.eco
+#: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
+#: app/controllers/time_accountings_controller.rb
 #: app/frontend/apps/mobile/modules/ticket/components/TicketList/TicketList.vue
 #: db/seeds/object_manager_attributes.rb lib/excel_sheet/ticket.rb
 msgid "Title"
@@ -11290,6 +11410,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/email_address.coffee
 #: app/assets/javascripts/app/models/group.coffee
 #: app/assets/javascripts/app/models/job.coffee
+#: app/assets/javascripts/app/models/ldap_source.coffee
 #: app/assets/javascripts/app/models/macro.coffee
 #: app/assets/javascripts/app/models/object_manager_attribute.coffee
 #: app/assets/javascripts/app/models/overview.coffee
@@ -11323,6 +11444,7 @@ msgstr "更新在"
 #: app/assets/javascripts/app/models/chat_sessions.coffee
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 #: app/assets/javascripts/app/models/job.coffee
+#: app/assets/javascripts/app/models/ldap_source.coffee
 #: app/assets/javascripts/app/models/organization.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 #: app/assets/javascripts/app/models/postmaster_filter.coffee
@@ -11398,6 +11520,10 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Use the time of the very last customer article."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_integration/ldap.coffee
+msgid "Use this switch to start synchronization of your ldap sources. "
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
@@ -11501,6 +11627,7 @@ msgstr ""
 msgid "Username"
 msgstr "使用者名稱"
 
+#: app/frontend/apps/mobile/modules/login/views/Login.vue
 #: app/models/form_schema/form/mobile/login.rb
 #, fuzzy
 #| msgid "Username / email"
@@ -11535,7 +11662,8 @@ msgstr "連接 Proxy 的使用者名稱"
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco
-#: db/seeds/groups.rb db/seeds/permissions.rb
+#: app/frontend/apps/mobile/modules/search/plugins/user.ts db/seeds/groups.rb
+#: db/seeds/permissions.rb
 msgid "Users"
 msgstr "使用者"
 
@@ -11670,8 +11798,10 @@ msgstr "切換為使用者視角"
 #: app/views/mailer/ticket_update/zh-cn.html.erb
 #: app/views/mailer/ticket_update/zh-tw.html.erb
 #: app/views/mailer/ticket_update_merged_into/en.html.erb
+#: app/views/mailer/ticket_update_merged_into/fr.html.erb
 #: app/views/mailer/ticket_update_merged_into/ru.html.erb
 #: app/views/mailer/ticket_update_received_merge/en.html.erb
+#: app/views/mailer/ticket_update_received_merge/fr.html.erb
 #: app/views/mailer/ticket_update_received_merge/ru.html.erb
 msgid "View this in Zammad"
 msgstr "到 Zammad 系統查看"
@@ -12204,6 +12334,10 @@ msgstr "您可以使用以下 Script 腳本將資料發佈到 %s。"
 msgid "You currently don't have any tickets."
 msgstr ""
 
+#: app/controllers/import_freshdesk_controller.rb
+msgid "You do not have administrator permission."
+msgstr ""
+
 #: app/frontend/shared/router/guards/before/permission.ts
 msgid "You don't have the necessary permissions to access this page."
 msgstr ""
@@ -12725,6 +12859,14 @@ msgstr "例如："
 msgid "edit"
 msgstr ""
 
+#: app/frontend/apps/mobile/composables/useEditedBy.ts
+msgid "edited %s"
+msgstr ""
+
+#: app/frontend/apps/mobile/composables/useEditedBy.ts
+msgid "edited %s by %s"
+msgstr ""
+
 #: db/seeds/ticket_article_types.rb
 msgid "email"
 msgstr "電子郵件"
@@ -13002,6 +13144,12 @@ msgstr "符合"
 msgid "maybe"
 msgstr "可能"
 
+#: app/frontend/apps/mobile/composables/useEditedBy.ts
+#, fuzzy
+#| msgid "Name"
+msgid "me"
+msgstr "名稱"
+
 #: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
 msgid "merged"
 msgstr "已合併"
@@ -13232,7 +13380,9 @@ msgstr "顯示"
 
 #: app/assets/javascripts/app/views/generic/object_search/item_organization_members.jst.eco
 #: app/assets/javascripts/app/views/organization_profile/object.jst.eco
+#: app/assets/javascripts/app/views/user_profile/object.jst.eco
 #: app/assets/javascripts/app/views/widget/organization.jst.eco
+#: app/assets/javascripts/app/views/widget/user.jst.eco
 msgid "show more"
 msgstr ""
 
@@ -13297,6 +13447,8 @@ msgstr "Telegram 個人訊息"
 msgid "this ticket was merged into ticket %s"
 msgstr "轉推 Retweets 將轉換為工單"
 
+#: app/frontend/apps/mobile/components/Organization/OrganizationItem.vue
+#: app/frontend/apps/mobile/components/User/UserItem.vue
 #: lib/calendar_subscriptions/tickets.rb
 msgid "ticket"
 msgstr ""
@@ -13456,6 +13608,17 @@ msgstr "...整個文字區域"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ 今日等待時間"
+
+#~ msgid "This service enables Zammad to connect with your LDAP server."
+#~ msgstr "此服務使 Zammad 與您的 LDAP 服務器連接。"
+
+#~ msgid "Send client stats"
+#~ msgstr "寄送客戶端統計"
+
+#~ msgid ""
+#~ "Send client stats/error message to central server to improve the "
+#~ "usability."
+#~ msgstr "將客戶端統計訊息/錯誤訊息發送到中央服務器以提高可用性。"
 
 #, fuzzy
 #~| msgid "Select"
