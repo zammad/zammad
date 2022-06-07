@@ -17,7 +17,7 @@ const { user } = storeToRefs(useSessionStore())
       class="flex flex-1 justify-center"
       exact-active-class="text-blue"
     >
-      <CommonIcon name="home" size="small" active-class="text-blue" />
+      <CommonIcon name="home" size="small" />
     </CommonLink>
     <CommonLink link="/notifications" class="flex flex-1 justify-center">
       <CommonIcon name="bell" size="medium" />

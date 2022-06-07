@@ -69,6 +69,6 @@ const finalSize = computed(() => {
     :aria-hidden="decorative"
     @click="onClick"
   >
-    <use :xlink:href="`#icon-${name}`" />
+    <use :href="`#icon-${name}`" />
   </svg>
 </template>

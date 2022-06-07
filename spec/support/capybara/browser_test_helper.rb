@@ -58,6 +58,16 @@ module BrowserTestHelper
     find(*args).click
   end
 
+  # Finds svg icon in Mobile View
+  #
+  # @example
+  #  icon = find_icon('home')
+  #  icon.click
+  #
+  def find_icon(name)
+    find("[href=\"#icon-#{name}\"]").find(:xpath, '..')
+  end
+
   # This is a wrapper around the Selenium::WebDriver::Wait class
   # with additional methods.
   # @see BrowserTestHelper::Waiter

@@ -16,7 +16,7 @@ export const queryAllIconsByName = (
   if (typeof matcher === 'string') {
     id = `#icon-${matcher}`
   }
-  return queryAllByAttribute(`xlink:href`, container, id).map(
+  return queryAllByAttribute(`href`, container, id).map(
     (el) => el.parentElement as HTMLElement,
   )
 }
