@@ -53,6 +53,7 @@ export const routes: Array<RouteRecordRaw> = [
   ...mainRoutes,
   {
     path: '/',
+    name: 'Main',
     props: true,
     component: LayoutMain,
     children: childRoutes,

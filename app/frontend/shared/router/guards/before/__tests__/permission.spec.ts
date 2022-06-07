@@ -73,6 +73,7 @@ describe('permissionGuard', () => {
 
     useAuthenticationStore().authenticated = true
     useSessionStore().user = {
+      id: '123',
       permissions: {
         names: ['example.view'],
       },
@@ -98,6 +99,7 @@ describe('permissionGuard', () => {
 
     useAuthenticationStore().authenticated = true
     useSessionStore().user = {
+      id: '123',
       permissions: {
         names: ['ticket.agent'],
       },

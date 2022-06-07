@@ -19,6 +19,7 @@ import type {
 
 // Adds the translations to storybook.
 app.config.globalProperties.i18n = i18n
+app.config.globalProperties.$t = i18n.t.bind(i18n)
 
 // Initialize the needed core components and plugins.
 initializeGlobalComponents(app)

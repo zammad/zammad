@@ -125,6 +125,7 @@
     "tippy.js": "^6.3.7",
     "ua-parser-js": "^1.0.2",
     "uuid": "^8.3.2",
+    "vite-plugin-glob": "^0.3.2",
     "vue": "^3.2.37",
     "vue-router": "^4.0.15",
     "vue3-draggable-resizable": "^1.6.4"

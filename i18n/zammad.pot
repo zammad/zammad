@@ -217,6 +217,11 @@ msgstr ""
 msgid "%s switched to |%s|!"
 msgstr ""
 
+#: app/frontend/apps/mobile/components/Organization/OrganizationItem.vue
+#: app/frontend/apps/mobile/components/User/UserItem.vue
+msgid "%s tickets"
+msgstr ""
+
 #: app/assets/javascripts/app/models/ticket_article.coffee
 msgid "%s updated article for |%s|"
 msgstr ""
@@ -1516,6 +1521,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/scheduled_widget.jst.eco
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco
+#: app/frontend/apps/mobile/modules/search/views/SearchOverview.vue
 msgid "Cancel"
 msgstr ""
 
@@ -5547,6 +5553,10 @@ msgstr ""
 msgid "Last run"
 msgstr ""
 
+#: app/frontend/apps/mobile/modules/search/views/SearchOverview.vue
+msgid "Last searches"
+msgstr ""
+
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
 msgid "Last sync"
@@ -6511,6 +6521,10 @@ msgstr ""
 msgid "No linked issues"
 msgstr ""
 
+#: app/frontend/apps/mobile/modules/search/views/SearchOverview.vue
+msgid "No previous searches"
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "No proxy for the following hosts."
 msgstr ""
@@ -6918,6 +6932,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
+#: app/frontend/apps/mobile/modules/search/plugins/organization.ts
 #: db/seeds/permissions.rb
 msgid "Organizations"
 msgstr ""
@@ -8005,6 +8020,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/idoit_object_selector.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/search_field_widget.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
+#: app/frontend/apps/mobile/modules/search/routes.ts
 #: app/frontend/shared/components/CommonInputSearch/CommonInputSearch.vue
 msgid "Search"
 msgstr ""
@@ -8026,6 +8042,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax_customer_organization.coffee
 #: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee
 #: app/assets/javascripts/app/views/generic/icon_picker.jst.eco
+#: app/frontend/apps/mobile/modules/search/views/SearchOverview.vue
 msgid "Search…"
 msgstr ""
 
@@ -9782,6 +9799,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
+#: app/frontend/apps/mobile/modules/search/plugins/ticket.ts
 msgid "Tickets"
 msgstr ""
 
@@ -10455,6 +10473,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco
+#: app/frontend/apps/mobile/modules/search/plugins/user.ts
 #: db/seeds/groups.rb
 #: db/seeds/permissions.rb
 msgid "Users"
@@ -11451,6 +11470,14 @@ msgstr ""
 msgid "edit"
 msgstr ""
 
+#: app/frontend/apps/mobile/composables/useEditedBy.ts
+msgid "edited %s"
+msgstr ""
+
+#: app/frontend/apps/mobile/composables/useEditedBy.ts
+msgid "edited %s by %s"
+msgstr ""
+
 #: db/seeds/ticket_article_types.rb
 msgid "email"
 msgstr ""
@@ -11705,6 +11732,10 @@ msgstr ""
 #: app/assets/javascripts/app/views/cti/caller_log_avatar.jst.eco
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco
 msgid "maybe"
+msgstr ""
+
+#: app/frontend/apps/mobile/composables/useEditedBy.ts
+msgid "me"
 msgstr ""
 
 #: db/seeds/ticket_state_types.rb
@@ -11997,6 +12028,8 @@ msgstr ""
 msgid "this ticket was merged into ticket %s"
 msgstr ""
 
+#: app/frontend/apps/mobile/components/Organization/OrganizationItem.vue
+#: app/frontend/apps/mobile/components/User/UserItem.vue
 #: lib/calendar_subscriptions/tickets.rb
 msgid "ticket"
 msgstr ""

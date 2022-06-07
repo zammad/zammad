@@ -56,10 +56,6 @@ const ticketOverview: MenuItem[] = [
     information: '1',
   },
 ]
-
-const openSearchDialog = () => {
-  console.log('open dialog')
-}
 </script>
 
 <template>
@@ -74,11 +70,9 @@ const openSearchDialog = () => {
     >
       {{ i18n.t('Home') }}
     </div>
-    <CommonInputSearch
-      wrapper-class="mb-4"
-      no-border
-      @click="openSearchDialog"
-    />
+    <CommonLink link="/search">
+      <CommonInputSearch wrapper-class="mb-4" no-border />
+    </CommonLink>
     <CommonSectionMenu :items="menu" />
     <CommonSectionMenu
       :items="ticketOverview"

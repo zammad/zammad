@@ -20,7 +20,12 @@
       "react": [".storybook/config/types__react"],
       "@storybook/vue3": [".storybook/node_modules/@storybook/vue3"]
     },
-    "types": ["vite/client", "vite-plugin-svg-icons/client", "node"],
+    "types": [
+      "vite/client",
+      "vite-plugin-svg-icons/client",
+      "node",
+      "vite-plugin-glob/client"
+    ],
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "skipLibCheck": true,

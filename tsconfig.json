@@ -1,7 +1,12 @@
 {
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "types": ["vitest/globals", "vite/client", "vite-plugin-svg-icons/client"]
+    "types": [
+      "vitest/globals",
+      "vite/client",
+      "vite-plugin-svg-icons/client",
+      "vite-plugin-glob/client"
+    ]
   },
   "include": ["app/frontend/**/*", ".storybook/config/**/*"],
   "exclude": ["app/frontend/cypress/**/*", "node_modules", "public", "vendor"]

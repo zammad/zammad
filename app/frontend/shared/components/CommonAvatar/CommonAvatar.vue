@@ -23,6 +23,7 @@ const iconSizes = {
   small: 'tiny',
   medium: 'small',
   large: 'medium',
+  xl: 'large',
 } as const
 
 const iconSize = computed(() => {
@@ -69,6 +70,14 @@ const iconSize = computed(() => {
 
   .vip {
     @apply -ml-8 w-16;
+  }
+}
+
+.size-xl {
+  @apply h-36 w-36 text-3xl leading-[5rem];
+
+  .vip {
+    @apply -top-[23px] -ml-8 w-16;
   }
 }
 

@@ -71,7 +71,7 @@ export default {
       v-if="filter && filter.length"
       :aria-label="i18n.t('Clear Search')"
       :fixed-size="{ width: 24, height: 24 }"
-      class="absolute right-6 shrink-0 text-gray"
+      class="absolute shrink-0 text-gray ltr:right-2 rtl:left-2"
       name="close-small"
       @click.stop="clearFilter"
     />

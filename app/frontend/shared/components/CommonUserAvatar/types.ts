@@ -1,9 +1,9 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 export interface AvatarUser {
-  lastname?: string
-  firstname?: string
-  email?: string
+  lastname?: Maybe<string>
+  firstname?: Maybe<string>
+  email?: Maybe<string>
   vip?: boolean
   outOfOffice?: boolean
   active?: boolean

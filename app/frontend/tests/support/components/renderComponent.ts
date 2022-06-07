@@ -1,7 +1,12 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { Plugin, Ref, ref, watchEffect } from 'vue'
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
+import { nextTick, Plugin, Ref, ref, watchEffect } from 'vue'
+import {
+  createRouter,
+  createWebHistory,
+  Router,
+  RouteRecordRaw,
+} from 'vue-router'
 import { MountingOptions } from '@vue/test-utils'
 import { Matcher, render, RenderResult } from '@testing-library/vue'
 import userEvent from '@testing-library/user-event'
@@ -15,6 +20,7 @@ import CommonDateTime from '@shared/components/CommonDateTime/CommonDateTime.vue
 import { i18n } from '@shared/i18n'
 import buildIconsQueries from './iconQueries'
 import buildLinksQueries from './linkQueries'
+import { waitForNextTick } from '../utils'
 
 // TODO: some things can be handled differently: https://test-utils.vuejs.org/api/#config-global
 
@@ -30,8 +36,14 @@ export interface ExtendedMountingOptions<Props> extends MountingOptions<Props> {
   }
 }
 
+type UserEvent = ReturnType<typeof userEvent['setup']>
+
+interface PageEvents extends UserEvent {
+  debounced(fn: () => unknown, ms?: number): Promise<void>
+}
+
 export interface ExtendedRenderResult extends RenderResult {
-  events: typeof userEvent
+  events: PageEvents
   queryAllIconsByName(matcher: Matcher): SVGElement[]
   queryIconByName(matcher: Matcher): SVGElement | null
   getAllIconsByName(matcher: Matcher): SVGElement[]
@@ -52,7 +64,7 @@ const defaultWrapperOptions: ExtendedMountingOptions<unknown> = {
     },
     mocks: {
       i18n,
-      $: (source: string) => source,
+      $t: i18n.t.bind(i18n),
       __: (source: string) => source,
     },
     stubs: {},
@@ -61,6 +73,9 @@ const defaultWrapperOptions: ExtendedMountingOptions<unknown> = {
 }
 
 let routerInitialized = false
+let router: Router
+
+export const getRouter = () => router
 
 const initializeRouter = (routes?: RouteRecordRaw[]) => {
   let localRoutes: RouteRecordRaw[] = [
@@ -92,7 +107,7 @@ const initializeRouter = (routes?: RouteRecordRaw[]) => {
     localRoutes = routes
   }
 
-  const router = createRouter({
+  router = createRouter({
     history: createWebHistory(),
     routes: localRoutes,
   })
@@ -110,8 +125,9 @@ const initializeRouter = (routes?: RouteRecordRaw[]) => {
 
 let storeInitialized = false
 
-const initializeStore = () => {
-  plugins.push(createTestingPinia({ createSpy: vi.fn }))
+export const initializeStore = () => {
+  if (storeInitialized) return
+  plugins.push(createTestingPinia({ createSpy: vi.fn, stubActions: false }))
   storeInitialized = true
 }
 
@@ -186,7 +202,35 @@ const renderComponent = <Props>(
   delete localWrapperOptions.store
 
   const view = render(component, localWrapperOptions) as ExtendedRenderResult
-  view.events = userEvent
+
+  const events = userEvent.setup({
+    advanceTimers(delay) {
+      try {
+        vi.advanceTimersByTime(delay)
+        // eslint-disable-next-line no-empty
+      } catch {}
+    },
+  })
+
+  view.events = {
+    ...events,
+    async debounced(cb, ms) {
+      vi.useFakeTimers()
+
+      await cb()
+
+      if (ms) {
+        vi.advanceTimersByTime(ms)
+      } else {
+        vi.runAllTimers()
+      }
+
+      vi.useRealTimers()
+
+      await waitForNextTick()
+      await nextTick()
+    },
+  }
 
   Object.assign(view, buildIconsQueries(view.container as HTMLElement))
   Object.assign(view, buildLinksQueries(view.container as HTMLElement))

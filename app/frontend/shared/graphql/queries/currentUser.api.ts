@@ -9,6 +9,7 @@ export type ReactiveFunction<TParam> = () => TParam;
 export const CurrentUserDocument = gql`
     query currentUser {
   currentUser {
+    id
     firstname
     lastname
     preferences

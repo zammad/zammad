@@ -329,12 +329,14 @@ const locale = useLocaleStore()
             <div
               class="flex grow flex-col items-start overflow-y-auto bg-black text-white"
             >
-              <CommonInputSearch
-                v-if="!context.noFiltering"
-                ref="filterInput"
-                v-model="filter"
-                wrapper-class="m-4"
-              />
+              <div class="w-full p-4">
+                <CommonInputSearch
+                  v-if="!context.noFiltering"
+                  ref="filterInput"
+                  v-model="filter"
+                  wrapper-class="p-4"
+                />
+              </div>
               <div
                 v-if="currentPath.length"
                 :class="{
