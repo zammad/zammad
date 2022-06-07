@@ -1,21 +1,22 @@
 class App.SearchableSelect extends Spine.Controller
 
   events:
-    'input .js-input':       'onInput'
-    'blur .js-input':        'onBlur'
-    'focus .js-input':       'onFocus'
-    'focus .js-shadow':      'onShadowFocus'
-    'change .js-shadow':     'onShadowChange'
-    'click .js-option':      'selectItem'
-    'click .js-enter':       'navigateIn'
-    'click .js-back':        'navigateOut'
-    'mouseenter .js-option': 'highlightItem'
-    'mouseenter .js-enter':  'highlightItem'
-    'mouseenter .js-back':   'highlightItem'
-    'shown.bs.dropdown':     'onDropdownShown'
-    'hidden.bs.dropdown':    'onDropdownHidden'
-    'keyup .js-input':       'onKeyUp'
-    'click .js-remove':      'removeThisToken'
+    'input .js-input':                      'onInput'
+    'blur .js-input':                       'onBlur'
+    'focus .js-input':                      'onFocus'
+    'focus .js-shadow':                     'onShadowFocus'
+    'change .js-shadow':                    'onShadowChange'
+    'click .js-option':                     'selectItem'
+    'click .searchableSelect-option-text':  'selectItem'
+    'click .searchableSelect-option-arrow': 'navigateIn'
+    'click .js-back':                       'navigateOut'
+    'mouseenter .js-option':                'highlightItem'
+    'mouseenter .js-enter':                 'highlightItem'
+    'mouseenter .js-back':                  'highlightItem'
+    'shown.bs.dropdown':                    'onDropdownShown'
+    'hidden.bs.dropdown':                   'onDropdownHidden'
+    'keyup .js-input':                      'onKeyUp'
+    'click .js-remove':                     'removeThisToken'
 
   elements:
     '.js-dropdown':               'dropdown'
@@ -288,10 +289,10 @@ class App.SearchableSelect extends Spine.Controller
     @shadowInput.val key
 
   selectItem: (event) ->
-    currentText = event.currentTarget.querySelector('span.searchableSelect-option-text').textContent.trim()
+    currentText = $(event.target).text().trim()
     return if !currentText
 
-    dataId = event.currentTarget.getAttribute('data-value')
+    dataId = $(event.target).closest('li').data('value')
     if @attribute.multiple
       @addValueToShadowInput(currentText, dataId)
     else
@@ -299,7 +300,6 @@ class App.SearchableSelect extends Spine.Controller
 
   navigateIn: (event) ->
     event.stopPropagation()
-    @selectItem(event)
     @navigateDepth(1)
 
   navigateOut: (event) ->
@@ -512,9 +512,8 @@ class App.SearchableSelect extends Spine.Controller
 
   addValueToShadowInput: (currentText, dataId) ->
     @input.val('')
+    return if @shadowInput.val().includes("#{dataId}") if @shadowInput.val() # cast dataId to string before check
     @currentData = {name: currentText, value: dataId}
-    if @shadowInput.val()
-      return if @shadowInput.val().includes("#{dataId}")  # cast dataId to string before check
     @shadowInput.append($('<option/>').attr('selected', true).attr('value', @currentData.value).text(@currentData.name))
     @onShadowChange()
 

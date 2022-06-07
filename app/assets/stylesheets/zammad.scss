@@ -11118,6 +11118,18 @@ output {
     &.is-hidden {
       display: none;
     }
+
+    &.js-enter {
+      padding: 0;
+
+      span.searchableSelect-option-text {
+        padding: 11px 15px;
+      }
+
+      span.searchableSelect-option-arrow {
+        padding: 11px 15px;
+      }
+    }
   }
 
   li:not(.is-active):hover + li {

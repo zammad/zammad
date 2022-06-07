@@ -570,8 +570,8 @@ QUnit.test("searchable_select submenu and option list check", assert => {
   });
 
   el.find("[name=\"tree_select\"].js-shadow + .js-input").trigger('click')
-  el.find(".searchableSelect .js-optionsList [data-value=\"a\\\\a\"]").mouseenter().trigger('click')
-  el.find(".searchableSelect .js-optionsSubmenu [data-value=\"a\\\\a::aab\"]").mouseenter().trigger('click')
+  el.find(".searchableSelect .js-optionsList [data-value=\"a\\\\a\"] .searchableSelect-option-arrow").mouseenter().trigger('click')
+  el.find(".searchableSelect .js-optionsSubmenu [data-value=\"a\\\\a::aab\"] .searchableSelect-option-text").mouseenter().trigger('click')
   el.find("[name=\"tree_select\"].js-shadow + .js-input").trigger('click')
 
   var params = App.ControllerForm.params(el)

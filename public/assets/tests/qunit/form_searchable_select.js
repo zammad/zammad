@@ -214,22 +214,34 @@ QUnit.test("searchable_select submenu and option list check", assert => {
           default: defaults['searchable_select1'],
           null:    true,
         },
+        {
+          name:    'searchable_select2',
+          display: 'SearchableSelect2',
+          tag:     'searchable_select',
+          options: options,
+          default: defaults['searchable_select1'],
+          null:    true,
+        },
       ]
     },
   })
 
+  el.find("[name=\"searchable_select2\"].js-shadow + .js-input").trigger('click')
+  el.find("div[data-attribute-name=searchable_select2] .js-optionsList [data-value=\"c\\\\cc\"] .searchableSelect-option-text").mouseenter().trigger('click')
+
   el.find("[name=\"searchable_select1\"].js-shadow + .js-input").trigger('click')
-  el.find(".searchableSelect .js-optionsList [data-value=\"c\\\\cc\"]").mouseenter().trigger('click')
-  el.find(".searchableSelect .js-optionsSubmenu [data-value=\"c\\\\cc::bbb\"]").mouseenter().trigger('click')
+  el.find("div[data-attribute-name=searchable_select1] .js-optionsList [data-value=\"c\\\\cc\"] .searchableSelect-option-arrow").mouseenter().trigger('click')
+  el.find("div[data-attribute-name=searchable_select1] .js-optionsSubmenu [data-value=\"c\\\\cc::bbb\"] .searchableSelect-option-text").mouseenter().trigger('click')
   el.find("[name=\"searchable_select1\"].js-shadow + .js-input").trigger('click')
 
   var params = App.ControllerForm.params(el)
   var test_params = {
-    searchable_select1: 'c\\cc::bbb'
+    searchable_select1: 'c\\cc::bbb',
+    searchable_select2: 'c\\cc',
   }
 
-  var optionsSubmenu = el.find(".searchableSelect .js-optionsSubmenu")
-  var optionsList = el.find(".searchableSelect .js-optionsList")
+  var optionsSubmenu = el.find("div[data-attribute-name=searchable_select1] .searchableSelect .js-optionsSubmenu")
+  var optionsList = el.find("div[data-attribute-name=searchable_select1] .searchableSelect .js-optionsList")
 
   setTimeout( () => {
     assert.deepEqual(params, test_params, 'form param check')
@@ -237,5 +249,4 @@ QUnit.test("searchable_select submenu and option list check", assert => {
     assert.equal(optionsList.is('[hidden]'), true, 'options list is hidden')
     done()
   }, 300)
-
 });

@@ -4,7 +4,9 @@
     <%= @option.name %><% if @detail: %><span class="dropdown-detail"><%= @detail %></span><% end %>
   </span>
   <% if @option.children: %>
+  <span class="searchableSelect-option-arrow">
     <%- @Icon('arrow-right', 'recipientList-arrow') %>
+  </span>
   <% end %>
   <% if @option.inactive is true: %>
     <span>
