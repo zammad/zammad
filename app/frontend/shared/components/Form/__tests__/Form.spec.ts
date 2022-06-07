@@ -329,7 +329,7 @@ describe('Form.vue - Edge Cases', () => {
   it('exposes the form node', () => {
     expect.assertions(2)
 
-    return new Promise((resolve): void => {
+    return new Promise<void>((resolve) => {
       renderComponent(
         {
           template: `<div><Form ref="form" :schema="schema" /></div>`,
