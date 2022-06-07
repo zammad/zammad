@@ -1,7 +1,6 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import type { RouteRecordRaw } from 'vue-router'
-import { useSearchPlugins } from './plugins'
 
 const routes: RouteRecordRaw[] = [
   {
@@ -9,19 +8,6 @@ const routes: RouteRecordRaw[] = [
     name: 'SearchOverview',
     props: true,
     component: () => import('./views/SearchOverview.vue'),
-    beforeEnter(to) {
-      const { type } = to.params
-
-      if (!type) return undefined
-
-      const searchPlugins = useSearchPlugins()
-
-      if (Array.isArray(type) || !searchPlugins[type]) {
-        return { ...to, params: {} }
-      }
-
-      return undefined
-    },
     meta: {
       title: __('Search'),
       requiresAuth: true,
