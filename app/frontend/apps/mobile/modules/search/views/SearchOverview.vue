@@ -1,7 +1,7 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { onMounted, reactive, ref, watch, defineComponent } from 'vue'
+import { onMounted, reactive, ref, watch } from 'vue'
 import CommonInputSearch, {
   CommonInputSearchExpose,
 } from '@shared/components/CommonInputSearch/CommonInputSearch.vue'
@@ -173,7 +173,7 @@ const types: SearchTypeItem[] = Object.entries(searchPlugins).map(
 </script>
 
 <script lang="ts">
-export default defineComponent({
+export default {
   beforeRouteEnter(to) {
     const { type } = to.params
     if (!type) return undefined
@@ -185,7 +185,7 @@ export default defineComponent({
 
     return undefined
   },
-})
+}
 </script>
 
 <template>
