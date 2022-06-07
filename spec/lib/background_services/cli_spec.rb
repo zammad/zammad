@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe BackgroundServices::Cli, ensure_threads_exited: true do
-  context 'when invoking scripts/background-services.rb via CLI' do
+  context 'when invoking scripts/background-worker.rb via CLI' do
 
     context 'without arguments' do
       it 'shows a help screen' do

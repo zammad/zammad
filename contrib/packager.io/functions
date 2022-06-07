@@ -108,7 +108,7 @@ function detect_webserver () {
 
 function create_initscripts () {
   echo "# (Re)creating init scripts"
-  zammad scale web=${ZAMMAD_WEBS} websocket=${ZAMMAD_WEBSOCKETS} worker=${ZAMMAD_WORKERS}
+  zammad scale web="${ZAMMAD_WEBS}" websocket="${ZAMMAD_WEBSOCKETS}" background-worker="${ZAMMAD_WORKERS}"
 
   echo "# Enabling Zammad on boot"
   ${INIT_CMD} enable zammad

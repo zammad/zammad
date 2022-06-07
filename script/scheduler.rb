@@ -13,7 +13,7 @@ Dir.chdir dir
 require 'bundler'
 require 'daemons'
 
-DEPRECATION_WARNING = "'script/scheduler.rb' is deprecated and will be removed with Zammad 6. Please use 'script/background-services.rb' instead - note that this will not daemonize but always stay in the foreground.".freeze
+DEPRECATION_WARNING = "'script/scheduler.rb' is deprecated and will be removed with Zammad 6. Please use 'script/background-worker.rb' instead - note that this will not daemonize but always stay in the foreground.".freeze
 warn "DEPRECATION WARNING: #{DEPRECATION_WARNING}"
 
 def before_fork

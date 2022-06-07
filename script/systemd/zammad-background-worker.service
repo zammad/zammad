@@ -1,12 +1,11 @@
 [Unit]
-Description=Zammad scheduler
+Description=Zammad Background Worker
 After=syslog.target
 After=network.target
 After=zammad.service
 Requires=zammad.service
 
 [Service]
-Type=forking
 EnvironmentFile=/etc/zammad/zammad.env
 User=zammad
 Group=zammad
@@ -14,7 +13,7 @@ Restart=always
 
 WorkingDirectory=/opt/zammad
 
-ExecStart=/bin/bash -l -c "${BUNDLE_BINARY} exec script/scheduler.rb start"
+ExecStart=/bin/bash -l -c "${BUNDLE_BINARY} exec script/background-worker.rb start"
 
 [Install]
 WantedBy=zammad.service

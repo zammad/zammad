@@ -1,5 +1,5 @@
 [Unit]
-Description=Zammad websocket
+Description=Zammad Websocket Server
 After=syslog.target
 After=network.target
 After=zammad.service
