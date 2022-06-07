@@ -3777,6 +3777,7 @@ msgid "Download and install the %s Migration Plugin on your %s instance."
 msgstr "Download en installeer de %s Migration Plugin op uw %'s instance."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
+#: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 msgid "Draft"
 msgstr "Concept"
 
@@ -6325,7 +6326,9 @@ msgstr "Macro"
 msgid "Macro group restrictions do not cover all tickets"
 msgstr "Macrogroepsbeperkingen dekken niet alle tickets"
 
-#: app/assets/javascripts/app/controllers/macro.coffee db/seeds/permissions.rb
+#: app/assets/javascripts/app/controllers/macro.coffee
+#: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
+#: db/seeds/permissions.rb
 msgid "Macros"
 msgstr "Macro's"
 
@@ -8556,6 +8559,7 @@ msgid "Save"
 msgstr "Opslaan"
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_overwrite_modal.coffee
+#: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 msgid "Save Draft"
 msgstr "Concept opslaan"
 

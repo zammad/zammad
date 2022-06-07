@@ -3835,6 +3835,7 @@ msgstr ""
 "Descargue e instale el complemento de migración de %s en su instancia de %s."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
+#: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 msgid "Draft"
 msgstr "Borrador"
 
@@ -6403,7 +6404,9 @@ msgstr "Macro"
 msgid "Macro group restrictions do not cover all tickets"
 msgstr "Las restricciones de macrogrupos no cubren todos los boletos"
 
-#: app/assets/javascripts/app/controllers/macro.coffee db/seeds/permissions.rb
+#: app/assets/javascripts/app/controllers/macro.coffee
+#: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
+#: db/seeds/permissions.rb
 msgid "Macros"
 msgstr "macros"
 
@@ -8639,6 +8642,7 @@ msgid "Save"
 msgstr "Guardar"
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_overwrite_modal.coffee
+#: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 msgid "Save Draft"
 msgstr "Guardar borrador"
 

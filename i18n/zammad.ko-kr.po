@@ -3755,6 +3755,7 @@ msgid "Download and install the %s Migration Plugin on your %s instance."
 msgstr "다운로드하여 %s 예에서 %s 마이그레이션 플러그인을 설치합니다."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
+#: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 msgid "Draft"
 msgstr "초안"
 
@@ -6295,7 +6296,9 @@ msgstr "매크로"
 msgid "Macro group restrictions do not cover all tickets"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/macro.coffee db/seeds/permissions.rb
+#: app/assets/javascripts/app/controllers/macro.coffee
+#: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
+#: db/seeds/permissions.rb
 msgid "Macros"
 msgstr "매크로"
 
@@ -8553,6 +8556,7 @@ msgid "Save"
 msgstr "저장"
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_overwrite_modal.coffee
+#: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 #, fuzzy
 #| msgid "Draft"
 msgid "Save Draft"

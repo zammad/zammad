@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-04-28 03:30+0000\n"
-"Last-Translator: Victor Cezario <victorhcezario@gmail.com>\n"
+"PO-Revision-Date: 2022-06-01 03:30+0000\n"
+"Last-Translator: Danniel Macedo <djsmacedo@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translations.zammad.org/projects/"
 "zammad/zammad-stable/pt_BR/>\n"
 "Language: pt-br\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.12\n"
+"X-Generator: Weblate 4.12.1\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -372,6 +372,16 @@ msgid ""
 "If you have customers with different business hours, you can create multiple "
 "calendars. Tickets are linked to calendars using **SLAs**."
 msgstr ""
+"Um **calendário** é necessário para calcular os encaminhamentos com base no "
+"horário comercial e enviar notificações de encaminhamento.\n"
+"\n"
+"Defina um calendário **\"padrão\"** válido em todo o sistema. As "
+"notificações de escalação só serão enviadas aos seus agentes durante o "
+"horário comercial definido.\n"
+"\n"
+"Se você tiver clientes com horários comerciais diferentes, poderá criar "
+"vários calendários. Os ingressos são vinculados a calendários usando "
+"**SLAs**."
 
 #: app/controllers/getting_started_controller.rb
 msgid "A URL looks like this: https://zammad.example.com"
@@ -910,7 +920,7 @@ msgstr "Aplicar"
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
 msgid "Apply Shared Draft"
-msgstr ""
+msgstr "Aplicar Rascunho Compartilhado"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
@@ -3673,6 +3683,7 @@ msgid "Download and install the %s Migration Plugin on your %s instance."
 msgstr "Baixe e instale o %s Plugins de Migração em sua %s instância %s."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
+#: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 msgid "Draft"
 msgstr "Esboço"
 
@@ -6181,7 +6192,9 @@ msgstr "Macro"
 msgid "Macro group restrictions do not cover all tickets"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/macro.coffee db/seeds/permissions.rb
+#: app/assets/javascripts/app/controllers/macro.coffee
+#: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
+#: db/seeds/permissions.rb
 msgid "Macros"
 msgstr "Macros"
 
@@ -8405,6 +8418,7 @@ msgid "Save"
 msgstr "Salvar"
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_overwrite_modal.coffee
+#: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 #, fuzzy
 #| msgid "Draft"
 msgid "Save Draft"

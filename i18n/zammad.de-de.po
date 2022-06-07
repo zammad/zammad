@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-05-17 03:05+0000\n"
-"Last-Translator: Martin Gruner <mg@zammad.com>\n"
+"PO-Revision-Date: 2022-06-07 18:10+0000\n"
+"Last-Translator: Ralf Ebert <info@ralfebert.de>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/de/>\n"
 "Language: de-de\n"
@@ -134,7 +134,7 @@ msgstr "%s-Anmeldeinformationen"
 
 #: app/assets/javascripts/app/models/user.coffee
 msgid "%s ended switch to |%s|!"
-msgstr "%s beendete sein Sitzung von |%s|!"
+msgstr "%s hat die Übernahme von |%s| beendet!"
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco
@@ -183,7 +183,7 @@ msgstr "%s meiner Tickets sind derzeit in Bearbeitung."
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_escalation.jst.eco
 msgid "%s of my tickets escalated."
-msgstr "%s meiner Tickets sind Eskaliert."
+msgstr "%s meiner Tickets sind eskaliert."
 
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay_user_group.jst.eco
 msgid "%s people"
@@ -203,7 +203,7 @@ msgstr "%s wird benötigt!"
 
 #: app/assets/javascripts/app/models/user.coffee
 msgid "%s started a new session"
-msgstr "%s startet eine neue Sitzung"
+msgstr "%s startete eine neue Sitzung"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
@@ -251,7 +251,7 @@ msgstr "%s Benutzer zu %s Benutzer"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco
 msgid "%s% are currently in process"
-msgstr "%s% derzeit in Bearbeitung"
+msgstr "%s% sind derzeit in Bearbeitung"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_reopen.jst.eco
 msgid "%s% have been reopened"
@@ -661,7 +661,7 @@ msgstr "Eine Notiz hinzufügen"
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 msgid "Add a Personal Access Token"
-msgstr "Hinzufügen eines persönlichen Access Token"
+msgstr "Hinzufügen eines persönlichen Zugangs-Tokens"
 
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 msgid "Add alarm to pending reminder and escalated tickets."
@@ -801,7 +801,7 @@ msgstr "Erlauben Sie die Verwendung von E-Mail-Adressen für mehrere Benutzer."
 
 #: app/assets/javascripts/app/models/chat.coffee
 msgid "Allow websites (separated by ;)"
-msgstr "Erlaubte Webseiten (separiert durch ;)"
+msgstr "Erlaubte Webseiten (getrennt mit ;)"
 
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
 msgid "Also notify via email"
@@ -838,7 +838,7 @@ msgstr "Es ist ein Fehler aufgetreten: %s"
 #: app/assets/javascripts/app/controllers/_integration/monit.coffee
 #: app/assets/javascripts/app/controllers/_integration/nagios.coffee
 msgid "An open-source monitoring tool."
-msgstr "Ein Open Source Monitoring Tool."
+msgstr "Ein Open Source Monitoring-Werkzeug."
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
@@ -1323,7 +1323,7 @@ msgstr "Caller-IDs basierend auf der Caller-ID des Senders blockieren."
 
 #: app/assets/javascripts/app/models/chat.coffee
 msgid "Blocked IPs (separated by ;)"
-msgstr "Blockierte IP (getrennt mit ;)"
+msgstr "Blockierte IPs (getrennt mit ;)"
 
 #: app/assets/javascripts/app/models/chat.coffee
 msgid "Blocked countries"
@@ -2030,7 +2030,7 @@ msgstr "Verfassen Sie Ihre Nachricht…"
 #: app/assets/javascripts/app/models/job.coffee
 #: app/assets/javascripts/app/models/trigger.coffee
 msgid "Conditions for affected objects"
-msgstr "Bedingung für zu verarbeitende Objekte"
+msgstr "Bedingungen für zu verarbeitende Objekte"
 
 #: app/assets/javascripts/app/models/overview.coffee
 msgid "Conditions for shown Tickets"
@@ -2744,7 +2744,7 @@ msgstr "Definieren Sie die maximale Payloadgröße für Elasticsearch."
 
 #: db/seeds/settings.rb
 msgid "Define pipeline name for Elasticsearch."
-msgstr "Definieren Sie den Pipelinenamen für Elasticsearch."
+msgstr "Definieren Sie den Pipeline-Namen für Elasticsearch."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -2826,8 +2826,7 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Defines Zendesk endpoint authentication user."
-msgstr ""
-"Definiert den Benutzernamen für die Zendesk-Endpunkt-Authentifizierung."
+msgstr "Definiert den Benutzernamen für die Zendesk-Endpunkt-Authentifizierung."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -3582,7 +3581,7 @@ msgstr "Lösche zuerst alle vorhandenen Datensätze."
 
 #: db/seeds/schedulers.rb
 msgid "Delete obsolete classic IMAP backup."
-msgstr "Lösche obsoletes klassische IMAP-Sicherung."
+msgstr "Lösche obsolete klassische IMAP-Sicherung."
 
 #: db/seeds/schedulers.rb
 msgid "Delete old 'RecentView' entries."
@@ -3590,7 +3589,7 @@ msgstr "Bereinigung alter 'RecentView'-Einträge."
 
 #: db/seeds/schedulers.rb
 msgid "Delete old activity stream entries."
-msgstr "Lösche alte Aktivitätenstream-Einträge."
+msgstr "Lösche alte Einträge im Aktivitäts-Verlauf."
 
 #: db/seeds/schedulers.rb
 msgid "Delete old online notification entries."
@@ -3836,6 +3835,7 @@ msgstr ""
 "%s Instanz."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
+#: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 msgid "Draft"
 msgstr "Entwurf"
 
@@ -4318,7 +4318,7 @@ msgstr "Person oder Organisation/Firma eingeben"
 
 #: app/assets/javascripts/app/views/integration/smime_private_key_add.jst.eco
 msgid "Enter Private Key Secret"
-msgstr "Privaten Schlüssel eingeben"
+msgstr "Passwort für privaten Schlüssel eingeben"
 
 #: app/assets/javascripts/app/views/ticket_zoom/title.jst.eco
 msgid "Enter Title…"
@@ -6359,7 +6359,7 @@ msgstr "Lokation einer externen chat.css-Datei."
 
 #: app/assets/javascripts/app/views/login.jst.eco
 msgid "Log in to %s"
-msgstr "Mit %s anmelden"
+msgstr "Bei %s anmelden"
 
 #: app/assets/javascripts/app/models/user.coffee
 #: app/assets/javascripts/app/views/maintenance.jst.eco
@@ -6400,7 +6400,9 @@ msgstr "Makro"
 msgid "Macro group restrictions do not cover all tickets"
 msgstr "Die Makro-Gruppenbeschränkungen gelten nicht für alle Tickets"
 
-#: app/assets/javascripts/app/controllers/macro.coffee db/seeds/permissions.rb
+#: app/assets/javascripts/app/controllers/macro.coffee
+#: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
+#: db/seeds/permissions.rb
 msgid "Macros"
 msgstr "Makros"
 
@@ -6462,7 +6464,7 @@ msgstr ""
 
 #: app/views/mailer/application.html.erb
 msgid "Manage your notification settings"
-msgstr "Benachrichtigungseinstellungen verwalten"
+msgstr "Benachrichtigungs-Einstellungen verwalten"
 
 #: app/assets/javascripts/app/views/api.jst.eco
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
@@ -8638,6 +8640,7 @@ msgid "Save"
 msgstr "Speichern"
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_overwrite_modal.coffee
+#: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 msgid "Save Draft"
 msgstr "Entwurf speichern"
 
@@ -9474,7 +9477,7 @@ msgstr "System"
 
 #: db/seeds/settings.rb
 msgid "System Address Display Name"
-msgstr "System-Anzeigename"
+msgstr "Anzeigename für System-Adresse"
 
 #: db/seeds/settings.rb
 msgid "System Init Done"
@@ -12815,7 +12818,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/settings/ticket_hook_position.jst.eco
 msgid "|Left| means |[Ticket#12345] Some Subject|"
-msgstr "|link| bedeutet |[Ticket#12345] Some Ein Betreff |"
+msgstr "|links| bedeutet |[Ticket#12345] Ein Betreff |"
 
 #: app/assets/javascripts/app/views/settings/ticket_hook_position.jst.eco
 msgid ""
@@ -12823,9 +12826,9 @@ msgid ""
 "should enable \"postmaster___follow___up___search___in\" to recognize follow-"
 "ups based on email headers and/or body."
 msgstr ""
-"|kein| bedeutet |Ein Betreff| (ohne Ticketnummer). In diesen Fall sollte die "
-"Einstellung \"postmaster___follow___up___search___in\" aktiviert werden um "
-"Nachfragen anhand der E-Mail-Kopfzeilen und/oder des E-Mail-Textes zu "
+"|keine| bedeutet |Ein Betreff| (ohne Ticketnummer). In diesen Fall sollte "
+"die Einstellung \"postmaster___follow___up___search___in\" aktiviert werden "
+"um Nachfragen anhand der E-Mail-Kopfzeilen und/oder des E-Mail-Textes zu "
 "erkennen."
 
 #: app/assets/javascripts/app/views/settings/ticket_hook_position.jst.eco

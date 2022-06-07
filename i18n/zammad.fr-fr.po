@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-04-29 05:45+0000\n"
-"Last-Translator: Ludovic <l.kennel@3magroup.com>\n"
+"PO-Revision-Date: 2022-06-01 03:30+0000\n"
+"Last-Translator: Guillaume Lasserre <guillaume.lasserre@clirisgroup.com>\n"
 "Language-Team: French <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/fr/>\n"
 "Language: fr-fr\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.12\n"
+"X-Generator: Weblate 4.12.1\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -1034,10 +1034,8 @@ msgstr "Affecter un temps d'attente maximal"
 
 #: app/assets/javascripts/app/models/_application_model.coffee
 #: app/assets/javascripts/app/models/group.coffee
-#, fuzzy
-#| msgid "Assignment Timeout"
 msgid "Assignment timeout"
-msgstr "Affecter un temps d'attente maximal"
+msgstr "‎Délai d’expiration de l’affectation‎"
 
 #: app/assets/javascripts/app/models/group.coffee
 #: db/seeds/object_manager_attributes.rb
@@ -1803,10 +1801,8 @@ msgid "Check 'Channel' streams."
 msgstr "Connecter des canaux"
 
 #: db/seeds/schedulers.rb
-#, fuzzy
-#| msgid "Connect Channels"
 msgid "Check channels."
-msgstr "Connecter des canaux"
+msgstr "Vérifier les canaux"
 
 #: lib/search_index_backend.rb
 msgid "Check the response and payload for detailed information:"
@@ -3603,9 +3599,8 @@ msgid "Delete obsolete classic IMAP backup."
 msgstr "Supprimer les configurations IMAP classiques de secours obsolètes."
 
 #: db/seeds/schedulers.rb
-#, fuzzy
 msgid "Delete old 'RecentView' entries."
-msgstr "Supprimer les anciennes entrées de \"VueRécente\"."
+msgstr "Supprimer les anciennes entrées de \"RecentView\"."
 
 #: db/seeds/schedulers.rb
 msgid "Delete old activity stream entries."
@@ -3853,6 +3848,7 @@ msgstr ""
 "Télécharger et installer le Plugin de Migration %s pour votre instance %s."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
+#: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 msgid "Draft"
 msgstr "Brouillon"
 
@@ -4581,10 +4577,9 @@ msgid "Extended Search"
 msgstr "Recherche étendue"
 
 #: lib/search_index_backend.rb
-#, fuzzy
 msgid "Extract zammad-attachment information from arrays"
 msgstr ""
-"Extraire les informations des pièces-jointes de zammad depuis des tableaux"
+"Extraire les informations des pièces jointes de Zammad depuis des tableaux"
 
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
@@ -4613,9 +4608,8 @@ msgstr "Impossible de trouver la sauvegarde sur le canal !"
 
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
-#, fuzzy
 msgid "Failed to roll back the migration of the channel!"
-msgstr "L'annulation de la migration du canal a échoué!"
+msgstr "L'annulation de la migration du canal a échoué !"
 
 #: app/assets/javascripts/app/controllers/user_profile.coffee
 #, fuzzy
@@ -6507,7 +6501,9 @@ msgstr ""
 "Les restrictions concernant les groupes macro ne couvrent pas tous les "
 "tickets"
 
-#: app/assets/javascripts/app/controllers/macro.coffee db/seeds/permissions.rb
+#: app/assets/javascripts/app/controllers/macro.coffee
+#: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
+#: db/seeds/permissions.rb
 msgid "Macros"
 msgstr "Macros"
 
@@ -8776,6 +8772,7 @@ msgid "Save"
 msgstr "Sauver"
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_overwrite_modal.coffee
+#: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 #, fuzzy
 #| msgid "Draft"
 msgid "Save Draft"
