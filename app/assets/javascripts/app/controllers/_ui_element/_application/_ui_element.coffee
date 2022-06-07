@@ -307,6 +307,7 @@ class App.UiElement.ApplicationUiElement
     attribute.historical_options ||= {}
     if _.isArray(attribute.options)
       for value in values
+        continue if !value
         continue if @findOption(attribute.options, value)
         attribute.options.push(
           value: value
@@ -314,5 +315,6 @@ class App.UiElement.ApplicationUiElement
         )
     else
       for value in values
+        continue if !value
         continue if attribute.options[value]
         attribute.options[value] = attribute.historical_options[value] || value

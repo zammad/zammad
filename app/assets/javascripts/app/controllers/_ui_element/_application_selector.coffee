@@ -494,6 +494,9 @@ class App.UiElement.ApplicationSelector
         config['value'] = @buildValueConfigValue(elementFull, elementRow, groupAndAttribute, elements, meta, attribute)
       if 'multiple' of config
         config = @buildValueConfigMultiple(config, meta)
+      if config.tag is 'tree_select'
+        config.multiple = true
+        config.nulloption = true
       if config.relation is 'User'
         config.multiple = false
         config.nulloption = false

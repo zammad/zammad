@@ -264,7 +264,8 @@ QUnit.test("form elements check", assert => {
   });
   var params = App.ControllerForm.params(el)
   var test_params = {
-    tree_select_search: ['aa::aab', 'aa::aac::33', 'bb'],
+    tree_select_search: ['aa::aab', 'bb', 'aa::aac::33'],
+    tree_select_search_completion: ""
   }
   assert.deepEqual(params, test_params, 'form param check')
 
