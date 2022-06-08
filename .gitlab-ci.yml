@@ -39,6 +39,8 @@ variables:
   KEEP_ON_MAIL_SERVER_ACCOUNT: "zammad@mail.test.dc.zammad.com:zammad"
   # Temporary switch to enable the mobile front end for testing.
   ENABLE_EXPERIMENTAL_MOBILE_FRONTEND: 'true'
+  # Compile assets only once.
+  CI_SKIP_ASSETS_PRECOMPILE: 'true'
 
 cache:
   # Cache gems in between jobs and pipelines

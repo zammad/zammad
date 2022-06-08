@@ -15,8 +15,9 @@ import tsconfig from './tsconfig.base.json'
 import TransformTestId from './app/frontend/build/transforms/transformTestId'
 import ManualChunks from './app/frontend/build/manual-chunks.mjs'
 
-export default defineConfig(({ mode }) => {
+export default defineConfig(({ mode, command }) => {
   const isTesting = ['test', 'storybook', 'cypress'].includes(mode)
+  const isBuild = command === 'build'
 
   return {
     esbuild: {
@@ -42,7 +43,7 @@ export default defineConfig(({ mode }) => {
     },
     plugins: [
       // Ruby plugin is not needed inside of the vitest context and has some side effects.
-      isTesting ? [] : [...RubyPlugin(), ManualChunks()],
+      isTesting && !isBuild ? [] : [...RubyPlugin(), ManualChunks()],
       VuePlugin({
         template: {
           compilerOptions: {

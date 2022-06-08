@@ -21,6 +21,10 @@ RSpec.configure do |config|
       Capybara.app_host = "http://#{ip_address}"
     end
 
+    if Capybara.app_host.nil?
+      Capybara.app_host = 'http://localhost'
+    end
+
     # set custom Zammad driver (e.g. zammad_chrome) for special
     # functionalities and CI requirements
     browser_name = ENV.fetch('BROWSER', 'firefox')
