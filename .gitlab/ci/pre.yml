@@ -102,10 +102,12 @@
 # Executed on a dedicated runner.
 'push to github':
   <<: *template_pre
-  tags:
-    - deploy
   before_script:
-    - '' # no RVM present in deploy ENV
+    - test -d $HOME/.ssh || mkdir $HOME/.ssh
+    - ssh-keyscan github.com >> $HOME/.ssh/known_hosts
+    - eval $(ssh-agent -s)
+    - echo "$PUSH_TO_GITHUB_SSH_PRIVATE_KEY" | ssh-add -
+    - ssh-add -l
   script:
     - git fetch --unshallow
     - script/build/sync_repo.sh git@github.com:zammad/zammad.git
