@@ -632,6 +632,20 @@ RSpec.describe Channel::EmailParser, type: :model do
               include_examples 'adds message to ticket'
             end
 
+            context 'in visible text with a linebreak' do
+              let(:raw_mail) { <<~RAW.chomp }
+                From: me@example.com
+                To: customer@example.com
+                Subject: no reference
+
+                Lorem ipsum dolor #{ticket_ref}
+                consetetur sadipscing elitr
+                sed diam nonumy eirmod
+              RAW
+
+              include_examples 'adds message to ticket'
+            end
+
             context 'as part of a larger word' do
               let(:ticket_ref) { "Foo#{Setting.get('ticket_hook')}#{Setting.get('ticket_hook_divider')}#{ticket.number}bar" }
 
