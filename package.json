@@ -78,7 +78,7 @@
     "vite-plugin-ruby": "^3.0.12",
     "vite-plugin-svg-icons": "^2.0.1",
     "vitest": "^0.14.0",
-    "vue-tsc": "^0.35.2"
+    "vue-tsc": "^0.36.1"
   },
   "dependencies": {
     "@apollo/client": "^3.6.6",

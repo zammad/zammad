@@ -171,9 +171,10 @@ const formConfig = computed(() => {
 })
 
 // Define the additional component library for the used components which are not form fields.
+// Because of a typescript error, we need to cased the type: https://github.com/formkit/formkit/issues/274
 const additionalComponentLibrary = {
-  FormLayout: markRaw(FormLayout) as ConcreteComponent,
-  FormGroup: markRaw(FormGroup) as ConcreteComponent,
+  FormLayout: markRaw(FormLayout) as unknown as ConcreteComponent,
+  FormGroup: markRaw(FormGroup) as unknown as ConcreteComponent,
 }
 
 // Define the static schema, which will be filled with the real fields from the `schemaData`.
