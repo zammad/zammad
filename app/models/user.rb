@@ -1190,7 +1190,7 @@ raise 'At least one user need to have admin permissions'
 
             record[column] = 1
           end
-          record.save!
+          record.save!(validate: false)
         rescue => e
           Rails.logger.error e
         end

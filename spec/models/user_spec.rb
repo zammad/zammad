@@ -1061,14 +1061,14 @@ RSpec.describe User, type: :model do
                      'Trigger'                            => { 'created_by_id' => 0, 'updated_by_id' => 0 },
                      'Translation'                        => { 'created_by_id' => 0, 'updated_by_id' => 0 },
                      'ObjectManager::Attribute'           => { 'created_by_id' => 0, 'updated_by_id' => 0 },
-                     'User'                               => { 'created_by_id' => 1, 'out_of_office_replacement_id' => 1, 'updated_by_id' => 1 },
+                     'User'                               => { 'created_by_id' => 2, 'out_of_office_replacement_id' => 1, 'updated_by_id' => 2 },
                      'Organization'                       => { 'created_by_id' => 0, 'updated_by_id' => 0 },
                      'Macro'                              => { 'created_by_id' => 0, 'updated_by_id' => 0 },
                      'CoreWorkflow'                       => { 'created_by_id' => 0, 'updated_by_id' => 0 },
                      'Mention'                            => { 'created_by_id' => 1, 'updated_by_id' => 0, 'user_id' => 1 },
                      'Channel'                            => { 'created_by_id' => 0, 'updated_by_id' => 0 },
                      'Role'                               => { 'created_by_id' => 0, 'updated_by_id' => 0 },
-                     'History'                            => { 'created_by_id' => 5 },
+                     'History'                            => { 'created_by_id' => 6 },
                      'Webhook'                            => { 'created_by_id' => 0, 'updated_by_id' => 0 },
                      'Overview'                           => { 'created_by_id' => 1, 'updated_by_id' => 0 },
                      'ActivityStream'                     => { 'created_by_id' => 0 },
@@ -1106,6 +1106,11 @@ RSpec.describe User, type: :model do
       # created_by_id and updated_by_id.
       create(:'chat/agent')
       chat_agent_user = create(:'chat/agent', created_by_id: user.id, updated_by_id: user.id)
+
+      # invalid user (by email) which has been updated by the user which
+      # will get deleted (#3935)
+      invalid_user = build(:user, email: 'abc', created_by_id: user.id, updated_by_id: user.id)
+      invalid_user.save!(validate: false)
 
       # move ownership objects
       group                 = create(:group, created_by_id: user.id)
@@ -1160,6 +1165,7 @@ RSpec.describe User, type: :model do
         .and change(user_created_by, :out_of_office_replacement_id).to(1)
       expect { draft_start.reload }.to change(draft_start, :created_by_id).to(1)
       expect { draft_zoom.reload }.to change(draft_zoom, :created_by_id).to(1)
+      expect { invalid_user.reload }.to change(invalid_user, :created_by_id).to(1)
     end
 
     it 'does delete cache after user deletion' do
