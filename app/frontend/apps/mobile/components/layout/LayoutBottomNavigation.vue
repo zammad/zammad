@@ -22,12 +22,20 @@ const { user } = storeToRefs(useSessionStore())
     <CommonLink link="/notifications" class="flex flex-1 justify-center">
       <CommonIcon name="bell" size="medium" />
     </CommonLink>
-    <CommonLink link="/user" class="flex-1">
+    <CommonLink link="/user" class="flex-1" exact-active-class="user-active">
       <!-- TODO use CommonUserAvatar with entity -->
       <CommonAvatar
-        class="bg-red"
+        class="user-avatar bg-red"
         :initials="getInitials(user?.firstname, user?.lastname)"
       />
     </CommonLink>
   </footer>
 </template>
+
+<style scoped lang="scss">
+.user-active {
+  .user-avatar {
+    @apply outline outline-2 outline-blue;
+  }
+}
+</style>

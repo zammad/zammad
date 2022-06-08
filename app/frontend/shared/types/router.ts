@@ -15,6 +15,7 @@ export interface RouteRecordMeta {
   requiresAuth: boolean
   requiredPermission: Maybe<Array<string>>
   hasBottomNavigation?: boolean
+  hasHeader?: boolean
   level?: number
 }
 
