@@ -42,7 +42,9 @@ const errorLink = onError(({ graphQLErrors, networkError, operation }) => {
   }
 
   if (networkError) {
-    errorMessages.push(`[Network error]: ${networkError}`)
+    // Suppress error message in Capybara test context, as it can happen if the
+    //  test session is reset to 'about:blank' while requests are still running.
+    if (!VITE_TEST_MODE) errorMessages.push(`[Network error]: ${networkError}`)
     // Network error implies application connection problems.
     // TODO: what's missing here is a detection of web socket disconnects.
     useApplicationStore().takeConnectionDown()
