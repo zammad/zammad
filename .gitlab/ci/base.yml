@@ -27,6 +27,7 @@
     START_XVFB: 'false' # not needed for headless mode
     SE_NODE_MAX_SESSIONS: '5'
     SE_NODE_OVERRIDE_MAX_SESSIONS: 'true'
+    SE_OPTS: '--log /builds/selenium.log'
 
 .variables_selenium_chrome: &variables_selenium_chrome
   variables:
@@ -36,6 +37,8 @@
     START_XVFB: 'false' # not needed for headless mode
     SE_NODE_MAX_SESSIONS: '5'
     SE_NODE_OVERRIDE_MAX_SESSIONS: 'true'
+    SE_OPTS: '--log /builds/selenium.log'
+    CHROME_LOG_FILE: '/builds/chrome.log'
 
 .variables_app_restart_cmd: &variables_app_restart_cmd
   variables:

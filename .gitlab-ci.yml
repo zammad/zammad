@@ -70,3 +70,5 @@ before_script:
 
 after_script:
   - .gitlab/environment_info.sh > log/environment_info.log
+  # Copy logs from other containers to store them as artifacts.
+  - cp /builds/*.log log/ || true

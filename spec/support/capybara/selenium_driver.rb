@@ -15,6 +15,7 @@ Capybara.register_driver(:zammad_chrome) do |app|
       'intl.accept_languages'                                => 'en-US',
       'profile.default_content_setting_values.notifications' => 1, # ALLOW notifications
     },
+    args:            %w[--enable-logging --v=1],
     # Disable the "Chrome is controlled by automation software" info bar.
     excludeSwitches: ['enable-automation'],
   )
