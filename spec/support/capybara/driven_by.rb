@@ -3,6 +3,8 @@
 require_relative './set_up'
 
 RSpec.configure do |config|
+  capybara_examples_performed = 0
+
   config.before(:each, type: :system) do |example|
 
     Capybara.register_server :puma_wrapper do |app, port, host, **_options|
@@ -39,12 +41,15 @@ RSpec.configure do |config|
   end
 
   config.after(:each, type: :system) do
+    capybara_examples_performed += 1
+    # End the main capybara session only from time to time, to speed up tests and make
+    #   sure memory consumption does not rise too much.
     # Make sure additional sessions (from using_sessions) are always ended
     #   after every test and not kept alive. Selenium will automatically close
     #   idle sessions which can cause 404 errors later.
     #   (see https://github.com/teamcapybara/capybara/issues/2237)
     Capybara.send(:session_pool).reverse_each do |_mode, session|
-      if !session.eql?(Capybara.current_session)
+      if !session.eql?(Capybara.current_session) || (capybara_examples_performed % 100).zero?
         session.quit
       end
     end
