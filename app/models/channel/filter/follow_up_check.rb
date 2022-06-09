@@ -18,7 +18,10 @@ module Channel::Filter::FollowUpCheck
 
     # get ticket# from body
     if setting.include?('body')
-      ticket = Ticket::Number.check(mail[:body].html2text)
+      body = mail[:body]
+      body = body.html2text if mail[:content_type] == 'text/html'
+
+      ticket = Ticket::Number.check(body)
       if ticket
         Rails.logger.debug { "Follow-up for '##{ticket.number}' in body." }
         mail[:'x-zammad-ticket-id'] = ticket.id
