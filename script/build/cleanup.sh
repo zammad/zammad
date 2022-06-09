@@ -26,7 +26,7 @@ rm -rf .rubocop
 rm .stylelintrc.json .eslintignore .eslintrc .eslintrc.js .prettierrc.json
 rm coffeelint.json
 rm -rf .coffeelint
-rm .overcommit.yml
+rm .overcommit.*
 
 # misc
 rm .codeclimate.yml

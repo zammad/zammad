@@ -26,9 +26,9 @@ PreCommit:
     exclude: 'public/assets/chat/**/*'
   CustomScript:
     enabled: true
-    description: 'Check if translation catalog is up-to-date'
-    required_executable: 'rails'
-    flags: ['generate', 'translation_catalog', '--check']
+    description: 'Perform custom Zammad code checks'
+    required_executable: 'bash'
+    flags: ['.overcommit.sh']
   Stylelint:
     enabled: true
   EsLint:
