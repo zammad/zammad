@@ -1142,10 +1142,10 @@
   resolved "https://registry.yarnpkg.com/@testing-library/user-event/-/user-event-14.2.0.tgz#8293560f8f80a00383d6c755ec3e0b918acb1683"
   integrity sha512-+hIlG4nJS6ivZrKnOP7OGsDu9Fxmryj9vCl8x0ZINtTJcCHs2zLsYif5GzuRiBF2ck5GZG2aQr7Msg+EHlnYVQ==
 
-"@testing-library/vue@^6.5.1":
-  version "6.5.1"
-  resolved "https://registry.yarnpkg.com/@testing-library/vue/-/vue-6.5.1.tgz#e312cb6fb59d2e0e1a3d62a13299a70cf9a95e56"
-  integrity sha512-zbh2cAJrFbNN9i30Ly6rhbxq7y1aD1Au8v4QjukOLWWHJj7WH6q051eBcHTxPFjKCU4sCH6w6Xn5Qj7B35vc0w==
+"@testing-library/vue@^6.6.0":
+  version "6.6.0"
+  resolved "https://registry.yarnpkg.com/@testing-library/vue/-/vue-6.6.0.tgz#5d5d1f5544969c6b0733b1b325c0df7e1ae3c5da"
+  integrity sha512-pVCYlXSc19TDe8h9KgZGRY9CrdrsN2wLOegWbyI53FDUEJOuk/3w/BeXPLTQPMYxIv4N3/ZKK2ZJcBsNCouajA==
   dependencies:
     "@babel/runtime" "^7.15.4"
     "@testing-library/dom" "^8.5.0"
