@@ -334,7 +334,6 @@ const locale = useLocaleStore()
                   v-if="!context.noFiltering"
                   ref="filterInput"
                   v-model="filter"
-                  wrapper-class="p-4"
                 />
               </div>
               <div

@@ -7,7 +7,7 @@ import {
 } from '@mobile/composables/useHeader'
 import { computed, unref, watch } from 'vue'
 import { useRoute } from 'vue-router'
-import TransitionViewNavigation from '../transition/TransitionViewNavigation/TransitionViewNavigation.vue'
+// import TransitionViewNavigation from '../transition/TransitionViewNavigation/TransitionViewNavigation.vue'
 import LayoutBottomNavigation from './LayoutBottomNavigation.vue'
 import LayoutHeader from './LayoutHeader.vue'
 
@@ -38,11 +38,14 @@ const showHeader = computed(() => {
   <div class="flex h-full flex-col overflow-hidden">
     <LayoutHeader v-if="showHeader" v-bind="header" :title="title" />
     <main class="overflow-y-scroll" :class="{ 'pb-14': showBottomNavigation }">
-      <RouterView #default="{ Component }">
+      <!-- let's see how it feels without transition -->
+      <RouterView />
+      <!-- TODO check when we will have more time -->
+      <!-- <router-view #default="{ Component }">
         <TransitionViewNavigation>
           <component :is="Component" />
         </TransitionViewNavigation>
-      </RouterView>
+      </router-view> -->
     </main>
     <LayoutBottomNavigation v-if="showBottomNavigation" />
   </div>

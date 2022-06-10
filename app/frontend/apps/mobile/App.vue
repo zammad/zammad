@@ -100,11 +100,3 @@ onBeforeUnmount(() => {
     <router-view />
   </div>
 </template>
-
-<style>
-body,
-html,
-#app {
-  height: 100%;
-}
-</style>
