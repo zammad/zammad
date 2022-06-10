@@ -378,10 +378,16 @@ RSpec.describe 'Ticket > Update > Full Quote Header', current_user_id: -> { curr
     end
 
     def timestamp_reply
+      format_string = if Capybara.current_driver == :zammad_firefox
+                        '%A, %B %1d, %Y at %1I:%M:%S %p'
+                      else
+                        '%A, %B %1d, %Y, %1I:%M:%S %p'
+                      end
+
       expected
         .created_at
         .in_time_zone('Europe/London')
-        .strftime('%A, %B %1d, %Y, %1I:%M:%S %p')
+        .strftime(format_string)
     end
 
     def timestamp_forward
