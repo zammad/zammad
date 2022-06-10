@@ -18,14 +18,12 @@ module BackgroundJobsHelper
     original_user_id = UserInfo.current_user_id
     UserInfo.current_user_id = nil
 
-    Delayed::Worker.new.work_off
-    # loop do
-    # success, failure = Delayed::Worker.new.work_off
-    # if failure.nonzero?
-    # raise "#{failure} failed background jobs: #{Delayed::Job.where.not(last_error: nil).inspect}"
-    # end
-    # break if success.zero?
-    # end
+    _success, failure = Delayed::Worker.new.work_off
+
+    if failure.nonzero?
+      raise "#{failure} failed background jobs: #{Delayed::Job.where.not(last_error: nil).inspect}"
+    end
+  ensure
     UserInfo.current_user_id = original_user_id
     ApplicationHandleInfo.current = original_interface_handle
   end
