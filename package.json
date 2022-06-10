@@ -51,7 +51,7 @@
     "eslint-import-resolver-alias": "^1.1.2",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-prettier": "^4.0.0",
-    "eslint-plugin-prettier-vue": "^3.1.0",
+    "eslint-plugin-prettier-vue": "^4.1.0",
     "eslint-plugin-storybook": "^0.5.12",
     "eslint-plugin-vue": "^9.1.0",
     "eslint-plugin-zammad": "file:.eslint-plugin-zammad",
