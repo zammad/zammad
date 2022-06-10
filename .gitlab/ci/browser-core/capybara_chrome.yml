@@ -2,22 +2,40 @@ capybara:chrome:1:
   extends:
     - .template_browser-core_capybara_chrome
   variables:
-    RSPEC_EXAMPLE_MATCHES: $RSPEC_EXAMPLE_SLICE_1_OF_4
+    RSPEC_SLICES: 6
+    RSPEC_CURRENT_SLICE: 1
 
 capybara:chrome:2:
   extends:
     - .template_browser-core_capybara_chrome
   variables:
-    RSPEC_EXAMPLE_MATCHES: $RSPEC_EXAMPLE_SLICE_2_OF_4
+    RSPEC_SLICES: 6
+    RSPEC_CURRENT_SLICE: 2
 
 capybara:chrome:3:
   extends:
     - .template_browser-core_capybara_chrome
   variables:
-    RSPEC_EXAMPLE_MATCHES: $RSPEC_EXAMPLE_SLICE_3_OF_4
+    RSPEC_SLICES: 6
+    RSPEC_CURRENT_SLICE: 3
 
 capybara:chrome:4:
   extends:
     - .template_browser-core_capybara_chrome
   variables:
-    RSPEC_EXAMPLE_MATCHES: $RSPEC_EXAMPLE_SLICE_4_OF_4
+    RSPEC_SLICES: 6
+    RSPEC_CURRENT_SLICE: 4
+
+capybara:chrome:5:
+  extends:
+    - .template_browser-core_capybara_chrome
+  variables:
+    RSPEC_SLICES: 6
+    RSPEC_CURRENT_SLICE: 5
+
+capybara:chrome:6:
+  extends:
+    - .template_browser-core_capybara_chrome
+  variables:
+    RSPEC_SLICES: 6
+    RSPEC_CURRENT_SLICE: 6

@@ -89,7 +89,6 @@ include:
   extends:
     - .env_base
     - .variables_es
-    - .variables_rspec_slicing
     - .tags_docker_low_concurrency
   variables:
     RAILS_ENV: "test"
@@ -98,7 +97,7 @@ include:
     - bundle exec rake zammad:ci:test:prepare
     - echo -e "\\e[0Ksection_end:`date +%s`:zammad_ci_test_prepare\\r\\e[0K"
     - echo "RSpec filter:" "$RSPEC_EXAMPLE_MATCHES"
-    - bundle exec rspec --require ./spec/rspec_extensions.rb --example-matches "$RSPEC_EXAMPLE_MATCHES" --fail-fast -t ~integration --profile 10 spec/system
+    - bundle exec rspec --require ./spec/rspec_extensions.rb --fail-fast -t ~integration --profile 10 spec/system
 
 .template_browser-core_capybara_chrome: &template_browser-core_capybara_chrome
   extends:

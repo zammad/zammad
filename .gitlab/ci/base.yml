@@ -44,14 +44,6 @@
   variables:
     APP_RESTART_CMD: 'bundle exec rake environment zammad:ci:app:restart'
 
-.variables_rspec_slicing: &variables_rspec_slicing
-  variables:
-    RSPEC_EXAMPLE_MATCHES: '.' # Default: all. Set this to one of the slices in a job to run only that slice.
-    RSPEC_EXAMPLE_SLICE_1_OF_4: '^[A-H]'
-    RSPEC_EXAMPLE_SLICE_2_OF_4: '^[I-P]'
-    RSPEC_EXAMPLE_SLICE_3_OF_4: '^[Q-S]'
-    RSPEC_EXAMPLE_SLICE_4_OF_4: '^[^A-S]' # Rest, including lower case and other characters like '#'
-
 .rules_singletest: &rules_singletest
   rules:
     - if: $CI_MERGE_REQUEST_ID
