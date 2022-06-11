@@ -724,13 +724,13 @@
     auto-bind "~4.0.0"
     tslib "~2.4.0"
 
-"@graphql-codegen/typescript-vue-apollo@^3.2.13":
-  version "3.2.13"
-  resolved "https://registry.yarnpkg.com/@graphql-codegen/typescript-vue-apollo/-/typescript-vue-apollo-3.2.13.tgz#9860969ed625990833b5898c6d2f8bfa694fbc0b"
-  integrity sha512-+2q7ZP9ehh/0I6OKmkzqJ+hWB9K2RIil92glB1zLsJzPZJ9tGDMMhx6LFHWrRQVbCy6qdLllmlwv1b1l43ihOw==
+"@graphql-codegen/typescript-vue-apollo@^3.2.14":
+  version "3.2.14"
+  resolved "https://registry.yarnpkg.com/@graphql-codegen/typescript-vue-apollo/-/typescript-vue-apollo-3.2.14.tgz#106846666a688e10d2794de6336e349d675a2218"
+  integrity sha512-5Skk0lYSzSfbmA5vMXJ+GVDX91UgJ7IJriHUaiBCxcQ7HLlwT3c8ZakmH2EjEhALW+ngT6OSsOrJ86W59B6k+g==
   dependencies:
     "@graphql-codegen/plugin-helpers" "^2.4.0"
-    "@graphql-codegen/visitor-plugin-common" "2.9.0"
+    "@graphql-codegen/visitor-plugin-common" "2.9.1"
     auto-bind "~4.0.0"
     change-case-all "1.0.14"
     tslib "~2.4.0"
