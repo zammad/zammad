@@ -25,7 +25,7 @@
     "@graphql-codegen/introspection": "^2.1.1",
     "@graphql-codegen/near-operation-file-preset": "^2.2.14",
     "@graphql-codegen/typescript": "^2.5.1",
-    "@graphql-codegen/typescript-operations": "^2.4.1",
+    "@graphql-codegen/typescript-operations": "^2.4.2",
     "@graphql-codegen/typescript-vue-apollo": "^3.2.14",
     "@pinia/testing": "^0.0.12",
     "@tailwindcss/forms": "^0.5.2",
