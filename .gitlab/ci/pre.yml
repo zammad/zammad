@@ -86,15 +86,13 @@
     - bundle exec .rubocop/validate_todos.rb
     - bundle exec rubocop --parallel
 
-# Must be a separate job because it may fail and is only executed for develop.
+# Must be a separate job because it may fail and is only executed manually.
 'lint: orphaned ruby gems':
   <<: *template_pre_rails
   allow_failure: true
   rules:
     - if: $CI_MERGE_REQUEST_ID
       when: never
-    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
-      when: always
     - when: manual
   script:
     - bundle exec rake zammad:ci:bundle:orphaned 5
