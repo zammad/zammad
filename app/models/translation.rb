@@ -110,8 +110,12 @@ because it could produce wrong matches on case insensitive MySQL databases.
 =end
 
   def self.find_source(locale, string)
-    # MySQL might find the wrong record with find_by with case insensitive locales, so use a direct comparison.
-    where(locale: locale, source: string).find { |t| t.source.eql? string }
+    if ActiveRecord::Base.connection_db_config.configuration_hash[:adapter] == 'mysql2'
+      # MySQL might find the wrong record with find_by with case insensitive locales, so use a direct comparison.
+      where(locale: locale, source: string).find { |t| t.source.eql? string }
+    else
+      find_by(locale: locale, source: string)
+    end
   end
 
 =begin

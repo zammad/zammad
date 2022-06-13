@@ -17,6 +17,8 @@ module Translation::SynchronizesFromPo
 
     def sync_locale_from_po(locale) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
+      previous_translation_map = Translation.where(locale: locale).index_by(&:source)
+
       previous_unmodified_translations = Translation.where(locale: locale, is_synchronized_from_codebase: true).select { |t| t.target.eql?(t.target_initial) }
       updated_translation_ids = Set[]
       importable_translations = []
@@ -28,7 +30,7 @@ module Translation::SynchronizesFromPo
           next
         end
 
-        t = Translation.find_source(locale, source)
+        t = previous_translation_map[source]
         # New string
         if !t
           importable_translations << Translation.new(

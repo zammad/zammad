@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Translation do
+RSpec.describe Translation, 'synchronizes_from_po' do
 
   context 'when getting the list of files for a locale' do
 
@@ -243,11 +243,11 @@ RSpec.describe Translation do
     end
   end
 
-  # Make sure that translation imports work really for all locales.
-  context 'when synchronizing strings for all locales' do
+  # Make sure that translation imports work really for some major locales.
+  context 'when synchronizing strings for some major locales' do
     before do
       # Only 'en-us' and 'de-de' are returned in test env - override.
-      allow(Locale).to receive(:to_sync).and_return(Locale.where(active: true))
+      allow(Locale).to receive(:to_sync).and_return(Locale.where(locale: %w[en-us de-de fr-fr ru zh-cn]))
       described_class.sync
     end
 
