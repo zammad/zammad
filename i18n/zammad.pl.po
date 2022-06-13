@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-06-07 18:10+0000\n"
-"Last-Translator: MBekspert <michal.bosak@ekspert.biz>\n"
+"PO-Revision-Date: 2022-06-13 07:28+0000\n"
+"Last-Translator: Paweł Rypień <pawel.rypien@bmw-sikora.pl>\n"
 "Language-Team: Polish <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/pl/>\n"
 "Language: pl\n"
@@ -2917,49 +2917,51 @@ msgstr "Określa, czy Checkmk (https://checkmk.com/) jest włączony, czy nie."
 
 #: db/seeds/settings.rb
 msgid "Defines if Clearbit (http://www.clearbit.com) is enabled or not."
-msgstr ""
+msgstr "Określa, czy Clearbit (http://www.clearbit.com) jest włączony, czy nie."
 
 #: db/seeds/settings.rb
 msgid "Defines if Exchange is enabled or not."
-msgstr ""
+msgstr "Określa, czy Exchange jest włączony, czy nie."
 
 #: db/seeds/settings.rb
 msgid "Defines if Icinga (http://www.icinga.org) is enabled or not."
-msgstr ""
+msgstr "Określa, czy Icinga (http://www.icinga.org) jest włączona, czy nie."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines if Knowledge Base navbar button is enabled for users without "
 "Knowledge Base permission."
 msgstr ""
+"Określa, czy przycisk paska nawigacyjnego bazy wiedzy jest włączony dla "
+"użytkowników bez uprawnień bazy wiedzy."
 
 #: db/seeds/settings.rb
 msgid "Defines if Knowledge Base navbar button is enabled."
-msgstr ""
+msgstr "Określa, czy włączony jest przycisk paska nawigacyjnego bazy wiedzy."
 
 #: db/seeds/settings.rb
 msgid "Defines if LDAP is enabled or not."
-msgstr ""
+msgstr "Określa, czy LDAP jest włączone, czy nie."
 
 #: db/seeds/settings.rb
 msgid "Defines if Monit (https://mmonit.com/monit/) is enabled or not."
-msgstr ""
+msgstr "Określa, czy Monit (https://mmonit.com/monit/) jest włączony, czy nie."
 
 #: db/seeds/settings.rb
 msgid "Defines if Nagios (http://www.nagios.org) is enabled or not."
-msgstr ""
+msgstr "Określa, czy Nagios (http://www.nagios.org) jest włączony, czy nie."
 
 #: db/seeds/settings.rb
 msgid "Defines if Placetel (http://www.placetel.de) is enabled or not."
-msgstr ""
+msgstr "Określa, czy Placetel (http://www.placetel.de) jest włączony, czy nie."
 
 #: db/seeds/settings.rb
 msgid "Defines if S/MIME encryption is enabled or not."
-msgstr ""
+msgstr "Określa, czy szyfrowanie S/MIME jest włączone, czy nie."
 
 #: db/seeds/settings.rb
 msgid "Defines if Slack (http://www.slack.org) is enabled or not."
-msgstr ""
+msgstr "Określa, czy Slack (http://www.slack.org) jest włączony, czy nie."
 
 #: db/seeds/settings.rb
 msgid "Defines if a customer can create tickets via the web interface."
@@ -2967,61 +2969,75 @@ msgstr "Definiuje czy klient może tworzyć zgłoszenia przez interfejs Web."
 
 #: db/seeds/settings.rb
 msgid "Defines if application is in init mode."
-msgstr ""
+msgstr "Określa, czy aplikacja jest w trybie init."
 
 #: db/seeds/settings.rb
 msgid "Defines if application is used as online service."
-msgstr ""
+msgstr "Określa, czy aplikacja jest używana jako usługa online."
 
 #: db/seeds/settings.rb
 msgid "Defines if generic CTI integration is enabled or not."
-msgstr ""
+msgstr "Określa, czy ogólna integracja CTI jest włączona, czy nie."
 
 #: db/seeds/settings.rb
 msgid "Defines if i-doit (http://www.i-doit) is enabled or not."
-msgstr ""
+msgstr "Określa, czy i-doit (http://www.i-doit) jest włączony, czy nie."
 
 #: db/seeds/settings.rb
 msgid "Defines if sipgate.io (http://www.sipgate.io) is enabled or not."
-msgstr ""
+msgstr "Określa, czy sipgate.io (http://www.sipgate.io) jest włączone, czy nie."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines if the GitHub (http://www.github.com) integration is enabled or not."
 msgstr ""
+"Określa, czy integracja z GitHub (http://www.github.com) jest włączona, czy "
+"nie."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines if the GitLab (http://www.gitlab.com) integration is enabled or not."
 msgstr ""
+"Określa, czy integracja z GitLab (http://www.gitlab.com) jest włączona, czy "
+"nie."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines if the agent has to accept a confirmation dialog when changing the "
 "article visibility to \"public\"."
 msgstr ""
+"Określa, czy agent musi zaakceptować okno dialogowe potwierdzenia podczas "
+"zmiany widoczności artykułu na \"publiczny\"."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines if the application is in developer mode (all users have the same "
 "password and password reset will work without email delivery)."
 msgstr ""
+"Określa, czy aplikacja jest w trybie programisty (wszyscy użytkownicy mają "
+"to samo hasło, a resetowanie hasła będzie działać bez dostarczania poczty "
+"e-mail)."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines if the core workflow communication should run over ajax instead of "
 "websockets."
 msgstr ""
+"Określa, czy główna komunikacja przepływu pracy powinna przebiegać przez "
+"ajax zamiast przez gniazda sieciowe."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines if the email should be displayed in the result of the user/"
 "organization widget."
 msgstr ""
+"Określa, czy wiadomość e-mail ma być wyświetlana w wyniku widżetu uż"
+"ytkownika/organizacji."
 
 #: db/seeds/settings.rb
 msgid "Defines if tickets can be created via web form."
 msgstr ""
+"Określa, czy zgłoszenia można tworzyć za pomocą formularza internetowego."
 
 #: db/seeds/settings.rb
 msgid "Defines if tickets should be closed if service is recovered."
@@ -3031,54 +3047,69 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Defines karma levels."
-msgstr ""
+msgstr "Definiuje poziomy karmy."
 
 #: db/seeds/settings.rb
 msgid "Defines postmaster filter for filters managed via admin interface."
 msgstr ""
+"Definiuje filtr postmaster dla filtrów zarządzanych przez interfejs "
+"administratora."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines postmaster filter to check if email has been created by Zammad "
 "itself and will set the article sender."
 msgstr ""
+"Definiuje filtr postmaster, aby sprawdzić, czy wiadomość e-mail została "
+"utworzona przez samego Zammad i ustawi nadawcę artykułu."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines postmaster filter to check if the email is a self-created "
 "notification email, then ignore it to prevent email loops."
 msgstr ""
+"Definiuje filtr postmaster, aby sprawdzić, czy wiadomość e-mail jest "
+"samodzielnie utworzoną wiadomością e-mail z powiadomieniem, a następnie "
+"zignorować ją, aby zapobiec pętlom wiadomości e-mail."
 
 #: db/seeds/settings.rb
 msgid "Defines postmaster filter to handle secure mailing."
-msgstr ""
+msgstr "Definiuje filtr postmaster do obsługi bezpiecznej poczty."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines postmaster filter to identify Jira mails for correct follow-ups."
-msgstr ""
+msgstr "Definiuje filtr postmaster do obsługi bezpiecznej metody."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines postmaster filter to identify ServiceNow mails for correct follow-"
 "ups."
 msgstr ""
+"Definiuje filtr postmaster do identyfikowania wiadomości ServiceNow dla "
+"poprawnych działań następczych."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines postmaster filter to identify auto responses to prevent auto replies "
 "from Zammad."
 msgstr ""
+"Definiuje filtr postmaster w celu identyfikacji automatycznych odpowiedzi, "
+"aby zapobiec automatycznym odpowiedziom z Zammad."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines postmaster filter to identify follow-up ticket for merged tickets."
 msgstr ""
+"Definiuje filtr postmaster w celu identyfikacji zgłoszenia uzupełniającego "
+"dla zgłoszeń scalonych."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines postmaster filter to identify follow-ups (based on admin settings)."
 msgstr ""
+"Definiuje filtr postmaster w celu identyfikacji działań następczych (na "
+"podstawie ustawień administratora)."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -3091,18 +3122,24 @@ msgid ""
 "Defines postmaster filter to identify postmaster bounces; and disables "
 "sending notification if delivery fails permanently."
 msgstr ""
+"Definiuje filtr postmastera do identyfikacji odrzuceń postmastera; i wyłącza "
+"wysyłanie powiadomień, jeśli dostarczanie nie powiedzie się na stałe."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines postmaster filter to identify postmaster bounces; and handles them "
 "as follow-up of the original tickets"
 msgstr ""
+"Definiuje filtr postmastera do identyfikacji odrzuceń postmastera; i "
+"traktuje je jako kontynuację oryginalnych biletów"
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines postmaster filter to identify postmaster bounces; and reopens "
 "tickets if delivery fails permanently."
 msgstr ""
+"Definiuje filtr postmastera do identyfikacji odrzuceń postmastera; i "
+"ponownie otwiera bilety, jeśli dostawa trwale nie powiedzie się."
 
 #: db/seeds/settings.rb
 msgid "Defines postmaster filter to identify sender user."

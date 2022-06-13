@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-06-07 18:10+0000\n"
-"Last-Translator: Ralf Ebert <info@ralfebert.de>\n"
+"PO-Revision-Date: 2022-06-13 07:28+0000\n"
+"Last-Translator: Marcel Herrguth <github@thehomeofanime.de>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/de/>\n"
 "Language: de-de\n"
@@ -4421,7 +4421,7 @@ msgstr "Eskalation am (Schließzeit)"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "Escalation at (First Response Time)"
-msgstr "Eskalation am (Reaktionszeit)"
+msgstr "Eskalation am (Erste Reaktionszeit)"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "Escalation at (Update Time)"
