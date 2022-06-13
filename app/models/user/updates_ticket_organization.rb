@@ -19,9 +19,11 @@ module User::UpdatesTicketOrganization
     # update last 100 tickets of user
     tickets = Ticket.where(customer_id: id).limit(100)
     tickets.each do |ticket|
-      if ticket.organization_id != organization_id
+      next if ticket.organization_id == organization_id
+
+      Transaction.execute(disable_notification: true, reset_user_id: true) do
         ticket.organization_id = organization_id
-        ticket.save
+        ticket.save!
       end
     end
   end

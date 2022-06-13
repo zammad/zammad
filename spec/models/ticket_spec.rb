@@ -1514,43 +1514,6 @@ RSpec.describe Ticket, type: :model do
     end
   end
 
-  describe 'Associations:' do
-    describe '#organization' do
-      subject(:ticket) { build(:ticket, customer: customer, organization: nil) }
-
-      let(:customer) { create(:customer, :with_org) }
-
-      context 'on creation' do
-        it 'automatically adopts the organization of its #customer' do
-          expect { ticket.save }
-            .to change(ticket, :organization).to(customer.organization)
-        end
-      end
-
-      context 'on update of #customer.organization' do
-        context 'to nil' do
-          it 'automatically updates to #customer’s new value' do
-            ticket.save
-
-            expect { customer.update(organization: nil) }
-              .to change { ticket.reload.organization }.to(nil)
-          end
-        end
-
-        context 'to a different organization' do
-          let(:new_org) { create(:organization) }
-
-          it 'automatically updates to #customer’s new value' do
-            ticket.save
-
-            expect { customer.update(organization: new_org) }
-              .to change { ticket.reload.organization }.to(new_org)
-          end
-        end
-      end
-    end
-  end
-
   describe '.search' do
 
     shared_examples 'search permissions' do
