@@ -50,6 +50,9 @@ class User extends App.ControllerSubContent
       @delay(@search, 220, 'search')
     )
 
+    # App.User.subscribe will clear model data so we use controllerBind (#4040)
+    @controllerBind('User:create User:update User:touch User:destroy', => @delay(@search, 220, 'search'))
+
     # show last 20 users
     @search()
 
@@ -182,9 +185,6 @@ class User extends App.ControllerSubContent
           'click': edit
     )
 
-    if !@subscribeId
-      @subscribeId = App.User.subscribe(=> @delay(@search, 220, 'search'))
-
   search: =>
     role_ids = []
     @$('.tab.active').each( (i,d) ->
@@ -241,9 +241,5 @@ class User extends App.ControllerSubContent
       baseUrl: '/api/v1/users'
       container: @el.closest('.content')
     )
-
-  release: =>
-    if @subscribeId
-      App.User.unsubscribe(@subscribeId)
 
 App.Config.set( 'User', { prio: 1000, name: __('Users'), parent: '#manage', target: '#manage/users', controller: User, permission: ['admin.user'] }, 'NavBarAdmin' )
