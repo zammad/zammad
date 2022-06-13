@@ -917,10 +917,8 @@ RSpec.describe Channel::Driver::Twitter, required_envs: %w[TWITTER_CONSUMER_KEY 
                 let(:twitter_job) { Delayed::Job.where("handler LIKE '%job_class: CommunicateTwitterJob%#{tweet.id}%'").first }
 
                 around do |example|
-                  # Run BG job (Why not use Scheduler.worker?
-                  # It led to hangs & failures elsewhere in test suite.)
                   Thread.new do
-                    sleep 5 # simulate other bg jobs holding up the queue
+                    sleep 5 # Simulate other bg jobs holding up the queue.
                     twitter_job.invoke_job
                   end.tap { example.run }.join
                 end

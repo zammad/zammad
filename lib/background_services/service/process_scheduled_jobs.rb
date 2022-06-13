@@ -15,7 +15,7 @@ class BackgroundServices
 
       def launch
         loop do
-          Rails.logger.info 'Scheduler running...'
+          Rails.logger.info 'ProcessScheduledJobs running...'
 
           run_jobs
 

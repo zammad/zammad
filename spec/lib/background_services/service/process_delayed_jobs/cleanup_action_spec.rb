@@ -66,10 +66,6 @@ RSpec.describe BackgroundServices::Service::ProcessDelayedJobs::CleanupAction do
       expect(instance).not_to have_received(:reschedulable?)
     end
 
-    # it 'reschedules an eligible job' do
-    # pending 'looks like dead code in pre-refactoring Scheduler'
-    # end
-
     it 'destroys non-reschedulable job' do
       SampleDelayedJob.perform_later
 

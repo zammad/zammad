@@ -5,7 +5,7 @@ module Import
   # This base class handles regular integrations.
   # It provides generic interfaces for settings and active state.
   # It ensures that all requirements for a regular integration are met before a import can start.
-  # It handles the case of an Scheduler interruption.
+  # It handles the case of a background worker interruption.
   #
   # It's required to implement the +start_import+ method which only has to start the import.
   class IntegrationBase < Import::Base
@@ -101,9 +101,9 @@ module Import
       start_import
     end
 
-    # Gets called when the Scheduler gets (re-)started and an ImportJob was still
+    # Gets called when the background worker gets (re-)started and an ImportJob was still
     # in the queue. The job will always get restarted to avoid the gap till the next
-    # run triggered by the Scheduler. The result will get updated to inform the user
+    # run triggered by the background worker. The result will get updated to inform the user
     # in the agent interface result view.
     #
     # @example

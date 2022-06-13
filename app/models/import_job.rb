@@ -38,13 +38,13 @@ class ImportJob < ApplicationModel
     save
   end
 
-  # Gets called when the Scheduler gets (re-)started and this job was still
+  # Gets called when the background worker gets (re-)started and this job was still
   # in the queue. If `finished_at` is blank the call is piped through to
   # the ImportJob backend which has to decide how to go from here. The delayed
   # job will get destroyed if rescheduled? is not implemented
   # as an ImportJob backend class method.
   #
-  # @see Scheduler#cleanup_delayed
+  # @see BackgroundServices::Service::ProcessDelayedJobs::CleanupAction.cleanup_delayed_jobs
   #
   # @example
   #  import.reschedule?(delayed_job)
@@ -168,12 +168,12 @@ class ImportJob < ApplicationModel
   # @param [ActiveSupport::TimeWithZone] after the time the cleanup was started
   #
   # @example
-  #   Scheduler.cleanup_import_jobs(TimeZone.now)
+  #   ImportJob.cleanup_import_jobs(TimeZone.now)
   #
   # return [nil]
   def self.cleanup_import_jobs(after)
     log_start_finish(:info, "Cleanup of left over import jobs #{after}") do
-      error = __('Interrupted by scheduler restart. Please restart manually or wait until the next execution time.').freeze
+      error = __('Interrupted by a restart of the background worker process. Please restart manually or wait until the next execution time.').freeze
 
       # we need to exclude jobs that were updated at or since we started
       # cleaning up (via the #reschedule? call) because they might

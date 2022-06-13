@@ -59,7 +59,7 @@
 </div>
 <div class="filter-preview">
   <h3>
-    Preview 
+    Preview
     <span class="subtitle hide">
       <span class="u-highlight">5</span> matches
     </span>
@@ -160,8 +160,8 @@
             Nicole Braun (Zammad Foundation)
           </span> </td>
         <td>
-          <a href="#ticket/zoom/6"> <span title="script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler">
-              script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler
+          <a href="#ticket/zoom/6"> <span title="script/background-worker.rb start">
+              script/background-worker.rb start
             </span> </a>
         </td>
         <td> <span>
@@ -177,8 +177,8 @@
 
 <h2>Schedule</h2>
 <h3>
-  Business Hours 
-  <div class="subtitle">in <span class="js-timezone">European Central Time</span> 
+  Business Hours
+  <div class="subtitle">in <span class="js-timezone">European Central Time</span>
     (<div class="btn btn--text btn--secondary btn--dropdown">
       change
       <select class="form-control js-selectTimezone" name="timezone">
@@ -804,7 +804,7 @@
       <%- @Icon('radio-checked', 'icon-checked') %>
     </span>
 
-  Subscribe to public holidays in 
+  Subscribe to public holidays in
 
   </label>
   <div class="u-inlineBlock u-positionOrigin">
@@ -824,7 +824,7 @@
       <%- @Icon('radio-checked', 'icon-checked') %>
     </span>
 
-    Subscribe to ical feed 
+    Subscribe to ical feed
 
   </label>
   <input class="form-control form-control--small form-control--inline" type="url">

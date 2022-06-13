@@ -14,7 +14,7 @@ module Import
       true
     end
 
-    # Checks if the backend is able to get queued by the Scheduler.
+    # Checks if the backend is able to get queued by the background worker.
     #
     # @example
     #  Import::ExampleBackend.queueable?
@@ -25,7 +25,7 @@ module Import
       true
     end
 
-    # Checks if the backend is able to get rescheduled in case the Scheduler
+    # Checks if the backend is able to get rescheduled in case the background worker
     # got (re-)started while this ImportJob was running. Defaults to false.
     #
     # @example

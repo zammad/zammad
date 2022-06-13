@@ -9,14 +9,14 @@ Spring.watch(
 
 module Spring
   module Commands
-    class SchedulerRb
+    class BackgroundWorkerRb
 
       def call
-        load ::Rails.root.join('script/scheduler.rb')
+        load ::Rails.root.join('script/background-worker.rb')
       end
     end
 
-    Spring.register_command 'scheduler.rb', Spring::Commands::SchedulerRb.new
+    Spring.register_command 'background-worker.rb', Spring::Commands::BackgroundWorkerRb.new
   end
 end
 
