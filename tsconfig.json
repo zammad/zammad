@@ -8,6 +8,6 @@
       "vite-plugin-glob/client"
     ]
   },
-  "include": ["app/frontend/**/*", ".storybook/config/**/*"],
+  "include": ["app/frontend/**/*", ".storybook/config/**/*.ts"],
   "exclude": ["app/frontend/cypress/**/*", "node_modules", "public", "vendor"]
 }

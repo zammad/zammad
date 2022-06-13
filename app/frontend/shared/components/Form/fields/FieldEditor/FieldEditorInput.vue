@@ -49,7 +49,7 @@ const editor = useEditor({
       return false
     },
     handleDrop(view, event) {
-      const e = event as InputEvent
+      const e = event as unknown as InputEvent
       const files = e.dataTransfer?.files || null
       convertFileList(files).then((urls) => {
         editor.value?.commands.setImages(urls)

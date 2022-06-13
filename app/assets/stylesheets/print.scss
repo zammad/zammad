@@ -1,4 +1,4 @@
-#app > *:not(.content):not(.active),
+#app > *:not(.content, .active),
 #app > .hide {
   display: none;
 }

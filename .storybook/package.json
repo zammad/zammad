@@ -6,11 +6,11 @@
     "postinstall": "rm -rf ./node_modules/@types/react"
   },
   "devDependencies": {
-    "@storybook/addon-actions": "^6.5.6",
-    "@storybook/addon-essentials": "^6.5.6",
-    "@storybook/addon-links": "^6.5.6",
+    "@storybook/addon-actions": "^6.5.8",
+    "@storybook/addon-essentials": "^6.5.8",
+    "@storybook/addon-links": "^6.5.8",
     "@storybook/addon-postcss": "^2.0.0",
-    "@storybook/vue3": "^6.5.6",
+    "@storybook/vue3": "^6.5.8",
     "storybook-builder-vite": "^0.1.23"
   }
 }

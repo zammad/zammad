@@ -1063,7 +1063,7 @@ pre code {
     @extend %clickable;
   }
 
-  &:not(:last-child):not(:only-child) {
+  &:not(:last-child, :only-child) {
     @include bidi-style(border-right-width, 0, border-left-width, 1px);
 
     @include phone {
@@ -4367,7 +4367,7 @@ footer {
 
   .zammad-switch {
     @include phone {
-      .navigation:not(:hover):not(:active):not(.is-hovered) & {
+      .navigation:not(:hover, :active, .is-hovered) & {
         position: absolute;
         right: 12px;
         top: 12px;
@@ -4836,7 +4836,7 @@ footer {
   }
 }
 
-.search:not(.filled):not(.focused) input[type='search'] {
+.search:not(.filled, .focused) input[type='search'] {
   @include phone {
     padding: 0;
   }
@@ -4909,7 +4909,7 @@ input[type='search']::-webkit-search-decoration {
 .search.filled {
   .search-holder {
     @include phone {
-      .navigation:not(:hover):not(:active):not(.is-hovered) & {
+      .navigation:not(:hover, :active, .is-hovered) & {
         width: 210px;
       }
     }
@@ -5068,7 +5068,7 @@ input[type='search']::-webkit-search-decoration {
   }
 }
 
-.user-menu .list-button *:not(.dropdown-nose):not(.icon-crown) {
+.user-menu .list-button *:not(.dropdown-nose, .icon-crown) {
   position: relative;
 }
 
@@ -6845,7 +6845,7 @@ a.list-group-item.active > .badge,
   display: flex;
 }
 
-.textBubble-letterCount:not(.label-danger):not(.label-warning) {
+.textBubble-letterCount:not(.label-danger, .label-warning) {
   color: hsl(0, 0%, 80%);
 }
 
@@ -9111,7 +9111,7 @@ li.dropdown-header {
 
   display: flex;
 
-  &:not(:hover):not(.is-active) {
+  &:not(:hover, .is-active) {
     background: hsl(206, 7%, 28%);
   }
 
