@@ -26,7 +26,7 @@ RSpec.describe 'Mobile > App Home Page', type: :system, app: :mobile do
     end
 
     it 'footer has my avatar' do
-      me = find('a[href="/user"]')
+      me = find('a[href="/mobile/account"]')
       firstname = admin.firstname.first
       lastname = admin.lastname.first
       expect(me.text).to match("#{firstname}#{lastname}")
