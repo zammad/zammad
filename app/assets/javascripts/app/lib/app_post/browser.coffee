@@ -83,18 +83,25 @@ class App.Browser
     fingerprint
 
   @magicKey: ->
-    browser = @detection()
-    magicKey = 'ctrl'
-    if browser && browser.os && browser.os.name.toString().match(/mac/i)
-      magicKey = 'cmd'
-    magicKey
+    if @isMac()
+      'cmd'
+    else
+      'ctrl'
 
   @hotkeys: ->
+    if @isMac()
+      'alt+ctrl'
+    else
+      'ctrl+shift'
+
+  @isMac: ->
     browser = @detection()
-    hotkeys = 'ctrl+shift'
-    if browser && browser.os && browser.os.name.toString().match(/mac/i)
-      hotkeys = 'alt+ctrl'
-    hotkeys
+
+    osName = browser?.os?.name?.toString()
+
+    return if !osName
+
+    osName.match(/mac/i)
 
 class Modal extends App.ControllerModal
   buttonClose: false
