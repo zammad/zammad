@@ -11,6 +11,7 @@ import type {
   TranslationsQueryVariables,
 } from '@shared/graphql/types'
 import type { ReactiveFunction } from '@shared/types/utils'
+import useApplicationLoadedStore from '@shared/stores/application'
 
 interface TranslationsCacheValue {
   cacheKey: string
@@ -52,6 +53,10 @@ const getTranslationsQuery = () => {
     useTranslationsQuery(
       translationsQueryVariables as ReactiveFunction<TranslationsQueryVariables>,
     ),
+    {
+      // Don't show an error while app is loading as this would cause startup failure.
+      errorShowNotification: useApplicationLoadedStore().loaded,
+    },
   )
 
   return translationsQuery
