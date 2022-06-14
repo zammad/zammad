@@ -54,12 +54,10 @@ module HasTranslations
   private
 
   def validate_translations
-    translations
-      .to_a
-      .reject(&:valid?)
-      .each do |elem|
-        error_key = elem.errors.keys.first
-        errors.add "translations.#{error_key}", elem.errors.messages[error_key].first
+    translations.reject(&:valid?).each do |elem|
+      elem.errors.each do |error|
+        errors.add "translations.#{error.attribute}", error.message
       end
+    end
   end
 end

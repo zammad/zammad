@@ -173,7 +173,7 @@ sync image to fs (public/assets/images/hash.png)
     file = read
     return if !file
 
-    path = Rails.root.join('public', 'assets', 'images', filename(file))
+    path = Rails.public_path.join('assets', 'images', filename(file))
     File.open(path, 'wb') do |f|
       f.puts file.content
     end

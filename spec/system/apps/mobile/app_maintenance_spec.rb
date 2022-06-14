@@ -12,7 +12,7 @@ RSpec.describe 'Mobile > App Update Check', type: :system, app: :mobile do
 
     it 'shows app rebuild dialog' do
       # Append a newline to the manifest file to trigger a reload notification.
-      File.open(Rails.root.join('public/vite/manifest.json'), 'a') do |file|
+      File.open(Rails.public_path.join('vite/manifest.json'), 'a') do |file|
         file.write("\n")
       end
 

@@ -483,7 +483,7 @@ get count of tickets and tickets which match on selector
       if !current_user || access == 'ignore'
         ticket_count = Ticket.distinct.where(query, *bind_params).joins(tables).count
         tickets = Ticket.distinct.where(query, *bind_params).joins(tables).limit(limit)
-        return [ticket_count, tickets]
+        next [ticket_count, tickets]
       end
 
       tickets = "TicketPolicy::#{access.camelize}Scope".constantize
@@ -492,13 +492,11 @@ get count of tickets and tickets which match on selector
                                                        .where(query, *bind_params)
                                                        .joins(tables)
 
-      return [tickets.count, tickets.limit(limit)]
+      next [tickets.count, tickets.limit(limit)]
     rescue ActiveRecord::StatementInvalid => e
       Rails.logger.error e
       raise ActiveRecord::Rollback
-
     end
-    []
   end
 
 =begin

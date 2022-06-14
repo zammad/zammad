@@ -72,7 +72,7 @@ module ApplicationController::HandlesErrors
         @exception = e
         @message = errors[:error_human] || errors[:error] || param[:message]
         @traceback = !Rails.env.production?
-        file = File.open(Rails.root.join('public', "#{status_code}.html"), 'r')
+        file = File.open(Rails.public_path.join("#{status_code}.html"), 'r')
         render inline: file.read, status: status, content_type: 'text/html' # rubocop:disable Rails/RenderInline
       end
     end

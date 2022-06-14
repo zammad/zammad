@@ -11,7 +11,7 @@ module Gql::Queries
       # Use a stable identifier for the development environment, as we use hot reloading there instead.
       return 'development-auto-build' if Rails.env.development?
 
-      filename = Rails.root.join('public/vite/manifest.json')
+      filename = Rails.public_path.join('vite/manifest.json')
       Digest::MD5.hexdigest(File.read(filename))
     end
 
