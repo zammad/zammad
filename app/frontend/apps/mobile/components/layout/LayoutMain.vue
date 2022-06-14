@@ -38,11 +38,11 @@ const showHeader = computed(() => {
   <div class="flex h-full flex-col overflow-hidden">
     <LayoutHeader v-if="showHeader" v-bind="header" :title="title" />
     <main class="overflow-y-scroll" :class="{ 'pb-14': showBottomNavigation }">
-      <router-view #default="{ Component }">
+      <RouterView #default="{ Component }">
         <TransitionViewNavigation>
           <component :is="Component" />
         </TransitionViewNavigation>
-      </router-view>
+      </RouterView>
     </main>
     <LayoutBottomNavigation v-if="showBottomNavigation" />
   </div>

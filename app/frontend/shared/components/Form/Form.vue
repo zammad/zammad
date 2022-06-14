@@ -377,7 +377,7 @@ if (props.formSchemaId) {
 
 <template>
   <FormKit
-    v-if="Object.keys(schemaData.fields).length > 0 || $slots.fields"
+    v-if="Object.keys(schemaData.fields).length > 0 || $slots.default"
     :id="formId"
     type="form"
     :config="formConfig"
@@ -392,7 +392,7 @@ if (props.formSchemaId) {
   >
     <slot name="before-fields" />
     <slot
-      name="fields"
+      name="default"
       :schema="staticSchema"
       :data="schemaData"
       :library="additionalComponentLibrary"

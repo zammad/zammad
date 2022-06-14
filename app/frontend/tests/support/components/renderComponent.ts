@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { nextTick, Plugin, Ref, ref, watchEffect } from 'vue'
+import { isRef, nextTick, Plugin, Ref, ref, watchEffect, unref } from 'vue'
 import {
   createRouter,
   createWebHistory,
@@ -180,9 +180,9 @@ const renderComponent = <Props>(
   const vModelOptions = Object.entries(wrapperOptions?.vModel || {})
 
   for (const [prop, propDefault] of vModelOptions) {
-    const reactiveValue = ref(propDefault)
+    const reactiveValue = isRef(propDefault) ? propDefault : ref(propDefault)
     const props = (wrapperOptions.props ?? {}) as Record<string, unknown>
-    props[prop] = propDefault
+    props[prop] = unref(propDefault)
     props[`onUpdate:${prop}`] = (value: unknown) => {
       reactiveValue.value = value
     }

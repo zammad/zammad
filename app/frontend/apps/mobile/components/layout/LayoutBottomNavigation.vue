@@ -22,7 +22,7 @@ const { user } = storeToRefs(useSessionStore())
     <CommonLink link="/notifications" class="flex flex-1 justify-center">
       <CommonIcon name="bell" size="medium" />
     </CommonLink>
-    <CommonLink link="/user" class="flex-1" exact-active-class="user-active">
+    <CommonLink link="/account" class="flex-1" exact-active-class="user-active">
       <!-- TODO use CommonUserAvatar with entity -->
       <CommonAvatar
         class="user-avatar bg-red"

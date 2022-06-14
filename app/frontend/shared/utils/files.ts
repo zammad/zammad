@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-export interface ImageData {
+export interface ImageFileData {
   name: string
   type: string
   content: string
@@ -15,8 +15,8 @@ export const blobToBase64 = async (blob: Blob) =>
   })
 
 export const convertFileList = async (
-  filesList: FileList | null,
-): Promise<ImageData[]> => {
+  filesList?: Maybe<FileList>,
+): Promise<ImageFileData[]> => {
   const files = Array.from(filesList || [])
 
   const promises = files.map(async (file) => {

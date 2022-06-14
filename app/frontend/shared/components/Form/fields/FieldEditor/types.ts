@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import type { ImageData } from '@shared/utils/files'
+import type { ImageFileData } from '@shared/utils/files'
 
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {
@@ -10,7 +10,7 @@ declare module '@tiptap/core' {
       openKnowledgeBaseMention: () => ReturnType
     }
     images: {
-      setImages(images: ImageData[]): ReturnType
+      setImages(images: ImageFileData[]): ReturnType
     }
   }
 }

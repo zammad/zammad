@@ -5,6 +5,7 @@ import { FormKit } from '@formkit/vue'
 import CommonIcon from '@shared/components/CommonIcon/CommonIcon.vue'
 import CommonLink from '@shared/components/CommonLink/CommonLink.vue'
 import CommonDateTime from '@shared/components/CommonDateTime/CommonDateTime.vue'
+import { RouterLink, RouterView } from 'vue-router'
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
@@ -12,6 +13,9 @@ declare module '@vue/runtime-core' {
     CommonLink: typeof CommonLink
     CommonDateTime: typeof CommonDateTime
     FormKit: typeof FormKit
+
+    RouterView: typeof RouterView
+    RouterLink: typeof RouterLink
   }
 }
 

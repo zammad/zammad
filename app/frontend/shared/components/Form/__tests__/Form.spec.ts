@@ -315,7 +315,7 @@ describe('Form.vue - Edge Cases', () => {
     const wrapper = renderComponent(Form, {
       ...wrapperParameters,
       slots: {
-        fields: '<FormKit type="text" name="example" label="Example" />',
+        default: '<FormKit type="text" name="example" label="Example" />',
       },
     })
 

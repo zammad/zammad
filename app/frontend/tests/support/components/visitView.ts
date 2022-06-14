@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { RouteRecordRaw } from 'vue-router'
+import type { RouteRecordRaw } from 'vue-router'
+import LayoutTest from './LayoutTest.vue'
 import mockApolloClient from '../mock-apollo-client'
 import renderComponent, { getRouter } from './renderComponent'
 
@@ -28,7 +29,8 @@ export const visitView = async (href: string) => {
 
   const view = renderComponent(
     {
-      template: html`<RouterView />`,
+      template: html`<LayoutTest />`,
+      components: { LayoutTest },
     },
     {
       store: true,

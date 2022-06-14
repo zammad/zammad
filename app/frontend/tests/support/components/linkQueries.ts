@@ -2,11 +2,6 @@
 
 import { getElementError } from '@testing-library/vue'
 
-const getElementParent = (el: HTMLElement): HTMLElement => {
-  if (el.parentElement) return getElementParent(el.parentElement)
-  return el
-}
-
 export const getLinkFromElement = (
   container: HTMLElement,
   element: Element,
@@ -17,15 +12,6 @@ export const getLinkFromElement = (
     throw getElementError(
       'Recieved element is not wrapped inside a link',
       container,
-    )
-  }
-
-  if (!container.contains(link)) {
-    const latestParent = getElementParent(container)
-
-    throw getElementError(
-      'Link is outside of a component wrapper',
-      latestParent,
     )
   }
 
