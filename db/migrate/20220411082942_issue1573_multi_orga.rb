@@ -74,6 +74,8 @@ class Issue1573MultiOrga < ActiveRecord::Migration[6.1]
 
   def add_organization_to_overview
     overview = Overview.find_by(link: 'my_organization_tickets')
+    return if overview.blank?
+
     %w[d s m].each do |view|
       next if overview.view[view].blank?
       next if overview.view[view].include?('organization')
