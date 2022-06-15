@@ -35,11 +35,11 @@ module Net
           if auth_capable?(DEFAULT_AUTH_TYPE)
             authtype = DEFAULT_AUTH_TYPE
           elsif capable_cram_md5_auth?
-            authtype = 'CRAM-MD5'
+            authtype = :cram_md5
           elsif capable_login_auth?
-            authtype = 'LOGIN'
+            authtype = :login
           elsif capable_plain_auth?
-            authtype = 'PLAIN'
+            authtype = :plain
           end
         end
       end
