@@ -14,18 +14,22 @@ class App.TicketZoomArticleImageView extends App.ControllerModal
   constructor: ->
     super
     @unbindAll()
-    $(document).on('keydown.image_preview', 'right', (e) =>
-      nextElement = @parentElement.closest('.attachment').next('.attachment.attachment--preview')
-      return if nextElement.length is 0
-      @close()
-      nextElement.find('img').trigger('click')
+    $(document).on('keydown.image_preview', (e) =>
+      return @nextRight() if e.keyCode is 39 # right
+      return @nextLeft() if e.keyCode is 37 # left
     )
-    $(document).on('keydown.image_preview', 'left', (e) =>
-      prevElement = @parentElement.closest('.attachment').prev('.attachment.attachment--preview')
-      return if prevElement.length is 0
-      @close()
-      prevElement.find('img').trigger('click')
-    )
+
+  nextRight: =>
+    nextElement = @parentElement.closest('.attachment').next('.attachment.attachment--preview')
+    return if nextElement.length is 0
+    @close()
+    nextElement.find('img').trigger('click')
+
+  nextLeft: =>
+    prevElement = @parentElement.closest('.attachment').prev('.attachment.attachment--preview')
+    return if prevElement.length is 0
+    @close()
+    prevElement.find('img').trigger('click')
 
   content: ->
     @image = @image.replace(/view=preview/, 'view=inline')
