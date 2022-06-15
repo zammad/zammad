@@ -24,6 +24,15 @@ RSpec.describe TriggerWebhookJob::RecordPayload::Ticket::Article do
       end
     end
 
+    describe 'Webhhok transfers "accounted_time" of an article as integer instead of float/double #4127' do
+      let(:entry) { create(:ticket_time_accounting, ticket_id: record.ticket.id, ticket_article_id: record.id, time_unit: 3.33) }
+
+      it "stores value as 'accounted_time' key" do
+        entry
+        expect(generate['accounted_time']).to eq(3.33)
+      end
+    end
+
     context 'when Article has stored attachments' do
 
       before do

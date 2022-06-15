@@ -10,7 +10,7 @@ class TriggerWebhookJob::RecordPayload::Ticket::Article < TriggerWebhookJob::Rec
   end
 
   def add_accounted_time(result)
-    result['accounted_time'] = record.ticket_time_accounting&.time_unit.to_i
+    result['accounted_time'] = record.ticket_time_accounting&.time_unit.to_f
     result
   end
 
