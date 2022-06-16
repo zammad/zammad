@@ -69,6 +69,10 @@ module Ticket::Article::AddsMetadataEmail
     elsif Setting.get('ticket_define_email_from') == 'AgentName'
       sender      = User.find(created_by_id)
       realname    = "#{sender.firstname} #{sender.lastname}"
+
+      # avoid "-" as realname, see https://github.com/zammad/zammad/issues/3890
+      realname = email_address.realname if sender.id == 1
+
       self.from = Channel::EmailBuild.recipient_line(realname, email_address.email)
     else
       self.from = Channel::EmailBuild.recipient_line(email_address.realname, email_address.email)
