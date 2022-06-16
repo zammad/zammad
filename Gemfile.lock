@@ -286,7 +286,7 @@ GEM
     mime-types-data (3.2022.0105)
     mini_mime (1.1.2)
     mini_portile2 (2.8.0)
-    minitest (5.15.0)
+    minitest (5.16.0)
     msgpack (1.5.2)
     multi_json (1.15.0)
     multi_xml (0.6.0)
@@ -409,7 +409,7 @@ GEM
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
-    rails-html-sanitizer (1.4.2)
+    rails-html-sanitizer (1.4.3)
       loofah (~> 2.3)
     railties (6.1.6)
       actionpack (= 6.1.6)
@@ -562,10 +562,10 @@ GEM
       logging
       nokogiri
       rubyntlm
-    vite_rails (3.0.9)
+    vite_rails (3.0.10)
       railties (>= 5.1, < 8)
       vite_ruby (~> 3.0)
-    vite_ruby (3.1.4)
+    vite_ruby (3.1.6)
       dry-cli (~> 0.7.0)
       rack-proxy (~> 0.6, >= 0.6.1)
       zeitwerk (~> 2.2)
