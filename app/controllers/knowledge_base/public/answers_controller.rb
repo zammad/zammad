@@ -13,7 +13,9 @@ class KnowledgeBase::Public::AnswersController < KnowledgeBase::Public::BaseCont
   private
 
   def render_alternative
-    @alternative = find_answer @knowledge_base.answers.eager_load(translations: :kb_locale), params[:answer], locale: false
+    answers = @knowledge_base.answers.where(category: params[:category]).eager_load(translations: :kb_locale)
+
+    @alternative = find_answer(answers, params[:answer], locale: false)
 
     raise ActiveRecord::RecordNotFound if !@alternative&.translations&.any?
 
