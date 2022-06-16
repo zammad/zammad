@@ -34,7 +34,7 @@ RSpec.describe Ticket::Article, type: :model do
 
     describe 'Setting of ticket_define_email_from' do
       subject(:article) do
-        create(:ticket_article, sender_name: 'Agent', type_name: 'email')
+        create(:ticket_article, created_by: created_by, sender_name: 'Agent', type_name: 'email')
       end
 
       context 'when AgentName' do
@@ -42,9 +42,22 @@ RSpec.describe Ticket::Article, type: :model do
           Setting.set('ticket_define_email_from', 'AgentName')
         end
 
-        it 'sets the from based on the setting' do
-          expect(article.reload.from).to eq("\"#{article.created_by.firstname} #{article.created_by.lastname}\" <#{article.ticket.group.email_address.email}>")
+        context 'with real sender' do
+          let(:created_by) { create(:user) }
+
+          it 'sets the from to the realname of the user' do
+            expect(article.reload.from).to eq("\"#{article.created_by.firstname} #{article.created_by.lastname}\" <#{article.ticket.group.email_address.email}>")
+          end
         end
+
+        context 'with no real sender (e.g. trigger or scheduler)' do
+          let(:created_by) { User.find(1) }
+
+          it 'sets the from to realname of the mail address)' do
+            expect(article.reload.from).to eq("\"#{article.ticket.group.email_address.realname}\" <#{article.ticket.group.email_address.email}>")
+          end
+        end
+
       end
     end
 
