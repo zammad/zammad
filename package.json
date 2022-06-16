@@ -120,7 +120,7 @@
     "loglevel": "^1.8.0",
     "mitt": "^3.0.0",
     "pinia": "^2.0.14",
-    "prosemirror-model": "^1.18.0",
+    "prosemirror-model": "^1.18.1",
     "prosemirror-state": "^1.4.0",
     "tippy.js": "^6.3.7",
     "ua-parser-js": "^1.0.2",
