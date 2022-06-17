@@ -3,6 +3,17 @@
 require 'rails_helper'
 
 RSpec.describe 'Mobile > App Update Check', type: :system, app: :mobile do
+  context 'when app is not configured yet', authenticated_as: false do
+    before do
+      Setting.set('system_init_done', false)
+      visit '/mobile/login'
+    end
+
+    it 'redirects to desktop app for system set-up' do
+      expect(page).to have_current_path('/')
+    end
+  end
+
   context 'when checking application rebuild notification', authenticated_as: false do
     before do
       visit '/mobile/login?ApplicationRebuildCheckInterval=500'
