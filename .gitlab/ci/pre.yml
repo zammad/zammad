@@ -1,116 +1,21 @@
 # Workaround to enable usage of mixed SSH and Docker GitLab CI runners
 .template_pre: &template_pre
   stage: pre
-  interruptible: true
   extends:
     - .job_rules_default
   before_script:
     - source /etc/profile.d/rvm.sh # ensure RVM is loaded
-
-.template_pre_rails: &template_pre_rails
-  stage: pre
-  interruptible: true
-  extends:
-    - .job_rules_default
-    - .services_postgresql
-  before_script:
-    - source /etc/profile.d/rvm.sh # ensure RVM is loaded
-    - echo -e "\\e[0Ksection_start:`date +%s`:bundle_install[collapsed=true]\\r\\e[0Kbundle install"
-    - bundle config set --local frozen 'true'
-    - bundle config set --local path 'vendor'
-    - bundle install -j $(nproc)
-    - echo -e "\\e[0Ksection_end:`date +%s`:bundle_install\\r\\e[0K"
-    - bundle exec ruby .gitlab/configure_environment.rb
-    - source .gitlab/environment.env
-    - echo -e "\\e[0Ksection_start:`date +%s`:zammad_db_init[collapsed=true]\\r\\e[0Kbundle exec rake zammad:db:init"
-    - bundle exec rake zammad:db:init
-    - echo -e "\\e[0Ksection_end:`date +%s`:zammad_db_init\\r\\e[0K"
 
 # Write CI cache once for faster runs
 # Do not use anchor, it's gonna miss at least the relevant tag required
-write_runner_cache:
+'write runner cache':
+  <<: *template_pre
   cache: !reference [.cache, read_write]
-  extends:
-    - .template_pre
   script:
     - bundle config set --local frozen 'true'
     - bundle config set --local path 'vendor'
     - bundle install -j $(nproc)
     - yarn install
-
-# Must be a separate job because it uses a custom image.
-'lint: shellcheck':
-  <<: *template_pre
-  image: koalaman/shellcheck-alpine:stable
-  before_script:
-    - echo "Disable default before_script."
-  script:
-    - shellcheck -S warning $(find . -name "*.sh" -o -name "functions" | egrep -v "/vendor|node_modules/")
-    - shellcheck -S error script/init.d/*
-  after_script:
-    - echo "Disable default before_script."
-
-'lint: i18n, rails & security':
-  <<: *template_pre_rails
-  needs:
-    - write_runner_cache
-  artifacts:
-    expire_in: 1 week
-    paths:
-      - tmp/brakeman-report.html
-    when: on_failure
-  script:
-    - yarn install
-    - echo "Checking .po file syntax..."
-    - for FILE in i18n/*.pot i18n/*.po; do echo "Checking $FILE"; msgfmt -o /dev/null -c $FILE; done
-    - echo "Checking .pot catalog consistency..."
-    - bundle exec rails generate translation_catalog --check
-    - echo "Brakeman security check..."
-    - bundle exec brakeman -o /dev/stdout -o tmp/brakeman-report.html
-    - echo "bundler-audit security check..."
-    - gem install bundler-audit
-    - bundle-audit update
-    - bundle-audit --ignore CVE-2015-9284
-    - echo "Rails zeitwerk:check autoloader check..."
-    - bundle exec rails zeitwerk:check
-    - .gitlab/check_graphql_api_consistency.sh
-
-'lint: ruby, js & css':
-  <<: *template_pre
-  needs:
-    - write_runner_cache
-  script:
-    - echo "Coffeelint check..."
-    - coffeelint --rules ./.coffeelint/rules/* app/
-    - echo "Stylelint check..."
-    - yarn install
-    - yarn lint:css
-    - echo "ESLint check..."
-    - yarn install --cwd .storybook
-    - yarn lint
-    - echo "Storybook build..."
-    - yarn storybook:build
-    - echo "Rubocop check..."
-    - echo -e "\\e[0Ksection_start:`date +%s`:bundle_install[collapsed=true]\\r\\e[0Kbundle install"
-    - bundle config set --local frozen 'true'
-    - bundle config set --local path 'vendor'
-    - bundle install -j $(nproc)
-    - echo -e "\\e[0Ksection_end:`date +%s`:bundle_install\\r\\e[0K"
-    - bundle exec .rubocop/validate_todos.rb
-    - bundle exec rubocop --parallel
-
-# Must be a separate job because it may fail and is only executed manually.
-'lint: orphaned ruby gems':
-  <<: *template_pre_rails
-  allow_failure: true
-  needs:
-    - write_runner_cache
-  rules:
-    - if: $CI_MERGE_REQUEST_ID
-      when: never
-    - when: manual
-  script:
-    - bundle exec rake zammad:ci:bundle:orphaned 5
 
 # Executed on a dedicated runner.
 'push to github':
@@ -125,13 +30,12 @@ write_runner_cache:
     - git fetch --unshallow
     - script/build/sync_repo.sh git@github.com:zammad/zammad.git
 
-global_refresh_envs:
-  needs:
-    - write_runner_cache
+'refresh global envs':
   extends:
     - .services_postgresql
   stage: pre
-  interruptible: true
+  needs:
+    - "write runner cache"
   # ensure that only one Job runs in the whole project (branches etc.)
   resource_group: global_refresh_envs
   # allow download via the web UI to restore ENVs in case global cache got deleted (see: `.gitlab-ci.yml`)
@@ -146,6 +50,5 @@ global_refresh_envs:
       when: manual
       allow_failure: true
     - when: on_success
-
   script:
     - bundle exec rake zammad:ci:refresh_envs

@@ -1,3 +1,0 @@
-autowizard_ff:
-  extends:
-    - .template_browser-core_autowizard_firefox

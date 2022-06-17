@@ -1,4 +1,17 @@
-cypress:
+frontend:vitest:
+  stage: test
+  extends:
+    - .job_rules_default
+  before_script:
+    - yarn install
+  script:
+    - yarn test
+    - echo "Also test eslint-plugin-zammad..."
+    - cd .eslint-plugin-zammad
+    - yarn install
+    - yarn test
+
+frontend:cypress:
   stage: test
   extends:
     - .job_rules_default

@@ -4,7 +4,6 @@ variables:
   Z_LOCALES: "en-us:de-de"
   # Browser tests and variables
   RAILS_SERVE_STATIC_FILES: "true"
-  APP_RESTART_CMD: 'bundle exec rake environment zammad:ci:app:restart'
   TZ: "Europe/London"
   # docker-imap-devel variables required for browser tests
   MAILNAME: "mail.test.dc.zammad.com"

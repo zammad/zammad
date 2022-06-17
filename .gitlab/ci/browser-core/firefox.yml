@@ -1,28 +1,28 @@
-1_firefox:
+minitest:firefox:1:
   extends:
     - .template_browser-core_firefox
   variables:
     TEST_SLICE: "1"
 
-2_firefox:
+minitest:firefox:2:
   extends:
     - .template_browser-core_firefox
   variables:
     TEST_SLICE: "2"
 
-3_firefox:
+minitest:firefox:3:
   extends:
     - .template_browser-core_firefox
   variables:
     TEST_SLICE: "3"
 
-4_firefox:
+minitest:firefox:4:
   extends:
     - .template_browser-core_firefox
   variables:
     TEST_SLICE: "4"
 
-5_firefox:
+minitest:firefox:5:
   extends:
     - .template_browser-core_firefox
   variables:

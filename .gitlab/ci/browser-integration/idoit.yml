@@ -1,4 +1,4 @@
-idoit_chrome:
+'integration:minitest:idoit':
   extends:
     - .template_browser-integration_chrome
   variables:

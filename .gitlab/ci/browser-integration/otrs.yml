@@ -1,4 +1,4 @@
-otrs_chrome:
+'integration:minitest:otrs':
   extends:
     - .template_browser-integration_import_chrome
   variables:

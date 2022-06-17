@@ -1,13 +1,5 @@
-include:
-
-  # browser-integration
-  - local: '/.gitlab/ci/browser-integration/capybara_chrome.yml'
-  - local: '/.gitlab/ci/browser-integration/capybara_ff.yml'
-  - local: '/.gitlab/ci/browser-integration/idoit_chrome.yml'
-  - local: '/.gitlab/ci/browser-integration/otrs_chrome.yml'
-
 .template_browser-integration_capybara: &template_browser-integration_capybara
-  stage: browser-integration
+  stage: browser
   dependencies:
     - browser:build
   extends:
@@ -33,7 +25,7 @@ include:
     - .services_mysql_postgresql_elasticsearch_selenium_firefox_imap_redis_memcached
 
 .template_browser-integration_chrome: &template_browser-integration_chrome
-  stage: browser-integration
+  stage: browser
   dependencies:
     - browser:build
   extends:
@@ -42,6 +34,7 @@ include:
     - .tags_docker_low_concurrency
   variables:
     RAILS_ENV: "production"
+    APP_RESTART_CMD: 'bundle exec rake environment zammad:ci:app:restart'
     AUTO_WIZARD_FILE: "contrib/auto_wizard_test.json"
   script:
     - RAILS_ENV=test bundle exec rake db:create
@@ -52,7 +45,7 @@ include:
     - bundle exec rails test $TEST_FILE
 
 .template_browser-integration_import_chrome: &template_browser-integration_import_chrome
-  stage: browser-integration
+  stage: browser
   dependencies:
     - browser:build
   extends:
@@ -61,6 +54,7 @@ include:
     - .tags_docker_low_concurrency
   variables:
     RAILS_ENV: "production"
+    APP_RESTART_CMD: 'bundle exec rake environment zammad:ci:app:restart'
     RAILS_SERVE_STATIC_FILES: "true"
   script:
     - RAILS_ENV=test bundle exec rake db:create

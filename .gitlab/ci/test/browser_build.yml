@@ -2,7 +2,6 @@ browser:build:
   stage: test
   extends:
     - .services_postgresql
-  interruptible: true
   artifacts:
     expire_in: 1 week
     paths:

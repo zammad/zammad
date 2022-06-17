@@ -1,0 +1,7 @@
+autowizard:chrome:
+  extends:
+    - .template_browser-core_autowizard_chrome
+
+autowizard:firefox:
+  extends:
+    - .template_browser-core_autowizard_firefox

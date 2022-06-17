@@ -1,18 +1,5 @@
-include:
-
-  # browser-core
-  - local: '/.gitlab/ci/browser-core/build.yml'
-  - local: '/.gitlab/ci/browser-core/autowizard_chrome.yml'
-  - local: '/.gitlab/ci/browser-core/autowizard_ff.yml'
-  - local: '/.gitlab/ci/browser-core/api_client_php.yml'
-  - local: '/.gitlab/ci/browser-core/api_client_ruby.yml'
-  - local: '/.gitlab/ci/browser-core/capybara_chrome.yml'
-  - local: '/.gitlab/ci/browser-core/capybara_ff.yml'
-  - local: '/.gitlab/ci/browser-core/chrome.yml'
-  - local: '/.gitlab/ci/browser-core/firefox.yml'
-
 .template_browser-core: &template_browser-core
-  stage: browser-core
+  stage: browser
   dependencies:
     - browser:build
   extends:
@@ -21,6 +8,7 @@ include:
     - .tags_docker_low_concurrency
   variables:
     RAILS_ENV: "production"
+    APP_RESTART_CMD: 'bundle exec rake environment zammad:ci:app:restart'
   script:
     - script/build/test_slice_tests.sh $TEST_SLICE
     - RAILS_ENV=test bundle exec rake db:create
@@ -40,7 +28,7 @@ include:
     - .services_mysql_postgresql_elasticsearch_selenium_firefox_imap_redis_memcached
 
 .template_browser-core_autowizard: &template_browser-core_autowizard
-  stage: browser-core
+  stage: browser
   dependencies:
     - browser:build
   extends:
@@ -48,6 +36,7 @@ include:
     - .tags_docker_low_concurrency
   variables:
     RAILS_ENV: "production"
+    APP_RESTART_CMD: 'bundle exec rake environment zammad:ci:app:restart'
     AUTO_WIZARD_FILE: "contrib/auto_wizard_example.json"
     TEST_FILE: "test/integration/auto_wizard_browser_test.rb"
   script:
@@ -68,19 +57,8 @@ include:
     - .template_browser-core_autowizard
     - .services_postgresql_selenium_firefox
 
-.template_browser-core_api_client: &template_browser-core_api_client
-  stage: browser-core
-  dependencies:
-    - browser:build
-  extends:
-    - .job_rules_default
-    - .services_mysql_postgresql_redis_memcached
-    - .tags_docker_low_concurrency
-  variables:
-    RAILS_ENV: "production"
-
 .template_browser-core_capybara: &template_browser-core_capybara
-  stage: browser-core
+  stage: browser
   dependencies:
     - browser:build
   extends:

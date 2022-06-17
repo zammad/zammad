@@ -1,28 +1,28 @@
-1_chrome:
+minitest:chrome:1:
   extends:
     - .template_browser-core_chrome
   variables:
     TEST_SLICE: "1"
 
-2_chrome:
+minitest:chrome:2:
   extends:
     - .template_browser-core_chrome
   variables:
     TEST_SLICE: "2"
 
-3_chrome:
+minitest:chrome:3:
   extends:
     - .template_browser-core_chrome
   variables:
     TEST_SLICE: "3"
 
-4_chrome:
+minitest:chrome:4:
   extends:
     - .template_browser-core_chrome
   variables:
     TEST_SLICE: "4"
 
-5_chrome:
+minitest:chrome:5:
   extends:
     - .template_browser-core_chrome
   variables:

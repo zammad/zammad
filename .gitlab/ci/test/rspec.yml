@@ -1,6 +1,5 @@
 include:
-  - local: '/.gitlab/ci/rspec/mysql.yml'
-  - local: '/.gitlab/ci/rspec/postgresql.yml'
+  - '.gitlab/ci/test/rspec/*.yml'
 
 .template_rspec: &template_rspec
   extends:

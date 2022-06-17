@@ -1,3 +1,0 @@
-autowizard_chrome:
-  extends:
-    - .template_browser-core_autowizard_chrome

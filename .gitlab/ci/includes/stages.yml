@@ -1,5 +1,0 @@
-stages:
-  - pre
-  - test
-  - browser-core
-  - browser-integration
