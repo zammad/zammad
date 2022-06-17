@@ -1889,7 +1889,7 @@
   dependencies:
     vue-demi "*"
 
-"@vueuse/shared@8.7.3", "@vueuse/shared@^8.6.0":
+"@vueuse/shared@^8.7.3":
   version "8.7.3"
   resolved "https://registry.yarnpkg.com/@vueuse/shared/-/shared-8.7.3.tgz#64b394c24a68fcf105c6bfe98954df11642bc111"
   integrity sha512-PMc/h6cEakJ4+5VuNUGi7RnbA6CkLvtG2230x8w3zYJpW1P6Qphh9+dFFvHn7TX+RlaicF5ND0RX1NxWmAoW7w==
