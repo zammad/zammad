@@ -12,8 +12,6 @@
     - bundle exec rails test test/integration/email_postmaster_to_sender.rb
     - echo "Clearbit test..."
     - bundle exec rails test test/integration/clearbit_test.rb
-    - echo "Geo tests..."
-    - bundle exec rails test test/integration/geo_location_test.rb
     - echo "Slack test..."
     - bundle exec rails test test/integration/slack_test.rb
     - echo "UserAgent tests..."
