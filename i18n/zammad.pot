@@ -465,11 +465,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/time_unit.jst.eco
-msgid "Accounted Time"
-msgstr ""
-
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
-msgid "Accounted time"
+msgid "Accounted Time"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
