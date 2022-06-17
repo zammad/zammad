@@ -1,6 +1,6 @@
 .template_integration_es: &template_integration_es
   extends:
-    - .env_base
+    - .job_rules_default
     - .services_mysql_postgresql_redis_memcached_elasticsearch
     - .variables_es
   stage: test

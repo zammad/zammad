@@ -1,0 +1,28 @@
+# Cache gems in between jobs and pipelines
+.cache_ruby: &cache_ruby
+  key:
+    files:
+      - Gemfile.lock
+  paths:
+    - vendor/ruby
+    - fresh.env
+
+# Cache node_modules likewise
+.cache_nodejs: &cache_nodejs
+  key:
+    files:
+      - yarn.lock
+  paths:
+    - .yarn/cache
+
+.cache:
+  read_only:
+    - <<: *cache_ruby
+      policy: pull
+    - <<: *cache_nodejs
+      policy: pull
+  read_write:
+    - <<: *cache_ruby
+      policy: pull-push
+    - <<: *cache_nodejs
+      policy: pull-push

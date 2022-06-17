@@ -1,7 +1,6 @@
 browser:build:
   stage: test
   extends:
-    - .tags_docker
     - .services_postgresql
   interruptible: true
   artifacts:

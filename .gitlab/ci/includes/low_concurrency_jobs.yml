@@ -1,0 +1,6 @@
+# Certain jobs like capybara should be executed on runners with limited concurrency to
+#   avoid stability issues.
+.tags_docker_low_concurrency:
+  tags:
+    - docker
+    - low_concurrency

@@ -1,0 +1,19 @@
+.job_rules_default:
+  rules:
+    - if: $CI_MERGE_REQUEST_ID
+      when: never
+    - if: '$SINGLETESTNAME && $SINGLETESTNAME == $CI_JOB_NAME'
+      when: always
+    - if: '$SINGLETESTNAME && $SINGLETESTNAME != $CI_JOB_NAME'
+      when: never
+    - if: '$CI_JOB_NAME'
+      when: on_success
+
+.job_rules_integration_manual_start:
+  rules:
+    - if: $CI_MERGE_REQUEST_ID
+      when: never
+    - if: '$CI_COMMIT_BRANCH =~ /^private/ && $INTEGRATION_TESTS == null'
+      when: manual
+      allow_failure: true
+    - when: on_success

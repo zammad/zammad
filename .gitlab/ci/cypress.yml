@@ -1,7 +1,7 @@
 cypress:
   stage: test
   extends:
-    - .env_base
+    - .job_rules_default
   before_script:
     - yarn install
     - yarn cypress:install

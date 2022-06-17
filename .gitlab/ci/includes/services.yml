@@ -1,13 +1,3 @@
-# Artifacts are stored for failed jobs
-.artifacts_error: &artifacts_error
-  artifacts:
-    expire_in: 1 week
-    when: on_failure
-    paths:
-      - tmp/screenshot*
-      - tmp/screenshots/*
-      - log/*.log
-
 .variables_es: &variables_es
   variables:
     ES_INDEX_RAND: 'true'
@@ -39,37 +29,6 @@
     SE_NODE_OVERRIDE_MAX_SESSIONS: 'true'
     SE_OPTS: '--log /builds/selenium.log'
     CHROME_LOG_FILE: '/builds/chrome.log'
-
-.variables_app_restart_cmd: &variables_app_restart_cmd
-  variables:
-    APP_RESTART_CMD: 'bundle exec rake environment zammad:ci:app:restart'
-
-.rules_singletest: &rules_singletest
-  rules:
-    - if: $CI_MERGE_REQUEST_ID
-      when: never
-    - if: '$SINGLETESTNAME && $SINGLETESTNAME == $CI_JOB_NAME'
-      when: always
-    - if: '$SINGLETESTNAME && $SINGLETESTNAME != $CI_JOB_NAME'
-      when: never
-    - if: '$CI_JOB_NAME'
-      when: on_success
-
-# Workaround to enable usage of mixed SSH and Docker GitLab CI runners
-.tags_docker: &tags_docker
-  tags:
-    - docker
-
-.tags_docker_low_concurrency: &tags_docker_low_concurrency
-  tags:
-    - docker
-    - low_concurrency
-
-.env_base: &env_base
-  <<: *tags_docker
-  <<: *artifacts_error
-  <<: *rules_singletest
-  interruptible: true
 
 # DB Docker
 .docker_mysql: &docker_mysql
@@ -106,11 +65,11 @@
   command: ['memcached', '-m', '256M']
 
   # service templates
-.services_mysql: &services_mysql
+.services_mysql:
   services:
     - <<: *docker_mysql
 
-.services_mysql_redis_memcached: &services_mysql_redis_memcached
+.services_mysql_redis_memcached:
   extends:
     - .variables_redis_memcached
   services:
@@ -118,11 +77,11 @@
     - <<: *docker_redis
     - <<: *docker_memcached
 
-.services_postgresql: &services_postgresql
+.services_postgresql:
   services:
     - <<: *docker_postgresql
 
-.services_postgresql_redis_memcached: &services_postgresql_redis_memcached
+.services_postgresql_redis_memcached:
   extends:
     - .variables_redis_memcached
   services:
@@ -131,7 +90,7 @@
     - <<: *docker_memcached
 
 .services_mysql_postgresql_redis_memcached:
-  &services_mysql_postgresql_redis_memcached
+
   extends:
     - .variables_redis_memcached
   services:
@@ -140,14 +99,14 @@
     - <<: *docker_redis
     - <<: *docker_memcached
 
-.services_postgresql_selenium_chrome: &services_postgresql_selenium_chrome
+.services_postgresql_selenium_chrome:
   extends:
     - .variables_selenium_chrome
   services:
     - <<: *docker_postgresql
     - <<: *docker_selenium_chrome
 
-.services_postgresql_selenium_firefox: &services_postgresql_selenium_firefox
+.services_postgresql_selenium_firefox:
   extends:
     - .variables_selenium_firefox
   services:
@@ -155,7 +114,6 @@
     - <<: *docker_selenium_firefox
 
 .services_mysql_postgresql_imap_redis_memcached:
-  &services_mysql_postgresql_imap_redis_memcached
   extends:
     - .variables_redis_memcached
   services:
@@ -166,14 +124,12 @@
     - <<: *docker_memcached
 
 .services_mysql_postgresql_elasticsearch:
-  &services_mysql_postgresql_elasticsearch
   services:
     - <<: *docker_mysql
     - <<: *docker_postgresql
     - <<: *docker_elasticsearch
 
 .services_mysql_postgresql_redis_memcached_elasticsearch:
-  &services_mysql_postgresql_redis_memcached_elasticsearch
   extends:
     - .variables_redis_memcached
   services:
@@ -184,7 +140,6 @@
     - <<: *docker_elasticsearch
 
 .services_mysql_postgresql_elasticsearch_selenium_chrome_imap:
-  &services_mysql_postgresql_elasticsearch_selenium_chrome_imap
   extends:
     - .variables_selenium_chrome
   services:
@@ -195,7 +150,6 @@
     - <<: *docker_imap
 
 .services_mysql_postgresql_elasticsearch_selenium_firefox_imap:
-  &services_mysql_postgresql_elasticsearch_selenium_firefox_imap
   extends:
     - .variables_selenium_firefox
   services:
@@ -206,7 +160,6 @@
     - <<: *docker_imap
 
 .services_mysql_postgresql_elasticsearch_selenium_chrome_imap_redis_memcached:
-  &services_mysql_postgresql_elasticsearch_selenium_chrome_imap_redis_memcached
   extends:
     - .variables_selenium_chrome
     - .variables_redis_memcached
@@ -220,7 +173,6 @@
     - <<: *docker_memcached
 
 .services_mysql_postgresql_elasticsearch_selenium_firefox_imap_redis_memcached:
-  &services_mysql_postgresql_elasticsearch_selenium_firefox_imap_redis_memcached
   extends:
     - .variables_selenium_firefox
     - .variables_redis_memcached
@@ -232,23 +184,3 @@
     - <<: *docker_imap
     - <<: *docker_redis
     - <<: *docker_memcached
-
-.rules_integration_manual_start: &rules_integration_manual_start
-  rules:
-    - if: $CI_MERGE_REQUEST_ID
-      when: never
-    - if: '$CI_COMMIT_BRANCH =~ /^private/ && $INTEGRATION_TESTS == null'
-      when: manual
-      allow_failure: true
-    - when: on_success
-
-# we need at least one job to store and include this template
-# but we skip this via 'only' -> 'variables' -> '$IGNORE'
-# $IGNORE is not defined
-ignore:
-  stage: test
-  only:
-    variables:
-      - $IGNORE
-  script:
-    - ''

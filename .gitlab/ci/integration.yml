@@ -5,21 +5,11 @@ include:
 
 .template_integration: &template_integration
   extends:
-    - .env_base
+    - .job_rules_default
     - .services_mysql_postgresql_imap_redis_memcached
-    - .rules_integration_manual_start
+    - .job_rules_integration_manual_start
   tags:
     - integration
   stage: test
   variables:
     RAILS_ENV: "test"
-
-# we need at least one job to store and include this template
-# $IGNORE is not defined
-ignore:
-  stage: test
-  only:
-    variables:
-      - $IGNORE
-  script:
-    - ''

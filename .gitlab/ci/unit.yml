@@ -4,7 +4,7 @@ include:
 
 .template_unit: &template_unit
   extends:
-    - .env_base
+    - .job_rules_default
   variables:
     RAILS_ENV: "test"
   script:
@@ -14,13 +14,3 @@ include:
     - bundle exec rake test:units
     - bundle exec rails test test/integration/object_manager_test.rb
     - bundle exec rails test test/integration/package_test.rb
-
-# we need at least one job to store and include this template
-# $IGNORE is not defined
-ignore:
-  stage: test
-  only:
-    variables:
-      - $IGNORE
-  script:
-    - ''

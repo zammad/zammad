@@ -4,7 +4,7 @@ include:
 
 .template_rspec: &template_rspec
   extends:
-    - .env_base
+    - .job_rules_default
   script:
     - echo -e "\\e[0Ksection_start:`date +%s`:zammad_db_init[collapsed=true]\\r\\e[0Kbundle exec rake zammad:db:init"
     - bundle exec rake zammad:db:init
@@ -19,9 +19,9 @@ include:
 rspec:integration:
   stage: test
   extends:
-    - .env_base
+    - .job_rules_default
     - .services_mysql_postgresql_imap_redis_memcached
-    - .rules_integration_manual_start
+    - .job_rules_integration_manual_start
   variables:
     RAILS_ENV: "test"
   script:

@@ -16,9 +16,8 @@ include:
   dependencies:
     - browser:build
   extends:
-    - .env_base
+    - .job_rules_default
     - .variables_es
-    - .variables_app_restart_cmd
     - .tags_docker_low_concurrency
   variables:
     RAILS_ENV: "production"
@@ -45,8 +44,7 @@ include:
   dependencies:
     - browser:build
   extends:
-    - .env_base
-    - .variables_app_restart_cmd
+    - .job_rules_default
     - .tags_docker_low_concurrency
   variables:
     RAILS_ENV: "production"
@@ -75,8 +73,7 @@ include:
   dependencies:
     - browser:build
   extends:
-    - .env_base
-    - .variables_app_restart_cmd
+    - .job_rules_default
     - .services_mysql_postgresql_redis_memcached
     - .tags_docker_low_concurrency
   variables:
@@ -87,7 +84,7 @@ include:
   dependencies:
     - browser:build
   extends:
-    - .env_base
+    - .job_rules_default
     - .variables_es
     - .tags_docker_low_concurrency
   variables:
@@ -108,13 +105,3 @@ include:
   extends:
     - .template_browser-core_capybara
     - .services_mysql_postgresql_elasticsearch_selenium_firefox_imap_redis_memcached
-
-# we need at least one job to store and include this template
-# $IGNORE is not defined
-ignore:
-  stage: test
-  only:
-    variables:
-      - $IGNORE
-  script:
-    - ''

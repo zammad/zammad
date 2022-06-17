@@ -3,9 +3,7 @@
   stage: pre
   interruptible: true
   extends:
-    - .tags_docker
-    - .rules_singletest
-    - .artifacts_error
+    - .job_rules_default
   before_script:
     - source /etc/profile.d/rvm.sh # ensure RVM is loaded
 
@@ -13,10 +11,8 @@
   stage: pre
   interruptible: true
   extends:
-    - .tags_docker
-    - .rules_singletest
+    - .job_rules_default
     - .services_postgresql
-    - .artifacts_error
   before_script:
     - source /etc/profile.d/rvm.sh # ensure RVM is loaded
     - echo -e "\\e[0Ksection_start:`date +%s`:bundle_install[collapsed=true]\\r\\e[0Kbundle install"
@@ -33,9 +29,9 @@
 # Write CI cache once for faster runs
 # Do not use anchor, it's gonna miss at least the relevant tag required
 write_runner_cache:
+  cache: !reference [.cache, read_write]
   extends:
     - .template_pre
-    - .cache_write
   script:
     - bundle config set --local frozen 'true'
     - bundle config set --local path 'vendor'
@@ -133,7 +129,6 @@ global_refresh_envs:
   needs:
     - write_runner_cache
   extends:
-    - .tags_docker
     - .services_postgresql
   stage: pre
   interruptible: true
@@ -154,4 +149,3 @@ global_refresh_envs:
 
   script:
     - bundle exec rake zammad:ci:refresh_envs
-
