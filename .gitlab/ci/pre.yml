@@ -30,6 +30,18 @@
     - bundle exec rake zammad:db:init
     - echo -e "\\e[0Ksection_end:`date +%s`:zammad_db_init\\r\\e[0K"
 
+# Write CI cache once for faster runs
+# Do not use anchor, it's gonna miss at least the relevant tag required
+write_runner_cache:
+  extends:
+    - .template_pre
+    - .cache_write
+  script:
+    - bundle config set --local frozen 'true'
+    - bundle config set --local path 'vendor'
+    - bundle install -j $(nproc)
+    - yarn install
+
 # Must be a separate job because it uses a custom image.
 'lint: shellcheck':
   <<: *template_pre
@@ -44,6 +56,8 @@
 
 'lint: i18n, rails & security':
   <<: *template_pre_rails
+  needs:
+    - write_runner_cache
   artifacts:
     expire_in: 1 week
     paths:
@@ -67,6 +81,8 @@
 
 'lint: ruby, js & css':
   <<: *template_pre
+  needs:
+    - write_runner_cache
   script:
     - echo "Coffeelint check..."
     - coffeelint --rules ./.coffeelint/rules/* app/
@@ -91,6 +107,8 @@
 'lint: orphaned ruby gems':
   <<: *template_pre_rails
   allow_failure: true
+  needs:
+    - write_runner_cache
   rules:
     - if: $CI_MERGE_REQUEST_ID
       when: never
@@ -112,6 +130,8 @@
     - script/build/sync_repo.sh git@github.com:zammad/zammad.git
 
 global_refresh_envs:
+  needs:
+    - write_runner_cache
   extends:
     - .tags_docker
     - .services_postgresql
@@ -134,3 +154,4 @@ global_refresh_envs:
 
   script:
     - bundle exec rake zammad:ci:refresh_envs
+
