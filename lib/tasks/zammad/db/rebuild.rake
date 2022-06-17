@@ -10,6 +10,7 @@ namespace :zammad do
       ActiveRecord::Base.connection.reconnect!
       ActiveRecord::Base.descendants.each(&:reset_column_information)
       Rails.cache.clear
+      EventBuffer.reset('transaction')
       Setting.reload
     end
   end
