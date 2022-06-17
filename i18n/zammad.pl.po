@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-06-13 07:28+0000\n"
-"Last-Translator: Paweł Rypień <pawel.rypien@bmw-sikora.pl>\n"
+"PO-Revision-Date: 2022-06-17 07:36+0000\n"
+"Last-Translator: MBekspert <michal.bosak@ekspert.biz>\n"
 "Language-Team: Polish <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/pl/>\n"
 "Language: pl\n"
@@ -3116,6 +3116,9 @@ msgid ""
 "Defines postmaster filter to identify out-of-office emails for follow-up "
 "detection and keeping current ticket state."
 msgstr ""
+"Definiuje filtr postmaster do identyfikowania wiadomości e-mail poza biurem "
+"w celu wykrywania działań następczych i utrzymywania aktualnego stanu "
+"zgłoszenia."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -3143,17 +3146,21 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Defines postmaster filter to identify sender user."
-msgstr ""
+msgstr "Definiuje filtr postmastera do identyfikacji użytkownika nadawcy."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines postmaster filter to manage Icinga (http://www.icinga.org) emails."
 msgstr ""
+"Definiuje filtr postmaster do zarządzania wiadomościami e-mail Icinga "
+"(http://www.icinga.org)."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines postmaster filter to manage Monit (https://mmonit.com/monit/) emails."
 msgstr ""
+"Definiuje filtr postmaster do zarządzania wiadomościami e-mail Monit "
+"(https://mmonit.com/monit/)."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -3167,6 +3174,8 @@ msgid ""
 "Defines postmaster filter to remove X-Zammad headers from untrustworthy "
 "sources."
 msgstr ""
+"Definiuje filtr postmaster, aby usunąć nagłówki X-Zammad z niewiarygodnych "
+"źródeł."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -3181,6 +3190,8 @@ msgid ""
 "Defines postmaster filter to set the sender/from of emails based on reply-to "
 "header."
 msgstr ""
+"Definiuje filtr postmaster, aby ustawić nadawcę/od e-maili na podstawie "
+"nagłówka odpowiedzi do."
 
 #: db/seeds/settings.rb
 msgid ""
