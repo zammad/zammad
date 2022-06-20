@@ -55,11 +55,13 @@ class App.TicketZoomArticleNew extends App.Controller
 
       @openTextarea(null, true, !data.nofocus)
       for key, value of data.article
-        if key is 'body'
-          @$("[data-name=\"#{key}\"]").html(value)
-        else
-          @$("[name=\"#{key}\"]").val(value).trigger('change')
-
+        switch key
+          when 'body'
+            @$("[data-name=\"#{key}\"]").html(value)
+          when 'internal'
+            @setArticleInternal(value)
+          else
+            @$("[name=\"#{key}\"]").val(value).trigger('change')
 
       @$('[name=shared_draft_id]').val(data.shared_draft_id)
 
@@ -363,19 +365,13 @@ class App.TicketZoomArticleNew extends App.Controller
     @el.find('.js-articleTypes').addClass('is-hidden')
 
   setArticleInternal: (internal) =>
-    if internal is true
-      @articleNewEdit
-        .removeClass('is-public')
-        .addClass('is-internal')
-
-      @$('[name=internal]').val('true')
-      return
-
     @articleNewEdit
-      .addClass('is-public')
-      .removeClass('is-internal')
+      .toggleClass('is-public', !internal)
+      .toggleClass('is-internal', internal)
 
-    @$('[name=internal]').val('')
+    value = if internal then 'true' else ''
+
+    @$('[name=internal]').val(value)
 
   setArticleTypePre: (type, signaturePosition = 'bottom') =>
     wasScrolledToBottom = @isScrolledToBottom()

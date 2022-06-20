@@ -9,11 +9,13 @@ RSpec.describe 'Ticket Shared Draft Zoom', type: :system, authenticated_as: :aut
   let(:ticket)              { create(:ticket, group: group) }
   let(:ticket_with_draft)   { create(:ticket, group: group) }
   let(:draft_body)          { 'draft here' }
+  let(:draft_type)          { 'note' }
+  let(:draft_internal)      { true }
 
   let(:draft) do
     create(:ticket_shared_draft_zoom,
            ticket:            ticket_with_draft,
-           new_article:       { body: draft_body, type: 'note', internal: true },
+           new_article:       { body: draft_body, type: draft_type, internal: draft_internal },
            ticket_attributes: { priority_id: '3' })
   end
 
@@ -247,6 +249,54 @@ RSpec.describe 'Ticket Shared Draft Zoom', type: :system, authenticated_as: :aut
 
     it 'applies attachment' do
       expect(page).to have_text('1x1.png')
+    end
+  end
+
+  context 'create ticket article' do
+    before do
+      visit "ticket/zoom/#{ticket_with_draft.id}"
+
+      click :draft_share_button
+
+      in_modal do
+        click '.js-submit'
+      end
+
+      within :active_content do
+        click '.js-submit'
+      end
+    end
+
+    let(:draft_type) { 'phone' }
+
+    it 'creates article with type' do
+      wait.until do
+        article = ticket_with_draft.articles.reload.first
+        next false if !article
+
+        expect(article).to have_attributes(
+          type:     Ticket::Article::Type.lookup(name: 'phone'),
+          internal: true,
+          body:     article.body
+        )
+      end
+    end
+
+    context 'when draft is public' do
+      let(:draft_internal) { false }
+
+      it 'creates article with selected visibility' do
+        wait.until do
+          article = ticket_with_draft.articles.reload.first
+          next false if !article
+
+          expect(article).to have_attributes(
+            type:     Ticket::Article::Type.lookup(name: 'phone'),
+            internal: false,
+            body:     article.body
+          )
+        end
+      end
     end
   end
 end
