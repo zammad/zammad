@@ -7,7 +7,7 @@ class Sequencer
         class Users < Sequencer::Unit::Import::Zendesk::SubSequence::Object
           include ::Sequencer::Unit::Import::Zendesk::Mixin::IncrementalExport
 
-          uses :organization_map, :group_map, :user_group_map
+          uses :organization_map, :group_map, :user_group_map, :field_map
 
           private
 
@@ -16,6 +16,7 @@ class Sequencer
               organization_map: organization_map,
               group_map:        group_map,
               user_group_map:   user_group_map,
+              field_map:        field_map,
             )
           end
         end

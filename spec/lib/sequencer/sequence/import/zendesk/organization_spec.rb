@@ -25,7 +25,8 @@ RSpec.describe ::Sequencer::Sequence::Import::Zendesk::Organization, sequencer: 
           'tags'                => ['b'],
           'organization_fields' => {
             'api_key'         => 'my api öäüß',
-            'custom_dropdown' => 'b'
+            'custom_dropdown' => 'b',
+            'test::example'   => '1',
           },
           'deleted_at'          => nil
         }
@@ -37,6 +38,7 @@ RSpec.describe ::Sequencer::Sequence::Import::Zendesk::Organization, sequencer: 
         'Organization' => {
           'api_key'         => 'api_key',
           'custom_dropdown' => 'custom_dropdown',
+          'test::example'   => 'test_example',
         }
       }
     end
@@ -56,13 +58,15 @@ RSpec.describe ::Sequencer::Sequence::Import::Zendesk::Organization, sequencer: 
         note:            nil,
         domain:          '',
         api_key:         'my api öäüß',
-        custom_dropdown: 'b'
+        custom_dropdown: 'b',
+        test_example:    '1',
       }
     end
 
     before do
       create :object_manager_attribute_select, object_name: 'Organization', name: 'custom_dropdown'
       create :object_manager_attribute_text, object_name: 'Organization', name: 'api_key'
+      create :object_manager_attribute_text, object_name: 'Organization', name: 'test_example'
       ObjectManager::Attribute.migration_execute
     end
 

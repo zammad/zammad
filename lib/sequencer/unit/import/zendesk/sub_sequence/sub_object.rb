@@ -8,7 +8,7 @@ class Sequencer
           class SubObject < Sequencer::Unit::Base
             include ::Sequencer::Unit::Import::Zendesk::SubSequence::Base
 
-            uses :resource, :instance, :user_id, :model_class, :action
+            uses :resource, :instance, :user_id, :model_class, :action, :field_map
 
             def self.inherited(subclass)
               super
@@ -38,6 +38,7 @@ class Sequencer
                 instance:    instance,
                 user_id:     user_id,
                 model_class: model_class,
+                field_map:   field_map,
               )
             end
           end

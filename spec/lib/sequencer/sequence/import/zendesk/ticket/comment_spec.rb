@@ -79,6 +79,7 @@ RSpec.describe ::Sequencer::Sequence::Import::Zendesk::Ticket::Comment, sequence
         instance:   ticket,
         resource:   resource,
         user_map:   user_map,
+        field_map:  {},
       }
     end
 

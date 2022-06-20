@@ -12,6 +12,7 @@ class Sequencer
               'Import::Zendesk::ObjectAttribute::SanitizedType',
               'Import::Zendesk::ObjectAttribute::SanitizedName',
               'Import::Zendesk::ObjectAttribute::Add',
+              'Import::Zendesk::ObjectAttribute::FieldMap',
             ]
           end
         end

@@ -7,7 +7,7 @@ class Sequencer
         class Tickets < Sequencer::Unit::Import::Zendesk::SubSequence::Object
           include ::Sequencer::Unit::Import::Zendesk::Mixin::IncrementalExport
 
-          uses :user_map, :organization_map, :group_map, :ticket_field_map
+          uses :user_map, :organization_map, :group_map, :ticket_field_map, :field_map
 
           private
 
@@ -17,6 +17,7 @@ class Sequencer
               group_map:        group_map,
               organization_map: organization_map,
               ticket_field_map: ticket_field_map,
+              field_map:        field_map,
             )
           end
         end

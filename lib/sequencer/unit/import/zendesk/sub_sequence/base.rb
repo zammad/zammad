@@ -16,7 +16,7 @@ class Sequencer
             def self.included(base)
               base.extend(ClassMethods)
 
-              base.uses :dry_run, :import_job
+              base.uses :dry_run, :import_job, :field_map
             end
 
             private
@@ -25,6 +25,7 @@ class Sequencer
               {
                 dry_run:    dry_run,
                 import_job: import_job,
+                field_map:  field_map,
               }
             end
 

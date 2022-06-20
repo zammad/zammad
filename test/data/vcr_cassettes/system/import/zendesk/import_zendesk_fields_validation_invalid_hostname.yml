@@ -21,9 +21,9 @@ http_interactions:
       message: Not Found
     headers:
       Date:
-      - Thu, 21 Apr 2022 06:41:31 GMT
+      - Wed, 15 Jun 2022 08:08:24 GMT
       Content-Type:
-      - application/json; charset=UTF-8
+      - application/json; charset=utf-8
       Transfer-Encoding:
       - chunked
       Connection:
@@ -35,14 +35,14 @@ http_interactions:
       Cache-Control:
       - no-cache
       X-Zendesk-Origin-Server:
-      - classic-app-server-6d4cf7447c-ktj5z
+      - classic-app-server-7974bb6f47-m9fpp
       X-Request-Id:
-      - 6ff4226ab9ec9a18-FRA
-      - 6ff4226ab9ec9a18-FRA
+      - 71b9d1504b3092b4-FRA
+      - 71b9d1504b3092b4-FRA
       X-Runtime:
-      - '0.008914'
+      - '0.016302'
       X-Envoy-Upstream-Service-Time:
-      - '10'
+      - '19'
       X-Envoy-Decorator-Operation:
       - classic.classic.svc.cluster.local:80/*
       X-Zendesk-Zorg:
@@ -52,19 +52,19 @@ http_interactions:
       Expect-Ct:
       - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
       Set-Cookie:
-      - __cf_bm=FWrOgqxG6FGc7l_1Q0RIx31t3Ri1i.SEnZvQSzfNZ6Q-1650523291-0-AR9JBpI7lJDGr/5G4Ij7lkXEZSN41auRmN1uGAD2fjRD9x445OHWQ0l3xChcfDzO8HOVp9Nuws31CiPohMDeaV6cVw2+R6EwSNmmmveGfIYQ;
-        path=/; expires=Thu, 21-Apr-22 07:11:31 GMT; domain=.zendesk.com; HttpOnly;
+      - __cf_bm=3xdh3XawBfOICFuHAK.RUetMbD21PtzBtRB0SXu98Lc-1655280504-0-AQxQWpyn3vESdQlUUlfmmLiHg08d1l6fvGvrcC9MzfMXYZOGc9Rjprx+oFERhfROlEdBnDKQAyH8L5AwtojGmP2hi5CS6ljpe/kMWPJW9NhS;
+        path=/; expires=Wed, 15-Jun-22 08:38:24 GMT; domain=.zendesk.com; HttpOnly;
         Secure; SameSite=None
-      - __cfruid=cd538244bb8005e025535f93c633690113b796d3-1650523291; path=/; domain=.zendesk.com;
+      - __cfruid=45e1ee0ae7ac644948863bb55d77014edbab392d-1655280504; path=/; domain=.zendesk.com;
         HttpOnly; Secure; SameSite=None
       Report-To:
-      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=%2FjmK2rN5tIzrV7WrgI5n9bZQx%2Fr6tlm6i%2FYBM14gXZD1qKpiS00cusKMqNxgLgeuiVwZRiPm6955ZEpWpZv%2FcZ0AvYP2Gv%2FY0D3IuslacKAqTOvq8rzei8mZlSwdQn7FNUVL7DucNug5Ao7ROPA%3D"}],"group":"cf-nel","max_age":604800}'
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=OzAaLEIoIHtiYmvhq2e19crX0JKsiW3MhwFfyE2MOqD%2FO9uQzugI17iAjpsuap6a5pDEDjJtIJRcnGzGMXNJbpgOLGUaH6g5VQ1rq9pzceP80ohQ4lnSpH1RmjDMPrmgLWCMFUmOzR%2Fsdpyh79M%3D"}],"group":"cf-nel","max_age":604800}'
       Nel:
       - '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
       Server:
       - cloudflare
       Cf-Ray:
-      - 6ff4226ab9ec9a18-FRA
+      - 71b9d1504b3092b4-FRA
     body:
       encoding: ASCII-8BIT
       string: |
@@ -74,5 +74,5 @@ http_interactions:
             "message": "There is no help desk configured at this address. This means that the address is available and that you can claim it at http://www.zendesk.com/signup"
           }
         }
-  recorded_at: Thu, 21 Apr 2022 06:41:31 GMT
+  recorded_at: Wed, 15 Jun 2022 08:08:24 GMT
 recorded_with: VCR 6.1.0

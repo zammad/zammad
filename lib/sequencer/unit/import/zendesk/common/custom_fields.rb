@@ -8,7 +8,7 @@ class Sequencer
           class CustomFields < Sequencer::Unit::Base
             include ::Sequencer::Unit::Import::Common::Mapping::Mixin::ProvideMapped
 
-            uses :resource
+            uses :resource, :field_map, :model_class
 
             def process
               provide_mapped do
@@ -32,7 +32,21 @@ class Sequencer
               fields.each_with_object({}) do |(key, value), result|
                 next if value.nil?
 
-                result[key] = value
+                if custom_fields_map.nil?
+                  result[key] = value
+                else
+                  local_name = custom_fields_map[key]
+                  result[ local_name.to_sym ] = value
+                end
+
+              end
+            end
+
+            def custom_fields_map
+              @custom_fields_map ||= begin
+                if model_class
+                  field_map[model_class.name]
+                end
               end
             end
           end

@@ -25,6 +25,7 @@ RSpec.shared_examples 'Sequencer::Unit::Import::Zendesk::SubSequence::Base' do
         organization_map: {}, # required by Tickets
         ticket_field_map: {}, # required by Tickets
         user_map:         {}, # required by Tickets
+        field_map:        {},
       }
     end
 

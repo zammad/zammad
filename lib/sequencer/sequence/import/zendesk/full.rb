@@ -15,6 +15,7 @@ class Sequencer
               'Import::Common::ImportJob::Statistics::Update',
               'Import::Common::ImportJob::Statistics::Store',
               'Import::Common::ImportJob::DryRun',
+              'Import::Zendesk::FieldMap',
               'Import::Zendesk::Groups',
               'Import::Zendesk::OrganizationFields',
               'Import::Zendesk::Organizations',

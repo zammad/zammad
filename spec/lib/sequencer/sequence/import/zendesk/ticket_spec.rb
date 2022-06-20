@@ -116,6 +116,7 @@ RSpec.describe ::Sequencer::Sequence::Import::Zendesk::Ticket, sequencer: :seque
         user_map:         user_map,
         organization_map: organization_map,
         ticket_field_map: ticket_field_map,
+        field_map:        {},
       }
     end
 
