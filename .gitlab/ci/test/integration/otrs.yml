@@ -2,9 +2,7 @@
   extends:
     - .template_integration
   script:
-    - echo -e "\\e[0Ksection_start:`date +%s`:zammad_db_unseeded[collapsed=true]\\r\\e[0Kbundle exec rake zammad:db:unseeded"
-    - bundle exec rake zammad:db:unseeded
-    - echo -e "\\e[0Ksection_end:`date +%s`:zammad_db_unseeded\\r\\e[0K"
+    - !reference [.scripts, zammad_db_unseeded]
     - bundle exec rails test test/integration/otrs_import_test.rb
   variables:
     FF_NETWORK_PER_BUILD: 1 # https://docs.gitlab.com/runner/configuration/feature-flags.html

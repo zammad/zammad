@@ -4,7 +4,7 @@
   extends:
     - .job_rules_default
   before_script:
-    - source /etc/profile.d/rvm.sh # ensure RVM is loaded
+    - !reference [.scripts, source_rvm]
 
 .template_lint_rails: &template_lint_rails
   stage: lint
@@ -12,17 +12,10 @@
     - .job_rules_default
     - .services_postgresql
   before_script:
-    - source /etc/profile.d/rvm.sh # ensure RVM is loaded
-    - echo -e "\\e[0Ksection_start:`date +%s`:bundle_install[collapsed=true]\\r\\e[0Kbundle install"
-    - bundle config set --local frozen 'true'
-    - bundle config set --local path 'vendor'
-    - bundle install -j $(nproc)
-    - echo -e "\\e[0Ksection_end:`date +%s`:bundle_install\\r\\e[0K"
-    - bundle exec ruby .gitlab/configure_environment.rb
-    - source .gitlab/environment.env
-    - echo -e "\\e[0Ksection_start:`date +%s`:zammad_db_init[collapsed=true]\\r\\e[0Kbundle exec rake zammad:db:init"
-    - bundle exec rake zammad:db:init
-    - echo -e "\\e[0Ksection_end:`date +%s`:zammad_db_init\\r\\e[0K"
+    - !reference [.scripts, source_rvm]
+    - !reference [.scripts, bundle_install]
+    - !reference [.scripts, configure_environment]
+    - !reference [.scripts, zammad_db_init]
 
 # Must be a separate job because it uses a custom image.
 'lint: shellcheck':
@@ -44,7 +37,7 @@
       - tmp/brakeman-report.html
     when: on_failure
   script:
-    - yarn install
+    - !reference [.scripts, yarn_install]
     - echo "Checking .po file syntax..."
     - for FILE in i18n/*.pot i18n/*.po; do echo "Checking $FILE"; msgfmt -o /dev/null -c $FILE; done
     - echo "Checking .pot catalog consistency..."
@@ -65,19 +58,15 @@
     - echo "Coffeelint check..."
     - coffeelint --rules ./.coffeelint/rules/* app/
     - echo "Stylelint check..."
-    - yarn install
+    - !reference [.scripts, yarn_install]
     - yarn lint:css
     - echo "ESLint check..."
     - yarn install --cwd .storybook
     - yarn lint
     - echo "Storybook build..."
     - yarn storybook:build
+    - !reference [.scripts, bundle_install]
     - echo "Rubocop check..."
-    - echo -e "\\e[0Ksection_start:`date +%s`:bundle_install[collapsed=true]\\r\\e[0Kbundle install"
-    - bundle config set --local frozen 'true'
-    - bundle config set --local path 'vendor'
-    - bundle install -j $(nproc)
-    - echo -e "\\e[0Ksection_end:`date +%s`:bundle_install\\r\\e[0K"
     - bundle exec .rubocop/validate_todos.rb
     - bundle exec rubocop --parallel
 

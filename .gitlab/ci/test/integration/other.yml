@@ -1,10 +1,9 @@
 "minitest:integration:other":
   extends:
     - .template_integration
+  allow_failure: true
   script:
-    - echo -e "\\e[0Ksection_start:`date +%s`:zammad_db_unseeded[collapsed=true]\\r\\e[0Kbundle exec rake zammad:db:unseeded"
-    - bundle exec rake zammad:db:unseeded
-    - echo -e "\\e[0Ksection_end:`date +%s`:zammad_db_unseeded\\r\\e[0K"
+    - !reference [.scripts, zammad_db_unseeded]
     - echo "email_helper_deliver tests..."
     - bundle exec rails test test/integration/email_helper_test.rb
     - bundle exec rails test test/integration/email_deliver_test.rb
@@ -18,6 +17,3 @@
     - bundle exec rails test test/integration/user_agent_test.rb
     - export ZAMMAD_PROXY_TEST=true
     - bundle exec rails test test/integration/user_agent_test.rb
-
-
-  allow_failure: true

@@ -19,14 +19,10 @@ default:
 
   # Initialize application env
   before_script:
-    - source /etc/profile.d/rvm.sh
-    - echo -e "\\e[0Ksection_start:`date +%s`:bundle_install[collapsed=true]\\r\\e[0Kbundle install"
-    - bundle config set --local frozen 'true'
-    - bundle config set --local path 'vendor'
-    - bundle install -j $(nproc)
-    - echo -e "\\e[0Ksection_end:`date +%s`:bundle_install\\r\\e[0K"
-    - bundle exec ruby .gitlab/configure_environment.rb
-    - source .gitlab/environment.env
+    - !reference [.scripts, source_rvm]
+    - !reference [.scripts, bundle_install]
+    - !reference [.scripts, yarn_install]
+    - !reference [.scripts, configure_environment]
 
   after_script:
     - .gitlab/environment_info.sh > log/environment_info.log

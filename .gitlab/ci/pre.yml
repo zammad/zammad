@@ -4,7 +4,7 @@
   extends:
     - .job_rules_default
   before_script:
-    - source /etc/profile.d/rvm.sh # ensure RVM is loaded
+    - !reference [.scripts, source_rvm]
 
 # Write CI cache once for faster runs
 # Do not use anchor, it's gonna miss at least the relevant tag required
@@ -12,10 +12,8 @@
   <<: *template_pre
   cache: !reference [.cache, read_write]
   script:
-    - bundle config set --local frozen 'true'
-    - bundle config set --local path 'vendor'
-    - bundle install -j $(nproc)
-    - yarn install
+    - !reference [.scripts, bundle_install]
+    - !reference [.scripts, yarn_install]
 
 # Executed on a dedicated runner.
 'push to github':

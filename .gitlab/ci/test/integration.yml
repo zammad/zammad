@@ -6,8 +6,4 @@ include:
     - .job_rules_default
     - .services_mysql_postgresql_imap_redis_memcached
     - .job_rules_integration_manual_start
-  tags:
-    - integration
   stage: test
-  variables:
-    RAILS_ENV: "test"

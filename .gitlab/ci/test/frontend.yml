@@ -3,7 +3,7 @@ frontend:vitest:
   extends:
     - .job_rules_default
   before_script:
-    - yarn install
+    - !reference [.scripts, yarn_install]
   script:
     - yarn test
     - echo "Also test eslint-plugin-zammad..."
@@ -16,7 +16,7 @@ frontend:cypress:
   extends:
     - .job_rules_default
   before_script:
-    - yarn install
+    - !reference [.scripts, yarn_install]
     - yarn cypress:install
   script:
     - sysctl -w fs.inotify.max_user_watches=524288 # see https://github.com/cypress-io/cypress/issues/6960

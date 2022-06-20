@@ -65,8 +65,6 @@
     - .job_rules_default
     - .variables_es
     - .tags_docker_low_concurrency
-  variables:
-    RAILS_ENV: "test"
   script:
     - echo -e "\\e[0Ksection_start:`date +%s`:zammad_ci_test_prepare[collapsed=true]\\r\\e[0Kbundle exec rake zammad:ci:test:prepare"
     - bundle exec rake zammad:ci:test:prepare

@@ -2,6 +2,7 @@
 variables:
   # for faster translation loading
   Z_LOCALES: "en-us:de-de"
+  RAILS_ENV: "test"
   # Browser tests and variables
   RAILS_SERVE_STATIC_FILES: "true"
   TZ: "Europe/London"
@@ -20,3 +21,5 @@ variables:
   ENABLE_EXPERIMENTAL_MOBILE_FRONTEND: 'true'
   # Compile assets only once.
   CI_SKIP_ASSETS_PRECOMPILE: 'true'
+  # Avoid unnecessary DB resets.
+  CI_SKIP_DB_RESET: 'true'
