@@ -349,6 +349,9 @@ class String
     string.gsub!(%r{[[:space:]]*(<br(|/)>[[:space:]]*)*\Z}i, '')
     string.gsub!(%r{(<p></p>){1,10}\Z}i, '')
 
+    # https://github.com/zammad/zammad/issues/4112
+    string.gsub!(%r{&lt;!\[if !supportLists\]&gt;.+?&lt;!\[endif\]&gt;}, '• ')
+
     string.signature_identify('html')
 
     marker_template = '<span class="js-signatureMarker"></span>'
