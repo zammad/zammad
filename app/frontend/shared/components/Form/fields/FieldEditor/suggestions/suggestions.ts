@@ -3,7 +3,7 @@
 import type { Content, Editor } from '@tiptap/core'
 import type { SuggestionOptions } from '@tiptap/suggestion'
 import { VueRenderer } from '@tiptap/vue-3'
-import tippy, { type Instance } from 'tippy.js'
+import tippy, { type GetReferenceClientRect, type Instance } from 'tippy.js'
 import { PluginKey } from 'prosemirror-state'
 
 import MentionItem from '../SuggestionItem.vue'
@@ -51,7 +51,7 @@ export default function buildMentionExtension<T>(
             editor: props.editor,
           })
           ;[popup] = tippy('body', {
-            getReferenceClientRect: props.clientRect,
+            getReferenceClientRect: props.clientRect as GetReferenceClientRect,
             appendTo: () => document.body,
             content: component.element,
             showOnCreate: true,
@@ -67,7 +67,7 @@ export default function buildMentionExtension<T>(
             type: options.type,
           })
           popup.setProps({
-            getReferenceClientRect: props.clientRect,
+            getReferenceClientRect: props.clientRect as GetReferenceClientRect,
           })
         },
         onKeyDown(props) {
