@@ -1430,6 +1430,20 @@ RSpec.describe String do
           <li><a href="http://business-catalogs.example.com/ODtpbGs5MWIzbjUyYzExLTA4Yy06Mmg7N3AvL3R0bmFvY3B0LXlhbW9sc2Nhb3NnYy5lL3RpbXJlZi9lbS9ycnJuaWFpZXMsdGxnY25pLGUsdXJ0b3NVTGVpNWZ8fGZh" rel="nofollow noreferrer noopener" target="_blank" title="http://business-catalogs.example.com/ODtpbGs5MWIzbjUyYzExLTA4Yy06Mmg7N3AvL3R0bmFvY3B0LXlhbW9sc2Nhb3NnYy5lL3RpbXJlZi9lbS9ycnJuaWFpZXMsdGxnY25pLGUsdXJ0b3NVTGVpNWZ8fGZh">Luxemburg</a></li>
         TEXT
       end
+
+      # https://github.com/zammad/zammad/issues/4112
+      it 'converts lists from MS Outlook correctly' do
+        expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+          <p class="MsoPlainText" style="margin-left:36.0pt;text-indent:-18.0pt;mso-list:l0 level1 lfo1">
+          <![if !supportLists]><span style="font-family:Symbol;mso-fareast-language:EN-US"><span style="mso-list:Ignore">Â·<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          </span></span></span><![endif]><span style="mso-fareast-language:EN-US">1<o:p></o:p></span></p>
+          <p class="MsoPlainText" style="margin-left:36.0pt;text-indent:-18.0pt;mso-list:l0 level1 lfo1">
+          <![if !supportLists]><span style="font-family:Symbol;mso-fareast-language:EN-US"><span style="mso-list:Ignore">Â·<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          </span></span></span><![endif]><span style="mso-fareast-language:EN-US">2<o:p></o:p></span></p>
+        HTML
+          <p>• 1</p><p>• 2</p>
+        TEXT
+      end
     end
 
     context 'signature recognition' do
