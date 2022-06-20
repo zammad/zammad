@@ -99,7 +99,7 @@
     "@tiptap/extension-link": "^2.0.0-beta.41",
     "@tiptap/extension-list-item": "^2.0.0-beta.23",
     "@tiptap/extension-mention": "^2.0.0-beta.97",
-    "@tiptap/extension-ordered-list": "^2.0.0-beta.27",
+    "@tiptap/extension-ordered-list": "^2.0.0-beta.30",
     "@tiptap/extension-paragraph": "^2.0.0-beta.23",
     "@tiptap/extension-strike": "^2.0.0-beta.27",
     "@tiptap/extension-underline": "^2.0.0-beta.23",
