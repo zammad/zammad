@@ -532,6 +532,10 @@ msgstr ""
 msgid "API token"
 msgstr "API Tóki"
 
+#: app/frontend/apps/mobile/modules/account/views/AccountOverview.vue
+msgid "About"
+msgstr ""
+
 #: db/seeds/permissions.rb
 msgid "Access to %s"
 msgstr "Aðgangur að %s"
@@ -545,6 +549,8 @@ msgid "Access to Customer Tickets based on current_user and organization"
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
+#: app/frontend/apps/mobile/modules/account/routes.ts
+#: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
 msgid "Account"
 msgstr ""
 
@@ -568,6 +574,7 @@ msgstr "Aðgangur ekki staðfestur"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/time_unit.jst.eco
+#: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 msgid "Accounted Time"
 msgstr "Gjaldfærður tími"
 
@@ -1356,6 +1363,9 @@ msgstr ""
 #: app/assets/javascripts/app/views/customer_chat/setting.jst.eco
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco
 #: app/assets/javascripts/app/views/profile/imageCropper.jst.eco
+#: app/frontend/apps/mobile/modules/account/routes.ts
+#: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/modules/account/views/AccountOverview.vue
 #: db/seeds/permissions.rb
 msgid "Avatar"
 msgstr "Avatar"
@@ -1654,6 +1664,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco
+#: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
 msgid "Camera"
 msgstr "Myndavél"
 
@@ -1699,6 +1710,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/scheduled_widget.jst.eco
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco
+#: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue
 #: app/frontend/apps/mobile/modules/search/views/SearchOverview.vue
 msgid "Cancel"
 msgstr "Hætta við"
@@ -2678,7 +2690,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 #: app/controllers/time_accountings_controller.rb
 #: app/frontend/apps/mobile/modules/ticket/components/TicketList/TicketList.vue
-#: app/frontend/apps/mobile/modules/user/routes.ts
 #: db/seeds/object_manager_attributes.rb db/seeds/roles.rb
 #: db/seeds/ticket_article_senders.rb lib/excel_sheet/ticket.rb
 msgid "Customer"
@@ -3549,6 +3560,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
 #: app/assets/javascripts/app/views/widget/template.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
+#: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
 msgid "Delete"
 msgstr "Eyða"
 
@@ -5845,8 +5857,8 @@ msgstr ""
 
 #: app/models/import_job.rb
 msgid ""
-"Interrupted by scheduler restart. Please restart manually or wait until the "
-"next execution time."
+"Interrupted by a restart of the background worker process. Please restart "
+"manually or wait until the next execution time."
 msgstr ""
 
 #: app/controllers/first_steps_controller.rb
@@ -6151,6 +6163,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/multi_locales.jst.eco
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco
 #: app/assets/javascripts/app/views/profile/language.jst.eco
+#: app/frontend/apps/mobile/modules/account/views/AccountOverview.vue
 #: db/seeds/permissions.rb
 msgid "Language"
 msgstr "Tungumál"
@@ -6224,6 +6237,10 @@ msgstr "Nýjustu uppfærslurnar"
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee
 msgid "Layout"
+msgstr ""
+
+#: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
+msgid "Library"
 msgstr ""
 
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
@@ -6383,7 +6400,6 @@ msgid "Logo"
 msgstr "Lógó"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
-#: app/frontend/apps/mobile/modules/user/views/UserOverview.vue
 msgid "Logout"
 msgstr "Útskrá"
 
@@ -7723,7 +7739,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/overview.coffee
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
-#: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 #: db/seeds/permissions.rb
 msgid "Overviews"
 msgstr "Yfirlit"
@@ -8712,6 +8727,7 @@ msgstr "Laugardagur"
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 #: app/assets/javascripts/app/views/widget/template.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
+#: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
 msgid "Save"
 msgstr "Vista"
 
@@ -9258,6 +9274,7 @@ msgid "Sign in"
 msgstr "Skrá inn"
 
 #: app/assets/javascripts/app/controllers/logout.coffee
+#: app/frontend/apps/mobile/modules/account/views/AccountOverview.vue
 msgid "Sign out"
 msgstr "Útskrá"
 
@@ -10749,6 +10766,12 @@ msgstr ""
 #| msgid "Tickets assigned to me: %s of %s"
 msgid "Ticket failed to save: %s"
 msgstr "Miðar úthlutaðir á mig: %s af %s"
+
+#: app/frontend/apps/mobile/modules/account/views/AccountOverview.vue
+#, fuzzy
+#| msgid "Block Notifications"
+msgid "Ticket notifications"
+msgstr "Loka fyrir tilkynningar"
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 msgid "Ticket reminder reached"
@@ -13367,6 +13390,11 @@ msgstr "...af textasvæðinu"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Biðtími í dag"
+
+#, fuzzy
+#~| msgid "Accounted Time"
+#~ msgid "Accounted time"
+#~ msgstr "Gjaldfærður tími"
 
 #~ msgid "Send client stats"
 #~ msgstr "Senda biðlaratölfræði"

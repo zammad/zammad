@@ -229,3 +229,8 @@
   name: Chinese (Trad.) (繁體中文)
   active: true
   dir: ltr
+- locale: th
+  alias: ''
+  name: Thai (ภาษาไทย)
+  active: true
+  dir: ltr

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-06-10 03:30+0000\n"
+"PO-Revision-Date: 2022-06-17 07:38+0000\n"
 "Last-Translator: Marcel Herrguth <github@thehomeofanime.de>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
 "zammad-development/de/>\n"
@@ -524,6 +524,10 @@ msgstr "API-Token Zugriff"
 msgid "API token"
 msgstr "API-Token"
 
+#: app/frontend/apps/mobile/modules/account/views/AccountOverview.vue
+msgid "About"
+msgstr "Über"
+
 #: db/seeds/permissions.rb
 msgid "Access to %s"
 msgstr "Zugriff auf %s"
@@ -538,6 +542,8 @@ msgstr ""
 "Zugriff auf Kundentickets basierend auf aktuellem Benutzer und Organisation"
 
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
+#: app/frontend/apps/mobile/modules/account/routes.ts
+#: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
 msgid "Account"
 msgstr "Konto"
 
@@ -561,6 +567,7 @@ msgstr "Konto nicht verifiziert"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/time_unit.jst.eco
+#: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 msgid "Accounted Time"
 msgstr "Berechnete Zeit"
 
@@ -1347,6 +1354,9 @@ msgstr "Verfügbare Typen für ein neues Ticket"
 #: app/assets/javascripts/app/views/customer_chat/setting.jst.eco
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco
 #: app/assets/javascripts/app/views/profile/imageCropper.jst.eco
+#: app/frontend/apps/mobile/modules/account/routes.ts
+#: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/modules/account/views/AccountOverview.vue
 #: db/seeds/permissions.rb
 msgid "Avatar"
 msgstr "Avatar"
@@ -1651,6 +1661,7 @@ msgstr "Anrufprotokoll"
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco
+#: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
 msgid "Camera"
 msgstr "Kamera"
 
@@ -1698,6 +1709,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/scheduled_widget.jst.eco
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco
+#: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue
 #: app/frontend/apps/mobile/modules/search/views/SearchOverview.vue
 msgid "Cancel"
 msgstr "Abbrechen"
@@ -2673,7 +2685,6 @@ msgstr "Benutzerdefinierte Adresse nicht gesetzt"
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 #: app/controllers/time_accountings_controller.rb
 #: app/frontend/apps/mobile/modules/ticket/components/TicketList/TicketList.vue
-#: app/frontend/apps/mobile/modules/user/routes.ts
 #: db/seeds/object_manager_attributes.rb db/seeds/roles.rb
 #: db/seeds/ticket_article_senders.rb lib/excel_sheet/ticket.rb
 msgid "Customer"
@@ -3656,6 +3667,7 @@ msgstr "Definiert ein Transaktions-Backend."
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
 #: app/assets/javascripts/app/views/widget/template.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
+#: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
 msgid "Delete"
 msgstr "Löschen"
 
@@ -5984,11 +5996,11 @@ msgstr "Intern"
 
 #: app/models/import_job.rb
 msgid ""
-"Interrupted by scheduler restart. Please restart manually or wait until the "
-"next execution time."
+"Interrupted by a restart of the background worker process. Please restart "
+"manually or wait until the next execution time."
 msgstr ""
-"Unterbrochen durch Scheduler-Neustart. Bitte manuell wieder starten oder die "
-"nächste Ausführzeit abwarten."
+"Unterbrochen durch Hintergrund-Arbeiter-Prozess-Neustart. Bitte manuell "
+"wieder starten oder die nächste Ausführzeit abwarten."
 
 #: app/controllers/first_steps_controller.rb
 msgid "Intro"
@@ -6281,6 +6293,7 @@ msgstr "Layout der Landing-Page"
 #: app/assets/javascripts/app/views/generic/multi_locales.jst.eco
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco
 #: app/assets/javascripts/app/views/profile/language.jst.eco
+#: app/frontend/apps/mobile/modules/account/views/AccountOverview.vue
 #: db/seeds/permissions.rb
 msgid "Language"
 msgstr "Sprache"
@@ -6351,6 +6364,10 @@ msgstr "Aktuellste Änderungen"
 #: app/assets/javascripts/app/models/knowledge_base.coffee
 msgid "Layout"
 msgstr "Layout"
+
+#: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
+msgid "Library"
+msgstr "Gallerie"
 
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
 msgid "Limit Groups"
@@ -6505,7 +6522,6 @@ msgid "Logo"
 msgstr "Logo"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
-#: app/frontend/apps/mobile/modules/user/views/UserOverview.vue
 msgid "Logout"
 msgstr "Abmelden"
 
@@ -7815,7 +7831,6 @@ msgstr "Übersicht Bulk Maske"
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/overview.coffee
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
-#: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 #: db/seeds/permissions.rb
 msgid "Overviews"
 msgstr "Übersichten"
@@ -8777,6 +8792,7 @@ msgstr "Samstag"
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 #: app/assets/javascripts/app/views/widget/template.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
+#: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
 msgid "Save"
 msgstr "Speichern"
 
@@ -9306,6 +9322,7 @@ msgid "Sign in"
 msgstr "Anmelden"
 
 #: app/assets/javascripts/app/controllers/logout.coffee
+#: app/frontend/apps/mobile/modules/account/views/AccountOverview.vue
 msgid "Sign out"
 msgstr "Abmelden"
 
@@ -10799,6 +10816,10 @@ msgstr "Ticket-Eskalation"
 #: app/assets/javascripts/app/lib/mixins/ticket_mass_updatable.coffee
 msgid "Ticket failed to save: %s"
 msgstr "Ticket konnte nicht gespeichert werden: %s"
+
+#: app/frontend/apps/mobile/modules/account/views/AccountOverview.vue
+msgid "Ticket notifications"
+msgstr "Ticket-Benachrichtigungen"
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 msgid "Ticket reminder reached"
@@ -13470,6 +13491,9 @@ msgstr "…des gesamten Textfelds"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Wartezeit heute"
+
+#~ msgid "Accounted time"
+#~ msgstr "Berechnete Zeit"
 
 #~ msgid "Defines the LDAP config."
 #~ msgstr "Definiert die LDAP-Konfiguration."

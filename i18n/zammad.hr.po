@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-04-07 03:30+0000\n"
-"Last-Translator: nlovrens <nikola.lovrenscak@gmail.com>\n"
+"PO-Revision-Date: 2022-06-17 15:08+0000\n"
+"Last-Translator: Ivan Perovic <ip@zammad.com>\n"
 "Language-Team: Croatian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/hr/>\n"
 "Language: hr\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.11.2\n"
+"X-Generator: Weblate 4.12.1\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -48,7 +48,7 @@ msgstr "dd.mm.yyyy HH:MM"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid " to "
-msgstr ""
+msgstr " do "
 
 #: db/seeds/settings.rb
 msgid ""
@@ -57,6 +57,10 @@ msgid ""
 "filesystem. You can switch between the modules even on a system that is "
 "already in production without any loss of data."
 msgstr ""
+"\"Baza podataka\" sprema sve priloge u bazu podataka (ne preporuča se "
+"spremanje velike količine podataka). \"Datotečni sustav\" sprema podatke u "
+"sustav datoteka. Možete prelaziti iz modula u modul, čak i u sustavu koji se "
+"već koristi i to bez gubitka podataka."
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
@@ -96,6 +100,8 @@ msgstr "prije %s"
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 msgid "%s completed data privacy task to delete user ID |%s|"
 msgstr ""
+"%s završenih zadataka zaštite podataka prilikom brisanja korisničkog ID-a "
+"|%s|"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee
 msgid "%s created article for |%s|"
@@ -103,7 +109,7 @@ msgstr "%s kreirana stavka za |%s|"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 msgid "%s created data privacy task to delete user ID |%s|"
-msgstr ""
+msgstr "%s stvorenih zadataka zaštite podataka za brisanje korisničkog ID-a %s|"
 
 #: app/assets/javascripts/app/models/group.coffee
 msgid "%s created group |%s|"
@@ -132,30 +138,26 @@ msgid "%s credentials"
 msgstr "%s akreditacije"
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "%s ago"
 msgid "%s days ago"
-msgstr "prije %s"
+msgstr "prije %s dana"
 
 #: app/assets/javascripts/app/models/user.coffee
 msgid "%s ended switch to |%s|!"
-msgstr ""
+msgstr "%s završeno preuzimanje |%s|!"
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco
 msgid "%s folders"
-msgstr ""
+msgstr "%s mape"
 
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco
 msgid "%s groups to %s roles assignments"
-msgstr ""
+msgstr "%s grupe u %s dodjele uloga"
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "%s ago"
 msgid "%s hours ago"
-msgstr "prije %s"
+msgstr "prije %s sati"
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
@@ -165,20 +167,16 @@ msgid "%s is inactive, please select an active one."
 msgstr "%s je neaktivan, molim odaberite aktivan."
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "minutes"
 msgid "%s minutes ago"
-msgstr "minute"
+msgstr "prije %s minuta"
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "%s ago"
 msgid "%s months ago"
-msgstr "prije %s"
+msgstr "prije %s mjeseca/i"
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
 msgid "%s object(s) have been created."
-msgstr "%s objekt je kreiran."
+msgstr "%s objek(a(t(a) je kreiran (je kreirano)."
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
 msgid "%s object(s) have been updated."
@@ -217,7 +215,7 @@ msgid ""
 "%s recommends using OAuth. %s announced it's going to drop Basic "
 "Authentication support in the future."
 msgstr ""
-"%s preporuča korištenje OAuth. %s najavio je prestanak podrške za Basic "
+"%s preporuča korištenje OAuth. %s je najavio prestanak podrške za Basic "
 "Authentication u budućnosti."
 
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee
@@ -239,10 +237,8 @@ msgstr "%s prebačeno na |%s|!"
 
 #: app/frontend/apps/mobile/components/Organization/OrganizationItem.vue
 #: app/frontend/apps/mobile/components/User/UserItem.vue
-#, fuzzy
-#| msgid "assign tickets"
 msgid "%s tickets"
-msgstr "dodijeli prijave"
+msgstr "dodijeli %s ticketa"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee
 msgid "%s updated article for |%s|"
@@ -251,6 +247,7 @@ msgstr "%s ažurirana stavka za |%s|"
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 msgid "%s updated data privacy task to delete user ID |%s|"
 msgstr ""
+"%s ažuriran zadatak zaštite podataka prilikom brisanja korisničkog ID-a |%s|"
 
 #: app/assets/javascripts/app/models/group.coffee
 msgid "%s updated group |%s|"
@@ -277,19 +274,15 @@ msgstr "%s ažuriran korisnik |%s|"
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco
 msgid "%s user to %s user"
-msgstr ""
+msgstr "%s korisnik prema %s korisniku"
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "%s ago"
 msgid "%s weeks ago"
-msgstr "prije %s"
+msgstr "prije %s tjedana"
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "%s ago"
 msgid "%s years ago"
-msgstr "prije %s"
+msgstr "prije %s godina"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco
 msgid "%s% are currently in process"
@@ -311,6 +304,14 @@ msgid ""
 "take some additional time depending on the number of objects that will be "
 "deleted."
 msgstr ""
+"** Zaštita podataka** pomaže Vam obrisati i potvrditi uklanjanje postojećih "
+"podataka iz sustava. \n"
+"\n"
+"Može se koristiti za brisanje ticketa, organizacija i korisnika. Dodjela "
+"vlasnika će biti poništena u slučaju da je obrisani korisnik agent. \n"
+"\n"
+"Zadaci zaštite podataka se izvršavaju svakih 10 minuta. Samo izvršenje može "
+"dodatno potrajati ovisno o broju objekata koji će biti obrisani."
 
 #: app/assets/javascripts/app/models/sla.coffee
 msgid ""
@@ -329,54 +330,59 @@ msgid ""
 "displayed in a separate view in your overviews. You can also configure ** "
 "email notifications **."
 msgstr ""
+"** Service Level Agreements **, skraćeno ** SLAs **, pomažu Vam ostvariti "
+"određeno reakcijsko vrijeme za upite Vaših korisnika. Na ovaj način možete "
+"definirati ciljeve poput odgovaranja na svaki upit unutar 8 sati. Ukoliko "
+"ste blizu tog limita, Zammad će Vas upozoriti.\n"
+"\n"
+"Mozete definirati ciljeve za 3 različita mjerila: **vrijeme reakcije ** ("
+"vrijeme između kreiranja ticketa i prve reakcija agenta), **vrijeme "
+"ažuriranja** (vrijeme između korisnikova upita i agentove reakcije) i **"
+"vrijeme rješenja** (vrijeme između kreiranja i zatvaranja ticketa).\n"
+"\n"
+"Svi eskalirani ticketi (npr. ticketi koji su prekoračili prethodno "
+"definirani limit) su prikazani u zasebnom dijelu Vaših pregleda. Ujedno "
+"možete konfigurirati i **email obavijesti**."
 
 #: db/seeds/settings.rb
 msgid "1 day"
 msgstr "1 dan"
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "1 day"
 msgid "1 day ago"
-msgstr "1 dan"
+msgstr "jučer"
 
 #: db/seeds/settings.rb
 msgid "1 hour"
 msgstr "1 sat"
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "1 hour"
 msgid "1 hour ago"
-msgstr "1 sat"
+msgstr "prije 1 sata"
 
 #: db/seeds/ticket_priorities.rb
 msgid "1 low"
 msgstr "1 nizak"
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "minute"
 msgid "1 minute ago"
-msgstr "minuta"
+msgstr "prije minutu"
 
 #: app/frontend/shared/i18n/dates.ts
 msgid "1 month ago"
-msgstr ""
+msgstr "prije mjesec dana"
 
 #: db/seeds/settings.rb
 msgid "1 week"
 msgstr "1 tjedan"
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "1 week"
 msgid "1 week ago"
-msgstr "1 tjedan"
+msgstr "prije tjedan dana"
 
 #: app/frontend/shared/i18n/dates.ts
 msgid "1 year ago"
-msgstr ""
+msgstr "prije godinu dana"
 
 #: db/seeds/settings.rb
 msgid "2 hours"
@@ -418,6 +424,15 @@ msgid ""
 "If you have customers with different business hours, you can create multiple "
 "calendars. Tickets are linked to calendars using **SLAs**."
 msgstr ""
+"**Kalendar** je potreban za računanje eskalacija temeljenih na radnom "
+"vremenu i za slanje obavijesti o eskalaciji.\n"
+"\n"
+"Definirajte **\"standardni\"** kalendar koji vrijedi za cijeli sustav. "
+"Obavijesti o eskalaciji će biti poslane samo Vašim agentima tijekom "
+"prethodno definirano radnog vremena.\n"
+"\n"
+"Ako imate klijente sa različitim radnim vremenom, možete napraviti različite "
+"kalendare. Ticketi su povezani sa kalendarom koristeći **SLAs**."
 
 #: app/controllers/getting_started_controller.rb
 msgid "A URL looks like this: https://zammad.example.com"
@@ -497,6 +512,10 @@ msgstr ""
 msgid "API token"
 msgstr "API token"
 
+#: app/frontend/apps/mobile/modules/account/views/AccountOverview.vue
+msgid "About"
+msgstr ""
+
 #: db/seeds/permissions.rb
 msgid "Access to %s"
 msgstr "Pristup %s"
@@ -510,6 +529,8 @@ msgid "Access to Customer Tickets based on current_user and organization"
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
+#: app/frontend/apps/mobile/modules/account/routes.ts
+#: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
 msgid "Account"
 msgstr "Račun"
 
@@ -533,6 +554,7 @@ msgstr "Račun nije verificiran"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/time_unit.jst.eco
+#: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 msgid "Accounted Time"
 msgstr ""
 
@@ -1310,6 +1332,9 @@ msgstr ""
 #: app/assets/javascripts/app/views/customer_chat/setting.jst.eco
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco
 #: app/assets/javascripts/app/views/profile/imageCropper.jst.eco
+#: app/frontend/apps/mobile/modules/account/routes.ts
+#: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/modules/account/views/AccountOverview.vue
 #: db/seeds/permissions.rb
 msgid "Avatar"
 msgstr "Avatar"
@@ -1606,6 +1631,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco
+#: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
 msgid "Camera"
 msgstr "Kamera"
 
@@ -1651,6 +1677,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/scheduled_widget.jst.eco
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco
+#: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue
 #: app/frontend/apps/mobile/modules/search/views/SearchOverview.vue
 msgid "Cancel"
 msgstr "Odustani"
@@ -2626,7 +2653,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 #: app/controllers/time_accountings_controller.rb
 #: app/frontend/apps/mobile/modules/ticket/components/TicketList/TicketList.vue
-#: app/frontend/apps/mobile/modules/user/routes.ts
 #: db/seeds/object_manager_attributes.rb db/seeds/roles.rb
 #: db/seeds/ticket_article_senders.rb lib/excel_sheet/ticket.rb
 msgid "Customer"
@@ -3471,6 +3497,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
 #: app/assets/javascripts/app/views/widget/template.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
+#: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
 msgid "Delete"
 msgstr "Izbrisati"
 
@@ -5674,8 +5701,8 @@ msgstr ""
 
 #: app/models/import_job.rb
 msgid ""
-"Interrupted by scheduler restart. Please restart manually or wait until the "
-"next execution time."
+"Interrupted by a restart of the background worker process. Please restart "
+"manually or wait until the next execution time."
 msgstr ""
 
 #: app/controllers/first_steps_controller.rb
@@ -5969,6 +5996,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/multi_locales.jst.eco
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco
 #: app/assets/javascripts/app/views/profile/language.jst.eco
+#: app/frontend/apps/mobile/modules/account/views/AccountOverview.vue
 #: db/seeds/permissions.rb
 msgid "Language"
 msgstr "Jezik"
@@ -6042,6 +6070,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee
 msgid "Layout"
+msgstr ""
+
+#: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
+msgid "Library"
 msgstr ""
 
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
@@ -6201,7 +6233,6 @@ msgid "Logo"
 msgstr "Logo"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
-#: app/frontend/apps/mobile/modules/user/views/UserOverview.vue
 msgid "Logout"
 msgstr "Odjava"
 
@@ -7514,7 +7545,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/overview.coffee
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
-#: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 #: db/seeds/permissions.rb
 msgid "Overviews"
 msgstr "Pregledi"
@@ -8480,6 +8510,7 @@ msgstr "subota"
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 #: app/assets/javascripts/app/views/widget/template.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
+#: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
 msgid "Save"
 msgstr "Spremi"
 
@@ -9006,6 +9037,7 @@ msgid "Sign in"
 msgstr "Prijavi se"
 
 #: app/assets/javascripts/app/controllers/logout.coffee
+#: app/frontend/apps/mobile/modules/account/views/AccountOverview.vue
 msgid "Sign out"
 msgstr "Odjavi se"
 
@@ -10451,6 +10483,12 @@ msgstr ""
 #: app/assets/javascripts/app/lib/mixins/ticket_mass_updatable.coffee
 msgid "Ticket failed to save: %s"
 msgstr ""
+
+#: app/frontend/apps/mobile/modules/account/views/AccountOverview.vue
+#, fuzzy
+#| msgid "Disable Notifications"
+msgid "Ticket notifications"
+msgstr "Onemogući obavijesti"
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 msgid "Ticket reminder reached"
@@ -13014,6 +13052,11 @@ msgstr "...cijelog polja za unos teksta"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr ""
+
+#, fuzzy
+#~| msgid "Account"
+#~ msgid "Accounted time"
+#~ msgstr "Račun"
 
 #, fuzzy
 #~| msgid "Select"
