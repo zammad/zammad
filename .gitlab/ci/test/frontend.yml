@@ -2,6 +2,7 @@ frontend:vitest:
   stage: test
   extends:
     - .job_rules_default
+  cache: !reference [.cache, read_only_nodejs]
   before_script:
     - !reference [.scripts, yarn_install]
   script:
@@ -15,6 +16,7 @@ frontend:cypress:
   stage: test
   extends:
     - .job_rules_default
+  cache: !reference [.cache, read_only_nodejs]
   before_script:
     - !reference [.scripts, yarn_install]
     - yarn cypress:install

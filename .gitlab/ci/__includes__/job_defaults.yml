@@ -4,7 +4,8 @@ default:
   tags:
     - docker
 
-  cache: !reference [.cache, read_only]
+  # Most jobs execute ruby commands, so take that as default.
+  cache: !reference [.cache, read_only_ruby]
 
   # Artifacts are stored for failed jobs
   artifacts:
@@ -21,7 +22,6 @@ default:
   before_script:
     - !reference [.scripts, source_rvm]
     - !reference [.scripts, bundle_install]
-    - !reference [.scripts, yarn_install]
     - !reference [.scripts, configure_environment]
 
   after_script:
