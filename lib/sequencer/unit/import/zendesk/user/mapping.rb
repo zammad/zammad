@@ -19,7 +19,7 @@ class Sequencer
                   email:           resource.email,
                   phone:           resource.phone,
                   password:        password,
-                  active:          !resource.suspended,
+                  active:          (!resource.suspended && resource.active) || false,
                   groups:          groups,
                   roles:           roles,
                   note:            resource.notes,

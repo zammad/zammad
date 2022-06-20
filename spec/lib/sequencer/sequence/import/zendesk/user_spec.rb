@@ -103,6 +103,8 @@ RSpec.describe ::Sequencer::Sequence::Import::Zendesk::User, sequencer: :sequenc
       }
     end
 
+    let(:merge_imported_user) { {} }
+
     let(:imported_user) do
       {
         firstname:       'Bob',
@@ -114,7 +116,7 @@ RSpec.describe ::Sequencer::Sequence::Import::Zendesk::User, sequencer: :sequenc
         custom_dropdown: '2',
         lieblingstier:   'Hundä',
         test_example:    '1',
-      }
+      }.merge(merge_imported_user)
     end
 
     before do
@@ -158,6 +160,44 @@ RSpec.describe ::Sequencer::Sequence::Import::Zendesk::User, sequencer: :sequenc
       it 'sets user groups correctly' do
         process(process_payload)
         expect(User.last.groups_access('full').sort).to eq groups
+      end
+    end
+
+    context 'with inactive user' do
+      let(:merge_resource) do
+        {
+          'active' => false,
+        }
+      end
+
+      let(:merge_imported_user) do
+        {
+          active: false,
+        }
+      end
+
+      it 'imports user data correctly' do
+        process(process_payload)
+        expect(User.last).to have_attributes(imported_user)
+      end
+    end
+
+    context 'with suspended user' do
+      let(:merge_resource) do
+        {
+          'suspended' => true,
+        }
+      end
+
+      let(:merge_imported_user) do
+        {
+          active: false,
+        }
+      end
+
+      it 'imports user data correctly' do
+        process(process_payload)
+        expect(User.last).to have_attributes(imported_user)
       end
     end
   end
