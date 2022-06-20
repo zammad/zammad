@@ -958,6 +958,9 @@ class Table extends App.Controller
     for ticket in tickets
       ticketListShow.push App.Ticket.find(ticket.id)
     @overview = App.Overview.find(overview.id)
+
+    @removePopovers()
+
     @table.update(
       overviewAttributes: @convertOverviewAttributesToArray(@overview.view.s)
       objects:            ticketListShow
@@ -966,6 +969,8 @@ class Table extends App.Controller
       orderBy:            @overview.order.by
       orderDirection:     @overview.order.direction
     )
+
+    @renderPopovers()
 
   render: (data) =>
     return if !data

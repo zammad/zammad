@@ -1,7 +1,8 @@
 InstanceMethods =
   # do not call directly
   initializePopovers: ->
-    @el.on('remove', @removePopovers)
+    @el.on 'remove', =>
+      @removePopovers()
 
     @initializeIntersectionObserver()
 
