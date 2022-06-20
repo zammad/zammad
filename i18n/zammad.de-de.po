@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-06-17 07:38+0000\n"
-"Last-Translator: Marcel Herrguth <github@thehomeofanime.de>\n"
+"PO-Revision-Date: 2022-06-20 07:48+0000\n"
+"Last-Translator: Martin Gruner <mg@zammad.com>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
 "zammad-development/de/>\n"
 "Language: de-de\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.12.1\n"
+"X-Generator: Weblate 4.13\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -1197,10 +1197,18 @@ msgstr "Wählen Sie mindestens ein Objekt aus."
 msgid "At least one user needs to have admin permissions."
 msgstr "Mindestens ein Benutzer muss administrative Berechtigungen besitzen."
 
+#: app/assets/javascripts/app/lib/app_post/utils.coffee
+msgid "Attached"
+msgstr "Angehängt"
+
 #: app/assets/javascripts/app/views/generic/attachments.jst.eco
 #: app/views/knowledge_base/public/answers/show.html.erb
 msgid "Attached Files"
 msgstr "anhängende Datei(en)"
+
+#: app/assets/javascripts/app/lib/app_post/utils.coffee
+msgid "Attachment"
+msgstr "Anhang"
 
 #: db/seeds/settings.rb
 msgid "Attachment - Search for follow-up also in attachments."
@@ -4391,6 +4399,14 @@ msgid "Enables users to create their own account via web interface."
 msgstr ""
 "Ermöglicht es Benutzer ihren eigenen Account über das Web-Interface zu "
 "erstellen."
+
+#: app/assets/javascripts/app/lib/app_post/utils.coffee
+msgid "Enclosed"
+msgstr "Anbei"
+
+#: app/assets/javascripts/app/lib/app_post/utils.coffee
+msgid "Enclosure"
+msgstr "Anlage"
 
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
@@ -12622,6 +12638,14 @@ msgstr "Tickets zuweisen"
 msgid "at"
 msgstr "um"
 
+#: app/assets/javascripts/app/lib/app_post/utils.coffee
+msgid "attached"
+msgstr "angehängt"
+
+#: app/assets/javascripts/app/lib/app_post/utils.coffee
+msgid "attachment"
+msgstr "anhang"
+
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "auto select"
 msgstr "automatisch auswählen"
@@ -12808,6 +12832,14 @@ msgstr "E-Mail"
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 msgid "email sent to '%s'"
 msgstr "E-Mail gesendet an '%s'"
+
+#: app/assets/javascripts/app/lib/app_post/utils.coffee
+msgid "enclosed"
+msgstr "anbei"
+
+#: app/assets/javascripts/app/lib/app_post/utils.coffee
+msgid "enclosure"
+msgstr "anlage"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "escalated"
@@ -13059,7 +13091,7 @@ msgstr "vielleicht"
 
 #: app/frontend/apps/mobile/composables/useEditedBy.ts
 msgid "me"
-msgstr "ich"
+msgstr "mir"
 
 #: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
 msgid "merged"

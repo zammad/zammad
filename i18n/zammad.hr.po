@@ -100,8 +100,8 @@ msgstr "prije %s"
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 msgid "%s completed data privacy task to delete user ID |%s|"
 msgstr ""
-"%s završenih zadataka zaštite podataka prilikom brisanja korisničkog ID-a "
-"|%s|"
+"%s završenih zadataka zaštite podataka prilikom brisanja korisničkog ID-a |"
+"%s|"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee
 msgid "%s created article for |%s|"
@@ -109,7 +109,8 @@ msgstr "%s kreirana stavka za |%s|"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 msgid "%s created data privacy task to delete user ID |%s|"
-msgstr "%s stvorenih zadataka zaštite podataka za brisanje korisničkog ID-a %s|"
+msgstr ""
+"%s stvorenih zadataka zaštite podataka za brisanje korisničkog ID-a %s|"
 
 #: app/assets/javascripts/app/models/group.coffee
 msgid "%s created group |%s|"
@@ -335,10 +336,10 @@ msgstr ""
 "definirati ciljeve poput odgovaranja na svaki upit unutar 8 sati. Ukoliko "
 "ste blizu tog limita, Zammad će Vas upozoriti.\n"
 "\n"
-"Mozete definirati ciljeve za 3 različita mjerila: **vrijeme reakcije ** ("
-"vrijeme između kreiranja ticketa i prve reakcija agenta), **vrijeme "
-"ažuriranja** (vrijeme između korisnikova upita i agentove reakcije) i **"
-"vrijeme rješenja** (vrijeme između kreiranja i zatvaranja ticketa).\n"
+"Mozete definirati ciljeve za 3 različita mjerila: **vrijeme reakcije ** "
+"(vrijeme između kreiranja ticketa i prve reakcija agenta), **vrijeme "
+"ažuriranja** (vrijeme između korisnikova upita i agentove reakcije) i "
+"**vrijeme rješenja** (vrijeme između kreiranja i zatvaranja ticketa).\n"
 "\n"
 "Svi eskalirani ticketi (npr. ticketi koji su prekoračili prethodno "
 "definirani limit) su prikazani u zasebnom dijelu Vaših pregleda. Ujedno "
@@ -1183,10 +1184,22 @@ msgstr ""
 msgid "At least one user needs to have admin permissions."
 msgstr ""
 
+#: app/assets/javascripts/app/lib/app_post/utils.coffee
+#, fuzzy
+#| msgid "Attachments"
+msgid "Attached"
+msgstr "Prilozi"
+
 #: app/assets/javascripts/app/views/generic/attachments.jst.eco
 #: app/views/knowledge_base/public/answers/show.html.erb
 msgid "Attached Files"
 msgstr "Priložene datoteke"
+
+#: app/assets/javascripts/app/lib/app_post/utils.coffee
+#, fuzzy
+#| msgid "Attachments"
+msgid "Attachment"
+msgstr "Prilozi"
 
 #: db/seeds/settings.rb
 msgid "Attachment - Search for follow-up also in attachments."
@@ -4177,6 +4190,18 @@ msgstr ""
 #: db/seeds/settings.rb
 msgid "Enables users to create their own account via web interface."
 msgstr ""
+
+#: app/assets/javascripts/app/lib/app_post/utils.coffee
+#, fuzzy
+#| msgid "closed"
+msgid "Enclosed"
+msgstr "zatvoreni"
+
+#: app/assets/javascripts/app/lib/app_post/utils.coffee
+#, fuzzy
+#| msgid "close"
+msgid "Enclosure"
+msgstr "zatvori"
 
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
@@ -12157,6 +12182,18 @@ msgstr "dodijeli prijave"
 msgid "at"
 msgstr ""
 
+#: app/assets/javascripts/app/lib/app_post/utils.coffee
+#, fuzzy
+#| msgid "Attached Files"
+msgid "attached"
+msgstr "Priložene datoteke"
+
+#: app/assets/javascripts/app/lib/app_post/utils.coffee
+#, fuzzy
+#| msgid "Attachments"
+msgid "attachment"
+msgstr "Prilozi"
+
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "auto select"
 msgstr ""
@@ -12345,6 +12382,18 @@ msgstr "E-pošta"
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 msgid "email sent to '%s'"
 msgstr ""
+
+#: app/assets/javascripts/app/lib/app_post/utils.coffee
+#, fuzzy
+#| msgid "closed"
+msgid "enclosed"
+msgstr "zatvoreni"
+
+#: app/assets/javascripts/app/lib/app_post/utils.coffee
+#, fuzzy
+#| msgid "close"
+msgid "enclosure"
+msgstr "zatvori"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "escalated"

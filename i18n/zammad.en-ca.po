@@ -1117,9 +1117,17 @@ msgstr ""
 msgid "At least one user needs to have admin permissions."
 msgstr ""
 
+#: app/assets/javascripts/app/lib/app_post/utils.coffee
+msgid "Attached"
+msgstr ""
+
 #: app/assets/javascripts/app/views/generic/attachments.jst.eco
 #: app/views/knowledge_base/public/answers/show.html.erb
 msgid "Attached Files"
+msgstr ""
+
+#: app/assets/javascripts/app/lib/app_post/utils.coffee
+msgid "Attachment"
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -4042,6 +4050,14 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Enables users to create their own account via web interface."
+msgstr ""
+
+#: app/assets/javascripts/app/lib/app_post/utils.coffee
+msgid "Enclosed"
+msgstr ""
+
+#: app/assets/javascripts/app/lib/app_post/utils.coffee
+msgid "Enclosure"
 msgstr ""
 
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco
@@ -11829,6 +11845,14 @@ msgstr ""
 msgid "at"
 msgstr ""
 
+#: app/assets/javascripts/app/lib/app_post/utils.coffee
+msgid "attached"
+msgstr ""
+
+#: app/assets/javascripts/app/lib/app_post/utils.coffee
+msgid "attachment"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "auto select"
 msgstr ""
@@ -12014,6 +12038,14 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 msgid "email sent to '%s'"
+msgstr ""
+
+#: app/assets/javascripts/app/lib/app_post/utils.coffee
+msgid "enclosed"
+msgstr ""
+
+#: app/assets/javascripts/app/lib/app_post/utils.coffee
+msgid "enclosure"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee
