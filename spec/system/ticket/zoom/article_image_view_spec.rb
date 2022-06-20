@@ -32,12 +32,12 @@ RSpec.describe 'Article Image View', type: :system do
     it 'does switch images via arrow keys' do
       first('.ticket-article-item .js-preview').click
       images = Store.last(3)
-      expect(page.find('div.imagePreview img')[:src]).to include("/#{images[0].id}")
+      wait.until { page.find('div.imagePreview img')[:src].include?("/#{images[0].id}") }
       find('body').send_keys :arrow_right
       find('body').send_keys :arrow_right
-      expect(page.find('div.imagePreview img')[:src]).to include("/#{images[2].id}")
+      wait.until { page.find('div.imagePreview img')[:src].include?("/#{images[2].id}") }
       find('body').send_keys :arrow_left
-      expect(page.find('div.imagePreview img')[:src]).to include("/#{images[1].id}")
+      wait.until { page.find('div.imagePreview img')[:src].include?("/#{images[1].id}") }
     end
   end
 end
