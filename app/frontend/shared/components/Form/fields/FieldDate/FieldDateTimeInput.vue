@@ -12,6 +12,7 @@ import {
   shallowRef,
   watch,
   watchEffect,
+  computed,
 } from 'vue'
 import { useEventListener } from '@vueuse/core'
 import { RouteLocationRaw } from 'vue-router'
@@ -26,7 +27,6 @@ export interface Props {
     minDate?: flatpickr.Options.DateOption
     link?: RouteLocationRaw
   }>
-  time?: boolean
 }
 
 const props = defineProps<Props>()
@@ -91,6 +91,10 @@ const locale: flatpickr.CustomLocale = {
 
 const pickerNode = shallowRef<HTMLElement>()
 const datepicker = shallowRef<flatpickr.Instance>()
+
+const time = computed(() => {
+  return props.context.type === 'datetime'
+})
 
 const getMinDate = () => {
   if (props.context.minDate) {
@@ -167,7 +171,7 @@ const createFlatpickr = () => {
     disableMobile: true,
     inline: true,
     time_24hr: i18n.timeFormat() === '24hour',
-    enableTime: props.time === true,
+    enableTime: time.value === true,
     allowInput: true,
     // append calendar to parent, so we can add our own elements after input
     // otherwise everything after input will actually appear after calendar
@@ -178,7 +182,7 @@ const createFlatpickr = () => {
     minDate: getMinDate(),
     formatDate(date) {
       const isoDate = date.toISOString()
-      if (props.time) return i18n.dateTime(isoDate)
+      if (time.value) return i18n.dateTime(isoDate)
       return i18n.date(isoDate)
     },
     onChange([date]) {
@@ -186,7 +190,7 @@ const createFlatpickr = () => {
         props.context.node.input(date)
         return
       }
-      const formatted = flatpickr.formatDate(date, props.time ? 'Z' : 'Y-m-d')
+      const formatted = flatpickr.formatDate(date, time.value ? 'Z' : 'Y-m-d')
       props.context.node.input(formatted)
     },
   })
@@ -207,10 +211,7 @@ const rerenderFlatpickr = () => {
 
 onMounted(rerenderFlatpickr)
 
-watch(
-  () => props.time,
-  (enable) => datepicker.value?.set('enableTime', enable),
-)
+watch(time, (enable) => datepicker.value?.set('enableTime', enable))
 
 // rerender flatpickr, if props dynamically change
 const watchableProps = ['maxDate', 'minDate', 'disabled', 'futureOnly']
