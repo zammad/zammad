@@ -42,7 +42,7 @@ let connectionNotificationId: string
 // TODO: consider switching from notification to a modal dialog, and improving the message
 const notifications = useNotifications()
 
-const useApplicationLoadedStore = defineStore('applicationLoaded', () => {
+const useApplicationStore = defineStore('applicationLoaded', () => {
   const loaded = ref(false)
   const loading = computed(() => !loaded.value)
 
@@ -95,6 +95,23 @@ const useApplicationLoadedStore = defineStore('applicationLoaded', () => {
 
   const config = ref<ConfigList>({})
 
+  const initializeConfigUpdateSubscription = (): void => {
+    const configUpdatesSubscription = new SubscriptionHandler(
+      useConfigUpdatesSubscription(),
+    )
+
+    configUpdatesSubscription.onResult((result) => {
+      const updatedSetting = result.data?.configUpdates.setting
+      if (updatedSetting) {
+        config.value[updatedSetting.key] = updatedSetting.value
+      } else {
+        testFlags.set('useConfigUpdatesSubscription.subscribed')
+      }
+    })
+
+    configUpdatesSubscriptionInitialized = true
+  }
+
   const getConfig = async (): Promise<void> => {
     const configQuery = getApplicationConfigQuery()
 
@@ -106,21 +123,7 @@ const useApplicationLoadedStore = defineStore('applicationLoaded', () => {
     }
 
     if (!configUpdatesSubscriptionInitialized) {
-      const configUpdatesSubscription = new SubscriptionHandler(
-        useConfigUpdatesSubscription(),
-      )
-
-      configUpdatesSubscription.onResult((result) => {
-        const updatedSetting = result.data?.configUpdates.setting
-
-        if (updatedSetting) {
-          config.value[updatedSetting.key] = updatedSetting.value
-        } else {
-          testFlags.set('useConfigUpdatesSubscription.subscribed')
-        }
-      })
-
-      configUpdatesSubscriptionInitialized = true
+      initializeConfigUpdateSubscription()
     }
   }
 
@@ -138,15 +141,10 @@ const useApplicationLoadedStore = defineStore('applicationLoaded', () => {
     bringConnectionUp,
     takeConnectionDown,
     config,
+    initializeConfigUpdateSubscription,
     getConfig,
     resetAndGetConfig,
   }
 })
 
-export default useApplicationLoadedStore
-
-declare module '@vue/runtime-core' {
-  export interface ComponentCustomProperties {
-    $c: ConfigList
-  }
-}
+export default useApplicationStore

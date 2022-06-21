@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { createApp, unref } from 'vue'
+import { createApp } from 'vue'
 import '@shared/initializer/translatableMarker'
 import App from '@mobile/App.vue'
 import useSessionStore from '@shared/stores/session'
@@ -11,12 +11,11 @@ import initializeStoreSubscriptions from '@shared/initializer/storeSubscriptions
 import initializeGlobalComponents from '@shared/initializer/globalComponents'
 import initializeRouter from '@mobile/router'
 import useApplicationStore from '@shared/stores/application'
-import { i18n } from '@shared/i18n'
 import useLocaleStore from '@shared/stores/locale'
 import useAuthenticationStore from '@shared/stores/authentication'
 import 'virtual:svg-icons-register' // eslint-disable-line import/no-unresolved
 import initializeForm from '@mobile/form'
-import { storeToRefs } from 'pinia'
+import initializeGlobalProperties from '@shared/initializer/globalProperties'
 
 export default async function mountApp(): Promise<void> {
   const app = createApp(App)
@@ -37,7 +36,6 @@ export default async function mountApp(): Promise<void> {
   await session.checkSession()
 
   const application = useApplicationStore()
-  const { config } = storeToRefs(application)
 
   const initalizeAfterSessionCheck: Array<Promise<unknown>> = [
     application.getConfig(),
@@ -55,14 +53,7 @@ export default async function mountApp(): Promise<void> {
     await locale.updateLocale()
   }
 
-  app.config.globalProperties.i18n = i18n
-  app.config.globalProperties.$t = i18n.t.bind(i18n)
-  Object.defineProperty(app.config.globalProperties, '$c', {
-    enumerable: true,
-    get: () => unref(config),
-  })
-  // eslint-disable-next-line no-underscore-dangle
-  app.config.globalProperties.__ = window.__
+  initializeGlobalProperties(app)
 
   initializeForm(app)
 

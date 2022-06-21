@@ -1,7 +1,9 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import { useMutation } from '@vue/apollo-composable'
-import createMockClient from '@tests/support/mock-apollo-client'
+import createMockClient, {
+  resetMockClient,
+} from '@tests/support/mock-apollo-client'
 import {
   SampleUpdateMutation,
   SampleUpdateMutationVariables,
@@ -36,6 +38,8 @@ const mutationSampleErrorResult = {
 const mutationSampleNetworkErrorResult = new Error('GraphQL Network Error')
 
 const mockClient = (error = false, errorType = 'GraphQL') => {
+  resetMockClient()
+
   createMockClient([
     {
       operationDocument: SampleTypedMutationDocument,

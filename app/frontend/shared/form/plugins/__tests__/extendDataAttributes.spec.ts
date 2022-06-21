@@ -50,7 +50,7 @@ describe('extendDataAttributes - data-populated', () => {
       originalSchema.mockReset()
     })
 
-    test('applies schema on input', () => {
+    it('applies schema on input', () => {
       extendDataAttribues(inputNode)
 
       const schema = (inputNode.props.definition?.schema ||
@@ -63,7 +63,7 @@ describe('extendDataAttributes - data-populated', () => {
       )
     })
 
-    test('skips non-inputs', () => {
+    it('skips non-inputs', () => {
       extendDataAttribues({
         ...inputNode,
         type: 'list',

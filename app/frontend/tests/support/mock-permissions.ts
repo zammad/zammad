@@ -6,13 +6,13 @@ import { initializeStore } from './components/renderComponent'
 export const mockPermissions = (permissions: string[]) => {
   initializeStore()
 
-  const user = useSessionStore()
-  if (!user.user) {
-    user.user = {
+  const session = useSessionStore()
+  if (!session.user) {
+    session.user = {
       id: '123',
       objectAttributeValues: [],
     }
   }
 
-  user.user!.permissions = { names: permissions }
+  session.user!.permissions = { names: permissions }
 }

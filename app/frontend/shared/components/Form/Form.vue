@@ -130,10 +130,12 @@ const onSubmit = (values: FormData): Promise<void> | void => {
   // TODO: Maybe we need to handle the disabled state on submit on our own. In clarification with FormKit (https://github.com/formkit/formkit/issues/236).
   if (submitResult instanceof Promise) {
     return submitResult.catch((errors: UserError) => {
-      formNode.value?.setErrors(
-        errors.generalErrors as string[],
-        errors.getFieldErrorList(),
-      )
+      if (errors instanceof UserError) {
+        formNode.value?.setErrors(
+          errors.generalErrors as string[],
+          errors.getFieldErrorList(),
+        )
+      }
     })
   }
 
@@ -378,12 +380,11 @@ if (props.formSchemaId) {
 <template>
   <FormKit
     v-if="Object.keys(schemaData.fields).length > 0 || $slots.default"
-    :id="formId"
     type="form"
     :config="formConfig"
     :form-class="localClass"
     :actions="false"
-    :incomplete-message="false"
+    :incomplete-message="true"
     :plugins="localFormKitPlugins"
     :sections-schema="formKitSectionsSchema"
     :disabled="localDisabled"

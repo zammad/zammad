@@ -7,6 +7,7 @@ import { useLoginMutation } from '@shared/graphql/mutations/login.api'
 import { useLogoutMutation } from '@shared/graphql/mutations/logout.api'
 import { clearApolloClientStore } from '@shared/server/apollo/client'
 import useFingerprint from '@shared/composables/useFingerprint'
+import testFlags from '@shared/utils/testFlags'
 import useSessionStore from './session'
 import useApplicationStore from './application'
 
@@ -41,9 +42,10 @@ const useAuthenticationStore = defineStore(
       const logoutMutation = new MutationHandler(useLogoutMutation())
 
       const result = await logoutMutation.send()
-
       if (result?.logout?.success) {
         await clearAuthentication()
+
+        testFlags.set('logout.success')
       }
     }
 
@@ -67,7 +69,12 @@ const useAuthenticationStore = defineStore(
 
       const result = await loginMutation.send()
 
-      const newSessionId = result?.login?.sessionId || null
+      if (result?.login?.errors || !result) {
+        return Promise.reject(result?.login?.errors)
+      }
+
+      const newSessionId = result.login?.sessionId || null
+
       if (newSessionId) {
         const session = useSessionStore()
         session.id = newSessionId

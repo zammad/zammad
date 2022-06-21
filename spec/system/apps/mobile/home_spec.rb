@@ -7,13 +7,13 @@ RSpec.describe 'Mobile > App Home Page', type: :system, app: :mobile do
     let(:admin) { create(:admin) }
 
     before do
-      visit '/mobile/'
+      visit '/'
     end
 
     it 'clicking on plus icon opens creating ticket' do
       icon = find_icon 'plus'
       icon.click
-      expect_current_route 'ticket/create'
+      expect_current_route('ticket/create', app: :desktop)
     end
 
     it '"all tickets" leads to tickets list' do

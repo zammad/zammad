@@ -14,6 +14,7 @@ import { merge, cloneDeep } from 'lodash-es'
 import { createTestingPinia } from '@pinia/testing'
 import { plugin as formPlugin } from '@formkit/vue'
 import { buildFormKitPluginConfig } from '@shared/form'
+import applicationConfigPlugin from '@shared/plugins/applicationConfigPlugin'
 import CommonIcon from '@shared/components/CommonIcon/CommonIcon.vue'
 import CommonLink from '@shared/components/CommonLink/CommonLink.vue'
 import CommonDateTime from '@shared/components/CommonDateTime/CommonDateTime.vue'
@@ -127,6 +128,7 @@ let storeInitialized = false
 
 export const initializeStore = () => {
   if (storeInitialized) return
+
   plugins.push(createTestingPinia({ createSpy: vi.fn, stubActions: false }))
   storeInitialized = true
 }
@@ -139,6 +141,18 @@ const initializeForm = () => {
   defaultWrapperOptions.shallow = false
 
   formInitialized = true
+}
+
+let applicationConfigInitialized = false
+
+const initializeApplicationConfig = () => {
+  if (!storeInitialized) {
+    initializeStore()
+  }
+
+  plugins.push(applicationConfigPlugin)
+
+  applicationConfigInitialized = true
 }
 
 const wrappers = new Set<[ExtendedMountingOptions<any>, ExtendedRenderResult]>()
@@ -167,6 +181,10 @@ const renderComponent = <Props>(
   }
   if (wrapperOptions?.form && !formInitialized) {
     initializeForm()
+  }
+
+  if (!applicationConfigInitialized) {
+    initializeApplicationConfig()
   }
 
   if (wrapperOptions?.form && wrapperOptions?.formField) {

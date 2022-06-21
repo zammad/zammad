@@ -21,27 +21,45 @@ module CommonActions
   #  )
   #
   # return [nil]
-  def login(username:, password:, remember_me: false)
+  def login(username:, password:, remember_me: false, app: self.class.metadata[:app])
     ENV['FAKE_SELENIUM_LOGIN_USER_ID'] = nil
 
-    visit '/'
-
-    within('#login') do
-      fill_in 'username', with: username
-      fill_in 'password', with: password
-
-      # check via label because checkbox is hidden
-      click('.checkbox-replacement') if remember_me
-
-      # submit
-      click_button
+    if !page.current_path || page.current_path.exclude?('login')
+      visit '/'
     end
 
-    wait.until_exists do
-      current_login
-    end
+    case app
+    when :mobile
+      wait_for_test_flag('applicationLoaded.loaded', skip_clearing: true)
 
-    await_empty_ajax_queue
+      within('#login') do
+        fill_in 'login', with: username
+        fill_in 'password', with: password
+
+        check 'rememberMe' if remember_me
+
+        click_button
+      end
+
+      wait_for_test_flag('useSessionUserStore.getCurrentUser.loaded', skip_clearing: true)
+    else
+      within('#login') do
+        fill_in 'username', with: username
+        fill_in 'password', with: password
+
+        # check via label because checkbox is hidden
+        click('.checkbox-replacement') if remember_me
+
+        # submit
+        click_button
+      end
+
+      wait.until_exists do
+        current_login
+      end
+
+      await_empty_ajax_queue
+    end
   end
 
   # Checks if the current session is logged in.
@@ -92,11 +110,16 @@ module CommonActions
   # @example
   #  logout
   #
-  def logout
+  def logout(app: self.class.metadata[:app])
     ENV['FAKE_SELENIUM_LOGIN_USER_ID'] = nil
     visit('logout')
 
-    wait.until_disappears { find('.user-menu .user a', wait: false) }
+    case app
+    when :mobile
+      wait_for_test_flag('logout.success', skip_clearing: true)
+    else
+      wait.until_disappears { find('.user-menu .user a', wait: false) }
+    end
   end
 
   # Overwrites the Capybara::Session#visit method to allow SPA navigation
@@ -118,25 +141,42 @@ module CommonActions
   #  visit('https://zammad.org')
   # => visited external URL 'https://zammad.org'
   #
-  def visit(route)
+  def visit(route, app: self.class.metadata[:app], skip_waiting: false)
     if route.include?('://')
       return without_port do
         super(route)
       end
     elsif !route.start_with?('/')
-      route = "/##{route}"
+      route = case app
+              when :mobile
+                "/#{route}"
+              else
+                "/##{route}"
+              end
     end
+
+    if app == :mobile
+      route = "/mobile#{route}"
+    end
+
     super(route)
 
-    # wait for AJAX requets only on WebApp visits
-    return if !route.start_with?('/#')
-    return if route == '/#logout'
+    wait_for_loading_to_complete(route: route, app: app, skip_waiting: skip_waiting)
+  end
 
-    # make sure all AJAX requests are done
-    await_empty_ajax_queue
+  def wait_for_loading_to_complete(route:, app: self.class.metadata[:app], skip_waiting: false)
+    case app
+    when :mobile
+      wait_for_test_flag('applicationLoaded.loaded', skip_clearing: true) if !skip_waiting
+    else
+      return if route && (!route.start_with?('/#') || route == '/#logout')
 
-    # make sure loading is completed (e.g. ticket zoom may take longer)
-    expect(page).to have_no_css('.icon-loading', wait: 30)
+      # make sure all AJAX requests are done
+      await_empty_ajax_queue
+
+      # make sure loading is completed (e.g. ticket zoom may take longer)
+      expect(page).to have_no_css('.icon-loading', wait: 30) if !skip_waiting
+    end
   end
 
   # Overwrites the global Capybara.always_include_port setting (true)
@@ -159,9 +199,17 @@ module CommonActions
   #  expect(page).to have_current_route('login')
   # => checks for SPA route '/#login'
   #
-  def have_current_route(route, **options)
+  def have_current_route(route, app: self.class.metadata[:app], **options)
     if route.is_a?(String)
-      route = Regexp.new(Regexp.quote("/##{route}"))
+      case app
+      when :mobile
+        if !route.start_with?('/')
+          route = "/#{route}"
+        end
+        route = Regexp.new(Regexp.quote("/mobile#{route}"))
+      else
+        route = Regexp.new(Regexp.quote("/##{route}"))
+      end
     end
 
     options.reverse_merge!(url: true)
@@ -176,8 +224,8 @@ module CommonActions
   #  expect_current_route('login')
   # => checks for SPA route '/#login'
   #
-  def expect_current_route(route, **options)
-    expect(page).to have_current_route(route, **options)
+  def expect_current_route(route, app: self.class.metadata[:app], **options)
+    expect(page).to have_current_route(route, app: app, **options)
   end
 
   # Create and migrate an object manager attribute and verify that it exists. Returns the newly attribute.

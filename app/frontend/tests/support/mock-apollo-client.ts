@@ -5,7 +5,8 @@ import { InMemoryCache } from '@apollo/client/core'
 import type { DocumentNode } from 'graphql'
 import {
   createMockClient as createMockedClient,
-  RequestHandler,
+  type MockApolloClient,
+  type RequestHandler,
 } from 'mock-apollo-client'
 
 interface ClientRequestHandler {
@@ -13,16 +14,24 @@ interface ClientRequestHandler {
   handler: RequestHandler
 }
 
+let mockClient: Maybe<MockApolloClient>
+
+export const resetMockClient = () => {
+  mockClient = null
+}
+
 const createMockClient = (
   handlers: ClientRequestHandler[],
+  resetClient = false,
   cacheOptions = {},
 ) => {
-  const cache = new InMemoryCache(cacheOptions)
-
-  const mockClient = createMockedClient({ cache })
+  if (!mockClient || resetClient) {
+    const cache = new InMemoryCache(cacheOptions)
+    mockClient = createMockedClient({ cache })
+  }
 
   handlers.forEach((clientRequestHandler) =>
-    mockClient.setRequestHandler(
+    mockClient?.setRequestHandler(
       clientRequestHandler.operationDocument,
       clientRequestHandler.handler,
     ),

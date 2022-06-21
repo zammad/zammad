@@ -2,7 +2,9 @@
 
 import { useSubscription } from '@vue/apollo-composable'
 import { createMockSubscription, IMockSubscription } from 'mock-apollo-client'
-import createMockClient from '@tests/support/mock-apollo-client'
+import createMockClient, {
+  resetMockClient,
+} from '@tests/support/mock-apollo-client'
 import {
   SampleTypedSubscriptionDocument,
   SampleUpdatedSubscription,
@@ -35,6 +37,8 @@ const subscriptionSampleErrorResult = {
 let mockSubscription: IMockSubscription
 
 const mockClient = () => {
+  resetMockClient()
+
   mockSubscription = createMockSubscription()
 
   createMockClient([

@@ -1,12 +1,11 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted, watch } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { onBeforeUnmount, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import CommonNotifications from '@shared/components/CommonNotifications/CommonNotifications.vue'
 import useApplicationStore from '@shared/stores/application'
 import useAuthenticationStore from '@shared/stores/authentication'
-import useSessionStore from '@shared/stores/session'
 import useMetaTitle from '@shared/composables/useMetaTitle'
 import emitter from '@shared/utils/emitter'
 import useAppMaintenanceCheck from '@shared/composables/useAppMaintenanceCheck'
@@ -14,11 +13,10 @@ import usePushMessages from '@shared/composables/usePushMessages'
 import useLocaleStore from '@shared/stores/locale'
 import useFormKitConfig from '@shared/composables/form/useFormKitConfig'
 import { useAppTheme } from '@shared/composables/useAppTheme'
+import useAuthenticationChanges from '@shared/composables/useAuthenticationUpdates'
 
 const router = useRouter()
-const route = useRoute()
 
-const session = useSessionStore()
 const authentication = useAuthenticationStore()
 
 useMetaTitle().initializeMetaTitle()
@@ -37,38 +35,9 @@ useAppMaintenanceCheck()
 usePushMessages()
 useAppTheme()
 
-// Add a watcher for authenticated changes (e.g. login/logout in a other browser tab).
-authentication.$subscribe(async (mutation, state) => {
-  if (state.authenticated && !session.id) {
-    session.checkSession().then(async (sessionId) => {
-      if (sessionId) {
-        await authentication.refreshAfterAuthentication()
-      }
-
-      if (route.name === 'Login') {
-        router.replace('/')
-      }
-    })
-  } else if (!state.authenticated && session.id) {
-    await authentication.clearAuthentication()
-    router.replace('/login')
-  }
-})
-
-watch(
-  () => application.config.maintenance_mode,
-  async (newValue, oldValue) => {
-    if (
-      !oldValue &&
-      newValue &&
-      authentication.authenticated &&
-      !session.hasPermission(['admin.maintenance', 'maintenance'])
-    ) {
-      await authentication.logout()
-      router.replace('/login')
-    }
-  },
-)
+// Add a check for authenticated changes (e.g. login/logout in a other
+// browser tab or maintenance mode switch).
+useAuthenticationChanges()
 
 // We need to trigger a manual translation update for the form related strings.
 const formConfig = useFormKitConfig()

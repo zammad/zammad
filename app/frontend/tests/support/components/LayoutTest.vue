@@ -9,6 +9,7 @@ import { computed, unref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import LayoutHeader from '@mobile/components/layout/LayoutHeader.vue'
 import CommonNotifications from '@shared/components/CommonNotifications/CommonNotifications.vue'
+import useAuthenticationChanges from '@shared/composables/useAuthenticationUpdates'
 
 const route = useRoute()
 
@@ -27,6 +28,8 @@ watch(
 const showHeader = computed(() => {
   return route.meta.hasHeader
 })
+
+useAuthenticationChanges()
 </script>
 
 <template>

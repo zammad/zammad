@@ -3,24 +3,24 @@
 require 'rails_helper'
 
 RSpec.describe 'Mobile > App Update Check', type: :system, app: :mobile do
-  context 'when app is not configured yet', authenticated_as: false do
+  context 'when app is not configured yet', set_up: false, authenticated_as: false do
     before do
-      Setting.set('system_init_done', false)
-      visit '/mobile/login'
+      visit '/mobile/login', skip_waiting: true
     end
 
     it 'redirects to desktop app for system set-up' do
-      expect(page).to have_current_path('/')
+      expect_current_route('getting_started', app: :desktop)
     end
   end
 
   context 'when checking application rebuild notification', authenticated_as: false do
     before do
-      visit '/mobile/login?ApplicationRebuildCheckInterval=500'
+      visit '/login?ApplicationRebuildCheckInterval=500'
       wait_for_test_flag('useApplicationBuildChecksumQuery.firstResult')
       wait_for_test_flag('useAppMaintenanceSubscription.subscribed')
     end
 
+    # TODO: test only the most popular rebuild dialog message in selenium and move the other stuff to the frontend.
     it 'shows app rebuild dialog' do
       # Append a newline to the manifest file to trigger a reload notification.
       File.open(Rails.public_path.join('vite/manifest.json'), 'a') do |file|
@@ -59,32 +59,19 @@ RSpec.describe 'Mobile > App Update Check', type: :system, app: :mobile do
       Setting.set('maintenance_mode', true)
     end
 
+    # TODO: check what we really need here, because of the frontend integration tests.
     context 'with admin user' do
       let(:user) { create(:admin) }
 
       it 'does not log out' do
-        expect(page).to have_current_path('/mobile/')
-      end
-    end
-
-    context 'with non-admin user' do
-      let(:user) { create(:user) }
-
-      it 'logs out' do
-        expect(page).to have_current_path('/mobile/login')
-        wait_for_test_flag('useConfigUpdatesSubscription.subscribed')
-
-        Setting.set('maintenance_login', true)
-        Setting.set('maintenance_login_message', 'Custom maintenance login message.')
-        expect(page).to have_text('Zammad is currently in maintenance mode')
-        expect(page).to have_text('Custom maintenance login message.')
+        expect_current_route '/'
       end
     end
   end
 
   context 'when maintenance message is sent', authenticated_as: false do
     before do
-      visit '/mobile'
+      visit '/'
       wait_for_test_flag('applicationLoaded.loaded')
       wait_for_test_flag('usePushMessagesSubscription.subscribed')
     end

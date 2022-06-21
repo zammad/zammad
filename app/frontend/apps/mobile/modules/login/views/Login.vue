@@ -105,6 +105,7 @@ const login = (formData: FormData<LoginFormData>) => {
   return authentication
     .login(formData.login!, formData.password!, formData.rememberMe!)
     .then(() => {
+      // TODO: maybe we need some additional logic for the ThirtParty-Login situtation.
       const { redirect: redirectUrl } = route.query
       if (typeof redirectUrl === 'string') {
         router.replace(redirectUrl)
@@ -113,10 +114,12 @@ const login = (formData: FormData<LoginFormData>) => {
       }
     })
     .catch((errors: UserError) => {
-      notify({
-        message: errors.generalErrors[0],
-        type: NotificationTypes.Error,
-      })
+      if (errors instanceof UserError) {
+        notify({
+          message: errors.generalErrors[0],
+          type: NotificationTypes.Error,
+        })
+      }
     })
 }
 </script>
@@ -152,6 +155,7 @@ const login = (formData: FormData<LoginFormData>) => {
             ></div>
           </template>
           <Form
+            id="login"
             ref="form"
             class="text-left"
             :schema="loginScheme"

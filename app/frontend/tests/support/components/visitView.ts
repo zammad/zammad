@@ -5,6 +5,14 @@ import LayoutTest from './LayoutTest.vue'
 import mockApolloClient from '../mock-apollo-client'
 import renderComponent, { getRouter } from './renderComponent'
 
+vi.mock('@shared/server/apollo/client', () => {
+  return {
+    clearApolloClientStore: () => {
+      return Promise.resolve()
+    },
+  }
+})
+
 Object.defineProperty(window, 'fetch', {
   value: (path: string) => {
     throw new Error(`calling fetch on ${path}`)
