@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-06-17 15:08+0000\n"
+"PO-Revision-Date: 2022-06-21 05:23+0000\n"
 "Last-Translator: Ivan Perovic <ip@zammad.com>\n"
 "Language-Team: Croatian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/hr/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.12.1\n"
+"X-Generator: Weblate 4.13\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -351,7 +351,7 @@ msgstr "1 dan"
 
 #: app/frontend/shared/i18n/dates.ts
 msgid "1 day ago"
-msgstr "jučer"
+msgstr "prije jednog dana"
 
 #: db/seeds/settings.rb
 msgid "1 hour"
@@ -441,7 +441,7 @@ msgstr "URL izgleda ovako: https://zammad.example.com"
 
 #: db/seeds/settings.rb
 msgid "A list of active import backends that gets scheduled automatically."
-msgstr ""
+msgstr "Popis aktivnih pozadinskih sustava uvoza koji se automatski zakazuju."
 
 #: app/assets/javascripts/app/controllers/_plugin/session_taken_over.coffee
 msgid ""
@@ -463,17 +463,18 @@ msgstr "Dostupna je nova verzija Zammada, molimo osvježite stranicu."
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee
 msgid "A powerful service to get more information about your customers."
-msgstr ""
+msgstr "Moćna usluga za dobivanje više informacija o Vašim klijentima."
 
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee
 msgid "A queue is required!"
-msgstr ""
+msgstr "Potreban je red čekanja!"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 msgid ""
 "A team communication tool for the 21st century. Compatible with tools like "
 "%s."
 msgstr ""
+"Komunikacijski alat za timove 21. stoljeća. Kompatabilan sa alatima poput %s."
 
 #: app/assets/javascripts/app/views/dashboard/first_steps_test_ticket_finish.jst.eco
 msgid ""
@@ -491,19 +492,19 @@ msgstr "API"
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee
 msgid "API Key"
-msgstr "API Ključ"
+msgstr "API ključ"
 
 #: db/seeds/settings.rb
 msgid "API Password Access"
-msgstr "API Pristupna Lozinka"
+msgstr "API pristupna lozinka"
 
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 msgid "API Token"
-msgstr "API Token"
+msgstr "API token"
 
 #: db/seeds/settings.rb
 msgid "API Token Access"
-msgstr ""
+msgstr "API pristup tokenom"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
@@ -515,7 +516,7 @@ msgstr "API token"
 
 #: app/frontend/apps/mobile/modules/account/views/AccountOverview.vue
 msgid "About"
-msgstr ""
+msgstr "O"
 
 #: db/seeds/permissions.rb
 msgid "Access to %s"
@@ -523,11 +524,12 @@ msgstr "Pristup %s"
 
 #: db/seeds/permissions.rb
 msgid "Access to Agent Tickets based on Group Access"
-msgstr ""
+msgstr "Pristup ticketima agenata na temelju grupnog pristupa"
 
 #: db/seeds/permissions.rb
 msgid "Access to Customer Tickets based on current_user and organization"
 msgstr ""
+"Pristup ticketima klijenata na temelju trenutnog korisnika i organizacije"
 
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 #: app/frontend/apps/mobile/modules/account/routes.ts
@@ -537,11 +539,11 @@ msgstr "Račun"
 
 #: app/models/channel/driver/sms/twilio.rb
 msgid "Account SID"
-msgstr "SID Računa"
+msgstr "SID računa"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee
 msgid "Account Time"
-msgstr ""
+msgstr "Vrijeme rada"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
@@ -557,7 +559,7 @@ msgstr "Račun nije verificiran"
 #: app/assets/javascripts/app/views/ticket_zoom/time_unit.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 msgid "Accounted Time"
-msgstr ""
+msgstr "Obračunato vrijeme"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
@@ -608,11 +610,11 @@ msgstr "Akcije"
 
 #: db/seeds/settings.rb
 msgid "Activate the recursive processing of ticket triggers."
-msgstr ""
+msgstr "Aktivirajte ponavljajuću obradu ticket triggera."
 
 #: db/seeds/settings.rb
 msgid "Activates lost password feature for users."
-msgstr ""
+msgstr "Aktiviraj opciju zaboravljene lozinke za korisnike."
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 #: app/assets/javascripts/app/models/chat.coffee
@@ -643,21 +645,19 @@ msgstr "Aktivno"
 #: app/assets/javascripts/app/controllers/chat.coffee
 #: app/assets/javascripts/app/views/customer_chat/chat_header.jst.eco
 msgid "Active Agents"
-msgstr "Aktivni Agenti"
+msgstr "Aktivni agenti"
 
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
-#, fuzzy
-#| msgid "Active"
 msgid "Activity"
-msgstr "Aktivno"
+msgstr "Aktivnost"
 
 #: app/assets/javascripts/app/views/dashboard.jst.eco
 msgid "Activity Stream"
-msgstr "Tijek Aktivnosti"
+msgstr "Tijek aktivnosti"
 
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 msgid "Adapter"
-msgstr ""
+msgstr "Prilagodnik"
 
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco
@@ -692,50 +692,50 @@ msgstr "Dodati"
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
 msgid "Add Account"
-msgstr "Dodaj Račun"
+msgstr "Dodaj račun"
 
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 msgid "Add Bot"
-msgstr "Dodaj Bot"
+msgstr "Dodaj Bota"
 
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee
 #: app/assets/javascripts/app/views/integration/smime.jst.eco
 msgid "Add Certificate"
-msgstr "Dodaj Certifikat"
+msgstr "Dodaj certifikat"
 
 #: app/assets/javascripts/app/views/link/ticket/list.jst.eco
 msgid "Add Link"
-msgstr "Dodaj Poveznicu"
+msgstr "Dodaj poveznicu"
 
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee
 #: app/assets/javascripts/app/views/integration/smime.jst.eco
 msgid "Add Private Key"
-msgstr "Dodaj Privatni Ključ"
+msgstr "Dodaj privatni ključ"
 
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/tags.jst.eco
 #: app/assets/javascripts/app/views/widget/tag.jst.eco
 msgid "Add Tag"
-msgstr "Dodaj Oznaku"
+msgstr "Dodaj oznaku"
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 msgid "Add Telegram Bot"
-msgstr "Dodaj Telegram Bot"
+msgstr "Dodaj Telegram Bota"
 
 #: app/assets/javascripts/app/views/organization_profile/object.jst.eco
 #: app/assets/javascripts/app/views/user_profile/object.jst.eco
 #: app/assets/javascripts/app/views/widget/organization.jst.eco
 #: app/assets/javascripts/app/views/widget/user.jst.eco
 msgid "Add a Note"
-msgstr "Dodaj Napomenu"
+msgstr "Dodaj napomenu"
 
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 msgid "Add a Personal Access Token"
-msgstr ""
+msgstr "Dodaj osobni pristupni token"
 
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 msgid "Add alarm to pending reminder and escalated tickets."
-msgstr ""
+msgstr "Dodaj alarm kod podsjetnika i eskaliranih ticketa."
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Add attachment option to upload."
