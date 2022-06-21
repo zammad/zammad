@@ -23,8 +23,8 @@ RSpec.describe Import::OTRS::Customer do
     json_fixture("import/otrs/customer/#{file}")
   end
 
-  let(:import_object) { Organization }
-  let(:existing_object) { instance_double(import_object) }
+  let(:import_object)     { Organization }
+  let(:existing_object)   { instance_double(import_object) }
   let(:start_import_test) { described_class.new(object_structure) }
 
   context 'Organization' do
@@ -53,7 +53,7 @@ RSpec.describe Import::OTRS::Customer do
 
   context 'OTRS CustomerID' do
 
-    let(:customer_id) { 'test922896' }
+    let(:customer_id)      { 'test922896' }
     let(:object_structure) { load_customer_json('default') }
     let(:otrs_dummy_response) do
       [

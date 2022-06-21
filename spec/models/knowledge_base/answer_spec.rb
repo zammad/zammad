@@ -25,9 +25,9 @@ RSpec.describe KnowledgeBase::Answer, type: :model, current_user_id: 1 do
   end
 
   describe '#assets', current_user_id: -> { user.id } do
-    let(:assets) { another_category_answer && internal_answer.assets }
-    let(:user) { create(:agent) }
-    let(:another_category) { create(:knowledge_base_category, knowledge_base: knowledge_base) }
+    let(:assets)                  { another_category_answer && internal_answer.assets }
+    let(:user)                    { create(:agent) }
+    let(:another_category)        { create(:knowledge_base_category, knowledge_base: knowledge_base) }
     let(:another_category_answer) { create(:knowledge_base_answer, :internal, category: another_category) }
 
     include_context 'basic Knowledge Base'

@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Gql::Types::BinaryString do
   context 'when receiving a Base64 string' do
-    let(:input) { Base64.strict_encode64(result) }
+    let(:input)  { Base64.strict_encode64(result) }
     let(:result) { 'my unicode string ø' }
 
     context 'without prefix' do
@@ -39,7 +39,7 @@ RSpec.describe Gql::Types::BinaryString do
   end
 
   context 'when sending a string' do
-    let(:input) { 'my unicode string ø' }
+    let(:input)  { 'my unicode string ø' }
     let(:result) { Base64.strict_encode64(input) }
 
     it 'transforms input correctly' do

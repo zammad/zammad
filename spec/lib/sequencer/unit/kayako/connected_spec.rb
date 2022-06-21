@@ -15,7 +15,7 @@ RSpec.describe Sequencer::Unit::Kayako::Connected, sequencer: :unit do
       }
     end
 
-    let(:response_ok) { Net::HTTPOK.new(1.0, '200', 'OK') }
+    let(:response_ok)           { Net::HTTPOK.new(1.0, '200', 'OK') }
     let(:response_unauthorized) { Net::HTTPUnauthorized.new(1.0, '401', 'Unauthorized') }
 
     it 'check for correct connection' do

@@ -3,9 +3,9 @@
 require 'rails_helper'
 
 RSpec.describe TicketOnlineNotificationSeenJob, type: :job do
-  let!(:user) { create(:user) }
+  let!(:user)       { create(:user) }
   let!(:other_user) { create(:user) }
-  let!(:ticket) { create(:ticket, owner: user, created_by_id: user.id) }
+  let!(:ticket)     { create(:ticket, owner: user, created_by_id: user.id) }
   let!(:online_notification) do
     create(:online_notification, o_id: ticket.id, user_id: user.id)
   end

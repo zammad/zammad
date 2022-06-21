@@ -41,7 +41,7 @@ RSpec.shared_examples 'Ticket::Escalation' do
                  },
                })
       end
-      let(:sla) { create(:sla, calendar: calendar, first_response_time: 60, response_time: 120, solution_time: 180) }
+      let(:sla)     { create(:sla, calendar: calendar, first_response_time: 60, response_time: 120, solution_time: 180) }
       let(:article) { create(:'ticket/article', :inbound_email, ticket: ticket, created_at: '2013-03-21 09:30:00 UTC', updated_at: '2013-03-21 09:30:00 UTC') }
 
       before do

@@ -107,7 +107,7 @@ RSpec.describe 'Time Accounting API endpoints', type: :request do
   describe 'Assign user to multiple organizations #1573' do
     let(:organization1) { create(:organization) }
     let(:organization2) { create(:organization) }
-    let(:customer) { create(:customer, organization: organization1, organizations: [organization2]) }
+    let(:customer)      { create(:customer, organization: organization1, organizations: [organization2]) }
     let(:ticket1) do
       ticket  = create(:ticket, state: Ticket::State.lookup(name: 'open'), customer: customer, organization: organization1)
       article = create(:ticket_article, ticket: ticket, type: Ticket::Article::Type.lookup(name: 'note'))

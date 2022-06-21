@@ -221,7 +221,7 @@ RSpec.describe Ldap do
 
     describe '#search' do
 
-      let(:base) { 'DC=domain,DC=tld' }
+      let(:base)   { 'DC=domain,DC=tld' }
       let(:filter) { '(objectClass=user)' }
 
       it 'responds to #search' do

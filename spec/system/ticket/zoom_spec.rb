@@ -7,7 +7,7 @@ require 'system/examples/core_workflow_examples'
 RSpec.describe 'Ticket zoom', type: :system do
 
   describe 'owner auto-assignment', authenticated_as: :authenticate do
-    let!(:ticket) { create(:ticket, group: Group.find_by(name: 'Users'), state: Ticket::State.find_by(name: 'new')) }
+    let!(:ticket)       { create(:ticket, group: Group.find_by(name: 'Users'), state: Ticket::State.find_by(name: 'new')) }
     let!(:session_user) { User.find_by(login: 'admin@example.com') }
 
     context 'for agent disabled' do
@@ -580,9 +580,9 @@ RSpec.describe 'Ticket zoom', type: :system do
   context 'S/MIME active', authenticated_as: :authenticate do
     let(:system_email_address) { 'smime1@example.com' }
     let(:email_address) { create(:email_address, email: system_email_address) }
-    let(:group) { create(:group, email_address: email_address) }
-    let(:agent_groups) { [group] }
-    let(:agent) { create(:agent, groups: agent_groups) }
+    let(:group)         { create(:group, email_address: email_address) }
+    let(:agent_groups)  { [group] }
+    let(:agent)         { create(:agent, groups: agent_groups) }
 
     let(:sender_email_address) { 'smime2@example.com' }
     let(:customer) { create(:customer, email: sender_email_address) }
@@ -1110,7 +1110,7 @@ RSpec.describe 'Ticket zoom', type: :system do
 
     context 'as customer' do
       let!(:current_user) { create(:customer) }
-      let(:ticket) { create(:ticket, customer: current_user) }
+      let(:ticket)        { create(:ticket, customer: current_user) }
 
       include_examples 'shows attributes and values for customer view'
     end
@@ -1210,7 +1210,7 @@ RSpec.describe 'Ticket zoom', type: :system do
 
     context 'as agent+customer but only customer for the ticket (no agent access)' do
       let!(:current_user) { create(:agent_and_customer) }
-      let(:ticket) { create(:ticket, customer: current_user) }
+      let(:ticket)        { create(:ticket, customer: current_user) }
 
       include_examples 'shows attributes and values for customer view'
     end
@@ -1448,9 +1448,9 @@ RSpec.describe 'Ticket zoom', type: :system do
 
   describe 'mentions' do
     context 'when logged in as agent' do
-      let(:ticket) { create(:ticket, group: Group.find_by(name: 'Users')) }
+      let(:ticket)       { create(:ticket, group: Group.find_by(name: 'Users')) }
       let!(:other_agent) { create(:agent, groups: [Group.find_by(name: 'Users')]) }
-      let!(:admin) { User.find_by(email: 'admin@example.com') }
+      let!(:admin)       { User.find_by(email: 'admin@example.com') }
 
       it 'can subscribe and unsubscribe' do
         ensure_websocket do
@@ -1539,7 +1539,7 @@ RSpec.describe 'Ticket zoom', type: :system do
   end
 
   describe 'Article ID URL / link' do
-    let(:ticket) { create(:ticket, group: Group.first) }
+    let(:ticket)   { create(:ticket, group: Group.first) }
     let!(:article) { create(:'ticket/article', ticket: ticket) }
 
     it 'shows Article direct link' do
@@ -1556,7 +1556,7 @@ RSpec.describe 'Ticket zoom', type: :system do
 
     context 'when multiple Articles are present' do
       let(:article_count) { 20 }
-      let(:article_top) { ticket.articles.second }
+      let(:article_top)    { ticket.articles.second }
       let(:article_middle) { ticket.articles[ article_count / 2 ] }
       let(:article_bottom) { ticket.articles.last }
 
@@ -1627,7 +1627,7 @@ RSpec.describe 'Ticket zoom', type: :system do
 
   describe 'Macros', authenticated_as: :authenticate do
     let(:macro_body) { 'macro <b>body</b>' }
-    let(:macro) { create :macro, perform: { 'article.note' => { 'body' => macro_body, 'internal' => 'true', 'subject' => 'macro note' } } }
+    let(:macro)   { create :macro, perform: { 'article.note' => { 'body' => macro_body, 'internal' => 'true', 'subject' => 'macro note' } } }
     let!(:ticket) { create(:ticket, group: Group.find_by(name: 'Users')) }
 
     def authenticate
@@ -1816,7 +1816,7 @@ RSpec.describe 'Ticket zoom', type: :system do
 
   context 'Sidebar - Open & Closed Tickets', searchindex: true, authenticated_as: :authenticate, performs_jobs: true do
     let(:customer) { create(:customer, :with_org) }
-    let(:ticket_open) { create(:ticket, group: Group.find_by(name: 'Users'), customer: customer, title: SecureRandom.uuid) }
+    let(:ticket_open)   { create(:ticket, group: Group.find_by(name: 'Users'), customer: customer, title: SecureRandom.uuid) }
     let(:ticket_closed) { create(:ticket, group: Group.find_by(name: 'Users'), customer: customer, state: Ticket::State.find_by(name: 'closed'), title: SecureRandom.uuid) }
 
     def authenticate
@@ -1845,8 +1845,8 @@ RSpec.describe 'Ticket zoom', type: :system do
     context 'members section' do
 
       let(:customers) { create_list(:customer, 50, organization: organization) }
-      let(:ticket) { create(:ticket, group: Group.find_by(name: 'Users'), customer: customers.first) }
-      let(:members) { organization.members.order(id: :asc) }
+      let(:ticket)    { create(:ticket, group: Group.find_by(name: 'Users'), customer: customers.first) }
+      let(:members)   { organization.members.order(id: :asc) }
 
       before do
         visit "#ticket/zoom/#{ticket.id}"
@@ -2222,7 +2222,7 @@ RSpec.describe 'Ticket zoom', type: :system do
   end
 
   describe 'Unable to close tickets in certran cases if core workflow is used #3710', authenticated_as: :authenticate, db_strategy: :reset do
-    let!(:ticket) { create(:ticket, group: Group.find_by(name: 'Users')) }
+    let!(:ticket)    { create(:ticket, group: Group.find_by(name: 'Users')) }
     let(:field_name) { SecureRandom.uuid }
     let(:field) do
       create :object_manager_attribute_text, name: field_name, display: field_name, screens: {
@@ -2351,7 +2351,7 @@ RSpec.describe 'Ticket zoom', type: :system do
 
     context 'when 2 users are in 2 different tickets' do
       let(:ticket2) { create(:ticket, group: Group.find_by(name: 'Users')) }
-      let(:agent2) { create(:agent, password: 'test', groups: [Group.find_by(name: 'Users')]) }
+      let(:agent2)  { create(:agent, password: 'test', groups: [Group.find_by(name: 'Users')]) }
 
       before do
         using_session(:second_browser) do
@@ -2504,7 +2504,7 @@ RSpec.describe 'Ticket zoom', type: :system do
 
   describe 'Multiselect displaying and saving', authenticated_as: :authenticate, db_strategy: :reset do
     let(:field_name) { SecureRandom.uuid }
-    let(:ticket) { create(:ticket, group: Group.find_by(name: 'Users'), field_name => %w[key_2 key_3]) }
+    let(:ticket)     { create(:ticket, group: Group.find_by(name: 'Users'), field_name => %w[key_2 key_3]) }
 
     def authenticate
       create :object_manager_attribute_multiselect, name: field_name, display: field_name, screens: {
@@ -2726,7 +2726,7 @@ RSpec.describe 'Ticket zoom', type: :system do
   context 'Assign user to multiple organizations #1573', authenticated_as: :authenticate do
     let(:organizations) { create_list(:organization, 20) }
     let(:customer) { create(:customer, organization: organizations[0], organizations: organizations[1..]) }
-    let(:ticket) { create(:ticket, group: Group.first, customer: customer) }
+    let(:ticket)   { create(:ticket, group: Group.first, customer: customer) }
 
     def authenticate
       customer

@@ -73,7 +73,7 @@ RSpec.describe SearchIndexBackend do
 
     context 'search with date that requires time zone conversion', time_zone: 'Europe/Vilnius' do
       let(:record_type) { 'Ticket'.freeze }
-      let(:record) { create :ticket }
+      let(:record)      { create :ticket }
 
       before do
         travel_to(Time.zone.parse('2019-01-02 00:33'))
@@ -243,10 +243,10 @@ RSpec.describe SearchIndexBackend do
 
   describe '.selectors', searchindex: true do
 
-    let(:group1) { create :group }
+    let(:group1)        { create :group }
     let(:organization1) { create :organization, note: 'hihi' }
-    let(:agent1) { create :agent, organization: organization1, groups: [group1] }
-    let(:customer1) { create :customer, organization: organization1, firstname: 'special-first-name' }
+    let(:agent1)        { create :agent, organization: organization1, groups: [group1] }
+    let(:customer1)     { create :customer, organization: organization1, firstname: 'special-first-name' }
     let(:ticket1) do
       ticket = create :ticket, title: 'some-title1', state_id: 1, created_by: agent1
       ticket.tag_add('t1', 1)
@@ -264,10 +264,10 @@ RSpec.describe SearchIndexBackend do
       ticket
     end
     let(:ticket4) { create :ticket, title: 'phrase some-title4', state_id: 1 }
-    let(:ticket5) { create :ticket, title: 'phrase some_title5', state_id: 1 }
-    let(:ticket6) { create :ticket, title: 'phrase some::title6', state_id: 1 }
-    let(:ticket7) { create :ticket, title: 'some title7', state_id: 1 }
-    let(:ticket8) { create :ticket, title: 'sometitle', group: group1, state_id: 1, owner: agent1, customer: customer1, organization: organization1 }
+    let(:ticket5)  { create :ticket, title: 'phrase some_title5', state_id: 1 }
+    let(:ticket6)  { create :ticket, title: 'phrase some::title6', state_id: 1 }
+    let(:ticket7)  { create :ticket, title: 'some title7', state_id: 1 }
+    let(:ticket8)  { create :ticket, title: 'sometitle', group: group1, state_id: 1, owner: agent1, customer: customer1, organization: organization1 }
     let(:article8) { create :ticket_article, ticket: ticket8, subject: 'lorem ipsum' }
 
     before do

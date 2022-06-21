@@ -5,7 +5,7 @@ require 'lib/import/factory_examples'
 require 'lib/import/otrs/dynamic_field_examples'
 
 RSpec.describe Import::OTRS::DynamicFieldFactory do
-  let(:object_structure) { [load_dynamic_field_json('text/default')] }
+  let(:object_structure)  { [load_dynamic_field_json('text/default')] }
   let(:start_import_test) { described_class.import(object_structure) }
 
   it_behaves_like 'Import::Factory'

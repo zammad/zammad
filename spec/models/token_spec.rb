@@ -135,7 +135,7 @@ RSpec.describe Token, type: :model do
     end
 
     let(:user) { create(:user, roles: [role]) }
-    let(:role) { create(:role, permissions: [permission]) }
+    let(:role)       { create(:role, permissions: [permission]) }
     let(:permission) { create(:permission, name: permission_name) }
 
     context 'with privileges for a root permission (e.g., "foo", not "foo.bar")' do

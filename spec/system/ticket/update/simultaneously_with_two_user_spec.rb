@@ -3,9 +3,9 @@
 require 'rails_helper'
 
 RSpec.describe 'Ticket > Update > Simultaneously with two different user', type: :system do
-  let(:group) { Group.find_by(name: 'Users') }
+  let(:group)  { Group.find_by(name: 'Users') }
   let(:ticket) { create(:ticket, group: group) }
-  let(:agent) { User.find_by(login: 'agent1@example.com') }
+  let(:agent)  { User.find_by(login: 'agent1@example.com') }
 
   def check_avatar(text, changed: true)
     changed_class = changed ? 'changed' : 'not-changed'

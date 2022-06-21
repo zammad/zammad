@@ -21,7 +21,7 @@ RSpec.describe 'User endpoint', type: :request, authenticated_as: false do
   context 'when user resets password more than throttle allows' do
 
     let(:static_username) { create(:user).login }
-    let(:static_ipv4) { Faker::Internet.ip_v4_address }
+    let(:static_ipv4)     { Faker::Internet.ip_v4_address }
 
     it 'blocks due to username throttling (multiple IPs)' do
       # Throttle should happen after 5 requests, but that is not reliable enough due to CI slowness.

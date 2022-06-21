@@ -8,7 +8,7 @@ RSpec.describe Service::GeoLocation, type: :integration do
 
     context 'when checking simple results' do
       let(:expected_result) { [ latitude, longitude ] }
-      let(:request_url) { "http://maps.googleapis.com/maps/api/geocode/json?address=#{CGI.escape(address)}&sensor=true" }
+      let(:request_url)     { "http://maps.googleapis.com/maps/api/geocode/json?address=#{CGI.escape(address)}&sensor=true" }
       let(:response_payload) do
         {
           'results' => [
@@ -30,7 +30,7 @@ RSpec.describe Service::GeoLocation, type: :integration do
 
       context 'with German addresses' do
         let(:address) { 'Marienstrasse 13, 10117 Berlin' }
-        let(:latitude) { 52.5219143 }
+        let(:latitude)  { 52.5219143 }
         let(:longitude) { 13.3832647 }
 
         it { is_expected.to eq(expected_result) }
@@ -52,9 +52,9 @@ RSpec.describe Service::GeoLocation, type: :integration do
         context 'when street, city and zip fields in user preferences are filled' do
           let(:address) { 'Marienstrasse 13, 10117, Berlin' }
           let(:address_parts) { address.split(%r{\.?\s+}, 4) }
-          let(:street) { "#{address_parts.first} #{address_parts[1].chop}" }
-          let(:zip) { address_parts[2].chop }
-          let(:city) { address_parts.last }
+          let(:street)        { "#{address_parts.first} #{address_parts[1].chop}" }
+          let(:zip)           { address_parts[2].chop }
+          let(:city)          { address_parts.last }
 
           let(:user) { create(:user, street: street, zip: zip, city: city) }
 
@@ -65,8 +65,8 @@ RSpec.describe Service::GeoLocation, type: :integration do
       end
 
       context 'with Swiss addresses' do
-        let(:address) { 'Martinsbruggstrasse 35, 9016 St. Gallen' }
-        let(:latitude) { 47.4366557 }
+        let(:address)   { 'Martinsbruggstrasse 35, 9016 St. Gallen' }
+        let(:latitude)  { 47.4366557 }
         let(:longitude) { 9.4098904 }
 
         it { is_expected.to eq(expected_result) }
@@ -85,7 +85,7 @@ RSpec.describe Service::GeoLocation, type: :integration do
 
     context 'when checking simple results' do
       let(:expected_result) { address }
-      let(:request_url) { "http://maps.googleapis.com/maps/api/geocode/json?latlng=#{latitude},#{longitude}&sensor=true" }
+      let(:request_url)     { "http://maps.googleapis.com/maps/api/geocode/json?latlng=#{latitude},#{longitude}&sensor=true" }
       let(:response_payload) do
         {
           'results' => [
@@ -104,7 +104,7 @@ RSpec.describe Service::GeoLocation, type: :integration do
 
       context 'with German addresses' do
         let(:address) { 'Marienstrasse 13, 10117 Berlin' }
-        let(:latitude) { 52.5219143 }
+        let(:latitude)  { 52.5219143 }
         let(:longitude) { 13.3832647 }
 
         it { is_expected.to eq(expected_result) }
@@ -112,7 +112,7 @@ RSpec.describe Service::GeoLocation, type: :integration do
 
       context 'with Swiss addresses' do
         let(:address) { 'Martinsbruggstrasse 35, 9016 St. Gallen' }
-        let(:latitude) { 47.4366557 }
+        let(:latitude)  { 47.4366557 }
         let(:longitude) { 9.4098904 }
 
         it { is_expected.to eq(expected_result) }

@@ -29,10 +29,10 @@ RSpec.shared_examples 'Sequencer::Unit::Import::Zendesk::SubSequence::Base' do
       }
     end
 
-    let(:collection_name) { described_class.name.demodulize.underscore.to_sym }
+    let(:collection_name)   { described_class.name.demodulize.underscore.to_sym }
     let(:client_collection) { double('ZendeskAPI::Collection') }
     let(:api_error_message) { 'Mock err msg' }
-    let(:api_error) { ZendeskAPI::Error::NetworkError.new(api_error_message, response_obj) }
+    let(:api_error)         { ZendeskAPI::Error::NetworkError.new(api_error_message, response_obj) }
 
     let(:response_obj) do
       # stubbed methods required for ZendeskAPI::Error::ClientError#to_s

@@ -14,12 +14,12 @@ RSpec.describe 'Ticket Article Attachments', type: :request, authenticated_as: -
     context 'with attachment urls' do
       let(:ticket1) { create(:ticket, group: group) }
       let(:article1) { create(:ticket_article, ticket: ticket1) }
-      let(:ticket2) { create(:ticket, group: group) }
+      let(:ticket2)  { create(:ticket, group: group) }
       let(:article2) { create(:ticket_article, ticket: ticket2) }
 
       let(:store_file_content_type) { 'text/plain' }
       let(:store_file_content) { 'some content' }
-      let(:store_file_name) { 'some_file.txt' }
+      let(:store_file_name)    { 'some_file.txt' }
       let!(:store_file) do
         create(:store,
                object:      'Ticket::Article',

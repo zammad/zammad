@@ -4,11 +4,11 @@ require 'rails_helper'
 
 RSpec.describe 'Telegram Webhook Integration', type: :request do
 
-  let!(:token) { 'valid_token' }
-  let!(:token2) { 'valid_token2' }
-  let!(:bot_id) { 123_456_789 }
-  let!(:bot_id2) { 987_654_321 }
-  let!(:group_id) { Group.find_by(name: 'Users').id }
+  let!(:token)     { 'valid_token' }
+  let!(:token2)    { 'valid_token2' }
+  let!(:bot_id)    { 123_456_789 }
+  let!(:bot_id2)   { 987_654_321 }
+  let!(:group_id)  { Group.find_by(name: 'Users').id }
   let!(:group_id2) { create(:group).id }
 
   describe 'request handling' do
@@ -122,7 +122,7 @@ RSpec.describe 'Telegram Webhook Integration', type: :request do
       end
 
       let!(:channel) { Telegram.create_or_update_channel(token, { group_id: group_id, welcome: 'hi!', goodbye: 'goodbye' }) }
-      let!(:channel2) { Telegram.create_or_update_channel(token2, { group_id: group_id2, welcome: 'hi!', goodbye: 'goodbye' }) }
+      let!(:channel2)      { Telegram.create_or_update_channel(token2, { group_id: group_id2, welcome: 'hi!', goodbye: 'goodbye' }) }
       let!(:callback_url)  { "/api/v1/channels_telegram_webhook/#{channel.options[:callback_token]}?bid=#{channel.options[:bot][:id]}" }
       let!(:callback_url2) { "/api/v1/channels_telegram_webhook/#{channel2.options[:callback_token]}?bid=#{channel2.options[:bot][:id]}" }
 

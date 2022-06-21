@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'Overview', type: :system do
   context 'when logged in as customer', authenticated_as: :customer do
-    let!(:customer) { create(:customer) }
+    let!(:customer)      { create(:customer) }
     let!(:main_overview) { create(:overview) }
     let!(:other_overview) do
       create(:overview, condition: {
@@ -212,8 +212,8 @@ RSpec.describe 'Overview', type: :system do
       end
 
       let(:ticket1) { create(:ticket, group: group_a, priority_id: 1, customer: user, tree_select_field: 'a::1') }
-      let(:ticket2) { create(:ticket, group: group_c, priority_id: 2, customer: user, tree_select_field: 'b::2') }
-      let(:ticket3) { create(:ticket, group: group_b, priority_id: 3, customer: user, tree_select_field: 'c::3') }
+      let(:ticket2)   { create(:ticket, group: group_c, priority_id: 2, customer: user, tree_select_field: 'b::2') }
+      let(:ticket3)   { create(:ticket, group: group_b, priority_id: 3, customer: user, tree_select_field: 'c::3') }
       let(:group_key) { 'tree_select_field' }
 
       context 'when group direction is default' do
@@ -268,7 +268,7 @@ RSpec.describe 'Overview', type: :system do
       }
     end
     let(:data_option) { { options: options_hash, default: '' } }
-    let(:group) { create(:group, name: 'aaa') }
+    let(:group)       { create(:group, name: 'aaa') }
 
     let(:ticket) { create(:ticket, group: group, customer: user, multiselect: multiselect_value) }
 
@@ -327,7 +327,7 @@ RSpec.describe 'Overview', type: :system do
 
   context 'when only one attribute is visible', authenticated_as: :user do
     let(:user) { create(:agent, groups: [group]) }
-    let(:group) { create(:group, name: 'aaa') }
+    let(:group)  { create(:group, name: 'aaa') }
     let(:ticket) { create(:ticket, group: group, customer: user) }
 
     let(:view) { { 's' => %w[title] } }

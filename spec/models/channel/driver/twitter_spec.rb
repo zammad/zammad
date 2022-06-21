@@ -714,7 +714,7 @@ RSpec.describe Channel::Driver::Twitter, required_envs: %w[TWITTER_CONSUMER_KEY 
 
     context 'for tweets' do
       let!(:outgoing_tweet) { create(:twitter_article) }
-      let(:return_value) { Twitter::Tweet }
+      let(:return_value)    { Twitter::Tweet }
 
       include_examples 'for #send'
 
@@ -738,7 +738,7 @@ RSpec.describe Channel::Driver::Twitter, required_envs: %w[TWITTER_CONSUMER_KEY 
     context 'for DMs' do
       let(:recipient) { create(:twitter_authorization, uid: ENV.fetch('TWITTER_DM_RECIPIENT', '1234567890')) }
       let!(:outgoing_tweet) { create(:twitter_dm_article, :pending_delivery, recipient: recipient) }
-      let(:return_value) { Twitter::DirectMessage }
+      let(:return_value)    { Twitter::DirectMessage }
 
       include_examples 'for #send'
     end

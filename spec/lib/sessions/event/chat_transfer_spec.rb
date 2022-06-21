@@ -3,8 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe Sessions::Event::ChatTransfer do
-  let(:client_id) { SecureRandom.uuid }
-  let(:chat) { Chat.first }
+  let(:client_id)          { SecureRandom.uuid }
+  let(:chat)               { Chat.first }
   let(:chat_transfer_into) { Chat.create!(name: 'chat 2', updated_by_id: 1, created_by_id: 1) }
   let(:chat_session) do
     Sessions.create('customer_session_id', { 'id' => customer.id }, {})

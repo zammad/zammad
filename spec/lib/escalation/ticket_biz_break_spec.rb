@@ -245,7 +245,7 @@ RSpec.describe Escalation::TicketBizBreak, time_zone: 'Europe/Berlin' do
 
     context 'when fits in a single day' do
       let(:history_from) { mock_state_hash(ticket.created_at + 90.minutes, 'open', 'pending close') }
-      let(:history_to) { mock_state_hash(ticket.created_at + 2.hours, 'pending close', 'closed') }
+      let(:history_to)   { mock_state_hash(ticket.created_at + 2.hours, 'pending close', 'closed') }
 
       it { expect(result).to be_a Hash }
       it { expect(result.keys).to eq [Time.current.to_date] }
@@ -276,7 +276,7 @@ RSpec.describe Escalation::TicketBizBreak, time_zone: 'Europe/Berlin' do
 
     shared_context 'when ticket has state changes' do
       let(:initial_state_name) { 'pending reminder' }
-      let(:ticket) { create :ticket, state: Ticket::State.lookup(name: initial_state_name) }
+      let(:ticket)             { create :ticket, state: Ticket::State.lookup(name: initial_state_name) }
 
       before do
         freeze_time

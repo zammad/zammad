@@ -3,12 +3,12 @@
 require 'rails_helper'
 
 RSpec.describe 'Mention', type: :request, authenticated_as: -> { user } do
-  let(:group) { create(:group) }
+  let(:group)   { create(:group) }
   let(:ticket1) { create(:ticket, group: group) }
   let(:ticket2) { create(:ticket, group: group) }
   let(:ticket3) { create(:ticket, group: group) }
   let(:ticket4) { create(:ticket, group: group) }
-  let(:user) { create(:agent, groups: [group]) }
+  let(:user)    { create(:agent, groups: [group]) }
 
   describe 'GET /api/v1/mentions' do
     before do

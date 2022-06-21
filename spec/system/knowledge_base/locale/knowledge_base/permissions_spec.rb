@@ -5,9 +5,9 @@ require 'rails_helper'
 RSpec.describe 'Knowledge Base Locale Knowledge Base Permissions', type: :system do
   include_context 'basic Knowledge Base'
 
-  let(:role_editor) { Role.find_by name: 'Admin' }
+  let(:role_editor)         { Role.find_by name: 'Admin' }
   let(:role_another_editor) { create(:role, permission_names: %w[knowledge_base.editor]) }
-  let(:role_reader) { Role.find_by name: 'Agent' }
+  let(:role_reader)         { Role.find_by name: 'Agent' }
 
   it 'shows roles with has KB permissions only' do
     open_page

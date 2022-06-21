@@ -12,7 +12,7 @@ RSpec.describe ::ObjectManager::Attribute::Validation::MinMax do
     )
   end
 
-  let(:record) { build(:user) }
+  let(:record)    { build(:user) }
   let(:attribute) { build(:object_manager_attribute_integer) }
 
   it_behaves_like 'validate backend'

@@ -4,9 +4,9 @@ require 'rails_helper'
 
 RSpec.describe 'Search', type: :system, authenticated: true, searchindex: true do
   let(:users_group) { Group.find_by(name: 'Users') }
-  let(:ticket_1) { create(:ticket, title: 'Testing Ticket 1', group: users_group) }
-  let(:ticket_2) { create(:ticket, title: 'Testing Ticket 2', group: users_group) }
-  let(:note) { 'Test note' }
+  let(:ticket_1)    { create(:ticket, title: 'Testing Ticket 1', group: users_group) }
+  let(:ticket_2)    { create(:ticket, title: 'Testing Ticket 2', group: users_group) }
+  let(:note)        { 'Test note' }
 
   before do
     ticket_1 && ticket_2 && configure_elasticsearch(required: true, rebuild: true)
@@ -271,12 +271,12 @@ RSpec.describe 'Search', type: :system, authenticated: true, searchindex: true d
 
   describe 'Searches display all groups and owners on bulk selections #4054', authenticated_as: :authenticate do
     let(:group1) { create(:group) }
-    let(:group2) { create(:group) }
-    let(:agent1) { create(:agent, groups: [group1]) }
-    let(:agent2) { create(:agent, groups: [group2]) }
+    let(:group2)    { create(:group) }
+    let(:agent1)    { create(:agent, groups: [group1]) }
+    let(:agent2)    { create(:agent, groups: [group2]) }
     let(:agent_all) { create(:agent, groups: [group1, group2]) }
-    let(:ticket1) { create(:ticket, group: group1, title: '4054 group 1') }
-    let(:ticket2) { create(:ticket, group: group2, title: '4054 group 2') }
+    let(:ticket1)   { create(:ticket, group: group1, title: '4054 group 1') }
+    let(:ticket2)   { create(:ticket, group: group2, title: '4054 group 2') }
 
     def authenticate
       agent1 && agent2 && agent_all

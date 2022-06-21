@@ -12,7 +12,7 @@ RSpec.describe ::ObjectManager::Attribute::Validation::Required do
     )
   end
 
-  let(:record) { build(:ticket_article) }
+  let(:record)    { build(:ticket_article) }
   let(:attribute) { build(:object_manager_attribute_date) }
 
   it_behaves_like 'validate backend'
@@ -42,9 +42,9 @@ RSpec.describe ::ObjectManager::Attribute::Validation::Required do
         end
 
         context 'when boolean field with false values' do
-          let(:value) { false }
+          let(:value)     { false }
           let(:attribute) { build(:object_manager_attribute_boolean) }
-          let(:action) { 'create_middle' }
+          let(:action)    { 'create_middle' }
 
           it_behaves_like 'a validation without errors'
         end

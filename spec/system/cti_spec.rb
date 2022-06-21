@@ -3,12 +3,12 @@
 require 'rails_helper'
 
 RSpec.describe 'Caller log', type: :system, authenticated_as: :authenticate do
-  let(:agent_phone) { '0190111' }
+  let(:agent_phone)    { '0190111' }
   let(:customer_phone) { '0190333' }
-  let(:cti_token) { 'token1234' }
-  let(:agent) { create(:agent, phone: agent_phone) }
-  let(:customer) { create(:customer, phone: customer_phone) }
-  let(:cti_on) { true }
+  let(:cti_token)      { 'token1234' }
+  let(:agent)          { create(:agent, phone: agent_phone) }
+  let(:customer)       { create(:customer, phone: customer_phone) }
+  let(:cti_on)         { true }
 
   let(:params) do
     {
@@ -147,8 +147,8 @@ RSpec.describe 'Caller log', type: :system, authenticated_as: :authenticate do
 
     context 'with e164 number' do
       let(:customer_phone) { '4930609854180' }
-      let(:agent_phone) { '4930609811111' }
-      let(:prettified_customer_phone) { '+49 30 609854180' }
+      let(:agent_phone)                   { '4930609811111' }
+      let(:prettified_customer_phone)     { '+49 30 609854180' }
       let(:prettified_current_user_phone) { '+49 30 609811111' }
 
       it 'appears prettified' do
@@ -196,10 +196,10 @@ RSpec.describe 'Caller log', type: :system, authenticated_as: :authenticate do
     end
 
     let(:firstname) { 'John' }
-    let(:lastname) { 'Doe' }
+    let(:lastname)          { 'Doe' }
     let(:organization_name) { 'Test Organization' }
-    let(:organization) { create(:organization, name: organization_name) }
-    let(:full_name) { "#{firstname} #{lastname}" }
+    let(:organization)      { create(:organization, name: organization_name) }
+    let(:full_name)         { "#{firstname} #{lastname}" }
     let(:customer) do
       create(:customer,
              phone:        customer_phone,

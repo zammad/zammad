@@ -111,7 +111,7 @@ RSpec.describe AutoWizard do
 
       let(:group_agent) { create(:agent) }
       let(:group_signature) { create(:signature) }
-      let(:group_email) { create(:email_address) }
+      let(:group_email)     { create(:email_address) }
 
       it 'creates a group with those attributes and associations' do
         expect { described_class.setup }
@@ -162,7 +162,7 @@ RSpec.describe AutoWizard do
       end
 
       let(:email_address) { create(:email_address) }
-      let(:new_channel) { create(:email_channel) }
+      let(:new_channel)   { create(:email_channel) }
 
       it 'updates the specified email address with the given attributes' do
         expect { described_class.setup }

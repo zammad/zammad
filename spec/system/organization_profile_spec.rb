@@ -6,7 +6,7 @@ RSpec.describe 'Organization Profile', type: :system do
 
   context 'members section' do
     let(:organization) { create(:organization) }
-    let(:members) { organization.members.order(id: :asc) }
+    let(:members)      { organization.members.order(id: :asc) }
 
     before do
       create_list(:customer, 50, organization: organization)

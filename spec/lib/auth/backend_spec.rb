@@ -4,9 +4,9 @@ require 'rails_helper'
 
 RSpec.describe Auth::Backend do
 
-  let(:user) { create(:user) }
+  let(:user)     { create(:user) }
   let(:password) { 'secure' }
-  let(:auth) { Auth.new(user.login, password) }
+  let(:auth)     { Auth.new(user.login, password) }
   let(:instance) { described_class.new(auth) }
 
   describe '#valid?' do

@@ -18,7 +18,7 @@ RSpec.describe CoreWorkflow::Attributes, type: :model do
   end
   let(:payload) { base_payload }
   let!(:action_user) { create(:agent, groups: [ticket.group]) }
-  let(:result) { described_class.new(result_object: CoreWorkflow::Result.new(payload: payload, user: action_user)) }
+  let(:result)       { described_class.new(result_object: CoreWorkflow::Result.new(payload: payload, user: action_user)) }
 
   describe '#payload_class' do
     it 'returns class' do

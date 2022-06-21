@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Stats::TicketWaitingTime do
   describe '.generate' do
-    let(:user) { create(:agent, groups: [group]) }
+    let(:user)  { create(:agent, groups: [group]) }
     let(:group) { create(:group) }
 
     context 'when given an agent with no tickets' do
@@ -78,7 +78,7 @@ RSpec.describe Stats::TicketWaitingTime do
   end
 
   describe '.calculate_average' do
-    let(:ticket) { create(:ticket) }
+    let(:ticket)     { create(:ticket) }
     let(:start_time) { Time.current.beginning_of_day }
 
     context 'with empty tickets (no articles)' do

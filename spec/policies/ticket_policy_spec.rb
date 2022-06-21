@@ -42,9 +42,9 @@ describe TicketPolicy do
     end
 
     context 'but the user is a customer from the same organization as ticket’s customer' do
-      let(:record) { create(:ticket, customer: customer) }
+      let(:record)   { create(:ticket, customer: customer) }
       let(:customer) { create(:customer, organization: create(:organization)) }
-      let(:user) { create(:customer, organization: customer.organization) }
+      let(:user)     { create(:customer, organization: customer.organization) }
 
       context 'and organization.shared is true (default)' do
 

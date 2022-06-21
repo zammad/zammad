@@ -57,7 +57,7 @@ RSpec.describe NotificationFactory::Mailer do
         include_examples 'plaintext mail templating' do
           let(:locale) { 'en' }
           let(:expected_subject) { en_expected_subject }
-          let(:expected_body) { en_expected_body }
+          let(:expected_body)    { en_expected_body }
         end
       end
 
@@ -87,7 +87,7 @@ RSpec.describe NotificationFactory::Mailer do
         include_examples 'plaintext mail templating' do
           let(:locale) { 'UNSUPPORTED_LOCALE' }
           let(:expected_subject) { en_expected_subject }
-          let(:expected_body) { en_expected_body }
+          let(:expected_body)    { en_expected_body }
         end
       end
     end

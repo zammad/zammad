@@ -3,7 +3,7 @@
 RSpec.shared_examples 'ChecksCoreWorkflow' do
 
   let(:agent_group) { create(:group) }
-  let(:agent) { create(:agent, groups: [agent_group]) }
+  let(:agent)       { create(:agent, groups: [agent_group]) }
 
   before do
     UserInfo.current_user_id = agent.id

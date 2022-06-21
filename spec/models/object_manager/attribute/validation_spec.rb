@@ -14,7 +14,7 @@ RSpec.describe ObjectManager::Attribute::Validation, application_handle: 'applic
 
     subject { described_class.new }
 
-    let(:record) { build(:user) }
+    let(:record)  { build(:user) }
     let(:backend) { spy }
 
     around do |example|

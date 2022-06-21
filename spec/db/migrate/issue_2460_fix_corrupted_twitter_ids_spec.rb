@@ -5,8 +5,8 @@ require 'rails_helper'
 RSpec.describe Issue2460FixCorruptedTwitterIds, type: :db_migration do
   before { allow(Twitter::REST::Client).to receive(:new).and_return(client) }
 
-  let(:client) { double('Twitter::REST::Client', user: twitter_api_user) }
-  let(:twitter_api_user) { double('Twitter::User', id: twitter_api_user_id) }
+  let(:client)              { double('Twitter::REST::Client', user: twitter_api_user) }
+  let(:twitter_api_user)    { double('Twitter::User', id: twitter_api_user_id) }
   let(:twitter_api_user_id) { 1234567890 } # rubocop:disable Style/NumericLiterals
 
   context 'with existing, corrupted Twitter channel' do

@@ -209,7 +209,7 @@ RSpec.describe 'External Credentials', type: :request do
           before { Permission.find_by(name: 'admin.channel_twitter').update(active: false) }
 
           include_examples 'for failure cases' do
-            let(:status) { :forbidden }
+            let(:status)        { :forbidden }
             let(:error_message) { 'Not authorized (user)!' }
           end
         end
@@ -225,7 +225,7 @@ RSpec.describe 'External Credentials', type: :request do
           let(:params) { invalid_credentials }
 
           include_examples 'for failure cases' do
-            let(:status) { :ok }
+            let(:status)        { :ok }
             let(:error_message) { <<~ERR.chomp }
               401 Unauthorized (Invalid credentials may be to blame.)
             ERR
@@ -236,7 +236,7 @@ RSpec.describe 'External Credentials', type: :request do
           let(:params) { valid_credentials }
 
           include_examples 'for failure cases' do
-            let(:status) { :ok }
+            let(:status)        { :ok }
             let(:error_message) { <<~ERR.chomp }
               403 Forbidden (Your app's callback URL configuration on developer.twitter.com may be to blame.)
             ERR
@@ -248,7 +248,7 @@ RSpec.describe 'External Credentials', type: :request do
 
           include_context 'for callback URL configuration'
           include_examples 'for failure cases' do
-            let(:status) { :ok }
+            let(:status)        { :ok }
             let(:error_message) { <<~ERR.chomp }
               Forbidden. Are you sure you created a development environment on developer.twitter.com?
             ERR
@@ -260,7 +260,7 @@ RSpec.describe 'External Credentials', type: :request do
 
           include_context 'for callback URL configuration'
           include_examples 'for failure cases' do
-            let(:status) { :ok }
+            let(:status)        { :ok }
             let(:error_message) { <<~ERR.chomp }
               Dev Environment Label invalid. Please use an existing one ["#{ENV.fetch('TWITTER_DEV_ENVIRONMENT', 'Integration')}"], or create a new one.
             ERR
@@ -346,7 +346,7 @@ RSpec.describe 'External Credentials', type: :request do
           let!(:twitter_credential) { create(:twitter_credential, :invalid) }
 
           include_examples 'for failure cases' do
-            let(:status) { :internal_server_error }
+            let(:status)        { :internal_server_error }
             let(:error_message) { <<~ERR.chomp }
               401 Unauthorized (Invalid credentials may be to blame.)
             ERR
@@ -357,7 +357,7 @@ RSpec.describe 'External Credentials', type: :request do
           let!(:twitter_credential) { create(:twitter_credential) }
 
           include_examples 'for failure cases' do
-            let(:status) { :internal_server_error }
+            let(:status)        { :internal_server_error }
             let(:error_message) { <<~ERR.chomp }
               403 Forbidden (Your app's callback URL configuration on developer.twitter.com may be to blame.)
             ERR
@@ -405,7 +405,7 @@ RSpec.describe 'External Credentials', type: :request do
           let!(:twitter_credential) { create(:twitter_credential) }
 
           include_examples 'for failure cases' do
-            let(:status) { :unprocessable_entity }
+            let(:status)        { :unprocessable_entity }
             let(:error_message) { 'No request_token for session found!' }
           end
         end
@@ -425,7 +425,7 @@ RSpec.describe 'External Credentials', type: :request do
           before { get '/api/v1/external_credentials/twitter/link_account', as: :json, headers: headers }
 
           include_examples 'for failure cases' do
-            let(:status) { :unprocessable_entity }
+            let(:status)        { :unprocessable_entity }
             let(:error_message) { 'Invalid oauth_token given!' }
           end
         end
@@ -461,8 +461,8 @@ RSpec.describe 'External Credentials', type: :request do
 
           # For illustrative purposes only.
           # These parameters cannot be used to record a new VCR cassette (see note above).
-          let(:params) { { oauth_token: oauth_token, oauth_verifier: oauth_verifier } }
-          let(:oauth_token) { 'DyhnyQAAAAAA9CNXAAABcSxAexs' }
+          let(:params)         { { oauth_token: oauth_token, oauth_verifier: oauth_verifier } }
+          let(:oauth_token)    { 'DyhnyQAAAAAA9CNXAAABcSxAexs' }
           let(:oauth_verifier) { '15DOeRkjP4JkOSVqULkTKA1SCuIPP105' }
 
           # Rails / Rack needs to detect that the request comes via HTTPS as well

@@ -14,7 +14,7 @@ RSpec.shared_examples 'HasEscalationCalculationImpact', :performs_jobs do
     subject(:sla) { create(:sla, calendar: calendar, first_response_time: 60, response_time: 180, solution_time: 240) }
 
     let(:calendar) { create(:calendar, :business_hours_9_17) }
-    let!(:ticket) { create(:ticket) }
+    let!(:ticket)  { create(:ticket) }
 
     it 'calculates escalation_at' do
       expect { sla }.to change { ticket.reload.escalation_at }.to eq(ticket.created_at + 1.hour)

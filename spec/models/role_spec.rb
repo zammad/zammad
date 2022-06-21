@@ -204,7 +204,7 @@ RSpec.describe Role do
   describe '.with_permissions' do
     context 'when given a name not matching any permissions' do
       let(:permission) { 'foo' }
-      let(:result) { [] }
+      let(:result)     { [] }
 
       it 'returns an empty array' do
         expect(described_class.with_permissions(permission)).to match_array(result)

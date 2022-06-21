@@ -2238,9 +2238,9 @@ RSpec.describe 'Ticket', type: :request do
 
   describe 'stats' do
     let(:ticket1) { create(:ticket, customer: customer, organization: organization, group: ticket_group) }
-    let(:ticket2) { create(:ticket, customer: customer, organization: organization, group: ticket_group) }
-    let(:ticket3) { create(:ticket, customer: customer, organization: organization, group: ticket_group) }
-    let(:customer) { create(:customer, organization: organization) }
+    let(:ticket2)      { create(:ticket, customer: customer, organization: organization, group: ticket_group) }
+    let(:ticket3)      { create(:ticket, customer: customer, organization: organization, group: ticket_group) }
+    let(:customer)     { create(:customer, organization: organization) }
     let(:organization) { create(:organization, shared: false) }
 
     before do
@@ -2272,7 +2272,7 @@ RSpec.describe 'Ticket', type: :request do
     subject(:ticket) { create(:ticket, state_name: 'closed') }
 
     let(:admin) { create(:admin, groups: [ticket.group]) }
-    let(:agent) { create(:agent, groups: [ticket.group]) }
+    let(:agent)    { create(:agent, groups: [ticket.group]) }
     let(:customer) { ticket.customer }
 
     describe 'reopening a ticket' do
@@ -2374,7 +2374,7 @@ RSpec.describe 'Ticket', type: :request do
     subject(:ticket) { create(:ticket, customer: customer_authorized) }
 
     let(:organization_authorized) { create(:organization) }
-    let(:customer_authorized) { create(:customer, organization: organization_authorized) }
+    let(:customer_authorized)     { create(:customer, organization: organization_authorized) }
 
     let(:organization_unauthorized) { create(:organization) }
     let(:customer_unauthorized) { create(:customer, organization: organization_unauthorized) }
@@ -2426,9 +2426,9 @@ RSpec.describe 'Ticket', type: :request do
 
   describe 'Assign user to multiple organizations #1573' do
     let(:organizations) { create_list(:organization, 3) }
-    let(:customer) { create(:customer, organization: organizations[0], organizations: organizations[1..]) }
-    let(:ticket1) { create(:ticket, customer: customer, organization: organizations[0], group: Group.first) }
-    let(:ticket2) { create(:ticket, customer: customer, organization: organizations[1], group: Group.first) }
+    let(:customer)      { create(:customer, organization: organizations[0], organizations: organizations[1..]) }
+    let(:ticket1)       { create(:ticket, customer: customer, organization: organizations[0], group: Group.first) }
+    let(:ticket2)       { create(:ticket, customer: customer, organization: organizations[1], group: Group.first) }
 
     before do
       ticket1 && ticket2

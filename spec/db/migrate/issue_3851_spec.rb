@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Issue3851, type: :db_migration do
   let(:follow_up_assignment) { ObjectManager::Attribute.for_object('Group').find_by(name: 'follow_up_assignment') }
-  let(:follow_up_possible) { ObjectManager::Attribute.for_object('Group').find_by(name: 'follow_up_possible') }
+  let(:follow_up_possible)   { ObjectManager::Attribute.for_object('Group').find_by(name: 'follow_up_possible') }
 
   before do
     migrate

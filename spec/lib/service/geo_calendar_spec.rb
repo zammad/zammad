@@ -88,15 +88,15 @@ RSpec.describe Service::GeoCalendar, type: :integration do
 
         context 'with US ip #1' do
           let(:ip_address) { '169.229.216.200' }
-          let(:name) { 'United States/California' }
-          let(:timezone) { 'America/Los_Angeles' }
+          let(:name)       { 'United States/California' }
+          let(:timezone)   { 'America/Los_Angeles' }
 
           include_examples 'contains correct data for location'
         end
 
         context 'with US ip #2' do
           let(:ip_address) { '17.171.2.25' }
-          let(:name) { 'United States' }
+          let(:name)     { 'United States' }
           let(:timezone) { 'America/Chicago' }
 
           include_examples 'contains correct data for location'

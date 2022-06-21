@@ -12,9 +12,9 @@ RSpec.describe KnowledgeBase::EffectivePermission do
 
     let(:user) { create(:user, roles: [role_editor, role_reader, role_non_kb]) }
     let(:user_editor) { create(:user, roles: [role_editor]) }
-    let(:user_admin) { create(:admin) }
+    let(:user_admin)  { create(:admin) }
     let(:user_reader) { create(:user, roles: [role_reader]) }
-    let(:user_nonkb) { create(:user, roles: [role_non_kb]) }
+    let(:user_nonkb)  { create(:user, roles: [role_non_kb]) }
 
     let(:child_category) { create(:knowledge_base_category, parent: category) }
 

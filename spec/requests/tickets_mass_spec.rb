@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'TicketsMass', type: :request, authenticated_as: :user do
-  let(:user) { create(:agent, groups: [group_a, group_b]) }
+  let(:user)  { create(:agent, groups: [group_a, group_b]) }
   let(:owner) { create(:agent) }
 
   let(:group_a) { create(:group) }

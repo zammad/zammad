@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe 'inserting Knowledge Base answer', type: :system, searchindex: true do
   include_context 'basic Knowledge Base'
 
-  let(:field) { find(:richtext) }
+  let(:field)              { find(:richtext) }
   let(:target_translation) { answer.translations.first }
 
   before do

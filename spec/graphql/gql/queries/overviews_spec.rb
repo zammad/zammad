@@ -5,8 +5,8 @@ require 'rails_helper'
 RSpec.describe Gql::Queries::Overviews, type: :graphql do
 
   context 'when fetching locales' do
-    let(:agent) { create(:agent) }
-    let(:query) { read_graphql_file('shared/entities/ticket/graphql/queries/overviews.graphql') }
+    let(:agent)     { create(:agent) }
+    let(:query)     { read_graphql_file('shared/entities/ticket/graphql/queries/overviews.graphql') }
     let(:variables) { { withTicketCount: false } }
 
     before do

@@ -4,8 +4,8 @@ require 'rails_helper'
 
 RSpec.describe Ticket::Number::Increment do
   describe '.generate' do
-    let(:number) { described_class.generate }
-    let(:system_id) { Setting.get('system_id') }
+    let(:number)       { described_class.generate }
+    let(:system_id)    { Setting.get('system_id') }
     let(:ticket_count) { Ticket::Counter.find_by(generator: 'Increment').content }
 
     it 'updates the "Increment" Ticket::Counter' do

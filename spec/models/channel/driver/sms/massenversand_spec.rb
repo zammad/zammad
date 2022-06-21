@@ -3,12 +3,12 @@
 require 'rails_helper'
 
 RSpec.describe Channel::Driver::Sms::Massenversand do
-  let(:gateway) { 'https://gate1.goyyamobile.com/sms/sendsms.asp' }
-  let(:message_body) { 'Test' }
+  let(:gateway)         { 'https://gate1.goyyamobile.com/sms/sendsms.asp' }
+  let(:message_body)    { 'Test' }
   let(:receiver_number) { '+37060010000' }
-  let(:sender_number) { '+491000000000' }
-  let(:token) { '00q1234123423r5rwefdfsfsfef' }
-  let(:url) { "#{gateway}?#{params}" }
+  let(:sender_number)   { '+491000000000' }
+  let(:token)           { '00q1234123423r5rwefdfsfsfef' }
+  let(:url)             { "#{gateway}?#{params}" }
   let(:params) do
     URI.encode_www_form(
       authToken: token,

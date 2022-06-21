@@ -428,8 +428,8 @@ RSpec.describe User, type: :model do
     end
 
     describe '#permissions' do
-      let(:user) { create(:agent).tap { |u| u.roles = [u.roles.first] } }
-      let(:role) { user.roles.first }
+      let(:user)        { create(:agent).tap { |u| u.roles = [u.roles.first] } }
+      let(:role)        { user.roles.first }
       let(:permissions) { role.permissions }
 
       it 'is a simple association getter' do
@@ -578,9 +578,9 @@ RSpec.describe User, type: :model do
       context 'with privileges for a root permission (e.g., "foo", not "foo.bar")' do
         subject(:user) { create(:user, roles: [role]) }
 
-        let(:role) { create(:role, permissions: [permission]) }
-        let!(:permission) { create(:permission, name: 'foo') }
-        let!(:child_permission) { create(:permission, name: 'foo.bar') }
+        let(:role)                       { create(:role, permissions: [permission]) }
+        let!(:permission)                { create(:permission, name: 'foo') }
+        let!(:child_permission)          { create(:permission, name: 'foo.bar') }
         let!(:inactive_child_permission) { create(:permission, name: 'foo.baz', active: false) }
 
         it 'includes the IDs of user’s explicit permissions' do
@@ -601,8 +601,8 @@ RSpec.describe User, type: :model do
         subject(:user) { create(:user, roles: [role]) }
 
         let(:role) { create(:role, permissions: [permission]) }
-        let!(:permission) { create(:permission, name: 'foo') }
-        let!(:child_permission) { create(:permission, name: 'foo.bar') }
+        let!(:permission)                { create(:permission, name: 'foo') }
+        let!(:child_permission)          { create(:permission, name: 'foo.bar') }
         let!(:inactive_child_permission) { create(:permission, name: 'foo.baz', active: false) }
 
         it 'includes the names of user’s explicit permissions' do
@@ -862,7 +862,7 @@ RSpec.describe User, type: :model do
 
       context 'when added on update' do
         let(:orig_number) { nil }
-        let(:new_number) { '1234567890' }
+        let(:new_number)  { '1234567890' }
 
         before { user } # create user
 
@@ -958,7 +958,7 @@ RSpec.describe User, type: :model do
     describe '#image_source' do
 
       describe 'when value is invalid' do
-        let(:value) { 'Th1515n0t4v4l1dh45h' }
+        let(:value)   { 'Th1515n0t4v4l1dh45h' }
         let(:escaped) { Regexp.escape(value) }
 
         it 'valid create' do
@@ -1250,8 +1250,8 @@ RSpec.describe User, type: :model do
 
   describe 'Callbacks, Observers, & Async Transactions -' do
     describe 'System-wide agent limit checks:' do
-      let(:agent_role) { Role.lookup(name: 'Agent') }
-      let(:admin_role) { Role.lookup(name: 'Admin') }
+      let(:agent_role)     { Role.lookup(name: 'Agent') }
+      let(:admin_role)     { Role.lookup(name: 'Admin') }
       let(:current_agents) { described_class.with_permissions('ticket.agent') }
 
       describe '#validate_agent_limit_by_role' do
@@ -1553,7 +1553,7 @@ RSpec.describe User, type: :model do
       let(:organization2) { create(:organization) }
       let(:organization3) { create(:organization) }
       let(:organization4) { create(:organization) }
-      let(:user) { create(:agent, organization: organization1, organizations: [organization2, organization3]) }
+      let(:user)          { create(:agent, organization: organization1, organizations: [organization2, organization3]) }
 
       def csv_import(string)
         User.csv_import(

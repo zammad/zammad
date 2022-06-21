@@ -15,7 +15,7 @@ RSpec.describe Sequencer::Unit::Freshdesk::PermissionPresent, sequencer: :unit d
       }
     end
 
-    let(:response_ok) { Net::HTTPOK.new(1.0, '200', 'OK') }
+    let(:response_ok)        { Net::HTTPOK.new(1.0, '200', 'OK') }
     let(:response_forbidden) { Net::HTTPForbidden.new(1.0, '403', 'Forbidden') }
 
     it 'check for correct permission' do

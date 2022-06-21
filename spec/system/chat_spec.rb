@@ -4,8 +4,8 @@ require 'rails_helper'
 
 RSpec.describe 'Chat Handling', type: :system do
   let(:agent_chat_switch_selector) { '#navigation .js-chatMenuItem .js-switch' }
-  let(:chat_url) { "/assets/chat/#{chat_url_type}.html?port=#{ENV['WS_PORT']}" }
-  let(:chat_url_type) { 'znuny' }
+  let(:chat_url)                   { "/assets/chat/#{chat_url_type}.html?port=#{ENV['WS_PORT']}" }
+  let(:chat_url_type)              { 'znuny' }
 
   def authenticate
     Setting.set('chat', true)
@@ -395,7 +395,7 @@ RSpec.describe 'Chat Handling', type: :system do
 
   context 'when image is present in chat message', authenticated_as: :authenticate do
     let(:chat) { create(:chat) }
-    let(:chat_user) { create(:agent) }
+    let(:chat_user)    { create(:agent) }
     let(:chat_session) { create(:'chat/session', user: chat_user, chat: chat) }
 
     before do

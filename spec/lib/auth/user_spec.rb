@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Auth::User do
 
-  let(:user) { create(:user) }
+  let(:user)     { create(:user) }
   let(:instance) { described_class.new(user.login) }
 
   describe '.can_login?' do

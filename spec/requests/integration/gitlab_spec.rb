@@ -6,7 +6,7 @@ require 'rails_helper'
 
 RSpec.describe 'GitLab', type: :request, required_envs: %w[GITLAB_ENDPOINT GITLAB_APITOKEN] do
 
-  let(:token) { 't0k3N' }
+  let(:token)    { 't0k3N' }
   let(:endpoint) { 'https://git.example.com/api/graphql' }
 
   let!(:admin) do

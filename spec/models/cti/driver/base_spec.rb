@@ -6,9 +6,9 @@ RSpec.describe Cti::Driver::Base do
   subject!(:driver) { described_class.new(mapping: {}, params: params, config: config) }
 
   let(:direction) { 'in' }
-  let(:event) { 'newCall' }
-  let(:config) { {} }
-  let(:params) { { 'direction' => direction, 'event' => event } }
+  let(:event)     { 'newCall' }
+  let(:config)    { {} }
+  let(:params)    { { 'direction' => direction, 'event' => event } }
 
   describe '.direction_check' do
     context 'for in direction' do
@@ -53,7 +53,7 @@ RSpec.describe Cti::Driver::Base do
     end
 
     context 'with reject number in from param and matching caller_id but wrong direction' do
-      let(:params) { { 'direction' => direction, 'event' => event, 'from' => '1234' } }
+      let(:params)    { { 'direction' => direction, 'event' => event, 'from' => '1234' } }
       let(:direction) { 'out' }
       let(:config) do
         {

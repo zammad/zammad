@@ -5,15 +5,15 @@ require 'rails_helper'
 RSpec.describe UserDevice, type: :model do
   describe '.add' do
     let(:existing_record) { described_class.add(user_agent, ip, agent.id, fingerprint, type) }
-    let(:ip) { '91.115.248.231' }
-    let(:agent) { create(:agent) }
+    let(:ip)              { '91.115.248.231' }
+    let(:agent)           { create(:agent) }
 
     context 'with existing record of type: "session"' do
       before { existing_record }  # create existing record
 
       let(:user_agent) { 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.107 Safari/537.36' }
       let(:fingerprint) { 'fingerprint1234' }
-      let(:type) { 'session' }
+      let(:type)        { 'session' }
 
       context 'when called with same parameters as existing record' do
         it 'returns the original record' do
@@ -110,7 +110,7 @@ RSpec.describe UserDevice, type: :model do
 
       let(:user_agent) { 'curl/7.43.0' }
       let(:fingerprint) { nil }
-      let(:type) { 'basic_auth' }
+      let(:type)        { 'basic_auth' }
 
       context 'when called with same parameters as existing record' do
         it 'returns the original record' do
@@ -149,7 +149,7 @@ RSpec.describe UserDevice, type: :model do
       end
 
       context 'when existing record’s user agent is blank, and given is nil' do
-        let(:user_agent) { '' }
+        let(:user_agent)       { '' }
         let(:other_user_agent) { nil }
 
         it 'returns the original record' do
@@ -173,7 +173,7 @@ RSpec.describe UserDevice, type: :model do
     context 'with exceedingly long fingerprint (161+ chars)' do
       let(:user_agent) { 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.107 Safari/537.36' }
       let(:fingerprint) { 'x' * 161 }
-      let(:type) { 'session' }
+      let(:type)        { 'session' }
 
       it 'raises an error' do
         expect { described_class.add(user_agent, ip, agent.id, fingerprint, type) }
@@ -184,11 +184,11 @@ RSpec.describe UserDevice, type: :model do
 
   describe '.action' do
     let(:user_device) { described_class.add(user_agent, ip, agent.id, fingerprint, type) }
-    let(:user_agent) { 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.107 Safari/537.36' }
-    let(:ip) { '91.115.248.231' }
-    let(:agent) { create(:agent) }
+    let(:user_agent)  { 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.107 Safari/537.36' }
+    let(:ip)          { '91.115.248.231' }
+    let(:agent)       { create(:agent) }
     let(:fingerprint) { 'fingerprint1234' }
-    let(:type) { 'session' }
+    let(:type)        { 'session' }
 
     context 'when called with parameters matching given user_device' do
       it 'returns the given user_device' do
@@ -224,10 +224,10 @@ RSpec.describe UserDevice, type: :model do
 
   describe '#notification_send' do
     let(:user_device) { described_class.add(user_agent, ip, agent.id, fingerprint, type) }
-    let(:user_agent) { 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.107 Safari/537.36' }
-    let(:ip) { '91.115.248.231' }
+    let(:user_agent)  { 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.107 Safari/537.36' }
+    let(:ip)          { '91.115.248.231' }
     let(:fingerprint) { 'fingerprint1234' }
-    let(:type) { 'session' }
+    let(:type)        { 'session' }
 
     context 'user with email address' do
       let(:agent) { create(:agent, email: 'somebody@example.com') }

@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe Ldap::Guid do
 
   let(:string) { 'f742b361-32c6-4a92-baaa-eaae7df657ee' }
-  let(:hex) { "a\xB3B\xF7\xC62\x92J\xBA\xAA\xEA\xAE}\xF6W\xEE".b }
+  let(:hex)    { "a\xB3B\xF7\xC62\x92J\xBA\xAA\xEA\xAE}\xF6W\xEE".b }
 
   describe '.valid?' do
 

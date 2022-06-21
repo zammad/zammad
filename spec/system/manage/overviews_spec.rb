@@ -6,15 +6,15 @@ RSpec.describe 'Manage > Overviews', type: :system do
   let(:group) { create(:group) }
 
   let(:owner_one) { create(:agent, groups: [group]) }
-  let(:owner_two) { create(:agent, groups: [group]) }
+  let(:owner_two)   { create(:agent, groups: [group]) }
   let(:owner_three) { create(:agent, groups: [group]) }
 
   let(:customer_one) { create(:customer, organization_id: organization_one.id, groups: [group]) }
-  let(:customer_two) { create(:customer, organization_id: organization_two.id, groups: [group]) }
+  let(:customer_two)   { create(:customer, organization_id: organization_two.id, groups: [group]) }
   let(:customer_three) { create(:customer, organization_id: organization_three.id, groups: [group]) }
 
   let(:organization_one) { create(:organization, name: 'Test Org One') }
-  let(:organization_two) { create(:organization, name: 'Test Org Two') }
+  let(:organization_two)   { create(:organization, name: 'Test Org Two') }
   let(:organization_three) { create(:organization, name: 'Test Org Three') }
 
   let!(:ticket_one) do

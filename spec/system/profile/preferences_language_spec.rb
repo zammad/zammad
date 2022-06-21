@@ -3,9 +3,9 @@
 require 'rails_helper'
 
 RSpec.describe 'Profile > Language', type: :system do
-  let(:group) { create(:group) }
+  let(:group)        { create(:group) }
   let(:session_user) { create(:admin, preferences: { locale: locale }, groups: Group.all) }
-  let(:path) { 'profile/language' }
+  let(:path)         { 'profile/language' }
 
   shared_examples 'having translated content in' do |current_element|
     it "the '#{current_element}' element" do
@@ -54,11 +54,11 @@ RSpec.describe 'Profile > Language', type: :system do
   end
 
   context 'when user locale is English (en-gb)', authenticated_as: :session_user do
-    let(:locale) { 'en-gb' }
-    let(:translated_content) { 'Overview' }
+    let(:locale)              { 'en-gb' }
+    let(:translated_content)  { 'Overview' }
     let(:full_current_locale) { 'English (Great Britain)' }
-    let(:priority) { 'PRIORITY' }
-    let(:owner) { 'OWNER' }
+    let(:priority)            { 'PRIORITY' }
+    let(:owner)               { 'OWNER' }
 
     before do
       visit path
@@ -101,7 +101,7 @@ RSpec.describe 'Profile > Language', type: :system do
     end
 
     context 'with dashboard page visited' do
-      let(:path) { 'dashboard' }
+      let(:path)               { 'dashboard' }
       let(:translated_content) { 'My Stats' }
 
       it_behaves_like 'having translated content in', :active_content
@@ -117,8 +117,8 @@ RSpec.describe 'Profile > Language', type: :system do
 
     context 'with drafted ticket create' do
       let(:path) { 'ticket/create' }
-      let(:title) { 'preferences lang check #1' }
-      let(:customer) { 'nicole' }
+      let(:title)              { 'preferences lang check #1' }
+      let(:customer)           { 'nicole' }
       let(:translated_content) { "Inbound Call: #{title}" }
 
       translated_element = '.newTicket .ticket-create'
@@ -136,10 +136,10 @@ RSpec.describe 'Profile > Language', type: :system do
 
     context 'with ticket zoom page' do
       let(:path) { "ticket/zoom/#{ticket.id}" }
-      let(:title) { 'preferences lang check #2' }
+      let(:title)              { 'preferences lang check #2' }
       let(:translated_content) { title }
-      let(:user_group) { Group.lookup(name: 'Users') }
-      let(:ticket) { create(:ticket, group: user_group, title: title) }
+      let(:user_group)         { Group.lookup(name: 'Users') }
+      let(:ticket)             { create(:ticket, group: user_group, title: title) }
 
       translated_element = '.content.active .sidebar-content'
 
@@ -149,10 +149,10 @@ RSpec.describe 'Profile > Language', type: :system do
 
   context 'when user locale is Deutsch', authenticated_as: :session_user do
     let(:locale) { 'de-de' }
-    let(:translated_content) { 'Übersichten' }
+    let(:translated_content)  { 'Übersichten' }
     let(:full_current_locale) { 'Deutsch' }
-    let(:priority) { 'PRIORITÄT' }
-    let(:owner) { 'BESITZER' }
+    let(:priority)            { 'PRIORITÄT' }
+    let(:owner)               { 'BESITZER' }
 
     before do
       visit path
@@ -167,7 +167,7 @@ RSpec.describe 'Profile > Language', type: :system do
     context 'when profile language is changed' do
       let(:new_locale) { 'en-gb' }
       let(:full_current_locale) { 'English (Great Britain)' }
-      let(:translated_content) { 'Übersichten' }
+      let(:translated_content)  { 'Übersichten' }
 
       before do
         within :active_content do
@@ -196,7 +196,7 @@ RSpec.describe 'Profile > Language', type: :system do
     end
 
     context 'with dashboard page visited' do
-      let(:path) { 'dashboard' }
+      let(:path)               { 'dashboard' }
       let(:translated_content) { 'Meine Statistik' }
 
       it_behaves_like 'having translated content in', :active_content
@@ -212,8 +212,8 @@ RSpec.describe 'Profile > Language', type: :system do
 
     context 'with drafted ticket create' do
       let(:path) { 'ticket/create' }
-      let(:title) { 'preferences lang check #1' }
-      let(:customer) { 'nicole' }
+      let(:title)              { 'preferences lang check #1' }
+      let(:customer)           { 'nicole' }
       let(:translated_content) { "Eingehender Anruf: #{title}" }
 
       translated_element = '.newTicket .ticket-create'
@@ -231,10 +231,10 @@ RSpec.describe 'Profile > Language', type: :system do
 
     context 'with ticket zoom page' do
       let(:path) { "ticket/zoom/#{ticket.id}" }
-      let(:title) { 'preferences lang check #2' }
+      let(:title)              { 'preferences lang check #2' }
       let(:translated_content) { title }
-      let(:user_group) { Group.lookup(name: 'Users') }
-      let(:ticket) { create(:ticket, group: user_group, title: title) }
+      let(:user_group)         { Group.lookup(name: 'Users') }
+      let(:ticket)             { create(:ticket, group: user_group, title: title) }
 
       translated_element = '.content.active .sidebar-content'
 

@@ -25,8 +25,8 @@ RSpec.describe Import::OTRS::State do
     json_fixture("import/otrs/state/#{file}")
   end
 
-  let(:import_object) { Ticket::State }
-  let(:existing_object) { instance_double(import_object) }
+  let(:import_object)     { Ticket::State }
+  let(:existing_object)   { instance_double(import_object) }
   let(:start_import_test) { described_class.new(object_structure) }
 
   context 'closed' do

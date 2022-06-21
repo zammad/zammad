@@ -6,8 +6,8 @@ RSpec.describe ChecksKbClientNotificationJob, type: :job, performs_jobs: true do
   include_context 'basic Knowledge Base'
 
   describe 'pushes to users who have access' do
-    let(:admin) { create(:admin) }
-    let(:agent) { create(:agent) }
+    let(:admin)    { create(:admin) }
+    let(:agent)    { create(:agent) }
     let(:customer) { create(:customer) }
 
     before do

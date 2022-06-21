@@ -10,7 +10,7 @@ RSpec.describe TriggerWebhookJob::RecordPayload do
 
     context 'when generator backend exists' do
 
-      let(:record) { build(:ticket) }
+      let(:record)  { build(:ticket) }
       let(:backend) { TriggerWebhookJob::RecordPayload::Ticket }
 
       it 'initializes backend instance and sends generate' do

@@ -14,10 +14,10 @@ RSpec.describe Sessions::Backend::TicketOverviewList do
   end
 
   describe '.push' do
-    let(:admin) { create(:admin, groups: [group]) }
-    let(:group) { create(:group) }
+    let(:admin)     { create(:admin, groups: [group]) }
+    let(:group)     { create(:group) }
     let(:client_id) { '12345' }
-    let(:ttl) { 3 } # seconds
+    let(:ttl)       { 3 } # seconds
 
     context 'when 3rd argument ("client") is false' do
       subject(:collection) { described_class.new(admin, {}, false, client_id, ttl) }
@@ -105,7 +105,7 @@ RSpec.describe Sessions::Backend::TicketOverviewList do
       end
 
       context 'when called twice, after changes have occurred to the Ticket table' do
-        let!(:ticket) { create(:ticket, group: group) }
+        let!(:ticket)     { create(:ticket, group: group) }
         let!(:first_call) { collection.push }
 
         context 'before the TTL has passed' do

@@ -36,8 +36,8 @@ RSpec.describe Ticket::Article::AddsMetadataGeneral do
     let(:organization) { create(:organization, shared: true) }
     let(:agent_a) { create(:agent_and_customer, organization: organization) }
     let(:agent_b) { create(:agent_and_customer, organization: organization) }
-    let(:group) { create(:group) }
-    let(:ticket) { create(:ticket, group: group, owner: agent_a, customer: agent_b) }
+    let(:group)   { create(:group) }
+    let(:ticket)  { create(:ticket, group: group, owner: agent_a, customer: agent_b) }
 
     before do
       [agent_a, agent_b].each do |elem|

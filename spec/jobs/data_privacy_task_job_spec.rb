@@ -11,8 +11,8 @@ RSpec.describe DataPrivacyTaskJob, type: :job do
     end
 
     let!(:organization) { create(:organization, name: 'test') }
-    let!(:admin) { create(:admin) }
-    let!(:user) { create(:customer, organization: organization) }
+    let!(:admin)        { create(:admin) }
+    let!(:user)         { create(:customer, organization: organization) }
 
     it 'checks if the user is deleted' do
       create(:data_privacy_task, deletable: user)

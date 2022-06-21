@@ -3,8 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe 'Manage > Integration > Clearbit', type: :system do
-  let(:api_key) { 'some_api_key' }
-  let(:source) { 'source1' }
+  let(:api_key)     { 'some_api_key' }
+  let(:source)      { 'source1' }
   let(:destination) { 'destination1' }
 
   before do

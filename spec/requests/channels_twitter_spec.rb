@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Twitter channel API endpoints', type: :request do
-  let!(:twitter_channel) { create(:twitter_channel) }
+  let!(:twitter_channel)   { create(:twitter_channel) }
   let(:twitter_credential) { ExternalCredential.find(twitter_channel.options[:auth][:external_credential_id]) }
 
   let(:hash_signature) { %(sha256=#{Base64.strict_encode64(OpenSSL::HMAC.digest('sha256', consumer_secret, payload))}) }
@@ -50,7 +50,7 @@ RSpec.describe 'Twitter channel API endpoints', type: :request do
   describe 'POST /api/v1/channels_twitter_webhook' do
     let(:payload) { params.stringify_keys.to_s.gsub(%r{=>}, ':').delete(' ') }
     let(:headers) { { 'x-twitter-webhooks-signature': hash_signature } }
-    let(:params) { { foo: 'bar', for_user_id: twitter_channel.options[:user][:id] } }
+    let(:params)  { { foo: 'bar', for_user_id: twitter_channel.options[:user][:id] } }
 
     # What's this all about? See the "Optional signature header validation" section of this article:
     # https://developer.twitter.com/en/docs/accounts-and-users/subscribe-account-activity/guides/securing-webhooks

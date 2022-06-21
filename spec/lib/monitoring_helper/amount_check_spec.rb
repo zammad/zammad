@@ -3,12 +3,12 @@
 require 'rails_helper'
 
 RSpec.describe MonitoringHelper::AmountCheck do
-  let(:instance) { described_class.new(params) }
+  let(:instance)   { described_class.new(params) }
   let(:ticket_now) { create(:ticket) }
   let(:ticket_10m) { travel_to(10.minutes.ago) { create(:ticket) } }
   let(:ticket_5d)  { travel_to(5.days.ago) { create(:ticket) } }
   let(:ticket_2w)  { travel_to(2.weeks.ago) { create(:ticket) } }
-  let(:params) { {} }
+  let(:params)     { {} }
 
   before do
     Ticket.destroy_all

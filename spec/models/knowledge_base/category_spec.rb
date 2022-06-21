@@ -23,8 +23,8 @@ RSpec.describe KnowledgeBase::Category, type: :model, current_user_id: 1 do
   context 'in multilevel tree' do
     subject(:kb_category_with_tree) { create(:kb_category_with_tree) }
 
-    let(:knowledge_base) { kb_category_with_tree.knowledge_base }
-    let(:child_category) { kb_category_with_tree.children.sorted.last }
+    let(:knowledge_base)      { kb_category_with_tree.knowledge_base }
+    let(:child_category)      { kb_category_with_tree.children.sorted.last }
     let(:grandchild_category) { child_category.children.sorted.first }
 
     it 'tests to fetch all categories in KB' do
@@ -138,7 +138,7 @@ RSpec.describe KnowledgeBase::Category, type: :model, current_user_id: 1 do
     include_context 'basic Knowledge Base'
 
     let(:user) { create(:agent) }
-    let(:another_category) { create(:knowledge_base_category, knowledge_base: knowledge_base) }
+    let(:another_category)        { create(:knowledge_base_category, knowledge_base: knowledge_base) }
     let(:another_category_answer) { create(:knowledge_base_answer, :internal, category: another_category) }
 
     context 'without permissions' do

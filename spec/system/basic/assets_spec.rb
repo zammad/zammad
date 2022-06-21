@@ -4,10 +4,10 @@ require 'rails_helper'
 
 RSpec.describe 'Assets', type: :system, db_strategy: :reset do
   let(:organization) { create(:organization, note: 'hello') }
-  let(:customer) { create(:customer, organization: organization, note: 'hello', last_login: Time.zone.now, login_failed: 1) }
-  let(:agent) { create(:agent, groups: [Group.find_by(name: 'Users')], note: 'hello', last_login: Time.zone.now, login_failed: 1) }
-  let(:admin) { create(:admin, groups: [Group.find_by(name: 'Users')], note: 'hello', last_login: Time.zone.now, login_failed: 1) }
-  let(:ticket) { create(:ticket, owner: agent, group: Group.find_by(name: 'Users'), customer: customer, created_by: admin) }
+  let(:customer)     { create(:customer, organization: organization, note: 'hello', last_login: Time.zone.now, login_failed: 1) }
+  let(:agent)        { create(:agent, groups: [Group.find_by(name: 'Users')], note: 'hello', last_login: Time.zone.now, login_failed: 1) }
+  let(:admin)        { create(:admin, groups: [Group.find_by(name: 'Users')], note: 'hello', last_login: Time.zone.now, login_failed: 1) }
+  let(:ticket)       { create(:ticket, owner: agent, group: Group.find_by(name: 'Users'), customer: customer, created_by: admin) }
 
   context 'groups' do
     def group_note

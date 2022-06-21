@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'Ticket Shared Drafts Zoom API endpoints', authenticated_as: :agent, type: :request do
 
-  let(:group) { create(:group, shared_drafts: true) }
+  let(:group)  { create(:group, shared_drafts: true) }
   let(:ticket) { create(:ticket, group: group) }
 
   let(:agent) do

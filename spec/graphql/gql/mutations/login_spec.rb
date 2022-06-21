@@ -13,7 +13,7 @@ RSpec.describe Gql::Mutations::Login, type: :request do
 
   context 'when logging on' do
     let(:agent_password) { 'some_test_password' }
-    let(:agent) { create(:agent, password: agent_password) }
+    let(:agent)          { create(:agent, password: agent_password) }
     let(:query) do
       File.read(Rails.root.join('app/frontend/shared/graphql/mutations/login.graphql')) +
         File.read(Rails.root.join('app/frontend/shared/graphql/fragments/errors.graphql'))

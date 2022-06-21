@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Sequencer::Unit::Import::Ldap::Sources::Lost::Deactivate, sequencer: :unit do
-  let!(:lost_users) { create_list(:user, sample_length, attributes) }
+  let!(:lost_users)   { create_list(:user, sample_length, attributes) }
   let(:sample_length) { 2 }
 
   context 'when provided ids of active users' do

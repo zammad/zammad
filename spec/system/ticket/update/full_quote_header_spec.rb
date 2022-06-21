@@ -3,12 +3,12 @@
 require 'rails_helper'
 
 RSpec.describe 'Ticket > Update > Full Quote Header', current_user_id: -> { current_user.id }, type: :system, time_zone: 'Europe/London' do
-  let(:group) { Group.find_by(name: 'Users') }
-  let(:ticket) { create(:ticket, group: group) }
+  let(:group)          { Group.find_by(name: 'Users') }
+  let(:ticket)         { create(:ticket, group: group) }
   let(:ticket_article) { create(:ticket_article, ticket: ticket, from: 'Example Name <asdf1@example.com>') }
-  let(:customer) { create(:customer) }
-  let(:current_user) { customer }
-  let(:selection) { '' }
+  let(:customer)       { create(:customer) }
+  let(:current_user)   { customer }
+  let(:selection)      { '' }
 
   prepend_before do
     Setting.set 'ui_ticket_zoom_article_email_full_quote_header', full_quote_header_setting
@@ -152,8 +152,8 @@ RSpec.describe 'Ticket > Update > Full Quote Header', current_user_id: -> { curr
   context 'when text is selected on page while replying' do
     let(:full_quote_header_setting) { false }
     let(:before_article_content_selector) { '.ticketZoom-header' }
-    let(:after_article_content_selector) { '.ticket-article-item .humanTimeFromNow' }
-    let(:article_content_selector) { '.ticket-article-item .richtext-content' }
+    let(:after_article_content_selector)  { '.ticket-article-item .humanTimeFromNow' }
+    let(:article_content_selector)        { '.ticket-article-item .richtext-content' }
 
     it 'does not quote article when bits other than the article are selected' do
       within(:active_content) do

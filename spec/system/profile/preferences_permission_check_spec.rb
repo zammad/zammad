@@ -3,8 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe 'Profile > PreferencesPermissionCheck', type: :system do
-  let(:admin) { create(:admin) }
-  let(:agent) { create(:agent) }
+  let(:admin)    { create(:admin) }
+  let(:agent)    { create(:agent) }
   let(:customer) { create(:customer) }
 
   before { visit 'profile' }

@@ -11,8 +11,8 @@ RSpec.describe Models do
       shared_examples 'migrates entries' do |model|
 
         let(:factory_name) { model.downcase.to_sym }
-        let(:source) { create(factory_name) }
-        let(:target) { create(factory_name) }
+        let(:source)       { create(factory_name) }
+        let(:target)       { create(factory_name) }
 
         it 'sends ExternalSync.migrate' do
           allow(ExternalSync).to receive(:migrate)

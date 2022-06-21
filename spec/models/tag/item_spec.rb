@@ -66,7 +66,7 @@ RSpec.describe Tag::Item do
       subject(:item) { create(:'tag/item', name: 'test1') }
 
       context "with reference to renamed tag in its #{method} hash (contains-one)" do
-        let(:object) { create(object_klass.name.underscore, method => { label => tag_matcher }) }
+        let(:object)      { create(object_klass.name.underscore, method => { label => tag_matcher }) }
         let(:tag_matcher) { { operator: 'contains one', value: 'test1' } }
 
         it 'updates reference with new tag name' do

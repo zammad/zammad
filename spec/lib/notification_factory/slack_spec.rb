@@ -19,9 +19,9 @@ RSpec.describe NotificationFactory::Slack do
       )
     end
 
-    let(:ticket) { article.ticket }
-    let(:article) { create(:ticket_article) }
-    let(:agent) { create(:agent) }
+    let(:ticket)       { article.ticket }
+    let(:article)      { create(:ticket_article) }
+    let(:agent)        { create(:agent) }
     let(:current_user) { create(:agent) }
 
     context 'for "ticket_create", with an empty "changes" hash' do

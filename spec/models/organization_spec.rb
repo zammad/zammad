@@ -32,8 +32,8 @@ RSpec.describe Organization, type: :model do
     describe '.destroy' do
 
       let!(:refs_known) { { 'Ticket' => { 'organization_id'=> 1 }, 'User' => { 'organization_id'=> 1 } } }
-      let!(:user) { create(:customer, organization: organization) }
-      let!(:ticket) { create(:ticket, organization: organization, customer: user) }
+      let!(:user)       { create(:customer, organization: organization) }
+      let!(:ticket)     { create(:ticket, organization: organization, customer: user) }
 
       it 'checks known refs' do
         refs_organization = Models.references('Organization', organization.id, true)
@@ -66,8 +66,8 @@ RSpec.describe Organization, type: :model do
 
       describe 'when changes for member_ids' do
         let(:agent1) { create(:agent) }
-        let(:agent2) { create(:agent) }
-        let(:agent3) { create(:agent) }
+        let(:agent2)              { create(:agent) }
+        let(:agent3)              { create(:agent) }
         let(:organization_agents) { create(:organization, member_ids: [agent1.id, agent2.id, agent3.id]) }
 
         it 'does not delete users' do

@@ -348,12 +348,12 @@ RSpec.describe Trigger, type: :model do
           create(:smime_certificate, fixture: customer_email_address)
         end
 
-        let(:system_email_address) { 'smime1@example.com' }
+        let(:system_email_address)   { 'smime1@example.com' }
         let(:customer_email_address) { 'smime2@example.com' }
 
         let(:email_address) { create(:email_address, email: system_email_address) }
 
-        let(:group) { create(:group, email_address: email_address) }
+        let(:group)    { create(:group, email_address: email_address) }
         let(:customer) { create(:customer, email: customer_email_address) }
 
         let(:security_preferences) { Ticket::Article.last.preferences[:security] }
@@ -960,9 +960,9 @@ RSpec.describe Trigger, type: :model do
       end
 
       let(:trigger_values) { %w[a b c] }
-      let(:group) { create(:group) }
-      let(:owner) { create(:admin, group_ids: [group.id]) }
-      let!(:ticket) { create(:ticket, group: group,) }
+      let(:group)          { create(:group) }
+      let(:owner)          { create(:admin, group_ids: [group.id]) }
+      let!(:ticket)        { create(:ticket, group: group,) }
 
       before do
         ticket.update_attribute(attribute_name, ticket_multiselect_values)

@@ -3,10 +3,10 @@
 require 'rails_helper'
 
 RSpec.describe 'Profile > Token Access', type: :system do
-  let(:label) { 'Some App Token' }
+  let(:label)          { 'Some App Token' }
   let(:checkbox_input) { 'input[value="ticket.agent"]' }
-  let(:expiry_date) { '05/15/2024' }
-  let(:token_list) { find('.js-tokenList') }
+  let(:expiry_date)    { '05/15/2024' }
+  let(:token_list)     { find('.js-tokenList') }
 
   shared_examples 'having an error notification message' do
     it 'has error notification message' do
@@ -93,7 +93,7 @@ RSpec.describe 'Profile > Token Access', type: :system do
     end
 
     context 'without label' do
-      let(:label) { nil }
+      let(:label)         { nil }
       let(:error_message) { 'Need label!' }
 
       before do

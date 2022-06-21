@@ -61,7 +61,7 @@ RSpec.shared_examples 'ApplicationModel::CanAssets' do |associations: [], select
         shared_examples 'collection association' do
           subject { create(described_class.name.underscore, association => collection) }
 
-          let(:collection) { create_list(reflection.class_name.underscore, 5) }
+          let(:collection)        { create_list(reflection.class_name.underscore, 5) }
           let(:collection_assets) { collection.reduce({}) { |assets_hash, single| single.assets(assets_hash) } }
 
           it 'returns a hash with their asset attributes' do

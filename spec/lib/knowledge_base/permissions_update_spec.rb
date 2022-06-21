@@ -163,7 +163,7 @@ RSpec.describe KnowledgeBase::PermissionsUpdate do
   describe '#update_using_params!' do
     subject(:updater) { described_class.new(category) }
 
-    let(:role) { create(:role, permission_names: %w[knowledge_base.editor]) }
+    let(:role)     { create(:role, permission_names: %w[knowledge_base.editor]) }
     let(:category) { create(:knowledge_base_category) }
 
     it 'calls update! with given roles' do

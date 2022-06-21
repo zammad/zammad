@@ -8,10 +8,10 @@ RSpec.describe Import::OTRS::ArticleCustomer do
     json_fixture("import/otrs/article/#{file}")
   end
 
-  let(:instance_id) { 1337 }
-  let(:existing_object) { instance_double(import_object) }
-  let(:import_object) { User }
-  let(:object_structure) { load_article_json('customer_phone') }
+  let(:instance_id)       { 1337 }
+  let(:existing_object)   { instance_double(import_object) }
+  let(:import_object)     { User }
+  let(:object_structure)  { load_article_json('customer_phone') }
   let(:start_import_test) { described_class.new(object_structure) }
 
   it 'finds customers by email' do

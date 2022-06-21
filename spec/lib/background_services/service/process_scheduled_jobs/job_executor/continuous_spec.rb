@@ -17,7 +17,7 @@ RSpec.describe BackgroundServices::Service::ProcessScheduledJobs::JobExecutor::C
 
   subject(:instance) { described_class.new(job) }
 
-  let(:job) { create(:scheduler, period: 0, method: 'ContinuousSpecExecutor.execute') }
+  let(:job)        { create(:scheduler, period: 0, method: 'ContinuousSpecExecutor.execute') }
   let(:loop_limit) { BackgroundServices::Service::ProcessScheduledJobs::JobExecutor::Continuous::LOOP_LIMIT }
 
   before { freeze_time }

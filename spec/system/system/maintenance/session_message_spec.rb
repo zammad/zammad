@@ -3,9 +3,9 @@
 require 'rails_helper'
 
 RSpec.describe 'System > Maintenance - Session Message', type: :system do
-  let(:agent) { User.find_by(login: 'agent1@example.com') }
+  let(:agent)                 { User.find_by(login: 'agent1@example.com') }
   let(:session_message_title) { 'Testing <b>Session Message Title</b>' }
-  let(:session_message_text) { "message <b>1äöüß</b> Session Message Title\n\n\nhttps://zammad.org" }
+  let(:session_message_text)  { "message <b>1äöüß</b> Session Message Title\n\n\nhttps://zammad.org" }
 
   def check_sesion_message_content(title, text)
     expect(page).to have_text(title)

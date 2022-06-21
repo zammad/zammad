@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Sessions::Event::ChatSessionStart do
   let(:client_id) { SecureRandom.uuid }
-  let(:chat) { Chat.first }
+  let(:chat)      { Chat.first }
   let(:chat_session) do
     Sessions.create('customer_session_id', { 'id' => customer.id }, {})
     Sessions.queue('customer_session_id')

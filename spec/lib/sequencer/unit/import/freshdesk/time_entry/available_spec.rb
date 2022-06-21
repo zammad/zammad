@@ -15,7 +15,7 @@ RSpec.describe Sequencer::Unit::Import::Freshdesk::TimeEntry::Available, sequenc
       }
     end
 
-    let(:response_ok) { Net::HTTPOK.new(1.0, '200', 'OK') }
+    let(:response_ok)        { Net::HTTPOK.new(1.0, '200', 'OK') }
     let(:response_forbidden) { Net::HTTPUnauthorized.new(1.0, '403', 'Forbidden') }
 
     it 'check for avilable time entry feature' do

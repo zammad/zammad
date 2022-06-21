@@ -44,7 +44,7 @@ RSpec.describe 'Public Knowledge Base canonical link', type: :system, current_us
 
     context 'with custom domain' do
       let(:custom_address) { subdomain }
-      let(:prefix) { "#{scheme}://#{subdomain}" }
+      let(:prefix)         { "#{scheme}://#{subdomain}" }
 
       it_behaves_like 'having canonical links on all pages'
     end
