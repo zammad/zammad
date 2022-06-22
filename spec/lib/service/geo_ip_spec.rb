@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Service::GeoIp, type: :integration do
+RSpec.describe Service::GeoIp, integration: true do
   describe '#location' do
     describe 'testing some locations' do
       subject(:lookup_result) { described_class.location(ip_address) }

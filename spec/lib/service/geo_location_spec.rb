@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Service::GeoLocation, type: :integration do
+RSpec.describe Service::GeoLocation, integration: true do
   describe '#geocode' do
     subject(:lookup_result) { described_class.geocode(address) }
 
