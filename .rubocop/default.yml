@@ -383,4 +383,4 @@ Zammad/ExistsDbStrategy:
   Include:
     - "spec/**/*.rb"
   Exclude:
-    - spec/support/capybara/common_actions.rb
+    - "spec/support/capybara/*.rb"
