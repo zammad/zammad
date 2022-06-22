@@ -335,7 +335,6 @@ RSpec/ExampleLength:
     - 'spec/requests/user/organization_spec.rb'
     - 'spec/requests/user/permission_spec.rb'
     - 'spec/requests/user_spec.rb'
-    - 'spec/scripts/websocket_server_spec.rb'
     - 'spec/system/**/*'
 
 RSpec/ExpectActual:
