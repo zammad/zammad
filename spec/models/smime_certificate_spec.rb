@@ -38,7 +38,7 @@ RSpec.describe SMIMECertificate, type: :model do
 
       context 'different letter case' do
 
-        let(:fixture) { 'CaseInsenstive@eXample.COM' }
+        let(:fixture)        { 'CaseInsenstive@eXample.COM' }
         let(:lookup_address) { 'CaseInsenStive@Example.coM' }
 
         context 'with private key' do
@@ -68,7 +68,7 @@ RSpec.describe SMIMECertificate, type: :model do
 
       let(:existing_address) { 'smime1@example.com' }
       let(:not_existing_address) { 'smime2@example.com' }
-      let(:lookup_addresses) { [existing_address, not_existing_address] }
+      let(:lookup_addresses)     { [existing_address, not_existing_address] }
 
       before do
         create(:smime_certificate, fixture: existing_address)
@@ -113,7 +113,7 @@ RSpec.describe SMIMECertificate, type: :model do
 
     context 'different letter case' do
 
-      let(:fixture) { 'CaseInsenstive@eXample.COM' }
+      let(:fixture)          { 'CaseInsenstive@eXample.COM' }
       let(:lookup_addresses) { ['CaseInsenStive@Example.coM'] }
 
       let!(:certificates) do

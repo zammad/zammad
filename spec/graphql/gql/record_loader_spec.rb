@@ -54,7 +54,7 @@ RSpec.describe Gql::RecordLoader, type: :graphql do
 
   context 'when querying multiple tickets' do
     let(:loops) { 5 }
-    let(:tickets_per_loop) { 5 }
+    let(:tickets_per_loop)    { 5 }
     let(:articles_per_ticket) { 1 }
     let(:overview_id) do
       condition = {
@@ -120,9 +120,9 @@ RSpec.describe Gql::RecordLoader, type: :graphql do
 
   context 'when querying one ticket with many articles' do
     let(:loops) { 1 }
-    let(:tickets_per_loop) { 1 }
+    let(:tickets_per_loop)    { 1 }
     let(:articles_per_ticket) { 100 }
-    let(:ticket_id) { Gql::ZammadSchema.id_from_object(Ticket.last) }
+    let(:ticket_id)           { Gql::ZammadSchema.id_from_object(Ticket.last) }
 
     it 'performs only the expected amount of DB queries', authenticated_as: :agent do # rubocop:disable RSpec/ExampleLength, RSpec/MultipleExpectations
       query = read_graphql_file('shared/graphql/fragments/objectAttributeValues.graphql') +

@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Issue3123ExternalSyncTicketMerge, type: :db_migration do
 
-  let(:user) { create(:agent) }
+  let(:user)          { create(:agent) }
   let(:source_ticket) { create(:ticket) }
   let(:target_ticket) { create(:ticket) }
 

@@ -82,7 +82,7 @@ RSpec.describe NotificationFactory::Renderer do
           create :object_manager_attribute_select, name: 'select'
         end
         let(:ticket) { create :ticket, customer: @user, select: 'key_1' }
-        let(:template) { '#{ticket.select} _SEPERATOR_ #{ticket.select.value}' }
+        let(:template)        { '#{ticket.select} _SEPERATOR_ #{ticket.select.value}' }
         let(:expected_render) { 'key_1 _SEPERATOR_ value_1' }
 
         it_behaves_like 'correctly rendering the attributes'
@@ -103,7 +103,7 @@ RSpec.describe NotificationFactory::Renderer do
         end
 
         let(:ticket) { create :ticket, customer: user }
-        let(:template) { '#{ticket.customer.select} _SEPERATOR_ #{ticket.customer.select.value}' }
+        let(:template)        { '#{ticket.customer.select} _SEPERATOR_ #{ticket.customer.select.value}' }
         let(:expected_render) { 'key_2 _SEPERATOR_ value_2' }
 
         it_behaves_like 'correctly rendering the attributes'
@@ -142,8 +142,8 @@ RSpec.describe NotificationFactory::Renderer do
           @user
         end
 
-        let(:ticket) { create :ticket, customer: user }
-        let(:template) { '#{ticket.customer.organization.select} _SEPERATOR_ #{ticket.customer.organization.select.value}' }
+        let(:ticket)          { create :ticket, customer: user }
+        let(:template)        { '#{ticket.customer.organization.select} _SEPERATOR_ #{ticket.customer.organization.select.value}' }
         let(:expected_render) { 'key_2 _SEPERATOR_ value_2' }
 
         it_behaves_like 'correctly rendering the attributes'
@@ -155,7 +155,7 @@ RSpec.describe NotificationFactory::Renderer do
             create :object_manager_attribute_multiselect, name: 'multiselect'
           end
           let(:ticket) { create :ticket, customer: @user, multiselect: ['key_1'] }
-          let(:template) { '#{ticket.multiselect} _SEPERATOR_ #{ticket.multiselect.value}' }
+          let(:template)        { '#{ticket.multiselect} _SEPERATOR_ #{ticket.multiselect.value}' }
           let(:expected_render) { 'key_1 _SEPERATOR_ value_1' }
 
           it_behaves_like 'correctly rendering the attributes'
@@ -176,7 +176,7 @@ RSpec.describe NotificationFactory::Renderer do
           end
 
           let(:ticket) { create :ticket, customer: user }
-          let(:template) { '#{ticket.customer.multiselect} _SEPERATOR_ #{ticket.customer.multiselect.value}' }
+          let(:template)        { '#{ticket.customer.multiselect} _SEPERATOR_ #{ticket.customer.multiselect.value}' }
           let(:expected_render) { 'key_2 _SEPERATOR_ value_2' }
 
           it_behaves_like 'correctly rendering the attributes'
@@ -215,8 +215,8 @@ RSpec.describe NotificationFactory::Renderer do
             @user
           end
 
-          let(:ticket) { create :ticket, customer: user }
-          let(:template) { '#{ticket.customer.organization.multiselect} _SEPERATOR_ #{ticket.customer.organization.multiselect.value}' }
+          let(:ticket)          { create :ticket, customer: user }
+          let(:template)        { '#{ticket.customer.organization.multiselect} _SEPERATOR_ #{ticket.customer.organization.multiselect.value}' }
           let(:expected_render) { 'key_2 _SEPERATOR_ value_2' }
 
           it_behaves_like 'correctly rendering the attributes'
@@ -227,7 +227,7 @@ RSpec.describe NotificationFactory::Renderer do
             create :object_manager_attribute_multiselect, name: 'multiselect'
           end
           let(:ticket) { create :ticket, customer: @user, multiselect: %w[key_1 key_2] }
-          let(:template) { '#{ticket.multiselect} _SEPERATOR_ #{ticket.multiselect.value}' }
+          let(:template)        { '#{ticket.multiselect} _SEPERATOR_ #{ticket.multiselect.value}' }
           let(:expected_render) { 'key_1, key_2 _SEPERATOR_ value_1, value_2' }
 
           it_behaves_like 'correctly rendering the attributes'
@@ -248,7 +248,7 @@ RSpec.describe NotificationFactory::Renderer do
           end
 
           let(:ticket) { create :ticket, customer: user }
-          let(:template) { '#{ticket.customer.multiselect} _SEPERATOR_ #{ticket.customer.multiselect.value}' }
+          let(:template)        { '#{ticket.customer.multiselect} _SEPERATOR_ #{ticket.customer.multiselect.value}' }
           let(:expected_render) { 'key_2, key_3 _SEPERATOR_ value_2, value_3' }
 
           it_behaves_like 'correctly rendering the attributes'
@@ -287,8 +287,8 @@ RSpec.describe NotificationFactory::Renderer do
             @user
           end
 
-          let(:ticket) { create :ticket, customer: user }
-          let(:template) { '#{ticket.customer.organization.multiselect} _SEPERATOR_ #{ticket.customer.organization.multiselect.value}' }
+          let(:ticket)          { create :ticket, customer: user }
+          let(:template)        { '#{ticket.customer.organization.multiselect} _SEPERATOR_ #{ticket.customer.organization.multiselect.value}' }
           let(:expected_render) { 'key_2, key_1 _SEPERATOR_ value_2, value_1' }
 
           it_behaves_like 'correctly rendering the attributes'
@@ -300,7 +300,7 @@ RSpec.describe NotificationFactory::Renderer do
           create :object_manager_attribute_tree_select, name: 'tree_select'
         end
         let(:ticket) { create :ticket, customer: @user, tree_select: 'Incident::Hardware::Laptop' }
-        let(:template) { '#{ticket.tree_select} _SEPERATOR_ #{ticket.tree_select.value}' }
+        let(:template)        { '#{ticket.tree_select} _SEPERATOR_ #{ticket.tree_select.value}' }
         let(:expected_render) { 'Incident::Hardware::Laptop _SEPERATOR_ Incident::Hardware::Laptop' }
 
         it_behaves_like 'correctly rendering the attributes'

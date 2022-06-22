@@ -4,8 +4,8 @@ require 'rails_helper'
 
 RSpec.describe 'Manage > Integration > Slack', type: :system do
   let(:group_ids) { 'Users' }
-  let(:webhook) { 'http://some_url/webhook/123' }
-  let(:username) { 'someuser' }
+  let(:webhook)   { 'http://some_url/webhook/123' }
+  let(:username)  { 'someuser' }
 
   before do
     visit 'system/integration/slack'

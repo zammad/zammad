@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe CoreWorkflow, type: :model do
-  let(:group) { create(:group) }
+  let(:group)   { create(:group) }
   let!(:ticket) { create(:ticket, state: Ticket::State.find_by(name: 'pending reminder'), pending_time: 5.days.from_now, group: group) }
   let!(:base_payload) do
     {
@@ -16,7 +16,7 @@ RSpec.describe CoreWorkflow, type: :model do
   end
   let(:payload) { base_payload }
   let!(:action_user) { create(:agent, groups: [ticket.group]) }
-  let(:result) { described_class.perform(payload: payload, user: action_user) }
+  let(:result)       { described_class.perform(payload: payload, user: action_user) }
 
   describe '.perform - Default - Group' do
     let!(:group_change) { create(:group) }
@@ -1039,7 +1039,7 @@ RSpec.describe CoreWorkflow, type: :model do
     end
 
     describe 'with "match all modules" blank' do
-      let(:modules) { [] }
+      let(:modules)  { [] }
       let(:operator) { 'match all modules' }
 
       it 'does match' do

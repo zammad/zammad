@@ -34,9 +34,9 @@ RSpec.describe Transaction::Notification, type: :model do
 
   # https://github.com/zammad/zammad/issues/4066
   describe 'notification sending reason may be fully translated' do
-    let(:group)  { create(:group) }
-    let(:user)   { create(:agent, groups: [group]) }
-    let(:ticket) { create(:ticket, owner: user, state_name: 'open', pending_time: Time.current) }
+    let(:group) { create(:group) }
+    let(:user)      { create(:agent, groups: [group]) }
+    let(:ticket)    { create(:ticket, owner: user, state_name: 'open', pending_time: Time.current) }
     let(:reason_en) { 'You are receiving this because you are the owner of this ticket.' }
     let(:reason_de) do
       Translation.translate('de-de', reason_en).tap do |translated|

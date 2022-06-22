@@ -13,7 +13,7 @@ RSpec.describe 'iCal endpoints', type: :request do
 
   describe 'time zone', authenticated_as: :user do
     let(:group) { create(:group) }
-    let(:user) { create(:agent) }
+    let(:user)  { create(:agent) }
 
     before do
       user.groups << group

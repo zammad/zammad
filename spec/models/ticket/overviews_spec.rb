@@ -80,8 +80,8 @@ RSpec.describe Ticket::Overviews do
 
   describe 'Mentions:' do
     let(:group_read) { create(:group) }
-    let(:user_read) { create(:agent) }
-    let(:ticket) { create(:ticket, group: group_read) }
+    let(:user_read)  { create(:agent) }
+    let(:ticket)     { create(:ticket, group: group_read) }
 
     before do
       user_read.group_names_access_map = {

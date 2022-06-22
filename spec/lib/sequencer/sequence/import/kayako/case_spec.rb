@@ -8,10 +8,10 @@ RSpec.describe ::Sequencer::Sequence::Import::Kayako::Case, sequencer: :sequence
 
   context 'when importing cases from Kayako' do
 
-    let(:group) { create :group }
-    let(:owner) { create :agent, group_ids: [group.id] }
+    let(:group)        { create :group }
+    let(:owner)        { create :agent, group_ids: [group.id] }
     let(:organization) { create :organization }
-    let(:customer) { create :customer, organization: organization }
+    let(:customer)     { create :customer, organization: organization }
 
     let(:resource) do
       {

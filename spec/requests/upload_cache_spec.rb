@@ -4,8 +4,8 @@ require 'rails_helper'
 
 RSpec.describe 'UploadCache', type: :request do
 
-  let(:user)    { create(:customer) }
-  let(:form_id) { 1337 }
+  let(:user)         { create(:customer) }
+  let(:form_id)      { 1337 }
   let(:upload_cache) { UploadCache.new(form_id) }
 
   # required for adding items to the Store

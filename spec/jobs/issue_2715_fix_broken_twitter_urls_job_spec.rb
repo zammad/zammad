@@ -6,7 +6,7 @@ require_dependency 'issue_2715_fix_broken_twitter_urls_job' # Rails autoloading 
 RSpec.describe Issue2715FixBrokenTwitterUrlsJob, type: :job do
   context 'with existing Twitter articles' do
     let!(:tweet) { create(:twitter_article, preferences: tweet_preferences) }
-    let!(:dm) { create(:twitter_dm_article, preferences: dm_preferences) }
+    let!(:dm)    { create(:twitter_dm_article, preferences: dm_preferences) }
 
     let(:tweet_preferences) do
       # NOTE: Faker 2.0+ has deprecated the `#number(20)` syntax in favor of `#number(digits: 20)`.

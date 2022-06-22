@@ -29,8 +29,8 @@ RSpec.shared_context 'with report examples' do
     end
   end
 
-  let(:group_1) { Group.lookup(name: 'Users') }
-  let(:group_2) { create(:group) }
+  let(:group_1)  { Group.lookup(name: 'Users') }
+  let(:group_2)  { create(:group) }
   let(:customer) { User.lookup(email: 'nicole.braun@zammad.org') }
 
   let(:ticket_1) do

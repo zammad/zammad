@@ -35,11 +35,11 @@ RSpec.describe Import::OTRS::CustomerUser do
     json_fixture("import/otrs/customer_user/#{file}")
   end
 
-  let(:import_object) { User }
-  let(:existing_object) { instance_double(import_object) }
+  let(:import_object)     { User }
+  let(:existing_object)   { instance_double(import_object) }
   let(:start_import_test) { described_class.new(object_structure) }
-  let(:organization) { instance_double(Organization) }
-  let(:organization_id) { 1337 }
+  let(:organization)      { instance_double(Organization) }
+  let(:organization_id)   { 1337 }
 
   context 'regular user' do
 

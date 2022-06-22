@@ -6,7 +6,7 @@ require 'rails_helper'
 
 RSpec.describe 'GitHub', type: :request, required_envs: %w[GITHUB_ENDPOINT GITHUB_APITOKEN] do
 
-  let(:token) { 't0k3N' }
+  let(:token)    { 't0k3N' }
   let(:endpoint) { 'https://api.github.com/graphql' }
 
   let!(:admin) do

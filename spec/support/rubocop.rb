@@ -8,7 +8,7 @@ RSpec.shared_context 'when checking custom RuboCop cops' do
   include RuboCop::RSpec::ExpectOffense
 
   let(:cop_options) { {} }
-  let(:cop_config) { {} }
+  let(:cop_config)  { {} }
 
   let(:cur_cop_config) do
     RuboCop::ConfigLoader

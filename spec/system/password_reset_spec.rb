@@ -35,7 +35,7 @@ RSpec.describe 'Password Reset', type: :system do
 
     context 'with existing user' do
       let(:user) { create(:agent) }
-      let(:username) { user.email }
+      let(:username)         { user.email }
       let(:generated_tokens) { Token.where(action: 'PasswordReset', user_id: user.id) }
 
       it 'proceeds' do

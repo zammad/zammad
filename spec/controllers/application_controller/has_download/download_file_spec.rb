@@ -6,8 +6,8 @@ RSpec.describe ApplicationController::HasDownload::DownloadFile do
   subject(:download_file) { described_class.new(stored_file.id, disposition: 'inline') }
 
   let(:file_content_type) { 'application/pdf' }
-  let(:file_data) { 'A example file.' }
-  let(:file_name) { 'example.pdf' }
+  let(:file_data)         { 'A example file.' }
+  let(:file_name)         { 'example.pdf' }
 
   let(:stored_file) do
     create(:store,

@@ -1076,7 +1076,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
 
         context 'with a position attribute given' do
           let(:position) { 50 }
-          let(:params) { base_params.merge(position: position) }
+          let(:params)   { base_params.merge(position: position) }
 
           it 'defaults to given position' do
             expect(new_attribute_object.position).to eq position
@@ -1087,7 +1087,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
       context 'when updating an existing attribute' do
         let(:alternative_position) { 123 }
         let(:alternative_display)  { 'another description' }
-        let(:params) { base_params }
+        let(:params)               { base_params }
         let(:alternative_params)   { base_params.merge(display: alternative_display) }
 
         before do

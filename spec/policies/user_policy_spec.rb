@@ -171,7 +171,7 @@ describe UserPolicy do
     end
 
     context 'when record is a colleague' do
-      let(:user) { create(:customer, :with_org) }
+      let(:user)   { create(:customer, :with_org) }
       let(:record) { create(:customer, organization: user.organization) }
 
       it { is_expected.to permit_action(:show) }

@@ -5,9 +5,9 @@ require 'lib/auth/backend/backend_examples'
 
 RSpec.describe Auth::Backend::Internal do
 
-  let(:user) { create(:user) }
+  let(:user)     { create(:user) }
   let(:password) { 'secure' }
-  let(:auth) { Auth.new(user.login, password) }
+  let(:auth)     { Auth.new(user.login, password) }
   let(:instance) { described_class.new({ adapter: described_class.name }, auth) }
 
   describe '#valid?' do
@@ -94,7 +94,7 @@ RSpec.describe Auth::Backend::Internal do
 
       context 'when authentication fails' do
         let(:password) { 'wrong' }
-        let(:user) { create(:user, password: 'secure') }
+        let(:user)     { create(:user, password: 'secure') }
 
         it 'sets Auth#increase_login_failed_attempts flag to true' do
           expect { instance.valid? }.to change(auth, :increase_login_failed_attempts).from(false).to(true)

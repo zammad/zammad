@@ -3,9 +3,9 @@
 require 'rails_helper'
 
 RSpec.describe 'Ticket Escalation', type: :request do
-  let(:sla_first_response) { 1.hour }
+  let(:sla_first_response)   { 1.hour }
   let(:sla_response)         { 3.hours }
-  let(:sla_close) { 4.hours }
+  let(:sla_close)            { 4.hours }
 
   let!(:mail_group) { create(:group, email_address: create(:email_address)) }
 

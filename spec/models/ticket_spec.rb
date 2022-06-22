@@ -74,10 +74,10 @@ RSpec.describe Ticket, type: :model do
         let(:organization1) { create(:organization) }
         let(:organization2) { create(:organization) }
         let(:organization3) { create(:organization) }
-        let(:customer) { create(:customer, organization: organization1, organizations: [organization2, organization3]) }
-        let(:ticket1) { create(:ticket, customer: customer, organization: organization1) }
-        let(:ticket2) { create(:ticket, customer: customer, organization: organization2) }
-        let(:ticket3) { create(:ticket, customer: customer, organization: organization3) }
+        let(:customer)      { create(:customer, organization: organization1, organizations: [organization2, organization3]) }
+        let(:ticket1)       { create(:ticket, customer: customer, organization: organization1) }
+        let(:ticket2)       { create(:ticket, customer: customer, organization: organization2) }
+        let(:ticket3)       { create(:ticket, customer: customer, organization: organization3) }
 
         before do
           ticket1 && ticket2 && ticket3
@@ -108,7 +108,7 @@ RSpec.describe Ticket, type: :model do
 
       context 'when source ticket has Links' do
         let(:linked_tickets) { create_list(:ticket, 3) }
-        let(:links) { linked_tickets.map { |l| create(:link, from: ticket, to: l) } }
+        let(:links)          { linked_tickets.map { |l| create(:link, from: ticket, to: l) } }
 
         it 'reassigns all links to the target ticket after merge' do
           expect { ticket.merge_to(ticket_id: target_ticket.id, user_id: 1) }
@@ -1038,7 +1038,7 @@ RSpec.describe Ticket, type: :model do
         end
 
         context 'to an agent not belonging to ticket.group' do
-          let(:agent) { create(:agent, groups: [other_group]) }
+          let(:agent)       { create(:agent, groups: [other_group]) }
           let(:other_group) { create(:group) }
 
           it 'resets to default user (id: 1) instead' do
@@ -1201,7 +1201,7 @@ RSpec.describe Ticket, type: :model do
     describe '#escalation_at' do
       before { travel_to(Time.current) } # freeze time
 
-      let(:sla) { create(:sla, calendar: calendar, first_response_time: 60, response_time: 180, solution_time: 240) }
+      let(:sla)      { create(:sla, calendar: calendar, first_response_time: 60, response_time: 180, solution_time: 240) }
       let(:calendar) { create(:calendar, :'24/7') }
 
       context 'with no SLAs in the system' do
@@ -1270,7 +1270,7 @@ RSpec.describe Ticket, type: :model do
 
       context 'when within last (relative)' do
         let(:first_response_time) { 5 }
-        let(:sla) { create(:sla, calendar: calendar, first_response_time: first_response_time) }
+        let(:sla)                 { create(:sla, calendar: calendar, first_response_time: first_response_time) }
         let(:within_condition) do
           { 'ticket.escalation_at'=>{ 'operator' => 'within last (relative)', 'value' => '30', 'range' => 'minute' } }
         end
@@ -1305,7 +1305,7 @@ RSpec.describe Ticket, type: :model do
 
       context 'when till (relative)' do
         let(:first_response_time) { 5 }
-        let(:sla) { create(:sla, calendar: calendar, first_response_time: first_response_time) }
+        let(:sla)                 { create(:sla, calendar: calendar, first_response_time: first_response_time) }
         let(:condition) do
           { 'ticket.escalation_at'=>{ 'operator' => 'till (relative)', 'value' => '30', 'range' => 'minute' } }
         end
@@ -1340,7 +1340,7 @@ RSpec.describe Ticket, type: :model do
 
       context 'when from (relative)' do
         let(:first_response_time) { 5 }
-        let(:sla) { create(:sla, calendar: calendar, first_response_time: first_response_time) }
+        let(:sla)                 { create(:sla, calendar: calendar, first_response_time: first_response_time) }
         let(:condition) do
           { 'ticket.escalation_at'=>{ 'operator' => 'from (relative)', 'value' => '30', 'range' => 'minute' } }
         end
@@ -1375,7 +1375,7 @@ RSpec.describe Ticket, type: :model do
 
       context 'when within next (relative)' do
         let(:first_response_time) { 5 }
-        let(:sla) { create(:sla, calendar: calendar, first_response_time: first_response_time) }
+        let(:sla)                 { create(:sla, calendar: calendar, first_response_time: first_response_time) }
         let(:within_condition) do
           { 'ticket.escalation_at'=>{ 'operator' => 'within next (relative)', 'value' => '30', 'range' => 'minute' } }
         end
@@ -1412,7 +1412,7 @@ RSpec.describe Ticket, type: :model do
     describe '#first_response_escalation_at' do
       before { travel_to(Time.current) } # freeze time
 
-      let(:sla) { create(:sla, calendar: calendar, first_response_time: 60, response_time: 180, solution_time: 240) }
+      let(:sla)      { create(:sla, calendar: calendar, first_response_time: 60, response_time: 180, solution_time: 240) }
       let(:calendar) { create(:calendar, :'24/7') }
 
       context 'with no SLAs in the system' do
@@ -1444,7 +1444,7 @@ RSpec.describe Ticket, type: :model do
     describe '#update_escalation_at' do
       before { travel_to(Time.current) } # freeze time
 
-      let(:sla) { create(:sla, calendar: calendar, first_response_time: 60, response_time: 180, solution_time: 240) }
+      let(:sla)      { create(:sla, calendar: calendar, first_response_time: 60, response_time: 180, solution_time: 240) }
       let(:calendar) { create(:calendar, :'24/7') }
 
       context 'with no SLAs in the system' do
@@ -1484,7 +1484,7 @@ RSpec.describe Ticket, type: :model do
     describe '#close_escalation_at' do
       before { travel_to(Time.current) } # freeze time
 
-      let(:sla) { create(:sla, calendar: calendar, first_response_time: 60, response_time: 180, solution_time: 240) }
+      let(:sla)      { create(:sla, calendar: calendar, first_response_time: 60, response_time: 180, solution_time: 240) }
       let(:calendar) { create(:calendar, :'24/7') }
 
       context 'with no SLAs in the system' do
@@ -1666,8 +1666,8 @@ RSpec.describe Ticket, type: :model do
       subject(:ticket) { create(:ticket, customer: customer) }
 
       let(:customer) { create(:customer, organization: organization) }
-      let(:organization) { create(:organization) }
-      let(:other_customer) { create(:customer, organization: other_organization) }
+      let(:organization)       { create(:organization) }
+      let(:other_customer)     { create(:customer, organization: other_organization) }
       let(:other_organization) { create(:organization) }
 
       context 'on creation' do
@@ -1953,12 +1953,12 @@ RSpec.describe Ticket, type: :model do
                                      'group_ids' => [create(:group).id, create(:group).id, create(:group).id] } }
       end
 
-      let(:mention_group) { create(:group) }
-      let(:no_access_group) { create(:group) }
+      let(:mention_group)      { create(:group) }
+      let(:no_access_group)    { create(:group) }
       let(:user_only_mentions) { create(:agent, groups: [mention_group], preferences: prefs_matrix_only_mentions) }
       let(:user_read_mentions) { create(:agent, groups: [mention_group], preferences: prefs_matrix_only_mentions_groups) }
-      let(:user_no_mentions) { create(:agent, groups: [mention_group], preferences: prefs_matrix_no_mentions) }
-      let(:ticket) { create(:ticket, group: mention_group, owner: user_no_mentions) }
+      let(:user_no_mentions)   { create(:agent, groups: [mention_group], preferences: prefs_matrix_no_mentions) }
+      let(:ticket)             { create(:ticket, group: mention_group, owner: user_no_mentions) }
 
       it 'does inform mention user about the ticket update' do
         create(:mention, mentionable: ticket, user: user_only_mentions)
@@ -2066,9 +2066,9 @@ RSpec.describe Ticket, type: :model do
 
     context 'selectors' do
       let(:mention_group) { create(:group) }
-      let(:ticket_mentions) { create(:ticket, group: mention_group) }
-      let(:ticket_normal) { create(:ticket, group: mention_group) }
-      let(:user_mentions) { create(:agent, groups: [mention_group]) }
+      let(:ticket_mentions)  { create(:ticket, group: mention_group) }
+      let(:ticket_normal)    { create(:ticket, group: mention_group) }
+      let(:user_mentions)    { create(:agent, groups: [mention_group]) }
       let(:user_no_mentions) { create(:agent, groups: [mention_group]) }
 
       before do

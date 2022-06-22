@@ -70,7 +70,7 @@ RSpec.describe CommunicateTwitterJob, type: :job, required_envs: %w[TWITTER_CONS
     end
 
     context 'for DMs' do
-      let(:article) { create(:twitter_dm_article, :pending_delivery, recipient: recipient, body: 'Please ignore this message.') }
+      let(:article)   { create(:twitter_dm_article, :pending_delivery, recipient: recipient, body: 'Please ignore this message.') }
       let(:recipient) { create(:twitter_authorization, uid: ENV.fetch('TWITTER_DM_RECIPIENT', '1234567890')) }
 
       let(:dm_attributes) do
@@ -139,7 +139,7 @@ RSpec.describe CommunicateTwitterJob, type: :job, required_envs: %w[TWITTER_CONS
       context 'if article.ticket.preferences["channel_id"] has been removed' do
         before { channel.destroy }
 
-        let(:channel) { Channel.find(article.ticket.preferences[:channel_id]) }
+        let(:channel)       { Channel.find(article.ticket.preferences[:channel_id]) }
         let(:error_message) { "No such channel id #{article.ticket.preferences['channel_id']}" }
 
         include_examples 'for failure cases'

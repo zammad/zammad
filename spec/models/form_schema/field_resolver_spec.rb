@@ -4,8 +4,8 @@ require 'rails_helper'
 
 RSpec.describe FormSchema::FieldResolver do
   context 'when resolving fields for ObjectManager attributes' do
-    let(:context) { Struct.new(:current_user, :current_user?).new(User.find(1)) }
-    let(:schema) { described_class.field_for_object_attribute(context: context, attribute: object_attribute).schema }
+    let(:context)          { Struct.new(:current_user, :current_user?).new(User.find(1)) }
+    let(:schema)           { described_class.field_for_object_attribute(context: context, attribute: object_attribute).schema }
     let(:object_attribute) { ObjectManager::Attribute.add(object: 'Ticket', created_by_id: 1, updated_by_id: 1, **object_attribute_data) }
 
     shared_examples 'field resolver' do

@@ -8,10 +8,10 @@ RSpec.describe Facebook, use_vcr: true, current_user_id: 1, required_envs: %w[FA
     travel_to '2021-02-13 13:37 +0100'
   end
 
-  let(:page_access_token) { ENV['FACEBOOK_PAGE_1_ACCCESS_TOKEN'] }
-  let(:page_client) { described_class.new page_access_token }
+  let(:page_access_token)  { ENV['FACEBOOK_PAGE_1_ACCCESS_TOKEN'] }
+  let(:page_client)        { described_class.new page_access_token }
   let(:admin_access_token) { ENV['FACEBOOK_ADMIN_ACCESS_TOKEN'] }
-  let(:admin_client) { described_class.new admin_access_token }
+  let(:admin_client)       { described_class.new admin_access_token }
 
   let(:post) do
     page_client
@@ -47,7 +47,7 @@ RSpec.describe Facebook, use_vcr: true, current_user_id: 1, required_envs: %w[FA
   describe '#to_user' do
 
     let(:posts) { page_client.client.get_connection('me', 'feed', fields: 'id,from,to,message,created_time,permalink_url,comments{id,from,to,message,created_time}') }
-    let(:user) { page_client.to_user(posts.first) }
+    let(:user)  { page_client.to_user(posts.first) }
 
     it 'works' do
       expect(user).to have_attributes(
@@ -87,7 +87,7 @@ RSpec.describe Facebook, use_vcr: true, current_user_id: 1, required_envs: %w[FA
   end
 
   describe '#from_article' do
-    let(:ticket) { page_client.to_group(post, Group.first.id, Channel.first, page) }
+    let(:ticket)  { page_client.to_group(post, Group.first.id, Channel.first, page) }
     let(:article) { create(:ticket_article, ticket: ticket, type_name: 'facebook feed comment', in_reply_to: ticket.articles.last.message_id) }
     let(:response) do
       page_client.from_article(

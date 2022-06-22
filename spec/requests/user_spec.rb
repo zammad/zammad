@@ -1095,7 +1095,7 @@ RSpec.describe 'User', type: :request, performs_jobs: true do
     end
 
     context 'does password reset by token work' do
-      let(:user) { create(:customer, login: 'somebody', email: 'somebody@example.com') }
+      let(:user)  { create(:customer, login: 'somebody', email: 'somebody@example.com') }
       let(:token) { create(:token, action: 'PasswordReset', user_id: user.id) }
 
       context 'for user without email address' do
@@ -1415,7 +1415,7 @@ RSpec.describe 'User', type: :request, performs_jobs: true do
 
   describe 'GET /api/v1/users/search group ids' do
     let(:group1) { create(:group) }
-    let(:group2) { create(:group) }
+    let(:group2)  { create(:group) }
     let!(:agent1) { create(:agent, firstname: '9U7Z-agent1', groups: [group1]) }
     let!(:agent2) { create(:agent, firstname: '9U7Z-agent2', groups: [group2]) }
 
@@ -1521,7 +1521,7 @@ RSpec.describe 'User', type: :request, performs_jobs: true do
   end
 
   describe 'POST /api/v1/users/avatar', authenticated_as: :user do
-    let(:user) { create(:user) }
+    let(:user)   { create(:user) }
     let(:base64) { 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==' }
 
     def make_request(params)
@@ -1653,7 +1653,7 @@ RSpec.describe 'User', type: :request, performs_jobs: true do
 
   describe 'PUT /api/v1/users/unlock/{id}' do
     let(:admin) { create(:admin) }
-    let(:agent) { create(:agent) }
+    let(:agent)    { create(:agent) }
     let(:customer) { create(:customer, login_failed: 2) }
 
     def make_request(id)

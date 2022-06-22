@@ -161,7 +161,7 @@ RSpec.describe 'Manage > Trigger', type: :system do
     end
 
     let(:group) { create(:group) }
-    let(:owner) { create(:admin, group_ids: [group.id]) }
+    let(:owner)   { create(:admin, group_ids: [group.id]) }
     let!(:ticket) { create(:ticket, group: group,) }
 
     before do

@@ -100,13 +100,13 @@ RSpec.describe 'Form', type: :system, authenticated_as: true do
   end
 
   context 'with in-app form' do
-    let(:path) { 'channels/form' }
+    let(:path)                  { 'channels/form' }
     let(:feedback_modal_button) { '.js-formBtn' }
 
     context 'when form is inline' do
       let(:form_context) { '.js-formInline form.zammad-form' }
-      let(:name_input) { '#zammad-form-name-inline' }
-      let(:body_input) { '#zammad-form-body-inline' }
+      let(:name_input)  { '#zammad-form-name-inline' }
+      let(:body_input)  { '#zammad-form-body-inline' }
       let(:email_input) { '#zammad-form-email-inline' }
 
       before do
@@ -119,8 +119,8 @@ RSpec.describe 'Form', type: :system, authenticated_as: true do
 
     context 'when form is modal' do
       let(:form_context) { '.js-zammad-form-modal-body form.zammad-form' }
-      let(:name_input) { '#zammad-form-name-modal' }
-      let(:body_input) { '#zammad-form-body-modal' }
+      let(:name_input)  { '#zammad-form-name-modal' }
+      let(:body_input)  { '#zammad-form-body-modal' }
       let(:email_input) { '#zammad-form-email-modal' }
 
       before do
@@ -141,7 +141,7 @@ RSpec.describe 'Form', type: :system, authenticated_as: true do
   context 'with external form' do
     let(:path) { '/assets/form/form.html' }
     let(:feedback_modal_button) { '#feedback-form-modal' }
-    let(:form_inline_selector) { '#feedback-form-inline form.zammad-form' }
+    let(:form_inline_selector)  { '#feedback-form-inline form.zammad-form' }
 
     context 'when feature is enabled' do
       before do
@@ -152,8 +152,8 @@ RSpec.describe 'Form', type: :system, authenticated_as: true do
 
       context 'when form is inline' do
         let(:form_context) { form_inline_selector }
-        let(:name_input) { '#zammad-form-name-inline' }
-        let(:body_input) { '#zammad-form-body-inline' }
+        let(:name_input)  { '#zammad-form-name-inline' }
+        let(:body_input)  { '#zammad-form-body-inline' }
         let(:email_input) { '#zammad-form-email-inline' }
 
         before { visit path }
@@ -164,8 +164,8 @@ RSpec.describe 'Form', type: :system, authenticated_as: true do
 
       context 'when form is modal' do
         let(:form_context) { '.js-zammad-form-modal-body form.zammad-form' }
-        let(:name_input) { '#zammad-form-name-modal' }
-        let(:body_input) { '#zammad-form-body-modal' }
+        let(:name_input)  { '#zammad-form-name-modal' }
+        let(:body_input)  { '#zammad-form-body-modal' }
         let(:email_input) { '#zammad-form-email-modal' }
 
         before do
@@ -184,8 +184,8 @@ RSpec.describe 'Form', type: :system, authenticated_as: true do
         end
 
         let(:form_context) { form_inline_selector }
-        let(:name_input) { '#zammad-form-name-inline' }
-        let(:body_input) { '#zammad-form-body-inline' }
+        let(:name_input)  { '#zammad-form-name-inline' }
+        let(:body_input)  { '#zammad-form-body-inline' }
         let(:email_input) { '#zammad-form-email-inline' }
 
         it_behaves_like 'submitting fails due to throttling'

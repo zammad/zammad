@@ -78,8 +78,8 @@ RSpec.describe 'Calendars', type: :request do
 
   describe 'Removing calendars via UI and API does not check for references #3845', authenticated_as: -> { user } do
     let(:calendar) { create(:calendar) }
-    let(:sla) { create(:sla, calendar: calendar) }
-    let(:user) { create(:admin) }
+    let(:sla)      { create(:sla, calendar: calendar) }
+    let(:user)     { create(:admin) }
 
     before do
       sla

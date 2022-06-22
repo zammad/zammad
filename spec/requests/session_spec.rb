@@ -6,7 +6,7 @@ RSpec.describe 'Sessions endpoints', type: :request do
 
   describe 'GET /' do
 
-    let(:headers) { {} }
+    let(:headers)     { {} }
     let(:session_key) { Zammad::Application::Initializer::SessionStore::SESSION_KEY }
 
     before do

@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'ImportFreshdesk', type: :request, set_up: false, authenticated_as: false, required_envs: %w[IMPORT_FRESHDESK_ENDPOINT_SUBDOMAIN] do
-  let(:action) { nil }
+  let(:action)   { nil }
   let(:endpoint) { "/api/v1/import/freshdesk/#{action}" }
 
   describe 'POST /api/v1/import/freshdesk/url_check', :use_vcr do

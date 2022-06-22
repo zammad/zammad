@@ -56,7 +56,7 @@ RSpec.describe Ticket::Number::Date do
     context 'for tickets with date-style numbers' do
       let(:ticket) { create(:ticket, number: ticket_number) }
       let(:ticket_number) { "19551105#{Setting.get('system_id')}0001" }
-      let(:check_query) { ticket.subject_build(ticket.title) }
+      let(:check_query)   { ticket.subject_build(ticket.title) }
 
       context 'when system_id is the same as when ticket was created' do
         before do

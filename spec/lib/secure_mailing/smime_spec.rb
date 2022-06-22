@@ -45,7 +45,7 @@ RSpec.describe SecureMailing::SMIME do
       end
     end
 
-    let(:sender_email_address) { system_email_address }
+    let(:sender_email_address)    { system_email_address }
     let(:recipient_email_address) { customer_email_address }
 
     context 'without security' do
@@ -275,7 +275,7 @@ RSpec.describe SecureMailing::SMIME do
         context 'expired' do
 
           # required to build mail with expired certificate
-          let(:allow_expired) { true }
+          let(:allow_expired)        { true }
           let(:sender_email_address) { expired_email_address }
 
           it 'verifies with comment' do
@@ -334,7 +334,7 @@ RSpec.describe SecureMailing::SMIME do
 
         context 'public key present in signature' do
 
-          let(:not_related_fixture) { 'smime3@example.com' }
+          let(:not_related_fixture)      { 'smime3@example.com' }
           let!(:not_related_certificate) { create(:smime_certificate, fixture: not_related_fixture) }
 
           context 'not related certificate present' do

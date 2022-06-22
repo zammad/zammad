@@ -6,7 +6,7 @@ RSpec.describe Gql::Queries::CurrentUser, type: :graphql do
 
   context 'when fetching user information' do
     let(:organization) { create(:organization) }
-    let(:agent) { create(:agent, department: 'TestDepartment', organization: organization) }
+    let(:agent)        { create(:agent, department: 'TestDepartment', organization: organization) }
     let(:query) do
       read_graphql_file('shared/graphql/queries/currentUser.graphql') +
         read_graphql_file('shared/graphql/fragments/objectAttributeValues.graphql')

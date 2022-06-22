@@ -28,8 +28,8 @@ RSpec.shared_examples 'HasHistory' do |history_relation_object: []|
       end
 
       describe 'of #active', if: described_class.attribute_names.include?('active') do
-        let(:attribute) { 'active' }
-        let(:new_value) { !subject.active }
+        let(:attribute)  { 'active' }
+        let(:new_value)  { !subject.active }
         let(:attributes) { { 'value_from' => old_value.to_s, 'value_to' => new_value.to_s } }
 
         include_examples 'attribute update'
@@ -37,7 +37,7 @@ RSpec.shared_examples 'HasHistory' do |history_relation_object: []|
 
       describe 'of #body', if: described_class.attribute_names.include?('body') do
         let(:attribute) { 'body' }
-        let(:new_value) { 'Lorem ipsum dolor' }
+        let(:new_value)  { 'Lorem ipsum dolor' }
         let(:attributes) { { 'value_from' => old_value, 'value_to' => new_value } }
 
         include_examples 'attribute update'
@@ -45,7 +45,7 @@ RSpec.shared_examples 'HasHistory' do |history_relation_object: []|
 
       describe 'of #email', if: described_class.attribute_names.include?('email') do
         let(:attribute) { 'email' }
-        let(:new_value) { Faker::Internet.email }
+        let(:new_value)  { Faker::Internet.email }
         let(:attributes) { { 'value_from' => old_value, 'value_to' => new_value } }
 
         include_examples 'attribute update'
@@ -53,7 +53,7 @@ RSpec.shared_examples 'HasHistory' do |history_relation_object: []|
 
       describe 'of #lastname', if: described_class.attribute_names.include?('lastname') do
         let(:attribute) { 'lastname' }
-        let(:new_value) { 'Foo' }
+        let(:new_value)  { 'Foo' }
         let(:attributes) { { 'value_from' => old_value, 'value_to' => new_value } }
 
         include_examples 'attribute update'
@@ -61,7 +61,7 @@ RSpec.shared_examples 'HasHistory' do |history_relation_object: []|
 
       describe 'of #name', if: described_class.attribute_names.include?('name') do
         let(:attribute) { 'name' }
-        let(:new_value) { 'Foo' }
+        let(:new_value)  { 'Foo' }
         let(:attributes) { { 'value_from' => old_value, 'value_to' => new_value } }
 
         include_examples 'attribute update'
@@ -69,16 +69,16 @@ RSpec.shared_examples 'HasHistory' do |history_relation_object: []|
 
       describe 'of #state', if: described_class.attribute_names.include?('state_id') do
         let(:attribute) { 'state' }
-        let(:new_value) { state_class.where.not(id: old_value.id).first }
+        let(:new_value)   { state_class.where.not(id: old_value.id).first }
         let(:state_class) { "#{described_class.name}::State".constantize }
-        let(:attributes) { { 'value_from' => old_value.name, 'value_to' => new_value.name } }
+        let(:attributes)  { { 'value_from' => old_value.name, 'value_to' => new_value.name } }
 
         include_examples 'attribute update'
       end
 
       describe 'of #title', if: described_class.attribute_names.include?('title') do
         let(:attribute) { 'title' }
-        let(:new_value) { 'foo' }
+        let(:new_value)  { 'foo' }
         let(:attributes) { { 'value_from' => old_value, 'value_to' => new_value } }
 
         include_examples 'attribute update'

@@ -4,8 +4,8 @@ RSpec.shared_examples 'HasGroups' do |group_access_factory:|
   describe 'group' do
     subject { create(group_access_factory) }
 
-    let(:group_full) { create(:group) }
-    let(:group_read) { create(:group) }
+    let(:group_full)     { create(:group) }
+    let(:group_read)     { create(:group) }
     let(:group_inactive) { create(:group, active: false) }
 
     describe '.group_through_identifier' do

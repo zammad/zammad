@@ -12,7 +12,7 @@ RSpec.describe Trigger do
     end
 
     let(:time_zone) { 'Europe/Vilnius' }
-    let(:locale) { 'de-de' }
+    let(:locale)    { 'de-de' }
 
     context 'sends interpolated, html-free SMS' do
       before do

@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Microsoft365 channel API endpoints', type: :request do
-  let(:admin) { create(:admin) }
+  let(:admin)                 { create(:admin) }
   let!(:microsoft365_channel) { create(:microsoft365_channel) }
 
   describe 'DELETE /api/v1/channels_microsoft365', authenticated_as: :admin do

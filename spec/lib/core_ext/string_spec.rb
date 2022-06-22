@@ -1908,7 +1908,7 @@ RSpec.describe String do
 
       context 'with no from: option' do
         let(:original_string) { 'Tschüss!' }
-        let(:input_encoding) { Encoding::ISO_8859_2 }
+        let(:input_encoding)  { Encoding::ISO_8859_2 }
 
         it 'detects the input encoding' do
           expect(string.utf8_encode).to eq(original_string)

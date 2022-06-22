@@ -4,8 +4,8 @@ require 'rails_helper'
 
 RSpec.describe OnlineNotification, type: :request do
 
-  let(:admin) { create(:admin, groups: Group.all) }
-  let(:agent) { create(:agent, groups: Group.all) }
+  let(:admin)   { create(:admin, groups: Group.all) }
+  let(:agent)   { create(:agent, groups: Group.all) }
   let(:user_id) { user.id }
 
   let(:type_lookup_id) { TypeLookup.by_name('create') }

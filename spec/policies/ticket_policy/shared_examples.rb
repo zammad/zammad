@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 RSpec.shared_examples 'for agent user' do |access_type|
-  let(:member_groups) { create_list(:group, 2) }
+  let(:member_groups)   { create_list(:group, 2) }
   let(:nonmember_group) { create(:group) }
 
   before do
@@ -48,7 +48,7 @@ RSpec.shared_examples 'for agent user' do |access_type|
   context 'without any role permission' do
 
     let(:role_without_rights) { create(:role) }
-    let(:user) { create(:agent, groups: member_groups, role_ids: [ role_without_rights.id ]) }
+    let(:user)                { create(:agent, groups: member_groups, role_ids: [ role_without_rights.id ]) }
 
     context 'when checking for "full" access' do
       # this is already true by default, but it doesn't hurt to be explicit
@@ -162,9 +162,9 @@ RSpec.shared_examples 'for agent user' do |access_type|
 end
 
 RSpec.shared_examples 'for agent user with predefined but impossible context' do
-  let(:member_groups) { create_list(:group, 2) }
+  let(:member_groups)   { create_list(:group, 2) }
   let(:nonmember_group) { create(:group) }
-  let(:user) { create(:agent, groups: member_groups) }
+  let(:user)            { create(:agent, groups: member_groups) }
 
   before do
     create(:ticket, group: member_groups.first)
@@ -209,11 +209,11 @@ RSpec.shared_examples 'for customer user' do
   end
 
   context 'with a multi #organization (shared false)' do
-    let(:user) { create(:customer, organization: organization, organizations: [secondary_organization]) }
+    let(:user)         { create(:customer, organization: organization, organizations: [secondary_organization]) }
     let(:organization) { create(:organization, shared: true) }
 
     let(:secondary_organization) { create(:organization, shared: false) }
-    let(:secondarymate) { create(:customer, organization: secondary_organization) }
+    let(:secondarymate)         { create(:customer, organization: secondary_organization) }
     let(:secondarymate_tickets) { create_list(:ticket, 2, customer: secondarymate) }
 
     before do
@@ -230,7 +230,7 @@ RSpec.shared_examples 'for customer user' do
     let(:organization) { create(:organization, shared: false) }
 
     let(:secondary_organization) { create(:organization, shared: true) }
-    let(:secondarymate) { create(:customer, organization: secondary_organization) }
+    let(:secondarymate)         { create(:customer, organization: secondary_organization) }
     let(:secondarymate_tickets) { create_list(:ticket, 2, customer: secondarymate) }
 
     before do

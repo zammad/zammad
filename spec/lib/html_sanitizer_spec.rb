@@ -6,7 +6,7 @@ require 'rails_helper'
 
 RSpec.describe HtmlSanitizer do
   describe '.replace_inline_images' do
-    let(:body) { described_class.replace_inline_images(html).first }
+    let(:body)               { described_class.replace_inline_images(html).first }
     let(:inline_attachments) { described_class.replace_inline_images(html).last }
 
     context 'for image at absolute path' do

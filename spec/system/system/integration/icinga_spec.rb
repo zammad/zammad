@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Manage > Integration > Icinga', type: :system do
-  let(:icinga_sender) { 'some@othersender.com' }
+  let(:icinga_sender)     { 'some@othersender.com' }
   let(:icinga_auto_close) { 'no' }
 
   before do

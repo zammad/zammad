@@ -7,10 +7,10 @@ require 'system/examples/text_modules_examples'
 
 RSpec.describe 'Ticket Create', type: :system do
   context 'when applying ticket templates' do
-    let(:agent) { create(:agent, groups: [permitted_group]) }
-    let(:permitted_group) { create(:group) }
+    let(:agent)             { create(:agent, groups: [permitted_group]) }
+    let(:permitted_group)   { create(:group) }
     let(:unpermitted_group) { create(:group) }
-    let!(:template) { create(:template, :dummy_data, group: unpermitted_group, owner: agent) }
+    let!(:template)         { create(:template, :dummy_data, group: unpermitted_group, owner: agent) }
 
     # Regression test for issue #2424 - Unavailable ticket template attributes get applied
     it 'unavailable attributes do not get applied', authenticated_as: :agent do
@@ -67,9 +67,9 @@ RSpec.describe 'Ticket Create', type: :system do
 
       let(:system_email_address) { 'smime1@example.com' }
       let(:email_address) { create(:email_address, email: system_email_address) }
-      let(:group) { create(:group, email_address: email_address) }
-      let(:agent_groups) { [group] }
-      let(:agent) { create(:agent, groups: agent_groups) }
+      let(:group)         { create(:group, email_address: email_address) }
+      let(:agent_groups)  { [group] }
+      let(:agent)         { create(:agent, groups: agent_groups) }
 
       before do
         create(:smime_certificate, :with_private, fixture: system_email_address)
@@ -267,7 +267,7 @@ RSpec.describe 'Ticket Create', type: :system do
               }
             end
 
-            let(:default_sign) { true }
+            let(:default_sign)       { true }
             let(:default_encryption) { true }
 
             shared_examples 'sign and encrypt variations' do |check_examples_name|
@@ -425,7 +425,7 @@ RSpec.describe 'Ticket Create', type: :system do
 
   describe 'GitLab Integration', :integration, authenticated_as: :authenticate, required_envs: %w[GITLAB_ENDPOINT GITLAB_APITOKEN] do
     let(:customer) { create(:customer) }
-    let(:agent) { create(:agent, groups: [Group.find_by(name: 'Users')]) }
+    let(:agent)     { create(:agent, groups: [Group.find_by(name: 'Users')]) }
     let!(:template) { create(:template, :dummy_data, group: Group.find_by(name: 'Users'), owner: agent, customer: customer) }
 
     def authenticate
@@ -470,7 +470,7 @@ RSpec.describe 'Ticket Create', type: :system do
 
   describe 'GitHub Integration', :integration, authenticated_as: :authenticate, required_envs: %w[GITHUB_ENDPOINT GITHUB_APITOKEN] do
     let(:customer) { create(:customer) }
-    let(:agent) { create(:agent, groups: [Group.find_by(name: 'Users')]) }
+    let(:agent)     { create(:agent, groups: [Group.find_by(name: 'Users')]) }
     let!(:template) { create(:template, :dummy_data, group: Group.find_by(name: 'Users'), owner: agent, customer: customer) }
 
     def authenticate
@@ -613,7 +613,7 @@ RSpec.describe 'Ticket Create', type: :system do
   end
 
   context 'when agent and customer user login after another' do
-    let(:agent) { create(:agent, password: 'test') }
+    let(:agent)    { create(:agent, password: 'test') }
     let(:customer) { create(:customer, password: 'test') }
 
     it 'customer user should not have agent object attributes', authenticated_as: :agent do
@@ -767,8 +767,8 @@ RSpec.describe 'Ticket Create', type: :system do
   end
 
   context 'default priority', authenticated_as: :authenticate do
-    let(:template)        { create(:template, :dummy_data) }
-    let(:ticket_priority) { create(:ticket_priority, default_create: true) }
+    let(:template)         { create(:template, :dummy_data) }
+    let(:ticket_priority)  { create(:ticket_priority, default_create: true) }
     let(:another_priority) { Ticket::Priority.find(1) }
     let(:priority_field)   { find('[name=priority_id]') }
 
@@ -1034,10 +1034,10 @@ RSpec.describe 'Ticket Create', type: :system do
     let(:organization2) { create(:organization) }
     let(:organization3) { create(:organization) }
     let(:organization4) { create(:organization) }
-    let(:user1) { create(:agent, organization: organization1, organizations: [organization2, organization3]) }
-    let(:user2) { create(:agent, organization: organization4) }
-    let(:customer1) { create(:customer, organization: organization1, organizations: [organization2, organization3]) }
-    let(:customer2) { create(:customer, organization: organization4) }
+    let(:user1)         { create(:agent, organization: organization1, organizations: [organization2, organization3]) }
+    let(:user2)         { create(:agent, organization: organization4) }
+    let(:customer1)     { create(:customer, organization: organization1, organizations: [organization2, organization3]) }
+    let(:customer2)     { create(:customer, organization: organization4) }
 
     context 'when agent', authenticated_as: :authenticate do
       def authenticate

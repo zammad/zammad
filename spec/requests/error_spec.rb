@@ -41,8 +41,8 @@ RSpec.describe 'Error handling', type: :request do
       get url, as: as
     end
 
-    let(:url) { '/not_existing_url' }
-    let(:message) { "No route matches [GET] #{url}" }
+    let(:url)         { '/not_existing_url' }
+    let(:message)     { "No route matches [GET] #{url}" }
     let(:http_status) { :not_found }
 
     context 'requesting JSON' do
@@ -121,7 +121,7 @@ RSpec.describe 'Error handling', type: :request do
 
         let(:exception) { exception }
         let(:http_status) { http_status }
-        let(:message) { message }
+        let(:message)     { message }
 
         context 'requesting JSON' do
           include_examples 'JSON response format'

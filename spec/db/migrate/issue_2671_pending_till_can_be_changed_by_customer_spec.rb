@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Issue2671PendingTillCanBeChangedByCustomer, type: :db_migration do
-  let(:attr) { ObjectManager::Attribute.find_by name: :pending_time }
+  let(:attr)                { ObjectManager::Attribute.find_by name: :pending_time }
   let(:initial_data_option) { { future: true, past: true, diff: 0 } }
 
   before do

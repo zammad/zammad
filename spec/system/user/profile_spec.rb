@@ -7,7 +7,7 @@ require 'system/examples/text_modules_examples'
 
 RSpec.describe 'User Profile', type: :system do
   let(:organizations) { create_list(:organization, 20) }
-  let(:customer) { create(:customer, organization: organizations[0], organizations: organizations[1..]) }
+  let(:customer)      { create(:customer, organization: organizations[0], organizations: organizations[1..]) }
 
   describe 'object manager attributes maxlength', authenticated_as: :authenticate, db_strategy: :reset do
     def authenticate

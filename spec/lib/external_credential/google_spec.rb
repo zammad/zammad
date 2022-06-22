@@ -4,12 +4,12 @@ require 'rails_helper'
 
 RSpec.describe ExternalCredential::Google do
 
-  let(:token_url) { 'https://accounts.google.com/o/oauth2/token' }
-  let(:alias_url) { 'https://www.googleapis.com/gmail/v1/users/me/settings/sendAs' }
+  let(:token_url)     { 'https://accounts.google.com/o/oauth2/token' }
+  let(:alias_url)     { 'https://www.googleapis.com/gmail/v1/users/me/settings/sendAs' }
   let(:authorize_url) { "https://accounts.google.com/o/oauth2/auth?access_type=offline&client_id=#{client_id}&prompt=consent&redirect_uri=http%3A%2F%2Fzammad.example.com%2Fapi%2Fv1%2Fexternal_credentials%2Fgoogle%2Fcallback&response_type=code&scope=openid+email+profile+https%3A%2F%2Fmail.google.com%2F" }
 
   let(:id_token) { 'eyJhbGciOiJSUzI1NiIsImtpZCI6Inh4eHh4eDkwYmNkNzZhZWIyMDAyNmY2Yjc3MGNhYzIyMTc4MyIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiMTMzNy1jdGYuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiIxMzM3LWN0Zi5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsInN1YiI6IjAwMDg5MjkxMzM3NDkxMDAwMDAyIiwiaGQiOiJleGFtcGxlLmNvbSIsImVtYWlsIjoidGVzdEBleGFtcGxlLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJhdF9oYXNoIjoibjAwd19fNVdwQ1RGNUcwMDBjbU56QSIsImlhdCI6MTU4NzczMjg5MywiZXhwIjoxNTg3NzM2NDkzfQ==' }
-  let(:access_token) { '000.0000lvC3gAbjs8CYoKitfqM5LBS5N13374MCg6pNpZ28mxO2HuZvg0000_rsW00aACmFEto1BJeGDuu0000vmV6Esqv78iec-FbEe842ZevQtOOemQyQXjhMs62K1E6g3ehDLPRp6j4vtpSKSb6I-3MuDPfdzdqI23hM0' }
+  let(:access_token)  { '000.0000lvC3gAbjs8CYoKitfqM5LBS5N13374MCg6pNpZ28mxO2HuZvg0000_rsW00aACmFEto1BJeGDuu0000vmV6Esqv78iec-FbEe842ZevQtOOemQyQXjhMs62K1E6g3ehDLPRp6j4vtpSKSb6I-3MuDPfdzdqI23hM0' }
   let(:refresh_token) { '1//00000VO1ES0hFCgYIARAAGAkSNwF-L9IraWQNMj5ZTqhB00006DssAYcpEyFks5OuvZ1337wrqX0D7tE5o71FIPzcWEMM5000004' }
   let(:request_token) { nil } # not used but required by ExternalCredential API
 
@@ -17,11 +17,11 @@ RSpec.describe ExternalCredential::Google do
   let(:scope_stub) { 'https://mail.google.com/ https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile openid' }
 
   let(:client_id) { '123' }
-  let(:client_secret) { '345' }
+  let(:client_secret)      { '345' }
   let(:authorization_code) { '567' }
 
   let(:primary_email) { 'test@example.com' }
-  let(:provider) { 'google' }
+  let(:provider)  { 'google' }
   let(:token_ttl) { 3599 }
 
   let!(:alias_response_payload) do
@@ -180,7 +180,7 @@ RSpec.describe ExternalCredential::Google do
 
       context '500 Internal Server Error' do
         let(:response_status) { 500 }
-        let(:response_payload) { nil }
+        let(:response_payload)  { nil }
         let(:exception_message) { 'Request failed! (code: 500)' }
 
         include_examples 'failed attempt'
@@ -305,7 +305,7 @@ RSpec.describe ExternalCredential::Google do
 
       context '500 Internal Server Error' do
         let(:response_status) { 500 }
-        let(:response_payload) { nil }
+        let(:response_payload)  { nil }
         let(:exception_message) { %r{code: 500} }
 
         include_examples 'failed attempt'
@@ -333,7 +333,7 @@ RSpec.describe ExternalCredential::Google do
 
       context 'missing credentials' do
         let(:credentials) { nil }
-        let(:app_required) { true }
+        let(:app_required)      { true }
         let(:exception_message) { 'No Google app configured!' }
 
         include_examples 'failed attempt'
@@ -420,7 +420,7 @@ RSpec.describe ExternalCredential::Google do
       end
 
       context '500 Internal Server Error' do
-        let(:response_status) { 500 }
+        let(:response_status)  { 500 }
         let(:response_payload) { nil }
 
         it 'raises an exception' do

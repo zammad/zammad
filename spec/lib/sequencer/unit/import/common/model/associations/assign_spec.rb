@@ -34,7 +34,7 @@ RSpec.describe Sequencer::Unit::Import::Common::Model::Associations::Assign, seq
   context 'when given a `associations` hash that does NOT change the instance' do
     let(:instance)     { create(:user) }
     let(:associations) { { organization_id: instance.organization_id } }
-    let(:action) { :unchanged }
+    let(:action)       { :unchanged }
 
     it 'keeps `:action => :unchanged`' do
       expect(process(parameters)).to include(action: :unchanged)

@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'Manage > Integration > sipgate.io', type: :system do
   let(:caller_id) { '0411234567' }
-  let(:note) { 'block spam caller id' }
+  let(:note)      { 'block spam caller id' }
 
   before do
     visit 'system/integration/sipgate'

@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'First Steps', type: :system do
 
-  let(:agent) { "bob.smith_#{SecureRandom.uuid}" }
+  let(:agent)    { "bob.smith_#{SecureRandom.uuid}" }
   let(:customer) { "customer.smith_#{SecureRandom.uuid}" }
 
   before do

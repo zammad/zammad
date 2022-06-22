@@ -5,7 +5,7 @@ require 'rails_helper'
 describe Ticket::ArticlePolicy do
   subject { described_class.new(user, record) }
 
-  let!(:group) { create(:group) }
+  let!(:group)           { create(:group) }
   let!(:ticket_customer) { create(:customer) }
 
   let(:record) do

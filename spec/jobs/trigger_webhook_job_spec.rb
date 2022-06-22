@@ -5,8 +5,8 @@ require 'rails_helper'
 RSpec.describe TriggerWebhookJob, type: :job do
 
   let(:endpoint) { 'http://api.example.com/webhook' }
-  let(:token) { 's3cr3t-t0k3n' }
-  let(:webhook) { create(:webhook, endpoint: endpoint, signature_token: token) }
+  let(:token)    { 's3cr3t-t0k3n' }
+  let(:webhook)  { create(:webhook, endpoint: endpoint, signature_token: token) }
   let(:trigger) do
     create(:trigger,
            perform: {

@@ -177,10 +177,10 @@ RSpec.describe ExternalSync do
 
   describe '.migrate' do
 
-    let(:model) { 'Ticket' }
+    let(:model)        { 'Ticket' }
     let(:factory_name) { model.downcase.to_sym }
-    let(:source) { create(factory_name) }
-    let(:target) { create(factory_name) }
+    let(:source)       { create(factory_name) }
+    let(:target)       { create(factory_name) }
     let(:entries) do
       create_list(:external_sync, 2,
                   object: model,

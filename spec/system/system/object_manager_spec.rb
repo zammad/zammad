@@ -184,8 +184,8 @@ RSpec.describe 'System > Objects', type: :system do
 
   context 'when checking field sorting', db_strategy: :reset do
     # lexicographically ordered list of option strings
-    let(:options) { %w[0 000.000 1 100.100 100.200 2 200.100 200.200 3 ä b n ö p sr ß st t ü v] }
-    let(:options_hash) { options.reverse.to_h { |o| [o, o] } }
+    let(:options)           { %w[0 000.000 1 100.100 100.200 2 200.100 200.200 3 ä b n ö p sr ß st t ü v] }
+    let(:options_hash)      { options.reverse.to_h { |o| [o, o] } }
     let(:cutomsort_options) { ['0', '1', '2', '3', 'v', 'ü', 't', 'st', 'ß', 'sr', 'p', 'ö', 'n', 'b', 'ä', '200.200', '200.100', '100.200', '100.100', '000.000'] }
 
     before do
@@ -219,7 +219,7 @@ RSpec.describe 'System > Objects', type: :system do
 
       context 'with customsort' do
         let(:options_hash) { options.reverse.collect { |o| { name: o, value: o } } }
-        let(:data_option) { { options: options_hash, default: 0, customsort: 'on' } }
+        let(:data_option)      { { options: options_hash, default: 0, customsort: 'on' } }
         let(:expected_options) { options.reverse } # preserves sorting from backend
 
         it_behaves_like 'preserving the sorting correctly'
@@ -294,9 +294,9 @@ RSpec.describe 'System > Objects', type: :system do
   context 'when checking selection options removal', db_strategy: :reset do
 
     let(:options) { %w[äöü cat delete dog ß].index_with { |x| "#{x.capitalize} Display" } }
-    let(:options_no_dog) { options.except('dog') }
+    let(:options_no_dog)           { options.except('dog') }
     let(:options_no_dog_no_delete) { options_no_dog.except('delete') }
-    let(:screens) { { 'create_middle' => { 'ticket.agent'=>{ 'shown' => true, 'required' => false, 'item_class' => 'column' } }, 'edit' => { 'ticket.agent'=>{ 'shown' => true, 'required' => false } } } }
+    let(:screens)                  { { 'create_middle' => { 'ticket.agent'=>{ 'shown' => true, 'required' => false, 'item_class' => 'column' } }, 'edit' => { 'ticket.agent'=>{ 'shown' => true, 'required' => false } } } }
 
     let(:object_attribute) do
       attribute = create(:object_manager_attribute_select, data_option: { options: options, default: 0 }, screens: screens, position: 999)

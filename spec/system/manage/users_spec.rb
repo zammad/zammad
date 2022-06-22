@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'Manage > Users', type: :system do
   describe 'switching to an alternative user', authentication_type: :form, authenticated_as: :authenticate do
-    let(:original_user) { create(:admin) }
+    let(:original_user)        { create(:admin) }
     let(:alternative_one_user) { create(:admin) }
     let(:alternative_two_user) { create(:admin) }
 
@@ -93,7 +93,7 @@ RSpec.describe 'Manage > Users', type: :system do
   end
 
   describe 'show/unlock a user', authenticated_as: :authenticate do
-    let(:user) { create(:admin) }
+    let(:user)        { create(:admin) }
     let(:locked_user) { create(:user, login_failed: 6) }
 
     def authenticate
@@ -192,7 +192,7 @@ RSpec.describe 'Manage > Users', type: :system do
     end
 
     context 'when admin tries to change admin' do
-      let(:user) { create(:admin) }
+      let(:user)   { create(:admin) }
       let(:record) { create(:admin) }
 
       include_examples 'user permission', true

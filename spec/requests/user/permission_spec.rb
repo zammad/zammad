@@ -363,7 +363,7 @@ RSpec.describe 'User endpoint', type: :request do
 
       let(:requested) { create(:user) }
       let(:attribute) { privileged.keys.first }
-      let(:payload) { cleaned_params_for(requested).merge(privileged) }
+      let(:payload)   { cleaned_params_for(requested).merge(privileged) }
 
       def value_of_attribute
         # we need to call .to_a otherwise Rails will load the

@@ -3,17 +3,17 @@
 require 'rails_helper'
 
 RSpec.describe Channel::Filter::InternalArticleCheck do
-  let(:ticket) { create(:ticket) }
-  let(:vendor_email) { 'vendor@example.com' }
-  let(:article_to) { vendor_email }
-  let(:from) { "From: <#{vendor_email}>" }
-  let(:message_id) { 'some_message_id_999@example.com' }
-  let(:in_reply_to) { message_id }
+  let(:ticket)          { create(:ticket) }
+  let(:vendor_email)    { 'vendor@example.com' }
+  let(:article_to)      { vendor_email }
+  let(:from)            { "From: <#{vendor_email}>" }
+  let(:message_id)      { 'some_message_id_999@example.com' }
+  let(:in_reply_to)     { message_id }
   let(:article_subject) { "Subject: #{ticket.subject_build('some subject')}" }
-  let(:ticket_article) { build(:ticket_article, ticket: ticket, to: article_to, internal: false, message_id: message_id) }
-  let(:inbound_email) { create(:ticket_article, :inbound_email, ticket: ticket) }
-  let(:outbound_email) { create(:ticket_article, :outbound_email, ticket: ticket) }
-  let(:internal_note) { create(:ticket_article, :outbound_note, ticket: ticket, internal: true) }
+  let(:ticket_article)  { build(:ticket_article, ticket: ticket, to: article_to, internal: false, message_id: message_id) }
+  let(:inbound_email)   { create(:ticket_article, :inbound_email, ticket: ticket) }
+  let(:outbound_email)  { create(:ticket_article, :outbound_email, ticket: ticket) }
+  let(:internal_note)   { create(:ticket_article, :outbound_note, ticket: ticket, internal: true) }
 
   let(:email_raw_string) do
     email_file_path = Rails.root.join('test/data/mail/mail001.box')

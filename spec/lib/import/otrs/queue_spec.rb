@@ -24,8 +24,8 @@ RSpec.describe Import::OTRS::Queue do
     json_fixture("import/otrs/queue/#{file}")
   end
 
-  let(:import_object) { Group }
-  let(:existing_object) { instance_double(import_object) }
+  let(:import_object)     { Group }
+  let(:existing_object)   { instance_double(import_object) }
   let(:start_import_test) { described_class.new(object_structure) }
 
   context 'default' do

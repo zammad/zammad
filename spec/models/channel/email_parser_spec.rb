@@ -128,7 +128,7 @@ RSpec.describe Channel::EmailParser, type: :model do
 
         context 'when no channel is given but a group with the :to address exists' do
           let!(:email_address) { create(:email_address, email: 'baz@qux.net', channel: nil) }
-          let!(:group) { create(:group, name: 'baz headquarter', email_address: email_address) }
+          let!(:group)         { create(:group, name: 'baz headquarter', email_address: email_address) }
           let!(:channel) do
             channel = create(:email_channel, group: group)
             email_address.update(channel: channel)
@@ -159,8 +159,8 @@ RSpec.describe Channel::EmailParser, type: :model do
 
         context 'when from address matches an existing agent customer' do
           let!(:agent_customer) { create(:agent_and_customer, email: 'foo@bar.com') }
-          let!(:ticket) { create(:ticket, customer: agent_customer) }
-          let!(:raw_email) { <<~RAW.chomp }
+          let!(:ticket)         { create(:ticket, customer: agent_customer) }
+          let!(:raw_email)      { <<~RAW.chomp }
             From: foo@bar.com
             To: myzammad@example.com
             Subject: [#{Setting.get('ticket_hook') + Setting.get('ticket_hook_divider') + ticket.number}] test
@@ -919,7 +919,7 @@ RSpec.describe Channel::EmailParser, type: :model do
 
         context 'when group has follow_up_assignment true' do
           let(:group) { create(:group, follow_up_assignment: true) }
-          let(:agent) { create(:agent, groups: [group]) }
+          let(:agent)  { create(:agent, groups: [group]) }
           let(:ticket) { create(:ticket, state_name: 'closed', owner: agent, group: group) }
 
           it 'does not change the owner' do
@@ -930,7 +930,7 @@ RSpec.describe Channel::EmailParser, type: :model do
 
         context 'when group has follow_up_assignment false' do
           let(:group) { create(:group, follow_up_assignment: false) }
-          let(:agent) { create(:agent, groups: [group]) }
+          let(:agent)  { create(:agent, groups: [group]) }
           let(:ticket) { create(:ticket, state_name: 'closed', owner: agent, group: group) }
 
           it 'does change the owner' do
@@ -977,7 +977,7 @@ RSpec.describe Channel::EmailParser, type: :model do
     describe 'formatting to/from addresses' do
       # see https://github.com/zammad/zammad/issues/2198
       context 'when sender address contains spaces (#2198)' do
-        let(:mail_file) { Rails.root.join('test/data/mail/mail071.box') }
+        let(:mail_file)    { Rails.root.join('test/data/mail/mail071.box') }
         let(:sender_email) { 'powerquadrantsystem@example.com' }
 
         it 'removes them before creating a new user' do
@@ -1090,7 +1090,7 @@ RSpec.describe Channel::EmailParser, type: :model do
     describe 'attachment handling' do
       context 'with header "Content-Transfer-Encoding: x-uuencode"' do
         let(:mail_file) { Rails.root.join('test/data/mail/mail078-content_transfer_encoding_x_uuencode.box') }
-        let(:article) { described_class.new.process({}, raw_mail).second }
+        let(:article)   { described_class.new.process({}, raw_mail).second }
 
         it 'does not raise RuntimeError' do
           expect { described_class.new.process({}, raw_mail) }
@@ -1152,7 +1152,7 @@ RSpec.describe Channel::EmailParser, type: :model do
       context 'when image is large but not resizable' do
         let(:mail_file) { Rails.root.join('test/data/mail/mail079.box') }
         let(:attachment) { article.attachments.to_a.find { |i| i.filename == 'a.jpg' } }
-        let(:article) { described_class.new.process({}, raw_mail).second }
+        let(:article)    { described_class.new.process({}, raw_mail).second }
 
         it "doesn't set resizable preference" do
           expect(attachment.filename).to eq('a.jpg')
@@ -1181,7 +1181,7 @@ RSpec.describe Channel::EmailParser, type: :model do
       context 'follow up' do
 
         let(:mail_file) { Rails.root.join('test/data/mail/mail090.box') }
-        let(:ticket) { create(:ticket) }
+        let(:ticket)    { create(:ticket) }
         let!(:external_sync) do
           create(:external_sync,
                  source:    'ServiceNow-example@service-now.com',
@@ -1288,8 +1288,8 @@ RSpec.describe Channel::EmailParser, type: :model do
     end
 
     context 'for “delivery failed” notifications (a.k.a. bounce messages)' do
-      let(:ticket) { article.ticket }
-      let(:article) { create(:ticket_article, sender_name: 'Agent', message_id: message_id) }
+      let(:ticket)     { article.ticket }
+      let(:article)    { create(:ticket_article, sender_name: 'Agent', message_id: message_id) }
       let(:message_id) { raw_mail[%r{(?<=^(References|Message-ID): )\S*}] }
 
       context 'with future retries (delayed)' do
@@ -1514,7 +1514,7 @@ RSpec.describe Channel::EmailParser, type: :model do
       context 'when gives address matches exactly' do
 
         let(:group) { create(:group) }
-        let(:channel) { create(:email_channel, group: group) }
+        let(:channel)        { create(:email_channel, group: group) }
         let!(:email_address) { create(:email_address, channel: channel) }
 
         it 'returns the Channel Group' do
@@ -1525,8 +1525,8 @@ RSpec.describe Channel::EmailParser, type: :model do
       context 'when gives address matches key insensitive' do
 
         let(:group) { create(:group) }
-        let(:channel) { create(:email_channel, group: group) }
-        let(:address) { 'KeyInsensitive@example.COM' }
+        let(:channel)        { create(:email_channel, group: group) }
+        let(:address)        { 'KeyInsensitive@example.COM' }
         let!(:email_address) { create(:email_address, email: address, channel: channel) }
 
         it 'returns the Channel Group' do
@@ -1545,7 +1545,7 @@ RSpec.describe Channel::EmailParser, type: :model do
 
       context 'when Channel has no Group assigned' do
 
-        let(:channel) { create(:email_channel, group: nil) }
+        let(:channel)        { create(:email_channel, group: nil) }
         let!(:email_address) { create(:email_address, channel: channel) }
 
         it 'returns nil' do

@@ -18,7 +18,7 @@ RSpec.describe EmailAddress, type: :model do
 
       context 'without a Channel association' do
         let(:channel) { nil }
-        let(:active) { true }
+        let(:active)  { true }
 
         it 'always returns false' do
           expect(email_address.active).not_to eq(active)

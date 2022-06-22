@@ -10,7 +10,7 @@ RSpec.describe TriggerWebhookJob::RecordPayload::Ticket::Article do
     subject(:generate) { described_class.new(record).generate }
 
     let(:resolved_associations) { described_class.const_get(:ASSOCIATIONS).map(&:to_s) }
-    let(:record) { create(:'ticket/article') }
+    let(:record)                { create(:'ticket/article') }
 
     it "adds 'accounted_time' key" do
       expect(generate['accounted_time']).to be_zero

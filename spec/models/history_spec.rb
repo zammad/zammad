@@ -94,7 +94,7 @@ RSpec.describe History, type: :model do
       end
 
       context 'with "related_history_object" argument' do
-        let!(:object) { related_object.ticket }
+        let!(:object)         { related_object.ticket }
         let!(:related_object) { create(:ticket_article, internal: true) } # MUST be internal, or else callbacks will create additional histories
 
         before { object.update(title: 'Lorem ipsum dolor') }

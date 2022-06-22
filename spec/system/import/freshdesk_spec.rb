@@ -10,7 +10,7 @@ RSpec.describe 'Import Freshdesk', type: :system, set_up: false, authenticated_a
     end
 
     let(:subdomain_field) { find('#freshdesk-subdomain') }
-    let(:token_field) { find('#freshdesk-api-token') }
+    let(:token_field)     { find('#freshdesk-api-token') }
 
     it 'invalid hostname' do
       subdomain_field.fill_in with: 'reallybadexample'

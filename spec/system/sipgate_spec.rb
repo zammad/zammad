@@ -3,11 +3,11 @@
 require 'rails_helper'
 
 RSpec.describe 'Caller log', type: :system, authenticated_as: :authenticate do
-  let(:agent_phone) { '0190111' }
+  let(:agent_phone)    { '0190111' }
   let(:customer_phone) { '0190333' }
-  let(:agent) { create(:agent, phone: agent_phone) }
-  let(:customer) { create(:customer, phone: customer_phone) }
-  let(:sipgate_on) { true }
+  let(:agent)          { create(:agent, phone: agent_phone) }
+  let(:customer)       { create(:customer, phone: customer_phone) }
+  let(:sipgate_on)     { true }
 
   let(:params) do
     {

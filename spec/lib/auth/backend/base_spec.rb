@@ -5,8 +5,8 @@ require 'lib/auth/backend/backend_examples'
 
 RSpec.describe Auth::Backend::Base do
 
-  let(:user) { create(:user) }
-  let(:auth) { Auth.new(user.login, 'not_used') }
+  let(:user)     { create(:user) }
+  let(:auth)     { Auth.new(user.login, 'not_used') }
   let(:instance) { described_class.new({ adapter: described_class.name }, auth) }
 
   describe '#valid?' do

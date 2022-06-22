@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe TicketArticleCommunicateEmailJob, type: :job do
   describe '#perform' do
     context 'for an email article' do
-      let(:article) { create(:ticket_article, type_name: 'email') }
+      let(:article)        { create(:ticket_article, type_name: 'email') }
       let(:recipient_list) { [article.to, article.cc].compact_blank.join(',') }
 
       before { allow(Rails.logger).to receive(:info) }

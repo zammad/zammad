@@ -26,7 +26,7 @@ RSpec.describe 'Manage > Report Profiles', type: :system do
     end
 
     context 'when creating an inactive profile' do
-      let(:name) { 'inactive profile' }
+      let(:name)           { 'inactive profile' }
       let(:profile_active) { 'inactive' }
 
       it 'creates an inactive profile report' do

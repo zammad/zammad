@@ -19,8 +19,8 @@ RSpec.describe Store, type: :model do
     }
   end
 
-  let(:data) { 'hello world' }
-  let(:filename) { 'test.txt' }
+  let(:data)        { 'hello world' }
+  let(:filename)    { 'test.txt' }
   let(:preferences) { {} }
 
   describe 'Class methods:' do
@@ -99,7 +99,7 @@ RSpec.describe Store, type: :model do
       end
 
       context 'with an image (jpeg/jpg/png)' do
-        let(:data) { File.binread(Rails.root.join('test/data/upload/upload2.jpg')) }
+        let(:data)        { File.binread(Rails.root.join('test/data/upload/upload2.jpg')) }
         let(:preferences) { { content_type: 'image/jpg' } }
 
         it 'generates previews' do
@@ -245,7 +245,7 @@ RSpec.describe Store, type: :model do
       context 'with content_type: "image/*"' do
         context 'and text content' do
           let(:content_type) { 'image/jpeg' }
-          let(:data) { 'foo' }
+          let(:data)         { 'foo' }
 
           it 'cannot be resized (neither inlined nor previewed)' do
             expect { store.content_inline }

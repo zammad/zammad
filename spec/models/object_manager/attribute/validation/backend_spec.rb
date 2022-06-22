@@ -13,7 +13,7 @@ RSpec.describe ObjectManager::Attribute::Validation::Backend do
       )
     end
 
-    let(:record) { build(:user) }
+    let(:record)    { build(:user) }
     let(:attribute) { ::ObjectManager::Attribute.find_by(name: 'firstname') }
 
     it 'has attr_accessor for record' do

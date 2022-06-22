@@ -192,9 +192,9 @@ RSpec.describe 'Ticket views', type: :system, authenticated_as: :authenticate do
     context 'when creating a Note', authenticated_as: :user do
       let(:group)    { create :group }
       let(:user)     { create :admin, groups: [group] }
-      let(:ticket1) { create(:ticket, state_name: 'open', owner: user, group: group) }
-      let(:ticket2) { create(:ticket, state_name: 'open', owner: user, group: group) }
-      let(:note) { Faker::Lorem.sentence }
+      let(:ticket1)  { create(:ticket, state_name: 'open', owner: user, group: group) }
+      let(:ticket2)  { create(:ticket, state_name: 'open', owner: user, group: group) }
+      let(:note)     { Faker::Lorem.sentence }
 
       it 'adds note to all selected tickets' do
         ticket1 && ticket2
@@ -317,7 +317,7 @@ RSpec.describe 'Ticket views', type: :system, authenticated_as: :authenticate do
 
   context 'Customer', authenticated_as: :authenticate do
     let(:customer) { create(:customer, :with_org) }
-    let(:ticket) { create(:ticket, customer: customer) }
+    let(:ticket)   { create(:ticket, customer: customer) }
 
     def authenticate
       ticket

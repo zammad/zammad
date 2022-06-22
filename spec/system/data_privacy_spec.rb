@@ -8,7 +8,7 @@ RSpec.describe 'Data Privacy', type: :system, searchindex: true, authenticated_a
   end
 
   let(:customer) { create(:customer, firstname: 'Frank1') }
-  let(:ticket) { create(:ticket, customer: customer, group: Group.find_by(name: 'Users')) }
+  let(:ticket)   { create(:ticket, customer: customer, group: Group.find_by(name: 'Users')) }
 
   def authenticate
     customer

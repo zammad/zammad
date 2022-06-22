@@ -7,7 +7,7 @@ require 'system/examples/macros_examples'
 
 RSpec.describe 'Ticket Update', type: :system do
 
-  let(:group) { Group.find_by(name: 'Users') }
+  let(:group)  { Group.find_by(name: 'Users') }
   let(:ticket) { create(:ticket, group: group) }
 
   # Regression test for issue #2242 - mandatory fields can be empty (or "-") on ticket update
@@ -223,7 +223,7 @@ RSpec.describe 'Ticket Update', type: :system do
   end
 
   context 'when merging tickets' do
-    let!(:user) { create(:user) }
+    let!(:user)          { create(:user) }
     let!(:origin_ticket) { create :ticket, group: group }
     let!(:target_ticket) { create :ticket, group: group }
 

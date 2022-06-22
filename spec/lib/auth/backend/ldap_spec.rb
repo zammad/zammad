@@ -6,9 +6,9 @@ require 'lib/auth/backend/backend_examples'
 RSpec.describe ::Auth::Backend::Ldap do
 
   let(:ldap_source) { create(:ldap_source) }
-  let(:user) { create(:user, source: "Ldap::#{ldap_source.id}") }
-  let(:password) { 'secure' }
-  let(:auth) { Auth.new(user.login, password) }
+  let(:user)        { create(:user, source: "Ldap::#{ldap_source.id}") }
+  let(:password)    { 'secure' }
+  let(:auth)        { Auth.new(user.login, password) }
   let(:config) do
     {
       adapter: described_class.name

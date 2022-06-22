@@ -85,7 +85,7 @@ RSpec.describe Channel::Filter::OutOfOfficeCheck, type: :channel_filter do
       end
 
       context 'with Gmail-style headers' do
-        let(:subject_line) { 'vacation: Lorem ipsum dolor' }
+        let(:subject_line)   { 'vacation: Lorem ipsum dolor' }
         let(:client_headers) { <<~HEAD.chomp }
           Precedence: bulk
           X-Autoreply: yes

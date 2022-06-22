@@ -24,8 +24,8 @@ RSpec.describe Import::OTRS::Article do
     json_fixture("import/otrs/article/#{file}")
   end
 
-  let(:import_object) { Ticket::Article }
-  let(:existing_object) { instance_double(import_object) }
+  let(:import_object)     { Ticket::Article }
+  let(:existing_object)   { instance_double(import_object) }
   let(:start_import_test) { described_class.new(object_structure) }
 
   context 'customer phone' do

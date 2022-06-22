@@ -5,8 +5,8 @@ require 'rails_helper'
 RSpec.describe DataPrivacyTask, type: :model do
   describe '.perform' do
     let(:organization) { create(:organization, name: 'test') }
-    let!(:admin) { create(:admin) }
-    let(:user) { create(:customer, organization: organization) }
+    let!(:admin)       { create(:admin) }
+    let(:user)         { create(:customer, organization: organization) }
 
     it 'blocks other objects than user objects' do
       expect { create(:data_privacy_task, deletable: create(:chat)) }.to raise_error(ActiveRecord::RecordInvalid, 'Validation failed: Deletable is not a User')

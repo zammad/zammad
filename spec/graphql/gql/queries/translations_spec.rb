@@ -5,8 +5,8 @@ require 'rails_helper'
 RSpec.describe Gql::Queries::Translations, type: :graphql do
 
   context 'when fetching translations' do
-    let(:query) { read_graphql_file('shared/graphql/queries/translations.graphql') }
-    let(:variables) { { locale: locale, cacheKey: cache_key } }
+    let(:query)              { read_graphql_file('shared/graphql/queries/translations.graphql') }
+    let(:variables)          { { locale: locale, cacheKey: cache_key } }
     let(:expected_cache_key) { Translation.where(locale: locale).order(updated_at: :desc).take.updated_at.to_s }
 
     before do
@@ -43,7 +43,7 @@ RSpec.describe Gql::Queries::Translations, type: :graphql do
     end
 
     context 'with an invalid locale' do
-      let(:locale) { 'invalid-locale' }
+      let(:locale)    { 'invalid-locale' }
       let(:cache_key) { nil }
 
       it 'returns error type' do

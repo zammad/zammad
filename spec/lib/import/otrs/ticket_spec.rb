@@ -34,8 +34,8 @@ RSpec.describe Import::OTRS::Ticket do
     allow(Import::OTRS::DynamicFieldFactory).to receive('skip_field?').and_return(true)
   end
 
-  let(:import_object) { Ticket }
-  let(:existing_object) { instance_double(import_object) }
+  let(:import_object)     { Ticket }
+  let(:existing_object)   { instance_double(import_object) }
   let(:start_import_test) { described_class.new(object_structure) }
 
   context 'default' do

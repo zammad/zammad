@@ -10,8 +10,8 @@ RSpec.describe 'Import Kayako', type: :system, set_up: false, authenticated_as: 
     end
 
     let(:subdomain_field) { find('#kayako-subdomain') }
-    let(:email_field) { find('#kayako-email') }
-    let(:password_field) { find('#kayako-password') }
+    let(:email_field)     { find('#kayako-email') }
+    let(:password_field)  { find('#kayako-password') }
 
     it 'invalid hostname' do
       subdomain_field.fill_in with: 'reallybadexample'
@@ -65,9 +65,9 @@ RSpec.describe 'Import Kayako', type: :system, set_up: false, authenticated_as: 
 
   describe 'import progress', :use_vcr do
     let(:subdomain_field) { find('#kayako-subdomain') }
-    let(:email_field) { find('#kayako-email') }
+    let(:email_field)    { find('#kayako-email') }
     let(:password_field) { find('#kayako-password') }
-    let(:job) { ImportJob.find_by(name: 'Import::Kayako') }
+    let(:job)            { ImportJob.find_by(name: 'Import::Kayako') }
 
     before do
       VCR.use_cassette 'system/import/kayako/import_progress_setup' do

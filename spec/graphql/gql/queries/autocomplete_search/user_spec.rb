@@ -5,12 +5,12 @@ require 'rails_helper'
 RSpec.describe Gql::Queries::AutocompleteSearch::User, type: :graphql, authenticated_as: :agent do
 
   context 'when searching for users' do
-    let(:agent) { create(:agent) }
-    let(:users) { create_list(:agent, 3, lastname: 'AutocompleteSearch') }
-    let(:query) { read_graphql_file('shared/graphql/queries/autocompleteSearch/user.graphql') }
-    let(:variables) { { query: query_string, limit: limit } }
+    let(:agent)        { create(:agent) }
+    let(:users)        { create_list(:agent, 3, lastname: 'AutocompleteSearch') }
+    let(:query)        { read_graphql_file('shared/graphql/queries/autocompleteSearch/user.graphql') }
+    let(:variables)    { { query: query_string, limit: limit } }
     let(:query_string) { users.last.lastname }
-    let(:limit) { nil }
+    let(:limit)        { nil }
 
     before do
       graphql_execute(query, variables: variables)

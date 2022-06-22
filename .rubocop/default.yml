@@ -339,6 +339,10 @@ RSpec/Rails/AvoidSetupHook:
   Exclude:
     - "test/**/*"
 
+RSpec/AlignLeftLetBrace:
+  Description: 'Checks that left braces for adjacent single line lets are aligned.'
+  Enabled: true
+
 Zammad/PreferNegatedIfOverUnless:
   Exclude:
     - 'bin/rspec'

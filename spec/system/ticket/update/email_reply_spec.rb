@@ -3,11 +3,11 @@
 require 'rails_helper'
 
 RSpec.describe 'Ticket > Update > Email Reply', current_user_id: -> { current_user.id }, type: :system, time_zone: 'Europe/London' do
-  let(:group) { Group.find_by(name: 'Users') }
-  let(:ticket) { create(:ticket, group: group) }
+  let(:group)          { Group.find_by(name: 'Users') }
+  let(:ticket)         { create(:ticket, group: group) }
   let(:ticket_article) { create(:ticket_article, ticket: ticket, from: 'Example Name <asdf1@example.com>') }
-  let(:customer) { create(:customer) }
-  let(:current_user) { customer }
+  let(:customer)       { create(:customer) }
+  let(:current_user)   { customer }
 
   before do
     visit "ticket/zoom/#{ticket_article.ticket.id}"

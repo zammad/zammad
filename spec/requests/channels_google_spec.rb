@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Google channel API endpoints', type: :request do
-  let(:admin) { create(:admin) }
+  let(:admin)           { create(:admin) }
   let!(:google_channel) { create(:google_channel) }
 
   describe 'DELETE /api/v1/channels_google', authenticated_as: :admin do

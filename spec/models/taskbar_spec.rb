@@ -9,7 +9,7 @@ RSpec.describe Taskbar do
   context 'key = Search' do
 
     context 'multiple taskbars', current_user_id: 1 do
-      let(:key) { 'Search' }
+      let(:key)           { 'Search' }
       let(:other_taskbar) { create(:taskbar, key: key) }
 
       describe '#create' do

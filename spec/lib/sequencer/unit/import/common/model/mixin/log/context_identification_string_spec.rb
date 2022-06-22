@@ -39,7 +39,7 @@ RSpec.describe Sequencer::Unit::Import::Common::Model::Mixin::Log::ContextIdenti
   context "when 'model_class' attribute is given" do
 
     let(:model_class) { ::User }
-    let(:parameters) { { model_class: model_class } }
+    let(:parameters)  { { model_class: model_class } }
 
     it 'adds Model class name and lookup_keys' do
       expect(result).to include(model_class.name, *model_class.lookup_keys.map(&:to_s))
@@ -79,7 +79,7 @@ RSpec.describe Sequencer::Unit::Import::Common::Model::Mixin::Log::ContextIdenti
 
   context "when 'mapped' attribute is given" do
 
-    let(:mapped) { { id: SecureRandom.base58, foo: SecureRandom.base58 } }
+    let(:mapped)     { { id: SecureRandom.base58, foo: SecureRandom.base58 } }
     let(:parameters) { { mapped: mapped } }
 
     it 'adds mapped identifiers' do

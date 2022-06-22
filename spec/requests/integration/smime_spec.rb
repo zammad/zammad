@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'Integration SMIME', type: :request do
 
-  let(:admin) { create(:admin) }
+  let(:admin)         { create(:admin) }
   let(:email_address) { 'smime1@example.com' }
 
   before do
@@ -138,7 +138,7 @@ RSpec.describe 'Integration SMIME', type: :request do
     context 'POST requests' do
 
       let(:system_email_address) { create(:email_address, email: email_address) }
-      let(:group) { create(:group, email_address: system_email_address) }
+      let(:group)                { create(:group, email_address: system_email_address) }
 
       let(:search_query) do
         {

@@ -5,9 +5,9 @@ require 'lib/auth/backend/backend_examples'
 
 RSpec.describe Auth::Backend::Developer do
 
-  let(:user) { create(:user) }
+  let(:user)     { create(:user) }
   let(:password) { 'not_used' }
-  let(:auth) { Auth.new(user.login, password) }
+  let(:auth)     { Auth.new(user.login, password) }
   let(:instance) { described_class.new({ adapter: described_class.name }, auth) }
 
   describe '#valid?' do
@@ -30,7 +30,7 @@ RSpec.describe Auth::Backend::Developer do
 
       context 'when password matches actual User password' do
 
-        let(:user) { create(:user, password: 'secure') }
+        let(:user)     { create(:user, password: 'secure') }
         let(:password) { user.password_plain }
 
         it "doesn't authenticate" do
@@ -56,7 +56,7 @@ RSpec.describe Auth::Backend::Developer do
 
       context 'when password matches actual User password' do
 
-        let(:user) { create(:user, password: 'secure') }
+        let(:user)     { create(:user, password: 'secure') }
         let(:password) { user.password_plain }
 
         it "doesn't authenticate" do
@@ -82,7 +82,7 @@ RSpec.describe Auth::Backend::Developer do
 
       context 'when password matches actual User password' do
 
-        let(:user) { create(:user, password: 'secure') }
+        let(:user)     { create(:user, password: 'secure') }
         let(:password) { user.password_plain }
 
         it "doesn't authenticate" do

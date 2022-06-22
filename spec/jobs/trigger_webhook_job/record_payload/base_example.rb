@@ -15,7 +15,7 @@ RSpec.shared_examples 'TriggerWebhookJob::RecordPayload backend' do |factory|
     subject(:generate) { described_class.new(record).generate }
 
     let(:resolved_associations) { described_class.const_get(:ASSOCIATIONS).map(&:to_s) }
-    let(:record) { build(factory) }
+    let(:record)                { build(factory) }
 
     it 'includes attributes with association names' do
       expect(generate).to include(record.attributes_with_association_names.except(*resolved_associations))
