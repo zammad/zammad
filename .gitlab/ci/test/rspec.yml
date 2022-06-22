@@ -9,7 +9,7 @@ include:
     - bundle exec rake zammad:db:init
     - echo -e "\\e[0Ksection_end:`date +%s`:zammad_db_init\\r\\e[0K"
     - echo "RSpec filter:" "$RSPEC_EXAMPLE_MATCHES"
-    - bundle exec rspec --require ./spec/rspec_extensions.rb --exclude-pattern "spec/{system,integration}/**/*_spec.rb" -t ~searchindex --profile 10
+    - bundle exec rspec --require ./spec/rspec_extensions.rb --exclude-pattern "spec/system/**/*_spec.rb" -t ~searchindex -t ~integration --profile 10
 
 # RSpec 3rd party integration tests are independent of the database
 # therefore we need only one job and choose a random database for each run
@@ -23,4 +23,4 @@ rspec:integration:
     - .job_rules_integration_manual_start
   script:
     - !reference [.scripts, zammad_db_init]
-    - bundle exec rspec -t type:integration --profile 10
+    - bundle exec rspec --exclude-pattern "spec/system/**/*_spec.rb" -t integration --profile 10

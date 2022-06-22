@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe EmailHelper::Probe, type: :integration do
+RSpec.describe EmailHelper::Probe, integration: true do
   let(:expected_result_failed) do
     {
       result:  'failed',

@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe EmailHelper do
-  describe '#mx_records', type: :integration do
+  describe '#mx_records', integration: true do
     context 'when checking for regular domains' do
       subject(:result) { described_class.mx_records(domain) }
 
@@ -79,7 +79,7 @@ RSpec.describe EmailHelper do
     end
   end
 
-  describe '#provider_inbound_mx', type: :integration do
+  describe '#provider_inbound_mx', integration: true do
     subject(:result) { described_class.provider_inbound_mx(user, email, password, mx_domains) }
 
     let(:email)        { 'linus@zammad.com' }
@@ -152,7 +152,7 @@ RSpec.describe EmailHelper do
     it { is_expected.to eq(expected_result) }
   end
 
-  describe '#provider_outbound_mx', type: :integration do
+  describe '#provider_outbound_mx', integration: true do
     subject(:result) { described_class.provider_outbound_mx(user, email, password, mx_domains) }
 
     let(:email)        { 'linus@zammad.com' }

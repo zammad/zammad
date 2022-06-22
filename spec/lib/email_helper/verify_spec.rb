@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe EmailHelper::Verify, type: :integration do
+RSpec.describe EmailHelper::Verify, integration: true do
   describe '#email' do
     subject(:verify_result) { described_class.email(verify_params) }
 

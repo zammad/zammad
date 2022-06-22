@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Kayako import', type: :integration, use_vcr: true, db_strategy: :reset, required_envs: %w[IMPORT_KAYAKO_ENDPOINT IMPORT_KAYAKO_ENDPOINT_PASSWORD IMPORT_KAYAKO_ENDPOINT_USERNAME] do # rubocop:disable RSpec/DescribeClass
+RSpec.describe 'Kayako import', integration: true, use_vcr: true, db_strategy: :reset, required_envs: %w[IMPORT_KAYAKO_ENDPOINT IMPORT_KAYAKO_ENDPOINT_PASSWORD IMPORT_KAYAKO_ENDPOINT_USERNAME] do # rubocop:disable RSpec/DescribeClass
   let(:job) { ImportJob.last }
 
   before do
