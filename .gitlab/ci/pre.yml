@@ -6,6 +6,7 @@
     - !reference [.scripts, source_rvm]
   script:
     - !reference [.scripts, bundle_install]
+  after_script: []
 
 'write runner cache: nodejs':
   stage: pre
@@ -16,6 +17,7 @@
     - yarn storybook:install
     - yarn cypress:install
     - yarn --cwd ./.eslint-plugin-zammad install
+  after_script: []
 
 # Executed on a dedicated runner.
 'push to github':
@@ -30,6 +32,7 @@
   script:
     - git fetch --unshallow
     - script/build/sync_repo.sh git@github.com:zammad/zammad.git
+  after_script: []
 
 'refresh global envs':
   extends:

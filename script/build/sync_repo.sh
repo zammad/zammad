@@ -6,18 +6,8 @@ GITHUB_DEST=$1
 
 git remote prune origin
 
-if echo $CI_BUILD_REF_NAME | grep private; then
-  echo 'sync no private branches'
-  exit 0
-fi
-
-if echo $CI_BUILD_REF_NAME | grep cherry-pick-; then
-  echo 'sync no cherry-pick branches'
-  exit 0
-fi
-
-if echo $CI_BUILD_REF_NAME | grep dependabot/; then
-  echo 'sync no dependabot branches'
+if echo $CI_BUILD_REF_NAME | grep -E "^(private|cherry-pick-|renovate/|dependabot/)"; then
+  echo 'Do not sync internal branches.'
   exit 0
 fi
 
