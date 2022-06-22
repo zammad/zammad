@@ -5,7 +5,6 @@
   script:
     - !reference [.scripts, zammad_db_unseeded]
     - echo "email_helper_deliver tests..."
-    - bundle exec rails test test/integration/email_helper_test.rb
     - bundle exec rails test test/integration/email_deliver_test.rb
     - bundle exec rails test test/integration/email_keep_on_server_test.rb
     - bundle exec rails test test/integration/email_postmaster_to_sender.rb
