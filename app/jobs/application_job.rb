@@ -5,6 +5,8 @@ class ApplicationJob < ActiveJob::Base
   include ApplicationJob::HasQueuingPriority
   include ApplicationJob::HasCustomLogging
 
+  discard_on HasActiveJobLock::LockKeyNotGeneratable
+
   ActiveJob::LogSubscriber.detach_from :active_job
 
   # See config/initializers/delayed_jobs_timeout_per_job.rb for details.
