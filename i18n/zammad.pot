@@ -6705,6 +6705,8 @@ msgstr ""
 #: app/assets/javascripts/app/models/postmaster_filter.coffee
 #: app/assets/javascripts/app/models/role.coffee
 #: app/assets/javascripts/app/models/signature.coffee
+#: app/assets/javascripts/app/models/text_module.coffee
+#: app/assets/javascripts/app/models/trigger.coffee
 #: app/assets/javascripts/app/models/webhook.coffee
 #: app/assets/javascripts/app/views/channel/topics.jst.eco
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco

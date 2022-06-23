@@ -1,5 +1,5 @@
 class App.TextModule extends App.Model
-  @configure 'TextModule', 'name', 'keywords', 'content', 'active', 'group_ids', 'user_id', 'updated_at'
+  @configure 'TextModule', 'name', 'keywords', 'content', 'active', 'group_ids', 'user_id', 'updated_at', 'note'
   @extend Spine.Model.Ajax
   @url: @apiPath + '/text_modules'
   @configure_attributes = [
@@ -24,6 +24,7 @@ class App.TextModule extends App.Model
       }
     ], note: __('To select placeholders from a list, just enter "::".')},
     { name: 'updated_at', display: __('Updated'), tag: 'datetime', readonly: 1 },
+    { name: 'note',       display: __('Note'),    tag: 'textarea',      limit:   250,      null: true },
     { name: 'group_ids',  display: __('Groups'),  tag: 'column_select', relation: 'Group', null: true, unsortable: true },
     { name: 'active',     display: __('Active'),  tag: 'active',   default: true },
   ]
