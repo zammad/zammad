@@ -506,6 +506,107 @@ RSpec.describe 'Search', type: :request do
 
   describe 'Assign user to multiple organizations #1573' do
     shared_examples 'search for organization ids' do
+      context 'when customer with multi organizations', authenticated_as: :customer do
+        context 'with multi organizations' do
+          let(:customer) { create(:customer, organization: organizations[0], organizations: organizations[1..2]) }
+          let(:organizations) { create_list(:organization, 5) }
+
+          it 'does not return organizations which are not allowed' do
+            params = {
+              query: 'TestOrganization',
+              limit: 10,
+            }
+            post '/api/v1/search/Organization', params: params, as: :json
+            expect(json_response['result']).to include({ 'id' => organizations[0].id, 'type' => 'Organization' })
+            expect(json_response['result']).to include({ 'id' => organizations[1].id, 'type' => 'Organization' })
+            expect(json_response['result']).to include({ 'id' => organizations[2].id, 'type' => 'Organization' })
+            expect(json_response['result']).not_to include({ 'id' => organizations[3].id, 'type' => 'Organization' })
+            expect(json_response['result']).not_to include({ 'id' => organizations[4].id, 'type' => 'Organization' })
+          end
+
+          it 'does not return organizations which are not allowed when overwritten' do
+            params = {
+              query: 'TestOrganization',
+              limit: 10,
+              ids:   organizations.map(&:id)
+            }
+            post '/api/v1/search/Organization', params: params, as: :json
+            expect(json_response['result']).to include({ 'id' => organizations[0].id, 'type' => 'Organization' })
+            expect(json_response['result']).to include({ 'id' => organizations[1].id, 'type' => 'Organization' })
+            expect(json_response['result']).to include({ 'id' => organizations[2].id, 'type' => 'Organization' })
+            expect(json_response['result']).not_to include({ 'id' => organizations[3].id, 'type' => 'Organization' })
+            expect(json_response['result']).not_to include({ 'id' => organizations[4].id, 'type' => 'Organization' })
+          end
+        end
+
+        context 'with single organization' do
+          let(:customer) { create(:customer, organization: organizations[0]) }
+          let(:organizations) { create_list(:organization, 5) }
+
+          it 'does not return organizations which are not allowed' do
+            params = {
+              query: 'TestOrganization',
+              limit: 10,
+            }
+            post '/api/v1/search/Organization', params: params, as: :json
+            expect(json_response['result']).to include({ 'id' => organizations[0].id, 'type' => 'Organization' })
+            expect(json_response['result']).not_to include({ 'id' => organizations[1].id, 'type' => 'Organization' })
+            expect(json_response['result']).not_to include({ 'id' => organizations[2].id, 'type' => 'Organization' })
+            expect(json_response['result']).not_to include({ 'id' => organizations[3].id, 'type' => 'Organization' })
+            expect(json_response['result']).not_to include({ 'id' => organizations[4].id, 'type' => 'Organization' })
+          end
+
+          it 'does not return organizations which are not allowed when overwritten' do
+            params = {
+              query: 'TestOrganization',
+              limit: 10,
+              ids:   organizations.map(&:id)
+            }
+            post '/api/v1/search/Organization', params: params, as: :json
+            expect(json_response['result']).to include({ 'id' => organizations[0].id, 'type' => 'Organization' })
+            expect(json_response['result']).not_to include({ 'id' => organizations[1].id, 'type' => 'Organization' })
+            expect(json_response['result']).not_to include({ 'id' => organizations[2].id, 'type' => 'Organization' })
+            expect(json_response['result']).not_to include({ 'id' => organizations[3].id, 'type' => 'Organization' })
+            expect(json_response['result']).not_to include({ 'id' => organizations[4].id, 'type' => 'Organization' })
+          end
+        end
+
+        context 'with no organization' do
+          let(:customer) do
+            organizations
+            create(:customer)
+          end
+          let(:organizations) { create_list(:organization, 5) }
+
+          it 'does not return organizations which are not allowed' do
+            params = {
+              query: 'TestOrganization',
+              limit: 10,
+            }
+            post '/api/v1/search/Organization', params: params, as: :json
+            expect(json_response['result']).not_to include({ 'id' => organizations[0].id, 'type' => 'Organization' })
+            expect(json_response['result']).not_to include({ 'id' => organizations[1].id, 'type' => 'Organization' })
+            expect(json_response['result']).not_to include({ 'id' => organizations[2].id, 'type' => 'Organization' })
+            expect(json_response['result']).not_to include({ 'id' => organizations[3].id, 'type' => 'Organization' })
+            expect(json_response['result']).not_to include({ 'id' => organizations[4].id, 'type' => 'Organization' })
+          end
+
+          it 'does not return organizations which are not allowed when overwritten' do
+            params = {
+              query: 'TestOrganization',
+              limit: 10,
+              ids:   organizations.map(&:id)
+            }
+            post '/api/v1/search/Organization', params: params, as: :json
+            expect(json_response['result']).not_to include({ 'id' => organizations[0].id, 'type' => 'Organization' })
+            expect(json_response['result']).not_to include({ 'id' => organizations[1].id, 'type' => 'Organization' })
+            expect(json_response['result']).not_to include({ 'id' => organizations[2].id, 'type' => 'Organization' })
+            expect(json_response['result']).not_to include({ 'id' => organizations[3].id, 'type' => 'Organization' })
+            expect(json_response['result']).not_to include({ 'id' => organizations[4].id, 'type' => 'Organization' })
+          end
+        end
+      end
+
       it 'does return all organizations' do
         params = {
           query: 'Rest',

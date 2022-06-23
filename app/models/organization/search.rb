@@ -31,7 +31,7 @@ returns if user has no permissions to search
 
         {
           prio:                1500,
-          direct_search_index: true,
+          direct_search_index: !customer_only?(current_user),
         }
       end
 
@@ -82,7 +82,7 @@ returns
         # check order - positions related to sort by
         order_by = sql_helper.get_order_by(params, %w[desc desc])
 
-        # enable search only for agents and admins
+        # enable search only for permitted users
         return [] if !search_preferences(current_user)
 
         # make sure customers always only can search their own organizations
