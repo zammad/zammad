@@ -62,7 +62,7 @@
     "prettier": "2.7.1",
     "prettier-plugin-tailwindcss": "^0.1.11",
     "regenerator-runtime": "^0.13.9",
-    "sass": "^1.52.3",
+    "sass": "^1.53.0",
     "stylelint": "^14.9.1",
     "stylelint-config-prettier": "^9.0.3",
     "stylelint-config-recommended-vue": "^1.4.0",
