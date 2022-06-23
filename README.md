@@ -36,6 +36,10 @@ https://zammad.org/screenshots
 
 https://docs.zammad.org/en/latest/api/intro.html
 
+## Security Policy
+
+For reporting security vulnerabilities, please see [SECURITY.md](SECURITY.md).
+
 
 ## Contributing
 
