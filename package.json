@@ -109,7 +109,7 @@
     "@vue/apollo-composable": "^4.0.0-alpha.17",
     "@vueuse/core": "^8.7.5",
     "@vueuse/router": "^8.7.4",
-    "@vueuse/shared": "^8.7.4",
+    "@vueuse/shared": "^8.7.5",
     "async-mutex": "^0.3.2",
     "broadcast-channel": "^4.13.0",
     "flatpickr": "^4.6.13",
