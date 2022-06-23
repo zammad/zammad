@@ -55,19 +55,12 @@ module Import
 
     # Provides the integration configuration.
     #
-    # @example
-    #  Import::Ldap.config
-    #  #=> {"ssl_verify"=>true, "host_url"=>"ldaps://192...", ...}
-    #
     # return [Hash] the configuration
     def self.config
       Setting.get("#{identifier.downcase}_config") || {}
     end
 
     # Stores the integration configuration.
-    #
-    # @example
-    #  Import::Ldap.config = {"ssl_verify"=>true, "host_url"=>"ldaps://192...", ...}
     #
     # return [nil]
     def self.config=(value)
@@ -79,7 +72,7 @@ module Import
     # an error which is confusing and wrong.
     #
     # @example
-    #  Import::Ldap.queueable?
+    #  Import::Exchange.queueable?
     #  #=> true
     #
     # return [Boolean]
