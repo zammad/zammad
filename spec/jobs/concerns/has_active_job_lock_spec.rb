@@ -165,7 +165,7 @@ RSpec.describe HasActiveJobLock, type: :job do
 
   include_examples 'handle locking of jobs'
 
-  context 'custom lock key' do
+  context 'when has custom lock key' do
 
     let(:job_class) do
       Class.new(super()) do
@@ -177,5 +177,49 @@ RSpec.describe HasActiveJobLock, type: :job do
     end
 
     include_examples 'handle locking of jobs'
+  end
+
+  context 'when has invalid custom lock key' do
+
+    let(:job_class) do
+      Class.new(super()) do
+
+        def lock_key
+          raise 'Cannot generate lock key anymore'
+        end
+      end
+    end
+
+    it 'does not allow enqueueing of perform_later jobs' do
+      expect { job_class.perform_later }.not_to have_enqueued_job(job_class)
+    end
+
+    it 'does not allow execution of perform_now jobs' do
+      expect { job_class.perform_now }.not_to change(job_class, :perform_counter)
+    end
+  end
+
+  # https://github.com/zammad/zammad/issues/4141
+  context 'when key becomes invalid after enqueueing' do
+    let(:job_class) do
+      Class.new(super()) do
+        cattr_accessor :allow_lock_key, default: true
+
+        def lock_key
+          raise 'Cannot generate lock key anymore' if !allow_lock_key
+
+          'lock key'
+        end
+      end
+    end
+
+    it 'safely handles error in generating lock key', performs_jobs: true do
+      job_class.perform_later
+
+      job_class.allow_lock_key = false
+
+      expect { perform_enqueued_jobs(only: job_class) }
+        .not_to raise_error
+    end
   end
 end

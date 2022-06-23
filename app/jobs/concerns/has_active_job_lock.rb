@@ -1,6 +1,8 @@
 # Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 module HasActiveJobLock
+  class LockKeyNotGeneratable < StandardError; end
+
   extend ActiveSupport::Concern
 
   included do
@@ -9,6 +11,9 @@ module HasActiveJobLock
     end
 
     around_perform do |job, block|
+      # do not perform job if lock key cannot be generated anymore
+      raise LockKeyNotGeneratable if job.safe_lock_key.nil?
+
       job.mark_active_job_lock_as_started
 
       block.call
@@ -40,6 +45,16 @@ module HasActiveJobLock
     self.class.name
   end
 
+  # Caches lock key for the duration of the job'
+  # Silences errors thrown when generating lock key
+  #
+  # return [String]
+  def safe_lock_key
+    @safe_lock_key ||= lock_key
+  rescue
+    nil
+  end
+
   def mark_active_job_lock_as_started
     release_active_job_lock_cache
 
@@ -56,28 +71,33 @@ module HasActiveJobLock
   def ensure_active_job_lock_for_enqueue!
     release_active_job_lock_cache
 
+    throw :abort if safe_lock_key.nil?
+
     in_active_job_lock_transaction do
       return if active_job_lock_for_enqueue!.present?
 
       ActiveJobLock.create!(
-        lock_key:      lock_key,
+        lock_key:      safe_lock_key,
         active_job_id: job_id,
       )
     end
   end
 
   def release_active_job_lock!
+    # nothing to release if lock key cannot be generated anymore
+    return if safe_lock_key.nil?
+
     # only delete lock if the current job is the one holding the lock
     # perform_now jobs or perform_later jobs for which follow-up jobs were enqueued
     # don't need to remove any locks
-    lock = ActiveJobLock.lock.find_by(lock_key: lock_key, active_job_id: job_id)
+    lock = ActiveJobLock.lock.find_by(lock_key: safe_lock_key, active_job_id: job_id)
 
     if !lock
-      logger.debug { "Found no ActiveJobLock for #{self.class.name} (Job ID: #{job_id}) with key '#{lock_key}'." }
+      logger.debug { "Found no ActiveJobLock for #{self.class.name} (Job ID: #{job_id}) with key '#{safe_lock_key}'." }
       return
     end
 
-    logger.debug { "Deleting ActiveJobLock for #{self.class.name} (Job ID: #{job_id}) with key '#{lock_key}'." }
+    logger.debug { "Deleting ActiveJobLock for #{self.class.name} (Job ID: #{job_id}) with key '#{safe_lock_key}'." }
     lock.destroy!
   end
 
@@ -114,7 +134,7 @@ module HasActiveJobLock
   end
 
   def active_job_lock
-    @active_job_lock ||= ActiveJobLock.lock.find_by(lock_key: lock_key)
+    @active_job_lock ||= ActiveJobLock.lock.find_by(lock_key: safe_lock_key)
   end
 
   def release_active_job_lock_cache
