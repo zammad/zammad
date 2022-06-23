@@ -10,7 +10,7 @@ end
 
 RSpec.describe BackgroundServices::Service::ProcessDelayedJobs, ensure_threads_exited: true do
   before do
-    stub_const "#{described_class}::WAIT", 0.5
+    stub_const "#{described_class}::SLEEP_IF_EMPTY", 0.5
   end
 
   let(:instance) { described_class.new }
