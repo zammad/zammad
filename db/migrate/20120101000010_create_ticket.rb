@@ -328,15 +328,6 @@ class CreateTicket < ActiveRecord::Migration[4.2]
     add_foreign_key :jobs, :users, column: :created_by_id
     add_foreign_key :jobs, :users, column: :updated_by_id
 
-    create_table :notifications do |t|
-      t.column :subject,      :string, limit: 250,   null: false
-      t.column :body,         :string, limit: 8000,  null: false
-      t.column :content_type, :string, limit: 250,   null: false
-      t.column :active,       :boolean,              null: false, default: true
-      t.column :note,         :string, limit: 250,   null: true
-      t.timestamps limit: 3, null: false
-    end
-
     create_table :link_types do |t|
       t.column :name,         :string, limit: 250,   null: false
       t.column :note,         :string, limit: 250,   null: true
@@ -625,7 +616,6 @@ class CreateTicket < ActiveRecord::Migration[4.2]
     drop_table :text_modules_groups
     drop_table :text_modules
     drop_table :postmaster_filters
-    drop_table :notifications
     drop_table :triggers
     drop_table :links
     drop_table :link_types

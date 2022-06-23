@@ -58,62 +58,69 @@ get assets and record_ids of selector
 =end
 
   def assets_of_selector(selector, assets = {})
-
-    # get assets of condition
-    models = Models.all
-    send(selector).each do |item, content|
-      attribute = item.split('.')
-      next if !attribute[1]
-
-      if attribute[0] == 'customer' || attribute[0] == 'session'
-        attribute[0] = 'user'
+    send(selector)
+      .each_with_object(assets) do |(item, content), memo|
+        assets_of_single_selector(item, content, memo)
       end
-
-      begin
-        attribute_class = attribute[0].to_classname.constantize
-      rescue => e
-        next if attribute[0] == 'article'
-        next if attribute[0] == 'execution_time'
-
-        logger.error "Unable to get asset for '#{attribute[0]}': #{e.inspect}"
-        next
-      end
-
-      if attribute_class == ::Notification
-        next if content['recipient'].blank?
-
-        attribute_ref_class = ::User
-        item_ids            = []
-        Array(content['recipient']).each do |identifier|
-          next if identifier !~ %r{\Auserid_(\d+)\z}
-
-          item_ids.push($1)
-        end
-      else
-        reflection = attribute[1].sub(%r{_id$}, '')
-        next if !models[attribute_class]
-        next if !models[attribute_class][:reflections]
-        next if !models[attribute_class][:reflections][reflection]
-        next if !models[attribute_class][:reflections][reflection].klass
-
-        attribute_ref_class = models[attribute_class][:reflections][reflection].klass
-        item_ids            = Array(content['value'])
-      end
-
-      item_ids.each do |item_id|
-        next if item_id.blank?
-
-        attribute_object = attribute_ref_class.lookup(id: item_id)
-        next if !attribute_object
-
-        assets = attribute_object.assets(assets)
-      end
-    end
-    assets
   end
 
   def assets_added_to?(data)
     data.dig(self.class.to_app_model, id).present?
+  end
+
+  private
+
+  def assets_of_single_selector(item, content, assets = {})
+    area, key = item.split('.')
+    return if !key
+
+    area = 'user' if %w[customer session].include? area
+
+    attribute_ref_class, item_ids = if area == 'notification'
+                                      notifications_assets_data(content)
+                                    else
+                                      non_notifications_assets_data(area, key, content)
+                                    end
+
+    return if !attribute_ref_class
+
+    items = item_ids
+      .compact_blank
+      .filter_map { |elem| attribute_ref_class.lookup(id: elem) }
+
+    ApplicationModel::CanAssets.reduce items, assets
+  end
+
+  def notifications_assets_data(content)
+    return if content['recipient'].blank?
+
+    item_ids = Array(content['recipient'])
+      .filter_map do |elem|
+        match = elem.match %r{\Auserid_(?<id>\d+)\z}
+
+        match[:id] if match
+      end
+
+    [::User, item_ids]
+  end
+
+  def non_notifications_assets_data(area, key, content)
+    return if %w[article execution_time].include? area
+
+    begin
+      attribute_class = area.to_classname.constantize
+    rescue => e
+      logger.error "Unable to get asset for '#{area}': #{e.inspect}"
+      return
+    end
+
+    reflection = key.delete_suffix '_id'
+
+    klass = Models.all.dig(attribute_class, :reflections, reflection)&.klass
+
+    return if !klass
+
+    [klass, Array(content['value'])]
   end
 
   # methods defined here are going to extend the class, not the instance of it
@@ -178,6 +185,8 @@ get assets of object list
     end
   end
 
+  class << self
+
 =begin
 
 Compiles an assets hash for given items
@@ -193,15 +202,16 @@ Compiles an assets hash for given items
 
 =end
 
-  def self.reduce(items, data = {}, suffix = nil)
-    items.reduce(data) do |memo, elem|
-      method_name = if suffix.present? && elem.respond_to?("assets_#{suffix}")
-                      "assets_#{suffix}"
-                    else
-                      :assets
-                    end
+    def reduce(items, data = {}, suffix = nil)
+      items.reduce(data) do |memo, elem|
+        method_name = if suffix.present? && elem.respond_to?("assets_#{suffix}")
+                        "assets_#{suffix}"
+                      else
+                        :assets
+                      end
 
-      elem.send method_name, memo
+        elem.send method_name, memo
+      end
     end
   end
 end
