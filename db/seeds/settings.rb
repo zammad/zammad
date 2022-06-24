@@ -1048,6 +1048,33 @@ Setting.create_if_not_exists(
   frontend:    true
 )
 
+Setting.create_if_not_exists(
+  title:       __('Enable default login'),
+  name:        'user_show_default_login',
+  area:        'Security::Base',
+  description: __('Show default login for users on login page.'),
+  options:     {
+    form: [
+      {
+        display: '',
+        null:    true,
+        name:    'user_show_default_login',
+        tag:     'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  state:       true,
+  preferences: {
+    prio:       40,
+    permission: ['admin.security'],
+  },
+  frontend:    true
+)
+
 options = [ { value: '0', name: 'disabled' }, { value: 1.hour.seconds, name: __('1 hour') }, { value: 2.hours.seconds, name: __('2 hours') }, { value: 1.day.seconds, name: __('1 day') }, { value: 7.days.seconds, name: __('1 week') }, { value: 14.days.seconds, name: __('2 weeks') }, { value: 21.days.seconds, name: __('3 weeks') }, { value: 28.days.seconds, name: __('4 weeks') } ]
 Setting.create_if_not_exists(
   title:       __('Session Timeout'),

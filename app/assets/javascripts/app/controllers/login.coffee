@@ -35,7 +35,8 @@ class Login extends App.ControllerFullPage
         data.name != 'user_create_account' &&
         data.name != 'product_name' &&
         data.name != 'product_logo' &&
-        data.name != 'fqdn'
+        data.name != 'fqdn' &&
+        data.name != 'user_show_default_login'
       @render()
       'rerender'
     )
