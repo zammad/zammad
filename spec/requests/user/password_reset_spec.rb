@@ -34,7 +34,8 @@ RSpec.describe 'User endpoint', type: :request, authenticated_as: false do
 
     it 'blocks due to source IP address throttling (multiple usernames)' do
       15.times do
-        post api_v1_users_password_reset_path, params: { username: create(:user).login }, headers: { 'X-Forwarded-For': static_ipv4 }
+        # Ensure throttling even on modified path.
+        post "#{api_v1_users_password_reset_path}.json", params: { username: create(:user).login }, headers: { 'X-Forwarded-For': static_ipv4 }
       end
 
       expect(response).to have_http_status(:too_many_requests)
