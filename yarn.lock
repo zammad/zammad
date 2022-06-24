@@ -7757,10 +7757,10 @@ vitest@^0.15.2:
     tinyspy "^0.3.3"
     vite "^2.9.12"
 
-vue-advanced-cropper@^2.8.2:
-  version "2.8.2"
-  resolved "https://registry.yarnpkg.com/vue-advanced-cropper/-/vue-advanced-cropper-2.8.2.tgz#8b9a35e06676f21e3600c62484d1f3255c060b07"
-  integrity sha512-55yNJeqjhN4yZ4wbH/kvVbt/D0E8chhu4O2+1N4KuWif6PMwBw9LffPaoC8kSd1+HlXEbYFl0yCLWWlIIuUYCA==
+vue-advanced-cropper@^2.8.3:
+  version "2.8.3"
+  resolved "https://registry.yarnpkg.com/vue-advanced-cropper/-/vue-advanced-cropper-2.8.3.tgz#28dba0917926c2be7e8031bd81ab12856e96563e"
+  integrity sha512-KyOm4sGMkaCMEfGCTWi3vuKZd4nhT+nWWUr9HfyA7Qvg3XYsfXWYeMeVT1mBBqlVGbYKMcPTGvdcBq1CXvFRWg==
   dependencies:
     classnames "^2.2.6"
     debounce "^1.2.0"
