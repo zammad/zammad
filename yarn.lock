@@ -6271,10 +6271,10 @@ prosemirror-schema-list@^1.2.0:
     prosemirror-state "^1.0.0"
     prosemirror-transform "^1.0.0"
 
-prosemirror-state@^1.0.0, prosemirror-state@^1.2.2, prosemirror-state@^1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/prosemirror-state/-/prosemirror-state-1.4.0.tgz#0b0c23b38d9f5bb23d19ad043cf8453d876c0414"
-  integrity sha512-mVDZdjNX/YT5FvypiwbphJe9psA5h+j9apsSszVRFc6oKFoIInvzdujh8QW9f9lwHtSYajLxNiM1hPhd0Sl1XA==
+prosemirror-state@^1.0.0, prosemirror-state@^1.2.2, prosemirror-state@^1.4.0, prosemirror-state@^1.4.1:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/prosemirror-state/-/prosemirror-state-1.4.1.tgz#f6e26c7b6a7e11206176689eb6ebbf91870953e1"
+  integrity sha512-U/LBDW2gNmVa07sz/D229XigSdDQ5CLFwVB1Vb32MJbAHHhWe/6pOc721faI17tqw4pZ49i1xfY/jEZ9tbIhPg==
   dependencies:
     prosemirror-model "^1.0.0"
     prosemirror-transform "^1.0.0"
