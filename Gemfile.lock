@@ -468,7 +468,7 @@ GEM
     rubocop-faker (1.1.0)
       faker (>= 2.12.0)
       rubocop (>= 0.82.0)
-    rubocop-graphql (0.14.3)
+    rubocop-graphql (0.14.4)
       rubocop (>= 0.87, < 2)
     rubocop-inflector (0.2.1)
       activesupport
@@ -554,7 +554,7 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.8.2)
-    unicode-display_width (2.1.0)
+    unicode-display_width (2.2.0)
     unicorn (6.1.0)
       kgio (~> 2.6)
       raindrops (~> 0.7)
