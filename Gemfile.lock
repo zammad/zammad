@@ -302,7 +302,7 @@ GEM
       racc (~> 1.4)
     nori (2.6.0)
     oauth (0.5.10)
-    oauth2 (2.0.1)
+    oauth2 (2.0.2)
       faraday (>= 0.17.3, < 3.0)
       jwt (>= 1.0, < 3.0)
       multi_xml (~> 0.5)
@@ -559,7 +559,7 @@ GEM
       kgio (~> 2.6)
       raindrops (~> 0.7)
     vcr (6.1.0)
-    version_gem (1.0.0)
+    version_gem (1.1.0)
     viewpoint (1.1.1)
       httpclient
       logging
