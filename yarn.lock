@@ -7329,10 +7329,10 @@ timezone-mock@^1.3.3:
   resolved "https://registry.yarnpkg.com/timezone-mock/-/timezone-mock-1.3.3.tgz#fbf65922103a3891912566e9bf01dd04cc106c4e"
   integrity sha512-ot3y6AixNd7YkcnXNYYoLIy0c0khENTq4qmdKB4pLIj5UyG2bTtg/g7cguh2O/yH7WZZsQGWthgnCgumg5HqHQ==
 
-tinypool@^0.1.3:
-  version "0.1.3"
-  resolved "https://registry.yarnpkg.com/tinypool/-/tinypool-0.1.3.tgz#b5570b364a1775fd403de5e7660b325308fee26b"
-  integrity sha512-2IfcQh7CP46XGWGGbdyO4pjcKqsmVqFAPcXfPxcPXmOWt9cYkTP9HcDmGgsfijYoAEc4z9qcpM/BaBz46Y9/CQ==
+tinypool@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/tinypool/-/tinypool-0.2.1.tgz#7c3347514de36113f224212590de17f04fdf0078"
+  integrity sha512-HFU5ZYVq3wBfhSaf8qdqGsneaqXm0FgJQpoUlJbVdHpRLzm77IneKAD3RjzJWZvIv0YpPB9S7LUW53f6BE6ZSg==
 
 tinyspy@^0.3.3:
   version "0.3.3"
@@ -7754,10 +7754,10 @@ vitest-mock-extended@^0.1.4:
   dependencies:
     ts-essentials "^9.1.2"
 
-vitest@^0.15.2:
-  version "0.15.2"
-  resolved "https://registry.yarnpkg.com/vitest/-/vitest-0.15.2.tgz#3931c390685ff03331298c7719d27d691f79e782"
-  integrity sha512-cMabuUqu+nNHafkdN7H8Z20+UZTrrUfqjGwAoLwUwrqFGWBz3gXwxndjbLf6mgSFs9lF/JWjKeNM1CXKwtk26w==
+vitest@^0.16.0:
+  version "0.16.0"
+  resolved "https://registry.yarnpkg.com/vitest/-/vitest-0.16.0.tgz#6858a864b25850d28252bc480b0c89014ff48ce8"
+  integrity sha512-Ntp6jrM8wf2NMtamMBLkRBBdeqHkgAH/WMh5Xryts1j2ft2D8QZQbiSVFkSl4WmEQzcPP0YM069g/Ga1vtnEtg==
   dependencies:
     "@types/chai" "^4.3.1"
     "@types/chai-subset" "^1.3.3"
@@ -7765,7 +7765,7 @@ vitest@^0.15.2:
     chai "^4.3.6"
     debug "^4.3.4"
     local-pkg "^0.4.1"
-    tinypool "^0.1.3"
+    tinypool "^0.2.1"
     tinyspy "^0.3.3"
     vite "^2.9.12"
 
