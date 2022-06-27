@@ -7,6 +7,13 @@ RSpec.describe 'Microsoft365 XOAUTH2', integration: true, required_envs: %w[MICR
   end
 
   context 'when probing inbound' do
+    before do
+      options = channel.options[:inbound][:options]
+      options[:port] = 993
+
+      imap_delete_old_mails(options)
+    end
+
     it 'succeeds' do
       result = EmailHelper::Probe.inbound(channel.options[:inbound])
       expect(result[:result]).to eq('ok')

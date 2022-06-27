@@ -79,6 +79,10 @@ RSpec.describe EmailHelper::Probe, integration: true do
       let(:host)          { '192.168.254.254' }
       let(:message_human) { [ 'Host not reachable!', 'No route to host!' ] }
 
+      before do
+        stub_const('Channel::Driver::Imap::CHECK_ONLY_TIMEOUT', 1.second)
+      end
+
       include_examples 'probe tests with invalid result'
     end
 
@@ -92,6 +96,10 @@ RSpec.describe EmailHelper::Probe, integration: true do
     context 'when authentication fails' do
       let(:host)          { 'mx2.zammad.com' }
       let(:message_human) { [ 'Authentication failed!', 'Host not reachable!' ] }
+
+      before do
+        stub_const('Channel::Driver::Imap::CHECK_ONLY_TIMEOUT', 1.second)
+      end
 
       include_examples 'probe tests with invalid result'
     end
@@ -154,6 +162,11 @@ RSpec.describe EmailHelper::Probe, integration: true do
       let(:host)          { '192.168.254.254' }
       let(:message_human) { [ 'Host not reachable!', 'No route to host!' ] }
 
+      before do
+        stub_const('Channel::Driver::Smtp::DEFAULT_OPEN_TIMEOUT', 2.seconds)
+        stub_const('Channel::Driver::Smtp::DEFAULT_READ_TIMEOUT', 4.seconds)
+      end
+
       include_examples 'probe tests with invalid result'
     end
 
@@ -168,6 +181,11 @@ RSpec.describe EmailHelper::Probe, integration: true do
       let(:host)          { 'mx2.zammad.com' }
       let(:port)          { 587 }
       let(:message_human) { 'Authentication failed!' }
+
+      before do
+        stub_const('Channel::Driver::Smtp::DEFAULT_OPEN_TIMEOUT', 5.seconds)
+        stub_const('Channel::Driver::Smtp::DEFAULT_READ_TIMEOUT', 10.seconds)
+      end
 
       include_examples 'probe tests with invalid result'
     end
@@ -189,6 +207,11 @@ RSpec.describe EmailHelper::Probe, integration: true do
             password: password,
           },
         }
+      end
+
+      before do
+        stub_const('Channel::Driver::Smtp::DEFAULT_OPEN_TIMEOUT', 5.seconds)
+        stub_const('Channel::Driver::Smtp::DEFAULT_READ_TIMEOUT', 10.seconds)
       end
 
       it { is_expected.to include(result: 'ok') }
@@ -224,22 +247,25 @@ RSpec.describe EmailHelper::Probe, integration: true do
 
       shared_examples 'do real testing' do
         it 'contains all information for a successful probe' do # rubocop:disable RSpec/ExampleLength
-
-          expect(probe_result).to include(
-            result:  'ok',
-            setting: include(
-              inbound:  include(
-                options: include(
-                  host: inbound_host
+          expect(probe_result).to include(result: 'ok')
+            .and include(
+              setting: include(
+                inbound: include(
+                  options: include(
+                    host: inbound_host
+                  ),
                 ),
               ),
-              outbound: include(
-                options: include(
-                  host: outbound_host,
+            )
+            .and include(
+              setting: include(
+                outbound: include(
+                  options: include(
+                    host: outbound_host,
+                  ),
                 ),
               ),
-            ),
-          )
+            )
         end
       end
 
@@ -247,6 +273,21 @@ RSpec.describe EmailHelper::Probe, integration: true do
         let(:real_user_data) { ENV['EMAILHELPER_MAILBOX_1'].split(':') }
         let(:inbound_host)   { 'mx2.zammad.com' }
         let(:outbound_host)  { inbound_host }
+
+        before do
+          stub_const('Channel::Driver::Smtp::DEFAULT_OPEN_TIMEOUT', 5.seconds)
+          stub_const('Channel::Driver::Smtp::DEFAULT_READ_TIMEOUT', 10.seconds)
+
+          options = {
+            host:      inbound_host,
+            port:      993,
+            ssl:       true,
+            auth_type: 'LOGIN',
+            user:      email,
+            password:  password,
+          }
+          imap_delete_old_mails(options)
+        end
 
         include_examples 'do real testing'
       end

@@ -2,6 +2,11 @@
 
 class Channel::Driver::Smtp
 
+  # we're using the same timeouts like in Net::SMTP gem
+  #   but we would like to have the possibility to mock it for tests
+  DEFAULT_OPEN_TIMEOUT = 30.seconds
+  DEFAULT_READ_TIMEOUT = 60.seconds
+
 =begin
 
   instance = Channel::Driver::Smtp.new
@@ -67,6 +72,8 @@ class Channel::Driver::Smtp
       port:                 options[:port],
       domain:               options[:domain],
       enable_starttls_auto: options[:enable_starttls_auto],
+      open_timeout:         DEFAULT_OPEN_TIMEOUT,
+      read_timeout:         DEFAULT_READ_TIMEOUT,
     }
 
     # set ssl if needed
