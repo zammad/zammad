@@ -1,6 +1,7 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
+import type { RouteLocationRaw } from 'vue-router'
 import type { MenuItem } from './types'
 import CommonSectionMenuLink from './CommonSectionMenuLink.vue'
 
@@ -8,6 +9,7 @@ import CommonSectionMenuLink from './CommonSectionMenuLink.vue'
 
 export interface Props {
   actionTitle?: string
+  actionLink?: RouteLocationRaw
   headerTitle?: string
   items?: MenuItem[]
 }
@@ -28,17 +30,21 @@ const clickOnAction = (event: MouseEvent) => {
     <div class="text-white/80 ltr:pl-4 rtl:pr-4">
       <slot name="header">{{ i18n.t(headerTitle) }}</slot>
     </div>
-    <div
+    <component
+      :is="actionLink ? 'CommonLink' : 'div'"
       v-if="actionTitle"
+      :link="actionLink"
       class="cursor-pointer text-blue ltr:pr-4 rtl:pl-4"
       @click="clickOnAction"
     >
       {{ i18n.t(actionTitle) }}
-    </div>
+    </component>
   </div>
   <div
     class="w-fill mb-6 flex flex-col rounded-xl bg-gray-500 px-3 py-1 text-base text-white"
+    v-bind="$attrs"
   >
+    <slot name="before-items" />
     <slot>
       <template v-for="(item, idx) in items" :key="idx">
         <CommonSectionMenuLink v-if="item.type === 'link'" v-bind="item" />

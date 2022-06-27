@@ -78,6 +78,7 @@
     "vite-plugin-ruby": "^3.0.12",
     "vite-plugin-svg-icons": "^2.0.1",
     "vitest": "^0.15.2",
+    "vitest-mock-extended": "^0.1.4",
     "vue-tsc": "^0.38.1"
   },
   "dependencies": {
@@ -129,6 +130,7 @@
     "vue": "^3.2.37",
     "vue-advanced-cropper": "^2.8.3",
     "vue-router": "^4.0.16",
-    "vue3-draggable-resizable": "^1.6.4"
+    "vue3-draggable-resizable": "^1.6.4",
+    "vuedraggable": "^4.1.0"
   }
 }

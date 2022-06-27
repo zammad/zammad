@@ -9,7 +9,7 @@ const routes: RouteRecordRaw[] = [
     props: true,
     component: () => import('./views/TicketOverview.vue'),
     meta: {
-      title: __('Ticket Overviews'),
+      title: __('Ticket Overview'),
       requiresAuth: true,
       requiredPermission: ['ticket.agent', 'ticket.customer'],
       hasBottomNavigation: true,

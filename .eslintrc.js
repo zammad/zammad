@@ -49,6 +49,7 @@ module.exports = {
           'vite.config.ts',
           'app/frontend/build/**',
           'app/frontend/**/*.spec.*',
+          'app/frontend/**/__tests__/**/*',
           'app/frontend/tests/**/*',
           'app/frontend/**/*.stories.ts',
           '.storybook/**/*',
@@ -161,6 +162,10 @@ module.exports = {
           ['@tests', path.resolve(__dirname, './app/frontend/tests')],
           ['@stories', path.resolve(__dirname, './app/frontend/stories')],
           ['@cy', path.resolve(__dirname, './.cypress')],
+          [
+            'vitest',
+            path.resolve(__dirname, 'node_modules/vitest/dist/index.mjs'),
+          ],
         ],
         extensions: ['.js', '.jsx', '.ts', '.tsx', '.vue'],
       },

@@ -1,0 +1,149 @@
+// Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
+import { OverviewsDocument } from '@shared/entities/ticket/graphql/queries/overviews.api'
+import { getAllByTestId, getByTestId, within } from '@testing-library/vue'
+import createMockClient from '@tests/support/mock-apollo-client'
+import { visitView } from '@tests/support/components/visitView'
+import {
+  NotificationTypes,
+  useNotifications,
+} from '@shared/components/CommonNotifications'
+import { mockAccount } from '@tests/support/mock-account'
+import { getIconByName } from '@tests/support/components/iconQueries'
+import { getTicketOverviewStorage } from '../helpers/ticketOverviewStorage'
+import { getApiTicketOverviews } from './mocks'
+
+const actualLocalStorage = window.localStorage
+
+describe('playing with overviews', () => {
+  beforeEach(() => {
+    mockAccount({ id: '666' })
+    createMockClient(
+      [
+        {
+          operationDocument: OverviewsDocument,
+          handler: async () => ({ data: getApiTicketOverviews() }),
+        },
+      ],
+      true,
+    )
+  })
+
+  afterEach(() => {
+    window.localStorage = actualLocalStorage
+    const { saveOverviews } = getTicketOverviewStorage()
+    saveOverviews([])
+  })
+
+  test('loading overviews from local storage', async () => {
+    const { saveOverviews, LOCAL_STORAGE_NAME } = getTicketOverviewStorage()
+    saveOverviews(['1', '2'])
+
+    const view = await visitView('/favorite/ticker-overviews/edit')
+
+    expect(view.getIconByName('loader')).toBeInTheDocument()
+
+    const includedOverviewsUtils = within(
+      await view.findByTestId('includedOverviews'),
+    )
+
+    const includedOverviews = await includedOverviewsUtils.findAllByTestId(
+      'overviewItem',
+    )
+
+    expect(includedOverviews).toHaveLength(2)
+    expect(includedOverviews[0]).toHaveTextContent('Overview 1')
+    expect(includedOverviews[1]).toHaveTextContent('Overview 2')
+
+    const excludedOverviewsUtils = within(
+      await view.findByTestId('excludedOverviews'),
+    )
+
+    const excludedOverviews =
+      excludedOverviewsUtils.getAllByTestId('overviewItem')
+
+    expect(excludedOverviews).toHaveLength(1)
+    expect(excludedOverviews[0]).toHaveTextContent('Overview 3')
+
+    vi.stubGlobal('localStorage', {
+      setItem: vi.fn(),
+    })
+
+    await view.events.click(view.getByText('Done'))
+
+    expect(localStorage.setItem).toHaveBeenCalledWith(
+      LOCAL_STORAGE_NAME,
+      '["1","2"]',
+    )
+  })
+
+  test('removing/adding overviews', async () => {
+    const { LOCAL_STORAGE_NAME } = getTicketOverviewStorage()
+
+    const view = await visitView('/favorite/ticker-overviews/edit')
+
+    const buttonsRemove = await view.findAllIconsByName('minus-small')
+
+    expect(buttonsRemove).toHaveLength(3)
+
+    const [overviewOneButton] = buttonsRemove
+
+    await view.events.click(overviewOneButton)
+
+    expect(view.getAllIconsByName('minus-small')).toHaveLength(2)
+
+    const overviewOneInExcluded = getByTestId(
+      view.getByTestId('excludedOverviews'),
+      'overviewItem',
+    )
+
+    expect(overviewOneInExcluded).toHaveTextContent('Overview 1')
+
+    const buttonAdd = getIconByName(overviewOneInExcluded, 'plus-small')
+
+    await view.events.click(buttonAdd)
+
+    const includedOverviews = getAllByTestId(
+      view.getByTestId('includedOverviews'),
+      'overviewItem',
+    )
+
+    expect(includedOverviews.at(-1)).toHaveTextContent('Overview 1')
+
+    vi.stubGlobal('localStorage', {
+      setItem: vi.fn(),
+    })
+
+    await view.events.click(view.getByText('Done'))
+
+    expect(localStorage.setItem).toHaveBeenCalledWith(
+      LOCAL_STORAGE_NAME,
+      '["2","3","1"]',
+    )
+
+    const { notify } = useNotifications()
+
+    expect(notify).toHaveBeenCalledWith({
+      type: NotificationTypes.Success,
+      message: 'Ticket Overview settings are saved',
+    })
+  })
+
+  test('gives error, when trying to save no overviews', async () => {
+    const { saveOverviews } = getTicketOverviewStorage()
+    saveOverviews(['1'])
+    const view = await visitView('/favorite/ticker-overviews/edit')
+
+    const buttonRemove = await view.findIconByName('minus-small')
+
+    await view.events.click(buttonRemove)
+    await view.events.click(view.getByText('Done'))
+
+    const { notify } = useNotifications()
+
+    expect(notify).toHaveBeenCalledWith({
+      type: NotificationTypes.Error,
+      message: 'Please select at least one ticket overview',
+    })
+  })
+})

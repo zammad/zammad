@@ -11,7 +11,7 @@ export interface Props {
   icon?: string | (IconProps & HTMLAttributes)
   iconBg?: string
   // TODO maybe change the name based on the usage
-  information?: string
+  information?: string | number
 }
 
 const props = defineProps<Props>()
@@ -55,7 +55,7 @@ const iconProps = computed<IconProps | null>(() => {
       </div>
 
       <div class="mr-1 flex items-center">
-        <slot name="right">{{ i18n.t(information) }}</slot>
+        <slot name="right">{{ information && i18n.t(`${information}`) }}</slot>
         <CommonIcon
           class="text-gray-300 ltr:ml-2 rtl:mr-2"
           :name="`arrow-${locale.localeData?.dir === 'rtl' ? 'left' : 'right'}`"

@@ -11,7 +11,7 @@ import { MountingOptions } from '@vue/test-utils'
 import { Matcher, render, RenderResult } from '@testing-library/vue'
 import userEvent from '@testing-library/user-event'
 import { merge, cloneDeep } from 'lodash-es'
-import { createTestingPinia } from '@pinia/testing'
+import { createTestingPinia, TestingPinia } from '@pinia/testing'
 import { plugin as formPlugin } from '@formkit/vue'
 import { buildFormKitPluginConfig } from '@shared/form'
 import applicationConfigPlugin from '@shared/plugins/applicationConfigPlugin'
@@ -19,6 +19,7 @@ import CommonIcon from '@shared/components/CommonIcon/CommonIcon.vue'
 import CommonLink from '@shared/components/CommonLink/CommonLink.vue'
 import CommonDateTime from '@shared/components/CommonDateTime/CommonDateTime.vue'
 import { i18n } from '@shared/i18n'
+import type { Store } from 'pinia'
 import buildIconsQueries from './iconQueries'
 import buildLinksQueries from './linkQueries'
 import { waitForNextTick } from '../utils'
@@ -126,10 +127,26 @@ const initializeRouter = (routes?: RouteRecordRaw[]) => {
 
 let storeInitialized = false
 
+let pinia: TestingPinia
+export const getPinia = () => pinia
+const stores = new Set<Store>()
+
+afterEach(() => {
+  if (!pinia || !stores.size) return
+  stores.forEach((store) => {
+    store.$dispose()
+  })
+  pinia.state.value = {}
+  stores.clear()
+})
+
 export const initializeStore = () => {
   if (storeInitialized) return
-
-  plugins.push(createTestingPinia({ createSpy: vi.fn, stubActions: false }))
+  pinia = createTestingPinia({ createSpy: vi.fn, stubActions: false })
+  plugins.push(pinia)
+  pinia.use((context) => {
+    stores.add(context.store)
+  })
   storeInitialized = true
 }
 

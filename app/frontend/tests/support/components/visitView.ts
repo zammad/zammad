@@ -1,6 +1,9 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
+import { useApolloClient } from '@vue/apollo-composable'
 import type { RouteRecordRaw } from 'vue-router'
+import { random } from 'lodash-es'
+import { handlers } from '@shared/server/apollo/handler/QueryHandler'
 import LayoutTest from './LayoutTest.vue'
 import mockApolloClient from '../mock-apollo-client'
 import renderComponent, { getRouter } from './renderComponent'
@@ -32,8 +35,15 @@ export const visitView = async (href: string) => {
   if (routes.at(-1)?.name === 'Main') {
     const [mainRoutes] = routes.splice(routes.length - 1, 1)
 
-    routes.push(...(mainRoutes.children as RouteRecordRaw[]))
+    routes.push(...(mainRoutes.children as RouteRecordRaw[]), {
+      path: '/testing-environment',
+      component: {
+        template: '<div></div>',
+      },
+    })
   }
+
+  const testKey = random()
 
   const view = renderComponent(
     {
@@ -46,8 +56,20 @@ export const visitView = async (href: string) => {
       form: true,
       unmount: true,
       routerRoutes: routes,
+      propsData: {
+        testKey,
+      },
     },
   )
+
+  const { client } = useApolloClient()
+  await client.clearStore()
+  await client.resetStore()
+  client.cache.reset()
+
+  handlers.forEach((handler) => {
+    handler.reset()
+  })
 
   const router = getRouter()
 

@@ -13,3 +13,26 @@ configure({
 })
 
 require.extensions['.css'] = () => ({})
+
+vi.mock('@shared/components/CommonNotifications/composable', async () => {
+  const { default: originalUseNotifications } = await vi.importActual<any>(
+    '@shared/components/CommonNotifications/composable',
+  )
+  let notifications: any
+  const useNotifications = () => {
+    if (notifications) return notifications
+    const result = originalUseNotifications()
+    notifications = {
+      notify: vi.fn(result.notify),
+      notifications: result.notifications,
+      removeNotification: vi.fn(result.removeNotification),
+      clearAllNotifications: vi.fn(result.clearAllNotifications),
+      hasErrors: vi.fn(result.hasErrors),
+    }
+    return notifications
+  }
+
+  return {
+    default: useNotifications,
+  }
+})

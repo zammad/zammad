@@ -9,7 +9,7 @@ import {
   type RequestHandler,
 } from 'mock-apollo-client'
 
-interface ClientRequestHandler {
+export interface ClientRequestHandler {
   operationDocument: DocumentNode
   handler: RequestHandler
 }

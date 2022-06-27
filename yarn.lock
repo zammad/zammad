@@ -6790,6 +6790,11 @@ snapdragon@^0.8.1:
     source-map-resolve "^0.5.0"
     use "^3.1.0"
 
+sortablejs@1.14.0:
+  version "1.14.0"
+  resolved "https://registry.yarnpkg.com/sortablejs/-/sortablejs-1.14.0.tgz#6d2e17ccbdb25f464734df621d4f35d4ab35b3d8"
+  integrity sha512-pBXvQCs5/33fdN1/39pPL0NZF20LeRbLQ5jtnheIPN9JQAaufGjKdWduZn4U7wCtVuzKhmRkI0DFYHYRbB2H1w==
+
 "source-map-js@>=0.6.2 <2.0.0", source-map-js@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/source-map-js/-/source-map-js-1.0.2.tgz#adbc361d9c62df380125e7f161f71c826f1e490c"
@@ -7742,6 +7747,13 @@ vite@^2.9.12:
   optionalDependencies:
     fsevents "~2.3.2"
 
+vitest-mock-extended@^0.1.4:
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/vitest-mock-extended/-/vitest-mock-extended-0.1.4.tgz#7ab28f0a52247ad9ce14ad714bc8ce5d4ef4d8ac"
+  integrity sha512-MV9ENQuPz07rIAJ0PFq2xcDI2gp/8q6o9O4mDxIoWp4LJfRvFfLYLp0vfCpL4wCU8wYe1GVO6jdvBYYU+TujfQ==
+  dependencies:
+    ts-essentials "^9.1.2"
+
 vitest@^0.15.2:
   version "0.15.2"
   resolved "https://registry.yarnpkg.com/vitest/-/vitest-0.15.2.tgz#3931c390685ff03331298c7719d27d691f79e782"
@@ -7813,6 +7825,13 @@ vue@^3.2.37:
     "@vue/runtime-dom" "3.2.37"
     "@vue/server-renderer" "3.2.37"
     "@vue/shared" "3.2.37"
+
+vuedraggable@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/vuedraggable/-/vuedraggable-4.1.0.tgz#edece68adb8a4d9e06accff9dfc9040e66852270"
+  integrity sha512-FU5HCWBmsf20GpP3eudURW3WdWTKIbEIQxh9/8GE806hydR9qZqRRxRE3RjqX7PkuLuMQG/A7n3cfj9rCEchww==
+  dependencies:
+    sortablejs "1.14.0"
 
 w3c-hr-time@^1.0.2:
   version "1.0.2"

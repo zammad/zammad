@@ -9,7 +9,7 @@ export interface HeaderOptions {
   backTitle?: string | ComputedRef<string>
   backUrl?: RouteLocationRaw | ComputedRef<RouteLocationRaw>
   actionTitle?: string | ComputedRef<string>
-  onAction?(): void
+  onAction?(): unknown
 }
 
 export const headerOptions = ref<HeaderOptions>({})

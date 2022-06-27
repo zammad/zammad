@@ -4,8 +4,13 @@
 import { MenuItem } from '@mobile/components/CommonSectionMenu'
 import CommonSectionMenu from '@mobile/components/CommonSectionMenu/CommonSectionMenu.vue'
 import CommonInputSearch from '@shared/components/CommonInputSearch/CommonInputSearch.vue'
+import useSessionStore from '@shared/stores/session'
+import { computed } from 'vue'
+import { useTicketsOverviews } from '../stores/ticketOverviews'
 
 const IS_DEV = import.meta.env.DEV
+
+const session = useSessionStore()
 
 // TODO all menus should be generated on back-end
 const menu: MenuItem[] = [
@@ -30,32 +35,20 @@ const menu: MenuItem[] = [
     : []),
 ]
 
-const ticketOverview: MenuItem[] = [
-  {
-    type: 'link',
-    link: '/tickets',
-    title: __('My Assigned Tickets'),
-    information: '2',
-  },
-  {
-    type: 'link',
-    link: '/tickets',
-    title: __('Unassigned & Open Tickets'),
-    information: '3',
-  },
-  {
-    type: 'link',
-    link: '/tickets',
-    title: __('My Pending Reached Tickets'),
-    information: '2',
-  },
-  {
-    type: 'link',
-    link: '/tickets',
-    title: __('My Subscribed Tickets'),
-    information: '1',
-  },
-]
+const overviews = useTicketsOverviews()
+
+const ticketOverview = computed<MenuItem[]>(() => {
+  if (overviews.loading) return []
+
+  return overviews.includedOverviews.map((overview) => {
+    return {
+      type: 'link',
+      link: '/',
+      title: overview.name,
+      information: overview.ticketCount,
+    }
+  })
+})
 </script>
 
 <template>
@@ -68,7 +61,7 @@ const ticketOverview: MenuItem[] = [
     <div
       class="mb-5 flex w-full items-center justify-center text-4xl font-bold"
     >
-      {{ i18n.t('Home') }}
+      {{ $t('Home') }}
     </div>
     <CommonLink link="/search">
       <CommonInputSearch wrapper-class="mb-4" no-border />
@@ -77,7 +70,18 @@ const ticketOverview: MenuItem[] = [
     <CommonSectionMenu
       :items="ticketOverview"
       :header-title="__('Ticket Overview')"
-      :action-title="__('Edit')"
-    />
+      :action-title="
+        session.hasPermission(['ticket.agent', 'ticket.customer'])
+          ? __('Edit')
+          : undefined
+      "
+      action-link="/favorite/ticker-overviews/edit"
+    >
+      <template v-if="overviews.loading" #before-items>
+        <div class="flex w-full justify-center">
+          <CommonIcon name="loader" animation="spin" />
+        </div>
+      </template>
+    </CommonSectionMenu>
   </div>
 </template>

@@ -11,6 +11,8 @@ import LayoutHeader from '@mobile/components/layout/LayoutHeader.vue'
 import CommonNotifications from '@shared/components/CommonNotifications/CommonNotifications.vue'
 import useAuthenticationChanges from '@shared/composables/useAuthenticationUpdates'
 
+defineProps<{ testKey: number }>()
+
 const route = useRoute()
 
 const title = computed(() => {
@@ -37,7 +39,7 @@ useAuthenticationChanges()
     <CommonNotifications />
     <LayoutHeader v-if="showHeader" v-bind="header" :title="title" />
     <main>
-      <RouterView />
+      <RouterView :key="testKey" />
     </main>
   </div>
 </template>

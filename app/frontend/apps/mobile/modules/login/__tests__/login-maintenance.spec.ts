@@ -14,8 +14,12 @@ import { ApplicationConfigDocument } from '@shared/graphql/queries/applicationCo
 import { waitFor } from '@testing-library/vue'
 import useAuthenticationStore from '@shared/stores/authentication'
 import { waitForNextTick } from '@tests/support/utils'
-import { resetMockClient } from '@tests/support/mock-apollo-client'
+import createMockClient, {
+  resetMockClient,
+} from '@tests/support/mock-apollo-client'
 import { mockPermissions } from '@tests/support/mock-permissions'
+import { getApiTicketOverviews } from '@mobile/modules/home/__tests__/mocks'
+import { OverviewsDocument } from '@shared/entities/ticket/graphql/queries/overviews.api'
 
 vi.mock('@shared/server/apollo/client', () => {
   return {
@@ -28,6 +32,12 @@ vi.mock('@shared/server/apollo/client', () => {
 describe('testing login maintenance mode', () => {
   beforeEach(() => {
     resetMockClient()
+    createMockClient([
+      {
+        operationDocument: OverviewsDocument,
+        handler: async () => ({ data: getApiTicketOverviews() }),
+      },
+    ])
   })
 
   it('check not visible maintenance mode message, when maintenance mode is not active', async () => {

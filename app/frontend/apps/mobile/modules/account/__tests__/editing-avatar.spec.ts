@@ -43,7 +43,7 @@ describe('editing avatar', () => {
   })
 
   afterEach(() => {
-    vi.mocked(console.log).mockRestore()
+    vi.spyOn(console, 'log').mockRestore()
   })
 
   it('can remove avatar', async () => {
