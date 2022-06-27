@@ -57,12 +57,6 @@ RSpec.describe 'Monitoring', type: :request, authenticated_as: :admin do
 
     it_behaves_like 'accessible', token: true, admin: true, agent: false
 
-    it 'returns matching token' do
-      make_call
-
-      expect(json_response['token']).to eq access_token
-    end
-
     it 'returns health status' do
       allow_any_instance_of(MonitoringHelper::HealthChecker) # rubocop:disable RSpec/AnyInstance
         .to receive(:response)

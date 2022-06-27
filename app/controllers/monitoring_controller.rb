@@ -40,7 +40,6 @@ curl http://localhost/api/v1/monitoring/health_check?token=XXX
       message: health_status.message,
       issues:  health_status.response.issues,
       actions: health_status.response.actions,
-      token:   token,
     }
     render json: result
   end
