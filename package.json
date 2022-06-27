@@ -79,7 +79,7 @@
     "vite-plugin-svg-icons": "^2.0.1",
     "vitest": "^0.16.0",
     "vitest-mock-extended": "^0.1.4",
-    "vue-tsc": "^0.38.1"
+    "vue-tsc": "^0.38.2"
   },
   "dependencies": {
     "@apollo/client": "^3.6.9",
