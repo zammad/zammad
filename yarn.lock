@@ -1373,14 +1373,14 @@
     "@tiptap/extension-strike" "^2.0.0-beta.29"
     "@tiptap/extension-text" "^2.0.0-beta.17"
 
-"@tiptap/suggestion@^2.0.0-beta.96":
-  version "2.0.0-beta.96"
-  resolved "https://registry.yarnpkg.com/@tiptap/suggestion/-/suggestion-2.0.0-beta.96.tgz#ab6f9e3d776950ed2e030f738cf239217d85fc80"
-  integrity sha512-nO8xLeMdL3i38SOBbohN7GzNpXcZN9SWjJs4+VxzKLv8E/k5ib+XtiX7ZETfsIfqDYAyCeut23tHARX5f0xxyQ==
+"@tiptap/suggestion@^2.0.0-beta.96", "@tiptap/suggestion@^2.0.0-beta.97":
+  version "2.0.0-beta.97"
+  resolved "https://registry.yarnpkg.com/@tiptap/suggestion/-/suggestion-2.0.0-beta.97.tgz#2e3dc20deebc2c37c5d39c848e61e9c837e7188a"
+  integrity sha512-3NWG+HE7v2w97Ek6z1tUosoZKpCDH+oAtIG9XoNkK1PmlaVV/H4d6HT9uPX+Y6SeN7fSAqlcXFUGLXcDi9d+Zw==
   dependencies:
-    prosemirror-model "^1.17.0"
-    prosemirror-state "^1.4.0"
-    prosemirror-view "^1.25.0"
+    prosemirror-model "1.18.1"
+    prosemirror-state "1.4.1"
+    prosemirror-view "1.26.2"
 
 "@tiptap/vue-3@^2.0.0-beta.95":
   version "2.0.0-beta.95"
