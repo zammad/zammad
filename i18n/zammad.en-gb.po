@@ -3638,6 +3638,7 @@ msgstr ""
 msgid "Don't synchronize"
 msgstr ""
 
+#: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
 #: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 msgid "Done"
 msgstr ""
@@ -5042,6 +5043,7 @@ msgid "Holidays iCalendar Feed"
 msgstr ""
 
 #: app/frontend/apps/mobile/modules/home/routes.ts
+#: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
 #: app/frontend/apps/mobile/modules/home/views/Home.vue
 msgid "Home"
 msgstr ""
@@ -5406,6 +5408,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco
 msgid "Include attachments of the article?"
+msgstr ""
+
+#: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
+msgid "Included ticket overviews"
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
@@ -6416,6 +6422,10 @@ msgstr ""
 msgid "More than 250 secondary organizations are not allowed."
 msgstr ""
 
+#: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
+msgid "More ticket overviews"
+msgstr ""
+
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
 msgid "Most recent activity"
 msgstr ""
@@ -6448,7 +6458,7 @@ msgstr ""
 msgid "Multiple tree selection field"
 msgstr ""
 
-#: app/frontend/apps/mobile/modules/home/views/Home.vue db/seeds/overviews.rb
+#: db/seeds/overviews.rb
 msgid "My Assigned Tickets"
 msgstr ""
 
@@ -6456,7 +6466,7 @@ msgstr ""
 msgid "My Organization Tickets"
 msgstr ""
 
-#: app/frontend/apps/mobile/modules/home/views/Home.vue db/seeds/overviews.rb
+#: db/seeds/overviews.rb
 msgid "My Pending Reached Tickets"
 msgstr ""
 
@@ -6468,7 +6478,7 @@ msgstr ""
 msgid "My Stats"
 msgstr ""
 
-#: app/frontend/apps/mobile/modules/home/views/Home.vue db/seeds/overviews.rb
+#: db/seeds/overviews.rb
 msgid "My Subscribed Tickets"
 msgstr ""
 
@@ -6839,6 +6849,10 @@ msgstr ""
 msgid "No email!"
 msgstr ""
 
+#: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
+msgid "No entries"
+msgstr ""
+
 #: app/controllers/integration/exchange_controller.rb
 msgid "No entries were found in the selected folder(s)."
 msgstr ""
@@ -7012,6 +7026,8 @@ msgstr ""
 #: app/assets/javascripts/app/models/postmaster_filter.coffee
 #: app/assets/javascripts/app/models/role.coffee
 #: app/assets/javascripts/app/models/signature.coffee
+#: app/assets/javascripts/app/models/text_module.coffee
+#: app/assets/javascripts/app/models/trigger.coffee
 #: app/assets/javascripts/app/models/webhook.coffee
 #: app/assets/javascripts/app/views/channel/topics.jst.eco
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
@@ -7647,6 +7663,10 @@ msgstr ""
 
 #: app/controllers/integration/exchange_controller.rb
 msgid "Please select at least one folder."
+msgstr ""
+
+#: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
+msgid "Please select at least one ticket overview"
 msgstr ""
 
 #: app/controllers/knowledge_base/manage_controller.rb
@@ -10157,13 +10177,16 @@ msgstr ""
 msgid "Ticket Number ignore system_id"
 msgstr ""
 
+#: app/frontend/apps/mobile/modules/home/routes.ts
+#: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
 #: app/frontend/apps/mobile/modules/home/views/Home.vue
+#: app/frontend/apps/mobile/modules/ticket/routes.ts
 #: app/frontend/apps/mobile/modules/ticket/views/TicketOverview.vue
 msgid "Ticket Overview"
 msgstr ""
 
-#: app/frontend/apps/mobile/modules/ticket/routes.ts
-msgid "Ticket Overviews"
+#: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
+msgid "Ticket Overview settings are saved"
 msgstr ""
 
 #: app/assets/javascripts/app/models/sla.coffee
@@ -10578,8 +10601,7 @@ msgstr ""
 msgid "URL (AJAX endpoint)"
 msgstr ""
 
-#: app/controllers/first_steps_controller.rb
-#: app/frontend/apps/mobile/modules/home/views/Home.vue db/seeds/overviews.rb
+#: app/controllers/first_steps_controller.rb db/seeds/overviews.rb
 msgid "Unassigned & Open Tickets"
 msgstr ""
 

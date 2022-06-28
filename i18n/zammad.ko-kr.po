@@ -3917,6 +3917,7 @@ msgstr ""
 msgid "Don't synchronize"
 msgstr ""
 
+#: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
 #: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 msgid "Done"
 msgstr ""
@@ -5424,6 +5425,7 @@ msgid "Holidays iCalendar Feed"
 msgstr "휴일을 iCalendar 피드"
 
 #: app/frontend/apps/mobile/modules/home/routes.ts
+#: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
 #: app/frontend/apps/mobile/modules/home/views/Home.vue
 msgid "Home"
 msgstr ""
@@ -5810,6 +5812,12 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco
 msgid "Include attachments of the article?"
 msgstr ""
+
+#: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
+#, fuzzy
+#| msgid "Overviews"
+msgid "Included ticket overviews"
+msgstr "Overviews"
 
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
 msgid "Including private key."
@@ -6864,6 +6872,12 @@ msgstr "Ticket 확대"
 msgid "More than 250 secondary organizations are not allowed."
 msgstr ""
 
+#: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
+#, fuzzy
+#| msgid "Overviews"
+msgid "More ticket overviews"
+msgstr "Overviews"
+
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
 msgid "Most recent activity"
 msgstr "최근 활동"
@@ -6898,7 +6912,7 @@ msgstr "대량 작업 실행!"
 msgid "Multiple tree selection field"
 msgstr ""
 
-#: app/frontend/apps/mobile/modules/home/views/Home.vue db/seeds/overviews.rb
+#: db/seeds/overviews.rb
 #, fuzzy
 #| msgid "My assigned Tickets"
 msgid "My Assigned Tickets"
@@ -6908,7 +6922,7 @@ msgstr "내 할당 된 Ticket"
 msgid "My Organization Tickets"
 msgstr "내 조직 Ticket"
 
-#: app/frontend/apps/mobile/modules/home/views/Home.vue db/seeds/overviews.rb
+#: db/seeds/overviews.rb
 #, fuzzy
 #| msgid "My pending reached Tickets"
 msgid "My Pending Reached Tickets"
@@ -6924,7 +6938,7 @@ msgstr "내 교체 Ticket"
 msgid "My Stats"
 msgstr "내 통계"
 
-#: app/frontend/apps/mobile/modules/home/views/Home.vue db/seeds/overviews.rb
+#: db/seeds/overviews.rb
 #, fuzzy
 #| msgid "My assigned Tickets"
 msgid "My Subscribed Tickets"
@@ -7311,6 +7325,12 @@ msgstr ""
 msgid "No email!"
 msgstr ""
 
+#: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
+#, fuzzy
+#| msgid "No Entries"
+msgid "No entries"
+msgstr "어떤 항목 없습니다"
+
 #: app/controllers/integration/exchange_controller.rb
 msgid "No entries were found in the selected folder(s)."
 msgstr ""
@@ -7490,6 +7510,8 @@ msgstr "구성되지 않음"
 #: app/assets/javascripts/app/models/postmaster_filter.coffee
 #: app/assets/javascripts/app/models/role.coffee
 #: app/assets/javascripts/app/models/signature.coffee
+#: app/assets/javascripts/app/models/text_module.coffee
+#: app/assets/javascripts/app/models/trigger.coffee
 #: app/assets/javascripts/app/models/webhook.coffee
 #: app/assets/javascripts/app/views/channel/topics.jst.eco
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
@@ -8154,6 +8176,10 @@ msgstr ""
 
 #: app/controllers/integration/exchange_controller.rb
 msgid "Please select at least one folder."
+msgstr ""
+
+#: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
+msgid "Please select at least one ticket overview"
 msgstr ""
 
 #: app/controllers/knowledge_base/manage_controller.rb
@@ -10852,17 +10878,20 @@ msgstr ""
 msgid "Ticket Number ignore system_id"
 msgstr ""
 
+#: app/frontend/apps/mobile/modules/home/routes.ts
+#: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
 #: app/frontend/apps/mobile/modules/home/views/Home.vue
+#: app/frontend/apps/mobile/modules/ticket/routes.ts
 #: app/frontend/apps/mobile/modules/ticket/views/TicketOverview.vue
 #, fuzzy
 #| msgid "New Overview"
 msgid "Ticket Overview"
 msgstr "새로운 Overview"
 
-#: app/frontend/apps/mobile/modules/ticket/routes.ts
+#: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
 #, fuzzy
 #| msgid "Overviews"
-msgid "Ticket Overviews"
+msgid "Ticket Overview settings are saved"
 msgstr "Overviews"
 
 #: app/assets/javascripts/app/models/sla.coffee
@@ -11299,8 +11328,7 @@ msgstr "URL"
 msgid "URL (AJAX endpoint)"
 msgstr ""
 
-#: app/controllers/first_steps_controller.rb
-#: app/frontend/apps/mobile/modules/home/views/Home.vue db/seeds/overviews.rb
+#: app/controllers/first_steps_controller.rb db/seeds/overviews.rb
 #, fuzzy
 #| msgid "Unassigned & Open"
 msgid "Unassigned & Open Tickets"

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-06-17 15:08+0000\n"
-"Last-Translator: francois littel <flittel@rentcompany.nl>\n"
+"PO-Revision-Date: 2022-06-24 03:30+0000\n"
+"Last-Translator: Wim Deprez <wim@tamale.nl>\n"
 "Language-Team: Dutch <https://translations.zammad.org/projects/zammad/zammad-"
 "development/nl/>\n"
 "Language: nl-nl\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.12.1\n"
+"X-Generator: Weblate 4.13\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -103,7 +103,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/ticket_article.coffee
 msgid "%s created article for |%s|"
-msgstr "%s maakte nototie voor |%s|"
+msgstr "%s maakte notitie voor |%s|"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 msgid "%s created data privacy task to delete user ID |%s|"
@@ -3894,6 +3894,7 @@ msgstr ""
 msgid "Don't synchronize"
 msgstr "Niet sychroniseren"
 
+#: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
 #: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 msgid "Done"
 msgstr "Klaar"
@@ -5391,6 +5392,7 @@ msgid "Holidays iCalendar Feed"
 msgstr "Vakantie iKalender Feederen"
 
 #: app/frontend/apps/mobile/modules/home/routes.ts
+#: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
 #: app/frontend/apps/mobile/modules/home/views/Home.vue
 msgid "Home"
 msgstr "Home"
@@ -5800,6 +5802,12 @@ msgstr "Incident"
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco
 msgid "Include attachments of the article?"
 msgstr "Bijlagen van de notitie toevoegen?"
+
+#: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
+#, fuzzy
+#| msgid "Ticket Overviews"
+msgid "Included ticket overviews"
+msgstr "Ticket Overzichten"
 
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
 msgid "Including private key."
@@ -6829,6 +6837,12 @@ msgstr "Stemming"
 msgid "More than 250 secondary organizations are not allowed."
 msgstr ""
 
+#: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
+#, fuzzy
+#| msgid "Ticket Overviews"
+msgid "More ticket overviews"
+msgstr "Ticket Overzichten"
+
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
 msgid "Most recent activity"
 msgstr "recentste activiteit"
@@ -6861,7 +6875,7 @@ msgstr "Meerkeuzeselectie veld"
 msgid "Multiple tree selection field"
 msgstr "Meerkeuze genest selectieveld"
 
-#: app/frontend/apps/mobile/modules/home/views/Home.vue db/seeds/overviews.rb
+#: db/seeds/overviews.rb
 msgid "My Assigned Tickets"
 msgstr "Mijn Toegewezen Tickets"
 
@@ -6869,7 +6883,7 @@ msgstr "Mijn Toegewezen Tickets"
 msgid "My Organization Tickets"
 msgstr "Mijn organisatie Tickets"
 
-#: app/frontend/apps/mobile/modules/home/views/Home.vue db/seeds/overviews.rb
+#: db/seeds/overviews.rb
 msgid "My Pending Reached Tickets"
 msgstr "Mijn Overschreden Tickets"
 
@@ -6881,7 +6895,7 @@ msgstr "Mijn Vervangende Tickets"
 msgid "My Stats"
 msgstr "MIjn statistieken"
 
-#: app/frontend/apps/mobile/modules/home/views/Home.vue db/seeds/overviews.rb
+#: db/seeds/overviews.rb
 msgid "My Subscribed Tickets"
 msgstr "Mijn Geabonneerde Tickets"
 
@@ -7256,6 +7270,12 @@ msgstr "Geen inhoud om weer te geven"
 msgid "No email!"
 msgstr "Geen e-mail!"
 
+#: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
+#, fuzzy
+#| msgid "No Entries"
+msgid "No entries"
+msgstr "Geen Ingangen"
+
 #: app/controllers/integration/exchange_controller.rb
 msgid "No entries were found in the selected folder(s)."
 msgstr "Er zijn geen items gevonden in de geselecteerde map(pen)."
@@ -7433,6 +7453,8 @@ msgstr "Niet geconfigureerd"
 #: app/assets/javascripts/app/models/postmaster_filter.coffee
 #: app/assets/javascripts/app/models/role.coffee
 #: app/assets/javascripts/app/models/signature.coffee
+#: app/assets/javascripts/app/models/text_module.coffee
+#: app/assets/javascripts/app/models/trigger.coffee
 #: app/assets/javascripts/app/models/webhook.coffee
 #: app/assets/javascripts/app/views/channel/topics.jst.eco
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
@@ -8084,6 +8106,12 @@ msgstr "Voeg a.u.b. een correcte URL toe."
 
 #: app/controllers/integration/exchange_controller.rb
 msgid "Please select at least one folder."
+msgstr "Selecteer ten minste één map."
+
+#: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
+#, fuzzy
+#| msgid "Please select at least one folder."
+msgid "Please select at least one ticket overview"
 msgstr "Selecteer ten minste één map."
 
 #: app/controllers/knowledge_base/manage_controller.rb
@@ -10708,13 +10736,18 @@ msgstr "Ticketnummer via datum"
 msgid "Ticket Number ignore system_id"
 msgstr "Ticketnummer negeert system_id"
 
+#: app/frontend/apps/mobile/modules/home/routes.ts
+#: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
 #: app/frontend/apps/mobile/modules/home/views/Home.vue
+#: app/frontend/apps/mobile/modules/ticket/routes.ts
 #: app/frontend/apps/mobile/modules/ticket/views/TicketOverview.vue
 msgid "Ticket Overview"
 msgstr "Ticket overzicht"
 
-#: app/frontend/apps/mobile/modules/ticket/routes.ts
-msgid "Ticket Overviews"
+#: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
+#, fuzzy
+#| msgid "Ticket Overviews"
+msgid "Ticket Overview settings are saved"
 msgstr "Ticket Overzichten"
 
 #: app/assets/javascripts/app/models/sla.coffee
@@ -11147,8 +11180,7 @@ msgstr "URL"
 msgid "URL (AJAX endpoint)"
 msgstr "URL (AJAX endpoint)"
 
-#: app/controllers/first_steps_controller.rb
-#: app/frontend/apps/mobile/modules/home/views/Home.vue db/seeds/overviews.rb
+#: app/controllers/first_steps_controller.rb db/seeds/overviews.rb
 msgid "Unassigned & Open Tickets"
 msgstr "Niet toegewezen & Openstaande Tickets"
 
