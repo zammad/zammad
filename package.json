@@ -97,7 +97,7 @@
     "@rails/actioncable": "6.0.5",
     "@tiptap/core": "^2.0.0-beta.181",
     "@tiptap/extension-image": "^2.0.0-beta.30",
-    "@tiptap/extension-link": "^2.0.0-beta.42",
+    "@tiptap/extension-link": "^2.0.0-beta.43",
     "@tiptap/extension-list-item": "^2.0.0-beta.23",
     "@tiptap/extension-mention": "^2.0.0-beta.101",
     "@tiptap/extension-ordered-list": "^2.0.0-beta.30",
