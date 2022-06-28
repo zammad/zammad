@@ -128,6 +128,10 @@ returns
 =end
 
   def attributes_with_association_ids
+    key = "#{self.class}::aws::#{id}"
+    cache = Rails.cache.read(key)
+    return filter_unauthorized_attributes(cache) if cache && cache['updated_at'] == try(:updated_at)
+
     attributes = self.attributes
     relevant   = %i[has_and_belongs_to_many has_many]
     eager_load = []
@@ -163,6 +167,8 @@ returns
     end
 
     filter_attributes(attributes)
+
+    Rails.cache.write(key, attributes)
     filter_unauthorized_attributes(attributes)
   end
 
