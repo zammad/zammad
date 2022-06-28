@@ -117,8 +117,7 @@ RSpec.shared_examples 'HasHistory' do |history_relation_object: []|
       end
 
       it 'returns a hash including FE assets of self and related objects' do
-        expect(subject.history_get(true))
-          .to include(assets: hash_including(subject.assets({})))
+        expect(subject.history_get(true)[:assets][described_class.to_app_model]).to include(subject.assets({})[described_class.to_app_model])
       end
     end
   end

@@ -15,15 +15,6 @@ RSpec.shared_examples 'ApplicationModel::CanAssets' do |associations: [], select
 
     include_examples 'own asset attributes' if own_attributes
 
-    describe 'for created_by & updated_by users' do
-      let(:users) { User.where(id: subject.attributes.slice('created_by_id', 'updated_by_id').values) }
-      let(:users_assets) { users.reduce({}) { |assets_hash, user| user.assets(assets_hash) } }
-
-      it 'returns a hash with their asset attributes' do
-        expect(subject.assets({})[:User]).to include(users_assets[:User])
-      end
-    end
-
     context 'when given a non-empty hash' do
       let(:hash) { { described_class.to_app_model => { foo: 'bar' } } }
 
@@ -65,7 +56,7 @@ RSpec.shared_examples 'ApplicationModel::CanAssets' do |associations: [], select
           let(:collection_assets) { collection.reduce({}) { |assets_hash, single| single.assets(assets_hash) } }
 
           it 'returns a hash with their asset attributes' do
-            expect(subject.assets({})).to include(collection_assets)
+            expect(subject.assets({})[reflection.klass.to_app_model]).to include(collection_assets[reflection.klass.to_app_model])
           end
 
           context 'after association has been modified' do

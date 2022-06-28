@@ -783,13 +783,6 @@ RSpec.describe 'User', type: :request, performs_jobs: true do
       expect(json_response['assets']['User'][user.id.to_s]['firstname']).to eq(user.firstname)
       expect(json_response['assets']['User'][user.id.to_s]['lastname']).to eq(user.lastname)
       expect(json_response['assets']['User'][user.id.to_s]['password']).to be_falsey
-
-      expect(json_response['assets']['User'][admin.id.to_s]).to be_truthy
-      expect(json_response['assets']['User'][admin.id.to_s]['id']).to eq(admin.id)
-      expect(json_response['assets']['User'][admin.id.to_s]['firstname']).to eq(admin.firstname)
-      expect(json_response['assets']['User'][admin.id.to_s]['lastname']).to eq(admin.lastname)
-      expect(json_response['assets']['User'][admin.id.to_s]['password']).to be_falsey
-
     end
 
     it 'does ticket update and response formats (04.04)' do
@@ -854,13 +847,6 @@ RSpec.describe 'User', type: :request, performs_jobs: true do
       expect(json_response['assets']['User'][user.id.to_s]['firstname']).to eq(params[:firstname])
       expect(json_response['assets']['User'][user.id.to_s]['lastname']).to eq(user.lastname)
       expect(json_response['assets']['User'][user.id.to_s]['password']).to be_falsey
-
-      expect(json_response['assets']['User'][admin.id.to_s]).to be_truthy
-      expect(json_response['assets']['User'][admin.id.to_s]['id']).to eq(admin.id)
-      expect(json_response['assets']['User'][admin.id.to_s]['firstname']).to eq(admin.firstname)
-      expect(json_response['assets']['User'][admin.id.to_s]['lastname']).to eq(admin.lastname)
-      expect(json_response['assets']['User'][admin.id.to_s]['password']).to be_falsey
-
     end
 
     it 'does csv example - customer no access (05.01)' do
