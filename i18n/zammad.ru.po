@@ -2,17 +2,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-05-29 03:30+0000\n"
+"PO-Revision-Date: 2022-06-28 05:33+0000\n"
 "Last-Translator: Zhilin Ruslan <x-th-unicorn@hotmail.com>\n"
 "Language-Team: Russian <https://translations.zammad.org/projects/zammad/"
-"zammad-development/ru/>\n"
+"zammad-stable/ru/>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.12.1\n"
+"X-Generator: Weblate 4.13\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -239,10 +239,8 @@ msgstr "%s переключился на |%s|!"
 
 #: app/frontend/apps/mobile/components/Organization/OrganizationItem.vue
 #: app/frontend/apps/mobile/components/User/UserItem.vue
-#, fuzzy
-#| msgid "assign tickets"
 msgid "%s tickets"
-msgstr "назначить заявки"
+msgstr "%s заявки"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee
 msgid "%s updated article for |%s|"
@@ -529,7 +527,7 @@ msgstr "Ключ программного интерфейса приложен�
 
 #: app/frontend/apps/mobile/modules/account/views/AccountOverview.vue
 msgid "About"
-msgstr ""
+msgstr "Об"
 
 #: db/seeds/permissions.rb
 msgid "Access to %s"
@@ -1199,10 +1197,8 @@ msgid "At least one user needs to have admin permissions."
 msgstr "По крайней мере, один пользователь должен иметь права администратора."
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
-#, fuzzy
-#| msgid "Attachments"
 msgid "Attached"
-msgstr "Вложения"
+msgstr "Вложенный"
 
 #: app/assets/javascripts/app/views/generic/attachments.jst.eco
 #: app/views/knowledge_base/public/answers/show.html.erb
@@ -1210,10 +1206,8 @@ msgid "Attached Files"
 msgstr "Прикрепленные файлы"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
-#, fuzzy
-#| msgid "Attachments"
 msgid "Attachment"
-msgstr "Вложения"
+msgstr "Вложение"
 
 #: db/seeds/settings.rb
 msgid "Attachment - Search for follow-up also in attachments."
@@ -1396,10 +1390,8 @@ msgid "Back to my view"
 msgstr "Вернуться к моему виду"
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
-#, fuzzy
-#| msgid "Back to my view"
 msgid "Back to overview"
-msgstr "Вернуться к моему виду"
+msgstr "Назад к обзору"
 
 #: app/assets/javascripts/app/views/knowledge_base/reader.jst.eco
 msgid "Back to search results"
@@ -4395,16 +4387,12 @@ msgstr ""
 "интерфейс."
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
-#, fuzzy
-#| msgid "closed"
 msgid "Enclosed"
-msgstr "Закрыта"
+msgstr "Приложенный"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
-#, fuzzy
-#| msgid "close"
 msgid "Enclosure"
-msgstr "закрыть"
+msgstr "Вложение"
 
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
@@ -5589,6 +5577,8 @@ msgid ""
 "If a user is found in two (or more) configured LDAP sources, the last "
 "synchronisation will win."
 msgstr ""
+"Если пользователь найден в двух (или более) настроенных источниках LDAP, "
+"последняя синхронизация будет иметь преимущество."
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
 msgid ""
@@ -5837,6 +5827,8 @@ msgid ""
 "In order to be able to influence the desired behaviour in this regard, you "
 "can influence the order of the LDAP sources via drag & drop."
 msgstr ""
+"Чтобы влиять на поведение в этом отношении, вы можете изменить порядок "
+"источников LDAP, перетаскивая их мышью."
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
@@ -6007,16 +5999,12 @@ msgid "Internal"
 msgstr "Внутренний"
 
 #: app/models/import_job.rb
-#, fuzzy
-#| msgid ""
-#| "Interrupted by scheduler restart. Please restart manually or wait till "
-#| "next execution time."
 msgid ""
 "Interrupted by a restart of the background worker process. Please restart "
 "manually or wait until the next execution time."
 msgstr ""
-"Прервано перезапуском планировщика. Пожалуйста, перезапустите вручную или "
-"дождитесь следующего времени выполнения."
+"Прервано перезапуском фонового рабочего процесса. Пожалуйста, перезапустите "
+"вручную или дождитесь следующего времени выполнения."
 
 #: app/controllers/first_steps_controller.rb
 msgid "Intro"
@@ -6360,10 +6348,8 @@ msgid "Last run"
 msgstr "Последний запуск"
 
 #: app/frontend/apps/mobile/modules/search/views/SearchOverview.vue
-#, fuzzy
-#| msgid "Last sync"
 msgid "Last searches"
-msgstr "Последняя синхронизация"
+msgstr "Последние запросы"
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
@@ -6388,7 +6374,7 @@ msgstr "Макет"
 
 #: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
 msgid "Library"
-msgstr ""
+msgstr "Библиотека"
 
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
 msgid "Limit Groups"
@@ -7167,10 +7153,8 @@ msgid "New Scheduler"
 msgstr "Новое Расписание"
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
-#, fuzzy
-#| msgid "Source"
 msgid "New Source"
-msgstr "Оригинал"
+msgstr "Новый источник"
 
 #: app/assets/javascripts/app/views/tag/index.jst.eco db/seeds/settings.rb
 msgid "New Tags"
@@ -7316,10 +7300,8 @@ msgid "No code for session found!"
 msgstr "Код сеанса не найден!"
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
-#, fuzzy
-#| msgid "Save configuration"
 msgid "No configuration set."
-msgstr "Сохранить конфигурацию"
+msgstr "Не задана конфигурация."
 
 #: app/models/calendar.rb
 msgid "No configured business hours found!"
@@ -7359,10 +7341,8 @@ msgid "No linked issues"
 msgstr "Нет связанных проблем"
 
 #: app/frontend/apps/mobile/modules/search/views/SearchOverview.vue
-#, fuzzy
-#| msgid "Show previous tab"
 msgid "No previous searches"
-msgstr "Показать предыдущую вкладку"
+msgstr "Нет предыдущих запросов"
 
 #: db/seeds/settings.rb
 msgid "No proxy for the following hosts."
@@ -9226,10 +9206,8 @@ msgid "Settings"
 msgstr "Параметры"
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
-#, fuzzy
-#| msgid "Settings"
 msgid "Settings %s"
-msgstr "Параметры"
+msgstr "Параметры %s"
 
 #: app/assets/javascripts/app/controllers/getting_started/finish.coffee
 #: app/assets/javascripts/app/views/getting_started/finish.jst.eco
@@ -9496,10 +9474,8 @@ msgid "Source"
 msgstr "Оригинал"
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
-#, fuzzy
-#| msgid "Source"
 msgid "Sources"
-msgstr "Оригинал"
+msgstr "Источники"
 
 #: db/seeds/settings.rb
 msgid "Special character required"
@@ -10866,10 +10842,8 @@ msgid "Ticket failed to save: %s"
 msgstr "Заявку не удалось сохранить: %s"
 
 #: app/frontend/apps/mobile/modules/account/views/AccountOverview.vue
-#, fuzzy
-#| msgid "Block Notifications"
 msgid "Ticket notifications"
-msgstr "Блокировка уведомлений"
+msgstr "Уведомления о заявках"
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 msgid "Ticket reminder reached"
@@ -11488,6 +11462,8 @@ msgstr "Использовать время самой последней ста
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 msgid "Use this switch to start synchronization of your ldap sources. "
 msgstr ""
+"Используйте этот переключатель, чтобы начать синхронизацию ваших источников "
+"LDAP. "
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Used anywhere"
@@ -12659,16 +12635,12 @@ msgid "at"
 msgstr "в"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
-#, fuzzy
-#| msgid "reached"
 msgid "attached"
-msgstr "достигнуто"
+msgstr "прикрепленный"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
-#, fuzzy
-#| msgid "Attachments"
 msgid "attachment"
-msgstr "Вложения"
+msgstr "вложение"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "auto select"
@@ -12842,14 +12814,12 @@ msgid "edit"
 msgstr "редактировать"
 
 #: app/frontend/apps/mobile/composables/useEditedBy.ts
-#, fuzzy
-#| msgid "edit"
 msgid "edited %s"
-msgstr "редактировать"
+msgstr "отредактировано %s"
 
 #: app/frontend/apps/mobile/composables/useEditedBy.ts
 msgid "edited %s by %s"
-msgstr ""
+msgstr "отредактировано %s пользователем %s"
 
 #: db/seeds/ticket_article_types.rb
 msgid "email"
@@ -12860,16 +12830,12 @@ msgid "email sent to '%s'"
 msgstr "письмо отправлено на '%s'"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
-#, fuzzy
-#| msgid "closed"
 msgid "enclosed"
-msgstr "Закрыта"
+msgstr "приложенный"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
-#, fuzzy
-#| msgid "close"
 msgid "enclosure"
-msgstr "закрыть"
+msgstr "приложение"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "escalated"
@@ -13120,10 +13086,8 @@ msgid "maybe"
 msgstr "может быть"
 
 #: app/frontend/apps/mobile/composables/useEditedBy.ts
-#, fuzzy
-#| msgid "m"
 msgid "me"
-msgstr "м"
+msgstr "мне"
 
 #: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
 msgid "merged"

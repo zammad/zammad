@@ -2,13 +2,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: \n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2022-06-28 05:33+0000\n"
+"Last-Translator: DjMagicFingers <amir@srvit.co.il>\n"
+"Language-Team: Hebrew (Israel) <https://translations.zammad.org/projects/"
+"zammad/zammad-stable/he_IL/>\n"
 "Language: he-il\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
+"n % 10 == 0) ? 2 : 3));\n"
+"X-Generator: Weblate 4.13\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -44,7 +48,7 @@ msgstr "dd/mm/yyyy HH:MM"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid " to "
-msgstr ""
+msgstr " אל "
 
 #: db/seeds/settings.rb
 msgid ""
