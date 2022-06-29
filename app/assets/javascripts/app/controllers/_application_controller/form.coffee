@@ -784,7 +784,8 @@ class App.ControllerForm extends App.Controller
     # set autofocus by delay to make validation testable
     App.Delay.set(
       ->
-        lookupForm.find('.has-error').find('input, textarea, select').first().trigger('focus')
+        # make sure to work for all field types (e.g. column_select which is an hidden select)
+        lookupForm.find('.has-error').get(0)?.scrollIntoView(true)
       200
       'validate'
     )
