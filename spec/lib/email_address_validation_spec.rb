@@ -35,6 +35,18 @@ RSpec.describe EmailAddressValidation do
       include_examples 'email address validity', valid: true, check_mx: false
     end
 
+    describe 'with special characters' do
+      let(:email_address) { '"a+ddress="@example.com' }
+
+      include_examples 'email address validity', valid: true, check_mx: false
+    end
+
+    describe 'with short legacy gmail address' do
+      let(:email_address) { 'you@gmail.com' }
+
+      include_examples 'email address validity', valid: true, check_mx: false
+    end
+
     describe 'when max length' do
       let(:email_address) { 'trulyverylongpastasdomainnamehere.trulyverylongpastasdomainnamee@trulyverylongpastasdomainnameheredoublethatloremipsumnamecodena.trulyverylongpastasdomainnameheredoublethatloremipsumnamecodena.trulyverylongpastasdomainnameheredoublethatloremipsumname.com' }
 

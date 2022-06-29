@@ -23,11 +23,8 @@ class EmailAddressValidation
   # @return [true]  if email address has valid format
   # @return [false] if email address has no valid format
   def valid?(check_mx: false)
-    EmailAddressValidator.valid? email_address,
-                                 host_validation:  (check_mx ? :mx : :syntax),
-                                 local_encoding:   :unicode,
-                                 host_local:       true,
-                                 host_fqdn:        false,
-                                 host_auto_append: false
+    host_validation_type = check_mx ? :mx : :syntax
+
+    EmailAddressValidator.valid? email_address, host_validation: host_validation_type
   end
 end
