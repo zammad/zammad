@@ -7,6 +7,10 @@ RSpec.describe Auth do
   let(:user)     { create(:user, password: password) }
   let(:instance) { described_class.new(user.login, password) }
 
+  before do
+    stub_const('Auth::BRUTE_FORCE_SLEEP', 0)
+  end
+
   describe '.valid?' do
     it 'responds to valid?' do
       expect(instance).to respond_to(:valid?)
@@ -83,7 +87,8 @@ RSpec.describe Auth do
         it 'failed login avoids brute force attack' do
           allow(instance).to receive(:sleep)
           instance.valid?
-          expect(instance).to have_received(:sleep).with(1)
+          # sleep receives the stubbed value.
+          expect(instance).to have_received(:sleep).with(0)
         end
       end
 

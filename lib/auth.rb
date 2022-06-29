@@ -8,6 +8,8 @@ class Auth
 
   attr_accessor :increase_login_failed_attempts
 
+  BRUTE_FORCE_SLEEP = 1.second
+
   # Initializes a Auth object for the given user.
   #
   # @param username [String] the user name for the user object which needs an authentication.
@@ -28,20 +30,21 @@ class Auth
   #
   # @return [Boolean] true if the user was authenticated, otherwise false.
   def valid?
-    if !auth_user || !auth_user.can_login?
-      avoid_brute_force_attack
+    # Wrap in a lock to synchronize concurrent requests.
+    validated = auth_user&.user&.with_lock do
+      next false if !auth_user.can_login?
+      next true if backends.valid?
 
-      return false
+      auth_user.increase_login_failed if increase_login_failed_attempts
+      false
     end
 
-    if backends.valid?
+    if validated
       auth_user.update_last_login
       return true
     end
 
     avoid_brute_force_attack
-
-    auth_user.increase_login_failed if increase_login_failed_attempts
     false
   end
 
@@ -49,7 +52,7 @@ class Auth
 
   # Sleep for a second to avoid brute force attacks.
   def avoid_brute_force_attack
-    sleep 1
+    sleep BRUTE_FORCE_SLEEP
   end
 
   def backends
