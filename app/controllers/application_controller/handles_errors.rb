@@ -56,8 +56,14 @@ module ApplicationController::HandlesErrors
     # check if a special authorization_error should be shown in the result payload
     # which was raised in one of the policies. Fall back to a simple "Not authorized"
     # error to hide actual cause for security reasons.
-    exeption = e.policy&.custom_exception || Exceptions::Forbidden.new(__('Not authorized'))
-    forbidden(exeption)
+    exception = e.policy&.custom_exception || Exceptions::Forbidden.new(__('Not authorized'))
+
+    case exception
+    when ActiveRecord::RecordNotFound
+      not_found(exception)
+    else
+      forbidden(exception)
+    end
   end
 
   private

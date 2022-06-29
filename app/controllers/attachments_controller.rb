@@ -82,10 +82,7 @@ class AttachmentsController < ApplicationController
     render json: { error: e.message }, status: :unprocessable_entity
   end
 
-  def authorize!
-    record = download_file&.store_object&.name&.safe_constantize&.find(download_file.o_id)
-    authorize(record) if record
-  rescue Pundit::NotAuthorizedError
-    raise ActiveRecord::RecordNotFound
+  def user_not_authorized(e)
+    not_found(e)
   end
 end

@@ -24,6 +24,10 @@ class KnowledgeBase::AnswerPolicy < ApplicationPolicy
     access_editor?
   end
 
+  def user_required?
+    false
+  end
+
   private
 
   def access
