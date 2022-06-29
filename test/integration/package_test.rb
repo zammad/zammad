@@ -352,9 +352,9 @@ class PackageTest < ActiveSupport::TestCase
         end
       when 'auto_install'
         if test[:zpm]
-          if !File.exist?(Rails.root.join('auto_install'))
-            Dir.mkdir(Rails.root.join('auto_install'), 0o755)
-          end
+
+          FileUtils.mkdir_p(Rails.root.join('auto_install'))
+
           location = Rails.root.join('auto_install/unittest.zpm')
           file = File.new(location, 'wb')
           file.write(test[:zpm])

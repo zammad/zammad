@@ -47,9 +47,9 @@ curl http://localhost/api/v1/user_access_token -v -u #{login}:#{password}
                .each { |permission| permission.preferences['disabled'] = true }
 
     render json: {
-      tokens:      tokens.map(&:attributes),
-      permissions: permissions.map(&:attributes),
-    }, status: :ok
+             tokens:      tokens.map(&:attributes),
+             permissions: permissions.map(&:attributes),
+           }, status: :ok
   end
 
 =begin
@@ -93,8 +93,8 @@ curl http://localhost/api/v1/user_access_token -v -u #{login}:#{password} -H "Co
       }
     )
     render json: {
-      name: token.name,
-    }, status: :ok
+             name: token.name,
+           }, status: :ok
   end
 
 =begin

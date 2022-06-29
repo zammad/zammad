@@ -65,8 +65,8 @@ class FormController < ApplicationController
 
     if errors.present?
       render json: {
-        errors: errors
-      }, status: :ok
+               errors: errors
+             }, status: :ok
       return
     end
 

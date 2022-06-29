@@ -601,18 +601,18 @@ RSpec.describe 'Ticket zoom', type: :system do
         context 'success' do
           it 'shows encryption/sign information' do
             create(:ticket_article, preferences: {
-                     security: {
-                       type:       'S/MIME',
-                       encryption: {
-                         success: true,
-                         comment: 'COMMENT_ENCRYPT_SUCCESS',
-                       },
-                       sign:       {
-                         success: true,
-                         comment: 'COMMENT_SIGN_SUCCESS',
-                       },
-                     }
-                   }, ticket: ticket)
+                                      security: {
+                                        type:       'S/MIME',
+                                        encryption: {
+                                          success: true,
+                                          comment: 'COMMENT_ENCRYPT_SUCCESS',
+                                        },
+                                        sign:       {
+                                          success: true,
+                                          comment: 'COMMENT_SIGN_SUCCESS',
+                                        },
+                                      }
+                                    }, ticket: ticket)
 
             visit "#ticket/zoom/#{ticket.id}"
 
@@ -632,18 +632,18 @@ RSpec.describe 'Ticket zoom', type: :system do
 
           it 'shows create information about encryption/sign failed' do
             create(:ticket_article, preferences: {
-                     security: {
-                       type:       'S/MIME',
-                       encryption: {
-                         success: false,
-                         comment: 'Encryption failed because XXX',
-                       },
-                       sign:       {
-                         success: false,
-                         comment: 'Sign failed because XXX',
-                       },
-                     }
-                   }, ticket: ticket)
+                                      security: {
+                                        type:       'S/MIME',
+                                        encryption: {
+                                          success: false,
+                                          comment: 'Encryption failed because XXX',
+                                        },
+                                        sign:       {
+                                          success: false,
+                                          comment: 'Sign failed because XXX',
+                                        },
+                                      }
+                                    }, ticket: ticket)
             visit "#ticket/zoom/#{ticket.id}"
 
             expect(page).to have_css('svg.icon-not-signed')

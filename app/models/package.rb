@@ -477,9 +477,8 @@ execute all pending package migrations at once
 
     # install file
     logger.info "NOTICE: uninstall '#{location}'"
-    if File.exist?(location)
-      File.delete(location)
-    end
+
+    FileUtils.rm_rf(location)
 
     # rename existing file
     backup_location = "#{location}.save"

@@ -70,9 +70,9 @@ curl http://localhost/api/v1/online_notifications -v -u #{login}:#{password}
         assets = item.assets(assets)
       end
       render json: {
-        record_ids: item_ids,
-        assets:     assets,
-      }, status: :ok
+               record_ids: item_ids,
+               assets:     assets,
+             }, status: :ok
       return
     end
 

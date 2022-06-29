@@ -35,9 +35,8 @@ class Sessions::Store::File
     path = "#{@path}/"
 
     # just make sure that spool path exists
-    if !File.exist?(path)
-      FileUtils.mkpath path
-    end
+
+    FileUtils.mkdir_p path
 
     data = []
     Dir.foreach(path) do |entry|
@@ -198,9 +197,8 @@ class Sessions::Store::File
   end
 
   def add_node(node_id, data)
-    if !File.exist?(@nodes_path)
-      FileUtils.mkpath @nodes_path
-    end
+
+    FileUtils.mkdir_p @nodes_path
 
     status_file = "#{@nodes_path}/#{node_id}.status"
 
@@ -233,9 +231,8 @@ class Sessions::Store::File
   end
 
   def create_node_session(node_id, client_id, data)
-    if !File.exist?(@nodes_path)
-      FileUtils.mkpath @nodes_path
-    end
+
+    FileUtils.mkdir_p @nodes_path
 
     status_file = "#{@nodes_path}/#{node_id}.#{client_id}.session"
     content = data.to_json
