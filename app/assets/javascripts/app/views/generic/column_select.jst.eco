@@ -9,6 +9,7 @@
   <%= @attribute.autofocus %>
   value="<%= @attribute.value %>"
   multiple
+  disabled
 >
   <% for option in @allOptions: %>
   <option value="<%= option.value %>" <%= ' selected' if option.selected %>><%= option.name %></option>
