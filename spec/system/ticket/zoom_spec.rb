@@ -1509,7 +1509,7 @@ RSpec.describe 'Ticket zoom', type: :system do
         within :active_content do
           # timepicker messes with the dom, so don't cache the element and wait a bit.
           sleep 1
-          find('.js-timepicker').click(x: 10, y: 20)
+          find('.js-timepicker').click(x: -10, y: 20)
           sleep 0.5
           expect(find('.js-timepicker')).to have_selection(0..2)
         end
@@ -1518,7 +1518,7 @@ RSpec.describe 'Ticket zoom', type: :system do
       it 'in the second half, minutes selected' do
         within :active_content do
           sleep 1
-          find('.js-timepicker').click(x: 35, y: 20)
+          find('.js-timepicker').click(x: 10, y: 20)
           sleep 0.5
           expect(find('.js-timepicker')).to have_selection(3..5)
         end
