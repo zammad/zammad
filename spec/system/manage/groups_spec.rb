@@ -84,4 +84,20 @@ RSpec.describe 'Manage > Groups', type: :system do
       expect(Group.find_by(name: 'Users').assignment_timeout).to be_nil
     end
   end
+
+  context 'Issue 4129 - Tooltips are not displayed correctly' do
+    before do
+      visit '/#manage/groups'
+    end
+
+    it 'renders tooltips correctly' do
+      find('td', text: 'Users').click
+
+      in_modal do
+        find('div.select[data-attribute-name="follow_up_possible"] .js-helpMessage').hover
+
+        expect(page).to have_css('div.tooltip')
+      end
+    end
+  end
 end

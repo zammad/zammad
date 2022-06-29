@@ -175,6 +175,7 @@ class App.FormHandlerCoreWorkflow
         )
 
         form.find('[name="' + field + '"]').closest('.form-group').replaceWith(newElement)
+        form.find('[name="' + field + '"]').closest('.form-group').find('.js-helpMessage').tooltip()
 
         if shown
           ui.show(field, form)
