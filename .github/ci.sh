@@ -40,4 +40,3 @@ bundle exec rspec -t ~type:system -t ~searchindex -t ~required_envs
 bundle exec rake zammad:db:reset
 bundle exec rake test:units
 ruby -I test/ test/integration/object_manager_test.rb
-ruby -I test/ test/integration/package_test.rb
