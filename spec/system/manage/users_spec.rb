@@ -136,13 +136,15 @@ RSpec.describe 'Manage > Users', type: :system do
         scroll_into_view 'table.settings-list'
         within 'table.settings-list tbody tr:first-child' do
           click 'input[value="full"]', visible: :all
-          expect(find('input[value="full"]', visible: :all).checked?).to be true
+          expect(find('input[value="full"]', visible: :all)).to be_checked
+
           click 'input[value="read"]', visible: :all
-          expect(find('input[value="full"]', visible: :all).checked?).to be false
-          expect(find('input[value="read"]', visible: :all).checked?).to be true
+          expect(find('input[value="full"]', visible: :all)).not_to be_checked
+          expect(find('input[value="read"]', visible: :all)).to be_checked
+
           click 'input[value="full"]', visible: :all
-          expect(find('input[value="full"]', visible: :all).checked?).to be true
-          expect(find('input[value="read"]', visible: :all).checked?).to be false
+          expect(find('input[value="full"]', visible: :all)).to be_checked
+          expect(find('input[value="read"]', visible: :all)).not_to be_checked
         end
       end
     end
