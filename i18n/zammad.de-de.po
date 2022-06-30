@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-06-20 07:48+0000\n"
+"PO-Revision-Date: 2022-06-30 09:25+0000\n"
 "Last-Translator: Martin Gruner <mg@zammad.com>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
 "zammad-development/de/>\n"
@@ -5869,10 +5869,8 @@ msgid "Include attachments of the article?"
 msgstr "Anhänge des Artikels mit beifügen?"
 
 #: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
-#, fuzzy
-#| msgid "Ticket Overviews"
 msgid "Included ticket overviews"
-msgstr "Ticket-Übersichten"
+msgstr "Enthaltene Ticket-Übersichten"
 
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
 msgid "Including private key."
@@ -6902,10 +6900,8 @@ msgid "More than 250 secondary organizations are not allowed."
 msgstr "Mehr als 250 sekundäre Organisationen sind nicht zulässig."
 
 #: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
-#, fuzzy
-#| msgid "Ticket Overviews"
 msgid "More ticket overviews"
-msgstr "Ticket-Übersichten"
+msgstr "Weitere Ticket-Übersichten"
 
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
 msgid "Most recent activity"
@@ -7333,8 +7329,6 @@ msgid "No email!"
 msgstr "Keine E-Mail!"
 
 #: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
-#, fuzzy
-#| msgid "No Entries"
 msgid "No entries"
 msgstr "Keine Einträge"
 
@@ -8173,10 +8167,8 @@ msgid "Please select at least one folder."
 msgstr "Bitte wählen Sie mindestens einen Ordner."
 
 #: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
-#, fuzzy
-#| msgid "Please select at least one folder."
 msgid "Please select at least one ticket overview"
-msgstr "Bitte wählen Sie mindestens einen Ordner."
+msgstr "Bitte wählen Sie mindestens eine Ticket-Übersicht aus"
 
 #: app/controllers/knowledge_base/manage_controller.rb
 msgid "Please submit custom address before generating the snippet"
@@ -10833,10 +10825,8 @@ msgid "Ticket Overview"
 msgstr "Ticket-Übersicht"
 
 #: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
-#, fuzzy
-#| msgid "Ticket Overviews"
 msgid "Ticket Overview settings are saved"
-msgstr "Ticket-Übersichten"
+msgstr "Einstellungen zu Ticket-Übersichten werden gespeichert"
 
 #: app/assets/javascripts/app/models/sla.coffee
 msgid "Ticket Selector"

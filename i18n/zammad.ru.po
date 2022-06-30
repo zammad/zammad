@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-06-28 03:30+0000\n"
+"PO-Revision-Date: 2022-06-30 09:22+0000\n"
 "Last-Translator: Zhilin Ruslan <x-th-unicorn@hotmail.com>\n"
 "Language-Team: Russian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/ru/>\n"
@@ -5857,10 +5857,8 @@ msgid "Include attachments of the article?"
 msgstr "Включить вложения в статью?"
 
 #: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
-#, fuzzy
-#| msgid "Ticket Overviews"
 msgid "Included ticket overviews"
-msgstr "Представления заявок"
+msgstr "Включенные представления заявок"
 
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
 msgid "Including private key."
@@ -6896,10 +6894,8 @@ msgid "More than 250 secondary organizations are not allowed."
 msgstr "Не допускается наличие более 250 вторичных организаций."
 
 #: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
-#, fuzzy
-#| msgid "Ticket Overviews"
 msgid "More ticket overviews"
-msgstr "Представления заявок"
+msgstr "Больше представлений заявок"
 
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
 msgid "Most recent activity"
@@ -7331,8 +7327,6 @@ msgid "No email!"
 msgstr "Нет электронной почты!"
 
 #: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
-#, fuzzy
-#| msgid "No Entries"
 msgid "No entries"
 msgstr "Нет записей"
 
@@ -8168,10 +8162,8 @@ msgid "Please select at least one folder."
 msgstr "Пожалуйста, выберите по крайней мере одну папку."
 
 #: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
-#, fuzzy
-#| msgid "Please select at least one folder."
 msgid "Please select at least one ticket overview"
-msgstr "Пожалуйста, выберите по крайней мере одну папку."
+msgstr "Пожалуйста, выберите по крайней мере одно представление заявок"
 
 #: app/controllers/knowledge_base/manage_controller.rb
 msgid "Please submit custom address before generating the snippet"
@@ -10841,10 +10833,8 @@ msgid "Ticket Overview"
 msgstr "Представление заявки"
 
 #: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
-#, fuzzy
-#| msgid "Ticket Overviews"
 msgid "Ticket Overview settings are saved"
-msgstr "Представления заявок"
+msgstr "Сохраняются настройки представления заявок"
 
 #: app/assets/javascripts/app/models/sla.coffee
 msgid "Ticket Selector"
