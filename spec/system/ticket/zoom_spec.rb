@@ -1863,7 +1863,7 @@ RSpec.describe 'Ticket zoom', type: :system do
     end
   end
 
-  describe 'merging', authenticated_as: :user do
+  describe 'merging happened in the background', authenticated_as: :user do
     before do
       merged_into_trigger && received_merge_trigger && update_trigger
 
@@ -2798,6 +2798,30 @@ RSpec.describe 'Ticket zoom', type: :system do
         end
         close_window_index(2)
       end
+    end
+  end
+
+  describe 'Copying ticket number' do
+    let(:ticket) { create(:ticket, group: Group.find_by(name: 'Users')) }
+    let(:ticket_number_copy_element) { 'div.ticketZoom-header div.js-ticketMetaContainer span.ticket-number-copy' }
+    let(:expected_clipboard_content) { (Setting.get('ticket_hook') + ticket.number).to_s }
+    let(:field)                      { find(:richtext) }
+
+    before do
+      visit "#ticket/zoom/#{ticket.id}"
+    end
+
+    it 'copies the ticket number correctly' do
+      find(ticket_number_copy_element).click
+
+      # simulate a paste action
+      within(:active_content) do
+        field.send_keys('')
+        field.click
+        field.send_keys([magic_key, 'v'])
+      end
+
+      expect(field.text).to eq(expected_clipboard_content)
     end
   end
 end

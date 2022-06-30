@@ -1,5 +1,5 @@
 <small class="task-subline">
-  <%- @C('ticket_hook') %><span class="ticket-number js-objectNumber" data-number="<%- @C('ticket_hook') %><%= @ticket.number %>"><%= @ticket.number %></span>
+  <span class="u-clickable ticket-number-copy"><%- @C('ticket_hook') %><span class="ticket-number js-objectNumber" data-number="<%- @C('ticket_hook') %><%= @ticket.number %>"><%= @ticket.number %></span></span>
   - <%- @T('created') %> <%- @humanTime(@ticket.created_at) %>
 
 <% if !@isCustomer: %>

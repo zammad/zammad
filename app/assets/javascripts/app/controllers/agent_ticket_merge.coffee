@@ -53,6 +53,17 @@ class App.TicketMerge extends App.ControllerModal
       $(e.target).parents().find('[name="radio"]').prop('checked', false)
     )
 
+    content.on('paste', '[name="target_ticket_number"]', (e) =>
+      execute = ->
+        # remove ticket hook if present
+        if e.target && e.target.value
+          $('[name="target_ticket_number"]').val( e.target.value.replace(App.Config.get('ticket_hook'), '') )
+
+      @delay( execute, 0)
+
+      return
+    )
+
     content.on('click', '[name="radio"]', (e) ->
       if $(e.target).prop('checked')
         ticket_id = $(e.target).val()
@@ -67,7 +78,7 @@ class App.TicketMerge extends App.ControllerModal
     params = @formParam(e.target)
 
     if !params.target_ticket_number
-      alert(App.i18n.translateInline('%s required!', 'Ticket#'))
+      alert(App.i18n.translateInline('%s required!', App.Config.get('ticket_hook')))
       @formEnable(e)
       return
 

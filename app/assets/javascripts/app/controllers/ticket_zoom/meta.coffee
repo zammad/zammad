@@ -1,6 +1,8 @@
 class App.TicketZoomMeta extends App.ControllerObserver
   @extend App.PopoverProvidable
   @registerPopovers 'Escalation'
+  events:
+    'click .ticket-number-copy': 'copyTicketNumber'
 
   model: 'Ticket'
   observe:
@@ -14,3 +16,8 @@ class App.TicketZoomMeta extends App.ControllerObserver
       isCustomer: ticket.currentView() is 'customer'
     )
     @renderPopovers()
+
+  copyTicketNumber: =>
+    text = @el.find('.js-objectNumber').first().data('number') || ''
+    if text
+      @copyToClipboardWithTooltip(text, '.ticket-number-copy', '.main')

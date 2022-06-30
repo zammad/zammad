@@ -417,7 +417,7 @@ class Navigation extends App.Controller
       # check if same prio already exists
       @addPrioCount newlist, item
 
-      newlist[ item['prio'] ] = item;
+      newlist[ item['prio'] ] = item
 
     # get keys for sort order
     keys = _.keys(newlist)

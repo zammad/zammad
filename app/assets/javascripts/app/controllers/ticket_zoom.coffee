@@ -7,11 +7,12 @@ class App.TicketZoom extends App.Controller
     '.scrollPageHeader':   'scrollPageHeader'
 
   events:
-    'click .js-submit':   'submit'
-    'click .js-bookmark': 'bookmark'
-    'click .js-reset':    'reset'
-    'click .js-draft':    'draft'
-    'click .main':        'muteTask'
+    'click .js-submit':                 'submit'
+    'click .js-bookmark':               'bookmark'
+    'click .js-reset':                  'reset'
+    'click .js-draft':                  'draft'
+    'click .main':                      'muteTask'
+    'click .ticket-number-copy-header': 'copyTicketNumber'
 
   constructor: (params) ->
     super
@@ -19,10 +20,11 @@ class App.TicketZoom extends App.Controller
     # check authentication
     @authenticateCheckRedirect()
 
-    @formMeta     = undefined
-    @ticket_id    = parseInt(params.ticket_id)
-    @article_id   = params.article_id
-    @sidebarState = {}
+    @formMeta      = undefined
+    @ticket_id     = parseInt(params.ticket_id)
+    @article_id    = params.article_id
+    @sidebarState  = {}
+    @tooltipCopied = undefined
 
     # if we are in init task startup, ignore overview_id
     if !params.init
@@ -339,6 +341,7 @@ class App.TicketZoom extends App.Controller
     @positionPageHeaderStop()
     @autosaveStop()
     @shortcutNavigationstop()
+    @hideCopyTicketNumberTooltip()
     return if !@attributeBar
     @attributeBar.stop()
 
@@ -434,6 +437,7 @@ class App.TicketZoom extends App.Controller
       scroll = headerHeight
 
     if scroll is @scrollHeaderPos
+      @hideCopyTicketNumberTooltip()
       return
 
     # translateY: headerHeight .. 0
@@ -1220,6 +1224,15 @@ class App.TicketZoom extends App.Controller
       ticket_id:   @ticket_id
       overview_id: @overview_id
     )
+
+  copyTicketNumber: =>
+    text = @el.find('.js-objectNumber').first().data('number') || ''
+    if text
+      @tooltipCopied = @copyToClipboardWithTooltip(text, '.ticket-number-copy-header', 'body')
+
+  hideCopyTicketNumberTooltip: =>
+    return if !@tooltipCopied
+    @tooltipCopied.tooltip('hide')
 
 class TicketZoomRouter extends App.ControllerPermanent
   requiredPermission: ['ticket.agent', 'ticket.customer']

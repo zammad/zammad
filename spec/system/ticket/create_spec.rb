@@ -932,8 +932,7 @@ RSpec.describe 'Ticket Create', type: :system do
 
       find('.token', text: 'def@example.com').double_click
 
-      meta_key = Gem::Platform.local.os == 'darwin' ? :command : :control
-      send_keys([meta_key, 'x'])
+      send_keys([magic_key, 'x'])
 
       find('.token').click # trigger blur
 

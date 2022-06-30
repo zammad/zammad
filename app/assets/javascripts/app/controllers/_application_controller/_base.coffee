@@ -115,6 +115,23 @@ class App.Controller extends Spine.Controller
     else
       window.prompt(__('Copy to clipboard: Ctrl+C, Enter'), text)
 
+  copyToClipboardWithTooltip: (text, selector, container) ->
+    clipboard.copy(text)
+
+    tooltipCopied = @el.find(selector).tooltip(
+      trigger:   'manual'
+      placement: 'bottom'
+      container: container
+      title: ->
+        App.i18n.translateContent('Copied to clipboard!')
+    )
+    tooltipCopied.tooltip('show')
+    @delay( ->
+      tooltipCopied.tooltip('hide')
+    , 1500)
+
+    return tooltipCopied
+
   # disable all delay's and interval's
   disconnectClient: ->
     App.Delay.reset()
