@@ -38,9 +38,9 @@ curl http://localhost/api/v1/recent_view -v -u #{login}:#{password} -H "Content-
         assets = item.assets(assets)
       end
       render json: {
-               record_ids: item_ids,
-               assets:     assets,
-             }, status: :ok
+        record_ids: item_ids,
+        assets:     assets,
+      }, status: :ok
       return
     end
 

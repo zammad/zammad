@@ -13,9 +13,9 @@ class TicketsMassController < ApplicationController
 
     if !applicable
       render json: {
-               error:            __('Macro group restrictions do not cover all tickets'),
-               blocking_tickets: applicable.blocking_tickets.map(&:id)
-             }, status: :unprocessable_entity
+        error:            __('Macro group restrictions do not cover all tickets'),
+        blocking_tickets: applicable.blocking_tickets.map(&:id)
+      }, status: :unprocessable_entity
 
       return
     end

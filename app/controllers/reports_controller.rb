@@ -64,8 +64,8 @@ class ReportsController < ApplicationController
 
     if !params[:downloadBackendSelected]
       render json: {
-               error: __("Required parameter 'downloadBackendSelected' is missing."),
-             }, status: :unprocessable_entity
+        error: __("Required parameter 'downloadBackendSelected' is missing."),
+      }, status: :unprocessable_entity
       return
     end
 

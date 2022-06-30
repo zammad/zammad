@@ -137,10 +137,10 @@ module ApplicationController::RendersModels
         assets = item.assets(assets)
       end
       render json: {
-               record_ids:  item_ids,
-               assets:      assets,
-               total_count: object.count
-             }, status: :ok
+        record_ids:  item_ids,
+        assets:      assets,
+        total_count: object.count
+      }, status: :ok
       return
     end
 

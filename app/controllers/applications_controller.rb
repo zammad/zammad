@@ -18,9 +18,9 @@ class ApplicationsController < ApplicationController
         assets[:Application][item.id] = application
       end
       render json: {
-               record_ids: item_ids,
-               assets:     assets,
-             }, status: :ok
+        record_ids: item_ids,
+        assets:     assets,
+      }, status: :ok
       return
     end
 

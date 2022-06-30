@@ -63,9 +63,9 @@ curl http://localhost/api/v1/slas.json -v -u #{login}:#{password}
         assets = item.assets(assets)
       end
       render json: {
-               record_ids: sla_ids,
-               assets:     assets,
-             }, status: :ok
+        record_ids: sla_ids,
+        assets:     assets,
+      }, status: :ok
       return
     end
 

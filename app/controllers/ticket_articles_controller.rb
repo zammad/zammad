@@ -62,9 +62,9 @@ class TicketArticlesController < ApplicationController
         assets = article.assets({})
       end
       render json: {
-               record_ids: record_ids,
-               assets:     assets,
-             }, status: :ok
+        record_ids: record_ids,
+        assets:     assets,
+      }, status: :ok
       return
     end
 
