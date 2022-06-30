@@ -1018,4 +1018,33 @@ QUnit.test('form checks', assert => {
     },
   }
   assert.deepEqual(params, test_params, 'form param condition check for multiple users and organisation')
+
+  // https://github.com/zammad/zammad/issues/4153
+  $('#forms').append('<hr><h1>Trigger Attribute "action > is > updated" is not working after Zammad 5.2 update #4153</h1><form id="form7"></form>')
+  var el = $('#form7')
+  var defaults = {
+    condition: {
+      'ticket.action': {
+        operator: 'is',
+        value: 'update',
+      },
+      'ticket.state_id': {
+        operator: 'is',
+        pre_condition: 'specific',
+        value: [1],
+      },
+    },
+  }
+  new App.ControllerForm({
+    el:        el,
+    model:     {
+      configure_attributes: [
+        { name: 'condition',  display: 'Conditions', tag: 'ticket_selector', null: true, action: true },
+      ]
+    },
+    params: defaults,
+    autofocus: true
+  })
+  assert.equal(undefined, $("#form7 select[name='condition::ticket.action::value']").attr('multiple'), 'ticket action is not multiple')
+  assert.equal('multiple', $("#form7  select[name='condition::ticket.state_id::value']").attr('multiple'), 'state id is multiple')
 });

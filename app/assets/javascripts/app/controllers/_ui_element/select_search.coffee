@@ -4,7 +4,10 @@ class App.UiElement.select_search extends App.UiElement.ApplicationUiElement
     attribute = $.extend(true, {}, attributeConfig)
 
     # set multiple option
-    attribute.multiple = 'multiple'
+    if attribute.multiple
+      attribute.multiple = 'multiple'
+    else
+      attribute.multiple = ''
 
     delete attribute.filter
 
