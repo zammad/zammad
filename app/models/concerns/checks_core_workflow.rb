@@ -22,7 +22,7 @@ module ChecksCoreWorkflow
                                             'class_name' => self.class.to_s,
                                             'screen'     => screen,
                                             'params'     => attributes
-                                          }, user: User.find(UserInfo.current_user_id))
+                                          }, user: User.find(UserInfo.current_user_id), assets: false)
 
     check_restrict_values(perform_result)
     check_mandatory(perform_result)

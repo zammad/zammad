@@ -44,6 +44,7 @@ class CoreWorkflow::Attributes::Group < CoreWorkflow::Attributes::Base
   end
 
   def assets(group)
+    return if @attributes.assets == false
     return if @attributes.assets[Group.to_app_model] && @attributes.assets[Group.to_app_model][group.id]
 
     @attributes.assets = group.assets(@attributes.assets)
