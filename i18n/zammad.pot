@@ -3448,6 +3448,7 @@ msgstr ""
 msgid "Don't synchronize"
 msgstr ""
 
+#: app/frontend/apps/mobile/components/CommonDialog/CommonDialog.vue
 #: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
 #: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 msgid "Done"

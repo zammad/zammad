@@ -31,3 +31,8 @@ type TakeInternal<T, K extends string | number> = K extends keyof T
   : never
 
 export type ConfidentTake<T, K extends NestedKeyOf<T>> = TakeInternal<T, K>
+
+export type EventHandlers<E> = {
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  [K in keyof E]?: E[K] extends Function ? E[K] : (payload: E[K]) => void
+}

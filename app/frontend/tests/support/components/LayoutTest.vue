@@ -10,6 +10,7 @@ import { useRoute } from 'vue-router'
 import LayoutHeader from '@mobile/components/layout/LayoutHeader.vue'
 import CommonNotifications from '@shared/components/CommonNotifications/CommonNotifications.vue'
 import useAuthenticationChanges from '@shared/composables/useAuthenticationUpdates'
+import DynamicInitializer from '@shared/components/DynamicInitializer/DynamicInitializer.vue'
 
 defineProps<{ testKey: number }>()
 
@@ -41,5 +42,6 @@ useAuthenticationChanges()
     <main>
       <RouterView :key="testKey" />
     </main>
+    <DynamicInitializer name="dialog" />
   </div>
 </template>

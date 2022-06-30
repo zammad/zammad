@@ -14,6 +14,7 @@ import useLocaleStore from '@shared/stores/locale'
 import useFormKitConfig from '@shared/composables/form/useFormKitConfig'
 import { useAppTheme } from '@shared/composables/useAppTheme'
 import useAuthenticationChanges from '@shared/composables/useAuthenticationUpdates'
+import DynamicInitializer from '@shared/components/DynamicInitializer/DynamicInitializer.vue'
 
 const router = useRouter()
 
@@ -73,4 +74,15 @@ onBeforeUnmount(() => {
   >
     <router-view />
   </div>
+  <DynamicInitializer
+    name="dialog"
+    :transition="{
+      enterActiveClass: 'duration-300 ease-out',
+      enterFromClass: 'opacity-0 translate-y-3/4',
+      enterToClass: 'opacity-100 translate-y-0',
+      leaveActiveClass: 'duration-200 ease-in',
+      leaveFromClass: 'opacity-100 translate-y-0',
+      leaveToClass: 'opacity-0 translate-y-3/4',
+    }"
+  />
 </template>

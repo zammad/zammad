@@ -5,30 +5,19 @@ import '@shared/initializer/translatableMarker'
 import App from '@mobile/App.vue'
 import useSessionStore from '@shared/stores/session'
 import '@mobile/styles/main.css'
-import initializeApolloClient from '@mobile/server/apollo'
-import initializeStore from '@shared/stores'
 import initializeStoreSubscriptions from '@shared/initializer/storeSubscriptions'
-import initializeGlobalComponents from '@shared/initializer/globalComponents'
-import initializeRouter from '@mobile/router'
 import useApplicationStore from '@shared/stores/application'
 import useLocaleStore from '@shared/stores/locale'
+import initializeRouter from '@mobile/router'
 import useAuthenticationStore from '@shared/stores/authentication'
 import 'virtual:svg-icons-register' // eslint-disable-line import/no-unresolved
-import initializeForm from '@mobile/form'
-import initializeGlobalProperties from '@shared/initializer/globalProperties'
+import initializeApp from './initialize'
 
 export default async function mountApp(): Promise<void> {
   const app = createApp(App)
 
-  // TODO remove when Vue 3.3 released
-  app.config.unwrapInjectedRef = true
-
-  initializeApolloClient(app)
-
-  initializeStore(app)
+  initializeApp(app)
   initializeRouter(app)
-
-  initializeGlobalComponents(app)
 
   initializeStoreSubscriptions()
 
@@ -52,10 +41,6 @@ export default async function mountApp(): Promise<void> {
   if (!locale.localeData) {
     await locale.updateLocale()
   }
-
-  initializeGlobalProperties(app)
-
-  initializeForm(app)
 
   app.mount('#app')
 }

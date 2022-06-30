@@ -5,6 +5,7 @@
 
 import Form from '@shared/components/Form/Form.vue'
 import { defineFormSchema } from '@mobile/form/composable'
+import { useDialog } from '@shared/composables/useDialog'
 
 const linkSchemaRaw = [
   {
@@ -37,7 +38,54 @@ const linkSchemaRaw = [
     name: 'treeselect',
     label: 'Treeselect',
     props: {
-      options: [{ label: 'Label', value: 1 }],
+      options: [
+        {
+          value: 0,
+          label: 'Item A',
+          children: [
+            {
+              value: 1,
+              label: 'Item 1',
+              children: [
+                {
+                  value: 2,
+                  label: 'Item I',
+                },
+                {
+                  value: 3,
+                  label: 'Item II',
+                },
+                {
+                  value: 4,
+                  label: 'Item III',
+                },
+              ],
+            },
+            {
+              value: 5,
+              label: 'Item 2',
+              children: [
+                {
+                  value: 6,
+                  label: 'Item IV',
+                },
+              ],
+            },
+            {
+              value: 7,
+              label: 'Item 3',
+            },
+          ],
+        },
+        {
+          value: 8,
+          label: 'Item B',
+        },
+        {
+          value: 9,
+          label: 'Ítem C',
+        },
+      ],
       link: '/tickets',
     },
   },
@@ -71,10 +119,20 @@ const schema = defineFormSchema([
     ],
   },
 ])
+
+const dialog = useDialog({
+  name: 'dialog',
+  component: async () =>
+    import('@mobile/components/CommonDialog/CommonDialog.vue'),
+})
 </script>
 
 <template>
   <div class="p-4">
+    <button @click="dialog.toggle({ name: 'dialog', label: 'Hello World' })">
+      Dialog
+    </button>
+
     <Form :schema="linkSchemas" />
     <Form :schema="schema" />
   </div>

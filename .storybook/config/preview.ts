@@ -1,50 +1,35 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import '@shared/initializer/translatableMarker'
-import initializeGlobalComponents from '@shared/initializer/globalComponents'
 import '@shared/styles/main.css'
-import { i18n } from '@shared/i18n'
 import { app } from '@storybook/vue3'
 import 'virtual:svg-icons-register' // eslint-disable-line import/no-unresolved
-import initializeStore from '@shared/stores'
-import initializeForm, { getFormPlugins } from '@shared/form'
-import type { ImportGlobEagerOutput } from '@shared/types/utils'
-import type { FormKitPlugin } from '@formkit/core'
-import getMobileCoreClasses from '@mobile/form/theme/global/getCoreClasses'
 import { createRouter, createWebHashHistory, type Router } from 'vue-router'
-import type {
-  FormFieldTypeImportModules,
-  FormThemeExtension,
-} from '@shared/types/form'
+import { createApp } from 'vue'
+import DynamicInitializer from '@shared/components/DynamicInitializer/DynamicInitializer.vue'
+import initializeApp from '@mobile/initialize'
 
-// Adds the translations to storybook.
-app.config.globalProperties.i18n = i18n
-app.config.globalProperties.$t = i18n.t.bind(i18n)
+const dynamic = createApp({
+  components: { DynamicInitializer },
+  template: `
+  <DynamicInitializer
+    name="dialog"
+    :transition="{
+      enterActiveClass: 'duration-300 ease-out',
+      enterFromClass: 'opacity-0 translate-y-3/4',
+      enterToClass: 'opacity-100 translate-y-0',
+      leaveActiveClass: 'duration-200 ease-in',
+      leaveFromClass: 'opacity-100 translate-y-0',
+      leaveToClass: 'opacity-0 translate-y-3/4',
+    }"
+  />
+  `,
+})
 
-// Initialize the needed core components and plugins.
-initializeGlobalComponents(app)
-initializeStore(app)
+dynamic.mount('#dynamic')
 
-// Initialize the FormKit plugin with the needed fields and internal FormKit plugins.
-const mobilePluginModules: ImportGlobEagerOutput<FormKitPlugin> =
-  import.meta.globEager('../app/frontend/apps/mobile/form/plugins/global/*.ts')
-const mobileFieldModules: ImportGlobEagerOutput<FormFieldTypeImportModules> =
-  import.meta.globEager(
-    '../app/frontend/apps/mobile/components/Form/fields/**/index.ts',
-  )
-const themeExtensionModules: ImportGlobEagerOutput<FormThemeExtension> =
-  import.meta.globEager(
-    '../app/frontend/apps/mobile/form/theme/global/extensions/*.ts',
-  )
-
-const plugins = getFormPlugins(mobilePluginModules)
-
-const appTheme = {
-  coreClasses: getMobileCoreClasses,
-  extensions: themeExtensionModules,
-}
-
-initializeForm(app, undefined, mobileFieldModules, plugins, appTheme)
+initializeApp(app)
+initializeApp(dynamic)
 
 const router: Router = createRouter({
   history: createWebHashHistory(),
