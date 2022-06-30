@@ -106,6 +106,8 @@ class App.UiElement.ApplicationSelector
               config.expanding = false
             if config.type is 'email' || config.type is 'tel'
               config.type = 'text'
+            if config.tag is 'select'
+              config.multiple = true
             for operatorRegEx, operator of operators_type
               myRegExp = new RegExp(operatorRegEx, 'i')
               if config.tag && config.tag.match(myRegExp)
