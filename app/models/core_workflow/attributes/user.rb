@@ -100,6 +100,7 @@ class CoreWorkflow::Attributes::User < CoreWorkflow::Attributes::Base
   end
 
   def assets(user)
+    return if @attributes.assets == false
     return if @attributes.assets[User.to_app_model] && @attributes.assets[User.to_app_model][user.id]
 
     @attributes.assets = user.assets(@attributes.assets)

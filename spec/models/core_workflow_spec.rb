@@ -18,6 +18,14 @@ RSpec.describe CoreWorkflow, type: :model do
   let!(:action_user) { create(:agent, groups: [ticket.group]) }
   let(:result)       { described_class.perform(payload: payload, user: action_user) }
 
+  describe '.perform - No assets' do
+    let(:result) { described_class.perform(payload: payload, user: action_user, assets: false) }
+
+    it 'does not contain assets' do
+      expect(result[:assets]).to be_blank
+    end
+  end
+
   describe '.perform - Default - Group' do
     let!(:group_change) { create(:group) }
     let!(:group_create) { create(:group) }

@@ -29,6 +29,7 @@ class CoreWorkflow::Attributes::TicketState < CoreWorkflow::Attributes::Base
   end
 
   def assets(state)
+    return if @attributes.assets == false
     return if @attributes.assets[Ticket::State.to_app_model] && @attributes.assets[Ticket::State.to_app_model][state.id]
 
     @attributes.assets = state.assets(@attributes.assets)

@@ -116,6 +116,7 @@ class CoreWorkflow::Result
   end
 
   def assets_in_result?
+    return false if assets == false
     return false if !@assets_in_result
 
     @result[:assets] = assets
