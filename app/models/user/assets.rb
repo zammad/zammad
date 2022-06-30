@@ -42,14 +42,17 @@ returns
       data[ app_model ][ id ] = local_attributes
 
       # get linked accounts
-      local_accounts = {}
-      authorizations.each do |authorization|
-        local_accounts[authorization.provider] = {
-          uid:      authorization[:uid],
-          username: authorization[:username]
-        }
+      local_attributes['accounts'] = Rails.cache.fetch("User/authorizations/#{cache_key_with_version}") do
+        local_accounts = {}
+        authorizations = self.authorizations()
+        authorizations.each do |authorization|
+          local_accounts[authorization.provider] = {
+            uid:      authorization[:uid],
+            username: authorization[:username]
+          }
+        end
+        local_accounts
       end
-      local_attributes['accounts'] = local_accounts
 
       # get roles
       local_attributes['role_ids']&.each do |role_id|
