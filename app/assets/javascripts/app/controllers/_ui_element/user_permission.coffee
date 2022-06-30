@@ -74,18 +74,10 @@ class App.UiElement.user_permission
       groupAccesses: App.Group.accesses()
     ) )
 
-    throttled = _.throttle( (e) ->
-      input = $(@).find('input')
-      upcoming_state = if $(e.target).is(':checkbox') then input.prop('checked') else !input.prop('checked')
-      value = input.val()
-
-      if value is 'full' and upcoming_state is true
-        $(@).closest('tr').find('input:not([value=full])').prop('checked', false)
-      else if value isnt 'full' and upcoming_state is true
-        $(@).closest('tr').find('input[value=full]').prop('checked', false)
-    , 300, { trailing: false })
-
-    item.on('click', '.checkbox-replacement', throttled)
+    # check/uncheck group permissions (particular permissions vs. full)
+    item.on('click', '.checkbox-replacement', (event) ->
+      App.PermissionHelper.switchGroupPermission(event)
+    )
 
     # if customer, remove admin and agent
     item.find('[name=role_ids]').on('change', (e) =>

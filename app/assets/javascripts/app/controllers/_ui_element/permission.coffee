@@ -30,6 +30,12 @@ class App.UiElement.permission extends App.UiElement.ApplicationUiElement
       @checkUncheck($(e.currentTarget), permissions, item)
     )
     item.find('[name=permission_ids]').trigger('change')
+
+    # check/uncheck group permissions (particular permissions vs. full)
+    item.on('click', '.checkbox-replacement', (event) ->
+      App.PermissionHelper.switchGroupPermission(event)
+    )
+
     item
 
   @checkUncheck: (element, permissions, item) ->
@@ -54,4 +60,3 @@ class App.UiElement.permission extends App.UiElement.ApplicationUiElement
         lookupPermission = App.Permission.findByAttribute('name', localPermission)
         if lookupPermission
           item.find("[name=permission_ids][value=#{lookupPermission.id}]").prop('checked', false)
-
