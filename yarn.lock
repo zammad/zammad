@@ -7756,10 +7756,22 @@ vite@^2.9.12:
   optionalDependencies:
     fsevents "~2.3.2"
 
-vitest-mock-extended@^0.1.4:
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/vitest-mock-extended/-/vitest-mock-extended-0.1.4.tgz#7ab28f0a52247ad9ce14ad714bc8ce5d4ef4d8ac"
-  integrity sha512-MV9ENQuPz07rIAJ0PFq2xcDI2gp/8q6o9O4mDxIoWp4LJfRvFfLYLp0vfCpL4wCU8wYe1GVO6jdvBYYU+TujfQ==
+vite@^2.9.13:
+  version "2.9.13"
+  resolved "https://registry.yarnpkg.com/vite/-/vite-2.9.13.tgz#859cb5d4c316c0d8c6ec9866045c0f7858ca6abc"
+  integrity sha512-AsOBAaT0AD7Mhe8DuK+/kE4aWYFMx/i0ZNi98hJclxb4e0OhQcZYUrvLjIaQ8e59Ui7txcvKMiJC1yftqpQoDw==
+  dependencies:
+    esbuild "^0.14.27"
+    postcss "^8.4.13"
+    resolve "^1.22.0"
+    rollup "^2.59.0"
+  optionalDependencies:
+    fsevents "~2.3.2"
+
+vitest-mock-extended@^0.1.9:
+  version "0.1.9"
+  resolved "https://registry.yarnpkg.com/vitest-mock-extended/-/vitest-mock-extended-0.1.9.tgz#d3abe06fa3d341d2df624ec5a3c55904472bf1b6"
+  integrity sha512-j819n1SEQVK1GJPwfhMD0ueuGlS2oABjmBchfnGnxz4yUwuH4lz25H3MtyV9dCI0PJ/Q0GDMDTMZ2cf075YzHw==
   dependencies:
     ts-essentials "^9.1.2"
 
