@@ -42,6 +42,7 @@ useAuthenticationChanges()
     <main>
       <RouterView :key="testKey" />
     </main>
+    <footer data-bottom-navigation />
     <DynamicInitializer name="dialog" />
   </div>
 </template>

@@ -18,7 +18,7 @@ defineProps<Props>()
 <template>
   <header
     v-if="title || (backUrl && backTitle) || (onAction && actionTitle)"
-    class="grid h-16 grid-cols-3 border-b-[0.5px] border-white/10 px-4"
+    class="grid h-[64px] grid-cols-3 border-b-[0.5px] border-white/10 px-4"
     data-test-id="appHeader"
   >
     <div class="flex items-center justify-self-start text-base">

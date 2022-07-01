@@ -137,6 +137,7 @@ module.exports = {
     {
       files: [
         'app/frontend/tests/**',
+        'app/frontend/**/__tests__/**',
         'app/frontend/**/*.spec.*',
         'app/frontend/stories/**',
         'app/frontend/cypress/**',
