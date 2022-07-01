@@ -177,7 +177,7 @@ GEM
     em-websocket (0.5.3)
       eventmachine (>= 0.12.9)
       http_parser.rb (~> 0)
-    email_address (0.2.3)
+    email_address (0.2.4)
       simpleidn
     equalizer (0.0.11)
     erubi (1.10.0)
