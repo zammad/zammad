@@ -39,6 +39,7 @@ QUnit.test("form elements check", assert => {
         { name: 'password2', display: 'Password2', tag: 'input', type: 'password', limit: 100, null: false, default: defaults['password2'] },
         { name: 'textarea1', display: 'Textarea1', tag: 'textarea', rows: 6, limit: 100, null: true, upload: true, default: defaults['textarea1'] },
         { name: 'textarea2', display: 'Textarea2', tag: 'textarea', rows: 6, limit: 100, null: false, upload: true, default: defaults['textarea2'] },
+        { name: 'textarea3', display: 'Textarea3', tag: 'textarea', limit: 100, null: false, upload: true, default: defaults['textarea3'] },
         { name: 'select1', display: 'Select1', tag: 'select', null: true, options: { true: 'internal', false: 'public' }, default: defaults['select1'] },
         { name: 'select2', display: 'Select2', tag: 'select', null: false, options: { true: 'internal', false: 'public' }, default: defaults['select2'] },
         { name: 'selectmulti1', display: 'SelectMulti1', tag: 'select', null: true, multiple: true, options: { true: 'internal', false: 'public' }, default: defaults['selectmulti1'] },
@@ -83,6 +84,9 @@ QUnit.test("form elements check", assert => {
   assert.equal(el.find('[name="textarea2"]').val(), 'lalu <l> lalu', 'check textarea2 value')
   assert.equal(el.find('[name="textarea2"]').prop('required'), true, 'check textarea2 required')
   assert.equal(el.find('[name="textarea2"]').is(":focus"), false, 'check textarea2 focus')
+  assert.equal(el.find('[name="textarea2"]').prop("rows"), 6, 'check textarea2 rows')
+
+  assert.equal(el.find('[name="textarea3"]').prop("rows"), 4, 'check textarea3 rows (default value)')
 
   assert.equal(el.find('[name="select1"]').val(), 'false', 'check select1 value')
   assert.equal(el.find('[name="select1"]').prop('required'), false, 'check select1 required')
@@ -1606,30 +1610,6 @@ QUnit.test("form with external links", assert => {
   assert.deepEqual(params, defaults)
   assert.equal('https://example.com/?q=133', el.find('input[name="a"]').parents('.controls').find('a[href]').attr('href'))
   assert.equal('https://example.com/?q=abc%20d', el.find('select[name="b"]').parents('.controls').find('a[href]').attr('href'))
-});
-
-QUnit.test("Fixes #3909 - Wrong size for textareas in triggers and core workflow.", assert => {
-  var done = assert.async(1)
-  $('#qunit').append('<hr><h1>Fixes #3909 - Wrong size for textareas in triggers and core workflow.</h1><form id="form21"></form>')
-  var el = $('#form21')
-  new App.ControllerForm({
-    el:        el,
-    model:     {
-      configure_attributes: [
-        { name: '3909_textarea_expanding', display: 'Textarea1', tag: 'textarea', rows: 6, limit: 100, null: true },
-        { name: '3909_textarea_no_expanding', display: 'Textarea2', tag: 'textarea', rows: 6, limit: 100, null: false, expanding: false },
-      ],
-    },
-    autofocus: true
-  });
-
-  new Promise( (resolve, reject) => {
-    App.Delay.set(resolve, 200);
-  }).then( function() {
-    assert.equal(el.find('textarea[name="3909_textarea_expanding"]').parent().hasClass('expanding-wrapper'), true, '3909_textarea_expanding has correct class')
-    assert.equal(el.find('textarea[name="3909_textarea_no_expanding"]').parent().hasClass('expanding-wrapper'), false, '3909_textarea_no_expanding has correct class')
-  })
-  .finally(done)
 });
 
 QUnit.test("Fixes #4024 - Tree select value cannot be set to \"-\" (empty) with Trigger/Scheduler/Core workflow.", assert => {

@@ -2304,6 +2304,7 @@ input.time.time--12 {
 
 textarea.form-control {
   height: 118px;
+  resize: vertical;
 
   &[rows] {
     height: auto;
@@ -6518,7 +6519,7 @@ a.list-group-item.active > .badge,
   resize: vertical;
 }
 
-.bulkAction-secondStep .form-inline .expanding-wrapper {
+.bulkAction-secondStep .form-inline .textarea .controls {
   margin: 0 6px;
 }
 

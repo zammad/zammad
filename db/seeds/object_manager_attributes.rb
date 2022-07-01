@@ -1172,6 +1172,7 @@ ObjectManager::Attribute.add(
   data_option: {
     type:       'text',
     maxlength:  500,
+    rows:       4,
     null:       true,
     item_class: 'formGroup--halfSize',
   },

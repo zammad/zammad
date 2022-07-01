@@ -64,6 +64,7 @@ FactoryBot.define do
       {
         'type'      => 'textarea',
         'maxlength' => 255,
+        'rows'      => 4,
         'null'      => true,
         'translate' => false,
         'default'   => default,

@@ -102,8 +102,6 @@ class App.UiElement.ApplicationSelector
           # ignore passwords and relations
           if config.type isnt 'password' && config.name.substr(config.name.length-4,4) isnt '_ids' && config.searchable isnt false
             config.default  = undefined
-            if config.tag is 'textarea'
-              config.expanding = false
             if config.type is 'email' || config.type is 'tel'
               config.type = 'text'
             if config.tag is 'select'

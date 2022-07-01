@@ -1,20 +1,13 @@
 # coffeelint: disable=camel_case_classes
 class App.UiElement.textarea
   @render: (attribute) ->
+
+    # set an appropriate default value for rows, if not given
+    if attribute.rows is undefined
+      attribute.rows = 4
+
     fileUploaderId = 'file-uploader-' + new Date().getTime() + '-' + Math.floor( Math.random() * 99999 )
     item = $( App.view('generic/textarea')( attribute: attribute ) + '<div class="file-uploader ' + attribute.class + '" id="' + fileUploaderId + '"></div>' )
-
-    if attribute.expanding isnt false
-      a = ->
-        visible = $( item[0] ).is(':visible')
-        if visible && !$( item[0] ).expanding('active')
-          $( item[0] ).expanding()
-        $( item[0] ).on('focus', ->
-          visible = $( item[0] ).is(':visible')
-          if visible && !$( item[0] ).expanding('active')
-            $( item[0] ).expanding().trigger('focus')
-        )
-      App.Delay.set(a, 80)
 
     if attribute.upload
 

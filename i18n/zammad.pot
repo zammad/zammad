@@ -7859,6 +7859,10 @@ msgstr ""
 msgid "Rollback of channel migration succeeded!"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+msgid "Rows"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee
 msgid "Run every %s at %s in %s time"
 msgstr ""

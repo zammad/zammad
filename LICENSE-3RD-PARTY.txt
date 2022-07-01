@@ -44,11 +44,6 @@ Source: https://github.com/jackbowman/email-addresses
 Copyright: 2013 Fog Creek Software, Jack Bowman (https://github.com/jackbowman)
 License: MIT license
 -----------------------------------------------------------------------------
-expanding.js
-Source: https://github.com/bgrins/ExpandingTextareas
-Copyright: Brian Grinstead (https://github.com/bgrins)
-License: MIT license
------------------------------------------------------------------------------
 Exif.js
 Source: https://github.com/exif-js/exif-js
 Copyright: Jacob Seidelin, Roald de Vries

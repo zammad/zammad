@@ -274,8 +274,19 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
       noFieldset: true
       params: params
     )
+    configureAttributes = [
+      { name: 'data_option::rows', display: __('Rows'), tag: 'integer', null: false, default: 4 },
+    ]
+    inputRows = new App.ControllerForm(
+      model:
+        configure_attributes: configureAttributes
+      noFieldset: true
+      params: params
+    )
+
     item.find('.js-inputDefault').html(inputDefault.form)
     item.find('.js-inputMaxlength').html(inputMaxlength.form)
+    item.find('.js-inputRows').html(inputRows.form)
 
   @datetime: (item, localParams, params) ->
     configureAttributes = [
