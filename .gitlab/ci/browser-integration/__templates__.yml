@@ -4,7 +4,6 @@
     - browser:build
   extends:
     - .job_rules_default
-    - .variables_es
     - .tags_docker_low_concurrency
   script:
     - echo -e "\\e[0Ksection_start:`date +%s`:zammad_ci_test_prepare[collapsed=true]\\r\\e[0Kbundle exec rake zammad:ci:test:prepare"
@@ -15,12 +14,28 @@
 .template_browser-integration_capybara_chrome: &template_browser-integration_capybara_chrome
   extends:
     - .template_browser-integration_capybara
-    - .services_mysql_postgresql_elasticsearch_selenium_chrome_imap_redis_memcached
+    - .variables_selenium_chrome
+  services:
+    - !reference [.services, mysql]
+    - !reference [.services, postgresql]
+    - !reference [.services, elasticsearch]
+    - !reference [.services, selenium-chrome]
+    - !reference [.services, imap]
+    - !reference [.services, redis]
+    - !reference [.services, memcached]
 
 .template_browser-integration_capybara_firefox: &template_browser-integration_capybara_firefox
   extends:
     - .template_browser-integration_capybara
-    - .services_mysql_postgresql_elasticsearch_selenium_firefox_imap_redis_memcached
+    - .variables_selenium_firefox
+  services:
+    - !reference [.services, mysql]
+    - !reference [.services, postgresql]
+    - !reference [.services, elasticsearch]
+    - !reference [.services, selenium-firefox]
+    - !reference [.services, imap]
+    - !reference [.services, redis]
+    - !reference [.services, memcached]
 
 .template_browser-integration_chrome: &template_browser-integration_chrome
   stage: browser
@@ -28,8 +43,11 @@
     - browser:build
   extends:
     - .job_rules_default
-    - .services_postgresql_selenium_chrome
     - .tags_docker_low_concurrency
+    - .variables_selenium_chrome
+  services:
+    - !reference [.services, postgresql]
+    - !reference [.services, selenium-chrome]
   variables:
     RAILS_ENV: "production"
     APP_RESTART_CMD: 'bundle exec rake environment zammad:ci:app:restart'
@@ -48,8 +66,11 @@
     - browser:build
   extends:
     - .job_rules_default
-    - .services_postgresql_selenium_chrome
     - .tags_docker_low_concurrency
+    - .variables_selenium_chrome
+  services:
+    - !reference [.services, postgresql]
+    - !reference [.services, selenium-chrome]
   variables:
     RAILS_ENV: "production"
     APP_RESTART_CMD: 'bundle exec rake environment zammad:ci:app:restart'

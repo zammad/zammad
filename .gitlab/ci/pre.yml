@@ -35,8 +35,8 @@
   after_script: []
 
 'refresh global envs':
-  extends:
-    - .services_postgresql
+  services:
+    - !reference [.services, postgresql]
   stage: pre
   needs:
     - 'write runner cache: ruby'

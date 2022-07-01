@@ -7,8 +7,10 @@ require 'fileutils'
 
 #
 # Configures the CI system
-#   - either (randomly) mysql or postgresql, if it is available
+#   - (randomly) mysql or postgresql, if available
 #   - (randomly) Redis or File as web socket session back end, if Redis is available
+#   - (randomly) Memcached or File as Rails cache store, if Memcached is available
+#   - Elasticsearch support, if available
 #
 # Database config happens directly in config/database.yml, other settings are written to
 #   .gitlab/environment.env which must be sourced in the CI configuration.
@@ -22,7 +24,35 @@ class ConfigureEnvironment
     true
   ENV_FILE_CONTENT
 
-  def self.configure_database # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+  DB_SETTINGS_MAP = {
+    'postgresql' => {
+      'adapter'  => 'postgresql',
+      'username' => 'zammad',
+      'password' => 'zammad',
+      'host'     => 'postgresql', # db alias from gitlab-ci.yml
+    },
+    'mysql'      => {
+      'adapter'  => 'mysql2',
+      'username' => 'root',
+      'password' => 'zammad',
+      'host'     => 'mysql', # db alias from gitlab-ci.yml
+    }
+  }.freeze
+
+  # Detect service availability based on host presence in network.
+  def self.network_host_exists?(hostname)
+    if %w[1 true].include?(ENV['FF_NETWORK_PER_BUILD'])
+      begin
+        !!Resolv::DNS.new.tap { |dns| dns.timeouts = 3 }.getaddress(hostname)
+      rescue Resolv::ResolvError
+        false
+      end
+    else
+      File.foreach('/etc/hosts').any? { |l| l[hostname] }
+    end
+  end
+
+  def self.configure_database # rubocop:disable Metrics/AbcSize
 
     if File.exist? File.join(__dir__, '../config/database.yml')
       puts "'config/database.yml' already exists and will not be changed."
@@ -32,51 +62,16 @@ class ConfigureEnvironment
     cnf = YAML.load_file(File.join(__dir__, '../config/database/database.yml'))
     cnf.delete('default')
 
-    database = ENV['ENFORCE_DB_SERVICE']
-
-    # Lookup in /etc/hosts first: gitlab uses that if FF_NETWORK_PER_BUILD is not set.
-    if !database
-      hostsfile = '/etc/hosts'
-      database  = %w[postgresql mysql].shuffle.find do |possible_database|
-        File.foreach(hostsfile).any? { |l| l[possible_database] }
-      end
-    end
-
-    # Lookup via DNS if needed: gitlab uses that if FF_NETWORK_PER_BUILD is enabled.
-    if !database
-      dns = Resolv::DNS.new
-      dns.timeouts = 3
-      database = %w[postgresql mysql].shuffle.find do |possible_database|
-        # Perform a lookup of the database host to check if it is configured as a service.
-        if dns.getaddress possible_database
-          next possible_database
-        end
-      rescue Resolv::ResolvError
-        # Ignore DNS lookup errors
-      end
+    database = ENV['ENFORCE_DB_SERVICE'] || %w[postgresql mysql].shuffle.find do |db|
+      network_host_exists?(db)
     end
 
     raise "Can't find any supported database." if database.nil?
 
     puts "Using #{database} as database service."
 
-    db_settings_map = {
-      'postgresql' => {
-        'adapter'  => 'postgresql',
-        'username' => 'zammad',
-        'password' => 'zammad',
-        'host'     => 'postgresql', # db alias from gitlab-ci.yml
-      },
-      'mysql'      => {
-        'adapter'  => 'mysql2',
-        'username' => 'root',
-        'password' => 'zammad',
-        'host'     => 'mysql', # db alias from gitlab-ci.yml
-      }
-    }
-
     # fetch DB settings from settings map and fallback to postgresql
-    db_settings = db_settings_map.fetch(database) { db_settings_map['postgresql'] }
+    db_settings = DB_SETTINGS_MAP.fetch(database) { DB_SETTINGS_MAP['postgresql'] }
 
     %w[development test production].each do |environment|
       cnf[environment].merge!(db_settings)
@@ -85,38 +80,44 @@ class ConfigureEnvironment
     File.write(File.join(__dir__, '../config/database.yml'), Psych.dump(cnf))
   end
 
-  def self.configure_redis # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity
-    puts 'ENABLING THE NEW EXPERIMENTAL MOBILE FRONTEND.' if ENV['ENABLE_EXPERIMENTAL_MOBILE_FRONTEND'] == 'true'
-    if ENV['ENABLE_EXPERIMENTAL_MOBILE_FRONTEND'] == 'true' && (ENV['REDIS_URL'].nil? || ENV['REDIS_URL'].empty?) # rubocop:disable Rails/Blank
-      if database_type == 'mysql'
-        raise 'Redis was not found, but is required for ActionCable on MySQL based systems.'
-      end
+  def self.configure_redis
+    has_redis = network_host_exists?('redis')
+    needs_redis = database_type == 'mysql' && ENV['ENABLE_EXPERIMENTAL_MOBILE_FRONTEND'] == 'true'
 
-      puts 'Redis is not available, using File as web socket session store.'
-      puts 'Redis is not available, using the PostgreSQL adapter for ActionCable.'
+    if needs_redis && !has_redis
+      raise 'Redis was not found, but is required for ActionCable on MySQL based systems.'
+    end
+
+    if has_redis && [true, needs_redis].sample
+      puts 'Using Redis as web socket session store and as adapter for ActionCable.'
+      @env_file_content += "export REDIS_URL='redis://redis:6379'\n"
       return
     end
-    if database_type == 'mysql' || [true, false].sample
-      puts 'Using Redis as web socket session store.'
-      puts 'Using the Redis adapter for ActionCable.'
-      return
-    end
-    puts 'Using File as web socket session store.'
-    puts 'Using the PostgreSQL adapter for ActionCable.'
+
+    puts 'Using File as web socket session store and the PostgreSQL adapter for ActionCable.'
     @env_file_content += "unset REDIS_URL\n"
   end
 
   def self.configure_memcached
-    if ENV['MEMCACHE_SERVERS'].nil? || ENV['MEMCACHE_SERVERS'].empty? # rubocop:disable Rails/Blank
-      puts 'Memcached is not available, using File as Rails cache store.'
-      return
-    end
-    if [true, false].sample
+    if network_host_exists?('memcached') && [true, false].sample
       puts 'Using memcached as Rails cache store.'
+      @env_file_content += "export MEMCACHE_SERVERS='memcached'\n"
       return
     end
+
     puts "Using Zammad's file store as Rails cache store."
     @env_file_content += "unset MEMCACHE_SERVERS\n"
+  end
+
+  def self.configure_elasticsearch
+    if network_host_exists?('elasticsearch')
+      puts 'Activating support for Elasticsearch.'
+      @env_file_content += "export ES_URL='http://elasticsearch:9200'\n"
+      return
+    end
+
+    puts 'Not using Elasticsearch.'
+    @env_file_content += "unset ES_URL\n"
   end
 
   # Since configure_database skips if database.yml already exists, check the
@@ -135,9 +136,11 @@ class ConfigureEnvironment
   end
 
   def self.run
+    puts 'ENABLING THE NEW EXPERIMENTAL MOBILE FRONTEND.' if ENV['ENABLE_EXPERIMENTAL_MOBILE_FRONTEND'] == 'true'
     configure_database
     configure_redis
     configure_memcached
+    configure_elasticsearch
     write_env_file
   end
 end

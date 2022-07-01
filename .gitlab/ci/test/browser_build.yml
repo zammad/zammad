@@ -1,7 +1,7 @@
 browser:build:
   stage: test
-  extends:
-    - .services_postgresql
+  services:
+    - !reference [.services, postgresql]
   artifacts:
     expire_in: 1 week
     paths:

@@ -2,6 +2,7 @@ include:
   - '.gitlab/ci/test/rspec/*.yml'
 
 .template_rspec: &template_rspec
+  stage: test
   extends:
     - .job_rules_default
   script:
@@ -19,8 +20,13 @@ rspec:integration:
   stage: test
   extends:
     - .job_rules_default
-    - .services_mysql_postgresql_imap_redis_memcached
     - .job_rules_integration_manual_start
+  services:
+    - !reference [.services, mysql]
+    - !reference [.services, postgresql]
+    - !reference [.services, imap]
+    - !reference [.services, redis]
+    - !reference [.services, memcached]
   script:
     - !reference [.scripts, zammad_db_init]
     - bundle exec rspec --exclude-pattern "spec/system/**/*_spec.rb" -t integration --profile 10

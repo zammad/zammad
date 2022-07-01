@@ -4,8 +4,12 @@
     - browser:build
   extends:
     - .job_rules_default
-    - .services_mysql_postgresql_redis_memcached
     - .tags_docker_low_concurrency
+  services:
+    - !reference [.services, mysql]
+    - !reference [.services, postgresql]
+    - !reference [.services, redis]
+    - !reference [.services, memcached]
   variables:
     RAILS_ENV: "production"
     APP_RESTART_CMD: 'bundle exec rake environment zammad:ci:app:restart'

@@ -1,8 +1,12 @@
 .template_integration_es: &template_integration_es
   extends:
     - .job_rules_default
-    - .services_mysql_postgresql_redis_memcached_elasticsearch
-    - .variables_es
+  services:
+    - !reference [.services, mysql]
+    - !reference [.services, postgresql]
+    - !reference [.services, redis]
+    - !reference [.services, memcached]
+    - !reference [.services, elasticsearch]
   stage: test
   script:
     - !reference [.scripts, zammad_db_unseeded]

@@ -1,53 +1,49 @@
+.template_rspec_postgresql:
+  extends:
+    - .template_rspec
+  services:
+  - !reference [.services, postgresql]
+  - !reference [.services, redis]
+  - !reference [.services, memcached]
+
 rspec:postgresql:1:
-  stage: test
   variables:
     RSPEC_SLICES: 6
     RSPEC_CURRENT_SLICE: 1
   extends:
-    - .services_postgresql_redis_memcached
-    - .template_rspec
+    - .template_rspec_postgresql
 
 rspec:postgresql:2:
-  stage: test
   variables:
     RSPEC_SLICES: 6
     RSPEC_CURRENT_SLICE: 2
   extends:
-    - .services_postgresql_redis_memcached
-    - .template_rspec
+    - .template_rspec_postgresql
 
 rspec:postgresql:3:
-  stage: test
   variables:
     RSPEC_SLICES: 6
     RSPEC_CURRENT_SLICE: 3
   extends:
-    - .services_postgresql_redis_memcached
-    - .template_rspec
+    - .template_rspec_postgresql
 
 rspec:postgresql:4:
-  stage: test
   variables:
     RSPEC_SLICES: 6
     RSPEC_CURRENT_SLICE: 4
   extends:
-    - .services_postgresql_redis_memcached
-    - .template_rspec
+    - .template_rspec_postgresql
 
 rspec:postgresql:5:
-  stage: test
   variables:
     RSPEC_SLICES: 6
     RSPEC_CURRENT_SLICE: 5
   extends:
-    - .services_postgresql_redis_memcached
-    - .template_rspec
+    - .template_rspec_postgresql
 
 rspec:postgresql:6:
-  stage: test
   variables:
     RSPEC_SLICES: 6
     RSPEC_CURRENT_SLICE: 6
   extends:
-    - .services_postgresql_redis_memcached
-    - .template_rspec
+    - .template_rspec_postgresql
