@@ -17,6 +17,11 @@ variables:
   MAIL_SERVER_EMAIL: "zammad@mail.test.dc.zammad.com"
   KEEP_ON_MAIL_SERVER: "mail"
   KEEP_ON_MAIL_SERVER_ACCOUNT: "zammad@mail.test.dc.zammad.com:zammad"
+
+  # Settings for elasticsearch, if active
+  ES_INDEX_RAND: 'true'
+  ELASTICSEARCH_TAG: '7.16'
+
   # Temporary switch to enable the mobile front end for testing.
   ENABLE_EXPERIMENTAL_MOBILE_FRONTEND: 'true'
   # Compile assets only once.

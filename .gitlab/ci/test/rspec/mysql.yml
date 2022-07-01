@@ -1,53 +1,49 @@
+.template_rspec_mysql:
+  extends:
+    - .template_rspec
+  services:
+    - !reference [.services, mysql]
+    - !reference [.services, redis]
+    - !reference [.services, memcached]
+
 rspec:mysql:1:
-  stage: test
   variables:
     RSPEC_SLICES: 6
     RSPEC_CURRENT_SLICE: 1
   extends:
-    - .services_mysql_redis_memcached
-    - .template_rspec
+    - .template_rspec_mysql
 
 rspec:mysql:2:
-  stage: test
   variables:
     RSPEC_SLICES: 6
     RSPEC_CURRENT_SLICE: 2
   extends:
-    - .services_mysql_redis_memcached
-    - .template_rspec
+    - .template_rspec_mysql
 
 rspec:mysql:3:
-  stage: test
   variables:
     RSPEC_SLICES: 6
     RSPEC_CURRENT_SLICE: 3
   extends:
-    - .services_mysql_redis_memcached
-    - .template_rspec
+    - .template_rspec_mysql
 
 rspec:mysql:4:
-  stage: test
   variables:
     RSPEC_SLICES: 6
     RSPEC_CURRENT_SLICE: 4
   extends:
-    - .services_mysql_redis_memcached
-    - .template_rspec
+    - .template_rspec_mysql
 
 rspec:mysql:5:
-  stage: test
   variables:
     RSPEC_SLICES: 6
     RSPEC_CURRENT_SLICE: 5
   extends:
-    - .services_mysql_redis_memcached
-    - .template_rspec
+    - .template_rspec_mysql
 
 rspec:mysql:6:
-  stage: test
   variables:
     RSPEC_SLICES: 6
     RSPEC_CURRENT_SLICE: 6
   extends:
-    - .services_mysql_redis_memcached
-    - .template_rspec
+    - .template_rspec_mysql

@@ -7,7 +7,8 @@
 .template_lint_rails: &template_lint_rails
   extends:
     - .template_lint
-    - .services_postgresql
+  services:
+    - !reference [.services, postgresql]
   before_script:
     - !reference [.scripts, source_rvm]
     - !reference [.scripts, bundle_install]

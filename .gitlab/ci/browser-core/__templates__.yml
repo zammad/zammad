@@ -4,7 +4,6 @@
     - browser:build
   extends:
     - .job_rules_default
-    - .variables_es
     - .tags_docker_low_concurrency
   variables:
     RAILS_ENV: "production"
@@ -20,12 +19,28 @@
 .template_browser-core_chrome: &template_browser-core_chrome
   extends:
     - .template_browser-core
-    - .services_mysql_postgresql_elasticsearch_selenium_chrome_imap_redis_memcached
+    - .variables_selenium_chrome
+  services:
+    - !reference [.services, mysql]
+    - !reference [.services, postgresql]
+    - !reference [.services, elasticsearch]
+    - !reference [.services, selenium-chrome]
+    - !reference [.services, imap]
+    - !reference [.services, redis]
+    - !reference [.services, memcached]
 
 .template_browser-core_firefox: &template_browser-core_firefox
   extends:
     - .template_browser-core
-    - .services_mysql_postgresql_elasticsearch_selenium_firefox_imap_redis_memcached
+    - .variables_selenium_firefox
+  services:
+    - !reference [.services, mysql]
+    - !reference [.services, postgresql]
+    - !reference [.services, elasticsearch]
+    - !reference [.services, selenium-firefox]
+    - !reference [.services, imap]
+    - !reference [.services, redis]
+    - !reference [.services, memcached]
 
 .template_browser-core_autowizard: &template_browser-core_autowizard
   stage: browser
@@ -50,12 +65,18 @@
 .template_browser-core_autowizard_chrome: &template_browser-core_autowizard_chrome
   extends:
     - .template_browser-core_autowizard
-    - .services_postgresql_selenium_chrome
+    - .variables_selenium_chrome
+  services:
+    - !reference [.services, postgresql]
+    - !reference [.services, selenium-chrome]
 
 .template_browser-core_autowizard_firefox: &template_browser-core_autowizard_firefox
   extends:
     - .template_browser-core_autowizard
-    - .services_postgresql_selenium_firefox
+    - .variables_selenium_firefox
+  services:
+    - !reference [.services, postgresql]
+    - !reference [.services, selenium-firefox]
 
 .template_browser-core_capybara: &template_browser-core_capybara
   stage: browser
@@ -63,7 +84,6 @@
     - browser:build
   extends:
     - .job_rules_default
-    - .variables_es
     - .tags_docker_low_concurrency
   script:
     - echo -e "\\e[0Ksection_start:`date +%s`:zammad_ci_test_prepare[collapsed=true]\\r\\e[0Kbundle exec rake zammad:ci:test:prepare"
@@ -75,9 +95,25 @@
 .template_browser-core_capybara_chrome: &template_browser-core_capybara_chrome
   extends:
     - .template_browser-core_capybara
-    - .services_mysql_postgresql_elasticsearch_selenium_chrome_imap_redis_memcached
+    - .variables_selenium_chrome
+  services:
+    - !reference [.services, mysql]
+    - !reference [.services, postgresql]
+    - !reference [.services, elasticsearch]
+    - !reference [.services, selenium-chrome]
+    - !reference [.services, imap]
+    - !reference [.services, redis]
+    - !reference [.services, memcached]
 
 .template_browser-core_capybara_firefox: &template_browser-core_capybara_firefox
   extends:
     - .template_browser-core_capybara
-    - .services_mysql_postgresql_elasticsearch_selenium_firefox_imap_redis_memcached
+    - .variables_selenium_firefox
+  services:
+    - !reference [.services, mysql]
+    - !reference [.services, postgresql]
+    - !reference [.services, elasticsearch]
+    - !reference [.services, selenium-firefox]
+    - !reference [.services, imap]
+    - !reference [.services, redis]
+    - !reference [.services, memcached]

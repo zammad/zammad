@@ -10,11 +10,17 @@
 unit:mysql:
   stage: test
   extends:
-    - .services_mysql_redis_memcached
     - .template_unit
+  services:
+    - !reference [.services, mysql]
+    - !reference [.services, redis]
+    - !reference [.services, memcached]
 
 unit:postgresql:
   stage: test
   extends:
-    - .services_postgresql_redis_memcached
     - .template_unit
+  services:
+    - !reference [.services, postgresql]
+    - !reference [.services, redis]
+    - !reference [.services, memcached]

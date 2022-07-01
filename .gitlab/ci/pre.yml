@@ -32,8 +32,8 @@
     - script/build/sync_repo.sh git@github.com:zammad/zammad.git
 
 'refresh global envs':
-  extends:
-    - .services_postgresql
+  services:
+    - !reference [.services, postgresql]
   stage: pre
   needs:
     - 'write runner cache: ruby'
