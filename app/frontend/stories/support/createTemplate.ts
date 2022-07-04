@@ -7,13 +7,18 @@ interface StoryTemplate<Props> {
   args?: Props
 }
 
-export default function createTemplate<Props>(StoryComponent: Component) {
+export default function createTemplate<Props>(
+  StoryComponent: Component,
+  slots: Record<string, string> = {},
+) {
   const fn = (args: Props) => ({
     components: { StoryComponent },
     setup() {
       return { args }
     },
-    template: '<StoryComponent v-bind="args"/>',
+    template: `<StoryComponent v-bind="args">${
+      slots.default || ''
+    }</StoryComponent>`,
   })
 
   fn.create = (args?: Props): StoryTemplate<Props> => {

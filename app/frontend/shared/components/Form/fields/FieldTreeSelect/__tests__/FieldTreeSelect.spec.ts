@@ -1,14 +1,22 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import { cloneDeep } from 'lodash-es'
-import {
-  getByText,
-  waitFor,
-  waitForElementToBeRemoved,
-} from '@testing-library/vue'
+import { getByText, waitFor } from '@testing-library/vue'
 import { FormKit } from '@formkit/vue'
 import { renderComponent } from '@tests/support/components'
 import { i18n } from '@shared/i18n'
+
+vi.mock('@vueuse/core', async () => {
+  const mod = await vi.importActual<typeof import('@vueuse/core')>(
+    '@vueuse/core',
+  )
+  return {
+    ...mod,
+    usePointerSwipe: vi
+      .fn()
+      .mockReturnValue({ distanceY: 0, isSwiping: false }),
+  }
+})
 
 // Mock IntersectionObserver feature by injecting it into the global namespace.
 //   More info here: https://vitest.dev/guide/mocking.html#globals
@@ -81,16 +89,13 @@ const wrapperParameters = {
   form: true,
   formField: true,
   store: true,
-
-  // NB: Dialog component from the Headless UI library uses a built-in Vue Teleport mechanism in order to "teleport" a
-  //   part of the dialog's template into a DOM node that exists outside the DOM hierarchy of the dialog. Vitest does
-  //   not stub this component automatically, so we need to be explicit.
-  global: {
-    stubs: {
-      teleport: true,
-    },
-  },
+  dialog: true,
 }
+
+beforeAll(async () => {
+  // so we don't need to wait until it loads inside test
+  await import('../FieldTreeSelectInputDialog.vue')
+})
 
 describe('Form - Field - TreeSelect - Dialog', () => {
   it('renders select options in a modal dialog', async () => {
@@ -112,9 +117,7 @@ describe('Form - Field - TreeSelect - Dialog', () => {
       expect(selectOption).toHaveTextContent(testOptions[index].label)
     })
 
-    await wrapper.events.click(wrapper.getByRole('button'))
-
-    await waitForElementToBeRemoved(() => wrapper.queryByRole('dialog'))
+    await wrapper.events.click(wrapper.getByRole('button', { name: /Done/ }))
 
     expect(wrapper.queryByRole('dialog')).not.toBeInTheDocument()
   })
@@ -140,8 +143,6 @@ describe('Form - Field - TreeSelect - Dialog', () => {
 
     expect(emittedInput[0][0]).toBe(testOptions[0].value)
 
-    await waitForElementToBeRemoved(() => wrapper.queryByRole('dialog'))
-
     expect(wrapper.queryByRole('dialog')).not.toBeInTheDocument()
   })
 
@@ -163,9 +164,7 @@ describe('Form - Field - TreeSelect - Dialog', () => {
 
     expect(wrapper.getIconByName('check')).toBeInTheDocument()
 
-    await wrapper.events.click(wrapper.getByRole('button'))
-
-    await waitForElementToBeRemoved(() => wrapper.queryByRole('dialog'))
+    await wrapper.events.click(wrapper.getByRole('button', { name: /Done/ }))
 
     expect(wrapper.queryByRole('dialog')).not.toBeInTheDocument()
   })
@@ -201,6 +200,7 @@ describe('Form - Field - TreeSelect - Dialog', () => {
     // Level 0
     await wrapper.events.click(wrapper.getByRole('list'))
 
+    // only "Done"
     expect(wrapper.getAllByRole('button')).toHaveLength(1)
 
     let selectOptions = wrapper.getAllByRole('option')
@@ -342,8 +342,6 @@ describe('Form - Field - TreeSelect - Options', () => {
 
     await wrapper.events.click(wrapper.getByRole('button'))
 
-    await waitForElementToBeRemoved(() => wrapper.queryByRole('dialog'))
-
     expect(wrapper.getByRole('listitem')).toHaveTextContent('Item D')
   })
 
@@ -448,8 +446,6 @@ describe('Form - Field - TreeSelect - Options', () => {
     expect(selectOptions).toHaveLength(selectedOptionStatuses.length)
 
     await wrapper.events.click(selectOptions[0])
-
-    await waitForElementToBeRemoved(() => wrapper.queryByRole('dialog'))
 
     expect(wrapper.getByRole('listitem')).toHaveAttribute(
       'data-test-status',
@@ -633,8 +629,6 @@ describe('Form - Field - TreeSelect - Features', () => {
     })
 
     await wrapper.events.click(wrapper.getByRole('button'))
-
-    await waitForElementToBeRemoved(() => wrapper.queryByRole('dialog'))
   })
 
   it('supports option sorting', async () => {
@@ -713,7 +707,7 @@ describe('Form - Field - TreeSelect - Features', () => {
 
     await wrapper.events.click(wrapper.getByRole('list'))
 
-    let selectOptions = wrapper.getAllByRole('option')
+    let selectOptions = await wrapper.findAllByRole('option')
 
     selectOptions.forEach((selectOption, index) => {
       expect(selectOption).toHaveTextContent(translatedOptions[index].label)
@@ -729,7 +723,9 @@ describe('Form - Field - TreeSelect - Features', () => {
       noOptionsLabelTranslation: true,
     })
 
-    selectOptions = wrapper.getAllByRole('option')
+    await wrapper.events.click(wrapper.getByRole('list'))
+
+    selectOptions = await wrapper.findAllByRole('option')
 
     selectOptions.forEach((selectOption, index) => {
       expect(selectOption).toHaveTextContent(untranslatedOptions[index].label)
@@ -965,8 +961,6 @@ describe('Form - Field - TreeSelect - Accessibility', () => {
     const emittedInput = wrapper.emitted().inputRaw as Array<Array<InputEvent>>
 
     expect(emittedInput[0][0]).toBe(testOptions[0].value)
-
-    await waitForElementToBeRemoved(() => wrapper.queryByRole('dialog'))
 
     wrapper.events.type(wrapper.getByRole('button'), '{Space}')
 

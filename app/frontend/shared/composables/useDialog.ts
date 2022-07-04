@@ -4,6 +4,7 @@ import {
   destroyComponent,
   pushComponent,
 } from '@shared/components/DynamicInitializer/manage'
+import { noop } from 'lodash-es'
 import {
   AsyncComponentLoader,
   Component,
@@ -18,6 +19,7 @@ import {
 export interface DialogOptions {
   name: string
   component: () => Promise<Component>
+  prefetch?: boolean
   beforeOpen?: () => Awaited<unknown>
   afterClose?: () => Awaited<unknown>
 }
@@ -115,11 +117,15 @@ export const useDialog = (options: DialogOptions) => {
     return openDialog(options.name, props)
   }
 
-  let pendingPrefetch: Promise<Component>
+  let pendingPrefetch: Promise<unknown>
   const prefetch = async () => {
     if (pendingPrefetch) return pendingPrefetch
-    pendingPrefetch = options.component()
+    pendingPrefetch = options.component().catch(noop)
     return pendingPrefetch
+  }
+
+  if (options.prefetch) {
+    prefetch()
   }
 
   return {

@@ -7,7 +7,7 @@ import {
   Router,
   RouteRecordRaw,
 } from 'vue-router'
-import { MountingOptions } from '@vue/test-utils'
+import { mount, MountingOptions } from '@vue/test-utils'
 import { Matcher, render, RenderResult } from '@testing-library/vue'
 import userEvent from '@testing-library/user-event'
 import { merge, cloneDeep } from 'lodash-es'
@@ -18,6 +18,7 @@ import applicationConfigPlugin from '@shared/plugins/applicationConfigPlugin'
 import CommonIcon from '@shared/components/CommonIcon/CommonIcon.vue'
 import CommonLink from '@shared/components/CommonLink/CommonLink.vue'
 import CommonDateTime from '@shared/components/CommonDateTime/CommonDateTime.vue'
+import DynamicInitializer from '@shared/components/DynamicInitializer/DynamicInitializer.vue'
 import { i18n } from '@shared/i18n'
 import type { Store } from 'pinia'
 import buildIconsQueries from './iconQueries'
@@ -33,6 +34,7 @@ export interface ExtendedMountingOptions<Props> extends MountingOptions<Props> {
   form?: boolean
   formField?: boolean
   unmount?: boolean
+  dialog?: boolean
   vModel?: {
     [prop: string]: unknown
   }
@@ -185,6 +187,22 @@ afterEach(() => {
   })
 })
 
+let dialogMounted = false
+
+const mountDialog = () => {
+  if (dialogMounted) return
+
+  const Dialog = {
+    components: { DynamicInitializer },
+    template: '<DynamicInitializer name="dialog" />',
+  } as any
+
+  const { element } = mount(Dialog, defaultWrapperOptions)
+  document.body.appendChild(element)
+
+  dialogMounted = true
+}
+
 const renderComponent = <Props>(
   component: any,
   wrapperOptions: ExtendedMountingOptions<Props> = {},
@@ -198,6 +216,9 @@ const renderComponent = <Props>(
   }
   if (wrapperOptions?.form && !formInitialized) {
     initializeForm()
+  }
+  if (wrapperOptions?.dialog && !dialogMounted) {
+    mountDialog()
   }
 
   if (!applicationConfigInitialized) {
@@ -267,8 +288,8 @@ const renderComponent = <Props>(
     },
   }
 
-  Object.assign(view, buildIconsQueries(view.container as HTMLElement))
-  Object.assign(view, buildLinksQueries(view.container as HTMLElement))
+  Object.assign(view, buildIconsQueries(view.baseElement as HTMLElement))
+  Object.assign(view, buildLinksQueries(view.baseElement as HTMLElement))
 
   wrappers.add([localWrapperOptions, view])
 

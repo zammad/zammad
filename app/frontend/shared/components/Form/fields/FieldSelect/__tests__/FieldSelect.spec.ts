@@ -1,11 +1,7 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import { cloneDeep } from 'lodash-es'
-import {
-  getByText,
-  waitFor,
-  waitForElementToBeRemoved,
-} from '@testing-library/vue'
+import { getByText, waitFor } from '@testing-library/vue'
 import { FormKit } from '@formkit/vue'
 import { renderComponent } from '@tests/support/components'
 import { i18n } from '@shared/i18n'
@@ -46,15 +42,7 @@ const testOptions = [
 const wrapperParameters = {
   form: true,
   formField: true,
-
-  // NB: Dialog component from the Headless UI library uses a built-in Vue Teleport mechanism in order to "teleport" a
-  //   part of the dialog's template into a DOM node that exists outside the DOM hierarchy of the dialog. Vitest does
-  //   not stub this component automatically, so we need to be explicit.
-  global: {
-    stubs: {
-      teleport: true,
-    },
-  },
+  dialog: true,
 }
 
 describe('Form - Field - Select - Dialog', () => {
@@ -78,8 +66,6 @@ describe('Form - Field - Select - Dialog', () => {
     })
 
     await wrapper.events.click(wrapper.getByTestId('dialog-overlay'))
-
-    await waitForElementToBeRemoved(() => wrapper.queryByRole('dialog'))
 
     expect(wrapper.queryByRole('dialog')).not.toBeInTheDocument()
   })
@@ -105,8 +91,6 @@ describe('Form - Field - Select - Dialog', () => {
 
     expect(emittedInput[0][0]).toBe(testOptions[0].value)
 
-    await waitForElementToBeRemoved(() => wrapper.queryByRole('dialog'))
-
     expect(wrapper.queryByRole('dialog')).not.toBeInTheDocument()
   })
 
@@ -129,8 +113,6 @@ describe('Form - Field - Select - Dialog', () => {
     expect(wrapper.getIconByName('check')).toBeInTheDocument()
 
     await wrapper.events.click(wrapper.getByTestId('dialog-overlay'))
-
-    await waitForElementToBeRemoved(() => wrapper.queryByRole('dialog'))
 
     expect(wrapper.queryByRole('dialog')).not.toBeInTheDocument()
   })
@@ -175,8 +157,6 @@ describe('Form - Field - Select - Options', () => {
     expect(selectOptions).toHaveLength(optionsProp.length)
 
     await wrapper.events.click(wrapper.getByTestId('dialog-overlay'))
-
-    await waitForElementToBeRemoved(() => wrapper.queryByRole('dialog'))
 
     expect(wrapper.getByRole('listitem')).toHaveTextContent('Item D')
   })
@@ -260,8 +240,6 @@ describe('Form - Field - Select - Options', () => {
     expect(selectOptions).toHaveLength(selectedOptionStatuses.length)
 
     await wrapper.events.click(selectOptions[0])
-
-    await waitForElementToBeRemoved(() => wrapper.queryByRole('dialog'))
 
     expect(wrapper.getByRole('listitem')).toHaveAttribute(
       'data-test-status',
@@ -365,7 +343,7 @@ describe('Form - Field - Select - Features', () => {
 
     await wrapper.events.click(wrapper.getByRole('list'))
 
-    const selectOptions = wrapper.getAllByRole('option')
+    let selectOptions = wrapper.getAllByRole('option')
 
     expect(selectOptions).toHaveLength(
       wrapper.queryAllIconsByName('checked-no').length,
@@ -389,7 +367,9 @@ describe('Form - Field - Select - Features', () => {
       expect(selectedLabel).toHaveTextContent(testOptions[index].label)
     })
 
-    wrapper.events.click(selectOptions[1])
+    selectOptions = wrapper.getAllByRole('option')
+
+    await wrapper.events.click(selectOptions[1])
 
     await waitFor(() => {
       expect(emittedInput[0][0]).toStrictEqual([
@@ -407,7 +387,9 @@ describe('Form - Field - Select - Features', () => {
       expect(selectedLabel).toHaveTextContent(testOptions[index].label)
     })
 
-    wrapper.events.click(selectOptions[2])
+    selectOptions = wrapper.getAllByRole('option')
+
+    await wrapper.events.click(selectOptions[2])
 
     await waitFor(() => {
       expect(emittedInput[0][0]).toStrictEqual([
@@ -426,7 +408,9 @@ describe('Form - Field - Select - Features', () => {
       expect(selectedLabel).toHaveTextContent(testOptions[index].label)
     })
 
-    wrapper.events.click(selectOptions[2])
+    selectOptions = wrapper.getAllByRole('option')
+
+    await wrapper.events.click(selectOptions[2])
 
     await waitFor(() => {
       expect(emittedInput[0][0]).toStrictEqual([
@@ -445,8 +429,6 @@ describe('Form - Field - Select - Features', () => {
     })
 
     await wrapper.events.click(wrapper.getByTestId('dialog-overlay'))
-
-    await waitForElementToBeRemoved(() => wrapper.queryByRole('dialog'))
   })
 
   it('supports option sorting', async () => {
@@ -540,6 +522,8 @@ describe('Form - Field - Select - Features', () => {
     await wrapper.rerender({
       noOptionsLabelTranslation: true,
     })
+
+    await wrapper.events.click(wrapper.getByRole('list'))
 
     selectOptions = wrapper.getAllByRole('option')
 

@@ -147,21 +147,21 @@ const useSelectOptions = (
 
     let targetElement
 
-    switch (event.keyCode) {
-      case 37:
+    switch (event.key) {
+      case 'ArrowLeft':
         if (typeof arrowLeftCallback === 'function')
           arrowLeftCallback(option, getDialogFocusTargets)
         break
-      case 38:
+      case 'ArrowUp':
         targetElement =
           targetElements[originElementIndex - 1] ||
           targetElements[targetElements.length - 1]
         break
-      case 39:
+      case 'ArrowRight':
         if (typeof arrowRightCallback === 'function')
           arrowRightCallback(option, getDialogFocusTargets)
         break
-      case 40:
+      case 'ArrowDown':
         targetElement =
           targetElements[originElementIndex + 1] || targetElements[0]
         break
