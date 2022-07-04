@@ -2505,6 +2505,12 @@ msgstr ""
 msgid "Conversion of retweets into tickets is turned off."
 msgstr "Η μετατροπή των retweets σε αιτήματα είναι απενεργοποιημένη"
 
+#: app/assets/javascripts/app/controllers/_application_controller/_base.coffee
+#, fuzzy
+#| msgid "Copy to clipboard: Ctrl+C, Enter"
+msgid "Copied to clipboard!"
+msgstr "Αντιγραφή στο πρόχειρο: Ctrl + C, Enter"
+
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
 msgid "Copy"
 msgstr ""
@@ -3996,6 +4002,7 @@ msgstr ""
 msgid "Don't synchronize"
 msgstr ""
 
+#: app/frontend/apps/mobile/components/CommonDialog/CommonDialog.vue
 #: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
 #: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 msgid "Done"
@@ -6804,6 +6811,7 @@ msgid "March"
 msgstr "Μάρτιος"
 
 #: app/assets/javascripts/app/views/widget/online_notification.jst.eco
+#: app/frontend/apps/mobile/modules/notifications/views/NotificationsList.vue
 msgid "Mark all as read"
 msgstr "Επισήμανση όλων ως αναγνωσμένων"
 
@@ -7742,6 +7750,7 @@ msgstr "Ηχος Ειδοποίησης"
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
 #: app/assets/javascripts/app/views/widget/online_notification.jst.eco
+#: app/frontend/apps/mobile/modules/notifications/routes.ts
 #: db/seeds/permissions.rb
 msgid "Notifications"
 msgstr "Ειδοποιήσεις"
@@ -8897,6 +8906,10 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 msgid "Rollback of channel migration succeeded!"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+msgid "Rows"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee

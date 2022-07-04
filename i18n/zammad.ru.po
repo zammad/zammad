@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-06-30 09:22+0000\n"
+"PO-Revision-Date: 2022-07-02 03:30+0000\n"
 "Last-Translator: Zhilin Ruslan <x-th-unicorn@hotmail.com>\n"
 "Language-Team: Russian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/ru/>\n"
@@ -2364,6 +2364,10 @@ msgstr "Разговор переносится в другой чат. Пожа
 msgid "Conversion of retweets into tickets is turned off."
 msgstr "Преобразование ретвитов (retweets) в заявки отключено."
 
+#: app/assets/javascripts/app/controllers/_application_controller/_base.coffee
+msgid "Copied to clipboard!"
+msgstr "Скопировано в буфер обмена!"
+
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
 msgid "Copy"
 msgstr "Копировать"
@@ -3927,6 +3931,7 @@ msgstr ""
 msgid "Don't synchronize"
 msgstr "Не синхронизировать"
 
+#: app/frontend/apps/mobile/components/CommonDialog/CommonDialog.vue
 #: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
 #: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 msgid "Done"
@@ -6658,6 +6663,7 @@ msgid "March"
 msgstr "Март"
 
 #: app/assets/javascripts/app/views/widget/online_notification.jst.eco
+#: app/frontend/apps/mobile/modules/notifications/views/NotificationsList.vue
 msgid "Mark all as read"
 msgstr "отметить все как прочитанное"
 
@@ -7561,6 +7567,7 @@ msgstr "Звук уведомления"
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
 #: app/assets/javascripts/app/views/widget/online_notification.jst.eco
+#: app/frontend/apps/mobile/modules/notifications/routes.ts
 #: db/seeds/permissions.rb
 msgid "Notifications"
 msgstr "Уведомления"
@@ -8670,6 +8677,10 @@ msgstr "Откат переноса"
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 msgid "Rollback of channel migration succeeded!"
 msgstr "Откат переноса канала выполнен успешно!"
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+msgid "Rows"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee
 msgid "Run every %s at %s in %s time"

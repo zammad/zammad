@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-06-24 03:30+0000\n"
+"PO-Revision-Date: 2022-07-01 03:30+0000\n"
 "Last-Translator: LAO <sumonchai@gmail.com>\n"
 "Language-Team: Thai <https://translations.zammad.org/projects/zammad/zammad-"
 "development/th/>\n"
@@ -280,7 +280,7 @@ msgstr "%s หลายปีก่อน"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco
 msgid "%s% are currently in process"
-msgstr "%s% are currently in process"
+msgstr "%s% อยู่ระหว่างดำเนินการ"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_reopen.jst.eco
 msgid "%s% have been reopened"
@@ -711,12 +711,12 @@ msgstr "เพิ่ม Telegram Bot"
 #: app/assets/javascripts/app/views/widget/organization.jst.eco
 #: app/assets/javascripts/app/views/widget/user.jst.eco
 msgid "Add a Note"
-msgstr "เพิ่มโน้ต"
+msgstr "เพิ่มหมายเหตุ"
 
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 msgid "Add a Personal Access Token"
-msgstr "เพิ่ม a Personal Access Token"
+msgstr "เพิ่ม โทเค็นการเข้าถึงส่วนบุคคล"
 
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 msgid "Add alarm to pending reminder and escalated tickets."
@@ -2298,6 +2298,12 @@ msgstr "การสนทนาถูกโอนไปยังแชทอื
 msgid "Conversion of retweets into tickets is turned off."
 msgstr "การแปลงการรีทวีตเป็น tickets ถูกปิด"
 
+#: app/assets/javascripts/app/controllers/_application_controller/_base.coffee
+#, fuzzy
+#| msgid "Paste from clipboard"
+msgid "Copied to clipboard!"
+msgstr "ว่างจากคลิปบอร์ด"
+
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
 msgid "Copy"
 msgstr "คัดลอก"
@@ -3168,7 +3174,7 @@ msgstr ""
 msgid ""
 "Defines postmaster filter to remove X-Zammad headers from untrustworthy "
 "sources."
-msgstr ""
+msgstr "กำหนดตัวกรอง postmaster เพื่อลบส่วนหัว X-Zammad จากแหล่งที่ไม่น่าไว้วางใจ"
 
 #: db/seeds/settings.rb
 msgid ""
@@ -3400,7 +3406,7 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Defines the timeframe during which a self-created note can be deleted."
-msgstr ""
+msgstr "กำหนดกรอบเวลาระหว่างที่บันทึกย่อที่สร้างขึ้นเองสามารถลบได้"
 
 #: db/seeds/settings.rb
 msgid "Defines the token for Placetel."
@@ -3602,11 +3608,11 @@ msgstr "กลุ่มปลายทาง"
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 msgid "Destination caller ID"
-msgstr ""
+msgstr "D ผู้โทรปลายทาง"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 msgid "Destination caller ID or queue"
-msgstr ""
+msgstr "ID ผู้โทรหรือคิวปลายทาง"
 
 #: db/seeds/settings.rb
 msgid "Developer System"
@@ -3735,6 +3741,7 @@ msgstr ""
 msgid "Don't synchronize"
 msgstr "อย่าซิงโครไนซ์"
 
+#: app/frontend/apps/mobile/components/CommonDialog/CommonDialog.vue
 #: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
 #: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 msgid "Done"
@@ -4028,7 +4035,7 @@ msgstr ""
 msgid ""
 "Enable if you want a timestamped reply header to be automatically inserted "
 "in front of quoted messages."
-msgstr ""
+msgstr "เปิดใช้งานหากคุณต้องการให้แทรกส่วนหัวการตอบกลับแบบประทับเวลาโดยอัตโนมัติต่อหน้าข้อความที่ยกมา"
 
 #: db/seeds/settings.rb
 msgid ""
@@ -4065,11 +4072,11 @@ msgstr "เปิดใช้งานการกำหนด ticket อัต�
 
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 msgid "Enable time accounting for following matching tickets."
-msgstr "เปิดใช้งานการบัญชีเวลาสำหรับ ticket ที่ตรงกันต่อไปนี้"
+msgstr "เปิดใช้งาน time accounting สำหรับ ticket ที่ตรงกันต่อไปนี้"
 
 #: db/seeds/settings.rb
 msgid "Enable time accounting for these tickets."
-msgstr "เปิดใช้งานการบัญชีเวลาสำหรับ ticket เหล่านี้"
+msgstr "เปิดใช้งานtime accounting สำหรับ ticket เหล่านี้"
 
 #: db/seeds/settings.rb
 msgid "Enable time accounting."
@@ -4117,6 +4124,9 @@ msgid ""
 "log into Zammad and then link his \"Third Party\" account to his Zammad "
 "account via Profile -> Linked Accounts."
 msgstr ""
+"เปิดใช้งานการเชื่อมโยงอัตโนมัติของบัญชีที่มีอยู่ในการเข้าสู่ระบบครั้งแรกผ่านแอปพลิเคชันบุคคลที่สาม "
+"หากปิดใช้งาน ผู้ใช้ที่มีอยู่ต้องลงชื่อเข้าใช้ Zammad ก่อน จากนั้นจึงเชื่อมโยงบัญชี \"บุคคลที่สาม\" "
+"กับบัญชี Zammad ผ่านโปรไฟล์ -> บัญชีที่เชื่อมโยง"
 
 #: db/seeds/settings.rb
 msgid "Enables user authentication via %s."
@@ -5350,6 +5360,8 @@ msgid ""
 "If you want to move already stored attachments from one backend to another, "
 "you need to execute the following via console."
 msgstr ""
+"หากคุณต้องการย้ายไฟล์แนบที่จัดเก็บไว้แล้วจากแบ็กเอนด์หนึ่งไปยังอีกที่หนึ่ง "
+"คุณต้องดำเนินการสิ่งต่อไปนี้ผ่านคอนโซล"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid ""
@@ -5821,7 +5833,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps.coffee
 msgid "Invite Customer"
-msgstr ""
+msgstr "เชิญลูกค้า"
 
 #: app/controllers/first_steps_controller.rb
 msgid "Invite agents/colleagues to help working on tickets"
@@ -5829,7 +5841,7 @@ msgstr ""
 
 #: app/controllers/first_steps_controller.rb
 msgid "Invite customers to create issues in Zammad"
-msgstr ""
+msgstr "เชิญลูกค้าสร้างปัญหาใน Zammad"
 
 #: app/assets/javascripts/app/lib/app_post/iconset_picker.coffee
 msgid "Ionicons"
@@ -6095,7 +6107,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/profile/linked_accounts.jst.eco
 msgid "Link Accounts"
-msgstr ""
+msgstr "เชื่อมโยงบัญชี"
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/link_answer_button.coffee
 msgid "Link Answer"
@@ -6125,7 +6137,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/popover/user.jst.eco
 #: app/assets/javascripts/app/views/widget/user.jst.eco db/seeds/permissions.rb
 msgid "Linked Accounts"
-msgstr ""
+msgstr "บัญชีที่เชื่อมโยง"
 
 #: app/assets/javascripts/app/views/knowledge_base/_reader_linked_tickets.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/linked_tickets.jst.eco
@@ -6327,6 +6339,7 @@ msgid "March"
 msgstr "มีนาคม"
 
 #: app/assets/javascripts/app/views/widget/online_notification.jst.eco
+#: app/frontend/apps/mobile/modules/notifications/views/NotificationsList.vue
 msgid "Mark all as read"
 msgstr ""
 
@@ -6420,7 +6433,7 @@ msgstr "ข้อความ"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Message after sending form"
-msgstr ""
+msgstr "ข้อความหลังจากส่งแบบฟอร์ม"
 
 #: db/seeds/settings.rb
 msgid "Message for login page."
@@ -6548,11 +6561,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco
 msgid "Month"
-msgstr ""
+msgstr "เดือน"
 
 #: app/assets/javascripts/app/controllers/_ui_element/time_range.coffee
 msgid "Month(s)"
-msgstr ""
+msgstr "เดือน (s)"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_escalation.jst.eco
 msgid "Mood"
@@ -6574,23 +6587,23 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 msgid "Move all from \"%s\" to \"%s\""
-msgstr ""
+msgstr "ย้ายทั้งหมดจาก \"%s\" เป็น \"%s\""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Move left and right"
-msgstr ""
+msgstr "เลื่อนไปทางซ้ายและขวา"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Move up and down"
-msgstr ""
+msgstr "เลื่อนขึ้นและลง"
 
 #: app/models/report.rb
 msgid "Moved in"
-msgstr ""
+msgstr "ย้ายเข้า"
 
 #: app/models/report.rb
 msgid "Moved out"
-msgstr ""
+msgstr "ย้ายออก"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Multiple selection field"
@@ -6636,7 +6649,7 @@ msgstr "วันทำการของฉัน: %s นาที"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco
 msgid "My tickets in process"
-msgstr ""
+msgstr "Tickets ของฉันอยู่ระหว่างดำเนินการ"
 
 #: app/assets/javascripts/app/controllers/_integration/nagios.coffee
 msgid "Nagios"
@@ -6695,15 +6708,15 @@ msgstr ""
 #: app/controllers/time_accountings_controller.rb
 #: db/seeds/object_manager_attributes.rb
 msgid "Name"
-msgstr ""
+msgstr "ชื่อ"
 
 #: db/seeds/settings.rb
 msgid "Name Identifier Format"
-msgstr ""
+msgstr "รูปแบบตัวระบุชื่อ"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Name of form submit button"
-msgstr ""
+msgstr "ชื่อปุ่มส่งแบบฟอร์ม"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Navigate through article"
@@ -6735,7 +6748,7 @@ msgstr ""
 
 #: app/models/application_model/can_creates_and_updates.rb
 msgid "Need name, login, email or locale for create_or_update()"
-msgstr ""
+msgstr "ต้องการชื่อ ล็อกอิน อีเมล หรือสถานที่ สำหรับ create_or_update()"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 msgid "Need recipient in \"TO\" or \"CC\"."
@@ -7178,11 +7191,11 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 #: db/seeds/object_manager_attributes.rb
 msgid "Note"
-msgstr ""
+msgstr "หมายเหตุ"
 
 #: db/seeds/settings.rb
 msgid "Note - default visibility"
-msgstr ""
+msgstr "หมายเหตุ - การมองเห็นเริ่มต้น"
 
 #: app/assets/javascripts/app/models/email_address.coffee
 #: app/assets/javascripts/app/models/group.coffee
@@ -7191,7 +7204,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/signature.coffee
 #: db/seeds/object_manager_attributes.rb
 msgid "Notes are visible to agents only, never to customers."
-msgstr ""
+msgstr "หมายเหตุจะปรากฏต่อตัวแทนเท่านั้น จะไม่แสดงต่อลูกค้า"
 
 #: app/assets/javascripts/app/views/generic/column_select.jst.eco
 msgid "Nothing selected"
@@ -7215,13 +7228,14 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
 msgid "Notification Sound"
-msgstr ""
+msgstr "เสียงแจ้งเตือน"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
 #: app/assets/javascripts/app/views/widget/online_notification.jst.eco
+#: app/frontend/apps/mobile/modules/notifications/routes.ts
 #: db/seeds/permissions.rb
 msgid "Notifications"
 msgstr "การแจ้งเตือน"
@@ -7370,7 +7384,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Open note box"
-msgstr ""
+msgstr "เปิดกล่องโน้ต"
 
 #: db/seeds/settings.rb
 msgid "Open ticket indicator"
@@ -7492,7 +7506,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
 msgid "Outbound Call"
-msgstr ""
+msgstr "โทรออก"
 
 #: app/assets/javascripts/app/lib/app_post/browser.coffee
 msgid "Outdated Browser"
@@ -7721,7 +7735,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 msgid "Pick a name for the application, and we'll give you a unique token."
-msgstr ""
+msgstr "เลือกชื่อสำหรับแอปพลิเคชัน แล้วเราจะมอบโทเค็นพิเศษให้คุณ"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/highlighter.coffee
 msgid "Pink"
@@ -8039,7 +8053,7 @@ msgstr "ตรวจสอบอีกครั้ง"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
 msgid "Received Call"
-msgstr ""
+msgstr "รับสาย"
 
 #: app/assets/javascripts/app/views/agent_ticket_merge.jst.eco
 #: app/assets/javascripts/app/views/link/ticket/add.jst.eco
@@ -8146,23 +8160,23 @@ msgstr "เอารูปแบบออก"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Removes any hyperlink"
-msgstr ""
+msgstr "ลบไฮเปอร์ลิงก์ใด ๆ"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Removes the formatting"
-msgstr ""
+msgstr "ลบการจัดรูปแบบ"
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
 msgid "Removes the shadows for a flat look."
-msgstr ""
+msgstr "ลบเงาเพื่อให้ดูเรียบ"
 
 #: app/models/report.rb
 msgid "Reopened"
-msgstr ""
+msgstr "เปิดใหม่"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_reopen.jst.eco
 msgid "Reopening rate"
-msgstr ""
+msgstr "อัตราการเปิดใหม่"
 
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
 msgid "Replacement"
@@ -8192,7 +8206,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/views/report/main.jst.eco
 msgid "Reporting"
-msgstr ""
+msgstr "การรายงาน"
 
 #: app/assets/javascripts/app/views/widget/http_log.jst.eco
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
@@ -8218,7 +8232,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Requirements"
-msgstr ""
+msgstr "ความต้องการ"
 
 #: app/assets/javascripts/app/controllers/_plugin/user_signup_check.coffee
 #: app/assets/javascripts/app/controllers/user_profile.coffee
@@ -8313,6 +8327,10 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 msgid "Rollback of channel migration succeeded!"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+msgid "Rows"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee
@@ -8797,23 +8815,23 @@ msgstr "ตั้งค่า ID ผู้โทรของการโทร�
 
 #: db/seeds/settings.rb
 msgid "Set notes for ticket create types by selecting type."
-msgstr ""
+msgstr "ตั้งค่าบันทึกสำหรับประเภทการสร้าง ticket โดยเลือกประเภท"
 
 #: db/seeds/settings.rb
 msgid "Set notes for ticket create types."
-msgstr ""
+msgstr "ตั้งค่าบันทึกสำหรับประเภทการสร้าง ticket"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 msgid "Set outbound caller ID"
-msgstr ""
+msgstr "ตั้งค่า ID ผู้โทรออก"
 
 #: db/seeds/settings.rb
 msgid ""
 "Set timeframe in seconds. If it's set to 0 you can delete notes without time "
 "limits"
-msgstr ""
+msgstr "กำหนดกรอบเวลาเป็นวินาที หากตั้งค่าเป็น 0 คุณสามารถลบโน้ตได้โดยไม่ จำกัด เวลา"
 
 #: app/assets/javascripts/app/views/getting_started/intro.jst.eco
 msgid "Set up a new system"
@@ -9120,7 +9138,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Start modal dialog for form."
-msgstr ""
+msgstr "เริ่มกล่องโต้ตอบ modal สำหรับแบบฟอร์ม"
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
@@ -9179,7 +9197,7 @@ msgstr ""
 #: app/views/slack/ticket_create/zh-tw.md.erb
 #: db/seeds/object_manager_attributes.rb lib/excel_sheet/ticket.rb
 msgid "State"
-msgstr "รัฐ"
+msgstr "สถานะ"
 
 #: db/seeds/settings.rb
 msgid "Stats Backend"
@@ -9323,7 +9341,7 @@ msgstr "ระบบ"
 
 #: db/seeds/settings.rb
 msgid "System Address Display Name"
-msgstr ""
+msgstr "ชื่อที่แสดงที่อยู่ของระบบ"
 
 #: db/seeds/settings.rb
 msgid "System Init Done"
@@ -9372,7 +9390,7 @@ msgstr "แท็ก"
 msgid ""
 "Take Reply-To header as sender/from of email and use the real name of origin "
 "from."
-msgstr ""
+msgstr "ใช้ส่วนหัว Reply-To เป็นผู้ส่ง/จากอีเมลและใช้ชื่อจริงของแหล่งที่มา"
 
 #: db/seeds/settings.rb
 msgid "Take Reply-To header as sender/from of email."
@@ -9660,7 +9678,7 @@ msgstr ""
 msgid ""
 "The identifier for a ticket, e.g. Ticket#, Call#, MyTicket#. The default is "
 "Ticket#."
-msgstr ""
+msgstr "ตัวระบุสำหรับ Ticket เช่น ticket# โทร# MyTicket# ค่าเริ่มต้นคือ Ticket#"
 
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee
 #: app/assets/javascripts/app/controllers/widget/import.coffee
@@ -9756,7 +9774,7 @@ msgstr "ข้อมูลประจำตัวที่ระบุไม่
 
 #: app/models/webhook.rb
 msgid "The provided endpoint is invalid, no hostname was specified."
-msgstr ""
+msgstr "ปลายทางที่ระบุไม่ถูกต้อง ไม่ได้ระบุชื่อโฮสต์"
 
 #: app/models/webhook.rb
 msgid ""
@@ -9885,7 +9903,7 @@ msgstr ""
 
 #: app/models/core_workflow/result.rb
 msgid "The required parameter 'payload->class_name' is missing."
-msgstr ""
+msgstr "ไม่มีพารามิเตอร์ที่จำเป็น 'payload->class_name'"
 
 #: app/models/core_workflow/result.rb
 msgid "The required parameter 'payload->screen' is missing."
@@ -10298,7 +10316,7 @@ msgstr "Ticket %s ผสานแล้ว"
 
 #: app/models/report.rb
 msgid "Ticket Count"
-msgstr "Ticket นับ"
+msgstr "จำนวน Ticket"
 
 #: db/seeds/settings.rb
 msgid "Ticket Hook"
@@ -10425,7 +10443,7 @@ msgstr "Tickets"
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco
 msgid ""
 "Tickets are only assigned automatically if they do not already have an owner."
-msgstr ""
+msgstr "Tickets จะถูกกำหนดโดยอัตโนมัติก็ต่อเมื่อยังไม่มีเจ้าของ"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_load_measure.jst.eco
 msgid "Tickets assigned to me: %s of %s"
@@ -10522,7 +10540,7 @@ msgstr "หัวเรื่อง"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Title of the form"
-msgstr ""
+msgstr "ชื่อของแบบฟอร์ม"
 
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee
 #: app/assets/javascripts/app/models/ticket_article.coffee
@@ -10686,7 +10704,7 @@ msgstr "เปลี่ยนแชทเป็น ticket"
 
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
 msgid "Tweets containing search terms are automatically turned into tickets."
-msgstr ""
+msgstr "ทวีตที่มีข้อความค้นหาจะเปลี่ยนเป็น tickets.โดยอัตโนมัติ"
 
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
@@ -11086,11 +11104,11 @@ msgstr "ชื่อผู้ใช้ / อีเมล"
 
 #: app/assets/javascripts/app/views/settings/proxy.jst.eco
 msgid "Username for proxy connection"
-msgstr ""
+msgstr "ชื่อผู้ใช้สำหรับการเชื่อมต่อพร็อกซี่"
 
 #: db/seeds/settings.rb
 msgid "Username for proxy connection."
-msgstr ""
+msgstr "ชื่อผู้ใช้สำหรับการเชื่อมต่อพร็อกซี่"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_customer.coffee
 #: app/assets/javascripts/app/controllers/cti.coffee
@@ -11316,6 +11334,7 @@ msgid ""
 "We have already found %s email(s) in your mailbox. We will move them all "
 "from your mailbox into Zammad."
 msgstr ""
+"เราพบ %s อีเมลในกล่องจดหมายของคุณแล้ว เราจะย้ายทั้งหมดจากกล่องจดหมายของคุณไปยัง Zammad"
 
 #: app/assets/javascripts/app/views/cti/not_configured.jst.eco
 msgid "We support"
@@ -11570,6 +11589,8 @@ msgid ""
 "SystemID, and the counter. The format will be \"Year.Month.Day.SystemID."
 "Counter\" (e.g. 201206231010138, 201206231010139)."
 msgstr ""
+"กับ |วันที่| หมายเลขตั๋วจะถูกสร้างขึ้นตามวันที่ปัจจุบัน SystemID และเคาน์เตอร์ รูปแบบจะเป็น "
+"\"Year.Month.Day.SystemID.Counter\" (เช่น 201206231010138, 201206231010139)"
 
 #: app/assets/javascripts/app/controllers/email_verify.coffee
 msgid "Woo hoo! Your email address has been verified!"

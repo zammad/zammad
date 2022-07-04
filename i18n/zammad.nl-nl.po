@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-06-30 09:22+0000\n"
-"Last-Translator: Wim Deprez <wim@tamale.nl>\n"
+"PO-Revision-Date: 2022-07-04 08:43+0000\n"
+"Last-Translator: JPB <jeffreypeerboom@eijsden-margraten.nl>\n"
 "Language-Team: Dutch <https://translations.zammad.org/projects/zammad/"
 "zammad-development/nl/>\n"
 "Language: nl-nl\n"
@@ -137,10 +137,8 @@ msgid "%s credentials"
 msgstr "%s credentials"
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "%s ago"
 msgid "%s days ago"
-msgstr "%s geleden"
+msgstr "%s dagen geleden"
 
 #: app/assets/javascripts/app/models/user.coffee
 msgid "%s ended switch to |%s|!"
@@ -748,19 +746,17 @@ msgstr "Voeg bijlage-optie toe om te uploaden."
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Add bullet list"
-msgstr ""
+msgstr "Voeg opsommingslijst toe"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Add first level heading"
-msgstr ""
+msgstr "Voeg hoofdniveau koptekst toe"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Add image"
 msgstr "Afbeelding toevoegen"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
-#, fuzzy
-#| msgid "Add Link"
 msgid "Add link"
 msgstr "Link toevoegen"
 
@@ -770,7 +766,7 @@ msgstr "Voeg toe als geordende lijst"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Add second level heading"
-msgstr ""
+msgstr "Voeg tweede niveau koptekst toe"
 
 #: db/seeds/settings.rb
 msgid "Add sender initials to end of a tweet."
@@ -778,7 +774,7 @@ msgstr "Voeg initialen toe van de behandelaar aan het eind van de tweet."
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Add third level heading"
-msgstr ""
+msgstr "Voeg derde niveau koptekst toe"
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
 msgid "Add this class to a button on your page that should open the chat."
@@ -1186,10 +1182,8 @@ msgid "At least one user needs to have admin permissions."
 msgstr "Minimaal één gebruiker moet administrator rechten hebben."
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
-#, fuzzy
-#| msgid "Attachments"
 msgid "Attached"
-msgstr "Bijlagen"
+msgstr "Bijgevoegd"
 
 #: app/assets/javascripts/app/views/generic/attachments.jst.eco
 #: app/views/knowledge_base/public/answers/show.html.erb
@@ -1197,10 +1191,8 @@ msgid "Attached Files"
 msgstr "Bijgevoegde bestanden"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
-#, fuzzy
-#| msgid "Attachments"
 msgid "Attachment"
-msgstr "Bijlagen"
+msgstr "Bijlage"
 
 #: db/seeds/settings.rb
 msgid "Attachment - Search for follow-up also in attachments."
@@ -1644,8 +1636,6 @@ msgstr "Ook de Caller ID van uitgaande gesprekken kan worden gewijzigd."
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
-#, fuzzy
-#| msgid "Caller id to block"
 msgid "Caller ID to block"
 msgstr "Caller ID om te blokkeren"
 
@@ -2021,8 +2011,6 @@ msgid "Clean up expired sessions."
 msgstr "Schoon verlopen sessies op."
 
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
-#, fuzzy
-#| msgid "clear"
 msgid "Clear"
 msgstr "Wissen"
 
@@ -2204,10 +2192,8 @@ msgid "Configure App"
 msgstr "Configureer App"
 
 #: app/assets/javascripts/app/controllers/getting_started/base.coffee
-#, fuzzy
-#| msgid "Basic Settings"
 msgid "Configure Basic Settings"
-msgstr "Basisinstellingen"
+msgstr "Configureer Basisinstellingen"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Confirm/submit dialog"
@@ -2356,6 +2342,10 @@ msgstr "Gesprek is doorgezet naar een andere chat. Een ogenblik geduld."
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
 msgid "Conversion of retweets into tickets is turned off."
 msgstr "Het omzetten van retweets naar tickets is uitgeschakeld."
+
+#: app/assets/javascripts/app/controllers/_application_controller/_base.coffee
+msgid "Copied to clipboard!"
+msgstr "Gekopieerd naar klembord!"
 
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
 msgid "Copy"
@@ -2596,10 +2586,8 @@ msgid "Created by"
 msgstr "Aangemaakt door"
 
 #: app/models/report.rb
-#, fuzzy
-#| msgid "Create Channels"
 msgid "Creation Channels"
-msgstr "Kanalen aanmaken"
+msgstr "Aanmaakkanaal"
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
 msgid "Creation mask"
@@ -3894,6 +3882,7 @@ msgstr ""
 msgid "Don't synchronize"
 msgstr "Niet sychroniseren"
 
+#: app/frontend/apps/mobile/components/CommonDialog/CommonDialog.vue
 #: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
 #: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 msgid "Done"
@@ -4348,16 +4337,12 @@ msgid "Enables users to create their own account via web interface."
 msgstr "Hiermee kunnen gebruikers hun eigen account aanmaken via webinterface."
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
-#, fuzzy
-#| msgid "closed"
 msgid "Enclosed"
-msgstr "gesloten"
+msgstr "Bijgevoegd"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
-#, fuzzy
-#| msgid "close"
 msgid "Enclosure"
-msgstr "sluiten"
+msgstr "Omsluiting"
 
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
@@ -4429,7 +4414,7 @@ msgstr "Invoergegevens invoeren"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Enter link URL"
-msgstr ""
+msgstr "Voer URL in"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
@@ -4596,8 +4581,6 @@ msgid "Examples"
 msgstr "Voorbeelden"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_auto_assignment.coffee
-#, fuzzy
-#| msgid "Exception users"
 msgid "Excepted users"
 msgstr "Uitgezonderde gebruikers"
 
@@ -5211,8 +5194,6 @@ msgstr "Groepsselectie voor het maken van tickets"
 
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
-#, fuzzy
-#| msgid "Group by"
 msgid "Grouping by"
 msgstr "Groeperen op"
 
@@ -5541,6 +5522,8 @@ msgid ""
 "If a user is found in two (or more) configured LDAP sources, the last "
 "synchronisation will win."
 msgstr ""
+"Als een gebruiker wordt gevonden in twee (of meer) geconfigureerde LDAP "
+"bronnen, dan zal de laatst gesynchroniseerde worden gebruikt."
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
 msgid ""
@@ -5778,6 +5761,8 @@ msgid ""
 "In order to be able to influence the desired behaviour in this regard, you "
 "can influence the order of the LDAP sources via drag & drop."
 msgstr ""
+"Om dit gedrag te beïnvloeden kun je de volgorde van LDAP bronnen aanpassen "
+"via drag en drop."
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
@@ -5804,10 +5789,8 @@ msgid "Include attachments of the article?"
 msgstr "Bijlagen van de notitie toevoegen?"
 
 #: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
-#, fuzzy
-#| msgid "Ticket Overviews"
 msgid "Included ticket overviews"
-msgstr "Ticket Overzichten"
+msgstr "Inbegrepen ticketoverzichten"
 
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
 msgid "Including private key."
@@ -6602,6 +6585,7 @@ msgid "March"
 msgstr "maart"
 
 #: app/assets/javascripts/app/views/widget/online_notification.jst.eco
+#: app/frontend/apps/mobile/modules/notifications/views/NotificationsList.vue
 msgid "Mark all as read"
 msgstr "Markeer alles als gelezen"
 
@@ -6835,13 +6819,11 @@ msgstr "Stemming"
 
 #: app/models/user.rb
 msgid "More than 250 secondary organizations are not allowed."
-msgstr ""
+msgstr "Meer dan 250 secundaire organisaties zijn niet toegestaan."
 
 #: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
-#, fuzzy
-#| msgid "Ticket Overviews"
 msgid "More ticket overviews"
-msgstr "Ticket Overzichten"
+msgstr "Meer ticketoverzichten"
 
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
 msgid "Most recent activity"
@@ -7105,10 +7087,8 @@ msgid "New Scheduler"
 msgstr "Nieuwe taak"
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
-#, fuzzy
-#| msgid "Source"
 msgid "New Source"
-msgstr "Bron"
+msgstr "Nieuwe bron"
 
 #: app/assets/javascripts/app/views/tag/index.jst.eco db/seeds/settings.rb
 msgid "New Tags"
@@ -7271,10 +7251,8 @@ msgid "No email!"
 msgstr "Geen e-mail!"
 
 #: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
-#, fuzzy
-#| msgid "No Entries"
 msgid "No entries"
-msgstr "Geen Ingangen"
+msgstr "Geen inschrijvingen"
 
 #: app/controllers/integration/exchange_controller.rb
 msgid "No entries were found in the selected folder(s)."
@@ -7507,6 +7485,7 @@ msgstr "Meldings Geluid"
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
 #: app/assets/javascripts/app/views/widget/online_notification.jst.eco
+#: app/frontend/apps/mobile/modules/notifications/routes.ts
 #: db/seeds/permissions.rb
 msgid "Notifications"
 msgstr "Notificaties"
@@ -7737,10 +7716,8 @@ msgstr ""
 "…) en klanten."
 
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
-#, fuzzy
-#| msgid "Organization"
 msgid "Organizer"
-msgstr "Organisatie"
+msgstr "Organisator"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee
 msgid "Origin By"
@@ -8109,10 +8086,8 @@ msgid "Please select at least one folder."
 msgstr "Selecteer ten minste één map."
 
 #: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
-#, fuzzy
-#| msgid "Please select at least one folder."
 msgid "Please select at least one ticket overview"
-msgstr "Selecteer ten minste één map."
+msgstr "Selecteer ten minste één ticketoverzicht"
 
 #: app/controllers/knowledge_base/manage_controller.rb
 msgid "Please submit custom address before generating the snippet"
@@ -8328,7 +8303,7 @@ msgstr "Ruwe data"
 
 #: app/assets/javascripts/app/models/group.coffee
 msgid "Read"
-msgstr ""
+msgstr "Lezen"
 
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco
 msgid "Real-time"
@@ -8620,6 +8595,10 @@ msgstr "Migratie terugdraaien"
 msgid "Rollback of channel migration succeeded!"
 msgstr "Terugdraaien van kanaalmigratie geslaagd!"
 
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+msgid "Rows"
+msgstr "Rijen"
+
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee
 msgid "Run every %s at %s in %s time"
 msgstr "Voer elke %s uit om %s in %s tijdzone"
@@ -8879,6 +8858,8 @@ msgid ""
 "Secondary organizations are only allowed when the primary organization is "
 "given."
 msgstr ""
+"Secundaire organisaties zijn alleen toegestaan als de primaire organisatie "
+"is opgegeven."
 
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco
@@ -9241,13 +9222,11 @@ msgstr "Minder tonen"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Show next tab"
-msgstr ""
+msgstr "Toon volgende tab"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
-#, fuzzy
-#| msgid "Previous tab"
 msgid "Show previous tab"
-msgstr "Vorige tab"
+msgstr "Toon vorige tab"
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
 msgid "Show the chat when ready."
@@ -10102,6 +10081,8 @@ msgstr ""
 msgid ""
 "The preview cannot be generated. The format is corrupted or not supported."
 msgstr ""
+"Het voorbeeld kan niet worden gegenereerd. Het formaat is beschadigd of "
+"wordt niet ondersteund."
 
 #: app/controllers/import_freshdesk_controller.rb
 #: app/controllers/import_kayako_controller.rb
@@ -10155,7 +10136,7 @@ msgstr "Het verzoek kon niet worden verwerkt."
 
 #: app/controllers/channels_twitter_controller.rb
 msgid "The required 'ExternalCredential' 'twitter' could not be found."
-msgstr ""
+msgstr "De vereiste 'ExternalCredential' 'twitter' kon niet worden gevonden."
 
 #: lib/idoit.rb
 msgid "The required field 'api_token' is missing from the config."
@@ -10283,6 +10264,7 @@ msgstr "De vereiste parameter 'group_id' ontbreekt."
 #: app/controllers/channels_twitter_controller.rb
 msgid "The required value external_credential could not be found in the cache."
 msgstr ""
+"De vereiste waarde external_credential kan niet worden gevonden in de cache."
 
 #: app/controllers/users_controller.rb
 msgid "The resized image is invalid."
@@ -10479,10 +10461,8 @@ msgid "This field doesn't contain an allowed value."
 msgstr "Dit veld bevat geen toegestane waarde."
 
 #: app/frontend/shared/form/i18n/locales.ts
-#, fuzzy
-#| msgid "The file does not belong to the specified article."
 msgid "This field doesn't correspond to the expected value."
-msgstr "Het bestand behoort niet tot de opgegeven notitie."
+msgstr "Dit veld komt niet overeen met de verwachte waarde."
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "This field doesn't end with \"%s\"."
@@ -10745,10 +10725,8 @@ msgid "Ticket Overview"
 msgstr "Ticket overzicht"
 
 #: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
-#, fuzzy
-#| msgid "Ticket Overviews"
 msgid "Ticket Overview settings are saved"
-msgstr "Ticket Overzichten"
+msgstr "Ticketoverzicht instellingen zijn opgeslagen"
 
 #: app/assets/javascripts/app/models/sla.coffee
 msgid "Ticket Selector"
@@ -11401,7 +11379,7 @@ msgstr "Gebruik de tijd van de allerlaatste klantnotitie."
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 msgid "Use this switch to start synchronization of your ldap sources. "
 msgstr ""
-"Gebruik deze schakelaar om de synchronisatie van je ldap bronnen te starten. "
+"Gebruik deze schakelaar om de synchronisatie van je LDAP bronnen te starten. "
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Used anywhere"
@@ -11506,8 +11484,6 @@ msgstr "Gebruikersnaam"
 
 #: app/frontend/apps/mobile/modules/login/views/Login.vue
 #: app/models/form_schema/form/mobile/login.rb
-#, fuzzy
-#| msgid "Username / email"
 msgid "Username / Email"
 msgstr "Gebruikersnaam / e-mailadres"
 
@@ -12521,7 +12497,7 @@ msgstr "Postcode"
 
 #: db/seeds/settings.rb
 msgid "absolute - e. g. \"Monday 09:30\" or \"Tuesday 23. Feb 14:20\""
-msgstr ""
+msgstr "absoluut - \"Maandag 09:30\" of \"Dinsdag 23. Feb 14:20\""
 
 #: app/assets/javascripts/app/controllers/_ui_element/active.coffee
 msgid "active"
@@ -12569,16 +12545,12 @@ msgid "at"
 msgstr "om"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
-#, fuzzy
-#| msgid "reached"
 msgid "attached"
-msgstr "bereikt"
+msgstr "bijgevoegd"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
-#, fuzzy
-#| msgid "Attachments"
 msgid "attachment"
-msgstr "Bijlagen"
+msgstr "bijlage"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "auto select"
@@ -12719,8 +12691,6 @@ msgid "disconnect"
 msgstr "verbreken"
 
 #: app/assets/javascripts/app/controllers/cti.coffee
-#, fuzzy
-#| msgid "not exist"
 msgid "does not exist"
 msgstr "bestaat niet"
 
@@ -12759,7 +12729,7 @@ msgstr "wijzig %s"
 
 #: app/frontend/apps/mobile/composables/useEditedBy.ts
 msgid "edited %s by %s"
-msgstr ""
+msgstr "Aangepast %s door %s"
 
 #: db/seeds/ticket_article_types.rb
 msgid "email"
@@ -12770,16 +12740,12 @@ msgid "email sent to '%s'"
 msgstr "E-mail verzonden naar '%s'"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
-#, fuzzy
-#| msgid "closed"
 msgid "enclosed"
-msgstr "gesloten"
+msgstr "bijgevoegd"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
-#, fuzzy
-#| msgid "close"
 msgid "enclosure"
-msgstr "sluiten"
+msgstr "omsluiting"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "escalated"
@@ -13000,7 +12966,7 @@ msgstr "vorige week"
 
 #: db/seeds/settings.rb
 msgid "left"
-msgstr ""
+msgstr "links"
 
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
 msgid "m"
@@ -13347,7 +13313,7 @@ msgstr "tot (relatief)"
 
 #: db/seeds/settings.rb
 msgid "timestamp - e. g. \"2018-08-30 14:30\""
-msgstr ""
+msgstr "timestamp - \"2018-08-30 14:30\""
 
 #: app/views/knowledge_base/public/not_found.html.erb
 msgid "to go to the homepage."

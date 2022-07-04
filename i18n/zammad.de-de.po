@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-06-30 09:25+0000\n"
-"Last-Translator: Martin Gruner <mg@zammad.com>\n"
+"PO-Revision-Date: 2022-07-04 08:43+0000\n"
+"Last-Translator: Marcel Herrguth <github@thehomeofanime.de>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
 "zammad-development/de/>\n"
 "Language: de-de\n"
@@ -2373,6 +2373,10 @@ msgstr ""
 msgid "Conversion of retweets into tickets is turned off."
 msgstr "Retweets werden nicht in Tickets umgewandelt."
 
+#: app/assets/javascripts/app/controllers/_application_controller/_base.coffee
+msgid "Copied to clipboard!"
+msgstr "In Zwischenablage kopiert!"
+
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
 msgid "Copy"
 msgstr "Kopieren"
@@ -3942,6 +3946,7 @@ msgstr ""
 msgid "Don't synchronize"
 msgstr "Nicht synchronisieren"
 
+#: app/frontend/apps/mobile/components/CommonDialog/CommonDialog.vue
 #: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
 #: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 msgid "Done"
@@ -6664,6 +6669,7 @@ msgid "March"
 msgstr "März"
 
 #: app/assets/javascripts/app/views/widget/online_notification.jst.eco
+#: app/frontend/apps/mobile/modules/notifications/views/NotificationsList.vue
 msgid "Mark all as read"
 msgstr "Alle als gelesen markieren"
 
@@ -7563,6 +7569,7 @@ msgstr "Benachrichtigungs-Klang"
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
 #: app/assets/javascripts/app/views/widget/online_notification.jst.eco
+#: app/frontend/apps/mobile/modules/notifications/routes.ts
 #: db/seeds/permissions.rb
 msgid "Notifications"
 msgstr "Benachrichtigungen"
@@ -8678,6 +8685,10 @@ msgstr "Migration rückgängig machen"
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 msgid "Rollback of channel migration succeeded!"
 msgstr "Zurückrollen der Kanal-Migration ist erfolgt!"
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+msgid "Rows"
+msgstr "Reihen"
 
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee
 msgid "Run every %s at %s in %s time"
