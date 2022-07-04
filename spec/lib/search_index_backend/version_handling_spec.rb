@@ -34,7 +34,7 @@ RSpec.describe SearchIndexBackend, 'version_handling' do
     let(:response) { instance_double(UserAgent::Result, success?: true, data: { 'version' => { 'number' => version } }) }
 
     context 'with allowed version' do
-      let(:version) { '7.12.0' }
+      let(:version) { '8.1.12' }
 
       it 'returns correct information' do
         expect(described_class.info).to eq({ 'version' => { 'number' => version } })

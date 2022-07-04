@@ -2,8 +2,8 @@
 
 class SearchIndexBackend
 
-  SUPPORTED_ES_VERSION_MINIMUM = '7.8'.freeze
-  SUPPORTED_ES_VERSION_MAXIMUM = '8'.freeze
+  SUPPORTED_ES_VERSION_MINIMUM   = '7.8'.freeze
+  SUPPORTED_ES_VERSION_LESS_THAN = '9'.freeze
 
 =begin
 
@@ -25,7 +25,7 @@ info about used search index machine
 
       installed_version_parsed = Gem::Version.new(installed_version)
 
-      if (installed_version_parsed > Gem::Version.new(SUPPORTED_ES_VERSION_MAXIMUM)) ||
+      if (installed_version_parsed >= Gem::Version.new(SUPPORTED_ES_VERSION_LESS_THAN)) ||
          (installed_version_parsed < Gem::Version.new(SUPPORTED_ES_VERSION_MINIMUM))
         raise "Version #{installed_version} of configured elasticsearch is not supported."
       end
