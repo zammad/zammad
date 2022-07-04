@@ -1,0 +1,38 @@
+--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+from: '"Lon L. Peters" <lpeters@example.com>'
+from_email: lpeters@example.com
+from_display_name: Lon L. Peters
+to: RRGA-L@LIST.example.com
+subject: PGP Comments on RTO West Release of Dec. 14
+body: |
+  Attached are the comments of the Public Generating Pool.
+  --
+  _________________________________
+  Lon L. Peters
+  Example Economic Research, Inc.
+  6765 S.W. Preslynn Drive
+  Portland, Oregon 11111-2222
+  503-000-0000 (voice)
+  503-000-0000 (fax)
+  503-000-0000 (mobile)
+  lpeters@example.com
+
+  NOTICE:  This communication and its attachments, if any, may contain
+  sensitive, privileged, or other confidential information.  If you are
+  not the intended recipient or believe that you have received this
+  communication in error, please notify the sender of this
+  communication and delete the copy you received from all storage
+  devices.  In addition, please do not print, copy, retransmit,
+  forward, disseminate, or otherwise use this communication or its
+  attachments, if any.  Thank you.
+content_type: text/plain
+attachments:
+- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+  data: Hello Zammad
+  filename: PGP_Cmts_on_12-14-01_Pkg.txt
+  preferences: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+    Content-Type: application/msword; name=pgp_cmts_on_12-14-01_pkg.txt; x-mac-creator=4d535744;
+      x-mac-type=5738424e
+    Content-ID: p05100307b863befdfb67@[127.0.0.1].0.0
+    Mime-Type: application/msword
+    Charset: UTF-8

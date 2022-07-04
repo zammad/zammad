@@ -1,0 +1,22 @@
+--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+from: '"finances8@firstfinanceloanfirm.example.com"'
+from_email: '"finances8@firstfinanceloanfirm.example.com"'
+from_display_name: ''
+to: ''
+subject: Darlehen bieten jetzt bewerben
+body: |+
+  Beantworten :firstfinancelender@example.com
+
+  Ich Mr.Squires Peter ist eine zuverlässige Kreditangebot mit einer
+  Rate von 1.5% für den Zeitraum von 1 bis 40yrs nur, von der minimalen
+  von 5,000.00euro sie an die maximale Menge an 150,000.000.00euro, so
+  dass für mehr Details, wenn interessiert kontaktieren Sie mich unter
+
+  firstfinancelender@example.com
+
+  Beantworten :firstfinancelender@example.com
+
+content_type: text/plain
+reply-to: firstfinanceloanfirm@example.com
+attachments: []
+...

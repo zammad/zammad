@@ -1,0 +1,75 @@
+--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+from: '"Valérie Oury" <me@example.com>'
+from_email: me@example.com
+from_display_name: Valérie Oury
+to: '"''service@example.com''" <service@example.com>'
+subject: Réclamation commande n° 018255977840
+body: "<div>\n<p>Bonjour,</p><p>&nbsp;</p><p>Je vous contacte suite ŕ ma commande
+  du 14 aoűt 2018 référencée ci-dessus.</p><p>&nbsp;</p><p>Je vous remercie d\x92avance.</p><p>&nbsp;</p><p>Cordialement,</p><p>&nbsp;</p><table
+  border=\"1\" cellspacing=\"0\" cellpadding=\"0\" style=\"border:none;border-bottom:solid
+  #a41a15 2.25pt;\">\n<tbody>\n<tr>\n<td valign=\"top\" style=\"border:none;padding:0cm
+  0cm 0cm 0cm;\">\n<p><span style=\"color:#676b68;\"><br>\n</span><b><span style=\"color:#88271b;\">Valérie
+  Smith</span></b><span style=\"color:#676b68;\"><br>\n<a href=\"mailto:me@example.com\"><span
+  style=\"color:#676b68;\">me@example.com </span></a><br>\n</span></p></td>\n<td valign=\"top\"
+  style=\"border:none;padding:0cm 0cm 0cm 0cm;\">\n<p><span style=\"color:#676b68;\">
+  </span></p></td>\n<td valign=\"top\" style=\"border:none;padding:0cm 0cm 0cm 0cm;\">\n<p><span
+  style=\"color:#676b68;\"><br>\n<b>XXXX S.aĚ r.l.</b><br> 12, Somewhere<br>\n</span></p></td>\n</tr>\n</tbody>\n</table>\n<p><span><br>\n<table
+  border=\"0\" cellspacing=\"0\" cellpadding=\"0\">\n<tbody>\n<tr>\n<td style=\"padding:0cm
+  0cm 0cm 0cm;\">\n</td>\n</tr>\n</tbody>\n</table>\n<p><span lang=\"EN-US\"><p>&nbsp;</p></span></p></span></p></div>"
+content_type: text/html
+attachments:
+- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+  data: "<html xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:o=\"urn:schemas-microsoft-com:office:office\"
+    xmlns:w=\"urn:schemas-microsoft-com:office:word\" xmlns:m=\"http://schemas.microsoft.com/office/2004/12/omml\"
+    xmlns=\"http://www.w3.org/TR/REC-html40\">\n<head>\n<meta http-equiv=\"Content-Type\"
+    content=\"text/html; charset=windows-1258\">\n<meta name=\"Generator\" content=\"Microsoft
+    Word 15 (filtered medium)\">\n<!--[if !mso]><style>v\\:* {behavior:url(#default#VML);}\no\\:*
+    {behavior:url(#default#VML);}\nw\\:* {behavior:url(#default#VML);}\n.shape {behavior:url(#default#VML);}\n</style><![endif]--><style><!--\n/*
+    Font Definitions */\n@font-face\n\t{font-family:\"Cambria Math\";\n\tpanose-1:2
+    4 5 3 5 4 6 3 2 4;}\n@font-face\n\t{font-family:Calibri;\n\tpanose-1:2 15 5 2
+    2 2 4 3 2 4;}\n/* Style Definitions */\np.MsoNormal, li.MsoNormal, div.MsoNormal\n\t{margin:0cm;\n\tmargin-bottom:.0001pt;\n\tfont-size:11.0pt;\n\tfont-family:\"Calibri\",sans-serif;\n\tmso-fareast-language:EN-US;}\na:link,
+    span.MsoHyperlink\n\t{mso-style-priority:99;\n\tcolor:#0563C1;\n\ttext-decoration:underline;}\na:visited,
+    span.MsoHyperlinkFollowed\n\t{mso-style-priority:99;\n\tcolor:#954F72;\n\ttext-decoration:underline;}\nspan.EmailStyle17\n\t{mso-style-type:personal-compose;\n\tfont-family:\"Arial\",sans-serif;\n\tcolor:windowtext;}\n.MsoChpDefault\n\t{mso-style-type:export-only;\n\tfont-family:\"Calibri\",sans-serif;\n\tmso-fareast-language:EN-US;}\n@page
+    WordSection1\n\t{size:612.0pt 792.0pt;\n\tmargin:70.85pt 70.85pt 70.85pt 70.85pt;}\ndiv.WordSection1\n\t{page:WordSection1;}\n--></style><!--[if
+    gte mso 9]><xml>\n<o:shapedefaults v:ext=\"edit\" spidmax=\"1026\" />\n</xml><![endif]--><!--[if
+    gte mso 9]><xml>\n<o:shapelayout v:ext=\"edit\">\n<o:idmap v:ext=\"edit\" data=\"1\"
+    />\n</o:shapelayout></xml><![endif]-->\n</head>\n<body lang=\"FR-BE\" link=\"#0563C1\"
+    vlink=\"#954F72\">\n<div class=\"WordSection1\">\n<p class=\"MsoNormal\"><span
+    style=\"font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif\">Bonjour,\n<o:p></o:p></span></p>\n<p
+    class=\"MsoNormal\"><span style=\"font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif\"><o:p>&nbsp;</o:p></span></p>\n<p
+    class=\"MsoNormal\"><span style=\"font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif\">Je
+    vous contacte suite ŕ ma commande du 14 aoűt 2018 référencée ci-dessus.<o:p></o:p></span></p>\n<p
+    class=\"MsoNormal\"><span style=\"font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif\"><o:p>&nbsp;</o:p></span></p>\n<p
+    class=\"MsoNormal\"><span style=\"font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n<o:p></o:p></span></p>\n<p
+    class=\"MsoNormal\"><span style=\"font-size:12.0pt;font-family:&quot;Times New
+    Roman&quot;,serif;mso-fareast-language:FR-BE\"><o:p>&nbsp;</o:p></span></p>\n<p
+    class=\"MsoNormal\"><span style=\"font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif\">Je
+    vous remercie d\x92avance.<o:p></o:p></span></p>\n<p class=\"MsoNormal\"><span
+    style=\"font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif\"><o:p>&nbsp;</o:p></span></p>\n<p
+    class=\"MsoNormal\"><span style=\"font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif\">Cordialement,<o:p></o:p></span></p>\n<p
+    class=\"MsoNormal\"><span style=\"font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif\"><o:p>&nbsp;</o:p></span></p>\n<p
+    class=\"MsoNormal\"><span style=\"font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif\"><o:p>&nbsp;</o:p></span></p>\n<table
+    class=\"MsoNormalTable\" border=\"1\" cellspacing=\"0\" cellpadding=\"0\" style=\"border:none;border-bottom:solid
+    #A41A15 2.25pt\">\n<tbody>\n<tr>\n<td width=\"200\" nowrap=\"\" valign=\"top\"
+    style=\"width:150.0pt;border:none;padding:0cm 0cm 0cm 0cm\">\n<p class=\"MsoNormal\"
+    style=\"line-height:13.5pt\"><span style=\"font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;color:#676B68;mso-fareast-language:FR-BE\"><br>\n</span><b><span
+    style=\"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif;color:#88271B;mso-fareast-language:FR-BE\">Valérie
+    Smith</span></b><span style=\"font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;color:#676B68;mso-fareast-language:FR-BE\"><br>\n<a
+    href=\"mailto:me@example.com\"><span style=\"color:#676B68;text-decoration:none\">me@example.com\n</span></a><br>\n</td>\n<td
+    width=\"18\" nowrap=\"\" valign=\"top\" style=\"width:7.5pt;border:none;padding:0cm
+    0cm 0cm 0cm\">\n<p class=\"MsoNormal\" style=\"line-height:13.5pt\"><span style=\"font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;color:#676B68;mso-fareast-language:FR-BE\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<o:p></o:p></span></p>\n</td>\n<td
+    width=\"120\" nowrap=\"\" valign=\"top\" style=\"width:90.0pt;border:none;padding:0cm
+    0cm 0cm 0cm\">\n<p class=\"MsoNormal\" style=\"margin-bottom:12.0pt;line-height:13.5pt\"><span
+    style=\"font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;color:#676B68;mso-fareast-language:FR-BE\"><br>\n<b>XXXX
+    S.aĚ r.l.</b><br>\n12, Somewhere<br>\n</span></a></b><o:p></o:p></span></p>\n</td>\n</tr>\n</tbody>\n</table>\n<p
+    class=\"MsoNormal\" style=\"margin-bottom:12.0pt\"><span style=\"font-size:12.0pt;font-family:&quot;Times
+    New Roman&quot;,serif;mso-fareast-language:FR-BE\"><br>\n<table class=\"MsoNormalTable\"
+    border=\"0\" cellspacing=\"0\" cellpadding=\"0\">\n<tbody>\n<tr>\n<td style=\"padding:0cm
+    0cm 0cm 0cm\">\n</td>\n</tr>\n</tbody>\n</table>\n<p class=\"MsoNormal\"><span
+    lang=\"EN-US\"><o:p>&nbsp;</o:p></span></p>\n</div>\n</body>\n</html>\n"
+  filename: message.html
+  preferences: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+    content-alternative: true
+    original-format: true
+    Mime-Type: text/html
+    Charset: windows-1258

@@ -1,0 +1,49 @@
+--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+from: Mail Delivery Subsystem <mailer-daemon@example.com>
+from_email: mailer-daemon@example.com
+from_display_name: Mail Delivery Subsystem
+to: service@example.de
+subject: Delivery Status Notification (Delay)
+body: "\n** Zustellung nicht abgeschlossen **\n\nBei der Zustellung Ihrer Nachricht
+  an bob.smith@example.de ist ein vorübergehendes Problem aufgetreten. Gmail versucht
+  noch weitere 46 Stunden, die Nachricht zuzustellen. Sie werden benachrichtigt, falls
+  die Zustellung dauerhaft fehlschlägt.\n\nHier erfahren Sie mehr: https://support.example.com/mail/answer/7720\n\nAntwort:\n\nThe
+  recipient server did not accept our requests to connect. Learn more at https://support.example.com/mail/answer/7720
+  \n[example.de 00:00:00:c00::13: timed out]\n[example.de 127.0.0.17: timed out]\n"
+content_type: text/plain
+attachments:
+- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+  data: |
+    Reporting-MTA: dns; example.com
+    Received-From-MTA: dns; service@example.de
+    Arrival-Date: Wed, 22 Aug 2018 02:00:03 -0700 (PDT)
+    X-Original-Message-ID: <20150830145601.30.608881@example.com>
+
+    Final-Recipient: rfc822; bob.smith@example.de
+    Action: delayed
+    Status: 4.4.1
+    Diagnostic-Code: smtp; The recipient server did not accept our requests to connect. Learn more at https://support.example.com/mail/answer/7720
+     [example.de 00:00:00:c00::13: timed out]
+     [example.de 127.0.0.17: timed out]
+     Last-Attempt-Date: Thu, 23 Aug 2018 03:22:44 -0700 (PDT)
+    Will-Retry-Until: Sat, 25 Aug 2018 02:00:04 -0700 (PDT)
+  filename: delivery-status.txt
+  preferences: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+    Content-Type: message/delivery-status
+    Mime-Type: message/delivery-status
+    Charset: UTF-8
+- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+  data: |
+    Date: Wed, 22 Aug 2018 11:00:03 +0200
+    From: example Helpdesk <service@example.de>
+    To: bob.smith@example.de
+    Message-ID: <20150830145601.30.608881@example.com>
+    Subject: Ihre Anfrage () [Ticket#638810]
+    Content-Type: text/plain; charset=UTF-8
+
+    ABC
+  filename: Ihre Anfrage () [Ticket#638810].eml
+  preferences: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+    Content-Type: message/rfc822
+    Mime-Type: message/rfc822
+    Charset: UTF-8

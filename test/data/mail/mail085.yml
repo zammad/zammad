@@ -1,0 +1,27 @@
+--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+from: Bob Smith <bob.smith@example.com>
+from_email: bob.smith@example.com
+from_display_name: Bob Smith
+to: Support GmbH <kaufs@example.com>
+subject: 'Re: buy - Wir freuen uns über Deine kurze Bewertung! #1XXXX9'
+body: '123'
+content_type: text/html
+attachments:
+- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+  data: '123
+
+    '
+  filename: message.html
+  preferences: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+    content-alternative: true
+    original-format: true
+    Mime-Type: text/html
+    Charset: utf-8
+- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+  data: !binary |-
+    PGh0bWw+PGhlYWQ+PG1ldGEgaHR0cC1lcXVpdj0iQ29udGVudC1UeXBlIiBjb250ZW50PSJ0ZXh0L2h0bWw7IGNoYXJzZXQtdXRmLTgiPjwvaGVhZD48Ym9keT4NCjxkaXY+X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fXzwvZGl2PjxkaXY+PGJyIGNsYXNzPSIiPjExMTExIFNvbWV3YXJlPGJyIGNsYXNzPSIiPjxiciBjbGFzcz0iIj5UZWxlZm9uOiArNDkuKDApIDMwLjEyMzQ8YnIgY2xhc3M9IiI+RmF4OiArNDkuKDApIDMwLjEyMzQ8YnIgY2xhc3M9IiI+DQpIUkIgMTIzNDUgQjxiciBjbGFzcz0iIj48YnIgY2xhc3M9IiI+R2VzY2jDpGZ0c2bDvGhydW5nOiBCb2IgU21pdGg8L2Rpdj48L2Rpdj48L2Rpdj4NCjwvZGl2Pg0KPGRpdj48YnIgY2xhc3M9IiI+PGJsb2NrcXVvdGUgdHlwZT0iY2l0ZSIgY2xhc3M9IiI+DQo8ZGl2IGNsYXNzPSIiPg0KICAgIDxkaXYgY2xhc3M9IiI+DQogICAgPHRhYmxlIGJvcmRlcj0iMCIgY2VsbHNwYWNpbmc9IjAiIGNlbGxwYWRkaW5nPSIwIiB3aWR0aD0iNjAwIiBjbGFzcz0iIj4NCiAgICAgICAgPHRib2R5IGNsYXNzPSIiPjx0ciBjbGFzcz0iIj4NCiAgICAgICAgPHRyIGNsYXNzPSIiPg0KICAgICAgICAgICAgPHRkIHN0eWxlPSJmb250LWZhbWlseTogQXJpYWwsIEhlbHZldGljYSwgc2Fucy1zZXJpZjtmb250LXNpemU6IDEycHg7bGluZS1oZWlnaHQ6MThweDtjb2xvcjojMzMzIiBjbGFzcz0iIj48ZGl2IEFudHdvcnRlICBlaW5mYWNoIGF1ZiBkaWVzZSBFLU1haWwgdW5kIHNjaGlsZGVyZSBrdXJ6LCB3YXMgcGFzc2llcnQgaXN0LCBkYW1pdCB3aXIgdW5zIHZlcmJlc3Nlcm4ga8O2bm5lbiE8YnIgY2xhc3M9IiI+DQo8YnIgY2xhc3M9IiI+DQpEYW5uIHfDvHJkZW4gd2lyIHVucyB1bmhlaW1saWNoIGZyZXVlbiwgd2VubiBEdSBEaXIgPHN0cm9uZyBjbGFzcz0iIj4NCiAgICAgICAgICAgIDwvdGQ+DQogICAgICAgIDwvdHI+DQogICAgPC90Ym9keT48L3RhYmxlPg0KICAgIDwvZGl2Pg0KDQo8L2Rpdj48L2Jsb2NrcXVvdGU+PC9kaXY+PGJyIGNsYXNzPSIiPjwvZGl2PjwvYm9keT48L2h0bWw+
+  filename: document.html
+  preferences: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+    Content-Type: text/html; charset=utf-8
+    Mime-Type: text/html
+    Charset: UTF-8

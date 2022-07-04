@@ -4,6 +4,39 @@ require 'rails_helper'
 
 RSpec.describe Channel::EmailParser, type: :model do
   describe '#parse' do
+
+    shared_examples 'parses email correctly' do |stored_email|
+      context "for #{stored_email}" do
+        let(:yml_file)                 { stored_email.ext('yml') }
+        let(:content)                  { YAML.load(File.read(yml_file)) } # rubocop:disable Security/YAMLLoad
+        let(:parsed)                   { described_class.new.parse(File.read(stored_email)) }
+        let(:expected_msg)             { content.except(:attachments) }
+        let(:parsed_msg)               { parsed.slice(*expected_msg.keys) }
+        let(:content_attachments_md5s) { (content[:attachments]&.map { |a| Digest::MD5.hexdigest(a[:data]) } || []).to_set }
+        let(:parsed_attachments_md5s)  { (parsed[:attachments]&.map { |a| Digest::MD5.hexdigest(a[:data]) } || []).to_set }
+
+        it 'parses correctly' do
+          expect(File).to exist(yml_file)
+          expect(parsed_msg).to include(expected_msg)
+          expect(content_attachments_md5s).to be_subset(parsed_attachments_md5s)
+        end
+      end
+    end
+
+    # To write new .yml files for emails you can use the following code:
+    #
+    # File.write('test/data/mail/mailXXX.yml', Channel::EmailParser.new.parse(File.read('test/data/mail/mailXXX.box')).slice(:from, :from_email, :from_display_name, :to, :cc, :subject, :body, :content_type, :'reply-to', :attachments).to_yaml)
+    #
+    context 'when checking a bunch of stored emails for correct parsing behaviour' do
+      tests = Dir.glob(Rails.root.join('test/data/mail/mail*.box')).each do |stored_email|
+        include_examples('parses email correctly', stored_email)
+      end
+
+      it 'ensures tests were dynamically generated' do
+        expect(tests.count).to eq(106)
+      end
+    end
+
     # regression test for issue 2390 - Add a postmaster filter to not show emails with potential issue
     describe 'handling HTML links in message content' do
       context 'with under 5,000 links' do

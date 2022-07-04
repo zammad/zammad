@@ -1,0 +1,11 @@
+--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+from: IT example <example@service-now.com>
+from_email: example@service-now.com
+from_display_name: IT example
+to: support@example.com
+subject: Incident INC678439 -- zugewiesen an EXT-XXXINIS
+body: 'Incident content
+
+  '
+content_type: text/plain
+attachments: []
