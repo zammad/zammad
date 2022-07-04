@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-06-30 09:20+0000\n"
+"PO-Revision-Date: 2022-07-04 08:42+0000\n"
 "Last-Translator: Ivan Perovic <ip@zammad.com>\n"
 "Language-Team: Croatian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/hr/>\n"
@@ -2825,11 +2825,11 @@ msgstr "Zadana vremenska razlika (sati)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Default time diff (minutes)"
-msgstr ""
+msgstr "Zadana vremenska razlika (minute)"
 
 #: db/seeds/settings.rb
 msgid "Default type for a new ticket"
-msgstr ""
+msgstr "Zadana vrsta novog ticketa"
 
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco
 #: db/seeds/settings.rb
@@ -2837,32 +2837,36 @@ msgid ""
 "Define an exception of \"automatic assignment\" for certain users (e.g. "
 "executives)."
 msgstr ""
+"Kreirajte iznimku od \"automatskog dodjeljivanja\" za određene korisnike ("
+"npr. rukovoditelje)."
 
 #: db/seeds/settings.rb
 msgid "Define max. attachment size for Elasticsearch."
-msgstr ""
+msgstr "Odredite maksimalnu veličinu privitka za Elasticsearch."
 
 #: db/seeds/settings.rb
 msgid "Define max. payload size for Elasticsearch."
-msgstr ""
+msgstr "Odredite maksimalnu veličinu payloada za Elasticsearch."
 
 #: db/seeds/settings.rb
 msgid "Define pipeline name for Elasticsearch."
-msgstr ""
+msgstr "Odredite naziv Pipelinea za Elasticsearch."
 
 #: db/seeds/settings.rb
 msgid ""
 "Define postmaster filter to check if follow-ups get created (based on admin "
 "settings)."
 msgstr ""
+"Kreirajte postmaster filter da biste provjerili stvaraju li se follow-ups ("
+"na temelju administratorskih postavki)."
 
 #: db/seeds/settings.rb
 msgid "Define postmaster filter to import archive mailboxes."
-msgstr ""
+msgstr "Kreirajte postmaster filter za uvoz arhivskih pretinaca."
 
 #: db/seeds/settings.rb
 msgid "Define postmaster filter."
-msgstr ""
+msgstr "Kreirajte postmaster filter."
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 msgid ""
@@ -2870,107 +2874,126 @@ msgid ""
 "agents to it. By this, Zammad can support your agents by showing them only "
 "relevant call entries and notifications."
 msgstr ""
+"Odredite redove čekanja ili odredišta poziva (što god odgovara vašem PBX-u) "
+"i mapirajte svoje agente na njega. Na taj način Zammad može pomoći Vašim "
+"agentima pokazujući im samo relevantne unose poziva i obavijesti."
 
 #: db/seeds/settings.rb
 msgid "Defines Elasticsearch index name."
-msgstr ""
+msgstr "Odredite ime Elasticsearch indeksa."
 
 #: db/seeds/settings.rb
 msgid "Defines Freshdesk endpoint authentication API key."
-msgstr ""
+msgstr "Odredite API ključ za autentificiranje krajnje točke Freshdeska."
 
 #: db/seeds/settings.rb
 msgid "Defines HTTP basic auth password of Elasticsearch."
-msgstr ""
+msgstr "Odredite HTTP basic auth lozinku Elasticsearcha."
 
 #: db/seeds/settings.rb
 msgid "Defines HTTP basic auth user of Elasticsearch."
-msgstr ""
+msgstr "Odredite HTTP basic auth korisnika Elasticsearcha."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines HTTP basic authentication password (only if OTRS is protected via "
 "HTTP basic auth)."
 msgstr ""
+"Određuje lozinku HTTP BasicAuth (samo ako je OTRS zaštićen HTTP BasicAuthom)."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines HTTP basic authentication user (only if OTRS is protected via HTTP "
 "basic auth)."
 msgstr ""
+"Određuje HTTP basic auth korisnika (ako je OTRS zaštićen HTTP basic authom)."
 
 #: db/seeds/settings.rb
 msgid "Defines Kayako endpoint authentication password."
-msgstr ""
+msgstr "Određivanje lozinke za Kayako krajnju točku."
 
 #: db/seeds/settings.rb
 msgid "Defines Kayako endpoint authentication user."
-msgstr ""
+msgstr "Određuje autentificiranje korisnika krajnje točke Kayaka."
 
 #: db/seeds/settings.rb
 msgid "Defines OTRS endpoint authentication key."
-msgstr ""
+msgstr "Određuje ključ za OTRS autentificiranje krajnje točke."
 
 #: db/seeds/settings.rb
 msgid "Defines Zendesk endpoint authentication API key."
-msgstr ""
+msgstr "Određuje API ključ za autentificiranje krajnje točke Zendeska."
 
 #: db/seeds/settings.rb
 msgid "Defines Zendesk endpoint authentication user."
-msgstr ""
+msgstr "Određuje korisničko ime za autentificiranje krajnje točke Zendeska."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines a Freshdesk endpoint to import users, tickets, states, and articles."
 msgstr ""
+"Određuje krajnju točku Freshdeska za uvoz korisnika, ticketa, statusa i "
+"stavki."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines a Kayako endpoint to import users, tickets, states, and articles."
 msgstr ""
+"Određuje krajnju točku Kayaka za uvoz korisnika, ticketa, statusa i stavki."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines a Zendesk endpoint to import users, tickets, states, and articles."
 msgstr ""
+"Određuje krajnju točku Zendeska za uvoz korisnika, ticketa, statusa i stavki."
 
 #: db/seeds/settings.rb
 msgid "Defines a dashboard stats backend that gets scheduled automatically."
 msgstr ""
+"Određuje pozadinski sustav statistike nadzorne ploče koji se automatski "
+"pokreće."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines a limit for how many tickets can be created via web form from one IP "
 "address per day."
 msgstr ""
+"Određuje limit koliko se ticketa dnevno može izraditi s jedne IP adrese "
+"putem web obrasca."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines a limit for how many tickets can be created via web form from one IP "
 "address per hour."
 msgstr ""
+"Određuje limit koliko se ticketa na sat može izraditi sa jedne IP adrese "
+"putem web obrasca."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines a limit for how many tickets can be created via web form per day."
 msgstr ""
+"Određuje limit koliko se ticketa dnevno može izraditi putem web obrasca."
 
 #: db/seeds/settings.rb
 msgid "Defines after how many failed logins accounts will be deactivated."
 msgstr ""
+"Određuje nakon koliko će neuspjelih pokušaja prijave računi biti "
+"deaktivirani."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines an OTRS endpoint to import users, tickets, states, and articles."
 msgstr ""
+"Određuje krajnju točku OTRS-a za uvoz korisnika, ticketa, statusa i stavki."
 
 #: db/seeds/settings.rb
 msgid "Defines attachment extensions which will be ignored by Elasticsearch."
-msgstr ""
+msgstr "Određuje datotečne nastavke privitaka koje će Elasticsearch zanemariti."
 
 #: db/seeds/settings.rb
 msgid "Defines endpoint of Elasticsearch."
-msgstr ""
+msgstr "Određuje krajnju točku Elasticsearcha."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -2985,69 +3008,74 @@ msgid ""
 "Defines how the From field of emails (sent from answers and email tickets) "
 "should look like."
 msgstr ""
+"Određuje kako bi trebalo izgledati polje pošiljatelja maila (poslano putem "
+"odgovora e-maila i putem e-mail ticketa)."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Defines if a customer can create tickets via the web interface."
 msgid ""
 "Defines how the last customer contact time of tickets should be calculated."
-msgstr "Određuje može li klijent kreirati tickete putem web sučelja."
+msgstr ""
+"Određuje kako računati vrijeme posljednjeg kontakta sa ticketom klijenta."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines how to reach websocket server. \"websocket\" is default on "
 "production, \"websocketPort\" is for CI"
 msgstr ""
+"Određuje kako kontaktirati sa websocket serverom. \"websocket\" je zadana "
+"vrijednost, \"websocketPort\" je za CI"
 
 #: db/seeds/settings.rb
 msgid "Defines if Checkmk (https://checkmk.com/) is enabled or not."
-msgstr ""
+msgstr "Određuje da li se checkmk (https://checkmk.com/) koristi."
 
 #: db/seeds/settings.rb
 msgid "Defines if Clearbit (http://www.clearbit.com) is enabled or not."
-msgstr ""
+msgstr "Određuje da li se Clearbit (http://www.clearbit.com) koristi."
 
 #: db/seeds/settings.rb
 msgid "Defines if Exchange is enabled or not."
-msgstr ""
+msgstr "Određuje da li se Exchange koristi."
 
 #: db/seeds/settings.rb
 msgid "Defines if Icinga (http://www.icinga.org) is enabled or not."
-msgstr ""
+msgstr "Određuje da li se Icinga (http://www.icinga.org) koristi."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines if Knowledge Base navbar button is enabled for users without "
 "Knowledge Base permission."
 msgstr ""
+"Određuje je li tipka navigacije u bazi podataka dostupna za korisnike bez "
+"prava u bazi podataka."
 
 #: db/seeds/settings.rb
 msgid "Defines if Knowledge Base navbar button is enabled."
-msgstr ""
+msgstr "Određuje je li tipka navigacije u bazi podataka aktivna."
 
 #: db/seeds/settings.rb
 msgid "Defines if LDAP is enabled or not."
-msgstr ""
+msgstr "Određuje koristi li se LDAP."
 
 #: db/seeds/settings.rb
 msgid "Defines if Monit (https://mmonit.com/monit/) is enabled or not."
-msgstr ""
+msgstr "Određuje koristi li se Monit (https://mmonit.com/monit/)."
 
 #: db/seeds/settings.rb
 msgid "Defines if Nagios (http://www.nagios.org) is enabled or not."
-msgstr ""
+msgstr "Određuje koristi li se Nagios (http://www.nagios.org)."
 
 #: db/seeds/settings.rb
 msgid "Defines if Placetel (http://www.placetel.de) is enabled or not."
-msgstr ""
+msgstr "Određuje koristi li se Placetel (http://www.placetel.de)."
 
 #: db/seeds/settings.rb
 msgid "Defines if S/MIME encryption is enabled or not."
-msgstr ""
+msgstr "Određuje da li je S/MIME šifriranje aktivno."
 
 #: db/seeds/settings.rb
 msgid "Defines if Slack (http://www.slack.org) is enabled or not."
-msgstr ""
+msgstr "Određuje koristi li se Slack (http://www.slack.org)."
 
 #: db/seeds/settings.rb
 msgid "Defines if a customer can create tickets via the web interface."
@@ -3055,130 +3083,158 @@ msgstr "Određuje može li klijent kreirati tickete putem web sučelja."
 
 #: db/seeds/settings.rb
 msgid "Defines if application is in init mode."
-msgstr ""
+msgstr "Određuje rad aplikacije u načinu rada \"init\"."
 
 #: db/seeds/settings.rb
 msgid "Defines if application is used as online service."
-msgstr ""
+msgstr "Određuje koristi li se aplikacija kao internetska usluga."
 
 #: db/seeds/settings.rb
 msgid "Defines if generic CTI integration is enabled or not."
-msgstr ""
+msgstr "Određuje da li je generička CTI integracija omogućena."
 
 #: db/seeds/settings.rb
 msgid "Defines if sipgate.io (http://www.sipgate.io) is enabled or not."
-msgstr ""
+msgstr "Određuje koristi li se sipgate.io (http://www.sipgate.io)."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines if the GitHub (http://www.github.com) integration is enabled or not."
-msgstr ""
+msgstr "Određuje koristi li se integracija GitHuba (http://www.github.com)."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines if the GitLab (http://www.gitlab.com) integration is enabled or not."
-msgstr ""
+msgstr "Određuje koristi li se integracija GitHuba (http://www.github.com)."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines if the agent has to accept a confirmation dialog when changing the "
 "article visibility to \"public\"."
 msgstr ""
+"Određuje da li agent mora prihvatiti dijaloški okvir potvrde prilikom "
+"promjene vidljivosti stavke u \"javno\"."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines if the application is in developer mode (all users have the same "
 "password and password reset will work without email delivery)."
 msgstr ""
+"Određuje je li aplikacija u razvojnom načinu rada (svi korisnici imaju istu "
+"lozinku, a resetiranje lozinke raditi će bez isporuke e-maila)."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines if the core workflow communication should run over ajax instead of "
 "websockets."
 msgstr ""
+"Određuje treba li se komunikacija core workflowa izvoditi preko ajaxa "
+"umjesto preko websocketa."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines if the email should be displayed in the result of the user/"
 "organization widget."
 msgstr ""
+"Određuje treba li e-mail biti prikazan u rezultatu widgeta korisnika/"
+"organizacije."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines if the i-doit (https://www.i-doit.org/) integration is enabled or "
 "not."
-msgstr ""
+msgstr "Određuje koristi li se integracija i-doit (https://www.i-doit.org/)."
 
 #: db/seeds/settings.rb
 msgid "Defines if tickets can be created via web form."
-msgstr ""
+msgstr "Određuje mogu li se ticketi izraditi putem web obrasca."
 
 #: db/seeds/settings.rb
 msgid "Defines if tickets should be closed if service is recovered."
-msgstr ""
+msgstr "Određuje treba li ticket zatvoriti prilikom oporavka servisa."
 
 #: db/seeds/settings.rb
 msgid "Defines karma levels."
-msgstr ""
+msgstr "Određuje razinu karme."
 
 #: db/seeds/settings.rb
 msgid "Defines postmaster filter for filters managed via admin interface."
 msgstr ""
+"Određuje postmaster filter za filtre kojima se upravlja putem "
+"administratorskog sučelja."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines postmaster filter to check if email has been created by Zammad "
 "itself and will set the article sender."
 msgstr ""
+"Određuje postmaster filter koji provjerava je li e-mail stvorio Zammad i "
+"sukladno tome postavlja pošiljatelja članka."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines postmaster filter to check if the email is a self-created "
 "notification email, then ignore it to prevent email loops."
 msgstr ""
+"Određuje postmaster filter koji provjerava je li e-mail samostvorena poruka "
+"sa obavijestima, a zatim ignorira mail kako bi spriječio e-mail petlje."
 
 #: db/seeds/settings.rb
 msgid "Defines postmaster filter to handle secure mailing."
-msgstr ""
+msgstr "Određuje postmaster filter za sigurno slanje mailova."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines postmaster filter to identify Jira mails for correct follow-ups."
 msgstr ""
+"Određuje postmaster filter za identifikaciju Jira mailova radi ispravnog "
+"daljnjeg praćenja."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines postmaster filter to identify ServiceNow mails for correct follow-"
 "ups."
 msgstr ""
+"Određuje postmaster filter za identificiranje ServiceNow mailova radi "
+"ispravnog daljnjeg praćenja."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines postmaster filter to identify auto responses to prevent auto replies "
 "from Zammad."
 msgstr ""
+"Određuje postmaster filter za prepoznavanje automatskih odgovora te "
+"sprječavanju automatskih odgovora na iste od Zammada."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines postmaster filter to identify follow-up ticket for merged tickets."
 msgstr ""
+"Određuje postmaster filter za identifikaciju naknadnih ticketa za spojene "
+"tickete."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines postmaster filter to identify follow-ups (based on admin settings)."
 msgstr ""
+"Određuje postmaster filter za prepoznavanje naknadnih ticketa (na temelju "
+"administratorskih postavki)."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines postmaster filter to identify out-of-office emails for follow-up "
 "detection and keeping current ticket state."
 msgstr ""
+"Određuje postmaster filter za identifikaciju mailova o odsutnosti za "
+"otkrivanje naknadnih ticketa i zadržavanje trenutnog statusa ulaznica."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines postmaster filter to identify postmaster bounces; and disables "
 "sending notification if delivery fails permanently."
 msgstr ""
+"Određuje postmaster filter za identifikaciju bounceova; i onemogućuje slanje "
+"obavijesti ako isporuku trajno nije moguće izvršiti."
 
 #: db/seeds/settings.rb
 msgid ""
