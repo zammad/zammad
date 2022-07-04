@@ -47,14 +47,26 @@ RSpec.describe EmailAddressValidation do
       include_examples 'email address validity', valid: true, check_mx: false
     end
 
-    describe 'when max length' do
-      let(:email_address) { 'trulyverylongpastasdomainnamehere.trulyverylongpastasdomainnamee@trulyverylongpastasdomainnameheredoublethatloremipsumnamecodena.trulyverylongpastasdomainnameheredoublethatloremipsumnamecodena.trulyverylongpastasdomainnameheredoublethatloremipsumname.com' }
+    describe 'when very long local part' do
+      let(:email_address) { 'd+aorgprcb5rboeldeti12rh-4fs92usdgsdzkw1xfppexrzd_efcxum1rxchmhjlplidc99k0141zduz2rmsvi2boiep-8b3-xh1dtbdvqjqn7lhguq6zh4nza8jmc2pv3thujtjatgtk@docs.google.com' }
 
       include_examples 'email address validity', valid: true, check_mx: false
     end
 
+    describe 'when max length' do
+      let(:email_address) { 'trulyverylongpastasdomainnamehere.trulyverylongpastasdomain@trulyverylongpastasdomainnameheredoublethatloremipsumnamecodena.trulyverylongpastasdomainnameheredoublethatloremipsumnamecodena.trulyverylongpastasdomainnameheredoublethatloremipsumname.com' }
+
+      include_examples 'email address validity', valid: true, check_mx: false
+    end
+
+    describe 'when over max length' do
+      let(:email_address) { 'trulyverylongpastasdomainnamehere.trulyverylongpastasdomainnamee@trulyverylongpastasdomainnameheredoublethatloremipsumnamecodena.trulyverylongpastasdomainnameheredoublethatloremipsumnamecodena.trulyverylongpastasdomainnameheredoublethatloremipsumname.com' }
+
+      include_examples 'email address validity', valid: false, check_mx: false
+    end
+
     describe 'when max length with unicode characters' do
-      let(:email_address) { 'trulyverylongpaštasdomainnamehere.trulyverylongpaštasdomainnamee@trulyverylongpaštasdomainnameheredoublethatloremipsumnamecodena.trulyverylongpaštasdomainnameheredoublethatloremipsumnamecodena.trulyverylongpaštasdomainnameheredob.com' }
+      let(:email_address) { 'trulyverylongpaštasdomainnamehere.trulyverylongpaštasdomain@trulyverylongpaštasdomainnameheredoublethatloremipsumnamecodena.trulyverylongpaštasdomainnameheredoublethatloremipsumnamecodena.trulyverylongpaštasdomainnameheredob.com' }
 
       include_examples 'email address validity', valid: true, check_mx: false
     end
