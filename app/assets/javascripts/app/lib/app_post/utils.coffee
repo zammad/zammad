@@ -780,6 +780,26 @@ class App.Utils
 
     @signatureIdentifyByHtmlHelper(message)
 
+  @signatureRemoveByHtml: (message) ->
+    container = document.createElement('container-element')
+    container.innerHTML = message
+
+    brsToRemove = []
+
+    signatures = container
+      .querySelectorAll('div[data-signature]')
+      .forEach (elem) ->
+        node = elem
+        while(node?.previousSibling?.nodeName == 'BR')
+          brsToRemove.push node.previousSibling
+          node = node.previousSibling
+
+        elem.remove()
+
+    brsToRemove.forEach (elem) -> elem.remove()
+
+    container.innerHTML
+
   @signatureIdentifyByHtmlHelper: (message, internal = false) ->
     # blockquotes and signature blocks are considered "dismiss nodes" and their indice will be stored
     dismissNodes = []

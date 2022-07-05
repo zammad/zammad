@@ -828,6 +828,43 @@ QUnit.test("check signature", assert => {
 
 });
 
+QUnit.test('remove signature', assert => {
+  var message = '<div>test 123 </div>'
+  var should  = '<div>test 123 </div>'
+  var result  = App.Utils.signatureRemoveByHtml(message)
+  assert.equal(result, should)
+
+  var message = '<div>test 123 </div><br>'
+  var should  = '<div>test 123 </div><br>'
+  var result  = App.Utils.signatureRemoveByHtml(message)
+  assert.equal(result, should)
+
+  var message = 'test 123'
+  var should  = 'test 123'
+  var result  = App.Utils.signatureRemoveByHtml(message)
+  assert.equal(result, should)
+
+  var message = '<div>test 123 <div data-signature="true" data-signature-id="1">Test Admin Agent<br>-----</div></div>'
+  var should  = '<div>test 123 </div>'
+  var result  = App.Utils.signatureRemoveByHtml(message)
+  assert.equal(result, should)
+
+  var message = '<div>test 123 <br><div data-signature="true" data-signature-id="1">Test Admin Agent<br>-----</div></div>'
+  var should  = '<div>test 123 </div>'
+  var result  = App.Utils.signatureRemoveByHtml(message)
+  assert.equal(result, should)
+
+  var message = '<div>test 123 <br><br><div data-signature="true" data-signature-id="1">Test Admin Agent<br>-----</div></div>'
+  var should  = '<div>test 123 </div>'
+  var result  = App.Utils.signatureRemoveByHtml(message)
+  assert.equal(result, should)
+
+  var message = 'test 123<br><div data-signature="true" data-signature-id="1">Test Admin Agent<br>-----</div>'
+  var should  = 'test 123'
+  var result  = App.Utils.signatureRemoveByHtml(message)
+  assert.equal(result, should)
+})
+
 // identify signature
 QUnit.test("identify signature by plaintext", assert => {
 

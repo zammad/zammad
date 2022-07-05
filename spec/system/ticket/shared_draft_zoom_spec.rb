@@ -165,6 +165,30 @@ RSpec.describe 'Ticket Shared Draft Zoom', type: :system, authenticated_as: :aut
         .to true
     end
 
+    context 'with a signature' do
+      let(:signature) { create(:signature) }
+      let(:group)     { create(:group, shared_drafts: group_shared_drafts, signature: signature) }
+
+      # https://github.com/zammad/zammad/issues/4042
+      it 'creates a draft without signature' do
+        within :active_content do
+          find('.articleNewEdit-body').send_keys(draft_body)
+          click '.editControls-item.pop-select'
+          click '.editControls-icon[data-value="email"]'
+          click '.js-openDropdownMacro'
+          click '.js-dropdownActionSaveDraft'
+        end
+
+        wait.until do
+          draft = Ticket::SharedDraftZoom.last
+
+          next false if draft.nil?
+
+          expect(draft.new_article).to include(body: draft_body)
+        end
+      end
+    end
+
     it 'shows overwrite warning when draft exists' do
       visit "ticket/zoom/#{ticket_with_draft.id}"
 
@@ -249,6 +273,20 @@ RSpec.describe 'Ticket Shared Draft Zoom', type: :system, authenticated_as: :aut
 
     it 'applies attachment' do
       expect(page).to have_text('1x1.png')
+    end
+
+    context 'with a signature' do
+      let(:signature_body) { 'Sample signature here' }
+      let(:signature)      { create(:signature, body: signature_body) }
+      let(:group)          { create(:group, shared_drafts: group_shared_drafts, signature: signature) }
+      let(:draft_type)     { 'email' }
+
+      # https://github.com/zammad/zammad/issues/4042
+      it 'applies with a signature' do
+        within :active_content do
+          expect(page).to have_text(signature_body).and(have_text(draft_body))
+        end
+      end
     end
   end
 
