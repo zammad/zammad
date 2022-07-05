@@ -578,10 +578,8 @@
           }),
           url:  translation.parent().generateURL('/attachments/clone_to_form'),
           success: function(data, status, xhr) {
-            translation.parent().attachments += data.attachments
-
             App.Utils.htmlImage2DataUrlAsync(body, function(output){
-              callback(output, translation.parent().attachments)
+              callback(output, data.attachments)
             })
           },
           error: function(xhr) {

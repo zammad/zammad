@@ -191,7 +191,6 @@ RSpec/ContextWording:
     - 'spec/system/system/object_manager_spec.rb'
     - 'spec/system/system/translations_spec.rb'
     - 'spec/system/ticket/create_spec.rb'
-    - 'spec/system/ticket/inserting_knowledge_base_answer_spec.rb'
     - 'spec/system/ticket/shared_draft_start_spec.rb'
     - 'spec/system/ticket/shared_draft_zoom_spec.rb'
     - 'spec/system/ticket/update/full_quote_header_spec.rb'
