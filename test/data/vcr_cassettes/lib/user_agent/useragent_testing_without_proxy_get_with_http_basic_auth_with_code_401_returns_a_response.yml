@@ -1,0 +1,61 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://web-test.dc.zammad.com/test_basic_auth/get/1?submitted=123
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Zammad User Agent
+      Host:
+      - web-test.dc.zammad.com
+      Authorization:
+      - Basic YmFzaWNfYXV0aF91c2VyOnRlc3Q8PjEyMw==
+  response:
+    status:
+      code: 401
+      message: Unauthorized
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Tue, 05 Jul 2022 08:53:05 GMT
+      Content-Type:
+      - text/html; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      X-Download-Options:
+      - noopen
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      Www-Authenticate:
+      - Basic realm="Application"
+      Cache-Control:
+      - no-cache
+      X-Request-Id:
+      - 6211cc7b-0792-4093-b5c1-64c164267c65
+      X-Runtime:
+      - '0.001001'
+    body:
+      encoding: UTF-8
+      string: 'HTTP Basic: Access denied.
+
+        '
+  recorded_at: Tue, 05 Jul 2022 08:53:05 GMT
+recorded_with: VCR 6.1.0

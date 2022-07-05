@@ -1,0 +1,63 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://web-test.dc.zammad.com/test_basic_auth/get/1?submitted=123
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Zammad User Agent
+      Host:
+      - web-test.dc.zammad.com
+      Authorization:
+      - Basic YmFzaWNfYXV0aF91c2VyOnRlc3QxMjM=
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Tue, 05 Jul 2022 08:53:28 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Frame-Options:
+      - DENY
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      - nosniff
+      X-Download-Options:
+      - noopen
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      Etag:
+      - W/"5237445bbd1b27ff683f301b3edc61e1"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 9eed4470-7f17-4ccb-bc93-cd1187766ae2
+      X-Runtime:
+      - '1.001545'
+      Strict-Transport-Security:
+      - max-age=63072000
+    body:
+      encoding: ASCII-8BIT
+      string: '{"remote_ip":"<ZAMMAD_PROXY_REMOTE_IP_CHECK>","content_type_requested":null,"method":"get","submitted":"123"}'
+  recorded_at: Tue, 05 Jul 2022 08:53:28 GMT
+recorded_with: VCR 6.1.0

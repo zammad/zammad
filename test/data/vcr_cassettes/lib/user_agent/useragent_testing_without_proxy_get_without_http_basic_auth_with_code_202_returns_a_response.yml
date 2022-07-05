@@ -1,0 +1,55 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://web-test.dc.zammad.com/test/get_accepted/1?submitted=123
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Zammad User Agent
+      Host:
+      - web-test.dc.zammad.com
+  response:
+    status:
+      code: 202
+      message: Accepted
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Tue, 05 Jul 2022 08:53:03 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      X-Download-Options:
+      - noopen
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      Cache-Control:
+      - no-cache
+      X-Request-Id:
+      - 1a1b2890-196b-442b-9716-5053a15b2be8
+      X-Runtime:
+      - '1.001387'
+    body:
+      encoding: UTF-8
+      string: '{"remote_ip":"155.133.206.83","content_type_requested":null,"method":"get","submitted":"123"}'
+  recorded_at: Tue, 05 Jul 2022 08:53:03 GMT
+recorded_with: VCR 6.1.0

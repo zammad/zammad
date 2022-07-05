@@ -4,6 +4,7 @@ require 'vcr'
 
 VCR_IGNORE_MATCHING_HOSTS = %w[elasticsearch selenium zammad.org zammad.com znuny.com google.com login.microsoftonline.com github.com].freeze
 VCR_IGNORE_MATCHING_REGEXPS = [%r{^192\.168\.\d+\.\d+$}].freeze
+VCR_MATCHING_HOSTS_WHITELIST = %w[web-test.dc.zammad.com].freeze
 
 VCR.configure do |config|
   config.cassette_library_dir = 'test/data/vcr_cassettes'
@@ -13,8 +14,9 @@ VCR.configure do |config|
   config.ignore_request do |request|
     uri = URI(request.uri)
 
-    next true if VCR_IGNORE_MATCHING_HOSTS.any?   { |elem| uri.host.include? elem }
-    next true if VCR_IGNORE_MATCHING_REGEXPS.any? { |elem| uri.host.match? elem }
+    next false if VCR_MATCHING_HOSTS_WHITELIST.any? { |elem| uri.host.include?(elem) }
+    next true if VCR_IGNORE_MATCHING_HOSTS.any?     { |elem| uri.host.include? elem }
+    next true if VCR_IGNORE_MATCHING_REGEXPS.any?   { |elem| uri.host.match? elem }
   end
 
   config.register_request_matcher(:oauth_headers) do |r1, r2|
