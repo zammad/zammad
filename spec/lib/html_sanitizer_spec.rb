@@ -1,7 +1,5 @@
 # Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-# frozen_string_literal: true
-
 require 'rails_helper'
 
 RSpec.describe HtmlSanitizer do
