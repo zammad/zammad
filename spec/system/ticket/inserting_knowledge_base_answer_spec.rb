@@ -14,7 +14,7 @@ RSpec.describe 'inserting Knowledge Base answer', type: :system, searchindex: tr
     end
   end
 
-  context 'given published answer' do
+  context 'when published answer' do
     let(:answer) { published_answer }
 
     it 'adds text' do
@@ -29,12 +29,15 @@ RSpec.describe 'inserting Knowledge Base answer', type: :system, searchindex: tr
       insert_kb_answer(target_translation, field)
 
       within(:active_content) do
-        expect(page).to have_css '.attachments .attachment--row'
+        within '.attachments .attachment--row' do
+          store_object = Store.where(store_object_id: Store::Object.lookup(name: 'UploadCache')).last
+          expect(page).to have_css ".attachment-delete[data-id='#{store_object.id}']", visible: :all # delete button is hidden by default
+        end
       end
     end
   end
 
-  context 'given answer with image' do
+  context 'when answer with image' do
     let(:answer) { create(:knowledge_base_answer, :with_image, published_at: 1.week.ago) }
 
     it 'inserts image' do
