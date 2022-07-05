@@ -1,5 +1,21 @@
 # Change Log
 
+## [5.2.1](https://github.com/zammad/zammad/tree/5.2.1) (2022-07-05)
+[Full Changelog](https://github.com/zammad/zammad/compare/5.2.0...5.2.1)
+
+**Fixed bugs:**
+
+- Allow very long email address [4159](https://github.com/zammad/zammad/issues/4159) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Elasticsearch 8 incompatible with Zammad 5.2 [4158](https://github.com/zammad/zammad/issues/4158)
+- Selecting group permission "full" behaves differently in user- and role-management [4100](https://github.com/zammad/zammad/issues/4100) [[bug](https://github.com/zammad/zammad/labels/bug)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised%20by%20payment)]
+- Trigger Attribute "action > is > updated" is not working after Zammad 5.2 update [4153](https://github.com/zammad/zammad/issues/4153) [[bug](https://github.com/zammad/zammad/labels/bug)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised%20by%20payment)]
+- cannot process emails with special characters in local part [4151](https://github.com/zammad/zammad/issues/4151) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- No error message is shown if the mandatory role field is missing during creating/updating overviews [4140](https://github.com/zammad/zammad/issues/4140) [[bug](https://github.com/zammad/zammad/labels/bug)] [[admin area](https://github.com/zammad/zammad/labels/admin%20area)] [[overviews](https://github.com/zammad/zammad/labels/overviews)]
+- Tooltips are not displayed correctly for all fields while creating a new group [4129](https://github.com/zammad/zammad/issues/4129) [[bug](https://github.com/zammad/zammad/labels/bug)] [[UX/UI](https://github.com/zammad/zammad/labels/UX%2FUI)] [[admin area](https://github.com/zammad/zammad/labels/admin%20area)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised%20by%20payment)]
+- LDAP import job no longer starts automatically [4143](https://github.com/zammad/zammad/issues/4143) [[bug](https://github.com/zammad/zammad/labels/bug)] [[blocker](https://github.com/zammad/zammad/labels/blocker)] [[LDAP](https://github.com/zammad/zammad/labels/LDAP)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised%20by%20payment)]
+- background_services will stop immediately after starting [4141](https://github.com/zammad/zammad/issues/4141) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- The use of shared drafts for response ends with the saving of an internal note [4031](https://github.com/zammad/zammad/issues/4031) [[bug](https://github.com/zammad/zammad/labels/bug)]
+
 ## [5.2.0](https://github.com/zammad/zammad/tree/5.2.0) (2022-06-21)
 [Full Changelog](https://github.com/zammad/zammad/compare/5.1.0...5.2.0)
 
