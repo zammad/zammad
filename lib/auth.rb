@@ -17,11 +17,8 @@ class Auth
   # @example
   #  auth = Auth.new('admin@example.com', 'some+password')
   def initialize(username, password)
-    @lookup_backend_instance = {}
-
     @auth_user = username.present? ? Auth::User.new(username) : nil
     @password = password
-
     @increase_login_failed_attempts = false
   end
 
