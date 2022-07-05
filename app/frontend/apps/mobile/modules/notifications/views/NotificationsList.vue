@@ -5,8 +5,13 @@
 /* eslint-disable zammad/zammad-detect-translatable-string */
 import { computed, ref } from 'vue'
 import LayoutCustomNavigation from '@mobile/components/layout/LayoutCustomNavigation.vue'
+import { useHeader } from '@mobile/composables/useHeader'
 import NotificationItem from '../components/NotificationItem.vue'
 import { NotificationListItem } from '../types/notificaitons'
+
+useHeader({
+  backButton: true,
+})
 
 // TODO make actual API call
 // TODO subscribe to notification changes

@@ -60,6 +60,20 @@ describe('mobile app header', () => {
     expect(view.getByText('Translated')).toBeInTheDocument()
   })
 
+  it('renders back button as button if no url is specified', async () => {
+    const view = renderComponent(LayoutHeader, {
+      props: {
+        backButton: true,
+      },
+      router: true,
+    })
+
+    const button = view.getIconByName('arrow-left')
+
+    expect(button).toBeInTheDocument()
+    expect(button.closest('a')).not.toBeInTheDocument()
+  })
+
   it('renders action, if specified', async () => {
     const onAction = vi.fn()
 
