@@ -68,7 +68,7 @@ describe('mobile app header', () => {
       router: true,
     })
 
-    const button = view.getIconByName('arrow-left')
+    const button = view.getByIconName('arrow-left')
 
     expect(button).toBeInTheDocument()
     expect(button.closest('a')).not.toBeInTheDocument()
