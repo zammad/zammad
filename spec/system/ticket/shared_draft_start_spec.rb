@@ -107,6 +107,32 @@ RSpec.describe 'Ticket Shared Draft Start', type: :system, authenticated_as: :au
       end
     end
 
+    context 'with a signature' do
+      let(:signature) { create(:signature) }
+      let(:group)     { create(:group, shared_drafts: group_shared_drafts, signature: signature) }
+
+      # https://github.com/zammad/zammad/issues/4042
+      it 'creates a draft without signature' do
+        within :active_content do
+          find('div[data-name=body]').send_keys draft_body
+          find('[data-type=email-out]').click
+        end
+
+        within :draft_sidebar do
+          find('.js-name').fill_in with: 'Draft Name'
+          click '.js-create'
+        end
+
+        wait.until do
+          draft = Ticket::SharedDraftStart.last
+
+          next false if draft.nil?
+
+          expect(draft.content).to include(body: draft_body)
+        end
+      end
+    end
+
     context 'draft saved' do
       before do
         within :draft_sidebar do
@@ -246,6 +272,20 @@ RSpec.describe 'Ticket Shared Draft Start', type: :system, authenticated_as: :au
     it 'applies attachment' do
       within :active_content do
         expect(page).to have_text('1x1.png')
+      end
+    end
+
+    context 'with a signature' do
+      let(:signature_body) { 'Sample signature here' }
+      let(:signature)      { create(:signature, body: signature_body) }
+      let(:group)          { create(:group, shared_drafts: group_shared_drafts, signature: signature) }
+      let(:draft_options)  { { priority_id: '3', formSenderType: 'email-out' } }
+
+      # https://github.com/zammad/zammad/issues/4042
+      it 'applies with a signature' do
+        within :active_content do
+          expect(page).to have_text(signature_body).and(have_text(draft_body))
+        end
       end
     end
   end

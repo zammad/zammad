@@ -57,6 +57,8 @@ class App.WidgetSharedDraft extends App.Controller
 
     return false if meta.name.trim() == ''
 
+    form.body = App.Utils.signatureRemoveByHtml(form.body)
+
     JSON.stringify({
       name:     meta.name
       group_id: form.group_id

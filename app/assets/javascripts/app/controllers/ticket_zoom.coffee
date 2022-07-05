@@ -983,6 +983,8 @@ class App.TicketZoom extends App.Controller
       new_article:       @articleNew.params()
       ticket_attributes: @ticketParams()
 
+    params.new_article.body = App.Utils.signatureRemoveByHtml(params.new_article.body)
+
     loaded_draft_id = params.new_article.shared_draft_id
 
     params.form_id = params.new_article['form_id']
