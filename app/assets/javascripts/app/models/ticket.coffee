@@ -258,8 +258,10 @@ class App.Ticket extends App.Model
 
   @_selectorMatch: (object, objectName, attributeName, condition) ->
     conditionValue = condition.value
+    conditionValue = '' if conditionValue == null
     conditionValue = '' if conditionValue == undefined
     objectValue    = object[attributeName]
+    objectValue    = '' if objectValue == null
     objectValue    = '' if objectValue == undefined
 
     # take care about pre conditions
