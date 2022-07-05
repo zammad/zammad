@@ -115,6 +115,13 @@ add avatar by url
         if filename.match?(%r{\.(jpg|jpeg)}i)
           mime_type = 'image/jpeg'
         end
+
+        # forbid creation of avatars without a specified mime_type (image is not displayed in the UI)
+        if mime_type == 'image'
+          logger.info "Could not determine mime_type for image '#{data[:url].inspect}'"
+          return
+        end
+
         data[:resize] ||= {}
         data[:resize][:content] = content
         data[:resize][:mime_type] = mime_type
@@ -155,6 +162,20 @@ add avatar by url
         end
         if url.match?(%r{\.(jpg|jpeg)}i)
           mime_type = 'image/jpeg'
+        end
+
+        # fallback to content-type of the response if url does not end with png, jpg or jpeg
+        #   see https://github.com/zammad/zammad/issues/3829
+        if mime_type == 'image' &&
+           response.header['content-type'].present? &&
+           Rails.application.config.active_storage.web_image_content_types.include?(response.header['content-type'])
+          mime_type = response.header['content-type']
+        end
+
+        # forbid creation of avatars without a specified mime_type (image is not displayed in the UI)
+        if mime_type == 'image'
+          logger.info "Could not determine mime_type for image '#{url}'"
+          return
         end
 
         data[:resize] ||= {}
