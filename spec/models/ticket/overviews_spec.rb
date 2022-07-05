@@ -72,9 +72,40 @@ RSpec.describe Ticket::Overviews do
       result = described_class.index(user)
       result = result.select { |x| x[:overview][:name] == overview.name }
 
-      expect(result.count).to be == 1
-      expect(result[0][:count]).to be == 2
-      expect(result[0][:tickets].count).to be == 2
+      expect(result.count).to eq(1)
+      expect(result[0][:count]).to eq(2)
+      expect(result[0][:tickets].count).to eq(2)
+    end
+
+    # https://github.com/zammad/zammad/issues/3853
+    context 'with specific group permissions' do
+      let(:group_read)      { create(:group) }
+      let(:group_overview)  { create(:group) }
+      let(:user)            { create(:agent) }
+      let(:ticket_read)     { create(:ticket, group: group_read) }
+      let(:ticket_overview) { create(:ticket, group: group_overview) }
+
+      before do
+        user.group_names_access_map = {
+          group_read.name     => %w[read],
+          group_overview.name => %w[read overview],
+        }
+
+        create(:mention, mentionable: ticket_read, user: user)
+        create(:mention, mentionable: ticket_overview, user: user)
+      end
+
+      it 'displays the correct amount of tickets in the sidebar' do
+        result = described_class.index(user, ['my_subscribed_tickets'])
+
+        expect(result.first[:count]).to eq(2)
+      end
+
+      it 'displays the correct amount of tickets in the list' do
+        result = described_class.index(user, ['my_subscribed_tickets'])
+
+        expect(result.first[:tickets].pluck(:id)).to eq([ticket_read.id, ticket_overview.id])
+      end
     end
   end
 
