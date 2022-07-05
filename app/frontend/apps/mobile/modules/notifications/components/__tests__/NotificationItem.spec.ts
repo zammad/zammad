@@ -55,7 +55,7 @@ describe('notification item', () => {
 
     vi.useRealTimers()
 
-    await view.events.click(view.getIconByName('trash'))
+    await view.events.click(view.getByIconName('trash'))
 
     expect(view.emitted().remove).toBeDefined()
   })
@@ -70,7 +70,7 @@ describe('notification item', () => {
       form: true,
     })
 
-    await view.events.click(view.getIconByName('trash'))
+    await view.events.click(view.getByIconName('trash'))
 
     expect(view.emitted().remove).toBeDefined()
   })

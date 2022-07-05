@@ -65,7 +65,7 @@ describe('CommonAvatar.vue', () => {
     const avatar = view.getByTestId('common-avatar')
 
     expect(avatar).not.toHaveTextContent('VL')
-    expect(view.getIconByName('facebook')).toBeInTheDocument()
+    expect(view.getByIconName('facebook')).toBeInTheDocument()
   })
 
   it('renders different sizes', async () => {
@@ -95,8 +95,8 @@ describe('CommonAvatar.vue', () => {
     const view = renderComponent(CommonAvatar, {
       unmount: false,
     })
-    expect(view.queryIconByName('crown')).not.toBeInTheDocument()
+    expect(view.queryByIconName('crown')).not.toBeInTheDocument()
     await view.rerender({ vip: true })
-    expect(view.getIconByName('crown')).toBeInTheDocument()
+    expect(view.getByIconName('crown')).toBeInTheDocument()
   })
 })

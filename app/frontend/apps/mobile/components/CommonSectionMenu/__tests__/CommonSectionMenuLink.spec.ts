@@ -22,7 +22,7 @@ describe('rendering item for section', () => {
 
     expect(view.getByTestId('section-menu-link').tagName).toBe('A')
     expect(view.getByText('Test Title')).toBeInTheDocument()
-    expect(view.getIconByName('arrow-right')).toBeInTheDocument()
+    expect(view.getByIconName('arrow-right')).toBeInTheDocument()
   })
 
   it('has an icon, if provided', () => {
@@ -31,7 +31,7 @@ describe('rendering item for section', () => {
       icon: 'home',
     })
 
-    expect(view.getIconByName('home')).toBeInTheDocument()
+    expect(view.getByIconName('home')).toBeInTheDocument()
   })
 
   it('has an icon with a background', () => {
@@ -53,7 +53,7 @@ describe('rendering item for section', () => {
       icon: { name: 'home', fixedSize: { width: 40, height: 40 } },
     })
 
-    const icon = view.getIconByName('home')
+    const icon = view.getByIconName('home')
 
     expect(icon).toBeInTheDocument()
 

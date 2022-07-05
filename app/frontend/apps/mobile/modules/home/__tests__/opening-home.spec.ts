@@ -27,7 +27,7 @@ describe('home page', () => {
 
     const view = await visitView('/')
 
-    expect(view.getIconByName('loader')).toBeInTheDocument()
+    expect(view.getByIconName('loader')).toBeInTheDocument()
     expect(view.getByRole('link', { name: /Edit/ })).toHaveAttribute(
       'href',
       '/favorite/ticker-overviews/edit',

@@ -14,12 +14,12 @@ describe('testing input for searching', () => {
       },
     })
 
-    expect(view.getIconByName('search')).toBeInTheDocument()
-    expect(view.queryIconByName('close-small')).not.toBeInTheDocument()
+    expect(view.getByIconName('search')).toBeInTheDocument()
+    expect(view.queryByIconName('close-small')).not.toBeInTheDocument()
 
     await view.events.type(view.getByRole('searchbox'), 'test')
 
-    const clearButton = view.getIconByName('close-small')
+    const clearButton = view.getByIconName('close-small')
 
     expect(clearButton).toBeInTheDocument()
 

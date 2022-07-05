@@ -9,7 +9,7 @@ import {
   useNotifications,
 } from '@shared/components/CommonNotifications'
 import { mockAccount } from '@tests/support/mock-account'
-import { getIconByName } from '@tests/support/components/iconQueries'
+import { getByIconName } from '@tests/support/components/iconQueries'
 import { getTicketOverviewStorage } from '../helpers/ticketOverviewStorage'
 import { getApiTicketOverviews } from './mocks'
 
@@ -41,7 +41,7 @@ describe('playing with overviews', () => {
 
     const view = await visitView('/favorite/ticker-overviews/edit')
 
-    expect(view.getIconByName('loader')).toBeInTheDocument()
+    expect(view.getByIconName('loader')).toBeInTheDocument()
 
     const includedOverviewsUtils = within(
       await view.findByTestId('includedOverviews'),
@@ -82,7 +82,7 @@ describe('playing with overviews', () => {
 
     const view = await visitView('/favorite/ticker-overviews/edit')
 
-    const buttonsRemove = await view.findAllIconsByName('minus-small')
+    const buttonsRemove = await view.findAllByIconName('minus-small')
 
     expect(buttonsRemove).toHaveLength(3)
 
@@ -90,7 +90,7 @@ describe('playing with overviews', () => {
 
     await view.events.click(overviewOneButton)
 
-    expect(view.getAllIconsByName('minus-small')).toHaveLength(2)
+    expect(view.getAllByIconName('minus-small')).toHaveLength(2)
 
     const overviewOneInExcluded = getByTestId(
       view.getByTestId('excludedOverviews'),
@@ -99,7 +99,7 @@ describe('playing with overviews', () => {
 
     expect(overviewOneInExcluded).toHaveTextContent('Overview 1')
 
-    const buttonAdd = getIconByName(overviewOneInExcluded, 'plus-small')
+    const buttonAdd = getByIconName(overviewOneInExcluded, 'plus-small')
 
     await view.events.click(buttonAdd)
 
@@ -134,7 +134,7 @@ describe('playing with overviews', () => {
     saveOverviews(['1'])
     const view = await visitView('/favorite/ticker-overviews/edit')
 
-    const buttonRemove = await view.findIconByName('minus-small')
+    const buttonRemove = await view.findByIconName('minus-small')
 
     await view.events.click(buttonRemove)
     await view.events.click(view.getByText('Done'))

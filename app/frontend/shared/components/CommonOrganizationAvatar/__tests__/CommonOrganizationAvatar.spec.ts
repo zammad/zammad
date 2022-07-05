@@ -14,7 +14,7 @@ describe('CommonOrganizationAvatar', () => {
       },
     })
 
-    expect(view.getIconByName('organization')).toBeInTheDocument()
+    expect(view.getByIconName('organization')).toBeInTheDocument()
 
     await view.rerender({
       entity: {
@@ -23,6 +23,6 @@ describe('CommonOrganizationAvatar', () => {
       },
     })
 
-    expect(view.getIconByName('inactive-organization')).toBeInTheDocument()
+    expect(view.getByIconName('inactive-organization')).toBeInTheDocument()
   })
 })

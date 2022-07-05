@@ -46,7 +46,7 @@ describe('CommonUserAvatar', () => {
 
     const avatar = view.getByTestId('common-avatar')
 
-    expect(view.getIconByName('logo')).toBeInTheDocument()
+    expect(view.getByIconName('logo')).toBeInTheDocument()
     expect(avatar).toHaveClass('bg-white')
   })
 
@@ -60,7 +60,7 @@ describe('CommonUserAvatar', () => {
       },
     })
 
-    expect(view.getIconByName('twitter')).toBeInTheDocument()
+    expect(view.getByIconName('twitter')).toBeInTheDocument()
 
     await view.rerender(<Props>{
       entity: {
@@ -69,7 +69,7 @@ describe('CommonUserAvatar', () => {
       },
     })
 
-    expect(view.getIconByName('facebook')).toBeInTheDocument()
+    expect(view.getByIconName('facebook')).toBeInTheDocument()
 
     await view.rerender(<Props>{
       entity: {
@@ -78,7 +78,7 @@ describe('CommonUserAvatar', () => {
       },
     })
 
-    expect(view.queryIconByName('some-unknown-source')).not.toBeInTheDocument()
+    expect(view.queryByIconName('some-unknown-source')).not.toBeInTheDocument()
   })
 
   it('renders active and outOfOffice', async () => {
@@ -127,7 +127,7 @@ describe('CommonUserAvatar', () => {
       },
     })
 
-    expect(view.getIconByName('crown')).toBeInTheDocument()
+    expect(view.getByIconName('crown')).toBeInTheDocument()
 
     await view.rerender(<Props>{
       entity: {
@@ -137,6 +137,6 @@ describe('CommonUserAvatar', () => {
       personal: true,
     })
 
-    expect(view.queryIconByName('crown')).not.toBeInTheDocument()
+    expect(view.queryByIconName('crown')).not.toBeInTheDocument()
   })
 })

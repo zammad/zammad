@@ -77,7 +77,7 @@ describe('ticket item display', () => {
 
     expect(view.getByText('lorem ipsum')).toBeInTheDocument()
     expect(view.getByText('1 ticket')).toBeInTheDocument()
-    expect(view.queryIconByName('·')).not.toBeInTheDocument()
+    expect(view.queryByIconName('·')).not.toBeInTheDocument()
 
     expect(view.queryByTestId('stringUpdated')).not.toBeInTheDocument()
   })

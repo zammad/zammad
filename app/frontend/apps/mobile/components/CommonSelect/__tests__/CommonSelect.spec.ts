@@ -54,7 +54,7 @@ describe('interacting with CommonSelect', () => {
 
     await view.events.click(view.getByText('Open Select'))
 
-    expect(view.getIconByName('check')).toBeInTheDocument()
+    expect(view.getByIconName('check')).toBeInTheDocument()
     await view.events.click(view.getByText('Item A'))
 
     expect(view.emitted().select).toEqual([[options[0]], [options[0]]])
@@ -69,7 +69,7 @@ describe('interacting with CommonSelect', () => {
 
     expect(modelValue.value).toEqual([0])
 
-    expect(view.queryAllIconsByName('checked-yes')).toHaveLength(1)
+    expect(view.queryAllByIconName('checked-yes')).toHaveLength(1)
     await view.events.click(view.getByText('Item A'))
 
     expect(modelValue.value).toEqual([])
@@ -79,7 +79,7 @@ describe('interacting with CommonSelect', () => {
 
     expect(modelValue.value).toEqual([0, 1])
 
-    expect(view.queryAllIconsByName('checked-yes')).toHaveLength(2)
+    expect(view.queryAllByIconName('checked-yes')).toHaveLength(2)
   })
   test("passive mode doesn't change local value, but emits select", async () => {
     const modelValue = ref()

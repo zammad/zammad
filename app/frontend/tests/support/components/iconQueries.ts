@@ -8,7 +8,7 @@ import {
   type BoundFunctions,
 } from '@testing-library/vue'
 
-export const queryAllIconsByName = (
+export const queryAllByIconName = (
   container: HTMLElement,
   matcher: Matcher,
 ) => {
@@ -22,25 +22,25 @@ export const queryAllIconsByName = (
 }
 
 export const [
-  queryIconByName,
-  getAllIconsByName,
-  getIconByName,
-  findAllIconsByName,
-  findIconByName,
+  queryByIconName,
+  getAllByIconName,
+  getByIconName,
+  findAllByIconName,
+  findByIconName,
 ] = buildQueries(
-  queryAllIconsByName,
+  queryAllByIconName,
   (_, matcher) => `Several icons with the "${matcher}" matcher were found`,
   (_, matcher) => `No icons with the "${matcher}" search were found`,
 )
 
 export default function buildIconsQueries(container: HTMLElement) {
   const queryFns = {
-    queryIconByName,
-    getAllIconsByName,
-    getIconByName,
-    findAllIconsByName,
-    findIconByName,
-    queryAllIconsByName,
+    queryByIconName,
+    getAllByIconName,
+    getByIconName,
+    findAllByIconName,
+    findByIconName,
+    queryAllByIconName,
   } as const
 
   return getQueriesForElement(container, queryFns as any) as BoundFunctions<

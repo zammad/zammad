@@ -110,7 +110,7 @@ describe('Form - Field - Select - Dialog', () => {
       getByText(wrapper.getByRole('listbox'), testOptions[1].label),
     ).toHaveClass('font-semibold')
 
-    expect(wrapper.getIconByName('check')).toBeInTheDocument()
+    expect(wrapper.getByIconName('check')).toBeInTheDocument()
 
     await wrapper.events.click(wrapper.getByTestId('dialog-overlay'))
 
@@ -271,8 +271,8 @@ describe('Form - Field - Select - Options', () => {
 
     await wrapper.events.click(wrapper.getByRole('list'))
 
-    expect(wrapper.queryIconByName(iconOptions[0].icon)).toBeInTheDocument()
-    expect(wrapper.queryIconByName(iconOptions[1].icon)).toBeInTheDocument()
+    expect(wrapper.queryByIconName(iconOptions[0].icon)).toBeInTheDocument()
+    expect(wrapper.queryByIconName(iconOptions[1].icon)).toBeInTheDocument()
   })
 })
 
@@ -346,7 +346,7 @@ describe('Form - Field - Select - Features', () => {
     let selectOptions = wrapper.getAllByRole('option')
 
     expect(selectOptions).toHaveLength(
-      wrapper.queryAllIconsByName('checked-no').length,
+      wrapper.queryAllByIconName('checked-no').length,
     )
 
     wrapper.events.click(selectOptions[0])
@@ -358,8 +358,8 @@ describe('Form - Field - Select - Features', () => {
     const emittedInput = wrapper.emitted().inputRaw as Array<Array<InputEvent>>
 
     expect(emittedInput[0][0]).toStrictEqual([testOptions[0].value])
-    expect(wrapper.queryAllIconsByName('checked-no')).toHaveLength(2)
-    expect(wrapper.queryAllIconsByName('checked-yes')).toHaveLength(1)
+    expect(wrapper.queryAllByIconName('checked-no')).toHaveLength(2)
+    expect(wrapper.queryAllByIconName('checked-yes')).toHaveLength(1)
     expect(wrapper.queryByRole('dialog')).toBeInTheDocument()
     expect(wrapper.queryAllByRole('listitem')).toHaveLength(1)
 
@@ -378,8 +378,8 @@ describe('Form - Field - Select - Features', () => {
       ])
     })
 
-    expect(wrapper.queryAllIconsByName('checked-no')).toHaveLength(1)
-    expect(wrapper.queryAllIconsByName('checked-yes')).toHaveLength(2)
+    expect(wrapper.queryAllByIconName('checked-no')).toHaveLength(1)
+    expect(wrapper.queryAllByIconName('checked-yes')).toHaveLength(2)
     expect(wrapper.queryByRole('dialog')).toBeInTheDocument()
     expect(wrapper.queryAllByRole('listitem')).toHaveLength(2)
 
@@ -399,8 +399,8 @@ describe('Form - Field - Select - Features', () => {
       ])
     })
 
-    expect(wrapper.queryAllIconsByName('checked-no')).toHaveLength(0)
-    expect(wrapper.queryAllIconsByName('checked-yes')).toHaveLength(3)
+    expect(wrapper.queryAllByIconName('checked-no')).toHaveLength(0)
+    expect(wrapper.queryAllByIconName('checked-yes')).toHaveLength(3)
     expect(wrapper.queryByRole('dialog')).toBeInTheDocument()
     expect(wrapper.queryAllByRole('listitem')).toHaveLength(3)
 
@@ -419,8 +419,8 @@ describe('Form - Field - Select - Features', () => {
       ])
     })
 
-    expect(wrapper.queryAllIconsByName('checked-no')).toHaveLength(1)
-    expect(wrapper.queryAllIconsByName('checked-yes')).toHaveLength(2)
+    expect(wrapper.queryAllByIconName('checked-no')).toHaveLength(1)
+    expect(wrapper.queryAllByIconName('checked-yes')).toHaveLength(2)
     expect(wrapper.queryByRole('dialog')).toBeInTheDocument()
     expect(wrapper.queryAllByRole('listitem')).toHaveLength(2)
 

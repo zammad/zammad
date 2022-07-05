@@ -105,7 +105,7 @@ describe('Form - Field - Button (Formkit-BuildIn)', () => {
       },
     })
 
-    const icon = view.getIconByName('arrow-right')
+    const icon = view.getByIconName('arrow-right')
 
     expect(icon).toBeInTheDocument()
   })
@@ -124,7 +124,7 @@ describe('Form - Field - Button (Formkit-BuildIn)', () => {
       },
     })
 
-    const icon = view.getIconByName('arrow-right')
+    const icon = view.getByIconName('arrow-right')
 
     await view.events.click(icon)
 

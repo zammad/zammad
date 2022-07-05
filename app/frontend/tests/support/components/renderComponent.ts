@@ -48,12 +48,12 @@ interface PageEvents extends UserEvent {
 
 export interface ExtendedRenderResult extends RenderResult {
   events: PageEvents
-  queryAllIconsByName(matcher: Matcher): SVGElement[]
-  queryIconByName(matcher: Matcher): SVGElement | null
-  getAllIconsByName(matcher: Matcher): SVGElement[]
-  getIconByName(matcher: Matcher): SVGElement
-  findAllIconsByName(matcher: Matcher): Promise<SVGElement[]>
-  findIconByName(matcher: Matcher): Promise<SVGElement>
+  queryAllByIconName(matcher: Matcher): SVGElement[]
+  queryByIconName(matcher: Matcher): SVGElement | null
+  getAllByIconName(matcher: Matcher): SVGElement[]
+  getByIconName(matcher: Matcher): SVGElement
+  findAllByIconName(matcher: Matcher): Promise<SVGElement[]>
+  findByIconName(matcher: Matcher): Promise<SVGElement>
   getLinkFromElement(element: HTMLElement): HTMLAnchorElement
 }
 

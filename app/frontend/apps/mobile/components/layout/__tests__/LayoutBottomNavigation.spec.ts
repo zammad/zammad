@@ -21,8 +21,8 @@ describe('bottom navigation in layout', () => {
 
     await flushPromises()
 
-    expect(view.getIconByName('home')).toBeInTheDocument()
-    expect(view.getIconByName('bell')).toBeInTheDocument()
+    expect(view.getByIconName('home')).toBeInTheDocument()
+    expect(view.getByIconName('bell')).toBeInTheDocument()
     expect(view.getByText('UT')).toBeInTheDocument()
   })
 })

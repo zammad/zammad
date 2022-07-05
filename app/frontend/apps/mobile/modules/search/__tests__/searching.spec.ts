@@ -32,7 +32,7 @@ describe('visiting search page', () => {
 
     // TODO api called immidiatly
 
-    // expect(view.getIconByName('loader')).toBeInTheDocument()
+    // expect(view.getByIconName('loader')).toBeInTheDocument()
 
     expect(view.getByPlaceholderText('Search')).toHaveFocus()
   })

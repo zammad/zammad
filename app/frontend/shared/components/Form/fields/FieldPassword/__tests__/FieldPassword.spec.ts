@@ -113,19 +113,19 @@ describe('toggling visibility', () => {
   it('can show password', async () => {
     const input = wrapper.getByLabelText('Password')
 
-    const iconToggle = wrapper.getIconByName('eye')
+    const iconToggle = wrapper.getByIconName('eye')
 
     await wrapper.events.click(iconToggle)
     await waitForNextTick(true)
 
     expect(input).toHaveAttribute('type', 'text')
-    expect(wrapper.getIconByName('eye-off')).toBeInTheDocument()
+    expect(wrapper.getByIconName('eye-off')).toBeInTheDocument()
   })
 
   it('can hide password', async () => {
     const input = wrapper.getByLabelText('Password')
 
-    const iconToggle = wrapper.getIconByName('eye-off')
+    const iconToggle = wrapper.getByIconName('eye-off')
 
     await wrapper.events.click(iconToggle)
     await waitForNextTick(true)
@@ -133,6 +133,6 @@ describe('toggling visibility', () => {
     await waitForNextTick(true)
 
     expect(input).toHaveAttribute('type', 'password')
-    expect(wrapper.getIconByName('eye')).toBeInTheDocument()
+    expect(wrapper.getByIconName('eye')).toBeInTheDocument()
   })
 })

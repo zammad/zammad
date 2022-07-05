@@ -17,7 +17,7 @@ describe('visiting /notifications', () => {
     const view = await visitView('/notifications')
 
     console.log = vi.fn()
-    await view.events.click(view.getAllIconsByName('trash')[0])
+    await view.events.click(view.getAllByIconName('trash')[0])
 
     expect(console.log).toHaveBeenCalledWith(
       'remove',
