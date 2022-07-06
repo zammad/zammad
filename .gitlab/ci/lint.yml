@@ -1,10 +1,10 @@
 # Workaround to enable usage of mixed SSH and Docker GitLab CI runners
-.template_lint: &template_lint
+.template_lint:
   stage: lint
   extends:
     - .job_rules_default
 
-.template_lint_rails: &template_lint_rails
+.template_lint_rails:
   extends:
     - .template_lint
   services:

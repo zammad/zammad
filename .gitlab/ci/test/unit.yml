@@ -1,4 +1,4 @@
-.template_unit: &template_unit
+.template_unit:
   extends:
     - .job_rules_default
   script:

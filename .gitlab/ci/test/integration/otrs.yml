@@ -1,4 +1,4 @@
-.template_integration_otrs: &template_integration_otrs
+.template_integration_otrs:
   extends:
     - .template_integration
   script:

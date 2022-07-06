@@ -1,4 +1,4 @@
-.template_browser-integration_capybara: &template_browser-integration_capybara
+.template_browser-integration_capybara:
   stage: browser
   dependencies:
     - browser:build
@@ -9,7 +9,7 @@
     - !reference [.scripts, zammad_ci_test_prepare]
     - bundle exec rspec --fail-fast --pattern "spec/system/**/*_spec.rb" -t integration --profile 10
 
-.template_browser-integration_capybara_chrome: &template_browser-integration_capybara_chrome
+.template_browser-integration_capybara_chrome:
   extends:
     - .template_browser-integration_capybara
     - .variables_selenium_chrome
@@ -22,7 +22,7 @@
     - !reference [.services, redis]
     - !reference [.services, memcached]
 
-.template_browser-integration_capybara_firefox: &template_browser-integration_capybara_firefox
+.template_browser-integration_capybara_firefox:
   extends:
     - .template_browser-integration_capybara
     - .variables_selenium_firefox
@@ -35,7 +35,7 @@
     - !reference [.services, redis]
     - !reference [.services, memcached]
 
-.template_browser-integration_chrome: &template_browser-integration_chrome
+.template_browser-integration_chrome:
   stage: browser
   dependencies:
     - browser:build
@@ -58,7 +58,7 @@
     - echo -e "\\e[0Ksection_end:`date +%s`:zammad_ci_test_start\\r\\e[0K"
     - bundle exec rails test $TEST_FILE
 
-.template_browser-integration_import_chrome: &template_browser-integration_import_chrome
+.template_browser-integration_import_chrome:
   stage: browser
   dependencies:
     - browser:build
