@@ -69,9 +69,8 @@ describe('CommonAvatar.vue', () => {
   })
 
   it('renders different sizes', async () => {
-    const view = renderComponent(CommonAvatar, {
-      unmount: false,
-    })
+    const view = renderComponent(CommonAvatar)
+
     const avatar = view.getByTestId('common-avatar')
 
     expect(avatar).toHaveClass('size-medium')
@@ -92,9 +91,7 @@ describe('CommonAvatar.vue', () => {
   })
 
   it('renders vip icon', async () => {
-    const view = renderComponent(CommonAvatar, {
-      unmount: false,
-    })
+    const view = renderComponent(CommonAvatar)
     expect(view.queryByIconName('crown')).not.toBeInTheDocument()
     await view.rerender({ vip: true })
     expect(view.getByIconName('crown')).toBeInTheDocument()

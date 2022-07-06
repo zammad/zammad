@@ -1,9 +1,8 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { useApolloClient } from '@vue/apollo-composable'
 import type { RouteRecordRaw } from 'vue-router'
+import { useApolloClient } from '@vue/apollo-composable'
 import { random } from 'lodash-es'
-import { handlers } from '@shared/server/apollo/handler/QueryHandler'
 import LayoutTest from './LayoutTest.vue'
 import mockApolloClient from '../mock-apollo-client'
 import renderComponent, { getRouter } from './renderComponent'
@@ -64,12 +63,6 @@ export const visitView = async (href: string) => {
 
   const { client } = useApolloClient()
   await client.clearStore()
-  await client.resetStore()
-  client.cache.reset()
-
-  handlers.forEach((handler) => {
-    handler.reset()
-  })
 
   const router = getRouter()
 

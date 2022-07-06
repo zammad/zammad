@@ -8,8 +8,6 @@ import {
   SubscribeToMoreOptions,
 } from '@apollo/client/core'
 import {
-  BaseHandlerOptions,
-  CommonHandlerOptionsParameter,
   OperationQueryOptionsReturn,
   OperationQueryResult,
   WatchResultCallback,
@@ -31,27 +29,12 @@ export default class QueryHandler<
 > {
   private firstResultLoaded = false
 
-  constructor(
-    operationResult: UseQueryReturn<TResult, TVariables>,
-    handlerOptions?: CommonHandlerOptionsParameter<BaseHandlerOptions>,
-  ) {
-    super(operationResult, handlerOptions)
-
-    handlers.push(this as unknown as QueryHandler)
-  }
-
   public options(): OperationQueryOptionsReturn<TResult, TVariables> {
     return this.operationResult.options
   }
 
   public result(): Ref<TResult | undefined> {
     return this.operationResult.result
-  }
-
-  public reset() {
-    this.operationResult.result.value = undefined
-    this.operationResult.start()
-    return this.operationResult.refetch(this.operationResult.variables.value)
   }
 
   public subscribeToMore<TSubscriptionData = TResult>(

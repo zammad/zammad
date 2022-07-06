@@ -21,12 +21,12 @@ import {
 } from '@shared/server/apollo/handler'
 import testFlags from '@shared/utils/testFlags'
 
-let query: QueryHandler<
+let checksumQuery: QueryHandler<
   ApplicationBuildChecksumQuery,
   ApplicationBuildChecksumQueryVariables
 >
 let previousChecksum: string
-let subscription: SubscriptionHandler<
+let appMaintenanceSubscription: SubscriptionHandler<
   AppMaintenanceSubscription,
   AppMaintenanceSubscriptionVariables
 >
@@ -44,7 +44,7 @@ const useAppMaintenanceCheck = () => {
   }
 
   onMounted(() => {
-    if (query) return
+    if (checksumQuery) return
 
     // Default poll interval: every minute.
     const defaultPollInterval = 60 * 1000
@@ -62,13 +62,13 @@ const useAppMaintenanceCheck = () => {
       options.pollInterval = parseInt(applicationRebuildCheckInterval.value, 10)
     })
 
-    query = new QueryHandler(useApplicationBuildChecksumQuery(options))
+    checksumQuery = new QueryHandler(useApplicationBuildChecksumQuery(options))
 
-    let notificationMessage = __(
+    const notificationMessage = __(
       'A newer version of the app is available. Please reload at your earliest.',
     )
 
-    query.watchOnResult((queryResult): void => {
+    checksumQuery.watchOnResult((queryResult): void => {
       if (!queryResult?.applicationBuildChecksum.length) return
       if (!previousChecksum) {
         previousChecksum = queryResult?.applicationBuildChecksum
@@ -79,16 +79,20 @@ const useAppMaintenanceCheck = () => {
       }
     })
 
-    subscription = new SubscriptionHandler(useAppMaintenanceSubscription())
-    subscription.onResult((result) => {
+    appMaintenanceSubscription = new SubscriptionHandler(
+      useAppMaintenanceSubscription(),
+    )
+    appMaintenanceSubscription.onResult((result) => {
       const type = result.data?.appMaintenance.type
+      let message = notificationMessage
+
       if (!type) {
         testFlags.set('useAppMaintenanceSubscription.subscribed')
         return
       }
       switch (type) {
         case AppMaintenanceType.ConfigChanged:
-          notificationMessage = __(
+          message = __(
             'The configuration of Zammad has changed. Please reload at your earliest.',
           )
           break
@@ -99,7 +103,7 @@ const useAppMaintenanceCheck = () => {
         default:
           break
       }
-      notify(notificationMessage)
+      notify(message)
     })
   })
 }

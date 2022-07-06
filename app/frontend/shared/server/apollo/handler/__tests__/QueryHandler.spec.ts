@@ -1,9 +1,7 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import { useQuery } from '@vue/apollo-composable'
-import createMockClient, {
-  resetMockClient,
-} from '@tests/support/mock-apollo-client'
+import createMockClient from '@tests/support/mock-apollo-client'
 import {
   SampleTypedQueryDocument,
   SampleQuery,
@@ -38,8 +36,6 @@ const querySampleErrorResult = {
 const querySampleNetworkErrorResult = new Error('GraphQL Network Error')
 
 const mockClient = (error = false, errorType = 'GraphQL') => {
-  resetMockClient()
-
   createMockClient([
     {
       operationDocument: SampleTypedQueryDocument,

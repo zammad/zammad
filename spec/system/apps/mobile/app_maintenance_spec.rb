@@ -20,7 +20,6 @@ RSpec.describe 'Mobile > App Update Check', type: :system, app: :mobile do
       wait_for_test_flag('useAppMaintenanceSubscription.subscribed')
     end
 
-    # TODO: test only the most popular rebuild dialog message in selenium and move the other stuff to the frontend.
     it 'shows app rebuild dialog' do
       # Append a newline to the manifest file to trigger a reload notification.
       File.open(Rails.public_path.join('vite/manifest.json'), 'a') do |file|
@@ -28,26 +27,6 @@ RSpec.describe 'Mobile > App Update Check', type: :system, app: :mobile do
       end
 
       expect(page).to have_text('A newer version of the app is available. Please reload at your earliest.')
-    end
-
-    it 'reacts to app_version message' do
-      AppVersion.set(true, AppVersion::MSG_APP_VERSION)
-      expect(page).to have_text('A newer version of the app is available. Please reload at your earliest.')
-    end
-
-    it 'reacts to reload_auto message' do
-      AppVersion.set(true, AppVersion::MSG_RESTART_AUTO)
-      expect(page).to have_text('A newer version of the app is available. Please reload at your earliest.')
-    end
-
-    it 'reacts to reload_manual message' do
-      AppVersion.set(true, AppVersion::MSG_RESTART_MANUAL)
-      expect(page).to have_text('A newer version of the app is available. Please reload at your earliest.')
-    end
-
-    it 'reacts to config_updated message' do
-      AppVersion.set(true, AppVersion::MSG_CONFIG_CHANGED)
-      expect(page).to have_text('The configuration of Zammad has changed. Please reload at your earliest.')
     end
   end
 
@@ -59,7 +38,6 @@ RSpec.describe 'Mobile > App Update Check', type: :system, app: :mobile do
       Setting.set('maintenance_mode', true)
     end
 
-    # TODO: check what we really need here, because of the frontend integration tests.
     context 'with admin user' do
       let(:user) { create(:admin) }
 

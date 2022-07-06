@@ -765,7 +765,6 @@ msgid "Alarm"
 msgstr ""
 
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
-#: app/frontend/apps/mobile/modules/home/views/Home.vue
 msgid "All Tickets"
 msgstr ""
 
@@ -9799,6 +9798,10 @@ msgstr ""
 
 #: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
 msgid "Ticket Overview settings are saved"
+msgstr ""
+
+#: app/frontend/apps/mobile/modules/home/views/Home.vue
+msgid "Ticket Overviews"
 msgstr ""
 
 #: app/assets/javascripts/app/models/sla.coffee

@@ -17,7 +17,7 @@ const menu: MenuItem[] = [
   {
     type: 'link',
     link: '/tickets',
-    title: __('All Tickets'),
+    title: __('Ticket Overviews'),
     icon: { name: 'stack', size: 'base' },
     iconBg: 'bg-pink',
   },

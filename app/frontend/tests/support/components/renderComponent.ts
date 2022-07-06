@@ -144,6 +144,7 @@ afterEach(() => {
 
 export const initializeStore = () => {
   if (storeInitialized) return
+
   pinia = createTestingPinia({ createSpy: vi.fn, stubActions: false })
   plugins.push(pinia)
   pinia.use((context) => {
@@ -165,9 +166,7 @@ const initializeForm = () => {
 let applicationConfigInitialized = false
 
 const initializeApplicationConfig = () => {
-  if (!storeInitialized) {
-    initializeStore()
-  }
+  initializeStore()
 
   plugins.push(applicationConfigPlugin)
 

@@ -10,27 +10,9 @@ RSpec.describe 'Mobile > App Home Page', type: :system, app: :mobile do
       visit '/'
     end
 
-    it 'clicking on plus icon opens creating ticket' do
-      icon = find_icon 'plus'
-      icon.click
-      expect_current_route('ticket/create', app: :desktop)
+    # TODO: align test, when we have the real funtionality on the home page (with correct permissions).
+    it 'check that we are on the home page' do
+      expect(page).to have_text('Home')
     end
-
-    it '"all tickets" leads to tickets list' do
-      tickets_link = find('a', text: 'All Tickets')
-      expect(tickets_link[:href]).to match(%r{/mobile/tickets})
-    end
-
-    it 'home icon is highlighted on home page' do
-      expect(page).to have_css('a[href="/mobile/"].text-blue')
-    end
-
-    it 'footer has my avatar' do
-      me = find('a[href="/mobile/account"]')
-      firstname = admin.firstname.first
-      lastname = admin.lastname.first
-      expect(me.text).to match("#{firstname}#{lastname}")
-    end
-
   end
 end

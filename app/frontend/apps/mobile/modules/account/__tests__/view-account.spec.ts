@@ -5,7 +5,7 @@ import { mockAccount } from '@tests/support/mock-account'
 
 describe('account page', () => {
   // TODO pretty much static page, not a lot of tests needed for now
-  test('can view my account page', async () => {
+  it('can view my account page', async () => {
     mockAccount({
       lastname: 'Doe',
       firstname: 'John',
@@ -13,9 +13,9 @@ describe('account page', () => {
 
     const view = await visitView('/account')
 
-    expect(view.getByText('JD'), 'have avatar').toBeInTheDocument()
-    expect(view.getByText('John Doe'), 'have my name').toBeInTheDocument()
-
-    expect(view.getByText('Sign out'), 'have logout button').toBeInTheDocument()
+    const mainContent = view.getByTestId('appMain')
+    expect(mainContent, 'have avatar').toHaveTextContent('JD')
+    expect(mainContent, 'have my name').toHaveTextContent('John Doe')
+    expect(mainContent, 'have logout button').toHaveTextContent('Sign out')
   })
 })

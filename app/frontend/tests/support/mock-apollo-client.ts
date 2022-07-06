@@ -16,16 +16,15 @@ export interface ClientRequestHandler {
 
 let mockClient: Maybe<MockApolloClient>
 
-export const resetMockClient = () => {
+afterEach(() => {
   mockClient = null
-}
+})
 
 const createMockClient = (
   handlers: ClientRequestHandler[],
-  resetClient = false,
   cacheOptions = {},
 ) => {
-  if (!mockClient || resetClient) {
+  if (!mockClient) {
     const cache = new InMemoryCache(cacheOptions)
     mockClient = createMockedClient({ cache })
   }
