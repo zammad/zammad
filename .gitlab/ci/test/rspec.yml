@@ -6,10 +6,7 @@ include:
   extends:
     - .job_rules_default
   script:
-    - echo -e "\\e[0Ksection_start:`date +%s`:zammad_db_init[collapsed=true]\\r\\e[0Kbundle exec rake zammad:db:init"
-    - bundle exec rake zammad:db:init
-    - echo -e "\\e[0Ksection_end:`date +%s`:zammad_db_init\\r\\e[0K"
-    - echo "RSpec filter:" "$RSPEC_EXAMPLE_MATCHES"
+    - !reference [.scripts, zammad_db_init]
     - bundle exec rspec --require ./spec/rspec_extensions.rb --exclude-pattern "spec/system/**/*_spec.rb" -t ~searchindex -t ~integration --profile 10
 
 # RSpec 3rd party integration tests are independent of the database

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe CoreWorkflow, type: :model do
+RSpec.describe CoreWorkflow, type: :model, mariadb: true do
   let(:group)   { create(:group) }
   let!(:ticket) { create(:ticket, state: Ticket::State.find_by(name: 'pending reminder'), pending_time: 5.days.from_now, group: group) }
   let!(:base_payload) do

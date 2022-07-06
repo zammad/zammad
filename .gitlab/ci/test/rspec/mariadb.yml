@@ -1,0 +1,11 @@
+rspec:mariadb:
+  extends:
+    - .template_rspec
+  services:
+    - !reference [.services, mariadb]
+    - !reference [.services, redis]
+    - !reference [.services, memcached]
+  script:
+    - !reference [.scripts, zammad_db_init]
+    # Execute only tests tagged with :mariadb.
+    - bundle exec rspec --require ./spec/rspec_extensions.rb --exclude-pattern "spec/system/**/*_spec.rb" -t mariadb --profile 10

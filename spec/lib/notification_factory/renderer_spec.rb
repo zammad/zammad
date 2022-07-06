@@ -149,7 +149,7 @@ RSpec.describe NotificationFactory::Renderer do
         it_behaves_like 'correctly rendering the attributes'
       end
 
-      context 'with multiselect' do
+      context 'with multiselect', mariadb: true do
         context 'with a simple multiselect attribute' do
           let(:create_object_manager_attribute) do
             create :object_manager_attribute_multiselect, name: 'multiselect'

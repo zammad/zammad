@@ -159,7 +159,7 @@ FactoryBot.define do
   end
 
   factory :object_manager_attribute_multiselect, parent: :object_manager_attribute do
-    default { '' }
+    default { [] }
 
     data_type { 'multiselect' }
     data_option do
@@ -294,7 +294,7 @@ FactoryBot.define do
   end
 
   factory :object_manager_attribute_multi_tree_select, parent: :object_manager_attribute do
-    default { '' }
+    default { [] }
 
     data_type { 'multi_tree_select' }
     data_option do
