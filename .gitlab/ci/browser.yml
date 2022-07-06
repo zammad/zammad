@@ -1,3 +1,2 @@
 include:
-  - '.gitlab/ci/browser-core/*.yml'
-  - '.gitlab/ci/browser-integration/*.yml'
+  - '.gitlab/ci/browser/*.yml'

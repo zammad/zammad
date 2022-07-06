@@ -1,7 +1,0 @@
-'integration:capybara:chrome':
-  extends:
-    - .template_browser-integration_capybara_chrome
-
-'integration:capybara:firefox':
-  extends:
-    - .template_browser-integration_capybara_firefox
