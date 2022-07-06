@@ -2794,7 +2794,7 @@ RSpec.describe 'Ticket zoom', type: :system do
         end
 
         within_window switch_to_window_index(2) do
-          expect(page).to have_css('a.logo')
+          expect(page).to have_link(class: ['logo'])
         end
         close_window_index(2)
       end

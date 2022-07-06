@@ -20,7 +20,7 @@ RSpec.describe 'Knowledge Base Locale Answer Read', type: :system, authenticated
       it 'shows tag' do
         within :active_content do
           within '.knowledge-base-article-tags--container' do
-            expect(page).to have_css('a', text: published_answer_tag_name)
+            expect(page).to have_link(published_answer_tag_name)
           end
         end
       end

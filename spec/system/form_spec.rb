@@ -56,7 +56,7 @@ RSpec.describe 'Form', type: :system, authenticated_as: true do
 
         click_on 'Submit'
 
-        expect(page).to have_selector('.has-error [name=email]').and have_no_selector('button[type="submit"][disabled]')
+        expect(page).to have_selector('.has-error [name=email]').and have_no_button(type: 'submit', disabled: true)
       end
     end
   end

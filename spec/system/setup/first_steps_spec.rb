@@ -75,6 +75,6 @@ RSpec.describe 'First Steps', type: :system do
       click '.tab[data-area="first-steps-widgets"]'
     end
 
-    expect(page).to have_selector 'a[href="#channels/form"].todo.is-done'
+    expect(page).to have_link(href: '#channels/form', class: %w[todo is-done])
   end
 end

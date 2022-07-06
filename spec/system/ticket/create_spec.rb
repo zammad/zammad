@@ -17,7 +17,7 @@ RSpec.describe 'Ticket Create', type: :system do
       visit 'ticket/create'
 
       use_template(template)
-      expect(page).to have_no_selector 'select[name="group_id"]'
+      expect(page).to have_no_select('group_id')
     end
   end
 

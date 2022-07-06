@@ -37,25 +37,25 @@ RSpec.describe 'Knowledge Base Locale Answer Edit', type: :system do
     it 'allows mailto links' do
       open_editor_and_add_link 'mailto:test@example.com'
 
-      expect(page).to have_selector('a[href="mailto:test@example.com"]')
+      expect(page).to have_link(href: 'mailto:test@example.com')
     end
 
     it 'allows link with a protocol' do
       open_editor_and_add_link 'protocol://example.org'
 
-      expect(page).to have_selector('a[href="protocol://example.org"]')
+      expect(page).to have_link(href: 'protocol://example.org')
     end
 
     it 'allows relative link' do
       open_editor_and_add_link '/path'
 
-      expect(page).to have_selector('a[href="/path"]')
+      expect(page).to have_link(href: '/path')
     end
 
     it 'allows non-protocol URL and prepends default protocol' do
       open_editor_and_add_link 'example.com'
 
-      expect(page).to have_selector('a[href="http://example.com"]')
+      expect(page).to have_link(href: 'http://example.com')
     end
   end
 
@@ -100,7 +100,7 @@ RSpec.describe 'Knowledge Base Locale Answer Edit', type: :system do
         elem.send_keys :return
 
         wait.until_exists { published_answer_with_tag.reload.tag_list.include? new_tag_name }
-        expect(page).to have_css('a.js-tag', text: new_tag_name)
+        expect(page).to have_link(new_tag_name, href: false, class: ['js-tag'])
       end
     end
 
@@ -116,7 +116,7 @@ RSpec.describe 'Knowledge Base Locale Answer Edit', type: :system do
 
     it 'shows an existing tag' do
       within :active_content do
-        expect(page).to have_css('a.js-tag', text: published_answer_tag_name)
+        expect(page).to have_link(published_answer_tag_name, href: false, class: ['js-tag'])
       end
     end
 
@@ -125,7 +125,7 @@ RSpec.describe 'Knowledge Base Locale Answer Edit', type: :system do
         find('.list-item', text: published_answer_tag_name)
           .find('.js-delete').click
 
-        expect(page).to have_no_css('a.js-tag', text: published_answer_tag_name)
+        expect(page).to have_no_link(published_answer_tag_name, href: false, class: ['js-tag'])
         wait.until_exists { published_answer_with_tag.reload.tag_list.exclude? published_answer_tag_name }
       end
     end

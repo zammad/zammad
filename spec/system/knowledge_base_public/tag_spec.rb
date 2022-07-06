@@ -17,11 +17,11 @@ RSpec.describe 'Public Knowledge Base tag', type: :system, authenticated_as: fal
     end
 
     it 'lists an answer with the tag' do
-      expect(page).to have_css('a', text: published_answer_with_tag.translations.first.title)
+      expect(page).to have_link(published_answer_with_tag.translations.first.title)
     end
 
     it 'does not list another answer' do
-      expect(page).to have_no_css('a', text: published_answer.translations.first.title)
+      expect(page).to have_no_link(published_answer.translations.first.title)
     end
 
     it 'does not show empty placeholder' do
