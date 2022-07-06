@@ -17,7 +17,8 @@
 
 # Must be a separate job because it uses a custom image.
 'lint: shellcheck':
-  <<: *template_lint
+  extends:
+    - .template_lint
   image: koalaman/shellcheck-alpine:stable
   cache: []
   before_script: []
@@ -27,7 +28,8 @@
   after_script: []
 
 'lint: i18n & rails':
-  <<: *template_lint_rails
+  extends:
+    - .template_lint_rails
   cache: !reference [.cache, read_only_full]
   artifacts:
     expire_in: 1 week
@@ -47,7 +49,8 @@
     - .gitlab/check_graphql_api_consistency.sh
 
 'lint: ruby & security':
-  <<: *template_lint
+  extends:
+    - .template_lint
   before_script:
     - !reference [.scripts, source_rvm]
     - !reference [.scripts, bundle_install]
@@ -61,7 +64,8 @@
     - bundle-audit --ignore CVE-2015-9284
 
 'lint: js & css':
-  <<: *template_lint
+  extends:
+    - .template_lint
   cache: !reference [.cache, read_only_nodejs]
   before_script: []
   script:
@@ -78,7 +82,8 @@
 
 # Must be a separate job because it may fail and is only executed manually.
 'lint: orphaned ruby gems':
-  <<: *template_lint_rails
+  extends:
+    - .template_lint_rails
   allow_failure: true
   rules:
     - if: $CI_MERGE_REQUEST_ID
