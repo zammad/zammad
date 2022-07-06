@@ -339,8 +339,13 @@ returns
     end
 
     return if mention_user_ids.blank?
-    return if ApplicationHandleInfo.postmaster? && !MentionPolicy.new(updated_by, Mention.new).create?
-    raise "User #{updated_by_id} has no permission to mention other Users!" if !MentionPolicy.new(updated_by, Mention.new).create?
+
+    if !MentionPolicy.new(updated_by, Mention.new).create?
+      return if ApplicationHandleInfo.postmaster?
+      return if updated_by.id == 1
+
+      raise "User #{updated_by_id} has no permission to mention other users!"
+    end
 
     user_ids = User.where(id: mention_user_ids).pluck(:id)
     user_ids.each do |user_id|

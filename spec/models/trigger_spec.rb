@@ -612,6 +612,20 @@ RSpec.describe Trigger, type: :model do
           end
         end
       end
+
+      # https://github.com/zammad/zammad/issues/3991
+      context 'when article contains a mention' do
+        let!(:article) do
+          create(:ticket_article,
+                 ticket: ticket,
+                 body:   '<a href="http:/#user/profile/1" data-mention-user-id="1" rel="nofollow noreferrer noopener" target="_blank" title="http:/#user/profile/1">Test Admin Agent</a> test<br>')
+        end
+
+        it 'fires correctly' do
+          expect { TransactionDispatcher.commit }
+            .to change { ticket.reload.articles.count }.by(1)
+        end
+      end
     end
 
     context 'with condition execution_time.calendar_id' do
