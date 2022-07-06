@@ -86,10 +86,7 @@
     - .job_rules_default
     - .tags_docker_low_concurrency
   script:
-    - echo -e "\\e[0Ksection_start:`date +%s`:zammad_ci_test_prepare[collapsed=true]\\r\\e[0Kbundle exec rake zammad:ci:test:prepare"
-    - bundle exec rake zammad:ci:test:prepare
-    - echo -e "\\e[0Ksection_end:`date +%s`:zammad_ci_test_prepare\\r\\e[0K"
-    - echo "RSpec filter:" "$RSPEC_EXAMPLE_MATCHES"
+    - !reference [.scripts, zammad_ci_test_prepare]
     - bundle exec rspec --require ./spec/rspec_extensions.rb --fail-fast -t ~integration --profile 10 spec/system
 
 .template_browser-core_capybara_chrome: &template_browser-core_capybara_chrome

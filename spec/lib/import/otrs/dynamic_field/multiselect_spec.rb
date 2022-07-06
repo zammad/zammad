@@ -3,7 +3,7 @@
 require 'rails_helper'
 require 'lib/import/otrs/dynamic_field_examples'
 
-RSpec.describe Import::OTRS::DynamicField::Multiselect do
+RSpec.describe Import::OTRS::DynamicField::Multiselect, mariadb: true do
   it_behaves_like 'Import::OTRS::DynamicField'
 
   it 'imports an OTRS Multiselect DynamicField' do

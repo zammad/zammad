@@ -24,6 +24,10 @@
     name: $CI_REGISTRY/docker/zammad-mysql:stable
     alias: mysql
 
+  mariadb:
+    name: $CI_REGISTRY/docker/zammad-mariadb:stable
+    alias: mysql
+
   postgresql:
     name: $CI_REGISTRY/docker/zammad-postgresql:stable
     alias: postgresql

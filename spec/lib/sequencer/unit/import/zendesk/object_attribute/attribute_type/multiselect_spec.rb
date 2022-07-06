@@ -3,7 +3,7 @@
 require 'rails_helper'
 require 'lib/sequencer/unit/import/zendesk/object_attribute/attribute_type/base_examples'
 
-RSpec.describe Sequencer::Unit::Import::Zendesk::ObjectAttribute::AttributeType::Multiselect do
+RSpec.describe Sequencer::Unit::Import::Zendesk::ObjectAttribute::AttributeType::Multiselect, mariadb: true do
   it_behaves_like Sequencer::Unit::Import::Zendesk::ObjectAttribute::AttributeType::Base do
     let(:zendesk_object_field_attributes) do
       {

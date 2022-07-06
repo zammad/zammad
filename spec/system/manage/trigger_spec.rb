@@ -3,7 +3,7 @@
 require 'rails_helper'
 require 'system/examples/pagination_examples'
 
-RSpec.describe 'Manage > Trigger', type: :system do
+RSpec.describe 'Manage > Trigger', type: :system, mariadb: true do
 
   def open_new_trigger_dialog
     visit '/#manage/trigger'
