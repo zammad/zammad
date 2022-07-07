@@ -1,4 +1,4 @@
-.template_browser-core: &template_browser-core
+.template_browser-core:
   stage: browser
   dependencies:
     - browser:build
@@ -16,7 +16,7 @@
     - echo -e "\\e[0Ksection_end:`date +%s`:zammad_ci_test_start\\r\\e[0K"
     - time bundle exec rails test --fail-fast test/browser
 
-.template_browser-core_chrome: &template_browser-core_chrome
+.template_browser-core_chrome:
   extends:
     - .template_browser-core
     - .variables_selenium_chrome
@@ -29,7 +29,7 @@
     - !reference [.services, redis]
     - !reference [.services, memcached]
 
-.template_browser-core_firefox: &template_browser-core_firefox
+.template_browser-core_firefox:
   extends:
     - .template_browser-core
     - .variables_selenium_firefox
@@ -42,7 +42,7 @@
     - !reference [.services, redis]
     - !reference [.services, memcached]
 
-.template_browser-core_autowizard: &template_browser-core_autowizard
+.template_browser-core_autowizard:
   stage: browser
   dependencies:
     - browser:build
@@ -62,7 +62,7 @@
     - echo -e "\\e[0Ksection_end:`date +%s`:zammad_ci_test_start\\r\\e[0K"
     - bundle exec rails test $TEST_FILE
 
-.template_browser-core_autowizard_chrome: &template_browser-core_autowizard_chrome
+.template_browser-core_autowizard_chrome:
   extends:
     - .template_browser-core_autowizard
     - .variables_selenium_chrome
@@ -70,7 +70,7 @@
     - !reference [.services, postgresql]
     - !reference [.services, selenium-chrome]
 
-.template_browser-core_autowizard_firefox: &template_browser-core_autowizard_firefox
+.template_browser-core_autowizard_firefox:
   extends:
     - .template_browser-core_autowizard
     - .variables_selenium_firefox
@@ -78,7 +78,7 @@
     - !reference [.services, postgresql]
     - !reference [.services, selenium-firefox]
 
-.template_browser-core_capybara: &template_browser-core_capybara
+.template_browser-core_capybara:
   stage: browser
   dependencies:
     - browser:build
@@ -87,9 +87,9 @@
     - .tags_docker_low_concurrency
   script:
     - !reference [.scripts, zammad_ci_test_prepare]
-    - bundle exec rspec --require ./spec/rspec_extensions.rb --fail-fast -t ~integration --profile 10 spec/system
+    - bundle exec rspec --require ./spec/rspec_extensions.rb --fail-fast --profile 10 spec/system
 
-.template_browser-core_capybara_chrome: &template_browser-core_capybara_chrome
+.template_browser-core_capybara_chrome:
   extends:
     - .template_browser-core_capybara
     - .variables_selenium_chrome
@@ -102,7 +102,7 @@
     - !reference [.services, redis]
     - !reference [.services, memcached]
 
-.template_browser-core_capybara_firefox: &template_browser-core_capybara_firefox
+.template_browser-core_capybara_firefox:
   extends:
     - .template_browser-core_capybara
     - .variables_selenium_firefox
@@ -114,3 +114,36 @@
     - !reference [.services, imap]
     - !reference [.services, redis]
     - !reference [.services, memcached]
+
+.template_browser-integration_chrome:
+  stage: browser
+  dependencies:
+    - browser:build
+  extends:
+    - .job_rules_default
+    - .tags_docker_low_concurrency
+    - .variables_selenium_chrome
+  services:
+    - !reference [.services, postgresql]
+    - !reference [.services, selenium-chrome]
+  variables:
+    RAILS_ENV: "production"
+    APP_RESTART_CMD: 'bundle exec rake environment zammad:ci:app:restart'
+    AUTO_WIZARD_FILE: "contrib/auto_wizard_test.json"
+  script:
+    - RAILS_ENV=test bundle exec rake db:create
+    - cp $AUTO_WIZARD_FILE auto_wizard.json
+    - echo -e "\\e[0Ksection_start:`date +%s`:zammad_ci_test_start[collapsed=true]\\r\\e[0Kbundle exec rake zammad:ci:test:start"
+    - bundle exec rake zammad:ci:test:start
+    - echo -e "\\e[0Ksection_end:`date +%s`:zammad_ci_test_start\\r\\e[0K"
+    - bundle exec rails test $TEST_FILE
+
+.template_browser-integration_import_chrome:
+  extends:
+    - .template_browser-integration_chrome
+  script:
+    - RAILS_ENV=test bundle exec rake db:create
+    - echo -e "\\e[0Ksection_start:`date +%s`:zammad_ci_test_start[collapsed=true]\\r\\e[0Kbundle exec rake zammad:ci:test:start"
+    - bundle exec rake zammad:ci:test:start
+    - echo -e "\\e[0Ksection_end:`date +%s`:zammad_ci_test_start\\r\\e[0K"
+    - bundle exec rails test $TEST_FILE

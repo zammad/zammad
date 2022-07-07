@@ -1,7 +1,7 @@
 include:
   - '.gitlab/ci/test/integration/*.yml'
 
-.template_integration: &template_integration
+.template_integration:
   extends:
     - .job_rules_default
     - .job_rules_integration_manual_start

@@ -1,7 +1,7 @@
 include:
   - '.gitlab/ci/test/rspec/*.yml'
 
-.template_rspec: &template_rspec
+.template_rspec:
   stage: test
   extends:
     - .job_rules_default
