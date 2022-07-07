@@ -2,10 +2,23 @@
 
 import { waitFor } from '@testing-library/vue'
 import { visitView } from '@tests/support/components/visitView'
+import { mockPermissions } from '@tests/support/mock-permissions'
 import { waitForNextTick } from '@tests/support/utils'
 
 describe('testing home section menu', () => {
-  it('home icon is highlighted on home page', async () => {
+  it('not show ticket overview section menu item without permission', async () => {
+    const view = await visitView('/')
+
+    expect(
+      view.queryByRole('link', {
+        name: 'Ticket Overviews',
+      }),
+    ).not.toBeInTheDocument()
+  })
+
+  it('show ticket overview section menu item', async () => {
+    mockPermissions(['ticket.agent'])
+
     const view = await visitView('/')
 
     const ticketOverviewLink = view.getByRole('link', {

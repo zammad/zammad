@@ -12,7 +12,6 @@ const IS_DEV = import.meta.env.DEV
 
 const session = useSessionStore()
 
-// TODO all menus should be generated on back-end
 const menu: MenuItem[] = [
   {
     type: 'link',
@@ -20,8 +19,9 @@ const menu: MenuItem[] = [
     title: __('Ticket Overviews'),
     icon: { name: 'stack', size: 'base' },
     iconBg: 'bg-pink',
+    permission: ['ticket.agent', 'ticket.customer'],
   },
-  // cannot inline import.meta here, Vite fails
+  // Cannot inline import.meta here, Vite fails
   ...(IS_DEV
     ? [
         {
@@ -68,13 +68,10 @@ const ticketOverview = computed<MenuItem[]>(() => {
     </CommonLink>
     <CommonSectionMenu :items="menu" />
     <CommonSectionMenu
+      v-if="session.hasPermission(['ticket.agent', 'ticket.customer'])"
       :items="ticketOverview"
       :header-title="__('Ticket Overview')"
-      :action-title="
-        session.hasPermission(['ticket.agent', 'ticket.customer'])
-          ? __('Edit')
-          : undefined
-      "
+      :action-title="__('Edit')"
       action-link="/favorite/ticker-overviews/edit"
     >
       <template v-if="overviews.loading" #before-items>

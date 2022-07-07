@@ -2,6 +2,7 @@
 
 import type { App } from 'vue'
 import type { Router, RouteRecordRaw, RouteLocationRaw } from 'vue-router'
+import type { RequiredPermission } from './permission'
 
 export type InitializeAppRouter = (app: App) => Router
 
@@ -13,7 +14,7 @@ export interface RoutesModule {
 export interface RouteRecordMeta {
   title?: string
   requiresAuth: boolean
-  requiredPermission: Maybe<Array<string>>
+  requiredPermission: Maybe<RequiredPermission>
   hasBottomNavigation?: boolean
   customBottomNavigation?: boolean
   hasHeader?: boolean

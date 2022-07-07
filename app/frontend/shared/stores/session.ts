@@ -7,6 +7,7 @@ import { useCurrentUserQuery } from '@shared/graphql/queries/currentUser.api'
 import { QueryHandler } from '@shared/server/apollo/handler'
 import type { UserData } from '@shared/types/store'
 import hasPermission from '@shared/utils/hasPermission'
+import type { RequiredPermission } from '@shared/types/permission'
 import type {
   CurrentUserQuery,
   CurrentUserQueryVariables,
@@ -90,7 +91,9 @@ const useSessionStore = defineStore('session', () => {
     return user.value
   }
 
-  const userHasPermission = (requiredPermission: Array<string>): boolean => {
+  const userHasPermission = (
+    requiredPermission: RequiredPermission,
+  ): boolean => {
     return hasPermission(
       requiredPermission,
       user.value?.permissions?.names || [],

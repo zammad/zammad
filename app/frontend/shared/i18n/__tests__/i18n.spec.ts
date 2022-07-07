@@ -45,6 +45,9 @@ describe('i18n', () => {
       props: {
         headerTitle: 'Hello world!',
       },
+      slots: {
+        default: 'Example Content',
+      },
       global: {
         mocks: {
           i18n,

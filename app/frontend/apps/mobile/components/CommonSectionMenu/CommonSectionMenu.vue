@@ -1,11 +1,11 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
+import { computed } from 'vue'
 import type { RouteLocationRaw } from 'vue-router'
+import useSessionStore from '@shared/stores/session'
 import type { MenuItem } from './types'
 import CommonSectionMenuLink from './CommonSectionMenuLink.vue'
-
-// TODO: Do not output anything, when no items are given via prop or slot?
 
 export interface Props {
   actionTitle?: string
@@ -14,7 +14,7 @@ export interface Props {
   items?: MenuItem[]
 }
 
-defineProps<Props>()
+const props = defineProps<Props>()
 
 const emit = defineEmits<{
   (e: 'action-click', event: MouseEvent): void
@@ -23,10 +23,27 @@ const emit = defineEmits<{
 const clickOnAction = (event: MouseEvent) => {
   emit('action-click', event)
 }
+
+const session = useSessionStore()
+
+const itemsWithPermission = computed(() => {
+  if (!props.items) return null
+
+  return props.items.filter((item) => {
+    if (item.permission) {
+      return session.hasPermission(item.permission)
+    }
+
+    return true
+  })
+})
 </script>
 
 <template>
-  <div class="mb-2 flex flex-row justify-between">
+  <div
+    v-if="itemsWithPermission || $slots.default"
+    class="mb-2 flex flex-row justify-between"
+  >
     <div class="text-white/80 ltr:pl-4 rtl:pr-4">
       <slot name="header">{{ i18n.t(headerTitle) }}</slot>
     </div>
@@ -41,13 +58,22 @@ const clickOnAction = (event: MouseEvent) => {
     </component>
   </div>
   <div
+    v-if="itemsWithPermission || $slots.default"
     class="w-fill mb-6 flex flex-col rounded-xl bg-gray-500 px-3 py-1 text-base text-white"
     v-bind="$attrs"
   >
     <slot name="before-items" />
     <slot>
-      <template v-for="(item, idx) in items" :key="idx">
-        <CommonSectionMenuLink v-if="item.type === 'link'" v-bind="item" />
+      <template v-for="(item, idx) in itemsWithPermission" :key="idx">
+        <CommonSectionMenuLink
+          v-if="item.type === 'link'"
+          :title="item.title"
+          :link="item.link"
+          :icon="item.icon"
+          :icon-bg="item.iconBg"
+          :information="item.information"
+          @click="item.onClick as () => void"
+        />
       </template>
     </slot>
   </div>

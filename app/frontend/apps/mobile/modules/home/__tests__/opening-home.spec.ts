@@ -20,7 +20,7 @@ describe('home page', () => {
     ])
   })
 
-  test('renders ticket overviews based on localStorage', async () => {
+  it('renders ticket overviews based on localStorage', async () => {
     mockPermissions(['ticket.agent', 'ticket.customer'])
     const { saveOverviews } = getTicketOverviewStorage()
     saveOverviews(['3', '2'])
@@ -38,14 +38,16 @@ describe('home page', () => {
     expect(overviews).toHaveLength(2)
     expect(overviews[0]).toHaveTextContent('Overview 3')
     expect(overviews[1]).toHaveTextContent('Overview 2')
+  })
 
-    mockPermissions([])
-
-    await flushPromises()
+  it('do not show favorite ticket overview section on home without permission', async () => {
+    const view = await visitView('/')
 
     expect(
       view.queryByRole('link', { name: /Edit/ }),
       "doesn't have link when account doesn't have rights",
     ).not.toBeInTheDocument()
+
+    expect(view.queryByText('Ticket Overview')).not.toBeInTheDocument()
   })
 })

@@ -35,7 +35,7 @@ describe('playing with overviews', () => {
     saveOverviews([])
   })
 
-  test('loading overviews from local storage', async () => {
+  it('loading overviews from local storage', async () => {
     const { saveOverviews, LOCAL_STORAGE_NAME } = getTicketOverviewStorage()
     saveOverviews(['1', '2'])
 
@@ -77,7 +77,7 @@ describe('playing with overviews', () => {
     )
   })
 
-  test('removing/adding overviews', async () => {
+  it('removing/adding overviews', async () => {
     const { LOCAL_STORAGE_NAME } = getTicketOverviewStorage()
 
     const view = await visitView('/favorite/ticker-overviews/edit')
@@ -129,7 +129,7 @@ describe('playing with overviews', () => {
     })
   })
 
-  test('gives error, when trying to save no overviews', async () => {
+  it('gives error, when trying to save no overviews', async () => {
     const { saveOverviews } = getTicketOverviewStorage()
     saveOverviews(['1'])
     const view = await visitView('/favorite/ticker-overviews/edit')

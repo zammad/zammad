@@ -1,5 +1,7 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
+import type { RequiredPermission } from '@shared/types/permission'
+
 /**
  * Check if the access can be granted for the given permissions.
  *
@@ -17,7 +19,7 @@
  * @returns {boolean}
  */
 const hasPermission = (
-  requiredPermission: Array<string> | string,
+  requiredPermission: RequiredPermission,
   permissions: Array<string>,
 ): boolean => {
   const requiredPermissions = Array.isArray(requiredPermission)
