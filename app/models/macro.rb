@@ -12,6 +12,7 @@ class Macro < ApplicationModel
 
   has_and_belongs_to_many :groups, after_add: :cache_update, after_remove: :cache_update, class_name: 'Group'
 
+  validates :note, length: { maximum: 250 }
   sanitized_html :note
 
   collection_push_permission('ticket.agent')

@@ -10,6 +10,7 @@ class Webhook < ApplicationModel
   validates :name, presence: true
   validate :validate_endpoint
 
+  validates :note, length: { maximum: 500 }
   sanitized_html :note
 
   private

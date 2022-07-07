@@ -37,6 +37,7 @@ class Organization < ApplicationModel
 
   activity_stream_permission 'admin.role'
 
+  validates :note, length: { maximum: 5000 }
   sanitized_html :note
 
   def destroy(associations: false)

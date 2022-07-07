@@ -4,6 +4,7 @@ class Scheduler < ApplicationModel
   include ChecksHtmlSanitized
   include HasTimeplan
 
+  validates :note, length: { maximum: 250 }
   sanitized_html :note
 
   scope :failed_jobs, -> { where(status: 'error', active: false) }

@@ -16,6 +16,7 @@ class EmailAddress < ApplicationModel
   after_update    :update_email_address_id
   before_destroy  :delete_group_reference
 
+  validates :note, length: { maximum: 250 }
   sanitized_html :note
 
   collection_push_permission('ticket.agent')

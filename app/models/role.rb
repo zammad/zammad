@@ -29,6 +29,7 @@ class Role < ApplicationModel
 
   activity_stream_permission 'admin.role'
 
+  validates :note, length: { maximum: 250 }
   sanitized_html :note
 
 =begin

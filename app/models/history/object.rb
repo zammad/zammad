@@ -3,5 +3,6 @@
 class History::Object < ApplicationModel
   include ChecksHtmlSanitized
 
+  validates :note, length: { maximum: 250 }
   sanitized_html :note
 end

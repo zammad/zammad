@@ -6,6 +6,7 @@ class Chat < ApplicationModel
   validates :name, presence: true
   store     :preferences
 
+  validates :note, length: { maximum: 250 }
   sanitized_html :note
 
 =begin

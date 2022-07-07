@@ -72,6 +72,7 @@ class Ticket < ApplicationModel
 
   history_relation_object 'Ticket::Article', 'Mention', 'Ticket::SharedDraftZoom'
 
+  validates :note, length: { maximum: 250 }
   sanitized_html :note
 
   belongs_to    :group, optional: true

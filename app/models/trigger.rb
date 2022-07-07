@@ -12,5 +12,6 @@ class Trigger < ApplicationModel
   store     :perform
   validates :name, presence: true
 
+  validates :note, length: { maximum: 250 }
   sanitized_html :note
 end

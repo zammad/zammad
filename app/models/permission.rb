@@ -9,6 +9,7 @@ class Permission < ApplicationModel
   validates               :name, presence: true
   store                   :preferences
 
+  validates :note, length: { maximum: 500 }
   sanitized_html :note
 
 =begin

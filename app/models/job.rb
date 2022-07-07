@@ -15,6 +15,7 @@ class Job < ApplicationModel
 
   before_save :updated_matching, :update_next_run_at
 
+  validates :note, length: { maximum: 250 }
   sanitized_html :note
 
 =begin

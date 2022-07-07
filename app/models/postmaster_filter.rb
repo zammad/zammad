@@ -10,6 +10,7 @@ class PostmasterFilter < ApplicationModel
   before_create :validate_condition
   before_update :validate_condition
 
+  validates :note, length: { maximum: 250 }
   sanitized_html :note
 
   def validate_condition

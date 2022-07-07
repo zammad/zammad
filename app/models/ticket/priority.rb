@@ -13,6 +13,7 @@ class Ticket::Priority < ApplicationModel
   after_update  :ensure_defaults
   after_destroy :ensure_defaults
 
+  validates :note, length: { maximum: 250 }
   sanitized_html :note
 
   attr_accessor :callback_loop
