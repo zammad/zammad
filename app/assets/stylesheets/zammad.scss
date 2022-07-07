@@ -2275,6 +2275,7 @@ input.time.time--12 {
   opacity: 1;
   background: hsl(210, 17%, 93%);
   border-color: hsl(210, 10%, 85%);
+  padding: unset;
 
   &:focus,
   &.focus {
