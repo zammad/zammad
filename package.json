@@ -127,7 +127,7 @@
     "uuid": "^8.3.2",
     "vue": "^3.2.37",
     "vue-advanced-cropper": "^2.8.3",
-    "vue-router": "^4.0.16",
+    "vue-router": "^4.1.1",
     "vue3-draggable-resizable": "^1.6.4",
     "vuedraggable": "^4.1.0"
   }

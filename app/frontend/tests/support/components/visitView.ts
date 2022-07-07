@@ -1,8 +1,8 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import type { RouteRecordRaw } from 'vue-router'
 import { useApolloClient } from '@vue/apollo-composable'
 import { random } from 'lodash-es'
+import type { RouteRecordRaw } from 'vue-router'
 import LayoutTest from './LayoutTest.vue'
 import mockApolloClient from '../mock-apollo-client'
 import renderComponent, { getRouter } from './renderComponent'

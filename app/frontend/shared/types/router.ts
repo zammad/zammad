@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import type { App } from 'vue'
-import type { Router, RouteRecordRaw } from 'vue-router'
+import type { Router, RouteRecordRaw, RouteLocationRaw } from 'vue-router'
 
 export type InitializeAppRouter = (app: App) => Router
 
@@ -20,4 +20,4 @@ export interface RouteRecordMeta {
   level?: number
 }
 
-export type Link = string | Partial<RouteRecordRaw>
+export type Link = RouteLocationRaw

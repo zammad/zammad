@@ -179,7 +179,7 @@ export default {
     if (!type) return undefined
 
     const searchPlugins = useSearchPlugins()
-    if (Array.isArray(type) || !searchPlugins[type]) {
+    if (Array.isArray(type) || !searchPlugins[type as string]) {
       return { ...to, params: {} }
     }
 
