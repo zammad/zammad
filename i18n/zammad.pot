@@ -5735,6 +5735,10 @@ msgstr ""
 msgid "Locale"
 msgstr ""
 
+#: app/graphql/gql/mutations/account/locale.rb
+msgid "Locale could not be found."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 msgid "Locale not found"
 msgstr ""

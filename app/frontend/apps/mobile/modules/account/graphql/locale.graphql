@@ -1,0 +1,8 @@
+mutation accountLocale($localeId: ID!) {
+  accountLocale(localeId: $localeId) {
+    success
+    errors {
+      ...errors
+    }
+  }
+}

@@ -32,9 +32,9 @@ class Gql::ZammadSchema < GraphQL::Schema
     object.to_gid_param
   end
 
-  # Given a string UUID, find the object
-  def self.object_from_id(id, _query_ctx = nil)
-    GlobalID.find(id, only: [ActiveRecord::Base])
+  # Given a string UUID, find the object (limit to model(s) via :only).
+  def self.object_from_id(id, _query_ctx = nil, only: ActiveRecord::Base)
+    GlobalID.find(id, only: [only].flatten)
   end
 
   def self.unauthorized_object(error)
