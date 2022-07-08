@@ -175,7 +175,7 @@ export type Mutations = {
 
 /** All available mutations. */
 export type MutationsAccountLocaleArgs = {
-  localeId: Scalars['ID'];
+  locale: Scalars['String'];
 };
 
 
@@ -768,7 +768,7 @@ export type UserError = {
 };
 
 export type AccountLocaleMutationVariables = Exact<{
-  localeId: Scalars['ID'];
+  locale: Scalars['String'];
 }>;
 
 

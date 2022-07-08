@@ -1,5 +1,5 @@
-mutation accountLocale($localeId: ID!) {
-  accountLocale(localeId: $localeId) {
+mutation accountLocale($locale: String!) {
+  accountLocale(locale: $locale) {
     success
     errors {
       ...errors

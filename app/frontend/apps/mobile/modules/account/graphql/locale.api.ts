@@ -7,8 +7,8 @@ import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
 
 export const AccountLocaleDocument = gql`
-    mutation accountLocale($localeId: ID!) {
-  accountLocale(localeId: $localeId) {
+    mutation accountLocale($locale: String!) {
+  accountLocale(locale: $locale) {
     success
     errors {
       ...errors

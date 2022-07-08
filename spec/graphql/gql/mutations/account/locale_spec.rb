@@ -10,8 +10,8 @@ RSpec.describe Gql::Mutations::Account::Locale, type: :graphql do
       read_graphql_file('apps/mobile/modules/account/graphql/locale.graphql') +
         read_graphql_file('shared/graphql/fragments/errors.graphql')
     end
-    let(:locale_id) { Gql::ZammadSchema.id_from_object(Locale.find_by(locale: 'en-us')) }
-    let(:variables) { { localeId: locale_id } }
+    let(:locale) { 'en-us' }
+    let(:variables) { { locale: locale } }
 
     before do
       graphql_execute(query, variables: variables)
@@ -28,7 +28,7 @@ RSpec.describe Gql::Mutations::Account::Locale, type: :graphql do
     end
 
     context 'with invalid locale' do
-      let(:locale_id) { Gql::ZammadSchema.id_from_object(Ticket.first) }
+      let(:locale) { 'nonexisting-locale' }
 
       it 'fails with error message' do
         expect(graphql_response['errors'][0]).to include('message' => 'Locale could not be found.')

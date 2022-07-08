@@ -4,17 +4,16 @@ module Gql::Mutations
   class Account::Locale < BaseMutation
     description 'Update the language of the currently logged in user'
 
-    argument :locale_id, GraphQL::Types::ID, 'Locale ID.'
+    argument :locale, String, 'The locale to use, e.g. "de-de".'
 
     field :success, Boolean, null: false, description: 'Was the update successful?'
 
-    def resolve(locale_id:)
-      locale = Gql::ZammadSchema.object_from_id(locale_id, only: [Locale])
-      if !locale&.active
+    def resolve(locale:)
+      if !Locale.exists?(locale: locale, active: true)
         raise ActiveRecord::RecordNotFound, __('Locale could not be found.')
       end
 
-      context.current_user.preferences['locale'] = locale.locale
+      context.current_user.preferences['locale'] = locale
       context.current_user.save!
       { success: true }
     end
