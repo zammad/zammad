@@ -7613,6 +7613,11 @@ ts-essentials@^9.1.2:
   resolved "https://registry.yarnpkg.com/ts-essentials/-/ts-essentials-9.1.2.tgz#46db6944b73b4cd603f3d959ef1123c16ba56f59"
   integrity sha512-EaSmXsAhEiirrTY1Oaa7TSpei9dzuCuFPmjKRJRPamERYtfaGS8/KpOSbjergLz/Y76/aZlV9i/krgzsuWEBbg==
 
+ts-essentials@^9.2.0:
+  version "9.2.0"
+  resolved "https://registry.yarnpkg.com/ts-essentials/-/ts-essentials-9.2.0.tgz#a6ec69b43d111f107b3e63e27b200d2d22542b55"
+  integrity sha512-HLl+am6q+ulOWcjUFghpIQXXyaH0hVTnFTVWNqwz1iDxyN+t+lwDfqPB5FmPUTFw3J+y26UR3hNGmK/1jehokA==
+
 ts-invariant@^0.10.3:
   version "0.10.3"
   resolved "https://registry.yarnpkg.com/ts-invariant/-/ts-invariant-0.10.3.tgz#3e048ff96e91459ffca01304dbc7f61c1f642f6c"
@@ -7917,12 +7922,12 @@ vite-plugin-svg-icons@^2.0.1:
   optionalDependencies:
     fsevents "~2.3.2"
 
-vitest-mock-extended@^0.1.9:
-  version "0.1.9"
-  resolved "https://registry.yarnpkg.com/vitest-mock-extended/-/vitest-mock-extended-0.1.9.tgz#d3abe06fa3d341d2df624ec5a3c55904472bf1b6"
-  integrity sha512-j819n1SEQVK1GJPwfhMD0ueuGlS2oABjmBchfnGnxz4yUwuH4lz25H3MtyV9dCI0PJ/Q0GDMDTMZ2cf075YzHw==
+vitest-mock-extended@^0.1.10:
+  version "0.1.10"
+  resolved "https://registry.yarnpkg.com/vitest-mock-extended/-/vitest-mock-extended-0.1.10.tgz#53563851ce556c181f5eb70719c4c398405f5b4d"
+  integrity sha512-2g9DobiZ54T3sTB9FzgzbiZ33eWtcozwQy1S3foQRHwczumMA7L/kdTPgz93uyE2sntYkaIMmfjQoSTXUxG1pg==
   dependencies:
-    ts-essentials "^9.1.2"
+    ts-essentials "^9.2.0"
 
 vitest@^0.17.1:
   version "0.17.1"
