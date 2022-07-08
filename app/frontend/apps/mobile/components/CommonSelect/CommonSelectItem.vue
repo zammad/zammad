@@ -3,11 +3,14 @@
 <script setup lang="ts">
 import { SelectOption } from '@shared/components/Form/fields/FieldSelect/types'
 import CommonTicketStateIndicator from '@shared/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue'
+import { computed } from 'vue'
+import { i18n } from '@shared/i18n'
 
-defineProps<{
+const props = defineProps<{
   option: SelectOption
   selected: boolean
   multiple?: boolean
+  noLabelTranslate?: boolean
 }>()
 
 const emit = defineEmits<{
@@ -17,6 +20,15 @@ const emit = defineEmits<{
 const select = (option: SelectOption) => {
   emit('select', option)
 }
+
+const label = computed(() => {
+  const { option } = props
+  if (props.noLabelTranslate) {
+    return option.label
+  }
+
+  return i18n.t(option.label, ...(option.labelPlaceholder || []))
+})
 </script>
 
 <template>
@@ -67,7 +79,7 @@ const select = (option: SelectOption) => {
       }"
       class="grow text-white/80"
     >
-      {{ option.label || option.value }}
+      {{ label || option.value }}
     </span>
     <CommonIcon
       v-if="!multiple && selected"

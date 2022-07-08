@@ -4,12 +4,12 @@ import type { RouteRecordRaw } from 'vue-router'
 
 const routes: RouteRecordRaw[] = [
   {
-    path: '/tickets',
+    path: '/tickets/view/:overviewLink?',
     name: 'TicketOverview',
     props: true,
     component: () => import('./views/TicketOverview.vue'),
     meta: {
-      title: __('Ticket Overview'),
+      title: __('Tickets'),
       requiresAuth: true,
       requiredPermission: ['ticket.agent', 'ticket.customer'],
       hasBottomNavigation: true,

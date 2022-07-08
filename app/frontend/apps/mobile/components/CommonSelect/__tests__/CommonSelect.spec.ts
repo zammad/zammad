@@ -1,5 +1,6 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
+import { i18n } from '@shared/i18n'
 import { renderComponent } from '@tests/support/components'
 import { ref, Ref } from 'vue'
 import CommonSelect, { type Props } from '../CommonSelect.vue'
@@ -21,7 +22,7 @@ const options = [
 
 const html = String.raw
 
-const renderSelect = (props: Props, modelValue: Ref) => {
+const renderSelect = (props: Props, modelValue?: Ref) => {
   return renderComponent(CommonSelect, {
     props,
     slots: {
@@ -104,6 +105,20 @@ describe('interacting with CommonSelect', () => {
 
     expect(view.emitted().select).toBeUndefined()
     expect(modelValue.value).toBeUndefined()
+  })
+  test('translated values', async () => {
+    i18n.setTranslationMap(new Map([[options[0].label, 'Translated Item A']]))
+    const view = renderSelect({ options })
+
+    await view.events.click(view.getByText('Open Select'))
+    expect(view.getByText('Translated Item A')).toBeInTheDocument()
+  })
+  test("doesn't translate with no-translate prop", async () => {
+    i18n.setTranslationMap(new Map([[options[0].label, 'Translated Item A']]))
+    const view = renderSelect({ options, noOptionsLabelTranslation: true })
+
+    await view.events.click(view.getByText('Open Select'))
+    expect(view.getByText(/^Item A$/)).toBeInTheDocument()
   })
   // TODO e2e test on keyboard interaction (select with space, moving up/down)
 })

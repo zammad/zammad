@@ -12,6 +12,7 @@ export const CurrentUserDocument = gql`
     id
     firstname
     lastname
+    fullname
     preferences
     objectAttributeValues {
       ...objectAttributeValues

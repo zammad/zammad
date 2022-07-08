@@ -5,6 +5,9 @@ module Gql::Types
     # add `nodes` and `pageInfo` fields, as well as `edge_type(...)` and `node_nullable(...)` overrides
     include GraphQL::Types::Relay::ConnectionBehaviors
 
+    node_nullable(false)
+    edges_nullable(false)
+
     field :total_count, Integer, null: false, description: 'Indicates the total number of available records.'
 
     def total_count

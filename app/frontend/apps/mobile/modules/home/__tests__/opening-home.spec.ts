@@ -6,8 +6,8 @@ import { mockAccount } from '@tests/support/mock-account'
 import createMockClient from '@tests/support/mock-apollo-client'
 import { mockPermissions } from '@tests/support/mock-permissions'
 import { flushPromises } from '@vue/test-utils'
+import { getApiTicketOverviews } from '@tests/support/mocks/ticket-overviews'
 import { getTicketOverviewStorage } from '../helpers/ticketOverviewStorage'
-import { getApiTicketOverviews } from './mocks'
 
 describe('home page', () => {
   beforeEach(() => {

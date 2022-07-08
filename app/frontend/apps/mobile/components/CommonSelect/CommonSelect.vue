@@ -14,6 +14,8 @@ export interface Props {
    */
   passive?: boolean
   multiple?: boolean
+  noClose?: boolean
+  noOptionsLabelTranslation?: boolean
 }
 
 const props = defineProps<Props>()
@@ -79,7 +81,7 @@ const select = (option: SelectOption) => {
     localValue.value = option.value
   }
 
-  if (!props.multiple) {
+  if (!props.multiple && !props.noClose) {
     closeDialog()
   }
 }
@@ -132,7 +134,7 @@ const advanceDialogFocus = (event: KeyboardEvent, currentIndex: number) => {
           <div
             ref="dialogElement"
             role="listbox"
-            class="w-full divide-y divide-solid divide-white/10"
+            class="max-h-[50vh] w-full divide-y divide-solid divide-white/10 overflow-y-auto"
           >
             <CommonSelectItem
               v-for="(option, index) in options"
@@ -140,6 +142,7 @@ const advanceDialogFocus = (event: KeyboardEvent, currentIndex: number) => {
               :selected="isCurrentValue(option.value)"
               :multiple="multiple"
               :option="option"
+              :no-label-translate="noOptionsLabelTranslation"
               @select="select($event)"
               @keydown="advanceDialogFocus($event, index)"
             />

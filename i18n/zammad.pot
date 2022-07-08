@@ -2334,7 +2334,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/popover/ticket.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco
-#: app/frontend/apps/mobile/modules/ticket/components/TicketList/TicketList.vue
 #: app/models/report.rb
 msgid "Created"
 msgstr ""
@@ -2353,6 +2352,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/http_log.jst.eco
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
 #: app/controllers/time_accountings_controller.rb
+#: app/frontend/apps/mobile/modules/ticket/views/TicketOverview.vue
 msgid "Created at"
 msgstr ""
 
@@ -2417,6 +2417,7 @@ msgid "Current user has no permission to use 'From'/'X-On-Behalf-Of'!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/frontend/apps/mobile/modules/ticket/views/TicketOverview.vue
 msgid "Currently no overview is assigned to your roles. Please contact your administrator."
 msgstr ""
 
@@ -2450,7 +2451,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 #: app/controllers/time_accountings_controller.rb
-#: app/frontend/apps/mobile/modules/ticket/components/TicketList/TicketList.vue
 #: db/seeds/object_manager_attributes.rb
 #: db/seeds/roles.rb
 #: db/seeds/ticket_article_senders.rb
@@ -6542,6 +6542,7 @@ msgid "No email!"
 msgstr ""
 
 #: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
+#: app/frontend/apps/mobile/modules/ticket/components/TicketList/TicketList.vue
 msgid "No entries"
 msgstr ""
 
@@ -6793,7 +6794,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/ticket.coffee
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco
-#: app/frontend/apps/mobile/modules/ticket/components/TicketList/TicketList.vue
+#: app/frontend/apps/mobile/modules/ticket/views/TicketOverview.vue
 msgid "Number"
 msgstr ""
 
@@ -8714,7 +8715,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/idoit_object_result.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_idoit.jst.eco
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
-#: app/frontend/apps/mobile/modules/ticket/components/TicketList/TicketList.vue
 msgid "Status"
 msgstr ""
 
@@ -9791,8 +9791,6 @@ msgstr ""
 #: app/frontend/apps/mobile/modules/home/routes.ts
 #: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
 #: app/frontend/apps/mobile/modules/home/views/Home.vue
-#: app/frontend/apps/mobile/modules/ticket/routes.ts
-#: app/frontend/apps/mobile/modules/ticket/views/TicketOverview.vue
 msgid "Ticket Overview"
 msgstr ""
 
@@ -9873,6 +9871,8 @@ msgstr ""
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
 #: app/frontend/apps/mobile/modules/search/plugins/ticket.ts
+#: app/frontend/apps/mobile/modules/ticket/routes.ts
+#: app/frontend/apps/mobile/modules/ticket/views/TicketOverview.vue
 msgid "Tickets"
 msgstr ""
 
@@ -9970,7 +9970,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
 #: app/controllers/time_accountings_controller.rb
-#: app/frontend/apps/mobile/modules/ticket/components/TicketList/TicketList.vue
+#: app/frontend/apps/mobile/modules/ticket/views/TicketOverview.vue
 #: db/seeds/object_manager_attributes.rb
 #: lib/excel_sheet/ticket.rb
 msgid "Title"
@@ -10331,6 +10331,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/organization.coffee
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/assets/javascripts/app/models/user.coffee
+#: app/frontend/apps/mobile/modules/ticket/views/TicketOverview.vue
 msgid "Updated at"
 msgstr ""
 
@@ -11358,6 +11359,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
+#: app/frontend/apps/mobile/modules/ticket/views/TicketOverview.vue
 msgid "ascending"
 msgstr ""
 
@@ -11510,6 +11512,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
+#: app/frontend/apps/mobile/modules/ticket/views/TicketOverview.vue
 msgid "descending"
 msgstr ""
 

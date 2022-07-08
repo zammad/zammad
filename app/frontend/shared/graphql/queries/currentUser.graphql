@@ -3,6 +3,7 @@ query currentUser {
     id
     firstname
     lastname
+    fullname
     preferences
     objectAttributeValues {
       ...objectAttributeValues

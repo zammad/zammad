@@ -288,9 +288,9 @@ export type Overview = Node & {
 export type OverviewConnection = {
   __typename?: 'OverviewConnection';
   /** A list of edges. */
-  edges?: Maybe<Array<Maybe<OverviewEdge>>>;
+  edges: Array<Maybe<OverviewEdge>>;
   /** A list of nodes. */
-  nodes?: Maybe<Array<Maybe<Overview>>>;
+  nodes: Array<Overview>;
   /** Information to aid in pagination. */
   pageInfo: PageInfo;
   /** Indicates the total number of available records. */
@@ -303,7 +303,7 @@ export type OverviewEdge = {
   /** A cursor for use in pagination. */
   cursor: Scalars['String'];
   /** The item at the end of the edge. */
-  node?: Maybe<Overview>;
+  node: Overview;
 };
 
 /** Information about pagination in a connection. */
@@ -538,9 +538,9 @@ export type TicketArticle = Node & {
 export type TicketArticleConnection = {
   __typename?: 'TicketArticleConnection';
   /** A list of edges. */
-  edges?: Maybe<Array<Maybe<TicketArticleEdge>>>;
+  edges: Array<Maybe<TicketArticleEdge>>;
   /** A list of nodes. */
-  nodes?: Maybe<Array<Maybe<TicketArticle>>>;
+  nodes: Array<TicketArticle>;
   /** Information to aid in pagination. */
   pageInfo: PageInfo;
   /** Indicates the total number of available records. */
@@ -553,16 +553,16 @@ export type TicketArticleEdge = {
   /** A cursor for use in pagination. */
   cursor: Scalars['String'];
   /** The item at the end of the edge. */
-  node?: Maybe<TicketArticle>;
+  node: TicketArticle;
 };
 
 /** The connection type for Ticket. */
 export type TicketConnection = {
   __typename?: 'TicketConnection';
   /** A list of edges. */
-  edges?: Maybe<Array<Maybe<TicketEdge>>>;
+  edges: Array<Maybe<TicketEdge>>;
   /** A list of nodes. */
-  nodes?: Maybe<Array<Maybe<Ticket>>>;
+  nodes: Array<Ticket>;
   /** Information to aid in pagination. */
   pageInfo: PageInfo;
   /** Indicates the total number of available records. */
@@ -575,7 +575,7 @@ export type TicketEdge = {
   /** A cursor for use in pagination. */
   cursor: Scalars['String'];
   /** The item at the end of the edge. */
-  node?: Maybe<Ticket>;
+  node: Ticket;
 };
 
 /** Option to choose ticket field for SQL sorting */
@@ -691,6 +691,7 @@ export type User = Node & ObjectAttributeValueInterface & {
   email?: Maybe<Scalars['String']>;
   fax?: Maybe<Scalars['String']>;
   firstname?: Maybe<Scalars['String']>;
+  fullname?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   image?: Maybe<Scalars['String']>;
   imageSource?: Maybe<Scalars['String']>;
@@ -724,9 +725,9 @@ export type User = Node & ObjectAttributeValueInterface & {
 export type UserConnection = {
   __typename?: 'UserConnection';
   /** A list of edges. */
-  edges?: Maybe<Array<Maybe<UserEdge>>>;
+  edges: Array<Maybe<UserEdge>>;
   /** A list of nodes. */
-  nodes?: Maybe<Array<Maybe<User>>>;
+  nodes: Array<User>;
   /** Information to aid in pagination. */
   pageInfo: PageInfo;
   /** Indicates the total number of available records. */
@@ -739,7 +740,7 @@ export type UserEdge = {
   /** A cursor for use in pagination. */
   cursor: Scalars['String'];
   /** The item at the end of the edge. */
-  node?: Maybe<User>;
+  node: User;
 };
 
 /** Represents an error in the input of a mutation. */
@@ -756,7 +757,7 @@ export type TicketsByIdQueryVariables = Exact<{
 }>;
 
 
-export type TicketsByIdQuery = { __typename?: 'Queries', ticketById: { __typename?: 'Ticket', id: string, number: string, title: string, createdAt: any, updatedAt: any, owner: { __typename?: 'User', firstname?: string | null, lastname?: string | null }, customer: { __typename?: 'User', firstname?: string | null, lastname?: string | null }, organization?: { __typename?: 'Organization', name: string } | null, state: { __typename?: 'TicketState', name: string, stateType: { __typename?: 'TicketStateType', name: string } }, group: { __typename?: 'Group', name: string }, priority: { __typename?: 'TicketPriority', name: string }, articles?: { __typename?: 'TicketArticleConnection', edges?: Array<{ __typename?: 'TicketArticleEdge', node?: { __typename?: 'TicketArticle', subject?: string | null } | null } | null> | null }, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: string | null, attribute: { __typename?: 'ObjectManagerAttribute', name: string, display: string, dataType: string, dataOption?: any | null, screens?: any | null, editable: boolean, active: boolean } }> } };
+export type TicketsByIdQuery = { __typename?: 'Queries', ticketById: { __typename?: 'Ticket', id: string, number: string, title: string, createdAt: any, updatedAt: any, owner: { __typename?: 'User', firstname?: string | null, lastname?: string | null }, customer: { __typename?: 'User', firstname?: string | null, lastname?: string | null }, organization?: { __typename?: 'Organization', name: string } | null, state: { __typename?: 'TicketState', name: string, stateType: { __typename?: 'TicketStateType', name: string } }, group: { __typename?: 'Group', name: string }, priority: { __typename?: 'TicketPriority', name: string }, articles?: { __typename?: 'TicketArticleConnection', edges: Array<{ __typename?: 'TicketArticleEdge', node: { __typename?: 'TicketArticle', subject?: string | null } } | null> }, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: string | null, attribute: { __typename?: 'ObjectManagerAttribute', name: string, display: string, dataType: string, dataOption?: any | null, screens?: any | null, editable: boolean, active: boolean } }> } };
 
 export type TicketsByOverviewQueryVariables = Exact<{
   overviewId: Scalars['ID'];
@@ -768,7 +769,7 @@ export type TicketsByOverviewQueryVariables = Exact<{
 }>;
 
 
-export type TicketsByOverviewQuery = { __typename?: 'Queries', ticketsByOverview: { __typename?: 'TicketConnection', totalCount: number, edges?: Array<{ __typename?: 'TicketEdge', cursor: string, node?: { __typename?: 'Ticket', id: string, number: string, title: string, createdAt: any, updatedAt: any, owner: { __typename?: 'User', firstname?: string | null, lastname?: string | null }, customer: { __typename?: 'User', firstname?: string | null, lastname?: string | null }, organization?: { __typename?: 'Organization', name: string } | null, state: { __typename?: 'TicketState', name: string, stateType: { __typename?: 'TicketStateType', name: string } }, group: { __typename?: 'Group', name: string }, priority: { __typename?: 'TicketPriority', name: string }, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: string | null, attribute: { __typename?: 'ObjectManagerAttribute', name: string, display: string, dataType: string, dataOption?: any | null, screens?: any | null, editable: boolean, active: boolean } }> } | null } | null> | null, pageInfo: { __typename?: 'PageInfo', endCursor?: string | null, hasNextPage: boolean } } };
+export type TicketsByOverviewQuery = { __typename?: 'Queries', ticketsByOverview: { __typename?: 'TicketConnection', totalCount: number, edges: Array<{ __typename?: 'TicketEdge', cursor: string, node: { __typename?: 'Ticket', id: string, number: string, title: string, createdAt: any, updatedAt: any, owner: { __typename?: 'User', firstname?: string | null, lastname?: string | null, fullname?: string | null }, customer: { __typename?: 'User', firstname?: string | null, lastname?: string | null, fullname?: string | null }, organization?: { __typename?: 'Organization', name: string } | null, state: { __typename?: 'TicketState', name: string, stateType: { __typename?: 'TicketStateType', name: string } }, group: { __typename?: 'Group', name: string }, priority: { __typename?: 'TicketPriority', name: string, uiColor?: string | null, defaultCreate: boolean }, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: string | null, attribute: { __typename?: 'ObjectManagerAttribute', name: string, display: string, dataType: string, dataOption?: any | null, screens?: any | null, editable: boolean, active: boolean } }> } } | null>, pageInfo: { __typename?: 'PageInfo', endCursor?: string | null, hasNextPage: boolean } } };
 
 export type FormUploadCacheAddMutationVariables = Exact<{
   formId: Scalars['FormId'];
@@ -798,7 +799,7 @@ export type OverviewsQueryVariables = Exact<{
 }>;
 
 
-export type OverviewsQuery = { __typename?: 'Queries', overviews: { __typename?: 'OverviewConnection', edges?: Array<{ __typename?: 'OverviewEdge', cursor: string, node?: { __typename?: 'Overview', id: string, name: string, link: string, prio: number, order: string, view: string, active: boolean, ticketCount?: number } | null } | null> | null, pageInfo: { __typename?: 'PageInfo', endCursor?: string | null, hasNextPage: boolean } } };
+export type OverviewsQuery = { __typename?: 'Queries', overviews: { __typename?: 'OverviewConnection', edges: Array<{ __typename?: 'OverviewEdge', cursor: string, node: { __typename?: 'Overview', id: string, name: string, link: string, prio: number, order: string, view: string, active: boolean, ticketCount?: number } } | null>, pageInfo: { __typename?: 'PageInfo', endCursor?: string | null, hasNextPage: boolean } } };
 
 export type ErrorsFragment = { __typename?: 'UserError', message: string, field?: string | null };
 
@@ -837,7 +838,7 @@ export type AutocompleteSearchUserQuery = { __typename?: 'Queries', autocomplete
 export type CurrentUserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CurrentUserQuery = { __typename?: 'Queries', currentUser: { __typename?: 'User', id: string, firstname?: string | null, lastname?: string | null, preferences?: any | null, objectAttributeValues: Array<{ __typename?: 'ObjectAttributeValue', value?: string | null, attribute: { __typename?: 'ObjectManagerAttribute', name: string, display: string, dataType: string, dataOption?: any | null, screens?: any | null, editable: boolean, active: boolean } }>, organization?: { __typename?: 'Organization', name: string, objectAttributeValues: Array<{ __typename?: 'ObjectAttributeValue', value?: string | null, attribute: { __typename?: 'ObjectManagerAttribute', name: string, display: string, dataType: string, dataOption?: any | null, screens?: any | null, editable: boolean, active: boolean } }> } | null, permissions?: { __typename?: 'Permission', names: Array<string> } | null } };
+export type CurrentUserQuery = { __typename?: 'Queries', currentUser: { __typename?: 'User', id: string, firstname?: string | null, lastname?: string | null, fullname?: string | null, preferences?: any | null, objectAttributeValues: Array<{ __typename?: 'ObjectAttributeValue', value?: string | null, attribute: { __typename?: 'ObjectManagerAttribute', name: string, display: string, dataType: string, dataOption?: any | null, screens?: any | null, editable: boolean, active: boolean } }>, organization?: { __typename?: 'Organization', name: string, objectAttributeValues: Array<{ __typename?: 'ObjectAttributeValue', value?: string | null, attribute: { __typename?: 'ObjectManagerAttribute', name: string, display: string, dataType: string, dataOption?: any | null, screens?: any | null, editable: boolean, active: boolean } }> } | null, permissions?: { __typename?: 'Permission', names: Array<string> } | null } };
 
 export type LocalesQueryVariables = Exact<{ [key: string]: never; }>;
 

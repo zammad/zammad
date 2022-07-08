@@ -54,7 +54,7 @@ export interface ExtendedRenderResult extends RenderResult {
   getByIconName(matcher: Matcher): SVGElement
   findAllByIconName(matcher: Matcher): Promise<SVGElement[]>
   findByIconName(matcher: Matcher): Promise<SVGElement>
-  getLinkFromElement(element: HTMLElement): HTMLAnchorElement
+  getLinkFromElement(element: Element): HTMLAnchorElement
 }
 
 const plugins: (Plugin | [Plugin, ...unknown[]])[] = []

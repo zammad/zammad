@@ -26,10 +26,12 @@ export const TicketsByOverviewDocument = gql`
         owner {
           firstname
           lastname
+          fullname
         }
         customer {
           firstname
           lastname
+          fullname
         }
         organization {
           name
@@ -45,6 +47,8 @@ export const TicketsByOverviewDocument = gql`
         }
         priority {
           name
+          uiColor
+          defaultCreate
         }
         objectAttributeValues @include(if: $withObjectAttributes) {
           ...objectAttributeValues

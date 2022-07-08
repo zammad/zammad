@@ -26,15 +26,15 @@ RSpec.describe 'Mobile > Login', type: :system, app: :mobile, authenticated_as: 
   end
 
   it 'Login and redirect to requsted url' do
-    visit 'tickets'
+    visit 'notifications'
 
-    expect_current_route '/login?redirect=/tickets'
+    expect_current_route '/login?redirect=/notifications'
 
     login(
       username: 'admin@example.com',
       password: 'test',
     )
 
-    expect_current_route '/tickets'
+    expect_current_route '/notifications'
   end
 end

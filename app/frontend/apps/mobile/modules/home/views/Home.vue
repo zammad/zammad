@@ -15,7 +15,7 @@ const session = useSessionStore()
 const menu: MenuItem[] = [
   {
     type: 'link',
-    link: '/tickets',
+    link: '/tickets/view',
     title: __('Ticket Overviews'),
     icon: { name: 'stack', size: 'base' },
     iconBg: 'bg-pink',
@@ -43,7 +43,7 @@ const ticketOverview = computed<MenuItem[]>(() => {
   return overviews.includedOverviews.map((overview) => {
     return {
       type: 'link',
-      link: '/',
+      link: `/tickets/view/${overview.link}`,
       title: overview.name,
       information: overview.ticketCount,
     }

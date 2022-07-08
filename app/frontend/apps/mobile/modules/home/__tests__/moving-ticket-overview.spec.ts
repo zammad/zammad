@@ -10,8 +10,8 @@ import {
 } from '@shared/components/CommonNotifications'
 import { mockAccount } from '@tests/support/mock-account'
 import { getByIconName } from '@tests/support/components/iconQueries'
+import { getApiTicketOverviews } from '@tests/support/mocks/ticket-overviews'
 import { getTicketOverviewStorage } from '../helpers/ticketOverviewStorage'
-import { getApiTicketOverviews } from './mocks'
 
 const actualLocalStorage = window.localStorage
 

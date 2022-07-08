@@ -7,15 +7,22 @@ export interface TicketItemData {
   id: string
   title: string
   number: string
-  state: TicketState
-  // TODO 2022-06-01 Sheremet V.A.
+  state: {
+    name: TicketState | string
+  }
   priority?: {
     name: string
+    defaultCreate: boolean
     uiColor?: Maybe<string>
   }
   owner?: {
     firstname?: Maybe<string>
     lastname?: Maybe<string>
+  }
+  customer?: {
+    firstname?: Maybe<string>
+    lastname?: Maybe<string>
+    fullname?: Maybe<string>
   }
   updatedAt?: string
   updatedBy?: {

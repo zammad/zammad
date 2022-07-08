@@ -50,6 +50,7 @@ useSelectAutoselect(sortedOptions, toRef(props, 'context'))
       :model-value="currentValue"
       :options="sortedOptions"
       :multiple="context.multiple"
+      no-options-label-translation
       passive
       @select="selectOption"
     >
@@ -58,7 +59,7 @@ useSelectAutoselect(sortedOptions, toRef(props, 'context'))
         :name="context.node.name"
         :class="{
           'grow pr-3': !isSizeSmall,
-          'px-2 py-1': isSizeSmall,
+          'ltr:pl-2 ltr:pr-1 rtl:pr-2 rtl:pl-1': isSizeSmall,
         }"
         class="flex cursor-pointer items-center focus:outline-none formkit-disabled:pointer-events-none"
         :aria-disabled="context.disabled"
@@ -93,7 +94,7 @@ useSelectAutoselect(sortedOptions, toRef(props, 'context'))
               :key="selectedValue"
               :class="{
                 'text-base leading-[19px]': !isSizeSmall,
-                'mr-1 text-sm leading-[17px]': isSizeSmall,
+                'mr-1 py-1': isSizeSmall,
               }"
               class="flex items-center after:content-[','] last:after:content-none"
               role="listitem"
@@ -104,11 +105,20 @@ useSelectAutoselect(sortedOptions, toRef(props, 'context'))
                 :fixed-size="{ width: 12, height: 12 }"
                 class="mr-1"
               />
-              {{ getSelectedOptionLabel(selectedValue) || selectedValue }}
+              <span
+                :class="{
+                  'max-w-[60vw] overflow-hidden text-ellipsis whitespace-nowrap text-sm':
+                    isSizeSmall,
+                }"
+              >
+                {{ getSelectedOptionLabel(selectedValue) || selectedValue }}
+              </span>
             </div>
           </template>
           <template v-else-if="isSizeSmall">
-            <div class="mr-1 text-sm leading-[17px]">
+            <div
+              class="mr-1 overflow-hidden text-ellipsis whitespace-nowrap py-1 text-sm leading-[17px]"
+            >
               {{ i18n.t(context.label) }}
             </div>
           </template>

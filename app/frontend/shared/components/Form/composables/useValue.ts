@@ -7,9 +7,9 @@ const useValue = (context: Ref<FormFieldContext<{ multiple?: boolean }>>) => {
   // eslint-disable-next-line no-underscore-dangle
   const currentValue = computed(() => context.value._value)
 
-  const hasValue = computed(() =>
-    context.value.fns.hasValue(currentValue.value),
-  )
+  const hasValue = computed(() => {
+    return context.value.fns.hasValue(currentValue.value)
+  })
 
   const valueContainer = computed(() =>
     context.value.multiple ? currentValue.value : [currentValue.value],

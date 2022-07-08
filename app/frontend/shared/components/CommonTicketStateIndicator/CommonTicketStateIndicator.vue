@@ -2,12 +2,12 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import type { TicketState } from '@shared/entities/ticket/types'
+import { TicketState } from '@shared/entities/ticket/types'
 
 // TODO: Add a test and story for this common component.
 
 export interface Props {
-  status: TicketState
+  status: TicketState | string
   label: string
   pill?: boolean
 }
@@ -16,7 +16,15 @@ const props = withDefaults(defineProps<Props>(), {
   pill: false,
 })
 
-const statusIndicator = computed(() => `state-${props.status}`)
+const states = new Set<string>(Object.values(TicketState))
+
+const statusIndicator = computed(() => {
+  if (!states.has(props.status)) {
+    return ''
+  }
+
+  return `state-${props.status}`
+})
 </script>
 
 <template>
@@ -29,6 +37,7 @@ const statusIndicator = computed(() => `state-${props.status}`)
     role="group"
   >
     <img
+      v-if="statusIndicator"
       :src="`/assets/images/icons/${statusIndicator}.svg`"
       :alt="label"
       :width="pill ? 12 : 24"

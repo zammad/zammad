@@ -30,8 +30,7 @@ describe('testing home section menu', () => {
     await waitForNextTick(true)
 
     await waitFor(() => {
-      // TODO: Switch to better identifier, when real ticket lists exists.
-      expect(view.getByText('Go to link Home')).toBeInTheDocument()
+      expect(view.getByText('Tickets')).toBeInTheDocument()
     })
   })
 })

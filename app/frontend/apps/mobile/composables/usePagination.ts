@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { computed, reactive, readonly } from 'vue'
+import { computed, reactive, readonly, ref } from 'vue'
 import { OperationVariables } from '@apollo/client/core'
 import { QueryHandler } from '@shared/server/apollo/handler'
 import {
@@ -25,15 +25,23 @@ export default function usePagination<
     return pageInfo.value.hasNextPage
   })
 
+  const loadingNextPage = ref(false)
+
   return reactive({
     pageInfo: readonly(pageInfo),
     hasNextPage: readonly(hasNextPage),
-    fetchNextPage() {
-      query.fetchMore({
-        variables: {
-          cursor: pageInfo.value?.endCursor,
-        } as Partial<TQueryVariables & PaginationVariables>,
-      })
+    loadingNextPage: readonly(loadingNextPage),
+    async fetchNextPage() {
+      try {
+        loadingNextPage.value = true
+        await query.fetchMore({
+          variables: {
+            cursor: pageInfo.value?.endCursor,
+          } as Partial<TQueryVariables & PaginationVariables>,
+        })
+      } finally {
+        loadingNextPage.value = false
+      }
     },
   })
 }

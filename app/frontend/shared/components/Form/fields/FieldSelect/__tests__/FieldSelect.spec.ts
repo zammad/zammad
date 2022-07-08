@@ -5,6 +5,8 @@ import { getByText, waitFor } from '@testing-library/vue'
 import { FormKit } from '@formkit/vue'
 import { renderComponent } from '@tests/support/components'
 import { i18n } from '@shared/i18n'
+import { getNode } from '@formkit/core'
+import { waitForNextTick } from '@tests/support/utils'
 
 // Mock IntersectionObserver feature by injecting it into the global namespace.
 //   More info here: https://vitest.dev/guide/mocking.html#globals
@@ -277,12 +279,11 @@ describe('Form - Field - Select - Options', () => {
 })
 
 describe('Form - Field - Select - Features', () => {
-  // FIXME: Updating value prop does not seem to mutate it.
-  //   It could be a bug in FormKit, though. Retry with next release.
-  it.todo('supports value mutation', async () => {
+  it('supports value mutation', async () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
+        id: 'select',
         type: 'select',
         options: testOptions,
         value: testOptions[1].value,
@@ -293,9 +294,10 @@ describe('Form - Field - Select - Features', () => {
       testOptions[1].label,
     )
 
-    await wrapper.rerender({
-      value: testOptions[2].value,
-    })
+    const node = getNode('select')
+    node?.input(testOptions[2].value)
+
+    await waitForNextTick(true)
 
     expect(wrapper.getByRole('listitem')).toHaveTextContent(
       testOptions[2].label,
@@ -580,12 +582,6 @@ describe('Form - Field - Select - Features', () => {
       'bg-gray-600 rounded-lg w-auto',
     )
 
-    expect(wrapper.getByRole('list')).toHaveClass('px-2 py-1')
-
-    expect(wrapper.getByRole('listitem')).toHaveClass(
-      'mr-1 text-sm leading-[17px]',
-    )
-
     expect(wrapper.getByText('Test label')).toHaveClass('hidden')
 
     await wrapper.rerender({
@@ -594,12 +590,6 @@ describe('Form - Field - Select - Features', () => {
 
     expect(wrapper.getByTestId('field-select')).not.toHaveClass(
       'bg-gray-600 rounded-lg w-auto',
-    )
-
-    expect(wrapper.getByRole('list')).not.toHaveClass('px-2 py-1')
-
-    expect(wrapper.getByRole('listitem')).not.toHaveClass(
-      'mr-1 text-sm leading-[17px]',
     )
 
     expect(wrapper.getByText('Test label')).not.toHaveClass('hidden')

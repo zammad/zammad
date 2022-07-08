@@ -17,6 +17,7 @@ module Gql::Types
     field :login, String, null: false
     field :firstname, String, null: true
     field :lastname, String, null: true
+    field :fullname, String, null: true
     field :email, String, null: true
     field :image, String, null: true
     field :image_source, String, null: true

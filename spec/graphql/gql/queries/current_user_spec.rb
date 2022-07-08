@@ -18,7 +18,7 @@ RSpec.describe Gql::Queries::CurrentUser, type: :graphql do
 
     context 'with authenticated session', authenticated_as: :agent do
       it 'has data' do
-        expect(graphql_response['data']['currentUser']).to include('firstname' => agent.firstname)
+        expect(graphql_response['data']['currentUser']).to include('fullname' => agent.fullname)
       end
 
       it 'has objectAttributeValue data for User' do
