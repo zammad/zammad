@@ -16,7 +16,7 @@ module Gql::Subscriptions
     # Default subscribe implementation that returns nothing. For this to work, all fields must have null: true.
     # Otherwise, you can provide a subscribe method in the inheriting class.
     #
-    def subscribe
+    def subscribe(...)
       {}
     end
 

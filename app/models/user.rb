@@ -18,6 +18,7 @@ class User < ApplicationModel
   include User::Search
   include User::SearchIndex
   include User::TouchesOrganization
+  include User::TriggersSubscriptions
   include User::PerformsGeoLookup
   include User::UpdatesTicketOrganization
 
