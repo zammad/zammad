@@ -3676,10 +3676,10 @@ eslint-plugin-prettier@^4.2.1:
   dependencies:
     prettier-linter-helpers "^1.0.0"
 
-eslint-plugin-storybook@^0.5.13:
-  version "0.5.13"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-storybook/-/eslint-plugin-storybook-0.5.13.tgz#dee4056eaa59c886a9ae78fb7b2ee0ed5fad4366"
-  integrity sha512-82x3FH1VAi68Awu1VEjn/hLkzFZsOP8ItcC5/uGF9WszIrj6n7Q3MZD57oE26k3aKwuPfFtAPnSjFnaBkBab+g==
+eslint-plugin-storybook@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-storybook/-/eslint-plugin-storybook-0.6.0.tgz#571a37fad6ee7f7923b58d4a7470da8918f08fe9"
+  integrity sha512-B6SKZSm1LaDq+bvjd4LCBmNK42LKrr+9Wsy9d5imB6yKVBVt/XFDJ3UhXxVm4OjTlrMyI4I9mTAQ7Lw1EHVXSw==
   dependencies:
     "@storybook/csf" "^0.0.1"
     "@typescript-eslint/experimental-utils" "^5.3.0"
