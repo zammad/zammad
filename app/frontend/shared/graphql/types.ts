@@ -10,15 +10,10 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  /** String with binary data, base64 encoded for transport (data: URL prefix is optional) */
   BinaryString: any;
-  /** BigInt to identify a form. */
   FormId: any;
-  /** An ISO 8601-encoded date */
   ISO8601Date: any;
-  /** An ISO 8601-encoded datetime */
   ISO8601DateTime: any;
-  /** Represents untyped JSON */
   JSON: any;
 };
 
