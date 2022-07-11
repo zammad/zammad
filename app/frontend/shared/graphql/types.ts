@@ -49,6 +49,8 @@ export enum AppMaintenanceType {
 export type AutocompleteEntry = {
   __typename?: 'AutocompleteEntry';
   disabled?: Maybe<Scalars['Boolean']>;
+  heading?: Maybe<Scalars['String']>;
+  headingPlaceholder?: Maybe<Array<Scalars['String']>>;
   icon?: Maybe<Scalars['String']>;
   label: Scalars['String'];
   labelPlaceholder?: Maybe<Array<Scalars['String']>>;
@@ -867,7 +869,7 @@ export type AutocompleteSearchUserQueryVariables = Exact<{
 }>;
 
 
-export type AutocompleteSearchUserQuery = { __typename?: 'Queries', autocompleteSearchUser: Array<{ __typename?: 'AutocompleteEntry', value: string, label: string, labelPlaceholder?: Array<string> | null, disabled?: boolean | null, icon?: string | null }> };
+export type AutocompleteSearchUserQuery = { __typename?: 'Queries', autocompleteSearchUser: Array<{ __typename?: 'AutocompleteEntry', value: string, label: string, labelPlaceholder?: Array<string> | null, heading?: string | null, headingPlaceholder?: Array<string> | null, disabled?: boolean | null, icon?: string | null }> };
 
 export type CurrentUserQueryVariables = Exact<{ [key: string]: never; }>;
 

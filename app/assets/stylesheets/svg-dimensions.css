@@ -3,6 +3,7 @@
 .icon-arrow-left { width: 7px; height: 13px; }
 .icon-arrow-right { width: 7px; height: 13px; }
 .icon-arrow-up { width: 13px; height: 7px; }
+.icon-bell { width: 33px; height: 32px; }
 .icon-bold { width: 12px; height: 12px; }
 .icon-caret-down { width: 24px; height: 24px; }
 .icon-chain { width: 16px; height: 16px; }
@@ -61,6 +62,7 @@
 .icon-group { width: 24px; height: 24px; }
 .icon-hashtag { width: 28px; height: 28px; }
 .icon-help { width: 16px; height: 16px; }
+.icon-home { width: 22px; height: 23px; }
 .icon-horizontal-rule { width: 12px; height: 12px; }
 .icon-important { width: 16px; height: 16px; }
 .icon-in-process { width: 64px; height: 64px; }
@@ -97,6 +99,8 @@
 .icon-mood-superbad { width: 60px; height: 59px; }
 .icon-mood-supergood { width: 60px; height: 59px; }
 .icon-mute { width: 16px; height: 16px; }
+.icon-new-customer { width: 24px; height: 24px; }
+.icon-new-organization { width: 24px; height: 24px; }
 .icon-not-signed { width: 14px; height: 14px; }
 .icon-note { width: 16px; height: 16px; }
 .icon-oauth2-button { width: 29px; height: 24px; }
@@ -131,6 +135,7 @@
 .icon-spinner-small { width: 15px; height: 15px; }
 .icon-split { width: 16px; height: 17px; }
 .icon-sso-button { width: 29px; height: 24px; }
+.icon-stack { width: 24px; height: 24px; }
 .icon-state-closed { width: 24px; height: 24px; }
 .icon-state-escalated { width: 24px; height: 24px; }
 .icon-state-open { width: 24px; height: 24px; }

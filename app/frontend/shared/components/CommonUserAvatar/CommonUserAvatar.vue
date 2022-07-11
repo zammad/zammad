@@ -55,6 +55,10 @@ const icon = computed(() => {
 
 const image = computed(() => {
   if (icon.value || !props.entity.image) return null
+
+  // Support the inline data URI as an image source.
+  if (/^data:/.test(props.entity.image)) return props.entity.image
+
   // TODO see how we will do this when API will be in Graphql Context
   const apiUrl = '/api/v1'
   return `${apiUrl}/users/image/${props.entity.image}`

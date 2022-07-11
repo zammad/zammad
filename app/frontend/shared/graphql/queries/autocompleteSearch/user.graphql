@@ -4,6 +4,8 @@ query autocompleteSearchUser($query: String!, $limit: Int)  {
     value
     label
     labelPlaceholder
+    heading
+    headingPlaceholder
     disabled
     icon
   }

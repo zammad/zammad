@@ -33,11 +33,13 @@ RSpec.describe Gql::Queries::AutocompleteSearch::User, type: :graphql, authentic
     context 'with exact search' do
       let(:first_user_payload) do
         {
-          'value'            => Gql::ZammadSchema.id_from_object(users.first),
-          'label'            => users.first.fullname,
-          'labelPlaceholder' => nil,
-          'icon'             => nil,
-          'disabled'         => nil,
+          'value'              => Gql::ZammadSchema.id_from_object(users.first),
+          'label'              => users.first.fullname,
+          'labelPlaceholder'   => nil,
+          'heading'            => nil,
+          'headingPlaceholder' => nil,
+          'icon'               => nil,
+          'disabled'           => nil,
         }
       end
       let(:query_string) { users.first.login }

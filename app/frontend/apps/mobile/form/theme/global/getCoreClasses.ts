@@ -75,8 +75,26 @@ const getCoreClasses: FormThemeExtension = (classes: FormThemeClasses) => {
       outer: `${classes.select && classes.select.outer} field-select`,
     }),
     treeselect: addFloatingLabel({
-      ...(classes.select || {}),
-      outer: `${classes.select && classes.select.outer} field-treeselect`,
+      ...(classes.treeselect || {}),
+      outer: `${
+        classes.treeselect && classes.treeselect.outer
+      } field-treeselect`,
+    }),
+    autocomplete: addFloatingLabel({
+      ...(classes.autocomplete || {}),
+      outer: `${
+        classes.autocomplete && classes.autocomplete.outer
+      } field-autocomplete`,
+    }),
+    customer: addFloatingLabel({
+      ...(classes.customer || {}),
+      outer: `${classes.customer && classes.customer.outer} field-customer`,
+    }),
+    organization: addFloatingLabel({
+      ...(classes.organization || {}),
+      outer: `${
+        classes.organization && classes.organization.outer
+      } field-organization`,
     }),
     button: addButtonVariants(classes.button),
     submit: addButtonVariants(classes.submit),

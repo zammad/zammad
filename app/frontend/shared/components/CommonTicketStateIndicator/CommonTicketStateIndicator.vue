@@ -7,7 +7,7 @@ import { TicketState } from '@shared/entities/ticket/types'
 // TODO: Add a test and story for this common component.
 
 export interface Props {
-  status: TicketState | string
+  status?: TicketState | string
   label: string
   pill?: boolean
 }
@@ -19,7 +19,7 @@ const props = withDefaults(defineProps<Props>(), {
 const states = new Set<string>(Object.values(TicketState))
 
 const statusIndicator = computed(() => {
-  if (!states.has(props.status)) {
+  if (!props.status || !states.has(props.status)) {
     return ''
   }
 

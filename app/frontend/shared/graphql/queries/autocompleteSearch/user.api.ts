@@ -11,6 +11,8 @@ export const AutocompleteSearchUserDocument = gql`
     value
     label
     labelPlaceholder
+    heading
+    headingPlaceholder
     disabled
     icon
   }

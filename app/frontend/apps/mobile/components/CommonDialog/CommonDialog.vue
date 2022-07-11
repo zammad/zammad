@@ -61,6 +61,7 @@ export default {
       <div
         class="relative flex h-16 shrink-0 select-none items-center justify-center rounded-t-xl bg-gray-600/80"
       >
+        <slot name="before-label" />
         <div
           class="grow text-center text-base font-semibold leading-[19px] text-white"
         >
@@ -68,19 +69,21 @@ export default {
             {{ i18n.t(label) }}
           </slot>
         </div>
-        <div class="absolute top-0 right-0 bottom-0 flex items-center pr-4">
-          <div
-            class="grow cursor-pointer text-blue"
-            tabindex="0"
-            role="button"
-            v-bind="listeners?.done"
-            @pointerdown.stop
-            @click="close()"
-            @keypress.space="close()"
-          >
-            {{ i18n.t('Done') }}
+        <slot name="after-label">
+          <div class="absolute top-0 right-0 bottom-0 flex items-center pr-4">
+            <div
+              class="grow cursor-pointer text-blue"
+              tabindex="0"
+              role="button"
+              v-bind="listeners?.done"
+              @pointerdown.stop
+              @click="close()"
+              @keypress.space="close()"
+            >
+              {{ i18n.t('Done') }}
+            </div>
           </div>
-        </div>
+        </slot>
       </div>
       <div
         class="flex grow flex-col items-start overflow-y-auto bg-black text-white"

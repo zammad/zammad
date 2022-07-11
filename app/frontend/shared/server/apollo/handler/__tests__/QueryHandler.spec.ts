@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { useQuery } from '@vue/apollo-composable'
+import { useLazyQuery, useQuery } from '@vue/apollo-composable'
 import createMockClient from '@tests/support/mock-apollo-client'
 import {
   SampleTypedQueryDocument,
@@ -102,6 +102,34 @@ describe('QueryHandler', () => {
       expect.assertions(2)
 
       const queryHandlerObject = new QueryHandler(sampleQuery({ id: 1 }))
+      expect(queryHandlerObject.loading().value).toBe(true)
+
+      await queryHandlerObject.onLoaded()
+
+      expect(queryHandlerObject.loading().value).toBe(false)
+    })
+
+    it('supports lazy queries', async () => {
+      expect.assertions(3)
+
+      const sampleLazyQuery = (
+        variables: SampleQueryVariables,
+        options = {},
+      ) => {
+        queryFunctionCallSpy()
+        return useLazyQuery<SampleQuery, SampleQueryVariables>(
+          SampleTypedQueryDocument,
+          variables,
+          options,
+        )
+      }
+
+      const queryHandlerObject = new QueryHandler(sampleLazyQuery({ id: 1 }))
+
+      expect(queryHandlerObject.loading().value).toBe(false)
+
+      await queryHandlerObject.load()
+
       expect(queryHandlerObject.loading().value).toBe(true)
 
       await queryHandlerObject.onLoaded()

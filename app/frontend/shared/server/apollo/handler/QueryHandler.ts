@@ -86,6 +86,17 @@ export default class QueryHandler<
     })
   }
 
+  public load(): void {
+    if (
+      typeof (this.operationResult as never as { load: () => void }).load !==
+      'function'
+    ) {
+      return undefined
+    }
+
+    return (this.operationResult as never as { load: () => void }).load()
+  }
+
   public async onLoaded(
     triggerPossibleRefetch = false,
   ): Promise<Maybe<TResult>> {

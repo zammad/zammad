@@ -6,10 +6,11 @@ import type { TicketState } from '@shared/entities/ticket/types'
 import type { SelectOptionSorting, SelectOption } from '../fields/FieldSelect'
 import type { FormFieldContext } from '../types/field'
 import type { FlatSelectOption } from '../fields/FieldTreeSelect'
+import type { AutoCompleteOption } from '../fields/FieldAutoComplete'
 import useValue from './useValue'
 
 const useSelectOptions = (
-  options: Ref<SelectOption[] | FlatSelectOption[]>,
+  options: Ref<SelectOption[] | FlatSelectOption[] | AutoCompleteOption[]>,
   context: Ref<
     FormFieldContext<{
       multiple?: boolean
@@ -18,11 +19,11 @@ const useSelectOptions = (
     }>
   >,
   arrowLeftCallback?: (
-    option?: SelectOption | FlatSelectOption,
+    option?: SelectOption | FlatSelectOption | AutoCompleteOption,
     getDialogFocusTargets?: (optionsOnly?: boolean) => HTMLElement[],
   ) => void,
   arrowRightCallback?: (
-    option?: SelectOption | FlatSelectOption,
+    option?: SelectOption | FlatSelectOption | AutoCompleteOption,
     getDialogFocusTargets?: (optionsOnly?: boolean) => HTMLElement[],
   ) => void,
 ) => {
@@ -31,25 +32,43 @@ const useSelectOptions = (
   const { currentValue } = useValue(context)
 
   const hasStatusProperty = computed(
-    () => options.value && options.value.some((option) => option.status),
+    () =>
+      options.value &&
+      options.value.some(
+        (option) => (option as SelectOption | FlatSelectOption).status,
+      ),
   )
 
   const translatedOptions = computed(
     () =>
       options.value &&
       options.value.map(
-        (option: SelectOption | FlatSelectOption) =>
+        (option: SelectOption | FlatSelectOption | AutoCompleteOption) =>
           ({
             ...option,
             label: context.value.noOptionsLabelTranslation
               ? option.label
               : i18n.t(option.label, option.labelPlaceholder as never),
-          } as unknown as SelectOption | FlatSelectOption),
+            ...((option as AutoCompleteOption).heading
+              ? {
+                  heading: context.value.noOptionsLabelTranslation
+                    ? (option as AutoCompleteOption).heading
+                    : i18n.t(
+                        (option as AutoCompleteOption).heading,
+                        (option as AutoCompleteOption)
+                          .headingPlaceholder as never,
+                      ),
+                }
+              : {}),
+          } as unknown as SelectOption | FlatSelectOption | AutoCompleteOption),
       ),
   )
 
   const optionValueLookup: ComputedRef<
-    Record<string | number, SelectOption | FlatSelectOption>
+    Record<
+      string | number,
+      SelectOption | FlatSelectOption | AutoCompleteOption
+    >
   > = computed(
     () =>
       translatedOptions.value &&
@@ -92,9 +111,12 @@ const useSelectOptions = (
 
   const getSelectedOptionStatus = (selectedValue: string | number) =>
     optionValueLookup.value[selectedValue] &&
-    (optionValueLookup.value[selectedValue].status as TicketState)
+    ((optionValueLookup.value[selectedValue] as SelectOption | FlatSelectOption)
+      .status as TicketState)
 
-  const selectOption = (option: SelectOption | FlatSelectOption) => {
+  const selectOption = (
+    option: SelectOption | FlatSelectOption | AutoCompleteOption,
+  ) => {
     if (context.value.multiple) {
       const selectedValue = currentValue.value ?? []
       const optionIndex = selectedValue.indexOf(option.value)

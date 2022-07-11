@@ -235,8 +235,12 @@ const goToNextPage = (option: FlatSelectOption) => {
         <div
           v-if="index !== 0"
           :class="{
-            'left-4': !context.multiple,
-            'left-14': context.multiple,
+            'left-4': !context.multiple && !option.icon && !(option as FlatSelectOption).status,
+            'left-[50px]': !context.multiple && option.icon && !(option as FlatSelectOption).status,
+            'left-[58px]': !context.multiple && !option.icon && (option as FlatSelectOption).status,
+            'left-[60px]': context.multiple && !option.icon && !(option as FlatSelectOption).status,
+            'left-[88px]': context.multiple && option.icon && !(option as FlatSelectOption).status,
+            'left-[94px]': context.multiple && !option.icon && (option as FlatSelectOption).status,
           }"
           class="absolute right-4 top-0 h-0 border-t border-white/10"
         />
@@ -251,8 +255,8 @@ const goToNextPage = (option: FlatSelectOption) => {
           class="mr-3 text-white/50"
         />
         <CommonTicketStateIndicator
-          v-if="option.status"
-          :status="option.status"
+          v-if="(option as FlatSelectOption).status"
+          :status="(option as FlatSelectOption).status"
           :label="option.label"
           :class="{
             'opacity-30': option.disabled,
