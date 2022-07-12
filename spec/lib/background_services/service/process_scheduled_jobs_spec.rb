@@ -28,7 +28,7 @@ RSpec.describe BackgroundServices::Service::ProcessScheduledJobs do
     let(:log) { [] }
 
     before do
-      allow_any_instance_of(described_class::Manager).to receive(:run) do # rubocop:disable RSpec/AnyInstance
+      allow_any_instance_of(described_class::Manager).to receive(:run) do
         log << :run_called
       end
     end

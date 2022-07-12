@@ -144,7 +144,7 @@ RSpec.describe BackgroundServices do
       let(:log) { [] }
 
       before do
-        allow_any_instance_of(SampleService).to receive(:run) do # rubocop:disable RSpec/AnyInstance
+        allow_any_instance_of(SampleService).to receive(:run) do
           log << :run_called
         end
       end
