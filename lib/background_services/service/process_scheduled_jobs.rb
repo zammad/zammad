@@ -33,6 +33,11 @@ class BackgroundServices
       end
 
       def scope
+        # changes in sub threads will not update the rails
+        # cache so we need to be sure that the scheduler get
+        # updated last_run values, so they don't run all the time
+        # https://github.com/zammad/zammad/issues/4167
+        Scheduler.clear_query_caches_for_current_thread
         Scheduler.where(active: true).order(prio: :asc)
       end
     end
