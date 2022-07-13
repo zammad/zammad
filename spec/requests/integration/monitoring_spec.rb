@@ -64,7 +64,7 @@ RSpec.describe 'Monitoring', type: :request, authenticated_as: :admin do
     end
 
     it 'returns health status' do
-      allow_any_instance_of(MonitoringHelper::HealthChecker) # rubocop:disable RSpec/AnyInstance
+      allow_any_instance_of(MonitoringHelper::HealthChecker)
         .to receive(:response)
         .and_return(successful_response)
 
@@ -81,7 +81,7 @@ RSpec.describe 'Monitoring', type: :request, authenticated_as: :admin do
     it_behaves_like 'accessible', token: true, admin: true, agent: false
 
     it 'returns status' do
-      allow_any_instance_of(MonitoringHelper::Status) # rubocop:disable RSpec/AnyInstance
+      allow_any_instance_of(MonitoringHelper::Status)
         .to receive(:fetch_status)
         .and_return({ status_hash: :sample })
 
@@ -96,13 +96,13 @@ RSpec.describe 'Monitoring', type: :request, authenticated_as: :admin do
     let(:method) { 'get' }
 
     before do
-      allow_any_instance_of(MonitoringHelper::AmountCheck).to receive(:check_amount).and_return({}) # rubocop:disable RSpec/AnyInstance
+      allow_any_instance_of(MonitoringHelper::AmountCheck).to receive(:check_amount).and_return({})
     end
 
     it_behaves_like 'accessible', token: true, admin: true, agent: false
 
     it 'returns amount' do
-      allow_any_instance_of(MonitoringHelper::AmountCheck) # rubocop:disable RSpec/AnyInstance
+      allow_any_instance_of(MonitoringHelper::AmountCheck)
         .to receive(:check_amount)
         .and_return({ amount_hash: :sample })
 

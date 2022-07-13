@@ -1,15 +1,3 @@
-RSpec/AnyInstance:
-  Exclude:
-    - 'spec/lib/import/otrs/article_spec.rb'
-    - 'spec/lib/import/otrs/customer_spec.rb'
-    - 'spec/lib/import/otrs/customer_user_spec.rb'
-    - 'spec/lib/import/otrs/priority_spec.rb'
-    - 'spec/lib/import/otrs/queue_spec.rb'
-    - 'spec/lib/import/otrs/state_spec.rb'
-    - 'spec/lib/import/otrs/ticket_spec.rb'
-    - 'spec/lib/import/otrs/user_spec.rb'
-    - 'spec/models/import_job_spec.rb'
-
 RSpec/BeforeAfterAll:
   Exclude:
     - 'spec/spec_helper.rb'
@@ -639,15 +627,6 @@ RSpec/ScatteredSetup:
     - 'spec/models/ticket_spec.rb'
     - 'spec/models/user_spec.rb'
     - 'spec/requests/upload_cache_spec.rb'
-
-RSpec/SubjectStub:
-  Exclude:
-    - 'spec/lib/import/exchange/folder_spec.rb'
-    - 'spec/models/concerns/has_groups_examples.rb'
-    - 'spec/models/concerns/has_roles_examples.rb'
-    - 'spec/models/job_spec.rb'
-    - 'spec/models/object_manager/attribute/validation/future_past_spec.rb'
-    - 'spec/models/object_manager/attribute/validation/required_spec.rb'
 
 RSpec/VerifiedDoubles:
   Exclude:

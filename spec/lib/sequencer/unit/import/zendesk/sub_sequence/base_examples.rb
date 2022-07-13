@@ -117,5 +117,11 @@ RSpec.shared_examples 'Sequencer::Unit::Import::Zendesk::SubSequence::Base' do
 
       include_examples 'retries ten times, in 10s intervals'
     end
+
+    context 'when Faraday::SSLError by peer occurs' do
+      let(:api_error) { Faraday::SSLError.new('sslv3 alert handshake failure') }
+
+      include_examples 'retries ten times, in 10s intervals'
+    end
   end
 end

@@ -29,9 +29,9 @@ RSpec.describe BackgroundServices::Service::ProcessScheduledJobs::JobExecutor::C
       end
 
       it 'sleeps after every execution' do
-        allow(instance).to receive(:sleep) # rubocop: disable RSpec/SubjectStub
+        allow(instance).to receive(:sleep)
         instance.run
-        expect(instance).to have_received(:sleep).with(0).exactly(loop_limit).times # rubocop: disable RSpec/SubjectStub
+        expect(instance).to have_received(:sleep).with(0).exactly(loop_limit).times
       end
 
       it 'updates last_run time' do
@@ -42,7 +42,7 @@ RSpec.describe BackgroundServices::Service::ProcessScheduledJobs::JobExecutor::C
 
     context 'when job is deleted while loop is running' do
       it 'raises error' do
-        allow(instance).to receive(:execute) # rubocop:disable RSpec/SubjectStub
+        allow(instance).to receive(:execute)
         job.destroy
         expect { instance.run }
           .to raise_error(BackgroundServices::Service::ProcessScheduledJobs::SchedulerObjectGoneError)

@@ -27,7 +27,7 @@ RSpec.describe BackgroundServices::Service::ProcessDelayedJobs::CleanupAction do
       travel 10.minutes
       SampleDelayedJob.perform_later && Delayed::Job.last.update!(locked_at: Time.current)
 
-      allow_any_instance_of(described_class).to receive(:cleanup) do # rubocop:disable RSpec/AnyInstance
+      allow_any_instance_of(described_class).to receive(:cleanup) do
         log << :cleanup_called
       end
     end

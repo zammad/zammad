@@ -100,7 +100,7 @@ RSpec.describe ObjectManager::Attribute::Validation, application_handle: 'applic
 
     context 'when custom attribute exists' do
       before do
-        allow(subject).to receive(:attributes_unchanged?) # rubocop:disable RSpec/SubjectStub
+        allow(subject).to receive(:attributes_unchanged?)
       end
 
       it 'runs validation in default context' do
@@ -108,7 +108,7 @@ RSpec.describe ObjectManager::Attribute::Validation, application_handle: 'applic
           subject.validate(record)
         end
 
-        expect(subject).to have_received(:attributes_unchanged?) # rubocop:disable RSpec/SubjectStub
+        expect(subject).to have_received(:attributes_unchanged?)
       end
 
       it 'does not run validations in contexts that do not use custom attributes' do
@@ -116,7 +116,7 @@ RSpec.describe ObjectManager::Attribute::Validation, application_handle: 'applic
           subject.validate(record)
         end
 
-        expect(subject).not_to have_received(:attributes_unchanged?) # rubocop:disable RSpec/SubjectStub
+        expect(subject).not_to have_received(:attributes_unchanged?)
       end
     end
   end
