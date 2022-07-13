@@ -6,7 +6,7 @@ RSpec.configure do |config|
 
     next if !sessions_jobs_required
 
-    allow_any_instance_of(Sessions::Backend::Base).to receive(:to_run?).and_return(true) # rubocop:disable RSpec/AnyInstance
+    allow_any_instance_of(Sessions::Backend::Base).to receive(:to_run?).and_return(true)
   end
 
   config.around(:each, type: :system) do |example|

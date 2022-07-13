@@ -11,7 +11,7 @@ RSpec.describe ChecksKbClientNotificationJob, type: :job, performs_jobs: true do
     let(:customer) { create(:customer) }
 
     before do
-      allow_any_instance_of(described_class) # rubocop:disable RSpec/AnyInstance
+      allow_any_instance_of(described_class)
         .to receive(:active_users)
         .and_return([admin, agent, customer])
 

@@ -343,6 +343,10 @@ RSpec/AlignLeftLetBrace:
   Description: 'Checks that left braces for adjacent single line lets are aligned.'
   Enabled: true
 
+RSpec/AnyInstance:
+  Description: 'Prefer instance doubles over stubbing any instance of a class.'
+  Enabled: false
+
 Zammad/PreferNegatedIfOverUnless:
   Exclude:
     - 'bin/rspec'

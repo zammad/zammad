@@ -315,7 +315,7 @@ RSpec.describe Ticket, type: :model do
           ticket && target_ticket
           merged_into_trigger && received_merge_trigger && update_trigger
 
-          allow_any_instance_of(described_class).to receive(:perform_changes) do |ticket, trigger| # rubocop:disable RSpec/AnyInstance
+          allow_any_instance_of(described_class).to receive(:perform_changes) do |ticket, trigger|
             log << { ticket: ticket.id, trigger: trigger.id }
           end
 
