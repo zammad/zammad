@@ -22,6 +22,9 @@ class Sequencer
             # then retry the request.
             config.retry = true
 
+            # Activate the retry also for exception, e.g. for Faraday::SSLError.
+            config.retry_on_exception = true
+
             # disable cache to avoid unneeded memory consumption
             # since we are using each object only once
             # Inspired by: https://medium.com/swiftype-engineering/using-jmat-to-find-analyze-memory-in-jruby-1c4196c1ec72
