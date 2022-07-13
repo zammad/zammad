@@ -347,6 +347,9 @@ RSpec/AnyInstance:
   Description: 'Prefer instance doubles over stubbing any instance of a class.'
   Enabled: false
 
+RSpec/SubjectStub:
+  Enabled: false
+
 Zammad/PreferNegatedIfOverUnless:
   Exclude:
     - 'bin/rspec'

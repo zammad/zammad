@@ -628,15 +628,6 @@ RSpec/ScatteredSetup:
     - 'spec/models/user_spec.rb'
     - 'spec/requests/upload_cache_spec.rb'
 
-RSpec/SubjectStub:
-  Exclude:
-    - 'spec/lib/import/exchange/folder_spec.rb'
-    - 'spec/models/concerns/has_groups_examples.rb'
-    - 'spec/models/concerns/has_roles_examples.rb'
-    - 'spec/models/job_spec.rb'
-    - 'spec/models/object_manager/attribute/validation/future_past_spec.rb'
-    - 'spec/models/object_manager/attribute/validation/required_spec.rb'
-
 RSpec/VerifiedDoubles:
   Exclude:
     - 'spec/db/migrate/issue_2460_fix_corrupted_twitter_ids_spec.rb'
