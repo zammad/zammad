@@ -43,7 +43,7 @@ class Sequencer
 
             def resource_iteration(&block)
               resource_collection.public_send(resource_iteration_method, &block)
-            rescue ZendeskAPI::Error::NetworkError => e
+            rescue ZendeskAPI::Error::NetworkError, Faraday::SSLError => e
               return if expected_exception?(e)
               raise if !retry_exception?(e)
               raise if (fail_count ||= 1) > 10
@@ -58,14 +58,14 @@ class Sequencer
 
             # #2262 Zendesk-Import fails for User & Organizations when 403 "access" denied
             def expected_exception?(e)
-              status = e.response.status.to_s
-              return false if status != '403'
+              status = e.response&.status.to_s
+              return false if !status || status != '403'
 
               %w[UserField OrganizationField].include?(resource_klass)
             end
 
             def retry_exception?(e)
-              !(200..399).cover? e&.response&.status
+              e.is_a?(Faraday::SSLError) || !(200..399).cover?(e&.response&.status)
             end
 
             def resource_collection
