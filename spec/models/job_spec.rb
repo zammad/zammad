@@ -12,6 +12,12 @@ RSpec.describe Job, type: :model do
   it_behaves_like 'HasXssSanitizedNote', model_factory: :job
   it_behaves_like 'HasTimeplan'
 
+  describe 'validation' do
+    it 'uses Validations::VerifyPerformRulesValidator' do
+      expect(described_class).to have_validator(Validations::VerifyPerformRulesValidator).on(:perform)
+    end
+  end
+
   describe 'Class methods:' do
     describe '.run' do
       let!(:executable_jobs)    { jobs.select(&:executable?).select(&:in_timeplan?) }
@@ -481,7 +487,7 @@ RSpec.describe Job, type: :model do
           end
 
           it 'fails if an empty "body" is given' do
-            expect { create(:job, perform: perform) }.to raise_error(Exceptions::UnprocessableEntity)
+            expect { create(:job, perform: perform) }.to raise_error(ActiveRecord::RecordInvalid, %r{body is missing})
           end
         end
 
@@ -491,7 +497,7 @@ RSpec.describe Job, type: :model do
           end
 
           it 'fails if an empty "recipient" is given' do
-            expect { create(:job, perform: perform) }.to raise_error(Exceptions::UnprocessableEntity)
+            expect { create(:job, perform: perform) }.to raise_error(ActiveRecord::RecordInvalid, %r{recipient is missing})
           end
         end
 
@@ -501,7 +507,7 @@ RSpec.describe Job, type: :model do
           end
 
           it 'fails if an empty "recipient" is given' do
-            expect { create(:job, perform: perform) }.to raise_error(Exceptions::UnprocessableEntity)
+            expect { create(:job, perform: perform) }.to raise_error(ActiveRecord::RecordInvalid, %r{recipient is missing})
           end
         end
       end

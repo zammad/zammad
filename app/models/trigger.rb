@@ -3,14 +3,14 @@
 class Trigger < ApplicationModel
   include ChecksConditionValidation
   include ChecksHtmlSanitized
-  include ChecksPerformValidation
   include CanSeed
 
   include Trigger::Assets
 
   store     :condition
   store     :perform
-  validates :name, presence: true
+  validates :name,    presence: true
+  validates :perform, 'validations/verify_perform_rules': true
 
   validates :note, length: { maximum: 250 }
   sanitized_html :note
