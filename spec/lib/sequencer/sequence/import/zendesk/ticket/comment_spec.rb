@@ -127,5 +127,17 @@ RSpec.describe ::Sequencer::Sequence::Import::Zendesk::Ticket::Comment, sequence
         expect(Ticket::Article.last.attachments.last).to have_attributes(imported_attachment)
       end
     end
+
+    context 'when attachment request has an error' do
+      before do
+        allow_any_instance_of(Sequencer::Unit::Import::Zendesk::Ticket::Comment::Attachment::Request).to receive(:sleep)
+        stub_request(:get, "https://#{hostname}/attachments/token/khRQTQjm8ODhA0FjbS39i4xOb/?name=1a3496b9-53d9-494d-bbb0-e1d2e22074f8.jpeg").to_return(status: 503, headers: {}).then.to_return(status: 200, body: '123', headers: {})
+      end
+
+      it 'adds attachment content after one request error' do
+        process(process_payload)
+        expect(Ticket::Article.last.attachments.last).to have_attributes(imported_attachment)
+      end
+    end
   end
 end
