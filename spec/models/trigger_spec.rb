@@ -11,32 +11,9 @@ RSpec.describe Trigger, type: :model do
   it_behaves_like 'HasXssSanitizedNote', model_factory: :trigger
 
   describe 'validation' do
-
-    let(:condition) do
-      { 'ticket.action' => { 'operator' => 'is', 'value' => 'create' } }
+    it 'uses Validations::VerifyPerformRulesValidator' do
+      expect(described_class).to have_validator(Validations::VerifyPerformRulesValidator).on(:perform)
     end
-    let(:perform) do
-      { 'ticket.title' => { 'value'=>'triggered' } }
-    end
-
-    context 'notification.email' do
-      context 'missing recipient' do
-
-        let(:perform) do
-          {
-            'notification.email' => {
-              'subject' => 'Hello',
-              'body'    => 'World!'
-            }
-          }
-        end
-
-        it 'raises an error' do
-          expect { trigger.save! }.to raise_error(Exceptions::UnprocessableEntity, 'Invalid perform notification.email, recipient is missing!')
-        end
-      end
-    end
-
   end
 
   describe 'Send-email triggers' do

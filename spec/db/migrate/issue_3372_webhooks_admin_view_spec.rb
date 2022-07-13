@@ -21,11 +21,17 @@ RSpec.describe Issue3372WebhooksAdminView, type: :db_migration do
   end
 
   let!(:trigger) do
-    Trigger.without_callback(:create, :before, :validate_perform) do
-      create(:trigger, perform: {
-               'notification.webhook' => trigger_webhook_config
-             })
-    end
+    validator = Trigger.validators_on(:perform).find(Validations::VerifyPerformRulesValidator).first
+
+    allow(validator).to receive(:validate_each)
+
+    trigger = create(:trigger, perform: {
+                       'notification.webhook' => trigger_webhook_config
+                     })
+
+    allow(validator).to receive(:validate_each).and_call_original
+
+    trigger
   end
 
   it 'Creates Webhook object from mapped Trigger configuration' do

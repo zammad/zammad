@@ -4,14 +4,14 @@ class Job < ApplicationModel
   include ChecksClientNotification
   include ChecksConditionValidation
   include ChecksHtmlSanitized
-  include ChecksPerformValidation
   include HasTimeplan
 
   include Job::Assets
 
   store     :condition
   store     :perform
-  validates :name, presence: true
+  validates :name,    presence: true
+  validates :perform, 'validations/verify_perform_rules': true
 
   before_save :updated_matching, :update_next_run_at
 

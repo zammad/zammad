@@ -8,6 +8,12 @@ RSpec.describe Macro, type: :model do
   it_behaves_like 'HasCollectionUpdate', collection_factory: :macro
   it_behaves_like 'HasXssSanitizedNote', model_factory: :macro
 
+  describe 'validation' do
+    it 'uses Validations::VerifyPerformRulesValidator' do
+      expect(described_class).to have_validator(Validations::VerifyPerformRulesValidator).on(:perform)
+    end
+  end
+
   describe 'Instance methods:' do
     describe '#applicable_on?' do
       let(:ticket)   { create(:ticket) }

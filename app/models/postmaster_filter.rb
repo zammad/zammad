@@ -5,7 +5,8 @@ class PostmasterFilter < ApplicationModel
 
   store     :perform
   store     :match
-  validates :name, presence: true
+  validates :name,    presence: true
+  validates :perform, 'validations/verify_perform_rules': true
 
   before_create :validate_condition
   before_update :validate_condition
