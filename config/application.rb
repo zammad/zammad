@@ -64,6 +64,8 @@ module Zammad
 
     config.active_job.queue_adapter = :delayed_job
 
+    config.active_record.use_yaml_unsafe_load = true
+
     # Use custom logger to log Thread id next to Process pid
     config.log_formatter = ::Logger::Formatter.new
 
