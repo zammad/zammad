@@ -518,12 +518,34 @@
     callback(item.content, [])
   }
 
+  function matchItemWithRegExp(item, regex) {
+    return (item.name && item.name.match(regex)) || (item.keywords && item.keywords.match(regex))
+  }
+
+  function compareItem(a, b) {
+    if (a.name < b.name) {
+      return 1;
+    }
+    if (a.name > b.name) {
+      return -1;
+    }
+    return 0;
+  }
+
   Collection.renderResults = function(textmodule, term) {
-    var reg    = new RegExp(term, 'i')
-    var result = textmodule.collection.filter(function(item) {
-      return (item.name && item.name.match(reg)) || (item.keywords && item.keywords.match(reg))
+    var reg     = new RegExp(term, 'i')
+    var regFull = new RegExp('\\b' + term + '\\b', 'i')
+    var result  = textmodule.collection.filter(function(item) {
+      return matchItemWithRegExp(item, reg) && !matchItemWithRegExp(item, regFull)
     })
-    result.reverse()
+    var resultFull = textmodule.collection.filter(function(item) {
+      return matchItemWithRegExp(item, regFull)
+    })
+    result.sort(compareItem)
+    if (resultFull.length) {
+      resultFull.sort(compareItem)
+      result = result.concat(resultFull)
+    }
 
     textmodule.emptyResultsContainer()
 
