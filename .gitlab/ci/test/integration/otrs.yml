@@ -2,117 +2,54 @@
   extends:
     - .template_integration
   script:
-    - !reference [.scripts, zammad_db_unseeded]
-    - bundle exec rails test test/integration/otrs_import_test.rb
+    - !reference [.scripts, zammad_db_init]
+    - bundle exec rspec spec/integration/otrs_spec.rb
+  services:
+    - !reference [.services, mysql]
+    - !reference [.services, postgresql]
+    - !reference [.services, redis]
+    - !reference [.services, memcached]
+    - name: $CI_REGISTRY/docker/zammad-ci-otrsimport-db:$OTRS_CONTAINER_TAG
+      alias: zammad-ci-otrsimport-db
+    - name: $CI_REGISTRY/docker/zammad-ci-otrsimport-app:$OTRS_CONTAINER_TAG
+      alias: zammad-ci-otrsimport-app
   variables:
     FF_NETWORK_PER_BUILD: 1 # https://docs.gitlab.com/runner/configuration/feature-flags.html
     IMPORT_OTRS_ENDPOINT: 'http://zammad-ci-otrsimport-app/otrs/public.pl?Action=ZammadMigrator'
     TZ: 'Europe/Berlin' # Required for the zammad-ci-otrsimport-app containers
 
-minitest:integration:otrs:6:
+rspec:integration:otrs:6:
   extends:
     - .template_integration_otrs
-  services:
-    - name: $CI_REGISTRY/docker/zammad-mysql:stable
-      alias: mysql
-    - name: $CI_REGISTRY/docker/zammad-postgresql:stable
-      alias: postgresql
-    - name: $CI_REGISTRY/docker/zammad-redis:stable
-      alias: redis
-    - name: $CI_REGISTRY/docker/zammad-memcached:stable
-      alias: memcached
-      command: ['memcached', '-m', '256M']
-    - name: $CI_REGISTRY/docker/zammad-ci-otrsimport-db:otrs6
-      alias: zammad-ci-otrsimport-db
-    - name: $CI_REGISTRY/docker/zammad-ci-otrsimport-app:otrs6
-      alias: zammad-ci-otrsimport-app
+  variables:
+    OTRS_CONTAINER_TAG: 'otrs6'
 
-minitest:integration:otrs:5:
+rspec:integration:otrs:5:
   extends:
     - .template_integration_otrs
-  services:
-    - name: $CI_REGISTRY/docker/zammad-mysql:stable
-      alias: mysql
-    - name: $CI_REGISTRY/docker/zammad-postgresql:stable
-      alias: postgresql
-    - name: $CI_REGISTRY/docker/zammad-redis:stable
-      alias: redis
-    - name: $CI_REGISTRY/docker/zammad-memcached:stable
-      alias: memcached
-      command: ['memcached', '-m', '256M']
-    - name: $CI_REGISTRY/docker/zammad-ci-otrsimport-db:otrs5
-      alias: zammad-ci-otrsimport-db
-    - name: $CI_REGISTRY/docker/zammad-ci-otrsimport-app:otrs5
-      alias: zammad-ci-otrsimport-app
+  variables:
+    OTRS_CONTAINER_TAG: 'otrs5'
 
-minitest:integration:otrs:4:
+rspec:integration:otrs:4:
   extends:
     - .template_integration_otrs
-  services:
-    - name: $CI_REGISTRY/docker/zammad-mysql:stable
-      alias: mysql
-    - name: $CI_REGISTRY/docker/zammad-postgresql:stable
-      alias: postgresql
-    - name: $CI_REGISTRY/docker/zammad-redis:stable
-      alias: redis
-    - name: $CI_REGISTRY/docker/zammad-memcached:stable
-      alias: memcached
-      command: ['memcached', '-m', '256M']
-    - name: $CI_REGISTRY/docker/zammad-ci-otrsimport-db:otrs4
-      alias: zammad-ci-otrsimport-db
-    - name: $CI_REGISTRY/docker/zammad-ci-otrsimport-app:otrs4
-      alias: zammad-ci-otrsimport-app
+  variables:
+    OTRS_CONTAINER_TAG: 'otrs4'
 
-minitest:integration:otrs:33:
+rspec:integration:otrs:33:
   extends:
     - .template_integration_otrs
-  services:
-    - name: $CI_REGISTRY/docker/zammad-mysql:stable
-      alias: mysql
-    - name: $CI_REGISTRY/docker/zammad-postgresql:stable
-      alias: postgresql
-    - name: $CI_REGISTRY/docker/zammad-redis:stable
-      alias: redis
-    - name: $CI_REGISTRY/docker/zammad-memcached:stable
-      alias: memcached
-      command: ['memcached', '-m', '256M']
-    - name: $CI_REGISTRY/docker/zammad-ci-otrsimport-db:otrs33
-      alias: zammad-ci-otrsimport-db
-    - name: $CI_REGISTRY/docker/zammad-ci-otrsimport-app:otrs33
-      alias: zammad-ci-otrsimport-app
+  variables:
+    OTRS_CONTAINER_TAG: 'otrs33'
 
-minitest:integration:otrs:32:
+rspec:integration:otrs:32:
   extends:
     - .template_integration_otrs
-  services:
-    - name: $CI_REGISTRY/docker/zammad-mysql:stable
-      alias: mysql
-    - name: $CI_REGISTRY/docker/zammad-postgresql:stable
-      alias: postgresql
-    - name: $CI_REGISTRY/docker/zammad-redis:stable
-      alias: redis
-    - name: $CI_REGISTRY/docker/zammad-memcached:stable
-      alias: memcached
-      command: ['memcached', '-m', '256M']
-    - name: $CI_REGISTRY/docker/zammad-ci-otrsimport-db:otrs32
-      alias: zammad-ci-otrsimport-db
-    - name: $CI_REGISTRY/docker/zammad-ci-otrsimport-app:otrs32
-      alias: zammad-ci-otrsimport-app
+  variables:
+    OTRS_CONTAINER_TAG: 'otrs32'
 
-minitest:integration:otrs:31:
+rspec:integration:otrs:31:
   extends:
     - .template_integration_otrs
-  services:
-    - name: $CI_REGISTRY/docker/zammad-mysql:stable
-      alias: mysql
-    - name: $CI_REGISTRY/docker/zammad-postgresql:stable
-      alias: postgresql
-    - name: $CI_REGISTRY/docker/zammad-redis:stable
-      alias: redis
-    - name: $CI_REGISTRY/docker/zammad-memcached:stable
-      alias: memcached
-      command: ['memcached', '-m', '256M']
-    - name: $CI_REGISTRY/docker/zammad-ci-otrsimport-db:otrs31
-      alias: zammad-ci-otrsimport-db
-    - name: $CI_REGISTRY/docker/zammad-ci-otrsimport-app:otrs31
-      alias: zammad-ci-otrsimport-app
+  variables:
+    OTRS_CONTAINER_TAG: 'otrs31'

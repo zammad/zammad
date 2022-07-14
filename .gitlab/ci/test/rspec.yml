@@ -26,4 +26,4 @@ rspec:integration:
     - !reference [.services, memcached]
   script:
     - !reference [.scripts, zammad_db_init]
-    - bundle exec rspec --exclude-pattern "spec/system/**/*_spec.rb" -t integration --profile 10
+    - bundle exec rspec --exclude-pattern "spec/system/**/*_spec.rb" -t integration -t ~integration_standalone --profile 10
