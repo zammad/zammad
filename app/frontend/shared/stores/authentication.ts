@@ -21,8 +21,7 @@ const useAuthenticationStore = defineStore(
       await clearApolloClientStore()
 
       const session = useSessionStore()
-      session.id = null
-      session.user = null
+      session.resetCurrentSession()
       authenticated.value = false
 
       // Refresh the config after logout, to have only the non authenticated version.

@@ -384,7 +384,7 @@ if (props.formSchemaId) {
     :config="formConfig"
     :form-class="localClass"
     :actions="false"
-    :incomplete-message="true"
+    :incomplete-message="false"
     :plugins="localFormKitPlugins"
     :sections-schema="formKitSectionsSchema"
     :disabled="localDisabled"

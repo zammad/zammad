@@ -8,6 +8,7 @@ import { QueryHandler } from '@shared/server/apollo/handler'
 import type { UserData } from '@shared/types/store'
 import hasPermission from '@shared/utils/hasPermission'
 import type { RequiredPermission } from '@shared/types/permission'
+import { CurrentUserUpdatesDocument } from '@shared/graphql/subscriptions/currentUserUpdates.api'
 import type {
   CurrentUserQuery,
   CurrentUserQueryVariables,
@@ -44,9 +45,7 @@ let currentUserQuery: QueryHandler<CurrentUserQuery, CurrentUserQueryVariables>
 const getCurrentUserQuery = () => {
   if (currentUserQuery) return currentUserQuery
 
-  currentUserQuery = new QueryHandler(
-    useCurrentUserQuery({ fetchPolicy: 'no-cache' }),
-  )
+  currentUserQuery = new QueryHandler(useCurrentUserQuery())
 
   return currentUserQuery
 }
@@ -67,28 +66,61 @@ const useSessionStore = defineStore('session', () => {
 
   const user = ref<Maybe<UserData>>(null)
 
+  let currentUserSubscriptionInitialized = false
+  let currentUserWatchOnResultInitialized = false
   const getCurrentUser = async (): Promise<Maybe<UserData>> => {
-    const currentUserQuery = getCurrentUserQuery()
+    if (currentUserQuery && !user.value) {
+      currentUserQuery.start()
+    }
 
-    const result = await currentUserQuery.loadedResult(true)
-    user.value = result?.currentUser || null
+    const query = getCurrentUserQuery()
+
+    // Watch on result that also the subscription to more will update the user data.
+    if (!currentUserWatchOnResultInitialized) {
+      query.watchOnResult((result) => {
+        user.value = result?.currentUser || null
+      })
+      currentUserWatchOnResultInitialized = true
+    }
+
+    await query.loadedResult(true)
 
     // Check if the locale is different, then a update is needed.
     const locale = useLocaleStore()
-    const userLocale = user.value?.preferences?.locale
+    const userLocale = user.value?.preferences?.locale as string
 
     if (
       userLocale &&
-      (userLocale !== locale.localeData || !locale.localeData)
+      (!locale.localeData || userLocale !== locale.localeData.locale)
     ) {
       await locale.setLocale(userLocale)
     }
 
     if (user.value) {
       testFlags.set('useSessionUserStore.getCurrentUser.loaded')
+
+      query.watchOnResult((result) => {
+        user.value = result?.currentUser || null
+      })
+
+      if (!currentUserSubscriptionInitialized) {
+        query.operationResult.subscribeToMore({
+          document: CurrentUserUpdatesDocument,
+          variables: { userId: user.value.id },
+        })
+
+        currentUserSubscriptionInitialized = true
+      }
     }
 
     return user.value
+  }
+
+  const resetCurrentSession = () => {
+    if (currentUserQuery) currentUserQuery.stop()
+
+    id.value = null
+    user.value = null
   }
 
   const userHasPermission = (
@@ -105,6 +137,7 @@ const useSessionStore = defineStore('session', () => {
     checkSession,
     user,
     getCurrentUser,
+    resetCurrentSession,
     hasPermission: userHasPermission,
   }
 })

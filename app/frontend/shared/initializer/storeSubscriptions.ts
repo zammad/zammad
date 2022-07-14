@@ -24,9 +24,14 @@ export default function initializeStoreSubscriptions(): void {
 
       watch(
         () => session.user,
-        (newValue) => {
-          if (!newValue) {
-            locale.setLocale()
+        (newValue, oldValue) => {
+          if (
+            !newValue ||
+            (oldValue?.preferences?.locale &&
+              locale.localeData &&
+              newValue.preferences?.locale !== locale.localeData.locale)
+          ) {
+            locale.setLocale(newValue?.preferences?.locale)
           }
         },
       )

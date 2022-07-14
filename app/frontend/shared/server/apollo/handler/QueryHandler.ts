@@ -97,6 +97,15 @@ export default class QueryHandler<
     return (this.operationResult as never as { load: () => void }).load()
   }
 
+  public start(): void {
+    this.operationResult.start()
+  }
+
+  public stop(): void {
+    this.firstResultLoaded = false
+    this.operationResult.stop()
+  }
+
   public async onLoaded(
     triggerPossibleRefetch = false,
   ): Promise<Maybe<TResult>> {

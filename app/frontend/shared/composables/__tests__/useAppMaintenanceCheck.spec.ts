@@ -6,13 +6,13 @@ import { AppMaintenanceDocument } from '@shared/graphql/subscriptions/appMainten
 import { AppMaintenanceType } from '@shared/graphql/types'
 import { renderComponent } from '@tests/support/components'
 import {
+  type ExtendedIMockSubscription,
   mockGraphQLApi,
   mockGraphQLSubscription,
 } from '@tests/support/mock-graphql-api'
-import { IMockSubscription } from 'mock-apollo-client'
 import useAppMaintenanceCheck from '../useAppMaintenanceCheck'
 
-let subscriptionAppMaintenance: IMockSubscription
+let subscriptionAppMaintenance: ExtendedIMockSubscription
 
 describe('useAppMaintenanceCheck', () => {
   beforeAll(() => {
@@ -42,8 +42,8 @@ describe('useAppMaintenanceCheck', () => {
     useNotifications().clearAllNotifications()
   })
 
-  it('reacts to config_updated message', () => {
-    subscriptionAppMaintenance.next({
+  it('reacts to config_updated message', async () => {
+    await subscriptionAppMaintenance.next({
       data: {
         appMaintenance: {
           type: AppMaintenanceType.ConfigChanged,
@@ -58,8 +58,8 @@ describe('useAppMaintenanceCheck', () => {
     )
   })
 
-  it('reacts to app_version message', () => {
-    subscriptionAppMaintenance.next({
+  it('reacts to app_version message', async () => {
+    await subscriptionAppMaintenance.next({
       data: {
         appMaintenance: {
           type: AppMaintenanceType.AppVersion,
@@ -74,8 +74,8 @@ describe('useAppMaintenanceCheck', () => {
     )
   })
 
-  it('reacts to reload_auto message', () => {
-    subscriptionAppMaintenance.next({
+  it('reacts to reload_auto message', async () => {
+    await subscriptionAppMaintenance.next({
       data: {
         appMaintenance: {
           type: AppMaintenanceType.RestartAuto,
@@ -90,8 +90,8 @@ describe('useAppMaintenanceCheck', () => {
     )
   })
 
-  it('reacts to reload_manual message', () => {
-    subscriptionAppMaintenance.next({
+  it('reacts to reload_manual message', async () => {
+    await subscriptionAppMaintenance.next({
       data: {
         appMaintenance: {
           type: AppMaintenanceType.RestartManual,

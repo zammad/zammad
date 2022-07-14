@@ -83,7 +83,7 @@ describe('testing login maintenance mode', () => {
     await visitView('/')
 
     // Change maintenance mode to trigger the logout for non admin user.
-    mockSubscription.next({
+    await mockSubscription.next({
       data: {
         configUpdates: {
           setting: {
@@ -93,8 +93,6 @@ describe('testing login maintenance mode', () => {
         },
       },
     })
-
-    await waitForNextTick(true)
 
     expect(useAuthenticationStore().authenticated).toBe(true)
   })
@@ -130,7 +128,7 @@ describe('testing login maintenance mode', () => {
     const view = await visitView('/')
 
     // Change maintenance mode to trigger the logout for non admin user.
-    mockSubscription.next({
+    await mockSubscription.next({
       data: {
         configUpdates: {
           setting: {
@@ -140,8 +138,6 @@ describe('testing login maintenance mode', () => {
         },
       },
     })
-
-    await waitForNextTick(true)
 
     expect(useAuthenticationStore().authenticated).toBe(false)
 

@@ -904,6 +904,13 @@ export type ConfigUpdatesSubscriptionVariables = Exact<{ [key: string]: never; }
 
 export type ConfigUpdatesSubscription = { __typename?: 'Subscriptions', configUpdates: { __typename?: 'ConfigUpdatesPayload', setting?: { __typename?: 'KeyComplexValue', key: string, value?: any | null } | null } };
 
+export type CurrentUserUpdatesSubscriptionVariables = Exact<{
+  userId: Scalars['ID'];
+}>;
+
+
+export type CurrentUserUpdatesSubscription = { __typename?: 'Subscriptions', userUpdates: { __typename?: 'UserUpdatesPayload', user?: { __typename?: 'User', id: string, firstname?: string | null, lastname?: string | null, fullname?: string | null, preferences?: any | null, objectAttributeValues: Array<{ __typename?: 'ObjectAttributeValue', value?: string | null, attribute: { __typename?: 'ObjectManagerAttribute', name: string, display: string, dataType: string, dataOption?: any | null, screens?: any | null, editable: boolean, active: boolean } }>, organization?: { __typename?: 'Organization', name: string, objectAttributeValues: Array<{ __typename?: 'ObjectAttributeValue', value?: string | null, attribute: { __typename?: 'ObjectManagerAttribute', name: string, display: string, dataType: string, dataOption?: any | null, screens?: any | null, editable: boolean, active: boolean } }> } | null, permissions?: { __typename?: 'Permission', names: Array<string> } | null } | null } };
+
 export type PushMessagesSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
