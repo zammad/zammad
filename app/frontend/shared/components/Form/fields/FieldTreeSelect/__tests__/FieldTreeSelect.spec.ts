@@ -6,18 +6,6 @@ import { FormKit } from '@formkit/vue'
 import { renderComponent } from '@tests/support/components'
 import { i18n } from '@shared/i18n'
 
-vi.mock('@vueuse/core', async () => {
-  const mod = await vi.importActual<typeof import('@vueuse/core')>(
-    '@vueuse/core',
-  )
-  return {
-    ...mod,
-    usePointerSwipe: vi
-      .fn()
-      .mockReturnValue({ distanceY: 0, isSwiping: false }),
-  }
-})
-
 // Mock IntersectionObserver feature by injecting it into the global namespace.
 //   More info here: https://vitest.dev/guide/mocking.html#globals
 const IntersectionObserverMock = vi.fn(() => ({

@@ -81,7 +81,7 @@ const useSessionStore = defineStore('session', () => {
       userLocale &&
       (userLocale !== locale.localeData || !locale.localeData)
     ) {
-      await locale.updateLocale(userLocale)
+      await locale.setLocale(userLocale)
     }
 
     if (user.value) {

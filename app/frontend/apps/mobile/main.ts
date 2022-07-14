@@ -39,7 +39,7 @@ export default async function mountApp(): Promise<void> {
   const locale = useLocaleStore()
 
   if (!locale.localeData) {
-    await locale.updateLocale()
+    await locale.setLocale()
   }
 
   app.mount('#app')

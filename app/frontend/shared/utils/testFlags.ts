@@ -3,9 +3,18 @@
 import { Mutex } from 'async-mutex'
 
 class TestFlags {
-  private mutex = new Mutex()
+  // @ts-expect-error this is not called in production
+  private mutex: Mutex
 
-  private flags: Map<string, boolean> = new Map()
+  // @ts-expect-error this is not called in production
+  private flags: Map<string, boolean>
+
+  constructor() {
+    if (VITE_TEST_MODE) {
+      this.mutex = new Mutex()
+      this.flags = new Map()
+    }
+  }
 
   get(flag: string, skipClearing = false): boolean {
     if (!VITE_TEST_MODE) return false

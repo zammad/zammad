@@ -48,10 +48,10 @@ describe('Translations Store', () => {
 
   it('sets rtl correctly', async () => {
     expect.assertions(4)
-    await locale.updateLocale('ar')
+    await locale.setLocale('ar')
     expect(document.documentElement.getAttribute('dir')).toBe('rtl')
     expect(document.documentElement.getAttribute('lang')).toBe('ar')
-    await locale.updateLocale('de-de')
+    await locale.setLocale('de-de')
     expect(document.documentElement.getAttribute('dir')).toBe('ltr')
     expect(document.documentElement.getAttribute('lang')).toBe('de-de')
   })

@@ -13,24 +13,29 @@ type Locale = LastArrayElement<LocalesQuery['locales']>
 
 const useLocaleStore = defineStore('locale', () => {
   const localeData = ref<Maybe<Locale>>(null)
+  const locales = ref<Maybe<LocalesQuery['locales']>>(null)
 
-  const updateLocale = async (newLocale?: string): Promise<void> => {
-    const availableLocales = await getAvailableLocales()
+  const loadLocales = async (): Promise<void> => {
+    if (locales.value) return
 
-    if (!availableLocales?.length) return
+    locales.value = await getAvailableLocales()
+  }
+
+  const setLocale = async (locale?: string): Promise<void> => {
+    await loadLocales()
 
     let newLocaleData
 
-    if (newLocale) {
-      newLocaleData = availableLocales.find((elem) => {
-        return elem.locale === newLocale
+    if (locale) {
+      newLocaleData = locales.value?.find((elem) => {
+        return elem.locale === locale
       })
     }
 
     if (!newLocaleData)
-      newLocaleData = localeForBrowserLanguage(availableLocales || [])
+      newLocaleData = localeForBrowserLanguage(locales.value || [])
 
-    log.debug('localeStore.updateLocale()', newLocaleData)
+    log.debug('localeStore.setLocale()', newLocaleData)
 
     // Update the translation store, when the locale is different.
     if (localeData.value?.locale !== newLocaleData.locale) {
@@ -43,8 +48,10 @@ const useLocaleStore = defineStore('locale', () => {
   }
 
   return {
+    locales,
     localeData,
-    updateLocale,
+    setLocale,
+    loadLocales,
   }
 })
 

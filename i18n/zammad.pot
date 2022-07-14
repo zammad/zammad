@@ -3338,6 +3338,7 @@ msgid "Devices"
 msgstr ""
 
 #: app/assets/javascripts/app/views/profile/language.jst.eco
+#: app/frontend/apps/mobile/modules/account/views/AccountOverview.vue
 msgid "Did you know? You can help translating %s at:"
 msgstr ""
 
@@ -9196,6 +9197,10 @@ msgstr ""
 msgid "The issue could not be saved."
 msgstr ""
 
+#: app/frontend/apps/mobile/modules/account/views/AccountOverview.vue
+msgid "The language could not be updated."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_new.coffee
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
@@ -9841,10 +9846,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/mixins/ticket_mass_updatable.coffee
 msgid "Ticket failed to save: %s"
-msgstr ""
-
-#: app/frontend/apps/mobile/modules/account/views/AccountOverview.vue
-msgid "Ticket notifications"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee

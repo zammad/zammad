@@ -26,7 +26,7 @@ export default function initializeStoreSubscriptions(): void {
         () => session.user,
         (newValue) => {
           if (!newValue) {
-            locale.updateLocale()
+            locale.setLocale()
           }
         },
       )

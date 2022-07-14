@@ -1,13 +1,17 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
+import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import CommonSectionMenu from '@mobile/components/CommonSectionMenu/CommonSectionMenu.vue'
-import type { MenuItem } from '@mobile/components/CommonSectionMenu'
 import CommonUserAvatar from '@shared/components/CommonUserAvatar/CommonUserAvatar.vue'
 import useSessionStore from '@shared/stores/session'
 import CommonSectionMenuLink from '@mobile/components/CommonSectionMenu/CommonSectionMenuLink.vue'
+import useLocaleStore from '@shared/stores/locale'
+import FormGroup from '@shared/components/Form/FormGroup.vue'
+import { MutationHandler } from '@shared/server/apollo/handler'
+import { useAccountLocaleMutation } from '../graphql/locale.api'
 
 const router = useRouter()
 
@@ -15,22 +19,42 @@ const logout = () => {
   router.push('/logout')
 }
 
-const menu: MenuItem[] = [
-  {
-    type: 'link',
-    icon: { name: 'bell', size: 'base' },
-    iconBg: 'bg-blue',
-    title: __('Ticket notifications'),
-  },
-  {
-    type: 'link',
-    icon: { name: 'form', size: 'small' },
-    iconBg: 'bg-orange',
-    title: __('Language'),
-  },
-]
-
 const { user } = storeToRefs(useSessionStore())
+
+const localeStore = useLocaleStore()
+const savingLocale = ref(false)
+
+const locales = computed(() => {
+  return (
+    localeStore.locales?.map((locale) => {
+      return { label: locale.name, value: locale.locale }
+    }) || []
+  )
+})
+
+const localeMutation = new MutationHandler(useAccountLocaleMutation({}), {
+  errorNotificationMessage: __('The language could not be updated.'),
+})
+
+const currentLocale = computed({
+  get: () => localeStore.localeData?.locale ?? null,
+  set: (locale) => {
+    // don't update if locale is the same
+    if (
+      !locale ||
+      savingLocale.value ||
+      localeStore.localeData?.locale === locale
+    )
+      return
+    savingLocale.value = true
+    Promise.all([
+      localeStore.setLocale(locale),
+      localeMutation.send({ locale }),
+    ]).finally(() => {
+      savingLocale.value = false
+    })
+  },
+})
 </script>
 
 <template>
@@ -56,7 +80,23 @@ const { user } = storeToRefs(useSessionStore())
       </CommonSectionMenuLink>
     </CommonSectionMenu>
 
-    <CommonSectionMenu :items="menu" />
+    <FormGroup>
+      <FormKit
+        v-model="currentLocale"
+        type="treeselect"
+        :label="__('Language')"
+        :options="locales"
+        :disabled="savingLocale"
+        no-options-label-translation
+      />
+
+      <template #help>
+        {{ $t('Did you know? You can help translating %s at:', 'Zammad') }}
+        <CommonLink class="text-blue" link="https://translations.zammad.org">
+          translations.zammad.org
+        </CommonLink>
+      </template>
+    </FormGroup>
 
     <CommonSectionMenu>
       <CommonSectionMenuLink

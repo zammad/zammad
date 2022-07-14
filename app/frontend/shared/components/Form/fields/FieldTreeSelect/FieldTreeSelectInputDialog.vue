@@ -5,7 +5,7 @@ import CommonInputSearch from '@shared/components/CommonInputSearch/CommonInputS
 import CommonDialog from '@mobile/components/CommonDialog/CommonDialog.vue'
 import CommonTicketStateIndicator from '@shared/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue'
 import { closeDialog } from '@shared/composables/useDialog'
-import { computed, nextTick, ref, toRef, watch } from 'vue'
+import { computed, nextTick, onMounted, ref, toRef, watch } from 'vue'
 import { escapeRegExp } from 'lodash-es'
 import useSelectOptions from '../../composables/useSelectOptions'
 import { FlatSelectOption, TreeSelectContext, TreeSelectOption } from './types'
@@ -72,8 +72,7 @@ watch(() => contextReactive.value.noFiltering, clearFilter)
 
 const focusFirstTarget = (targetElements?: HTMLElement[]) => {
   if (!props.context.noFiltering) {
-    const filterInputElement = filterInput.value
-    if (filterInputElement) filterInputElement.focus()
+    filterInput.value?.focus()
     return
   }
 
@@ -172,6 +171,10 @@ const goToPreviousPage = () => {
 const goToNextPage = (option: FlatSelectOption) => {
   nextPageCallback(option, getDialogFocusTargets)
 }
+
+onMounted(() => {
+  filterInput.value?.focus()
+})
 </script>
 
 <template>

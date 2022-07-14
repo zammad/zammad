@@ -19,3 +19,23 @@ export const waitForNextTick = async (withTimeout = false) => {
 
   return nextTick()
 }
+
+export const waitUntil = async (
+  condition: () => unknown,
+  msThreshold = 1000,
+) => {
+  return new Promise<void>((resolve, reject) => {
+    const start = Date.now()
+    const max = start + msThreshold
+    const interval = setInterval(() => {
+      if (condition()) {
+        clearInterval(interval)
+        resolve()
+      }
+      if (max < Date.now()) {
+        clearInterval(interval)
+        reject(new Error('Timeout'))
+      }
+    }, 30)
+  })
+}
