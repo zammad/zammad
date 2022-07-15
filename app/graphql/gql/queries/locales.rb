@@ -5,11 +5,14 @@ module Gql::Queries
 
     description 'Locales available in the system'
 
+    argument :only_active, Boolean, required: false, description: 'Fetch only active locales'
+
     type [Gql::Types::LocaleType, { null: false }], null: false
 
-    def resolve(...)
+    def resolve(only_active: false)
+      return Locale.where(active: true) if only_active
+
       Locale.all
     end
-
   end
 end

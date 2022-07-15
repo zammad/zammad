@@ -7,7 +7,7 @@ import { visitView } from '@tests/support/components/visitView'
 import { mockAccount } from '@tests/support/mock-account'
 import { mockGraphQLApi } from '@tests/support/mock-graphql-api'
 import { waitUntil } from '@tests/support/utils'
-import { AccountLocaleDocument } from '../graphql/locale.api'
+import { AccountLocaleDocument } from '../graphql/mutations/locale.api'
 
 const locales: Record<string, LocalesQuery['locales'][number]> = {
   de: {

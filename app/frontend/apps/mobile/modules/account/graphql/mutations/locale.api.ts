@@ -1,7 +1,7 @@
-import * as Types from '../../../../../shared/graphql/types';
+import * as Types from '../../../../../../shared/graphql/types';
 
 import gql from 'graphql-tag';
-import { ErrorsFragmentDoc } from '../../../../../shared/graphql/fragments/errors.api';
+import { ErrorsFragmentDoc } from '../../../../../../shared/graphql/fragments/errors.api';
 import * as VueApolloComposable from '@vue/apollo-composable';
 import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;

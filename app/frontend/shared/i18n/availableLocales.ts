@@ -11,7 +11,7 @@ const getAvailableLocales = async (): Promise<
 > => {
   if (availableLocales !== undefined) return availableLocales
 
-  const query = new QueryHandler(useLocalesQuery())
+  const query = new QueryHandler(useLocalesQuery({ onlyActive: true }))
   const result = await query.loadedResult()
 
   availableLocales = result?.locales || null

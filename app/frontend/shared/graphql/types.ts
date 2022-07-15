@@ -395,6 +395,12 @@ export type QueriesFormSchemaArgs = {
 
 
 /** All available queries */
+export type QueriesLocalesArgs = {
+  onlyActive?: InputMaybe<Scalars['Boolean']>;
+};
+
+
+/** All available queries */
 export type QueriesNodeArgs = {
   id: Scalars['ID'];
 };
@@ -876,7 +882,9 @@ export type CurrentUserQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type CurrentUserQuery = { __typename?: 'Queries', currentUser: { __typename?: 'User', id: string, firstname?: string | null, lastname?: string | null, fullname?: string | null, preferences?: any | null, objectAttributeValues: Array<{ __typename?: 'ObjectAttributeValue', value?: string | null, attribute: { __typename?: 'ObjectManagerAttribute', name: string, display: string, dataType: string, dataOption?: any | null, screens?: any | null, editable: boolean, active: boolean } }>, organization?: { __typename?: 'Organization', name: string, objectAttributeValues: Array<{ __typename?: 'ObjectAttributeValue', value?: string | null, attribute: { __typename?: 'ObjectManagerAttribute', name: string, display: string, dataType: string, dataOption?: any | null, screens?: any | null, editable: boolean, active: boolean } }> } | null, permissions?: { __typename?: 'Permission', names: Array<string> } | null } };
 
-export type LocalesQueryVariables = Exact<{ [key: string]: never; }>;
+export type LocalesQueryVariables = Exact<{
+  onlyActive?: InputMaybe<Scalars['Boolean']>;
+}>;
 
 
 export type LocalesQuery = { __typename?: 'Queries', locales: Array<{ __typename?: 'Locale', locale: string, alias?: string | null, name: string, dir: TextDirection, active: boolean }> };

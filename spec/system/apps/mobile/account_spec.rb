@@ -17,7 +17,7 @@ RSpec.describe 'Mobile > App Account Page', type: :system, app: :mobile do
 
         click('output', text: %r{English}i)
         click('span', text: %r{Dansk}i)
-        sleep 1
+        wait_for_test_flag('updateLocale.success')
         admin.reload
         expect(admin.preferences[:locale]).to eq('da')
       end

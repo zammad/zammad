@@ -1,5 +1,5 @@
-query locales {
-  locales {
+query locales($onlyActive: Boolean = false) {
+  locales(onlyActive: $onlyActive) {
     locale
     alias
     name

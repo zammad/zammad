@@ -4,14 +4,15 @@
 import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
-import CommonSectionMenu from '@mobile/components/CommonSectionMenu/CommonSectionMenu.vue'
-import CommonUserAvatar from '@shared/components/CommonUserAvatar/CommonUserAvatar.vue'
-import useSessionStore from '@shared/stores/session'
-import CommonSectionMenuLink from '@mobile/components/CommonSectionMenu/CommonSectionMenuLink.vue'
-import useLocaleStore from '@shared/stores/locale'
-import FormGroup from '@shared/components/Form/FormGroup.vue'
 import { MutationHandler } from '@shared/server/apollo/handler'
-import { useAccountLocaleMutation } from '../graphql/locale.api'
+import useSessionStore from '@shared/stores/session'
+import useLocaleStore from '@shared/stores/locale'
+import testFlags from '@shared/utils/testFlags'
+import FormGroup from '@shared/components/Form/FormGroup.vue'
+import CommonUserAvatar from '@shared/components/CommonUserAvatar/CommonUserAvatar.vue'
+import CommonSectionMenu from '@mobile/components/CommonSectionMenu/CommonSectionMenu.vue'
+import CommonSectionMenuLink from '@mobile/components/CommonSectionMenu/CommonSectionMenuLink.vue'
+import { useAccountLocaleMutation } from '../graphql/mutations/locale.api'
 
 const router = useRouter()
 
@@ -50,9 +51,13 @@ const currentLocale = computed({
     Promise.all([
       localeStore.setLocale(locale),
       localeMutation.send({ locale }),
-    ]).finally(() => {
-      savingLocale.value = false
-    })
+    ])
+      .then(() => {
+        testFlags.set('updateLocale.success')
+      })
+      .finally(() => {
+        savingLocale.value = false
+      })
   },
 })
 </script>
@@ -80,6 +85,9 @@ const currentLocale = computed({
       </CommonSectionMenuLink>
     </CommonSectionMenu>
 
+    <!--
+      TODO: no-options-label-translation is not working currently, therefore we need to explicitly set it to true
+    -->
     <FormGroup>
       <FormKit
         v-model="currentLocale"
@@ -87,7 +95,8 @@ const currentLocale = computed({
         :label="__('Language')"
         :options="locales"
         :disabled="savingLocale"
-        no-options-label-translation
+        :no-options-label-translation="true"
+        sorting="label"
       />
 
       <template #help>
