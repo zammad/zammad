@@ -6,6 +6,7 @@ module Gql::Types
     include GraphQL::Types::Relay::ConnectionBehaviors
 
     node_nullable(false)
+    edge_nullable(false)
     edges_nullable(false)
 
     field :total_count, Integer, null: false, description: 'Indicates the total number of available records.'
