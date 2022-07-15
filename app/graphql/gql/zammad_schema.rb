@@ -32,9 +32,25 @@ class Gql::ZammadSchema < GraphQL::Schema
     object.to_gid_param
   end
 
-  # Given a string UUID, find the object (limit to model(s) via :only).
-  def self.object_from_id(id, _query_ctx = nil, only: ActiveRecord::Base)
-    GlobalID.find(id, only: [only].flatten)
+  # Given a string UUID, find the object.
+  def self.object_from_id(id, _query_ctx = nil, type: ActiveRecord::Base)
+    GlobalID.find(id, only: [type])
+  end
+
+  # Find the object, but also ensure its type and that it was actually found.
+  def self.verified_object_from_id(id, type:)
+    object_from_id(id, type: type) || raise(ActiveRecord::RecordNotFound, "Could not find #{only} #{id}")
+  end
+
+  # Like .verified_object_from_id, but with additional Pundit autorization.
+  #   This is only needed for objects where no validation takes place through their GraphQL type.
+  def self.authorized_object_from_id(id, type:, user:, query: :show?)
+    verified_object_from_id(id, type: type).tap do |object|
+      Pundit.authorize user, object, query
+    rescue Pundit::NotAuthorizedError => e
+      # Map Pundit errors since we are not in a GraphQL built-in authorization context here.
+      raise Exceptions::Forbidden, e.message
+    end
   end
 
   def self.unauthorized_object(error)
@@ -45,11 +61,13 @@ class Gql::ZammadSchema < GraphQL::Schema
     raise Exceptions::Forbidden, error.message # Add a top-level error to the response instead of returning nil.
   end
 
+  RETHROWABLE_ERRORS = [ArgumentError, IndexError, NameError, RangeError, RegexpError, SystemCallError, ThreadError, TypeError, ZeroDivisionError].freeze
+
   # Post-process errors and enrich them with meta information for processing on the client side.
   rescue_from(StandardError) do |err, _obj, _args, _ctx, _field|
 
     # Re-throw built-in errors that point to programming errors rather than problems with input or data - causes GraphQL processing to be aborted.
-    [ArgumentError, IndexError, NameError, RangeError, RegexpError, SystemCallError, ThreadError, TypeError, ZeroDivisionError].each do |klass|
+    RETHROWABLE_ERRORS.each do |klass|
       raise err if err.is_a? klass
     end
 

@@ -11,7 +11,7 @@ module Gql::Mutations
 
     def resolve(form_id:, file_ids:)
       cache = UploadCache.new(form_id)
-      file_ids.map { |file_id| cache.remove_item(Gql::ZammadSchema.object_from_id(file_id, only: Store).id) }
+      file_ids.map { |file_id| cache.remove_item(Gql::ZammadSchema.verified_object_from_id(file_id, type: ::Store).id) }
       { success: true }
     end
 

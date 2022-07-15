@@ -1,10 +1,13 @@
-query ticketsById(
-  $ticketId: ID!
+query ticket(
+  $ticketId: ID
+  $ticketInternalId: Int
+  $ticketNumber: String
   $withArticles: Boolean = false
   $withObjectAttributes: Boolean = false
 ) {
-  ticketById(ticketId: $ticketId) {
+  ticket(ticketId: $ticketId, ticketInternalId: $ticketInternalId, ticketNumber: $ticketNumber) {
     id
+    internalId
     number
     title
     createdAt

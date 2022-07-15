@@ -12,7 +12,7 @@ module Gql::Queries
     type Gql::Types::OverviewType.connection_type, null: false
 
     def resolve(...)
-      Ticket::Overviews.all(current_user: context.current_user)
+      ::Ticket::Overviews.all(current_user: context.current_user)
     end
 
   end

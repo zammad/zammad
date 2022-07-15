@@ -126,7 +126,7 @@ RSpec.describe Gql::RecordLoader, type: :graphql do
 
     it 'performs only the expected amount of DB queries', authenticated_as: :agent do # rubocop:disable RSpec/ExampleLength, RSpec/MultipleExpectations
       query = read_graphql_file('shared/graphql/fragments/objectAttributeValues.graphql') +
-              read_graphql_file('apps/mobile/modules/ticket/graphql/queries/ticketById.graphql')
+              read_graphql_file('apps/mobile/modules/ticket/graphql/queries/ticket.graphql')
       variables = { ticketId: ticket_id, withArticles: true }
 
       total_queries = {}
@@ -136,7 +136,7 @@ RSpec.describe Gql::RecordLoader, type: :graphql do
         graphql_execute(query, variables: variables)
       end
 
-      expect(result['data']['ticketById']['id']).to eq(ticket_id)
+      expect(result['data']['ticket']['id']).to eq(ticket_id)
 
       expect(total_queries).to include(
         {

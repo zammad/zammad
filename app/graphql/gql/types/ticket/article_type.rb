@@ -10,6 +10,9 @@ module Gql::Types::Ticket
 
     description 'Ticket articles'
 
+    belongs_to :type, Gql::Types::Ticket::Article::TypeType, null: true
+    belongs_to :sender, Gql::Types::Ticket::Article::TypeType, null: true
+
     field :from, String
     field :to, String
     field :cc, String

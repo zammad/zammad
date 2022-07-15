@@ -1,0 +1,37 @@
+query ticketArticles(
+  $ticketId: ID!
+) {
+  ticketArticles(ticketId: $ticketId) {
+    totalCount
+    edges {
+      node {
+        id
+        from
+        to
+        cc
+        subject
+        replyTo
+        messageId
+        messageIdMd5
+        inReplyTo
+        contentType
+        references
+        body
+        internal
+        createdAt
+        updatedAt
+        type {
+          name
+        }
+        sender {
+          name
+        }
+      }
+      cursor
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+  }
+}
