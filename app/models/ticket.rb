@@ -320,6 +320,11 @@ returns
           target_ticket.last_contact_at = last_contact_at
         end
 
+        if last_contact_agent_at.to_i > target_ticket.last_contact_agent_at.to_i
+          # set last_contact_at agent
+          target_ticket.last_contact_agent_at = last_contact_agent_at
+        end
+
         # save target ticket
         target_ticket.save!
       end

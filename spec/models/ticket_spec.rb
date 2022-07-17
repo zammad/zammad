@@ -333,17 +333,21 @@ RSpec.describe Ticket, type: :model do
           end
 
           it 'when agent already replied on target ticket' do
-            target_ticket['last_contact_agent_at'] = 5.minutes.ago
+            agent_timestamp = 5.minutes.ago
+            target_ticket['last_contact_agent_at'] = agent_timestamp
             target_ticket.save!
             expect { ticket.merge_to(ticket_id: target_ticket.id, user_id: merge_user.id) }
               .to change { target_ticket.reload.last_contact_customer_at }.to(ticket['last_contact_customer_at'])
+            expect(target_ticket.reload.last_contact_agent_at).to be_within(1.minute).of(agent_timestamp)
           end
 
           it 'when agent already replied on origin ticket' do
-            ticket['last_contact_agent_at'] = 5.minutes.ago
+            agent_timestamp = 5.minutes.ago
+            ticket['last_contact_agent_at'] = agent_timestamp
             ticket.save!
             expect { ticket.merge_to(ticket_id: target_ticket.id, user_id: merge_user.id) }
               .to change { target_ticket.reload.last_contact_customer_at }.to(ticket['last_contact_customer_at'])
+            expect(target_ticket.reload.last_contact_agent_at).to be_within(1.minute).of(agent_timestamp)
           end
         end
 
@@ -372,17 +376,21 @@ RSpec.describe Ticket, type: :model do
           end
 
           it 'not when agent already replied on target ticket' do
-            target_ticket['last_contact_agent_at'] = 5.minutes.ago
+            agent_timestamp = 5.minutes.ago
+            target_ticket['last_contact_agent_at'] = agent_timestamp
             target_ticket.save!
             ticket.merge_to(ticket_id: target_ticket.id, user_id: merge_user.id)
             expect(target_ticket.reload.last_contact_customer_at).not_to eq ticket.reload.last_contact_customer_at
+            expect(target_ticket.reload.last_contact_agent_at).to be_within(1.minute).of(agent_timestamp)
           end
 
           it 'not when agent already replied on origin ticket' do
-            ticket['last_contact_agent_at'] = 5.minutes.ago
+            agent_timestamp = 5.minutes.ago
+            ticket['last_contact_agent_at'] = agent_timestamp
             ticket.save!
             ticket.merge_to(ticket_id: target_ticket.id, user_id: merge_user.id)
             expect(target_ticket.reload.last_contact_customer_at).not_to eq ticket.reload.last_contact_customer_at
+            expect(target_ticket.reload.last_contact_agent_at).to be_within(1.minute).of(agent_timestamp)
           end
         end
       end
