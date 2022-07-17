@@ -309,6 +309,84 @@ RSpec.describe Ticket, type: :model do
         end
       end
 
+      describe 'updates last contact' do
+        context 'on older target ticket' do
+          let(:merge_user) { create(:user) }
+
+          before do
+            target_ticket['last_contact_customer_at'] = 60.minutes.ago
+            ticket['last_contact_customer_at'] = 20.minutes.ago
+            ticket.save!
+            target_ticket.save!
+          end
+
+          it 'when having ticket_last_contact_behaviour set to based_on_customer_reaction' do
+            Setting.set('ticket_last_contact_behaviour', 'based_on_customer_reaction')
+            expect { ticket.merge_to(ticket_id: target_ticket.id, user_id: merge_user.id) }
+              .to change { target_ticket.reload.last_contact_customer_at }.to(ticket['last_contact_customer_at'])
+          end
+
+          it 'not when having ticket_last_contact_behaviour set to check_if_agent_already_replied' do
+            Setting.set('ticket_last_contact_behaviour', 'check_if_agent_already_replied')
+            ticket.merge_to(ticket_id: target_ticket.id, user_id: merge_user.id)
+            expect(target_ticket.reload.last_contact_customer_at).not_to eq ticket.reload.last_contact_customer_at
+          end
+
+          it 'when agent already replied on target ticket' do
+            target_ticket['last_contact_agent_at'] = 5.minutes.ago
+            target_ticket.save!
+            expect { ticket.merge_to(ticket_id: target_ticket.id, user_id: merge_user.id) }
+              .to change { target_ticket.reload.last_contact_customer_at }.to(ticket['last_contact_customer_at'])
+          end
+
+          it 'when agent already replied on origin ticket' do
+            ticket['last_contact_agent_at'] = 5.minutes.ago
+            ticket.save!
+            expect { ticket.merge_to(ticket_id: target_ticket.id, user_id: merge_user.id) }
+              .to change { target_ticket.reload.last_contact_customer_at }.to(ticket['last_contact_customer_at'])
+          end
+        end
+
+        context 'on newer target ticket' do
+          let(:merge_user) { create(:user) }
+
+          before do
+            target_ticket['last_contact_customer_at'] = 20.minutes.ago
+            ticket['last_contact_customer_at'] = 60.minutes.ago
+            ticket.save!
+            target_ticket.save!
+          end
+
+          it 'not when having ticket_last_contact_behaviour set to based_on_customer_reaction' do
+            Setting.set('ticket_last_contact_behaviour', 'based_on_customer_reaction')
+            expect(target_ticket.last_contact_customer_at.to_i).not_to eq ticket.last_contact_customer_at.to_i
+            ticket.merge_to(ticket_id: target_ticket.id, user_id: merge_user.id)
+            expect(target_ticket.last_contact_customer_at.to_i).not_to eq ticket.last_contact_customer_at.to_i
+            expect(target_ticket.reload.last_contact_customer_at).not_to eq ticket.reload.last_contact_customer_at
+          end
+
+          it 'not when having ticket_last_contact_behaviour set to check_if_agent_already_replied' do
+            Setting.set('ticket_last_contact_behaviour', 'check_if_agent_already_replied')
+            expect { ticket.merge_to(ticket_id: target_ticket.id, user_id: merge_user.id) }
+              .to not_change { target_ticket.reload.last_contact_customer_at }
+          end
+
+          it 'not when agent already replied on target ticket' do
+            target_ticket['last_contact_agent_at'] = 5.minutes.ago
+            target_ticket.save!
+            ticket.merge_to(ticket_id: target_ticket.id, user_id: merge_user.id)
+            expect(target_ticket.reload.last_contact_customer_at).not_to eq ticket.reload.last_contact_customer_at
+          end
+
+          it 'not when agent already replied on origin ticket' do
+            ticket['last_contact_agent_at'] = 5.minutes.ago
+            ticket.save!
+            ticket.merge_to(ticket_id: target_ticket.id, user_id: merge_user.id)
+            expect(target_ticket.reload.last_contact_customer_at).not_to eq ticket.reload.last_contact_customer_at
+          end
+        end
+      end
+
       # https://github.com/zammad/zammad/issues/3105
       context 'when merge actions triggers exist', :performs_jobs do
         before do

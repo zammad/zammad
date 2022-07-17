@@ -307,6 +307,23 @@ returns
       # which might be a long time ago
       target_ticket.updated_at = Time.zone.now
 
+      # update last contact on target ticket depending on setting or if agent already had responded
+      if Setting.get('ticket_last_contact_behaviour') == 'based_on_customer_reaction' ||
+         target_ticket.agent_responded? || agent_responded?
+        if last_contact_customer_at.to_i > target_ticket.last_contact_customer_at.to_i
+          # set last_contact_at customer
+          target_ticket.last_contact_customer_at = last_contact_customer_at
+        end
+
+        if last_contact_at.to_i > target_ticket.last_contact_at.to_i
+          # set last_contact
+          target_ticket.last_contact_at = last_contact_at
+        end
+
+        # save target ticket
+        target_ticket.save!
+      end
+
       # add merge event to both ticket's history (Issue #2469 - Add information "Ticket merged" to History)
       target_ticket.history_log(
         'received_merge',
