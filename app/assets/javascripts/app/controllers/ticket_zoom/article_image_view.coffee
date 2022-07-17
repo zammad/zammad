@@ -5,6 +5,7 @@ class App.TicketZoomArticleImageView extends App.ControllerModal
   buttonClass: 'btn--success'
   head: ''
   veryLarge: true
+  nextElement: null
 
   events:
     'submit form':      'submit'
@@ -20,16 +21,14 @@ class App.TicketZoomArticleImageView extends App.ControllerModal
     )
 
   nextRight: =>
-    nextElement = @parentElement.closest('.attachment').next('.attachment.attachment--preview')
-    return if nextElement.length is 0
+    this.nextElement = @parentElement.closest('.attachment').next('.attachment.attachment--preview')
+    return if @nextElement.length is 0
     @close()
-    nextElement.find('img').trigger('click')
 
   nextLeft: =>
-    prevElement = @parentElement.closest('.attachment').prev('.attachment.attachment--preview')
-    return if prevElement.length is 0
+    this.nextElement = @parentElement.closest('.attachment').prev('.attachment.attachment--preview')
+    return if @nextElement.length is 0
     @close()
-    prevElement.find('img').trigger('click')
 
   content: ->
     @image = @image.replace(/view=preview/, 'view=inline')
@@ -40,8 +39,15 @@ class App.TicketZoomArticleImageView extends App.ControllerModal
     url = "#{$(@image).attr('src')}?disposition=attachment"
     window.open(url, '_blank')
 
+  onShow: =>
+    @el.attr('tabindex', '-1')
+    $('.modal').focus()
+
   onClose: =>
     @unbindAll()
+
+  onClosed: =>
+    this.nextElement.find('img').trigger('click') if this.nextElement
 
   unbindAll: ->
     $(document).off('keydown.image_preview')
