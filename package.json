@@ -92,7 +92,7 @@
     "@formkit/utils": "^1.0.0-beta.9",
     "@formkit/validation": "^1.0.0-beta.9",
     "@formkit/vue": "^1.0.0-beta.9",
-    "@rails/actioncable": "6.0.5",
+    "@rails/actioncable": "6.1.6",
     "@tiptap/core": "^2.0.0-beta.182",
     "@tiptap/extension-image": "^2.0.0-beta.30",
     "@tiptap/extension-link": "^2.0.0-beta.43",
