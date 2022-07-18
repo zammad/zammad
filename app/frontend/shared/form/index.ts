@@ -32,8 +32,10 @@ export const getFormPlugins = (
   return plugins
 }
 
-const pluginModules: ImportGlobEagerOutput<FormKitPlugin> =
-  import.meta.globEager('./plugins/global/*.ts')
+const pluginModules: ImportGlobEagerOutput<FormKitPlugin> = import.meta.glob(
+  './plugins/global/*.ts',
+  { eager: true },
+)
 const plugins = getFormPlugins(pluginModules)
 
 export const buildFormKitPluginConfig = (

@@ -16,7 +16,7 @@ import type {
 } from '@shared/types/utils'
 
 const fieldModules: ImportGlobEagerOutput<FormFieldTypeImportModules> =
-  import.meta.globEager('../../components/Form/fields/**/index.ts')
+  import.meta.glob('../../components/Form/fields/**/index.ts', { eager: true })
 
 // The main field type "form" from FormKit is a fixed type.
 const fields: FormFieldsTypeDefinition = {

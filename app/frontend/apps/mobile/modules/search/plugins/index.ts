@@ -12,7 +12,7 @@ export interface SearchPlugin<T = unknown> {
   itemTitle?(entity: T): string // by default "title" field
 }
 
-const pluginsModules = import.meta.importGlob<SearchPlugin>(
+const pluginsModules = import.meta.glob<SearchPlugin>(
   ['./**/*.ts', '!./**/index.ts', '!./__tests__/**/*.ts'],
   {
     eager: true,

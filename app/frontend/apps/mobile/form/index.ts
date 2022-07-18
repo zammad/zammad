@@ -11,12 +11,14 @@ import type {
 import type { ImportGlobEagerOutput } from '@shared/types/utils'
 import getCoreClasses from './theme/global/getCoreClasses'
 
-const pluginModules: ImportGlobEagerOutput<FormKitPlugin> =
-  import.meta.globEager('./plugins/global/*.ts')
+const pluginModules: ImportGlobEagerOutput<FormKitPlugin> = import.meta.glob(
+  './plugins/global/*.ts',
+  { eager: true },
+)
 const fieldModules: ImportGlobEagerOutput<FormFieldTypeImportModules> =
-  import.meta.globEager('../components/Form/fields/**/index.ts')
+  import.meta.glob('../components/Form/fields/**/index.ts', { eager: true })
 const themeExtensionModules: ImportGlobEagerOutput<FormThemeExtension> =
-  import.meta.globEager('./theme/global/extensions/*.ts')
+  import.meta.glob('./theme/global/extensions/*.ts', { eager: true })
 
 const initializeForm: InitializeAppForm = (app: App) => {
   const plugins = getFormPlugins(pluginModules)

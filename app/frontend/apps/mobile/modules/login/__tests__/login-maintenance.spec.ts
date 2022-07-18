@@ -13,7 +13,6 @@ import { LogoutDocument } from '@shared/graphql/mutations/logout.api'
 import { ApplicationConfigDocument } from '@shared/graphql/queries/applicationConfig.api'
 import { waitFor } from '@testing-library/vue'
 import useAuthenticationStore from '@shared/stores/authentication'
-import { waitForNextTick } from '@tests/support/utils'
 import { mockPermissions } from '@tests/support/mock-permissions'
 
 vi.mock('@shared/server/apollo/client', () => {

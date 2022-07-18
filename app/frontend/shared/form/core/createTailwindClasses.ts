@@ -14,7 +14,7 @@ import type {
 import commonClasses from '../theme/global'
 
 const extensionsModules: ImportGlobEagerOutput<FormThemeExtension> =
-  import.meta.globEager('../theme/global/extensions/*.ts')
+  import.meta.glob('../theme/global/extensions/*.ts', { eager: true })
 
 const getExtensionsFromModules = (
   extensionsModules: ImportGlobEagerOutput<FormThemeExtension>,

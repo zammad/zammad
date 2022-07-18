@@ -7,8 +7,9 @@ import type { InitializeAppRouter, RoutesModule } from '@shared/types/router'
 import LayoutMain from '@mobile/components/layout/LayoutMain.vue'
 import transitionViewGuard from './guards/before/viewTransition'
 
-const routeModules: Record<string, RoutesModule> = import.meta.globEager(
+const routeModules: Record<string, RoutesModule> = import.meta.glob(
   '../modules/*/routes.ts',
+  { eager: true },
 )
 
 const mainRoutes: Array<RouteRecordRaw> = []

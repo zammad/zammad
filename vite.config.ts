@@ -6,7 +6,6 @@
 import { defineConfig } from 'vite'
 import RubyPlugin from 'vite-plugin-ruby'
 import VuePlugin from '@vitejs/plugin-vue'
-import Glob from 'vite-plugin-glob'
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 import type { OptimizeOptions } from 'svgo'
 import * as path from 'path'
@@ -51,7 +50,6 @@ export default defineConfig(({ mode, command }) => {
           },
         },
       }),
-      Glob(),
       createSvgIconsPlugin({
         // Specify the icon folder to be cached
         iconDirs: [

@@ -10,8 +10,9 @@ import type {
 
 let cacheConfig: InMemoryCacheConfig = {}
 
-const cacheInitializerModules: CacheInitializerModules = import.meta.globEager(
+const cacheInitializerModules: CacheInitializerModules = import.meta.glob(
   './cache/initializer/*.ts',
+  { eager: true },
 )
 
 const registerInitializeModules = (

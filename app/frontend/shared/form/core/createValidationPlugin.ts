@@ -16,7 +16,7 @@ import type {
 } from '@shared/types/utils'
 
 const ruleModules: ImportGlobEagerOutput<FormValidationRuleType> =
-  import.meta.globEager('../validation/rules/*.ts')
+  import.meta.glob('../validation/rules/*.ts', { eager: true })
 
 const createValidationPlugin = (): FormKitPlugin => {
   const rules: FormValidationRules = {}
