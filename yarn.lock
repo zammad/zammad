@@ -1255,19 +1255,19 @@
     lodash "^4.17.15"
     redent "^3.0.0"
 
-"@testing-library/user-event@^14.2.1":
-  version "14.2.1"
-  resolved "https://registry.yarnpkg.com/@testing-library/user-event/-/user-event-14.2.1.tgz#8c5ff2d004544bb2220e1d864f7267fe7eb6c556"
-  integrity sha512-HOr1QiODrq+0j9lKU5i10y9TbhxMBMRMGimNx10asdmau9cb8Xb1Vyg0GvTwyIL2ziQyh2kAloOtAQFBQVuecA==
+"@testing-library/user-event@^14.2.5":
+  version "14.2.5"
+  resolved "https://registry.yarnpkg.com/@testing-library/user-event/-/user-event-14.2.5.tgz#a27a16ee7f915c22c62b9c065d743248ee79dcb6"
+  integrity sha512-xcSw47H8JidxQPAqPlHp4l51EYJx+2TlHgYBW9i+noNlgUMMrhgtefnrWcpZ1k9ep6SMhJVyx3N7F4tIKTuJ9w==
 
-"@testing-library/vue@^6.6.0":
-  version "6.6.0"
-  resolved "https://registry.yarnpkg.com/@testing-library/vue/-/vue-6.6.0.tgz#5d5d1f5544969c6b0733b1b325c0df7e1ae3c5da"
-  integrity sha512-pVCYlXSc19TDe8h9KgZGRY9CrdrsN2wLOegWbyI53FDUEJOuk/3w/BeXPLTQPMYxIv4N3/ZKK2ZJcBsNCouajA==
+"@testing-library/vue@^6.6.1":
+  version "6.6.1"
+  resolved "https://registry.yarnpkg.com/@testing-library/vue/-/vue-6.6.1.tgz#b28d0ce9c0228032873947a1a5a2b96fc9016096"
+  integrity sha512-vpyBPrHzKTwEGS7ehUC8/IXgnqTBEMk6jd52Gouf51arG2jUorPhmkbsxUwJOyxz6L0gj2ZcmWnznG1OJcTCDQ==
   dependencies:
     "@babel/runtime" "^7.15.4"
     "@testing-library/dom" "^8.5.0"
-    "@vue/test-utils" "^2.0.0-rc.18"
+    "@vue/test-utils" "^2.0.0"
 
 "@tiptap/core@^2.0.0-beta.182":
   version "2.0.0-beta.182"
@@ -1980,12 +1980,7 @@
   resolved "https://registry.yarnpkg.com/@vue/shared/-/shared-3.2.37.tgz#8e6adc3f2759af52f0e85863dfb0b711ecc5c702"
   integrity sha512-4rSJemR2NQIo9Klm1vabqWjD8rs/ZaJSzMxkMNeJS6lHiUjjUeYFbooN19NgFjztubEKh3WlZUeOLVdbbUWHsw==
 
-"@vue/test-utils@^2.0.0-rc.18":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@vue/test-utils/-/test-utils-2.0.0.tgz#06455934091d237d71d81bac6617485de38b1c58"
-  integrity sha512-zL5kygNq7hONrO1CzaUGprEAklAX+pH8J1MPMCU3Rd2xtSYkZ+PmKU3oEDRg8VAGdL5lNJHzDgrud5amFPtirw==
-
-"@vue/test-utils@^2.0.2":
+"@vue/test-utils@^2.0.0", "@vue/test-utils@^2.0.2":
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/@vue/test-utils/-/test-utils-2.0.2.tgz#0b5edd683366153d5bc5a91edc62f292118710eb"
   integrity sha512-E2P4oXSaWDqTZNbmKZFVLrNN/siVN78YkEqs7pHryWerrlZR9bBFLWdJwRoguX45Ru6HxIflzKl4vQvwRMwm5g==
@@ -5116,10 +5111,10 @@ loader-utils@^1.1.0:
     emojis-list "^3.0.0"
     json5 "^1.0.1"
 
-local-pkg@^0.4.1:
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/local-pkg/-/local-pkg-0.4.1.tgz#e7b0d7aa0b9c498a1110a5ac5b00ba66ef38cfff"
-  integrity sha512-lL87ytIGP2FU5PWwNDo0w3WhIo2gopIAxPg9RxDYF7m4rr5ahuZxP22xnJHIvaLTe4Z9P6uKKY2UHiwyB4pcrw==
+local-pkg@^0.4.2:
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/local-pkg/-/local-pkg-0.4.2.tgz#13107310b77e74a0e513147a131a2ba288176c2f"
+  integrity sha512-mlERgSPrbxU3BP4qBqAvvwlgW4MTg78iwJdGGnv7kibKjWcJksrG3t6LB5lXI93wXRDvG4NpUgJFmTG4T6rdrg==
 
 locate-path@^2.0.0:
   version "2.0.0"
@@ -7192,15 +7187,15 @@ timezone-mock@^1.3.4:
   resolved "https://registry.yarnpkg.com/timezone-mock/-/timezone-mock-1.3.4.tgz#16cc40bfad10d461f8a41ed7396eeb6ea1e1b2b3"
   integrity sha512-B0CGmOgMPVUZqp63eU/FGcDaL68JjHeiVnCF24K99Kj6AwCV15BHWMLCv8ZKSUq5oyVHTtg7p1ajOWfXB+0wnQ==
 
-tinypool@^0.2.1:
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/tinypool/-/tinypool-0.2.1.tgz#7c3347514de36113f224212590de17f04fdf0078"
-  integrity sha512-HFU5ZYVq3wBfhSaf8qdqGsneaqXm0FgJQpoUlJbVdHpRLzm77IneKAD3RjzJWZvIv0YpPB9S7LUW53f6BE6ZSg==
+tinypool@^0.2.4:
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/tinypool/-/tinypool-0.2.4.tgz#4d2598c4689d1a2ce267ddf3360a9c6b3925a20c"
+  integrity sha512-Vs3rhkUH6Qq1t5bqtb816oT+HeJTXfwt2cbPH17sWHIYKTotQIFPk3tf2fgqRrVyMDVOc1EnPgzIxfIulXVzwQ==
 
-tinyspy@^0.3.3:
-  version "0.3.3"
-  resolved "https://registry.yarnpkg.com/tinyspy/-/tinyspy-0.3.3.tgz#8b57f8aec7fe1bf583a3a49cb9ab30c742f69237"
-  integrity sha512-gRiUR8fuhUf0W9lzojPf1N1euJYA30ISebSfgca8z76FOvXtVXqd5ojEIaKLWbDQhAaC3ibxZIjqbyi4ybjcTw==
+tinyspy@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/tinyspy/-/tinyspy-1.0.0.tgz#0cb34587287b0432b33fe36a9bd945fe22b1eb89"
+  integrity sha512-FI5B2QdODQYDRjfuLF+OrJ8bjWRMCXokQPcwKm0W3IzcbUmBNv536cQc7eXGoAuXphZwgx1DFbqImwzz08Fnhw==
 
 tippy.js@^6.3.7:
   version "6.3.7"
@@ -7612,19 +7607,19 @@ vitest-mock-extended@^0.1.10:
   dependencies:
     ts-essentials "^9.2.0"
 
-vitest@^0.18.0:
-  version "0.18.0"
-  resolved "https://registry.yarnpkg.com/vitest/-/vitest-0.18.0.tgz#a9b59213ee6917e9da0797a2e1d7cb52b8f1b644"
-  integrity sha512-ryAtlh5Gvg3+aLNuOQ8YOHxgQCCu46jx40X5MBL0K0/ejB9i5zsr8fV8LTGXbXex80UMHlzceI9F+ouGaiR+mQ==
+vitest@^0.18.1:
+  version "0.18.1"
+  resolved "https://registry.yarnpkg.com/vitest/-/vitest-0.18.1.tgz#33c5003fc8c4b296801897ae1a3f142f57015574"
+  integrity sha512-4F/1K/Vn4AvJwe7i2YblR02PT5vMKcw9KN4unDq2KD0YcSxX0B/6D6Qu9PJaXwVuxXMFTQ5ovd4+CQaW3bwofA==
   dependencies:
     "@types/chai" "^4.3.1"
     "@types/chai-subset" "^1.3.3"
     "@types/node" "*"
     chai "^4.3.6"
     debug "^4.3.4"
-    local-pkg "^0.4.1"
-    tinypool "^0.2.1"
-    tinyspy "^0.3.3"
+    local-pkg "^0.4.2"
+    tinypool "^0.2.4"
+    tinyspy "^1.0.0"
     vite "^2.9.12 || ^3.0.0-0"
 
 vue-advanced-cropper@^2.8.3:
