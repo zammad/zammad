@@ -464,7 +464,7 @@ GEM
       rubocop-ast (>= 1.18.0, < 2.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 1.4.0, < 3.0)
-    rubocop-ast (1.18.0)
+    rubocop-ast (1.19.1)
       parser (>= 3.1.1.0)
     rubocop-faker (1.1.0)
       faker (>= 2.12.0)
@@ -475,7 +475,7 @@ GEM
       activesupport
       rubocop
       rubocop-rspec
-    rubocop-performance (1.14.2)
+    rubocop-performance (1.14.3)
       rubocop (>= 1.7.0, < 2.0)
       rubocop-ast (>= 0.4.0)
     rubocop-rails (2.15.2)
@@ -708,4 +708,4 @@ RUBY VERSION
    ruby 3.0.4p208
 
 BUNDLED WITH
-   2.3.17
+   2.3.18
