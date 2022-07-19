@@ -48,38 +48,56 @@ update search index, if configured - will be executed automatically
     true
   end
 
-=begin
+  def search_index_indexable
+    Models.indexable.reject { |local_class| local_class == self.class }
+  end
 
-update search index, if configured - will be executed automatically
+  def search_index_indexable_attributes(index_class)
+    result = []
+    index_class.new.attributes.each do |key, _value|
+      attribute_name = key.to_s
+      next if attribute_name.blank?
 
-  model = Organizations.find(123)
-  result = model.search_index_update_associations_full
+      # due to performance reasons, we only want to process some attributes for specific classes (e.g. tickets)
+      next if !index_class.search_index_attribute_relevant?(attribute_name)
 
-returns
+      attribute_ref_name = index_class.search_index_attribute_ref_name(attribute_name)
+      next if attribute_ref_name.blank?
 
-  # Updates asscociation data for users and tickets of the organization in this example
-  result = true
+      association = index_class.reflect_on_association(attribute_ref_name)
+      next if association.blank?
+      next if association.options[:polymorphic]
 
-=end
+      attribute_class = association.klass
+      next if attribute_class.blank?
+      next if attribute_class != self.class
 
-  def search_index_update_associations_full
-    update_class = {
-      'Organization'     => :organization_id,
-      'Group'            => :group_id,
-      'Ticket::State'    => :state_id,
-      'Ticket::Priority' => :priority_id,
-    }
-    update_column = update_class[self.class.to_s]
-    return if update_column.blank?
-
-    # reindex all object related tickets for the given object id
-    # we can not use the delta function for this because of the excluded
-    # ticket article attachments. see explain in delta function
-    Ticket.select('id').where(update_column => id).order(id: :desc).limit(10_000).pluck(:id).each do |ticket_id|
-      SearchIndexJob.perform_later('Ticket', ticket_id)
+      result << {
+        name:     attribute_name,
+        ref_name: attribute_ref_name,
+      }
     end
+    result
+  end
 
-    true
+  def search_index_indexable_bulk_updates?(index_class)
+    SearchIndexBackend.get_mapping_properties_object(index_class).dig(:_source, :excludes).blank?
+  end
+
+  def search_index_update_full(index_class:, attribute:)
+    index_class.select('id').where(attribute[:name] => id).order(id: :desc).limit(10_000).pluck(:id).each do |row_id|
+      SearchIndexJob.perform_later(index_class.to_s, row_id)
+    end
+  end
+
+  def search_index_update_delta(index_class:, value:, attribute:)
+    data = {
+      attribute[:ref_name] => value,
+    }
+    where = {
+      attribute[:name] => id
+    }
+    SearchIndexBackend.update_by_query(index_class.to_s, data, where)
   end
 
 =begin
@@ -87,7 +105,7 @@ returns
 update search index, if configured - will be executed automatically
 
   model = Organizations.find(123)
-  result = model.search_index_update_associations_delta
+  result = model.search_index_update_associations
 
 returns
 
@@ -96,7 +114,7 @@ returns
 
 =end
 
-  def search_index_update_associations_delta
+  def search_index_update_associations
 
     # start background job to transfer data to search index
     return true if !SearchIndexBackend.enabled?
@@ -104,40 +122,13 @@ returns
     new_search_index_value = search_index_attribute_lookup(include_references: false)
     return if new_search_index_value.blank?
 
-    Models.indexable.each do |local_object|
-      next if local_object == self.class
-
-      # delta update of associations is only possible for
-      # objects which are not containing modifications of the source
-      # https://github.com/zammad/zammad/blob/264853dcbe4e53addaf0f8e6df3735ceddc9de63/lib/tasks/search_index_es.rake#L266
-      # because of the exlusion of the article attachments for the ticket
-      # we dont have the attachment data available in the json store of the object.
-      # so the search index would lose the attachment information on the _update_by_query function
-      # https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping-source-field.html
-      next if local_object.to_s == 'Ticket'
-
-      local_object.new.attributes.each do |key, _value|
-        attribute_name = key.to_s
-        next if attribute_name.blank?
-
-        attribute_ref_name = local_object.search_index_attribute_ref_name(attribute_name)
-        next if attribute_ref_name.blank?
-
-        association = local_object.reflect_on_association(attribute_ref_name)
-        next if association.blank?
-        next if association.options[:polymorphic]
-
-        attribute_class = association.klass
-        next if attribute_class.blank?
-        next if attribute_class != self.class
-
-        data = {
-          attribute_ref_name => new_search_index_value,
-        }
-        where = {
-          attribute_name => id
-        }
-        SearchIndexBackend.update_by_query(local_object.to_s, data, where)
+    search_index_indexable.each do |index_class|
+      search_index_indexable_attributes(index_class).each do |attribute|
+        if search_index_indexable_bulk_updates?(index_class)
+          search_index_update_delta(index_class: index_class, value: new_search_index_value, attribute: attribute)
+        else
+          search_index_update_full(index_class: index_class, attribute: attribute)
+        end
       end
     end
 
@@ -203,6 +194,10 @@ end
 
     def search_index_attributes_ignored(*attributes)
       @search_index_attributes_ignored = attributes
+    end
+
+    def search_index_attributes_relevant(*attributes)
+      @search_index_attributes_relevant = attributes
     end
 
 =begin

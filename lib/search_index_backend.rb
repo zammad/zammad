@@ -151,6 +151,22 @@ add new object to search index
 
 =begin
 
+get object of search index by id
+
+  SearchIndexBackend.get('Ticket', 123)
+
+=end
+
+  def self.get(type, data)
+
+    url = build_url(type: type, object_id: data, with_pipeline: false)
+    return if url.blank?
+
+    make_request(url, method: :get).try(:data)
+  end
+
+=begin
+
 This function updates specifc attributes of an index based on a query.
 
   data = {

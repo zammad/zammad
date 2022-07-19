@@ -164,5 +164,24 @@ returns
 
       ignored_attributes.include?(attribute_name.to_sym)
     end
+
+=begin
+
+This function returns if a search index attribute is relevant for creating/updating the search index for this object.
+
+relevant = Ticket.search_index_attribute_relevant?('organization_id')
+
+returns
+
+relevant = true
+
+=end
+
+    def search_index_attribute_relevant?(attribute_name = '')
+      relevant_attributes = instance_variable_get(:@search_index_attributes_relevant) || []
+      return true if relevant_attributes.blank?
+
+      relevant_attributes.include?(attribute_name.to_sym)
+    end
   end
 end

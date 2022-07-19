@@ -22,5 +22,16 @@ RSpec.describe KnowledgeBase::Answer::Translation, type: :model, current_user_id
       expect(described_class.search(query: query, current_user: user))
         .to include published_answer.translations.first
     end
+
+    # https://github.com/zammad/zammad/issues/4134
+    context 'when associations are updated' do
+      it 'does not delete the attachment from the search index' do
+        User.find(1).search_index_update_associations
+        SearchIndexBackend.refresh
+
+        expect(described_class.search(query: query, current_user: user))
+          .to include published_answer.translations.first
+      end
+    end
   end
 end
