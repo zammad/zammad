@@ -561,6 +561,7 @@ msgstr "账号尚未通过验证"
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/time_unit.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
+#: app/graphql/gql/types/overview_type.rb
 msgid "Accounted Time"
 msgstr "佔用時間"
 
@@ -868,7 +869,6 @@ msgid "Alarm"
 msgstr "警报"
 
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
-#: app/frontend/apps/mobile/modules/home/views/Home.vue
 msgid "All Tickets"
 msgstr "所有工单"
 
@@ -1108,6 +1108,7 @@ msgid "Article could not be deleted."
 msgstr "文章不能被删除。"
 
 #: app/assets/javascripts/app/models/ticket.coffee
+#: app/graphql/gql/types/overview_type.rb
 msgid "Article#"
 msgstr "文章#"
 
@@ -1688,6 +1689,7 @@ msgstr "不能更新密码，输入的密码不对。请重试！"
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue
 #: app/frontend/apps/mobile/modules/search/views/SearchOverview.vue
+#: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 msgid "Cancel"
 msgstr "取消"
 
@@ -2017,6 +2019,7 @@ msgstr "清除"
 msgid "Clear Search"
 msgstr "搜索"
 
+#: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
 #: app/frontend/shared/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 #, fuzzy
@@ -2119,6 +2122,7 @@ msgid "Closed Tickets"
 msgstr "关闭的工单"
 
 #: app/assets/javascripts/app/models/ticket.coffee
+#: app/graphql/gql/types/overview_type.rb
 msgid "Closing time"
 msgstr "关闭时间"
 
@@ -2539,7 +2543,6 @@ msgstr "创建第一个工单"
 #: app/assets/javascripts/app/views/popover/ticket.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco
-#: app/frontend/apps/mobile/modules/ticket/components/TicketList/TicketList.vue
 #: app/models/report.rb
 msgid "Created"
 msgstr "创建于"
@@ -2558,6 +2561,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/http_log.jst.eco
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
 #: app/controllers/time_accountings_controller.rb
+#: app/graphql/gql/types/overview_type.rb
 msgid "Created at"
 msgstr "创建时间"
 
@@ -2576,6 +2580,7 @@ msgstr "创建时间"
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/assets/javascripts/app/models/ticket_article.coffee
 #: app/assets/javascripts/app/models/user.coffee
+#: app/graphql/gql/types/overview_type.rb
 msgid "Created by"
 msgstr "创建人"
 
@@ -2624,6 +2629,7 @@ msgid "Current user has no permission to use 'From'/'X-On-Behalf-Of'!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/frontend/apps/mobile/modules/ticket/views/TicketOverview.vue
 msgid ""
 "Currently no overview is assigned to your roles. Please contact your "
 "administrator."
@@ -2659,9 +2665,9 @@ msgstr ""
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 #: app/controllers/time_accountings_controller.rb
-#: app/frontend/apps/mobile/modules/ticket/components/TicketList/TicketList.vue
-#: db/seeds/object_manager_attributes.rb db/seeds/roles.rb
-#: db/seeds/ticket_article_senders.rb lib/excel_sheet/ticket.rb
+#: app/graphql/gql/types/overview_type.rb db/seeds/object_manager_attributes.rb
+#: db/seeds/roles.rb db/seeds/ticket_article_senders.rb
+#: lib/excel_sheet/ticket.rb
 msgid "Customer"
 msgstr "用户单位"
 
@@ -3696,6 +3702,7 @@ msgid "Devices"
 msgstr "登录设备"
 
 #: app/assets/javascripts/app/views/profile/language.jst.eco
+#: app/frontend/apps/mobile/modules/account/views/AccountOverview.vue
 msgid "Did you know? You can help translating %s at:"
 msgstr ""
 
@@ -3820,7 +3827,7 @@ msgstr ""
 
 #: app/frontend/apps/mobile/components/CommonDialog/CommonDialog.vue
 #: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
-#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
+#: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 msgid "Done"
 msgstr ""
 
@@ -4424,18 +4431,22 @@ msgid "Escalation Times"
 msgstr "SLA層級提升時間"
 
 #: app/assets/javascripts/app/models/ticket.coffee
+#: app/graphql/gql/types/overview_type.rb
 msgid "Escalation at"
 msgstr "層級提升於"
 
 #: app/assets/javascripts/app/models/ticket.coffee
+#: app/graphql/gql/types/overview_type.rb
 msgid "Escalation at (Close Time)"
 msgstr "在（关闭时）升级"
 
 #: app/assets/javascripts/app/models/ticket.coffee
+#: app/graphql/gql/types/overview_type.rb
 msgid "Escalation at (First Response Time)"
 msgstr "在（第一次时）升级"
 
 #: app/assets/javascripts/app/models/ticket.coffee
+#: app/graphql/gql/types/overview_type.rb
 msgid "Escalation at (Update Time)"
 msgstr "在（启动时）上升级"
 
@@ -4714,6 +4725,7 @@ msgid "First name"
 msgstr "名"
 
 #: app/assets/javascripts/app/models/ticket.coffee
+#: app/graphql/gql/types/overview_type.rb
 msgid "First response"
 msgstr "第一次回應"
 
@@ -5056,6 +5068,7 @@ msgstr "通过LinkedIn启用用户身份验证。"
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
+#: app/graphql/gql/types/overview_type.rb
 #: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/de.html.erb
 #: app/views/mailer/ticket_create/en.html.erb
@@ -6214,14 +6227,17 @@ msgid "Last change %s %s by %s"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee
+#: app/graphql/gql/types/overview_type.rb
 msgid "Last contact"
 msgstr "上一次聯繫"
 
 #: app/assets/javascripts/app/models/ticket.coffee
+#: app/graphql/gql/types/overview_type.rb
 msgid "Last contact (agent)"
 msgstr "上一次聯繫 (客服人員)"
 
 #: app/assets/javascripts/app/models/ticket.coffee
+#: app/graphql/gql/types/overview_type.rb
 msgid "Last contact (customer)"
 msgstr "上ㄧ次聯繫 (客戶)"
 
@@ -6383,6 +6399,12 @@ msgstr ""
 #: db/seeds/settings.rb
 msgid "Locale"
 msgstr "語言環境"
+
+#: app/graphql/gql/mutations/account/locale.rb
+#, fuzzy
+#| msgid "%s Object(s) are updated."
+msgid "Locale could not be found."
+msgstr "％s 对象已更新。"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 msgid "Locale not found"
@@ -7233,6 +7255,7 @@ msgid "No email!"
 msgstr ""
 
 #: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
+#: app/frontend/apps/mobile/modules/ticket/components/TicketList/TicketList.vue
 #, fuzzy
 #| msgid "No Entries"
 msgid "No entries"
@@ -7285,7 +7308,8 @@ msgid "No request_token for session found!"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
-#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
+#: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
+#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 msgid "No results found"
 msgstr "未找到结果"
 
@@ -7490,7 +7514,7 @@ msgstr "十一月"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket.coffee
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco
-#: app/frontend/apps/mobile/modules/ticket/components/TicketList/TicketList.vue
+#: app/graphql/gql/types/overview_type.rb
 msgid "Number"
 msgstr "编号"
 
@@ -7548,6 +7572,12 @@ msgstr "在 %s, %s 編輯:"
 #: app/assets/javascripts/app/models/macro.coffee
 msgid "Once completed…"
 msgstr "一旦完成…"
+
+#: app/graphql/gql/queries/ticket.rb
+msgid ""
+"One of the arguments 'ticket_id', 'ticket_internal_id' or 'ticket_number' "
+"must be provided."
+msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Online"
@@ -7661,8 +7691,8 @@ msgstr "從另一個系統遷移"
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 #: app/controllers/time_accountings_controller.rb
-#: db/seeds/object_manager_attributes.rb db/seeds/settings.rb
-#: lib/excel_sheet/ticket.rb
+#: app/graphql/gql/types/overview_type.rb db/seeds/object_manager_attributes.rb
+#: db/seeds/settings.rb lib/excel_sheet/ticket.rb
 msgid "Organization"
 msgstr "组织"
 
@@ -7785,6 +7815,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco
+#: app/graphql/gql/types/overview_type.rb
 #: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/de.html.erb
 #: app/views/mailer/ticket_create/en.html.erb
@@ -7934,7 +7965,7 @@ msgid "Pending reminder reached for ticket |%s|"
 msgstr "工單已達到待處理提醒|％s |"
 
 #: app/assets/javascripts/app/models/ticket.coffee
-#: db/seeds/object_manager_attributes.rb
+#: app/graphql/gql/types/overview_type.rb db/seeds/object_manager_attributes.rb
 msgid "Pending till"
 msgstr "挂起至"
 
@@ -8169,7 +8200,8 @@ msgstr "里奧"
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco
 #: app/assets/javascripts/app/views/popover/ticket.jst.eco
-#: db/seeds/object_manager_attributes.rb lib/excel_sheet/ticket.rb
+#: app/graphql/gql/types/overview_type.rb db/seeds/object_manager_attributes.rb
+#: lib/excel_sheet/ticket.rb
 msgid "Priority"
 msgstr "优先级"
 
@@ -8951,6 +8983,7 @@ msgstr "選擇器"
 msgid "Selects the ticket number generator module."
 msgstr "選擇工單產生器模組"
 
+#: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
 #: app/frontend/shared/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 #, fuzzy
@@ -9481,6 +9514,12 @@ msgstr "开始输入以搜索用户…"
 msgid "Start typing to search in Knowledge Base…"
 msgstr "开始输入以搜索知识库…"
 
+#: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
+#, fuzzy
+#| msgid "Start typing to search for users…"
+msgid "Start typing to search…"
+msgstr "开始输入以搜索用户…"
+
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
 msgid "Started"
 msgstr "已开始"
@@ -9502,6 +9541,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
 #: app/assets/javascripts/app/views/package.jst.eco
+#: app/graphql/gql/types/overview_type.rb
 #: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/de.html.erb
 #: app/views/mailer/ticket_create/en.html.erb
@@ -9530,7 +9570,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/idoit_object_result.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_idoit.jst.eco
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
-#: app/frontend/apps/mobile/modules/ticket/components/TicketList/TicketList.vue
 msgid "Status"
 msgstr "状态"
 
@@ -10057,6 +10096,12 @@ msgstr ""
 #| msgid "%s Object(s) are created."
 msgid "The issue could not be saved."
 msgstr "％s 对象已创建。"
+
+#: app/frontend/apps/mobile/modules/account/views/AccountOverview.vue
+#, fuzzy
+#| msgid "%s Object(s) are updated."
+msgid "The language could not be updated."
+msgstr "％s 对象已更新。"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_new.coffee
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee
@@ -10762,8 +10807,6 @@ msgstr ""
 #: app/frontend/apps/mobile/modules/home/routes.ts
 #: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
 #: app/frontend/apps/mobile/modules/home/views/Home.vue
-#: app/frontend/apps/mobile/modules/ticket/routes.ts
-#: app/frontend/apps/mobile/modules/ticket/views/TicketOverview.vue
 #, fuzzy
 #| msgid "New Overview"
 msgid "Ticket Overview"
@@ -10774,6 +10817,12 @@ msgstr "新增工单概览"
 #| msgid "Overviews"
 msgid "Ticket Overview settings are saved"
 msgstr "概览"
+
+#: app/frontend/apps/mobile/modules/home/views/Home.vue
+#, fuzzy
+#| msgid "New Overview"
+msgid "Ticket Overviews"
+msgstr "新增工单概览"
 
 #: app/assets/javascripts/app/models/sla.coffee
 msgid "Ticket Selector"
@@ -10804,12 +10853,6 @@ msgstr "服务请求升级"
 #| msgid "Tickets assigned to me: %s of %s"
 msgid "Ticket failed to save: %s"
 msgstr "指派给你有 %s 笔, 共 %s 笔"
-
-#: app/frontend/apps/mobile/modules/account/views/AccountOverview.vue
-#, fuzzy
-#| msgid "Block Notifications"
-msgid "Ticket notifications"
-msgstr "阻止通知"
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 msgid "Ticket reminder reached"
@@ -10850,6 +10893,8 @@ msgstr ""
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
 #: app/frontend/apps/mobile/modules/search/plugins/ticket.ts
+#: app/frontend/apps/mobile/modules/ticket/routes.ts
+#: app/frontend/apps/mobile/modules/ticket/views/TicketOverview.vue
 msgid "Tickets"
 msgstr "工单"
 
@@ -10946,8 +10991,8 @@ msgstr "時間點"
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
 #: app/controllers/time_accountings_controller.rb
-#: app/frontend/apps/mobile/modules/ticket/components/TicketList/TicketList.vue
-#: db/seeds/object_manager_attributes.rb lib/excel_sheet/ticket.rb
+#: app/graphql/gql/types/overview_type.rb db/seeds/object_manager_attributes.rb
+#: lib/excel_sheet/ticket.rb
 msgid "Title"
 msgstr "标题"
 
@@ -11330,6 +11375,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/organization.coffee
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/assets/javascripts/app/models/user.coffee
+#: app/graphql/gql/types/overview_type.rb
 msgid "Updated at"
 msgstr "更新於"
 
@@ -11348,6 +11394,7 @@ msgstr "更新於"
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/assets/javascripts/app/models/ticket_article.coffee
 #: app/assets/javascripts/app/models/user.coffee
+#: app/graphql/gql/types/overview_type.rb
 msgid "Updated by"
 msgstr "更新者"
 
@@ -12564,6 +12611,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
+#: app/frontend/apps/mobile/modules/ticket/views/TicketOverview.vue
 #, fuzzy
 #| msgid "pending"
 msgid "ascending"
@@ -12720,6 +12768,7 @@ msgstr "刪除"
 
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
+#: app/frontend/apps/mobile/modules/ticket/views/TicketOverview.vue
 #, fuzzy
 #| msgid "pending"
 msgid "descending"
@@ -13522,6 +13571,11 @@ msgstr "...整个文本区域"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅轮候时间"
+
+#, fuzzy
+#~| msgid "Block Notifications"
+#~ msgid "Ticket notifications"
+#~ msgstr "阻止通知"
 
 #, fuzzy
 #~| msgid "Accounted Time"

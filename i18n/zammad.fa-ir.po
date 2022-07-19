@@ -525,6 +525,7 @@ msgstr "حساب کاربری تایید نشد"
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/time_unit.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
+#: app/graphql/gql/types/overview_type.rb
 msgid "Accounted Time"
 msgstr "زمان صرف‌شده"
 
@@ -830,7 +831,6 @@ msgid "Alarm"
 msgstr "آلارم"
 
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
-#: app/frontend/apps/mobile/modules/home/views/Home.vue
 msgid "All Tickets"
 msgstr "تمام تیکت‌ها"
 
@@ -1070,6 +1070,7 @@ msgid "Article could not be deleted."
 msgstr "امکان حذف یادداشت وجود ندارد."
 
 #: app/assets/javascripts/app/models/ticket.coffee
+#: app/graphql/gql/types/overview_type.rb
 msgid "Article#"
 msgstr "شماره یادداشت"
 
@@ -1647,6 +1648,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue
 #: app/frontend/apps/mobile/modules/search/views/SearchOverview.vue
+#: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 msgid "Cancel"
 msgstr "لغو"
 
@@ -1968,6 +1970,7 @@ msgstr "پاک کردن"
 msgid "Clear Search"
 msgstr "جستجو"
 
+#: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
 #: app/frontend/shared/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 #, fuzzy
@@ -2070,6 +2073,7 @@ msgid "Closed Tickets"
 msgstr "تیکتهای بسته‌شده"
 
 #: app/assets/javascripts/app/models/ticket.coffee
+#: app/graphql/gql/types/overview_type.rb
 msgid "Closing time"
 msgstr "زمان بستن"
 
@@ -2476,7 +2480,6 @@ msgstr "اولین پرونده خود را ایجاد کنید"
 #: app/assets/javascripts/app/views/popover/ticket.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco
-#: app/frontend/apps/mobile/modules/ticket/components/TicketList/TicketList.vue
 #: app/models/report.rb
 msgid "Created"
 msgstr "ایجاد شده"
@@ -2495,6 +2498,7 @@ msgstr "زمان ایجاد"
 #: app/assets/javascripts/app/views/widget/http_log.jst.eco
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
 #: app/controllers/time_accountings_controller.rb
+#: app/graphql/gql/types/overview_type.rb
 msgid "Created at"
 msgstr "ایجاد شده در تاریخ"
 
@@ -2513,6 +2517,7 @@ msgstr "ایجاد شده در تاریخ"
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/assets/javascripts/app/models/ticket_article.coffee
 #: app/assets/javascripts/app/models/user.coffee
+#: app/graphql/gql/types/overview_type.rb
 msgid "Created by"
 msgstr "ایجاد شده توسط"
 
@@ -2561,6 +2566,7 @@ msgid "Current user has no permission to use 'From'/'X-On-Behalf-Of'!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/frontend/apps/mobile/modules/ticket/views/TicketOverview.vue
 msgid ""
 "Currently no overview is assigned to your roles. Please contact your "
 "administrator."
@@ -2598,9 +2604,9 @@ msgstr "آدرس سفارشی تنظیم نشده است"
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 #: app/controllers/time_accountings_controller.rb
-#: app/frontend/apps/mobile/modules/ticket/components/TicketList/TicketList.vue
-#: db/seeds/object_manager_attributes.rb db/seeds/roles.rb
-#: db/seeds/ticket_article_senders.rb lib/excel_sheet/ticket.rb
+#: app/graphql/gql/types/overview_type.rb db/seeds/object_manager_attributes.rb
+#: db/seeds/roles.rb db/seeds/ticket_article_senders.rb
+#: lib/excel_sheet/ticket.rb
 msgid "Customer"
 msgstr "مشتری"
 
@@ -3584,6 +3590,7 @@ msgid "Devices"
 msgstr "دستگاه‌ها"
 
 #: app/assets/javascripts/app/views/profile/language.jst.eco
+#: app/frontend/apps/mobile/modules/account/views/AccountOverview.vue
 msgid "Did you know? You can help translating %s at:"
 msgstr "آیا میدانید که شما میتوانید در ترجمه %s کمک کنید :"
 
@@ -3701,7 +3708,7 @@ msgstr "عدم همگام‌سازی"
 
 #: app/frontend/apps/mobile/components/CommonDialog/CommonDialog.vue
 #: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
-#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
+#: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 msgid "Done"
 msgstr ""
 
@@ -4284,18 +4291,22 @@ msgid "Escalation Times"
 msgstr "زمان‌های دگرسپاری"
 
 #: app/assets/javascripts/app/models/ticket.coffee
+#: app/graphql/gql/types/overview_type.rb
 msgid "Escalation at"
 msgstr "زمان دگرسپاری‌"
 
 #: app/assets/javascripts/app/models/ticket.coffee
+#: app/graphql/gql/types/overview_type.rb
 msgid "Escalation at (Close Time)"
 msgstr "زمان دگرسپاری‌ (زمان بسته شدن)"
 
 #: app/assets/javascripts/app/models/ticket.coffee
+#: app/graphql/gql/types/overview_type.rb
 msgid "Escalation at (First Response Time)"
 msgstr "زمان دگرسپاری‌ (زمان اولین پاسخ)"
 
 #: app/assets/javascripts/app/models/ticket.coffee
+#: app/graphql/gql/types/overview_type.rb
 msgid "Escalation at (Update Time)"
 msgstr "زمان دگرسپاری‌ (زمان به‌روزرسانی)"
 
@@ -4557,6 +4568,7 @@ msgid "First name"
 msgstr "نام"
 
 #: app/assets/javascripts/app/models/ticket.coffee
+#: app/graphql/gql/types/overview_type.rb
 msgid "First response"
 msgstr "اولین پاسخ"
 
@@ -4888,6 +4900,7 @@ msgstr "پیام خوشآمد"
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
+#: app/graphql/gql/types/overview_type.rb
 #: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/de.html.erb
 #: app/views/mailer/ticket_create/en.html.erb
@@ -5983,14 +5996,17 @@ msgid "Last change %s %s by %s"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee
+#: app/graphql/gql/types/overview_type.rb
 msgid "Last contact"
 msgstr "آخرین تماس"
 
 #: app/assets/javascripts/app/models/ticket.coffee
+#: app/graphql/gql/types/overview_type.rb
 msgid "Last contact (agent)"
 msgstr "آخرین تماس (کارشناس)"
 
 #: app/assets/javascripts/app/models/ticket.coffee
+#: app/graphql/gql/types/overview_type.rb
 msgid "Last contact (customer)"
 msgstr "آخرین تماس (مشتری)"
 
@@ -6146,6 +6162,12 @@ msgstr ""
 #: db/seeds/settings.rb
 msgid "Locale"
 msgstr "زبان محلی"
+
+#: app/graphql/gql/mutations/account/locale.rb
+#, fuzzy
+#| msgid "The object could not be updated."
+msgid "Locale could not be found."
+msgstr "آبجکت قابل بروزرسانی نبود."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 msgid "Locale not found"
@@ -6979,6 +7001,7 @@ msgid "No email!"
 msgstr "بدون ایمیل!"
 
 #: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
+#: app/frontend/apps/mobile/modules/ticket/components/TicketList/TicketList.vue
 #, fuzzy
 #| msgid "No Entries"
 msgid "No entries"
@@ -7031,7 +7054,8 @@ msgid "No request_token for session found!"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
-#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
+#: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
+#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 msgid "No results found"
 msgstr "نتایجی یافت نشد"
 
@@ -7236,7 +7260,7 @@ msgstr "نوامبر"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket.coffee
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco
-#: app/frontend/apps/mobile/modules/ticket/components/TicketList/TicketList.vue
+#: app/graphql/gql/types/overview_type.rb
 msgid "Number"
 msgstr "عدد"
 
@@ -7294,6 +7318,12 @@ msgstr ""
 #: app/assets/javascripts/app/models/macro.coffee
 msgid "Once completed…"
 msgstr "پس از اتمام…"
+
+#: app/graphql/gql/queries/ticket.rb
+msgid ""
+"One of the arguments 'ticket_id', 'ticket_internal_id' or 'ticket_number' "
+"must be provided."
+msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Online"
@@ -7403,8 +7433,8 @@ msgstr ""
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 #: app/controllers/time_accountings_controller.rb
-#: db/seeds/object_manager_attributes.rb db/seeds/settings.rb
-#: lib/excel_sheet/ticket.rb
+#: app/graphql/gql/types/overview_type.rb db/seeds/object_manager_attributes.rb
+#: db/seeds/settings.rb lib/excel_sheet/ticket.rb
 msgid "Organization"
 msgstr "سازمان"
 
@@ -7525,6 +7555,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco
+#: app/graphql/gql/types/overview_type.rb
 #: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/de.html.erb
 #: app/views/mailer/ticket_create/en.html.erb
@@ -7668,7 +7699,7 @@ msgid "Pending reminder reached for ticket |%s|"
 msgstr "انتظار یادآوری برای پرونده |%s| پایان یافت"
 
 #: app/assets/javascripts/app/models/ticket.coffee
-#: db/seeds/object_manager_attributes.rb
+#: app/graphql/gql/types/overview_type.rb db/seeds/object_manager_attributes.rb
 msgid "Pending till"
 msgstr "انتظار تا"
 
@@ -7896,7 +7927,8 @@ msgstr "اولویت"
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco
 #: app/assets/javascripts/app/views/popover/ticket.jst.eco
-#: db/seeds/object_manager_attributes.rb lib/excel_sheet/ticket.rb
+#: app/graphql/gql/types/overview_type.rb db/seeds/object_manager_attributes.rb
+#: lib/excel_sheet/ticket.rb
 msgid "Priority"
 msgstr "اولویت"
 
@@ -8663,6 +8695,7 @@ msgstr "انتخاب گر"
 msgid "Selects the ticket number generator module."
 msgstr ""
 
+#: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
 #: app/frontend/shared/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 #, fuzzy
@@ -9172,6 +9205,12 @@ msgstr "برای جستجوی کاربران شروع به تایپ نمایید
 msgid "Start typing to search in Knowledge Base…"
 msgstr "برای جستجو در پایگاه دانش شروع به تایپ نمایید…"
 
+#: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
+#, fuzzy
+#| msgid "Start typing to search for users…"
+msgid "Start typing to search…"
+msgstr "برای جستجوی کاربران شروع به تایپ نمایید…"
+
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
 msgid "Started"
 msgstr "آغاز شده"
@@ -9193,6 +9232,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
 #: app/assets/javascripts/app/views/package.jst.eco
+#: app/graphql/gql/types/overview_type.rb
 #: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/de.html.erb
 #: app/views/mailer/ticket_create/en.html.erb
@@ -9221,7 +9261,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/idoit_object_result.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_idoit.jst.eco
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
-#: app/frontend/apps/mobile/modules/ticket/components/TicketList/TicketList.vue
 msgid "Status"
 msgstr "وضعیت"
 
@@ -9728,6 +9767,12 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee
 msgid "The issue could not be saved."
 msgstr "مشکل قابل ذخیره نبود."
+
+#: app/frontend/apps/mobile/modules/account/views/AccountOverview.vue
+#, fuzzy
+#| msgid "The object could not be updated."
+msgid "The language could not be updated."
+msgstr "آبجکت قابل بروزرسانی نبود."
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_new.coffee
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee
@@ -10407,8 +10452,6 @@ msgstr ""
 #: app/frontend/apps/mobile/modules/home/routes.ts
 #: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
 #: app/frontend/apps/mobile/modules/home/views/Home.vue
-#: app/frontend/apps/mobile/modules/ticket/routes.ts
-#: app/frontend/apps/mobile/modules/ticket/views/TicketOverview.vue
 msgid "Ticket Overview"
 msgstr "مرور کلی تیکت"
 
@@ -10417,6 +10460,12 @@ msgstr "مرور کلی تیکت"
 #| msgid "Overviews"
 msgid "Ticket Overview settings are saved"
 msgstr "مرورکلی"
+
+#: app/frontend/apps/mobile/modules/home/views/Home.vue
+#, fuzzy
+#| msgid "Ticket Overview"
+msgid "Ticket Overviews"
+msgstr "مرور کلی تیکت"
 
 #: app/assets/javascripts/app/models/sla.coffee
 msgid "Ticket Selector"
@@ -10445,12 +10494,6 @@ msgstr "دگرسپاری تیکتها"
 #: app/assets/javascripts/app/lib/mixins/ticket_mass_updatable.coffee
 msgid "Ticket failed to save: %s"
 msgstr "ذخیره تیکت موفقیت‌آمیز نبود : %s"
-
-#: app/frontend/apps/mobile/modules/account/views/AccountOverview.vue
-#, fuzzy
-#| msgid "Block Notifications"
-msgid "Ticket notifications"
-msgstr "متوقف کردن اطلاع رسانی ها"
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 msgid "Ticket reminder reached"
@@ -10489,6 +10532,8 @@ msgstr "شناسه تیکت"
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
 #: app/frontend/apps/mobile/modules/search/plugins/ticket.ts
+#: app/frontend/apps/mobile/modules/ticket/routes.ts
+#: app/frontend/apps/mobile/modules/ticket/views/TicketOverview.vue
 msgid "Tickets"
 msgstr "تیکت‌ها"
 
@@ -10585,8 +10630,8 @@ msgstr "زمان‌بندی"
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
 #: app/controllers/time_accountings_controller.rb
-#: app/frontend/apps/mobile/modules/ticket/components/TicketList/TicketList.vue
-#: db/seeds/object_manager_attributes.rb lib/excel_sheet/ticket.rb
+#: app/graphql/gql/types/overview_type.rb db/seeds/object_manager_attributes.rb
+#: lib/excel_sheet/ticket.rb
 msgid "Title"
 msgstr "عنوان"
 
@@ -10958,6 +11003,7 @@ msgstr "زمان به‌روزرسانی"
 #: app/assets/javascripts/app/models/organization.coffee
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/assets/javascripts/app/models/user.coffee
+#: app/graphql/gql/types/overview_type.rb
 msgid "Updated at"
 msgstr "به‌روز شده در"
 
@@ -10976,6 +11022,7 @@ msgstr "به‌روز شده در"
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/assets/javascripts/app/models/ticket_article.coffee
 #: app/assets/javascripts/app/models/user.coffee
+#: app/graphql/gql/types/overview_type.rb
 msgid "Updated by"
 msgstr "به‌روز شده توسط"
 
@@ -12101,6 +12148,7 @@ msgstr "آرشیو شده"
 
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
+#: app/frontend/apps/mobile/modules/ticket/views/TicketOverview.vue
 #, fuzzy
 #| msgid "pending"
 msgid "ascending"
@@ -12257,6 +12305,7 @@ msgstr "حذف"
 
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
+#: app/frontend/apps/mobile/modules/ticket/views/TicketOverview.vue
 #, fuzzy
 #| msgid "pending"
 msgid "descending"
@@ -13025,6 +13074,11 @@ msgstr "...از تمام محدوده متن"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "میانگین زمان پاسخگویی (امروز)"
+
+#, fuzzy
+#~| msgid "Block Notifications"
+#~ msgid "Ticket notifications"
+#~ msgstr "متوقف کردن اطلاع رسانی ها"
 
 #, fuzzy
 #~| msgid "Accounted Time"
