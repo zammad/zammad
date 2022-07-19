@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Types
-  class BinaryString < GraphQL::Types::String
+  class BinaryStringType < GraphQL::Types::String
 
     description 'String with binary data, base64 encoded for transport (data: URL prefix is optional)'
 
