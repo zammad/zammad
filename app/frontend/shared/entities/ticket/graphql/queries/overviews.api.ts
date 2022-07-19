@@ -14,8 +14,16 @@ export const OverviewsDocument = gql`
         name
         link
         prio
-        order
-        view
+        orderBy
+        orderDirection
+        viewColumns {
+          key
+          value
+        }
+        orderColumns {
+          key
+          value
+        }
         active
         ticketCount @include(if: $withTicketCount)
       }

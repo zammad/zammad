@@ -1,6 +1,6 @@
 query ticketsByOverview(
   $overviewId: ID!
-  $orderBy: TicketOrderBy
+  $orderBy: String
   $orderDirection: OrderDirection
   $cursor: String
   $pageSize: Int = 10

@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Gql::Queries::Overviews, type: :graphql do
 
-  context 'when fetching locales' do
+  context 'when fetching overviews' do
     let(:agent)     { create(:agent) }
     let(:query)     { read_graphql_file('shared/entities/ticket/graphql/queries/overviews.graphql') }
     let(:variables) { { withTicketCount: false } }
@@ -16,6 +16,13 @@ RSpec.describe Gql::Queries::Overviews, type: :graphql do
     context 'with an agent', authenticated_as: :agent do
       it 'has agent overview' do
         expect(graphql_response['data']['overviews']['edges'][0]['node']).to include('name' => 'My Assigned Tickets', 'link' => 'my_assigned', 'prio' => 1000, 'active' => true,)
+      end
+
+      it 'has view and order columns' do
+        expect(graphql_response['data']['overviews']['edges'][0]['node']).to include(
+          'viewColumns'  => include({ 'key' => 'title', 'value' => 'Title' }),
+          'orderColumns' => include({ 'key' => 'created_at', 'value' => 'Created at' }),
+        )
       end
 
       context 'without ticket count' do

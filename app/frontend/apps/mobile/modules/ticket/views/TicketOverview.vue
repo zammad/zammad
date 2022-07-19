@@ -3,12 +3,13 @@
 <script setup lang="ts">
 import { computed, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { watchOnce } from '@vueuse/shared'
 import {
   useViewTransition,
   ViewTransitions,
 } from '@mobile/components/transition/TransitionViewNavigation'
 import { i18n } from '@shared/i18n'
-import { OrderDirection, TicketOrderBy } from '@shared/graphql/types'
+import { OrderDirection } from '@shared/graphql/types'
 import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
 import { useTicketsOverviews } from '@mobile/modules/home/stores/ticketOverviews'
 import CommonSelect from '@mobile/components/CommonSelect/CommonSelect.vue'
@@ -34,6 +35,13 @@ const goBack = () => {
 const { overviews, loading: loadingOverviews } = storeToRefs(
   useTicketsOverviews(),
 )
+
+const optionsOverviews = computed(() => {
+  return overviews.value.map((overview) => ({
+    value: overview.link,
+    label: `${i18n.t(overview.name)} (${overview.ticketCount})`,
+  }))
+})
 
 const selectedOverview = computed(() => {
   return (
@@ -62,28 +70,72 @@ watch(
   { immediate: true },
 )
 
-// TODO when order on overview will be parsed, this should be taken from there by default
-const orderColumn = useRouteQuery<TicketOrderBy>(
-  'column',
-  TicketOrderBy.CreatedAt,
-)
-const orderDirection = useRouteQuery<OrderDirection>(
+const userOrderBy = useRouteQuery<string | undefined>('column', undefined)
+
+const orderColumnsOptions = computed(() => {
+  return (
+    selectedOverview.value?.orderColumns.map((entry) => {
+      return { value: entry.key, label: entry.value || entry.key }
+    }) || []
+  )
+})
+
+const orderColumnLabels = computed(() => {
+  const map: { [key: string]: string } = {}
+  return (
+    selectedOverview.value?.orderColumns.reduce((map, entry) => {
+      map[entry.key] = entry.value || entry.key
+      return map
+    }, map) || {}
+  )
+})
+
+// Check that the given order by column is really a valid column and otherwise
+// reset query parameter.
+watchOnce(orderColumnLabels, () => {
+  if (userOrderBy.value && !orderColumnLabels.value[userOrderBy.value]) {
+    userOrderBy.value = undefined
+  }
+})
+
+const orderBy = computed({
+  get: () => {
+    if (userOrderBy.value && orderColumnLabels.value[userOrderBy.value])
+      return userOrderBy.value
+    return selectedOverview.value?.orderBy
+  },
+  set: (column) => {
+    userOrderBy.value =
+      column !== selectedOverview.value?.orderBy ? column : undefined
+  },
+})
+
+const userOrderDirection = useRouteQuery<OrderDirection | undefined>(
   'direction',
-  OrderDirection.Descending,
+  undefined,
 )
 
-// TODO should be generated on server
-const columns: Record<TicketOrderBy, string> = {
-  [TicketOrderBy.CreatedAt]: __('Created at'),
-  [TicketOrderBy.Title]: __('Title'),
-  [TicketOrderBy.UpdatedAt]: __('Updated at'),
-  [TicketOrderBy.Number]: __('Number'),
+// Check that the given order direction is a valid direction, otherwise
+// reset the query parameter.
+if (
+  userOrderDirection.value &&
+  !Object.values(OrderDirection).includes(userOrderDirection.value)
+) {
+  userOrderDirection.value = undefined
 }
 
-const columnOptions = Object.entries(columns).map(([value, label]) => ({
-  value,
-  label,
-}))
+const orderDirection = computed({
+  get: () => {
+    if (userOrderDirection.value) return userOrderDirection.value
+    return selectedOverview.value?.orderDirection
+  },
+  set: (direction) => {
+    userOrderDirection.value =
+      direction !== selectedOverview.value?.orderDirection
+        ? direction
+        : undefined
+  },
+})
 
 const directionOptions = computed(() => [
   {
@@ -114,13 +166,6 @@ const directionOptions = computed(() => [
     },
   },
 ])
-
-const optionsOverviews = computed(() => {
-  return overviews.value.map((overview) => ({
-    value: overview.link,
-    label: `${i18n.t(overview.name)} (${overview.ticketCount})`,
-  }))
-})
 </script>
 
 <template>
@@ -148,22 +193,20 @@ const optionsOverviews = computed(() => {
         </div>
       </div>
       <div
-        v-if="loadingOverviews || optionsOverviews.length"
+        v-if="optionsOverviews.length"
         class="mb-3 flex items-center justify-between gap-2"
         data-test-id="overview"
       >
-        <CommonLoader class="w-16" :loading="loadingOverviews">
-          <FormKit
-            type="select"
-            size="small"
-            :classes="{ wrapper: 'px-0' }"
-            :model-value="selectedOverviewLink"
-            :options="optionsOverviews"
-            no-options-label-translation
-            @update:model-value="selectOverview($event as string)"
-          />
-        </CommonLoader>
-        <CommonSelect v-model="orderColumn" :options="columnOptions" no-close>
+        <FormKit
+          type="select"
+          size="small"
+          :classes="{ wrapper: 'px-0' }"
+          :model-value="selectedOverviewLink"
+          :options="optionsOverviews"
+          no-options-label-translation
+          @update:model-value="selectOverview($event as string)"
+        />
+        <CommonSelect v-model="orderBy" :options="orderColumnsOptions" no-close>
           <template #default="{ open }">
             <div
               class="flex cursor-pointer items-center gap-1 whitespace-nowrap text-blue"
@@ -178,7 +221,7 @@ const optionsOverviews = computed(() => {
                 }"
                 :fixed-size="{ width: 12, height: 12 }"
               />
-              {{ orderColumn && $t(columns[orderColumn]) }}
+              {{ orderBy && $t(orderColumnLabels[orderBy]) }}
             </div>
           </template>
 
@@ -216,9 +259,9 @@ const optionsOverviews = computed(() => {
       :loading="loadingOverviews"
     >
       <TicketList
-        v-if="selectedOverview && orderColumn"
+        v-if="selectedOverview && orderBy && orderDirection"
         :overview-id="selectedOverview.id"
-        :order-by="orderColumn"
+        :order-by="orderBy"
         :order-direction="orderDirection"
       />
     </CommonLoader>

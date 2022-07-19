@@ -3,7 +3,7 @@
 module Gql::EntryPoints
   class Mutations < Gql::Types::BaseObject
 
-    description 'All available mutations.'
+    description 'All available mutations'
 
     Mixin::RequiredSubPaths.eager_load_recursive Gql::Mutations, "#{__dir__}/../mutations/"
     Gql::Mutations::BaseMutation.descendants.reject { |klass| klass.name.include?('::Base') }.each do |klass|

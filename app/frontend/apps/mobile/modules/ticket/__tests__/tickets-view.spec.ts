@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { OrderDirection, TicketOrderBy } from '@shared/graphql/types'
+import { OrderDirection } from '@shared/graphql/types'
 import { waitFor } from '@testing-library/vue'
 import { visitView } from '@tests/support/components/visitView'
 import { mockTicketOverviews } from '@tests/support/mocks/ticket-overviews'
@@ -32,9 +32,11 @@ it('see default list when opening page', async () => {
     'has default overview',
   ).toHaveTextContent('Overview 1')
 
-  expect(view.getByTestId('column'), 'has default column').toHaveTextContent(
-    'Created at',
-  )
+  expect(
+    await view.findByTestId('column'),
+    'has default column',
+  ).toHaveTextContent('Created at')
+
   expect(
     view.getByIconName('long-arrow-down'),
     'descending by default',
@@ -59,7 +61,7 @@ it('can filter by overview type', async () => {
 
   expect(ticketsMock.spies.resolve).toHaveBeenCalledWith(
     expect.objectContaining({
-      orderBy: TicketOrderBy.CreatedAt,
+      orderBy: 'created_at',
       orderDirection: OrderDirection.Descending,
       overviewId: '1',
     }),
@@ -86,7 +88,7 @@ it('can filter by columns and direction', async () => {
 
   expect(ticketsMock.spies.resolve).toHaveBeenCalledWith(
     expect.objectContaining({
-      orderBy: TicketOrderBy.UpdatedAt,
+      orderBy: 'updated_at',
       orderDirection: OrderDirection.Ascending,
       overviewId: '1',
     }),
@@ -112,7 +114,7 @@ it('can filter by type and columns and direction', async () => {
   expect(ticketsMock.spies.resolve).toHaveBeenCalledWith(
     expect.objectContaining({
       overviewId: '1',
-      orderBy: TicketOrderBy.UpdatedAt,
+      orderBy: 'updated_at',
       orderDirection: OrderDirection.Ascending,
     }),
   )
@@ -124,7 +126,7 @@ it('takes filter from query', async () => {
   const ticketsMock = mockTicketsByOverview()
 
   const query = stringifyQuery({
-    column: TicketOrderBy.Number,
+    column: 'number',
     direction: OrderDirection.Ascending,
   })
   await visitView(`/tickets/view?${query}`)
@@ -133,7 +135,7 @@ it('takes filter from query', async () => {
     expect(ticketsMock.spies.resolve).toHaveBeenCalledWith(
       expect.objectContaining({
         overviewId: '1',
-        orderBy: TicketOrderBy.Number,
+        orderBy: 'number',
         orderDirection: OrderDirection.Ascending,
       }),
     )

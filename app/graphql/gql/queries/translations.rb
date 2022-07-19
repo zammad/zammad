@@ -22,7 +22,9 @@ module Gql::Queries
       base_query = Translation.where(locale: locale).where('target != source').where.not(target: '')
       new_cache_key = base_query.order(updated_at: :desc).take&.updated_at.to_s
 
-      raise "No translations found for locale #{locale}." if new_cache_key.empty?
+      if new_cache_key.empty?
+        raise ActiveRecord::RecordNotFound, "No translations found for locale #{locale}."
+      end
 
       if new_cache_key == cache_key
         return { is_cache_still_valid: true }

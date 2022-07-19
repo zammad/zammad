@@ -47,7 +47,7 @@ RSpec.describe Gql::Queries::Translations, type: :graphql do
       let(:cache_key) { nil }
 
       it 'returns error type' do
-        expect(graphql_response['errors'][0]['extensions']).to include({ 'type' => 'RuntimeError' })
+        expect(graphql_response['errors'][0]['extensions']).to include({ 'type' => 'ActiveRecord::RecordNotFound' })
       end
 
       it 'returns error message' do

@@ -96,6 +96,13 @@ export type KeyComplexValue = {
   value?: Maybe<Scalars['JSON']>;
 };
 
+/** Key/value type with string values. */
+export type KeyValue = {
+  __typename?: 'KeyValue';
+  key: Scalars['String'];
+  value?: Maybe<Scalars['String']>;
+};
+
 /** Locales available in the system */
 export type Locale = Node & {
   __typename?: 'Locale';
@@ -154,7 +161,7 @@ export type LogoutPayload = {
   success: Scalars['Boolean'];
 };
 
-/** All available mutations. */
+/** All available mutations */
 export type Mutations = {
   __typename?: 'Mutations';
   /** Update the language of the currently logged in user */
@@ -170,27 +177,27 @@ export type Mutations = {
 };
 
 
-/** All available mutations. */
+/** All available mutations */
 export type MutationsAccountLocaleArgs = {
   locale: Scalars['String'];
 };
 
 
-/** All available mutations. */
+/** All available mutations */
 export type MutationsFormUploadCacheAddArgs = {
   files: Array<UploadFileInput>;
   formId: Scalars['FormId'];
 };
 
 
-/** All available mutations. */
+/** All available mutations */
 export type MutationsFormUploadCacheRemoveArgs = {
   fileIds: Array<Scalars['ID']>;
   formId: Scalars['FormId'];
 };
 
 
-/** All available mutations. */
+/** All available mutations */
 export type MutationsLoginArgs = {
   input: LoginInput;
 };
@@ -287,7 +294,10 @@ export type Overview = Node & {
   id: Scalars['ID'];
   link: Scalars['String'];
   name: Scalars['String'];
-  order: Scalars['String'];
+  orderBy: Scalars['String'];
+  /** Columns that may be used as order_by of overview queries, with assigned label values */
+  orderColumns: Array<KeyValue>;
+  orderDirection: OrderDirection;
   prio: Scalars['Int'];
   /** Count of tickets the authenticated user may see in this overview */
   ticketCount: Scalars['Int'];
@@ -295,7 +305,8 @@ export type Overview = Node & {
   updatedAt: Scalars['ISO8601DateTime'];
   /** Last user that updated this record */
   updatedBy: User;
-  view: Scalars['String'];
+  /** Columns to be shown on screen, with assigned label values */
+  viewColumns: Array<KeyValue>;
 };
 
 /** The connection type for Overview. */
@@ -447,7 +458,7 @@ export type QueriesTicketsByOverviewArgs = {
   before?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
   last?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<TicketOrderBy>;
+  orderBy?: InputMaybe<Scalars['String']>;
   orderDirection?: InputMaybe<OrderDirection>;
   overviewId: Scalars['ID'];
 };
@@ -638,18 +649,6 @@ export type TicketEdge = {
   /** The item at the end of the edge. */
   node: Ticket;
 };
-
-/** Option to choose ticket field for SQL sorting */
-export enum TicketOrderBy {
-  /** Sort by create time */
-  CreatedAt = 'CREATED_AT',
-  /** Sort by ticket number */
-  Number = 'NUMBER',
-  /** Sort by title */
-  Title = 'TITLE',
-  /** Sort by update time */
-  UpdatedAt = 'UPDATED_AT'
-}
 
 /** Ticket priorities */
 export type TicketPriority = Node & {
@@ -845,7 +844,7 @@ export type TicketArticlesQuery = { __typename?: 'Queries', ticketArticles: { __
 
 export type TicketsByOverviewQueryVariables = Exact<{
   overviewId: Scalars['ID'];
-  orderBy?: InputMaybe<TicketOrderBy>;
+  orderBy?: InputMaybe<Scalars['String']>;
   orderDirection?: InputMaybe<OrderDirection>;
   cursor?: InputMaybe<Scalars['String']>;
   pageSize?: InputMaybe<Scalars['Int']>;
@@ -883,7 +882,7 @@ export type OverviewsQueryVariables = Exact<{
 }>;
 
 
-export type OverviewsQuery = { __typename?: 'Queries', overviews: { __typename?: 'OverviewConnection', edges: Array<{ __typename?: 'OverviewEdge', cursor: string, node: { __typename?: 'Overview', id: string, name: string, link: string, prio: number, order: string, view: string, active: boolean, ticketCount?: number } }>, pageInfo: { __typename?: 'PageInfo', endCursor?: string | null, hasNextPage: boolean } } };
+export type OverviewsQuery = { __typename?: 'Queries', overviews: { __typename?: 'OverviewConnection', edges: Array<{ __typename?: 'OverviewEdge', cursor: string, node: { __typename?: 'Overview', id: string, name: string, link: string, prio: number, orderBy: string, orderDirection: OrderDirection, active: boolean, ticketCount?: number, viewColumns: Array<{ __typename?: 'KeyValue', key: string, value?: string | null }>, orderColumns: Array<{ __typename?: 'KeyValue', key: string, value?: string | null }> } }>, pageInfo: { __typename?: 'PageInfo', endCursor?: string | null, hasNextPage: boolean } } };
 
 export type ErrorsFragment = { __typename?: 'UserError', message: string, field?: string | null };
 
