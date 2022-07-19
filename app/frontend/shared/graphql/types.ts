@@ -314,8 +314,6 @@ export type OverviewConnection = {
   __typename?: 'OverviewConnection';
   /** A list of edges. */
   edges: Array<OverviewEdge>;
-  /** A list of nodes. */
-  nodes: Array<Overview>;
   /** Information to aid in pagination. */
   pageInfo: PageInfo;
   /** Indicates the total number of available records. */
@@ -596,8 +594,6 @@ export type TicketArticleConnection = {
   __typename?: 'TicketArticleConnection';
   /** A list of edges. */
   edges: Array<TicketArticleEdge>;
-  /** A list of nodes. */
-  nodes: Array<TicketArticle>;
   /** Information to aid in pagination. */
   pageInfo: PageInfo;
   /** Indicates the total number of available records. */
@@ -633,8 +629,6 @@ export type TicketConnection = {
   __typename?: 'TicketConnection';
   /** A list of edges. */
   edges: Array<TicketEdge>;
-  /** A list of nodes. */
-  nodes: Array<Ticket>;
   /** Information to aid in pagination. */
   pageInfo: PageInfo;
   /** Indicates the total number of available records. */
@@ -786,8 +780,6 @@ export type UserConnection = {
   __typename?: 'UserConnection';
   /** A list of edges. */
   edges: Array<UserEdge>;
-  /** A list of nodes. */
-  nodes: Array<User>;
   /** Information to aid in pagination. */
   pageInfo: PageInfo;
   /** Indicates the total number of available records. */

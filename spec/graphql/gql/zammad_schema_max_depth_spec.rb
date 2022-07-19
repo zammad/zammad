@@ -12,16 +12,16 @@ RSpec.describe Gql::ZammadSchema, type: :graphql do
           currentUser {
             organization {
               members {
-                nodes {
-                  firstname
-                  organization {
-                    members {
-                      nodes {
-                        firstname
-                        organization {
-                          members {
-                            nodes {
-                              firstname
+                edges {
+                  node {
+                    firstname
+                    organization {
+                      members {
+                        edges {
+                          node {
+                            firstname
+                            organization {
+                              name
                             }
                           }
                         }
