@@ -7,10 +7,6 @@ module Gql::Queries
 
     type Gql::Types::UserType, null: false
 
-    def self.authorize(_obj, ctx)
-      ctx.current_user
-    end
-
     def resolve(...)
       context.current_user
     end

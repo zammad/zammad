@@ -8,6 +8,10 @@ module Gql::Subscriptions
     field :title, String, null: true, description: 'Message title'
     field :text, String, null: true, description: 'Message text'
 
+    def self.authorize(...)
+      true # This subscription should be available for all (including unauthenticated) users.
+    end
+
     def update
       object
     end

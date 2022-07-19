@@ -5,11 +5,7 @@ module Gql::Queries
 
     description 'Fetch a ticket by ID'
 
-    def self.authorize(_obj, ctx)
-      # Pundit authorization will be done via TicketType.
-      ctx.current_user
-    end
-
+    # Pundit authorization will be done via TicketType.
     argument :ticket_id, GraphQL::Types::ID, required: true, description: 'Ticket ID'
 
     type Gql::Types::Ticket::ArticleType.connection_type, null: false

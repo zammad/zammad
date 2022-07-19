@@ -41,6 +41,10 @@ RSpec.describe Gql::Subscriptions::UserUpdates, type: :graphql do
       it 'does not subscribe' do
         expect(graphql_response['errors'][0]).to be_present
       end
+
+      it 'returns an authorization error' do
+        expect(graphql_response['errors'][0]['extensions']['type']).to eq('Exceptions::Forbidden')
+      end
     end
 
     context 'when subscribing for itself' do

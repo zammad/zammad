@@ -9,6 +9,10 @@ module Gql::Queries
 
     type GraphQL::Types::JSON, null: false
 
+    def self.authorize(...)
+      true # This query should be available for all (including unauthenticated) users.
+    end
+
     def resolve(form_schema_id: nil)
       form_schema_id.constantize.new(context: context).schema
     end

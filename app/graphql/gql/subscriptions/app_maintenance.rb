@@ -7,6 +7,10 @@ module Gql::Subscriptions
 
     field :type, Gql::Types::Enum::AppMaintenanceTypeType, null: true, description: 'Maintenance type, may trigger actions in the front end'
 
+    def self.authorize(...)
+      true # This subscription should be available for all (including unauthenticated) users.
+    end
+
     def update
       object
     end

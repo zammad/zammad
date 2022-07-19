@@ -8,6 +8,10 @@ module Gql::Subscriptions
     field_class    Gql::Types::BaseField
     argument_class Gql::Types::BaseArgument
 
+    def self.authorize(_obj, ctx)
+      ctx.current_user
+    end
+
     def self.field_name
       name.sub('Gql::Subscriptions::', '').gsub('::', '').camelize(:lower).to_sym
     end

@@ -13,6 +13,10 @@ module Gql::Queries
     field :cache_key, String, null: true, description: 'Cache key that the front end should use to cache the new translation data.'
     field :translations, GraphQL::Types::JSON, null: true, description: 'The actual translation data as Hash where keys are source and values target strings (excluding untranslated strings).'
 
+    def self.authorize(...)
+      true # This query should be available for all (including unauthenticated) users.
+    end
+
     def resolve(locale:, cache_key: nil)
 
       base_query = Translation.where(locale: locale).where('target != source').where.not(target: '')
