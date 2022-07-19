@@ -2,8 +2,8 @@
 
 import { defineStore } from 'pinia'
 import { QueryHandler } from '@shared/server/apollo/handler'
-import { useOverviewsQuery } from '@shared/entities/ticket/graphql/queries/overviews.api'
-import { OverviewsQuery } from '@shared/graphql/types'
+import { useTicketOverviewsQuery } from '@shared/entities/ticket/graphql/queries/ticket/overviews.api'
+import { TicketOverviewsQuery } from '@shared/graphql/types'
 import { ref, computed } from 'vue'
 import { keyBy } from 'lodash-es'
 import { watchOnce } from '@vueuse/core'
@@ -11,16 +11,19 @@ import { ConfidentTake } from '@shared/types/utils'
 import { getTicketOverviewStorage } from '../helpers/ticketOverviewStorage'
 
 export type TicketOverview = ConfidentTake<
-  OverviewsQuery,
-  'overviews.edges.node'
+  TicketOverviewsQuery,
+  'ticketOverviews.edges.node'
 >
 
-let overviewHandler: QueryHandler<OverviewsQuery, { withTicketCount: boolean }>
+let overviewHandler: QueryHandler<
+  TicketOverviewsQuery,
+  { withTicketCount: boolean }
+>
 
 const getOverviewHandler = () => {
   if (!overviewHandler) {
     overviewHandler = new QueryHandler(
-      useOverviewsQuery({ withTicketCount: true }),
+      useTicketOverviewsQuery({ withTicketCount: true }),
     )
   }
 
@@ -33,10 +36,10 @@ export const useTicketsOverviews = defineStore('tickets-overview', () => {
   const overviewsLoading = handler.loading()
 
   const overviews = computed(() => {
-    if (!overviewsRaw.value?.overviews.edges) return []
+    if (!overviewsRaw.value?.ticketOverviews.edges) return []
 
     return (
-      overviewsRaw.value.overviews.edges
+      overviewsRaw.value.ticketOverviews.edges
         .filter((overview) => overview?.node?.id)
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         .map((edge) => edge!.node!)

@@ -379,14 +379,14 @@ export type Queries = {
   node?: Maybe<Node>;
   /** Fetches a list of objects given a list of IDs. */
   nodes: Array<Maybe<Node>>;
-  /** Ticket overviews available in the system */
-  overviews: OverviewConnection;
   /** The sessionId of the currently authenticated user. */
   sessionId: Scalars['String'];
   /** Fetch a ticket by ID */
   ticket: Ticket;
   /** Fetch a ticket by ID */
   ticketArticles: TicketArticleConnection;
+  /** Ticket overviews available in the system */
+  ticketOverviews: OverviewConnection;
   /** Fetch tickets of a given ticket overview */
   ticketsByOverview: TicketConnection;
   /** Translations for a given locale */
@@ -426,15 +426,6 @@ export type QueriesNodesArgs = {
 
 
 /** All available queries */
-export type QueriesOverviewsArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-};
-
-
-/** All available queries */
 export type QueriesTicketArgs = {
   ticketId?: InputMaybe<Scalars['ID']>;
   ticketInternalId?: InputMaybe<Scalars['Int']>;
@@ -449,6 +440,15 @@ export type QueriesTicketArticlesArgs = {
   first?: InputMaybe<Scalars['Int']>;
   last?: InputMaybe<Scalars['Int']>;
   ticketId: Scalars['ID'];
+};
+
+
+/** All available queries */
+export type QueriesTicketOverviewsArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
 };
 
 
@@ -877,12 +877,12 @@ export type FormSchemaQueryVariables = Exact<{
 
 export type FormSchemaQuery = { __typename?: 'Queries', formSchema: any };
 
-export type OverviewsQueryVariables = Exact<{
+export type TicketOverviewsQueryVariables = Exact<{
   withTicketCount: Scalars['Boolean'];
 }>;
 
 
-export type OverviewsQuery = { __typename?: 'Queries', overviews: { __typename?: 'OverviewConnection', edges: Array<{ __typename?: 'OverviewEdge', cursor: string, node: { __typename?: 'Overview', id: string, name: string, link: string, prio: number, orderBy: string, orderDirection: OrderDirection, active: boolean, ticketCount?: number, viewColumns: Array<{ __typename?: 'KeyValue', key: string, value?: string | null }>, orderColumns: Array<{ __typename?: 'KeyValue', key: string, value?: string | null }> } }>, pageInfo: { __typename?: 'PageInfo', endCursor?: string | null, hasNextPage: boolean } } };
+export type TicketOverviewsQuery = { __typename?: 'Queries', ticketOverviews: { __typename?: 'OverviewConnection', edges: Array<{ __typename?: 'OverviewEdge', cursor: string, node: { __typename?: 'Overview', id: string, name: string, link: string, prio: number, orderBy: string, orderDirection: OrderDirection, active: boolean, ticketCount?: number, viewColumns: Array<{ __typename?: 'KeyValue', key: string, value?: string | null }>, orderColumns: Array<{ __typename?: 'KeyValue', key: string, value?: string | null }> } }>, pageInfo: { __typename?: 'PageInfo', endCursor?: string | null, hasNextPage: boolean } } };
 
 export type ErrorsFragment = { __typename?: 'UserError', message: string, field?: string | null };
 

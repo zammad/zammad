@@ -84,8 +84,8 @@ RSpec.describe Gql::RecordLoader, type: :graphql do
         {
           'Overview Load'          => 1,
           'ObjectLookup Load'      => 1,
-          'Permission Load'        => 25,
-          'Permission Exists?'     => 24,
+          'Permission Load'        => 26,
+          'Permission Exists?'     => 25,
           'Group Load'             => 11,
           'UserGroup Exists?'      => 10,
           'Ticket Load'            => 1,
@@ -102,8 +102,8 @@ RSpec.describe Gql::RecordLoader, type: :graphql do
         {
           'Overview Load'          => 1,
           'ObjectLookup Load'      => 1,
-          'Permission Load'        => 4,
-          'Permission Exists?'     => 4,
+          'Permission Load'        => 5,
+          'Permission Exists?'     => 5,
           'Group Load'             => 3,
           'UserGroup Exists?'      => 2,
           'Ticket Load'            => 1,

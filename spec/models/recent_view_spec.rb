@@ -167,7 +167,7 @@ RSpec.describe RecentView, type: :model do
 
       it 'does not create RecentView for instance of non-ObjectLookup class' do
         expect do
-          described_class.log('Overview', 1, admin)
+          described_class.log('BackgroundServices', 1, admin)
         end.not_to change(described_class, :count)
       end
 

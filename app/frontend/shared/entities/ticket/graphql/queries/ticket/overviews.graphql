@@ -1,5 +1,5 @@
-query overviews($withTicketCount: Boolean!) {
-  overviews {
+query ticketOverviews($withTicketCount: Boolean!) {
+  ticketOverviews {
     edges {
       node {
         id

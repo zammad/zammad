@@ -42,13 +42,13 @@ RSpec.describe Gql::Queries::TicketsByOverview, type: :graphql do
       end
     end
 
-    # TODO: overview authorization is missing.
-    # context 'with a customer', authenticated_as: :customer do
-    #   let(:customer) { create(:customer) }
-    #   it 'raises authorization error' do
-    #     expect(graphql_response['errors'][0]['extensions']['type']).to eq('Exceptions::Forbidden')
-    #   end
-    # end
+    context 'with a customer', authenticated_as: :customer do
+      let(:customer) { create(:customer) }
+
+      it 'raises authorization error' do
+        expect(graphql_response['errors'][0]['extensions']['type']).to eq('Exceptions::Forbidden')
+      end
+    end
 
     it_behaves_like 'graphql responds with error if unauthenticated'
   end

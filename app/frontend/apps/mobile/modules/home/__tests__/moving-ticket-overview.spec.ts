@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { OverviewsDocument } from '@shared/entities/ticket/graphql/queries/overviews.api'
+import { TicketOverviewsDocument } from '@shared/entities/ticket/graphql/queries/ticket/overviews.api'
 import { getAllByTestId, getByTestId, within } from '@testing-library/vue'
 import createMockClient from '@tests/support/mock-apollo-client'
 import { visitView } from '@tests/support/components/visitView'
@@ -21,7 +21,7 @@ describe('playing with overviews', () => {
     createMockClient(
       [
         {
-          operationDocument: OverviewsDocument,
+          operationDocument: TicketOverviewsDocument,
           handler: async () => ({ data: getApiTicketOverviews() }),
         },
       ],

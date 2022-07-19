@@ -22,7 +22,7 @@ returns
       begin
         local_class = object.constantize
       rescue => e
-        raise "Unable for get an instance of '#{object}': #{e.inspect}"
+        raise "Could not create an instance of '#{object}': #{e.inspect}"
       end
       if !local_class.exists?(o_id)
         raise ActiveRecord::RecordNotFound, "Unable for find reference object '#{object}.exists?(#{o_id})!"

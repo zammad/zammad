@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { OverviewsDocument } from '@shared/entities/ticket/graphql/queries/overviews.api'
+import { TicketOverviewsDocument } from '@shared/entities/ticket/graphql/queries/ticket/overviews.api'
 import { visitView } from '@tests/support/components/visitView'
 import { mockAccount } from '@tests/support/mock-account'
 import createMockClient from '@tests/support/mock-apollo-client'
@@ -13,7 +13,7 @@ describe('home page', () => {
     mockAccount({ id: '666' })
     createMockClient([
       {
-        operationDocument: OverviewsDocument,
+        operationDocument: TicketOverviewsDocument,
         handler: async () => ({ data: getApiTicketOverviews() }),
       },
     ])

@@ -1,13 +1,14 @@
 # Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Queries
-  class Overviews < BaseQuery
+  class Ticket::Overviews < BaseQuery
 
     description 'Ticket overviews available in the system'
 
     type Gql::Types::OverviewType.connection_type, null: false
 
-    def resolve(...)
+    def resolve
+      # This effectively scopes the overviews by `:use?` permission.
       ::Ticket::Overviews.all(current_user: context.current_user)
     end
 

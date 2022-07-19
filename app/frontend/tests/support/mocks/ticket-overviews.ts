@@ -1,12 +1,12 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { OverviewsDocument } from '@shared/entities/ticket/graphql/queries/overviews.api'
-import { OrderDirection, OverviewsQuery } from '@shared/graphql/types'
+import { TicketOverviewsDocument } from '@shared/entities/ticket/graphql/queries/ticket/overviews.api'
+import { OrderDirection, TicketOverviewsQuery } from '@shared/graphql/types'
 import { mock } from 'vitest-mock-extended'
 import { mockGraphQLApi } from '../mock-graphql-api'
 
-export const getApiTicketOverviews = (): OverviewsQuery => ({
-  overviews: mock<OverviewsQuery['overviews']>(
+export const getApiTicketOverviews = (): TicketOverviewsQuery => ({
+  ticketOverviews: mock<TicketOverviewsQuery['ticketOverviews']>(
     {
       pageInfo: {
         endCursor: null,
@@ -71,5 +71,5 @@ export const getApiTicketOverviews = (): OverviewsQuery => ({
 })
 
 export const mockTicketOverviews = () => {
-  return mockGraphQLApi(OverviewsDocument).willResolve(getApiTicketOverviews())
+  return mockGraphQLApi(TicketOverviewsDocument).willResolve(getApiTicketOverviews())
 }
