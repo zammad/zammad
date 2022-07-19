@@ -2,16 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-06-07 07:11+0000\n"
+"PO-Revision-Date: 2022-07-15 05:28+0000\n"
 "Last-Translator: Marco Badan <info@marcobadan.com>\n"
 "Language-Team: Italian <https://translations.zammad.org/projects/zammad/"
-"zammad-development/it/>\n"
+"zammad-stable/it/>\n"
 "Language: it-it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.12.1\n"
+"X-Generator: Weblate 4.13\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -238,10 +238,8 @@ msgstr "%s è passato a |%s|!"
 
 #: app/frontend/apps/mobile/components/Organization/OrganizationItem.vue
 #: app/frontend/apps/mobile/components/User/UserItem.vue
-#, fuzzy
-#| msgid "assign tickets"
 msgid "%s tickets"
-msgstr "assegna ticket"
+msgstr "%s ticket"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee
 msgid "%s updated article for |%s|"
@@ -528,7 +526,7 @@ msgstr "Token API"
 
 #: app/frontend/apps/mobile/modules/account/views/AccountOverview.vue
 msgid "About"
-msgstr ""
+msgstr "Chi siamo"
 
 #: db/seeds/permissions.rb
 msgid "Access to %s"
@@ -1193,10 +1191,8 @@ msgid "At least one user needs to have admin permissions."
 msgstr "Dev'esserci almeno un utente con privilegi di amministratore."
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
-#, fuzzy
-#| msgid "Attachments"
 msgid "Attached"
-msgstr "Allegati"
+msgstr "Allegato"
 
 #: app/assets/javascripts/app/views/generic/attachments.jst.eco
 #: app/views/knowledge_base/public/answers/show.html.erb
@@ -1204,10 +1200,8 @@ msgid "Attached Files"
 msgstr "Attached Files"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
-#, fuzzy
-#| msgid "Attachments"
 msgid "Attachment"
-msgstr "Allegati"
+msgstr "Allegato"
 
 #: db/seeds/settings.rb
 msgid "Attachment - Search for follow-up also in attachments."
@@ -4376,16 +4370,12 @@ msgstr ""
 "Consente agli utenti di creare il proprio account tramite l'interfaccia web."
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
-#, fuzzy
-#| msgid "closed"
 msgid "Enclosed"
-msgstr "chiuso"
+msgstr "Incluso"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
-#, fuzzy
-#| msgid "close"
 msgid "Enclosure"
-msgstr "chiudi"
+msgstr "Allegato"
 
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
@@ -4457,7 +4447,7 @@ msgstr "Inserisci le tue credenziali"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Enter link URL"
-msgstr ""
+msgstr "Inserisci collegamento URL"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
@@ -5067,7 +5057,7 @@ msgstr "Ottieni un Token di accesso"
 #: app/assets/javascripts/app/controllers/_integration/github.coffee
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
 msgid "GitHub"
-msgstr ""
+msgstr "GitHub"
 
 #: db/seeds/settings.rb
 msgid "GitHub App Credentials"
@@ -5075,41 +5065,43 @@ msgstr "Credenziali App GitHub"
 
 #: db/seeds/settings.rb
 msgid "GitHub config"
-msgstr ""
+msgstr "Configurazione GitHub"
 
 #: db/seeds/settings.rb
 msgid "GitHub integration"
-msgstr ""
+msgstr "Integrazione GitHub"
 
 #: lib/github/http_client.rb
 msgid "GitHub request failed! Please have a look at the log file for details"
 msgstr ""
+"Richiesta verso GitHub fallita! dai un'occhiata al file di log per i dettagli"
 
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
 msgid "GitLab"
-msgstr ""
+msgstr "GitLab"
 
 #: db/seeds/settings.rb
 msgid "GitLab App Credentials"
-msgstr ""
+msgstr "Credenziali App GitLab"
 
 #: db/seeds/settings.rb
 msgid "GitLab config"
-msgstr ""
+msgstr "Configurazione GitLab"
 
 #: db/seeds/settings.rb
 msgid "GitLab integration"
-msgstr ""
+msgstr "Integrazione GitLab"
 
 #: lib/gitlab/http_client.rb
 msgid "GitLab request failed! Please have a look at the log file for details"
 msgstr ""
+"Richiesta verso GitLab fallita! Dai un'occhiata al file di log per i dettagli"
 
 #: app/assets/javascripts/app/views/google/index.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
 msgid "Gmail"
-msgstr ""
+msgstr "Gmail"
 
 #: app/assets/javascripts/app/views/agent_ticket_view/bulk.jst.eco
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
@@ -5132,12 +5124,12 @@ msgstr "Indietro"
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
 msgid "Goodbye message"
-msgstr ""
+msgstr "Messaggio di saluto"
 
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
 msgid "Google"
-msgstr ""
+msgstr "Google"
 
 #: db/seeds/settings.rb
 msgid "Google App Credentials"
@@ -5145,7 +5137,7 @@ msgstr "Credenziali Google App"
 
 #: db/seeds/settings.rb
 msgid "Google Maps"
-msgstr ""
+msgstr "Google Maps"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/highlighter.coffee
 msgid "Green"
@@ -5205,7 +5197,7 @@ msgstr "Gruppo (Completo)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "Group (overview)"
-msgstr ""
+msgstr "Gruppo (panoramica)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "Group (read)"
