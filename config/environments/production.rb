@@ -102,4 +102,17 @@ Rails.application.configure do
   # ignored for Session logging and fall back to localhost
   # see https://github.com/zammad/zammad/issues/742
   config.action_dispatch.trusted_proxies = ['127.0.0.1', '::1']
+
+  # configure action mailer via SMTP_URL environment variable
+  if ENV['SMTP_URL']
+    smtp_url = URI.parse(ENV['SMTP_URL'])
+    smtp_params = Rack::Utils.parse_nested_query(smtp_url.query)
+    config.action_mailer.smtp_settings = {
+      address:              smtp_url.host || 'localhost',
+      port:                 smtp_url.port || 25,
+      user_name:            smtp_url.user,
+      password:             smtp_url.password,
+      enable_starttls_auto: smtp_params['tls'].in?(['true', '1', 1, true, 'True', 'TRUE']),
+    }
+  end
 end
