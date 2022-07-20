@@ -6876,10 +6876,6 @@ msgstr ""
 msgid "Once completed…"
 msgstr ""
 
-#: app/graphql/gql/queries/ticket.rb
-msgid "One of the arguments 'ticket_id', 'ticket_internal_id' or 'ticket_number' must be provided."
-msgstr ""
-
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Online"
 msgstr ""

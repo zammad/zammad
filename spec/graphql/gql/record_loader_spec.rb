@@ -144,7 +144,7 @@ RSpec.describe Gql::RecordLoader, type: :graphql do
           'Permission Exists?'     => 4,
           # The next lines are unfortunately high, caused by Pundit layer, but mitigated by SQL cache.
           'Group Load'             => 102,
-          'UserGroup Exists?'      => 101,
+          'UserGroup Exists?'      => 102,
           'Ticket Load'            => 101,
           'Ticket::Article Load'   => 1,
           'User Load'              => 1,

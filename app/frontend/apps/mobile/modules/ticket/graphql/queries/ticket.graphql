@@ -5,7 +5,7 @@ query ticket(
   $withArticles: Boolean = false
   $withObjectAttributes: Boolean = false
 ) {
-  ticket(ticketId: $ticketId, ticketInternalId: $ticketInternalId, ticketNumber: $ticketNumber) {
+  ticket(ticket: {ticketId: $ticketId, ticketInternalId: $ticketInternalId, ticketNumber: $ticketNumber}) {
     id
     internalId
     number

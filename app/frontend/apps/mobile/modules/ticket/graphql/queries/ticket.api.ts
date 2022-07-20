@@ -9,9 +9,7 @@ export type ReactiveFunction<TParam> = () => TParam;
 export const TicketDocument = gql`
     query ticket($ticketId: ID, $ticketInternalId: Int, $ticketNumber: String, $withArticles: Boolean = false, $withObjectAttributes: Boolean = false) {
   ticket(
-    ticketId: $ticketId
-    ticketInternalId: $ticketInternalId
-    ticketNumber: $ticketNumber
+    ticket: {ticketId: $ticketId, ticketInternalId: $ticketInternalId, ticketNumber: $ticketNumber}
   ) {
     id
     internalId

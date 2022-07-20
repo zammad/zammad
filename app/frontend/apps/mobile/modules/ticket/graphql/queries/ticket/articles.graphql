@@ -1,7 +1,9 @@
 query ticketArticles(
-  $ticketId: ID!
+  $ticketId: ID
+  $ticketInternalId: Int
+  $ticketNumber: String
 ) {
-  ticketArticles(ticketId: $ticketId) {
+  ticketArticles(ticket: {ticketId: $ticketId, ticketInternalId: $ticketInternalId, ticketNumber: $ticketNumber}) {
     totalCount
     edges {
       node {

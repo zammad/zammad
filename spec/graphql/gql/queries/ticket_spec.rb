@@ -51,7 +51,7 @@ RSpec.describe Gql::Queries::Ticket, type: :graphql do
           let(:variables) { {} }
 
           it 'raises an exception' do
-            expect(graphql_response['errors'][0]['extensions']['type']).to eq('RuntimeError')
+            expect(graphql_response['errors'][0]['extensions']['type']).to eq('GraphQL::Schema::Validator::ValidationFailedError')
           end
         end
       end

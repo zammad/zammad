@@ -425,9 +425,7 @@ export type QueriesNodesArgs = {
 
 /** All available queries */
 export type QueriesTicketArgs = {
-  ticketId?: InputMaybe<Scalars['ID']>;
-  ticketInternalId?: InputMaybe<Scalars['Int']>;
-  ticketNumber?: InputMaybe<Scalars['String']>;
+  ticket: TicketLocatorInput;
 };
 
 
@@ -437,7 +435,7 @@ export type QueriesTicketArticlesArgs = {
   before?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
   last?: InputMaybe<Scalars['Int']>;
-  ticketId: Scalars['ID'];
+  ticket: TicketLocatorInput;
 };
 
 
@@ -644,6 +642,16 @@ export type TicketEdge = {
   node: Ticket;
 };
 
+/** Locate a ticket via id, internalId or number. */
+export type TicketLocatorInput = {
+  /** Ticket ID */
+  ticketId?: InputMaybe<Scalars['ID']>;
+  /** Ticket internalId */
+  ticketInternalId?: InputMaybe<Scalars['Int']>;
+  /** Ticket number */
+  ticketNumber?: InputMaybe<Scalars['String']>;
+};
+
 /** Ticket priorities */
 export type TicketPriority = Node & {
   __typename?: 'TicketPriority';
@@ -828,7 +836,9 @@ export type TicketQueryVariables = Exact<{
 export type TicketQuery = { __typename?: 'Queries', ticket: { __typename?: 'Ticket', id: string, internalId: number, number: string, title: string, createdAt: any, updatedAt: any, owner: { __typename?: 'User', firstname?: string | null, lastname?: string | null }, customer: { __typename?: 'User', firstname?: string | null, lastname?: string | null }, organization?: { __typename?: 'Organization', name: string } | null, state: { __typename?: 'TicketState', name: string, stateType: { __typename?: 'TicketStateType', name: string } }, group: { __typename?: 'Group', name: string }, priority: { __typename?: 'TicketPriority', name: string }, articles?: { __typename?: 'TicketArticleConnection', edges: Array<{ __typename?: 'TicketArticleEdge', node: { __typename?: 'TicketArticle', subject?: string | null } }> }, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: string | null, attribute: { __typename?: 'ObjectManagerAttribute', name: string, display: string, dataType: string, dataOption?: any | null, screens?: any | null, editable: boolean, active: boolean } }> } };
 
 export type TicketArticlesQueryVariables = Exact<{
-  ticketId: Scalars['ID'];
+  ticketId?: InputMaybe<Scalars['ID']>;
+  ticketInternalId?: InputMaybe<Scalars['Int']>;
+  ticketNumber?: InputMaybe<Scalars['String']>;
 }>;
 
 

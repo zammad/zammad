@@ -44,6 +44,22 @@ RSpec.describe Gql::Queries::Ticket::Articles, type: :graphql do
         it 'finds article content' do
           expect(graphql_response['data']['ticketArticles']['edges'][0]['node']).to include(expected_article1)
         end
+
+        context 'with ticketInternalId' do
+          let(:variables) { { ticketInternalId: ticket.id } }
+
+          it 'finds articles' do
+            expect(graphql_response['data']['ticketArticles']['totalCount']).to eq(articles.count)
+          end
+        end
+
+        context 'with ticketNumber' do
+          let(:variables) { { ticketNumber: ticket.number } }
+
+          it 'finds articles' do
+            expect(graphql_response['data']['ticketArticles']['totalCount']).to eq(articles.count)
+          end
+        end
       end
 
       context 'without permission' do

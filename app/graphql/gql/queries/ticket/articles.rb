@@ -5,13 +5,11 @@ module Gql::Queries
 
     description 'Fetch a ticket by ID'
 
-    # Pundit authorization will be done via TicketType.
-    argument :ticket_id, GraphQL::Types::ID, required: true, description: 'Ticket ID'
+    argument :ticket, Gql::Types::Input::TicketLocatorInputType, required: true, description: 'Ticket locator'
 
     type Gql::Types::Ticket::ArticleType.connection_type, null: false
 
-    def resolve(ticket_id:)
-      ticket = Gql::ZammadSchema.authorized_object_from_id(ticket_id, type: ::Ticket, user: context.current_user)
+    def resolve(ticket:)
       ::Ticket::Article.where(ticket: ticket).order(:id)
     end
   end
