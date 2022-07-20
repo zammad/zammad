@@ -72,7 +72,7 @@ it('can filter by overview type', async () => {
   expect(ticketItem).toBeInTheDocument()
   expect(view.getLinkFromElement(ticketItem)).toHaveAttribute(
     'href',
-    '/#ticket/zoom/1',
+    '/tickets/1',
   )
 })
 

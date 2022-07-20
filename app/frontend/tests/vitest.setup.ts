@@ -14,6 +14,8 @@ configure({
 
 require.extensions['.css'] = () => ({})
 
+vi.stubGlobal('scrollTo', vi.fn())
+
 vi.mock('@shared/components/CommonNotifications/composable', async () => {
   const { default: originalUseNotifications } = await vi.importActual<any>(
     '@shared/components/CommonNotifications/composable',

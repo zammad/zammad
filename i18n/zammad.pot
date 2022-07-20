@@ -160,6 +160,10 @@ msgstr ""
 msgid "%s months ago"
 msgstr ""
 
+#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/ArticleBadgeMore.vue
+msgid "%s more"
+msgstr ""
+
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
 msgid "%s object(s) have been created."
 msgstr ""
@@ -670,6 +674,10 @@ msgstr ""
 msgid "Add ordered list"
 msgstr ""
 
+#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/TicketZoomReplyButton.vue
+msgid "Add reply"
+msgstr ""
+
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Add second level heading"
 msgstr ""
@@ -987,6 +995,10 @@ msgstr ""
 msgid "Article Count"
 msgstr ""
 
+#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/ArticleBubble.vue
+msgid "Article actions"
+msgstr ""
+
 #: app/models/ticket.rb
 msgid "Article could not be created. An unsupported key other than 'article.note' was provided."
 msgstr ""
@@ -1218,12 +1230,17 @@ msgstr ""
 #: app/frontend/apps/mobile/modules/account/routes.ts
 #: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
 #: app/frontend/apps/mobile/modules/account/views/AccountOverview.vue
+#: app/frontend/shared/components/CommonUserAvatar/CommonUserAvatar.vue
 #: db/seeds/permissions.rb
 msgid "Avatar"
 msgstr ""
 
 #: app/graphql/gql/mutations/account/avatar/delete.rb
 msgid "Avatar could not be found."
+msgstr ""
+
+#: app/frontend/shared/components/CommonAvatar/CommonAvatar.vue
+msgid "Avatar with initials %s"
 msgstr ""
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_load_measure.jst.eco
@@ -2224,6 +2241,10 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Core Workflows are actions or constraints on selections in forms. Depending on an action, it is possible to hide or restrict fields or to change the obligation to fill them in."
+msgstr ""
+
+#: app/frontend/apps/mobile/modules/ticket/views/TicketDetailedView.vue
+msgid "Could not load the ticket"
 msgstr ""
 
 #: app/assets/javascripts/app/views/tag/table.jst.eco
@@ -3570,6 +3591,10 @@ msgstr ""
 msgid "Edit mask"
 msgstr ""
 
+#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/TicketViewersDialog.vue
+msgid "Editing ticket"
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "Elasticsearch Attachment Extensions"
 msgstr ""
@@ -4388,6 +4413,10 @@ msgstr ""
 msgid "Format as ||italic||"
 msgstr ""
 
+#: app/frontend/apps/mobile/modules/ticket/composable/useTicketArticleContext.ts
+msgid "Forward"
+msgstr ""
+
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco
 msgid "Frequency"
 msgstr ""
@@ -4711,6 +4740,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/job.coffee
 msgid "Has processed"
+msgstr ""
+
+#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/TicketViewersDialog.vue
+msgid "Has ticket open in taskbar, but is not actively looking in the ticket."
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
@@ -5857,6 +5890,10 @@ msgstr ""
 msgid "Maintenance mode enabled!"
 msgstr ""
 
+#: app/frontend/apps/mobile/modules/ticket/composable/useTicketArticleContext.ts
+msgid "Make internal"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/manage.coffee
 msgid "Manage"
 msgstr ""
@@ -5974,6 +6011,10 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "May"
+msgstr ""
+
+#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/ArticleBubble.vue
+msgid "Me"
 msgstr ""
 
 #: app/assets/javascripts/app/views/organization_profile/object.jst.eco
@@ -6971,6 +7012,10 @@ msgstr ""
 msgid "Open ticket indicator"
 msgstr ""
 
+#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/TicketViewersDialog.vue
+msgid "Opened in taskbar"
+msgstr ""
+
 #: app/assets/javascripts/app/views/agent_ticket_view/content.jst.eco
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #: app/assets/javascripts/app/views/channel/form.jst.eco
@@ -7758,6 +7803,10 @@ msgstr ""
 msgid "Replacement"
 msgstr ""
 
+#: app/frontend/apps/mobile/modules/ticket/composable/useTicketArticleContext.ts
+msgid "Reply"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Reply to last article"
 msgstr ""
@@ -8177,6 +8226,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/ArticleBubble.vue
 msgid "See less"
 msgstr ""
 
@@ -8184,6 +8234,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
+#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/ArticleBubble.vue
 msgid "See more"
 msgstr ""
 
@@ -8502,6 +8553,10 @@ msgstr ""
 msgid "Show less"
 msgstr ""
 
+#: app/frontend/apps/mobile/modules/ticket/composable/useTicketArticleContext.ts
+msgid "Show meta data"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Show next tab"
 msgstr ""
@@ -8512,6 +8567,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
 msgid "Show the chat when ready."
+msgstr ""
+
+#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/TicketZoomHeader.vue
+msgid "Show ticket viewers"
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
@@ -8684,6 +8743,10 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Special character required"
+msgstr ""
+
+#: app/frontend/apps/mobile/modules/ticket/composable/useTicketArticleContext.ts
+msgid "Split"
 msgstr ""
 
 #: db/seeds/groups.rb
@@ -9814,6 +9877,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/signature.coffee
 #: app/assets/javascripts/app/models/text_module.coffee
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
+#: app/frontend/apps/mobile/modules/ticket/routes.ts
 #: db/seeds/permissions.rb
 msgid "Ticket"
 msgstr ""
@@ -9908,12 +9972,20 @@ msgstr ""
 msgid "Ticket failed to save: %s"
 msgstr ""
 
+#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/TicketZoomHeader.vue
+msgid "Ticket has %s viewers"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 msgid "Ticket reminder reached"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 msgid "Ticket update"
+msgstr ""
+
+#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/TicketViewersDialog.vue
+msgid "Ticket viewers"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee
@@ -10754,6 +10826,10 @@ msgstr ""
 msgid "View this in Zammad"
 msgstr ""
 
+#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/TicketViewersDialog.vue
+msgid "Viewing ticket"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_dialog.coffee
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee
@@ -11542,6 +11618,10 @@ msgstr ""
 msgid "created"
 msgstr ""
 
+#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/TicketZoomHeader.vue
+msgid "created %s"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
 msgid "current user"
@@ -11927,6 +12007,7 @@ msgstr ""
 msgid "my own note"
 msgstr ""
 
+#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/ArticleBadgeNew.vue
 #: db/seeds/ticket_state_types.rb
 #: db/seeds/ticket_states.rb
 msgid "new"

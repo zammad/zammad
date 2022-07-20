@@ -19,7 +19,8 @@ type TicketByOverviewPageInfo = ConfidentTake<
 export const ticketDefault: Partial<TicketItemByOverview> = {
   id: 'af12',
   title: 'Ticket 1',
-  number: '1',
+  number: '63001',
+  internalId: 1,
   priority: {
     name: 'high',
     defaultCreate: false,

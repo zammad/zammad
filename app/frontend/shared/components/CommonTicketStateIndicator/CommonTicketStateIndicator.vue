@@ -33,15 +33,15 @@ const statusIndicator = computed(() => {
       'status-pill': pill,
       [`status-${status}`]: pill,
     }"
-    class="flex items-center"
+    class="flex select-none items-center"
     role="group"
   >
     <img
       v-if="statusIndicator"
       :src="`/assets/images/icons/${statusIndicator}.svg`"
       :alt="label"
-      :width="pill ? 12 : 24"
-      :height="pill ? 12 : 24"
+      :width="pill ? 18 : 24"
+      :height="pill ? 18 : 24"
     />
     <div v-if="pill" class="ml-[2px] text-xs uppercase leading-[14px]">
       {{ label }}
@@ -52,7 +52,7 @@ const statusIndicator = computed(() => {
 <style scoped lang="scss">
 .status {
   &-pill {
-    @apply rounded px-px pr-1.5 pl-1;
+    @apply rounded bg-gray-100 py-1 pr-1.5 pl-1 text-black;
   }
 
   &-closed {

@@ -20,6 +20,7 @@ const animationClassMap: Record<Animations, string> = {
 }
 
 const sizeMap: Record<Sizes, number> = {
+  xs: 10,
   tiny: 15,
   small: 20,
   base: 25,

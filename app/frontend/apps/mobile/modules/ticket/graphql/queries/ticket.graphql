@@ -5,7 +5,13 @@ query ticket(
   $withArticles: Boolean = false
   $withObjectAttributes: Boolean = false
 ) {
-  ticket(ticket: {ticketId: $ticketId, ticketInternalId: $ticketInternalId, ticketNumber: $ticketNumber}) {
+  ticket(
+    ticket: {
+      ticketId: $ticketId
+      ticketInternalId: $ticketInternalId
+      ticketNumber: $ticketNumber
+    }
+  ) {
     id
     internalId
     number
@@ -17,8 +23,10 @@ query ticket(
       lastname
     }
     customer {
+      id
       firstname
       lastname
+      fullname
     }
     organization {
       name
@@ -34,11 +42,27 @@ query ticket(
     }
     priority {
       name
+      defaultCreate
+      uiColor
     }
     articles @include(if: $withArticles) {
       edges {
         node {
+          id
+          internal
+          body
+          createdAt
+          createdBy {
+            id
+            firstname
+            lastname
+          }
+          sender {
+            name
+          }
           subject
+          to
+          internal
         }
       }
     }

@@ -17,6 +17,7 @@ query ticketsByOverview(
     edges {
       node {
         id
+        internalId
         number
         title
         createdAt

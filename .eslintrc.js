@@ -120,6 +120,8 @@ module.exports = {
 
     // Enforce v-slot directive usage in short form as error instead of warning
     'vue/v-slot-style': ['error', 'shorthand'],
+
+    'no-promise-executor-return': 'off',
   },
   overrides: [
     {

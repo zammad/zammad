@@ -31,12 +31,19 @@ const colors = [
   'bg-orange',
 ]
 
-const colorClass = computed(() => {
-  const { lastname, firstname, email, id } = props.entity
+const fullName = computed(() => {
+  const { lastname, firstname } = props.entity
 
+  return [firstname, lastname].filter(Boolean).join(' ')
+})
+
+const colorClass = computed(() => {
+  const { email, id } = props.entity
+
+  // TODO ID is mangled by gql, maybe backend should send "isSystem"-like property?
   if (id === '1') return 'bg-white'
 
-  const name = [firstname, lastname, email].filter(Boolean).join('')
+  const name = [fullName.value, email].filter(Boolean).join('')
 
   if (!name) return colors[0]
   // get color based on mod of the fullname length
@@ -57,7 +64,7 @@ const image = computed(() => {
   if (icon.value || !props.entity.image) return null
 
   // Support the inline data URI as an image source.
-  if (/^data:/.test(props.entity.image)) return props.entity.image
+  if (props.entity.image.startsWith('data:')) return props.entity.image
 
   // we're using the REST api here to get the image and to also use the browser image cache
   // TODO: this should be re-evaluated when the desktop app is going to be implemented
@@ -90,5 +97,6 @@ const className = computed(() => {
     :class="className"
     :image="image"
     :vip="isVip"
+    :aria-label="`${$t('Avatar')} (${fullName || entity.email || initials})`"
   />
 </template>

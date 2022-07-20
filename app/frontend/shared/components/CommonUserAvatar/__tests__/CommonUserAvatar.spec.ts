@@ -18,7 +18,7 @@ describe('CommonUserAvatar', () => {
     const avatar = view.getByTestId('common-avatar')
 
     expect(avatar).toHaveTextContent('JD')
-    expect(avatar).toHaveClass('bg-yellow')
+    expect(avatar).toHaveClass('bg-blue')
 
     await view.rerender(<Props>{
       entity: {

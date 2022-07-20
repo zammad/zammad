@@ -1,0 +1,43 @@
+@import '@shared/styles/main.css';
+
+.Content,
+.ProseMirror {
+  &:focus-visible {
+    outline: none;
+  }
+
+  &::before {
+    content: attr(aria-placeholder);
+    @apply absolute cursor-text text-white/50;
+  }
+
+  ol {
+    list-style: decimal;
+  }
+
+  ul {
+    list-style: disc;
+  }
+
+  ol,
+  ul {
+    @apply ltr:pl-2 rtl:pr-2;
+
+    list-style-position: inside;
+
+    p {
+      display: inline-block;
+    }
+  }
+
+  a {
+    @apply text-blue;
+  }
+}
+
+@layer components {
+  .floating-input:focus-within label,
+  .floating-input.formkit-outer[data-populated] label {
+    @apply -translate-y-3 scale-75 opacity-75 ltr:translate-x-1 rtl:translate-x-6;
+  }
+}

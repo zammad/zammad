@@ -1,7 +1,7 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, useSlots } from 'vue'
 import type { RouteLocationRaw } from 'vue-router'
 import useSessionStore from '@shared/stores/session'
 import type { MenuItem } from './types'
@@ -12,6 +12,7 @@ export interface Props {
   actionLink?: RouteLocationRaw
   headerTitle?: string
   items?: MenuItem[]
+  help?: string
 }
 
 const props = defineProps<Props>()
@@ -37,6 +38,10 @@ const itemsWithPermission = computed(() => {
     return true
   })
 })
+
+const slots = useSlots()
+
+const hasHelp = computed(() => slots.help || props.help)
 </script>
 
 <template>
@@ -44,7 +49,7 @@ const itemsWithPermission = computed(() => {
     v-if="itemsWithPermission || $slots.default"
     class="mb-2 flex flex-row justify-between"
   >
-    <div class="text-white/80 ltr:pl-4 rtl:pr-4">
+    <div class="text-white/80 ltr:pl-3 rtl:pr-3">
       <slot name="header">{{ i18n.t(headerTitle) }}</slot>
     </div>
     <component
@@ -59,7 +64,8 @@ const itemsWithPermission = computed(() => {
   </div>
   <div
     v-if="itemsWithPermission || $slots.default"
-    class="w-fill mb-6 flex flex-col rounded-xl bg-gray-500 px-3 py-1 text-base text-white"
+    class="flex w-full flex-col rounded-xl bg-gray-500 px-3 py-1 text-base text-white"
+    :class="{ 'mb-6': !hasHelp }"
     v-bind="$attrs"
   >
     <slot name="before-items" />
@@ -72,9 +78,14 @@ const itemsWithPermission = computed(() => {
           :icon="item.icon"
           :icon-bg="item.iconBg"
           :information="item.information"
-          @click="item.onClick as () => void"
+          @click="item.onClick?.($event)"
         />
       </template>
+    </slot>
+  </div>
+  <div v-if="hasHelp" class="mb-4 pt-1 text-xs text-gray-100 ltr:pl-3 rtl:pr-3">
+    <slot name="help">
+      {{ $t(help) }}
     </slot>
   </div>
 </template>

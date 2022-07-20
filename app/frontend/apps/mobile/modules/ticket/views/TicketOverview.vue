@@ -257,6 +257,7 @@ const directionOptions = computed(() => [
     <CommonLoader
       v-if="loadingOverviews || overviews.length"
       :loading="loadingOverviews"
+      center
     >
       <TicketList
         v-if="selectedOverview && orderBy && orderDirection"

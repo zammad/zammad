@@ -3,6 +3,7 @@
 <script setup lang="ts">
 import { computed, toRef } from 'vue'
 import CommonTicketStateIndicator from '@shared/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue'
+import CommonTicketPriorityIndicator from '@shared/components/CommonTicketPriorityIndicator/CommonTicketPriorityIndicator.vue'
 import { useEditedBy } from '@mobile/composables/useEditedBy'
 import { type TicketItemData } from './types'
 
@@ -10,25 +11,9 @@ export interface Props {
   entity: TicketItemData
 }
 
-interface Priority {
-  class: string | null
-  text: string
-}
-
 const props = defineProps<Props>()
 
 const { stringUpdated } = useEditedBy(toRef(props, 'entity'))
-
-const priority = computed<Priority | null>(() => {
-  const { entity } = props
-  if (!entity.priority || entity.priority.defaultCreate) {
-    return null
-  }
-  return {
-    class: `u-${entity.priority.uiColor || 'default'}-color`,
-    text: entity.priority.name.toUpperCase(),
-  }
-})
 
 const customer = computed(() => {
   const { customer } = props.entity
@@ -41,7 +26,7 @@ const customer = computed(() => {
 
 <template>
   <CommonLink
-    :link="`/#ticket/zoom/${entity.number}`"
+    :link="`/tickets/${entity.internalId}`"
     class="flex cursor-pointer ltr:pr-3 rtl:pl-3"
   >
     <div class="flex w-14 items-center justify-center">
@@ -76,33 +61,7 @@ const customer = computed(() => {
           {{ stringUpdated }}
         </div>
       </div>
-      <div
-        v-if="priority"
-        :class="[
-          priority.class,
-          'h-min whitespace-nowrap rounded-[4px] py-1 px-2',
-        ]"
-      >
-        {{ priority.text }}
-      </div>
+      <CommonTicketPriorityIndicator :priority="entity.priority" />
     </div>
   </CommonLink>
 </template>
-
-<style scoped lang="scss">
-.u-default-color {
-  @apply bg-gray/10 text-gray;
-}
-
-.u-high-priority-color {
-  @apply bg-red/10 text-red;
-}
-
-.u-low-priority-color {
-  @apply bg-blue/10 text-blue;
-}
-
-.u-medium-priority-color {
-  @apply bg-yellow/10 text-yellow;
-}
-</style>

@@ -5,7 +5,11 @@ import { NetworkStatus } from '@apollo/client/core'
 import type { UserError } from '@shared/graphql/types'
 import { GraphQLErrorReport } from '@shared/types/error'
 import type { DocumentNode } from 'graphql'
-import { createMockSubscription, IMockSubscription } from 'mock-apollo-client'
+import {
+  createMockSubscription,
+  type IMockSubscription,
+  type RequestHandlerResponse,
+} from 'mock-apollo-client'
 import type { SpyInstance } from 'vitest'
 import createMockClient from './mock-apollo-client'
 import { waitForNextTick } from './utils'
@@ -112,14 +116,15 @@ export const mockGraphQLApi = (
   return instance
 }
 
-export interface ExtendedIMockSubscription
-  extends Omit<IMockSubscription, 'closed'> {
+export interface ExtendedIMockSubscription<T = unknown>
+  extends Omit<IMockSubscription, 'next' | 'closed'> {
   closed: () => boolean
+  next: (result: RequestHandlerResponse<T>) => Promise<void>
 }
 
-export const mockGraphQLSubscription = (
+export const mockGraphQLSubscription = <T>(
   operationDocument: DocumentNode,
-): ExtendedIMockSubscription => {
+): ExtendedIMockSubscription<T> => {
   const mockSubscription = createMockSubscription()
 
   createMockClient([
@@ -132,7 +137,7 @@ export const mockGraphQLSubscription = (
   return {
     next: async (
       value: Parameters<typeof mockSubscription.next>[0],
-    ): Promise<ReturnType<typeof mockSubscription.next>> => {
+    ): Promise<void> => {
       mockSubscription.next(value)
 
       await waitForNextTick(true)

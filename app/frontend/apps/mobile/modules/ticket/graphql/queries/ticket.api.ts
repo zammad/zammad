@@ -22,8 +22,10 @@ export const TicketDocument = gql`
       lastname
     }
     customer {
+      id
       firstname
       lastname
+      fullname
     }
     organization {
       name
@@ -39,11 +41,27 @@ export const TicketDocument = gql`
     }
     priority {
       name
+      defaultCreate
+      uiColor
     }
     articles @include(if: $withArticles) {
       edges {
         node {
+          id
+          internal
+          body
+          createdAt
+          createdBy {
+            id
+            firstname
+            lastname
+          }
+          sender {
+            name
+          }
           subject
+          to
+          internal
         }
       }
     }

@@ -19,6 +19,7 @@ export const TicketsByOverviewDocument = gql`
     edges {
       node {
         id
+        internalId
         number
         title
         createdAt

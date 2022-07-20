@@ -42,6 +42,11 @@ const closeDialog = () => {
   showDialog.value = false
 }
 
+defineExpose({
+  openDialog,
+  closeDialog,
+})
+
 onClickOutside(dialogElement, closeDialog)
 onKeyDown('Escape', closeDialog)
 

@@ -66,12 +66,67 @@ RSpec.describe Gql::RecordLoader, type: :graphql do
       overview = create(:overview, condition: condition)
       Gql::ZammadSchema.id_from_object(overview)
     end
+    let(:query) do
+      <<~QUERY
+        query ticketsByOverview(
+          $overviewId: ID!
+          $pageSize: Int = 10
+        ) {
+          ticketsByOverview(
+            overviewId: $overviewId
+            first: $pageSize
+          ) {
+            totalCount
+            edges {
+              node {
+                id
+                internalId
+                number
+                title
+                createdAt
+                updatedAt
+                owner {
+                  firstname
+                  lastname
+                  fullname
+                }
+                customer {
+                  firstname
+                  lastname
+                  fullname
+                }
+                organization {
+                  name
+                }
+                state {
+                  name
+                  stateType {
+                    name
+                  }
+                }
+                group {
+                  name
+                }
+                priority {
+                  name
+                  uiColor
+                  defaultCreate
+                }
+              }
+              cursor
+            }
+            pageInfo {
+              endCursor
+              hasNextPage
+            }
+          }
+        }
+      QUERY
+    end
 
     it 'performs only the expected amount of DB queries', authenticated_as: :agent do # rubocop:disable RSpec/ExampleLength, RSpec/MultipleExpectations
-      query = read_graphql_file('shared/graphql/fragments/objectAttributeValues.graphql') +
-              read_graphql_file('apps/mobile/modules/ticket/graphql/queries/ticketsByOverview.graphql')
+      # Create variables here and not via let(), otherwise the objects would be instantiated later in the traced block.
       variables = { overviewId: overview_id }
-
       total_queries = {}
       uncached_queries = {}
 
@@ -121,14 +176,75 @@ RSpec.describe Gql::RecordLoader, type: :graphql do
   context 'when querying one ticket with many articles' do
     let(:loops) { 1 }
     let(:tickets_per_loop)    { 1 }
-    let(:articles_per_ticket) { 100 }
+    let(:articles_per_ticket) { 10 }
     let(:ticket_id)           { Gql::ZammadSchema.id_from_object(Ticket.last) }
+    let(:query) do
+      <<~QUERY
+        query ticket(
+          $ticketId: ID
+          $withArticles: Boolean = false
+        ) {
+          ticket(
+            ticket: {
+              ticketId: $ticketId
+            }
+          ) {
+            id
+            internalId
+            number
+            title
+            createdAt
+            updatedAt
+            owner {
+              firstname
+              lastname
+            }
+            customer {
+              id
+              firstname
+              lastname
+              fullname
+            }
+            organization {
+              name
+            }
+            state {
+              name
+              stateType {
+                name
+              }
+            }
+            group {
+              name
+            }
+            priority {
+              name
+              defaultCreate
+              uiColor
+            }
+            articles @include(if: $withArticles) {
+              edges {
+                node {
+                  id
+                  internal
+                  body
+                  createdAt
+                  sender {
+                    name
+                  }
+                  subject
+                  to
+                  internal
+                }
+              }
+            }
+          }
+        }
+      QUERY
+    end
 
     it 'performs only the expected amount of DB queries', authenticated_as: :agent do # rubocop:disable RSpec/ExampleLength, RSpec/MultipleExpectations
-      query = read_graphql_file('shared/graphql/fragments/objectAttributeValues.graphql') +
-              read_graphql_file('apps/mobile/modules/ticket/graphql/queries/ticket.graphql')
       variables = { ticketId: ticket_id, withArticles: true }
-
       total_queries = {}
       uncached_queries = {}
 
@@ -140,18 +256,18 @@ RSpec.describe Gql::RecordLoader, type: :graphql do
 
       expect(total_queries).to include(
         {
-          'Permission Load'        => 5,
-          'Permission Exists?'     => 4,
-          # The next lines are unfortunately high, caused by Pundit layer, but mitigated by SQL cache.
-          'Group Load'             => 102,
-          'UserGroup Exists?'      => 102,
-          'Ticket Load'            => 101,
-          'Ticket::Article Load'   => 1,
-          'User Load'              => 2,
-          'Organization Load'      => 1,
-          'Ticket::State Load'     => 1,
-          'Ticket::Priority Load'  => 1,
-          'Ticket::StateType Load' => 1
+          'Permission Load'              => 5,
+          'Permission Exists?'           => 4,
+          'Group Load'                   => 12,
+          'UserGroup Exists?'            => 12,
+          'Ticket Load'                  => 11,
+          'Ticket::Article Load'         => 1,
+          'Ticket::Article::Sender Load' => 1,
+          'User Load'                    => 2,
+          'Organization Load'            => 1,
+          'Ticket::State Load'           => 1,
+          'Ticket::Priority Load'        => 1,
+          'Ticket::StateType Load'       => 1
         }
       )
 

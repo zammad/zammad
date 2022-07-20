@@ -130,6 +130,7 @@ export const useDialog = (options: DialogOptions) => {
 
   return {
     isOpened,
+    name: options.name,
     open,
     close,
     toggle,

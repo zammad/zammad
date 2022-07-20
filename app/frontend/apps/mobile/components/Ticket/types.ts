@@ -5,6 +5,7 @@ import { TicketState } from '@shared/entities/ticket/types'
 // TODO 2022-05-31 Sheremet V.A. base types on actual usage
 export interface TicketItemData {
   id: string
+  internalId: number
   title: string
   number: string
   state: {

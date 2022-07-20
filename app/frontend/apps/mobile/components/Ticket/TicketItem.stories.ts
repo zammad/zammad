@@ -14,6 +14,7 @@ const Template = createTemplate<Props>(TicketItem)
 const ticket = {
   id: '54321',
   number: '12345',
+  internalId: 1,
   state: { name: TicketState.Open },
   title: 'Test Ticket',
   owner: {

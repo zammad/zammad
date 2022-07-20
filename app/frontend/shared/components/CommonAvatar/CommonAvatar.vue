@@ -12,6 +12,7 @@ export interface Props {
   icon?: Maybe<string>
   size?: AvatarSize
   vip?: boolean
+  ariaLabel?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -20,6 +21,7 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const iconSizes = {
+  xs: 'xs',
   small: 'tiny',
   medium: 'small',
   large: 'medium',
@@ -38,10 +40,12 @@ const iconSize = computed(() => {
       backgroundImage: image ? `url(${image})` : undefined,
     }"
     :class="[
-      'relative inline-flex h-10 w-10 shrink-0 text-white',
+      'relative inline-flex h-10 w-10 shrink-0 select-none text-white',
       'items-center justify-center rounded-full bg-cover bg-center',
       `size-${size}`,
     ]"
+    role="img"
+    :aria-label="ariaLabel || $t('Avatar with initials %s', initials)"
     data-test-id="common-avatar"
   >
     <CommonIcon
@@ -57,6 +61,14 @@ const iconSize = computed(() => {
 </template>
 
 <style scoped lang="scss">
+.size-xs {
+  @apply h-6 w-6 text-xs leading-6;
+
+  .vip {
+    @apply -ml-2 w-4;
+  }
+}
+
 .size-small {
   @apply h-8 w-8 text-xs leading-8;
 

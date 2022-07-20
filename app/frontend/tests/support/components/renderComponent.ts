@@ -146,7 +146,7 @@ export const initializeStore = () => {
   if (storeInitialized) return
 
   pinia = createTestingPinia({ createSpy: vi.fn, stubActions: false })
-  plugins.push(pinia)
+  plugins.push({ install: pinia.install })
   pinia.use((context) => {
     stores.add(context.store)
   })

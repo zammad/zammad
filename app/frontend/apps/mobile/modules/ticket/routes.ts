@@ -4,6 +4,18 @@ import type { RouteRecordRaw } from 'vue-router'
 
 const routes: RouteRecordRaw[] = [
   {
+    path: '/tickets/:internalId(\\d+)',
+    name: 'TicketZoom',
+    props: true,
+    component: () => import('./views/TicketDetailedView.vue'),
+    meta: {
+      title: __('Ticket'),
+      requiresAuth: true,
+      requiredPermission: ['ticket.agent', 'ticket.customer'],
+      level: 3,
+    },
+  },
+  {
     path: '/tickets/view/:overviewLink?',
     name: 'TicketOverview',
     props: true,

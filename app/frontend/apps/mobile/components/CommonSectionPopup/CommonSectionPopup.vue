@@ -1,7 +1,7 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { onClickOutside, useVModel } from '@vueuse/core'
+import { onClickOutside, onKeyUp, useVModel } from '@vueuse/core'
 import { shallowRef } from 'vue'
 import { PopupItem } from './types'
 
@@ -30,8 +30,12 @@ const onItemClick = (action: PopupItem['onAction']) => {
 
 const wrapper = shallowRef<HTMLElement>()
 
-onClickOutside(wrapper, () => {
-  hidePopup()
+onClickOutside(wrapper, () => hidePopup())
+onKeyUp(['Escape', 'Spacebar', ' '], (e) => {
+  if (localState.value) {
+    e.preventDefault()
+    hidePopup()
+  }
 })
 </script>
 
@@ -57,7 +61,7 @@ onClickOutside(wrapper, () => {
               v-for="item in items"
               :key="item.title"
               :link="item.link"
-              class="flex h-14 cursor-pointer items-center justify-center border-b border-gray-300 last:border-0"
+              class="flex h-14 w-full cursor-pointer items-center justify-center border-b border-gray-300 last:border-0"
               :class="item.class"
               @click="onItemClick(item.onAction)"
             >

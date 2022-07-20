@@ -56,21 +56,21 @@ useEventListener(
 
 <template>
   <TransitionGroup v-if="transition" v-bind="transition">
-    <template
+    <Component
+      :is="cmp"
       v-for="{ cmp, name: cmpName, id, props: cmpProps } in components"
       :key="`${cmpName + id}`"
-    >
-      <Component :is="cmp" v-bind="cmpProps" />
-    </template>
+      v-bind="cmpProps"
+    />
   </TransitionGroup>
 
   <template v-else-if="!$slots.default">
-    <template
+    <Component
+      :is="cmp"
       v-for="{ cmp, name: cmpName, id, props: cmpProps } in components"
       :key="`${cmpName + id}`"
-    >
-      <Component :is="cmp" v-bind="cmpProps" />
-    </template>
+      v-bind="cmpProps"
+    />
   </template>
 
   <slot v-else :components="components" />

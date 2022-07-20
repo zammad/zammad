@@ -157,39 +157,3 @@ useEventListener('click', (e) => {
     </button>
   </div>
 </template>
-
-<style lang="scss">
-.ProseMirror {
-  &:focus-visible {
-    outline: none;
-  }
-
-  &::before {
-    content: attr(aria-placeholder);
-    @apply absolute cursor-text text-white/50;
-  }
-
-  ol {
-    list-style: decimal;
-  }
-
-  ul {
-    list-style: disc;
-  }
-
-  ol,
-  ul {
-    @apply ltr:pl-2 rtl:pr-2;
-
-    list-style-position: inside;
-
-    p {
-      display: inline-block;
-    }
-  }
-
-  a {
-    @apply text-blue;
-  }
-}
-</style>
