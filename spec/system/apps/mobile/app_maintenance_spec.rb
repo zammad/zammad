@@ -56,7 +56,7 @@ RSpec.describe 'Mobile > App Update Check', type: :system, app: :mobile do
 
     it 'reacts to maintenance broadcast message' do
       Gql::ZammadSchema.subscriptions.trigger(
-        Gql::Subscriptions::PushMessages.field_name,
+        Gql::Subscriptions::PushMessages.graphql_field_name,
         {},
         {
           title: 'Attention',

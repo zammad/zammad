@@ -5,6 +5,8 @@ module Gql::Subscriptions
 
     description 'Application update/change events'
 
+    broadcastable true
+
     field :type, Gql::Types::Enum::AppMaintenanceTypeType, null: true, description: 'Maintenance type, may trigger actions in the front end'
 
     def self.authorize(...)
@@ -13,10 +15,6 @@ module Gql::Subscriptions
 
     def update
       object
-    end
-
-    def self.register_in_schema(schema)
-      schema.field field_name, resolver: self, broadcastable: true
     end
   end
 end

@@ -15,7 +15,7 @@ module User::TriggersSubscriptions
     return true if Setting.get('import_mode')
 
     Gql::ZammadSchema.subscriptions.trigger(
-      Gql::Subscriptions::UserUpdates.field_name,
+      Gql::Subscriptions::UserUpdates.graphql_field_name,
       { user_id: Gql::ZammadSchema.id_from_object(self) },
       self
     )

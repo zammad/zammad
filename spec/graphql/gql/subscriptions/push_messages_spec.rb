@@ -22,7 +22,7 @@ RSpec.describe Gql::Subscriptions::PushMessages, type: :graphql do
 
   def trigger_push_message(title, text)
     Gql::ZammadSchema.subscriptions.trigger(
-      described_class.field_name,
+      described_class.graphql_field_name,
       {},
       {
         title: title,

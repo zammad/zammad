@@ -5,6 +5,8 @@ module Gql::Subscriptions
 
     description 'Broadcast messages to all users'
 
+    broadcastable true
+
     field :title, String, null: true, description: 'Message title'
     field :text, String, null: true, description: 'Message text'
 
@@ -14,10 +16,6 @@ module Gql::Subscriptions
 
     def update
       object
-    end
-
-    def self.register_in_schema(schema)
-      schema.field field_name, resolver: self, broadcastable: true
     end
   end
 end

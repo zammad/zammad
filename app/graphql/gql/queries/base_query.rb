@@ -11,8 +11,7 @@ module Gql::Queries
     end
 
     def self.register_in_schema(schema)
-      field_name = name.sub('Gql::Queries::', '').gsub('::', '').camelize(:lower).to_sym
-      schema.field field_name, resolver: self
+      schema.field graphql_field_name, resolver: self
     end
 
   end

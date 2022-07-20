@@ -10,5 +10,9 @@ module Gql::Concern::HasNestedGraphqlName
 
       subclass.graphql_name(subclass.name.sub(%r{Gql::[^:]+::}, '').gsub('::', '').sub(%r{Type\Z}, ''))
     end
+
+    def self.graphql_field_name
+      graphql_name.camelize(:lower).to_sym
+    end
   end
 end

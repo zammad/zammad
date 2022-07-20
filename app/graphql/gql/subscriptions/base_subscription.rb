@@ -13,8 +13,13 @@ module Gql::Subscriptions
       ctx.current_user
     end
 
-    def self.field_name
-      name.sub('Gql::Subscriptions::', '').gsub('::', '').camelize(:lower).to_sym
+    # Add DSL to specify if a subscription is broadcastable.
+    def self.broadcastable(broadcastable = nil)
+      if broadcastable.nil?
+        @broadcastable
+      else
+        @broadcastable = broadcastable
+      end
     end
 
     #
@@ -32,7 +37,7 @@ module Gql::Subscriptions
     end
 
     def self.register_in_schema(schema)
-      schema.field field_name, resolver: self
+      schema.field graphql_field_name, resolver: self, broadcastable: !!broadcastable
     end
 
   end

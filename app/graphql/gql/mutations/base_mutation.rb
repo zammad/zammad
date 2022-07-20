@@ -40,8 +40,7 @@ module Gql::Mutations
     end
 
     def self.register_in_schema(schema)
-      field_name = name.sub('Gql::Mutations::', '').gsub('::', '').camelize(:lower).to_sym
-      schema.field field_name, mutation: self
+      schema.field graphql_field_name, mutation: self
     end
 
     def error_response(*errors)
