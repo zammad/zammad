@@ -7,7 +7,7 @@ import { computed, ref } from 'vue'
 import LayoutCustomNavigation from '@mobile/components/layout/LayoutCustomNavigation.vue'
 import { useHeader } from '@mobile/composables/useHeader'
 import NotificationItem from '../components/NotificationItem.vue'
-import { NotificationListItem } from '../types/notificaitons'
+import type { NotificationListItem } from '../types/notificaitons'
 
 useHeader({
   backButton: true,

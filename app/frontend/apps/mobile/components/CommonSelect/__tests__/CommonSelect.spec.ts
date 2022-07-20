@@ -2,7 +2,8 @@
 
 import { i18n } from '@shared/i18n'
 import { renderComponent } from '@tests/support/components'
-import { ref, Ref } from 'vue'
+import type { Ref } from 'vue'
+import { ref } from 'vue'
 import CommonSelect, { type Props } from '../CommonSelect.vue'
 
 const options = [

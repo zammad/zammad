@@ -1,9 +1,9 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import { computed, reactive, readonly, ref } from 'vue'
-import { OperationVariables } from '@apollo/client/core'
-import { QueryHandler } from '@shared/server/apollo/handler'
-import {
+import type { OperationVariables } from '@apollo/client/core'
+import type { QueryHandler } from '@shared/server/apollo/handler'
+import type {
   BaseConnection,
   OperationQueryResult,
   PaginationVariables,

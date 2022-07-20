@@ -4,7 +4,7 @@ import Mention from '@tiptap/extension-mention'
 import Link from '@tiptap/extension-link'
 
 import buildMentionSuggestion from './suggestions'
-import { CommandUserProps, MentionUserItem } from '../types'
+import type { CommandUserProps, MentionUserItem } from '../types'
 
 const LINK_NAME = 'mention-user-link'
 const ACTIVATOR = '@@'

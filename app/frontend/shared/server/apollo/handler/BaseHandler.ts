@@ -1,19 +1,19 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { Ref } from 'vue'
-import { ApolloError, OperationVariables } from '@apollo/client/core'
-import {
+import type { Ref } from 'vue'
+import type { ApolloError, OperationVariables } from '@apollo/client/core'
+import type {
   BaseHandlerOptions,
   CommonHandlerOptions,
   CommonHandlerOptionsParameter,
   OperationResult,
   OperationReturn,
 } from '@shared/types/server/apollo/handler'
-import {
+import type {
   GraphQLErrorReport,
-  GraphQLErrorTypes,
   GraphQLHandlerError,
 } from '@shared/types/error'
+import { GraphQLErrorTypes } from '@shared/types/error'
 import {
   useNotifications,
   NotificationTypes,

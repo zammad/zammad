@@ -1,8 +1,9 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import { i18n } from '@shared/i18n'
-import { computed, Ref } from 'vue'
-import { TicketArticle } from '../types/tickets'
+import type { Ref } from 'vue'
+import { computed } from 'vue'
+import type { TicketArticle } from '../types/tickets'
 
 interface ArticleRow {
   type: 'article-bubble'

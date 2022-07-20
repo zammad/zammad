@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { App } from 'vue'
+import type { App } from 'vue'
 import { i18n } from '@shared/i18n'
 import applicationConfigPlugin from '../plugins/applicationConfigPlugin'
 

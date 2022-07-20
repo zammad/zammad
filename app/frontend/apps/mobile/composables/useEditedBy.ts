@@ -2,7 +2,8 @@
 
 import { i18n } from '@shared/i18n'
 import useSessionStore from '@shared/stores/session'
-import { computed, Ref } from 'vue'
+import type { Ref } from 'vue'
+import { computed } from 'vue'
 
 interface Author {
   id: string

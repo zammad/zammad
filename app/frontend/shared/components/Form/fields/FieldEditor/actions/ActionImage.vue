@@ -2,7 +2,7 @@
 
 <script setup lang="ts">
 import { convertFileList } from '@shared/utils/files'
-import { Editor } from '@tiptap/vue-3'
+import type { Editor } from '@tiptap/vue-3'
 import { ref } from 'vue'
 
 const props = defineProps<{

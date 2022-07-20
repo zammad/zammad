@@ -7,7 +7,7 @@ import tippy, { type GetReferenceClientRect, type Instance } from 'tippy.js'
 import { PluginKey } from 'prosemirror-state'
 
 import MentionItem from '../SuggestionItem.vue'
-import { MentionType } from '../types'
+import type { MentionType } from '../types'
 
 interface MentionOptions<T> {
   activator: string

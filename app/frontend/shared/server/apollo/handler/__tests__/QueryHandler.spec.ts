@@ -2,11 +2,11 @@
 
 import { useLazyQuery, useQuery } from '@vue/apollo-composable'
 import createMockClient from '@tests/support/mock-apollo-client'
-import {
-  SampleTypedQueryDocument,
+import type {
   SampleQuery,
   SampleQueryVariables,
 } from '@tests/fixtures/graphqlSampleTypes'
+import { SampleTypedQueryDocument } from '@tests/fixtures/graphqlSampleTypes'
 import { useNotifications } from '@shared/components/CommonNotifications'
 import { NetworkStatus } from '@apollo/client/core'
 import { GraphQLErrorTypes } from '@shared/types/error'

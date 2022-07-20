@@ -1,13 +1,14 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import { useSubscription } from '@vue/apollo-composable'
-import { createMockSubscription, IMockSubscription } from 'mock-apollo-client'
+import type { IMockSubscription } from 'mock-apollo-client'
+import { createMockSubscription } from 'mock-apollo-client'
 import createMockClient from '@tests/support/mock-apollo-client'
-import {
-  SampleTypedSubscriptionDocument,
+import type {
   SampleUpdatedSubscription,
   SampleUpdatedSubscriptionVariables,
 } from '@tests/fixtures/graphqlSampleTypes'
+import { SampleTypedSubscriptionDocument } from '@tests/fixtures/graphqlSampleTypes'
 import { useNotifications } from '@shared/components/CommonNotifications'
 import { NetworkStatus } from '@apollo/client/core'
 import SubscriptionHandler from '../SubscriptionHandler'

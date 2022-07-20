@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { FormKitNode } from '@formkit/core'
+import type { FormKitNode } from '@formkit/core'
 
 const addRequiredValidation = (node: FormKitNode) => {
   node.addProps(['required'])

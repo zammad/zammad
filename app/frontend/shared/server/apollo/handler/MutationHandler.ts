@@ -1,10 +1,10 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { Ref } from 'vue'
-import { UseMutationReturn } from '@vue/apollo-composable'
-import { OperationVariables } from '@apollo/client/core'
+import type { Ref } from 'vue'
+import type { UseMutationReturn } from '@vue/apollo-composable'
+import type { OperationVariables } from '@apollo/client/core'
 import UserError from '@shared/errors/UserError'
-import { OperationMutationResult } from '@shared/types/server/apollo/handler'
+import type { OperationMutationResult } from '@shared/types/server/apollo/handler'
 import BaseHandler from './BaseHandler'
 
 export default class MutationHandler<

@@ -1,7 +1,7 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { SelectOption } from '@shared/components/Form/fields/FieldSelect/types'
+import type { SelectOption } from '@shared/components/Form/fields/FieldSelect/types'
 import { onClickOutside, onKeyDown, useVModel } from '@vueuse/core'
 import { ref } from 'vue'
 import CommonSelectItem from './CommonSelectItem.vue'

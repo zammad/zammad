@@ -4,7 +4,7 @@ import Mention from '@tiptap/extension-mention'
 
 import { replaceTags } from '@shared/utils/formatter'
 
-import { CommandTextProps, MentionTextItem } from '../types'
+import type { CommandTextProps, MentionTextItem } from '../types'
 import buildMentionSuggestion from './suggestions'
 
 const ACTIVATOR = '::'

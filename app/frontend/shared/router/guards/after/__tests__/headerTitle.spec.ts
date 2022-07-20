@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import { createTestingPinia } from '@pinia/testing'
-import { RouteLocationNormalized } from 'vue-router'
+import type { RouteLocationNormalized } from 'vue-router'
 import { nextTick } from 'vue'
 import useMetaTitle from '@shared/composables/useMetaTitle'
 import useApplicationStore from '@shared/stores/application'

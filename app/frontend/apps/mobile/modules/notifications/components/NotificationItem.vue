@@ -2,7 +2,7 @@
 
 <script setup lang="ts">
 import CommonUserAvatar from '@shared/components/CommonUserAvatar/CommonUserAvatar.vue'
-import { NotificationListItem } from '../types/notificaitons'
+import type { NotificationListItem } from '../types/notificaitons'
 
 defineProps<{
   notification: NotificationListItem

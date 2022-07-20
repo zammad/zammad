@@ -1,7 +1,8 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import type { App } from 'vue'
-import { createPinia, Pinia } from 'pinia'
+import type { Pinia } from 'pinia'
+import { createPinia } from 'pinia'
 import PiniaSharedState from './plugins/sharedState'
 
 const store: Pinia = createPinia()

@@ -8,8 +8,9 @@ import { closeDialog } from '@shared/composables/useDialog'
 import { computed, nextTick, onMounted, ref, toRef, watch } from 'vue'
 import { escapeRegExp } from 'lodash-es'
 import useSelectOptions from '../../composables/useSelectOptions'
-import { FlatSelectOption, TreeSelectContext, TreeSelectOption } from './types'
-import { SelectOption } from '../FieldSelect'
+import type { TreeSelectContext, TreeSelectOption } from './types'
+import { FlatSelectOption } from './types'
+import type { SelectOption } from '../FieldSelect'
 import useValue from '../../composables/useValue'
 
 const props = defineProps<{

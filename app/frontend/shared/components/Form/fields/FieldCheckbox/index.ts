@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { FormKitNode } from '@formkit/core'
+import type { FormKitNode } from '@formkit/core'
 import { checkbox as checkboxDefinition } from '@formkit/inputs'
 import { has } from '@formkit/utils'
 import initializeFieldDefinition from '@shared/form/core/initializeFieldDefinition'

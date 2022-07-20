@@ -1,7 +1,8 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import type { LastArrayElement } from 'type-fest'
-import { LocalesQuery, EnumTextDirection } from '@shared/graphql/types'
+import type { LocalesQuery } from '@shared/graphql/types'
+import { EnumTextDirection } from '@shared/graphql/types'
 
 const localeForBrowserLanguage = (
   locales: LocalesQuery['locales'],

@@ -4,7 +4,8 @@ import { createPinia, setActivePinia } from 'pinia'
 import { createMockClient } from 'mock-apollo-client'
 import { provideApolloClient } from '@vue/apollo-composable'
 import { LocalesDocument } from '@shared/graphql/queries/locales.api'
-import { LocalesQuery, EnumTextDirection } from '@shared/graphql/types'
+import type { LocalesQuery } from '@shared/graphql/types'
+import { EnumTextDirection } from '@shared/graphql/types'
 import useLocaleStore from '../locale'
 
 const mockQueryResult = (): LocalesQuery => {

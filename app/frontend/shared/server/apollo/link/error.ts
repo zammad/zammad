@@ -3,10 +3,8 @@
 import { onError } from '@apollo/client/link/error'
 import getErrorContext from '@shared/server/apollo/utils/getErrorContext'
 import log from '@shared/utils/log'
-import {
-  GraphQLErrorExtensionsHandler,
-  GraphQLErrorTypes,
-} from '@shared/types/error'
+import type { GraphQLErrorExtensionsHandler } from '@shared/types/error'
+import { GraphQLErrorTypes } from '@shared/types/error'
 import emitter from '@shared/utils/emitter'
 import useApplicationStore from '@shared/stores/application'
 

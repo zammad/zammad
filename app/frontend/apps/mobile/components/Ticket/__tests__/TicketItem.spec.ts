@@ -5,7 +5,7 @@ vi.setSystemTime(now)
 
 import { renderComponent } from '@tests/support/components'
 import { TicketState } from '@shared/entities/ticket/types'
-import { TicketItemData } from '../types'
+import type { TicketItemData } from '../types'
 import TicketItem from '../TicketItem.vue'
 
 describe('ticket item display', () => {

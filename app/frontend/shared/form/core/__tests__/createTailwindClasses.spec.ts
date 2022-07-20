@@ -2,7 +2,7 @@
 
 import globalClasses from '@shared/form/theme/global'
 import createTailwindClasses from '@shared/form/core/createTailwindClasses'
-import { FormThemeClasses } from '@shared/types/form'
+import type { FormThemeClasses } from '@shared/types/form'
 
 vi.mock('@formkit/themes', () => {
   return {

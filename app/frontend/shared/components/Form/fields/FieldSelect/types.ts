@@ -2,7 +2,7 @@
 
 import type { TicketState } from '@shared/entities/ticket/types'
 import type { Props as IconProps } from '@shared/components/CommonIcon/CommonIcon.vue'
-import { FormFieldContext } from '../../types/field'
+import type { FormFieldContext } from '../../types/field'
 
 export interface SelectOption {
   value: string | number

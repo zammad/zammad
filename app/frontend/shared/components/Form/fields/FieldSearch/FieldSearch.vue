@@ -6,7 +6,7 @@ import CommonInputSearch, {
 } from '@shared/components/CommonInputSearch/CommonInputSearch.vue'
 import { toRef } from 'vue'
 import useValue from '../../composables/useValue'
-import { FormFieldContext } from '../../types/field'
+import type { FormFieldContext } from '../../types/field'
 
 export interface FieldSearchProps {
   context: FormFieldContext<CommonInputSearchProps>

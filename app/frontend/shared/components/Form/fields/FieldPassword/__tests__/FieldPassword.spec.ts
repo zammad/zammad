@@ -2,10 +2,8 @@
 
 import { getNode } from '@formkit/core'
 import { FormKit } from '@formkit/vue'
-import {
-  ExtendedRenderResult,
-  renderComponent,
-} from '@tests/support/components'
+import type { ExtendedRenderResult } from '@tests/support/components'
+import { renderComponent } from '@tests/support/components'
 import { waitForNextTick, waitForTimeout } from '@tests/support/utils'
 
 const wrapperParameters = {

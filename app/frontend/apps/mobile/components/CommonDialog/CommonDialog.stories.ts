@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import { useDialog } from '@shared/composables/useDialog'
-import { Story } from '@storybook/vue3'
+import type { Story } from '@storybook/vue3'
 import DynamicInitializer from '@shared/components/DynamicInitializer/DynamicInitializer.vue'
 import CommonDialog from './CommonDialog.vue'
 

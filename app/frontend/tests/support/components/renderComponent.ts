@@ -1,17 +1,17 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { isRef, nextTick, Plugin, Ref, ref, watchEffect, unref } from 'vue'
-import {
-  createRouter,
-  createWebHistory,
-  Router,
-  RouteRecordRaw,
-} from 'vue-router'
-import { mount, MountingOptions } from '@vue/test-utils'
-import { Matcher, render, RenderResult } from '@testing-library/vue'
+import type { Plugin, Ref } from 'vue'
+import { isRef, nextTick, ref, watchEffect, unref } from 'vue'
+import type { Router, RouteRecordRaw } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
+import type { MountingOptions } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
+import type { Matcher, RenderResult } from '@testing-library/vue'
+import { render } from '@testing-library/vue'
 import userEvent from '@testing-library/user-event'
 import { merge, cloneDeep } from 'lodash-es'
-import { createTestingPinia, TestingPinia } from '@pinia/testing'
+import type { TestingPinia } from '@pinia/testing'
+import { createTestingPinia } from '@pinia/testing'
 import { plugin as formPlugin } from '@formkit/vue'
 import { buildFormKitPluginConfig } from '@shared/form'
 import applicationConfigPlugin from '@shared/plugins/applicationConfigPlugin'

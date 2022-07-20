@@ -1,10 +1,10 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import {
-  createNode,
+import type {
   FormKitExtendableSchemaRoot,
   FormKitFrameworkContext,
 } from '@formkit/core'
+import { createNode } from '@formkit/core'
 import { FormKit } from '@formkit/vue'
 import { renderComponent } from '@tests/support/components'
 import extendDataAttribues from '../global/extendDataAttributes'

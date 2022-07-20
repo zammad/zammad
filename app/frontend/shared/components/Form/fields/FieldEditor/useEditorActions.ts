@@ -1,9 +1,9 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import { i18n } from '@shared/i18n'
-import { ChainedCommands } from '@tiptap/core'
-import { Editor } from '@tiptap/vue-3'
-import { Component, ShallowRef } from 'vue'
+import type { ChainedCommands } from '@tiptap/core'
+import type { Editor } from '@tiptap/vue-3'
+import type { Component, ShallowRef } from 'vue'
 import ActionImage from './actions/ActionImage.vue'
 
 export interface EditorButton {

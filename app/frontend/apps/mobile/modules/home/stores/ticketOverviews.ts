@@ -3,11 +3,11 @@
 import { defineStore } from 'pinia'
 import { QueryHandler } from '@shared/server/apollo/handler'
 import { useTicketOverviewsQuery } from '@shared/entities/ticket/graphql/queries/ticket/overviews.api'
-import { TicketOverviewsQuery } from '@shared/graphql/types'
+import type { TicketOverviewsQuery } from '@shared/graphql/types'
 import { ref, computed } from 'vue'
 import { keyBy } from 'lodash-es'
 import { watchOnce } from '@vueuse/core'
-import { ConfidentTake } from '@shared/types/utils'
+import type { ConfidentTake } from '@shared/types/utils'
 import { getTicketOverviewStorage } from '../helpers/ticketOverviewStorage'
 
 export type TicketOverview = ConfidentTake<

@@ -4,7 +4,7 @@ import { capitalize, isEmpty } from 'lodash-es'
 import { ApolloLink } from '@apollo/client/core'
 import { getMainDefinition } from '@apollo/client/utilities'
 import { print } from 'graphql/language/printer'
-import {
+import type {
   DebugLinkRequestOutput,
   DebugLinkResponseOutput,
 } from '@shared/types/server/apollo/client'

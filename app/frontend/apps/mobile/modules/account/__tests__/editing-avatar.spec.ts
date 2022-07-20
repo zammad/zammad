@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { ExtendedRenderResult } from '@tests/support/components'
+import type { ExtendedRenderResult } from '@tests/support/components'
 import { visitView } from '@tests/support/components/visitView'
 import { mockAccount } from '@tests/support/mock-account'
 import { mockGraphQLApi } from '@tests/support/mock-graphql-api'

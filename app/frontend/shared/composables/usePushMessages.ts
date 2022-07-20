@@ -6,7 +6,7 @@ import {
   NotificationTypes,
 } from '@shared/components/CommonNotifications'
 import { usePushMessagesSubscription } from '@shared/graphql/subscriptions/pushMessages.api'
-import {
+import type {
   PushMessagesSubscription,
   PushMessagesSubscriptionVariables,
 } from '@shared/graphql/types'

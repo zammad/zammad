@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { InMemoryCacheConfig } from '@apollo/client/cache/inmemory/types'
+import type { InMemoryCacheConfig } from '@apollo/client/cache/inmemory/types'
 import { relayStylePagination } from '@apollo/client/utilities'
 
 export default function registerRelayStylePagination(

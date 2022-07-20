@@ -6,7 +6,7 @@ import type { LastArrayElement } from 'type-fest'
 import log from '@shared/utils/log'
 import localeForBrowserLanguage from '@shared/i18n/localeForBrowserLanguage'
 import getAvailableLocales from '@shared/i18n/availableLocales'
-import { LocalesQuery } from '@shared/graphql/types'
+import type { LocalesQuery } from '@shared/graphql/types'
 import useTranslationsStore from './translations'
 
 type Locale = LastArrayElement<LocalesQuery['locales']>

@@ -4,7 +4,7 @@
 import { useEditedBy } from '@mobile/composables/useEditedBy'
 import CommonOrganizationAvatar from '@shared/components/CommonOrganizationAvatar/CommonOrganizationAvatar.vue'
 import { computed, toRef } from 'vue'
-import { OrganizationItemData } from './types'
+import type { OrganizationItemData } from './types'
 
 export interface Props {
   entity: OrganizationItemData

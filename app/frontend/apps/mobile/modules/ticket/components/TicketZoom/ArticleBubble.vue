@@ -3,7 +3,7 @@
 <script setup lang="ts">
 /* eslint-disable vue/no-v-html */
 
-import { AvatarUser } from '@shared/components/CommonUserAvatar'
+import type { AvatarUser } from '@shared/components/CommonUserAvatar'
 import CommonUserAvatar from '@shared/components/CommonUserAvatar/CommonUserAvatar.vue'
 import { computed } from 'vue'
 import { i18n } from '@shared/i18n'

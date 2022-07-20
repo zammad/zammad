@@ -2,7 +2,8 @@
 
 import { ref } from 'vue'
 import getUuid from '@shared/utils/getUuid'
-import { NewNotification, type Notification, NotificationTypes } from './types'
+import type { NewNotification } from './types'
+import { type Notification, NotificationTypes } from './types'
 
 const notifications = ref<Notification[]>([])
 const defaultNotificationDurationMS = 5000

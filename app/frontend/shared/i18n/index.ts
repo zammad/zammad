@@ -1,7 +1,8 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import { reactive, shallowRef } from 'vue'
-import { TranslationMap, Translator } from './translator'
+import type { TranslationMap } from './translator'
+import { Translator } from './translator'
 import * as dates from './dates'
 
 const reactiveNow = shallowRef(new Date())

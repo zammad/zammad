@@ -1,9 +1,10 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { EventHandlers } from '@shared/types/utils'
+import type { EventHandlers } from '@shared/types/utils'
 import { usePointerSwipe } from '@vueuse/core'
-import { Events, ref } from 'vue'
+import type { Events } from 'vue'
+import { ref } from 'vue'
 import { useDialogState } from './composable'
 
 const props = defineProps<{

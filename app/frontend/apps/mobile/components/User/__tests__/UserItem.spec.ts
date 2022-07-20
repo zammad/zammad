@@ -4,7 +4,7 @@ const now = new Date(2022, 1, 1, 20, 0, 0, 0)
 vi.setSystemTime(now)
 
 import { renderComponent } from '@tests/support/components'
-import { UserItemData } from '../types'
+import type { UserItemData } from '../types'
 import UserItem from '../UserItem.vue'
 
 describe('user item display', () => {

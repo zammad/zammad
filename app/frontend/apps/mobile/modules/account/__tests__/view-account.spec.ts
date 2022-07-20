@@ -1,7 +1,8 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import { TranslationsDocument } from '@shared/graphql/queries/translations.api'
-import { EnumTextDirection, LocalesQuery } from '@shared/graphql/types'
+import type { LocalesQuery } from '@shared/graphql/types'
+import { EnumTextDirection } from '@shared/graphql/types'
 import useLocaleStore from '@shared/stores/locale'
 import { visitView } from '@tests/support/components/visitView'
 import { mockAccount } from '@tests/support/mock-account'

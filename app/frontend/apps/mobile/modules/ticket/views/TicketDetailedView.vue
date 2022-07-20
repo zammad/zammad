@@ -10,7 +10,7 @@ import TicketZoomTitle from '../components/TicketZoom/TicketZoomTitle.vue'
 import { useTicketQuery } from '../graphql/queries/ticket.api'
 import TicketZoomArticlesList from '../components/TicketZoom/ArticlesList.vue'
 import TicketZoomReplyButton from '../components/TicketZoom/TicketZoomReplyButton.vue'
-import { TicketArticle } from '../types/tickets'
+import type { TicketArticle } from '../types/tickets'
 
 interface Props {
   internalId: string

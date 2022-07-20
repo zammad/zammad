@@ -9,7 +9,10 @@ import {
   time as inputTimeDefinition,
 } from '@formkit/inputs'
 import initializeFieldDefinition from '@shared/form/core/initializeFieldDefinition'
-import { FormFieldsTypeDefinition, FormFieldType } from '@shared/types/form'
+import type {
+  FormFieldsTypeDefinition,
+  FormFieldType,
+} from '@shared/types/form'
 import addLink from '@shared/form/features/addLink'
 
 const inputFieldDefinitionList: FormFieldsTypeDefinition = {

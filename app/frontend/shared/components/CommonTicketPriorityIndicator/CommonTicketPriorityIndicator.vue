@@ -3,7 +3,7 @@
 <script setup lang="ts">
 import { i18n } from '@shared/i18n'
 import { computed } from 'vue'
-import { TicketPriority } from './types'
+import type { TicketPriority } from './types'
 
 interface Props {
   priority?: TicketPriority

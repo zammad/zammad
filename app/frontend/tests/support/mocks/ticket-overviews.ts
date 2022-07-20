@@ -1,7 +1,8 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import { TicketOverviewsDocument } from '@shared/entities/ticket/graphql/queries/ticket/overviews.api'
-import { EnumOrderDirection, TicketOverviewsQuery } from '@shared/graphql/types'
+import type { TicketOverviewsQuery } from '@shared/graphql/types'
+import { EnumOrderDirection } from '@shared/graphql/types'
 import { mock } from 'vitest-mock-extended'
 import { mockGraphQLApi } from '../mock-graphql-api'
 

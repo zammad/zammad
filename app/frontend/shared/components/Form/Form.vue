@@ -1,17 +1,8 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import {
-  computed,
-  ref,
-  reactive,
-  toRef,
-  watch,
-  markRaw,
-  ConcreteComponent,
-  nextTick,
-  Ref,
-} from 'vue'
+import type { ConcreteComponent, Ref } from 'vue'
+import { computed, ref, reactive, toRef, watch, markRaw, nextTick } from 'vue'
 import { FormKit, FormKitSchema } from '@formkit/vue'
 import type {
   FormKitPlugin,
@@ -24,9 +15,10 @@ import type {
 } from '@formkit/core'
 import { useTimeoutFn } from '@vueuse/shared'
 import UserError from '@shared/errors/UserError'
-import { EnumFormSchemaId } from '@shared/graphql/types'
+import type { EnumFormSchemaId } from '@shared/graphql/types'
 import { QueryHandler } from '@shared/server/apollo/handler'
 import { useFormSchemaQuery } from './graphql/queries/formSchema.api'
+import type { FormSchemaGroupOrList } from './types'
 import {
   type FormData,
   type FormSchemaField,
@@ -35,7 +27,6 @@ import {
   type FormValues,
   type ReactiveFormSchemData,
   FormValidationVisibility,
-  FormSchemaGroupOrList,
 } from './types'
 import FormLayout from './FormLayout.vue'
 import FormGroup from './FormGroup.vue'

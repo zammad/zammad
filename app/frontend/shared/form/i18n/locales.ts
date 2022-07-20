@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import type { FormKitValidationMessages } from '@formkit/validation'
-import { FormKitLocale } from '@formkit/i18n'
+import type { FormKitLocale } from '@formkit/i18n'
 import { i18n } from '@shared/i18n'
 import { commaSeparatedList, order } from '@shared/utils/formatter'
 

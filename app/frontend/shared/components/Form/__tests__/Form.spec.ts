@@ -3,12 +3,10 @@
 import Form from '@shared/components/Form/Form.vue'
 import UserError from '@shared/errors/UserError'
 import type { FormValues } from '@shared/components/Form'
-import { FormKitNode } from '@formkit/core'
+import type { FormKitNode } from '@formkit/core'
 import { within } from '@testing-library/vue'
-import {
-  ExtendedRenderResult,
-  renderComponent,
-} from '@tests/support/components'
+import type { ExtendedRenderResult } from '@tests/support/components'
+import { renderComponent } from '@tests/support/components'
 import { waitForNextTick } from '@tests/support/utils'
 import { nextTick, onMounted, ref } from 'vue'
 

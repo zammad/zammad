@@ -1,13 +1,13 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { Story } from '@storybook/vue3'
+import type { Story } from '@storybook/vue3'
 import { FormKit } from '@formkit/vue'
 import { escapeRegExp } from 'lodash-es'
 import defaultArgTypes from '@stories/support/form/field/defaultArgTypes'
-import { FieldArgs } from '@stories/types/form'
+import type { FieldArgs } from '@stories/types/form'
 import { createMockClient } from 'mock-apollo-client'
 import { provideApolloClient } from '@vue/apollo-composable'
-import { AutocompleteSearchUserQuery } from '@shared/graphql/types'
+import type { AutocompleteSearchUserQuery } from '@shared/graphql/types'
 import { AutocompleteSearchUserDocument } from '@shared/graphql/queries/autocompleteSearch/user.api'
 
 export default {

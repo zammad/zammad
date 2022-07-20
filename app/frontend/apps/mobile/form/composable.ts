@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { FormSchemaNode } from '@shared/components/Form'
+import type { FormSchemaNode } from '@shared/components/Form'
 
 export const defineFormSchema = (
   schema: FormSchemaNode[],

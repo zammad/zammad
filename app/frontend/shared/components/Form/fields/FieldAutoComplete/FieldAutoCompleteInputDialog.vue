@@ -1,16 +1,8 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import {
-  computed,
-  ConcreteComponent,
-  nextTick,
-  onMounted,
-  Ref,
-  ref,
-  toRef,
-  watch,
-} from 'vue'
+import type { ConcreteComponent, Ref } from 'vue'
+import { computed, nextTick, onMounted, ref, toRef, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { cloneDeep } from 'lodash-es'
 import { refDebounced } from '@vueuse/core'
@@ -25,7 +17,8 @@ import FieldAutoCompleteOptionIcon from './FieldAutoCompleteOptionIcon.vue'
 import useSelectOptions from '../../composables/useSelectOptions'
 import useValue from '../../composables/useValue'
 import type { FormFieldContext } from '../../types/field'
-import type { AutoCompleteProps, AutoCompleteOption } from './types'
+import { AutoCompleteOption } from './types'
+import type { AutoCompleteProps } from './types'
 
 const props = defineProps<{
   context: FormFieldContext<

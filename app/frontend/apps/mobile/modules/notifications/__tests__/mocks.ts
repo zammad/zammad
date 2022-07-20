@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { NotificationListItem } from '../types/notificaitons'
+import type { NotificationListItem } from '../types/notificaitons'
 
 export const getMockedNotification = (
   item: Partial<NotificationListItem> = {},

@@ -5,9 +5,8 @@ import {
   pushComponent,
 } from '@shared/components/DynamicInitializer/manage'
 import { noop } from 'lodash-es'
+import type { AsyncComponentLoader, Component } from 'vue'
 import {
-  AsyncComponentLoader,
-  Component,
   computed,
   defineAsyncComponent,
   ref,

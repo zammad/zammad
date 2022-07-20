@@ -3,7 +3,7 @@
 <script setup lang="ts">
 import { onClickOutside, onKeyUp, useVModel } from '@vueuse/core'
 import { shallowRef } from 'vue'
-import { PopupItem } from './types'
+import type { PopupItem } from './types'
 
 export interface Props {
   items: PopupItem[]

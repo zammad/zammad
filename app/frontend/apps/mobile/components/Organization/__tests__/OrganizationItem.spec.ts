@@ -4,7 +4,7 @@ const now = new Date(2022, 1, 1, 20, 0, 0, 0)
 vi.setSystemTime(now)
 
 import { renderComponent } from '@tests/support/components'
-import { OrganizationItemData } from '../types'
+import type { OrganizationItemData } from '../types'
 import OrganizationItem from '../OrganizationItem.vue'
 
 describe('ticket item display', () => {

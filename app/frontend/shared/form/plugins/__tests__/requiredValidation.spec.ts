@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { createNode, FormKitFrameworkContext } from '@formkit/core'
+import type { FormKitFrameworkContext } from '@formkit/core'
+import { createNode } from '@formkit/core'
 import requiredValidation from '../global/requiredValidation'
 
 const createInput = (props: any = {}) => {

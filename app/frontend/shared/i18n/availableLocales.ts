@@ -2,7 +2,7 @@
 
 import { QueryHandler } from '@shared/server/apollo/handler'
 import { useLocalesQuery } from '@shared/graphql/queries/locales.api'
-import { LocalesQuery } from '@shared/graphql/types'
+import type { LocalesQuery } from '@shared/graphql/types'
 
 let availableLocales: Maybe<LocalesQuery['locales']>
 

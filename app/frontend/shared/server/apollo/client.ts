@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { ApolloClient, NormalizedCacheObject } from '@apollo/client/core'
+import type { NormalizedCacheObject } from '@apollo/client/core'
+import { ApolloClient } from '@apollo/client/core'
 import type { CacheInitializerModules } from '@shared/types/server/apollo/client'
 import link from './link'
 import createCache from './cache'

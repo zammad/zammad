@@ -1,11 +1,7 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import {
-  ApolloLink,
-  createHttpLink,
-  from,
-  Operation,
-} from '@apollo/client/core'
+import type { Operation } from '@apollo/client/core'
+import { ApolloLink, createHttpLink, from } from '@apollo/client/core'
 import type { FragmentDefinitionNode, OperationDefinitionNode } from 'graphql'
 import consumer from '@shared/server/action_cable/consumer'
 import { BatchHttpLink } from '@apollo/client/link/batch-http'

@@ -1,8 +1,8 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { PopupItem } from '@mobile/components/CommonSectionPopup'
+import type { PopupItem } from '@mobile/components/CommonSectionPopup'
 import { computed, shallowRef } from 'vue'
-import { TicketArticle } from '../types/tickets'
+import type { TicketArticle } from '../types/tickets'
 
 export const useTicketArticleContext = () => {
   const articleForContext = shallowRef<TicketArticle>()

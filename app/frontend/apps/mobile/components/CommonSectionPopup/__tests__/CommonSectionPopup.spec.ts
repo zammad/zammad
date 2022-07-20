@@ -4,7 +4,7 @@ import { renderComponent } from '@tests/support/components'
 import { flushPromises } from '@vue/test-utils'
 import { ref } from 'vue'
 import CommonSectionPopup from '../CommonSectionPopup.vue'
-import { PopupItem } from '../types'
+import type { PopupItem } from '../types'
 
 describe('popup behaviour', () => {
   it('renders list', async () => {

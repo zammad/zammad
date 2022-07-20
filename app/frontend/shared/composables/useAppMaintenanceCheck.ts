@@ -8,13 +8,13 @@ import {
 } from '@shared/components/CommonNotifications'
 import { useApplicationBuildChecksumQuery } from '@shared/graphql/queries/applicationBuildChecksum.api'
 import { useAppMaintenanceSubscription } from '@shared/graphql/subscriptions/appMaintenance.api'
-import {
+import type {
   ApplicationBuildChecksumQuery,
   ApplicationBuildChecksumQueryVariables,
-  EnumAppMaintenanceType,
   AppMaintenanceSubscription,
   AppMaintenanceSubscriptionVariables,
 } from '@shared/graphql/types'
+import { EnumAppMaintenanceType } from '@shared/graphql/types'
 import {
   QueryHandler,
   SubscriptionHandler,

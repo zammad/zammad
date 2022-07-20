@@ -2,11 +2,11 @@
 
 import { useMutation } from '@vue/apollo-composable'
 import createMockClient from '@tests/support/mock-apollo-client'
-import {
+import type {
   SampleUpdateMutation,
   SampleUpdateMutationVariables,
-  SampleTypedMutationDocument,
 } from '@tests/fixtures/graphqlSampleTypes'
+import { SampleTypedMutationDocument } from '@tests/fixtures/graphqlSampleTypes'
 import { useNotifications } from '@shared/components/CommonNotifications'
 import { GraphQLErrorTypes } from '@shared/types/error'
 import UserError from '@shared/errors/UserError'

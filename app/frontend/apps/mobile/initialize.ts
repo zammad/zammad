@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { App } from 'vue'
+import type { App } from 'vue'
 
 import initializeApolloClient from '@mobile/server/apollo'
 import initializeStore from '@shared/stores'

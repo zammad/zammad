@@ -1,6 +1,7 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 <script setup lang="ts">
-import { InputHTMLAttributes, ref, Ref } from 'vue'
+import type { InputHTMLAttributes, Ref } from 'vue'
+import { ref } from 'vue'
 import type { FormFieldContext } from '@shared/components/Form/types/field'
 import { MutationHandler } from '@shared/server/apollo/handler'
 import { convertFileList } from '@shared/utils/files'

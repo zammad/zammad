@@ -1,9 +1,9 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { Story } from '@storybook/vue3'
+import type { Story } from '@storybook/vue3'
 import { FormKit } from '@formkit/vue'
 import defaultArgTypes from '@stories/support/form/field/defaultArgTypes'
-import { FieldArgs } from '@stories/types/form'
+import type { FieldArgs } from '@stories/types/form'
 
 export default {
   title: 'Form/Field/Textarea',

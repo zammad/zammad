@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import { cloneDeep } from 'lodash-es'
-import { FormKitNode, FormKitExtendableSchemaRoot } from '@formkit/core'
+import type { FormKitNode, FormKitExtendableSchemaRoot } from '@formkit/core'
 
 import FormFieldLink from '@shared/components/Form/FormFieldLink.vue'
 import { markRaw } from 'vue'

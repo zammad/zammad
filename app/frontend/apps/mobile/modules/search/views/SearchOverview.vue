@@ -2,14 +2,14 @@
 
 <script setup lang="ts">
 import { onMounted, reactive, ref, watch } from 'vue'
-import CommonInputSearch, {
-  CommonInputSearchExpose,
-} from '@shared/components/CommonInputSearch/CommonInputSearch.vue'
+import type { CommonInputSearchExpose } from '@shared/components/CommonInputSearch/CommonInputSearch.vue'
+import CommonInputSearch from '@shared/components/CommonInputSearch/CommonInputSearch.vue'
 import CommonSectionMenu from '@mobile/components/CommonSectionMenu/CommonSectionMenu.vue'
-import { MenuItem } from '@mobile/components/CommonSectionMenu'
+import type { MenuItem } from '@mobile/components/CommonSectionMenu'
 import { ignorableWatch } from '@vueuse/shared'
 import { useLocalStorage } from '@vueuse/core'
-import { LocationQueryRaw, useRoute, useRouter } from 'vue-router'
+import type { LocationQueryRaw } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { debounce } from 'lodash-es'
 import { TicketState } from '@shared/entities/ticket/types'
 import { i18n } from '@shared/i18n'

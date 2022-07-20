@@ -3,7 +3,10 @@
 import Mention from '@tiptap/extension-mention'
 
 import buildMentionSuggestion from './suggestions'
-import { CommandKnowledgeBaseProps, MentionKnowledgeBaseItem } from '../types'
+import type {
+  CommandKnowledgeBaseProps,
+  MentionKnowledgeBaseItem,
+} from '../types'
 
 const ACTIVATOR = '??'
 

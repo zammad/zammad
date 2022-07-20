@@ -15,7 +15,7 @@ import {
   computed,
 } from 'vue'
 import { useEventListener } from '@vueuse/core'
-import { RouteLocationRaw } from 'vue-router'
+import type { RouteLocationRaw } from 'vue-router'
 import FormFieldLink from '../../FormFieldLink.vue'
 import type { FormFieldContext } from '../../types/field'
 import useValue from '../../composables/useValue'

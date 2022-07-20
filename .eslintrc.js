@@ -154,6 +154,20 @@ module.exports = {
         'import/first': 'off',
       },
     },
+    // rules that require type information
+    {
+      files: ['*.ts', '*.tsx', '*.vue'],
+      rules: {
+        '@typescript-eslint/consistent-type-imports': [
+          'error',
+          { prefer: 'type-imports', disallowTypeAnnotations: false },
+        ],
+        '@typescript-eslint/consistent-type-exports': 'error',
+      },
+      parserOptions: {
+        project: ['./tsconfig.json', './app/frontend/cypress/tsconfig.json'],
+      },
+    },
   ],
   settings: {
     'import/resolver': {

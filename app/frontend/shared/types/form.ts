@@ -6,7 +6,7 @@ import type {
   FormKitValidationRule,
   FormKitValidationMessages,
 } from '@formkit/validation'
-import { RouteLocationRaw } from 'vue-router'
+import type { RouteLocationRaw } from 'vue-router'
 import type { ImportGlobEagerOutput } from './utils'
 
 export type InitializeAppForm = (app: App) => void

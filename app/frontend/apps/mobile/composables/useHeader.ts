@@ -1,7 +1,8 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { ComputedRef, ref, UnwrapRef, watch } from 'vue'
-import { RouteLocationRaw } from 'vue-router'
+import type { ComputedRef, UnwrapRef } from 'vue'
+import { ref, watch } from 'vue'
+import type { RouteLocationRaw } from 'vue-router'
 import useMetaTitle from '@shared/composables/useMetaTitle'
 
 export interface HeaderOptions {

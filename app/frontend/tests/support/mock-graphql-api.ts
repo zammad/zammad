@@ -3,7 +3,7 @@
 
 import { NetworkStatus } from '@apollo/client/core'
 import type { UserError } from '@shared/graphql/types'
-import { GraphQLErrorReport } from '@shared/types/error'
+import type { GraphQLErrorReport } from '@shared/types/error'
 import type { DocumentNode } from 'graphql'
 import {
   createMockSubscription,

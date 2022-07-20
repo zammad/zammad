@@ -4,7 +4,7 @@ const now = new Date(2022, 1, 1, 0, 0, 0, 0)
 vi.setSystemTime(now)
 
 import { TicketState } from '@shared/entities/ticket/types'
-import { TicketQuery } from '@shared/graphql/types'
+import type { TicketQuery } from '@shared/graphql/types'
 import { getAllByRole } from '@testing-library/vue'
 import { visitView } from '@tests/support/components/visitView'
 import { mockGraphQLApi } from '@tests/support/mock-graphql-api'

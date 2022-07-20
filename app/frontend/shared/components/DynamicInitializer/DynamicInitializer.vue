@@ -2,9 +2,10 @@
 
 <script setup lang="ts">
 import { useEventListener } from '@vueuse/core'
-import { markRaw, shallowRef, TransitionProps } from 'vue'
+import type { TransitionProps } from 'vue'
+import { markRaw, shallowRef } from 'vue'
 import { Events } from './manage'
-import { DestroyComponentData, PushComponentData } from './types'
+import type { DestroyComponentData, PushComponentData } from './types'
 
 const props = defineProps<{
   /**

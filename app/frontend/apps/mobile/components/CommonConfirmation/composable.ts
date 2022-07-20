@@ -1,7 +1,8 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { Ref, ref } from 'vue'
-import { ConfirmationOptions } from './types'
+import type { Ref } from 'vue'
+import { ref } from 'vue'
+import type { ConfirmationOptions } from './types'
 
 const confirmationDialog: Ref<ConfirmationOptions | undefined> = ref()
 

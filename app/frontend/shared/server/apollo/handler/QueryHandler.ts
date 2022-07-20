@@ -1,19 +1,20 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { Ref, watch } from 'vue'
-import {
+import type { Ref } from 'vue'
+import { watch } from 'vue'
+import type {
   FetchMoreOptions,
   FetchMoreQueryOptions,
   OperationVariables,
   SubscribeToMoreOptions,
 } from '@apollo/client/core'
-import {
+import type {
   OperationQueryOptionsReturn,
   OperationQueryResult,
   WatchResultCallback,
 } from '@shared/types/server/apollo/handler'
-import { ReactiveFunction } from '@shared/types/utils'
-import { UseQueryReturn } from '@vue/apollo-composable'
+import type { ReactiveFunction } from '@shared/types/utils'
+import type { UseQueryReturn } from '@vue/apollo-composable'
 import BaseHandler from './BaseHandler'
 
 // eslint-disable-next-line no-use-before-define

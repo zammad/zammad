@@ -2,7 +2,7 @@
 
 /* eslint-disable vue/one-component-per-file */
 
-import { Story } from '@storybook/vue3'
+import type { Story } from '@storybook/vue3'
 import TransitionViewNavigation from '@mobile/components/transition/TransitionViewNavigation/TransitionViewNavigation.vue'
 import {
   useViewTransition,

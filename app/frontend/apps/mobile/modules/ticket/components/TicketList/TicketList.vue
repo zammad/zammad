@@ -1,7 +1,7 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import {
+import type {
   EnumOrderDirection,
   TicketsByOverviewQuery,
 } from '@shared/graphql/types'
@@ -11,7 +11,7 @@ import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
 import TicketItem from '@mobile/components/Ticket/TicketItem.vue'
 import { useInfiniteScroll } from '@vueuse/core'
 import { computed } from 'vue'
-import { ConfidentTake } from '@shared/types/utils'
+import type { ConfidentTake } from '@shared/types/utils'
 import { useTicketsByOverviewQuery } from '../../graphql/queries/ticketsByOverview.api'
 
 interface Props {
