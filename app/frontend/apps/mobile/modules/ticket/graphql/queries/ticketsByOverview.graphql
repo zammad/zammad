@@ -1,7 +1,7 @@
 query ticketsByOverview(
   $overviewId: ID!
   $orderBy: String
-  $orderDirection: OrderDirection
+  $orderDirection: EnumOrderDirection
   $cursor: String
   $pageSize: Int = 10
   $withObjectAttributes: Boolean = false

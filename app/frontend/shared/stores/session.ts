@@ -2,6 +2,7 @@
 
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
+import { cloneDeep } from 'lodash-es'
 import { useSessionIdQuery } from '@shared/graphql/queries/sessionId.api'
 import { useCurrentUserQuery } from '@shared/graphql/queries/currentUser.api'
 import { QueryHandler } from '@shared/server/apollo/handler'
@@ -78,7 +79,7 @@ const useSessionStore = defineStore('session', () => {
     // Watch on result that also the subscription to more will update the user data.
     if (!currentUserWatchOnResultInitialized) {
       query.watchOnResult((result) => {
-        user.value = result?.currentUser || null
+        user.value = cloneDeep(result?.currentUser) || null
       })
       currentUserWatchOnResultInitialized = true
     }
@@ -98,10 +99,6 @@ const useSessionStore = defineStore('session', () => {
 
     if (user.value) {
       testFlags.set('useSessionUserStore.getCurrentUser.loaded')
-
-      query.watchOnResult((result) => {
-        user.value = result?.currentUser || null
-      })
 
       if (!currentUserSubscriptionInitialized) {
         query.operationResult.subscribeToMore({

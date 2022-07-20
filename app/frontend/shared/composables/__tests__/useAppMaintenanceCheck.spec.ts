@@ -3,7 +3,7 @@
 import { useNotifications } from '@shared/components/CommonNotifications'
 import { ApplicationBuildChecksumDocument } from '@shared/graphql/queries/applicationBuildChecksum.api'
 import { AppMaintenanceDocument } from '@shared/graphql/subscriptions/appMaintenance.api'
-import { AppMaintenanceType } from '@shared/graphql/types'
+import { EnumAppMaintenanceType } from '@shared/graphql/types'
 import { renderComponent } from '@tests/support/components'
 import {
   type ExtendedIMockSubscription,
@@ -46,7 +46,7 @@ describe('useAppMaintenanceCheck', () => {
     await subscriptionAppMaintenance.next({
       data: {
         appMaintenance: {
-          type: AppMaintenanceType.ConfigChanged,
+          type: EnumAppMaintenanceType.ConfigChanged,
         },
       },
     })
@@ -62,7 +62,7 @@ describe('useAppMaintenanceCheck', () => {
     await subscriptionAppMaintenance.next({
       data: {
         appMaintenance: {
-          type: AppMaintenanceType.AppVersion,
+          type: EnumAppMaintenanceType.AppVersion,
         },
       },
     })
@@ -78,7 +78,7 @@ describe('useAppMaintenanceCheck', () => {
     await subscriptionAppMaintenance.next({
       data: {
         appMaintenance: {
-          type: AppMaintenanceType.RestartAuto,
+          type: EnumAppMaintenanceType.RestartAuto,
         },
       },
     })
@@ -94,7 +94,7 @@ describe('useAppMaintenanceCheck', () => {
     await subscriptionAppMaintenance.next({
       data: {
         appMaintenance: {
-          type: AppMaintenanceType.RestartManual,
+          type: EnumAppMaintenanceType.RestartManual,
         },
       },
     })

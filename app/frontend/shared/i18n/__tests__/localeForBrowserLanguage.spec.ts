@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { TextDirection } from '@shared/graphql/types'
+import { EnumTextDirection } from '@shared/graphql/types'
 import localeForBrowserLanguage from '../localeForBrowserLanguage'
 
 describe('localeFinder', () => {
@@ -18,21 +18,21 @@ describe('localeFinder', () => {
     {
       active: true,
       alias: 'de',
-      dir: TextDirection.Ltr,
+      dir: EnumTextDirection.Ltr,
       locale: 'de-de',
       name: 'Deutsch',
     },
     {
       active: true,
       alias: 'es',
-      dir: TextDirection.Ltr,
+      dir: EnumTextDirection.Ltr,
       locale: 'es-es',
       name: 'Español',
     },
     {
       active: true,
       alias: '',
-      dir: TextDirection.Ltr,
+      dir: EnumTextDirection.Ltr,
       locale: 'es-co',
       name: 'Español (Colombia)',
     },
@@ -53,7 +53,7 @@ describe('localeFinder', () => {
     expect(localeForBrowserLanguage(locales)).toStrictEqual({
       active: true,
       alias: 'en',
-      dir: TextDirection.Ltr,
+      dir: EnumTextDirection.Ltr,
       locale: 'en-us',
       name: 'English (United States)',
     })

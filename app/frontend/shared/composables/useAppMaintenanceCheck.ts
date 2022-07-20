@@ -11,7 +11,7 @@ import { useAppMaintenanceSubscription } from '@shared/graphql/subscriptions/app
 import {
   ApplicationBuildChecksumQuery,
   ApplicationBuildChecksumQueryVariables,
-  AppMaintenanceType,
+  EnumAppMaintenanceType,
   AppMaintenanceSubscription,
   AppMaintenanceSubscriptionVariables,
 } from '@shared/graphql/types'
@@ -91,13 +91,13 @@ const useAppMaintenanceCheck = () => {
         return
       }
       switch (type) {
-        case AppMaintenanceType.ConfigChanged:
+        case EnumAppMaintenanceType.ConfigChanged:
           message = __(
             'The configuration of Zammad has changed. Please reload at your earliest.',
           )
           break
-        case AppMaintenanceType.RestartAuto:
-        case AppMaintenanceType.RestartManual:
+        case EnumAppMaintenanceType.RestartAuto:
+        case EnumAppMaintenanceType.RestartManual:
           // TODO: this case cannot be handled right now. Legacy interface performs a connectivity check.
           break
         default:

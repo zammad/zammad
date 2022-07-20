@@ -1,0 +1,8 @@
+mutation accountAvatarDelete($id: ID!) {
+  accountAvatarDelete(id: $id) {
+    success
+    errors {
+      ...errors
+    }
+  }
+}

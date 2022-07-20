@@ -32,9 +32,7 @@ export default abstract class BaseHandler<
 
   protected baseHandlerOptions: BaseHandlerOptions = {
     errorShowNotification: true,
-    errorNotificationMessage: __(
-      'An error occured during the operation. Please contact your administrator.',
-    ),
+    errorNotificationMessage: __('An error occured during the operation.'),
     errorNotificationType: NotificationTypes.Error,
   }
 

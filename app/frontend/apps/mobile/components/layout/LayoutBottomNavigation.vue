@@ -1,8 +1,7 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 <script setup lang="ts">
-import CommonAvatar from '@shared/components/CommonAvatar/CommonAvatar.vue'
+import CommonUserAvatar from '@shared/components/CommonUserAvatar/CommonUserAvatar.vue'
 import useSessionStore from '@shared/stores/session'
-import { getInitials } from '@shared/utils/formatter'
 import { storeToRefs } from 'pinia'
 import { useCustomLayout } from './useCustomLayout'
 
@@ -36,10 +35,12 @@ const { isCustomLayout } = useCustomLayout()
         class="flex-1"
         exact-active-class="user-active"
       >
-        <!-- TODO use CommonUserAvatar with entity -->
-        <CommonAvatar
-          class="user-avatar bg-red"
-          :initials="getInitials(user?.firstname, user?.lastname)"
+        <CommonUserAvatar
+          v-if="user"
+          :entity="user"
+          class="user-avatar"
+          size="small"
+          personal
         />
       </CommonLink>
     </template>

@@ -39,7 +39,7 @@ class Gql::ZammadSchema < GraphQL::Schema
 
   # Find the object, but also ensure its type and that it was actually found.
   def self.verified_object_from_id(id, type:)
-    object_from_id(id, type: type) || raise(ActiveRecord::RecordNotFound, "Could not find #{only} #{id}")
+    object_from_id(id, type: type) || raise(ActiveRecord::RecordNotFound, "Could not find #{type} #{id}")
   end
 
   # Like .verified_object_from_id, but with additional Pundit autorization.

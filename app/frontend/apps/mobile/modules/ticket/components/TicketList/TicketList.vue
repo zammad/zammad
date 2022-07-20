@@ -1,7 +1,10 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { OrderDirection, TicketsByOverviewQuery } from '@shared/graphql/types'
+import {
+  EnumOrderDirection,
+  TicketsByOverviewQuery,
+} from '@shared/graphql/types'
 import { QueryHandler } from '@shared/server/apollo/handler'
 import usePagination from '@mobile/composables/usePagination'
 import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
@@ -14,7 +17,7 @@ import { useTicketsByOverviewQuery } from '../../graphql/queries/ticketsByOvervi
 interface Props {
   overviewId: string
   orderBy: string
-  orderDirection: OrderDirection
+  orderDirection: EnumOrderDirection
 }
 
 const props = defineProps<Props>()

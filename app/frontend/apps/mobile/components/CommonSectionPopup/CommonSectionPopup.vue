@@ -12,15 +12,20 @@ export interface Props {
 
 const props = defineProps<Props>()
 const emit = defineEmits<{
-  (e: 'close'): void
+  (e: 'close', isCancel: boolean): void
   (e: 'update:state', state: boolean): void
 }>()
 
 const localState = useVModel(props, 'state', emit)
 
-const hidePopup = () => {
+const hidePopup = (cancel = true) => {
+  emit('close', cancel)
   localState.value = false
-  emit('close')
+}
+
+const onItemClick = (action: PopupItem['onAction']) => {
+  if (action) action()
+  hidePopup(false)
 }
 
 const wrapper = shallowRef<HTMLElement>()
@@ -45,15 +50,16 @@ onClickOutside(wrapper, () => {
         @keydown.esc="hidePopup()"
       >
         <div ref="wrapper" class="wrapper">
-          <div class="rounded-xl bg-black">
+          <div class="flex w-full flex-col rounded-xl bg-black">
+            <slot name="header" />
             <component
-              :is="item.link ? 'CommonLink' : 'div'"
+              :is="item.link ? 'CommonLink' : 'button'"
               v-for="item in items"
               :key="item.title"
               :link="item.link"
               class="flex h-14 cursor-pointer items-center justify-center border-b border-gray-300 last:border-0"
               :class="item.class"
-              @click="item.onAction"
+              @click="onItemClick(item.onAction)"
             >
               {{ $t(item.title) }}
             </component>

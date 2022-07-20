@@ -15,6 +15,7 @@ const userData = {
   firstname: 'John',
   lastname: 'Doe',
   fullname: 'John Doe',
+  image: 'c2715a3e92c7e375b8c212d25d431e2a',
   preferences: {
     locale: 'de-de',
   },

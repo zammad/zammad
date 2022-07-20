@@ -1,6 +1,5 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
-<!-- TODO: needed because of vue-tsc issue: https://github.com/johnsoncodehk/volar/issues/1452 -->
 <script setup lang="ts">
 import { computed, useSlots } from 'vue'
 

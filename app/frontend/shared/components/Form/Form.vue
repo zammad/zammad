@@ -24,7 +24,7 @@ import type {
 } from '@formkit/core'
 import { useTimeoutFn } from '@vueuse/shared'
 import UserError from '@shared/errors/UserError'
-import { FormSchemaId } from '@shared/graphql/types'
+import { EnumFormSchemaId } from '@shared/graphql/types'
 import { QueryHandler } from '@shared/server/apollo/handler'
 import { useFormSchemaQuery } from './graphql/queries/formSchema.api'
 import {
@@ -48,7 +48,7 @@ import FormGroup from './FormGroup.vue'
 
 export interface Props {
   schema?: FormSchemaNode[]
-  formSchemaId?: FormSchemaId
+  formSchemaId?: EnumFormSchemaId
   changeFields?: Record<string, FormSchemaField>
   formKitPlugins?: FormKitPlugin[]
   formKitSectionsSchema?: Record<

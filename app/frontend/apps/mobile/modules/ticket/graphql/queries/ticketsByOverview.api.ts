@@ -7,7 +7,7 @@ import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
 
 export const TicketsByOverviewDocument = gql`
-    query ticketsByOverview($overviewId: ID!, $orderBy: String, $orderDirection: OrderDirection, $cursor: String, $pageSize: Int = 10, $withObjectAttributes: Boolean = false) {
+    query ticketsByOverview($overviewId: ID!, $orderBy: String, $orderDirection: EnumOrderDirection, $cursor: String, $pageSize: Int = 10, $withObjectAttributes: Boolean = false) {
   ticketsByOverview(
     overviewId: $overviewId
     orderBy: $orderBy

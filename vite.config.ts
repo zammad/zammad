@@ -46,7 +46,10 @@ export default defineConfig(({ mode, command }) => {
       VuePlugin({
         template: {
           compilerOptions: {
-            nodeTransforms: isTesting ? [] : [TransformTestId],
+            nodeTransforms:
+              isTesting || !!process.env.VITE_TEST_MODE
+                ? []
+                : [TransformTestId],
           },
         },
       }),

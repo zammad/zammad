@@ -6,7 +6,7 @@ import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
 
 export const FormSchemaDocument = gql`
-    query formSchema($formSchemaId: FormSchemaId!) {
+    query formSchema($formSchemaId: EnumFormSchemaId!) {
   formSchema(formSchemaId: $formSchemaId)
 }
     `;

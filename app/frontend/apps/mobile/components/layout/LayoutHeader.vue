@@ -45,13 +45,13 @@ defineProps<Props>()
       {{ $t(title) }}
     </div>
     <div class="flex cursor-pointer items-center justify-self-end text-base">
-      <div
+      <button
         v-if="onAction && actionTitle"
         class="text-blue"
         @click="onAction?.()"
       >
         {{ $t(actionTitle) }}
-      </div>
+      </button>
     </div>
   </header>
 </template>

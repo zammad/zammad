@@ -11,6 +11,7 @@ import LayoutHeader from '@mobile/components/layout/LayoutHeader.vue'
 import CommonNotifications from '@shared/components/CommonNotifications/CommonNotifications.vue'
 import DynamicInitializer from '@shared/components/DynamicInitializer/DynamicInitializer.vue'
 import useAuthenticationChanges from '@shared/composables/useAuthenticationUpdates'
+import CommonConfirmation from '@mobile/components/CommonConfirmation/CommonConfirmation.vue'
 
 defineProps<{ testKey: number }>()
 
@@ -38,6 +39,7 @@ useAuthenticationChanges()
 <template>
   <div>
     <CommonNotifications />
+    <CommonConfirmation />
     <LayoutHeader v-if="showHeader" v-bind="header" :title="title" />
     <main data-test-id="appMain">
       <RouterView :key="testKey" />

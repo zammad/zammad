@@ -59,7 +59,8 @@ const image = computed(() => {
   // Support the inline data URI as an image source.
   if (/^data:/.test(props.entity.image)) return props.entity.image
 
-  // TODO see how we will do this when API will be in Graphql Context
+  // we're using the REST api here to get the image and to also use the browser image cache
+  // TODO: this should be re-evaluated when the desktop app is going to be implemented
   const apiUrl = '/api/v1'
   return `${apiUrl}/users/image/${props.entity.image}`
 })

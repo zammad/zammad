@@ -4,6 +4,7 @@ module Gql::Mutations
   # class BaseMutation < GraphQL::Schema::RelayClassicMutation
   class BaseMutation < GraphQL::Schema::Mutation
     include Gql::Concern::HandlesAuthorization
+    include Gql::Concern::HasNestedGraphqlName
 
     argument_class Gql::Types::BaseArgument
     field_class    Gql::Types::BaseField

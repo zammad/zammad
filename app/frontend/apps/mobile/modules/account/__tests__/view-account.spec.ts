@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import { TranslationsDocument } from '@shared/graphql/queries/translations.api'
-import { TextDirection, LocalesQuery } from '@shared/graphql/types'
+import { EnumTextDirection, LocalesQuery } from '@shared/graphql/types'
 import useLocaleStore from '@shared/stores/locale'
 import { visitView } from '@tests/support/components/visitView'
 import { mockAccount } from '@tests/support/mock-account'
@@ -13,14 +13,14 @@ const locales: Record<string, LocalesQuery['locales'][number]> = {
   de: {
     locale: 'de-de',
     name: 'Deutsch',
-    dir: TextDirection.Ltr,
+    dir: EnumTextDirection.Ltr,
     alias: 'de',
     active: true,
   },
   ar: {
     locale: 'ar',
     name: 'Arabic',
-    dir: TextDirection.Rtl,
+    dir: EnumTextDirection.Rtl,
     alias: null,
     active: true,
   },

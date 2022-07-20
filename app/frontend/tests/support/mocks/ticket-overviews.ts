@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import { TicketOverviewsDocument } from '@shared/entities/ticket/graphql/queries/ticket/overviews.api'
-import { OrderDirection, TicketOverviewsQuery } from '@shared/graphql/types'
+import { EnumOrderDirection, TicketOverviewsQuery } from '@shared/graphql/types'
 import { mock } from 'vitest-mock-extended'
 import { mockGraphQLApi } from '../mock-graphql-api'
 
@@ -21,7 +21,7 @@ export const getApiTicketOverviews = (): TicketOverviewsQuery => ({
             link: 'overview_1',
             ticketCount: 1,
             orderBy: 'created_at',
-            orderDirection: OrderDirection.Descending,
+            orderDirection: EnumOrderDirection.Descending,
             orderColumns: [
               { key: 'number', value: 'Number' },
               { key: 'title', value: 'Title' },
@@ -38,7 +38,7 @@ export const getApiTicketOverviews = (): TicketOverviewsQuery => ({
             link: 'overview_2',
             ticketCount: 2,
             orderBy: 'created_at',
-            orderDirection: OrderDirection.Ascending,
+            orderDirection: EnumOrderDirection.Ascending,
             orderColumns: [
               { key: 'number', value: 'Number' },
               { key: 'title', value: 'Title' },
@@ -55,7 +55,7 @@ export const getApiTicketOverviews = (): TicketOverviewsQuery => ({
             link: 'overview_3',
             ticketCount: 3,
             orderBy: 'created_at',
-            orderDirection: OrderDirection.Ascending,
+            orderDirection: EnumOrderDirection.Ascending,
             orderColumns: [
               { key: 'number', value: 'Number' },
               { key: 'title', value: 'Title' },
@@ -71,5 +71,7 @@ export const getApiTicketOverviews = (): TicketOverviewsQuery => ({
 })
 
 export const mockTicketOverviews = () => {
-  return mockGraphQLApi(TicketOverviewsDocument).willResolve(getApiTicketOverviews())
+  return mockGraphQLApi(TicketOverviewsDocument).willResolve(
+    getApiTicketOverviews(),
+  )
 }

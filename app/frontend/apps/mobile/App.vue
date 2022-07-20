@@ -15,6 +15,7 @@ import useFormKitConfig from '@shared/composables/form/useFormKitConfig'
 import { useAppTheme } from '@shared/composables/useAppTheme'
 import useAuthenticationChanges from '@shared/composables/useAuthenticationUpdates'
 import DynamicInitializer from '@shared/components/DynamicInitializer/DynamicInitializer.vue'
+import CommonConfirmation from '@mobile/components/CommonConfirmation/CommonConfirmation.vue'
 
 const router = useRouter()
 
@@ -67,7 +68,10 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <CommonNotifications v-if="application.loaded" />
+  <template v-if="application.loaded">
+    <CommonNotifications />
+    <CommonConfirmation />
+  </template>
   <div
     v-if="application.loaded"
     class="h-full min-w-full bg-black font-sans text-sm text-white antialiased"

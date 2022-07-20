@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { OrderDirection } from '@shared/graphql/types'
+import { EnumOrderDirection } from '@shared/graphql/types'
 import { waitFor } from '@testing-library/vue'
 import { visitView } from '@tests/support/components/visitView'
 import { mockTicketOverviews } from '@tests/support/mocks/ticket-overviews'
@@ -62,7 +62,7 @@ it('can filter by overview type', async () => {
   expect(ticketsMock.spies.resolve).toHaveBeenCalledWith(
     expect.objectContaining({
       orderBy: 'created_at',
-      orderDirection: OrderDirection.Descending,
+      orderDirection: EnumOrderDirection.Descending,
       overviewId: '1',
     }),
   )
@@ -89,7 +89,7 @@ it('can filter by columns and direction', async () => {
   expect(ticketsMock.spies.resolve).toHaveBeenCalledWith(
     expect.objectContaining({
       orderBy: 'updated_at',
-      orderDirection: OrderDirection.Ascending,
+      orderDirection: EnumOrderDirection.Ascending,
       overviewId: '1',
     }),
   )
@@ -115,7 +115,7 @@ it('can filter by type and columns and direction', async () => {
     expect.objectContaining({
       overviewId: '1',
       orderBy: 'updated_at',
-      orderDirection: OrderDirection.Ascending,
+      orderDirection: EnumOrderDirection.Ascending,
     }),
   )
 
@@ -127,7 +127,7 @@ it('takes filter from query', async () => {
 
   const query = stringifyQuery({
     column: 'number',
-    direction: OrderDirection.Ascending,
+    direction: EnumOrderDirection.Ascending,
   })
   await visitView(`/tickets/view?${query}`)
 
@@ -136,7 +136,7 @@ it('takes filter from query', async () => {
       expect.objectContaining({
         overviewId: '1',
         orderBy: 'number',
-        orderDirection: OrderDirection.Ascending,
+        orderDirection: EnumOrderDirection.Ascending,
       }),
     )
   })

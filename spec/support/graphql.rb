@@ -80,6 +80,9 @@ module ZammadSpecSupportGraphql
     if @graphql_current_user
       # TODO: we only fake a SID for now, create a real session?
       context[:sid] = SecureRandom.hex(16)
+
+      # we need to set the current_user_id in the UserInfo context as well
+      UserInfo.current_user_id = context[:current_user].id
     end
     @graphql_result = Gql::ZammadSchema.execute(query, variables: variables, context: context)
   end

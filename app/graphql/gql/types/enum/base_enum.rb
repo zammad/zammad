@@ -2,5 +2,6 @@
 
 module Gql::Types::Enum
   class BaseEnum < GraphQL::Schema::Enum
+    include Gql::Concern::HasNestedGraphqlName
   end
 end

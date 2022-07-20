@@ -4,6 +4,7 @@ query currentUser {
     firstname
     lastname
     fullname
+    image
     preferences
     objectAttributeValues {
       ...objectAttributeValues

@@ -9,7 +9,7 @@ import {
   ViewTransitions,
 } from '@mobile/components/transition/TransitionViewNavigation'
 import { i18n } from '@shared/i18n'
-import { OrderDirection } from '@shared/graphql/types'
+import { EnumOrderDirection } from '@shared/graphql/types'
 import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
 import { useTicketsOverviews } from '@mobile/modules/home/stores/ticketOverviews'
 import CommonSelect from '@mobile/components/CommonSelect/CommonSelect.vue'
@@ -110,7 +110,7 @@ const orderBy = computed({
   },
 })
 
-const userOrderDirection = useRouteQuery<OrderDirection | undefined>(
+const userOrderDirection = useRouteQuery<EnumOrderDirection | undefined>(
   'direction',
   undefined,
 )
@@ -119,7 +119,7 @@ const userOrderDirection = useRouteQuery<OrderDirection | undefined>(
 // reset the query parameter.
 if (
   userOrderDirection.value &&
-  !Object.values(OrderDirection).includes(userOrderDirection.value)
+  !Object.values(EnumOrderDirection).includes(userOrderDirection.value)
 ) {
   userOrderDirection.value = undefined
 }
@@ -139,19 +139,19 @@ const orderDirection = computed({
 
 const directionOptions = computed(() => [
   {
-    value: OrderDirection.Descending,
+    value: EnumOrderDirection.Descending,
     label: __('descending'),
     icon: 'long-arrow-down',
     iconProps: {
       size: 'tiny' as const,
       class: {
-        'text-blue': orderDirection.value === OrderDirection.Descending,
+        'text-blue': orderDirection.value === EnumOrderDirection.Descending,
       },
       fixedSize: { width: 12, height: 12 },
     },
   },
   {
-    value: OrderDirection.Ascending,
+    value: EnumOrderDirection.Ascending,
     label: __('ascending'),
     icon: 'long-arrow-down',
     iconProps: {
@@ -159,7 +159,7 @@ const directionOptions = computed(() => [
       class: [
         'rotate-180',
         {
-          'text-blue': orderDirection.value === OrderDirection.Ascending,
+          'text-blue': orderDirection.value === EnumOrderDirection.Ascending,
         },
       ],
       fixedSize: { width: 12, height: 12 },
@@ -217,7 +217,7 @@ const directionOptions = computed(() => [
               <CommonIcon
                 name="long-arrow-down"
                 :class="{
-                  'rotate-180': orderDirection === OrderDirection.Ascending,
+                  'rotate-180': orderDirection === EnumOrderDirection.Ascending,
                 }"
                 :fixed-size="{ width: 12, height: 12 }"
               />
@@ -267,11 +267,7 @@ const directionOptions = computed(() => [
     </CommonLoader>
     <div v-else class="flex items-center justify-center gap-2 p-4 text-center">
       <CommonIcon class="text-red" name="close-small" />
-      {{
-        $t(
-          'Currently no overview is assigned to your roles. Please contact your administrator.',
-        )
-      }}
+      {{ $t('Currently no overview is assigned to your roles.') }}
     </div>
   </div>
 </template>

@@ -7,7 +7,7 @@ export interface AvatarUser {
   vip?: boolean
   outOfOffice?: boolean
   active?: boolean
-  image?: string
+  image?: Maybe<string>
   id: string
   source?: string
 }

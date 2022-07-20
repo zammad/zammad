@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import type { LastArrayElement } from 'type-fest'
-import { LocalesQuery, TextDirection } from '@shared/graphql/types'
+import { LocalesQuery, EnumTextDirection } from '@shared/graphql/types'
 
 const localeForBrowserLanguage = (
   locales: LocalesQuery['locales'],
@@ -27,7 +27,7 @@ const localeForBrowserLanguage = (
     alias: 'en',
     // eslint-disable-next-line zammad/zammad-detect-translatable-string
     name: 'English (United States)',
-    dir: TextDirection.Ltr,
+    dir: EnumTextDirection.Ltr,
     active: true,
   }
 }
