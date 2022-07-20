@@ -10,7 +10,11 @@ module Gql::Queries
     type Gql::Types::Ticket::ArticleType.connection_type, null: false
 
     def resolve(ticket:)
-      ::Ticket::Article.where(ticket: ticket).order(:id)
+      if TicketPolicy.new(context.current_user, ticket).agent_read_access?
+        ::Ticket::Article.where(ticket: ticket).order(:id)
+      else
+        ::Ticket::Article.where(ticket: ticket, internal: false).order(:id)
+      end
     end
   end
 end

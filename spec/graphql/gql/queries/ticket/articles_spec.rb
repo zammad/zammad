@@ -10,8 +10,12 @@ RSpec.describe Gql::Queries::Ticket::Articles, type: :graphql do
       read_graphql_file('apps/mobile/modules/ticket/graphql/queries/ticket/articles.graphql')
     end
     let(:variables) { { ticketId: Gql::ZammadSchema.id_from_object(ticket) } }
-    let(:ticket)    { create(:ticket) }
-    let!(:articles) { create_list(:ticket_article, 5, :outbound_email, ticket: ticket) }
+    let(:customer)             { create(:customer) }
+    let(:ticket)               { create(:ticket, customer: customer) }
+    let!(:articles)            { create_list(:ticket_article, 5, :outbound_email, ticket: ticket) }
+    let!(:internal_article)    { create(:ticket_article, :outbound_email, ticket: ticket, internal: true) }
+    let(:response_articles)    { graphql_response['data']['ticketArticles']['edges'].map { |edge| edge['node'] } }
+    let(:response_total_count) { graphql_response['data']['ticketArticles']['totalCount'] }
 
     before do
       graphql_execute(query, variables: variables)
@@ -37,19 +41,19 @@ RSpec.describe Gql::Queries::Ticket::Articles, type: :graphql do
           }
         end
 
-        it 'finds articles' do
-          expect(graphql_response['data']['ticketArticles']['totalCount']).to eq(articles.count)
+        it 'finds public and internal articles' do
+          expect(response_total_count).to eq(articles.count + 1)
         end
 
         it 'finds article content' do
-          expect(graphql_response['data']['ticketArticles']['edges'][0]['node']).to include(expected_article1)
+          expect(response_articles.first).to include(expected_article1)
         end
 
         context 'with ticketInternalId' do
           let(:variables) { { ticketInternalId: ticket.id } }
 
           it 'finds articles' do
-            expect(graphql_response['data']['ticketArticles']['totalCount']).to eq(articles.count)
+            expect(response_total_count).to eq(articles.count + 1)
           end
         end
 
@@ -57,7 +61,7 @@ RSpec.describe Gql::Queries::Ticket::Articles, type: :graphql do
           let(:variables) { { ticketNumber: ticket.number } }
 
           it 'finds articles' do
-            expect(graphql_response['data']['ticketArticles']['totalCount']).to eq(articles.count)
+            expect(response_total_count).to eq(articles.count + 1)
           end
         end
       end
@@ -70,11 +74,22 @@ RSpec.describe Gql::Queries::Ticket::Articles, type: :graphql do
 
       context 'without ticket' do
         let(:ticket)   { create(:ticket).tap(&:destroy) }
-        let(:articles) { [] }
+        let(:articles)         { [] }
+        let(:internal_article) { [] }
 
         it 'fetches no ticket' do
           expect(graphql_response['errors'][0]['extensions']['type']).to eq('ActiveRecord::RecordNotFound')
         end
+      end
+    end
+
+    context 'with an customer', authenticated_as: :customer do
+      it 'finds only public articles' do
+        expect(response_total_count).to eq(articles.count)
+      end
+
+      it 'does not find internal articles' do
+        expect(response_articles.pluck(:id)).to not_include(internal_article.id)
       end
     end
 
