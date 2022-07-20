@@ -10,7 +10,7 @@ import NotificationItem from '../components/NotificationItem.vue'
 import type { NotificationListItem } from '../types/notificaitons'
 
 useHeader({
-  backButton: true,
+  backUrl: '/',
 })
 
 // TODO make actual API call

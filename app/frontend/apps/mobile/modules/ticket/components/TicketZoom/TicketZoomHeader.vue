@@ -5,6 +5,7 @@ import type { AvatarUser } from '@shared/components/CommonUserAvatar'
 import CommonUserAvatar from '@shared/components/CommonUserAvatar/CommonUserAvatar.vue'
 import { useDialog } from '@shared/composables/useDialog'
 import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
+import CommonBackButton from '@mobile/components/CommonBackButton/CommonBackButton.vue'
 
 interface Props {
   ticketId: string
@@ -31,10 +32,7 @@ const showViewers = () => {
   <header
     class="grid h-[64px] grid-cols-[70px_auto_70px] border-b-[0.5px] border-white/10 bg-gray-600/90 px-4"
   >
-    <!-- TODO "back" where? -->
-    <button class="flex items-center justify-self-start">
-      <CommonIcon name="arrow-left" size="small" @click="$router.back()" />
-    </button>
+    <CommonBackButton class="justify-self-start" fallback="/" />
     <CommonLoader data-test-id="loader-header" :loading="loadingTicket" center>
       <div
         class="flex flex-1 flex-col items-center justify-center text-center text-sm leading-4"

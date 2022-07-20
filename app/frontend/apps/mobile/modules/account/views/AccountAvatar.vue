@@ -2,7 +2,6 @@
 
 <script setup lang="ts">
 import { reactive, shallowRef, watch, ref, computed } from 'vue'
-import { useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { Cropper, type CropperResult } from 'vue-advanced-cropper'
 import 'vue-advanced-cropper/dist/style.css'
@@ -18,6 +17,7 @@ import CommonUserAvatar from '@shared/components/CommonUserAvatar/CommonUserAvat
 import CommonAvatar from '@shared/components/CommonAvatar/CommonAvatar.vue'
 import { MutationHandler, QueryHandler } from '@shared/server/apollo/handler'
 import type { AccountAvatarActiveQuery } from '@shared/graphql/types'
+import { useRouter } from 'vue-router'
 import { useHeader } from '@mobile/composables/useHeader'
 import useConfirmation from '@mobile/components/CommonConfirmation/composable'
 import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
@@ -158,7 +158,7 @@ useHeader({
   backTitle: __('Account'),
   actionTitle: __('Done'),
   onAction() {
-    router.back()
+    router.push('/account')
   },
 })
 

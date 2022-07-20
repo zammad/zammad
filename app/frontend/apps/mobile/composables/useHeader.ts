@@ -10,7 +10,6 @@ export interface HeaderOptions {
   titleClass?: string | ComputedRef<string>
   backTitle?: string | ComputedRef<string>
   backUrl?: RouteLocationRaw | ComputedRef<RouteLocationRaw>
-  backButton?: boolean
   actionTitle?: string | ComputedRef<string>
   onAction?(): unknown
 }

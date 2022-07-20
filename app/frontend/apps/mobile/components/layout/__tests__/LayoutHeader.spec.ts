@@ -51,27 +51,12 @@ describe('mobile app header', () => {
     const backButton = view.getByText('Back')
 
     expect(backButton).toBeInTheDocument()
-    expect(view.getLinkFromElement(backButton)).toHaveAttribute('href', '/')
 
     i18n.setTranslationMap(new Map([['Test2', 'Translated']]))
 
     await view.rerender({ backTitle: 'Test2', backUrl: '/' })
 
     expect(view.getByText('Translated')).toBeInTheDocument()
-  })
-
-  it('renders back button as button if no url is specified', async () => {
-    const view = renderComponent(LayoutHeader, {
-      props: {
-        backButton: true,
-      },
-      router: true,
-    })
-
-    const button = view.getByIconName('arrow-left')
-
-    expect(button).toBeInTheDocument()
-    expect(button.closest('a')).not.toBeInTheDocument()
   })
 
   it('renders action, if specified', async () => {

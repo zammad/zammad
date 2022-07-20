@@ -19,6 +19,7 @@ import CommonIcon from '@shared/components/CommonIcon/CommonIcon.vue'
 import CommonLink from '@shared/components/CommonLink/CommonLink.vue'
 import CommonDateTime from '@shared/components/CommonDateTime/CommonDateTime.vue'
 import DynamicInitializer from '@shared/components/DynamicInitializer/DynamicInitializer.vue'
+import { initializeWalker } from '@shared/router/walker'
 import { i18n } from '@shared/i18n'
 import type { Store } from 'pinia'
 import buildIconsQueries from './iconQueries'
@@ -117,6 +118,11 @@ const initializeRouter = (routes?: RouteRecordRaw[]) => {
   })
 
   plugins.push(router)
+  plugins.push({
+    install(app) {
+      initializeWalker(app, router)
+    },
+  })
 
   defaultWrapperOptions.global ||= {}
   defaultWrapperOptions.global.stubs ||= {}

@@ -13,6 +13,7 @@ import type { RouteRecordMeta } from '@shared/types/router'
 import authenticationGuard from './guards/before/authentication'
 import permissionGuard from './guards/before/permission'
 import headerTitleGuard from './guards/after/headerTitle'
+import { initializeWalker } from './walker'
 
 declare module 'vue-router' {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -41,6 +42,8 @@ export default function initializeRouter(
   afterGuards?.forEach((guard) => router.afterEach(guard))
 
   app.use(router)
+
+  initializeWalker(app, router)
 
   return router
 }

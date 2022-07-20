@@ -4,11 +4,8 @@
 import { computed, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { watchOnce } from '@vueuse/shared'
-import {
-  useViewTransition,
-  ViewTransitions,
-} from '@mobile/components/transition/TransitionViewNavigation'
 import { i18n } from '@shared/i18n'
+import CommonBackButton from '@mobile/components/CommonBackButton/CommonBackButton.vue'
 import { EnumOrderDirection } from '@shared/graphql/types'
 import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
 import { useTicketsOverviews } from '@mobile/modules/home/stores/ticketOverviews'
@@ -23,14 +20,6 @@ const props = defineProps<{
 
 const router = useRouter()
 const route = useRoute()
-
-const { setViewTransition } = useViewTransition()
-
-const goBack = () => {
-  setViewTransition(ViewTransitions.Prev)
-
-  router.go(-1)
-}
 
 const { overviews, loading: loadingOverviews } = storeToRefs(
   useTicketsOverviews(),
@@ -175,9 +164,7 @@ const directionOptions = computed(() => [
         <div
           class="flex cursor-pointer items-center justify-self-start text-base"
         >
-          <div @click="goBack()">
-            <CommonIcon name="arrow-left" size="small" />
-          </div>
+          <CommonBackButton fallback="/" />
         </div>
         <div
           class="flex flex-1 items-center justify-center text-center text-lg font-bold"

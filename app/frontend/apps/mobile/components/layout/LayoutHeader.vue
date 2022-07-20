@@ -2,6 +2,7 @@
 
 <script setup lang="ts">
 import type { RouteLocationRaw } from 'vue-router'
+import CommonBackButton from '../CommonBackButton/CommonBackButton.vue'
 
 export interface Props {
   title?: string
@@ -9,7 +10,6 @@ export interface Props {
   backTitle?: string
   backUrl?: RouteLocationRaw
   actionTitle?: string
-  backButton?: boolean
   onAction?(): void
 }
 
@@ -18,23 +18,12 @@ defineProps<Props>()
 
 <template>
   <header
-    v-if="
-      title || (backUrl && backTitle) || backButton || (onAction && actionTitle)
-    "
+    v-if="title || backUrl || (onAction && actionTitle)"
     class="grid h-[64px] grid-cols-3 border-b-[0.5px] border-white/10 px-4"
     data-test-id="appHeader"
   >
     <div class="flex items-center justify-self-start text-base">
-      <component
-        :is="backUrl ? 'CommonLink' : 'div'"
-        v-if="(backUrl && backTitle) || backButton"
-        :link="backUrl"
-        class="flex cursor-pointer gap-2"
-        @click="backButton && $router.back()"
-      >
-        <CommonIcon name="arrow-left" size="small" />
-        <span>{{ $t(backTitle) }}</span>
-      </component>
+      <CommonBackButton v-if="backUrl" :fallback="backUrl" :label="backTitle" />
     </div>
     <div
       :class="[
