@@ -13,7 +13,7 @@ const hasHelp = computed(() => slots.help || props.help)
 <template>
   <div
     v-bind="$attrs"
-    class="form-group rounded-xl bg-gray-500"
+    class="form-group overflow-hidden rounded-xl bg-gray-500"
     :class="{ 'mb-4': !hasHelp }"
   >
     <slot />

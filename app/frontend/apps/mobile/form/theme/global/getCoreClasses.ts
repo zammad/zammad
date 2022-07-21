@@ -10,12 +10,12 @@ export const addFloatingLabel = (classes: Classes = {}): Classes => {
 
   return {
     outer: `${classes.outer || ''} floating-input`,
-    wrapper: `${classes.wrapper || ''} formkit-invalid:bg-red/10 relative px-3`,
-    inner: 'flex',
+    wrapper: `${classes.wrapper || ''} formkit-invalid:bg-red/10 relative`,
+    inner: 'flex ltr:pr-3 rtl:pl-3',
     input: `
       ${inputClass}
       w-full
-      px-0
+      ltr:pl-3 rtl:pr-3
       h-14
       text-sm
       bg-transparent

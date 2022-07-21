@@ -265,7 +265,7 @@ onBeforeUnmount(() => {
 
 <template>
   <!-- TODO add placeholder support when styling will be finished -->
-  <div class="flex w-full">
+  <div class="flex w-full ltr:pr-3 rtl:pl-3">
     <input
       :id="props.context.id"
       ref="pickerNode"
