@@ -70,6 +70,7 @@ module ZammadSpecSupportGraphql
 
   def graphql_current_user=(user)
     @graphql_current_user = user
+    UserInfo.current_user_id = user&.id
   end
 
   #

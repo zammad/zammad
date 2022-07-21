@@ -12,6 +12,7 @@ module ApplicationCable
     #   reflect the changes within GraphQL.
     def connect
       find_verified_user
+      UserInfo.current_user_id = current_user&.id
     end
 
     private
