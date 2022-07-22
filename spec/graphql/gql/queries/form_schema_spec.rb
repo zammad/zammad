@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe Gql::Queries::FormSchema, type: :graphql do
 
   context 'when fetching form schema data' do
-    let(:query)     { read_graphql_file('shared/components/Form/graphql/queries/formSchema.graphql') }
+    let(:query)     { gql.read_files('shared/components/Form/graphql/queries/formSchema.graphql') }
     let(:variables) { { formSchemaId: 'FormSchema__Form__Mobile__Login' } }
     let(:expected) do
       [
@@ -55,11 +55,11 @@ RSpec.describe Gql::Queries::FormSchema, type: :graphql do
     end
 
     before do
-      graphql_execute(query, variables: variables)
+      gql.execute(query, variables: variables)
     end
 
     it 'returns form schema' do
-      expect(graphql_response['data']['formSchema']).to eq(expected)
+      expect(gql.result.data).to eq(expected)
     end
   end
 end

@@ -5,12 +5,12 @@ require 'rails_helper'
 RSpec.describe Gql::Queries::Translations, type: :graphql do
 
   context 'when fetching translations' do
-    let(:query)              { read_graphql_file('shared/graphql/queries/translations.graphql') }
+    let(:query)              { gql.read_files('shared/graphql/queries/translations.graphql') }
     let(:variables)          { { locale: locale, cacheKey: cache_key } }
     let(:expected_cache_key) { Translation.where(locale: locale).order(updated_at: :desc).take.updated_at.to_s }
 
     before do
-      graphql_execute(query, variables: variables)
+      gql.execute(query, variables: variables)
     end
 
     context 'with a valid locale' do
@@ -20,15 +20,15 @@ RSpec.describe Gql::Queries::Translations, type: :graphql do
         let(:cache_key) { nil }
 
         it 'returns metadata' do
-          expect(graphql_response['data']['translations']).to include({ 'isCacheStillValid' => false, 'cacheKey' => expected_cache_key })
+          expect(gql.result.data).to include({ 'isCacheStillValid' => false, 'cacheKey' => expected_cache_key })
         end
 
         it 'returns translations' do
-          expect(graphql_response['data']['translations']['translations']).to include({ 'yes' => 'ja' })
+          expect(gql.result.data['translations']).to include({ 'yes' => 'ja' })
         end
 
         it 'does not return empty or "untranslated" translations' do
-          expect(graphql_response['data']['translations']['translations'].select { |k, v| v.empty? || k == v }).to be_empty
+          expect(gql.result.data['translations'].select { |k, v| v.empty? || k == v }).to be_empty
         end
       end
 
@@ -36,7 +36,7 @@ RSpec.describe Gql::Queries::Translations, type: :graphql do
         let(:cache_key) { expected_cache_key }
 
         it 'returns only metadata' do
-          expect(graphql_response['data']['translations']).to include({ 'isCacheStillValid' => true, 'cacheKey' => nil, 'translations' => nil })
+          expect(gql.result.data).to include({ 'isCacheStillValid' => true, 'cacheKey' => nil, 'translations' => nil })
         end
       end
 
@@ -47,11 +47,11 @@ RSpec.describe Gql::Queries::Translations, type: :graphql do
       let(:cache_key) { nil }
 
       it 'returns error type' do
-        expect(graphql_response['errors'][0]['extensions']).to include({ 'type' => 'ActiveRecord::RecordNotFound' })
+        expect(gql.result.error_type).to eq(ActiveRecord::RecordNotFound)
       end
 
       it 'returns error message' do
-        expect(graphql_response['errors'][0]).to include('message' => "No translations found for locale #{locale}.")
+        expect(gql.result.error_message).to eq("No translations found for locale #{locale}.")
       end
     end
   end

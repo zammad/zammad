@@ -11,23 +11,22 @@ RSpec.describe Gql::Mutations::Account::Avatar::Add, type: :graphql do
     let(:execute_query) { true }
 
     let(:query) do
-      read_graphql_file('apps/mobile/modules/account/avatar/graphql/mutations/add.graphql') +
-        read_graphql_file('shared/graphql/fragments/errors.graphql')
+      gql.read_files('apps/mobile/modules/account/avatar/graphql/mutations/add.graphql', 'shared/graphql/fragments/errors.graphql')
     end
 
     before do
       next if !execute_query
 
-      graphql_execute(query, variables: variables)
+      gql.execute(query, variables: variables)
     end
 
     context 'with valid image' do
       it 'returns the newly created avatar' do
-        expect(graphql_response['data']['accountAvatarAdd']['avatar']).not_to be_nil
+        expect(gql.result.data['avatar']).not_to be_nil
       end
 
       it 'updates the image for the user' do
-        avatar = Gql::ZammadSchema.verified_object_from_id(graphql_response['data']['accountAvatarAdd']['avatar']['id'], type: Avatar)
+        avatar = Gql::ZammadSchema.verified_object_from_id(gql.result.data['avatar']['id'], type: Avatar)
         expect(agent.reload.image).to eq(avatar.store_hash)
       end
 
@@ -35,7 +34,7 @@ RSpec.describe Gql::Mutations::Account::Avatar::Add, type: :graphql do
         let(:execute_query) { false }
 
         it 'increases the amount of records correctly' do
-          expect { graphql_execute(query, variables: variables) }.to change(Store, :count).by(2)
+          expect { gql.execute(query, variables: variables) }.to change(Store, :count).by(2)
         end
       end
     end
@@ -44,7 +43,7 @@ RSpec.describe Gql::Mutations::Account::Avatar::Add, type: :graphql do
       let(:base64_img) { 'invalid image' }
 
       it 'fails with error message' do
-        expect(graphql_response['data']['accountAvatarAdd']['errors'][0]).to include('message' => 'The image is invalid.')
+        expect(gql.result.data['errors'][0]).to include('message' => 'The image is invalid.')
       end
     end
 
@@ -52,7 +51,7 @@ RSpec.describe Gql::Mutations::Account::Avatar::Add, type: :graphql do
       let(:mime_type) { 'image/tiff' }
 
       it 'fails with error message' do
-        expect(graphql_response['data']['accountAvatarAdd']['errors'][0]).to include('message' => 'The MIME type of the image is invalid.')
+        expect(gql.result.data['errors'][0]).to include('message' => 'The MIME type of the image is invalid.')
       end
     end
 

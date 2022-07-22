@@ -7,19 +7,18 @@ RSpec.describe Gql::Mutations::Account::Locale, type: :graphql do
   context 'when updating language of the logged-in user', authenticated_as: :agent do
     let(:agent)        { create(:agent, preferences: { 'locale' => 'de-de' }) }
     let(:query)        do
-      read_graphql_file('apps/mobile/modules/account/graphql/mutations/locale.graphql') +
-        read_graphql_file('shared/graphql/fragments/errors.graphql')
+      gql.read_files('apps/mobile/modules/account/graphql/mutations/locale.graphql', 'shared/graphql/fragments/errors.graphql')
     end
     let(:locale) { 'en-us' }
     let(:variables) { { locale: locale } }
 
     before do
-      graphql_execute(query, variables: variables)
+      gql.execute(query, variables: variables)
     end
 
     context 'with valid locale' do
       it 'returns success' do
-        expect(graphql_response['data']['accountLocale']['success']).to be true
+        expect(gql.result.data['success']).to be true
       end
 
       it 'updates the locale' do
@@ -31,11 +30,11 @@ RSpec.describe Gql::Mutations::Account::Locale, type: :graphql do
       let(:locale) { 'nonexisting-locale' }
 
       it 'fails with error message' do
-        expect(graphql_response['errors'][0]).to include('message' => 'Locale could not be found.')
+        expect(gql.result.error_message).to eq('Locale could not be found.')
       end
 
       it 'fails with error type' do
-        expect(graphql_response['errors'][0]['extensions']).to include({ 'type' => 'ActiveRecord::RecordNotFound' })
+        expect(gql.result.error_type).to eq(ActiveRecord::RecordNotFound)
       end
     end
 

@@ -5,20 +5,18 @@ require 'rails_helper'
 RSpec.describe Gql::Queries::Ticket::Articles, type: :graphql do
 
   context 'when fetching tickets' do
-    let(:agent)     { create(:agent) }
-    let(:query)     do
-      read_graphql_file('apps/mobile/modules/ticket/graphql/queries/ticket/articles.graphql')
-    end
-    let(:variables) { { ticketId: Gql::ZammadSchema.id_from_object(ticket) } }
+    let(:agent)                { create(:agent) }
+    let(:query)                { gql.read_files('apps/mobile/modules/ticket/graphql/queries/ticket/articles.graphql') }
+    let(:variables)            { { ticketId: gql.id(ticket) } }
     let(:customer)             { create(:customer) }
     let(:ticket)               { create(:ticket, customer: customer) }
     let!(:articles)            { create_list(:ticket_article, 5, :outbound_email, ticket: ticket) }
     let!(:internal_article)    { create(:ticket_article, :outbound_email, ticket: ticket, internal: true) }
-    let(:response_articles)    { graphql_response['data']['ticketArticles']['edges'].map { |edge| edge['node'] } }
-    let(:response_total_count) { graphql_response['data']['ticketArticles']['totalCount'] }
+    let(:response_articles)    { gql.result.nodes }
+    let(:response_total_count) { gql.result.data['totalCount'] }
 
     before do
-      graphql_execute(query, variables: variables)
+      gql.execute(query, variables: variables)
     end
 
     context 'with an agent', authenticated_as: :agent do
@@ -68,7 +66,7 @@ RSpec.describe Gql::Queries::Ticket::Articles, type: :graphql do
 
       context 'without permission' do
         it 'raises authorization error' do
-          expect(graphql_response['errors'][0]['extensions']['type']).to eq('Exceptions::Forbidden')
+          expect(gql.result.error_type).to eq(Exceptions::Forbidden)
         end
       end
 
@@ -78,7 +76,7 @@ RSpec.describe Gql::Queries::Ticket::Articles, type: :graphql do
         let(:internal_article) { [] }
 
         it 'fetches no ticket' do
-          expect(graphql_response['errors'][0]['extensions']['type']).to eq('ActiveRecord::RecordNotFound')
+          expect(gql.result.error_type).to eq(ActiveRecord::RecordNotFound)
         end
       end
     end

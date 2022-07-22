@@ -6,7 +6,7 @@ RSpec.describe Gql::Queries::Locales, type: :graphql do
 
   context 'when fetching locales' do
     let(:agent)     { create(:agent) }
-    let(:query)     { read_graphql_file('shared/graphql/queries/locales.graphql') }
+    let(:query)     { gql.read_files('shared/graphql/queries/locales.graphql') }
     let(:active)    { true }
     let(:variables) { { onlyActive: false } }
     let(:target_locale) do
@@ -20,12 +20,12 @@ RSpec.describe Gql::Queries::Locales, type: :graphql do
     end
 
     before do
-      graphql_execute(query, variables: variables)
+      gql.execute(query, variables: variables)
     end
 
     context 'with authenticated session', authenticated_as: :agent do
       it 'has data' do
-        expect(graphql_response['data']['locales']).to include(target_locale)
+        expect(gql.result.data).to include(target_locale)
       end
 
       context 'when fetching only active locales' do
@@ -37,14 +37,14 @@ RSpec.describe Gql::Queries::Locales, type: :graphql do
         let(:variables) { { onlyActive: true } }
 
         it 'does not include inactive locales' do
-          expect(graphql_response['data']['locales']).not_to include(target_locale)
+          expect(gql.result.data).not_to include(target_locale)
         end
       end
     end
 
     context 'without authenticated session', authenticated_as: false do
       it 'has data' do
-        expect(graphql_response['data']['locales']).to include(target_locale)
+        expect(gql.result.data).to include(target_locale)
       end
     end
   end

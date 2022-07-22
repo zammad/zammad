@@ -17,14 +17,14 @@ RSpec.describe Gql::Queries::ApplicationBuildChecksum, type: :graphql, authentic
       end
       Digest::MD5.hexdigest(File.read(filename))
     end
-    let(:query) { read_graphql_file('shared/graphql/queries/applicationBuildChecksum.graphql') }
+    let(:query) { gql.read_files('shared/graphql/queries/applicationBuildChecksum.graphql') }
 
     before do
       File.open(filename, 'a') do |file|
         file.write("\n")
       end
 
-      graphql_execute(query)
+      gql.execute(query)
     end
 
     after do
@@ -34,7 +34,7 @@ RSpec.describe Gql::Queries::ApplicationBuildChecksum, type: :graphql, authentic
     end
 
     it 'returns the checksum of the manifest file' do
-      expect(graphql_response['data']['applicationBuildChecksum']).to not_eq(initial_checksum)
+      expect(gql.result.data).to not_eq(initial_checksum)
     end
   end
 end

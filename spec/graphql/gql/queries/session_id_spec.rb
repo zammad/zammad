@@ -6,15 +6,15 @@ RSpec.describe Gql::Queries::SessionId, type: :graphql do
 
   context 'when checking the SessionID' do
     let(:agent) { create(:agent) }
-    let(:query) { read_graphql_file('shared/graphql/queries/sessionId.graphql') }
+    let(:query) { gql.read_files('shared/graphql/queries/sessionId.graphql') }
 
     before do
-      graphql_execute(query)
+      gql.execute(query)
     end
 
     context 'with authenticated session', authenticated_as: :agent do
       it 'has data' do
-        expect(graphql_response['data']['sessionId']).to be_present
+        expect(gql.result.data).to be_present
       end
     end
 

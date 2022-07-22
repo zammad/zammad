@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Gql::Subscriptions::PushMessages, type: :graphql do
 
-  let(:subscription) { read_graphql_file('shared/graphql/subscriptions/pushMessages.graphql') }
+  let(:subscription) { gql.read_files('shared/graphql/subscriptions/pushMessages.graphql') }
   let(:mock_channel) { build_mock_channel }
   let(:expected_msg) do
     {
@@ -32,7 +32,7 @@ RSpec.describe Gql::Subscriptions::PushMessages, type: :graphql do
   end
 
   before do
-    graphql_execute(subscription, context: { channel: mock_channel })
+    gql.execute(subscription, context: { channel: mock_channel })
   end
 
   it 'broadcasts push message to all users' do

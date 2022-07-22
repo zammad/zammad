@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Gql::Subscriptions::AppMaintenance, type: :graphql do
 
-  let(:subscription)  { read_graphql_file('shared/graphql/subscriptions/appMaintenance.graphql') }
+  let(:subscription)  { gql.read_files('shared/graphql/subscriptions/appMaintenance.graphql') }
   let(:mock_channel)  { build_mock_channel }
   let(:expected_type) { 'app_version' }
   let(:expected_msg) do
@@ -28,7 +28,7 @@ RSpec.describe Gql::Subscriptions::AppMaintenance, type: :graphql do
 
   context 'when app maintenance update/change events (trigger actions in the frontend) are triggered' do
     before do
-      graphql_execute(subscription, context: { channel: mock_channel })
+      gql.execute(subscription, context: { channel: mock_channel })
       AppVersion.set(true, app_version_set)
     end
 

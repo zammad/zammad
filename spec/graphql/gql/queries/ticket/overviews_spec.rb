@@ -6,20 +6,20 @@ RSpec.describe Gql::Queries::Ticket::Overviews, type: :graphql do
 
   context 'when fetching ticket overviews' do
     let(:agent)     { create(:agent) }
-    let(:query)     { read_graphql_file('shared/entities/ticket/graphql/queries/ticket/overviews.graphql') }
+    let(:query)     { gql.read_files('shared/entities/ticket/graphql/queries/ticket/overviews.graphql') }
     let(:variables) { { withTicketCount: false } }
 
     before do
-      graphql_execute(query, variables: variables)
+      gql.execute(query, variables: variables)
     end
 
     context 'with an agent', authenticated_as: :agent do
       it 'has agent overview' do
-        expect(graphql_response['data']['ticketOverviews']['edges'][0]['node']).to include('name' => 'My Assigned Tickets', 'link' => 'my_assigned', 'prio' => 1000, 'active' => true,)
+        expect(gql.result.nodes.first).to include('name' => 'My Assigned Tickets', 'link' => 'my_assigned', 'prio' => 1000, 'active' => true,)
       end
 
       it 'has view and order columns' do
-        expect(graphql_response['data']['ticketOverviews']['edges'][0]['node']).to include(
+        expect(gql.result.nodes.first).to include(
           'viewColumns'  => include({ 'key' => 'title', 'value' => 'Title' }),
           'orderColumns' => include({ 'key' => 'created_at', 'value' => 'Created at' }),
         )
@@ -27,7 +27,7 @@ RSpec.describe Gql::Queries::Ticket::Overviews, type: :graphql do
 
       context 'without ticket count' do
         it 'does not include ticketCount field' do
-          expect(graphql_response['data']['ticketOverviews']['edges'][0]['node']).not_to have_key('ticketCount')
+          expect(gql.result.nodes.first).not_to have_key('ticketCount')
         end
       end
 
@@ -35,7 +35,7 @@ RSpec.describe Gql::Queries::Ticket::Overviews, type: :graphql do
         let(:variables) { { withTicketCount: true } }
 
         it 'includes ticketCount field' do
-          expect(graphql_response['data']['ticketOverviews']['edges'][0]['node']['ticketCount']).to eq(0)
+          expect(gql.result.nodes.first['ticketCount']).to eq(0)
         end
       end
     end
@@ -44,7 +44,7 @@ RSpec.describe Gql::Queries::Ticket::Overviews, type: :graphql do
       let(:customer) { create(:customer) }
 
       it 'has customer overview' do
-        expect(graphql_response['data']['ticketOverviews']['edges'][0]['node']).to include('name' => 'My Tickets', 'link' => 'my_tickets', 'prio' => 1100, 'active' => true,)
+        expect(gql.result.nodes.first).to include('name' => 'My Tickets', 'link' => 'my_tickets', 'prio' => 1100, 'active' => true,)
       end
     end
 

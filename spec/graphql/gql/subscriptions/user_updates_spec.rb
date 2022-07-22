@@ -5,22 +5,21 @@ require 'rails_helper'
 RSpec.describe Gql::Subscriptions::UserUpdates, type: :graphql do
 
   let(:subscription) do
-    read_graphql_file('shared/graphql/subscriptions/userUpdates.graphql') +
-      read_graphql_file('shared/graphql/fragments/objectAttributeValues.graphql')
+    gql.read_files('shared/graphql/subscriptions/userUpdates.graphql', 'shared/graphql/fragments/objectAttributeValues.graphql')
   end
   let(:mock_channel) { build_mock_channel }
   let(:target)       { create(:user) }
-  let(:variables)    { { userId: Gql::ZammadSchema.id_from_object(target) } }
+  let(:variables)    { { userId: gql.id(target) } }
 
   before do
-    graphql_execute(subscription, variables: variables, context: { channel: mock_channel })
+    gql.execute(subscription, variables: variables, context: { channel: mock_channel })
   end
 
   context 'with authenticated user', authenticated_as: :agent do
     let(:agent) { create(:agent) }
 
     it 'subscribes' do
-      expect(graphql_response['data']['userUpdates']).to eq({ 'user' => nil })
+      expect(gql.result.data).to eq({ 'user' => nil })
     end
 
     it 'receives user updates for target user' do
@@ -38,12 +37,8 @@ RSpec.describe Gql::Subscriptions::UserUpdates, type: :graphql do
     let(:customer) { create(:customer) }
 
     context 'when subscribing for other users' do
-      it 'does not subscribe' do
-        expect(graphql_response['errors'][0]).to be_present
-      end
-
-      it 'returns an authorization error' do
-        expect(graphql_response['errors'][0]['extensions']['type']).to eq('Exceptions::Forbidden')
+      it 'does not subscribe but returns an authorization error' do
+        expect(gql.result.error_type).to eq(Exceptions::Forbidden)
       end
     end
 
@@ -51,7 +46,7 @@ RSpec.describe Gql::Subscriptions::UserUpdates, type: :graphql do
       let(:target) { customer }
 
       it 'subscribes' do
-        expect(graphql_response['data']['userUpdates']).to eq({ 'user' => nil })
+        expect(gql.result.data).to eq({ 'user' => nil })
       end
 
       it 'receives user updates for target user' do

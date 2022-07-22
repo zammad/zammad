@@ -3,11 +3,11 @@
 RSpec.shared_examples 'graphql responds with error if unauthenticated' do
   context 'without authenticated session', authenticated_as: false do
     it 'fails with error message' do
-      expect(graphql_response['errors'][0]).to include('message' => 'Authentication required')
+      expect(gql.result.error_message).to eq('Authentication required')
     end
 
     it 'fails with error type' do
-      expect(graphql_response['errors'][0]['extensions']).to include({ 'type' => 'Exceptions::NotAuthorized' })
+      expect(gql.result.error_type).to eq(Exceptions::NotAuthorized)
     end
   end
 end

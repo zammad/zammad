@@ -37,11 +37,11 @@ RSpec.describe Gql::ZammadSchema, type: :graphql do
     end
 
     before do
-      graphql_execute(query)
+      gql.execute(query)
     end
 
     it 'has data' do
-      expect(graphql_response['errors']).to eq([{ 'message'=>'Query has depth of 11, which exceeds max depth of 10' }])
+      expect(gql.result.error_message).to eq('Query has depth of 11, which exceeds max depth of 10')
     end
   end
 end

@@ -64,7 +64,7 @@ RSpec.describe Gql::RecordLoader, type: :graphql do
         },
       }
       overview = create(:overview, condition: condition)
-      Gql::ZammadSchema.id_from_object(overview)
+      gql.id(overview)
     end
     let(:query) do
       <<~QUERY
@@ -130,10 +130,10 @@ RSpec.describe Gql::RecordLoader, type: :graphql do
       total_queries = {}
       uncached_queries = {}
 
-      result = trace_queries(total_queries, uncached_queries) do
-        graphql_execute(query, variables: variables)
+      trace_queries(total_queries, uncached_queries) do
+        gql.execute(query, variables: variables)
       end
-      expect(result['data']['ticketsByOverview']['edges'].count).to eq(10)
+      expect(gql.result.nodes.count).to eq(10)
 
       expect(total_queries).to include(
         {
@@ -177,7 +177,7 @@ RSpec.describe Gql::RecordLoader, type: :graphql do
     let(:loops) { 1 }
     let(:tickets_per_loop)    { 1 }
     let(:articles_per_ticket) { 10 }
-    let(:ticket_id)           { Gql::ZammadSchema.id_from_object(Ticket.last) }
+    let(:ticket_id)           { gql.id(Ticket.last) }
     let(:query) do
       <<~QUERY
         query ticket(
@@ -248,11 +248,11 @@ RSpec.describe Gql::RecordLoader, type: :graphql do
       total_queries = {}
       uncached_queries = {}
 
-      result = trace_queries(total_queries, uncached_queries) do
-        graphql_execute(query, variables: variables)
+      trace_queries(total_queries, uncached_queries) do
+        gql.execute(query, variables: variables)
       end
 
-      expect(result['data']['ticket']['id']).to eq(ticket_id)
+      expect(gql.result.data['id']).to eq(ticket_id)
 
       expect(total_queries).to include(
         {

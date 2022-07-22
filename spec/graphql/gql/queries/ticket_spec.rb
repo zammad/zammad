@@ -7,14 +7,13 @@ RSpec.describe Gql::Queries::Ticket, type: :graphql do
   context 'when fetching tickets' do
     let(:agent)     { create(:agent) }
     let(:query)     do
-      read_graphql_file('apps/mobile/modules/ticket/graphql/queries/ticket.graphql') +
-        read_graphql_file('shared/graphql/fragments/objectAttributeValues.graphql')
+      gql.read_files('apps/mobile/modules/ticket/graphql/queries/ticket.graphql', 'shared/graphql/fragments/objectAttributeValues.graphql')
     end
-    let(:variables) { { ticketId: Gql::ZammadSchema.id_from_object(ticket) } }
+    let(:variables) { { ticketId: gql.id(ticket) } }
     let(:ticket)    { create(:ticket) }
 
     before do
-      graphql_execute(query, variables: variables)
+      gql.execute(query, variables: variables)
     end
 
     context 'with an agent', authenticated_as: :agent do
@@ -23,8 +22,8 @@ RSpec.describe Gql::Queries::Ticket, type: :graphql do
 
         shared_examples 'finds the ticket' do
           it 'finds the ticket' do
-            expect(graphql_response['data']['ticket']).to include(
-              'id'         => Gql::ZammadSchema.id_from_object(ticket),
+            expect(gql.result.data).to include(
+              'id'         => gql.id(ticket),
               'internalId' => ticket.id,
               'number'     => ticket.number,
             )
@@ -51,14 +50,14 @@ RSpec.describe Gql::Queries::Ticket, type: :graphql do
           let(:variables) { {} }
 
           it 'raises an exception' do
-            expect(graphql_response['errors'][0]['extensions']['type']).to eq('GraphQL::Schema::Validator::ValidationFailedError')
+            expect(gql.result.error_type).to eq(GraphQL::Schema::Validator::ValidationFailedError)
           end
         end
       end
 
       context 'without permission' do
         it 'raises authorization error' do
-          expect(graphql_response['errors'][0]['extensions']['type']).to eq('Exceptions::Forbidden')
+          expect(gql.result.error_type).to eq(Exceptions::Forbidden)
         end
       end
 
@@ -66,7 +65,7 @@ RSpec.describe Gql::Queries::Ticket, type: :graphql do
         let(:ticket) { create(:ticket).tap(&:destroy) }
 
         it 'fetches no ticket' do
-          expect(graphql_response['errors'][0]['extensions']['type']).to eq('ActiveRecord::RecordNotFound')
+          expect(gql.result.error_type).to eq(ActiveRecord::RecordNotFound)
         end
       end
     end

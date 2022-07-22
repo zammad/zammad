@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Gql::Subscriptions::ConfigUpdates, type: :graphql do
 
-  let(:subscription) { read_graphql_file('shared/graphql/subscriptions/configUpdates.graphql') }
+  let(:subscription) { gql.read_files('shared/graphql/subscriptions/configUpdates.graphql') }
   let(:mock_channel) { build_mock_channel }
   let(:expected_msg) do
     {
@@ -23,7 +23,7 @@ RSpec.describe Gql::Subscriptions::ConfigUpdates, type: :graphql do
   end
 
   it 'broadcasts config update events' do
-    graphql_execute(subscription, context: { channel: mock_channel })
+    gql.execute(subscription, context: { channel: mock_channel })
     Setting.set('product_name', 'subscription_test')
     expect(mock_channel.mock_broadcasted_messages).to eq([expected_msg])
   end

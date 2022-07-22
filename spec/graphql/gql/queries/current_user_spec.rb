@@ -8,30 +8,29 @@ RSpec.describe Gql::Queries::CurrentUser, type: :graphql do
     let(:organization) { create(:organization) }
     let(:agent)        { create(:agent, department: 'TestDepartment', organization: organization) }
     let(:query) do
-      read_graphql_file('shared/graphql/queries/currentUser.graphql') +
-        read_graphql_file('shared/graphql/fragments/objectAttributeValues.graphql')
+      gql.read_files('shared/graphql/queries/currentUser.graphql', 'shared/graphql/fragments/objectAttributeValues.graphql')
     end
 
     before do
-      graphql_execute(query)
+      gql.execute(query)
     end
 
     context 'with authenticated session', authenticated_as: :agent do
       it 'has data' do
-        expect(graphql_response['data']['currentUser']).to include('fullname' => agent.fullname)
+        expect(gql.result.data).to include('fullname' => agent.fullname)
       end
 
       it 'has objectAttributeValue data for User' do
-        oas = graphql_response['data']['currentUser']['objectAttributeValues']
+        oas = gql.result.data['objectAttributeValues']
         expect(oas.find { |oa| oa['attribute']['name'].eql?('department') }['value']).to eq('TestDepartment')
       end
 
       it 'has data for Organization' do
-        expect(graphql_response['data']['currentUser']['organization']).to include('name' => organization.name)
+        expect(gql.result.data['organization']).to include('name' => organization.name)
       end
 
       it 'has permission data' do
-        expect(graphql_response['data']['currentUser']['permissions']['names']).to eq(agent.permissions_with_child_names)
+        expect(gql.result.data['permissions']['names']).to eq(agent.permissions_with_child_names)
       end
     end
 

@@ -7,15 +7,14 @@ RSpec.describe Gql::Queries::TicketsByOverview, type: :graphql do
   context 'when fetching ticket overviews' do
     let(:agent)     { create(:agent) }
     let(:query)     do
-      read_graphql_file('apps/mobile/modules/ticket/graphql/queries/ticketsByOverview.graphql') +
-        read_graphql_file('shared/graphql/fragments/objectAttributeValues.graphql')
+      gql.read_files('apps/mobile/modules/ticket/graphql/queries/ticketsByOverview.graphql', 'shared/graphql/fragments/objectAttributeValues.graphql')
     end
-    let(:variables) { { overviewId: Gql::ZammadSchema.id_from_object(overview) } }
+    let(:variables) { { overviewId: gql.id(overview) } }
     let(:overview)    { Overview.find_by(link: 'all_unassigned') }
     let!(:ticket)     { create(:ticket) }
 
     before do
-      graphql_execute(query, variables: variables)
+      gql.execute(query, variables: variables)
     end
 
     context 'with an agent', authenticated_as: :agent do
@@ -23,21 +22,21 @@ RSpec.describe Gql::Queries::TicketsByOverview, type: :graphql do
         let(:agent) { create(:agent, groups: [ticket.group]) }
 
         it 'fetches a ticket' do
-          expect(graphql_response['data']['ticketsByOverview']['edges'][0]['node']).to include('number' => ticket.number)
+          expect(gql.result.nodes.first).to include('number' => ticket.number)
         end
 
         it 'has total_count' do
-          expect(graphql_response['data']['ticketsByOverview']['totalCount']).to eq(1)
+          expect(gql.result.data['totalCount']).to eq(1)
         end
       end
 
       context 'without visible tickets' do
         it 'fetches no ticket' do
-          expect(graphql_response['data']['ticketsByOverview']['edges']).to eq([])
+          expect(gql.result.nodes).to eq([])
         end
 
         it 'has total_count' do
-          expect(graphql_response['data']['ticketsByOverview']['totalCount']).to be_zero
+          expect(gql.result.data['totalCount']).to be_zero
         end
       end
     end
@@ -46,7 +45,7 @@ RSpec.describe Gql::Queries::TicketsByOverview, type: :graphql do
       let(:customer) { create(:customer) }
 
       it 'raises authorization error' do
-        expect(graphql_response['errors'][0]['extensions']['type']).to eq('Exceptions::Forbidden')
+        expect(gql.result.error_type).to eq(Exceptions::Forbidden)
       end
     end
 

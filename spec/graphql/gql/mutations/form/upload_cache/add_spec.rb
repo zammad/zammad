@@ -6,7 +6,7 @@ RSpec.describe Gql::Mutations::Form::UploadCache::Add, type: :graphql do
 
   context 'when uploading files for a form', authenticated_as: :agent do
     let(:agent)        { create(:agent) }
-    let(:query)        { read_graphql_file('shared/components/Form/fields/FieldFile/graphql/mutations/uploadCache/add.graphql') }
+    let(:query)        { gql.read_files('shared/components/Form/fields/FieldFile/graphql/mutations/uploadCache/add.graphql') }
     let(:form_id)      { 12_345 }
     let(:file_name)    { 'my_testfile.pdf' }
     let(:file_type)    { 'application/pdf' }
@@ -26,18 +26,18 @@ RSpec.describe Gql::Mutations::Form::UploadCache::Add, type: :graphql do
 
     let(:expected_response) do
       [{
-        'id'   => Gql::ZammadSchema.id_from_object(UploadCache.new(form_id).attachments.first),
+        'id'   => gql.id(UploadCache.new(form_id).attachments.first),
         'name' => file_name,
         'type' => file_type,
       }]
     end
 
     before do
-      graphql_execute(query, variables: variables)
+      gql.execute(query, variables: variables)
     end
 
     it 'creates Store entry' do
-      expect(graphql_response['data']['formUploadCacheAdd']['uploadedFiles']).to eq(expected_response)
+      expect(gql.result.data['uploadedFiles']).to eq(expected_response)
     end
 
     it_behaves_like 'graphql responds with error if unauthenticated'

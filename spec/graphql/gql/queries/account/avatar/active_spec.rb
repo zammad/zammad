@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe Gql::Queries::Account::Avatar::Active, type: :graphql do
   context 'when fetching avatar' do
     let(:query) do
-      read_graphql_file('apps/mobile/modules/account/avatar/graphql/queries/active.graphql')
+      gql.read_files('apps/mobile/modules/account/avatar/graphql/queries/active.graphql')
     end
 
     context 'when authorized', authenticated_as: :agent do
@@ -13,12 +13,12 @@ RSpec.describe Gql::Queries::Account::Avatar::Active, type: :graphql do
       let!(:avatar) { nil }
 
       before do
-        graphql_execute(query)
+        gql.execute(query)
       end
 
       context 'when no avatar is available' do
         it 'returns nil' do
-          expect(graphql_response['data']['accountAvatarActive']).to be_nil
+          expect(gql.result.data).to be_nil
         end
       end
 
@@ -46,14 +46,14 @@ RSpec.describe Gql::Queries::Account::Avatar::Active, type: :graphql do
         end
 
         it 'returns data' do
-          expect(graphql_response['data']['accountAvatarActive']['id']).to eq(Gql::ZammadSchema.id_from_object(avatar))
+          expect(gql.result.data['id']).to eq(gql.id(avatar))
         end
       end
     end
 
     context 'when unauthenticated' do
       before do
-        graphql_execute(query)
+        gql.execute(query)
       end
 
       it_behaves_like 'graphql responds with error if unauthenticated'
