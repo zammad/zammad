@@ -34,3 +34,6 @@ rm .overcommit.*
 
 # misc
 rm .codeclimate.yml
+
+# developer manual
+rm -rf doc/developer_manual

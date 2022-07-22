@@ -82,9 +82,6 @@
 # Byebug
 /.byebug_history
 
-# RDoc / YARD
-/doc
-
 # Backup files
 *~
 
