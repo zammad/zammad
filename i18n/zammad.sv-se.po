@@ -179,6 +179,12 @@ msgstr "minuter"
 msgid "%s months ago"
 msgstr "%s sedan"
 
+#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/ArticleBadgeMore.vue
+#, fuzzy
+#| msgid "See more"
+msgid "%s more"
+msgstr "Se mer"
+
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
 msgid "%s object(s) have been created."
 msgstr "%s objekt har skapats."
@@ -788,6 +794,12 @@ msgstr "Lägg till länk"
 msgid "Add ordered list"
 msgstr "Formatera som ordnad lista"
 
+#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/TicketZoomReplyButton.vue
+#, fuzzy
+#| msgid "reply"
+msgid "Add reply"
+msgstr "svara"
+
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Add second level heading"
 msgstr ""
@@ -956,8 +968,7 @@ msgstr ""
 #: app/frontend/shared/server/apollo/handler/BaseHandler.ts
 #, fuzzy
 #| msgid "Unable to verify email. Please contact your administrator."
-msgid ""
-"An error occured during the operation. Please contact your administrator."
+msgid "An error occured during the operation."
 msgstr ""
 "Det gick inte att verifiera e-post. Vänligen kontakta din administratör."
 
@@ -1125,6 +1136,12 @@ msgstr ""
 
 #: lib/excel_sheet/ticket.rb
 msgid "Article Count"
+msgstr "Antal inlägg"
+
+#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/ArticleBubble.vue
+#, fuzzy
+#| msgid "Article Count"
+msgid "Article actions"
 msgstr "Antal inlägg"
 
 #: app/models/ticket.rb
@@ -1398,9 +1415,20 @@ msgstr ""
 #: app/frontend/apps/mobile/modules/account/routes.ts
 #: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
 #: app/frontend/apps/mobile/modules/account/views/AccountOverview.vue
+#: app/frontend/shared/components/CommonUserAvatar/CommonUserAvatar.vue
 #: db/seeds/permissions.rb
 msgid "Avatar"
 msgstr "Avatar"
+
+#: app/graphql/gql/mutations/account/avatar/delete.rb
+#, fuzzy
+#| msgid "%s Object(s) are updated."
+msgid "Avatar could not be found."
+msgstr "%s Objekt är uppdaterade."
+
+#: app/frontend/shared/components/CommonAvatar/CommonAvatar.vue
+msgid "Avatar with initials %s"
+msgstr ""
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_load_measure.jst.eco
 msgid "Average: %s"
@@ -1767,6 +1795,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/knowledge_base/scheduled_widget.jst.eco
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue
+#: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
 #: app/frontend/apps/mobile/modules/search/views/SearchOverview.vue
 #: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 msgid "Cancel"
@@ -2502,6 +2531,12 @@ msgid ""
 "obligation to fill them in."
 msgstr ""
 
+#: app/frontend/apps/mobile/modules/ticket/views/TicketDetailedView.vue
+#, fuzzy
+#| msgid "You have closed a ticket"
+msgid "Could not load the ticket"
+msgstr "Du har stängt ett ärende"
+
 #: app/assets/javascripts/app/views/tag/table.jst.eco
 msgid "Count"
 msgstr "ANTAL"
@@ -2731,8 +2766,11 @@ msgstr ""
 msgid "Current user has no permission to use 'From'/'X-On-Behalf-Of'!"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/frontend/apps/mobile/modules/ticket/views/TicketOverview.vue
+msgid "Currently no overview is assigned to your roles."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/ticket_overview.coffee
 msgid ""
 "Currently no overview is assigned to your roles. Please contact your "
 "administrator."
@@ -3705,6 +3743,12 @@ msgstr ""
 msgid "Delete all existing records first."
 msgstr "Ta bort alla befintliga poster först."
 
+#: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
+#, fuzzy
+#| msgid "Delete User"
+msgid "Delete avatar"
+msgstr "Ta bort användare"
+
 #: db/seeds/schedulers.rb
 msgid "Delete obsolete classic IMAP backup."
 msgstr ""
@@ -3928,6 +3972,12 @@ msgstr "Säkert att radera detta objektet?"
 msgid "Do you really want to delete this object?"
 msgstr "Säkert att radera detta objektet?"
 
+#: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
+#, fuzzy
+#| msgid "Sure to delete this object?"
+msgid "Do you really want to delete your current avatar?"
+msgstr "Säkert att radera detta objektet?"
+
 #: app/assets/javascripts/app/controllers/_application_controller/article_public_confirm.coffee
 #, fuzzy
 #| msgid "Sure to delete this object?"
@@ -3953,6 +4003,7 @@ msgid "Don't synchronize"
 msgstr ""
 
 #: app/frontend/apps/mobile/components/CommonDialog/CommonDialog.vue
+#: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
 #: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
 #: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 msgid "Done"
@@ -4056,6 +4107,12 @@ msgstr "Ändra organisation"
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
 msgid "Edit mask"
 msgstr ""
+
+#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/TicketViewersDialog.vue
+#, fuzzy
+#| msgid "assign tickets"
+msgid "Editing ticket"
+msgstr "tilldela ärenden"
 
 #: db/seeds/settings.rb
 msgid "Elasticsearch Attachment Extensions"
@@ -5009,6 +5066,10 @@ msgstr "Formatera som |fet|"
 msgid "Format as ||italic||"
 msgstr "Formatera som ||kursiv||"
 
+#: app/frontend/apps/mobile/modules/ticket/composable/useTicketArticleContext.ts
+msgid "Forward"
+msgstr ""
+
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco
 msgid "Frequency"
 msgstr "FREKVENS"
@@ -5348,6 +5409,10 @@ msgstr ""
 #: app/assets/javascripts/app/models/job.coffee
 msgid "Has processed"
 msgstr "Har bearbetat"
+
+#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/TicketViewersDialog.vue
+msgid "Has ticket open in taskbar, but is not actively looking in the ticket."
+msgstr ""
 
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
 msgid "Hash"
@@ -6684,6 +6749,12 @@ msgstr ""
 msgid "Maintenance mode enabled!"
 msgstr ""
 
+#: app/frontend/apps/mobile/modules/ticket/composable/useTicketArticleContext.ts
+#, fuzzy
+#| msgid "internal"
+msgid "Make internal"
+msgstr "intern"
+
 #: app/assets/javascripts/app/controllers/manage.coffee
 msgid "Manage"
 msgstr "Administration"
@@ -6812,6 +6883,12 @@ msgstr ""
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "May"
 msgstr "maj"
+
+#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/ArticleBubble.vue
+#, fuzzy
+#| msgid "Mode"
+msgid "Me"
+msgstr "Underhållsläge"
 
 #: app/assets/javascripts/app/views/organization_profile/object.jst.eco
 #: app/assets/javascripts/app/views/popover/organization.jst.eco
@@ -7716,6 +7793,10 @@ msgstr "Nummer"
 msgid "OAuth2 token is expired!"
 msgstr ""
 
+#: app/frontend/apps/mobile/components/CommonConfirmation/CommonConfirmation.vue
+msgid "OK"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 msgid "OK, I've copied my token"
 msgstr "OK, jag har kopierat min token"
@@ -7768,12 +7849,6 @@ msgstr "%s skrev %s:"
 #| msgid "Once completed..."
 msgid "Once completed…"
 msgstr "När den är klar..."
-
-#: app/graphql/gql/queries/ticket.rb
-msgid ""
-"One of the arguments 'ticket_id', 'ticket_internal_id' or 'ticket_number' "
-"must be provided."
-msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Online"
@@ -7852,6 +7927,10 @@ msgstr "Öppna anteckningsruta"
 
 #: db/seeds/settings.rb
 msgid "Open ticket indicator"
+msgstr ""
+
+#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/TicketViewersDialog.vue
+msgid "Opened in taskbar"
 msgstr ""
 
 #: app/assets/javascripts/app/views/agent_ticket_view/content.jst.eco
@@ -8700,6 +8779,12 @@ msgstr "Återöppningsgrad"
 msgid "Replacement"
 msgstr "Ersättning"
 
+#: app/frontend/apps/mobile/modules/ticket/composable/useTicketArticleContext.ts
+#, fuzzy
+#| msgid "reply"
+msgid "Reply"
+msgstr "svara"
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Reply to last article"
 msgstr "Svara på den senaste artikeln"
@@ -9140,6 +9225,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/ArticleBubble.vue
 msgid "See less"
 msgstr "Se mindre"
 
@@ -9147,6 +9233,7 @@ msgstr "Se mindre"
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
+#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/ArticleBubble.vue
 msgid "See more"
 msgstr "Se mer"
 
@@ -9512,6 +9599,12 @@ msgstr ""
 msgid "Show less"
 msgstr ""
 
+#: app/frontend/apps/mobile/modules/ticket/composable/useTicketArticleContext.ts
+#, fuzzy
+#| msgid "Show Search Details"
+msgid "Show meta data"
+msgstr "Visa Sökdetaljer"
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Show next tab"
 msgstr ""
@@ -9525,6 +9618,12 @@ msgstr "Föregående flik"
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
 msgid "Show the chat when ready."
 msgstr "Visa chatten när den är klar."
+
+#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/TicketZoomHeader.vue
+#, fuzzy
+#| msgid "Overviews"
+msgid "Show ticket viewers"
+msgstr "Översikter"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Show title in form."
@@ -9717,6 +9816,12 @@ msgstr "Ursprung"
 #: db/seeds/settings.rb
 msgid "Special character required"
 msgstr ""
+
+#: app/frontend/apps/mobile/modules/ticket/composable/useTicketArticleContext.ts
+#, fuzzy
+#| msgid "split"
+msgid "Split"
+msgstr "dela upp"
 
 #: db/seeds/groups.rb
 msgid "Standard Group/Pool for Tickets."
@@ -10135,6 +10240,10 @@ msgstr "%s Objekt har skapats."
 msgid "The MIME type of the full-size image is invalid."
 msgstr ""
 
+#: app/graphql/gql/types/input/avatar_input_type.rb
+msgid "The MIME type of the image is invalid."
+msgstr ""
+
 #: app/controllers/users_controller.rb
 msgid "The MIME type of the resized image is invalid."
 msgstr ""
@@ -10166,6 +10275,24 @@ msgstr ""
 #: app/assets/javascripts/app/views/getting_started/auto_wizard_enabled.jst.eco
 msgid "The auto wizard is enabled. Please use the provided auto wizard url."
 msgstr ""
+
+#: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
+#, fuzzy
+#| msgid "%s Object(s) are updated."
+msgid "The avatar could not be deleted."
+msgstr "%s Objekt är uppdaterade."
+
+#: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
+#, fuzzy
+#| msgid "%s Object(s) are created."
+msgid "The avatar could not be fetched."
+msgstr "%s Objekt har skapats."
+
+#: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
+#, fuzzy
+#| msgid "%s Object(s) are created."
+msgid "The avatar could not be uploaded."
+msgstr "%s Objekt har skapats."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid ""
@@ -10319,6 +10446,10 @@ msgid ""
 msgstr ""
 "Identifieraren för ett ärende, e. g. Ärende#, Samtal#, MittÄrende#. Standard "
 "är Ärende#."
+
+#: app/graphql/gql/types/input/avatar_input_type.rb
+msgid "The image is invalid."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee
 #: app/assets/javascripts/app/controllers/widget/import.coffee
@@ -11013,7 +11144,7 @@ msgstr "Torsdag"
 #: app/assets/javascripts/app/models/signature.coffee
 #: app/assets/javascripts/app/models/text_module.coffee
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
-#: db/seeds/permissions.rb
+#: app/frontend/apps/mobile/modules/ticket/routes.ts db/seeds/permissions.rb
 msgid "Ticket"
 msgstr "Ärende"
 
@@ -11117,6 +11248,12 @@ msgstr "Ärende-eskalering"
 msgid "Ticket failed to save: %s"
 msgstr "Ärenden tilldelade till mig:"
 
+#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/TicketZoomHeader.vue
+#, fuzzy
+#| msgid "New Overview"
+msgid "Ticket has %s viewers"
+msgstr "Ny översikt"
+
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 msgid "Ticket reminder reached"
 msgstr "Ärendepåminnelse uppnådd"
@@ -11124,6 +11261,12 @@ msgstr "Ärendepåminnelse uppnådd"
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 msgid "Ticket update"
 msgstr "Ärendeuppdatering"
+
+#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/TicketViewersDialog.vue
+#, fuzzy
+#| msgid "New Overview"
+msgid "Ticket viewers"
+msgstr "Ny översikt"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 #, fuzzy
@@ -12016,6 +12159,12 @@ msgstr "Utsikt från användarens perspektiv"
 #: app/views/mailer/ticket_update_received_merge/ru.html.erb
 msgid "View this in Zammad"
 msgstr "Visa i webbläsare"
+
+#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/TicketViewersDialog.vue
+#, fuzzy
+#| msgid "New Ticket"
+msgid "Viewing ticket"
+msgstr "Nytt ärende"
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_dialog.coffee
@@ -13027,6 +13176,12 @@ msgstr "innehåller inte en"
 msgid "created"
 msgstr "skapad"
 
+#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/TicketZoomHeader.vue
+#, fuzzy
+#| msgid "created"
+msgid "created %s"
+msgstr "skapad"
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
 msgid "current user"
@@ -13441,6 +13596,7 @@ msgstr "minuter"
 msgid "my own note"
 msgstr ""
 
+#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/ArticleBadgeNew.vue
 #: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
 msgid "new"
 msgstr "ny"

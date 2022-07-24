@@ -189,6 +189,12 @@ msgstr "minut(y)"
 msgid "%s months ago"
 msgstr "%s zpět"
 
+#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/ArticleBadgeMore.vue
+#, fuzzy
+#| msgid "See more"
+msgid "%s more"
+msgstr "Zobrazit více"
+
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
 #, fuzzy
 #| msgid "%s Object(s) have been created."
@@ -794,6 +800,12 @@ msgstr "Propojit"
 msgid "Add ordered list"
 msgstr "Formátovat jako seřazený seznam"
 
+#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/TicketZoomReplyButton.vue
+#, fuzzy
+#| msgid "reply"
+msgid "Add reply"
+msgstr "odpověď"
+
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Add second level heading"
 msgstr ""
@@ -961,8 +973,7 @@ msgstr ""
 #: app/frontend/shared/server/apollo/handler/BaseHandler.ts
 #, fuzzy
 #| msgid "Unable to verify email. Please contact your administrator."
-msgid ""
-"An error occured during the operation. Please contact your administrator."
+msgid "An error occured during the operation."
 msgstr "Nepodařilo se ověřit email. Prosím kontaktujte vašeho administrátora."
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
@@ -1129,6 +1140,12 @@ msgstr ""
 
 #: lib/excel_sheet/ticket.rb
 msgid "Article Count"
+msgstr "Počet Položek"
+
+#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/ArticleBubble.vue
+#, fuzzy
+#| msgid "Article Count"
+msgid "Article actions"
 msgstr "Počet Položek"
 
 #: app/models/ticket.rb
@@ -1395,9 +1412,20 @@ msgstr ""
 #: app/frontend/apps/mobile/modules/account/routes.ts
 #: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
 #: app/frontend/apps/mobile/modules/account/views/AccountOverview.vue
+#: app/frontend/shared/components/CommonUserAvatar/CommonUserAvatar.vue
 #: db/seeds/permissions.rb
 msgid "Avatar"
 msgstr "Avatar"
+
+#: app/graphql/gql/mutations/account/avatar/delete.rb
+#, fuzzy
+#| msgid "%s Object(s) are updated."
+msgid "Avatar could not be found."
+msgstr "%s objektů je aktualizováno."
+
+#: app/frontend/shared/components/CommonAvatar/CommonAvatar.vue
+msgid "Avatar with initials %s"
+msgstr ""
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_load_measure.jst.eco
 msgid "Average: %s"
@@ -1754,6 +1782,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/knowledge_base/scheduled_widget.jst.eco
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue
+#: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
 #: app/frontend/apps/mobile/modules/search/views/SearchOverview.vue
 #: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 msgid "Cancel"
@@ -2482,6 +2511,12 @@ msgid ""
 "obligation to fill them in."
 msgstr ""
 
+#: app/frontend/apps/mobile/modules/ticket/views/TicketDetailedView.vue
+#, fuzzy
+#| msgid "You have closed a ticket"
+msgid "Could not load the ticket"
+msgstr "Uzavřel jste tiket"
+
 #: app/assets/javascripts/app/views/tag/table.jst.eco
 msgid "Count"
 msgstr "Počet"
@@ -2711,8 +2746,11 @@ msgstr ""
 msgid "Current user has no permission to use 'From'/'X-On-Behalf-Of'!"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/frontend/apps/mobile/modules/ticket/views/TicketOverview.vue
+msgid "Currently no overview is assigned to your roles."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/ticket_overview.coffee
 msgid ""
 "Currently no overview is assigned to your roles. Please contact your "
 "administrator."
@@ -3664,6 +3702,12 @@ msgstr ""
 msgid "Delete all existing records first."
 msgstr ""
 
+#: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
+#, fuzzy
+#| msgid "Delete User"
+msgid "Delete avatar"
+msgstr "Smazat uživatele"
+
 #: db/seeds/schedulers.rb
 msgid "Delete obsolete classic IMAP backup."
 msgstr ""
@@ -3887,6 +3931,12 @@ msgstr "Určitě chcete smazat tento objekt?"
 msgid "Do you really want to delete this object?"
 msgstr "Určitě chcete smazat tento objekt?"
 
+#: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
+#, fuzzy
+#| msgid "Sure to delete this object?"
+msgid "Do you really want to delete your current avatar?"
+msgstr "Určitě chcete smazat tento objekt?"
+
 #: app/assets/javascripts/app/controllers/_application_controller/article_public_confirm.coffee
 #, fuzzy
 #| msgid "Sure to delete this object?"
@@ -3912,6 +3962,7 @@ msgid "Don't synchronize"
 msgstr ""
 
 #: app/frontend/apps/mobile/components/CommonDialog/CommonDialog.vue
+#: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
 #: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
 #: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 msgid "Done"
@@ -4010,6 +4061,12 @@ msgstr "Upravit Organizaci"
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
 msgid "Edit mask"
 msgstr ""
+
+#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/TicketViewersDialog.vue
+#, fuzzy
+#| msgid "assign tickets"
+msgid "Editing ticket"
+msgstr "přiřadit tikety"
 
 #: db/seeds/settings.rb
 msgid "Elasticsearch Attachment Extensions"
@@ -4933,6 +4990,10 @@ msgstr "Formátovat jako |tučné| "
 msgid "Format as ||italic||"
 msgstr "Formátovat jako ||kurzívu||"
 
+#: app/frontend/apps/mobile/modules/ticket/composable/useTicketArticleContext.ts
+msgid "Forward"
+msgstr ""
+
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco
 msgid "Frequency"
 msgstr "Četnost"
@@ -5269,6 +5330,10 @@ msgstr ""
 #: app/assets/javascripts/app/models/job.coffee
 msgid "Has processed"
 msgstr "Byl zpracován"
+
+#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/TicketViewersDialog.vue
+msgid "Has ticket open in taskbar, but is not actively looking in the ticket."
+msgstr ""
 
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
 msgid "Hash"
@@ -6562,6 +6627,12 @@ msgstr ""
 msgid "Maintenance mode enabled!"
 msgstr ""
 
+#: app/frontend/apps/mobile/modules/ticket/composable/useTicketArticleContext.ts
+#, fuzzy
+#| msgid "internal"
+msgid "Make internal"
+msgstr "interní"
+
 #: app/assets/javascripts/app/controllers/manage.coffee
 msgid "Manage"
 msgstr "Spravovat"
@@ -6691,6 +6762,12 @@ msgstr ""
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "May"
 msgstr "Kvě"
+
+#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/ArticleBubble.vue
+#, fuzzy
+#| msgid "Mode"
+msgid "Me"
+msgstr "Režim údržby"
 
 #: app/assets/javascripts/app/views/organization_profile/object.jst.eco
 #: app/assets/javascripts/app/views/popover/organization.jst.eco
@@ -7597,6 +7674,10 @@ msgstr "Číslo"
 msgid "OAuth2 token is expired!"
 msgstr ""
 
+#: app/frontend/apps/mobile/components/CommonConfirmation/CommonConfirmation.vue
+msgid "OK"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 msgid "OK, I've copied my token"
 msgstr "OK, okopíroval jsem svůj token"
@@ -7646,12 +7727,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/macro.coffee
 msgid "Once completed…"
-msgstr ""
-
-#: app/graphql/gql/queries/ticket.rb
-msgid ""
-"One of the arguments 'ticket_id', 'ticket_internal_id' or 'ticket_number' "
-"must be provided."
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
@@ -7731,6 +7806,10 @@ msgstr "Otevřít oblast pro poznámku"
 
 #: db/seeds/settings.rb
 msgid "Open ticket indicator"
+msgstr ""
+
+#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/TicketViewersDialog.vue
+msgid "Opened in taskbar"
 msgstr ""
 
 #: app/assets/javascripts/app/views/agent_ticket_view/content.jst.eco
@@ -8576,6 +8655,12 @@ msgstr "Poměr opětovného otevření"
 msgid "Replacement"
 msgstr "Náhrada"
 
+#: app/frontend/apps/mobile/modules/ticket/composable/useTicketArticleContext.ts
+#, fuzzy
+#| msgid "reply"
+msgid "Reply"
+msgstr "odpověď"
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Reply to last article"
 msgstr "Odpověď na poslední položku"
@@ -9013,6 +9098,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/ArticleBubble.vue
 msgid "See less"
 msgstr "Zobrazit méně"
 
@@ -9020,6 +9106,7 @@ msgstr "Zobrazit méně"
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
+#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/ArticleBubble.vue
 msgid "See more"
 msgstr "Zobrazit více"
 
@@ -9373,6 +9460,12 @@ msgstr ""
 msgid "Show less"
 msgstr ""
 
+#: app/frontend/apps/mobile/modules/ticket/composable/useTicketArticleContext.ts
+#, fuzzy
+#| msgid "Show Search Details"
+msgid "Show meta data"
+msgstr "Zobrazit detaily vyhledávání"
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Show next tab"
 msgstr ""
@@ -9386,6 +9479,12 @@ msgstr "Předchozí záložka"
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
 msgid "Show the chat when ready."
 msgstr "Pokud to lze, chat se zobrazí."
+
+#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/TicketZoomHeader.vue
+#, fuzzy
+#| msgid "Overviews"
+msgid "Show ticket viewers"
+msgstr "Přehledy"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Show title in form."
@@ -9578,6 +9677,12 @@ msgstr "zdroj"
 #: db/seeds/settings.rb
 msgid "Special character required"
 msgstr ""
+
+#: app/frontend/apps/mobile/modules/ticket/composable/useTicketArticleContext.ts
+#, fuzzy
+#| msgid "split"
+msgid "Split"
+msgstr "rozdělit"
 
 #: db/seeds/groups.rb
 msgid "Standard Group/Pool for Tickets."
@@ -9998,6 +10103,10 @@ msgstr "%s objektů je vytvořeno."
 msgid "The MIME type of the full-size image is invalid."
 msgstr ""
 
+#: app/graphql/gql/types/input/avatar_input_type.rb
+msgid "The MIME type of the image is invalid."
+msgstr ""
+
 #: app/controllers/users_controller.rb
 msgid "The MIME type of the resized image is invalid."
 msgstr ""
@@ -10029,6 +10138,24 @@ msgstr ""
 #: app/assets/javascripts/app/views/getting_started/auto_wizard_enabled.jst.eco
 msgid "The auto wizard is enabled. Please use the provided auto wizard url."
 msgstr ""
+
+#: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
+#, fuzzy
+#| msgid "%s Object(s) are updated."
+msgid "The avatar could not be deleted."
+msgstr "%s objektů je aktualizováno."
+
+#: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
+#, fuzzy
+#| msgid "%s Object(s) are created."
+msgid "The avatar could not be fetched."
+msgstr "%s objektů je vytvořeno."
+
+#: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
+#, fuzzy
+#| msgid "%s Object(s) are created."
+msgid "The avatar could not be uploaded."
+msgstr "%s objektů je vytvořeno."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid ""
@@ -10169,6 +10296,10 @@ msgstr ""
 msgid ""
 "The identifier for a ticket, e.g. Ticket#, Call#, MyTicket#. The default is "
 "Ticket#."
+msgstr ""
+
+#: app/graphql/gql/types/input/avatar_input_type.rb
+msgid "The image is invalid."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee
@@ -10835,7 +10966,7 @@ msgstr "Čtvrtek"
 #: app/assets/javascripts/app/models/signature.coffee
 #: app/assets/javascripts/app/models/text_module.coffee
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
-#: db/seeds/permissions.rb
+#: app/frontend/apps/mobile/modules/ticket/routes.ts db/seeds/permissions.rb
 msgid "Ticket"
 msgstr "Tiket"
 
@@ -10939,6 +11070,12 @@ msgstr "Eskalace Tiketu"
 msgid "Ticket failed to save: %s"
 msgstr "Přiřazených tiketů mé osobě: %s ze %s"
 
+#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/TicketZoomHeader.vue
+#, fuzzy
+#| msgid "New Overview"
+msgid "Ticket has %s viewers"
+msgstr "Nový Přehled"
+
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 msgid "Ticket reminder reached"
 msgstr "Dosažena upomínka tiketu"
@@ -10946,6 +11083,12 @@ msgstr "Dosažena upomínka tiketu"
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 msgid "Ticket update"
 msgstr "Aktualizace tiketu"
+
+#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/TicketViewersDialog.vue
+#, fuzzy
+#| msgid "New Overview"
+msgid "Ticket viewers"
+msgstr "Nový Přehled"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 #, fuzzy
@@ -11824,6 +11967,12 @@ msgstr "Prohlédnout z uživatelovy perspektivy"
 #: app/views/mailer/ticket_update_received_merge/ru.html.erb
 msgid "View this in Zammad"
 msgstr "Prohlédnout v Zammadu"
+
+#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/TicketViewersDialog.vue
+#, fuzzy
+#| msgid "New Ticket"
+msgid "Viewing ticket"
+msgstr "Nový Tiket"
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_dialog.coffee
@@ -12783,6 +12932,12 @@ msgstr ""
 msgid "created"
 msgstr "vytvořeno"
 
+#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/TicketZoomHeader.vue
+#, fuzzy
+#| msgid "created"
+msgid "created %s"
+msgstr "vytvořeno"
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
 msgid "current user"
@@ -13193,6 +13348,7 @@ msgstr "minut(y)"
 msgid "my own note"
 msgstr ""
 
+#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/ArticleBadgeNew.vue
 #: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
 msgid "new"
 msgstr "nový"
