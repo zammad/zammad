@@ -21,12 +21,12 @@ class App.TicketZoomArticleImageView extends App.ControllerModal
     )
 
   nextRight: =>
-    this.nextElement = @parentElement.closest('.attachment').next('.attachment.attachment--preview')
+    @nextElement = @parentElement.closest('.attachment').next('.attachment.attachment--preview')
     return if @nextElement.length is 0
     @close()
 
   nextLeft: =>
-    this.nextElement = @parentElement.closest('.attachment').prev('.attachment.attachment--preview')
+    @nextElement = @parentElement.closest('.attachment').prev('.attachment.attachment--preview')
     return if @nextElement.length is 0
     @close()
 
@@ -47,7 +47,7 @@ class App.TicketZoomArticleImageView extends App.ControllerModal
     @unbindAll()
 
   onClosed: =>
-    this.nextElement.find('img').trigger('click') if this.nextElement
+    @nextElement.find('img').trigger('click') if @nextElement
 
   unbindAll: ->
     $(document).off('keydown.image_preview')
