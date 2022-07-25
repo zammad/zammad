@@ -54,7 +54,10 @@ const iconProps = computed<IconProps | null>(() => {
         <slot>{{ i18n.t(title) }}</slot>
       </div>
 
-      <div class="mr-1 flex items-center">
+      <div
+        class="mr-1 flex items-center"
+        data-test-id="section-menu-information"
+      >
         <slot name="right">{{ information && i18n.t(`${information}`) }}</slot>
         <CommonIcon
           class="text-gray-300 ltr:ml-2 rtl:mr-2"

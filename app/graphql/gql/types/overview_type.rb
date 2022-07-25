@@ -37,13 +37,14 @@ module Gql::Types
     end
 
     def view_columns
-      object.view['s'].map do |attribute|
+      columns = flatten_columns(object.view['s'])
+      columns.map do |attribute|
         { key: attribute, value: label_for_attribute(attribute) }
       end
     end
 
     def order_columns
-      columns = object.view['s']
+      columns = flatten_columns(object.view['s'])
       columns.unshift(order_by) if columns.exclude?(order_by)
 
       columns.map do |attribute|
@@ -90,6 +91,10 @@ module Gql::Types
       end
 
       VISIBLE_ORDER_BY_NAMES[attribute] || object_attribute_names[attribute]
+    end
+
+    def flatten_columns(columns)
+      [ columns ].flatten
     end
   end
 end

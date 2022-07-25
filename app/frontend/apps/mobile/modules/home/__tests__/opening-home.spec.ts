@@ -1,5 +1,6 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
+import { getByTestId } from '@testing-library/vue'
 import { TicketOverviewsDocument } from '@shared/entities/ticket/graphql/queries/ticket/overviews.api'
 import { visitView } from '@tests/support/components/visitView'
 import { mockAccount } from '@tests/support/mock-account'
@@ -37,6 +38,18 @@ describe('home page', () => {
     expect(overviews).toHaveLength(2)
     expect(overviews[0]).toHaveTextContent('Overview 3')
     expect(overviews[1]).toHaveTextContent('Overview 2')
+
+    const overviewLinks = await view.findAllByTestId('section-menu-link')
+    const lastOverview = overviewLinks.at(-1)
+    expect(lastOverview).toHaveTextContent('Overview 2')
+
+    if (lastOverview) {
+      const overviewCount = getByTestId(
+        lastOverview,
+        'section-menu-information',
+      )
+      expect(overviewCount).toHaveTextContent('2')
+    }
   })
 
   it('do not show favorite ticket overview section on home without permission', async () => {
