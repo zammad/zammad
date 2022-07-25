@@ -143,9 +143,6 @@ class ExcelSheet
     if !value && additional && additional[attribute.to_sym]
       value = additional[attribute.to_sym]
     end
-    if value.is_a?(Array)
-      value = value.join(',')
-    end
     value
   end
 
@@ -158,9 +155,16 @@ class ExcelSheet
     case object[:data_type]
     when 'boolean', %r{^(multi|tree_)?select$}
       if object[:data_option].present? && object[:data_option]['options'].present?
-        value = ObjectManager::Attribute.data_options_hash(object[:data_option]['options'])[value]
+        if value.is_a?(Array)
+          displays = []
+          value.each do |key|
+            displays.push(ObjectManager::Attribute.data_options_hash(object[:data_option]['options'])[key])
+          end
+          value = displays.join(',')
+        else
+          value = ObjectManager::Attribute.data_options_hash(object[:data_option]['options'])[value]
+        end
       end
-
       @worksheet.write_string(@current_row, @current_column, value) if value.present?
     when 'datetime'
       @worksheet.write_date_time(@current_row, @current_column, timestamp_in_localtime(value), @format_time) if value.present?
