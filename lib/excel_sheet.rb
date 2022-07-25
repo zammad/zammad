@@ -118,7 +118,7 @@ class ExcelSheet
     time.in_time_zone(@timezone).strftime('%F %T') # "2019-08-19 16:21:52"
   end
 
-  def value_lookup(record, attribute, additional)
+  def value_lookup(record, attribute, object, additional)
     value = record[attribute.to_sym]
     if attribute[-3, 3] == '_id'
       ref = attribute[0, attribute.length - 3]
@@ -143,6 +143,10 @@ class ExcelSheet
     if !value && additional && additional[attribute.to_sym]
       value = additional[attribute.to_sym]
     end
+    if object[:data_type] !~ %r{^(multi_)?tree_select$} && object[:data_option].present? && object[:data_option]['options'].present?
+      display_values = ObjectManager::Attribute.data_options_hash(object[:data_option]['options'])
+      value = Array(value).map { |v| display_values[v] }.join(',')
+    end
     if value.is_a?(Array)
       value = value.join(',')
     end
@@ -151,16 +155,12 @@ class ExcelSheet
 
   def value_convert(record, attribute, object, additional = {})
     value = if attribute
-              value_lookup(record, attribute, additional)
+              value_lookup(record, attribute, object, additional)
             else
               record
             end
     case object[:data_type]
     when 'boolean', %r{^(multi)?select$}
-      if object[:data_option].present? && object[:data_option]['options'].present?
-        value = ObjectManager::Attribute.data_options_hash(object[:data_option]['options'])[value]
-      end
-
       @worksheet.write_string(@current_row, @current_column, value) if value.present?
     when 'datetime'
       @worksheet.write_date_time(@current_row, @current_column, timestamp_in_localtime(value), @format_time) if value.present?
