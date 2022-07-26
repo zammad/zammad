@@ -450,6 +450,8 @@ export type Queries = {
   node?: Maybe<Node>;
   /** Fetches a list of objects given a list of IDs. */
   nodes: Array<Maybe<Node>>;
+  /** Generic object search */
+  search: Array<SearchResult>;
   /** The sessionId of the currently authenticated user. */
   sessionId: Scalars['String'];
   /** Fetch a ticket by ID */
@@ -497,6 +499,13 @@ export type QueriesNodesArgs = {
 
 
 /** All available queries */
+export type QueriesSearchArgs = {
+  limit?: InputMaybe<Scalars['Int']>;
+  query: Scalars['String'];
+};
+
+
+/** All available queries */
 export type QueriesTicketArgs = {
   ticket: TicketLocatorInput;
 };
@@ -538,6 +547,9 @@ export type QueriesTranslationsArgs = {
   cacheKey?: InputMaybe<Scalars['String']>;
   locale: Scalars['String'];
 };
+
+/** Objects found by search */
+export type SearchResult = Organization | Ticket | User;
 
 /** All available subscriptions */
 export type Subscriptions = {
