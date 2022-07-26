@@ -130,7 +130,7 @@ class App.WidgetUser extends App.Controller
       elLocal.find('.js-organizationList').prepend(organizations)
     )
 
-    if @user.organization_ids.length < @organizationLimit
+    if @user.organization_ids && @user.organization_ids.length < @organizationLimit
       @el.find('.js-showMoreOrganizations').addClass('hidden')
     else
       @el.find('.js-showMoreOrganizations').removeClass('hidden')

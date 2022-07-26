@@ -378,8 +378,11 @@ class App.User extends App.Model
     _.uniq(result)
 
   secondaryOrganizations: (offset, limit, callback) ->
-    organization_ids         = @organization_ids.slice(offset, limit)
-    missing_organization_ids = _.filter(organization_ids, (id) -> !App.Organization.findNative(id))
+    organization_ids = []
+    missing_organization_ids = []
+    if _.isArray(@organization_ids)
+      organization_ids         = @organization_ids.slice(offset, limit)
+      missing_organization_ids = _.filter(organization_ids, (id) -> !App.Organization.findNative(id))
 
     organizationResult = ->
       organizations = []

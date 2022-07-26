@@ -9,6 +9,7 @@
 </div>
 <% for row in @userData: %>
   <% if @user[row.name]? || row.name is 'note': %>
+    <% continue if row.name is 'organization_ids' && @user[row.name].length is 0 %>
     <div class="sidebar-block">
     <label><%- @T(row.display) %></label>
     <% if row.name is 'organization_ids': %>
