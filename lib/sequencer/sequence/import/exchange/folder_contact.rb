@@ -20,6 +20,7 @@ class Sequencer
               'Import::Common::User::Attributes::Downcase',
               'Import::Common::User::Email::CheckValidity',
               'Import::Common::Model::FindBy::UserAttributes',
+              'Import::Common::User::Skip::IsLdapSource',
               'Import::Common::Model::Attributes::AddByIds',
               'Import::Common::Model::Update',
               'Import::Common::Model::Create',
