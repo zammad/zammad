@@ -11,7 +11,7 @@ describe('resizing image within editor', () => {
       .find('input[type="file"]')
       .selectFile(
         {
-          contents: 'fixtures/example.png',
+          contents: '.cypress/fixtures/example.png',
           fileName: 'example.png',
           mimeType: 'image/png',
           lastModified: Date.now(),

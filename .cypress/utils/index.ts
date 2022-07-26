@@ -1,6 +1,5 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { mount } from '@cypress/vue'
 import { merge } from 'lodash-es'
 import { plugin as formPlugin } from '@formkit/vue'
 
@@ -19,7 +18,7 @@ export const mountComponent: typeof mount = (component, options) => {
   const plugins = []
   plugins.push(initializeGlobalComponents)
   plugins.push([formPlugin, buildFormKitPluginConfig()])
-  return mount(component, merge({ global: { plugins } }, options))
+  return cy.mount(component, merge({ global: { plugins } }, options))
 }
 
 export default {}

@@ -35,6 +35,7 @@ declare global {
         fileName: string,
         options?: Partial<Loggable & Timeoutable & ScreenshotOptions>,
       ): Chainable<null>
+      mount: typeof import('cypress/vue')['mount']
     }
   }
 }

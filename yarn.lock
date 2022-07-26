@@ -1186,10 +1186,10 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@pinia/testing@^0.0.12":
-  version "0.0.12"
-  resolved "https://registry.yarnpkg.com/@pinia/testing/-/testing-0.0.12.tgz#1692568b4b55347429556ab43e354e81519f73e0"
-  integrity sha512-OGJ5kZihiuNua9trREAVLiv8wAlxT2+gZAz3Cen1L4ch51MbSgY5/nbo9htYsP2my9dhbggBhecgYWlhejhRcQ==
+"@pinia/testing@^0.0.13":
+  version "0.0.13"
+  resolved "https://registry.yarnpkg.com/@pinia/testing/-/testing-0.0.13.tgz#a0059a1ca2bc62b7c0f1a60daf3219c0827f1638"
+  integrity sha512-OiqJzUzHrBetqYZ0IrT4MCz4WGViVLjWlsC6xhyf6t/PDUR5IxeLK3HJcP4i3y6Pq4+IVLYhu6xfy1PGfY9p5Q==
   dependencies:
     vue-demi "*"
 
@@ -1256,10 +1256,10 @@
     lodash "^4.17.15"
     redent "^3.0.0"
 
-"@testing-library/user-event@^14.2.5":
-  version "14.2.5"
-  resolved "https://registry.yarnpkg.com/@testing-library/user-event/-/user-event-14.2.5.tgz#a27a16ee7f915c22c62b9c065d743248ee79dcb6"
-  integrity sha512-xcSw47H8JidxQPAqPlHp4l51EYJx+2TlHgYBW9i+noNlgUMMrhgtefnrWcpZ1k9ep6SMhJVyx3N7F4tIKTuJ9w==
+"@testing-library/user-event@^14.3.0":
+  version "14.3.0"
+  resolved "https://registry.yarnpkg.com/@testing-library/user-event/-/user-event-14.3.0.tgz#0a6750b94b40e4739706d41e8efc2ccf64d2aad9"
+  integrity sha512-P02xtBBa8yMaLhK8CzJCIns8rqwnF6FxhR9zs810flHOBXUYCFjLd8Io1rQrAkQRWEmW2PGdZIEdMxf/KLsqFA==
 
 "@testing-library/vue@^6.6.1":
   version "6.6.1"
@@ -7542,7 +7542,6 @@ vite-plugin-svg-icons@^2.0.1:
     svg-baker "1.7.0"
     svgo "^2.8.0"
 
-
 "vite@^2.9.12 || ^3.0.0-0", vite@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/vite/-/vite-3.0.2.tgz#2a7b4642c53ae066cf724e7e581d6c1fd24e2c32"
@@ -7562,10 +7561,10 @@ vitest-mock-extended@^0.1.10:
   dependencies:
     ts-essentials "^9.2.0"
 
-vitest@^0.18.1:
-  version "0.18.1"
-  resolved "https://registry.yarnpkg.com/vitest/-/vitest-0.18.1.tgz#33c5003fc8c4b296801897ae1a3f142f57015574"
-  integrity sha512-4F/1K/Vn4AvJwe7i2YblR02PT5vMKcw9KN4unDq2KD0YcSxX0B/6D6Qu9PJaXwVuxXMFTQ5ovd4+CQaW3bwofA==
+vitest@^0.19.1:
+  version "0.19.1"
+  resolved "https://registry.yarnpkg.com/vitest/-/vitest-0.19.1.tgz#8a89f4c873132d778d4206dbfbd6791c12f6d921"
+  integrity sha512-E/ZXpFMUahn731wzhMBNzWRp4mGgiZFT0xdHa32cbNO0CSaHpE9hTfteEU247Gi2Dula8uXo5vvrNB6dtszmQA==
   dependencies:
     "@types/chai" "^4.3.1"
     "@types/chai-subset" "^1.3.3"

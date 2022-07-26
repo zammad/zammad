@@ -4,11 +4,14 @@ import '@testing-library/cypress/add-commands'
 import 'cypress-real-events/support'
 import { configure } from '@testing-library/cypress'
 import { addMatchImageSnapshotCommand } from 'cypress-image-snapshot/command'
+import { mount } from 'cypress/vue'
 
 addMatchImageSnapshotCommand({
   customSnapshotsDir: 'snapshots',
 })
 configure({ testIdAttribute: 'data-test-id' })
+
+Cypress.Commands.add('mount', mount)
 
 /**
  * Simulates a paste event.

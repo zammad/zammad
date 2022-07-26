@@ -35,11 +35,6 @@
   resolved "https://registry.yarnpkg.com/@colors/colors/-/colors-1.5.0.tgz#bb504579c1cae923e6576a4f5da43d25f97bdbd9"
   integrity sha512-ooWCrlZP11i8GImSjTHYHLkvFDP48nS4+204nGb1RiX/WXYHmJA2III9/e2DWVabCESdW7hBAEzHRqUn9OUVvQ==
 
-"@cypress/mount-utils@1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@cypress/mount-utils/-/mount-utils-1.0.2.tgz#afbc4f8c350b7cd86edc5ad0db0cbe1e0181edc8"
-  integrity sha512-Fn3fdTiyayHoy8Ol0RSu4MlBH2maQ2ZEXeEVKl/zHHXEQpld5HX3vdNLhK5YLij8cLynA4DxOT/nO9iEnIiOXw==
-
 "@cypress/request@^2.88.10":
   version "2.88.10"
   resolved "https://registry.yarnpkg.com/@cypress/request/-/request-2.88.10.tgz#b66d76b07f860d3a4b8d7a0604d020c662752cce"
@@ -64,22 +59,6 @@
     tunnel-agent "^0.6.0"
     uuid "^8.3.2"
 
-"@cypress/vite-dev-server@^2.2.2":
-  version "2.2.2"
-  resolved "https://registry.yarnpkg.com/@cypress/vite-dev-server/-/vite-dev-server-2.2.2.tgz#dd16b7470ddd1ff095678b61c56da52ac02f44ed"
-  integrity sha512-02y/Fm0N+CQjKbSjjRtktPgPbp91kOvtc8+WW2l2odIYQkKlG6IOCpmgc898muW0lBAcCszdEIHR/ItdZDiYPw==
-  dependencies:
-    debug "^4.3.2"
-    get-port "^5.1.1"
-
-"@cypress/vue@^3.1.2":
-  version "3.1.2"
-  resolved "https://registry.yarnpkg.com/@cypress/vue/-/vue-3.1.2.tgz#0950d20249daf5e4140a880d5230305a23cb2fea"
-  integrity sha512-CqIBupPW6EhXJ7lXE64MBKh3VfdShHnuC3HBV/euHBt9tsgSo7RZHBTZUsKc8aM745VzVnuNiax+JV4CplrtLQ==
-  dependencies:
-    "@cypress/mount-utils" "1.0.2"
-    "@vue/test-utils" "^2.0.0-rc.10"
-
 "@cypress/xvfb@^1.2.4":
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/@cypress/xvfb/-/xvfb-1.2.4.tgz#2daf42e8275b39f4aa53c14214e557bd14e7748a"
@@ -88,10 +67,10 @@
     debug "^3.1.0"
     lodash.once "^4.1.1"
 
-"@testing-library/cypress@^8.0.2":
-  version "8.0.2"
-  resolved "https://registry.yarnpkg.com/@testing-library/cypress/-/cypress-8.0.2.tgz#b13f0ff2424dec4368b6670dfbfb7e43af8eefc9"
-  integrity sha512-KVdm7n37sg/A4e3wKMD4zUl0NpzzVhx06V9Tf0hZHZ7nrZ4yFva6Zwg2EFF1VzHkEfN/ahUzRtT1qiW+vuWnJw==
+"@testing-library/cypress@^8.0.3":
+  version "8.0.3"
+  resolved "https://registry.yarnpkg.com/@testing-library/cypress/-/cypress-8.0.3.tgz#24ab34df34d7896866603ade705afbdd186e273c"
+  integrity sha512-nY2YaSbmuPo5k6kL0iLj/pGPPfka3iwb3kpTx8QN/vOCns92Saz9wfACqB8FJzcR7+lfA4d5HUOWqmTddBzczg==
   dependencies:
     "@babel/runtime" "^7.14.6"
     "@testing-library/dom" "^8.1.0"
@@ -141,11 +120,6 @@
   integrity sha512-Cn6WYCm0tXv8p6k+A8PvbDG763EDpBoTzHdA+Q/MF6H3sapGjCm9NzoaJncJS9tUKSuCoDs9XHxYYsQDgxR6kw==
   dependencies:
     "@types/node" "*"
-
-"@vue/test-utils@^2.0.0-rc.10":
-  version "2.0.0-rc.21"
-  resolved "https://registry.yarnpkg.com/@vue/test-utils/-/test-utils-2.0.0-rc.21.tgz#9ebb0029bafa94ee55e90a6b4eab6d1e7b7a3152"
-  integrity sha512-wIJR4e/jISBKVKfiod3DV32BlDsoD744WVCuCaGtaSKvhvTL9gI5vl2AYSy00V51YaM8dCOFi3zcpCON8G1WqA==
 
 aggregate-error@^3.0.0:
   version "3.1.0"
@@ -473,15 +447,15 @@ cypress-image-snapshot@^4.0.1:
     pkg-dir "^3.0.0"
     term-img "^4.0.0"
 
-cypress-real-events@^1.7.0:
-  version "1.7.0"
-  resolved "https://registry.yarnpkg.com/cypress-real-events/-/cypress-real-events-1.7.0.tgz#ad6a78de33af3af0e6437f5c713e30691c44472c"
-  integrity sha512-iyXp07j0V9sG3YClVDcvHN2DAQDgr+EjTID82uWDw6OZBlU3pXEBqTMNYqroz3bxlb0k+F74U81aZwzMNaKyew==
+cypress-real-events@^1.7.1:
+  version "1.7.1"
+  resolved "https://registry.yarnpkg.com/cypress-real-events/-/cypress-real-events-1.7.1.tgz#8f430d67c29ea4f05b9c5b0311780120cbc9b935"
+  integrity sha512-/Bg15RgJ0SYsuXc6lPqH08x19z6j2vmhWN4wXfJqm3z8BTAFiK2MvipZPzxT8Z0jJP0q7kuniWrLIvz/i/8lCQ==
 
-cypress@^9.6.0:
-  version "9.6.0"
-  resolved "https://registry.yarnpkg.com/cypress/-/cypress-9.6.0.tgz#84473b3362255fa8f5e627a596e58575c9e5320f"
-  integrity sha512-nNwt9eBQmSENamwa8LxvggXksfyzpyYaQ7lNBLgks3XZ6dPE/6BCQFBzeAyAPt/bNXfH3tKPkAyhiAZPYkWoEg==
+cypress@^10.3.1:
+  version "10.3.1"
+  resolved "https://registry.yarnpkg.com/cypress/-/cypress-10.3.1.tgz#7fab4ef43481c05a9a17ebe9a0ec860e15b95a19"
+  integrity sha512-As9HrExjAgpgjCnbiQCuPdw5sWKx5HUJcK2EOKziu642akwufr/GUeqL5UnCPYXTyyibvEdWT/pSC2qnGW/e5w==
   dependencies:
     "@cypress/request" "^2.88.10"
     "@cypress/xvfb" "^1.2.4"
@@ -718,11 +692,6 @@ fs.realpath@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/fs.realpath/-/fs.realpath-1.0.0.tgz#1504ad2523158caa40db4a2787cb01411994ea4f"
   integrity sha1-FQStJSMVjKpA20onh8sBQRmU6k8=
-
-get-port@^5.1.1:
-  version "5.1.1"
-  resolved "https://registry.yarnpkg.com/get-port/-/get-port-5.1.1.tgz#0469ed07563479de6efb986baf053dcd7d4e3193"
-  integrity sha512-g/Q1aTSDOxFpchXC4i8ZWvxA1lnPqx/JHqcpIw0/LX9T8x/GBbi6YnlN5nhaKIFkT8oFsscUKgDJYxfwfS6QsQ==
 
 get-stdin@^5.0.1:
   version "5.0.1"
