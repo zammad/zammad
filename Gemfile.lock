@@ -167,7 +167,7 @@ GEM
       unf (>= 0.0.5, < 1.0.0)
     doorkeeper (5.5.4)
       railties (>= 5)
-    dotenv (2.7.6)
+    dotenv (2.8.0)
     dry-cli (0.7.0)
     eco (1.0.0)
       coffee-script
