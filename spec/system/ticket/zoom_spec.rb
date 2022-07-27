@@ -2824,4 +2824,18 @@ RSpec.describe 'Ticket zoom', type: :system do
       expect(field.text).to eq(expected_clipboard_content)
     end
   end
+
+  describe 'Redirects from ticket number' do
+    it 'when found' do
+      visit "#ticket/number/#{ticket.number}"
+      wait(5, interval: 1).until_constant { current_url }
+      expect(current_url).to include("ticket/zoom/#{ticket.id}")
+    end
+
+    it 'when not found' do
+      visit "#ticket/number/123456789"
+      wait(5, interval: 1).until_constant { current_url }
+      expect(current_url).to include("ticket/zoom/0")
+    end
+  end
 end
