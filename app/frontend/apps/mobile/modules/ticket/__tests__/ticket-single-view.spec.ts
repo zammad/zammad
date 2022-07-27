@@ -15,6 +15,11 @@ import { TicketDocument } from '../graphql/queries/ticket.api'
 
 const ticketDate = new Date(2022, 0, 29, 0, 0, 0, 0)
 
+const address = {
+  raw: '',
+  parsed: null,
+}
+
 const ticket = mock<TicketQuery>({
   ticket: {
     id: '1fs432fdsfsg3qr32d',
@@ -51,6 +56,7 @@ const ticket = mock<TicketQuery>({
         {
           node: {
             id: '1fs432fdsfsg3qr32d',
+            to: address,
             createdAt: ticketDate.toISOString(),
             createdBy: {
               id: 'fdsf214fse12d',
@@ -67,6 +73,7 @@ const ticket = mock<TicketQuery>({
         {
           node: {
             id: '1fs432fdsfsg3qr32f',
+            to: address,
             createdAt: new Date(2022, 0, 30, 0, 0, 0, 0).toISOString(),
             createdBy: {
               id: 'dsvvr32532fs',
@@ -83,6 +90,7 @@ const ticket = mock<TicketQuery>({
         {
           node: {
             id: '1fs432fdsfsg3qr30f',
+            to: address,
             createdAt: new Date(2022, 0, 30, 10, 0, 0, 0).toISOString(),
             createdBy: {
               id: 'fsfy345343f',

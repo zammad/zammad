@@ -60,7 +60,13 @@ export const TicketDocument = gql`
             name
           }
           subject
-          to
+          to {
+            raw
+            parsed {
+              name
+              emailAddress
+            }
+          }
           internal
         }
       }

@@ -7,21 +7,19 @@ module Gql::Mutations
     argument :form_id, Gql::Types::FormIdType, 'FormID for the uploads.'
     argument :files, [Gql::Types::Input::UploadFileInputType], 'Files to be uploaded.'
 
-    field :uploaded_files, [Gql::Types::UploadedFileType], null: false, description: 'Information about the uploaded files.'
+    field :uploaded_files, [Gql::Types::StoredFileType], null: false, description: 'Information about the uploaded files.'
 
     def resolve(form_id:, files:)
 
       cache = UploadCache.new(form_id)
 
       result = files.map do |file|
-        record = cache.add(
+        cache.add(
           data:          file.content,
           filename:      file.name,
           preferences:   { 'Content-Type' => file.type },
           created_by_id: context.current_user.id
         )
-
-        { id: Gql::ZammadSchema.id_from_object(record), name: record.filename, type: file.type }
       end
 
       { uploaded_files: result }

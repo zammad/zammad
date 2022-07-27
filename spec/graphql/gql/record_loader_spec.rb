@@ -233,7 +233,6 @@ RSpec.describe Gql::RecordLoader, type: :graphql do
                     name
                   }
                   subject
-                  to
                   internal
                 }
               }

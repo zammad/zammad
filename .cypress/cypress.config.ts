@@ -2,6 +2,7 @@ import { defineConfig } from 'cypress'
 import { addMatchImageSnapshotPlugin } from 'cypress-image-snapshot/plugin'
 import { rm } from 'node:fs/promises'
 import { resolve } from 'node:path'
+import pkg from '../package.json'
 
 const isCI = !!process.env.CI
 const root = resolve(__dirname, '..')
@@ -43,7 +44,17 @@ export default defineConfig({
             '!**/node_modules/**',
             '!**/*.d.ts',
           ],
-          include: ['flatpickr', '@vueuse/core', '@formkit/core'],
+          include: [
+            'flatpickr',
+            '@vueuse/core',
+            '@formkit/core',
+            'tippy.js',
+            'prosemirror-state',
+            'vue3-draggable-resizable',
+            ...Object.keys(pkg.dependencies).filter((name) =>
+              name.startsWith('@tiptap'),
+            ),
+          ],
         },
       },
     },

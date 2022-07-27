@@ -61,7 +61,13 @@ query ticket(
             name
           }
           subject
-          to
+          to {
+            raw
+            parsed {
+              name
+              emailAddress
+            }
+          }
           internal
         }
       }

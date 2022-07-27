@@ -18,9 +18,13 @@ class Gql::ZammadSchema < GraphQL::Schema
   # The GraphQL introspection query has a depth of 13, so allow that in the development env.
   max_depth Rails.env.eql?('development') ? 13 : 10
 
+  TYPE_MAP = {
+    ::Store => ::Gql::Types::StoredFileType
+  }.freeze
+
   # Union and Interface Resolution
   def self.resolve_type(_abstract_type, obj, _ctx)
-    "Gql::Types::#{obj.class.name}Type".constantize
+    TYPE_MAP[obj.class] || "Gql::Types::#{obj.class.name}Type".constantize
   rescue
     raise GraphQL::RequiredImplementationMissingError, "Cannot resolve type for '#{obj.class.name}'."
   end

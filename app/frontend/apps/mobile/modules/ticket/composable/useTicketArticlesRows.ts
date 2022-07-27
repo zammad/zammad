@@ -59,7 +59,7 @@ export const useTicketArticleRows = (articles: Ref<TicketArticle[]>) => {
         rows.push({
           type: 'system',
           subject: article.subject,
-          to: article.to,
+          to: article.to?.raw || '',
           key: article.id,
         })
       } else {

@@ -5,7 +5,7 @@ import { ref } from 'vue'
 import type { FormFieldContext } from '@shared/components/Form/types/field'
 import { MutationHandler } from '@shared/server/apollo/handler'
 import { convertFileList } from '@shared/utils/files'
-import type { Scalars, UploadedFile } from '@shared/graphql/types'
+import type { Scalars, StoredFile } from '@shared/graphql/types'
 import { useFormUploadCacheAddMutation } from './graphql/mutations/uploadCache/add.api'
 import { useFormUploadCacheRemoveMutation } from './graphql/mutations/uploadCache/remove.api'
 
@@ -22,7 +22,7 @@ export interface Props {
 
 const props = defineProps<Props>()
 
-const uploadFiles: Ref<UploadedFile[]> = ref([])
+const uploadFiles: Ref<Pick<StoredFile, 'id' | 'name' | 'type'>[]> = ref([])
 
 const addFileMutation = new MutationHandler(useFormUploadCacheAddMutation({}))
 const addFileLoading = addFileMutation.loading()

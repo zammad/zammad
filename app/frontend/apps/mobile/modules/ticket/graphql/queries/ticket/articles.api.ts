@@ -14,11 +14,35 @@ export const TicketArticlesDocument = gql`
     edges {
       node {
         id
-        from
-        to
-        cc
+        from {
+          raw
+          parsed {
+            name
+            emailAddress
+          }
+        }
+        to {
+          raw
+          parsed {
+            name
+            emailAddress
+          }
+        }
+        cc {
+          raw
+          parsed {
+            name
+            emailAddress
+          }
+        }
         subject
-        replyTo
+        replyTo {
+          raw
+          parsed {
+            name
+            emailAddress
+          }
+        }
         messageId
         messageIdMd5
         inReplyTo

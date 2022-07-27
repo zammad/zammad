@@ -10,7 +10,9 @@ RSpec.describe Gql::Queries::Ticket::Articles, type: :graphql do
     let(:variables)            { { ticketId: gql.id(ticket) } }
     let(:customer)             { create(:customer) }
     let(:ticket)               { create(:ticket, customer: customer) }
-    let!(:articles)            { create_list(:ticket_article, 5, :outbound_email, ticket: ticket) }
+    let(:cc)                   { 'Zammad CI <ci@zammad.org>' }
+    let(:to)                   { '@unparseable_address' }
+    let!(:articles)            { create_list(:ticket_article, 5, :outbound_email, ticket: ticket, to: to, cc: cc) }
     let!(:internal_article)    { create(:ticket_article, :outbound_email, ticket: ticket, internal: true) }
     let(:response_articles)    { gql.result.nodes }
     let(:response_total_count) { gql.result.data['totalCount'] }
@@ -27,8 +29,19 @@ RSpec.describe Gql::Queries::Ticket::Articles, type: :graphql do
         let(:expected_article1) do
           {
             'subject'    => article1.subject,
-            'from'       => article1.from,
-            'to'         => article1.to,
+            'cc'         => {
+              'parsed' => [
+                {
+                  'emailAddress' => 'ci@zammad.org',
+                  'name'         => 'Zammad CI',
+                },
+              ],
+              'raw'    => cc,
+            },
+            'to'         => {
+              'parsed' => nil,
+              'raw'    => to,
+            },
             'references' => article1.references,
             'type'       => {
               'name' => article1.type.name,
