@@ -81,10 +81,10 @@ const testFlagLink = VITE_TEST_MODE
         return response
       })
     })
-  : ApolloLink.empty()
+  : null
 
 const link = from([
-  testFlagLink,
+  ...(testFlagLink ? [testFlagLink] : []),
   csrfLink,
   errorLink,
   setAuthorizationLink,
