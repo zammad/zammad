@@ -134,7 +134,7 @@ const advanceDialogFocus = (event: KeyboardEvent, currentIndex: number) => {
       ></div>
       <div class="select-dialog relative m-auto">
         <div
-          class="flex min-w-[294px] flex-col items-start rounded-xl bg-gray-400/80 backdrop-blur-[15px]"
+          class="flex min-w-[294px] max-w-[90vw] flex-col items-start rounded-xl bg-gray-400/80 backdrop-blur-[15px]"
         >
           <div
             ref="dialogElement"

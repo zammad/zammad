@@ -82,8 +82,10 @@ const label = computed(() => {
       {{ label || option.value }}
     </span>
     <CommonIcon
-      v-if="!multiple && selected"
+      v-if="!multiple"
+      class="ltr:ml-2 rtl:mr-2"
       :class="{
+        invisible: !selected,
         'opacity-30': option.disabled,
       }"
       size="tiny"

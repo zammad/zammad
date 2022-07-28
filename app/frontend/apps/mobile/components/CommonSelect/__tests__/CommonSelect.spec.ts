@@ -56,7 +56,15 @@ describe('interacting with CommonSelect', () => {
 
     await view.events.click(view.getByText('Open Select'))
 
-    expect(view.getByIconName('check')).toBeInTheDocument()
+    expect(
+      // TODO should work just with view.getByIconName('check') with Vitest 0.19
+      view.getByIconName((name, node) => {
+        return (
+          name === '#icon-check' &&
+          !node?.parentElement?.classList.contains('invisible')
+        )
+      }),
+    ).toBeInTheDocument()
     await view.events.click(view.getByText('Item A'))
 
     expect(view.emitted().select).toEqual([[options[0]], [options[0]]])

@@ -57,7 +57,7 @@ it('can filter by overview type', async () => {
 
   const overview = await view.findByTestId('overview')
   await view.events.click(overview)
-  await view.events.click(view.getByText('Overview 1 (1)'))
+  await view.events.click(view.getByText('Overview 1'))
 
   expect(ticketsMock.spies.resolve).toHaveBeenCalledWith(
     expect.objectContaining({
@@ -104,7 +104,7 @@ it('can filter by type and columns and direction', async () => {
 
   const overview = await view.findByTestId('overview')
   await view.events.click(overview)
-  await view.events.click(view.getByText('Overview 1 (1)'))
+  await view.events.click(view.getByText('Overview 1'))
 
   const columnSelector = view.getByTestId('column')
   await view.events.click(columnSelector)

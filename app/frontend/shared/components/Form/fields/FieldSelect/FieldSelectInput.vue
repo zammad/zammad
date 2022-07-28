@@ -9,6 +9,7 @@ import useValue from '../../composables/useValue'
 import useSelectOptions from '../../composables/useSelectOptions'
 import useSelectAutoselect from '../../composables/useSelectAutoselect'
 import type { SelectContext } from './types'
+import FieldSelectInputSelected from './FieldSelectInputSelected.vue'
 
 interface Props {
   context: SelectContext
@@ -105,14 +106,11 @@ useSelectAutoselect(sortedOptions, toRef(props, 'context'))
                 :fixed-size="{ width: 12, height: 12 }"
                 class="mr-1"
               />
-              <span
-                :class="{
-                  'max-w-[60vw] overflow-hidden text-ellipsis whitespace-nowrap text-sm':
-                    isSizeSmall,
-                }"
-              >
-                {{ getSelectedOptionLabel(selectedValue) || selectedValue }}
-              </span>
+              <FieldSelectInputSelected
+                :slotted="(context.slots as any)?.output"
+                :label="getSelectedOptionLabel(selectedValue) || selectedValue"
+                :small="isSizeSmall"
+              />
             </div>
           </template>
           <template v-else-if="isSizeSmall">

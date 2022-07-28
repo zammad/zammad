@@ -185,6 +185,7 @@ const directionOptions = computed(() => [
         data-test-id="overview"
       >
         <FormKit
+          name="overview"
           type="select"
           size="small"
           :classes="{ wrapper: 'px-0' }"
@@ -192,23 +193,39 @@ const directionOptions = computed(() => [
           :options="optionsOverviews"
           no-options-label-translation
           @update:model-value="selectOverview($event as string)"
-        />
+        >
+          <template #output>
+            <span
+              class="max-w-[55vw] overflow-hidden text-ellipsis whitespace-nowrap"
+            >
+              {{ $t(selectedOverview?.name) }}
+            </span>
+            <span class="ltr:pl-1 rtl:pr-1">
+              ({{ selectedOverview?.ticketCount }})
+            </span>
+          </template>
+        </FormKit>
         <CommonSelect v-model="orderBy" :options="orderColumnsOptions" no-close>
           <template #default="{ open }">
             <div
-              class="flex cursor-pointer items-center gap-1 whitespace-nowrap text-blue"
+              class="flex cursor-pointer items-center gap-1 overflow-hidden whitespace-nowrap text-blue"
               data-test-id="column"
               @click="open"
               @keydown.space="open"
             >
-              <CommonIcon
-                name="long-arrow-down"
-                :class="{
-                  'rotate-180': orderDirection === EnumOrderDirection.Ascending,
-                }"
-                :fixed-size="{ width: 12, height: 12 }"
-              />
-              {{ orderBy && $t(orderColumnLabels[orderBy]) }}
+              <div>
+                <CommonIcon
+                  name="long-arrow-down"
+                  :class="{
+                    'rotate-180':
+                      orderDirection === EnumOrderDirection.Ascending,
+                  }"
+                  :fixed-size="{ width: 12, height: 12 }"
+                />
+              </div>
+              <span class="overflow-hidden text-ellipsis whitespace-nowrap">
+                {{ orderBy && $t(orderColumnLabels[orderBy]) }}
+              </span>
             </div>
           </template>
 

@@ -112,7 +112,14 @@ describe('Form - Field - Select - Dialog', () => {
       getByText(wrapper.getByRole('listbox'), testOptions[1].label),
     ).toHaveClass('font-semibold')
 
-    expect(wrapper.getByIconName('check')).toBeInTheDocument()
+    expect(
+      wrapper.getByIconName((name, node) => {
+        return (
+          name === '#icon-check' &&
+          !node?.parentElement?.classList.contains('invisible')
+        )
+      }),
+    ).toBeInTheDocument()
 
     await wrapper.events.click(wrapper.getByTestId('dialog-overlay'))
 
@@ -302,6 +309,22 @@ describe('Form - Field - Select - Features', () => {
     expect(wrapper.getByRole('listitem')).toHaveTextContent(
       testOptions[2].label,
     )
+  })
+
+  it('can pass down a slot', () => {
+    const wrapper = renderComponent(FormKit, {
+      ...wrapperParameters,
+      props: {
+        type: 'select',
+        options: testOptions,
+        value: testOptions[1].value,
+      },
+      slots: {
+        output: '<span>Custom label</span>',
+      },
+    })
+
+    expect(wrapper.getByText('Custom label')).toBeInTheDocument()
   })
 
   it('supports selection clearing', async () => {

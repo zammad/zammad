@@ -86,12 +86,11 @@ RSpec.describe 'Mobile > Tickets', type: :system, app: :mobile, authenticated_as
 
         find_link('Open Tickets', href: '/mobile/tickets/view/all_open').click
 
-        overview_text = 'Open Tickets (21)'
         wait.until do
-          expect(page).to have_text(overview_text)
+          expect(page).to have_text("Open Tickets\n(21)")
         end
 
-        find('span', text: overview_text).click
+        find('output[name="overview"]').click
 
         wait.until do
           expect(page).to have_css('div.select-dialog')
@@ -102,7 +101,7 @@ RSpec.describe 'Mobile > Tickets', type: :system, app: :mobile, authenticated_as
 
         wait.until do
           expect(page).to have_no_css('div.select-dialog')
-          expect(page).to have_text('Escalated Tickets (0)')
+          expect(page).to have_text("Escalated Tickets\n(0)")
         end
       end
     end

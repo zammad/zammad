@@ -48,9 +48,9 @@ describe('ticket item display', () => {
 
     // TODO alt removed from img, maybe return? remove if error
     // expect(view.getByAltText(TicketState.Open)).toBeInTheDocument()
-    expect(view.getByText('#12345')).toBeInTheDocument()
-    expect(view.getByText('·')).toBeInTheDocument()
-    expect(view.getByText('John Doe')).toBeInTheDocument()
+    expect(view.getByText('#12345 · John Doe')).toBeInTheDocument()
+    // expect(view.getByText('·')).toBeInTheDocument()
+    // expect(view.getByText('John Doe')).toBeInTheDocument()
     expect(view.getByText('test ticket')).toBeInTheDocument()
 
     expect(

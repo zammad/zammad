@@ -58,7 +58,12 @@ useInfiniteScroll(window, async () => {
 <template>
   <CommonLoader :loading="!tickets.length && loading">
     <TicketItem v-for="ticket in tickets" :key="ticket.id" :entity="ticket" />
-    <CommonLoader v-if="pagination.loadingNextPage" loading class="mt-4" />
+    <CommonLoader
+      v-if="pagination.loadingNextPage"
+      loading
+      class="mt-4"
+      center
+    />
     <div v-if="!tickets.length" class="px-4 py-3 text-center text-base">
       {{ $t('No entries') }}
     </div>
