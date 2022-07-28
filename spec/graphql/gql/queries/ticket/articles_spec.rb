@@ -7,7 +7,7 @@ RSpec.describe Gql::Queries::Ticket::Articles, type: :graphql do
   context 'when fetching tickets' do
     let(:agent)                { create(:agent) }
     let(:query)                { gql.read_files('apps/mobile/modules/ticket/graphql/queries/ticket/articles.graphql') }
-    let(:variables)            { { ticketId: gql.id(ticket) } }
+    let(:variables)            { { ticketId: gql.id(ticket), isAgent: true } }
     let(:customer)             { create(:customer) }
     let(:ticket)               { create(:ticket, customer: customer) }
     let(:cc)                   { 'Zammad CI <ci@zammad.org>' }
@@ -61,7 +61,7 @@ RSpec.describe Gql::Queries::Ticket::Articles, type: :graphql do
         end
 
         context 'with ticketInternalId' do
-          let(:variables) { { ticketInternalId: ticket.id } }
+          let(:variables) { { ticketInternalId: ticket.id, isAgent: true } }
 
           it 'finds articles' do
             expect(response_total_count).to eq(articles.count + 1)
@@ -69,7 +69,7 @@ RSpec.describe Gql::Queries::Ticket::Articles, type: :graphql do
         end
 
         context 'with ticketNumber' do
-          let(:variables) { { ticketNumber: ticket.number } }
+          let(:variables) { { ticketNumber: ticket.number, isAgent: true } }
 
           it 'finds articles' do
             expect(response_total_count).to eq(articles.count + 1)
@@ -94,7 +94,9 @@ RSpec.describe Gql::Queries::Ticket::Articles, type: :graphql do
       end
     end
 
-    context 'with an customer', authenticated_as: :customer do
+    context 'with a customer', authenticated_as: :customer do
+      let(:variables) { { ticketId: gql.id(ticket), isAgent: false } }
+
       it 'finds only public articles' do
         expect(response_total_count).to eq(articles.count)
       end

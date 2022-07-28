@@ -2,6 +2,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
+import useApplicationStore from '@shared/stores/application'
 import { getInitials } from '@shared/utils/formatter'
 import CommonAvatar from '../CommonAvatar/CommonAvatar.vue'
 import type { AvatarSize } from '../CommonAvatar'
@@ -43,9 +44,10 @@ const colorClass = computed(() => {
   // TODO ID is mangled by gql, maybe backend should send "isSystem"-like property?
   if (id === '1') return 'bg-white'
 
+  // TODO it's better to use ID, so if someone changes name the color won't change
   const name = [fullName.value, email].filter(Boolean).join('')
 
-  if (!name) return colors[0]
+  if (!name || name === ' ' || name === '-') return colors[0]
   // get color based on mod of the fullname length
   // so it stays consistent between different interfaces and logins
   return colors[name.length % 5]
@@ -60,6 +62,8 @@ const icon = computed(() => {
   return null
 })
 
+const app = useApplicationStore()
+
 const image = computed(() => {
   if (icon.value || !props.entity.image) return null
 
@@ -68,7 +72,7 @@ const image = computed(() => {
 
   // we're using the REST api here to get the image and to also use the browser image cache
   // TODO: this should be re-evaluated when the desktop app is going to be implemented
-  const apiUrl = '/api/v1'
+  const apiUrl = String(app.config.api_path)
   return `${apiUrl}/users/image/${props.entity.image}`
 })
 

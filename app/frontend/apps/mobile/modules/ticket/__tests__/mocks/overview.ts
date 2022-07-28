@@ -4,7 +4,7 @@ import type { TicketsByOverviewQuery } from '@shared/graphql/types'
 import type { ConfidentTake } from '@shared/types/utils'
 import { mockGraphQLApi } from '@tests/support/mock-graphql-api'
 import { mock } from 'vitest-mock-extended'
-import { TicketsByOverviewDocument } from '../graphql/queries/ticketsByOverview.api'
+import { TicketsByOverviewDocument } from '../../graphql/queries/ticketsByOverview.api'
 
 type TicketItemByOverview = ConfidentTake<
   TicketsByOverviewQuery,
@@ -16,11 +16,14 @@ type TicketByOverviewPageInfo = ConfidentTake<
   'ticketsByOverview.pageInfo'
 >
 
+const ticketDate = new Date(2022, 0, 29, 0, 0, 0, 0)
+
 export const ticketDefault: Partial<TicketItemByOverview> = {
   id: 'af12',
   title: 'Ticket 1',
   number: '63001',
   internalId: 1,
+  createdAt: ticketDate.toISOString(),
   priority: {
     name: 'high',
     defaultCreate: false,

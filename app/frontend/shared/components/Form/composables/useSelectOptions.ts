@@ -88,7 +88,7 @@ const useSelectOptions = (
       context.value.sorting !== 'label' &&
       context.value.sorting !== 'value'
     ) {
-      console.warn('Unsupported sorting option')
+      console.warn(`Unsupported sorting option "${context.value.sorting}"`)
       return translatedOptions.value
     }
 

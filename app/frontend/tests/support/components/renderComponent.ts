@@ -20,6 +20,7 @@ import CommonLink from '@shared/components/CommonLink/CommonLink.vue'
 import CommonDateTime from '@shared/components/CommonDateTime/CommonDateTime.vue'
 import DynamicInitializer from '@shared/components/DynamicInitializer/DynamicInitializer.vue'
 import { initializeWalker } from '@shared/router/walker'
+import useApplicationStore from '@shared/stores/application'
 import { i18n } from '@shared/i18n'
 import type { Store } from 'pinia'
 import buildIconsQueries from './iconQueries'
@@ -80,7 +81,7 @@ const defaultWrapperOptions: ExtendedMountingOptions<unknown> = {
 let routerInitialized = false
 let router: Router
 
-export const getRouter = () => router
+export const getTestRouter = () => router
 
 const initializeRouter = (routes?: RouteRecordRaw[]) => {
   let localRoutes: RouteRecordRaw[] = [
@@ -117,6 +118,12 @@ const initializeRouter = (routes?: RouteRecordRaw[]) => {
     routes: localRoutes,
   })
 
+  vi.spyOn(router, 'push')
+  vi.spyOn(router, 'replace')
+  vi.spyOn(router, 'back')
+  vi.spyOn(router, 'go')
+  vi.spyOn(router, 'forward')
+
   plugins.push(router)
   plugins.push({
     install(app) {
@@ -136,17 +143,8 @@ const initializeRouter = (routes?: RouteRecordRaw[]) => {
 let storeInitialized = false
 
 let pinia: TestingPinia
-export const getPinia = () => pinia
+export const getTestPinia = () => pinia
 const stores = new Set<Store>()
-
-afterEach(() => {
-  if (!pinia || !stores.size) return
-  stores.forEach((store) => {
-    store.$dispose()
-  })
-  pinia.state.value = {}
-  stores.clear()
-})
 
 export const initializeStore = () => {
   if (storeInitialized) return
@@ -157,6 +155,8 @@ export const initializeStore = () => {
     stores.add(context.store)
   })
   storeInitialized = true
+  const app = useApplicationStore()
+  app.config.api_path = '/api'
 }
 
 let formInitialized = false
@@ -181,7 +181,7 @@ const initializeApplicationConfig = () => {
 
 const wrappers = new Set<[ExtendedMountingOptions<any>, ExtendedRenderResult]>()
 
-afterEach(() => {
+export const cleanup = () => {
   wrappers.forEach((wrapper) => {
     const [{ unmount = true }, view] = wrapper
 
@@ -190,7 +190,16 @@ afterEach(() => {
       wrappers.delete(wrapper)
     }
   })
-})
+
+  if (!pinia || !stores.size) return
+  stores.forEach((store) => {
+    store.$dispose()
+  })
+  pinia.state.value = {}
+  stores.clear()
+}
+
+globalThis.cleanupComponents = cleanup
 
 let dialogMounted = false
 

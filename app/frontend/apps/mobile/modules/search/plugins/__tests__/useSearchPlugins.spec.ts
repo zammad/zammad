@@ -1,11 +1,11 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import useSessionStore from '@shared/stores/session'
+import { useSessionStore } from '@shared/stores/session'
 import { useSearchPlugins } from '../index'
 
 vi.mock('@shared/stores/session', () => {
   return {
-    default: vi.fn(() => ({
+    useSessionStore: vi.fn(() => ({
       hasPermission: () => true,
     })),
   }

@@ -41,6 +41,7 @@ const { distanceY, isSwiping } = usePointerSwipe(dialogElement, {
       top.value = '0'
     }
   },
+  pointerTypes: ['touch', 'pen'],
 })
 </script>
 

@@ -51,7 +51,7 @@ const getCurrentUserQuery = () => {
   return currentUserQuery
 }
 
-const useSessionStore = defineStore('session', () => {
+export const useSessionStore = defineStore('session', () => {
   const id = ref<Maybe<string>>(null)
 
   const checkSession = async (): Promise<string | null> => {

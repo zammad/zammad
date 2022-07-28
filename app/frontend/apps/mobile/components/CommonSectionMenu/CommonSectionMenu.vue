@@ -3,7 +3,7 @@
 <script setup lang="ts">
 import { computed, useSlots } from 'vue'
 import type { RouteLocationRaw } from 'vue-router'
-import useSessionStore from '@shared/stores/session'
+import { useSessionStore } from '@shared/stores/session'
 import type { MenuItem } from './types'
 import CommonSectionMenuLink from './CommonSectionMenuLink.vue'
 

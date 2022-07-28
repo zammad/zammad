@@ -9,6 +9,7 @@
     "importHelpers": true,
     "strict": true,
     "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
     "paths": {
       "@mobile/*": ["app/frontend/apps/mobile/*"],

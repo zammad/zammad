@@ -1,5 +1,6 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
+import useApplicationStore from '@shared/stores/application'
 import { renderComponent } from '@tests/support/components'
 import type { MountingOptions } from '@vue/test-utils'
 import CommonLink, { type Props } from '../CommonLink.vue'
@@ -35,7 +36,9 @@ describe('CommonLink.vue', () => {
     expect(link).not.toHaveAttribute('target')
   })
 
-  it('supports click event', async () => {
+  it('supports click event', async (context) => {
+    context.skipConsole = true
+
     const { getLink, ...wrapper } = renderCommonLink()
 
     const link = getLink()
@@ -127,5 +130,17 @@ describe('CommonLink.vue', () => {
 
     expect(link).toHaveTextContent('A test link')
     expect(link).toHaveAttribute('href', '/example')
+  })
+
+  it('supports api urls', () => {
+    const app = useApplicationStore()
+    app.config.api_path = '/api'
+    const { getLink } = renderCommonLink({
+      props: {
+        link: '/example',
+        restApi: true,
+      },
+    })
+    expect(getLink()).toHaveAttribute('href', '/api/example')
   })
 })

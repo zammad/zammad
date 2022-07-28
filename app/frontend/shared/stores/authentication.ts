@@ -8,7 +8,7 @@ import { useLogoutMutation } from '@shared/graphql/mutations/logout.api'
 import { clearApolloClientStore } from '@shared/server/apollo/client'
 import useFingerprint from '@shared/composables/useFingerprint'
 import testFlags from '@shared/utils/testFlags'
-import useSessionStore from './session'
+import { useSessionStore } from './session'
 import useApplicationStore from './application'
 
 const useAuthenticationStore = defineStore(

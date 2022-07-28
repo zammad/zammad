@@ -3,114 +3,18 @@
 const now = new Date(2022, 1, 1, 0, 0, 0, 0)
 vi.setSystemTime(now)
 
-import { TicketState } from '@shared/entities/ticket/types'
-import type { TicketQuery } from '@shared/graphql/types'
+import { ErrorStatusCodes } from '@shared/types/error'
 import { getAllByRole } from '@testing-library/vue'
+import { getTestRouter } from '@tests/support/components/renderComponent'
 import { visitView } from '@tests/support/components/visitView'
 import { mockGraphQLApi } from '@tests/support/mock-graphql-api'
 import { waitUntil } from '@tests/support/utils'
 import { flushPromises } from '@vue/test-utils'
-import { mock } from 'vitest-mock-extended'
 import { TicketDocument } from '../graphql/queries/ticket.api'
-
-const ticketDate = new Date(2022, 0, 29, 0, 0, 0, 0)
-
-const address = {
-  raw: '',
-  parsed: null,
-}
-
-const ticket = mock<TicketQuery>({
-  ticket: {
-    id: '1fs432fdsfsg3qr32d',
-    internalId: 1,
-    number: '610001',
-    createdAt: ticketDate.toISOString(),
-    title: 'Test Ticket View',
-    owner: {
-      firstname: 'Max',
-      lastname: 'Mustermann',
-    },
-    customer: {
-      id: 'fdsf214fse12d',
-      firstname: 'John',
-      lastname: 'Doe',
-      fullname: 'John Doe',
-    },
-    organization: {
-      name: 'Zammad Foundation',
-    },
-    state: {
-      name: 'open',
-      stateType: {
-        name: TicketState.Open,
-      },
-    },
-    priority: {
-      name: 'low',
-      uiColor: 'low',
-      defaultCreate: false,
-    },
-    articles: {
-      edges: [
-        {
-          node: {
-            id: '1fs432fdsfsg3qr32d',
-            to: address,
-            createdAt: ticketDate.toISOString(),
-            createdBy: {
-              id: 'fdsf214fse12d',
-              firstname: 'John',
-              lastname: 'Doe',
-            },
-            internal: false,
-            body: '<p>Body <b>of a test ticket</b></p>',
-            sender: {
-              name: 'Customer',
-            },
-          },
-        },
-        {
-          node: {
-            id: '1fs432fdsfsg3qr32f',
-            to: address,
-            createdAt: new Date(2022, 0, 30, 0, 0, 0, 0).toISOString(),
-            createdBy: {
-              id: 'dsvvr32532fs',
-              firstname: 'Albert',
-              lastname: 'Einstein',
-            },
-            internal: false,
-            body: '<p>energy equals power times time</p>',
-            sender: {
-              name: 'Agent',
-            },
-          },
-        },
-        {
-          node: {
-            id: '1fs432fdsfsg3qr30f',
-            to: address,
-            createdAt: new Date(2022, 0, 30, 10, 0, 0, 0).toISOString(),
-            createdBy: {
-              id: 'fsfy345343f',
-              firstname: 'Monkey',
-              lastname: 'Brain',
-            },
-            internal: true,
-            body: '<p>only agents can see this haha</p>',
-            sender: {
-              name: 'Agent',
-            },
-          },
-        },
-      ],
-    },
-  },
-})
+import { mockTicketDetailvViewGql } from './mocks/detailed-view'
 
 test('statics inside ticket zoom view', async () => {
-  const mockApiTicket = mockGraphQLApi(TicketDocument).willResolve(ticket)
+  const { waitUntillTickesLoaded } = mockTicketDetailvViewGql()
 
   const view = await visitView('/tickets/1')
 
@@ -118,7 +22,7 @@ test('statics inside ticket zoom view', async () => {
   expect(view.getByTestId('loader-title')).toBeInTheDocument()
   expect(view.getByTestId('loader-header')).toBeInTheDocument()
 
-  await waitUntil(() => mockApiTicket.spies.resolve.mock.calls.length > 0)
+  await waitUntillTickesLoaded()
 
   const header = view.getByTestId('header-content')
 
@@ -162,11 +66,11 @@ test('statics inside ticket zoom view', async () => {
 })
 
 test('can refresh data by pulling up', async () => {
-  const mockApiTicket = mockGraphQLApi(TicketDocument).willResolve(ticket)
+  const { waitUntillTickesLoaded } = mockTicketDetailvViewGql()
 
   const view = await visitView('/tickets/1')
 
-  await waitUntil(() => mockApiTicket.spies.resolve.mock.calls.length > 0)
+  await waitUntillTickesLoaded()
 
   const articlesElement = view.getByRole('group', { name: 'Articles' })
 
@@ -208,24 +112,32 @@ test('can refresh data by pulling up', async () => {
   // TODO test api call
 })
 
-test("shows error, if can't find ticket", async () => {
-  mockGraphQLApi(TicketDocument).willFailWithError([
+test("redirects to error page, if can't find ticket", async () => {
+  const { calls } = mockGraphQLApi(TicketDocument).willFailWithError([
     { message: 'The ticket 9866 could not be found', extensions: {} },
   ])
 
-  const view = await visitView('/tickets/9866')
+  await visitView('/tickets/9866')
 
-  expect(
-    await view.findByText('The ticket 9866 could not be found'),
-  ).toBeInTheDocument()
+  await waitUntil(() => calls.error > 0)
+  await flushPromises()
+
+  const router = getTestRouter()
+  expect(router.replace).toHaveBeenCalledWith({
+    name: 'Error',
+    params: {
+      statusCode: ErrorStatusCodes.Forbidden,
+      message: 'Sorry, but you have insufficient rights to open this page.',
+    },
+  })
 })
 
 test('show article context on click', async () => {
-  const mockApiTicket = mockGraphQLApi(TicketDocument).willResolve(ticket)
+  const { waitUntillTickesLoaded } = mockTicketDetailvViewGql()
 
   const view = await visitView('/tickets/1')
 
-  await waitUntil(() => mockApiTicket.spies.resolve.mock.calls.length > 0)
+  await waitUntillTickesLoaded()
 
   vi.useRealTimers()
 

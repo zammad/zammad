@@ -1,21 +1,22 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-// TODO scroll to bottom when data is loaded
+// TODO scroll to bottom when data is loaded(?)
 import { toRef, shallowRef } from 'vue'
 import CommonSectionPopup from '@mobile/components/CommonSectionPopup/CommonSectionPopup.vue'
 import ArticleBubble from './ArticleBubble.vue'
 import ArticlesPullDown from './ArticlesPullDown.vue'
-import ArticleBadgeNew from './ArticleBadgeNew.vue'
-import ArticleBadgeMore from './ArticleBadgeMore.vue'
+import ArticleSeparatorNew from './ArticleSeparatorNew.vue'
+import ArticleSeparatorMore from './ArticleSeparatorMore.vue'
+import ArticleSeparatorDate from './ArticleSeparatorDate.vue'
 import type { TicketArticle } from '../../types/tickets'
-import ArticleBadgeDate from './ArticleBadgeDate.vue'
 import { useTicketArticleRows } from '../../composable/useTicketArticlesRows'
 import { useTicketArticleContext } from '../../composable/useTicketArticleContext'
 import ArticleSystem from './ArticleSystem.vue'
 
 interface Props {
   articles: TicketArticle[]
+  ticketInternalId: number
 }
 
 const props = defineProps<Props>()
@@ -36,6 +37,21 @@ const loadMoreArticles = () => {
 }
 
 const { rows } = useTicketArticleRows(toRef(props, 'articles'))
+
+const attachments = [
+  {
+    id: '1',
+    name: 'Zammad.png',
+    size: 242143,
+    type: 'image/png',
+  },
+  {
+    id: '2',
+    name: 'Zammad2.pdf',
+    size: 355,
+    type: 'image/pdf',
+  },
+]
 </script>
 
 <template>
@@ -58,11 +74,15 @@ const { rows } = useTicketArticleRows(toRef(props, 'articles'))
         :content="row.article.body"
         :user="row.article.createdBy"
         :internal="row.article.internal"
+        :content-type="row.article.contentType"
         :position="
           row.article.sender?.name !== 'Customer' || row.article.internal
             ? 'left'
             : 'right'
         "
+        :ticket-internal-id="ticketInternalId"
+        :article-internal-id="row.article.internalId"
+        :attachments="attachments"
         @show-context="showArticleContext(row.article)"
       />
       <ArticleSystem
@@ -70,9 +90,9 @@ const { rows } = useTicketArticleRows(toRef(props, 'articles'))
         :to="row.to"
         :subject="row.subject"
       />
-      <ArticleBadgeDate v-if="row.type === 'date'" :date="row.date" />
-      <ArticleBadgeNew v-if="row.type === 'new'" />
-      <ArticleBadgeMore v-if="row.type === 'more'" :count="row.count" />
+      <ArticleSeparatorDate v-if="row.type === 'date'" :date="row.date" />
+      <ArticleSeparatorNew v-if="row.type === 'new'" />
+      <ArticleSeparatorMore v-if="row.type === 'more'" :count="row.count" />
     </template>
   </section>
   <CommonSectionPopup

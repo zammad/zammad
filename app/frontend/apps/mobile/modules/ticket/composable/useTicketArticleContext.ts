@@ -1,11 +1,17 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import type { PopupItem } from '@mobile/components/CommonSectionPopup'
+import { useDialog } from '@shared/composables/useDialog'
 import { computed, shallowRef } from 'vue'
 import type { TicketArticle } from '../types/tickets'
 
 export const useTicketArticleContext = () => {
   const articleForContext = shallowRef<TicketArticle>()
+  const metadataDialog = useDialog({
+    name: 'article-metadata',
+    component: () =>
+      import('../components/TicketDetailView/ArticleMetadataDialog.vue'),
+  })
 
   const contextOptions: PopupItem[] = [
     {
@@ -35,7 +41,10 @@ export const useTicketArticleContext = () => {
     {
       title: __('Show meta data'),
       onAction() {
-        console.log('show meta data')
+        metadataDialog.open({
+          name: metadataDialog.name,
+          article: articleForContext.value,
+        })
       },
     },
   ]
@@ -53,6 +62,7 @@ export const useTicketArticleContext = () => {
   })
 
   const showArticleContext = (article: TicketArticle) => {
+    metadataDialog.prefetch()
     articleForContext.value = article
   }
 

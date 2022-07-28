@@ -20,7 +20,7 @@ const Template: Story<Args> = (args: Args) => ({
     if (args.isCustomLogo) {
       application.config.product_logo = 'icons/logotype.svg'
     } else {
-      application.config.product_logo = undefined
+      delete application.config.product_logo
     }
     return { args }
   },

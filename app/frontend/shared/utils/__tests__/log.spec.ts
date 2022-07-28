@@ -1,19 +1,23 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-vi.spyOn(console, 'error').mockReturnValue()
-vi.spyOn(console, 'warn').mockReturnValue()
-vi.spyOn(console, 'info').mockReturnValue()
-vi.spyOn(console, 'log').mockReturnValue()
-vi.spyOn(console, 'trace').mockReturnValue()
-
-import log from '../log'
-
 describe('log', () => {
   afterAll(() => {
     vi.restoreAllMocks()
   })
 
-  it('logs with default log level', () => {
+  beforeEach(() => {
+    vi.spyOn(console, 'error').mockReturnValue()
+    vi.spyOn(console, 'warn').mockReturnValue()
+    vi.spyOn(console, 'info').mockReturnValue()
+    vi.spyOn(console, 'log').mockReturnValue()
+    vi.spyOn(console, 'trace').mockReturnValue()
+  })
+
+  it('logs with default log level', async (context) => {
+    const { default: log } = await import('../log')
+
+    context.skipConsole = true
+
     log.error('error')
     log.warn('warn')
     log.info('info')

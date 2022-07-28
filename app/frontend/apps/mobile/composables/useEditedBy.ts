@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import { i18n } from '@shared/i18n'
-import useSessionStore from '@shared/stores/session'
+import { useSessionStore } from '@shared/stores/session'
 import type { Ref } from 'vue'
 import { computed } from 'vue'
 

@@ -6,7 +6,7 @@ import { visitView } from '@tests/support/components/visitView'
 import { mockTicketOverviews } from '@tests/support/mocks/ticket-overviews'
 import { waitForNextTick } from '@tests/support/utils'
 import { stringifyQuery } from 'vue-router'
-import { mockTicketsByOverview, ticketDefault } from './mocks'
+import { mockTicketsByOverview, ticketDefault } from './mocks/overview'
 
 beforeEach(() => {
   mockTicketOverviews()

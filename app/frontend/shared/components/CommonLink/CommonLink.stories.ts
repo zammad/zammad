@@ -24,14 +24,14 @@ BasicLink.args = {
 export const ExternalLink = Template.bind({})
 ExternalLink.args = {
   link: 'https://www.google.com',
-  isExternal: true,
+  external: true,
   openInNewTab: true,
 }
 
 export const RouterLink = Template.bind({})
 RouterLink.args = {
   link: '/login',
-  isRoute: true,
+  internal: true,
 }
 
 export const DisabledLink = Template.bind({})

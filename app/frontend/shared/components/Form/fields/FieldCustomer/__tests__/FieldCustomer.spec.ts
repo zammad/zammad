@@ -10,18 +10,6 @@ import { provideApolloClient } from '@vue/apollo-composable'
 import testOptions from '@shared/components/Form/fields/FieldCustomer/__tests__/test-options.json'
 import type { AvatarUser } from '@shared/components/CommonUserAvatar/types'
 
-vi.mock('@vueuse/core', async () => {
-  const mod = await vi.importActual<typeof import('@vueuse/core')>(
-    '@vueuse/core',
-  )
-  return {
-    ...mod,
-    usePointerSwipe: vi
-      .fn()
-      .mockReturnValue({ distanceY: 0, isSwiping: false }),
-  }
-})
-
 const AutocompleteSearchCustomerDocument = gql`
   query autocompleteSearchCustomer($query: String!, $limit: Int) {
     autocompleteSearchCustomer(query: $query, limit: $limit) {
@@ -108,6 +96,7 @@ const wrapperParameters = {
   formField: true,
   router: true,
   dialog: true,
+  store: true,
 }
 
 const testProps = {

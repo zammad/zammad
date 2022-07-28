@@ -41,8 +41,6 @@ describe('playing with overviews', () => {
 
     const view = await visitView('/favorite/ticker-overviews/edit')
 
-    expect(view.getByIconName('loader')).toBeInTheDocument()
-
     const includedOverviewsUtils = within(
       await view.findByTestId('includedOverviews'),
     )

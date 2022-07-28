@@ -40,6 +40,12 @@ export interface MockGraphQLInstance {
     userError: SpyInstance
     networkError: SpyInstance
   }
+  calls: {
+    resolve: number
+    error: number
+    userError: number
+    networkError: number
+  }
 }
 
 export const mockGraphQLApi = (
@@ -110,6 +116,20 @@ export const mockGraphQLApi = (
       error: errorSpy,
       userError: userErrorSpy,
       networkError: networkErrorSpy,
+    },
+    calls: {
+      get resolve() {
+        return resolveSpy.mock.calls.length
+      },
+      get error() {
+        return errorSpy.mock.calls.length
+      },
+      get userError() {
+        return userErrorSpy.mock.calls.length
+      },
+      get networkError() {
+        return networkErrorSpy.mock.calls.length
+      },
     },
   }
 

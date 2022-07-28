@@ -3,19 +3,23 @@
 import { waitForAnimationFrame } from '@shared/utils/helpers'
 import { renderComponent } from '@tests/support/components'
 import { mockAccount } from '@tests/support/mock-account'
-import ArticleBubble, { type Props } from '../ArticleBubble.vue'
+import ArticleBubble from '../ArticleBubble.vue'
 
-const renderArticleBubble = (props: Partial<Props> = {}) => {
+const renderArticleBubble = (props = {}) => {
   return renderComponent(ArticleBubble, {
     props: {
       position: 'right',
       internal: false,
       content: 'Some Content',
+      contentType: 'text/html',
+      ticketInternalId: 1,
+      articleInternalId: 1,
       user: {
         id: '2',
         firstname: 'Max',
         lastname: 'Mustermann',
       },
+      attachments: [],
       ...props,
     },
   })
@@ -105,7 +109,7 @@ describe('component for displaying text article', () => {
     await view.events.click(seeMoreButton)
 
     expect(seeMoreButton).toHaveTextContent('See less')
-    expect(content, 'has actual height').toHaveStyle({ height: '900px' })
+    expect(content, 'has actual height').toHaveStyle({ height: '910px' })
   })
 
   it('has "see more" for small article with signature', async () => {
@@ -140,6 +144,54 @@ describe('component for displaying text article', () => {
     await view.events.click(seeMoreButton)
 
     expect(seeMoreButton).toHaveTextContent('See less')
-    expect(content, 'has actual height').toHaveStyle({ height: '200px' })
+    expect(content, 'has actual height').toHaveStyle({ height: '210px' })
+  })
+
+  it('processes plain text into html', () => {
+    const view = renderArticleBubble({
+      content: 'Some Text\n\nhttp://example.com',
+      contentType: 'text/plain',
+    })
+
+    const newLine = view.container.querySelector('br')
+
+    expect(newLine).toBeInTheDocument()
+
+    const link = view.getByText('http://example.com')
+
+    expect(link).toHaveAttribute('href', 'http://example.com')
+  })
+
+  it('renders attachments', () => {
+    const view = renderArticleBubble({
+      attachments: [
+        {
+          ID: '1',
+          name: 'Zammad 1.png',
+          size: 242143,
+          type: 'image/png',
+        },
+        {
+          ID: '2',
+          name: 'Zammad 2.pdf',
+          size: 355,
+          type: 'image/pdf',
+        },
+      ],
+    })
+
+    expect(view.getByText('2 attached files')).toBeInTheDocument()
+
+    const attachments = view.getAllByRole('button', { name: /^Download / })
+
+    expect(attachments).toHaveLength(2)
+
+    const [attachment1, attachment2] = attachments
+
+    expect(attachment1).toHaveTextContent('Zammad 1.png')
+    expect(attachment1).toHaveTextContent('236 KB')
+
+    expect(attachment2).toHaveTextContent('Zammad 2.pdf')
+    expect(attachment2).toHaveTextContent('355 Bytes')
   })
 })

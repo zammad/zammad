@@ -5,9 +5,9 @@ import type { RouteRecordRaw } from 'vue-router'
 const routes: RouteRecordRaw[] = [
   {
     path: '/tickets/:internalId(\\d+)',
-    name: 'TicketZoom',
+    name: 'TicketDetailView',
     props: true,
-    component: () => import('./views/TicketDetailedView.vue'),
+    component: () => import('./views/TicketDetailView.vue'),
     meta: {
       title: __('Ticket'),
       requiresAuth: true,

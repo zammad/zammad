@@ -25,7 +25,7 @@ describe('CommonLogo.vue', () => {
     const application = useApplicationStore()
 
     application.config.product_logo = 'icons/logotype.svg'
-    application.config.product_name = undefined
+    delete application.config.product_name
 
     await nextTick()
 

@@ -120,6 +120,8 @@ const useApplicationStore = defineStore('applicationLoaded', () => {
       result.applicationConfig.forEach((item) => {
         config.value[item.key] = item.value
       })
+      // app/assets/javascripts/app/config.coffee
+      config.value.api_path = '/api/v1'
     }
 
     if (!configUpdatesSubscriptionInitialized) {

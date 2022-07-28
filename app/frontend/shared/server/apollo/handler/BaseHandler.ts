@@ -63,6 +63,10 @@ export default abstract class BaseHandler<
     return this.operationResult.error
   }
 
+  public onError(callback: (error: ApolloError) => void): void {
+    this.operationResult.onError(callback)
+  }
+
   protected handleError(error: ApolloError): void {
     const options = this.handlerOptions
 

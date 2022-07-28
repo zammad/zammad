@@ -256,7 +256,7 @@ describe('Form.vue - Edge Cases', () => {
                 isLayout: true,
                 component: 'CommonLink',
                 props: {
-                  isExternalLink: true,
+                  external: true,
                   link: 'https://example.com',
                 },
                 children: 'Example Link',

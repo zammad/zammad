@@ -4,7 +4,7 @@ const now = new Date('2020-02-01 00:00:00')
 vi.setSystemTime(now)
 
 import { renderComponent } from '@tests/support/components'
-import TicketZoomHeader from '../TicketZoomHeader.vue'
+import TicketDetailViewHeader from '../TicketDetailViewHeader.vue'
 
 const createdAt = new Date('2020-01-29 00:00:00')
 
@@ -14,7 +14,7 @@ beforeAll(async () => {
 
 describe('tickets zoom header', () => {
   test('has basic information', () => {
-    const view = renderComponent(TicketZoomHeader, {
+    const view = renderComponent(TicketDetailViewHeader, {
       props: {
         ticketId: '123456',
         createdAt: createdAt.toISOString(),
@@ -34,7 +34,7 @@ describe('tickets zoom header', () => {
   })
 
   test('has avatars and opens viewers dialog', async () => {
-    const view = renderComponent(TicketZoomHeader, {
+    const view = renderComponent(TicketDetailViewHeader, {
       props: {
         ticketId: '123456',
         createdAt: createdAt.toISOString(),

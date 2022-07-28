@@ -55,7 +55,7 @@ export const useTicketArticleRows = (articles: Ref<TicketArticle[]>) => {
           key: date,
         })
       }
-      if (article.sender?.name === 'System') {
+      if (article.sender?.name === 'System' && article.type?.name !== 'note') {
         rows.push({
           type: 'system',
           subject: article.subject,

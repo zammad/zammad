@@ -195,7 +195,7 @@ const login = (formData: FormData<LoginFormData>) => {
     <div class="flex items-center justify-center align-middle text-gray-200">
       <CommonLink
         link="https://zammad.org"
-        is-external
+        external
         open-in-new-tab
         class="ltr:mr-1 rtl:ml-1"
       >
@@ -204,7 +204,7 @@ const login = (formData: FormData<LoginFormData>) => {
       <span class="ltr:mr-1 rtl:ml-1">{{ $t('Powered by') }}</span>
       <CommonLink
         link="https://zammad.org"
-        is-external
+        external
         open-in-new-tab
         class="font-semibold !text-gray-200"
       >

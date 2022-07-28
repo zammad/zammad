@@ -619,7 +619,9 @@ describe('Form - Field - TreeSelect - Features', () => {
     await wrapper.events.click(wrapper.getByRole('button'))
   })
 
-  it('supports option sorting', async () => {
+  it('supports option sorting', async (context) => {
+    context.skipConsole = true
+
     const reversedOptions = cloneDeep(testOptions).reverse()
 
     const wrapper = renderComponent(FormKit, {
@@ -655,7 +657,9 @@ describe('Form - Field - TreeSelect - Features', () => {
       sorting: 'foobar',
     })
 
-    expect(console.warn).toHaveBeenCalledWith('Unsupported sorting option')
+    expect(console.warn).toHaveBeenCalledWith(
+      'Unsupported sorting option "foobar"',
+    )
   })
 
   it('supports label translation', async () => {

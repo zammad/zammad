@@ -2,12 +2,20 @@ query ticketArticles(
   $ticketId: ID
   $ticketInternalId: Int
   $ticketNumber: String
+  $isAgent: Boolean!
 ) {
-  ticketArticles(ticket: {ticketId: $ticketId, ticketInternalId: $ticketInternalId, ticketNumber: $ticketNumber}) {
+  ticketArticles(
+    ticket: {
+      ticketId: $ticketId
+      ticketInternalId: $ticketInternalId
+      ticketNumber: $ticketNumber
+    }
+  ) {
     totalCount
     edges {
       node {
         id
+        internalId
         from {
           raw
           parsed {
@@ -45,7 +53,11 @@ query ticketArticles(
         body
         internal
         createdAt
-        updatedAt
+        createdBy @include(if: $isAgent) {
+          id
+          firstname
+          lastname
+        }
         type {
           name
         }

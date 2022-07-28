@@ -30,7 +30,7 @@ const customer = computed(() => {
     <div class="ltr:mr-3 rtl:ml-3">
       <CommonUserAvatar :entity="ticket.customer" />
     </div>
-    <div>
+    <div class="overflow-hidden">
       <div class="flex text-sm leading-4 text-gray-100">
         <div
           class="overflow-hidden text-ellipsis whitespace-nowrap"
@@ -50,7 +50,10 @@ const customer = computed(() => {
           </div>
         </template>
       </div>
-      <div role="heading" class="text-xl font-bold leading-7 line-clamp-3">
+      <div
+        role="heading"
+        class="break-words text-xl font-bold leading-7 line-clamp-3"
+      >
         {{ ticket.title }}
       </div>
       <div class="mt-2 flex gap-2">

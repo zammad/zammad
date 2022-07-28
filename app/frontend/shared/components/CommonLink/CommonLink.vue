@@ -5,11 +5,13 @@ import { computed, toRef } from 'vue'
 import { useLink } from 'vue-router'
 import stopEvent from '@shared/utils/events'
 import type { Link } from '@shared/types/router'
+import useApplicationStore from '@shared/stores/application'
 
 export interface Props {
   link: Link
-  isExternal?: boolean
-  isRoute?: boolean
+  external?: boolean
+  internal?: boolean
+  restApi?: boolean
   disabled?: boolean
   rel?: string
   target?: string
@@ -20,8 +22,8 @@ export interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  isExternal: false,
-  isRoute: false,
+  external: false,
+  internal: false,
   replace: false,
   append: false,
   openInNewTab: false,
@@ -55,11 +57,25 @@ const { href, route, navigate, isActive, isExactActive } = useLink({
 })
 
 const isInternalLink = computed(() => {
-  if (props.isExternal) return false
-  if (props.isRoute) return true
+  if (props.external || props.restApi) return false
+  if (props.internal) return true
   // zammad desktop urls
   if (route.value.fullPath.startsWith('/#')) return false
   return route.value.matched.length > 0 && route.value.name !== 'Error'
+})
+
+const app = useApplicationStore()
+
+const path = computed(() => {
+  if (isInternalLink.value) {
+    return href.value
+  }
+
+  if (props.restApi) {
+    return `${String(app.config.api_path)}${props.link}`
+  }
+
+  return props.link as string
 })
 
 const onClick = (event: MouseEvent) => {
@@ -83,7 +99,7 @@ const onClick = (event: MouseEvent) => {
 <template>
   <a
     data-test-id="common-link"
-    :href="isInternalLink ? href : (link as string)"
+    :href="path"
     :target="target"
     :rel="rel"
     :class="[

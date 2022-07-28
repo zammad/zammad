@@ -4,7 +4,7 @@
 import type { MenuItem } from '@mobile/components/CommonSectionMenu'
 import CommonSectionMenu from '@mobile/components/CommonSectionMenu/CommonSectionMenu.vue'
 import CommonInputSearch from '@shared/components/CommonInputSearch/CommonInputSearch.vue'
-import useSessionStore from '@shared/stores/session'
+import { useSessionStore } from '@shared/stores/session'
 import { computed } from 'vue'
 import { useTicketsOverviews } from '../stores/ticketOverviews'
 

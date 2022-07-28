@@ -7,7 +7,7 @@ import {
   mockGraphQLSubscription,
 } from '@tests/support/mock-graphql-api'
 import { createPinia, setActivePinia } from 'pinia'
-import useSessionStore from '../session'
+import { useSessionStore } from '../session'
 
 const userData = {
   __typename: 'User',

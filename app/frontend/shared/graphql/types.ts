@@ -679,6 +679,8 @@ export type TicketArticle = Node & {
   id: Scalars['ID'];
   inReplyTo?: Maybe<Scalars['String']>;
   internal: Scalars['Boolean'];
+  /** Internal database ID */
+  internalId: Scalars['Int'];
   messageId?: Maybe<Scalars['String']>;
   messageIdMd5?: Maybe<Scalars['String']>;
   originBy?: Maybe<User>;
@@ -962,10 +964,11 @@ export type TicketArticlesQueryVariables = Exact<{
   ticketId?: InputMaybe<Scalars['ID']>;
   ticketInternalId?: InputMaybe<Scalars['Int']>;
   ticketNumber?: InputMaybe<Scalars['String']>;
+  isAgent: Scalars['Boolean'];
 }>;
 
 
-export type TicketArticlesQuery = { __typename?: 'Queries', ticketArticles: { __typename?: 'TicketArticleConnection', totalCount: number, edges: Array<{ __typename?: 'TicketArticleEdge', cursor: string, node: { __typename?: 'TicketArticle', id: string, subject?: string | null, messageId?: string | null, messageIdMd5?: string | null, inReplyTo?: string | null, contentType: string, references?: string | null, body: string, internal: boolean, createdAt: any, updatedAt: any, from?: { __typename?: 'AddressesField', raw: string, parsed?: Array<{ __typename?: 'EmailAddress', name?: string | null, emailAddress?: string | null }> | null } | null, to?: { __typename?: 'AddressesField', raw: string, parsed?: Array<{ __typename?: 'EmailAddress', name?: string | null, emailAddress?: string | null }> | null } | null, cc?: { __typename?: 'AddressesField', raw: string, parsed?: Array<{ __typename?: 'EmailAddress', name?: string | null, emailAddress?: string | null }> | null } | null, replyTo?: { __typename?: 'AddressesField', raw: string, parsed?: Array<{ __typename?: 'EmailAddress', name?: string | null, emailAddress?: string | null }> | null } | null, type?: { __typename?: 'TicketArticleType', name?: string | null } | null, sender?: { __typename?: 'TicketArticleType', name?: string | null } | null } }>, pageInfo: { __typename?: 'PageInfo', endCursor?: string | null, hasNextPage: boolean } } };
+export type TicketArticlesQuery = { __typename?: 'Queries', ticketArticles: { __typename?: 'TicketArticleConnection', totalCount: number, edges: Array<{ __typename?: 'TicketArticleEdge', cursor: string, node: { __typename?: 'TicketArticle', id: string, internalId: number, subject?: string | null, messageId?: string | null, messageIdMd5?: string | null, inReplyTo?: string | null, contentType: string, references?: string | null, body: string, internal: boolean, createdAt: any, from?: { __typename?: 'AddressesField', raw: string, parsed?: Array<{ __typename?: 'EmailAddress', name?: string | null, emailAddress?: string | null }> | null } | null, to?: { __typename?: 'AddressesField', raw: string, parsed?: Array<{ __typename?: 'EmailAddress', name?: string | null, emailAddress?: string | null }> | null } | null, cc?: { __typename?: 'AddressesField', raw: string, parsed?: Array<{ __typename?: 'EmailAddress', name?: string | null, emailAddress?: string | null }> | null } | null, replyTo?: { __typename?: 'AddressesField', raw: string, parsed?: Array<{ __typename?: 'EmailAddress', name?: string | null, emailAddress?: string | null }> | null } | null, createdBy?: { __typename?: 'User', id: string, firstname?: string | null, lastname?: string | null }, type?: { __typename?: 'TicketArticleType', name?: string | null } | null, sender?: { __typename?: 'TicketArticleType', name?: string | null } | null } }>, pageInfo: { __typename?: 'PageInfo', endCursor?: string | null, hasNextPage: boolean } } };
 
 export type TicketsByOverviewQueryVariables = Exact<{
   overviewId: Scalars['ID'];

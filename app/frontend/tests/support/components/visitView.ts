@@ -5,7 +5,7 @@ import { random } from 'lodash-es'
 import type { RouteRecordRaw } from 'vue-router'
 import LayoutTest from './LayoutTest.vue'
 import mockApolloClient from '../mock-apollo-client'
-import renderComponent, { getRouter } from './renderComponent'
+import renderComponent, { getTestRouter } from './renderComponent'
 
 vi.mock('@shared/server/apollo/client', () => {
   return {
@@ -64,7 +64,7 @@ export const visitView = async (href: string) => {
   const { client } = useApolloClient()
   await client.clearStore()
 
-  const router = getRouter()
+  const router = getTestRouter()
 
   await router.replace(href)
 

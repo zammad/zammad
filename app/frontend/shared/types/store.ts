@@ -1,12 +1,12 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import type { CurrentUserQuery } from '@shared/graphql/types'
-import type { Primitive } from 'type-fest'
+import type { JsonPrimitive } from 'type-fest'
 
 export type ConfigValues =
-  | Primitive
-  | Record<string, Primitive>
-  | Array<Primitive | Record<string, Primitive>>
+  | JsonPrimitive
+  | Record<string, JsonPrimitive>
+  | Array<JsonPrimitive | Record<string, JsonPrimitive>>
 
 export type ConfigList = Record<string, ConfigValues>
 

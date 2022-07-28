@@ -10,18 +10,6 @@ import { provideApolloClient } from '@vue/apollo-composable'
 import { AutocompleteSearchUserDocument } from '@shared/graphql/queries/autocompleteSearch/user.api'
 import type { AutocompleteSearchUserQuery } from '@shared/graphql/types'
 
-vi.mock('@vueuse/core', async () => {
-  const mod = await vi.importActual<typeof import('@vueuse/core')>(
-    '@vueuse/core',
-  )
-  return {
-    ...mod,
-    usePointerSwipe: vi
-      .fn()
-      .mockReturnValue({ distanceY: 0, isSwiping: false }),
-  }
-})
-
 const testOptions = [
   {
     value: 0,
@@ -97,6 +85,7 @@ const wrapperParameters = {
   formField: true,
   router: true,
   dialog: true,
+  store: true,
 }
 
 const testProps = {
@@ -513,7 +502,9 @@ describe('Form - Field - AutoComplete - Features', () => {
     await wrapper.events.click(wrapper.getByRole('button'))
   })
 
-  it('supports option sorting', async () => {
+  it('supports option sorting', async (context) => {
+    context.skipConsole = true
+
     const reversedOptions = cloneDeep(testOptions).reverse()
 
     const wrapper = renderComponent(FormKit, {
@@ -551,9 +542,7 @@ describe('Form - Field - AutoComplete - Features', () => {
       sorting: 'foobar',
     })
 
-    expect(warn).toHaveBeenCalledWith('Unsupported sorting option')
-
-    warn.mockRestore()
+    expect(warn).toHaveBeenCalledWith('Unsupported sorting option "foobar"')
   })
 
   it('supports label translation', async () => {
