@@ -14,7 +14,7 @@ module Gql::Queries
     end
 
     def resolve(form_schema_id: nil)
-      form_schema_id.constantize.new(context: context).schema
+      form_schema_id.new(context: context).schema
     end
   end
 end

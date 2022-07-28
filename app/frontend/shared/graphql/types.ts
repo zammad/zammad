@@ -140,6 +140,13 @@ export enum EnumOrderDirection {
   Descending = 'DESCENDING'
 }
 
+/** All searchable models */
+export enum EnumSearchableModels {
+  Organization = 'Organization',
+  Ticket = 'Ticket',
+  User = 'User'
+}
+
 /** Option to choose SQL sorting direction */
 export enum EnumTextDirection {
   /** Left-to-right */
@@ -519,7 +526,8 @@ export type QueriesNodesArgs = {
 /** All available queries */
 export type QueriesSearchArgs = {
   limit?: InputMaybe<Scalars['Int']>;
-  query: Scalars['String'];
+  onlyIn?: InputMaybe<EnumSearchableModels>;
+  search: Scalars['String'];
 };
 
 

@@ -17,8 +17,8 @@ RSpec.describe Gql::Queries::Search, type: :graphql do
     let(:search)    { SecureRandom.uuid }
     let(:query)     do
       <<~QUERY
-        query search($query: String!) {
-          search(query: $query) {
+        query search($search: String!, $onlyIn: EnumSearchableModels) {
+          search(search: $search, onlyIn: $onlyIn) {
             ... on Ticket {
               __typename
               number
@@ -37,7 +37,7 @@ RSpec.describe Gql::Queries::Search, type: :graphql do
         }
       QUERY
     end
-    let(:variables) { { query: search } }
+    let(:variables) { { search: search } }
     let(:es_setup) do
       Setting.set('es_url', nil)
     end
@@ -50,16 +50,31 @@ RSpec.describe Gql::Queries::Search, type: :graphql do
     shared_examples 'test search query' do
 
       context 'with an agent', authenticated_as: :agent do
-        let(:expected_result) do
-          [
-            { '__typename' => 'Organization', 'name' => organization.name },
-            { '__typename' => 'User', 'firstname' => agent.firstname, 'lastname' => agent.lastname },
-            { '__typename' => 'Ticket', 'number' => ticket.number, 'title' => ticket.title },
-          ]
+        context 'without model limit' do
+          let(:expected_result) do
+            [
+              { '__typename' => 'Organization', 'name' => organization.name },
+              { '__typename' => 'User', 'firstname' => agent.firstname, 'lastname' => agent.lastname },
+              { '__typename' => 'Ticket', 'number' => ticket.number, 'title' => ticket.title },
+            ]
+          end
+
+          it 'finds expected objects across models' do
+            expect(gql.result.data).to eq(expected_result)
+          end
         end
 
-        it 'finds expected objects' do
-          expect(gql.result.data).to eq(expected_result)
+        context 'with model restriction' do
+          let(:variables) { { search: search, onlyIn: 'User' } }
+          let(:expected_result) do
+            [
+              { '__typename' => 'User', 'firstname' => agent.firstname, 'lastname' => agent.lastname },
+            ]
+          end
+
+          it 'finds expected objects only from selected model' do
+            expect(gql.result.data).to eq(expected_result)
+          end
         end
       end
 
