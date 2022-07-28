@@ -490,7 +490,7 @@
 
       // Clear `cropBox` is necessary when replace
       this.cropBox = null;
-      this.off();
+      this.unbind();
 
       this.resetPreview();
       this.$preview = null;
