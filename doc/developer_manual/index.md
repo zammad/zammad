@@ -22,6 +22,7 @@ Welcome to the developer docs of Zammad. 👋 This is a work in progress, and yo
 - [How to use debuggers with Zammad](cookbook/how-to-use-debuggers.md)
 - [How to test with RSpec / Capybara](cookbook/how-to-test-with-rspec-and-capybara.md)
 - [How to test with QUnit](cookbook/how-to-test-with-qunit.md)
+- [How to test with Vitest and Cypress](cookbook/how-to-test-with-vitest-and-cypress.md)
 
 # How to Contribute
 
