@@ -7,6 +7,9 @@ import pkg from '../package.json'
 const isCI = !!process.env.CI
 const root = resolve(__dirname, '..')
 
+// we don't need to optimize graphql and apollo
+const skipDeps = ['graphql', 'apollo']
+
 export default defineConfig({
   videosFolder: '.cypress/videos',
   supportFolder: '.cypress/support/index.js',
@@ -45,14 +48,9 @@ export default defineConfig({
             '!**/*.d.ts',
           ],
           include: [
-            'flatpickr',
-            '@vueuse/core',
-            '@formkit/core',
-            'tippy.js',
-            'prosemirror-state',
-            'vue3-draggable-resizable',
-            ...Object.keys(pkg.dependencies).filter((name) =>
-              name.startsWith('@tiptap'),
+            // if you see cypress failing on some dependency, add it to skipDeps
+            ...Object.keys(pkg.dependencies).filter(
+              (name) => !skipDeps.some((dep) => name.includes(dep)),
             ),
           ],
         },
