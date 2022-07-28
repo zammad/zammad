@@ -7,7 +7,6 @@ import { storeToRefs } from 'pinia'
 import { MutationHandler } from '@shared/server/apollo/handler'
 import useSessionStore from '@shared/stores/session'
 import useLocaleStore from '@shared/stores/locale'
-import testFlags from '@shared/utils/testFlags'
 import FormGroup from '@shared/components/Form/FormGroup.vue'
 import CommonUserAvatar from '@shared/components/CommonUserAvatar/CommonUserAvatar.vue'
 import CommonSectionMenu from '@mobile/components/CommonSectionMenu/CommonSectionMenu.vue'
@@ -51,13 +50,9 @@ const currentLocale = computed({
     Promise.all([
       localeStore.setLocale(locale),
       localeMutation.send({ locale }),
-    ])
-      .then(() => {
-        testFlags.set('updateLocale.success')
-      })
-      .finally(() => {
-        savingLocale.value = false
-      })
+    ]).finally(() => {
+      savingLocale.value = false
+    })
   },
 })
 </script>

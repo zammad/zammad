@@ -3,6 +3,7 @@
 import type { Operation } from '@apollo/client/core'
 import { ApolloLink, createHttpLink, from } from '@apollo/client/core'
 import type { FragmentDefinitionNode, OperationDefinitionNode } from 'graphql'
+import { Kind } from 'graphql'
 import consumer from '@shared/server/action_cable/consumer'
 import { BatchHttpLink } from '@apollo/client/link/batch-http'
 import { getMainDefinition } from '@apollo/client/utilities'
@@ -68,7 +69,22 @@ const actionCableLink = new ActionCableLink({ cable: consumer })
 
 const splitLink = ApolloLink.split(requiresHttpLink, httpLink, actionCableLink)
 
+const testFlagLink = VITE_TEST_MODE
+  ? new ApolloLink((operation, forward) => {
+      return forward(operation).map((response) => {
+        const definition = getMainDefinition(operation.query)
+        if (definition.kind === Kind.FRAGMENT_DEFINITION) return response
+        const operationType = definition.operation
+        const operationName = definition.name?.value
+        const flag = `__gql ${operationType} ${operationName}`
+        window.testFlags?.set(flag)
+        return response
+      })
+    })
+  : ApolloLink.empty()
+
 const link = from([
+  testFlagLink,
   csrfLink,
   errorLink,
   setAuthorizationLink,

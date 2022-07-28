@@ -1,9 +1,5 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import QueryHandler from './QueryHandler'
-import MutationHandler from './MutationHandler'
-import SubscriptionHandler from './SubscriptionHandler'
-
-export { QueryHandler }
-export { MutationHandler }
-export { SubscriptionHandler }
+export { default as QueryHandler } from './QueryHandler'
+export { default as MutationHandler } from './MutationHandler'
+export { default as SubscriptionHandler } from './SubscriptionHandler'
