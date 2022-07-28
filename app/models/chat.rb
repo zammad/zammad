@@ -3,6 +3,8 @@
 class Chat < ApplicationModel
   include ChecksHtmlSanitized
 
+  has_many :sessions, dependent: :destroy
+
   validates :name, presence: true
   store     :preferences
 

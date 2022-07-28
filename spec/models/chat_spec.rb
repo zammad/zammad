@@ -19,4 +19,17 @@ RSpec.describe Chat, type: :model do
       expect(result).to be false
     end
   end
+
+  describe '#destroy' do
+    let(:chat) { create(:chat) }
+    let(:session) { create(:'chat/session', chat: chat) }
+
+    before do
+      session
+    end
+
+    it 'does delete chats properly if they have sessions' do
+      expect { chat.destroy! }.not_to raise_error
+    end
+  end
 end
