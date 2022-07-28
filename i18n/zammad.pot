@@ -9324,6 +9324,10 @@ msgstr ""
 msgid "The language could not be updated."
 msgstr ""
 
+#: app/frontend/apps/mobile/modules/ticket/components/TicketList/TicketList.vue
+msgid "The limit of %s tickets reached (%s remaining)"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_new.coffee
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee

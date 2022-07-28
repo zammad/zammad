@@ -18,6 +18,8 @@ const props = defineProps<{
   overviewLink: string
 }>()
 
+const MAX_COUNT_TICKETS = 2000
+
 const router = useRouter()
 const route = useRoute()
 
@@ -70,12 +72,11 @@ const orderColumnsOptions = computed(() => {
 })
 
 const orderColumnLabels = computed(() => {
-  const map: { [key: string]: string } = {}
   return (
     selectedOverview.value?.orderColumns.reduce((map, entry) => {
       map[entry.key] = entry.value || entry.key
       return map
-    }, map) || {}
+    }, {} as Record<string, string>) || {}
   )
 })
 
@@ -268,6 +269,7 @@ const directionOptions = computed(() => [
         :overview-id="selectedOverview.id"
         :order-by="orderBy"
         :order-direction="orderDirection"
+        :max-count="MAX_COUNT_TICKETS"
       />
     </CommonLoader>
     <div v-else class="flex items-center justify-center gap-2 p-4 text-center">

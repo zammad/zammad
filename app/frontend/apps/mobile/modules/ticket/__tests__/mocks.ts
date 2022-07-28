@@ -35,12 +35,13 @@ export const ticketDefault: Partial<TicketItemByOverview> = {
 export const mockTicketsByOverview = (
   tickets: Partial<TicketItemByOverview>[] = [ticketDefault],
   pageInfo: Partial<TicketByOverviewPageInfo> = {},
+  totalCount: number | null = null,
 ) => {
   return mockGraphQLApi(TicketsByOverviewDocument).willResolve(
     mock<TicketsByOverviewQuery>(
       {
         ticketsByOverview: {
-          totalCount: tickets.length,
+          totalCount: totalCount ?? tickets.length,
           edges: tickets.map((node) => ({ node })),
           pageInfo,
         },

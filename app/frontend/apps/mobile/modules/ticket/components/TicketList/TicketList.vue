@@ -16,6 +16,7 @@ import { useTicketsByOverviewQuery } from '../../graphql/queries/ticketsByOvervi
 
 interface Props {
   overviewId: string
+  maxCount: number
   orderBy: string
   orderDirection: EnumOrderDirection
 }
@@ -47,9 +48,17 @@ const tickets = computed(
       .filter(Boolean) as TicketResultItem[]) || [],
 )
 
+const totalCount = computed(
+  () => ticketsResult.value?.ticketsByOverview.totalCount || 0,
+)
+
 const pagination = usePagination(ticketsQuery, 'ticketsByOverview')
 useInfiniteScroll(window, async () => {
-  if (!loading.value && pagination.hasNextPage) {
+  if (
+    !loading.value &&
+    pagination.hasNextPage &&
+    tickets.value.length < props.maxCount
+  ) {
     await pagination.fetchNextPage()
   }
 })
@@ -66,6 +75,18 @@ useInfiniteScroll(window, async () => {
     />
     <div v-if="!tickets.length" class="px-4 py-3 text-center text-base">
       {{ $t('No entries') }}
+    </div>
+    <div
+      v-else-if="tickets.length >= maxCount && totalCount > maxCount"
+      class="px-4 py-3 text-center text-sm"
+    >
+      {{
+        $t(
+          'The limit of %s tickets reached (%s remaining)',
+          maxCount,
+          totalCount - tickets.length,
+        )
+      }}
     </div>
   </CommonLoader>
 </template>
