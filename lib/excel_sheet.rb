@@ -156,7 +156,7 @@ class ExcelSheet
               record
             end
     case object[:data_type]
-    when 'boolean', %r{^(multi|tree_)?select$}
+    when 'boolean', %r{^(multi)?select$}
       if object[:data_option].present? && object[:data_option]['options'].present?
         value = ObjectManager::Attribute.data_options_hash(object[:data_option]['options'])[value]
       end
