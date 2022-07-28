@@ -167,7 +167,7 @@ GEM
       unf (>= 0.0.5, < 1.0.0)
     doorkeeper (5.5.4)
       railties (>= 5)
-    dotenv (2.8.0)
+    dotenv (2.8.1)
     dry-cli (0.7.0)
     eco (1.0.0)
       coffee-script
@@ -708,4 +708,4 @@ RUBY VERSION
    ruby 3.0.4p208
 
 BUNDLED WITH
-   2.3.18
+   2.3.19
