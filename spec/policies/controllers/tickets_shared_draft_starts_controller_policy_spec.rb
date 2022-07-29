@@ -28,7 +28,7 @@ describe Controllers::TicketsSharedDraftStartsControllerPolicy do
     context 'when has no access to tickets' do
       let(:user) { create(:customer) }
 
-      it { is_expected.not_to permit_action(action_name) }
+      it { is_expected.to forbid_action(action_name) }
     end
   end
 

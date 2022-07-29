@@ -29,7 +29,7 @@ describe Controllers::TicketSharedDraftZoomControllerPolicy do
     end
 
     context 'when has no access to ticket' do
-      it { is_expected.not_to permit_action(action_name) }
+      it { is_expected.to forbid_action(action_name) }
     end
   end
 

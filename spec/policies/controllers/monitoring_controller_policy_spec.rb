@@ -36,7 +36,7 @@ describe Controllers::MonitoringControllerPolicy do
       let(:token_or_permission) { false }
 
       it 'forbids action' do
-        expect(instance).not_to permit_action(action_name)
+        expect(instance).to forbid_action(action_name)
       end
     end
   end
@@ -60,7 +60,7 @@ describe Controllers::MonitoringControllerPolicy do
       let(:permission) { false }
 
       it 'forbids action' do
-        expect(instance).not_to permit_action(action_name)
+        expect(instance).to forbid_action(action_name)
       end
     end
   end
