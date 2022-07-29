@@ -164,9 +164,6 @@ gem 'PoParser', require: false
 # in production environments by default.
 group :development, :test do
 
-  # app boottime improvement
-  gem 'spring'
-
   # watch file changes
   gem 'listen'
 

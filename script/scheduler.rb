@@ -1,12 +1,6 @@
 #!/usr/bin/env ruby
 # Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-begin
-  load File.expand_path('../bin/spring', __dir__)
-rescue LoadError => e
-  raise if e.message.exclude?('spring')
-end
-
 dir = File.expand_path(File.join(File.dirname(__FILE__), '..'))
 Dir.chdir dir
 
@@ -31,15 +25,6 @@ def after_fork(dir)
   @files_to_reopen.each do |file|
     file.reopen file.path, 'a+'
     file.sync = true
-  end
-
-  # Spring redirects STDOUT and STDERR to /dev/null
-  # before we get here. This causes the `reopen` lines
-  # below to fail because the handles are already
-  # opened for write
-  if defined?(Spring)
-    $stdout.close
-    $stderr.close
   end
 
   $stdout.reopen("#{dir}/log/scheduler_out.log", 'w')

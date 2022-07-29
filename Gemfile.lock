@@ -518,7 +518,6 @@ GEM
       hashie
       websocket-driver
     slop (3.6.0)
-    spring (4.0.0)
     sprockets (3.7.2)
       concurrent-ruby (~> 1.0)
       rack (> 1, < 3)
@@ -686,7 +685,6 @@ DEPENDENCIES
   shoulda-matchers
   slack-notifier
   slack-ruby-client
-  spring
   sprockets (~> 3.7.2)
   tcr
   telegramAPI!
