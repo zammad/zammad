@@ -5,6 +5,32 @@ and in combination with Capybara also Selenium based end-to-end tests.
 
 This page explains some Zammad specific extensions that make testing easier.
 
+## Running
+
+To run tests locally in the test environment, you need to first ensure the `test` database is in the expected state:
+
+```sh
+$ RAILS_ENV=test bundle exec rake db:drop db:create zammad:ci:test:prepare
+```
+
+Now, running a single test can be done via the following command:
+
+```sh
+$ bundle exec rspec spec/system/ticket/zoom_spec.rb
+```
+
+Note that it's also possible to run a specific test case by including the line number in the command:
+
+```sh
+$ bundle exec rspec spec/system/ticket/zoom_spec.rb:1072
+```
+
+If you would like to specify the used browser for Capybara end-to-end tests, simply set the `BROWSER` environment variable:
+
+```sh
+BROWSER=firefox bundle exec rspec spec/system/ticket/zoom_spec.rb
+```
+
 ## Default RSpec Environment
 
 RSpec will populate the database at startup. These users are available in any test right away:
