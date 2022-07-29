@@ -1,0 +1,21 @@
+subscription ticketUpdates(
+  $ticketId: ID!
+  $withArticles: Boolean = false
+  $withObjectAttributes: Boolean = false
+) {
+  ticketUpdates(ticketId: $ticketId) {
+    ticket {
+      ...ticketAttributes
+      articles @include(if: $withArticles) {
+        edges {
+          node {
+            ...ticketArticleAttributes
+          }
+        }
+      }
+      objectAttributeValues @include(if: $withObjectAttributes) {
+        ...objectAttributeValues
+      }
+    }
+  }
+}

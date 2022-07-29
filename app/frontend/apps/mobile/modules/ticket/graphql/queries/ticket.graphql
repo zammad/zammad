@@ -12,63 +12,11 @@ query ticket(
       ticketNumber: $ticketNumber
     }
   ) {
-    id
-    internalId
-    number
-    title
-    createdAt
-    updatedAt
-    owner {
-      firstname
-      lastname
-    }
-    customer {
-      id
-      firstname
-      lastname
-      fullname
-    }
-    organization {
-      name
-    }
-    state {
-      name
-      stateType {
-        name
-      }
-    }
-    group {
-      name
-    }
-    priority {
-      name
-      defaultCreate
-      uiColor
-    }
+    ...ticketAttributes
     articles @include(if: $withArticles) {
       edges {
         node {
-          id
-          internal
-          body
-          createdAt
-          createdBy {
-            id
-            firstname
-            lastname
-          }
-          sender {
-            name
-          }
-          subject
-          to {
-            raw
-            parsed {
-              name
-              emailAddress
-            }
-          }
-          internal
+          ...ticketArticleAttributes
         }
       }
     }

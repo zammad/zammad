@@ -8,7 +8,11 @@ RSpec.describe Gql::Queries::CurrentUser, type: :graphql do
     let(:organization) { create(:organization) }
     let(:agent)        { create(:agent, department: 'TestDepartment', organization: organization) }
     let(:query) do
-      gql.read_files('shared/graphql/queries/currentUser.graphql', 'shared/graphql/fragments/objectAttributeValues.graphql')
+      gql.read_files(
+        'shared/graphql/queries/currentUser.graphql',
+        'shared/graphql/fragments/currentUserAttributes.graphql',
+        'shared/graphql/fragments/objectAttributeValues.graphql'
+      )
     end
 
     before do

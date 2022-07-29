@@ -7,7 +7,12 @@ RSpec.describe Gql::Queries::Ticket, type: :graphql do
   context 'when fetching tickets' do
     let(:agent)     { create(:agent) }
     let(:query)     do
-      gql.read_files('apps/mobile/modules/ticket/graphql/queries/ticket.graphql', 'shared/graphql/fragments/objectAttributeValues.graphql')
+      gql.read_files(
+        'apps/mobile/modules/ticket/graphql/queries/ticket.graphql',
+        'apps/mobile/modules/ticket/graphql/fragments/ticketAttributes.graphql',
+        'apps/mobile/modules/ticket/graphql/fragments/ticketArticleAttributes.graphql',
+        'shared/graphql/fragments/objectAttributeValues.graphql'
+      )
     end
     let(:variables) { { ticketId: gql.id(ticket) } }
     let(:ticket)    { create(:ticket) }

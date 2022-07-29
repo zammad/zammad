@@ -1,0 +1,35 @@
+fragment ticketAttributes on Ticket {
+  id
+  internalId
+  number
+  title
+  createdAt
+  updatedAt
+  owner {
+    firstname
+    lastname
+  }
+  customer {
+    id
+    firstname
+    lastname
+    fullname
+  }
+  organization {
+    name
+  }
+  state {
+    name
+    stateType {
+      name
+    }
+  }
+  group {
+    name
+  }
+  priority {
+    name
+    defaultCreate
+    uiColor
+  }
+}

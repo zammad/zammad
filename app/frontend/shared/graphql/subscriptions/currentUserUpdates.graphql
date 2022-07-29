@@ -1,23 +1,7 @@
 subscription currentUserUpdates($userId: ID!) {
   userUpdates(userId: $userId) {
     user {
-      id
-      firstname
-      lastname
-      fullname
-      preferences
-      objectAttributeValues {
-        ...objectAttributeValues
-      }
-      organization {
-        name
-        objectAttributeValues {
-          ...objectAttributeValues
-        }
-      }
-      permissions {
-        names
-      }
+      ...currentUserAttributes
     }
   }
 }

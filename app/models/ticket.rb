@@ -20,6 +20,7 @@ class Ticket < ApplicationModel
   include Ticket::SetsCloseTime
   include Ticket::SetsOnlineNotificationSeen
   include Ticket::TouchesAssociations
+  include Ticket::TriggersSubscriptions
 
   include ::Ticket::Escalation
   include ::Ticket::Subject

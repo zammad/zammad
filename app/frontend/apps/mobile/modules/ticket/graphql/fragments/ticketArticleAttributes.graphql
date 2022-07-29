@@ -1,0 +1,23 @@
+fragment ticketArticleAttributes on TicketArticle {
+  id
+  internal
+  body
+  createdAt
+  createdBy {
+    id
+    firstname
+    lastname
+  }
+  sender {
+    name
+  }
+  subject
+  to {
+    raw
+    parsed {
+      name
+      emailAddress
+    }
+  }
+  internal
+}

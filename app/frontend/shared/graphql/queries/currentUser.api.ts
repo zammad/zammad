@@ -1,7 +1,7 @@
 import * as Types from '../types';
 
 import gql from 'graphql-tag';
-import { ObjectAttributeValuesFragmentDoc } from '../fragments/objectAttributeValues.api';
+import { CurrentUserAttributesFragmentDoc } from '../fragments/currentUserAttributes.api';
 import * as VueApolloComposable from '@vue/apollo-composable';
 import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
@@ -9,27 +9,10 @@ export type ReactiveFunction<TParam> = () => TParam;
 export const CurrentUserDocument = gql`
     query currentUser {
   currentUser {
-    id
-    firstname
-    lastname
-    fullname
-    image
-    preferences
-    objectAttributeValues {
-      ...objectAttributeValues
-    }
-    organization {
-      name
-      objectAttributeValues {
-        ...objectAttributeValues
-      }
-    }
-    permissions {
-      names
-    }
+    ...currentUserAttributes
   }
 }
-    ${ObjectAttributeValuesFragmentDoc}`;
+    ${CurrentUserAttributesFragmentDoc}`;
 export function useCurrentUserQuery(options: VueApolloComposable.UseQueryOptions<Types.CurrentUserQuery, Types.CurrentUserQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.CurrentUserQuery, Types.CurrentUserQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.CurrentUserQuery, Types.CurrentUserQueryVariables>> = {}) {
   return VueApolloComposable.useQuery<Types.CurrentUserQuery, Types.CurrentUserQueryVariables>(CurrentUserDocument, {}, options);
 }

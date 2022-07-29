@@ -11,10 +11,10 @@ import { mockGraphQLApi } from '@tests/support/mock-graphql-api'
 import { waitUntil } from '@tests/support/utils'
 import { flushPromises } from '@vue/test-utils'
 import { TicketDocument } from '../graphql/queries/ticket.api'
-import { mockTicketDetailvViewGql } from './mocks/detailed-view'
+import { mockTicketDetailViewGql } from './mocks/detailed-view'
 
 test('statics inside ticket zoom view', async () => {
-  const { waitUntillTickesLoaded } = mockTicketDetailvViewGql()
+  const { waitUntilTicketLoaded } = mockTicketDetailViewGql()
 
   const view = await visitView('/tickets/1')
 
@@ -22,7 +22,7 @@ test('statics inside ticket zoom view', async () => {
   expect(view.getByTestId('loader-title')).toBeInTheDocument()
   expect(view.getByTestId('loader-header')).toBeInTheDocument()
 
-  await waitUntillTickesLoaded()
+  await waitUntilTicketLoaded()
 
   const header = view.getByTestId('header-content')
 
@@ -66,11 +66,11 @@ test('statics inside ticket zoom view', async () => {
 })
 
 test('can refresh data by pulling up', async () => {
-  const { waitUntillTickesLoaded } = mockTicketDetailvViewGql()
+  const { waitUntilTicketLoaded } = mockTicketDetailViewGql()
 
   const view = await visitView('/tickets/1')
 
-  await waitUntillTickesLoaded()
+  await waitUntilTicketLoaded()
 
   const articlesElement = view.getByRole('group', { name: 'Articles' })
 
@@ -133,11 +133,11 @@ test("redirects to error page, if can't find ticket", async () => {
 })
 
 test('show article context on click', async () => {
-  const { waitUntillTickesLoaded } = mockTicketDetailvViewGql()
+  const { waitUntilTicketLoaded } = mockTicketDetailViewGql()
 
   const view = await visitView('/tickets/1')
 
-  await waitUntillTickesLoaded()
+  await waitUntilTicketLoaded()
 
   vi.useRealTimers()
 

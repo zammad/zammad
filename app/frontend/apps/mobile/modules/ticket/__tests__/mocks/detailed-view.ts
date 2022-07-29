@@ -15,11 +15,13 @@ const ticketDate = new Date(2022, 0, 29, 0, 0, 0, 0)
 
 export const defaultTicket = mock<TicketQuery>({
   ticket: {
+    __typename: 'Ticket',
     id: '1fs432fdsfsg3qr32d',
     internalId: 1,
     number: '610001',
-    createdAt: ticketDate.toISOString(),
     title: 'Test Ticket View',
+    createdAt: ticketDate.toISOString(),
+    updatedAt: ticketDate.toISOString(),
     owner: {
       firstname: 'Max',
       lastname: 'Mustermann',
@@ -38,6 +40,9 @@ export const defaultTicket = mock<TicketQuery>({
       stateType: {
         name: TicketState.Open,
       },
+    },
+    group: {
+      name: 'Users',
     },
     priority: {
       name: 'low',
@@ -58,6 +63,7 @@ export const defaultArticles = mock<TicketArticlesQuery>({
     edges: [
       {
         node: {
+          __typename: 'TicketArticle',
           id: '1fs432fdsfsg3qr32d',
           internalId: 1,
           createdAt: ticketDate.toISOString(),
@@ -84,6 +90,7 @@ export const defaultArticles = mock<TicketArticlesQuery>({
       },
       {
         node: {
+          __typename: 'TicketArticle',
           id: '1fs432fdsfsg3qr32f',
           internalId: 2,
           to: address,
@@ -110,6 +117,7 @@ export const defaultArticles = mock<TicketArticlesQuery>({
       },
       {
         node: {
+          __typename: 'TicketArticle',
           id: '1fs432fdsfsg3qr30f',
           internalId: 3,
           to: address,
@@ -142,7 +150,7 @@ export const defaultArticles = mock<TicketArticlesQuery>({
   },
 })
 
-export const mockTicketDetailvViewGql = () => {
+export const mockTicketDetailViewGql = () => {
   mockPermissions(['admin.*'])
 
   const mockApiTicket =
@@ -151,7 +159,7 @@ export const mockTicketDetailvViewGql = () => {
     defaultArticles,
   )
 
-  const waitUntillTickesLoaded = async () => {
+  const waitUntilTicketLoaded = async () => {
     await waitUntil(
       () => mockApiTicket.calls.resolve && mockApiArticles.calls.resolve,
     )
@@ -160,6 +168,6 @@ export const mockTicketDetailvViewGql = () => {
   return {
     mockApiArticles,
     mockApiTicket,
-    waitUntillTickesLoaded,
+    waitUntilTicketLoaded,
   }
 }
