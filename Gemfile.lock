@@ -115,7 +115,7 @@ GEM
     biz (1.8.2)
       clavius (~> 1.0)
       tzinfo
-    bootsnap (1.12.0)
+    bootsnap (1.13.0)
       msgpack (~> 1.2)
     brakeman (5.2.3)
     browser (5.3.1)
@@ -287,7 +287,7 @@ GEM
     mini_mime (1.1.2)
     mini_portile2 (2.8.0)
     minitest (5.16.2)
-    msgpack (1.5.2)
+    msgpack (1.5.4)
     multi_json (1.15.0)
     multi_xml (0.6.0)
     multipart-post (2.2.3)
