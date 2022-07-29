@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-07-04 08:42+0000\n"
-"Last-Translator: JPB <jeffreypeerboom@eijsden-margraten.nl>\n"
+"PO-Revision-Date: 2022-07-29 02:19+0000\n"
+"Last-Translator: Wim Deprez <wim@tamale.nl>\n"
 "Language-Team: Dutch <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/nl/>\n"
 "Language: nl-nl\n"
@@ -4874,31 +4874,31 @@ msgstr "Formaat"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Format as //strikethrough//"
-msgstr "Formateer als //doorgestreept//"
+msgstr "Opmaken als //doorgestreept//"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Format as _underlined_"
-msgstr "Formateer als _onderstreept_"
+msgstr "Opmaken als _onderstreept_"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Format as h1 heading"
-msgstr "Formaat als h1-rubriek\t"
+msgstr "Opmaken als h1-rubriek"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Format as h2 heading"
-msgstr "Formaat als h2-rubriek\t"
+msgstr "Opmaken als h2-rubriek"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Format as h3 heading"
-msgstr "Formaat als h3-rubriek\t"
+msgstr "Opmaken als h3-rubriek"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Format as ordered list"
-msgstr "Formaat als geordende lijst"
+msgstr "Opmaken als geordende lijst"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Format as unordered list"
-msgstr "Formaat als ongeordende lijst"
+msgstr "Opmaken als ongeordende lijst"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Format as |bold|"
@@ -4906,7 +4906,7 @@ msgstr "Opmaken als |vetgedrukt|"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Format as ||italic||"
-msgstr "Vorm als ||cursief||"
+msgstr "Opmaken als ||cursief||"
 
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco
 msgid "Frequency"
@@ -8399,7 +8399,7 @@ msgstr "Verwijderd de formattering"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Removes any hyperlink"
-msgstr "Verwijderd elke hyperlink"
+msgstr "Verwijdert elke hyperlink"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Removes the formatting"

@@ -2,16 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-05-31 03:30+0000\n"
-"Last-Translator: Danniel Macedo <djsmacedo@gmail.com>\n"
+"PO-Revision-Date: 2022-07-29 02:19+0000\n"
+"Last-Translator: Diego <diegowave@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translations.zammad.org/projects/"
-"zammad/zammad-development/pt_BR/>\n"
+"zammad/zammad-stable/pt_BR/>\n"
 "Language: pt-br\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.12.1\n"
+"X-Generator: Weblate 4.13\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -47,7 +47,7 @@ msgstr "dd/mm/yyyy HH:MM"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid " to "
-msgstr ""
+msgstr " para "
 
 #: db/seeds/settings.rb
 msgid ""
@@ -138,10 +138,8 @@ msgid "%s credentials"
 msgstr "%s credenciais"
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "%s ago"
 msgid "%s days ago"
-msgstr "%s atrás"
+msgstr "%s dias atrás"
 
 #: app/assets/javascripts/app/models/user.coffee
 msgid "%s ended switch to |%s|!"
@@ -158,10 +156,8 @@ msgid "%s groups to %s roles assignments"
 msgstr "atribuições de %s grupos para %s perfis"
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "%s ago"
 msgid "%s hours ago"
-msgstr "%s atrás"
+msgstr "%s horas atrás"
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
@@ -171,16 +167,12 @@ msgid "%s is inactive, please select an active one."
 msgstr "%s está inativo, por favor, selecione um ativo."
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "minutes"
 msgid "%s minutes ago"
-msgstr "minutos"
+msgstr "%s minutos atrás"
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "%s ago"
 msgid "%s months ago"
-msgstr "%s atrás"
+msgstr "%s meses atrás"
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
 msgid "%s object(s) have been created."
@@ -245,10 +237,8 @@ msgstr "%s alternou para |%s|!"
 
 #: app/frontend/apps/mobile/components/Organization/OrganizationItem.vue
 #: app/frontend/apps/mobile/components/User/UserItem.vue
-#, fuzzy
-#| msgid "assign tickets"
 msgid "%s tickets"
-msgstr "tickets assinados"
+msgstr "%s tickets"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee
 msgid "%s updated article for |%s|"
@@ -288,16 +278,12 @@ msgid "%s user to %s user"
 msgstr "%s usuário para %s usuário"
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "%s ago"
 msgid "%s weeks ago"
-msgstr "%s atrás"
+msgstr "%s semanas atrás"
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "%s ago"
 msgid "%s years ago"
-msgstr "%s atrás"
+msgstr "%s anos atrás"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco
 msgid "%s% are currently in process"
@@ -368,48 +354,40 @@ msgid "1 day"
 msgstr "1 dia"
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "1 day"
 msgid "1 day ago"
-msgstr "1 dia"
+msgstr "1 dia atrás"
 
 #: db/seeds/settings.rb
 msgid "1 hour"
 msgstr "1 hora"
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "1 hour"
 msgid "1 hour ago"
-msgstr "1 hora"
+msgstr "1 hora atrás"
 
 #: db/seeds/ticket_priorities.rb
 msgid "1 low"
 msgstr "1 baixo"
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "minute"
 msgid "1 minute ago"
-msgstr "minuto"
+msgstr "1 minuto atrás"
 
 #: app/frontend/shared/i18n/dates.ts
 msgid "1 month ago"
-msgstr ""
+msgstr "1 mês atrás"
 
 #: db/seeds/settings.rb
 msgid "1 week"
 msgstr "1 semana"
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "1 week"
 msgid "1 week ago"
-msgstr "1 semana"
+msgstr "1 semana atrás"
 
 #: app/frontend/shared/i18n/dates.ts
 msgid "1 year ago"
-msgstr ""
+msgstr "1 ano atrás"
 
 #: db/seeds/settings.rb
 msgid "2 hours"
@@ -485,12 +463,11 @@ msgstr ""
 "Uma nova versão do zammad está disponível, por favor, atualize seu navegador."
 
 #: app/frontend/shared/composables/useAppMaintenanceCheck.ts
-#, fuzzy
-#| msgid "A new version of Zammad is available, please reload your browser."
 msgid ""
 "A newer version of the app is available. Please reload at your earliest."
 msgstr ""
-"Uma nova versão do zammad está disponível, por favor, atualize seu navegador."
+"Uma versão mais nova do aplicativo está disponível. Por favor, recarregue "
+"quando possível."
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee
 msgid "A powerful service to get more information about your customers."
@@ -550,7 +527,7 @@ msgstr "API token"
 
 #: app/frontend/apps/mobile/modules/account/views/AccountOverview.vue
 msgid "About"
-msgstr ""
+msgstr "Sobre"
 
 #: db/seeds/permissions.rb
 msgid "Access to %s"
@@ -681,10 +658,8 @@ msgid "Active Agents"
 msgstr "Agentes ativos"
 
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
-#, fuzzy
-#| msgid "Active"
 msgid "Activity"
-msgstr "Ativo"
+msgstr "Atividade"
 
 #: app/assets/javascripts/app/views/dashboard.jst.eco
 msgid "Activity Stream"
@@ -778,33 +753,27 @@ msgstr "Adicionar opção de anexo no upload."
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Add bullet list"
-msgstr ""
+msgstr "Adicionar marcadores"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Add first level heading"
-msgstr ""
+msgstr "Adicionar título de primeiro nível"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
-#, fuzzy
-#| msgid "Add Tag"
 msgid "Add image"
-msgstr "Adicionar Tag"
+msgstr "Adicionar imagem"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
-#, fuzzy
-#| msgid "Add Link"
 msgid "Add link"
 msgstr "Adicionar Link"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
-#, fuzzy
-#| msgid "Format as ordered list"
 msgid "Add ordered list"
-msgstr "Formata lista ordenada"
+msgstr "Adiciona lista ordenada"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Add second level heading"
-msgstr ""
+msgstr "Adicionar título de segundo nível"
 
 #: db/seeds/settings.rb
 msgid "Add sender initials to end of a tweet."
@@ -812,7 +781,7 @@ msgstr "Add sender initials to end of a tweet."
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Add third level heading"
-msgstr ""
+msgstr "Adicionar título de terceiro nível"
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
 msgid "Add this class to a button on your page that should open the chat."
@@ -966,17 +935,13 @@ msgstr ""
 "Como alternativa, você pode usar a API do Help Desk para importar dados."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_calendar_view.coffee
-#, fuzzy
-#| msgid "An error occurred: %s"
 msgid "An error has occurred"
-msgstr "Ocorreu um erro: %s"
+msgstr "Ocorreu um erro"
 
 #: app/frontend/shared/server/apollo/handler/BaseHandler.ts
-#, fuzzy
-#| msgid "Unable to verify email. Please contact your administrator."
 msgid ""
 "An error occured during the operation. Please contact your administrator."
-msgstr "Não foi possível verificar e-mail. Por favor contate um administrador."
+msgstr "Ocorreu um erro durante a operação. Por favor contate um administrador."
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
@@ -1068,10 +1033,8 @@ msgid "Apply"
 msgstr "Aplicar"
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
-#, fuzzy
-#| msgid "Apply"
 msgid "Apply Draft"
-msgstr "Aplicar"
+msgstr "Aplicar rascunho"
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
 msgid "Apply Shared Draft"
@@ -1129,7 +1092,7 @@ msgstr "Artigo"
 
 #: db/seeds/settings.rb
 msgid "Article - visibility confirmation dialog"
-msgstr ""
+msgstr "Artigo - caixa de confirmação de visibilidade"
 
 #: lib/excel_sheet/ticket.rb
 msgid "Article Count"
