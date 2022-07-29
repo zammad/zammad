@@ -41,15 +41,13 @@ class ConfigureEnvironment
 
   # Detect service availability based on host presence in network.
   def self.network_host_exists?(hostname)
-    if %w[1 true].include?(ENV['FF_NETWORK_PER_BUILD'])
-      begin
-        !!Resolv::DNS.new.tap { |dns| dns.timeouts = 3 }.getaddress(hostname)
-      rescue Resolv::ResolvError
-        false
-      end
-    else
-      File.foreach('/etc/hosts').any? { |l| l[hostname] }
-    end
+    # GitLab used the /etc/hosts file if FF_NETWORK_PER_BUILD is not set.
+    return true if File.foreach('/etc/hosts').any? { |l| l[hostname] }
+
+    # Fall back to DNS lookup, also for GitHub
+    !!Resolv::DNS.new.tap { |dns| dns.timeouts = 3 }.getaddress(hostname)
+  rescue Resolv::ResolvError
+    false
   end
 
   def self.configure_database # rubocop:disable Metrics/AbcSize
