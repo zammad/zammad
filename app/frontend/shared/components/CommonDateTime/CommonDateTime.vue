@@ -3,34 +3,47 @@
 <script setup lang="ts">
 import type { ComputedRef } from 'vue'
 import { computed } from 'vue'
+import { i18n } from '@shared/i18n'
 import useApplicationStore from '@shared/stores/application'
-import type { DateTimeFormat } from './types'
+import type { DateTimeType, DateTimeAbsoluteFormat } from './types'
 
 export interface Props {
   dateTime: string
-  format?: DateTimeFormat
+  type?: DateTimeType
+  absoluteFormat?: DateTimeAbsoluteFormat
 }
 
-type OutputFormat = Exclude<DateTimeFormat, 'configured'>
+type OutputType = Exclude<DateTimeType, 'configured'>
 
 const props = withDefaults(defineProps<Props>(), {
-  format: 'configured',
+  type: 'configured',
+  absoluteFormat: 'datetime',
 })
 
 const application = useApplicationStore()
 
-const outputFormat: ComputedRef<OutputFormat> = computed(() => {
-  if (props.format !== 'configured') return props.format
+const outputFormat: ComputedRef<OutputType> = computed(() => {
+  if (props.type !== 'configured') return props.type
 
   return application.config.pretty_date_format === 'relative'
     ? 'relative'
     : 'absolute'
 })
+
+const outputAbsoluteDate = computed(() => {
+  if (props.absoluteFormat === 'date') return i18n.date(props.dateTime)
+  return i18n.dateTime(props.dateTime)
+})
 </script>
 
 <template>
-  <span v-if="outputFormat === 'absolute'">{{ i18n.dateTime(dateTime) }}</span>
-  <span v-else :title="i18n.dateTime(dateTime)">{{
-    i18n.relativeDateTime(dateTime)
-  }}</span>
+  <span v-if="outputFormat === 'absolute'" data-test-id="date-time-absolute">
+    {{ outputAbsoluteDate }}
+  </span>
+  <span
+    v-else
+    :title="i18n.dateTime(dateTime)"
+    data-test-id="date-time-relative"
+    >{{ i18n.relativeDateTime(dateTime) }}</span
+  >
 </template>

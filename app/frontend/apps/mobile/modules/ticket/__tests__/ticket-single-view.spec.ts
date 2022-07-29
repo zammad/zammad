@@ -4,7 +4,7 @@ const now = new Date(2022, 1, 1, 0, 0, 0, 0)
 vi.setSystemTime(now)
 
 import { ErrorStatusCodes } from '@shared/types/error'
-import { getAllByRole } from '@testing-library/vue'
+import { getAllByTestId } from '@testing-library/vue'
 import { getTestRouter } from '@tests/support/components/renderComponent'
 import { visitView } from '@tests/support/components/visitView'
 import { mockGraphQLApi } from '@tests/support/mock-graphql-api'
@@ -36,7 +36,8 @@ test('statics inside ticket zoom view', async () => {
 
   const articlesElement = view.getByRole('group', { name: 'Articles' })
 
-  const times = getAllByRole(articlesElement, 'time')
+  const times = getAllByTestId(articlesElement, 'date-time-absolute')
+  console.log('times', times)
 
   expect(times).toHaveLength(2)
   expect(times[0]).toHaveTextContent('2022-01-29')

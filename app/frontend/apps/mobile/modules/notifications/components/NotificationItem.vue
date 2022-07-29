@@ -52,7 +52,7 @@ defineEmits<{
           <!-- TODO what name? -->
           Gina
           <div class="px-1">·</div>
-          {{ i18n.relativeDateTime(notification.createdAt) }}
+          <CommonDateTime :date-time="notification.createdAt" type="relative" />
         </div>
       </div>
     </div>

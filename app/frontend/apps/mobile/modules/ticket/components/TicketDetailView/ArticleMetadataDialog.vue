@@ -79,7 +79,7 @@ const links = computed(() => {
         </div>
       </CommonSectionMenuItem>
       <CommonSectionMenuItem :label="__('Sent')">
-        <CommonDateTime :date-time="article.createdAt" format="absolute" />
+        <CommonDateTime :date-time="article.createdAt" type="absolute" />
       </CommonSectionMenuItem>
     </CommonSectionMenu>
   </CommonDialog>

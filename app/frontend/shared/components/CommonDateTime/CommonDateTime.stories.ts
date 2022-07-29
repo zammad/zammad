@@ -16,9 +16,13 @@ export default {
         type: 'date',
       },
     },
-    format: {
+    type: {
       control: { type: 'select' },
       options: ['absolute', 'relative'],
+    },
+    absoluteFormat: {
+      control: { type: 'select' },
+      options: ['date', 'datetime'],
     },
   },
 }
@@ -34,11 +38,12 @@ const Template: Story<Props> = (args: Props) => ({
 export const AbsoluteDateTime = Template.bind({})
 AbsoluteDateTime.args = {
   dateTime: '2020-10-10 10:10:11',
-  format: 'absolute',
+  type: 'absolute',
+  absoluteFormat: 'date',
 }
 
 export const RelativeDateTime = Template.bind({})
 RelativeDateTime.args = {
   dateTime: '2020-10-10 10:10:11',
-  format: 'relative',
+  type: 'relative',
 }

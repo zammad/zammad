@@ -10,6 +10,6 @@ defineProps<Props>()
 
 <template>
   <div class="text-center text-gray">
-    <time role="time" :datetime="date">{{ date }}</time>
+    <CommonDateTime :date-time="date" type="absolute" absolute-format="date" />
   </div>
 </template>
