@@ -10,10 +10,9 @@ module Gql::Types
     field :size, Integer, null: true, description: 'File size in bytes'
     field :type, String, null: true, description: "File's content-type."
 
-    # TODO: StorePolicy is missing right now...
-    # def self.authorize(object, ctx)
-    #   Pundit.authorize ctx.current_user, object, :show?
-    # end
+    def self.authorize(object, ctx)
+      Pundit.authorize ctx.current_user, object, :show?
+    end
 
     def type
       object.preferences['Content-Type']
