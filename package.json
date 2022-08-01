@@ -77,7 +77,7 @@
     "vite": "^3.0.2",
     "vite-plugin-ruby": "^3.1.2",
     "vite-plugin-svg-icons": "^2.0.1",
-    "vitest": "^0.19.1",
+    "vitest": "^0.20.2",
     "vitest-mock-extended": "^0.1.10",
     "vue-tsc": "^0.39.4"
   },
