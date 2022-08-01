@@ -10,7 +10,7 @@ module Gql::Subscriptions
     field :ticket, Gql::Types::TicketType, null: true, description: 'Updated ticket'
 
     def authorized?(ticket_id:)
-      Gql::ZammadSchema.authorized_object_from_id(ticket_id, type: ::Ticket, user: context.current_user).present?
+      Gql::ZammadSchema.authorized_object_from_id ticket_id, type: ::Ticket, user: context.current_user
     end
 
     def update(ticket_id:)

@@ -22,6 +22,21 @@ module Gql::Subscriptions
       end
     end
 
+    # Shortcut method to trigger a subscription. Just call:
+    #
+    #   Gql::Subscriptions::MyScubscription.trigger(
+    #     self,                             # object to pass as payload,
+    #     arguments: { 'filter' => arg },   # custom arguments
+    #   )
+    def self.trigger(object, arguments: {}, scope: nil)
+      ::Gql::ZammadSchema.subscriptions.trigger(
+        graphql_field_name,
+        arguments,
+        object,
+        scope: scope
+      )
+    end
+
     #
     # Default subscribe implementation that returns nothing. For this to work, all fields must have null: true.
     # Otherwise, you can provide a subscribe method in the inheriting class.

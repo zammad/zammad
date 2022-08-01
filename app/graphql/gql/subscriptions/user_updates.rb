@@ -3,23 +3,18 @@
 module Gql::Subscriptions
   class UserUpdates < BaseSubscription
 
-    argument :user_id, GraphQL::Types::ID, 'ID of the user to receive updates for', loads: Gql::Types::UserType
+    argument :user_id, GraphQL::Types::ID, 'ID of the user to receive updates for'
 
     description 'Updates to user records'
 
     field :user, Gql::Types::UserType, null: true, description: 'Updated user'
 
     # Instance method: allow subscriptions only for users where the current user has read permission for.
-    def authorized?(user:)
-      Pundit.authorize context.current_user, user, :show?
+    def authorized?(user_id:)
+      ::Gql::ZammadSchema.authorized_object_from_id user_id, type: ::User, user: context.current_user
     end
 
-    def update(user:)
-      # Safeguard, this should not happen.
-      if user.id != object.id
-        return no_update
-      end
-
+    def update(user_id:)
       { user: object }
     end
   end

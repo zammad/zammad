@@ -25,14 +25,7 @@ To execute this manually, just paste the following into the browser console
     data = @payload['data']
     return if data['type'] != 'message'
 
-    Gql::ZammadSchema.subscriptions.trigger(
-      Gql::Subscriptions::PushMessages.field_name,
-      {},
-      {
-        title: data['head'],
-        text:  data['message'],
-      }
-    )
+    Gql::Subscriptions::PushMessages.trigger({ title: data['head'], text: data['message'] })
     false
   end
 
