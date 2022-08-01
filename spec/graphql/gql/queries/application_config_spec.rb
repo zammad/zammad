@@ -21,6 +21,13 @@ RSpec.describe Gql::Queries::ApplicationConfig, type: :graphql do
         expect(gql.result.data).to include({ 'key' => 'system_id', 'value' => Setting.get('system_id') })
       end
 
+      it 'returns data for Rails.application.config' do
+        expect(gql.result.data).to include({
+                                             'key'   => 'active_storage.web_image_content_types',
+                                             'value' => Rails.application.config.active_storage.web_image_content_types,
+                                           })
+      end
+
       it 'hides non-frontend data' do
         expect(gql.result.data.select { |s| s['key'].eql?('storage_provider') }).to be_empty
       end

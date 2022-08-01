@@ -13,6 +13,12 @@ module Gql::Queries
 
     # Reimplemented from sessions_controller#config_frontend.
     def resolve(...)
+      frontend_settings + rails_application_config
+    end
+
+    private
+
+    def frontend_settings
       result = []
       unauthenticated = context.current_user?.nil?
       Setting.select('name, preferences').where(frontend: true).each do |setting|
@@ -26,5 +32,19 @@ module Gql::Queries
       result
     end
 
+    def rails_application_config
+      relevant_configs = [
+        'active_storage.web_image_content_types',
+      ]
+
+      relevant_configs.map do |config_name|
+        (method, key) = config_name.split('.')
+
+        value = Rails.application.config.send(method)
+        value = value[key.to_sym] if key.present?
+
+        { key: config_name, value: value }
+      end
+    end
   end
 end

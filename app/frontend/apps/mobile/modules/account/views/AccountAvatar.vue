@@ -8,6 +8,7 @@ import 'vue-advanced-cropper/dist/style.css'
 import type { ImageFileData } from '@shared/utils/files'
 import { convertFileList } from '@shared/utils/files'
 import { useSessionStore } from '@shared/stores/session'
+import useApplicationStore from '@shared/stores/application'
 import {
   useNotifications,
   NotificationTypes,
@@ -177,6 +178,18 @@ const cancelCropping = () => {
   avatarImage.value = undefined
   state.image = activeAvatar.value?.imageResize || ''
 }
+
+const application = useApplicationStore()
+const allowedImageTypes = computed(() => {
+  if (!application.config['active_storage.web_image_content_types'])
+    return 'image/*'
+
+  const types = application.config[
+    'active_storage.web_image_content_types'
+  ] as Array<string>
+
+  return types.join(',')
+})
 </script>
 
 <template>
@@ -218,7 +231,7 @@ const cancelCropping = () => {
         data-test-id="fileGalleryInput"
         type="file"
         class="hidden"
-        accept="image/*"
+        :accept="allowedImageTypes"
         @change="loadAvatar(fileGalleryInput)"
       />
 
@@ -227,7 +240,7 @@ const cancelCropping = () => {
         data-test-id="fileCameraInput"
         type="file"
         class="hidden"
-        accept="image/*"
+        :accept="allowedImageTypes"
         capture="environment"
         @change="loadAvatar(fileCameraInput)"
       />
