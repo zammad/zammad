@@ -5,6 +5,7 @@ import CommonDialog from '@mobile/components/CommonDialog/CommonDialog.vue'
 import CommonSectionMenu from '@mobile/components/CommonSectionMenu/CommonSectionMenu.vue'
 import CommonSectionMenuItem from '@mobile/components/CommonSectionMenu/CommonSectionMenuItem.vue'
 import { computed } from 'vue'
+import ArticleMetadataAddress from './ArticleMetadataAddress.vue'
 import type { TicketArticle } from '../../types/tickets'
 
 interface Props {
@@ -39,19 +40,13 @@ const links = computed(() => {
 <template>
   <CommonDialog :label="__('Meta Data')" :name="name" class="px-4">
     <CommonSectionMenu>
-      <!-- TODO return in a different format: https://github.com/zammad/coordination-feature-mobile-view/issues/151 -->
-      <CommonSectionMenuItem v-if="article.from" :label="__('From')">
-        <div>{{ article.from.raw }}</div>
-      </CommonSectionMenuItem>
-      <CommonSectionMenuItem v-if="article.replyTo" :label="__('Reply-To')">
-        <div>{{ article.replyTo.raw }}</div>
-      </CommonSectionMenuItem>
-      <CommonSectionMenuItem v-if="article.to" :label="__('To')">
-        <div>{{ article.to.raw }}</div>
-      </CommonSectionMenuItem>
-      <CommonSectionMenuItem v-if="article.cc" :label="__('CC')">
-        <div>{{ article.cc.raw }}</div>
-      </CommonSectionMenuItem>
+      <ArticleMetadataAddress :address="article.from" :label="__('From')" />
+      <ArticleMetadataAddress
+        :address="article.replyTo"
+        :label="__('Reply-To')"
+      />
+      <ArticleMetadataAddress :address="article.to" :label="__('To')" />
+      <ArticleMetadataAddress :address="article.cc" :label="__('CC')" />
       <CommonSectionMenuItem v-if="article.subject" :label="__('Subject')">
         <div>{{ article.subject }}</div>
       </CommonSectionMenuItem>

@@ -6,7 +6,7 @@ import { getByRole } from '@testing-library/vue'
 import { renderComponent } from '@tests/support/components'
 import ArticleMetadata from '../ArticleMetadataDialog.vue'
 
-// TODO use parsed
+// parsed is tested in unit test
 const getAddress = (raw: string) => ({
   raw,
   parsed: null,
