@@ -25,10 +25,12 @@ export const ticketDefault: Partial<TicketItemByOverview> = {
   internalId: 1,
   createdAt: ticketDate.toISOString(),
   priority: {
+    id: 'fdsf214fse12e',
     name: 'high',
     defaultCreate: false,
   },
   customer: {
+    id: 'fdsf214fse12d',
     firstname: 'John',
     lastname: 'Doe',
     fullname: 'John Doe',

@@ -25,28 +25,34 @@ export const TicketsByOverviewDocument = gql`
         createdAt
         updatedAt
         owner {
+          id
           firstname
           lastname
           fullname
         }
         customer {
+          id
           firstname
           lastname
           fullname
         }
         organization {
+          id
           name
         }
         state {
+          id
           name
           stateType {
             name
           }
         }
         group {
+          id
           name
         }
         priority {
+          id
           name
           uiColor
           defaultCreate

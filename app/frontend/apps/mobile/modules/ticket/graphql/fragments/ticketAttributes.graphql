@@ -6,6 +6,7 @@ fragment ticketAttributes on Ticket {
   createdAt
   updatedAt
   owner {
+    id
     firstname
     lastname
   }
@@ -19,15 +20,18 @@ fragment ticketAttributes on Ticket {
     name
   }
   state {
+    id
     name
     stateType {
       name
     }
   }
   group {
+    id
     name
   }
   priority {
+    id
     name
     defaultCreate
     uiColor

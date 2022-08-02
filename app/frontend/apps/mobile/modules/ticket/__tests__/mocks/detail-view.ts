@@ -23,6 +23,7 @@ export const defaultTicket = mock<TicketQuery>({
     createdAt: ticketDate.toISOString(),
     updatedAt: ticketDate.toISOString(),
     owner: {
+      id: 'abc12sf123ad2',
       firstname: 'Max',
       lastname: 'Mustermann',
     },

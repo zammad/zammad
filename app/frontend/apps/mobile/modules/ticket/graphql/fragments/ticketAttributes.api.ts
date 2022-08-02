@@ -10,6 +10,7 @@ export const TicketAttributesFragmentDoc = gql`
   createdAt
   updatedAt
   owner {
+    id
     firstname
     lastname
   }
@@ -23,15 +24,18 @@ export const TicketAttributesFragmentDoc = gql`
     name
   }
   state {
+    id
     name
     stateType {
       name
     }
   }
   group {
+    id
     name
   }
   priority {
+    id
     name
     defaultCreate
     uiColor
