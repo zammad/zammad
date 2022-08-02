@@ -79,7 +79,7 @@ const colorsClasses = computed(() => {
   }
   return {
     top: 'border-t-[0.5px] border-black',
-    amount: 'text-black/80',
+    amount: 'text-black/60',
     file: 'border-black',
     icon: 'border-black',
   }
@@ -91,6 +91,7 @@ const { shownMore, bubbleElement, hasShowMore, toggleShowMore } =
 
 <template>
   <div
+    :id="`article-${articleInternalId}`"
     role="comment"
     class="Article relative flex"
     :class="{
@@ -162,7 +163,7 @@ const { shownMore, bubbleElement, hasShowMore, toggleShowMore } =
           -->
         <ArticleAttachment
           v-for="attachment of attachments"
-          :key="attachment.id"
+          :key="attachment.internalId"
           :attachment="attachment"
           :colors="colorsClasses"
           :ticket-internal-id="ticketInternalId"

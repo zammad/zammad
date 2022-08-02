@@ -49,6 +49,14 @@ export const TicketArticlesDocument = gql`
         inReplyTo
         contentType
         references
+        attachments {
+          internalId
+          name
+          size
+          type
+          preferences
+        }
+        preferences
         body
         internal
         createdAt

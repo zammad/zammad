@@ -9,9 +9,4 @@ export type TicketArticle = ConfidentTake<
   'ticketArticles.edges.node'
 >
 
-export interface TicketArticleAttachment {
-  id: string
-  name: string
-  size: number
-  type: string
-}
+export type TicketArticleAttachment = TicketArticle['attachments'][number]

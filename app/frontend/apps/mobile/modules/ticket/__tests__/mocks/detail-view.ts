@@ -85,6 +85,19 @@ export const defaultArticles = mock<TicketArticlesQuery>({
             name: 'article',
           },
           contentType: 'text/html',
+          attachments: [
+            // should not be visible
+            {
+              internalId: 66,
+              name: 'not-visible-attachment.png',
+              type: 'image/png',
+              size: 0,
+              preferences: {
+                'original-format': true,
+              },
+            },
+          ],
+          preferences: {},
         },
         cursor: 'Mg',
       },
@@ -111,6 +124,8 @@ export const defaultArticles = mock<TicketArticlesQuery>({
           type: {
             name: 'article',
           },
+          attachments: [],
+          preferences: {},
           contentType: 'text/html',
         },
         cursor: 'MH',
@@ -139,6 +154,8 @@ export const defaultArticles = mock<TicketArticlesQuery>({
             name: 'article',
           },
           contentType: 'text/html',
+          attachments: [],
+          preferences: {},
         },
         cursor: 'MI',
       },

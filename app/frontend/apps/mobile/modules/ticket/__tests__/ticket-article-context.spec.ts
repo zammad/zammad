@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import { visitView } from '@tests/support/components/visitView'
-import { mockTicketDetailViewGql } from './mocks/detailed-view'
+import { mockTicketDetailViewGql } from './mocks/detail-view'
 
 beforeAll(async () => {
   await import('../components/TicketDetailView/ArticleMetadataDialog.vue')

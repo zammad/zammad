@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-export const getIconByContentType = (type?: string) => {
+export const getIconByContentType = (type?: Maybe<string>) => {
   if (!type) return 'file-unknown'
   const contentType = type.replace(/^(.+?\/.+?)(\b|\s).+?$/, '$1')
 

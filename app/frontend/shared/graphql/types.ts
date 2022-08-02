@@ -585,8 +585,11 @@ export type StoredFile = Node & {
   /** User that created this record */
   createdBy: User;
   id: Scalars['ID'];
+  /** Internal database ID */
+  internalId: Scalars['Int'];
   /** File name. */
   name: Scalars['String'];
+  preferences?: Maybe<Scalars['JSON']>;
   /** File size in bytes */
   size?: Maybe<Scalars['Int']>;
   /** File's content-type. */
@@ -995,7 +998,7 @@ export type TicketArticlesQueryVariables = Exact<{
 }>;
 
 
-export type TicketArticlesQuery = { __typename?: 'Queries', ticketArticles: { __typename?: 'TicketArticleConnection', totalCount: number, edges: Array<{ __typename?: 'TicketArticleEdge', cursor: string, node: { __typename?: 'TicketArticle', id: string, internalId: number, subject?: string | null, messageId?: string | null, messageIdMd5?: string | null, inReplyTo?: string | null, contentType: string, references?: string | null, body: string, internal: boolean, createdAt: any, from?: { __typename?: 'AddressesField', raw: string, parsed?: Array<{ __typename?: 'EmailAddress', name?: string | null, emailAddress?: string | null }> | null } | null, to?: { __typename?: 'AddressesField', raw: string, parsed?: Array<{ __typename?: 'EmailAddress', name?: string | null, emailAddress?: string | null }> | null } | null, cc?: { __typename?: 'AddressesField', raw: string, parsed?: Array<{ __typename?: 'EmailAddress', name?: string | null, emailAddress?: string | null }> | null } | null, replyTo?: { __typename?: 'AddressesField', raw: string, parsed?: Array<{ __typename?: 'EmailAddress', name?: string | null, emailAddress?: string | null }> | null } | null, createdBy?: { __typename?: 'User', id: string, firstname?: string | null, lastname?: string | null }, type?: { __typename?: 'TicketArticleType', name?: string | null } | null, sender?: { __typename?: 'TicketArticleType', name?: string | null } | null } }>, pageInfo: { __typename?: 'PageInfo', endCursor?: string | null, hasNextPage: boolean } } };
+export type TicketArticlesQuery = { __typename?: 'Queries', ticketArticles: { __typename?: 'TicketArticleConnection', totalCount: number, edges: Array<{ __typename?: 'TicketArticleEdge', cursor: string, node: { __typename?: 'TicketArticle', id: string, internalId: number, subject?: string | null, messageId?: string | null, messageIdMd5?: string | null, inReplyTo?: string | null, contentType: string, references?: string | null, preferences?: any | null, body: string, internal: boolean, createdAt: any, from?: { __typename?: 'AddressesField', raw: string, parsed?: Array<{ __typename?: 'EmailAddress', name?: string | null, emailAddress?: string | null }> | null } | null, to?: { __typename?: 'AddressesField', raw: string, parsed?: Array<{ __typename?: 'EmailAddress', name?: string | null, emailAddress?: string | null }> | null } | null, cc?: { __typename?: 'AddressesField', raw: string, parsed?: Array<{ __typename?: 'EmailAddress', name?: string | null, emailAddress?: string | null }> | null } | null, replyTo?: { __typename?: 'AddressesField', raw: string, parsed?: Array<{ __typename?: 'EmailAddress', name?: string | null, emailAddress?: string | null }> | null } | null, attachments: Array<{ __typename?: 'StoredFile', internalId: number, name: string, size?: number | null, type?: string | null, preferences?: any | null }>, createdBy?: { __typename?: 'User', id: string, firstname?: string | null, lastname?: string | null }, type?: { __typename?: 'TicketArticleType', name?: string | null } | null, sender?: { __typename?: 'TicketArticleType', name?: string | null } | null } }>, pageInfo: { __typename?: 'PageInfo', endCursor?: string | null, hasNextPage: boolean } } };
 
 export type TicketsByOverviewQueryVariables = Exact<{
   overviewId: Scalars['ID'];

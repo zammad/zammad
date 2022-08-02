@@ -2,11 +2,12 @@
 
 import type { PopupItem } from '@mobile/components/CommonSectionPopup'
 import { useDialog } from '@shared/composables/useDialog'
-import { computed, shallowRef } from 'vue'
+import { computed, ref, shallowRef } from 'vue'
 import type { TicketArticle } from '../types/tickets'
 
 export const useTicketArticleContext = () => {
   const articleForContext = shallowRef<TicketArticle>()
+  const ticketInternalId = ref(0)
   const metadataDialog = useDialog({
     name: 'article-metadata',
     component: () =>
@@ -44,6 +45,7 @@ export const useTicketArticleContext = () => {
         metadataDialog.open({
           name: metadataDialog.name,
           article: articleForContext.value,
+          ticketInternalId: ticketInternalId.value,
         })
       },
     },
@@ -61,9 +63,10 @@ export const useTicketArticleContext = () => {
     },
   })
 
-  const showArticleContext = (article: TicketArticle) => {
+  const showArticleContext = (article: TicketArticle, ticketId: number) => {
     metadataDialog.prefetch()
     articleForContext.value = article
+    ticketInternalId.value = ticketId
   }
 
   return {

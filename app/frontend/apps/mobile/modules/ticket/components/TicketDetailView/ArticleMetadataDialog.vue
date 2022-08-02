@@ -11,6 +11,7 @@ import type { TicketArticle } from '../../types/tickets'
 interface Props {
   name: string
   article: TicketArticle
+  ticketInternalId: number
 }
 
 const props = defineProps<Props>()
@@ -21,18 +22,31 @@ const channelIcon = computed(() => {
 
 const links = computed(() => {
   const { article } = props
-  const links = []
+  // Example for usage: https://github.com/zammad/zammad/blob/develop/app/jobs/communicate_twitter_job.rb#L65
+  const links = [...(article.preferences?.links || [])]
   if (article.type?.name === 'email') {
     links.push({
       label: __('Raw'),
       api: true,
       url: `/ticket_article_plain/${article.internalId}`,
+      target: '_blank',
     })
   }
-
-  // TODO preferences link:
-  // app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee:141
-  // Example for usage: https://github.com/zammad/zammad/blob/develop/app/jobs/communicate_twitter_job.rb#L65
+  article.attachments.forEach((file) => {
+    if (file.preferences?.['original-format'] !== true) {
+      return
+    }
+    const articleInternalId = props.article.internalId
+    const attachmentInternalId = file.internalId
+    const { ticketInternalId } = props
+    const url = `/ticket_attachment/${ticketInternalId}/${articleInternalId}/${attachmentInternalId}?disposition=attachment`
+    links.push({
+      label: __('Original Formatting'),
+      api: true,
+      url,
+      target: '_blank',
+    })
+  })
   return links
 })
 </script>
@@ -62,11 +76,11 @@ const links = computed(() => {
         </span>
         <div class="leading-3">
           <CommonLink
-            v-for="{ url, api, label } of links"
+            v-for="{ url, api, label, target } of links"
             :key="url"
             :link="url"
             :rest-api="api"
-            open-in-new-tab
+            :target="target"
             class="text-sm text-white/75 after:inline after:content-['|'] last:after:hidden ltr:after:ml-1 rtl:after:mr-1"
           >
             {{ $t(label) }}

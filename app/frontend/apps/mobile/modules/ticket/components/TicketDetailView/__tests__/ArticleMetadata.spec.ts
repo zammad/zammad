@@ -1,8 +1,8 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { defaultArticles } from '@mobile/modules/ticket/__tests__/mocks/detailed-view'
+import { defaultArticles } from '@mobile/modules/ticket/__tests__/mocks/detail-view'
 import type { TicketArticle } from '@mobile/modules/ticket/types/tickets'
-import { getByRole } from '@testing-library/vue'
+import { getAllByRole } from '@testing-library/vue'
 import { renderComponent } from '@tests/support/components'
 import ArticleMetadata from '../ArticleMetadataDialog.vue'
 
@@ -17,6 +17,7 @@ describe('visuals for metadata', () => {
     const createdAt = new Date(2022, 1, 1, 0, 0, 0, 0).toISOString()
 
     const article: TicketArticle = {
+      // default article has attachment that should be visible as a link
       ...defaultArticles.ticketArticles.edges[0].node,
       internalId: 1,
       from: getAddress(
@@ -30,12 +31,22 @@ describe('visuals for metadata', () => {
         name: 'email',
       },
       createdAt,
+      preferences: {
+        links: [
+          {
+            label: 'Twitter',
+            url: 'https://twitter.com/zammad',
+            target: '_blank',
+          },
+        ],
+      },
     }
 
     const view = renderComponent(ArticleMetadata, {
       props: {
         name: 'article',
         article,
+        ticketInternalId: 2,
       },
       router: true,
       store: true,
@@ -57,9 +68,21 @@ describe('visuals for metadata', () => {
     expect(view.getByTitle('Sent')).toHaveTextContent(/2022-02-01 00:00$/)
     const channel = view.getByTitle('Channel')
     expect(channel).toHaveTextContent(/email/)
-    expect(getByRole(channel, 'link')).toHaveAttribute(
+    const links = getAllByRole(channel, 'link')
+    expect(links).toHaveLength(3)
+
+    const [twitter, raw, attachment] = links
+
+    expect(twitter).toHaveTextContent('Twitter')
+    expect(twitter).toHaveAttribute('href', 'https://twitter.com/zammad')
+
+    expect(raw).toHaveTextContent('Raw')
+    expect(raw).toHaveAttribute('href', '/api/ticket_article_plain/1')
+
+    expect(attachment).toHaveTextContent('Original Formatting')
+    expect(attachment).toHaveAttribute(
       'href',
-      '/api/ticket_article_plain/1',
+      '/api/ticket_attachment/2/1/66?disposition=attachment',
     )
   })
 })

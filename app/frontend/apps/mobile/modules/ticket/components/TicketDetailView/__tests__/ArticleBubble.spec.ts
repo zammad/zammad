@@ -22,6 +22,8 @@ const renderArticleBubble = (props = {}) => {
       attachments: [],
       ...props,
     },
+    router: true,
+    store: true,
   })
 }
 
@@ -166,13 +168,13 @@ describe('component for displaying text article', () => {
     const view = renderArticleBubble({
       attachments: [
         {
-          ID: '1',
+          internalId: '1',
           name: 'Zammad 1.png',
           size: 242143,
           type: 'image/png',
         },
         {
-          ID: '2',
+          internalId: '2',
           name: 'Zammad 2.pdf',
           size: 355,
           type: 'image/pdf',
@@ -182,7 +184,7 @@ describe('component for displaying text article', () => {
 
     expect(view.getByText('2 attached files')).toBeInTheDocument()
 
-    const attachments = view.getAllByRole('button', { name: /^Download / })
+    const attachments = view.getAllByRole('link', { name: /^Download / })
 
     expect(attachments).toHaveLength(2)
 

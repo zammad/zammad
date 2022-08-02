@@ -38,20 +38,11 @@ const loadMoreArticles = () => {
 
 const { rows } = useTicketArticleRows(toRef(props, 'articles'))
 
-const attachments = [
-  {
-    id: '1',
-    name: 'Zammad.png',
-    size: 242143,
-    type: 'image/png',
-  },
-  {
-    id: '2',
-    name: 'Zammad2.pdf',
-    size: 355,
-    type: 'image/pdf',
-  },
-]
+const filterAttachments = (article: TicketArticle) => {
+  return article.attachments.filter(
+    (file) => !file.preferences || !file.preferences['original-format'],
+  )
+}
 </script>
 
 <template>
@@ -68,7 +59,6 @@ const attachments = [
       <CommonIcon class="rotate-180" size="medium" name="long-arrow-down" />
     </button> -->
     <template v-for="row in rows" :key="row.key">
-      <!-- TODO add id="article-internalId" -->
       <ArticleBubble
         v-if="row.type === 'article-bubble'"
         :content="row.article.body"
@@ -82,8 +72,8 @@ const attachments = [
         "
         :ticket-internal-id="ticketInternalId"
         :article-internal-id="row.article.internalId"
-        :attachments="attachments"
-        @show-context="showArticleContext(row.article)"
+        :attachments="filterAttachments(row.article)"
+        @show-context="showArticleContext(row.article, ticketInternalId)"
       />
       <ArticleSystem
         v-if="row.type === 'system'"

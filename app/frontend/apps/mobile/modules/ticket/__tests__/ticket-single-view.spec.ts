@@ -11,7 +11,7 @@ import { mockGraphQLApi } from '@tests/support/mock-graphql-api'
 import { waitUntil } from '@tests/support/utils'
 import { flushPromises } from '@vue/test-utils'
 import { TicketDocument } from '../graphql/queries/ticket.api'
-import { mockTicketDetailViewGql } from './mocks/detailed-view'
+import { mockTicketDetailViewGql } from './mocks/detail-view'
 
 test('statics inside ticket zoom view', async () => {
   const { waitUntilTicketLoaded } = mockTicketDetailViewGql()
@@ -63,6 +63,11 @@ test('statics inside ticket zoom view', async () => {
   expect(comments[2]).toHaveTextContent('only agents can see this haha')
 
   expect(view.getByRole('button', { name: 'Add reply' })).toBeInTheDocument()
+
+  expect(
+    view.queryByText('not-visible-attachment.png'),
+    'filters original-format attachments',
+  ).not.toBeInTheDocument()
 })
 
 test('can refresh data by pulling up', async () => {

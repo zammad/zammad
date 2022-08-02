@@ -30,4 +30,8 @@ export const convertFileList = async (
   return Promise.all(promises)
 }
 
+export const canDownloadFile = (type?: Maybe<string>) => {
+  return type && type !== 'application/pdf' && type !== 'text/html'
+}
+
 export default {}
