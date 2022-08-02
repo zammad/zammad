@@ -507,11 +507,7 @@ class App.UiElement.ApplicationSelector
         config.guess = false
       if config.tag is 'checkbox'
         config.tag = 'select'
-      tagSearch = "#{config.tag}_search"
-      if App.UiElement[tagSearch]
-        item = App.UiElement[tagSearch].render(config, {})
-      else
-        item = App.UiElement[config.tag].render(config, {})
+      item = @renderConfig(config, meta)
     if meta.operator is 'before (relative)' || meta.operator is 'within next (relative)' || meta.operator is 'within last (relative)' || meta.operator is 'after (relative)' || meta.operator is 'from (relative)' || meta.operator is 'till (relative)'
       config['name'] = "#{attribute.name}::#{groupAndAttribute}"
       if attribute.value && attribute.value[groupAndAttribute]
@@ -524,6 +520,11 @@ class App.UiElement.ApplicationSelector
       elementRow.find('.js-preCondition').closest('.controls').addClass('hide')
     else
       elementRow.find('.js-value').removeClass('hide')
+
+  @renderConfig: (config, meta) ->
+    tagSearch = "#{config.tag}_search"
+    return App.UiElement[tagSearch].render(config, {}) if App.UiElement[tagSearch]
+    return App.UiElement[config.tag].render(config, {})
 
   @buildValueConfigMultiple: (config, meta) ->
     config.multiple = true

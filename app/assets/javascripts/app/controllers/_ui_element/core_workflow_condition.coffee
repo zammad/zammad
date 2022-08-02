@@ -161,6 +161,8 @@ class App.UiElement.core_workflow_condition extends App.UiElement.ApplicationSel
             config.expanding = false
           if config.type is 'email' || config.type is 'tel'
             config.type = 'text'
+          if config.tag.match(/^(tree_)?select$/)
+            config.multiple = true
           for operatorRegEx, operator of operatorsType
             myRegExp = new RegExp(operatorRegEx, 'i')
             if config.tag && config.tag.match(myRegExp)
