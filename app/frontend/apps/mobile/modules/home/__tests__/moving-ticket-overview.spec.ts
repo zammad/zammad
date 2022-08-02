@@ -11,7 +11,7 @@ import {
 import { mockAccount } from '@tests/support/mock-account'
 import { getByIconName } from '@tests/support/components/iconQueries'
 import { getApiTicketOverviews } from '@tests/support/mocks/ticket-overviews'
-import { getTicketOverviewStorage } from '../helpers/ticketOverviewStorage'
+import { getTicketOverviewStorage } from '@mobile/entities/ticket/helpers/ticketOverviewStorage'
 
 const actualLocalStorage = window.localStorage
 

@@ -7,7 +7,7 @@ import { mockAccount } from '@tests/support/mock-account'
 import createMockClient from '@tests/support/mock-apollo-client'
 import { mockPermissions } from '@tests/support/mock-permissions'
 import { getApiTicketOverviews } from '@tests/support/mocks/ticket-overviews'
-import { getTicketOverviewStorage } from '../helpers/ticketOverviewStorage'
+import { getTicketOverviewStorage } from '@mobile/entities/ticket/helpers/ticketOverviewStorage'
 
 describe('home page', () => {
   beforeEach(() => {

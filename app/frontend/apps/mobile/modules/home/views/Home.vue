@@ -1,12 +1,12 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import type { MenuItem } from '@mobile/components/CommonSectionMenu'
-import CommonSectionMenu from '@mobile/components/CommonSectionMenu/CommonSectionMenu.vue'
+import { computed } from 'vue'
 import CommonInputSearch from '@shared/components/CommonInputSearch/CommonInputSearch.vue'
 import { useSessionStore } from '@shared/stores/session'
-import { computed } from 'vue'
-import { useTicketsOverviews } from '../stores/ticketOverviews'
+import type { MenuItem } from '@mobile/components/CommonSectionMenu'
+import CommonSectionMenu from '@mobile/components/CommonSectionMenu/CommonSectionMenu.vue'
+import { useTicketsOverviews } from '@mobile/entities/ticket/stores/ticketOverviews'
 
 const IS_DEV = import.meta.env.DEV
 

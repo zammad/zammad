@@ -2,7 +2,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import type { TicketOverview } from '../stores/ticketOverviews'
+import type { TicketOverview } from '@mobile/entities/ticket/stores/ticketOverviews'
 
 const props = defineProps<{
   action: 'add' | 'delete'

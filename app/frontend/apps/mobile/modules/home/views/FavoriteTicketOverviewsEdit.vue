@@ -10,7 +10,7 @@ import {
 } from '@shared/components/CommonNotifications'
 import { computed, ref, watch } from 'vue'
 import { storeToRefs } from 'pinia'
-import { useTicketsOverviews } from '../stores/ticketOverviews'
+import { useTicketsOverviews } from '@mobile/entities/ticket/stores/ticketOverviews'
 import TicketOverviewEditItem from '../components/TicketOverviewEditItem.vue'
 
 const overviewStore = useTicketsOverviews()
