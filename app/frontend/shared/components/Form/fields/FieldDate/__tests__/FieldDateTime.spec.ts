@@ -1,6 +1,9 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 /* eslint-disable import/first */
 
+const now = new Date('2021-04-13T11:10:10Z')
+vi.useFakeTimers().setSystemTime(now)
+
 import { FormKit } from '@formkit/vue'
 import { waitFor } from '@testing-library/vue'
 import flatpickr from 'flatpickr'
@@ -20,13 +23,17 @@ const renderDateField = (props: Record<string, unknown> = {}) => {
   })
 }
 
-// I've tried mocking date, but it breaks flatpickr for some reason
-// so, instead I am relying on current date
-const now = new Date()
-
 describe('Fields - FieldDate - type "date"', () => {
   beforeEach(() => {
     i18n.setTranslationMap(new Map())
+  })
+
+  beforeAll(() => {
+    vi.useFakeTimers().setSystemTime(now)
+  })
+
+  afterAll(() => {
+    vi.useRealTimers()
   })
 
   it('renders input and allows selecting date', async () => {
@@ -238,6 +245,8 @@ describe('Fields - FieldDate - type "date"', () => {
   })
 })
 
+// Mocking date breaks flatpickr for some reason so, instead we relying
+// on current date for the interaction tests.
 describe('Fields - FieldDate - visuals', () => {
   it('calendar visibility changes based on interaction', async () => {
     const view = renderDateField()
@@ -269,7 +278,12 @@ describe('Fields - FieldDate - visuals', () => {
 })
 
 describe('Fields - FieldDate - type "datetime"', () => {
+  beforeAll(() => {
+    vi.useFakeTimers().setSystemTime(now)
+  })
+
   afterAll(() => {
+    vi.useRealTimers()
     i18n.setTranslationMap(new Map())
   })
 
