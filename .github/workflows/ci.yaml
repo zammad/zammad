@@ -26,14 +26,14 @@ jobs:
         id: cache-npm
         uses: actions/cache@v3
         with:
-          path: ~/.yarn/cache
-          key: ${{ runner.os }}-cache-npm-${{ hashFiles('~/.yarn.lock') }}
+          path: .yarn/cache
+          key: ${{ runner.os }}-cache-npm-${{ hashFiles('.yarn.lock') }}
       - name: Cache Rubygems
         id: cache-bundler
         uses: actions/cache@v3
         with:
-          path: ~/vendor/ruby
-          key: ${{ runner.os }}-cache-bundler-${{ hashFiles('~/.Gemfile.lock') }}
+          path: vendor/ruby
+          key: ${{ runner.os }}-cache-bundler-${{ hashFiles('.Gemfile.lock') }}
       - name: Set up Zammad
         shell: bash
         run: |
