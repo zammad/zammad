@@ -10,6 +10,7 @@ import useFingerprint from '@shared/composables/useFingerprint'
 import testFlags from '@shared/utils/testFlags'
 import { useSessionStore } from './session'
 import useApplicationStore from './application'
+import { resetAndDisposeStores } from '.'
 
 const useAuthenticationStore = defineStore(
   'authentication',
@@ -23,6 +24,8 @@ const useAuthenticationStore = defineStore(
       const session = useSessionStore()
       session.resetCurrentSession()
       authenticated.value = false
+
+      resetAndDisposeStores(true)
 
       // Refresh the config after logout, to have only the non authenticated version.
       await useApplicationStore().resetAndGetConfig()
@@ -97,6 +100,7 @@ const useAuthenticationStore = defineStore(
     shareState: {
       enabled: true,
     },
+    requiresAuth: false,
   },
 )
 

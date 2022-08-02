@@ -19,11 +19,11 @@
   "Groups": [
     {
       "name": "some group1",
-      "users": ["admin@example.com","agent1@example.com"]
+      "users": ["admin@example.com", "agent1@example.com"]
     },
     {
       "name": "Users",
-      "users": ["admin@example.com","agent1@example.com"],
+      "users": ["admin@example.com", "agent1@example.com"],
       "signature": "default",
       "email_address_id": 1
     }
@@ -61,6 +61,10 @@
     {
       "name": "product_name",
       "value": "Zammad Test System"
+    },
+    {
+      "name": "developer_mode",
+      "value": true
     }
   ],
   "TextModuleLocale": {

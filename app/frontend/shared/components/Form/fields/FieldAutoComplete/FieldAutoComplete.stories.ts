@@ -156,12 +156,9 @@ const mockQueryResult = (
 const mockClient = () => {
   const mockApolloClient = createMockClient()
 
-  console.log('mockApolloClient', mockApolloClient)
-
   mockApolloClient.setRequestHandler(
     AutocompleteSearchUserDocument,
     (variables) => {
-      console.log('VARIABLES', variables)
       return Promise.resolve({
         data: mockQueryResult(variables.query, variables.limit),
       })

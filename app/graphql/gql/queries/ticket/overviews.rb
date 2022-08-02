@@ -11,6 +11,5 @@ module Gql::Queries
       # This effectively scopes the overviews by `:use?` permission.
       ::Ticket::Overviews.all(current_user: context.current_user)
     end
-
   end
 end

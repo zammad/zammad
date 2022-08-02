@@ -15,23 +15,10 @@ export type TicketOverview = ConfidentTake<
   'ticketOverviews.edges.node'
 >
 
-let overviewHandler: QueryHandler<
-  TicketOverviewsQuery,
-  { withTicketCount: boolean }
->
-
-const getOverviewHandler = () => {
-  if (!overviewHandler) {
-    overviewHandler = new QueryHandler(
-      useTicketOverviewsQuery({ withTicketCount: true }),
-    )
-  }
-
-  return overviewHandler
-}
-
 export const useTicketsOverviews = defineStore('tickets-overview', () => {
-  const handler = getOverviewHandler()
+  const handler = new QueryHandler(
+    useTicketOverviewsQuery({ withTicketCount: true }),
+  )
   const overviewsRaw = handler.result()
   const overviewsLoading = handler.loading()
 

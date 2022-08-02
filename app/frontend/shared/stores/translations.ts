@@ -62,53 +62,59 @@ const getTranslationsQuery = () => {
   return translationsQuery
 }
 
-const useTranslationsStore = defineStore('translations', () => {
-  const cacheKey = ref<string>('CACHE_EMPTY')
-  const translationData = ref<Record<string, string>>({})
+const useTranslationsStore = defineStore(
+  'translations',
+  () => {
+    const cacheKey = ref<string>('CACHE_EMPTY')
+    const translationData = ref<Record<string, string>>({})
 
-  const load = async (locale: string): Promise<void> => {
-    log.debug('translations.load()', locale)
+    const load = async (locale: string): Promise<void> => {
+      log.debug('translations.load()', locale)
 
-    const cachedData = loadCache(locale)
+      const cachedData = loadCache(locale)
 
-    Object.assign(translationsQueryVariables, {
-      cacheKey: cachedData.cacheKey,
-      locale,
-    })
-
-    const query = getTranslationsQuery()
-
-    const result = await query.loadedResult()
-    if (!result?.translations) {
-      return
-    }
-
-    if (result.translations.isCacheStillValid) {
-      cacheKey.value = cachedData.cacheKey
-      translationData.value = cachedData.translations
-    } else {
-      cacheKey.value = result.translations.cacheKey || 'CACHE_EMPTY'
-      translationData.value = result.translations.translations
-
-      setCache(locale, {
-        cacheKey: cacheKey.value,
-        translations: translationData.value,
+      Object.assign(translationsQueryVariables, {
+        cacheKey: cachedData.cacheKey,
+        locale,
       })
+
+      const query = getTranslationsQuery()
+
+      const result = await query.loadedResult()
+      if (!result?.translations) {
+        return
+      }
+
+      if (result.translations.isCacheStillValid) {
+        cacheKey.value = cachedData.cacheKey
+        translationData.value = cachedData.translations
+      } else {
+        cacheKey.value = result.translations.cacheKey || 'CACHE_EMPTY'
+        translationData.value = result.translations.translations
+
+        setCache(locale, {
+          cacheKey: cacheKey.value,
+          translations: translationData.value,
+        })
+      }
+
+      log.debug(
+        'translations.load() setting new translation map',
+        locale,
+        translationData.value,
+      )
+      i18n.setTranslationMap(new Map(Object.entries(translationData.value)))
     }
 
-    log.debug(
-      'translations.load() setting new translation map',
-      locale,
-      translationData.value,
-    )
-    i18n.setTranslationMap(new Map(Object.entries(translationData.value)))
-  }
-
-  return {
-    cacheKey,
-    translationData,
-    load,
-  }
-})
+    return {
+      cacheKey,
+      translationData,
+      load,
+    }
+  },
+  {
+    requiresAuth: false,
+  },
+)
 
 export default useTranslationsStore

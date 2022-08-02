@@ -11,48 +11,54 @@ import useTranslationsStore from './translations'
 
 type Locale = LastArrayElement<LocalesQuery['locales']>
 
-const useLocaleStore = defineStore('locale', () => {
-  const localeData = ref<Maybe<Locale>>(null)
-  const locales = ref<Maybe<LocalesQuery['locales']>>(null)
+const useLocaleStore = defineStore(
+  'locale',
+  () => {
+    const localeData = ref<Maybe<Locale>>(null)
+    const locales = ref<Maybe<LocalesQuery['locales']>>(null)
 
-  const loadLocales = async (): Promise<void> => {
-    if (locales.value) return
+    const loadLocales = async (): Promise<void> => {
+      if (locales.value) return
 
-    locales.value = await getAvailableLocales()
-  }
-
-  const setLocale = async (locale?: string): Promise<void> => {
-    await loadLocales()
-
-    let newLocaleData
-
-    if (locale) {
-      newLocaleData = locales.value?.find((elem) => {
-        return elem.locale === locale
-      })
+      locales.value = await getAvailableLocales()
     }
 
-    if (!newLocaleData)
-      newLocaleData = localeForBrowserLanguage(locales.value || [])
+    const setLocale = async (locale?: string): Promise<void> => {
+      await loadLocales()
 
-    log.debug('localeStore.setLocale()', newLocaleData)
+      let newLocaleData
 
-    // Update the translation store, when the locale is different.
-    if (localeData.value?.locale !== newLocaleData.locale) {
-      await useTranslationsStore().load(newLocaleData.locale)
-      localeData.value = newLocaleData
+      if (locale) {
+        newLocaleData = locales.value?.find((elem) => {
+          return elem.locale === locale
+        })
+      }
 
-      document.documentElement.setAttribute('dir', newLocaleData.dir)
-      document.documentElement.setAttribute('lang', newLocaleData.locale)
+      if (!newLocaleData)
+        newLocaleData = localeForBrowserLanguage(locales.value || [])
+
+      log.debug('localeStore.setLocale()', newLocaleData)
+
+      // Update the translation store, when the locale is different.
+      if (localeData.value?.locale !== newLocaleData.locale) {
+        await useTranslationsStore().load(newLocaleData.locale)
+        localeData.value = newLocaleData
+
+        document.documentElement.setAttribute('dir', newLocaleData.dir)
+        document.documentElement.setAttribute('lang', newLocaleData.locale)
+      }
     }
-  }
 
-  return {
-    locales,
-    localeData,
-    setLocale,
-    loadLocales,
-  }
-})
+    return {
+      locales,
+      localeData,
+      setLocale,
+      loadLocales,
+    }
+  },
+  {
+    requiresAuth: false,
+  },
+)
 
 export default useLocaleStore

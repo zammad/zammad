@@ -5,18 +5,24 @@ import { defineStore } from 'pinia'
 import { cloneDeep } from 'lodash-es'
 import { useSessionIdQuery } from '@shared/graphql/queries/sessionId.api'
 import { useCurrentUserQuery } from '@shared/graphql/queries/currentUser.api'
-import { QueryHandler } from '@shared/server/apollo/handler'
+import {
+  QueryHandler,
+  SubscriptionHandler,
+} from '@shared/server/apollo/handler'
 import type { UserData } from '@shared/types/store'
 import hasPermission from '@shared/utils/hasPermission'
 import type { RequiredPermission } from '@shared/types/permission'
-import { CurrentUserUpdatesDocument } from '@shared/graphql/subscriptions/currentUserUpdates.api'
+import { useCurrentUserUpdatesSubscription } from '@shared/graphql/subscriptions/currentUserUpdates.api'
 import type {
   CurrentUserQuery,
   CurrentUserQueryVariables,
+  CurrentUserUpdatesSubscription,
+  CurrentUserUpdatesSubscriptionVariables,
   SessionIdQuery,
   SessionIdQueryVariables,
 } from '@shared/graphql/types'
 import testFlags from '@shared/utils/testFlags'
+import log from '@shared/utils/log'
 import useLocaleStore from './locale'
 
 let sessionIdQuery: QueryHandler<SessionIdQuery, SessionIdQueryVariables>
@@ -51,92 +57,112 @@ const getCurrentUserQuery = () => {
   return currentUserQuery
 }
 
-export const useSessionStore = defineStore('session', () => {
-  const id = ref<Maybe<string>>(null)
+export const useSessionStore = defineStore(
+  'session',
+  () => {
+    const id = ref<Maybe<string>>(null)
 
-  const checkSession = async (): Promise<string | null> => {
-    const sessionIdQuery = getSessionIdQuery()
+    const checkSession = async (): Promise<string | null> => {
+      const sessionIdQuery = getSessionIdQuery()
 
-    const result = await sessionIdQuery.loadedResult(true)
+      const result = await sessionIdQuery.loadedResult(true)
 
-    // Refresh the current sessionId state.
-    id.value = result?.sessionId || null
+      // Refresh the current sessionId state.
+      id.value = result?.sessionId || null
 
-    return id.value
-  }
-
-  const user = ref<Maybe<UserData>>(null)
-
-  let currentUserSubscriptionInitialized = false
-  let currentUserWatchOnResultInitialized = false
-  const getCurrentUser = async (): Promise<Maybe<UserData>> => {
-    if (currentUserQuery && !user.value) {
-      currentUserQuery.start()
+      return id.value
     }
 
-    const query = getCurrentUserQuery()
+    const user = ref<Maybe<UserData>>(null)
 
-    // Watch on result that also the subscription to more will update the user data.
-    if (!currentUserWatchOnResultInitialized) {
-      query.watchOnResult((result) => {
-        user.value = cloneDeep(result?.currentUser) || null
-      })
-      currentUserWatchOnResultInitialized = true
-    }
-
-    await query.loadedResult(true)
-
-    // Check if the locale is different, then a update is needed.
-    const locale = useLocaleStore()
-    const userLocale = user.value?.preferences?.locale as string
-
-    if (
-      userLocale &&
-      (!locale.localeData || userLocale !== locale.localeData.locale)
-    ) {
-      await locale.setLocale(userLocale)
-    }
-
-    if (user.value) {
-      testFlags.set('useSessionUserStore.getCurrentUser.loaded')
-
-      if (!currentUserSubscriptionInitialized) {
-        query.operationResult.subscribeToMore({
-          document: CurrentUserUpdatesDocument,
-          variables: { userId: user.value.id },
-        })
-
-        currentUserSubscriptionInitialized = true
+    let currentUserUpdateSubscription: SubscriptionHandler<
+      CurrentUserUpdatesSubscription,
+      CurrentUserUpdatesSubscriptionVariables
+    >
+    let currentUserWatchOnResultInitialized = false
+    const getCurrentUser = async (): Promise<Maybe<UserData>> => {
+      if (currentUserQuery && !user.value) {
+        currentUserQuery.start()
       }
+
+      const query = getCurrentUserQuery()
+
+      // Watch on result that also the subscription to more will update the user data.
+      if (!currentUserWatchOnResultInitialized) {
+        query.watchOnResult((result) => {
+          user.value = cloneDeep(result?.currentUser) || null
+
+          log.debug('currentUserUpdate', user.value)
+        })
+        currentUserWatchOnResultInitialized = true
+      }
+
+      await query.loadedResult(true)
+
+      // Check if the locale is different, then a update is needed.
+      const locale = useLocaleStore()
+      const userLocale = user.value?.preferences?.locale as string
+
+      if (
+        userLocale &&
+        (!locale.localeData || userLocale !== locale.localeData.locale)
+      ) {
+        await locale.setLocale(userLocale)
+      }
+
+      if (user.value) {
+        if (!currentUserUpdateSubscription) {
+          currentUserUpdateSubscription = new SubscriptionHandler(
+            useCurrentUserUpdatesSubscription(() => ({
+              userId: (user.value as UserData)?.id,
+            })),
+          )
+
+          currentUserUpdateSubscription.onResult((result) => {
+            const user = result.data?.userUpdates.user
+            if (!user) {
+              testFlags.set('useCurrentUserUpdatesSubscription.subscribed')
+            }
+          })
+        } else {
+          currentUserUpdateSubscription.start()
+        }
+
+        testFlags.set('useSessionUserStore.getCurrentUser.loaded')
+      }
+
+      return user.value
     }
 
-    return user.value
-  }
+    const resetCurrentSession = () => {
+      if (currentUserUpdateSubscription) currentUserUpdateSubscription.stop()
+      if (currentUserQuery) currentUserQuery.stop()
 
-  const resetCurrentSession = () => {
-    if (currentUserQuery) currentUserQuery.stop()
+      id.value = null
+      user.value = null
+    }
 
-    id.value = null
-    user.value = null
-  }
+    const userHasPermission = (
+      requiredPermission: RequiredPermission,
+    ): boolean => {
+      return hasPermission(
+        requiredPermission,
+        user.value?.permissions?.names || [],
+      )
+    }
 
-  const userHasPermission = (
-    requiredPermission: RequiredPermission,
-  ): boolean => {
-    return hasPermission(
-      requiredPermission,
-      user.value?.permissions?.names || [],
-    )
-  }
-
-  return {
-    id,
-    checkSession,
-    user,
-    getCurrentUser,
-    resetCurrentSession,
-    hasPermission: userHasPermission,
-  }
-})
+    return {
+      id,
+      checkSession,
+      user,
+      getCurrentUser,
+      resetCurrentSession,
+      hasPermission: userHasPermission,
+    }
+  },
+  {
+    requiresAuth: false,
+  },
+)
 
 export default useSessionStore

@@ -19,6 +19,7 @@ module Gql::Mutations
     def resolve(...)
 
       context[:controller].reset_session
+      context[:current_user] = nil
       context[:controller].request.env['rack.session.options'][:expire_after] = nil
 
       { success: true }

@@ -25,6 +25,14 @@ export default class SubscriptionHandler<
     return this.operationResult.options
   }
 
+  public start(): void {
+    this.operationResult.start()
+  }
+
+  public stop(): void {
+    this.operationResult.stop()
+  }
+
   public result(): Ref<Maybe<TResult> | undefined> {
     return this.operationResult.result
   }

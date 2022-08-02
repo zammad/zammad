@@ -42,111 +42,118 @@ let connectionNotificationId: string
 // TODO: consider switching from notification to a modal dialog, and improving the message
 const notifications = useNotifications()
 
-const useApplicationStore = defineStore('applicationLoaded', () => {
-  const loaded = ref(false)
-  const loading = computed(() => !loaded.value)
+const useApplicationStore = defineStore(
+  'application',
+  () => {
+    const loaded = ref(false)
+    const loading = computed(() => !loaded.value)
 
-  const setLoaded = (): void => {
-    const loadingAppElement: Maybe<HTMLElement> =
-      document.getElementById('loading-app')
+    const setLoaded = (): void => {
+      const loadingAppElement: Maybe<HTMLElement> =
+        document.getElementById('loading-app')
 
-    if (useNotifications().hasErrors()) {
-      loadingAppElement
-        ?.getElementsByClassName('loading-failed')
-        .item(0)
-        ?.classList.add('active')
-      return
-    }
-
-    loaded.value = true
-
-    if (loadingAppElement) {
-      loadingAppElement.remove()
-    }
-
-    testFlags.set('applicationLoaded.loaded')
-  }
-
-  const connected = ref(false)
-
-  const bringConnectionUp = (): void => {
-    if (connected.value) return
-
-    log.debug('Application connection just came up.')
-
-    if (connectionNotificationId) {
-      notifications.removeNotification(connectionNotificationId)
-    }
-    connected.value = true
-  }
-
-  const takeConnectionDown = (): void => {
-    if (!connected.value) return
-
-    log.debug('Application connection just went down.')
-
-    connectionNotificationId = notifications.notify({
-      message: __('The connection to the server was lost.'),
-      type: NotificationTypes.Error,
-      persistent: true,
-    })
-    connected.value = false
-  }
-
-  const config = ref<ConfigList>({})
-
-  const initializeConfigUpdateSubscription = (): void => {
-    const configUpdatesSubscription = new SubscriptionHandler(
-      useConfigUpdatesSubscription(),
-    )
-
-    configUpdatesSubscription.onResult((result) => {
-      const updatedSetting = result.data?.configUpdates.setting
-      if (updatedSetting) {
-        config.value[updatedSetting.key] = updatedSetting.value
-      } else {
-        testFlags.set('useConfigUpdatesSubscription.subscribed')
+      if (useNotifications().hasErrors()) {
+        loadingAppElement
+          ?.getElementsByClassName('loading-failed')
+          .item(0)
+          ?.classList.add('active')
+        return
       }
-    })
 
-    configUpdatesSubscriptionInitialized = true
-  }
+      loaded.value = true
 
-  const getConfig = async (): Promise<void> => {
-    const configQuery = getApplicationConfigQuery()
+      if (loadingAppElement) {
+        loadingAppElement.remove()
+      }
 
-    const result = await configQuery.loadedResult(true)
-    if (result?.applicationConfig) {
-      result.applicationConfig.forEach((item) => {
-        config.value[item.key] = item.value
+      testFlags.set('applicationLoaded.loaded')
+    }
+
+    const connected = ref(false)
+
+    const bringConnectionUp = (): void => {
+      if (connected.value) return
+
+      log.debug('Application connection just came up.')
+
+      if (connectionNotificationId) {
+        notifications.removeNotification(connectionNotificationId)
+      }
+      connected.value = true
+    }
+
+    const takeConnectionDown = (): void => {
+      if (!connected.value) return
+
+      log.debug('Application connection just went down.')
+
+      connectionNotificationId = notifications.notify({
+        message: __('The connection to the server was lost.'),
+        type: NotificationTypes.Error,
+        persistent: true,
       })
-      // app/assets/javascripts/app/config.coffee
-      config.value.api_path = '/api/v1'
+      connected.value = false
     }
 
-    if (!configUpdatesSubscriptionInitialized) {
-      initializeConfigUpdateSubscription()
+    const config = ref<ConfigList>({})
+
+    const initializeConfigUpdateSubscription = (): void => {
+      const configUpdatesSubscription = new SubscriptionHandler(
+        useConfigUpdatesSubscription(),
+      )
+
+      configUpdatesSubscription.onResult((result) => {
+        const updatedSetting = result.data?.configUpdates.setting
+        if (updatedSetting) {
+          config.value[updatedSetting.key] = updatedSetting.value
+        } else {
+          testFlags.set('useConfigUpdatesSubscription.subscribed')
+        }
+      })
+
+      configUpdatesSubscriptionInitialized = true
     }
-  }
 
-  const resetAndGetConfig = async (): Promise<void> => {
-    config.value = {}
+    const getConfig = async (): Promise<void> => {
+      const configQuery = getApplicationConfigQuery()
 
-    await getConfig()
-  }
+      const result = await configQuery.loadedResult(true)
+      if (result?.applicationConfig) {
+        result.applicationConfig.forEach((item) => {
+          config.value[item.key] = item.value
+        })
 
-  return {
-    loaded,
-    loading,
-    setLoaded,
-    connected,
-    bringConnectionUp,
-    takeConnectionDown,
-    config,
-    initializeConfigUpdateSubscription,
-    getConfig,
-    resetAndGetConfig,
-  }
-})
+        // app/assets/javascripts/app/config.coffee
+        config.value.api_path = '/api/v1'
+      }
+
+      if (!configUpdatesSubscriptionInitialized) {
+        initializeConfigUpdateSubscription()
+      }
+    }
+
+    const resetAndGetConfig = async (): Promise<void> => {
+      config.value = {}
+
+      await getConfig()
+    }
+
+    return {
+      loaded,
+      loading,
+      setLoaded,
+      connected,
+      bringConnectionUp,
+      takeConnectionDown,
+      config,
+      initializeConfigUpdateSubscription,
+      getConfig,
+      resetAndGetConfig,
+    }
+  },
+  {
+    requiresAuth: false,
+  },
+)
 
 export default useApplicationStore

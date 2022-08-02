@@ -31,7 +31,7 @@ const userData = {
   },
 }
 
-describe('Translations Store', () => {
+describe('Session Store', () => {
   beforeEach(() => {
     setActivePinia(createPinia())
   })

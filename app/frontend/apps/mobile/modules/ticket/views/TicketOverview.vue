@@ -82,7 +82,7 @@ const orderColumnLabels = computed(() => {
 
 // Check that the given order by column is really a valid column and otherwise
 // reset query parameter.
-watchOnce(orderColumnLabels, () => {
+watch(selectedOverview, () => {
   if (userOrderBy.value && !orderColumnLabels.value[userOrderBy.value]) {
     userOrderBy.value = undefined
   }
