@@ -3,8 +3,7 @@
 set -o errexit
 set -o pipefail
 
-source /etc/profile.d/rvm.sh
-source .gitlab/environment.env
+source /etc/profile.d/rvm.sh # ensure RVM is loaded
 
 echo "Checking .po file syntax..."
 for FILE in i18n/*.pot i18n/*.po; do echo "Checking $FILE"; msgfmt -o /dev/null -c $FILE; done
@@ -23,6 +22,8 @@ coffeelint --rules ./.coffeelint/rules/* app/
 echo "Stylelint check..."
 yarn lint:css
 echo "ESLint check..."
+yarn install
+yarn storybook:install
 yarn lint
 echo "Storybook test build..."
 yarn storybook:build
