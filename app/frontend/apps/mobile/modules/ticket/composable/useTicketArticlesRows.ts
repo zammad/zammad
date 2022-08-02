@@ -51,7 +51,7 @@ export const useTicketArticleRows = (articles: Ref<TicketArticle[]>) => {
         dates.add(date)
         rows.push({
           type: 'date',
-          date,
+          date: article.createdAt,
           key: date,
         })
       }

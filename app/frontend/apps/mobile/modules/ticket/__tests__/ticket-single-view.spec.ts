@@ -37,7 +37,6 @@ test('statics inside ticket zoom view', async () => {
   const articlesElement = view.getByRole('group', { name: 'Articles' })
 
   const times = getAllByTestId(articlesElement, 'date-time-absolute')
-  console.log('times', times)
 
   expect(times).toHaveLength(2)
   expect(times[0]).toHaveTextContent('2022-01-29')
