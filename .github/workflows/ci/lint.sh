@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+set -o errexit
+set -o pipefail
+
+source /etc/profile.d/rvm.sh # ensure RVM is loaded
+
 echo "Checking .po file syntax..."
 for FILE in i18n/*.pot i18n/*.po; do echo "Checking $FILE"; msgfmt -o /dev/null -c $FILE; done
 echo "Checking .pot catalog consistency..."
