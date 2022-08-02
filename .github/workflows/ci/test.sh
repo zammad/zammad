@@ -3,10 +3,15 @@
 set -o errexit
 set -o pipefail
 
+# shellcheck disable=SC1091
 source /etc/profile.d/rvm.sh
+# shellcheck disable=SC1091
 source .gitlab/environment.env
 
-echo "Running front end tests"
+echo "Checking assets generation..."
+bundle exec rake assets:precompile
+
+echo "Running front end tests..."
 yarn test
 yarn test:ci:ct
 

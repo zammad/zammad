@@ -3,11 +3,13 @@
 set -o errexit
 set -o pipefail
 
+# shellcheck disable=SC1091
 source /etc/profile.d/rvm.sh
+# shellcheck disable=SC1091
 source .gitlab/environment.env
 
 echo "Checking .po file syntax..."
-for FILE in i18n/*.pot i18n/*.po; do echo "Checking $FILE"; msgfmt -o /dev/null -c $FILE; done
+for FILE in i18n/*.pot i18n/*.po; do echo "Checking $FILE"; msgfmt -o /dev/null -c "$FILE"; done
 echo "Checking .pot catalog consistency..."
 bundle exec rails generate translation_catalog --check
 echo "Brakeman security check..."
