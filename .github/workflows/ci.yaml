@@ -1,45 +1,35 @@
-name: ci
+name: CI
 
 on:
   pull_request
 
 jobs:
-  ci:
+  CI:
     runs-on: ubuntu-latest
+    container:
+      image: registry.zammad.com/docker/zammad-ci:stable
+      credentials:
+        username: ${{ secrets.ZAMMAD_DOCKER_REGISTRY_USERNAME }}
+        password: ${{ secrets.ZAMMAD_DOCKER_REGISTRY_PASSWORD }}
     services:
-      mysql:
-        image: mysql:5
-        env:
-          MYSQL_ROOT_PASSWORD: password
-        ports:
-        - 13306:3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
-      postgres:
-        image: postgres:11
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-        ports:
-        - 5432:5432
-        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
-    strategy:
-      matrix:
-        dbs:
-          - mysql
-          - postgresql
+      postgresql:
+        image: registry.zammad.com/docker/zammad-postgresql:stable
+        credentials:
+          username: ${{ secrets.ZAMMAD_DOCKER_REGISTRY_USERNAME }}
+          password: ${{ secrets.ZAMMAD_DOCKER_REGISTRY_PASSWORD }}
     env:
       RAILS_ENV: test
-      ZAMMAD_DBS: ${{ matrix.dbs }}
     steps:
       - name: Checkout
         uses: actions/checkout@v1
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 3.0.4
-      - name: Increase MySQL max_allowed_packet to 1GB (workaround for unknown/missing service option)
+      - name: Set up Zammad
+        shell: bash
         run: |
-          sudo apt-get install -y mysql-client
-          mysql --host 127.0.0.1 --port 13306 -uroot -ppassword -e "SET GLOBAL max_allowed_packet=1073741824;"
-      - name: CI
-        run: .github/ci.sh
+          source /etc/profile.d/rvm.sh # ensure RVM is loaded
+          bundle config set --local frozen 'true'
+          bundle config set --local path 'vendor'
+          bundle install -j $(nproc)
+          bundle exec ruby .gitlab/configure_environment.rb
+          source .gitlab/environment.env
+      # - name: CI
+      #   run: .github/ci.sh
