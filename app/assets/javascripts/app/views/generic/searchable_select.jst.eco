@@ -14,7 +14,6 @@
       value
       name="<%- @attribute.name %>_completion"
       autocomplete="off"
-      <%= @attribute.required %>
       <% if @attribute.disabled: %> disabled<% end %>
     >
   <% else: %>
@@ -22,7 +21,6 @@
       class="searchableSelect-shadow form-control js-shadow"
       <% if @attribute.id: %>id="<%= @attribute.id %>"<% end %>
       name="<%= @attribute.name %>"
-      <%= @attribute.required %>
       <%= @attribute.autofocus %>
       value="<%= @attribute.value %>"
       tabindex="-1"
@@ -33,7 +31,6 @@
       placeholder="<%= @attribute.placeholder %>"
       value="<%= @attribute.valueName %>"
       autocomplete="off"
-      <%= @attribute.required %>
       <% if @attribute.disabled: %> disabled<% end %>
     >
   <% end %>

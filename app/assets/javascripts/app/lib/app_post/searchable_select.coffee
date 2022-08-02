@@ -459,12 +459,12 @@ class App.SearchableSelect extends Spine.Controller
     content = {}
     if @attribute.relation
       content =
-        name: name
+        name: String(name)
         value: value
         object: @attribute.relation
     else
       content =
-        name: value
+        name: String(value)
         value: value
 
     @input.before App.view('generic/token')(content)
