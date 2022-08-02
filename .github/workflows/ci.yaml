@@ -44,5 +44,7 @@ jobs:
           yarn install
           bundle exec ruby .gitlab/configure_environment.rb
           source .gitlab/environment.env
+      - name: Lint
+        run: .github/workflows/ci/lint.sh
       # - name: CI
       #   run: .github/ci.sh
