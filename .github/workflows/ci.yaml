@@ -22,6 +22,18 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v1
+      - name: Cache node modules
+        id: cache-npm
+        uses: actions/cache@v3
+        with:
+          path: ~/.yarn/cache
+          key: ${{ runner.os }}-cache-npm-${{ hashFiles('~/.yarn.lock') }}
+      - name: Cache Rubygems
+        id: cache-bundler
+        uses: actions/cache@v3
+        with:
+          path: ~/vendor/ruby
+          key: ${{ runner.os }}-cache-bundler-${{ hashFiles('~/.Gemfile.lock') }}
       - name: Set up Zammad
         shell: bash
         run: |
@@ -29,6 +41,7 @@ jobs:
           bundle config set --local frozen 'true'
           bundle config set --local path 'vendor'
           bundle install -j $(nproc)
+          yarn install
           bundle exec ruby .gitlab/configure_environment.rb
           source .gitlab/environment.env
       # - name: CI
