@@ -8,7 +8,7 @@ import LayoutMain from '@mobile/components/layout/LayoutMain.vue'
 import transitionViewGuard from './guards/before/viewTransition'
 
 const routeModules: Record<string, RoutesModule> = import.meta.glob(
-  '../modules/*/routes.ts',
+  ['../modules/*/routes.ts', '../modules/*/routes/*.ts'],
   { eager: true },
 )
 
