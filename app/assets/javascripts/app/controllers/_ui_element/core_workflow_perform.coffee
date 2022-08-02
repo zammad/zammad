@@ -75,6 +75,8 @@ class App.UiElement.core_workflow_perform extends App.UiElement.ApplicationSelec
           config.default  = undefined
           if config.tag is 'boolean'
             config.tag = 'select'
+          if config.tag.match(/^(tree_)?select$/)
+            config.multiple = true
           if config.type is 'email' || config.type is 'tel'
             config.type = 'text'
           for operatorRegEx, operator of operatorsType
@@ -129,11 +131,21 @@ class App.UiElement.core_workflow_perform extends App.UiElement.ApplicationSelec
   @buildValueConfigMultiple: (config, meta) ->
     if _.contains(['add_option', 'remove_option', 'set_fixed_to', 'select'], meta.operator)
       config.multiple = true
+      if config.data_type.match(/^(tree_)?select$/) && meta.operator is 'select'
+        config.multiple = false
+
       config.nulloption = true
     else
       config.multiple = false
       config.nulloption = false
     return config
+
+  @renderConfig: (config, meta) ->
+    if _.contains(['add_option', 'remove_option', 'set_fixed_to'], meta.operator)
+      tagSearch = "#{config.tag}_search"
+      return App.UiElement[tagSearch].render(config, {}) if App.UiElement[tagSearch]
+
+    return App.UiElement[config.tag].render(config, {})
 
   @mapOperatorDisplayName: (operator) ->
     names =
