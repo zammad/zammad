@@ -19,6 +19,13 @@ jobs:
           password: ${{ secrets.ZAMMAD_DOCKER_REGISTRY_PASSWORD }}
     env:
       RAILS_ENV: test
+      Z_LOCALES: "en-us:de-de"
+      # Temporary switch to enable the mobile front end for testing.
+      ENABLE_EXPERIMENTAL_MOBILE_FRONTEND: 'true'
+      # Compile assets only once.
+      CI_SKIP_ASSETS_PRECOMPILE: 'true'
+      # Avoid unnecessary DB resets.
+      CI_SKIP_DB_RESET: 'true'
     steps:
       - name: Checkout
         uses: actions/checkout@v1
