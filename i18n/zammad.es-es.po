@@ -2,16 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-05-26 03:30+0000\n"
-"Last-Translator: Arturo <r2r0@posteo.de>\n"
+"PO-Revision-Date: 2022-08-03 16:05+0000\n"
+"Last-Translator: Ales Zabala Alava <shagi@gisa-elkartea.org>\n"
 "Language-Team: Spanish <https://translations.zammad.org/projects/zammad/"
-"zammad-development/es/>\n"
+"zammad-stable/es/>\n"
 "Language: es-es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.12.1\n"
+"X-Generator: Weblate 4.13\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -774,7 +774,7 @@ msgstr "Añadir alarma para recordatorio de tickets pendientes y escalados."
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Add attachment option to upload."
-msgstr "Añadir opción para subir un adjunto"
+msgstr "Añadir opción para subir un adjunto."
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Add bullet list"
@@ -1557,7 +1557,7 @@ msgstr "Navegador"
 
 #: app/assets/javascripts/app/lib/mixins/ticket_mass_updatable.coffee
 msgid "Bulk action executed!"
-msgstr "Acción masiva ejecutada"
+msgstr "¡Acción masiva ejecutada!"
 
 #: app/assets/javascripts/app/lib/mixins/ticket_mass_updatable.coffee
 msgid "Bulk action failed"
@@ -4573,15 +4573,15 @@ msgstr "Escalada en"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "Escalation at (Close Time)"
-msgstr "Escalada en (Hora de cierre) "
+msgstr "Escalada en (Hora de cierre)"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "Escalation at (First Response Time)"
-msgstr "Escalada en (Tiempo de primera respuesta) "
+msgstr "Escalada en (Tiempo de primera respuesta)"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "Escalation at (Update Time)"
-msgstr "Escalada en (hora de actualización) "
+msgstr "Escalada en (hora de actualización)"
 
 #: db/seeds/settings.rb
 msgid "Evangelist"
@@ -5089,7 +5089,7 @@ msgstr "Servicio de Geo Calendario"
 
 #: db/seeds/settings.rb
 msgid "Geo IP Service"
-msgstr "Servicio de Geo IP "
+msgstr "Servicio de Geo IP"
 
 #: db/seeds/settings.rb
 msgid "Geo Location Service"
@@ -5305,10 +5305,8 @@ msgid "Groups"
 msgstr "Grupos"
 
 #: app/assets/javascripts/app/controllers/group.coffee
-#, fuzzy
-#| msgid "Group (read)"
 msgid "Groups are …"
-msgstr "Grupo (leer)"
+msgstr "Los grupos son …"
 
 #: app/assets/javascripts/app/models/webhook.coffee
 msgid "HMAC SHA1 Signature Token"
@@ -5533,10 +5531,8 @@ msgid "Hours"
 msgstr "Horas"
 
 #: app/views/layouts/knowledge_base.html.erb
-#, fuzzy
-#| msgid "How can we help you? Search for an answer or a topic..."
 msgid "How can we help you? Search for an answer or a topic…"
-msgstr "Como podemos ayudarte? Buscar una respuesta o un tema..."
+msgstr "Como podemos ayudarte? Buscar una respuesta o un tema…"
 
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_waiting_time.coffee
 #, fuzzy
@@ -6094,7 +6090,7 @@ msgstr ""
 
 #: lib/github/linked_issue.rb
 msgid "Invalid GitHub issue link format"
-msgstr "Formato inválido del enlace de GitHub "
+msgstr "Formato inválido del enlace de GitHub"
 
 #: lib/gitlab/credentials.rb
 msgid "Invalid GitLab GraphQL API token"
@@ -6134,13 +6130,11 @@ msgstr ""
 
 #: lib/password_policy/min_length.rb
 msgid "Invalid password, it must be at least %s characters long!"
-msgstr "Password invalido, debe contener al menos %s caracteres de longitud"
+msgstr "¡Contraseña inválida, debe contener al menos %s caracteres de longitud!"
 
 #: lib/password_policy/max_length.rb
-#, fuzzy
-#| msgid "Invalid password, it must be at least %s characters long!"
 msgid "Invalid password, it must be shorter than %s characters!"
-msgstr "Password invalido, debe contener al menos %s caracteres de longitud"
+msgstr "¡Contraseña inválida, debe contener al menos %s caracteres de longitud!"
 
 #: lib/password_policy/digit.rb
 msgid "Invalid password, it must contain at least 1 digit!"
@@ -6155,8 +6149,8 @@ msgid ""
 "Invalid password, it must contain at least 2 lowercase and 2 uppercase "
 "characters!"
 msgstr ""
-"Password Invalido, debe contener al menos 2 letras minisculas y 2 letras "
-"mayusculas."
+"¡Contraseña inválida, debe contener al menos 2 letras minúsculas y 2 letras "
+"mayúsculas!"
 
 #: app/controllers/settings_controller.rb
 msgid "Invalid payload, need data:image in logo param"
@@ -6232,10 +6226,8 @@ msgstr "Enero"
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
-#, fuzzy
-#| msgid "Job is waiting to get started..."
 msgid "Job is waiting to get started…"
-msgstr "El trabajo está esperando para empezar ..."
+msgstr "El trabajo está esperando para empezar…"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "John Smith"
@@ -6560,10 +6552,8 @@ msgstr "Cargando-Fallido"
 #: app/assets/javascripts/app/lib/app_post/task_manager.coffee
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 #: app/assets/javascripts/app/views/generic/page_loading.jst.eco
-#, fuzzy
-#| msgid "Loading..."
 msgid "Loading…"
-msgstr "Cargando..."
+msgstr "Cargando…"
 
 #: lib/email_helper.rb
 msgid "Local MTA (Sendmail/Postfix/Exim/…) - use server setup"
@@ -7726,10 +7716,8 @@ msgid "On %s, %s wrote:"
 msgstr "En %s, %s escribió:"
 
 #: app/assets/javascripts/app/models/macro.coffee
-#, fuzzy
-#| msgid "Once completed..."
 msgid "Once completed…"
-msgstr "Una vez completado..."
+msgstr "Una vez completado…"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Online"
@@ -8286,10 +8274,8 @@ msgid "Please supply your new password!"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
-#, fuzzy
-#| msgid "Please wait..."
 msgid "Please wait…"
-msgstr "Espere, Por favor..."
+msgstr "Espere, Por favor…"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
@@ -8735,10 +8721,8 @@ msgid "Reset changes"
 msgstr "Restablecer cambios"
 
 #: app/assets/javascripts/app/controllers/translation.coffee
-#, fuzzy
-#| msgid "Reset changes"
 msgid "Resetting changes…"
-msgstr "Restablecer cambios"
+msgstr "Restableciendo cambios…"
 
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
 msgid "Response"
@@ -8820,10 +8804,8 @@ msgstr "Tareas en ejecución"
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
-#, fuzzy
-#| msgid "Running..."
 msgid "Running…"
-msgstr "Ejecutando..."
+msgstr "Ejecutando…"
 
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee
 msgid "S/MIME"
@@ -9015,10 +8997,8 @@ msgid "Schedulers"
 msgstr "Programadores"
 
 #: app/assets/javascripts/app/controllers/job.coffee
-#, fuzzy
-#| msgid "Scheduler"
 msgid "Schedulers are …"
-msgstr "Programador"
+msgstr "Los programador son …"
 
 #: app/assets/javascripts/app/views/object_manager/screens.jst.eco
 msgid "Screen"
@@ -9061,10 +9041,8 @@ msgstr "Buscar por usuario"
 #: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee
 #: app/assets/javascripts/app/views/generic/icon_picker.jst.eco
 #: app/frontend/apps/mobile/modules/search/views/SearchOverview.vue
-#, fuzzy
-#| msgid "Search"
 msgid "Search…"
-msgstr "Buscar"
+msgstr "Buscar…"
 
 #: db/seeds/object_manager_attributes.rb
 #, fuzzy
@@ -9158,10 +9136,8 @@ msgstr "Selecciona el módulo generador de números de ticket."
 
 #: app/frontend/shared/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
-#, fuzzy
-#| msgid "Select Template"
 msgid "Select…"
-msgstr "Seleccionar Template"
+msgstr "Seleccionar…"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco
@@ -9224,10 +9200,8 @@ msgid "Sender of last article"
 msgstr "Responder al último artículo"
 
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco
-#, fuzzy
-#| msgid "pending"
 msgid "Sending…"
-msgstr "pendiente"
+msgstr "Enviando…"
 
 #: app/assets/javascripts/app/controllers/maintenance.coffee
 msgid "Sent successfully!"
@@ -9451,10 +9425,8 @@ msgstr "Mostrar detalles de búsqueda"
 
 #: app/assets/javascripts/app/views/generic/ticket_list.jst.eco
 #: app/assets/javascripts/app/views/widget/ticket_stats_list.jst.eco
-#, fuzzy
-#| msgid "Show all..."
 msgid "Show all…"
-msgstr "Ver todo..."
+msgstr "Ver todo…"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Show chat automatically"
@@ -9486,7 +9458,7 @@ msgstr "Muestre el título en forma."
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 msgid "Shown records in caller log."
-msgstr "Registros mostrados en el registro de llamadas. "
+msgstr "Registros mostrados en el registro de llamadas."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Shown when the chat is closed."
@@ -9535,10 +9507,8 @@ msgid "Signature"
 msgstr "Firma"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
-#, fuzzy
-#| msgid "Resend verification email"
 msgid "Signature verification failed!"
-msgstr "Reenviar Email de verificación"
+msgstr "¡La verificación de firma ha fallado!"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
@@ -9693,10 +9663,8 @@ msgid "Start new conversation"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
-#, fuzzy
-#| msgid "Start typing to search for users..."
 msgid "Start typing to search for users…"
-msgstr "Comienza a escribir para buscar usuarios"
+msgstr "Comienza a escribir para buscar usuarios…"
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 #, fuzzy
@@ -10035,10 +10003,8 @@ msgstr "Modulos de texto"
 
 #: app/assets/javascripts/app/controllers/macro.coffee
 #: app/assets/javascripts/app/controllers/text_module.coffee
-#, fuzzy
-#| msgid "Text modules"
 msgid "Text modules are …"
-msgstr "Modulos de texto"
+msgstr "Los módulos de texto son…"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 msgid "Text needed"
@@ -10700,13 +10666,11 @@ msgstr "%s Objecto(s) se han createdo."
 
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
 msgid "Third-party Applications"
-msgstr "Aplicaciones tercer-izadas "
+msgstr "Aplicaciones tercer-izadas"
 
 #: lib/telegram.rb
-#, fuzzy
-#| msgid "Bot already exists!"
 msgid "This bot already exists."
-msgstr "¡Bot ya existe!"
+msgstr "Este bot ya existe."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/reader_list_controller.coffee
 msgid "This category is empty"
@@ -11088,7 +11052,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "Ticket |%s| will escalate soon!"
-msgstr "Ticket |%s| será escalado pronto."
+msgstr "¡El ticket |%s| será escalado pronto!"
 
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
@@ -11365,10 +11329,8 @@ msgid "Triggers"
 msgstr "Disparadores"
 
 #: app/assets/javascripts/app/controllers/trigger.coffee
-#, fuzzy
-#| msgid "Triggers"
 msgid "Triggers are …"
-msgstr "Disparadores"
+msgstr "Los disparadores son …"
 
 #: app/assets/javascripts/app/lib/app_post/websocket.coffee
 msgid "Trying to reconnect…"
@@ -11600,7 +11562,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/assets/javascripts/app/models/user.coffee
 msgid "Updated at"
-msgstr "Actualizar a las "
+msgstr "Actualizar a las"
 
 #: app/assets/javascripts/app/models/calendar.coffee
 #: app/assets/javascripts/app/models/chat.coffee
@@ -11894,10 +11856,8 @@ msgstr "Verificando el envío y la recepción"
 #: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco
-#, fuzzy
-#| msgid "Verifying..."
 msgid "Verifying…"
-msgstr "Verificando..."
+msgstr "Verificando…"
 
 #: app/assets/javascripts/app/controllers/version.coffee
 #: app/assets/javascripts/app/views/package.jst.eco
@@ -12122,10 +12082,8 @@ msgid "Webhooks"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/webhook.coffee
-#, fuzzy
-#| msgid "Webhook"
 msgid "Webhooks are …"
-msgstr "Webhook"
+msgstr "Los webhook son …"
 
 #: app/assets/javascripts/app/models/webhook.coffee
 msgid ""
@@ -12200,7 +12158,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
 msgid "Welcome!"
-msgstr "Bienvenido"
+msgstr "¡Bienvenido!"
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco lib/telegram.rb
@@ -13563,10 +13521,8 @@ msgstr "seleccione"
 
 #: app/assets/javascripts/app/views/generic/attachment.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
-#, fuzzy
-#| msgid "select attachment..."
 msgid "select attachment…"
-msgstr "Seleccionar Adjunto"
+msgstr "seleccionar adjunto…"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "set fixed to"

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-07-15 05:28+0000\n"
-"Last-Translator: Virtorgan <dpires1966@yahoo.fr>\n"
+"PO-Revision-Date: 2022-08-03 16:05+0000\n"
+"Last-Translator: ® <rossdaworld@gmail.com>\n"
 "Language-Team: French <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/fr/>\n"
 "Language: fr-fr\n"
@@ -759,7 +759,7 @@ msgstr "Ajouter liste a puces"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Add first level heading"
-msgstr ""
+msgstr "Ajouter un titre de premier niveau"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Add image"
@@ -775,7 +775,7 @@ msgstr "Ajouter liste numérotée"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Add second level heading"
-msgstr ""
+msgstr "Ajouter un titre de second niveau"
 
 #: db/seeds/settings.rb
 msgid "Add sender initials to end of a tweet."
@@ -783,7 +783,7 @@ msgstr "Ajouter les initiales de l'auteur à la fin d'un tweet."
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Add third level heading"
-msgstr ""
+msgstr "Ajouter un titre de troisième niveau"
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
 msgid "Add this class to a button on your page that should open the chat."
@@ -1206,10 +1206,8 @@ msgid "Attached Files"
 msgstr "Fichiers Attachés"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
-#, fuzzy
-#| msgid "Attachments"
 msgid "Attachment"
-msgstr "Pièces jointes"
+msgstr "Pièce jointe"
 
 #: db/seeds/settings.rb
 msgid "Attachment - Search for follow-up also in attachments."
@@ -1943,7 +1941,7 @@ msgstr "Clients en cours Chat"
 #, fuzzy
 #| msgid "Connect Channels"
 msgid "Check 'Channel' streams."
-msgstr "Connecter des canaux"
+msgstr "Vérifier les canaux."
 
 #: db/seeds/schedulers.rb
 msgid "Check channels."
@@ -2055,23 +2053,17 @@ msgid "Clean up expired sessions."
 msgstr "Supprimer les sessions expirées."
 
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
-#, fuzzy
-#| msgid "clear"
 msgid "Clear"
-msgstr "réinitialisation"
+msgstr "Réinitialisation"
 
 #: app/frontend/shared/components/CommonInputSearch/CommonInputSearch.vue
-#, fuzzy
-#| msgid "Search"
 msgid "Clear Search"
-msgstr "Rechercher"
+msgstr "Réinitialiser la recherche"
 
 #: app/frontend/shared/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
-#, fuzzy
-#| msgid "Clearbit integration"
 msgid "Clear Selection"
-msgstr "Integration Clearbit"
+msgstr "Réinitialiser la sélection"
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco
@@ -2122,7 +2114,7 @@ msgstr "Fermer et Marquer en tant que Spam"
 
 #: lib/excel_sheet/ticket.rb
 msgid "Close Diff In Min"
-msgstr ""
+msgstr "Différence de clôture en min"
 
 #: lib/excel_sheet/ticket.rb
 msgid "Close Escalation At"
@@ -2243,10 +2235,8 @@ msgid "Configure App"
 msgstr "Configurer App"
 
 #: app/assets/javascripts/app/controllers/getting_started/base.coffee
-#, fuzzy
-#| msgid "Basic Settings"
 msgid "Configure Basic Settings"
-msgstr "Paramètres de base"
+msgstr "Configurer les paramètres de base"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Confirm/submit dialog"
@@ -2385,7 +2375,7 @@ msgstr "Prolonger la session"
 #, fuzzy
 #| msgid "Continue session"
 msgid "Continue to desktop app"
-msgstr "Prolonger la session"
+msgstr "Prolonger sur la version desktop"
 
 #: app/assets/javascripts/app/views/translation/index.jst.eco
 msgid "Contributing Translations"
@@ -2645,7 +2635,7 @@ msgstr "Créé par"
 #, fuzzy
 #| msgid "Create Channels"
 msgid "Creation Channels"
-msgstr "Canaux de création"
+msgstr "Création de canaux"
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
 msgid "Creation mask"
@@ -2797,20 +2787,16 @@ msgid "Date & Time"
 msgstr "Date & Heure"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
-#, fuzzy
-#| msgid "Date & Time"
 msgid "Date & time field"
-msgstr "Date & Heure"
+msgstr "Champ date et heure"
 
 #: db/seeds/settings.rb
 msgid "Date (Year.Month.Day.SystemID.Counter)"
 msgstr "Date (Année.Mois.Jour.IDSystème.Compteur)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
-#, fuzzy
-#| msgid "Date & Time"
 msgid "Date field"
-msgstr "Date & Heure"
+msgstr "Champ date"
 
 #: app/assets/javascripts/app/views/generic/timer.jst.eco
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco
@@ -3215,15 +3201,11 @@ msgstr ""
 "utilisateur/organisation."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid ""
-#| "Defines if the GitHub (http://www.github.com) integration is enabled or "
-#| "not."
 msgid ""
 "Defines if the i-doit (https://www.i-doit.org/) integration is enabled or "
 "not."
 msgstr ""
-"Définit si l'intégration GitHub (http://www.github.com) est active ou non."
+"Définit si l'intégration i-doit (http://www.i-doit.org) est active ou non."
 
 #: db/seeds/settings.rb
 msgid "Defines if tickets can be created via web form."
@@ -3986,7 +3968,7 @@ msgstr "ne pas synchroniser"
 
 #: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 msgid "Done"
-msgstr ""
+msgstr "Terminé"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_image_view.coffee
 msgid "Download"
@@ -4883,7 +4865,7 @@ msgstr "Première réponse à"
 
 #: lib/excel_sheet/ticket.rb
 msgid "First Response Diff In Min"
-msgstr ""
+msgstr "Différence entre première réponse en min"
 
 #: lib/excel_sheet/ticket.rb
 msgid "First Response Escalation At"

@@ -2,16 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-04-19 17:01+0000\n"
-"Last-Translator: Petr Daniel Ambrož <paces@paces.cz>\n"
-"Language-Team: Czech <https://translations.zammad.org/projects/zammad/zammad-"
-"development/cs/>\n"
+"PO-Revision-Date: 2022-08-03 16:05+0000\n"
+"Last-Translator: Ondrej Pokorny <ondrej.pokorny@entry-cz.com>\n"
+"Language-Team: Czech <https://translations.zammad.org/projects/zammad/"
+"zammad-stable/cs/>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Weblate 4.11.2\n"
+"X-Generator: Weblate 4.13\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -47,7 +47,7 @@ msgstr "dd/mm/yyyy HH:MM"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid " to "
-msgstr ""
+msgstr " do "
 
 #: db/seeds/settings.rb
 msgid ""
@@ -99,44 +99,32 @@ msgid "%s completed data privacy task to delete user ID |%s|"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket_article.coffee
-#, fuzzy
-#| msgid "%s created Article for |%s|"
 msgid "%s created article for |%s|"
-msgstr "%s vytvořil(a) položku pro |%s| "
+msgstr "%s vytvořil(a) položku pro |%s|"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 msgid "%s created data privacy task to delete user ID |%s|"
 msgstr ""
 
 #: app/assets/javascripts/app/models/group.coffee
-#, fuzzy
-#| msgid "%s created Group |%s|"
 msgid "%s created group |%s|"
-msgstr "%s vytvořil(a) Skupinu |%s| "
+msgstr "%s vytvořil(a) Skupinu |%s|"
 
 #: app/assets/javascripts/app/models/organization.coffee
-#, fuzzy
-#| msgid "%s created Organization |%s|"
 msgid "%s created organization |%s|"
-msgstr "%s vytvořil(a) Organizaci |%s| "
+msgstr "%s vytvořil(a) Organizaci |%s|"
 
 #: app/assets/javascripts/app/models/role.coffee
-#, fuzzy
-#| msgid "%s created Group |%s|"
 msgid "%s created role |%s|"
-msgstr "%s vytvořil(a) Skupinu |%s| "
+msgstr "%s vytvořil(a) Skupinu |%s|"
 
 #: app/assets/javascripts/app/models/ticket.coffee
-#, fuzzy
-#| msgid "%s created Ticket |%s|"
 msgid "%s created ticket |%s|"
-msgstr "%s vytvořil(a) Ticket |%s| "
+msgstr "%s vytvořil(a) Ticket |%s|"
 
 #: app/assets/javascripts/app/models/user.coffee
-#, fuzzy
-#| msgid "%s created User |%s|"
 msgid "%s created user |%s|"
-msgstr "%s vytvořil(a) Uživatele |%s| "
+msgstr "%s vytvořil(a) uživatele |%s|"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
@@ -226,10 +214,8 @@ msgid "%s object(s) will be updated."
 msgstr "%s objektů je aktualizováno."
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco
-#, fuzzy
-#| msgid "%s of your tickets are currently in process."
 msgid "%s of my tickets are currently in process."
-msgstr "%s tvých tiketů je v řízení. "
+msgstr "%s tvých tiketů je aktivních."
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_escalation.jst.eco
 msgid "%s of my tickets escalated."
@@ -247,7 +233,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee
 msgid "%s required!"
-msgstr "%s je vyžadován! "
+msgstr "%s je vyžadován!"
 
 #: app/assets/javascripts/app/models/user.coffee
 msgid "%s started a new session"
@@ -260,7 +246,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/user.coffee
 msgid "%s switched to |%s|!"
-msgstr "%s se přenul jako |%s|! "
+msgstr "%s se přepnul na |%s|!"
 
 #: app/frontend/apps/mobile/components/Organization/OrganizationItem.vue
 #: app/frontend/apps/mobile/components/User/UserItem.vue
@@ -270,10 +256,8 @@ msgid "%s tickets"
 msgstr "přiřadit tikety"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee
-#, fuzzy
-#| msgid "%s created Article for |%s|"
 msgid "%s updated article for |%s|"
-msgstr "%s vytvořil(a) položku pro |%s| "
+msgstr "%s aktualizoval (a) položku pro |%s|"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 msgid "%s updated data privacy task to delete user ID |%s|"
@@ -298,10 +282,8 @@ msgid "%s updated role |%s|"
 msgstr "%s aktualizoval Skupinu |%s|"
 
 #: app/assets/javascripts/app/models/ticket.coffee
-#, fuzzy
-#| msgid "%s updated Ticket |%s|"
 msgid "%s updated ticket |%s|"
-msgstr "%s aktualizoval ticket |%s| "
+msgstr "%s aktualizoval ticket |%s|"
 
 #: app/assets/javascripts/app/models/user.coffee
 #, fuzzy
@@ -981,17 +963,13 @@ msgstr "Opensource monitorovací nástroj."
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
-#, fuzzy
-#| msgid "Analyzing entries with given configuration..."
 msgid "Analyzing entries with given configuration…"
-msgstr "Analyzování záznamů s danou konfigurací..."
+msgstr "Analyzování záznamů s danou konfigurací…"
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
-#, fuzzy
-#| msgid "Analyzing structure..."
 msgid "Analyzing structure…"
-msgstr "Analyzuji strukturu..."
+msgstr "Analyzuji strukturu…"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "Another ticket was merged into ticket |%s|"
@@ -1035,14 +1013,12 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee
-#, fuzzy
-#| msgid "Account not verified"
 msgid "App could not be verified."
-msgstr "Účet neověřen"
+msgstr "Účet nemůže být ověřen."
 
 #: db/seeds/settings.rb
 msgid "App credentials for Facebook."
-msgstr "Přihlašovací údaje pro Facebook"
+msgstr "Přihlašovací údaje pro Facebook."
 
 #: db/seeds/settings.rb
 msgid "App credentials for Twitter."
