@@ -34,13 +34,13 @@ jobs:
         uses: actions/cache@v3
         with:
           path: .yarn/cache
-          key: ${{ runner.os }}-cache-npm-${{ hashFiles('.yarn.lock') }}
+          key: ${{ runner.os }}-cache-npm-${{ hashFiles('yarn.lock') }}
       - name: Cache Rubygems
         id: cache-bundler
         uses: actions/cache@v3
         with:
           path: vendor/ruby
-          key: ${{ runner.os }}-cache-bundler-${{ hashFiles('.Gemfile.lock') }}
+          key: ${{ runner.os }}-cache-bundler-${{ hashFiles('Gemfile.lock') }}
       - name: Pre
         run: .github/workflows/ci/pre.sh
       - name: Lint
