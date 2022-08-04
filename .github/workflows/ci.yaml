@@ -1,45 +1,49 @@
-name: ci
+name: CI
 
 on:
   pull_request
 
 jobs:
-  ci:
+  CI:
     runs-on: ubuntu-latest
+    container:
+      image: registry.zammad.com/docker/zammad-ci:stable
+      credentials:
+        username: ${{ secrets.ZAMMAD_DOCKER_REGISTRY_USERNAME }}
+        password: ${{ secrets.ZAMMAD_DOCKER_REGISTRY_PASSWORD }}
     services:
-      mysql:
-        image: mysql:5
-        env:
-          MYSQL_ROOT_PASSWORD: password
-        ports:
-        - 13306:3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
-      postgres:
-        image: postgres:11
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-        ports:
-        - 5432:5432
-        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
-    strategy:
-      matrix:
-        dbs:
-          - mysql
-          - postgresql
+      postgresql:
+        image: registry.zammad.com/docker/zammad-postgresql:stable
+        credentials:
+          username: ${{ secrets.ZAMMAD_DOCKER_REGISTRY_USERNAME }}
+          password: ${{ secrets.ZAMMAD_DOCKER_REGISTRY_PASSWORD }}
     env:
       RAILS_ENV: test
-      ZAMMAD_DBS: ${{ matrix.dbs }}
+      Z_LOCALES: "en-us:de-de"
+      # Temporary switch to enable the mobile front end for testing.
+      ENABLE_EXPERIMENTAL_MOBILE_FRONTEND: 'true'
+      # Compile assets only once.
+      CI_SKIP_ASSETS_PRECOMPILE: 'true'
+      # Avoid unnecessary DB resets.
+      CI_SKIP_DB_RESET: 'true'
     steps:
       - name: Checkout
         uses: actions/checkout@v1
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
+      - name: Cache node modules
+        id: cache-npm
+        uses: actions/cache@v3
         with:
-          ruby-version: 3.0.4
-      - name: Increase MySQL max_allowed_packet to 1GB (workaround for unknown/missing service option)
-        run: |
-          sudo apt-get install -y mysql-client
-          mysql --host 127.0.0.1 --port 13306 -uroot -ppassword -e "SET GLOBAL max_allowed_packet=1073741824;"
-      - name: CI
-        run: .github/ci.sh
+          path: .yarn/cache
+          key: ${{ runner.os }}-cache-npm-${{ hashFiles('yarn.lock') }}
+      - name: Cache Rubygems
+        id: cache-bundler
+        uses: actions/cache@v3
+        with:
+          path: vendor/ruby
+          key: ${{ runner.os }}-cache-bundler-${{ hashFiles('Gemfile.lock') }}
+      - name: Pre
+        run: .github/workflows/ci/pre.sh
+      - name: Lint
+        run: .github/workflows/ci/lint.sh
+      - name: Test
+        run: .github/workflows/ci/test.sh
