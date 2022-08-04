@@ -29,6 +29,12 @@ const classes: FormThemeClasses = {
     input:
       'appearance-none focus:outline-none focus:ring-0 focus:ring-offset-0',
   },
+  radio: {
+    wrapper: 'inline-flex items-center cursor-pointer',
+    inner: 'mr-2',
+    input:
+      'appearance-none focus:outline-none focus:ring-0 focus:ring-offset-0',
+  },
 }
 
 export default classes

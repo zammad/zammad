@@ -175,5 +175,15 @@ const dialog = useDialog({
 
     <Form :schema="linkSchemas" />
     <Form :schema="schema" />
+
+    <FormKit
+      type="radio"
+      :buttons="true"
+      :options="[
+        { label: 'Incoming Phone', value: 1, icon: 'received-calls' },
+        { label: 'Outgoing Phone', value: 2, icon: 'outbound-calls' },
+        { label: 'Send Email', value: 3, icon: 'email' },
+      ]"
+    />
   </div>
 </template>

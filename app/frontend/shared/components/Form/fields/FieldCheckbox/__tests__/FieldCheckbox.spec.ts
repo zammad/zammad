@@ -75,7 +75,6 @@ describe('Form - Field - Checkbox (Formkit-BuildIn)', () => {
 
   it('check for the input value when on-value and off-value is used', async () => {
     const view = renderCheckbox({
-      ...wrapperParameters,
       props: {
         label: 'Checkbox',
         name: 'checkbox',
