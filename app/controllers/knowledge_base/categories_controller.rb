@@ -22,8 +22,6 @@ class KnowledgeBase::CategoriesController < KnowledgeBase::BaseController
     all_ids_present = collection.map(&:id).sort == ids.sort
     raise Exceptions::UnprocessableEntity, __('Provide position of all items in scope') if !all_ids_present
 
-    klass.notify_kb_clients_suspend = true
-
     klass.acts_as_list_no_update do
       ids.each_with_index do |id, index|
         collection
@@ -31,11 +29,6 @@ class KnowledgeBase::CategoriesController < KnowledgeBase::BaseController
           .update!(position: index)
       end
     end
-
-    klass.notify_kb_clients_suspend = false
-
-    # it's enough to notify about one updated item
-    collection.first.touch # rubocop:disable Rails/SkipsModelValidations
 
     assets = ApplicationModel::CanAssets.reduce(collection, {})
     render json: assets

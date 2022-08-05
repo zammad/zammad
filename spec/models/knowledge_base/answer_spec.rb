@@ -35,22 +35,6 @@ RSpec.describe KnowledgeBase::Answer, type: :model, current_user_id: 1 do
     context 'without permissions' do
       it { expect(assets).to include_assets_of internal_answer }
       it { expect(assets).to include_assets_of category }
-      it { expect(assets).to include_assets_of another_category }
-
-      context 'with internal and published articles in category' do
-        before do
-          internal_answer
-          published_answer
-        end
-
-        it 'internal sibling returned' do
-          expect(published_answer.assets).to include_assets_of(internal_answer, category)
-        end
-
-        it 'published sibling returned' do
-          expect(internal_answer.assets).to include_assets_of(published_answer, category)
-        end
-      end
     end
 
     context 'with readable another category' do
@@ -62,26 +46,6 @@ RSpec.describe KnowledgeBase::Answer, type: :model, current_user_id: 1 do
 
       it { expect(assets).to include_assets_of internal_answer }
       it { expect(assets).to include_assets_of category }
-      it { expect(assets).to include_assets_of another_category }
-
-      context 'with internal and published articles in category' do
-        before do
-          KnowledgeBase::PermissionsUpdate
-            .new(category)
-            .update! user.roles.first => 'reader'
-
-          internal_answer
-          published_answer
-        end
-
-        it 'internal sibling returned' do
-          expect(published_answer.assets).to include_assets_of(internal_answer, category)
-        end
-
-        it 'published sibling returned' do
-          expect(internal_answer.assets).to include_assets_of(published_answer, category)
-        end
-      end
     end
 
     context 'with hidden another category' do
@@ -93,26 +57,6 @@ RSpec.describe KnowledgeBase::Answer, type: :model, current_user_id: 1 do
 
       it { expect(assets).to include_assets_of internal_answer }
       it { expect(assets).to include_assets_of category }
-      it { expect(assets).not_to include_assets_of another_category }
-
-      context 'with internal and published articles in category' do
-        before do
-          KnowledgeBase::PermissionsUpdate
-            .new(category)
-            .update! user.roles.first => 'none'
-
-          internal_answer
-          published_answer
-        end
-
-        it 'internal sibling not returned' do
-          expect(published_answer.assets).to not_include_assets_of(internal_answer).and(include_assets_of(category))
-        end
-
-        it 'published sibling returned' do
-          expect(internal_answer.assets).to include_assets_of(published_answer, category)
-        end
-      end
 
       context 'with published answer' do
         let(:another_category_published_answer) { create(:knowledge_base_answer, :published, category: another_category) }
@@ -121,7 +65,6 @@ RSpec.describe KnowledgeBase::Answer, type: :model, current_user_id: 1 do
 
         it { expect(assets).to include_assets_of internal_answer }
         it { expect(assets).to include_assets_of category }
-        it { expect(assets).to include_assets_of another_category }
       end
     end
   end
