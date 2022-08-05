@@ -143,7 +143,6 @@ RSpec.describe KnowledgeBase::Category, type: :model, current_user_id: 1 do
 
     context 'without permissions' do
       it { expect(assets).to include_assets_of category }
-      it { expect(assets).to include_assets_of another_category }
     end
 
     context 'with readable another category' do
@@ -154,7 +153,6 @@ RSpec.describe KnowledgeBase::Category, type: :model, current_user_id: 1 do
       end
 
       it { expect(assets).to include_assets_of category }
-      it { expect(assets).to include_assets_of another_category }
     end
 
     context 'with hidden another category' do
@@ -173,7 +171,6 @@ RSpec.describe KnowledgeBase::Category, type: :model, current_user_id: 1 do
         before { another_category_published_answer }
 
         it { expect(assets).to include_assets_of category }
-        it { expect(assets).to include_assets_of another_category }
       end
     end
   end
