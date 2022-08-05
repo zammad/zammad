@@ -90,7 +90,7 @@ module Gql::Types
         [object_attribute[:name], object_attribute[:display]]
       end
 
-      VISIBLE_ORDER_BY_NAMES[attribute] || object_attribute_names[attribute]
+      VISIBLE_ORDER_BY_NAMES[attribute] || @object_attribute_names[attribute]
     end
 
     def flatten_columns(columns)

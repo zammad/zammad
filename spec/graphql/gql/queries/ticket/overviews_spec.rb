@@ -25,6 +25,31 @@ RSpec.describe Gql::Queries::Ticket::Overviews, type: :graphql do
         )
       end
 
+      context 'with object attributes and unknown attributes', db_strategy: :reset do
+        let(:oa) do
+          create(:object_manager_attribute_text, screens: attributes_for(:required_screen)).tap do
+            ObjectManager::Attribute.migration_execute
+          end
+        end
+        # Change the overview to include an object attribute column and a column that has an unknown field.
+        let(:overview) do
+          Overview.find_by('link' => 'my_assigned').tap do |overview|
+            overview.view = { 's' => [oa.name, 'unknown_field'] }
+            overview.save!
+          end
+        end
+        let(:variables) do
+          overview
+          { withTicketCount: false }
+        end
+
+        it 'lists view colummns correctly' do
+          expect(gql.result.nodes.first).to include(
+            'viewColumns' => [ { 'key' => oa.name, 'value' => oa.display }, { 'key' => 'unknown_field', 'value' => nil }],
+          )
+        end
+      end
+
       context 'without ticket count' do
         it 'does not include ticketCount field' do
           expect(gql.result.nodes.first).not_to have_key('ticketCount')
