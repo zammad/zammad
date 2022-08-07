@@ -2833,9 +2833,9 @@ RSpec.describe 'Ticket zoom', type: :system do
     end
 
     it 'when not found' do
-      visit "#ticket/number/123456789"
+      visit '#ticket/number/123456789'
       wait(5, interval: 1).until_constant { current_url }
-      expect(current_url).to include("ticket/zoom/0")
+      expect(current_url).to include('ticket/zoom/0')
     end
   end
 end
