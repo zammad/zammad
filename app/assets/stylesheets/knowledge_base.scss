@@ -468,6 +468,13 @@ b {
         @include bidi-style(padding-left, 0, padding-right, 0);
       }
     }
+
+    .article-content {
+      ul,
+      ol {
+        @include bidi-style(padding-left, 1.5em, padding-right, 0);
+      }
+    }
   }
 }
 
