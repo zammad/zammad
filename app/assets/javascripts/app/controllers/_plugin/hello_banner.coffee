@@ -10,7 +10,7 @@ class HelloBanner
 |
 | Hi there, nice to meet you!
 |
-| Visit %chttp://zammad.com/jobs%c to learn about our current job openings.
+| Visit %chttps://zammad.com/jobs%c to learn about our current job openings.
 |
 | Your Zammad Team
 |
