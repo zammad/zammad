@@ -34,4 +34,12 @@ RSpec.describe HtmlSanitizer::Scrubber::TagRemove do
 
     it { is_expected.to eq target }
   end
+
+  context 'when custom tags list is given' do
+    let(:scrubber) { described_class.new tags: %w[test] }
+    let(:input)    { '<test></test><tag-to-remove><div>text</div></tag-to-remove>' }
+    let(:target)   { '<tag-to-remove><div>text</div></tag-to-remove>' }
+
+    it { is_expected.to eq target }
+  end
 end

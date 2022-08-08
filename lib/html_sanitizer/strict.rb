@@ -2,6 +2,12 @@
 
 class HtmlSanitizer
   class Strict < Base
+    def initialize(no_images: false)
+      super()
+
+      @no_images = no_images
+    end
+
     def sanitize(string, external: false, timeout: true)
       return run_sanitization(string, external) if !timeout
 
@@ -17,6 +23,10 @@ class HtmlSanitizer
         .fragment(string)
         .scrub!(HtmlSanitizer::Scrubber::TagRemove.new)
         .scrub!(HtmlSanitizer::Scrubber::QuoteContent.new)
+
+      if @no_images
+        fragment.scrub! HtmlSanitizer::Scrubber::TagRemove.new(tags: %w[img])
+      end
 
       wipe_scrubber = HtmlSanitizer::Scrubber::Wipe.new
 

@@ -21,7 +21,7 @@ class Group < ApplicationModel
   validates :name, presence: true
 
   validates :note, length: { maximum: 250 }
-  sanitized_html :note
+  sanitized_html :note, no_images: true
 
   activity_stream_permission 'admin.group'
 end

@@ -12,21 +12,31 @@ module ChecksHtmlSanitized
     html_attributes = self.class.instance_variable_get(:@sanitized_html) || []
     return true if html_attributes.blank?
 
-    html_attributes.each do |attribute|
-      next if changes[attribute].blank?
+    options = self.class.instance_variable_get(:@sanitized_html_kwargs).slice(:no_images)
 
-      value = send(attribute)
+    sanitizer = HtmlSanitizer::Strict.new(**options)
 
-      next if value.blank?
-      next if !sanitizeable?(attribute, value)
-
-      send(:"#{attribute}=", HtmlSanitizer.strict(value))
+    html_attributes.each do |attr|
+      sanitize_single_attribute(attr, sanitizer)
     end
     true
   end
 
   def sanitizeable?(_attribute, _value)
     true
+  end
+
+  private
+
+  def sanitize_single_attribute(attr, sanitizer)
+    return if changes[attr].blank?
+
+    value = send(attr)
+
+    return if value.blank?
+    return if !sanitizeable?(attr, value)
+
+    send(:"#{attr}=", sanitizer.sanitize(value))
   end
 
   # methods defined here are going to extend the class, not the instance of it
@@ -43,8 +53,9 @@ end
 
 =end
 
-    def sanitized_html(*attributes)
-      @sanitized_html = attributes
+    def sanitized_html(*attributes, **kwargs)
+      @sanitized_html        = attributes
+      @sanitized_html_kwargs = kwargs
     end
   end
 end

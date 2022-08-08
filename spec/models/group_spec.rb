@@ -6,6 +6,7 @@ require 'models/concerns/can_be_imported_examples'
 require 'models/concerns/has_object_manager_attributes_examples'
 require 'models/concerns/has_collection_update_examples'
 require 'models/concerns/has_xss_sanitized_note_examples'
+require 'models/concerns/has_image_sanitized_note_examples'
 
 RSpec.describe Group, type: :model do
   subject(:group) { create(:group) }
@@ -15,4 +16,5 @@ RSpec.describe Group, type: :model do
   it_behaves_like 'HasObjectManagerAttributes'
   it_behaves_like 'HasCollectionUpdate', collection_factory: :group
   it_behaves_like 'HasXssSanitizedNote', model_factory: :group
+  it_behaves_like 'HasImageSanitizedNote', model_factory: :group
 end

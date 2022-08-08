@@ -6,6 +6,7 @@ require 'models/concerns/can_csv_import_examples'
 require 'models/concerns/has_history_examples'
 require 'models/concerns/has_search_index_backend_examples'
 require 'models/concerns/has_xss_sanitized_note_examples'
+require 'models/concerns/has_image_sanitized_note_examples'
 require 'models/concerns/has_object_manager_attributes_examples'
 require 'models/concerns/has_taskbars_examples'
 
@@ -17,6 +18,7 @@ RSpec.describe Organization, type: :model do
   it_behaves_like 'HasHistory'
   it_behaves_like 'HasSearchIndexBackend', indexed_factory: :organization
   it_behaves_like 'HasXssSanitizedNote', model_factory: :organization
+  it_behaves_like 'HasImageSanitizedNote', model_factory: :organization
   it_behaves_like 'HasObjectManagerAttributes'
   it_behaves_like 'HasTaskbars'
 

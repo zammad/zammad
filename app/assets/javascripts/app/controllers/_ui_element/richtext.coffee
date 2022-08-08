@@ -12,6 +12,7 @@ class App.UiElement.richtext
       mode:      attribute.type
       maxlength: attribute.maxlength
       buttons:   attribute.buttons
+      noImages:  attribute.no_images
     )
 
     item.find('a.btn--action[data-action]').on 'click', (event) => @toolButtonClicked(event, form)

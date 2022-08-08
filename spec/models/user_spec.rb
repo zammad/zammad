@@ -7,6 +7,7 @@ require 'models/concerns/has_history_examples'
 require 'models/concerns/has_roles_examples'
 require 'models/concerns/has_groups_permissions_examples'
 require 'models/concerns/has_xss_sanitized_note_examples'
+require 'models/concerns/has_image_sanitized_note_examples'
 require 'models/concerns/can_be_imported_examples'
 require 'models/concerns/has_object_manager_attributes_examples'
 require 'models/user/can_lookup_search_index_attributes_examples'
@@ -25,6 +26,7 @@ RSpec.describe User, type: :model do
   it_behaves_like 'HasHistory'
   it_behaves_like 'HasRoles', group_access_factory: :agent
   it_behaves_like 'HasXssSanitizedNote', model_factory: :user
+  it_behaves_like 'HasImageSanitizedNote', model_factory: :user
   it_behaves_like 'HasGroups and Permissions', group_access_no_permission_factory: :user
   it_behaves_like 'CanBeImported'
   it_behaves_like 'HasObjectManagerAttributes'

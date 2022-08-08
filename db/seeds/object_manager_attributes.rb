@@ -1299,6 +1299,7 @@ ObjectManager::Attribute.add(
   data_option: {
     type:      'text',
     maxlength: 5000,
+    no_images: false,
     null:      true,
     note:      __('Notes are visible to agents only, never to customers.'),
   },
@@ -1598,6 +1599,7 @@ ObjectManager::Attribute.add(
   data_option: {
     type:      'text',
     maxlength: 5000,
+    no_images: false,
     null:      true,
     note:      __('Notes are visible to agents only, never to customers.'),
   },
@@ -1922,6 +1924,7 @@ ObjectManager::Attribute.add(
   data_option: {
     type:      'text',
     maxlength: 250,
+    no_images: false,
     null:      true,
     note:      __('Notes are visible to agents only, never to customers.'),
   },

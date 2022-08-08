@@ -3,16 +3,21 @@
 class HtmlSanitizer
   module Scrubber
     class TagRemove < Base
+      # @param tags [Array<String,Symbol>] list of tags to remove. Defaults to .tags_remove_content
+      def initialize(tags: nil)
+        super()
+
+        @tags = tags || self.class.tags_remove_content
+      end
+
       def scrub(node)
-        return if tags_remove_content.exclude?(node.name)
+        return if @tags.exclude?(node.name)
 
         node.remove
         STOP
       end
 
-      private
-
-      def tags_remove_content
+      def self.tags_remove_content
         Rails.configuration.html_sanitizer_tags_remove_content
       end
     end

@@ -370,7 +370,7 @@ class App.Utils
     html
 
   # cleanHtmlWithRichText = App.Utils.htmlCleanup(html)
-  @htmlCleanup: (html) ->
+  @htmlCleanup: (html, removeImages = false) ->
     return html if !html
     html = @_checkTypeOf(html)
 
@@ -388,6 +388,12 @@ class App.Utils
     html.find('small, time, form, label').replaceWith( ->
       $(@).contents()
     )
+
+    # remove image tags if needed
+    if removeImages
+      html.find('img').replaceWith( ->
+        $(@).contents()
+      )
 
     # replace tags with generic div
     # New type of the tag
@@ -1482,7 +1488,7 @@ class App.Utils
       else
         html = App.Utils.htmlRemoveRichtext(htmlRaw)
     else
-      html = App.Utils.htmlCleanup(htmlRaw)
+      html = App.Utils.htmlCleanup(htmlRaw, options.noImages)
 
     htmlString = html.html()
 

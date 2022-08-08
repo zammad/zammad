@@ -96,7 +96,7 @@ class User < ApplicationModel
                          :user_groups
 
   validates :note, length: { maximum: 5000 }
-  sanitized_html :note
+  sanitized_html :note, no_images: true
 
   def ignore_search_indexing?(_action)
     # ignore internal user

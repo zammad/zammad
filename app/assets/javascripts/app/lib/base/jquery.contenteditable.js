@@ -15,6 +15,7 @@
     mode:      'richtext',
     multiline: true,
     imageWidth: 'absolute',
+    noImages:  false,
     allowKey:  {
       8: true, // backspace
       9: true, // tab
@@ -340,6 +341,8 @@
     htmlRaw = this.getHtmlFromClipboard(clipboardData)
 
     if (!App.Utils.clipboardHtmlIsWithText(htmlRaw)) {
+      // stop processing if input form does not accept images
+      if(this.options.noImages) return;
 
       // insert and in case, resize images
       clipboardImage = this.getClipboardDataImage(clipboardData)
