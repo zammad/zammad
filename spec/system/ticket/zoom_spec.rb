@@ -2800,4 +2800,18 @@ RSpec.describe 'Ticket zoom', type: :system do
       end
     end
   end
+
+  describe 'Allow additional usage of Ticket Number in (Zoom) URL #849' do
+    let(:ticket) { create(:ticket, group: Group.find_by(name: 'Users')) }
+
+    it 'does find the ticket by ticket number' do
+      visit "#ticket/zoom/number/#{ticket.number}"
+      expect(current_url).to include("ticket/zoom/#{ticket.id}")
+    end
+
+    it 'does fail properly for ticket numbers which are not found' do
+      visit '#ticket/zoom/number/123456789'
+      expect(page).to have_text("I can't find this Ticket")
+    end
+  end
 end

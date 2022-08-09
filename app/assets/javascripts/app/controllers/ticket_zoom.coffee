@@ -1228,6 +1228,41 @@ class TicketZoomRouter extends App.ControllerPermanent
   constructor: (params) ->
     super
 
+    return @byNumber(params) if params.ticket_number
+    @byTicketId(params)
+
+  byNumber: (params) ->
+    return @byTicketId(params) if !params.ticket_number
+    return @byTicketId(params) if params.ticket_id
+
+    number = params.ticket_number
+    delete params.ticket_number
+
+    ticket = App.Ticket.findByAttribute('number', number)
+    return @navigate("ticket/zoom/#{ticket.id}") if ticket
+
+    App.Ajax.request(
+      type:  'POST'
+      url:   "#{@apiPath}/tickets/search"
+      processData: true
+      data: JSON.stringify(
+        condition: {
+          'ticket.number': {
+            operator: 'is',
+            value: number
+          }
+        }
+        limit: 1
+      )
+      success: (data, status, xhr) =>
+        return @byTicketId(params) if _.isEmpty(data.tickets)
+        @navigate("ticket/zoom/#{data.tickets[0]}")
+      error: =>
+        @byTicketId(params)
+    )
+
+  byTicketId: (params) ->
+
     # cleanup params
     clean_params =
       ticket_id:  params.ticket_id
@@ -1242,6 +1277,7 @@ class TicketZoomRouter extends App.ControllerPermanent
       show:       true
     )
 
+App.Config.set('ticket/zoom/number/:ticket_number', TicketZoomRouter, 'Routes')
 App.Config.set('ticket/zoom/:ticket_id', TicketZoomRouter, 'Routes')
 App.Config.set('ticket/zoom/:ticket_id/nav/:nav', TicketZoomRouter, 'Routes')
 App.Config.set('ticket/zoom/:ticket_id/:article_id', TicketZoomRouter, 'Routes')
