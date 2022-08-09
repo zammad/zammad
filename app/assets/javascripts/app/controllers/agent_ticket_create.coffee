@@ -181,7 +181,7 @@ class App.TicketCreate extends App.Controller
   show: =>
     @navupdate("#ticket/create/id/#{@id}#{@split}", type: 'menu')
     @autosaveStart()
-    @controllerBind('ticket_create_rerender',           (template) => @renderQueue(template))
+    @controllerBind('ticket_create_rerender', (template) => @renderQueue(template))
     @controllerBind('ticket_create_shared_draft_saved',       @sharedDraftSaved)
     @controllerBind('ticket_create_import_draft_attachments', @importDraftAttachments)
 
@@ -192,7 +192,7 @@ class App.TicketCreate extends App.Controller
 
   hide: =>
     @autosaveStop()
-    @controllerUnbind('ticket_create_rerender', (template) => @renderQueue(template))
+    @controllerUnbind('ticket_create_rerender')
     @controllerUnbind('ticket_create_shared_draft_saved')
     @controllerUnbind('ticket_create_import_draft_attachments')
 
@@ -292,7 +292,7 @@ class App.TicketCreate extends App.Controller
     localeRender = =>
       @render(template)
     App.QueueManager.add(@queueKey, localeRender)
-    return if !@formMeta
+    return if !@formMeta && !@controllerFormCreateMiddle
     App.QueueManager.run(@queueKey)
 
   importDraftAttachments: (options = {}) =>
@@ -331,6 +331,10 @@ class App.TicketCreate extends App.Controller
 
       if !_.isEmpty(params['form_id'])
         @formId = params['form_id']
+
+    if !_.isEmpty(params)
+      # only use form meta once so it will not get used on templates
+      @formMeta = undefined
 
     params.priority_id ||= App.TicketPriority.findByAttribute( 'default_create', true )?.id
 

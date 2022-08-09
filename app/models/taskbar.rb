@@ -3,6 +3,7 @@
 class Taskbar < ApplicationModel
   include ChecksClientNotification
   include ::Taskbar::HasAttachments
+  include Taskbar::Assets
 
   store           :state
   store           :params
