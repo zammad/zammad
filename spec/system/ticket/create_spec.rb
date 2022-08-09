@@ -1117,4 +1117,22 @@ RSpec.describe 'Ticket Create', type: :system do
       expect(page).to have_select('state_id', selected: 'open')
     end
   end
+
+  describe 'Ticket templates do not save the owner attribute #4175' do
+    let(:ticket)    { create(:ticket, group: Group.first) }
+    let(:agent)     { create(:agent, groups: [Group.first]) }
+    let!(:template) { create(:template, :dummy_data, group: Group.first, owner: agent) }
+
+    before do
+      visit 'ticket/create'
+    end
+
+    it 'does set owners properly by templates and taskbars' do
+      use_template(template)
+      expect(page).to have_select('owner_id', selected: agent.fullname)
+      wait.until { Taskbar.last.state['owner_id'].to_i == agent.id }
+      refresh
+      expect(page).to have_select('owner_id', selected: agent.fullname)
+    end
+  end
 end

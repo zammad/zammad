@@ -2,6 +2,7 @@
 
 class Template < ApplicationModel
   include ChecksClientNotification
+  include Template::Assets
 
   store     :options
   validates :name, presence: true
