@@ -71,7 +71,8 @@ function build(cb) {
   cb();
 }
 
-exports.default = function() {
-  gulp.watch(iconsource, build)
+exports.default = function(cb) {
+  gulp.watch(iconsource, build);
+  cb();
 }
 exports.build = build
