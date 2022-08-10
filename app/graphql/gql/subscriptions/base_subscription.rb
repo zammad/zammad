@@ -22,6 +22,10 @@ module Gql::Subscriptions
       end
     end
 
+    def self.broadcastable?
+      !!broadcastable
+    end
+
     # Shortcut method to trigger a subscription. Just call:
     #
     #   Gql::Subscriptions::MyScubscription.trigger(
@@ -52,7 +56,7 @@ module Gql::Subscriptions
     end
 
     def self.register_in_schema(schema)
-      schema.field graphql_field_name, resolver: self, broadcastable: !!broadcastable
+      schema.field graphql_field_name, resolver: self, broadcastable: broadcastable?
     end
 
   end
