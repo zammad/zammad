@@ -8,6 +8,14 @@
   <link rel="apple-touch-icon" href="apple-touch-icon.png" />
   <%= stylesheet_link_tag "application", :media => 'all' %>
   <%= stylesheet_link_tag "application-print", :media => 'print' %>
+  <%= javascript_tag nonce: true do -%>
+    if(window.MSInputMethodContext && document.documentMode){
+      var polyfillScriptTag = document.createElement('script');
+      polyfillScriptTag.setAttribute('src', '<%= path_to_javascript('ie11CustomProperties.min') %>');
+      polyfillScriptTag.setAttribute('nonce', '<%= content_security_policy_nonce %>');
+      document.head.appendChild(polyfillScriptTag);
+    }
+  <% end -%>
   <% if Rails.configuration.assets.debug %>
     <%= javascript_include_tag "application", nonce: true %>
   <% else %>
