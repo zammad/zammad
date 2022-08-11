@@ -36,6 +36,8 @@ class Sessions::Client
       user = User.lookup(id: session_data[:user]['id'])
       return if !user
 
+      UserInfo.current_user_id = user.id
+
       # init new backends
       if user_id_last_run != user.id
         user_id_last_run = user.id
