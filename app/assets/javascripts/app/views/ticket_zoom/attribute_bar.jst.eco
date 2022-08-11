@@ -61,15 +61,12 @@
     <button class="btn btn--primary btn--slim btn--only-icon btn--split--last js-openDropdownMacro"><%- @Icon('arrow-up') %></button>
       <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="userAction">
         <% if !@sharedDraftsDisabled: %>
-          <li class="label" role="menuitem">
-            <label><%- @T('Draft') %></label>
+          <li class="dropdown-header" role="menuitem"><%- @T('Draft') %></li>
           <li class="js-dropdownActionSaveDraft" role="menuitem"><%- @T('Save Draft') %></li>
         <% end %>
 
         <% if !@macroDisabled: %>
-          <li class="label" role="menuitem">
-            <label><%- @T('Macros') %></label>
-
+          <li class="dropdown-header" role="menuitem"><%- @T('Macros') %></li>
           <% for macro in @macros: %>
             <li class="js-dropdownActionMacro" role="menuitem" data-id="<%= macro.id %>"><%- macro.displayName() %>
           <% end %>
