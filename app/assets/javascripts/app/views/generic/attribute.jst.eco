@@ -3,7 +3,7 @@
   <h2>
   <% end %>
   <div class="formGroup-label">
-    <label for="<%= @attribute.id %>"<% if @attribute.label_class: %> class="<%= @attribute.label_class %>"<% end %>><%- @T(@attribute.display) %> <span><% if !@attribute.null: %>*<% end %></span></label>
+    <label for="<%= @attribute.id %>"<% if @attribute.label_class: %> class="<%= @attribute.label_class %>"<% end %>><%- @T(@attribute.display) %> <span><% if !@attribute.null: %>*<% end %></span></label>
     <%- @item %>
     <% if @bookmarkable: %>
     <div class="align-right js-bookmark formGroup-bookmark">
