@@ -37,20 +37,16 @@
   <div class="js-tablistItem js-service">
     <p><%- @T('Script can be located under: ||%s|| and needs to be executable.', '/opt/omd/sites/{SITENAME}/local/share/check_mk/notifications/zammad-service') %></p>
 
-    <pre><code class="language-bash js-code hljs">
-#!/bin/bash
+    <pre><code class="language-bash js-code hljs">#!/bin/bash
 
-curl -X POST -F "event_id=$NOTIFY_SERVICEPROBLEMID" -F "host=$NOTIFY_HOSTNAME" -F "service=$NOTIFY_SERVICEDESC" -F "state=$NOTIFY_SERVICESTATE" -F "text=$NOTIFY_SERVICEOUTPUT" <%= App.Config.get('http_type') %>://<%= App.Config.get('fqdn') %>/api/v1/integration/check_mk/<%= App.Setting.get('check_mk_token') %>
-    </code></pre>
+curl -X POST -F "event_id=$NOTIFY_SERVICEPROBLEMID" -F "host=$NOTIFY_HOSTNAME" -F "service=$NOTIFY_SERVICEDESC" -F "state=$NOTIFY_SERVICESTATE" -F "text=$NOTIFY_SERVICEOUTPUT" <%= App.Config.get('http_type') %>://<%= App.Config.get('fqdn') %>/api/v1/integration/check_mk/<%= App.Setting.get('check_mk_token') %></code></pre>
   </div>
 
   <div class="js-tablistItem js-host hidden">
     <p><%- @T('Script can be located under: ||%s|| and needs to be executable.', '/opt/omd/sites/{SITENAME}/local/share/check_mk/notifications/zammad-host') %></p>
 
-    <pre><code class="language-bash js-code hljs">
-#!/bin/bash
+    <pre><code class="language-bash js-code hljs">#!/bin/bash
 
-curl -X POST -F "event_id=$NOTIFY_HOSTPROBLEMID" -F "host=$NOTIFY_HOSTNAME" -F "state=$NOTIFY_HOSTSTATE" -F "text=$NOTIFY_HOSTOUTPUT" <%= App.Config.get('http_type') %>://<%= App.Config.get('fqdn') %>/api/v1/integration/check_mk/<%= App.Setting.get('check_mk_token') %>
-    </code></pre>
+curl -X POST -F "event_id=$NOTIFY_HOSTPROBLEMID" -F "host=$NOTIFY_HOSTNAME" -F "state=$NOTIFY_HOSTSTATE" -F "text=$NOTIFY_HOSTOUTPUT" <%= App.Config.get('http_type') %>://<%= App.Config.get('fqdn') %>/api/v1/integration/check_mk/<%= App.Setting.get('check_mk_token') %></code></pre>
   </div>
 </div>
