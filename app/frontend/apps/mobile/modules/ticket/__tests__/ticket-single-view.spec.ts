@@ -10,6 +10,7 @@ import { visitView } from '@tests/support/components/visitView'
 import { mockGraphQLApi } from '@tests/support/mock-graphql-api'
 import { waitUntil } from '@tests/support/utils'
 import { flushPromises } from '@vue/test-utils'
+import { mock } from 'vitest-mock-extended'
 import { TicketDocument } from '../graphql/queries/ticket.api'
 import { mockTicketDetailViewGql } from './mocks/detail-view'
 
@@ -158,4 +159,23 @@ test('show article context on click', async () => {
   expect(view.getByText('Reply')).toBeInTheDocument()
 
   // TODO actions itself should be tested when reply will be implemented
+})
+
+test('change content on subscription', async () => {
+  const { waitUntilTicketLoaded, mockTicketSubscription, ticket } =
+    mockTicketDetailViewGql()
+
+  const view = await visitView('/tickets/1')
+
+  await waitUntilTicketLoaded()
+
+  expect(view.getByText(ticket.title)).toBeInTheDocument()
+
+  await mockTicketSubscription.next({
+    data: mock({
+      ticketUpdates: { ticket: mock({ ...ticket, title: 'Some New Title' }) },
+    }),
+  })
+
+  expect(view.getByText('Some New Title')).toBeInTheDocument()
 })

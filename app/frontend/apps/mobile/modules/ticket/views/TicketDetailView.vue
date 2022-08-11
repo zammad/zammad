@@ -9,12 +9,18 @@ import { useRouter } from 'vue-router'
 import { isNonNullObject } from '@apollo/client/utilities'
 import { useSessionStore } from '@shared/stores/session'
 import { ErrorStatusCodes } from '@shared/types/error'
+import { whenever } from '@vueuse/shared'
+import type {
+  TicketUpdatesSubscription,
+  TicketUpdatesSubscriptionVariables,
+} from '@shared/graphql/types'
 import TicketHeader from '../components/TicketDetailView/TicketDetailViewHeader.vue'
 import TicketTitle from '../components/TicketDetailView/TicketDetailViewTitle.vue'
 import { useTicketQuery } from '../graphql/queries/ticket.api'
 import TicketArticlesList from '../components/TicketDetailView/ArticlesList.vue'
 import TicketReplyButton from '../components/TicketDetailView/TicketDetailViewReplyButton.vue'
 import { useTicketArticlesQuery } from '../graphql/queries/ticket/articles.api'
+import { TicketUpdatesDocument } from '../graphql/subscriptions/ticketUpdates.api'
 
 interface Props {
   internalId: string
@@ -26,9 +32,7 @@ const ticketQuery = new QueryHandler(
   useTicketQuery(() => ({
     ticketInternalId: Number(props.internalId),
   })),
-  {
-    errorShowNotification: false,
-  },
+  { errorShowNotification: false },
 )
 
 const session = useSessionStore()
@@ -38,9 +42,7 @@ const articlesQuery = new QueryHandler(
     ticketInternalId: Number(props.internalId),
     isAgent: session.hasPermission(['admin.*', 'ticket.agent']),
   })),
-  {
-    errorShowNotification: false,
-  },
+  { errorShowNotification: false },
 )
 
 const router = useRouter()
@@ -75,6 +77,25 @@ useHeader({
     return `#${number} - ${title}`
   }),
 })
+
+const stopWatch = whenever(
+  () => !isLoadingTicket.value,
+  () => {
+    if (!ticket.value) return
+
+    stopWatch()
+
+    ticketQuery.subscribeToMore<
+      TicketUpdatesSubscriptionVariables,
+      TicketUpdatesSubscription
+    >({
+      document: TicketUpdatesDocument,
+      variables: {
+        ticketId: ticket.value.id,
+      },
+    })
+  },
+)
 
 // TODO get users from graphql
 const users = [{ id: '1' }, { id: '2', lastname: 'Smith', firstname: 'John' }]

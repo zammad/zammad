@@ -38,10 +38,23 @@ export default class QueryHandler<
     return this.operationResult.result
   }
 
-  public subscribeToMore<TSubscriptionData = TResult>(
-    options: ReactiveFunction<
-      SubscribeToMoreOptions<TResult, TVariables, TSubscriptionData>
-    >,
+  public subscribeToMore<
+    TSubscriptionVariables = TVariables,
+    TSubscriptionData = TResult,
+  >(
+    options:
+      | SubscribeToMoreOptions<
+          TResult,
+          TSubscriptionVariables,
+          TSubscriptionData
+        >
+      | ReactiveFunction<
+          SubscribeToMoreOptions<
+            TResult,
+            TSubscriptionVariables,
+            TSubscriptionData
+          >
+        >,
   ): void {
     return this.operationResult.subscribeToMore(options)
   }

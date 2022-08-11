@@ -18,7 +18,7 @@ describe('visuals for metadata', () => {
 
     const article: TicketArticle = {
       // default article has attachment that should be visible as a link
-      ...defaultArticles.ticketArticles.edges[0].node,
+      ...defaultArticles().ticketArticles.edges[0].node,
       internalId: 1,
       from: getAddress(
         '"Test Admin Agent via Zammad Helpdesk" <zammad@localhost>',
