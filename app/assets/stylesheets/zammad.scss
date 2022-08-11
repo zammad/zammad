@@ -8759,6 +8759,10 @@ li.list-item-none {
   @include phone {
     padding: 14px 15px;
   }
+
+  &--empty {
+    padding: 0;
+  }
 }
 
 .modal-header h1 {

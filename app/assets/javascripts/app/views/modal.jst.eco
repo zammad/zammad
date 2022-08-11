@@ -3,7 +3,7 @@
     <form autocomplete="off">
   <% end %>
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header<%= ' modal-header--empty' if !@head %>">
   <% if @buttonClose: %>
         <div class="modal-close js-close">
           <%- @Icon('diagonal-cross') %>
