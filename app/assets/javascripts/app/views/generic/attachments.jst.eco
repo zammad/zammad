@@ -27,7 +27,8 @@
             <div class="attachment-size"><%- @humanFileSize(attachment.size) %></div>
           </div>
           <% if @ContentTypeIcon(content_type) is 'file-calendar': %>
-            <button class="btn js-preview" type="button"><%- @T('Preview') %></button>
+            <div class="half-spacer"></div>
+            <button class="btn btn--action btn--small  js-preview" type="button"><%- @T('Preview') %></button>
           <% end %>
         </a>
       <% end %>
