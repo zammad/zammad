@@ -37,6 +37,12 @@ class Authorization < ApplicationModel
         end
       end
 
+      if Setting.get('auth_saml_credentials')['role_sync']
+        # set roles according to the SAML response
+        saml_roles = Role.get_role_names_from_saml(hash)
+        user.role_ids = Role.get_matching_role_ids(saml_roles) if saml_roles
+      end
+
       # update image if needed
       if hash['info']['image'].present?
         avatar = Avatar.add(

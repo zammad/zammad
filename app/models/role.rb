@@ -84,6 +84,46 @@ returns
 
 =begin
 
+get array of role names provided by the SAML response hash, returning nil when roles are not provided in hash
+
+  Role.get_role_names_from_saml(saml_hash)
+
+returns
+
+  [roleName1, roleName2, ...]
+
+=end
+
+  def self.get_role_names_from_saml(hash)
+    all_raw_info = hash.dig(:extra, :raw_info)&.all
+    all_raw_info.nil? ? nil : all_raw_info['Role']
+  end
+
+=begin
+
+intersect the input role names with all role names in Zammad and return the ids of matching roles
+raises an UnprocessableEntity Exception when no matching roles exist
+
+  Role.get_matching_role_ids(input_roles)
+
+returns
+
+  [roleId1, roleId2, ...]
+
+=end
+
+  def self.get_matching_role_ids(input_roles)
+    matching_role_ids = []
+    input_roles.each do |input_role_name|
+      zammad_role = Role.find_by(name: input_role_name)
+      matching_role_ids << zammad_role.id if zammad_role
+    end
+
+    matching_role_ids
+  end
+
+=begin
+
 get signup role ids
 
   Role.signup_role_ids

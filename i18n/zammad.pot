@@ -9770,6 +9770,10 @@ msgstr ""
 msgid "Sync with computer"
 msgstr ""
 
+#: db/seeds/settings.rb
+msgid "Synchronize roles"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_manage/system.coffee
 #: app/assets/javascripts/app/controllers/manage.coffee
 #: db/seeds/permissions.rb

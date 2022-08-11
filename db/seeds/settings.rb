@@ -1911,6 +1911,16 @@ Setting.create_if_not_exists(
         tag:      'auth_provider',
         provider: 'auth_saml',
       },
+      {
+        display: __('Synchronize roles'),
+        null:    true,
+        name:    'role_sync',
+        tag:     'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
     ],
   },
   state:       {},
