@@ -50,6 +50,7 @@
     </div>
   </div>
 </div>
+<% if ((@article.preferences.security?.sign?.success is false && @article.preferences.security?.sign?.comment) || (@article.preferences.security?.encryption?.success is false && @article.preferences.security?.encryption?.comment) or (@article.preferences.security?.encryption?.success is true || @article.preferences.security?.sign?.success is true)): %>
 <div class="article-meta-permanent">
 <% if (@article.preferences.security?.sign?.success is false && @article.preferences.security?.sign?.comment) || (@article.preferences.security?.encryption?.success is false && @article.preferences.security?.encryption?.comment): %>
   <div class="alert alert--warning">
@@ -76,6 +77,7 @@
   </div>
 <% end %>
 </div>
+<% end %>
 <div class="article-content">
   <% if @article.sender.name isnt 'Agent': %>
   <%    position = 'left' %>
