@@ -234,16 +234,16 @@ class App.CustomerChat extends App.Controller
     if @meta.waiting_chat_count && @maxChatWindows > @windowCount()
 
       # activate normal button
-      @acceptChatElement.not('[data-chat-id]').addClass('is-active pulsate-animation')
+      @acceptChatElement.not('[data-chat-id]').next().addBack().addClass('is-active pulsate-animation')
 
       # activate specific chat buttons
       if activeChatTopcis.length > 1
         for chat in activeChatTopcis
           if @meta.waiting_chat_count_by_chat[chat.id]
-            @$(".js-header .js-acceptChat[data-chat-id=#{chat.id}]").addClass('is-active pulsate-animation').attr('disabled', false)
+            @$(".js-header .js-acceptChat[data-chat-id=#{chat.id}]").attr('disabled', false).next().addBack().addClass('is-active pulsate-animation')
       @idleTimeoutStart()
     else
-      @acceptChatElement.removeClass('is-active pulsate-animation')
+      @acceptChatElement.next().addBack().removeClass('is-active pulsate-animation')
       @idleTimeoutStop()
 
     if activeChatTopcis.length > 1
