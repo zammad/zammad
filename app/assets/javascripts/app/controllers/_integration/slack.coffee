@@ -27,11 +27,11 @@ class Slack extends App.ControllerIntegrationBase
 
     configureAttributes = [
       { name: 'types',     display: __('Trigger'),  tag: 'checkbox', options: options, 'null': false, class: 'vertical', note: __('When notification is being sent.') },
-      { name: 'group_ids', display: __('Group'),    tag: 'select', relation: 'Group', multiple: true, 'null': false, note: __('Only for these groups.') },
-      { name: 'webhook',   display: __('Webhook'),  tag: 'input', type: 'url',  limit: 200, 'null': false, placeholder: 'https://hooks.slack.com/services/...' },
-      { name: 'username',  display: __('Username'), tag: 'input', type: 'text', limit: 100, 'null': false, placeholder: 'username' },
-      { name: 'channel',   display: __('Channel'),  tag: 'input', type: 'text', limit: 100, 'null': true, placeholder: '#channel' },
-      { name: 'icon_url',  display: __('Icon URL'), tag: 'input', type: 'url',  limit: 200, 'null': true, placeholder: 'https://example.com/logo.png' },
+      { name: 'group_ids', display: __('Group'),    tag: 'select', relation: 'Group', multiple: true, 'null': false, class: 'form-control--small', note: __('Only for these groups.') },
+      { name: 'webhook',   display: __('Webhook'),  tag: 'input', type: 'url',  limit: 200, 'null': false, class: 'form-control--small', placeholder: 'https://hooks.slack.com/services/...' },
+      { name: 'username',  display: __('Username'), tag: 'input', type: 'text', limit: 100, 'null': false, class: 'form-control--small', placeholder: 'username' },
+      { name: 'channel',   display: __('Channel'),  tag: 'input', type: 'text', limit: 100, 'null': true, class: 'form-control--small', placeholder: '#channel' },
+      { name: 'icon_url',  display: __('Icon URL'), tag: 'input', type: 'url',  limit: 200, 'null': true, class: 'form-control--small', placeholder: 'https://example.com/logo.png' },
     ]
 
     settings = []
