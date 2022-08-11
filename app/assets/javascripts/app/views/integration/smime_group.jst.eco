@@ -16,8 +16,8 @@
     <% for group in @groups: %>
       <tr data-id="<%= group.id %>">
         <td><%= group.name %>
-        <td class="js-signDefault">
-        <td class="js-encryptionDefault">
+        <td class="settings-list-control-cell js-signDefault">
+        <td class="settings-list-control-cell js-encryptionDefault">
     <% end %>
   <% end %>
   </tbody>
