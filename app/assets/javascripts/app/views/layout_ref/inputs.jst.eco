@@ -11,7 +11,7 @@
         <input type="text" id="background-color" value="">
         <div class="controls-button">
           <div class="controls-button-inner u-clickable">
-            <%- @Icon('eyedropper') %>
+            <div class="color-field js-swatch" style="background-color: #febf01"></div>
           </div>
         </div>
       </div>
