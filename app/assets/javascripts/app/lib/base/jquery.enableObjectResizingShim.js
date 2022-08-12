@@ -128,6 +128,7 @@
   }
 
   Editor.prototype.startResize = function (event) {
+    event.preventDefault()
     var $handle = $(event.currentTarget),
       maxWidth = this.$element.closest('[contenteditable="true"]').width() || ''
     this.resizeCorner = $handle.index()
