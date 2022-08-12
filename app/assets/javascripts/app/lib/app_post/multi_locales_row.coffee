@@ -65,7 +65,8 @@ class App.MultiLocalesRow extends App.Controller
   _updateButtons: (value, is_solo, is_primary) ->
     is_deleted = @el.hasClass('settings-list--deleted')
 
-    @removeButton.attr('disabled',    is_solo || !value || is_primary)
+    @removeButton.attr('disabled', is_solo || !value || is_primary)
+    @removeButton.parent().toggleClass('is-disabled', is_solo || !value || is_primary)
     @primaryCheckbox.attr('disabled', is_solo || !value || is_deleted)
     @primaryCheckbox.prop('checked' , is_primary)
 
