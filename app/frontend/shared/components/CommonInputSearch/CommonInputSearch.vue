@@ -58,7 +58,7 @@ export default {
       ref="filterInput"
       v-model="filter"
       v-bind="$attrs"
-      :placeholder="i18n.t('Search')"
+      :placeholder="i18n.t('Search…')"
       class="h-12 w-full grow rounded-xl bg-gray-500 px-9 placeholder:text-gray focus:shadow-none focus:outline-none focus:ring-0"
       :class="{
         'focus:border-white focus:ring-0': !noBorder,

@@ -2,6 +2,7 @@
 
 import type { OrganizationItemData } from '@mobile/components/Organization/types'
 import { renderComponent } from '@tests/support/components'
+import { mockPermissions } from '@tests/support/mock-permissions'
 
 import SearchResults from '../SearchResults.vue'
 
@@ -10,12 +11,12 @@ describe('renders search result', () => {
     const org: OrganizationItemData = {
       name: 'organization',
       id: '123',
+      internalId: 123,
       ticketsCount: 2,
       active: true,
     }
 
-    // will be needed when permissions are implemented for default plugins
-    // mockPermissions(['admin.organization'])
+    mockPermissions(['ticket.agent'])
 
     const view = renderComponent(SearchResults, {
       props: {

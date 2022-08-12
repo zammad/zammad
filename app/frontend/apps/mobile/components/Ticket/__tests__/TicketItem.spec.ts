@@ -21,15 +21,12 @@ describe('ticket item display', () => {
       state: { name: TicketState.Open },
       title: 'test ticket',
       customer: {
-        firstname: 'John',
-        lastname: 'Doe',
         fullname: 'John Doe',
       },
       updatedAt: new Date(2022, 1, 1, 10, 0, 0, 0).toISOString(),
       updatedBy: {
         id: '456',
-        firstname: 'Jane',
-        lastname: 'Doe',
+        fullname: 'Jane Doe',
       },
       priority: {
         name: 'high',
@@ -81,7 +78,7 @@ describe('ticket item display', () => {
     })
 
     expect(view.getByText('#12345')).toBeInTheDocument()
-    expect(view.queryByText('·')).not.toBeInTheDocument()
+    expect(view.queryByText(/·/)).not.toBeInTheDocument()
     expect(view.getByText('test ticket')).toBeInTheDocument()
 
     expect(view.queryByTestId('stringUpdated')).not.toBeInTheDocument()

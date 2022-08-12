@@ -70,4 +70,4 @@ export type CommonHandlerOptions<TOptions> = BaseHandlerOptions & TOptions
 export type CommonHandlerOptionsParameter<TOptions> =
   Partial<BaseHandlerOptions> & Partial<TOptions>
 
-export type WatchResultCallback<TResult> = (result?: TResult) => void
+export type WatchResultCallback<TResult> = (result: TResult) => void

@@ -66,7 +66,13 @@ useInfiniteScroll(window, async () => {
 
 <template>
   <CommonLoader :loading="!tickets.length && loading">
-    <TicketItem v-for="ticket in tickets" :key="ticket.id" :entity="ticket" />
+    <CommonLink
+      v-for="ticket in tickets"
+      :key="ticket.id"
+      :link="`/tickets/${ticket.internalId}`"
+    >
+      <TicketItem :entity="ticket" />
+    </CommonLink>
     <CommonLoader
       v-if="pagination.loadingNextPage"
       loading

@@ -21,8 +21,7 @@ describe('user item display', () => {
       updatedAt: new Date(2022, 1, 1, 10, 0, 0, 0).toISOString(),
       updatedBy: {
         id: '456',
-        firstname: 'Jane',
-        lastname: 'Doe',
+        fullname: 'Jane Doe',
       },
       organization: {
         name: 'organization',
@@ -37,9 +36,8 @@ describe('user item display', () => {
     })
 
     expect(view.getByText('JD')).toBeInTheDocument() // avatar
-    expect(view.getByText('organization')).toBeInTheDocument()
-    expect(view.getByText('·')).toBeInTheDocument()
-    expect(view.getByText('2 tickets')).toBeInTheDocument()
+    expect(view.getByText(/organization/)).toBeInTheDocument()
+    expect(view.getByText(/2 tickets/)).toBeInTheDocument()
     expect(view.getByText('John Doe')).toBeInTheDocument()
     expect(
       view.getByText('edited 10 hours ago by Jane Doe'),
@@ -63,7 +61,7 @@ describe('user item display', () => {
     expect(view.getByText('JO')).toBeInTheDocument() // avatar
     expect(view.getByText(/^John$/)).toBeInTheDocument()
     expect(view.getByText('1 ticket')).toBeInTheDocument()
-    expect(view.queryByText('·')).not.toBeInTheDocument()
+    expect(view.queryByText(/·/)).not.toBeInTheDocument()
     expect(view.queryByTestId('stringUpdated')).not.toBeInTheDocument()
   })
 })

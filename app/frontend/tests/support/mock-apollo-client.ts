@@ -20,6 +20,10 @@ afterEach(() => {
   mockClient = null
 })
 
+export const clearMockClient = () => {
+  mockClient = null
+}
+
 const createMockClient = (
   handlers: ClientRequestHandler[],
   cacheOptions = {},

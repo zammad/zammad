@@ -3,7 +3,6 @@
 <script setup lang="ts">
 import { computed, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { watchOnce } from '@vueuse/shared'
 import { i18n } from '@shared/i18n'
 import CommonBackButton from '@mobile/components/CommonBackButton/CommonBackButton.vue'
 import { EnumOrderDirection } from '@shared/graphql/types'

@@ -2,17 +2,21 @@
 
 export interface OrganizationItemData {
   id: string
-  ticketsCount: number
+  internalId: number
+  ticketsCount?: number
   members?: {
-    lastname?: Maybe<string>
-    firstname?: Maybe<string>
-  }[]
+    edges: {
+      node: {
+        fullname: string
+      }
+    }[]
+    totalCount: number
+  }
   active: boolean
   name: string
   updatedAt?: string
   updatedBy?: {
     id: string
-    firstname?: Maybe<string>
-    lastname?: Maybe<string>
+    fullname?: Maybe<string>
   }
 }

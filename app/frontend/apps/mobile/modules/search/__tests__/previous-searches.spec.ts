@@ -2,8 +2,20 @@
 
 import { getByText, getAllByRole } from '@testing-library/vue'
 import { visitView } from '@tests/support/components/visitView'
+import { nullableMock, waitUntil } from '@tests/support/utils'
+import type { MockGraphQLInstance } from '@tests/support/mock-graphql-api'
+import { clearMockClient } from '@tests/support/mock-apollo-client'
+import { mockPermissions } from '@tests/support/mock-permissions'
+import { mockSearchOverview } from '../graphql/mocks/mockSearchOverview'
 
 describe('testing previous searches block', () => {
+  let mockSearchApi: MockGraphQLInstance
+
+  beforeEach(() => {
+    mockPermissions(['ticket.agent'])
+    mockSearchApi = mockSearchOverview([])
+  })
+
   it('previous searches', async () => {
     localStorage.clear()
     const view = await visitView('/search/user')
@@ -12,14 +24,15 @@ describe('testing previous searches block', () => {
       return getByText(view.getByTestId('lastSearches'), text)
     }
 
-    const typeInSearch = (text: string) => {
-      return view.events.debounced(() =>
-        view.events.type(view.getByPlaceholderText('Search'), text),
+    const typeInSearch = async (text: string) => {
+      await view.events.debounced(() =>
+        view.events.type(view.getByPlaceholderText('Search…'), text),
       )
+      await waitUntil(() => mockSearchApi.calls.resolve)
     }
     const clearSearch = () => {
       return view.events.debounced(() =>
-        view.events.clear(view.getByPlaceholderText('Search')),
+        view.events.clear(view.getByPlaceholderText('Search…')),
       )
     }
 
@@ -78,9 +91,11 @@ describe('testing previous searches block', () => {
     localStorage.clear()
     const view = await visitView('/search/user')
 
-    const input = view.getByPlaceholderText('Search')
+    const input = view.getByPlaceholderText('Search…')
     await view.events.debounced(() => view.events.type(input, 'search'))
     await view.events.debounced(() => view.events.type(input, '123'))
+
+    await waitUntil(() => mockSearchApi.calls.resolve)
 
     let items = view.getAllByRole('listitem')
     expect(items).toHaveLength(2)
@@ -93,6 +108,47 @@ describe('testing previous searches block', () => {
     expect(items[0]).toHaveTextContent(/^search$/)
     expect(items[1]).toHaveTextContent(/^search123$/)
 
-    // TODO expect api called
+    expect(mockSearchApi.spies.resolve).toHaveBeenNthCalledWith(1, {
+      onlyIn: 'User',
+      isAgent: true,
+      search: 'search',
+    })
+    expect(mockSearchApi.spies.resolve).toHaveBeenNthCalledWith(2, {
+      onlyIn: 'User',
+      isAgent: true,
+      search: 'search123',
+    })
+  })
+
+  it('emptying out search shows last searches', async () => {
+    localStorage.clear()
+    clearMockClient()
+    mockSearchApi.willResolve({
+      search: [
+        nullableMock({
+          __typename: 'User',
+          id: '1sdsada',
+          internalId: 1,
+          updatedAt: new Date().toISOString(),
+          firstname: 'Max',
+          lastname: 'Mustermann',
+        }),
+      ],
+    })
+    const view = await visitView('/search/user')
+
+    const input = view.getByPlaceholderText('Search…')
+    await view.events.debounced(() => view.events.type(input, 'search'))
+    await view.events.debounced(() => view.events.type(input, '123'))
+
+    await waitUntil(() => mockSearchApi.calls.resolve)
+
+    expect(view.container).toHaveTextContent('Max Mustermann')
+
+    await view.events.debounced(() => view.events.clear(input))
+
+    expect(view.container).not.toHaveTextContent('Max Mustermann')
+
+    expect(view.getByTestId('lastSearches')).toBeInTheDocument()
   })
 })

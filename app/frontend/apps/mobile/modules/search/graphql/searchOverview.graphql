@@ -1,0 +1,60 @@
+query search(
+  $search: String!
+  $isAgent: Boolean!
+  $onlyIn: EnumSearchableModels
+) {
+  search(search: $search, onlyIn: $onlyIn) {
+    ... on Ticket {
+      id
+      internalId
+      title
+      number
+      state {
+        name
+      }
+      priority @include(if: $isAgent) {
+        name
+        defaultCreate
+        uiColor
+      }
+      customer {
+        fullname
+      }
+      updatedAt
+      updatedBy @include(if: $isAgent) {
+        id
+        fullname
+      }
+    }
+    ... on User {
+      id
+      internalId
+      firstname
+      lastname
+      image
+      organization {
+        name
+      }
+      updatedAt
+    }
+    ... on Organization {
+      id
+      internalId
+      members(first: 2) {
+        edges {
+          node {
+            fullname
+          }
+        }
+        totalCount
+      }
+      active
+      name
+      updatedAt
+      updatedBy @include(if: $isAgent) {
+        id
+        fullname
+      }
+    }
+  }
+}

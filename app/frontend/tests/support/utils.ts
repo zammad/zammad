@@ -39,3 +39,17 @@ export const waitUntil = async (
     }, 30)
   })
 }
+
+// apollo cache always asks for a field, even if it's marked as optional
+// this function returns a proxy that will return "null" on properties not defined
+// in the initial object
+export const nullableMock = <T extends object>(obj: T): T => {
+  return new Proxy(obj, {
+    get(target, prop, receiver) {
+      if (!Reflect.has(target, prop)) {
+        return null
+      }
+      return Reflect.get(target, prop, receiver)
+    },
+  })
+}

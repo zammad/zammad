@@ -366,6 +366,8 @@ export type Organization = Node & ObjectAttributeValueInterface & {
   domain?: Maybe<Scalars['String']>;
   domainAssignment: Scalars['Boolean'];
   id: Scalars['ID'];
+  /** Internal database ID */
+  internalId: Scalars['Int'];
   members: UserConnection;
   name: Scalars['String'];
   note?: Maybe<Scalars['String']>;
@@ -882,6 +884,8 @@ export type User = Node & ObjectAttributeValueInterface & {
   id: Scalars['ID'];
   image?: Maybe<Scalars['String']>;
   imageSource?: Maybe<Scalars['String']>;
+  /** Internal database ID */
+  internalId: Scalars['Int'];
   lastLogin?: Maybe<Scalars['ISO8601DateTime']>;
   lastname?: Maybe<Scalars['String']>;
   login: Scalars['String'];
@@ -974,6 +978,15 @@ export type AccountLocaleMutationVariables = Exact<{
 
 
 export type AccountLocaleMutation = { __typename?: 'Mutations', accountLocale?: { __typename?: 'AccountLocalePayload', success: boolean, errors?: Array<{ __typename?: 'UserError', message: string, field?: string | null }> | null } | null };
+
+export type SearchQueryVariables = Exact<{
+  search: Scalars['String'];
+  isAgent: Scalars['Boolean'];
+  onlyIn?: InputMaybe<EnumSearchableModels>;
+}>;
+
+
+export type SearchQuery = { __typename?: 'Queries', search: Array<{ __typename?: 'Organization', id: string, internalId: number, active: boolean, name: string, updatedAt: any, members: { __typename?: 'UserConnection', totalCount: number, edges: Array<{ __typename?: 'UserEdge', node: { __typename?: 'User', fullname?: string | null } }> }, updatedBy?: { __typename?: 'User', id: string, fullname?: string | null } } | { __typename?: 'Ticket', id: string, internalId: number, title: string, number: string, updatedAt: any, state: { __typename?: 'TicketState', name: string }, priority?: { __typename?: 'TicketPriority', name: string, defaultCreate: boolean, uiColor?: string | null }, customer: { __typename?: 'User', fullname?: string | null }, updatedBy?: { __typename?: 'User', id: string, fullname?: string | null } } | { __typename?: 'User', id: string, internalId: number, firstname?: string | null, lastname?: string | null, image?: string | null, updatedAt: any, organization?: { __typename?: 'Organization', name: string } | null }> };
 
 export type TicketArticleAttributesFragment = { __typename?: 'TicketArticle', id: string, internal: boolean, body: string, createdAt: any, subject?: string | null, createdBy: { __typename?: 'User', id: string, firstname?: string | null, lastname?: string | null }, sender?: { __typename?: 'TicketArticleType', name?: string | null } | null, to?: { __typename?: 'AddressesField', raw: string, parsed?: Array<{ __typename?: 'EmailAddress', name?: string | null, emailAddress?: string | null }> | null } | null };
 

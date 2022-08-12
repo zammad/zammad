@@ -12,6 +12,7 @@ const Template = createTemplate<Props>(OrganizationItem)
 
 const organization = {
   id: '54321',
+  internalId: 2,
   ticketsCount: 2,
   name: 'Lorem Ipsum',
   active: false,
@@ -24,23 +25,19 @@ export const Default = Template.create({
     updatedAt: new Date(2022, 1, 2).toISOString(),
     updatedBy: {
       id: '456',
-      firstname: 'Jane',
-      lastname: 'Doe',
+      fullname: 'Jane Doe',
     },
-    members: [
-      {
-        lastname: 'Wise',
-        firstname: 'Erik',
-      },
-      {
-        lastname: 'Smith',
-        firstname: 'Peter',
-      },
-      {
-        lastname: "O'Hara",
-        firstname: 'Nils',
-      },
-    ],
+    members: {
+      edges: [
+        {
+          node: { fullname: 'Erik Wise' },
+        },
+        {
+          node: { fullname: 'Peter Smith' },
+        },
+      ],
+      totalCount: 3,
+    },
   },
 })
 

@@ -3,6 +3,7 @@
 module Gql::Types
   class UserType < Gql::Types::BaseObject
     include Gql::Concern::IsModelObject
+    include Gql::Concern::HasInternalId
 
     def self.authorize(object, ctx)
       Pundit.authorize ctx.current_user, object, :show?

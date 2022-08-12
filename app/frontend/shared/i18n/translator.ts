@@ -13,7 +13,7 @@ export class Translator {
     let target = this.translationMap.get(source) || source
 
     args.forEach((arg) => {
-      if (arg) target = target.replace('%s', arg.toString())
+      if (arg != null) target = target.replace('%s', arg.toString())
     })
 
     return target

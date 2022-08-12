@@ -2,7 +2,6 @@
 
 import type { TicketState } from '@shared/entities/ticket/types'
 
-// TODO 2022-05-31 Sheremet V.A. base types on actual usage
 export interface TicketItemData {
   id: string
   internalId: number
@@ -16,19 +15,12 @@ export interface TicketItemData {
     defaultCreate: boolean
     uiColor?: Maybe<string>
   }
-  owner?: {
-    firstname?: Maybe<string>
-    lastname?: Maybe<string>
-  }
   customer?: {
-    firstname?: Maybe<string>
-    lastname?: Maybe<string>
     fullname?: Maybe<string>
   }
   updatedAt?: string
   updatedBy?: {
     id: string
-    firstname?: Maybe<string>
-    lastname?: Maybe<string>
+    fullname?: Maybe<string>
   }
 }

@@ -9,6 +9,7 @@ interface Author {
   id: string
   firstname?: Maybe<string>
   lastname?: Maybe<string>
+  fullname?: Maybe<string>
 }
 
 interface Entity {
@@ -23,7 +24,8 @@ export const useEditedBy = (entity: Ref<Entity>) => {
     if (!updatedBy) return ''
     return updatedBy.id === session.user?.id
       ? i18n.t('me')
-      : [updatedBy.firstname, updatedBy.lastname].filter(Boolean).join(' ')
+      : updatedBy.fullname ||
+          [updatedBy.firstname, updatedBy.lastname].filter(Boolean).join(' ')
   })
 
   const date = computed(() => {

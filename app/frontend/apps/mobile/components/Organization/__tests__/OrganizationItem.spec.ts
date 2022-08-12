@@ -19,27 +19,24 @@ describe('ticket item display', () => {
     const organization: OrganizationItemData = {
       id: '54321',
       ticketsCount: 2,
+      internalId: 3,
       name: 'lorem ipsum',
       active: true,
-      members: [
-        {
-          lastname: 'Wise',
-          firstname: 'Erik',
-        },
-        {
-          lastname: 'Smith',
-          firstname: 'Peter',
-        },
-        {
-          lastname: "O'Hara",
-          firstname: 'Nils',
-        },
-      ],
+      members: {
+        edges: [
+          {
+            node: { fullname: 'Erik Wise' },
+          },
+          {
+            node: { fullname: 'Peter Smith' },
+          },
+        ],
+        totalCount: 3,
+      },
       updatedAt: new Date(2022, 1, 1, 10, 0, 0, 0).toISOString(),
       updatedBy: {
         id: '456',
-        firstname: 'Jane',
-        lastname: 'Doe',
+        fullname: 'Jane Doe',
       },
     }
 
@@ -51,9 +48,9 @@ describe('ticket item display', () => {
     })
 
     expect(view.getByText('lorem ipsum')).toBeInTheDocument()
-    expect(view.getByText('2 tickets')).toBeInTheDocument()
-    expect(view.getByText('·')).toBeInTheDocument()
-    expect(view.getByText('Erik Wise, Peter Smith, +1')).toBeInTheDocument()
+    expect(view.getByText(/2 tickets/)).toBeInTheDocument()
+    expect(view.getByText(/·/)).toBeInTheDocument()
+    expect(view.getByText(/Erik Wise, Peter Smith, \+1/)).toBeInTheDocument()
 
     expect(
       view.getByText('edited 10 hours ago by Jane Doe'),
@@ -63,6 +60,7 @@ describe('ticket item display', () => {
   it('renders when something is missing', () => {
     const organization: OrganizationItemData = {
       id: '54321',
+      internalId: 2,
       ticketsCount: 1,
       name: 'lorem ipsum',
       active: true,
@@ -76,8 +74,8 @@ describe('ticket item display', () => {
     })
 
     expect(view.getByText('lorem ipsum')).toBeInTheDocument()
-    expect(view.getByText('1 ticket')).toBeInTheDocument()
-    expect(view.queryByIconName('·')).not.toBeInTheDocument()
+    expect(view.getByText(/1 ticket/)).toBeInTheDocument()
+    expect(view.queryByIconName(/·/)).not.toBeInTheDocument()
 
     expect(view.queryByTestId('stringUpdated')).not.toBeInTheDocument()
   })

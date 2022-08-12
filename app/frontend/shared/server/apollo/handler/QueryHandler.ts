@@ -120,6 +120,11 @@ export default class QueryHandler<
     this.operationResult.stop()
   }
 
+  public abort() {
+    this.operationResult.stop()
+    this.operationResult.start()
+  }
+
   public async onLoaded(
     triggerPossibleRefetch = false,
   ): Promise<Maybe<TResult>> {

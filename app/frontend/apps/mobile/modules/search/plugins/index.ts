@@ -1,15 +1,19 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { useSessionStore } from '@shared/stores/session'
+import type { EnumSearchableModels } from '@shared/graphql/types'
 import type { Component } from 'vue'
+import { useSessionStore } from '@shared/stores/session'
+import type { Props as IconProps } from '@shared/components/CommonIcon/CommonIcon.vue'
 
-export interface SearchPlugin<T = unknown> {
-  headerTitle: string
+export interface SearchPlugin {
+  model: EnumSearchableModels
+  headerLabel: string
   order: number
   link: string
   permissions: string[]
+  icon?: string | IconProps
+  iconBg?: string
   component: Component // component needs to have a slot called "default" and prop "entity"
-  itemTitle?(entity: T): string // by default "title" field
 }
 
 const pluginsModules = import.meta.glob<SearchPlugin>(

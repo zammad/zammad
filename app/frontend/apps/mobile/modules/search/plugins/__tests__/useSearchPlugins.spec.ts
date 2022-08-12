@@ -16,11 +16,17 @@ describe('plugins are returned correctly', () => {
     const plugins = useSearchPlugins()
 
     expect(plugins).toEqual({
-      ticket: expect.objectContaining({ order: 100, link: '/tickets/#{id}' }),
-      user: expect.objectContaining({ order: 200, link: '/users/#{id}' }),
+      ticket: expect.objectContaining({
+        order: 100,
+        link: '/tickets/#{internalId}',
+      }),
+      user: expect.objectContaining({
+        order: 200,
+        link: '/users/#{internalId}',
+      }),
       organization: expect.objectContaining({
         order: 300,
-        link: '/organizations/#{id}',
+        link: '/organizations/#{internalId}',
       }),
     })
   })
@@ -37,6 +43,6 @@ describe('plugins are returned correctly', () => {
 
     const plugins = useSearchPlugins()
 
-    expect(plugins).not.toHaveProperty('ticket')
+    expect(plugins).not.toHaveProperty('organization')
   })
 })

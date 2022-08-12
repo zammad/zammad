@@ -2,11 +2,10 @@
 
 import { EnumOrderDirection } from '@shared/graphql/types'
 import { waitFor } from '@testing-library/vue'
-import { getTestRouter } from '@tests/support/components/renderComponent'
 import { visitView } from '@tests/support/components/visitView'
 import { mockTicketOverviews } from '@tests/support/mocks/ticket-overviews'
 import { waitForNextTick } from '@tests/support/utils'
-import { stringifyQuery, useRoute } from 'vue-router'
+import { stringifyQuery } from 'vue-router'
 import { mockTicketsByOverview, ticketDefault } from './mocks/overview'
 
 beforeEach(() => {

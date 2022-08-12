@@ -26,8 +26,7 @@ export const Default = Template.create({
     updatedAt: new Date(2022, 1, 2).toISOString(),
     updatedBy: {
       id: '456',
-      firstname: 'Jane',
-      lastname: 'Doe',
+      fullname: 'Jane Doe',
     },
   },
 })

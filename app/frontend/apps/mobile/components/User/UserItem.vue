@@ -16,28 +16,34 @@ const { stringUpdated } = useEditedBy(toRef(props, 'entity'))
 </script>
 
 <template>
-  <div class="flex">
-    <div class="mt-4 w-12">
+  <div class="flex ltr:pr-3 rtl:pl-3">
+    <div class="mt-4 flex w-14 justify-center">
       <CommonUserAvatar :entity="entity" />
     </div>
     <div
-      class="flex flex-1 flex-col border-b border-white/10 py-3 text-gray-100"
+      class="flex flex-1 flex-col overflow-hidden border-b border-white/10 py-3 text-gray-100"
     >
-      <div class="flex">
-        <div v-if="entity.organization">{{ entity.organization.name }}</div>
-        <div v-if="entity.organization" class="px-1">·</div>
-        <div>
-          {{
-            entity.ticketsCount === 1
-              ? `1 ${$t('ticket')}`
-              : $t('%s tickets', entity.ticketsCount)
-          }}
-        </div>
-      </div>
-      <div class="mb-1 text-lg">
+      <span class="overflow-hidden text-ellipsis whitespace-nowrap">
+        {{
+          entity.ticketsCount === 1
+            ? `1 ${$t('ticket')}`
+            : $t('%s tickets', entity.ticketsCount || 0)
+        }}
+        <template v-if="entity.organization">
+          ·
+          {{ entity.organization.name }}
+        </template>
+      </span>
+      <span
+        class="mb-1 whitespace-normal text-lg font-bold leading-5 line-clamp-3"
+      >
         <slot> {{ entity.firstname }} {{ entity.lastname }} </slot>
-      </div>
-      <div v-if="stringUpdated" class="text-gray" data-test-id="stringUpdated">
+      </span>
+      <div
+        v-if="stringUpdated"
+        class="overflow-hidden text-ellipsis text-gray"
+        data-test-id="stringUpdated"
+      >
         {{ stringUpdated }}
       </div>
     </div>

@@ -25,10 +25,7 @@ const customer = computed(() => {
 </script>
 
 <template>
-  <CommonLink
-    :link="`/tickets/${entity.internalId}`"
-    class="flex cursor-pointer ltr:pr-3 rtl:pl-3"
-  >
+  <div class="flex cursor-pointer ltr:pr-3 rtl:pl-3">
     <div class="flex w-14 items-center justify-center">
       <!-- TODO label? -->
       <CommonTicketStateIndicator :status="entity.state.name" label="" />
@@ -54,12 +51,12 @@ const customer = computed(() => {
         <div
           v-if="stringUpdated"
           data-test-id="stringUpdated"
-          class="text-gray"
+          class="overflow-hidden text-ellipsis text-gray"
         >
           {{ stringUpdated }}
         </div>
       </div>
       <CommonTicketPriorityIndicator :priority="entity.priority" />
     </div>
-  </CommonLink>
+  </div>
 </template>
