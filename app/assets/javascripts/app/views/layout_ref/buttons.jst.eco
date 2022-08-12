@@ -77,7 +77,7 @@
   <div class="buttonDropdown dropdown js-submitDropdownDown" style="margin-left: 0px;">
     <button class="btn btn--primary btn--split--first js-submit">Dropdown Down</button>
     <button class="btn btn--primary btn--slim btn--split--last js-openDropdownDown">
-      <svg class="icon icon-arrow-up "><use xlink:href="assets/images/icons.svg#icon-arrow-down"></use></svg>
+      <svg class="icon icon-arrow-down"><use xlink:href="assets/images/icons.svg#icon-arrow-down"></use></svg>
     </button>
     <ul class="dropdown-menu dropdown-menu" role="menu" aria-labelledby="userAction" style="min-width: 195px;">
         <li class="js-dropdownActionDown" role="menuitem" data-id="1">Value 1</li>
