@@ -26,7 +26,7 @@ describe('visiting search page', () => {
 
     // TODO api called
 
-    expect(view.getByTestId('selectTypesRow')).toBeInTheDocument()
+    expect(view.getByTestId('buttonPills')).toBeInTheDocument()
 
     await view.events.click(view.getByText('Organizations'))
 

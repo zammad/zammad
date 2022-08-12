@@ -18,7 +18,7 @@ const localState = computed({
 
 const item = computed(() => {
   return {
-    title: confirmationDialog.value?.buttonTitle || __('OK'),
+    label: confirmationDialog.value?.buttonTitle || __('OK'),
     class: confirmationDialog.value?.buttonTextColorClass || 'text-white',
     onAction: confirmationDialog.value?.confirmCallback,
   }

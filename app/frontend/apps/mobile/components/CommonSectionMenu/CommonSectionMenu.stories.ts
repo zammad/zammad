@@ -27,11 +27,11 @@ Default.args = {
       type: 'link',
       link: '/',
       icon: 'home',
-      title: 'Home',
+      label: 'Home',
     },
     {
       type: 'link',
-      title: 'Action',
+      label: 'Action',
       onClick() {
         // eslint-disable-next-line no-alert
         alert('click')
@@ -42,8 +42,8 @@ Default.args = {
 
 export const Action = Template.bind({})
 Action.args = {
-  headerTitle: 'Header',
-  actionTitle: 'Click Me',
+  headerLabel: 'Header',
+  actionLabel: 'Click Me',
   onActionClick() {
     // eslint-disable-next-line no-alert
     alert('action clicked')
@@ -53,7 +53,7 @@ Action.args = {
       type: 'link',
       link: '/',
       icon: 'home',
-      title: 'Home',
+      label: 'Home',
     },
   ],
 }

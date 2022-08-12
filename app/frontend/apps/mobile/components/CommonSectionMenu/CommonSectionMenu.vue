@@ -8,9 +8,9 @@ import type { MenuItem } from './types'
 import CommonSectionMenuLink from './CommonSectionMenuLink.vue'
 
 export interface Props {
-  actionTitle?: string
+  actionLabel?: string
   actionLink?: RouteLocationRaw
-  headerTitle?: string
+  headerLabel?: string
   items?: MenuItem[]
   help?: string
 }
@@ -50,16 +50,16 @@ const hasHelp = computed(() => slots.help || props.help)
     class="mb-2 flex flex-row justify-between"
   >
     <div class="text-white/80 ltr:pl-3 rtl:pr-3">
-      <slot name="header">{{ i18n.t(headerTitle) }}</slot>
+      <slot name="header">{{ i18n.t(headerLabel) }}</slot>
     </div>
     <component
       :is="actionLink ? 'CommonLink' : 'div'"
-      v-if="actionTitle"
+      v-if="actionLabel"
       :link="actionLink"
       class="cursor-pointer text-blue ltr:pr-4 rtl:pl-4"
       @click="clickOnAction"
     >
-      {{ i18n.t(actionTitle) }}
+      {{ i18n.t(actionLabel) }}
     </component>
   </div>
   <div
@@ -73,7 +73,7 @@ const hasHelp = computed(() => slots.help || props.help)
       <template v-for="(item, idx) in itemsWithPermission" :key="idx">
         <CommonSectionMenuLink
           v-if="item.type === 'link'"
-          :title="item.title"
+          :label="item.label"
           :link="item.link"
           :icon="item.icon"
           :icon-bg="item.iconBg"

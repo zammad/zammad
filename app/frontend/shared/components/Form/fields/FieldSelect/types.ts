@@ -6,7 +6,7 @@ import type { FormFieldContext } from '../../types/field'
 
 export interface SelectOption {
   value: string | number
-  label: string
+  label?: string
   labelPlaceholder?: string[]
   disabled?: boolean
   status?: TicketState

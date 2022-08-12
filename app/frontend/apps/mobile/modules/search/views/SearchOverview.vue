@@ -12,7 +12,7 @@ import type { LocationQueryRaw } from 'vue-router'
 import { useRoute, useRouter } from 'vue-router'
 import { debounce } from 'lodash-es'
 import { TicketState } from '@shared/entities/ticket/types'
-import { i18n } from '@shared/i18n'
+import CommonButtonPills from '@mobile/components/CommonButtonPills/CommonButtonPills.vue'
 import SearchResults from '../components/SearchResults.vue'
 import { useSearchPlugins } from '../plugins'
 
@@ -163,7 +163,7 @@ const selectLastSearch = async (lastSearch: string) => {
 const types: SearchTypeItem[] = Object.entries(searchPlugins).map(
   ([name, plugin]) => {
     return {
-      title: i18n.t(plugin.headerTitle),
+      label: plugin.headerTitle,
       type: 'link',
       value: name,
       onClick: () => selectType(name),
@@ -203,27 +203,14 @@ export default {
         {{ $t('Cancel') }}
       </CommonLink>
     </div>
-    <div
+    <CommonButtonPills
       v-if="type"
-      class="flex max-w-[100vw] overflow-x-auto border-b border-white/10 px-4 pb-4"
-      data-test-id="selectTypesRow"
-    >
-      <div
-        v-for="searchType in types"
-        :key="searchType.value"
-        class="cursor-pointer rounded-xl py-2 px-3 text-base ltr:mr-2 rtl:ml-2"
-        :class="
-          type === searchType.value
-            ? 'bg-gray-200'
-            : 'bg-gray-600 text-white/60'
-        "
-        @click="selectType(searchType.value)"
-      >
-        {{ searchType.title }}
-      </div>
-    </div>
+      :options="types"
+      :model-value="type"
+      @update:model-value="selectType($event as string)"
+    />
     <div v-else class="mt-8 px-4" data-test-id="selectTypesSection">
-      <CommonSectionMenu :header-title="$t('Search…')" :items="types" />
+      <CommonSectionMenu :header-label="$t('Search…')" :items="types" />
     </div>
     <div v-if="loading" class="flex h-14 w-full items-center justify-center">
       <CommonIcon name="loader" animation="spin" />

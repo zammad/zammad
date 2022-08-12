@@ -102,12 +102,10 @@ const useSelectOptions = (
   })
 
   const getSelectedOptionIcon = (selectedValue: string | number) =>
-    optionValueLookup.value[selectedValue] &&
-    (optionValueLookup.value[selectedValue].icon as string)
+    optionValueLookup.value[selectedValue]?.icon as string
 
   const getSelectedOptionLabel = (selectedValue: string | number) =>
-    optionValueLookup.value[selectedValue] &&
-    optionValueLookup.value[selectedValue].label
+    optionValueLookup.value[selectedValue]?.label || selectedValue.toString()
 
   const getSelectedOptionStatus = (selectedValue: string | number) =>
     optionValueLookup.value[selectedValue] &&

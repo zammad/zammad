@@ -8,7 +8,7 @@ describe('rendering section', () => {
   it('no output without default slot and items', () => {
     const view = renderComponent(CommonSectionMenu, {
       props: {
-        headerTitle: 'Test Header',
+        headerLabel: 'Test Header',
       },
       router: true,
     })
@@ -19,10 +19,10 @@ describe('rendering section', () => {
   it('if have header prop, renders header', () => {
     const view = renderComponent(CommonSectionMenu, {
       props: {
-        headerTitle: 'Test Header',
+        headerLabel: 'Test Header',
         items: [
           {
-            title: 'Example',
+            label: 'Example',
           },
         ],
       },
@@ -48,7 +48,7 @@ describe('rendering section', () => {
   it('if have action prop, renders action and emits an event on click', async () => {
     const view = renderComponent(CommonSectionMenu, {
       props: {
-        actionTitle: 'Edit',
+        actionLabel: 'Edit',
       },
       slots: {
         default: 'Example',
@@ -63,8 +63,8 @@ describe('rendering section', () => {
 
   it('rendering items', () => {
     const items: MenuItem[] = [
-      { type: 'link', link: '/login', title: 'Login' },
-      { type: 'link', link: '/', title: 'Link' },
+      { type: 'link', link: '/login', label: 'Login' },
+      { type: 'link', link: '/', label: 'Link' },
     ]
 
     const view = renderComponent(CommonSectionMenu, {
@@ -81,8 +81,8 @@ describe('rendering section', () => {
 
   it('rendering only items with permission', () => {
     const items: MenuItem[] = [
-      { type: 'link', link: '/login', title: 'Login' },
-      { type: 'link', link: '/', title: 'Link', permission: ['example'] },
+      { type: 'link', link: '/login', label: 'Login' },
+      { type: 'link', link: '/', label: 'Link', permission: ['example'] },
     ]
 
     const view = renderComponent(CommonSectionMenu, {

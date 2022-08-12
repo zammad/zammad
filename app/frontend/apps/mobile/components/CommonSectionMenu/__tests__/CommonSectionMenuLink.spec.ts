@@ -17,7 +17,7 @@ describe('rendering item for section', () => {
   it('renders a link, if link is provided', () => {
     const view = renderMenuItem({
       link: '/',
-      title: 'Test Title',
+      label: 'Test Title',
     })
 
     expect(view.getByTestId('section-menu-link').tagName).toBe('A')
@@ -85,7 +85,7 @@ describe('rendering item for section', () => {
 
   it('draws default slot, if provided', () => {
     const view = renderMenuItem(
-      { title: 'Some Title', link: '/' },
+      { label: 'Some Title', link: '/' },
       {
         default: 'Slot Title',
       },

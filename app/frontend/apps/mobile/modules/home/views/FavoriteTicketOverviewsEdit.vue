@@ -90,7 +90,7 @@ const addToFavorites = (id: string) => {
 
     <CommonSectionMenu
       v-if="!overviewsLoading"
-      :header-title="__('Included ticket overviews')"
+      :header-label="__('Included ticket overviews')"
       data-test-id="includedOverviews"
     >
       <Draggable
@@ -118,7 +118,7 @@ const addToFavorites = (id: string) => {
 
     <CommonSectionMenu
       v-if="!overviewsLoading"
-      :header-title="__('More ticket overviews')"
+      :header-label="__('More ticket overviews')"
       data-test-id="excludedOverviews"
     >
       <TicketOverviewEditItem

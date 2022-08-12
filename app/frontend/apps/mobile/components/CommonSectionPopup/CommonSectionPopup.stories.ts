@@ -28,7 +28,7 @@ export const Default = Template.bind({})
 Default.args = {
   items: [
     {
-      title: 'Some Item',
+      label: 'Some Item',
       onAction() {
         // eslint-disable-next-line no-alert
         alert('clicked!')

@@ -43,7 +43,7 @@ describe('i18n', () => {
   it('updates (reactive) translations automatically', async () => {
     const { container } = renderComponent(CommonSectionMenu, {
       props: {
-        headerTitle: 'Hello world!',
+        headerLabel: 'Hello world!',
       },
       slots: {
         default: 'Example Content',

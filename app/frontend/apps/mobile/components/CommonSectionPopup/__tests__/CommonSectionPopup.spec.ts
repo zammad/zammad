@@ -11,11 +11,11 @@ describe('popup behaviour', () => {
     const onAction = vi.fn()
     const items: PopupItem[] = [
       {
-        title: 'Link',
+        label: 'Link',
         link: '/',
       },
       {
-        title: 'Action',
+        label: 'Action',
         onAction,
       },
     ]
@@ -32,8 +32,8 @@ describe('popup behaviour', () => {
 
     const [linkItem, actionItem] = items
 
-    const link = view.getByText(linkItem.title)
-    const action = view.getByText(actionItem.title)
+    const link = view.getByText(linkItem.label)
+    const action = view.getByText(actionItem.label)
 
     expect(link).toBeInTheDocument()
     expect(action).toBeInTheDocument()

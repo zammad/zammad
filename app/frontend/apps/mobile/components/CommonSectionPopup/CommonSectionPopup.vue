@@ -59,13 +59,13 @@ onKeyUp(['Escape', 'Spacebar', ' '], (e) => {
             <component
               :is="item.link ? 'CommonLink' : 'button'"
               v-for="item in items"
-              :key="item.title"
+              :key="item.label"
               :link="item.link"
               class="flex h-14 w-full cursor-pointer items-center justify-center border-b border-gray-300 last:border-0"
               :class="item.class"
               @click="onItemClick(item.onAction)"
             >
-              {{ $t(item.title) }}
+              {{ $t(item.label) }}
             </component>
           </div>
           <div

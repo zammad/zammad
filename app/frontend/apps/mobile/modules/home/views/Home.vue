@@ -16,7 +16,7 @@ const menu: MenuItem[] = [
   {
     type: 'link',
     link: '/tickets/view',
-    title: __('Ticket Overviews'),
+    label: __('Ticket Overviews'),
     icon: { name: 'stack', size: 'base' },
     iconBg: 'bg-pink',
     permission: ['ticket.agent', 'ticket.customer'],
@@ -27,7 +27,7 @@ const menu: MenuItem[] = [
         {
           type: 'link' as const,
           link: '/playground',
-          title: 'Playground',
+          label: 'Playground',
           icon: { name: 'cog', size: 'small' as const },
           iconBg: 'bg-orange',
         },
@@ -44,7 +44,7 @@ const ticketOverview = computed<MenuItem[]>(() => {
     return {
       type: 'link',
       link: `/tickets/view/${overview.link}`,
-      title: overview.name,
+      label: overview.name,
       information: overview.ticketCount,
     }
   })
@@ -70,8 +70,8 @@ const ticketOverview = computed<MenuItem[]>(() => {
     <CommonSectionMenu
       v-if="session.hasPermission(['ticket.agent', 'ticket.customer'])"
       :items="ticketOverview"
-      :header-title="__('Ticket Overview')"
-      :action-title="__('Edit')"
+      :header-label="__('Ticket Overview')"
+      :action-label="__('Edit')"
       action-link="/favorite/ticker-overviews/edit"
     >
       <template v-if="overviews.loading" #before-items>

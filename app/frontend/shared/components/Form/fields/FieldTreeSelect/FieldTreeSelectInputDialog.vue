@@ -140,7 +140,9 @@ const filteredOptions = computed(() => {
   )
 
   // Search across options via their de-accented labels.
-  return options.filter((option) => filterRegex.test(deaccent(option.label)))
+  return options.filter((option) =>
+    filterRegex.test(deaccent(option.label || String(option.value))),
+  )
 })
 
 const select = (option: FlatSelectOption) => {
@@ -261,7 +263,7 @@ onMounted(() => {
         <CommonTicketStateIndicator
           v-if="(option as FlatSelectOption).status"
           :status="(option as FlatSelectOption).status"
-          :label="option.label"
+          :label="option.label || String(option.value)"
           :class="{
             'opacity-30': option.disabled,
           }"

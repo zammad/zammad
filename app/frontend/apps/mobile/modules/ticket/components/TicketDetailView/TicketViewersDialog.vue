@@ -18,16 +18,16 @@ defineProps<Props>()
     :label="__('Ticket viewers')"
     class="w-full p-4 text-sm"
   >
-    <CommonSectionMenu class="py-4" :header-title="__('Editing ticket')">
+    <CommonSectionMenu class="py-4" :header-label="__('Editing ticket')">
       <TicketViewerItem :user="{ id: '22', firstname: 'Sarah' }" />
     </CommonSectionMenu>
-    <CommonSectionMenu class="py-4" :header-title="__('Viewing ticket')">
+    <CommonSectionMenu class="py-4" :header-label="__('Viewing ticket')">
       <TicketViewerItem :user="{ id: '23', firstname: 'Mateo' }" />
       <TicketViewerItem :user="{ id: '24', firstname: 'Nicole' }" />
     </CommonSectionMenu>
     <CommonSectionMenu
       class="py-4"
-      :header-title="__('Opened in taskbar')"
+      :header-label="__('Opened in taskbar')"
       :help="
         __(
           'Has ticket open in taskbar, but is not actively looking in the ticket.',

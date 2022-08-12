@@ -32,12 +32,12 @@ Default.args = {
   link: '/',
   icon: 'home',
   information: '33',
-  title: 'Home',
+  label: 'Home',
 }
 
 export const Action = Template.bind({})
 Action.args = {
-  title: 'Click Me',
+  label: 'Click Me',
   onClick() {
     // eslint-disable-next-line no-alert
     alert('click')

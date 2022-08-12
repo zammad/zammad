@@ -16,31 +16,31 @@ export const useTicketArticleContext = () => {
 
   const contextOptions: PopupItem[] = [
     {
-      title: __('Make internal'),
+      label: __('Make internal'),
       onAction() {
         console.log('make internal')
       },
     },
     {
-      title: __('Reply'),
+      label: __('Reply'),
       onAction() {
         console.log('reply')
       },
     },
     {
-      title: __('Forward'),
+      label: __('Forward'),
       onAction() {
         console.log('forward')
       },
     },
     {
-      title: __('Split'),
+      label: __('Split'),
       onAction() {
         console.log('split')
       },
     },
     {
-      title: __('Show meta data'),
+      label: __('Show meta data'),
       onAction() {
         metadataDialog.open({
           name: metadataDialog.name,
