@@ -18,13 +18,13 @@
   </div>
 
   <% if _.isEmpty(@shared_drafts): %>
-    no drafts
+  <div class="text-placeholder"><%- @T('No drafts') %></div>
   <% end %>
 
   <% for draft in @shared_drafts: %>
     <div class="shared-draft-item" shared-draft-id="<%= draft.id %>">
       <div class="u-highlight u-clickable"><%= draft.name %></div>
-      <div class="label-subtle" style="display: flex;flex-wrap:wrap;column-gap:0.2em">
+      <div class="text-muted" style="display: flex;flex-wrap:wrap;column-gap:0.2em">
         <div>
           <%= App.User.find(draft.updated_by_id).displayName() %>
           ⸱
