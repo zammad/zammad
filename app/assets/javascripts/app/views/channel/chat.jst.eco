@@ -19,10 +19,10 @@
   <div class="form-group">
     <label class="formGroup-label"><%- @T('Preview Width') %></label>
     <div class="control">
-      <div class="select-tabs js-selectBrowserSize">
+      <div class="tabs js-selectBrowserSize">
         <div class="tab" data-size="mobile">Mobile</div>
         <div class="tab" data-size="1:1">1:1</div>
-        <div class="tab is-selected" data-size="desktop">Desktop</div>
+        <div class="tab active" data-size="desktop">Desktop</div>
       </div>
     </div>
   </div>

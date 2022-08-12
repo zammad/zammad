@@ -170,7 +170,7 @@ class ChannelChat extends App.ControllerSubContent
     tab = $(event.target).closest('[data-size]')
 
     # select tab
-    tab.addClass('is-selected').siblings().removeClass('is-selected')
+    tab.addClass('active').siblings().removeClass('active')
     @browserSize = tab.attr('data-size')
     @updatePreview()
 
