@@ -3,8 +3,11 @@
 module Gql::Mutations
   # class BaseMutation < GraphQL::Schema::RelayClassicMutation
   class BaseMutation < GraphQL::Schema::Mutation
-    include Gql::Concern::HandlesAuthorization
-    include Gql::Concern::HasNestedGraphqlName
+    include Gql::Concerns::HandlesAuthorization
+    include Gql::Concerns::HasNestedGraphqlName
+
+    include Gql::Mutations::Concerns::HandlesObjectAttributeValues
+    include Gql::Mutations::Concerns::HandlesCoreWorkflow
 
     argument_class Gql::Types::BaseArgument
     field_class    Gql::Types::BaseField
@@ -46,6 +49,5 @@ module Gql::Mutations
     def error_response(*errors)
       { errors: errors }
     end
-
   end
 end

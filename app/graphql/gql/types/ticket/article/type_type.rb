@@ -2,7 +2,7 @@
 
 module Gql::Types::Ticket::Article
   class TypeType < Gql::Types::BaseObject
-    include Gql::Concern::IsModelObject
+    include Gql::Concerns::IsModelObject
 
     description 'Ticket article types'
 

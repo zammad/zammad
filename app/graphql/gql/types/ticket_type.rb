@@ -2,8 +2,8 @@
 
 module Gql::Types
   class TicketType < BaseObject
-    include Gql::Concern::IsModelObject
-    include Gql::Concern::HasInternalId
+    include Gql::Concerns::IsModelObject
+    include Gql::Concerns::HasInternalId
 
     def self.authorize(object, ctx)
       Pundit.authorize ctx.current_user, object, :show?

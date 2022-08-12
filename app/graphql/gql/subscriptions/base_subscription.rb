@@ -2,8 +2,8 @@
 
 module Gql::Subscriptions
   class BaseSubscription < GraphQL::Schema::Subscription
-    include Gql::Concern::HandlesAuthorization
-    include Gql::Concern::HasNestedGraphqlName
+    include Gql::Concerns::HandlesAuthorization
+    include Gql::Concerns::HasNestedGraphqlName
 
     object_class   Gql::Types::BaseObject
     field_class    Gql::Types::BaseField

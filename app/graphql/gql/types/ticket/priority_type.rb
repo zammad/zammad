@@ -2,7 +2,7 @@
 
 module Gql::Types::Ticket
   class PriorityType < Gql::Types::BaseObject
-    include Gql::Concern::IsModelObject
+    include Gql::Concerns::IsModelObject
 
     description 'Ticket priorities'
 

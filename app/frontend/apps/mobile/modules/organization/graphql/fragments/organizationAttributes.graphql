@@ -1,0 +1,12 @@
+fragment organizationAttributes on Organization {
+  id
+  name
+  shared
+  domain
+  domainAssignment
+  active
+  note
+  objectAttributeValues {
+    ...objectAttributeValues
+  }
+}

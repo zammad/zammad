@@ -2,7 +2,7 @@
 
 # Provide the internal id only for objects that need it, for example
 #   in URLs.
-module Gql::Concern::HasInternalId
+module Gql::Concerns::HasInternalId
   extend ActiveSupport::Concern
 
   included do

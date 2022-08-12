@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-# Trigger GraphQL subscriptions on ticket changes.
-module Ticket::TriggersSubscriptions
+# Trigger GraphQL subscriptions on user changes.
+module Organization::TriggersSubscriptions
   extend ActiveSupport::Concern
 
   included do
@@ -14,6 +14,6 @@ module Ticket::TriggersSubscriptions
     # return if we run import mode
     return true if Setting.get('import_mode')
 
-    Gql::Subscriptions::TicketUpdates.trigger(self, arguments: { ticket_id: Gql::ZammadSchema.id_from_object(self) })
+    Gql::Subscriptions::OrganizationUpdates.trigger(self, arguments: { organization_id: Gql::ZammadSchema.id_from_object(self) })
   end
 end

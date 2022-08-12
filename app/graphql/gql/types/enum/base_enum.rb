@@ -2,7 +2,7 @@
 
 module Gql::Types::Enum
   class BaseEnum < GraphQL::Schema::Enum
-    include Gql::Concern::HasNestedGraphqlName
+    include Gql::Concerns::HasNestedGraphqlName
 
     # Create an enum type from a list of classes.
     def self.build_class_list_enum(classes)

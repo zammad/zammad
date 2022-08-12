@@ -2,7 +2,7 @@
 
 module Gql::Types
   class OverviewType < Gql::Types::BaseObject
-    include Gql::Concern::IsModelObject
+    include Gql::Concerns::IsModelObject
 
     def self.authorize(object, ctx)
       Pundit.authorize ctx.current_user, object, :show?

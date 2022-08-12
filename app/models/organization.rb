@@ -13,6 +13,7 @@ class Organization < ApplicationModel
   include Organization::Assets
   include Organization::Search
   include Organization::SearchIndex
+  include Organization::TriggersSubscriptions
 
   include HasTransactionDispatcher
 

@@ -2,7 +2,7 @@
 
 module Gql::Types::Ticket
   class StateType < Gql::Types::BaseObject
-    include Gql::Concern::IsModelObject
+    include Gql::Concerns::IsModelObject
 
     description 'Ticket states'
 

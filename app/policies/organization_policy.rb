@@ -3,15 +3,21 @@
 class OrganizationPolicy < ApplicationPolicy
 
   def show?
-    return true if user.permissions?(['admin', 'ticket.agent'])
+    return true if accessible?
     return true if user.organization_id?(record.id)
 
     false
   end
 
   def update?
-    return true if user.permissions?(['admin', 'ticket.agent'])
+    return true if accessible?
 
     false
+  end
+
+  private
+
+  def accessible?
+    user.permissions?(['admin.organization', 'ticket.agent'])
   end
 end

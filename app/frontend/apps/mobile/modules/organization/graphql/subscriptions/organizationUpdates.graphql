@@ -1,0 +1,7 @@
+subscription organizationUpdates($organizationId: ID!) {
+  organizationUpdates(organizationId: $organizationId) {
+    organization {
+      ...organizationAttributes
+    }
+  }
+}

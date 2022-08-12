@@ -2,8 +2,8 @@
 
 module Gql::Types
   class StoredFileType < Gql::Types::BaseObject
-    include Gql::Concern::IsModelObject
-    include Gql::Concern::HasInternalId
+    include Gql::Concerns::IsModelObject
+    include Gql::Concerns::HasInternalId
 
     description 'Represents a stored file.'
 
