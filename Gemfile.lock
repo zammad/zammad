@@ -180,7 +180,7 @@ GEM
     email_address (0.2.4)
       simpleidn
     equalizer (0.0.11)
-    erubi (1.10.0)
+    erubi (1.11.0)
     eventmachine (1.2.7)
     execjs (2.8.1)
     factory_bot (6.2.1)
@@ -547,7 +547,7 @@ GEM
       multipart-post (~> 2.0)
       naught (~> 1.0)
       simple_oauth (~> 0.3.0)
-    tzinfo (2.0.4)
+    tzinfo (2.0.5)
       concurrent-ruby (~> 1.0)
     uglifier (4.2.0)
       execjs (>= 0.3.0, < 3)
@@ -565,10 +565,10 @@ GEM
       logging
       nokogiri
       rubyntlm
-    vite_rails (3.0.10)
+    vite_rails (3.0.11)
       railties (>= 5.1, < 8)
       vite_ruby (~> 3.0)
-    vite_ruby (3.2.0)
+    vite_ruby (3.2.1)
       dry-cli (~> 0.7.0)
       rack-proxy (~> 0.6, >= 0.6.1)
       zeitwerk (~> 2.2)
