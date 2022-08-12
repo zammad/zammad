@@ -8018,12 +8018,20 @@ a.list-group-item.active > .badge,
     border-radius: 0;
   }
 
-  .btn {
-    margin-top: -4px;
-    margin-bottom: -5px;
+  &.horizontal .btn {
+    margin-top: -5px;
+    margin-bottom: -4px;
 
     &:last-child {
       margin-right: -5px;
+    }
+  }
+
+  &-row {
+    margin: 3px 0;
+
+    + .btn {
+      margin-top: 3px;
     }
   }
 }
