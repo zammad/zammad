@@ -1,20 +1,29 @@
 <fieldset>
   <% ticket_number_input = () => %>
-    <input type="text" name="ticket_number" value="" class="span2" required/>
+    <input type="text" name="ticket_number" value="" required/>
+  <% end %>
+  <% ticket_number_input_inline = () => %>
+    <input type="text" name="ticket_number" value="" class="form-control--inline form-control--small u-inlinePad" required/>
   <% end %>
   <% if @link_types.length > 1: %>
     <% link_type_selector = () => %>
-    <select name="link_type" class="span2" required>
-      <% for link_type in @link_types: %>
-        <option value="<%= link_type[0] %>"><%- @T(link_type[1]) %></option>
-      <% end %>
-    </select>
+    <div class="u-inlineBlock u-positionOrigin u-inlinePad">
+      <select name="link_type" class="form-control form-control--small" required>
+        <% for link_type in @link_types: %>
+          <option value="<%= link_type[0] %>"><%- @T(link_type[1]) %></option>
+        <% end %>
+      </select>
+      <%- @Icon('arrow-down') %>
+    </div>
     <% end %>
-    <%- App.i18n.translatePlain( 'Link %s %s as %s of Ticket# %s', @T(@link_object), ticket_number_input(), link_type_selector(), @object.number ) %>
+    <div class="form-group">
+      <%- App.i18n.translatePlain( 'Link %s %s as %s of Ticket# %s', @T(@link_object), ticket_number_input_inline(), link_type_selector(), @object.number ) %>
+    </div>
   <% else: %>
     <%- ticket_number_input() %>
     <input type="hidden" name="link_type" value="<%= @link_types[0][0] %>"/>
   <% end %>
+  </div>
 
   <% if @hasByCustomer: %>
     <hr>
