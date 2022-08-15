@@ -79,7 +79,7 @@
     "vite-plugin-svg-icons": "^2.0.1",
     "vitest": "^0.20.2",
     "vitest-mock-extended": "^0.1.13",
-    "vue-tsc": "^0.39.5"
+    "vue-tsc": "^0.40.1"
   },
   "dependencies": {
     "@apollo/client": "^3.6.9",
@@ -119,7 +119,7 @@
     "lodash-es": "^4.17.21",
     "loglevel": "^1.8.0",
     "mitt": "^3.0.0",
-    "pinia": "^2.0.17",
+    "pinia": "^2.0.18",
     "prosemirror-model": "^1.18.1",
     "prosemirror-state": "^1.4.1",
     "tippy.js": "^6.3.7",
