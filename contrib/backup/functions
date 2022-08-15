@@ -372,7 +372,7 @@ function restore_zammad () {
     echo "# ... Creating database ${DB_NAME} for owner ${DB_USER}"
     if command -v zammad > /dev/null; then
       # We'll skip this part for docker installations
-      su -c "psql -c \"CREATE DATABASE ${DB_NAME} OWNER ${DB_USER};\"" postgres
+      su -c "psql -c \"CREATE DATABASE ${DB_NAME} OWNER ${DB_USER};\"" -l postgres
     else
       ${ZAMMAD_DIR}/bin/rake db:create
     fi
@@ -483,7 +483,7 @@ function db_helper_alter_user () {
 
     if [[ ("${DB_HOST}" == "localhost") || "${DB_HOST}" == "127.0.0.1" || "${DB_HOST}" == "::1" ]]; then
       # Looks like a local pgsql installation - let's continue
-      su -c "psql -c \"ALTER USER ${DB_USER} WITH PASSWORD '${DB_PASS}';\"" postgres
+      su -c "psql -c \"ALTER USER ${DB_USER} WITH PASSWORD '${DB_PASS}';\"" -l postgres
       state=$?
 
     else
