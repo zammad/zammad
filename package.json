@@ -21,12 +21,12 @@
     "node": ">=16"
   },
   "devDependencies": {
-    "@graphql-codegen/cli": "^2.11.3",
-    "@graphql-codegen/introspection": "^2.2.0",
-    "@graphql-codegen/near-operation-file-preset": "^2.4.0",
-    "@graphql-codegen/typescript": "^2.7.2",
-    "@graphql-codegen/typescript-operations": "^2.5.2",
-    "@graphql-codegen/typescript-vue-apollo": "^3.3.2",
+    "@graphql-codegen/cli": "^2.11.6",
+    "@graphql-codegen/introspection": "^2.2.1",
+    "@graphql-codegen/near-operation-file-preset": "^2.4.1",
+    "@graphql-codegen/typescript": "^2.7.3",
+    "@graphql-codegen/typescript-operations": "^2.5.3",
+    "@graphql-codegen/typescript-vue-apollo": "^3.3.3",
     "@pinia/testing": "^0.0.13",
     "@tailwindcss/forms": "^0.5.2",
     "@tailwindcss/line-clamp": "^0.4.0",
