@@ -1010,7 +1010,7 @@ describe('Form - Field - TreeSelect - Input Checklist', () => {
     })
 
     wrapper.getByRole('list').focus()
-    wrapper.events.tab()
+    await wrapper.events.tab()
 
     expect(blurHandler).toHaveBeenCalled()
   })
