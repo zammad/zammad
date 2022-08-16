@@ -828,7 +828,7 @@ QUnit.test("form postmaster filter", assert => {
         { name: 'input1', display: 'Input1', tag: 'input', type: 'text', limit: 100, null: true, default: 'some not used default' },
         { name: 'input2', display: 'Input2', tag: 'input', type: 'text', limit: 100, null: true, default: 'some used default' },
         { name: 'match',  display: 'Match',  tag: 'postmaster_match', null: false, default: false},
-        { name: 'set',    display: 'Set',    tag: 'postmaster_set', null: false, default: false},
+        { name: 'set',    display: 'Set',    tag: 'postmaster_set', null: false, default: false, user_action: false},
       ],
     },
     params: defaults,
@@ -927,12 +927,12 @@ QUnit.test("form postmaster filter", assert => {
       'x-zammad-ticket-group_id': {
         value: '1'
       },
-      'x-zammad-ticket-priority_id': {
-        value: '1'
-      },
       'x-zammad-ticket-tags': {
         operator: 'add',
         value: 'test, test1'
+      },
+      'x-zammad-ticket-title': {
+        value: ''
       },
     },
   };

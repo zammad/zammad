@@ -958,23 +958,7 @@ perform changes on ticket
                     when 'static'
                       value['value']
                     when 'relative'
-                      pendtil = Time.zone.now
-                      val     = value['value'].to_i
-
-                      case value['range']
-                      when 'day'
-                        pendtil += val.days
-                      when 'minute'
-                        pendtil += val.minutes
-                      when 'hour'
-                        pendtil += val.hours
-                      when 'month'
-                        pendtil += val.months
-                      when 'year'
-                        pendtil += val.years
-                      end
-
-                      pendtil
+                      TimeRangeHelper.relative(range: value['range'], value: value['value'])
                     end
 
         if new_value

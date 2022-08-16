@@ -78,6 +78,11 @@ module Channel::Filter::Database
           next
         end
 
+        if meta['value'].present? && meta['operator'] == 'relative'
+          mail[ key.downcase.to_sym ] = TimeRangeHelper.relative(range: meta['range'], value: meta['value'])
+          next
+        end
+
         mail[ key.downcase.to_sym ] = meta['value']
       end
     end
