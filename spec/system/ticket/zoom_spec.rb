@@ -2814,4 +2814,22 @@ RSpec.describe 'Ticket zoom', type: :system do
       expect(page).to have_text("I can't find this Ticket")
     end
   end
+
+  describe 'Article update causes missing icons in the UI after switching internal state #4213' do
+    let(:ticket)  { create(:ticket, group: Group.find_by(name: 'Users')) }
+    let(:article) { create(:ticket_article, ticket: ticket, body: SecureRandom.uuid) }
+
+    before do
+      visit "#ticket/zoom/#{article.ticket.id}"
+    end
+
+    it 'does find the ticket by ticket number' do
+      expect(page).to have_text(article.body)
+      article.update(body: SecureRandom.uuid)
+      expect(page).to have_text(article.body)
+      click '.js-ArticleAction[data-type=internal]'
+      click '.js-ArticleAction[data-type=public]'
+      expect(page).to have_css('.js-ArticleAction[data-type=emailReply]')
+    end
+  end
 end
