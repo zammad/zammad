@@ -330,6 +330,7 @@ class App.UiElement.ApplicationAction
 
     if config.relation is 'User'
       config.tag = 'user_autocompletion'
+      config.disableCreateObject = true
     if config.relation is 'Organization'
       config.tag = 'autocompletion_ajax'
 
