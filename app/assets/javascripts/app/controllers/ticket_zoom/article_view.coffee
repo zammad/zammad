@@ -94,7 +94,7 @@ class ArticleViewItem extends App.ControllerObserver
 
   constructor: ->
     super
-    @seeMore = false
+    @seeMoreOpen = false
 
     # set expand of text area only once
     @controllerBind('ui::ticket::shown', (data) =>
@@ -254,12 +254,11 @@ class ArticleViewItem extends App.ControllerObserver
     bubbleOverflowContainer = @textBubbleOverflowContainer
 
     # expand if see more is already clicked
-    if @seeMore
+    if @seeMoreOpen
       bubbleContent.css('height', 'auto')
-      return
-
-    # reset bubble height and "see more" opacity
-    bubbleContent.css('height', '')
+    else
+      # reset bubble height and "see more" opacity
+      bubbleContent.css('height', '')
     bubbleOverflowContainer.css('opacity', '')
 
     # remember offset of "see more"
@@ -296,7 +295,9 @@ class ArticleViewItem extends App.ControllerObserver
     else if bubbleContentHeight > maxHeight
       bubbleContent.attr('data-height', bubbleContentHeight + 30)
       bubbleContent.attr('data-height-origin', maxHeight)
-      bubbleContent.css('height', "#{maxHeight}px")
+      newHeight = if @seeMoreOpen then 'auto' else "#{maxHeight}px"
+      bubbleContent.css('height', newHeight)
+      bubbleOverflowContainer.toggleClass('is-open', @seeMoreOpen).find('.js-toggleFold').html(@label)
       bubbleOverflowContainer.removeClass('hide')
     else
       bubbleOverflowContainer.addClass('hide')
@@ -448,15 +449,15 @@ class ArticleViewItem extends App.ControllerObserver
     bubbleOverflowContainer = @textBubbleOverflowContainer
 
     if @seeMoreOpen
-      label = App.i18n.translateContent('See more')
+      @label = App.i18n.translateContent('See more')
       height = bubbleContent.attr('data-height-origin')
       @seeMoreOpen = false
     else
-      label = App.i18n.translateContent('See less')
+      @label = App.i18n.translateContent('See less')
       height = bubbleContent.attr('data-height')
       @seeMoreOpen = true
 
-    bubbleOverflowContainer.toggleClass('is-open', @seeMoreOpen).find('.js-toggleFold').html(label)
+    bubbleOverflowContainer.toggleClass('is-open', @seeMoreOpen).find('.js-toggleFold').html(@label)
 
     bubbleContent.velocity
       properties:
