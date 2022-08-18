@@ -7,9 +7,19 @@ module Gql::Types::Enum
     # Create an enum type from a list of classes.
     def self.build_class_list_enum(classes)
       classes.each do |klass|
-        # Convert to a GraphQL compatible name.
-        value klass.name.gsub('::', '__'), value: klass
+        value graphql_compatible_name(klass.name), value: klass
       end
+    end
+
+    # Create an enum type from a list of strings.
+    def self.build_string_list_enum(strings)
+      strings.each do |string|
+        value graphql_compatible_name(string), value: string
+      end
+    end
+
+    def self.graphql_compatible_name(name)
+      name.gsub('::', '__')
     end
   end
 end

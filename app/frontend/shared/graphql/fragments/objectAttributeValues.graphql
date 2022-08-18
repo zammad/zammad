@@ -4,9 +4,6 @@ fragment objectAttributeValues on ObjectAttributeValue {
     display
     dataType
     dataOption
-    screens
-    editable
-    active
   }
   value
 }

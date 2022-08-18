@@ -13,7 +13,7 @@ module Gql::Types
       result = []
 
       find_object_attributes.each do |oa|
-        result << { attribute: oa.attribute, value: @object[oa.attribute.name.to_sym] }
+        result << { attribute: attribute_hash(oa.attribute), value: @object[oa.attribute[:name].to_sym] }
       end
 
       result
@@ -21,7 +21,18 @@ module Gql::Types
 
     def find_object_attributes
       ::ObjectManager::Object.new(@object.class.name).attributes(context.current_user, @object, data_only: false)
-        .select { |oa| oa.attribute.active && oa.attribute.editable }
+        .select { |oa| oa.attribute.editable }
+    end
+
+    private
+
+    def attribute_hash(attribute)
+      {
+        name:        attribute[:name],
+        display:     attribute[:display],
+        data_type:   attribute[:data_type],
+        data_option: attribute[:data_option],
+      }
     end
   end
 end

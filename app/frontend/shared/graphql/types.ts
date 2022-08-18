@@ -132,6 +132,15 @@ export enum EnumFormSchemaId {
   FormSchemaFormMobileLogin = 'FormSchema__Form__Mobile__Login'
 }
 
+/** All backend managed objects */
+export enum EnumObjectManagerObjects {
+  Group = 'Group',
+  Organization = 'Organization',
+  Ticket = 'Ticket',
+  TicketArticle = 'TicketArticle',
+  User = 'User'
+}
+
 /** Option to choose SQL sorting direction */
 export enum EnumOrderDirection {
   /** Sort with ascending order */
@@ -332,7 +341,7 @@ export type Node = {
 export type ObjectAttributeValue = {
   __typename?: 'ObjectAttributeValue';
   /** The object attribute record */
-  attribute: ObjectManagerAttribute;
+  attribute: ObjectManagerFrontendAttribute;
   /** The value of the current object's object attribute */
   value?: Maybe<Scalars['JSON']>;
 };
@@ -350,26 +359,13 @@ export type ObjectAttributeValueInterface = {
   objectAttributeValues: Array<ObjectAttributeValue>;
 };
 
-/** An object manager attribute record */
-export type ObjectManagerAttribute = Node & {
-  __typename?: 'ObjectManagerAttribute';
-  active: Scalars['Boolean'];
-  /** Create date/time of the record */
-  createdAt: Scalars['ISO8601DateTime'];
-  /** User that created this record */
-  createdBy: User;
+/** An object manager attribute record especially for the frontend */
+export type ObjectManagerFrontendAttribute = {
+  __typename?: 'ObjectManagerFrontendAttribute';
   dataOption?: Maybe<Scalars['JSON']>;
   dataType: Scalars['String'];
   display: Scalars['String'];
-  editable: Scalars['Boolean'];
-  id: Scalars['ID'];
   name: Scalars['String'];
-  position: Scalars['Int'];
-  screens?: Maybe<Scalars['JSON']>;
-  /** Last update date/time of the record */
-  updatedAt: Scalars['ISO8601DateTime'];
-  /** Last user that updated this record */
-  updatedBy: User;
 };
 
 /** Organizations that users can belong to */
@@ -528,6 +524,8 @@ export type Queries = {
   node?: Maybe<Node>;
   /** Fetches a list of objects given a list of IDs. */
   nodes: Array<Maybe<Node>>;
+  /** Fetch meta information about object manager attributes for usage in frontend. */
+  objectManagerFrontendAttributes: Array<ObjectManagerFrontendAttribute>;
   /** Fetch an organization by ID */
   organization: Organization;
   /** Generic object search */
@@ -575,6 +573,13 @@ export type QueriesNodeArgs = {
 /** All available queries */
 export type QueriesNodesArgs = {
   ids: Array<Scalars['ID']>;
+};
+
+
+/** All available queries */
+export type QueriesObjectManagerFrontendAttributesArgs = {
+  filterScreen?: InputMaybe<Scalars['String']>;
+  object: EnumObjectManagerObjects;
 };
 
 
@@ -1046,7 +1051,7 @@ export type AccountLocaleMutationVariables = Exact<{
 
 export type AccountLocaleMutation = { __typename?: 'Mutations', accountLocale?: { __typename?: 'AccountLocalePayload', success: boolean, errors?: Array<{ __typename?: 'UserError', message: string, field?: string | null }> | null } | null };
 
-export type OrganizationAttributesFragment = { __typename?: 'Organization', id: string, name: string, shared: boolean, domain?: string | null, domainAssignment: boolean, active: boolean, note?: string | null, objectAttributeValues: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, attribute: { __typename?: 'ObjectManagerAttribute', name: string, display: string, dataType: string, dataOption?: any | null, screens?: any | null, editable: boolean, active: boolean } }> };
+export type OrganizationAttributesFragment = { __typename?: 'Organization', id: string, name: string, shared: boolean, domain?: string | null, domainAssignment: boolean, active: boolean, note?: string | null, objectAttributeValues: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string, dataType: string, dataOption?: any | null } }> };
 
 export type OrganizationUpdateMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -1054,21 +1059,21 @@ export type OrganizationUpdateMutationVariables = Exact<{
 }>;
 
 
-export type OrganizationUpdateMutation = { __typename?: 'Mutations', organizationUpdate?: { __typename?: 'OrganizationUpdatePayload', organization: { __typename?: 'Organization', id: string, name: string, shared: boolean, domain?: string | null, domainAssignment: boolean, active: boolean, note?: string | null, objectAttributeValues: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, attribute: { __typename?: 'ObjectManagerAttribute', name: string, display: string, dataType: string, dataOption?: any | null, screens?: any | null, editable: boolean, active: boolean } }> }, errors?: Array<{ __typename?: 'UserError', message: string, field?: string | null }> | null } | null };
+export type OrganizationUpdateMutation = { __typename?: 'Mutations', organizationUpdate?: { __typename?: 'OrganizationUpdatePayload', organization: { __typename?: 'Organization', id: string, name: string, shared: boolean, domain?: string | null, domainAssignment: boolean, active: boolean, note?: string | null, objectAttributeValues: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string, dataType: string, dataOption?: any | null } }> }, errors?: Array<{ __typename?: 'UserError', message: string, field?: string | null }> | null } | null };
 
 export type OrganizationQueryVariables = Exact<{
   organizationId: Scalars['ID'];
 }>;
 
 
-export type OrganizationQuery = { __typename?: 'Queries', organization: { __typename?: 'Organization', id: string, name: string, shared: boolean, domain?: string | null, domainAssignment: boolean, active: boolean, note?: string | null, objectAttributeValues: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, attribute: { __typename?: 'ObjectManagerAttribute', name: string, display: string, dataType: string, dataOption?: any | null, screens?: any | null, editable: boolean, active: boolean } }> } };
+export type OrganizationQuery = { __typename?: 'Queries', organization: { __typename?: 'Organization', id: string, name: string, shared: boolean, domain?: string | null, domainAssignment: boolean, active: boolean, note?: string | null, objectAttributeValues: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string, dataType: string, dataOption?: any | null } }> } };
 
 export type OrganizationUpdatesSubscriptionVariables = Exact<{
   organizationId: Scalars['ID'];
 }>;
 
 
-export type OrganizationUpdatesSubscription = { __typename?: 'Subscriptions', organizationUpdates: { __typename?: 'OrganizationUpdatesPayload', organization?: { __typename?: 'Organization', id: string, name: string, shared: boolean, domain?: string | null, domainAssignment: boolean, active: boolean, note?: string | null, objectAttributeValues: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, attribute: { __typename?: 'ObjectManagerAttribute', name: string, display: string, dataType: string, dataOption?: any | null, screens?: any | null, editable: boolean, active: boolean } }> } | null } };
+export type OrganizationUpdatesSubscription = { __typename?: 'Subscriptions', organizationUpdates: { __typename?: 'OrganizationUpdatesPayload', organization?: { __typename?: 'Organization', id: string, name: string, shared: boolean, domain?: string | null, domainAssignment: boolean, active: boolean, note?: string | null, objectAttributeValues: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string, dataType: string, dataOption?: any | null } }> } | null } };
 
 export type SearchQueryVariables = Exact<{
   search: Scalars['String'];
@@ -1092,7 +1097,7 @@ export type TicketQueryVariables = Exact<{
 }>;
 
 
-export type TicketQuery = { __typename?: 'Queries', ticket: { __typename?: 'Ticket', id: string, internalId: number, number: string, title: string, createdAt: any, updatedAt: any, articles?: { __typename?: 'TicketArticleConnection', edges: Array<{ __typename?: 'TicketArticleEdge', node: { __typename?: 'TicketArticle', id: string, internal: boolean, body: string, createdAt: any, subject?: string | null, createdBy: { __typename?: 'User', id: string, firstname?: string | null, lastname?: string | null }, sender?: { __typename?: 'TicketArticleType', name?: string | null } | null, to?: { __typename?: 'AddressesField', raw: string, parsed?: Array<{ __typename?: 'EmailAddress', name?: string | null, emailAddress?: string | null }> | null } | null } }> }, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, attribute: { __typename?: 'ObjectManagerAttribute', name: string, display: string, dataType: string, dataOption?: any | null, screens?: any | null, editable: boolean, active: boolean } }>, owner: { __typename?: 'User', id: string, firstname?: string | null, lastname?: string | null }, customer: { __typename?: 'User', id: string, firstname?: string | null, lastname?: string | null, fullname?: string | null }, organization?: { __typename?: 'Organization', name: string } | null, state: { __typename?: 'TicketState', id: string, name: string, stateType: { __typename?: 'TicketStateType', name: string } }, group: { __typename?: 'Group', id: string, name: string }, priority: { __typename?: 'TicketPriority', id: string, name: string, defaultCreate: boolean, uiColor?: string | null } } };
+export type TicketQuery = { __typename?: 'Queries', ticket: { __typename?: 'Ticket', id: string, internalId: number, number: string, title: string, createdAt: any, updatedAt: any, articles?: { __typename?: 'TicketArticleConnection', edges: Array<{ __typename?: 'TicketArticleEdge', node: { __typename?: 'TicketArticle', id: string, internal: boolean, body: string, createdAt: any, subject?: string | null, createdBy: { __typename?: 'User', id: string, firstname?: string | null, lastname?: string | null }, sender?: { __typename?: 'TicketArticleType', name?: string | null } | null, to?: { __typename?: 'AddressesField', raw: string, parsed?: Array<{ __typename?: 'EmailAddress', name?: string | null, emailAddress?: string | null }> | null } | null } }> }, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string, dataType: string, dataOption?: any | null } }>, owner: { __typename?: 'User', id: string, firstname?: string | null, lastname?: string | null }, customer: { __typename?: 'User', id: string, firstname?: string | null, lastname?: string | null, fullname?: string | null }, organization?: { __typename?: 'Organization', name: string } | null, state: { __typename?: 'TicketState', id: string, name: string, stateType: { __typename?: 'TicketStateType', name: string } }, group: { __typename?: 'Group', id: string, name: string }, priority: { __typename?: 'TicketPriority', id: string, name: string, defaultCreate: boolean, uiColor?: string | null } } };
 
 export type TicketArticlesQueryVariables = Exact<{
   ticketId?: InputMaybe<Scalars['ID']>;
@@ -1114,7 +1119,7 @@ export type TicketsByOverviewQueryVariables = Exact<{
 }>;
 
 
-export type TicketsByOverviewQuery = { __typename?: 'Queries', ticketsByOverview: { __typename?: 'TicketConnection', totalCount: number, edges: Array<{ __typename?: 'TicketEdge', cursor: string, node: { __typename?: 'Ticket', id: string, internalId: number, number: string, title: string, createdAt: any, updatedAt: any, owner: { __typename?: 'User', id: string, firstname?: string | null, lastname?: string | null, fullname?: string | null }, customer: { __typename?: 'User', id: string, firstname?: string | null, lastname?: string | null, fullname?: string | null }, organization?: { __typename?: 'Organization', id: string, name: string } | null, state: { __typename?: 'TicketState', id: string, name: string, stateType: { __typename?: 'TicketStateType', name: string } }, group: { __typename?: 'Group', id: string, name: string }, priority: { __typename?: 'TicketPriority', id: string, name: string, uiColor?: string | null, defaultCreate: boolean }, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, attribute: { __typename?: 'ObjectManagerAttribute', name: string, display: string, dataType: string, dataOption?: any | null, screens?: any | null, editable: boolean, active: boolean } }> } }>, pageInfo: { __typename?: 'PageInfo', endCursor?: string | null, hasNextPage: boolean } } };
+export type TicketsByOverviewQuery = { __typename?: 'Queries', ticketsByOverview: { __typename?: 'TicketConnection', totalCount: number, edges: Array<{ __typename?: 'TicketEdge', cursor: string, node: { __typename?: 'Ticket', id: string, internalId: number, number: string, title: string, createdAt: any, updatedAt: any, owner: { __typename?: 'User', id: string, firstname?: string | null, lastname?: string | null, fullname?: string | null }, customer: { __typename?: 'User', id: string, firstname?: string | null, lastname?: string | null, fullname?: string | null }, organization?: { __typename?: 'Organization', id: string, name: string } | null, state: { __typename?: 'TicketState', id: string, name: string, stateType: { __typename?: 'TicketStateType', name: string } }, group: { __typename?: 'Group', id: string, name: string }, priority: { __typename?: 'TicketPriority', id: string, name: string, uiColor?: string | null, defaultCreate: boolean }, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string, dataType: string, dataOption?: any | null } }> } }>, pageInfo: { __typename?: 'PageInfo', endCursor?: string | null, hasNextPage: boolean } } };
 
 export type TicketUpdatesSubscriptionVariables = Exact<{
   ticketId: Scalars['ID'];
@@ -1123,7 +1128,7 @@ export type TicketUpdatesSubscriptionVariables = Exact<{
 }>;
 
 
-export type TicketUpdatesSubscription = { __typename?: 'Subscriptions', ticketUpdates: { __typename?: 'TicketUpdatesPayload', ticket?: { __typename?: 'Ticket', id: string, internalId: number, number: string, title: string, createdAt: any, updatedAt: any, articles?: { __typename?: 'TicketArticleConnection', edges: Array<{ __typename?: 'TicketArticleEdge', node: { __typename?: 'TicketArticle', id: string, internal: boolean, body: string, createdAt: any, subject?: string | null, createdBy: { __typename?: 'User', id: string, firstname?: string | null, lastname?: string | null }, sender?: { __typename?: 'TicketArticleType', name?: string | null } | null, to?: { __typename?: 'AddressesField', raw: string, parsed?: Array<{ __typename?: 'EmailAddress', name?: string | null, emailAddress?: string | null }> | null } | null } }> }, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, attribute: { __typename?: 'ObjectManagerAttribute', name: string, display: string, dataType: string, dataOption?: any | null, screens?: any | null, editable: boolean, active: boolean } }>, owner: { __typename?: 'User', id: string, firstname?: string | null, lastname?: string | null }, customer: { __typename?: 'User', id: string, firstname?: string | null, lastname?: string | null, fullname?: string | null }, organization?: { __typename?: 'Organization', name: string } | null, state: { __typename?: 'TicketState', id: string, name: string, stateType: { __typename?: 'TicketStateType', name: string } }, group: { __typename?: 'Group', id: string, name: string }, priority: { __typename?: 'TicketPriority', id: string, name: string, defaultCreate: boolean, uiColor?: string | null } } | null } };
+export type TicketUpdatesSubscription = { __typename?: 'Subscriptions', ticketUpdates: { __typename?: 'TicketUpdatesPayload', ticket?: { __typename?: 'Ticket', id: string, internalId: number, number: string, title: string, createdAt: any, updatedAt: any, articles?: { __typename?: 'TicketArticleConnection', edges: Array<{ __typename?: 'TicketArticleEdge', node: { __typename?: 'TicketArticle', id: string, internal: boolean, body: string, createdAt: any, subject?: string | null, createdBy: { __typename?: 'User', id: string, firstname?: string | null, lastname?: string | null }, sender?: { __typename?: 'TicketArticleType', name?: string | null } | null, to?: { __typename?: 'AddressesField', raw: string, parsed?: Array<{ __typename?: 'EmailAddress', name?: string | null, emailAddress?: string | null }> | null } | null } }> }, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string, dataType: string, dataOption?: any | null } }>, owner: { __typename?: 'User', id: string, firstname?: string | null, lastname?: string | null }, customer: { __typename?: 'User', id: string, firstname?: string | null, lastname?: string | null, fullname?: string | null }, organization?: { __typename?: 'Organization', name: string } | null, state: { __typename?: 'TicketState', id: string, name: string, stateType: { __typename?: 'TicketStateType', name: string } }, group: { __typename?: 'Group', id: string, name: string }, priority: { __typename?: 'TicketPriority', id: string, name: string, defaultCreate: boolean, uiColor?: string | null } } | null } };
 
 export type FormUploadCacheAddMutationVariables = Exact<{
   formId: Scalars['FormId'];
@@ -1155,11 +1160,11 @@ export type TicketOverviewsQueryVariables = Exact<{
 
 export type TicketOverviewsQuery = { __typename?: 'Queries', ticketOverviews: { __typename?: 'OverviewConnection', edges: Array<{ __typename?: 'OverviewEdge', cursor: string, node: { __typename?: 'Overview', id: string, name: string, link: string, prio: number, orderBy: string, orderDirection: EnumOrderDirection, active: boolean, ticketCount?: number, viewColumns: Array<{ __typename?: 'KeyValue', key: string, value?: string | null }>, orderColumns: Array<{ __typename?: 'KeyValue', key: string, value?: string | null }> } }>, pageInfo: { __typename?: 'PageInfo', endCursor?: string | null, hasNextPage: boolean } } };
 
-export type CurrentUserAttributesFragment = { __typename?: 'User', id: string, firstname?: string | null, lastname?: string | null, fullname?: string | null, image?: string | null, preferences?: any | null, objectAttributeValues: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, attribute: { __typename?: 'ObjectManagerAttribute', name: string, display: string, dataType: string, dataOption?: any | null, screens?: any | null, editable: boolean, active: boolean } }>, organization?: { __typename?: 'Organization', name: string, objectAttributeValues: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, attribute: { __typename?: 'ObjectManagerAttribute', name: string, display: string, dataType: string, dataOption?: any | null, screens?: any | null, editable: boolean, active: boolean } }> } | null, permissions?: { __typename?: 'UserPermission', names: Array<string> } | null };
+export type CurrentUserAttributesFragment = { __typename?: 'User', id: string, firstname?: string | null, lastname?: string | null, fullname?: string | null, image?: string | null, preferences?: any | null, objectAttributeValues: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string, dataType: string, dataOption?: any | null } }>, organization?: { __typename?: 'Organization', name: string, objectAttributeValues: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string, dataType: string, dataOption?: any | null } }> } | null, permissions?: { __typename?: 'UserPermission', names: Array<string> } | null };
 
 export type ErrorsFragment = { __typename?: 'UserError', message: string, field?: string | null };
 
-export type ObjectAttributeValuesFragment = { __typename?: 'ObjectAttributeValue', value?: any | null, attribute: { __typename?: 'ObjectManagerAttribute', name: string, display: string, dataType: string, dataOption?: any | null, screens?: any | null, editable: boolean, active: boolean } };
+export type ObjectAttributeValuesFragment = { __typename?: 'ObjectAttributeValue', value?: any | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string, dataType: string, dataOption?: any | null } };
 
 export type LoginMutationVariables = Exact<{
   input: LoginInput;
@@ -1194,7 +1199,7 @@ export type AutocompleteSearchUserQuery = { __typename?: 'Queries', autocomplete
 export type CurrentUserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CurrentUserQuery = { __typename?: 'Queries', currentUser: { __typename?: 'User', id: string, firstname?: string | null, lastname?: string | null, fullname?: string | null, image?: string | null, preferences?: any | null, objectAttributeValues: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, attribute: { __typename?: 'ObjectManagerAttribute', name: string, display: string, dataType: string, dataOption?: any | null, screens?: any | null, editable: boolean, active: boolean } }>, organization?: { __typename?: 'Organization', name: string, objectAttributeValues: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, attribute: { __typename?: 'ObjectManagerAttribute', name: string, display: string, dataType: string, dataOption?: any | null, screens?: any | null, editable: boolean, active: boolean } }> } | null, permissions?: { __typename?: 'UserPermission', names: Array<string> } | null } };
+export type CurrentUserQuery = { __typename?: 'Queries', currentUser: { __typename?: 'User', id: string, firstname?: string | null, lastname?: string | null, fullname?: string | null, image?: string | null, preferences?: any | null, objectAttributeValues: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string, dataType: string, dataOption?: any | null } }>, organization?: { __typename?: 'Organization', name: string, objectAttributeValues: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string, dataType: string, dataOption?: any | null } }> } | null, permissions?: { __typename?: 'UserPermission', names: Array<string> } | null } };
 
 export type LocalesQueryVariables = Exact<{
   onlyActive?: InputMaybe<Scalars['Boolean']>;
@@ -1202,6 +1207,14 @@ export type LocalesQueryVariables = Exact<{
 
 
 export type LocalesQuery = { __typename?: 'Queries', locales: Array<{ __typename?: 'Locale', locale: string, alias?: string | null, name: string, dir: EnumTextDirection, active: boolean }> };
+
+export type ObjectManagerFrontendAttributesQueryVariables = Exact<{
+  object: EnumObjectManagerObjects;
+  filterScreen?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type ObjectManagerFrontendAttributesQuery = { __typename?: 'Queries', objectManagerFrontendAttributes: Array<{ __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string, dataType: string, dataOption?: any | null }> };
 
 export type SessionIdQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1231,7 +1244,7 @@ export type CurrentUserUpdatesSubscriptionVariables = Exact<{
 }>;
 
 
-export type CurrentUserUpdatesSubscription = { __typename?: 'Subscriptions', userUpdates: { __typename?: 'UserUpdatesPayload', user?: { __typename?: 'User', id: string, firstname?: string | null, lastname?: string | null, fullname?: string | null, image?: string | null, preferences?: any | null, objectAttributeValues: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, attribute: { __typename?: 'ObjectManagerAttribute', name: string, display: string, dataType: string, dataOption?: any | null, screens?: any | null, editable: boolean, active: boolean } }>, organization?: { __typename?: 'Organization', name: string, objectAttributeValues: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, attribute: { __typename?: 'ObjectManagerAttribute', name: string, display: string, dataType: string, dataOption?: any | null, screens?: any | null, editable: boolean, active: boolean } }> } | null, permissions?: { __typename?: 'UserPermission', names: Array<string> } | null } | null } };
+export type CurrentUserUpdatesSubscription = { __typename?: 'Subscriptions', userUpdates: { __typename?: 'UserUpdatesPayload', user?: { __typename?: 'User', id: string, firstname?: string | null, lastname?: string | null, fullname?: string | null, image?: string | null, preferences?: any | null, objectAttributeValues: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string, dataType: string, dataOption?: any | null } }>, organization?: { __typename?: 'Organization', name: string, objectAttributeValues: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string, dataType: string, dataOption?: any | null } }> } | null, permissions?: { __typename?: 'UserPermission', names: Array<string> } | null } | null } };
 
 export type PushMessagesSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
@@ -1243,4 +1256,4 @@ export type UserUpdatesSubscriptionVariables = Exact<{
 }>;
 
 
-export type UserUpdatesSubscription = { __typename?: 'Subscriptions', userUpdates: { __typename?: 'UserUpdatesPayload', user?: { __typename?: 'User', id: string, firstname?: string | null, lastname?: string | null, fullname?: string | null, preferences?: any | null, objectAttributeValues: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, attribute: { __typename?: 'ObjectManagerAttribute', name: string, display: string, dataType: string, dataOption?: any | null, screens?: any | null, editable: boolean, active: boolean } }>, organization?: { __typename?: 'Organization', name: string, objectAttributeValues: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, attribute: { __typename?: 'ObjectManagerAttribute', name: string, display: string, dataType: string, dataOption?: any | null, screens?: any | null, editable: boolean, active: boolean } }> } | null } | null } };
+export type UserUpdatesSubscription = { __typename?: 'Subscriptions', userUpdates: { __typename?: 'UserUpdatesPayload', user?: { __typename?: 'User', id: string, firstname?: string | null, lastname?: string | null, fullname?: string | null, preferences?: any | null, objectAttributeValues: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string, dataType: string, dataOption?: any | null } }>, organization?: { __typename?: 'Organization', name: string, objectAttributeValues: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string, dataType: string, dataOption?: any | null } }> } | null } | null } };

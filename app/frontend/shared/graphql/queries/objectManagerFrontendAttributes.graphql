@@ -1,0 +1,14 @@
+query objectManagerFrontendAttributes(
+  $object: EnumObjectManagerObjects!
+  $filterScreen: String
+) {
+  objectManagerFrontendAttributes(
+    object: $object
+    filterScreen: $filterScreen
+  ) {
+    name
+    display
+    dataType
+    dataOption
+  }
+}

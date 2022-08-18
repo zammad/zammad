@@ -5,7 +5,7 @@ module Gql::Types
 
     description 'Data of one object attribute value of another object'
 
-    field :attribute, Gql::Types::ObjectManager::AttributeType, null: false, description: 'The object attribute record'
+    field :attribute, Gql::Types::ObjectManager::FrontendAttributeType, null: false, description: 'The object attribute record'
     field :value, GraphQL::Types::JSON, null: true, description: "The value of the current object's object attribute"
   end
 end

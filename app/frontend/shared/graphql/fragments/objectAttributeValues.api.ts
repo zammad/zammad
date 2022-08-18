@@ -8,9 +8,6 @@ export const ObjectAttributeValuesFragmentDoc = gql`
     display
     dataType
     dataOption
-    screens
-    editable
-    active
   }
   value
 }
