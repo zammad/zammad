@@ -40,12 +40,16 @@ type TicketArticleRow = (
   key: string
 }
 
-export const useTicketArticleRows = (articles: Ref<TicketArticle[]>) => {
+export const useTicketArticleRows = (
+  articles: Ref<TicketArticle[]>,
+  totalCount: Ref<number>,
+) => {
   const rows = computed(() => {
     const rows: TicketArticleRow[] = []
     const dates = new Set<string>()
+    const needMoreButton = articles.value.length < totalCount.value
     // assuming it is sorted by createdAt
-    articles.value.forEach((article) => {
+    articles.value.forEach((article, index) => {
       const date = i18n.date(article.createdAt)
       if (!dates.has(date)) {
         dates.add(date)
@@ -67,6 +71,14 @@ export const useTicketArticleRows = (articles: Ref<TicketArticle[]>) => {
           type: 'article-bubble',
           article,
           key: article.id,
+        })
+      }
+      // after "description" (always first) article is added, add "more" button
+      if (index === 0 && needMoreButton) {
+        rows.push({
+          type: 'more',
+          key: 'more',
+          count: totalCount.value - articles.value.length,
         })
       }
     })

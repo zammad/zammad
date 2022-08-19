@@ -4,18 +4,14 @@ import gql from 'graphql-tag';
 export const TicketArticleAttributesFragmentDoc = gql`
     fragment ticketArticleAttributes on TicketArticle {
   id
-  internal
-  body
-  createdAt
-  createdBy {
-    id
-    firstname
-    lastname
+  internalId
+  from {
+    raw
+    parsed {
+      name
+      emailAddress
+    }
   }
-  sender {
-    name
-  }
-  subject
   to {
     raw
     parsed {
@@ -23,6 +19,48 @@ export const TicketArticleAttributesFragmentDoc = gql`
       emailAddress
     }
   }
+  cc {
+    raw
+    parsed {
+      name
+      emailAddress
+    }
+  }
+  subject
+  replyTo {
+    raw
+    parsed {
+      name
+      emailAddress
+    }
+  }
+  messageId
+  messageIdMd5
+  inReplyTo
+  contentType
+  references
+  attachments {
+    internalId
+    name
+    size
+    type
+    preferences
+  }
+  preferences
+  body
   internal
+  createdAt
+  createdBy @include(if: $isAgent) {
+    id
+    fullname
+    firstname
+    lastname
+  }
+  type {
+    name
+  }
+  sender {
+    name
+  }
 }
     `;

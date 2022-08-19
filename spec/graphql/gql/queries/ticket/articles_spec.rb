@@ -6,7 +6,93 @@ RSpec.describe Gql::Queries::Ticket::Articles, type: :graphql do
 
   context 'when fetching tickets' do
     let(:agent)                { create(:agent) }
-    let(:query)                { gql.read_files('apps/mobile/modules/ticket/graphql/queries/ticket/articles.graphql') }
+    let(:query)                do
+      <<~QUERY
+        query ticketArticles(
+          $ticketId: ID
+          $ticketInternalId: Int
+          $ticketNumber: String
+          $isAgent: Boolean!
+        ) {
+          ticketArticles(
+            ticket: {
+              ticketId: $ticketId
+              ticketInternalId: $ticketInternalId
+              ticketNumber: $ticketNumber
+            }
+          ) {
+            totalCount
+            edges {
+              node {
+                id
+                internalId
+                from {
+                  raw
+                  parsed {
+                    name
+                    emailAddress
+                  }
+                }
+                to {
+                  raw
+                  parsed {
+                    name
+                    emailAddress
+                  }
+                }
+                cc {
+                  raw
+                  parsed {
+                    name
+                    emailAddress
+                  }
+                }
+                subject
+                replyTo {
+                  raw
+                  parsed {
+                    name
+                    emailAddress
+                  }
+                }
+                messageId
+                messageIdMd5
+                inReplyTo
+                contentType
+                references
+                attachments {
+                  internalId
+                  name
+                  size
+                  type
+                  preferences
+                }
+                preferences
+                body
+                internal
+                createdAt
+                createdBy @include(if: $isAgent) {
+                  id
+                  firstname
+                  lastname
+                }
+                type {
+                  name
+                }
+                sender {
+                  name
+                }
+              }
+              cursor
+            }
+            pageInfo {
+              endCursor
+              hasNextPage
+            }
+          }
+        }
+      QUERY
+    end
     let(:variables)            { { ticketId: gql.id(ticket), isAgent: true } }
     let(:customer)             { create(:customer) }
     let(:ticket)               { create(:ticket, customer: customer) }

@@ -7,12 +7,23 @@ import { ErrorStatusCodes } from '@shared/types/error'
 import { getAllByTestId } from '@testing-library/vue'
 import { getTestRouter } from '@tests/support/components/renderComponent'
 import { visitView } from '@tests/support/components/visitView'
-import { mockGraphQLApi } from '@tests/support/mock-graphql-api'
+import createMockClient from '@tests/support/mock-apollo-client'
+import { mockApplicationConfig } from '@tests/support/mock-applicationConfig'
+import {
+  mockGraphQLApi,
+  mockGraphQLSubscription,
+} from '@tests/support/mock-graphql-api'
 import { waitUntil } from '@tests/support/utils'
 import { flushPromises } from '@vue/test-utils'
 import { mock } from 'vitest-mock-extended'
 import { TicketDocument } from '../graphql/queries/ticket.api'
-import { mockTicketDetailViewGql } from './mocks/detail-view'
+import { TicketArticlesDocument } from '../graphql/queries/ticket/articles.api'
+import { TicketUpdatesDocument } from '../graphql/subscriptions/ticketUpdates.api'
+import {
+  defaultArticles,
+  defaultTicket,
+  mockTicketDetailViewGql,
+} from './mocks/detail-view'
 
 test('statics inside ticket zoom view', async () => {
   const { waitUntilTicketLoaded } = mockTicketDetailViewGql()
@@ -122,6 +133,9 @@ test("redirects to error page, if can't find ticket", async () => {
   const { calls } = mockGraphQLApi(TicketDocument).willFailWithError([
     { message: 'The ticket 9866 could not be found', extensions: {} },
   ])
+  mockGraphQLApi(TicketArticlesDocument).willFailWithError([
+    { message: 'The ticket 9866 could not be found', extensions: {} },
+  ])
 
   await visitView('/tickets/9866')
 
@@ -178,4 +192,70 @@ test('change content on subscription', async () => {
   })
 
   expect(view.getByText('Some New Title')).toBeInTheDocument()
+})
+
+test('can load more articles', async () => {
+  mockApplicationConfig({
+    ticket_articles_min: 1,
+  })
+
+  const { description, articles } = defaultArticles()
+
+  const [article1, article2] = articles.edges
+
+  const articlesHandler = vi.fn(async (variables: any) => {
+    if (!variables.loadDescription) {
+      return {
+        data: {
+          description: null,
+          articles: {
+            __typename: 'TicketArticleConnection',
+            totalCount: 3,
+            edges: [article2],
+            pageInfo: {
+              __typename: 'PageInfo',
+              hasPreviousPage: false,
+              startCursor: '',
+            },
+          },
+        },
+      }
+    }
+    return {
+      data: {
+        description,
+        articles: {
+          __typename: 'TicketArticleConnection',
+          totalCount: 3,
+          edges: [article1],
+          pageInfo: {
+            __typename: 'PageInfo',
+            hasPreviousPage: true,
+            startCursor: article1.cursor,
+          },
+        },
+      },
+    }
+  })
+
+  mockGraphQLApi(TicketDocument).willResolve(defaultTicket())
+  mockGraphQLSubscription(TicketUpdatesDocument)
+  createMockClient([
+    {
+      operationDocument: TicketArticlesDocument,
+      handler: articlesHandler,
+    },
+  ])
+
+  const view = await visitView('/tickets/1')
+
+  const comments = await view.findAllByRole('comment')
+
+  expect(comments).toHaveLength(2)
+
+  vi.useRealTimers()
+
+  await view.events.click(view.getByText('load 1 more'))
+
+  expect(view.getAllByRole('comment')).toHaveLength(3)
 })

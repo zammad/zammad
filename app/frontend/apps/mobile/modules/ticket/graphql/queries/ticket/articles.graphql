@@ -2,82 +2,44 @@ query ticketArticles(
   $ticketId: ID
   $ticketInternalId: Int
   $ticketNumber: String
+  $cursor: String
+  $pageSize: Int
   $isAgent: Boolean!
+  $loadDescription: Boolean = true
 ) {
-  ticketArticles(
+  description: ticketArticles(
     ticket: {
       ticketId: $ticketId
       ticketInternalId: $ticketInternalId
       ticketNumber: $ticketNumber
     }
+    first: 1
+  ) @include(if: $loadDescription) {
+    edges {
+      node {
+        ...ticketArticleAttributes
+      }
+    }
+  }
+  articles: ticketArticles(
+    ticket: {
+      ticketId: $ticketId
+      ticketInternalId: $ticketInternalId
+      ticketNumber: $ticketNumber
+    }
+    before: $cursor
+    last: $pageSize
   ) {
     totalCount
     edges {
       node {
-        id
-        internalId
-        from {
-          raw
-          parsed {
-            name
-            emailAddress
-          }
-        }
-        to {
-          raw
-          parsed {
-            name
-            emailAddress
-          }
-        }
-        cc {
-          raw
-          parsed {
-            name
-            emailAddress
-          }
-        }
-        subject
-        replyTo {
-          raw
-          parsed {
-            name
-            emailAddress
-          }
-        }
-        messageId
-        messageIdMd5
-        inReplyTo
-        contentType
-        references
-        attachments {
-          internalId
-          name
-          size
-          type
-          preferences
-        }
-        preferences
-        body
-        internal
-        createdAt
-        createdBy @include(if: $isAgent) {
-          id
-          firstname
-          lastname
-        }
-        type {
-          name
-        }
-        sender {
-          name
-        }
+        ...ticketArticleAttributes
       }
       cursor
     }
     pageInfo {
-      endCursor
-      hasNextPage
+      startCursor
+      hasPreviousPage
     }
   }
 }

@@ -9,9 +9,7 @@ RSpec.describe Gql::Queries::Ticket, type: :graphql do
     let(:query)     do
       gql.read_files(
         'apps/mobile/modules/ticket/graphql/queries/ticket.graphql',
-        'apps/mobile/modules/ticket/graphql/fragments/ticketAttributes.graphql',
-        'apps/mobile/modules/ticket/graphql/fragments/ticketArticleAttributes.graphql',
-        'shared/graphql/fragments/objectAttributeValues.graphql'
+        'apps/mobile/modules/ticket/graphql/fragments/ticketAttributes.graphql'
       )
     end
     let(:variables) { { ticketId: gql.id(ticket) } }

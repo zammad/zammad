@@ -20,27 +20,42 @@ export default function usePagination<
   })
 
   const hasNextPage = computed(() => {
-    if (!pageInfo.value) return false
-
-    return pageInfo.value.hasNextPage
+    return pageInfo.value?.hasNextPage ?? false
   })
 
-  const loadingNextPage = ref(false)
+  const hasPreviousPage = computed(() => {
+    return pageInfo.value?.hasPreviousPage ?? false
+  })
+
+  const loadingNewPage = ref(false)
 
   return reactive({
     pageInfo: readonly(pageInfo),
     hasNextPage: readonly(hasNextPage),
-    loadingNextPage: readonly(loadingNextPage),
+    hasPreviousPage: readonly(hasPreviousPage),
+    loadingNewPage: readonly(loadingNewPage),
+    async fetchPreviousPage() {
+      try {
+        loadingNewPage.value = true
+        await query.fetchMore({
+          variables: {
+            cursor: pageInfo.value?.startCursor,
+          } as Partial<TQueryVariables & PaginationVariables>,
+        })
+      } finally {
+        loadingNewPage.value = false
+      }
+    },
     async fetchNextPage() {
       try {
-        loadingNextPage.value = true
+        loadingNewPage.value = true
         await query.fetchMore({
           variables: {
             cursor: pageInfo.value?.endCursor,
           } as Partial<TQueryVariables & PaginationVariables>,
         })
       } finally {
-        loadingNextPage.value = false
+        loadingNewPage.value = false
       }
     },
   })

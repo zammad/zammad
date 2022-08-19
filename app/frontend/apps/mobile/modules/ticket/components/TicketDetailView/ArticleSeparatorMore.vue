@@ -11,11 +11,11 @@ defineProps<Props>()
 <template>
   <div class="relative text-center">
     <div class="line-more absolute top-1/2 z-0 w-full"></div>
-    <span
+    <button
       class="relative select-none rounded-2xl border border-white/80 bg-black px-4 py-1 text-xs text-white/80"
     >
-      {{ $t('%s more', count) }}
-    </span>
+      {{ $t('load %s more', count) }}
+    </button>
   </div>
 </template>
 

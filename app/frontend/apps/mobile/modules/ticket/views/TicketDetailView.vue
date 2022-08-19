@@ -6,7 +6,7 @@ import { computed } from 'vue'
 import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
 import { QueryHandler } from '@shared/server/apollo/handler'
 import { useRouter } from 'vue-router'
-import { isNonNullObject } from '@apollo/client/utilities'
+import useApplicationStore from '@shared/stores/application'
 import { useSessionStore } from '@shared/stores/session'
 import { ErrorStatusCodes } from '@shared/types/error'
 import { whenever } from '@vueuse/shared'
@@ -14,12 +14,14 @@ import type {
   TicketUpdatesSubscription,
   TicketUpdatesSubscriptionVariables,
 } from '@shared/graphql/types'
+import { noop } from 'lodash-es'
 import TicketHeader from '../components/TicketDetailView/TicketDetailViewHeader.vue'
 import TicketTitle from '../components/TicketDetailView/TicketDetailViewTitle.vue'
 import { useTicketQuery } from '../graphql/queries/ticket.api'
 import TicketArticlesList from '../components/TicketDetailView/ArticlesList.vue'
 import TicketReplyButton from '../components/TicketDetailView/TicketDetailViewReplyButton.vue'
 import { useTicketArticlesQuery } from '../graphql/queries/ticket/articles.api'
+import type { TicketArticle } from '../types/tickets'
 import { TicketUpdatesDocument } from '../graphql/subscriptions/ticketUpdates.api'
 
 interface Props {
@@ -36,11 +38,13 @@ const ticketQuery = new QueryHandler(
 )
 
 const session = useSessionStore()
+const application = useApplicationStore()
 
 const articlesQuery = new QueryHandler(
   useTicketArticlesQuery(() => ({
     ticketInternalId: Number(props.internalId),
-    isAgent: session.hasPermission(['admin.*', 'ticket.agent']),
+    pageSize: Number(application.config.ticket_articles_min ?? 5),
+    isAgent: session.hasPermission(['ticket.agent']),
   })),
   { errorShowNotification: false },
 )
@@ -60,13 +64,24 @@ ticketQuery.onError(() => {
 const isLoadingTicket = ticketQuery.loading()
 
 const ticket = computed(() => ticketQuery.result().value?.ticket)
+const result = articlesQuery.result()
+
+const totalCount = computed(() => result.value?.articles.totalCount || 0)
 
 const toMs = (date: string) => new Date(date).getTime()
 const articles = computed(() => {
-  const result = articlesQuery.result()
-  const nodes = result.value?.ticketArticles.edges.map(({ node }) => node) || []
+  if (!result.value) {
+    return []
+  }
+  const nodes = result.value.articles.edges.map(({ node }) => node) || []
+  const totalCount = result.value.articles.totalCount || 0
+  // description might've returned with "articles"
+  const description = result.value.description.edges[0]?.node
+  if (totalCount > nodes.length && description) {
+    nodes.unshift(description)
+  }
   return nodes
-    .filter(isNonNullObject)
+    .filter((a): a is TicketArticle => a != null)
     .sort((a, b) => toMs(a.createdAt) - toMs(b.createdAt))
 })
 
@@ -100,6 +115,26 @@ const stopWatch = whenever(
 // TODO get users from graphql
 const users = [{ id: '1' }, { id: '2', lastname: 'Smith', firstname: 'John' }]
 // const usersLoading = ref(true) // TODO
+
+articlesQuery
+  .onLoaded()
+  .then(() => {
+    window.scrollTo({
+      behavior: 'smooth',
+      top: window.innerHeight,
+    })
+  })
+  .catch(noop)
+
+const loadPreviousArticles = async () => {
+  await articlesQuery.fetchMore({
+    variables: {
+      pageSize: null,
+      loadDescription: false,
+      cursor: result.value?.articles.pageInfo.startCursor,
+    },
+  })
+}
 </script>
 
 <template>
@@ -128,6 +163,8 @@ const users = [{ id: '1' }, { id: '2', lastname: 'Smith', firstname: 'John' }]
       <TicketArticlesList
         :ticket-internal-id="Number(internalId)"
         :articles="articles"
+        :total-count="totalCount"
+        @load-previous="loadPreviousArticles"
       />
     </CommonLoader>
   </div>

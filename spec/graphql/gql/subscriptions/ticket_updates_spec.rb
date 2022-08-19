@@ -10,9 +10,7 @@ RSpec.describe Gql::Subscriptions::TicketUpdates, type: :graphql do
   let(:subscription) do
     gql.read_files(
       'apps/mobile/modules/ticket/graphql/subscriptions/ticketUpdates.graphql',
-      'apps/mobile/modules/ticket/graphql/fragments/ticketAttributes.graphql',
-      'apps/mobile/modules/ticket/graphql/fragments/ticketArticleAttributes.graphql',
-      'shared/graphql/fragments/objectAttributeValues.graphql'
+      'apps/mobile/modules/ticket/graphql/fragments/ticketAttributes.graphql'
     )
   end
 

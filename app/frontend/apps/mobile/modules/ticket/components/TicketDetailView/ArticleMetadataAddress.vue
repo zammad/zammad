@@ -1,15 +1,12 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import type { TicketArticlesQuery } from '@shared/graphql/types'
-import type { ConfidentTake } from '@shared/types/utils'
 import CommonSectionMenuItem from '@mobile/components/CommonSectionMenu/CommonSectionMenuItem.vue'
 import { computed } from 'vue'
+import type { TicketArticle } from '../../types/tickets'
 
 interface Props {
-  address?: Maybe<
-    ConfidentTake<TicketArticlesQuery, 'ticketArticles.edges.node.cc'>
-  >
+  address?: TicketArticle['from']
   label: string
 }
 

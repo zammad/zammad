@@ -18,6 +18,7 @@ const renderArticleBubble = (props = {}) => {
         id: '2',
         firstname: 'Max',
         lastname: 'Mustermann',
+        fullname: 'Max Mustermann',
       },
       attachments: [],
       ...props,
@@ -59,6 +60,7 @@ describe('component for displaying text article', () => {
       user: {
         id: '3',
         lastname: 'Mustermann',
+        fullname: 'Mustermann',
       },
     })
 

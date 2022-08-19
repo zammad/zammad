@@ -6,7 +6,7 @@ import type { ConfidentTake } from '@shared/types/utils'
 export type TicketById = TicketQuery['ticket']
 export type TicketArticle = ConfidentTake<
   TicketArticlesQuery,
-  'ticketArticles.edges.node'
+  'articles.edges.node'
 >
 
 export type TicketArticleAttachment = TicketArticle['attachments'][number]

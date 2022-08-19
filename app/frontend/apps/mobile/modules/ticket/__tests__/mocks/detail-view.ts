@@ -7,9 +7,8 @@ import {
   mockGraphQLSubscription,
 } from '@tests/support/mock-graphql-api'
 import { mockPermissions } from '@tests/support/mock-permissions'
-import { waitUntil } from '@tests/support/utils'
+import { nullableMock, waitUntil } from '@tests/support/utils'
 
-import { mock } from 'vitest-mock-extended'
 import { TicketDocument } from '../../graphql/queries/ticket.api'
 
 import { TicketArticlesDocument } from '../../graphql/queries/ticket/articles.api'
@@ -18,7 +17,7 @@ import { TicketUpdatesDocument } from '../../graphql/subscriptions/ticketUpdates
 const ticketDate = new Date(2022, 0, 29, 0, 0, 0, 0)
 
 export const defaultTicket = () =>
-  mock<TicketQuery>({
+  nullableMock<TicketQuery>({
     ticket: {
       __typename: 'Ticket',
       id: '1fs432fdsfsg3qr32d',
@@ -46,6 +45,7 @@ export const defaultTicket = () =>
       },
       state: {
         __typename: 'TicketState',
+        id: 'open',
         name: 'open',
         stateType: {
           __typename: 'TicketStateType',
@@ -54,10 +54,12 @@ export const defaultTicket = () =>
       },
       group: {
         __typename: 'Group',
+        id: 'Users',
         name: 'Users',
       },
       priority: {
         __typename: 'TicketPriority',
+        id: 'low',
         name: 'low',
         uiColor: 'low',
         defaultCreate: false,
@@ -66,19 +68,30 @@ export const defaultTicket = () =>
   })
 
 const address = {
+  __typename: 'AddressesField' as const,
   parsed: null,
   raw: '',
 }
 
-export const defaultArticles = () =>
-  mock<TicketArticlesQuery>({
-    ticketArticles: {
-      totalCount: 3,
+const nullableArticle = {
+  __typename: 'TicketArticle' as const,
+  references: null,
+  inReplyTo: null,
+  messageIdMd5: null,
+  messageId: null,
+  subject: null,
+}
+
+export const defaultArticles = (): TicketArticlesQuery =>
+  nullableMock({
+    description: {
+      __typename: 'TicketArticleConnection',
       edges: [
         {
+          __typename: 'TicketArticleEdge',
           node: {
-            __typename: 'TicketArticle',
-            id: '1fs432fdsfsg3qr32d',
+            ...nullableArticle,
+            id: '1fs432fczfsg3qr32d',
             internalId: 1,
             createdAt: ticketDate.toISOString(),
             to: address,
@@ -86,22 +99,27 @@ export const defaultArticles = () =>
             cc: address,
             from: address,
             createdBy: {
+              __typename: 'User',
               id: 'fdsf214fse12d',
               firstname: 'John',
               lastname: 'Doe',
+              fullname: 'John Doe',
             },
             internal: false,
             body: '<p>Body <b>of a test ticket</b></p>',
             sender: {
+              __typename: 'TicketArticleType',
               name: 'Customer',
             },
             type: {
+              __typename: 'TicketArticleType',
               name: 'article',
             },
             contentType: 'text/html',
             attachments: [
               // should not be visible
               {
+                __typename: 'StoredFile',
                 internalId: 66,
                 name: 'not-visible-attachment.png',
                 type: 'image/png',
@@ -113,11 +131,17 @@ export const defaultArticles = () =>
             ],
             preferences: {},
           },
-          cursor: 'Mg',
         },
+      ],
+    },
+    articles: {
+      __typename: 'TicketArticleConnection',
+      totalCount: 3,
+      edges: [
         {
+          __typename: 'TicketArticleEdge',
           node: {
-            __typename: 'TicketArticle',
+            ...nullableArticle,
             id: '1fs432fdsfsg3qr32f',
             internalId: 2,
             to: address,
@@ -126,16 +150,20 @@ export const defaultArticles = () =>
             from: address,
             createdAt: new Date(2022, 0, 30, 0, 0, 0, 0).toISOString(),
             createdBy: {
+              __typename: 'User',
               id: 'dsvvr32532fs',
               firstname: 'Albert',
               lastname: 'Einstein',
+              fullname: 'Albert Einstein',
             },
             internal: false,
             body: '<p>energy equals power times time</p>',
             sender: {
+              __typename: 'TicketArticleType',
               name: 'Agent',
             },
             type: {
+              __typename: 'TicketArticleType',
               name: 'article',
             },
             attachments: [],
@@ -145,8 +173,9 @@ export const defaultArticles = () =>
           cursor: 'MH',
         },
         {
+          __typename: 'TicketArticleEdge',
           node: {
-            __typename: 'TicketArticle',
+            ...nullableArticle,
             id: '1fs432fdsfsg3qr30f',
             internalId: 3,
             to: address,
@@ -155,16 +184,20 @@ export const defaultArticles = () =>
             from: address,
             createdAt: new Date(2022, 0, 30, 10, 0, 0, 0).toISOString(),
             createdBy: {
+              __typename: 'User',
               id: 'fsfy345343f',
               firstname: 'Monkey',
               lastname: 'Brain',
+              fullname: 'Monkey Brain',
             },
             internal: true,
             body: '<p>only agents can see this haha</p>',
             sender: {
+              __typename: 'TicketArticleType',
               name: 'Agent',
             },
             type: {
+              __typename: 'TicketArticleType',
               name: 'article',
             },
             contentType: 'text/html',
@@ -175,14 +208,15 @@ export const defaultArticles = () =>
         },
       ],
       pageInfo: {
-        hasNextPage: false,
-        endCursor: '',
+        __typename: 'PageInfo',
+        hasPreviousPage: false,
+        startCursor: 'MH',
       },
     },
   })
 
 export const mockTicketDetailViewGql = () => {
-  mockPermissions(['admin.*'])
+  mockPermissions(['ticket.agent'])
 
   const ticket = defaultTicket()
 

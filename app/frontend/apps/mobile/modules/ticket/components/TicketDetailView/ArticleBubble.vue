@@ -3,12 +3,13 @@
 <script setup lang="ts">
 /* eslint-disable vue/no-v-html */
 
-import type { AvatarUser } from '@shared/components/CommonUserAvatar'
 import CommonUserAvatar from '@shared/components/CommonUserAvatar/CommonUserAvatar.vue'
 import { computed } from 'vue'
 import { i18n } from '@shared/i18n'
 import { textToHtml } from '@shared/utils/helpers'
 import { useSessionStore } from '@shared/stores/session'
+import type { TicketArticlesQuery } from '@shared/graphql/types'
+import type { ConfidentTake } from '@shared/types/utils'
 import { useArticleToggleMore } from '../../composable/useArticleToggleMore'
 import type { TicketArticleAttachment } from '../../types/tickets'
 import ArticleAttachment from './ArticleAttachment.vue'
@@ -17,7 +18,9 @@ interface Props {
   position: 'left' | 'right'
   content: string
   internal: boolean
-  user?: Maybe<AvatarUser>
+  user?: Maybe<
+    ConfidentTake<TicketArticlesQuery, 'articles.edges.node.createdBy'>
+  >
   contentType: string
   ticketInternalId: number
   articleInternalId: number
@@ -48,9 +51,7 @@ const username = computed(() => {
   if (session.user?.id === user.id) {
     return i18n.t('Me')
   }
-  const username = user.firstname || user.lastname
-  if (username !== '-') return username
-  return ''
+  return user.fullname
 })
 
 const body = computed(() => {
@@ -111,7 +112,7 @@ const { shownMore, bubbleElement, hasShowMore, toggleShowMore } =
       <CommonUserAvatar v-if="user" size="xs" :entity="user" />
     </div>
     <div
-      class="content flex flex-col rounded-3xl px-4 py-2"
+      class="content flex flex-col overflow-hidden rounded-3xl px-4 py-2"
       :class="bubbleClasses"
     >
       <div
@@ -123,7 +124,11 @@ const { shownMore, bubbleElement, hasShowMore, toggleShowMore } =
         }"
       >
         <CommonIcon v-if="internal" size="tiny" name="lock" />
-        {{ username }}
+        <span
+          class="overflow-hidden text-ellipsis whitespace-nowrap break-words"
+        >
+          {{ username }}
+        </span>
       </div>
       <div
         ref="bubbleElement"

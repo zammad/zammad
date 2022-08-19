@@ -74,7 +74,7 @@ useInfiniteScroll(window, async () => {
       <TicketItem :entity="ticket" />
     </CommonLink>
     <CommonLoader
-      v-if="pagination.loadingNextPage"
+      v-if="pagination.loadingNewPage"
       loading
       class="mt-4"
       center

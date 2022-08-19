@@ -1,13 +1,19 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import { provideApolloClient } from '@vue/apollo-composable'
-import { InMemoryCache } from '@apollo/client/core'
 import type { DocumentNode } from 'graphql'
 import {
   createMockClient as createMockedClient,
   type MockApolloClient,
   type RequestHandler,
 } from 'mock-apollo-client'
+import createCache from '@shared/server/apollo/cache'
+import type { CacheInitializerModules } from '@shared/types/server/apollo/client'
+
+const cacheInitializerModules: CacheInitializerModules = import.meta.glob(
+  '@mobile/server/apollo/cache/initializer/*.ts',
+  { eager: true },
+)
 
 export interface ClientRequestHandler {
   operationDocument: DocumentNode
@@ -24,12 +30,9 @@ export const clearMockClient = () => {
   mockClient = null
 }
 
-const createMockClient = (
-  handlers: ClientRequestHandler[],
-  cacheOptions = {},
-) => {
+const createMockClient = (handlers: ClientRequestHandler[]) => {
   if (!mockClient) {
-    const cache = new InMemoryCache(cacheOptions)
+    const cache = createCache(cacheInitializerModules)
     mockClient = createMockedClient({ cache })
   }
 

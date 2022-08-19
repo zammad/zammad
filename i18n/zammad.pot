@@ -164,10 +164,6 @@ msgstr ""
 msgid "%s months ago"
 msgstr ""
 
-#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleSeparatorMore.vue
-msgid "%s more"
-msgstr ""
-
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
 msgid "%s object(s) have been created."
 msgstr ""
@@ -11987,6 +11983,10 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "left"
+msgstr ""
+
+#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleSeparatorMore.vue
+msgid "load %s more"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee

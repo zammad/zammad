@@ -17,9 +17,13 @@ import ArticleSystem from './ArticleSystem.vue'
 interface Props {
   articles: TicketArticle[]
   ticketInternalId: number
+  totalCount: number
 }
 
 const props = defineProps<Props>()
+const emit = defineEmits<{
+  (e: 'loadPrevious'): void
+}>()
 
 const { contextOptions, articleContextShown, showArticleContext } =
   useTicketArticleContext()
@@ -36,7 +40,10 @@ const loadMoreArticles = () => {
   }, 1000)
 }
 
-const { rows } = useTicketArticleRows(toRef(props, 'articles'))
+const { rows } = useTicketArticleRows(
+  toRef(props, 'articles'),
+  toRef(props, 'totalCount'),
+)
 
 const filterAttachments = (article: TicketArticle) => {
   return article.attachments.filter(
@@ -82,7 +89,11 @@ const filterAttachments = (article: TicketArticle) => {
       />
       <ArticleSeparatorDate v-if="row.type === 'date'" :date="row.date" />
       <ArticleSeparatorNew v-if="row.type === 'new'" />
-      <ArticleSeparatorMore v-if="row.type === 'more'" :count="row.count" />
+      <ArticleSeparatorMore
+        v-if="row.type === 'more'"
+        :count="row.count"
+        @click="emit('loadPrevious')"
+      />
     </template>
   </section>
   <CommonSectionPopup

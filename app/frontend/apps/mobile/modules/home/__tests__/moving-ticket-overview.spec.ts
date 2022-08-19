@@ -18,15 +18,12 @@ const actualLocalStorage = window.localStorage
 describe('playing with overviews', () => {
   beforeEach(() => {
     mockAccount({ id: '666' })
-    createMockClient(
-      [
-        {
-          operationDocument: TicketOverviewsDocument,
-          handler: async () => ({ data: getApiTicketOverviews() }),
-        },
-      ],
-      true,
-    )
+    createMockClient([
+      {
+        operationDocument: TicketOverviewsDocument,
+        handler: async () => ({ data: getApiTicketOverviews() }),
+      },
+    ])
   })
 
   afterEach(() => {

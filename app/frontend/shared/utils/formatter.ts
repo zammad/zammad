@@ -35,6 +35,15 @@ export const order = (
   return Number(first) >= Number(second) ? [second, first] : [first, second]
 }
 
+export const getFullName = (
+  firstname?: Maybe<string>,
+  lastname?: Maybe<string>,
+): string => {
+  const fullname = [firstname, lastname].filter(Boolean).join(' ')
+  if (fullname === '-') return ''
+  return fullname
+}
+
 /**
  * Returns user's initials based on their first name, last name and email, if any present.
  * @param firstname - user's first name
