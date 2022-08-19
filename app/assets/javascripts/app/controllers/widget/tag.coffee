@@ -51,8 +51,10 @@ class App.WidgetTag extends App.Controller
   render: =>
     return if @lastLocalTags && _.isEqual(@lastLocalTags, @localTags)
     @lastLocalTags = _.clone(@localTags)
+
     @html App.view(@templateName)(
       tags: @localTags || [],
+      editable: @editable
     )
     source = "#{App.Config.get('api_path')}/tag_search"
     @$('.js-newTagInput').autocomplete(

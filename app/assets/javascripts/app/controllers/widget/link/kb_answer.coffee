@@ -43,6 +43,7 @@ class App.WidgetLinkKbAnswer extends App.WidgetLink
   render: ->
     @html App.view('link/kb_answer')(
       list: @linksForRendering()
+      editable: @editable
     )
 
     @renderPopovers()

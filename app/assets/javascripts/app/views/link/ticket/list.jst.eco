@@ -5,4 +5,6 @@
   <%- @links[type].ticketList %>
 </div>
 <% end %>
-<div class="text-muted u-clickable js-add">+ <%- @T('Add Link') %></div>
+<% if @editable: %>
+  <div class="text-muted u-clickable js-add">+ <%- @T('Add Link') %></div>
+<% end %>
