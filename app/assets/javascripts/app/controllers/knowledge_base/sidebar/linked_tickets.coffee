@@ -20,6 +20,7 @@ class App.KnowledgeBaseSidebarLinkedTickets extends App.Controller
   render: ->
     @html App.view('knowledge_base/sidebar/linked_tickets')(
       tickets: @object.translation(@kb_locale.id)?.linked_tickets() || []
+      editable: true
     )
 
     @renderPopovers()

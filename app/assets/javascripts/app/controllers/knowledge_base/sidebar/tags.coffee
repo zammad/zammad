@@ -10,6 +10,7 @@ class App.KnowledgeBaseSidebarTags extends App.Controller
       object_type: 'KnowledgeBaseAnswer'
       object:      @object
       tags:        @object.tags
+      editable:    true
     )
 
   updateIfNeeded: ->

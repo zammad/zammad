@@ -17,7 +17,7 @@
       </a>
       <%- @humanTime(ticket.created_at, false, 'time') %>
     </div>
-    <% if @object: %>
+    <% if @object && @editable: %>
     <a class="list-item-delete js-delete" data-object="<%= @object %>" data-object-id="<%= ticket.id %>" data-link-type="<%= @linkType || 'normal' %>" data-type="remove">
       <%- @Icon('diagonal-cross') %>
     </a>

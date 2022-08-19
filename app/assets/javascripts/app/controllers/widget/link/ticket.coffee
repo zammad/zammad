@@ -47,11 +47,13 @@ class App.WidgetLink.Ticket extends App.WidgetLink
         tickets: list[type].tickets
         object: 'Ticket'
         linkType: type
+        editable: @editable
       ) unless list[type].tickets.length == 0
 
     # insert data
     @html App.view('link/ticket/list')(
       links: list
+      editable: @editable
     )
 
     @renderPopovers()

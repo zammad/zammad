@@ -152,12 +152,14 @@ class SidebarTicket extends App.Controller
         object_type: 'Ticket'
         object:      @ticket
         tags:        @tags
+        editable:    @ticket.editable()
       )
       @linkWidget = new App.WidgetLink.Ticket(
         el:          localEl.filter('.js-links')
         object_type: 'Ticket'
         object:      @ticket
         links:       @links
+        editable:    @ticket.editable()
       )
 
       if @permissionCheck('knowledge_base.*') and App.Config.get('kb_active')
@@ -166,6 +168,7 @@ class SidebarTicket extends App.Controller
           object_type: 'Ticket'
           object:      @ticket
           links:       @links
+          editable:    @ticket.editable()
         )
 
       @timeUnitWidget = new App.TicketZoomTimeUnit(
