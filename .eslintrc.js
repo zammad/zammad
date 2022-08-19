@@ -46,7 +46,7 @@ module.exports = {
       {
         devDependencies: [
           'tailwind.config.js',
-          'vite.config.ts',
+          'vite.config.*',
           'app/frontend/build/**',
           'app/frontend/**/*.spec.*',
           'app/frontend/**/__tests__/**/*',

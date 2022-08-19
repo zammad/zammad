@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { splitVendorChunk } from 'vite'
+const { splitVendorChunk } = require('vite')
 
 const graphqlChunk = ['graphql', '@apollo', '@vue/apollo']
 
@@ -10,7 +10,7 @@ const isGraphqlChunk = (id) =>
 /**
  * @returns {import("vite").Plugin}
  */
-function PluginManualChunks() {
+const PluginManualChunks = () => {
   const getChunk = splitVendorChunk()
 
   const graphqlIds = new Set()
@@ -63,4 +63,4 @@ function PluginManualChunks() {
   }
 }
 
-export default PluginManualChunks
+module.exports = PluginManualChunks

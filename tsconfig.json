@@ -3,6 +3,10 @@
   "compilerOptions": {
     "types": ["vitest/globals", "vite/client", "vite-plugin-svg-icons/client"]
   },
-  "include": ["app/frontend/**/*", ".storybook/config/**/*.ts"],
+  "include": [
+    "app/frontend/**/*",
+    ".storybook/config/**/*.ts",
+    "./vite.config.*"
+  ],
   "exclude": ["app/frontend/cypress/**/*", "node_modules", "public", "vendor"]
 }
