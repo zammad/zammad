@@ -101,7 +101,6 @@ class App.Controller extends Spine.Controller
 
   # add @title method to set title
   title: (name, translate = false) ->
-#    $('html head title').html(@Config.get(product_name) + ' - ' + App.i18n.translateInline(name))
     title = name
     if translate
       title = App.i18n.translatePlain(name)
@@ -109,21 +108,15 @@ class App.Controller extends Spine.Controller
     document.title = documentTitle
     App.Event.trigger('window-title-set', documentTitle)
 
-  copyToClipboard: (text) ->
-    if window.clipboardData # IE
-      window.clipboardData.setData('Text', text)
-    else
-      window.prompt(__('Copy to clipboard: Ctrl+C, Enter'), text)
-
   copyToClipboardWithTooltip: (text, selector, container) ->
-    clipboard.copy(text)
+    clipboard.writeText(text)
 
-    tooltipCopied = @el.find(selector).tooltip(
+    tooltipCopied = @el.find(selector + ' > .ticketNumberCopy-icon').tooltip(
       trigger:   'manual'
       placement: 'bottom'
       container: container
       title: ->
-        App.i18n.translateContent('Copied to clipboard!')
+        App.i18n.translateContent('Copied!')
     )
     tooltipCopied.tooltip('show')
     @delay( ->

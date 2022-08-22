@@ -275,24 +275,33 @@ App.Config.set(
               description: __('Copy current object number (e. g. Ticket#) to clipboard')
               callback: (shortcut, lastKey, modifier) ->
                 App.Event.trigger('keyboard_shortcuts_close')
-                text = $('.active.content .js-objectNumber').first().data('number') || ''
+                text = $('.active.content .js-objectNumber').first().data('number') || ''
                 if lastKey && lastKey.count is 1
-                  clipboard.copy(text)
+                  clipboard.writeText(text)
                   return
 
                 title = $('.active.content .js-objectTitle').first().text()
                 if lastKey && lastKey.count is 2
                   if title
                     text += ": #{title}"
-                  clipboard.copy(text)
+                  clipboard.writeText(text)
                   return
 
                 url = window.location.toString()
                 if lastKey && lastKey.count is 3
-                  clipboard.copy(
-                    'text/plain': "#{text}: #{title}\n#{url}",
-                    'text/html': "<a href=\"#{url}\">#{text}</a>: #{title}"
+                  item = new window.ClipboardItem(
+                    {
+                      'text/plain': new Blob(
+                        ["#{text}: #{title}\n#{url}"],
+                        { type: 'text/plain' }
+                      ),
+                      'text/html': new Blob(
+                        ["<a href=\"#{url}\">#{text}</a>: #{title}"],
+                        { type: 'text/html' }
+                      ),
+                    }
                   )
+                  clipboard.write([item])
             }
             {
               keyPrefix: '2x'

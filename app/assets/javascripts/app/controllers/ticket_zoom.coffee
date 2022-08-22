@@ -7,12 +7,12 @@ class App.TicketZoom extends App.Controller
     '.scrollPageHeader':   'scrollPageHeader'
 
   events:
-    'click .js-submit':                 'submit'
-    'click .js-bookmark':               'bookmark'
-    'click .js-reset':                  'reset'
-    'click .js-draft':                  'draft'
-    'click .main':                      'muteTask'
-    'click .ticket-number-copy-header': 'copyTicketNumber'
+    'click .js-submit':                                          'submit'
+    'click .js-bookmark':                                        'bookmark'
+    'click .js-reset':                                           'reset'
+    'click .js-draft':                                           'draft'
+    'click .main':                                               'muteTask'
+    'click .ticket-number-copy-header > .ticketNumberCopy-icon': 'copyTicketNumber'
 
   constructor: (params) ->
     super

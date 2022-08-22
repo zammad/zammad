@@ -2,7 +2,7 @@ class App.TicketZoomMeta extends App.ControllerObserver
   @extend App.PopoverProvidable
   @registerPopovers 'Escalation'
   events:
-    'click .ticket-number-copy': 'copyTicketNumber'
+    'click .ticket-number-copy > .ticketNumberCopy-icon': 'copyTicketNumber'
 
   model: 'Ticket'
   observe:

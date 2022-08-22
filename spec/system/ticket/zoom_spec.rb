@@ -2803,7 +2803,7 @@ RSpec.describe 'Ticket zoom', type: :system do
 
   describe 'Copying ticket number' do
     let(:ticket) { create(:ticket, group: Group.find_by(name: 'Users')) }
-    let(:ticket_number_copy_element) { 'div.ticketZoom-header div.js-ticketMetaContainer span.ticket-number-copy' }
+    let(:ticket_number_copy_element) { 'span.ticket-number-copy svg.ticketNumberCopy-icon' }
     let(:expected_clipboard_content) { (Setting.get('ticket_hook') + ticket.number).to_s }
     let(:field)                      { find(:richtext) }
 
