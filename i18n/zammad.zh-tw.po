@@ -95,6 +95,12 @@ msgstr "%s URL"
 msgid "%s ago"
 msgstr "%s 之前"
 
+#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleBubble.vue
+#, fuzzy
+#| msgid "Attached Files"
+msgid "%s attached files"
+msgstr "附件檔案"
+
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 #, fuzzy
 #| msgid "%s created data privacy task to delete user id |%s|"
@@ -193,12 +199,6 @@ msgstr "分鐘"
 #| msgid "%s ago"
 msgid "%s months ago"
 msgstr "%s 之前"
-
-#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/ArticleBadgeMore.vue
-#, fuzzy
-#| msgid "See more"
-msgid "%s more"
-msgstr "看到更多"
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
 #, fuzzy
@@ -404,6 +404,12 @@ msgstr ""
 "\n"
 "任何投訴工單 (例如，工單已經錯過了所定目標) 會在您的總覽中分開單獨顯示。您也"
 "可以設置 ** 電子郵件通知 **。"
+
+#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleBubble.vue
+#, fuzzy
+#| msgid "Attached Files"
+msgid "1 attached file"
+msgstr "附件檔案"
 
 #: db/seeds/settings.rb
 msgid "1 day"
@@ -643,8 +649,8 @@ msgid "Accounts"
 msgstr "帳號"
 
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
 #: app/assets/javascripts/app/models/core_workflow.coffee
 #: app/assets/javascripts/app/views/api.jst.eco
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco
@@ -835,7 +841,7 @@ msgstr "新增連結"
 msgid "Add ordered list"
 msgstr "排序列表格式"
 
-#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/TicketZoomReplyButton.vue
+#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/TicketDetailViewReplyButton.vue
 #, fuzzy
 #| msgid "reply"
 msgid "Add reply"
@@ -940,7 +946,7 @@ msgstr ""
 msgid "All Tickets"
 msgstr "所有工單"
 
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #, fuzzy
 #| msgid "All Agents"
 msgid "All agents"
@@ -1163,8 +1169,8 @@ msgstr ""
 msgid "Are you sure?"
 msgstr "您確定嗎？"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
 msgid "Article"
 msgstr "文章"
 
@@ -1176,7 +1182,7 @@ msgstr ""
 msgid "Article Count"
 msgstr "文章數量"
 
-#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/ArticleBubble.vue
+#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleBubble.vue
 #, fuzzy
 #| msgid "Article Count"
 msgid "Article actions"
@@ -1667,6 +1673,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/ticket_article.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
+#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 #: db/seeds/object_manager_attributes.rb
 msgid "CC"
 msgstr ""
@@ -1949,6 +1956,7 @@ msgstr "已進行更動，需要更新資料庫。"
 #: app/assets/javascripts/app/models/email_address.coffee
 #: app/assets/javascripts/app/models/postmaster_filter.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
+#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Channel"
 msgstr "通訊管道"
 
@@ -2521,10 +2529,8 @@ msgid "Conversion of retweets into tickets is turned off."
 msgstr "Retweet 轉推到工單的功能已關閉"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_base.coffee
-#, fuzzy
-#| msgid "Copy to clipboard: Ctrl+C, Enter"
-msgid "Copied to clipboard!"
-msgstr "複製到剪貼板：Ctrl+C, Enter"
+msgid "Copied!"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
 msgid "Copy"
@@ -2533,10 +2539,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Copy current object number (e. g. Ticket#) to clipboard"
 msgstr "將當前物件號碼 (例如：Ticket#) 複製到剪貼板"
-
-#: app/assets/javascripts/app/controllers/_application_controller/_base.coffee
-msgid "Copy to clipboard: Ctrl+C, Enter"
-msgstr "複製到剪貼板：Ctrl+C, Enter"
 
 #: db/seeds/permissions.rb
 msgid "Core Workflow"
@@ -2557,12 +2559,6 @@ msgid ""
 "on an action, it is possible to hide or restrict fields or to change the "
 "obligation to fill them in."
 msgstr ""
-
-#: app/frontend/apps/mobile/modules/ticket/views/TicketDetailedView.vue
-#, fuzzy
-#| msgid "You have closed a ticket"
-msgid "Could not load the ticket"
-msgstr "您關閉了一個工單"
 
 #: app/assets/javascripts/app/views/tag/table.jst.eco
 msgid "Count"
@@ -2771,7 +2767,7 @@ msgstr "目前狀態"
 msgid "Current Token"
 msgstr "目前的 Token"
 
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/models/signature.coffee
 #: app/assets/javascripts/app/models/text_module.coffee
 msgid "Current User"
@@ -2817,10 +2813,9 @@ msgid "Custom address is not set"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
-#: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_customer.coffee
 #: app/assets/javascripts/app/controllers/ticket_customer.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee
@@ -3946,11 +3941,11 @@ msgstr "顯示"
 msgid "Display name"
 msgstr "顯示名稱"
 
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 msgid "Do not encrypt email"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 msgid "Do not sign email"
 msgstr ""
 
@@ -4018,6 +4013,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_image_view.coffee
 msgid "Download"
+msgstr ""
+
+#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleAttachment.vue
+msgid "Download %s"
 msgstr ""
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
@@ -4115,7 +4114,7 @@ msgstr "編輯機構"
 msgid "Edit mask"
 msgstr "編輯遮罩"
 
-#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/TicketViewersDialog.vue
+#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/TicketViewersDialog.vue
 #, fuzzy
 #| msgid "assign tickets"
 msgid "Editing ticket"
@@ -4164,7 +4163,7 @@ msgid "Elasticsearch needs to be configured!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel.coffee
 #: app/assets/javascripts/app/models/email_address.coffee
@@ -4474,11 +4473,11 @@ msgstr "關閉"
 msgid "Encrypt"
 msgstr "加密"
 
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 msgid "Encrypt email (if not possible, discard notification)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 msgid "Encrypt email (if not possible, send notification anyway)"
 msgstr ""
 
@@ -4543,6 +4542,10 @@ msgstr "輸入憑證"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Enter link URL"
+msgstr ""
+
+#: app/frontend/apps/mobile/modules/search/views/SearchOverview.vue
+msgid "Enter more than two characters to get any results…"
 msgstr ""
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
@@ -5085,6 +5088,7 @@ msgstr "星期五"
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
+#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "From"
 msgstr "From"
 
@@ -5260,7 +5264,6 @@ msgstr "問候語"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
-#: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee
 #: app/assets/javascripts/app/controllers/group.coffee
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco
@@ -5397,7 +5400,7 @@ msgstr ""
 msgid "Has processed"
 msgstr "作業進行中"
 
-#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/TicketViewersDialog.vue
+#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/TicketViewersDialog.vue
 msgid "Has ticket open in taskbar, but is not actively looking in the ticket."
 msgstr ""
 
@@ -5799,6 +5802,12 @@ msgstr ""
 msgid "Image Service"
 msgstr "圖像服務"
 
+#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleAttachment.vue
+#, fuzzy
+#| msgid "Manage %s"
+msgid "Image of %s"
+msgstr "管理 %s"
+
 #: app/assets/javascripts/app/controllers/import.coffee
 #: app/assets/javascripts/app/controllers/import_freshdesk.coffee
 #: app/assets/javascripts/app/controllers/import_otrs.coffee
@@ -6109,7 +6118,6 @@ msgstr "整合"
 msgid "Intermediate"
 msgstr "中間"
 
-#: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee
 msgid "Internal"
@@ -6850,7 +6858,7 @@ msgstr ""
 msgid "May"
 msgstr "五月"
 
-#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/ArticleBubble.vue
+#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleBubble.vue
 #, fuzzy
 #| msgid "Mode"
 msgid "Me"
@@ -6901,6 +6909,12 @@ msgstr ""
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 msgid "Messages"
 msgstr "訊息"
+
+#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+#, fuzzy
+#| msgid "Show Search Details"
+msgid "Meta Data"
+msgstr "顯示搜尋細節"
 
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
 msgid "Method"
@@ -7399,7 +7413,7 @@ msgstr "下一步"
 msgid "Next in overview"
 msgstr "回到工單總覽"
 
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 msgid "No"
 msgstr "否"
 
@@ -7492,6 +7506,7 @@ msgid "No email!"
 msgstr ""
 
 #: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
+#: app/frontend/apps/mobile/modules/search/views/SearchOverview.vue
 #: app/frontend/apps/mobile/modules/ticket/components/TicketList/TicketList.vue
 #, fuzzy
 #| msgid "No Entries"
@@ -7669,7 +7684,7 @@ msgstr "不適用於所選語言"
 msgid "Not configured"
 msgstr "未配置"
 
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/models/chat.coffee
 #: app/assets/javascripts/app/models/email_address.coffee
 #: app/assets/javascripts/app/models/group.coffee
@@ -7714,7 +7729,7 @@ msgstr "還沒有選中"
 msgid "Notice"
 msgstr "注意"
 
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/views/mailer/application.html.erb
 msgid "Notification"
 msgstr "通知"
@@ -7895,7 +7910,7 @@ msgstr "開啟備註輸入框"
 msgid "Open ticket indicator"
 msgstr ""
 
-#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/TicketViewersDialog.vue
+#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/TicketViewersDialog.vue
 msgid "Opened in taskbar"
 msgstr ""
 
@@ -7983,6 +7998,7 @@ msgid "Original"
 msgstr "原翻譯"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Original Formatting"
 msgstr "原始格式"
 
@@ -8056,8 +8072,7 @@ msgstr "總覽"
 msgid "Overwrite Draft"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco
 #: app/graphql/gql/types/overview_type.rb
@@ -8442,7 +8457,6 @@ msgid "Prio"
 msgstr "優先序"
 
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee
-#: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee
 #: app/assets/javascripts/app/models/core_workflow.coffee
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco
@@ -8584,6 +8598,7 @@ msgid "Queue already exists!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Raw"
 msgstr ""
 
@@ -8752,6 +8767,7 @@ msgid "Reply to last article"
 msgstr "回覆最新文章"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
+#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Reply-To"
 msgstr "Reply-To"
 
@@ -8966,7 +8982,7 @@ msgid "SLAs"
 msgstr "SLAs"
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 msgid "SMS"
 msgstr "簡訊"
 
@@ -9133,7 +9149,6 @@ msgstr "向下滾動以查看新訊息"
 #: app/assets/javascripts/app/views/knowledge_base/search_field_widget.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 #: app/frontend/apps/mobile/modules/search/routes.ts
-#: app/frontend/shared/components/CommonInputSearch/CommonInputSearch.vue
 msgid "Search"
 msgstr "搜尋"
 
@@ -9150,11 +9165,17 @@ msgstr "搜尋術語"
 msgid "Search for users"
 msgstr "搜尋使用者"
 
+#: app/frontend/apps/mobile/modules/search/views/SearchOverview.vue
+#, fuzzy
+#| msgid "Search"
+msgid "Search for…"
+msgstr "搜尋"
+
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax_customer_organization.coffee
 #: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee
 #: app/assets/javascripts/app/views/generic/icon_picker.jst.eco
-#: app/frontend/apps/mobile/modules/search/views/SearchOverview.vue
+#: app/frontend/shared/components/CommonInputSearch/CommonInputSearch.vue
 #, fuzzy
 #| msgid "Search"
 msgid "Search…"
@@ -9186,7 +9207,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
-#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/ArticleBubble.vue
+#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleBubble.vue
 msgid "See less"
 msgstr "看到更少"
 
@@ -9194,7 +9215,7 @@ msgstr "看到更少"
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
-#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/ArticleBubble.vue
+#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleBubble.vue
 msgid "See more"
 msgstr "看到更多"
 
@@ -9290,7 +9311,6 @@ msgstr ""
 msgid "Send to clients"
 msgstr "發送給客戶端"
 
-#: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee
 #: app/assets/javascripts/app/models/ticket_article.coffee
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 #: app/models/channel/driver/sms/massenversand.rb
@@ -9312,7 +9332,7 @@ msgstr "寄件人格式分隔符號"
 msgid "Sender based on Reply-To header"
 msgstr "基於 Reply-To 標頭的寄件人"
 
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #, fuzzy
 #| msgid "Reply to last article"
 msgid "Sender of last article"
@@ -9323,6 +9343,10 @@ msgstr "回覆最新文章"
 #| msgid "pending"
 msgid "Sending…"
 msgstr "待處理"
+
+#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+msgid "Sent"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/maintenance.coffee
 msgid "Sent successfully!"
@@ -9573,7 +9597,7 @@ msgstr "上一頁籤"
 msgid "Show the chat when ready."
 msgstr "準備好後顯示文字對談。"
 
-#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/TicketZoomHeader.vue
+#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/TicketDetailViewHeader.vue
 #, fuzzy
 #| msgid "Overviews"
 msgid "Show ticket viewers"
@@ -9604,11 +9628,11 @@ msgstr ""
 msgid "Sign"
 msgstr "標誌"
 
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 msgid "Sign email (if not possible, discard notification)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 msgid "Sign email (if not possible, send notification anyway)"
 msgstr ""
 
@@ -9729,6 +9753,10 @@ msgstr ""
 msgid "Something went wrong. Please contact your administrator."
 msgstr ""
 
+#: app/frontend/apps/mobile/modules/ticket/views/TicketDetailView.vue
+msgid "Sorry, but you have insufficient rights to open this page."
+msgstr ""
+
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Sorry, not all fields are filled out correctly."
 msgstr ""
@@ -9831,7 +9859,6 @@ msgid ""
 "\"translations.zammad.org\" %l."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee
 #: app/assets/javascripts/app/models/chat_sessions.coffee
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 #: app/assets/javascripts/app/models/ticket.coffee
@@ -9921,6 +9948,7 @@ msgstr "街道"
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
+#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Subject"
 msgstr "主旨"
 
@@ -10027,10 +10055,6 @@ msgstr "工單操作後的頁籤行為"
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee
 msgid "Tab has changed, do you really want to close it?"
 msgstr "頁籤已有更動，您確定要關閉?"
-
-#: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee
-msgid "Tag"
-msgstr "標籤"
 
 #: app/assets/javascripts/app/controllers/chat.coffee
 #: app/assets/javascripts/app/controllers/tag.coffee
@@ -10427,6 +10451,10 @@ msgstr "%s 個物件已建立。"
 #| msgid "%s Object(s) are updated."
 msgid "The language could not be updated."
 msgstr "%s 個物件已刪除。"
+
+#: app/frontend/apps/mobile/modules/ticket/components/TicketList/TicketList.vue
+msgid "The limit of %s tickets reached (%s remaining)"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_new.coffee
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee
@@ -11068,9 +11096,10 @@ msgid "Thursday"
 msgstr "星期四"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee
 #: app/assets/javascripts/app/models/signature.coffee
 #: app/assets/javascripts/app/models/text_module.coffee
@@ -11179,7 +11208,7 @@ msgstr "工單提升等級"
 msgid "Ticket failed to save: %s"
 msgstr "指派給我的工單有 %s 筆，共 %s 筆"
 
-#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/TicketZoomHeader.vue
+#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/TicketDetailViewHeader.vue
 #, fuzzy
 #| msgid "New Overview"
 msgid "Ticket has %s viewers"
@@ -11193,7 +11222,7 @@ msgstr "工單到達提醒時間"
 msgid "Ticket update"
 msgstr "工單更新"
 
-#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/TicketViewersDialog.vue
+#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/TicketViewersDialog.vue
 #, fuzzy
 #| msgid "New Overview"
 msgid "Ticket viewers"
@@ -11342,6 +11371,7 @@ msgstr "表單標題"
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
+#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 #: db/seeds/object_manager_attributes.rb
 msgid "To"
 msgstr "To"
@@ -11554,7 +11584,6 @@ msgstr "Twitter Secret"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
-#: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee
 #: app/assets/javascripts/app/models/ticket_article.coffee
@@ -11836,8 +11865,8 @@ msgid "Used when viewing a Ticket"
 msgstr "適用在查看工單時"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_customer.coffee
 #: app/assets/javascripts/app/controllers/cti.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
@@ -11983,7 +12012,7 @@ msgstr "VIP"
 msgid "Value"
 msgstr "值"
 
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 msgid "Variables"
 msgstr "變數"
 
@@ -12087,13 +12116,13 @@ msgstr "切換為使用者視角"
 msgid "View this in Zammad"
 msgstr "到 Zammad 系統查看"
 
-#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/TicketViewersDialog.vue
+#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/TicketViewersDialog.vue
 #, fuzzy
 #| msgid "New Ticket"
 msgid "Viewing ticket"
 msgstr "新的工單"
 
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_dialog.coffee
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee
 #: app/assets/javascripts/app/models/ticket_article.coffee
@@ -12218,7 +12247,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/webhook.coffee
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 msgid "Webhook"
@@ -12482,7 +12511,7 @@ msgid "Yellow"
 msgstr "黄色"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm.coffee
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/tag.coffee
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
 msgid "Yes"
@@ -12938,6 +12967,7 @@ msgstr ""
 msgid "after (absolute)"
 msgstr "之後 (絕對)"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 msgid "after (relative)"
 msgstr "之後 (相對)"
@@ -12990,6 +13020,7 @@ msgstr "自動選擇"
 msgid "before (absolute)"
 msgstr "之前 (絕對)"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 msgid "before (relative)"
 msgstr "之前 (相對)"
@@ -13071,19 +13102,19 @@ msgstr "一個都不含"
 msgid "created"
 msgstr "建立於"
 
-#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/TicketZoomHeader.vue
+#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/TicketDetailViewHeader.vue
 #, fuzzy
 #| msgid "created"
 msgid "created %s"
 msgstr "建立於"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
 msgid "current user"
 msgstr "目前使用者"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
 msgid "current user organization"
 msgstr "用前使用者機構"
 
@@ -13248,6 +13279,7 @@ msgstr ""
 msgid "from"
 msgstr "from"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 msgid "from (relative)"
 msgstr "from (相關)"
@@ -13383,7 +13415,7 @@ msgstr "進行處理中"
 msgid "inactive"
 msgstr "停用的"
 
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 msgid "internal"
 msgstr "內部"
@@ -13434,6 +13466,12 @@ msgstr ""
 msgid "left"
 msgstr ""
 
+#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleSeparatorMore.vue
+#, fuzzy
+#| msgid "See more"
+msgid "load %s more"
+msgstr "看到更多"
+
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
 msgid "m"
 msgstr ""
@@ -13473,7 +13511,7 @@ msgstr "名稱"
 msgid "merged"
 msgstr "已合併"
 
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 msgid "message"
 msgstr ""
 
@@ -13491,7 +13529,7 @@ msgstr "分鐘"
 msgid "my own note"
 msgstr ""
 
-#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/ArticleBadgeNew.vue
+#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleSeparatorNew.vue
 #: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
 msgid "new"
 msgstr "新增"
@@ -13594,7 +13632,7 @@ msgstr "待提醒"
 msgid "phone"
 msgstr "電話"
 
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #, fuzzy
 #| msgid "Public"
 msgid "public"
@@ -13615,6 +13653,12 @@ msgstr "regex 符合"
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "regex mismatch"
 msgstr "regex 不符合"
+
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
+#, fuzzy
+#| msgid "active"
+msgid "relative"
+msgstr "啟用"
 
 #: db/seeds/settings.rb
 msgid "relative - e. g. \"2 hours ago\" or \"2 days and 15 minutes ago\""
@@ -13739,13 +13783,13 @@ msgstr "已略過"
 msgid "sms"
 msgstr "簡訊"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
 msgid "specific organization"
 msgstr "特定的機構"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
 msgid "specific user"
 msgstr "特定的使用者"
 
@@ -13791,6 +13835,7 @@ msgstr ""
 msgid "ticket.customer"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 msgid "till (relative)"
 msgstr "直到 (相對)"
@@ -13821,7 +13866,7 @@ msgstr "Twitter 直接訊息"
 msgid "twitter status"
 msgstr "Twitter 狀態"
 
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 msgid "unassign user"
 msgstr "不指派使用者"
 
@@ -13859,10 +13904,12 @@ msgstr ""
 msgid "will be deleted"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 msgid "within last (relative)"
 msgstr "在最後內 (相對)"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 msgid "within next (relative)"
 msgstr "在下一個 (相對)"
@@ -13928,6 +13975,22 @@ msgstr "...整個文字區域"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ 今日等待時間"
+
+#, fuzzy
+#~| msgid "Copy to clipboard: Ctrl+C, Enter"
+#~ msgid "Copied to clipboard!"
+#~ msgstr "複製到剪貼板：Ctrl+C, Enter"
+
+#~ msgid "Copy to clipboard: Ctrl+C, Enter"
+#~ msgstr "複製到剪貼板：Ctrl+C, Enter"
+
+#~ msgid "Tag"
+#~ msgstr "標籤"
+
+#, fuzzy
+#~| msgid "You have closed a ticket"
+#~ msgid "Could not load the ticket"
+#~ msgstr "您關閉了一個工單"
 
 #, fuzzy
 #~| msgid "Block Notifications"

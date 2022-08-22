@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-07-22 03:30+0000\n"
+"PO-Revision-Date: 2022-08-19 03:30+0000\n"
 "Last-Translator: Marcel Herrguth <github@thehomeofanime.de>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
 "zammad-development/de/>\n"
@@ -96,6 +96,10 @@ msgstr "%s-URL"
 msgid "%s ago"
 msgstr "vor %s"
 
+#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleBubble.vue
+msgid "%s attached files"
+msgstr "%s anhängende Dateien"
+
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 msgid "%s completed data privacy task to delete user ID |%s|"
 msgstr ""
@@ -108,7 +112,7 @@ msgstr "%s erstellte einen Artikel für |%s|"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 msgid "%s created data privacy task to delete user ID |%s|"
-msgstr "%s erstellte Datenschutz-Auftrag für Benutzer-ID |%s|"
+msgstr "%s erstellte Datenschutz-Auftrag um Benutzer-ID |%s| zu löschen"
 
 #: app/assets/javascripts/app/models/group.coffee
 msgid "%s created group |%s|"
@@ -172,10 +176,6 @@ msgstr "vor %s Minuten"
 #: app/frontend/shared/i18n/dates.ts
 msgid "%s months ago"
 msgstr "vor %s Monaten"
-
-#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/ArticleBadgeMore.vue
-msgid "%s more"
-msgstr "%s weitere"
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
 msgid "%s object(s) have been created."
@@ -348,6 +348,10 @@ msgstr ""
 "Jedes eskalierte Ticket (z.B. Tickets deren definierte Ziele nicht "
 "eingehalten wurden) werden in separaten Ansichten Ihrer Übersichten "
 "angezeigt. Sie können außerdem ** E-Mail-Benachrichtigungen ** konfigurieren."
+
+#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleBubble.vue
+msgid "1 attached file"
+msgstr "1 angehängte Datei"
 
 #: db/seeds/settings.rb
 msgid "1 day"
@@ -592,8 +596,8 @@ msgid "Accounts"
 msgstr "Konten"
 
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
 #: app/assets/javascripts/app/models/core_workflow.coffee
 #: app/assets/javascripts/app/views/api.jst.eco
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco
@@ -776,7 +780,7 @@ msgstr "Verknüpfung hinzufügen"
 msgid "Add ordered list"
 msgstr "Sortierte Liste hinzufügen"
 
-#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/TicketZoomReplyButton.vue
+#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/TicketDetailViewReplyButton.vue
 msgid "Add reply"
 msgstr "Antwort hinzufügen"
 
@@ -884,7 +888,7 @@ msgstr "Alarm"
 msgid "All Tickets"
 msgstr "Alle Tickets"
 
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 msgid "All agents"
 msgstr "Alle Agenten"
 
@@ -1098,8 +1102,8 @@ msgstr ""
 msgid "Are you sure?"
 msgstr "Sind Sie sicher?"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
 msgid "Article"
 msgstr "Artikel"
 
@@ -1111,7 +1115,7 @@ msgstr "Artikel - Bestätigungsdialog zur Sichtbarkeit"
 msgid "Article Count"
 msgstr "Artikelanzahl"
 
-#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/ArticleBubble.vue
+#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleBubble.vue
 msgid "Article actions"
 msgstr "Artikel-Aktionen"
 
@@ -1596,6 +1600,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/ticket_article.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
+#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 #: db/seeds/object_manager_attributes.rb
 msgid "CC"
 msgstr "CC"
@@ -1860,6 +1865,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/email_address.coffee
 #: app/assets/javascripts/app/models/postmaster_filter.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
+#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Channel"
 msgstr "Kanal"
 
@@ -2397,8 +2403,8 @@ msgid "Conversion of retweets into tickets is turned off."
 msgstr "Retweets werden nicht in Tickets umgewandelt."
 
 #: app/assets/javascripts/app/controllers/_application_controller/_base.coffee
-msgid "Copied to clipboard!"
-msgstr "In Zwischenablage kopiert!"
+msgid "Copied!"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
 msgid "Copy"
@@ -2407,10 +2413,6 @@ msgstr "Kopieren"
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Copy current object number (e. g. Ticket#) to clipboard"
 msgstr "Kopiert aktuelle Objekt-Nummer (z. B. Ticket#) in Zwischenablage"
-
-#: app/assets/javascripts/app/controllers/_application_controller/_base.coffee
-msgid "Copy to clipboard: Ctrl+C, Enter"
-msgstr "In die Zwischenablage kopieren: Strg+C, Return"
 
 #: db/seeds/permissions.rb
 msgid "Core Workflow"
@@ -2434,10 +2436,6 @@ msgstr ""
 "Core Workflows sind Aktionen oder Einschränken für Auswahlen von Formularen. "
 "Je nach Aktion ist es möglich, Felder zu verstecken, Felder einzuschränken "
 "oder die Verpflichtung diese auszufüllen zu ändern."
-
-#: app/frontend/apps/mobile/modules/ticket/views/TicketDetailedView.vue
-msgid "Could not load the ticket"
-msgstr "Laden des Tickets fehlgeschlagen"
 
 #: app/assets/javascripts/app/views/tag/table.jst.eco
 msgid "Count"
@@ -2662,7 +2660,7 @@ msgstr "Aktueller Status"
 msgid "Current Token"
 msgstr "Aktueller Token"
 
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/models/signature.coffee
 #: app/assets/javascripts/app/models/text_module.coffee
 msgid "Current User"
@@ -2712,10 +2710,9 @@ msgid "Custom address is not set"
 msgstr "Benutzerdefinierte Adresse nicht gesetzt"
 
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
-#: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_customer.coffee
 #: app/assets/javascripts/app/controllers/ticket_customer.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee
@@ -3932,11 +3929,11 @@ msgstr "Anzeige"
 msgid "Display name"
 msgstr "Anzeigename"
 
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 msgid "Do not encrypt email"
 msgstr "E-Mail nicht verschlüsseln"
 
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 msgid "Do not sign email"
 msgstr "E-Mail nicht signieren"
 
@@ -3997,6 +3994,10 @@ msgstr "Erledigt"
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_image_view.coffee
 msgid "Download"
 msgstr "Herunterladen"
+
+#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleAttachment.vue
+msgid "Download %s"
+msgstr "%s herunterladen"
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 msgid "Download %s Migration Plugin"
@@ -4092,11 +4093,9 @@ msgstr "Organisation bearbeiten"
 msgid "Edit mask"
 msgstr "Bearbeitungsmaske"
 
-#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/TicketViewersDialog.vue
-#, fuzzy
-#| msgid "assign tickets"
+#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/TicketViewersDialog.vue
 msgid "Editing ticket"
-msgstr "Tickets zuweisen"
+msgstr "Ticket bearbeiten"
 
 #: db/seeds/settings.rb
 msgid "Elasticsearch Attachment Extensions"
@@ -4143,7 +4142,7 @@ msgid "Elasticsearch needs to be configured!"
 msgstr "Elasticsearch muss konfiguriert werden!"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel.coffee
 #: app/assets/javascripts/app/models/email_address.coffee
@@ -4467,11 +4466,11 @@ msgstr "Anlage"
 msgid "Encrypt"
 msgstr "Verschlüsseln"
 
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 msgid "Encrypt email (if not possible, discard notification)"
 msgstr "Email verschlüsseln (verwerfe Benachrichtigung, sofern nicht möglich)"
 
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 msgid "Encrypt email (if not possible, send notification anyway)"
 msgstr ""
 "Email verschlüsseln (sende Benachrichtigung dennoch, sofern nicht möglich)"
@@ -4534,6 +4533,10 @@ msgstr "Anmeldeinformationen eingeben"
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Enter link URL"
 msgstr "Verknüpfungs-URL angeben"
+
+#: app/frontend/apps/mobile/modules/search/views/SearchOverview.vue
+msgid "Enter more than two characters to get any results…"
+msgstr ""
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
@@ -5073,6 +5076,7 @@ msgstr "Freitag"
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
+#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "From"
 msgstr "Von"
 
@@ -5246,7 +5250,6 @@ msgstr "Begrüßung"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
-#: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee
 #: app/assets/javascripts/app/controllers/group.coffee
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco
@@ -5377,7 +5380,7 @@ msgstr "Datenschutz-Aufgaben ausführen."
 msgid "Has processed"
 msgstr "wurde verarbeitet"
 
-#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/TicketViewersDialog.vue
+#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/TicketViewersDialog.vue
 msgid "Has ticket open in taskbar, but is not actively looking in the ticket."
 msgstr ""
 "Hat das Ticket in der Taskbar geöffnet, schaut jedoch nicht aktiv ins Ticket."
@@ -5772,6 +5775,10 @@ msgstr "Bild"
 msgid "Image Service"
 msgstr "Bilder-Service"
 
+#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleAttachment.vue
+msgid "Image of %s"
+msgstr "Bild von %s"
+
 #: app/assets/javascripts/app/controllers/import.coffee
 #: app/assets/javascripts/app/controllers/import_freshdesk.coffee
 #: app/assets/javascripts/app/controllers/import_otrs.coffee
@@ -6078,7 +6085,6 @@ msgstr "Integrationen"
 msgid "Intermediate"
 msgstr "Vordiplom"
 
-#: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee
 msgid "Internal"
@@ -6803,7 +6809,7 @@ msgstr "Maximale Anzahl der rekursiv aufgeführten Trigger."
 msgid "May"
 msgstr "Mai"
 
-#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/ArticleBubble.vue
+#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleBubble.vue
 msgid "Me"
 msgstr "Ich"
 
@@ -6850,6 +6856,10 @@ msgstr "Nachricht für die Login-Seite."
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 msgid "Messages"
 msgstr "Nachrichten"
+
+#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+msgid "Meta Data"
+msgstr "Meta-Daten"
 
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
 msgid "Method"
@@ -7328,7 +7338,7 @@ msgstr "Weiter"
 msgid "Next in overview"
 msgstr "Nächstes der Übersicht"
 
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 msgid "No"
 msgstr "Nein"
 
@@ -7413,6 +7423,7 @@ msgid "No email!"
 msgstr "Keine E-Mail!"
 
 #: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
+#: app/frontend/apps/mobile/modules/search/views/SearchOverview.vue
 #: app/frontend/apps/mobile/modules/ticket/components/TicketList/TicketList.vue
 msgid "No entries"
 msgstr "Keine Einträge"
@@ -7586,7 +7597,7 @@ msgstr "Nicht in der gewählten Sprache verfügbar"
 msgid "Not configured"
 msgstr "Nicht konfiguriert"
 
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/models/chat.coffee
 #: app/assets/javascripts/app/models/email_address.coffee
 #: app/assets/javascripts/app/models/group.coffee
@@ -7631,7 +7642,7 @@ msgstr "Nichts ausgewählt"
 msgid "Notice"
 msgstr "Hinweis"
 
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/views/mailer/application.html.erb
 msgid "Notification"
 msgstr "Benachrichtigung"
@@ -7816,7 +7827,7 @@ msgstr "Öffnet Notiz-Dialog"
 msgid "Open ticket indicator"
 msgstr "Indikator für offenes Ticket"
 
-#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/TicketViewersDialog.vue
+#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/TicketViewersDialog.vue
 msgid "Opened in taskbar"
 msgstr "In Taskbar geöffnet"
 
@@ -7902,6 +7913,7 @@ msgid "Original"
 msgstr "Original"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Original Formatting"
 msgstr "Original-Formatierung"
 
@@ -7970,8 +7982,7 @@ msgstr "Übersichten sind …"
 msgid "Overwrite Draft"
 msgstr "Entwurf überschreiben"
 
-#: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco
 #: app/graphql/gql/types/overview_type.rb
@@ -8344,7 +8355,6 @@ msgid "Prio"
 msgstr "Prio"
 
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee
-#: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee
 #: app/assets/javascripts/app/models/core_workflow.coffee
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco
@@ -8478,6 +8488,7 @@ msgid "Queue already exists!"
 msgstr "Queue existiert bereits!"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Raw"
 msgstr "Rohdaten"
 
@@ -8638,6 +8649,7 @@ msgid "Reply to last article"
 msgstr "Auf letzen Artikel antworten"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
+#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Reply-To"
 msgstr "Antworten an"
 
@@ -8851,7 +8863,7 @@ msgid "SLAs"
 msgstr "SLAs"
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 msgid "SMS"
 msgstr "SMS"
 
@@ -9010,7 +9022,6 @@ msgstr "Scrolle nach unten um neue Nachrichten zu sehen"
 #: app/assets/javascripts/app/views/knowledge_base/search_field_widget.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 #: app/frontend/apps/mobile/modules/search/routes.ts
-#: app/frontend/shared/components/CommonInputSearch/CommonInputSearch.vue
 msgid "Search"
 msgstr "Suche"
 
@@ -9027,11 +9038,15 @@ msgstr "Suchbegriffe"
 msgid "Search for users"
 msgstr "Benutzer suchen"
 
+#: app/frontend/apps/mobile/modules/search/views/SearchOverview.vue
+msgid "Search for…"
+msgstr "Suche nach…"
+
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax_customer_organization.coffee
 #: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee
 #: app/assets/javascripts/app/views/generic/icon_picker.jst.eco
-#: app/frontend/apps/mobile/modules/search/views/SearchOverview.vue
+#: app/frontend/shared/components/CommonInputSearch/CommonInputSearch.vue
 msgid "Search…"
 msgstr "Suchen…"
 
@@ -9061,7 +9076,7 @@ msgstr "Sicherheitsfehler"
 
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
-#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/ArticleBubble.vue
+#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleBubble.vue
 msgid "See less"
 msgstr "Weniger anzeigen"
 
@@ -9069,7 +9084,7 @@ msgstr "Weniger anzeigen"
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
-#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/ArticleBubble.vue
+#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleBubble.vue
 msgid "See more"
 msgstr "Mehr anzeigen"
 
@@ -9165,7 +9180,6 @@ msgstr ""
 msgid "Send to clients"
 msgstr "An Clients senden"
 
-#: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee
 #: app/assets/javascripts/app/models/ticket_article.coffee
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 #: app/models/channel/driver/sms/massenversand.rb
@@ -9187,13 +9201,17 @@ msgstr "Sender Format Trenner"
 msgid "Sender based on Reply-To header"
 msgstr "Absender basierend auf Reply-To-Header"
 
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 msgid "Sender of last article"
 msgstr "Sender des letzten Artikels"
 
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco
 msgid "Sending…"
 msgstr "Sende…"
+
+#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+msgid "Sent"
+msgstr "Gesendet"
 
 #: app/assets/javascripts/app/controllers/maintenance.coffee
 msgid "Sent successfully!"
@@ -9428,7 +9446,7 @@ msgstr "Vorherigen Tab anzeigen"
 msgid "Show the chat when ready."
 msgstr "Anzeige des Chat sobald dieser bereit ist."
 
-#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/TicketZoomHeader.vue
+#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/TicketDetailViewHeader.vue
 msgid "Show ticket viewers"
 msgstr "Zeige Ticketzuschauer"
 
@@ -9457,11 +9475,11 @@ msgstr "Sidebar Anhänge"
 msgid "Sign"
 msgstr "Signieren"
 
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 msgid "Sign email (if not possible, discard notification)"
 msgstr "Signiere E-Mail (wenn nicht möglich, verwerfe Benachrichtigung)"
 
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 msgid "Sign email (if not possible, send notification anyway)"
 msgstr "Signiere E-Mail (wenn nicht möglich, sende Benachrichtigung dennoch)"
 
@@ -9585,6 +9603,11 @@ msgstr ""
 msgid "Something went wrong. Please contact your administrator."
 msgstr "Etwas ist schiefgelaufen. Bitte kontaktieren Sie Ihren Administrator."
 
+#: app/frontend/apps/mobile/modules/ticket/views/TicketDetailView.vue
+msgid "Sorry, but you have insufficient rights to open this page."
+msgstr ""
+"Entschuldigung, aber Sie haben nicht genug Rechte um diese Seite zu öffnen."
+
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Sorry, not all fields are filled out correctly."
 msgstr "Entschuldigung, nicht alle Felder sind korrekt ausgefüllt."
@@ -9675,7 +9698,6 @@ msgstr ""
 "Ab Zammad 5.1 können Übersetzungen ausschließlich über \"translations.zammad."
 "org\" %l beigetragen werden."
 
-#: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee
 #: app/assets/javascripts/app/models/chat_sessions.coffee
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 #: app/assets/javascripts/app/models/ticket.coffee
@@ -9765,6 +9787,7 @@ msgstr "Straße"
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
+#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Subject"
 msgstr "Betreff"
 
@@ -9875,10 +9898,6 @@ msgid "Tab has changed, do you really want to close it?"
 msgstr ""
 "Inhalte des Tabs haben sich geändert, wollen Sie diese Änderungen wirklich "
 "verwerfen?"
-
-#: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee
-msgid "Tag"
-msgstr "Tag"
 
 #: app/assets/javascripts/app/controllers/chat.coffee
 #: app/assets/javascripts/app/controllers/tag.coffee
@@ -10267,6 +10286,10 @@ msgstr "Das Issue konnte nicht angelegt werden."
 #: app/frontend/apps/mobile/modules/account/views/AccountOverview.vue
 msgid "The language could not be updated."
 msgstr "Die Sprache konnte nicht aktualisiert werden."
+
+#: app/frontend/apps/mobile/modules/ticket/components/TicketList/TicketList.vue
+msgid "The limit of %s tickets reached (%s remaining)"
+msgstr "Das Limit von %s Ticket wurde erreicht (%s verbleibend)"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_new.coffee
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee
@@ -10905,9 +10928,10 @@ msgid "Thursday"
 msgstr "Donnerstag"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee
 #: app/assets/javascripts/app/models/signature.coffee
 #: app/assets/javascripts/app/models/text_module.coffee
@@ -11006,7 +11030,7 @@ msgstr "Ticket-Eskalation"
 msgid "Ticket failed to save: %s"
 msgstr "Ticket konnte nicht gespeichert werden: %s"
 
-#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/TicketZoomHeader.vue
+#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/TicketDetailViewHeader.vue
 msgid "Ticket has %s viewers"
 msgstr "Ticket hat %s Zuschauer"
 
@@ -11018,7 +11042,7 @@ msgstr "Ticket-Erinnerung erreicht"
 msgid "Ticket update"
 msgstr "Ticket-Änderung"
 
-#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/TicketViewersDialog.vue
+#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/TicketViewersDialog.vue
 msgid "Ticket viewers"
 msgstr "Ticket-Zuschauer"
 
@@ -11168,6 +11192,7 @@ msgstr "Titel des Formulars"
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
+#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 #: db/seeds/object_manager_attributes.rb
 msgid "To"
 msgstr "An"
@@ -11379,7 +11404,6 @@ msgstr "Twitter-Secret"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
-#: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee
 #: app/assets/javascripts/app/models/ticket_article.coffee
@@ -11671,8 +11695,8 @@ msgid "Used when viewing a Ticket"
 msgstr "Verwendet wenn ein Ticket angesehen wird"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_customer.coffee
 #: app/assets/javascripts/app/controllers/cti.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
@@ -11823,7 +11847,7 @@ msgstr "VIP"
 msgid "Value"
 msgstr "Wert"
 
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 msgid "Variables"
 msgstr "Variablen"
 
@@ -11923,11 +11947,11 @@ msgstr "Aus Benutzersicht ansehen"
 msgid "View this in Zammad"
 msgstr "In Zammad anzeigen"
 
-#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/TicketViewersDialog.vue
+#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/TicketViewersDialog.vue
 msgid "Viewing ticket"
 msgstr "Ticket ansehen"
 
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_dialog.coffee
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee
 #: app/assets/javascripts/app/models/ticket_article.coffee
@@ -12047,7 +12071,7 @@ msgstr "Webserver-Konfiguration"
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/webhook.coffee
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 msgid "Webhook"
@@ -12319,7 +12343,7 @@ msgid "Yellow"
 msgstr "Gelb"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm.coffee
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/tag.coffee
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
 msgid "Yes"
@@ -12793,6 +12817,7 @@ msgstr "admin"
 msgid "after (absolute)"
 msgstr "nach (absolut)"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 msgid "after (relative)"
 msgstr "nach (relativ)"
@@ -12839,6 +12864,7 @@ msgstr "automatisch auswählen"
 msgid "before (absolute)"
 msgstr "vor (absolut)"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 msgid "before (relative)"
 msgstr "vor (relativ)"
@@ -12918,17 +12944,17 @@ msgstr "enthält eins nicht"
 msgid "created"
 msgstr "erstellt"
 
-#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/TicketZoomHeader.vue
+#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/TicketDetailViewHeader.vue
 msgid "created %s"
 msgstr "%s erstellt"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
 msgid "current user"
 msgstr "aktueller Benutzer"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
 msgid "current user organization"
 msgstr "Organisation des aktuellen Benutzers"
 
@@ -13084,6 +13110,7 @@ msgstr "für einen Agenten zu reagieren"
 msgid "from"
 msgstr "von"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 msgid "from (relative)"
 msgstr "von vor (relativ)"
@@ -13201,7 +13228,7 @@ msgstr "in Arbeit"
 msgid "inactive"
 msgstr "nicht aktiv"
 
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 msgid "internal"
 msgstr "intern"
@@ -13252,6 +13279,12 @@ msgstr "letzte Woche"
 msgid "left"
 msgstr "links"
 
+#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleSeparatorMore.vue
+#, fuzzy
+#| msgid "%s more"
+msgid "load %s more"
+msgstr "%s weitere"
+
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
 msgid "m"
 msgstr "m"
@@ -13287,7 +13320,7 @@ msgstr "mir"
 msgid "merged"
 msgstr "zusammengefasst"
 
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 msgid "message"
 msgstr "Nachricht"
 
@@ -13305,7 +13338,7 @@ msgstr "Minuten"
 msgid "my own note"
 msgstr "Meine eigene Notiz"
 
-#: app/frontend/apps/mobile/modules/ticket/components/TicketZoom/ArticleBadgeNew.vue
+#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleSeparatorNew.vue
 #: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
 msgid "new"
 msgstr "neu"
@@ -13404,7 +13437,7 @@ msgstr "warten auf Erinnerung"
 msgid "phone"
 msgstr "Telefon"
 
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 msgid "public"
 msgstr "öffentlich"
 
@@ -13423,6 +13456,10 @@ msgstr "passt zu Regex"
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "regex mismatch"
 msgstr "passt nicht zu Regex"
+
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
+msgid "relative"
+msgstr "relativ"
 
 #: db/seeds/settings.rb
 msgid "relative - e. g. \"2 hours ago\" or \"2 days and 15 minutes ago\""
@@ -13543,13 +13580,13 @@ msgstr "übersprungen"
 msgid "sms"
 msgstr "SMS"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
 msgid "specific organization"
 msgstr "spezifische Organisation"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
 msgid "specific user"
 msgstr "spezifischer Benutzer"
 
@@ -13591,6 +13628,7 @@ msgstr "ticket.agent"
 msgid "ticket.customer"
 msgstr "ticket.customer"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 msgid "till (relative)"
 msgstr "bis in (relativ)"
@@ -13621,7 +13659,7 @@ msgstr "Twitter-Direktnachricht"
 msgid "twitter status"
 msgstr "Twitter-Statusmeldung"
 
-#: app/assets/javascripts/app/controllers/_ui_element/ticket_perform_action.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 msgid "unassign user"
 msgstr "Benutzerzuweisung entfernen"
 
@@ -13659,10 +13697,12 @@ msgstr "wird erstellt"
 msgid "will be deleted"
 msgstr "wird gelöscht"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 msgid "within last (relative)"
 msgstr "innerhalb letzter (relativ)"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 msgid "within next (relative)"
 msgstr "innerhalb nächster (relativ)"
@@ -13714,6 +13754,18 @@ msgstr "…des gesamten Textfelds"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Wartezeit heute"
+
+#~ msgid "Copied to clipboard!"
+#~ msgstr "In Zwischenablage kopiert!"
+
+#~ msgid "Copy to clipboard: Ctrl+C, Enter"
+#~ msgstr "In die Zwischenablage kopieren: Strg+C, Return"
+
+#~ msgid "Tag"
+#~ msgstr "Tag"
+
+#~ msgid "Could not load the ticket"
+#~ msgstr "Laden des Tickets fehlgeschlagen"
 
 #~ msgid ""
 #~ "One of the arguments 'ticket_id', 'ticket_internal_id' or 'ticket_number' "
@@ -13942,9 +13994,6 @@ msgstr "∅ Wartezeit heute"
 
 #~ msgid "Area"
 #~ msgstr "Bereich"
-
-#~ msgid "Data"
-#~ msgstr "Daten"
 
 #~ msgid "Level"
 #~ msgstr "Stufe"
