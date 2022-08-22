@@ -20,7 +20,7 @@ export const defaultTicket = () =>
   nullableMock<TicketQuery>({
     ticket: {
       __typename: 'Ticket',
-      id: '1fs432fdsfsg3qr32d',
+      id: '1fssfsg3qr32d',
       internalId: 1,
       number: '610001',
       title: 'Test Ticket View',
@@ -73,15 +73,6 @@ const address = {
   raw: '',
 }
 
-const nullableArticle = {
-  __typename: 'TicketArticle' as const,
-  references: null,
-  inReplyTo: null,
-  messageIdMd5: null,
-  messageId: null,
-  subject: null,
-}
-
 export const defaultArticles = (): TicketArticlesQuery =>
   nullableMock({
     description: {
@@ -90,8 +81,8 @@ export const defaultArticles = (): TicketArticlesQuery =>
         {
           __typename: 'TicketArticleEdge',
           node: {
-            ...nullableArticle,
-            id: '1fs432fczfsg3qr32d',
+            __typename: 'TicketArticle',
+            id: '1fs4323qr32d',
             internalId: 1,
             createdAt: ticketDate.toISOString(),
             to: address,
@@ -141,8 +132,8 @@ export const defaultArticles = (): TicketArticlesQuery =>
         {
           __typename: 'TicketArticleEdge',
           node: {
-            ...nullableArticle,
-            id: '1fs432fdsfsg3qr32f',
+            __typename: 'TicketArticle',
+            id: '1fs432fdsfsg3',
             internalId: 2,
             to: address,
             replyTo: address,
@@ -175,8 +166,8 @@ export const defaultArticles = (): TicketArticlesQuery =>
         {
           __typename: 'TicketArticleEdge',
           node: {
-            ...nullableArticle,
-            id: '1fs432fdsfsg3qr30f',
+            __typename: 'TicketArticle',
+            id: '1fs4sfsg3qr30f',
             internalId: 3,
             to: address,
             replyTo: address,

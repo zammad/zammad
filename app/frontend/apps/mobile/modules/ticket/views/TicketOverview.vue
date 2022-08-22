@@ -9,6 +9,7 @@ import { EnumOrderDirection } from '@shared/graphql/types'
 import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
 import { useTicketsOverviews } from '@mobile/entities/ticket/stores/ticketOverviews'
 import CommonSelect from '@mobile/components/CommonSelect/CommonSelect.vue'
+import { useSessionStore } from '@shared/stores/session'
 import { useRouteQuery } from '@vueuse/router'
 import { storeToRefs } from 'pinia'
 import TicketList from '../components/TicketList/TicketList.vue'
@@ -42,6 +43,18 @@ const selectedOverview = computed(() => {
 
 const selectedOverviewLink = computed(() => {
   return selectedOverview.value?.link || null
+})
+
+const session = useSessionStore()
+
+const hiddenColumns = computed(() => {
+  if (session.hasPermission(['ticket.agent'])) return []
+  const viewColumns =
+    selectedOverview.value?.viewColumns.map((column) => column.key) || []
+  // show priority only if it is specified in overview
+  return ['priority', 'updated_by'].filter(
+    (name) => !viewColumns.includes(name),
+  )
 })
 
 const selectOverview = (link: string) => {
@@ -269,6 +282,7 @@ const directionOptions = computed(() => [
         :order-by="orderBy"
         :order-direction="orderDirection"
         :max-count="MAX_COUNT_TICKETS"
+        :hidden-columns="hiddenColumns"
       />
     </CommonLoader>
     <div v-else class="flex items-center justify-center gap-2 p-4 text-center">

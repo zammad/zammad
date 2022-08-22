@@ -12,7 +12,7 @@ import TicketList from '../TicketList.vue'
 describe('testing a list of tickets', () => {
   it('shows warning when all available tickets are loaded', async () => {
     const ticketOverviewsApi = mockTicketsByOverview(
-      [ticketDefault],
+      [ticketDefault()],
       {
         hasNextPage: true,
         endCursor: 'cursor',
@@ -26,6 +26,7 @@ describe('testing a list of tickets', () => {
         overviewId: '1f',
         orderBy: 'name',
         orderDirection: EnumOrderDirection.Ascending,
+        hiddenColumns: [],
       },
       router: true,
       store: true,

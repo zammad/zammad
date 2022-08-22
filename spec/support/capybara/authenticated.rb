@@ -29,13 +29,9 @@ RSpec.configure do |config|
     else
       ENV['FAKE_SELENIUM_LOGIN_USER_ID'] = User.find_by(email: credentials[:username]).id.to_s
 
-      visit '/'
+      if example.metadata[:app] != :mobile
+        visit '/'
 
-      case example.metadata[:app]
-      when :mobile
-        wait_for_test_flag('applicationLoaded.loaded', skip_clearing: true)
-        wait_for_test_flag('useSessionUserStore.getCurrentUser.loaded', skip_clearing: true)
-      else
         wait.until_exists do
           current_login
         end

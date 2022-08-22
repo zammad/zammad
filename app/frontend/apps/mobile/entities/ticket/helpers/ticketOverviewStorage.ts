@@ -1,9 +1,9 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import useSession from '@shared/stores/session'
+import { useSessionStore } from '@shared/stores/session'
 
 export const getTicketOverviewStorage = () => {
-  const session = useSession()
+  const session = useSessionStore()
 
   const LOCAL_STORAGE_NAME = `ticket-overviews-${session.user?.id || '1'}`
 

@@ -44,12 +44,18 @@ export const waitUntil = async (
 // this function returns a proxy that will return "null" on properties not defined
 // in the initial object
 export const nullableMock = <T extends object>(obj: T): T => {
+  const skipProperties = new Set(['_id', 'id', Symbol.toStringTag])
+
   return new Proxy(obj, {
     get(target, prop, receiver) {
-      if (!Reflect.has(target, prop)) {
+      if (!Reflect.has(target, prop) && !skipProperties.has(prop)) {
         return null
       }
-      return Reflect.get(target, prop, receiver)
+      const value = Reflect.get(target, prop, receiver)
+      if (typeof value === 'object' && value !== null) {
+        return nullableMock(value)
+      }
+      return value
     },
   })
 }

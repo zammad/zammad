@@ -8,6 +8,7 @@ RSpec.describe 'Mobile > Basic > Logout Frontend Store Reset', type: :system, ap
     let(:customer) { create(:customer) }
 
     it 'check that overviews are resetet for a different user', authenticated_as: :agent do
+      visit '/'
       wait_for_gql 'shared/entities/ticket/graphql/queries/ticket/overviews.graphql'
       expect(find_all('a[href^="/mobile/tickets/view/"]').length).to eq(7)
 

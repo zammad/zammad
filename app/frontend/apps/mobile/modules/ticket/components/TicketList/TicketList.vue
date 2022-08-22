@@ -18,6 +18,7 @@ interface Props {
   overviewId: string
   maxCount: number
   orderBy: string
+  hiddenColumns: string[]
   orderDirection: EnumOrderDirection
 }
 
@@ -29,6 +30,8 @@ const ticketsQuery = new QueryHandler(
       overviewId: props.overviewId,
       orderBy: props.orderBy,
       orderDirection: props.orderDirection,
+      showUpdatedBy: !props.hiddenColumns.includes('updated_by'),
+      showPriority: !props.hiddenColumns.includes('priority'),
     }
   }),
 )

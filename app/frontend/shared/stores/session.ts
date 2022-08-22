@@ -164,5 +164,3 @@ export const useSessionStore = defineStore(
     requiresAuth: false,
   },
 )
-
-export default useSessionStore

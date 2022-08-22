@@ -7,7 +7,7 @@ import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
 
 export const TicketsByOverviewDocument = gql`
-    query ticketsByOverview($overviewId: ID!, $orderBy: String, $orderDirection: EnumOrderDirection, $cursor: String, $pageSize: Int = 10, $withObjectAttributes: Boolean = false) {
+    query ticketsByOverview($overviewId: ID!, $orderBy: String, $orderDirection: EnumOrderDirection, $cursor: String, $showPriority: Boolean!, $showUpdatedBy: Boolean!, $pageSize: Int = 10, $withObjectAttributes: Boolean = false) {
   ticketsByOverview(
     overviewId: $overviewId
     orderBy: $orderBy
@@ -24,10 +24,8 @@ export const TicketsByOverviewDocument = gql`
         title
         createdAt
         updatedAt
-        owner {
+        updatedBy @include(if: $showUpdatedBy) {
           id
-          firstname
-          lastname
           fullname
         }
         customer {
@@ -51,7 +49,7 @@ export const TicketsByOverviewDocument = gql`
           id
           name
         }
-        priority {
+        priority @include(if: $showPriority) {
           id
           name
           uiColor

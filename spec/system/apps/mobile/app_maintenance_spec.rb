@@ -15,7 +15,7 @@ RSpec.describe 'Mobile > App Update Check', type: :system, app: :mobile do
 
   context 'when checking application rebuild notification', authenticated_as: false do
     before do
-      visit '/login?ApplicationRebuildCheckInterval=500'
+      visit '/login?ApplicationRebuildCheckInterval=500', skip_waiting: true
       wait_for_test_flag('useApplicationBuildChecksumQuery.firstResult')
       wait_for_test_flag('useAppMaintenanceSubscription.subscribed')
     end
@@ -32,6 +32,7 @@ RSpec.describe 'Mobile > App Update Check', type: :system, app: :mobile do
 
   context 'when maintenance mode is activated', authenticated_as: :user do
     before do
+      visit '/', skip_waiting: true
       wait_for_test_flag('applicationLoaded.loaded')
       wait_for_test_flag('useConfigUpdatesSubscription.subscribed')
 
@@ -49,7 +50,7 @@ RSpec.describe 'Mobile > App Update Check', type: :system, app: :mobile do
 
   context 'when maintenance message is sent', authenticated_as: false do
     before do
-      visit '/'
+      visit '/', skip_waiting: true
       wait_for_test_flag('applicationLoaded.loaded')
       wait_for_test_flag('usePushMessagesSubscription.subscribed')
     end

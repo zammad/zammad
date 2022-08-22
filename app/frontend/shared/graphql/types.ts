@@ -1115,12 +1115,14 @@ export type TicketsByOverviewQueryVariables = Exact<{
   orderBy?: InputMaybe<Scalars['String']>;
   orderDirection?: InputMaybe<EnumOrderDirection>;
   cursor?: InputMaybe<Scalars['String']>;
+  showPriority: Scalars['Boolean'];
+  showUpdatedBy: Scalars['Boolean'];
   pageSize?: InputMaybe<Scalars['Int']>;
   withObjectAttributes?: InputMaybe<Scalars['Boolean']>;
 }>;
 
 
-export type TicketsByOverviewQuery = { __typename?: 'Queries', ticketsByOverview: { __typename?: 'TicketConnection', totalCount: number, edges: Array<{ __typename?: 'TicketEdge', cursor: string, node: { __typename?: 'Ticket', id: string, internalId: number, number: string, title: string, createdAt: any, updatedAt: any, owner: { __typename?: 'User', id: string, firstname?: string | null, lastname?: string | null, fullname?: string | null }, customer: { __typename?: 'User', id: string, firstname?: string | null, lastname?: string | null, fullname?: string | null }, organization?: { __typename?: 'Organization', id: string, name: string } | null, state: { __typename?: 'TicketState', id: string, name: string, stateType: { __typename?: 'TicketStateType', name: string } }, group: { __typename?: 'Group', id: string, name: string }, priority: { __typename?: 'TicketPriority', id: string, name: string, uiColor?: string | null, defaultCreate: boolean }, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string, dataType: string, dataOption?: any | null } }> } }>, pageInfo: { __typename?: 'PageInfo', endCursor?: string | null, hasNextPage: boolean } } };
+export type TicketsByOverviewQuery = { __typename?: 'Queries', ticketsByOverview: { __typename?: 'TicketConnection', totalCount: number, edges: Array<{ __typename?: 'TicketEdge', cursor: string, node: { __typename?: 'Ticket', id: string, internalId: number, number: string, title: string, createdAt: any, updatedAt: any, updatedBy?: { __typename?: 'User', id: string, fullname?: string | null }, customer: { __typename?: 'User', id: string, firstname?: string | null, lastname?: string | null, fullname?: string | null }, organization?: { __typename?: 'Organization', id: string, name: string } | null, state: { __typename?: 'TicketState', id: string, name: string, stateType: { __typename?: 'TicketStateType', name: string } }, group: { __typename?: 'Group', id: string, name: string }, priority?: { __typename?: 'TicketPriority', id: string, name: string, uiColor?: string | null, defaultCreate: boolean }, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string, dataType: string, dataOption?: any | null } }> } }>, pageInfo: { __typename?: 'PageInfo', endCursor?: string | null, hasNextPage: boolean } } };
 
 export type TicketUpdatesSubscriptionVariables = Exact<{
   ticketId: Scalars['ID'];

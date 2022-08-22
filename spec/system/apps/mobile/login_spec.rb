@@ -4,6 +4,8 @@ require 'rails_helper'
 
 RSpec.describe 'Mobile > Login', type: :system, app: :mobile, authenticated_as: false do
   it 'Login with remember me and logout again' do
+    visit '/login', skip_waiting: true
+
     login(
       username:    'admin@example.com',
       password:    'test',
@@ -26,7 +28,7 @@ RSpec.describe 'Mobile > Login', type: :system, app: :mobile, authenticated_as: 
   end
 
   it 'Login and redirect to requsted url' do
-    visit 'notifications'
+    visit '/notifications', skip_waiting: true
 
     expect_current_route '/login?redirect=/notifications'
 

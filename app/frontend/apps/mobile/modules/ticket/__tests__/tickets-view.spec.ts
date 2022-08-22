@@ -146,7 +146,7 @@ it('takes filter from query', async () => {
 })
 
 it('pagination loads additional list', async () => {
-  const ticketOverviewsApi = mockTicketsByOverview([ticketDefault], {
+  const ticketOverviewsApi = mockTicketsByOverview([ticketDefault()], {
     hasNextPage: true,
     endCursor: 'cursor',
   })
@@ -170,7 +170,7 @@ it('pagination loads additional list', async () => {
 })
 
 it("pagination doesn't load if it is already loading more", async () => {
-  const ticketOverviewsApi = mockTicketsByOverview([ticketDefault], {
+  const ticketOverviewsApi = mockTicketsByOverview([ticketDefault()], {
     hasNextPage: true,
     endCursor: 'cursor',
   })

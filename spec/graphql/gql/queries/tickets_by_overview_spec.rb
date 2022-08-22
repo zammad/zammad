@@ -9,7 +9,7 @@ RSpec.describe Gql::Queries::TicketsByOverview, type: :graphql do
     let(:query)     do
       gql.read_files('apps/mobile/modules/ticket/graphql/queries/ticketsByOverview.graphql', 'shared/graphql/fragments/objectAttributeValues.graphql')
     end
-    let(:variables) { { overviewId: gql.id(overview) } }
+    let(:variables) { { overviewId: gql.id(overview), showPriority: true, showUpdatedBy: true } }
     let(:overview)    { Overview.find_by(link: 'all_unassigned') }
     let!(:ticket)     { create(:ticket) }
 

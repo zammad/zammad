@@ -25,7 +25,7 @@ module CommonActions
     ENV['FAKE_SELENIUM_LOGIN_USER_ID'] = nil
 
     if !page.current_path || page.current_path.exclude?('login')
-      visit '/'
+      visit '/', skip_waiting: true
     end
 
     case app
@@ -167,7 +167,9 @@ module CommonActions
   def wait_for_loading_to_complete(route:, app: self.class.metadata[:app], skip_waiting: false)
     case app
     when :mobile
-      wait_for_test_flag('applicationLoaded.loaded', skip_clearing: true) if !skip_waiting
+      return if skip_waiting
+
+      wait_for_test_flag('applicationLoaded.loaded', skip_clearing: true)
     else
       return if route && (!route.start_with?('/#') || route == '/#logout')
 
