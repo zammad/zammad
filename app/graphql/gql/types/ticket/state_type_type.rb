@@ -3,10 +3,10 @@
 module Gql::Types::Ticket
   class StateTypeType < Gql::Types::BaseObject
     include Gql::Concerns::IsModelObject
+    include Gql::Concerns::HasInternalNoteField
 
     description 'Ticket state types'
 
     field :name, String, null: false
-    field :note, String, null: true
   end
 end

@@ -3,30 +3,44 @@
 module Gql::Types
   class UserType < Gql::Types::BaseObject
     include Gql::Concerns::IsModelObject
-    include Gql::Concerns::HasInternalId
+    include Gql::Concerns::HasInternalIdField
+    include Gql::Concerns::HasInternalNoteField
 
-    def self.authorize(object, ctx)
-      Pundit.authorize ctx.current_user, object, :show?
-    end
+    # Special handling for users: GraphQL allows all authenticated users
+    #   to look at other user records, but only some non-sensitive fields.
+    # For the other fields, proper pundit authorization to the user object
+    #   is required.
 
     description 'Users (admins, agents and customers)'
 
     implements Gql::Types::ObjectAttributeValueInterface
 
-    belongs_to :organization, Gql::Types::OrganizationType, null: true
+    belongs_to :organization, Gql::Types::OrganizationType, null: true, authorize: :by_pundit
 
-    field :login, String, null: false
     field :firstname, String, null: true
     field :lastname, String, null: true
     field :fullname, String, null: true
-    field :email, String, null: true
     field :image, String, null: true
     field :image_source, String, null: true
-    field :web, String, null: true
-    field :password, String, null: true
-    field :phone, String, null: true
-    field :fax, String, null: true
-    field :mobile, String, null: true
+
+    field_args(authorize: :by_pundit, null: true) do
+      field :login, String
+      field :email, String
+      field :web, String
+      field :phone, String
+      field :fax, String
+      field :mobile, String
+      field :vip, Boolean
+      field :verified, Boolean
+      field :active, Boolean
+      field :out_of_office, Boolean
+      field :out_of_office_start_at, GraphQL::Types::ISO8601Date
+      field :out_of_office_end_at, GraphQL::Types::ISO8601Date
+      field :out_of_office_replacement_id, Integer
+      field :preferences, GraphQL::Types::JSON
+      field :permissions, Gql::Types::User::PermissionType, method: :itself
+      field :tickets_count, Gql::Types::TicketCountType, method: :itself
+    end
 
     # These fields are changeable object attributes, so manage them only via the ObjectAttributeInterface
     # field :department, String, null: true
@@ -35,20 +49,5 @@ module Gql::Types
     # field :city, String, null: true
     # field :country, String, null: true
     # field :address, String, null: true
-
-    field :vip, Boolean, null: true
-    field :verified, Boolean, null: false
-    field :active, Boolean, null: false
-    field :note, String, null: true
-    field :last_login, GraphQL::Types::ISO8601DateTime, null: true
-    field :source, String, null: true
-    field :login_failed, Integer, null: false
-    field :out_of_office, Boolean, null: false
-    field :out_of_office_start_at, GraphQL::Types::ISO8601Date, null: true
-    field :out_of_office_end_at, GraphQL::Types::ISO8601Date, null: true
-    field :out_of_office_replacement_id, Integer, null: true
-    field :preferences, GraphQL::Types::JSON, null: true
-    field :permissions, Gql::Types::User::PermissionType, null: true, method: :itself
-    field :tickets_count, Gql::Types::TicketCountType, null: false, method: :itself
   end
 end

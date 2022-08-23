@@ -4,7 +4,6 @@ module Gql::Concerns::IsModelObject
   extend ActiveSupport::Concern
 
   included do
-    implements GraphQL::Types::Relay::Node
     global_id_field :id
 
     field :created_at, GraphQL::Types::ISO8601DateTime, null: false, description: 'Create date/time of the record'

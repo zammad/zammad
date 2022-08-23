@@ -2,9 +2,8 @@
 
 module Gql::EntryPoints
   class Subscriptions < Gql::Types::BaseObject
-    # # Add `node(id: ID!) and `nodes(ids: [ID!]!)`
-    # include GraphQL::Types::Relay::HasNodeField
-    # include GraphQL::Types::Relay::HasNodesField
+    # Don't implement the nodes query interface for security reasons.
+    #   IDs can be generated on the client side and used to fetch all records from the database.
 
     description 'All available subscriptions'
 

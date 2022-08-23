@@ -3,7 +3,8 @@
 module Gql::Types
   class OrganizationType < Gql::Types::BaseObject
     include Gql::Concerns::IsModelObject
-    include Gql::Concerns::HasInternalId
+    include Gql::Concerns::HasInternalIdField
+    include Gql::Concerns::HasInternalNoteField
 
     def self.authorize(object, ctx)
       Pundit.authorize ctx.current_user, object, :show?
@@ -18,8 +19,7 @@ module Gql::Types
     field :domain, String, null: true
     field :domain_assignment, Boolean, null: false
     field :active, Boolean, null: false
-    field :note, String, null: true
     field :members, Gql::Types::UserType.connection_type, null: false
-    field :tickets_count, Gql::Types::TicketCountType, null: false, method: :itself
+    field :tickets_count, Gql::Types::TicketCountType, method: :itself
   end
 end

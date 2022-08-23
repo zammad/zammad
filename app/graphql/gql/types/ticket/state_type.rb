@@ -3,6 +3,7 @@
 module Gql::Types::Ticket
   class StateType < Gql::Types::BaseObject
     include Gql::Concerns::IsModelObject
+    include Gql::Concerns::HasInternalNoteField
 
     description 'Ticket states'
 
@@ -13,7 +14,6 @@ module Gql::Types::Ticket
     field :ignore_escalation, Boolean, null: false
     field :default_create, Boolean, null: false
     field :default_follow_up, Boolean, null: false
-    field :note, String, null: true
     field :active, Boolean, null: false
   end
 end

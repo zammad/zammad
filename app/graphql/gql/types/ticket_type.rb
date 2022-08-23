@@ -3,7 +3,8 @@
 module Gql::Types
   class TicketType < BaseObject
     include Gql::Concerns::IsModelObject
-    include Gql::Concerns::HasInternalId
+    include Gql::Concerns::HasInternalIdField
+    include Gql::Concerns::HasInternalNoteField
 
     def self.authorize(object, ctx)
       Pundit.authorize ctx.current_user, object, :show?
@@ -30,7 +31,6 @@ module Gql::Types
     field :articles, Gql::Types::Ticket::ArticleType.connection_type, null: false
     field :number, String, null: false
     field :title, String, null: false
-    field :note, String, null: true
 
     field :first_response_at, GraphQL::Types::ISO8601DateTime, null: true
     field :first_response_escalation_at, GraphQL::Types::ISO8601DateTime, null: true

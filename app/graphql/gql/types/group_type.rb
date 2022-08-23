@@ -3,6 +3,7 @@
 module Gql::Types
   class GroupType < Gql::Types::BaseObject
     include Gql::Concerns::IsModelObject
+    include Gql::Concerns::HasInternalNoteField
 
     description 'Groups'
 
@@ -13,6 +14,5 @@ module Gql::Types
     field :follow_up_possible, String, null: false
     field :follow_up_assignment, Boolean, null: false
     field :active, Boolean, null: false
-    field :note, String, null: true
   end
 end

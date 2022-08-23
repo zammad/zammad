@@ -7,10 +7,35 @@ RSpec.describe Gql::Queries::Ticket, type: :graphql do
   context 'when fetching tickets' do
     let(:agent)     { create(:agent) }
     let(:query)     do
-      gql.read_files(
-        'apps/mobile/modules/ticket/graphql/queries/ticket.graphql',
-        'apps/mobile/modules/ticket/graphql/fragments/ticketAttributes.graphql'
-      )
+      <<~QUERY
+        query ticket($ticketId: ID, $ticketInternalId: Int, $ticketNumber: String) {
+          ticket(
+            ticket: {
+              ticketId: $ticketId
+              ticketInternalId: $ticketInternalId
+              ticketNumber: $ticketNumber
+            }
+          ) {
+            id
+            internalId
+            number
+            title
+            owner {
+              id
+              firstname
+              email
+            }
+            customer {
+              id
+              firstname
+              email
+            }
+            organization {
+              name
+            }
+          }
+        }
+      QUERY
     end
     let(:variables) { { ticketId: gql.id(ticket) } }
     let(:ticket)    { create(:ticket) }
@@ -24,12 +49,20 @@ RSpec.describe Gql::Queries::Ticket, type: :graphql do
         let(:agent) { create(:agent, groups: [ticket.group]) }
 
         shared_examples 'finds the ticket' do
-          it 'finds the ticket' do
-            expect(gql.result.data).to include(
+          let(:expected_result) do
+            {
               'id'         => gql.id(ticket),
               'internalId' => ticket.id,
               'number'     => ticket.number,
-            )
+              # Agent is allowed to see user data
+              'owner'      => include(
+                'firstname' => ticket.owner.firstname,
+                'email'     => ticket.owner.email,
+              ),
+            }
+          end
+          it 'finds the ticket' do
+            expect(gql.result.data).to include(expected_result)
           end
         end
 
@@ -70,6 +103,33 @@ RSpec.describe Gql::Queries::Ticket, type: :graphql do
         it 'fetches no ticket' do
           expect(gql.result.error_type).to eq(ActiveRecord::RecordNotFound)
         end
+      end
+    end
+
+    context 'with a customer', authenticated_as: :customer do
+      let(:customer) { create(:customer) }
+      let(:ticket)   { create(:ticket, customer: customer) }
+      let(:expected_result) do
+        {
+          'id'         => gql.id(ticket),
+          'internalId' => ticket.id,
+          'number'     => ticket.number,
+          # Customer is not allowed to see data of other users
+          'owner'      => include(
+            'firstname' => ticket.owner.firstname,
+            'email'     => nil,
+          ),
+          # Customer may see their own data
+          'customer'   => include(
+            'firstname' => customer.firstname,
+            'email'     => customer.email,
+          ),
+
+        }
+      end
+
+      it 'finds the ticket, but without data of other users' do
+        expect(gql.result.data).to include(expected_result)
       end
     end
 

@@ -3,6 +3,8 @@
 module Gql::Types
   class BaseField < GraphQL::Schema::Field
     include Gql::Concerns::HandlesAuthorization
+    include Gql::Concerns::SkipsUnauthorizedFields
+
     argument_class Gql::Types::BaseArgument
   end
 end
