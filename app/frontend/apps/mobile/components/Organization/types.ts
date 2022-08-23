@@ -3,7 +3,10 @@
 export interface OrganizationItemData {
   id: string
   internalId: number
-  ticketsCount?: number
+  ticketsCount?: {
+    open: number
+    closed: number
+  }
   members?: {
     edges: {
       node: {

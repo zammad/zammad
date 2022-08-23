@@ -49,5 +49,6 @@ module Gql::Types
     field :out_of_office_replacement_id, Integer, null: true
     field :preferences, GraphQL::Types::JSON, null: true
     field :permissions, Gql::Types::User::PermissionType, null: true, method: :itself
+    field :tickets_count, Gql::Types::TicketCountType, null: false, method: :itself
   end
 end

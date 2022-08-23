@@ -36,6 +36,10 @@ query search(
         name
       }
       updatedAt
+      ticketsCount {
+        open
+        closed
+      }
     }
     ... on Organization {
       id
@@ -54,6 +58,10 @@ query search(
       updatedBy @include(if: $isAgent) {
         id
         fullname
+      }
+      ticketsCount {
+        open
+        closed
       }
     }
   }

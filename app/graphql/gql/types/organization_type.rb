@@ -20,5 +20,6 @@ module Gql::Types
     field :active, Boolean, null: false
     field :note, String, null: true
     field :members, Gql::Types::UserType.connection_type, null: false
+    field :tickets_count, Gql::Types::TicketCountType, null: false, method: :itself
   end
 end

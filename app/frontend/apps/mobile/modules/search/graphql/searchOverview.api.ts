@@ -40,6 +40,10 @@ export const SearchDocument = gql`
         name
       }
       updatedAt
+      ticketsCount {
+        open
+        closed
+      }
     }
     ... on Organization {
       id
@@ -58,6 +62,10 @@ export const SearchDocument = gql`
       updatedBy @include(if: $isAgent) {
         id
         fullname
+      }
+      ticketsCount {
+        open
+        closed
       }
     }
   }

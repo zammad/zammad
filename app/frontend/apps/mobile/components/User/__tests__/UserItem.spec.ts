@@ -15,7 +15,10 @@ describe('user item display', () => {
   it('renders correctly', () => {
     const user: UserItemData = {
       id: '123',
-      ticketsCount: 2,
+      ticketsCount: {
+        open: 2,
+        closed: 0,
+      },
       firstname: 'John',
       lastname: 'Doe',
       updatedAt: new Date(2022, 1, 1, 10, 0, 0, 0).toISOString(),
@@ -47,7 +50,10 @@ describe('user item display', () => {
   it('renders when something is missing', () => {
     const user: UserItemData = {
       id: '123',
-      ticketsCount: 1,
+      ticketsCount: {
+        open: 1,
+        closed: 0,
+      },
       firstname: 'John',
     }
 

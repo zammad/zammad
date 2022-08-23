@@ -24,10 +24,11 @@ const { stringUpdated } = useEditedBy(toRef(props, 'entity'))
       class="flex flex-1 flex-col overflow-hidden border-b border-white/10 py-3 text-gray-100"
     >
       <span class="overflow-hidden text-ellipsis whitespace-nowrap">
+        <!-- TODO: Should we show open or closed or nothing at all? -->
         {{
-          entity.ticketsCount === 1
+          entity.ticketsCount?.open === 1
             ? `1 ${$t('ticket')}`
-            : $t('%s tickets', entity.ticketsCount || 0)
+            : $t('%s tickets', entity.ticketsCount?.open || 0)
         }}
         <template v-if="entity.organization">
           ·

@@ -12,7 +12,10 @@ describe('renders search result', () => {
       name: 'organization',
       id: '123',
       internalId: 123,
-      ticketsCount: 2,
+      ticketsCount: {
+        open: 2,
+        closed: 0,
+      },
       active: true,
     }
 

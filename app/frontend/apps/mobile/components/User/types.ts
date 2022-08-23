@@ -5,7 +5,10 @@ export interface UserItemData {
   firstname?: Maybe<string>
   lastname?: Maybe<string>
   image?: Maybe<string>
-  ticketsCount?: number
+  ticketsCount?: {
+    open: number
+    closed: number
+  }
   organization?: {
     name: string
   }

@@ -6,6 +6,10 @@ fragment organizationAttributes on Organization {
   domainAssignment
   active
   note
+  ticketsCount {
+    open
+    closed
+  }
   objectAttributeValues {
     ...objectAttributeValues
   }

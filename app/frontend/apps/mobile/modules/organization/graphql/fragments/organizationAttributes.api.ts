@@ -11,6 +11,10 @@ export const OrganizationAttributesFragmentDoc = gql`
   domainAssignment
   active
   note
+  ticketsCount {
+    open
+    closed
+  }
   objectAttributeValues {
     ...objectAttributeValues
   }

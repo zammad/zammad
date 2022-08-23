@@ -13,7 +13,10 @@ const Template = createTemplate<Props>(OrganizationItem)
 const organization = {
   id: '54321',
   internalId: 2,
-  ticketsCount: 2,
+  ticketsCount: {
+    open: 2,
+    closed: 0,
+  },
   name: 'Lorem Ipsum',
   active: false,
 }

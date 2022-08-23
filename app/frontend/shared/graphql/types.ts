@@ -386,6 +386,7 @@ export type Organization = Node & ObjectAttributeValueInterface & {
   note?: Maybe<Scalars['String']>;
   objectAttributeValues: Array<ObjectAttributeValue>;
   shared: Scalars['Boolean'];
+  ticketsCount: TicketCount;
   /** Last update date/time of the record */
   updatedAt: Scalars['ISO8601DateTime'];
   /** Last user that updated this record */
@@ -836,6 +837,13 @@ export type TicketConnection = {
   totalCount: Scalars['Int'];
 };
 
+/** Open and closed ticket information */
+export type TicketCount = {
+  __typename?: 'TicketCount';
+  closed: Scalars['Int'];
+  open: Scalars['Int'];
+};
+
 /** An edge in a connection. */
 export type TicketEdge = {
   __typename?: 'TicketEdge';
@@ -975,6 +983,7 @@ export type User = Node & ObjectAttributeValueInterface & {
   phone?: Maybe<Scalars['String']>;
   preferences?: Maybe<Scalars['JSON']>;
   source?: Maybe<Scalars['String']>;
+  ticketsCount: TicketCount;
   /** Last update date/time of the record */
   updatedAt: Scalars['ISO8601DateTime'];
   /** Last user that updated this record */
@@ -1051,7 +1060,7 @@ export type AccountLocaleMutationVariables = Exact<{
 
 export type AccountLocaleMutation = { __typename?: 'Mutations', accountLocale?: { __typename?: 'AccountLocalePayload', success: boolean, errors?: Array<{ __typename?: 'UserError', message: string, field?: string | null }> | null } | null };
 
-export type OrganizationAttributesFragment = { __typename?: 'Organization', id: string, name: string, shared: boolean, domain?: string | null, domainAssignment: boolean, active: boolean, note?: string | null, objectAttributeValues: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string, dataType: string, dataOption?: any | null } }> };
+export type OrganizationAttributesFragment = { __typename?: 'Organization', id: string, name: string, shared: boolean, domain?: string | null, domainAssignment: boolean, active: boolean, note?: string | null, ticketsCount: { __typename?: 'TicketCount', open: number, closed: number }, objectAttributeValues: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string, dataType: string, dataOption?: any | null } }> };
 
 export type OrganizationUpdateMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -1059,21 +1068,21 @@ export type OrganizationUpdateMutationVariables = Exact<{
 }>;
 
 
-export type OrganizationUpdateMutation = { __typename?: 'Mutations', organizationUpdate?: { __typename?: 'OrganizationUpdatePayload', organization: { __typename?: 'Organization', id: string, name: string, shared: boolean, domain?: string | null, domainAssignment: boolean, active: boolean, note?: string | null, objectAttributeValues: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string, dataType: string, dataOption?: any | null } }> }, errors?: Array<{ __typename?: 'UserError', message: string, field?: string | null }> | null } | null };
+export type OrganizationUpdateMutation = { __typename?: 'Mutations', organizationUpdate?: { __typename?: 'OrganizationUpdatePayload', organization: { __typename?: 'Organization', id: string, name: string, shared: boolean, domain?: string | null, domainAssignment: boolean, active: boolean, note?: string | null, ticketsCount: { __typename?: 'TicketCount', open: number, closed: number }, objectAttributeValues: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string, dataType: string, dataOption?: any | null } }> }, errors?: Array<{ __typename?: 'UserError', message: string, field?: string | null }> | null } | null };
 
 export type OrganizationQueryVariables = Exact<{
   organizationId: Scalars['ID'];
 }>;
 
 
-export type OrganizationQuery = { __typename?: 'Queries', organization: { __typename?: 'Organization', id: string, name: string, shared: boolean, domain?: string | null, domainAssignment: boolean, active: boolean, note?: string | null, objectAttributeValues: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string, dataType: string, dataOption?: any | null } }> } };
+export type OrganizationQuery = { __typename?: 'Queries', organization: { __typename?: 'Organization', id: string, name: string, shared: boolean, domain?: string | null, domainAssignment: boolean, active: boolean, note?: string | null, ticketsCount: { __typename?: 'TicketCount', open: number, closed: number }, objectAttributeValues: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string, dataType: string, dataOption?: any | null } }> } };
 
 export type OrganizationUpdatesSubscriptionVariables = Exact<{
   organizationId: Scalars['ID'];
 }>;
 
 
-export type OrganizationUpdatesSubscription = { __typename?: 'Subscriptions', organizationUpdates: { __typename?: 'OrganizationUpdatesPayload', organization?: { __typename?: 'Organization', id: string, name: string, shared: boolean, domain?: string | null, domainAssignment: boolean, active: boolean, note?: string | null, objectAttributeValues: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string, dataType: string, dataOption?: any | null } }> } | null } };
+export type OrganizationUpdatesSubscription = { __typename?: 'Subscriptions', organizationUpdates: { __typename?: 'OrganizationUpdatesPayload', organization?: { __typename?: 'Organization', id: string, name: string, shared: boolean, domain?: string | null, domainAssignment: boolean, active: boolean, note?: string | null, ticketsCount: { __typename?: 'TicketCount', open: number, closed: number }, objectAttributeValues: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string, dataType: string, dataOption?: any | null } }> } | null } };
 
 export type SearchQueryVariables = Exact<{
   search: Scalars['String'];
@@ -1082,7 +1091,7 @@ export type SearchQueryVariables = Exact<{
 }>;
 
 
-export type SearchQuery = { __typename?: 'Queries', search: Array<{ __typename?: 'Organization', id: string, internalId: number, active: boolean, name: string, updatedAt: any, members: { __typename?: 'UserConnection', totalCount: number, edges: Array<{ __typename?: 'UserEdge', node: { __typename?: 'User', fullname?: string | null } }> }, updatedBy?: { __typename?: 'User', id: string, fullname?: string | null } } | { __typename?: 'Ticket', id: string, internalId: number, title: string, number: string, updatedAt: any, state: { __typename?: 'TicketState', name: string }, priority?: { __typename?: 'TicketPriority', name: string, defaultCreate: boolean, uiColor?: string | null }, customer: { __typename?: 'User', fullname?: string | null }, updatedBy?: { __typename?: 'User', id: string, fullname?: string | null } } | { __typename?: 'User', id: string, internalId: number, firstname?: string | null, lastname?: string | null, image?: string | null, updatedAt: any, organization?: { __typename?: 'Organization', name: string } | null }> };
+export type SearchQuery = { __typename?: 'Queries', search: Array<{ __typename?: 'Organization', id: string, internalId: number, active: boolean, name: string, updatedAt: any, members: { __typename?: 'UserConnection', totalCount: number, edges: Array<{ __typename?: 'UserEdge', node: { __typename?: 'User', fullname?: string | null } }> }, updatedBy?: { __typename?: 'User', id: string, fullname?: string | null }, ticketsCount: { __typename?: 'TicketCount', open: number, closed: number } } | { __typename?: 'Ticket', id: string, internalId: number, title: string, number: string, updatedAt: any, state: { __typename?: 'TicketState', name: string }, priority?: { __typename?: 'TicketPriority', name: string, defaultCreate: boolean, uiColor?: string | null }, customer: { __typename?: 'User', fullname?: string | null }, updatedBy?: { __typename?: 'User', id: string, fullname?: string | null } } | { __typename?: 'User', id: string, internalId: number, firstname?: string | null, lastname?: string | null, image?: string | null, updatedAt: any, organization?: { __typename?: 'Organization', name: string } | null, ticketsCount: { __typename?: 'TicketCount', open: number, closed: number } }> };
 
 export type TicketArticleAttributesFragment = { __typename?: 'TicketArticle', id: string, internalId: number, subject?: string | null, messageId?: string | null, messageIdMd5?: string | null, inReplyTo?: string | null, contentType: string, references?: string | null, preferences?: any | null, body: string, internal: boolean, createdAt: any, from?: { __typename?: 'AddressesField', raw: string, parsed?: Array<{ __typename?: 'EmailAddress', name?: string | null, emailAddress?: string | null }> | null } | null, to?: { __typename?: 'AddressesField', raw: string, parsed?: Array<{ __typename?: 'EmailAddress', name?: string | null, emailAddress?: string | null }> | null } | null, cc?: { __typename?: 'AddressesField', raw: string, parsed?: Array<{ __typename?: 'EmailAddress', name?: string | null, emailAddress?: string | null }> | null } | null, replyTo?: { __typename?: 'AddressesField', raw: string, parsed?: Array<{ __typename?: 'EmailAddress', name?: string | null, emailAddress?: string | null }> | null } | null, attachments: Array<{ __typename?: 'StoredFile', internalId: number, name: string, size?: number | null, type?: string | null, preferences?: any | null }>, createdBy?: { __typename?: 'User', id: string, fullname?: string | null, firstname?: string | null, lastname?: string | null }, type?: { __typename?: 'TicketArticleType', name?: string | null } | null, sender?: { __typename?: 'TicketArticleType', name?: string | null } | null };
 

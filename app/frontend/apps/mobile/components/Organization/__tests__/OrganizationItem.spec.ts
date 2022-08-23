@@ -18,7 +18,10 @@ describe('ticket item display', () => {
 
     const organization: OrganizationItemData = {
       id: '54321',
-      ticketsCount: 2,
+      ticketsCount: {
+        open: 2,
+        closed: 1,
+      },
       internalId: 3,
       name: 'lorem ipsum',
       active: true,
@@ -61,7 +64,10 @@ describe('ticket item display', () => {
     const organization: OrganizationItemData = {
       id: '54321',
       internalId: 2,
-      ticketsCount: 1,
+      ticketsCount: {
+        open: 1,
+        closed: 0,
+      },
       name: 'lorem ipsum',
       active: true,
     }

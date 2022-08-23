@@ -12,7 +12,10 @@ const Template = createTemplate<Props>(UserItem)
 
 const user = {
   id: '123',
-  ticketsCount: 2,
+  ticketsCount: {
+    open: 2,
+    closed: 0,
+  },
   firstname: 'John',
   lastname: 'Doe',
   organization: {
