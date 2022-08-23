@@ -74,7 +74,7 @@ group :assets do
 
   # asset handling - pipeline
   gem 'sprockets', '~> 3.7.2', require: false
-  gem 'uglifier', require: false
+  gem 'terser', require: false
 
   gem 'autoprefixer-rails', require: false
 end

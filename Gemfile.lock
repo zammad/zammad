@@ -527,6 +527,8 @@ GEM
       sprockets (>= 3.0.0)
     tcr (0.2.2)
     telephone_number (1.4.16)
+    terser (1.1.12)
+      execjs (>= 0.3.0, < 3)
     test-unit (3.5.3)
       power_assert
     thor (1.2.1)
@@ -549,8 +551,6 @@ GEM
       simple_oauth (~> 0.3.0)
     tzinfo (2.0.5)
       concurrent-ruby (~> 1.0)
-    uglifier (4.2.0)
-      execjs (>= 0.3.0, < 3)
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.8.2)
@@ -689,11 +689,11 @@ DEPENDENCIES
   tcr
   telegramAPI!
   telephone_number
+  terser
   test-unit
   thor
   twilio-ruby
   twitter
-  uglifier
   unicorn
   vcr
   viewpoint
@@ -706,4 +706,4 @@ RUBY VERSION
    ruby 3.0.4p208
 
 BUNDLED WITH
-   2.3.20
+   2.3.16
