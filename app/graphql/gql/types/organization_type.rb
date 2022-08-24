@@ -16,7 +16,7 @@ module Gql::Types
 
     field :name, String, null: false
     field :shared, Boolean, null: false
-    field :domain, String, null: true
+    field :domain, String
     field :domain_assignment, Boolean, null: false
     field :active, Boolean, null: false
     field :members, Gql::Types::UserType.connection_type, null: false

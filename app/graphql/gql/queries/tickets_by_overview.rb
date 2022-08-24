@@ -5,7 +5,7 @@ module Gql::Queries
 
     description 'Fetch tickets of a given ticket overview'
 
-    argument :overview_id, GraphQL::Types::ID, required: true, description: 'Overview ID'
+    argument :overview_id, GraphQL::Types::ID, description: 'Overview ID'
     argument :order_by, String, required: false, description: 'Set a custom order by'
     argument :order_direction, Gql::Types::Enum::OrderDirectionType, required: false, description: 'Set a custom order direction'
 

@@ -6,6 +6,6 @@ module Gql::Types
     description 'Represents an error in the input of a mutation.'
 
     field :message, String, null: false
-    field :field, String, null: true
+    field :field, String
   end
 end

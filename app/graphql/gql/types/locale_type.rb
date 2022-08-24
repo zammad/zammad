@@ -7,7 +7,7 @@ module Gql::Types
     description 'Locales available in the system'
 
     field :locale, String, null: false
-    field :alias, String, null: true, resolver_method: :resolve_alias
+    field :alias, String, resolver_method: :resolve_alias
     field :name, String, null: false
     field :dir, Gql::Types::Enum::TextDirectionType, null: false
     field :active, Boolean, null: false

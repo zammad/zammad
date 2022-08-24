@@ -7,7 +7,7 @@ module Gql::Subscriptions
 
     broadcastable true
 
-    field :type, Gql::Types::Enum::AppMaintenanceTypeType, null: true, description: 'Maintenance type, may trigger actions in the front end'
+    field :type, Gql::Types::Enum::AppMaintenanceTypeType, description: 'Maintenance type, may trigger actions in the front end'
 
     def self.authorize(...)
       true # This subscription should be available for all (including unauthenticated) users.

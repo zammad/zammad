@@ -4,9 +4,9 @@ module Gql::Mutations
   class Account::Avatar::Add < BaseMutation
     description 'Add a new avatar for the currently logged in user.'
 
-    argument :images, Gql::Types::Input::AvatarInputType, required: true, description: 'Images to be uploaded.'
+    argument :images, Gql::Types::Input::AvatarInputType, description: 'Images to be uploaded.'
 
-    field :avatar, Gql::Types::AvatarType, null: true, description: 'The newly created avatar.'
+    field :avatar, Gql::Types::AvatarType, description: 'The newly created avatar.'
 
     def resolve(images:)
       file_full   = images[:full]

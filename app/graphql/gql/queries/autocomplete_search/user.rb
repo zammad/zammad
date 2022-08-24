@@ -5,7 +5,7 @@ module Gql::Queries
 
     description 'Search for users'
 
-    argument :query, String, required: true, description: 'Query from the autocomplete field'
+    argument :query, String, description: 'Query from the autocomplete field'
     argument :limit, Integer, required: false, description: 'Limit for the amount of entries'
 
     type [Gql::Types::AutocompleteEntryType], null: false

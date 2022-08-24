@@ -5,7 +5,7 @@ module Gql::Queries
 
     description 'Fetch an organization by ID'
 
-    argument :organization_id, GraphQL::Types::ID, required: true, description: 'ID of the organization'
+    argument :organization_id, GraphQL::Types::ID, description: 'ID of the organization'
 
     type Gql::Types::OrganizationType, null: false
 

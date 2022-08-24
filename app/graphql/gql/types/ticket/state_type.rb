@@ -10,7 +10,7 @@ module Gql::Types::Ticket
     belongs_to :state_type, Gql::Types::Ticket::StateTypeType, null: false
 
     field :name, String, null: false
-    field :next_state_id, Integer, null: true
+    field :next_state_id, Integer
     field :ignore_escalation, Boolean, null: false
     field :default_create, Boolean, null: false
     field :default_follow_up, Boolean, null: false

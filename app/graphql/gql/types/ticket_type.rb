@@ -24,7 +24,7 @@ module Gql::Types
     belongs_to :group, Gql::Types::GroupType, null: false
     belongs_to :priority, Gql::Types::Ticket::PriorityType, null: false
     belongs_to :state, Gql::Types::Ticket::StateType, null: false
-    belongs_to :organization, Gql::Types::OrganizationType, null: true
+    belongs_to :organization, Gql::Types::OrganizationType
     belongs_to :owner, Gql::Types::UserType, null: false
     belongs_to :customer, Gql::Types::UserType, null: false
 
@@ -32,29 +32,29 @@ module Gql::Types
     field :number, String, null: false
     field :title, String, null: false
 
-    field :first_response_at, GraphQL::Types::ISO8601DateTime, null: true
-    field :first_response_escalation_at, GraphQL::Types::ISO8601DateTime, null: true
-    field :first_response_in_min, Integer, null: true
-    field :first_response_diff_in_min, Integer, null: true
-    field :close_at, GraphQL::Types::ISO8601DateTime, null: true
-    field :close_escalation_at, GraphQL::Types::ISO8601DateTime, null: true
-    field :close_in_min, Integer, null: true
-    field :close_diff_in_min, Integer, null: true
-    field :update_escalation_at, GraphQL::Types::ISO8601DateTime, null: true
-    field :update_in_min, Integer, null: true
-    field :update_diff_in_min, Integer, null: true
-    field :last_contact_at, GraphQL::Types::ISO8601DateTime, null: true
-    field :last_contact_agent_at, GraphQL::Types::ISO8601DateTime, null: true
-    field :last_contact_customer_at, GraphQL::Types::ISO8601DateTime, null: true
-    field :last_owner_update_at, GraphQL::Types::ISO8601DateTime, null: true
-    field :escalation_at, GraphQL::Types::ISO8601DateTime, null: true
-    field :pending_time, GraphQL::Types::ISO8601DateTime, null: true
+    field :first_response_at, GraphQL::Types::ISO8601DateTime
+    field :first_response_escalation_at, GraphQL::Types::ISO8601DateTime
+    field :first_response_in_min, Integer
+    field :first_response_diff_in_min, Integer
+    field :close_at, GraphQL::Types::ISO8601DateTime
+    field :close_escalation_at, GraphQL::Types::ISO8601DateTime
+    field :close_in_min, Integer
+    field :close_diff_in_min, Integer
+    field :update_escalation_at, GraphQL::Types::ISO8601DateTime
+    field :update_in_min, Integer
+    field :update_diff_in_min, Integer
+    field :last_contact_at, GraphQL::Types::ISO8601DateTime
+    field :last_contact_agent_at, GraphQL::Types::ISO8601DateTime
+    field :last_contact_customer_at, GraphQL::Types::ISO8601DateTime
+    field :last_owner_update_at, GraphQL::Types::ISO8601DateTime
+    field :escalation_at, GraphQL::Types::ISO8601DateTime
+    field :pending_time, GraphQL::Types::ISO8601DateTime
 
-    # field :create_article_type_id, Integer, null: true
-    # field :create_article_sender_id, Integer, null: true
-    field :article_count, Integer, null: true
-    # field :type, String, null: true
-    field :time_unit, Float, null: true
-    field :preferences, GraphQL::Types::JSON, null: true
+    # field :create_article_type_id, Integer
+    # field :create_article_sender_id, Integer
+    field :article_count, Integer
+    # field :type, String
+    field :time_unit, Float
+    field :preferences, GraphQL::Types::JSON
   end
 end

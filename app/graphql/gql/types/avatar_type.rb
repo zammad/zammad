@@ -9,8 +9,8 @@ module Gql::Types
     field :default, Boolean, null: false
     field :deletable, Boolean, null: false
     field :initial, Boolean, null: false
-    field :image_full, String, null: true
-    field :image_resize, String, null: true
+    field :image_full, String
+    field :image_resize, String
 
     def self.authorize(_object, ctx)
       ctx.current_user

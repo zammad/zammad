@@ -15,15 +15,15 @@ module Gql::Types
 
     implements Gql::Types::ObjectAttributeValueInterface
 
-    belongs_to :organization, Gql::Types::OrganizationType, null: true, authorize: :by_pundit
+    belongs_to :organization, Gql::Types::OrganizationType, authorize: :by_pundit
 
-    field :firstname, String, null: true
-    field :lastname, String, null: true
-    field :fullname, String, null: true
-    field :image, String, null: true
-    field :image_source, String, null: true
+    field :firstname, String
+    field :lastname, String
+    field :fullname, String
+    field :image, String
+    field :image_source, String
 
-    field_args(authorize: :by_pundit, null: true) do
+    field_args(authorize: :by_pundit) do
       field :login, String
       field :email, String
       field :web, String
@@ -43,11 +43,11 @@ module Gql::Types
     end
 
     # These fields are changeable object attributes, so manage them only via the ObjectAttributeInterface
-    # field :department, String, null: true
-    # field :street, String, null: true
-    # field :zip, String, null: true
-    # field :city, String, null: true
-    # field :country, String, null: true
-    # field :address, String, null: true
+    # field :department, String
+    # field :street, String
+    # field :zip, String
+    # field :city, String
+    # field :country, String
+    # field :address, String
   end
 end

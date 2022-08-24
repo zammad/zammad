@@ -3,11 +3,11 @@
 module Gql::Subscriptions
   class OrganizationUpdates < BaseSubscription
 
-    argument :organization_id, GraphQL::Types::ID, required: true, description: 'Organization identifier'
+    argument :organization_id, GraphQL::Types::ID, description: 'Organization identifier'
 
     description 'Updates to organization records'
 
-    field :organization, Gql::Types::OrganizationType, null: true, description: 'Updated organization'
+    field :organization, Gql::Types::OrganizationType, description: 'Updated organization'
 
     def authorized?(organization_id:)
       Gql::ZammadSchema.authorized_object_from_id organization_id, type: ::Organization, user: context.current_user

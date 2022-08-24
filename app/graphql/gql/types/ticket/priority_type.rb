@@ -9,8 +9,8 @@ module Gql::Types::Ticket
 
     field :name, String, null: false
     field :default_create, Boolean, null: false
-    field :ui_icon, String, null: true
-    field :ui_color, String, null: true
+    field :ui_icon, String
+    field :ui_color, String
     field :active, Boolean, null: false
   end
 end

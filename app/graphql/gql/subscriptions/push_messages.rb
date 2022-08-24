@@ -7,8 +7,8 @@ module Gql::Subscriptions
 
     broadcastable true
 
-    field :title, String, null: true, description: 'Message title'
-    field :text, String, null: true, description: 'Message text'
+    field :title, String, description: 'Message title'
+    field :text, String, description: 'Message text'
 
     def self.authorize(...)
       true # This subscription should be available for all (including unauthenticated) users.

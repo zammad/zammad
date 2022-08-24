@@ -5,13 +5,13 @@ module Gql::Queries
 
     description 'Translations for a given locale'
 
-    argument :locale,    String, required: true, description: 'The locale to fetch translations for, e.g. "de-de".'
+    argument :locale,    String, description: 'The locale to fetch translations for, e.g. "de-de".'
     argument :cache_key, String, required:    false,
                                  description: 'Cache identifier that the front end used to store the translations when fetching last time. If this is still up-to-date, no data will be returned and the front end should use its cached data.'
 
     field :is_cache_still_valid, Boolean, null: false, description: "If this is true, then the front end's translation cache is still valid and should be used, cacheKey and translation will not be returned."
-    field :cache_key, String, null: true, description: 'Cache key that the front end should use to cache the new translation data.'
-    field :translations, GraphQL::Types::JSON, null: true, description: 'The actual translation data as Hash where keys are source and values target strings (excluding untranslated strings).'
+    field :cache_key, String, description: 'Cache key that the front end should use to cache the new translation data.'
+    field :translations, GraphQL::Types::JSON, description: 'The actual translation data as Hash where keys are source and values target strings (excluding untranslated strings).'
 
     def self.authorize(...)
       true # This query should be available for all (including unauthenticated) users.

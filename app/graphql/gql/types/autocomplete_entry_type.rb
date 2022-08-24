@@ -7,11 +7,11 @@ module Gql::Types
 
     field :value, String, null: false
     field :label, String, null: false
-    field :label_placeholder, [String], null: true
-    field :heading, String, null: true
-    field :heading_placeholder, [String], null: true
-    field :disabled, Boolean, null: true
-    field :icon, String, null: true
+    field :label_placeholder, [String]
+    field :heading, String
+    field :heading_placeholder, [String]
+    field :disabled, Boolean
+    field :icon, String
     # field :status?
   end
 end

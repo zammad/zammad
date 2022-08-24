@@ -4,7 +4,7 @@ module Gql::Types::Input
   class ObjectAttributeValueInputType < Gql::Types::BaseInputObject
     description 'Data of one object attribute value of another object'
 
-    argument :name, String, required: true, description: "The name of the current object's attribute"
+    argument :name, String, description: "The name of the current object's attribute"
     argument :value, GraphQL::Types::JSON, required: false, description: "The value of the current object's object attribute"
   end
 end

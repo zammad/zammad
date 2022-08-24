@@ -4,8 +4,8 @@ module Gql::Mutations
   class Organization::Update < BaseMutation
     description 'Update organization data.'
 
-    argument :id, GraphQL::Types::ID, required: true, description: 'The organization ID', as: :current_organization, loads: Gql::Types::OrganizationType
-    argument :input, Gql::Types::Input::OrganizationInputType, required: true, description: 'The organization data'
+    argument :id, GraphQL::Types::ID, description: 'The organization ID', as: :current_organization, loads: Gql::Types::OrganizationType
+    argument :input, Gql::Types::Input::OrganizationInputType, description: 'The organization data'
 
     field :organization, Gql::Types::OrganizationType, null: false, description: 'The updated organization.'
 

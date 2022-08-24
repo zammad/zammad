@@ -6,7 +6,7 @@ module Gql::Queries
 
       description 'Fetch meta information about object manager attributes for usage in frontend.'
 
-      argument :object, Gql::Types::Enum::ObjectManagerObjectsType, required: true, description: 'Object name to fetch meta information for'
+      argument :object, Gql::Types::Enum::ObjectManagerObjectsType, description: 'Object name to fetch meta information for'
       argument :filter_screen, String, required: false, description: 'Only return attributes that are available on a specific screen'
 
       type [Gql::Types::ObjectManager::FrontendAttributeType], null: false

@@ -5,8 +5,8 @@ module Gql::Types::Input
 
     description 'The fields for uploading a new avatar.'
 
-    argument :full, String, required: true, description: 'The full image to use for the avatar (Base64 encoded).'
-    argument :resize, String, required: true, description: 'The resized/cropped image to use for the avatar (Base64 encoded).'
+    argument :full, String, description: 'The full image to use for the avatar (Base64 encoded).'
+    argument :resize, String, description: 'The resized/cropped image to use for the avatar (Base64 encoded).'
 
     def prepare
       super

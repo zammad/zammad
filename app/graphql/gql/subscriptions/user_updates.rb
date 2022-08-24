@@ -7,7 +7,7 @@ module Gql::Subscriptions
 
     description 'Updates to user records'
 
-    field :user, Gql::Types::UserType, null: true, description: 'Updated user'
+    field :user, Gql::Types::UserType, description: 'Updated user'
 
     # Instance method: allow subscriptions only for users where the current user has read permission for.
     def authorized?(user_id:)

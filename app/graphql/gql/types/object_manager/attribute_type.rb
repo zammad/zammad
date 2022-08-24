@@ -10,11 +10,11 @@ module Gql::Types::ObjectManager
     field :name, String, null: false
     field :display, String, null: false, resolver_method: :resolve_display
     field :data_type, String, null: false
-    field :data_option, GraphQL::Types::JSON, null: true
-    # field :data_option_new, String, null: true
+    field :data_option, GraphQL::Types::JSON
+    # field :data_option_new, String
     field :editable, Boolean, null: false
     field :active, Boolean, null: false
-    field :screens, GraphQL::Types::JSON, null: true
+    field :screens, GraphQL::Types::JSON
     # field :to_create, Boolean, null: false
     # field :to_migrate, Boolean, null: false
     # field :to_delete, Boolean, null: false

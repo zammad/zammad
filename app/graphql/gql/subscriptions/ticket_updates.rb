@@ -3,11 +3,11 @@
 module Gql::Subscriptions
   class TicketUpdates < BaseSubscription
 
-    argument :ticket_id, GraphQL::Types::ID, required: true, description: 'Ticket identifier'
+    argument :ticket_id, GraphQL::Types::ID, description: 'Ticket identifier'
 
     description 'Updates to ticket records'
 
-    field :ticket, Gql::Types::TicketType, null: true, description: 'Updated ticket'
+    field :ticket, Gql::Types::TicketType, description: 'Updated ticket'
 
     def authorized?(ticket_id:)
       Gql::ZammadSchema.authorized_object_from_id ticket_id, type: ::Ticket, user: context.current_user

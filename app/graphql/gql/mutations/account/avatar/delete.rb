@@ -4,7 +4,7 @@ module Gql::Mutations
   class Account::Avatar::Delete < BaseMutation
     description 'Delete an existing avatar for the currently logged in user.'
 
-    argument :id, GraphQL::Types::ID, required: true, description: 'The unique identifier of the avatar which should be deleted.'
+    argument :id, GraphQL::Types::ID, description: 'The unique identifier of the avatar which should be deleted.'
 
     field :success, Boolean, null: false, description: 'Was the avatar deletion successful?'
 

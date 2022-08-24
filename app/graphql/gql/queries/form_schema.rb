@@ -5,7 +5,7 @@ module Gql::Queries
 
     description 'Return FormKit schema definition for a given form.'
 
-    argument :form_schema_id, Gql::Types::Enum::FormSchemaIdType, required: true, description: 'Form identifier'
+    argument :form_schema_id, Gql::Types::Enum::FormSchemaIdType, description: 'Form identifier'
 
     type GraphQL::Types::JSON, null: false
 

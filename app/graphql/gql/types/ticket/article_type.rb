@@ -11,8 +11,8 @@ module Gql::Types::Ticket
 
     description 'Ticket articles'
 
-    belongs_to :type, Gql::Types::Ticket::Article::TypeType, null: true
-    belongs_to :sender, Gql::Types::Ticket::Article::TypeType, null: true
+    belongs_to :type, Gql::Types::Ticket::Article::TypeType
+    belongs_to :sender, Gql::Types::Ticket::Article::TypeType
 
     field :subject, String
     field :from, Gql::Types::AddressesFieldType
@@ -27,7 +27,7 @@ module Gql::Types::Ticket
     field :body, String, null: false
     field :internal, Boolean, null: false
     field :preferences, ::GraphQL::Types::JSON
-    field :origin_by, Gql::Types::UserType, null: true
+    field :origin_by, Gql::Types::UserType
 
     field :attachments, [Gql::Types::StoredFileType, { null: false }], null: false
   end

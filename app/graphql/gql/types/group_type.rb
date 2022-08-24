@@ -7,10 +7,10 @@ module Gql::Types
 
     description 'Groups'
 
-    # field :signature_id, Integer, null: true
-    # field :email_address_id, Integer, null: true
+    # field :signature_id, Integer
+    # field :email_address_id, Integer
     field :name, String, null: false
-    field :assignment_timeout, Integer, null: true
+    field :assignment_timeout, Integer
     field :follow_up_possible, String, null: false
     field :follow_up_assignment, Boolean, null: false
     field :active, Boolean, null: false

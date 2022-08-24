@@ -8,7 +8,7 @@ module Gql::Subscriptions
 
     description 'Updates to configuration settings'
 
-    field :setting, Gql::Types::KeyComplexValueType, null: true, description: 'Updated setting'
+    field :setting, Gql::Types::KeyComplexValueType, description: 'Updated setting'
 
     def self.authorize(...)
       true # This subscription should be available for all (including unauthenticated) users.

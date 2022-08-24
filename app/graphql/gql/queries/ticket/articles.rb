@@ -5,7 +5,7 @@ module Gql::Queries
 
     description 'Fetch a ticket by ID'
 
-    argument :ticket, Gql::Types::Input::TicketLocatorInputType, required: true, description: 'Ticket locator'
+    argument :ticket, Gql::Types::Input::TicketLocatorInputType, description: 'Ticket locator'
 
     type Gql::Types::Ticket::ArticleType.connection_type, null: false
 

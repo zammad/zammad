@@ -5,7 +5,7 @@ module Gql::Queries
 
     description 'Generic object search'
 
-    argument :search,  String, required: true, description: 'What to search for'
+    argument :search,  String, description: 'What to search for'
     argument :only_in, Gql::Types::Enum::SearchableModelsType, required: false, description: 'Optionally restrict search to only_in one model'
     argument :limit,   Integer, required: false, description: 'How many entries to find at maximum per model'
 

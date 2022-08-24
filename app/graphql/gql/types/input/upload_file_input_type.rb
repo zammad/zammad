@@ -5,8 +5,8 @@ module Gql::Types::Input
 
     description 'A file to be uploaded.'
 
-    argument :name, String, required: true, description: 'File name.'
+    argument :name, String, description: 'File name.'
     argument :type, String, required: false, description: "File's content-type."
-    argument :content, Gql::Types::BinaryStringType, required: true, description: 'File content'
+    argument :content, Gql::Types::BinaryStringType, description: 'File content'
   end
 end
