@@ -7,7 +7,21 @@ RSpec.describe Gql::Queries::AutocompleteSearch::User, type: :graphql, authentic
   context 'when searching for users' do
     let(:agent)        { create(:agent) }
     let(:users)        { create_list(:agent, 3, lastname: 'AutocompleteSearch') }
-    let(:query)        { gql.read_files('shared/graphql/queries/autocompleteSearch/user.graphql') }
+    let(:query)        do
+      <<~QUERY
+        query autocompleteSearchUser($query: String!, $limit: Int)  {
+          autocompleteSearchUser(query: $query, limit: $limit) {
+            value
+            label
+            labelPlaceholder
+            heading
+            headingPlaceholder
+            disabled
+            icon
+          }
+        }
+      QUERY
+    end
     let(:variables)    { { query: query_string, limit: limit } }
     let(:query_string) { users.last.lastname }
     let(:limit)        { nil }

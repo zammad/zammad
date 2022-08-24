@@ -194,15 +194,6 @@ module ZammadSpecSupportGraphql
       end
       @result = Result.new(Gql::ZammadSchema.execute(query, variables: variables, context: context).to_h)
     end
-
-    #
-    # Read and concatenate graphql query definition files from app/frontend/*.
-    #
-    def read_files(*filenames)
-      filenames.reduce('') do |content, filename|
-        content + File.read(Rails.root.join("app/frontend/#{filename}"))
-      end
-    end
   end
 
   def gql

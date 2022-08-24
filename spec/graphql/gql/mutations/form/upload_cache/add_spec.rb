@@ -5,8 +5,20 @@ require 'rails_helper'
 RSpec.describe Gql::Mutations::Form::UploadCache::Add, type: :graphql do
 
   context 'when uploading files for a form', authenticated_as: :agent do
-    let(:agent)        { create(:agent) }
-    let(:query)        { gql.read_files('shared/components/Form/fields/FieldFile/graphql/mutations/uploadCache/add.graphql') }
+    let(:agent) { create(:agent) }
+    let(:query) do
+      <<~QUERY
+        mutation formUploadCacheAdd($formId: FormId!, $files: [UploadFileInput!]!) {
+          formUploadCacheAdd(formId: $formId, files: $files) {
+            uploadedFiles {
+              id
+              name
+              type
+            }
+          }
+        }
+      QUERY
+    end
     let(:form_id)      { 12_345 }
     let(:file_name)    { 'my_testfile.pdf' }
     let(:file_type)    { 'application/pdf' }

@@ -7,7 +7,32 @@ RSpec.describe Gql::Queries::TicketsByOverview, type: :graphql do
   context 'when fetching ticket overviews' do
     let(:agent)     { create(:agent) }
     let(:query)     do
-      gql.read_files('apps/mobile/modules/ticket/graphql/queries/ticketsByOverview.graphql', 'shared/graphql/fragments/objectAttributeValues.graphql')
+      <<~QUERY
+        query ticketsByOverview(
+          $overviewId: ID!
+          $orderBy: String
+          $orderDirection: EnumOrderDirection
+          $cursor: String
+          $pageSize: Int = 10
+        ) {
+          ticketsByOverview(
+            overviewId: $overviewId
+            orderBy: $orderBy
+            orderDirection: $orderDirection
+            after: $cursor
+            first: $pageSize
+          ) {
+            totalCount
+            edges {
+              node {
+                id
+                internalId
+                number
+              }
+            }
+          }
+        }
+      QUERY
     end
     let(:variables) { { overviewId: gql.id(overview), showPriority: true, showUpdatedBy: true } }
     let(:overview)    { Overview.find_by(link: 'all_unassigned') }

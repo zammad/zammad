@@ -10,7 +10,17 @@ RSpec.describe Gql::Mutations::Account::Avatar::Delete, type: :graphql do
     let(:avatar)        { create(:avatar, o_id: agent.id) }
 
     let(:query) do
-      gql.read_files('apps/mobile/modules/account/avatar/graphql/mutations/delete.graphql', 'shared/graphql/fragments/errors.graphql')
+      <<~QUERY
+        mutation accountAvatarDelete($id: ID!) {
+          accountAvatarDelete(id: $id) {
+            success
+            errors {
+              message
+              field
+            }
+          }
+        }
+      QUERY
     end
 
     before do

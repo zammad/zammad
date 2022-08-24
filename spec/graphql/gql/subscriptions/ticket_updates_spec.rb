@@ -8,10 +8,17 @@ RSpec.describe Gql::Subscriptions::TicketUpdates, type: :graphql do
   let(:variables)    { { ticketId: gql.id(ticket) } }
   let(:mock_channel) { build_mock_channel }
   let(:subscription) do
-    gql.read_files(
-      'apps/mobile/modules/ticket/graphql/subscriptions/ticketUpdates.graphql',
-      'apps/mobile/modules/ticket/graphql/fragments/ticketAttributes.graphql'
-    )
+    <<~QUERY
+      subscription ticketUpdates($ticketId: ID!) {
+        ticketUpdates(ticketId: $ticketId) {
+          ticket {
+            id
+            internalId
+            title
+          }
+        }
+      }
+    QUERY
   end
 
   before do

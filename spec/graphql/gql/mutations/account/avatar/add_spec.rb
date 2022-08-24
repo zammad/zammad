@@ -11,7 +11,19 @@ RSpec.describe Gql::Mutations::Account::Avatar::Add, type: :graphql do
     let(:execute_query) { true }
 
     let(:query) do
-      gql.read_files('apps/mobile/modules/account/avatar/graphql/mutations/add.graphql', 'shared/graphql/fragments/errors.graphql')
+      <<~QUERY
+        mutation accountAvatarAdd($images: AvatarInput!) {
+          accountAvatarAdd(images: $images) {
+            avatar {
+              id
+            }
+            errors {
+              message
+              field
+            }
+          }
+        }
+      QUERY
     end
 
     before do

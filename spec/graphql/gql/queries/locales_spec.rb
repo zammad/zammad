@@ -6,7 +6,19 @@ RSpec.describe Gql::Queries::Locales, type: :graphql do
 
   context 'when fetching locales' do
     let(:agent)     { create(:agent) }
-    let(:query)     { gql.read_files('shared/graphql/queries/locales.graphql') }
+    let(:query)     do
+      <<~QUERY
+        query locales($onlyActive: Boolean = false) {
+          locales(onlyActive: $onlyActive) {
+            locale
+            alias
+            name
+            dir
+            active
+          }
+        }
+      QUERY
+    end
     let(:active)    { true }
     let(:variables) { { onlyActive: false } }
     let(:target_locale) do

@@ -9,12 +9,26 @@ RSpec.describe Gql::Mutations::Organization::Update, type: :graphql do
     let(:variables)          { { id: gql.id(organization), input: input_payload } }
     let(:input_payload)      { {} }
     let(:query) do
-      gql.read_files(
-        'apps/mobile/modules/organization/graphql/mutations/update.graphql',
-        'apps/mobile/modules/organization/graphql/fragments/organizationAttributes.graphql',
-        'shared/graphql/fragments/objectAttributeValues.graphql',
-        'shared/graphql/fragments/errors.graphql',
-      )
+      <<~QUERY
+        mutation organizationUpdate($id: ID!, $input: OrganizationInput!) {
+          organizationUpdate(id: $id, input: $input) {
+            organization {
+              id
+              name
+              objectAttributeValues {
+                attribute {
+                  name
+                }
+                value
+              }
+            }
+            errors {
+              message
+              field
+            }
+          }
+        }
+      QUERY
     end
 
     before do

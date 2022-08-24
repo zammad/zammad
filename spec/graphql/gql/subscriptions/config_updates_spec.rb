@@ -4,7 +4,18 @@ require 'rails_helper'
 
 RSpec.describe Gql::Subscriptions::ConfigUpdates, type: :graphql do
 
-  let(:subscription) { gql.read_files('shared/graphql/subscriptions/configUpdates.graphql') }
+  let(:subscription) do
+    <<~QUERY
+      subscription configUpdates {
+        configUpdates {
+          setting {
+            key
+            value
+          }
+        }
+      }
+    QUERY
+  end
   let(:mock_channel) { build_mock_channel }
   let(:expected_msg) do
     {

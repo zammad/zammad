@@ -7,7 +7,17 @@ RSpec.describe Gql::Mutations::Account::Locale, type: :graphql do
   context 'when updating language of the logged-in user', authenticated_as: :agent do
     let(:agent)        { create(:agent, preferences: { 'locale' => 'de-de' }) }
     let(:query)        do
-      gql.read_files('apps/mobile/modules/account/graphql/mutations/locale.graphql', 'shared/graphql/fragments/errors.graphql')
+      <<~QUERY
+        mutation accountLocale($locale: String!) {
+          accountLocale(locale: $locale) {
+            success
+            errors {
+              message
+              field
+            }
+          }
+        }
+      QUERY
     end
     let(:locale) { 'en-us' }
     let(:variables) { { locale: locale } }

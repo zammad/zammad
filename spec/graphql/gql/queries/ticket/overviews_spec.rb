@@ -6,7 +6,34 @@ RSpec.describe Gql::Queries::Ticket::Overviews, type: :graphql do
 
   context 'when fetching ticket overviews' do
     let(:agent)     { create(:agent) }
-    let(:query)     { gql.read_files('shared/entities/ticket/graphql/queries/ticket/overviews.graphql') }
+    let(:query)     do
+      <<~QUERY
+        query ticketOverviews($withTicketCount: Boolean!) {
+          ticketOverviews {
+            edges {
+              node {
+                id
+                name
+                link
+                prio
+                orderBy
+                orderDirection
+                viewColumns {
+                  key
+                  value
+                }
+                orderColumns {
+                  key
+                  value
+                }
+                active
+                ticketCount @include(if: $withTicketCount)
+              }
+            }
+          }
+        }
+      QUERY
+    end
     let(:variables) { { withTicketCount: false } }
 
     before do

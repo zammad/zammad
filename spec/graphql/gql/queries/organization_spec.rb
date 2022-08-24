@@ -8,11 +8,23 @@ RSpec.describe Gql::Queries::Organization, type: :graphql do
     let(:organization) { create(:organization) }
     let(:variables)    { { organizationId: gql.id(organization) } }
     let(:query) do
-      gql.read_files(
-        'apps/mobile/modules/organization/graphql/queries/organization.graphql',
-        'apps/mobile/modules/organization/graphql/fragments/organizationAttributes.graphql',
-        'shared/graphql/fragments/objectAttributeValues.graphql',
-      )
+      <<~QUERY
+        query organization($organizationId: ID!) {
+          organization(organizationId: $organizationId) {
+            id
+            name
+            shared
+            domain
+            domainAssignment
+            active
+            note
+            ticketsCount {
+              open
+              closed
+            }
+          }
+        }
+      QUERY
     end
 
     before do

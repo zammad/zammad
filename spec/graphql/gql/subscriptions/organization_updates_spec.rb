@@ -8,11 +8,15 @@ RSpec.describe Gql::Subscriptions::OrganizationUpdates, type: :graphql do
   let(:variables)    { { organizationId: gql.id(organization) } }
   let(:mock_channel) { build_mock_channel }
   let(:subscription) do
-    gql.read_files(
-      'apps/mobile/modules/organization/graphql/subscriptions/organizationUpdates.graphql',
-      'apps/mobile/modules/organization/graphql/fragments/organizationAttributes.graphql',
-      'shared/graphql/fragments/objectAttributeValues.graphql',
-    )
+    <<~QUERY
+      subscription organizationUpdates($organizationId: ID!) {
+        organizationUpdates(organizationId: $organizationId) {
+          organization {
+            name
+          }
+        }
+      }
+    QUERY
   end
 
   before do

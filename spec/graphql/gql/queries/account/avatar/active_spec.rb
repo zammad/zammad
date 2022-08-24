@@ -5,7 +5,13 @@ require 'rails_helper'
 RSpec.describe Gql::Queries::Account::Avatar::Active, type: :graphql do
   context 'when fetching avatar' do
     let(:query) do
-      gql.read_files('apps/mobile/modules/account/avatar/graphql/queries/active.graphql')
+      <<~QUERY
+        query accountAvatarActive {
+          accountAvatarActive {
+            id
+          }
+        }
+      QUERY
     end
 
     context 'when authorized', authenticated_as: :agent do

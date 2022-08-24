@@ -4,7 +4,16 @@ require 'rails_helper'
 
 RSpec.describe Gql::Subscriptions::PushMessages, type: :graphql do
 
-  let(:subscription) { gql.read_files('shared/graphql/subscriptions/pushMessages.graphql') }
+  let(:subscription) do
+    <<~QUERY
+      subscription pushMessages {
+        pushMessages {
+          title
+          text
+        }
+      }
+    QUERY
+  end
   let(:mock_channel) { build_mock_channel }
   let(:expected_msg) do
     {

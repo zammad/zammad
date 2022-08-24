@@ -4,7 +4,24 @@ require 'rails_helper'
 
 RSpec.describe Gql::Queries::ObjectManager::FrontendAttributes, type: :graphql do
   context 'when fetching meta information' do
-    let(:query)                    { gql.read_files('shared/graphql/queries/objectManagerFrontendAttributes.graphql') }
+    let(:query) do
+      <<~QUERY
+        query objectManagerFrontendAttributes(
+          $object: EnumObjectManagerObjects!
+          $filterScreen: String
+        ) {
+          objectManagerFrontendAttributes(
+            object: $object
+            filterScreen: $filterScreen
+          ) {
+            name
+            display
+            dataType
+            dataOption
+          }
+        }
+      QUERY
+    end
     let(:variables)                { { object: object, filterScreen: filter_screen } }
     let(:filter_screen)            { nil }
     let(:expected_result_agent)    { nil }

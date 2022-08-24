@@ -17,7 +17,13 @@ RSpec.describe Gql::Queries::ApplicationBuildChecksum, type: :graphql, authentic
       end
       Digest::MD5.hexdigest(File.read(filename))
     end
-    let(:query) { gql.read_files('shared/graphql/queries/applicationBuildChecksum.graphql') }
+    let(:query) do
+      <<~QUERY
+        query applicationBuildChecksum {
+          applicationBuildChecksum
+        }
+      QUERY
+    end
 
     before do
       File.open(filename, 'a') do |file|

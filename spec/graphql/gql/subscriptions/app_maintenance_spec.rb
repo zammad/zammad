@@ -4,7 +4,15 @@ require 'rails_helper'
 
 RSpec.describe Gql::Subscriptions::AppMaintenance, type: :graphql do
 
-  let(:subscription)  { gql.read_files('shared/graphql/subscriptions/appMaintenance.graphql') }
+  let(:subscription) do
+    <<~QUERY
+      subscription appMaintenance {
+        appMaintenance {
+          type
+        }
+      }
+    QUERY
+  end
   let(:mock_channel)  { build_mock_channel }
   let(:expected_type) { 'app_version' }
   let(:expected_msg) do

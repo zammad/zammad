@@ -5,7 +5,17 @@ require 'rails_helper'
 RSpec.describe Gql::Queries::Translations, type: :graphql do
 
   context 'when fetching translations' do
-    let(:query)              { gql.read_files('shared/graphql/queries/translations.graphql') }
+    let(:query) do
+      <<~QUERY
+        query translations($locale: String!, $cacheKey: String)  {
+          translations(locale: $locale, cacheKey: $cacheKey) {
+            isCacheStillValid
+            cacheKey
+            translations
+          }
+        }
+      QUERY
+    end
     let(:variables)          { { locale: locale, cacheKey: cache_key } }
     let(:expected_cache_key) { Translation.where(locale: locale).order(updated_at: :desc).take.updated_at.to_s }
 

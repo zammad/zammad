@@ -5,10 +5,17 @@ require 'rails_helper'
 RSpec.describe Gql::Subscriptions::UserUpdates, type: :graphql do
 
   let(:subscription) do
-    gql.read_files(
-      'shared/graphql/subscriptions/userUpdates.graphql',
-      'shared/graphql/fragments/objectAttributeValues.graphql'
-    )
+    <<~QUERY
+      subscription userUpdates($userId: ID!) {
+        userUpdates(userId: $userId) {
+          user {
+            id
+            firstname
+            lastname
+          }
+        }
+      }
+    QUERY
   end
   let(:mock_channel) { build_mock_channel }
   let(:target)       { create(:user) }
