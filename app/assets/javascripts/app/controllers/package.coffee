@@ -15,8 +15,9 @@ class Package extends App.ControllerSubContent
       url:   "#{@apiPath}/packages",
       processData: true,
       success: (data) =>
-        @packages = data.packages
-        @commands = data.commands
+        @packages             = data.packages
+        @package_installation = data.package_installation
+        @local_gemfiles       = data.local_gemfiles
         @render()
       )
 
@@ -35,7 +36,8 @@ class Package extends App.ControllerSubContent
     @html App.view('package')(
       head:     __('Dashboard')
       packages: @packages
-      commands: @commands
+      package_installation: @package_installation
+      local_gemfiles: @local_gemfiles
     )
 
   action: (e) ->

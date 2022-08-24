@@ -5,14 +5,10 @@ class PackagesController < ApplicationController
 
   # GET /api/v1/packages
   def index
-    packages = Package.all.order('name')
-    commands = ['rails zammad:package:migrate', 'rails assets:precompile']
-    if File.exist?('/usr/bin/zammad')
-      commands.map! { |s| "zammad run #{s}" }
-    end
     render json: {
-      packages: packages,
-      commands: commands
+      packages:             Package.all.order('name'),
+      package_installation: File.exist?('/usr/bin/zammad'),
+      local_gemfiles:       Dir['Gemfile.local.*'].present?
     }
   end
 
