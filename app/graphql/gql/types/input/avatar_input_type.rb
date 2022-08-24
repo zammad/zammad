@@ -12,30 +12,9 @@ module Gql::Types::Input
       super
 
       {
-        full:   get_and_validate_avatar_data(full),
-        resize: get_and_validate_avatar_data(resize)
+        full:   execute_service(Avatar::ImageValidateService, image_data: full),
+        resize: execute_service(Avatar::ImageValidateService, image_data: resize)
       }
-    end
-
-    private
-
-    def get_and_validate_avatar_data(avatar)
-      begin
-        file = StaticAssets.data_url_attributes(avatar)
-      rescue
-        return {
-          error_message: __('The image is invalid.')
-        }
-      end
-
-      web_image_content_types = Rails.application.config.active_storage.web_image_content_types
-      if web_image_content_types.exclude?(file[:mime_type])
-        return {
-          error_message: __('The MIME type of the image is invalid.')
-        }
-      end
-
-      file
     end
   end
 end

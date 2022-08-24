@@ -127,6 +127,8 @@ create/update/delete index
     return if url.blank?
 
     if data[:action] && data[:action] == 'delete'
+      return if !SearchIndexBackend.index_exists?(data[:name])
+
       return SearchIndexBackend.remove(data[:name])
     end
 
@@ -163,6 +165,25 @@ get object of search index by id
     return if url.blank?
 
     make_request(url, method: :get).try(:data)
+  end
+
+=begin
+
+Check if an index exists.
+
+  SearchIndexBackend.index_exists?('Ticket')
+
+=end
+
+  def self.index_exists?(type)
+    url = build_url(type: type, with_pipeline: false, with_document_type: false)
+    return if url.blank?
+
+    response = make_request(url)
+    return true if response.success?
+    return true if response.code.to_s != '404'
+
+    false
   end
 
 =begin

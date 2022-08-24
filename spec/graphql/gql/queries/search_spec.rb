@@ -53,9 +53,9 @@ RSpec.describe Gql::Queries::Search, type: :graphql do
         context 'without model limit' do
           let(:expected_result) do
             [
-              { '__typename' => 'Organization', 'name' => organization.name },
-              { '__typename' => 'User', 'firstname' => agent.firstname, 'lastname' => agent.lastname },
               { '__typename' => 'Ticket', 'number' => ticket.number, 'title' => ticket.title },
+              { '__typename' => 'User', 'firstname' => agent.firstname, 'lastname' => agent.lastname },
+              { '__typename' => 'Organization', 'name' => organization.name },
             ]
           end
 

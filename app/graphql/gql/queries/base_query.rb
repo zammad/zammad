@@ -4,6 +4,7 @@ module Gql::Queries
   class BaseQuery < GraphQL::Schema::Resolver
     include Gql::Concerns::HandlesAuthorization
     include Gql::Concerns::HasNestedGraphqlName
+    include Gql::Concerns::HandlesServices
 
     # Require authentication by default for queries.
     def self.authorize(_obj, ctx)

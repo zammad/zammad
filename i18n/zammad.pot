@@ -6359,6 +6359,10 @@ msgstr ""
 msgid "Need 'form_id' to add attachments to new form."
 msgstr ""
 
+#: app/services/base_service.rb
+msgid "Need a valid user to create a new service object!"
+msgstr ""
+
 #: app/controllers/concerns/creates_ticket_articles.rb
 msgid "Need at least an 'article body' field."
 msgstr ""
@@ -9162,16 +9166,8 @@ msgstr ""
 msgid "The Knowledge Base could not be created."
 msgstr ""
 
-#: app/controllers/users_controller.rb
-msgid "The MIME type of the full-size image is invalid."
-msgstr ""
-
-#: app/graphql/gql/types/input/avatar_input_type.rb
+#: app/services/avatar/image_validate_service.rb
 msgid "The MIME type of the image is invalid."
-msgstr ""
-
-#: app/controllers/users_controller.rb
-msgid "The MIME type of the resized image is invalid."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
@@ -9306,15 +9302,11 @@ msgstr ""
 msgid "The format of the subject."
 msgstr ""
 
-#: app/controllers/users_controller.rb
-msgid "The full-size image is invalid."
-msgstr ""
-
 #: db/seeds/settings.rb
 msgid "The identifier for a ticket, e.g. Ticket#, Call#, MyTicket#. The default is Ticket#."
 msgstr ""
 
-#: app/graphql/gql/types/input/avatar_input_type.rb
+#: app/services/avatar/image_validate_service.rb
 msgid "The image is invalid."
 msgstr ""
 
@@ -9569,10 +9561,6 @@ msgstr ""
 
 #: app/controllers/channels_twitter_controller.rb
 msgid "The required value external_credential could not be found in the cache."
-msgstr ""
-
-#: app/controllers/users_controller.rb
-msgid "The resized image is invalid."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee

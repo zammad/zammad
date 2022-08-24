@@ -1516,12 +1516,12 @@ RSpec.describe 'User', type: :request, performs_jobs: true do
 
     it 'returns verbose error when full image is missing' do
       make_request(avatar_full: '')
-      expect(json_response).to include('error' => match(%r{full}).and(match(%r{is invalid})))
+      expect(json_response).to include('error' => 'The image is invalid.')
     end
 
     it 'returns verbose error when resized image is missing' do
       make_request(avatar_full: base64)
-      expect(json_response).to include('error' => match(%r{resized}).and(match(%r{is invalid})))
+      expect(json_response).to include('error' => 'The image is invalid.')
     end
 
     it 'successfully changes avatar' do
@@ -1534,7 +1534,7 @@ RSpec.describe 'User', type: :request, performs_jobs: true do
 
       it 'returns verbose error for a not allowed mime-type' do
         make_request(avatar_full: base64)
-        expect(json_response).to include('error' => 'The MIME type of the full-size image is invalid.')
+        expect(json_response).to include('error' => 'The MIME type of the image is invalid.')
       end
     end
 
@@ -1543,7 +1543,7 @@ RSpec.describe 'User', type: :request, performs_jobs: true do
 
       it 'returns verbose error for a not allowed mime-type' do
         make_request(avatar_full: base64, avatar_resize: resized_base64)
-        expect(json_response).to include('error' => 'The MIME type of the resized image is invalid.')
+        expect(json_response).to include('error' => 'The MIME type of the image is invalid.')
       end
     end
   end

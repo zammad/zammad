@@ -5,6 +5,7 @@ module Gql::Mutations
   class BaseMutation < GraphQL::Schema::Mutation
     include Gql::Concerns::HandlesAuthorization
     include Gql::Concerns::HasNestedGraphqlName
+    include Gql::Concerns::HandlesServices
 
     include Gql::Mutations::Concerns::HandlesObjectAttributeValues
     include Gql::Mutations::Concerns::HandlesCoreWorkflow

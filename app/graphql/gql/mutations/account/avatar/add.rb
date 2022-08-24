@@ -12,36 +12,13 @@ module Gql::Mutations
       file_full   = images[:full]
       file_resize = images[:resize]
 
-      if file_full[:error_message].present? || file_resize[:error_message].present?
-        return error_response({
-                                message: file_full[:error_message] || file_resize[:error_message]
-                              })
+      if file_full[:error].present? || file_resize[:error].present?
+        return error_response({ message: file_full[:message] || file_resize[:message] })
       end
 
-      { avatar: store_avatar(file_full, file_resize) }
-    end
-
-    private
-
-    def store_avatar(file_full, file_resize)
-      avatar = Avatar.add(
-        object:    'User',
-        o_id:      context.current_user.id,
-        full:      {
-          content:   file_full[:content],
-          mime_type: file_full[:mime_type],
-        },
-        resize:    {
-          content:   file_resize[:content],
-          mime_type: file_resize[:mime_type],
-        },
-        source:    "upload #{Time.zone.now}",
-        deletable: true,
-      )
-
-      context.current_user.update!(image: avatar.store_hash)
-
-      avatar
+      {
+        avatar: execute_service(Avatar::AddService, full_image: file_full, resize_image: file_resize)
+      }
     end
   end
 end

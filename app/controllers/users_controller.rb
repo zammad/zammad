@@ -767,53 +767,19 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
 =end
 
   def avatar_new
-    # get & validate image
-    begin
-      file_full = StaticAssets.data_url_attributes(params[:avatar_full])
-    rescue
-      render json: { error: __('The full-size image is invalid.') }, status: :unprocessable_entity
+    file_full = execute_service(Avatar::ImageValidateService, image_data: params[:avatar_full])
+    if file_full[:error].present?
+      render json: { error: file_full[:message] }, status: :unprocessable_entity
       return
     end
 
-    web_image_content_types = Rails.application.config.active_storage.web_image_content_types
-
-    if web_image_content_types.exclude?(file_full[:mime_type])
-      render json: { error: __('The MIME type of the full-size image is invalid.') }, status: :unprocessable_entity
+    file_resize = execute_service(Avatar::ImageValidateService, image_data: params[:avatar_resize])
+    if file_resize[:error].present?
+      render json: { error: file_resize[:message] }, status: :unprocessable_entity
       return
     end
 
-    begin
-      file_resize = StaticAssets.data_url_attributes(params[:avatar_resize])
-    rescue
-      render json: { error: __('The resized image is invalid.') }, status: :unprocessable_entity
-      return
-    end
-
-    if web_image_content_types.exclude?(file_resize[:mime_type])
-      render json: { error: __('The MIME type of the resized image is invalid.') }, status: :unprocessable_entity
-      return
-    end
-
-    avatar = Avatar.add(
-      object:    'User',
-      o_id:      current_user.id,
-      full:      {
-        content:   file_full[:content],
-        mime_type: file_full[:mime_type],
-      },
-      resize:    {
-        content:   file_resize[:content],
-        mime_type: file_resize[:mime_type],
-      },
-      source:    "upload #{Time.zone.now}",
-      deletable: true,
-    )
-
-    # update user link
-    user = User.find(current_user.id)
-    user.update!(image: avatar.store_hash)
-
-    render json: { avatar: avatar }, status: :ok
+    render json: { avatar: execute_service(Avatar::AddService, full_image: file_full, resize_image: file_resize) }, status: :ok
   end
 
   def avatar_set_default
