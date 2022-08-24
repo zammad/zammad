@@ -3,8 +3,10 @@
 import { createRequire } from 'module'
 import { defineConfig } from 'vite'
 import VuePlugin from '@vitejs/plugin-vue'
-import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
-import type { OptimizeOptions } from 'svgo'
+import {
+  createSvgIconsPlugin,
+  type ViteSvgIconsPlugin,
+} from 'vite-plugin-svg-icons'
 import path from 'path'
 
 import tsconfig from './tsconfig.base.json'
@@ -61,7 +63,7 @@ export default defineConfig(({ mode, command }) => {
             },
           },
         ],
-      } as OptimizeOptions,
+      } as ViteSvgIconsPlugin['svgoOptions'],
     }),
   ]
 
