@@ -1,7 +1,7 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import useApplicationStore from '@shared/stores/application'
+import { useApplicationStore } from '@shared/stores/application'
 import { canDownloadFile } from '@shared/utils/files'
 import { humanizaFileSize } from '@shared/utils/helpers'
 import { getIconByContentType } from '@shared/utils/icons'

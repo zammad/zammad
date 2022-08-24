@@ -5,7 +5,7 @@ import { computed, toRef } from 'vue'
 import { useLink } from 'vue-router'
 import stopEvent from '@shared/utils/events'
 import type { Link } from '@shared/types/router'
-import useApplicationStore from '@shared/stores/application'
+import { useApplicationStore } from '@shared/stores/application'
 
 export interface Props {
   link: Link

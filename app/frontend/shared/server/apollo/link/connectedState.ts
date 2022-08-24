@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import { ApolloLink } from '@apollo/client/core'
-import useApplicationStore from '@shared/stores/application'
+import { useApplicationStore } from '@shared/stores/application'
 
 // This link is only there to look for received responses and set
 //  the applicationConnected state accordingly.

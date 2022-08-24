@@ -2,7 +2,7 @@
 
 import { nextTick } from 'vue'
 import { renderComponent } from '@tests/support/components'
-import useApplicationStore from '@shared/stores/application'
+import { useApplicationStore } from '@shared/stores/application'
 import CommonLogo from '../CommonLogo.vue'
 
 describe('CommonLogo.vue', () => {

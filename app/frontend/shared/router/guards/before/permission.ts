@@ -6,7 +6,7 @@ import type {
   NavigationGuardNext,
 } from 'vue-router'
 import log from '@shared/utils/log'
-import useAuthenticationStore from '@shared/stores/authentication'
+import { useAuthenticationStore } from '@shared/stores/authentication'
 import { useSessionStore } from '@shared/stores/session'
 import { ErrorStatusCodes } from '@shared/types/error'
 

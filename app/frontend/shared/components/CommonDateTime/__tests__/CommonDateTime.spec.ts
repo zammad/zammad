@@ -4,7 +4,7 @@ vi.useFakeTimers().setSystemTime(new Date('2020-10-11T10:10:10Z'))
 
 import { nextTick } from 'vue'
 import { renderComponent } from '@tests/support/components'
-import useApplicationStore from '@shared/stores/application'
+import { useApplicationStore } from '@shared/stores/application'
 import CommonDateTime, { type Props } from '../CommonDateTime.vue'
 
 const dateTime = '2020-10-10T10:10:10Z'

@@ -2,7 +2,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import useApplicationStore from '@shared/stores/application'
+import { useApplicationStore } from '@shared/stores/application'
 import { getInitials } from '@shared/utils/formatter'
 import CommonAvatar from '../CommonAvatar/CommonAvatar.vue'
 import type { AvatarSize } from '../CommonAvatar'

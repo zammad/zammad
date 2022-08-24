@@ -4,7 +4,7 @@
 import type { ComputedRef } from 'vue'
 import { computed } from 'vue'
 import { i18n } from '@shared/i18n'
-import useApplicationStore from '@shared/stores/application'
+import { useApplicationStore } from '@shared/stores/application'
 import type { DateTimeType, DateTimeAbsoluteFormat } from './types'
 
 export interface Props {

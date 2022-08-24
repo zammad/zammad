@@ -23,7 +23,7 @@ import type {
 } from '@shared/graphql/types'
 import testFlags from '@shared/utils/testFlags'
 import log from '@shared/utils/log'
-import useLocaleStore from './locale'
+import { useLocaleStore } from './locale'
 
 let sessionIdQuery: QueryHandler<SessionIdQuery, SessionIdQueryVariables>
 

@@ -6,10 +6,10 @@ import App from '@mobile/App.vue'
 import { useSessionStore } from '@shared/stores/session'
 import '@mobile/styles/main.scss'
 import initializeStoreSubscriptions from '@shared/initializer/storeSubscriptions'
-import useApplicationStore from '@shared/stores/application'
-import useLocaleStore from '@shared/stores/locale'
+import { useApplicationStore } from '@shared/stores/application'
+import { useLocaleStore } from '@shared/stores/locale'
 import initializeRouter from '@mobile/router'
-import useAuthenticationStore from '@shared/stores/authentication'
+import { useAuthenticationStore } from '@shared/stores/authentication'
 import 'virtual:svg-icons-register' // eslint-disable-line import/no-unresolved
 import initializeApp from './initialize'
 

@@ -7,7 +7,7 @@ import { i18n } from '@shared/i18n'
 import CommonBackButton from '@mobile/components/CommonBackButton/CommonBackButton.vue'
 import { EnumOrderDirection } from '@shared/graphql/types'
 import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
-import { useTicketsOverviews } from '@mobile/entities/ticket/stores/ticketOverviews'
+import { useTicketOverviewsStore } from '@mobile/entities/ticket/stores/ticketOverviews'
 import CommonSelect from '@mobile/components/CommonSelect/CommonSelect.vue'
 import { useSessionStore } from '@shared/stores/session'
 import { useRouteQuery } from '@vueuse/router'
@@ -24,7 +24,7 @@ const router = useRouter()
 const route = useRoute()
 
 const { overviews, loading: loadingOverviews } = storeToRefs(
-  useTicketsOverviews(),
+  useTicketOverviewsStore(),
 )
 
 const optionsOverviews = computed(() => {

@@ -4,7 +4,7 @@
 import { markRaw, ref, toRef } from 'vue'
 import { i18n } from '@shared/i18n'
 import { useDialog } from '@shared/composables/useDialog'
-import useLocaleStore from '@shared/stores/locale'
+import { useLocaleStore } from '@shared/stores/locale'
 import useValue from '../../composables/useValue'
 import useSelectOptions from '../../composables/useSelectOptions'
 import useSelectAutoselect from '../../composables/useSelectAutoselect'

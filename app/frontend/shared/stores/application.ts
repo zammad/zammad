@@ -42,7 +42,7 @@ let connectionNotificationId: string
 // TODO: consider switching from notification to a modal dialog, and improving the message
 const notifications = useNotifications()
 
-const useApplicationStore = defineStore(
+export const useApplicationStore = defineStore(
   'application',
   () => {
     const loaded = ref(false)
@@ -52,7 +52,7 @@ const useApplicationStore = defineStore(
       const loadingAppElement: Maybe<HTMLElement> =
         document.getElementById('loading-app')
 
-      if (useNotifications().hasErrors()) {
+      if (notifications.hasErrors()) {
         loadingAppElement
           ?.getElementsByClassName('loading-failed')
           .item(0)
@@ -155,5 +155,3 @@ const useApplicationStore = defineStore(
     requiresAuth: false,
   },
 )
-
-export default useApplicationStore

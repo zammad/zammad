@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import useApplicationStore from '@shared/stores/application'
+import { useApplicationStore } from '@shared/stores/application'
 import { visitView } from '@tests/support/components/visitView'
 import { mockApplicationConfig } from '@tests/support/mock-applicationConfig'
 import { mockAuthentication } from '@tests/support/mock-authentication'
@@ -12,7 +12,7 @@ import { ConfigUpdatesDocument } from '@shared/graphql/subscriptions/configUpdat
 import { LogoutDocument } from '@shared/graphql/mutations/logout.api'
 import { ApplicationConfigDocument } from '@shared/graphql/queries/applicationConfig.api'
 import { waitFor } from '@testing-library/vue'
-import useAuthenticationStore from '@shared/stores/authentication'
+import { useAuthenticationStore } from '@shared/stores/authentication'
 import { mockPermissions } from '@tests/support/mock-permissions'
 
 vi.mock('@shared/server/apollo/client', () => {

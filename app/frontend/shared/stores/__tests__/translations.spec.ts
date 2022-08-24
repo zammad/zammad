@@ -6,7 +6,7 @@ import { provideApolloClient } from '@vue/apollo-composable'
 import { i18n } from '@shared/i18n'
 import { TranslationsDocument } from '@shared/graphql/queries/translations.api'
 import type { TranslationsPayload } from '@shared/graphql/types'
-import useTranslationsStore from '../translations'
+import { useTranslationsStore } from '../translations'
 
 const mockQueryResult = (
   locale: string,

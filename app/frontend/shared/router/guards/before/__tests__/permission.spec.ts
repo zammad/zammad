@@ -2,7 +2,7 @@
 
 import { createPinia, setActivePinia } from 'pinia'
 import type { RouteLocationNormalized } from 'vue-router'
-import useAuthenticationStore from '@shared/stores/authentication'
+import { useAuthenticationStore } from '@shared/stores/authentication'
 import { useSessionStore } from '@shared/stores/session'
 import permissionGuard from '../permission'
 

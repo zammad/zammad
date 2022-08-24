@@ -6,7 +6,7 @@ import CommonInputSearch from '@shared/components/CommonInputSearch/CommonInputS
 import { useSessionStore } from '@shared/stores/session'
 import type { MenuItem } from '@mobile/components/CommonSectionMenu'
 import CommonSectionMenu from '@mobile/components/CommonSectionMenu/CommonSectionMenu.vue'
-import { useTicketsOverviews } from '@mobile/entities/ticket/stores/ticketOverviews'
+import { useTicketOverviewsStore } from '@mobile/entities/ticket/stores/ticketOverviews'
 
 const IS_DEV = import.meta.env.DEV
 
@@ -35,7 +35,7 @@ const menu: MenuItem[] = [
     : []),
 ]
 
-const overviews = useTicketsOverviews()
+const overviews = useTicketOverviewsStore()
 
 const ticketOverview = computed<MenuItem[]>(() => {
   if (overviews.loading) return []

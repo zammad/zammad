@@ -2,7 +2,7 @@
 
 import type { RouteRecordRaw } from 'vue-router'
 
-import useAuthenticationStore from '@shared/stores/authentication'
+import { useAuthenticationStore } from '@shared/stores/authentication'
 import { useNotifications } from '@shared/components/CommonNotifications'
 
 export const isMainRoute = true

@@ -6,7 +6,7 @@ import { provideApolloClient } from '@vue/apollo-composable'
 import { LocalesDocument } from '@shared/graphql/queries/locales.api'
 import type { LocalesQuery } from '@shared/graphql/types'
 import { EnumTextDirection } from '@shared/graphql/types'
-import useLocaleStore from '../locale'
+import { useLocaleStore } from '../locale'
 
 const mockQueryResult = (): LocalesQuery => {
   return {

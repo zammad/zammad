@@ -8,7 +8,7 @@ import 'vue-advanced-cropper/dist/style.css'
 import type { ImageFileData } from '@shared/utils/files'
 import { convertFileList } from '@shared/utils/files'
 import { useSessionStore } from '@shared/stores/session'
-import useApplicationStore from '@shared/stores/application'
+import { useApplicationStore } from '@shared/stores/application'
 import {
   useNotifications,
   NotificationTypes,

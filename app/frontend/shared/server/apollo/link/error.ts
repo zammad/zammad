@@ -6,7 +6,7 @@ import log from '@shared/utils/log'
 import type { GraphQLErrorExtensionsHandler } from '@shared/types/error'
 import { GraphQLErrorTypes } from '@shared/types/error'
 import emitter from '@shared/utils/emitter'
-import useApplicationStore from '@shared/stores/application'
+import { useApplicationStore } from '@shared/stores/application'
 
 const errorLink = onError(({ graphQLErrors, networkError, operation }) => {
   const errorContext = getErrorContext(operation)

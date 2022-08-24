@@ -4,7 +4,7 @@ import { createTestingPinia } from '@pinia/testing'
 import type { RouteLocationNormalized } from 'vue-router'
 import { nextTick } from 'vue'
 import useMetaTitle from '@shared/composables/useMetaTitle'
-import useApplicationStore from '@shared/stores/application'
+import { useApplicationStore } from '@shared/stores/application'
 import headerTitle from '../headerTitle'
 
 describe('headerTitle', () => {

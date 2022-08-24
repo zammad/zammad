@@ -3,7 +3,7 @@
 import { TranslationsDocument } from '@shared/graphql/queries/translations.api'
 import type { LocalesQuery } from '@shared/graphql/types'
 import { EnumTextDirection } from '@shared/graphql/types'
-import useLocaleStore from '@shared/stores/locale'
+import { useLocaleStore } from '@shared/stores/locale'
 import { visitView } from '@tests/support/components/visitView'
 import { mockAccount } from '@tests/support/mock-account'
 import { mockGraphQLApi } from '@tests/support/mock-graphql-api'

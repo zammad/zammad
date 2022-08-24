@@ -7,11 +7,11 @@ import log from '@shared/utils/log'
 import localeForBrowserLanguage from '@shared/i18n/localeForBrowserLanguage'
 import getAvailableLocales from '@shared/i18n/availableLocales'
 import type { LocalesQuery } from '@shared/graphql/types'
-import useTranslationsStore from './translations'
+import { useTranslationsStore } from './translations'
 
 type Locale = LastArrayElement<LocalesQuery['locales']>
 
-const useLocaleStore = defineStore(
+export const useLocaleStore = defineStore(
   'locale',
   () => {
     const localeData = ref<Maybe<Locale>>(null)
@@ -60,5 +60,3 @@ const useLocaleStore = defineStore(
     requiresAuth: false,
   },
 )
-
-export default useLocaleStore

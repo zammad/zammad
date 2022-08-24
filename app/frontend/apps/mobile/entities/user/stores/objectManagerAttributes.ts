@@ -4,7 +4,7 @@ import { defineStore } from 'pinia'
 import { useObjectManagerAttributes } from '@shared/entities/object-manager/composables/useObjectManagerAttributes'
 import { EnumObjectManagerObjects } from '@shared/graphql/types'
 
-export const useUserObjectManagerAttributes = defineStore(
+export const useUserObjectManagerAttributesStore = defineStore(
   'userObjectAttributes',
   () => {
     const attributes = useObjectManagerAttributes(

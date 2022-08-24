@@ -6,13 +6,13 @@ import {
   useNotifications,
   NotificationTypes,
 } from '@shared/components/CommonNotifications'
-import useAuthenticationStore from '@shared/stores/authentication'
+import { useAuthenticationStore } from '@shared/stores/authentication'
 import CommonLogo from '@shared/components/CommonLogo/CommonLogo.vue'
 import Form from '@shared/components/Form/Form.vue'
 import { type FormData, useForm } from '@shared/components/Form'
 import UserError from '@shared/errors/UserError'
 import { defineFormSchema } from '@mobile/form/composable'
-import useApplicationLoadedStore from '@shared/stores/application'
+import { useApplicationStore } from '@shared/stores/application'
 
 interface Props {
   invalidatedSession?: string
@@ -36,7 +36,7 @@ const authentication = useAuthenticationStore()
 const router = useRouter()
 const route = useRoute()
 
-const application = useApplicationLoadedStore()
+const application = useApplicationStore()
 
 const loginScheme = defineFormSchema([
   {
@@ -102,25 +102,28 @@ const login = (formData: FormData<LoginFormData>) => {
   // Clear notifications to avoid duplicated error messages.
   clearAllNotifications()
 
-  return authentication
-    .login(formData.login!, formData.password!, formData.rememberMe!)
-    .then(() => {
-      // TODO: maybe we need some additional logic for the ThirtParty-Login situtation.
-      const { redirect: redirectUrl } = route.query
-      if (typeof redirectUrl === 'string') {
-        router.replace(redirectUrl)
-      } else {
-        router.replace('/')
-      }
-    })
-    .catch((errors: UserError) => {
-      if (errors instanceof UserError) {
-        notify({
-          message: errors.generalErrors[0],
-          type: NotificationTypes.Error,
-        })
-      }
-    })
+  return (
+    authentication
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      .login(formData.login!, formData.password!, formData.rememberMe!)
+      .then(() => {
+        // TODO: maybe we need some additional logic for the ThirtParty-Login situtation.
+        const { redirect: redirectUrl } = route.query
+        if (typeof redirectUrl === 'string') {
+          router.replace(redirectUrl)
+        } else {
+          router.replace('/')
+        }
+      })
+      .catch((errors: UserError) => {
+        if (errors instanceof UserError) {
+          notify({
+            message: errors.generalErrors[0],
+            type: NotificationTypes.Error,
+          })
+        }
+      })
+  )
 }
 </script>
 

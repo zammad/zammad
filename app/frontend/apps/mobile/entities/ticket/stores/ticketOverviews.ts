@@ -15,7 +15,7 @@ export type TicketOverview = ConfidentTake<
   'ticketOverviews.edges.node'
 >
 
-export const useTicketsOverviews = defineStore('tickets-overview', () => {
+export const useTicketOverviewsStore = defineStore('ticketOverviews', () => {
   const handler = new QueryHandler(
     useTicketOverviewsQuery({ withTicketCount: true }),
   )

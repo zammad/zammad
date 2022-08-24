@@ -2,9 +2,9 @@
 
 import { watch } from 'vue'
 import consumer from '@shared/server/action_cable/consumer'
-import useLocaleStore from '@shared/stores/locale'
+import { useLocaleStore } from '@shared/stores/locale'
 import { useSessionStore } from '@shared/stores/session'
-import useApplicationStore from '@shared/stores/application'
+import { useApplicationStore } from '@shared/stores/application'
 
 export default function initializeStoreSubscriptions(): void {
   const session = useSessionStore()

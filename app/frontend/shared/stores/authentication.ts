@@ -9,10 +9,10 @@ import { clearApolloClientStore } from '@shared/server/apollo/client'
 import useFingerprint from '@shared/composables/useFingerprint'
 import testFlags from '@shared/utils/testFlags'
 import { useSessionStore } from './session'
-import useApplicationStore from './application'
+import { useApplicationStore } from './application'
 import { resetAndDisposeStores } from '.'
 
-const useAuthenticationStore = defineStore(
+export const useAuthenticationStore = defineStore(
   'authentication',
   () => {
     const authenticated = ref(false)
@@ -103,5 +103,3 @@ const useAuthenticationStore = defineStore(
     requiresAuth: false,
   },
 )
-
-export default useAuthenticationStore
