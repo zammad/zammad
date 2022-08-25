@@ -9,7 +9,7 @@ frontend:vitest:
     - yarn test
     - echo "Also test eslint-plugin-zammad..."
     - cd .eslint-plugin-zammad
-    - yarn install
+    - yarn install || yarn install || yarn install  # retry on errors
     - yarn test
 
 frontend:cypress:
