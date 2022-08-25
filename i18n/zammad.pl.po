@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-08-16 03:30+0000\n"
-"Last-Translator: Magdalena Dulęba <magdalena.duleba@pwr.edu.pl>\n"
+"PO-Revision-Date: 2022-08-25 19:53+0000\n"
+"Last-Translator: MBekspert <michal.bosak@ekspert.biz>\n"
 "Language-Team: Polish <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/pl/>\n"
 "Language: pl\n"
@@ -620,9 +620,8 @@ msgid "Actions"
 msgstr "Akcje"
 
 #: db/seeds/settings.rb
-#, fuzzy
 msgid "Activate the recursive processing of ticket triggers."
-msgstr "Aktywuj rekurencyjne przetwarzanie wyzwalaczy biletów."
+msgstr "Aktywuj rekurencyjne przetwarzanie wyzwalaczy zgłoszeń."
 
 #: db/seeds/settings.rb
 msgid "Activates lost password feature for users."
@@ -851,9 +850,8 @@ msgid "Agent Name"
 msgstr "Imię agenta"
 
 #: db/seeds/settings.rb
-#, fuzzy
 msgid "Agent Name + FromSeparator + System Address Display Name"
-msgstr "Nazwa agenta + OD separator + Wyświetlana nazwa adresu systemowego"
+msgstr "Nazwa agenta + OD separator + Wyświetlana nazwa adresu systemu"
 
 #: db/seeds/settings.rb
 msgid "Agent idle timeout"
@@ -998,7 +996,6 @@ msgid "App Secret"
 msgstr "Sekret Aplikacji"
 
 #: db/seeds/settings.rb
-#, fuzzy
 msgid "App Tenant ID"
 msgstr "ID tenantu"
 
@@ -1307,7 +1304,6 @@ msgid "Auto Assignment"
 msgstr "Automatyczne przypisanie"
 
 #: app/assets/javascripts/app/controllers/getting_started/auto_wizard.coffee
-#, fuzzy
 msgid "Auto Wizard"
 msgstr "Kreator automatyczny"
 
@@ -1376,7 +1372,6 @@ msgid "Average: %s%"
 msgstr "Średnio: %s%"
 
 #: db/seeds/settings.rb
-#, fuzzy
 msgid "BCC address for all outgoing emails"
 msgstr "Adres UDW dla wszystkich wychodzących e-maili"
 
@@ -1538,7 +1533,6 @@ msgid "But it's only available in these languages:"
 msgstr "Ale jest dostępny tylko w tych językach:"
 
 #: db/seeds/settings.rb
-#, fuzzy
 msgid ""
 "By default, the follow-up check is done via the subject of an email. This "
 "setting lets you add more fields for which the follow-up check will be "
@@ -1549,18 +1543,16 @@ msgstr ""
 "wykonana kontrola uzupełniająca."
 
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
-#, fuzzy
 msgid ""
 "By mapping your agents' Placetel SIP users to their Zammad user accounts, "
 "Zammad can support your agents by opening either a new ticket dialogue or "
 "the user profile upon picking up a new call."
 msgstr ""
-"Poprzez mapowanie użytkowników Placetel SIP na ich konta użytkowników "
-"Zammad. Dodatkowo Zammad może wspierać Twoich agentów, otwierając nowe okno "
-"dialogowe zgłoszenia lub profil użytkownika po odebraniu nowego połączenia."
+"Mapując użytkowników Placetel SIP swoich agentów na ich konta użytkowników "
+"Zammada, Zammad może wspierać Twoich agentów, otwierając nowe okno dialogowe "
+"biletu lub profil użytkownika po odebraniu nowego połączenia."
 
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
-#, fuzzy
 msgid ""
 "By mapping your agents' sipgate users to their Zammad user accounts, Zammad "
 "can support your agents by opening either a new ticket dialogue or the user "
@@ -1697,7 +1689,6 @@ msgid "Can't merge ticket with itself!"
 msgstr "Nie można połączyć zgłoszenia z samym sobą!"
 
 #: lib/sessions/event/spool.rb
-#, fuzzy
 msgid "Can't send spool, session not authenticated"
 msgstr "Nie można wysłać buforu, sesja nie została uwierzytelniona"
 
@@ -1954,7 +1945,6 @@ msgid "Checkmk token"
 msgstr "Token checkmk"
 
 #: db/seeds/settings.rb
-#, fuzzy
 msgid "Checksum"
 msgstr "Suma kontrolna"
 
@@ -2092,7 +2082,6 @@ msgid "Close & Tag as Spam"
 msgstr "Zamknij & oznacz jako Spam"
 
 #: lib/excel_sheet/ticket.rb
-#, fuzzy
 msgid "Close Diff In Min"
 msgstr "Zamknij różnicę w min"
 
@@ -2101,7 +2090,6 @@ msgid "Close Escalation At"
 msgstr "Zakończ eskalację o"
 
 #: lib/excel_sheet/ticket.rb
-#, fuzzy
 msgid "Close In Min"
 msgstr "Zamknij w min"
 
@@ -2733,7 +2721,6 @@ msgid "DataPrivacyTask"
 msgstr "Zadanie prywatności danych"
 
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
-#, fuzzy
 msgid "DataPrivacyTasks"
 msgstr "Zadania prywatności danych"
 
@@ -2858,7 +2845,6 @@ msgid "Define max. attachment size for Elasticsearch."
 msgstr "Określ maks. rozmiar załącznika dla Elasticsearch."
 
 #: db/seeds/settings.rb
-#, fuzzy
 msgid "Define max. payload size for Elasticsearch."
 msgstr "Określ maks. rozmiar ładunku dla Elasticsearch."
 
@@ -3772,7 +3758,6 @@ msgstr "Opis"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #: app/assets/javascripts/app/views/channel/form.jst.eco
-#, fuzzy
 msgid "Designer"
 msgstr "Projektant"
 
@@ -3951,7 +3936,6 @@ msgid "Download Private Key"
 msgstr "Pobierz klucz prywatny"
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
-#, fuzzy
 msgid "Download and install the %s Migration Plugin on your %s instance."
 msgstr "Pobierz i zainstaluj wtyczkę %s Migration Plugin na instancji %s."
 
@@ -4617,7 +4601,6 @@ msgstr "Przykładowy plik CSV do pobrania."
 
 #: app/assets/javascripts/app/controllers/webhook.coffee
 #: app/assets/javascripts/app/controllers/widget/payload_example.coffee
-#, fuzzy
 msgid "Example Payload"
 msgstr "Przykładowy ładunek"
 
@@ -4845,7 +4828,6 @@ msgid "Fixed Email Accounts"
 msgstr "Stałe konta e-mail"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
-#, fuzzy
 msgid "Flat Design"
 msgstr "płaski projekt"
 
@@ -4991,7 +4973,6 @@ msgid "From"
 msgstr "Od"
 
 #: app/assets/javascripts/app/controllers/_manage/system.coffee
-#, fuzzy
 msgid "Frontend"
 msgstr "Frontend"
 
@@ -5016,9 +4997,8 @@ msgid "GID"
 msgstr "GID"
 
 #: app/models/channel/driver/sms/massenversand.rb
-#, fuzzy
 msgid "Gateway"
-msgstr "Wejscie"
+msgstr "Wejście"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee
 #: app/assets/javascripts/app/lib/app_post/ajax.coffee
@@ -6063,9 +6043,8 @@ msgstr ""
 "Niewłaściwe hasło, musi zawierać przynajmniej 2 małe i 2 WIELKIE litery!"
 
 #: app/controllers/settings_controller.rb
-#, fuzzy
 msgid "Invalid payload, need data:image in logo param"
-msgstr "Nieprawidłowy ładunek, potrzebne dane: obraz w param logo"
+msgstr "Nieprawidłowy ładunek, potrzebne dane:obraz w parametrach logo"
 
 #: lib/knowledge_base/permissions_update.rb
 msgid "Invalid permissions, do not lock yourself out."
@@ -12477,7 +12456,7 @@ msgstr "Zammad uruchamia się ponownie…"
 
 #: app/assets/javascripts/app/views/widget/switch_back_to_user.jst.eco
 msgid "Zammad looks like this for \"%s\""
-msgstr "Zammad wygląd tak dla %s"
+msgstr "Zammad wygląda tak dla %s"
 
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee
 msgid "Zammad requires a restart!"
@@ -13139,10 +13118,8 @@ msgid "regex mismatch"
 msgstr "niezgodność wyrażeń regularnych"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
-#, fuzzy
-#| msgid "active"
 msgid "relative"
-msgstr "aktywny"
+msgstr "względny"
 
 #: db/seeds/settings.rb
 msgid "relative - e. g. \"2 hours ago\" or \"2 days and 15 minutes ago\""
