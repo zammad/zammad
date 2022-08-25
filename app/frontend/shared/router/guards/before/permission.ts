@@ -9,6 +9,7 @@ import log from '@shared/utils/log'
 import { useAuthenticationStore } from '@shared/stores/authentication'
 import { useSessionStore } from '@shared/stores/session'
 import { ErrorStatusCodes } from '@shared/types/error'
+import { errorOptions } from '@mobile/router/error'
 
 const permissionGuard: NavigationGuard = (
   to: RouteLocationNormalized,
@@ -30,15 +31,19 @@ const permissionGuard: NavigationGuard = (
   if (!hasPermission) {
     log.debug(`Route guard for '${to.path}': permission - forbidden.`)
 
+    errorOptions.value = {
+      title: __('Forbidden'),
+      message: __(
+        "You don't have the necessary permissions to access this page.",
+      ),
+      statusCode: ErrorStatusCodes.Forbidden,
+      route: to.fullPath,
+    }
+
     next({
       name: 'Error',
-      params: {
-        title: __('Forbidden'),
-        message: __(
-          "You don't have the necessary permissions to access this page.",
-        ),
-        statusCode: ErrorStatusCodes.Forbidden,
-        route: to.fullPath,
+      query: {
+        redirect: '1',
       },
       replace: true,
     })

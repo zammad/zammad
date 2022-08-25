@@ -6,6 +6,7 @@ import mainInitializeRouter from '@shared/router'
 import type { InitializeAppRouter, RoutesModule } from '@shared/types/router'
 import LayoutMain from '@mobile/components/layout/LayoutMain.vue'
 import transitionViewGuard from './guards/before/viewTransition'
+import { errorAfterGuard } from './error'
 
 const routeModules: Record<string, RoutesModule> = import.meta.glob(
   ['../modules/*/routes.ts', '../modules/*/routes/*.ts'],
@@ -66,7 +67,7 @@ const initializeRouter: InitializeAppRouter = (app: App) => {
     app,
     routes,
     [transitionViewGuard],
-    undefined,
+    [errorAfterGuard],
     'mobile',
   )
 }

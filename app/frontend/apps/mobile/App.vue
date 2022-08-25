@@ -55,7 +55,7 @@ emitter.on('sessionInvalid', async () => {
 
     router.replace({
       name: 'Login',
-      params: {
+      query: {
         invalidatedSession: '1',
       },
     })

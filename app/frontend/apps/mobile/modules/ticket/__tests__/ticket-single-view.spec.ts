@@ -3,7 +3,6 @@
 const now = new Date(2022, 1, 1, 0, 0, 0, 0)
 vi.setSystemTime(now)
 
-import { ErrorStatusCodes } from '@shared/types/error'
 import { getAllByTestId } from '@testing-library/vue'
 import { getTestRouter } from '@tests/support/components/renderComponent'
 import { visitView } from '@tests/support/components/visitView'
@@ -145,9 +144,8 @@ test("redirects to error page, if can't find ticket", async () => {
   const router = getTestRouter()
   expect(router.replace).toHaveBeenCalledWith({
     name: 'Error',
-    params: {
-      statusCode: ErrorStatusCodes.Forbidden,
-      message: 'Sorry, but you have insufficient rights to open this page.',
+    query: {
+      redirect: '1',
     },
   })
 })

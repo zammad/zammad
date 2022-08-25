@@ -14,6 +14,7 @@ import type {
   TicketUpdatesSubscription,
   TicketUpdatesSubscriptionVariables,
 } from '@shared/graphql/types'
+import { redirectToError } from '@mobile/router/error'
 import { noop } from 'lodash-es'
 import TicketHeader from '../components/TicketDetailView/TicketDetailViewHeader.vue'
 import TicketTitle from '../components/TicketDetailView/TicketDetailViewTitle.vue'
@@ -52,12 +53,9 @@ const articlesQuery = new QueryHandler(
 const router = useRouter()
 
 ticketQuery.onError(() => {
-  return router.replace({
-    name: 'Error',
-    params: {
-      statusCode: ErrorStatusCodes.Forbidden,
-      message: __('Sorry, but you have insufficient rights to open this page.'),
-    },
+  return redirectToError(router, {
+    statusCode: ErrorStatusCodes.Forbidden,
+    message: __('Sorry, but you have insufficient rights to open this page.'),
   })
 })
 

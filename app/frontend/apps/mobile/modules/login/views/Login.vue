@@ -14,15 +14,11 @@ import UserError from '@shared/errors/UserError'
 import { defineFormSchema } from '@mobile/form/composable'
 import { useApplicationStore } from '@shared/stores/application'
 
-interface Props {
-  invalidatedSession?: string
-}
-
-const props = defineProps<Props>()
+const route = useRoute()
 
 // Output a hint when the session is no longer valid.
 // This could happen because the session was deleted on the server.
-if (props.invalidatedSession === '1') {
+if (route.query.invalidatedSession === '1') {
   const { notify } = useNotifications()
 
   notify({
@@ -34,7 +30,6 @@ if (props.invalidatedSession === '1') {
 const authentication = useAuthenticationStore()
 
 const router = useRouter()
-const route = useRoute()
 
 const application = useApplicationStore()
 

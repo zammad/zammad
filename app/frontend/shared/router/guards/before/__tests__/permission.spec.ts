@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import { createPinia, setActivePinia } from 'pinia'
+import { errorOptions } from '@mobile/router/error'
 import type { RouteLocationNormalized } from 'vue-router'
 import { useAuthenticationStore } from '@shared/stores/authentication'
 import { useSessionStore } from '@shared/stores/session'
@@ -9,19 +10,6 @@ import permissionGuard from '../permission'
 vi.mock('@shared/server/apollo/client', () => {
   return {}
 })
-
-const errorRedirect = (route: string) => {
-  return {
-    name: 'Error',
-    params: {
-      title: 'Forbidden',
-      message: "You don't have the necessary permissions to access this page.",
-      statusCode: 403,
-      route,
-    },
-    replace: true,
-  }
-}
 
 describe('permissionGuard', () => {
   setActivePinia(createPinia())
@@ -82,7 +70,20 @@ describe('permissionGuard', () => {
 
     permissionGuard(to, from, next)
 
-    expect(next).toHaveBeenCalledWith(errorRedirect('/tickets'))
+    expect(next).toHaveBeenCalledWith({
+      name: 'Error',
+      query: {
+        redirect: '1',
+      },
+      replace: true,
+    })
+
+    expect(errorOptions.value).toEqual({
+      title: 'Forbidden',
+      message: "You don't have the necessary permissions to access this page.",
+      statusCode: 403,
+      route: '/tickets',
+    })
   })
 
   it('should allow access for user with required permission', () => {

@@ -16,7 +16,7 @@ export class Walker {
     })
   }
 
-  private static getHistoryBackRoute() {
+  private static getHistoryBackRoute(): string | null {
     const { state } = window.history
 
     if (state && typeof state.back === 'string') {
