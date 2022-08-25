@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-08-11 03:30+0000\n"
-"Last-Translator: Magdalena Dulęba <magdalena.duleba@pwr.edu.pl>\n"
+"PO-Revision-Date: 2022-08-25 03:30+0000\n"
+"Last-Translator: MBekspert <michal.bosak@ekspert.biz>\n"
 "Language-Team: Polish <https://translations.zammad.org/projects/zammad/"
 "zammad-development/pl/>\n"
 "Language: pl\n"
@@ -98,10 +98,8 @@ msgid "%s ago"
 msgstr "%s temu"
 
 #: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleBubble.vue
-#, fuzzy
-#| msgid "Attached Files"
 msgid "%s attached files"
-msgstr "Załączone pliki"
+msgstr "%s załączone pliki"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 msgid "%s completed data privacy task to delete user ID |%s|"
@@ -358,10 +356,8 @@ msgstr ""
 "także skonfigurować ** powiadomienia e-mail **."
 
 #: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleBubble.vue
-#, fuzzy
-#| msgid "Attached Files"
 msgid "1 attached file"
-msgstr "Załączone pliki"
+msgstr "1 załączony plik"
 
 #: db/seeds/settings.rb
 msgid "1 day"
@@ -633,9 +629,8 @@ msgid "Actions"
 msgstr "Akcje"
 
 #: db/seeds/settings.rb
-#, fuzzy
 msgid "Activate the recursive processing of ticket triggers."
-msgstr "Aktywuj rekurencyjne przetwarzanie wyzwalaczy biletów."
+msgstr "Aktywuj rekurencyjne przetwarzanie wyzwalaczy zgłoszeń."
 
 #: db/seeds/settings.rb
 msgid "Activates lost password feature for users."
@@ -868,9 +863,8 @@ msgid "Agent Name"
 msgstr "Imię agenta"
 
 #: db/seeds/settings.rb
-#, fuzzy
 msgid "Agent Name + FromSeparator + System Address Display Name"
-msgstr "Nazwa agenta + OD separator + Wyświetlana nazwa adresu systemowego"
+msgstr "Nazwa agenta + OD separator + Wyświetlana nazwa adresu systemu"
 
 #: db/seeds/settings.rb
 msgid "Agent idle timeout"
@@ -1013,7 +1007,6 @@ msgid "App Secret"
 msgstr "Sekret Aplikacji"
 
 #: db/seeds/settings.rb
-#, fuzzy
 msgid "App Tenant ID"
 msgstr "ID tenantu"
 
@@ -1327,7 +1320,6 @@ msgid "Auto Assignment"
 msgstr "Automatyczne przypisanie"
 
 #: app/assets/javascripts/app/controllers/getting_started/auto_wizard.coffee
-#, fuzzy
 msgid "Auto Wizard"
 msgstr "Kreator automatyczny"
 
@@ -1405,7 +1397,6 @@ msgid "Average: %s%"
 msgstr "Średnio: %s%"
 
 #: db/seeds/settings.rb
-#, fuzzy
 msgid "BCC address for all outgoing emails"
 msgstr "Adres UDW dla wszystkich wychodzących e-maili"
 
@@ -1567,7 +1558,6 @@ msgid "But it's only available in these languages:"
 msgstr "Ale jest dostępny tylko w tych językach:"
 
 #: db/seeds/settings.rb
-#, fuzzy
 msgid ""
 "By default, the follow-up check is done via the subject of an email. This "
 "setting lets you add more fields for which the follow-up check will be "
@@ -1578,18 +1568,16 @@ msgstr ""
 "wykonana kontrola uzupełniająca."
 
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
-#, fuzzy
 msgid ""
 "By mapping your agents' Placetel SIP users to their Zammad user accounts, "
 "Zammad can support your agents by opening either a new ticket dialogue or "
 "the user profile upon picking up a new call."
 msgstr ""
-"Poprzez mapowanie użytkowników Placetel SIP na ich konta użytkowników "
-"Zammad. Dodatkowo Zammad może wspierać Twoich agentów, otwierając nowe okno "
-"dialogowe zgłoszenia lub profil użytkownika po odebraniu nowego połączenia."
+"Mapując użytkowników Placetel SIP swoich agentów na ich konta użytkowników "
+"Zammada, Zammad może wspierać Twoich agentów, otwierając nowe okno dialogowe "
+"biletu lub profil użytkownika po odebraniu nowego połączenia."
 
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
-#, fuzzy
 msgid ""
 "By mapping your agents' sipgate users to their Zammad user accounts, Zammad "
 "can support your agents by opening either a new ticket dialogue or the user "
@@ -1727,7 +1715,6 @@ msgid "Can't merge ticket with itself!"
 msgstr "Nie można połączyć zgłoszenia z samym sobą!"
 
 #: lib/sessions/event/spool.rb
-#, fuzzy
 msgid "Can't send spool, session not authenticated"
 msgstr "Nie można wysłać buforu, sesja nie została uwierzytelniona"
 
@@ -1987,7 +1974,6 @@ msgid "Checkmk token"
 msgstr "Token checkmk"
 
 #: db/seeds/settings.rb
-#, fuzzy
 msgid "Checksum"
 msgstr "Suma kontrolna"
 
@@ -2126,7 +2112,6 @@ msgid "Close & Tag as Spam"
 msgstr "Zamknij & oznacz jako Spam"
 
 #: lib/excel_sheet/ticket.rb
-#, fuzzy
 msgid "Close Diff In Min"
 msgstr "Zamknij różnicę w min"
 
@@ -2135,7 +2120,6 @@ msgid "Close Escalation At"
 msgstr "Zakończ eskalację o"
 
 #: lib/excel_sheet/ticket.rb
-#, fuzzy
 msgid "Close In Min"
 msgstr "Zamknij w min"
 
@@ -2403,7 +2387,7 @@ msgstr "Konwersja retweetów na zgłoszenia jest wyłączona."
 
 #: app/assets/javascripts/app/controllers/_application_controller/_base.coffee
 msgid "Copied!"
-msgstr ""
+msgstr "Skopiowane!"
 
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
 msgid "Copy"
@@ -2773,7 +2757,6 @@ msgid "DataPrivacyTask"
 msgstr "Zadanie prywatności danych"
 
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
-#, fuzzy
 msgid "DataPrivacyTasks"
 msgstr "Zadania prywatności danych"
 
@@ -2898,7 +2881,6 @@ msgid "Define max. attachment size for Elasticsearch."
 msgstr "Określ maks. rozmiar załącznika dla Elasticsearch."
 
 #: db/seeds/settings.rb
-#, fuzzy
 msgid "Define max. payload size for Elasticsearch."
 msgstr "Określ maks. rozmiar ładunku dla Elasticsearch."
 
@@ -3816,7 +3798,6 @@ msgstr "Opis"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #: app/assets/javascripts/app/views/channel/form.jst.eco
-#, fuzzy
 msgid "Designer"
 msgstr "Projektant"
 
@@ -3987,10 +3968,8 @@ msgid "Download"
 msgstr "Pobierz"
 
 #: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleAttachment.vue
-#, fuzzy
-#| msgid "Download"
 msgid "Download %s"
-msgstr "Pobierz"
+msgstr "Pobierz %s"
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 msgid "Download %s Migration Plugin"
@@ -4009,7 +3988,6 @@ msgid "Download Private Key"
 msgstr "Pobierz klucz prywatny"
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
-#, fuzzy
 msgid "Download and install the %s Migration Plugin on your %s instance."
 msgstr "Pobierz i zainstaluj wtyczkę %s Migration Plugin na instancji %s."
 
@@ -4525,7 +4503,7 @@ msgstr "Wprowadź link URL"
 
 #: app/frontend/apps/mobile/modules/search/views/SearchOverview.vue
 msgid "Enter more than two characters to get any results…"
-msgstr ""
+msgstr "Wpisz więcej niż dwa znaki, aby uzyskać jakiekolwiek wyniki…"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
@@ -4687,7 +4665,6 @@ msgstr "Przykładowy plik CSV do pobrania."
 
 #: app/assets/javascripts/app/controllers/webhook.coffee
 #: app/assets/javascripts/app/controllers/widget/payload_example.coffee
-#, fuzzy
 msgid "Example Payload"
 msgstr "Przykładowy ładunek"
 
@@ -4916,7 +4893,6 @@ msgid "Fixed Email Accounts"
 msgstr "Stałe konta e-mail"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
-#, fuzzy
 msgid "Flat Design"
 msgstr "płaski projekt"
 
@@ -5067,7 +5043,6 @@ msgid "From"
 msgstr "Od"
 
 #: app/assets/javascripts/app/controllers/_manage/system.coffee
-#, fuzzy
 msgid "Frontend"
 msgstr "Frontend"
 
@@ -5092,9 +5067,8 @@ msgid "GID"
 msgstr "GID"
 
 #: app/models/channel/driver/sms/massenversand.rb
-#, fuzzy
 msgid "Gateway"
-msgstr "Wejscie"
+msgstr "Wejście"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee
 #: app/assets/javascripts/app/lib/app_post/ajax.coffee
@@ -5752,10 +5726,8 @@ msgid "Image Service"
 msgstr "Usługa wizerunkowa"
 
 #: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleAttachment.vue
-#, fuzzy
-#| msgid "Image"
 msgid "Image of %s"
-msgstr "Obraz"
+msgstr "Obraz %s"
 
 #: app/assets/javascripts/app/controllers/import.coffee
 #: app/assets/javascripts/app/controllers/import_freshdesk.coffee
@@ -6155,9 +6127,8 @@ msgstr ""
 "Niewłaściwe hasło, musi zawierać przynajmniej 2 małe i 2 WIELKIE litery!"
 
 #: app/controllers/settings_controller.rb
-#, fuzzy
 msgid "Invalid payload, need data:image in logo param"
-msgstr "Nieprawidłowy ładunek, potrzebne dane: obraz w param logo"
+msgstr "Nieprawidłowy ładunek, potrzebne dane:obraz w parametrach logo"
 
 #: lib/knowledge_base/permissions_update.rb
 msgid "Invalid permissions, do not lock yourself out."
@@ -6832,10 +6803,8 @@ msgid "Messages"
 msgstr "Wiadomości"
 
 #: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
-#, fuzzy
-#| msgid "Show meta data"
 msgid "Meta Data"
-msgstr "Pokaż wyniki wyszukiwania"
+msgstr "Metadane"
 
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
 msgid "Method"
@@ -7121,6 +7090,10 @@ msgstr "Nawigacja"
 #: app/controllers/concerns/clones_ticket_article_attachments.rb
 msgid "Need 'form_id' to add attachments to new form."
 msgstr "Potrzebujesz „form_id”, aby dodać załączniki do nowego formularza."
+
+#: app/services/base_service.rb
+msgid "Need a valid user to create a new service object!"
+msgstr ""
 
 #: app/controllers/concerns/creates_ticket_articles.rb
 msgid "Need at least an 'article body' field."
@@ -7532,7 +7505,7 @@ msgstr "Niedostępne"
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee
-#: app/frontend/apps/mobile/modules/error/views/Error.vue
+#: app/frontend/apps/mobile/router/error.ts
 #: app/helpers/knowledge_base_public_page_title_helper.rb
 msgid "Not Found"
 msgstr "Nie znaleziono"
@@ -9013,8 +8986,6 @@ msgid "Search for users"
 msgstr "Szukaj użytkowników"
 
 #: app/frontend/apps/mobile/modules/search/views/SearchOverview.vue
-#, fuzzy
-#| msgid "Search…"
 msgid "Search for…"
 msgstr "Szukaj…"
 
@@ -9189,7 +9160,7 @@ msgstr "Wysyłanie…"
 
 #: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Sent"
-msgstr ""
+msgstr "Wysłano"
 
 #: app/assets/javascripts/app/controllers/maintenance.coffee
 msgid "Sent successfully!"
@@ -9580,12 +9551,9 @@ msgid "Something went wrong. Please contact your administrator."
 msgstr "Coś poszło nie tak. Skontaktuj się z administratorem."
 
 #: app/frontend/apps/mobile/modules/ticket/views/TicketDetailView.vue
-#, fuzzy
-#| msgid "Oops.. I'm sorry, but you have insufficient rights to open this %s."
 msgid "Sorry, but you have insufficient rights to open this page."
 msgstr ""
-"Ups... Przykro mi, ale nie masz wystarczających uprawnień, aby otworzyć ten "
-"%s."
+"Przepraszamy, ale nie masz wystarczających uprawnień, aby otworzyć tę stronę."
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Sorry, not all fields are filled out correctly."
@@ -10027,17 +9995,9 @@ msgstr "Nie można znaleźć tokena API."
 msgid "The Knowledge Base could not be created."
 msgstr "Baza wiedzy nie mogła zostać utworzona."
 
-#: app/controllers/users_controller.rb
-msgid "The MIME type of the full-size image is invalid."
-msgstr "Typ MIME obrazu w pełnym rozmiarze jest nieprawidłowy."
-
-#: app/graphql/gql/types/input/avatar_input_type.rb
+#: app/services/avatar/image_validate_service.rb
 msgid "The MIME type of the image is invalid."
 msgstr "Typ MIME obrazu jest nieprawidłowy."
-
-#: app/controllers/users_controller.rb
-msgid "The MIME type of the resized image is invalid."
-msgstr "Typ MIME obrazu o zmienionym rozmiarze jest nieprawidłowy."
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 msgid "The Telegram bot could not be saved."
@@ -10209,10 +10169,6 @@ msgstr ""
 msgid "The format of the subject."
 msgstr "Format dla tematu e-maila."
 
-#: app/controllers/users_controller.rb
-msgid "The full-size image is invalid."
-msgstr "Obraz w pełnym rozmiarze jest nieprawidłowy."
-
 #: db/seeds/settings.rb
 msgid ""
 "The identifier for a ticket, e.g. Ticket#, Call#, MyTicket#. The default is "
@@ -10221,7 +10177,7 @@ msgstr ""
 "Identyfikator dla zgłoszenia, np. Zgłoszenie#, Problem#, MojeZgłoszenia#. "
 "Domyślnie jest Zgłoszenie#."
 
-#: app/graphql/gql/types/input/avatar_input_type.rb
+#: app/services/avatar/image_validate_service.rb
 msgid "The image is invalid."
 msgstr "Obraz jest nieprawidłowy."
 
@@ -10261,7 +10217,7 @@ msgstr "Nie można zaktualizować języka."
 
 #: app/frontend/apps/mobile/modules/ticket/components/TicketList/TicketList.vue
 msgid "The limit of %s tickets reached (%s remaining)"
-msgstr ""
+msgstr "Osiągnięto limit %s zgłoszeń (pozostało %s)"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_new.coffee
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee
@@ -10497,10 +10453,6 @@ msgid "The required value external_credential could not be found in the cache."
 msgstr ""
 "Nie można znaleźć wymaganej wartości external_credential w pamięci "
 "podręcznej."
-
-#: app/controllers/users_controller.rb
-msgid "The resized image is invalid."
-msgstr "Obraz o zmienionym rozmiarze jest nieprawidłowy."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 msgid "The retried security process failed!"
@@ -11983,7 +11935,7 @@ msgstr ""
 msgid "We support"
 msgstr "Wspieramy"
 
-#: app/frontend/apps/mobile/modules/error/views/Error.vue
+#: app/frontend/apps/mobile/router/error.ts
 msgid "We're sorry, but this page doesn't exist."
 msgstr "Przepraszamy, ale ta strona nie istnieje."
 
@@ -12712,7 +12664,7 @@ msgstr "Zammad uruchamia się ponownie…"
 
 #: app/assets/javascripts/app/views/widget/switch_back_to_user.jst.eco
 msgid "Zammad looks like this for \"%s\""
-msgstr "Zammad wygląd tak dla %s"
+msgstr "Zammad wygląda tak dla %s"
 
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee
 msgid "Zammad requires a restart!"
@@ -13209,10 +13161,8 @@ msgid "left"
 msgstr "lewo"
 
 #: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleSeparatorMore.vue
-#, fuzzy
-#| msgid "%s more"
 msgid "load %s more"
-msgstr "%s więcej"
+msgstr "załaduj %s więcej"
 
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
 msgid "m"
@@ -13387,10 +13337,8 @@ msgid "regex mismatch"
 msgstr "niezgodność wyrażeń regularnych"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
-#, fuzzy
-#| msgid "active"
 msgid "relative"
-msgstr "aktywny"
+msgstr "względny"
 
 #: db/seeds/settings.rb
 msgid "relative - e. g. \"2 hours ago\" or \"2 days and 15 minutes ago\""
@@ -13685,6 +13633,18 @@ msgstr "...całego pola tekstowego"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ dzisiejszy czas oczekiwania "
+
+#~ msgid "The MIME type of the full-size image is invalid."
+#~ msgstr "Typ MIME obrazu w pełnym rozmiarze jest nieprawidłowy."
+
+#~ msgid "The MIME type of the resized image is invalid."
+#~ msgstr "Typ MIME obrazu o zmienionym rozmiarze jest nieprawidłowy."
+
+#~ msgid "The full-size image is invalid."
+#~ msgstr "Obraz w pełnym rozmiarze jest nieprawidłowy."
+
+#~ msgid "The resized image is invalid."
+#~ msgstr "Obraz o zmienionym rozmiarze jest nieprawidłowy."
 
 #~ msgid "Copied to clipboard!"
 #~ msgstr "Kopiuj do schowka: Ctrl+C, Enter!"

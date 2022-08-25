@@ -6857,6 +6857,10 @@ msgstr "ตัวนำทาง"
 msgid "Need 'form_id' to add attachments to new form."
 msgstr "ต้องการ 'form_id' เพื่อเพิ่มไฟล์แนบในแบบฟอร์มใหม่"
 
+#: app/services/base_service.rb
+msgid "Need a valid user to create a new service object!"
+msgstr ""
+
 #: app/controllers/concerns/creates_ticket_articles.rb
 msgid "Need at least an 'article body' field."
 msgstr ""
@@ -7258,7 +7262,7 @@ msgstr "ไม่มีข้อมูล"
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee
-#: app/frontend/apps/mobile/modules/error/views/Error.vue
+#: app/frontend/apps/mobile/router/error.ts
 #: app/helpers/knowledge_base_public_page_title_helper.rb
 msgid "Not Found"
 msgstr "ไม่พบ"
@@ -9703,19 +9707,11 @@ msgstr ""
 msgid "The Knowledge Base could not be created."
 msgstr "ศูนย์รวมข้อมูล ไม่สามารถสร้างได้"
 
-#: app/controllers/users_controller.rb
-msgid "The MIME type of the full-size image is invalid."
-msgstr ""
-
-#: app/graphql/gql/types/input/avatar_input_type.rb
+#: app/services/avatar/image_validate_service.rb
 #, fuzzy
 #| msgid "The resized image is invalid."
 msgid "The MIME type of the image is invalid."
 msgstr "ภาพที่ปรับขนาดไม่ถูกต้อง"
-
-#: app/controllers/users_controller.rb
-msgid "The MIME type of the resized image is invalid."
-msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 msgid "The Telegram bot could not be saved."
@@ -9876,17 +9872,13 @@ msgstr ""
 msgid "The format of the subject."
 msgstr ""
 
-#: app/controllers/users_controller.rb
-msgid "The full-size image is invalid."
-msgstr ""
-
 #: db/seeds/settings.rb
 msgid ""
 "The identifier for a ticket, e.g. Ticket#, Call#, MyTicket#. The default is "
 "Ticket#."
 msgstr "ตัวระบุสำหรับ Ticket เช่น ticket# โทร# MyTicket# ค่าเริ่มต้นคือ Ticket#"
 
-#: app/graphql/gql/types/input/avatar_input_type.rb
+#: app/services/avatar/image_validate_service.rb
 #, fuzzy
 #| msgid "The resized image is invalid."
 msgid "The image is invalid."
@@ -10156,10 +10148,6 @@ msgstr "ไม่มีค่าที่ต้องการ 'group_id'"
 #: app/controllers/channels_twitter_controller.rb
 msgid "The required value external_credential could not be found in the cache."
 msgstr ""
-
-#: app/controllers/users_controller.rb
-msgid "The resized image is invalid."
-msgstr "ภาพที่ปรับขนาดไม่ถูกต้อง"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 msgid "The retried security process failed!"
@@ -11585,7 +11573,7 @@ msgstr ""
 msgid "We support"
 msgstr "เราสนับสนุน"
 
-#: app/frontend/apps/mobile/modules/error/views/Error.vue
+#: app/frontend/apps/mobile/router/error.ts
 msgid "We're sorry, but this page doesn't exist."
 msgstr ""
 
@@ -13235,6 +13223,9 @@ msgstr "‎... ของพื้นที่ข้อความทั้ง�
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ รอเวลาวันนี้"
+
+#~ msgid "The resized image is invalid."
+#~ msgstr "ภาพที่ปรับขนาดไม่ถูกต้อง"
 
 #~ msgid "Copied to clipboard!"
 #~ msgstr "ว่างจากคลิปบอร์ด"

@@ -7063,6 +7063,10 @@ msgstr "导航"
 msgid "Need 'form_id' to add attachments to new form."
 msgstr ""
 
+#: app/services/base_service.rb
+msgid "Need a valid user to create a new service object!"
+msgstr ""
+
 #: app/controllers/concerns/creates_ticket_articles.rb
 msgid "Need at least an 'article body' field."
 msgstr ""
@@ -7480,7 +7484,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee
-#: app/frontend/apps/mobile/modules/error/views/Error.vue
+#: app/frontend/apps/mobile/router/error.ts
 #: app/helpers/knowledge_base_public_page_title_helper.rb
 msgid "Not Found"
 msgstr ""
@@ -10020,16 +10024,8 @@ msgstr ""
 msgid "The Knowledge Base could not be created."
 msgstr "％s 对象已创建。"
 
-#: app/controllers/users_controller.rb
-msgid "The MIME type of the full-size image is invalid."
-msgstr ""
-
-#: app/graphql/gql/types/input/avatar_input_type.rb
+#: app/services/avatar/image_validate_service.rb
 msgid "The MIME type of the image is invalid."
-msgstr ""
-
-#: app/controllers/users_controller.rb
-msgid "The MIME type of the resized image is invalid."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
@@ -10208,17 +10204,13 @@ msgstr "表單內容已更改。您要關閉並取消更改嗎？"
 msgid "The format of the subject."
 msgstr "主旨的格式"
 
-#: app/controllers/users_controller.rb
-msgid "The full-size image is invalid."
-msgstr ""
-
 #: db/seeds/settings.rb
 msgid ""
 "The identifier for a ticket, e.g. Ticket#, Call#, MyTicket#. The default is "
 "Ticket#."
 msgstr "工單的標示符號, e.g. Ticket#, Call#, MyTicket#. 預設是 Ticket#"
 
-#: app/graphql/gql/types/input/avatar_input_type.rb
+#: app/services/avatar/image_validate_service.rb
 msgid "The image is invalid."
 msgstr ""
 
@@ -10499,10 +10491,6 @@ msgstr ""
 
 #: app/controllers/channels_twitter_controller.rb
 msgid "The required value external_credential could not be found in the cache."
-msgstr ""
-
-#: app/controllers/users_controller.rb
-msgid "The resized image is invalid."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
@@ -12019,7 +12007,7 @@ msgstr "Zammad 找到 %s 封新邮件, 将下载所有的邮件到系统中."
 msgid "We support"
 msgstr ""
 
-#: app/frontend/apps/mobile/modules/error/views/Error.vue
+#: app/frontend/apps/mobile/router/error.ts
 msgid "We're sorry, but this page doesn't exist."
 msgstr ""
 

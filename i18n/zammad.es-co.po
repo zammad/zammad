@@ -7289,6 +7289,10 @@ msgstr "Navegación"
 msgid "Need 'form_id' to add attachments to new form."
 msgstr "Necesita 'form_id' para agregar archivos adjuntos al nuevo formulario."
 
+#: app/services/base_service.rb
+msgid "Need a valid user to create a new service object!"
+msgstr ""
+
 #: app/controllers/concerns/creates_ticket_articles.rb
 msgid "Need at least an 'article body' field."
 msgstr "Necesita al menos un campo de 'cuerpo del artículo'."
@@ -7713,7 +7717,7 @@ msgstr "Not Available"
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee
-#: app/frontend/apps/mobile/modules/error/views/Error.vue
+#: app/frontend/apps/mobile/router/error.ts
 #: app/helpers/knowledge_base_public_page_title_helper.rb
 msgid "Not Found"
 msgstr "No encontrado"
@@ -10266,18 +10270,10 @@ msgstr "No se pudo encontrar el token de API."
 msgid "The Knowledge Base could not be created."
 msgstr "No se pudo crear el objeto."
 
-#: app/controllers/users_controller.rb
-msgid "The MIME type of the full-size image is invalid."
-msgstr "El tipo MIME de la imagen de tamaño completo no es válido."
-
-#: app/graphql/gql/types/input/avatar_input_type.rb
+#: app/services/avatar/image_validate_service.rb
 #, fuzzy
 #| msgid "The MIME type of the resized image is invalid."
 msgid "The MIME type of the image is invalid."
-msgstr "El tipo MIME de la imagen redimensionada no es válido."
-
-#: app/controllers/users_controller.rb
-msgid "The MIME type of the resized image is invalid."
 msgstr "El tipo MIME de la imagen redimensionada no es válido."
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
@@ -10461,10 +10457,6 @@ msgstr ""
 msgid "The format of the subject."
 msgstr "El formato del tema."
 
-#: app/controllers/users_controller.rb
-msgid "The full-size image is invalid."
-msgstr "La imagen a tamaño completo no es válida."
-
 #: db/seeds/settings.rb
 msgid ""
 "The identifier for a ticket, e.g. Ticket#, Call#, MyTicket#. The default is "
@@ -10473,7 +10465,7 @@ msgstr ""
 "El identificador de un ticket, p. Ticket#, Call#, MiTicket#. El valor "
 "predeterminado es Ticket#."
 
-#: app/graphql/gql/types/input/avatar_input_type.rb
+#: app/services/avatar/image_validate_service.rb
 #, fuzzy
 #| msgid "The resized image is invalid."
 msgid "The image is invalid."
@@ -10782,10 +10774,6 @@ msgstr "Falta el parámetro requerido 'id'."
 #: app/controllers/channels_twitter_controller.rb
 msgid "The required value external_credential could not be found in the cache."
 msgstr ""
-
-#: app/controllers/users_controller.rb
-msgid "The resized image is invalid."
-msgstr "La imagen redimensionada no es válida."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 msgid "The retried security process failed!"
@@ -12317,7 +12305,7 @@ msgstr ""
 msgid "We support"
 msgstr "Nosotros apoyamos"
 
-#: app/frontend/apps/mobile/modules/error/views/Error.vue
+#: app/frontend/apps/mobile/router/error.ts
 msgid "We're sorry, but this page doesn't exist."
 msgstr ""
 
@@ -14087,6 +14075,18 @@ msgstr "…de toda el área de texto"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Tiempo de espera de hoy"
+
+#~ msgid "The MIME type of the full-size image is invalid."
+#~ msgstr "El tipo MIME de la imagen de tamaño completo no es válido."
+
+#~ msgid "The MIME type of the resized image is invalid."
+#~ msgstr "El tipo MIME de la imagen redimensionada no es válido."
+
+#~ msgid "The full-size image is invalid."
+#~ msgstr "La imagen a tamaño completo no es válida."
+
+#~ msgid "The resized image is invalid."
+#~ msgstr "La imagen redimensionada no es válida."
 
 #, fuzzy
 #~| msgid "Paste from clipboard"

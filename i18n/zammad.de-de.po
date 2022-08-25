@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-08-19 03:30+0000\n"
+"PO-Revision-Date: 2022-08-25 03:30+0000\n"
 "Last-Translator: Marcel Herrguth <github@thehomeofanime.de>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
 "zammad-development/de/>\n"
@@ -2404,7 +2404,7 @@ msgstr "Retweets werden nicht in Tickets umgewandelt."
 
 #: app/assets/javascripts/app/controllers/_application_controller/_base.coffee
 msgid "Copied!"
-msgstr ""
+msgstr "Kopiert!"
 
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
 msgid "Copy"
@@ -7146,6 +7146,10 @@ msgstr "Navigation"
 msgid "Need 'form_id' to add attachments to new form."
 msgstr "Benötigt 'form_id', um Anhänge zu einem neuen Formular hinzuzufügen."
 
+#: app/services/base_service.rb
+msgid "Need a valid user to create a new service object!"
+msgstr ""
+
 #: app/controllers/concerns/creates_ticket_articles.rb
 msgid "Need at least an 'article body' field."
 msgstr "Mindestens ein Feld \"Artikeltext\" ist erforderlich."
@@ -7551,7 +7555,7 @@ msgstr "Nicht verfügbar"
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee
-#: app/frontend/apps/mobile/modules/error/views/Error.vue
+#: app/frontend/apps/mobile/router/error.ts
 #: app/helpers/knowledge_base_public_page_title_helper.rb
 msgid "Not Found"
 msgstr "Nicht gefunden"
@@ -10049,17 +10053,9 @@ msgstr "Das API-Token konnte nicht gefunden werden."
 msgid "The Knowledge Base could not be created."
 msgstr "Die Knowledge Base konnte nicht erzeugt werden."
 
-#: app/controllers/users_controller.rb
-msgid "The MIME type of the full-size image is invalid."
-msgstr "Der MIME-Typ des Bildes in voller Größe ist ungültig."
-
-#: app/graphql/gql/types/input/avatar_input_type.rb
+#: app/services/avatar/image_validate_service.rb
 msgid "The MIME type of the image is invalid."
 msgstr "Der MIME-Typ des Bildes ist ungültig."
-
-#: app/controllers/users_controller.rb
-msgid "The MIME type of the resized image is invalid."
-msgstr "Der MIME-Typ des angepassten Bildes ist ungültig."
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 msgid "The Telegram bot could not be saved."
@@ -10236,10 +10232,6 @@ msgstr ""
 msgid "The format of the subject."
 msgstr "Das Format für die Betreff/Titel Zeil."
 
-#: app/controllers/users_controller.rb
-msgid "The full-size image is invalid."
-msgstr "Das Bild in voller Größe ist ungültig."
-
 #: db/seeds/settings.rb
 msgid ""
 "The identifier for a ticket, e.g. Ticket#, Call#, MyTicket#. The default is "
@@ -10248,7 +10240,7 @@ msgstr ""
 "Die Bezeichnung eines Tickets, z.B. Ticket#, Call#, MyTicket#. Der Standard "
 "ist  Ticket#."
 
-#: app/graphql/gql/types/input/avatar_input_type.rb
+#: app/services/avatar/image_validate_service.rb
 msgid "The image is invalid."
 msgstr "Das Bild ist ungültig."
 
@@ -10531,10 +10523,6 @@ msgid "The required value external_credential could not be found in the cache."
 msgstr ""
 "Der erforderliche Wert external_credential konnte nicht im Cache gefunden "
 "werden."
-
-#: app/controllers/users_controller.rb
-msgid "The resized image is invalid."
-msgstr "Das in der Größe veränderte Bild ist ungültig."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 msgid "The retried security process failed!"
@@ -12037,7 +12025,7 @@ msgstr ""
 msgid "We support"
 msgstr "Wir unterstützen"
 
-#: app/frontend/apps/mobile/modules/error/views/Error.vue
+#: app/frontend/apps/mobile/router/error.ts
 msgid "We're sorry, but this page doesn't exist."
 msgstr "Es tut uns Leid, diese Seite existiert nicht."
 
@@ -13280,10 +13268,8 @@ msgid "left"
 msgstr "links"
 
 #: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleSeparatorMore.vue
-#, fuzzy
-#| msgid "%s more"
 msgid "load %s more"
-msgstr "%s weitere"
+msgstr "%s weitere laden"
 
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
 msgid "m"
@@ -13754,6 +13740,18 @@ msgstr "…des gesamten Textfelds"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Wartezeit heute"
+
+#~ msgid "The MIME type of the full-size image is invalid."
+#~ msgstr "Der MIME-Typ des Bildes in voller Größe ist ungültig."
+
+#~ msgid "The MIME type of the resized image is invalid."
+#~ msgstr "Der MIME-Typ des angepassten Bildes ist ungültig."
+
+#~ msgid "The full-size image is invalid."
+#~ msgstr "Das Bild in voller Größe ist ungültig."
+
+#~ msgid "The resized image is invalid."
+#~ msgstr "Das in der Größe veränderte Bild ist ungültig."
 
 #~ msgid "Copied to clipboard!"
 #~ msgstr "In Zwischenablage kopiert!"

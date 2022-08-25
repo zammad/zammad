@@ -7066,6 +7066,10 @@ msgstr "Navigatie"
 msgid "Need 'form_id' to add attachments to new form."
 msgstr "'form_id' nodig om bijlagen aan een nieuw formulier toe te voegen."
 
+#: app/services/base_service.rb
+msgid "Need a valid user to create a new service object!"
+msgstr ""
+
 #: app/controllers/concerns/creates_ticket_articles.rb
 msgid "Need at least an 'article body' field."
 msgstr "Minimaal een veld 'article body' nodig."
@@ -7471,7 +7475,7 @@ msgstr "Niet beschikbaar"
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee
-#: app/frontend/apps/mobile/modules/error/views/Error.vue
+#: app/frontend/apps/mobile/router/error.ts
 #: app/helpers/knowledge_base_public_page_title_helper.rb
 msgid "Not Found"
 msgstr "Niet gevonden"
@@ -9960,17 +9964,9 @@ msgstr "De API-sleutel kan niet worden gevonden."
 msgid "The Knowledge Base could not be created."
 msgstr "Het Kennisbank Artikel kon niet worden aangemaakt."
 
-#: app/controllers/users_controller.rb
-msgid "The MIME type of the full-size image is invalid."
-msgstr "Het MIME-type van de volledige afbeelding is ongeldig."
-
-#: app/graphql/gql/types/input/avatar_input_type.rb
+#: app/services/avatar/image_validate_service.rb
 msgid "The MIME type of the image is invalid."
 msgstr "Het MIME-type van de afbeelding is ongeldig."
-
-#: app/controllers/users_controller.rb
-msgid "The MIME type of the resized image is invalid."
-msgstr "Het MIME-type van de gewijzigde afbeelding is ongeldig."
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 msgid "The Telegram bot could not be saved."
@@ -10142,10 +10138,6 @@ msgstr ""
 msgid "The format of the subject."
 msgstr "Het format van het onderwerp."
 
-#: app/controllers/users_controller.rb
-msgid "The full-size image is invalid."
-msgstr "De volledige grootte afbeelding is ongeldig."
-
 #: db/seeds/settings.rb
 msgid ""
 "The identifier for a ticket, e.g. Ticket#, Call#, MyTicket#. The default is "
@@ -10154,7 +10146,7 @@ msgstr ""
 "De identificator voor een ticket, b.v. Ticket #, Call #, MyTicket #. De "
 "standaard is Ticket #."
 
-#: app/graphql/gql/types/input/avatar_input_type.rb
+#: app/services/avatar/image_validate_service.rb
 msgid "The image is invalid."
 msgstr "De afbeelding is ongeldig."
 
@@ -10432,10 +10424,6 @@ msgstr "De vereiste parameter 'group_id' ontbreekt."
 msgid "The required value external_credential could not be found in the cache."
 msgstr ""
 "De vereiste waarde external_credential kan niet worden gevonden in de cache."
-
-#: app/controllers/users_controller.rb
-msgid "The resized image is invalid."
-msgstr "De gewijzigde afbeelding is ongeldig."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 msgid "The retried security process failed!"
@@ -11932,7 +11920,7 @@ msgstr ""
 msgid "We support"
 msgstr "Wij ondersteunen"
 
-#: app/frontend/apps/mobile/modules/error/views/Error.vue
+#: app/frontend/apps/mobile/router/error.ts
 msgid "We're sorry, but this page doesn't exist."
 msgstr "Het spijt ons, maar deze pagina bestaat niet."
 
@@ -13639,6 +13627,18 @@ msgstr "…van geheel tekstvak"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Wachttijd vandaag"
+
+#~ msgid "The MIME type of the full-size image is invalid."
+#~ msgstr "Het MIME-type van de volledige afbeelding is ongeldig."
+
+#~ msgid "The MIME type of the resized image is invalid."
+#~ msgstr "Het MIME-type van de gewijzigde afbeelding is ongeldig."
+
+#~ msgid "The full-size image is invalid."
+#~ msgstr "De volledige grootte afbeelding is ongeldig."
+
+#~ msgid "The resized image is invalid."
+#~ msgstr "De gewijzigde afbeelding is ongeldig."
 
 #~ msgid "Copied to clipboard!"
 #~ msgstr "Gekopieerd naar klembord!"

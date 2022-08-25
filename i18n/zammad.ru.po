@@ -7139,6 +7139,10 @@ msgstr "Навигация"
 msgid "Need 'form_id' to add attachments to new form."
 msgstr "Необходим 'form_id' для добавления вложений в новую форму."
 
+#: app/services/base_service.rb
+msgid "Need a valid user to create a new service object!"
+msgstr ""
+
 #: app/controllers/concerns/creates_ticket_articles.rb
 msgid "Need at least an 'article body' field."
 msgstr "Необходимо хотя бы поле «тело статьи»."
@@ -7548,7 +7552,7 @@ msgstr "Недоступно"
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee
-#: app/frontend/apps/mobile/modules/error/views/Error.vue
+#: app/frontend/apps/mobile/router/error.ts
 #: app/helpers/knowledge_base_public_page_title_helper.rb
 msgid "Not Found"
 msgstr "Не найдено"
@@ -10045,17 +10049,9 @@ msgstr "Не удалось найти API-ключ."
 msgid "The Knowledge Base could not be created."
 msgstr "Не удалось создать базу знаний."
 
-#: app/controllers/users_controller.rb
-msgid "The MIME type of the full-size image is invalid."
-msgstr "Недопустимый мультимедиа тип (MIME type) полноразмерного изображения."
-
-#: app/graphql/gql/types/input/avatar_input_type.rb
+#: app/services/avatar/image_validate_service.rb
 msgid "The MIME type of the image is invalid."
 msgstr "Недопустимый мультимедиа тип (MIME type) изображения."
-
-#: app/controllers/users_controller.rb
-msgid "The MIME type of the resized image is invalid."
-msgstr "Недопустимый мультимедиа тип (MIME type) измененного изображения."
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 msgid "The Telegram bot could not be saved."
@@ -10228,10 +10224,6 @@ msgstr ""
 msgid "The format of the subject."
 msgstr "Формат объекта."
 
-#: app/controllers/users_controller.rb
-msgid "The full-size image is invalid."
-msgstr "Недопустимое полноразмерное изображение."
-
 #: db/seeds/settings.rb
 msgid ""
 "The identifier for a ticket, e.g. Ticket#, Call#, MyTicket#. The default is "
@@ -10240,7 +10232,7 @@ msgstr ""
 "Идентификатор заявки, например, Заявка№, Звонок№, МояЗаявка№. По умолчанию - "
 "Заявка №."
 
-#: app/graphql/gql/types/input/avatar_input_type.rb
+#: app/services/avatar/image_validate_service.rb
 msgid "The image is invalid."
 msgstr "Изображение является недопустимым."
 
@@ -10543,10 +10535,6 @@ msgid "The required value external_credential could not be found in the cache."
 msgstr ""
 "Не удалось найти требуемое значение "
 "«внешние_учетные_данные» (external_credential) в кеше."
-
-#: app/controllers/users_controller.rb
-msgid "The resized image is invalid."
-msgstr "Изображение с измененным размером является недопустимым."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 msgid "The retried security process failed!"
@@ -12041,7 +12029,7 @@ msgstr ""
 msgid "We support"
 msgstr "Мы поддерживаем"
 
-#: app/frontend/apps/mobile/modules/error/views/Error.vue
+#: app/frontend/apps/mobile/router/error.ts
 msgid "We're sorry, but this page doesn't exist."
 msgstr "Сожалеем, но этой страницы не существует."
 
@@ -13752,6 +13740,19 @@ msgstr "…всей текстовой области"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Сегодня время ожидания"
+
+#~ msgid "The MIME type of the full-size image is invalid."
+#~ msgstr ""
+#~ "Недопустимый мультимедиа тип (MIME type) полноразмерного изображения."
+
+#~ msgid "The MIME type of the resized image is invalid."
+#~ msgstr "Недопустимый мультимедиа тип (MIME type) измененного изображения."
+
+#~ msgid "The full-size image is invalid."
+#~ msgstr "Недопустимое полноразмерное изображение."
+
+#~ msgid "The resized image is invalid."
+#~ msgstr "Изображение с измененным размером является недопустимым."
 
 #~ msgid "Copied to clipboard!"
 #~ msgstr "Скопировано в буфер обмена!"
