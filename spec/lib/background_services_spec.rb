@@ -49,9 +49,8 @@ RSpec.describe BackgroundServices do
 
     it 'runs given services' do
       allow(instance).to receive(:run_service)
-      thread = ensure_block_keeps_running_in_thread { instance.run }
+      ensure_block_keeps_running { instance.run }
       expect(instance).to have_received(:run_service).with(config)
-      thread.join
     end
   end
 
@@ -120,11 +119,9 @@ RSpec.describe BackgroundServices do
 
       it 'runs Service#run' do
         instance.send(:start_as_forks, ProcessService, 1)
-        sleep 0.1
+        sleep 0.1 until File.exist? ProcessService.path
 
-        f = File.open ProcessService.path, 'r'
-
-        expect(f.read).to eq('run')
+        expect(File.read(ProcessService.path)).to eq('run')
       end
     end
 

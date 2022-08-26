@@ -33,11 +33,10 @@ RSpec.describe BackgroundServices::Service::ProcessDelayedJobs, ensure_threads_e
       it 'runs loop multiple times' do # rubocop:disable RSpec/MultipleExpectations
         allow(instance).to receive(:process_results)
 
-        thread = ensure_block_keeps_running_in_thread { instance.run }
+        ensure_block_keeps_running { instance.run }
 
         expect(instance).to have_received(:process_results).with([1, 0], any_args).once
         expect(instance).to have_received(:process_results).with([0, 0], any_args).at_least(1)
-        thread.join
       end
     end
   end

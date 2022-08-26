@@ -89,7 +89,7 @@ RSpec.describe BackgroundServices::Service::ProcessScheduledJobs::Manager do
     end
 
     it 'skip if alive thread', ensure_threads_exited: true do
-      thread = Thread.new { sleep 0.1 }
+      thread = Thread.new { sleep 1000 } # will be stopped by ensure_threads_exited
       container[job.id] = thread
       expect(instance.send(:skip_already_running?)).to be_truthy
     end
@@ -150,7 +150,7 @@ RSpec.describe BackgroundServices::Service::ProcessScheduledJobs::Manager do
   describe '#start', ensure_threads_exited: true do
     it 'starts a thread' do
       container[job.id] = :thread
-      allow(instance).to receive(:start_in_thread).and_invoke(-> { sleep 0.1 })
+      allow(instance).to receive(:start_in_thread).and_invoke(-> { sleep 1000 }) # will be stopped by ensure_threads_exited
 
       thread = instance.send(:start)
       expect(thread).to be_alive

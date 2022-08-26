@@ -24,12 +24,6 @@ module ThreadsHelper
     # Default case: process started fine and kept running, interrupted by timeout.
     true
   end
-
-  def ensure_block_keeps_running_in_thread(timeout: 2.seconds, sleep_duration: 0.1.seconds, &block)
-    thread = Thread.new { ensure_block_keeps_running(&block) }
-    sleep sleep_duration
-    thread
-  end
 end
 
 RSpec.configure do |config|

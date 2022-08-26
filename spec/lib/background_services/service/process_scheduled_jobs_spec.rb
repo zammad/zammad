@@ -18,9 +18,8 @@ RSpec.describe BackgroundServices::Service::ProcessScheduledJobs do
   describe '#run' do
     it 'keeps running jobs', ensure_threads_exited: true do
       allow(instance).to receive(:run_jobs)
-      thread = ensure_block_keeps_running_in_thread { instance.run }
+      ensure_block_keeps_running { instance.run }
       expect(instance).to have_received(:run_jobs).at_least(2)
-      thread.join
     end
   end
 
