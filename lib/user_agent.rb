@@ -44,7 +44,8 @@ returns
 =end
 
   def self.get(url, params = {}, options = {}, count = 10)
-    uri  = URI.parse(url)
+    # Any params must be added to the URL for GET requests.
+    uri  = parse_uri(url, params)
     http = get_http(uri, options)
 
     # prepare request
@@ -55,9 +56,6 @@ returns
 
     # http basic auth (if needed)
     request = set_basic_auth(request, options)
-
-    # set params
-    request = set_params(request, params, options)
 
     # add signature
     request = set_signature(request, options)
@@ -106,7 +104,7 @@ returns
 =end
 
   def self.post(url, params = {}, options = {}, count = 10)
-    uri  = URI.parse(url)
+    uri  = parse_uri(url)
     http = get_http(uri, options)
 
     # prepare request
@@ -167,7 +165,7 @@ returns
 =end
 
   def self.put(url, params = {}, options = {}, count = 10)
-    uri  = URI.parse(url)
+    uri  = parse_uri(url)
     http = get_http(uri, options)
 
     # prepare request
@@ -224,7 +222,7 @@ returns
 =end
 
   def self.delete(url, params = {}, options = {}, count = 10)
-    uri  = URI.parse(url)
+    uri  = parse_uri(url)
     http = get_http(uri, options)
 
     # prepare request
@@ -285,7 +283,7 @@ returns
 
   def self.request(url, options = {})
 
-    uri = URI.parse(url)
+    uri = parse_uri(url)
     case uri.scheme.downcase
     when %r{ftp}
       ftp(uri, options)
@@ -336,6 +334,8 @@ returns
       end
     end
 
+    # http.set_debug_output($stdout) if options[:debug]
+
     http
   end
 
@@ -348,11 +348,19 @@ returns
     request
   end
 
+  def self.parse_uri(url, params = {})
+    uri = URI.parse(url)
+    uri.query = [uri.query, URI.encode_www_form(params)].join('&') if params.present?
+    uri
+  end
+
   def self.set_params(request, params, options)
     if options[:json]
-      request.add_field('Content-Type', 'application/json')
-      if params.present?
-        request.body = params.to_json
+      if !request.is_a?(Net::HTTP::Get) # GET requests pass params in query, see 'parse_uri'.
+        request.add_field('Content-Type', 'application/json')
+        if params.present?
+          request.body = params.to_json
+        end
       end
     elsif params.present?
       request.set_form_data(params)

@@ -344,7 +344,7 @@ remove whole data from index
       query_data[:highlight] = { fields: fields_for_highlight }
     end
 
-    response = make_request(url, data: query_data)
+    response = make_request(url, data: query_data, method: :post)
 
     if !response.success?
       Rails.logger.error humanized_error(
@@ -479,7 +479,7 @@ example for aggregations within one year
 
     verify_date_range(url, data)
 
-    response = make_request(url, data: data)
+    response = make_request(url, data: data, method: :post)
 
     if !response.success?
       raise humanized_error(

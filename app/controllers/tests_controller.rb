@@ -18,14 +18,14 @@ class TestsController < ApplicationController
     end
   end
 
-  # GET /test/wait
+  # GET /tests/wait
   def wait
     sleep params[:sec].to_i
     result = { success: true }
     render json: result
   end
 
-  # GET /test/raised_exception
+  # GET /tests/raised_exception
   def error_raised_exception
     exception = params.fetch(:exception, 'StandardError')
     message   = params.fetch(:message, 'no message provided')

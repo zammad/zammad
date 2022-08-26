@@ -5,6 +5,7 @@ include:
   stage: test
   extends:
     - .job_rules_default
+    - .variables_proxy
   script:
     - !reference [.scripts, zammad_db_init]
     - bundle exec rspec --require ./spec/rspec_extensions.rb --exclude-pattern "spec/system/**/*_spec.rb" -t ~searchindex -t ~integration --profile 10
@@ -18,12 +19,14 @@ rspec:integration:
   extends:
     - .job_rules_default
     - .job_rules_integration_manual_start
+    - .variables_proxy
   services:
     - !reference [.services, mysql]
     - !reference [.services, postgresql]
     - !reference [.services, imap]
     - !reference [.services, redis]
     - !reference [.services, memcached]
+    - !reference [.services, proxy]
   script:
     - !reference [.scripts, zammad_db_init]
     - bundle exec rspec --exclude-pattern "spec/system/**/*_spec.rb" -t integration -t ~integration_standalone --profile 10

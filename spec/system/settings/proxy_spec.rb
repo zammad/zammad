@@ -2,13 +2,13 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Manage > Settings > System > Network', type: :system do
+RSpec.describe 'Manage > Settings > System > Network', type: :system, required_envs: %w[CI_PROXY_URL CI_PROXY_USER CI_PROXY_PASSWORD] do
 
   before { visit 'settings/system' }
 
-  let(:proxy)          { ENV['ZAMMAD_PROXY'] }
-  let(:proxy_username) { ENV['ZAMMAD_PROXY_USERNAME'] }
-  let(:proxy_password) { ENV['ZAMMAD_PROXY_PASSWORD'] }
+  let(:proxy)          { ENV['CI_PROXY_URL'] }
+  let(:proxy_username) { ENV['CI_PROXY_USER'] }
+  let(:proxy_password) { ENV['CI_PROXY_PASSWORD'] }
 
   describe 'configure proxy setting' do
 

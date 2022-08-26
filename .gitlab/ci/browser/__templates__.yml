@@ -93,6 +93,7 @@
   extends:
     - .template_browser-core_capybara
     - .variables_selenium_chrome
+    - .variables_proxy
   services:
     - !reference [.services, mysql]
     - !reference [.services, postgresql]
@@ -101,11 +102,13 @@
     - !reference [.services, imap]
     - !reference [.services, redis]
     - !reference [.services, memcached]
+    - !reference [.services, proxy]
 
 .template_browser-core_capybara_firefox:
   extends:
     - .template_browser-core_capybara
     - .variables_selenium_firefox
+    - .variables_proxy
   services:
     - !reference [.services, mysql]
     - !reference [.services, postgresql]
@@ -114,6 +117,7 @@
     - !reference [.services, imap]
     - !reference [.services, redis]
     - !reference [.services, memcached]
+    - !reference [.services, proxy]
 
 .template_browser-integration_chrome:
   stage: browser

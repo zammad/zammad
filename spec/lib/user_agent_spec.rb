@@ -1,17 +1,59 @@
 # Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
+require 'rack/handler/puma'
 
 # rubocop:disable RSpec/MultipleExpectations
 # this cop is disabled to speed up testing by avoiding the overhead of multiple requests
 
-RSpec.describe UserAgent, integration: true, use_vcr: true do
+RSpec.describe UserAgent, integration: true do
   include ZammadSpecSupportRequest
 
-  let(:has_proxy) { false }
+  def host_with_port
+    host = 'http://localhost:3000'
+
+    if ENV['CI'].present?
+      ip_address = Socket.ip_address_list.detect(&:ipv4_private?).ip_address
+      host = "http://#{ip_address}:3000"
+    end
+
+    host
+  end
+
+  puma_thread = nil
+
+  # we need a running web server, otherwise the requests will fail
+  before :all do # rubocop:disable RSpec/BeforeAfterAll
+    ENV['CI_BASIC_AUTH_USER']     = 'basic_auth_user'
+    ENV['CI_BASIC_AUTH_PASSWORD'] = 'test123'
+
+    puma_thread = Thread.new do
+      app = Rack::Builder.new do
+        map '/' do
+          run Rails.application
+        end
+      end.to_app
+      Rack::Handler::Puma.run app, Port: 3000
+    end
+
+    sleep 0.25
+
+    # wait for server to start
+    server_started = false
+    10.times do
+      next if server_started
+
+      server_started = system("curl -sSf #{host_with_port} > /dev/null")
+      sleep 0.2 if !server_started
+    end
+  end
+
+  after :all do # rubocop:disable RSpec/BeforeAfterAll
+    puma_thread.kill
+  end
 
   shared_context 'when doing user agent tests' do
-    let(:host) { 'https://web-test.dc.zammad.com' }
+    let(:host) { host_with_port }
 
     shared_examples 'successful request' do
       it 'returns a response' do
@@ -21,18 +63,10 @@ RSpec.describe UserAgent, integration: true, use_vcr: true do
     end
 
     shared_examples 'successful request with json body' do
-      it 'returns a response' do # rubocop:disable RSpec/ExampleLength
+      it 'returns a response' do
         expect(response).to be_success
         expect(response.code).to eq(code)
-
-        if has_proxy
-          expect(json_response).to include(expected_body)
-            .and include(
-              'remote_ip' => ENV['ZAMMAD_PROXY_REMOTE_IP_CHECK'],
-            )
-        else
-          expect(json_response).to include(expected_body)
-        end
+        expect(json_response).to include(expected_body)
       end
     end
 
@@ -167,12 +201,12 @@ RSpec.describe UserAgent, integration: true, use_vcr: true do
       context 'when timeouts are raised' do
         subject(:response) do
           described_class.get(request_url, {}, {
-                                open_timeout: 0.25,
-                                read_timeout: 0.25,
+                                open_timeout: 0,
+                                read_timeout: 0,
                               })
         end
 
-        let(:request_url) { "#{host}/test/get/3?submitted=123" }
+        let(:request_url) { "#{host}/test/get/1?submitted=123" }
         let(:code)        { 0 }
 
         include_examples 'unsuccessful request without body'
@@ -185,15 +219,13 @@ RSpec.describe UserAgent, integration: true, use_vcr: true do
           let(:code)            { '200' }
           let(:content_type)    { 'application/json; charset=utf-8' }
           let(:request_url)     { "#{host}/test/get/1" }
-          let(:request_params)  { { submitted: { key: 'some value' } } }
+          let(:request_params)  { { submitted: 'some value' } }
           let(:request_options) { { json: true } }
           let(:expected_body) do
             {
               'method'                 => 'get',
-              'content_type_requested' => 'application/json',
-              'submitted'              => {
-                'key' => 'some value',
-              },
+              'content_type_requested' => nil,
+              'submitted'              => 'some value',
             }
           end
 
@@ -277,12 +309,12 @@ RSpec.describe UserAgent, integration: true, use_vcr: true do
       context 'when timeouts are raised' do
         subject(:response) do
           described_class.post(request_url, request_params, {
-                                 open_timeout: 0.25,
-                                 read_timeout: 0.25,
+                                 open_timeout: 0,
+                                 read_timeout: 0,
                                })
         end
 
-        let(:request_url) { "#{host}/test/post/3" }
+        let(:request_url) { "#{host}/test/post/1" }
         let(:request_params) { { submitted: 'timeout' } }
         let(:code)           { 0 }
 
@@ -526,13 +558,11 @@ RSpec.describe UserAgent, integration: true, use_vcr: true do
     include_context 'when doing user agent tests'
   end
 
-  describe 'testing with proxy', required_envs: %w[ZAMMAD_PROXY ZAMMAD_PROXY_USERNAME ZAMMAD_PROXY_PASSWORD ZAMMAD_PROXY_REMOTE_IP_CHECK] do
-    let(:has_proxy) { true }
-
+  describe 'testing with proxy', required_envs: %w[CI_PROXY_URL CI_PROXY_USER CI_PROXY_PASSWORD] do
     before do
-      Setting.set('proxy', ENV['ZAMMAD_PROXY'])
-      Setting.set('proxy_username', ENV['ZAMMAD_PROXY_USERNAME'])
-      Setting.set('proxy_password', ENV['ZAMMAD_PROXY_PASSWORD'])
+      Setting.set('proxy', ENV['CI_PROXY_URL'])
+      Setting.set('proxy_username', ENV['CI_PROXY_USER'])
+      Setting.set('proxy_password', ENV['CI_PROXY_PASSWORD'])
     end
 
     include_context 'when doing user agent tests'

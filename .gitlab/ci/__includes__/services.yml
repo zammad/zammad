@@ -19,6 +19,12 @@
     SE_OPTS: '--log /builds/selenium.log'
     CHROME_LOG_FILE: '/builds/chrome.log'
 
+.variables_proxy:
+  variables:
+    CI_PROXY_URL: 'proxy:3128'
+    CI_PROXY_USER: 'zammad'
+    CI_PROXY_PASSWORD: 'zammad'
+
 .services:
   mysql:
     name: $CI_REGISTRY/docker/zammad-mysql:stable
@@ -56,3 +62,7 @@
     name: $CI_REGISTRY/docker/zammad-memcached:stable
     alias: memcached
     command: ['memcached', '-m', '256M']
+
+  proxy:
+    name: $CI_REGISTRY/docker/zammad-proxies:stable
+    alias: proxy

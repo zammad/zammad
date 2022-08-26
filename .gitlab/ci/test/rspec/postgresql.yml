@@ -5,6 +5,7 @@
   - !reference [.services, postgresql]
   - !reference [.services, redis]
   - !reference [.services, memcached]
+  - !reference [.services, proxy]
 
 rspec:postgresql:1:
   variables:
