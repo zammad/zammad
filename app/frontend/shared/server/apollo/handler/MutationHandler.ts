@@ -21,7 +21,9 @@ export default class MutationHandler<
         .mutate(variables)
         .then((result) => {
           if (result?.data) {
-            const { errors } = Object.values(result.data)[0]
+            const { errors } = Object.values(result.data)[0] as {
+              errors: UserError[]
+            }
 
             if (errors) {
               const userErrors = new UserError(errors)

@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import type { Plugin, Ref } from 'vue'
+import type { Plugin, Ref, VNodeProps } from 'vue'
 import { isRef, nextTick, ref, watchEffect, unref } from 'vue'
 import type { Router, RouteRecordRaw } from 'vue-router'
 import { createRouter, createWebHistory } from 'vue-router'
@@ -259,6 +259,9 @@ const renderComponent = <Props>(
 
     vModelProps.push([prop, reactiveValue])
 
+    // TODO: remove this again
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     wrapperOptions.props = props as Props
   }
 
