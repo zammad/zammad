@@ -8828,6 +8828,10 @@ li.list-item-none {
     text-align: center;
     padding: 70px;
   }
+
+  &-backdrop--local {
+    background: var(--background-primary-alt);
+  }
 }
 
 .modal-dialog {

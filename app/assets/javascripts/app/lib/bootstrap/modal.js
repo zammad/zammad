@@ -13,6 +13,8 @@
   - add rtl support
   modified by Felix Feb-2021
   - limit top position value to >= 0
+  modified by Felix Aug-2022
+  - add local class to backdrop when there is a container
 */
 
 
@@ -214,7 +216,12 @@
 
       this.$backdrop = $(document.createElement('div'))
         .addClass('modal-backdrop ' + animate)
-        .appendTo(this.$body)
+
+      if (this.options.container) {
+        this.$backdrop.addClass('modal-backdrop--local')
+      }
+
+      this.$backdrop.appendTo(this.$body)
 
       this.$element.on('click.dismiss.bs.modal', $.proxy(function (e) {
         if (this.ignoreBackdropClick) {
