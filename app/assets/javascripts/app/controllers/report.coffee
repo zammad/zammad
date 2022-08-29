@@ -224,7 +224,13 @@ class Graph extends App.Controller
     # plot
     $.plot( $('#placeholder'), dataPlot, {
       yaxis: { min: 0 },
-      xaxis: { ticks: xaxis }
+      xaxis: { ticks: xaxis },
+      legend: { labelBoxBorderColor: 'var(--ghost-color)' },
+      grid: {
+        color: 'var(--text-normal)',
+        markingsColor: 'var(--background-primary)'
+      },
+      series: { points: { fillColor: 'var(--background-secondary)' } }
     } )
 
 

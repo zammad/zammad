@@ -4272,7 +4272,12 @@ footer {
 
 .panel {
   box-shadow: none;
+  background: var(--background-secondary);
   color: var(--text-normal);
+}
+
+.panel-default {
+  border-color: var(--border-alt);
 }
 
 .panel-default > .panel-heading {
@@ -4282,8 +4287,13 @@ footer {
   font-size: 12px;
   line-height: 17px;
   letter-spacing: 0.05em;
+  color: inherit;
   background: var(--background-primary-alt);
   border-color: var(--border-alt);
+
+  + .panel-collapse > .panel-body {
+    border-top-color: var(--border-alt);
+  }
 }
 
 .panel-title {
@@ -14186,5 +14196,15 @@ span.is-disabled {
     &:last-of-type {
       display: none;
     }
+  }
+}
+
+.reporting {
+  .legend > div {
+    background: var(--background-secondary) !important;
+  }
+
+  .legendColorBox {
+    padding-right: 4px;
   }
 }
