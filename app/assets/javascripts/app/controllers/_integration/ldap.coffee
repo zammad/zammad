@@ -281,6 +281,7 @@ class ConnectionWizard extends App.ControllerWizardModal
     super
 
     @wizardConfig = @config || {}
+    @wizardData   = {}
 
     if @container
       @el.addClass('modal--local')
@@ -478,11 +479,11 @@ class ConnectionWizard extends App.ControllerWizardModal
           roles[role.id] = role.displayName()
 
         # update wizard data
-        @wizardConfig.wizardData= {}
-        @wizardConfig.wizardData.backend_user_attributes = data.user_attributes
-        @wizardConfig.wizardData.backend_groups = data.groups
-        @wizardConfig.wizardData.user_attributes = user_attributes
-        @wizardConfig.wizardData.roles = roles
+        @wizardData = {}
+        @wizardData.backend_user_attributes = data.user_attributes
+        @wizardData.backend_groups = data.groups
+        @wizardData.user_attributes = user_attributes
+        @wizardData.roles = roles
 
         for key in ['user_uid', 'user_filter', 'group_uid', 'group_filter']
           @wizardConfig[key] ?= data[key]
@@ -577,8 +578,8 @@ class ConnectionWizard extends App.ControllerWizardModal
 
   buildRowUserAttribute: (source, dest) =>
     el = $(App.view('integration/ldap_user_attribute_row')())
-    el.find('.js-ldapAttribute').html(@createSelection('source', @wizardConfig.wizardData.backend_user_attributes, source, true))
-    el.find('.js-userAttribute').html(@createSelection('dest', @wizardConfig.wizardData.user_attributes, dest))
+    el.find('.js-ldapAttribute').html(@createSelection('source', @wizardData.backend_user_attributes, source, true))
+    el.find('.js-userAttribute').html(@createSelection('dest', @wizardData.user_attributes, dest))
     el
 
   buildRowsGroupRole: (group_role_map) =>
@@ -590,8 +591,8 @@ class ConnectionWizard extends App.ControllerWizardModal
 
   buildRowGroupRole: (source, dest) =>
     el = $(App.view('integration/ldap_group_role_row')())
-    el.find('.js-ldapList').html(@createAutocompletion('source', @wizardConfig.wizardData.backend_groups, source))
-    el.find('.js-roleList').html(@createSelection('dest', @wizardConfig.wizardData.roles, dest))
+    el.find('.js-ldapList').html(@createAutocompletion('source', @wizardData.backend_groups, source))
+    el.find('.js-roleList').html(@createSelection('dest', @wizardData.roles, dest))
     el
 
   createSelection: (name, options, selected, unknown) ->
