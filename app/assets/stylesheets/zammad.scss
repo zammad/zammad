@@ -1800,67 +1800,6 @@ td .prefix-icon > .icon {
   float: right;
 }
 
-#task {
-  position: fixed;
-  display: table;
-  width: 100%;
-  min-width: 1000px;
-  top: 46px;
-  display: none;
-}
-
-#task > .taskbar {
-  display: table-row;
-  z-index: 1040;
-}
-
-#task > .taskbar > div {
-  padding: 0 4px 4px;
-  display: table-cell;
-}
-
-#task .task {
-  @extend .u-textTruncate;
-
-  max-width: 120px;
-  display: inline-block;
-}
-
-#task .task > a,
-#task .task > a:hover {
-  color: var(--text-inverted);
-  text-decoration: none;
-}
-
-#task .btn-default .task > a,
-#task .btn-default .task > a:hover {
-  color: #333;
-}
-
-#task .taskbar .btn-small {
-  padding: 3px 8px 4px;
-  margin-top: 2px;
-  font-size: 11px;
-  font-weight: 300;
-}
-
-#task .taskbar .btn-default {
-  background-color: #c3c3c3;
-  border-color: #c3c3c3;
-}
-
-#task [data-type='close'] {
-  @include bidi-style(margin-left, 5px, margin-right, 0);
-
-  font-size: 13px;
-  top: 1px;
-}
-
-#task .taskbar-new {
-  text-align: end;
-  padding-right: 12px;
-}
-
 .max-size-scroll {
   max-height: 240px;
   overflow-y: scroll;
