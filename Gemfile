@@ -33,7 +33,9 @@ gem 'thor'
 gem 'em-websocket'
 gem 'eventmachine'
 gem 'hiredis', require: false
-gem 'redis', require: false
+# version restriction from actioncable-6.1.6.1/lib/action_cable/subscription_adapter/redis.rb
+#   - check after rails update
+gem 'redis', '>= 3', '< 5', require: false
 
 # core - password security
 gem 'argon2'

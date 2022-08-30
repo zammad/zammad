@@ -669,7 +669,7 @@ DEPENDENCIES
   rails (~> 6.1.0)
   rails-controller-testing
   rchardet (>= 1.8.0)
-  redis
+  redis (>= 3, < 5)
   rspec-rails
   rspec-retry
   rszr
@@ -706,4 +706,4 @@ RUBY VERSION
    ruby 3.0.4p208
 
 BUNDLED WITH
-   2.3.21
+   2.3.16
