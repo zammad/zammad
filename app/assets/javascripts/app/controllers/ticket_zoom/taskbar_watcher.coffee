@@ -25,30 +25,32 @@ class App.TaskbarWatcher extends App.Controller
     @lastTasks = clone(preferences.tasks)
 
     watchers = []
+    filteredTasks = _.filter preferences.tasks, (watcher) -> watcher.user_id != currentUserId
     @el.empty()
-    for watcher in preferences.tasks
-      if watcher.user_id != currentUserId
-        cssClass = []
-        if watcher.idle
-          cssClass.push('avatar--idle')
-        if watcher.changed
-          cssClass.push('avatar--changed')
-        else
-          cssClass.push('avatar--not-changed')
-        @el.append('<div class="js-avatar"></div>')
+    for watcher, i in filteredTasks
+      cssClass = []
+      if watcher.idle
+        cssClass.push('avatar--idle')
+      if watcher.changed
+        cssClass.push('avatar--changed')
+      else
+        cssClass.push('avatar--not-changed')
+      @el.append('<div class="js-avatar"></div>')
+
+      if i != filteredTasks.length - 1
         @el.append('<div class="half-spacer"></div>')
 
-        avatar = new App.WidgetAvatar(
-          el:        @el.find('.js-avatar').last()
-          object_id: watcher.user_id
-          size:      40
-          cssClass:  cssClass.join(' ')
-        )
+      avatar = new App.WidgetAvatar(
+        el:        @el.find('.js-avatar').last()
+        object_id: watcher.user_id
+        size:      40
+        cssClass:  cssClass.join(' ')
+      )
 
-        if watcher.changed
-          status = $('<div class="avatar-status"></div>')
-          status.append App.Utils.icon('pen')
-          avatar.el.find('.avatar').append status
+      if watcher.changed
+        status = $('<div class="avatar-status"></div>')
+        status.append App.Utils.icon('pen')
+        avatar.el.find('.avatar').append status
 
   start: =>
     @intervalId = @interval(
