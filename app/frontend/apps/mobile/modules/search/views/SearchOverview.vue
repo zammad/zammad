@@ -16,7 +16,7 @@ import CommonButtonPills from '@mobile/components/CommonButtonPills/CommonButton
 import { useSessionStore } from '@shared/stores/session'
 import SearchResults from '../components/SearchResults.vue'
 import { useSearchPlugins } from '../plugins'
-import { useSearchLazyQuery } from '../graphql/searchOverview.api'
+import { useSearchLazyQuery } from '../graphql/queries/searchOverview.api'
 
 interface SearchTypeItem extends MenuItem {
   value: string

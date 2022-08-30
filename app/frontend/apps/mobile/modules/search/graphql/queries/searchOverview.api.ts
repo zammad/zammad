@@ -1,4 +1,4 @@
-import * as Types from '../../../../../shared/graphql/types';
+import * as Types from '../../../../../../shared/graphql/types';
 
 import gql from 'graphql-tag';
 import * as VueApolloComposable from '@vue/apollo-composable';

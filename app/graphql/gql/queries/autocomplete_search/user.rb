@@ -18,7 +18,7 @@ module Gql::Queries
       return [] if query.strip.empty?
 
       # TODO: Check if this is appropriate or if more complex logic from SearchController is needed.
-      User.search(query: query, limit: limit, current_user: context.current_user).map { |u| coerce_to_result(u) }
+      ::User.search(query: query, limit: limit, current_user: context.current_user).map { |u| coerce_to_result(u) }
     end
 
     def coerce_to_result(user)

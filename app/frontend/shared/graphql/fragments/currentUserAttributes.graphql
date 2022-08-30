@@ -1,19 +1,5 @@
 fragment currentUserAttributes on User {
-  id
-  firstname
-  lastname
-  fullname
-  image
-  preferences
-  objectAttributeValues {
-    ...objectAttributeValues
-  }
-  organization {
-    name
-    objectAttributeValues {
-      ...objectAttributeValues
-    }
-  }
+  ...userAttributes
   permissions {
     names
   }

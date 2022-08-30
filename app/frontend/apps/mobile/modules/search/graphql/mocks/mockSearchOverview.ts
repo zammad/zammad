@@ -3,7 +3,7 @@
 import type { SearchQuery } from '@shared/graphql/types'
 import type { ConfidentTake } from '@shared/types/utils'
 import { mockGraphQLApi } from '@tests/support/mock-graphql-api'
-import { SearchDocument } from '../searchOverview.api'
+import { SearchDocument } from '../queries/searchOverview.api'
 
 export const mockSearchOverview = (
   search: ConfidentTake<SearchQuery, 'search'>,

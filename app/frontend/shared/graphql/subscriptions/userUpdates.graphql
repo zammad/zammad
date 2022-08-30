@@ -1,20 +1,7 @@
 subscription userUpdates($userId: ID!) {
   userUpdates(userId: $userId) {
     user {
-      id
-      firstname
-      lastname
-      fullname
-      preferences
-      objectAttributeValues {
-        ...objectAttributeValues
-      }
-      organization {
-        name
-        objectAttributeValues {
-          ...objectAttributeValues
-        }
-      }
+      ...userAttributes
     }
   }
 }

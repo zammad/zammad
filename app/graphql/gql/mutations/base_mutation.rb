@@ -8,6 +8,8 @@ module Gql::Mutations
     include Gql::Concerns::HandlesServices
 
     include Gql::Mutations::Concerns::HandlesObjectAttributeValues
+
+    # FIXME: Remove when all mutations are using services which are taking care of this flag.
     include Gql::Mutations::Concerns::HandlesCoreWorkflow
 
     argument_class Gql::Types::BaseArgument

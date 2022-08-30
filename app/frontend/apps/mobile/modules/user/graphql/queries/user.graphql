@@ -1,0 +1,5 @@
+query user($userId: ID, $userInternalId: Int) {
+  user(user: { userId: $userId, userInternalId: $userInternalId }) {
+    ...userAttributes
+  }
+}
