@@ -4008,37 +4008,6 @@ footer {
   @include rtl(padding-right, 10px);
 }
 
-.can-move {
-  cursor: move;
-}
-
-.can-move-placeholder {
-  border: 1px dashed #ddd;
-  background: #eee;
-  margin-top: 5px;
-  margin-bottom: 5px;
-}
-
-.customer_info ul.nav > li {
-  width: 50%;
-}
-
-.customer_info ul.nav > li > a {
-  @extend .u-textTruncate;
-}
-
-.customer_info .thumbnail {
-  position: absolute;
-  right: 20px;
-}
-
-.customer_info textarea {
-  @include bidi-style(padding-left, 10px, padding-right, 0);
-
-  width: 100%;
-  border-color: #eee;
-}
-
 .overviews {
   .sidebar {
     @include small-desktop {
