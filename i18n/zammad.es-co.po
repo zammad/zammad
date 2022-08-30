@@ -5497,7 +5497,7 @@ msgid "Has processed"
 msgstr "ha procesado"
 
 #: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/TicketViewersDialog.vue
-msgid "Has ticket open in taskbar, but is not actively looking in the ticket."
+msgid "Has ticket open in taskbar, but is not actively looking at the ticket."
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
@@ -10509,7 +10509,7 @@ msgid "The language could not be updated."
 msgstr "No se pudo actualizar el objeto."
 
 #: app/frontend/apps/mobile/modules/ticket/components/TicketList/TicketList.vue
-msgid "The limit of %s tickets reached (%s remaining)"
+msgid "The limit of %s displayable tickets was reached (%s remaining)"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_new.coffee
@@ -11926,7 +11926,7 @@ msgid "Use the time of the very last customer article."
 msgstr "Utilice la hora del último artículo del cliente."
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
-msgid "Use this switch to start synchronization of your ldap sources. "
+msgid "Use this switch to start synchronization of your ldap sources."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
@@ -13323,6 +13323,12 @@ msgstr "editar"
 msgid "edited %s by %s"
 msgstr ""
 
+#: app/frontend/apps/mobile/composables/useEditedBy.ts
+#, fuzzy
+#| msgid "edit"
+msgid "edited %s by me"
+msgstr "editar"
+
 #: db/seeds/ticket_article_types.rb
 msgid "email"
 msgstr "correo"
@@ -13621,12 +13627,6 @@ msgstr "matches"
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco
 msgid "maybe"
 msgstr "quizá"
-
-#: app/frontend/apps/mobile/composables/useEditedBy.ts
-#, fuzzy
-#| msgid "m"
-msgid "me"
-msgstr "m"
 
 #: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
 msgid "merged"
@@ -14075,6 +14075,11 @@ msgstr "…de toda el área de texto"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Tiempo de espera de hoy"
+
+#, fuzzy
+#~| msgid "m"
+#~ msgid "me"
+#~ msgstr "m"
 
 #~ msgid "The MIME type of the full-size image is invalid."
 #~ msgstr "El tipo MIME de la imagen de tamaño completo no es válido."

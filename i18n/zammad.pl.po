@@ -5344,7 +5344,10 @@ msgid "Has processed"
 msgstr "Przeprocesowany"
 
 #: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/TicketViewersDialog.vue
-msgid "Has ticket open in taskbar, but is not actively looking in the ticket."
+#, fuzzy
+#| msgid ""
+#| "Has ticket open in taskbar, but is not actively looking in the ticket."
+msgid "Has ticket open in taskbar, but is not actively looking at the ticket."
 msgstr "Ma bilet otwarty na pasku zadań, ale nie szuka aktywnie w bilecie."
 
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
@@ -10216,7 +10219,9 @@ msgid "The language could not be updated."
 msgstr "Nie można zaktualizować języka."
 
 #: app/frontend/apps/mobile/modules/ticket/components/TicketList/TicketList.vue
-msgid "The limit of %s tickets reached (%s remaining)"
+#, fuzzy
+#| msgid "The limit of %s tickets reached (%s remaining)"
+msgid "The limit of %s displayable tickets was reached (%s remaining)"
 msgstr "Osiągnięto limit %s zgłoszeń (pozostało %s)"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_new.coffee
@@ -11563,7 +11568,9 @@ msgid "Use the time of the very last customer article."
 msgstr "Wykorzystaj czas ostatniego artykułu klienta."
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
-msgid "Use this switch to start synchronization of your ldap sources. "
+#, fuzzy
+#| msgid "Use this switch to start synchronization of your ldap sources. "
+msgid "Use this switch to start synchronization of your ldap sources."
 msgstr "Użyj tego przełącznika, aby rozpocząć synchronizację źródeł LDAP. "
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
@@ -12922,6 +12929,12 @@ msgstr "edycja %s"
 msgid "edited %s by %s"
 msgstr "edytowane %s przez %s"
 
+#: app/frontend/apps/mobile/composables/useEditedBy.ts
+#, fuzzy
+#| msgid "edited %s by %s"
+msgid "edited %s by me"
+msgstr "edytowane %s przez %s"
+
 #: db/seeds/ticket_article_types.rb
 msgid "email"
 msgstr "e-mail"
@@ -13190,10 +13203,6 @@ msgstr "znalezione trafienia"
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco
 msgid "maybe"
 msgstr "może"
-
-#: app/frontend/apps/mobile/composables/useEditedBy.ts
-msgid "me"
-msgstr "ja"
 
 #: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
 msgid "merged"
@@ -13633,6 +13642,9 @@ msgstr "...całego pola tekstowego"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ dzisiejszy czas oczekiwania "
+
+#~ msgid "me"
+#~ msgstr "ja"
 
 #~ msgid "The MIME type of the full-size image is invalid."
 #~ msgstr "Typ MIME obrazu w pełnym rozmiarze jest nieprawidłowy."

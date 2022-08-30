@@ -5374,7 +5374,7 @@ msgid "Has processed"
 msgstr "E' stata processato"
 
 #: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/TicketViewersDialog.vue
-msgid "Has ticket open in taskbar, but is not actively looking in the ticket."
+msgid "Has ticket open in taskbar, but is not actively looking at the ticket."
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
@@ -10207,7 +10207,7 @@ msgid "The language could not be updated."
 msgstr "Impossibile aggiornare l'oggetto."
 
 #: app/frontend/apps/mobile/modules/ticket/components/TicketList/TicketList.vue
-msgid "The limit of %s tickets reached (%s remaining)"
+msgid "The limit of %s displayable tickets was reached (%s remaining)"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_new.coffee
@@ -11540,7 +11540,9 @@ msgid "Use the time of the very last customer article."
 msgstr "Usa il tempo dell'ultima nota del cliente."
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
-msgid "Use this switch to start synchronization of your ldap sources. "
+#, fuzzy
+#| msgid "Use this switch to start synchronization of your ldap sources. "
+msgid "Use this switch to start synchronization of your ldap sources."
 msgstr ""
 "Usa questo switch per avviare la sincronizzazione dei tuoi sorgenti ldap. "
 
@@ -12864,6 +12866,10 @@ msgstr ""
 msgid "edited %s by %s"
 msgstr ""
 
+#: app/frontend/apps/mobile/composables/useEditedBy.ts
+msgid "edited %s by me"
+msgstr ""
+
 #: db/seeds/ticket_article_types.rb
 msgid "email"
 msgstr "email"
@@ -13138,12 +13144,6 @@ msgstr "corrispondenze trovate"
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco
 msgid "maybe"
 msgstr "forse"
-
-#: app/frontend/apps/mobile/composables/useEditedBy.ts
-#, fuzzy
-#| msgid "Name"
-msgid "me"
-msgstr "Nome"
 
 #: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
 msgid "merged"
@@ -13586,6 +13586,11 @@ msgstr "…dell'intera area di testo"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Tempi di attesa - Oggi"
+
+#, fuzzy
+#~| msgid "Name"
+#~ msgid "me"
+#~ msgstr "Nome"
 
 #~ msgid "Copied to clipboard!"
 #~ msgstr "Copia negli appunti!"

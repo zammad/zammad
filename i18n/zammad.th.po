@@ -5145,7 +5145,7 @@ msgid "Has processed"
 msgstr "Has processed"
 
 #: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/TicketViewersDialog.vue
-msgid "Has ticket open in taskbar, but is not actively looking in the ticket."
+msgid "Has ticket open in taskbar, but is not actively looking at the ticket."
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
@@ -9919,7 +9919,7 @@ msgid "The language could not be updated."
 msgstr "ไม่สามารถอัปโหลดไฟล์ได้"
 
 #: app/frontend/apps/mobile/modules/ticket/components/TicketList/TicketList.vue
-msgid "The limit of %s tickets reached (%s remaining)"
+msgid "The limit of %s displayable tickets was reached (%s remaining)"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_new.coffee
@@ -11217,7 +11217,9 @@ msgid "Use the time of the very last customer article."
 msgstr "ใช้เวลาของบทความลูกค้าล่าสุด."
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
-msgid "Use this switch to start synchronization of your ldap sources. "
+#, fuzzy
+#| msgid "Use this switch to start synchronization of your ldap sources. "
+msgid "Use this switch to start synchronization of your ldap sources."
 msgstr "ใช้สวิตช์นี้เพื่อเริ่มการซิงโครไนซ์แหล่งที่มา ldap ของคุณ. "
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
@@ -12509,6 +12511,12 @@ msgstr "แก้ไข %s"
 msgid "edited %s by %s"
 msgstr "แก้ไข %s โดย %s"
 
+#: app/frontend/apps/mobile/composables/useEditedBy.ts
+#, fuzzy
+#| msgid "edited %s by %s"
+msgid "edited %s by me"
+msgstr "แก้ไข %s โดย %s"
+
 #: db/seeds/ticket_article_types.rb
 msgid "email"
 msgstr "อีเมล์"
@@ -12779,10 +12787,6 @@ msgstr "ที่ตรงกันที่พบ"
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco
 msgid "maybe"
 msgstr "อาจจะ"
-
-#: app/frontend/apps/mobile/composables/useEditedBy.ts
-msgid "me"
-msgstr "me"
 
 #: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
 msgid "merged"
@@ -13223,6 +13227,9 @@ msgstr "‎... ของพื้นที่ข้อความทั้ง�
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ รอเวลาวันนี้"
+
+#~ msgid "me"
+#~ msgstr "me"
 
 #~ msgid "The resized image is invalid."
 #~ msgstr "ภาพที่ปรับขนาดไม่ถูกต้อง"

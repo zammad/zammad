@@ -5365,7 +5365,10 @@ msgid "Has processed"
 msgstr "Обработано"
 
 #: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/TicketViewersDialog.vue
-msgid "Has ticket open in taskbar, but is not actively looking in the ticket."
+#, fuzzy
+#| msgid ""
+#| "Has ticket open in taskbar, but is not actively looking in the ticket."
+msgid "Has ticket open in taskbar, but is not actively looking at the ticket."
 msgstr "Заявка открыта на панели задач, но с ней не работают."
 
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
@@ -10272,7 +10275,9 @@ msgid "The language could not be updated."
 msgstr "Язык не может быть обновлен."
 
 #: app/frontend/apps/mobile/modules/ticket/components/TicketList/TicketList.vue
-msgid "The limit of %s tickets reached (%s remaining)"
+#, fuzzy
+#| msgid "The limit of %s tickets reached (%s remaining)"
+msgid "The limit of %s displayable tickets was reached (%s remaining)"
 msgstr "Достигнуто ограничение на количество билетов: %s (осталось %s)"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_new.coffee
@@ -11652,7 +11657,9 @@ msgid "Use the time of the very last customer article."
 msgstr "Использовать время самой последней статьи клиента."
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
-msgid "Use this switch to start synchronization of your ldap sources. "
+#, fuzzy
+#| msgid "Use this switch to start synchronization of your ldap sources. "
+msgid "Use this switch to start synchronization of your ldap sources."
 msgstr ""
 "Используйте этот переключатель, чтобы начать синхронизацию ваших источников "
 "LDAP. "
@@ -13025,6 +13032,12 @@ msgstr "отредактировано %s"
 msgid "edited %s by %s"
 msgstr "отредактировано %s пользователем %s"
 
+#: app/frontend/apps/mobile/composables/useEditedBy.ts
+#, fuzzy
+#| msgid "edited %s by %s"
+msgid "edited %s by me"
+msgstr "отредактировано %s пользователем %s"
+
 #: db/seeds/ticket_article_types.rb
 msgid "email"
 msgstr "email"
@@ -13295,10 +13308,6 @@ msgstr "совпадения найдены"
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco
 msgid "maybe"
 msgstr "может быть"
-
-#: app/frontend/apps/mobile/composables/useEditedBy.ts
-msgid "me"
-msgstr "мне"
 
 #: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
 msgid "merged"
@@ -13740,6 +13749,9 @@ msgstr "…всей текстовой области"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Сегодня время ожидания"
+
+#~ msgid "me"
+#~ msgstr "мне"
 
 #~ msgid "The MIME type of the full-size image is invalid."
 #~ msgstr ""

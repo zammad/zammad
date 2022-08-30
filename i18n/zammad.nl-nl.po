@@ -5305,7 +5305,7 @@ msgid "Has processed"
 msgstr "Heeft verwerkt"
 
 #: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/TicketViewersDialog.vue
-msgid "Has ticket open in taskbar, but is not actively looking in the ticket."
+msgid "Has ticket open in taskbar, but is not actively looking at the ticket."
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
@@ -10186,7 +10186,9 @@ msgid "The language could not be updated."
 msgstr "De taal kon niet worden bijgewerkt."
 
 #: app/frontend/apps/mobile/modules/ticket/components/TicketList/TicketList.vue
-msgid "The limit of %s tickets reached (%s remaining)"
+#, fuzzy
+#| msgid "The limit of %s tickets reached (%s remaining)"
+msgid "The limit of %s displayable tickets was reached (%s remaining)"
 msgstr "Limiet van %s tickets bereikt (%s resterend)"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_new.coffee
@@ -11547,7 +11549,9 @@ msgid "Use the time of the very last customer article."
 msgstr "Gebruik de tijd van de allerlaatste klantnotitie."
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
-msgid "Use this switch to start synchronization of your ldap sources. "
+#, fuzzy
+#| msgid "Use this switch to start synchronization of your ldap sources. "
+msgid "Use this switch to start synchronization of your ldap sources."
 msgstr ""
 "Gebruik deze schakelaar om de synchronisatie van je LDAP bronnen te starten. "
 
@@ -12913,6 +12917,12 @@ msgstr "wijzig %s"
 msgid "edited %s by %s"
 msgstr "Aangepast %s door %s"
 
+#: app/frontend/apps/mobile/composables/useEditedBy.ts
+#, fuzzy
+#| msgid "edited %s by %s"
+msgid "edited %s by me"
+msgstr "Aangepast %s door %s"
+
 #: db/seeds/ticket_article_types.rb
 msgid "email"
 msgstr "e-mail"
@@ -13183,10 +13193,6 @@ msgstr "overeenkomsten gevonden"
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco
 msgid "maybe"
 msgstr "misschien"
-
-#: app/frontend/apps/mobile/composables/useEditedBy.ts
-msgid "me"
-msgstr "mij"
 
 #: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
 msgid "merged"
@@ -13627,6 +13633,9 @@ msgstr "…van geheel tekstvak"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Wachttijd vandaag"
+
+#~ msgid "me"
+#~ msgstr "mij"
 
 #~ msgid "The MIME type of the full-size image is invalid."
 #~ msgstr "Het MIME-type van de volledige afbeelding is ongeldig."

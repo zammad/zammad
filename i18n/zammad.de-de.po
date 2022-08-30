@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-08-25 03:30+0000\n"
-"Last-Translator: Marcel Herrguth <github@thehomeofanime.de>\n"
+"PO-Revision-Date: 2022-08-30 13:03+0000\n"
+"Last-Translator: Martin Gruner <mg@zammad.com>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
 "zammad-development/de/>\n"
 "Language: de-de\n"
@@ -4425,15 +4425,15 @@ msgstr "Aktiviert die Benutzer-Authentifizierung über GitHub."
 
 #: db/seeds/settings.rb
 msgid "Enables user authentication via GitLab."
-msgstr "Aktiviert die Benutzer-Authentifizierung via GitLab."
+msgstr "Aktiviert die Benutzer-Authentifizierung über GitLab."
 
 #: db/seeds/settings.rb
 msgid "Enables user authentication via Google."
-msgstr "Aktiviert die User Authentifizierung über Google."
+msgstr "Aktiviert die Benutzer-Authentifizierung über Google."
 
 #: db/seeds/settings.rb
 msgid "Enables user authentication via LinkedIn."
-msgstr "Aktiviert User Authentifizierung über LinkedIn."
+msgstr "Aktiviert Benutzer-Authentifizierung über LinkedIn."
 
 #: db/seeds/settings.rb
 msgid "Enables user authentication via Microsoft 365."
@@ -4441,11 +4441,11 @@ msgstr "Aktiviert die Benutzer-Authentifizierung via Microsoft 365."
 
 #: db/seeds/settings.rb
 msgid "Enables user authentication via SAML."
-msgstr "Aktiviert die Benutzer-Authentifizierung via SAML."
+msgstr "Aktiviert die Benutzer-Authentifizierung über SAML."
 
 #: db/seeds/settings.rb
 msgid "Enables user authentication via Weibo."
-msgstr "Aktiviert die Benutzer-Authentifizierung mit Weibo."
+msgstr "Aktiviert die Benutzer-Authentifizierung über Weibo."
 
 #: db/seeds/settings.rb
 msgid "Enables users to create their own account via web interface."
@@ -4536,7 +4536,7 @@ msgstr "Verknüpfungs-URL angeben"
 
 #: app/frontend/apps/mobile/modules/search/views/SearchOverview.vue
 msgid "Enter more than two characters to get any results…"
-msgstr ""
+msgstr "Geben Sie mehr als zwei Zeichen ein, um Ergebnisse zu erhalten…"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
@@ -4636,7 +4636,7 @@ msgstr "Eskalation am (Schließzeit)"
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/graphql/gql/types/overview_type.rb
 msgid "Escalation at (First Response Time)"
-msgstr "Eskalation am (Erste Reaktionszeit)"
+msgstr "Eskalation am (Erstreaktionszeit)"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/graphql/gql/types/overview_type.rb
@@ -5381,7 +5381,7 @@ msgid "Has processed"
 msgstr "wurde verarbeitet"
 
 #: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/TicketViewersDialog.vue
-msgid "Has ticket open in taskbar, but is not actively looking in the ticket."
+msgid "Has ticket open in taskbar, but is not actively looking at the ticket."
 msgstr ""
 "Hat das Ticket in der Taskbar geöffnet, schaut jedoch nicht aktiv ins Ticket."
 
@@ -6859,7 +6859,7 @@ msgstr "Nachrichten"
 
 #: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Meta Data"
-msgstr "Meta-Daten"
+msgstr "Metadaten"
 
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
 msgid "Method"
@@ -7149,6 +7149,8 @@ msgstr "Benötigt 'form_id', um Anhänge zu einem neuen Formular hinzuzufügen."
 #: app/services/base_service.rb
 msgid "Need a valid user to create a new service object!"
 msgstr ""
+"Zur Erstellung eines neuen Service-Objekts wird ein gültiger Benutzer "
+"benötigt!"
 
 #: app/controllers/concerns/creates_ticket_articles.rb
 msgid "Need at least an 'article body' field."
@@ -7968,7 +7970,7 @@ msgstr "Übersicht"
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
 msgid "Overview bulk mask"
-msgstr "Übersicht Bulk Maske"
+msgstr "Übersicht Bulk-Maske"
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
@@ -8798,7 +8800,7 @@ msgstr "Zurückrollen der Kanal-Migration ist erfolgt!"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Rows"
-msgstr "Reihen"
+msgstr "Zeilen"
 
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee
 msgid "Run every %s at %s in %s time"
@@ -9044,7 +9046,7 @@ msgstr "Benutzer suchen"
 
 #: app/frontend/apps/mobile/modules/search/views/SearchOverview.vue
 msgid "Search for…"
-msgstr "Suche nach…"
+msgstr "Suchen nach…"
 
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax_customer_organization.coffee
@@ -10280,8 +10282,8 @@ msgid "The language could not be updated."
 msgstr "Die Sprache konnte nicht aktualisiert werden."
 
 #: app/frontend/apps/mobile/modules/ticket/components/TicketList/TicketList.vue
-msgid "The limit of %s tickets reached (%s remaining)"
-msgstr "Das Limit von %s Ticket wurde erreicht (%s verbleibend)"
+msgid "The limit of %s displayable tickets was reached (%s remaining)"
+msgstr "Das Limit von %s darstellbaren Tickets wurde erreicht (%s verbleibend)"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_new.coffee
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee
@@ -11649,10 +11651,10 @@ msgid "Use the time of the very last customer article."
 msgstr "Verwenden Sie den Zeitpunkt des allerletzten Kundenartikels."
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
-msgid "Use this switch to start synchronization of your ldap sources. "
+msgid "Use this switch to start synchronization of your ldap sources."
 msgstr ""
 "Nutzen Sie diesen Schalter, um die Synchronisierung Ihrer LDAP-Quellen zu "
-"starten. "
+"starten."
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Used anywhere"
@@ -13029,6 +13031,10 @@ msgstr "bearbeitet %s"
 msgid "edited %s by %s"
 msgstr "%s von %s bearbeitet"
 
+#: app/frontend/apps/mobile/composables/useEditedBy.ts
+msgid "edited %s by me"
+msgstr "%s von mir bearbeitet"
+
 #: db/seeds/ticket_article_types.rb
 msgid "email"
 msgstr "E-Mail"
@@ -13297,10 +13303,6 @@ msgstr "Treffer gefunden"
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco
 msgid "maybe"
 msgstr "vielleicht"
-
-#: app/frontend/apps/mobile/composables/useEditedBy.ts
-msgid "me"
-msgstr "mir"
 
 #: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
 msgid "merged"
@@ -13740,6 +13742,9 @@ msgstr "…des gesamten Textfelds"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Wartezeit heute"
+
+#~ msgid "me"
+#~ msgstr "mir"
 
 #~ msgid "The MIME type of the full-size image is invalid."
 #~ msgstr "Der MIME-Typ des Bildes in voller Größe ist ungültig."

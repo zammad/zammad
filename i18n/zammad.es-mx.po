@@ -5288,7 +5288,7 @@ msgid "Has processed"
 msgstr "Ha procesado"
 
 #: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/TicketViewersDialog.vue
-msgid "Has ticket open in taskbar, but is not actively looking in the ticket."
+msgid "Has ticket open in taskbar, but is not actively looking at the ticket."
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
@@ -10206,7 +10206,7 @@ msgid "The language could not be updated."
 msgstr "No se pudo actualizar el objeto."
 
 #: app/frontend/apps/mobile/modules/ticket/components/TicketList/TicketList.vue
-msgid "The limit of %s tickets reached (%s remaining)"
+msgid "The limit of %s displayable tickets was reached (%s remaining)"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_new.coffee
@@ -11571,7 +11571,7 @@ msgid "Use the time of the very last customer article."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
-msgid "Use this switch to start synchronization of your ldap sources. "
+msgid "Use this switch to start synchronization of your ldap sources."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
@@ -12910,6 +12910,10 @@ msgstr ""
 msgid "edited %s by %s"
 msgstr ""
 
+#: app/frontend/apps/mobile/composables/useEditedBy.ts
+msgid "edited %s by me"
+msgstr ""
+
 #: db/seeds/ticket_article_types.rb
 msgid "email"
 msgstr "correo"
@@ -13204,12 +13208,6 @@ msgstr "coincidencias"
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco
 msgid "maybe"
 msgstr "quizás"
-
-#: app/frontend/apps/mobile/composables/useEditedBy.ts
-#, fuzzy
-#| msgid "Name"
-msgid "me"
-msgstr "Nombre"
 
 #: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
 msgid "merged"
@@ -13658,6 +13656,11 @@ msgstr "…de toda el área de texto"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Tiempo de espera hoy"
+
+#, fuzzy
+#~| msgid "Name"
+#~ msgid "me"
+#~ msgstr "Nombre"
 
 #, fuzzy
 #~| msgid "Copy to clipboard: Ctrl+C, Enter"
