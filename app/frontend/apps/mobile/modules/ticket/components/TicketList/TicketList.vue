@@ -91,7 +91,7 @@ useInfiniteScroll(window, async () => {
     >
       {{
         $t(
-          'The limit of %s tickets reached (%s remaining)',
+          'The limit of %s displayable tickets was reached (%s remaining)',
           maxCount,
           totalCount - tickets.length,
         )

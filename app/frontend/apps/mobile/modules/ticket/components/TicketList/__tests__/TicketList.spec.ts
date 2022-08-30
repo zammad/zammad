@@ -35,7 +35,9 @@ describe('testing a list of tickets', () => {
     await waitUntil(() => ticketOverviewsApi.spies.resolve.mock.calls.length)
 
     expect(
-      view.getByText('The limit of 1 tickets reached (9 remaining)'),
+      view.getByText(
+        'The limit of 1 displayable tickets was reached (9 remaining)',
+      ),
     ).toBeInTheDocument()
   })
 })

@@ -22,10 +22,10 @@ export const useEditedBy = (entity: Ref<Entity>) => {
   const author = computed(() => {
     const { updatedBy } = entity.value
     if (!updatedBy) return ''
-    return updatedBy.id === session.user?.id
-      ? i18n.t('me')
-      : updatedBy.fullname ||
-          [updatedBy.firstname, updatedBy.lastname].filter(Boolean).join(' ')
+    return (
+      updatedBy.fullname ||
+      [updatedBy.firstname, updatedBy.lastname].filter(Boolean).join(' ')
+    )
   })
 
   const date = computed(() => {
@@ -36,6 +36,9 @@ export const useEditedBy = (entity: Ref<Entity>) => {
 
   const stringUpdated = computed(() => {
     if (!date.value) return ''
+    if (entity.value.updatedBy?.id === session.user?.id) {
+      return i18n.t('edited %s by me', date.value)
+    }
     if (!author.value) return i18n.t('edited %s', date.value)
     return i18n.t('edited %s by %s', date.value, author.value)
   })

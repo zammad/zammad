@@ -9337,7 +9337,7 @@ msgid "The language could not be updated."
 msgstr ""
 
 #: app/frontend/apps/mobile/modules/ticket/components/TicketList/TicketList.vue
-msgid "The limit of %s tickets reached (%s remaining)"
+msgid "The limit of %s displayable tickets was reached (%s remaining)"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_new.coffee
@@ -11731,6 +11731,10 @@ msgstr ""
 msgid "edited %s by %s"
 msgstr ""
 
+#: app/frontend/apps/mobile/composables/useEditedBy.ts
+msgid "edited %s by me"
+msgstr ""
+
 #: db/seeds/ticket_article_types.rb
 msgid "email"
 msgstr ""
@@ -11998,10 +12002,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/cti/caller_log_avatar.jst.eco
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco
 msgid "maybe"
-msgstr ""
-
-#: app/frontend/apps/mobile/composables/useEditedBy.ts
-msgid "me"
 msgstr ""
 
 #: db/seeds/ticket_state_types.rb
