@@ -4748,7 +4748,7 @@ msgid "Has processed"
 msgstr ""
 
 #: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/TicketViewersDialog.vue
-msgid "Has ticket open in taskbar, but is not actively looking in the ticket."
+msgid "Has ticket open in taskbar, but is not actively looking at the ticket."
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
@@ -10575,7 +10575,7 @@ msgid "Use the time of the very last customer article."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
-msgid "Use this switch to start synchronization of your ldap sources. "
+msgid "Use this switch to start synchronization of your ldap sources."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee

@@ -30,7 +30,7 @@ defineProps<Props>()
       :header-label="__('Opened in taskbar')"
       :help="
         __(
-          'Has ticket open in taskbar, but is not actively looking in the ticket.',
+          'Has ticket open in taskbar, but is not actively looking at the ticket.',
         )
       "
     >
