@@ -41,6 +41,7 @@ export const defaultTicket = () =>
       },
       organization: {
         __typename: 'Organization',
+        id: '3423225dsf0',
         name: 'Zammad Foundation',
       },
       state: {

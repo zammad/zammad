@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import linkify from 'linkify-html'
+import { i18n } from '@shared/i18n'
 
 export const mergeArray = <T extends unknown[]>(a: T, b: T) => {
   return [...new Set([...a, ...b])]
@@ -31,7 +32,7 @@ export const textToHtml = (text: string) => {
   return text.replace(/<div><\/div>/g, '<div><br></div>')
 }
 
-export const humanizaFileSize = (size: number) => {
+export const humanizeFileSize = (size: number) => {
   if (size > 1024 * 1024) {
     return `${Math.round((size * 10) / (1024 * 1024)) / 10} MB`
   }

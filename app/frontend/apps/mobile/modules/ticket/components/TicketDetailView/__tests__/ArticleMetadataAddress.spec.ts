@@ -14,7 +14,9 @@ describe('displaying contact address in metadata', () => {
       },
     })
 
-    expect(view.getByTitle('Label')).toHaveTextContent(/some-email/)
+    expect(view.getByRole('region', { name: 'Label' })).toHaveTextContent(
+      /some-email/,
+    )
   })
 
   it('displays parsed data, if exists', () => {

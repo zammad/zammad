@@ -7,8 +7,21 @@ import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
 
 export const OrganizationDocument = gql`
-    query organization($organizationId: ID!) {
+    query organization($organizationId: ID!, $membersCount: Int) {
   organization(organizationId: $organizationId) {
+    members(first: $membersCount) {
+      edges {
+        node {
+          id
+          internalId
+          image
+          firstname
+          lastname
+          fullname
+        }
+      }
+      totalCount
+    }
     ...organizationAttributes
   }
 }

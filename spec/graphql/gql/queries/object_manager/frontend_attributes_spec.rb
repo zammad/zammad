@@ -27,20 +27,17 @@ RSpec.describe Gql::Queries::ObjectManager::FrontendAttributes, type: :graphql d
     let(:expected_result_agent)    { nil }
     let(:expected_result_customer) { nil }
 
-    before do
-      gql.execute(query, variables: variables)
-    end
-
     shared_context 'when fetching (filtered) meta information as agent and customer' do
       context 'with an agent', authenticated_as: :user, db_strategy: :reset do
         let(:user) { create(:admin) }
 
         it 'returns all object manager attributes' do
+          gql.execute(query, variables: variables)
           expect(gql.result.data).to eq(expected_result_agent)
         end
 
         context 'with a specific screen', db_strategy: :reset do
-          let(:screen) { 'edit' }
+          let(:filter_screen) { 'edit' }
           let(:object_attribute) do
             create(:object_manager_attribute_text, object_name: object, screens: { 'edit' => {
                      'ticket.agent'       => {
@@ -56,14 +53,13 @@ RSpec.describe Gql::Queries::ObjectManager::FrontendAttributes, type: :graphql d
             end
           end
 
-          before do
-            object_attribute
-            gql.execute(query, variables: variables)
-          end
-
           context 'with a shown attribute' do
-            it 'does contain the shown attribute' do
+            before do
+              object_attribute
+              gql.execute(query, variables: variables)
+            end
 
+            it 'does contain the shown attribute' do
               expect(gql.result.data).to include(
                 include(
                   'name' => object_attribute.name
@@ -74,6 +70,7 @@ RSpec.describe Gql::Queries::ObjectManager::FrontendAttributes, type: :graphql d
 
           context 'with a hidden attribute' do
             before do
+              object_attribute
               object_attribute.update!(screens: { 'edit' => {
                                          'ticket.agent'       => {
                                            'shown'    => false,
@@ -84,13 +81,15 @@ RSpec.describe Gql::Queries::ObjectManager::FrontendAttributes, type: :graphql d
                                            'required' => false,
                                          }
                                        } })
+
+              gql.execute(query, variables: variables)
             end
 
             it 'does not contain the hidden attribute' do
               expect(gql.result.data).not_to include(
-                {
+                include(
                   'name' => object_attribute.name,
-                }
+                )
               )
             end
           end
@@ -101,6 +100,7 @@ RSpec.describe Gql::Queries::ObjectManager::FrontendAttributes, type: :graphql d
         let(:user) { create(:customer) }
 
         it 'returns all object manager attributes' do
+          gql.execute(query, variables: variables)
           expect(gql.result.data).to eq(expected_result_customer)
         end
       end

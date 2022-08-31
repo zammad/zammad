@@ -11,12 +11,9 @@ defineProps<Props>()
 
 <template>
   <div class="border-b border-gray-300 last:border-0">
-    <div
-      :title="$t(label)"
-      class="min-h-[54px] border-b border-gray-300 py-3 last:border-0"
-    >
+    <section :aria-label="$t(label)" class="min-h-[54px] py-2">
       <div class="text-xs text-white/80">{{ $t(label) }}</div>
       <slot>{{ body }}</slot>
-    </div>
+    </section>
   </div>
 </template>

@@ -52,21 +52,25 @@ describe('visuals for metadata', () => {
       store: true,
     })
 
-    expect(view.getByTitle('From')).toHaveTextContent(
+    expect(view.getByRole('region', { name: 'From' })).toHaveTextContent(
       /Test Admin Agent via Zammad Helpdesk/,
     )
-    expect(view.getByTitle('To')).toHaveTextContent(
+    expect(view.getByRole('region', { name: 'To' })).toHaveTextContent(
       /Nicole Braun <nicole.braun@zammad.org>/,
     )
-    expect(view.getByTitle('Subject')).toHaveTextContent(/Some Email/)
-    expect(view.getByTitle('CC')).toHaveTextContent(
+    expect(view.getByRole('region', { name: 'Subject' })).toHaveTextContent(
+      /Some Email/,
+    )
+    expect(view.getByRole('region', { name: 'CC' })).toHaveTextContent(
       /Joe Mike <joe.mike@zammad.org>/,
     )
-    expect(view.getByTitle('Reply-To')).toHaveTextContent(
+    expect(view.getByRole('region', { name: 'Reply-To' })).toHaveTextContent(
       /Arthur Miller <arthur.miller@zammad.org/,
     )
-    expect(view.getByTitle('Sent')).toHaveTextContent(/2022-02-01 00:00$/)
-    const channel = view.getByTitle('Channel')
+    expect(view.getByRole('region', { name: 'Sent' })).toHaveTextContent(
+      /2022-02-01 00:00$/,
+    )
+    const channel = view.getByRole('region', { name: 'Channel' })
     expect(channel).toHaveTextContent(/email/)
     const links = getAllByRole(channel, 'link')
     expect(links).toHaveLength(3)

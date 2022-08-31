@@ -26,6 +26,7 @@ const hasHelp = computed(() => slots.help || props.help)
 </template>
 
 <style lang="scss">
+// TODO not actually correct. border should has padding from left and right
 .form-group {
   .formkit-outer:not(:last-child) {
     .formkit-inner {

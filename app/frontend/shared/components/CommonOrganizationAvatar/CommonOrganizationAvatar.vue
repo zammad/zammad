@@ -19,5 +19,5 @@ const icon = computed(() => {
 </script>
 
 <template>
-  <CommonAvatar :size="size" :icon="icon" />
+  <CommonAvatar class="bg-gray" :size="size" :icon="icon" />
 </template>

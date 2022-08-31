@@ -17,6 +17,7 @@ fragment ticketAttributes on Ticket {
     fullname
   }
   organization {
+    id
     name
   }
   state {

@@ -202,29 +202,27 @@ const executeAction = () => {
       </div>
     </template>
     <template #after-label>
-      <div class="absolute top-0 right-0 bottom-0 flex items-center pr-4">
-        <CommonIcon
-          v-if="context.action"
-          :name="context.actionIcon ? context.actionIcon : 'external'"
-          :fixed-size="{ width: 24, height: 24 }"
-          class="cursor-pointer text-white"
-          tabindex="0"
-          role="button"
-          @click="executeAction"
-          @keypress.space="executeAction"
-          @keydown="advanceDialogFocus"
-        />
-        <div
-          v-else
-          class="grow cursor-pointer text-blue"
-          tabindex="0"
-          role="button"
-          @click="close()"
-          @keypress.space="close()"
-          @keydown="advanceDialogFocus"
-        >
-          {{ i18n.t('Done') }}
-        </div>
+      <CommonIcon
+        v-if="context.action"
+        :name="context.actionIcon ? context.actionIcon : 'external'"
+        :fixed-size="{ width: 24, height: 24 }"
+        class="cursor-pointer text-white"
+        tabindex="0"
+        role="button"
+        @click="executeAction"
+        @keypress.space="executeAction"
+        @keydown="advanceDialogFocus"
+      />
+      <div
+        v-else
+        class="grow cursor-pointer text-blue"
+        tabindex="0"
+        role="button"
+        @click="close()"
+        @keypress.space="close()"
+        @keydown="advanceDialogFocus"
+      >
+        {{ i18n.t('Done') }}
       </div>
     </template>
     <div class="w-full p-4">

@@ -68,7 +68,15 @@ const getCoreClasses: FormThemeExtension = (classes: FormThemeClasses) => {
     time: addFloatingLabel(classes.time),
     date: addDateLabel(classes.date),
     datetime: addDateLabel(classes.datetime),
-    textarea: addFloatingLabel(classes.textarea),
+    textarea: addFloatingLabel({
+      ...classes.textarea,
+      input: `${classes.textarea.input || ''} min-h-[100px]`,
+    }),
+    checkbox: {
+      wrapper: `${
+        classes.checkbox?.wrapper || ''
+      } flex-row-reverse w-full justify-between h-14 ltr:pl-3 rtl:pr-3`,
+    },
     password: addFloatingLabel(classes.password),
     select: addFloatingLabel({
       ...(classes.select || {}),

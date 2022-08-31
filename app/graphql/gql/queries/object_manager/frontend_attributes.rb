@@ -24,7 +24,7 @@ module Gql::Queries
         attributes.each do |attribute|
           oa = attribute.attribute
 
-          if filter_screen.present? && !apply_screen_filter?(oa, filter_screen)
+          if filter_screen.present? && !apply_screen_filter?(attribute.screens, filter_screen)
             next
           end
 
@@ -39,11 +39,11 @@ module Gql::Queries
         result
       end
 
-      def apply_screen_filter?(attribute, filter_screen)
+      def apply_screen_filter?(screens, filter_screen)
         return false if filter_screen.blank?
-        return false if attribute.screens.blank?
+        return false if screens.blank?
 
-        relevant_for_screen?(attribute.screens, filter_screen)
+        relevant_for_screen?(screens, filter_screen)
       end
 
       def relevant_for_screen?(screens, filter_screen)

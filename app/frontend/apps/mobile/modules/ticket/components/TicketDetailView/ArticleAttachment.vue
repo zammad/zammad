@@ -3,7 +3,7 @@
 <script setup lang="ts">
 import { useApplicationStore } from '@shared/stores/application'
 import { canDownloadFile } from '@shared/utils/files'
-import { humanizaFileSize } from '@shared/utils/helpers'
+import { humanizeFileSize } from '@shared/utils/helpers'
 import { getIconByContentType } from '@shared/utils/icons'
 import { computed } from 'vue'
 import type { TicketArticleAttachment } from '../../types/tickets'
@@ -85,7 +85,7 @@ const icon = computed(() => getIconByContentType(props.attachment.type))
       class="whitespace-nowrap"
       :class="colors.amount"
     >
-      {{ humanizaFileSize(attachment.size) }}
+      {{ humanizeFileSize(attachment.size) }}
     </span>
   </CommonLink>
 </template>

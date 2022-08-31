@@ -35,6 +35,10 @@ export const order = (
   return Number(first) >= Number(second) ? [second, first] : [first, second]
 }
 
+export const camelize = (str: string) => {
+  return str.replace(/[_.-](\w|$)/g, (_, x) => x.toUpperCase())
+}
+
 export const getFullName = (
   firstname?: Maybe<string>,
   lastname?: Maybe<string>,

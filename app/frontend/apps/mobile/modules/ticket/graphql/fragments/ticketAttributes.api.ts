@@ -21,6 +21,7 @@ export const TicketAttributesFragmentDoc = gql`
     fullname
   }
   organization {
+    id
     name
   }
   state {

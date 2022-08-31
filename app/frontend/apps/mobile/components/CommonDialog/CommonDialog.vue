@@ -63,7 +63,9 @@ export default {
       <div
         class="relative flex h-16 shrink-0 select-none items-center justify-center rounded-t-xl bg-gray-600/80"
       >
-        <slot name="before-label" />
+        <div class="absolute top-0 left-0 bottom-0 flex items-center pl-4">
+          <slot name="before-label" />
+        </div>
         <div
           class="grow text-center text-base font-semibold leading-[19px] text-white"
         >
@@ -71,10 +73,10 @@ export default {
             {{ i18n.t(label) }}
           </slot>
         </div>
-        <slot name="after-label">
-          <div class="absolute top-0 right-0 bottom-0 flex items-center pr-4">
-            <div
-              class="grow cursor-pointer text-blue"
+        <div class="absolute top-0 right-0 bottom-0 flex items-center pr-4">
+          <slot name="after-label">
+            <button
+              class="grow text-blue"
               tabindex="0"
               role="button"
               v-bind="listeners?.done"
@@ -83,9 +85,9 @@ export default {
               @keypress.space="close()"
             >
               {{ i18n.t('Done') }}
-            </div>
-          </div>
-        </slot>
+            </button>
+          </slot>
+        </div>
       </div>
       <div
         class="flex grow flex-col items-start overflow-y-auto bg-black text-white"
