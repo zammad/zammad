@@ -847,6 +847,24 @@ RSpec.describe Ticket, type: :model do
           expect { ticket.perform_changes(trigger, 'trigger', {}, 1) }.to have_enqueued_job(TriggerWebhookJob).with(trigger, ticket, nil)
         end
       end
+
+      context 'Allow placeholders in trigger perform actions for ticket/custom attributes #4216' do
+        let(:customer) { create(:customer, mobile: '+491907655431') }
+        let(:ticket) { create(:ticket, customer: customer) }
+
+        let(:perform) do
+          {
+            'ticket.title' => {
+              'value' => ticket.customer.mobile.to_s,
+            }
+          }
+        end
+
+        it 'does replace custom fields in trigger' do
+          ticket.perform_changes(performable, 'trigger', ticket, User.first)
+          expect(ticket.reload.title).to eq(customer.mobile)
+        end
+      end
     end
 
     describe '#trigger_based_notification?' do

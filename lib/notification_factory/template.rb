@@ -23,7 +23,7 @@ examples how to use
   def to_s
     result = @template
     result.gsub!(%r{<%(?!%)}, '<%%') if !@trusted
-    result.gsub(%r{\#{\s*(.*?)\s*}}m) do
+    result = result.gsub(%r{(?<!\\)\#{\s*(.*?)\s*}}m) do
       # some browsers start adding HTML tags
       # fixes https://github.com/zammad/zammad/issues/385
       input_template = $1.gsub(%r{\A<.+?>\s*|\s*<.+?>\z}, '')
@@ -39,6 +39,7 @@ examples how to use
         %(<%= d "#{sanitize_object_name(input_template)}", #{@escape} %>)
       end
     end
+    result.gsub(%r{\\\#{\s*(.*?)\s*}}m, '#{\1}') # rubocop:disable Lint/InterpolationCheck
   end
 
   def sanitize_text(string)

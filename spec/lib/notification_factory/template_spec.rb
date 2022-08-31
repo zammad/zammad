@@ -30,6 +30,26 @@ RSpec.describe NotificationFactory::Template do
       end
     end
 
+    context 'for escaped input template' do
+      let(:template_string) { "\\\#{ticket.customer.name}" }
+
+      context 'with escape = true' do
+        let(:escape) { true }
+
+        it 'returns the original template string' do
+          expect(template.to_s).to eq('#{ticket.customer.name}') # rubocop:disable Lint/InterpolationCheck
+        end
+      end
+
+      context 'with escape = false' do
+        let(:escape) { false }
+
+        it 'returns the original template string' do
+          expect(template.to_s).to eq('#{ticket.customer.name}') # rubocop:disable Lint/InterpolationCheck
+        end
+      end
+    end
+
     context 'for sanitizing the template string' do
       let(:escape) { false }
 
@@ -54,7 +74,7 @@ RSpec.describe NotificationFactory::Template do
 
     context 'for input template using #t helper' do
       let(:template_string) { "\#{t('some text')}" }
-      let(:escape) { false }
+      let(:escape)          { false }
 
       it 'returns an ERB template with the #t helper, and passes escape arg as string' do
         expect(template.to_s).to eq('<%= t "some text", false %>')
