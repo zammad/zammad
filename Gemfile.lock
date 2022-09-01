@@ -469,7 +469,7 @@ GEM
     rubocop-faker (1.1.0)
       faker (>= 2.12.0)
       rubocop (>= 0.82.0)
-    rubocop-graphql (0.14.5)
+    rubocop-graphql (0.14.6)
       rubocop (>= 0.87, < 2)
     rubocop-inflector (0.2.1)
       activesupport
@@ -706,4 +706,4 @@ RUBY VERSION
    ruby 3.0.4p208
 
 BUNDLED WITH
-   2.3.16
+   2.3.21
