@@ -40,9 +40,9 @@ $mobileNavigationWidthOpen: 220px;
   --background-secondary-hover: hsl(239, 4%, 95%);
   --background-tertiary: hsl(233, 9%, 19%);
   --background-quaternary: hsl(231, 9%, 16%);
+  --background-quaternary-alt: hsl(228, 17%, 91%);
   --background-popover: white;
   --background-active: hsl(233, 9%, 19%);
-  --background-accent: hsl(210, 8%, 29%);
   --background-highlight: hsl(200, 100%, 91%);
   --background-article-meta: hsl(212, 14%, 99%);
   --background-article-customer: hsl(201, 46%, 93%);
@@ -56,7 +56,6 @@ $mobileNavigationWidthOpen: 220px;
   --backdrop-clue-start: hsla(202, 68%, 54%, 0.1);
   --backdrop-clue-end: hsla(202, 68%, 54%, 0.9);
   --border: hsl(0, 0%, 90%);
-  --border-light: hsl(0, 0%, 95%);
   --border-alt: hsl(198, 18%, 86%);
   --border-highlight: hsl(200, 71%, 59%);
   --border-internal: hsl(18, 79%, 89%);
@@ -83,7 +82,7 @@ $mobileNavigationWidthOpen: 220px;
 }
 
 // dark mode
-[data-dark-mode="on"] {
+[data-theme="dark"] {
   --button-action-color: hsl(0, 0%, 80%);
   --button-border: hsl(230,4%,20%);
   --button-background: hsla(0, 0%, 100%, .03);
@@ -109,14 +108,14 @@ $mobileNavigationWidthOpen: 220px;
   --interactive-muted-alt-selected: hsl(205, 4%, 75%);
   --input-disabled: hsl(230, 4%, 20%);
   --background-primary: hsl(230, 5%, 22%);
-  --background-primary-alt: hsl(230, 7%, 24%);
+  --background-primary-alt: hsl(230, 5%, 24%);
   --background-secondary: hsl(230, 5%, 26%);
   --background-secondary-hover: hsl(230, 5%, 23%);
   --background-tertiary: hsl(230, 7%, 17%);
   --background-quaternary: hsl(230, 7%, 13%);
-  --background-popover: hsl(230, 5%, 30%);
+  --background-quaternary-alt: hsl(230, 4%, 30%);
+  --background-popover: hsl(216, 3%, 30%);
   --background-active: var(--highlight);
-  --background-accent: hsl(240, 8%, 28%);
   --background-highlight: hsl(205, 30%, 27%);
   --background-article-meta: hsl(230, 7%, 25%);
   --background-article-customer: hsl(218, 8%, 32%);
@@ -130,7 +129,6 @@ $mobileNavigationWidthOpen: 220px;
   --backdrop-clue-start: hsla(202, 68%, 54%, 0.1);
   --backdrop-clue-end: hsla(202, 68%, 54%, 0.9);
   --border: hsl(230, 4%, 19%);
-  --border-light: hsl(230, 4%, 20%);
   --border-alt: hsl(230, 7%, 21%);
   --border-highlight: hsl(205, 70%, 50%);
   --border-internal: hsl(18, 30%, 39%);
@@ -145,8 +143,8 @@ $mobileNavigationWidthOpen: 220px;
   --ghost-color: hsl(0, 0%, 40%);
   --danger-color: hsl(0, 65%, 55%);
   --elevation-stroke: 0 1px hsla(0, 0%, 0%, .13);
-  --elevation-low: 0 1px 5px hsla(205, 20%, 10%, 0.1);
-  --elevation-high: 0 1px 14px hsla(208, 95%, 3%, 0.25);
+  --elevation-low: 0 1px 5px hsla(0, 0%, 0%, 0.15);
+  --elevation-high: 0 1px 14px hsla(0, 0%, 0%, 0.25);
   --highlighter-yellow: hsl(48, 34%, 30%);
   --highlighter-green: hsl(105, 34%, 27%);
   --highlighter-blue: hsl(207, 41%, 30%);
@@ -157,7 +155,7 @@ $mobileNavigationWidthOpen: 220px;
 }
 
 @mixin dark {
-  [data-dark-mode="on"] & {
+  [data-theme="dark"] & {
     @content;
   }
 }
@@ -319,7 +317,7 @@ a.create {
 }
 
 small {
-  color: hsl(198, 4%, 56%);
+  color: var(--text-muted);
   font-size: 12px;
 }
 
@@ -1433,7 +1431,7 @@ table {
 }
 
 .table--light {
-  color: hsl(198, 4%, 56%);
+  color: var(--text-muted);
 }
 
 .table-fluid {
@@ -1507,7 +1505,7 @@ th.align-right {
 
 .table > tbody > tr > td {
   padding: 10px 10px 8px;
-  border-color: var(--border-light);
+  border-color: var(--background-modifier-accent);
 
   &.no-side-padding {
     padding-left: 0;
@@ -1599,8 +1597,6 @@ td .icon {
 td .icon-draggable,
 td .icon-trash {
   vertical-align: middle;
-
-  //fill: hsl(240,1%,77%);
 }
 
 td .prefix-icon > .icon {
@@ -1783,7 +1779,7 @@ td .prefix-icon > .icon {
 .table .table-cell {
   vertical-align: top;
   display: table-cell;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--background-primary-alt);
 }
 
 .hero-two {
@@ -1819,10 +1815,6 @@ h5,
 h6 {
   font-weight: normal;
   color: var(--header-primary);
-
-  small {
-    color: var(--text-muted);
-  }
 }
 
 h1 {
@@ -1977,9 +1969,14 @@ fieldset {
 
 .form-field-group {
   padding: 20px;
-  background: hsl(0, 0%, 97%);
+  background: var(--background-secondary);
   border-radius: 4px;
   margin-bottom: 16px;
+  border: 1px solid var(--border);
+
+  .modal-body & {
+    background: var(--background-primary);
+  }
 
   > .form-group:last-child {
     margin-bottom: 0;
@@ -2026,7 +2023,7 @@ fieldset > .form-group {
 
     .merge-source,
     .merge-target {
-      border-bottom: 1px solid #eee;
+      border-bottom: 1px solid var(--border);
     }
   }
 
@@ -2042,8 +2039,8 @@ fieldset > .form-group {
   .merge-source,
   .merge-target {
     padding-bottom: 3px;
-    border-left: 1px solid #eee;
-    border-right: 1px solid #eee;
+    border-left: 1px solid var(--border);
+    border-right: 1px solid var(--border);
     padding: 7px 13px;
   }
 
@@ -2052,7 +2049,7 @@ fieldset > .form-group {
 
     .merge-source,
     .merge-target {
-      border-top: 1px solid #eee;
+      border-top: 1px solid var(--border);
       border-radius: 3px 3px 0 0;
     }
   }
@@ -2062,7 +2059,7 @@ fieldset > .form-group {
 
     .merge-source,
     .merge-target {
-      border-bottom: 1px solid #eee;
+      border-bottom: 1px solid var(--border);
       border-radius: 0 0 3px 3px;
     }
   }
@@ -2278,10 +2275,13 @@ textarea,
   .modal-body &,
   .box &,
   .sidebar &,
-  .hero-unit & {
+  .hero-unit &,
+  .form-field-group &,
+  .popover & {
     background: var(--background-primary);
   }
 
+  .modal-body .form-field-group &,
   .formset-inset & {
     background: var(--background-secondary);
   }
@@ -2400,8 +2400,8 @@ input.time.time--12 {
 .richtext.form-control [contenteditable='false'] {
   cursor: not-allowed;
   opacity: 1;
-  background: hsl(210, 17%, 93%);
-  border-color: hsl(210, 10%, 85%);
+  background: var(--input-disabled);
+  border-color: var(--border);
   padding: unset;
 
   &:focus,
@@ -2517,7 +2517,7 @@ input.has-error {
 
   & + label {
     font-size: 11px;
-    color: #dbdbdb;
+    color: var(--interactive-muted);
     margin: 0;
 
     @extend %clickable;
@@ -2781,7 +2781,7 @@ input.has-error {
 
   h2 {
     margin: 15px;
-    color: hsl(0, 0%, 60%);
+    color: var(--text-muted);
   }
 }
 
@@ -3117,11 +3117,6 @@ kbd {
     color: var(--header-secondary);
   }
 
-  .help-text,
-  .help-block {
-    color: var(--text-muted);
-  }
-
   .content-controls-align-right {
     display: flex;
     justify-content: flex-end;
@@ -3171,9 +3166,13 @@ kbd {
   @include bidi-style(margin-left, 10px, margin-right, 0);
 }
 
+.help-text,
+.help-block {
+  color: var(--text-muted);
+}
+
 .help-block {
   margin: 0;
-  color: #bcbcbc;
   font-size: 13px;
 
   &.help-block--center {
@@ -3456,14 +3455,13 @@ ol.tabs li {
   }
 
   .icon {
-    fill: hsl(0, 0%, 70%);
+    fill: var(--text-muted);
   }
 
   &.active {
     background: var(--background-secondary);
 
     .icon {
-      fill: #444a4f;
       opacity: 1;
     }
   }
@@ -3761,10 +3759,6 @@ ol.tabs li {
   }
 }
 
-.icon-knowledge-base {
-  fill: var(--background-accent);
-}
-
 .loading.icon {
   display: inline-block;
   width: 30px;
@@ -3784,7 +3778,7 @@ ol.tabs li {
 }
 
 .loading.icon.muted {
-  background: hsl(195, 20%, 96%);
+  background: var(--ghost-color);
 }
 
 @keyframes rotateplane {
@@ -3841,7 +3835,7 @@ ol.tabs li {
   }
 
   &.inactive {
-    fill: var(--border-alt);
+    fill: var(--ghost-color);
   }
 
   &.ok {
@@ -4367,8 +4361,12 @@ footer {
     position: relative;
   }
 
-  .accessory-icon {
-    fill: var(--background-accent);
+  .icon {
+    fill: var(--menu-icon);
+
+    &.accessory-icon {
+      opacity: .7;
+    }
   }
 
   &:hover {
@@ -4443,7 +4441,6 @@ footer {
 
   width: 24px;
   height: 24px;
-  fill: var(--menu-icon);
 
   @include phone {
     @include bidi-style(margin-right, 0, margin-left, 0);
@@ -4465,11 +4462,11 @@ footer {
 }
 
 .call-widget {
-  background: hsl(228, 17%, 91%);
+  background: var(--background-quaternary-alt);
   padding: 8px 10px;
 
   & + & {
-    border-top: 1px solid hsl(228, 10%, 81%);
+    border-top: 1px solid var(--background-modifier-border);
   }
 
   &-header {
@@ -4532,6 +4529,7 @@ footer {
       width: 16px;
       height: 16px;
       vertical-align: middle;
+      margin-top: -3px;
 
       @include bidi-style(margin-right, 4px, margin-left, 0);
     }
@@ -4599,11 +4597,6 @@ footer {
 
 .tasks-navigation .nav-tab-icon .error {
   transform: scale(0.85);
-}
-
-.nav-tab:hover {
-  color: #808080;
-  text-decoration: none;
 }
 
 .nav-tab.is-active,
@@ -5791,13 +5784,13 @@ a.list-group-item.active > .badge,
 }
 
 .popover .person .organization {
-  color: #a1a4a7;
+  color: var(--text-muted);
 }
 
 .popover .person {
   &.is-inactive {
     text-decoration: line-through;
-    color: #ccc;
+    color: var(--ghost-color);
   }
 }
 
@@ -5809,7 +5802,7 @@ a.list-group-item.active > .badge,
 
   &.is-inactive {
     text-decoration: line-through;
-    color: #ccc;
+    color: var(--ghost-color);
   }
 }
 
@@ -5904,7 +5897,7 @@ a.list-group-item.active > .badge,
   }
 
   .popover-notificationsHeader {
-    border-bottom: 1px solid var(--border-light);
+    border-bottom: 1px solid var(--background-modifier-accent);
     padding-bottom: 14px;
     flex-shrink: 0;
 
@@ -6023,6 +6016,7 @@ a.list-group-item.active > .badge,
   height: 10px;
   margin-top: -7px;
   margin-bottom: 2px;
+  position: relative;
 }
 
 .stat-tickets {
@@ -6299,7 +6293,7 @@ a.list-group-item.active > .badge,
     bottom: 0;
     right: 0;
     left: 0;
-    border-bottom: 1px solid var(--border-light);
+    border-bottom: 1px solid var(--background-modifier-accent);
   }
 
   &.activity-entry--removeable:not(:last-child) .activity-body::after {
@@ -6433,8 +6427,8 @@ a.list-group-item.active > .badge,
   width: 3px;
   background: repeating-linear-gradient(
       45deg,
-      hsl(193, 18%, 90%),
-      hsl(193, 18%, 90%) 5px,
+      var(--background-modifier-border),
+      var(--background-modifier-border) 5px,
       transparent 5px,
       transparent 9px
     )
@@ -6955,7 +6949,7 @@ a.list-group-item.active > .badge,
 }
 
 .customer .richtext-content blockquote {
-  border-left: 5px solid #dfdfdf;
+  border-left: 5px solid var(--background-modifier-border);
 }
 
 .customer.ticket-article-item.state--folde-out .textBubble {
@@ -7407,6 +7401,7 @@ a.list-group-item.active > .badge,
   margin-top: 2px;
   width: 38px;
   text-align: center;
+  flex-shrink: 0;
 
   .icon {
     vertical-align: bottom;
@@ -7469,7 +7464,7 @@ a.list-group-item.active > .badge,
 }
 
 .attachment--preview .attachment-delete .icon {
-  fill: hsl(198, 18%, 72%);
+  fill: var(--interactive-muted);
   width: 9px;
   height: 9px;
 
@@ -7549,7 +7544,7 @@ a.list-group-item.active > .badge,
 }
 
 .attachmentUpload .icon {
-  fill: hsl(198, 18%, 72%);
+  fill: var(--interactive-muted);
   width: 9px;
   height: 9px;
 
@@ -7572,10 +7567,6 @@ a.list-group-item.active > .badge,
 
   &:last-child {
     margin-bottom: 0;
-  }
-
-  .icon {
-    fill: #d1d1d1;
   }
 
   .attachmentUpload-cancel {
@@ -7630,6 +7621,7 @@ a.list-group-item.active > .badge,
   width: $sidebarWidth;
   border-left: 1px solid var(--border);
   padding: 0;
+  margin-bottom: 1px;
 }
 
 .tabsSidebar .sidebar > hr {
@@ -8076,6 +8068,7 @@ li.list-item-none {
   background: var(--background-secondary);
   transition: margin 250ms;
   flex-shrink: 0;
+  border-top: 1px solid var(--border);
 
   &.is-closed {
     margin-bottom: -60px;
@@ -8109,9 +8102,10 @@ li.list-item-none {
   }
 
   &-draft-spacer {
-    width: 2px;
+    width: 1px;
     height: 60px;
     margin-right: 15px;
+    background: var(--background-modifier-accent);
   }
 
   &-avatars:empty + &-draft-spacer {
@@ -8119,7 +8113,7 @@ li.list-item-none {
   }
 
   &--border {
-    border-top: 1px solid hsl(0, 0%, 94%);
+    border-top: 1px solid var(--border);
   }
 
   &--spacer-after {
@@ -8528,7 +8522,7 @@ li.list-item-none {
 
   margin-bottom: 2px;
   font-size: 13px;
-  color: hsl(198, 11%, 59%);
+  color: var(--text-muted-alt);
   background: var(--background-primary-alt);
   border: 1px solid var(--border);
   border-radius: 3px;
@@ -8788,13 +8782,12 @@ li.list-item-none {
     padding: 0 !important;
   }
 
-  .modal-backdrop {
-    background: hsla(210, 17%, 93%, 0.55);
-    opacity: 1;
-  }
-
   .modal-dialog {
     box-shadow: 0 0 40px hsla(210, 17%, 40%, 0.34);
+
+    @include dark {
+      box-shadow: 0 0 40px hsla(0, 0%, 0%, .34);
+    }
   }
 }
 
@@ -8904,17 +8897,15 @@ li.list-item-none {
 
 .dropdown li.with-category,
 .dropdown.dropdown--actions li.with-category {
-  line-height: 19.5px;
-
   small {
-    color: #fff !important;
+    color: inherit !important;
   }
 }
 
 .dropdown.dropdown--actions li.with-category {
   height: 39px;
-  padding: 0 15px;
-  display: list-item;
+  padding: 2.5px 15px;
+  display: block;
 }
 
 .dropdown li:not(:first-child) {
@@ -9264,13 +9255,14 @@ li.dropdown-header {
 
   .form-group & {
     padding: 10px 12px;
+    margin: 0;
     list-style: none;
     height: auto;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    border: none;
-    background: none;
+    background: var(--background-secondary);
+    border: 1px solid var(--border);
   }
 
   .checkbox-replacement {
@@ -9321,7 +9313,6 @@ li.dropdown-header {
 
   .help-text {
     display: table;
-    color: hsl(0, 0%, 60%);
     font-size: 0.92em;
     margin: 2px 0 3px 18px;
   }
@@ -9363,14 +9354,6 @@ li.dropdown-header {
 
   &-child {
     padding-left: 20px;
-  }
-
-  .help-text {
-    display: table;
-    color: hsl(0, 0%, 60%);
-    margin-left: 18px;
-    font-size: 0.92em;
-    margin-bottom: 3px;
   }
 }
 
@@ -9550,8 +9533,11 @@ li.dropdown-header {
   span {
     position: relative;
     background: var(--background-secondary);
-    background: var(--background, white);
     padding: 0 10px;
+
+    .modal-body & {
+      background: var(--background-primary);
+    }
   }
 }
 
@@ -9746,8 +9732,8 @@ label + .wizard-buttonList {
 
   + .logo-preview-placeholder {
     height: 100px;
-    color: hsl(0, 0%, 60%);
-    background: hsl(0, 0%, 95%);
+    color: var(--text-muted);
+    background: var(--background-modifier-accent);
     margin-bottom: 10px;
     display: flex;
     align-items: center;
@@ -9872,12 +9858,13 @@ label + .wizard-buttonList {
   background: var(--background-secondary);
   border-radius: 2px;
   margin: 5px 0 20px;
+  box-shadow: var(--elevation-low);
 }
 
 .channelList,
 .channelList-controls,
 .channelList-controlEntry {
-  border: 1px solid hsl(251, 6%, 90%);
+  border: 1px solid var(--border);
 }
 
 .channelList-entry {
@@ -9886,7 +9873,7 @@ label + .wizard-buttonList {
   padding: 5px 8px;
 
   &:not(:last-child) {
-    border-bottom: 1px solid hsl(251, 6%, 90%);
+    border-bottom: 1px solid var(--border);
   }
 }
 
@@ -9915,7 +9902,7 @@ label + .wizard-buttonList {
 .channelList-controls {
   margin-top: auto;
   display: flex;
-  background: hsl(251, 6%, 92%);
+  background: var(--background-quaternary-alt);
   border-left: none;
   border-right: none;
   border-bottom: none;
@@ -9986,7 +9973,7 @@ label + .wizard-buttonList {
 
   svg {
     opacity: 0.5;
-    fill: hsl(234, 10%, 19%);
+    fill: var(--interactive-primary);
   }
 
   &:hover svg {
@@ -10614,8 +10601,8 @@ output {
 
   &[disabled] + label {
     cursor: not-allowed;
-    background: hsl(210, 17%, 93%);
-    border-color: hsl(210, 10%, 85%);
+    background: var(--input-disabled);
+    border-color: var(--border);
   }
 
   &[disabled] + label::after {
@@ -10768,8 +10755,6 @@ output {
   }
 
   .settings-list--deleted {
-    background-color: #eee;
-
     td {
       text-decoration: line-through;
     }
@@ -11267,7 +11252,7 @@ output {
   }
 
   h3 {
-    color: hsl(0, 0%, 60%);
+    color: var(--text-muted);
     margin-top: 0;
 
     + .btn--text {
@@ -11893,7 +11878,7 @@ output {
       position: absolute;
       left: 0;
       top: 0;
-      transition: 500ms;
+      transition: width 500ms;
       display: flex;
       flex-direction: column;
     }
@@ -12289,7 +12274,7 @@ output {
 
   blockquote {
     padding: 8px 12px;
-    border-left: 5px solid #eee;
+    border-left: 5px solid var(--background-primary-alt);
   }
 
   code {
@@ -12682,6 +12667,7 @@ output {
     display: inline-block;
     vertical-align: middle;
     line-height: 1;
+    margin-top: -3px;
   }
 
   &-icon {
@@ -13664,6 +13650,7 @@ span.is-disabled {
 
   &-icon {
     flex-shrink: 0;
+    vertical-align: middle;
 
     &-holder {
       @include ltr(margin-right, 11px);
@@ -13812,7 +13799,7 @@ span.is-disabled {
 .miller-columns {
   display: flex;
   font-size: 12px;
-  border: 1px solid hsl(0, 0%, 85%);
+  border: 1px solid var(--border);
   border-radius: 3px;
 
   .column {
@@ -13823,7 +13810,7 @@ span.is-disabled {
     height: 300px;
     overflow: auto;
     -webkit-overflow-scrolling: touch;
-    border-right: 1px solid hsl(0, 0%, 85%);
+    border-right: 1px solid var(--border);
 
     &:last-child {
       border-right-width: 0;
@@ -13836,11 +13823,11 @@ span.is-disabled {
       cursor: default;
 
       &:hover {
-        background: hsl(0, 0%, 95%);
+        background: var(--background-modifier-accent-light);
       }
 
       &.is-selected {
-        background: var(--border);
+        background: var(--background-secondary-hover);
       }
 
       &--has-children {
