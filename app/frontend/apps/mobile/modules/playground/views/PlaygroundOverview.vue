@@ -6,6 +6,7 @@
 import Form from '@shared/components/Form/Form.vue'
 import { defineFormSchema } from '@mobile/form/composable'
 import { useDialog } from '@shared/composables/useDialog'
+import CommonButtonGroup from '@mobile/components/CommonButtonGroup/CommonButtonGroup.vue'
 
 const linkSchemaRaw = [
   {
@@ -172,6 +173,15 @@ const dialog = useDialog({
     <button @click="dialog.toggle({ name: 'dialog', label: 'Hello World' })">
       Dialog
     </button>
+
+    <CommonButtonGroup
+      class="py-4"
+      :options="[
+        { label: 'Merge tickets', icon: 'home' },
+        { label: 'Subscribe', icon: 'home', selected: true },
+        { label: 'Ticket info', icon: 'home' },
+      ]"
+    />
 
     <Form :schema="linkSchemas" />
     <Form :schema="schema" />
