@@ -47,11 +47,11 @@ describe('static organization', () => {
 
     expect(openTickets).toHaveAttribute(
       'href',
-      '/search/ticket?state=open&organization_id=1vs2dr3041dsa9',
+      expect.stringContaining('organization.name: "Some Organization"'),
     )
     expect(closedTickets).toHaveAttribute(
       'href',
-      '/search/ticket?state=closed&organization_id=1vs2dr3041dsa9',
+      expect.stringContaining('organization.name: "Some Organization"'),
     )
 
     await mockSubscription.next({

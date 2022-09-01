@@ -2,6 +2,7 @@
 
 <script setup lang="ts">
 import { TicketState } from '@shared/entities/ticket/types'
+import { replaceTags } from '@shared/utils/formatter'
 import CommonSectionMenu from '../CommonSectionMenu/CommonSectionMenu.vue'
 import CommonSectionMenuLink from '../CommonSectionMenu/CommonSectionMenuLink.vue'
 
@@ -9,10 +10,19 @@ interface Props {
   createLink?: string
   createLabel?: string
   counts: Record<TicketState.Closed | TicketState.Open, number>
-  ticketsLink(state: TicketState.Closed | TicketState.Open): string
+  ticketsLinkQuery: string
 }
 
-defineProps<Props>()
+const props = defineProps<Props>()
+
+const getTicketsLink = (stateIds: number[]) => {
+  const states = stateIds
+    .map((stateId) => `state.state_type_id: ${stateId}`)
+    .join(' OR ')
+  return replaceTags(`/search/ticket?search=(${states}) AND #{query}`, {
+    query: props.ticketsLinkQuery,
+  })
+}
 </script>
 
 <template>
@@ -20,14 +30,14 @@ defineProps<Props>()
     <CommonSectionMenuLink
       :icon="{ name: 'state-open', size: 'base', class: 'text-yellow' }"
       :information="counts[TicketState.Open]"
-      :link="ticketsLink(TicketState.Open)"
+      :link="getTicketsLink([1, 2, 3, 4])"
     >
       {{ $t('open') }}
     </CommonSectionMenuLink>
     <CommonSectionMenuLink
       :icon="{ name: 'state-closed', size: 'base', class: 'text-green' }"
       :information="counts[TicketState.Closed]"
-      :link="ticketsLink(TicketState.Closed)"
+      :link="getTicketsLink([5])"
     >
       {{ $t('closed') }}
     </CommonSectionMenuLink>

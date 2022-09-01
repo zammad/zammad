@@ -85,6 +85,10 @@ const loadAllMembers = () => {
     membersCount: null,
   })
 }
+
+const ticketsLinkQuery = computed(() => {
+  return `organization.name: "${organization.value?.name}"`
+})
 </script>
 
 <template>
@@ -116,10 +120,7 @@ const loadAllMembers = () => {
       :create-link="`/tickets/create?organization_id=${organization.id}`"
       :create-label="__('Create new ticket for this organization')"
       :counts="organization.ticketsCount"
-      :tickets-link="
-        (state) =>
-          `/search/ticket?state=${state}&organization_id=${organization?.id}`
-      "
+      :tickets-link-query="ticketsLinkQuery"
     />
   </div>
   <CommonLoader
