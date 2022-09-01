@@ -1,6 +1,6 @@
 <div class="attributeBar-avatars horizontal js-avatars hidden-xs"></div>
 
-<div class="attributeBar-draft-spacer content hidden-xs"></div>
+<div class="attributeBar-draft-spacer hidden-xs"></div>
 
 <div class="attributeBar-draft <% if !@sharedButtonVisible: %>hide<% end %> buttonDropdown btn js-draft align-left">
   <span class="attributeBar-draft--available">
