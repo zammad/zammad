@@ -59,7 +59,7 @@
         <td><%= item.version %></td>
         <td><a href="<%- item.url %>" target="_blank"><%= item.vendor %></a></td>
         <td><%- @T(item.state) %></td>
-        <td><% for action in item.action: %><a href="#" class="btn btn--action btn--danger" data-type="<%= action %>"><%- @T(action) %></a><br/><% end %></td>
+        <td><% for action in item.action: %><a href="#" class="package-action btn btn--action<%= ' btn--danger' if action == 'uninstall' %>" data-type="<%= action %>"><%- @T(action) %></a><br/><% end %></td>
       </tr>
     <% end %>
     </tbody>
