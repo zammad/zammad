@@ -20,7 +20,7 @@
   </h2>
   <p class="help-text"><% if @attribute.help: %><%- @T(@attribute.help) %><% end %><%- @attribute.helpLink %></p>
   <% end %>
-  <div class="controls <% if ( @attribute.type is 'url' || !_.isEmpty(@attribute.linktemplate) ) && !_.isEmpty(@placeholderObjects): %>controls-button ignore-readonly<% end %>">
+  <div class="controls <% if ( @attribute.type is 'url' || !_.isEmpty(@attribute.linktemplate) ) && !_.isEmpty(@placeholderObjects): %>controls--button ignore-readonly<% end %>">
     <% if ( @attribute.type is 'url' || !_.isEmpty(@attribute.linktemplate) ) && !_.isEmpty(@placeholderObjects): %>
     <a href="<% if @attribute.type is 'url': %><%= @placeholderObjects[@className.toLowerCase()][@attribute.name] %><% else: %><%- @replacePlaceholder(@attribute.linktemplate, @placeholderObjects, true) %><% end %>" class="controls-button" target="_blank" rel="nofollow">
       <span class="controls-button-inner"><%- @Icon('external') %></span>
