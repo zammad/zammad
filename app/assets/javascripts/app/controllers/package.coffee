@@ -2,7 +2,7 @@ class Package extends App.ControllerSubContent
   requiredPermission: 'admin.package'
   header: __('Packages')
   events:
-    'click .action':  'action'
+    'click .package-action':  'action'
 
   constructor: ->
     super
