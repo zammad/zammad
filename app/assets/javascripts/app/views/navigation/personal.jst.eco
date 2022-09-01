@@ -28,7 +28,7 @@
               <% if item.iconClass: %><%- @Icon(item.iconClass) %><% end %>
               <% if item.toggle: %>
                 <span class="zammad-switch zammad-switch--tiny">
-                   <input type="checkbox" id="<%- item.toggle %>-switch" <% if item.checked: %>checked<% end %>>
+                   <input type="checkbox" id="<%- item.toggle %>-switch" <% if item.checked && item.checked(): %>checked<% end %>>
                    <label for="<%- item.toggle %>-switch"></label>
                 </span>
               <% end %>

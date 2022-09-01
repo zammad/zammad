@@ -57,6 +57,7 @@ class App.KeyboardShortcutWidget extends App.Controller
               if shortcut.callback
                 @log 'debug', 'bind for', modifier
                 $(document).on('keydown.shortcuts', {keys: modifier}, (e) =>
+                  return if shortcut.onlyOutsideInputs && (_.contains(['INPUT', 'TEXTAREA'], document.activeElement.nodeName) || document.activeElement.getAttribute('contenteditable') == 'true')
                   e.preventDefault()
                   if @lastKey && @lastKey.modifier is modifier && @lastKey.time + 5500  > new Date().getTime()
                     @lastKey.count += 1
@@ -332,6 +333,25 @@ App.Config.set(
               hotkeys: true
               description: __('Enable/disable inline translations')
               globalEvent: 'translation-mode'
+            }
+          ]
+        }
+      ]
+    }
+    {
+      headline: __('Appearance')
+      location: 'left'
+      content: [
+        {
+          where: __('Used anywhere')
+          shortcuts: [
+            {
+              key: 'd'
+              hotkeys: false
+              onlyOutsideInputs: true
+              description: __('Toggle dark mode')
+              callback: ->
+                App.Event.trigger('ui:theme:toggle-dark-mode')
             }
           ]
         }

@@ -9,31 +9,22 @@ class App.DarkMode extends App.Controller
     @quickToggle.closest('.zammad-switch').on('click', @stopPropagation)
     @quickToggleMenuItem.on('click', @onMenuItemClick)
 
-    if localStorage.getItem('dark-mode') == 'on' || window.matchMedia('(prefers-color-scheme: dark)').matches
-      this.setMode 'on'
+    @controllerBind('ui:theme:changed', @onUpdate)
 
   stopPropagation: (event) ->
-    console.log "stopPropagation"
     event.stopPropagation()
 
   onMenuItemClick: (event) =>
     event.stopPropagation()
-    oppositeState = if @quickToggle.prop('checked') then 'off' else 'on'
-    this.setMode oppositeState
-    console.log "onMenuItemClick"
+    oppositeTheme = if @quickToggle.prop('checked') then 'light' else 'dark'
+    App.Event.trigger('ui:theme:set', { theme: oppositeTheme, source: 'quick_switch' })
 
   quickToggleChange: =>
-    state = if @quickToggle.prop('checked') then 'on' else 'off'
-    console.log "quickToggleChange", @quickToggle.prop('checked'), state
-    this.setMode state, true
+    theme = if @quickToggle.prop('checked') then 'dark' else 'light'
+    App.Event.trigger('ui:theme:set', { theme: theme, source: 'quick_switch' })
 
-  setMode: (mode, silent) ->
-    enabled = mode == 'on' ? true : false
-    if mode == 'auto'
-      enabled = window.matchMedia('(prefers-color-scheme: dark)').matches
-    document.documentElement.dataset.darkMode = if enabled then 'on' else 'off'
-    localStorage.setItem('dark-mode', mode)
-    if !silent
-      @quickToggle.prop('checked', enabled)
+  onUpdate: (event) =>
+    if event.source != 'quick_switch'
+      @quickToggle.prop('checked', event.detectedTheme == 'dark')
 
-App.Config.set('DarkMode', { prio: 1000, parent: '#current_user', name: __('Dark Mode'), translate: true, toggle: 'dark-mode-quick', permission: ['user_preferences.*'] }, 'NavBarRight')
+App.Config.set('DarkMode', { prio: 1000, parent: '#current_user', name: __('Dark Mode'), translate: true, toggle: 'dark-mode-quick', checked: (-> document.documentElement.dataset.theme == 'dark'), permission: ['user_preferences.*'] }, 'NavBarRight')

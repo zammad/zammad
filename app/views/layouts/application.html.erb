@@ -16,8 +16,8 @@
       document.head.appendChild(polyfillScriptTag);
     }
 
-    if(window.matchMedia('(prefers-color-scheme: dark)').matches || localStorage.getItem('dark-mode') == 'on'){
-      document.documentElement.dataset.darkMode = 'on';
+    if(window.matchMedia('(prefers-color-scheme: dark)').matches || localStorage.getItem('theme') == 'dark'){
+      document.documentElement.dataset.theme = 'dark';
     }
   <% end -%>
   <% if Rails.configuration.assets.debug %>
