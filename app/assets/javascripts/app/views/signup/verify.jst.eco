@@ -12,5 +12,18 @@
         </div>
       </form>
     </div>
+  <% if @public_links: %>
+    <p>
+      <% for link, link_index in @public_links: %>
+        <% if link_index > 0: %> | <% end %>
+        <a href="<%= link.link %>" title="<% if link.description: %><%= link.description %><% else: %><%= link.title %><% end %>"<% if link.new_tab: %> target="_blank"<% end %>><%= link.title %></a>
+      <% end %>
+    </p>
+  <% end %>
+  </div>
+  <div class="poweredBy">
+    <a href="https://zammad.org" target="_blank"><%- @Icon('logo') %></a>
+    <%- @T('Powered by') %>
+    <a href="https://zammad.org" target="_blank"><%- @Icon('logotype', 'logotype') %></a>
   </div>
 </div>

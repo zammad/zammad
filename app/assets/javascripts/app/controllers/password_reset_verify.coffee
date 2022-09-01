@@ -22,25 +22,31 @@ class PasswordResetVerify extends App.ControllerFullPage
     @title __('Reset Password')
     @navupdate '#password_reset_verify'
 
-    # get data
-    params =
-      token: @token
-    @ajax(
-      id:          'password_reset_verify'
-      type:        'POST'
-      url:         "#{@apiPath}/users/password_reset_verify"
-      data:        JSON.stringify(params)
-      processData: true
-      success:     @renderChange
+    @publicLinksSubscribeId = App.PublicLink.subscribe(=>
+      @verify_token()
     )
 
+    @verify_token()
+
+  release: =>
+    if @publicLinksSubscribeId
+      App.PublicLink.unsubscribe(@publicLinksSubscribeId)
+
   renderChange: (data) =>
+    public_links = App.PublicLink.search(
+      filter:
+        screen: ['password_reset']
+      sortBy: 'prio'
+    )
+
     if data.message is 'ok'
       configure_attributes = [
         { name: 'password', display: __('Password'), tag: 'input', type: 'password', limit: 100, null: false, class: 'input' }
       ]
 
-      @replaceWith(App.view('password/reset_change')())
+      @replaceWith(App.view('password/reset_change')(
+        public_links: public_links
+      ))
 
       new App.ControllerForm(
         el:        @el.find('.js-password')
@@ -51,6 +57,7 @@ class PasswordResetVerify extends App.ControllerFullPage
       @replaceWith(App.view('password/reset_failed')(
         head:    __('Reset Password failed!')
         message: __('Token is invalid!')
+        public_links: public_links
       ))
 
   submit: (e) ->
@@ -137,5 +144,17 @@ class PasswordResetVerify extends App.ControllerFullPage
           removeAll: true
         )
       @formEnable(@$('form'))
+
+  verify_token: ->
+    params =
+      token: @token
+    @ajax(
+      id:          'password_reset_verify'
+      type:        'POST'
+      url:         "#{@apiPath}/users/password_reset_verify"
+      data:        JSON.stringify(params)
+      processData: true
+      success:     @renderChange
+    )
 
 App.Config.set('password_reset_verify/:token', PasswordResetVerify, 'Routes')

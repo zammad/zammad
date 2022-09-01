@@ -3163,16 +3163,20 @@ kbd {
   }
 }
 
-.login {
+.login,
+.reset_password,
+.signup {
   padding: 24px;
   color: hsl(212, 8%, 40%);
 
-  @include phone {
-    padding: 15px 10px;
-  }
-
   a {
     color: hsl(229, 2%, 51%);
+  }
+}
+
+.login {
+  @include phone {
+    padding: 15px 10px;
   }
 
   &.login--fancy {
@@ -3222,7 +3226,9 @@ kbd {
   }
 }
 
-.login p {
+.login p,
+.reset_password p,
+.signup p {
   margin: 0 auto 22px;
   max-width: 400px;
   text-align: center;
@@ -3232,6 +3238,11 @@ kbd {
   }
 }
 
+.reset_password p,
+.signup p {
+  padding-top: 28px;
+}
+
 .login hr {
   margin: 0 auto 22px;
   border-top-color: hsl(240, 5%, 27%);
@@ -3239,7 +3250,9 @@ kbd {
   max-width: 400px;
 }
 
-.login p a {
+.login p a,
+.reset_password p a,
+.signup p a {
   text-decoration: underline;
 }
 

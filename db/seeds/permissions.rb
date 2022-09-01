@@ -279,6 +279,13 @@ Permission.create_if_not_exists(
   },
 )
 Permission.create_if_not_exists(
+  name:        'admin.public_links',
+  note:        __('Manage %s'),
+  preferences: {
+    translations: [__('Public Links')]
+  },
+)
+Permission.create_if_not_exists(
   name:         'user_preferences',
   note:         __('User Preferences'),
   preferences:  {},

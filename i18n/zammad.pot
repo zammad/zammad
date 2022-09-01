@@ -2179,6 +2179,7 @@ msgid "Content was changed since loading"
 msgstr ""
 
 #: app/assets/javascripts/app/models/core_workflow.coffee
+#: app/assets/javascripts/app/models/public_link.coffee
 msgid "Context"
 msgstr ""
 
@@ -3338,6 +3339,10 @@ msgstr ""
 msgid "Description"
 msgstr ""
 
+#: app/assets/javascripts/app/models/public_link.coffee
+msgid "Description (shown as title tag for screen readers)"
+msgstr ""
+
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Designer"
@@ -3439,6 +3444,10 @@ msgstr ""
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Display"
+msgstr ""
+
+#: app/assets/javascripts/app/models/public_link.coffee
+msgid "Display in new tab"
 msgstr ""
 
 #: app/assets/javascripts/app/models/email_address.coffee
@@ -4371,6 +4380,10 @@ msgstr ""
 
 #: app/frontend/shared/router/guards/before/permission.ts
 msgid "Forbidden"
+msgstr ""
+
+#: app/assets/javascripts/app/models/public_link.coffee
+msgid "Forgot Password Screen"
 msgstr ""
 
 #: app/assets/javascripts/app/views/login.jst.eco
@@ -5727,6 +5740,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/link_button.coffee
 #: app/assets/javascripts/app/controllers/ticket_link_add.coffee
 #: app/assets/javascripts/app/models/overview.coffee
+#: app/assets/javascripts/app/models/public_link.coffee
 msgid "Link"
 msgstr ""
 
@@ -5848,6 +5862,10 @@ msgstr ""
 #: app/controllers/time_accountings_controller.rb
 #: db/seeds/object_manager_attributes.rb
 msgid "Login"
+msgstr ""
+
+#: app/assets/javascripts/app/models/public_link.coffee
+msgid "Login Screen"
 msgstr ""
 
 #: app/controllers/application_controller/authenticates.rb
@@ -6468,6 +6486,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/report_profile.coffee
 msgid "New Profile"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/public_link.coffee
+msgid "New Public Link"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/role.coffee
@@ -7512,6 +7534,12 @@ msgid "Postmaster Filter"
 msgstr ""
 
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/assets/javascripts/app/views/password/reset.jst.eco
+#: app/assets/javascripts/app/views/password/reset_change.jst.eco
+#: app/assets/javascripts/app/views/password/reset_failed.jst.eco
+#: app/assets/javascripts/app/views/password/reset_sent.jst.eco
+#: app/assets/javascripts/app/views/signup.jst.eco
+#: app/assets/javascripts/app/views/signup/verify.jst.eco
 #: app/frontend/apps/mobile/modules/login/views/Login.vue
 msgid "Powered by"
 msgstr ""
@@ -7555,6 +7583,7 @@ msgid "Previously owned tickets (%s in total)"
 msgstr ""
 
 #: app/assets/javascripts/app/models/overview.coffee
+#: app/assets/javascripts/app/models/public_link.coffee
 msgid "Prio"
 msgstr ""
 
@@ -7644,6 +7673,19 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 msgid "Public"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/public_link.coffee
+msgid "Public Link"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/public_link.coffee
+#: db/seeds/permissions.rb
+msgid "Public Links"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/public_link.coffee
+msgid "Public Links are …"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
@@ -8685,6 +8727,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 msgid "Signed"
+msgstr ""
+
+#: app/assets/javascripts/app/models/public_link.coffee
+msgid "Signup Screen"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/iconset_picker.coffee
@@ -10142,6 +10188,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/knowledge_base_answer.coffee
 #: app/assets/javascripts/app/models/knowledge_base_category.coffee
 #: app/assets/javascripts/app/models/knowledge_base_translation.coffee
+#: app/assets/javascripts/app/models/public_link.coffee
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/public_menu_form_item.jst.eco
@@ -11236,6 +11283,10 @@ msgstr ""
 msgid "You can define different signatures for each group, which allows you to use a different signature for every department.\n\nOnce you have created a signature here, you will also need to edit the groups where you want to use it."
 msgstr ""
 
+#: app/assets/javascripts/app/models/public_link.coffee
+msgid "You can define links which are shown e.g. in the footer of Zammad's login screen. These have many purposes, such as displaying a data privacy page for all people using your Zammad instance."
+msgstr ""
+
 #: app/assets/javascripts/app/views/facebook/app_config.jst.eco
 #: app/assets/javascripts/app/views/google/app_config.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco
@@ -12060,6 +12111,7 @@ msgid "new & open"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/boolean.coffee
+#: app/assets/javascripts/app/models/public_link.coffee
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco
 #: app/frontend/apps/mobile/components/CommonObjectAttributes/AttributeBoolean/AttributeBoolean.vue
 msgid "no"
@@ -12425,6 +12477,7 @@ msgid "within next (relative)"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/boolean.coffee
+#: app/assets/javascripts/app/models/public_link.coffee
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco
 #: app/frontend/apps/mobile/components/CommonObjectAttributes/AttributeBoolean/AttributeBoolean.vue
 msgid "yes"

@@ -1030,6 +1030,7 @@ RSpec.describe User, type: :model do
                      'Ticket::State'                      => { 'created_by_id' => 0, 'updated_by_id' => 0 },
                      'Ticket::Flag'                       => { 'created_by_id' => 0 },
                      'PostmasterFilter'                   => { 'created_by_id' => 0, 'updated_by_id' => 0 },
+                     'PublicLink'                         => { 'created_by_id' => 1, 'updated_by_id' => 0 },
                      'OnlineNotification'                 => { 'user_id' => 1, 'created_by_id' => 0, 'updated_by_id' => 0 },
                      'Ticket'                             =>
                                                              { 'created_by_id' => 0, 'updated_by_id' => 0, 'owner_id' => 1, 'customer_id' => 3 },
@@ -1100,6 +1101,7 @@ RSpec.describe User, type: :model do
       chat_message2       = create(:'chat/message', chat_session: chat_session, created_by: user)
       draft_start         = create(:ticket_shared_draft_start, created_by: user)
       draft_zoom          = create(:ticket_shared_draft_zoom, created_by: user)
+      public_link         = create(:public_link, created_by: user)
       expect(overview.reload.user_ids).to eq([user.id])
 
       # create a chat agent for admin user (id=1) before agent user
@@ -1168,6 +1170,7 @@ RSpec.describe User, type: :model do
       expect { draft_start.reload }.to change(draft_start, :created_by_id).to(1)
       expect { draft_zoom.reload }.to change(draft_zoom, :created_by_id).to(1)
       expect { invalid_user.reload }.to change(invalid_user, :created_by_id).to(1)
+      expect { public_link.reload }.to change(public_link, :created_by_id).to(1)
     end
 
     it 'does delete cache after user deletion' do

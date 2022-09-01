@@ -797,5 +797,26 @@ class CreateBase < ActiveRecord::Migration[4.2]
     add_index :ldap_sources, [:name], unique: true
     add_foreign_key :ldap_sources, :users, column: :created_by_id
     add_foreign_key :ldap_sources, :users, column: :updated_by_id
+
+    create_table :public_links do |t|
+      t.string  :link, limit: 500,        null: false
+      t.string  :title, limit: 200,       null: false
+      t.string  :description, limit: 200, null: true
+
+      if Rails.application.config.db_column_array
+        t.string :screen, null: false, array: true
+      else
+        t.json :screen, null: false
+      end
+
+      t.boolean :new_tab,                 null: false, default: true
+      t.integer :prio,                    null: false
+      t.column  :updated_by_id, :integer, null: false
+      t.column  :created_by_id, :integer, null: false
+      t.timestamps limit: 3,              null: false
+    end
+    add_index :public_links, [:link], unique: true
+    add_foreign_key :public_links, :users, column: :created_by_id
+    add_foreign_key :public_links, :users, column: :updated_by_id
   end
 end

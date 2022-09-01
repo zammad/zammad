@@ -34,10 +34,6 @@
           </div>
 
           <div class="form-group">
-    <!--
-            <label for="remember_me"><%- @Ti('Remember me') %></label>
-            <input id="remember_me" name="remember_me" value="1" type="checkbox"/>
-    -->
             <label class="inline-label checkbox-replacement">
               <input name="remember_me" value="1" type="checkbox">
               <%- @Icon('checkbox', 'icon-unchecked') %>
@@ -81,12 +77,17 @@
         <% end %>
       </p>
 
-    <% if @C('user_create_account'): %>
+    <% if @C('user_create_account') || @public_links: %>
       <hr>
       <p>
-        <a href="#signup"><%- @T('Register as a new customer') %></a>
+        <% if @C('user_create_account'): %>
+          <a href="#signup"><%- @T('Register as a new customer') %></a>
+        <% end %>
+        <% for link, link_index in @public_links: %>
+          <% if link_index > 0 || @C('user_create_account'): %> | <% end %>
+          <a href="<%= link.link %>" title="<% if link.description: %><%= link.description %><% else: %><%= link.title %><% end %>"<% if link.new_tab: %> target="_blank"<% end %>><%= link.title %></a>
+        <% end %>
       </p>
-    <% end %>
     </div>
   </div>
   <div class="poweredBy">

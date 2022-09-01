@@ -42,6 +42,13 @@ class Login extends App.ControllerFullPage
     @controllerBind('ui:rerender', =>
       @render()
     )
+    @publicLinksSubscribeId = App.PublicLink.subscribe(=>
+      @render()
+    )
+
+  release: =>
+    if @publicLinksSubscribeId
+      App.PublicLink.unsubscribe(@publicLinksSubscribeId)
 
   render: (data = {}) ->
     auth_provider_all = App.Config.get('auth_provider_all')
@@ -50,10 +57,17 @@ class Login extends App.ControllerFullPage
       if @Config.get(provider.config) is true || @Config.get(provider.config) is 'true'
         auth_providers.push provider
 
+    public_links = App.PublicLink.search(
+      filter:
+        screen: ['login']
+      sortBy: 'prio'
+    )
+
     @replaceWith App.view('login')(
       item:           data
       logoUrl:        @logoUrl()
       auth_providers: auth_providers
+      public_links:   public_links
     )
 
     # set focus to username or password

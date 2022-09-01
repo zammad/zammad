@@ -48,7 +48,10 @@ class SessionsController < ApplicationController
       error:       e.message,
       config:      config_frontend,
       models:      SessionHelper.models,
-      collections: { Locale.to_app_model => Locale.where(active: true) }
+      collections: {
+        Locale.to_app_model     => Locale.where(active: true),
+        PublicLink.to_app_model => PublicLink.all,
+      }
     }
   end
 

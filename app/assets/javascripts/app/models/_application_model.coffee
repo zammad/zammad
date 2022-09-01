@@ -842,9 +842,17 @@ set new attributes of model (remove already available attributes)
 
   @_filter: (collection, filter) ->
     for key, value of filter
+      filterValue = value
+      if !_.isArray(filterValue)
+        filterValue = [filterValue]
+
       collection = _.filter(collection, (item) ->
-        if item[key] is value
-          return item
+        itemValue = item[key]
+        if !_.isArray(itemValue)
+          itemValue = [itemValue]
+
+        for value in filterValue
+          return item if _.contains(itemValue, value)
       )
     collection
 

@@ -18,11 +18,26 @@ class Signup extends App.ControllerFullPage
     @title __('Sign up')
     @navupdate '#signup'
 
+    @publicLinksSubscribeId = App.PublicLink.subscribe(=>
+      @render()
+    )
+
     @render()
 
-  render: ->
+  release: =>
+    if @publicLinksSubscribeId
+      App.PublicLink.unsubscribe(@publicLinksSubscribeId)
 
-    @replaceWith(App.view('signup')())
+  render: ->
+    public_links = App.PublicLink.search(
+      filter:
+        screen: ['signup']
+      sortBy: 'prio'
+    )
+
+    @replaceWith App.view('signup')(
+      public_links: public_links
+    )
 
     @form = new App.ControllerForm(
       el:        @el.find('form')
@@ -69,8 +84,14 @@ class Signup extends App.ControllerFullPage
     # save user
     user.save(
       done: (r) =>
+        public_links = App.PublicLink.search(
+          filter:
+            screen: ['signup']
+          sortBy: 'prio'
+        )
         @replaceWith(App.view('signup/verify')(
-          email: @params.email
+          email:        @params.email
+          public_links: public_links
         ))
       fail: (settings, details) =>
         @formEnable(e)

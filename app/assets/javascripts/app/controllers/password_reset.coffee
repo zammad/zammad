@@ -23,12 +23,26 @@ class PasswordReset extends App.ControllerFullPage
     @title __('Reset Password')
     @navupdate '#password_reset'
 
+    @publicLinksSubscribeId = App.PublicLink.subscribe(=>
+      @render()
+    )
+
     @render()
 
-  render: (params) ->
+  release: =>
+    if @publicLinksSubscribeId
+      App.PublicLink.unsubscribe(@publicLinksSubscribeId)
+
+  render: (params = {}) ->
     configure_attributes = [
       { name: 'username', display: __('Enter your username or email address'), tag: 'input', type: 'text', limit: 100, null: false, class: 'input span4' }
     ]
+
+    params['public_links'] = App.PublicLink.search(
+      filter:
+        screen: ['password_reset']
+      sortBy: 'prio'
+    )
 
     @replaceWith(App.view('password/reset')(params))
 
@@ -58,6 +72,14 @@ class PasswordReset extends App.ControllerFullPage
     )
 
   success: (data) =>
-    @html(App.view('password/reset_sent')())
+    public_links = App.PublicLink.search(
+      filter:
+        screen: ['password_reset']
+      sortBy: 'prio'
+    )
+
+    @html(App.view('password/reset_sent')(
+      public_links: public_links
+    ))
 
 App.Config.set('password_reset', PasswordReset, 'Routes')

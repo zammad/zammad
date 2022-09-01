@@ -1,7 +1,7 @@
 window.onload = function() {
 
-// search
-QUnit.test( "model search tests", assert => {
+// TicketPriority search
+QUnit.test( "TicketPriority search tests", assert => {
 
   App.TicketPriority.refresh( [
     {
@@ -47,6 +47,59 @@ QUnit.test( "model search tests", assert => {
   assert.equal('2 normal', priorities[3].name, 'check 1 entry')
   assert.equal(undefined, priorities[4], 'check 5 entry')
 
+  priorities = App.TicketPriority.search({filter: { name: '4 very high' }, sortBy:'name', order: 'ASC'})
+  assert.equal('4 very high', priorities[0].name, 'check name filter')
+  assert.equal(undefined, priorities[1], 'check name filter is undefined')
+});
+
+// PublicLink search
+QUnit.test( "PublicLink search tests", assert => {
+
+  App.PublicLink.refresh( [
+    {
+      id:           1,
+      link:         'https://zammad.org',
+      title:        'Zammad Community',
+      description:  'Zammad is a very cool application',
+      screen:       ['login'],
+      prio:         1,
+    },
+    {
+      id:           2,
+      link:         'https://zammad.com',
+      title:        'Zammad <3',
+      description:  'Zammad is a very cool application',
+      screen:       ['login', 'password_reset', 'signup'],
+      prio:         2,
+    },
+    {
+      id:           3,
+      link:         'https://zammad.biz',
+      title:        'Zammad BIZ',
+      description:  'Zammad is a very cool application',
+      screen:       ['login', 'signup'],
+      prio:         3,
+    },
+  ] )
+
+  public_links = App.PublicLink.search({filter: { screen: ['login'] }, sortBy:'prio', order: 'ASC'})
+  assert.equal('Zammad Community', public_links[0].title, 'check link 1 ASC')
+  assert.equal('Zammad <3', public_links[1].title, 'check link 2 ASC')
+  assert.equal('Zammad BIZ', public_links[2].title, 'check link 3 ASC')
+
+  public_links = App.PublicLink.search({filter: { screen: ['login'] }, sortBy:'prio', order: 'DESC'})
+  assert.equal('Zammad BIZ', public_links[0].title, 'check link 1 DESC')
+  assert.equal('Zammad <3', public_links[1].title, 'check link 2 DESC')
+  assert.equal('Zammad Community', public_links[2].title, 'check link 3 DESC')
+
+  public_links = App.PublicLink.search({filter: { screen: ['signup', 'password_reset'] }, sortBy:'prio', order: 'ASC'})
+  assert.equal('Zammad <3', public_links[0].title, 'check signup link 1 ASC')
+  assert.equal('Zammad BIZ', public_links[1].title, 'check signup link 2 ASC')
+  assert.equal(undefined, public_links[2], 'check signup links')
+
+  public_links = App.PublicLink.search({filter: { screen: ['password_reset'] }, sortBy:'prio', order: 'ASC'})
+  assert.equal('Zammad <3', public_links[0].title, 'check password_reset link 1 ASC')
+  assert.equal(undefined, public_links[1], 'check password_reset links')
 });
 
 // model

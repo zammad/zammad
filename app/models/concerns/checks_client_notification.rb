@@ -18,7 +18,7 @@ module ChecksClientNotification
         event: "#{class_name}:#{event}",
         data:  notify_clients_data_attributes
       },
-      type:    'authenticated',
+      type:    client_notification_send_type,
     }
   end
 
@@ -107,6 +107,10 @@ module ChecksClientNotification
     @client_notification_send_to ||= self.class.instance_variable_get(:@client_notification_send_to) || []
   end
 
+  def client_notification_send_type
+    @client_notification_send_type ||= self.class.instance_variable_get(:@client_notification_send_type) || 'authenticated'
+  end
+
   # methods defined here are going to extend the class, not the instance of it
   class_methods do
 
@@ -132,6 +136,10 @@ module ChecksClientNotification
     def client_notification_send_to(*attributes)
       @client_notification_send_to ||= []
       @client_notification_send_to |= attributes
+    end
+
+    def client_notification_send_type(type)
+      @client_notification_send_type = type
     end
   end
 end
