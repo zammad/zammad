@@ -309,7 +309,7 @@ GEM
       rack (>= 1.2, < 3)
       rash_alt (>= 0.4, < 1)
       version_gem (~> 1.1)
-    omniauth (1.9.1)
+    omniauth (1.9.2)
       hashie (>= 3.4.6)
       rack (>= 1.6.2, < 3)
     omniauth-facebook (9.0.0)
