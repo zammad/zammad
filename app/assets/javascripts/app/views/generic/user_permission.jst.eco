@@ -1,4 +1,4 @@
-<div class="checkbox <%= @attribute.class %> checkbox">
+<div class="checkbox <%= @attribute.class %>">
 <% for role in @roles: %>
   <label class="inline-label checkbox-replacement">
     <input type="checkbox" value="<%= role.id %>" name="role_ids" <% if @rolesSelected[role.id]: %>checked<% end %>/>
