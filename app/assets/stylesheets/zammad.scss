@@ -13875,39 +13875,6 @@ span.is-disabled {
   }
 }
 
-[data-theme='dark'] {
-  background: hsl(232, 11%, 19%);
-
-  label {
-    color: var(--text-inverted);
-  }
-
-  &.left > .arrow::after {
-    border-left-color: hsl(232, 11%, 19%);
-  }
-
-  &.right > .arrow::after {
-    border-right-color: hsl(232, 11%, 19%);
-  }
-
-  &.top > .arrow::after {
-    border-top-color: hsl(232, 11%, 19%);
-  }
-
-  &.bottom > .arrow::after {
-    border-bottom-color: hsl(232, 11%, 19%);
-  }
-
-  .form-control:focus {
-    border-color: hsl(232, 11%, 19%);
-    box-shadow: 0 0 0 3px var(--highlight);
-  }
-
-  .btn--subtle {
-    color: hsl(0, 0%, 45%);
-  }
-}
-
 .highlight-emulator {
   background-color: highlight;
 }
