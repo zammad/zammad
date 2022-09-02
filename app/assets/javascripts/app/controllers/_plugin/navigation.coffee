@@ -162,6 +162,8 @@ class Navigation extends App.Controller
       openTab: openTab
     )
 
+    new App.DarkMode()
+
     # only start avatar widget on existing session
     if App.Session.get('id')
       new App.WidgetAvatar(

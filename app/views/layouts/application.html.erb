@@ -15,6 +15,10 @@
       polyfillScriptTag.setAttribute('nonce', '<%= content_security_policy_nonce %>');
       document.head.appendChild(polyfillScriptTag);
     }
+
+    if(window.matchMedia('(prefers-color-scheme: dark)').matches || localStorage.getItem('dark-mode') == 'on'){
+      document.documentElement.dataset.darkMode = 'on';
+    }
   <% end -%>
   <% if Rails.configuration.assets.debug %>
     <%= javascript_include_tag "application", nonce: true %>

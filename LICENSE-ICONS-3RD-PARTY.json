@@ -24,10 +24,20 @@
         "url": "",
         "license": "MIT"
     },
+    "bell.svg": {
+        "author": "",
+        "url": "",
+        "license": ""
+    },
     "bold.svg": {
         "author": "Felix Niklas",
         "url": "",
         "license": "MIT"
+    },
+    "caret-down.svg": {
+        "author": "",
+        "url": "",
+        "license": ""
     },
     "chain.svg": {
         "author": "Felix Niklas",
@@ -38,6 +48,11 @@
         "author": "Felix Niklas",
         "url": "",
         "license": "MIT"
+    },
+    "check.svg": {
+        "author": "",
+        "url": "",
+        "license": ""
     },
     "checkbox-checked.svg": {
         "author": "Zammad",
@@ -54,10 +69,40 @@
         "url": "",
         "license": "MIT"
     },
+    "checked-no.svg": {
+        "author": "",
+        "url": "",
+        "license": ""
+    },
+    "checked-yes.svg": {
+        "author": "",
+        "url": "",
+        "license": ""
+    },
     "checkmark.svg": {
         "author": "Zammad",
         "url": "",
         "license": "MIT"
+    },
+    "chevron-down.svg": {
+        "author": "",
+        "url": "",
+        "license": ""
+    },
+    "chevron-left.svg": {
+        "author": "",
+        "url": "",
+        "license": ""
+    },
+    "chevron-right.svg": {
+        "author": "",
+        "url": "",
+        "license": ""
+    },
+    "chevron-up.svg": {
+        "author": "",
+        "url": "",
+        "license": ""
     },
     "clipboard.svg": {
         "author": "Felix Niklas",
@@ -68,6 +113,11 @@
         "author": "Felix Niklas",
         "url": "",
         "license": "MIT"
+    },
+    "close-small.svg": {
+        "author": "",
+        "url": "",
+        "license": ""
     },
     "cloud.svg": {
         "author": "Kirill Ulitin",
@@ -138,6 +188,11 @@
         "author": "Felix Niklas",
         "url": "",
         "license": "MIT"
+    },
+    "eye-off.svg": {
+        "author": "",
+        "url": "",
+        "license": ""
     },
     "eye.svg": {
         "author": "Felix Niklas",
@@ -264,6 +319,11 @@
         "url": "",
         "license": "MIT"
     },
+    "home.svg": {
+        "author": "",
+        "url": "",
+        "license": ""
+    },
     "horizontal-rule.svg": {
         "author": "Felix Niklas",
         "url": "",
@@ -334,6 +394,11 @@
         "url": "",
         "license": "MIT"
     },
+    "loader.svg": {
+        "author": "",
+        "url": "",
+        "license": ""
+    },
     "loading.svg": {
         "author": "Zammad",
         "url": "",
@@ -389,6 +454,11 @@
         "url": "",
         "license": "MIT"
     },
+    "microsoft-button.svg": {
+        "author": "",
+        "url": "",
+        "license": ""
+    },
     "minus-small.svg": {
         "author": "Zammad",
         "url": "",
@@ -434,6 +504,16 @@
         "url": "",
         "license": "MIT"
     },
+    "new-customer.svg": {
+        "author": "",
+        "url": "",
+        "license": ""
+    },
+    "new-organization.svg": {
+        "author": "",
+        "url": "",
+        "license": ""
+    },
     "not-signed.svg": {
         "author": "Zammad",
         "url": "",
@@ -448,11 +528,6 @@
         "author": "Felix Niklas",
         "url": "",
         "license": "MIT"
-    },
-    "office365-button.svg": {
-        "author": "Office 365",
-        "url": "",
-        "license": ""
     },
     "one-ticket.svg": {
         "author": "Zammad",
@@ -564,6 +639,11 @@
         "url": "",
         "license": "MIT"
     },
+    "search.svg": {
+        "author": "",
+        "url": "",
+        "license": ""
+    },
     "searchdetail.svg": {
         "author": "Felix Niklas",
         "url": "",
@@ -603,6 +683,36 @@
         "author": "Tanu Doank",
         "url": "https:\/\/thenounproject.com\/term\/key\/1247931\/",
         "license": "CC 3.0 Attribution"
+    },
+    "stack.svg": {
+        "author": "",
+        "url": "",
+        "license": ""
+    },
+    "state-closed.svg": {
+        "author": "",
+        "url": "",
+        "license": ""
+    },
+    "state-escalated.svg": {
+        "author": "",
+        "url": "",
+        "license": ""
+    },
+    "state-open.svg": {
+        "author": "",
+        "url": "",
+        "license": ""
+    },
+    "state-waiting-for-closure.svg": {
+        "author": "",
+        "url": "",
+        "license": ""
+    },
+    "state-waiting-for-reminder.svg": {
+        "author": "",
+        "url": "",
+        "license": ""
     },
     "status-modified-outer-circle.svg": {
         "author": "Zammad",

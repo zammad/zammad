@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg width="11px" height="11px" viewBox="0 0 11 11" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 53.2 (72643) - https://sketchapp.com -->
     <title>radio-checked</title>
-    <desc>Created with Sketch.</desc>
     <g id="radio-checked" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <circle id="inner" fill="#000000" cx="5.5" cy="5.5" r="2.5"></circle>
-        <path d="M5.5,11 C2.46243388,11 0,8.53756612 0,5.5 C0,2.46243388 2.46243388,0 5.5,0 C8.53756612,0 11,2.46243388 11,5.5 C11,8.53756612 8.53756612,11 5.5,11 Z M5.5,10 C7.98528137,10 10,7.98528137 10,5.5 C10,3.01471863 7.98528137,1 5.5,1 C3.01471863,1 1,3.01471863 1,5.5 C1,7.98528137 3.01471863,10 5.5,10 Z" id="outer" fill="#BD10E0"></path>
+        <path d="M1,5.5 C1,3.0147184 3.0147184,1 5.5,1 C7.9852816,1 10,3.0147184 10,5.5 C10,7.9852816 7.9852816,10 5.5,10 C3.0147184,10 1,7.9852816 1,5.5 L1,5.5 Z" id="background" fill="#50E3C2"></path>
+        <path d="M5.5,0 C8.53756567,0 11,2.46243342 11,5.5 C11,8.53756567 8.53756567,11 5.5,11 C2.46243342,11 0,8.53756567 0,5.5 C0,2.46243342 2.46243342,0 5.5,0 Z M5.5,1 C3.0147184,1 1,3.0147184 1,5.5 C1,7.9852816 3.0147184,10 5.5,10 C7.9852816,10 10,7.9852816 10,5.5 C10,3.0147184 7.9852816,1 5.5,1 Z" id="border" fill="#BD10E0"></path>
+        <circle id="dot" fill="#BD10E0" cx="5.5" cy="5.5" r="2.5"></circle>
     </g>
 </svg>
