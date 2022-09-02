@@ -12299,6 +12299,20 @@ output {
     margin-bottom: 6px;
     border: 0;
   }
+
+
+  // add contrast to
+  [style*="background"] {
+    color: black;
+  }
+
+  [style*="color"] {
+    background: white;
+
+    @include dark {
+      background: hsl(0,0%,64%);
+    }
+  }
 }
 
 .detail-search-header {
