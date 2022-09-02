@@ -27,6 +27,6 @@ class App.Theme extends App.Controller
     if data.theme == 'auto'
       detectedTheme = if window.matchMedia('(prefers-color-scheme: dark)').matches then 'dark' else 'light'
     document.documentElement.dataset.theme = detectedTheme
-    App.Event.trigger('ui:theme:changed', { theme: data.theme, source: data.source })
+    App.Event.trigger('ui:theme:changed', { theme: data.theme, detectedTheme: detectedTheme, source: data.source })
 
 App.Config.set('theme', App.Theme, 'Plugins')
