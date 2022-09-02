@@ -5,7 +5,7 @@
       <p><%- @message %></p>
       <a href="#password_reset" class="btn btn--text btn--secondary retry">&raquo; <%- @T('try again') %> &laquo;</a>
     </div>
-  <% if @public_links: %>
+  <% if !_.isEmpty(@public_links): %>
     <p>
       <% for link, link_index in @public_links: %>
         <% if link_index > 0: %> | <% end %>

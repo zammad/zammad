@@ -3148,6 +3148,7 @@ kbd {
 
 .getstarted,
 .reset_password,
+.request_admin_password_auth,
 .signup,
 .darkBackground,
 .login {
@@ -3165,6 +3166,7 @@ kbd {
 
 .login,
 .reset_password,
+.request_admin_password_auth,
 .signup {
   padding: 24px;
   color: hsl(212, 8%, 40%);
@@ -3537,11 +3539,12 @@ ol.tabs li {
 .auth-providers {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: center;
   margin-bottom: -10px;
 
   > form {
     width: calc(33.33% - 6px);
+    padding: 1%;
   }
 }
 

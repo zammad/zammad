@@ -84,4 +84,13 @@ class ProfilePassword extends App.ControllerSubContent
 
     @formEnable( @$('form') )
 
-App.Config.set('Password', { prio: 2000, name: __('Password'), parent: '#profile', target: '#profile/password', controller: ProfilePassword, permission: ['user_preferences.password'] }, 'NavBarProfile')
+App.Config.set('Password', {
+  prio: 2000,
+  name: __('Password'),
+  parent: '#profile',
+  target: '#profile/password',
+  controller: ProfilePassword,
+  permission: (controller) ->
+    return false if !App.Config.get('user_show_password_login') && !controller.permissionCheck('admin.*')
+    return controller.permissionCheck('user_preferences.password')
+}, 'NavBarProfile')

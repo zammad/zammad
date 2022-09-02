@@ -10,7 +10,7 @@
         </div>
       </form>
     </div>
-  <% if @public_links: %>
+  <% if !_.isEmpty(@public_links): %>
     <p>
       <% for link, link_index in @public_links: %>
         <% if link_index > 0: %> | <% end %>

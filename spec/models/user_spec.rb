@@ -429,6 +429,55 @@ RSpec.describe User, type: :model do
       end
     end
 
+    describe '#admin_password_auth_new_token' do
+      context 'with user role agent' do
+        subject(:user) { create(:agent) }
+
+        it 'returns no token' do
+          expect(described_class.admin_password_auth_new_token(user.login)).to be_nil
+        end
+      end
+
+      context 'with user role admin' do
+        subject(:user) { create(:admin) }
+
+        it 'returns token' do
+          expect(described_class.admin_password_auth_new_token(user.login).keys).to include(:user, :token)
+        end
+
+        it 'delete existing tokens when creating multiple times' do
+          described_class.admin_password_auth_new_token(user.login)
+          described_class.admin_password_auth_new_token(user.login)
+
+          expect(Token.where(action: 'AdminAuth', user_id: user.id).count).to eq(1)
+        end
+      end
+    end
+
+    describe '#admin_password_auth_via_token' do
+      context 'with invalid token' do
+        it 'returns nil' do
+          expect(described_class.admin_password_auth_via_token('not-existing')).to be_nil
+        end
+      end
+
+      context 'with valid token' do
+        let(:user) { create(:admin) }
+
+        it 'returns the matching user' do
+          result = described_class.admin_password_auth_new_token(user.login)
+          token = result[:token].name
+          expect(described_class.admin_password_auth_via_token(token)).to match(user)
+        end
+
+        it 'destroys token' do
+          result = described_class.admin_password_auth_new_token(user.login)
+          token = result[:token].name
+          expect { described_class.admin_password_auth_via_token(token) }.to change(Token, :count).by(-1)
+        end
+      end
+    end
+
     describe '#permissions' do
       let(:user)        { create(:agent).tap { |u| u.roles = [u.roles.first] } }
       let(:role)        { user.roles.first }

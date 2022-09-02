@@ -24,8 +24,29 @@ class Login extends App.ControllerFullPage
       }
 
     @title __('Sign in')
-    @render(data)
-    @navupdate '#login'
+
+    if !App.Config.get('user_show_password_login') && @password_auth_token
+      params =
+        token: @password_auth_token
+      @ajax(
+        id:          'admin_password_auth_verify'
+        type:        'POST'
+        url:         "#{@apiPath}/users/admin_password_auth_verify"
+        data:        JSON.stringify(params)
+        processData: true
+        success:     (verify_data, status, xhr) =>
+          if verify_data.message is 'ok'
+            data.showAdminPasswordLogin = true
+            data.username = verify_data.user_login
+          else
+            data.showAdminPasswordLoginFailed = true
+
+          @render(data)
+          @navupdate '#login'
+      )
+    else
+      @render(data)
+      @navupdate '#login'
 
     # observe config changes related to login page
     @controllerBind('config_update_local', (data) =>
@@ -35,10 +56,12 @@ class Login extends App.ControllerFullPage
         data.name != 'user_create_account' &&
         data.name != 'product_name' &&
         data.name != 'product_logo' &&
-        data.name != 'fqdn'
+        data.name != 'fqdn' &&
+        data.name != 'user_show_password_login'
       @render()
       'rerender'
     )
+
     @controllerBind('ui:rerender', =>
       @render()
     )
@@ -123,4 +146,5 @@ class Login extends App.ControllerFullPage
     )
 
 App.Config.set('login', Login, 'Routes')
+App.Config.set('login/admin/:password_auth_token', Login, 'Routes')
 App.Config.set('session_timeout', Login, 'Routes')

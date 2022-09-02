@@ -551,6 +551,36 @@ returns
     user
   end
 
+  def self.admin_password_auth_new_token(username)
+    return if username.blank?
+
+    # try to find user based on login
+    user = User.find_by(login: username.downcase.strip, active: true)
+
+    # try second lookup with email
+    user ||= User.find_by(email: username.downcase.strip, active: true)
+
+    return if !user || !user.email
+    return if !user.permissions?('admin.*')
+
+    # Discard any possible previous tokens for safety reasons.
+    Token.where(action: 'AdminAuth', user_id: user.id).destroy_all
+
+    {
+      token: Token.create(action: 'AdminAuth', user_id: user.id, persistent: false),
+      user:  user,
+    }
+  end
+
+  def self.admin_password_auth_via_token(token)
+    user = Token.check(action: 'AdminAuth', name: token)
+    return if !user
+
+    Token.find_by(action: 'AdminAuth', name: token).destroy
+
+    user
+  end
+
 =begin
 
 update last login date and reset login_failed (is automatically done by auth and sso backend)

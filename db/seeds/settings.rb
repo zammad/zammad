@@ -996,10 +996,37 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
+  title:       __('Password Login'),
+  name:        'user_show_password_login',
+  area:        'Security::Base',
+  description: __('Show password login for users on login page. Disabling only takes effect if third-party authentication is enabled.'),
+  options:     {
+    form: [
+      {
+        display: '',
+        null:    true,
+        name:    'user_show_password_login',
+        tag:     'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  state:       true,
+  preferences: {
+    prio:       5,
+    permission: ['admin.security'],
+  },
+  frontend:    true
+)
+
+Setting.create_if_not_exists(
   title:       __('New User Accounts'),
   name:        'user_create_account',
   area:        'Security::Base',
-  description: __('Enables users to create their own account via web interface.'),
+  description: __('Enables users to create their own account via web interface. This setting is only effective if the password login is enabled.'),
   options:     {
     form: [
       {
@@ -1025,7 +1052,7 @@ Setting.create_if_not_exists(
   title:       __('Lost Password'),
   name:        'user_lost_password',
   area:        'Security::Base',
-  description: __('Activates lost password feature for users.'),
+  description: __('Activates lost password feature for users. This setting is only effective if the password login is enabled.'),
   options:     {
     form: [
       {

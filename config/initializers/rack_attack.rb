@@ -17,6 +17,22 @@ Rack::Attack.throttle('limit password reset requests per source IP address', lim
 end
 
 #
+# Throttle admin auth requests
+#
+API_V1_USERS__ADMIN_PASSWORD_AUTH_PATH = '/api/v1/users/admin_password_auth'.freeze
+Rack::Attack.throttle('limit admi auth requests per username', limit: 3, period: 1.minute.to_i) do |req|
+  if req.path.start_with?(API_V1_USERS__ADMIN_PASSWORD_AUTH_PATH) && req.post?
+    # Normalize to protect against rate limit bypasses.
+    req.params['username'].to_s.downcase.gsub(%r{\s+}, '')
+  end
+end
+Rack::Attack.throttle('limit admin requests per source IP address', limit: 3, period: 1.minute.to_i) do |req|
+  if req.path.start_with?(API_V1_USERS__ADMIN_PASSWORD_AUTH_PATH) && req.post?
+    req.ip
+  end
+end
+
+#
 # Throttle form submit requests
 #
 API_V1_FORM_SUBMIT_PATH = '/api/v1/form_submit'.freeze

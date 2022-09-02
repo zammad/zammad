@@ -535,7 +535,7 @@ msgid "Activate the recursive processing of ticket triggers."
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Activates lost password feature for users."
+msgid "Activates lost password feature for users. This setting is only effective if the password login is enabled."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
@@ -731,6 +731,10 @@ msgstr ""
 
 #: db/seeds/permissions.rb
 msgid "Admin Interface"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/admin_password_auth.coffee
+msgid "Admin Password Login"
 msgstr ""
 
 #: app/assets/javascripts/app/views/getting_started/admin.jst.eco
@@ -1590,6 +1594,8 @@ msgid "Cancel"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal.coffee
+#: app/assets/javascripts/app/views/admin_password_auth/request.jst.eco
+#: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco
 #: app/assets/javascripts/app/views/agent_user_create.jst.eco
 #: app/assets/javascripts/app/views/customer_ticket_create.jst.eco
@@ -3913,7 +3919,7 @@ msgid "Enables user authentication via Weibo."
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Enables users to create their own account via web interface."
+msgid "Enables users to create their own account via web interface. This setting is only effective if the password login is enabled."
 msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
@@ -4038,6 +4044,7 @@ msgstr ""
 msgid "Enter your email address and the %s API token gained from your admin interface."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/admin_password_auth.coffee
 #: app/assets/javascripts/app/controllers/password_reset.coffee
 msgid "Enter your username or email address"
 msgstr ""
@@ -5042,6 +5049,7 @@ msgstr ""
 msgid "If this regex matches, no notification will be sent by the sender."
 msgstr ""
 
+#: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco
 msgid "If you don't receive instructions within a minute or two, check your email's spam and junk filters, or try resending your request."
 msgstr ""
@@ -5049,6 +5057,10 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_plugin/user_signup_check.coffee
 #: app/assets/javascripts/app/views/signup/verify.jst.eco
 msgid "If you don't see the email, check other places it might be, like your junk, spam, social, or other folders."
+msgstr ""
+
+#: app/assets/javascripts/app/views/login.jst.eco
+msgid "If you have problems with the third-party login you can request a one-time password login as an admin."
 msgstr ""
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
@@ -7314,6 +7326,10 @@ msgstr ""
 msgid "Password Access"
 msgstr ""
 
+#: db/seeds/settings.rb
+msgid "Password Login"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
 msgid "Password changed successfully!"
 msgstr ""
@@ -7546,6 +7562,8 @@ msgstr ""
 msgid "Postmaster Filter"
 msgstr ""
 
+#: app/assets/javascripts/app/views/admin_password_auth/request.jst.eco
+#: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
 #: app/assets/javascripts/app/views/password/reset.jst.eco
 #: app/assets/javascripts/app/views/password/reset_change.jst.eco
@@ -7927,6 +7945,14 @@ msgstr ""
 
 #: db/seeds/object_manager_attributes.rb
 msgid "Request for Change"
+msgstr ""
+
+#: app/assets/javascripts/app/views/admin_password_auth/request.jst.eco
+msgid "Request password login for admin?"
+msgstr ""
+
+#: app/assets/javascripts/app/views/login.jst.eco
+msgid "Request the password login here."
 msgstr ""
 
 #: app/assets/javascripts/app/views/api.jst.eco
@@ -8660,6 +8686,10 @@ msgstr ""
 msgid "Show next tab"
 msgstr ""
 
+#: db/seeds/settings.rb
+msgid "Show password login for users on login page. Disabling only takes effect if third-party authentication is enabled."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Show previous tab"
 msgstr ""
@@ -8711,6 +8741,10 @@ msgstr ""
 #: app/frontend/apps/mobile/modules/login/routes.ts
 #: app/frontend/apps/mobile/modules/login/views/Login.vue
 msgid "Sign in"
+msgstr ""
+
+#: app/assets/javascripts/app/views/login.jst.eco
+msgid "Sign in using"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/logout.coffee
@@ -9000,6 +9034,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee
 #: app/assets/javascripts/app/controllers/tag.coffee
 #: app/assets/javascripts/app/controllers/widget/button_with_dropdown.coffee
+#: app/assets/javascripts/app/views/admin_password_auth/request.jst.eco
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/vertical_form.jst.eco
 #: app/assets/javascripts/app/views/password/reset.jst.eco
@@ -9694,6 +9729,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee
 msgid "The tickets could not be merged."
+msgstr ""
+
+#: app/assets/javascripts/app/views/login.jst.eco
+msgid "The token for the admin password login is invalid."
 msgstr ""
 
 #: app/controllers/getting_started_controller.rb
@@ -10991,6 +11030,10 @@ msgstr ""
 msgid "We're sorry, but this page doesn't exist."
 msgstr ""
 
+#: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
+msgid "We've sent admin password login instructions to your email address."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_plugin/user_signup_check.coffee
 msgid "We've sent an email to _%s_. Click the link in the email to verify your account."
 msgstr ""
@@ -11595,6 +11638,7 @@ msgstr ""
 msgid "after (relative)"
 msgstr ""
 
+#: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco
 msgid "again"
 msgstr ""

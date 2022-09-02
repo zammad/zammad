@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   include CanPaginate
 
   prepend_before_action -> { authorize! }, only: %i[import_example import_start search history unlock]
-  prepend_before_action :authentication_check, except: %i[create password_reset_send password_reset_verify image email_verify email_verify_send]
+  prepend_before_action :authentication_check, except: %i[create password_reset_send password_reset_verify image email_verify email_verify_send admin_password_auth_send admin_password_auth_verify]
   prepend_before_action :authentication_check_only, only: %i[create]
 
   # @path       [GET] /users
@@ -420,6 +420,67 @@ curl http://localhost/api/v1/users/email_verify_send -v -u #{login}:#{password} 
 
     # unable to generate token
     render json: { message: 'failed' }, status: :ok
+  end
+
+=begin
+
+Resource:
+POST /api/v1/users/admin_login
+
+Payload:
+{
+  "username": "some user name"
+}
+
+Response:
+{
+  :message => 'ok'
+}
+
+Test:
+curl http://localhost/api/v1/users/admin_login -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"username": "some_username"}'
+
+=end
+
+  def admin_password_auth_send
+    # check if feature is enabled
+    raise Exceptions::UnprocessableEntity, __('Feature not enabled!') if password_login?
+    raise Exceptions::UnprocessableEntity, 'username param needed!' if params[:username].blank?
+
+    result = User.admin_password_auth_new_token(params[:username])
+    if result && result[:token]
+
+      # unable to send email
+      if !result[:user] || result[:user].email.blank?
+        render json: { message: 'failed' }, status: :ok
+        return
+      end
+
+      # send password reset emails
+      NotificationFactory::Mailer.notification(
+        template: 'admin_password_auth',
+        user:     result[:user],
+        objects:  result
+      )
+    end
+
+    # result is always positive to avoid leaking of existing user accounts
+    render json: { message: 'ok' }, status: :ok
+  end
+
+  def admin_password_auth_verify
+    # check if feature is enabled
+    raise Exceptions::UnprocessableEntity, __('Feature not enabled!') if password_login?
+    raise Exceptions::UnprocessableEntity, 'token param needed!' if params[:token].blank?
+
+    user = User.admin_password_auth_via_token(params[:token])
+    if !user
+      render json: { message: 'failed' }, status: :ok
+      return
+    end
+
+    # result is always positive to avoid leaking of existing user accounts
+    render json: { message: 'ok', user_login: user.login }, status: :ok
   end
 
 =begin
@@ -862,6 +923,15 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
   end
 
   private
+
+  def password_login?
+    return true if Setting.get('user_show_password_login')
+    return true if Setting.where('name LIKE ? AND frontend = true', 'auth_%')
+      .map { |provider| provider.state_current['value'] }
+      .all?(false)
+
+    false
+  end
 
   def clean_user_params
     User.param_cleanup(User.association_name_to_id_convert(params), true).merge(screen: 'create')

@@ -46,4 +46,29 @@ RSpec.describe 'Profile', type: :system do
       expect(page).to have_text('Token Access')
     end
   end
+
+  context 'when password login is disabled', authenticated_as: :authenticate do
+    let(:user) { create(:agent) }
+
+    def authenticate
+      Setting.set('user_show_password_login', false)
+      user
+    end
+
+    before do
+      visit 'profile'
+    end
+
+    it 'does not show password profile' do
+      expect(page).to have_no_text('Password')
+    end
+
+    context 'with admin user' do
+      let(:user) { create(:admin) }
+
+      it 'does show password profile' do
+        expect(page).to have_text('Password')
+      end
+    end
+  end
 end

@@ -1,23 +1,15 @@
-<div class="reset_password fullscreen">
+<div class="request_admin_password_auth fullscreen">
   <div class="fullscreen-center">
     <div class="hero-unit fullscreen-body">
-      <h2><%- @T('Forgot your password?') %><small></small></h2>
-      <form class="js-passwordForm">
-        <div class="js-password"></div>
+      <h2><%- @T('Request password login for admin?') %><small></small></h2>
+      <form class="js-adminPasswordAuthForm">
+        <div class="js-adminPassword"></div>
         <div class="form-controls">
           <a class="btn btn--text btn--subtle js-cancel" href="#login"><%- @T('Cancel & Go Back') %></a>
           <button class="btn btn--primary js-submit align-right"><%- @T('Submit') %></button>
         </div>
       </form>
     </div>
-  <% if !_.isEmpty(@public_links): %>
-    <p>
-      <% for link, link_index in @public_links: %>
-        <% if link_index > 0: %> | <% end %>
-        <a href="<%= link.link %>" title="<% if link.description: %><%= link.description %><% else: %><%= link.title %><% end %>"<% if link.new_tab: %> target="_blank"<% end %>><%= link.title %></a>
-      <% end %>
-    </p>
-  <% end %>
   </div>
   <div class="poweredBy">
     <a href="https://zammad.org" target="_blank"><%- @Icon('logo') %></a>
