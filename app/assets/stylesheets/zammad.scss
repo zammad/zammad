@@ -3818,7 +3818,7 @@ ol.tabs li {
     opacity: 0;
   }
 
-  to {
+  100% {
     opacity: 1;
   }
 }
@@ -11865,7 +11865,7 @@ output {
 }
 
 @keyframes load-fade {
-  from {
+  0% {
     opacity: 0.5;
     transform: scale(0.6);
   }
