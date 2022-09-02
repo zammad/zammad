@@ -24,6 +24,14 @@ class App.UiElement.richtext.additions.RichTextToolButton
 
   @popoverAttributes: (event, selection, delegate) ->
     content = @instantiateContent(event, selection, delegate)
+    if $(event.currentTarget).closest('.page-content .main').length
+      container_selector = '.page-content .main'
+    else if $(event.currentTarget).closest('.content').attr('id')
+      container_id = $(event.currentTarget).closest('.content').attr('id')
+      container_selector = "##{container_id} .page-content"
+    else
+      container_selector = '.page-content'
+
     hash =
       trigger:   'manual'
       backdrop:  true
@@ -33,8 +41,8 @@ class App.UiElement.richtext.additions.RichTextToolButton
       placement: 'top'
       theme:     'dark'
       content:   content
-      container: '.page-content .main'
-      viewport:  { selector: '.page-content .main', padding: 10 }
+      container: container_selector
+      viewport:  { selector: container_selector, padding: 10 }
       template:  '<div class="popover popover--has-horizontal-form popover--richtextpopover" role="tooltip"><div class="arrow"></div><h2 class="popover-title"></h2><div class="popover-content"></div></div>'
 
     hash

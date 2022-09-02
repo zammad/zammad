@@ -36,22 +36,23 @@ class App.UiElement.richtext.additions.RichTextToolPopupLink extends App.UiEleme
       when 'existing'
         @applyOnto(@selection.dom, url)
       when 'append'
-        newElem = $('<a>')
+        newElem = $('<a target="_blank">')
         @applyOnto(newElem, url, input)
         @selection.dom.append(newElem)
       when 'caret'
-        newElem = $('<a>')
+        newElem = $('<a target="_blank">')
         @applyOnto(newElem, url, input)
         @selection.dom[0].splitText?(@selection.offset)
         newElem.insertAfter(@selection.dom)
       when 'range'
         placeholder = textEditor.find('span.highlight-emulator')
-        newElem = $('<a>')
+        newElem = $('<a target="_blank">')
         @applyOnto(newElem, url)
         placeholder.wrap(newElem)
         placeholder.contents()
 
     callback()
+    textEditor.trigger('change')
 
   clear: ->
     switch @selection.type

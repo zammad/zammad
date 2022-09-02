@@ -206,7 +206,7 @@ $(function() {
     this.endpoint_config = this._src.replace(this._script_location, this._endpoint_config)
     this.endpoint_submit = this._src.replace(this._script_location, this._endpoint_submit)
 
-    this.options = $.extend({}, defaults, options)
+    this.options = $.extend(true, {}, defaults, options)
     if (!this.options.lang) {
       this.options.lang = $('html').attr('lang')
     }
@@ -230,12 +230,6 @@ $(function() {
     if (!_this.options.noCSS) {
       _this.loadCss(_this.css_location)
     }
-
-    $.each(_this.options.attributes, function(index, item) {
-      if (item.name == 'file[]') {
-        _this.options.attributes.splice(index, 1);
-      }
-    })
     if (_this.options.attachmentSupport === true || _this.options.attachmentSupport === 'true') {
       var attachment = {
         display: 'Attachments',
@@ -245,6 +239,18 @@ $(function() {
         repeat: 1,
       }
       _this.options.attributes.push(attachment)
+    }
+    if (_this.options.agreementMessage) {
+      var agreement = {
+        display: _this.options.agreementMessage,
+        name: 'agreement',
+        tag: 'input',
+        type: 'checkbox',
+        id: 'zammad-form-agreement',
+        required: true,
+        defaultValue: '',
+      }
+      _this.options.attributes.push(agreement)
     }
 
     _this.log('debug', 'endpoint_config: ' + _this.endpoint_config)
@@ -418,13 +424,23 @@ $(function() {
     }
     $.each(this.options.attributes, function(index, value) {
       var valueId = _this.options.modal ? value.id + '-modal' : value.id + '-inline'
-      // Deprecated class "form-group" can be removed in future versions.
-      var item = $('<div class="form-group '+ _this.options.prefixCSS +'group"><label for="' + valueId +'"> ' + _this.T(value.display) + '</label></div>');
+      var item
+      if (value.type == 'checkbox'){
+        item = $('<div class="form-group '+ _this.options.prefixCSS +'group"></div>');
+      } else {
+        // Deprecated class "form-group" can be removed in future versions.
+        item = $('<div class="form-group '+ _this.options.prefixCSS +'group"><label for="' + valueId +'"> ' + _this.T(value.display) + '</label></div>');
+      }
       var defaultValue = (typeof value.defaultValue === 'function') ? value.defaultValue() : value.defaultValue;
       for (var i=0; i < (value.repeat ? value.repeat : 1); i++) {
-        if (value.tag == 'input') {
-          // Deprecated class "form-control" can be removed in future versions.
-          item.append('<input class="form-control '+ _this.options.prefixCSS +'control" id="' + valueId + '" name="' + value.name + '" type="' + value.type + '" placeholder="' + _this.T(value.placeholder) + '" value="' + (defaultValue || '') + '"' + (value.required === true ? ' required' : '') + '>')
+        if (value.tag === 'input') {
+          if (value.type === 'checkbox'){
+            var label = $('<label for="' + valueId + '"><input type="' + value.type + '" name="' + value.name + '" id="' + valueId + '" class="' + _this.options.prefixCSS + 'checkbox" ' + (value.required === true ? ' required' : '') + '>' + _this.T(value.display) + '</label>')
+            item.append(label)
+          } else {
+            // Deprecated class "form-control" can be removed in future versions.
+            item.append('<input class="form-control '+ _this.options.prefixCSS +'control" id="' + valueId + '" name="' + value.name + '" type="' + value.type + '" placeholder="' + _this.T(value.placeholder) + '" value="' + (defaultValue || '') + '"' + (value.required === true ? ' required' : '') + '>')
+          }
         }
         else if (value.tag == 'textarea') {
           // Deprecated class "form-control" can be removed in future versions.

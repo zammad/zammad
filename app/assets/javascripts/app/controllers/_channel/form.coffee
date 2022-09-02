@@ -38,7 +38,17 @@ class ChannelForm extends App.ControllerSubContent
       value: group_id
       #class: 'form-control--small'
     )
+    agreementTextInput = App.UiElement.richtext.render(
+      name: "agreementMessage"
+      buttons: [ 'link']
+      null: false
+      noImages: true
+      id: 'form-message-agreement'
+      tag:     'richtext'
+      value: __('Accept Data Privacy Policy & Acceptable Use Policy')
+    )
     element.find('.js-groupSelector').html(selection)
+    element.find('.agreement-support-text').html(agreementTextInput)
 
     @html element
 
@@ -53,6 +63,13 @@ class ChannelForm extends App.ControllerSubContent
         .replace(/\</g, '&lt;')
         .replace(/\>/g, '&gt;')
     params = @formParam(@$('.js-paramsDesigner'))
+
+    if @$('#agreementSupport').prop('checked')
+      @$('.agreement-support-text').removeClass('hide')
+    else
+      @$('.agreement-support-text').addClass('hide')
+      delete params.agreementMessage
+
     paramString = ''
     for key, value of params
       if !_.isEmpty(value)

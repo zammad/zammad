@@ -435,6 +435,11 @@ msgstr ""
 msgid "About"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_channel/form.coffee
+#: app/assets/javascripts/app/views/channel/form.jst.eco
+msgid "Accept Data Privacy Policy & Acceptable Use Policy"
+msgstr ""
+
 #: db/seeds/permissions.rb
 msgid "Access to %s"
 msgstr ""
@@ -649,6 +654,10 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 msgid "Add a Personal Access Token"
+msgstr ""
+
+#: app/assets/javascripts/app/views/channel/form.jst.eco
+msgid "Add agreement text before submit."
 msgstr ""
 
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco

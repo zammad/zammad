@@ -111,6 +111,23 @@
               </span>
               <%- @T('Add attachment option to upload.') %>
             </label>
+        <tr>
+          <td>
+            <div class="form-group">
+              <label class="inline-label">
+                <span class="checkbox-replacement checkbox-replacement--inline">
+                  <input type="checkbox" id="agreementSupport" value="true">
+                  <%- @Icon('checkbox', 'icon-unchecked') %>
+                  <%- @Icon('checkbox-checked', 'icon-checked') %>
+                </span>
+                <%- @T('Add agreement text before submit.') %>
+              </label>
+              <div class="controls">
+                <div class="hide agreement-support-text richtext form-group">
+                  <textarea type="text" id="form-message-agreement" name="agreementMessage" rows="3"><%- @Ti('Accept Data Privacy Policy & Acceptable Use Policy') %></textarea>
+                </div>
+              </div>
+            </div>
       </tbody>
     </table>
   </form>

@@ -17,6 +17,10 @@
   box-sizing: border-box;
 }
 
+.zammad-form .zammad-form-checkbox {
+  margin-right: 4px;
+}
+
 .zammad-form-group--has-error .zammad-form-control {
   border-color: #a94442;
 }
