@@ -91,3 +91,24 @@
     - when: manual
   script:
     - bundle exec rake zammad:ci:bundle:orphaned 5
+
+'refresh global envs':
+  services:
+    - !reference [.services, postgresql]
+  stage: lint
+  # ensure that only one Job runs in the whole project (branches etc.)
+  resource_group: global_refresh_envs
+  # allow download via the web UI to restore ENVs in case global cache got deleted (see: `.gitlab-ci.yml`)
+  artifacts:
+    expire_in: 1 week
+    paths:
+      - fresh.env
+  rules:
+    - if: $CI_MERGE_REQUEST_ID
+      when: never
+    - if: '$CI_COMMIT_BRANCH =~ /^private/'
+      when: manual
+      allow_failure: true
+    - when: on_success
+  script:
+    - bundle exec rake zammad:ci:refresh_envs
