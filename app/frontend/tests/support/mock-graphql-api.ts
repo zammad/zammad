@@ -165,7 +165,7 @@ export interface ExtendedIMockSubscription<T = unknown>
 export const mockGraphQLSubscription = <T>(
   operationDocument: DocumentNode,
 ): ExtendedIMockSubscription<T> => {
-  const mockSubscription = createMockSubscription()
+  const mockSubscription = createMockSubscription({ disableLogging: true })
 
   createMockClient([
     {

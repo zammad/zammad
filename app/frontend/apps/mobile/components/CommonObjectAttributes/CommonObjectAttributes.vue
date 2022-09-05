@@ -131,5 +131,6 @@ const fields = computed<AttributeField[]>(() => {
         />
       </CommonSectionMenuItem>
     </template>
+    <slot name="after-fields" />
   </CommonSectionMenu>
 </template>

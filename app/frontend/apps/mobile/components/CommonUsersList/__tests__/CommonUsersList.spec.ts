@@ -72,7 +72,14 @@ describe('list of users with avatars', () => {
   it('cannot load more, if disabled', async () => {
     const view = renderComponent(CommonUsersList, {
       props: {
-        users: [],
+        users: [
+          {
+            id: '123',
+            fullname: 'Jone Doe',
+            firstname: 'Jone',
+            lastname: 'Doe',
+          },
+        ],
         totalCount: 3,
         disableShowMore: true,
         label: 'Some Label',
@@ -81,7 +88,7 @@ describe('list of users with avatars', () => {
       store: true,
     })
 
-    await view.events.click(view.getByRole('button', { name: 'Show 3 more' }))
+    await view.events.click(view.getByRole('button', { name: 'Show 2 more' }))
 
     expect(view.emitted().showMore).toBeFalsy()
   })

@@ -212,8 +212,14 @@ export default {
           @click="selectLastSearch(searchItem)"
         >
           <button class="flex items-center">
-            <CommonIcon name="clock" size="small" class="mx-2 text-white/50" />
-            <span class="text-base">{{ searchItem }}</span>
+            <div>
+              <CommonIcon
+                name="clock"
+                size="small"
+                class="mx-2 text-white/50"
+              />
+            </div>
+            <span class="text-left text-base">{{ searchItem }}</span>
           </button>
         </li>
         <li v-if="!lastSearches.length">{{ $t('No previous searches') }}</li>

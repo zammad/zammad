@@ -4,7 +4,7 @@ import { closeDialog } from '@shared/composables/useDialog'
 import { renderComponent } from '@tests/support/components'
 import { mockGraphQLApi } from '@tests/support/mock-graphql-api'
 import { waitUntil } from '@tests/support/utils'
-import { OrganizationUpdateDocument } from '../../graphql/mutations/update.api'
+import { OrganizationUpdateDocument } from '@mobile/entities/organization/graphql/mutations/update.api'
 import OrganizationEditDialog from '../OrganizationEditDialog.vue'
 
 vi.mock('@shared/composables/useDialog')

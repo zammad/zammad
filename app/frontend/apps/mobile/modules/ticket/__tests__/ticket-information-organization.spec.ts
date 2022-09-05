@@ -13,32 +13,49 @@ import {
   defaultOrganization,
   mockOrganizationObjectAttributes,
 } from '@mobile/entities/organization/__tests__/mocks/organization-mocks'
+import type { ConfidentTake } from '@shared/types/utils'
+import type { OrganizationQuery } from '@shared/graphql/types'
+import { mockTicketDetailViewGql } from './mocks/detail-view'
+
+const visitTicketOrganization = async (
+  organization: ConfidentTake<OrganizationQuery, 'organization'>,
+) => {
+  mockTicketDetailViewGql({ mockSubscription: false })
+
+  const mockApi = mockGraphQLApi(OrganizationDocument).willResolve({
+    organization,
+  })
+  const mockSubscription = mockGraphQLSubscription(OrganizationUpdatesDocument)
+  const mockAttributes = mockOrganizationObjectAttributes()
+
+  const view = await visitView('/tickets/1/information/organization')
+
+  await waitUntil(() => mockApi.calls.resolve && mockAttributes.calls.resolve)
+
+  return {
+    view,
+    mockApi,
+    mockSubscription,
+  }
+}
 
 describe('static organization', () => {
   it('shows organization', async () => {
-    mockPermissions(['admin.organization'])
-
+    mockPermissions(['ticket.agent'])
     const organization = defaultOrganization()
-    const mockApi = mockGraphQLApi(OrganizationDocument).willResolve({
+    const { view, mockSubscription } = await visitTicketOrganization(
       organization,
-    })
-    const mockSubscription = mockGraphQLSubscription(
-      OrganizationUpdatesDocument,
     )
-    mockOrganizationObjectAttributes()
-
-    const view = await visitView('/organizations/3423225dsf0')
-
-    await waitUntil(() => mockApi.calls.resolve)
 
     expect(view.getByText(organization.name)).toBeInTheDocument()
 
+    expect(view.getByRole('region', { name: 'Note' })).toHaveTextContent(
+      'Save something as this note',
+    )
+
     expect(
-      view.getByRole('region', { name: 'Shared organization' }),
-    ).toHaveTextContent('no')
-    expect(
-      view.getByRole('region', { name: 'Domain based assignment' }),
-    ).toHaveTextContent('yes')
+      view.getByRole('button', { name: 'Edit organization' }),
+    ).toBeInTheDocument()
 
     expect(view.container).toHaveTextContent('Tickets')
 
@@ -70,24 +87,15 @@ describe('static organization', () => {
   })
 
   it('shows organization members', async () => {
-    mockPermissions(['admin.organization'])
-
+    mockPermissions(['ticket.agent'])
     const organization = defaultOrganization()
-    const mockApi = mockGraphQLApi(OrganizationDocument).willResolve({
-      organization: {
-        ...organization,
-        members: {
-          ...organization.members,
-          totalCount: 2,
-        },
+    const { view, mockApi } = await visitTicketOrganization({
+      ...organization,
+      members: {
+        ...organization.members,
+        totalCount: 2,
       },
     })
-    mockGraphQLSubscription(OrganizationUpdatesDocument)
-    mockOrganizationObjectAttributes()
-
-    const view = await visitView('/organizations/3423225dsf0')
-
-    await waitUntil(() => mockApi.calls.resolve)
 
     expect(view.container).toHaveTextContent('Members')
 
@@ -126,5 +134,15 @@ describe('static organization', () => {
     await waitUntil(() => mockApi.calls.resolve > 1)
 
     expect(view.container).toHaveTextContent('Jane Hunter')
+  })
+
+  it('cannot edit organization without permission', async () => {
+    mockPermissions([])
+    const organization = defaultOrganization()
+    const { view } = await visitTicketOrganization(organization)
+
+    expect(
+      view.queryByRole('button', { name: 'Edit organization' }),
+    ).not.toBeInTheDocument()
   })
 })

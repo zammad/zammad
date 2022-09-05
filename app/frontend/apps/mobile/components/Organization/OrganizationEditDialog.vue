@@ -12,7 +12,7 @@ import { closeDialog } from '@shared/composables/useDialog'
 import { MutationHandler } from '@shared/server/apollo/handler'
 import { shallowRef } from 'vue'
 import type { FormKitNode } from '@formkit/core'
-import { useOrganizationUpdateMutation } from '../graphql/mutations/update.api'
+import { useOrganizationUpdateMutation } from '@mobile/entities/organization/graphql/mutations/update.api'
 
 interface Props {
   name: string
@@ -118,6 +118,7 @@ const saveOrganization = async (input: OrganizationInput) => {
       </button>
     </template>
     <Form
+      id="edit-organization"
       ref="formElement"
       class="w-full p-4"
       :schema="schema"

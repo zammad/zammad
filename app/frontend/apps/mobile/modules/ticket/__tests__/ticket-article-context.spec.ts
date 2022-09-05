@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import { visitView } from '@tests/support/components/visitView'
+import { mockPermissions } from '@tests/support/mock-permissions'
 import { mockTicketDetailViewGql } from './mocks/detail-view'
 
 beforeAll(async () => {
@@ -8,6 +9,10 @@ beforeAll(async () => {
 })
 
 describe('actions inside article context', () => {
+  beforeEach(() => {
+    mockPermissions(['ticket.agent'])
+  })
+
   test('opens metadata', async () => {
     const { waitUntilTicketLoaded } = mockTicketDetailViewGql()
 

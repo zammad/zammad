@@ -11,7 +11,7 @@ RSpec.describe 'Mobile > Ticket', type: :system, app: :mobile, authenticated_as:
     it 'updates the content on the page' do
       visit "/tickets/#{ticket.id}"
 
-      wait_for_gql 'apps/mobile/modules/ticket/graphql/subscriptions/ticketUpdates.graphql'
+      wait_for_gql 'apps/mobile/modules/ticket/graphql/queries/ticket.graphql'
       expect(page).to have_text('Ticket Title')
 
       ticket.update!(title: 'New Title')

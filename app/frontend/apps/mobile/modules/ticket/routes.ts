@@ -16,6 +16,40 @@ const routes: RouteRecordRaw[] = [
     },
   },
   {
+    path: '/tickets/:internalId(\\d+)/information',
+    component: () => import('./views/TicketInformationView.vue'),
+    name: 'TicketInformationView',
+    props: true,
+    children: [
+      {
+        path: '',
+        name: 'TicketInformationDetails',
+        component: () => import('./views/TicketInformationDetails.vue'),
+      },
+      {
+        path: 'customer',
+        name: 'TicketInformationCustomer',
+        component: () => import('./views/TicketInformationCustomer.vue'),
+      },
+      {
+        path: 'organization',
+        name: 'TicketInformationOrganization',
+        component: () => import('./views/TicketInformationOrganization.vue'),
+        meta: {
+          requiresAuth: true,
+          requiredPermission: [],
+        },
+      },
+    ],
+    meta: {
+      title: __('Ticket information'),
+      requiresAuth: true,
+      requiredPermission: ['ticket.agent', 'ticket.customer'],
+      hasHeader: true,
+      level: 4,
+    },
+  },
+  {
     path: '/tickets/view/:overviewLink?',
     name: 'TicketOverview',
     props: true,

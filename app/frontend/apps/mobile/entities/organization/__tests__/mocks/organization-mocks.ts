@@ -12,7 +12,7 @@ export const defaultOrganization = (): ConfidentTake<
 > =>
   nullableMock({
     __typename: 'Organization',
-    id: '1vs2dr3041dsa9',
+    id: '3423225dsf0',
     name: 'Some Organization',
     shared: false,
     domain: 'some-domain@domain.me',
@@ -132,7 +132,7 @@ export const organizationObjectAttributes = () => [
 ]
 
 export const mockOrganizationObjectAttributes = () => {
-  mockGraphQLApi(ObjectManagerFrontendAttributesDocument).willResolve({
+  return mockGraphQLApi(ObjectManagerFrontendAttributesDocument).willResolve({
     objectManagerFrontendAttributes: organizationObjectAttributes(),
   })
 }

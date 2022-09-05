@@ -12,6 +12,7 @@ import {
   mockGraphQLApi,
   mockGraphQLSubscription,
 } from '@tests/support/mock-graphql-api'
+import { mockPermissions } from '@tests/support/mock-permissions'
 import { nullableMock, waitUntil } from '@tests/support/utils'
 import { flushPromises } from '@vue/test-utils'
 import { TicketDocument } from '../graphql/queries/ticket.api'
@@ -22,6 +23,10 @@ import {
   defaultTicket,
   mockTicketDetailViewGql,
 } from './mocks/detail-view'
+
+beforeEach(() => {
+  mockPermissions(['ticket.agent'])
+})
 
 test('statics inside ticket zoom view', async () => {
   const { waitUntilTicketLoaded } = mockTicketDetailViewGql()

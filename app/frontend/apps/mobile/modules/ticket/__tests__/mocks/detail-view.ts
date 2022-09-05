@@ -2,11 +2,11 @@
 
 import { TicketState } from '@shared/entities/ticket/types'
 import type { TicketArticlesQuery, TicketQuery } from '@shared/graphql/types'
+import type { ExtendedIMockSubscription } from '@tests/support/mock-graphql-api'
 import {
   mockGraphQLApi,
   mockGraphQLSubscription,
 } from '@tests/support/mock-graphql-api'
-import { mockPermissions } from '@tests/support/mock-permissions'
 import { nullableMock, waitUntil } from '@tests/support/utils'
 
 import { TicketDocument } from '../../graphql/queries/ticket.api'
@@ -207,8 +207,12 @@ export const defaultArticles = (): TicketArticlesQuery =>
     },
   })
 
-export const mockTicketDetailViewGql = () => {
-  mockPermissions(['ticket.agent'])
+interface MockOptions {
+  mockSubscription?: boolean
+}
+
+export const mockTicketDetailViewGql = (options: MockOptions = {}) => {
+  const { mockSubscription = true } = options
 
   const ticket = defaultTicket()
 
@@ -216,7 +220,12 @@ export const mockTicketDetailViewGql = () => {
   const mockApiArticles = mockGraphQLApi(TicketArticlesDocument).willResolve(
     defaultArticles(),
   )
-  const mockTicketSubscription = mockGraphQLSubscription(TicketUpdatesDocument)
+  let mockTicketSubscription: ExtendedIMockSubscription
+  if (mockSubscription) {
+    mockTicketSubscription = mockGraphQLSubscription(TicketUpdatesDocument)
+  } else {
+    mockTicketSubscription = {} as ExtendedIMockSubscription
+  }
 
   const waitUntilTicketLoaded = async () => {
     await waitUntil(

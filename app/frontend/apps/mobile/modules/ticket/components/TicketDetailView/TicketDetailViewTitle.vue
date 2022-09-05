@@ -23,9 +23,10 @@ const customer = computed(() => {
 </script>
 
 <template>
-  <header
+  <CommonLink
     class="flex border-b-[0.5px] border-white/10 bg-gray-600/90 py-5 px-4"
     data-test-id="title-content"
+    :link="`/tickets/${ticket.internalId}/information`"
   >
     <div class="ltr:mr-3 rtl:ml-3">
       <CommonUserAvatar :entity="ticket.customer" />
@@ -65,5 +66,5 @@ const customer = computed(() => {
         <CommonTicketPriorityIndicator :priority="ticket.priority" />
       </div>
     </div>
-  </header>
+  </CommonLink>
 </template>

@@ -22,7 +22,7 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <CommonSectionMenu :header-label="label">
+  <CommonSectionMenu v-if="users.length" :header-label="label">
     <CommonLink
       v-for="user of users"
       :key="user.id"

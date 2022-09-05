@@ -7,16 +7,16 @@ import { computed } from 'vue'
 import CommonOrganizationAvatar from '@shared/components/CommonOrganizationAvatar/CommonOrganizationAvatar.vue'
 import { QueryHandler } from '@shared/server/apollo/handler'
 import { useHeader } from '@mobile/composables/useHeader'
-import { useDialog } from '@shared/composables/useDialog'
 import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
 import CommonTicketStateList from '@mobile/components/CommonTicketStateList/CommonTicketStateList.vue'
-import CommonObjectAttributes from '@mobile/components/CommonObjectAttributes/CommonObjectAttributes.vue'
 import { redirectToError } from '@mobile/router/error'
-import CommonUsersList from '@mobile/components/CommonUsersList/CommonUsersList.vue'
 import { ErrorStatusCodes } from '@shared/types/error'
+import { useOrganizationQuery } from '@mobile/entities/organization/graphql/queries/organization.api'
+import { OrganizationUpdatesDocument } from '@mobile/entities/organization/graphql/subscriptions/organizationUpdates.api'
+import { useOrganizationEdit } from '@mobile/entities/organization/composables/useOrganizationEdit'
+import OrganizationMembersList from '@mobile/components/Organization/OrganizationMembersList.vue'
 import { useOrganizationObjectManagerAttributesStore } from '@mobile/entities/organization/stores/objectManagerAttributes'
-import { useOrganizationQuery } from '../graphql/queries/organization.api'
-import { OrganizationUpdatesDocument } from '../graphql/subscriptions/organizationUpdates.api'
+import CommonObjectAttributes from '@mobile/components/CommonObjectAttributes/CommonObjectAttributes.vue'
 
 interface Props {
   id: string
@@ -58,25 +58,16 @@ const objectAttributes = computed(
   () => objectAttributesManager.attributes || [],
 )
 
-const editDialog = useDialog({
-  name: 'organization-edit',
-  component: () => import('../components/OrganizationEditDialog.vue'),
-})
+const { openEditOrganizationDialog } = useOrganizationEdit()
 
 useHeader({
   title: __('Organization'),
   backUrl: '/',
   actionTitle: __('Edit'),
   onAction() {
-    editDialog.open({
-      organization,
-      name: editDialog.name,
-    })
+    if (!organization.value) return
+    openEditOrganizationDialog(organization.value)
   },
-})
-
-const members = computed(() => {
-  return organization.value?.members.edges.map(({ node }) => node) || []
 })
 
 const loadAllMembers = () => {
@@ -107,12 +98,10 @@ const ticketsLinkQuery = computed(() => {
       :attributes="objectAttributes"
     />
 
-    <CommonUsersList
-      :label="__('Members')"
-      :users="members"
-      :total-count="organization.members.totalCount || 0"
+    <OrganizationMembersList
+      :organization="organization"
       :disable-show-more="loading"
-      @show-more="loadAllMembers()"
+      @load-more="loadAllMembers()"
     />
 
     <CommonTicketStateList

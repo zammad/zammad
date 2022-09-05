@@ -560,7 +560,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
-#: app/frontend/apps/mobile/modules/organization/components/OrganizationEditDialog.vue
+#: app/frontend/apps/mobile/components/Organization/OrganizationEditDialog.vue
 #: db/seeds/object_manager_attributes.rb
 msgid "Active"
 msgstr ""
@@ -1586,8 +1586,8 @@ msgstr ""
 #: app/assets/javascripts/app/views/knowledge_base/scheduled_widget.jst.eco
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue
+#: app/frontend/apps/mobile/components/Organization/OrganizationEditDialog.vue
 #: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
-#: app/frontend/apps/mobile/modules/organization/components/OrganizationEditDialog.vue
 #: app/frontend/apps/mobile/modules/search/views/SearchOverview.vue
 #: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 msgid "Cancel"
@@ -2513,6 +2513,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 #: app/controllers/time_accountings_controller.rb
+#: app/frontend/apps/mobile/modules/ticket/views/TicketInformationView.vue
 #: app/graphql/gql/types/overview_type.rb
 #: db/seeds/object_manager_attributes.rb
 #: db/seeds/roles.rb
@@ -3511,12 +3512,12 @@ msgstr ""
 msgid "Do you really want to set the visibility of this article to \"public\"?"
 msgstr ""
 
-#: app/frontend/apps/mobile/modules/organization/components/OrganizationEditDialog.vue
+#: app/frontend/apps/mobile/components/Organization/OrganizationEditDialog.vue
 #: db/seeds/object_manager_attributes.rb
 msgid "Domain"
 msgstr ""
 
-#: app/frontend/apps/mobile/modules/organization/components/OrganizationEditDialog.vue
+#: app/frontend/apps/mobile/components/Organization/OrganizationEditDialog.vue
 #: db/seeds/object_manager_attributes.rb
 msgid "Domain based assignment"
 msgstr ""
@@ -3614,8 +3615,8 @@ msgstr ""
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
+#: app/frontend/apps/mobile/components/Organization/OrganizationEditDialog.vue
 #: app/frontend/apps/mobile/modules/home/views/Home.vue
-#: app/frontend/apps/mobile/modules/organization/components/OrganizationEditDialog.vue
 #: app/frontend/apps/mobile/modules/organization/views/OrganizationDetailView.vue
 msgid "Edit"
 msgstr ""
@@ -3632,6 +3633,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
 msgid "Edit mask"
+msgstr ""
+
+#: app/frontend/apps/mobile/modules/ticket/views/TicketInformationOrganization.vue
+msgid "Edit organization"
 msgstr ""
 
 #: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/TicketViewersDialog.vue
@@ -6085,7 +6090,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/organization_profile/object.jst.eco
 #: app/assets/javascripts/app/views/popover/organization.jst.eco
 #: app/assets/javascripts/app/views/widget/organization.jst.eco
-#: app/frontend/apps/mobile/modules/organization/views/OrganizationDetailView.vue
+#: app/frontend/apps/mobile/components/Organization/OrganizationMembersList.vue
 msgid "Members"
 msgstr ""
 
@@ -6889,7 +6894,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
-#: app/frontend/apps/mobile/modules/organization/components/OrganizationEditDialog.vue
+#: app/frontend/apps/mobile/components/Organization/OrganizationEditDialog.vue
 #: db/seeds/object_manager_attributes.rb
 msgid "Note"
 msgstr ""
@@ -7129,6 +7134,7 @@ msgstr ""
 #: app/controllers/time_accountings_controller.rb
 #: app/frontend/apps/mobile/modules/organization/routes.ts
 #: app/frontend/apps/mobile/modules/organization/views/OrganizationDetailView.vue
+#: app/frontend/apps/mobile/modules/ticket/views/TicketInformationView.vue
 #: app/graphql/gql/types/overview_type.rb
 #: db/seeds/object_manager_attributes.rb
 #: db/seeds/settings.rb
@@ -8218,8 +8224,8 @@ msgstr ""
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 #: app/assets/javascripts/app/views/widget/template.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
+#: app/frontend/apps/mobile/components/Organization/OrganizationEditDialog.vue
 #: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
-#: app/frontend/apps/mobile/modules/organization/components/OrganizationEditDialog.vue
 msgid "Save"
 msgstr ""
 
@@ -8635,7 +8641,7 @@ msgid "Shared draft cannot be selected for this ticket."
 msgstr ""
 
 #: app/assets/javascripts/app/models/organization.coffee
-#: app/frontend/apps/mobile/modules/organization/components/OrganizationEditDialog.vue
+#: app/frontend/apps/mobile/components/Organization/OrganizationEditDialog.vue
 #: db/seeds/object_manager_attributes.rb
 msgid "Shared organization"
 msgstr ""
@@ -10015,6 +10021,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/text_module.coffee
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 #: app/frontend/apps/mobile/modules/ticket/routes.ts
+#: app/frontend/apps/mobile/modules/ticket/views/TicketInformationView.vue
 #: db/seeds/permissions.rb
 msgid "Ticket"
 msgstr ""
@@ -10111,6 +10118,11 @@ msgstr ""
 
 #: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/TicketDetailViewHeader.vue
 msgid "Ticket has %s viewers"
+msgstr ""
+
+#: app/frontend/apps/mobile/modules/ticket/routes.ts
+#: app/frontend/apps/mobile/modules/ticket/views/TicketInformationView.vue
+msgid "Ticket information"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee

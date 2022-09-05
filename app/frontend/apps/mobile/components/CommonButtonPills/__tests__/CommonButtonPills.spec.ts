@@ -17,6 +17,11 @@ describe('buttons component', () => {
         label: 'Button 2',
         value: '2',
       },
+      {
+        label: 'Button 3',
+        value: '3',
+        permissions: ['no.permissions'],
+      },
     ]
 
     const modelValue = ref('1')
@@ -28,6 +33,7 @@ describe('buttons component', () => {
       vModel: {
         modelValue,
       },
+      store: true,
     })
 
     const button1 = view.getByRole('button', { name: 'Button 1' })
@@ -35,6 +41,8 @@ describe('buttons component', () => {
 
     expect(button1).toBeInTheDocument()
     expect(button2).toBeInTheDocument()
+
+    expect(view.queryByText('Button 3')).not.toBeInTheDocument()
 
     expect(button1).toHaveClass('bg-gray-200')
     expect(button2).not.toHaveClass('bg-gray-200')
@@ -60,6 +68,7 @@ describe('buttons component', () => {
         ],
         modelValue: '1',
       },
+      store: true,
     })
 
     expect(view.getByText('Translated text')).toBeInTheDocument()
@@ -87,6 +96,7 @@ describe('buttons component', () => {
       vModel: {
         modelValue,
       },
+      store: true,
     })
 
     const button2 = view.getByRole('button', { name: 'Button 2' })

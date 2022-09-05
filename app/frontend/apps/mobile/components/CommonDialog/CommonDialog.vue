@@ -54,6 +54,7 @@ export default {
 <template>
   <div class="fixed inset-0 z-10 flex overflow-y-auto" role="dialog">
     <div
+      :id="`dialog-${name}`"
       ref="dialogElement"
       class="flex h-full grow flex-col bg-black"
       :class="{ 'transition-all duration-200 ease-linear': !isSwiping }"
