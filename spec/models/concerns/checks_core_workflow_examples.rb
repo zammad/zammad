@@ -108,4 +108,48 @@ RSpec.shared_examples 'ChecksCoreWorkflow' do
       expect { ticket }.not_to raise_error
     end
   end
+
+  describe 'Tickets can be closed with the bulk action, even when a mandatory field is empty #4198', db_strategy: :reset do
+    let(:ticket) { create(:ticket, group: agent_group, state: Ticket::State.find_by(name: 'open')) }
+    let(:ticket2)       { create(:ticket, group: agent_group, state: Ticket::State.find_by(name: 'open')) }
+    let(:field_name)    { SecureRandom.uuid }
+    let(:ticket_update) { { screen: 'edit', title: 'test' } }
+
+    before do
+      ticket
+
+      create(:object_manager_attribute_text, object_name: 'Ticket', name: field_name, display: field_name, screens: {
+               'edit' => {
+                 'ticket.agent' => {
+                   shown:    true,
+                   required: false,
+                 }
+               }
+             })
+      ObjectManager::Attribute.migration_execute
+
+      ticket2
+
+      create(:core_workflow,
+             object:  'Ticket',
+             perform: {
+               "ticket.#{field_name}": {
+                 operator:      'set_mandatory',
+                 set_mandatory: true
+               },
+             })
+    end
+
+    it 'does raise error for old tickets before required test field got created' do
+      expect do
+        ticket.update(ticket_update)
+      end.to raise_error(Exceptions::ApplicationModel, "Missing required value for field '#{field_name}'!")
+    end
+
+    it 'does raise error for new tickets after required test field got created' do
+      expect do
+        ticket2.update(ticket_update)
+      end.to raise_error(Exceptions::ApplicationModel, "Missing required value for field '#{field_name}'!")
+    end
+  end
 end

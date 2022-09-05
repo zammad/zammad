@@ -50,7 +50,7 @@ module ChecksCoreWorkflow
     perform_result[:mandatory].each_key do |key|
       next if field_visible?(perform_result, key)
       next if !field_mandatory?(perform_result, key)
-      next if !column_value?(key)
+      next if !column_empty?(key)
       next if !colum_default?(key)
 
       raise Exceptions::ApplicationModel.new(self, "Missing required value for field '#{key}'!")
@@ -65,8 +65,8 @@ module ChecksCoreWorkflow
     perform_result[:mandatory][key]
   end
 
-  def column_value?(key)
-    self[key].nil?
+  def column_empty?(key)
+    self[key].nil? || ([true, false].exclude?(self[key]) && self[key].blank?)
   end
 
   def colum_default?(key)
