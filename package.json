@@ -21,7 +21,7 @@
     "node": ">=16"
   },
   "devDependencies": {
-    "@graphql-codegen/cli": "^2.11.8",
+    "@graphql-codegen/cli": "^2.12.0",
     "@graphql-codegen/introspection": "^2.2.1",
     "@graphql-codegen/near-operation-file-preset": "^2.4.1",
     "@graphql-codegen/typescript": "^2.7.3",
