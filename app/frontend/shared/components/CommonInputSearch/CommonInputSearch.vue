@@ -8,6 +8,7 @@ export interface CommonInputSearchProps {
   modelValue?: string
   noBorder?: boolean
   wrapperClass?: string
+  placeholder?: string
 }
 
 export interface CommonInputSearchEmits {
@@ -18,7 +19,9 @@ export interface CommonInputSearchExpose {
   focus(): void
 }
 
-const props = defineProps<CommonInputSearchProps>()
+const props = withDefaults(defineProps<CommonInputSearchProps>(), {
+  placeholder: __('Search…'),
+})
 const emit = defineEmits<CommonInputSearchEmits>()
 
 const filter = useVModel(props, 'modelValue', emit)
@@ -58,7 +61,7 @@ export default {
       ref="filterInput"
       v-model="filter"
       v-bind="$attrs"
-      :placeholder="i18n.t('Search…')"
+      :placeholder="i18n.t(placeholder)"
       class="h-12 w-full grow rounded-xl bg-gray-500 px-9 placeholder:text-gray focus:shadow-none focus:outline-none focus:ring-0"
       :class="{
         'focus:border-white focus:ring-0': !noBorder,
@@ -67,13 +70,16 @@ export default {
       type="text"
       role="searchbox"
     />
-    <CommonIcon
-      v-if="filter && filter.length"
-      :aria-label="i18n.t('Clear Search')"
-      :fixed-size="{ width: 24, height: 24 }"
-      class="absolute shrink-0 text-gray ltr:right-2 rtl:left-2"
-      name="close-small"
-      @click.stop="clearFilter"
-    />
+    <div class="absolute flex shrink-0 items-center ltr:right-2 rtl:left-2">
+      <slot name="controls" />
+      <CommonIcon
+        v-if="filter && filter.length"
+        :aria-label="i18n.t('Clear Search')"
+        :fixed-size="{ width: 24, height: 24 }"
+        class="text-gray"
+        name="close-small"
+        @click.stop="clearFilter"
+      />
+    </div>
   </div>
 </template>

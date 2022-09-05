@@ -50,10 +50,24 @@ const linkSchemaRaw = [
     },
   },
   {
+    type: 'tags',
+    name: 'tags',
+    label: 'Tags',
+    props: {
+      options: [
+        { label: 'test', value: 'test' },
+        { label: 'support', value: 'support' },
+        { label: 'paid', value: 'paid' },
+      ],
+      canCreate: true,
+    },
+  },
+  {
     type: 'treeselect',
     name: 'treeselect',
     label: 'TreeSelect',
     props: {
+      multiple: true,
       options: [
         {
           value: 0,
@@ -163,8 +177,7 @@ const schema = defineFormSchema([
 
 const dialog = useDialog({
   name: 'dialog',
-  component: async () =>
-    import('@mobile/components/CommonDialog/CommonDialog.vue'),
+  component: () => import('@mobile/components/CommonDialog/CommonDialog.vue'),
 })
 </script>
 

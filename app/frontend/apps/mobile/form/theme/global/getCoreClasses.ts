@@ -78,6 +78,10 @@ const getCoreClasses: FormThemeExtension = (classes: FormThemeClasses) => {
       } flex-row-reverse w-full justify-between h-14 ltr:pl-3 rtl:pr-3`,
     },
     password: addFloatingLabel(classes.password),
+    tags: addFloatingLabel({
+      ...(classes.tags || {}),
+      outer: `${classes.tags?.outer || ''} field-tags`,
+    }),
     select: addFloatingLabel({
       ...(classes.select || {}),
       outer: `${classes.select && classes.select.outer} field-select`,

@@ -2365,6 +2365,10 @@ msgstr ""
 msgid "Create rules that single out the tickets for the Service Level Agreement."
 msgstr ""
 
+#: app/frontend/shared/components/Form/fields/FieldTags/FieldTagsDialog.vue
+msgid "Create tag"
+msgstr ""
+
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
 msgid "Create your first ticket"
 msgstr ""
@@ -9142,6 +9146,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco
 #: app/assets/javascripts/app/views/tag/index.jst.eco
 #: app/assets/javascripts/app/views/widget/tag.jst.eco
+#: app/frontend/shared/components/Form/fields/FieldTags/FieldTagsDialog.vue
 #: app/views/knowledge_base/public/answers/show.html.erb
 #: db/seeds/object_manager_attributes.rb
 #: db/seeds/permissions.rb

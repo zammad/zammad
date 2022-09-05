@@ -180,7 +180,7 @@ const executeAction = () => {
 <template>
   <CommonDialog
     :name="name"
-    :label="$t(context.label)"
+    :label="context.label"
     :listeners="{ done: { onKeydown: advanceDialogFocus } }"
     @close="close"
   >
