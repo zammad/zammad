@@ -78,7 +78,7 @@
     "vite-plugin-svg-icons": "^2.0.1",
     "vitest": "^0.22.1",
     "vitest-mock-extended": "^0.1.13",
-    "vue-tsc": "^0.40.4"
+    "vue-tsc": "^0.40.7"
   },
   "dependencies": {
     "@apollo/client": "^3.6.9",
@@ -124,7 +124,7 @@
     "tippy.js": "^6.3.7",
     "ua-parser-js": "^1.0.2",
     "uuid": "^8.3.2",
-    "vue": "^3.2.37",
+    "vue": "^3.2.38",
     "vue-advanced-cropper": "^2.8.3",
     "vue-router": "^4.1.5",
     "vue3-draggable-resizable": "^1.6.5",
