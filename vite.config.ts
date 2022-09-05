@@ -107,6 +107,7 @@ export default defineConfig(({ mode, command }) => {
       setupFiles: ['app/frontend/tests/vitest.setup.ts'],
       environment: 'jsdom',
       css: false,
+      testTimeout: 30_000,
     },
     plugins,
   }

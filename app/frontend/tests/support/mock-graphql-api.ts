@@ -25,6 +25,7 @@ interface ResultWithUserError extends Result {
 type OperationResultWithUserError = Record<string, ResultWithUserError>
 
 export interface MockGraphQLInstance {
+  willBehave<T>(handler: (variables: any) => T): MockGraphQLInstance
   willResolve<T>(result: T): MockGraphQLInstance
   willFailWithError(
     errors: GraphQLErrorReport[],
@@ -35,12 +36,14 @@ export interface MockGraphQLInstance {
   ): MockGraphQLInstance
   willFailWithNetworkError(error: Error): MockGraphQLInstance
   spies: {
+    behave: SpyInstance
     resolve: SpyInstance
     error: SpyInstance
     userError: SpyInstance
     networkError: SpyInstance
   }
   calls: {
+    behave: number
     resolve: number
     error: number
     userError: number
@@ -55,6 +58,18 @@ export const mockGraphQLApi = (
   const errorSpy = vi.fn()
   const userErrorSpy = vi.fn()
   const networkErrorSpy = vi.fn()
+  const behaveSpy = vi.fn()
+
+  const willBehave = (fn: (variables: any) => unknown) => {
+    behaveSpy.mockImplementation(async (variables: any) => fn(variables))
+    createMockClient([
+      {
+        operationDocument,
+        handler: behaveSpy,
+      },
+    ])
+    return instance
+  }
 
   const willResolve = <T>(result: T) => {
     resolveSpy.mockResolvedValue({ data: result })
@@ -111,13 +126,18 @@ export const mockGraphQLApi = (
     willFailWithUserError,
     willFailWithNetworkError,
     willResolve,
+    willBehave,
     spies: {
+      behave: behaveSpy,
       resolve: resolveSpy,
       error: errorSpy,
       userError: userErrorSpy,
       networkError: networkErrorSpy,
     },
     calls: {
+      get behave() {
+        return behaveSpy.mock.calls.length
+      },
       get resolve() {
         return resolveSpy.mock.calls.length
       },

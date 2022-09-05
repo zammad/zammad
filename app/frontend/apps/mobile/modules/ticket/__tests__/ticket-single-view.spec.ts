@@ -12,9 +12,8 @@ import {
   mockGraphQLApi,
   mockGraphQLSubscription,
 } from '@tests/support/mock-graphql-api'
-import { waitUntil } from '@tests/support/utils'
+import { nullableMock, waitUntil } from '@tests/support/utils'
 import { flushPromises } from '@vue/test-utils'
-import { mock } from 'vitest-mock-extended'
 import { TicketDocument } from '../graphql/queries/ticket.api'
 import { TicketArticlesDocument } from '../graphql/queries/ticket/articles.api'
 import { TicketUpdatesDocument } from '../graphql/subscriptions/ticketUpdates.api'
@@ -184,9 +183,12 @@ test('change content on subscription', async () => {
   expect(view.getByText(ticket.title)).toBeInTheDocument()
 
   await mockTicketSubscription.next({
-    data: mock({
-      ticketUpdates: { ticket: mock({ ...ticket, title: 'Some New Title' }) },
-    }),
+    data: {
+      ticketUpdates: {
+        __typename: 'TicketUpdatesPayload',
+        ticket: nullableMock({ ...ticket, title: 'Some New Title' }),
+      },
+    },
   })
 
   expect(view.getByText('Some New Title')).toBeInTheDocument()

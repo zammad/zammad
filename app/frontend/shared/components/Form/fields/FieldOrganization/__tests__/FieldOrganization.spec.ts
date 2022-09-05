@@ -6,10 +6,11 @@ import { waitFor } from '@testing-library/vue'
 import { FormKit } from '@formkit/vue'
 import { renderComponent } from '@tests/support/components'
 import { queryByIconName } from '@tests/support/components/iconQueries'
-import { createMockClient } from 'mock-apollo-client'
-import { provideApolloClient } from '@vue/apollo-composable'
 import testOptions from '@shared/components/Form/fields/FieldOrganization/__tests__/test-options.json'
 import type { AvatarOrganization } from '@shared/components/CommonOrganizationAvatar/types'
+import type { MockGraphQLInstance } from '@tests/support/mock-graphql-api'
+import { mockGraphQLApi } from '@tests/support/mock-graphql-api'
+import { waitUntil } from '@tests/support/utils'
 
 vi.mock('@vueuse/core', async () => {
   const mod = await vi.importActual<typeof import('@vueuse/core')>(
@@ -89,21 +90,6 @@ const mockQueryResult = (
   }
 }
 
-const mockClient = () => {
-  const mockApolloClient = createMockClient()
-
-  mockApolloClient.setRequestHandler(
-    AutocompleteSearchOrganizationDocument,
-    (variables) => {
-      return Promise.resolve({
-        data: mockQueryResult(variables.query, variables.limit),
-      })
-    },
-  )
-
-  provideApolloClient(mockApolloClient)
-}
-
 const wrapperParameters = {
   form: true,
   formField: true,
@@ -122,7 +108,17 @@ beforeAll(async () => {
 
 // We include only some query-related test cases, since the actual autocomplete component has its own unit test.
 describe('Form - Field - Organization - Query', () => {
-  mockClient()
+  let mockApi: MockGraphQLInstance
+
+  beforeEach(() => {
+    mockApi = mockGraphQLApi(AutocompleteSearchOrganizationDocument).willBehave(
+      (variables) => {
+        return {
+          data: mockQueryResult(variables.query, variables.limit),
+        }
+      },
+    )
+  })
 
   it('fetches remote options via GraphQL query', async () => {
     const wrapper = renderComponent(FormKit, {
@@ -244,7 +240,9 @@ describe('Form - Field - Organization - Query', () => {
 
     await wrapper.events.type(filterElement, 'zammad')
 
-    wrapper.events.click(wrapper.getAllByRole('option')[0])
+    await waitUntil(() => mockApi.calls.behave)
+
+    wrapper.events.click((await wrapper.findAllByRole('option'))[0])
 
     await waitFor(() => {
       expect(wrapper.emitted().inputRaw).toBeTruthy()
