@@ -42,6 +42,10 @@ msgstr "mm/dd/yyyy"
 msgid "FORMAT_DATETIME"
 msgstr "mm/dd/yyyy l:MM P"
 
+#: app/assets/javascripts/app/controllers/_profile/overviews.coffee
+msgid " Order"
+msgstr ""
+
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid " to "
 msgstr ""
@@ -6000,7 +6004,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/api.jst.eco
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco
-#: app/assets/javascripts/app/views/generic/admin/index.jst.eco
 #: app/assets/javascripts/app/views/package.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
 #: app/assets/javascripts/app/views/user.jst.eco
@@ -6388,6 +6391,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/ticket_state.coffee
 #: app/assets/javascripts/app/models/trigger.coffee
 #: app/assets/javascripts/app/models/twitter.coffee
+#: app/assets/javascripts/app/models/user_overview_sorting_overview.coffee
 #: app/assets/javascripts/app/models/webhook.coffee
 #: app/assets/javascripts/app/views/channel/topics.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
@@ -7128,6 +7132,10 @@ msgstr ""
 msgid "Or migrate from another system."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_profile/overviews.coffee
+msgid "Order"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_organization.coffee
@@ -7242,7 +7250,12 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/overview.coffee
 #: app/assets/javascripts/app/models/group.coffee
+#: app/assets/javascripts/app/models/user_overview_sorting.coffee
 msgid "Overview"
+msgstr ""
+
+#: db/seeds/permissions.rb
+msgid "Overview Sortings"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
@@ -7251,6 +7264,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
+#: app/assets/javascripts/app/controllers/_profile/overviews.coffee
 #: app/assets/javascripts/app/controllers/overview.coffee
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: db/seeds/permissions.rb
@@ -7448,6 +7462,10 @@ msgstr ""
 msgid "Personal Settings"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_profile/overviews.coffee
+msgid "Personal overview sortings deleted!"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/cti.coffee
 #: db/seeds/object_manager_attributes.rb
 msgid "Phone"
@@ -7642,6 +7660,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/overview.coffee
 #: app/assets/javascripts/app/models/public_link.coffee
+#: app/assets/javascripts/app/models/user_overview_sorting.coffee
 msgid "Prio"
 msgstr ""
 
@@ -8014,6 +8033,10 @@ msgstr ""
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 #: app/assets/javascripts/app/views/translation/list.jst.eco
 msgid "Reset"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_profile/overviews.coffee
+msgid "Reset Order"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/password_reset.coffee
@@ -8888,6 +8911,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/cti/not_configured.jst.eco
 msgid "Sorry, there is currently no CTI backend enabled."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_profile/overviews.coffee
+msgid "Sorting"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
@@ -10777,6 +10804,7 @@ msgstr ""
 #: app/assets/javascripts/app/lib/app_post/user_organization_autocompletion.coffee
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 #: app/assets/javascripts/app/models/mention.coffee
+#: app/assets/javascripts/app/models/user_overview_sorting.coffee
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco

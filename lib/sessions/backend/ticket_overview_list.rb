@@ -118,6 +118,7 @@ class Sessions::Backend::TicketOverviewList < Sessions::Backend::Base
       next if !overview
 
       meta = {
+        id:    overview.id,
         name:  overview.name,
         prio:  overview.prio,
         link:  overview.link,

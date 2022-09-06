@@ -25,6 +25,7 @@ class TicketOverviewsController < ApplicationController
       index_and_lists.each do |index|
         overview = Overview.lookup(id: index[:overview][:id])
         meta = {
+          id:    overview.id,
           name:  overview.name,
           prio:  overview.prio,
           link:  overview.link,

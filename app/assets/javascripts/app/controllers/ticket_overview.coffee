@@ -820,6 +820,11 @@ class Navbar extends App.Controller
 
   autoFoldTabs: =>
     items = App.OverviewIndexCollection.get()
+    if App.UserOverviewSorting.count()
+      items.sort(App.UserOverviewSortingOverview.overviewSort)
+    else
+      items.sort((a, b) -> a.prio - b.prio)
+
     @html App.view("agent_ticket_view/navbar#{ if @vertical then '_vertical' }")
       items: items
       isAgent: @permissionCheck('ticket.agent')
@@ -891,6 +896,12 @@ class Navbar extends App.Controller
         activeOverview = item
       else
         item.active = false
+
+    # sort by profile preferences
+    if App.UserOverviewSorting.count()
+      data.sort(App.UserOverviewSortingOverview.overviewSort)
+    else
+      data.sort((a, b) -> a.prio - b.prio)
 
     @html App.view("agent_ticket_view/navbar#{ if @vertical then '_vertical' else '' }")
       items: data

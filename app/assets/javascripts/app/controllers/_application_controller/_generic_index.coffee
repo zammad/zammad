@@ -108,6 +108,7 @@ class App.ControllerGenericIndex extends App.Controller
         notes:           @pageData.notes
         buttons:         @pageData.buttons
         menus:           @pageData.menus
+        subHead:         @pageData.subHead
         showDescription: showDescription
       )
 

@@ -1114,6 +1114,7 @@ RSpec.describe User, type: :model do
                      'Translation'                        => { 'created_by_id' => 0, 'updated_by_id' => 0 },
                      'ObjectManager::Attribute'           => { 'created_by_id' => 0, 'updated_by_id' => 0 },
                      'User'                               => { 'created_by_id' => 2, 'out_of_office_replacement_id' => 1, 'updated_by_id' => 2 },
+                     'User::OverviewSorting'              => { 'created_by_id' => 0, 'updated_by_id' => 0, 'user_id' => 1 },
                      'Organization'                       => { 'created_by_id' => 0, 'updated_by_id' => 0 },
                      'Macro'                              => { 'created_by_id' => 0, 'updated_by_id' => 0 },
                      'CoreWorkflow'                       => { 'created_by_id' => 0, 'updated_by_id' => 0 },
@@ -1132,25 +1133,26 @@ RSpec.describe User, type: :model do
                      'Authorization'                      => { 'user_id' => 1 } }
 
       # delete objects
-      token               = create(:token, user: user)
-      online_notification = create(:online_notification, user: user)
-      taskbar             = create(:taskbar, user: user)
-      user_device         = create(:user_device, user: user)
-      karma_activity_log  = create(:karma_activity_log, user: user)
-      cti_caller_id       = create(:cti_caller_id, user: user)
-      authorization       = create(:twitter_authorization, user: user)
-      recent_view         = create(:recent_view, created_by: user)
-      avatar              = create(:avatar, o_id: user.id)
-      overview            = create(:overview, created_by_id: user.id, user_ids: [user.id])
-      mention             = create(:mention, mentionable: create(:ticket), user: user)
-      mention_created_by  = create(:mention, mentionable: create(:ticket), user: create(:agent), created_by: user)
-      user_created_by     = create(:customer, created_by_id: user.id, updated_by_id: user.id, out_of_office_replacement_id: user.id)
-      chat_session        = create(:'chat/session', user: user)
-      chat_message        = create(:'chat/message', chat_session: chat_session)
-      chat_message2       = create(:'chat/message', chat_session: chat_session, created_by: user)
-      draft_start         = create(:ticket_shared_draft_start, created_by: user)
-      draft_zoom          = create(:ticket_shared_draft_zoom, created_by: user)
-      public_link         = create(:public_link, created_by: user)
+      token                 = create(:token, user: user)
+      online_notification   = create(:online_notification, user: user)
+      taskbar               = create(:taskbar, user: user)
+      user_device           = create(:user_device, user: user)
+      karma_activity_log    = create(:karma_activity_log, user: user)
+      cti_caller_id         = create(:cti_caller_id, user: user)
+      authorization         = create(:twitter_authorization, user: user)
+      recent_view           = create(:recent_view, created_by: user)
+      avatar                = create(:avatar, o_id: user.id)
+      overview              = create(:overview, created_by_id: user.id, user_ids: [user.id])
+      mention               = create(:mention, mentionable: create(:ticket), user: user)
+      mention_created_by    = create(:mention, mentionable: create(:ticket), user: create(:agent), created_by: user)
+      user_created_by       = create(:customer, created_by_id: user.id, updated_by_id: user.id, out_of_office_replacement_id: user.id)
+      chat_session          = create(:'chat/session', user: user)
+      chat_message          = create(:'chat/message', chat_session: chat_session)
+      chat_message2         = create(:'chat/message', chat_session: chat_session, created_by: user)
+      draft_start           = create(:ticket_shared_draft_start, created_by: user)
+      draft_zoom            = create(:ticket_shared_draft_zoom, created_by: user)
+      public_link           = create(:public_link, created_by: user)
+      user_overview_sorting = create(:'user/overview_sorting', user: user)
       expect(overview.reload.user_ids).to eq([user.id])
 
       # create a chat agent for admin user (id=1) before agent user
@@ -1199,6 +1201,7 @@ RSpec.describe User, type: :model do
       expect { chat_session.reload }.to raise_exception(ActiveRecord::RecordNotFound)
       expect { chat_message.reload }.to raise_exception(ActiveRecord::RecordNotFound)
       expect { chat_message2.reload }.to raise_exception(ActiveRecord::RecordNotFound)
+      expect { user_overview_sorting.reload }.to raise_exception(ActiveRecord::RecordNotFound)
 
       # move ownership objects
       expect { group.reload }.to change(group, :created_by_id).to(1)

@@ -366,6 +366,15 @@ Permission.create_if_not_exists(
   },
   allow_signup: true,
 )
+Permission.create_if_not_exists(
+  name:         'user_preferences.overview_sorting',
+  note:         __('Change %s'),
+  preferences:  {
+    translations: [__('Overview Sortings')],
+    required:     ['ticket.agent'],
+  },
+  allow_signup: true,
+)
 
 Permission.create_if_not_exists(
   name:        'report',

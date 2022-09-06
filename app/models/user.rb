@@ -40,6 +40,7 @@ class User < ApplicationModel
   has_many                :cti_caller_ids,         class_name: 'Cti::CallerId', dependent: :destroy
   has_many                :customer_tickets,       class_name: 'Ticket', foreign_key: :customer_id, dependent: :destroy, inverse_of: :customer
   has_many                :owner_tickets,          class_name: 'Ticket', foreign_key: :owner_id, inverse_of: :owner
+  has_many                :overview_sortings,      dependent: :destroy
   has_many                :created_recent_views,   class_name: 'RecentView', foreign_key: :created_by_id, dependent: :destroy, inverse_of: :created_by
   has_many                :permissions,            -> { where(roles: { active: true }, active: true) }, through: :roles
   has_many                :data_privacy_tasks,     as: :deletable

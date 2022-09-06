@@ -6,7 +6,7 @@ module CanPrioritize
   def prio
     klass.without_callback(:update, :before, :rearrangement) do
       params[:prios].each do |entry_prio|
-        entry = klass.find(entry_prio[0])
+        entry = prio_find(entry_prio) || prio_create(entry_prio)
         next if entry.prio == entry_prio[1]
 
         entry.prio = entry_prio[1]
@@ -14,5 +14,13 @@ module CanPrioritize
       end
     end
     render json: { success: true }, status: :ok
+  end
+
+  def prio_create(entry_prio)
+    klass.try(:prio_create, id: entry_prio[0], prio: entry_prio[1], current_user: current_user)
+  end
+
+  def prio_find(entry_prio)
+    klass.find_by(id: entry_prio[0])
   end
 end
