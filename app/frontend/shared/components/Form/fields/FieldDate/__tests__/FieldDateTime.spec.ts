@@ -9,7 +9,6 @@ import { waitFor } from '@testing-library/vue'
 import flatpickr from 'flatpickr'
 import { i18n } from '@shared/i18n'
 import { renderComponent } from '@tests/support/components'
-import { beforeAll } from 'vitest'
 
 const renderDateField = (props: Record<string, unknown> = {}) => {
   return renderComponent(FormKit, {

@@ -15,7 +15,7 @@ import {
   onMounted,
 } from 'vue'
 
-export interface DialogOptions {
+interface DialogOptions {
   name: string
   component: () => Promise<Component>
   prefetch?: boolean

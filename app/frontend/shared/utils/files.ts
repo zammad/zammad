@@ -1,5 +1,7 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
+import { useApplicationStore } from '@shared/stores/application'
+
 export interface ImageFileData {
   name: string
   type: string
@@ -31,7 +33,16 @@ export const convertFileList = async (
 }
 
 export const canDownloadFile = (type?: Maybe<string>) => {
-  return type && type !== 'application/pdf' && type !== 'text/html'
+  return Boolean(type && type !== 'application/pdf' && type !== 'text/html')
 }
 
-export default {}
+export const canPreviewFile = (type?: Maybe<string>) => {
+  if (!type) return false
+
+  const { config } = useApplicationStore()
+
+  const allowedPreviewContentTypes =
+    (config['active_storage.web_image_content_types'] as string[]) || []
+
+  return allowedPreviewContentTypes.includes(type)
+}

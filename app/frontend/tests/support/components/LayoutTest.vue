@@ -9,6 +9,7 @@ import CommonNotifications from '@shared/components/CommonNotifications/CommonNo
 import DynamicInitializer from '@shared/components/DynamicInitializer/DynamicInitializer.vue'
 import useAuthenticationChanges from '@shared/composables/useAuthenticationUpdates'
 import CommonConfirmation from '@mobile/components/CommonConfirmation/CommonConfirmation.vue'
+import CommonImageViewer from '@shared/components/CommonImageViewer/CommonImageViewer.vue'
 
 defineProps<{ testKey: number }>()
 
@@ -27,13 +28,14 @@ useAuthenticationChanges()
 
 <template>
   <div>
-    <CommonNotifications />
-    <CommonConfirmation />
     <LayoutHeader v-if="showHeader" v-bind="header" :title="title" />
     <main data-test-id="appMain">
       <RouterView :key="testKey" />
     </main>
     <footer data-bottom-navigation />
     <DynamicInitializer name="dialog" />
+    <CommonNotifications />
+    <CommonImageViewer />
+    <CommonConfirmation />
   </div>
 </template>

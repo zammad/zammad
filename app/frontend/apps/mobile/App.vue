@@ -16,6 +16,7 @@ import { useAppTheme } from '@shared/composables/useAppTheme'
 import useAuthenticationChanges from '@shared/composables/useAuthenticationUpdates'
 import DynamicInitializer from '@shared/components/DynamicInitializer/DynamicInitializer.vue'
 import CommonConfirmation from '@mobile/components/CommonConfirmation/CommonConfirmation.vue'
+import CommonImageViewer from '@shared/components/CommonImageViewer/CommonImageViewer.vue'
 
 const router = useRouter()
 
@@ -71,6 +72,7 @@ onBeforeUnmount(() => {
   <template v-if="application.loaded">
     <CommonNotifications />
     <CommonConfirmation />
+    <CommonImageViewer />
   </template>
   <div
     v-if="application.loaded"

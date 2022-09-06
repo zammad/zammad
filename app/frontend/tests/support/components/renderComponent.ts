@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import type { Plugin, Ref, VNodeProps } from 'vue'
+import type { Plugin, Ref } from 'vue'
 import { isRef, nextTick, ref, watchEffect, unref } from 'vue'
 import type { Router, RouteRecordRaw } from 'vue-router'
 import { createRouter, createWebHistory } from 'vue-router'
@@ -18,6 +18,9 @@ import applicationConfigPlugin from '@shared/plugins/applicationConfigPlugin'
 import CommonIcon from '@shared/components/CommonIcon/CommonIcon.vue'
 import CommonLink from '@shared/components/CommonLink/CommonLink.vue'
 import CommonDateTime from '@shared/components/CommonDateTime/CommonDateTime.vue'
+import CommonConfirmation from '@mobile/components/CommonConfirmation/CommonConfirmation.vue'
+import CommonImageViewer from '@shared/components/CommonImageViewer/CommonImageViewer.vue'
+import { imageViewerOptions } from '@shared/composables/useImageViewer'
 import DynamicInitializer from '@shared/components/DynamicInitializer/DynamicInitializer.vue'
 import { initializeWalker } from '@shared/router/walker'
 import { useApplicationStore } from '@shared/stores/application'
@@ -33,6 +36,8 @@ export interface ExtendedMountingOptions<Props> extends MountingOptions<Props> {
   router?: boolean
   routerRoutes?: RouteRecordRaw[]
   store?: boolean
+  imageViewer?: boolean
+  conformation?: boolean
   form?: boolean
   formField?: boolean
   unmount?: boolean
@@ -217,6 +222,48 @@ const mountDialog = () => {
   dialogMounted = true
 }
 
+let imageViewerMounted = false
+
+const mountImageViewer = () => {
+  if (imageViewerMounted) return
+
+  const ImageViewer = {
+    components: { CommonImageViewer },
+    template: '<CommonImageViewer />',
+  } as any
+
+  const { element } = mount(ImageViewer, defaultWrapperOptions)
+  document.body.appendChild(element)
+
+  imageViewerMounted = true
+}
+
+afterEach(() => {
+  if (!imageViewerMounted) return
+
+  imageViewerOptions.value = {
+    visible: false,
+    index: 0,
+    images: [],
+  }
+})
+
+let conformationMounted = false
+
+const mountConformation = () => {
+  if (conformationMounted) return
+
+  const Confirmation = {
+    components: { CommonConfirmation },
+    template: '<CommonConfirmation />',
+  } as any
+
+  const { element } = mount(Confirmation, defaultWrapperOptions)
+  document.body.appendChild(element)
+
+  conformationMounted = true
+}
+
 const renderComponent = <Props>(
   component: any,
   wrapperOptions: ExtendedMountingOptions<Props> = {},
@@ -233,6 +280,12 @@ const renderComponent = <Props>(
   }
   if (wrapperOptions?.dialog && !dialogMounted) {
     mountDialog()
+  }
+  if (wrapperOptions?.imageViewer && !imageViewerMounted) {
+    mountImageViewer()
+  }
+  if (wrapperOptions?.conformation && !conformationMounted) {
+    mountConformation()
   }
 
   if (!applicationConfigInitialized) {

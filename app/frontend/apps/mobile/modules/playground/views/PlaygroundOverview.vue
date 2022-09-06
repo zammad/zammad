@@ -10,14 +10,6 @@ import CommonButtonGroup from '@mobile/components/CommonButtonGroup/CommonButton
 
 const linkSchemaRaw = [
   {
-    type: 'date',
-    name: 'date',
-    label: 'Date_Input',
-    props: {
-      link: '/tickets',
-    },
-  },
-  {
     type: 'search',
     name: 'search',
     // label: 'Date_Input',
@@ -150,26 +142,15 @@ const linkSchemas = defineFormSchema(linkSchemaRaw)
 const schema = defineFormSchema([
   {
     isLayout: true,
-    component: 'FormLayout',
-    props: {
-      columns: 2,
-    },
+    component: 'FormGroup',
     children: [
       {
-        isLayout: true,
-        component: 'FormGroup',
-        children: [
-          {
-            type: 'text',
-            name: 'text22',
-            label: 'Some_Label',
-          },
-        ],
-      },
-      {
-        type: 'text',
-        name: 'text23',
-        label: 'Some Label3',
+        type: 'file',
+        name: 'file',
+        // label: 'File',
+        props: {
+          link: '/tickets',
+        },
       },
     ],
   },

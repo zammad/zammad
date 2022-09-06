@@ -10,9 +10,12 @@ import { textToHtml } from '@shared/utils/helpers'
 import { useSessionStore } from '@shared/stores/session'
 import type { TicketArticlesQuery } from '@shared/graphql/types'
 import type { ConfidentTake } from '@shared/types/utils'
+import useImageViewer from '@shared/composables/useImageViewer'
+import CommonFilePreview from '@mobile/components/CommonFilePreview/CommonFilePreview.vue'
+import stopEvent from '@shared/utils/events'
 import { useArticleToggleMore } from '../../composable/useArticleToggleMore'
 import type { TicketArticleAttachment } from '../../types/tickets'
-import ArticleAttachment from './ArticleAttachment.vue'
+import { useArticleAttachments } from '../../composable/useArticleAttachments'
 
 interface Props {
   position: 'left' | 'right'
@@ -88,6 +91,19 @@ const colorsClasses = computed(() => {
 
 const { shownMore, bubbleElement, hasShowMore, toggleShowMore } =
   useArticleToggleMore()
+
+const { attachments: articleAttachments } = useArticleAttachments({
+  ticketInternalId: props.ticketInternalId,
+  articleInternalId: props.articleInternalId,
+  attachments: computed(() => props.attachments),
+})
+
+const { showImage } = useImageViewer(articleAttachments)
+
+const previewImage = (event: Event, attachment: TicketArticleAttachment) => {
+  stopEvent(event)
+  showImage(attachment)
+}
 </script>
 
 <template>
@@ -166,13 +182,18 @@ const { shownMore, bubbleElement, hasShowMore, toggleShowMore } =
             app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee:147
             we would need internal ID for this url to work, or update url to allow GQL IDs
           -->
-        <ArticleAttachment
-          v-for="attachment of attachments"
+        <CommonFilePreview
+          v-for="attachment of articleAttachments"
           :key="attachment.internalId"
-          :attachment="attachment"
-          :colors="colorsClasses"
-          :ticket-internal-id="ticketInternalId"
-          :article-internal-id="articleInternalId"
+          :file="attachment"
+          :download-url="attachment.downloadUrl"
+          :preview-url="attachment.content"
+          :no-preview="!$c.ui_ticket_zoom_attachments_preview"
+          :wrapper-class="colorsClasses.file"
+          :icon-class="colorsClasses.icon"
+          :size-class="colorsClasses.amount"
+          no-remove
+          @preview="previewImage($event, attachment)"
         />
       </div>
       <div class="flex h-3 justify-end">

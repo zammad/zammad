@@ -88,6 +88,8 @@ export default defineConfig(({ mode, command }) => {
         '@stories': path.resolve(__dirname, 'app/frontend/stories'),
         '@cy': path.resolve(__dirname, '.cypress'),
         '@': path.resolve(__dirname, 'app/frontend'),
+        '^vue-easy-lightbox$':
+          'vue-easy-lightbox/dist/external-css/vue-easy-lightbox.esm.min.js',
       },
     },
     server: {

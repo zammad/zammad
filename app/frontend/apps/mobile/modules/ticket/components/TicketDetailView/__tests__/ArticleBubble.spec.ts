@@ -1,8 +1,10 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import { waitForAnimationFrame } from '@shared/utils/helpers'
+import { getByAltText, queryByAltText } from '@testing-library/vue'
 import { renderComponent } from '@tests/support/components'
 import { mockAccount } from '@tests/support/mock-account'
+import { mockApplicationConfig } from '@tests/support/mock-applicationConfig'
 import ArticleBubble from '../ArticleBubble.vue'
 
 const renderArticleBubble = (props = {}) => {
@@ -32,6 +34,17 @@ describe('component for displaying text article', () => {
   beforeEach(() => {
     mockAccount({
       id: '2',
+    })
+
+    mockApplicationConfig({
+      ui_ticket_zoom_attachments_preview: true,
+      api_path: '/api',
+      'active_storage.web_image_content_types': [
+        'image/png',
+        'image/jpeg',
+        'image/jpg',
+        'image/gif',
+      ],
     })
   })
 
@@ -168,6 +181,8 @@ describe('component for displaying text article', () => {
 
   it('renders attachments', () => {
     const view = renderArticleBubble({
+      ticketInternalId: 6,
+      articleInternalId: 12,
       attachments: [
         {
           internalId: '1',
@@ -186,16 +201,32 @@ describe('component for displaying text article', () => {
 
     expect(view.getByText('2 attached files')).toBeInTheDocument()
 
-    const attachments = view.getAllByRole('link', { name: /^Download / })
+    const attachments = view.getAllByRole('link', { name: /Zammad / })
 
     expect(attachments).toHaveLength(2)
 
     const [attachment1, attachment2] = attachments
 
+    expect(attachment1).toHaveAttribute(
+      'href',
+      '/api/ticket_attachment/6/12/1?disposition=attachment',
+    )
     expect(attachment1).toHaveTextContent('Zammad 1.png')
     expect(attachment1).toHaveTextContent('236 KB')
+    expect(getByAltText(attachment1, 'Image of Zammad 1.png')).toHaveAttribute(
+      'src',
+      '/api/ticket_attachment/6/12/1?view=preview',
+    )
 
+    expect(attachment2).toHaveAttribute(
+      'href',
+      '/api/ticket_attachment/6/12/2?disposition=attachment',
+    )
     expect(attachment2).toHaveTextContent('Zammad 2.pdf')
     expect(attachment2).toHaveTextContent('355 Bytes')
+    expect(
+      queryByAltText(attachment2, 'Image of Zammad 2.pdf'),
+      "pdf doesn't have preview",
+    ).not.toBeInTheDocument()
   })
 })

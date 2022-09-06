@@ -11,9 +11,31 @@ const useConfirmation = () => {
     confirmationDialog.value = confirmationOptions
   }
 
+  const waitForConfirmation = (
+    heading: string,
+    options: Pick<
+      ConfirmationOptions,
+      'buttonTextColorClass' | 'buttonTitle'
+    > = {},
+  ) => {
+    return new Promise<boolean>((resolve) => {
+      showConfirmation({
+        ...options,
+        heading,
+        confirmCallback() {
+          resolve(true)
+        },
+        cancelCallback() {
+          resolve(false)
+        },
+      })
+    })
+  }
+
   return {
     confirmationDialog,
     showConfirmation,
+    waitForConfirmation,
   }
 }
 

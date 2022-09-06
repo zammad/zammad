@@ -11,6 +11,7 @@ export const FormUploadCacheAddDocument = gql`
     uploadedFiles {
       id
       name
+      size
       type
     }
   }

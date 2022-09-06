@@ -2,7 +2,7 @@
 
 <script setup lang="ts">
 import { useHeader } from '@mobile/composables/useHeader'
-import { computed } from 'vue'
+import { computed, watch } from 'vue'
 import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
 import { QueryHandler } from '@shared/server/apollo/handler'
 import { useRouter } from 'vue-router'
@@ -15,7 +15,6 @@ import type {
   TicketUpdatesSubscriptionVariables,
 } from '@shared/graphql/types'
 import { redirectToError } from '@mobile/router/error'
-import { noop } from 'lodash-es'
 import TicketHeader from '../components/TicketDetailView/TicketDetailViewHeader.vue'
 import TicketTitle from '../components/TicketDetailView/TicketDetailViewTitle.vue'
 import { useTicketQuery } from '../graphql/queries/ticket.api'
@@ -114,15 +113,20 @@ const stopWatch = whenever(
 const users = [{ id: '1' }, { id: '2', lastname: 'Smith', firstname: 'John' }]
 // const usersLoading = ref(true) // TODO
 
-articlesQuery
-  .onLoaded()
-  .then(() => {
-    window.scrollTo({
-      behavior: 'smooth',
-      top: window.innerHeight,
+watch(
+  () => articles.value.length,
+  (length) => {
+    if (!length) return
+
+    requestAnimationFrame(() => {
+      window.scrollTo({
+        behavior: 'smooth',
+        top: window.innerHeight,
+      })
     })
-  })
-  .catch(noop)
+  },
+  { immediate: true },
+)
 
 const loadPreviousArticles = async () => {
   await articlesQuery.fetchMore({

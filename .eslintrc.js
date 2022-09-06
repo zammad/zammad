@@ -183,6 +183,13 @@ module.exports = {
             'vitest',
             path.resolve(__dirname, 'node_modules/vitest/dist/index.mjs'),
           ],
+          [
+            'vue-easy-lightbox/dist/external-css/vue-easy-lightbox.css',
+            path.resolve(
+              __dirname,
+              'node_modules/vue-easy-lightbox/dist/external-css/vue-easy-lightbox.css',
+            ),
+          ],
         ],
         extensions: ['.js', '.jsx', '.ts', '.tsx', '.vue'],
       },

@@ -3,6 +3,7 @@ mutation formUploadCacheAdd($formId: FormId!, $files: [UploadFileInput!]!) {
     uploadedFiles {
       id
       name
+      size
       type
     }
   }

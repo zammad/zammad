@@ -40,8 +40,8 @@ onKeyUp(['Escape', 'Spacebar', ' '], (e) => {
 </script>
 
 <template>
-  <teleport to="body">
-    <transition
+  <Teleport to="body">
+    <Transition
       leave-active-class="window-open"
       enter-active-class="window-open"
       enter-from-class="window-close"
@@ -76,8 +76,8 @@ onKeyUp(['Escape', 'Spacebar', ' '], (e) => {
           </div>
         </div>
       </div>
-    </transition>
-  </teleport>
+    </Transition>
+  </Teleport>
 </template>
 
 <style scoped lang="scss">

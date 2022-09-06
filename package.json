@@ -125,6 +125,7 @@
     "uuid": "^8.3.2",
     "vue": "^3.2.38",
     "vue-advanced-cropper": "^2.8.3",
+    "vue-easy-lightbox": "1.7.1",
     "vue-router": "^4.1.5",
     "vue3-draggable-resizable": "^1.6.5",
     "vuedraggable": "^4.1.0"

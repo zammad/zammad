@@ -2,7 +2,7 @@
 
 import type { StopEventOptions } from '@shared/types/events'
 
-const stopEvent = (event: Event, stopOptions: StopEventOptions): void => {
+const stopEvent = (event: Event, stopOptions: StopEventOptions = {}): void => {
   const {
     preventDefault = true,
     propagation = true,

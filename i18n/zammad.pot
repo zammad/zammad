@@ -1001,6 +1001,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/delete.coffee
 #: app/assets/javascripts/app/controllers/widget/template.coffee
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue
 msgid "Are you sure?"
 msgstr ""
 
@@ -1096,6 +1097,14 @@ msgstr ""
 #: app/models/role.rb
 #: app/models/user.rb
 msgid "At least one user needs to have admin permissions."
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue
+msgid "Attach another file"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue
+msgid "Attach files"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
@@ -3541,7 +3550,7 @@ msgstr ""
 msgid "Download"
 msgstr ""
 
-#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleAttachment.vue
+#: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue
 msgid "Download %s"
 msgstr ""
 
@@ -5112,7 +5121,7 @@ msgstr ""
 msgid "Image Service"
 msgstr ""
 
-#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleAttachment.vue
+#: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue
 msgid "Image of %s"
 msgstr ""
 
@@ -7075,6 +7084,10 @@ msgstr ""
 msgid "Oops.. I'm sorry, but you have insufficient rights to open this %s."
 msgstr ""
 
+#: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue
+msgid "Open %s"
+msgstr ""
+
 #: app/assets/javascripts/app/views/dashboard/first_steps_test_ticket_finish.jst.eco
 msgid "Open Ticket# %s"
 msgstr ""
@@ -7599,6 +7612,10 @@ msgstr ""
 msgid "Preview"
 msgstr ""
 
+#: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue
+msgid "Preview %s"
+msgstr ""
+
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Preview Width"
 msgstr ""
@@ -7883,6 +7900,10 @@ msgstr ""
 #: app/assets/javascripts/app/views/twitter/search_term.jst.eco
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Remove"
+msgstr ""
+
+#: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue
+msgid "Remove %s"
 msgstr ""
 
 #: app/frontend/shared/form/i18n/locales.ts

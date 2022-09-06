@@ -1232,7 +1232,7 @@ export type FormUploadCacheAddMutationVariables = Exact<{
 }>;
 
 
-export type FormUploadCacheAddMutation = { __typename?: 'Mutations', formUploadCacheAdd?: { __typename?: 'FormUploadCacheAddPayload', uploadedFiles: Array<{ __typename?: 'StoredFile', id: string, name: string, type?: string | null }> } | null };
+export type FormUploadCacheAddMutation = { __typename?: 'Mutations', formUploadCacheAdd?: { __typename?: 'FormUploadCacheAddPayload', uploadedFiles: Array<{ __typename?: 'StoredFile', id: string, name: string, size?: number | null, type?: string | null }> } | null };
 
 export type FormUploadCacheRemoveMutationVariables = Exact<{
   formId: Scalars['FormId'];
