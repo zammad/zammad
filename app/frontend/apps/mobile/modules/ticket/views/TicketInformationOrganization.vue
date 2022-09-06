@@ -14,6 +14,7 @@ import { useOrganizationEdit } from '@mobile/entities/organization/composables/u
 import OrganizationMembersList from '@mobile/components/Organization/OrganizationMembersList.vue'
 import { OrganizationUpdatesDocument } from '@mobile/entities/organization/graphql/subscriptions/organizationUpdates.api'
 import { useSessionStore } from '@shared/stores/session'
+import { AvatarOrganization } from '@shared/components/CommonOrganizationAvatar'
 import type { TicketById } from '../types/tickets'
 
 const ticket = inject('ticket') as ComputedRef<Maybe<TicketById>>
@@ -78,7 +79,10 @@ const ticketsLinkQuery = computed(() => {
     :error="error"
   >
     <div v-if="organization" class="mb-3 flex items-center gap-3">
-      <CommonOrganizationAvatar size="normal" :entity="organization" />
+      <CommonOrganizationAvatar
+        size="normal"
+        :entity="(organization as AvatarOrganization)"
+      />
       <h2 class="text-lg font-semibold">
         {{ organization.name }}
       </h2>

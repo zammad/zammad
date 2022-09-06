@@ -32,8 +32,8 @@ RSpec.describe Gql::Queries::Organization, type: :graphql do
     end
 
     context 'with authenticated session', authenticated_as: :user do
-      it 'has data' do
-        expect(gql.result.data).to include('name' => organization.name)
+      it 'has full data' do
+        expect(gql.result.data).to include('name' => organization.name, 'shared' => organization.shared)
       end
 
       context 'without organization' do
@@ -47,7 +47,7 @@ RSpec.describe Gql::Queries::Organization, type: :graphql do
       context 'without organization assignment - no permission' do
         let(:user) { create(:customer) }
 
-        it 'raises authorization error' do
+        it 'returns an error' do
           expect(gql.result.error_type).to eq(Exceptions::Forbidden)
         end
       end
@@ -55,14 +55,14 @@ RSpec.describe Gql::Queries::Organization, type: :graphql do
       context 'with organization assignment - permission' do
         let(:user) { create(:customer, organization: organization) }
 
-        it 'has data' do
-          expect(gql.result.data).to include('name' => organization.name)
+        it 'returns a record, but only limited data', :aggregate_failures do
+          expect(gql.result.data).to include('name' => organization.name, 'shared' => nil)
         end
 
         context 'with assignment to another organization' do
           let(:user) { create(:customer, organization: create(:organization)) }
 
-          it 'raises authorization error' do
+          it 'returns an error' do
             expect(gql.result.error_type).to eq(Exceptions::Forbidden)
           end
         end

@@ -13,9 +13,11 @@ module Gql::Mutations
     include Gql::Mutations::Concerns::HandlesCoreWorkflow
 
     argument_class Gql::Types::BaseArgument
-    field_class    Gql::Types::BaseField
+    field_class    Gql::Fields::BaseField
     object_class   Gql::Types::BaseObject
     # input_object_class Gql::Types::BaseInputObject
+
+    description 'Base class for all mutations'
 
     field :errors, [Gql::Types::UserErrorType], description: 'Errors encountered during execution of the mutation.'
 

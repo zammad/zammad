@@ -291,6 +291,11 @@ GraphQL/FieldDescription:
   Exclude:
     - "app/graphql/gql/types/**/*"
 
+GraphQL/ObjectDescription:
+  Exclude:
+    - "app/graphql/gql/fields/**/*" # false positive?
+    - "app/graphql/gql/types/**/base_*"
+
 # RSpec tests
 Style/NumericPredicate:
   Description: >-

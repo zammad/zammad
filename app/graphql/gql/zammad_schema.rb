@@ -11,6 +11,8 @@ class Gql::ZammadSchema < GraphQL::Schema
   # Enable batch loading
   use GraphQL::Batch
 
+  description 'This is the Zammad GraphQL API'
+
   # Set maximum page size and depth to protect the system.
   #   Values may need to be adjusted in future.
   default_max_page_size 1000
@@ -90,7 +92,7 @@ end
 # Temporary Hack: only process trigger events if ActionCable is enabled.
 # TODO: Remove when this switch is not needed any more.
 module GraphQL
-  class Subscriptions
+  class Subscriptions # rubocop:disable GraphQL/ObjectDescription
     if !method_defined?(:orig_trigger)
       alias orig_trigger trigger
       def trigger(...)

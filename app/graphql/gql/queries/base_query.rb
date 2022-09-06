@@ -6,6 +6,8 @@ module Gql::Queries
     include Gql::Concerns::HasNestedGraphqlName
     include Gql::Concerns::HandlesServices
 
+    description 'Base class for all queries'
+
     # Require authentication by default for queries.
     def self.authorize(_obj, ctx)
       ctx.current_user

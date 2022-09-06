@@ -31,7 +31,7 @@ describe('static organization', () => {
 
     await waitUntil(() => mockApi.calls.resolve)
 
-    expect(view.getByText(organization.name)).toBeInTheDocument()
+    expect(view.getByText(organization.name || 'not found')).toBeInTheDocument()
 
     expect(
       view.getByRole('region', { name: 'Shared organization' }),
@@ -91,7 +91,7 @@ describe('static organization', () => {
 
     expect(view.container).toHaveTextContent('Members')
 
-    const members = organization.members.edges
+    const members = organization.members?.edges || []
 
     expect(members).toHaveLength(1)
     expect(view.container).toHaveTextContent(members[0].node.fullname!)

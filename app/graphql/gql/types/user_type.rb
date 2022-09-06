@@ -5,25 +5,27 @@ module Gql::Types
     include Gql::Concerns::IsModelObject
     include Gql::Concerns::HasInternalIdField
     include Gql::Concerns::HasInternalNoteField
-
-    # Special handling for users: GraphQL allows all authenticated users
-    #   to look at other user records, but only some non-sensitive fields.
-    # For the other fields, proper pundit authorization to the user object
-    #   is required.
+    include Gql::Concerns::HasPunditAuthorization
 
     description 'Users (admins, agents and customers)'
 
     implements Gql::Types::ObjectAttributeValueInterface
 
-    belongs_to :organization, Gql::Types::OrganizationType, authorize: :by_pundit
+    # Special handling for users: GraphQL allows all authenticated users
+    #   to look at other user records, but only some non-sensitive fields.
+    def self.nested_access_pundit_method
+      :nested_show?
+    end
 
-    field :firstname, String
-    field :lastname, String
-    field :fullname, String
-    field :image, String
-    field :image_source, String
+    scoped_fields do
+      belongs_to :organization, Gql::Types::OrganizationType
 
-    field_args(authorize: :by_pundit) do
+      field :firstname, String
+      field :lastname, String
+      field :fullname, String
+      field :image, String
+      field :image_source, String
+
       field :login, String
       field :email, String
       field :web, String

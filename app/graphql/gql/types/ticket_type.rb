@@ -5,10 +5,7 @@ module Gql::Types
     include Gql::Concerns::IsModelObject
     include Gql::Concerns::HasInternalIdField
     include Gql::Concerns::HasInternalNoteField
-
-    def self.authorize(object, ctx)
-      Pundit.authorize ctx.current_user, object, :show?
-    end
+    include Gql::Concerns::HasPunditAuthorization
 
     description 'Tickets'
 

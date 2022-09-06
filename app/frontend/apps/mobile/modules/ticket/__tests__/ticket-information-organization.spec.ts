@@ -47,7 +47,7 @@ describe('static organization', () => {
       organization,
     )
 
-    expect(view.getByText(organization.name)).toBeInTheDocument()
+    expect(view.getByText(organization.name || 'unknown')).toBeInTheDocument()
 
     expect(view.getByRole('region', { name: 'Note' })).toHaveTextContent(
       'Save something as this note',
@@ -93,13 +93,14 @@ describe('static organization', () => {
       ...organization,
       members: {
         ...organization.members,
+        edges: organization.members?.edges || [],
         totalCount: 2,
       },
     })
 
     expect(view.container).toHaveTextContent('Members')
 
-    const members = organization.members.edges
+    const members = organization.members?.edges || []
 
     expect(members).toHaveLength(1)
     expect(view.container).toHaveTextContent(members[0].node.fullname!)

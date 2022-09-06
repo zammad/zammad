@@ -17,7 +17,7 @@ const emit = defineEmits<{
 }>()
 
 const members = computed(() => {
-  return props.organization.members.edges.map(({ node }) => node) || []
+  return props.organization.members?.edges.map(({ node }) => node) || []
 })
 </script>
 
@@ -25,7 +25,7 @@ const members = computed(() => {
   <CommonUsersList
     :label="__('Members')"
     :users="members"
-    :total-count="organization.members.totalCount || 0"
+    :total-count="organization.members?.totalCount || 0"
     :disable-show-more="disableShowMore"
     @show-more="emit('load-more')"
   />

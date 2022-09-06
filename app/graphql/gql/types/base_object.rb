@@ -3,12 +3,12 @@
 module Gql::Types
   class BaseObject < GraphQL::Schema::Object
     include Gql::Concerns::HandlesAuthorization
-    include Gql::Concerns::CanAuthorizeFields
-    include Gql::Concerns::HasFieldArguments
     include Gql::Concerns::HasNestedGraphqlName
 
     edge_type_class       Gql::Types::BaseEdge
     connection_type_class Gql::Types::BaseConnection
-    field_class           Gql::Types::BaseField
+    field_class           Gql::Fields::BaseField
+
+    description 'Base class for all GraphQL objects'
   end
 end

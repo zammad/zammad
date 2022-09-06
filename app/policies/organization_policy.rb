@@ -4,7 +4,8 @@ class OrganizationPolicy < ApplicationPolicy
 
   def show?
     return true if accessible?
-    return true if user.organization_id?(record.id)
+
+    return customer_field_scope if user.organization_id?(record.id)
 
     false
   end
@@ -19,5 +20,9 @@ class OrganizationPolicy < ApplicationPolicy
 
   def accessible?
     user.permissions?(['admin.organization', 'ticket.agent'])
+  end
+
+  def customer_field_scope
+    @customer_field_scope ||= ApplicationPolicy::FieldScope.new(allow: %i[id name active])
   end
 end

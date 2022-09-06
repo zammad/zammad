@@ -6,8 +6,10 @@ module Gql::Subscriptions
     include Gql::Concerns::HasNestedGraphqlName
 
     object_class   Gql::Types::BaseObject
-    field_class    Gql::Types::BaseField
+    field_class    Gql::Fields::BaseField
     argument_class Gql::Types::BaseArgument
+
+    description 'Base class for all subscriptions'
 
     def self.authorize(_obj, ctx)
       ctx.current_user

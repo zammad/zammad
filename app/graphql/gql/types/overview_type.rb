@@ -3,10 +3,7 @@
 module Gql::Types
   class OverviewType < Gql::Types::BaseObject
     include Gql::Concerns::IsModelObject
-
-    def self.authorize(object, ctx)
-      Pundit.authorize ctx.current_user, object, :show?
-    end
+    include Gql::Concerns::HasPunditAuthorization
 
     description 'Ticket overviews'
 

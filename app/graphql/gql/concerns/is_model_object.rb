@@ -31,7 +31,7 @@ module Gql::Concerns::IsModelObject
         Gql::RecordLoader.for(definition.klass).load(id)
       end
 
-      field(association, *args, **kwargs, &block)
+      field(association, *args, **kwargs, is_dependent_field: true, &block)
     end
 
     def has_one(association, *args, **kwargs, &block) # rubocop:disable Naming/PredicateName
@@ -40,7 +40,7 @@ module Gql::Concerns::IsModelObject
         Gql::RecordLoader.for(definition.klass, column: definition.foreign_key).load(object.id)
       end
 
-      field(association, *args, **kwargs, &block)
+      field(association, *args, **kwargs, is_dependent_field: true, &block)
     end
 
     private

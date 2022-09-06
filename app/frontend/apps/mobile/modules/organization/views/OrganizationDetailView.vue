@@ -16,6 +16,7 @@ import { OrganizationUpdatesDocument } from '@mobile/entities/organization/graph
 import { useOrganizationEdit } from '@mobile/entities/organization/composables/useOrganizationEdit'
 import OrganizationMembersList from '@mobile/components/Organization/OrganizationMembersList.vue'
 import { useOrganizationObjectManagerAttributesStore } from '@mobile/entities/organization/stores/objectManagerAttributes'
+import { AvatarOrganization } from '@shared/components/CommonOrganizationAvatar'
 import CommonObjectAttributes from '@mobile/components/CommonObjectAttributes/CommonObjectAttributes.vue'
 
 interface Props {
@@ -86,7 +87,11 @@ const ticketsLinkQuery = computed(() => {
   <div v-if="organization" class="px-4">
     <div class="flex flex-col items-center justify-center py-6">
       <div>
-        <CommonOrganizationAvatar :entity="organization" size="xl" personal />
+        <CommonOrganizationAvatar
+          :entity="(organization as AvatarOrganization)"
+          size="xl"
+          personal
+        />
       </div>
       <div class="mt-2 text-xl font-bold">
         {{ organization.name }}

@@ -6,7 +6,9 @@ module Gql::Types
 
     description 'Custom object fields (only editable & active)'
 
-    field :object_attribute_values, [Gql::Types::ObjectAttributeValueType, { null: false }], authorize: :by_pundit
+    scoped_fields do
+      field :object_attribute_values, [Gql::Types::ObjectAttributeValueType, { null: false }]
+    end
 
     def object_attribute_values
       return [] if !@object || !context.current_user?

@@ -4,6 +4,7 @@ module Gql::Types
   class StoredFileType < Gql::Types::BaseObject
     include Gql::Concerns::IsModelObject
     include Gql::Concerns::HasInternalIdField
+    include Gql::Concerns::HasPunditAuthorization
 
     description 'Represents a stored file.'
 
@@ -11,10 +12,6 @@ module Gql::Types
     field :size, Integer, description: 'File size in bytes'
     field :type, String, description: "File's content-type."
     field :preferences, GraphQL::Types::JSON
-
-    def self.authorize(object, ctx)
-      Pundit.authorize ctx.current_user, object, :show?
-    end
 
     def type
       object.preferences['Content-Type']

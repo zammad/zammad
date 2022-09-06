@@ -4,10 +4,7 @@ module Gql::Types::Ticket
   class ArticleType < Gql::Types::BaseObject
     include Gql::Concerns::IsModelObject
     include Gql::Concerns::HasInternalIdField
-
-    def self.authorize(object, ctx)
-      Pundit.authorize ctx.current_user, object, :show?
-    end
+    include Gql::Concerns::HasPunditAuthorization
 
     description 'Ticket articles'
 

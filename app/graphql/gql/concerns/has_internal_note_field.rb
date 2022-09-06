@@ -6,7 +6,8 @@ module Gql::Concerns::HasInternalNoteField
   extend ActiveSupport::Concern
 
   included do
-    # internal note field
-    field :note, String, authorize: ['ticket.agent', 'admin.*'], description: 'Internal note'
+    internal_fields do
+      field :note, String, description: 'Internal note'
+    end
   end
 end

@@ -6,5 +6,7 @@ module Gql::Queries
   class BaseQueryWithPayload < BaseQuery
     extend GraphQL::Schema::Member::HasFields
     extend GraphQL::Schema::Resolver::HasPayloadType
+
+    description 'Base class for queries that auto-generates a payload object for the declared fields'
   end
 end
