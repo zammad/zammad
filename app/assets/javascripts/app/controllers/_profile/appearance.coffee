@@ -9,14 +9,14 @@ class ProfileAppearance extends App.ControllerSubContent
     @render()
     @controllerBind('ui:theme:changed', @onUpdate)
 
-  render: ->
+  render: (theme) ->
     @html App.view('profile/appearance')(
-      theme: localStorage.getItem('theme') || App.Session.get('preferences').theme || 'light'
+      theme: theme || App.Session.get('preferences').theme || 'auto'
     )
 
   onUpdate: (event) =>
     if event.source != 'profile_appearance'
-      @render()
+      @render event.detectedTheme
 
   updateTheme: (event) ->
     App.Event.trigger('ui:theme:set', { theme: event.target.value, source: 'profile_appearance' })
