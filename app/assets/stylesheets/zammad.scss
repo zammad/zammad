@@ -24,12 +24,13 @@ $mobileNavigationWidthOpen: 220px;
   --text-link: hsl(204, 72%, 50%);
   --text-inverted: white;
   --text-nav: hsl(204, 72%, 50%);
-  --menu-icon: hsl(206, 7%, 37%);
+  --menu-text: hsl(0, 0%, 74%);
+  --menu-icon: hsl(206, 5%, 42%);
   --nav-icon: hsl(0, 0%, 50%);
   --highlight: hsl(205, 90%, 60%);
   --highlight-muted: hsl(198, 19%, 72%);
   --interactive-primary: black;
-  --interactive-muted: hsl(210, 4%, 76%);
+  --interactive-muted: hsl(210, 3%, 71%);
   --interactive-muted-active: hsl(210, 4%, 71%);
   --interactive-muted-alt: hsl(197, 19%, 78%);
   --interactive-muted-alt-selected: hsl(206, 7%, 37%);
@@ -58,7 +59,8 @@ $mobileNavigationWidthOpen: 220px;
   --border: hsl(0, 0%, 90%);
   --border-alt: hsl(198, 18%, 86%);
   --border-highlight: hsl(200, 71%, 59%);
-  --border-internal: hsl(18, 79%, 89%);
+  --border-internal: hsl(18, 91%, 89%);
+  --border-internal-stripe: hsl(18, 94%, 95%);
   --border-article-customer: hsl(199, 38%, 90%);
   --border-article-customer-selected: hsl(199, 44%, 85%);
   --shadow-highlight: hsl(201, 62%, 90%);
@@ -67,7 +69,7 @@ $mobileNavigationWidthOpen: 220px;
   --ok-color: hsl(41, 100%, 49%);
   --bad-color: hsl(30, 93%, 50%);
   --superbad-color: hsl(19, 90%, 51%);
-  --ghost-color: hsl(0, 0%, 80%);
+  --ghost-color: hsl(0, 0%, 74%);
   --danger-color: hsl(0, 65%, 55%);
   --elevation-stroke: 0 1px hsl(210, 7%, 94%);
   --elevation-low: 0 1px 5px hsla(205, 30%, 30%, 0.1);
@@ -79,6 +81,8 @@ $mobileNavigationWidthOpen: 220px;
   --highlighter-purple: hsl(288, 62%, 86%);
   --file-icon-background: white;
   --file-icon-color: hsl(198, 18%, 86%);
+  --tag-text: hsl(198, 5%, 41%);
+  --tag-background: hsl(198, 19%, 92%);
 }
 
 // dark mode
@@ -91,26 +95,25 @@ $mobileNavigationWidthOpen: 220px;
   --button-active-active: hsla(0, 0%, 100%, .08);
   --header-primary: white;
   --header-secondary: hsl(198, 5%, 73%);
-  --text-normal: hsl(205, 1%, 84%);
+  --text-normal: hsl(205, 1%, 86%);
   --text-muted: hsl(213, 3%, 60%);
   --text-muted-alt: hsl(213, 8%, 61%);
   --text-link: hsl(202, 72%, 50%);
   --text-inverted: white;
   --text-nav: hsl(205, 1%, 84%);
-  --menu-icon: hsl(206, 7%, 37%);
   --nav-icon: hsl(0, 0%, 50%);
   --highlight: hsl(205, 90%, 60%);
   --highlight-muted: hsl(210, 8%, 22%);
   --interactive-primary: white;
-  --interactive-muted: hsl(213, 3%, 40%);
+  --interactive-muted: hsl(213, 3%, 64%);
   --interactive-muted-active: hsl(213, 3%, 35%);
   --interactive-muted-alt: hsl(209, 5%, 35%);
   --interactive-muted-alt-selected: hsl(205, 4%, 75%);
   --input-disabled: hsl(230, 4%, 20%);
-  --background-primary: hsl(230, 5%, 22%);
-  --background-primary-alt: hsl(230, 5%, 24%);
-  --background-secondary: hsl(230, 5%, 26%);
-  --background-secondary-hover: hsl(230, 5%, 23%);
+  --background-primary: hsl(230, 5%, 19%);
+  --background-primary-alt: hsl(230, 5%, 21%);
+  --background-secondary: hsl(230, 5%, 23%);
+  --background-secondary-hover: hsl(230, 5%, 20%);
   --background-tertiary: hsl(230, 7%, 17%);
   --background-quaternary: hsl(230, 7%, 13%);
   --background-quaternary-alt: hsl(230, 4%, 30%);
@@ -128,10 +131,11 @@ $mobileNavigationWidthOpen: 220px;
   --background-modifier-hover: hsla(230, 5%, 36%, .4);
   --backdrop-clue-start: hsla(202, 68%, 54%, 0.1);
   --backdrop-clue-end: hsla(202, 68%, 54%, 0.9);
-  --border: hsl(230, 4%, 19%);
-  --border-alt: hsl(230, 7%, 21%);
+  --border: hsl(230, 4%, 17%);
+  --border-alt: hsl(230, 7%, 18%);
   --border-highlight: hsl(205, 70%, 50%);
   --border-internal: hsl(18, 30%, 39%);
+  --border-internal-stripe: hsl(18, 30%, 30%);
   --border-article-customer: hsl(209, 6%, 30%);
   --border-article-customer-selected: hsl(199, 10%, 33%);
   --shadow-highlight: hsl(205, 42%, 36%);
@@ -140,8 +144,8 @@ $mobileNavigationWidthOpen: 220px;
   --ok-color: hsl(41, 100%, 49%);
   --bad-color: hsl(30, 93%, 50%);
   --superbad-color: hsl(19, 90%, 51%);
-  --ghost-color: hsl(0, 0%, 40%);
-  --danger-color: hsl(0, 65%, 55%);
+  --ghost-color: hsl(0, 0%, 50%);
+  --danger-color: hsl(0, 82%, 59%);
   --elevation-stroke: 0 1px hsla(0, 0%, 0%, .13);
   --elevation-low: 0 1px 5px hsla(0, 0%, 0%, 0.15);
   --elevation-high: 0 1px 14px hsla(0, 0%, 0%, 0.25);
@@ -152,6 +156,8 @@ $mobileNavigationWidthOpen: 220px;
   --highlighter-purple: hsl(288, 22%, 36%);
   --file-icon-background: hsl(216, 5%, 77%);
   --file-icon-color: hsl(230, 7%, 21%);
+  --tag-text: var(--text-normal);
+  --tag-background: hsl(230, 5%, 32%);
 }
 
 @mixin dark {
@@ -879,7 +885,7 @@ pre code {
     }
 
     &.btn--secondary {
-      color: var(--text-muted);
+      color: var(--interactive-muted);
       text-decoration: underline;
 
       &:active {
@@ -907,7 +913,7 @@ pre code {
 
     &.btn--subtle {
       text-decoration: underline;
-      color: var(--text-muted);
+      color: var(--interactive-muted);
 
       &:active {
         opacity: .75;
@@ -2141,7 +2147,7 @@ fieldset > .form-group {
     margin: -6px 0 -6px auto;
     font-size: 20px;
     line-height: 1;
-    color: var(--text-muted);
+    color: var(--interactive-muted);
   }
 }
 
@@ -3369,7 +3375,7 @@ ol.tabs li {
   display: flex;
   padding: 0;
   margin-bottom: 20px;
-  color: var(--text-muted);
+  color: var(--interactive-muted);
   border: 1px solid var(--border);
   border-radius: 3px;
   background: var(--background-secondary);
@@ -4281,8 +4287,6 @@ footer {
 
   .icon {
     @include bidi-style(margin-right, 10px, margin-left, 0);
-
-    filter: grayscale(90%);
   }
 }
 
@@ -4348,7 +4352,7 @@ footer {
 .menu-item {
   padding: 0 15px;
   height: 48px;
-  color: rgba(240, 250, 255, 0.4);
+  color: var(--menu-text);
   border-bottom: 1px solid hsla(230, 4%, 84%, .05);
   text-decoration: none;
   display: flex;
@@ -4565,7 +4569,7 @@ footer {
   @include bidi-style(padding, 10px 15px 9px 0, padding, 10px 0 9px 15px);
 
   position: relative;
-  color: var(--text-muted);
+  color: var(--menu-text);
   display: flex;
   align-items: center;
 
@@ -6840,7 +6844,7 @@ a.list-group-item.active > .badge,
 
 .internal-border {
   padding: 5px;
-  border-radius: 8px;
+  border-radius: 5px;
   margin: -5px;
 }
 
@@ -6849,10 +6853,11 @@ a.list-group-item.active > .badge,
     45deg,
     var(--border-internal),
     var(--border-internal) 5px,
-    var(--background-primary) 5px,
-    var(--background-primary) 6px
+    var(--border-internal-stripe) 5px,
+    var(--border-internal-stripe) 10px
   );
-  background-size: 8px 8px;
+  background-size: 14px 14px;
+  background-position: -1px;
 }
 
 .is-internal .bubble-arrow {
@@ -7080,7 +7085,7 @@ a.list-group-item.active > .badge,
 .article-action {
   padding: 5px 16px;
   margin-top: 5px;
-  color: var(--interactive-muted-alt);
+  color: var(--interactive-muted);
   font-size: 12px;
   text-align: center;
 
@@ -7088,7 +7093,7 @@ a.list-group-item.active > .badge,
 }
 
 .article-action:hover {
-  color: var(--interactive-primary);
+  color: var(--text-primary);
   text-decoration: none;
 }
 
@@ -7491,7 +7496,7 @@ a.list-group-item.active > .badge,
 }
 
 .attachment--row .attachment-delete {
-  color: var(--text-muted);
+  color: var(--interactive-muted);
   text-decoration: underline;
   display: none;
   white-space: nowrap;
@@ -8009,7 +8014,7 @@ a.list-group-item.active > .badge,
   margin-top: 7px;
   margin-bottom: 4px;
   text-transform: uppercase;
-  color: hsl(198, 19%, 84%);
+  color: var(--ghost-color);
   display: block;
   font-size: 12px;
   font-weight: normal;
@@ -8349,9 +8354,9 @@ li.list-item-none {
   padding: 0 0 0 10px;
   margin: 0 5px 6px 0;
   height: 26px;
-  color: var(--text-inverted);
+  color: var(--tag-text);
   border-radius: 3px;
-  background: var(--highlight-muted);
+  background: var(--tag-background);
   border: none;
   float: none;
   display: inline-flex;
@@ -8361,6 +8366,7 @@ li.list-item-none {
 
   &.active {
     background: var(--highlight);
+    color: var(--text-inverted);
 
     .close,
     .token-close {
@@ -8421,7 +8427,7 @@ li.list-item-none {
   font-weight: 100;
   font-size: 28px;
   line-height: 1;
-  color: var(--text-inverted);
+  color: inherit;
   text-shadow: none;
   opacity: 0.5;
   outline: none;
@@ -9474,7 +9480,7 @@ li.dropdown-header {
 
 .nav-tabs li {
   margin: 0;
-  color: var(--text-muted);
+  color: var(--interactive-muted);
   border: 1px solid var(--border);
   margin-left: -1px;
   background: var(--background-secondary);
@@ -10652,10 +10658,8 @@ output {
   @extend %clickable;
 
   &:hover:not(.is-disabled) {
-    border-color: hsl(198, 19%, 83%);
-
     .icon {
-      fill: black;
+      fill: var(--interactive-primary);
     }
   }
 
@@ -10669,7 +10673,7 @@ output {
   }
 
   .icon {
-    fill: hsl(0, 0%, 61%);
+    fill: var(--interactive-muted);
   }
 }
 
@@ -10891,7 +10895,7 @@ output {
     @extend .u-clickable;
 
     text-align: center;
-    color: var(--text-muted);
+    color: var(--interactive-muted);
     background:
       linear-gradient(hsla(0,0%,100%,.02), hsla(0,0%,100%,.02)),
       linear-gradient(var(--background-primary-alt), var(--background-primary-alt));
@@ -13354,7 +13358,7 @@ span.is-disabled {
   &-navigation {
     display: flex;
     align-items: center;
-    color: var(--text-muted);
+    color: var(--interactive-muted);
     background: var(--background-primary-alt);
     border-bottom: 1px solid var(--border);
     padding: 7px;
