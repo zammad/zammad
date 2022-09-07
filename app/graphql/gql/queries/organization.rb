@@ -2,15 +2,14 @@
 
 module Gql::Queries
   class Organization < BaseQuery
-
     description 'Fetch an organization by ID'
 
-    argument :organization_id, GraphQL::Types::ID, description: 'ID of the organization'
+    argument :organization, Gql::Types::Input::Locator::OrganizationInputType, description: 'Organization locator'
 
     type Gql::Types::OrganizationType, null: false
 
-    def resolve(organization_id:)
-      Gql::ZammadSchema.verified_object_from_id(organization_id, type: ::Organization)
+    def resolve(organization:)
+      organization
     end
   end
 end

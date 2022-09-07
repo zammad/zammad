@@ -1,5 +1,5 @@
-query organization($organizationId: ID!, $membersCount: Int) {
-  organization(organizationId: $organizationId) {
+query organization($organizationId: ID, $organizationInternalId: Int, $membersCount: Int) {
+  organization( organization: { organizationId: $organizationId, organizationInternalId: $organizationInternalId } ) {
     members(first: $membersCount) {
       edges {
         node {

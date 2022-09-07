@@ -4,7 +4,7 @@ module Gql::Queries
   class User < BaseQuery
     description 'Fetch a user information by ID'
 
-    argument :user, Gql::Types::Input::UserLocatorInputType, description: 'User locator'
+    argument :user, Gql::Types::Input::Locator::UserInputType, description: 'User locator'
 
     type Gql::Types::UserType, null: false
 

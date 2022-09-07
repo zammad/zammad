@@ -8,7 +8,7 @@ module Gql::Concerns::HasNestedGraphqlName
       super
       return if !subclass.name
 
-      subclass.graphql_name(subclass.name.sub(%r{Gql::[^:]+::}, '').gsub('::', '').sub(%r{Type\Z}, ''))
+      subclass.graphql_name(subclass.name.sub(%r{Gql::[^:]+::}, '').gsub('::', '').delete_prefix('Input').sub(%r{Type\Z}, ''))
     end
 
     def self.graphql_field_name

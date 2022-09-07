@@ -236,6 +236,32 @@ export type Locale = {
   updatedBy: User;
 };
 
+/** Locate an organization via id or internalId. */
+export type LocatorOrganizationInput = {
+  /** Organization ID */
+  organizationId?: InputMaybe<Scalars['ID']>;
+  /** Organization internalId */
+  organizationInternalId?: InputMaybe<Scalars['Int']>;
+};
+
+/** Locate a ticket via id, internalId or number. */
+export type LocatorTicketInput = {
+  /** Ticket ID */
+  ticketId?: InputMaybe<Scalars['ID']>;
+  /** Ticket internalId */
+  ticketInternalId?: InputMaybe<Scalars['Int']>;
+  /** Ticket number */
+  ticketNumber?: InputMaybe<Scalars['String']>;
+};
+
+/** Locate a User via id or internalId. */
+export type LocatorUserInput = {
+  /** User ID */
+  userId?: InputMaybe<Scalars['ID']>;
+  /** User internalId */
+  userInternalId?: InputMaybe<Scalars['Int']>;
+};
+
 /** The user login fields. */
 export type LoginInput = {
   /** Device fingerprint - a string identifying the device used for the login */
@@ -585,7 +611,7 @@ export type QueriesObjectManagerFrontendAttributesArgs = {
 
 /** All available queries */
 export type QueriesOrganizationArgs = {
-  organizationId: Scalars['ID'];
+  organization: LocatorOrganizationInput;
 };
 
 
@@ -599,7 +625,7 @@ export type QueriesSearchArgs = {
 
 /** All available queries */
 export type QueriesTicketArgs = {
-  ticket: TicketLocatorInput;
+  ticket: LocatorTicketInput;
 };
 
 
@@ -609,7 +635,7 @@ export type QueriesTicketArticlesArgs = {
   before?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
   last?: InputMaybe<Scalars['Int']>;
-  ticket: TicketLocatorInput;
+  ticket: LocatorTicketInput;
 };
 
 
@@ -643,7 +669,7 @@ export type QueriesTranslationsArgs = {
 
 /** All available queries */
 export type QueriesUserArgs = {
-  user: UserLocatorInput;
+  user: LocatorUserInput;
 };
 
 /** Objects found by search */
@@ -859,16 +885,6 @@ export type TicketEdge = {
   node: Ticket;
 };
 
-/** Locate a ticket via id, internalId or number. */
-export type TicketLocatorInput = {
-  /** Ticket ID */
-  ticketId?: InputMaybe<Scalars['ID']>;
-  /** Ticket internalId */
-  ticketInternalId?: InputMaybe<Scalars['Int']>;
-  /** Ticket number */
-  ticketNumber?: InputMaybe<Scalars['String']>;
-};
-
 /** Ticket priorities */
 export type TicketPriority = {
   __typename?: 'TicketPriority';
@@ -1065,14 +1081,6 @@ export type UserInput = {
   web?: InputMaybe<Scalars['String']>;
 };
 
-/** Locate an user via id or internalId. */
-export type UserLocatorInput = {
-  /** User ID */
-  userId?: InputMaybe<Scalars['ID']>;
-  /** User internalId */
-  userInternalId?: InputMaybe<Scalars['Int']>;
-};
-
 /** Permissions for the current user */
 export type UserPermission = {
   __typename?: 'UserPermission';
@@ -1107,7 +1115,8 @@ export type OrganizationUpdateMutationVariables = Exact<{
 export type OrganizationUpdateMutation = { __typename?: 'Mutations', organizationUpdate?: { __typename?: 'OrganizationUpdatePayload', organization: { __typename?: 'Organization', id: string, name?: string | null, shared?: boolean | null, domain?: string | null, domainAssignment?: boolean | null, active?: boolean | null, note?: string | null, ticketsCount?: { __typename?: 'TicketCount', open: number, closed: number } | null, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string, dataType: string, dataOption?: any | null } }> | null }, errors?: Array<{ __typename?: 'UserError', message: string, field?: string | null }> | null } | null };
 
 export type OrganizationQueryVariables = Exact<{
-  organizationId: Scalars['ID'];
+  organizationId?: InputMaybe<Scalars['ID']>;
+  organizationInternalId?: InputMaybe<Scalars['Int']>;
   membersCount?: InputMaybe<Scalars['Int']>;
 }>;
 
