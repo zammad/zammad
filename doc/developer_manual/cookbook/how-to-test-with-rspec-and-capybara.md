@@ -30,6 +30,11 @@ If you would like to specify the used browser for Capybara end-to-end tests, sim
 ```sh
 BROWSER=firefox bundle exec rspec spec/system/ticket/zoom_spec.rb
 ```
+Also running failed tests only is possible with the option `--only-failures`.
+
+```sh
+$ bundle exec rspec --only-failures spec/system/ticket/zoom_spec.rb
+```
 
 ## Default RSpec Environment
 
