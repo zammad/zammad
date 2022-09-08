@@ -41,15 +41,14 @@ RSpec.describe Gql::Queries::Locales, type: :graphql do
       end
 
       context 'when fetching only active locales' do
-        before do
+        let(:active)    { false }
+        let(:variables) do
           Locale.find_by(locale: 'de-de').update!(active: false)
+          { onlyActive: true }
         end
 
-        let(:active)    { false }
-        let(:variables) { { onlyActive: true } }
-
         it 'does not include inactive locales' do
-          expect(gql.result.data).not_to include(target_locale)
+          expect(gql.result.data.select { |e| e['locale'] == 'de-de' }).to eq([])
         end
       end
     end
