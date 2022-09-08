@@ -105,7 +105,7 @@ const loadByFilter = async (filterQuery: string) => {
 }
 
 // load data after a few ms to not overload the api
-const { ignoreUpdates } = ignorableWatch(search, debounce(loadByFilter, 400))
+const { ignoreUpdates } = ignorableWatch(search, debounce(loadByFilter, 600))
 
 // load data immidiately when type changes or when last search selected
 watch(
@@ -179,6 +179,7 @@ export default {
     </div>
     <CommonButtonPills
       v-if="type"
+      class="px-4 pb-4"
       :options="types"
       :model-value="type"
       @update:model-value="selectType($event as string)"

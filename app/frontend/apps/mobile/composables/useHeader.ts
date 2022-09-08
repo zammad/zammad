@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import type { ComputedRef, UnwrapRef } from 'vue'
+import type { ComputedRef, Ref, UnwrapRef } from 'vue'
 import { onBeforeUnmount, onBeforeMount, ref, watch } from 'vue'
 import type { RouteLocationRaw } from 'vue-router'
 import useMetaTitle from '@shared/composables/useMetaTitle'
@@ -11,6 +11,7 @@ export interface HeaderOptions {
   backTitle?: string | ComputedRef<string>
   backUrl?: RouteLocationRaw | ComputedRef<RouteLocationRaw>
   actionTitle?: string | ComputedRef<string>
+  actionDisabled?: boolean | ComputedRef<boolean> | Ref<boolean>
   onAction?(): unknown
 }
 

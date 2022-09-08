@@ -27,6 +27,7 @@ const getTicketsLink = (stateIds: number[]) => {
 
 <template>
   <CommonSectionMenu header-label="Tickets">
+    <slot name="before-fields" />
     <CommonSectionMenuLink
       :icon="{ name: 'state-open', size: 'base', class: 'text-yellow' }"
       :information="counts[TicketState.Open]"

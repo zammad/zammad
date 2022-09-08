@@ -47,11 +47,11 @@ describe('static organization', () => {
 
     expect(openTickets).toHaveAttribute(
       'href',
-      expect.stringContaining('organization.name: "Some Organization"'),
+      expect.stringContaining(`organization.id: ${organization.internalId}`),
     )
     expect(closedTickets).toHaveAttribute(
       'href',
-      expect.stringContaining('organization.name: "Some Organization"'),
+      expect.stringContaining(`organization.id: ${organization.internalId}`),
     )
 
     await mockSubscription.next({
@@ -110,6 +110,7 @@ describe('static organization', () => {
                   __typename: 'User',
                   id: 'dsa214dascxasdw',
                   internalId: 2,
+                  vip: false,
                   firstname: 'Jane',
                   lastname: 'Hunter',
                   fullname: 'Jane Hunter',

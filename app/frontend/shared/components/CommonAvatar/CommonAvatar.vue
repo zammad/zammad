@@ -11,7 +11,7 @@ export interface Props {
   // name of the icon
   icon?: Maybe<string>
   size?: AvatarSize
-  vip?: boolean
+  vip?: Maybe<boolean>
   ariaLabel?: string
 }
 
@@ -98,7 +98,7 @@ const iconSize = computed(() => {
   @apply h-36 w-36 text-3xl leading-[5rem];
 
   .vip {
-    @apply -top-[23px] -ml-8 w-16;
+    @apply -top-[28px] -ml-14 h-12 w-28;
   }
 }
 

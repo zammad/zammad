@@ -13,6 +13,7 @@ export const defaultOrganization = (): ConfidentTake<
   nullableMock({
     __typename: 'Organization',
     id: '3423225dsf0',
+    internalId: 100,
     name: 'Some Organization',
     shared: false,
     domain: 'some-domain@domain.me',
@@ -33,6 +34,7 @@ export const defaultOrganization = (): ConfidentTake<
             __typename: 'User',
             id: 'fds2342das23ds21sa',
             internalId: 1,
+            vip: false,
             firstname: 'John',
             lastname: 'Doe',
             fullname: 'John Doe',

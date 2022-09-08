@@ -16,6 +16,7 @@ export const TicketAttributesFragmentDoc = gql`
   }
   customer {
     id
+    internalId
     firstname
     lastname
     fullname

@@ -7,6 +7,8 @@ import { computed, provide } from 'vue'
 import CommonButtonPills from '@mobile/components/CommonButtonPills/CommonButtonPills.vue'
 import { QueryHandler } from '@shared/server/apollo/handler'
 import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
+import { useSessionStore } from '@shared/stores/session'
+import { truthy } from '@shared/utils/helpers'
 import { useTicketQuery } from '../graphql/queries/ticket.api'
 
 const props = defineProps<{
@@ -35,21 +37,24 @@ useHeader({
   title: __('Ticket information'),
 })
 
-const types: ButtonPillOption[] = [
-  {
-    label: __('Ticket'),
-    value: 'TicketInformationDetails',
-  },
-  {
-    label: __('Customer'),
-    value: 'TicketInformationCustomer',
-  },
-  {
-    label: __('Organization'),
-    value: 'TicketInformationOrganization',
-    permissions: ['ticket.agent'],
-  },
-]
+const session = useSessionStore()
+
+const types = computed<ButtonPillOption[]>(() =>
+  [
+    {
+      label: __('Ticket'),
+      value: 'TicketInformationDetails',
+    },
+    session.hasPermission(['ticket.agent']) && {
+      label: __('Customer'),
+      value: 'TicketInformationCustomer',
+    },
+    ticket.value?.organization && {
+      label: __('Organization'),
+      value: 'TicketInformationOrganization',
+    },
+  ].filter(truthy),
+)
 </script>
 
 <template>
@@ -60,6 +65,7 @@ const types: ButtonPillOption[] = [
     </h1>
   </div>
   <CommonButtonPills
+    class="px-4 pb-4"
     no-border
     :options="types"
     :model-value="($route.name as string)"

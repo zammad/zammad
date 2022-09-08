@@ -18,6 +18,7 @@ import OrganizationMembersList from '@mobile/components/Organization/Organizatio
 import { useOrganizationObjectManagerAttributesStore } from '@mobile/entities/organization/stores/objectManagerAttributes'
 import { AvatarOrganization } from '@shared/components/CommonOrganizationAvatar'
 import CommonObjectAttributes from '@mobile/components/CommonObjectAttributes/CommonObjectAttributes.vue'
+import { useOrganizationTicketsCount } from '@mobile/entities/organization/composables/useOrganizationTicketsCount'
 
 interface Props {
   id: string
@@ -78,9 +79,8 @@ const loadAllMembers = () => {
   })
 }
 
-const ticketsLinkQuery = computed(() => {
-  return `organization.name: "${organization.value?.name}"`
-})
+const { getTicketData } = useOrganizationTicketsCount()
+const ticketData = computed(() => getTicketData(organization.value))
 </script>
 
 <template>
@@ -110,11 +110,11 @@ const ticketsLinkQuery = computed(() => {
     />
 
     <CommonTicketStateList
-      v-if="organization.ticketsCount"
-      :create-link="`/tickets/create?organization_id=${organization.id}`"
-      :create-label="__('Create new ticket for this organization')"
-      :counts="organization.ticketsCount"
-      :tickets-link-query="ticketsLinkQuery"
+      v-if="ticketData"
+      :create-link="ticketData.createLink"
+      :create-label="ticketData.createLabel"
+      :counts="ticketData.count"
+      :tickets-link-query="ticketData.query"
     />
   </div>
   <CommonLoader

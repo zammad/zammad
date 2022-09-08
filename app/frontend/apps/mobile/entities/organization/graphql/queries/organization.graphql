@@ -9,6 +9,7 @@ query organization($organizationId: ID, $organizationInternalId: Int, $membersCo
           firstname
           lastname
           fullname
+          vip
         }
       }
       totalCount

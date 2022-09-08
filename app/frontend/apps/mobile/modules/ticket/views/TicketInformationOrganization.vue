@@ -15,6 +15,7 @@ import OrganizationMembersList from '@mobile/components/Organization/Organizatio
 import { OrganizationUpdatesDocument } from '@mobile/entities/organization/graphql/subscriptions/organizationUpdates.api'
 import { useSessionStore } from '@shared/stores/session'
 import { AvatarOrganization } from '@shared/components/CommonOrganizationAvatar'
+import { useOrganizationTicketsCount } from '@mobile/entities/organization/composables/useOrganizationTicketsCount'
 import type { TicketById } from '../types/tickets'
 
 const ticket = inject('ticket') as ComputedRef<Maybe<TicketById>>
@@ -66,10 +67,9 @@ const objectAttributes = computed(
 )
 
 const { openEditOrganizationDialog } = useOrganizationEdit()
+const { getTicketData } = useOrganizationTicketsCount()
 
-const ticketsLinkQuery = computed(() => {
-  return `organization.name: "${organization.value?.name}"`
-})
+const ticketsData = computed(() => getTicketData(organization.value))
 </script>
 
 <template>
@@ -98,7 +98,7 @@ const ticketsLinkQuery = computed(() => {
           class="p-4 text-blue"
           @click="openEditOrganizationDialog(organization!)"
         >
-          {{ $t('Edit organization') }}
+          {{ $t('Edit Organization') }}
         </button>
       </template>
     </CommonObjectAttributes>
@@ -110,9 +110,9 @@ const ticketsLinkQuery = computed(() => {
     />
 
     <CommonTicketStateList
-      v-if="organization.ticketsCount"
-      :counts="organization.ticketsCount"
-      :tickets-link-query="ticketsLinkQuery"
+      v-if="ticketsData"
+      :counts="ticketsData.count"
+      :tickets-link-query="ticketsData.query"
     />
   </div>
 </template>

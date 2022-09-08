@@ -5,7 +5,7 @@ export interface AvatarUser {
   firstname?: Maybe<string>
   fullname?: Maybe<string>
   email?: Maybe<string>
-  vip?: boolean
+  vip?: Maybe<boolean>
   outOfOffice?: boolean
   active?: boolean
   image?: Maybe<string>

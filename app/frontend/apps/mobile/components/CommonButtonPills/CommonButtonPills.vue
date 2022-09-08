@@ -30,7 +30,7 @@ const filteredOptions = computed(() => {
 
 <template>
   <div
-    class="flex max-w-[100vw] overflow-x-auto px-4 pb-4"
+    class="flex max-w-[100vw] overflow-x-auto"
     :class="{ 'border-b border-white/10': !noBorder }"
     data-test-id="buttonPills"
   >

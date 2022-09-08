@@ -35,6 +35,7 @@ export const defaultTicket = () =>
       customer: {
         __typename: 'User',
         id: 'fdsf214fse12d',
+        internalId: 200,
         firstname: 'John',
         lastname: 'Doe',
         fullname: 'John Doe',

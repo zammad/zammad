@@ -1,5 +1,6 @@
 fragment organizationAttributes on Organization {
   id
+  internalId
   name
   shared
   domain

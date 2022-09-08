@@ -5,6 +5,7 @@ import { ObjectAttributeValuesFragmentDoc } from '../../../../../../shared/graph
 export const OrganizationAttributesFragmentDoc = gql`
     fragment organizationAttributes on Organization {
   id
+  internalId
   name
   shared
   domain

@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import { nextTick } from 'vue'
+import type { MockGraphQLInstance } from './mock-graphql-api'
 
 export const waitForTimeout = async (milliseconds = 0) => {
   return new Promise((resolve) => {
@@ -40,6 +41,10 @@ export const waitUntil = async (
   })
 }
 
+export const waitUntilApisResolved = (...mockApis: MockGraphQLInstance[]) => {
+  return waitUntil(() => mockApis.every((mock) => mock.calls.resolve))
+}
+
 // apollo cache always asks for a field, even if it's marked as optional
 // this function returns a proxy that will return "null" on properties not defined
 // in the initial object
@@ -52,6 +57,9 @@ export const nullableMock = <T extends object>(obj: T): T => {
         return null
       }
       const value = Reflect.get(target, prop, receiver)
+      if (Array.isArray(value)) {
+        return value.map(nullableMock)
+      }
       if (typeof value === 'object' && value !== null) {
         return nullableMock(value)
       }

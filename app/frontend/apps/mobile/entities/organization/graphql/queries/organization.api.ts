@@ -20,6 +20,7 @@ export const OrganizationDocument = gql`
           firstname
           lastname
           fullname
+          vip
         }
       }
       totalCount

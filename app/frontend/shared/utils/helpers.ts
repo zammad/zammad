@@ -1,7 +1,13 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import linkify from 'linkify-html'
-import { i18n } from '@shared/i18n'
+
+type Falsy = false | 0 | '' | null | undefined
+type IsTruthy<T> = T extends Falsy ? never : T
+
+export const truthy = <T>(value: Maybe<T>): value is IsTruthy<T> => {
+  return !!value
+}
 
 export const mergeArray = <T extends unknown[]>(a: T, b: T) => {
   return [...new Set([...a, ...b])]

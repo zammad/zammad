@@ -27,6 +27,7 @@ const link = computed(() => {
     v-else
     class="cursor-pointer text-blue"
     :external="attribute.dataOption.type !== 'url'"
+    open-in-new-tab
     :link="link"
   >
     {{ value }}

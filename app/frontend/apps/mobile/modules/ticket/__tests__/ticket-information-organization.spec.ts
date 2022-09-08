@@ -54,7 +54,7 @@ describe('static organization', () => {
     )
 
     expect(
-      view.getByRole('button', { name: 'Edit organization' }),
+      view.getByRole('button', { name: 'Edit Organization' }),
     ).toBeInTheDocument()
 
     expect(view.container).toHaveTextContent('Tickets')
@@ -64,11 +64,11 @@ describe('static organization', () => {
 
     expect(openTickets).toHaveAttribute(
       'href',
-      expect.stringContaining('organization.name: "Some Organization"'),
+      expect.stringContaining(`organization.id: ${organization.internalId}`),
     )
     expect(closedTickets).toHaveAttribute(
       'href',
-      expect.stringContaining('organization.name: "Some Organization"'),
+      expect.stringContaining(`organization.id: ${organization.internalId}`),
     )
 
     await mockSubscription.next({
@@ -120,6 +120,7 @@ describe('static organization', () => {
                   id: 'dsa214dascxasdw',
                   internalId: 2,
                   firstname: 'Jane',
+                  vip: false,
                   lastname: 'Hunter',
                   fullname: 'Jane Hunter',
                   image: null,
@@ -143,7 +144,7 @@ describe('static organization', () => {
     const { view } = await visitTicketOrganization(organization)
 
     expect(
-      view.queryByRole('button', { name: 'Edit organization' }),
+      view.queryByRole('button', { name: 'Edit Organization' }),
     ).not.toBeInTheDocument()
   })
 })

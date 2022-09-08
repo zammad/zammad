@@ -12,6 +12,7 @@ fragment ticketAttributes on Ticket {
   }
   customer {
     id
+    internalId
     firstname
     lastname
     fullname

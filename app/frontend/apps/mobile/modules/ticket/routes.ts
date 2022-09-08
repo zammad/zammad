@@ -25,11 +25,20 @@ const routes: RouteRecordRaw[] = [
         path: '',
         name: 'TicketInformationDetails',
         component: () => import('./views/TicketInformationDetails.vue'),
+        meta: {
+          requiresAuth: true,
+          requiredPermission: [],
+        },
       },
       {
         path: 'customer',
         name: 'TicketInformationCustomer',
+        props: (route) => ({ internalId: Number(route.params.internalId) }),
         component: () => import('./views/TicketInformationCustomer.vue'),
+        meta: {
+          requiresAuth: true,
+          requiredPermission: [],
+        },
       },
       {
         path: 'organization',
