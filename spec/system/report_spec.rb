@@ -3,10 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe 'Report', type: :system, searchindex: true do
-  before do
-    configure_elasticsearch(required: true, rebuild: true)
-  end
-
   context 'with ticket search result' do
     let(:label) { find('.content ul.checkbox-list') }
 

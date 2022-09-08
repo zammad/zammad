@@ -4,10 +4,9 @@ require 'rails_helper'
 
 RSpec.describe 'HasSearchIndexBackend', type: :model, searchindex: true do
   before do
-    configure_elasticsearch(required: true, rebuild: true) do
-      user.search_index_update_backend
-      organization.search_index_update_backend
-    end
+    user && organization
+
+    searchindex_model_reload([::User, ::Organization])
   end
 
   describe 'Updating referenced data between user and organizations' do

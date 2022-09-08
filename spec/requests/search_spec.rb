@@ -56,7 +56,7 @@ RSpec.describe 'Search', type: :request do
 
   describe 'request handling', searchindex: true, performs_jobs: true do
     before do
-      configure_elasticsearch rebuild: true
+      searchindex_model_reload([::Ticket, ::User, ::Organization])
     end
 
     it 'does settings index with nobody' do
@@ -511,13 +511,17 @@ RSpec.describe 'Search', type: :request do
 
     context 'with elasticsearch', searchindex: true do
       before do
-        configure_elasticsearch(required: true, rebuild: true)
+        searchindex_model_reload([::Ticket, ::User, ::Organization])
       end
 
       include_examples 'search for organization ids'
     end
 
     context 'with db only', searchindex: false do
+      before do
+        Setting.set('es_url', nil)
+      end
+
       include_examples 'search for organization ids'
     end
   end

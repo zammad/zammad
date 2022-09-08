@@ -6,73 +6,79 @@ require 'rake'
 # this is required as long as our test suite is made of RSpec and MiniTest
 module SearchindexBackendHelper
 
-  def self.included(base)
-    # Execute in RSpec class context
-    base.class_exec do
-
-      after do
-        next if ENV['ES_URL'].blank?
-
-        Rake::Task['zammad:searchindex:drop'].execute
-      end
+  class Initialized
+    class << self
+      attr_accessor :flag
     end
   end
 
-=begin
-
-prepares elasticsearch
-
-@param required [Boolean] raises error if ES is not configured. Recommended to avoid mysterious errors in CI.
-@param rebuild  [Boolean] rebuilds indexes and sleeps for 1 second after given yield block is executed
-
-@yield given block run after ES is setup, but before index rebuilding
-
-=end
-  def configure_elasticsearch(required: false, rebuild: false)
+  # Configure ES specific Settings in Zammad. Must be done for every test.
+  def configure_es_settings
     if ENV['ES_URL'].blank?
-      return if !required
-
       raise "Need ES_URL - hint ES_URL='http://127.0.0.1:9200'"
     end
 
-    Setting.set('es_url', ENV['ES_URL'])
-
-    # Setting.set('es_url', 'http://127.0.0.1:9200')
-    # Setting.set('es_index', 'estest.local_zammad')
-    # Setting.set('es_user', 'elasticsearch')
-    # Setting.set('es_password', 'zammad')
-
-    if ENV['ES_INDEX_RAND'].present?
-      rand_id          = ENV.fetch('CI_JOB_ID', SecureRandom.uuid)
-      test_method_name = self.class.description.gsub(%r{[^\w]}, '_')
-      ENV['ES_INDEX']  = "es_index_#{test_method_name.downcase}_#{rand_id.downcase}"
-    end
     if ENV['ES_INDEX'].blank?
       raise "Need ES_INDEX - hint ES_INDEX='estest.local_zammad'"
     end
 
+    Setting.set('es_url',   ENV['ES_URL'])
     Setting.set('es_index', ENV['ES_INDEX'])
-
-    # set max attachment size in mb
     Setting.set('es_attachment_max_size_in_mb', 1)
-
-    yield if block_given?
-
-    return if !rebuild
-
-    rebuild_searchindex
   end
 
-  def rebuild_searchindex
-    Rake::Task.clear
-    Zammad::Application.load_tasks
-    Rake::Task['zammad:searchindex:rebuild'].execute
-    Rake::Task['zammad:searchindex:refresh'].execute
+  def build_indexes
+    puts 'Preparing initial Elasticsearch environment...'
+    # Just in case, support subseqent runs.
+    Rake::Task['zammad:searchindex:drop'].execute
+    Rake::Task['zammad:searchindex:create'].execute
   end
 
+  # Remove all existing data of all indexes.
+  #   WARNING: don't use in scenarios with shared ES instances.
+  def drop_es_content
+    # Ensure consistent state before + after dropping data.
+    SearchIndexBackend.refresh
+
+    url = "#{Setting.get('es_url')}/_all/_delete_by_query"
+    SearchIndexBackend.make_request_and_validate(url, data: { query: { match_all: {} }, }, method: :post)
+
+    # We need to recreate the pipeline.
+    SearchIndexBackend.create_pipeline
+    SearchIndexBackend.refresh
+  end
+
+=begin
+
+reloads the search index for the given models.
+
+  searchindex_model_reload([::Ticket, ::User, ::Organization])
+
+=end
+
+  def searchindex_model_reload(models)
+    models.each { |model| model.search_index_reload(silent: true) }
+    SearchIndexBackend.refresh
+  end
 end
 
-# configure_elasticsearch has to be executed manually!!!
 RSpec.configure do |config|
   config.include SearchindexBackendHelper, searchindex: true
+
+  # Ensure a state with empty indexes at the start of every test.
+  # Tests should use 'searchindex_model_reload' to populate required model indexes.
+  config.before(:each, searchindex: true) do
+
+    configure_es_settings # always needed
+
+    if !SearchindexBackendHelper::Initialized.flag
+      # First run - create indexes.
+      build_indexes
+      SearchindexBackendHelper::Initialized.flag = true
+      next
+    end
+
+    # Was previously run - drop all indexed content.
+    drop_es_content
+  end
 end

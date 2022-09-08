@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'User', type: :request, performs_jobs: true do
 
-  describe 'request handling', searchindex: true do
+  describe 'request handling' do
     let!(:admin) do
       create(
         :admin,
@@ -75,10 +75,6 @@ RSpec.describe 'User', type: :request, performs_jobs: true do
         email:        'rest-customer_inactive@example.com',
         active:       false,
       )
-    end
-
-    before do |example|
-      configure_elasticsearch(rebuild: true) if example.metadata[:searchindex]
     end
 
     it 'does user create tests - no user' do
@@ -1147,7 +1143,7 @@ RSpec.describe 'User', type: :request, performs_jobs: true do
       end
     end
 
-    context 'ultra long password', authenticated_as: :user, searchindex: false do
+    context 'ultra long password', authenticated_as: :user do
       let(:user)        { create :agent, :with_valid_password }
       let(:long_string) { "asd1ASDasd!#{Faker::Lorem.characters(number: 1_000)}" }
 
@@ -1173,7 +1169,7 @@ RSpec.describe 'User', type: :request, performs_jobs: true do
     end
   end
 
-  describe 'POST /api/v1/users', authenticated_as: -> { create(:admin) }, searchindex: false do
+  describe 'POST /api/v1/users', authenticated_as: -> { create(:admin) } do
     def make_request(params)
       post '/api/v1/users', params: params, as: :json
     end
@@ -1411,6 +1407,10 @@ RSpec.describe 'User', type: :request, performs_jobs: true do
     end
 
     describe 'without searchindex' do
+      before do
+        Setting.set('es_url', nil)
+      end
+
       it 'does find both users' do
         make_request(query: '9U7Z')
         expect(json_response.count).to eq(2)
@@ -1442,7 +1442,7 @@ RSpec.describe 'User', type: :request, performs_jobs: true do
 
     describe 'with searchindex', searchindex: true do
       before do
-        configure_elasticsearch(rebuild: true)
+        searchindex_model_reload([::User])
       end
 
       it 'does find both users' do
@@ -1487,7 +1487,7 @@ RSpec.describe 'User', type: :request, performs_jobs: true do
       create(:agent, firstname: 'Test-Agent1')
       create(:agent, firstname: 'Test-Agent2')
 
-      configure_elasticsearch(rebuild: true)
+      searchindex_model_reload([::User])
     end
 
     it 'uses elasticsearch when query is non empty' do
@@ -1596,7 +1596,7 @@ RSpec.describe 'User', type: :request, performs_jobs: true do
   describe 'GET /api/v1/users/search, checks usage of the ids parameter', authenticated_as: :agent do
     let(:agent) { create(:agent) }
 
-    let(:search_agents) { create_list(:agent, 3, firstname: 'Nick') }
+    let!(:search_agents) { create_list(:agent, 3, firstname: 'Nick') }
 
     shared_examples 'ids requests' do
 
@@ -1625,14 +1625,18 @@ RSpec.describe 'User', type: :request, performs_jobs: true do
     end
 
     context 'with elasticsearch', searchindex: true do
-      include_examples 'ids requests' do
-        before do
-          configure_elasticsearch(required: true, rebuild: true)
-        end
+      before do
+        searchindex_model_reload([::User])
       end
+
+      include_examples 'ids requests'
     end
 
     context 'without elasticsearch' do
+      before do
+        Setting.set('es_url', nil)
+      end
+
       include_examples 'ids requests'
     end
   end

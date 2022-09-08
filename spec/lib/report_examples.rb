@@ -4,29 +4,19 @@ RSpec.shared_context 'with report examples' do
   before do |example|
     next if !example.metadata[:searchindex]
 
-    configure_elasticsearch(required: true, rebuild: true) do
-      ticket_1
+    ticket_1
+    ticket_2
+    ticket_3
+    ticket_4
+    ticket_5
+    ticket_6
+    ticket_7
+    ticket_8
+    ticket_9
+    ticket_after_72h
+    ticket_before_40d
 
-      ticket_2
-
-      ticket_3
-
-      ticket_4
-
-      ticket_5
-
-      ticket_6
-
-      ticket_7
-
-      ticket_8
-
-      ticket_9
-
-      ticket_after_72h
-
-      ticket_before_40d
-    end
+    searchindex_model_reload([::Ticket])
   end
 
   let(:group_1)  { Group.lookup(name: 'Users') }

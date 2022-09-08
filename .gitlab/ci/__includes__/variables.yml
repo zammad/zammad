@@ -19,7 +19,7 @@ variables:
   KEEP_ON_MAIL_SERVER_ACCOUNT: "zammad@mail.test.dc.zammad.com:zammad"
 
   # Settings for elasticsearch, if active
-  ES_INDEX_RAND: 'true'
+  ES_INDEX: 'estest.ci'
   ELASTICSEARCH_TAG: '7.16'
 
   # Temporary switch to enable the mobile front end for testing.

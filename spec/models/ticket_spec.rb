@@ -1639,12 +1639,16 @@ RSpec.describe Ticket, type: :model do
 
       include_examples 'search permissions' do
         before do
-          configure_elasticsearch(required: true, rebuild: true)
+          searchindex_model_reload([::Ticket])
         end
       end
     end
 
     context 'without searchindex' do
+      before do
+        Setting.set('es_url', nil)
+      end
+
       include_examples 'search permissions'
     end
   end

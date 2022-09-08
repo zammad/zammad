@@ -945,6 +945,8 @@ RSpec.describe 'Ticket zoom', type: :system do
         visit "#ticket/zoom/#{ticket.id}"
 
         within :active_content do
+          wait.until_exists { find('.link_kb_answers') }
+
           within '.link_kb_answers' do
             find('.js-add').click
 
@@ -958,22 +960,19 @@ RSpec.describe 'Ticket zoom', type: :system do
       end
     end
 
-    context 'with ES', searchindex: true, authenticated_as: :authenticate do
-      def authenticate
-        configure_elasticsearch(required: true, rebuild: true) do
-          answer
-        end
-
-        true
+    context 'with ES', searchindex: true do
+      before do
+        answer
+        searchindex_model_reload([::KnowledgeBase::Translation, ::KnowledgeBase::Category::Translation, ::KnowledgeBase::Answer::Translation])
       end
 
       include_examples 'verify linking'
     end
 
-    context 'without ES', authenticated_as: :authenticate do
-      def authenticate
+    context 'without ES' do
+      before do
+        Setting.set('es_url', nil)
         answer
-        true
       end
 
       include_examples 'verify linking'
@@ -1814,17 +1813,16 @@ RSpec.describe 'Ticket zoom', type: :system do
     end
   end
 
-  context 'Sidebar - Open & Closed Tickets', searchindex: true, authenticated_as: :authenticate, performs_jobs: true do
-    let(:customer) { create(:customer, :with_org) }
+  context 'Sidebar - Open & Closed Tickets', searchindex: true, performs_jobs: true do
+    let(:customer)      { create(:customer, :with_org) }
     let(:ticket_open)   { create(:ticket, group: Group.find_by(name: 'Users'), customer: customer, title: SecureRandom.uuid) }
     let(:ticket_closed) { create(:ticket, group: Group.find_by(name: 'Users'), customer: customer, state: Ticket::State.find_by(name: 'closed'), title: SecureRandom.uuid) }
 
-    def authenticate
+    before do
       ticket_open
       ticket_closed
-      configure_elasticsearch(required: true, rebuild: true)
       perform_enqueued_jobs
-      true
+      searchindex_model_reload([::Ticket, ::User, ::Organization])
     end
 
     it 'does show open and closed tickets in advanced search url' do

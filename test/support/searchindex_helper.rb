@@ -39,11 +39,6 @@ prepares elasticsearch
     # Setting.set('es_user', 'elasticsearch')
     # Setting.set('es_password', 'zammad')
 
-    if ENV['ES_INDEX_RAND'].present?
-      rand_id          = ENV.fetch('CI_JOB_ID', "r#{SecureRandom.uuid}")
-      test_method_name = method_name.gsub(%r{[^\w]}, '_')
-      ENV['ES_INDEX']  = "es_index_#{test_method_name.downcase}_#{rand_id.downcase}"
-    end
     if ENV['ES_INDEX'].blank?
       raise "ERROR: Need ES_INDEX - hint ES_INDEX='estest.local_zammad'"
     end

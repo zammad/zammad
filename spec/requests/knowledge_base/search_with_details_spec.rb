@@ -6,9 +6,8 @@ RSpec.describe 'Knowledge Base search with details', type: :request, searchindex
   include_context 'basic Knowledge Base'
 
   before do
-    configure_elasticsearch(required: true, rebuild: true) do
-      published_answer
-    end
+    published_answer
+    searchindex_model_reload([::KnowledgeBase::Translation, ::KnowledgeBase::Category::Translation, ::KnowledgeBase::Answer::Translation])
   end
 
   let(:endpoint) { '/api/v1/knowledge_bases/search' }
@@ -39,7 +38,7 @@ RSpec.describe 'Knowledge Base search with details', type: :request, searchindex
 
     before do
       alternative_translation
-      rebuild_searchindex
+      searchindex_model_reload([::KnowledgeBase::Translation, ::KnowledgeBase::Category::Translation, ::KnowledgeBase::Answer::Translation])
     end
 
     it 'returns answer in locale without category translation' do
@@ -55,7 +54,8 @@ RSpec.describe 'Knowledge Base search with details', type: :request, searchindex
     let(:child_category_translation) { create('knowledge_base/category/translation', title: search_phrase, kb_locale: alternative_locale, category: child_category) }
 
     before do
-      child_category_translation && rebuild_searchindex
+      child_category_translation
+      searchindex_model_reload([::KnowledgeBase::Translation, ::KnowledgeBase::Category::Translation, ::KnowledgeBase::Answer::Translation])
     end
 
     it 'returns category in locale without category translation', authenticated_as: -> { create(:admin) } do
@@ -74,7 +74,8 @@ RSpec.describe 'Knowledge Base search with details', type: :request, searchindex
     let(:answer_full_tree) { create(:knowledge_base_answer, :published, :with_attachment, category: category5) }
 
     before do
-      answer_cut_tree && answer_full_tree && rebuild_searchindex
+      answer_cut_tree && answer_full_tree
+      searchindex_model_reload([::KnowledgeBase::Translation, ::KnowledgeBase::Category::Translation, ::KnowledgeBase::Answer::Translation])
     end
 
     it 'returns category with cut tree', authenticated_as: -> { create(:admin) } do
@@ -119,9 +120,8 @@ RSpec.describe 'Knowledge Base search with details', type: :request, searchindex
     let(:search_phrase) { 'paging test' }
 
     before do
-      configure_elasticsearch(required: true, rebuild: true) do
-        answers
-      end
+      answers
+      searchindex_model_reload([::KnowledgeBase::Translation, ::KnowledgeBase::Category::Translation, ::KnowledgeBase::Answer::Translation])
     end
 
     it 'returns success' do

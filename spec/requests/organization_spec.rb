@@ -42,7 +42,7 @@ RSpec.describe 'Organization', type: :request, searchindex: true, performs_jobs:
   end
 
   before do
-    configure_elasticsearch rebuild: true, required: true
+    searchindex_model_reload([::Organization])
   end
 
   describe 'request handling' do

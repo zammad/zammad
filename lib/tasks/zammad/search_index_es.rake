@@ -62,6 +62,7 @@ namespace :zammad do
     task refresh: %i[zammad:searchindex:version_supported] do
       print 'Refreshing all indexes... '
       SearchIndexBackend.refresh
+      puts 'done.'
     end
 
     desc 'Full re-creation of all search indexes and re-indexing of all data'

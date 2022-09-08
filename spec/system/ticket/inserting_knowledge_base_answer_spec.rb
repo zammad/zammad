@@ -9,9 +9,8 @@ RSpec.describe 'inserting Knowledge Base answer', type: :system, searchindex: tr
   let(:target_translation) { answer.translations.first }
 
   before do
-    configure_elasticsearch(required: true, rebuild: true) do
-      answer
-    end
+    answer
+    searchindex_model_reload([::KnowledgeBase::Translation, ::KnowledgeBase::Category::Translation, ::KnowledgeBase::Answer::Translation])
   end
 
   context 'when published answer' do

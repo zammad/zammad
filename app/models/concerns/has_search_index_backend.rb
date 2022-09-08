@@ -208,7 +208,7 @@ reload search index with full data
 
 =end
 
-    def search_index_reload
+    def search_index_reload(silent: false)
       tolerance       = 10
       tolerance_count = 0
       query           = order(created_at: :desc)
@@ -226,6 +226,8 @@ reload search index with full data
             raise "Unable to send #{record.class}.find(#{record.id}).search_index_update_backend backend: #{e.inspect}" if tolerance_count == tolerance
           end
         end
+
+        next if silent
 
         record_count += 1
         if (record_count % batch_size).zero? || record_count == total

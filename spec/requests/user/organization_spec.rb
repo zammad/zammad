@@ -27,7 +27,7 @@ RSpec.describe 'User Organization', type: :request, searchindex: true, performs_
   end
 
   before do
-    configure_elasticsearch rebuild: true
+    searchindex_model_reload([::Organization])
   end
 
   describe 'request handling' do

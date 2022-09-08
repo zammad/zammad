@@ -45,20 +45,20 @@ RSpec.describe 'Report', type: :request, searchindex: true do
   end
 
   before do
-    configure_elasticsearch rebuild: true do
-      travel_to today.midday
-      Ticket.destroy_all
-      create(:ticket, title: 'ticket for report #1', created_at: today.midday)
-      create(:ticket, title: 'ticket for report #2', created_at: today.midday + 2.hours)
-      create(:ticket, title: 'ticket for report #3', created_at: today.midday + 2.hours)
-      create(:ticket, title: 'ticket for report #4', created_at: today.midday + 10.hours, state: Ticket::State.lookup(name: 'closed'))
-      create(:ticket, title: 'ticket for report #5', created_at: today.midday + 11.hours)
-      create(:ticket, title: 'ticket for report #6', created_at: today.midday - 11.hours)
-      create(:ticket, title: 'ticket for report #7', created_at: Time.zone.parse('2019-02-28T23:30:00Z'))
-      create(:ticket, title: 'ticket for report #8', created_at: Time.zone.parse('2019-03-01T00:30:00Z'))
-      create(:ticket, title: 'ticket for report #9', created_at: Time.zone.parse('2019-03-31T23:30:00Z'))
-      create(:ticket, title: 'ticket for report #10', created_at: Time.zone.parse('2019-04-01T00:30:00Z'))
-    end
+    travel_to today.midday
+    Ticket.destroy_all
+    create(:ticket, title: 'ticket for report #1', created_at: today.midday)
+    create(:ticket, title: 'ticket for report #2', created_at: today.midday + 2.hours)
+    create(:ticket, title: 'ticket for report #3', created_at: today.midday + 2.hours)
+    create(:ticket, title: 'ticket for report #4', created_at: today.midday + 10.hours, state: Ticket::State.lookup(name: 'closed'))
+    create(:ticket, title: 'ticket for report #5', created_at: today.midday + 11.hours)
+    create(:ticket, title: 'ticket for report #6', created_at: today.midday - 11.hours)
+    create(:ticket, title: 'ticket for report #7', created_at: Time.zone.parse('2019-02-28T23:30:00Z'))
+    create(:ticket, title: 'ticket for report #8', created_at: Time.zone.parse('2019-03-01T00:30:00Z'))
+    create(:ticket, title: 'ticket for report #9', created_at: Time.zone.parse('2019-03-31T23:30:00Z'))
+    create(:ticket, title: 'ticket for report #10', created_at: Time.zone.parse('2019-04-01T00:30:00Z'))
+
+    searchindex_model_reload([::Ticket, ::User])
   end
 
   describe 'request handling' do

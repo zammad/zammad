@@ -16,13 +16,15 @@ RSpec.describe SearchKnowledgeBaseBackend do
     }
   end
 
-  context 'with ES', searchindex: true do
-    before do
-      configure_elasticsearch(required: true, rebuild: true) do
-        published_answer
-      end
+  def handle_elasticsearch(enabled)
+    if enabled
+      searchindex_model_reload([::KnowledgeBase::Translation, ::KnowledgeBase::Category::Translation, ::KnowledgeBase::Answer::Translation])
+    else
+      Setting.set('es_url', nil)
     end
+  end
 
+  context 'with ES', searchindex: true do
     describe '#search' do
       context 'when highlight enabled' do
         let(:options) do
@@ -32,6 +34,11 @@ RSpec.describe SearchKnowledgeBaseBackend do
             scope:             nil,
             highlight_enabled: true
           }
+        end
+
+        before do
+          published_answer
+          handle_elasticsearch(true)
         end
 
         # https://github.com/zammad/zammad/issues/3070
@@ -64,7 +71,8 @@ RSpec.describe SearchKnowledgeBaseBackend do
       context "when elastic search is #{elasticsearch}", searchindex: elasticsearch do
         before do
           answers
-          configure_elasticsearch(required: true, rebuild: true) if elasticsearch
+
+          handle_elasticsearch(elasticsearch)
         end
 
         it 'first page is first 5 answers' do
@@ -104,10 +112,14 @@ RSpec.describe SearchKnowledgeBaseBackend do
   end
 
   context 'with successful API response' do
+    before do
+      published_answer
+    end
+
     shared_examples 'verify response' do |elasticsearch:|
       it "ID is an Integer when ES=#{elasticsearch}", searchindex: elasticsearch do
-        published_answer
-        configure_elasticsearch(required: true, rebuild: true) if elasticsearch
+        handle_elasticsearch(elasticsearch)
+
         first_result = instance.search(published_answer.translations.first.title, user: user).first
         expect(first_result[:id]).to be_a(Integer)
       end
@@ -136,7 +148,9 @@ RSpec.describe SearchKnowledgeBaseBackend do
       it "#{prefix} in #{ui} interface when ES=#{elasticsearch}", searchindex: elasticsearch do
         instance = expected_visibility_instance ui
         object
-        configure_elasticsearch(required: true, rebuild: true) if elasticsearch
+
+        handle_elasticsearch(elasticsearch)
+
         expect(instance.search(object.translations.first.title, user: user)).to is_visible ? be_present : be_blank
       end
     end

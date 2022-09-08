@@ -9,7 +9,8 @@ RSpec.describe 'Search', type: :system, authenticated: true, searchindex: true d
   let(:note)        { 'Test note' }
 
   before do
-    ticket_1 && ticket_2 && configure_elasticsearch(required: true, rebuild: true)
+    ticket_1 && ticket_2
+    searchindex_model_reload([::Ticket, ::Organization, ::User])
   end
 
   it 'shows default widgets' do
@@ -146,7 +147,7 @@ RSpec.describe 'Search', type: :system, authenticated: true, searchindex: true d
       create(:customer, firstname: 'Firstname', lastname: 'Active', active: true)
       create(:customer, firstname: 'Firstname', lastname: 'Inactive', active: false)
 
-      configure_elasticsearch(rebuild: true)
+      searchindex_model_reload([::User, ::Organization])
     end
 
     it 'check that inactive organizations are marked correctly' do
@@ -270,7 +271,7 @@ RSpec.describe 'Search', type: :system, authenticated: true, searchindex: true d
   end
 
   describe 'Searches display all groups and owners on bulk selections #4054', authenticated_as: :authenticate do
-    let(:group1) { create(:group) }
+    let(:group1)    { create(:group) }
     let(:group2)    { create(:group) }
     let(:agent1)    { create(:agent, groups: [group1]) }
     let(:agent2)    { create(:agent, groups: [group2]) }

@@ -14,6 +14,14 @@ RSpec.describe KnowledgeBase::Answer::Translation, type: :model, current_user_id
   it { is_expected.to belong_to(:answer) }
   it { is_expected.to belong_to(:kb_locale) }
 
+  def handle_elasticsearch(enabled)
+    if enabled
+      searchindex_model_reload([::KnowledgeBase::Translation, ::KnowledgeBase::Category::Translation, ::KnowledgeBase::Answer::Translation])
+    else
+      Setting.set('es_url', nil)
+    end
+  end
+
   describe '.search' do
     include_context 'basic Knowledge Base'
 
@@ -23,10 +31,10 @@ RSpec.describe KnowledgeBase::Answer::Translation, type: :model, current_user_id
       it "#{prefix} #{trait} answer to #{user_id} when ES=#{elasticsearch}", searchindex: elasticsearch do
         user   = create(user_id)
         object = create(:knowledge_base_answer, trait, knowledge_base: knowledge_base)
-        configure_elasticsearch(required: true, rebuild: true) if elasticsearch
 
-        expect(described_class.search({ query: object.translations.first.title, current_user: user }))
-          .to is_visible ? be_present : be_blank
+        handle_elasticsearch(elasticsearch)
+
+        expect(described_class.search({ query: object.translations.first.title, current_user: user })).to is_visible ? be_present : be_blank
       end
     end
 
@@ -49,12 +57,12 @@ RSpec.describe KnowledgeBase::Answer::Translation, type: :model, current_user_id
     shared_examples 'verify multiple KBs support' do |elasticsearch:|
       it 'searches in multiple KBs', searchindex: elasticsearch do
         title = Faker::Appliance.equipment
-        user  = create(:admin)
 
         create_list(:knowledge_base_answer, 2, :published, translation_attributes: { title: title })
 
-        configure_elasticsearch(required: true, rebuild: true) if elasticsearch
-        expect(described_class.search({ query: title, current_user: user }).count).to be 2
+        handle_elasticsearch(elasticsearch)
+
+        expect(described_class.search({ query: title, current_user: create(:admin) }).count).to be 2
       end
     end
 

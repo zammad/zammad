@@ -6,9 +6,9 @@ RSpec.describe 'Public Knowledge Base for guest search', type: :system, searchin
   include_context 'basic Knowledge Base'
 
   before do
-    configure_elasticsearch(required: true, rebuild: true) do
-      published_answer && draft_answer && internal_answer
-    end
+    published_answer && draft_answer && internal_answer
+
+    searchindex_model_reload([::KnowledgeBase::Translation, ::KnowledgeBase::Category::Translation, ::KnowledgeBase::Answer::Translation])
 
     visit help_no_locale_path
   end
