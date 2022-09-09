@@ -7,16 +7,13 @@ jobs:
   CI:
     runs-on: ubuntu-latest
     container:
-      image: registry.zammad.com/docker/zammad-ci:stable
-      credentials:
-        username: ${{ secrets.ZAMMAD_DOCKER_REGISTRY_USERNAME }}
-        password: ${{ secrets.ZAMMAD_DOCKER_REGISTRY_PASSWORD }}
+      image: zammad/zammad-ci:latest
     services:
       postgresql:
-        image: registry.zammad.com/docker/zammad-postgresql:stable
-        credentials:
-          username: ${{ secrets.ZAMMAD_DOCKER_REGISTRY_USERNAME }}
-          password: ${{ secrets.ZAMMAD_DOCKER_REGISTRY_PASSWORD }}
+        image: postgres:10
+        env:
+          POSTGRES_USER: zammad
+          POSTGRES_PASSWORD: zammad
     env:
       RAILS_ENV: test
       Z_LOCALES: "en-us:de-de"
