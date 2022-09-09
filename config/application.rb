@@ -26,7 +26,7 @@ Object.send(:remove_const, :EmailAddress)
 
 # Only load gems for asset compilation if they are needed to avoid
 #   having unneeded runtime dependencies like NodeJS.
-if ArgvHelper.argv.include?('assets:precompile') || Rails.groups.exclude?('production')
+if ArgvHelper.argv.any? { |e| e.start_with? 'assets:' } || Rails.groups.exclude?('production')
   Bundler.load.current_dependencies.select do |dep|
     require dep.name if dep.groups.include?(:assets)
   end
