@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-08-20 03:33+0000\n"
-"Last-Translator: Marcel Herrguth <github@thehomeofanime.de>\n"
+"PO-Revision-Date: 2022-09-03 06:30+0000\n"
+"Last-Translator: Martin Gruner <mg@zammad.com>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/de/>\n"
 "Language: de-de\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.13\n"
+"X-Generator: Weblate 4.14\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -4371,15 +4371,15 @@ msgstr "Aktiviert die Benutzer-Authentifizierung über GitHub."
 
 #: db/seeds/settings.rb
 msgid "Enables user authentication via GitLab."
-msgstr "Aktiviert die Benutzer-Authentifizierung via GitLab."
+msgstr "Aktiviert die Benutzer-Authentifizierung über GitLab."
 
 #: db/seeds/settings.rb
 msgid "Enables user authentication via Google."
-msgstr "Aktiviert die User Authentifizierung über Google."
+msgstr "Aktiviert die Benutzer-Authentifizierung über Google."
 
 #: db/seeds/settings.rb
 msgid "Enables user authentication via LinkedIn."
-msgstr "Aktiviert User Authentifizierung über LinkedIn."
+msgstr "Aktiviert Benutzer-Authentifizierung über LinkedIn."
 
 #: db/seeds/settings.rb
 msgid "Enables user authentication via Microsoft 365."
@@ -4387,11 +4387,11 @@ msgstr "Aktiviert die Benutzer-Authentifizierung via Microsoft 365."
 
 #: db/seeds/settings.rb
 msgid "Enables user authentication via SAML."
-msgstr "Aktiviert die Benutzer-Authentifizierung via SAML."
+msgstr "Aktiviert die Benutzer-Authentifizierung über SAML."
 
 #: db/seeds/settings.rb
 msgid "Enables user authentication via Weibo."
-msgstr "Aktiviert die Benutzer-Authentifizierung mit Weibo."
+msgstr "Aktiviert die Benutzer-Authentifizierung über Weibo."
 
 #: db/seeds/settings.rb
 msgid "Enables users to create their own account via web interface."
@@ -4575,7 +4575,7 @@ msgstr "Eskalation am (Schließzeit)"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "Escalation at (First Response Time)"
-msgstr "Eskalation am (Erste Reaktionszeit)"
+msgstr "Eskalation am (Erstreaktionszeit)"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "Escalation at (Update Time)"
@@ -7838,7 +7838,7 @@ msgstr "Übersicht"
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
 msgid "Overview bulk mask"
-msgstr "Übersicht Bulk Maske"
+msgstr "Übersicht Bulk-Maske"
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee

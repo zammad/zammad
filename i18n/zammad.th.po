@@ -2,16 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-07-19 11:51+0000\n"
+"PO-Revision-Date: 2022-09-03 06:30+0000\n"
 "Last-Translator: LAO <sumonchai@gmail.com>\n"
-"Language-Team: Thai <https://translations.zammad.org/projects/zammad/zammad-"
-"stable/th/>\n"
+"Language-Team: Thai <https://translations.zammad.org/projects/zammad/"
+"zammad-stable/th/>\n"
 "Language: th\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.13\n"
+"X-Generator: Weblate 4.14\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -4159,7 +4159,7 @@ msgstr "เปิดใช้งานการตรวจสอบผู้ใ
 
 #: db/seeds/settings.rb
 msgid "Enables users to create their own account via web interface."
-msgstr ""
+msgstr "ให้ผู้ใช้สร้างบัญชีของตนเองผ่านอินเทอร์เฟซทางเว็บ"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 msgid "Enclosed"
@@ -8228,7 +8228,7 @@ msgstr "รีเซ็ตรหัสผ่านล้มเหลว!"
 #: app/assets/javascripts/app/controllers/translation.coffee
 #: app/assets/javascripts/app/views/translation/index.jst.eco
 msgid "Reset changes"
-msgstr ""
+msgstr "รีเซ็ตการเปลี่ยนแปลง"
 
 #: app/assets/javascripts/app/controllers/translation.coffee
 msgid "Resetting changes…"

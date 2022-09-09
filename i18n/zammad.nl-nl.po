@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-08-22 18:16+0000\n"
+"PO-Revision-Date: 2022-09-09 15:30+0000\n"
 "Last-Translator: grtnl <geert.noel@aalst.be>\n"
 "Language-Team: Dutch <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/nl/>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.13\n"
+"X-Generator: Weblate 4.14\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -722,7 +722,7 @@ msgstr "Label toevoegen"
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 msgid "Add Telegram Bot"
-msgstr "Telegram Bot toevoegen"
+msgstr "Telegrambot toevoegen"
 
 #: app/assets/javascripts/app/views/organization_profile/object.jst.eco
 #: app/assets/javascripts/app/views/user_profile/object.jst.eco
@@ -734,7 +734,7 @@ msgstr "Notitie toevoegen"
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 msgid "Add a Personal Access Token"
-msgstr "Personal Access Token toevoegen"
+msgstr "Persoonlijke toegangstoken toevoegen"
 
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 msgid "Add alarm to pending reminder and escalated tickets."
@@ -907,7 +907,7 @@ msgstr "Toegestane website (gescheiden door ;)"
 
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
 msgid "Also notify via email"
-msgstr "Ook notificeren via e -mail"
+msgstr "Verstuur ook via e -mail"
 
 #: db/seeds/settings.rb
 msgid ""
@@ -1971,7 +1971,7 @@ msgstr "Kies je taal."
 
 #: app/assets/javascripts/app/views/password/reset_change.jst.eco
 msgid "Choose your new password."
-msgstr "Kies uw nieuwe wachtwoord."
+msgstr "Kies je nieuw wachtwoord."
 
 #: app/assets/javascripts/app/models/user.coffee
 msgid "Christmas holiday"
@@ -3763,7 +3763,7 @@ msgstr "Apparaten"
 
 #: app/assets/javascripts/app/views/profile/language.jst.eco
 msgid "Did you know? You can help translating %s at:"
-msgstr "Wist je dat? Je kunt helpen %s te vertalen op:"
+msgstr "Wist je dat je kan helpen %s te vertalen op:"
 
 #: db/seeds/settings.rb
 msgid "Digit required"
@@ -4772,7 +4772,7 @@ msgstr "Eerste reactie"
 
 #: app/models/report.rb
 msgid "First Solution"
-msgstr "Eerste aangedragen oplossing"
+msgstr "Eerste oplossing"
 
 #: app/assets/javascripts/app/views/dashboard.jst.eco
 msgid "First Steps"
@@ -5007,7 +5007,7 @@ msgstr "Ermee beginnen"
 
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid "Getting an Access Token"
-msgstr "Toegangspenning krijgen"
+msgstr "Toegangstoken krijgen"
 
 #: app/assets/javascripts/app/controllers/_integration/github.coffee
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
@@ -5177,7 +5177,7 @@ msgstr "Groep is nodig voor kanaal defintie!"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco db/seeds/settings.rb
 msgid "Group selection for Ticket creation"
-msgstr "geselecteerde groep voor toewijzing ticket"
+msgstr "Geselecteerde groep voor toewijzing ticket"
 
 #: db/seeds/settings.rb
 msgid "Group selection for ticket creation"
@@ -6346,7 +6346,7 @@ msgstr "Koppel GitLab-issues aan je tickets."
 
 #: app/assets/javascripts/app/views/link/kb_answer.jst.eco
 msgid "Link Related Answer"
-msgstr "Linked gerelateerde antwoorden"
+msgstr "Gerelateerde antwoorden koppelen"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Link Template"
@@ -6365,7 +6365,7 @@ msgstr "Gekoppelde accounts"
 #: app/assets/javascripts/app/views/knowledge_base/_reader_linked_tickets.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/linked_tickets.jst.eco
 msgid "Linked Tickets"
-msgstr "Gelinkte tickets"
+msgstr "Gekoppelde tickets"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
 msgid "LinkedIn"
@@ -6426,7 +6426,7 @@ msgstr "Locatie van een extern chat.css bestand."
 
 #: app/assets/javascripts/app/views/login.jst.eco
 msgid "Log in to %s"
-msgstr "Log in met %s"
+msgstr "Aanmelden bij %s"
 
 #: app/assets/javascripts/app/models/user.coffee
 #: app/assets/javascripts/app/views/maintenance.jst.eco
@@ -7252,7 +7252,7 @@ msgstr "Er zijn geen mappen gevonden voor de opgegeven gebruikersreferenties."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee
 msgid "No linked issues"
-msgstr "Geen gekoppelde issues"
+msgstr "Geen gekoppelde tickets"
 
 #: app/frontend/apps/mobile/modules/search/views/SearchOverview.vue
 msgid "No previous searches"
@@ -7942,7 +7942,7 @@ msgstr "Permissies"
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 msgid "Personal Access Tokens"
-msgstr "Persoonlijke Toegangs Tokens"
+msgstr "Persoonlijke Toegangstokens"
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
 msgid "Personal Settings"
@@ -7968,7 +7968,7 @@ msgstr "Telefoonextensie naar Behandelaartoewijzing"
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 msgid "Pick a name for the application, and we'll give you a unique token."
-msgstr "Kies een naam voor de applicatie, dan geven we u een unieke token."
+msgstr "Kies een naam voor de applicatie, dan geven we je een unieke token."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/highlighter.coffee
 msgid "Pink"
@@ -8065,7 +8065,7 @@ msgstr "Dien een aangepast adres in voordat u het fragment genereert"
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee
 #: app/controllers/users_controller.rb
 msgid "Please supply your new password!"
-msgstr "Geef uw nieuwe wachtwoord op!"
+msgstr "Geef je nieuw wachtwoord op!"
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 msgid "Please wait…"
@@ -8283,7 +8283,7 @@ msgstr "Opnieuw verifiëren"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
 msgid "Received Call"
-msgstr "Ontvangen gesprek"
+msgstr "Inkomend gesprek"
 
 #: app/assets/javascripts/app/views/agent_ticket_merge.jst.eco
 #: app/assets/javascripts/app/views/link/ticket/add.jst.eco
@@ -8452,7 +8452,7 @@ msgstr "Wijzigingsverzoek"
 
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid "Requesting the Grant"
-msgstr "Geld aanvragen"
+msgstr "Toegang aanvragen"
 
 #: app/controllers/reports_controller.rb
 msgid "Required parameter 'downloadBackendSelected' is missing."
@@ -8725,7 +8725,7 @@ msgstr "Opslaan als"
 
 #: app/assets/javascripts/app/views/widget/template.jst.eco
 msgid "Save as template"
-msgstr "Bewaar"
+msgstr "Bewaren als sjabloon"
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
@@ -8734,7 +8734,7 @@ msgstr "Configuratie opslaan"
 
 #: app/assets/javascripts/app/views/widget/template.jst.eco
 msgid "Save new template"
-msgstr "Nieuwe template opslaan"
+msgstr "Nieuw sjabloon opslaan"
 
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Saved conditions"
@@ -8853,8 +8853,8 @@ msgid ""
 "See your tickets from within your favorite calendar by adding the following "
 "URL to your calendar app."
 msgstr ""
-"Zie uw tickets in uw favoriete kalender app door de volgende URL toe te "
-"voegen aan uw kalender app."
+"Zie je tickets in je favoriete kalender app door de volgende URL toe te "
+"voegen aan je kalender app."
 
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
 msgid "Select All"
@@ -8870,7 +8870,7 @@ msgstr "Selecteer gedeeld concept"
 
 #: app/assets/javascripts/app/views/widget/template.jst.eco
 msgid "Select Template"
-msgstr "Kies template"
+msgstr "Kies sjabloon"
 
 #: db/seeds/settings.rb
 msgid "Select default ticket type"
@@ -9764,7 +9764,8 @@ msgstr "Tekstvak"
 msgid ""
 "Thank you for your inquiry (#%s)! We'll contact you as soon as possible."
 msgstr ""
-"Dank u voor uw bericht (#%s)! We nemen zo spoedig mogelijk contact met u op."
+"Bedankt voor je bericht (#%s)! We nemen zo spoedig mogelijk contact met je "
+"op."
 
 #: app/assets/javascripts/app/views/signup/verify.jst.eco
 msgid "Thanks for joining. Email sent to \"%s\"."
@@ -9788,7 +9789,7 @@ msgstr "Het MIME-type van de gewijzigde afbeelding is ongeldig."
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 msgid "The Telegram bot could not be saved."
-msgstr "De Telegram bot kon niet worden opgeslagen."
+msgstr "De Telegrambot kon niet worden opgeslagen."
 
 #: lib/telegram.rb
 msgid "The Telegram file is larger than the allowed 20 MB."
@@ -11950,8 +11951,8 @@ msgid ""
 "With form you can add a form to your web page which directly generates a "
 "ticket for you."
 msgstr ""
-"Met het formulier kunt u een formulier toevoegen aan uw webpagina die direct "
-"een ticket voor u genereert."
+"Met het formulier kan je een formulier toevoegen aan je webpagina die direct "
+"een ticket voor je genereert."
 
 #: app/assets/javascripts/app/views/widget/template.jst.eco
 msgid "With templates you can pre-fill ticket attributes."
@@ -12075,7 +12076,7 @@ msgid ""
 "You can create chat widgets for your web pages to allow visitors to chat "
 "with you."
 msgstr ""
-"U kunt chatwidgets voor uw webpagina's maken zodat bezoekers met u kunnen "
+"Je kan chatwidgets voor je webpagina's maken zodat bezoekers met jou kunnen "
 "chatten."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
@@ -12112,7 +12113,7 @@ msgid ""
 "You can generate a personal access token for each application you use that "
 "needs access to the Zammad API."
 msgstr ""
-"U kunt een persoonlijk toegangstoken genereren voor elke toepassing die u "
+"Je kan een persoonlijk toegangstoken genereren voor elke toepassing die je "
 "gebruikt die toegang moet hebben tot de Zammad-API."
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee
@@ -12208,7 +12209,7 @@ msgstr "U heeft %s geconfigureerd."
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 msgid "You have no configured account right now."
-msgstr "Momenteel is er geen ingesteld account."
+msgstr "Momenteel is er geen account ingesteld."
 
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
 msgid "You have no tickets to display in this overview."
@@ -12232,7 +12233,7 @@ msgstr "U moet toegang tot uw webcam toestaan."
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "You need to add the following Javascript code snippet to your web page"
-msgstr "U moet het volgende Javascript-codefragment aan uw webpagina toevoegen"
+msgstr "Je moet het volgende Javascript-codefragment aan je webpagina toevoegen"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 msgid "You need to configure the Zammad endpoints in the %s"
@@ -12292,7 +12293,7 @@ msgstr "Uw Logo"
 
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 msgid "Your New Personal Access Token"
-msgstr "Jouw nieuwe persoonlijke toegangs token"
+msgstr "Je nieuwe persoonlijke toegangstoken"
 
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
 msgid ""
