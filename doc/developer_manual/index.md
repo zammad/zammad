@@ -14,6 +14,7 @@ Welcome to the developer docs of Zammad. 👋 This is a work in progress, and yo
 - [How to design tests](standards/how-to-design-tests.md)
 - [How to add a database migration](standards/how-to-add-a-database-migration.md)
 - [How to add an SVG Icon](standards/how-to-add-an-svg-icon.md)
+- [How to handle localization & translations](standards/how-to-handle-localization.md)
 - [How to rebuild the chat](standards/how-to-rebuild-the-chat.md)
 
 # Cookbook / Recipes
