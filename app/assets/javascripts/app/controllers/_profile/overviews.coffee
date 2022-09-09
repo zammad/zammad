@@ -1,6 +1,6 @@
 class Overviews extends App.ControllerSubContent
   requiredPermission: 'user_preferences.overview_sorting'
-  header: __('Sorting')
+  header: __('Order of Overviews')
 
   constructor: ->
     super
@@ -26,12 +26,12 @@ class Overviews extends App.ControllerSubContent
       defaultSortBy: 'prio'
       pageData:
         home: 'overviews'
-        object: __('Order')
-        objects: __(' Order')
+        object: __('Order of Overviews')
+        objects: __('Order of Overviews')
         navupdate: '#profile/overviews'
         subHead: false
         buttons: [
-          { name: __('Reset Order'), 'data-type': 'reset', class: 'btn--danger' }
+          { name: __('Reset overview order'), 'data-type': 'reset', class: 'btn--danger' }
         ]
       container: @el.closest('.content')
       veryLarge: true
@@ -73,7 +73,7 @@ class Index extends App.ControllerGenericIndex
 
     @notify
       type: 'success'
-      msg:  __('Personal overview sortings deleted!')
+      msg:  __('Personal overview order was reset.')
     @render()
 
 App.Config.set('Overviews', { prio: 2900, name: __('Overviews'), parent: '#profile', target: '#profile/overviews', controller: Overviews, permission: ['user_preferences.overview_sorting'] }, 'NavBarProfile')

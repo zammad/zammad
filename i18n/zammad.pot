@@ -42,10 +42,6 @@ msgstr "mm/dd/yyyy"
 msgid "FORMAT_DATETIME"
 msgstr "mm/dd/yyyy l:MM P"
 
-#: app/assets/javascripts/app/controllers/_profile/overviews.coffee
-msgid " Order"
-msgstr ""
-
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid " to "
 msgstr ""
@@ -7136,7 +7132,7 @@ msgid "Or migrate from another system."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee
-msgid "Order"
+msgid "Order of Overviews"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
@@ -7470,7 +7466,7 @@ msgid "Personal Settings"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee
-msgid "Personal overview sortings deleted!"
+msgid "Personal overview order was reset."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/cti.coffee
@@ -8042,10 +8038,6 @@ msgstr ""
 msgid "Reset"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_profile/overviews.coffee
-msgid "Reset Order"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/password_reset.coffee
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee
 msgid "Reset Password"
@@ -8058,6 +8050,10 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/translation.coffee
 #: app/assets/javascripts/app/views/translation/index.jst.eco
 msgid "Reset changes"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_profile/overviews.coffee
+msgid "Reset overview order"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/translation.coffee
@@ -8920,10 +8916,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/cti/not_configured.jst.eco
 msgid "Sorry, there is currently no CTI backend enabled."
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_profile/overviews.coffee
-msgid "Sorting"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
