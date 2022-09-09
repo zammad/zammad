@@ -7,7 +7,9 @@ import { ref } from 'vue'
 import CommonSelectItem from './CommonSelectItem.vue'
 
 export interface Props {
-  modelValue?: string | number | (string | number)[]
+  // we cannot move types into separate file, because Vue would not be able to
+  // transform these into runtime types
+  modelValue?: string | number | boolean | (string | number | boolean)[]
   options: SelectOption[]
   /**
    * Do not modify local value
@@ -50,7 +52,7 @@ defineExpose({
 onClickOutside(dialogElement, closeDialog)
 onKeyDown('Escape', closeDialog)
 
-const isCurrentValue = (value: string | number) => {
+const isCurrentValue = (value: string | number | boolean) => {
   if (props.multiple && Array.isArray(localValue.value)) {
     return localValue.value.includes(value)
   }
@@ -143,7 +145,7 @@ const advanceDialogFocus = (event: KeyboardEvent, currentIndex: number) => {
           >
             <CommonSelectItem
               v-for="(option, index) in options"
-              :key="option.value"
+              :key="String(option.value)"
               :selected="isCurrentValue(option.value)"
               :multiple="multiple"
               :option="option"

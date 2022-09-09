@@ -4,8 +4,10 @@ import type { TicketState } from '@shared/entities/ticket/types'
 import type { Props as IconProps } from '@shared/components/CommonIcon/CommonIcon.vue'
 import type { FormFieldContext } from '../../types/field'
 
+export type SelectValue = string | number | boolean
+
 export interface SelectOption {
-  value: string | number
+  value: SelectValue
   label?: string
   labelPlaceholder?: string[]
   disabled?: boolean

@@ -9,7 +9,7 @@ export type TreeSelectOption = SelectOption & {
 
 export type FlatSelectOption = SelectOption & {
   hasChildren: boolean
-  parents: (string | number)[]
+  parents: (string | number | boolean)[]
 }
 
 export type TreeSelectContext = FormFieldContext<{

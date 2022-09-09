@@ -52,7 +52,7 @@ const popFromPath = () => {
 
 const flattenOptions = (
   options: TreeSelectOption[],
-  parents: (string | number)[] = [],
+  parents: (string | number | boolean)[] = [],
 ): FlatSelectOption[] =>
   options &&
   options.reduce((flatOptions: FlatSelectOption[], { children, ...option }) => {
@@ -225,7 +225,7 @@ onMounted(() => {
     >
       <div
         v-for="(option, index) in filter ? filteredOptions : currentOptions"
-        :key="option.value"
+        :key="String(option.value)"
         :class="{
           'px-6': !context.noFiltering,
           'pointer-events-none': option.disabled,
@@ -290,7 +290,7 @@ onMounted(() => {
           <template v-if="filter">
             <span
               v-for="parentValue in (option as FlatSelectOption).parents"
-              :key="parentValue"
+              :key="String(parentValue)"
               class="opacity-50"
             >
               —

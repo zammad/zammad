@@ -70,6 +70,7 @@ describe('interacting with CommonSelect', () => {
     expect(view.emitted().select).toEqual([[options[0]], [options[0]]])
     expect(modelValue.value).toBe(undefined)
   })
+
   test('can select and deselect multiple values', async () => {
     const modelValue = ref()
     const view = renderSelect({ options, multiple: true }, modelValue)
@@ -91,6 +92,7 @@ describe('interacting with CommonSelect', () => {
 
     expect(view.queryAllByIconName('checked-yes')).toHaveLength(2)
   })
+
   test("passive mode doesn't change local value, but emits select", async () => {
     const modelValue = ref()
     const view = renderSelect({ options, passive: true }, modelValue)
@@ -102,6 +104,7 @@ describe('interacting with CommonSelect', () => {
 
     expect(modelValue.value).toBeUndefined()
   })
+
   test("can't select disabled values", async () => {
     const modelValue = ref()
     const view = renderSelect(
@@ -115,6 +118,7 @@ describe('interacting with CommonSelect', () => {
     expect(view.emitted().select).toBeUndefined()
     expect(modelValue.value).toBeUndefined()
   })
+
   test('translated values', async () => {
     i18n.setTranslationMap(new Map([[options[0].label, 'Translated Item A']]))
     const view = renderSelect({ options })
@@ -122,12 +126,29 @@ describe('interacting with CommonSelect', () => {
     await view.events.click(view.getByText('Open Select'))
     expect(view.getByText('Translated Item A')).toBeInTheDocument()
   })
+
   test("doesn't translate with no-translate prop", async () => {
     i18n.setTranslationMap(new Map([[options[0].label, 'Translated Item A']]))
     const view = renderSelect({ options, noOptionsLabelTranslation: true })
 
     await view.events.click(view.getByText('Open Select'))
     expect(view.getByText(/^Item A$/)).toBeInTheDocument()
+  })
+
+  test('can use boolean as value', async () => {
+    const modelValue = ref()
+    const view = renderSelect(
+      {
+        options: [
+          { value: true, label: 'Yes' },
+          { value: false, label: 'No' },
+        ],
+      },
+      modelValue,
+    )
+    await view.events.click(view.getByText('Open Select'))
+    await view.events.click(view.getByText('Yes'))
+    expect(modelValue.value).toBe(true)
   })
   // TODO e2e test on keyboard interaction (select with space, moving up/down)
 })

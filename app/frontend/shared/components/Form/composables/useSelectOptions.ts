@@ -1,13 +1,15 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { computed, type ComputedRef, ref, type Ref } from 'vue'
+import { computed, ref, type Ref } from 'vue'
 import { i18n } from '@shared/i18n'
+import { keyBy } from 'lodash-es'
 import type { TicketState } from '@shared/entities/ticket/types'
 import type { SelectOptionSorting, SelectOption } from '../fields/FieldSelect'
 import type { FormFieldContext } from '../types/field'
 import type { FlatSelectOption } from '../fields/FieldTreeSelect'
 import type { AutoCompleteOption } from '../fields/FieldAutoComplete'
 import useValue from './useValue'
+import type { SelectValue } from '../fields/FieldSelect/types'
 
 const useSelectOptions = (
   options: Ref<SelectOption[] | FlatSelectOption[] | AutoCompleteOption[]>,
@@ -27,7 +29,7 @@ const useSelectOptions = (
     getDialogFocusTargets?: (optionsOnly?: boolean) => HTMLElement[],
   ) => void,
 ) => {
-  const dialog = ref(null)
+  const dialog = ref<HTMLElement>()
 
   const { currentValue } = useValue(context)
 
@@ -39,78 +41,71 @@ const useSelectOptions = (
       ),
   )
 
-  const translatedOptions = computed(
-    () =>
-      options.value &&
-      options.value.map(
-        (option: SelectOption | FlatSelectOption | AutoCompleteOption) =>
-          ({
-            ...option,
-            label: context.value.noOptionsLabelTranslation
-              ? option.label
-              : i18n.t(option.label, option.labelPlaceholder as never),
-            ...((option as AutoCompleteOption).heading
-              ? {
-                  heading: context.value.noOptionsLabelTranslation
-                    ? (option as AutoCompleteOption).heading
-                    : i18n.t(
-                        (option as AutoCompleteOption).heading,
-                        (option as AutoCompleteOption)
-                          .headingPlaceholder as never,
-                      ),
-                }
-              : {}),
-          } as unknown as SelectOption | FlatSelectOption | AutoCompleteOption),
-      ),
-  )
+  const translatedOptions = computed(() => {
+    if (!options.value) return []
 
-  const optionValueLookup: ComputedRef<
-    Record<
-      string | number,
-      SelectOption | FlatSelectOption | AutoCompleteOption
-    >
-  > = computed(
-    () =>
-      translatedOptions.value &&
-      translatedOptions.value.reduce(
-        (options, option) => ({
-          ...options,
-          [option.value]: option,
-        }),
-        {},
-      ),
+    const { noOptionsLabelTranslation } = context.value
+
+    return options.value.map(
+      (option: SelectOption | FlatSelectOption | AutoCompleteOption) => {
+        const label = noOptionsLabelTranslation
+          ? option.label
+          : i18n.t(option.label, ...(option.labelPlaceholder || []))
+
+        const variant = option as AutoCompleteOption
+        const heading = noOptionsLabelTranslation
+          ? variant.heading
+          : i18n.t(variant.heading, ...(variant.headingPlaceholder || []))
+
+        return {
+          ...option,
+          label,
+          heading,
+        } as SelectOption | FlatSelectOption | AutoCompleteOption
+      },
+    )
+  })
+
+  const optionValueLookup = computed(() =>
+    keyBy(translatedOptions.value, 'value'),
   )
 
   const sortedOptions = computed(() => {
-    if (!context.value.sorting) return translatedOptions.value
+    const { sorting } = context.value
 
-    if (
-      context.value.sorting !== 'label' &&
-      context.value.sorting !== 'value'
-    ) {
-      console.warn(`Unsupported sorting option "${context.value.sorting}"`)
+    if (!sorting) return translatedOptions.value
+
+    if (sorting !== 'label' && sorting !== 'value') {
+      console.warn(`Unsupported sorting option "${sorting}"`)
       return translatedOptions.value
     }
 
     return [...translatedOptions.value]?.sort((a, b) => {
-      const aLabelOrValue =
-        a[context.value.sorting as SelectOptionSorting] || a.value
-      const bLabelOrValue =
-        b[context.value.sorting as SelectOptionSorting] || b.value
-      return aLabelOrValue.toString().localeCompare(bLabelOrValue.toString())
+      const aLabelOrValue = a[sorting] || a.value
+      const bLabelOrValue = b[sorting] || a.value
+      return String(aLabelOrValue).localeCompare(String(bLabelOrValue))
     })
   })
 
-  const getSelectedOptionIcon = (selectedValue: string | number) =>
-    optionValueLookup.value[selectedValue]?.icon as string
+  const getSelectedOptionIcon = (selectedValue: SelectValue) => {
+    const key = selectedValue.toString()
+    const option = optionValueLookup.value[key]
+    return option?.icon as string
+  }
 
-  const getSelectedOptionLabel = (selectedValue: string | number) =>
-    optionValueLookup.value[selectedValue]?.label || selectedValue.toString()
+  const getSelectedOptionLabel = (selectedValue: SelectValue) => {
+    const key = selectedValue.toString()
+    const option = optionValueLookup.value[key]
+    return option?.label || selectedValue.toString()
+  }
 
-  const getSelectedOptionStatus = (selectedValue: string | number) =>
-    optionValueLookup.value[selectedValue] &&
-    ((optionValueLookup.value[selectedValue] as SelectOption | FlatSelectOption)
-      .status as TicketState)
+  const getSelectedOptionStatus = (selectedValue: SelectValue) => {
+    const key = selectedValue.toString()
+    const option = optionValueLookup.value[key] as
+      | SelectOption
+      | FlatSelectOption
+    return option?.status as TicketState
+  }
 
   const selectOption = (
     option: SelectOption | FlatSelectOption | AutoCompleteOption,
@@ -133,13 +128,12 @@ const useSelectOptions = (
   }
 
   const getDialogFocusTargets = (optionsOnly?: boolean): HTMLElement[] => {
-    const containerElement =
-      dialog.value && (dialog.value as HTMLElement).parentElement
+    const containerElement = dialog.value?.parentElement
     if (!containerElement) return []
 
     const targetElements = Array.from(
-      (containerElement as HTMLElement).querySelectorAll('[tabindex="0"]'),
-    ) as HTMLElement[]
+      containerElement.querySelectorAll<HTMLElement>('[tabindex="0"]'),
+    )
     if (!targetElements) return []
 
     if (optionsOnly)

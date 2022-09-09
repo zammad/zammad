@@ -12,9 +12,9 @@ const extendDataAttribues = (node: FormKitNode) => {
   // Adds a helper function to check the existing value inside of the context.
   context.fns.hasValue = (value: unknown): boolean => {
     if (typeof value === 'object') return !isEmpty(value)
-    if (typeof value === 'number') return value !== undefined && value !== null
 
-    return !!value
+    // will rule out undefined and null
+    return value != null
   }
 
   context.fns.hasRule = (

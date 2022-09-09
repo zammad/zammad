@@ -10,35 +10,22 @@ import CommonButtonGroup from '@mobile/components/CommonButtonGroup/CommonButton
 
 const linkSchemaRaw = [
   {
+    type: 'select',
+    name: 'select',
+    label: 'Select',
+    props: {
+      options: [
+        { value: true, label: 'Yes' },
+        { value: false, label: 'No' },
+      ],
+    },
+  },
+  {
     type: 'search',
     name: 'search',
     // label: 'Date_Input',
     props: {
       link: '/tickets',
-    },
-  },
-  {
-    type: 'select',
-    name: 'select',
-    label: 'Select',
-    props: {
-      // multiple: true,
-      link: '/tickets',
-      options: [
-        {
-          value: 0,
-          label: 'Item A',
-          disabled: true,
-        },
-        {
-          value: 1,
-          label: 'Item B',
-        },
-        {
-          value: 2,
-          label: 'Item C',
-        },
-      ],
     },
   },
   {

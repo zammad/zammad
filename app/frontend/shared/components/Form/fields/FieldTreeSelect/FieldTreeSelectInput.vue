@@ -14,6 +14,7 @@ import type {
   FlatSelectOption,
   TreeSelectContext,
 } from './types'
+import type { SelectValue } from '../FieldSelect/types'
 
 interface Props {
   context: TreeSelectContext
@@ -58,7 +59,7 @@ const openModal = () => {
 
 const flattenOptions = (
   options: TreeSelectOption[],
-  parents: (string | number)[] = [],
+  parents: SelectValue[] = [],
 ): FlatSelectOption[] =>
   options &&
   options.reduce((flatOptions: FlatSelectOption[], { children, ...option }) => {

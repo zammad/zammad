@@ -236,7 +236,7 @@ const executeAction = () => {
         v-for="(option, index) in filter
           ? sortedAutocompleteOptions
           : sortedOptions"
-        :key="option.value"
+        :key="String(option.value)"
         :class="{
           'pointer-events-none': option.disabled,
         }"
