@@ -2,8 +2,6 @@
 
 require 'rake'
 
-# if you make changes, then please also change this file 'test/support/searchindex_helper.rb'
-# this is required as long as our test suite is made of RSpec and MiniTest
 module SearchindexBackendHelper
 
   class Initialized
@@ -12,7 +10,7 @@ module SearchindexBackendHelper
     end
   end
 
-  # Configure ES specific Settings in Zammad. Must be done for every test.
+  # Configure ES specific settings in Zammad. Must be done for every test.
   def configure_es_settings
     if ENV['ES_URL'].blank?
       raise "Need ES_URL - hint ES_URL='http://127.0.0.1:9200'"
@@ -25,6 +23,11 @@ module SearchindexBackendHelper
     Setting.set('es_url',   ENV['ES_URL'])
     Setting.set('es_index', ENV['ES_INDEX'])
     Setting.set('es_attachment_max_size_in_mb', 1)
+
+    return if ENV['ES_USER'].blank? && ENV['ES_PASSWORD'].blank?
+
+    Setting.set('es_user', ENV['ES_USER'])
+    Setting.set('es_password', ENV['ES_PASSWORD'])
   end
 
   def build_indexes

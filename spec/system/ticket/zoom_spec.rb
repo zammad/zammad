@@ -936,9 +936,9 @@ RSpec.describe 'Ticket zoom', type: :system do
   describe 'linking Knowledge Base answer' do
     include_context 'basic Knowledge Base'
 
-    let(:ticket)      { create :ticket, group: Group.find_by(name: 'Users') }
-    let(:answer)      { published_answer }
-    let(:translation) { answer.translations.first }
+    let(:ticket)       { create :ticket, group: Group.find_by(name: 'Users') }
+    let(:answer)       { published_answer }
+    let(:translation)  { answer.translations.first }
 
     shared_examples 'verify linking' do
       it 'allows to look up an answer' do
@@ -962,20 +962,21 @@ RSpec.describe 'Ticket zoom', type: :system do
 
     context 'with ES', searchindex: true do
       before do
-        answer
+        answer && translation
         searchindex_model_reload([::KnowledgeBase::Translation, ::KnowledgeBase::Category::Translation, ::KnowledgeBase::Answer::Translation])
       end
 
-      include_examples 'verify linking'
+      include_examples 'verify linking', elasticsearch: true
     end
 
-    context 'without ES' do
+    context 'without ES', performs_jobs: true do
       before do
         Setting.set('es_url', nil)
-        answer
+        answer && translation
+        perform_enqueued_jobs
       end
 
-      include_examples 'verify linking'
+      include_examples 'verify linking', elasticsearch: false
     end
   end
 

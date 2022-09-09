@@ -9,10 +9,7 @@
     - !reference [.services, elasticsearch]
   stage: test
   script:
-    - !reference [.scripts, zammad_db_unseeded]
-    - bundle exec rails test test/integration/elasticsearch_active_test.rb
-    - bundle exec rails test test/integration/elasticsearch_test.rb
-    - !reference [.scripts, zammad_db_reset]
+    - !reference [.scripts, zammad_db_init]
     - bundle exec rspec --tag searchindex --tag ~type:system --profile 10
 
 # Lowest supported version
