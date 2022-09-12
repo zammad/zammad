@@ -85,7 +85,7 @@ class App.GlobalSearch extends App.Controller
           params.callbackMatch()
 
       # if result hasn't changed, do not rerender
-      if @lastQuery is query && @searchResultCache[query]
+      if !params.force && @lastQuery is query && @searchResultCache[query]
         diff = difference(@searchResultCache[query].result, result)
         if _.isEmpty(diff)
           return

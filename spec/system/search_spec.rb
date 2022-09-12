@@ -3,10 +3,15 @@
 require 'rails_helper'
 
 RSpec.describe 'Search', type: :system, authenticated: true, searchindex: true do
-  let(:users_group) { Group.find_by(name: 'Users') }
-  let(:ticket_1)    { create(:ticket, title: 'Testing Ticket 1', group: users_group) }
-  let(:ticket_2)    { create(:ticket, title: 'Testing Ticket 2', group: users_group) }
-  let(:note)        { 'Test note' }
+  let(:group_1)              { create :group }
+  let(:group_2)              { create :group }
+  let(:macro_without_group)  { create :macro }
+  let(:macro_note)           { create :macro, name: 'Macro note', perform: { 'article.note'=>{ 'body' => 'macro body', 'internal' => 'true', 'subject' => 'macro note' } } }
+  let(:macro_group1)         { create :macro, groups: [group_1] }
+  let(:macro_group2)         { create :macro, groups: [group_2] }
+  let(:ticket_1)             { create :ticket, title: 'Testing Ticket 1', group: group_1 }
+  let(:ticket_2)             { create :ticket, title: 'Testing Ticket 2', group: group_2 }
+  let(:note)                 { 'Test note' }
 
   before do
     ticket_1 && ticket_2 && configure_elasticsearch(required: true, rebuild: true)
@@ -22,7 +27,14 @@ RSpec.describe 'Search', type: :system, authenticated: true, searchindex: true d
     end
   end
 
-  context 'with ticket search result' do
+  context 'with ticket search result', authenticated_as: :authenticate do
+    let(:agent) { create(:agent, groups: Group.all) }
+
+    def authenticate
+      ticket_1 && ticket_2
+      agent
+    end
+
     before do
       fill_in id: 'global-search', with: 'Testing'
       click_on 'Show Search Details'
@@ -116,11 +128,148 @@ RSpec.describe 'Search', type: :system, authenticated: true, searchindex: true d
         end.not_to raise_error
       end
     end
+
+    context 'with drag and drop' do
+      context 'when checked tickets are dragged' do
+        it 'shows the batch actions' do
+          within(:active_content, '.main .table') do
+            # get element to move
+            element = page.find(:table_row, ticket_1.id).native
+            click_and_hold(element)
+            # move element a bit to display batch actions
+            move_mouse_by(0, 5)
+            # move mouse again to trigger the event for chrome
+            move_mouse_by(0, 7)
+          end
+
+          expect(page).to have_selector('.batch-overlay-circle--top.js-batch-macro-circle')
+            .and(have_selector('.batch-overlay-circle--bottom.js-batch-assign-circle'))
+        end
+      end
+    end
+  end
+
+  context 'with ticket search result for macros bulk action', authenticated_as: :authenticate do
+    let(:group_3)      { create :group }
+    let(:search_query) { 'Testing' }
+    let(:ticket_3)     { create :ticket, title: 'Testing Ticket 3', group: group_3 }
+    let(:agent)        { create(:agent, groups: Group.all) }
+
+    before do
+      fill_in id: 'global-search', with: search_query
+      click_on 'Show Search Details'
+
+      find('[data-tab-content=Ticket]').click
+    end
+
+    describe 'group-dependent macros' do
+      def authenticate
+        ticket_1 && ticket_2 && ticket_3
+        macro_without_group && macro_group1 && macro_group2
+        agent
+      end
+
+      it 'shows only non-group macro when ticket does not match any group macros' do
+        within(:active_content) do
+          display_macro_batches ticket_3
+
+          expect(page).to have_selector(:macro_batch, macro_without_group.id)
+            .and(have_no_selector(:macro_batch, macro_group1.id))
+            .and(have_no_selector(:macro_batch, macro_group2.id))
+        end
+      end
+
+      it 'shows non-group and matching group macros for matching ticket' do
+        within(:active_content) do
+          display_macro_batches ticket_1
+
+          expect(page).to have_selector(:macro_batch, macro_without_group.id)
+            .and(have_selector(:macro_batch, macro_group1.id))
+            .and(have_no_selector(:macro_batch, macro_group2.id))
+        end
+      end
+    end
+
+    context 'with macro batch overlay' do
+      shared_examples "adding 'small' class to macro element" do
+        it 'adds a "small" class to the macro element' do
+          within(:active_content) do
+            display_macro_batches ticket_1
+
+            expect(page).to have_selector('.batch-overlay-macro-entry.small')
+          end
+        end
+      end
+
+      shared_examples "not adding 'small' class to macro element" do
+        it 'does not add a "small" class to the macro element' do
+          within(:active_content) do
+            display_macro_batches ticket_1
+
+            expect(page).to have_no_selector('.batch-overlay-macro-entry.small')
+          end
+        end
+      end
+
+      shared_examples 'showing all macros' do
+        it 'shows all macros' do
+          within(:active_content) do
+            display_macro_batches ticket_1
+
+            expect(page).to have_selector('.batch-overlay-macro-entry', count: all)
+          end
+        end
+      end
+
+      shared_examples 'showing some macros' do |count|
+        it 'shows all macros' do
+          within(:active_content) do
+            display_macro_batches ticket_1
+
+            expect(page).to have_selector('.batch-overlay-macro-entry', count: count)
+          end
+        end
+      end
+
+      def authenticate
+        ticket_1 && ticket_2
+        Macro.destroy_all && (create_list :macro, all)
+        agent
+      end
+
+      context 'with few macros' do
+        let(:all) { 15 }
+
+        context 'when on large screen', screen_size: :desktop do
+          it_behaves_like 'showing all macros'
+          it_behaves_like "not adding 'small' class to macro element"
+        end
+
+        context 'when on small screen', screen_size: :tablet do
+          it_behaves_like 'showing all macros'
+          it_behaves_like "not adding 'small' class to macro element"
+        end
+
+      end
+
+      context 'with many macros' do
+        let(:all) { 50 }
+
+        context 'when on large screen', screen_size: :desktop do
+          it_behaves_like 'showing some macros', 32
+        end
+
+        context 'when on small screen', screen_size: :tablet do
+          it_behaves_like 'showing some macros', 24
+          it_behaves_like "adding 'small' class to macro element"
+        end
+      end
+    end
   end
 
   context 'Organization members', authenticated_as: :authenticate do
     let(:organization) { create(:organization) }
-    let(:members) { organization.members.order(id: :asc) }
+    let(:members)      { organization.members.order(id: :asc) }
 
     def authenticate
       create_list(:customer, 50, organization: organization)
@@ -172,7 +321,13 @@ RSpec.describe 'Search', type: :system, authenticated: true, searchindex: true d
     end
   end
 
-  describe 'Search is not triggered/updated if url of search is updated new search item or new search is triggered via global search #3873' do
+  describe 'Search is not triggered/updated if url of search is updated new search item or new search is triggered via global search #3873', authenticated_as: :authenticate do
+    let(:agent) { create(:agent, groups: Group.all) }
+
+    def authenticate
+      ticket_1 && ticket_2
+      agent
+    end
 
     context 'when search changed via input box' do
       before do
@@ -234,7 +389,7 @@ RSpec.describe 'Search', type: :system, authenticated: true, searchindex: true d
 
   context 'Assign user to multiple organizations #1573', authenticated_as: :authenticate do
     let(:organizations) { create_list(:organization, 20) }
-    let(:customer) { create(:customer, organization: organizations[0], organizations: organizations[1..]) }
+    let(:customer)      { create(:customer, organization: organizations[0], organizations: organizations[1..]) }
 
     context 'when agent' do
       def authenticate
@@ -270,24 +425,24 @@ RSpec.describe 'Search', type: :system, authenticated: true, searchindex: true d
   end
 
   describe 'Searches display all groups and owners on bulk selections #4054', authenticated_as: :authenticate do
-    let(:group1) { create(:group) }
-    let(:group2)    { create(:group) }
-    let(:agent1)    { create(:agent, groups: [group1]) }
-    let(:agent2)    { create(:agent, groups: [group2]) }
-    let(:agent_all) { create(:agent, groups: [group1, group2]) }
-    let(:ticket1)   { create(:ticket, group: group1, title: '4054 group 1') }
-    let(:ticket2)   { create(:ticket, group: group2, title: '4054 group 2') }
+    let(:group_1) { create(:group) }
+    let(:group_2)     { create(:group) }
+    let(:agent_1)     { create(:agent, groups: [group_1]) }
+    let(:agent_2)     { create(:agent, groups: [group_2]) }
+    let(:agent_all)   { create(:agent, groups: [group_1, group_2]) }
+    let(:ticket_1)    { create(:ticket, group: group_1, title: '4054 group 1') }
+    let(:ticket_2)    { create(:ticket, group: group_2, title: '4054 group 2') }
 
     def authenticate
-      agent1 && agent2 && agent_all
-      ticket1 && ticket2
+      agent_1 && agent_2 && agent_all
+      ticket_1 && ticket_2
       agent_all
     end
 
     def check_owner_empty
       expect(page).to have_select('owner_id', text: '-', visible: :all)
-      expect(page).to have_no_select('owner_id', text: agent1.fullname, visible: :all)
-      expect(page).to have_no_select('owner_id', text: agent2.fullname, visible: :all)
+      expect(page).to have_no_select('owner_id', text: agent_1.fullname, visible: :all)
+      expect(page).to have_no_select('owner_id', text: agent_2.fullname, visible: :all)
     end
 
     def click_ticket(ticket)
@@ -295,21 +450,21 @@ RSpec.describe 'Search', type: :system, authenticated: true, searchindex: true d
     end
 
     def check_owner_agent1_shown
-      expect(page).to have_select('owner_id', text: agent1.fullname)
-      expect(page).to have_no_select('owner_id', text: agent2.fullname)
+      expect(page).to have_select('owner_id', text: agent_1.fullname)
+      expect(page).to have_no_select('owner_id', text: agent_2.fullname)
     end
 
     def check_owner_agent2_shown
-      expect(page).to have_no_select('owner_id', text: agent1.fullname)
-      expect(page).to have_select('owner_id', text: agent2.fullname)
+      expect(page).to have_no_select('owner_id', text: agent_1.fullname)
+      expect(page).to have_select('owner_id', text: agent_2.fullname)
     end
 
     def check_owner_field
       check_owner_empty
-      click_ticket(ticket1)
+      click_ticket(ticket_1)
       check_owner_agent1_shown
-      click_ticket(ticket1)
-      click_ticket(ticket2)
+      click_ticket(ticket_1)
+      click_ticket(ticket_2)
       check_owner_agent2_shown
     end
 

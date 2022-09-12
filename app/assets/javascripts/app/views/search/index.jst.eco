@@ -26,3 +26,4 @@
 </div>
 
 <div class="bulkAction hide"></div>
+<div class="batch-overlay js-batch-overlay"></div>

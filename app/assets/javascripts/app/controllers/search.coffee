@@ -1,5 +1,6 @@
 class App.Search extends App.Controller
   @extend App.PopoverProvidable
+  @extend App.TicketMassUpdatable
 
   elements:
     '.js-search': 'searchInput'
@@ -10,6 +11,8 @@ class App.Search extends App.Controller
     'keyup .js-search': 'listNavigate'
     'click .js-tab': 'showTab'
     'input .js-search': 'updateFilledClass'
+
+  @include App.ValidUsersForTicketSelectionMethods
 
   constructor: ->
     super
@@ -36,6 +39,11 @@ class App.Search extends App.Controller
       @render()
     )
 
+    load = (data) =>
+      App.Collection.loadAssets(data.assets)
+      @formMeta = data.form_meta
+    @bindId = App.TicketOverviewCollection.bind(load)
+
   meta: =>
     title = @query || App.i18n.translateInline('Extended Search')
 
@@ -54,9 +62,13 @@ class App.Search extends App.Controller
     if @table
       @table.show()
     @navupdate(url: '#search', type: 'menu')
-    return if _.isEmpty(params.query)
 
-    @$('.js-search').val(params.query).trigger('keyup')
+    if !_.isEmpty(params.query)
+      @$('.js-search').val(params.query).trigger('keyup')
+      return
+
+    if @query
+      @search(500, true)
 
   hide: ->
     if @table
@@ -90,11 +102,22 @@ class App.Search extends App.Controller
       @tabs.push tab
 
     # build view
-    @html App.view('search/index')(
+    elLocal = $(App.view('search/index')(
       query: @query
       tabs: @tabs
+    ))
+
+    @controllerTicketBatch.releaseController() if @controllerTicketBatch
+    @controllerTicketBatch = new App.TicketBatch(
+      el:       elLocal.filter('.js-batch-overlay')
+      parent:   @
+      parentEl: elLocal
+      appEl:    @appEl
+      batchSuccess: =>
+        @search(0, true)
     )
 
+    @html elLocal
     if @query
       @search(500, true)
 
@@ -133,6 +156,7 @@ class App.Search extends App.Controller
     @globalSearch.search(
       delay: delay
       query: @query
+      force: force
     )
 
   renderResult: (result = []) =>
@@ -229,16 +253,16 @@ class App.Search extends App.Controller
 
       updateSearch = =>
         callback = =>
-          @search(true)
+          @search(0, true)
         @delay(callback, 100)
 
       @bulkForm.releaseController() if @bulkForm
       @bulkForm = new App.TicketBulkForm(
-        el:        @el.find('.bulkAction')
-        holder:    localeEl
-        view:      @view
-        callback:  updateSearch
-        noSidebar: true
+        el:           @el.find('.bulkAction')
+        holder:       localeEl
+        view:         @view
+        batchSuccess: updateSearch
+        noSidebar:    true
       )
 
       # start bulk action observ

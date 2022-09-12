@@ -240,7 +240,7 @@ class App.TicketBulkForm extends App.Controller
 
     @ajax_mass_update(data, =>
       @holder.find('.table').find('[name="bulk"]:checked').prop('checked', false)
-      @render()
+      @batchSuccess()
       @hide()
     )
 
