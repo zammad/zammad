@@ -1,12 +1,13 @@
 # Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 RSpec.shared_examples 'text modules' do |path:|
-  let!(:agent_fixed_name)          { create :agent, firstname: 'FFFF1', lastname: 'GGGG1', groups: [Group.find_by(name: 'Users')] }
-  let!(:group1)                    { create :group }
-  let!(:group2)                    { create :group }
-  let!(:text_module_without_group) { create :text_module }
-  let!(:text_module_group1)        { create :text_module, groups: [group1] }
-  let!(:text_module_group2)        { create :text_module, groups: [group2] }
+  let!(:agent_fixed_name)           { create :agent, firstname: 'FFFF1', lastname: 'GGGG1', groups: [Group.find_by(name: 'Users')] }
+  let!(:group1)                     { create :group }
+  let!(:group2)                     { create :group }
+  let!(:text_module_without_group1) { create :text_module, name: 'aaa', keywords: "test dummy #{Faker::Superhero.prefix}" }
+  let!(:text_module_without_group2) { create :text_module, name: 'bbb', keywords: "test dummy #{Faker::Superhero.prefix}" }
+  let!(:text_module_group1)         { create :text_module, name: 'ccc', keywords: "test dummy #{Faker::Superhero.prefix}", groups: [group1] }
+  let!(:text_module_group2)         { create :text_module, name: 'ddd', keywords: "test dummy #{Faker::Superhero.prefix}", groups: [group2] }
 
   it 'shows when send ::' do
     refresh # workaround to get new created objects from db
@@ -15,7 +16,7 @@ RSpec.shared_examples 'text modules' do |path:|
       find('select[name="group_id"]').select(1)
       find(:richtext).send_keys(':')
       find(:richtext).send_keys(':')
-      expect(page).to have_selector(:text_module, text_module_without_group.id)
+      expect(page).to have_selector(:text_module, text_module_without_group1.id)
     end
   end
 
@@ -43,7 +44,8 @@ RSpec.shared_examples 'text modules' do |path:|
       find(:richtext).send_keys(':')
       find(:richtext).send_keys(:enter)
       find(:richtext).send_keys(':')
-      expect(page).to have_no_selector(:text_module, text_module_without_group.id)
+      expect(page).to have_no_selector(:text_module, text_module_without_group1.id)
+      expect(page).to have_no_selector(:text_module, text_module_without_group2.id)
     end
   end
 
@@ -137,16 +139,49 @@ RSpec.shared_examples 'text modules' do |path:|
       find('select[name="group_id"]').select(group1.name)
       find(:richtext).send_keys('::')
 
-      expect(page).to have_selector(:text_module, text_module_without_group.id)
+      expect(page).to have_selector(:text_module, text_module_without_group1.id)
+      expect(page).to have_selector(:text_module, text_module_without_group2.id)
       expect(page).to have_selector(:text_module, text_module_group1.id)
       expect(page).to have_no_selector(:text_module, text_module_group2.id)
 
       find('select[name="group_id"]').select(group2.name)
       find(:richtext).send_keys('::')
 
-      expect(page).to have_selector(:text_module, text_module_without_group.id)
+      expect(page).to have_selector(:text_module, text_module_without_group1.id)
+      expect(page).to have_selector(:text_module, text_module_without_group2.id)
       expect(page).to have_no_selector(:text_module, text_module_group1.id)
       expect(page).to have_selector(:text_module, text_module_group2.id)
+    end
+  end
+
+  it 'orders text modules by alphabet' do
+    refresh # workaround to get changed settings from db
+    visit path
+
+    within(:active_content) do
+      find(:richtext).send_keys('::')
+      find(:richtext).send_keys('dummy')
+
+      wait.until_exists { find('.text-modules-box') }
+
+      expected_order = [
+        text_module_without_group2.name + text_module_without_group2.keywords,
+        text_module_without_group1.name + text_module_without_group1.keywords,
+      ]
+      if path == 'ticket/create'
+        expected_order = [
+          text_module_group2.name + text_module_group2.keywords,
+          text_module_group1.name + text_module_group1.keywords,
+          text_module_without_group2.name + text_module_without_group2.keywords,
+          text_module_without_group1.name + text_module_without_group1.keywords,
+        ]
+      end
+
+      shown_text_modules = find_all(:css, '.text-modules-box li')
+      expect(shown_text_modules.length).to eq(expected_order.length)
+
+      shown_text_modules_text = shown_text_modules.map(&:text)
+      expect(shown_text_modules_text).to eq(expected_order)
     end
   end
 end
