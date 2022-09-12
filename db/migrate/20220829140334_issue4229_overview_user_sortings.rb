@@ -22,7 +22,7 @@ class Issue4229OverviewUserSortings < ActiveRecord::Migration[6.1]
       name:         'user_preferences.overview_sorting',
       note:         'Change %s',
       preferences:  {
-        translations: ['Overview Sortings'],
+        translations: ['Order of Overviews'],
         required:     ['ticket.agent'],
       },
       allow_signup: true,

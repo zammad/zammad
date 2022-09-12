@@ -7132,6 +7132,7 @@ msgid "Or migrate from another system."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee
+#: db/seeds/permissions.rb
 msgid "Order of Overviews"
 msgstr ""
 
@@ -7255,10 +7256,6 @@ msgstr ""
 #: app/assets/javascripts/app/models/group.coffee
 #: app/assets/javascripts/app/models/user_overview_sorting.coffee
 msgid "Overview"
-msgstr ""
-
-#: db/seeds/permissions.rb
-msgid "Overview Sortings"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee

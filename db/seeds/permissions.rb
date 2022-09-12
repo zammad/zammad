@@ -370,7 +370,7 @@ Permission.create_if_not_exists(
   name:         'user_preferences.overview_sorting',
   note:         __('Change %s'),
   preferences:  {
-    translations: [__('Overview Sortings')],
+    translations: [__('Order of Overviews')],
     required:     ['ticket.agent'],
   },
   allow_signup: true,
