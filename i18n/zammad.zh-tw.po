@@ -590,6 +590,11 @@ msgstr "API token"
 msgid "About"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_channel/form.coffee
+#: app/assets/javascripts/app/views/channel/form.jst.eco
+msgid "Accept Data Privacy Policy & Acceptable Use Policy"
+msgstr ""
+
 #: db/seeds/permissions.rb
 msgid "Access to %s"
 msgstr "存取 %s"
@@ -685,8 +690,10 @@ msgid "Activate the recursive processing of ticket triggers."
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Activates lost password feature for users."
-msgstr "啟用使用者的自行重置密碼功能。"
+msgid ""
+"Activates lost password feature for users. This setting is only effective if "
+"the password login is enabled."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 #: app/assets/javascripts/app/models/chat.coffee
@@ -710,6 +717,7 @@ msgstr "啟用使用者的自行重置密碼功能。"
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
+#: app/frontend/apps/mobile/components/Organization/OrganizationEditDialog.vue
 #: db/seeds/object_manager_attributes.rb
 msgid "Active"
 msgstr "啟用"
@@ -807,6 +815,10 @@ msgstr "新增備註"
 msgid "Add a Personal Access Token"
 msgstr "新增個人存取權 Token"
 
+#: app/assets/javascripts/app/views/channel/form.jst.eco
+msgid "Add agreement text before submit."
+msgstr ""
+
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 msgid "Add alarm to pending reminder and escalated tickets."
 msgstr "新增警報在待提醒及被提升層級的工單。"
@@ -887,6 +899,12 @@ msgstr "系統管理員"
 #: db/seeds/permissions.rb
 msgid "Admin Interface"
 msgstr ""
+
+#: app/assets/javascripts/app/controllers/admin_password_auth.coffee
+#, fuzzy
+#| msgid "Bind Password"
+msgid "Admin Password Login"
+msgstr "綁定密碼"
 
 #: app/assets/javascripts/app/views/getting_started/admin.jst.eco
 msgid "Administrator Account"
@@ -1056,6 +1074,12 @@ msgstr ""
 msgid "Answers"
 msgstr "回答"
 
+#: app/assets/javascripts/app/views/knowledge_base/_reader_list_item.jst.eco
+#, fuzzy
+#| msgid "Answers"
+msgid "Answers: %s"
+msgstr "回答"
+
 #: app/assets/javascripts/app/lib/app_post/iconset_picker.coffee
 msgid "Anticon"
 msgstr ""
@@ -1166,6 +1190,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/delete.coffee
 #: app/assets/javascripts/app/controllers/widget/template.coffee
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue
 msgid "Are you sure?"
 msgstr "您確定嗎？"
 
@@ -1279,6 +1304,18 @@ msgstr ""
 #: app/models/role.rb app/models/user.rb
 msgid "At least one user needs to have admin permissions."
 msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue
+#, fuzzy
+#| msgid "Attached Files"
+msgid "Attach another file"
+msgstr "附件檔案"
+
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue
+#, fuzzy
+#| msgid "Attached Files"
+msgid "Attach files"
+msgstr "附件檔案"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 #, fuzzy
@@ -1829,6 +1866,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/knowledge_base/scheduled_widget.jst.eco
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue
+#: app/frontend/apps/mobile/components/Organization/OrganizationEditDialog.vue
 #: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
 #: app/frontend/apps/mobile/modules/search/views/SearchOverview.vue
 #: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
@@ -1836,6 +1874,8 @@ msgid "Cancel"
 msgstr "取消"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal.coffee
+#: app/assets/javascripts/app/views/admin_password_auth/request.jst.eco
+#: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco
 #: app/assets/javascripts/app/views/agent_user_create.jst.eco
 #: app/assets/javascripts/app/views/customer_ticket_create.jst.eco
@@ -2485,6 +2525,7 @@ msgid "Content was changed since loading"
 msgstr ""
 
 #: app/assets/javascripts/app/models/core_workflow.coffee
+#: app/assets/javascripts/app/models/public_link.coffee
 msgid "Context"
 msgstr ""
 
@@ -2671,6 +2712,18 @@ msgstr ""
 msgid "Create new records"
 msgstr "建立新的記錄"
 
+#: app/frontend/apps/mobile/entities/organization/composables/useOrganizationTicketsCount.ts
+#, fuzzy
+#| msgid "Tickets of Organization"
+msgid "Create new ticket for this organization"
+msgstr "機構中的工單"
+
+#: app/frontend/apps/mobile/entities/user/composables/useUserTicketsCount.ts
+#, fuzzy
+#| msgid "Tickets of Organization"
+msgid "Create new ticket for this user"
+msgstr "機構中的工單"
+
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee
 msgid "Create organizations automatically if record has one."
 msgstr "如果有一記錄則自動建立組織。"
@@ -2679,6 +2732,12 @@ msgstr "如果有一記錄則自動建立組織。"
 msgid ""
 "Create rules that single out the tickets for the Service Level Agreement."
 msgstr "建立規則以單獨列出服務等級協議 SLA 的工單。"
+
+#: app/frontend/shared/components/Form/fields/FieldTags/FieldTagsDialog.vue
+#, fuzzy
+#| msgid "Created at"
+msgid "Create tag"
+msgstr "建立在"
 
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
 msgid "Create your first ticket"
@@ -2828,6 +2887,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 #: app/controllers/time_accountings_controller.rb
+#: app/frontend/apps/mobile/modules/ticket/views/TicketInformationView.vue
 #: app/graphql/gql/types/overview_type.rb db/seeds/object_manager_attributes.rb
 #: db/seeds/roles.rb db/seeds/ticket_article_senders.rb
 #: lib/excel_sheet/ticket.rb
@@ -3830,6 +3890,10 @@ msgstr "部門"
 msgid "Description"
 msgstr "描述"
 
+#: app/assets/javascripts/app/models/public_link.coffee
+msgid "Description (shown as title tag for screen readers)"
+msgstr ""
+
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Designer"
@@ -3937,6 +4001,12 @@ msgstr "放棄尚未儲存的更動。"
 msgid "Display"
 msgstr "顯示"
 
+#: app/assets/javascripts/app/models/public_link.coffee
+#, fuzzy
+#| msgid "Display name"
+msgid "Display in new tab"
+msgstr "顯示名稱"
+
 #: app/assets/javascripts/app/models/email_address.coffee
 msgid "Display name"
 msgstr "顯示名稱"
@@ -3987,10 +4057,12 @@ msgstr "您確定要刪除這個物件嗎？"
 msgid "Do you really want to set the visibility of this article to \"public\"?"
 msgstr "您確定要刪除這個物件嗎？"
 
+#: app/frontend/apps/mobile/components/Organization/OrganizationEditDialog.vue
 #: db/seeds/object_manager_attributes.rb
 msgid "Domain"
 msgstr "網域"
 
+#: app/frontend/apps/mobile/components/Organization/OrganizationEditDialog.vue
 #: db/seeds/object_manager_attributes.rb
 msgid "Domain based assignment"
 msgstr "根據網域指派"
@@ -4015,7 +4087,7 @@ msgstr ""
 msgid "Download"
 msgstr ""
 
-#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleAttachment.vue
+#: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue
 msgid "Download %s"
 msgstr ""
 
@@ -4096,17 +4168,22 @@ msgstr "復活節假期"
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
+#: app/frontend/apps/mobile/components/Organization/OrganizationEditDialog.vue
 #: app/frontend/apps/mobile/modules/home/views/Home.vue
+#: app/frontend/apps/mobile/modules/organization/views/OrganizationDetailView.vue
+#: app/frontend/apps/mobile/modules/user/views/UserDetailView.vue
 msgid "Edit"
 msgstr "編輯"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_customer.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee
+#: app/frontend/apps/mobile/modules/ticket/views/TicketInformationCustomer.vue
 msgid "Edit Customer"
 msgstr "編輯客戶"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_organization.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_organization.coffee
+#: app/frontend/apps/mobile/modules/ticket/views/TicketInformationOrganization.vue
 msgid "Edit Organization"
 msgstr "編輯機構"
 
@@ -4453,7 +4530,11 @@ msgid "Enables user authentication via Weibo."
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Enables users to create their own account via web interface."
+#, fuzzy
+#| msgid "Enables users to create their own account via web interface."
+msgid ""
+"Enables users to create their own account via web interface. This setting is "
+"only effective if the password login is enabled."
 msgstr "啟用使用者允許透過網頁介面建立自己的帳號。"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
@@ -4594,6 +4675,7 @@ msgid ""
 "interface."
 msgstr "輸入您的電子郵件地址和您從管理介面獲得的 %s API token。"
 
+#: app/assets/javascripts/app/controllers/admin_password_auth.coffee
 #: app/assets/javascripts/app/controllers/password_reset.coffee
 msgid "Enter your username or email address"
 msgstr "請輸入你的使用者名稱或郵件地址"
@@ -5001,6 +5083,12 @@ msgstr ""
 #: app/frontend/shared/router/guards/before/permission.ts
 msgid "Forbidden"
 msgstr ""
+
+#: app/assets/javascripts/app/models/public_link.coffee
+#, fuzzy
+#| msgid "Forgot password?"
+msgid "Forgot Password Screen"
+msgstr "忘記密碼？"
 
 #: app/assets/javascripts/app/views/login.jst.eco
 #: app/frontend/apps/mobile/modules/login/views/Login.vue
@@ -5731,6 +5819,7 @@ msgstr "如果寄件人是客服人員，則將收件人列表中的第一個使
 msgid "If this regex matches, no notification will be sent by the sender."
 msgstr "如果此正規表達式符合匹配，則不會有這個寄件人所發送的通知。"
 
+#: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco
 msgid ""
 "If you don't receive instructions within a minute or two, check your email's "
@@ -5747,6 +5836,12 @@ msgid ""
 msgstr ""
 "如果你看不到郵件，可以查看其他地方，比如垃圾郵件、濫發郵件、社交通訊或其他文"
 "件夹。"
+
+#: app/assets/javascripts/app/views/login.jst.eco
+msgid ""
+"If you have problems with the third-party login you can request a one-time "
+"password login as an admin."
+msgstr ""
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 msgid ""
@@ -5802,7 +5897,7 @@ msgstr ""
 msgid "Image Service"
 msgstr "圖像服務"
 
-#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleAttachment.vue
+#: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue
 #, fuzzy
 #| msgid "Manage %s"
 msgid "Image of %s"
@@ -6530,6 +6625,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/link_button.coffee
 #: app/assets/javascripts/app/controllers/ticket_link_add.coffee
 #: app/assets/javascripts/app/models/overview.coffee
+#: app/assets/javascripts/app/models/public_link.coffee
 msgid "Link"
 msgstr "連結"
 
@@ -6660,6 +6756,12 @@ msgstr ""
 msgid "Login"
 msgstr "登入"
 
+#: app/assets/javascripts/app/models/public_link.coffee
+#, fuzzy
+#| msgid "Screen"
+msgid "Login Screen"
+msgstr "畫面"
+
 #: app/controllers/application_controller/authenticates.rb
 #: app/graphql/gql/mutations/login.rb
 msgid ""
@@ -6762,7 +6864,6 @@ msgstr "管理您的通知設置"
 #: app/assets/javascripts/app/views/api.jst.eco
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco
-#: app/assets/javascripts/app/views/generic/admin/index.jst.eco
 #: app/assets/javascripts/app/views/package.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
 #: app/assets/javascripts/app/views/user.jst.eco
@@ -6867,6 +6968,7 @@ msgstr "模式"
 #: app/assets/javascripts/app/views/organization_profile/object.jst.eco
 #: app/assets/javascripts/app/views/popover/organization.jst.eco
 #: app/assets/javascripts/app/views/widget/organization.jst.eco
+#: app/frontend/apps/mobile/components/Organization/OrganizationMembersList.vue
 msgid "Members"
 msgstr "成員"
 
@@ -7176,6 +7278,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/ticket_state.coffee
 #: app/assets/javascripts/app/models/trigger.coffee
 #: app/assets/javascripts/app/models/twitter.coffee
+#: app/assets/javascripts/app/models/user_overview_sorting_overview.coffee
 #: app/assets/javascripts/app/models/webhook.coffee
 #: app/assets/javascripts/app/views/channel/topics.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
@@ -7320,6 +7423,12 @@ msgstr "新增工單總覽"
 #: app/assets/javascripts/app/controllers/report_profile.coffee
 msgid "New Profile"
 msgstr "新增個人資料配置"
+
+#: app/assets/javascripts/app/controllers/public_link.coffee
+#, fuzzy
+#| msgid "Public Menu"
+msgid "New Public Link"
+msgstr "公開選單"
 
 #: app/assets/javascripts/app/controllers/role.coffee
 msgid "New Role"
@@ -7705,6 +7814,7 @@ msgstr "未配置"
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
+#: app/frontend/apps/mobile/components/Organization/OrganizationEditDialog.vue
 #: db/seeds/object_manager_attributes.rb
 msgid "Note"
 msgstr "備註"
@@ -7892,6 +8002,12 @@ msgstr ""
 msgid "Oops.. I'm sorry, but you have insufficient rights to open this %s."
 msgstr ""
 
+#: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue
+#, fuzzy
+#| msgid "Open"
+msgid "Open %s"
+msgstr "開啟"
+
 #: app/assets/javascripts/app/views/dashboard/first_steps_test_ticket_finish.jst.eco
 msgid "Open Ticket# %s"
 msgstr "開啟工單# %s"
@@ -7934,6 +8050,12 @@ msgstr "選項"
 msgid "Or migrate from another system."
 msgstr "從另一個系統遷移"
 
+#: app/assets/javascripts/app/controllers/_profile/overviews.coffee
+#, fuzzy
+#| msgid "New Overview"
+msgid "Order of Overviews"
+msgstr "新增工單總覽"
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_organization.coffee
@@ -7951,6 +8073,9 @@ msgstr "從另一個系統遷移"
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 #: app/controllers/time_accountings_controller.rb
+#: app/frontend/apps/mobile/modules/organization/routes.ts
+#: app/frontend/apps/mobile/modules/organization/views/OrganizationDetailView.vue
+#: app/frontend/apps/mobile/modules/ticket/views/TicketInformationView.vue
 #: app/graphql/gql/types/overview_type.rb db/seeds/object_manager_attributes.rb
 #: db/seeds/settings.rb lib/excel_sheet/ticket.rb
 msgid "Organization"
@@ -7968,6 +8093,12 @@ msgstr "機構名稱"
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 msgid "Organization Support"
 msgstr "機構支援"
+
+#: app/frontend/apps/mobile/modules/user/views/UserDetailView.vue
+#, fuzzy
+#| msgid "My Organization Tickets"
+msgid "Organization tickets"
+msgstr "我所在機構的工單"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_organization.coffee
 #: app/assets/javascripts/app/controllers/organization.coffee
@@ -8051,7 +8182,14 @@ msgstr "瀏覽器"
 
 #: app/assets/javascripts/app/controllers/overview.coffee
 #: app/assets/javascripts/app/models/group.coffee
+#: app/assets/javascripts/app/models/user_overview_sorting.coffee
 msgid "Overview"
+msgstr "總覽"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Overviews"
+msgid "Overview Sortings"
 msgstr "總覽"
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
@@ -8060,6 +8198,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
+#: app/assets/javascripts/app/controllers/_profile/overviews.coffee
 #: app/assets/javascripts/app/controllers/overview.coffee
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: db/seeds/permissions.rb
@@ -8159,6 +8298,12 @@ msgstr "密碼"
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid "Password Access"
 msgstr "密碼存取"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Password"
+msgid "Password Login"
+msgstr "密碼"
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
 msgid "Password changed successfully!"
@@ -8261,6 +8406,10 @@ msgstr "個人存取 Token"
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
 msgid "Personal Settings"
 msgstr "個人設定"
+
+#: app/assets/javascripts/app/controllers/_profile/overviews.coffee
+msgid "Personal overview order was reset."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/cti.coffee
 #: db/seeds/object_manager_attributes.rb
@@ -8413,7 +8562,15 @@ msgstr ""
 msgid "Postmaster Filter"
 msgstr "郵件管理過濾器"
 
+#: app/assets/javascripts/app/views/admin_password_auth/request.jst.eco
+#: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/assets/javascripts/app/views/password/reset.jst.eco
+#: app/assets/javascripts/app/views/password/reset_change.jst.eco
+#: app/assets/javascripts/app/views/password/reset_failed.jst.eco
+#: app/assets/javascripts/app/views/password/reset_sent.jst.eco
+#: app/assets/javascripts/app/views/signup.jst.eco
+#: app/assets/javascripts/app/views/signup/verify.jst.eco
 #: app/frontend/apps/mobile/modules/login/views/Login.vue
 msgid "Powered by"
 msgstr "Powered by"
@@ -8430,6 +8587,12 @@ msgstr "優雅的日期"
 #: app/assets/javascripts/app/views/settings/ticket_number.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 msgid "Preview"
+msgstr "預覽"
+
+#: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue
+#, fuzzy
+#| msgid "Preview"
+msgid "Preview %s"
 msgstr "預覽"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
@@ -8457,6 +8620,8 @@ msgid "Previously owned tickets (%s in total)"
 msgstr "之前承辦的工單 (總計 %s)"
 
 #: app/assets/javascripts/app/models/overview.coffee
+#: app/assets/javascripts/app/models/public_link.coffee
+#: app/assets/javascripts/app/models/user_overview_sorting.coffee
 msgid "Prio"
 msgstr "優先序"
 
@@ -8552,6 +8717,25 @@ msgstr "代理服務器地址。"
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 msgid "Public"
 msgstr "公開的"
+
+#: app/assets/javascripts/app/controllers/public_link.coffee
+#, fuzzy
+#| msgid "Public Menu"
+msgid "Public Link"
+msgstr "公開選單"
+
+#: app/assets/javascripts/app/controllers/public_link.coffee
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Public Menu"
+msgid "Public Links"
+msgstr "公開選單"
+
+#: app/assets/javascripts/app/controllers/public_link.coffee
+#, fuzzy
+#| msgid "Webhook"
+msgid "Public Links are …"
+msgstr "Webhook"
 
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
 #: app/assets/javascripts/app/views/knowledge_base/public_menu_manager.jst.eco
@@ -8724,6 +8908,12 @@ msgstr ""
 msgid "Remove"
 msgstr "移除"
 
+#: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue
+#, fuzzy
+#| msgid "Remove"
+msgid "Remove %s"
+msgstr "移除"
+
 #: app/frontend/shared/form/i18n/locales.ts
 #, fuzzy
 #| msgid "Remove"
@@ -8802,6 +8992,14 @@ msgstr ""
 msgid "Request for Change"
 msgstr ""
 
+#: app/assets/javascripts/app/views/admin_password_auth/request.jst.eco
+msgid "Request password login for admin?"
+msgstr ""
+
+#: app/assets/javascripts/app/views/login.jst.eco
+msgid "Request the password login here."
+msgstr ""
+
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid "Requesting the Grant"
 msgstr "要求授權"
@@ -8845,6 +9043,12 @@ msgstr ""
 #: app/assets/javascripts/app/views/translation/index.jst.eco
 msgid "Reset changes"
 msgstr "重置所有更動"
+
+#: app/assets/javascripts/app/controllers/_profile/overviews.coffee
+#, fuzzy
+#| msgid "Reset Password"
+msgid "Reset overview order"
+msgstr "重置密碼"
 
 #: app/assets/javascripts/app/controllers/translation.coffee
 #, fuzzy
@@ -9070,6 +9274,7 @@ msgstr "星期六"
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 #: app/assets/javascripts/app/views/widget/template.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
+#: app/frontend/apps/mobile/components/Organization/OrganizationEditDialog.vue
 #: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
 msgid "Save"
 msgstr "儲存"
@@ -9185,6 +9390,8 @@ msgstr "搜尋"
 msgid "Search…"
 msgstr "搜尋"
 
+#: app/frontend/apps/mobile/modules/ticket/views/TicketInformationCustomer.vue
+#: app/frontend/apps/mobile/modules/user/views/UserDetailView.vue
 #: db/seeds/object_manager_attributes.rb
 #, fuzzy
 #| msgid "Shared organization"
@@ -9531,6 +9738,7 @@ msgid "Shared draft cannot be selected for this ticket."
 msgstr ""
 
 #: app/assets/javascripts/app/models/organization.coffee
+#: app/frontend/apps/mobile/components/Organization/OrganizationEditDialog.vue
 #: db/seeds/object_manager_attributes.rb
 msgid "Shared organization"
 msgstr "共享的機構"
@@ -9555,6 +9763,12 @@ msgstr "該電子郵箱的電子郵件應匯入為封存或一般電子郵件？
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 msgid "Show"
 msgstr "顯示"
+
+#: app/frontend/apps/mobile/components/CommonUsersList/CommonUsersList.vue
+#, fuzzy
+#| msgid "See more"
+msgid "Show %s more"
+msgstr "看到更多"
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_overwrite_modal.coffee
 #, fuzzy
@@ -9589,6 +9803,12 @@ msgstr "顯示搜尋細節"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Show next tab"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid ""
+"Show password login for users on login page. Disabling only takes effect if "
+"third-party authentication is enabled."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
@@ -9648,6 +9868,12 @@ msgstr ""
 msgid "Sign in"
 msgstr "登入"
 
+#: app/assets/javascripts/app/views/login.jst.eco
+#, fuzzy
+#| msgid "or sign in using"
+msgid "Sign in using"
+msgstr "或登入使用"
+
 #: app/assets/javascripts/app/controllers/logout.coffee
 #: app/frontend/apps/mobile/modules/account/views/AccountOverview.vue
 msgid "Sign out"
@@ -9678,6 +9904,12 @@ msgstr "簽名"
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 msgid "Signed"
 msgstr ""
+
+#: app/assets/javascripts/app/models/public_link.coffee
+#, fuzzy
+#| msgid "Signature"
+msgid "Signup Screen"
+msgstr "簽名"
 
 #: app/assets/javascripts/app/lib/app_post/iconset_picker.coffee
 msgid "Simple Line Icons"
@@ -9757,6 +9989,7 @@ msgstr ""
 msgid "Something went wrong. Please contact your administrator."
 msgstr ""
 
+#: app/frontend/apps/mobile/modules/organization/views/OrganizationDetailView.vue
 #: app/frontend/apps/mobile/modules/ticket/views/TicketDetailView.vue
 msgid "Sorry, but you have insufficient rights to open this page."
 msgstr ""
@@ -9959,6 +10192,7 @@ msgstr "主旨"
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee
 #: app/assets/javascripts/app/controllers/tag.coffee
 #: app/assets/javascripts/app/controllers/widget/button_with_dropdown.coffee
+#: app/assets/javascripts/app/views/admin_password_auth/request.jst.eco
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/vertical_form.jst.eco
 #: app/assets/javascripts/app/views/password/reset.jst.eco
@@ -10067,6 +10301,7 @@ msgstr "頁籤已有更動，您確定要關閉?"
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco
 #: app/assets/javascripts/app/views/tag/index.jst.eco
 #: app/assets/javascripts/app/views/widget/tag.jst.eco
+#: app/frontend/shared/components/Form/fields/FieldTags/FieldTagsDialog.vue
 #: app/views/knowledge_base/public/answers/show.html.erb
 #: db/seeds/object_manager_attributes.rb db/seeds/permissions.rb
 #: lib/excel_sheet/ticket.rb
@@ -10753,6 +10988,10 @@ msgstr "電子郵件回覆中主旨的開頭文字，例如 RE, AW 或 AS。"
 msgid "The tickets could not be merged."
 msgstr "%s 個物件已建立。"
 
+#: app/assets/javascripts/app/views/login.jst.eco
+msgid "The token for the admin password login is invalid."
+msgstr ""
+
 #: app/controllers/getting_started_controller.rb
 #: app/controllers/settings_controller.rb
 #, fuzzy
@@ -10772,6 +11011,12 @@ msgstr "與我們溝通的方式就是所謂的 \"工單\"。"
 #: lib/telegram.rb
 msgid "The webhook could not be saved by Telegram, seems to be an invalid URL."
 msgstr ""
+
+#: app/frontend/apps/mobile/modules/user/views/UserDetailView.vue
+#, fuzzy
+#| msgid "Tickets"
+msgid "Their tickets"
+msgstr "工單"
 
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
 msgid "Theme"
@@ -11092,7 +11337,9 @@ msgstr "星期四"
 #: app/assets/javascripts/app/models/signature.coffee
 #: app/assets/javascripts/app/models/text_module.coffee
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
-#: app/frontend/apps/mobile/modules/ticket/routes.ts db/seeds/permissions.rb
+#: app/frontend/apps/mobile/modules/ticket/routes.ts
+#: app/frontend/apps/mobile/modules/ticket/views/TicketInformationView.vue
+#: db/seeds/permissions.rb
 msgid "Ticket"
 msgstr "工單"
 
@@ -11201,6 +11448,13 @@ msgstr "指派給我的工單有 %s 筆，共 %s 筆"
 #| msgid "New Overview"
 msgid "Ticket has %s viewers"
 msgstr "新增工單總覽"
+
+#: app/frontend/apps/mobile/modules/ticket/routes.ts
+#: app/frontend/apps/mobile/modules/ticket/views/TicketInformationView.vue
+#, fuzzy
+#| msgid "Block Notifications"
+msgid "Ticket information"
+msgstr "封鎖通知"
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 msgid "Ticket reminder reached"
@@ -11337,6 +11591,7 @@ msgstr "時間點"
 #: app/assets/javascripts/app/models/knowledge_base_answer.coffee
 #: app/assets/javascripts/app/models/knowledge_base_category.coffee
 #: app/assets/javascripts/app/models/knowledge_base_translation.coffee
+#: app/assets/javascripts/app/models/public_link.coffee
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/public_menu_form_item.jst.eco
@@ -11865,6 +12120,7 @@ msgstr "適用在查看工單時"
 #: app/assets/javascripts/app/lib/app_post/user_organization_autocompletion.coffee
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 #: app/assets/javascripts/app/models/mention.coffee
+#: app/assets/javascripts/app/models/user_overview_sorting.coffee
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
@@ -11873,6 +12129,8 @@ msgstr "適用在查看工單時"
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 #: app/assets/javascripts/app/views/session.jst.eco
+#: app/frontend/apps/mobile/modules/user/routes.ts
+#: app/frontend/apps/mobile/modules/user/views/UserDetailView.vue
 msgid "User"
 msgstr "使用者"
 
@@ -12208,6 +12466,12 @@ msgstr ""
 #: app/frontend/apps/mobile/router/error.ts
 msgid "We're sorry, but this page doesn't exist."
 msgstr ""
+
+#: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
+#, fuzzy
+#| msgid "We've sent password reset instructions to your email address."
+msgid "We've sent admin password login instructions to your email address."
+msgstr "我們已將密碼重設說明發送到您的電子郵件地址。"
 
 #: app/assets/javascripts/app/controllers/_plugin/user_signup_check.coffee
 msgid ""
@@ -12575,6 +12839,13 @@ msgid ""
 "\n"
 "Once you have created a signature here, you will also need to edit the "
 "groups where you want to use it."
+msgstr ""
+
+#: app/assets/javascripts/app/models/public_link.coffee
+msgid ""
+"You can define links which are shown e.g. in the footer of Zammad's login "
+"screen. These have many purposes, such as displaying a data privacy page for "
+"all people using your Zammad instance."
 msgstr ""
 
 #: app/assets/javascripts/app/views/facebook/app_config.jst.eco
@@ -12960,6 +13231,7 @@ msgstr "之後 (絕對)"
 msgid "after (relative)"
 msgstr "之後 (相對)"
 
+#: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco
 msgid "again"
 msgstr "再一次"
@@ -13046,6 +13318,7 @@ msgstr "清除"
 msgid "close"
 msgstr "關閉"
 
+#: app/frontend/apps/mobile/components/CommonTicketStateList/CommonTicketStateList.vue
 #: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
 msgid "closed"
 msgstr "已關閉"
@@ -13525,7 +13798,9 @@ msgid "new & open"
 msgstr "新增 & 開啟"
 
 #: app/assets/javascripts/app/controllers/_ui_element/boolean.coffee
+#: app/assets/javascripts/app/models/public_link.coffee
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco
+#: app/frontend/apps/mobile/components/CommonObjectAttributes/AttributeBoolean/AttributeBoolean.vue
 msgid "no"
 msgstr "否"
 
@@ -13580,6 +13855,7 @@ msgstr "傳送通知的寄件人"
 msgid "now"
 msgstr "否"
 
+#: app/frontend/apps/mobile/components/CommonTicketStateList/CommonTicketStateList.vue
 #: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
 msgid "open"
 msgstr "開啟"
@@ -13901,7 +14177,9 @@ msgid "within next (relative)"
 msgstr "在下一個 (相對)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/boolean.coffee
+#: app/assets/javascripts/app/models/public_link.coffee
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco
+#: app/frontend/apps/mobile/components/CommonObjectAttributes/AttributeBoolean/AttributeBoolean.vue
 msgid "yes"
 msgstr "是的"
 
@@ -13963,6 +14241,27 @@ msgid "∅ Waiting time today"
 msgstr "∅ 今日等待時間"
 
 #, fuzzy
+#~| msgid "Order"
+#~ msgid " Order"
+#~ msgstr "排序"
+
+#~ msgid "Order"
+#~ msgstr "排序"
+
+#, fuzzy
+#~| msgid "Reporting"
+#~ msgid "Sorting"
+#~ msgstr "統計報告"
+
+#, fuzzy
+#~| msgid "Edit Organization"
+#~ msgid "Edit organization"
+#~ msgstr "編輯機構"
+
+#~ msgid "Activates lost password feature for users."
+#~ msgstr "啟用使用者的自行重置密碼功能。"
+
+#, fuzzy
 #~| msgid "Name"
 #~ msgid "me"
 #~ msgstr "名稱"
@@ -13982,11 +14281,6 @@ msgstr "∅ 今日等待時間"
 #~| msgid "You have closed a ticket"
 #~ msgid "Could not load the ticket"
 #~ msgstr "您關閉了一個工單"
-
-#, fuzzy
-#~| msgid "Block Notifications"
-#~ msgid "Ticket notifications"
-#~ msgstr "封鎖通知"
 
 #, fuzzy
 #~| msgid "Accounted Time"
@@ -14014,9 +14308,6 @@ msgstr "∅ 今日等待時間"
 
 #~ msgid "Next in tab"
 #~ msgstr "下一個頁籤"
-
-#~ msgid "Order"
-#~ msgstr "排序"
 
 #~ msgid "Order by Direction"
 #~ msgstr "依方向排序"
@@ -14100,9 +14391,6 @@ msgstr "∅ 今日等待時間"
 #~ msgid ""
 #~ "Last customer contact (without consideration an agent has replied to it)"
 #~ msgstr "上次客戶聯繫 (不考慮是否已由客服人員回覆)"
-
-#~ msgid "Open"
-#~ msgstr "開啟"
 
 #~ msgid "Pending reached"
 #~ msgstr "待處理已到期"

@@ -553,6 +553,11 @@ msgstr "API token"
 msgid "About"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_channel/form.coffee
+#: app/assets/javascripts/app/views/channel/form.jst.eco
+msgid "Accept Data Privacy Policy & Acceptable Use Policy"
+msgstr ""
+
 #: db/seeds/permissions.rb
 msgid "Access to %s"
 msgstr "Accéder à %s"
@@ -648,8 +653,10 @@ msgid "Activate the recursive processing of ticket triggers."
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Activates lost password feature for users."
-msgstr "Active la fonction de mot de passe perdu pour les utilisateurs."
+msgid ""
+"Activates lost password feature for users. This setting is only effective if "
+"the password login is enabled."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 #: app/assets/javascripts/app/models/chat.coffee
@@ -673,6 +680,7 @@ msgstr "Active la fonction de mot de passe perdu pour les utilisateurs."
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
+#: app/frontend/apps/mobile/components/Organization/OrganizationEditDialog.vue
 #: db/seeds/object_manager_attributes.rb
 msgid "Active"
 msgstr "Activer"
@@ -770,6 +778,10 @@ msgstr "Ajouter une Note"
 msgid "Add a Personal Access Token"
 msgstr "Ajouter un jeton d'accès personnel"
 
+#: app/assets/javascripts/app/views/channel/form.jst.eco
+msgid "Add agreement text before submit."
+msgstr ""
+
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 msgid "Add alarm to pending reminder and escalated tickets."
 msgstr ""
@@ -852,6 +864,12 @@ msgstr "Administrateur"
 #: db/seeds/permissions.rb
 msgid "Admin Interface"
 msgstr ""
+
+#: app/assets/javascripts/app/controllers/admin_password_auth.coffee
+#, fuzzy
+#| msgid "Bind Password"
+msgid "Admin Password Login"
+msgstr "Lier le mot de passe"
 
 #: app/assets/javascripts/app/views/getting_started/admin.jst.eco
 msgid "Administrator Account"
@@ -1020,6 +1038,12 @@ msgstr ""
 msgid "Answers"
 msgstr "Réponses"
 
+#: app/assets/javascripts/app/views/knowledge_base/_reader_list_item.jst.eco
+#, fuzzy
+#| msgid "Answers"
+msgid "Answers: %s"
+msgstr "Réponses"
+
 #: app/assets/javascripts/app/lib/app_post/iconset_picker.coffee
 msgid "Anticon"
 msgstr ""
@@ -1128,6 +1152,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/delete.coffee
 #: app/assets/javascripts/app/controllers/widget/template.coffee
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue
 msgid "Are you sure?"
 msgstr ""
 
@@ -1235,6 +1260,18 @@ msgstr ""
 #: app/models/role.rb app/models/user.rb
 msgid "At least one user needs to have admin permissions."
 msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue
+#, fuzzy
+#| msgid "Attached Files"
+msgid "Attach another file"
+msgstr "Fichiers joints"
+
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue
+#, fuzzy
+#| msgid "Attached Files"
+msgid "Attach files"
+msgstr "Fichiers joints"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 #, fuzzy
@@ -1795,6 +1832,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/knowledge_base/scheduled_widget.jst.eco
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue
+#: app/frontend/apps/mobile/components/Organization/OrganizationEditDialog.vue
 #: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
 #: app/frontend/apps/mobile/modules/search/views/SearchOverview.vue
 #: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
@@ -1802,6 +1840,8 @@ msgid "Cancel"
 msgstr "Annuler"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal.coffee
+#: app/assets/javascripts/app/views/admin_password_auth/request.jst.eco
+#: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco
 #: app/assets/javascripts/app/views/agent_user_create.jst.eco
 #: app/assets/javascripts/app/views/customer_ticket_create.jst.eco
@@ -2431,6 +2471,7 @@ msgid "Content was changed since loading"
 msgstr ""
 
 #: app/assets/javascripts/app/models/core_workflow.coffee
+#: app/assets/javascripts/app/models/public_link.coffee
 msgid "Context"
 msgstr ""
 
@@ -2617,6 +2658,18 @@ msgstr ""
 msgid "Create new records"
 msgstr "Créer de nouveaux enregistrements"
 
+#: app/frontend/apps/mobile/entities/organization/composables/useOrganizationTicketsCount.ts
+#, fuzzy
+#| msgid "Tickets of Organization"
+msgid "Create new ticket for this organization"
+msgstr "Billets de l'organisation"
+
+#: app/frontend/apps/mobile/entities/user/composables/useUserTicketsCount.ts
+#, fuzzy
+#| msgid "Tickets of Organization"
+msgid "Create new ticket for this user"
+msgstr "Billets de l'organisation"
+
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee
 msgid "Create organizations automatically if record has one."
 msgstr ""
@@ -2627,6 +2680,12 @@ msgid ""
 msgstr ""
 "Créez des règles qui distinguent les billets pour l'accord de niveau de "
 "service."
+
+#: app/frontend/shared/components/Form/fields/FieldTags/FieldTagsDialog.vue
+#, fuzzy
+#| msgid "Created at"
+msgid "Create tag"
+msgstr "Créé à"
 
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
 msgid "Create your first ticket"
@@ -2776,6 +2835,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 #: app/controllers/time_accountings_controller.rb
+#: app/frontend/apps/mobile/modules/ticket/views/TicketInformationView.vue
 #: app/graphql/gql/types/overview_type.rb db/seeds/object_manager_attributes.rb
 #: db/seeds/roles.rb db/seeds/ticket_article_senders.rb
 #: lib/excel_sheet/ticket.rb
@@ -3790,6 +3850,10 @@ msgstr "Département"
 msgid "Description"
 msgstr "Description"
 
+#: app/assets/javascripts/app/models/public_link.coffee
+msgid "Description (shown as title tag for screen readers)"
+msgstr ""
+
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Designer"
@@ -3897,6 +3961,12 @@ msgstr "Ignorez les modifications non enregistrées."
 msgid "Display"
 msgstr "Afficher"
 
+#: app/assets/javascripts/app/models/public_link.coffee
+#, fuzzy
+#| msgid "Display name"
+msgid "Display in new tab"
+msgstr "Afficher un nom"
+
 #: app/assets/javascripts/app/models/email_address.coffee
 msgid "Display name"
 msgstr "Afficher un nom"
@@ -3947,10 +4017,12 @@ msgstr "Voulez-vous vraiment supprimer cet objet?"
 msgid "Do you really want to set the visibility of this article to \"public\"?"
 msgstr "Voulez-vous vraiment supprimer cet objet?"
 
+#: app/frontend/apps/mobile/components/Organization/OrganizationEditDialog.vue
 #: db/seeds/object_manager_attributes.rb
 msgid "Domain"
 msgstr "Domaine"
 
+#: app/frontend/apps/mobile/components/Organization/OrganizationEditDialog.vue
 #: db/seeds/object_manager_attributes.rb
 msgid "Domain based assignment"
 msgstr "Affectation basée sur le domaine"
@@ -3977,7 +4049,7 @@ msgstr "Terminé"
 msgid "Download"
 msgstr ""
 
-#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleAttachment.vue
+#: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue
 #, fuzzy
 #| msgid "Download %s record(s)"
 msgid "Download %s"
@@ -4056,17 +4128,22 @@ msgstr "Fête de Pâques"
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
+#: app/frontend/apps/mobile/components/Organization/OrganizationEditDialog.vue
 #: app/frontend/apps/mobile/modules/home/views/Home.vue
+#: app/frontend/apps/mobile/modules/organization/views/OrganizationDetailView.vue
+#: app/frontend/apps/mobile/modules/user/views/UserDetailView.vue
 msgid "Edit"
 msgstr "Modifier"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_customer.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee
+#: app/frontend/apps/mobile/modules/ticket/views/TicketInformationCustomer.vue
 msgid "Edit Customer"
 msgstr "Modifier le client"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_organization.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_organization.coffee
+#: app/frontend/apps/mobile/modules/ticket/views/TicketInformationOrganization.vue
 msgid "Edit Organization"
 msgstr "Modifier l'organisation"
 
@@ -4425,7 +4502,11 @@ msgid "Enables user authentication via Weibo."
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Enables users to create their own account via web interface."
+#, fuzzy
+#| msgid "Enables users to create their own account via web interface."
+msgid ""
+"Enables users to create their own account via web interface. This setting is "
+"only effective if the password login is enabled."
 msgstr ""
 "Permet aux utilisateurs de créer leur propre compte via l'interface Web."
 
@@ -4567,6 +4648,7 @@ msgstr ""
 "Saisissez votre adresse courriel et le jeton d'API %s obtenu à partir de "
 "votre interface d'administration."
 
+#: app/assets/javascripts/app/controllers/admin_password_auth.coffee
 #: app/assets/javascripts/app/controllers/password_reset.coffee
 msgid "Enter your username or email address"
 msgstr "Entrez votre nom d'utilisateur ou votre adresse courriel"
@@ -4974,6 +5056,12 @@ msgstr ""
 #: app/frontend/shared/router/guards/before/permission.ts
 msgid "Forbidden"
 msgstr ""
+
+#: app/assets/javascripts/app/models/public_link.coffee
+#, fuzzy
+#| msgid "Forgot password?"
+msgid "Forgot Password Screen"
+msgstr "Mot de passe oublié?"
 
 #: app/assets/javascripts/app/views/login.jst.eco
 #: app/frontend/apps/mobile/modules/login/views/Login.vue
@@ -5724,6 +5812,7 @@ msgstr ""
 "Si cette expression régulière correspond, aucune notification ne sera "
 "envoyée par l'expéditeur."
 
+#: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco
 msgid ""
 "If you don't receive instructions within a minute or two, check your email's "
@@ -5742,6 +5831,12 @@ msgstr ""
 "Si vous ne voyez pas le courriel, vérifiez les autres endroits où il "
 "pourrait se trouver: dossiers des indésirables, pourriels, média sociaux ou "
 "autres."
+
+#: app/assets/javascripts/app/views/login.jst.eco
+msgid ""
+"If you have problems with the third-party login you can request a one-time "
+"password login as an admin."
+msgstr ""
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 msgid ""
@@ -5801,7 +5896,7 @@ msgstr ""
 msgid "Image Service"
 msgstr "Service d'imagerie"
 
-#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleAttachment.vue
+#: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue
 #, fuzzy
 #| msgid "Manage %s"
 msgid "Image of %s"
@@ -6517,6 +6612,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/link_button.coffee
 #: app/assets/javascripts/app/controllers/ticket_link_add.coffee
 #: app/assets/javascripts/app/models/overview.coffee
+#: app/assets/javascripts/app/models/public_link.coffee
 msgid "Link"
 msgstr "Lien"
 
@@ -6643,6 +6739,10 @@ msgstr ""
 msgid "Login"
 msgstr "S'authentifier"
 
+#: app/assets/javascripts/app/models/public_link.coffee
+msgid "Login Screen"
+msgstr ""
+
 #: app/controllers/application_controller/authenticates.rb
 #: app/graphql/gql/mutations/login.rb
 msgid ""
@@ -6746,7 +6846,6 @@ msgstr "Gérez vos paramètres de notifications"
 #: app/assets/javascripts/app/views/api.jst.eco
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco
-#: app/assets/javascripts/app/views/generic/admin/index.jst.eco
 #: app/assets/javascripts/app/views/package.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
 #: app/assets/javascripts/app/views/user.jst.eco
@@ -6851,6 +6950,7 @@ msgstr "Mode"
 #: app/assets/javascripts/app/views/organization_profile/object.jst.eco
 #: app/assets/javascripts/app/views/popover/organization.jst.eco
 #: app/assets/javascripts/app/views/widget/organization.jst.eco
+#: app/frontend/apps/mobile/components/Organization/OrganizationMembersList.vue
 msgid "Members"
 msgstr "Membres"
 
@@ -7158,6 +7258,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/ticket_state.coffee
 #: app/assets/javascripts/app/models/trigger.coffee
 #: app/assets/javascripts/app/models/twitter.coffee
+#: app/assets/javascripts/app/models/user_overview_sorting_overview.coffee
 #: app/assets/javascripts/app/models/webhook.coffee
 #: app/assets/javascripts/app/views/channel/topics.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
@@ -7302,6 +7403,12 @@ msgstr "Nouvel aperçu"
 #: app/assets/javascripts/app/controllers/report_profile.coffee
 msgid "New Profile"
 msgstr "Nouveau Rapport"
+
+#: app/assets/javascripts/app/controllers/public_link.coffee
+#, fuzzy
+#| msgid "Public Menu"
+msgid "New Public Link"
+msgstr "Menu Publique"
 
 #: app/assets/javascripts/app/controllers/role.coffee
 msgid "New Role"
@@ -7675,6 +7782,7 @@ msgstr "Non configuré"
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
+#: app/frontend/apps/mobile/components/Organization/OrganizationEditDialog.vue
 #: db/seeds/object_manager_attributes.rb
 msgid "Note"
 msgstr "Note"
@@ -7864,6 +7972,12 @@ msgstr ""
 msgid "Oops.. I'm sorry, but you have insufficient rights to open this %s."
 msgstr ""
 
+#: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue
+#, fuzzy
+#| msgid "Open"
+msgid "Open %s"
+msgstr "Ouverts"
+
 #: app/assets/javascripts/app/views/dashboard/first_steps_test_ticket_finish.jst.eco
 msgid "Open Ticket# %s"
 msgstr "Ouvrir le billet # %s"
@@ -7904,6 +8018,12 @@ msgstr "Options"
 msgid "Or migrate from another system."
 msgstr "Ou migrer d'un autre système."
 
+#: app/assets/javascripts/app/controllers/_profile/overviews.coffee
+#, fuzzy
+#| msgid "New Overview"
+msgid "Order of Overviews"
+msgstr "Nouvel aperçu"
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_organization.coffee
@@ -7921,6 +8041,9 @@ msgstr "Ou migrer d'un autre système."
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 #: app/controllers/time_accountings_controller.rb
+#: app/frontend/apps/mobile/modules/organization/routes.ts
+#: app/frontend/apps/mobile/modules/organization/views/OrganizationDetailView.vue
+#: app/frontend/apps/mobile/modules/ticket/views/TicketInformationView.vue
 #: app/graphql/gql/types/overview_type.rb db/seeds/object_manager_attributes.rb
 #: db/seeds/settings.rb lib/excel_sheet/ticket.rb
 msgid "Organization"
@@ -7938,6 +8061,12 @@ msgstr "Nom de l'organisation"
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 msgid "Organization Support"
 msgstr "Assistance pour l'organisation"
+
+#: app/frontend/apps/mobile/modules/user/views/UserDetailView.vue
+#, fuzzy
+#| msgid "My Organization Tickets"
+msgid "Organization tickets"
+msgstr "Mes billets de mon organisation"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_organization.coffee
 #: app/assets/javascripts/app/controllers/organization.coffee
@@ -8021,7 +8150,14 @@ msgstr "Navigateur"
 
 #: app/assets/javascripts/app/controllers/overview.coffee
 #: app/assets/javascripts/app/models/group.coffee
+#: app/assets/javascripts/app/models/user_overview_sorting.coffee
 msgid "Overview"
+msgstr "Vue d'ensemble"
+
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Overviews"
+msgid "Overview Sortings"
 msgstr "Vue d'ensemble"
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
@@ -8030,6 +8166,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
+#: app/assets/javascripts/app/controllers/_profile/overviews.coffee
 #: app/assets/javascripts/app/controllers/overview.coffee
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: db/seeds/permissions.rb
@@ -8127,6 +8264,12 @@ msgstr "Mot de passe"
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid "Password Access"
 msgstr "Accès par mot de passe"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Password"
+msgid "Password Login"
+msgstr "Mot de passe"
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
 msgid "Password changed successfully!"
@@ -8229,6 +8372,10 @@ msgstr "Jetons d'accès personnels"
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
 msgid "Personal Settings"
 msgstr "Réglages personnels"
+
+#: app/assets/javascripts/app/controllers/_profile/overviews.coffee
+msgid "Personal overview order was reset."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/cti.coffee
 #: db/seeds/object_manager_attributes.rb
@@ -8381,7 +8528,15 @@ msgstr ""
 msgid "Postmaster Filter"
 msgstr ""
 
+#: app/assets/javascripts/app/views/admin_password_auth/request.jst.eco
+#: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/assets/javascripts/app/views/password/reset.jst.eco
+#: app/assets/javascripts/app/views/password/reset_change.jst.eco
+#: app/assets/javascripts/app/views/password/reset_failed.jst.eco
+#: app/assets/javascripts/app/views/password/reset_sent.jst.eco
+#: app/assets/javascripts/app/views/signup.jst.eco
+#: app/assets/javascripts/app/views/signup/verify.jst.eco
 #: app/frontend/apps/mobile/modules/login/views/Login.vue
 msgid "Powered by"
 msgstr "Propulsé par"
@@ -8398,6 +8553,12 @@ msgstr "Date \"Pretty\""
 #: app/assets/javascripts/app/views/settings/ticket_number.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 msgid "Preview"
+msgstr "Grand (L)"
+
+#: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue
+#, fuzzy
+#| msgid "Preview"
+msgid "Preview %s"
 msgstr "Grand (L)"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
@@ -8425,6 +8586,8 @@ msgid "Previously owned tickets (%s in total)"
 msgstr ""
 
 #: app/assets/javascripts/app/models/overview.coffee
+#: app/assets/javascripts/app/models/public_link.coffee
+#: app/assets/javascripts/app/models/user_overview_sorting.coffee
 msgid "Prio"
 msgstr "Prio"
 
@@ -8516,6 +8679,23 @@ msgstr "Adresse Proxy"
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 msgid "Public"
 msgstr "Publique"
+
+#: app/assets/javascripts/app/controllers/public_link.coffee
+#, fuzzy
+#| msgid "Public Menu"
+msgid "Public Link"
+msgstr "Menu Publique"
+
+#: app/assets/javascripts/app/controllers/public_link.coffee
+#: db/seeds/permissions.rb
+#, fuzzy
+#| msgid "Public Menu"
+msgid "Public Links"
+msgstr "Menu Publique"
+
+#: app/assets/javascripts/app/controllers/public_link.coffee
+msgid "Public Links are …"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
 #: app/assets/javascripts/app/views/knowledge_base/public_menu_manager.jst.eco
@@ -8691,6 +8871,12 @@ msgstr ""
 msgid "Remove"
 msgstr "Supprimer"
 
+#: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue
+#, fuzzy
+#| msgid "Remove"
+msgid "Remove %s"
+msgstr "Supprimer"
+
 #: app/frontend/shared/form/i18n/locales.ts
 #, fuzzy
 #| msgid "Remove"
@@ -8769,6 +8955,14 @@ msgstr ""
 msgid "Request for Change"
 msgstr ""
 
+#: app/assets/javascripts/app/views/admin_password_auth/request.jst.eco
+msgid "Request password login for admin?"
+msgstr ""
+
+#: app/assets/javascripts/app/views/login.jst.eco
+msgid "Request the password login here."
+msgstr ""
+
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid "Requesting the Grant"
 msgstr "Demande de \"GRANT\""
@@ -8812,6 +9006,12 @@ msgstr ""
 #: app/assets/javascripts/app/views/translation/index.jst.eco
 msgid "Reset changes"
 msgstr "Réinitialiser les modifications"
+
+#: app/assets/javascripts/app/controllers/_profile/overviews.coffee
+#, fuzzy
+#| msgid "Reset Password"
+msgid "Reset overview order"
+msgstr "Réinitialiser le mot de passe"
 
 #: app/assets/javascripts/app/controllers/translation.coffee
 msgid "Resetting changes…"
@@ -9029,6 +9229,7 @@ msgstr "Samedi"
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 #: app/assets/javascripts/app/views/widget/template.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
+#: app/frontend/apps/mobile/components/Organization/OrganizationEditDialog.vue
 #: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
 msgid "Save"
 msgstr "Sauvegarder"
@@ -9138,6 +9339,8 @@ msgstr "Recherche"
 msgid "Search…"
 msgstr "Recherche…"
 
+#: app/frontend/apps/mobile/modules/ticket/views/TicketInformationCustomer.vue
+#: app/frontend/apps/mobile/modules/user/views/UserDetailView.vue
 #: db/seeds/object_manager_attributes.rb
 #, fuzzy
 #| msgid "Shared organization"
@@ -9489,6 +9692,7 @@ msgid "Shared draft cannot be selected for this ticket."
 msgstr ""
 
 #: app/assets/javascripts/app/models/organization.coffee
+#: app/frontend/apps/mobile/components/Organization/OrganizationEditDialog.vue
 #: db/seeds/object_manager_attributes.rb
 msgid "Shared organization"
 msgstr "Organisation partagée"
@@ -9511,6 +9715,12 @@ msgstr ""
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 msgid "Show"
 msgstr "Afficher"
+
+#: app/frontend/apps/mobile/components/CommonUsersList/CommonUsersList.vue
+#, fuzzy
+#| msgid "See more"
+msgid "Show %s more"
+msgstr "Voir plus"
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_overwrite_modal.coffee
 #, fuzzy
@@ -9543,6 +9753,12 @@ msgstr "Afficher les détails de la recherche"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Show next tab"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid ""
+"Show password login for users on login page. Disabling only takes effect if "
+"third-party authentication is enabled."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
@@ -9602,6 +9818,12 @@ msgstr ""
 msgid "Sign in"
 msgstr "Se connecter"
 
+#: app/assets/javascripts/app/views/login.jst.eco
+#, fuzzy
+#| msgid "or sign in using"
+msgid "Sign in using"
+msgstr "ou connectez-vous en utilisant"
+
 #: app/assets/javascripts/app/controllers/logout.coffee
 #: app/frontend/apps/mobile/modules/account/views/AccountOverview.vue
 msgid "Sign out"
@@ -9630,6 +9852,12 @@ msgstr "Signatures"
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 msgid "Signed"
 msgstr ""
+
+#: app/assets/javascripts/app/models/public_link.coffee
+#, fuzzy
+#| msgid "Signature"
+msgid "Signup Screen"
+msgstr "Signature"
 
 #: app/assets/javascripts/app/lib/app_post/iconset_picker.coffee
 msgid "Simple Line Icons"
@@ -9709,6 +9937,7 @@ msgstr ""
 msgid "Something went wrong. Please contact your administrator."
 msgstr ""
 
+#: app/frontend/apps/mobile/modules/organization/views/OrganizationDetailView.vue
 #: app/frontend/apps/mobile/modules/ticket/views/TicketDetailView.vue
 msgid "Sorry, but you have insufficient rights to open this page."
 msgstr ""
@@ -9907,6 +10136,7 @@ msgstr "Objet"
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee
 #: app/assets/javascripts/app/controllers/tag.coffee
 #: app/assets/javascripts/app/controllers/widget/button_with_dropdown.coffee
+#: app/assets/javascripts/app/views/admin_password_auth/request.jst.eco
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/vertical_form.jst.eco
 #: app/assets/javascripts/app/views/password/reset.jst.eco
@@ -10015,6 +10245,7 @@ msgstr "L'onglet a changé, voulez-vous vraiment le fermer?"
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco
 #: app/assets/javascripts/app/views/tag/index.jst.eco
 #: app/assets/javascripts/app/views/widget/tag.jst.eco
+#: app/frontend/shared/components/Form/fields/FieldTags/FieldTagsDialog.vue
 #: app/views/knowledge_base/public/answers/show.html.erb
 #: db/seeds/object_manager_attributes.rb db/seeds/permissions.rb
 #: lib/excel_sheet/ticket.rb
@@ -10697,6 +10928,10 @@ msgstr ""
 msgid "The tickets could not be merged."
 msgstr "Les billets n'ont pas pu être fusionnés."
 
+#: app/assets/javascripts/app/views/login.jst.eco
+msgid "The token for the admin password login is invalid."
+msgstr ""
+
 #: app/controllers/getting_started_controller.rb
 #: app/controllers/settings_controller.rb
 msgid "The uploaded image could not be processed."
@@ -10714,6 +10949,12 @@ msgstr "La façon de communiquer avec nous est cet objet appelée \"billet\"."
 #: lib/telegram.rb
 msgid "The webhook could not be saved by Telegram, seems to be an invalid URL."
 msgstr ""
+
+#: app/frontend/apps/mobile/modules/user/views/UserDetailView.vue
+#, fuzzy
+#| msgid "Tickets"
+msgid "Their tickets"
+msgstr "Demandes"
 
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
 msgid "Theme"
@@ -11034,7 +11275,9 @@ msgstr "Jeudi"
 #: app/assets/javascripts/app/models/signature.coffee
 #: app/assets/javascripts/app/models/text_module.coffee
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
-#: app/frontend/apps/mobile/modules/ticket/routes.ts db/seeds/permissions.rb
+#: app/frontend/apps/mobile/modules/ticket/routes.ts
+#: app/frontend/apps/mobile/modules/ticket/views/TicketInformationView.vue
+#: db/seeds/permissions.rb
 msgid "Ticket"
 msgstr "Billet"
 
@@ -11139,6 +11382,13 @@ msgstr "Tickets assignés à moi: %s of %s"
 #| msgid "New Overview"
 msgid "Ticket has %s viewers"
 msgstr "Nouvel aperçu"
+
+#: app/frontend/apps/mobile/modules/ticket/routes.ts
+#: app/frontend/apps/mobile/modules/ticket/views/TicketInformationView.vue
+#, fuzzy
+#| msgid "Block Notifications"
+msgid "Ticket information"
+msgstr "Bloquer les notifications"
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 msgid "Ticket reminder reached"
@@ -11277,6 +11527,7 @@ msgstr "Minutage"
 #: app/assets/javascripts/app/models/knowledge_base_answer.coffee
 #: app/assets/javascripts/app/models/knowledge_base_category.coffee
 #: app/assets/javascripts/app/models/knowledge_base_translation.coffee
+#: app/assets/javascripts/app/models/public_link.coffee
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/public_menu_form_item.jst.eco
@@ -11812,6 +12063,7 @@ msgstr "Utilisé lors de la visualisation d'un billet"
 #: app/assets/javascripts/app/lib/app_post/user_organization_autocompletion.coffee
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 #: app/assets/javascripts/app/models/mention.coffee
+#: app/assets/javascripts/app/models/user_overview_sorting.coffee
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
@@ -11820,6 +12072,8 @@ msgstr "Utilisé lors de la visualisation d'un billet"
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 #: app/assets/javascripts/app/views/session.jst.eco
+#: app/frontend/apps/mobile/modules/user/routes.ts
+#: app/frontend/apps/mobile/modules/user/views/UserDetailView.vue
 msgid "User"
 msgstr "Utilisateur"
 
@@ -12156,6 +12410,14 @@ msgstr ""
 #: app/frontend/apps/mobile/router/error.ts
 msgid "We're sorry, but this page doesn't exist."
 msgstr ""
+
+#: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
+#, fuzzy
+#| msgid "We've sent password reset instructions to your email address."
+msgid "We've sent admin password login instructions to your email address."
+msgstr ""
+"Nous avons envoyé des instructions de réinitialisation de mot de passe à "
+"votre adresse courriel."
 
 #: app/assets/javascripts/app/controllers/_plugin/user_signup_check.coffee
 msgid ""
@@ -12538,6 +12800,13 @@ msgid ""
 "\n"
 "Once you have created a signature here, you will also need to edit the "
 "groups where you want to use it."
+msgstr ""
+
+#: app/assets/javascripts/app/models/public_link.coffee
+msgid ""
+"You can define links which are shown e.g. in the footer of Zammad's login "
+"screen. These have many purposes, such as displaying a data privacy page for "
+"all people using your Zammad instance."
 msgstr ""
 
 #: app/assets/javascripts/app/views/facebook/app_config.jst.eco
@@ -12944,6 +13213,7 @@ msgstr "Après (Absolue)"
 msgid "after (relative)"
 msgstr "Après (Relative)"
 
+#: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco
 msgid "again"
 msgstr "encore"
@@ -13030,6 +13300,7 @@ msgstr "effacer"
 msgid "close"
 msgstr "Fermer"
 
+#: app/frontend/apps/mobile/components/CommonTicketStateList/CommonTicketStateList.vue
 #: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
 msgid "closed"
 msgstr "fermé"
@@ -13505,7 +13776,9 @@ msgid "new & open"
 msgstr "Nouveau et Ouvert"
 
 #: app/assets/javascripts/app/controllers/_ui_element/boolean.coffee
+#: app/assets/javascripts/app/models/public_link.coffee
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco
+#: app/frontend/apps/mobile/components/CommonObjectAttributes/AttributeBoolean/AttributeBoolean.vue
 msgid "no"
 msgstr "non"
 
@@ -13560,6 +13833,7 @@ msgstr "Expéditeur de notification"
 msgid "now"
 msgstr "non"
 
+#: app/frontend/apps/mobile/components/CommonTicketStateList/CommonTicketStateList.vue
 #: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
 msgid "open"
 msgstr "ouverte"
@@ -13873,7 +14147,9 @@ msgid "within next (relative)"
 msgstr "suivant (relatif)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/boolean.coffee
+#: app/assets/javascripts/app/models/public_link.coffee
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco
+#: app/frontend/apps/mobile/components/CommonObjectAttributes/AttributeBoolean/AttributeBoolean.vue
 msgid "yes"
 msgstr "oui"
 
@@ -13934,6 +14210,27 @@ msgstr "... de toute la zone de texte"
 msgid "∅ Waiting time today"
 msgstr "∅ TEMPS D'ATTENTE AUJOURD'HUI"
 
+#, fuzzy
+#~| msgid "Order"
+#~ msgid " Order"
+#~ msgstr "Ordre"
+
+#~ msgid "Order"
+#~ msgstr "Ordre"
+
+#, fuzzy
+#~| msgid "Reporting"
+#~ msgid "Sorting"
+#~ msgstr "Rapports"
+
+#, fuzzy
+#~| msgid "Edit Organization"
+#~ msgid "Edit organization"
+#~ msgstr "Modifier l'organisation"
+
+#~ msgid "Activates lost password feature for users."
+#~ msgstr "Active la fonction de mot de passe perdu pour les utilisateurs."
+
 #~ msgid "me"
 #~ msgstr "moi"
 
@@ -13952,11 +14249,6 @@ msgstr "∅ TEMPS D'ATTENTE AUJOURD'HUI"
 #~| msgid "You have closed a ticket"
 #~ msgid "Could not load the ticket"
 #~ msgstr "Vous avez fermé un billet"
-
-#, fuzzy
-#~| msgid "Block Notifications"
-#~ msgid "Ticket notifications"
-#~ msgstr "Bloquer les notifications"
 
 #, fuzzy
 #~| msgid "Accounted Time"
@@ -13986,9 +14278,6 @@ msgstr "∅ TEMPS D'ATTENTE AUJOURD'HUI"
 
 #~ msgid "Next in tab"
 #~ msgstr "Suivant dans l'onglet"
-
-#~ msgid "Order"
-#~ msgstr "Ordre"
 
 #~ msgid "Order by Direction"
 #~ msgstr "Direction de l'ordre"
@@ -14061,9 +14350,6 @@ msgstr "∅ TEMPS D'ATTENTE AUJOURD'HUI"
 #~ msgid ""
 #~ "Last customer contact (without consideration an agent has replied to it)"
 #~ msgstr "Dernier contact client (sans considérer qu'un agent y ait répondu)"
-
-#~ msgid "Open"
-#~ msgstr "Ouverts"
 
 #~ msgid "Pending reached"
 #~ msgstr "Temps d'attente atteint"
