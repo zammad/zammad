@@ -933,53 +933,6 @@ RSpec.describe 'Ticket zoom', type: :system do
     end
   end
 
-  describe 'linking Knowledge Base answer' do
-    include_context 'basic Knowledge Base'
-
-    let(:ticket)       { create :ticket, group: Group.find_by(name: 'Users') }
-    let(:answer)       { published_answer }
-    let(:translation)  { answer.translations.first }
-
-    shared_examples 'verify linking' do
-      it 'allows to look up an answer' do
-        visit "#ticket/zoom/#{ticket.id}"
-
-        within :active_content do
-          wait.until_exists { find('.link_kb_answers') }
-
-          within '.link_kb_answers' do
-            find('.js-add').click
-
-            find('.js-input').send_keys translation.title
-
-            find(%(li[data-value="#{translation.id}"])).click
-
-            expect(find('.link_kb_answers ol')).to have_text translation.title
-          end
-        end
-      end
-    end
-
-    context 'with ES', searchindex: true do
-      before do
-        answer && translation
-        searchindex_model_reload([::KnowledgeBase::Translation, ::KnowledgeBase::Category::Translation, ::KnowledgeBase::Answer::Translation])
-      end
-
-      include_examples 'verify linking', elasticsearch: true
-    end
-
-    context 'without ES', performs_jobs: true do
-      before do
-        Setting.set('es_url', nil)
-        answer && translation
-        perform_enqueued_jobs
-      end
-
-      include_examples 'verify linking', elasticsearch: false
-    end
-  end
-
   describe 'forwarding article with an image' do
     let(:ticket_article_body) do
       filename = 'squares.png'
@@ -1045,7 +998,7 @@ RSpec.describe 'Ticket zoom', type: :system do
   # https://github.com/zammad/zammad/issues/3335
   context 'ticket state sort order maintained when locale is de-de', authenticated_as: :user do
     context 'when existing ticket is open' do
-      let(:user) { create(:customer, preferences: { locale: 'de-de' }) }
+      let(:user)   { create(:customer, preferences: { locale: 'de-de' }) }
       let(:ticket) { create(:ticket, customer: user) }
 
       it 'shows ticket state dropdown options in sorted translated alphabetically order' do
