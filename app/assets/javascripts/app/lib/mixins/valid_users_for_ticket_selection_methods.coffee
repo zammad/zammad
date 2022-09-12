@@ -1,6 +1,6 @@
 App.ValidUsersForTicketSelectionMethods =
   validUsersForTicketSelection: ->
-    items = $('.content.active .table-overview .table').find('[name="bulk"]:checked')
+    items = $('.content.active .main .table').find('[name="bulk"]:checked')
 
     # we want to display all users for which we can assign the tickets directly
     # for this we need to get the groups of all selected tickets
@@ -17,7 +17,6 @@ App.ValidUsersForTicketSelectionMethods =
     group_ids     = _.keys(@formMeta?.dependencies?.group_id)
     groups        = App.Group.findAll(group_ids)
     groups_sorted = _.sortBy(groups, (group) -> group.name)
-
     # get the number of visible users per group
     # from the TicketOverviewCollection
     # (filled for e.g. the TicketCreation or TicketZoom assignment)
