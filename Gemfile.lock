@@ -288,6 +288,7 @@ GEM
     mini_mime (1.1.2)
     mini_portile2 (2.8.0)
     minitest (5.16.3)
+    minitest-profile (0.0.2)
     msgpack (1.5.4)
     multi_json (1.15.0)
     multi_xml (0.6.0)
@@ -646,6 +647,7 @@ DEPENDENCIES
   mail!
   messagebird-rest
   mime-types
+  minitest-profile
   mysql2
   net-ldap
   oauth2

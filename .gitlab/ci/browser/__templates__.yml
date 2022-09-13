@@ -14,7 +14,7 @@
     - echo -e "\\e[0Ksection_start:`date +%s`:zammad_ci_test_start[collapsed=true]\\r\\e[0Kbundle exec rake zammad:ci:test:start"
     - bundle exec rake zammad:ci:test:start[with_elasticsearch]
     - echo -e "\\e[0Ksection_end:`date +%s`:zammad_ci_test_start\\r\\e[0K"
-    - time bundle exec rails test --fail-fast test/browser
+    - bundle exec rails test --fail-fast test/browser --profile
 
 .template_browser-core_chrome:
   extends:

@@ -176,6 +176,7 @@ group :development, :test do
   gem 'pry-stack_explorer'
 
   # test frameworks
+  gem 'minitest-profile', require: false
   gem 'rails-controller-testing'
   gem 'rspec-rails'
   gem 'rspec-retry'
