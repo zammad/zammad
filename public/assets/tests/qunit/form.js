@@ -1475,6 +1475,53 @@ QUnit.test("time range form 1", assert => {
     }
   }
   assert.deepEqual(params, test_params, 'form param year range check')
+
+  el.find('.js-range').val('minute').trigger('change')
+  el.find('.js-valueRangeSelector .js-value').val('11').trigger('change')
+
+  el.find('.js-range').val('hour').trigger('change')
+
+  params = App.ControllerForm.params(el)
+  test_params = {
+    "time_range": {
+      "range": "hour",
+      "value": "11"
+    }
+  }
+  assert.deepEqual(params, test_params, 'form param selected value hour check')
+
+  el.find('.js-range').val('day').trigger('change')
+
+  params = App.ControllerForm.params(el)
+  test_params = {
+    "time_range": {
+      "range": "day",
+      "value": "11"
+    }
+  }
+  assert.deepEqual(params, test_params, 'form param selected value day check')
+
+  el.find('.js-range').val('month').trigger('change')
+
+  params = App.ControllerForm.params(el)
+  test_params = {
+    "time_range": {
+      "range": "month",
+      "value": "11"
+    }
+  }
+  assert.deepEqual(params, test_params, 'form param selected value month check')
+
+  el.find('.js-range').val('year').trigger('change')
+
+  params = App.ControllerForm.params(el)
+  test_params = {
+    "time_range": {
+      "range": "year",
+      "value": "11"
+    }
+  }
+  assert.deepEqual(params, test_params, 'form param selected value year check')
 });
 
 QUnit.test("form select with empty option list", assert => {
