@@ -103,8 +103,7 @@ gem 'rack-attack'
 # channels
 gem 'gmail_xoauth'
 gem 'koala'
-# TODO: remove git information after https://github.com/bennesp/telegramAPI/pull/8 is merged
-gem 'telegramAPI', git: 'https://github.com/zammad-deps/telegramAPI', branch: 'uri-escape-warning'
+gem 'telegram-bot-ruby'
 gem 'twitter'
 
 # channels - email additions

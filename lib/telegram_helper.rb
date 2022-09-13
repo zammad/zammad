@@ -1,6 +1,8 @@
 # Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-class Telegram
+require 'telegram/bot'
+
+class TelegramHelper
 
   attr_accessor :client
 
@@ -8,25 +10,27 @@ class Telegram
 
 check token and return bot attributes of token
 
-  bot = Telegram.check_token('token')
+  bot = TelegramHelper.check_token('token')
 
 =end
 
   def self.check_token(token)
-    api = TelegramAPI.new(token)
+    result = nil
     begin
-      bot = api.getMe
+      Telegram::Bot::Client.run(token) do |bot|
+        result = bot.api.getMe['result']
+      end
     rescue
       raise Exceptions::UnprocessableEntity, 'invalid api token'
     end
-    bot
+    result
   end
 
 =begin
 
 set webhook for bot
 
-  success = Telegram.set_webhook('token', callback_url)
+  success = TelegramHelper.set_webhook('token', callback_url)
 
 returns
 
@@ -36,12 +40,13 @@ returns
 
   def self.set_webhook(token, callback_url)
     if callback_url.match?(%r{^http://}i)
-      raise Exceptions::UnprocessableEntity, 'webhook url need to start with https://, you use http://'
+      raise Exceptions::UnprocessableEntity, __('The Telegram integration can only be configured on systems using the HTTPS protocol.')
     end
 
-    api = TelegramAPI.new(token)
     begin
-      api.setWebhook(callback_url)
+      Telegram::Bot::Client.run(token) do |bot|
+        bot.api.setWebhook(url: callback_url)
+      end
     rescue
       raise Exceptions::UnprocessableEntity, __('The webhook could not be saved by Telegram, seems to be an invalid URL.')
     end
@@ -52,7 +57,7 @@ returns
 
 create or update channel, store bot attributes and verify token
 
-  channel = Telegram.create_or_update_channel('token', params)
+  channel = TelegramHelper.create_or_update_channel('token', params)
 
 returns
 
@@ -63,9 +68,9 @@ returns
   def self.create_or_update_channel(token, params, channel = nil)
 
     # verify token
-    bot = Telegram.check_token(token)
+    bot = check_token(token)
 
-    if !channel && Telegram.bot_duplicate?(bot['id'])
+    if !channel && bot_duplicate?(bot['id'])
       raise Exceptions::UnprocessableEntity, __('This bot already exists.')
     end
 
@@ -87,10 +92,10 @@ returns
 
     # set webhook / callback url for this bot @ telegram
     callback_url = "#{Setting.get('http_type')}://#{Setting.get('fqdn')}/api/v1/channels_telegram_webhook/#{callback_token}?bid=#{bot['id']}"
-    Telegram.set_webhook(token, callback_url)
+    set_webhook(token, callback_url)
 
     if !channel
-      channel = Telegram.bot_by_bot_id(bot['id'])
+      channel = bot_by_bot_id(bot['id'])
       if !channel
         channel = Channel.new
       end
@@ -119,7 +124,7 @@ returns
 
 check if bot already exists as channel
 
-  success = Telegram.bot_duplicate?(bot_id)
+  success = TelegramHelper.bot_duplicate?(bot_id)
 
 returns
 
@@ -144,7 +149,7 @@ returns
 
 get channel by bot_id
 
-  channel = Telegram.bot_by_bot_id(bot_id)
+  channel = TelegramHelper.bot_by_bot_id(bot_id)
 
 returns
 
@@ -166,7 +171,7 @@ returns
 
 generate message_id for message
 
-  message_id = Telegram.message_id(message)
+  message_id = TelegramHelper.message_id(message)
 
 returns
 
@@ -200,13 +205,12 @@ returns
 
 =begin
 
-  client = Telegram.new('token')
+  client = TelegramHelper.new('token')
 
 =end
 
   def initialize(token)
     @token = token
-    @api = TelegramAPI.new(token)
   end
 
 =begin
@@ -227,7 +231,9 @@ returns
       message = Translation.translate(locale[:locale], message)
     end
 
-    @api.sendMessage(chat_id, message)
+    Telegram::Bot::Client.run(@token) do |bot|
+      bot.api.sendMessage(chat_id: chat_id, text: message)
+    end
   end
 
   def user(params)
@@ -384,7 +390,7 @@ returns
         sender_id:   Ticket::Article::Sender.find_by(name: 'Customer').id,
         from:        user(params)[:username],
         to:          "@#{channel[:options][:bot][:username]}",
-        message_id:  Telegram.message_id(params),
+        message_id:  TelegramHelper.message_id(params),
         internal:    false,
         preferences: {
           message:   {
@@ -702,11 +708,11 @@ returns
     end
 
     # prevent multiple update
-    return if !params[:edited_message] && Ticket::Article.exists?(message_id: Telegram.message_id(params))
+    return if !params[:edited_message] && Ticket::Article.exists?(message_id: TelegramHelper.message_id(params))
 
     # update article
     if params[:edited_message]
-      article = Ticket::Article.find_by(message_id: Telegram.message_id(params))
+      article = Ticket::Article.find_by(message_id: TelegramHelper.message_id(params))
       return if !article
 
       params[:message] = params[:edited_message]
@@ -787,7 +793,11 @@ returns
   end
 
   def download_file(file_id)
-    document = @api.getFile(file_id)
+    document = nil
+    Telegram::Bot::Client.run(@token) do |bot|
+      document = bot.api.getFile(file_id: file_id)['result']
+    end
+
     url = "https://api.telegram.org/file/bot#{@token}/#{document['file_path']}"
     UserAgent.get(
       url,
