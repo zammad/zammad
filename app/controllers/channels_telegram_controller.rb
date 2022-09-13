@@ -19,7 +19,7 @@ class ChannelsTelegramController < ApplicationController
 
   def add
     begin
-      channel = Telegram.create_or_update_channel(params[:api_token], params)
+      channel = TelegramHelper.create_or_update_channel(params[:api_token], params)
     rescue => e
       raise Exceptions::UnprocessableEntity, e.message
     end
@@ -29,7 +29,7 @@ class ChannelsTelegramController < ApplicationController
   def update
     channel = Channel.find_by(id: params[:id], area: 'Telegram::Bot')
     begin
-      channel = Telegram.create_or_update_channel(params[:api_token], params, channel)
+      channel = TelegramHelper.create_or_update_channel(params[:api_token], params, channel)
     rescue => e
       raise Exceptions::UnprocessableEntity, e.message
     end
@@ -59,14 +59,14 @@ class ChannelsTelegramController < ApplicationController
   def webhook
     raise Exceptions::UnprocessableEntity, 'bot id is missing' if params['bid'].blank?
 
-    channel = Telegram.bot_by_bot_id(params['bid'])
+    channel = TelegramHelper.bot_by_bot_id(params['bid'])
     raise Exceptions::UnprocessableEntity, 'bot not found' if !channel
 
     if channel.options[:callback_token] != params['callback_token']
       raise Exceptions::UnprocessableEntity, 'invalid callback token'
     end
 
-    telegram = Telegram.new(channel.options[:api_token])
+    telegram = TelegramHelper.new(channel.options[:api_token])
     begin
       telegram.to_group(params, channel.group_id, channel)
     rescue Exceptions::UnprocessableEntity => e

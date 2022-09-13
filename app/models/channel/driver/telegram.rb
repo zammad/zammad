@@ -25,7 +25,7 @@ class Channel::Driver::Telegram
 
     options = check_external_credential(options)
 
-    @client = Telegram.new(options[:auth][:api_key])
+    @client = TelegramHelper.new(options[:auth][:api_key])
     @client.from_article(article)
 
   end

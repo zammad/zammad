@@ -18,7 +18,7 @@ class CommunicateTelegramJob < ApplicationJob
     log_error(article, "Can't find ticket.preferences['telegram'] for Ticket.find(#{article.ticket_id})") if !ticket.preferences['telegram']
     log_error(article, "Can't find ticket.preferences['telegram']['chat_id'] for Ticket.find(#{article.ticket_id})") if !ticket.preferences['telegram']['chat_id']
     if ticket.preferences['telegram'] && ticket.preferences['telegram']['bid']
-      channel = Telegram.bot_by_bot_id(ticket.preferences['telegram']['bid'])
+      channel = TelegramHelper.bot_by_bot_id(ticket.preferences['telegram']['bid'])
     end
     if !channel
       channel = Channel.lookup(id: ticket.preferences['channel_id'])
@@ -27,18 +27,27 @@ class CommunicateTelegramJob < ApplicationJob
     # log_error(article, "Channel.find(#{channel.id}) isn't a telegram channel!") if channel.options[:adapter] !~ /\Atelegram/i
     log_error(article, "Channel.find(#{channel.id}) has not telegram api token!") if channel.options[:api_token].blank?
 
+    result = nil
     begin
-      api = TelegramAPI.new(channel.options[:api_token])
-      chat_id = ticket.preferences[:telegram][:chat_id]
-      result = api.sendMessage(chat_id, article.body)
-      me = api.getMe
-      article.attachments.each do |file|
-        parts = file.filename.split(%r{^(.*)(\..+?)$})
-        t = Tempfile.new([parts[1], parts[2]])
-        t.binmode
-        t.write(file.content)
-        t.rewind
-        api.sendDocument(chat_id, t.path.to_s)
+      Telegram::Bot::Client.run(channel.options[:api_token]) do |bot|
+        chat_id = ticket.preferences[:telegram][:chat_id]
+        result = bot.api.sendMessage(chat_id: chat_id, text: article.body)['result']
+
+        article.attachments.each do |file|
+          parts = file.filename.split(%r{^(.*)(\..+?)$})
+          t = Tempfile.new([parts[1], parts[2]])
+          t.binmode
+          t.write(file.content)
+          t.rewind
+
+          upload = Faraday::UploadIO.new(
+            t.path,
+            file.preferences['Content-Type'],
+            file.filename
+          )
+
+          bot.api.sendDocument(chat_id: chat_id, document: upload)
+        end
       end
     rescue => e
       log_error(article, e.message)
