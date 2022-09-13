@@ -6,7 +6,7 @@
         <% if @item.objectNative && @item.objectNative.activityMessage: %>
           <%- @item.objectNative.activityMessage(@item) %>
         <% else: %>
-            Need objectNative in item <%= item.object %>.find(<%= item.o_id %>)
+            Need objectNative in item <%= @item.object %>.find(<%= @item.o_id %>)
         <% end %>
       </span>
       <%- @humanTime(@item.created_at, false, 'activity-time') %>
