@@ -36,7 +36,7 @@ RSpec.describe ::Sequencer::Sequence::Import::Zendesk::Group, sequencer: :sequen
         base_resource.merge('deleted' => false)
       end
 
-      it 'adds groups' do # rubocop:disable RSpec/MultipleExpectations
+      it 'adds groups', :aggregate_failures do
         expect { process(process_payload) }.to change(Group, :count).by(1)
         expect(Group.last).to have_attributes(
           name:   'Additional Group',
@@ -51,7 +51,7 @@ RSpec.describe ::Sequencer::Sequence::Import::Zendesk::Group, sequencer: :sequen
         base_resource.merge('deleted' => true)
       end
 
-      it 'adds groups' do # rubocop:disable RSpec/MultipleExpectations
+      it 'adds groups', :aggregate_failures do
         expect { process(process_payload) }.to change(Group, :count).by(1)
         expect(Group.last).to have_attributes(
           name:   'Additional Group',

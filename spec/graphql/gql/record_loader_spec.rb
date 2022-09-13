@@ -124,7 +124,7 @@ RSpec.describe Gql::RecordLoader, type: :graphql do
       QUERY
     end
 
-    it 'performs only the expected amount of DB queries', authenticated_as: :agent do # rubocop:disable RSpec/ExampleLength, RSpec/MultipleExpectations
+    it 'performs only the expected amount of DB queries', :aggregate_failures, authenticated_as: :agent do # rubocop:disable RSpec/ExampleLength
       # Create variables here and not via let(), otherwise the objects would be instantiated later in the traced block.
       variables = { overviewId: overview_id }
       total_queries = {}
@@ -242,7 +242,7 @@ RSpec.describe Gql::RecordLoader, type: :graphql do
       QUERY
     end
 
-    it 'performs only the expected amount of DB queries', authenticated_as: :agent do # rubocop:disable RSpec/ExampleLength, RSpec/MultipleExpectations
+    it 'performs only the expected amount of DB queries', :aggregate_failures, authenticated_as: :agent do # rubocop:disable RSpec/ExampleLength
       variables = { ticketId: ticket_id, withArticles: true }
       total_queries = {}
       uncached_queries = {}

@@ -67,7 +67,7 @@ RSpec.describe BackgroundServices do
       context 'when disabled' do
         let(:is_disabled) { true }
 
-        it 'stops early if disabled' do # rubocop:disable RSpec/MultipleExpectations
+        it 'stops early if disabled', :aggregate_failures do
           allow(Rails.logger).to receive(:debug)
           instance.send(:run_service, config)
 

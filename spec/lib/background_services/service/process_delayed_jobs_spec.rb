@@ -30,7 +30,7 @@ RSpec.describe BackgroundServices::Service::ProcessDelayedJobs, ensure_threads_e
         end.to change(Delayed::Job, :count).by(-1)
       end
 
-      it 'runs loop multiple times' do # rubocop:disable RSpec/MultipleExpectations
+      it 'runs loop multiple times', :aggregate_failures do
         allow(instance).to receive(:process_results)
 
         ensure_block_keeps_running { instance.run }
@@ -42,7 +42,7 @@ RSpec.describe BackgroundServices::Service::ProcessDelayedJobs, ensure_threads_e
   end
 
   describe '#process_results' do
-    it 'sleeps & loops when no jobs processed' do # rubocop:disable RSpec/MultipleExpectations
+    it 'sleeps & loops when no jobs processed', :aggregate_failures do
       allow(Rails.logger).to receive(:debug)
       instance.send(:process_results, [0, 0], 1)
 
@@ -51,7 +51,7 @@ RSpec.describe BackgroundServices::Service::ProcessDelayedJobs, ensure_threads_e
       end
     end
 
-    it 'loops immediatelly when there was anything to process' do # rubocop:disable RSpec/MultipleExpectations
+    it 'loops immediatelly when there was anything to process', :aggregate_failures do
       allow(Rails.logger).to receive(:debug)
       instance.send(:process_results, [1, 0], 1)
 

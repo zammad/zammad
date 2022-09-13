@@ -3,10 +3,9 @@
 require 'rails_helper'
 require 'rack/handler/puma'
 
-# rubocop:disable RSpec/MultipleExpectations
 # this cop is disabled to speed up testing by avoiding the overhead of multiple requests
 
-RSpec.describe UserAgent, integration: true do
+RSpec.describe UserAgent, :aggregate_failures, integration: true do
   include ZammadSpecSupportRequest
 
   def host_with_port
@@ -568,5 +567,3 @@ RSpec.describe UserAgent, integration: true do
     include_context 'when doing user agent tests'
   end
 end
-
-# rubocop:enable RSpec/MultipleExpectations

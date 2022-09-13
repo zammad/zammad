@@ -30,7 +30,7 @@ RSpec.describe ::Sequencer::Sequence::Import::Freshdesk::Group, sequencer: :sequ
       }
     end
 
-    it 'adds groups' do # rubocop:disable RSpec/MultipleExpectations
+    it 'adds groups', :aggregate_failures do
       expect { process(process_payload) }.to change(Group, :count).by(1)
       expect(Group.last).to have_attributes(
         name:   'QA',
