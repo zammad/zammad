@@ -91,11 +91,20 @@ module Tasks
             #
             # production
             #
-            'rails-dom-testing',  # Rails core stuff
-            'htmlentities',       # widely used and active
-            'promise.rb',         # widely used and active
-            'ffi-compiler',       # widely used and active
-            'unf',                # widely used and active
+            'rails-dom-testing', # Rails core stuff
+            # widely used and/or small language extensions, seem to be safe
+            'axiom-types',
+            'coercible',
+            'descendants_tracker',
+            'ffi-compiler',
+            'htmlentities',
+            'ice_nine',
+            'inflection',
+            'multi_xml',
+            'promise.rb',
+            'thread_safe',
+            'unf',
+            'virtus',
           ].freeze
 
           def self.find_orphaned_gems(age)
