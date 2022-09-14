@@ -1444,6 +1444,20 @@ RSpec.describe String do
           <p>• 1</p><p>• 2</p>
         TEXT
       end
+
+      # https://github.com/zammad/zammad/issues/4184
+      it 'deletes downlevel revealed conditional comments' do
+        expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+          <p class="MsoPlainText" style="margin-left:36.0pt;text-indent:-18.0pt;mso-list:l0 level1 lfo1">
+          <![if !vml]><img width="52" height="52" src="cid:image001.png@01D8AC0A.08251CD0" v:shapes="Picture_x0020_1"><![endif]>
+          <span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;color:black;mso-fareast-language:EN-AU">dummy1</span>
+          <![if !vml]><img width="52" height="52" src="cid:image002.png@01D8AC0A.08251CD1" v:shapes="Picture_x0020_2"><![endif]>
+          <span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;color:black;mso-fareast-language:EN-AU">dummy2</span>
+          </p>
+        HTML
+          <p> <img src="cid:image001.png@01D8AC0A.08251CD0" style="width:52px;height:52px;"> dummy1 <img src="cid:image002.png@01D8AC0A.08251CD1" style="width:52px;height:52px;"> dummy2 </p>
+        TEXT
+      end
     end
 
     context 'signature recognition' do
