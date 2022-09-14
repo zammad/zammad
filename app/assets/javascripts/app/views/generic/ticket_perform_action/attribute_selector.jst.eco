@@ -1,5 +1,5 @@
 <div class="flex horizontal">
-  <div class="controls half-space-right">
+  <div class="controls half-space-right flex-no-shrink">
     <div class="u-positionOrigin js-operator">
       <select></select>
       <%- @Icon('arrow-down', 'dropdown-arrow') %>

@@ -5,7 +5,7 @@
         <%- @Icon('arrow-down', 'dropdown-arrow') %>
       </div>
     </div>
-    <div class="controls js-setAttribute horizontal"></div>
+    <div class="controls js-setAttribute horizontal span-width"></div>
     <div class="horizontal-filter-group js-setNotification flex"></div>
     <div class="horizontal-filter-group js-setArticle flex"></div>
   </div>
