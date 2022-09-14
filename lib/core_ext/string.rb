@@ -352,6 +352,9 @@ class String
     # https://github.com/zammad/zammad/issues/4112
     string.gsub!(%r{&lt;!\[if !supportLists\]&gt;.+?&lt;!\[endif\]&gt;}, '• ')
 
+    # https://github.com/zammad/zammad/issues/4184
+    string.gsub!(%r{&lt;!\[if !\w+\]&gt;(.+?)&lt;!\[endif\]&gt;}, '\1')
+
     string.signature_identify('html')
 
     marker_template = '<span class="js-signatureMarker"></span>'
