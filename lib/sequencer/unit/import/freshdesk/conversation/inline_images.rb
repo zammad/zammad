@@ -5,72 +5,11 @@ class Sequencer
     module Import
       module Freshdesk
         module Conversation
-          class InlineImages < Sequencer::Unit::Base
-            include ::Sequencer::Unit::Import::Common::Mapping::Mixin::ProvideMapped
-
-            uses :mapped
-
-            def process
-              return if !contains_inline_image?(mapped[:body])
-
-              provide_mapped do
-                {
-                  body: replaced_inline_images,
-                }
-              end
-            end
-
-            def self.inline_data(freshdesk_url)
-              clean_freshdesk_url = freshdesk_url.gsub(%r{^cid:}, '')
-              return if !%r{^(http|https)://.+?$}.match?(clean_freshdesk_url)
-
-              @cache ||= {}
-              return @cache[clean_freshdesk_url] if @cache[clean_freshdesk_url]
-
-              image_data = download(clean_freshdesk_url)
-              return if image_data.blank?
-
-              @cache[clean_freshdesk_url] = "data:image/png;base64,#{Base64.strict_encode64(image_data)}"
-              @cache[clean_freshdesk_url]
-            end
-
-            def self.download(freshdesk_url)
-              logger.debug { "Downloading inline image from #{freshdesk_url}" }
-
-              response = UserAgent.get(
-                freshdesk_url,
-                {},
-                {
-                  open_timeout: 20,
-                  read_timeout: 240,
-                  verify_ssl:   true,
-                },
-              )
-
-              return response.body if response.success?
-
-              logger.error response.error
-              nil
-            end
-
+          class InlineImages < Sequencer::Unit::Import::Common::Ticket::Article::InlineImages
             private
 
-            def contains_inline_image?(string)
-              return false if string.blank?
-
-              string.include?('freshdesk.com/inline/attachment')
-            end
-
-            def replaced_inline_images
-              body_html = Nokogiri::HTML(mapped[:body])
-
-              body_html.css('img').each do |node|
-                next if !contains_inline_image?(node['src'])
-
-                node.attributes['src'].value = self.class.inline_data(node['src'])
-              end
-
-              body_html.to_html
+            def inline_image_url_prefix
+              'freshdesk.com/inline/attachment'
             end
           end
         end
