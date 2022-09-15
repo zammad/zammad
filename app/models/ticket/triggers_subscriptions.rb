@@ -11,9 +11,6 @@ module Ticket::TriggersSubscriptions
   private
 
   def trigger_subscriptions
-    # return if we run import mode
-    return true if Setting.get('import_mode')
-
     Gql::Subscriptions::TicketUpdates.trigger(self, arguments: { ticket_id: Gql::ZammadSchema.id_from_object(self) })
   end
 end

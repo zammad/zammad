@@ -35,6 +35,9 @@ module Gql::Subscriptions
     #     arguments: { 'filter' => arg },   # custom arguments
     #   )
     def self.trigger(object, arguments: {}, scope: nil)
+
+      return if Setting.get('import_mode')
+
       ::Gql::ZammadSchema.subscriptions.trigger(
         graphql_field_name,
         arguments,

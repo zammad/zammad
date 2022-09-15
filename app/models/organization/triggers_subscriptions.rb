@@ -11,9 +11,6 @@ module Organization::TriggersSubscriptions
   private
 
   def trigger_subscriptions
-    # return if we run import mode
-    return true if Setting.get('import_mode')
-
     Gql::Subscriptions::OrganizationUpdates.trigger(self, arguments: { organization_id: Gql::ZammadSchema.id_from_object(self) })
   end
 end
