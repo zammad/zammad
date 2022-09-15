@@ -9828,9 +9828,15 @@ msgstr "Typ MIME obrazu o zmienionym rozmiarze jest nieprawidłowy."
 msgid "The Telegram bot could not be saved."
 msgstr "Nie udało się zapisać bota Telegrama."
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "The Telegram file is larger than the allowed 20 MB."
 msgstr "Plik telegramu jest większy niż dozwolone 20 MB."
+
+#: lib/telegram_helper.rb
+msgid ""
+"The Telegram integration can only be configured on systems using the HTTPS "
+"protocol."
+msgstr ""
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 msgid "The URL to this installation of Zammad."
@@ -9950,7 +9956,7 @@ msgstr "Dzielnik między TicketHook a numerem zgłoszenia. Np. ':'."
 msgid "The entry could not be created."
 msgstr "Nie udało się utworzyć wpisu."
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "The file could not be retrieved from the bot."
 msgstr "Nie udało się pobrać pliku z bota."
 
@@ -10185,11 +10191,11 @@ msgstr "Brak wymaganego parametru „current_user_id”."
 msgid "The required parameter 'for_user_id' is missing."
 msgstr "Brak wymaganego parametru „for_user_id”."
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "The required parameter 'group_id' is invalid."
 msgstr "Wymagany parametr „group_id” jest nieprawidłowy."
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "The required parameter 'group_id' is missing."
 msgstr "Brak wymaganego parametru „group_id”."
 
@@ -10340,7 +10346,7 @@ msgstr "Nie można wyodrębnić „preferred_username” użytkownika z „id_to
 msgid "The way to communicate with us is this thing called \"ticket\"."
 msgstr "Sposób komunikowania się z nami jest poprzez \"Zgłoszenie\"."
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "The webhook could not be saved by Telegram, seems to be an invalid URL."
 msgstr ""
 "Webhook nie mógł zostać zapisany przez Telegram, prawdopodobnie jest to "
@@ -10404,7 +10410,7 @@ msgstr "Nie utworzono bazy wiedzy."
 msgid "Third-party Applications"
 msgstr "aplikacje firm trzecich"
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "This bot already exists."
 msgstr "Ten bot już istnieje."
 
@@ -11861,7 +11867,8 @@ msgid "Welcome!"
 msgstr "Witaj!"
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
-#: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco lib/telegram.rb
+#: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
+#: lib/telegram_helper.rb
 msgid "Welcome! Feel free to ask me a question!"
 msgstr "Witaj! Zapraszam do zadawania mi pytań!"
 

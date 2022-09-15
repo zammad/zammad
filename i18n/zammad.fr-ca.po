@@ -4715,8 +4715,8 @@ msgstr "Fonction désactivée !"
 #: app/controllers/integration/sipgate_controller.rb
 msgid "Feature is disabled, please contact your administrator!"
 msgstr ""
-"Cette fonctionnalité est désactivée, veuillez contacter votre administrateur "
-"!"
+"Cette fonctionnalité est désactivée, veuillez contacter votre "
+"administrateur !"
 
 #: app/controllers/integration/cti_controller.rb
 #: app/controllers/integration/placetel_controller.rb
@@ -9950,8 +9950,14 @@ msgstr ""
 msgid "The Telegram bot could not be saved."
 msgstr "Le robot Telegram n'a pu être sauvegardé."
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "The Telegram file is larger than the allowed 20 MB."
+msgstr ""
+
+#: lib/telegram_helper.rb
+msgid ""
+"The Telegram integration can only be configured on systems using the HTTPS "
+"protocol."
 msgstr ""
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
@@ -10055,12 +10061,12 @@ msgid ""
 "g., \"/support\", \"example.com\", or \"example.com/support\"). Then, follow "
 "the directions under \"Web Server Configuration\" to complete the process."
 msgstr ""
-"L'URL par défaut de votre base de connaissances est, par exemple, "
-"exemple.com ou exemple.com/aide. Pour la diffuser à partir d'une URL "
-"personnalisée, saisissez la destination ci-dessous (par exemple, \"/ "
-"assistance\", \"exemple.com.com\" ou \"exemple.com/assistance\"). Ensuite, "
-"suivez les instructions sous \"Configuration du serveur Web\" pour terminer "
-"le processus."
+"L'URL par défaut de votre base de connaissances est, par exemple, exemple."
+"com ou exemple.com/aide. Pour la diffuser à partir d'une URL personnalisée, "
+"saisissez la destination ci-dessous (par exemple, \"/ assistance\", "
+"\"exemple.com.com\" ou \"exemple.com/assistance\"). Ensuite, suivez les "
+"instructions sous \"Configuration du serveur Web\" pour terminer le "
+"processus."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "The default font size is 12px."
@@ -10077,7 +10083,7 @@ msgstr ""
 msgid "The entry could not be created."
 msgstr ""
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "The file could not be retrieved from the bot."
 msgstr ""
 
@@ -10317,11 +10323,11 @@ msgstr ""
 msgid "The required parameter 'for_user_id' is missing."
 msgstr ""
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "The required parameter 'group_id' is invalid."
 msgstr ""
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "The required parameter 'group_id' is missing."
 msgstr ""
 
@@ -10467,7 +10473,7 @@ msgstr ""
 msgid "The way to communicate with us is this thing called \"ticket\"."
 msgstr "La façon de communiquer avec nous est cet objet appelée \"billet\"."
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "The webhook could not be saved by Telegram, seems to be an invalid URL."
 msgstr ""
 
@@ -10534,7 +10540,7 @@ msgstr "Aucune base de connaissances n'a été créée."
 msgid "Third-party Applications"
 msgstr "Applications tierces"
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "This bot already exists."
 msgstr ""
 
@@ -12015,7 +12021,8 @@ msgid "Welcome!"
 msgstr "Bienvenue !"
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
-#: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco lib/telegram.rb
+#: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
+#: lib/telegram_helper.rb
 msgid "Welcome! Feel free to ask me a question!"
 msgstr ""
 

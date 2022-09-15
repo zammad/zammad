@@ -10063,8 +10063,14 @@ msgstr ""
 msgid "The Telegram bot could not be saved."
 msgstr "%s objekt(er) er opprettet."
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "The Telegram file is larger than the allowed 20 MB."
+msgstr ""
+
+#: lib/telegram_helper.rb
+msgid ""
+"The Telegram integration can only be configured on systems using the HTTPS "
+"protocol."
 msgstr ""
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
@@ -10190,7 +10196,7 @@ msgstr ""
 msgid "The entry could not be created."
 msgstr ""
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "The file could not be retrieved from the bot."
 msgstr ""
 
@@ -10437,11 +10443,11 @@ msgstr ""
 msgid "The required parameter 'for_user_id' is missing."
 msgstr ""
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "The required parameter 'group_id' is invalid."
 msgstr ""
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "The required parameter 'group_id' is missing."
 msgstr ""
 
@@ -10597,7 +10603,7 @@ msgstr ""
 msgid "The way to communicate with us is this thing called \"ticket\"."
 msgstr "Måten å kommunisere med oss ​​på er via tickets."
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "The webhook could not be saved by Telegram, seems to be an invalid URL."
 msgstr ""
 
@@ -10667,7 +10673,7 @@ msgstr "%s objekt(er) er opprettet."
 msgid "Third-party Applications"
 msgstr "Tredjepartstjenester"
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "This bot already exists."
 msgstr ""
 
@@ -12154,7 +12160,8 @@ msgid "Welcome!"
 msgstr "Velkommen!"
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
-#: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco lib/telegram.rb
+#: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
+#: lib/telegram_helper.rb
 msgid "Welcome! Feel free to ask me a question!"
 msgstr ""
 

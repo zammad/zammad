@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-09-03 06:30+0000\n"
-"Last-Translator: Martin Gruner <mg@zammad.com>\n"
+"PO-Revision-Date: 2022-09-15 03:30+0000\n"
+"Last-Translator: Marcel Herrguth <github@thehomeofanime.de>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/de/>\n"
 "Language: de-de\n"
@@ -9887,9 +9887,17 @@ msgstr "Der MIME-Typ des angepassten Bildes ist ungültig."
 msgid "The Telegram bot could not be saved."
 msgstr "Der Telegram-Bot konnte nicht gesichert werden."
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "The Telegram file is larger than the allowed 20 MB."
 msgstr "Die Datei von Telegram ist größer als die erlaubten 20 MB."
+
+#: lib/telegram_helper.rb
+msgid ""
+"The Telegram integration can only be configured on systems using the HTTPS "
+"protocol."
+msgstr ""
+"Die Telegram-Integration kann nur auf Systemen konfiguriert werden, die das "
+"HTTPS-Protokoll nutzen."
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 msgid "The URL to this installation of Zammad."
@@ -10014,7 +10022,7 @@ msgstr ""
 msgid "The entry could not be created."
 msgstr "Der Eintrag konnte nicht erstellt werden."
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "The file could not be retrieved from the bot."
 msgstr "Die Datei konnte nicht vom Bot abgerufen werden."
 
@@ -10256,11 +10264,11 @@ msgstr "Der erforderliche Parameter 'current_user_id' fehlt."
 msgid "The required parameter 'for_user_id' is missing."
 msgstr "Der erforderliche Parameter 'for_user_id' fehlt."
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "The required parameter 'group_id' is invalid."
 msgstr "Der erforderliche Parameter 'group_id' ist ungültig."
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "The required parameter 'group_id' is missing."
 msgstr "Der erforderliche Parameter 'group_id' fehlt."
 
@@ -10412,7 +10420,7 @@ msgstr ""
 msgid "The way to communicate with us is this thing called \"ticket\"."
 msgstr "Der Weg um mit uns zu kommunizieren ist das sogenannte \"Ticket\"."
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "The webhook could not be saved by Telegram, seems to be an invalid URL."
 msgstr ""
 "Der Webhook konnte von Telegram nicht gespeichert werden, es scheint eine "
@@ -10477,7 +10485,7 @@ msgstr "Es wurde keine Knowledge Base erstellt."
 msgid "Third-party Applications"
 msgstr "Anwendungen von Drittanbietern"
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "This bot already exists."
 msgstr "Dieser Bot existiert bereits."
 
@@ -11954,7 +11962,8 @@ msgid "Welcome!"
 msgstr "Willkommen!"
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
-#: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco lib/telegram.rb
+#: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
+#: lib/telegram_helper.rb
 msgid "Welcome! Feel free to ask me a question!"
 msgstr "Willkommen! Stellen Sie mir gern eine Frage!"
 
