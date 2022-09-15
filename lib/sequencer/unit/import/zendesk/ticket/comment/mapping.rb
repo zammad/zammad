@@ -24,6 +24,8 @@ class Sequencer
                     message_id:    resource.id,
                     updated_by_id: user_id,
                     created_by_id: user_id,
+                    updated_at:    resource.created_at,
+                    created_at:    resource.created_at,
                     sender_id:     article_sender_id,
                     type_id:       article_type_id,
                   }
