@@ -57,7 +57,7 @@ RSpec.describe ::Sequencer::Sequence::Import::Zendesk::Ticket::Comment, sequence
               'rel'  => nil
             },
           },
-          'created_at'  => '2015-07-19 22:41:44 UTC',
+          'created_at'  => '2018-09-28T12:00:00Z',
           'metadata'    => {
             'system' => {},
             'custom' => {}
@@ -85,9 +85,11 @@ RSpec.describe ::Sequencer::Sequence::Import::Zendesk::Ticket::Comment, sequence
 
     let(:imported_article) do
       {
-        from: 'john.doe@example.com',
-        to:   'zendesk@example.com',
-        body: "\n<div dir=\"auto\">\n<p dir=\"auto\">This is the latest comment for this ticket. You also changed the ticket status to Pending.</p>\n<span><img src=\"data:image/png;base64,MTIz\"></span>\n</div>\n"
+        from:       'john.doe@example.com',
+        to:         'zendesk@example.com',
+        body:       "\n<div dir=\"auto\">\n<p dir=\"auto\">This is the latest comment for this ticket. You also changed the ticket status to Pending.</p>\n<span><img src=\"data:image/png;base64,MTIz\"></span>\n</div>\n",
+        created_at: Time.zone.parse('2018-09-28T12:00:00Z'),
+        updated_at: Time.zone.parse('2018-09-28T12:00:00Z'),
       }
     end
 
