@@ -13,6 +13,8 @@ RSpec.describe ::Sequencer::Sequence::Import::Zendesk::Ticket::Comment, sequence
 
     let(:ticket) { create(:ticket) }
 
+    let(:inline_image_url) { "https://#{hostname}/attachments/token/khRQTQjm8ODhA0FjbS39i4xOb/?name=1a3496b9-53d9-494d-bbb0-e1d2e22074f8.jpeg" }
+
     let(:resource) do
       ZendeskAPI::Ticket::Comment.new(
         nil,
@@ -20,9 +22,7 @@ RSpec.describe ::Sequencer::Sequence::Import::Zendesk::Ticket::Comment, sequence
           'id'          => 31_964_468_581,
           'type'        => 'Comment',
           'author_id'   => 1_150_734_731,
-          'body'        => 'This is the latest comment for this ticket. You also changed the ticket status to Pending.',
-          'html_body'   => '<div class="zd-comment" dir="auto"><p dir="auto">This is the latest comment for this ticket. You also changed the ticket status to Pending.</p></div>',
-          'plain_body'  => 'This is the latest comment for this ticket. You also changed the ticket status to Pending.',
+          'html_body'   => "<div class=\"zd-comment\" dir=\"auto\"><p dir=\"auto\">This is the latest comment for this ticket. You also changed the ticket status to Pending.</p><span style=\"opacity: 1;\"><img src=\"#{inline_image_url}\"></span></div>",
           'public'      => true,
           'attachments' => [
             {
@@ -87,7 +87,7 @@ RSpec.describe ::Sequencer::Sequence::Import::Zendesk::Ticket::Comment, sequence
       {
         from: 'john.doe@example.com',
         to:   'zendesk@example.com',
-        body: '<div dir="auto"><p dir="auto">This is the latest comment for this ticket. You also changed the ticket status to Pending.</p></div>'
+        body: "\n<div dir=\"auto\">\n<p dir=\"auto\">This is the latest comment for this ticket. You also changed the ticket status to Pending.</p>\n<span><img src=\"data:image/png;base64,MTIz\"></span>\n</div>\n"
       }
     end
 
