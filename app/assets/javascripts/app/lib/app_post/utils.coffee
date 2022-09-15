@@ -224,7 +224,16 @@ class App.Utils
 
   # htmlEscapedAndLinkified = App.Utils.linkify(rawText)
   @linkify: (string) ->
-    window.linkify(string)
+    window.linkifyStr(string, {
+      attributes: @_getLinkifyAttributes,
+    })
+
+  @_getLinkifyAttributes: (href) ->
+    attributes = {
+      title: href,
+    }
+    if /^https?:/.test(href) then attributes.target = '_blank'
+    return attributes
 
   # htmlEscapedAndPhoneified = App.Utils.phoneify(rawText)
   @phoneify: (string) ->

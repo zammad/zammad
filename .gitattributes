@@ -1,5 +1,4 @@
 app/assets/javascripts/app/lib/animations/** linguist-vendored
-app/assets/javascripts/app/lib/base/ba-linkify.js linguist-vendored
 app/assets/javascripts/app/lib/base/bootstrap-tokenfield.js linguist-vendored
 app/assets/javascripts/app/lib/base/clipboard.js linguist-vendored
 app/assets/javascripts/app/lib/base/cropper.js linguist-vendored
@@ -14,6 +13,7 @@ app/assets/javascripts/app/lib/base/jquery.fineuploader-3.0.js linguist-vendored
 app/assets/javascripts/app/lib/base/jquery.hotkeys.js linguist-vendored
 app/assets/javascripts/app/lib/base/jquery.noty.js linguist-vendored
 app/assets/javascripts/app/lib/base/jquery.visible.js linguist-vendored
+app/assets/javascripts/app/lib/base/linkify.js linguist-vendored
 app/assets/javascripts/app/lib/base/marked.js linguist-vendored
 app/assets/javascripts/app/lib/base/modernizr.custom.92138.js linguist-vendored
 app/assets/javascripts/app/lib/base/seedrandom.js linguist-vendored

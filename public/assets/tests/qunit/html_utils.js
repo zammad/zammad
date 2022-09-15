@@ -299,12 +299,12 @@ QUnit.test("linkify", assert => {
   assert.equal(result, should, source)
 
   source = "test@example.com some text"
-  should = 'test@example.com some text'
+  should = '<a href="mailto:test@example.com" title="mailto:test@example.com">test@example.com</a> some text'
   result = App.Utils.linkify(source)
   assert.equal(result, should, source)
 
-  source = "abc test@example.com some text"
-  should = 'abc test@example.com some text'
+  source = "abc domain.de-@domain.de some text"
+  should = 'abc <a href="mailto:domain.de-@domain.de" title="mailto:domain.de-@domain.de">domain.de-@domain.de</a> some text'
   result = App.Utils.linkify(source)
   assert.equal(result, should, source)
 
