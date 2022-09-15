@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 describe UserPolicy do
-  subject { described_class.new(user, record) }
+  subject(:user_policy) { described_class.new(user, record) }
 
   context 'when user is an admin' do
     let(:user) { create(:user, roles: [partial_admin_role]) }
@@ -146,11 +146,26 @@ describe UserPolicy do
   context 'when user is a customer' do
     let(:user) { create(:customer) }
 
+    shared_examples 'restricts fields' do |method|
+      it "restricts fields for #{method}", :aggregate_failures do
+        expect(user_policy.public_send(method)).to permit_fields(%i[id firstname lastname image image_source active])
+        expect(user_policy.public_send(method)).to forbid_fields(%i[email phone mobile note])
+      end
+    end
+
+    shared_examples 'does not restrict fields' do |method|
+      it "does not restrict fields for #{method}" do
+        expect(user_policy.public_send(method)).to be(true)
+      end
+    end
+
     context 'when record is an admin user' do
       let(:record) { create(:admin) }
 
       it { is_expected.to permit_actions(%i[nested_show]) }
       it { is_expected.to forbid_actions(%i[show update destroy]) }
+
+      include_examples 'restricts fields', :nested_show?
     end
 
     context 'when record is an agent user' do
@@ -158,6 +173,8 @@ describe UserPolicy do
 
       it { is_expected.to permit_actions(%i[nested_show]) }
       it { is_expected.to forbid_actions(%i[show update destroy]) }
+
+      include_examples 'restricts fields', :nested_show?
     end
 
     context 'when record is a customer user' do
@@ -165,6 +182,8 @@ describe UserPolicy do
 
       it { is_expected.to permit_actions(%i[nested_show]) }
       it { is_expected.to forbid_actions(%i[show update destroy]) }
+
+      include_examples 'restricts fields', :nested_show?
     end
 
     context 'when record is any user' do
@@ -172,6 +191,8 @@ describe UserPolicy do
 
       it { is_expected.to permit_actions(%i[nested_show]) }
       it { is_expected.to forbid_actions(%i[show update destroy]) }
+
+      include_examples 'restricts fields', :nested_show?
     end
 
     context 'when record is a colleague' do
@@ -180,6 +201,9 @@ describe UserPolicy do
 
       it { is_expected.to permit_actions(%i[show nested_show]) }
       it { is_expected.to forbid_actions(%i[update destroy]) }
+
+      include_examples 'restricts fields', :nested_show?
+      include_examples 'restricts fields', :show?
     end
 
     context 'when record is the same user' do
@@ -187,6 +211,9 @@ describe UserPolicy do
 
       it { is_expected.to permit_actions(%i[show nested_show]) }
       it { is_expected.to forbid_actions(%i[update destroy]) }
+
+      include_examples 'does not restrict fields', :nested_show?
+      include_examples 'does not restrict fields', :show?
     end
 
     context 'when record is both admin and customer' do
@@ -194,6 +221,8 @@ describe UserPolicy do
 
       it { is_expected.to permit_action(:nested_show) }
       it { is_expected.to forbid_actions(%i[show update destroy]) }
+
+      include_examples 'restricts fields', :nested_show?
     end
 
     context 'when record is both agent and customer' do
@@ -201,6 +230,8 @@ describe UserPolicy do
 
       it { is_expected.to permit_action(:nested_show) }
       it { is_expected.to forbid_actions(%i[show update destroy]) }
+
+      include_examples 'restricts fields', :nested_show?
     end
 
   end

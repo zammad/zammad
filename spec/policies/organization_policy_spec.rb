@@ -3,36 +3,45 @@
 require 'rails_helper'
 
 describe OrganizationPolicy do
-  subject { described_class.new(user, record) }
+  subject(:organization_policy) { described_class.new(user, record) }
 
   let(:record) { create(:organization) }
 
-  context 'when customer' do
+  shared_examples 'restricts fields' do |method|
+    it "restricts fields for #{method}", :aggregate_failures do
+      expect(organization_policy.public_send(method)).to permit_fields(%i[id name active])
+      expect(organization_policy.public_send(method)).to forbid_fields(%i[shared domain note])
+    end
+  end
+
+  context 'when user is a customer in the same organization' do
     let(:user) { create(:customer, organization: record) }
 
     it { is_expected.to permit_actions(%i[show]) }
     it { is_expected.to forbid_actions(%i[update]) }
+
+    include_examples 'restricts fields', :show?
   end
 
-  context 'when customer without organization' do
+  context 'when user is a customer without organization' do
     let(:user) { create(:customer) }
 
     it { is_expected.to forbid_actions(%i[show update]) }
   end
 
-  context 'when agent and customer' do
+  context 'when user is an agent and customer' do
     let(:user) { create(:agent_and_customer, organization: record) }
 
     it { is_expected.to permit_actions(%i[show update]) }
   end
 
-  context 'when agent' do
+  context 'when user is an agent' do
     let(:user) { create(:agent) }
 
     it { is_expected.to permit_actions(%i[show update]) }
   end
 
-  context 'when admin' do
+  context 'when user is an admin' do
     let(:user) { create(:admin) }
 
     it { is_expected.to permit_actions(%i[show update]) }
