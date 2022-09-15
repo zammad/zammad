@@ -13176,6 +13176,10 @@ body.fit {
   flex: 0 1 auto;
 }
 
+.flex-no-shrink {
+  flex-shrink: 0;
+}
+
 .flex-none {
   flex: none;
 }
