@@ -27,3 +27,21 @@ minitest:chrome:5:
     - .template_browser-core_chrome
   variables:
     TEST_SLICE: "5"
+
+minitest:chrome:6:
+  extends:
+    - .template_browser-core_chrome
+  variables:
+    TEST_SLICE: "6"
+
+minitest:chrome:7:
+  extends:
+    - .template_browser-core_chrome
+  variables:
+    TEST_SLICE: "7"
+
+minitest:chrome:8:
+  extends:
+    - .template_browser-core_chrome
+  variables:
+    TEST_SLICE: "8"

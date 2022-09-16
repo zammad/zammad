@@ -27,3 +27,21 @@ minitest:firefox:5:
     - .template_browser-core_firefox
   variables:
     TEST_SLICE: "5"
+
+minitest:firefox:6:
+  extends:
+    - .template_browser-core_firefox
+  variables:
+    TEST_SLICE: "6"
+
+minitest:firefox:7:
+  extends:
+    - .template_browser-core_firefox
+  variables:
+    TEST_SLICE: "7"
+
+minitest:firefox:8:
+  extends:
+    - .template_browser-core_firefox
+  variables:
+    TEST_SLICE: "8"
