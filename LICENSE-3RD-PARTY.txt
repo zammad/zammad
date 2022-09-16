@@ -1,9 +1,4 @@
 -----------------------------------------------------------------------------
-ba-linkify.js
-Source: http://benalman.com/code/test/js-linkify/
-Copyright: 2009 "Cowboy" Ben Alman
-License: MIT license
------------------------------------------------------------------------------
 bootstrap
 Source: https://github.com/twbs/bootstrap
 Copyright: 2011-2015 Twitter, Inc.
@@ -105,6 +100,11 @@ License: Dual licensed under the MIT or GPL Version 2 licenses.
 jquery.visible.js
 Source: https://github.com/customd/jquery-visible
 Copyright: 2012, Digital Fusion
+License: MIT license
+-----------------------------------------------------------------------------
+linkify.js
+Source: https://github.com/Hypercontext/linkifyjs
+Copyright: Copyright (c) 2021 SoapBox Innovations Inc.
 License: MIT license
 -----------------------------------------------------------------------------
 marked.js
