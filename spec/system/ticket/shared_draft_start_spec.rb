@@ -152,7 +152,7 @@ RSpec.describe 'Ticket Shared Draft Start', type: :system, authenticated_as: :au
       click :draft_sidebar_button
 
       within :draft_sidebar do
-        click '.label-subtle'
+        click '.text-muted'
       end
 
       in_modal do
@@ -202,7 +202,7 @@ RSpec.describe 'Ticket Shared Draft Start', type: :system, authenticated_as: :au
       click :draft_sidebar_button
 
       within :draft_sidebar do
-        click '.label-subtle'
+        click '.text-muted'
       end
 
       in_modal do
@@ -224,7 +224,7 @@ RSpec.describe 'Ticket Shared Draft Start', type: :system, authenticated_as: :au
       click :draft_sidebar_button
 
       within :draft_sidebar do
-        click '.label-subtle'
+        click '.text-muted'
       end
     end
 
@@ -247,7 +247,7 @@ RSpec.describe 'Ticket Shared Draft Start', type: :system, authenticated_as: :au
       click :draft_sidebar_button
 
       within :draft_sidebar do
-        click '.label-subtle'
+        click '.text-muted'
       end
 
       in_modal do
