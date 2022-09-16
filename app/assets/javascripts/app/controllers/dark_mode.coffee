@@ -2,29 +2,32 @@ class App.DarkMode extends App.Controller
   constructor: ->
     super
 
-    @quickToggle = $('#dark-mode-quick-switch')
-    @quickToggleMenuItem = @quickToggle.closest('.dropdown-menu-item--toggle')
+    @quickToggle         = $('#dark-mode-quick-switch')
+    @quickToggleLabel    = @quickToggle.next('label')
+    @quickToggleMenuItem = @quickToggle.closest('.dropdown-menu-item--toggle').find('span.u-textTruncate')
 
-    @quickToggle.on('change', @quickToggleChange)
-    @quickToggle.closest('.zammad-switch').on('click', @stopPropagation)
     @quickToggleMenuItem.on('click', @onMenuItemClick)
-
+    @quickToggleLabel.on('click', @quickToggleChange)
     @controllerBind('ui:theme:changed', @onUpdate)
 
-  stopPropagation: (event) ->
-    event.stopPropagation()
+  currentTheme: ->
+    if @quickToggle.prop('checked') then 'dark' else 'light'
+
+  oppositeTheme: ->
+    if @quickToggle.prop('checked') then 'light' else 'dark'
 
   onMenuItemClick: (event) =>
     event.stopPropagation()
-    oppositeTheme = if @quickToggle.prop('checked') then 'light' else 'dark'
-    App.Event.trigger('ui:theme:set', { theme: oppositeTheme, source: 'quick_switch' })
+    @quickToggleLabel.trigger('click')
 
-  quickToggleChange: =>
-    theme = if @quickToggle.prop('checked') then 'dark' else 'light'
-    App.Event.trigger('ui:theme:set', { theme: theme, source: 'quick_switch' })
+  quickToggleChange: (event) =>
+    event.stopPropagation()
+    App.Event.trigger('ui:theme:set', { theme: @oppositeTheme(), source: 'quick_switch' })
 
   onUpdate: (event) =>
-    if event.source != 'quick_switch'
-      @quickToggle.prop('checked', event.detectedTheme == 'dark')
+    return if event.source is 'quick_switch'
+    return if event.detectedTheme is @currentTheme()
+
+    @quickToggle.prop('checked', if event.detectedTheme is 'dark' then true else false)
 
 App.Config.set('DarkMode', { prio: 1000, parent: '#current_user', name: __('Dark Mode'), translate: true, toggle: 'dark-mode-quick', checked: (-> document.documentElement.dataset.theme == 'dark'), permission: ['user_preferences.*'] }, 'NavBarRight')
