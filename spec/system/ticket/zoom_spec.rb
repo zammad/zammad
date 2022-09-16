@@ -1132,37 +1132,37 @@ RSpec.describe 'Ticket zoom', type: :system do
     it 'previous is not clickable for the first item' do
       open_nth_item(0)
 
-      expect { click '.pagination .previous' }.not_to change { page.find('.content.active')[:id] }
+      expect(page).to have_css('.pagination .btn--split--first.is-disabled')
     end
 
     it 'next is clickable for the first item' do
       open_nth_item(0)
 
-      expect { click '.pagination .next' }.to change { page.find('.content.active')[:id] }
+      expect { click '.pagination .btn--split--last' }.to change { page.find('.content.active')[:id] }
     end
 
     it 'previous is clickable for the middle item' do
       open_nth_item(1)
 
-      expect { click '.pagination .previous' }.to change { page.find('.content.active')[:id] }
+      expect { click '.pagination .btn--split--first' }.to change { page.find('.content.active')[:id] }
     end
 
     it 'next is clickable for the middle item' do
       open_nth_item(1)
 
-      expect { click '.pagination .next' }.to change { page.find('.content.active')[:id] }
+      expect { click '.pagination .btn--split--last' }.to change { page.find('.content.active')[:id] }
     end
 
     it 'previous is clickable for the last item' do
       open_nth_item(2)
 
-      expect { click '.pagination .previous' }.to change { page.find('.content.active')[:id] }
+      expect { click '.pagination .btn--split--first' }.to change { page.find('.content.active')[:id] }
     end
 
     it 'next is not clickable for the last item' do
       open_nth_item(2)
 
-      expect { click '.pagination .next' }.not_to change { page.find('.content.active')[:id] }
+      expect(page).to have_css('.pagination .btn--split--last.is-disabled')
     end
 
     def open_nth_item(nth)
