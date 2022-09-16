@@ -177,6 +177,23 @@ returns
     result
   end
 
+  def auto_assign(user)
+    return if Setting.get('ticket_auto_assignment').blank?
+    return if owner_id != 1
+    return if !TicketPolicy.new(user, self).full?
+
+    user_ids_ignore = Array(Setting.get('ticket_auto_assignment_user_ids_ignore')).map(&:to_i)
+    return if user_ids_ignore.include?(user.id)
+
+    ticket_auto_assignment_selector = Setting.get('ticket_auto_assignment_selector')
+    return if ticket_auto_assignment_selector.blank?
+
+    ticket_count, = Ticket.selectors(ticket_auto_assignment_selector[:condition], limit: 1, current_user: user, access: 'full')
+    return if ticket_count.zero?
+
+    update!(owner: user)
+  end
+
 =begin
 
 processes escalated tickets
