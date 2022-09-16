@@ -1172,4 +1172,45 @@ RSpec.describe 'Ticket Create', type: :system do
       expect(page).to have_select('owner_id', selected: agent.fullname)
     end
   end
+
+  describe 'Ticket templates resets article body #2434' do
+    let(:ticket)     { create(:ticket) }
+    let!(:template1) { create(:template, :dummy_data, title: 'template 1', body: 'body 1') }
+    let!(:template2) { create(:template, :dummy_data, title: 'template 2', body: 'body 2') }
+
+    before do
+      visit 'ticket/create'
+    end
+
+    it 'preserves text input from the user' do
+      find('[data-name="body"]').set('foobar')
+
+      # Trigger the input event to mark the body field as "dirty"
+      execute_script('$("[data-name=\"body\"]").trigger("input")')
+
+      use_template(template1)
+      expect(find('[name="title"]').value).to have_text('template 1')
+      expect(find('[data-name="body"]').text).to have_text('foobar')
+    end
+
+    it 'allows easy switching between templates' do
+      use_template(template1)
+      expect(find('[name="title"]').value).to have_text('template 1')
+      expect(find('[data-name="body"]').text).to have_text('body 1')
+
+      use_template(template2)
+      expect(find('[name="title"]').value).to eq('template 2')
+      expect(find('[data-name="body"]').text).to have_text('body 2')
+
+      find('[data-name="body"]').set('foobar')
+
+      # Trigger the input event to mark the body field as "dirty"
+      execute_script('$("[data-name=\"body\"]").trigger("input")')
+
+      # This time body value should be left as-is
+      use_template(template1)
+      expect(find('[name="title"]').value).to have_text('template 1')
+      expect(find('[data-name="body"]').text).to have_text('foobar')
+    end
+  end
 end
