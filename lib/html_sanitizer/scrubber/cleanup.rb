@@ -27,7 +27,12 @@ class HtmlSanitizer
       def remove_space_if_needed(content)
         return content if space_or_nl?(content)
 
-        content.gsub(%r{[[:space:]]+}, ' ')
+        # https://github.com/zammad/zammad/issues/4223
+        # We are converting multiple line breaks into a more readable format.
+        #   All other whitespace is treated as a single space character.
+        content.gsub(%r{[[:space:]]+}) do |match|
+          match.include?("\n\n") ? "\n\n" : ' '
+        end
       end
 
       def strip_if_needed_previous(node, content)

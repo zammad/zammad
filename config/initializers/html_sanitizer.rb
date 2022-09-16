@@ -48,6 +48,7 @@ Rails.application.config.html_sanitizer_attributes_allowlist = {
   'q'          => %w[cite],
   'span'       => %w[style],
   'div'        => %w[style],
+  'p'          => %w[style],
   'time'       => %w[datetime pubdate],
 }
 
@@ -63,6 +64,9 @@ Rails.application.config.html_sanitizer_css_properties_allowlist = {
   ],
   'div'   => %w[
     color
+  ],
+  'p'     => %w[
+    white-space
   ],
   'table' => %w[
     background background-color color font-size vertical-align
@@ -128,6 +132,10 @@ Rails.application.config.html_sanitizer_css_values_blocklist = {
     'color:#fff',
     'color:#ffffff',
     'color:rgb(0,0,0)',
+  ],
+  'p'     => [
+    'white-space:nowrap',
+    'white-space:pre',
   ],
   'table' => [
     'font-size:0',

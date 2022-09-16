@@ -27,6 +27,10 @@ RSpec.describe Channel::EmailParser, type: :model do
     #
     # File.write('test/data/mail/mailXXX.yml', Channel::EmailParser.new.parse(File.read('test/data/mail/mailXXX.box')).slice(:from, :from_email, :from_display_name, :to, :cc, :subject, :body, :content_type, :'reply-to', :attachments).to_yaml)
     #
+    # To renew all existing files, you can use the following code:
+    #
+    # Dir.glob(Rails.root.join('test/data/mail/mail*.box')).each { |mail_file| File.write(mail_file.gsub('.box', '.yml'), Channel::EmailParser.new.parse(File.read(mail_file)).slice(:from, :from_email, :from_display_name, :to, :cc, :subject, :body, :content_type, :'reply-to', :attachments).to_yaml) }
+    #
     context 'when checking a bunch of stored emails for correct parsing behaviour' do
       tests = Dir.glob(Rails.root.join('test/data/mail/mail*.box')).each do |stored_email|
         include_examples('parses email correctly', stored_email)

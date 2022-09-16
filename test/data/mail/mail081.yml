@@ -7,13 +7,13 @@ subject: UTF-8-Attachment-Test
 body: 'Regression test case for issue #2458 - Zammad fails to parse filename* in Content-Disposition
   header of attachment
 
-'
+  '
 content_type: text/plain
 attachments:
 - !ruby/hash:ActiveSupport::HashWithIndifferentAccess
   data: 'Hello World
 
-'
+    '
   filename: Erklärung.txt
   preferences: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
     Content-Type: text/plain; name="=?utf-8?Q?Erkl=C3=A4rung=2Etxt?="

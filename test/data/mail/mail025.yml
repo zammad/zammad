@@ -2,8 +2,8 @@
 from: oracle@IG0-1-DB01.example.com
 from_email: oracle@IG0-1-DB01.example.com
 from_display_name: ''
-subject: 'Regelsets im Test-Status gefunden: 1'
 to: support@example.com
+subject: 'Regelsets im Test-Status gefunden: 1'
 body: |
   begin 644 rulesets-report.csv
   M4E5,15-%5%])1#M.04U%.T%#5$E6.U)53E]-3T1%.T%51$E47TU/1$E&65]$
@@ -11,3 +11,5 @@ body: |
   *.S$W+C`Y+C$T"@``
   `
   end
+content_type: text/plain
+attachments: []

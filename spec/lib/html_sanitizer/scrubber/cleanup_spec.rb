@@ -69,5 +69,20 @@ RSpec.describe HtmlSanitizer::Scrubber::Cleanup do
 
       it { is_expected.to eq target }
     end
+
+    context 'when p has style with white-space property' do
+      let(:input) do
+        '<p style="white-space: pre-wrap">Hi!
+
+This is a dummy text for   Zammad   to test multi-line text that is wrapped in a preformatted text block.</p>'
+      end
+      let(:target) do
+        '<p style="white-space: pre-wrap">Hi!
+
+This is a dummy text for Zammad to test multi-line text that is wrapped in a preformatted text block.</p>'
+      end
+
+      it { is_expected.to eq target }
+    end
   end
 end

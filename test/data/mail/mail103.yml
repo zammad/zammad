@@ -6,6 +6,6 @@ to: support@example.com
 subject: "[JIRA] (SYS-422) test zammad 3"
 body: 'Incident content
 
-'
+  '
 content_type: text/plain
 attachments: []

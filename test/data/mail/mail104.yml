@@ -6,6 +6,6 @@ to: support@example.com
 subject: "[JIRA] (SYS-422) booob"
 body: 'Incident content
 
-'
+  '
 content_type: text/plain
 attachments: []

@@ -2,8 +2,8 @@
 from: marc.smith@example.com (Marc Smith)
 from_email: marc.smith@example.com
 from_display_name: Marc Smith
+to: Martin Edenhofer via Znuny Team <support@znuny.com>
 subject: 'Re: XXXX Betatest Ticket Templates [Ticket#11162]'
-content_type: text/plain
 body: "Am 07.05.2012 08:10, schrieb Martin Edenhofer via Znuny Team:\n> Hallo Marc,\n>\n>
   super! Ich freu mich!\n>\n> Wir würden gerne die Präsentation/Einführung in die
   Ticket Templates per Screensharing oder zumindest per Telefon machen.\n>\n> Mögliche
@@ -22,3 +22,5 @@ body: "Am 07.05.2012 08:10, schrieb Martin Edenhofer via Znuny Team:\n> Hallo Ma
   könnten, da wir von dem \"Internet PC\" nicht auf \nunser XXXX zugreifen können.
   Falls ihr sonst noch irgendwas benötigt \neinfach kurz ne Rückmeldung...;-)\n\nGrüße
   aus Bonn\n\nJohn & Marc\n\n"
+content_type: text/plain
+attachments: []

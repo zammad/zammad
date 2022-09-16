@@ -2,8 +2,8 @@
 from: '"Günther Katja | Example GmbH" <k.guenther@example.com>'
 from_email: k.guenther@example.com
 from_display_name: Günther Katja | Example GmbH
+to: Martin Edenhofer via Znuny Team <support@example.com>
 subject: 'AW: Ticket Templates [Ticket#11168]'
-content_type: text/plain
 body: |+
   Hallo Katja,
 
@@ -25,3 +25,6 @@ body: |+
    -Martin
 
 
+content_type: text/plain
+attachments: []
+...

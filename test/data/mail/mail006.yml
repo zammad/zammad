@@ -4,10 +4,12 @@ from_email: me@bogen.net
 from_display_name: Hans BÄKOSchönland
 to: Namedyński (hans@example.com)
 subject: 'utf8: 使って / ISO-8859-1: Priorität"  / cp-1251: Сергей Углицких'
-body: '<div><p>this is a test</p></div><br><hr> <a href="http://localhost/8HMZENUS/2737??PS="
-  rel="nofollow noreferrer noopener" target="_blank" title="http://localhost/8HMZENUS/2737??PS=">Compare
-  Cable, DSL or Satellite plans: As low as $2.95. </a> <br> <br> Test1:– <br> Test2:&amp;
-  <br> Test3:∋ <br> Test4:&amp; <br> Test5:='
+body: |-
+  <div><p>this is a test</p></div><br><hr> <a href="http://localhost/8HMZENUS/2737??PS=" rel="nofollow noreferrer noopener" target="_blank" title="http://localhost/8HMZENUS/2737??PS=">Compare Cable, DSL or Satellite plans: As low as $2.95. </a>
+
+  <br>
+
+  <br> Test1:– <br> Test2:&amp; <br> Test3:∋ <br> Test4:&amp; <br> Test5:=
 content_type: text/html
 attachments:
 - !ruby/hash:ActiveSupport::HashWithIndifferentAccess

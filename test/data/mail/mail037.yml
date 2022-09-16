@@ -2,9 +2,11 @@
 from: Example <info@example.com>
 from_email: info@example.com
 from_display_name: Example
-subject: 'Example: Java 8 Neuerungen'
 to: Max Kohl | [example.com] <kohl@example.com>
 cc: Ingo Best <iw@example.com>
+subject: 'Example: Java 8 Neuerungen'
 body: 'Tag Max / Ingo!
 
-'
+  '
+content_type: text/plain
+attachments: []

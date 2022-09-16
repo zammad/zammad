@@ -2,8 +2,8 @@
 from: Martin Edenhofer <martin@example.com>
 from_email: martin@example.com
 from_display_name: Martin Edenhofer
+to: metest@znuny.com
 subject: aaäöüßad asd
-content_type: text/plain
 body: |
   äöüß ad asd
 
@@ -11,3 +11,5 @@ body: |
 
   --
   Old programmers never die. They just branch to a new address.
+content_type: text/plain
+attachments: []

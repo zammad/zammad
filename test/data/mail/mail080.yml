@@ -3,7 +3,7 @@ from: Martin Edenhofer <martin@example.de>
 from_email: martin@example.de
 from_display_name: Martin Edenhofer
 to: me@example.de
-subject: 'some test with blank filename in attachment'
+subject: some test with blank filename in attachment
 body: |-
   Enjoy!<div>
   <br><div>-Martin<br><span class="js-signatureMarker"></span><br>--<br>Old programmers never die. They just branch to a new address.<br>
