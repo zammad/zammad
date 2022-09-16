@@ -22,12 +22,12 @@ class App.DarkMode extends App.Controller
 
   quickToggleChange: (event) =>
     event.stopPropagation()
-    App.Event.trigger('ui:theme:set', { theme: @oppositeTheme(), source: 'quick_switch' })
+    App.Event.trigger('ui:theme:set', { theme: @oppositeTheme(), save: true, toggleLoop: true })
 
   onUpdate: (event) =>
-    return if event.source is 'quick_switch'
-    return if event.detectedTheme is @currentTheme()
+    return if event.toggleLoop is true
+    return if event.theme is @currentTheme()
 
-    @quickToggle.prop('checked', if event.detectedTheme is 'dark' then true else false)
+    @quickToggle.prop('checked', if event.theme is 'dark' then true else false)
 
 App.Config.set('DarkMode', { prio: 1000, parent: '#current_user', name: __('Dark Mode'), translate: true, toggle: 'dark-mode-quick', checked: (-> document.documentElement.dataset.theme == 'dark'), permission: ['user_preferences.*'] }, 'NavBarRight')
