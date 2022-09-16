@@ -9,10 +9,20 @@
   <%= stylesheet_link_tag "application", :media => 'all' %>
   <%= stylesheet_link_tag "application-print", :media => 'print' %>
   <% if Rails.configuration.assets.debug %>
-  <%= javascript_include_tag "application", nonce: true %>
+    <%= javascript_include_tag "application", nonce: true %>
   <% else %>
-  <%= javascript_include_tag "application", nonce: true, :defer => 'defer' %>
+    <%= javascript_include_tag "application", nonce: true, :defer => 'defer' %>
   <% end %>
+
+  <%# Statically include external files with a nonce here to conform to CSP properly. %>
+  <%# Required by form channel configuration preview. %>
+  <%= javascript_include_tag "../assets/form/form.js", nonce: true, :defer => 'defer', :skip_pipeline => true, :id => "zammad_form_script"  %>
+
+  <%# Required for browser time mocking in tests. %>
+  <% if Rails.env.test? %>
+    <%= javascript_include_tag "../assets/tests/sinon-9.2.4.js", nonce: true, :skip_pipeline => true, :id => "zammad_form_script"  %>
+  <% end %>
+
   <%= csrf_meta_tags %>
 </head>
 <body>

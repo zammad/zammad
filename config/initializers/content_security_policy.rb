@@ -45,7 +45,7 @@ Rails.application.config.content_security_policy do |policy|
   policy.font_src    :self, :data
   policy.img_src     '*', :data
   policy.object_src  :none
-  policy.script_src  :self, :unsafe_eval, :strict_dynamic
+  policy.script_src  :self, :unsafe_eval
   policy.style_src   :self, :unsafe_inline
   policy.frame_src   'www.youtube.com', 'player.vimeo.com'
 

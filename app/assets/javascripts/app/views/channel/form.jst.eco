@@ -140,7 +140,6 @@
         <div class="browser-website centered vertical fit">
           <div class="btn js-formBtn"><%- @T('Feedback') %></div>
           <div class="js-formInline browser-inline-form"></div>
-          <script id="zammad_form_script" src="/assets/form/form.js"></script>
         </div>
       </div>
     </div>

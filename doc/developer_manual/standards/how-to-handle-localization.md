@@ -24,6 +24,11 @@ The Zammad chat currently has its own build pipeline and also a custom translati
 Messages and translations are directly baked into [chat.coffee](../public/assets/chat/chat.coffee) and have to be maintained
 there.
 
+### Zammad Forms Channel - `public/assets/form/form.js`
+
+Messages and translations are directly baked into [form.js](../public/assets/form/form.js) and have to be maintained
+there.
+
 ## Zammad Notification Templates - `app/views/mailer/*`
 
 Zammad contains a number of different notification templates which are currently stored directly in language-specific `ERB`
