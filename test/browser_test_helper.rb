@@ -4620,7 +4620,7 @@ wait untill text in selector disabppears
     click(browser: instance, css: '#navigation .user-menu .js-avatar')
 
     click(browser: instance, css: '#navigation .user-menu a[href="#profile"]')
-    click(browser:  instance, css: 'a[href="#profile/language"]')
+    click(browser: instance, css: 'a[href="#profile/language"]')
 
     select(
       browser: instance,
