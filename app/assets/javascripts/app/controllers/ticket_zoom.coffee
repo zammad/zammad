@@ -93,7 +93,7 @@ class App.TicketZoom extends App.Controller
     @ajax(
       id:    "ticket_zoom_#{@ticket_id}"
       type:  'GET'
-      url:   "#{@apiPath}/tickets/#{@ticket_id}?all=true"
+      url:   "#{@apiPath}/tickets/#{@ticket_id}?all=true&auto_assign=true"
       processData: true
       queue: queue
       success: (data, status, xhr) =>
@@ -556,26 +556,6 @@ class App.TicketZoom extends App.Controller
         mentions:     @mentions
         links:        @links
       )
-
-      # check if autolock is needed
-      if @Config.get('ticket_auto_assignment') is true
-        if @ticket.owner_id is 1 && @permissionCheck('ticket.agent') && @ticket.editable('full')
-          userIdsIgnore = @Config.get('ticket_auto_assignment_user_ids_ignore') || []
-          if !_.isArray(userIdsIgnore)
-            userIdsIgnore = [userIdsIgnore]
-          userIgnored = false
-          currentUserId = App.Session.get('id')
-          for userIdIgnore in userIdsIgnore
-            if userIdIgnore.toString() is currentUserId.toString()
-              userIgnored = true
-              break
-          if userIgnored is false
-            ticket_auto_assignment_selector = @Config.get('ticket_auto_assignment_selector')
-            if App.Ticket.selector(@ticket, ticket_auto_assignment_selector['condition'])
-              assign = =>
-                @ticket.owner_id = App.Session.get('id')
-                @ticket.save()
-              @delay(assign, 800, "ticket-auto-assign-#{@ticket.id}")
 
     # render init content
     if elLocal

@@ -50,6 +50,8 @@ class TicketsController < ApplicationController
     ticket = Ticket.find(params[:id])
     authorize!(ticket)
 
+    auto_assign_ticket(ticket)
+
     if response_expand?
       result = ticket.attributes_with_association_names
       render json: result, status: :ok
@@ -68,6 +70,12 @@ class TicketsController < ApplicationController
     end
 
     render json: ticket
+  end
+
+  def auto_assign_ticket(ticket)
+    return if params[:auto_assign].blank?
+
+    ticket.auto_assign(current_user)
   end
 
   # POST /api/v1/tickets
