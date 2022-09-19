@@ -110,7 +110,7 @@ class AgentTicketOverviewLevel1Test < TestCase
 
     click(
       browser: browser2,
-      css:     '.active .ticketZoom .ticketZoom-controls .overview-navigator .next',
+      css:     '.active .ticketZoom .ticketZoom-controls .overview-navigator .btn--split--last',
     )
     match(
       browser: browser2,
@@ -125,7 +125,7 @@ class AgentTicketOverviewLevel1Test < TestCase
 
     click(
       browser: browser2,
-      css:     '.active .ticketZoom .ticketZoom-controls .overview-navigator .next',
+      css:     '.active .ticketZoom .ticketZoom-controls .overview-navigator .btn--split--last',
     )
     match(
       browser: browser2,
@@ -160,7 +160,7 @@ class AgentTicketOverviewLevel1Test < TestCase
     )
     click(
       browser: browser2,
-      css:     '.active .ticketZoom .ticketZoom-controls .overview-navigator .previous',
+      css:     '.active .ticketZoom .ticketZoom-controls .overview-navigator .btn--split--first',
     )
 
     match(
@@ -175,7 +175,7 @@ class AgentTicketOverviewLevel1Test < TestCase
     )
     click(
       browser: browser2,
-      css:     '.active .ticketZoom .ticketZoom-controls .overview-navigator .next',
+      css:     '.active .ticketZoom .ticketZoom-controls .overview-navigator .btn--split--last',
     )
     match(
       browser: browser2,
