@@ -17,16 +17,12 @@ class Sequencer
 
               private
 
-              def data_type(_attribute)
+              def data_type(...)
                 'select'
               end
 
               def options(object_attribte)
-                result = {}
-                object_attribte.custom_field_options.each do |entry|
-                  result[ entry['value'] ] = entry['name']
-                end
-                result
+                object_attribte.custom_field_options.to_h { |entry| [entry['value'], entry['name']] }
               end
             end
           end

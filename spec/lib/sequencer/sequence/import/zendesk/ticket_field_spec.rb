@@ -212,6 +212,47 @@ RSpec.describe ::Sequencer::Sequence::Import::Zendesk::TicketField, sequencer: :
       end
     end
 
+    context 'when field is the ticket type' do
+      let(:resource) do
+        ZendeskAPI::TicketField.new(
+          nil,
+          base_resource.merge(
+            {
+              'title'                => 'Type',
+              'type'                 => 'tickettype',
+              'system_field_options' => [
+                {
+                  'name'  => 'Question',
+                  'value' => 'question'
+                },
+                {
+                  'name'  => 'Incident',
+                  'value' => 'incident'
+                },
+                {
+                  'name'  => 'Problem',
+                  'value' => 'problem'
+                },
+                {
+                  'name'  => 'Task',
+                  'value' => 'task'
+                }
+              ]
+            }
+          )
+        )
+      end
+
+      it "activate the already existing ticket 'type' field" do
+        expect { process(process_payload) }.to change { ObjectManager::Attribute.get(object: 'Ticket', name: 'type').active }.from(false).to(true)
+      end
+
+      it "import the fixed option list for the ticket 'type' field" do
+        process(process_payload)
+        expect(ObjectManager::Attribute.get(object: 'Ticket', name: 'type').data_option[:options]).to include(resource['system_field_options'].to_h { |choice| [choice['value'], choice['name']] })
+      end
+    end
+
     context 'when field is unknown' do
       let(:resource) do
         ZendeskAPI::TicketField.new(

@@ -132,6 +132,7 @@ RSpec.describe ::Sequencer::Sequence::Import::Zendesk::Ticket, sequencer: :seque
         priority_id:              3,
         owner_id:                 owner.id,
         customer_id:              customer.id,
+        type:                     'question',
         custom_dropdown:          'key_1',
         custom_checkbox:          true,
         custom_multiselect:       %w[key_1 key_2],

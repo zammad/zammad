@@ -39,7 +39,7 @@ class Sequencer
                   editable:      !attribute.removable,
                   active:        attribute.active,
                   screens:       screens(attribute),
-                  position:      attribute.position,
+                  position:      position(attribute),
                   created_by_id: 1,
                   updated_by_id: 1,
                 }
@@ -71,6 +71,10 @@ class Sequencer
                   null: !attribute.required,
                   note: attribute.description,
                 }
+              end
+
+              def position(attribute)
+                attribute.position
               end
 
               def data_type(attribute)

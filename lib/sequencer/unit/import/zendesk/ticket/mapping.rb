@@ -30,6 +30,7 @@ class Sequencer
                   created_at:               resource.created_at,
                   updated_by_id:            user_id,
                   created_by_id:            user_id,
+                  type:                     resource.type,
                   create_article_sender_id: article_sender_id,
                   create_article_type_id:   article_type_id,
                 }
