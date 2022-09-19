@@ -223,12 +223,6 @@ group :development, :test do
 
   # Slack helper for testing
   gem 'slack-ruby-client', require: false
-
-  # livereload on template changes (html, js, css)
-  gem 'guard',             require: false
-  gem 'guard-livereload',  require: false
-  gem 'rack-livereload',   require: false
-  gem 'rb-fsevent',        require: false
 end
 
 # Want to extend Zammad with additional gems?
