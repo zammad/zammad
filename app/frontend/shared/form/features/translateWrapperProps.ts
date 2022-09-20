@@ -44,9 +44,11 @@ const translateWrapperProps = (node: FormKitNode) => {
   node.hook.prop(({ prop, value }, next) => {
     const propName = prop as string
     if (propName === 'attrs' && !isEmpty(value)) {
+      // eslint-disable-next-line vue/no-ref-as-operand
       value = translateAttrs(node, value)
     }
     if (propsToTranslate.includes(propName)) {
+      // eslint-disable-next-line vue/no-ref-as-operand
       if (!node.store[propName] || node.store[propName].value !== value) {
         node.store.set(
           createMessage({
@@ -58,6 +60,7 @@ const translateWrapperProps = (node: FormKitNode) => {
       }
 
       if (propName === 'label') {
+        // eslint-disable-next-line vue/no-ref-as-operand
         value = computed(() => {
           return i18n.t(
             node.store[propName].value as string,
@@ -65,6 +68,7 @@ const translateWrapperProps = (node: FormKitNode) => {
           )
         })
       } else {
+        // eslint-disable-next-line vue/no-ref-as-operand
         value = computed(() => {
           return i18n.t(node.store[propName].value as string)
         })
