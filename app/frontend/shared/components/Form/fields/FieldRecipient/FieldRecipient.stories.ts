@@ -3,21 +3,21 @@
 import type { Story } from '@storybook/vue3'
 import { FormKit } from '@formkit/vue'
 import { escapeRegExp } from 'lodash-es'
+import gql from 'graphql-tag'
 import defaultArgTypes from '@stories/support/form/field/defaultArgTypes'
 import type { FieldArgs } from '@stories/types/form'
 import { createMockClient } from 'mock-apollo-client'
 import { provideApolloClient } from '@vue/apollo-composable'
-import type { AutocompleteSearchUserQuery } from '@shared/graphql/types'
-import { AutocompleteSearchUserDocument } from '@shared/graphql/queries/autocompleteSearch/user.api'
+import type { AutoCompleteOption } from '../FieldAutoComplete'
 
 export default {
-  title: 'Form/Field/AutoComplete',
+  title: 'Form/Field/Recipient',
   component: FormKit,
   argTypes: {
     ...defaultArgTypes,
     options: {
       type: { name: 'array', required: true },
-      description: 'List of initial autocomplete options',
+      description: 'List of initial recipients',
       table: {
         expanded: true,
         type: {
@@ -40,9 +40,6 @@ export default {
     actionIcon: {
       description: 'Defines optional icon for the action button in the dialog',
     },
-    allowUnknownValues: {
-      description: 'Allows selection of unknown values entered as search input',
-    },
     autoselect: {
       description:
         'Automatically selects last option when and only when option list length equals one',
@@ -54,11 +51,8 @@ export default {
       description:
         'Defines interval for debouncing search input (default: 500)',
     },
-    filterInputValidation: {
-      description: 'Defines FormKit validation rule for search input',
-    },
     gqlQuery: {
-      description: 'Defines GraphQL query for the autocomplete search',
+      description: 'Defines GraphQL query for the recipient search',
     },
     limit: {
       description: 'Controls maximum number of results',
@@ -90,48 +84,62 @@ export default {
   },
 }
 
-const testOptions = [
+const testOptions: AutoCompleteOption[] = [
   {
-    value: 0,
-    label: 'Item A',
-    icon: 'gitlab-logo',
-    heading: 'autocomplete sample 1',
+    value: 'baz@bar.tld',
+    label: 'Baz',
+    heading: 'baz@bar.tld',
   },
   {
-    value: 1,
-    label: 'Item B',
-    icon: 'github-logo',
-    heading: 'autocomplete sample 2',
+    value: 'qux@bar.tld',
+    label: 'Qux',
+    heading: 'qux@bar.tld',
   },
   {
-    value: 2,
-    label: 'Ítem C',
-    icon: 'web',
-    heading: 'autocomplete sample 3',
+    value: 'corge@bar.tld',
+    label: 'Corge',
+    heading: 'corge@bar.tld',
   },
 ]
 
-const gqlQuery = `
-  query autocompleteSearchUser($query: String!, $limit: Int) {
-    autocompleteSearchUser(query: $query, limit: $limit) {
+const AutocompleteSearchRecipientDocument = gql`
+  query autocompleteSearchRecipient($query: String!, $limit: Int) {
+    autocompleteSearchRecipient(query: $query, limit: $limit) {
       value
       label
       labelPlaceholder
+      heading
+      headingPlaceholder
       disabled
       icon
     }
   }
 `
 
+type AutocompleteSearchRecipientQuery = {
+  __typename?: 'Queries'
+  autocompleteSearchRecipient: Array<{
+    __typename?: 'AutocompleteEntry'
+    value: string
+    label: string
+    labelPlaceholder?: Array<string> | null
+    heading?: string | null
+    headingPlaceholder?: Array<string> | null
+    disabled?: boolean | null
+    icon?: string | null
+  }>
+}
+
 const mockQueryResult = (
   query: string,
   limit: number,
-): AutocompleteSearchUserQuery => {
+): AutocompleteSearchRecipientQuery => {
   const options = testOptions.map((option) => ({
     ...option,
     labelPlaceholder: null,
     headingPlaceholder: null,
     disabled: null,
+    icon: null,
     __typename: 'AutocompleteEntry',
   }))
 
@@ -143,8 +151,10 @@ const mockQueryResult = (
   const filterRegex = new RegExp(escapeRegExp(deaccent(query)), 'i')
 
   // Search across options via their de-accented labels.
-  const filteredOptions = options.filter((option) =>
-    filterRegex.test(deaccent(option.label)),
+  const filteredOptions = options.filter(
+    (option) =>
+      filterRegex.test(deaccent(option.label)) ||
+      filterRegex.test(deaccent(option.heading as string)),
   ) as unknown as {
     __typename?: 'AutocompleteEntry'
     value: string
@@ -155,7 +165,7 @@ const mockQueryResult = (
   }[]
 
   return {
-    autocompleteSearchUser: filteredOptions.slice(0, limit ?? 25),
+    autocompleteSearchRecipient: filteredOptions.slice(0, limit ?? 25),
   }
 }
 
@@ -163,7 +173,7 @@ const mockClient = () => {
   const mockApolloClient = createMockClient()
 
   mockApolloClient.setRequestHandler(
-    AutocompleteSearchUserDocument,
+    AutocompleteSearchRecipientDocument,
     (variables) => {
       return Promise.resolve({
         data: mockQueryResult(variables.query, variables.limit),
@@ -180,7 +190,7 @@ const Template: Story<FieldArgs> = (args: FieldArgs) => ({
     mockClient()
     return { args }
   },
-  template: '<FormKit type="autocomplete" v-bind="args"/>',
+  template: '<FormKit type="recipient" v-bind="args"/>',
 })
 
 export const Default = Template.bind({})
@@ -190,44 +200,29 @@ Default.args = {
   actionIcon: null,
   autoselect: false,
   clearable: false,
-  gqlQuery,
   limit: null,
   multiple: false,
   noOptionsLabelTranslation: false,
   size: null,
   sorting: null,
-  label: 'Auto Complete',
-  name: 'autocomplete',
+  label: 'Recipient',
+  name: 'recipient',
 }
 
 export const InitialOptions = Template.bind({})
 InitialOptions.args = {
-  options: [
-    {
-      value: 0,
-      label: 'Item A',
-    },
-    {
-      value: 1,
-      label: 'Item B',
-    },
-    {
-      value: 2,
-      label: 'Item C',
-    },
-  ],
+  options: testOptions,
   action: null,
   actionIcon: null,
   autoselect: false,
   clearable: false,
-  gqlQuery,
   limit: null,
   multiple: false,
   noOptionsLabelTranslation: false,
   size: null,
   sorting: null,
   label: 'Initial Options',
-  name: 'autocomplete_options',
+  name: 'recipient_options',
 }
 
 export const DefaultValue = Template.bind({})
@@ -237,15 +232,14 @@ DefaultValue.args = {
   actionIcon: null,
   autoselect: false,
   clearable: false,
-  gqlQuery,
   limit: null,
   multiple: false,
   noOptionsLabelTranslation: false,
   size: null,
   sorting: null,
   label: 'Default Value',
-  name: 'autocomplete_default_value',
-  value: 0,
+  name: 'recipient_default_value',
+  value: 'corge@bar.tld',
 }
 
 export const ClearableValue = Template.bind({})
@@ -255,15 +249,14 @@ ClearableValue.args = {
   actionIcon: null,
   autoselect: false,
   clearable: true,
-  gqlQuery,
   limit: null,
   multiple: false,
   noOptionsLabelTranslation: false,
   size: null,
   sorting: null,
   label: 'Clearable Value',
-  name: 'autocomplete_clearable',
-  value: 1,
+  name: 'recipient_clearable',
+  value: 'qux@bar.tld',
 }
 
 export const QueryLimit = Template.bind({})
@@ -273,14 +266,13 @@ QueryLimit.args = {
   actionIcon: null,
   autoselect: false,
   clearable: false,
-  gqlQuery,
   limit: 1,
   multiple: false,
   noOptionsLabelTranslation: false,
   size: null,
   sorting: null,
   label: 'Query Limit',
-  name: 'autocomplete_limit',
+  name: 'recipient_limit',
 }
 
 export const DisabledState = Template.bind({})
@@ -290,15 +282,14 @@ DisabledState.args = {
   actionIcon: null,
   autoselect: false,
   clearable: false,
-  gqlQuery,
   limit: null,
   multiple: false,
   noOptionsLabelTranslation: false,
   size: null,
   sorting: null,
   label: 'Disabled State',
-  name: 'autocomplete_disabled',
-  value: 2,
+  name: 'recipient_disabled',
+  value: 'baz@bar.tld',
   disabled: true,
 }
 
@@ -309,159 +300,155 @@ MultipleSelection.args = {
   actionIcon: null,
   autoselect: false,
   clearable: false,
-  gqlQuery,
   limit: null,
   multiple: true,
   noOptionsLabelTranslation: false,
   size: null,
   sorting: null,
   label: 'Multiple Selection',
-  name: 'autocomplete_multiple',
-  value: [0, 2],
+  name: 'recipient_multiple',
+  value: ['baz@bar.tld', 'corge@bar.tld'],
 }
 
 export const OptionSorting = Template.bind({})
 OptionSorting.args = {
-  options: [
-    {
-      value: 1,
-      label: 'Item B',
-    },
-    {
-      value: 2,
-      label: 'Item C',
-    },
-    {
-      value: 0,
-      label: 'Item A',
-    },
-  ],
+  options: testOptions.reverse(),
   action: null,
   actionIcon: null,
   autoselect: false,
   clearable: false,
-  gqlQuery,
   limit: null,
   multiple: false,
   noOptionsLabelTranslation: false,
   size: null,
   sorting: 'label',
   label: 'Option Sorting',
-  name: 'autocomplete_sorting',
+  name: 'recipient_sorting',
 }
 
 export const OptionTranslation = Template.bind({})
 OptionTranslation.args = {
   options: [
     {
-      value: 0,
-      label: 'Item A (%s)',
+      value: 'baz@bar.tld',
+      label: 'Baz (%s)',
       labelPlaceholder: ['1st'],
+      heading: 'baz@bar.tld',
     },
     {
-      value: 1,
-      label: 'Item B (%s)',
+      value: 'qux@bar.tld',
+      label: 'Qux (%s)',
       labelPlaceholder: ['2nd'],
+      heading: 'qux@bar.tld',
     },
     {
-      value: 2,
-      label: 'Item C (%s)',
+      value: 'corge@bar.tld',
+      label: 'Corge (%s)',
       labelPlaceholder: ['3rd'],
+      heading: 'corge@bar.tld',
     },
   ],
   action: null,
   actionIcon: null,
   autoselect: false,
   clearable: false,
-  gqlQuery,
   limit: null,
   multiple: false,
   noOptionsLabelTranslation: false,
   size: null,
   sorting: null,
   label: 'Option Translation',
-  name: 'autocomplete_translation',
+  name: 'recipient_translation',
 }
 
 export const OptionAutoselect = Template.bind({})
 OptionAutoselect.args = {
   options: [
     {
-      value: 1,
-      label: 'The One',
+      value: 'foo@bar.tld',
+      label: 'Foo',
+      heading: 'foo@bar.tld',
     },
   ],
   action: null,
   actionIcon: null,
   autoselect: true,
   clearable: false,
-  gqlQuery,
   limit: null,
   multiple: false,
   noOptionsLabelTranslation: false,
   size: null,
   sorting: null,
   label: 'Option Autoselect',
-  name: 'autocomplete_autoselect',
+  name: 'recipient_autoselect',
 }
 
 export const OptionDisabled = Template.bind({})
 OptionDisabled.args = {
   options: [
     {
-      value: 0,
-      label: 'Item A',
+      value: 'baz@bar.tld',
+      label: 'Baz',
+      heading: 'baz@bar.tld',
     },
     {
-      value: 1,
-      label: 'Item B',
+      value: 'qux@bar.tld',
+      label: 'Qux',
+      heading: 'qux@bar.tld',
       disabled: true,
     },
     {
-      value: 2,
-      label: 'Item C',
+      value: 'corge@bar.tld',
+      label: 'Corge',
+      heading: 'corge@bar.tld',
     },
   ],
   action: null,
   actionIcon: null,
   autoselect: false,
   clearable: false,
-  gqlQuery,
   limit: null,
   multiple: false,
   noOptionsLabelTranslation: false,
   size: null,
   sorting: null,
   label: 'Option Disabled',
-  name: 'autocomplete_disabled',
+  name: 'recipient_disabled',
 }
 
 export const OptionIcon = Template.bind({})
 OptionIcon.args = {
   options: [
     {
-      value: 1,
-      label: 'GitLab',
-      icon: 'gitlab-logo',
+      value: 'baz@bar.tld',
+      label: 'Baz',
+      heading: 'baz@bar.tld',
+      icon: 'email',
     },
     {
-      value: 2,
-      label: 'GitHub',
-      icon: 'github-logo',
+      value: 'qux@bar.tld',
+      label: 'Qux',
+      heading: 'qux@bar.tld',
+      icon: 'email',
+    },
+    {
+      value: 'corge@bar.tld',
+      label: 'Corge',
+      heading: 'corge@bar.tld',
+      icon: 'email',
     },
   ],
   action: null,
   actionIcon: null,
   autoselect: false,
   clearable: false,
-  gqlQuery,
   limit: null,
   multiple: false,
   noOptionsLabelTranslation: false,
   size: null,
   sorting: null,
   label: 'Option Icon',
-  name: 'autocomplete_icon',
+  name: 'recipient_icon',
 }
 
 export const AdditionalAction = Template.bind({})
@@ -471,44 +458,11 @@ AdditionalAction.args = {
   actionIcon: 'web',
   autoselect: false,
   clearable: false,
-  gqlQuery,
   limit: null,
   multiple: false,
   noOptionsLabelTranslation: false,
   size: null,
   sorting: null,
   label: 'Additional Action',
-  name: 'autocomplete_action',
-}
-
-export const UnknownValues = Template.bind({})
-UnknownValues.args = {
-  options: [
-    {
-      value: 0,
-      label: 'Item A',
-    },
-    {
-      value: 1,
-      label: 'Item B',
-    },
-    {
-      value: 2,
-      label: 'Item C',
-    },
-  ],
-  action: null,
-  actionIcon: null,
-  allowUnknownValues: true,
-  autoselect: false,
-  clearable: false,
-  filterInputValidation: 'starts_with:Item',
-  gqlQuery,
-  limit: null,
-  multiple: false,
-  noOptionsLabelTranslation: false,
-  size: null,
-  sorting: null,
-  label: 'Unknown Values',
-  name: 'autocomplete_unknown_values',
+  name: 'recipient_action',
 }

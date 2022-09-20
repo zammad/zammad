@@ -108,6 +108,12 @@ const getCoreClasses: FormThemeExtension = (classes: FormThemeClasses) => {
         classes.organization && classes.organization.outer
       } field-organization`,
     }),
+    recipient: addFloatingLabel({
+      ...(classes.recipient || {}),
+      outer: `${
+        classes.recipient && classes.recipient.outer
+      } field-autocomplete`,
+    }),
     button: addButtonVariants(classes.button),
     submit: addButtonVariants(classes.submit),
   }

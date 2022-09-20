@@ -21,8 +21,10 @@ const { localValue } = useValue(toRef(props, 'context'))
   <CommonInputSearch
     :id="props.context.id"
     v-model="localValue"
-    no-border
     :disabled="props.context.disabled"
+    :placeholder="props.context.placeholder || props.context.attrs.placeholder"
+    :wrapper-class="props.context.wrapperClass"
+    no-border
     @blur="context.handlers.blur"
   />
 </template>

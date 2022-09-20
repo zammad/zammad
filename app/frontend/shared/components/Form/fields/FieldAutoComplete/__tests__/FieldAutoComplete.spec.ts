@@ -672,6 +672,83 @@ describe('Form - Field - AutoComplete - Features', () => {
 
     expect(wrapper.getByIconName('web')).toBeInTheDocument()
   })
+
+  it('supports selection of unknown values', async () => {
+    const wrapper = renderComponent(FormKit, {
+      ...wrapperParameters,
+      props: {
+        ...testProps,
+        allowUnknownValues: true,
+        debounceInterval: 0,
+      },
+    })
+
+    await wrapper.events.click(wrapper.getByRole('list'))
+
+    const filterElement = wrapper.getByRole('searchbox')
+
+    await wrapper.events.type(filterElement, 'Item D')
+
+    let selectOptions = wrapper.getAllByRole('option')
+
+    expect(selectOptions).toHaveLength(1)
+    expect(selectOptions[0]).toHaveTextContent('Item D')
+
+    wrapper.events.click(wrapper.getAllByRole('option')[0])
+
+    await waitFor(() => {
+      expect(wrapper.emitted().inputRaw).toBeTruthy()
+    })
+
+    const emittedInput = wrapper.emitted().inputRaw as Array<Array<InputEvent>>
+
+    expect(emittedInput[0][0]).toBe('Item D')
+    expect(wrapper.getByRole('listitem')).toHaveTextContent('Item D')
+
+    await wrapper.events.click(wrapper.getByRole('list'))
+
+    selectOptions = wrapper.getAllByRole('option')
+
+    expect(selectOptions).toHaveLength(1)
+    expect(selectOptions[0]).toHaveTextContent('Item D')
+  })
+
+  it('supports validation of filter input', async () => {
+    const wrapper = renderComponent(FormKit, {
+      ...wrapperParameters,
+      props: {
+        ...testProps,
+        allowUnknownValues: true,
+        debounceInterval: 0,
+        filterInputValidation: 'starts_with:#',
+      },
+    })
+
+    await wrapper.events.click(wrapper.getByRole('list'))
+
+    const filterElement = wrapper.getByRole('searchbox')
+
+    await wrapper.events.type(filterElement, 'foo')
+
+    expect(
+      wrapper.queryByText(`This field doesn't start with "#".`),
+    ).toBeInTheDocument()
+
+    expect(wrapper.queryByText('No results found')).toBeInTheDocument()
+
+    await wrapper.events.clear(filterElement)
+
+    await wrapper.events.type(filterElement, '#foo')
+
+    expect(
+      wrapper.queryByText(`This field doesn't start with "#".`),
+    ).not.toBeInTheDocument()
+
+    const selectOptions = wrapper.getAllByRole('option')
+
+    expect(selectOptions).toHaveLength(1)
+    expect(selectOptions[0]).toHaveTextContent('#foo')
+  })
 })
 
 describe('Form - Field - AutoComplete - Accessibility', () => {

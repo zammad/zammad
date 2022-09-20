@@ -9,10 +9,10 @@ import { refDebounced } from '@vueuse/core'
 import { useLazyQuery } from '@vue/apollo-composable'
 import gql from 'graphql-tag'
 import type { NameNode, OperationDefinitionNode, SelectionNode } from 'graphql'
-import CommonInputSearch from '@shared/components/CommonInputSearch/CommonInputSearch.vue'
 import CommonDialog from '@mobile/components/CommonDialog/CommonDialog.vue'
 import { QueryHandler } from '@shared/server/apollo/handler'
 import { closeDialog } from '@shared/composables/useDialog'
+import type { FormKitNode } from '@formkit/core'
 import FieldAutoCompleteOptionIcon from './FieldAutoCompleteOptionIcon.vue'
 import useSelectOptions from '../../composables/useSelectOptions'
 import useValue from '../../composables/useValue'
@@ -50,15 +50,22 @@ const replacementLocalOptions: Ref<AutoCompleteOption[]> = ref(
 
 const filter = ref('')
 
-const clearFilter = () => {
-  filter.value = ''
-}
-
 const filterInput = ref(null)
 
 const focusFirstTarget = () => {
-  const filterInputElement = filterInput.value as null | HTMLElement
-  if (filterInputElement) filterInputElement.focus()
+  const filterInputFormKit = filterInput.value as null | { node: FormKitNode }
+  if (!filterInputFormKit) return
+
+  const filterInputElement = document.getElementById(
+    filterInputFormKit.node.context?.id as string,
+  )
+  if (!filterInputElement) return
+
+  filterInputElement.focus()
+}
+
+const clearFilter = () => {
+  filter.value = ''
 }
 
 onMounted(() => {
@@ -121,9 +128,25 @@ const autocompleteQueryResultOptions = computed(
     ] as unknown as AutoCompleteOption[],
 )
 
-const autocompleteOptions = computed(
-  () => autocompleteQueryResultOptions.value || [],
-)
+const autocompleteOptions = computed(() => {
+  const result = cloneDeep(autocompleteQueryResultOptions.value) || []
+
+  const filterInputFormKit = filterInput.value as null | { node: FormKitNode }
+
+  if (
+    props.context.allowUnknownValues &&
+    filterInputFormKit &&
+    filterInputFormKit.node.context?.state.complete &&
+    !result.some((option) => option.value === trimmedFilter.value)
+  ) {
+    result.unshift({
+      value: trimmedFilter.value,
+      label: trimmedFilter.value,
+    })
+  }
+
+  return result
+})
 
 const { sortedOptions: sortedAutocompleteOptions } = useSelectOptions(
   autocompleteOptions,
@@ -182,6 +205,7 @@ const executeAction = () => {
     :name="name"
     :label="context.label"
     :listeners="{ done: { onKeydown: advanceDialogFocus } }"
+    class="field-autocomplete-dialog"
     @close="close"
   >
     <template #before-label>
@@ -226,7 +250,16 @@ const executeAction = () => {
       </div>
     </template>
     <div class="w-full p-4">
-      <CommonInputSearch ref="filterInput" v-model="filter" />
+      <FormKit
+        ref="filterInput"
+        v-model="filter"
+        :delay="context.node.props.delay"
+        :placeholder="context.filterInputPlaceholder"
+        :validation="context.filterInputValidation"
+        type="search"
+        validation-visibility="live"
+        role="searchbox"
+      />
     </div>
     <div
       class="flex grow flex-col items-start self-stretch overflow-y-auto"
@@ -330,3 +363,11 @@ const executeAction = () => {
     </div>
   </CommonDialog>
 </template>
+
+<style lang="scss">
+.field-autocomplete-dialog {
+  .formkit-wrapper {
+    @apply px-0;
+  }
+}
+</style>

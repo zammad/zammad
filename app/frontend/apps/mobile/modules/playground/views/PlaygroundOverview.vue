@@ -103,11 +103,30 @@ const linkSchemaRaw = [
     name: 'autocomplete',
     label: 'AutoComplete',
     props: {
-      // options: [{ label: 'Label', value: 1 }],
       sorting: 'label',
       link: '/tickets',
       action: '/tickets',
       actionIcon: 'new-customer',
+      gqlQuery: `
+query autocompleteSearchUser($query: String!, $limit: Int) {
+  autocompleteSearchUser(query: $query, limit: $limit) {
+    value
+    label
+    labelPlaceholder
+    heading
+    headingPlaceholder
+    disabled
+    icon
+  }
+}
+`,
+    },
+  },
+  {
+    type: 'recipient',
+    name: 'recipient',
+    label: 'Recipient',
+    props: {
       gqlQuery: `
 query autocompleteSearchUser($query: String!, $limit: Int) {
   autocompleteSearchUser(query: $query, limit: $limit) {

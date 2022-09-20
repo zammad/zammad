@@ -552,6 +552,8 @@ export type Queries = {
   applicationBuildChecksum: Scalars['String'];
   /** Configuration required for front end operation (more results returned for authenticated users) */
   applicationConfig: Array<KeyComplexValue>;
+  /** Search for recipients */
+  autocompleteSearchRecipient: Array<AutocompleteEntry>;
   /** Search for users */
   autocompleteSearchUser: Array<AutocompleteEntry>;
   /** Information about the authenticated user */
@@ -580,6 +582,13 @@ export type Queries = {
   translations?: Maybe<TranslationsPayload>;
   /** Fetch a user information by ID */
   user: User;
+};
+
+
+/** All available queries */
+export type QueriesAutocompleteSearchRecipientArgs = {
+  limit?: InputMaybe<Scalars['Int']>;
+  query: Scalars['String'];
 };
 
 
@@ -1296,6 +1305,14 @@ export type ApplicationConfigQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type ApplicationConfigQuery = { __typename?: 'Queries', applicationConfig: Array<{ __typename?: 'KeyComplexValue', key: string, value?: any | null }> };
+
+export type AutocompleteSearchRecipientQueryVariables = Exact<{
+  query: Scalars['String'];
+  limit?: InputMaybe<Scalars['Int']>;
+}>;
+
+
+export type AutocompleteSearchRecipientQuery = { __typename?: 'Queries', autocompleteSearchRecipient: Array<{ __typename?: 'AutocompleteEntry', value: string, label: string, labelPlaceholder?: Array<string> | null, heading?: string | null, headingPlaceholder?: Array<string> | null, disabled?: boolean | null, icon?: string | null }> };
 
 export type AutocompleteSearchUserQueryVariables = Exact<{
   query: Scalars['String'];

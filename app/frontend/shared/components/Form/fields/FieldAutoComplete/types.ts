@@ -18,10 +18,13 @@ export type AutoCompleteOption = {
 export type AutoCompleteProps = FormFieldContext<{
   action?: RouteLocationRaw
   actionIcon?: string
+  allowUnknownValues?: boolean
   autoselect?: boolean
   clearable?: boolean
   debounceInterval: number
   disabled?: boolean
+  filterInputPlaceholder?: string
+  filterInputValidation?: string
   limit?: number
   multiple?: boolean
   noOptionsLabelTranslation?: boolean
