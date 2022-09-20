@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-03-29 03:30+0000\n"
-"Last-Translator: grantw <grantw@gmail.com>\n"
+"PO-Revision-Date: 2022-09-20 12:05+0000\n"
+"Last-Translator: Martin Gruner <mg@zammad.com>\n"
 "Language-Team: Chinese (Simplified) <https://translations.zammad.org/"
 "projects/zammad/zammad-development/zh_Hans/>\n"
 "Language: zh-cn\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.11.2\n"
+"X-Generator: Weblate 4.14\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -433,6 +433,10 @@ msgstr "3周"
 #: db/seeds/settings.rb
 msgid "4 weeks"
 msgstr "4周"
+
+#: public/assets/chat/chat-no-jquery.coffee public/assets/chat/chat.coffee
+msgid "<strong>Chat</strong> with us!"
+msgstr "发起<strong>即时对话</strong>!"
 
 #: app/assets/javascripts/app/models/calendar.coffee
 msgid ""
@@ -1057,6 +1061,12 @@ msgstr "Facebook的应用程序凭据。"
 msgid "App credentials for Twitter."
 msgstr "Twitter的应用程序凭据。"
 
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
+#: app/assets/javascripts/app/controllers/_profile/appearance.coffee
+#: app/assets/javascripts/app/views/profile/appearance.jst.eco
+msgid "Appearance"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/api.coffee
 msgid "Application"
 msgstr "应用程序"
@@ -1265,6 +1275,7 @@ msgstr "附件 - 同时在附件中搜索跟进。"
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_article_attachments.coffee
 #: app/assets/javascripts/app/views/knowledge_base/_answer_attachments.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/attachments.jst.eco
+#: public/assets/form/form.js
 msgid "Attachments"
 msgstr "附件"
 
@@ -2790,6 +2801,16 @@ msgstr "機構中的客戶可以互相查看項目"
 msgid "Cut"
 msgstr ""
 
+#: app/assets/javascripts/app/views/profile/appearance.jst.eco
+msgid "Dark"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/dark_mode.coffee
+#, fuzzy
+#| msgid "Mode"
+msgid "Dark Mode"
+msgstr "维护模式"
+
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/dashboard.coffee
@@ -4113,7 +4134,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
-#: db/seeds/object_manager_attributes.rb
+#: db/seeds/object_manager_attributes.rb public/assets/form/form.js
 msgid "Email"
 msgstr "邮件地址"
 
@@ -6451,6 +6472,10 @@ msgstr ""
 msgid "Library"
 msgstr ""
 
+#: app/assets/javascripts/app/views/profile/appearance.jst.eco
+msgid "Light"
+msgstr ""
+
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
 msgid "Limit Groups"
 msgstr "限制群組"
@@ -6841,6 +6866,7 @@ msgstr "合併到工單"
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee
 #: app/assets/javascripts/app/views/maintenance.jst.eco
+#: public/assets/form/form.js
 msgid "Message"
 msgstr "消息"
 
@@ -7142,7 +7168,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/organization.jst.eco
 #: app/assets/javascripts/app/views/widget/user.jst.eco
 #: app/controllers/time_accountings_controller.rb
-#: db/seeds/object_manager_attributes.rb
+#: db/seeds/object_manager_attributes.rb public/assets/form/form.js
 msgid "Name"
 msgstr "名称"
 
@@ -7453,6 +7479,12 @@ msgstr ""
 #: app/views/knowledge_base/public/tags/show.html.erb
 msgid "No content to show"
 msgstr ""
+
+#: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
+#, fuzzy
+#| msgid "draft"
+msgid "No drafts"
+msgstr "草稿"
 
 #: app/controllers/users_controller.rb
 msgid "No email!"
@@ -7771,6 +7803,10 @@ msgstr "十月"
 msgid "October"
 msgstr "十月"
 
+#: public/assets/chat/chat.coffee
+msgid "Offline"
+msgstr "离线"
+
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee
 msgid "Ok"
 msgstr ""
@@ -7784,6 +7820,7 @@ msgid "Once completed…"
 msgstr "一旦完成…"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
+#: public/assets/chat/chat.coffee
 msgid "Online"
 msgstr "在线"
 
@@ -7889,6 +7926,7 @@ msgid "Or migrate from another system."
 msgstr "從另一個系統遷移"
 
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee
+#: db/seeds/permissions.rb
 #, fuzzy
 #| msgid "New Overview"
 msgid "Order of Overviews"
@@ -8021,12 +8059,6 @@ msgstr "浏览器"
 #: app/assets/javascripts/app/models/user_overview_sorting.coffee
 msgid "Overview"
 msgstr "工单概览"
-
-#: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Overviews"
-msgid "Overview Sortings"
-msgstr "概览"
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
 msgid "Overview bulk mask"
@@ -9172,6 +9204,7 @@ msgid "Script can be located under: ||%s|| and needs to be executable."
 msgstr ""
 
 #: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco
+#: public/assets/chat/chat-no-jquery.coffee public/assets/chat/chat.coffee
 msgid "Scroll down to see new messages"
 msgstr "向下滚动以查看新消息"
 
@@ -10066,6 +10099,10 @@ msgstr ""
 msgid "Sync calendars with iCal feeds."
 msgstr ""
 
+#: app/assets/javascripts/app/views/profile/appearance.jst.eco
+msgid "Sync with computer"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_manage/system.coffee
 #: app/assets/javascripts/app/controllers/manage.coffee db/seeds/permissions.rb
 #: db/seeds/ticket_article_senders.rb
@@ -10269,8 +10306,14 @@ msgstr ""
 msgid "The Telegram bot could not be saved."
 msgstr "％s 对象已创建。"
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "The Telegram file is larger than the allowed 20 MB."
+msgstr ""
+
+#: lib/telegram_helper.rb
+msgid ""
+"The Telegram integration can only be configured on systems using the HTTPS "
+"protocol."
 msgstr ""
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
@@ -10405,7 +10448,7 @@ msgstr ""
 msgid "The entry could not be created."
 msgstr ""
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "The file could not be retrieved from the bot."
 msgstr ""
 
@@ -10658,11 +10701,11 @@ msgstr ""
 msgid "The required parameter 'for_user_id' is missing."
 msgstr ""
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "The required parameter 'group_id' is invalid."
 msgstr ""
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "The required parameter 'group_id' is missing."
 msgstr ""
 
@@ -10814,7 +10857,7 @@ msgstr ""
 msgid "The way to communicate with us is this thing called \"ticket\"."
 msgstr "與我們溝通的方式就是所謂的“工單”"
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "The webhook could not be saved by Telegram, seems to be an invalid URL."
 msgstr ""
 
@@ -10825,6 +10868,7 @@ msgid "Their tickets"
 msgstr "工单"
 
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
+#: app/assets/javascripts/app/views/profile/appearance.jst.eco
 msgid "Theme"
 msgstr "主題"
 
@@ -10888,7 +10932,7 @@ msgstr "％s 对象已创建。"
 msgid "Third-party Applications"
 msgstr "第三方应用"
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 #, fuzzy
 #| msgid "Account already exists!"
 msgid "This bot already exists."
@@ -11482,6 +11526,10 @@ msgstr "處理工單中"
 #: public/assets/chat/chat-no-jquery.coffee public/assets/chat/chat.coffee
 msgid "Today"
 msgstr "今天"
+
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
+msgid "Toggle dark mode"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/api.coffee
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
@@ -12397,7 +12445,8 @@ msgid "Welcome!"
 msgstr "欢迎！"
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
-#: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco lib/telegram.rb
+#: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
+#: lib/telegram_helper.rb
 msgid "Welcome! Feel free to ask me a question!"
 msgstr ""
 
@@ -12838,6 +12887,10 @@ msgstr ""
 msgid "Your API key."
 msgstr "API Key"
 
+#: public/assets/form/form.js
+msgid "Your Email"
+msgstr "您的邮件地址"
+
 #: app/controllers/first_steps_controller.rb
 msgid "Your Email Configuration"
 msgstr "系统邮件配置"
@@ -12846,6 +12899,14 @@ msgstr "系统邮件配置"
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 msgid "Your Logo"
 msgstr "您的Logo"
+
+#: public/assets/form/form.js
+msgid "Your Message..."
+msgstr "您的留言..."
+
+#: public/assets/form/form.js
+msgid "Your Name"
+msgstr "您的尊姓大名"
 
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 msgid "Your New Personal Access Token"
@@ -14038,6 +14099,11 @@ msgstr "...整个文本区域"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅轮候时间"
+
+#, fuzzy
+#~| msgid "Overviews"
+#~ msgid "Overview Sortings"
+#~ msgstr "概览"
 
 #, fuzzy
 #~| msgid "Order"

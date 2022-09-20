@@ -2,10 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-09-08 03:30+0000\n"
-"Last-Translator: grtnl <geert.noel@aalst.be>\n"
-"Language-Team: Dutch <https://translations.zammad.org/projects/zammad/zammad-"
-"development/nl/>\n"
+"PO-Revision-Date: 2022-09-20 12:05+0000\n"
+"Last-Translator: Martin Gruner <mg@zammad.com>\n"
+"Language-Team: Dutch <https://translations.zammad.org/projects/zammad/"
+"zammad-development/nl/>\n"
 "Language: nl-nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -421,6 +421,10 @@ msgstr "3 weken"
 #: db/seeds/settings.rb
 msgid "4 weeks"
 msgstr "4 weken"
+
+#: public/assets/chat/chat-no-jquery.coffee public/assets/chat/chat.coffee
+msgid "<strong>Chat</strong> with us!"
+msgstr "<strong>Chat</strong> met ons!"
 
 #: app/assets/javascripts/app/models/calendar.coffee
 msgid ""
@@ -1043,6 +1047,12 @@ msgstr "App inloggegevens voor Facebook."
 msgid "App credentials for Twitter."
 msgstr "App inloggegevens voor Twitter."
 
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
+#: app/assets/javascripts/app/controllers/_profile/appearance.coffee
+#: app/assets/javascripts/app/views/profile/appearance.jst.eco
+msgid "Appearance"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/api.coffee
 msgid "Application"
 msgstr "Applicatie"
@@ -1220,10 +1230,8 @@ msgid "At least one user needs to have admin permissions."
 msgstr "Minimaal één gebruiker moet administrator rechten hebben."
 
 #: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue
-#, fuzzy
-#| msgid "Attached Files"
 msgid "Attach another file"
-msgstr "Bijlagen"
+msgstr "Extra bijlage toevoegen"
 
 #: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue
 #, fuzzy
@@ -1251,6 +1259,7 @@ msgstr "Bijlage - Voor Follow-up ook in bijlages zoeken."
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_article_attachments.coffee
 #: app/assets/javascripts/app/views/knowledge_base/_answer_attachments.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/attachments.jst.eco
+#: public/assets/form/form.js
 msgid "Attachments"
 msgstr "Bijlagen"
 
@@ -2581,10 +2590,8 @@ msgid "Create new ticket for this organization"
 msgstr "Maak een nieuw ticket voor deze organisatie"
 
 #: app/frontend/apps/mobile/entities/user/composables/useUserTicketsCount.ts
-#, fuzzy
-#| msgid "Create new ticket for this organization"
 msgid "Create new ticket for this user"
-msgstr "Maak een nieuw ticket voor deze organisatie"
+msgstr "Maak een nieuw ticket voor deze gebruiker"
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee
 msgid "Create organizations automatically if record has one."
@@ -2597,10 +2604,8 @@ msgstr ""
 "Creëer regels die de tickets voor de Service Level Agreement uitkiezen."
 
 #: app/frontend/shared/components/Form/fields/FieldTags/FieldTagsDialog.vue
-#, fuzzy
-#| msgid "Created At"
 msgid "Create tag"
-msgstr "Gemaakt op"
+msgstr "Label maken"
 
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
 msgid "Create your first ticket"
@@ -2784,6 +2789,16 @@ msgstr "Klanten in de organisatie kunnen elkaars items bekijken."
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
 msgid "Cut"
 msgstr "Knip"
+
+#: app/assets/javascripts/app/views/profile/appearance.jst.eco
+msgid "Dark"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/dark_mode.coffee
+#, fuzzy
+#| msgid "Mode"
+msgid "Dark Mode"
+msgstr "Modus"
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
@@ -4157,7 +4172,7 @@ msgstr "Elasticsearch moet geconfigureerd worden!"
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
-#: db/seeds/object_manager_attributes.rb
+#: db/seeds/object_manager_attributes.rb public/assets/form/form.js
 msgid "Email"
 msgstr "E-mail"
 
@@ -6475,6 +6490,12 @@ msgstr "Layout"
 msgid "Library"
 msgstr "Bibliotheek"
 
+#: app/assets/javascripts/app/views/profile/appearance.jst.eco
+#, fuzzy
+#| msgid "right"
+msgid "Light"
+msgstr "rechts"
+
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
 msgid "Limit Groups"
 msgstr "Groepen beperken"
@@ -6854,6 +6875,7 @@ msgstr "Samenvoegen met Ticket #"
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee
 #: app/assets/javascripts/app/views/maintenance.jst.eco
+#: public/assets/form/form.js
 msgid "Message"
 msgstr "Bericht"
 
@@ -7135,7 +7157,7 @@ msgstr "Nagios integratie"
 #: app/assets/javascripts/app/views/widget/organization.jst.eco
 #: app/assets/javascripts/app/views/widget/user.jst.eco
 #: app/controllers/time_accountings_controller.rb
-#: db/seeds/object_manager_attributes.rb
+#: db/seeds/object_manager_attributes.rb public/assets/form/form.js
 msgid "Name"
 msgstr "Naam"
 
@@ -7438,6 +7460,12 @@ msgstr "Geen geconfigureerde openingstijden gevonden!"
 #: app/views/knowledge_base/public/tags/show.html.erb
 msgid "No content to show"
 msgstr "Geen inhoud om weer te geven"
+
+#: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
+#, fuzzy
+#| msgid "draft"
+msgid "No drafts"
+msgstr "concept"
 
 #: app/controllers/users_controller.rb
 msgid "No email!"
@@ -7752,6 +7780,10 @@ msgstr "okt"
 msgid "October"
 msgstr "oktober"
 
+#: public/assets/chat/chat.coffee
+msgid "Offline"
+msgstr "Offline"
+
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee
 msgid "Ok"
 msgstr "Ok"
@@ -7765,6 +7797,7 @@ msgid "Once completed…"
 msgstr "Wanneer het voltooid is…"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
+#: public/assets/chat/chat.coffee
 msgid "Online"
 msgstr "Online"
 
@@ -7826,10 +7859,8 @@ msgid "Oops.. I'm sorry, but you have insufficient rights to open this %s."
 msgstr "Oeps… Sorry, U heeft niet genoeg rechten om dit te openen: %s."
 
 #: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue
-#, fuzzy
-#| msgid "Open"
 msgid "Open %s"
-msgstr "Open"
+msgstr "Open %s"
 
 #: app/assets/javascripts/app/views/dashboard/first_steps_test_ticket_finish.jst.eco
 msgid "Open Ticket# %s"
@@ -7872,10 +7903,9 @@ msgid "Or migrate from another system."
 msgstr "Of migreer van een ander systeem."
 
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee
-#, fuzzy
-#| msgid "New Overview"
+#: db/seeds/permissions.rb
 msgid "Order of Overviews"
-msgstr "Nieuw overzicht"
+msgstr "Volgorde van overzichten"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
@@ -7916,10 +7946,8 @@ msgid "Organization Support"
 msgstr "Bedrijfsondersteuning"
 
 #: app/frontend/apps/mobile/modules/user/views/UserDetailView.vue
-#, fuzzy
-#| msgid "My Organization Tickets"
 msgid "Organization tickets"
-msgstr "Mijn organisatie Tickets"
+msgstr "Tickets organisatie"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_organization.coffee
 #: app/assets/javascripts/app/controllers/organization.coffee
@@ -8003,12 +8031,6 @@ msgstr "Verouderde browser"
 #: app/assets/javascripts/app/models/user_overview_sorting.coffee
 msgid "Overview"
 msgstr "Overzicht"
-
-#: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Overviews"
-msgid "Overview Sortings"
-msgstr "Overzichten"
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
 msgid "Overview bulk mask"
@@ -8217,7 +8239,7 @@ msgstr "Persoonlijke Instellingen"
 
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee
 msgid "Personal overview order was reset."
-msgstr ""
+msgstr "Volgorde persoonlijk overzicht is gereset."
 
 #: app/assets/javascripts/app/controllers/cti.coffee
 #: db/seeds/object_manager_attributes.rb
@@ -8389,10 +8411,8 @@ msgid "Preview"
 msgstr "Voorbeeld"
 
 #: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue
-#, fuzzy
-#| msgid "Preview"
 msgid "Preview %s"
-msgstr "Voorbeeld"
+msgstr "Voorbeeld %s"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Preview Width"
@@ -8690,10 +8710,8 @@ msgid "Remove"
 msgstr "Verwijderen"
 
 #: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue
-#, fuzzy
-#| msgid "Remove"
 msgid "Remove %s"
-msgstr "Verwijderen"
+msgstr "Verwijder %s"
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Remove all"
@@ -8820,10 +8838,8 @@ msgid "Reset changes"
 msgstr "Annuleren"
 
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee
-#, fuzzy
-#| msgid "Reset Password"
 msgid "Reset overview order"
-msgstr "Reset wachtwoord"
+msgstr "Reset volgorde overzicht"
 
 #: app/assets/javascripts/app/controllers/translation.coffee
 msgid "Resetting changes…"
@@ -9113,6 +9129,7 @@ msgid "Script can be located under: ||%s|| and needs to be executable."
 msgstr "Script kan worden gevonden onder: ||%s|| en moet uitvoerbaar zijn."
 
 #: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco
+#: public/assets/chat/chat-no-jquery.coffee public/assets/chat/chat.coffee
 msgid "Scroll down to see new messages"
 msgstr "Scroll naar beneden om nieuwe tickets te bekijken"
 
@@ -9561,7 +9578,7 @@ msgstr "Laat de chat zien wanneer gereed."
 
 #: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/TicketDetailViewHeader.vue
 msgid "Show ticket viewers"
-msgstr "Toon ticket bekijkers"
+msgstr "Toon raadplegers ticket"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Show title in form."
@@ -9650,15 +9667,15 @@ msgstr "Simple Line Icons"
 msgid ""
 "Since you didn't respond in the last %s minutes your conversation got closed."
 msgstr ""
-"Omdat je niet hebt gereageerd in de laatste %s minuten is de chat gesloten."
+"De chat is afgesloten omdat je de laatste %s minuten niet hebt gereageerd."
 
 #: public/assets/chat/views/customer_timeout.eco
 msgid ""
 "Since you didn't respond in the last %s minutes your conversation with "
 "<strong>%s</strong> got closed."
 msgstr ""
-"Omdat je niet hebt gereageerd in de laatste %s minuten is je chat met "
-"<strong>%s</strong> gesloten."
+"Je chat met <strong>%s</strong> is afgesloten omdat je niet hebt gereageerd "
+"in de laatste %s minuten."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Single selection field"
@@ -9942,7 +9959,7 @@ msgstr "abonneren"
 
 #: app/assets/javascripts/app/views/generic/ical_feed.jst.eco
 msgid "Subscribe to iCalendar feed"
-msgstr "Abboneer op iCalendar feed"
+msgstr "Aboneer op iCalendar feed"
 
 #: app/assets/javascripts/app/views/generic/ical_feed.jst.eco
 msgid "Subscribe to public holidays in"
@@ -9980,6 +9997,10 @@ msgstr "Ondersteuning van meertalige Kennisbank."
 #: db/seeds/schedulers.rb
 msgid "Sync calendars with iCal feeds."
 msgstr "Synchroniseer agenda's met iCal-feeds."
+
+#: app/assets/javascripts/app/views/profile/appearance.jst.eco
+msgid "Sync with computer"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/system.coffee
 #: app/assets/javascripts/app/controllers/manage.coffee db/seeds/permissions.rb
@@ -10180,9 +10201,15 @@ msgstr "Het MIME-type van de afbeelding is ongeldig."
 msgid "The Telegram bot could not be saved."
 msgstr "De Telegrambot kon niet worden opgeslagen."
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "The Telegram file is larger than the allowed 20 MB."
 msgstr "Het Telegram-bestand is groter dan het toegestane 20 MB."
+
+#: lib/telegram_helper.rb
+msgid ""
+"The Telegram integration can only be configured on systems using the HTTPS "
+"protocol."
+msgstr ""
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 msgid "The URL to this installation of Zammad."
@@ -10314,7 +10341,7 @@ msgstr ""
 msgid "The entry could not be created."
 msgstr "De vermelding kon niet worden gemaakt."
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "The file could not be retrieved from the bot."
 msgstr "Het bestand kon niet uit de bot worden opgehaald."
 
@@ -10560,11 +10587,11 @@ msgstr "De vereiste parameter 'current_user_id' ontbreekt."
 msgid "The required parameter 'for_user_id' is missing."
 msgstr "De vereiste parameter 'for_user_id' ontbreekt."
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "The required parameter 'group_id' is invalid."
 msgstr "De vereiste parameter 'group_id' is foutief."
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "The required parameter 'group_id' is missing."
 msgstr "De vereiste parameter 'group_id' ontbreekt."
 
@@ -10715,19 +10742,18 @@ msgstr ""
 msgid "The way to communicate with us is this thing called \"ticket\"."
 msgstr "De manier om met ons te communiceren is een \"ticket\"."
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "The webhook could not be saved by Telegram, seems to be an invalid URL."
 msgstr ""
 "De webhook kon niet worden opgeslagen door Telegram, lijkt een ongeldige URL "
 "te zijn."
 
 #: app/frontend/apps/mobile/modules/user/views/UserDetailView.vue
-#, fuzzy
-#| msgid "Tickets"
 msgid "Their tickets"
-msgstr "Tickets"
+msgstr "Hun tickets"
 
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
+#: app/assets/javascripts/app/views/profile/appearance.jst.eco
 msgid "Theme"
 msgstr "Thema"
 
@@ -10785,7 +10811,7 @@ msgstr "Er is geen kennisbank aangemaakt."
 msgid "Third-party Applications"
 msgstr "Third-party applicaties"
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "This bot already exists."
 msgstr "Deze bot bestaat al."
 
@@ -11140,10 +11166,8 @@ msgstr "Ticket heeft %s bekijkers"
 
 #: app/frontend/apps/mobile/modules/ticket/routes.ts
 #: app/frontend/apps/mobile/modules/ticket/views/TicketInformationView.vue
-#, fuzzy
-#| msgid "Ticket notifications"
 msgid "Ticket information"
-msgstr "Ticket notificaties"
+msgstr "Ticket informatie"
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 msgid "Ticket reminder reached"
@@ -11366,6 +11390,10 @@ msgstr "Tickets verwerken."
 #: public/assets/chat/chat-no-jquery.coffee public/assets/chat/chat.coffee
 msgid "Today"
 msgstr "Vandaag"
+
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
+msgid "Toggle dark mode"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/api.coffee
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
@@ -12287,7 +12315,8 @@ msgid "Welcome!"
 msgstr "Welkom!"
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
-#: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco lib/telegram.rb
+#: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
+#: lib/telegram_helper.rb
 msgid "Welcome! Feel free to ask me a question!"
 msgstr "Welkom! Stel gerust een vraag!"
 
@@ -12743,6 +12772,10 @@ msgstr "YouTube- of Vimeo-adres"
 msgid "Your API key."
 msgstr "API Key."
 
+#: public/assets/form/form.js
+msgid "Your Email"
+msgstr "Uw Email adres"
+
 #: app/controllers/first_steps_controller.rb
 msgid "Your Email Configuration"
 msgstr "Jouw Email configuratie"
@@ -12751,6 +12784,14 @@ msgstr "Jouw Email configuratie"
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 msgid "Your Logo"
 msgstr "Uw Logo"
+
+#: public/assets/form/form.js
+msgid "Your Message..."
+msgstr "Uw bericht..."
+
+#: public/assets/form/form.js
+msgid "Your Name"
+msgstr "Uw naam"
 
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 msgid "Your New Personal Access Token"
@@ -13875,6 +13916,11 @@ msgstr "…van geheel tekstvak"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Wachttijd vandaag"
+
+#, fuzzy
+#~| msgid "Overviews"
+#~ msgid "Overview Sortings"
+#~ msgstr "Overzichten"
 
 #, fuzzy
 #~| msgid "Order"

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-07-14 03:30+0000\n"
-"Last-Translator: jebulol <jebulol@gmail.com>\n"
+"PO-Revision-Date: 2022-09-20 12:05+0000\n"
+"Last-Translator: Martin Gruner <mg@zammad.com>\n"
 "Language-Team: Finnish <https://translations.zammad.org/projects/zammad/"
 "zammad-development/fi/>\n"
 "Language: fi\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.13\n"
+"X-Generator: Weblate 4.14\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -396,6 +396,10 @@ msgstr "3 viikkoa"
 #: db/seeds/settings.rb
 msgid "4 weeks"
 msgstr "4 viikkoa"
+
+#: public/assets/chat/chat-no-jquery.coffee public/assets/chat/chat.coffee
+msgid "<strong>Chat</strong> with us!"
+msgstr "<strong>Keskustele</strong> kanssamme!"
 
 #: app/assets/javascripts/app/models/calendar.coffee
 msgid ""
@@ -1011,6 +1015,12 @@ msgstr "Sovelluksen kirjautumistiedot Facebookiin."
 msgid "App credentials for Twitter."
 msgstr "Sovelluksen kirjautumistiedot Twitteriin."
 
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
+#: app/assets/javascripts/app/controllers/_profile/appearance.coffee
+#: app/assets/javascripts/app/views/profile/appearance.jst.eco
+msgid "Appearance"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/api.coffee
 msgid "Application"
 msgstr ""
@@ -1217,6 +1227,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_article_attachments.coffee
 #: app/assets/javascripts/app/views/knowledge_base/_answer_attachments.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/attachments.jst.eco
+#: public/assets/form/form.js
 msgid "Attachments"
 msgstr "Liitteet"
 
@@ -2734,6 +2745,16 @@ msgstr ""
 msgid "Cut"
 msgstr ""
 
+#: app/assets/javascripts/app/views/profile/appearance.jst.eco
+msgid "Dark"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/dark_mode.coffee
+#, fuzzy
+#| msgid "Mode"
+msgid "Dark Mode"
+msgstr "Tila"
+
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/dashboard.coffee
@@ -4005,7 +4026,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
-#: db/seeds/object_manager_attributes.rb
+#: db/seeds/object_manager_attributes.rb public/assets/form/form.js
 msgid "Email"
 msgstr "Sähköposti"
 
@@ -6217,6 +6238,10 @@ msgstr ""
 msgid "Library"
 msgstr ""
 
+#: app/assets/javascripts/app/views/profile/appearance.jst.eco
+msgid "Light"
+msgstr ""
+
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
 msgid "Limit Groups"
 msgstr "Rajoita ryhmiä"
@@ -6596,6 +6621,7 @@ msgstr "Yhdistä Ticket#"
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee
 #: app/assets/javascripts/app/views/maintenance.jst.eco
+#: public/assets/form/form.js
 msgid "Message"
 msgstr "Viesti"
 
@@ -6885,7 +6911,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/organization.jst.eco
 #: app/assets/javascripts/app/views/widget/user.jst.eco
 #: app/controllers/time_accountings_controller.rb
-#: db/seeds/object_manager_attributes.rb
+#: db/seeds/object_manager_attributes.rb public/assets/form/form.js
 msgid "Name"
 msgstr "Nimi"
 
@@ -7192,6 +7218,12 @@ msgstr ""
 #: app/views/knowledge_base/public/tags/show.html.erb
 msgid "No content to show"
 msgstr ""
+
+#: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
+#, fuzzy
+#| msgid "draft"
+msgid "No drafts"
+msgstr "luonnos"
 
 #: app/controllers/users_controller.rb
 msgid "No email!"
@@ -7508,6 +7540,10 @@ msgstr "Loka"
 msgid "October"
 msgstr "Lokakuu"
 
+#: public/assets/chat/chat.coffee
+msgid "Offline"
+msgstr "Poissa"
+
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee
 msgid "Ok"
 msgstr ""
@@ -7521,6 +7557,7 @@ msgid "Once completed…"
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
+#: public/assets/chat/chat.coffee
 msgid "Online"
 msgstr "Online"
 
@@ -7622,6 +7659,7 @@ msgid "Or migrate from another system."
 msgstr "Tai tuo toisesta järjestelmästä."
 
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee
+#: db/seeds/permissions.rb
 #, fuzzy
 #| msgid "New Overview"
 msgid "Order of Overviews"
@@ -7754,12 +7792,6 @@ msgstr "Vanhentunut selain"
 #: app/assets/javascripts/app/models/user_overview_sorting.coffee
 msgid "Overview"
 msgstr "Yleisnäkymä"
-
-#: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Overviews"
-msgid "Overview Sortings"
-msgstr "Yleisnäkymät"
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
 msgid "Overview bulk mask"
@@ -8872,6 +8904,7 @@ msgid "Script can be located under: ||%s|| and needs to be executable."
 msgstr ""
 
 #: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco
+#: public/assets/chat/chat-no-jquery.coffee public/assets/chat/chat.coffee
 msgid "Scroll down to see new messages"
 msgstr ""
 
@@ -9741,6 +9774,10 @@ msgstr ""
 msgid "Sync calendars with iCal feeds."
 msgstr ""
 
+#: app/assets/javascripts/app/views/profile/appearance.jst.eco
+msgid "Sync with computer"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_manage/system.coffee
 #: app/assets/javascripts/app/controllers/manage.coffee db/seeds/permissions.rb
 #: db/seeds/ticket_article_senders.rb
@@ -9942,8 +9979,14 @@ msgstr ""
 msgid "The Telegram bot could not be saved."
 msgstr "Objekti luotu"
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "The Telegram file is larger than the allowed 20 MB."
+msgstr ""
+
+#: lib/telegram_helper.rb
+msgid ""
+"The Telegram integration can only be configured on systems using the HTTPS "
+"protocol."
 msgstr ""
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
@@ -10068,7 +10111,7 @@ msgstr ""
 msgid "The entry could not be created."
 msgstr ""
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "The file could not be retrieved from the bot."
 msgstr ""
 
@@ -10315,11 +10358,11 @@ msgstr ""
 msgid "The required parameter 'for_user_id' is missing."
 msgstr ""
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "The required parameter 'group_id' is invalid."
 msgstr ""
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "The required parameter 'group_id' is missing."
 msgstr ""
 
@@ -10471,7 +10514,7 @@ msgstr ""
 msgid "The way to communicate with us is this thing called \"ticket\"."
 msgstr "Tapa, jolla voit viestiä ongelmasta meille on nimeltään \"tiketti\"."
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "The webhook could not be saved by Telegram, seems to be an invalid URL."
 msgstr ""
 
@@ -10482,6 +10525,7 @@ msgid "Their tickets"
 msgstr "Tiketit"
 
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
+#: app/assets/javascripts/app/views/profile/appearance.jst.eco
 msgid "Theme"
 msgstr "Teema"
 
@@ -10534,7 +10578,7 @@ msgstr "Objekti luotu"
 msgid "Third-party Applications"
 msgstr "Kolmannen osapuolen sovellukset"
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "This bot already exists."
 msgstr ""
 
@@ -11100,6 +11144,10 @@ msgstr ""
 #: public/assets/chat/chat-no-jquery.coffee public/assets/chat/chat.coffee
 msgid "Today"
 msgstr "Tänään"
+
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
+msgid "Toggle dark mode"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/api.coffee
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
@@ -11993,7 +12041,8 @@ msgid "Welcome!"
 msgstr "Tervetuloa!"
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
-#: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco lib/telegram.rb
+#: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
+#: lib/telegram_helper.rb
 msgid "Welcome! Feel free to ask me a question!"
 msgstr ""
 
@@ -12394,6 +12443,12 @@ msgstr ""
 msgid "Your API key."
 msgstr ""
 
+#: public/assets/form/form.js
+#, fuzzy
+#| msgid "Email"
+msgid "Your Email"
+msgstr "Sähköposti"
+
 #: app/controllers/first_steps_controller.rb
 msgid "Your Email Configuration"
 msgstr "Sähköpostiasetuksesi"
@@ -12402,6 +12457,18 @@ msgstr "Sähköpostiasetuksesi"
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 msgid "Your Logo"
 msgstr "Logo"
+
+#: public/assets/form/form.js
+#, fuzzy
+#| msgid "Message"
+msgid "Your Message..."
+msgstr "Viesti"
+
+#: public/assets/form/form.js
+#, fuzzy
+#| msgid "Full Name"
+msgid "Your Name"
+msgstr "Koko nimi"
 
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 msgid "Your New Personal Access Token"
@@ -13540,6 +13607,11 @@ msgstr "koko tekstikehyksestä"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Odotusaika tänään"
+
+#, fuzzy
+#~| msgid "Overviews"
+#~ msgid "Overview Sortings"
+#~ msgstr "Yleisnäkymät"
 
 #, fuzzy
 #~| msgid "Order"

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-08-25 03:30+0000\n"
-"Last-Translator: MBekspert <michal.bosak@ekspert.biz>\n"
+"PO-Revision-Date: 2022-09-20 12:05+0000\n"
+"Last-Translator: Martin Gruner <mg@zammad.com>\n"
 "Language-Team: Polish <https://translations.zammad.org/projects/zammad/"
 "zammad-development/pl/>\n"
 "Language: pl\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.13\n"
+"X-Generator: Weblate 4.14\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -426,6 +426,10 @@ msgstr "3 tygodnie"
 #: db/seeds/settings.rb
 msgid "4 weeks"
 msgstr "4 tygodnie"
+
+#: public/assets/chat/chat-no-jquery.coffee public/assets/chat/chat.coffee
+msgid "<strong>Chat</strong> with us!"
+msgstr "<strong>Czatuj</strong> z nami!"
 
 #: app/assets/javascripts/app/models/calendar.coffee
 msgid ""
@@ -1053,6 +1057,12 @@ msgstr "Uwierzytelnienie aplikacji dla Facebooka."
 msgid "App credentials for Twitter."
 msgstr "Uwierzytelnienie aplikacji dla Twittera."
 
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
+#: app/assets/javascripts/app/controllers/_profile/appearance.coffee
+#: app/assets/javascripts/app/views/profile/appearance.jst.eco
+msgid "Appearance"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/api.coffee
 msgid "Application"
 msgstr "Aplikacja"
@@ -1262,6 +1272,7 @@ msgstr "Załącznik — szukaj dalszych informacji również w załącznikach."
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_article_attachments.coffee
 #: app/assets/javascripts/app/views/knowledge_base/_answer_attachments.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/attachments.jst.eco
+#: public/assets/form/form.js
 msgid "Attachments"
 msgstr "Załączniki"
 
@@ -2799,6 +2810,16 @@ msgstr "Klienci w organizacji mogą przeglądać swoje zgłoszenia nawzajem."
 msgid "Cut"
 msgstr "Wytnij"
 
+#: app/assets/javascripts/app/views/profile/appearance.jst.eco
+msgid "Dark"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/dark_mode.coffee
+#, fuzzy
+#| msgid "Mode"
+msgid "Dark Mode"
+msgstr "Tryb"
+
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/dashboard.coffee
@@ -4198,7 +4219,7 @@ msgstr "Trzeba skonfigurować Elasticsearch!"
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
-#: db/seeds/object_manager_attributes.rb
+#: db/seeds/object_manager_attributes.rb public/assets/form/form.js
 msgid "Email"
 msgstr "E-Mail"
 
@@ -6512,6 +6533,12 @@ msgstr "Układ"
 msgid "Library"
 msgstr "Biblioteka"
 
+#: app/assets/javascripts/app/views/profile/appearance.jst.eco
+#, fuzzy
+#| msgid "right"
+msgid "Light"
+msgstr "prawo"
+
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
 msgid "Limit Groups"
 msgstr "Grupy limitowe"
@@ -6892,6 +6919,7 @@ msgstr "Scal ze zgłoszeniem#"
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee
 #: app/assets/javascripts/app/views/maintenance.jst.eco
+#: public/assets/form/form.js
 msgid "Message"
 msgstr "Wiadomość"
 
@@ -7173,7 +7201,7 @@ msgstr "Integracja Nagios"
 #: app/assets/javascripts/app/views/widget/organization.jst.eco
 #: app/assets/javascripts/app/views/widget/user.jst.eco
 #: app/controllers/time_accountings_controller.rb
-#: db/seeds/object_manager_attributes.rb
+#: db/seeds/object_manager_attributes.rb public/assets/form/form.js
 msgid "Name"
 msgstr "Nazwa"
 
@@ -7482,6 +7510,12 @@ msgstr "Nie skonfigurowano godzin pracy!"
 #: app/views/knowledge_base/public/tags/show.html.erb
 msgid "No content to show"
 msgstr "Nie mam co wyświetlić"
+
+#: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
+#, fuzzy
+#| msgid "draft"
+msgid "No drafts"
+msgstr "wersja robocza"
 
 #: app/controllers/users_controller.rb
 msgid "No email!"
@@ -7796,6 +7830,10 @@ msgstr "Paź"
 msgid "October"
 msgstr "Październik"
 
+#: public/assets/chat/chat.coffee
+msgid "Offline"
+msgstr "Offline"
+
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee
 msgid "Ok"
 msgstr "Ok"
@@ -7809,6 +7847,7 @@ msgid "Once completed…"
 msgstr "Po ukończeniu…"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
+#: public/assets/chat/chat.coffee
 msgid "Online"
 msgstr "Online"
 
@@ -7918,6 +7957,7 @@ msgid "Or migrate from another system."
 msgstr "Lub migruj z innego systemu."
 
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee
+#: db/seeds/permissions.rb
 #, fuzzy
 #| msgid "New Overview"
 msgid "Order of Overviews"
@@ -8048,12 +8088,6 @@ msgstr "Nieaktualna przeglądarka"
 #: app/assets/javascripts/app/models/group.coffee
 #: app/assets/javascripts/app/models/user_overview_sorting.coffee
 msgid "Overview"
-msgstr "Przegląd"
-
-#: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Overviews"
-msgid "Overview Sortings"
 msgstr "Przegląd"
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
@@ -9167,6 +9201,7 @@ msgid "Script can be located under: ||%s|| and needs to be executable."
 msgstr "Skrypt można znaleźć pod: ||%s|| i musi być wykonywalny."
 
 #: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco
+#: public/assets/chat/chat-no-jquery.coffee public/assets/chat/chat.coffee
 msgid "Scroll down to see new messages"
 msgstr "Skroluj w dół, aby zobaczyć wiadomości"
 
@@ -10043,6 +10078,10 @@ msgstr "Wsparcie wielojęzycznej bazy wiedzy."
 msgid "Sync calendars with iCal feeds."
 msgstr "Synchronizuj kalendarze z kanałami iCal."
 
+#: app/assets/javascripts/app/views/profile/appearance.jst.eco
+msgid "Sync with computer"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_manage/system.coffee
 #: app/assets/javascripts/app/controllers/manage.coffee db/seeds/permissions.rb
 #: db/seeds/ticket_article_senders.rb
@@ -10241,9 +10280,15 @@ msgstr "Typ MIME obrazu jest nieprawidłowy."
 msgid "The Telegram bot could not be saved."
 msgstr "Nie udało się zapisać bota Telegrama."
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "The Telegram file is larger than the allowed 20 MB."
 msgstr "Plik telegramu jest większy niż dozwolone 20 MB."
+
+#: lib/telegram_helper.rb
+msgid ""
+"The Telegram integration can only be configured on systems using the HTTPS "
+"protocol."
+msgstr ""
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 msgid "The URL to this installation of Zammad."
@@ -10375,7 +10420,7 @@ msgstr "Dzielnik między TicketHook a numerem zgłoszenia. Np. ':'."
 msgid "The entry could not be created."
 msgstr "Nie udało się utworzyć wpisu."
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "The file could not be retrieved from the bot."
 msgstr "Nie udało się pobrać pliku z bota."
 
@@ -10620,11 +10665,11 @@ msgstr "Brak wymaganego parametru „current_user_id”."
 msgid "The required parameter 'for_user_id' is missing."
 msgstr "Brak wymaganego parametru „for_user_id”."
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "The required parameter 'group_id' is invalid."
 msgstr "Wymagany parametr „group_id” jest nieprawidłowy."
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "The required parameter 'group_id' is missing."
 msgstr "Brak wymaganego parametru „group_id”."
 
@@ -10777,7 +10822,7 @@ msgstr "Nie można wyodrębnić „preferred_username” użytkownika z „id_to
 msgid "The way to communicate with us is this thing called \"ticket\"."
 msgstr "Sposób komunikowania się z nami jest poprzez \"Zgłoszenie\"."
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "The webhook could not be saved by Telegram, seems to be an invalid URL."
 msgstr ""
 "Webhook nie mógł zostać zapisany przez Telegram, prawdopodobnie jest to "
@@ -10790,6 +10835,7 @@ msgid "Their tickets"
 msgstr "Zgłoszenia"
 
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
+#: app/assets/javascripts/app/views/profile/appearance.jst.eco
 msgid "Theme"
 msgstr "Kompozycja"
 
@@ -10847,7 +10893,7 @@ msgstr "Nie utworzono bazy wiedzy."
 msgid "Third-party Applications"
 msgstr "aplikacje firm trzecich"
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "This bot already exists."
 msgstr "Ten bot już istnieje."
 
@@ -11421,6 +11467,10 @@ msgstr "Do pracy na zgłoszeniach."
 #: public/assets/chat/chat-no-jquery.coffee public/assets/chat/chat.coffee
 msgid "Today"
 msgstr "Dzisiaj"
+
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
+msgid "Toggle dark mode"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/api.coffee
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
@@ -12342,7 +12392,8 @@ msgid "Welcome!"
 msgstr "Witaj!"
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
-#: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco lib/telegram.rb
+#: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
+#: lib/telegram_helper.rb
 msgid "Welcome! Feel free to ask me a question!"
 msgstr "Witaj! Zapraszam do zadawania mi pytań!"
 
@@ -12790,6 +12841,10 @@ msgstr "Adres YouTube lub Vimeo"
 msgid "Your API key."
 msgstr "Twój klucz API."
 
+#: public/assets/form/form.js
+msgid "Your Email"
+msgstr "Adres e-mail"
+
 #: app/controllers/first_steps_controller.rb
 msgid "Your Email Configuration"
 msgstr "Konfiguracja Twojego e-maila"
@@ -12798,6 +12853,14 @@ msgstr "Konfiguracja Twojego e-maila"
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 msgid "Your Logo"
 msgstr "Twoje logo"
+
+#: public/assets/form/form.js
+msgid "Your Message..."
+msgstr "Twoja wiadomość..."
+
+#: public/assets/form/form.js
+msgid "Your Name"
+msgstr "Imię i nazwisko"
 
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 msgid "Your New Personal Access Token"
@@ -13922,6 +13985,11 @@ msgstr "...całego pola tekstowego"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ dzisiejszy czas oczekiwania "
+
+#, fuzzy
+#~| msgid "Overviews"
+#~ msgid "Overview Sortings"
+#~ msgstr "Przegląd"
 
 #, fuzzy
 #~| msgid "Order"

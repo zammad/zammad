@@ -393,6 +393,10 @@ msgstr ""
 msgid "4 weeks"
 msgstr ""
 
+#: public/assets/chat/chat-no-jquery.coffee public/assets/chat/chat.coffee
+msgid "<strong>Chat</strong> with us!"
+msgstr ""
+
 #: app/assets/javascripts/app/models/calendar.coffee
 msgid ""
 "A **calendar** is needed to calculate escalations based on business hours "
@@ -990,6 +994,12 @@ msgstr ""
 msgid "App credentials for Twitter."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
+#: app/assets/javascripts/app/controllers/_profile/appearance.coffee
+#: app/assets/javascripts/app/views/profile/appearance.jst.eco
+msgid "Appearance"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/api.coffee
 msgid "Application"
 msgstr ""
@@ -1190,6 +1200,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_article_attachments.coffee
 #: app/assets/javascripts/app/views/knowledge_base/_answer_attachments.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/attachments.jst.eco
+#: public/assets/form/form.js
 msgid "Attachments"
 msgstr ""
 
@@ -2661,6 +2672,14 @@ msgstr ""
 msgid "Cut"
 msgstr ""
 
+#: app/assets/javascripts/app/views/profile/appearance.jst.eco
+msgid "Dark"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/dark_mode.coffee
+msgid "Dark Mode"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/dashboard.coffee
@@ -3912,7 +3931,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
-#: db/seeds/object_manager_attributes.rb
+#: db/seeds/object_manager_attributes.rb public/assets/form/form.js
 msgid "Email"
 msgstr ""
 
@@ -6085,6 +6104,10 @@ msgstr ""
 msgid "Library"
 msgstr ""
 
+#: app/assets/javascripts/app/views/profile/appearance.jst.eco
+msgid "Light"
+msgstr ""
+
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
 msgid "Limit Groups"
 msgstr ""
@@ -6454,6 +6477,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee
 #: app/assets/javascripts/app/views/maintenance.jst.eco
+#: public/assets/form/form.js
 msgid "Message"
 msgstr ""
 
@@ -6735,7 +6759,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/organization.jst.eco
 #: app/assets/javascripts/app/views/widget/user.jst.eco
 #: app/controllers/time_accountings_controller.rb
-#: db/seeds/object_manager_attributes.rb
+#: db/seeds/object_manager_attributes.rb public/assets/form/form.js
 msgid "Name"
 msgstr ""
 
@@ -7035,6 +7059,10 @@ msgstr ""
 #: app/views/knowledge_base/public/categories/index.html.erb
 #: app/views/knowledge_base/public/tags/show.html.erb
 msgid "No content to show"
+msgstr ""
+
+#: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
+msgid "No drafts"
 msgstr ""
 
 #: app/controllers/users_controller.rb
@@ -7346,6 +7374,10 @@ msgstr ""
 msgid "October"
 msgstr ""
 
+#: public/assets/chat/chat.coffee
+msgid "Offline"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee
 msgid "Ok"
 msgstr ""
@@ -7359,6 +7391,7 @@ msgid "Once completed…"
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
+#: public/assets/chat/chat.coffee
 msgid "Online"
 msgstr ""
 
@@ -7458,6 +7491,7 @@ msgid "Or migrate from another system."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee
+#: db/seeds/permissions.rb
 msgid "Order of Overviews"
 msgstr ""
 
@@ -7581,10 +7615,6 @@ msgstr ""
 #: app/assets/javascripts/app/models/group.coffee
 #: app/assets/javascripts/app/models/user_overview_sorting.coffee
 msgid "Overview"
-msgstr ""
-
-#: db/seeds/permissions.rb
-msgid "Overview Sortings"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
@@ -8670,6 +8700,7 @@ msgid "Script can be located under: ||%s|| and needs to be executable."
 msgstr ""
 
 #: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco
+#: public/assets/chat/chat-no-jquery.coffee public/assets/chat/chat.coffee
 msgid "Scroll down to see new messages"
 msgstr ""
 
@@ -9509,6 +9540,10 @@ msgstr ""
 msgid "Sync calendars with iCal feeds."
 msgstr ""
 
+#: app/assets/javascripts/app/views/profile/appearance.jst.eco
+msgid "Sync with computer"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_manage/system.coffee
 #: app/assets/javascripts/app/controllers/manage.coffee db/seeds/permissions.rb
 #: db/seeds/ticket_article_senders.rb
@@ -9702,8 +9737,14 @@ msgstr ""
 msgid "The Telegram bot could not be saved."
 msgstr ""
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "The Telegram file is larger than the allowed 20 MB."
+msgstr ""
+
+#: lib/telegram_helper.rb
+msgid ""
+"The Telegram integration can only be configured on systems using the HTTPS "
+"protocol."
 msgstr ""
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
@@ -9817,7 +9858,7 @@ msgstr ""
 msgid "The entry could not be created."
 msgstr ""
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "The file could not be retrieved from the bot."
 msgstr ""
 
@@ -10048,11 +10089,11 @@ msgstr ""
 msgid "The required parameter 'for_user_id' is missing."
 msgstr ""
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "The required parameter 'group_id' is invalid."
 msgstr ""
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "The required parameter 'group_id' is missing."
 msgstr ""
 
@@ -10194,7 +10235,7 @@ msgstr ""
 msgid "The way to communicate with us is this thing called \"ticket\"."
 msgstr ""
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "The webhook could not be saved by Telegram, seems to be an invalid URL."
 msgstr ""
 
@@ -10203,6 +10244,7 @@ msgid "Their tickets"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
+#: app/assets/javascripts/app/views/profile/appearance.jst.eco
 msgid "Theme"
 msgstr ""
 
@@ -10253,7 +10295,7 @@ msgstr ""
 msgid "Third-party Applications"
 msgstr ""
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "This bot already exists."
 msgstr ""
 
@@ -10792,6 +10834,10 @@ msgstr ""
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 #: public/assets/chat/chat-no-jquery.coffee public/assets/chat/chat.coffee
 msgid "Today"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
+msgid "Toggle dark mode"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/api.coffee
@@ -11670,7 +11716,8 @@ msgid "Welcome!"
 msgstr ""
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
-#: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco lib/telegram.rb
+#: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
+#: lib/telegram_helper.rb
 msgid "Welcome! Feel free to ask me a question!"
 msgstr ""
 
@@ -12064,6 +12111,10 @@ msgstr ""
 msgid "Your API key."
 msgstr ""
 
+#: public/assets/form/form.js
+msgid "Your Email"
+msgstr ""
+
 #: app/controllers/first_steps_controller.rb
 msgid "Your Email Configuration"
 msgstr ""
@@ -12071,6 +12122,14 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 msgid "Your Logo"
+msgstr ""
+
+#: public/assets/form/form.js
+msgid "Your Message..."
+msgstr ""
+
+#: public/assets/form/form.js
+msgid "Your Name"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee

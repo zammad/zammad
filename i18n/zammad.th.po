@@ -417,6 +417,10 @@ msgstr "3 สัปดาห์"
 msgid "4 weeks"
 msgstr "4 สัปดาห์"
 
+#: public/assets/chat/chat-no-jquery.coffee public/assets/chat/chat.coffee
+msgid "<strong>Chat</strong> with us!"
+msgstr ""
+
 #: app/assets/javascripts/app/models/calendar.coffee
 msgid ""
 "A **calendar** is needed to calculate escalations based on business hours "
@@ -1030,6 +1034,12 @@ msgstr "ข้อมูลประจำตัวแอปสำหรับ Fa
 msgid "App credentials for Twitter."
 msgstr "ข้อมูลรับรองแอพสำหรับ Twitter"
 
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
+#: app/assets/javascripts/app/controllers/_profile/appearance.coffee
+#: app/assets/javascripts/app/views/profile/appearance.jst.eco
+msgid "Appearance"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/api.coffee
 msgid "Application"
 msgstr "โปรแกรม"
@@ -1234,6 +1244,7 @@ msgstr "ไฟล์แนบ - ค้นหาการติดตามใน
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_article_attachments.coffee
 #: app/assets/javascripts/app/views/knowledge_base/_answer_attachments.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/attachments.jst.eco
+#: public/assets/form/form.js
 msgid "Attachments"
 msgstr "แฟ้มแนบ"
 
@@ -2751,6 +2762,16 @@ msgstr "ลูกค้าในองค์กรสามารถดูรา
 msgid "Cut"
 msgstr "ตัด"
 
+#: app/assets/javascripts/app/views/profile/appearance.jst.eco
+msgid "Dark"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/dark_mode.coffee
+#, fuzzy
+#| msgid "Mode"
+msgid "Dark Mode"
+msgstr "โหมดการบำรุงรักษา"
+
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/dashboard.coffee
@@ -4041,7 +4062,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
-#: db/seeds/object_manager_attributes.rb
+#: db/seeds/object_manager_attributes.rb public/assets/form/form.js
 msgid "Email"
 msgstr "อีเมล"
 
@@ -6272,6 +6293,12 @@ msgstr "ผังแป้นพิมพ์"
 msgid "Library"
 msgstr "Library"
 
+#: app/assets/javascripts/app/views/profile/appearance.jst.eco
+#, fuzzy
+#| msgid "right"
+msgid "Light"
+msgstr "ขวา"
+
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
 msgid "Limit Groups"
 msgstr "จำกัดกลุ่ม"
@@ -6651,6 +6678,7 @@ msgstr "รวมเป็น Ticket#"
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee
 #: app/assets/javascripts/app/views/maintenance.jst.eco
+#: public/assets/form/form.js
 msgid "Message"
 msgstr "ข้อความ"
 
@@ -6936,7 +6964,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/organization.jst.eco
 #: app/assets/javascripts/app/views/widget/user.jst.eco
 #: app/controllers/time_accountings_controller.rb
-#: db/seeds/object_manager_attributes.rb
+#: db/seeds/object_manager_attributes.rb public/assets/form/form.js
 msgid "Name"
 msgstr "ชื่อ"
 
@@ -7239,6 +7267,12 @@ msgstr "ไม่พบเวลาทำการที่กำหนดค่
 #: app/views/knowledge_base/public/tags/show.html.erb
 msgid "No content to show"
 msgstr "ไม่มีเนื้อหาที่จะแสดง"
+
+#: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
+#, fuzzy
+#| msgid "draft"
+msgid "No drafts"
+msgstr "แบบร่าง"
 
 #: app/controllers/users_controller.rb
 msgid "No email!"
@@ -7549,6 +7583,12 @@ msgstr ""
 msgid "October"
 msgstr "ตุลาคม"
 
+#: public/assets/chat/chat.coffee
+#, fuzzy
+#| msgid "Online"
+msgid "Offline"
+msgstr "ออนไลน์"
+
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee
 msgid "Ok"
 msgstr "ตกลง"
@@ -7562,6 +7602,7 @@ msgid "Once completed…"
 msgstr "เมื่อเสร็จแล้ว…"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
+#: public/assets/chat/chat.coffee
 msgid "Online"
 msgstr "ออนไลน์"
 
@@ -7663,6 +7704,7 @@ msgid "Or migrate from another system."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee
+#: db/seeds/permissions.rb
 #, fuzzy
 #| msgid "New Overview"
 msgid "Order of Overviews"
@@ -7790,12 +7832,6 @@ msgstr "เบราว์เซอร์"
 #: app/assets/javascripts/app/models/group.coffee
 #: app/assets/javascripts/app/models/user_overview_sorting.coffee
 msgid "Overview"
-msgstr "ภาพรวม"
-
-#: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Overviews"
-msgid "Overview Sortings"
 msgstr "ภาพรวม"
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
@@ -8900,6 +8936,7 @@ msgid "Script can be located under: ||%s|| and needs to be executable."
 msgstr ""
 
 #: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco
+#: public/assets/chat/chat-no-jquery.coffee public/assets/chat/chat.coffee
 msgid "Scroll down to see new messages"
 msgstr ""
 
@@ -9757,6 +9794,10 @@ msgstr "การสนับสนุน ศูนย์การเรีย�
 msgid "Sync calendars with iCal feeds."
 msgstr ""
 
+#: app/assets/javascripts/app/views/profile/appearance.jst.eco
+msgid "Sync with computer"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_manage/system.coffee
 #: app/assets/javascripts/app/controllers/manage.coffee db/seeds/permissions.rb
 #: db/seeds/ticket_article_senders.rb
@@ -9952,8 +9993,14 @@ msgstr "ภาพที่ปรับขนาดไม่ถูกต้อง
 msgid "The Telegram bot could not be saved."
 msgstr ""
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "The Telegram file is larger than the allowed 20 MB."
+msgstr ""
+
+#: lib/telegram_helper.rb
+msgid ""
+"The Telegram integration can only be configured on systems using the HTTPS "
+"protocol."
 msgstr ""
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
@@ -10077,7 +10124,7 @@ msgstr ""
 msgid "The entry could not be created."
 msgstr ""
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "The file could not be retrieved from the bot."
 msgstr ""
 
@@ -10314,11 +10361,11 @@ msgstr ""
 msgid "The required parameter 'for_user_id' is missing."
 msgstr ""
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "The required parameter 'group_id' is invalid."
 msgstr ""
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "The required parameter 'group_id' is missing."
 msgstr ""
 
@@ -10462,7 +10509,7 @@ msgstr "ไม่สามารถแยก 'preferred_username' ของผ�
 msgid "The way to communicate with us is this thing called \"ticket\"."
 msgstr "ช่องทางการติดต่อสื่อสารกับเราคือสิ่งนี้ที่เรียกว่า \"ticket\"."
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "The webhook could not be saved by Telegram, seems to be an invalid URL."
 msgstr ""
 
@@ -10473,6 +10520,7 @@ msgid "Their tickets"
 msgstr "Tickets"
 
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
+#: app/assets/javascripts/app/views/profile/appearance.jst.eco
 msgid "Theme"
 msgstr "Theme"
 
@@ -10523,7 +10571,7 @@ msgstr "ไม่มีการสร้างศูนย์การเรี
 msgid "Third-party Applications"
 msgstr "แอปพลิเคชันบุคคลที่สาม"
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "This bot already exists."
 msgstr "รายการนี้อยู่แล้ว!."
 
@@ -11079,6 +11127,10 @@ msgstr ""
 #: public/assets/chat/chat-no-jquery.coffee public/assets/chat/chat.coffee
 msgid "Today"
 msgstr "วันนี้"
+
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
+msgid "Toggle dark mode"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/api.coffee
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
@@ -11971,7 +12023,8 @@ msgid "Welcome!"
 msgstr "ยินดีต้อนรับ!"
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
-#: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco lib/telegram.rb
+#: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
+#: lib/telegram_helper.rb
 msgid "Welcome! Feel free to ask me a question!"
 msgstr "ยินดีต้อนรับ! อย่าลังเลที่จะถามคำถาม!"
 
@@ -12381,6 +12434,12 @@ msgstr "ที่อยู่ YouTube หรือ Vimeo"
 msgid "Your API key."
 msgstr "คีย์ API ของคุณ"
 
+#: public/assets/form/form.js
+#, fuzzy
+#| msgid "Email"
+msgid "Your Email"
+msgstr "อีเมล"
+
 #: app/controllers/first_steps_controller.rb
 msgid "Your Email Configuration"
 msgstr "ตั้งค่า Email ของคุณ"
@@ -12389,6 +12448,18 @@ msgstr "ตั้งค่า Email ของคุณ"
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 msgid "Your Logo"
 msgstr "โลโก้"
+
+#: public/assets/form/form.js
+#, fuzzy
+#| msgid "Ignore Message"
+msgid "Your Message..."
+msgstr "ละเว้นข้อความ"
+
+#: public/assets/form/form.js
+#, fuzzy
+#| msgid "Full Name"
+msgid "Your Name"
+msgstr "ชื่อเต็ม"
 
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 msgid "Your New Personal Access Token"
@@ -13507,6 +13578,11 @@ msgstr "‎... ของพื้นที่ข้อความทั้ง�
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ รอเวลาวันนี้"
+
+#, fuzzy
+#~| msgid "Overviews"
+#~ msgid "Overview Sortings"
+#~ msgstr "ภาพรวม"
 
 #, fuzzy
 #~| msgid "Reporting"

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-03-17 14:17+0000\n"
-"Last-Translator: Péter Dobos <peter.dobos@neucom.hu>\n"
+"PO-Revision-Date: 2022-09-20 12:05+0000\n"
+"Last-Translator: Martin Gruner <mg@zammad.com>\n"
 "Language-Team: Hungarian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/hu/>\n"
 "Language: hu\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.11.2\n"
+"X-Generator: Weblate 4.14\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -456,6 +456,10 @@ msgstr "3 hét"
 #: db/seeds/settings.rb
 msgid "4 weeks"
 msgstr "4 hét"
+
+#: public/assets/chat/chat-no-jquery.coffee public/assets/chat/chat.coffee
+msgid "<strong>Chat</strong> with us!"
+msgstr "<strong>Chatelj</strong> velünk!"
 
 #: app/assets/javascripts/app/models/calendar.coffee
 msgid ""
@@ -1076,6 +1080,12 @@ msgstr ""
 msgid "App credentials for Twitter."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
+#: app/assets/javascripts/app/controllers/_profile/appearance.coffee
+#: app/assets/javascripts/app/views/profile/appearance.jst.eco
+msgid "Appearance"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/api.coffee
 msgid "Application"
 msgstr ""
@@ -1288,6 +1298,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_article_attachments.coffee
 #: app/assets/javascripts/app/views/knowledge_base/_answer_attachments.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/attachments.jst.eco
+#: public/assets/form/form.js
 msgid "Attachments"
 msgstr "Csatolmányok"
 
@@ -2827,6 +2838,16 @@ msgstr ""
 msgid "Cut"
 msgstr ""
 
+#: app/assets/javascripts/app/views/profile/appearance.jst.eco
+msgid "Dark"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/dark_mode.coffee
+#, fuzzy
+#| msgid "Mode"
+msgid "Dark Mode"
+msgstr "Mód"
+
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/dashboard.coffee
@@ -4110,7 +4131,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
-#: db/seeds/object_manager_attributes.rb
+#: db/seeds/object_manager_attributes.rb public/assets/form/form.js
 msgid "Email"
 msgstr "E-mail"
 
@@ -6345,6 +6366,10 @@ msgstr ""
 msgid "Library"
 msgstr ""
 
+#: app/assets/javascripts/app/views/profile/appearance.jst.eco
+msgid "Light"
+msgstr ""
+
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
 msgid "Limit Groups"
 msgstr "Limitálás csoportokra"
@@ -6730,6 +6755,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee
 #: app/assets/javascripts/app/views/maintenance.jst.eco
+#: public/assets/form/form.js
 msgid "Message"
 msgstr "Üzenet"
 
@@ -7029,7 +7055,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/organization.jst.eco
 #: app/assets/javascripts/app/views/widget/user.jst.eco
 #: app/controllers/time_accountings_controller.rb
-#: db/seeds/object_manager_attributes.rb
+#: db/seeds/object_manager_attributes.rb public/assets/form/form.js
 msgid "Name"
 msgstr "Név"
 
@@ -7344,6 +7370,12 @@ msgstr ""
 #: app/views/knowledge_base/public/tags/show.html.erb
 msgid "No content to show"
 msgstr ""
+
+#: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
+#, fuzzy
+#| msgid "Draft"
+msgid "No drafts"
+msgstr "Piszkozat"
 
 #: app/controllers/users_controller.rb
 msgid "No email!"
@@ -7662,6 +7694,10 @@ msgstr "okt."
 msgid "October"
 msgstr "október"
 
+#: public/assets/chat/chat.coffee
+msgid "Offline"
+msgstr "Offline"
+
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee
 msgid "Ok"
 msgstr ""
@@ -7677,6 +7713,7 @@ msgid "Once completed…"
 msgstr "Ha kész..."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
+#: public/assets/chat/chat.coffee
 msgid "Online"
 msgstr "Elérhető"
 
@@ -7784,6 +7821,7 @@ msgid "Or migrate from another system."
 msgstr "migrálás más rendszerből"
 
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee
+#: db/seeds/permissions.rb
 #, fuzzy
 #| msgid "New Overview"
 msgid "Order of Overviews"
@@ -7917,12 +7955,6 @@ msgstr "Böngésző"
 #: app/assets/javascripts/app/models/group.coffee
 #: app/assets/javascripts/app/models/user_overview_sorting.coffee
 msgid "Overview"
-msgstr "Áttekintés"
-
-#: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Overviews"
-msgid "Overview Sortings"
 msgstr "Áttekintés"
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
@@ -9054,6 +9086,7 @@ msgid "Script can be located under: ||%s|| and needs to be executable."
 msgstr ""
 
 #: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco
+#: public/assets/chat/chat-no-jquery.coffee public/assets/chat/chat.coffee
 msgid "Scroll down to see new messages"
 msgstr "Görgess lejjebb az új üzenetekhez"
 
@@ -9947,6 +9980,10 @@ msgstr ""
 msgid "Sync calendars with iCal feeds."
 msgstr ""
 
+#: app/assets/javascripts/app/views/profile/appearance.jst.eco
+msgid "Sync with computer"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_manage/system.coffee
 #: app/assets/javascripts/app/controllers/manage.coffee db/seeds/permissions.rb
 #: db/seeds/ticket_article_senders.rb
@@ -10152,8 +10189,14 @@ msgstr ""
 msgid "The Telegram bot could not be saved."
 msgstr "%s objektum létrehozva."
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "The Telegram file is larger than the allowed 20 MB."
+msgstr ""
+
+#: lib/telegram_helper.rb
+msgid ""
+"The Telegram integration can only be configured on systems using the HTTPS "
+"protocol."
 msgstr ""
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
@@ -10277,7 +10320,7 @@ msgstr ""
 msgid "The entry could not be created."
 msgstr ""
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "The file could not be retrieved from the bot."
 msgstr ""
 
@@ -10524,11 +10567,11 @@ msgstr ""
 msgid "The required parameter 'for_user_id' is missing."
 msgstr ""
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "The required parameter 'group_id' is invalid."
 msgstr ""
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "The required parameter 'group_id' is missing."
 msgstr ""
 
@@ -10678,7 +10721,7 @@ msgstr ""
 msgid "The way to communicate with us is this thing called \"ticket\"."
 msgstr "Itt tudsz velünk kommunikálni hibajegyeken keresztül."
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "The webhook could not be saved by Telegram, seems to be an invalid URL."
 msgstr ""
 
@@ -10689,6 +10732,7 @@ msgid "Their tickets"
 msgstr "Jegyek"
 
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
+#: app/assets/javascripts/app/views/profile/appearance.jst.eco
 msgid "Theme"
 msgstr "Téma"
 
@@ -10741,7 +10785,7 @@ msgstr "%s objektum létrehozva."
 msgid "Third-party Applications"
 msgstr "Third-party applikációk"
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "This bot already exists."
 msgstr ""
 
@@ -11302,6 +11346,10 @@ msgstr ""
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 #: public/assets/chat/chat-no-jquery.coffee public/assets/chat/chat.coffee
 msgid "Today"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
+msgid "Toggle dark mode"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/api.coffee
@@ -12201,7 +12249,8 @@ msgid "Welcome!"
 msgstr "Üdvözöljük!"
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
-#: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco lib/telegram.rb
+#: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
+#: lib/telegram_helper.rb
 msgid "Welcome! Feel free to ask me a question!"
 msgstr ""
 
@@ -12597,6 +12646,12 @@ msgstr ""
 msgid "Your API key."
 msgstr ""
 
+#: public/assets/form/form.js
+#, fuzzy
+#| msgid "Email"
+msgid "Your Email"
+msgstr "E-mail"
+
 #: app/controllers/first_steps_controller.rb
 msgid "Your Email Configuration"
 msgstr "Email beállítások konfigurálása"
@@ -12605,6 +12660,18 @@ msgstr "Email beállítások konfigurálása"
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 msgid "Your Logo"
 msgstr "Saját logo"
+
+#: public/assets/form/form.js
+#, fuzzy
+#| msgid "Message"
+msgid "Your Message..."
+msgstr "Üzenet"
+
+#: public/assets/form/form.js
+#, fuzzy
+#| msgid "Full Name"
+msgid "Your Name"
+msgstr "Teljes név"
 
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 msgid "Your New Personal Access Token"
@@ -13754,6 +13821,11 @@ msgstr "...a teljes szövegmezőből"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "Várakozási idő ma"
+
+#, fuzzy
+#~| msgid "Overviews"
+#~ msgid "Overview Sortings"
+#~ msgstr "Áttekintés"
 
 #, fuzzy
 #~| msgid "Order"

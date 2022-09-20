@@ -401,6 +401,10 @@ msgstr "۳ هفته"
 msgid "4 weeks"
 msgstr "۴ هفته"
 
+#: public/assets/chat/chat-no-jquery.coffee public/assets/chat/chat.coffee
+msgid "<strong>Chat</strong> with us!"
+msgstr ""
+
 #: app/assets/javascripts/app/models/calendar.coffee
 msgid ""
 "A **calendar** is needed to calculate escalations based on business hours "
@@ -1017,6 +1021,12 @@ msgstr ""
 msgid "App credentials for Twitter."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
+#: app/assets/javascripts/app/controllers/_profile/appearance.coffee
+#: app/assets/javascripts/app/views/profile/appearance.jst.eco
+msgid "Appearance"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/api.coffee
 msgid "Application"
 msgstr "اپلیکیشن"
@@ -1226,6 +1236,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_article_attachments.coffee
 #: app/assets/javascripts/app/views/knowledge_base/_answer_attachments.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/attachments.jst.eco
+#: public/assets/form/form.js
 msgid "Attachments"
 msgstr "ضمایم"
 
@@ -2733,6 +2744,16 @@ msgstr "مشتریان داخل سازمان قادر به مشاهده آیتم
 msgid "Cut"
 msgstr "برش"
 
+#: app/assets/javascripts/app/views/profile/appearance.jst.eco
+msgid "Dark"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/dark_mode.coffee
+#, fuzzy
+#| msgid "Mode"
+msgid "Dark Mode"
+msgstr "حالت"
+
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/dashboard.coffee
@@ -3998,7 +4019,7 @@ msgstr "تنظیمات الاستیک‌سرچ بایستی انجام شود!"
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
-#: db/seeds/object_manager_attributes.rb
+#: db/seeds/object_manager_attributes.rb public/assets/form/form.js
 msgid "Email"
 msgstr "ایمیل"
 
@@ -6222,6 +6243,10 @@ msgstr "چیدمان"
 msgid "Library"
 msgstr ""
 
+#: app/assets/javascripts/app/views/profile/appearance.jst.eco
+msgid "Light"
+msgstr ""
+
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
 msgid "Limit Groups"
 msgstr "محدودیت گروه‌ها"
@@ -6605,6 +6630,7 @@ msgstr "ادغام با تیکت شماره"
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee
 #: app/assets/javascripts/app/views/maintenance.jst.eco
+#: public/assets/form/form.js
 msgid "Message"
 msgstr "پیام"
 
@@ -6894,7 +6920,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/organization.jst.eco
 #: app/assets/javascripts/app/views/widget/user.jst.eco
 #: app/controllers/time_accountings_controller.rb
-#: db/seeds/object_manager_attributes.rb
+#: db/seeds/object_manager_attributes.rb public/assets/form/form.js
 msgid "Name"
 msgstr "نام"
 
@@ -7203,6 +7229,12 @@ msgstr ""
 #: app/views/knowledge_base/public/tags/show.html.erb
 msgid "No content to show"
 msgstr "محتوایی برای نمایش وجود ندارد"
+
+#: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
+#, fuzzy
+#| msgid "draft"
+msgid "No drafts"
+msgstr "پیش‌نویس"
 
 #: app/controllers/users_controller.rb
 msgid "No email!"
@@ -7521,6 +7553,12 @@ msgstr "اکتبر"
 msgid "October"
 msgstr "اکتبر"
 
+#: public/assets/chat/chat.coffee
+#, fuzzy
+#| msgid "Online"
+msgid "Offline"
+msgstr "آنلاین"
+
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee
 msgid "Ok"
 msgstr "بسیار خوب"
@@ -7534,6 +7572,7 @@ msgid "Once completed…"
 msgstr "پس از اتمام…"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
+#: public/assets/chat/chat.coffee
 msgid "Online"
 msgstr "آنلاین"
 
@@ -7635,6 +7674,7 @@ msgid "Or migrate from another system."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee
+#: db/seeds/permissions.rb
 #, fuzzy
 #| msgid "New Overview"
 msgid "Order of Overviews"
@@ -7765,12 +7805,6 @@ msgstr "مرورگر خارج از رده"
 #: app/assets/javascripts/app/models/user_overview_sorting.coffee
 msgid "Overview"
 msgstr "پیش نمایش"
-
-#: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Overviews"
-msgid "Overview Sortings"
-msgstr "مرورکلی"
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
 msgid "Overview bulk mask"
@@ -8886,6 +8920,7 @@ msgid "Script can be located under: ||%s|| and needs to be executable."
 msgstr ""
 
 #: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco
+#: public/assets/chat/chat-no-jquery.coffee public/assets/chat/chat.coffee
 msgid "Scroll down to see new messages"
 msgstr "برای دیدن پیام‌های جدید به سمت پایین حرکت کنید"
 
@@ -9761,6 +9796,10 @@ msgstr "پشتیبانی از پایگاه دانش چند زبانه."
 msgid "Sync calendars with iCal feeds."
 msgstr ""
 
+#: app/assets/javascripts/app/views/profile/appearance.jst.eco
+msgid "Sync with computer"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_manage/system.coffee
 #: app/assets/javascripts/app/controllers/manage.coffee db/seeds/permissions.rb
 #: db/seeds/ticket_article_senders.rb
@@ -9962,8 +10001,14 @@ msgstr "تصویر با تغییر اندازه معتبر نیست."
 msgid "The Telegram bot could not be saved."
 msgstr "بات تلگرام قابل ذخیره نیست."
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "The Telegram file is larger than the allowed 20 MB."
+msgstr ""
+
+#: lib/telegram_helper.rb
+msgid ""
+"The Telegram integration can only be configured on systems using the HTTPS "
+"protocol."
 msgstr ""
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
@@ -10088,7 +10133,7 @@ msgstr ""
 msgid "The entry could not be created."
 msgstr "امکان ایجاداین ورودی وجود ندارد."
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "The file could not be retrieved from the bot."
 msgstr ""
 
@@ -10335,11 +10380,11 @@ msgstr ""
 msgid "The required parameter 'for_user_id' is missing."
 msgstr "تصویر با تغییر اندازه معتبر نیست."
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "The required parameter 'group_id' is invalid."
 msgstr ""
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "The required parameter 'group_id' is missing."
 msgstr ""
 
@@ -10496,7 +10541,7 @@ msgid "The way to communicate with us is this thing called \"ticket\"."
 msgstr ""
 "راهکاری که از طریق آن می‌توانید با ما در ارتباط باشید، تیکت نامیده می‌شود."
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "The webhook could not be saved by Telegram, seems to be an invalid URL."
 msgstr ""
 
@@ -10507,6 +10552,7 @@ msgid "Their tickets"
 msgstr "تیکت‌ها"
 
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
+#: app/assets/javascripts/app/views/profile/appearance.jst.eco
 msgid "Theme"
 msgstr "تم"
 
@@ -10561,7 +10607,7 @@ msgstr "هیچ پایگاه دانشی ایجاد نشد"
 msgid "Third-party Applications"
 msgstr "اپلیکیشن‌های ثالث"
 
-#: lib/telegram.rb
+#: lib/telegram_helper.rb
 msgid "This bot already exists."
 msgstr ""
 
@@ -11121,6 +11167,10 @@ msgstr "که روی پرونده ها کار میکند."
 #: public/assets/chat/chat-no-jquery.coffee public/assets/chat/chat.coffee
 msgid "Today"
 msgstr "امروز"
+
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
+msgid "Toggle dark mode"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/api.coffee
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
@@ -12003,7 +12053,8 @@ msgid "Welcome!"
 msgstr "خوش آمدید!"
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
-#: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco lib/telegram.rb
+#: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
+#: lib/telegram_helper.rb
 msgid "Welcome! Feel free to ask me a question!"
 msgstr ""
 
@@ -12404,6 +12455,12 @@ msgstr ""
 msgid "Your API key."
 msgstr ""
 
+#: public/assets/form/form.js
+#, fuzzy
+#| msgid "Email"
+msgid "Your Email"
+msgstr "ایمیل"
+
 #: app/controllers/first_steps_controller.rb
 msgid "Your Email Configuration"
 msgstr "تنظیمات ایمیل شما"
@@ -12412,6 +12469,18 @@ msgstr "تنظیمات ایمیل شما"
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 msgid "Your Logo"
 msgstr "لوگوی شما"
+
+#: public/assets/form/form.js
+#, fuzzy
+#| msgid "Ignore Message"
+msgid "Your Message..."
+msgstr "صرف‌نظر از پیام"
+
+#: public/assets/form/form.js
+#, fuzzy
+#| msgid "Full Name"
+msgid "Your Name"
+msgstr "نام کامل"
 
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 msgid "Your New Personal Access Token"
@@ -13551,6 +13620,11 @@ msgstr "...از تمام محدوده متن"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "میانگین زمان پاسخگویی (امروز)"
+
+#, fuzzy
+#~| msgid "Overviews"
+#~ msgid "Overview Sortings"
+#~ msgstr "مرورکلی"
 
 #, fuzzy
 #~| msgid "Order"
