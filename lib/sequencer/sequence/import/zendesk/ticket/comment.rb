@@ -16,6 +16,7 @@ class Sequencer
                 'Import::Zendesk::Ticket::Comment::To',
                 'Import::Zendesk::Ticket::Comment::Mapping',
                 'Import::Zendesk::Ticket::Comment::InlineImages',
+                'Import::Zendesk::Ticket::Comment::InternalTicketLinks',
                 'Import::Zendesk::Ticket::Comment::UnsetInstance',
                 'Common::ModelClass::Ticket::Article',
                 'Import::Common::Model::FindBy::MessageId',
