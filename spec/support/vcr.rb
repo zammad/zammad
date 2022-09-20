@@ -18,6 +18,8 @@ VCR.configure do |config|
 
     next true if VCR_IGNORE_MATCHING_HOSTS.any?     { |elem| uri.host.include? elem }
     next true if VCR_IGNORE_MATCHING_REGEXPS.any?   { |elem| uri.host.match? elem }
+
+    puts "Using cassette for request #{request.uri}"
   end
 
   config.register_request_matcher(:oauth_headers) do |r1, r2|
@@ -79,6 +81,17 @@ end
 
 RSpec.configure do |config|
   config.around(:each, use_vcr: true) do |example|
+
+    # Perform live integration tests without using VCR cassettes if CI_IGNORE_CASSETTES is set.
+    if example.metadata[:integration] && %w[1 true].include?(ENV['CI_IGNORE_CASSETTES'])
+      next VCR.turned_off(ignore_cassettes: true) do
+        WebMock.disable!
+        example.run
+      ensure
+        WebMock.enable!
+      end
+    end
+
     vcr_options = Array(example.metadata[:use_vcr])
 
     spec_path     = Pathname.new(example.file_path).realpath
