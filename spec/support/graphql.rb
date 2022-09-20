@@ -114,11 +114,16 @@ module ZammadSpecSupportGraphql
       #
       #   expect(gql.response.nodes.first).to include(...)
       #
-      def nodes
+      # Also can operate on a subentry in the hash rather than the top level.
+      #
+      #   expect(gql.response.nodes('first_level', 'second_level').first).to include(...)
+      #
+      def nodes(*subkeys)
+        content = data.dig(*subkeys, 'edges')
         assert('GraphQL result contains node entries') do
-          !data['edges'].nil?
+          !content.nil?
         end
-        data['edges'].map { |edge| edge['node'] }
+        content.map { |edge| edge['node'] }
       end
 
       #

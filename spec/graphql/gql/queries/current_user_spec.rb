@@ -5,8 +5,9 @@ require 'rails_helper'
 RSpec.describe Gql::Queries::CurrentUser, type: :graphql do
 
   context 'when fetching user information' do
-    let(:organization) { create(:organization) }
-    let(:agent)        { create(:agent, department: 'TestDepartment', organization: organization) }
+    let(:organization)   { create(:organization) }
+    let(:secondary_orgs) { create_list(:organization, 2) }
+    let(:agent)          { create(:agent, department: 'TestDepartment', organization: organization, organizations: secondary_orgs) }
     let(:query) do
       <<~QUERY
         query currentUser {
@@ -23,6 +24,13 @@ RSpec.describe Gql::Queries::CurrentUser, type: :graphql do
             }
             organization {
               name
+            }
+            secondaryOrganizations {
+              edges {
+                node {
+                  name
+                }
+              }
             }
             permissions {
               names
@@ -46,8 +54,9 @@ RSpec.describe Gql::Queries::CurrentUser, type: :graphql do
         expect(oas.find { |oa| oa['attribute']['name'].eql?('department') }['value']).to eq('TestDepartment')
       end
 
-      it 'has data for Organization' do
+      it 'has data for primary and secondary organizations', :aggregate_failures do
         expect(gql.result.data['organization']).to include('name' => organization.name)
+        expect(gql.result.nodes('secondaryOrganizations')).to eq(secondary_orgs.map { |o| { 'name' => o.name } })
       end
 
       it 'has permission data' do

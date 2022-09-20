@@ -20,6 +20,8 @@ module Gql::Types
     scoped_fields do
       belongs_to :organization, Gql::Types::OrganizationType
 
+      field :secondary_organizations, Gql::Types::OrganizationType.connection_type
+
       field :firstname, String
       field :lastname, String
       field :fullname, String
@@ -51,5 +53,9 @@ module Gql::Types
     # field :city, String
     # field :country, String
     # field :address, String
+
+    def secondary_organizations
+      @object.organizations
+    end
   end
 end
