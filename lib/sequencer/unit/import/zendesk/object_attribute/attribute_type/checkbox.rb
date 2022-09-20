@@ -19,7 +19,7 @@ class Sequencer
 
               private
 
-              def data_type(_attribute)
+              def data_type(...)
                 'boolean'
               end
             end

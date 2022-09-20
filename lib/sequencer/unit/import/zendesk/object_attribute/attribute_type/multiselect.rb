@@ -7,7 +7,7 @@ class Sequencer
         module ObjectAttribute
           module AttributeType
             class Multiselect < Sequencer::Unit::Import::Zendesk::ObjectAttribute::AttributeType::Select
-              def data_type(_attribute)
+              def data_type(...)
                 'multiselect'
               end
             end
