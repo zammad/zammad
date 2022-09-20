@@ -378,7 +378,7 @@
 }
 
 @-webkit-keyframes load-fade {
-  from {
+  0% {
     opacity: 0.5;
     -webkit-transform: scale(0.6);
     transform: scale(0.6);
@@ -391,7 +391,7 @@
 }
 
 @keyframes load-fade {
-  from {
+  0% {
     opacity: 0.5;
     -webkit-transform: scale(0.6);
     transform: scale(0.6);

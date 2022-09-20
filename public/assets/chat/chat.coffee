@@ -1382,7 +1382,7 @@ do($ = window.jQuery, window) ->
       @el
         .find('.zammad-chat-agent-status')
         .attr('data-status', state)
-        .text @T(capitalizedState)
+        .text @T(capitalizedState)  # @T('Online') @T('Offline')
 
     detectHost: ->
       protocol = 'ws://'

@@ -357,6 +357,11 @@ msgstr ""
 msgid "4 weeks"
 msgstr ""
 
+#: public/assets/chat/chat-no-jquery.coffee
+#: public/assets/chat/chat.coffee
+msgid "<strong>Chat</strong> with us!"
+msgstr ""
+
 #: app/assets/javascripts/app/models/calendar.coffee
 msgid "A **calendar** is needed to calculate escalations based on business hours and to send out escalation notifications.\n\nDefine a **\"standard\"** calendar which is valid system-wide. The escalation notifications will only be sent to your agents during the defined business hours.\n\nIf you have customers with different business hours, you can create multiple calendars. Tickets are linked to calendars using **SLAs**."
 msgstr ""
@@ -1133,6 +1138,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_article_attachments.coffee
 #: app/assets/javascripts/app/views/knowledge_base/_answer_attachments.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/attachments.jst.eco
+#: public/assets/form/form.js
 msgid "Attachments"
 msgstr ""
 
@@ -3720,6 +3726,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
 #: db/seeds/object_manager_attributes.rb
+#: public/assets/form/form.js
 msgid "Email"
 msgstr ""
 
@@ -6146,6 +6153,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee
 #: app/assets/javascripts/app/views/maintenance.jst.eco
+#: public/assets/form/form.js
 msgid "Message"
 msgstr ""
 
@@ -6429,6 +6437,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/user.jst.eco
 #: app/controllers/time_accountings_controller.rb
 #: db/seeds/object_manager_attributes.rb
+#: public/assets/form/form.js
 msgid "Name"
 msgstr ""
 
@@ -7045,6 +7054,10 @@ msgstr ""
 msgid "October"
 msgstr ""
 
+#: public/assets/chat/chat.coffee
+msgid "Offline"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee
 msgid "Ok"
 msgstr ""
@@ -7058,6 +7071,7 @@ msgid "Once completed…"
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
+#: public/assets/chat/chat.coffee
 msgid "Online"
 msgstr ""
 
@@ -8359,6 +8373,8 @@ msgid "Script can be located under: ||%s|| and needs to be executable."
 msgstr ""
 
 #: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco
+#: public/assets/chat/chat-no-jquery.coffee
+#: public/assets/chat/chat.coffee
 msgid "Scroll down to see new messages"
 msgstr ""
 
@@ -11587,6 +11603,10 @@ msgstr ""
 msgid "Your API key."
 msgstr ""
 
+#: public/assets/form/form.js
+msgid "Your Email"
+msgstr ""
+
 #: app/controllers/first_steps_controller.rb
 msgid "Your Email Configuration"
 msgstr ""
@@ -11594,6 +11614,14 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 msgid "Your Logo"
+msgstr ""
+
+#: public/assets/form/form.js
+msgid "Your Message..."
+msgstr ""
+
+#: public/assets/form/form.js
+msgid "Your Name"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
