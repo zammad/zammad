@@ -9366,6 +9366,12 @@ msgstr "Recherche d'utilisateurs"
 msgid "Search for…"
 msgstr "Recherche"
 
+#: app/frontend/shared/components/Form/fields/FieldRecipient/index.ts
+#, fuzzy
+#| msgid "Enter your username or email address"
+msgid "Search or enter email address..."
+msgstr "Entrez votre nom d'utilisateur ou votre adresse courriel"
+
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax_customer_organization.coffee
 #: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee

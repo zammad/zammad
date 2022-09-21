@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-09-20 12:05+0000\n"
+"PO-Revision-Date: 2022-09-21 11:42+0000\n"
 "Last-Translator: Martin Gruner <mg@zammad.com>\n"
 "Language-Team: Italian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/it/>\n"
@@ -9228,6 +9228,12 @@ msgstr "Cerca gli utenti"
 msgid "Search for…"
 msgstr "Cerca…"
 
+#: app/frontend/shared/components/Form/fields/FieldRecipient/index.ts
+#, fuzzy
+#| msgid "Enter your username or email address"
+msgid "Search or enter email address..."
+msgstr "Inserisci il tuo nome utente o la tua email"
+
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax_customer_organization.coffee
 #: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee
@@ -9874,7 +9880,7 @@ msgstr "Inizia nuovo"
 #: public/assets/chat/views/customer_timeout.eco
 #: public/assets/chat/views/waiting_list_timeout.eco
 msgid "Start new conversation"
-msgstr ""
+msgstr "Avvia una nuova chat"
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 msgid "Start typing to search for users…"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-09-20 12:05+0000\n"
+"PO-Revision-Date: 2022-09-21 11:42+0000\n"
 "Last-Translator: Martin Gruner <mg@zammad.com>\n"
 "Language-Team: Chinese (Traditional) <https://translations.zammad.org/"
 "projects/zammad/zammad-development/zh_Hant/>\n"
@@ -976,7 +976,7 @@ msgstr "所有的客服人員"
 
 #: public/assets/chat/views/waiting.eco
 msgid "All colleagues are busy."
-msgstr ""
+msgstr "所有服務人員都在忙碌中."
 
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
 msgid "All computers and browsers that have access to your Zammad appear here."
@@ -2482,7 +2482,7 @@ msgstr "連接 Twitter APP"
 
 #: public/assets/chat/views/loader.eco
 msgid "Connecting"
-msgstr ""
+msgstr "連線中"
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
@@ -2497,7 +2497,7 @@ msgstr ""
 
 #: public/assets/chat/chat-no-jquery.coffee public/assets/chat/chat.coffee
 msgid "Connection re-established"
-msgstr ""
+msgstr "正在重新建立連線中"
 
 #: lib/search_index_backend.rb
 msgid "Connection refused"
@@ -9413,6 +9413,12 @@ msgstr "搜尋使用者"
 msgid "Search for…"
 msgstr "搜尋"
 
+#: app/frontend/shared/components/Form/fields/FieldRecipient/index.ts
+#, fuzzy
+#| msgid "Enter your username or email address"
+msgid "Search or enter email address..."
+msgstr "請輸入你的使用者名稱或郵件地址"
+
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax_customer_organization.coffee
 #: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee
@@ -9951,13 +9957,13 @@ msgstr ""
 #: public/assets/chat/views/customer_timeout.eco
 msgid ""
 "Since you didn't respond in the last %s minutes your conversation got closed."
-msgstr ""
+msgstr "由於你超過 %s 分鐘沒有任何回應, 該對話已被關閉."
 
 #: public/assets/chat/views/customer_timeout.eco
 msgid ""
 "Since you didn't respond in the last %s minutes your conversation with "
 "<strong>%s</strong> got closed."
-msgstr ""
+msgstr "由於你超過 %s 分鐘沒有回應, 你與 <strong>%s</strong> 的對話已被關閉."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #, fuzzy
@@ -10095,7 +10101,7 @@ msgstr "重新開始"
 #: public/assets/chat/views/customer_timeout.eco
 #: public/assets/chat/views/waiting_list_timeout.eco
 msgid "Start new conversation"
-msgstr ""
+msgstr "開始新的對話"
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 #, fuzzy
@@ -12462,7 +12468,8 @@ msgstr "警告"
 msgid ""
 "We are sorry, it takes longer as expected to get an empty slot. Please try "
 "again later or send us an email. Thank you!"
-msgstr ""
+msgstr "非常抱歉, 當前需要等候更長的時間方可排入對話程序, "
+"請稍後重試或向我們寄送電子郵件. 謝謝!"
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 #, fuzzy
@@ -12828,7 +12835,7 @@ msgstr "您是 |%s|。"
 
 #: public/assets/chat/views/waiting.eco
 msgid "You are on waiting list position <strong>%s</strong>."
-msgstr ""
+msgstr "你目前的等候位置是第 <strong>%s</strong> 順位."
 
 #: app/models/transaction/notification.rb
 msgid ""

@@ -8889,6 +8889,12 @@ msgstr "Otsi kasutajaid"
 msgid "Search for…"
 msgstr "Otsi…"
 
+#: app/frontend/shared/components/Form/fields/FieldRecipient/index.ts
+#, fuzzy
+#| msgid "Enter your username or email address"
+msgid "Search or enter email address..."
+msgstr "Sisesta oma kasutajanimi või e-posti aadress"
+
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax_customer_organization.coffee
 #: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee

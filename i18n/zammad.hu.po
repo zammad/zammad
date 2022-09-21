@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-09-20 12:05+0000\n"
+"PO-Revision-Date: 2022-09-21 11:42+0000\n"
 "Last-Translator: Martin Gruner <mg@zammad.com>\n"
 "Language-Team: Hungarian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/hu/>\n"
@@ -937,7 +937,7 @@ msgstr "Összes ügyintéző"
 
 #: public/assets/chat/views/waiting.eco
 msgid "All colleagues are busy."
-msgstr ""
+msgstr "Jelenleg minden kollégánk elfoglalt."
 
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
 msgid "All computers and browsers that have access to your Zammad appear here."
@@ -2001,7 +2001,7 @@ msgstr "Chat cím"
 
 #: public/assets/chat/chat-no-jquery.coffee public/assets/chat/chat.coffee
 msgid "Chat closed by %s"
-msgstr ""
+msgstr "A beszélgetést lezárta %s"
 
 #: app/assets/javascripts/app/controllers/chat.coffee
 msgid "Chat not answered, automatically set to offline."
@@ -2393,7 +2393,7 @@ msgstr "Csatlakozás a Twitter App-hoz"
 
 #: public/assets/chat/views/loader.eco
 msgid "Connecting"
-msgstr ""
+msgstr "Csatlakozás"
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
@@ -2408,7 +2408,7 @@ msgstr ""
 
 #: public/assets/chat/chat-no-jquery.coffee public/assets/chat/chat.coffee
 msgid "Connection re-established"
-msgstr ""
+msgstr "Újracsatlakozás"
 
 #: lib/search_index_backend.rb
 msgid "Connection refused"
@@ -9119,6 +9119,12 @@ msgstr "Felhasználók keresése"
 msgid "Search for…"
 msgstr "Keresés"
 
+#: app/frontend/shared/components/Form/fields/FieldRecipient/index.ts
+#, fuzzy
+#| msgid "Enter your username or email address"
+msgid "Search or enter email address..."
+msgstr "Add meg az email címed"
+
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax_customer_organization.coffee
 #: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee
@@ -9642,13 +9648,15 @@ msgstr ""
 #: public/assets/chat/views/customer_timeout.eco
 msgid ""
 "Since you didn't respond in the last %s minutes your conversation got closed."
-msgstr ""
+msgstr "Mivel %s perce nem érkezett válasz, a beszélgetés lezárult."
 
 #: public/assets/chat/views/customer_timeout.eco
 msgid ""
 "Since you didn't respond in the last %s minutes your conversation with "
 "<strong>%s</strong> got closed."
 msgstr ""
+"Mivel %s perce nem érkezett újabb üzenet, ezért a <strong>%s</strong> "
+"kollégával folytatott beszéletést lezártuk."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #, fuzzy
@@ -9784,7 +9792,7 @@ msgstr ""
 #: public/assets/chat/views/customer_timeout.eco
 #: public/assets/chat/views/waiting_list_timeout.eco
 msgid "Start new conversation"
-msgstr ""
+msgstr "Új beszélgetés indítása"
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 #, fuzzy
@@ -11346,7 +11354,7 @@ msgstr ""
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 #: public/assets/chat/chat-no-jquery.coffee public/assets/chat/chat.coffee
 msgid "Today"
-msgstr ""
+msgstr "Ma"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Toggle dark mode"
@@ -12086,6 +12094,8 @@ msgid ""
 "We are sorry, it takes longer as expected to get an empty slot. Please try "
 "again later or send us an email. Thank you!"
 msgstr ""
+"Sajnáljuk, de a várakozási idő hosszabb a szokásosnál. Kérlek próbáld újra, "
+"vagy írd meg kérdésed emailben. Köszönjük!"
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 msgid ""
@@ -12418,7 +12428,7 @@ msgstr ""
 
 #: public/assets/chat/views/waiting.eco
 msgid "You are on waiting list position <strong>%s</strong>."
-msgstr ""
+msgstr "A várólistán a <strong>%s</strong>. pozícióban várakozol."
 
 #: app/models/transaction/notification.rb
 msgid ""

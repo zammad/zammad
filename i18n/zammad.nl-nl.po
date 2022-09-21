@@ -4,8 +4,8 @@ msgstr ""
 "POT-Creation-Date: \n"
 "PO-Revision-Date: 2022-09-20 12:05+0000\n"
 "Last-Translator: Martin Gruner <mg@zammad.com>\n"
-"Language-Team: Dutch <https://translations.zammad.org/projects/zammad/"
-"zammad-development/nl/>\n"
+"Language-Team: Dutch <https://translations.zammad.org/projects/zammad/zammad-"
+"development/nl/>\n"
 "Language: nl-nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -9159,6 +9159,12 @@ msgstr "Zoek gebruikers"
 #: app/frontend/apps/mobile/modules/search/views/SearchOverview.vue
 msgid "Search for…"
 msgstr "Zoeken naar…"
+
+#: app/frontend/shared/components/Form/fields/FieldRecipient/index.ts
+#, fuzzy
+#| msgid "Enter your username or email address"
+msgid "Search or enter email address..."
+msgstr "Voer uw gebruikersnaam of e-mailadres in"
 
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax_customer_organization.coffee

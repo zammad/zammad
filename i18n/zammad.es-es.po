@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-09-20 12:05+0000\n"
+"PO-Revision-Date: 2022-09-21 11:42+0000\n"
 "Last-Translator: Martin Gruner <mg@zammad.com>\n"
 "Language-Team: Spanish <https://translations.zammad.org/projects/zammad/"
 "zammad-development/es/>\n"
@@ -9361,6 +9361,12 @@ msgstr "Buscar por usuario"
 msgid "Search for…"
 msgstr "Buscar…"
 
+#: app/frontend/shared/components/Form/fields/FieldRecipient/index.ts
+#, fuzzy
+#| msgid "Enter your username or email address"
+msgid "Search or enter email address..."
+msgstr " Ingrese su nombre de usuario o dirección de correo electrónico"
+
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax_customer_organization.coffee
 #: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee
@@ -9898,12 +9904,16 @@ msgstr ""
 msgid ""
 "Since you didn't respond in the last %s minutes your conversation got closed."
 msgstr ""
+"Puesto que usted no respondió en los últimos %s minutos su conversación se "
+"ha cerrado."
 
 #: public/assets/chat/views/customer_timeout.eco
 msgid ""
 "Since you didn't respond in the last %s minutes your conversation with "
 "<strong>%s</strong> got closed."
 msgstr ""
+"Puesto que usted no respondió en los últimos %s minutos su conversación con "
+"<strong>%s</strong> se ha cerrado."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #, fuzzy
@@ -10041,7 +10051,7 @@ msgstr "Comenzar nuevo"
 #: public/assets/chat/views/customer_timeout.eco
 #: public/assets/chat/views/waiting_list_timeout.eco
 msgid "Start new conversation"
-msgstr ""
+msgstr "Iniciar nueva conversación"
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 msgid "Start typing to search for users…"
@@ -12444,6 +12454,9 @@ msgid ""
 "We are sorry, it takes longer as expected to get an empty slot. Please try "
 "again later or send us an email. Thank you!"
 msgstr ""
+"Lo sentimos, se tarda más tiempo de lo esperado para ser atendido por un "
+"agente. Inténtelo de nuevo más tarde o envíenos un correo electrónico. "
+"¡Gracias!"
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 #, fuzzy
@@ -12826,7 +12839,7 @@ msgstr "Eres un/a |%s|"
 
 #: public/assets/chat/views/waiting.eco
 msgid "You are on waiting list position <strong>%s</strong>."
-msgstr ""
+msgstr "Usted está en la posición <strong>%s</strong> de la lista de espera."
 
 #: app/models/transaction/notification.rb
 msgid ""

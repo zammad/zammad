@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-09-20 12:05+0000\n"
+"PO-Revision-Date: 2022-09-21 11:42+0000\n"
 "Last-Translator: Martin Gruner <mg@zammad.com>\n"
 "Language-Team: Norwegian Bokmål <https://translations.zammad.org/projects/"
 "zammad/zammad-development/nb_NO/>\n"
@@ -968,7 +968,7 @@ msgstr "Alle agenter"
 
 #: public/assets/chat/views/waiting.eco
 msgid "All colleagues are busy."
-msgstr ""
+msgstr "Alle våre kolleger er for øyeblikket opptatt."
 
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
 msgid "All computers and browsers that have access to your Zammad appear here."
@@ -2082,7 +2082,7 @@ msgstr "Chat tittel"
 
 #: public/assets/chat/chat-no-jquery.coffee public/assets/chat/chat.coffee
 msgid "Chat closed by %s"
-msgstr ""
+msgstr "Chat avsluttes om %s"
 
 #: app/assets/javascripts/app/controllers/chat.coffee
 msgid "Chat not answered, automatically set to offline."
@@ -2484,7 +2484,7 @@ msgstr "Koble til Twitter App"
 
 #: public/assets/chat/views/loader.eco
 msgid "Connecting"
-msgstr ""
+msgstr "Koble til"
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
@@ -2499,7 +2499,7 @@ msgstr ""
 
 #: public/assets/chat/chat-no-jquery.coffee public/assets/chat/chat.coffee
 msgid "Connection re-established"
-msgstr ""
+msgstr "Tilkoblingen er gjenopprettet"
 
 #: lib/search_index_backend.rb
 msgid "Connection refused"
@@ -9462,6 +9462,12 @@ msgstr "Søk etter brukere"
 msgid "Search for…"
 msgstr "Søk"
 
+#: app/frontend/shared/components/Form/fields/FieldRecipient/index.ts
+#, fuzzy
+#| msgid "Enter your username or email address"
+msgid "Search or enter email address..."
+msgstr "Skriv inn brukernavnet eller e-postadressen din"
+
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax_customer_organization.coffee
 #: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee
@@ -10006,12 +10012,16 @@ msgstr ""
 msgid ""
 "Since you didn't respond in the last %s minutes your conversation got closed."
 msgstr ""
+"Ettersom du ikke har respondert i løpet av de siste %s minuttene, har "
+"samtalen nå blitt avsluttet."
 
 #: public/assets/chat/views/customer_timeout.eco
 msgid ""
 "Since you didn't respond in the last %s minutes your conversation with "
 "<strong>%s</strong> got closed."
 msgstr ""
+"Ettersom du ikke har respondert i løpet av de siste %s minuttene av "
+"samtalen, vil samtalen med  <strong>%s</strong> nå avsluttes."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #, fuzzy
@@ -10149,7 +10159,7 @@ msgstr "Start ny"
 #: public/assets/chat/views/customer_timeout.eco
 #: public/assets/chat/views/waiting_list_timeout.eco
 msgid "Start new conversation"
-msgstr ""
+msgstr "Start en ny samtale"
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 #, fuzzy
@@ -12543,6 +12553,9 @@ msgid ""
 "We are sorry, it takes longer as expected to get an empty slot. Please try "
 "again later or send us an email. Thank you!"
 msgstr ""
+"Vi beklager, men det tar lengre tid enn vanlig å få en ledig plass i vår "
+"chat. Vennligst prøv igjen på et senere tidspunkt eller send oss en e-post. "
+"Tusen takk!"
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 #, fuzzy
@@ -12923,7 +12936,7 @@ msgstr "Du er en |%s|."
 
 #: public/assets/chat/views/waiting.eco
 msgid "You are on waiting list position <strong>%s</strong>."
-msgstr ""
+msgstr "Du står nå i kø og er nr. <strong>%s</strong> på ventelisten."
 
 #: app/models/transaction/notification.rb
 msgid ""
