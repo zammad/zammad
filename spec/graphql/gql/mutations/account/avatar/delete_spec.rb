@@ -48,7 +48,7 @@ RSpec.describe Gql::Mutations::Account::Avatar::Delete, type: :graphql do
     end
 
     context 'with not existing avatar' do
-      let(:variables) { { id: SecureRandom.random_number(1_000_000) + 123_456 } }
+      let(:variables) { { id: 123_456_789 } }
 
       it 'fails with error message' do
         expect(gql.result.error_message).to eq("Could not find Avatar #{variables[:id]}")

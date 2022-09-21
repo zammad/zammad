@@ -2,7 +2,8 @@
 
 FactoryBot.define do
   factory :public_link do
-    link          { "https://zammad#{SecureRandom.random_number(1000) + 1234}.com" }
+    sequence(:link) { |i| "https://zammad#{i}.com" }
+
     title         { 'Zammad Homepage' }
     description   { 'Our fancy homepage.' }
     screen        { ['login'] }
