@@ -651,6 +651,12 @@ QUnit.test('difference', assert => {
   result = {}
   item = difference(object1, object2)
   assert.deepEqual(item, result)
+
+  item = difference({}, undefined)
+  assert.deepEqual(item, {})
+
+  item = difference(undefined, {})
+  assert.deepEqual(item, {})
 });
 
 QUnit.test('auth - not existing user', assert => {
