@@ -578,6 +578,10 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
 
         f.value = try_iso88591
         value = f.decoded.to_utf8
+      rescue Date::Error => e
+        raise e if !f.name.eql?('Resent-Date')
+
+        f.value = ''
       rescue
         value = f.decoded.to_utf8(fallback: :read_as_sanitized_binary)
       end

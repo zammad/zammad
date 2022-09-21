@@ -78,6 +78,19 @@ RSpec.describe Channel::EmailParser, type: :model do
       it { expect(parsed['body']).to eq '<div>このアドレスへのメルマガを解除してください。</div>' }
       it { expect(parsed['subject']).to eq 'メルマガ解除' }
     end
+
+    describe "invalid 'Resent-Date' header field" do
+      it 'is ignored' do
+        expect(described_class.new.parse(<<~RAW)['resent_date']).to be_nil
+          From: me@example.com
+          To: to@example.com
+          Subject: 123
+          Resent-Date: 6/29/2022 11:57:13 AM
+
+          body 123
+        RAW
+      end
+    end
   end
 
   describe '#process' do
