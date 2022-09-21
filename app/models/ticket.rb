@@ -189,7 +189,7 @@ returns
     return if ticket_auto_assignment_selector.blank?
 
     ticket_count, = Ticket.selectors(ticket_auto_assignment_selector[:condition], limit: 1, current_user: user, access: 'full')
-    return if ticket_count.zero?
+    return if ticket_count.to_i.zero?
 
     update!(owner: user)
   end
