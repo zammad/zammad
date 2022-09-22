@@ -317,15 +317,8 @@ module HasGroups
       access   = Array(access).map(&:to_sym) | [:full]
 
       # check direct access
-      instances = joins(group_through.name)
+      instances = Permission.join_with(self, 'ticket.agent').joins(group_through.name)
                   .where(group_through.table_name => { group_id: group_id, access: access }, active: true)
-
-      if method_defined?(:permissions?)
-        permissions = Permission.with_parents('ticket.agent')
-        instances = instances
-                    .joins(roles: :permissions)
-                    .where(roles: { active: true }, permissions: { name: permissions, active: true })
-      end
 
       # check indirect access through roles if possible
       return instances if !respond_to?(:role_access)

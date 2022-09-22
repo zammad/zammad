@@ -39,4 +39,12 @@ returns
     name
   end
 
+  def self.join_with(object, permissions)
+    return object if !object.method_defined?(:permissions?)
+
+    permissions = with_parents(permissions)
+
+    object.joins(roles: :permissions)
+                .where(roles: { active: true }, permissions: { name: permissions, active: true })
+  end
 end

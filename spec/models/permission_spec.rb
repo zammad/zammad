@@ -22,4 +22,17 @@ RSpec.describe Permission, type: :model do
       end
     end
   end
+
+  describe '.join_with' do
+    let!(:agents)    { create_list(:agent, 5) }
+    let!(:customers) { create_list(:customer, 5) }
+
+    it 'does include agents' do
+      expect(described_class.join_with(User, 'ticket.agent')).to include(*agents)
+    end
+
+    it 'does exclude customers' do
+      expect(described_class.join_with(User, 'ticket.agent')).not_to include(*customers)
+    end
+  end
 end

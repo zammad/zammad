@@ -4,7 +4,7 @@ RSpec.shared_examples 'HasRoles' do |group_access_factory:|
   context 'role' do
     subject { create(group_access_factory) }
 
-    let(:role)           { create(:role) }
+    let(:role)           { create(:agent_role) }
     let(:group_instance) { create(:group) }
     let(:group_role)     { create(:group) }
     let(:group_inactive) { create(:group, active: false) }
