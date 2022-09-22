@@ -8424,7 +8424,7 @@ msgid "Secondary organizations"
 msgstr ""
 
 #: app/models/user.rb
-msgid "Secondary organizations are only allowed when the primary organization is given."
+msgid "Secondary organizations are only allowed when the primary organization is not given."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
