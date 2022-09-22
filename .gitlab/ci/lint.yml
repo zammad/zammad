@@ -62,6 +62,12 @@
     - gem install bundler-audit
     - bundle-audit update
     - bundle-audit --ignore CVE-2015-9284
+    - echo "Checking if chat assets need a rebuild..."
+    - echo "Please see public/assets/chat/README.md for build instructions."
+    - cp public/assets/chat/chat.js tmp/chat.js
+    - yarn install --cwd public/assets/chat
+    - (cd public/assets/chat && npx gulp build)
+    - cmp public/assets/chat/chat.js tmp/chat.js
 
 'lint: js & css':
   extends:
