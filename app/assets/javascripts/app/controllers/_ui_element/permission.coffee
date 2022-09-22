@@ -25,6 +25,18 @@ class App.UiElement.permission extends App.UiElement.ApplicationUiElement
       groupAccesses: App.Group.accesses()
     ) )
 
+    item.find('div.js-groupList input[type="checkbox"]').on('change', (e) ->
+      checked = item.find('div.js-groupList input[type="checkbox"]:checked').length > 0 ? true : false
+      parentCheckbox = item.find('div.js-groupList input[type="checkbox"]').parents('.js-subPermissionList').find('input[type="checkbox"][data-permission-name]')
+
+      parentCheckbox.prop('checked', checked)
+    )
+
+    item.find('div.js-groupList input[type="checkbox"]').parents('.js-subPermissionList').find('input[type="checkbox"][data-permission-name]').on('change', (e) ->
+      return if $(e.currentTarget).prop('checked')
+      item.find('div.js-groupList input[type="checkbox"]:checked').prop('checked', false)
+    )
+
     # show/hide trees
     item.find('[name=permission_ids]').on('change', (e) =>
       @checkUncheck($(e.currentTarget), permissions, item)

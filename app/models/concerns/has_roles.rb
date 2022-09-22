@@ -69,7 +69,8 @@ module HasRoles
 
       role_ids   = RoleGroup.eager_load(:role).where(group_id: group_id, access: access, roles: { active: true }).pluck(:role_id)
       join_table = reflect_on_association(:roles).join_table
-      joins(:roles).where(active: true, join_table => { role_id: role_ids }).distinct.select(&:groups_access_permission?)
+
+      Permission.join_with(self, 'ticket.agent').joins(:roles).where(active: true, join_table => { role_id: role_ids }).distinct
     end
 
     # Lists IDs of instances having the given access(es) to the given Group through Roles.
