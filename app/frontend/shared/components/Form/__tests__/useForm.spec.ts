@@ -65,4 +65,17 @@ describe('useForm', () => {
     expect(isSubmitted.value).toBe(false)
     expect(isDisabled.value).toBe(false)
   })
+
+  it('use values', () => {
+    const { form, values } = useForm()
+
+    form.value = {
+      formNode: getNode('test-form') as FormKitNode,
+    }
+
+    expect(values.value).toStrictEqual({
+      title: undefined,
+      text: 'Some text',
+    })
+  })
 })

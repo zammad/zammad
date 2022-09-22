@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import { defaultOrganization } from '@mobile/entities/organization/__tests__/mocks/organization-mocks'
-import { ObjectManagerFrontendAttributesDocument } from '@shared/graphql/queries/objectManagerFrontendAttributes.api'
+import { ObjectManagerFrontendAttributesDocument } from '@shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.api'
 import { UserUpdatesDocument } from '@shared/graphql/subscriptions/userUpdates.api'
 import type { UserQuery } from '@shared/graphql/types'
 import type { ConfidentTake } from '@shared/types/utils'
@@ -11,7 +11,7 @@ import {
 } from '@tests/support/mock-graphql-api'
 import { nullableMock } from '@tests/support/utils'
 import { UserDocument } from '../../graphql/queries/user.api'
-import managerAttrutes from './managerAttributes.json'
+import managerAttributes from './managerAttributes.json'
 
 export const defaultUser = (): ConfidentTake<UserQuery, 'user'> => {
   const organization = defaultOrganization()
@@ -76,7 +76,7 @@ export const defaultUser = (): ConfidentTake<UserQuery, 'user'> => {
 
 export const mockUserManagerAttributes = () => {
   return mockGraphQLApi(ObjectManagerFrontendAttributesDocument).willResolve({
-    objectManagerFrontendAttributes: managerAttrutes,
+    objectManagerFrontendAttributes: managerAttributes,
   })
 }
 

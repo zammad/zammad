@@ -1,3 +1,0 @@
-query formSchema($formSchemaId: EnumFormSchemaId!) {
-  formSchema(formSchemaId: $formSchemaId)
-}

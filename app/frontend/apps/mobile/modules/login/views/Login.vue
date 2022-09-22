@@ -33,7 +33,7 @@ const router = useRouter()
 
 const application = useApplicationStore()
 
-const loginScheme = defineFormSchema([
+const loginSchema = defineFormSchema([
   {
     name: 'login',
     type: 'text',
@@ -63,6 +63,7 @@ const loginScheme = defineFormSchema([
         type: 'checkbox',
         name: 'rememberMe',
         label: __('Remember me'),
+        wrapperClass: '!h-6',
       },
       // TODO support if/then in form-schema
       ...(application.config.user_lost_password
@@ -83,9 +84,9 @@ const loginScheme = defineFormSchema([
 ])
 
 interface LoginFormData {
-  login?: string
-  password?: string
-  rememberMe?: boolean
+  login: string
+  password: string
+  rememberMe: boolean
 }
 
 // TODO: workaround for disabled button state, will be changed in formkit.
@@ -97,28 +98,25 @@ const login = (formData: FormData<LoginFormData>) => {
   // Clear notifications to avoid duplicated error messages.
   clearAllNotifications()
 
-  return (
-    authentication
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      .login(formData.login!, formData.password!, formData.rememberMe!)
-      .then(() => {
-        // TODO: maybe we need some additional logic for the ThirtParty-Login situtation.
-        const { redirect: redirectUrl } = route.query
-        if (typeof redirectUrl === 'string') {
-          router.replace(redirectUrl)
-        } else {
-          router.replace('/')
-        }
-      })
-      .catch((errors: UserError) => {
-        if (errors instanceof UserError) {
-          notify({
-            message: errors.generalErrors[0],
-            type: NotificationTypes.Error,
-          })
-        }
-      })
-  )
+  return authentication
+    .login(formData.login, formData.password, formData.rememberMe)
+    .then(() => {
+      // TODO: maybe we need some additional logic for the ThirtParty-Login situtation.
+      const { redirect: redirectUrl } = route.query
+      if (typeof redirectUrl === 'string') {
+        router.replace(redirectUrl)
+      } else {
+        router.replace('/')
+      }
+    })
+    .catch((errors: UserError) => {
+      if (errors instanceof UserError) {
+        notify({
+          message: errors.generalErrors[0],
+          type: NotificationTypes.Error,
+        })
+      }
+    })
 }
 </script>
 
@@ -156,8 +154,8 @@ const login = (formData: FormData<LoginFormData>) => {
             id="login"
             ref="form"
             class="text-left"
-            :schema="loginScheme"
-            @submit="login"
+            :schema="loginSchema"
+            @submit="login($event as FormData<LoginFormData>)"
           >
             <template #after-fields>
               <div
@@ -173,7 +171,7 @@ const login = (formData: FormData<LoginFormData>) => {
                 </CommonLink>
               </div>
               <FormKit
-                wrapper-class="mt-4 flex grow justify-center items-center"
+                wrapper-class="mt-6 flex grow justify-center items-center"
                 input-class="py-2 px-4 w-full h-14 text-xl font-semibold text-black formkit-variant-primary:bg-yellow rounded-xl select-none"
                 type="submit"
                 :disabled="isDisabled"

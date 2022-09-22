@@ -9,7 +9,7 @@ const routes: RouteRecordRaw[] = [
     props: true,
     component: () => import('./views/TicketDetailView.vue'),
     meta: {
-      title: __('Ticket'),
+      title: __('Ticket'), // TODO needs to be the ticket title/number (should be done inside of the route component?)
       requiresAuth: true,
       requiredPermission: ['ticket.agent', 'ticket.customer'],
       level: 3,
@@ -68,6 +68,18 @@ const routes: RouteRecordRaw[] = [
       requiresAuth: true,
       requiredPermission: ['ticket.agent', 'ticket.customer'],
       hasBottomNavigation: true,
+      level: 2,
+    },
+  },
+  {
+    path: '/tickets/create',
+    name: 'TicketCreate',
+    props: true,
+    component: () => import('./views/TicketCreate.vue'),
+    meta: {
+      title: __('Ticket Create'),
+      requiresAuth: true,
+      requiredPermission: ['ticket.agent', 'ticket.customer'],
       level: 2,
     },
   },

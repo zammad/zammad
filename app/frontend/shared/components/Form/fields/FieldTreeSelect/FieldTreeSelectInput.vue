@@ -56,6 +56,7 @@ const openModal = () => {
   })
 }
 
+// TODO: could maybe be moved to a other place, because it's currently duplicated
 const flattenOptions = (
   options: TreeSelectOption[],
   parents: SelectValue[] = [],

@@ -2,12 +2,17 @@
 
 import { isEmpty } from 'lodash-es'
 import type { FormKitNode } from '@formkit/core'
+import type { FormKitValidation } from '@formkit/validation'
 import extendSchemaDefinition from '@shared/form/utils/extendSchemaDefinition'
 
 const extendDataAttribues = (node: FormKitNode) => {
   const { props, context } = node
 
   if (!props.definition || !context || node.type !== 'input') return
+
+  // Add the parsedRules as props, so that the value is reactive and
+  // `$parsedRules` can be used in the if condition (https://github.com/formkit/formkit/issues/356).
+  node.addProps(['parsedRules'])
 
   // Adds a helper function to check the existing value inside of the context.
   context.fns.hasValue = (value: unknown): boolean => {
@@ -17,18 +22,8 @@ const extendDataAttribues = (node: FormKitNode) => {
     return value != null
   }
 
-  context.fns.hasRule = (
-    rule?: string,
-    ruleSet?: string | Array<Array<string>>,
-  ) => {
-    if (!ruleSet || !rule) return false
-
-    if (Array.isArray(ruleSet)) return ruleSet.some((r) => r.includes(rule))
-
-    return ruleSet
-      .split('|')
-      .map((r) => r.split(/:|,+/g))
-      .some((r) => r.includes(rule))
+  context.fns.hasRule = (parsedRules: FormKitValidation[]) => {
+    return parsedRules.some((rule) => rule.name === 'required')
   }
 
   extendSchemaDefinition(node, 'outer', {
@@ -39,7 +34,7 @@ const extendDataAttribues = (node: FormKitNode) => {
         else: undefined,
       },
       'data-required': {
-        if: '$fns.hasRule("required", $node.props.validation)',
+        if: '$fns.hasRule($parsedRules)',
         then: 'true',
         else: undefined,
       },

@@ -18,6 +18,8 @@ class Group < ApplicationModel
   # workflow checks should run after before_create and before_update callbacks
   include ChecksCoreWorkflow
 
+  core_workflow_screens 'create', 'edit'
+
   validates :name, presence: true
 
   validates :note, length: { maximum: 250 }

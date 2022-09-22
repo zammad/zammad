@@ -4450,7 +4450,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/login.jst.eco
 #: app/frontend/apps/mobile/modules/login/views/Login.vue
-#: app/models/form_schema/form/mobile/login.rb
 msgid "Forgot password?"
 msgstr ""
 
@@ -4461,6 +4460,10 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/form.coffee
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Form"
+msgstr ""
+
+#: app/graphql/gql/queries/form_updater.rb
+msgid "FormSchema could not be found."
 msgstr ""
 
 #: app/assets/javascripts/app/models/object_manager_attribute.coffee
@@ -7389,7 +7392,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/login.jst.eco
 #: app/frontend/apps/mobile/modules/login/views/Login.vue
 #: app/frontend/shared/components/Form/Form.stories.ts
-#: app/models/form_schema/form/mobile/login.rb
 #: db/seeds/object_manager_attributes.rb
 #: db/seeds/permissions.rb
 msgid "Password"
@@ -7927,7 +7929,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
 #: app/frontend/apps/mobile/modules/login/views/Login.vue
-#: app/models/form_schema/form/mobile/login.rb
 msgid "Remember me"
 msgstr ""
 
@@ -10139,6 +10140,10 @@ msgstr ""
 msgid "Ticket Count"
 msgstr ""
 
+#: app/frontend/apps/mobile/modules/ticket/routes.ts
+msgid "Ticket Create"
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "Ticket Hook"
 msgstr ""
@@ -10921,7 +10926,6 @@ msgid "Username"
 msgstr ""
 
 #: app/frontend/apps/mobile/modules/login/views/Login.vue
-#: app/models/form_schema/form/mobile/login.rb
 msgid "Username / Email"
 msgstr ""
 

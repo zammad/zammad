@@ -18,14 +18,6 @@ const IntersectionObserverMock = vi.fn(() => ({
 }))
 vi.stubGlobal('IntersectionObserver', IntersectionObserverMock)
 
-// FIXME: Vue Test Utils' teleport stub and HeadlessUI's Dialog don't work well together.
-//   Temporarily disable `console.warn` method due to log being flooded with warnings such as:
-//   [Vue warn]: Maximum recursive updates exceeded in component <Portal>. This means you have a reactive effect that is
-//   mutating its own dependencies and thus recursively triggering itself. Possible sources include component template,
-//   render function, updated hook or watcher source function.
-//   More info here: https://github.com/tailwindlabs/headlessui/issues/1025
-globalThis.console.warn = vi.fn() as never
-
 const testOptions = [
   {
     value: 0,

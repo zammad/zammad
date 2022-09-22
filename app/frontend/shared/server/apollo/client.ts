@@ -14,7 +14,7 @@ export const createApolloClient = (
   const cache = createCache(cacheInitializerModules)
 
   apolloClient = new ApolloClient({
-    connectToDevTools: true,
+    connectToDevTools: process.env.NODE_ENV !== 'production',
     link,
     cache,
   })

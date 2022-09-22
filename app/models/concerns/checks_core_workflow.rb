@@ -12,6 +12,12 @@ module ChecksCoreWorkflow
 
   private
 
+  class_methods do
+    def core_workflow_screens(*screens)
+      @core_workflow_screens ||= screens
+    end
+  end
+
   def validate_workflows
     return if !screen
     return if !UserInfo.current_user_id

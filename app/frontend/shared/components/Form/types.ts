@@ -12,7 +12,8 @@ import type {
   FormKitValidationMessages,
   FormKitValidationRules,
 } from '@formkit/validation'
-import type { Except } from 'type-fest'
+import type { EnumObjectManagerObjects } from '@shared/graphql/types'
+import type { Except, SetRequired } from 'type-fest'
 
 export interface FormFieldAdditionalProps {
   [index: string]: unknown
@@ -30,6 +31,8 @@ export type AllowedClasses = string | Record<string, boolean> | FormKitClasses
 
 export interface FormSchemaField {
   show?: boolean
+  relation?: string
+  updateFields?: boolean
   type: string
   name: string
   value?: unknown
@@ -70,9 +73,9 @@ export interface FormSchemaField {
 }
 
 export interface FormSchemaGroupOrList {
-  type: string
+  isGroupOrList: boolean
+  type: 'group' | 'list'
   name: string
-  children: FormSchemaField[]
 }
 
 interface FormSchemaLayoutBase {
@@ -92,20 +95,48 @@ export interface FormSchemaDOMElement extends FormSchemaLayoutBase {
   attrs?: FormKitSchemaAttributes
 }
 
-export type FormSchemaLayout = (FormSchemaComponent | FormSchemaDOMElement) & {
-  children: (FormSchemaLayout | FormSchemaField | string)[] | string
+export interface FormSchemaFieldsForObjectAttributeScreen {
+  screen: string
+  object: EnumObjectManagerObjects
+}
+
+export type FormSchemaFieldObjectAttribute = SetRequired<
+  Partial<FormSchemaField>,
+  'name'
+> & {
+  object: EnumObjectManagerObjects
+}
+
+export type FormSchemaLayout = FormSchemaComponent | FormSchemaDOMElement
+
+export type FormSchemaNodeWithChildren = (
+  | FormSchemaLayout
+  | FormSchemaGroupOrList
+) & {
+  children:
+    | (
+        | FormSchemaField
+        | FormSchemaFieldObjectAttribute
+        | FormSchemaFieldsForObjectAttributeScreen
+        | FormSchemaNodeWithChildren
+        | string
+      )[]
+    | string
 }
 
 export type FormSchemaNode =
-  | FormSchemaLayout
+  | FormSchemaNodeWithChildren
   | FormSchemaField
-  | FormSchemaGroupOrList
+  | FormSchemaFieldObjectAttribute
+  | FormSchemaFieldsForObjectAttributeScreen
+  | string
 
 export interface ReactiveFormSchemData {
   fields: Record<
     string,
     {
       show: boolean
+      updateFields: boolean
       props: Except<FormSchemaField, 'show' | 'props'>
     }
   >

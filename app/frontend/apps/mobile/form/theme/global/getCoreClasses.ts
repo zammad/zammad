@@ -43,7 +43,7 @@ const getCoreClasses: FormThemeExtension = (classes: FormThemeClasses) => {
     checkbox: {
       wrapper: `${
         classes.checkbox?.wrapper || ''
-      } flex-row-reverse w-full justify-between h-14 ltr:pl-2 rtl:pr-2`,
+      } w-full justify-between h-14 ltr:pl-2 rtl:pr-2`,
     },
     tags: addBlockFloatingLabel({
       ...(classes.tags || {}),

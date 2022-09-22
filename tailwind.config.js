@@ -5,31 +5,6 @@ const lineClampPlugin = require('@tailwindcss/line-clamp')
 const formKitTailwind = require('@formkit/themes/tailwindcss')
 const plugin = require('tailwindcss/plugin')
 const path = require('path')
-const fs = require('fs')
-
-// TODO: Move utility code elsewhere?
-function* walkSync(dir) {
-  const files = fs.readdirSync(dir, { withFileTypes: true })
-  for (const file of files) {
-    if (file.isDirectory()) {
-      yield* walkSync(path.join(dir, file.name))
-    } else {
-      yield path.join(dir, file.name)
-    }
-  }
-}
-
-// Here we need to add classes which are only present in the FormSchema back end, as Tailwind
-//  can't detect them otherwise.
-const safelist = new Set()
-for (const filePath of walkSync(`${__dirname}/app/models/form_schema/form/`)) {
-  const content = fs.readFileSync(filePath).toString()
-  for (const match of content.matchAll(/class: '([^']+)'/g)) {
-    for (const klass of match[1].split(/[ ]+/)) {
-      safelist.add(klass)
-    }
-  }
-}
 
 // Add the moment we can use one tailwind config for the mobile app, but later we need to check
 // how this works with different apps.
@@ -117,5 +92,4 @@ module.exports = {
       ])
     }),
   ],
-  safelist: [...safelist.values()],
 }

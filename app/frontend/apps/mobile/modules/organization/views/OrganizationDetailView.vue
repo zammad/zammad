@@ -15,7 +15,7 @@ import { useOrganizationQuery } from '@mobile/entities/organization/graphql/quer
 import { OrganizationUpdatesDocument } from '@mobile/entities/organization/graphql/subscriptions/organizationUpdates.api'
 import { useOrganizationEdit } from '@mobile/entities/organization/composables/useOrganizationEdit'
 import OrganizationMembersList from '@mobile/components/Organization/OrganizationMembersList.vue'
-import { useOrganizationObjectManagerAttributesStore } from '@mobile/entities/organization/stores/objectManagerAttributes'
+import { useOrganizationObjectAttributesStore } from '@shared/entities/organization/stores/objectAttributes'
 import { AvatarOrganization } from '@shared/components/CommonOrganizationAvatar'
 import CommonObjectAttributes from '@mobile/components/CommonObjectAttributes/CommonObjectAttributes.vue'
 import { useOrganizationTicketsCount } from '@mobile/entities/organization/composables/useOrganizationTicketsCount'
@@ -54,10 +54,10 @@ const loading = organizationQuery.loading()
 
 const organization = computed(() => organizationResult.value?.organization)
 
-const objectAttributesManager = useOrganizationObjectManagerAttributesStore()
+const objectAttributesManager = useOrganizationObjectAttributesStore()
 
 const objectAttributes = computed(
-  () => objectAttributesManager.attributes || [],
+  () => objectAttributesManager.viewScreenAttributes || [],
 )
 
 const { openEditOrganizationDialog } = useOrganizationEdit()

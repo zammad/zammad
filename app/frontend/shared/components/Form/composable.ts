@@ -15,6 +15,8 @@ const useForm = () => {
 
   const context = computed(() => node.value?.context)
 
+  const values = computed(() => context?.value?.value)
+
   const state = computed(() => context.value?.state)
 
   const isValid = computed(() => !!state.value?.valid)
@@ -35,6 +37,7 @@ const useForm = () => {
     form,
     node,
     context,
+    values,
     state,
     isValid,
     isDirty,

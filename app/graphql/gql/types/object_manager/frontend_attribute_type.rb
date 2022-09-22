@@ -9,6 +9,7 @@ module Gql::Types::ObjectManager
     field :display, String, null: false, resolver_method: :resolve_display
     field :data_type, String, null: false
     field :data_option, GraphQL::Types::JSON
+    field :screens, GraphQL::Types::JSON
 
     # Custom resolvers are needed as there are conflicts with a built-in 'display' method.
     def resolve_display

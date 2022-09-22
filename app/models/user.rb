@@ -59,6 +59,8 @@ class User < ApplicationModel
   # workflow checks should run after before_create and before_update callbacks
   include ChecksCoreWorkflow
 
+  core_workflow_screens 'create', 'edit'
+
   store :preferences
 
   association_attributes_ignored :online_notifications, :templates, :taskbars, :user_devices, :chat_sessions, :karma_activity_logs, :cti_caller_ids, :text_modules, :customer_tickets, :owner_tickets, :created_recent_views, :chat_agents, :data_privacy_tasks, :overviews, :mentions

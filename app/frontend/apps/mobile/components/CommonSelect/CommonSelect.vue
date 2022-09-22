@@ -30,6 +30,7 @@ const emit = defineEmits<{
 const dialogElement = ref<HTMLElement>()
 const localValue = useVModel(props, 'modelValue', emit)
 
+// TODO: do we really want this initial transfomring of the value, when it's null?
 if (localValue.value == null && props.multiple) {
   localValue.value = []
 }

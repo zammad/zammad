@@ -8,7 +8,7 @@ import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
 import CommonOrganizationAvatar from '@shared/components/CommonOrganizationAvatar/CommonOrganizationAvatar.vue'
 import CommonTicketStateList from '@mobile/components/CommonTicketStateList/CommonTicketStateList.vue'
 import CommonObjectAttributes from '@mobile/components/CommonObjectAttributes/CommonObjectAttributes.vue'
-import { useOrganizationObjectManagerAttributesStore } from '@mobile/entities/organization/stores/objectManagerAttributes'
+import { useOrganizationObjectAttributesStore } from '@shared/entities/organization/stores/objectAttributes'
 import { useOrganizationLazyQuery } from '@mobile/entities/organization/graphql/queries/organization.api'
 import { useOrganizationEdit } from '@mobile/entities/organization/composables/useOrganizationEdit'
 import OrganizationMembersList from '@mobile/components/Organization/OrganizationMembersList.vue'
@@ -60,10 +60,10 @@ const loadAllMembers = () => {
   })
 }
 
-const objectAttributesManager = useOrganizationObjectManagerAttributesStore()
+const objectAttributesManager = useOrganizationObjectAttributesStore()
 
 const objectAttributes = computed(
-  () => objectAttributesManager.attributes || [],
+  () => objectAttributesManager.viewScreenAttributes || [],
 )
 
 const { openEditOrganizationDialog } = useOrganizationEdit()

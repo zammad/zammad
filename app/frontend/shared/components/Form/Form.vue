@@ -2,7 +2,16 @@
 
 <script setup lang="ts">
 import type { ConcreteComponent, Ref } from 'vue'
-import { computed, ref, reactive, toRef, watch, markRaw, nextTick } from 'vue'
+import {
+  computed,
+  ref,
+  reactive,
+  toRef,
+  watch,
+  markRaw,
+  nextTick,
+  useSlots,
+} from 'vue'
 import { FormKit, FormKitSchema } from '@formkit/vue'
 import type {
   FormKitPlugin,
@@ -14,11 +23,17 @@ import type {
   FormKitSchemaComponent,
 } from '@formkit/core'
 import { useTimeoutFn } from '@vueuse/shared'
+import log from '@shared/utils/log'
 import UserError from '@shared/errors/UserError'
-import type { EnumFormSchemaId } from '@shared/graphql/types'
+import type {
+  EnumObjectManagerObjects,
+  EnumFormUpdaterId,
+  FormUpdaterRelationField,
+} from '@shared/graphql/types'
 import { QueryHandler } from '@shared/server/apollo/handler'
-import { useFormSchemaQuery } from './graphql/queries/formSchema.api'
-import type { FormSchemaGroupOrList } from './types'
+import { useObjectAttributeLoadFormFields } from '@shared/entities/object-attributes/composables/useObjectAttributeLoadFormFields'
+import { useObjectAttributeFormFields } from '@shared/entities/object-attributes/composables/useObjectAttributeFormFields'
+import { useFormUpdaterQuery } from './graphql/queries/formUpdater.api'
 import {
   type FormData,
   type FormSchemaField,
@@ -39,7 +54,7 @@ import FormGroup from './FormGroup.vue'
 
 export interface Props {
   schema?: FormSchemaNode[]
-  formSchemaId?: EnumFormSchemaId
+  formUpdaterId?: EnumFormUpdaterId
   changeFields?: Record<string, FormSchemaField>
   formKitPlugins?: FormKitPlugin[]
   formKitSectionsSchema?: Record<
@@ -53,6 +68,10 @@ export interface Props {
   queryParams?: Record<string, unknown>
   validationVisibility?: FormValidationVisibility
   disabled?: boolean
+
+  // Some special properties for working with object attribute fields inside of a form schema.
+  useObjectAttributes?: boolean
+  objectAttributeSkippedFields?: string[]
 
   // Implement the submit in this way, because we need to react on async usage of the submit function.
   onSubmit?: (values: FormData) => Promise<void> | void
@@ -74,7 +93,21 @@ const props = withDefaults(defineProps<Props>(), {
   },
   validationVisibility: FormValidationVisibility.Submit,
   disabled: false,
+  useObjectAttributes: false,
 })
+
+const slots = useSlots()
+
+const hasSchema = computed(
+  () => Boolean(slots.default) || Boolean(props.schema),
+)
+const formSchemaInitialized = ref(false)
+
+if (!hasSchema.value) {
+  log.error(
+    'No schema defined. Please use the schema prop or the default slot for the schema.',
+  )
+}
 
 // Rename prop 'class' for usage in the template, because of reserved word
 const localClass = toRef(props, 'class')
@@ -105,6 +138,8 @@ const values = computed<FormValues>(() => {
   return formNodeContext.value.value
 })
 
+const relationFields: FormUpdaterRelationField[] = []
+
 const updateSchemaProcessing = ref(false)
 
 const onSubmit = (values: FormData): Promise<void> | void => {
@@ -134,22 +169,25 @@ const onSubmit = (values: FormData): Promise<void> | void => {
 }
 
 const coreWorkflowActive = ref(false)
-const coreWorkflowChanges = ref<Record<string, FormSchemaField>>({})
+const formUpdaterChanges = ref<Record<string, FormSchemaField>>({})
 
 const changedValuePlugin = (node: FormKitNode) => {
-  node.on('input', ({ payload: value, origin: node }) => {
-    // TODO: trigger update form check (e.g. core workflow)
-    // Or maybe also some "update"-flag on field level?
-    if (coreWorkflowActive.value) {
-      updateSchemaProcessing.value = true
-      setTimeout(() => {
-        // TODO: ... do some needed stuff
-        coreWorkflowChanges.value = {}
-        updateSchemaProcessing.value = false
-      }, 2000)
-    }
+  node.on('created', () => {
+    node.on('input', ({ payload: value, origin: node }) => {
+      // TODO: We need to ignore the initial events
+      // TODO: trigger update form check (e.g. core workflow)
+      // Or maybe also some "update"-flag on field level?
+      if (coreWorkflowActive.value) {
+        updateSchemaProcessing.value = true
+        setTimeout(() => {
+          // TODO: ... do some needed stuff
+          formUpdaterChanges.value = {}
+          updateSchemaProcessing.value = false
+        }, 2000)
+      }
 
-    emit('changed', value, node.name)
+      emit('changed', value, node.name)
+    })
   })
 }
 
@@ -171,19 +209,22 @@ const additionalComponentLibrary = {
 }
 
 // Define the static schema, which will be filled with the real fields from the `schemaData`.
-const staticSchema: FormKitSchemaNode[] = []
+const staticSchema = ref<FormKitSchemaNode[]>([])
+
+const fixedAndSkippedFields: string[] = []
 
 const schemaData = reactive<ReactiveFormSchemData>({
   fields: {},
 })
 
 const updateSchemaDataField = (field: FormSchemaField) => {
-  const { show, props: specificProps, ...fieldProps } = field
+  const { show, updateFields, props: specificProps, ...fieldProps } = field
   const showField = show ?? true
 
   if (schemaData.fields[field.name]) {
     schemaData.fields[field.name] = {
       show: showField,
+      updateFields: updateFields || false,
       props: Object.assign(
         schemaData.fields[field.name].props,
         fieldProps,
@@ -193,15 +234,29 @@ const updateSchemaDataField = (field: FormSchemaField) => {
   } else {
     schemaData.fields[field.name] = {
       show: showField,
+      updateFields: updateFields || false,
       props: Object.assign(fieldProps, specificProps),
     }
   }
 }
 
-const buildStaticSchema = (schema: FormSchemaNode[]) => {
+const buildStaticSchema = () => {
+  const { getFormFieldSchema, getFormFieldsFromScreen } =
+    useObjectAttributeFormFields(fixedAndSkippedFields)
+
   const buildFormKitField = (
     field: FormSchemaField,
   ): FormKitSchemaComponent => {
+    if (field.relation) {
+      relationFields.push({
+        name: field.name,
+        relation: field.relation,
+        // TODO: Filter?
+      })
+
+      delete field.relation
+    }
+
     return {
       $cmp: 'FormKit',
       if: `$fields.${field.name}.show`,
@@ -217,90 +272,107 @@ const buildStaticSchema = (schema: FormSchemaNode[]) => {
   }
 
   const getLayoutType = (
-    layoutItem: FormSchemaLayout,
+    layoutNode: FormSchemaLayout,
   ): FormKitSchemaDOMNode | FormKitSchemaComponent => {
-    if ('component' in layoutItem) {
+    if ('component' in layoutNode) {
       return {
-        $cmp: layoutItem.component,
-        props: layoutItem.props,
+        $cmp: layoutNode.component,
+        props: layoutNode.props,
       }
     }
 
     return {
-      $el: layoutItem.element,
-      attrs: layoutItem.attrs,
+      $el: layoutNode.element,
+      attrs: layoutNode.attrs,
     }
   }
 
-  schema.forEach((node) => {
-    if ((node as FormSchemaLayout).isLayout) {
-      const layoutItem = node as FormSchemaLayout
+  type ResolveFormSchemaNode = Exclude<FormSchemaNode, string>
+  type ResolveFormKitSchemaNode = Exclude<FormKitSchemaNode, string>
 
-      if (typeof layoutItem.children === 'string') {
-        staticSchema.push({
-          ...getLayoutType(layoutItem),
-          children: layoutItem.children,
-        })
-      } else {
-        const childrens = layoutItem.children.map((childNode) => {
-          if (typeof childNode === 'string') {
-            return childNode
-          }
-          if ((childNode as FormSchemaLayout).isLayout) {
-            const layoutItemChildNode = childNode as FormSchemaLayout
-
-            return {
-              ...getLayoutType(layoutItemChildNode),
-              children: layoutItemChildNode.children as
-                | string
-                | FormKitSchemaNode[]
-                | FormKitSchemaCondition,
-            }
-          }
-
-          updateSchemaDataField(childNode as FormSchemaField)
-          return buildFormKitField(childNode as FormSchemaField)
-        })
-
-        staticSchema.push({
-          ...getLayoutType(layoutItem),
-          children: childrens,
-        })
-      }
+  const resolveSchemaNode = (
+    node: ResolveFormSchemaNode,
+  ): Maybe<ResolveFormKitSchemaNode | ResolveFormKitSchemaNode[]> => {
+    if ('isLayout' in node && node.isLayout) {
+      return getLayoutType(node)
     }
-    // At the moment we support only one level of group/list fields, no recursive implementation.
-    else if (
-      (node as FormSchemaGroupOrList).type === 'group' ||
-      (node as FormSchemaGroupOrList).type === 'list'
-    ) {
-      const groupOrListField = node as FormSchemaGroupOrList
 
-      const childrenStaticSchema: FormKitSchemaComponent[] = []
-      groupOrListField.children.forEach((childField) => {
-        childrenStaticSchema.push(buildFormKitField(childField))
-        updateSchemaDataField(childField)
-      })
-
-      staticSchema.push({
+    if ('isGroupOrList' in node && node.isGroupOrList) {
+      return {
         $cmp: 'FormKit',
         props: {
-          type: groupOrListField.type,
-          name: groupOrListField.name,
-          key: groupOrListField.name,
+          type: node.type,
+          name: node.name,
+          key: node.name,
         },
-        children: childrenStaticSchema,
-      })
-    } else {
-      const field = node as FormSchemaField
-
-      staticSchema.push(buildFormKitField(field))
-      updateSchemaDataField(field)
+      }
     }
-  })
+
+    if ('object' in node && getFormFieldSchema && getFormFieldsFromScreen) {
+      if ('name' in node && node.name && !node.type) {
+        const resolvedField = getFormFieldSchema(node.name, node.object)
+
+        if (!resolvedField) return null
+
+        node = {
+          ...resolvedField,
+          ...node,
+        }
+      } else if ('screen' in node) {
+        const resolvedFields = getFormFieldsFromScreen(node.screen, node.object)
+
+        const formKitFields: ResolveFormKitSchemaNode[] = []
+        resolvedFields.forEach((screenField) => {
+          updateSchemaDataField(screenField)
+          formKitFields.push(buildFormKitField(screenField))
+        })
+
+        return formKitFields
+      }
+    }
+
+    updateSchemaDataField(node as FormSchemaField)
+    return buildFormKitField(node as FormSchemaField)
+  }
+
+  const resolveSchema = (schema: FormSchemaNode[] = props.schema) => {
+    return schema.reduce((resolvedSchema: FormKitSchemaNode[], node) => {
+      if (typeof node === 'string') {
+        resolvedSchema.push(node)
+        return resolvedSchema
+      }
+
+      const resolvedNode = resolveSchemaNode(node)
+
+      if (!resolvedNode) return resolvedSchema
+
+      if ('children' in node) {
+        const childrens = Array.isArray(node.children)
+          ? [...resolveSchema(node.children)]
+          : node.children
+
+        resolvedSchema.push({
+          ...(resolvedNode as Exclude<FormKitSchemaNode, string>),
+          children: childrens,
+        })
+        return resolvedSchema
+      }
+
+      if (Array.isArray(resolvedNode)) {
+        resolvedSchema.push(...resolvedNode)
+      } else {
+        resolvedSchema.push(resolvedNode)
+      }
+
+      return resolvedSchema
+    }, [])
+  }
+
+  staticSchema.value = resolveSchema()
 }
 
 const localChangeFields = computed(() => {
-  // if (props.formSchemaId) return coreWorkflowChanges.value
+  if (props.formUpdaterId) return formUpdaterChanges.value
 
   return props.changeFields
 })
@@ -349,28 +421,98 @@ const toggleInitialLoadingAnimation = () => {
   startLoadingAnimationTimeout()
 }
 
+const initializeFormSchema = () => {
+  buildStaticSchema()
+
+  if (props.formUpdaterId) {
+    toggleInitialLoadingAnimation()
+    new QueryHandler(
+      useFormUpdaterQuery({
+        formUpdaterId: props.formUpdaterId,
+        data: {},
+        meta: { formId },
+        relationFields,
+      }),
+    ).watchOnResult((queryResult) => {
+      if (queryResult?.formUpdater) {
+        formUpdaterChanges.value = queryResult.formUpdater
+        formSchemaInitialized.value = true
+        toggleInitialLoadingAnimation()
+      }
+    })
+  } else {
+    formSchemaInitialized.value = true
+  }
+}
+
 // TODO: maybe we should react on schema changes and rebuild the static schema with a new form-id and re-rendering of
 // the complete form (= use the formId as the key for the whole form to trigger the re-rendering of the component...)
-if (props.formSchemaId) {
-  // TODO: call the GraphQL-Query to fetch the schema.
-  toggleInitialLoadingAnimation()
-  new QueryHandler(
-    useFormSchemaQuery({ formSchemaId: props.formSchemaId }),
-  ).watchOnResult((queryResult) => {
-    if (queryResult?.formSchema) {
-      buildStaticSchema(queryResult.formSchema)
-      toggleInitialLoadingAnimation()
+// ...
+
+if (props.schema) {
+  if (props.useObjectAttributes) {
+    // TODO: rebuild schema, when object attributes
+    // was changed from outside(not such important,
+    // because we have currently the reload solution like in the desktop view).
+    if (props.objectAttributeSkippedFields) {
+      fixedAndSkippedFields.push(...props.objectAttributeSkippedFields)
     }
-  })
-} else if (props.schema) {
-  // localSchema.value = toRef(props, 'schema').value
-  buildStaticSchema(toRef(props, 'schema').value)
+
+    const objectAttributeObjects: EnumObjectManagerObjects[] = []
+
+    const detectObjectAttributeObjects = (
+      schema: FormSchemaNode[] = props.schema,
+    ) => {
+      schema.forEach((item) => {
+        if (typeof item === 'string') return
+
+        if ('object' in item) {
+          if ('name' in item && item.name && !item.type) {
+            fixedAndSkippedFields.push(item.name)
+          }
+
+          if (objectAttributeObjects.includes(item.object)) return
+
+          objectAttributeObjects.push(item.object)
+        }
+
+        if ('children' in item && Array.isArray(item.children)) {
+          detectObjectAttributeObjects(item.children)
+        }
+      })
+    }
+
+    detectObjectAttributeObjects()
+
+    // We need only to fetch object attributes, when there are used in the given schema.
+    if (objectAttributeObjects.length > 0) {
+      const { objectAttributesLoading } = useObjectAttributeLoadFormFields(
+        objectAttributeObjects,
+      )
+
+      watch(
+        objectAttributesLoading,
+        (loading) => {
+          if (!loading) initializeFormSchema()
+        },
+        { immediate: true },
+      )
+    } else {
+      initializeFormSchema()
+    }
+  } else {
+    initializeFormSchema()
+  }
 }
 </script>
 
 <template>
   <FormKit
-    v-if="Object.keys(schemaData.fields).length > 0 || $slots.default"
+    v-if="
+      hasSchema &&
+      ((formSchemaInitialized && Object.keys(schemaData.fields).length > 0) ||
+        $slots.default)
+    "
     type="form"
     :config="formConfig"
     :form-class="localClass"

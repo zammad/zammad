@@ -6,7 +6,10 @@ import Form from '@shared/components/Form/Form.vue'
 import CommonDialog from '@mobile/components/CommonDialog/CommonDialog.vue'
 import { CheckboxVariant } from '@shared/components/Form/fields/FieldCheckbox'
 import type { ConfidentTake } from '@shared/types/utils'
-import { OrganizationInput } from '@shared/graphql/types'
+import {
+  // EnumObjectManagerObjects,
+  type OrganizationInput,
+} from '@shared/graphql/types'
 import type { OrganizationQuery } from '@shared/graphql/types'
 import { closeDialog } from '@shared/composables/useDialog'
 import { MutationHandler } from '@shared/server/apollo/handler'
@@ -80,6 +83,26 @@ const schema = defineFormSchema([
       },
     ],
   },
+  // {
+  //   isLayout: true,
+  //   component: 'FormGroup',
+  //   children: [
+  //     {
+  //       screen: 'edit',
+  //       object: EnumObjectManagerObjects.Organization,
+  //     },
+  //   ],
+  // },
+  // {
+  //   isLayout: true,
+  //   component: 'FormGroup',
+  //   children: [
+  //     {
+  //       name: 'active',
+  //       object: EnumObjectManagerObjects.Organization,
+  //     },
+  //   ],
+  // },
 ])
 
 const updateQuery = new MutationHandler(useOrganizationUpdateMutation({}))
@@ -121,7 +144,9 @@ const saveOrganization = async (input: OrganizationInput) => {
       id="edit-organization"
       ref="formElement"
       class="w-full p-4"
+      :initial-values="props.organization"
       :schema="schema"
+      use-object-attributes
       @submit="saveOrganization($event as OrganizationInput)"
     />
   </CommonDialog>

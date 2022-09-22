@@ -8,8 +8,8 @@ import type {
 import { QueryHandler } from '@shared/server/apollo/handler'
 import { whenever } from '@vueuse/shared'
 import { computed, nextTick, ref } from 'vue'
+import { useUserObjectAttributesStore } from '@shared/entities/user/stores/objectAttributes'
 import { useUserLazyQuery } from '../graphql/queries/user.api'
-import { useUserObjectManagerAttributesStore } from '../stores/objectManagerAttributes'
 
 export const useUserDetail = () => {
   const internalId = ref(0)
@@ -35,10 +35,10 @@ export const useUserDetail = () => {
 
   const user = computed(() => userResult.value?.user)
 
-  const objectAttributesManager = useUserObjectManagerAttributesStore()
+  const objectAttributesManager = useUserObjectAttributesStore()
 
   const objectAttributes = computed(
-    () => objectAttributesManager.attributes || [],
+    () => objectAttributesManager.viewScreenAttributes || [],
   )
 
   const stopWatch = whenever(

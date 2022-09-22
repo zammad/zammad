@@ -2,60 +2,86 @@
 
 module Gql::Queries
   module ObjectManager
-    class FrontendAttributes < BaseQuery
+    class FrontendAttributes < BaseQueryWithPayload
 
       description 'Fetch meta information about object manager attributes for usage in frontend.'
 
       argument :object, Gql::Types::Enum::ObjectManagerObjectsType, description: 'Object name to fetch meta information for'
-      argument :filter_screen, String, required: false, description: 'Only return attributes that are available on a specific screen'
 
-      type [Gql::Types::ObjectManager::FrontendAttributeType], null: false
+      field :attributes, [Gql::Types::ObjectManager::FrontendAttributeType, { null: false }], null: false, description: 'Attributes to be shown in the frontend'
+      field :screens, [Gql::Types::ObjectManager::ScreenAttributesType, { null: false }], null: false, description: 'Screens with attributes to be shown in the frontend'
 
-      def resolve(object:, filter_screen: nil)
-        object_manager_attributes(object, filter_screen)
+      def resolve(object:)
+        object_manager_attributes(object)
       end
 
       private
 
-      def object_manager_attributes(object, filter_screen)
-        attributes = ::ObjectManager::Object.new(object).attributes(context.current_user, nil, data_only: false)
+      def object_manager_attributes(object)
+        object_attributes = ::ObjectManager::Object.new(object).attributes(context.current_user, nil, data_only: false)
 
-        result = []
-        attributes.each do |attribute|
-          oa = attribute.attribute
+        frontend_attributes = []
+        frontend_screens = {}
 
-          if filter_screen.present? && !apply_screen_filter?(attribute.screens, filter_screen)
-            next
-          end
+        object_attributes.each do |element|
+          next if !check_attribute_frontend_screens(frontend_screens, element.screens, element.attribute.name)
 
-          result << {
-            name:        oa[:name],
-            display:     oa[:display],
-            data_type:   oa[:data_type],
-            data_option: oa[:data_option],
-          }
+          frontend_attributes << frontend_attribute_fields(element)
         end
 
-        result
+        {
+          attributes: frontend_attributes,
+          screens:    frontend_screens.map { |screen, attributes| { name: screen, attributes: attributes } }
+        }
       end
 
-      def apply_screen_filter?(screens, filter_screen)
-        return false if filter_screen.blank?
-        return false if screens.blank?
+      def frontend_attribute_fields(element)
+        attribute = element.attribute
 
-        relevant_for_screen?(screens, filter_screen)
+        {
+          name:        attribute[:name],
+          display:     attribute[:display],
+          data_type:   attribute[:data_type],
+          data_option: attribute[:data_option],
+          screens:     element.screens,
+        }
       end
 
-      def relevant_for_screen?(screens, filter_screen)
-        return false if !screens.key?(filter_screen)
+      def check_attribute_frontend_screens(frontend_screens, screens, name)
+        attribute_shown = false
 
-        current_screen = screens[filter_screen]
-        return false if current_screen.empty?
+        screens.each do |screen, screen_data|
+          frontend_screens[screen] ||= []
 
-        shown = current_screen['shown']
-        return true if shown.nil? || shown == true
+          next if !apply_screen_filter?(screen, screen_data)
+
+          frontend_screens[screen] << name
+
+          attribute_shown = true
+        end
+
+        attribute_shown
+      end
+
+      def apply_screen_filter?(screen, screen_data)
+        return false if screen_data.empty?
+
+        shown = screen_data['shown']
+        return true if shown.nil? || shown == true || core_workflow_screen?(screen)
 
         false
+      end
+
+      def core_workflow_screen?(screen)
+        core_workflow? && object_class.core_workflow_screens.include?(screen)
+      end
+
+      def core_workflow?
+        @core_workflow ||= object_class.included_modules.include?(ChecksCoreWorkflow)
+      end
+
+      def object_class
+        @object_class = "::#{context[:current_arguments][:object]}".constantize
       end
     end
   end

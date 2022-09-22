@@ -7,8 +7,16 @@ import type { FormKitNode } from '@formkit/core'
 import { within } from '@testing-library/vue'
 import type { ExtendedRenderResult } from '@tests/support/components'
 import { renderComponent } from '@tests/support/components'
-import { waitForNextTick } from '@tests/support/utils'
+import { waitForNextTick, waitUntil } from '@tests/support/utils'
 import { nextTick, onMounted, ref } from 'vue'
+import {
+  EnumFormUpdaterId,
+  EnumObjectManagerObjects,
+} from '@shared/graphql/types'
+import { mockGraphQLApi } from '@tests/support/mock-graphql-api'
+import managerAttributes from '@shared/entities/ticket/__tests__/mocks/managerAttributes.json'
+import { ObjectManagerFrontendAttributesDocument } from '@shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.api'
+import { FormUpdaterDocument } from '../graphql/queries/formUpdater.api'
 
 const wrapperParameters = {
   form: true,
@@ -261,6 +269,21 @@ describe('Form.vue - Edge Cases', () => {
                 },
                 children: 'Example Link',
               },
+              {
+                isLayout: true,
+                component: 'CommonLink',
+                props: {
+                  external: true,
+                  link: 'https://example.com',
+                },
+                children: [
+                  {
+                    type: 'text',
+                    name: 'additional',
+                    label: 'Additional',
+                  },
+                ],
+              },
             ],
           },
         ],
@@ -273,6 +296,7 @@ describe('Form.vue - Edge Cases', () => {
 
     expect(wrapper.getByText('Example Link')).toBeInTheDocument()
     expect(wrapper.getByLabelText('Title')).toBeInTheDocument()
+    expect(wrapper.getByLabelText('Additional')).toBeInTheDocument()
   })
 
   it('can use list/group fields in form schema', () => {
@@ -306,8 +330,6 @@ describe('Form.vue - Edge Cases', () => {
     expect(view.getByLabelText('Street')).toBeInTheDocument()
     expect(view.getByLabelText('City')).toBeInTheDocument()
   })
-
-  // TODO: add test case for loading animation, when real query call is availabe (can then be mocked).
 
   it('can use fields slot instead of a form schema', () => {
     const wrapper = renderComponent(Form, {
@@ -366,6 +388,82 @@ describe('Form.vue - Edge Cases', () => {
         },
       )
     })
+  })
+})
+
+describe('Form.vue - with form updater and object attributes', () => {
+  it('render form schema with object attributes', async () => {
+    mockGraphQLApi(ObjectManagerFrontendAttributesDocument).willResolve({
+      objectManagerFrontendAttributes: managerAttributes,
+    })
+
+    const wrapper = renderComponent(Form, {
+      ...wrapperParameters,
+      props: {
+        useObjectAttributes: true,
+        schema: [
+          {
+            object: EnumObjectManagerObjects.Ticket,
+            name: 'title',
+          },
+          {
+            object: EnumObjectManagerObjects.Ticket,
+            screen: 'create_middle',
+          },
+        ],
+      },
+    })
+
+    await waitUntil(() => wrapper.queryByLabelText('Title'))
+
+    expect(wrapper.getByLabelText('Title')).toBeInTheDocument()
+    expect(wrapper.getByLabelText('Group')).toBeInTheDocument()
+    expect(wrapper.getByLabelText('State')).toBeInTheDocument()
+  })
+
+  it('render form schema and updates relation fields', async () => {
+    mockGraphQLApi(ObjectManagerFrontendAttributesDocument).willResolve({
+      objectManagerFrontendAttributes: managerAttributes,
+    })
+
+    mockGraphQLApi(FormUpdaterDocument).willResolve({
+      formUpdater: {
+        group_id: {
+          options: [
+            {
+              label: 'Users',
+              id: 1,
+            },
+          ],
+        },
+      },
+    })
+
+    const wrapper = renderComponent(Form, {
+      ...wrapperParameters,
+      props: {
+        useObjectAttributes: true,
+        schema: [
+          {
+            object: EnumObjectManagerObjects.Ticket,
+            name: 'title',
+          },
+          {
+            object: EnumObjectManagerObjects.Ticket,
+            screen: 'create_middle',
+          },
+        ],
+        formUpdaterId: EnumFormUpdaterId.FormUpdaterUpdaterTicketCreate,
+      },
+    })
+
+    await waitUntil(() => wrapper.queryByLabelText('Group'))
+
+    await wrapper.events.click(wrapper.getByLabelText('Group'))
+    const selectOptions = wrapper.getAllByRole('option')
+
+    expect(selectOptions).toHaveLength(1)
+    expect(selectOptions[0]).toHaveTextContent('Users')
   })
 })
 

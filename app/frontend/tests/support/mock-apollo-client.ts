@@ -34,6 +34,7 @@ const createMockClient = (handlers: ClientRequestHandler[]) => {
   if (!mockClient) {
     const cache = createCache(cacheInitializerModules)
     mockClient = createMockedClient({ cache })
+    provideApolloClient(mockClient)
   }
 
   handlers.forEach((clientRequestHandler) =>
@@ -42,8 +43,6 @@ const createMockClient = (handlers: ClientRequestHandler[]) => {
       clientRequestHandler.handler,
     ),
   )
-
-  provideApolloClient(mockClient)
 
   return mockClient
 }

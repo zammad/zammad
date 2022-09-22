@@ -40,6 +40,7 @@ const handleVariant = (node: FormKitNode) => {
         'translate-x-0 pointer-events-none inline-block h-[22px] w-[22px] rounded-full bg-white shadow-lg transform ring-0 transition ease-in-out duration-200 peer-checked:translate-x-4'
       props.inputClass = '$reset peer sr-only'
     } else {
+      props.wrapper = 'flex-row-reverse'
       props.inputClass =
         'h-4 w-4 border-[1.5px] border-white rounded-sm bg-transparent focus:border-blue focus:bg-blue-highlight checked:focus:color-blue checked:bg-blue checked:border-blue checked:focus:bg-blue checked:hover:bg-blue'
     }

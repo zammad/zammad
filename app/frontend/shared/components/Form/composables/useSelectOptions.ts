@@ -111,16 +111,16 @@ const useSelectOptions = (
     option: SelectOption | FlatSelectOption | AutoCompleteOption,
   ) => {
     if (context.value.multiple) {
-      const selectedValue = currentValue.value ?? []
-      const optionIndex = selectedValue.indexOf(option.value)
-      if (optionIndex !== -1) selectedValue.splice(optionIndex, 1)
-      else selectedValue.push(option.value)
-      selectedValue.sort(
+      const selectedValues = currentValue.value || []
+      const optionIndex = selectedValues.indexOf(option.value)
+      if (optionIndex !== -1) selectedValues.splice(optionIndex, 1)
+      else selectedValues.push(option.value)
+      selectedValues.sort(
         (a: string | number, b: string | number) =>
           sortedOptions.value.findIndex((option) => option.value === a) -
           sortedOptions.value.findIndex((option) => option.value === b),
       )
-      context.value.node.input(selectedValue)
+      context.value.node.input(selectedValues)
       return
     }
 

@@ -15,7 +15,7 @@ import setAuthorizationLink from './link/setAuthorization'
 import connectedStateLink from './link/connectedState'
 
 // Should subsequent HTTP calls be batched together?
-const enableBatchLink = false
+const enableBatchLink = true
 
 // Should queries and mutations be sent over ActionCable?
 const enableQueriesOverWebsocket = false
