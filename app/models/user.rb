@@ -23,7 +23,7 @@ class User < ApplicationModel
 
   include HasTransactionDispatcher
 
-  has_and_belongs_to_many :organizations,          after_add: :cache_update, after_remove: :cache_update, class_name: 'Organization'
+  has_and_belongs_to_many :organizations,          after_add: %i[cache_update create_organization_add_history], after_remove: %i[cache_update create_organization_remove_history], class_name: 'Organization'
   has_and_belongs_to_many :overviews,              dependent: :nullify
   has_many                :tokens,                 after_add: :cache_update, after_remove: :cache_update, dependent: :destroy
   has_many                :authorizations,         after_add: :cache_update, after_remove: :cache_update, dependent: :destroy
@@ -873,7 +873,27 @@ try to find correct name
     all_organization_ids.include?(organization_id)
   end
 
+  def create_organization_add_history(org)
+    organization_history_log(org, 'added')
+  end
+
+  def create_organization_remove_history(org)
+    organization_history_log(org, 'removed')
+  end
+
   private
+
+  def organization_history_log(org, type)
+    return if id.blank?
+
+    attributes = {
+      history_attribute: 'organization_ids',
+      id_to:             org.id,
+      value_to:          org.name
+    }
+
+    history_log(type, id, attributes)
+  end
 
   def check_name
     firstname&.strip!
@@ -979,7 +999,7 @@ try to find correct name
     return if organization_ids.blank?
     return if organization_id.present?
 
-    errors.add :base, __('Secondary organizations are only allowed when the primary organization is given.')
+    errors.add :base, __('Secondary organizations are only allowed when the primary organization is not given.')
   end
 
   def ensure_organizations_limit
