@@ -2,9 +2,11 @@
 
 class Generators::TranslationCatalog::Extractor::Base
 
+  attr_reader   :options
   attr_accessor :strings, :references
 
-  def initialize
+  def initialize(options:)
+    @options = options
     @strings = Set[]
     @references = {}
   end

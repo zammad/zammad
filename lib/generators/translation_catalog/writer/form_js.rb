@@ -4,11 +4,8 @@ class Generators::TranslationCatalog::Writer::FormJs < Generators::TranslationCa
 
   def write_catalog(strings, references)
 
-    # TEMPORARILY DISABLED
-    return
-
     # Only execute for Zammad, not for addons.
-    return if options['addon_path'] # rubocop:disable Lint/UnreachableCode
+    return if options['addon_path']
 
     # Do not run in CI.
     return if options['check']
@@ -22,6 +19,7 @@ class Generators::TranslationCatalog::Writer::FormJs < Generators::TranslationCa
   def write_file(file, content)
     target_file = Rails.root.join(file)
     before = target_file.read
+    puts "Writing form asset file #{target_file}." # rubocop:disable Rails/Output
     after = before.sub(%r{(// ZAMMAD_TRANSLATIONS_START\n).*(    // ZAMMAD_TRANSLATIONS_END)}m) do |_match|
       $1 + content + $2
     end
@@ -33,7 +31,7 @@ class Generators::TranslationCatalog::Writer::FormJs < Generators::TranslationCa
     map.keys.sort.each do |locale|
       string += "      '#{locale}': {\n"
       map[locale].keys.sort.each do |source|
-        string += "        '#{source.gsub(%r{'}, "\\\\'")}': '#{map[locale][source].gsub("'", "\\\\'")}',\n"
+        string += "        '#{escape_for_js(source)}': '#{escape_for_js(map[locale][source])}',\n"
       end
       string += "      },\n"
     end
@@ -69,7 +67,7 @@ class Generators::TranslationCatalog::Writer::FormJs < Generators::TranslationCa
       string_map[missing_source] = ''
     end
 
-    return if string_map.values.count(&:blank?) > 3
+    return if string_map.values.any?(&:blank?)
 
     string_map
   end

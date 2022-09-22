@@ -4,20 +4,16 @@ class Generators::TranslationCatalog::Writer::Chat < Generators::TranslationCata
 
   def write_catalog(strings, references)
 
-    # TEMPORARILY DISABLED
-    return
-
     # Only execute for Zammad, not for addons.
-    return if options['addon_path'] # rubocop:disable Lint/UnreachableCode
+    return if options['addon_path']
 
     # Do not run in CI.
     return if options['check']
 
     content = serialized(translation_map(strings, references))
-    ['public/assets/chat/chat.coffee'].each do |f|
+    ['public/assets/chat/chat.coffee', 'public/assets/chat/chat-no-jquery.coffee'].each do |f|
       write_file(f, content)
     end
-    # puts content
   end
 
   private
@@ -25,6 +21,7 @@ class Generators::TranslationCatalog::Writer::Chat < Generators::TranslationCata
   def write_file(file, content)
     target_file = Rails.root.join(file)
     before = target_file.read
+    puts "Writing chat asset file #{target_file}." # rubocop:disable Rails/Output
     after = before.sub(%r{(# ZAMMAD_TRANSLATIONS_START\n).*(    # ZAMMAD_TRANSLATIONS_END)}m) do |_match|
       $1 + content + $2
     end
@@ -36,7 +33,7 @@ class Generators::TranslationCatalog::Writer::Chat < Generators::TranslationCata
     map.keys.sort.each do |locale|
       string += "      '#{locale}':\n"
       map[locale].keys.sort.each do |source|
-        string += "        '#{source.gsub(%r{'}, "\\\\'")}': '#{map[locale][source].gsub("'", "\\\\'")}'\n"
+        string += "        '#{escape_for_js(source)}': '#{escape_for_js(map[locale][source])}'\n"
       end
     end
     string
@@ -71,7 +68,7 @@ class Generators::TranslationCatalog::Writer::Chat < Generators::TranslationCata
       string_map[missing_source] = ''
     end
 
-    return if string_map.values.count(&:blank?) > 5
+    return if string_map.values.count(&:blank?) > 3
 
     string_map
   end

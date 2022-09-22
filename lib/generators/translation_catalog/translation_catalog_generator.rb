@@ -31,7 +31,7 @@ class Generators::TranslationCatalog::TranslationCatalogGenerator < Rails::Gener
     # rubocop:disable Rails/Output
     print "Extracting strings from #{path}..."
     Generators::TranslationCatalog::Extractor::Base.descendants.each do |klass|
-      backend = klass.new
+      backend = klass.new(options: options)
       backend.extract_translatable_strings path
       strings.merge backend.strings
       references.merge!(backend.references) { |_key, oldval, newval| newval + oldval }

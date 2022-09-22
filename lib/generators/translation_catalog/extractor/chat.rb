@@ -24,6 +24,9 @@ class Generators::TranslationCatalog::Extractor::Chat < Generators::TranslationC
   end
 
   def find_files(base_path)
+    # Only execute for Zammad, not for addons.
+    return [] if options['addon_path']
+
     [
       "#{base_path}/public/assets/chat/chat.coffee",
       "#{base_path}/public/assets/chat/chat-no-jquery.coffee",

@@ -136,7 +136,7 @@ RSpec.describe 'Chat Handling', type: :system do
       using_session :customer do
 
         check_content('.zammad-chat .zammad-chat-agent-status', 'Offline')
-        check_content('.zammad-chat', %r{(Chat closed by|Chat beendet von)})
+        check_content('.zammad-chat', %r{(Chat closed by|Chat.*geschlossen)})
 
         click '.zammad-chat .js-chat-toggle .zammad-chat-header-icon'
 
@@ -212,7 +212,7 @@ RSpec.describe 'Chat Handling', type: :system do
 
         check_content('.zammad-chat', 'agent is asking')
 
-        check_content('.zammad-chat-modal-text', %r{(Since you didn't respond|Da Sie in den letzten)}, wait: 30)
+        check_content('.zammad-chat-modal-text', %r{(Since you didn't respond|Da Sie innerhalb der letzten)}, wait: 30)
       end
 
       # Test the restart of inactive chat.

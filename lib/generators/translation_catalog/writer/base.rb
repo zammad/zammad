@@ -24,4 +24,8 @@ class Generators::TranslationCatalog::Writer::Base
     File.basename options['addon_path']
   end
 
+  def escape_for_js(string)
+    string.gsub(%r{\\}) { '\\\\' }.gsub(%r{'}) { "\\'" }
+  end
+
 end

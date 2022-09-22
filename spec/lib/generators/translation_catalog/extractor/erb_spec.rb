@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Generators::TranslationCatalog::Extractor::Erb do
-  subject(:extractor_module) { described_class.new }
+  subject(:extractor_module) { described_class.new(options: {}) }
 
   let(:filename) { 'myfile' }
   let(:result_strings) do

@@ -23,6 +23,9 @@ class Generators::TranslationCatalog::Extractor::FormJs < Generators::Translatio
   end
 
   def find_files(base_path)
+    # Only execute for Zammad, not for addons.
+    return [] if options['addon_path']
+
     ["#{base_path}/public/assets/form/form.js"]
   end
 end
