@@ -35,6 +35,10 @@ class ExternalCredential::Microsoft365
   end
 
   def self.link_account(_request_token, params)
+
+    # return to admin interface if admin Consent is in process and user clicks on "Back to app"
+    return "#{Setting.get('http_type')}://#{Setting.get('fqdn')}/#channels/microsoft365/error/AADSTS65004" if params[:error_description].present? && params[:error_description].include?('AADSTS65004')
+
     external_credential = ExternalCredential.find_by(name: 'microsoft365')
     raise Exceptions::UnprocessableEntity, __('No Microsoft 365 app configured!') if !external_credential
     raise Exceptions::UnprocessableEntity, __('No code for session found!') if !params[:code]
@@ -168,7 +172,7 @@ class ExternalCredential::Microsoft365
       'scope'         => scope,
       'response_type' => 'code',
       'access_type'   => 'offline',
-      'prompt'        => 'consent',
+      'prompt'        => credentials[:prompt] || 'login',
     }
 
     tenant = credentials[:client_tenant].presence || 'common'

@@ -1,0 +1,5 @@
+<p>
+  <%- @T('The admin consent request was sent to your administrator.') %><br>
+  <%- @T('Please wait until you received the notification email of the approval.') %><br><br>
+  <%- @T('After approval, please re-connect your Microsoft365 mailbox.') %><br>
+</p>

@@ -1,7 +1,9 @@
 <h2><%- @T('SMS Accounts') %></h2>
 
 <% if _.isEmpty(@account_channels): %>
-  <p><%- @T('You have no configured account right now.') %></p>
+  <table class="table table--placeholder">
+    <thead><tr><th><%- @T('No Entries') %>
+  </table>
 <% else: %>
   <% for channel in @account_channels: %>
   <div class="action <% if channel.active isnt true: %>is-inactive<% end %>" data-id="<%- channel.id %>">
@@ -85,7 +87,9 @@
 
 <h2><%- @T('SMS Notification') %></h2>
 <% if _.isEmpty(@notification_channels): %>
-  <p><%- @T('You have no configured account right now.') %></p>
+  <table class="table table--placeholder">
+    <thead><tr><th><%- @T('No Entries') %>
+  </table>
   <a class="btn btn--success js-editNotification"><%- @T('New') %></a>
 <% else: %>
   <% for channel in @notification_channels: %>

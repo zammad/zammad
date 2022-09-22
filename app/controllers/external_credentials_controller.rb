@@ -32,7 +32,7 @@ class ExternalCredentialsController < ApplicationController
 
   def link_account
     provider = params[:provider].downcase
-    attributes = ExternalCredential.request_account_to_link(provider)
+    attributes = ExternalCredential.request_account_to_link(provider, params)
     session[:request_token] = attributes[:request_token]
     session[:channel_id] = params[:channel_id]
     redirect_to attributes[:authorize_url]
@@ -41,6 +41,8 @@ class ExternalCredentialsController < ApplicationController
   def callback
     provider = params[:provider].downcase
     channel = ExternalCredential.link_account(provider, session[:request_token], link_params)
+    return redirect_to(channel) if channel.instance_of?(String)
+
     session[:request_token] = nil
     session[:channel_id] = nil
     redirect_to app_url(provider, channel.id)
