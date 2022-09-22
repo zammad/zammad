@@ -97,7 +97,6 @@ class SecureMailing::SMIME::Outgoing < SecureMailing::Backend::Handler
   end
 
   def encrypt(data)
-    certificates = SMIMECertificate.for_recipipent_email_addresses!(@mail.to)
     expired_cert = certificates.detect(&:expired?)
     raise "Expired certificates for cert with #{expired_cert.not_before_at} to #{expired_cert.not_after_at}" if !@security[:encryption][:allow_expired] && expired_cert.present?
 
@@ -112,10 +111,11 @@ class SecureMailing::SMIME::Outgoing < SecureMailing::Backend::Handler
   end
 
   def log(action, status, error = nil)
+    recipients = %i[to cc].map { |recipient| @mail[recipient] }.join(' ').strip!
     HttpLog.create(
       direction:     'out',
       facility:      'S/MIME',
-      url:           "#{@mail[:from]} -> #{@mail[:to]}",
+      url:           "#{@mail[:from]} -> #{recipients}",
       status:        status,
       ip:            nil,
       request:       @security,
@@ -124,5 +124,18 @@ class SecureMailing::SMIME::Outgoing < SecureMailing::Backend::Handler
       created_by_id: 1,
       updated_by_id: 1,
     )
+  end
+
+  private
+
+  def certificates
+    certificates = []
+    %w[to cc].each do |recipient|
+      addresses = @mail.send(recipient)
+      next if !addresses
+
+      certificates += SMIMECertificate.for_recipipent_email_addresses!(addresses)
+    end
+    certificates
   end
 end

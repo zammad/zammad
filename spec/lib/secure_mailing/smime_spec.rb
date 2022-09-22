@@ -9,11 +9,13 @@ RSpec.describe SecureMailing::SMIME do
 
   let(:raw_body) { 'Some text' }
 
-  let(:system_email_address) { 'smime1@example.com' }
-  let(:customer_email_address) { 'smime2@example.com' }
+  let(:system_email_address)      { 'smime1@example.com' }
+  let(:customer_email_address)    { 'smime2@example.com' }
+  let(:cc_customer_email_address) { 'smime3@example.com' }
 
-  let(:sender_certificate_subject) { "/emailAddress=#{sender_email_address}/C=DE/ST=Berlin/L=Berlin/O=Example Security/OU=IT Department/CN=example.com" }
-  let(:recipient_certificate_subject) { "/emailAddress=#{recipient_email_address}/C=DE/ST=Berlin/L=Berlin/O=Example Security/OU=IT Department/CN=example.com" }
+  let(:sender_certificate_subject)       { "/emailAddress=#{sender_email_address}/C=DE/ST=Berlin/L=Berlin/O=Example Security/OU=IT Department/CN=example.com" }
+  let(:recipient_certificate_subject)    { "/emailAddress=#{recipient_email_address}/C=DE/ST=Berlin/L=Berlin/O=Example Security/OU=IT Department/CN=example.com" }
+  let(:cc_recipient_certificate_subject) { "/emailAddress=#{cc_recipient_email_address}/C=DE/ST=Berlin/L=Berlin/O=Example Security/OU=IT Department/CN=example.com" }
 
   let(:expired_email_address) { 'expiredsmime1@example.com' }
 
@@ -25,6 +27,7 @@ RSpec.describe SecureMailing::SMIME do
     Channel::EmailBuild.build(
       from:         sender_email_address,
       to:           recipient_email_address,
+      cc:           cc_recipient_email_address,
       body:         raw_body,
       content_type: content_type,
       security:     security_preferences
@@ -45,8 +48,9 @@ RSpec.describe SecureMailing::SMIME do
       end
     end
 
-    let(:sender_email_address)    { system_email_address }
-    let(:recipient_email_address) { customer_email_address }
+    let(:sender_email_address)       { system_email_address }
+    let(:recipient_email_address)    { customer_email_address }
+    let(:cc_recipient_email_address) { cc_customer_email_address }
 
     context 'without security' do
       let(:security_preferences) do
@@ -180,6 +184,7 @@ RSpec.describe SecureMailing::SMIME do
       context 'public key present' do
         before do
           create(:smime_certificate, fixture: recipient_email_address)
+          create(:smime_certificate, fixture: cc_recipient_email_address)
         end
 
         it 'builds mail' do
@@ -228,8 +233,9 @@ RSpec.describe SecureMailing::SMIME do
       end
     end
 
-    let(:sender_email_address) { customer_email_address }
-    let(:recipient_email_address) { system_email_address }
+    let(:sender_email_address)       { customer_email_address }
+    let(:recipient_email_address)    { system_email_address }
+    let(:cc_recipient_email_address) { cc_customer_email_address }
 
     context 'signature verification' do
 
@@ -513,8 +519,9 @@ RSpec.describe SecureMailing::SMIME do
         }
       end
 
-      let!(:sender_certificate) { create(:smime_certificate, :with_private, fixture: sender_email_address) }
-      let!(:recipient_certificate) { create(:smime_certificate, :with_private, fixture: recipient_email_address) }
+      let!(:sender_certificate)       { create(:smime_certificate, :with_private, fixture: sender_email_address) }
+      let!(:recipient_certificate)    { create(:smime_certificate, :with_private, fixture: recipient_email_address) }
+      let!(:cc_recipient_certificate) { create(:smime_certificate, :with_private, fixture: cc_recipient_email_address) }
 
       context 'private key present' do
 
@@ -562,6 +569,7 @@ RSpec.describe SecureMailing::SMIME do
 
           sender_certificate.destroy!
           recipient_certificate.destroy!
+          cc_recipient_certificate.destroy!
 
           SecureMailing.incoming(mail)
 
@@ -581,8 +589,9 @@ RSpec.describe SecureMailing::SMIME do
     end
 
     context 'with signature verification and decryption' do
-      let!(:sender_certificate) { create(:smime_certificate, :with_private, fixture: sender_email_address) }
-      let!(:recipient_certificate) { create(:smime_certificate, :with_private, fixture: recipient_email_address) }
+      let!(:sender_certificate)       { create(:smime_certificate, :with_private, fixture: sender_email_address) }
+      let!(:recipient_certificate)    { create(:smime_certificate, :with_private, fixture: recipient_email_address) }
+      let!(:cc_recipient_certificate) { create(:smime_certificate, :with_private, fixture: cc_recipient_email_address) }
 
       let(:security_preferences) do
         {
@@ -635,8 +644,9 @@ RSpec.describe SecureMailing::SMIME do
   end
 
   describe '.retry' do
-    let(:sender_email_address) { customer_email_address }
-    let(:recipient_email_address) { system_email_address }
+    let(:sender_email_address)       { customer_email_address }
+    let(:recipient_email_address)    { system_email_address }
+    let(:cc_recipient_email_address) { system_email_address }
 
     let(:security_preferences) do
       {
