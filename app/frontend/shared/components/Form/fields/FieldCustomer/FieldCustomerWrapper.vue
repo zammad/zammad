@@ -51,17 +51,3 @@ query autocompleteSearchCustomer($query: String!, $limit: Int) {
 <template>
   <FieldAutoCompleteInput :context="context" v-bind="$attrs" />
 </template>
-
-<style lang="scss">
-.field-customer {
-  &.floating-input:focus-within:not([data-populated]) {
-    label {
-      @apply translate-y-0 translate-x-0 scale-100 opacity-100;
-    }
-  }
-
-  .formkit-label {
-    @apply py-4;
-  }
-}
-</style>

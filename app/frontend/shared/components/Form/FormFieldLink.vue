@@ -9,11 +9,13 @@ defineProps<{
 </script>
 
 <template>
-  <div class="h-14 w-14 py-2 focus:outline-none">
+  <div
+    class="flex h-full items-center border-white/10 focus:outline-none ltr:border-l ltr:pl-1 rtl:border-r rtl:pr-1"
+  >
     <CommonLink
       v-if="link"
       :link="link"
-      class="flex h-full w-full items-center justify-center border-white/10 ltr:border-l ltr:pl-1 rtl:border-r rtl:pr-1"
+      class="flex h-10 w-12 items-center justify-center"
       open-in-new-tab
     >
       <CommonIcon name="external" size="small" />

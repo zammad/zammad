@@ -7,13 +7,13 @@ import {
   tel as inputTelDefinition,
   text as inputTextDefinition,
   time as inputTimeDefinition,
+  textInput,
 } from '@formkit/inputs'
 import initializeFieldDefinition from '@shared/form/core/initializeFieldDefinition'
 import type {
   FormFieldsTypeDefinition,
   FormFieldType,
 } from '@shared/types/form'
-import addLink from '@shared/form/features/addLink'
 
 const inputFieldDefinitionList: FormFieldsTypeDefinition = {
   text: inputTextDefinition,
@@ -27,9 +27,11 @@ const inputFieldDefinitionList: FormFieldsTypeDefinition = {
 const inputFields: FormFieldType[] = []
 
 Object.keys(inputFieldDefinitionList).forEach((inputType) => {
-  initializeFieldDefinition(inputFieldDefinitionList[inputType], {
-    features: [addLink],
-  })
+  initializeFieldDefinition(
+    inputFieldDefinitionList[inputType],
+    {},
+    { schema: textInput },
+  )
 
   inputFields.push({
     fieldType: inputType,

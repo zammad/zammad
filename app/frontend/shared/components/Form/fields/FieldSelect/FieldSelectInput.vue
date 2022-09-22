@@ -40,7 +40,7 @@ useSelectAutoselect(sortedOptions, toRef(props, 'context'))
   <div
     :class="{
       [context.classes.input]: true,
-      'min-h-[3.5rem] rounded-none bg-transparent': !isSizeSmall,
+      'rounded-none bg-transparent': !isSizeSmall,
       'w-auto rounded-lg bg-gray-600': isSizeSmall,
     }"
     class="flex h-auto focus-within:bg-blue-highlight focus-within:pt-0 formkit-populated:pt-0"
@@ -74,7 +74,7 @@ useSelectAutoselect(sortedOptions, toRef(props, 'context'))
       >
         <div
           :class="{
-            'grow translate-y-2': !isSizeSmall,
+            grow: !isSizeSmall,
           }"
           class="flex flex-wrap gap-1"
         >
@@ -132,29 +132,7 @@ useSelectAutoselect(sortedOptions, toRef(props, 'context'))
           @click.stop="clearValue"
           @keypress.space.prevent.stop="clearValue"
         />
-        <CommonIcon
-          :fixed-size="{ width: 16, height: 16 }"
-          class="shrink-0"
-          name="caret-down"
-          decorative
-        />
       </output>
     </CommonSelect>
   </div>
 </template>
-
-<style lang="scss">
-.field-select {
-  &.floating-input:focus-within:not([data-populated]) label {
-    @apply translate-y-0 translate-x-0 scale-100 opacity-100;
-  }
-
-  .formkit-label {
-    @apply py-4;
-  }
-
-  .formkit-inner {
-    @apply flex;
-  }
-}
-</style>

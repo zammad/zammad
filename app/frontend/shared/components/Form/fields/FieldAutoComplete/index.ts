@@ -25,6 +25,7 @@ const fieldDefinition = createInput(
   FieldAutoCompleteInput,
   [...autoCompleteProps, 'gqlQuery'],
   { features: [addLink] },
+  { addArrow: true },
 )
 
 export default {

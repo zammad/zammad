@@ -5,9 +5,12 @@ import addLink from '@shared/form/features/addLink'
 import FieldCustomerWrapper from './FieldCustomerWrapper.vue'
 import { autoCompleteProps } from '../FieldAutoComplete'
 
-const fieldDefinition = createInput(FieldCustomerWrapper, autoCompleteProps, {
-  features: [addLink],
-})
+const fieldDefinition = createInput(
+  FieldCustomerWrapper,
+  autoCompleteProps,
+  { features: [addLink] },
+  { addArrow: true },
+)
 
 export default {
   fieldType: 'customer',

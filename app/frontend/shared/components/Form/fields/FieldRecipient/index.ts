@@ -32,9 +32,14 @@ const setAutoCompleteBehavior = (node: FormKitNode) => {
   `
 }
 
-const fieldDefinition = createInput(FieldAutoCompleteInput, autoCompleteProps, {
-  features: [addLink, setAutoCompleteBehavior],
-})
+const fieldDefinition = createInput(
+  FieldAutoCompleteInput,
+  autoCompleteProps,
+  {
+    features: [addLink, setAutoCompleteBehavior],
+  },
+  { addArrow: true },
+)
 
 export default {
   fieldType: 'recipient',

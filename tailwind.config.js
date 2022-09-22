@@ -1,7 +1,6 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 const colors = require('tailwindcss/colors')
-const formsPlugin = require('@tailwindcss/forms')
 const lineClampPlugin = require('@tailwindcss/line-clamp')
 const formKitTailwind = require('@formkit/themes/tailwindcss')
 const plugin = require('tailwindcss/plugin')
@@ -90,7 +89,6 @@ module.exports = {
     extend: {},
   },
   plugins: [
-    formsPlugin,
     lineClampPlugin,
     formKitTailwind,
     plugin(({ addVariant }) => {

@@ -1,47 +1,13 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import type { FormThemeClasses, FormThemeExtension } from '@shared/types/form'
-
-type Classes = Record<string, string>
-
-export const addFloatingLabel = (classes: Classes = {}): Classes => {
-  const inputClass = classes.input || ''
-  const labelClass = classes.label || ''
-
-  return {
-    outer: `${classes.outer || ''} floating-input`,
-    wrapper: `${classes.wrapper || ''} formkit-invalid:bg-red/10 relative`,
-    inner: 'flex ltr:pr-3 rtl:pl-3',
-    input: `
-      ${inputClass}
-      w-full
-      ltr:pl-3 rtl:pr-3
-      h-14
-      text-sm
-      bg-transparent
-      border-none
-      focus:outline-none
-      placeholder:text-transparent
-      focus-within:pt-8
-      formkit-populated:pt-8
-    `,
-    label: `
-      ${labelClass}
-      absolute top-0 ltr:left-0 rtl:right-0
-      py-5 px-3 h-14
-      text-base
-      transition-all duration-100 ease-in-out origin-left
-      pointer-events-none
-      formkit-populated:-translate-y-3 formkit-populated:translate-x-6
-      formkit-populated:scale-75 formkit-populated:opacity-75
-      formkit-required:required
-      formkit-invalid:text-red
-    `,
-  }
-}
+import { addAbsoluteFloatingLabel } from './addAbsoluteFloatingLabel'
+import { addFloatingTextareaLabel } from './addFloatingTextareaLabel'
+import { addBlockFloatingLabel } from './addBlockFloatingLabel'
+import type { Classes } from './utils'
 
 export const addDateLabel = (classes: Classes = {}): Classes => {
-  const newClasses = addFloatingLabel(classes)
+  const newClasses = addAbsoluteFloatingLabel(classes)
   return {
     ...newClasses,
     inner: 'flex flex-col items-center',
@@ -60,59 +26,60 @@ export const addButtonVariants = (classes: Classes = {}): Classes => {
 const getCoreClasses: FormThemeExtension = (classes: FormThemeClasses) => {
   return {
     global: {},
-    text: addFloatingLabel(classes.text),
-    email: addFloatingLabel(classes.email),
-    number: addFloatingLabel(classes.number),
+    text: addAbsoluteFloatingLabel(classes.text),
+    email: addAbsoluteFloatingLabel(classes.email),
+    number: addAbsoluteFloatingLabel(classes.number),
     search: { inner: 'flex', wrapper: 'px-3' },
-    tel: addFloatingLabel(classes.tel),
-    time: addFloatingLabel(classes.time),
+    tel: addAbsoluteFloatingLabel(classes.tel),
+    time: addAbsoluteFloatingLabel(classes.time),
+    password: addAbsoluteFloatingLabel(classes.password),
     date: addDateLabel(classes.date),
     datetime: addDateLabel(classes.datetime),
-    textarea: addFloatingLabel({
+    textarea: addFloatingTextareaLabel({
       ...classes.textarea,
-      input: `${classes.textarea.input || ''} min-h-[100px]`,
+      label: `${classes.textarea?.label || ''} cursor-text`,
+      input: `${classes.textarea?.input || ''} min-h-[100px]`,
     }),
     checkbox: {
       wrapper: `${
         classes.checkbox?.wrapper || ''
-      } flex-row-reverse w-full justify-between h-14 ltr:pl-3 rtl:pr-3`,
+      } flex-row-reverse w-full justify-between h-14 ltr:pl-2 rtl:pr-2`,
     },
-    password: addFloatingLabel(classes.password),
-    tags: addFloatingLabel({
+    tags: addBlockFloatingLabel({
       ...(classes.tags || {}),
-      outer: `${classes.tags?.outer || ''} field-tags`,
+      outer: `${classes.tags?.outer || ''} field-tags min-h-[3.5rem]`,
     }),
-    select: addFloatingLabel({
+    select: addBlockFloatingLabel({
       ...(classes.select || {}),
-      outer: `${classes.select && classes.select.outer} field-select`,
+      outer: `${classes.select?.outer || ''} field-select min-h-[3.5rem]`,
     }),
-    treeselect: addFloatingLabel({
+    treeselect: addBlockFloatingLabel({
       ...(classes.treeselect || {}),
       outer: `${
-        classes.treeselect && classes.treeselect.outer
-      } field-treeselect`,
+        classes.treeselect?.outer || ''
+      } field-treeselect min-h-[3.5rem]`,
     }),
-    autocomplete: addFloatingLabel({
+    autocomplete: addBlockFloatingLabel({
       ...(classes.autocomplete || {}),
       outer: `${
-        classes.autocomplete && classes.autocomplete.outer
-      } field-autocomplete`,
+        classes.autocomplete?.outer || ''
+      } field-autocomplete min-h-[3.5rem]`,
     }),
-    customer: addFloatingLabel({
+    customer: addBlockFloatingLabel({
       ...(classes.customer || {}),
-      outer: `${classes.customer && classes.customer.outer} field-customer`,
+      outer: `${classes.customer?.outer || ''} field-customer min-h-[3.5rem]`,
     }),
-    organization: addFloatingLabel({
+    organization: addBlockFloatingLabel({
       ...(classes.organization || {}),
       outer: `${
-        classes.organization && classes.organization.outer
-      } field-organization`,
+        classes.organization?.outer || ''
+      } field-organization min-h-[3.5rem]`,
     }),
-    recipient: addFloatingLabel({
+    recipient: addBlockFloatingLabel({
       ...(classes.recipient || {}),
       outer: `${
-        classes.recipient && classes.recipient.outer
-      } field-autocomplete`,
+        classes.recipient?.outer || ''
+      } field-autocomplete min-h-[3.5rem]`,
     }),
     button: addButtonVariants(classes.button),
     submit: addButtonVariants(classes.submit),

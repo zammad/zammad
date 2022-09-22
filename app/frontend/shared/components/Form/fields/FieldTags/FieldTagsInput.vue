@@ -2,7 +2,6 @@
 
 <script setup lang="ts">
 import { computed, toRef } from 'vue'
-import { useLocaleStore } from '@shared/stores/locale'
 import { useDialog } from '@shared/composables/useDialog'
 import useValue from '../../composables/useValue'
 import type { FieldTagsContext } from './types'
@@ -34,8 +33,6 @@ const showDialog = () => {
     context,
   })
 }
-
-const locale = useLocaleStore()
 </script>
 
 <template>
@@ -43,7 +40,7 @@ const locale = useLocaleStore()
     :class="{
       [context.classes.input]: true,
     }"
-    class="flex h-auto min-h-[3.5rem] rounded-none bg-transparent focus-within:bg-blue-highlight focus-within:pt-0 formkit-populated:pt-0"
+    class="flex h-auto rounded-none bg-transparent focus-within:bg-blue-highlight focus-within:pt-0 formkit-populated:pt-0"
     data-test-id="field-tags"
   >
     <output
@@ -58,7 +55,7 @@ const locale = useLocaleStore()
       @keypress.space="showDialog()"
       @blur="context.handlers.blur"
     >
-      <div class="flex grow translate-y-2 flex-wrap gap-1">
+      <div class="flex grow flex-wrap gap-1">
         <div
           v-for="tag of selectedTagsList"
           :key="tag"
@@ -67,26 +64,6 @@ const locale = useLocaleStore()
           {{ tag }}
         </div>
       </div>
-      <CommonIcon
-        :fixed-size="{ width: 24, height: 24 }"
-        class="shrink-0"
-        :name="`chevron-${locale.localeData?.dir === 'rtl' ? 'left' : 'right'}`"
-        decorative
-      />
     </output>
   </div>
 </template>
-
-<style lang="scss">
-.field-tags {
-  &.floating-input:focus-within:not([data-populated]) {
-    label {
-      @apply translate-y-0 translate-x-0 scale-100 opacity-100;
-    }
-  }
-
-  .formkit-label {
-    @apply py-4;
-  }
-}
-</style>

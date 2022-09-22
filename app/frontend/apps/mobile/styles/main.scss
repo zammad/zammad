@@ -35,9 +35,40 @@
   }
 }
 
+@layer base {
+  [type='text'],
+  [type='password'],
+  [type='email'],
+  [type='number'],
+  [type='url'],
+  [type='date'],
+  [type='datetime-local'],
+  [type='time'],
+  [type='search'],
+  [type='tel'],
+  select,
+  select[multiple] {
+    @apply p-2;
+  }
+
+  textarea {
+    @apply px-2 py-1;
+  }
+}
+
 @layer components {
+  .absolute-floating-input:focus-within label,
+  .absolute-floating-input.formkit-outer[data-populated] label {
+    @apply -translate-y-2 scale-75 opacity-75 ltr:translate-x-[2px] rtl:translate-x-6;
+  }
+
   .floating-input:focus-within label,
   .floating-input.formkit-outer[data-populated] label {
-    @apply -translate-y-3 scale-75 opacity-75 ltr:translate-x-1 rtl:translate-x-6;
+    @apply text-xs opacity-75;
+  }
+
+  .floating-textarea:focus-within label,
+  .floating-textarea.formkit-outer[data-populated] label {
+    @apply translate-y-0 text-xs opacity-75;
   }
 }

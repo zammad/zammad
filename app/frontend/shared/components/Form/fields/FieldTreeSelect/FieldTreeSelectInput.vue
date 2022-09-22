@@ -5,7 +5,6 @@ import { computed, nextTick, ref, toRef } from 'vue'
 import { i18n } from '@shared/i18n'
 import { useDialog } from '@shared/composables/useDialog'
 import CommonTicketStateIndicator from '@shared/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue'
-import { useLocaleStore } from '@shared/stores/locale'
 import useValue from '../../composables/useValue'
 import useSelectOptions from '../../composables/useSelectOptions'
 import useSelectAutoselect from '../../composables/useSelectAutoselect'
@@ -120,8 +119,6 @@ const toggleDialog = async (isVisible: boolean) => {
 }
 
 useSelectAutoselect(flatOptions, toRef(props, 'context'))
-
-const locale = useLocaleStore()
 </script>
 
 <template>
@@ -129,13 +126,13 @@ const locale = useLocaleStore()
     :class="{
       [context.classes.input]: true,
     }"
-    class="flex h-auto min-h-[3.5rem] rounded-none bg-transparent focus-within:bg-blue-highlight focus-within:pt-0 formkit-populated:pt-0"
+    class="flex h-auto rounded-none bg-transparent focus-within:bg-blue-highlight focus-within:pt-0 formkit-populated:pt-0"
     data-test-id="field-treeselect"
   >
     <output
       :id="context.id"
       :name="context.node.name"
-      class="flex grow cursor-pointer items-center focus:outline-none formkit-disabled:pointer-events-none ltr:pr-3 rtl:pl-3"
+      class="flex grow cursor-pointer items-center focus:outline-none formkit-disabled:pointer-events-none"
       :aria-disabled="context.disabled"
       :aria-label="i18n.t('Select…')"
       :tabindex="context.disabled ? '-1' : '0'"
@@ -145,7 +142,7 @@ const locale = useLocaleStore()
       @keypress.space="toggleDialog(true)"
       @blur="context.handlers.blur"
     >
-      <div class="flex grow translate-y-2 flex-wrap gap-1">
+      <div class="flex grow flex-wrap gap-1">
         <template v-if="hasValue && hasStatusProperty">
           <CommonTicketStateIndicator
             v-for="selectedValue in valueContainer"
@@ -185,26 +182,6 @@ const locale = useLocaleStore()
         @click.stop="clearValue"
         @keypress.space.prevent.stop="clearValue"
       />
-      <CommonIcon
-        :fixed-size="{ width: 24, height: 24 }"
-        class="shrink-0"
-        :name="`chevron-${locale.localeData?.dir === 'rtl' ? 'left' : 'right'}`"
-        decorative
-      />
     </output>
   </div>
 </template>
-
-<style lang="scss">
-.field-treeselect {
-  &.floating-input:focus-within:not([data-populated]) {
-    label {
-      @apply translate-y-0 translate-x-0 scale-100 opacity-100;
-    }
-  }
-
-  .formkit-label {
-    @apply py-4;
-  }
-}
-</style>

@@ -46,14 +46,18 @@ describe('initializeFieldDefinition', () => {
 
   it('do not add default props', () => {
     const definition = cloneDeep(inputTextDefinition)
-    initializeFieldDefinition(definition, {}, false)
+    initializeFieldDefinition(definition, {}, { addDefaultProps: false })
 
     expect(definition.props).toEqual([])
   })
 
   it('do not add default features', () => {
     const definition = cloneDeep(inputTextDefinition)
-    initializeFieldDefinition(definition, {}, true, false)
+    initializeFieldDefinition(
+      definition,
+      {},
+      { addDefaultProps: true, addDefaultFeatures: false },
+    )
 
     expect(definition.features).toEqual([])
   })

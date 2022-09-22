@@ -9,6 +9,7 @@ const fieldDefinition = createInput(
   FieldOrganizationWrapper,
   autoCompleteProps,
   { features: [addLink] },
+  { addArrow: true },
 )
 
 export default {

@@ -16,7 +16,6 @@ import {
 } from 'vue'
 import { useEventListener } from '@vueuse/core'
 import type { RouteLocationRaw } from 'vue-router'
-import FormFieldLink from '../../FormFieldLink.vue'
 import type { FormFieldContext } from '../../types/field'
 import useValue from '../../composables/useValue'
 
@@ -274,9 +273,6 @@ onBeforeUnmount(() => {
       @blur="context.handlers.blur"
       @focus="showPicker = true"
     />
-    <div>
-      <FormFieldLink v-if="context.link" :link="context.link" />
-    </div>
   </div>
   <div v-show="showPicker" class="mx-2 w-full">
     <div class="h-[1px] w-full bg-white/10"></div>

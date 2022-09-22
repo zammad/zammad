@@ -35,6 +35,9 @@ const fieldDefinition = createInput(
   {
     features: [hideLabelForSmallSelects, addLink],
   },
+  {
+    addArrow: true,
+  },
 )
 
 export default {

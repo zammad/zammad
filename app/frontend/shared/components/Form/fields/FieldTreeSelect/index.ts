@@ -16,6 +16,7 @@ const fieldDefinition = createInput(
     'sorting',
   ],
   { features: [addLink] },
+  { addArrow: true },
 )
 
 export default {

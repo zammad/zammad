@@ -8,6 +8,7 @@ const fieldDefinition = createInput(
   FieldTagsInput,
   ['noOptionsLabelTranslation', 'options', 'sorting', 'canCreate'],
   { features: [addLink] },
+  { addArrow: true },
 )
 
 export default {
