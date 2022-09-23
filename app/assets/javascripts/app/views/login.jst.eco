@@ -49,7 +49,7 @@
               <button class="btn btn--primary" type="submit"><%- @T('Sign in') %></button>
 
               <% if @C('user_lost_password'): %>
-                <a href="#password_reset" class="btn btn--text btn--secondary align-right"><%- @T('Forgot password?') %></a>
+                <a href="#password_reset" class="btn btn--text btn--secondary align-center"><%- @T('Forgot password?') %></a>
               <% end %>
             </div>
 
@@ -79,7 +79,7 @@
                 <button type="submit" class="auth-provider auth-provider--<%= auth_provider.class %>">
                   <%- @Icon("#{auth_provider.class}-button", 'provider-icon') %>
                   <span class="provider-name">
-                    <%- @T(auth_provider.name) %>
+                    <%- @C("#{auth_provider.config}_display_name") || @T(auth_provider.name) %>
                   </span>
                 </button>
               </form>

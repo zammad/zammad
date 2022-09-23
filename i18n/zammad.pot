@@ -3577,6 +3577,7 @@ msgid "Display in new tab"
 msgstr ""
 
 #: app/assets/javascripts/app/models/email_address.coffee
+#: db/seeds/settings.rb
 msgid "Display name"
 msgstr ""
 
@@ -8312,6 +8313,7 @@ msgid "S/MIME integration"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
+#: db/seeds/settings.rb
 msgid "SAML"
 msgstr ""
 

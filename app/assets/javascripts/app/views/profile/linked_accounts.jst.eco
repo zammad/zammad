@@ -6,7 +6,7 @@
 <div class="page-content">
   <ul>
     <% for key, provider of @auth_providers: %>
-      <li> <%- @T( provider.name ) %>
+      <li> <%- @C("#{provider.config}_display_name") || @T( provider.name ) %>
         <% if !@user['accounts'] || !@user['accounts'][key]: %>
           <form method="post" class="hidden js-addForm-<%= key %>" action="<%= provider.url %>">
             <input type="hidden" name="authenticity_token" value="<%= Spine.Ajax.defaults.headers['X-CSRF-Token'] %>">

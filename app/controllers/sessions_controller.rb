@@ -251,6 +251,12 @@ class SessionsController < ApplicationController
       config[setting.name] = value
     end
 
+    # NB: Explicitly include SAML display name config
+    #   This is needed because the setting is not frontend related,
+    #   but we still to display one of the options
+    # https://github.com/zammad/zammad/issues/4263
+    config['auth_saml_display_name'] = Setting.get('auth_saml_credentials')[:display_name]
+
     # remember if we can switch back to user
     if session[:switched_from_user_id]
       config['switch_back_to_possible'] = true

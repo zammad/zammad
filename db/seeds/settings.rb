@@ -1803,6 +1803,13 @@ Setting.create_if_not_exists(
   options:     {
     form: [
       {
+        display:     __('Display name'),
+        null:        true,
+        name:        'display_name',
+        tag:         'input',
+        placeholder: __('SAML'),
+      },
+      {
         display:     __('IDP SSO target URL'),
         null:        true,
         name:        'idp_sso_target_url',

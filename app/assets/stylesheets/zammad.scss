@@ -3250,8 +3250,16 @@ kbd {
 }
 
 .login {
-  .btn:not(.btn--text) {
-    min-width: calc(33.33% - 6px); // auth provider width
+  .btn {
+    width: 100%;
+  }
+
+  .btn--text {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: unset;
+    text-align: center;
   }
 }
 
@@ -3583,28 +3591,30 @@ ol.tabs li {
 .auth-providers {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  margin-bottom: -10px;
+  gap: 14px;
 
   > form {
-    width: calc(33.33% - 6px);
-    padding: 1%;
+    display: flex;
+    flex-grow: 1;
+    min-width: calc(100% / 2 - 8px);
   }
 }
 
 .auth-provider {
-  width: 100%;
   height: 40px;
   padding: 0 10px 0 7px;
-  margin-bottom: 10px;
   color: white !important;
   line-height: 23px;
   border-radius: 4px;
   display: flex;
+  flex-grow: 1;
+  justify-content: center;
   align-items: center;
   text-decoration: none;
   border: none;
   text-align: initial;
+  white-space: nowrap;
+  overflow: hidden;
 
   @extend %clickable;
 
@@ -3658,15 +3668,17 @@ ol.tabs li {
     background: #454545;
   }
 
-  .provider-name {
-    flex: 1;
-  }
-
   .provider-icon {
     width: 29px;
     height: 24px;
+    flex-shrink: 0;
 
     @include bidi-style(margin-right, 10px, margin-left, 0);
+  }
+
+  .provider-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 
@@ -3972,12 +3984,9 @@ ol.tabs li {
   @extend .clearfix;
 
   display: flex;
+  flex-direction: column;
   align-items: center;
   margin-top: 10px;
-
-  .btn + .btn:not(.align-right) {
-    @include bidi-style(margin-left, 20px, margin-right, 10px);
-  }
 }
 
 .form-buttons {

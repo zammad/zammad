@@ -4,14 +4,20 @@ require 'rails_helper'
 
 RSpec.describe 'Manage > Settings > Security', type: :system do
   describe 'configure third-party applications' do
-    shared_examples 'for third-party applications button in login page' do
-      context 'for third-party applications button in login page', authenticated_as: false do
+    shared_examples 'for third-party applications button in login page' do |**args|
+      context "for third-party applications button in login page #{args.empty? ? '' : args.to_s}", authenticated_as: false do
+        let(:display_name) { args[:display_name] || app_name }
+
+        before do
+          Setting.set("#{app_setting}_credentials", { display_name: args[:display_name] }) if args[:display_name]
+        end
+
         context 'when feature is on' do
           before { Setting.set(app_setting, true) }
 
           it 'has authentication button in login page' do
             visit 'login'
-            expect(page).to have_button(app_name)
+            expect(page).to have_button(display_name)
           end
         end
 
@@ -20,7 +26,7 @@ RSpec.describe 'Manage > Settings > Security', type: :system do
 
           it 'does not have authentication button in login page' do
             visit 'login'
-            expect(page).to have_no_button(app_name)
+            expect(page).to have_no_button(display_name)
           end
         end
       end
@@ -88,7 +94,7 @@ RSpec.describe 'Manage > Settings > Security', type: :system do
     end
 
     describe 'Authentication via Facebook' do
-      let(:app_name) { 'Facebook' }
+      let(:app_name)    { 'Facebook' }
       let(:app_setting) { 'auth_facebook' }
 
       include_examples 'for third-party applications button in login page'
@@ -146,12 +152,13 @@ RSpec.describe 'Manage > Settings > Security', type: :system do
       let(:app_setting) { 'auth_saml' }
 
       include_examples 'for third-party applications button in login page'
+      include_examples 'for third-party applications button in login page', display_name: 'Security Assertion Markup Language'
       include_examples 'for third-party applications settings'
       include_examples 'Display callback urls for third-party applications #3622'
     end
 
     describe 'Authentication via SSO' do
-      let(:app_name) { 'SSO' }
+      let(:app_name)    { 'SSO' }
       let(:app_setting) { 'auth_sso' }
 
       include_examples 'for third-party applications button in login page'

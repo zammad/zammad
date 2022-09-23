@@ -9,6 +9,7 @@ class Setting < ApplicationModel
   after_create  :reset_change_id, :reset_cache, :check_broadcast
   before_update :state_check
   after_update  :reset_change_id, :reset_cache, :check_broadcast
+  after_commit  :check_refresh
 
   attr_accessor :state
 
@@ -201,5 +202,15 @@ reload config settings
     )
     Gql::Subscriptions::ConfigUpdates.trigger(self)
     true
+  end
+
+  # NB: Force users to reload on SAML credentials config changes
+  #   This is needed because the setting is not frontend related,
+  #   so we can't rely on 'config_update_local' mechanism to kick in
+  # https://github.com/zammad/zammad/issues/4263
+  def check_refresh
+    return if ['auth_saml_credentials'].exclude?(name)
+
+    AppVersion.set(true, AppVersion::MSG_CONFIG_CHANGED)
   end
 end
