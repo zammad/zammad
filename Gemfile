@@ -167,7 +167,7 @@ gem "net-imap", require: false
 gem "net-pop", require: false
 gem "net-ftp", require: false
 # gem 'psych', '>= 4.0' # fail
-gem "psych", "< 4.0"  # pass
+gem "psych", "< 4.0" # pass
 
 # Gems used only for develop/test and not required
 # in production environments by default.
