@@ -1,228 +1,236 @@
 # Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-source 'https://rubygems.org'
+source "https://rubygems.org"
 
 # core - base
-ruby '3.0.4'
-gem 'rails', '~> 6.1.0'
+ruby "3.1.2" # ruby '3.0.4'
+gem "rails", "~> 6.1.0"
 
 # core - rails additions
-gem 'activerecord-import'
-gem 'activerecord-session_store'
-gem 'bootsnap', require: false
-gem 'composite_primary_keys'
-gem 'json'
+gem "activerecord-import"
+gem "activerecord-session_store"
+gem "bootsnap", require: false
+gem "composite_primary_keys"
+gem "json"
 
 # core - application servers
-gem 'puma', '~> 4', group: :puma
-gem 'unicorn', group: :unicorn
+gem "puma", "~> 4", group: :puma
+gem "unicorn", group: :unicorn
 
 # core - supported ORMs
-gem 'activerecord-nulldb-adapter', group: :nulldb
-gem 'mysql2', group: :mysql
-gem 'pg', '~> 1.2.0', group: :postgres
+gem "activerecord-nulldb-adapter", group: :nulldb
+gem "mysql2", group: :mysql
+gem "pg", "~> 1.2.0", group: :postgres
 
 # core - asynchrous task execution
-gem 'daemons'
-gem 'delayed_job_active_record'
+gem "daemons"
+gem "delayed_job_active_record"
 
 # core - command line interface
-gem 'thor'
+gem "thor"
 
 # core - websocket
-gem 'em-websocket'
-gem 'eventmachine'
-gem 'hiredis', require: false
+gem "em-websocket"
+gem "eventmachine"
+gem "hiredis", require: false
 # version restriction from actioncable-6.1.6.1/lib/action_cable/subscription_adapter/redis.rb
 #   - check after rails update
-gem 'redis', '>= 3', '< 5', require: false
+gem "redis", ">= 3", "< 5", require: false
 
 # core - password security
-gem 'argon2'
+gem "argon2"
 
 # core - state machine
-gem 'aasm'
+gem "aasm"
 
 # core - authorization
-gem 'pundit'
+gem "pundit"
 
 # core - graphql handling
-gem 'graphql'
-gem 'graphql-batch', require: 'graphql/batch'
+gem "graphql"
+gem "graphql-batch", require: "graphql/batch"
 
 # core - image processing
-gem 'rszr'
+gem "rszr"
 
 # performance - Memcached
-gem 'dalli', require: false
+gem "dalli", require: false
 
 # Vite is required by the web server
-gem 'vite_rails'
+gem "vite_rails"
 
 # Only load gems for asset compilation if they are needed to avoid
 #   having unneeded runtime dependencies like NodeJS.
 group :assets do
   # asset handling - javascript execution for e.g. linux
-  gem 'execjs', require: false
+  gem "execjs", require: false
 
   # asset handling - coffee-script
-  gem 'coffee-rails', require: false
+  gem "coffee-rails", require: false
 
   # asset handling - frontend templating
-  gem 'eco', require: false
+  gem "eco", require: false
 
   # asset handling - SASS
-  gem 'sassc-rails', require: false
+  gem "sassc-rails", require: false
 
   # asset handling - pipeline
-  gem 'sprockets', '~> 3.7.2', require: false
-  gem 'terser', require: false
+  gem "sprockets", "~> 3.7.2", require: false
+  gem "terser", require: false
 
-  gem 'autoprefixer-rails', require: false
+  gem "autoprefixer-rails", require: false
 end
 
 # authentication - provider
-gem 'doorkeeper'
-gem 'oauth2'
+gem "doorkeeper"
+gem "oauth2"
 
 # authentication - third party
-gem 'omniauth-rails_csrf_protection'
+gem "omniauth-rails_csrf_protection"
 
 # authentication - third party providers
-gem 'omniauth-facebook'
-gem 'omniauth-github'
-gem 'omniauth-gitlab'
-gem 'omniauth-google-oauth2'
-gem 'omniauth-linkedin-oauth2'
-gem 'omniauth-microsoft-office365'
-gem 'omniauth-saml'
-gem 'omniauth-twitter'
-gem 'omniauth-weibo-oauth2'
+gem "omniauth-facebook"
+gem "omniauth-github"
+gem "omniauth-gitlab"
+gem "omniauth-google-oauth2"
+gem "omniauth-linkedin-oauth2"
+gem "omniauth-microsoft-office365"
+gem "omniauth-saml"
+gem "omniauth-twitter"
+gem "omniauth-weibo-oauth2"
 
 # Rate limiting
-gem 'rack-attack'
+gem "rack-attack"
 
 # channels
-gem 'gmail_xoauth'
-gem 'koala'
-gem 'telegram-bot-ruby'
-gem 'twitter'
+gem "gmail_xoauth"
+gem "koala"
+gem "telegram-bot-ruby"
+gem "twitter"
 
 # channels - email additions
-gem 'email_address'
-gem 'htmlentities'
+gem "email_address"
+gem "htmlentities"
 # TODO: remove git information once v2.8 is released and works with Zammad
-gem 'mail', git: 'https://github.com/zammad-deps/mail', branch: '2-7-stable'
-gem 'mime-types'
-gem 'rchardet', '>= 1.8.0'
+gem "mail", git: "https://github.com/zammad-deps/mail", branch: "2-7-stable"
+gem "mime-types"
+gem "rchardet", ">= 1.8.0"
 
 # feature - business hours
-gem 'biz'
+gem "biz"
 
 # feature - signature diffing
-gem 'diffy'
+gem "diffy"
 
 # feature - excel output
-gem 'writeexcel', require: false
+gem "writeexcel", require: false
 
 # feature - csv import/export
-gem 'csv', require: false
+gem "csv", require: false
 
 # feature - device logging
-gem 'browser'
+gem "browser"
 
 # feature - iCal export
-gem 'icalendar'
-gem 'icalendar-recurrence'
+gem "icalendar"
+gem "icalendar-recurrence"
 
 # feature - phone number formatting
-gem 'telephone_number'
+gem "telephone_number"
 
 # feature - SMS
-gem 'messagebird-rest'
-gem 'twilio-ruby', require: false
+gem "messagebird-rest"
+gem "twilio-ruby", require: false
 
 # feature - ordering
-gem 'acts_as_list'
+gem "acts_as_list"
 
 # integrations
-gem 'clearbit', require: false
-gem 'net-ldap'
-gem 'slack-notifier', require: false
-gem 'zendesk_api', require: false
+gem "clearbit", require: false
+gem "net-ldap"
+gem "slack-notifier", require: false
+gem "zendesk_api", require: false
 
 # integrations - exchange
-gem 'autodiscover', git: 'https://github.com/zammad-deps/autodiscover', require: false
-gem 'viewpoint', require: false
+gem "autodiscover", git: "https://github.com/zammad-deps/autodiscover", require: false
+gem "viewpoint", require: false
 
 # integrations - S/MIME
-gem 'openssl'
+gem "openssl"
 
 # Translation sync
-gem 'PoParser', require: false
+gem "PoParser", require: false
+
+# Gems needed for Rails 6 running on Ruby 3.1.2
+gem "net-smtp", require: false
+gem "net-imap", require: false
+gem "net-pop", require: false
+gem "net-ftp", require: false
+# gem 'psych', '>= 4.0' # fail
+gem "psych", "< 4.0"  # pass
 
 # Gems used only for develop/test and not required
 # in production environments by default.
 group :development, :test do
 
   # watch file changes
-  gem 'listen'
+  gem "listen"
 
   # debugging
-  gem 'byebug'
-  gem 'pry-rails'
-  gem 'pry-remote'
-  gem 'pry-rescue'
-  gem 'pry-stack_explorer'
+  gem "byebug"
+  gem "pry-rails"
+  gem "pry-remote"
+  gem "pry-rescue"
+  gem "pry-stack_explorer"
 
   # test frameworks
-  gem 'minitest-profile', require: false
-  gem 'rails-controller-testing'
-  gem 'rspec-rails'
-  gem 'rspec-retry'
-  gem 'shoulda-matchers'
-  gem 'test-unit'
+  gem "minitest-profile", require: false
+  gem "rails-controller-testing"
+  gem "rspec-rails"
+  gem "rspec-retry"
+  gem "shoulda-matchers"
+  gem "test-unit"
 
   # for testing Pundit authorisation policies in RSpec
-  gem 'pundit-matchers'
+  gem "pundit-matchers"
 
   # UI tests w/ Selenium
-  gem 'capybara'
-  gem 'selenium-webdriver'
+  gem "capybara"
+  gem "selenium-webdriver"
 
   # code QA
-  gem 'brakeman', require: false
-  gem 'overcommit'
-  gem 'rubocop'
-  gem 'rubocop-faker'
-  gem 'rubocop-graphql'
-  gem 'rubocop-inflector'
-  gem 'rubocop-performance'
-  gem 'rubocop-rails'
-  gem 'rubocop-rspec'
+  gem "brakeman", require: false
+  gem "overcommit"
+  gem "rubocop"
+  gem "rubocop-faker"
+  gem "rubocop-graphql"
+  gem "rubocop-inflector"
+  gem "rubocop-performance"
+  gem "rubocop-rails"
+  gem "rubocop-rspec"
 
   # generate random test data
-  gem 'factory_bot_rails'
-  gem 'faker'
+  gem "factory_bot_rails"
+  gem "faker"
 
   # mock http calls
-  gem 'webmock'
+  gem "webmock"
 
   # record and replay TCP/HTTP transactions
-  gem 'tcr', require: false
-  gem 'vcr', require: false
+  gem "tcr", require: false
+  gem "vcr", require: false
 
   # handle deprecations in core and addons
-  gem 'deprecation_toolkit'
+  gem "deprecation_toolkit"
 
   # image comparison in tests
-  gem 'chunky_png'
+  gem "chunky_png"
 
   # refresh ENVs in CI environment
-  gem 'dotenv', require: false
+  gem "dotenv", require: false
 
   # Slack helper for testing
-  gem 'slack-ruby-client', require: false
+  gem "slack-ruby-client", require: false
 end
 
 # Want to extend Zammad with additional gems?
@@ -232,6 +240,6 @@ end
 # ZAMMAD DEVS:  Consult the internal wiki
 #               (or else risk pushing unwanted changes to Gemfile.lock!)
 #               https://git.zammad.com/zammad/zammad/wikis/Tips#user-content-customizing-the-gemfile
-Dir['Gemfile.local*'].each do |file|
+Dir["Gemfile.local*"].each do |file|
   eval_gemfile file
 end
