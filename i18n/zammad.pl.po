@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-08-25 19:53+0000\n"
-"Last-Translator: MBekspert <michal.bosak@ekspert.biz>\n"
+"PO-Revision-Date: 2022-09-25 12:30+0000\n"
+"Last-Translator: Marcin Miłek <marcin.milek@pwr.edu.pl>\n"
 "Language-Team: Polish <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/pl/>\n"
 "Language: pl\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.13\n"
+"X-Generator: Weblate 4.14\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -1436,7 +1436,7 @@ msgstr "Zanim wspomnisz o użytkowniku, wybierz grupę."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 msgid "Begin forwarded message"
-msgstr "Rozpocznij przekazywanie wiadomości"
+msgstr "Początek przekazywanej wiadomości"
 
 #: db/seeds/settings.rb
 msgid "Beginner"
