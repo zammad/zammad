@@ -406,7 +406,6 @@ returns
     if body
       request_data[:content] += "\n#{body}"
     end
-    request_data[:content] = request_data[:content].slice(0, 8000)
 
     # response
     response_data = {
@@ -428,7 +427,6 @@ returns
       if body
         response_data[:content] += "\n#{body}"
       end
-      response_data[:content] = response_data[:content].slice(0, 8000)
     end
 
     record = {

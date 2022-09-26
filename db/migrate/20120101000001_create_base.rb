@@ -718,11 +718,11 @@ class CreateBase < ActiveRecord::Migration[4.2]
       t.column :direction,            :string, limit: 20,    null: false
       t.column :facility,             :string, limit: 100,   null: false
       t.column :method,               :string, limit: 100,   null: false
-      t.column :url,                  :string, limit: 255,   null: false
+      t.column :url,                  :string, limit: 2000,  null: false
       t.column :status,               :string, limit: 20,    null: true
       t.column :ip,                   :string, limit: 50,    null: true
-      t.column :request,              :string, limit: 10_000, null: false
-      t.column :response,             :string, limit: 10_000, null: false
+      t.column :request,              :text,                 null: false
+      t.column :response,             :text,                 null: false
       t.column :updated_by_id,        :integer,              null: true
       t.column :created_by_id,        :integer,              null: true
       t.timestamps limit: 3, null: false
