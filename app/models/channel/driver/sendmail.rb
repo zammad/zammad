@@ -16,15 +16,19 @@ class Channel::Driver::Sendmail
     end
 
     mail = Channel::EmailBuild.build(attr, notification)
-    mail.delivery_method delivery_method
+    delivery_method(mail)
     mail.deliver
   end
 
   private
 
-  def delivery_method
-    return :test if Rails.env.test?
+  def delivery_method(mail)
+    if ENV['ZAMMAD_MAIL_TO_FILE'].present?
+      return mail.delivery_method :file, { location: Rails.root.join('tmp/mails'), extension: '.eml' }
+    end
 
-    :sendmail
+    return mail.delivery_method :test if Rails.env.test?
+
+    mail.delivery_method :sendmail
   end
 end
