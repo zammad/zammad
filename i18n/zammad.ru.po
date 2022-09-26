@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-09-20 12:05+0000\n"
+"PO-Revision-Date: 2022-09-26 12:39+0000\n"
 "Last-Translator: Martin Gruner <mg@zammad.com>\n"
 "Language-Team: Russian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/ru/>\n"
@@ -61,6 +61,195 @@ msgstr ""
 "хранения больших объемов данных). \"Файловая система\" хранит данные в "
 "файловой системе. Вы можете переключаться между модулями даже в системе, "
 "которая уже находится в рабочем состоянии, без какой-либо потери данных."
+
+#. This is the template file app/views/slack/ticket_create/en.md.erb in ERB/Markdown format.
+#. Please make sure to translate it to a valid corresponding output structure.
+#: app/views/slack/ticket_create/en.md.erb
+msgid ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Created by #{current_user.longname} at #{ticket."
+"updated_at}_\n"
+"* #{t('Group')}: #{ticket.group.name}\n"
+"* #{t('Owner')}: #{ticket.owner.fullname}\n"
+"* #{t('State')}: #{t(ticket.state.name)}\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
+msgstr ""
+
+#. This is the template file app/views/slack/ticket_escalation/en.md.erb in ERB/Markdown format.
+#. Please make sure to translate it to a valid corresponding output structure.
+#: app/views/slack/ticket_escalation/en.md.erb
+msgid ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Escalated at #{ticket.escalation_at}_\n"
+"A ticket (#{ticket.title}) from \"#{ticket.customer.longname}\" is escalated "
+"since \"#{ticket.escalation_at}\"!\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
+msgstr ""
+
+#. This is the template file app/views/slack/ticket_reminder_reached/en.md.erb in ERB/Markdown format.
+#. Please make sure to translate it to a valid corresponding output structure.
+#: app/views/slack/ticket_reminder_reached/en.md.erb
+msgid ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Reminder reached!_\n"
+"A ticket needs attention, reminder reached for (#{ticket.title}) with "
+"customer \"*#{ticket.customer.longname}*\".\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
+msgstr ""
+
+#. This is the template file app/views/slack/ticket_update/en.md.erb in ERB/Markdown format.
+#. Please make sure to translate it to a valid corresponding output structure.
+#: app/views/slack/ticket_update/en.md.erb
+msgid ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Updated by #{current_user.longname} at #{ticket."
+"updated_at}_\n"
+"<% if @objects[:changes].present? %>\n"
+"  <% @objects[:changes].each do |key, value| %>\n"
+"  * <%= t key %>: <%= h value[0] %> -> <%= h value[1] %>\n"
+"  <% end %>\n"
+"<% end %>\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
+msgstr ""
+
+#. This is the template file app/views/slack/ticket_escalation_warning/en.md.erb in ERB/Markdown format.
+#. Please make sure to translate it to a valid corresponding output structure.
+#: app/views/slack/ticket_escalation_warning/en.md.erb
+msgid ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Will escalate at #{ticket.escalation_at}_\n"
+"A ticket (#{ticket.title}) from \"#{ticket.customer.longname}\" will "
+"escalate at \"#{ticket.escalation_at}\"!\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
+msgstr ""
+
+#. This is the template file app/views/mailer/user_device_new_location/en.html.erb in ERB/HTML format.
+#. Please make sure to translate it to a valid corresponding output structure.
+#: app/views/mailer/user_device_new_location/en.html.erb
+msgid ""
+"#{config.product_name} signin detected from a new country\n"
+"\n"
+"<div>Hi #{user.firstname},</div>\n"
+"<br>\n"
+"<div>It looks like you used your account with an <b>known device but from a "
+"new country</b> on \"#{user_device.created_at}\":</div>\n"
+"<br>\n"
+"<div>\n"
+"Your device: #{user_device.name}<br>\n"
+"Your location (relative): #{user_device.location}<br>\n"
+"Your IP: #{user_device.ip}<br>\n"
+"</div>\n"
+"<br>\n"
+"<div>The country has been added to your list of known devices, which you can "
+"view here:</div>\n"
+"<br>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices"
+"\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<br>\n"
+"<div>If this wasn't you, remove the device, changing your account password, "
+"and contacting your administrator. Somebody might have gained unauthorized "
+"access to your account.</div>\n"
+"<br>\n"
+"<div>Your #{config.product_name} Team</div>\n"
+msgstr ""
+"#{config.product_name} обнаружен вход из новой страны\n"
+"\n"
+"<div>Здравствуйте #{user.firstname},</div>\n"
+"<br>\n"
+"<div>Похоже, вы использовали свою учетную запись на <b> известном "
+"устройстве, но из другой страны </b> в \"#{user_device.created_at}\":</div>\n"
+"<br>\n"
+"<div>\n"
+"Ваше устройство: #{user_device.name}<br>\n"
+"Ваша локация (относительная): #{user_device.location}<br>\n"
+"Ваш IP: #{user_device.ip}<br>\n"
+"</div>\n"
+"<br>\n"
+"<div>Страна добавлена в список известных устройств, который вы можете "
+"просмотреть здесь.:</div>\n"
+"<br>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices\""
+">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<br>\n"
+"<div>Если это не вы, удалите устройство, измените пароль учетной записи и "
+"обратитесь к администратору. Кто-то мог получить несанкционированный доступ "
+"к вашей учетной записи.</div>\n"
+"<br>\n"
+"<div>Команда #{config.product_name}</div>\n"
+
+#. This is the template file app/views/mailer/user_device_new/en.html.erb in ERB/HTML format.
+#. Please make sure to translate it to a valid corresponding output structure.
+#: app/views/mailer/user_device_new/en.html.erb
+msgid ""
+"#{config.product_name} signin detected from a new device\n"
+"\n"
+"<div>Hi #{user.firstname},</div>\n"
+"<br>\n"
+"<div>It looks like you signed into your account <b>using a new device</b> on "
+"\"#{user_device.created_at}\":</div>\n"
+"<br>\n"
+"<div>\n"
+"Your device: #{user_device.name}<br>\n"
+"Your location (relative): #{user_device.location}<br>\n"
+"Your IP: #{user_device.ip}<br>\n"
+"</div>\n"
+"<br>\n"
+"<div>Your device has been added to your list of known devices, which you can "
+"view here:</div>\n"
+"<br>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices"
+"\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<br>\n"
+"<div>If this wasn't you, remove the device, changing your account password, "
+"and contacting your administrator. Somebody might have gained unauthorized "
+"access to your account.</div>\n"
+"<br>\n"
+"<div>Your #{config.product_name} Team</div>\n"
+msgstr ""
+"#{config.product_name} вход обнаружен с нового устройства\n"
+"\n"
+"<div>Здравствуйте #{user.firstname},</div>\n"
+"<br>\n"
+"<div>Похоже, вы вошли в свою учетную запись <b> с нового устройства </b> в \""
+"#{user_device.created_at}\":</div>\n"
+"<br>\n"
+"<div>\n"
+"Ваше устройство: #{user_device.name}<br>\n"
+"Ваша локация (относительная): #{user_device.location}<br>\n"
+"Ваш IP: #{user_device.ip}<br>\n"
+"</div>\n"
+"<br>\n"
+"<div>Ваше устройство было добавлено в список известных устройств, который вы "
+"можете просмотреть здесь.:</div>\n"
+"<br>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices\""
+">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<br>\n"
+"<div>Если это не вы, удалите устройство, измените пароль учетной записи и "
+"обратитесь к администратору. Кто-то мог получить несанкционированный доступ "
+"к вашей учетной записи.</div>\n"
+"<br>\n"
+"<div>Команда #{config.product_name}</div>\n"
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
@@ -844,6 +1033,10 @@ msgstr "Адрес прокси-сервера для ресурсов HTTP и H
 msgid "Admin"
 msgstr "Администратор"
 
+#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
+msgid "Admin Consent"
+msgstr ""
+
 #: db/seeds/permissions.rb
 msgid "Admin Interface"
 msgstr "Интерфейс администратора"
@@ -853,6 +1046,31 @@ msgstr "Интерфейс администратора"
 #| msgid "Bind Password"
 msgid "Admin Password Login"
 msgstr "Пароль для подключения"
+
+#. This is the template file app/views/mailer/admin_password_auth/en.html.erb in ERB/HTML format.
+#. Please make sure to translate it to a valid corresponding output structure.
+#: app/views/mailer/admin_password_auth/en.html.erb
+msgid ""
+"Administration login to #{config.product_name}\n"
+"\n"
+"<div>Hi #{user.firstname},</div>\n"
+"<br>\n"
+"<div>We received a request for an administration login for your #{config."
+"product_name} account <b>#{user.login}</b>.</div>\n"
+"<br>\n"
+"<div>Please, click on the link below (or copy and paste the URL into your "
+"browser) to proceed:</div>\n"
+"<br>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#login/admin/{token."
+"name}\">#{config.http_type}://#{config.fqdn}/#login/admin/{token.name}</a></"
+"div>\n"
+"<br>\n"
+"<div>This link takes you to a page where you can log in.</div>\n"
+"<br>\n"
+"<div>If you don't want to log in, please ignore this message.</div>\n"
+"<br>\n"
+"<div>Your #{config.product_name} Team</div>\n"
+msgstr ""
 
 #: app/assets/javascripts/app/views/getting_started/admin.jst.eco
 msgid "Administrator Account"
@@ -865,6 +1083,10 @@ msgstr "Учетная запись администратора уже созд
 #: app/assets/javascripts/app/models/macro.coffee
 msgid "Advance to next ticket from overview"
 msgstr "Перейти к следующей заявке из представления"
+
+#: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
+msgid "After approval, please re-connect your Microsoft365 mailbox."
+msgstr ""
 
 #: app/assets/javascripts/app/views/package.jst.eco
 msgid ""
@@ -1008,6 +1230,25 @@ msgstr "Анализ записей с заданной конфигурацие
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "Analyzing structure…"
 msgstr "Анализ структуры…"
+
+#. This is the template file app/views/mailer/ticket_update_received_merge/en.html.erb in ERB/HTML format.
+#. Please make sure to translate it to a valid corresponding output structure.
+#: app/views/mailer/ticket_update_received_merge/en.html.erb
+msgid ""
+"Another ticket was merged into ticket (#{ticket.title})\n"
+"\n"
+"<div>Hi #{recipient.firstname},</div>\n"
+"<br>\n"
+"<div>\n"
+"Another ticket was merged into ticket (#{ticket.title}) by "
+"\"<b>#{current_user.longname}</b>\".\n"
+"</div>\n"
+"<br>\n"
+"<div>\n"
+"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\" "
+"target=\"zammad_app\">#{t('View this in Zammad')}</a>\n"
+"</div>\n"
+msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "Another ticket was merged into ticket |%s|"
@@ -2160,6 +2401,7 @@ msgstr "Копировать"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_description.coffee
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_error_modal.coffee
+#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee
 #: app/assets/javascripts/app/controllers/_settings/area_proxy.coffee
 #: app/assets/javascripts/app/controllers/widget/error_modal.coffee
@@ -2296,6 +2538,39 @@ msgstr "Настроить приложение"
 #: app/assets/javascripts/app/controllers/getting_started/base.coffee
 msgid "Configure Basic Settings"
 msgstr "Настройка основных параметров"
+
+#. This is the template file app/views/mailer/signup/en.html.erb in ERB/HTML format.
+#. Please make sure to translate it to a valid corresponding output structure.
+#: app/views/mailer/signup/en.html.erb
+msgid ""
+"Confirm your #{config.product_name} account, #{user.firstname} #{user."
+"lastname}\n"
+"\n"
+"<div>Hi #{user.firstname},</div>\n"
+"<br>\n"
+"<div>Confirm your email address to complete your #{config.product_name} "
+"account. It's easy, just click the link below.</div>\n"
+"<br>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#email_verify/#{token."
+"name}\">#{config.http_type}://#{config.fqdn}/#email_verify/#{token.name}</"
+"a></div>\n"
+"<br>\n"
+"<div>Your #{config.product_name} Team</div>\n"
+msgstr ""
+"Подтвердите вашу учетную запись #{config.product_name}, #{user.firstname} "
+"#{user.lastname}\n"
+"\n"
+"<div>Здравствуйте, #{user.firstname},</div>\n"
+"<br>\n"
+"<div>Подтвердите свой адрес электронной почты, чтобы завершить учетную "
+"запись #{config.product_name}. Это просто, просто нажмите на ссылку "
+"ниже.</div>\n"
+"<br>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#email_verify/#{token."
+"name}\">#{config.http_type}://#{config.fqdn}/#email_verify/#{token."
+"name}</a></div>\n"
+"<br>\n"
+"<div>Команда #{config.product_name}</div>\n"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Confirm/submit dialog"
@@ -5084,7 +5359,6 @@ msgstr "Забыли пароль?"
 
 #: app/assets/javascripts/app/views/login.jst.eco
 #: app/frontend/apps/mobile/modules/login/views/Login.vue
-#: app/models/form_schema/form/mobile/login.rb
 msgid "Forgot password?"
 msgstr "Забыли пароль?"
 
@@ -5096,6 +5370,12 @@ msgstr "Забыли свой пароль?"
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Form"
 msgstr "Форма"
+
+#: app/graphql/gql/queries/form_updater.rb
+#, fuzzy
+#| msgid "Locale could not be found."
+msgid "FormSchema could not be found."
+msgstr "Не удалось найти локализацию."
 
 #: app/assets/javascripts/app/models/object_manager_attribute.coffee
 msgid "Format"
@@ -6309,6 +6589,46 @@ msgstr "Неверный URL-адрес видео"
 msgid "Invitation sent!"
 msgstr "Приглашение отправлено!"
 
+#. This is the template file app/views/mailer/user_invite/en.html.erb in ERB/HTML format.
+#. Please make sure to translate it to a valid corresponding output structure.
+#: app/views/mailer/user_invite/en.html.erb
+msgid ""
+"Invitation to #{config.product_name} at #{config.fqdn}\n"
+"\n"
+"<div>Hi #{user.firstname},</div>\n"
+"<br>\n"
+"<div>I (#{current_user.firstname} #{current_user.lastname}) invite you to "
+"#{config.product_name} - our customer support / ticket system platform.</"
+"div>\n"
+"<br>\n"
+"<div>Click <a href=\"#{config.http_type}://#{config.fqdn}/"
+"#password_reset_verify/#{token.name}\">here</a> and set your password.</"
+"div>\n"
+"<br>\n"
+"<div>Enjoy,</div>\n"
+"<br>\n"
+"<div>#{current_user.firstname} #{current_user.lastname}</div>\n"
+"<br>\n"
+"<div>Your #{config.product_name} Team</div>\n"
+msgstr ""
+"Приглашение в #{config.product_name} на #{config.fqdn}\n"
+"\n"
+"<div>Здравствуйте #{user.firstname},</div>\n"
+"<br>\n"
+"<div>Я (#{current_user.firstname} #{current_user.lastname}) приглашаю вас в "
+"#{config.product_name} - наша платформа поддержки клиентов / "
+"тикет-системы.</div>\n"
+"<br>\n"
+"<div>Нажмите <a href=\"#{config.http_type}://#{config.fqdn}/#"
+"password_reset_verify/#{token.name}\">сюда</a> и установите свой "
+"пароль.</div>\n"
+"<br>\n"
+"<div>Наслаждайтесь,</div>\n"
+"<br>\n"
+"<div>#{current_user.firstname} #{current_user.lastname}</div>\n"
+"<br>\n"
+"<div>Команда #{config.product_name}</div>\n"
+
 #: app/assets/javascripts/app/views/getting_started/agent.jst.eco
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco
 msgid "Invite"
@@ -7409,6 +7729,64 @@ msgstr "Новые теги"
 msgid "New Ticket"
 msgstr "Новая заявка"
 
+#. This is the template file app/views/mailer/ticket_create/en.html.erb in ERB/HTML format.
+#. Please make sure to translate it to a valid corresponding output structure.
+#: app/views/mailer/ticket_create/en.html.erb
+msgid ""
+"New Ticket (#{ticket.title})\n"
+"\n"
+"<div>Hi #{recipient.firstname},</div>\n"
+"<br>\n"
+"<div>A new ticket (#{ticket.title}) has been created by \"<b>#{current_user."
+"longname}</b>\".</div>\n"
+"<br>\n"
+"<div>\n"
+"#{t('Group')}: #{ticket.group.name}<br>\n"
+"#{t('Owner')}: #{ticket.owner.fullname}<br>\n"
+"#{t('State')}: #{t(ticket.state.name)}<br>\n"
+"</div>\n"
+"<br>\n"
+"<% if @objects[:article] %>\n"
+"  <div>\n"
+"  #{t('Information')}:\n"
+"  <blockquote type=\"cite\">\n"
+"  #{article.body_as_html}\n"
+"  </blockquote>\n"
+"  </div>\n"
+"<% end %>\n"
+"<br>\n"
+"<div>\n"
+"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\" "
+"target=\"zammad_app\">#{t('View this in Zammad')}</a>\n"
+"</div>\n"
+msgstr ""
+"Новый тикет (#{ticket.title})\n"
+"\n"
+"<div>Здравствуйте #{recipient.firstname},</div>\n"
+"<br>\n"
+"<div>Новый тикет (#{ticket.title}) был создан \"<b>#{current_user."
+"longname}</b>\".</div>\n"
+"<br>\n"
+"<div>\n"
+"#{t('Group')}: #{ticket.group.name}<br>\n"
+"#{t('Owner')}: #{ticket.owner.fullname}<br>\n"
+"#{t('State')}: #{t(ticket.state.name)}<br>\n"
+"</div>\n"
+"<br>\n"
+"<% if @objects[:article] %>\n"
+"  <div>\n"
+"  #{t('Information')}:\n"
+"  <blockquote type=\"cite\">\n"
+"  #{article.body_as_html}\n"
+"  </blockquote>\n"
+"  </div>\n"
+"<% end %>\n"
+"<br>\n"
+"<div>\n"
+"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\" "
+"target=\"zammad_app\">#{t('View this in Zammad')}</a>\n"
+"</div>\n"
+
 #: app/assets/javascripts/app/controllers/trigger.coffee
 msgid "New Trigger"
 msgstr "Новый триггер"
@@ -7479,12 +7857,16 @@ msgstr "Нет"
 msgid "No %s configured."
 msgstr "%s не настроен(а/о)."
 
+#: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
+#: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 #: app/assets/javascripts/app/views/generic/admin/empty.jst.eco
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
+#: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_group.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
+#: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_organization.jst.eco
@@ -8227,7 +8609,6 @@ msgstr "Родитель"
 #: app/assets/javascripts/app/views/login.jst.eco
 #: app/frontend/apps/mobile/modules/login/views/Login.vue
 #: app/frontend/shared/components/Form/Form.stories.ts
-#: app/models/form_schema/form/mobile/login.rb
 #: db/seeds/object_manager_attributes.rb db/seeds/permissions.rb
 msgid "Password"
 msgstr "Пароль"
@@ -8463,6 +8844,10 @@ msgstr ""
 #: app/controllers/users_controller.rb
 msgid "Please supply your new password!"
 msgstr "Пожалуйста, введите свой новый пароль!"
+
+#: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
+msgid "Please wait until you received the notification email of the approval."
+msgstr ""
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 msgid "Please wait…"
@@ -8782,9 +9167,54 @@ msgstr "Обновить заявку"
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
 #: app/frontend/apps/mobile/modules/login/views/Login.vue
-#: app/models/form_schema/form/mobile/login.rb
 msgid "Remember me"
 msgstr "запомнить меня"
+
+#. This is the template file app/views/mailer/ticket_reminder_reached/en.html.erb in ERB/HTML format.
+#. Please make sure to translate it to a valid corresponding output structure.
+#: app/views/mailer/ticket_reminder_reached/en.html.erb
+msgid ""
+"Reminder reached (#{ticket.title})\n"
+"\n"
+"<div>Hi #{recipient.firstname},</div>\n"
+"<br>\n"
+"<div>A ticket needs attention, reminder reached for (#{ticket.title}) with "
+"customer \"<b>#{ticket.customer.longname}</b>\".</div>\n"
+"<br>\n"
+"<% if @objects[:article] %>\n"
+"  <div>\n"
+"  #{t('Information')}:\n"
+"  <blockquote type=\"cite\">\n"
+"  #{article.body_as_html}\n"
+"  </blockquote>\n"
+"  </div>\n"
+"<% end %>\n"
+"<br>\n"
+"<div>\n"
+"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\" "
+"target=\"zammad_app\">#{t('View this in Zammad')}</a>\n"
+"</div>\n"
+msgstr ""
+"Напоминание доставлено (#{ticket.title})\n"
+"\n"
+"<div>Здравствуйте #{recipient.firstname},</div>\n"
+"<br>\n"
+"<div>Тикет требует внимания, напоминание доставленно для (#{ticket.title}) с "
+"клиентом \"<b>#{ticket.customer.longname}</b>\".</div>\n"
+"<br>\n"
+"<% if @objects[:article] %>\n"
+"  <div>\n"
+"  #{t('Information')}:\n"
+"  <blockquote type=\"cite\">\n"
+"  #{article.body_as_html}\n"
+"  </blockquote>\n"
+"  </div>\n"
+"<% end %>\n"
+"<br>\n"
+"<div>\n"
+"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\" "
+"target=\"zammad_app\">#{t('View this in Zammad')}</a>\n"
+"</div>\n"
 
 #: app/assets/javascripts/app/views/generic/postmaster_match.jst.eco
 #: app/assets/javascripts/app/views/generic/postmaster_set_row.jst.eco
@@ -8886,6 +9316,12 @@ msgstr "Составление отчетов"
 msgid "Request"
 msgstr "Запрос"
 
+#: app/assets/javascripts/app/views/microsoft365/list.jst.eco
+#, fuzzy
+#| msgid "Requesting the Grant"
+msgid "Request Admin Consent"
+msgstr "Запрос подтверждения выдачи прав"
+
 #: db/seeds/object_manager_attributes.rb
 msgid "Request for Change"
 msgstr "Запрос на изменение"
@@ -8947,6 +9383,103 @@ msgstr "Сбросить изменения"
 #| msgid "Reset Password"
 msgid "Reset overview order"
 msgstr "Сброс пароля"
+
+#. This is the template file app/views/mailer/password_reset/en.html.erb in ERB/HTML format.
+#. Please make sure to translate it to a valid corresponding output structure.
+#: app/views/mailer/password_reset/en.html.erb
+msgid ""
+"Reset your #{config.product_name} password\n"
+"\n"
+"<div>Hi #{user.firstname},</div>\n"
+"<br>\n"
+"<div>We received a request to reset the password for your #{config."
+"product_name} account <b>#{user.login}</b>.</div>\n"
+"<br>\n"
+"<div>If you want to reset your password, click on the link below (or copy "
+"and paste the URL into your browser):</div>\n"
+"<br>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#password_reset_verify/"
+"#{token.name}\">#{config.http_type}://#{config.fqdn}/#password_reset_verify/"
+"#{token.name}</a></div>\n"
+"<br>\n"
+"<div>This link takes you to a page where you can change your password.</"
+"div>\n"
+"<br>\n"
+"<div>If you don't want to reset your password, please ignore this message. "
+"Your password will not be reset.</div>\n"
+"<br>\n"
+"<div>Your #{config.product_name} Team</div>\n"
+msgstr ""
+"Cброс пароля учетной записи #{config.product_name}\n"
+"\n"
+"<div>Здравствуйте #{user.firstname},</div>\n"
+"<br>\n"
+"<div>Мы получили запрос на сброс пароля для вашей учетной записи #{config."
+"product_name} <b>#{user.login}</b>.</div>\n"
+"<br>\n"
+"<div>Если вы хотите сбросить пароль, нажмите на ссылку ниже (или скопируйте "
+"и вставьте URL-адрес в свой браузер):</div>\n"
+"<br>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#password_reset_verify/"
+"#{token.name}\">#{config.http_type}://#{config.fqdn}/#password_reset_verify/"
+"#{token.name}</a></div>\n"
+"<br>\n"
+"<div>Эта ссылка приведет вас на страницу, где вы можете изменить свой "
+"пароль.</div>\n"
+"<br>\n"
+"<div>Если вы не хотите сбрасывать пароль, не обращайте внимания на это "
+"сообщение. Ваш пароль не будет сброшен.</div>\n"
+"<br>\n"
+"<div>Команда #{config.product_name}</div>\n"
+
+#. This is the template file app/views/mailer/signup_taken_reset/en.html.erb in ERB/HTML format.
+#. Please make sure to translate it to a valid corresponding output structure.
+#: app/views/mailer/signup_taken_reset/en.html.erb
+msgid ""
+"Reset your #{config.product_name} password\n"
+"\n"
+"<div>Hi #{user.firstname},</div>\n"
+"<br>\n"
+"<div>You or someone else tried to sign up with this email address. However, "
+"this email is already being used.</div>\n"
+"<br>\n"
+"<div>If you want to reset your password, click on the link below (or copy "
+"and paste the URL into your browser):</div>\n"
+"<br>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#password_reset_verify/"
+"#{token.name}\">#{config.http_type}://#{config.fqdn}/#password_reset_verify/"
+"#{token.name}</a></div>\n"
+"<br>\n"
+"<div>This link takes you to a page where you can change your password.</"
+"div>\n"
+"<br>\n"
+"<div>If you don't want to reset your password, please ignore this message. "
+"Your password will not be reset.</div>\n"
+"<br>\n"
+"<div>Your #{config.product_name} Team</div>\n"
+msgstr ""
+"Cброс пароля учетной записи #{config.product_name}\n"
+"\n"
+"<div>Здравствуйте #{user.firstname},</div>\n"
+"<br>\n"
+"<div>Вы или кто-то другой пытались зарегистрироваться с этим адресом "
+"электронной почты. Однако этот адрес электронной почты уже "
+"используется.</div>\n"
+"<br>\n"
+"<div>Если вы хотите сбросить пароль, нажмите на ссылку ниже (или скопируйте "
+"и вставьте URL-адрес в свой браузер):</div>\n"
+"<br>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#password_reset_verify/"
+"#{token.name}\">#{config.http_type}://#{config.fqdn}/#password_reset_verify/"
+"#{token.name}</a></div>\n"
+"<br>\n"
+"<div>Эта ссылка приведет вас на страницу, где вы можете изменить свой "
+"пароль.</div>\n"
+"<br>\n"
+"<div>Если вы не хотите сбрасывать пароль, не обращайте внимания на это "
+"сообщение. Ваш пароль не будет сброшен.</div>\n"
+"<br>\n"
+"<div>Комнда #{config.product_name}</div>\n"
 
 #: app/assets/javascripts/app/controllers/translation.coffee
 msgid "Resetting changes…"
@@ -9294,9 +9827,13 @@ msgid "Secondary organizations"
 msgstr "Вторичные организации"
 
 #: app/models/user.rb
+#, fuzzy
+#| msgid ""
+#| "Secondary organizations are only allowed when the primary organization is "
+#| "given."
 msgid ""
 "Secondary organizations are only allowed when the primary organization is "
-"given."
+"not given."
 msgstr ""
 "Вторичные организации разрешены только в том случае, если указана первичная "
 "организация."
@@ -10237,6 +10774,31 @@ msgstr "Проверить SMS-провайдера"
 msgid "Test Ticket"
 msgstr "Тестовая заявка"
 
+#. This is the template file app/views/mailer/test_ticket/en.html.erb in ERB/HTML format.
+#. Please make sure to translate it to a valid corresponding output structure.
+#: app/views/mailer/test_ticket/en.html.erb
+msgid ""
+"Test Ticket!\n"
+"\n"
+"<div>Dear #{agent.firstname},</div>\n"
+"<br>\n"
+"<div>This is a <b>test ticket</b>. I'm a customer and I need some help! :)</"
+"div>\n"
+"<br>\n"
+"<div>#{customer.fullname}</div>\n"
+"<br>\n"
+"<div>The Zammad Project</div>\n"
+msgstr ""
+"Тестовый тикет!\n"
+"\n"
+"<div>Уважаемый #{agent.firstname},</div>\n"
+"<br>\n"
+"<div>Это<b>тестовый тикет</b>. Я клиент, и мне нужна помощь! :)</div>\n"
+"<br>\n"
+"<div>#{customer.fullname}</div>\n"
+"<br>\n"
+"<div>Проект Zammad</div>\n"
+
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee
 msgid "Test message from Zammad"
 msgstr "Тестовое сообщение от Zammad"
@@ -10345,6 +10907,13 @@ msgstr "URL этой установки Zammad."
 #: app/controllers/reports_controller.rb
 msgid "The active reporting profile could not be found."
 msgstr "Не удалось найти активный профиль отчетности."
+
+#: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
+#, fuzzy
+#| msgid "The password could not be set. Please contact your administrator."
+msgid "The admin consent request was sent to your administrator."
+msgstr ""
+"Не удалось установить пароль. Пожалуйста, свяжитесь с вашим администратором."
 
 #: app/controllers/ticket_articles_controller.rb
 msgid "The article does not belong to the specified ticket."
@@ -11238,9 +11807,34 @@ msgstr "Заявка %s создана!"
 msgid "Ticket %s merged."
 msgstr "Заявка %s объединена."
 
+#. This is the template file app/views/mailer/ticket_update_merged_into/en.html.erb in ERB/HTML format.
+#. Please make sure to translate it to a valid corresponding output structure.
+#: app/views/mailer/ticket_update_merged_into/en.html.erb
+msgid ""
+"Ticket (#{ticket.title}) was merged into another ticket\n"
+"\n"
+"<div>Hi #{recipient.firstname},</div>\n"
+"<br>\n"
+"<div>\n"
+"Ticket (#{ticket.title}) was merged into another ticket by "
+"\"<b>#{current_user.longname}</b>\".\n"
+"</div>\n"
+"<br>\n"
+"<div>\n"
+"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\" "
+"target=\"zammad_app\">#{t('View this in Zammad')}</a>\n"
+"</div>\n"
+msgstr ""
+
 #: app/models/report.rb
 msgid "Ticket Count"
 msgstr "Количество билетов"
+
+#: app/frontend/apps/mobile/modules/ticket/routes.ts
+#, fuzzy
+#| msgid "Ticket %s created!"
+msgid "Ticket Create"
+msgstr "Заявка %s создана!"
 
 #: db/seeds/settings.rb
 msgid "Ticket Hook"
@@ -11331,6 +11925,52 @@ msgstr "Заявку просмотрели: %s"
 msgid "Ticket information"
 msgstr "Уведомления о заявках"
 
+#. This is the template file app/views/mailer/ticket_escalation/en.html.erb in ERB/HTML format.
+#. Please make sure to translate it to a valid corresponding output structure.
+#: app/views/mailer/ticket_escalation/en.html.erb
+msgid ""
+"Ticket is escalated (#{ticket.title})\n"
+"\n"
+"<div>Hi #{recipient.firstname},</div>\n"
+"<br>\n"
+"<div>A ticket (#{ticket.title}) from \"<b>#{ticket.customer.longname}</b>\" "
+"is escalated since \"#{ticket.escalation_at}\"!</div>\n"
+"<br>\n"
+"<% if @objects[:article] %>\n"
+"  <div>\n"
+"  #{t('Information')}:\n"
+"  <blockquote type=\"cite\">\n"
+"  #{article.body_as_html}\n"
+"  </blockquote>\n"
+"  </div>\n"
+"<% end %>\n"
+"<br>\n"
+"<div>\n"
+"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\" "
+"target=\"zammad_app\">#{t('View this in Zammad')}</a>\n"
+"</div>\n"
+msgstr ""
+"Тикет эскалирован (#{ticket.title})\n"
+"\n"
+"<div>Здравствуйте #{recipient.firstname},</div>\n"
+"<br>\n"
+"<div>Тикет (#{ticket.title}) от \"<b>#{ticket.customer.longname}</b>\" бы "
+"эскалирован с \"#{ticket.escalation_at}\"!</div>\n"
+"<br>\n"
+"<% if @objects[:article] %>\n"
+"  <div>\n"
+"  #{t('Information')}:\n"
+"  <blockquote type=\"cite\">\n"
+"  #{article.body_as_html}\n"
+"  </blockquote>\n"
+"  </div>\n"
+"<% end %>\n"
+"<br>\n"
+"<div>\n"
+"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\" "
+"target=\"zammad_app\">#{t('View this in Zammad')}</a>\n"
+"</div>\n"
+
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 msgid "Ticket reminder reached"
 msgstr "Напоминание о заявке исполнено"
@@ -11342,6 +11982,52 @@ msgstr "Заявка обновлена"
 #: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/TicketViewersDialog.vue
 msgid "Ticket viewers"
 msgstr "Заявку просматривали"
+
+#. This is the template file app/views/mailer/ticket_escalation_warning/en.html.erb in ERB/HTML format.
+#. Please make sure to translate it to a valid corresponding output structure.
+#: app/views/mailer/ticket_escalation_warning/en.html.erb
+msgid ""
+"Ticket will escalate (#{ticket.title})\n"
+"\n"
+"<div>Hi #{recipient.firstname},</div>\n"
+"<br>\n"
+"<div>A ticket (#{ticket.title}) from \"<b>#{ticket.customer.longname}</b>\" "
+"will escalate at \"#{ticket.escalation_at}\"!</div>\n"
+"<br>\n"
+"<% if @objects[:article] %>\n"
+"  <div>\n"
+"  #{t('Information')}:\n"
+"  <blockquote type=\"cite\">\n"
+"  #{article.body_as_html}\n"
+"  </blockquote>\n"
+"  </div>\n"
+"<% end %>\n"
+"<br>\n"
+"<div>\n"
+"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\" "
+"target=\"zammad_app\">#{t('View this in Zammad')}</a>\n"
+"</div>\n"
+msgstr ""
+"Тикет будет эскалирован (#{ticket.title})\n"
+"\n"
+"<div>Здравствуйте #{recipient.firstname},</div>\n"
+"<br>\n"
+"<div>Тикет (#{ticket.title}) от \"<b>#{ticket.customer.longname}</b>\" будет "
+"эскалирован с \"#{ticket.escalation_at}\"!</div>\n"
+"<br>\n"
+"<% if @objects[:article] %>\n"
+"  <div>\n"
+"  #{t('Information')}:\n"
+"  <blockquote type=\"cite\">\n"
+"  #{article.body_as_html}\n"
+"  </blockquote>\n"
+"  </div>\n"
+"<% end %>\n"
+"<br>\n"
+"<div>\n"
+"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\" "
+"target=\"zammad_app\">#{t('View this in Zammad')}</a>\n"
+"</div>\n"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "Ticket |%s| has escalated!"
@@ -11861,6 +12547,75 @@ msgstr "Обновлено"
 msgid "Updated At"
 msgstr "Обновлено в"
 
+#. This is the template file app/views/mailer/ticket_update/en.html.erb in ERB/HTML format.
+#. Please make sure to translate it to a valid corresponding output structure.
+#: app/views/mailer/ticket_update/en.html.erb
+msgid ""
+"Updated Ticket (#{ticket.title})\n"
+"\n"
+"<div>Hi #{recipient.firstname},</div>\n"
+"<br>\n"
+"<div>\n"
+"Ticket (#{ticket.title}) has been updated by \"<b>#{current_user.longname}</"
+"b>\".\n"
+"</div>\n"
+"<br>\n"
+"<% if @objects[:changes].present? %>\n"
+"  <div>\n"
+"  #{t('Changes')}:<br>\n"
+"  <% @objects[:changes].each do |key, value| %>\n"
+"    <%= t key %>: <%= h value[0] %> -&gt; <%= h value[1] %><br>\n"
+"  <% end %>\n"
+"  </div>\n"
+"<% end %>\n"
+"<br>\n"
+"<% if @objects[:article] %>\n"
+"  <div>\n"
+"  #{t('Information')}:\n"
+"  <blockquote type=\"cite\">\n"
+"  #{article.body_as_html}\n"
+"  </blockquote>\n"
+"  </div>\n"
+"<% end %>\n"
+"<br>\n"
+"<div>\n"
+"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}<% "
+"if @objects[:article] %>/#{article.id}<% end %>\" target=\"zammad_app"
+"\">#{t('View this in Zammad')}</a>\n"
+"</div>\n"
+msgstr ""
+"Тикет обновлен (#{ticket.title})\n"
+"\n"
+"<div>Здравствуйте #{recipient.firstname},</div>\n"
+"<br>\n"
+"<div>\n"
+"Тикет (#{ticket.title}) был обновлен \"<b>#{current_user.longname}</b>\".\n"
+"</div>\n"
+"<br>\n"
+"<% if @objects[:changes].present? %>\n"
+"  <div>\n"
+"  #{t('Changes')}:<br>\n"
+"  <% @objects[:changes].each do |key, value| %>\n"
+"    <%= t key %>: <%= h value[0] %> -&gt; <%= h value[1] %><br>\n"
+"  <% end %>\n"
+"  </div>\n"
+"<% end %>\n"
+"<br>\n"
+"<% if @objects[:article] %>\n"
+"  <div>\n"
+"  #{t('Information')}:\n"
+"  <blockquote type=\"cite\">\n"
+"  #{article.body_as_html}\n"
+"  </blockquote>\n"
+"  </div>\n"
+"<% end %>\n"
+"<br>\n"
+"<div>\n"
+"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}<% "
+"if @objects[:article] %>/#{article.id}<% end %>\" target=\"zammad_app\">#{t("
+"'View this in Zammad')}</a>\n"
+"</div>\n"
+
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee
 #: app/assets/javascripts/app/models/organization.coffee
 #: app/assets/javascripts/app/models/ticket.coffee
@@ -12072,7 +12827,6 @@ msgid "Username"
 msgstr "Логин"
 
 #: app/frontend/apps/mobile/modules/login/views/Login.vue
-#: app/models/form_schema/form/mobile/login.rb
 msgid "Username / Email"
 msgstr "Имя пользователя / Электронная почта"
 
@@ -12857,11 +13611,6 @@ msgstr "У вас есть эскалированные заявки"
 msgid "You have no configured %s right now."
 msgstr "У вас еще нет настроенного %s."
 
-#: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
-#: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
-msgid "You have no configured account right now."
-msgstr "У вас сейчас нет настроенной учетной записи."
-
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
 msgid "You have no tickets to display in this overview."
 msgstr "У вас нет заявок для отображения в этом представлении."
@@ -12931,6 +13680,34 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/embed_video_button.coffee
 msgid "YouTube or Vimeo address"
 msgstr "Адрес YouTube или Vimeo"
+
+#. This is the template file app/views/mailer/password_change/en.html.erb in ERB/HTML format.
+#. Please make sure to translate it to a valid corresponding output structure.
+#: app/views/mailer/password_change/en.html.erb
+msgid ""
+"Your #{config.product_name} password has been changed\n"
+"\n"
+"<p>Hi #{user.firstname},</p>\n"
+"<br>\n"
+"<p>The password for your #{config.product_name} account <b>#{user.login}</b> "
+"has been changed recently.</p>\n"
+"<br>\n"
+"<p>This activity is not known to you? If not, contact your system "
+"administrator.</p>\n"
+"<br>\n"
+"<p>Your #{config.product_name} Team</p>\n"
+msgstr ""
+"Пароль был изменен в #{config.product_name} \n"
+"\n"
+"<p>Здравствуйте #{user.firstname},</p>\n"
+"<br>\n"
+"<p>Пароль для вашей учетной записи #{config.product_name} <b>#{user.login}</"
+"b> недавно был изменен.</p>\n"
+"<br>\n"
+"<p>Эта деятельность вам не известна? Если нет, обратитесь к системному "
+"администратору..</p>\n"
+"<br>\n"
+"<p>Команда #{config.product_name}</p>\n"
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee
 msgid "Your API key."
@@ -13117,6 +13894,41 @@ msgstr "Zendesk"
 #: db/seeds/object_manager_attributes.rb
 msgid "Zip"
 msgstr "Индекс"
+
+#. This is the template file app/views/mailer/email_oversized/en.txt.erb in ERB/Text format.
+#. Please make sure to translate it to a valid corresponding output structure.
+#: app/views/mailer/email_oversized/en.txt.erb
+msgid ""
+"[undeliverable] Message too large\n"
+"Dear #{mail.from_display_name},\n"
+"\n"
+"Unfortunately your email titled \"#{mail.subject}\" could not be delivered "
+"to one or more recipients.\n"
+"\n"
+"Your message was #{mail.msg_size} MB but we only accept messages up to "
+"#{config.postmaster_max_size} MB.\n"
+"\n"
+"Please reduce the message size and try again. Thank you for your "
+"understanding.\n"
+"\n"
+"Regretfully,\n"
+"\n"
+"Postmaster of #{config.fqdn}\n"
+msgstr ""
+"[undeliverable] Сообщение слишком велико\n"
+"Уважаемый #{mail.from_display_name},\n"
+"\n"
+"К сожалению, ваше электронное письмо с названием \"#{mail.subject}\" не "
+"может быть доставлено одному или нескольким получателям.\n"
+"\n"
+"Размер вашего сообщения составляет #{mail.msg_size} МБ, но мы принимаем "
+"сообщения размером до #{config.postmaster_max_size} МБ.\n"
+"\n"
+"Уменьшите размер сообщения и попробуйте еще раз. Спасибо за Ваше понимание.\n"
+"\n"
+"С уважением,\n"
+"\n"
+"Почтмейстер #{config.fqdn}\n"
 
 #: db/seeds/settings.rb
 msgid "absolute - e. g. \"Monday 09:30\" or \"Tuesday 23. Feb 14:20\""
@@ -14087,6 +14899,9 @@ msgstr "…всей текстовой области"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Сегодня время ожидания"
+
+#~ msgid "You have no configured account right now."
+#~ msgstr "У вас сейчас нет настроенной учетной записи."
 
 #, fuzzy
 #~| msgid "Overviews"
