@@ -3,7 +3,7 @@
 class Generators::TranslationCatalog::Extractor::FormJs < Generators::TranslationCatalog::Extractor::Base
 
   # Extract some unmarked strings from form.js asset file.
-  def extract_from_string(string, filename) # rubocop:disable Metrics/AbcSize
+  def extract_from_string(string, filename)
     return if string.empty?
 
     # display: '...'
@@ -14,12 +14,8 @@ class Generators::TranslationCatalog::Extractor::FormJs < Generators::Translatio
       result = match[1].gsub(%r{\\'}, "'")
       next if match[0].eql?('"') && result.include?('#{')
 
-      strings << result
-      references[result] ||= Set[]
-      references[result] << filename
+      strings << Generators::TranslationCatalog::ExtractedString.new(string: result, references: [filename])
     end
-
-    validate_strings
   end
 
   def find_files(base_path)

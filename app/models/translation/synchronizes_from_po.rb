@@ -3,7 +3,31 @@
 module Translation::SynchronizesFromPo
   extend ActiveSupport::Concern
 
-  TRANSLATION_FILE_STRUCT = Struct.new(:translation, :translation_file, keyword_init: true).freeze
+  # Represents an entry to import to the Translation table.
+  class TranslationEntry
+    attr_reader :source, :translation, :translation_file
+
+    def self.create(locale, file, entry)
+      source = unescape_po(entry.msgid.to_s)
+
+      # Make sure to ignore fuzzy entries.
+      translation = entry.translated? ? unescape_po(entry.msgstr.to_s) : ''
+
+      # For 'en-*' locales, treat source as translation as well, to indicate that nothing is missing.
+      translation = source if translation.empty? && locale.start_with?('en')
+      new(source: source, translation: translation, translation_file: file)
+    end
+
+    def self.unescape_po(string)
+      string.gsub(%r{\\n}, "\n").gsub(%r{\\"}, '"').gsub(%r{\\\\}, '\\')
+    end
+
+    def initialize(source:, translation:, translation_file:)
+      @source = source
+      @translation = translation
+      @translation_file = translation_file
+    end
+  end
 
   class_methods do # rubocop:disable Metrics/BlockLength
 
@@ -67,27 +91,21 @@ module Translation::SynchronizesFromPo
       true
     end
 
-    def strings_for_locale(locale) # rubocop:disable Metrics/AbcSize
+    def strings_for_locale(locale)
       result = {}
       po_files_for_locale(locale).each do |file|
         require 'poparser' # Only load when it is actually used
         PoParser.parse_file(Rails.root.join(file)).entries.each do |entry|
 
-          source = unescape_po(entry.msgid.to_s)
+          # Some strings are not needed in the database.
+          next if entry.flag&.to_s&.include?('zammad-skip-translation-sync')
 
-          # Make sure to ignore fuzzy entries.
-          translation = entry.translated? ? unescape_po(entry.msgstr.to_s) : ''
-
-          # For 'en-*' locales, treat source as translation as well, to indicate that nothing is missing.
-          translation = source if translation.empty? && locale.start_with?('en')
-          result[source] = TRANSLATION_FILE_STRUCT.new(translation: translation, translation_file: file)
+          TranslationEntry.create(locale, file, entry).tap do |translation_entry|
+            result[translation_entry.source] = translation_entry
+          end
         end
       end
       result
-    end
-
-    def unescape_po(string)
-      string.gsub(%r{\\n}, "\n").gsub(%r{\\"}, '"').gsub(%r{\\\\}, '\\')
     end
 
     # Returns all po files for a locale with zammad.*.po as first entry,

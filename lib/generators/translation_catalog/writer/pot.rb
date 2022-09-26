@@ -2,9 +2,9 @@
 
 class Generators::TranslationCatalog::Writer::Pot < Generators::TranslationCatalog::Writer::Base
 
-  def write_catalog(strings, references)
+  def write(strings)
 
-    pot = build_pot_content(strings, references)
+    pot = build_pot_content(strings)
 
     target_filename = "#{target_path}.pot"
 
@@ -42,7 +42,7 @@ class Generators::TranslationCatalog::Writer::Pot < Generators::TranslationCatal
     #. - 'P' - Meridian indicator ('am' or 'pm')
   LEGEND
 
-  def build_pot_content(strings, references)
+  def build_pot_content(strings)
     # Don't set a POT-Creation-Date to avoid unneccessary changes in Git.
     pot = <<~POT_HEADER
       msgid ""
@@ -75,18 +75,23 @@ class Generators::TranslationCatalog::Writer::Pot < Generators::TranslationCatal
 
     FORMAT_STRINGS
 
-    strings.to_a.sort.each do |s|
-      references[s].to_a.sort.each do |ref|
-        pot += "#: #{ref}\n"
-      end
-      pot += <<~POT_ENTRY
-        msgid "#{escape_for_po(s)}"
-        msgstr ""
-
-      POT_ENTRY
-    end
+    strings.sorted_values.each { |s| pot += string_to_pot(s) }
 
     pot
+  end
+
+  def string_to_pot(string)
+    pot = ''
+    pot += string.comment.lines.map { |l| "#. #{l}" }.join if string.comment
+    string.references.to_a.sort.each do |ref|
+      pot += "#: #{ref}\n"
+    end
+    pot += "#, zammad-skip-translation-sync\n" if string.skip_translation_sync
+    pot += <<~POT_ENTRY
+      msgid "#{escape_for_po(string.string)}"
+      msgstr ""
+
+    POT_ENTRY
   end
 
   # Escape: \ -> \\, " -> \" and newline -> literal \n

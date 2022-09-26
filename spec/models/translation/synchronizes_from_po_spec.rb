@@ -89,7 +89,7 @@ RSpec.describe Translation, 'synchronizes_from_po' do
 
   context 'when unescaping po strings' do
     it 'does the right thing' do
-      expect(described_class.unescape_po('My complex \\n \\" string \\\\ with quotes')).to eq("My complex \n \" string \\ with quotes")
+      expect(Translation::TranslationEntry.unescape_po('My complex \\n \\" string \\\\ with quotes')).to eq("My complex \n \" string \\ with quotes")
     end
   end
 
@@ -190,6 +190,10 @@ RSpec.describe Translation, 'synchronizes_from_po' do
         msgid "custom-string-translated"
         msgstr "custom-string-übersetzt"
 
+        #, zammad-skip-translation-sync
+        msgid "custom-string-to-skip"
+        msgstr "custom-string-zu-überspringen"
+
         msgid "custom-string-too-long"
         msgstr "custom-string-too-long #{'a' * 3001}"
 
@@ -240,6 +244,10 @@ RSpec.describe Translation, 'synchronizes_from_po' do
 
     it 'ignores strings that are too long' do
       expect(described_class.find_source('de-de', 'custom-string-too-long')).to be_nil
+    end
+
+    it 'skips strings that are flagged for skipping' do
+      expect(described_class.find_source('de-de', 'custom-string-to-skip')).to be_nil
     end
   end
 

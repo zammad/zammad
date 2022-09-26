@@ -8,7 +8,7 @@ RSpec.describe Generators::TranslationCatalog::Extractor::Frontend do
   let(:filename) { 'myfile' }
   let(:result_strings) do
     extractor_module.extract_from_string(string, filename)
-    extractor_module.strings
+    extractor_module.strings.keys.sort
   end
 
   context 'with strings to be found' do
@@ -29,7 +29,7 @@ RSpec.describe Generators::TranslationCatalog::Extractor::Frontend do
     end
 
     it 'finds the correct strings' do
-      expect(result_strings).to eq(Set['__ String', 'String', 'Inline string', "Double quoted String with '", 'T', 'Ti', 'new tech stack', 'global t in tech stack', 'Indented string.'])
+      expect(result_strings).to eq(['__ String', 'String', 'Inline string', "Double quoted String with '", 'T', 'Ti', 'new tech stack', 'global t in tech stack', 'Indented string.'].sort)
     end
   end
 
@@ -44,7 +44,7 @@ RSpec.describe Generators::TranslationCatalog::Extractor::Frontend do
     end
 
     it 'does not find strings' do
-      expect(result_strings).to eq(Set[])
+      expect(result_strings).to eq([])
     end
   end
 
@@ -56,7 +56,7 @@ RSpec.describe Generators::TranslationCatalog::Extractor::Frontend do
     end
 
     it 'raises an error' do
-      expect { result_strings }.to raise_error(%r{Found a string that longer than than the allowed 3000 characters})
+      expect { result_strings }.to raise_error(%r{Found a string that is longer than the allowed 3000 characters})
     end
   end
 end

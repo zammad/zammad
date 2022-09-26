@@ -2,7 +2,7 @@
 
 class Generators::TranslationCatalog::Extractor::Frontend < Generators::TranslationCatalog::Extractor::Base
 
-  def extract_from_string(string, filename) # rubocop:disable Metrics/AbcSize
+  def extract_from_string(string, filename)
     return if string.empty?
 
     # @T / @Ti
@@ -30,12 +30,9 @@ class Generators::TranslationCatalog::Extractor::Frontend < Generators::Translat
         result = match[1].gsub(%r{\\'}, "'")
         next if match[0].eql?('"') && result.include?('#{')
 
-        strings << result
-        references[result] ||= Set[]
-        references[result] << filename
+        strings << Generators::TranslationCatalog::ExtractedString.new(string: result, references: [filename])
       end
     end
-    validate_strings
   end
 
   def find_files(base_path)

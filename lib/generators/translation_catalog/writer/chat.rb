@@ -2,7 +2,7 @@
 
 class Generators::TranslationCatalog::Writer::Chat < Generators::TranslationCatalog::Writer::Base
 
-  def write_catalog(strings, references)
+  def write(strings)
 
     # Only execute for Zammad, not for addons.
     return if options['addon_path']
@@ -10,7 +10,7 @@ class Generators::TranslationCatalog::Writer::Chat < Generators::TranslationCata
     # Do not run in CI.
     return if options['check']
 
-    content = serialized(translation_map(strings, references))
+    content = serialized(translation_map(strings))
     ['public/assets/chat/chat.coffee', 'public/assets/chat/chat-no-jquery.coffee'].each do |f|
       write_file(f, content)
     end
@@ -39,8 +39,8 @@ class Generators::TranslationCatalog::Writer::Chat < Generators::TranslationCata
     string
   end
 
-  def translation_map(_strings, references)
-    sources = source_strings(references)
+  def translation_map(strings)
+    sources = source_strings(strings)
     map = {}
     Locale.all.each do |locale|
       next if locale.locale.start_with?('en')
@@ -52,10 +52,10 @@ class Generators::TranslationCatalog::Writer::Chat < Generators::TranslationCata
     map
   end
 
-  def source_strings(references)
-    references.select do |_k, v|
-      v.count { |f| f.include?('public/assets/chat/') }.positive?
-    end.keys.sort
+  def source_strings(strings)
+    strings.sorted_values.select do |s|
+      s.references.any? { |f| f.include?('public/assets/chat/') }
+    end.map(&:string)
   end
 
   def translations(sources, locale)

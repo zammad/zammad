@@ -9,10 +9,10 @@ class Generators::TranslationCatalog::TranslationCatalogGenerator < Rails::Gener
 
   def generate
     options_valid?
-    strings, references = extract_strings(base_path)
+    strings = extract_strings(base_path)
     return if strings.count.zero?
 
-    write_strings(strings, references)
+    write_strings(strings)
   end
 
   private
@@ -26,24 +26,22 @@ class Generators::TranslationCatalog::TranslationCatalogGenerator < Rails::Gener
   end
 
   def extract_strings(path)
-    strings = Set[]
-    references = {}
+    strings = Generators::TranslationCatalog::ExtractedStrings.new
     # rubocop:disable Rails/Output
     print "Extracting strings from #{path}..."
     Generators::TranslationCatalog::Extractor::Base.descendants.each do |klass|
       backend = klass.new(options: options)
       backend.extract_translatable_strings path
-      strings.merge backend.strings
-      references.merge!(backend.references) { |_key, oldval, newval| newval + oldval }
+      strings.merge! backend.strings
     end
     puts "#{strings.count} strings found."
     # rubocop:enable Rails/Output
-    [strings, references]
+    strings
   end
 
-  def write_strings(strings, references)
+  def write_strings(strings)
     Generators::TranslationCatalog::Writer::Base.descendants.each do |klass|
-      klass.new(options: options).write_catalog(strings, references)
+      klass.new(options: options).write(strings)
     end
   end
 
