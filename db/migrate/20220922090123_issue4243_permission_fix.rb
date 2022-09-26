@@ -8,7 +8,10 @@ class Issue4243PermissionFix < ActiveRecord::Migration[6.1]
     Role.find_each do |role|
       next if role.groups.blank?
 
-      role.permissions |= Permission.where(name: 'ticket.agent')
+      agent_permission = Permission.find_by(name: 'ticket.agent')
+      next if role.permissions.include?(agent_permission)
+
+      role.groups = []
     end
   end
 end

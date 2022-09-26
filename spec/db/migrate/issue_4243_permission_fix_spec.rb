@@ -10,12 +10,23 @@ RSpec.describe Issue4243PermissionFix, type: :db_migration do
     }
     role
   end
+  let!(:agent_role) do
+    role = create(:agent_role)
+    role.group_names_access_map = {
+      Group.first.name => 'full',
+    }
+    role
+  end
 
   before do
     migrate
   end
 
-  it 'does add the permission if groups are present but ticket.agent permission is not set' do
-    expect(test_role.reload.permissions).to include(Permission.find_by(name: 'ticket.agent'))
+  it 'does remove the groups if the role does not have the ticket.agent permissions' do
+    expect(test_role.reload.groups).to eq([])
+  end
+
+  it 'does nothing if the role does have the ticket.agent permissions' do
+    expect(agent_role.reload.groups).to be_present
   end
 end
