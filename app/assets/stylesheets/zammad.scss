@@ -12283,10 +12283,16 @@ output {
     width: 100%;
     overflow: auto;
     -webkit-overflow-scrolling: touch;
-    word-break: break-all;
+    word-break: keep-all;
 
     col {
       width: auto;
+    }
+
+    span,
+    p,
+    a {
+      word-break: break-all;
     }
   }
 
