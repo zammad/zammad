@@ -24,12 +24,12 @@ class Generators::TranslationCatalog::Extractor::Ruby < Generators::TranslationC
         result = match[1].gsub(%r{\\'}, "'")
         next if match[0].eql?('"') && result.include?('#{')
 
-        strings << Generators::TranslationCatalog::ExtractedString.new(string: result, references: [filename])
+        extracted_strings << Generators::TranslationCatalog::ExtractedString.new(string: result, references: [filename])
       end
     end
   end
 
-  def find_files(base_path)
+  def find_files
     files = []
     %w[lib db app].each do |dir|
       files += Dir.glob("#{base_path}/#{dir}/**/*.rb")

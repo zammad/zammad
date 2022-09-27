@@ -536,7 +536,7 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
         'Start new conversation': 'Démarrer une nouvelle conversation',
         'Today': 'Aujourd\'hui',
         'We are sorry, it takes longer as expected to get an empty slot. Please try again later or send us an email. Thank you!': 'Nous sommes désolés, trouver un opérateur disponible prend plus de temps que prévu. Réessayez plus tard ou envoyez-nous un mail. Merci !',
-        'You are on waiting list position <strong>%s</strong>.': 'Vous êtes actuellement en position <strong>%s</strong> dans la file d\\\'attente.'
+        'You are on waiting list position <strong>%s</strong>.': 'Vous êtes actuellement en position <strong>%s</strong> dans la file d\'attente.'
       },
       'he-il': {
         '<strong>Chat</strong> with us!': '<strong>שוחח</strong>איתנו!',
@@ -652,7 +652,7 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
         'We are sorry, it takes longer as expected to get an empty slot. Please try again later or send us an email. Thank you!': 'Przepraszamy, otrzymanie pustego slotu trwa dłużej, niż oczekiwano. Spróbuj ponownie później lub wyślij nam e-mail. Dziękuję!',
         'You are on waiting list position <strong>%s</strong>.': 'Jesteś na pozycji listy oczekujących <strong>%s</strong>.'
       },
-      'pt': {
+      'pt-br': {
         '<strong>Chat</strong> with us!': '<strong>Chat</strong> fale conosco!',
         'All colleagues are busy.': 'Nossos atendentes estão ocupados.',
         'Chat closed by %s': 'Chat encerrado por %s',

@@ -53,49 +53,42 @@ msgstr ""
 #. This is the template file app/views/slack/ticket_create/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/slack/ticket_create/en.md.erb
-#, zammad-skip-translation-sync
 msgid "# #{ticket.title}\n_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Created by #{current_user.longname} at #{ticket.updated_at}_\n* #{t('Group')}: #{ticket.group.name}\n* #{t('Owner')}: #{ticket.owner.fullname}\n* #{t('State')}: #{t(ticket.state.name)}\n\n<% if @objects[:article] %>\n#{article.body_as_text}\n<% end %>\n"
 msgstr ""
 
 #. This is the template file app/views/slack/ticket_escalation/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/slack/ticket_escalation/en.md.erb
-#, zammad-skip-translation-sync
 msgid "# #{ticket.title}\n_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Escalated at #{ticket.escalation_at}_\nA ticket (#{ticket.title}) from \"#{ticket.customer.longname}\" is escalated since \"#{ticket.escalation_at}\"!\n\n<% if @objects[:article] %>\n#{article.body_as_text}\n<% end %>\n"
 msgstr ""
 
 #. This is the template file app/views/slack/ticket_reminder_reached/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/slack/ticket_reminder_reached/en.md.erb
-#, zammad-skip-translation-sync
 msgid "# #{ticket.title}\n_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Reminder reached!_\nA ticket needs attention, reminder reached for (#{ticket.title}) with customer \"*#{ticket.customer.longname}*\".\n\n<% if @objects[:article] %>\n#{article.body_as_text}\n<% end %>\n"
 msgstr ""
 
 #. This is the template file app/views/slack/ticket_update/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/slack/ticket_update/en.md.erb
-#, zammad-skip-translation-sync
 msgid "# #{ticket.title}\n_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Updated by #{current_user.longname} at #{ticket.updated_at}_\n<% if @objects[:changes].present? %>\n  <% @objects[:changes].each do |key, value| %>\n  * <%= t key %>: <%= h value[0] %> -> <%= h value[1] %>\n  <% end %>\n<% end %>\n\n<% if @objects[:article] %>\n#{article.body_as_text}\n<% end %>\n"
 msgstr ""
 
 #. This is the template file app/views/slack/ticket_escalation_warning/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/slack/ticket_escalation_warning/en.md.erb
-#, zammad-skip-translation-sync
 msgid "# #{ticket.title}\n_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Will escalate at #{ticket.escalation_at}_\nA ticket (#{ticket.title}) from \"#{ticket.customer.longname}\" will escalate at \"#{ticket.escalation_at}\"!\n\n<% if @objects[:article] %>\n#{article.body_as_text}\n<% end %>\n"
 msgstr ""
 
 #. This is the template file app/views/mailer/user_device_new_location/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/user_device_new_location/en.html.erb
-#, zammad-skip-translation-sync
 msgid "#{config.product_name} signin detected from a new country\n\n<div>Hi #{user.firstname},</div>\n<br>\n<div>It looks like you used your account with an <b>known device but from a new country</b> on \"#{user_device.created_at}\":</div>\n<br>\n<div>\nYour device: #{user_device.name}<br>\nYour location (relative): #{user_device.location}<br>\nYour IP: #{user_device.ip}<br>\n</div>\n<br>\n<div>The country has been added to your list of known devices, which you can view here:</div>\n<br>\n<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n<br>\n<div>If this wasn't you, remove the device, changing your account password, and contacting your administrator. Somebody might have gained unauthorized access to your account.</div>\n<br>\n<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
 
 #. This is the template file app/views/mailer/user_device_new/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/user_device_new/en.html.erb
-#, zammad-skip-translation-sync
 msgid "#{config.product_name} signin detected from a new device\n\n<div>Hi #{user.firstname},</div>\n<br>\n<div>It looks like you signed into your account <b>using a new device</b> on \"#{user_device.created_at}\":</div>\n<br>\n<div>\nYour device: #{user_device.name}<br>\nYour location (relative): #{user_device.location}<br>\nYour IP: #{user_device.ip}<br>\n</div>\n<br>\n<div>Your device has been added to your list of known devices, which you can view here:</div>\n<br>\n<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n<br>\n<div>If this wasn't you, remove the device, changing your account password, and contacting your administrator. Somebody might have gained unauthorized access to your account.</div>\n<br>\n<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
 
@@ -798,7 +791,6 @@ msgstr ""
 #. This is the template file app/views/mailer/admin_password_auth/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/admin_password_auth/en.html.erb
-#, zammad-skip-translation-sync
 msgid "Administration login to #{config.product_name}\n\n<div>Hi #{user.firstname},</div>\n<br>\n<div>We received a request for an administration login for your #{config.product_name} account <b>#{user.login}</b>.</div>\n<br>\n<div>Please, click on the link below (or copy and paste the URL into your browser) to proceed:</div>\n<br>\n<div><a href=\"#{config.http_type}://#{config.fqdn}/#login/admin/{token.name}\">#{config.http_type}://#{config.fqdn}/#login/admin/{token.name}</a></div>\n<br>\n<div>This link takes you to a page where you can log in.</div>\n<br>\n<div>If you don't want to log in, please ignore this message.</div>\n<br>\n<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
 
@@ -954,7 +946,6 @@ msgstr ""
 #. This is the template file app/views/mailer/ticket_update_received_merge/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/ticket_update_received_merge/en.html.erb
-#, zammad-skip-translation-sync
 msgid "Another ticket was merged into ticket (#{ticket.title})\n\n<div>Hi #{recipient.firstname},</div>\n<br>\n<div>\nAnother ticket was merged into ticket (#{ticket.title}) by \"<b>#{current_user.longname}</b>\".\n</div>\n<br>\n<div>\n  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\" target=\"zammad_app\">#{t('View this in Zammad')}</a>\n</div>\n"
 msgstr ""
 
@@ -2183,7 +2174,6 @@ msgstr ""
 #. This is the template file app/views/mailer/signup/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/signup/en.html.erb
-#, zammad-skip-translation-sync
 msgid "Confirm your #{config.product_name} account, #{user.firstname} #{user.lastname}\n\n<div>Hi #{user.firstname},</div>\n<br>\n<div>Confirm your email address to complete your #{config.product_name} account. It's easy, just click the link below.</div>\n<br>\n<div><a href=\"#{config.http_type}://#{config.fqdn}/#email_verify/#{token.name}\">#{config.http_type}://#{config.fqdn}/#email_verify/#{token.name}</a></div>\n<br>\n<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
 
@@ -5612,7 +5602,6 @@ msgstr ""
 #. This is the template file app/views/mailer/user_invite/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/user_invite/en.html.erb
-#, zammad-skip-translation-sync
 msgid "Invitation to #{config.product_name} at #{config.fqdn}\n\n<div>Hi #{user.firstname},</div>\n<br>\n<div>I (#{current_user.firstname} #{current_user.lastname}) invite you to #{config.product_name} - our customer support / ticket system platform.</div>\n<br>\n<div>Click <a href=\"#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.name}\">here</a> and set your password.</div>\n<br>\n<div>Enjoy,</div>\n<br>\n<div>#{current_user.firstname} #{current_user.lastname}</div>\n<br>\n<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
 
@@ -6688,7 +6677,6 @@ msgstr ""
 #. This is the template file app/views/mailer/ticket_create/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/ticket_create/en.html.erb
-#, zammad-skip-translation-sync
 msgid "New Ticket (#{ticket.title})\n\n<div>Hi #{recipient.firstname},</div>\n<br>\n<div>A new ticket (#{ticket.title}) has been created by \"<b>#{current_user.longname}</b>\".</div>\n<br>\n<div>\n#{t('Group')}: #{ticket.group.name}<br>\n#{t('Owner')}: #{ticket.owner.fullname}<br>\n#{t('State')}: #{t(ticket.state.name)}<br>\n</div>\n<br>\n<% if @objects[:article] %>\n  <div>\n  #{t('Information')}:\n  <blockquote type=\"cite\">\n  #{article.body_as_html}\n  </blockquote>\n  </div>\n<% end %>\n<br>\n<div>\n  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\" target=\"zammad_app\">#{t('View this in Zammad')}</a>\n</div>\n"
 msgstr ""
 
@@ -8036,7 +8024,6 @@ msgstr ""
 #. This is the template file app/views/mailer/ticket_reminder_reached/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/ticket_reminder_reached/en.html.erb
-#, zammad-skip-translation-sync
 msgid "Reminder reached (#{ticket.title})\n\n<div>Hi #{recipient.firstname},</div>\n<br>\n<div>A ticket needs attention, reminder reached for (#{ticket.title}) with customer \"<b>#{ticket.customer.longname}</b>\".</div>\n<br>\n<% if @objects[:article] %>\n  <div>\n  #{t('Information')}:\n  <blockquote type=\"cite\">\n  #{article.body_as_html}\n  </blockquote>\n  </div>\n<% end %>\n<br>\n<div>\n  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\" target=\"zammad_app\">#{t('View this in Zammad')}</a>\n</div>\n"
 msgstr ""
 
@@ -8205,14 +8192,12 @@ msgstr ""
 #. This is the template file app/views/mailer/password_reset/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/password_reset/en.html.erb
-#, zammad-skip-translation-sync
 msgid "Reset your #{config.product_name} password\n\n<div>Hi #{user.firstname},</div>\n<br>\n<div>We received a request to reset the password for your #{config.product_name} account <b>#{user.login}</b>.</div>\n<br>\n<div>If you want to reset your password, click on the link below (or copy and paste the URL into your browser):</div>\n<br>\n<div><a href=\"#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.name}\">#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.name}</a></div>\n<br>\n<div>This link takes you to a page where you can change your password.</div>\n<br>\n<div>If you don't want to reset your password, please ignore this message. Your password will not be reset.</div>\n<br>\n<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
 
 #. This is the template file app/views/mailer/signup_taken_reset/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/signup_taken_reset/en.html.erb
-#, zammad-skip-translation-sync
 msgid "Reset your #{config.product_name} password\n\n<div>Hi #{user.firstname},</div>\n<br>\n<div>You or someone else tried to sign up with this email address. However, this email is already being used.</div>\n<br>\n<div>If you want to reset your password, click on the link below (or copy and paste the URL into your browser):</div>\n<br>\n<div><a href=\"#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.name}\">#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.name}</a></div>\n<br>\n<div>This link takes you to a page where you can change your password.</div>\n<br>\n<div>If you don't want to reset your password, please ignore this message. Your password will not be reset.</div>\n<br>\n<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
 
@@ -9433,7 +9418,6 @@ msgstr ""
 #. This is the template file app/views/mailer/test_ticket/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/test_ticket/en.html.erb
-#, zammad-skip-translation-sync
 msgid "Test Ticket!\n\n<div>Dear #{agent.firstname},</div>\n<br>\n<div>This is a <b>test ticket</b>. I'm a customer and I need some help! :)</div>\n<br>\n<div>#{customer.fullname}</div>\n<br>\n<div>The Zammad Project</div>\n"
 msgstr ""
 
@@ -10276,7 +10260,6 @@ msgstr ""
 #. This is the template file app/views/mailer/ticket_update_merged_into/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/ticket_update_merged_into/en.html.erb
-#, zammad-skip-translation-sync
 msgid "Ticket (#{ticket.title}) was merged into another ticket\n\n<div>Hi #{recipient.firstname},</div>\n<br>\n<div>\nTicket (#{ticket.title}) was merged into another ticket by \"<b>#{current_user.longname}</b>\".\n</div>\n<br>\n<div>\n  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\" target=\"zammad_app\">#{t('View this in Zammad')}</a>\n</div>\n"
 msgstr ""
 
@@ -10378,7 +10361,6 @@ msgstr ""
 #. This is the template file app/views/mailer/ticket_escalation/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/ticket_escalation/en.html.erb
-#, zammad-skip-translation-sync
 msgid "Ticket is escalated (#{ticket.title})\n\n<div>Hi #{recipient.firstname},</div>\n<br>\n<div>A ticket (#{ticket.title}) from \"<b>#{ticket.customer.longname}</b>\" is escalated since \"#{ticket.escalation_at}\"!</div>\n<br>\n<% if @objects[:article] %>\n  <div>\n  #{t('Information')}:\n  <blockquote type=\"cite\">\n  #{article.body_as_html}\n  </blockquote>\n  </div>\n<% end %>\n<br>\n<div>\n  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\" target=\"zammad_app\">#{t('View this in Zammad')}</a>\n</div>\n"
 msgstr ""
 
@@ -10397,7 +10379,6 @@ msgstr ""
 #. This is the template file app/views/mailer/ticket_escalation_warning/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/ticket_escalation_warning/en.html.erb
-#, zammad-skip-translation-sync
 msgid "Ticket will escalate (#{ticket.title})\n\n<div>Hi #{recipient.firstname},</div>\n<br>\n<div>A ticket (#{ticket.title}) from \"<b>#{ticket.customer.longname}</b>\" will escalate at \"#{ticket.escalation_at}\"!</div>\n<br>\n<% if @objects[:article] %>\n  <div>\n  #{t('Information')}:\n  <blockquote type=\"cite\">\n  #{article.body_as_html}\n  </blockquote>\n  </div>\n<% end %>\n<br>\n<div>\n  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\" target=\"zammad_app\">#{t('View this in Zammad')}</a>\n</div>\n"
 msgstr ""
 
@@ -10894,7 +10875,6 @@ msgstr ""
 #. This is the template file app/views/mailer/ticket_update/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/ticket_update/en.html.erb
-#, zammad-skip-translation-sync
 msgid "Updated Ticket (#{ticket.title})\n\n<div>Hi #{recipient.firstname},</div>\n<br>\n<div>\nTicket (#{ticket.title}) has been updated by \"<b>#{current_user.longname}</b>\".\n</div>\n<br>\n<% if @objects[:changes].present? %>\n  <div>\n  #{t('Changes')}:<br>\n  <% @objects[:changes].each do |key, value| %>\n    <%= t key %>: <%= h value[0] %> -&gt; <%= h value[1] %><br>\n  <% end %>\n  </div>\n<% end %>\n<br>\n<% if @objects[:article] %>\n  <div>\n  #{t('Information')}:\n  <blockquote type=\"cite\">\n  #{article.body_as_html}\n  </blockquote>\n  </div>\n<% end %>\n<br>\n<div>\n  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}<% if @objects[:article] %>/#{article.id}<% end %>\" target=\"zammad_app\">#{t('View this in Zammad')}</a>\n</div>\n"
 msgstr ""
 
@@ -11770,7 +11750,6 @@ msgstr ""
 #. This is the template file app/views/mailer/password_change/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/password_change/en.html.erb
-#, zammad-skip-translation-sync
 msgid "Your #{config.product_name} password has been changed\n\n<p>Hi #{user.firstname},</p>\n<br>\n<p>The password for your #{config.product_name} account <b>#{user.login}</b> has been changed recently.</p>\n<br>\n<p>This activity is not known to you? If not, contact your system administrator.</p>\n<br>\n<p>Your #{config.product_name} Team</p>\n"
 msgstr ""
 
@@ -11924,7 +11903,6 @@ msgstr ""
 #. This is the template file app/views/mailer/email_oversized/en.txt.erb in ERB/Text format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/email_oversized/en.txt.erb
-#, zammad-skip-translation-sync
 msgid "[undeliverable] Message too large\nDear #{mail.from_display_name},\n\nUnfortunately your email titled \"#{mail.subject}\" could not be delivered to one or more recipients.\n\nYour message was #{mail.msg_size} MB but we only accept messages up to #{config.postmaster_max_size} MB.\n\nPlease reduce the message size and try again. Thank you for your understanding.\n\nRegretfully,\n\nPostmaster of #{config.fqdn}\n"
 msgstr ""
 

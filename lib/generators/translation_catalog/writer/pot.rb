@@ -2,9 +2,9 @@
 
 class Generators::TranslationCatalog::Writer::Pot < Generators::TranslationCatalog::Writer::Base
 
-  def write(strings)
+  def write(extracted_strings)
 
-    pot = build_pot_content(strings)
+    pot = build_pot_content(extracted_strings)
 
     target_filename = "#{target_path}.pot"
 
@@ -19,10 +19,9 @@ class Generators::TranslationCatalog::Writer::Pot < Generators::TranslationCatal
         exit! # rubocop:disable Rails/Exit
       end
     end
-
-    puts "Writing translation catalog file #{target_filename}."
-    File.write(target_filename, pot)
     # rubocop:enable Rails/Output
+
+    create_or_update_file(target_filename, pot)
   end
 
   private
@@ -42,7 +41,7 @@ class Generators::TranslationCatalog::Writer::Pot < Generators::TranslationCatal
     #. - 'P' - Meridian indicator ('am' or 'pm')
   LEGEND
 
-  def build_pot_content(strings)
+  def build_pot_content(extracted_strings)
     # Don't set a POT-Creation-Date to avoid unneccessary changes in Git.
     pot = <<~POT_HEADER
       msgid ""
@@ -75,7 +74,7 @@ class Generators::TranslationCatalog::Writer::Pot < Generators::TranslationCatal
 
     FORMAT_STRINGS
 
-    strings.sorted_values.each { |s| pot += string_to_pot(s) }
+    extracted_strings.sorted_values.each { |s| pot += string_to_pot(s) }
 
     pot
   end
@@ -86,7 +85,6 @@ class Generators::TranslationCatalog::Writer::Pot < Generators::TranslationCatal
     string.references.to_a.sort.each do |ref|
       pot += "#: #{ref}\n"
     end
-    pot += "#, zammad-skip-translation-sync\n" if string.skip_translation_sync
     pot += <<~POT_ENTRY
       msgid "#{escape_for_po(string.string)}"
       msgstr ""

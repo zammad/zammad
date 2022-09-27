@@ -5,9 +5,9 @@ module Translation::SynchronizesFromPo
 
   # Represents an entry to import to the Translation table.
   class TranslationEntry
-    attr_reader :source, :translation, :translation_file
+    attr_reader :source, :translation, :translation_file, :skip_sync
 
-    def self.create(locale, file, entry)
+    def self.create(locale, file, entry) # rubocop:disable Metrics/AbcSize
       source = unescape_po(entry.msgid.to_s)
 
       # Make sure to ignore fuzzy entries.
@@ -15,17 +15,33 @@ module Translation::SynchronizesFromPo
 
       # For 'en-*' locales, treat source as translation as well, to indicate that nothing is missing.
       translation = source if translation.empty? && locale.start_with?('en')
-      new(source: source, translation: translation, translation_file: file)
+
+      # Some strings are not needed in the database, because changes will take no effect and
+      #   also keep storage small.
+      skip_sync = entry.reference.present? && [entry.reference].flatten.all? do |ref|
+        # Ignore strings that come only from the chat, form and view_template extractors.
+        # We tried avoiding this by using gettext flags in the pot file, but they don't propagate
+        #   correctly to the translation files.
+        ref.to_s.start_with?(%r{public/assets/(?:chat|form)/|app/views/(?:mailer|slack)/})
+      end
+      new(source: source, translation: translation, translation_file: file, skip_sync: skip_sync)
     end
 
     def self.unescape_po(string)
       string.gsub(%r{\\n}, "\n").gsub(%r{\\"}, '"').gsub(%r{\\\\}, '\\')
     end
 
-    def initialize(source:, translation:, translation_file:)
+    def skip_sync?
+      @skip_sync
+    end
+
+    private
+
+    def initialize(source:, translation:, translation_file:, skip_sync:)
       @source = source
       @translation = translation
       @translation_file = translation_file
+      @skip_sync = skip_sync
     end
   end
 
@@ -48,6 +64,8 @@ module Translation::SynchronizesFromPo
       importable_translations = []
 
       strings_for_locale(locale).each_pair do |source, entry| # rubocop:disable Metrics/BlockLength
+
+        next if entry.skip_sync?
 
         if source.length > 3000 || entry.translation.length > 3000
           Rails.logger.error "Cannot import translation for locale #{locale} because it exceeds maximum string length of 3000: source: '#{source}', translation: '#{entry.translation}'"
@@ -91,14 +109,16 @@ module Translation::SynchronizesFromPo
       true
     end
 
+    def cached_strings_for_locale(locale)
+      @cached_strings_for_locale ||= {}
+      @cached_strings_for_locale[locale] ||= strings_for_locale(locale).freeze
+    end
+
     def strings_for_locale(locale)
       result = {}
       po_files_for_locale(locale).each do |file|
         require 'poparser' # Only load when it is actually used
         PoParser.parse_file(Rails.root.join(file)).entries.each do |entry|
-
-          # Some strings are not needed in the database.
-          next if entry.flag&.to_s&.include?('zammad-skip-translation-sync')
 
           TranslationEntry.create(locale, file, entry).tap do |translation_entry|
             result[translation_entry.source] = translation_entry

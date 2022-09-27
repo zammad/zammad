@@ -15,11 +15,11 @@ class Generators::TranslationCatalog::Extractor::Chat < Generators::TranslationC
       result = match[1].gsub(%r{\\'}, "'")
       next if match[0].eql?('"') && result.include?('#{')
 
-      strings << Generators::TranslationCatalog::ExtractedString.new(string: result, references: [filename])
+      extracted_strings << Generators::TranslationCatalog::ExtractedString.new(string: result, references: [filename])
     end
   end
 
-  def find_files(base_path)
+  def find_files
     # Only execute for Zammad, not for addons.
     return [] if options['addon_path']
 

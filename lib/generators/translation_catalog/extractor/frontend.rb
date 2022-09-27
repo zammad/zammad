@@ -30,12 +30,12 @@ class Generators::TranslationCatalog::Extractor::Frontend < Generators::Translat
         result = match[1].gsub(%r{\\'}, "'")
         next if match[0].eql?('"') && result.include?('#{')
 
-        strings << Generators::TranslationCatalog::ExtractedString.new(string: result, references: [filename])
+        extracted_strings << Generators::TranslationCatalog::ExtractedString.new(string: result, references: [filename])
       end
     end
   end
 
-  def find_files(base_path)
+  def find_files
     files = []
 
     ['app/assets/**', 'public/assets/{chat,chat/views,form}'].each do |dir|

@@ -2,7 +2,7 @@
 
 class Generators::TranslationCatalog::Writer::Chat < Generators::TranslationCatalog::Writer::Base
 
-  def write(strings)
+  def write(extracted_strings)
 
     # Only execute for Zammad, not for addons.
     return if options['addon_path']
@@ -10,7 +10,7 @@ class Generators::TranslationCatalog::Writer::Chat < Generators::TranslationCata
     # Do not run in CI.
     return if options['check']
 
-    content = serialized(translation_map(strings))
+    content = serialized(translation_map(extracted_strings))
     ['public/assets/chat/chat.coffee', 'public/assets/chat/chat-no-jquery.coffee'].each do |f|
       write_file(f, content)
     end
@@ -21,10 +21,12 @@ class Generators::TranslationCatalog::Writer::Chat < Generators::TranslationCata
   def write_file(file, content)
     target_file = Rails.root.join(file)
     before = target_file.read
-    puts "Writing chat asset file #{target_file}." # rubocop:disable Rails/Output
     after = before.sub(%r{(# ZAMMAD_TRANSLATIONS_START\n).*(    # ZAMMAD_TRANSLATIONS_END)}m) do |_match|
       $1 + content + $2
     end
+    return if before == after
+
+    puts "Updating file #{target_file}." # rubocop:disable Rails/Output
     target_file.write(after)
   end
 
@@ -39,8 +41,8 @@ class Generators::TranslationCatalog::Writer::Chat < Generators::TranslationCata
     string
   end
 
-  def translation_map(strings)
-    sources = source_strings(strings)
+  def translation_map(extracted_strings)
+    sources = source_strings(extracted_strings)
     map = {}
     Locale.all.each do |locale|
       next if locale.locale.start_with?('en')
@@ -52,14 +54,14 @@ class Generators::TranslationCatalog::Writer::Chat < Generators::TranslationCata
     map
   end
 
-  def source_strings(strings)
-    strings.sorted_values.select do |s|
+  def source_strings(extracted_strings)
+    extracted_strings.sorted_values.select do |s|
       s.references.any? { |f| f.include?('public/assets/chat/') }
     end.map(&:string)
   end
 
   def translations(sources, locale)
-    string_map = Translation.strings_for_locale(locale).select do |source, _entry|
+    string_map = Translation.cached_strings_for_locale(locale).select do |source, _entry|
       sources.include?(source)
     end.transform_values(&:translation)
 

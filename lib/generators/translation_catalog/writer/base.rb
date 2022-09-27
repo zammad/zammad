@@ -9,6 +9,14 @@ class Generators::TranslationCatalog::Writer::Base
 
   protected
 
+  def create_or_update_file(file, content)
+    target_file = Rails.root.join(file)
+    return if target_file.exist? && target_file.read == content
+
+    puts "#{target_file.exist? ? 'Updating' : 'Creating'} file #{target_file}." # rubocop:disable Rails/Output
+    target_file.write(content)
+  end
+
   def base_path
     options['addon_path'] || Rails.root.to_s
   end

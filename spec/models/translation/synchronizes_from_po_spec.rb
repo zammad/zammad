@@ -187,10 +187,12 @@ RSpec.describe Translation, 'synchronizes_from_po' do
     before :all do # rubocop:disable RSpec/BeforeAfterAll
       # Simulate additional entries
       Rails.root.join('i18n/testaddon.de-de.po').write(<<~CUSTOM_PO)
+        #: app/graphql/custom.rb
         msgid "custom-string-translated"
         msgstr "custom-string-übersetzt"
 
-        #, zammad-skip-translation-sync
+        #: app/views/mailer/ticket_create/zh-tw.html.erb
+        #: app/views/slack/ticket_create/en.md.erb
         msgid "custom-string-to-skip"
         msgstr "custom-string-zu-überspringen"
 
@@ -246,7 +248,7 @@ RSpec.describe Translation, 'synchronizes_from_po' do
       expect(described_class.find_source('de-de', 'custom-string-too-long')).to be_nil
     end
 
-    it 'skips strings that are flagged for skipping' do
+    it 'skips strings that need to be skipped' do
       expect(described_class.find_source('de-de', 'custom-string-to-skip')).to be_nil
     end
   end

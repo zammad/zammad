@@ -9,7 +9,7 @@ class Generators::TranslationCatalog::TranslationCatalogGenerator < Rails::Gener
 
   def generate
     options_valid?
-    strings = extract_strings(base_path)
+    strings = extract_strings
     return if strings.count.zero?
 
     write_strings(strings)
@@ -25,23 +25,23 @@ class Generators::TranslationCatalog::TranslationCatalogGenerator < Rails::Gener
     true
   end
 
-  def extract_strings(path)
-    strings = Generators::TranslationCatalog::ExtractedStrings.new
+  def extract_strings
+    extracted_strings = Generators::TranslationCatalog::ExtractedStrings.new
     # rubocop:disable Rails/Output
-    print "Extracting strings from #{path}..."
+    print "Extracting strings from #{base_path}… "
     Generators::TranslationCatalog::Extractor::Base.descendants.each do |klass|
       backend = klass.new(options: options)
-      backend.extract_translatable_strings path
-      strings.merge! backend.strings
+      backend.extract_translatable_strings
+      extracted_strings.merge! backend.extracted_strings
     end
-    puts "#{strings.count} strings found."
+    puts "#{extracted_strings.count} strings found."
     # rubocop:enable Rails/Output
-    strings
+    extracted_strings
   end
 
-  def write_strings(strings)
+  def write_strings(extracted_strings)
     Generators::TranslationCatalog::Writer::Base.descendants.each do |klass|
-      klass.new(options: options).write(strings)
+      klass.new(options: options).write(extracted_strings)
     end
   end
 

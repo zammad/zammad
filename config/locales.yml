@@ -120,7 +120,7 @@
   active: true
   dir: ltr
 - locale: pt-br
-  alias: pt
+  alias: ''
   name: Português Brasileiro
   active: true
   dir: ltr

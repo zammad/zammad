@@ -8,7 +8,7 @@ RSpec.describe Generators::TranslationCatalog::Extractor::Frontend do
   let(:filename) { 'myfile' }
   let(:result_strings) do
     extractor_module.extract_from_string(string, filename)
-    extractor_module.strings.keys.sort
+    extractor_module.extracted_strings.keys.sort
   end
 
   context 'with strings to be found' do
