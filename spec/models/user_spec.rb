@@ -824,22 +824,47 @@ RSpec.describe User, type: :model do
       end
 
       context 'for existing user records' do
+        before do
+          user.update(password: password)
+          allow(user).to receive(:ensured_password).and_call_original
+        end
+
         context 'when changed to empty string' do
-          before { user.update(password: password) }
-
           it 'keeps previous password' do
-
             expect { user.update!(password: '') }
               .not_to change(user, :password)
+          end
+
+          it 'calls #ensured_password' do
+            user.update!(password: '')
+
+            expect(user).to have_received(:ensured_password)
           end
         end
 
         context 'when changed to nil' do
-          before { user.update(password: password) }
-
           it 'keeps previous password' do
             expect { user.update!(password: nil) }
               .not_to change(user, :password)
+          end
+
+          it 'calls #ensured_password' do
+            user.update!(password: nil)
+
+            expect(user).to have_received(:ensured_password)
+          end
+        end
+
+        context 'when changed another attribute' do
+          it 'keeps previous password' do
+            expect { user.update!(email: "123#{user.email}") }
+              .not_to change(user, :password)
+          end
+
+          it 'does not call #ensured_password' do
+            user.update!(email: "123#{user.email}")
+
+            expect(user).not_to have_received(:ensured_password)
           end
         end
       end

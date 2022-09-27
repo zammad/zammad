@@ -1256,6 +1256,8 @@ raise 'At least one user need to have admin permissions'
   end
 
   def ensure_password
+    return if !password_changed?
+
     self.password = ensured_password
   end
 
