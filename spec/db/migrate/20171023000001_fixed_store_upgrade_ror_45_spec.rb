@@ -54,14 +54,8 @@ RSpec.describe FixedStoreUpgradeRor45, type: :db_migration do
         .and not_change { taskbar.reload.params }
         .and change { taskbar.reload.read_attribute_before_type_cast(:preferences) }
 
-      expect(taskbar.read_attribute_before_type_cast(:state))
-        .to start_with('--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess')
-
-      expect(taskbar.read_attribute_before_type_cast(:params))
-        .to start_with('--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess')
-
-      expect(taskbar.read_attribute_before_type_cast(:preferences))
-        .to start_with('--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess')
+      expect(taskbar.attributes.slice('params', 'preferences', 'state').values)
+        .to all(be_kind_of(ActiveSupport::HashWithIndifferentAccess))
     end
   end
 end

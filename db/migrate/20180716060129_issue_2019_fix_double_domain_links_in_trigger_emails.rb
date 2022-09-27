@@ -6,7 +6,7 @@ class Issue2019FixDoubleDomainLinksInTriggerEmails < ActiveRecord::Migration[5.1
   def up
     return if !Setting.exists?(name: 'system_init_done')
 
-    Trigger.where('perform LIKE ?', '%notification.email: %')
+    Trigger.where('perform LIKE ?', '%notification.email:%')
            .find_each do |t|
              email_response = t.perform['notification.email']
              next if email_response.blank? || !email_response['body']&.match(DOUBLE_DOMAIN_REGEX)
