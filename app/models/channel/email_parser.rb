@@ -377,7 +377,7 @@ returns
   end
 
   def self.sender_attributes(from)
-    if from.is_a?(HashWithIndifferentAccess)
+    if from.is_a?(ActiveSupport::HashWithIndifferentAccess)
       from = SENDER_FIELDS.filter_map { |f| from[f] }
                           .map(&:to_utf8).compact_blank
                           .partition { |address| address.match?(EMAIL_REGEX) }

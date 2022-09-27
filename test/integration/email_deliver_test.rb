@@ -6,7 +6,7 @@ class EmailDeliverTest < ActiveSupport::TestCase
   include BackgroundJobsHelper
 
   test 'basic check' do
-    travel_to DateTime.current
+    freeze_time
 
     if ENV['MAIL_SERVER'].blank?
       raise "Need MAIL_SERVER as ENV variable like export MAIL_SERVER='mx.example.com'"

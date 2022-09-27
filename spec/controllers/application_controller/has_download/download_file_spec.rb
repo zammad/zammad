@@ -72,7 +72,7 @@ RSpec.describe ApplicationController::HasDownload::DownloadFile do
 
     context 'with image content type' do
       let(:file_content_type) { 'image/jpg' }
-      let(:file_data) { File.binread(Rails.root.join('test/data/upload/upload2.jpg')) }
+      let(:file_data) { Rails.root.join('test/data/upload/upload2.jpg').binread }
       let(:file_name) { 'image.jpg' }
 
       it 'check that inline content will be returned' do

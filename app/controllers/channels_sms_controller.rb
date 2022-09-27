@@ -98,7 +98,7 @@ class ChannelsSmsController < ApplicationController
 
   def channels_config
     list = []
-    Dir.glob(Rails.root.join('app/models/channel/driver/sms/*.rb')).each do |path|
+    Rails.root.glob('app/models/channel/driver/sms/*.rb').each do |path|
       filename = File.basename(path)
       next if !Channel.driver_class("sms/#{filename}").const_defined?(:NAME)
 

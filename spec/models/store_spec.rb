@@ -67,7 +67,7 @@ RSpec.describe Store, type: :model do
       end
 
       context 'with binary data' do
-        let(:data) { File.binread(Rails.root.join('test/data/pdf/test1.pdf')) }
+        let(:data) { Rails.root.join('test/data/pdf/test1.pdf').binread }
 
         it 'stores data as binary string to #content attribute' do
           expect { create(:store, **attributes) }
@@ -99,7 +99,7 @@ RSpec.describe Store, type: :model do
       end
 
       context 'with an image (jpeg/jpg/png)' do
-        let(:data)        { File.binread(Rails.root.join('test/data/upload/upload2.jpg')) }
+        let(:data)        { Rails.root.join('test/data/upload/upload2.jpg').binread }
         let(:preferences) { { content_type: 'image/jpg' } }
 
         it 'generates previews' do
@@ -264,7 +264,7 @@ RSpec.describe Store, type: :model do
         context 'with image content (width > 1800px)' do
           context 'width <= 200px' do
             let(:content_type) { 'image/png' }
-            let(:data) { File.binread(Rails.root.join('test/data/image/1x1.png')) }
+            let(:data) { Rails.root.join('test/data/image/1x1.png').binread }
 
             it 'cannot be resized (neither inlined nor previewed)' do
               expect { store.content_inline }
@@ -282,7 +282,7 @@ RSpec.describe Store, type: :model do
 
           context '200px < width <= 1800px)' do
             let(:content_type) { 'image/png' }
-            let(:data) { File.binread(Rails.root.join('test/data/image/1000x1000.png')) }
+            let(:data) { Rails.root.join('test/data/image/1000x1000.png').binread }
 
             it 'can be resized (previewed but not inlined)' do
               expect { store.content_inline }
@@ -299,7 +299,7 @@ RSpec.describe Store, type: :model do
 
           context '1800px < width' do
             let(:content_type) { 'image/jpeg' }
-            let(:data) { File.binread(Rails.root.join('test/data/upload/upload2.jpg')) }
+            let(:data) { Rails.root.join('test/data/upload/upload2.jpg').binread }
 
             it 'can be resized (inlined @ 1800px wide or previewed @ 200px wide)' do
               expect(resized_inline_image.width).to eq(1800)
@@ -312,7 +312,7 @@ RSpec.describe Store, type: :model do
             end
 
             context 'kind of wide/short: 8000x300' do
-              let(:data) { File.binread(Rails.root.join('test/data/image/8000x300.jpg')) }
+              let(:data) { Rails.root.join('test/data/image/8000x300.jpg').binread }
 
               it 'can be resized (inlined @ 1800px wide or previewed @ 200px wide)' do
                 expect(resized_inline_image.width).to eq(1800)
@@ -326,7 +326,7 @@ RSpec.describe Store, type: :model do
             end
 
             context 'very wide/short: 4000x1; i.e., <= 6px vertically per 200px (preview) or 1800px (inline) horizontally' do
-              let(:data) { File.binread(Rails.root.join('test/data/image/4000x1.jpg')) }
+              let(:data) { Rails.root.join('test/data/image/4000x1.jpg').binread }
 
               it 'cannot be resized (neither inlined nor previewed)' do
                 expect { store.content_inline }
@@ -343,7 +343,7 @@ RSpec.describe Store, type: :model do
             end
 
             context 'very wide/short: 8000x25; i.e., <= 6px vertically per 200px (preview) or 1800px (inline) horizontally' do
-              let(:data) { File.binread(Rails.root.join('test/data/image/8000x25.jpg')) }
+              let(:data) { Rails.root.join('test/data/image/8000x25.jpg').binread }
 
               it 'cannot be resized (neither inlined nor previewed)' do
                 expect { store.content_inline }

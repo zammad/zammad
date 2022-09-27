@@ -7,13 +7,13 @@ RSpec.describe 'Manage > Integration > S/MIME', type: :system do
   let(:fixture) { 'smime1@example.com' }
 
   let!(:certificate) do
-    File.read(Rails.root.join("spec/fixtures/files/smime/#{fixture}.crt"))
+    Rails.root.join("spec/fixtures/files/smime/#{fixture}.crt").read
   end
   let!(:private_key) do
-    File.read(Rails.root.join("spec/fixtures/files/smime/#{fixture}.key"))
+    Rails.root.join("spec/fixtures/files/smime/#{fixture}.key").read
   end
   let!(:private_key_secret) do
-    File.read(Rails.root.join("spec/fixtures/files/smime/#{fixture}.secret")).strip
+    Rails.root.join("spec/fixtures/files/smime/#{fixture}.secret").read.strip
   end
 
   before do
@@ -46,9 +46,9 @@ RSpec.describe 'Manage > Integration > S/MIME', type: :system do
 
     it 'adding of multiple certificates at once' do
       multiple_certificates = [
-        File.read(Rails.root.join('spec/fixtures/files/smime/ChainCA.crt')),
-        File.read(Rails.root.join('spec/fixtures/files/smime/IntermediateCA.crt')),
-        File.read(Rails.root.join('spec/fixtures/files/smime/RootCA.crt')),
+        Rails.root.join('spec/fixtures/files/smime/ChainCA.crt').read,
+        Rails.root.join('spec/fixtures/files/smime/IntermediateCA.crt').read,
+        Rails.root.join('spec/fixtures/files/smime/RootCA.crt').read,
       ].join
 
       # add cert
@@ -65,7 +65,7 @@ RSpec.describe 'Manage > Integration > S/MIME', type: :system do
 
   context 'Adding private keys allows adding certificates #3727' do
     let!(:private_key) do
-      File.read(Rails.root.join('spec/fixtures/files/smime/issue_3727.key'))
+      Rails.root.join('spec/fixtures/files/smime/issue_3727.key').read
     end
 
     it 'does add public and private key in one file' do

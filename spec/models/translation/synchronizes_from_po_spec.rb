@@ -186,7 +186,7 @@ RSpec.describe Translation, 'synchronizes_from_po' do
     # Tests are slow, so use before :all to save time.
     before :all do # rubocop:disable RSpec/BeforeAfterAll
       # Simulate additional entries
-      File.write(Rails.root.join('i18n/testaddon.de-de.po'), <<~CUSTOM_PO)
+      Rails.root.join('i18n/testaddon.de-de.po').write(<<~CUSTOM_PO)
         msgid "custom-string-translated"
         msgstr "custom-string-übersetzt"
 

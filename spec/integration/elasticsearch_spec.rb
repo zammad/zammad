@@ -13,7 +13,7 @@ RSpec.describe 'Elasticsearch', searchindex: true do
     create(:store,
            object:   'Ticket::Article',
            o_id:     article.id,
-           data:     File.binread(Rails.root.join("#{assets}/es-normal.txt")),
+           data:     Rails.root.join("#{assets}/es-normal.txt").binread,
            filename: 'es-normal.txt')
   end
   let(:customers) do
@@ -45,22 +45,22 @@ RSpec.describe 'Elasticsearch', searchindex: true do
         create(:store,
                object:   'Ticket::Article',
                o_id:     article.id,
-               data:     File.binread(Rails.root.join("#{assets}/es-normal.txt")),
+               data:     Rails.root.join("#{assets}/es-normal.txt").binread,
                filename: 'es-normal.txt')
         create(:store,
                object:   'Ticket::Article',
                o_id:     article.id,
-               data:     File.binread(Rails.root.join("#{assets}/es-pdf1.pdf")),
+               data:     Rails.root.join("#{assets}/es-pdf1.pdf").binread,
                filename: 'es-pdf1.pdf')
         create(:store,
                object:   'Ticket::Article',
                o_id:     article.id,
-               data:     File.binread(Rails.root.join("#{assets}/es-box1.box")),
+               data:     Rails.root.join("#{assets}/es-box1.box").binread,
                filename: 'mail1.box')
         create(:store,
                object:   'Ticket::Article',
                o_id:     article.id,
-               data:     File.binread(Rails.root.join("#{assets}/es-too-big.txt")),
+               data:     Rails.root.join("#{assets}/es-too-big.txt").binread,
                filename: 'es-too-big.txt')
       end,
       create(:ticket_article,

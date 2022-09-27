@@ -6,7 +6,7 @@ RSpec.describe 'KnowledgeBase attachments', type: :request, authenticated_as: :c
   include_context 'basic Knowledge Base'
 
   let(:store_file_content) do
-    File.read(Rails.root.join('spec/fixtures/files/upload/hello_world.txt'))
+    Rails.root.join('spec/fixtures/files/upload/hello_world.txt').read
   end
   let(:store_file_name) { 'hello_world.txt' }
 
@@ -41,7 +41,7 @@ RSpec.describe 'KnowledgeBase attachments', type: :request, authenticated_as: :c
     shared_examples 'previewing a calendar file' do
       context 'with calendar preview' do
         let(:store_file_content) do
-          File.read(Rails.root.join('spec/fixtures/files/calendar/basic.ics'))
+          Rails.root.join('spec/fixtures/files/calendar/basic.ics').read
         end
         let(:store_file_name) { 'basic.ics' }
 

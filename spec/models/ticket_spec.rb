@@ -1217,7 +1217,7 @@ RSpec.describe Ticket, type: :model do
     end
 
     describe '#escalation_at' do
-      before { travel_to(Time.current) } # freeze time
+      before { freeze_time } # freeze time
 
       let(:sla)      { create(:sla, calendar: calendar, first_response_time: 60, response_time: 180, solution_time: 240) }
       let(:calendar) { create(:calendar, :'24/7') }
@@ -1428,7 +1428,7 @@ RSpec.describe Ticket, type: :model do
     end
 
     describe '#first_response_escalation_at' do
-      before { travel_to(Time.current) } # freeze time
+      before { freeze_time } # freeze time
 
       let(:sla)      { create(:sla, calendar: calendar, first_response_time: 60, response_time: 180, solution_time: 240) }
       let(:calendar) { create(:calendar, :'24/7') }
@@ -1460,7 +1460,7 @@ RSpec.describe Ticket, type: :model do
     end
 
     describe '#update_escalation_at' do
-      before { travel_to(Time.current) } # freeze time
+      before { freeze_time } # freeze time
 
       let(:sla)      { create(:sla, calendar: calendar, first_response_time: 60, response_time: 180, solution_time: 240) }
       let(:calendar) { create(:calendar, :'24/7') }
@@ -1500,7 +1500,7 @@ RSpec.describe Ticket, type: :model do
     end
 
     describe '#close_escalation_at' do
-      before { travel_to(Time.current) } # freeze time
+      before { freeze_time } # freeze time
 
       let(:sla)      { create(:sla, calendar: calendar, first_response_time: 60, response_time: 180, solution_time: 240) }
       let(:calendar) { create(:calendar, :'24/7') }
@@ -1813,7 +1813,7 @@ RSpec.describe Ticket, type: :model do
       context 'when ticket is generated from email (with attachments)' do
         subject(:ticket) { Channel::EmailParser.new.process({}, raw_email).first }
 
-        let(:raw_email) { File.read(Rails.root.join('test/data/mail/mail001.box')) }
+        let(:raw_email) { Rails.root.join('test/data/mail/mail001.box').read }
 
         it 'adds attachments to the Store{::File,::Provider::DB} tables' do
           expect { ticket }

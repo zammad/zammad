@@ -6,7 +6,7 @@ module TestFlags
   end
 
   def wait_for_gql(filename, skip_clearing: false)
-    gql = File.read(Rails.root.join("app/frontend/#{filename}"))
+    gql = Rails.root.join("app/frontend/#{filename}").read
     operation = %r{^\w+ \w+}.match(gql).to_s
     wait_for_test_flag("__gql #{operation}", skip_clearing: skip_clearing)
   end

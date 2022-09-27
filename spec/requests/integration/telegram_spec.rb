@@ -415,7 +415,7 @@ RSpec.describe 'Telegram Webhook Integration', type: :request do
     end
 
     def read_message(type, file)
-      JSON.parse(File.read(Rails.root.join('test', 'data', 'telegram', type, "#{file}.json")))
+      JSON.parse(Rails.root.join('test', 'data', 'telegram', type, "#{file}.json").read)
     end
 
     def init_mocks

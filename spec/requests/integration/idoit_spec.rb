@@ -150,7 +150,7 @@ RSpec.describe 'Idoit', type: :request do
     end
 
     def read_message(file)
-      File.read(Rails.root.join('test', 'data', 'idoit', "#{file}.json"))
+      Rails.root.join('test', 'data', 'idoit', "#{file}.json").read
     end
   end
 end

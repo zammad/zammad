@@ -10,7 +10,7 @@ RSpec.shared_examples 'TicketSetsCloseTime' do
   end
 
   before do
-    travel_to Time.zone.now
+    freeze_time
   end
 
   it 'resets pending_time seconds' do

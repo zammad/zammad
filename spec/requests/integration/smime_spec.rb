@@ -84,7 +84,7 @@ RSpec.describe 'Integration SMIME', type: :request do
       let(:private_string) { File.read(private_path) }
 
       let(:secret) do
-        File.read(Rails.root.join("spec/fixtures/files/smime/#{email_address}.secret")).strip
+        Rails.root.join("spec/fixtures/files/smime/#{email_address}.secret").read.strip
       end
 
       let!(:certificate) { create(:smime_certificate, fixture: email_address) }

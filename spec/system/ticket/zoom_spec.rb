@@ -51,7 +51,7 @@ RSpec.describe 'Ticket zoom', type: :system do
   context 'when ticket has a calendar attachment' do
     let(:group) { Group.find_by(name: 'Users') }
     let(:store_file_content_name) do
-      File.read(Rails.root.join('spec/fixtures/files/calendar/basic.ics'))
+      Rails.root.join('spec/fixtures/files/calendar/basic.ics').read
     end
     let(:store_file_name) { 'basic.ics' }
     let(:expected_event) do
@@ -811,7 +811,7 @@ RSpec.describe 'Ticket zoom', type: :system do
   describe 'forwarding article with an image' do
     let(:ticket_article_body) do
       filename = 'squares.png'
-      file     = File.binread(Rails.root.join("spec/fixtures/files/image/#{filename}"))
+      file     = Rails.root.join("spec/fixtures/files/image/#{filename}").binread
       ext      = File.extname(filename)[1...]
       base64   = Base64.encode64(file).delete("\n")
 
@@ -2580,7 +2580,7 @@ RSpec.describe 'Ticket zoom', type: :system do
     let(:ticket) { create(:ticket, group: Group.find_by(name: 'Users')) }
 
     let(:image_as_base64) do
-      file = File.binread(Rails.root.join('spec/fixtures/files/image/squares.png'))
+      file = Rails.root.join('spec/fixtures/files/image/squares.png').binread
       Base64.encode64(file).delete("\n")
     end
 

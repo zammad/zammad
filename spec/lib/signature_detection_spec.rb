@@ -127,7 +127,7 @@ RSpec.describe SignatureDetection do
   describe '.find_signature_line' do
     context 'when given a plain text message' do
       let(:content_type) { 'text/plain' }
-      let(:content)      { File.read(Rails.root.join('test/data/email_signature_detection/client_a_1.txt')) }
+      let(:content)      { Rails.root.join('test/data/email_signature_detection/client_a_1.txt').read }
 
       context 'and a substring it contains' do
         let(:signature) { <<~SIG.chomp }
@@ -151,7 +151,7 @@ RSpec.describe SignatureDetection do
 
     context 'when given an HTML message' do
       let(:content_type) { 'text/html' }
-      let(:content)      { File.read(Rails.root.join('test/data/email_signature_detection/example1.html')) }
+      let(:content)      { Rails.root.join('test/data/email_signature_detection/example1.html').read }
 
       context 'and a substring it contains' do
         let(:signature) { <<~SIG.chomp }

@@ -117,7 +117,7 @@ RSpec.describe Store::Provider::File do
     context 'when the file’s parent directories contain no other files' do
       it 'deletes empty parent subdirectories, up to /storage/fs' do
         expect { described_class.delete(sha) }
-          .to change { Dir.empty?(Rails.root.join('storage/fs')) }.to(true)
+          .to change { Rails.root.join('storage/fs').empty? }.to(true)
       end
     end
   end

@@ -19,7 +19,7 @@ RSpec.describe 'HasSearchIndexBackend', type: :model, searchindex: true, perform
       create(:store,
              object:   'Ticket::Article',
              o_id:     article.id,
-             data:     File.binread(Rails.root.join('test/data/elasticsearch/es-normal.txt')),
+             data:     Rails.root.join('test/data/elasticsearch/es-normal.txt').binread,
              filename: 'es-normal.txt')
 
       article

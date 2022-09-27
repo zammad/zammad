@@ -32,7 +32,7 @@ RSpec.describe Channel::EmailParser, type: :model do
     # Dir.glob(Rails.root.join('test/data/mail/mail*.box')).each { |mail_file| File.write(mail_file.gsub('.box', '.yml'), Channel::EmailParser.new.parse(File.read(mail_file)).slice(:from, :from_email, :from_display_name, :to, :cc, :subject, :body, :content_type, :'reply-to', :attachments).to_yaml) }
     #
     context 'when checking a bunch of stored emails for correct parsing behaviour' do
-      tests = Dir.glob(Rails.root.join('test/data/mail/mail*.box')).each do |stored_email|
+      tests = Dir.glob(Rails.root.join('test/data/mail/mail*.box')).each do |stored_email| # rubocop:disable Rails/RootPathnameMethods
         include_examples('parses email correctly', stored_email)
       end
 
@@ -1498,7 +1498,7 @@ RSpec.describe Channel::EmailParser, type: :model do
   end
 
   describe '#compose_postmaster_reply' do
-    let(:raw_incoming_mail) { File.read(Rails.root.join('test/data/mail/mail010.box')) }
+    let(:raw_incoming_mail) { Rails.root.join('test/data/mail/mail010.box').read }
 
     shared_examples 'postmaster reply' do
       it 'composes postmaster reply' do

@@ -78,7 +78,7 @@ RSpec.describe 'Mobile > Account > Avatar', type: :system, app: :mobile do
     end
 
     context 'when an avatar is already uploaded' do
-      let(:base64_img) { Base64.decode64(File.read(Rails.root.join('test/data/image/1000x1000.png'))) }
+      let(:base64_img) { Base64.decode64(Rails.root.join('test/data/image/1000x1000.png').read) }
 
       let(:avatar) do
         avatar = Avatar.add(

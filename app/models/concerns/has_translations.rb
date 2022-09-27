@@ -4,7 +4,7 @@ module HasTranslations
   extend ActiveSupport::Concern
 
   included do
-    has_many :translations, class_name: translation_class_name, # rubocop:disable Rails/ReflectionClassName
+    has_many :translations, class_name: translation_class_name,
                             inverse_of: name.demodulize.underscore,
                             dependent:  :destroy
 

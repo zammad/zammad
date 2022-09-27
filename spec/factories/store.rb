@@ -8,7 +8,7 @@ FactoryBot.define do
     created_by_id { 1 }
 
     factory :store_image do
-      data { File.binread(Rails.root.join('test/data/image/1x1.png')) }
+      data { Rails.root.join('test/data/image/1x1.png').binread }
       filename { '1x1.png' }
     end
   end

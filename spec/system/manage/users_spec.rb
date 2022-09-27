@@ -256,7 +256,7 @@ RSpec.describe 'Manage > Users', type: :system do
       visit '#manage/users'
       ensure_websocket
       User.csv_import(
-        string:       File.read(Rails.root.join('spec/fixtures/files/csv_import/user/simple.csv')),
+        string:       Rails.root.join('spec/fixtures/files/csv_import/user/simple.csv').read,
         parse_params: {
           col_sep: ';',
         },

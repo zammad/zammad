@@ -7,9 +7,9 @@ RSpec.describe Package, type: :model do
   # cleanup package files
   after :all do # rubocop:disable RSpec/BeforeAfterAll
     %w[example.rb app/controllers/test_controller.rb].each do |file|
-      next if !File.exist?(Rails.root.join(file))
+      next if !Rails.root.join(file).exist?
 
-      File.delete(Rails.root.join(file))
+      Rails.root.join(file).delete
     end
   end
 
@@ -138,7 +138,7 @@ RSpec.describe Package, type: :model do
       end
 
       after do
-        File.delete(Rails.root.join('auto_install/unittest.zpm'))
+        Rails.root.join('auto_install/unittest.zpm').delete
       end
 
       it 'does install package' do
@@ -160,7 +160,7 @@ RSpec.describe Package, type: :model do
       context 'when verify is not ok' do
         it 'returns verify issues' do
           package = described_class.install(string: package_zpm_json)
-          File.delete(Rails.root.join('example.rb'))
+          Rails.root.join('example.rb').delete
 
           expect(package.verify).not_to be_nil
         end

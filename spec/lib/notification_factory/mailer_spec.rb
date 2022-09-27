@@ -6,7 +6,7 @@ require 'ostruct'
 RSpec.describe NotificationFactory::Mailer do
   describe '#template' do
     context 'for postmaster oversized mail' do
-      let(:raw_incoming_mail) { File.read(Rails.root.join('test/data/mail/mail010.box')) }
+      let(:raw_incoming_mail) { Rails.root.join('test/data/mail/mail010.box').read }
 
       let(:parsed_incoming_mail) { Channel::EmailParser.new.parse raw_incoming_mail }
 

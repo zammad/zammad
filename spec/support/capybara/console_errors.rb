@@ -12,7 +12,7 @@ RSpec.configure do |config|
         puts "#{error.message}\n\n"
       end
 
-      File.write(Rails.root.join('log/browser.log'), logs.map { |l| "#{l.level}|#{l.message}" }.join("\n"))
+      Rails.root.join('log/browser.log').write(logs.map { |l| "#{l.level}|#{l.message}" }.join("\n"))
     end
 
     expect(errors.length).to eq(0)

@@ -12,7 +12,7 @@ RSpec.shared_examples 'TicketSetsLastOwnerUpdateTime' do
   end
 
   before do
-    travel_to Time.zone.now
+    freeze_time
   end
 
   it 'has no last_owner_update_at initially' do

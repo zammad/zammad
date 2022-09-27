@@ -223,7 +223,7 @@ RSpec.describe 'Twilio SMS', type: :request, performs_jobs: true do
     end
 
     def read_message(file)
-      JSON.parse(File.read(Rails.root.join('test', 'data', 'twilio', "#{file}.json")))
+      JSON.parse(Rails.root.join('test', 'data', 'twilio', "#{file}.json").read)
     end
   end
 end

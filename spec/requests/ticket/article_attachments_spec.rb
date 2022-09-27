@@ -109,7 +109,7 @@ RSpec.describe 'Ticket Article Attachments', type: :request, authenticated_as: -
 
         context 'with calendar preview' do
           let(:store_file_content) do
-            File.read(Rails.root.join('spec/fixtures/files/calendar/basic.ics'))
+            Rails.root.join('spec/fixtures/files/calendar/basic.ics').read
           end
           let(:store_file_name) { 'basic.ics' }
           let(:store_file_content_type) { 'text/calendar' }

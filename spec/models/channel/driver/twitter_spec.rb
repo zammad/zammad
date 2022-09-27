@@ -163,7 +163,7 @@ RSpec.describe Channel::Driver::Twitter, required_envs: %w[TWITTER_CONSUMER_KEY 
           before do
             channel.process(
               YAML.safe_load(
-                File.read(Rails.root.join('test/data/twitter/webhook_events/direct_message-incoming.yml')),
+                Rails.root.join('test/data/twitter/webhook_events/direct_message-incoming.yml').read,
                 [ActiveSupport::HashWithIndifferentAccess]
               )
             )
@@ -416,7 +416,7 @@ RSpec.describe Channel::Driver::Twitter, required_envs: %w[TWITTER_CONSUMER_KEY 
 
           let(:parent_tweet_payload) do
             YAML.safe_load(
-              File.read(Rails.root.join('test/data/twitter/webhook_events/tweet_create-user_mention.yml')),
+              Rails.root.join('test/data/twitter/webhook_events/tweet_create-user_mention.yml').read,
               [ActiveSupport::HashWithIndifferentAccess]
             )
           end

@@ -203,7 +203,7 @@ RSpec.describe Trigger, type: :model do
       context 'when ticket is created via Channel::EmailParser.process' do
         before { create(:email_address, groups: [Group.first]) }
 
-        let(:raw_email) { File.read(Rails.root.join('test/data/mail/mail001.box')) }
+        let(:raw_email) { Rails.root.join('test/data/mail/mail001.box').read }
 
         it 'fires (without altering ticket state)' do
           expect { Channel::EmailParser.new.process({}, raw_email) }
@@ -217,7 +217,7 @@ RSpec.describe Trigger, type: :model do
       context 'when ticket is created via Channel::EmailParser.process with inline image' do
         before { create(:email_address, groups: [Group.first]) }
 
-        let(:raw_email) { File.read(Rails.root.join('test/data/mail/mail010.box')) }
+        let(:raw_email) { Rails.root.join('test/data/mail/mail010.box').read }
 
         it 'fires (without altering ticket state)' do
           expect { Channel::EmailParser.new.process({}, raw_email) }
@@ -564,7 +564,7 @@ RSpec.describe Trigger, type: :model do
                    subject:    raw_email[%r{(?<=^Subject: Re: ).*$}])
           end
 
-          let(:raw_email) { File.read(Rails.root.join('test/data/mail/mail005.box')) }
+          let(:raw_email) { Rails.root.join('test/data/mail/mail005.box').read }
 
           it 'fires (without altering ticket state)' do
             expect { Channel::EmailParser.new.process({}, raw_email) }
@@ -581,7 +581,7 @@ RSpec.describe Trigger, type: :model do
                    message_id: raw_email[%r{(?<=^Message-ID: )\S*}])
           end
 
-          let(:raw_email) { File.read(Rails.root.join('test/data/mail/mail055.box')) }
+          let(:raw_email) { Rails.root.join('test/data/mail/mail055.box').read }
 
           it 'does not fire' do
             expect { Channel::EmailParser.new.process({}, raw_email) }

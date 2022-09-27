@@ -177,7 +177,7 @@ RSpec.describe 'Message Bird SMS', type: :request, performs_jobs: true do
     end
 
     def read_message(file)
-      JSON.parse(File.read(Rails.root.join('test', 'data', 'message_bird', "#{file}.json")))
+      JSON.parse(Rails.root.join('test', 'data', 'message_bird', "#{file}.json").read)
     end
 
     def mocked_response_success

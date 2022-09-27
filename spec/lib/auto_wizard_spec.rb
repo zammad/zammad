@@ -27,7 +27,7 @@ RSpec.describe AutoWizard do
 
   describe '.setup' do
     around do |example|
-      File.write(Rails.root.join('auto_wizard.json'), seed_data.to_json)
+      Rails.root.join('auto_wizard.json').write(seed_data.to_json)
       example.run
       FileUtils.rm(Rails.root.join('auto_wizard.json'), force: true)
     end
@@ -36,7 +36,7 @@ RSpec.describe AutoWizard do
 
     it 'removes "auto_wizard.json" file when complete' do
       expect { described_class.setup }
-        .to change { File.exist?(Rails.root.join('auto_wizard.json')) }.to(false)
+        .to change { Rails.root.join('auto_wizard.json').exist? }.to(false)
     end
 
     context 'when "auto_wizard.json" contains a set of User attributes and associations (Role names)' do

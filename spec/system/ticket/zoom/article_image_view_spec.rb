@@ -8,17 +8,17 @@ RSpec.describe 'Article Image View', type: :system do
     let(:article) do
       create(:ticket_article, ticket: ticket, attachments: [
                {
-                 data:        File.read(Rails.root.join('spec/fixtures/files/image/large.png')),
+                 data:        Rails.root.join('spec/fixtures/files/image/large.png').read,
                  filename:    'large.png',
                  preferences: { 'Content-Type' => 'image/png', 'resizable' => true, 'content_preview' => true },
                },
                {
-                 data:        File.read(Rails.root.join('spec/fixtures/files/image/large2.png')),
+                 data:        Rails.root.join('spec/fixtures/files/image/large2.png').read,
                  filename:    'large2.png',
                  preferences: { 'Content-Type' => 'image/png', 'resizable' => true, 'content_preview' => true },
                },
                {
-                 data:        File.read(Rails.root.join('spec/fixtures/files/image/large3.png')),
+                 data:        Rails.root.join('spec/fixtures/files/image/large3.png').read,
                  filename:    'large3.png',
                  preferences: { 'Content-Type' => 'image/png', 'resizable' => true, 'content_preview' => true },
                },

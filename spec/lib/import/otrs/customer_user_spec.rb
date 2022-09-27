@@ -109,7 +109,7 @@ RSpec.describe Import::OTRS::CustomerUser do
     end
 
     before do
-      travel_to DateTime.current
+      freeze_time
     end
 
     it 'creates' do
