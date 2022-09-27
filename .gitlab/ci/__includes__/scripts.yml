@@ -16,7 +16,8 @@
     - yarn install || yarn install || yarn install
     - yarn storybook:install || yarn storybook:install || yarn storybook:install
     - yarn cypress:install || yarn cypress:install || yarn cypress:install
-    - yarn --cwd ./.eslint-plugin-zammad install
+    - yarn --cwd .eslint-plugin-zammad install || yarn --cwd .eslint-plugin-zammad install || yarn --cwd .eslint-plugin-zammad install
+    - yarn --cwd public/assets/chat install || yarn --cwd public/assets/chat install || yarn --cwd public/assets/chat install
   configure_environment:
     - bundle exec ruby .gitlab/configure_environment.rb
     - source .gitlab/environment.env
