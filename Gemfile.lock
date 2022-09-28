@@ -260,9 +260,10 @@ GEM
     json (2.6.2)
     jwt (2.3.0)
     kgio (2.11.4)
-    koala (3.2.0)
+    koala (3.3.0)
       addressable
-      faraday (< 2)
+      faraday
+      faraday-multipart
       json (>= 1.8)
       rexml
     listen (3.7.1)
