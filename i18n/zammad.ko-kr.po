@@ -1223,7 +1223,7 @@ msgid ""
 "<br>\n"
 "<div>\n"
 "  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\" "
-"target=\"zammad_app\">View this in Zammad</a>\n"
+"target=\"zammad_app\">View this in #{config.product_name}</a>\n"
 "</div>\n"
 msgstr ""
 
@@ -2135,7 +2135,6 @@ msgstr "변경"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 #: app/views/mailer/ticket_update/cs.html.erb
-#: app/views/mailer/ticket_update/de.html.erb
 #: app/views/mailer/ticket_update/es.html.erb
 #: app/views/mailer/ticket_update/fr.html.erb
 #: app/views/mailer/ticket_update/it.html.erb
@@ -4930,7 +4929,7 @@ msgid ""
 "<br>\n"
 "<div>\n"
 "  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\" "
-"target=\"zammad_app\">View this in Zammad</a>\n"
+"target=\"zammad_app\">View this in #{config.product_name}</a>\n"
 "</div>\n"
 msgstr ""
 
@@ -5600,7 +5599,6 @@ msgstr "환영"
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
 #: app/graphql/gql/types/overview_type.rb
 #: app/views/mailer/ticket_create/cs.html.erb
-#: app/views/mailer/ticket_create/de.html.erb
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/it.html.erb
@@ -6290,7 +6288,6 @@ msgid "Info: %s"
 msgstr ""
 
 #: app/views/mailer/ticket_create/cs.html.erb
-#: app/views/mailer/ticket_create/de.html.erb
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/it.html.erb
@@ -6310,7 +6307,6 @@ msgstr ""
 #: app/views/mailer/ticket_escalation/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation/zh-tw.html.erb
 #: app/views/mailer/ticket_escalation_warning/cs.html.erb
-#: app/views/mailer/ticket_escalation_warning/de.html.erb
 #: app/views/mailer/ticket_escalation_warning/es.html.erb
 #: app/views/mailer/ticket_escalation_warning/fr.html.erb
 #: app/views/mailer/ticket_escalation_warning/it.html.erb
@@ -6320,7 +6316,6 @@ msgstr ""
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb
 #: app/views/mailer/ticket_reminder_reached/cs.html.erb
-#: app/views/mailer/ticket_reminder_reached/de.html.erb
 #: app/views/mailer/ticket_reminder_reached/es.html.erb
 #: app/views/mailer/ticket_reminder_reached/fr.html.erb
 #: app/views/mailer/ticket_reminder_reached/it.html.erb
@@ -6329,7 +6324,6 @@ msgstr ""
 #: app/views/mailer/ticket_reminder_reached/zh-cn.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-tw.html.erb
 #: app/views/mailer/ticket_update/cs.html.erb
-#: app/views/mailer/ticket_update/de.html.erb
 #: app/views/mailer/ticket_update/es.html.erb
 #: app/views/mailer/ticket_update/fr.html.erb
 #: app/views/mailer/ticket_update/it.html.erb
@@ -7755,7 +7749,7 @@ msgid ""
 "<br>\n"
 "<div>\n"
 "  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\" "
-"target=\"zammad_app\">View this in Zammad</a>\n"
+"target=\"zammad_app\">View this in #{config.product_name}</a>\n"
 "</div>\n"
 msgstr ""
 
@@ -8485,7 +8479,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco
 #: app/graphql/gql/types/overview_type.rb
 #: app/views/mailer/ticket_create/cs.html.erb
-#: app/views/mailer/ticket_create/de.html.erb
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/it.html.erb
@@ -10435,7 +10428,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/package.jst.eco
 #: app/graphql/gql/types/overview_type.rb
 #: app/views/mailer/ticket_create/cs.html.erb
-#: app/views/mailer/ticket_create/de.html.erb
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/it.html.erb
@@ -10707,7 +10699,7 @@ msgid ""
 "<br>\n"
 "<div>#{customer.fullname}</div>\n"
 "<br>\n"
-"<div>The Zammad Project</div>\n"
+"<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee
@@ -11731,7 +11723,7 @@ msgid ""
 "<br>\n"
 "<div>\n"
 "  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\" "
-"target=\"zammad_app\">View this in Zammad</a>\n"
+"target=\"zammad_app\">View this in #{config.product_name}</a>\n"
 "</div>\n"
 msgstr ""
 
@@ -11870,7 +11862,7 @@ msgid ""
 "<br>\n"
 "<div>\n"
 "  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\" "
-"target=\"zammad_app\">View this in Zammad</a>\n"
+"target=\"zammad_app\">View this in #{config.product_name}</a>\n"
 "</div>\n"
 msgstr ""
 
@@ -11906,7 +11898,7 @@ msgid ""
 "<br>\n"
 "<div>\n"
 "  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\" "
-"target=\"zammad_app\">View this in Zammad</a>\n"
+"target=\"zammad_app\">View this in #{config.product_name}</a>\n"
 "</div>\n"
 msgstr ""
 
@@ -12489,7 +12481,7 @@ msgid ""
 "<div>\n"
 "  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}<% "
 "if @objects[:article] %>/#{article.id}<% end %>\" target=\"zammad_app\">View "
-"this in Zammad</a>\n"
+"this in #{config.product_name}</a>\n"
 "</div>\n"
 msgstr ""
 
@@ -12793,7 +12785,6 @@ msgid "View from user's perspective"
 msgstr "사용자의 관점에서보기"
 
 #: app/views/mailer/ticket_create/cs.html.erb
-#: app/views/mailer/ticket_create/de.html.erb
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/it.html.erb
@@ -12801,7 +12792,6 @@ msgstr "사용자의 관점에서보기"
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
 #: app/views/mailer/ticket_escalation/cs.html.erb
-#: app/views/mailer/ticket_escalation/de.html.erb
 #: app/views/mailer/ticket_escalation/es.html.erb
 #: app/views/mailer/ticket_escalation/fr.html.erb
 #: app/views/mailer/ticket_escalation/it.html.erb
@@ -12809,7 +12799,6 @@ msgstr "사용자의 관점에서보기"
 #: app/views/mailer/ticket_escalation/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation/zh-tw.html.erb
 #: app/views/mailer/ticket_escalation_warning/cs.html.erb
-#: app/views/mailer/ticket_escalation_warning/de.html.erb
 #: app/views/mailer/ticket_escalation_warning/es.html.erb
 #: app/views/mailer/ticket_escalation_warning/fr.html.erb
 #: app/views/mailer/ticket_escalation_warning/it.html.erb
@@ -12817,7 +12806,6 @@ msgstr "사용자의 관점에서보기"
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb
 #: app/views/mailer/ticket_reminder_reached/cs.html.erb
-#: app/views/mailer/ticket_reminder_reached/de.html.erb
 #: app/views/mailer/ticket_reminder_reached/es.html.erb
 #: app/views/mailer/ticket_reminder_reached/fr.html.erb
 #: app/views/mailer/ticket_reminder_reached/it.html.erb
@@ -12825,7 +12813,6 @@ msgstr "사용자의 관점에서보기"
 #: app/views/mailer/ticket_reminder_reached/zh-cn.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-tw.html.erb
 #: app/views/mailer/ticket_update/cs.html.erb
-#: app/views/mailer/ticket_update/de.html.erb
 #: app/views/mailer/ticket_update/es.html.erb
 #: app/views/mailer/ticket_update/fr.html.erb
 #: app/views/mailer/ticket_update/it.html.erb

@@ -1,6 +1,6 @@
 Ticket wird eskalieren (#{ticket.title})
 
-<div>Hallo #{recipient.firstname},</div>
+<div>Hallo #{recipient.fullname},</div>
 <br>
 <div>das Ticket (#{ticket.title}) von "<b>#{ticket.customer.longname}</b>" wird um "#{ticket.escalation_at}" eskalieren!</div>
 <br>
@@ -14,5 +14,5 @@ Ticket wird eskalieren (#{ticket.title})
 <% end %>
 <br>
 <div>
-  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">In Zammad anzeigen</a>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">In #{config.product_name} anzeigen</a>
 </div>
