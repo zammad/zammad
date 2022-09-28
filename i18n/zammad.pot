@@ -946,7 +946,7 @@ msgstr ""
 #. This is the template file app/views/mailer/ticket_update_received_merge/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/ticket_update_received_merge/en.html.erb
-msgid "Another ticket was merged into ticket (#{ticket.title})\n\n<div>Hi #{recipient.firstname},</div>\n<br>\n<div>\nAnother ticket was merged into ticket (#{ticket.title}) by \"<b>#{current_user.longname}</b>\".\n</div>\n<br>\n<div>\n  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\" target=\"zammad_app\">View this in Zammad</a>\n</div>\n"
+msgid "Another ticket was merged into ticket (#{ticket.title})\n\n<div>Hi #{recipient.firstname},</div>\n<br>\n<div>\nAnother ticket was merged into ticket (#{ticket.title}) by \"<b>#{current_user.longname}</b>\".\n</div>\n<br>\n<div>\n  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\" target=\"zammad_app\">View this in #{config.product_name}</a>\n</div>\n"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee
@@ -4182,7 +4182,7 @@ msgstr ""
 #. This is the template file app/views/mailer/ticket_escalation/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/ticket_escalation/en.html.erb
-msgid "Escalated ticket (#{ticket.title})\n\n<div>Hi #{recipient.firstname},</div>\n<br>\n<div>The ticket (#{ticket.title}) from \"<b>#{ticket.customer.longname}</b>\" has been escalated since \"#{ticket.escalation_at}\"!</div>\n<br>\n<% if @objects[:article] %>\n  <div>\n  Information:\n  <blockquote type=\"cite\">\n  #{article.body_as_html}\n  </blockquote>\n  </div>\n<% end %>\n<br>\n<div>\n  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\" target=\"zammad_app\">View this in Zammad</a>\n</div>\n"
+msgid "Escalated ticket (#{ticket.title})\n\n<div>Hi #{recipient.firstname},</div>\n<br>\n<div>The ticket (#{ticket.title}) from \"<b>#{ticket.customer.longname}</b>\" has been escalated since \"#{ticket.escalation_at}\"!</div>\n<br>\n<% if @objects[:article] %>\n  <div>\n  Information:\n  <blockquote type=\"cite\">\n  #{article.body_as_html}\n  </blockquote>\n  </div>\n<% end %>\n<br>\n<div>\n  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\" target=\"zammad_app\">View this in #{config.product_name}</a>\n</div>\n"
 msgstr ""
 
 #: lib/excel_sheet/ticket.rb
@@ -6712,7 +6712,7 @@ msgstr ""
 #. This is the template file app/views/mailer/ticket_create/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/ticket_create/en.html.erb
-msgid "New ticket (#{ticket.title})\n\n<div>Hi #{recipient.firstname},</div>\n<br>\n<div>The new ticket (#{ticket.title}) has been created by \"<b>#{current_user.longname}</b>\".</div>\n<br>\n<div>\nGroup: #{ticket.group.name}<br>\nOwner: #{ticket.owner.fullname}<br>\nState: #{t(ticket.state.name)}<br>\n</div>\n<br>\n<% if @objects[:article] %>\n  <div>\n  Information:\n  <blockquote type=\"cite\">\n  #{article.body_as_html}\n  </blockquote>\n  </div>\n<% end %>\n<br>\n<div>\n  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\" target=\"zammad_app\">View this in Zammad</a>\n</div>\n"
+msgid "New ticket (#{ticket.title})\n\n<div>Hi #{recipient.firstname},</div>\n<br>\n<div>The new ticket (#{ticket.title}) has been created by \"<b>#{current_user.longname}</b>\".</div>\n<br>\n<div>\nGroup: #{ticket.group.name}<br>\nOwner: #{ticket.owner.fullname}<br>\nState: #{t(ticket.state.name)}<br>\n</div>\n<br>\n<% if @objects[:article] %>\n  <div>\n  Information:\n  <blockquote type=\"cite\">\n  #{article.body_as_html}\n  </blockquote>\n  </div>\n<% end %>\n<br>\n<div>\n  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\" target=\"zammad_app\">View this in #{config.product_name}</a>\n</div>\n"
 msgstr ""
 
 #: app/frontend/apps/mobile/modules/login/views/Login.vue
@@ -9400,7 +9400,7 @@ msgstr ""
 #. This is the template file app/views/mailer/test_ticket/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/test_ticket/en.html.erb
-msgid "Test Ticket!\n\n<div>Dear #{agent.firstname},</div>\n<br>\n<div>This is a <b>test ticket</b>. I'm a customer and I need some help! :)</div>\n<br>\n<div>#{customer.fullname}</div>\n<br>\n<div>The Zammad Project</div>\n"
+msgid "Test Ticket!\n\n<div>Dear #{agent.firstname},</div>\n<br>\n<div>This is a <b>test ticket</b>. I'm a customer and I need some help! :)</div>\n<br>\n<div>#{customer.fullname}</div>\n<br>\n<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee
@@ -10242,7 +10242,7 @@ msgstr ""
 #. This is the template file app/views/mailer/ticket_update_merged_into/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/ticket_update_merged_into/en.html.erb
-msgid "Ticket (#{ticket.title}) was merged into another ticket\n\n<div>Hi #{recipient.firstname},</div>\n<br>\n<div>\nThe ticket (#{ticket.title}) was merged into another ticket by \"<b>#{current_user.longname}</b>\".\n</div>\n<br>\n<div>\n  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\" target=\"zammad_app\">View this in Zammad</a>\n</div>\n"
+msgid "Ticket (#{ticket.title}) was merged into another ticket\n\n<div>Hi #{recipient.firstname},</div>\n<br>\n<div>\nThe ticket (#{ticket.title}) was merged into another ticket by \"<b>#{current_user.longname}</b>\".\n</div>\n<br>\n<div>\n  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\" target=\"zammad_app\">View this in #{config.product_name}</a>\n</div>\n"
 msgstr ""
 
 #: app/models/report.rb
@@ -10347,7 +10347,7 @@ msgstr ""
 #. This is the template file app/views/mailer/ticket_reminder_reached/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/ticket_reminder_reached/en.html.erb
-msgid "Ticket reminder reached (#{ticket.title})\n\n<div>Hi #{recipient.firstname},</div>\n<br>\n<div>A ticket needs attention: reminder reached for (#{ticket.title}) with customer \"<b>#{ticket.customer.longname}</b>\".</div>\n<br>\n<% if @objects[:article] %>\n  <div>\n  Information:\n  <blockquote type=\"cite\">\n  #{article.body_as_html}\n  </blockquote>\n  </div>\n<% end %>\n<br>\n<div>\n  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\" target=\"zammad_app\">View this in Zammad</a>\n</div>\n"
+msgid "Ticket reminder reached (#{ticket.title})\n\n<div>Hi #{recipient.firstname},</div>\n<br>\n<div>A ticket needs attention: reminder reached for (#{ticket.title}) with customer \"<b>#{ticket.customer.longname}</b>\".</div>\n<br>\n<% if @objects[:article] %>\n  <div>\n  Information:\n  <blockquote type=\"cite\">\n  #{article.body_as_html}\n  </blockquote>\n  </div>\n<% end %>\n<br>\n<div>\n  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\" target=\"zammad_app\">View this in #{config.product_name}</a>\n</div>\n"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
@@ -10361,7 +10361,7 @@ msgstr ""
 #. This is the template file app/views/mailer/ticket_escalation_warning/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/ticket_escalation_warning/en.html.erb
-msgid "Ticket will escalate (#{ticket.title})\n\n<div>Hi #{recipient.firstname},</div>\n<br>\n<div>The ticket (#{ticket.title}) from \"<b>#{ticket.customer.longname}</b>\" will escalate at \"#{ticket.escalation_at}\"!</div>\n<br>\n<% if @objects[:article] %>\n  <div>\n  Information:\n  <blockquote type=\"cite\">\n  #{article.body_as_html}\n  </blockquote>\n  </div>\n<% end %>\n<br>\n<div>\n  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\" target=\"zammad_app\">View this in Zammad</a>\n</div>\n"
+msgid "Ticket will escalate (#{ticket.title})\n\n<div>Hi #{recipient.firstname},</div>\n<br>\n<div>The ticket (#{ticket.title}) from \"<b>#{ticket.customer.longname}</b>\" will escalate at \"#{ticket.escalation_at}\"!</div>\n<br>\n<% if @objects[:article] %>\n  <div>\n  Information:\n  <blockquote type=\"cite\">\n  #{article.body_as_html}\n  </blockquote>\n  </div>\n<% end %>\n<br>\n<div>\n  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\" target=\"zammad_app\">View this in #{config.product_name}</a>\n</div>\n"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee
@@ -10884,7 +10884,7 @@ msgstr ""
 #. This is the template file app/views/mailer/ticket_update/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/ticket_update/en.html.erb
-msgid "Updated ticket (#{ticket.title})\n\n<div>Hi #{recipient.firstname},</div>\n<br>\n<div>\nTicket (#{ticket.title}) has been updated by \"<b>#{current_user.longname}</b>\".\n</div>\n<br>\n<% if @objects[:changes].present? %>\n  <div>\n  Changes:<br>\n  <% @objects[:changes].each do |key, value| %>\n    <%= t key %>: <%= h value[0] %> -&gt; <%= h value[1] %><br>\n  <% end %>\n  </div>\n<% end %>\n<br>\n<% if @objects[:article] %>\n  <div>\n  Information:\n  <blockquote type=\"cite\">\n  #{article.body_as_html}\n  </blockquote>\n  </div>\n<% end %>\n<br>\n<div>\n  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}<% if @objects[:article] %>/#{article.id}<% end %>\" target=\"zammad_app\">View this in Zammad</a>\n</div>\n"
+msgid "Updated ticket (#{ticket.title})\n\n<div>Hi #{recipient.firstname},</div>\n<br>\n<div>\nTicket (#{ticket.title}) has been updated by \"<b>#{current_user.longname}</b>\".\n</div>\n<br>\n<% if @objects[:changes].present? %>\n  <div>\n  Changes:<br>\n  <% @objects[:changes].each do |key, value| %>\n    <%= t key %>: <%= h value[0] %> -&gt; <%= h value[1] %><br>\n  <% end %>\n  </div>\n<% end %>\n<br>\n<% if @objects[:article] %>\n  <div>\n  Information:\n  <blockquote type=\"cite\">\n  #{article.body_as_html}\n  </blockquote>\n  </div>\n<% end %>\n<br>\n<div>\n  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}<% if @objects[:article] %>/#{article.id}<% end %>\" target=\"zammad_app\">View this in #{config.product_name}</a>\n</div>\n"
 msgstr ""
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
