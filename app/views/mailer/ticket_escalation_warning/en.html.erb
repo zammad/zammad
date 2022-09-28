@@ -2,11 +2,11 @@ Ticket will escalate (#{ticket.title})
 
 <div>Hi #{recipient.firstname},</div>
 <br>
-<div>A ticket (#{ticket.title}) from "<b>#{ticket.customer.longname}</b>" will escalate at "#{ticket.escalation_at}"!</div>
+<div>The ticket (#{ticket.title}) from "<b>#{ticket.customer.longname}</b>" will escalate at "#{ticket.escalation_at}"!</div>
 <br>
 <% if @objects[:article] %>
   <div>
-  #{t('Information')}:
+  Information:
   <blockquote type="cite">
   #{article.body_as_html}
   </blockquote>
@@ -14,5 +14,5 @@ Ticket will escalate (#{ticket.title})
 <% end %>
 <br>
 <div>
-  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">#{t('View this in Zammad')}</a>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">View this in Zammad</a>
 </div>

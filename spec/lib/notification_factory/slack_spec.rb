@@ -89,8 +89,8 @@ RSpec.describe NotificationFactory::Slack do
 
       it 'returns a hash with body: <ticket customer, escalation time, & body>' do
         expect(template[:body])
-          .to match(%r{A ticket \(#{ticket.title}\) from "#{ticket.customer.fullname}"})
-          .and match(%r{is escalated since "04/01/2019 12:00 pm \(Europe/Berlin\)"!})
+          .to match(%r{The ticket \(#{ticket.title}\) from "#{ticket.customer.fullname}"})
+          .and match(%r{escalated since "04/01/2019 12:00 pm \(Europe/Berlin\)"!})
           .and match(%r{#{article.body}\z})
       end
     end

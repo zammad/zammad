@@ -117,7 +117,7 @@ class NotificationFactoryMailerTemplateTest < ActiveSupport::TestCase
         changes:      changes,
       },
     )
-    assert_match('New Ticket', result[:subject])
+    assert_match('New ticket', result[:subject])
     assert_match('Notification&lt;b&gt;xxx&lt;/b&gt;', result[:body])
     assert_match('has been created by', result[:body])
     assert_match('&lt;b&gt;test123&lt;/b&gt;', result[:body])
@@ -173,7 +173,7 @@ class NotificationFactoryMailerTemplateTest < ActiveSupport::TestCase
         changes:      changes,
       },
     )
-    assert_match('Updated Ticket', result[:subject])
+    assert_match('Updated ticket', result[:subject])
     assert_match('Notification&lt;b&gt;xxx&lt;/b&gt;', result[:body])
     assert_match('has been updated by', result[:body])
     assert_match('<b>test123</b>', result[:body])
@@ -233,7 +233,7 @@ class NotificationFactoryMailerTemplateTest < ActiveSupport::TestCase
         changes:      changes,
       },
     )
-    assert_match('Updated Ticket', result[:subject])
+    assert_match('Updated ticket', result[:subject])
     assert_match('Notification&lt;b&gt;xxx&lt;/b&gt;', result[:body])
     assert_match('has been updated by', result[:body])
     assert_match('<b>test123</b>', result[:body])

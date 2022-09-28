@@ -1259,8 +1259,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
       }
     )
 
-    assert_match('Ticket is escalated (some notification template test 1 Bobs\'s resumé', result[:subject])
-    assert_match('is escalated since "04/01/2019  6:00 am (America/St_Lucia)"!', result[:body])
+    assert_match('Escalated ticket (some notification template test 1 Bobs\'s resumé', result[:subject])
+    assert_match('escalated since "04/01/2019  6:00 am (America/St_Lucia)"!', result[:body])
 
   end
 
