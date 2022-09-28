@@ -644,16 +644,16 @@ example for aggregations within one year
           t[:query_string] = {}
           case data['operator']
           when 'contains all'
-            t[:query_string][:query] = "#{key_tmp}:\"#{values.join('" AND "')}\""
+            t[:query_string][:query] = "#{key_tmp}:(\"#{values.join('" AND "')}\")"
             query_must.push t
           when 'contains one not'
-            t[:query_string][:query] = "#{key_tmp}:\"#{values.join('" OR "')}\""
+            t[:query_string][:query] = "#{key_tmp}:(\"#{values.join('" OR "')}\")"
             query_must_not.push t
           when 'contains one'
-            t[:query_string][:query] = "#{key_tmp}:\"#{values.join('" OR "')}\""
+            t[:query_string][:query] = "#{key_tmp}:(\"#{values.join('" OR "')}\")"
             query_must.push t
           when 'contains all not'
-            t[:query_string][:query] = "#{key_tmp}:\"#{values.join('" AND "')}\""
+            t[:query_string][:query] = "#{key_tmp}:(\"#{values.join('" AND "')}\")"
             query_must_not.push t
           end
 

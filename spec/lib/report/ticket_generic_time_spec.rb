@@ -35,6 +35,191 @@ RSpec.describe Report::TicketGenericTime, searchindex: true do
 
       expect(result).to eq [0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 1, 0]
     end
+
+    context 'when report profile has a ticket tag condition' do
+      shared_examples 'getting the correct aggregated results' do
+        it { expect(result).to eq expected_result }
+      end
+
+      # With tag1
+      let(:ticket_1) do
+        travel_to DateTime.new 2015, 1, 28, 9, 30
+        ticket = create(:ticket,
+                        group:    group_2,
+                        customer: customer)
+
+        ticket.tag_add('tag1', 1)
+        travel_back
+        ticket
+      end
+
+      # With tag2
+      let(:ticket_2) do
+        travel_to DateTime.new 2015, 2, 28, 9, 30
+        ticket = create(:ticket,
+                        group:    group_1,
+                        customer: customer)
+
+        ticket.tag_add('tag2', 1)
+        travel_back
+        ticket
+      end
+
+      # Without tag1 or tag2, but article with tag1
+      let(:ticket_3) do
+        travel_to DateTime.new 2015, 3, 28, 9, 30
+        ticket = create(:ticket,
+                        group:    group_1,
+                        customer: customer)
+        create(:ticket_article, ticket: ticket, body: 'tag1')
+        travel_back
+        ticket
+      end
+
+      # Without tag1 or tag2, but article with tag2
+      let(:ticket_4) do
+        travel_to DateTime.new 2015, 4, 28, 9, 30
+        ticket = create(:ticket,
+                        group:    group_1,
+                        customer: customer)
+        create(:ticket_article, ticket: ticket, body: 'tag2')
+        travel_back
+        ticket
+      end
+
+      # With tag1 and tag2
+      let(:ticket_5) do
+        travel_to DateTime.new 2015, 5, 28, 9, 30
+        ticket = create(:ticket,
+                        group:    group_1,
+                        customer: customer)
+        create(:ticket_article, ticket: ticket)
+        ticket.tag_add('tag1', 1)
+        ticket.tag_add('tag2', 1)
+        travel_back
+        ticket
+      end
+
+      # With tag1 and tag2, with article body tag1
+      let(:ticket_6) do
+        travel_to DateTime.new 2015, 6, 28, 9, 30
+        ticket = create(:ticket,
+                        group:    group_1,
+                        customer: customer)
+        create(:ticket_article, ticket: ticket, body: 'tag1')
+        ticket.tag_add('tag1', 1)
+        ticket.tag_add('tag2', 1)
+        travel_back
+        ticket
+      end
+
+      # With tag1 and tag2, with article body tag2
+      let(:ticket_7) do
+        travel_to DateTime.new 2015, 7, 28, 9, 30
+        ticket = create(:ticket,
+                        group:    group_1,
+                        customer: customer)
+        create(:ticket_article, ticket: ticket, body: 'tag1')
+        ticket.tag_add('tag1', 1)
+        ticket.tag_add('tag2', 1)
+        travel_back
+        ticket
+      end
+
+      # With tag1 and tag2, with article body tag1 and tag2
+      let(:ticket_8) do
+        travel_to DateTime.new 2015, 8, 28, 9, 30
+        ticket = create(:ticket,
+                        group:    group_1,
+                        customer: customer)
+        create(:ticket_article, ticket: ticket, body: 'tag1')
+        create(:ticket_article, ticket: ticket, body: 'tag2')
+        ticket.tag_add('tag1', 1)
+        ticket.tag_add('tag2', 1)
+        travel_back
+        ticket
+      end
+
+      # Without tag1 or tag2, and without article with tag1 or tag2
+      let(:ticket_9) do
+        travel_to DateTime.new 2015, 4, 28, 9, 30
+        ticket = create(:ticket,
+                        group:    group_1,
+                        customer: customer)
+        travel_back
+        ticket
+      end
+
+      let(:result) do
+        described_class.aggs(
+          range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+          range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
+          interval:    'month',
+          selector:    selector,
+          params:      { field: 'created_at' },
+        )
+      end
+
+      context 'with contains all' do
+        let(:selector) do
+          {
+            'ticket.tags' => {
+              'operator' => 'contains all',
+              'value'    => 'tag1, tag2'
+            }
+          }
+        end
+
+        let(:expected_result) { [0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0] }
+
+        it_behaves_like 'getting the correct aggregated results'
+      end
+
+      context 'with contains one not' do
+        let(:selector) do
+          {
+            'ticket.tags' => {
+              'operator' => 'contains one not',
+              'value'    => 'tag1, tag2'
+            }
+          }
+        end
+
+        let(:expected_result) { [0, 0, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0] }
+
+        it_behaves_like 'getting the correct aggregated results'
+      end
+
+      context 'with contains one' do
+        let(:selector) do
+          {
+            'ticket.tags' => {
+              'operator' => 'contains one',
+              'value'    => 'tag1, tag2'
+            }
+          }
+        end
+
+        let(:expected_result) { [1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0] }
+
+        it_behaves_like 'getting the correct aggregated results'
+      end
+
+      context 'with contains all not' do
+        let(:selector) do
+          {
+            'ticket.tags' => {
+              'operator' => 'contains all not',
+              'value'    => 'tag1, tag2'
+            }
+          }
+        end
+
+        let(:expected_result) { [1, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0] }
+
+        it_behaves_like 'getting the correct aggregated results'
+      end
+    end
   end
 
   describe '.items' do
