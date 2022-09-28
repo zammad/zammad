@@ -31,6 +31,11 @@
 <% end %>
 
 <div class="page-content">
+<% if _.isEmpty(@channels): %>
+  <table class="table table--placeholder">
+    <thead><tr><th><%- @T('No Entries') %>
+  </table>
+<% end %>
 <% for channel in @channels: %>
   <div class="action <% if channel.active isnt true: %>is-inactive<% end %>" data-id="<%= channel.id %>">
     <div class="action-flow" style="width: 100%;">

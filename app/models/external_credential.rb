@@ -11,9 +11,9 @@ class ExternalCredential < ApplicationModel
     backend.app_verify(params)
   end
 
-  def self.request_account_to_link(provider)
+  def self.request_account_to_link(provider, params = {})
     backend = load_backend(provider)
-    backend.request_account_to_link
+    backend.request_account_to_link(params)
   end
 
   def self.link_account(provider, request_token, params)

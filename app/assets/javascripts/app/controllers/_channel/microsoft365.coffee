@@ -36,6 +36,7 @@ class ChannelAccountOverview extends App.ControllerSubContent
   requiredPermission: 'admin.channel_microsoft365'
   events:
     'click .js-new':                'new'
+    'click .js-admin-consent':      'adminConsent'
     'click .js-delete':             'delete'
     'click .js-reauthenticate':     'reauthenticate'
     'click .js-configApp':          'configApp'
@@ -126,6 +127,10 @@ class ChannelAccountOverview extends App.ControllerSubContent
         @editInbound(undefined, @channel_id, true)
         @channel_id = undefined
 
+    if @error_code is 'AADSTS65004'
+      @error_code = undefined
+      new AdminConsentInfo(container: @container)
+
   show: (params) =>
     for key, value of params
       if key isnt 'el' && key isnt 'shown' && key isnt 'match'
@@ -140,6 +145,9 @@ class ChannelAccountOverview extends App.ControllerSubContent
 
   new: (e) ->
     window.location.href = "#{@apiPath}/external_credentials/microsoft365/link_account"
+
+  adminConsent: (e) ->
+    window.location.href = "#{@apiPath}/external_credentials/microsoft365/link_account?prompt=consent"
 
   delete: (e) =>
     e.preventDefault()
@@ -427,5 +435,17 @@ class AppConfig extends App.ControllerModal
         @formEnable(e)
         @el.find('.alert').removeClass('hidden').text(data.error || __('App could not be verified.'))
     )
+
+class AdminConsentInfo extends App.ControllerModal
+  buttonClose: true
+  small: true
+  buttonSubmit: __('Close')
+  head: __('Admin Consent')
+
+  content: ->
+    App.view('microsoft365/admin_consent')()
+
+  onSubmit: =>
+    @close()
 
 App.Config.set('microsoft365', { prio: 5000, name: __('Microsoft 365'), parent: '#channels', target: '#channels/microsoft365', controller: App.ChannelMicrosoft365, permission: ['admin.channel_microsoft365'] }, 'NavBarAdmin')

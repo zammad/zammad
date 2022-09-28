@@ -6,6 +6,7 @@
   <div class="page-header-meta">
     <a class="btn js-configApp"><%- @T('Configure App') %></a>
     <a class="btn btn--success js-new"><%- @T('Add Account') %></a>
+    <a class="btn btn--success js-admin-consent"><%- @T('Request Admin Consent') %></a>
   </div>
 </div>
 
@@ -31,6 +32,11 @@
 <% end %>
 
 <div class="page-content">
+<% if _.isEmpty(@channels): %>
+  <table class="table table--placeholder">
+    <thead><tr><th><%- @T('No Entries') %>
+  </table>
+<% end %>
 <% for channel in @channels: %>
   <div class="action <% if channel.active isnt true: %>is-inactive<% end %>" data-id="<%= channel.id %>">
     <div class="action-flow" style="width: 100%;">
