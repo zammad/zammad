@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-09-26 12:39+0000\n"
-"Last-Translator: Martin Gruner <mg@zammad.com>\n"
+"PO-Revision-Date: 2022-09-28 03:30+0000\n"
+"Last-Translator: Daniel Garcia <gm.dani@gmail.com>\n"
 "Language-Team: Spanish <https://translations.zammad.org/projects/zammad/"
 "zammad-development/es/>\n"
 "Language: es-es\n"
@@ -231,8 +231,8 @@ msgstr ""
 "\n"
 "<div>Buenos días #{user.firstname},</div>\n"
 "<br>\n"
-"<div>parece haber accedido a <b>un nuevo dispositivo</b> para \"#{user_device"
-".created_at}\" a:</div>\n"
+"<div>parece haber accedido a <b>un nuevo dispositivo</b> para "
+"\"#{user_device.created_at}\" a:</div>\n"
 "<br>\n"
 "<div>\n"
 "Su dispositivo: #{user_device.name}<br>\n"
@@ -276,7 +276,7 @@ msgstr "%s Migración"
 
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "%s Role"
-msgstr "%s Ro"
+msgstr "%s Rol"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
@@ -348,7 +348,7 @@ msgstr "%s carpetas"
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco
 msgid "%s groups to %s roles assignments"
-msgstr "Asignación de %s grupo a %s rol."
+msgstr "Asignación de %s grupo a %s rol"
 
 #: app/frontend/shared/i18n/dates.ts
 msgid "%s hours ago"
@@ -1007,7 +1007,7 @@ msgstr "Añadir encabezado de tercer nivel"
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
 msgid "Add this class to a button on your page that should open the chat."
-msgstr "Añadir esta clase a un botón en tu página para abrir un chat"
+msgstr "Añadir esta clase a un botón en tu página para abrir un chat."
 
 #: app/controllers/first_steps_controller.rb
 msgid "Additional Channels"
@@ -1147,7 +1147,7 @@ msgstr "Todos los colegas están ocupados."
 msgid "All computers and browsers that have access to your Zammad appear here."
 msgstr ""
 "Todas las computadoras y buscadores que tienen acceso a tu Zammad aparecen "
-"aquí"
+"aquí."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Allow future"
@@ -1216,7 +1216,7 @@ msgstr "Ocurrió un error: %s"
 #: app/assets/javascripts/app/controllers/_integration/monit.coffee
 #: app/assets/javascripts/app/controllers/_integration/nagios.coffee
 msgid "An open-source monitoring tool."
-msgstr "Una herramienta de monitoreo de código abierto"
+msgstr "Una herramienta de monitorización de código abierto."
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
@@ -1294,7 +1294,7 @@ msgstr "Version de aplicacion"
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee
 msgid "App could not be verified."
-msgstr "Cuenta no verificada."
+msgstr "La aplicación no pudo ser verificada."
 
 #: db/seeds/settings.rb
 msgid "App credentials for Facebook."
@@ -1460,15 +1460,15 @@ msgid ""
 "Assignment timeout in minutes if assigned agent is not working on it. Ticket "
 "will be shown as unassigend."
 msgstr ""
-"Tiempo asignado en minutos si el agente no está trabajando en esta tarea.  "
-"El ticket se mostrará como \"no asignado\""
+"Tiempo asignado en minutos si el agente no está trabajando en esta tarea. El "
+"Ticket se mostrará como \"no asignado\"."
 
 #: app/models/user.rb
 msgid ""
 "At least one identifier (firstname, lastname, phone or email) for user is "
 "required."
 msgstr ""
-"Al menos un identificador (nombre, apellido, teléfono o email) para e "
+"Al menos un identificador (nombre, apellido, teléfono o email) para el "
 "usuario es obligatorio."
 
 #: app/models/object_manager/attribute.rb
@@ -1896,7 +1896,7 @@ msgstr "CC"
 
 #: app/assets/javascripts/app/controllers/_integration/idoit.coffee
 msgid "CMDB to document complex relations of your network components."
-msgstr "CMDB para documentar los elementos de los componentes de red"
+msgstr "CMDB para documentar los elementos de los componentes de red."
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
 msgid ""
@@ -1904,7 +1904,7 @@ msgid ""
 "the font-size of the website."
 msgstr ""
 "Tamaño de fuente de CSS en unidades, como 12px, 1,5 pulgadas. Si no se "
-"define, herada el tamaño de fuente de la página."
+"define, heredará el tamaño de fuente de la página."
 
 #: app/assets/javascripts/app/controllers/cti.coffee db/seeds/permissions.rb
 msgid "CTI"
@@ -2147,7 +2147,8 @@ msgstr "Los cambios no se han guardado."
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Changes were made that require a database update."
-msgstr "Se efectuaron modificaciones que requieren actualizar la base de datos"
+msgstr ""
+"Se efectuaron modificaciones que requieren actualizar la base de datos."
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
@@ -2285,7 +2286,7 @@ msgstr "Hijo"
 
 #: app/assets/javascripts/app/views/widget/template.jst.eco
 msgid "Choose attributes and then save them as a new template."
-msgstr "Elige los atributos y luego guárdalos como una nueva plantilla"
+msgstr "Elige los atributos y luego guárdalos como una nueva plantilla."
 
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
 msgid "Choose if retweets should also be converted to tickets."
@@ -2567,12 +2568,12 @@ msgstr ""
 "<div>Buenos días #{user.firstname},</div>\n"
 "<br>\n"
 "<div>confirma la dirección de correo electrónico para completar la "
-"registración para #{config.product_name}. Cliccar sobre el link abajo.</div>"
-"\n"
+"registración para #{config.product_name}. Cliccar sobre el link abajo.</"
+"div>\n"
 "<br>\n"
 "<div><a href=\"#{config.http_type}://#{config.fqdn}/#email_verify/#{token."
-"name}\">#{config.http_type}://#{config.fqdn}/#email_verify/#{token."
-"name}</a></div>\n"
+"name}\">#{config.http_type}://#{config.fqdn}/#email_verify/#{token.name}</"
+"a></div>\n"
 "<br>\n"
 "<div>Siempre atentamente </div>\n"
 "<br>\n"
@@ -3344,17 +3345,23 @@ msgid ""
 "Defines a limit for how many tickets can be created via web form from one IP "
 "address per day."
 msgstr ""
+"Define un límite de cuántos tickets pueden ser creados vía web desde una "
+"misma IP por día."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines a limit for how many tickets can be created via web form from one IP "
 "address per hour."
 msgstr ""
+"Define un límite de cuántos tickets pueden ser creados vía web desde una "
+"misma IP por hora."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines a limit for how many tickets can be created via web form per day."
 msgstr ""
+"Define un límite de cuántos tickets pueden ser creados vía formulario web "
+"por día."
 
 #: db/seeds/settings.rb
 #, fuzzy
@@ -3372,6 +3379,7 @@ msgstr ""
 #: db/seeds/settings.rb
 msgid "Defines attachment extensions which will be ignored by Elasticsearch."
 msgstr ""
+"Define las extensiones de los adjuntos que serán ignoradas por Elasticsearch."
 
 #: db/seeds/settings.rb
 msgid "Defines endpoint of Elasticsearch."
@@ -6611,12 +6619,12 @@ msgstr ""
 "<div>Buenos días #{user.firstname},</div>\n"
 "<br>\n"
 "<div>A mi (#{current_user.firstname} #{current_user.lastname}) me gustaría "
-"invitar a #{config.product_name} - nuestra plataforma Usersupport/"
-"Ticket.</div>\n"
+"invitar a #{config.product_name} - nuestra plataforma Usersupport/Ticket.</"
+"div>\n"
 "<br>\n"
-"<div>Para iniciar sesión <a href=\"#{config.http_type}://#{config.fqdn}/#"
-"password_reset_verify/#{token.name}\">configure aquí</a> la contraseña.</div>"
-"\n"
+"<div>Para iniciar sesión <a href=\"#{config.http_type}://#{config.fqdn}/"
+"#password_reset_verify/#{token.name}\">configure aquí</a> la contraseña.</"
+"div>\n"
 "<br>\n"
 "<div>Gracias,</div>\n"
 "<br>\n"
@@ -10889,8 +10897,8 @@ msgstr ""
 "\n"
 "<div>Buenos días #{agent.firstname},</div>\n"
 "<br>\n"
-"<div>Este es un <b>ticket de prueba </b>. Soy un cliente y necesito ayuda! "
-":)</div>\n"
+"<div>Este es un <b>ticket de prueba </b>. Soy un cliente y necesito "
+"ayuda! :)</div>\n"
 "<br>\n"
 "<div>#{customer.fullname}</div>\n"
 "<br>\n"
@@ -12757,8 +12765,8 @@ msgstr ""
 "<br>\n"
 "<div>\n"
 "  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}<% "
-"if @objects[:article] %>/#{article.id}<% end %>\" target=\"zammad_app\">#{t("
-"'View this in Zammad')}</a>\n"
+"if @objects[:article] %>/#{article.id}<% end %>\" target=\"zammad_app"
+"\">#{t('View this in Zammad')}</a>\n"
 "</div>\n"
 
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee
@@ -13853,8 +13861,8 @@ msgstr ""
 "\n"
 "<div>Buenos días #{user.firstname},</div>\n"
 "<br>\n"
-"<div>la contraseña para acceder a #{config.product_name} cuenta #{user."
-"login}</b> ha cambiado recientemente. </div>\n"
+"<div>la contraseña para acceder a #{config.product_name} cuenta #{user.login}"
+"</b> ha cambiado recientemente. </div>\n"
 "<br>\n"
 "<div>¿Esta actividad es desconocida para vosotros? En este caso, ponerse en "
 "contacto con su administrador de sistema.</div>\n"
