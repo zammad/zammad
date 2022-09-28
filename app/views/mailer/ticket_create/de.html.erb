@@ -2,17 +2,17 @@ Neues Ticket (#{ticket.title})
 
 <div>Hallo #{recipient.firstname},</div>
 <br>
-<div>es wurde ein neues Ticket (#{ticket.title}) von "<b>#{current_user.longname}</b>" erstellt.</div>
+<div>ein neues Ticket (#{ticket.title}) wurde von "<b>#{current_user.longname}</b>" erstellt.</div>
 <br>
 <div>
-#{t('Group')}: #{ticket.group.name}<br>
-#{t('Owner')}: #{ticket.owner.fullname}<br>
-#{t('State')}: #{t(ticket.state.name)}<br>
+Gruppe: #{ticket.group.name}<br>
+Besitzer: #{ticket.owner.fullname}<br>
+Status: #{t(ticket.state.name)}<br>
 </div>
 <br>
 <% if @objects[:article] %>
   <div>
-  #{t('Information')}:
+  Information:
   <blockquote type="cite">
   #{article.body_as_html}
   </blockquote>
@@ -20,5 +20,5 @@ Neues Ticket (#{ticket.title})
 <% end %>
 <br>
 <div>
-  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">#{t('View this in Zammad')}</a>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">In Zammad anzeigen</a>
 </div>

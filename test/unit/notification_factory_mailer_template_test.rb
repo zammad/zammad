@@ -139,7 +139,7 @@ class NotificationFactoryMailerTemplateTest < ActiveSupport::TestCase
     )
     assert_match('Neues Ticket', result[:subject])
     assert_match('Notification&lt;b&gt;xxx&lt;/b&gt;', result[:body])
-    assert_match('es wurde ein neues Ticket', result[:body])
+    assert_match('ein neues Ticket', result[:body])
     assert_match('&lt;b&gt;test123&lt;/b&gt;', result[:body])
     assert_match(Translation.translate('de-de', 'Manage your notification settings'), result[:body])
     assert_no_match('Your', result[:body])
@@ -193,7 +193,7 @@ class NotificationFactoryMailerTemplateTest < ActiveSupport::TestCase
         changes:      changes,
       },
     )
-    assert_match('Ticket aktualisiert', result[:subject])
+    assert_match('Aktualisiertes Ticket', result[:subject])
     assert_match('Notification&lt;b&gt;xxx&lt;/b&gt;', result[:body])
     assert_match('wurde von', result[:body])
     assert_match('<b>test123</b>', result[:body])
@@ -213,7 +213,7 @@ class NotificationFactoryMailerTemplateTest < ActiveSupport::TestCase
         changes:      changes,
       },
     )
-    assert_match('Ticket aktualisiert', result[:subject])
+    assert_match('Aktualisiertes Ticket', result[:subject])
     assert_match('Notification&lt;b&gt;xxx&lt;/b&gt;', result[:body])
     assert_match('wurde von', result[:body])
     assert_match('<b>test123</b>', result[:body])

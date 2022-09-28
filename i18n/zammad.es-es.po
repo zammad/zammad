@@ -70,9 +70,9 @@ msgid ""
 "_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
 "Ticket##{ticket.number}>: Created by #{current_user.longname} at #{ticket."
 "updated_at}_\n"
-"* #{t('Group')}: #{ticket.group.name}\n"
-"* #{t('Owner')}: #{ticket.owner.fullname}\n"
-"* #{t('State')}: #{t(ticket.state.name)}\n"
+"* Group: #{ticket.group.name}\n"
+"* Owner: #{ticket.owner.fullname}\n"
+"* State: #{t(ticket.state.name)}\n"
 "\n"
 "<% if @objects[:article] %>\n"
 "#{article.body_as_text}\n"
@@ -86,8 +86,8 @@ msgid ""
 "# #{ticket.title}\n"
 "_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
 "Ticket##{ticket.number}>: Escalated at #{ticket.escalation_at}_\n"
-"A ticket (#{ticket.title}) from \"#{ticket.customer.longname}\" is escalated "
-"since \"#{ticket.escalation_at}\"!\n"
+"The ticket (#{ticket.title}) from \"#{ticket.customer.longname}\" has been "
+"escalated since \"#{ticket.escalation_at}\"!\n"
 "\n"
 "<% if @objects[:article] %>\n"
 "#{article.body_as_text}\n"
@@ -101,7 +101,7 @@ msgid ""
 "# #{ticket.title}\n"
 "_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
 "Ticket##{ticket.number}>: Reminder reached!_\n"
-"A ticket needs attention, reminder reached for (#{ticket.title}) with "
+"A ticket needs attention: reminder reached for (#{ticket.title}) with "
 "customer \"*#{ticket.customer.longname}*\".\n"
 "\n"
 "<% if @objects[:article] %>\n"
@@ -135,7 +135,7 @@ msgid ""
 "# #{ticket.title}\n"
 "_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
 "Ticket##{ticket.number}>: Will escalate at #{ticket.escalation_at}_\n"
-"A ticket (#{ticket.title}) from \"#{ticket.customer.longname}\" will "
+"The ticket (#{ticket.title}) from \"#{ticket.customer.longname}\" will "
 "escalate at \"#{ticket.escalation_at}\"!\n"
 "\n"
 "<% if @objects[:article] %>\n"
@@ -146,12 +146,38 @@ msgstr ""
 #. This is the template file app/views/mailer/user_device_new_location/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/user_device_new_location/en.html.erb
+#, fuzzy
+#| msgid ""
+#| "#{config.product_name} signin detected from a new country\n"
+#| "\n"
+#| "<div>Hi #{user.firstname},</div>\n"
+#| "<br>\n"
+#| "<div>It looks like you used your account with an <b>known device but from "
+#| "a new country</b> on \"#{user_device.created_at}\":</div>\n"
+#| "<br>\n"
+#| "<div>\n"
+#| "Your device: #{user_device.name}<br>\n"
+#| "Your location (relative): #{user_device.location}<br>\n"
+#| "Your IP: #{user_device.ip}<br>\n"
+#| "</div>\n"
+#| "<br>\n"
+#| "<div>The country has been added to your list of known devices, which you "
+#| "can view here:</div>\n"
+#| "<br>\n"
+#| "<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices"
+#| "\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+#| "<br>\n"
+#| "<div>If this wasn't you, remove the device, changing your account "
+#| "password, and contacting your administrator. Somebody might have gained "
+#| "unauthorized access to your account.</div>\n"
+#| "<br>\n"
+#| "<div>Your #{config.product_name} Team</div>\n"
 msgid ""
-"#{config.product_name} signin detected from a new country\n"
+"#{config.product_name} login from a new country\n"
 "\n"
 "<div>Hi #{user.firstname},</div>\n"
 "<br>\n"
-"<div>It looks like you used your account with an <b>known device but from a "
+"<div>It looks like you used your account with a <b>known device but from a "
 "new country</b> on \"#{user_device.created_at}\":</div>\n"
 "<br>\n"
 "<div>\n"
@@ -166,9 +192,9 @@ msgid ""
 "<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices"
 "\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
 "<br>\n"
-"<div>If this wasn't you, remove the device, changing your account password, "
-"and contacting your administrator. Somebody might have gained unauthorized "
-"access to your account.</div>\n"
+"<div>If this wasn't you, please remove the device, change your account "
+"password, and contact your administrator. Somebody might have gained "
+"unauthorized access to your account.</div>\n"
 "<br>\n"
 "<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
@@ -201,12 +227,38 @@ msgstr ""
 #. This is the template file app/views/mailer/user_device_new/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/user_device_new/en.html.erb
+#, fuzzy
+#| msgid ""
+#| "#{config.product_name} signin detected from a new device\n"
+#| "\n"
+#| "<div>Hi #{user.firstname},</div>\n"
+#| "<br>\n"
+#| "<div>It looks like you signed into your account <b>using a new device</b> "
+#| "on \"#{user_device.created_at}\":</div>\n"
+#| "<br>\n"
+#| "<div>\n"
+#| "Your device: #{user_device.name}<br>\n"
+#| "Your location (relative): #{user_device.location}<br>\n"
+#| "Your IP: #{user_device.ip}<br>\n"
+#| "</div>\n"
+#| "<br>\n"
+#| "<div>Your device has been added to your list of known devices, which you "
+#| "can view here:</div>\n"
+#| "<br>\n"
+#| "<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices"
+#| "\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+#| "<br>\n"
+#| "<div>If this wasn't you, remove the device, changing your account "
+#| "password, and contacting your administrator. Somebody might have gained "
+#| "unauthorized access to your account.</div>\n"
+#| "<br>\n"
+#| "<div>Your #{config.product_name} Team</div>\n"
 msgid ""
-"#{config.product_name} signin detected from a new device\n"
+"#{config.product_name} login from a new device\n"
 "\n"
 "<div>Hi #{user.firstname},</div>\n"
 "<br>\n"
-"<div>It looks like you signed into your account <b>using a new device</b> on "
+"<div>It looks like you logged into your account <b>using a new device</b> on "
 "\"#{user_device.created_at}\":</div>\n"
 "<br>\n"
 "<div>\n"
@@ -221,9 +273,9 @@ msgid ""
 "<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices"
 "\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
 "<br>\n"
-"<div>If this wasn't you, remove the device, changing your account password, "
-"and contacting your administrator. Somebody might have gained unauthorized "
-"access to your account.</div>\n"
+"<div>If this wasn't you, please remove the device, change your account "
+"password, and contact your administrator. Somebody might have gained "
+"unauthorized access to your account.</div>\n"
 "<br>\n"
 "<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
@@ -1231,6 +1283,28 @@ msgstr "Analizando estructura…"
 #. This is the template file app/views/mailer/ticket_update_received_merge/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/ticket_update_received_merge/en.html.erb
+#, fuzzy
+#| msgid ""
+#| "Reminder reached (#{ticket.title})\n"
+#| "\n"
+#| "<div>Hi #{recipient.firstname},</div>\n"
+#| "<br>\n"
+#| "<div>A ticket needs attention, reminder reached for (#{ticket.title}) "
+#| "with customer \"<b>#{ticket.customer.longname}</b>\".</div>\n"
+#| "<br>\n"
+#| "<% if @objects[:article] %>\n"
+#| "  <div>\n"
+#| "  #{t('Information')}:\n"
+#| "  <blockquote type=\"cite\">\n"
+#| "  #{article.body_as_html}\n"
+#| "  </blockquote>\n"
+#| "  </div>\n"
+#| "<% end %>\n"
+#| "<br>\n"
+#| "<div>\n"
+#| "  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+#| "id}\" target=\"zammad_app\">#{t('View this in Zammad')}</a>\n"
+#| "</div>\n"
 msgid ""
 "Another ticket was merged into ticket (#{ticket.title})\n"
 "\n"
@@ -1243,9 +1317,29 @@ msgid ""
 "<br>\n"
 "<div>\n"
 "  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\" "
-"target=\"zammad_app\">#{t('View this in Zammad')}</a>\n"
+"target=\"zammad_app\">View this in Zammad</a>\n"
 "</div>\n"
 msgstr ""
+"Recordatorio alcanzado (#{ticket.title})\n"
+"\n"
+"<div>Buenos días #{recipient.firstname},</div>\n"
+"<br>\n"
+"<div>Un ticket necesita atención, recordatorio alcanzado para (#{ticket."
+"title}) con el cliente \"<b>#{ticket.customer.longname}</b>\".</div>\n"
+"<br>\n"
+"<% if @objects[:article] %>\n"
+"  <div>\n"
+"  #{t('Information')}:\n"
+"  <blockquote type=\"cite\">\n"
+"  #{article.body_as_html}\n"
+"  </blockquote>\n"
+"  </div>\n"
+"<% end %>\n"
+"<br>\n"
+"<div>\n"
+"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\" "
+"target=\"zammad_app\">#{t('View this in Zammad')}</a>\n"
+"</div>\n"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "Another ticket was merged into ticket |%s|"
@@ -2125,7 +2219,6 @@ msgstr "Modificado"
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 #: app/views/mailer/ticket_update/cs.html.erb
 #: app/views/mailer/ticket_update/de.html.erb
-#: app/views/mailer/ticket_update/en.html.erb
 #: app/views/mailer/ticket_update/es.html.erb
 #: app/views/mailer/ticket_update/fr.html.erb
 #: app/views/mailer/ticket_update/it.html.erb
@@ -4210,7 +4303,7 @@ msgstr "Display"
 msgid "Display in new tab"
 msgstr "Nombre para mostrar"
 
-#: app/assets/javascripts/app/models/email_address.coffee
+#: app/assets/javascripts/app/models/email_address.coffee db/seeds/settings.rb
 msgid "Display name"
 msgstr "Nombre para mostrar"
 
@@ -4926,6 +5019,74 @@ msgstr ""
 msgid "Escalated Tickets"
 msgstr "Tiempos de escalada"
 
+#. This is the template file app/views/mailer/ticket_escalation/en.html.erb in ERB/HTML format.
+#. Please make sure to translate it to a valid corresponding output structure.
+#: app/views/mailer/ticket_escalation/en.html.erb
+#, fuzzy
+#| msgid ""
+#| "Ticket is escalated (#{ticket.title})\n"
+#| "\n"
+#| "<div>Hi #{recipient.firstname},</div>\n"
+#| "<br>\n"
+#| "<div>A ticket (#{ticket.title}) from \"<b>#{ticket.customer.longname}</b>"
+#| "\" is escalated since \"#{ticket.escalation_at}\"!</div>\n"
+#| "<br>\n"
+#| "<% if @objects[:article] %>\n"
+#| "  <div>\n"
+#| "  #{t('Information')}:\n"
+#| "  <blockquote type=\"cite\">\n"
+#| "  #{article.body_as_html}\n"
+#| "  </blockquote>\n"
+#| "  </div>\n"
+#| "<% end %>\n"
+#| "<br>\n"
+#| "<div>\n"
+#| "  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+#| "id}\" target=\"zammad_app\">#{t('View this in Zammad')}</a>\n"
+#| "</div>\n"
+msgid ""
+"Escalated ticket (#{ticket.title})\n"
+"\n"
+"<div>Hi #{recipient.firstname},</div>\n"
+"<br>\n"
+"<div>The ticket (#{ticket.title}) from \"<b>#{ticket.customer.longname}</b>"
+"\" has been escalated since \"#{ticket.escalation_at}\"!</div>\n"
+"<br>\n"
+"<% if @objects[:article] %>\n"
+"  <div>\n"
+"  Information:\n"
+"  <blockquote type=\"cite\">\n"
+"  #{article.body_as_html}\n"
+"  </blockquote>\n"
+"  </div>\n"
+"<% end %>\n"
+"<br>\n"
+"<div>\n"
+"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\" "
+"target=\"zammad_app\">View this in Zammad</a>\n"
+"</div>\n"
+msgstr ""
+"El ticket está escalado (#{ticket.title})\n"
+"\n"
+"<div>Buenos días #{recipient.firstname},</div>\n"
+"<br>\n"
+"<div>Un ticket (#{ticket.title}) de \"<b>#{ticket.customer.longname}</b>\" "
+"se incrementa desde \"#{ticket.escalation_at}\"!</div>\n"
+"<br>\n"
+"<% if @objects[:article] %>\n"
+"  <div>\n"
+"  #{t('Information')}:\n"
+"  <blockquote type=\"cite\">\n"
+"  #{article.body_as_html}\n"
+"  </blockquote>\n"
+"  </div>\n"
+"<% end %>\n"
+"<br>\n"
+"<div>\n"
+"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\" "
+"target=\"zammad_app\">#{t('View this in Zammad')}</a>\n"
+"</div>\n"
+
 #: lib/excel_sheet/ticket.rb
 msgid "Escalation At"
 msgstr ""
@@ -5602,7 +5763,6 @@ msgstr "Saludos"
 #: app/graphql/gql/types/overview_type.rb
 #: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/de.html.erb
-#: app/views/mailer/ticket_create/en.html.erb
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/it.html.erb
@@ -5611,7 +5771,6 @@ msgstr "Saludos"
 #: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
-#: app/views/slack/ticket_create/en.md.erb
 #: app/views/slack/ticket_create/fr.md.erb
 #: app/views/slack/ticket_create/pt-br.md.erb
 #: app/views/slack/ticket_create/zh-cn.md.erb
@@ -6342,7 +6501,6 @@ msgstr ""
 
 #: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/de.html.erb
-#: app/views/mailer/ticket_create/en.html.erb
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/it.html.erb
@@ -6353,7 +6511,6 @@ msgstr ""
 #: app/views/mailer/ticket_create/zh-tw.html.erb
 #: app/views/mailer/ticket_escalation/cs.html.erb
 #: app/views/mailer/ticket_escalation/de.html.erb
-#: app/views/mailer/ticket_escalation/en.html.erb
 #: app/views/mailer/ticket_escalation/es.html.erb
 #: app/views/mailer/ticket_escalation/fr.html.erb
 #: app/views/mailer/ticket_escalation/it.html.erb
@@ -6364,7 +6521,6 @@ msgstr ""
 #: app/views/mailer/ticket_escalation/zh-tw.html.erb
 #: app/views/mailer/ticket_escalation_warning/cs.html.erb
 #: app/views/mailer/ticket_escalation_warning/de.html.erb
-#: app/views/mailer/ticket_escalation_warning/en.html.erb
 #: app/views/mailer/ticket_escalation_warning/es.html.erb
 #: app/views/mailer/ticket_escalation_warning/fr.html.erb
 #: app/views/mailer/ticket_escalation_warning/it.html.erb
@@ -6375,7 +6531,6 @@ msgstr ""
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb
 #: app/views/mailer/ticket_reminder_reached/cs.html.erb
 #: app/views/mailer/ticket_reminder_reached/de.html.erb
-#: app/views/mailer/ticket_reminder_reached/en.html.erb
 #: app/views/mailer/ticket_reminder_reached/es.html.erb
 #: app/views/mailer/ticket_reminder_reached/fr.html.erb
 #: app/views/mailer/ticket_reminder_reached/it.html.erb
@@ -6385,7 +6540,6 @@ msgstr ""
 #: app/views/mailer/ticket_reminder_reached/zh-tw.html.erb
 #: app/views/mailer/ticket_update/cs.html.erb
 #: app/views/mailer/ticket_update/de.html.erb
-#: app/views/mailer/ticket_update/en.html.erb
 #: app/views/mailer/ticket_update/es.html.erb
 #: app/views/mailer/ticket_update/fr.html.erb
 #: app/views/mailer/ticket_update/it.html.erb
@@ -6595,14 +6749,32 @@ msgstr "Invitación Enviada!"
 #. This is the template file app/views/mailer/user_invite/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/user_invite/en.html.erb
+#, fuzzy
+#| msgid ""
+#| "Invitation to #{config.product_name} at #{config.fqdn}\n"
+#| "\n"
+#| "<div>Hi #{user.firstname},</div>\n"
+#| "<br>\n"
+#| "<div>I (#{current_user.firstname} #{current_user.lastname}) invite you to "
+#| "#{config.product_name} - our customer support / ticket system platform.</"
+#| "div>\n"
+#| "<br>\n"
+#| "<div>Click <a href=\"#{config.http_type}://#{config.fqdn}/"
+#| "#password_reset_verify/#{token.name}\">here</a> and set your password.</"
+#| "div>\n"
+#| "<br>\n"
+#| "<div>Enjoy,</div>\n"
+#| "<br>\n"
+#| "<div>#{current_user.firstname} #{current_user.lastname}</div>\n"
+#| "<br>\n"
+#| "<div>Your #{config.product_name} Team</div>\n"
 msgid ""
 "Invitation to #{config.product_name} at #{config.fqdn}\n"
 "\n"
 "<div>Hi #{user.firstname},</div>\n"
 "<br>\n"
 "<div>I (#{current_user.firstname} #{current_user.lastname}) invite you to "
-"#{config.product_name} - our customer support / ticket system platform.</"
-"div>\n"
+"#{config.product_name} - our customer support platform.</div>\n"
 "<br>\n"
 "<div>Click <a href=\"#{config.http_type}://#{config.fqdn}/"
 "#password_reset_verify/#{token.name}\">here</a> and set your password.</"
@@ -7768,64 +7940,6 @@ msgstr "Nuevos Tags"
 msgid "New Ticket"
 msgstr "Nuevo Ticket"
 
-#. This is the template file app/views/mailer/ticket_create/en.html.erb in ERB/HTML format.
-#. Please make sure to translate it to a valid corresponding output structure.
-#: app/views/mailer/ticket_create/en.html.erb
-msgid ""
-"New Ticket (#{ticket.title})\n"
-"\n"
-"<div>Hi #{recipient.firstname},</div>\n"
-"<br>\n"
-"<div>A new ticket (#{ticket.title}) has been created by \"<b>#{current_user."
-"longname}</b>\".</div>\n"
-"<br>\n"
-"<div>\n"
-"#{t('Group')}: #{ticket.group.name}<br>\n"
-"#{t('Owner')}: #{ticket.owner.fullname}<br>\n"
-"#{t('State')}: #{t(ticket.state.name)}<br>\n"
-"</div>\n"
-"<br>\n"
-"<% if @objects[:article] %>\n"
-"  <div>\n"
-"  #{t('Information')}:\n"
-"  <blockquote type=\"cite\">\n"
-"  #{article.body_as_html}\n"
-"  </blockquote>\n"
-"  </div>\n"
-"<% end %>\n"
-"<br>\n"
-"<div>\n"
-"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\" "
-"target=\"zammad_app\">#{t('View this in Zammad')}</a>\n"
-"</div>\n"
-msgstr ""
-"Nuevo Ticket (#{ticket.title})\n"
-"\n"
-"<div>Buenos días #{recipient.firstname},</div>\n"
-"<br>\n"
-"<div>Se ha creado un nuevo ticket (#{ticket.title}) con \"<b>#{current_user."
-"longname}</b>\".</div>\n"
-"<br>\n"
-"<div>\n"
-"#{t('Group')}: #{ticket.group.name}<br>\n"
-"#{t('Owner')}: #{ticket.owner.fullname}<br>\n"
-"#{t('State')}: #{t(ticket.state.name)}<br>\n"
-"</div>\n"
-"<br>\n"
-"<% if @objects[:article] %>\n"
-"  <div>\n"
-"  #{t('Information')}:\n"
-"  <blockquote type=\"cite\">\n"
-"  #{article.body_as_html}\n"
-"  </blockquote>\n"
-"  </div>\n"
-"<% end %>\n"
-"<br>\n"
-"<div>\n"
-"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\" "
-"target=\"zammad_app\">#{t('View this in Zammad')}</a>\n"
-"</div>\n"
-
 #: app/assets/javascripts/app/controllers/trigger.coffee
 msgid "New Trigger"
 msgstr "Nuevo disparador"
@@ -7867,6 +7981,92 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/text_module.coffee
 msgid "New text module"
 msgstr "Nuevo módulo de texto"
+
+#. This is the template file app/views/mailer/ticket_create/en.html.erb in ERB/HTML format.
+#. Please make sure to translate it to a valid corresponding output structure.
+#: app/views/mailer/ticket_create/en.html.erb
+#, fuzzy
+#| msgid ""
+#| "New Ticket (#{ticket.title})\n"
+#| "\n"
+#| "<div>Hi #{recipient.firstname},</div>\n"
+#| "<br>\n"
+#| "<div>A new ticket (#{ticket.title}) has been created by "
+#| "\"<b>#{current_user.longname}</b>\".</div>\n"
+#| "<br>\n"
+#| "<div>\n"
+#| "#{t('Group')}: #{ticket.group.name}<br>\n"
+#| "#{t('Owner')}: #{ticket.owner.fullname}<br>\n"
+#| "#{t('State')}: #{t(ticket.state.name)}<br>\n"
+#| "</div>\n"
+#| "<br>\n"
+#| "<% if @objects[:article] %>\n"
+#| "  <div>\n"
+#| "  #{t('Information')}:\n"
+#| "  <blockquote type=\"cite\">\n"
+#| "  #{article.body_as_html}\n"
+#| "  </blockquote>\n"
+#| "  </div>\n"
+#| "<% end %>\n"
+#| "<br>\n"
+#| "<div>\n"
+#| "  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+#| "id}\" target=\"zammad_app\">#{t('View this in Zammad')}</a>\n"
+#| "</div>\n"
+msgid ""
+"New ticket (#{ticket.title})\n"
+"\n"
+"<div>Hi #{recipient.firstname},</div>\n"
+"<br>\n"
+"<div>The new ticket (#{ticket.title}) has been created by "
+"\"<b>#{current_user.longname}</b>\".</div>\n"
+"<br>\n"
+"<div>\n"
+"Group: #{ticket.group.name}<br>\n"
+"Owner: #{ticket.owner.fullname}<br>\n"
+"State: #{t(ticket.state.name)}<br>\n"
+"</div>\n"
+"<br>\n"
+"<% if @objects[:article] %>\n"
+"  <div>\n"
+"  Information:\n"
+"  <blockquote type=\"cite\">\n"
+"  #{article.body_as_html}\n"
+"  </blockquote>\n"
+"  </div>\n"
+"<% end %>\n"
+"<br>\n"
+"<div>\n"
+"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\" "
+"target=\"zammad_app\">View this in Zammad</a>\n"
+"</div>\n"
+msgstr ""
+"Nuevo Ticket (#{ticket.title})\n"
+"\n"
+"<div>Buenos días #{recipient.firstname},</div>\n"
+"<br>\n"
+"<div>Se ha creado un nuevo ticket (#{ticket.title}) con \"<b>#{current_user."
+"longname}</b>\".</div>\n"
+"<br>\n"
+"<div>\n"
+"#{t('Group')}: #{ticket.group.name}<br>\n"
+"#{t('Owner')}: #{ticket.owner.fullname}<br>\n"
+"#{t('State')}: #{t(ticket.state.name)}<br>\n"
+"</div>\n"
+"<br>\n"
+"<% if @objects[:article] %>\n"
+"  <div>\n"
+"  #{t('Information')}:\n"
+"  <blockquote type=\"cite\">\n"
+"  #{article.body_as_html}\n"
+"  </blockquote>\n"
+"  </div>\n"
+"<% end %>\n"
+"<br>\n"
+"<div>\n"
+"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\" "
+"target=\"zammad_app\">#{t('View this in Zammad')}</a>\n"
+"</div>\n"
 
 #: app/frontend/apps/mobile/modules/login/views/Login.vue
 #, fuzzy
@@ -8595,7 +8795,6 @@ msgstr ""
 #: app/graphql/gql/types/overview_type.rb
 #: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/de.html.erb
-#: app/views/mailer/ticket_create/en.html.erb
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/it.html.erb
@@ -8604,7 +8803,6 @@ msgstr ""
 #: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
-#: app/views/slack/ticket_create/en.md.erb
 #: app/views/slack/ticket_create/fr.md.erb
 #: app/views/slack/ticket_create/pt-br.md.erb
 #: app/views/slack/ticket_create/zh-cn.md.erb
@@ -9263,52 +9461,6 @@ msgstr "Recargar aplicación"
 msgid "Remember me"
 msgstr "Recordarme"
 
-#. This is the template file app/views/mailer/ticket_reminder_reached/en.html.erb in ERB/HTML format.
-#. Please make sure to translate it to a valid corresponding output structure.
-#: app/views/mailer/ticket_reminder_reached/en.html.erb
-msgid ""
-"Reminder reached (#{ticket.title})\n"
-"\n"
-"<div>Hi #{recipient.firstname},</div>\n"
-"<br>\n"
-"<div>A ticket needs attention, reminder reached for (#{ticket.title}) with "
-"customer \"<b>#{ticket.customer.longname}</b>\".</div>\n"
-"<br>\n"
-"<% if @objects[:article] %>\n"
-"  <div>\n"
-"  #{t('Information')}:\n"
-"  <blockquote type=\"cite\">\n"
-"  #{article.body_as_html}\n"
-"  </blockquote>\n"
-"  </div>\n"
-"<% end %>\n"
-"<br>\n"
-"<div>\n"
-"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\" "
-"target=\"zammad_app\">#{t('View this in Zammad')}</a>\n"
-"</div>\n"
-msgstr ""
-"Recordatorio alcanzado (#{ticket.title})\n"
-"\n"
-"<div>Buenos días #{recipient.firstname},</div>\n"
-"<br>\n"
-"<div>Un ticket necesita atención, recordatorio alcanzado para (#{ticket."
-"title}) con el cliente \"<b>#{ticket.customer.longname}</b>\".</div>\n"
-"<br>\n"
-"<% if @objects[:article] %>\n"
-"  <div>\n"
-"  #{t('Information')}:\n"
-"  <blockquote type=\"cite\">\n"
-"  #{article.body_as_html}\n"
-"  </blockquote>\n"
-"  </div>\n"
-"<% end %>\n"
-"<br>\n"
-"<div>\n"
-"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\" "
-"target=\"zammad_app\">#{t('View this in Zammad')}</a>\n"
-"</div>\n"
-
 #: app/assets/javascripts/app/views/generic/postmaster_match.jst.eco
 #: app/assets/javascripts/app/views/generic/postmaster_set_row.jst.eco
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/row.jst.eco
@@ -9677,6 +9829,7 @@ msgid "S/MIME integration"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
+#: db/seeds/settings.rb
 msgid "SAML"
 msgstr ""
 
@@ -10618,7 +10771,6 @@ msgstr ""
 #: app/graphql/gql/types/overview_type.rb
 #: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/de.html.erb
-#: app/views/mailer/ticket_create/en.html.erb
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/it.html.erb
@@ -10627,7 +10779,6 @@ msgstr ""
 #: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
-#: app/views/slack/ticket_create/en.md.erb
 #: app/views/slack/ticket_create/fr.md.erb
 #: app/views/slack/ticket_create/pt-br.md.erb
 #: app/views/slack/ticket_create/zh-cn.md.erb
@@ -11945,21 +12096,63 @@ msgstr "Boleto %s fusionado!"
 #. This is the template file app/views/mailer/ticket_update_merged_into/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/ticket_update_merged_into/en.html.erb
+#, fuzzy
+#| msgid ""
+#| "Ticket will escalate (#{ticket.title})\n"
+#| "\n"
+#| "<div>Hi #{recipient.firstname},</div>\n"
+#| "<br>\n"
+#| "<div>A ticket (#{ticket.title}) from \"<b>#{ticket.customer.longname}</b>"
+#| "\" will escalate at \"#{ticket.escalation_at}\"!</div>\n"
+#| "<br>\n"
+#| "<% if @objects[:article] %>\n"
+#| "  <div>\n"
+#| "  #{t('Information')}:\n"
+#| "  <blockquote type=\"cite\">\n"
+#| "  #{article.body_as_html}\n"
+#| "  </blockquote>\n"
+#| "  </div>\n"
+#| "<% end %>\n"
+#| "<br>\n"
+#| "<div>\n"
+#| "  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+#| "id}\" target=\"zammad_app\">#{t('View this in Zammad')}</a>\n"
+#| "</div>\n"
 msgid ""
 "Ticket (#{ticket.title}) was merged into another ticket\n"
 "\n"
 "<div>Hi #{recipient.firstname},</div>\n"
 "<br>\n"
 "<div>\n"
-"Ticket (#{ticket.title}) was merged into another ticket by "
+"The ticket (#{ticket.title}) was merged into another ticket by "
 "\"<b>#{current_user.longname}</b>\".\n"
 "</div>\n"
 "<br>\n"
 "<div>\n"
 "  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\" "
-"target=\"zammad_app\">#{t('View this in Zammad')}</a>\n"
+"target=\"zammad_app\">View this in Zammad</a>\n"
 "</div>\n"
 msgstr ""
+"El ticket escalará (#{ticket.title})\n"
+"\n"
+"<div>Buenos días #{recipient.firstname},</div>\n"
+"<br>\n"
+"<div>Un ticket (#{ticket.title}) de \"<b>#{ticket.customer.longname}</b>\" "
+"escalará a \"#{ticket.escalation_at}\"!</div>\n"
+"<br>\n"
+"<% if @objects[:article] %>\n"
+"  <div>\n"
+"  #{t('Information')}:\n"
+"  <blockquote type=\"cite\">\n"
+"  #{article.body_as_html}\n"
+"  </blockquote>\n"
+"  </div>\n"
+"<% end %>\n"
+"<br>\n"
+"<div>\n"
+"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\" "
+"target=\"zammad_app\">#{t('View this in Zammad')}</a>\n"
+"</div>\n"
 
 #: app/models/report.rb
 msgid "Ticket Count"
@@ -12070,55 +12263,77 @@ msgstr "Nueva Descripción"
 msgid "Ticket information"
 msgstr "Bloquear notificaciones"
 
-#. This is the template file app/views/mailer/ticket_escalation/en.html.erb in ERB/HTML format.
-#. Please make sure to translate it to a valid corresponding output structure.
-#: app/views/mailer/ticket_escalation/en.html.erb
-msgid ""
-"Ticket is escalated (#{ticket.title})\n"
-"\n"
-"<div>Hi #{recipient.firstname},</div>\n"
-"<br>\n"
-"<div>A ticket (#{ticket.title}) from \"<b>#{ticket.customer.longname}</b>\" "
-"is escalated since \"#{ticket.escalation_at}\"!</div>\n"
-"<br>\n"
-"<% if @objects[:article] %>\n"
-"  <div>\n"
-"  #{t('Information')}:\n"
-"  <blockquote type=\"cite\">\n"
-"  #{article.body_as_html}\n"
-"  </blockquote>\n"
-"  </div>\n"
-"<% end %>\n"
-"<br>\n"
-"<div>\n"
-"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\" "
-"target=\"zammad_app\">#{t('View this in Zammad')}</a>\n"
-"</div>\n"
-msgstr ""
-"El ticket está escalado (#{ticket.title})\n"
-"\n"
-"<div>Buenos días #{recipient.firstname},</div>\n"
-"<br>\n"
-"<div>Un ticket (#{ticket.title}) de \"<b>#{ticket.customer.longname}</b>\" "
-"se incrementa desde \"#{ticket.escalation_at}\"!</div>\n"
-"<br>\n"
-"<% if @objects[:article] %>\n"
-"  <div>\n"
-"  #{t('Information')}:\n"
-"  <blockquote type=\"cite\">\n"
-"  #{article.body_as_html}\n"
-"  </blockquote>\n"
-"  </div>\n"
-"<% end %>\n"
-"<br>\n"
-"<div>\n"
-"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\" "
-"target=\"zammad_app\">#{t('View this in Zammad')}</a>\n"
-"</div>\n"
-
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 msgid "Ticket reminder reached"
 msgstr "Recordatorio de Ticket, alcanzado"
+
+#. This is the template file app/views/mailer/ticket_reminder_reached/en.html.erb in ERB/HTML format.
+#. Please make sure to translate it to a valid corresponding output structure.
+#: app/views/mailer/ticket_reminder_reached/en.html.erb
+#, fuzzy
+#| msgid ""
+#| "Reminder reached (#{ticket.title})\n"
+#| "\n"
+#| "<div>Hi #{recipient.firstname},</div>\n"
+#| "<br>\n"
+#| "<div>A ticket needs attention, reminder reached for (#{ticket.title}) "
+#| "with customer \"<b>#{ticket.customer.longname}</b>\".</div>\n"
+#| "<br>\n"
+#| "<% if @objects[:article] %>\n"
+#| "  <div>\n"
+#| "  #{t('Information')}:\n"
+#| "  <blockquote type=\"cite\">\n"
+#| "  #{article.body_as_html}\n"
+#| "  </blockquote>\n"
+#| "  </div>\n"
+#| "<% end %>\n"
+#| "<br>\n"
+#| "<div>\n"
+#| "  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+#| "id}\" target=\"zammad_app\">#{t('View this in Zammad')}</a>\n"
+#| "</div>\n"
+msgid ""
+"Ticket reminder reached (#{ticket.title})\n"
+"\n"
+"<div>Hi #{recipient.firstname},</div>\n"
+"<br>\n"
+"<div>A ticket needs attention: reminder reached for (#{ticket.title}) with "
+"customer \"<b>#{ticket.customer.longname}</b>\".</div>\n"
+"<br>\n"
+"<% if @objects[:article] %>\n"
+"  <div>\n"
+"  Information:\n"
+"  <blockquote type=\"cite\">\n"
+"  #{article.body_as_html}\n"
+"  </blockquote>\n"
+"  </div>\n"
+"<% end %>\n"
+"<br>\n"
+"<div>\n"
+"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\" "
+"target=\"zammad_app\">View this in Zammad</a>\n"
+"</div>\n"
+msgstr ""
+"Recordatorio alcanzado (#{ticket.title})\n"
+"\n"
+"<div>Buenos días #{recipient.firstname},</div>\n"
+"<br>\n"
+"<div>Un ticket necesita atención, recordatorio alcanzado para (#{ticket."
+"title}) con el cliente \"<b>#{ticket.customer.longname}</b>\".</div>\n"
+"<br>\n"
+"<% if @objects[:article] %>\n"
+"  <div>\n"
+"  #{t('Information')}:\n"
+"  <blockquote type=\"cite\">\n"
+"  #{article.body_as_html}\n"
+"  </blockquote>\n"
+"  </div>\n"
+"<% end %>\n"
+"<br>\n"
+"<div>\n"
+"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\" "
+"target=\"zammad_app\">#{t('View this in Zammad')}</a>\n"
+"</div>\n"
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 msgid "Ticket update"
@@ -12133,17 +12348,39 @@ msgstr "Nueva Descripción"
 #. This is the template file app/views/mailer/ticket_escalation_warning/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/ticket_escalation_warning/en.html.erb
+#, fuzzy
+#| msgid ""
+#| "Ticket will escalate (#{ticket.title})\n"
+#| "\n"
+#| "<div>Hi #{recipient.firstname},</div>\n"
+#| "<br>\n"
+#| "<div>A ticket (#{ticket.title}) from \"<b>#{ticket.customer.longname}</b>"
+#| "\" will escalate at \"#{ticket.escalation_at}\"!</div>\n"
+#| "<br>\n"
+#| "<% if @objects[:article] %>\n"
+#| "  <div>\n"
+#| "  #{t('Information')}:\n"
+#| "  <blockquote type=\"cite\">\n"
+#| "  #{article.body_as_html}\n"
+#| "  </blockquote>\n"
+#| "  </div>\n"
+#| "<% end %>\n"
+#| "<br>\n"
+#| "<div>\n"
+#| "  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+#| "id}\" target=\"zammad_app\">#{t('View this in Zammad')}</a>\n"
+#| "</div>\n"
 msgid ""
 "Ticket will escalate (#{ticket.title})\n"
 "\n"
 "<div>Hi #{recipient.firstname},</div>\n"
 "<br>\n"
-"<div>A ticket (#{ticket.title}) from \"<b>#{ticket.customer.longname}</b>\" "
-"will escalate at \"#{ticket.escalation_at}\"!</div>\n"
+"<div>The ticket (#{ticket.title}) from \"<b>#{ticket.customer.longname}</b>"
+"\" will escalate at \"#{ticket.escalation_at}\"!</div>\n"
 "<br>\n"
 "<% if @objects[:article] %>\n"
 "  <div>\n"
-"  #{t('Information')}:\n"
+"  Information:\n"
 "  <blockquote type=\"cite\">\n"
 "  #{article.body_as_html}\n"
 "  </blockquote>\n"
@@ -12152,7 +12389,7 @@ msgid ""
 "<br>\n"
 "<div>\n"
 "  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\" "
-"target=\"zammad_app\">#{t('View this in Zammad')}</a>\n"
+"target=\"zammad_app\">View this in Zammad</a>\n"
 "</div>\n"
 msgstr ""
 "El ticket escalará (#{ticket.title})\n"
@@ -12699,11 +12936,72 @@ msgstr ""
 msgid "Updated At"
 msgstr ""
 
+#: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee
+#: app/assets/javascripts/app/models/organization.coffee
+#: app/assets/javascripts/app/models/ticket.coffee
+#: app/assets/javascripts/app/models/user.coffee
+#: app/graphql/gql/types/overview_type.rb
+msgid "Updated at"
+msgstr "Actualizar a las"
+
+#: app/assets/javascripts/app/models/calendar.coffee
+#: app/assets/javascripts/app/models/chat.coffee
+#: app/assets/javascripts/app/models/chat_sessions.coffee
+#: app/assets/javascripts/app/models/data_privacy_task.coffee
+#: app/assets/javascripts/app/models/job.coffee
+#: app/assets/javascripts/app/models/ldap_source.coffee
+#: app/assets/javascripts/app/models/organization.coffee
+#: app/assets/javascripts/app/models/overview.coffee
+#: app/assets/javascripts/app/models/postmaster_filter.coffee
+#: app/assets/javascripts/app/models/role.coffee
+#: app/assets/javascripts/app/models/signature.coffee
+#: app/assets/javascripts/app/models/sla.coffee
+#: app/assets/javascripts/app/models/ticket.coffee
+#: app/assets/javascripts/app/models/ticket_article.coffee
+#: app/assets/javascripts/app/models/user.coffee
+#: app/graphql/gql/types/overview_type.rb
+msgid "Updated by"
+msgstr "Actualizado por"
+
 #. This is the template file app/views/mailer/ticket_update/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/ticket_update/en.html.erb
+#, fuzzy
+#| msgid ""
+#| "Updated Ticket (#{ticket.title})\n"
+#| "\n"
+#| "<div>Hi #{recipient.firstname},</div>\n"
+#| "<br>\n"
+#| "<div>\n"
+#| "Ticket (#{ticket.title}) has been updated by \"<b>#{current_user.longname}"
+#| "</b>\".\n"
+#| "</div>\n"
+#| "<br>\n"
+#| "<% if @objects[:changes].present? %>\n"
+#| "  <div>\n"
+#| "  #{t('Changes')}:<br>\n"
+#| "  <% @objects[:changes].each do |key, value| %>\n"
+#| "    <%= t key %>: <%= h value[0] %> -&gt; <%= h value[1] %><br>\n"
+#| "  <% end %>\n"
+#| "  </div>\n"
+#| "<% end %>\n"
+#| "<br>\n"
+#| "<% if @objects[:article] %>\n"
+#| "  <div>\n"
+#| "  #{t('Information')}:\n"
+#| "  <blockquote type=\"cite\">\n"
+#| "  #{article.body_as_html}\n"
+#| "  </blockquote>\n"
+#| "  </div>\n"
+#| "<% end %>\n"
+#| "<br>\n"
+#| "<div>\n"
+#| "  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}"
+#| "<% if @objects[:article] %>/#{article.id}<% end %>\" target=\"zammad_app"
+#| "\">#{t('View this in Zammad')}</a>\n"
+#| "</div>\n"
 msgid ""
-"Updated Ticket (#{ticket.title})\n"
+"Updated ticket (#{ticket.title})\n"
 "\n"
 "<div>Hi #{recipient.firstname},</div>\n"
 "<br>\n"
@@ -12714,7 +13012,7 @@ msgid ""
 "<br>\n"
 "<% if @objects[:changes].present? %>\n"
 "  <div>\n"
-"  #{t('Changes')}:<br>\n"
+"  Changes:<br>\n"
 "  <% @objects[:changes].each do |key, value| %>\n"
 "    <%= t key %>: <%= h value[0] %> -&gt; <%= h value[1] %><br>\n"
 "  <% end %>\n"
@@ -12723,7 +13021,7 @@ msgid ""
 "<br>\n"
 "<% if @objects[:article] %>\n"
 "  <div>\n"
-"  #{t('Information')}:\n"
+"  Information:\n"
 "  <blockquote type=\"cite\">\n"
 "  #{article.body_as_html}\n"
 "  </blockquote>\n"
@@ -12732,8 +13030,8 @@ msgid ""
 "<br>\n"
 "<div>\n"
 "  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}<% "
-"if @objects[:article] %>/#{article.id}<% end %>\" target=\"zammad_app"
-"\">#{t('View this in Zammad')}</a>\n"
+"if @objects[:article] %>/#{article.id}<% end %>\" target=\"zammad_app\">View "
+"this in Zammad</a>\n"
 "</div>\n"
 msgstr ""
 "Ticket actualizado (#{ticket.title})\n"
@@ -12768,33 +13066,6 @@ msgstr ""
 "if @objects[:article] %>/#{article.id}<% end %>\" target=\"zammad_app"
 "\">#{t('View this in Zammad')}</a>\n"
 "</div>\n"
-
-#: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee
-#: app/assets/javascripts/app/models/organization.coffee
-#: app/assets/javascripts/app/models/ticket.coffee
-#: app/assets/javascripts/app/models/user.coffee
-#: app/graphql/gql/types/overview_type.rb
-msgid "Updated at"
-msgstr "Actualizar a las"
-
-#: app/assets/javascripts/app/models/calendar.coffee
-#: app/assets/javascripts/app/models/chat.coffee
-#: app/assets/javascripts/app/models/chat_sessions.coffee
-#: app/assets/javascripts/app/models/data_privacy_task.coffee
-#: app/assets/javascripts/app/models/job.coffee
-#: app/assets/javascripts/app/models/ldap_source.coffee
-#: app/assets/javascripts/app/models/organization.coffee
-#: app/assets/javascripts/app/models/overview.coffee
-#: app/assets/javascripts/app/models/postmaster_filter.coffee
-#: app/assets/javascripts/app/models/role.coffee
-#: app/assets/javascripts/app/models/signature.coffee
-#: app/assets/javascripts/app/models/sla.coffee
-#: app/assets/javascripts/app/models/ticket.coffee
-#: app/assets/javascripts/app/models/ticket_article.coffee
-#: app/assets/javascripts/app/models/user.coffee
-#: app/graphql/gql/types/overview_type.rb
-msgid "Updated by"
-msgstr "Actualizado por"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Updating Database"
@@ -13095,7 +13366,6 @@ msgstr "Vista desde la perspectiva del usuario"
 
 #: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/de.html.erb
-#: app/views/mailer/ticket_create/en.html.erb
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/it.html.erb
@@ -13104,7 +13374,6 @@ msgstr "Vista desde la perspectiva del usuario"
 #: app/views/mailer/ticket_create/zh-tw.html.erb
 #: app/views/mailer/ticket_escalation/cs.html.erb
 #: app/views/mailer/ticket_escalation/de.html.erb
-#: app/views/mailer/ticket_escalation/en.html.erb
 #: app/views/mailer/ticket_escalation/es.html.erb
 #: app/views/mailer/ticket_escalation/fr.html.erb
 #: app/views/mailer/ticket_escalation/it.html.erb
@@ -13113,7 +13382,6 @@ msgstr "Vista desde la perspectiva del usuario"
 #: app/views/mailer/ticket_escalation/zh-tw.html.erb
 #: app/views/mailer/ticket_escalation_warning/cs.html.erb
 #: app/views/mailer/ticket_escalation_warning/de.html.erb
-#: app/views/mailer/ticket_escalation_warning/en.html.erb
 #: app/views/mailer/ticket_escalation_warning/es.html.erb
 #: app/views/mailer/ticket_escalation_warning/fr.html.erb
 #: app/views/mailer/ticket_escalation_warning/it.html.erb
@@ -13122,7 +13390,6 @@ msgstr "Vista desde la perspectiva del usuario"
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb
 #: app/views/mailer/ticket_reminder_reached/cs.html.erb
 #: app/views/mailer/ticket_reminder_reached/de.html.erb
-#: app/views/mailer/ticket_reminder_reached/en.html.erb
 #: app/views/mailer/ticket_reminder_reached/es.html.erb
 #: app/views/mailer/ticket_reminder_reached/fr.html.erb
 #: app/views/mailer/ticket_reminder_reached/it.html.erb
@@ -13131,17 +13398,14 @@ msgstr "Vista desde la perspectiva del usuario"
 #: app/views/mailer/ticket_reminder_reached/zh-tw.html.erb
 #: app/views/mailer/ticket_update/cs.html.erb
 #: app/views/mailer/ticket_update/de.html.erb
-#: app/views/mailer/ticket_update/en.html.erb
 #: app/views/mailer/ticket_update/es.html.erb
 #: app/views/mailer/ticket_update/fr.html.erb
 #: app/views/mailer/ticket_update/it.html.erb
 #: app/views/mailer/ticket_update/ru.html.erb
 #: app/views/mailer/ticket_update/zh-cn.html.erb
 #: app/views/mailer/ticket_update/zh-tw.html.erb
-#: app/views/mailer/ticket_update_merged_into/en.html.erb
 #: app/views/mailer/ticket_update_merged_into/fr.html.erb
 #: app/views/mailer/ticket_update_merged_into/ru.html.erb
-#: app/views/mailer/ticket_update_received_merge/en.html.erb
 #: app/views/mailer/ticket_update_received_merge/fr.html.erb
 #: app/views/mailer/ticket_update_received_merge/ru.html.erb
 msgid "View this in Zammad"
