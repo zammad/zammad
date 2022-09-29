@@ -129,7 +129,10 @@ export enum EnumAppMaintenanceType {
 
 /** All available form updaters */
 export enum EnumFormUpdaterId {
-  FormUpdaterUpdaterTicketCreate = 'FormUpdater__Updater__Ticket__Create'
+  FormUpdaterUpdaterOrganizationEdit = 'FormUpdater__Updater__Organization__Edit',
+  FormUpdaterUpdaterTicketCreate = 'FormUpdater__Updater__Ticket__Create',
+  FormUpdaterUpdaterUserAdd = 'FormUpdater__Updater__User__Add',
+  FormUpdaterUpdaterUserEdit = 'FormUpdater__Updater__User__Edit'
 }
 
 /** All backend managed objects */

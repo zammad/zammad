@@ -9,11 +9,11 @@ class FormUpdater::Updater
   attr_reader :context, :relation_fields, :meta, :data, :id, :object
 
   def initialize(context:, relation_fields:, meta:, data:, id: nil)
-    @context = context
+    @context         = context
     @relation_fields = relation_fields
-    @meta    = meta
-    @data    = data
-    @id      = id
+    @meta            = meta
+    @data            = data
+    @id              = id
   end
 
   def object_type
