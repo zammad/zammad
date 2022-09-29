@@ -427,7 +427,7 @@ GEM
       ffi (~> 1.0)
     rchardet (1.8.0)
     redis (4.8.0)
-    regexp_parser (2.5.0)
+    regexp_parser (2.6.0)
     rexml (3.2.5)
     rspec-core (3.11.0)
       rspec-support (~> 3.11.0)
@@ -464,7 +464,7 @@ GEM
     rubocop-faker (1.1.0)
       faker (>= 2.12.0)
       rubocop (>= 0.82.0)
-    rubocop-graphql (0.14.6)
+    rubocop-graphql (0.15.0)
       rubocop (>= 0.87, < 2)
     rubocop-inflector (0.2.1)
       activesupport
