@@ -35,46 +35,49 @@ module.exports = {
 
     return {
       Literal(node) {
-        if (typeof node.value === 'string') {
-          string = node.value
+        if (typeof node.value !== 'string') {
+          return
+        }
 
-          // Ignore strings with less than two words.
-          if (string.split(' ').length < 2) return
+        const string = node.value
 
-          for (const pattern of IGNORE_STRING_PATTERNS) {
-            if (string.match(pattern)) return
-          }
+        // Ignore strings with less than two words.
+        if (string.split(' ').length < 2) return
 
-          // Ignore strings used for comparison
-          const tokenBefore = context.getTokenBefore(node)
+        for (const pattern of IGNORE_STRING_PATTERNS) {
+          if (string.match(pattern)) return
+        }
+
+        // Ignore strings used for comparison
+        const tokenBefore = context.getTokenBefore(node)
+        if (
+          tokenBefore &&
+          tokenBefore.type === 'Punctuator' &&
+          ['==', '==='].includes(tokenBefore.value)
+        ) {
+          return
+        }
+
+        const { parent } = node
+
+        if (parent.type === 'CallExpression') {
+          if (IGNORE_METHODS.includes(parent.callee.name)) return
           if (
-            tokenBefore &&
-            tokenBefore.type === 'Punctuator' &&
-            ['==', '==='].includes(tokenBefore.value)
+            parent.callee.type === 'MemberExpression' &&
+            IGNORE_OBJECTS.includes(parent.callee.object.name)
           ) {
             return
           }
-
-          const { parent } = node
-
-          if (parent.type === 'CallExpression') {
-            if (IGNORE_METHODS.includes(parent.callee.name)) return
-            if (parent.callee.type === 'MemberExpression') {
-              if (IGNORE_OBJECTS.includes(parent.callee.object.name)) return
-            }
-          }
-
-          // console.log(node, parent)
-
-          context.report({
-            node,
-            message:
-              'This string looks like it should be marked as translatable via __(...)',
-            fix(fixer) {
-              return fixer.replaceText(node, `__(${node.raw})`)
-            },
-          })
         }
+
+        context.report({
+          node,
+          message:
+            'This string looks like it should be marked as translatable via __(...)',
+          fix(fixer) {
+            return fixer.replaceText(node, `__(${node.raw})`)
+          },
+        })
       },
     }
   },

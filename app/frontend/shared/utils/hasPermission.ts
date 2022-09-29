@@ -21,6 +21,7 @@ import type { RequiredPermission } from '@shared/types/permission'
 const hasPermission = (
   requiredPermission: RequiredPermission,
   permissions: Array<string>,
+  // eslint-disable-next-line sonarjs/cognitive-complexity
 ): boolean => {
   const requiredPermissions = Array.isArray(requiredPermission)
     ? requiredPermission

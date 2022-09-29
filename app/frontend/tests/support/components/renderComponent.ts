@@ -89,6 +89,8 @@ let router: Router
 export const getTestRouter = () => router
 
 const initializeRouter = (routes?: RouteRecordRaw[]) => {
+  if (routerInitialized) return
+
   let localRoutes: RouteRecordRaw[] = [
     {
       name: 'Dashboard',
@@ -167,6 +169,8 @@ export const initializeStore = () => {
 let formInitialized = false
 
 const initializeForm = () => {
+  if (formInitialized) return
+
   // TODO: needs to be extended, when we have app specific plugins/fields
   plugins.push([formPlugin, buildFormKitPluginConfig()])
   defaultWrapperOptions.shallow = false
@@ -177,6 +181,8 @@ const initializeForm = () => {
 let applicationConfigInitialized = false
 
 const initializeApplicationConfig = () => {
+  if (applicationConfigInitialized) return
+
   initializeStore()
 
   plugins.push(applicationConfigPlugin)
@@ -264,33 +270,66 @@ const mountConformation = () => {
   conformationMounted = true
 }
 
+const setupVModel = <Props>(wrapperOptions: ExtendedMountingOptions<Props>) => {
+  const vModelProps: [string, Ref][] = []
+  const vModelOptions = Object.entries(wrapperOptions?.vModel || {})
+
+  for (const [prop, propDefault] of vModelOptions) {
+    const reactiveValue = isRef(propDefault) ? propDefault : ref(propDefault)
+    const props = (wrapperOptions.props ?? {}) as any
+    props[prop] = unref(propDefault)
+    props[`onUpdate:${prop}`] = (value: unknown) => {
+      reactiveValue.value = value
+    }
+
+    vModelProps.push([prop, reactiveValue])
+
+    wrapperOptions.props = props
+  }
+
+  const startWatchingModel = (view: ExtendedRenderResult) => {
+    if (!vModelProps.length) return
+
+    watchEffect(() => {
+      const propsValues = vModelProps.reduce((acc, [prop, reactiveValue]) => {
+        acc[prop] = reactiveValue.value
+        return acc
+      }, {} as Record<string, unknown>)
+
+      view.rerender(propsValues)
+    })
+  }
+
+  return {
+    startWatchingModel,
+  }
+}
+
 const renderComponent = <Props>(
   component: any,
   wrapperOptions: ExtendedMountingOptions<Props> = {},
 ): ExtendedRenderResult => {
   // Store and Router needs only to be initalized once for a test suit.
-  if (wrapperOptions?.router && !routerInitialized) {
+  if (wrapperOptions?.router) {
     initializeRouter(wrapperOptions?.routerRoutes)
   }
-  if (wrapperOptions?.store && !storeInitialized) {
+  if (wrapperOptions?.store) {
     initializeStore()
   }
-  if (wrapperOptions?.form && !formInitialized) {
+  if (wrapperOptions?.form) {
     initializeForm()
   }
-  if (wrapperOptions?.dialog && !dialogMounted) {
+  if (wrapperOptions?.dialog) {
     mountDialog()
   }
-  if (wrapperOptions?.imageViewer && !imageViewerMounted) {
+  if (wrapperOptions?.imageViewer) {
     mountImageViewer()
   }
-  if (wrapperOptions?.conformation && !conformationMounted) {
+  if (wrapperOptions?.conformation) {
     mountConformation()
   }
 
-  if (!applicationConfigInitialized) {
-    initializeApplicationConfig()
-  }
+  initializeApplicationConfig()
 
   if (wrapperOptions?.form && wrapperOptions?.formField) {
     defaultWrapperOptions.props ||= {}
@@ -299,24 +338,7 @@ const renderComponent = <Props>(
     defaultWrapperOptions.props.delay = 0
   }
 
-  const vModelProps: [string, Ref][] = []
-  const vModelOptions = Object.entries(wrapperOptions?.vModel || {})
-
-  for (const [prop, propDefault] of vModelOptions) {
-    const reactiveValue = isRef(propDefault) ? propDefault : ref(propDefault)
-    const props = (wrapperOptions.props ?? {}) as Record<string, unknown>
-    props[prop] = unref(propDefault)
-    props[`onUpdate:${prop}`] = (value: unknown) => {
-      reactiveValue.value = value
-    }
-
-    vModelProps.push([prop, reactiveValue])
-
-    // TODO: remove this again
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    wrapperOptions.props = props as Props
-  }
+  const { startWatchingModel } = setupVModel(wrapperOptions)
 
   const localWrapperOptions: ExtendedMountingOptions<Props> = merge(
     cloneDeep(defaultWrapperOptions),
@@ -363,16 +385,7 @@ const renderComponent = <Props>(
 
   wrappers.add([localWrapperOptions, view])
 
-  if (vModelProps.length) {
-    watchEffect(() => {
-      const propsValues = vModelProps.reduce((acc, [prop, reactiveValue]) => {
-        acc[prop] = reactiveValue.value
-        return acc
-      }, {} as Record<string, unknown>)
-
-      view.rerender(propsValues)
-    })
-  }
+  startWatchingModel(view)
 
   return view
 }

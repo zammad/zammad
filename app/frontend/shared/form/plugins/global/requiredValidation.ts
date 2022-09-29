@@ -1,58 +1,57 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import type { FormKitNode } from '@formkit/core'
+import type { FormKitNode, FormKitProps } from '@formkit/core'
 
+const addRequired = (props: Partial<FormKitProps>) => {
+  const { validation } = props
+  if (Array.isArray(validation)) {
+    validation.push(['required'])
+    return
+  }
+
+  if (!validation) {
+    props.validation = 'required'
+    return
+  }
+
+  if (!validation.includes('required')) {
+    props.validation = `${validation}|required`
+  }
+}
+
+const removeRequired = (props: Partial<FormKitProps>) => {
+  const { validation } = props
+
+  if (!validation) {
+    return
+  }
+
+  if (Array.isArray(validation)) {
+    props.validation = validation.filter(([rule]) => rule !== 'required')
+    return
+  }
+
+  if (validation.includes('required')) {
+    props.validation = validation
+      .split('|')
+      .filter((rule: string) => !rule.includes('required'))
+      .join('|')
+  }
+}
 const addRequiredValidation = (node: FormKitNode) => {
   node.addProps(['required'])
 
   const { props } = node
 
-  const addRequired = () => {
-    const { validation } = props
-    if (Array.isArray(validation)) {
-      validation.push(['required'])
-      return
-    }
-
-    if (!validation) {
-      props.validation = 'required'
-      return
-    }
-
-    if (!validation.includes('required')) {
-      props.validation = `${validation}|required`
-    }
-  }
-
-  const removeRequired = () => {
-    const { validation } = props
-
-    if (!validation) {
-      return
-    }
-
-    if (Array.isArray(validation)) {
-      props.validation = validation.filter(([rule]) => rule !== 'required')
-      return
-    }
-
-    if (validation.includes('required')) {
-      props.validation = validation
-        .split('|')
-        .filter((rule: string) => !rule.includes('required'))
-        .join('|')
-    }
-  }
-
   if (props.required) {
-    addRequired()
+    addRequired(props)
   }
 
   node.on('prop:required', ({ payload }) => {
     if (payload) {
-      addRequired()
+      addRequired(props)
     } else {
-      removeRequired()
+      removeRequired(props)
     }
   })
 }

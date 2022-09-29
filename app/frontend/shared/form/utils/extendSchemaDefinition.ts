@@ -16,6 +16,7 @@ const extendSchemaDefinition = (
   schemaExtension: FormKitSchemaCondition | Partial<FormKitSchemaNode>,
   extendType: FormSchemaExtendType = FormSchemaExtendType.Replace,
   cloneDefinition = true,
+  // eslint-disable-next-line sonarjs/cognitive-complexity
 ) => {
   const { props } = node
 

@@ -37,50 +37,21 @@ const getCoreClasses: FormThemeExtension = (classes: FormThemeClasses) => {
     datetime: addDateLabel(classes.datetime),
     textarea: addFloatingTextareaLabel({
       ...classes.textarea,
-      label: `${classes.textarea?.label || ''} cursor-text`,
-      input: `${classes.textarea?.input || ''} min-h-[100px]`,
+      label: `${classes.textarea?.label} cursor-text`,
+      input: `${classes.textarea?.input} min-h-[100px]`,
     }),
     checkbox: {
       wrapper: `${
         classes.checkbox?.wrapper || ''
       } w-full justify-between h-14 ltr:pl-2 rtl:pr-2`,
     },
-    tags: addBlockFloatingLabel({
-      ...(classes.tags || {}),
-      outer: `${classes.tags?.outer || ''} field-tags min-h-[3.5rem]`,
-    }),
-    select: addBlockFloatingLabel({
-      ...(classes.select || {}),
-      outer: `${classes.select?.outer || ''} field-select min-h-[3.5rem]`,
-    }),
-    treeselect: addBlockFloatingLabel({
-      ...(classes.treeselect || {}),
-      outer: `${
-        classes.treeselect?.outer || ''
-      } field-treeselect min-h-[3.5rem]`,
-    }),
-    autocomplete: addBlockFloatingLabel({
-      ...(classes.autocomplete || {}),
-      outer: `${
-        classes.autocomplete?.outer || ''
-      } field-autocomplete min-h-[3.5rem]`,
-    }),
-    customer: addBlockFloatingLabel({
-      ...(classes.customer || {}),
-      outer: `${classes.customer?.outer || ''} field-customer min-h-[3.5rem]`,
-    }),
-    organization: addBlockFloatingLabel({
-      ...(classes.organization || {}),
-      outer: `${
-        classes.organization?.outer || ''
-      } field-organization min-h-[3.5rem]`,
-    }),
-    recipient: addBlockFloatingLabel({
-      ...(classes.recipient || {}),
-      outer: `${
-        classes.recipient?.outer || ''
-      } field-autocomplete min-h-[3.5rem]`,
-    }),
+    tags: addBlockFloatingLabel(classes.tags),
+    select: addBlockFloatingLabel(classes.select),
+    treeselect: addBlockFloatingLabel(classes.treeselect),
+    autocomplete: addBlockFloatingLabel(classes.autocomplete),
+    customer: addBlockFloatingLabel(classes.customer),
+    organization: addBlockFloatingLabel(classes.organization),
+    recipient: addBlockFloatingLabel(classes.recipient),
     button: addButtonVariants(classes.button),
     submit: addButtonVariants(classes.submit),
   }

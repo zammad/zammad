@@ -460,6 +460,12 @@ if (props.schema) {
 
     const objectAttributeObjects: EnumObjectManagerObjects[] = []
 
+    const addObjectAttributeToObjects = (object: EnumObjectManagerObjects) => {
+      if (objectAttributeObjects.includes(object)) return
+
+      objectAttributeObjects.push(object)
+    }
+
     const detectObjectAttributeObjects = (
       schema: FormSchemaNode[] = props.schema,
     ) => {
@@ -471,9 +477,7 @@ if (props.schema) {
             fixedAndSkippedFields.push(item.name)
           }
 
-          if (objectAttributeObjects.includes(item.object)) return
-
-          objectAttributeObjects.push(item.object)
+          addObjectAttributeToObjects(item.object)
         }
 
         if ('children' in item && Array.isArray(item.children)) {

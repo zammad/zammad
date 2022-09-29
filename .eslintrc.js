@@ -8,7 +8,7 @@ module.exports = {
     browser: true,
     node: true,
   },
-  plugins: ['@typescript-eslint', 'vue', 'prettier', 'zammad'],
+  plugins: ['@typescript-eslint', 'vue', 'prettier', 'sonarjs', 'zammad'],
   extends: [
     'airbnb-base',
     'plugin:vue/vue3-recommended',
@@ -18,6 +18,7 @@ module.exports = {
     '@vue/prettier',
     '@vue/typescript/recommended',
     'prettier',
+    'plugin:sonarjs/recommended',
   ],
   rules: {
     'zammad/zammad-copyright': 'error',
@@ -112,16 +113,24 @@ module.exports = {
     // Don't require multi word component names.
     'vue/multi-word-component-names': 'off',
 
-    // Enforce v-bind directive usage in short form as error instead of warning
+    // Enforce v-bind directive usage in short form as error instead of warning.
     'vue/v-bind-style': ['error', 'shorthand'],
 
-    // Enforce v-on directive usage in short form as error instead of warning
+    // Enforce v-on directive usage in short form as error instead of warning.
     'vue/v-on-style': ['error', 'shorthand'],
 
-    // Enforce v-slot directive usage in short form as error instead of warning
+    // Enforce v-slot directive usage in short form as error instead of warning.
     'vue/v-slot-style': ['error', 'shorthand'],
 
     'no-promise-executor-return': 'off',
+
+    // We have quite a lot of constant strings in our code.
+    'sonarjs/no-duplicate-string': 'off',
+
+    // It also supresses local function returns.
+    'sonarjs/prefer-immediate-return': 'off',
+
+    'sonarjs/prefer-single-boolean-return': 'off',
   },
   overrides: [
     {

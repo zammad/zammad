@@ -99,7 +99,7 @@ describe('testing actions', () => {
       .should(
         'have.attr',
         'src',
-        `data:image/png;base64,${btoa(`${imageBuffer}`)}`,
+        `data:image/png;base64,${btoa(imageBuffer.toString())}`,
       )
   })
 })
