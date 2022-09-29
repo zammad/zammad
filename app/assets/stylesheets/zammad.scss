@@ -3250,16 +3250,25 @@ kbd {
 }
 
 .login {
-  .btn {
-    width: 100%;
-  }
+  .form-controls {
+    flex-direction: column;
 
-  .btn--text {
-    display: block;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    margin: unset;
-    text-align: center;
+    .btn {
+      width: 100%;
+    }
+
+    .btn--text {
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin: unset;
+      text-align: center;
+    }
+
+    .btn + .btn:not(.align-right) {
+      margin-left: unset;
+      margin-right: unset;
+    }
   }
 }
 
@@ -3984,9 +3993,12 @@ ol.tabs li {
   @extend .clearfix;
 
   display: flex;
-  flex-direction: column;
   align-items: center;
   margin-top: 10px;
+
+  .btn + .btn:not(.align-right) {
+    @include bidi-style(margin-left, 20px, margin-right, 10px);
+  }
 }
 
 .form-buttons {
