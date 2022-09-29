@@ -10,6 +10,8 @@ export interface ObjectAttributeRichtext
     no_images: boolean
     note: string
     null: boolean
+    upload?: boolean
+    rows?: number
     type: string // text
   }
 }

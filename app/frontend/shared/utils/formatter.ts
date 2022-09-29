@@ -39,6 +39,11 @@ export const camelize = (str: string) => {
   return str.replace(/[_.-](\w|$)/g, (_, x) => x.toUpperCase())
 }
 
+// app/assets/javascripts/app/lib/app_post/utils.coffee:230
+export const phoneify = (phone: string) => {
+  return phone.replace(/[^0-9,+,#,*]+/g, '').replace(/(.)\+/, '$1')
+}
+
 export const getFullName = (
   firstname?: Maybe<string>,
   lastname?: Maybe<string>,

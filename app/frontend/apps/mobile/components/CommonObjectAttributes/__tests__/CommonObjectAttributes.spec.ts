@@ -1,10 +1,14 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
+vi.setSystemTime('2021-04-09T10:11:12Z')
+
 import type { ObjectManagerFrontendAttribute } from '@shared/graphql/types'
 import { i18n } from '@shared/i18n'
 import { getByRole } from '@testing-library/vue'
 import { renderComponent } from '@tests/support/components'
+import { mockApplicationConfig } from '@tests/support/mock-applicationConfig'
 import { mockPermissions } from '@tests/support/mock-permissions'
+import { flushPromises } from '@vue/test-utils'
 import { keyBy } from 'lodash-es'
 import CommonObjectAttributes from '../CommonObjectAttributes.vue'
 
@@ -402,7 +406,7 @@ describe('common object attributes interface', () => {
     expect(getRegion('Note')).toHaveTextContent(object.note)
     expect(getRegion('Active')).toHaveTextContent('yes')
 
-    expect(getRegion('Date Attribute')).toHaveTextContent('19/08/2022')
+    expect(getRegion('Date Attribute')).toHaveTextContent(/19\/08\/2022$/)
     expect(getRegion('Textarea Field')).toHaveTextContent('textarea text')
     expect(getRegion('Integer Field')).toHaveTextContent('600')
     expect(getRegion('DateTime Field')).toHaveTextContent('11/08/2022 05:00')
@@ -599,5 +603,43 @@ describe('common object attributes interface', () => {
     expect(multiSelect).toHaveTextContent('Monitor1, Monitor2')
     expect(singleTreeSelect).toHaveTextContent('llave1::llave1_niño1')
     expect(multiTreeSelect).toHaveTextContent('llave1, llave1::llave1_niño1')
+  })
+
+  it('renders different dates', async () => {
+    const object = {
+      now: '2021-04-09T10:11:12Z',
+      past: '2021-02-09T10:11:12Z',
+      future: '2021-10-09T10:11:12Z',
+    }
+
+    const attributes = [
+      { ...attributesByKey.date_time_field, name: 'now', display: 'now' },
+      { ...attributesByKey.date_time_field, name: 'past', display: 'past' },
+      { ...attributesByKey.date_time_field, name: 'future', display: 'future' },
+    ]
+
+    const view = renderComponent(CommonObjectAttributes, {
+      props: {
+        object,
+        attributes,
+      },
+      router: true,
+    })
+
+    const getRegion = (time: string) => view.getByRole('region', { name: time })
+
+    expect(getRegion('now')).toHaveTextContent('2021-04-09 10:11')
+    expect(getRegion('past')).toHaveTextContent('2021-02-09 10:11')
+    expect(getRegion('future')).toHaveTextContent('2021-10-09 10:11')
+
+    mockApplicationConfig({
+      pretty_date_format: 'relative',
+    })
+
+    await flushPromises()
+
+    expect(getRegion('now')).toHaveTextContent('just now')
+    expect(getRegion('past')).toHaveTextContent('1 month ago')
+    expect(getRegion('future')).toHaveTextContent('in 6 months')
   })
 })

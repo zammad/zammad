@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import linkify from 'linkify-html'
+import linkifyHtml from 'linkify-html'
 
 type Falsy = false | 0 | '' | null | undefined
 type IsTruthy<T> = T extends Falsy ? never : T
@@ -28,10 +28,12 @@ export const textCleanup = (ascii: string) => {
     .replace(/\n{3,20}/g, '\n\n') // remove multiple empty lines
 }
 
+export const linkify = (text: string) => linkifyHtml(text)
+
 // taken from App.Utils.text2html for consistency
 export const textToHtml = (text: string) => {
   text = textCleanup(text)
-  text = linkify(text)
+  text = linkifyHtml(text)
   text = text.replace(/(\n\r|\r\n|\r)/g, '\n')
   text = text.replace(/ {2}/g, ' &nbsp;')
   text = `<div>${text.replace(/\n/g, '</div><div>')}</div>`

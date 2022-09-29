@@ -1,6 +1,7 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
+import { phoneify } from '@shared/utils/formatter'
 import { computed } from 'vue'
 import type { ObjectAttributeInput } from './attributeInputTypes'
 
@@ -14,7 +15,8 @@ const link = computed(() => {
   // link is processed in common component
   if (linktemplate) return null
   const value = String(props.value)
-  if (type === 'tel') return `tel:${value.replace(/[^0-9+]/g, '')}`
+  // app/assets/javascripts/app/index.coffee:135
+  if (type === 'tel') return `tel:${phoneify(value)}`
   if (type === 'url') return value
   if (type === 'email') return `mailto:${value}`
   return ''

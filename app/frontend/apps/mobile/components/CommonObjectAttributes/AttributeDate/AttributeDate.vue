@@ -1,23 +1,19 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { i18n } from '@shared/i18n'
-import { computed } from 'vue'
+import CommonDateTime from '@shared/components/CommonDateTime/CommonDateTime.vue'
 import type { ObjectAttributeDate } from './attributeDateTypes'
 
-const props = defineProps<{
+defineProps<{
   attribute: ObjectAttributeDate
   value: string
 }>()
-
-const body = computed(() => {
-  if (props.attribute.dataType === 'date') {
-    return i18n.date(props.value)
-  }
-  return i18n.dateTime(props.value)
-})
 </script>
 
 <template>
-  {{ body }}
+  <CommonDateTime
+    :date-time="value"
+    :type="attribute.dataType === 'date' ? 'absolute' : 'configured'"
+    :absolute-format="attribute.dataType"
+  />
 </template>

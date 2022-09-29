@@ -21,19 +21,17 @@ export class I18N {
   }
 
   date(dateString: string): string {
-    const template = this.translator.lookup('FORMAT_DATE') || 'yyyy-mm-dd'
+    const template = dates.getDateFormat(this.translator)
     return dates.absoluteDateTime(dateString, template)
   }
 
   dateTime(dateTimeString: string): string {
-    const template =
-      this.translator.lookup('FORMAT_DATETIME') || 'yyyy-mm-dd HH:MM'
+    const template = dates.getDateTimeFormat(this.translator)
     return dates.absoluteDateTime(dateTimeString, template)
   }
 
   timeFormat() {
-    const datetimeFormat =
-      this.translator.lookup('FORMAT_DATETIME') || 'yyyy-mm-dd HH:MM'
+    const datetimeFormat = dates.getDateTimeFormat(this.translator)
     const time24hour = !datetimeFormat.includes('P') // P means AM/PM
     return time24hour ? '24hour' : '12hour'
   }

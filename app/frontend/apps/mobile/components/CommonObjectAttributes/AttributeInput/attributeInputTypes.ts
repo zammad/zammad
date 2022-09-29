@@ -7,8 +7,10 @@ export interface ObjectAttributeInput extends ObjectManagerFrontendAttribute {
   dataOption: {
     item_class: string
     maxlength: number
-    linktemplate?: string
+    autocapitalize?: boolean
     null: boolean
-    type: 'text' | 'url' | 'email' | 'tel' // text
+    type: 'text' | 'url' | 'email' | 'tel'
+    linktemplate?: string
+    note?: string
   }
 }

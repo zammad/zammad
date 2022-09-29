@@ -37,13 +37,15 @@ const outputAbsoluteDate = computed(() => {
 </script>
 
 <template>
-  <span v-if="outputFormat === 'absolute'" data-test-id="date-time-absolute">
+  <time v-if="outputFormat === 'absolute'" data-test-id="date-time-absolute">
     {{ outputAbsoluteDate }}
-  </span>
-  <span
+  </time>
+  <time
     v-else
     :title="i18n.dateTime(dateTime)"
+    :datetime="dateTime"
     data-test-id="date-time-relative"
-    >{{ i18n.relativeDateTime(dateTime) }}</span
   >
+    {{ i18n.relativeDateTime(dateTime) }}
+  </time>
 </template>

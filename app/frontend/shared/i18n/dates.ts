@@ -143,3 +143,11 @@ export const relativeDateTime = (
 
   return translator.translate('just now')
 }
+
+export const getDateFormat = (translator: Translator) => {
+  return translator.lookup('FORMAT_DATE') || 'yyyy-mm-dd'
+}
+
+export const getDateTimeFormat = (translator: Translator) => {
+  return translator.lookup('FORMAT_DATETIME') || 'yyyy-mm-dd HH:MM'
+}

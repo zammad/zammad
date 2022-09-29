@@ -7,7 +7,10 @@ export interface ObjectAttributeDate extends ObjectManagerFrontendAttribute {
   dataOption: {
     relation: string
     null: boolean
+    past?: boolean
+    future?: boolean
+    include_timezone?: boolean
     default: Maybe<string>
-    diff: Maybe<string>
+    diff: Maybe<number>
   }
 }

@@ -27,7 +27,7 @@ const attributesDeclarations = import.meta.glob<AttributeDeclaration>(
   { eager: true, import: 'default' },
 )
 
-const componentsByType = Object.values(attributesDeclarations).reduce(
+const definitionsByType = Object.values(attributesDeclarations).reduce(
   (acc, declaration) => {
     declaration.dataTypes.forEach((type) => {
       acc[type] = declaration.component
@@ -70,7 +70,22 @@ interface AttributeField {
 
 const fields = computed<AttributeField[]>(() => {
   return props.attributes
-    .filter((attribute) => {
+    .map((attribute) => {
+      let value = getValue(attribute.name)
+
+      if (typeof value !== 'boolean' && !value) {
+        value = attribute.dataOption?.default
+      }
+
+      return {
+        attribute,
+        component: definitionsByType[attribute.dataType],
+        value,
+      }
+    })
+    .filter(({ attribute, value, component }) => {
+      if (!component) return false
+
       const dataOption = attribute.dataOption || {}
 
       if (
@@ -80,29 +95,15 @@ const fields = computed<AttributeField[]>(() => {
         return false
       }
 
-      // hide all falsy non-boolean values without default value
+      // hide all falsy non-boolean values without value
       if (
         !['boolean', 'active'].includes(attribute.dataType) &&
-        isEmpty(dataOption.default) &&
-        isEmpty(getValue(attribute.name))
+        isEmpty(value)
       ) {
         return false
       }
 
       return !skipAttributes.includes(attribute.name)
-    })
-    .map((attribute) => {
-      const component = componentsByType[attribute.dataType]
-      const value = getValue(attribute.name)
-
-      return {
-        attribute,
-        component,
-        value:
-          typeof value === 'boolean'
-            ? value
-            : value || attribute.dataOption?.default,
-      }
     })
 })
 </script>
