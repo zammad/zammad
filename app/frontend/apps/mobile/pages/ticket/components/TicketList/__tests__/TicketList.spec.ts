@@ -3,7 +3,7 @@
 import {
   mockTicketsByOverview,
   ticketDefault,
-} from '@mobile/modules/ticket/__tests__/mocks/overview'
+} from '@mobile/pages/ticket/__tests__/mocks/overview'
 import { EnumOrderDirection } from '@shared/graphql/types'
 import { renderComponent } from '@tests/support/components'
 import { waitUntil } from '@tests/support/utils'

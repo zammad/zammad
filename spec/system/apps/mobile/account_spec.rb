@@ -17,7 +17,7 @@ RSpec.describe 'Mobile > App Account Page', type: :system, app: :mobile do
 
         click('output', text: %r{English}i)
         click('span', text: %r{Dansk}i)
-        wait_for_gql('apps/mobile/modules/account/graphql/mutations/locale.graphql')
+        wait_for_gql('apps/mobile/pages/account/graphql/mutations/locale.graphql')
         admin.reload
         expect(admin.preferences[:locale]).to eq('da')
       end

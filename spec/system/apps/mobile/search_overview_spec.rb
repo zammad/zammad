@@ -24,7 +24,7 @@ RSpec.describe 'Mobile > Search', type: :system, app: :mobile, authenticated_as:
 
       fill_in placeholder: 'Search…', with: 'test'
 
-      wait_for_gql('apps/mobile/modules/search/graphql/queries/searchOverview.graphql')
+      wait_for_gql('apps/mobile/pages/search/graphql/queries/searchOverview.graphql')
 
       expect(page).to have_text('test ticket')
       expect(page).to have_no_text('other ticket')
@@ -62,7 +62,7 @@ RSpec.describe 'Mobile > Search', type: :system, app: :mobile, authenticated_as:
 
       fill_in placeholder: 'Search…', with: 'test'
 
-      wait_for_gql('apps/mobile/modules/search/graphql/queries/searchOverview.graphql')
+      wait_for_gql('apps/mobile/pages/search/graphql/queries/searchOverview.graphql')
 
       expect(page).to have_text('test ticket')
       expect(page).to have_no_text('other ticket')
@@ -76,7 +76,7 @@ RSpec.describe 'Mobile > Search', type: :system, app: :mobile, authenticated_as:
 
       fill_in placeholder: 'Search…', with: 'test'
 
-      wait_for_gql('apps/mobile/modules/search/graphql/queries/searchOverview.graphql')
+      wait_for_gql('apps/mobile/pages/search/graphql/queries/searchOverview.graphql')
 
       expect(page).to have_text('test customer')
       expect(page).to have_no_text('other customer')
@@ -90,7 +90,7 @@ RSpec.describe 'Mobile > Search', type: :system, app: :mobile, authenticated_as:
 
       fill_in placeholder: 'Search…', with: 'test'
 
-      wait_for_gql('apps/mobile/modules/search/graphql/queries/searchOverview.graphql')
+      wait_for_gql('apps/mobile/pages/search/graphql/queries/searchOverview.graphql')
 
       expect(page).to have_text('test organization')
       expect(page).to have_no_text('other organization')

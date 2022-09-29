@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { defaultArticles } from '@mobile/modules/ticket/__tests__/mocks/detail-view'
-import type { TicketArticle } from '@mobile/modules/ticket/types/tickets'
+import { defaultArticles } from '@mobile/pages/ticket/__tests__/mocks/detail-view'
+import type { TicketArticle } from '@mobile/pages/ticket/types/tickets'
 import { getAllByRole } from '@testing-library/vue'
 import { renderComponent } from '@tests/support/components'
 import ArticleMetadata from '../ArticleMetadataDialog.vue'

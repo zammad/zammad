@@ -9,7 +9,7 @@ import transitionViewGuard from './guards/before/viewTransition'
 import { errorAfterGuard } from './error'
 
 const routeModules: Record<string, RoutesModule> = import.meta.glob(
-  ['../modules/*/routes.ts', '../modules/*/routes/*.ts'],
+  ['../pages/*/routes.ts', '../pages/*/routes/*.ts'],
   { eager: true },
 )
 

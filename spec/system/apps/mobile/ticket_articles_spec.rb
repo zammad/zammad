@@ -57,7 +57,7 @@ RSpec.describe 'Mobile > Ticket > Articles', type: :system, app: :mobile, authen
 
       click('button', text: 'load 4 more')
 
-      wait_for_gql('apps/mobile/modules/ticket/graphql/queries/ticket/articles.graphql')
+      wait_for_gql('apps/mobile/pages/ticket/graphql/queries/ticket/articles.graphql')
 
       (1..4).each do |number|
         expect(page).to have_text(articles[number].body, count: 1)

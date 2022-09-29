@@ -37,9 +37,7 @@ const showDialog = () => {
 
 <template>
   <div
-    :class="{
-      [context.classes.input]: true,
-    }"
+    :class="context.classes.input"
     class="flex h-auto rounded-none bg-transparent focus-within:bg-blue-highlight focus-within:pt-0 formkit-populated:pt-0"
     data-test-id="field-tags"
   >

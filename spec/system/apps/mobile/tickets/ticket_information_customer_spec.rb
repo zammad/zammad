@@ -13,7 +13,7 @@ RSpec.describe 'Mobile > Ticket > Customer > Preview customer information', type
     visit "/tickets/#{ticket.id}/information/customer"
     wait_for_gql('shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.graphql')
     wait_for_gql('apps/mobile/entities/user/graphql/queries/user.graphql')
-    wait_for_gql('apps/mobile/modules/ticket/graphql/queries/ticket.graphql')
+    wait_for_gql('apps/mobile/pages/ticket/graphql/queries/ticket.graphql')
   end
 
   context 'when visiting as agent', authenticated_as: :agent do
