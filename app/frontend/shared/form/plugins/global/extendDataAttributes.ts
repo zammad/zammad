@@ -18,8 +18,7 @@ const extendDataAttribues = (node: FormKitNode) => {
   context.fns.hasValue = (value: unknown): boolean => {
     if (typeof value === 'object') return !isEmpty(value)
 
-    // will rule out undefined and null
-    return value != null
+    return value != null && value !== ''
   }
 
   context.fns.hasRule = (parsedRules: FormKitValidation[]) => {
@@ -29,7 +28,7 @@ const extendDataAttribues = (node: FormKitNode) => {
   extendSchemaDefinition(node, 'outer', {
     attrs: {
       'data-populated': {
-        if: '$fns.hasValue($_value)',
+        if: '$fns.hasValue($value)',
         then: 'true',
         else: undefined,
       },

@@ -4,9 +4,10 @@ import type {
   FormKitExtendableSchemaRoot,
   FormKitFrameworkContext,
 } from '@formkit/core'
-import { createNode } from '@formkit/core'
+import { createNode, getNode } from '@formkit/core'
 import { FormKit } from '@formkit/vue'
 import { renderComponent } from '@tests/support/components'
+import { waitForNextTick } from '@tests/support/utils'
 import extendDataAttribues from '../global/extendDataAttributes'
 
 const wrapperParameters = {
@@ -83,8 +84,53 @@ describe('extendDataAttributes - data-populated', () => {
       const kit = renderKit()
 
       const input = kit.getByLabelText('text')
-      await kit.events.clear(input)
+      expect(kit.getOuterKit()).not.toHaveAttribute('data-populated')
+
       await kit.events.type(input, 'input')
+
+      expect(kit.getOuterKit()).toHaveAttribute('data-populated')
+
+      await kit.events.clear(input)
+
+      expect(kit.getOuterKit()).not.toHaveAttribute('data-populated')
+    })
+
+    it('is data attribute true when input has an initial value', async () => {
+      const kit = renderKit({
+        value: 'abc',
+      })
+
+      expect(kit.getOuterKit()).toHaveAttribute('data-populated')
+    })
+
+    it('is data attribute true for number input with zero', async () => {
+      const kit = renderKit({
+        name: 'number',
+        type: 'number',
+        id: 'number',
+        label: 'number',
+      })
+
+      const node = getNode('number')
+      node?.input(0)
+
+      await waitForNextTick(true)
+
+      expect(kit.getOuterKit()).toHaveAttribute('data-populated')
+    })
+
+    it('is data attribute true for a false boolean value', async () => {
+      const kit = renderKit({
+        name: 'checkbox',
+        type: 'checkbox',
+        id: 'checkbox',
+        label: 'checkbox',
+      })
+
+      const node = getNode('checkbox')
+      node?.input(false)
+
+      await waitForNextTick(true)
 
       expect(kit.getOuterKit()).toHaveAttribute('data-populated')
     })
