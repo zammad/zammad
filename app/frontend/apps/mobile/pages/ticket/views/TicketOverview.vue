@@ -9,16 +9,17 @@ import { EnumOrderDirection } from '@shared/graphql/types'
 import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
 import { useTicketOverviewsStore } from '@mobile/entities/ticket/stores/ticketOverviews'
 import CommonSelect from '@mobile/components/CommonSelect/CommonSelect.vue'
+import { useApplicationStore } from '@shared/stores/application'
 import { useSessionStore } from '@shared/stores/session'
 import { useRouteQuery } from '@vueuse/router'
 import { storeToRefs } from 'pinia'
 import TicketList from '../components/TicketList/TicketList.vue'
 
+const application = useApplicationStore()
+
 const props = defineProps<{
   overviewLink: string
 }>()
-
-const MAX_COUNT_TICKETS = 2000
 
 const router = useRouter()
 const route = useRoute()
@@ -281,7 +282,7 @@ const directionOptions = computed(() => [
         :overview-id="selectedOverview.id"
         :order-by="orderBy"
         :order-direction="orderDirection"
-        :max-count="MAX_COUNT_TICKETS"
+        :max-count="Number(application.config.ui_ticket_overview_ticket_limit)"
         :hidden-columns="hiddenColumns"
       />
     </CommonLoader>

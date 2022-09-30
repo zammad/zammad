@@ -996,6 +996,19 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
+  title:       __('Maximum number of ticket shown in overviews'),
+  name:        'ui_ticket_overview_ticket_limit',
+  area:        'UI::TicketOverview::TicketLimit',
+  description: __('Define the maximum number of ticket shown in overviews.'),
+  options:     {},
+  state:       2000,
+  preferences: {
+    permission: ['admin.overview'],
+  },
+  frontend:    true
+)
+
+Setting.create_if_not_exists(
   title:       __('Password Login'),
   name:        'user_show_password_login',
   area:        'Security::Base',

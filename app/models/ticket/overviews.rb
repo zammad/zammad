@@ -87,7 +87,7 @@ returns
         .where(db_query_params.query_condition, *db_query_params.bind_condition)
         .joins(db_query_params.tables)
         .order(Arel.sql("#{db_query_params.order_by} #{db_query_params.direction}"))
-        .limit(2000)
+        .limit(limit_per_overview)
         .pluck(:id, :updated_at, Arel.sql(db_query_params.order_by))
 
       tickets = ticket_result.map do |ticket|
@@ -128,7 +128,7 @@ returns
       .where(db_query_params.query_condition, *db_query_params.bind_condition)
       .joins(db_query_params.tables)
       .order(Arel.sql("#{db_query_params.order_by} #{db_query_params.direction}"))
-      .limit(2000)
+      .limit(limit_per_overview)
   end
 
   DB_QUERY_PARAMS = Struct.new(:query_condition, :bind_condition, :tables, :order_by, :direction)
@@ -166,4 +166,7 @@ returns
     result
   end
 
+  def self.limit_per_overview
+    Setting.get('ui_ticket_overview_ticket_limit')
+  end
 end

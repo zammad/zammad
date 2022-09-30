@@ -3,6 +3,7 @@
 import { EnumOrderDirection } from '@shared/graphql/types'
 import { waitFor } from '@testing-library/vue'
 import { visitView } from '@tests/support/components/visitView'
+import { mockApplicationConfig } from '@tests/support/mock-applicationConfig'
 import { mockTicketOverviews } from '@tests/support/mocks/ticket-overviews'
 import { waitForNextTick } from '@tests/support/utils'
 import { stringifyQuery } from 'vue-router'
@@ -149,6 +150,10 @@ it('pagination loads additional list', async () => {
   const ticketOverviewsApi = mockTicketsByOverview([ticketDefault()], {
     hasNextPage: true,
     endCursor: 'cursor',
+  })
+
+  mockApplicationConfig({
+    ui_ticket_overview_ticket_limit: 2000,
   })
 
   const view = await visitView(`/tickets/view`)
