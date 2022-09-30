@@ -1,39 +1,34 @@
 # Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-module ActiveRecord
-  module Locking
-    module Pessimistic
-      def lock!(lock = true) # rubocop:disable Style/OptionalBooleanParameter, Metrics/AbcSize
-        if persisted?
-          if has_changes_to_save?
-            # ---
-            # Zammad
-            # ---
-            # https://github.com/zammad/zammad/issues/3664
+module ActiveRecord::Locking::Pessimistic
 
-            # We will skip the exception in case if the changes
-            # only include columns which are store-type
-            skip_exception = changes.all? do |key, value|
-              send(key.to_sym).instance_of?(ActiveSupport::HashWithIndifferentAccess) && Marshal.dump(value[0]) == Marshal.dump(value[1])
-            end
+  # https://github.com/zammad/zammad/issues/3664
+  #
+  # With Zammad 5.2 and Rails update from 6.1.6.2 to 6.1.7, internal database storage format
+  #   of preferences columns changed from serialized `ActiveSupport::HashWithIndifferentAccess` to just serialized `Hash``.
+  # The downside is that 'old' values still have the old format, and show up as changed, which prevents
+  #   `with_lock` from working correctly - it would throw errors on previously modified records,
+  #   making tickets/users non-updateable.
+  # We work around this by suppressing the exception in just this case.
+  if !method_defined?(:orig_lock!)
 
-            if skip_exception
-              reload(lock: lock)
-              return self
-            end
-            # ---
-            raise(<<-MSG.squish)
-              Locking a record with unpersisted changes is not supported. Use
-              `save` to persist the changes, or `reload` to discard them
-              explicitly.
-              Changed attributes: #{changed.map(&:inspect).join(', ')}.
-            MSG
-          end
+    alias orig_lock! lock!
 
-          reload(lock: lock)
+    def lock!(lock = true) # rubocop:disable Style/OptionalBooleanParameter
+      if persisted? && has_changes_to_save?
+
+        # We will skip the exception in case if the changes only contain columns which are store-type and have idential value.
+        skip_exception = changes.all? do |key, value|
+          send(key.to_sym).instance_of?(ActiveSupport::HashWithIndifferentAccess) && Marshal.dump(value[0]) == Marshal.dump(value[1])
         end
-        self
+
+        if skip_exception
+          reload(lock: lock)
+          return self
+        end
       end
+
+      orig_lock!(lock)
     end
   end
 end
