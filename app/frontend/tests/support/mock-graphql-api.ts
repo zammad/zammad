@@ -71,8 +71,14 @@ export const mockGraphQLApi = (
     return instance
   }
 
-  const willResolve = <T>(result: T) => {
-    resolveSpy.mockResolvedValue({ data: result })
+  const willResolve = <T>(result: T | T[]) => {
+    if (Array.isArray(result)) {
+      result.forEach((singleResult) => {
+        resolveSpy.mockResolvedValueOnce({ data: singleResult })
+      })
+    } else {
+      resolveSpy.mockResolvedValue({ data: result })
+    }
     createMockClient([
       {
         operationDocument,

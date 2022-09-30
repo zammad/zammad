@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
 import { cloneDeep } from 'lodash-es'
 import { useSessionIdQuery } from '@shared/graphql/queries/sessionId.api'
@@ -151,10 +151,15 @@ export const useSessionStore = defineStore(
       )
     }
 
+    // TODO: more like a workaround to avoid some definedchecks during the usage, maybe
+    // we have a different solution or remove it again.
+    const userId = computed(() => user.value?.id as string)
+
     return {
       id,
       checkSession,
       user,
+      userId,
       getCurrentUser,
       resetCurrentSession,
       hasPermission: userHasPermission,

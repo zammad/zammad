@@ -27,5 +27,7 @@ module Gql::Types::Ticket
     field :origin_by, Gql::Types::UserType
 
     field :attachments, [Gql::Types::StoredFileType, { null: false }], null: false
+
+    belongs_to :ticket, Gql::Types::TicketType, null: false
   end
 end

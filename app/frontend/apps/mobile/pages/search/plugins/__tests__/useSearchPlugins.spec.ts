@@ -26,7 +26,7 @@ describe('plugins are returned correctly', () => {
       }),
       organization: expect.objectContaining({
         order: 300,
-        link: '/organizations/#{id}',
+        link: '/organizations/#{internalId}',
       }),
     })
   })

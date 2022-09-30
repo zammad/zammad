@@ -790,6 +790,29 @@
       "note": "Admin configured RegExp"
     },
     {
+      "warning_type": "Remote Code Execution",
+      "warning_code": 24,
+      "fingerprint": "ea684c8cc399726b0a3e7077de81f0ea11da26bba7c2007ac6a8e36eecace97f",
+      "check_name": "UnsafeReflection",
+      "message": "Unsafe reflection method `constantize` called on model attribute",
+      "file": "app/graphql/gql/concerns/is_model_object.rb",
+      "line": 58,
+      "link": "https://brakemanscanner.org/docs/warning_types/remote_code_execution/",
+      "code": "ObjectLookup.by_id(object.send(through_key)).constantize",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Gql::Concerns::IsModelObject",
+        "method": "load_belongs_to"
+      },
+      "user_input": "ObjectLookup.by_id(object.send(through_key))",
+      "confidence": "Medium",
+      "cwe_id": [
+        470
+      ],
+      "note": ""
+    },
+    {
       "warning_type": "Session Setting",
       "warning_code": 29,
       "fingerprint": "f0ee1cc1980474c82a013645508f002dcc801e00db5592f7dd8cd6bdb93c73fe",

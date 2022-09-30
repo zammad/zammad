@@ -7,7 +7,7 @@ export default <SearchPlugin>{
   model: 'Organization',
   headerLabel: __('Organizations'),
   component: OrganizationItem,
-  link: '/organizations/#{id}',
+  link: '/organizations/#{internalId}',
   permissions: ['ticket.agent'],
   order: 300,
   icon: { name: 'organization', size: 'small' },

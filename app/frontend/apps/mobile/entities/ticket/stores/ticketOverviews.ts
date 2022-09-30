@@ -25,12 +25,9 @@ export const useTicketOverviewsStore = defineStore('ticketOverviews', () => {
   const overviews = computed(() => {
     if (!overviewsRaw.value?.ticketOverviews.edges) return []
 
-    return (
-      overviewsRaw.value.ticketOverviews.edges
-        .filter((overview) => overview?.node?.id)
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        .map((edge) => edge!.node!)
-    )
+    return overviewsRaw.value.ticketOverviews.edges
+      .filter((overview) => overview?.node?.id)
+      .map((edge) => edge.node)
   })
 
   const overviewsByKey = computed(() => keyBy(overviews.value, 'id'))

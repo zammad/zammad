@@ -1,10 +1,15 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
+import { OnlineNotificationsCountDocument } from '@shared/entities/online-notification/graphql/subscriptions/onlineNotificationsCount.api'
 import { useSessionStore } from '@shared/stores/session'
 import type { UserData } from '@shared/types/store'
 import { renderComponent } from '@tests/support/components'
+import { mockGraphQLSubscription } from '@tests/support/mock-graphql-api'
 import { flushPromises } from '@vue/test-utils'
 import LayoutBottomNavigation from '../LayoutBottomNavigation.vue'
+
+// TODO: Add correct notification count test case, when real count output exists.
+mockGraphQLSubscription(OnlineNotificationsCountDocument)
 
 describe('bottom navigation in layout', () => {
   it('renders navigation', async () => {

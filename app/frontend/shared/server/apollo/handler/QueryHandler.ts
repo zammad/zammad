@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import type { Ref } from 'vue'
+import type { Ref, WatchStopHandle } from 'vue'
 import { watch } from 'vue'
 import type {
   FetchMoreOptions,
@@ -164,8 +164,10 @@ export default class QueryHandler<
       .catch((error) => error)
   }
 
-  public watchOnResult(callback: WatchResultCallback<TResult>): void {
-    watch(
+  public watchOnResult(
+    callback: WatchResultCallback<TResult>,
+  ): WatchStopHandle {
+    return watch(
       this.result(),
       (result) => {
         if (!result) {

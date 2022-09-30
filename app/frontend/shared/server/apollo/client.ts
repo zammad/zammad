@@ -17,6 +17,7 @@ export const createApolloClient = (
     connectToDevTools: process.env.NODE_ENV !== 'production',
     link,
     cache,
+    queryDeduplication: true,
   })
 
   return apolloClient

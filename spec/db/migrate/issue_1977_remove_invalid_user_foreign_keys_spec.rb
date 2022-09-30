@@ -13,8 +13,10 @@ RSpec.describe Issue1977RemoveInvalidUserForeignKeys, type: :db_migration do
       it 'cleans up OnlineNotification#user_id', db_strategy: :reset do
         without_foreign_key(:online_notifications, column: :user_id)
 
-        create(:online_notification, user_id: 1337)
-        create(:online_notification, user_id: existing_user_id)
+        OnlineNotification.without_callback :save, :after, :trigger_subscriptions do
+          create(:online_notification, user_id: 1337)
+          create(:online_notification, user_id: existing_user_id)
+        end
 
         expect do
           migrate

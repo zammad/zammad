@@ -1,0 +1,39 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
+require 'rails_helper'
+
+RSpec.describe Gql::Queries::OnlineNotifications, type: :graphql do
+  context 'with a notification' do
+    let(:user)                      { create(:agent) }
+    let(:notification)              { create(:online_notification, user: user) }
+    let(:another_user_notification) { create(:online_notification, user: create(:user)) }
+
+    let(:query) do
+      <<~QUERY
+        query onlineNotifications {
+          onlineNotifications {
+            edges {
+              node {
+                id
+              }
+            }
+          }
+        }
+      QUERY
+    end
+
+    before do
+      user.groups << Ticket.first.group
+      notification
+      another_user_notification
+
+      gql.execute(query)
+    end
+
+    it 'contains a notification', authenticated_as: :user do
+      returned_ids = gql.result.nodes.map { |elem| elem['id'] }
+
+      expect(returned_ids).to contain_exactly(notification.to_gid_param)
+    end
+  end
+end

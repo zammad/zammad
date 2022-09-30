@@ -21,6 +21,18 @@ module ZammadSpecSupportGraphql
         block ||= ->(msg) { @mock_broadcasted_messages << msg }
         MockActionCable.mock_stream_for(stream_name).add_mock_channel(self, block)
       end
+
+      def mock_broadcasted_at(index)
+        data = mock_broadcasted_messages.dig(index, :result)
+
+        return if !data
+
+        GraphQLHelpers::Result.new(data)
+      end
+
+      def mock_broadcasted_first
+        mock_broadcasted_at(0)
+      end
     end
 
     class MockStream

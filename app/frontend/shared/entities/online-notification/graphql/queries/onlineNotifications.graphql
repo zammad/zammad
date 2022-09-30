@@ -1,0 +1,37 @@
+query onlineNotifications {
+  onlineNotifications {
+    edges {
+      node {
+        id
+        seen
+        createdAt
+        createdBy {
+          id
+          fullname
+          lastname
+          firstname
+          email
+          vip
+          outOfOffice
+          active
+          image
+        }
+        typeName
+        objectName
+        objectId
+        metaObject {
+          ... on Ticket {
+            id
+            internalId
+            title
+          }
+        }
+      }
+      cursor
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+  }
+}

@@ -3,12 +3,13 @@
 FactoryBot.define do
   factory :online_notification do
     transient do
-      o { Ticket.first }
+      o         { Ticket.first }
+      type_name { 'updated' }
     end
 
     object_lookup_id { ObjectLookup.by_name(o.class.name) }
     o_id             { o.id }
-    type_lookup_id   { TypeLookup.by_name('updated') }
+    type_lookup_id   { TypeLookup.by_name(type_name) }
     seen             { false }
     user_id          { 1 }
     created_by_id    { 1 }

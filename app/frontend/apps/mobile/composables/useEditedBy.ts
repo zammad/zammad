@@ -1,5 +1,6 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
+import { userDisplayName } from '@shared/entities/user/utils/getUserDisplayName'
 import { i18n } from '@shared/i18n'
 import { useSessionStore } from '@shared/stores/session'
 import type { Ref } from 'vue'
@@ -22,10 +23,8 @@ export const useEditedBy = (entity: Ref<Entity>) => {
   const author = computed(() => {
     const { updatedBy } = entity.value
     if (!updatedBy) return ''
-    return (
-      updatedBy.fullname ||
-      [updatedBy.firstname, updatedBy.lastname].filter(Boolean).join(' ')
-    )
+
+    return userDisplayName(updatedBy)
   })
 
   const date = computed(() => {

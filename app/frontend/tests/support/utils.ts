@@ -45,9 +45,9 @@ export const waitUntilApisResolved = (...mockApis: MockGraphQLInstance[]) => {
   return waitUntil(() => mockApis.every((mock) => mock.calls.resolve))
 }
 
-// apollo cache always asks for a field, even if it's marked as optional
+// The apollo cache always asks for a field, even if it's marked as optional
 // this function returns a proxy that will return "null" on properties not defined
-// in the initial object
+// in the initial object.
 export const nullableMock = <T extends object>(obj: T): T => {
   const skipProperties = new Set(['_id', 'id', Symbol.toStringTag])
 

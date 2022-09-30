@@ -18,17 +18,18 @@ module Gql::Concerns::IsModelObject
     end
   end
 
-  class_methods do
+  class_methods do # rubocop:disable Metrics/BlockLength
 
     # Using AssociationLoader with has_many and has_and_belongs_to_many didn't work out,
     #   because the ConnectionTypes generate their own, non-preloadable queries.
     # See also https://github.com/Shopify/graphql-batch/issues/114.
 
     def belongs_to(association, *args, **kwargs, &block)
+      given_foreign_key = kwargs.delete(:foreign_key)
+      given_through_key = kwargs.delete(:through_key)
+
       kwargs[:resolver_method] = association_resolver(association) do
-        definition = object.class.reflections[association.to_s]
-        id = object.public_send(:"#{definition.plural_name.singularize}_id")
-        Gql::RecordLoader.for(definition.klass).load(id)
+        load_belongs_to(object, association, given_foreign_key, given_through_key)
       end
 
       field(association, *args, **kwargs, is_dependent_field: true, &block)
@@ -43,12 +44,56 @@ module Gql::Concerns::IsModelObject
       field(association, *args, **kwargs, is_dependent_field: true, &block)
     end
 
+    def lookup_field(name, *args, **kwargs, &block)
+      method_name = (kwargs.delete(:method) || name).to_s
+
+      kwargs[:resolver_method] = lookup_resolver(name) do
+        raw_value = object.send(method_name)
+
+        reflection_target_by_key(object, method_name)
+          &.lookup(id: raw_value)
+          &.name
+      end
+
+      field(name, *args, **kwargs, &block)
+    end
+
     private
 
     def association_resolver(association, &block)
-      :"resolve_#{association}_association".tap do |resolver_method|
-        define_method(resolver_method, &block)
-      end
+      define_dynamic_resolver(:"resolve_#{association}_association", &block)
     end
+
+    def lookup_resolver(name, &block)
+      define_dynamic_resolver(:"resolve_#{name}_lookup", &block)
+    end
+
+    def define_dynamic_resolver(name, &block)
+      define_method(name, &block)
+
+      name
+    end
+  end
+
+  def load_belongs_to(object, association, foreign_key, through_key)
+    if through_key.present?
+      object_klass = ObjectLookup.by_id(object.send(through_key)).constantize
+      object_id    = object.public_send(foreign_key)
+    else
+      definition = object.class.reflections[association.to_s]
+      object_klass = definition.klass
+      object_id = object.public_send(foreign_key || :"#{definition.plural_name.singularize}_id")
+    end
+
+    Gql::RecordLoader.for(object_klass).load(object_id)
+  end
+
+  def reflection_target_by_key(object, key)
+    object
+      .class
+      .reflections
+      .find { |_, elem| elem.foreign_key == key }
+      &.last
+      &.klass
   end
 end

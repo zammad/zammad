@@ -3,10 +3,12 @@
 import CommonUserAvatar from '@shared/components/CommonUserAvatar/CommonUserAvatar.vue'
 import { useSessionStore } from '@shared/stores/session'
 import { storeToRefs } from 'pinia'
+import { useOnlineNotificationCount } from '@shared/entities/online-notification/composables/useOnlineNotificationCount'
 import { useCustomLayout } from './useCustomLayout'
 
 const { user } = storeToRefs(useSessionStore())
 const { isCustomLayout } = useCustomLayout()
+const { unseenCount } = useOnlineNotificationCount()
 </script>
 
 <template>
@@ -23,10 +25,12 @@ const { isCustomLayout } = useCustomLayout()
       >
         <CommonIcon name="home" size="small" />
       </CommonLink>
+      <!-- TODO: instead of read icon, we need a number like in Figma -->
       <CommonLink
         link="/notifications"
         exact-active-class="text-blue"
         class="flex flex-1 justify-center"
+        :class="{ 'text-red': unseenCount > 0 }"
       >
         <CommonIcon name="bell" size="medium" />
       </CommonLink>

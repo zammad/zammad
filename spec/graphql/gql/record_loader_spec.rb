@@ -139,10 +139,10 @@ RSpec.describe Gql::RecordLoader, type: :graphql do
         {
           'Overview Load'          => 1,
           'ObjectLookup Load'      => 1,
-          'Permission Load'        => 46,
-          'Permission Exists?'     => 45,
+          'Permission Load'        => 56,
+          'Permission Exists?'     => 55,
           'Group Load'             => 11,
-          'UserGroup Exists?'      => 10,
+          'UserGroup Exists?'      => 20,
           'Ticket Load'            => 1,
           'Ticket Exists?'         => 1,
           'User Load'              => 2,
@@ -157,8 +157,8 @@ RSpec.describe Gql::RecordLoader, type: :graphql do
         {
           'Overview Load'          => 1,
           'ObjectLookup Load'      => 1,
-          'Permission Load'        => 5,
-          'Permission Exists?'     => 5,
+          'Permission Load'        => 6,
+          'Permission Exists?'     => 6,
           'Group Load'             => 3,
           'UserGroup Exists?'      => 2,
           'Ticket Load'            => 1,
@@ -255,10 +255,10 @@ RSpec.describe Gql::RecordLoader, type: :graphql do
 
       expect(total_queries).to include(
         {
-          'Permission Load'              => 7,
-          'Permission Exists?'           => 6,
+          'Permission Load'              => 8,
+          'Permission Exists?'           => 7,
           'Group Load'                   => 12,
-          'UserGroup Exists?'            => 12,
+          'UserGroup Exists?'            => 13,
           'Ticket Load'                  => 11,
           'Ticket::Article Load'         => 1,
           'Ticket::Article::Sender Load' => 1,
@@ -274,8 +274,8 @@ RSpec.describe Gql::RecordLoader, type: :graphql do
 
       expect(uncached_queries).to include(
         {
-          'Permission Load'        => 3,
-          'Permission Exists?'     => 3,
+          'Permission Load'        => 4,
+          'Permission Exists?'     => 4,
           'Group Load'             => 2,
           'UserGroup Exists?'      => 1,
           'Ticket Load'            => adapter == 'mysql2' ? 1 : 2,  # differs for some reason, not sure why

@@ -2,6 +2,7 @@
 
 class OnlineNotification < ApplicationModel
   include OnlineNotification::Assets
+  include OnlineNotification::TriggersSubscriptions
 
   belongs_to :user, optional: true
   # rubocop:disable Rails/InverseOf
@@ -12,6 +13,9 @@ class OnlineNotification < ApplicationModel
   after_create    :notify_clients_after_change
   after_update    :notify_clients_after_change
   after_destroy   :notify_clients_after_change
+
+  belongs_to :created_by, class_name: 'User'
+  belongs_to :updated_by, class_name: 'User'
 
 =begin
 
@@ -177,36 +181,6 @@ returns:
       return false if !onine_notification['seen']
     end
     true
-  end
-
-=begin
-
-check if notification was created for certain user
-
-  OnlineNotification.exists?(for_user, object, o_id, type, created_by_user, seen)
-
-returns:
-
-  true # false
-
-=end
-
-  # rubocop:disable Metrics/ParameterLists
-  def self.exists?(user, object_name, o_id, type_name, created_by_user, seen)
-    # rubocop:enable Metrics/ParameterLists
-    object_id     = ObjectLookup.by_name(object_name)
-    type_id       = TypeLookup.by_name(type_name)
-    notifications = OnlineNotification.list(user, 10)
-    notifications.each do |notification|
-      next if notification.o_id != o_id
-      next if notification.object_lookup_id != object_id
-      next if notification.type_lookup_id != type_id
-      next if notification.created_by_id != created_by_user.id
-      next if notification.seen != seen
-
-      return true
-    end
-    false
   end
 
 =begin

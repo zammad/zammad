@@ -132,34 +132,42 @@ msgid "%s attached files"
 msgstr ""
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts
 msgid "%s completed data privacy task to delete user ID |%s|"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket_article.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts
 msgid "%s created article for |%s|"
 msgstr ""
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts
 msgid "%s created data privacy task to delete user ID |%s|"
 msgstr ""
 
 #: app/assets/javascripts/app/models/group.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/group.ts
 msgid "%s created group |%s|"
 msgstr ""
 
 #: app/assets/javascripts/app/models/organization.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/organization.ts
 msgid "%s created organization |%s|"
 msgstr ""
 
 #: app/assets/javascripts/app/models/role.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/role.ts
 msgid "%s created role |%s|"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/ticket.ts
 msgid "%s created ticket |%s|"
 msgstr ""
 
 #: app/assets/javascripts/app/models/user.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/user.ts
 msgid "%s created user |%s|"
 msgstr ""
 
@@ -174,6 +182,7 @@ msgid "%s days ago"
 msgstr ""
 
 #: app/assets/javascripts/app/models/user.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/user.ts
 msgid "%s ended switch to |%s|!"
 msgstr ""
 
@@ -251,6 +260,7 @@ msgid "%s required!"
 msgstr ""
 
 #: app/assets/javascripts/app/models/user.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/user.ts
 msgid "%s started a new session"
 msgstr ""
 
@@ -260,6 +270,7 @@ msgid "%s subdomain"
 msgstr ""
 
 #: app/assets/javascripts/app/models/user.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/user.ts
 msgid "%s switched to |%s|!"
 msgstr ""
 
@@ -269,30 +280,37 @@ msgid "%s tickets"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket_article.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts
 msgid "%s updated article for |%s|"
 msgstr ""
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts
 msgid "%s updated data privacy task to delete user ID |%s|"
 msgstr ""
 
 #: app/assets/javascripts/app/models/group.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/group.ts
 msgid "%s updated group |%s|"
 msgstr ""
 
 #: app/assets/javascripts/app/models/organization.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/organization.ts
 msgid "%s updated organization |%s|"
 msgstr ""
 
 #: app/assets/javascripts/app/models/role.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/role.ts
 msgid "%s updated role |%s|"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/ticket.ts
 msgid "%s updated ticket |%s|"
 msgstr ""
 
 #: app/assets/javascripts/app/models/user.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/user.ts
 msgid "%s updated user |%s|"
 msgstr ""
 
@@ -950,6 +968,7 @@ msgid "Another ticket was merged into ticket (#{ticket.title})\n\n<div>Hi #{reci
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/ticket.ts
 msgid "Another ticket was merged into ticket |%s|"
 msgstr ""
 
@@ -1700,6 +1719,10 @@ msgstr ""
 
 #: app/policies/ticket_policy.rb
 msgid "Cannot follow-up on a closed ticket. Please create a new ticket."
+msgstr ""
+
+#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue
+msgid "Cannot set online notifications as seen"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/categories.coffee
@@ -6134,7 +6157,7 @@ msgid "March"
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/online_notification.jst.eco
-#: app/frontend/apps/mobile/pages/notifications/views/NotificationsList.vue
+#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue
 msgid "Mark all as read"
 msgstr ""
 
@@ -6837,6 +6860,7 @@ msgid "No email!"
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
+#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue
 msgid "No entries"
@@ -7073,7 +7097,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
 #: app/assets/javascripts/app/views/widget/online_notification.jst.eco
-#: app/frontend/apps/mobile/pages/notifications/routes.ts
+#: app/frontend/apps/mobile/pages/online-notification/routes.ts
 #: db/seeds/permissions.rb
 msgid "Notifications"
 msgstr ""
@@ -7545,6 +7569,7 @@ msgid "Pending Reached Tickets"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/ticket.ts
 msgid "Pending reminder reached for ticket |%s|"
 msgstr ""
 
@@ -7939,6 +7964,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/group.coffee
 msgid "Read"
+msgstr ""
+
+#: app/frontend/apps/mobile/pages/online-notification/components/NotificationItem.vue
+msgid "Read notification"
 msgstr ""
 
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco
@@ -9674,6 +9703,10 @@ msgstr ""
 msgid "The limit of %s displayable tickets was reached (%s remaining)"
 msgstr ""
 
+#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue
+msgid "The notifcation could not be deleted."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_new.coffee
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
@@ -10377,14 +10410,17 @@ msgid "Ticket will escalate (#{ticket.title})\n\n<div>Hi #{recipient.firstname},
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/ticket.ts
 msgid "Ticket |%s| has escalated!"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/ticket.ts
 msgid "Ticket |%s| was merged into another ticket"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/ticket.ts
 msgid "Ticket |%s| will escalate soon!"
 msgstr ""
 
@@ -10766,6 +10802,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/user.coffee
 msgid "Unlock"
+msgstr ""
+
+#: app/frontend/apps/mobile/pages/online-notification/components/NotificationItem.vue
+msgid "Unread notification"
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
