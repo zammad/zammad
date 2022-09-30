@@ -4,11 +4,13 @@
 import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
-import { MutationHandler } from '@shared/server/apollo/handler'
+import { MutationHandler, QueryHandler } from '@shared/server/apollo/handler'
 import { useSessionStore } from '@shared/stores/session'
 import { useLocaleStore } from '@shared/stores/locale'
 import FormGroup from '@shared/components/Form/FormGroup.vue'
 import CommonUserAvatar from '@shared/components/CommonUserAvatar/CommonUserAvatar.vue'
+import type { ProductAboutQuery } from '@shared/graphql/types'
+import { useProductAboutQuery } from '@shared/graphql/queries/about.api'
 import CommonSectionMenu from '@mobile/components/CommonSectionMenu/CommonSectionMenu.vue'
 import CommonSectionMenuLink from '@mobile/components/CommonSectionMenu/CommonSectionMenuLink.vue'
 import { useAccountLocaleMutation } from '../graphql/mutations/locale.api'
@@ -19,7 +21,8 @@ const logout = () => {
   router.push('/logout')
 }
 
-const { user } = storeToRefs(useSessionStore())
+const session = useSessionStore()
+const { user } = storeToRefs(session)
 
 const localeStore = useLocaleStore()
 const savingLocale = ref(false)
@@ -55,6 +58,19 @@ const currentLocale = computed({
     })
   },
 })
+
+const productAbout = ref<ProductAboutQuery['productAbout']>()
+const versionPermission = session.hasPermission('admin.version')
+
+if (versionPermission) {
+  const productAboutQuery = new QueryHandler(useProductAboutQuery(), {
+    errorNotificationMessage: __('The product version could not be fetched.'),
+  })
+
+  productAboutQuery.watchOnResult((data) => {
+    productAbout.value = data?.productAbout
+  })
+}
 </script>
 
 <template>
@@ -102,11 +118,11 @@ const currentLocale = computed({
       </template>
     </FormGroup>
 
-    <CommonSectionMenu>
+    <CommonSectionMenu v-if="versionPermission">
       <CommonSectionMenuLink
         :icon="{ name: 'info', size: 'base' }"
+        :information="productAbout"
         icon-bg="bg-gray"
-        information="v 1.1"
       >
         {{ $t('About') }}
       </CommonSectionMenuLink>

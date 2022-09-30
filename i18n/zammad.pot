@@ -9716,6 +9716,10 @@ msgstr ""
 msgid "The preview cannot be generated. The format is corrupted or not supported."
 msgstr ""
 
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
+msgid "The product version could not be fetched."
+msgstr ""
+
 #: app/controllers/import_freshdesk_controller.rb
 #: app/controllers/import_kayako_controller.rb
 #: app/controllers/import_otrs_controller.rb

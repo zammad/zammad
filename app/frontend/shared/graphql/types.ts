@@ -636,6 +636,8 @@ export type Queries = {
   objectManagerFrontendAttributes?: Maybe<ObjectManagerFrontendAttributesPayload>;
   /** Fetch an organization by ID */
   organization: Organization;
+  /** Fetch the version of Zammad */
+  productAbout: Scalars['String'];
   /** Generic object search */
   search: Array<SearchResult>;
   /** The sessionId of the currently authenticated user. */
@@ -1389,6 +1391,11 @@ export type LogoutMutationVariables = Exact<{ [key: string]: never; }>;
 
 
 export type LogoutMutation = { __typename?: 'Mutations', logout?: { __typename?: 'LogoutPayload', success: boolean } | null };
+
+export type ProductAboutQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ProductAboutQuery = { __typename?: 'Queries', productAbout: string };
 
 export type ApplicationBuildChecksumQueryVariables = Exact<{ [key: string]: never; }>;
 
