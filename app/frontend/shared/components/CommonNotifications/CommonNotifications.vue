@@ -1,8 +1,11 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
+/* eslint-disable vue/no-v-html */
+
 import useNotifications from '@shared/components/CommonNotifications/composable'
 import type { Notification } from '@shared/components/CommonNotifications/types'
+import { markup } from '@shared/utils/markup'
 
 const notificationTypeClassMap = {
   warn: 'bg-yellow text-white',
@@ -51,14 +54,17 @@ const clickHandler = (notification: Notification) => {
               @click="clickHandler(notification)"
             >
               <CommonIcon :name="iconNameMap[notification.type]" size="small" />
-              <span class="text-sm ltr:ml-2 rtl:mr-2">{{
-                notification.messagePlaceholder
-                  ? i18n.t(
+              <span
+                class="text-sm ltr:ml-2 rtl:mr-2"
+                v-html="
+                  markup(
+                    $t(
                       notification.message,
-                      ...notification.messagePlaceholder,
-                    )
-                  : i18n.t(notification.message)
-              }}</span>
+                      ...(notification.messagePlaceholder || []),
+                    ),
+                  )
+                "
+              />
             </div>
           </div>
         </div>

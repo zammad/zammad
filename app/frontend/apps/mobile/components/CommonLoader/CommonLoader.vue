@@ -1,6 +1,10 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
+/* eslint-disable vue/no-v-html */
+
+import { markup } from '@shared/utils/markup'
+
 interface Props {
   loading?: boolean
   error?: string
@@ -37,7 +41,7 @@ export default {
     class="flex items-center justify-center gap-2 text-base text-red"
   >
     <CommonIcon name="close-small" />
-    <span>{{ $t(error) }}</span>
+    <span v-html="markup($t(error))" />
   </div>
   <slot v-else />
 </template>
