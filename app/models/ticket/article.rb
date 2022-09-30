@@ -293,7 +293,9 @@ returns
     attributes = super
     add_attachments_to_attributes(attributes)
     if attributes['body'] && attributes['content_type'] =~ %r{text/html}i
-      attributes['body'] = HtmlSanitizer.dynamic_image_size(attributes['body'])
+      attributes['body'] = Rails.cache.fetch("#{self.class}/#{cache_key_with_version}/body/dynamic_image_size") do
+        HtmlSanitizer.dynamic_image_size(attributes['body'])
+      end
     end
     Ticket::Article.insert_urls(attributes)
   end
