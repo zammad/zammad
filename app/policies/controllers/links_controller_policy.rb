@@ -4,65 +4,46 @@ class Controllers::LinksControllerPolicy < Controllers::ApplicationControllerPol
   default_permit!('admin.tag')
 
   def add?
-    object_update?
+    object_target_update? && object_source_show?
   end
 
   def remove?
-    object_update?
+    object_target_update?
   end
 
   private
 
-  def object_update?
-    return false if !object_target_update?
-    return false if !object_source_show?
-
-    true
-  end
-
   def object_target_update?
-    case record.params[:link_object_target]
-    when 'Ticket'
-      object_target_ticket_update?
-    when %r{KnowledgeBase::Answer(?:::.+)?}
-      object_target_kb_answer_update?
-    end
-  end
-
-  def object_target_ticket_update?
-    ticket = Ticket.find(record.params[:link_object_target_value])
-    TicketPolicy.new(user, ticket).update?
-  end
-
-  def object_target_kb_answer_update?
-    answer = KnowledgeBase::Answer.find(record.params[:link_object_target_value])
-    KnowledgeBase::AnswerPolicy.new(user, answer).update?
+    object_policy(record.params[:link_object_target], id: record.params[:link_object_target_value])
+      .update?
   end
 
   def object_source_show?
-    case record.params[:link_object_source]
-    when 'Ticket'
-      object_source_ticket_show?
-    when %r{KnowledgeBase::Answer(?:::.+)?}
-      object_source_kb_answer_show?
+    object_policy(record.params[:link_object_source], number: record.params[:link_object_source_number])
+      .show?
+  end
+
+  def object_policy(object_name, id: nil, number: nil)
+    case [object_name, id, number]
+    in ['Ticket', id, nil]
+      ticket_policy(:id, id)
+    in ['Ticket', nil, number]
+      ticket_policy(:number, number)
+    in ['KnowledgeBase::Answer::Translation', *_]
+      kb_answer_policy(id.presence || number.presence)
     end
   end
 
-  def object_source_ticket_show?
-    if record.params[:action] == 'add'
-      ticket = Ticket.find_by(number: record.params[:link_object_source_number])
-      return TicketPolicy.new(user, ticket).show?
-    end
+  def kb_answer_policy(id)
+    answer_id = KnowledgeBase::Answer::Translation.find(id).answer_id
+    answer    = KnowledgeBase::Answer.find(answer_id)
 
-    true
+    KnowledgeBase::AnswerPolicy.new(user, answer)
   end
 
-  def object_source_kb_answer_show?
-    if record.params[:action] == 'add'
-      answer = KnowledgeBase::Answer.find(record.params[:link_object_source_number])
-      return KnowledgeBase::AnswerPolicy.new(user, answer).show?
-    end
+  def ticket_policy(key, id)
+    ticket = Ticket.find_by!(key => id)
 
-    true
+    TicketPolicy.new(user, ticket)
   end
 end

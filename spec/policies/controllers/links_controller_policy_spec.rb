@@ -5,6 +5,8 @@ require 'rails_helper'
 describe Controllers::LinksControllerPolicy do
   subject { described_class.new(user, record) }
 
+  include_context 'basic Knowledge Base'
+
   let(:record_class) { LinksController }
   let(:record) do
     rec             = record_class.new
@@ -62,21 +64,21 @@ describe Controllers::LinksControllerPolicy do
       end
 
       context 'when user has full permission on target and accces on source' do
-        let(:kb_answer_source) { create(:knowledge_base_answer, :published) }
+        let(:kb_answer_source) { published_answer.translations.first }
         let(:user)             { create(:agent, groups: [ticket_target.group]) }
 
         it { is_expected.to permit_action(action_name) }
       end
 
       context 'when user has no permission on target' do
-        let(:kb_answer_source) { create(:knowledge_base_answer, :published) }
+        let(:kb_answer_source) { published_answer.translations.first }
         let(:user)             { create(:agent) }
 
         it { is_expected.to forbid_action(action_name) }
       end
 
       context 'when user has no access on source' do
-        let(:kb_answer_source) { create(:knowledge_base_answer) }
+        let(:kb_answer_source) { archived_answer.translations.first }
         let(:user)             { create(:agent, groups: [ticket_target.group]) }
 
         it { is_expected.to forbid_action(action_name) }
@@ -85,7 +87,7 @@ describe Controllers::LinksControllerPolicy do
 
     context 'with target knowledge base answer and source ticket' do
       let(:ticket_source)    { create(:ticket) }
-      let(:kb_answer_target) { create(:knowledge_base_answer) }
+      let(:kb_answer_target) { published_answer.translations.first }
       let(:action_name)      { :remove }
       let(:params) do
         {
@@ -167,21 +169,21 @@ describe Controllers::LinksControllerPolicy do
       end
 
       context 'when user has full permission on target and access on source' do
-        let(:kb_answer_source) { create(:knowledge_base_answer, :published) }
+        let(:kb_answer_source) { published_answer.translations.first }
         let(:user) { create(:agent, groups: [ticket_target.group]) }
 
         it { is_expected.to permit_action(action_name) }
       end
 
       context 'when user has no permission on target' do
-        let(:kb_answer_source) { create(:knowledge_base_answer, :published) }
+        let(:kb_answer_source) { published_answer.translations.first }
         let(:user) { create(:agent) }
 
         it { is_expected.to forbid_action(action_name) }
       end
 
       context 'when user has no permission on source' do
-        let(:kb_answer_source) { create(:knowledge_base_answer) }
+        let(:kb_answer_source) { archived_answer.translations.first }
         let(:user) { create(:agent, groups: [ticket_target.group]) }
 
         it { is_expected.to permit_action(action_name) }
@@ -190,7 +192,7 @@ describe Controllers::LinksControllerPolicy do
 
     context 'with target knowledge base answer and source ticket' do
       let(:ticket_source)    { create(:ticket) }
-      let(:kb_answer_target) { create(:knowledge_base_answer) }
+      let(:kb_answer_target) { published_answer.translations.first }
       let(:action_name)      { :remove }
       let(:params) do
         {
