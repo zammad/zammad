@@ -1,5 +1,33 @@
 # Change Log
 
+## [5.2.3](https://github.com/zammad/zammad/tree/5.2.3) (2022-09-30)
+[Full Changelog](https://github.com/zammad/zammad/compare/5.2.2...5.2.3)
+
+**Implemented enhancements:**
+
+- Unable to add Microsoft 365 account when admin consent for enterprise applications is enabled [3963](https://github.com/zammad/zammad/issues/3963) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised%20by%20payment)] [[mail processing](https://github.com/zammad/zammad/labels/mail%20processing)]
+- Zendesk Import: Link to linked Tickets are not working after migration to Zammad [4249](https://github.com/zammad/zammad/issues/4249) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)] [[import](https://github.com/zammad/zammad/labels/import)]
+
+**Fixed bugs:**
+
+- KB answer linking in ticket zoom fails: Couldn't find KnowledgeBase::Answer with 'id'=315 [4259](https://github.com/zammad/zammad/issues/4259) [[bug](https://github.com/zammad/zammad/labels/bug)] [[blocker](https://github.com/zammad/zammad/labels/blocker)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised%20by%20payment)] [[knowledge base](https://github.com/zammad/zammad/labels/knowledge%20base)]
+- Locking a record with unpersisted changes is not supported. Use `save` to persist the changes, or `reload` to discard them explicitly [3664](https://github.com/zammad/zammad/issues/3664) [[bug](https://github.com/zammad/zammad/labels/bug)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised%20by%20payment)]
+- HTML table in mail preview is misformatted [3630](https://github.com/zammad/zammad/issues/3630) [[bug](https://github.com/zammad/zammad/labels/bug)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised%20by%20payment)]
+- Zammad suffers from serious performance degrade on incorrect role configurations [4243](https://github.com/zammad/zammad/issues/4243) [[bug](https://github.com/zammad/zammad/labels/bug)] [[blocker](https://github.com/zammad/zammad/labels/blocker)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised%20by%20payment)]
+- Apply via role granted permission while creating shared draft [4071](https://github.com/zammad/zammad/issues/4071) [[bug](https://github.com/zammad/zammad/labels/bug)] [[ticket](https://github.com/zammad/zammad/labels/ticket)]
+- Mandatory field in combination with automatic assignment leads to a divergence in the setting of the ticket owner [4245](https://github.com/zammad/zammad/issues/4245) [[bug](https://github.com/zammad/zammad/labels/bug)] [[blocker](https://github.com/zammad/zammad/labels/blocker)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised%20by%20payment)] [[regression](https://github.com/zammad/zammad/labels/regression)]
+- Type attribute is being ignored on Zendesk import [4246](https://github.com/zammad/zammad/issues/4246) [[bug](https://github.com/zammad/zammad/labels/bug)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised%20by%20payment)]
+- Email address falsely converted on pasting into article body [3099](https://github.com/zammad/zammad/issues/3099) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Zendesk import does not import comment create date inside of the created articles [4244](https://github.com/zammad/zammad/issues/4244) [[bug](https://github.com/zammad/zammad/labels/bug)] [[import](https://github.com/zammad/zammad/labels/import)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised%20by%20payment)]
+- Zendesk import does not import embedded images [4234](https://github.com/zammad/zammad/issues/4234) [[bug](https://github.com/zammad/zammad/labels/bug)] [[import](https://github.com/zammad/zammad/labels/import)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised%20by%20payment)]
+- Fix width of tags add in trigger [4215](https://github.com/zammad/zammad/issues/4215) [[bug](https://github.com/zammad/zammad/labels/bug)] [[UX/UI](https://github.com/zammad/zammad/labels/UX%2FUI)]
+- HTML comments/conditions being rendered from emails [4184](https://github.com/zammad/zammad/issues/4184) [[bug](https://github.com/zammad/zammad/labels/bug)] [[mail processing](https://github.com/zammad/zammad/labels/mail%20processing)]
+- Drag & Drop bulk operations not available in search results [3923](https://github.com/zammad/zammad/issues/3923) [[bug](https://github.com/zammad/zammad/labels/bug)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised%20by%20payment)]
+- Fixes #3718 - Dashboard stopped working. [4240](https://github.com/zammad/zammad/pull/4240)
+- Dashboard stopped working [3718](https://github.com/zammad/zammad/issues/3718) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- The webhook could not be saved by Telegram, seems to be an invalid URL. [4156](https://github.com/zammad/zammad/issues/4156) [[bug](https://github.com/zammad/zammad/labels/bug)] [[telegram](https://github.com/zammad/zammad/labels/telegram)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised%20by%20payment)]
+- Changing time range in "Wait until" picker at trigger action resets time value to "1" [4207](https://github.com/zammad/zammad/issues/4207) [[bug](https://github.com/zammad/zammad/labels/bug)]
+
 ## [5.2.2](https://github.com/zammad/zammad/tree/5.2.2) (2022-09-13)
 [Full Changelog](https://github.com/zammad/zammad/compare/5.2.1...5.2.2)
 
