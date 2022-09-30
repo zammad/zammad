@@ -57,7 +57,11 @@ Rails.application.configure do
 
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
-  config.file_watcher = ActiveSupport::EventedFileUpdateChecker
+  config.file_watcher = if ENV['DEVELOPMENT_FILE_WATCHER'] == 'file_update_checker'
+                          ActiveSupport::FileUpdateChecker
+                        else
+                          ActiveSupport::EventedFileUpdateChecker
+                        end
 
   # Asset digests allow you to set far-future HTTP expiration dates on all assets,
   # yet still be able to expire them through the digest params.
