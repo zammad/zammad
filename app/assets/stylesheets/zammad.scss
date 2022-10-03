@@ -3261,13 +3261,13 @@ kbd {
       display: block;
       overflow: hidden;
       text-overflow: ellipsis;
-      margin: unset;
+      margin: initial;
       text-align: center;
     }
 
     .btn + .btn:not(.align-right) {
-      margin-left: unset;
-      margin-right: unset;
+      margin-left: initial;
+      margin-right: initial;
     }
   }
 }
@@ -3600,18 +3600,25 @@ ol.tabs li {
 .auth-providers {
   display: flex;
   flex-wrap: wrap;
-  gap: 14px;
 
   > form {
     display: flex;
     flex-grow: 1;
     min-width: calc(100% / 2 - 8px);
+
+    &:last-child {
+      .auth-provider {
+        margin-bottom: initial;
+      }
+    }
   }
 }
 
 .auth-provider {
   height: 40px;
   padding: 0 10px 0 7px;
+  margin-bottom: 14px;
+  margin-right: 14px;
   color: white !important;
   line-height: 23px;
   border-radius: 4px;
