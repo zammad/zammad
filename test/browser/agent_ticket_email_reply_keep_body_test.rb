@@ -225,7 +225,6 @@ class AgentTicketEmailReplyKeepBodyTest < TestCase
 
     datestamp = match[1]
     assert datestamp
-    assert Time.zone.parse(datestamp)
     day_of_week = datestamp.split(',').first
     assert %w[Montag Dienstag Mittwoch Donnerstag Freitag Samstag Sonntag].include? day_of_week
 
