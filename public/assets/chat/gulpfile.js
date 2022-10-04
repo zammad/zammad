@@ -13,7 +13,6 @@ function css(cb) {
   gulp.src('chat.scss')
     .pipe(sass.sync().on('error', gutil.log))
     .pipe(autoprefixer({
-        browsers: ['last 4 versions'],
         cascade: false
     }))
     .pipe(gulp.dest('./'));

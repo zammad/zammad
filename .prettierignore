@@ -1,2 +1,3 @@
 **/graphql/**/*.ts
 !**/graphql/**/mocks/*.ts
+public/**/*
