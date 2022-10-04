@@ -16,17 +16,29 @@ module Ticket::SetsCloseTime
     # return if we run import mode
     return true if Setting.get('import_mode')
 
+    # check if ticket is closed now
+    return true if !ticket_closed?(self)
+
+    # set last close_at
+    if changes_to_save['state_id'].present? || last_close_at.blank?
+      self.last_close_at = Time.zone.now
+    end
+
     # check if close_at is already set
     return true if close_at
-
-    # check if ticket is closed now
-    return true if !state_id
-
-    state = Ticket::State.lookup(id: state_id)
-    state_type = Ticket::StateType.lookup(id: state.state_type_id)
-    return true if state_type.name != 'closed'
 
     # set close_at
     self.close_at = Time.zone.now
   end
+
+  def ticket_closed?(ticket)
+    return false if !ticket.state_id
+
+    state = Ticket::State.lookup(id: ticket.state_id)
+    state_type = Ticket::StateType.lookup(id: state.state_type_id)
+    return true if state_type.name == 'closed'
+
+    false
+  end
+
 end

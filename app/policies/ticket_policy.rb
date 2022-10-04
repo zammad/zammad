@@ -36,9 +36,14 @@ class TicketPolicy < ApplicationPolicy
   end
 
   def follow_up?
-    return true if user.permissions?('ticket.agent') # agents can always reopen tickets, regardless of group configuration
-    return true if record.group.follow_up_possible != 'new_ticket' # check if the setting for follow_up_possible is disabled
+    # This method is used to check if a follow-up is possible (mostly based on the configuration).
+    # Agents are always allowed to reopen tickets, configuration does not matter.
+
     return true if record.state.name != 'closed' # check if the ticket state is already closed
+    return true if user.permissions?('ticket.agent')
+
+    # Check follow_up_possible configuration, based on the group.
+    return true if follow_up_possible?
 
     raise Exceptions::UnprocessableEntity, __('Cannot follow-up on a closed ticket. Please create a new ticket.')
   end
@@ -48,6 +53,19 @@ class TicketPolicy < ApplicationPolicy
   end
 
   private
+
+  def follow_up_possible?
+    case record.group.follow_up_possible
+    when 'yes'
+      # Easy going, just reopen the ticket.
+      return true
+    when 'new_ticket_after_certain_time'
+      # Maybe we are allowed to reopen the existing ticket. Let's check.
+      return true if record.reopen_after_certain_time?
+    end
+
+    false
+  end
 
   def access?(access)
     return true if agent_access?(access)

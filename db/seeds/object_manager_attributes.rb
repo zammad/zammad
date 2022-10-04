@@ -1748,8 +1748,9 @@ ObjectManager::Attribute.add(
   data_option: {
     default:   'yes',
     options:   {
-      yes:        'yes',
-      new_ticket: 'do not reopen Ticket but create new Ticket'
+      yes:                           'yes',
+      new_ticket:                    'do not reopen ticket but create new ticket',
+      new_ticket_after_certain_time: 'do not reopen ticket after certain time but create new ticket',
     },
     null:      false,
     note:      __('Follow-up for closed ticket possible or not.'),
@@ -1773,6 +1774,35 @@ ObjectManager::Attribute.add(
   to_migrate:  false,
   to_delete:   false,
   position:    400,
+)
+
+ObjectManager::Attribute.add(
+  force:         true,
+  object:        'Group',
+  name:          'reopen_time_in_days',
+  display:       __('Reopening time in days'),
+  data_type:     'integer',
+  data_option:   {
+    default:   '',
+    min:       1,
+    max:       3650,
+    null:      true,
+    note:      __('Allow reopening of tickets within a certain time.'),
+    translate: true
+  },
+  editable:      false,
+  active:        true,
+  screens:       {
+    create: { 'admin.group': { shown: false, required: false } },
+    edit:   { 'admin.group': { shown: false, required: false } },
+    view:   { 'admin.group': { shown: false } }
+  },
+  to_create:     false,
+  to_migrate:    false,
+  to_delete:     false,
+  position:      410,
+  created_by_id: 1,
+  updated_by_id: 1,
 )
 
 ObjectManager::Attribute.add(

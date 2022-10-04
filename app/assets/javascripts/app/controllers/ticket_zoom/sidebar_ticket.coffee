@@ -18,8 +18,8 @@ class Edit extends App.Controller
   render: (draft = {}) =>
     defaults = @ticket.attributes()
     delete defaults.article # ignore article infos
-    followUpPossible = App.Group.find(defaults.group_id).follow_up_possible
-    ticketState = App.TicketState.find(defaults.state_id).name
+    group = App.Group.find(defaults.group_id)
+    ticketStateType = App.TicketState.find(defaults.state_id).name
 
     taskState = @taskGet('ticket')
     handlers = @Config.get('TicketZoomFormHandler')
@@ -30,9 +30,23 @@ class Edit extends App.Controller
       # for the new ticket + eventually changed task state
       @formMeta.core_workflow = undefined
 
-    editable = @ticket.editable()
-    if followUpPossible == 'new_ticket' && ticketState != 'closed' || followUpPossible != 'new_ticket' || @permissionCheck('admin') || @ticket.currentView() is 'agent'
-      editable = !editable
+    isDisabled = !@ticket.editable()
+
+    # if ticket is closed and not re-openable
+    if group.follow_up_possible == 'new_ticket' && ticketStateType is 'closed'
+      isDisabled = true
+
+    # if ticket is closed and not re-openable
+    if group.follow_up_possible == 'new_ticket_after_certain_time' && ticketStateType is 'closed' && @ticket.last_close_at
+      closed_since = (new Date - Date.parse(@ticket.last_close_at)) / (24 * 60 * 60 * 1000)
+      if closed_since >= group.reopen_time_in_days
+        isDisabled = true
+      else
+        isDisabled = false
+
+    # if ticket is shown by admin
+    if @permissionCheck('admin')
+      isDisabled = false
 
     # reset updated_at for the sidbar because we render a new state
     # it is used to compare the ticket with the rendered data later
@@ -47,7 +61,7 @@ class Edit extends App.Controller
       filter:         @formMeta.filter
       formMeta:       @formMeta
       params:         _.extend(defaults, draft)
-      isDisabled:     editable
+      isDisabled:     isDisabled
       taskKey:        @taskKey
       core_workflow: {
         callbacks: [@markForm]

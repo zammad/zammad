@@ -21,6 +21,7 @@ class Ticket < ApplicationModel
   include Ticket::SetsOnlineNotificationSeen
   include Ticket::TouchesAssociations
   include Ticket::TriggersSubscriptions
+  include Ticket::ChecksReopenAfterCertainTime
 
   include ::Ticket::Escalation
   include ::Ticket::Subject
@@ -62,6 +63,7 @@ class Ticket < ApplicationModel
                                      :update_escalation_at,
                                      :update_in_min,
                                      :update_diff_in_min,
+                                     :last_close_at,
                                      :last_contact_at,
                                      :last_contact_agent_at,
                                      :last_contact_customer_at,

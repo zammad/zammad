@@ -116,6 +116,7 @@ class CreateBase < ActiveRecord::Migration[4.2]
       t.string :name,                   limit: 160, null: false
       t.integer :assignment_timeout,                null: true
       t.string :follow_up_possible,     limit: 100, null: false, default: 'yes'
+      t.integer :reopen_time_in_days,               null: true
       t.boolean :follow_up_assignment,              null: false, default: true
       t.boolean :active,                            null: false, default: true
       t.boolean :shared_drafts,                     null: false, default: true

@@ -60,3 +60,15 @@ CoreWorkflow.create_if_not_exists(
   created_by_id:   1,
   updated_by_id:   1,
 )
+CoreWorkflow.create_if_not_exists(
+  name:               'base - show reopen_time_in_days',
+  object:             'Group',
+  condition_saved:    {},
+  condition_selected: { 'group.follow_up_possible'=>{ 'operator' => 'is', 'value' => ['new_ticket_after_certain_time'] } },
+  perform:            { 'group.reopen_time_in_days'=>{ 'operator' => 'show', 'show' => 'true' } },
+  preferences:        { 'screen'=>%w[create edit] },
+  changeable:         false,
+  active:             true,
+  created_by_id:      1,
+  updated_by_id:      1,
+)

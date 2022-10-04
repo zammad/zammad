@@ -8,7 +8,7 @@ class Group
       return super if UserInfo.assets.blank? || UserInfo.assets.agent?
 
       attributes = super
-      attributes.slice('id', 'name', 'active')
+      attributes.slice('id', 'name', 'follow_up_possible', 'reopen_time_in_days', 'active')
     end
   end
 end

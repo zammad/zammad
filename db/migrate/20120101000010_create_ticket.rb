@@ -70,6 +70,7 @@ class CreateTicket < ActiveRecord::Migration[4.2]
       t.column :update_escalation_at,             :timestamp, limit: 3,   null: true
       t.column :update_in_min,                    :integer,               null: true
       t.column :update_diff_in_min,               :integer,               null: true
+      t.column :last_close_at,                    :timestamp, limit: 3,   null: true
       t.column :last_contact_at,                  :timestamp, limit: 3,   null: true
       t.column :last_contact_agent_at,            :timestamp, limit: 3,   null: true
       t.column :last_contact_customer_at,         :timestamp, limit: 3,   null: true

@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 describe TicketPolicy do
-  subject { described_class.new(user, record) }
+  subject(:policy) { described_class.new(user, record) }
 
   let(:record) { create(:ticket) }
 
@@ -76,6 +76,80 @@ describe TicketPolicy do
       end
 
       it { is_expected.to permit_actions(%i[show full]) }
+    end
+
+    context 'when groups.follow_up_possible is set' do
+      let(:record)   { create(:ticket, customer: customer, group: group, state: Ticket::State.find_by(name: 'closed')) }
+      let(:customer) { create(:customer, organization: create(:organization)) }
+      let(:user)     { create(:agent) }
+
+      context 'to yes' do
+        let(:group) { create(:group, follow_up_possible: 'yes') }
+
+        it { is_expected.to permit_actions(%i[follow_up]) }
+      end
+
+      context 'to new_ticket' do
+        let(:group) { create(:group, follow_up_possible: 'new_ticket') }
+
+        it { is_expected.to permit_actions(%i[follow_up]) }
+      end
+
+      context 'to new_ticket_after_certain_time' do
+        let(:group) { create(:group, follow_up_possible: 'new_ticket_after_certain_time', reopen_time_in_days: 2) }
+
+        context 'when reopen_time_in_days is within configured time frame' do
+          it { is_expected.to permit_actions(%i[follow_up]) }
+        end
+
+        context 'when reopen_time_in_days is outside configured time frame' do
+          before do
+            policy
+            travel 3.days
+          end
+
+          it { is_expected.to permit_actions(%i[follow_up]) }
+        end
+      end
+
+    end
+
+  end
+
+  context 'when user is customer' do
+    context 'when groups.follow_up_possible is yes' do
+      let(:record) { create(:ticket, customer: user, group: group, state: Ticket::State.find_by(name: 'closed')) }
+      let(:group)  { create(:group, follow_up_possible: 'yes') }
+      let(:user)   { create(:customer, organization: create(:organization)) }
+
+      it { is_expected.to permit_actions(%i[follow_up]) }
+    end
+
+    context 'when groups.follow_up_possible is new_ticket' do
+      let(:record) { create(:ticket, customer: user, group: group, state: Ticket::State.find_by(name: 'closed')) }
+      let(:group)  { create(:group, follow_up_possible: 'new_ticket') }
+      let(:user)   { create(:customer, organization: create(:organization)) }
+
+      it { expect { policy.follow_up? }.to raise_error(Exceptions::UnprocessableEntity) }
+    end
+
+    context 'when groups.follow_up_possible is new_ticket_after_certain_time' do
+      let(:record) { create(:ticket, customer: user, group: group, state: Ticket::State.find_by(name: 'closed')) }
+      let(:group)  { create(:group, follow_up_possible: 'new_ticket_after_certain_time', reopen_time_in_days: 2) }
+      let(:user)   { create(:customer, organization: create(:organization)) }
+
+      context 'when reopen_time_in_days is within reopen time frame' do
+        it { is_expected.to permit_actions(%i[follow_up]) }
+      end
+
+      context 'when reopen_time_in_days is without reopen time frame' do
+        before do
+          policy
+          travel 3.days
+        end
+
+        it { expect { policy.follow_up? }.to raise_error(Exceptions::UnprocessableEntity) }
+      end
     end
 
   end

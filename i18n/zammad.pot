@@ -894,6 +894,10 @@ msgstr ""
 msgid "Allow past"
 msgstr ""
 
+#: db/seeds/object_manager_attributes.rb
+msgid "Allow reopening of tickets within a certain time."
+msgstr ""
+
 #: app/assets/javascripts/app/views/tag/index.jst.eco
 msgid "Allow users to add new tags."
 msgstr ""
@@ -8120,6 +8124,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_reopen.jst.eco
 msgid "Reopening rate"
+msgstr ""
+
+#: app/assets/javascripts/app/models/group.coffee
+#: db/seeds/object_manager_attributes.rb
+msgid "Reopening time in days"
 msgstr ""
 
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco

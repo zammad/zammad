@@ -2345,6 +2345,48 @@ RSpec.describe Ticket, type: :model do
         expect(search_index_attribute_lookup['article'][0]['attachment'].count).to eq 0
       end
     end
+  end
 
+  describe '#reopen_after_certain_time?' do
+    context 'when groups.follow_up_possible is set to "new_ticket_after_certain_time"' do
+      let(:group) { create(:group, follow_up_possible: 'new_ticket_after_certain_time', reopen_time_in_days: 2) }
+
+      context 'when ticket is open' do
+        let(:ticket) { create(:ticket, group: group, state: Ticket::State.find_by(name: 'open')) }
+
+        it 'returns false' do
+          expect(ticket.reopen_after_certain_time?).to be false
+        end
+      end
+
+      context 'when ticket is closed' do
+        let(:ticket) { create(:ticket, group: group, state: Ticket::State.find_by(name: 'closed')) }
+
+        context 'when it is within configured time frame' do
+          it 'returns true' do
+            expect(ticket.reopen_after_certain_time?).to be true
+          end
+        end
+
+        context 'when it is outside configured time frame' do
+          before do
+            ticket
+            travel 3.days
+          end
+
+          it 'returns false' do
+            expect(ticket.reopen_after_certain_time?).to be false
+          end
+        end
+      end
+
+      context 'when reopen_time_in_days is not set' do
+        let(:group) { create(:group, follow_up_possible: 'new_ticket_after_certain_time', reopen_time_in_days: -1) }
+
+        it 'returns false' do
+          expect(ticket.reopen_after_certain_time?).to be false
+        end
+      end
+    end
   end
 end
