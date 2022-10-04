@@ -41,6 +41,7 @@ module Zammad
       autoloader.ignore            "#{config.root}/app/frontend"
       autoloader.do_not_eager_load "#{config.root}/lib/core_ext"
       autoloader.collapse          "#{config.root}/lib/omniauth"
+      autoloader.collapse          "#{config.root}/lib/generators"
       autoloader.inflector.inflect(
         'github_database' => 'GithubDatabase',
         'otrs'            => 'OTRS',

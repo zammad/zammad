@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Generators::TranslationCatalog::Extractor::FormJs do
+RSpec.describe Zammad::TranslationCatalog::Extractor::Chat do
   subject(:extractor_module) { described_class.new(options: {}) }
 
   let(:filename) { 'myfile' }
@@ -15,15 +15,15 @@ RSpec.describe Generators::TranslationCatalog::Extractor::FormJs do
     let(:string) do
       <<~'CODE'
         var value = {
-          display: 'My display',
-          placeholder: "My placeholder",
+          title: 'My title',
+          scrollHint: "My scroll hint",
           otherKey: "Not found",
         }
       CODE
     end
 
     it 'finds the correct strings' do
-      expect(result_strings).to eq(['My display', 'My placeholder'])
+      expect(result_strings).to eq(['My scroll hint', 'My title'])
     end
   end
 end

@@ -1,6 +1,6 @@
 # Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-class Generators::TranslationCatalog::Writer::ViewTemplates < Generators::TranslationCatalog::Writer::Base
+class Zammad::TranslationCatalog::Writer::ViewTemplates < Zammad::TranslationCatalog::Writer::Base
 
   def write(_strings)
 
@@ -10,7 +10,7 @@ class Generators::TranslationCatalog::Writer::ViewTemplates < Generators::Transl
     # Do not run in CI.
     return if options['check']
 
-    extractor = Generators::TranslationCatalog::Extractor::ViewTemplates.new(options: options)
+    extractor = Zammad::TranslationCatalog::Extractor::ViewTemplates.new(options: options)
     extractor.extract_translatable_strings
 
     extractor.extracted_strings.sorted_values.each do |extracted_string|

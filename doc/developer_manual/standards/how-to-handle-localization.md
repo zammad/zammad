@@ -33,11 +33,11 @@ Feel free to send pull requests to add more helpful examples to existing files o
 If changes to translatable strings are made during the development process, developers can just run the following to
 re-extract the strings to the catalog file:
 
-`rails generate translation_catalog`
+`rails generate zammad:translation_catalog`
 
 This will update the `i18n/zammad.pot` file in Zammad. To do this for an existing addon module, call
 
-`rails generate translation_catalog --addon-path /path/to/addon`
+`rails generate zammad:translation_catalog --addon-path /path/to/addon`
 
 ### Testing Translation Changes from Weblate
 

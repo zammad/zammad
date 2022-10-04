@@ -1,6 +1,6 @@
 # Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-class Generators::TranslationCatalog::ExtractedString
+class Zammad::TranslationCatalog::ExtractedString
   attr_accessor :string, :comment, :references, :skip_translation_sync
 
   def initialize(string:, references:, comment: nil, skip_translation_sync: false)

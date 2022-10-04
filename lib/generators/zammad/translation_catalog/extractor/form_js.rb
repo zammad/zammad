@@ -1,6 +1,6 @@
 # Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-class Generators::TranslationCatalog::Extractor::FormJs < Generators::TranslationCatalog::Extractor::Base
+class Zammad::TranslationCatalog::Extractor::FormJs < Zammad::TranslationCatalog::Extractor::Base
 
   # Extract some unmarked strings from form.js asset file.
   def extract_from_string(string, filename)
@@ -14,7 +14,7 @@ class Generators::TranslationCatalog::Extractor::FormJs < Generators::Translatio
       result = match[1].gsub(%r{\\'}, "'")
       next if match[0].eql?('"') && result.include?('#{')
 
-      extracted_strings << Generators::TranslationCatalog::ExtractedString.new(string: result, references: [filename])
+      extracted_strings << Zammad::TranslationCatalog::ExtractedString.new(string: result, references: [filename])
     end
   end
 

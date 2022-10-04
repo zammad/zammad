@@ -1,6 +1,6 @@
 # Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-class Generators::TranslationCatalog::Writer::Base
+class Zammad::TranslationCatalog::Writer::Base
   attr_reader :options
 
   def initialize(options:)

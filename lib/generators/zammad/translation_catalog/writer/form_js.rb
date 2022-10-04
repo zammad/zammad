@@ -1,6 +1,6 @@
 # Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-class Generators::TranslationCatalog::Writer::Chat < Generators::TranslationCatalog::Writer::Base
+class Zammad::TranslationCatalog::Writer::FormJs < Zammad::TranslationCatalog::Writer::Base
 
   def write(extracted_strings)
 
@@ -11,9 +11,7 @@ class Generators::TranslationCatalog::Writer::Chat < Generators::TranslationCata
     return if options['check']
 
     content = serialized(translation_map(extracted_strings))
-    ['public/assets/chat/chat.coffee', 'public/assets/chat/chat-no-jquery.coffee'].each do |f|
-      write_file(f, content)
-    end
+    write_file('public/assets/form/form.js', content)
   end
 
   private
@@ -21,7 +19,7 @@ class Generators::TranslationCatalog::Writer::Chat < Generators::TranslationCata
   def write_file(file, content)
     target_file = Rails.root.join(file)
     before = target_file.read
-    after = before.sub(%r{(# ZAMMAD_TRANSLATIONS_START\n).*(    # ZAMMAD_TRANSLATIONS_END)}m) do |_match|
+    after = before.sub(%r{(// ZAMMAD_TRANSLATIONS_START\n).*(    // ZAMMAD_TRANSLATIONS_END)}m) do |_match|
       $1 + content + $2
     end
     return if before == after
@@ -33,10 +31,11 @@ class Generators::TranslationCatalog::Writer::Chat < Generators::TranslationCata
   def serialized(map)
     string = ''
     map.keys.sort.each do |locale|
-      string += "      '#{locale}':\n"
+      string += "      '#{locale}': {\n"
       map[locale].keys.sort.each do |source|
-        string += "        '#{escape_for_js(source)}': '#{escape_for_js(map[locale][source])}'\n"
+        string += "        '#{escape_for_js(source)}': '#{escape_for_js(map[locale][source])}',\n"
       end
+      string += "      },\n"
     end
     string
   end
@@ -56,7 +55,7 @@ class Generators::TranslationCatalog::Writer::Chat < Generators::TranslationCata
 
   def source_strings(extracted_strings)
     extracted_strings.sorted_values.select do |s|
-      s.references.any? { |f| f.include?('public/assets/chat/') }
+      s.references.any? { |f| f.include?('public/assets/form/') }
     end.map(&:string)
   end
 
@@ -70,7 +69,7 @@ class Generators::TranslationCatalog::Writer::Chat < Generators::TranslationCata
       string_map[missing_source] = ''
     end
 
-    return if string_map.values.count(&:blank?) > 3
+    return if string_map.values.any?(&:blank?)
 
     string_map
   end

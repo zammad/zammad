@@ -1,13 +1,13 @@
 # Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-class Generators::TranslationCatalog::Extractor::Base
+class Zammad::TranslationCatalog::Extractor::Base
 
   attr_reader   :options
   attr_accessor :extracted_strings
 
   def initialize(options:)
     @options = options
-    @extracted_strings = Generators::TranslationCatalog::ExtractedStrings.new
+    @extracted_strings = Zammad::TranslationCatalog::ExtractedStrings.new
   end
 
   def extract_translatable_strings

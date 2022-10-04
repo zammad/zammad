@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Generators::TranslationCatalog::Extractor::ViewTemplates do
+RSpec.describe Zammad::TranslationCatalog::Extractor::FormJs do
   subject(:extractor_module) { described_class.new(options: {}) }
 
   let(:filename) { 'myfile' }
@@ -13,17 +13,17 @@ RSpec.describe Generators::TranslationCatalog::Extractor::ViewTemplates do
 
   context 'with strings to be found' do
     let(:string) do
-      <<~'TEMPLATE'
-        New Ticket (#{ticket.title})
-
-        <div>Hi #{recipient.firstname},</div>
-        <br>
-        <div>A new ticket (#{ticket.title}) has been created by "<b>#{current_user.longname}</b>".</div>
-      TEMPLATE
+      <<~'CODE'
+        var value = {
+          display: 'My display',
+          placeholder: "My placeholder",
+          otherKey: "Not found",
+        }
+      CODE
     end
 
     it 'finds the correct strings' do
-      expect(result_strings).to eq([string])
+      expect(result_strings).to eq(['My display', 'My placeholder'])
     end
   end
 end

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Generators::TranslationCatalog::Extractor::Ruby do
+RSpec.describe Zammad::TranslationCatalog::Extractor::Ruby do
   subject(:extractor_module) { described_class.new(options: {}) }
 
   let(:filename) { 'myfile' }

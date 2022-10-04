@@ -1,6 +1,6 @@
 # Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-class Generators::TranslationCatalog::ExtractedStrings < SimpleDelegator
+class Zammad::TranslationCatalog::ExtractedStrings < SimpleDelegator
   def initialize
     super({})
   end

@@ -1,6 +1,6 @@
 # Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-class Generators::TranslationCatalog::Writer::Pot < Generators::TranslationCatalog::Writer::Base
+class Zammad::TranslationCatalog::Writer::Pot < Zammad::TranslationCatalog::Writer::Base
 
   def write(extracted_strings)
 
@@ -15,7 +15,7 @@ class Generators::TranslationCatalog::Writer::Pot < Generators::TranslationCatal
         puts "File #{target_filename} is up-to-date."
         return
       else
-        puts "File #{target_filename} is not up-to-date, please run 'rails generate translation_catalog' to update it."
+        puts "File #{target_filename} is not up-to-date, please run 'rails generate zammad:translation_catalog' to update it."
         exit! # rubocop:disable Rails/Exit
       end
     end

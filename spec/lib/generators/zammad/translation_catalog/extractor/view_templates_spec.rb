@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Generators::TranslationCatalog::Extractor::Chat do
+RSpec.describe Zammad::TranslationCatalog::Extractor::ViewTemplates do
   subject(:extractor_module) { described_class.new(options: {}) }
 
   let(:filename) { 'myfile' }
@@ -13,17 +13,17 @@ RSpec.describe Generators::TranslationCatalog::Extractor::Chat do
 
   context 'with strings to be found' do
     let(:string) do
-      <<~'CODE'
-        var value = {
-          title: 'My title',
-          scrollHint: "My scroll hint",
-          otherKey: "Not found",
-        }
-      CODE
+      <<~'TEMPLATE'
+        New Ticket (#{ticket.title})
+
+        <div>Hi #{recipient.firstname},</div>
+        <br>
+        <div>A new ticket (#{ticket.title}) has been created by "<b>#{current_user.longname}</b>".</div>
+      TEMPLATE
     end
 
     it 'finds the correct strings' do
-      expect(result_strings).to eq(['My scroll hint', 'My title'])
+      expect(result_strings).to eq([string])
     end
   end
 end

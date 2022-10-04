@@ -1,6 +1,8 @@
 # Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-class Generators::GraphqlIntrospection::GraphqlIntrospectionGenerator < Rails::Generators::Base
+class Zammad::GraphqlIntrospectionGenerator < Rails::Generators::Base
+
+  desc 'Create JSON from the GraphQL introspection information and output it to STDOUT'
 
   def generate
     result = Gql::ZammadSchema.execute(introspection_query, variables: {}, context: { is_graphql_introspection_generator: true })
@@ -116,8 +118,4 @@ class Generators::GraphqlIntrospection::GraphqlIntrospectionGenerator < Rails::G
       }
     INTROSPECTION_QUERY
   end
-end
-
-# Allow Rails to find the generator
-class GraphqlIntrospectionGenerator < Generators::GraphqlIntrospection::GraphqlIntrospectionGenerator
 end

@@ -1,6 +1,6 @@
 # Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-class Generators::TranslationCatalog::Extractor::Chat < Generators::TranslationCatalog::Extractor::Base
+class Zammad::TranslationCatalog::Extractor::Chat < Zammad::TranslationCatalog::Extractor::Base
 
   # Extract some unmarked strings from the chat coffee files.
   def extract_from_string(string, filename)
@@ -15,7 +15,7 @@ class Generators::TranslationCatalog::Extractor::Chat < Generators::TranslationC
       result = match[1].gsub(%r{\\'}, "'")
       next if match[0].eql?('"') && result.include?('#{')
 
-      extracted_strings << Generators::TranslationCatalog::ExtractedString.new(string: result, references: [filename])
+      extracted_strings << Zammad::TranslationCatalog::ExtractedString.new(string: result, references: [filename])
     end
   end
 

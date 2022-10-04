@@ -1,6 +1,6 @@
 # Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-class Generators::TranslationCatalog::Extractor::Frontend < Generators::TranslationCatalog::Extractor::Base
+class Zammad::TranslationCatalog::Extractor::Frontend < Zammad::TranslationCatalog::Extractor::Base
 
   def extract_from_string(string, filename)
     return if string.empty?
@@ -30,7 +30,7 @@ class Generators::TranslationCatalog::Extractor::Frontend < Generators::Translat
         result = match[1].gsub(%r{\\'}, "'")
         next if match[0].eql?('"') && result.include?('#{')
 
-        extracted_strings << Generators::TranslationCatalog::ExtractedString.new(string: result, references: [filename])
+        extracted_strings << Zammad::TranslationCatalog::ExtractedString.new(string: result, references: [filename])
       end
     end
   end

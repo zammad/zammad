@@ -11,7 +11,7 @@ source .gitlab/environment.env
 echo "Checking .po file syntax..."
 for FILE in i18n/*.pot i18n/*.po; do echo "Checking $FILE"; msgfmt -o /dev/null -c "$FILE"; done
 echo "Checking .pot catalog consistency..."
-bundle exec rails generate translation_catalog --check
+bundle exec rails generate zammad:translation_catalog --check
 echo "Brakeman security check..."
 bundle exec brakeman -o /dev/stdout -o tmp/brakeman-report.html
 echo "Rails zeitwerk:check autoloader check..."
