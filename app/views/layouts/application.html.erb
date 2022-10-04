@@ -20,7 +20,7 @@
       if(window.matchMedia('(prefers-color-scheme: dark)').matches || localStorage.getItem('theme') == 'dark'){
         document.documentElement.dataset.theme = 'dark';
       }
-    } catch { };
+    } catch (e) { };
   <% end -%>
   <% if Rails.configuration.assets.debug %>
     <%= javascript_include_tag "application", nonce: true %>

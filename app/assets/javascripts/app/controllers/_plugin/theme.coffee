@@ -2,7 +2,10 @@ class App.Theme extends App.Controller
   constructor: ->
     super
 
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', @onMediaQueryChange)
+    mediaQueryList = window.matchMedia('(prefers-color-scheme: dark)')
+    if typeof mediaQueryList.addEventListener is 'function'
+      mediaQueryList.addEventListener('change', @onMediaQueryChange)
+
     @controllerBind('ui:theme:set', @set)
     @controllerBind('ui:theme:toggle-dark-mode', @toggleDarkMode)
     @set(

@@ -106,11 +106,11 @@ class _Singleton
       logArgs = [prefix].concat(args)
 
     if level is 'error'
-      console.error.apply console, logArgs
+      console.error?.apply console, logArgs
     else if level is 'debug'
-      console.debug.apply console, logArgs
+      console.debug?.apply console, logArgs
     else
-      console.log.apply console, logArgs
+      console.log?.apply console, logArgs
 
   # used inpirations from http://latentflip.com/bows/
   yieldColor: =>

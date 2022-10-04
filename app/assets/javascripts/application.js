@@ -68,7 +68,9 @@ Date.prototype.getWeek = function() {
   return Math.ceil((((this - onejan) / 86400000) + onejan.getDay()+1)/7);
 }
 
-function difference(object1 = {}, object2 = {}) {
+function difference(object1, object2) {
+  object1 = object1 || {};
+  object2 = object2 || {};
   var changes = {};
   _.uniq(Object.keys(object1).concat(Object.keys(object2))).forEach(function(name) {
     if (name in object1 && name in object2) {
