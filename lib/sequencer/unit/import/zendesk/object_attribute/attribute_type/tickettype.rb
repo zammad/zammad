@@ -1,30 +1,18 @@
 # Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-class Sequencer
-  class Unit
-    module Import
-      module Zendesk
-        module ObjectAttribute
-          module AttributeType
-            class Tickettype < Sequencer::Unit::Import::Zendesk::ObjectAttribute::AttributeType::Select
-              private
+class Sequencer::Unit::Import::Zendesk::ObjectAttribute::AttributeType::Tickettype < Sequencer::Unit::Import::Zendesk::ObjectAttribute::AttributeType::Select
+  private
 
-              def position(...)
-                attribute = ObjectManager::Attribute.get(
-                  object: 'Ticket',
-                  name:   'type',
-                )
+  def position(...)
+    attribute = ObjectManager::Attribute.get(
+      object: 'Ticket',
+      name:   'type',
+    )
 
-                attribute.position
-              end
+    attribute.position
+  end
 
-              def options(object_attribte)
-                object_attribte.system_field_options.to_h { |entry| [entry['value'], entry['name']] }
-              end
-            end
-          end
-        end
-      end
-    end
+  def options(object_attribte)
+    object_attribte.system_field_options.to_h { |entry| [entry['value'], entry['name']] }
   end
 end

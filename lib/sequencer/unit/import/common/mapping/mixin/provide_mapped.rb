@@ -1,37 +1,25 @@
 # Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-class Sequencer
-  class Unit
-    module Import
-      module Common
-        module Mapping
-          module Mixin
-            module ProvideMapped
+module Sequencer::Unit::Import::Common::Mapping::Mixin::ProvideMapped
 
-              def self.included(base)
-                base.optional :mapped
-                base.provides :mapped
-              end
+  def self.included(base)
+    base.optional :mapped
+    base.provides :mapped
+  end
 
-              private
+  private
 
-              def existing_mapped
-                @existing_mapped ||= begin
-                  # we need to use `state.optional` instead of just `mapped` here
-                  # to prevent naming conflicts with other Unit methods named `mapped`
-                  state.optional(:mapped) || ActiveSupport::HashWithIndifferentAccess.new
-                end
-              end
+  def existing_mapped
+    @existing_mapped ||= begin
+      # we need to use `state.optional` instead of just `mapped` here
+      # to prevent naming conflicts with other Unit methods named `mapped`
+      state.optional(:mapped) || ActiveSupport::HashWithIndifferentAccess.new
+    end
+  end
 
-              def provide_mapped
-                state.provide(:mapped) do
-                  existing_mapped.merge(yield)
-                end
-              end
-            end
-          end
-        end
-      end
+  def provide_mapped
+    state.provide(:mapped) do
+      existing_mapped.merge(yield)
     end
   end
 end

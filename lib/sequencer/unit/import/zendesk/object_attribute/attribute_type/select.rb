@@ -1,33 +1,21 @@
 # Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-class Sequencer
-  class Unit
-    module Import
-      module Zendesk
-        module ObjectAttribute
-          module AttributeType
-            class Select < Sequencer::Unit::Import::Zendesk::ObjectAttribute::AttributeType::Base
+class Sequencer::Unit::Import::Zendesk::ObjectAttribute::AttributeType::Select < Sequencer::Unit::Import::Zendesk::ObjectAttribute::AttributeType::Base
 
-              def init_callback(object_attribte)
-                @data_option.merge!(
-                  default: '',
-                  options: options(object_attribte),
-                )
-              end
+  def init_callback(object_attribte)
+    @data_option.merge!(
+      default: '',
+      options: options(object_attribte),
+    )
+  end
 
-              private
+  private
 
-              def data_type(...)
-                'select'
-              end
+  def data_type(...)
+    'select'
+  end
 
-              def options(object_attribte)
-                object_attribte.custom_field_options.to_h { |entry| [entry['value'], entry['name']] }
-              end
-            end
-          end
-        end
-      end
-    end
+  def options(object_attribte)
+    object_attribte.custom_field_options.to_h { |entry| [entry['value'], entry['name']] }
   end
 end

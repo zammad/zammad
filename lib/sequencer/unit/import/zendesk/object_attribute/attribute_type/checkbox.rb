@@ -1,31 +1,19 @@
 # Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-class Sequencer
-  class Unit
-    module Import
-      module Zendesk
-        module ObjectAttribute
-          module AttributeType
-            class Checkbox < Sequencer::Unit::Import::Zendesk::ObjectAttribute::AttributeType::Base
-              def init_callback(_object_attribte)
-                @data_option.merge!(
-                  default: false,
-                  options: {
-                    true  => 'yes',
-                    false => 'no',
-                  },
-                )
-              end
+class Sequencer::Unit::Import::Zendesk::ObjectAttribute::AttributeType::Checkbox < Sequencer::Unit::Import::Zendesk::ObjectAttribute::AttributeType::Base
+  def init_callback(_object_attribte)
+    @data_option.merge!(
+      default: false,
+      options: {
+        true  => 'yes',
+        false => 'no',
+      },
+    )
+  end
 
-              private
+  private
 
-              def data_type(...)
-                'boolean'
-              end
-            end
-          end
-        end
-      end
-    end
+  def data_type(...)
+    'boolean'
   end
 end

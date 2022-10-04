@@ -1,51 +1,39 @@
 # Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-class Sequencer
-  class Unit
-    module Import
-      module Common
-        module User
-          module Email
-            class CheckValidity < Sequencer::Unit::Base
-              prepend ::Sequencer::Unit::Import::Common::Model::Mixin::Skip::Action
+class Sequencer::Unit::Import::Common::User::Email::CheckValidity < Sequencer::Unit::Base
+  prepend ::Sequencer::Unit::Import::Common::Model::Mixin::Skip::Action
 
-              skip_action :skipped, :failed
+  skip_action :skipped, :failed
 
-              uses :mapped
+  uses :mapped
 
-              def process
-                return if mapped[:email].blank?
+  def process
+    return if mapped[:email].blank?
 
-                # TODO: This should be done totally somewhere central
-                mapped[:email] = ensure_valid_email(mapped[:email])
-              end
+    # TODO: This should be done totally somewhere central
+    mapped[:email] = ensure_valid_email(mapped[:email])
+  end
 
-              private
+  private
 
-              def ensure_valid_email(source)
-                # TODO: should get unified with User#check_email
-                email = extract_email(source)
-                return if !email
+  def ensure_valid_email(source)
+    # TODO: should get unified with User#check_email
+    email = extract_email(source)
+    return if !email
 
-                email.downcase
-              end
+    email.downcase
+  end
 
-              def extract_email(source)
-                # Support format like "Bob Smith (bob@example.com)"
-                if source =~ %r{\((.+@.+)\)}
-                  source = $1
-                end
-
-                Mail::Address.new(source).address
-              rescue
-                return source if source !~ %r{<\s*([^>]+)}
-
-                $1.strip
-              end
-            end
-          end
-        end
-      end
+  def extract_email(source)
+    # Support format like "Bob Smith (bob@example.com)"
+    if source =~ %r{\((.+@.+)\)}
+      source = $1
     end
+
+    Mail::Address.new(source).address
+  rescue
+    return source if source !~ %r{<\s*([^>]+)}
+
+    $1.strip
   end
 end

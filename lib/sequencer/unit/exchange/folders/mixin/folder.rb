@@ -1,24 +1,14 @@
 # Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-class Sequencer
-  class Unit
-    module Exchange
-      module Folders
-        module Mixin
-          module Folder
+module Sequencer::Unit::Exchange::Folders::Mixin::Folder
 
-            def self.included(base)
-              base.uses :ews_connection
-            end
+  def self.included(base)
+    base.uses :ews_connection
+  end
 
-            private
+  private
 
-            def ews_folder
-              @ews_folder ||= ::Import::Exchange::Folder.new(ews_connection)
-            end
-          end
-        end
-      end
-    end
+  def ews_folder
+    @ews_folder ||= ::Import::Exchange::Folder.new(ews_connection)
   end
 end

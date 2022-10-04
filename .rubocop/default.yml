@@ -200,7 +200,15 @@ Rails/ReversibleMigration:
 
 Style/ClassAndModuleChildren:
   Description: 'Checks style of children classes and modules.'
-  Enabled: false
+  Enabled: true
+  EnforcedStyle: compact
+  # Avoids nesting of classes and modules in sequencer code and improves readability by decreasing whitespace.
+  #   This cop is excluded for the rest of the codebase, due to following problems:
+  #   - undefined constants in path components which are not autoloaded
+  #   - changes to the lexical scope which require reference to the complete namespace of external classes
+  #   - difficult backporting due to extensive whitespace changes on all lines
+  Include:
+    - 'lib/sequencer/**/*.rb'
 
 Naming/FileName:
   Description: 'Use snake_case for source file names.'

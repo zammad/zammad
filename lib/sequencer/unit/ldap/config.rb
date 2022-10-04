@@ -1,19 +1,13 @@
 # Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-class Sequencer
-  class Unit
-    module Ldap
-      class Config < Sequencer::Unit::Common::Provider::Fallback
+class Sequencer::Unit::Ldap::Config < Sequencer::Unit::Common::Provider::Fallback
 
-        uses :resource
-        provides :ldap_config
+  uses :resource
+  provides :ldap_config
 
-        private
+  private
 
-        def ldap_config
-          resource
-        end
-      end
-    end
+  def ldap_config
+    resource
   end
 end

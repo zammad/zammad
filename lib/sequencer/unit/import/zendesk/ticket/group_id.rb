@@ -1,22 +1,12 @@
 # Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-class Sequencer
-  class Unit
-    module Import
-      module Zendesk
-        module Ticket
-          class GroupId < Sequencer::Unit::Common::Provider::Named
+class Sequencer::Unit::Import::Zendesk::Ticket::GroupId < Sequencer::Unit::Common::Provider::Named
 
-            uses :resource, :group_map
+  uses :resource, :group_map
 
-            private
+  private
 
-            def group_id
-              group_map.fetch(resource.group_id, 1)
-            end
-          end
-        end
-      end
-    end
+  def group_id
+    group_map.fetch(resource.group_id, 1)
   end
 end

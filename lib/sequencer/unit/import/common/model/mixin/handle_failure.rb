@@ -1,26 +1,14 @@
 # Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-class Sequencer
-  class Unit
-    module Import
-      module Common
-        module Model
-          module Mixin
-            module HandleFailure
+module Sequencer::Unit::Import::Common::Model::Mixin::HandleFailure
 
-              def self.included(base)
-                base.provides :exception, :action
-              end
+  def self.included(base)
+    base.provides :exception, :action
+  end
 
-              def handle_failure(e)
-                logger.error(e)
-                state.provide(:exception, e)
-                state.provide(:action, :failed)
-              end
-            end
-          end
-        end
-      end
-    end
+  def handle_failure(e)
+    logger.error(e)
+    state.provide(:exception, e)
+    state.provide(:action, :failed)
   end
 end

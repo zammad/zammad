@@ -1,29 +1,17 @@
 # Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-class Sequencer
-  class Unit
-    module Import
-      module Zendesk
-        module ObjectAttribute
-          module AttributeType
-            class Integer < Sequencer::Unit::Import::Zendesk::ObjectAttribute::AttributeType::Base
+class Sequencer::Unit::Import::Zendesk::ObjectAttribute::AttributeType::Integer < Sequencer::Unit::Import::Zendesk::ObjectAttribute::AttributeType::Base
 
-              def init_callback(_object_attribte)
-                @data_option.merge!(
-                  min: 0,
-                  max: 999_999_999,
-                )
-              end
+  def init_callback(_object_attribte)
+    @data_option.merge!(
+      min: 0,
+      max: 999_999_999,
+    )
+  end
 
-              private
+  private
 
-              def data_type(...)
-                'integer'
-              end
-            end
-          end
-        end
-      end
-    end
+  def data_type(...)
+    'integer'
   end
 end
