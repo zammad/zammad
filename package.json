@@ -56,7 +56,7 @@
     "eslint-plugin-zammad": "file:.eslint-plugin-zammad",
     "jsdom": "^20.0.0",
     "mock-apollo-client": "^1.2.1",
-    "postcss": "^8.4.16",
+    "postcss": "^8.4.17",
     "postcss-html": "^1.5.0",
     "prettier": "2.7.1",
     "prettier-plugin-tailwindcss": "^0.1.13",
