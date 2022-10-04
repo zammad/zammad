@@ -54,7 +54,7 @@
     "eslint-plugin-storybook": "^0.6.4",
     "eslint-plugin-vue": "^9.5.1",
     "eslint-plugin-zammad": "file:.eslint-plugin-zammad",
-    "jsdom": "^20.0.0",
+    "jsdom": "^20.0.1",
     "mock-apollo-client": "^1.2.1",
     "postcss": "^8.4.17",
     "postcss-html": "^1.5.0",
@@ -76,7 +76,7 @@
     "vite": "^3.0.9",
     "vite-plugin-ruby": "^3.1.2",
     "vite-plugin-svg-icons": "^2.0.1",
-    "vitest": "^0.23.1",
+    "vitest": "^0.23.4",
     "vue-tsc": "^0.40.13"
   },
   "dependencies": {
