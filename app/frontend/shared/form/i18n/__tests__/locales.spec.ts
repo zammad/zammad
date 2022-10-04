@@ -12,6 +12,9 @@ const staticLocaleValidation = staticLocale.validation
 describe('locales', () => {
   it('check the ui strings', () => {
     Object.keys(en.ui).forEach((key) => {
+      if (!staticLocaleUI[key]) {
+        console.log(`Missing form kit ui string "${key}".`)
+      }
       expect(staticLocaleUI[key]).toBeTruthy()
     })
   })

@@ -5981,6 +5981,10 @@ msgstr ""
 msgid "Load"
 msgstr ""
 
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "Load more"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee
@@ -5988,6 +5992,10 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/widget/payload_example.coffee
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee
 msgid "Loading failed."
+msgstr ""
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "Loading..."
 msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/task_manager.coffee
@@ -6420,8 +6428,16 @@ msgstr ""
 msgid "Move all from \"%s\" to \"%s\""
 msgstr ""
 
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "Move down"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Move left and right"
+msgstr ""
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "Move up"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee

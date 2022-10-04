@@ -40,6 +40,22 @@ const loadLocales = (): FormKitLocaleExtended => {
        * Shown when no files are selected.
        */
       noFiles: () => i18n.t('No file chosen.'),
+      /**
+       * Shown on buttons that move fields up in a list.
+       */
+      moveUp: () => i18n.t('Move up'),
+      /**
+       * Shown on buttons that move fields down in a list.
+       */
+      moveDown: () => i18n.t('Move down'),
+      /**
+       * Shown when something is actively loading.
+       */
+      isLoading: () => i18n.t('Loading...'),
+      /**
+       * Shown when there is more to load.
+       */
+      loadMore: () => i18n.t('Load more'),
     },
 
     validation: {
