@@ -25,9 +25,20 @@ ActiveRecord::ConnectionAdapters::AbstractMysqlAdapter.class_eval do
   # the constraint checks to find out if the column was created as json.
   # Based on this detection we will hack the type so rails will handle
   # values properly as json values.
+  # INFORMATION_SCHEMA.CHECK_CONSTRAINTS is only support on > 10.4 mariadb
+  # so we use object manager attributes table now to detect them.
   def mariadb_column_json?(table_name, field_name)
     field = quote(field_name)
     scope = quoted_scope(table_name)
+
+    # for older versions
+    if database_version < '10.4' && %w[tickets users groups organizations].include?(table_name)
+      class_name = table_name.classify
+      execute_and_free("SELECT 1 FROM object_manager_attributes, object_lookups WHERE object_manager_attributes.object_lookup_id = object_lookups.id AND object_lookups.name = '#{class_name}' AND object_manager_attributes.name = #{field} AND object_manager_attributes.data_type IN ('multiselect', 'multi_tree_select') LIMIT 1") do |r|
+        return r.to_a.present?
+      end
+    end
+
     execute_and_free("SELECT 1 FROM INFORMATION_SCHEMA.CHECK_CONSTRAINTS WHERE TABLE_NAME = #{scope[:name]} AND CONSTRAINT_SCHEMA = #{scope[:schema]} AND CONSTRAINT_NAME = #{field} AND CHECK_CLAUSE LIKE '%json_valid%'") do |r|
       return r.to_a.present?
     end
