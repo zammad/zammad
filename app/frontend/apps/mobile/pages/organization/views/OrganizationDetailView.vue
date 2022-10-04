@@ -5,40 +5,34 @@
 import { useRouter } from 'vue-router'
 import { computed } from 'vue'
 import CommonOrganizationAvatar from '@shared/components/CommonOrganizationAvatar/CommonOrganizationAvatar.vue'
-import { QueryHandler } from '@shared/server/apollo/handler'
 import { useHeader } from '@mobile/composables/useHeader'
 import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
 import CommonTicketStateList from '@mobile/components/CommonTicketStateList/CommonTicketStateList.vue'
 import { redirectToError } from '@mobile/router/error'
 import { ErrorStatusCodes } from '@shared/types/error'
-import { useOrganizationQuery } from '@mobile/entities/organization/graphql/queries/organization.api'
-import { OrganizationUpdatesDocument } from '@mobile/entities/organization/graphql/subscriptions/organizationUpdates.api'
 import { useOrganizationEdit } from '@mobile/entities/organization/composables/useOrganizationEdit'
 import OrganizationMembersList from '@mobile/components/Organization/OrganizationMembersList.vue'
-import { useOrganizationObjectAttributesStore } from '@shared/entities/organization/stores/objectAttributes'
 import { AvatarOrganization } from '@shared/components/CommonOrganizationAvatar'
 import CommonObjectAttributes from '@mobile/components/CommonObjectAttributes/CommonObjectAttributes.vue'
 import { useOrganizationTicketsCount } from '@mobile/entities/organization/composables/useOrganizationTicketsCount'
+import { useOrganizationDetail } from '@mobile/entities/organization/composables/useOrganizationDetail'
 
 interface Props {
-  id: string
+  internalId: number
 }
 
 const props = defineProps<Props>()
 
-const organizationQuery = new QueryHandler(
-  useOrganizationQuery({
-    organizationId: props.id,
-    membersCount: 3,
-  }),
-)
+const {
+  organization,
+  organizationQuery,
+  loading,
+  objectAttributes,
+  loadAllMembers,
+  loadOrganization,
+} = useOrganizationDetail()
 
-organizationQuery.subscribeToMore({
-  document: OrganizationUpdatesDocument,
-  variables: {
-    organizationId: props.id,
-  },
-})
+loadOrganization(props.internalId)
 
 const router = useRouter()
 
@@ -48,17 +42,6 @@ organizationQuery.onError(() => {
     message: __('Sorry, but you have insufficient rights to open this page.'),
   })
 })
-
-const organizationResult = organizationQuery.result()
-const loading = organizationQuery.loading()
-
-const organization = computed(() => organizationResult.value?.organization)
-
-const objectAttributesManager = useOrganizationObjectAttributesStore()
-
-const objectAttributes = computed(
-  () => objectAttributesManager.viewScreenAttributes || [],
-)
 
 const { openEditOrganizationDialog } = useOrganizationEdit()
 
@@ -71,13 +54,6 @@ useHeader({
     openEditOrganizationDialog(organization.value)
   },
 })
-
-const loadAllMembers = () => {
-  organizationQuery.refetch({
-    organizationId: props.id,
-    membersCount: null,
-  })
-}
 
 const { getTicketData } = useOrganizationTicketsCount()
 const ticketData = computed(() => getTicketData(organization.value))

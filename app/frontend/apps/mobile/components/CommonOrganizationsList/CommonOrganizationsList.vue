@@ -7,10 +7,18 @@ import CommonSectionMenu from '../CommonSectionMenu/CommonSectionMenu.vue'
 
 interface Props {
   organizations: (AvatarOrganization & { id: string; internalId: number })[]
+  totalCount: number
+  disableShowMore?: boolean
   label?: string
 }
 
-defineProps<Props>()
+withDefaults(defineProps<Props>(), {
+  disableShowMore: false,
+})
+
+const emit = defineEmits<{
+  (e: 'showMore'): void
+}>()
 </script>
 
 <template>
@@ -29,5 +37,17 @@ defineProps<Props>()
         {{ organization.name }}
       </span>
     </CommonLink>
+    <button
+      v-if="organizations.length < totalCount"
+      class="flex min-h-[54px] items-center justify-center gap-2"
+      :class="{
+        'cursor-default text-gray-100/50': disableShowMore,
+        'text-blue': !disableShowMore,
+      }"
+      :disabled="disableShowMore"
+      @click="emit('showMore')"
+    >
+      {{ $t('Show %s more', totalCount - organizations.length) }}
+    </button>
   </CommonSectionMenu>
 </template>

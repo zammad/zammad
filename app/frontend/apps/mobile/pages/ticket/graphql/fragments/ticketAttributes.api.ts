@@ -23,6 +23,7 @@ export const TicketAttributesFragmentDoc = gql`
   }
   organization {
     id
+    internalId
     name
   }
   state {

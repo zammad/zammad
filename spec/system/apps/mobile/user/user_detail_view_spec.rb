@@ -33,6 +33,25 @@ RSpec.describe 'Mobile > User > Preview detailed information about user', type: 
       expect(find('section', text: %r{Last name})).to have_text('Nylund')
       expect(find('section', text: %r{Address})).to have_text('Hamburg')
     end
+
+    it 'can load all secondary organizations' do
+      organizations = create_list(:organization, 5)
+      user.update(organizations: organizations)
+
+      open_user
+
+      expect(page).to have_text(organizations[0].name)
+      expect(page).to have_text(organizations[1].name)
+      expect(page).to have_text(organizations[2].name)
+      expect(page).to have_no_text(organizations[3].name)
+
+      click('button', text: 'Show 2 more')
+
+      wait_for_gql('apps/mobile/entities/user/graphql/queries/user.graphql', number: 2)
+
+      expect(page).to have_text(organizations[3].name)
+      expect(page).to have_text(organizations[4].name)
+    end
   end
 
   context 'when visiting as customer', authenticated_as: :user do

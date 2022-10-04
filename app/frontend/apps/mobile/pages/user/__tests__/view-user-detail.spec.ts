@@ -28,7 +28,7 @@ describe('visiting user page', () => {
     expect(organizationLink).toBeInTheDocument()
     expect(organizationLink).toHaveAttribute(
       'href',
-      `/organizations/${organization.id}`,
+      `/organizations/${organization.internalId}`,
     )
 
     expect(view.queryByRole('region', { name: 'Name' })).not.toBeInTheDocument()
@@ -50,6 +50,9 @@ describe('visiting user page', () => {
       'href',
       expect.stringContaining(`customer.id: ${user.internalId}`),
     )
+
+    expect(view.getByText('Secondary organizations')).toBeInTheDocument()
+    expect(view.getByText('Dammaz')).toBeInTheDocument()
   })
 
   test('can toggle tickets count view', async () => {

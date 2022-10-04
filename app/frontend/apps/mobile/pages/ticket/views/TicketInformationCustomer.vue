@@ -12,6 +12,7 @@ import { useSessionStore } from '@shared/stores/session'
 import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
 import CommonUserAvatar from '@shared/components/CommonUserAvatar/CommonUserAvatar.vue'
 import CommonOrganizationsList from '@mobile/components/CommonOrganizationsList/CommonOrganizationsList.vue'
+import { normalizeEdges } from '@shared/utils/helpers'
 import type { TicketById } from '../types/tickets'
 
 interface Props {
@@ -23,7 +24,13 @@ defineProps<Props>()
 const ticket = inject('ticket') as ComputedRef<Maybe<TicketById>>
 
 const session = useSessionStore()
-const { user, loading, objectAttributes, loadUser } = useUserDetail()
+const {
+  user,
+  loading,
+  objectAttributes,
+  loadUser,
+  loadAllSecondaryOrganizations,
+} = useUserDetail()
 
 watchEffect(() => {
   if (ticket.value) {
@@ -36,11 +43,9 @@ const { openEditUserDialog } = useUserEdit()
 const { getTicketData } = useUsersTicketsCount()
 const ticketsData = computed(() => getTicketData(user.value))
 
-// TODO when API is done
-const secondaryOrganizations = [
-  { id: '1x', internalId: 1, name: 'Zammad' },
-  { id: '2x', internalId: 2, name: 'Dammaz' },
-]
+const secondaryOrganizations = computed(() =>
+  normalizeEdges(user.value?.secondaryOrganizations),
+)
 </script>
 
 <template>
@@ -61,8 +66,11 @@ const secondaryOrganizations = [
       </template>
     </CommonObjectAttributes>
     <CommonOrganizationsList
-      :organizations="secondaryOrganizations"
+      :organizations="secondaryOrganizations.array"
+      :total-count="secondaryOrganizations.totalCount"
+      :disable-show-more="loading"
       :label="__('Secondary organizations')"
+      @show-more="loadAllSecondaryOrganizations()"
     />
     <CommonTicketStateList
       v-if="ticketsData"

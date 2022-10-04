@@ -1,37 +1,32 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { QueryHandler } from '@shared/server/apollo/handler'
 import type { ComputedRef } from 'vue'
 import { computed, ref, watchEffect, inject } from 'vue'
 import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
 import CommonOrganizationAvatar from '@shared/components/CommonOrganizationAvatar/CommonOrganizationAvatar.vue'
 import CommonTicketStateList from '@mobile/components/CommonTicketStateList/CommonTicketStateList.vue'
 import CommonObjectAttributes from '@mobile/components/CommonObjectAttributes/CommonObjectAttributes.vue'
-import { useOrganizationObjectAttributesStore } from '@shared/entities/organization/stores/objectAttributes'
-import { useOrganizationLazyQuery } from '@mobile/entities/organization/graphql/queries/organization.api'
 import { useOrganizationEdit } from '@mobile/entities/organization/composables/useOrganizationEdit'
 import OrganizationMembersList from '@mobile/components/Organization/OrganizationMembersList.vue'
-import { OrganizationUpdatesDocument } from '@mobile/entities/organization/graphql/subscriptions/organizationUpdates.api'
 import { useSessionStore } from '@shared/stores/session'
 import { AvatarOrganization } from '@shared/components/CommonOrganizationAvatar'
 import { useOrganizationTicketsCount } from '@mobile/entities/organization/composables/useOrganizationTicketsCount'
+import { useOrganizationDetail } from '@mobile/entities/organization/composables/useOrganizationDetail'
 import type { TicketById } from '../types/tickets'
 
 const ticket = inject('ticket') as ComputedRef<Maybe<TicketById>>
 
 const session = useSessionStore()
 
-const organizationQuery = new QueryHandler(
-  useOrganizationLazyQuery(() => ({
-    organizationId: ticket.value?.organization?.id || '',
-    membersCount: 3,
-  })),
-)
-
-const organizationResult = organizationQuery.result()
-const organization = computed(() => organizationResult.value?.organization)
-const organizationLoading = organizationQuery.loading()
+const {
+  organization,
+  organizationQuery,
+  loading: organizationLoading,
+  objectAttributes,
+  loadAllMembers,
+  loadOrganization,
+} = useOrganizationDetail()
 
 const error = ref('')
 organizationQuery.onError((apolloError) => {
@@ -39,32 +34,13 @@ organizationQuery.onError((apolloError) => {
 })
 
 watchEffect(() => {
-  const organizationId = ticket.value?.organization?.id
+  const organizationId = ticket.value?.organization?.internalId
   if (!organizationId) {
     return
   }
-  organizationQuery.load()
 
-  organizationQuery.subscribeToMore({
-    document: OrganizationUpdatesDocument,
-    variables: {
-      organizationId,
-    },
-  })
+  loadOrganization(organizationId)
 })
-
-const loadAllMembers = () => {
-  organizationQuery.refetch({
-    organizationId: organization.value?.id || '',
-    membersCount: null,
-  })
-}
-
-const objectAttributesManager = useOrganizationObjectAttributesStore()
-
-const objectAttributes = computed(
-  () => objectAttributesManager.viewScreenAttributes || [],
-)
 
 const { openEditOrganizationDialog } = useOrganizationEdit()
 const { getTicketData } = useOrganizationTicketsCount()

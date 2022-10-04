@@ -21,13 +21,17 @@ const isEmptyResponse = (response: unknown) => {
   return false
 }
 
+const counts: Record<string, number> = {}
+
 const testFlagsLink = /* #__PURE__ */ new ApolloLink((operation, forward) => {
   return forward(operation).map((response) => {
     const definition = getMainDefinition(operation.query)
     if (definition.kind === Kind.FRAGMENT_DEFINITION) return response
     const operationType = definition.operation
     const operationName = definition.name?.value as string
-    const flag = `__gql ${operationType} ${operationName}`
+    const operationFlag = `__gql ${operationType} ${operationName}`
+    const count = counts[operationFlag] || 1
+    const testFlag = `${operationFlag} ${count}`
     if (operationType === 'subscription') {
       // only trigger subscription, if it was actually returned
       // this is also triggered with empty response, when we subscribe
@@ -35,10 +39,12 @@ const testFlagsLink = /* #__PURE__ */ new ApolloLink((operation, forward) => {
         response.errors ||
         (response.data && !isEmptyResponse(response.data[operationName]))
       ) {
-        window.testFlags?.set(flag)
+        counts[operationFlag] = count + 1
+        window.testFlags?.set(testFlag)
       }
     } else {
-      window.testFlags?.set(flag)
+      counts[operationFlag] = count + 1
+      window.testFlags?.set(testFlag)
     }
     return response
   })

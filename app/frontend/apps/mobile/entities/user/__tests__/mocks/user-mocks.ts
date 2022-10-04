@@ -34,6 +34,22 @@ export const defaultUser = (): ConfidentTake<UserQuery, 'user'> => {
       name: organization.name,
       ticketsCount: organization.ticketsCount,
     },
+    secondaryOrganizations: {
+      __typename: 'OrganizationConnection',
+      edges: [
+        {
+          __typename: 'OrganizationEdge',
+          node: {
+            __typename: 'Organization',
+            id: 'dsa34fsa223d',
+            name: 'Dammaz',
+            internalId: 10,
+            active: true,
+          },
+        },
+      ],
+      totalCount: 1,
+    },
     objectAttributeValues: [
       {
         attribute: {

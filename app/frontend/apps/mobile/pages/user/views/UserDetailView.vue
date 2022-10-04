@@ -14,6 +14,7 @@ import { useOrganizationTicketsCount } from '@mobile/entities/organization/compo
 import { useUsersTicketsCount } from '@mobile/entities/user/composables/useUserTicketsCount'
 import { useUserDetail } from '@mobile/entities/user/composables/useUserDetail'
 import CommonOrganizationsList from '@mobile/components/CommonOrganizationsList/CommonOrganizationsList.vue'
+import { normalizeEdges } from '@shared/utils/helpers'
 
 interface Props {
   internalId: number
@@ -21,7 +22,13 @@ interface Props {
 
 const props = defineProps<Props>()
 
-const { user, loading, objectAttributes, loadUser } = useUserDetail()
+const {
+  user,
+  loading,
+  objectAttributes,
+  loadUser,
+  loadAllSecondaryOrganizations,
+} = useUserDetail()
 
 loadUser(props.internalId)
 
@@ -77,11 +84,9 @@ const ticketsData = computed(() => {
   return getOrganizationTicketsData(organization)
 })
 
-// TODO when API is done
-const secondaryOrganizations = [
-  { id: '1x', internalId: 1, name: 'Zammad' },
-  { id: '2x', internalId: 2, name: 'Dammaz' },
-]
+const secondaryOrganizations = computed(() =>
+  normalizeEdges(user.value?.secondaryOrganizations),
+)
 </script>
 
 <template>
@@ -96,7 +101,7 @@ const secondaryOrganizations = [
       <CommonLink
         v-if="user.organization"
         data-test-id="organization-link"
-        :link="`/organizations/${user.organization.id}`"
+        :link="`/organizations/${user.organization.internalId}`"
         class="text-center text-base text-blue"
       >
         {{ user.organization.name }}
@@ -106,8 +111,11 @@ const secondaryOrganizations = [
     <CommonObjectAttributes :attributes="objectAttributes" :object="user" />
 
     <CommonOrganizationsList
-      :organizations="secondaryOrganizations"
+      :organizations="secondaryOrganizations.array"
+      :total-count="secondaryOrganizations.totalCount"
+      :disable-show-more="loading"
       :label="__('Secondary organizations')"
+      @show-more="loadAllSecondaryOrganizations()"
     />
 
     <CommonTicketStateList

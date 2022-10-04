@@ -5,10 +5,10 @@ module TestFlags
     wait.until { page.evaluate_script("window.testFlags && window.testFlags.get('#{flag.gsub("'", "\\'")}', #{skip_clearing})") }
   end
 
-  def wait_for_gql(filename, skip_clearing: false)
+  def wait_for_gql(filename, number: 1, skip_clearing: false)
     gql = Rails.root.join("app/frontend/#{filename}").read
     operation = %r{^\w+ \w+}.match(gql).to_s
-    wait_for_test_flag("__gql #{operation}", skip_clearing: skip_clearing)
+    wait_for_test_flag("__gql #{operation} #{number}", skip_clearing: skip_clearing)
   end
 end
 

@@ -9,6 +9,22 @@ export const truthy = <T>(value: Maybe<T>): value is IsTruthy<T> => {
   return !!value
 }
 
+export const edgesToArray = <T>(
+  object?: Maybe<{ edges?: { node: T }[] }>,
+): T[] => {
+  return object?.edges?.map((edge) => edge.node) || []
+}
+
+export const normalizeEdges = <T>(
+  object?: Maybe<{ edges?: { node: T }[]; totalCount?: number }>,
+): { array: T[]; totalCount: number } => {
+  const array = edgesToArray(object)
+  return {
+    array,
+    totalCount: object?.totalCount ?? array.length,
+  }
+}
+
 export const mergeArray = <T extends unknown[]>(a: T, b: T) => {
   return [...new Set([...a, ...b])]
 }

@@ -58,6 +58,9 @@ describe('visiting ticket user page', () => {
       'href',
       expect.stringContaining(`customer.id: ${user.internalId}`),
     )
+
+    expect(view.getByText('Secondary organizations')).toBeInTheDocument()
+    expect(view.getByText('Dammaz')).toBeInTheDocument()
   })
 
   test('view fully configured user', async () => {

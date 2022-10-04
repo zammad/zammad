@@ -6,8 +6,7 @@ import type {
   UserUpdatesSubscription,
 } from '@shared/graphql/types'
 import { QueryHandler } from '@shared/server/apollo/handler'
-import { whenever } from '@vueuse/shared'
-import { computed, nextTick, ref } from 'vue'
+import { computed, nextTick, ref, watch } from 'vue'
 import { useUserObjectAttributesStore } from '@shared/entities/user/stores/objectAttributes'
 import { useUserLazyQuery } from '../graphql/queries/user.api'
 
@@ -18,6 +17,7 @@ export const useUserDetail = () => {
     useUserLazyQuery(
       () => ({
         userInternalId: internalId.value,
+        secondaryOrganizationsCount: 3,
       }),
       () => ({ enabled: internalId.value > 0 }),
     ),
@@ -27,6 +27,13 @@ export const useUserDetail = () => {
     internalId.value = id
     nextTick(() => {
       userQuery.load()
+    })
+  }
+
+  const loadAllSecondaryOrganizations = () => {
+    userQuery.refetch({
+      userInternalId: internalId.value,
+      secondaryOrganizationsCount: null,
     })
   }
 
@@ -41,12 +48,10 @@ export const useUserDetail = () => {
     () => objectAttributesManager.viewScreenAttributes || [],
   )
 
-  const stopWatch = whenever(
-    () => user.value != null,
-    () => {
-      if (!user.value) return
-
-      stopWatch()
+  watch(
+    () => user.value?.id,
+    (userId) => {
+      if (!userId) return
 
       userQuery.subscribeToMore<
         UserUpdatesSubscriptionVariables,
@@ -54,16 +59,18 @@ export const useUserDetail = () => {
       >({
         document: UserUpdatesDocument,
         variables: {
-          userId: user.value.id,
+          userId,
         },
       })
     },
+    { immediate: true },
   )
 
   return {
     loading,
     user,
     objectAttributes,
+    loadAllSecondaryOrganizations,
     loadUser,
   }
 }

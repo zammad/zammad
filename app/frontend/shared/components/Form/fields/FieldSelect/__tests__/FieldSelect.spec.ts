@@ -366,7 +366,7 @@ describe('Form - Field - Select - Features', () => {
       wrapper.queryAllByIconName('checked-no').length,
     )
 
-    wrapper.events.click(selectOptions[0])
+    await wrapper.events.click(selectOptions[0])
 
     await waitFor(() => {
       expect(wrapper.emitted().inputRaw).toBeTruthy()

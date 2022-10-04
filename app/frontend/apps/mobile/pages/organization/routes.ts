@@ -4,9 +4,9 @@ import type { RouteRecordRaw } from 'vue-router'
 
 const routes: RouteRecordRaw[] = [
   {
-    path: '/organizations/:id',
+    path: '/organizations/:internalId',
     name: 'OrganizationDetailView',
-    props: true,
+    props: (route) => ({ internalId: Number(route.params.internalId) }),
     component: () => import('./views/OrganizationDetailView.vue'),
     meta: {
       title: __('Organization'),

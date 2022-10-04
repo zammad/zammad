@@ -27,7 +27,7 @@ describe('static organization', () => {
     )
     mockOrganizationObjectAttributes()
 
-    const view = await visitView('/organizations/3423225dsf0')
+    const view = await visitView(`/organizations/${organization.internalId}`)
 
     await waitUntil(() => mockApi.calls.resolve)
 
@@ -85,7 +85,7 @@ describe('static organization', () => {
     mockGraphQLSubscription(OrganizationUpdatesDocument)
     mockOrganizationObjectAttributes()
 
-    const view = await visitView('/organizations/3423225dsf0')
+    const view = await visitView(`/organizations/${organization.internalId}`)
 
     await waitUntil(() => mockApi.calls.resolve)
 

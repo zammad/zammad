@@ -19,6 +19,7 @@ fragment ticketAttributes on Ticket {
   }
   organization {
     id
+    internalId
     name
   }
   state {

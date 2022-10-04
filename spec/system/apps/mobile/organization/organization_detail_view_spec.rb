@@ -9,8 +9,7 @@ RSpec.describe 'Mobile > Organization > Can view organization', type: :system, a
   let(:agent)               { create(:agent, groups: [group]) }
 
   def open_organization
-    id = Gql::ZammadSchema.id_from_object(organization)
-    visit "/organizations/#{id}"
+    visit "/organizations/#{organization.id}"
     wait_for_gql('apps/mobile/entities/organization/graphql/queries/organization.graphql')
   end
 
