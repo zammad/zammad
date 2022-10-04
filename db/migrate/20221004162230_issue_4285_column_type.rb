@@ -1,6 +1,6 @@
 # Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-class Issue3671HttpLogsUnlimitRequestResponse < ActiveRecord::Migration[6.1]
+class Issue4285ColumnType < ActiveRecord::Migration[6.1]
   def up
 
     # return if it's a new setup
@@ -8,8 +8,6 @@ class Issue3671HttpLogsUnlimitRequestResponse < ActiveRecord::Migration[6.1]
 
     change_table :http_logs do |t|
       t.change :url, :text
-      t.change :request, :text
-      t.change :response, :text
     end
 
     HttpLog.reset_column_information
