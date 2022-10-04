@@ -39,7 +39,7 @@ class Tag extends App.ControllerSubContent
       url:   "#{@apiPath}/tag_list"
       data:  JSON.stringify(name: name)
       success: (data, status, xhr) =>
-        field.val('')
+        @html App.view('tag/index')()
         new Table(
           el: @$('.js-Table')
         )
