@@ -3,10 +3,13 @@
 class PublicLink < ApplicationModel
   include CanPriorization
   include ChecksClientNotification
+  include PublicLink::TriggersSubscriptions
 
-  validates :link,      presence: true, length: { maximum: 500 }
-  validates :title,     presence: true, length: { maximum: 200 }
-  validates :screen, presence: true, inclusion: { in: %w[login signup password_reset] }
+  AVAILABLE_SCREENS = %w[login signup password_reset].freeze
+
+  validates :link,   presence: true, length: { maximum: 500 }
+  validates :title,  presence: true, length: { maximum: 200 }
+  validates :screen, presence: true, inclusion: { in: AVAILABLE_SCREENS }
 
   before_validation :check_link
 

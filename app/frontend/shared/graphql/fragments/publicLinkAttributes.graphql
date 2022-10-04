@@ -1,0 +1,7 @@
+fragment publicLinkAttributes on PublicLink {
+  id
+  link
+  title
+  description
+  newTab
+}
