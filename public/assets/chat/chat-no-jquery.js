@@ -709,6 +709,25 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
         'We are sorry, it takes longer as expected to get an empty slot. Please try again later or send us an email. Thank you!': 'Vi är ledsna, det tar längre tid som förväntat att få en ledig plats. Försök igen senare eller skicka ett e-postmeddelande till oss. Tack!',
         'You are on waiting list position <strong>%s</strong>.': 'Du är på väntelistan som position <strong>%s</strong>.'
       },
+      'th': {
+        '<strong>Chat</strong> with us!': '',
+        'All colleagues are busy.': 'เพื่อนร่วมงานทุกคนไม่ว่าง',
+        'Chat closed by %s': 'ปิดแชทโดย %s',
+        'Compose your message…': 'เขียนข้อความของคุณ…',
+        'Connecting': 'กำลังเชื่อมต่อ',
+        'Connection lost': 'การเชื่อมต่อล้มเหลว',
+        'Connection re-established': 'เชื่อมต่อใหม่แล้ว',
+        'Offline': 'ออฟไลน์',
+        'Online': 'ออนไลน์',
+        'Scroll down to see new messages': '',
+        'Send': 'ส่ง',
+        'Since you didn\'t respond in the last %s minutes your conversation got closed.': 'เนื่องจากคุณไม่ได้ตอบกลับใน %s นาทีที่ผ่านมา การสนทนาของคุณจึงถูกปิด',
+        'Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> got closed.': 'เนื่องจากคุณไม่ได้ตอบกลับในช่วง %s นาทีที่แล้ว การสนทนาของคุณกับ <strong>%s</strong> จึงปิดลง',
+        'Start new conversation': '',
+        'Today': 'วันนี้',
+        'We are sorry, it takes longer as expected to get an empty slot. Please try again later or send us an email. Thank you!': 'ขออภัย ใช้เวลานานกว่าที่คาดไว้จึงจะได้ช่องว่าง โปรดลองอีกครั้งในภายหลังหรือส่งอีเมลถึงเรา ขอขอบคุณ!',
+        'You are on waiting list position <strong>%s</strong>.': 'อยู่ในรายการรอตำแหน่ง <strong>%s</strong>'
+      },
       'zh-cn': {
         '<strong>Chat</strong> with us!': '发起<strong>即时对话</strong>!',
         'All colleagues are busy.': '所有同事都很忙。',
