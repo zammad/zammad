@@ -238,43 +238,51 @@ msgstr "%s URL"
 msgid "%s ago"
 msgstr "%s temu"
 
-#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleBubble.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue
 msgid "%s attached files"
 msgstr "%s załączone pliki"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts
 msgid "%s completed data privacy task to delete user ID |%s|"
 msgstr ""
 "%s ukończono zadanie prywatności danych - usunięcie identyfikatora "
 "użytkownika [%s]"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts
 msgid "%s created article for |%s|"
 msgstr "%s stworzył/a artykuł dla |%s|"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts
 msgid "%s created data privacy task to delete user ID |%s|"
 msgstr ""
 "%s utworzył/a zadanie prywatności danych w celu usunięcia identyfikatora "
 "użytkownika |%s|"
 
 #: app/assets/javascripts/app/models/group.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/group.ts
 msgid "%s created group |%s|"
 msgstr "%s utworzył/a grupę |%s|"
 
 #: app/assets/javascripts/app/models/organization.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/organization.ts
 msgid "%s created organization |%s|"
 msgstr "%s utworzył/a organizację |%s|"
 
 #: app/assets/javascripts/app/models/role.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/role.ts
 msgid "%s created role |%s|"
 msgstr "%s utworzył/a rolę |%s|"
 
 #: app/assets/javascripts/app/models/ticket.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/ticket.ts
 msgid "%s created ticket |%s|"
 msgstr "%s utworzył/a zgłoszenie |%s|"
 
 #: app/assets/javascripts/app/models/user.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/user.ts
 msgid "%s created user |%s|"
 msgstr "%s utworzył/a użytkownika |%s|"
 
@@ -289,6 +297,7 @@ msgid "%s days ago"
 msgstr "%s dni temu"
 
 #: app/assets/javascripts/app/models/user.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/user.ts
 msgid "%s ended switch to |%s|!"
 msgstr "%s zakończył/a zmianę do |%s|!"
 
@@ -370,6 +379,7 @@ msgid "%s required!"
 msgstr "%s wymagane!"
 
 #: app/assets/javascripts/app/models/user.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/user.ts
 msgid "%s started a new session"
 msgstr "%s rozpoczął/ęła nową sesję"
 
@@ -379,6 +389,7 @@ msgid "%s subdomain"
 msgstr "%s subdomena"
 
 #: app/assets/javascripts/app/models/user.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/user.ts
 msgid "%s switched to |%s|!"
 msgstr "%s zmienił/a do |%s|!"
 
@@ -388,32 +399,39 @@ msgid "%s tickets"
 msgstr "%s zgłoszeń"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts
 msgid "%s updated article for |%s|"
 msgstr "%s zaktualizowany wpis dla |%s|"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts
 msgid "%s updated data privacy task to delete user ID |%s|"
 msgstr ""
 "%s zaktualizował zadanie prywatności danych, aby usunąć identyfikator "
 "użytkownika [%s]"
 
 #: app/assets/javascripts/app/models/group.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/group.ts
 msgid "%s updated group |%s|"
 msgstr "%s zaktualizował/a grupę |%s|"
 
 #: app/assets/javascripts/app/models/organization.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/organization.ts
 msgid "%s updated organization |%s|"
 msgstr "%s zaktualizował/a organizację |%s|"
 
 #: app/assets/javascripts/app/models/role.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/role.ts
 msgid "%s updated role |%s|"
 msgstr "%s zaktualizował/a rolę |%s|"
 
 #: app/assets/javascripts/app/models/ticket.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/ticket.ts
 msgid "%s updated ticket |%s|"
 msgstr "%s zaktualizował/a zgłoszenie |%s|"
 
 #: app/assets/javascripts/app/models/user.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/user.ts
 msgid "%s updated user |%s|"
 msgstr "%s zaktualizował/a użytkownika |%s|"
 
@@ -496,7 +514,7 @@ msgstr ""
 "określonego celu) są wyświetlane w osobnym widoku w przeglądach. Możesz "
 "także skonfigurować ** powiadomienia e-mail **."
 
-#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleBubble.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue
 msgid "1 attached file"
 msgstr "1 załączony plik"
 
@@ -678,7 +696,7 @@ msgstr "Dostęp do tokena API"
 msgid "API token"
 msgstr "Token API"
 
-#: app/frontend/apps/mobile/modules/account/views/AccountOverview.vue
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 msgid "About"
 msgstr "O"
 
@@ -701,8 +719,8 @@ msgstr ""
 "Dostęp do zgłoszeń klienta na podstawie aktualnego użytkownika i organizacji"
 
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
-#: app/frontend/apps/mobile/modules/account/routes.ts
-#: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/routes.ts
+#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 msgid "Account"
 msgstr "Konto"
 
@@ -938,7 +956,7 @@ msgstr "Dodaj link"
 msgid "Add ordered list"
 msgstr "Dodaj listę uporządkowaną"
 
-#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/TicketDetailViewReplyButton.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewReplyButton.vue
 msgid "Add reply"
 msgstr "Dodaj odpowiedz"
 
@@ -1104,6 +1122,10 @@ msgstr "Zezwól na przyszłość"
 msgid "Allow past"
 msgstr "Zezwol na przeszłość"
 
+#: db/seeds/object_manager_attributes.rb
+msgid "Allow reopening of tickets within a certain time."
+msgstr ""
+
 #: app/assets/javascripts/app/views/tag/index.jst.eco
 msgid "Allow users to add new tags."
 msgstr "Pozwól użytkownikom na dodawanie nowych tagów."
@@ -1236,6 +1258,7 @@ msgstr ""
 "</div>\n"
 
 #: app/assets/javascripts/app/models/ticket.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/ticket.ts
 msgid "Another ticket was merged into ticket |%s|"
 msgstr "Kolejne zgłoszenie zostało scalone ze zgłoszeniem |%s|"
 
@@ -1382,7 +1405,7 @@ msgstr "Wpis - okno potwierdzenia widoczności"
 msgid "Article Count"
 msgstr "Liczba wpisów"
 
-#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleBubble.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue
 msgid "Article actions"
 msgstr "Działania dotyczące artykułu"
 
@@ -1650,9 +1673,9 @@ msgstr "Dostępne rodzaje dla nowego zgłoszenia"
 #: app/assets/javascripts/app/views/customer_chat/setting.jst.eco
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco
 #: app/assets/javascripts/app/views/profile/imageCropper.jst.eco
-#: app/frontend/apps/mobile/modules/account/routes.ts
-#: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
-#: app/frontend/apps/mobile/modules/account/views/AccountOverview.vue
+#: app/frontend/apps/mobile/pages/account/routes.ts
+#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 #: app/frontend/shared/components/CommonUserAvatar/CommonUserAvatar.vue
 #: db/seeds/permissions.rb
 msgid "Avatar"
@@ -1875,7 +1898,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/ticket_article.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
-#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 #: db/seeds/object_manager_attributes.rb
 msgid "CC"
 msgstr "DW"
@@ -1969,7 +1992,7 @@ msgstr "Logi połączeń"
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco
-#: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 msgid "Camera"
 msgstr "Kamera"
 
@@ -2019,8 +2042,8 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue
 #: app/frontend/apps/mobile/components/Organization/OrganizationEditDialog.vue
-#: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
-#: app/frontend/apps/mobile/modules/search/views/SearchOverview.vue
+#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
 #: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 msgid "Cancel"
 msgstr "Anuluj"
@@ -2052,6 +2075,12 @@ msgid "Cannot follow-up on a closed ticket. Please create a new ticket."
 msgstr ""
 "Nie można kontynuować na zamkniętym zgłoszeniu. Proszę utwórz nowe "
 "zgłoszenie."
+
+#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue
+#, fuzzy
+#| msgid "Delete old online notification entries."
+msgid "Cannot set online notifications as seen"
+msgstr "Usuń stare wpisy powiadomień online."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/categories.coffee
 msgid "Categories"
@@ -2140,7 +2169,7 @@ msgstr "Dokonano zmian, ktore wymagają aktualizacji bazy danych."
 #: app/assets/javascripts/app/models/email_address.coffee
 #: app/assets/javascripts/app/models/postmaster_filter.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
-#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Channel"
 msgstr "Kanał"
 
@@ -2687,7 +2716,7 @@ msgstr "Kontynuuj mimo to"
 msgid "Continue session"
 msgstr "Kontynuuj sesje"
 
-#: app/frontend/apps/mobile/modules/login/views/Login.vue
+#: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid "Continue to desktop app"
 msgstr "Przejdź do aplikacji desktopowej"
 
@@ -3002,7 +3031,7 @@ msgstr "Potrzebne aktualne hasło!"
 msgid "Current user has no permission to use 'From'/'X-On-Behalf-Of'!"
 msgstr "Bieżący użytkownik nie ma uprawnień do używania „Od”/„X-w imieniu”!"
 
-#: app/frontend/apps/mobile/modules/ticket/views/TicketOverview.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketOverview.vue
 msgid "Currently no overview is assigned to your roles."
 msgstr "Obecnie do Twoich ról nie jest przypisany żaden przegląd."
 
@@ -3043,7 +3072,7 @@ msgstr "Adres niestandardowy nie jest ustawiony"
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 #: app/controllers/time_accountings_controller.rb
-#: app/frontend/apps/mobile/modules/ticket/views/TicketInformationView.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformationView.vue
 #: app/graphql/gql/types/overview_type.rb db/seeds/object_manager_attributes.rb
 #: db/seeds/roles.rb db/seeds/ticket_article_senders.rb
 #: lib/excel_sheet/ticket.rb
@@ -3262,6 +3291,10 @@ msgstr ""
 "centrali PBX) i przypisz do nich swoich agentów. Dzięki temu Zammad może "
 "wspierać Twoich agentów, pokazując im tylko odpowiednie wpisy połączeń i "
 "powiadomienia."
+
+#: db/seeds/settings.rb
+msgid "Define the maximum number of ticket shown in overviews."
+msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Defines Elasticsearch index name."
@@ -4029,7 +4062,7 @@ msgstr "Definiuje backend transakcji."
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
 #: app/assets/javascripts/app/views/widget/template.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
-#: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 msgid "Delete"
 msgstr "Kasuj"
 
@@ -4063,7 +4096,7 @@ msgstr ""
 msgid "Delete all existing records first."
 msgstr "Najpierw usuń wszystkie istniejące rekordy."
 
-#: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 msgid "Delete avatar"
 msgstr "Usunąć awatar"
 
@@ -4188,7 +4221,7 @@ msgid "Devices"
 msgstr "Urządzenia"
 
 #: app/assets/javascripts/app/views/profile/language.jst.eco
-#: app/frontend/apps/mobile/modules/account/views/AccountOverview.vue
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 msgid "Did you know? You can help translating %s at:"
 msgstr "Czy wiesz, że możesz pomóc w tłumaczeniu %s na stronie:"
 
@@ -4286,7 +4319,7 @@ msgstr "Czy na pewno chcesz usunąć tę wersję roboczą?"
 msgid "Do you really want to delete this object?"
 msgstr "Czy na pewno chcesz usunąć ten obiekt?"
 
-#: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 msgid "Do you really want to delete your current avatar?"
 msgstr "Czy na pewno chcesz usunąć twój aktualny awatar?"
 
@@ -4316,8 +4349,8 @@ msgid "Don't synchronize"
 msgstr "Nie synchronizuj"
 
 #: app/frontend/apps/mobile/components/CommonDialog/CommonDialog.vue
-#: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
-#: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
+#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
 #: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 msgid "Done"
 msgstr "Gotowe"
@@ -4405,21 +4438,21 @@ msgstr "Święta Wielkanocne"
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 #: app/frontend/apps/mobile/components/Organization/OrganizationEditDialog.vue
-#: app/frontend/apps/mobile/modules/home/views/Home.vue
-#: app/frontend/apps/mobile/modules/organization/views/OrganizationDetailView.vue
-#: app/frontend/apps/mobile/modules/user/views/UserDetailView.vue
+#: app/frontend/apps/mobile/pages/home/views/Home.vue
+#: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue
+#: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue
 msgid "Edit"
 msgstr "Edytuj"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_customer.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee
-#: app/frontend/apps/mobile/modules/ticket/views/TicketInformationCustomer.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformationCustomer.vue
 msgid "Edit Customer"
 msgstr "Edytuj klienta"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_organization.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_organization.coffee
-#: app/frontend/apps/mobile/modules/ticket/views/TicketInformationOrganization.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformationOrganization.vue
 msgid "Edit Organization"
 msgstr "Edytuj organizacje"
 
@@ -4427,7 +4460,7 @@ msgstr "Edytuj organizacje"
 msgid "Edit mask"
 msgstr "Maska edycji"
 
-#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/TicketViewersDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue
 msgid "Editing ticket"
 msgstr "Edytuj bilet"
 
@@ -4869,7 +4902,7 @@ msgstr "Wprowadź poświadczenia"
 msgid "Enter link URL"
 msgstr "Wprowadź link URL"
 
-#: app/frontend/apps/mobile/modules/search/views/SearchOverview.vue
+#: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
 msgid "Enter more than two characters to get any results…"
 msgstr "Wpisz więcej niż dwa znaki, aby uzyskać jakiekolwiek wyniki…"
 
@@ -4936,7 +4969,7 @@ msgstr "Wprowadź swoją nazwę użytkownika lub adres e-mail"
 msgid "Error"
 msgstr "Błąd"
 
-#: app/frontend/apps/mobile/modules/error/views/Error.vue
+#: app/frontend/apps/mobile/pages/error/views/Error.vue
 msgid "Error - %s"
 msgstr "Błąd - %s"
 
@@ -5396,7 +5429,7 @@ msgid "Forgot Password Screen"
 msgstr "Zapomniałeś hasła?"
 
 #: app/assets/javascripts/app/views/login.jst.eco
-#: app/frontend/apps/mobile/modules/login/views/Login.vue
+#: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid "Forgot password?"
 msgstr "Zapomniałeś hasła?"
 
@@ -5455,7 +5488,7 @@ msgstr "Formatuj jako |bold|"
 msgid "Format as ||italic||"
 msgstr "Formatuj jako ||italic||"
 
-#: app/frontend/apps/mobile/modules/ticket/composable/useTicketArticleContext.ts
+#: app/frontend/apps/mobile/pages/ticket/composable/useTicketArticleContext.ts
 msgid "Forward"
 msgstr "Do przodu"
 
@@ -5486,7 +5519,7 @@ msgstr "Piątek"
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
-#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "From"
 msgstr "Od"
 
@@ -5788,7 +5821,7 @@ msgstr "Obsługuj zadania związane z prywatnością danych."
 msgid "Has processed"
 msgstr "Przeprocesowany"
 
-#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/TicketViewersDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue
 #, fuzzy
 #| msgid ""
 #| "Has ticket open in taskbar, but is not actively looking in the ticket."
@@ -5921,9 +5954,9 @@ msgstr "wakacje"
 msgid "Holidays iCalendar Feed"
 msgstr "zasilenie dniami wolnymi z icalendar"
 
-#: app/frontend/apps/mobile/modules/home/routes.ts
-#: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
-#: app/frontend/apps/mobile/modules/home/views/Home.vue
+#: app/frontend/apps/mobile/pages/home/routes.ts
+#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
+#: app/frontend/apps/mobile/pages/home/views/Home.vue
 msgid "Home"
 msgstr "Dom"
 
@@ -6346,7 +6379,7 @@ msgstr "Incydent"
 msgid "Include attachments of the article?"
 msgstr "Dołączyć załączniki do wpisu?"
 
-#: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
+#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
 msgid "Included ticket overviews"
 msgstr "Przegląd biletów"
 
@@ -6831,7 +6864,7 @@ msgstr "Układ strony docelowej"
 #: app/assets/javascripts/app/views/generic/multi_locales.jst.eco
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco
 #: app/assets/javascripts/app/views/profile/language.jst.eco
-#: app/frontend/apps/mobile/modules/account/views/AccountOverview.vue
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 #: db/seeds/permissions.rb
 msgid "Language"
 msgstr "Język"
@@ -6881,7 +6914,7 @@ msgstr "Nazwisko"
 msgid "Last run"
 msgstr "Ostatnie uruchomienie"
 
-#: app/frontend/apps/mobile/modules/search/views/SearchOverview.vue
+#: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
 msgid "Last searches"
 msgstr "Ostatnie wyszukiwania"
 
@@ -6906,7 +6939,7 @@ msgstr "Ostatnie aktualizacje"
 msgid "Layout"
 msgstr "Układ"
 
-#: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 msgid "Library"
 msgstr "Biblioteka"
 
@@ -7007,6 +7040,12 @@ msgstr "Lista skrótów"
 msgid "Load"
 msgstr "Załaduj"
 
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "load %s more"
+msgid "Load more"
+msgstr "załaduj %s więcej"
+
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee
@@ -7019,6 +7058,7 @@ msgstr "Ładowanie nie powiodło się."
 #: app/assets/javascripts/app/lib/app_post/task_manager.coffee
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 #: app/assets/javascripts/app/views/generic/page_loading.jst.eco
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "Loading…"
 msgstr "Ładowanie…"
 
@@ -7136,7 +7176,7 @@ msgstr "tryb konserwacji"
 msgid "Maintenance mode enabled!"
 msgstr "Tryb konserwacji włączony!"
 
-#: app/frontend/apps/mobile/modules/ticket/composable/useTicketArticleContext.ts
+#: app/frontend/apps/mobile/pages/ticket/composable/useTicketArticleContext.ts
 msgid "Make internal"
 msgstr "Zrób wewnetrzny"
 
@@ -7202,7 +7242,7 @@ msgid "March"
 msgstr "Marzec"
 
 #: app/assets/javascripts/app/views/widget/online_notification.jst.eco
-#: app/frontend/apps/mobile/modules/notifications/views/NotificationsList.vue
+#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue
 msgid "Mark all as read"
 msgstr "Zaznacz wszystko jako przeczytane"
 
@@ -7255,6 +7295,10 @@ msgstr "Maksymalna liczba nieudanych logowań"
 msgid "Maximum number of recursively executed triggers."
 msgstr "Maksymalna liczba wyzwalaczy wykonywanych rekurencyjnie."
 
+#: db/seeds/settings.rb
+msgid "Maximum number of ticket shown in overviews"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
@@ -7262,7 +7306,7 @@ msgstr "Maksymalna liczba wyzwalaczy wykonywanych rekurencyjnie."
 msgid "May"
 msgstr "Maj"
 
-#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleBubble.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue
 msgid "Me"
 msgstr "Ja"
 
@@ -7312,7 +7356,7 @@ msgstr "Wiadomość dla strony logowania."
 msgid "Messages"
 msgstr "Wiadomości"
 
-#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Meta Data"
 msgstr "Metadane"
 
@@ -7448,7 +7492,7 @@ msgstr "Nastrój"
 msgid "More than 250 secondary organizations are not allowed."
 msgstr "Więcej niż 250 drugorzędnych organizacji jest niedozwolonych."
 
-#: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
+#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
 msgid "More ticket overviews"
 msgstr "Większy przegląd biletów"
 
@@ -7460,9 +7504,21 @@ msgstr "ostatnia aktywność"
 msgid "Move all from \"%s\" to \"%s\""
 msgstr "Przenieś wszystkie \"%s\" do \"%s\""
 
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "Move up and down"
+msgid "Move down"
+msgstr "Przesuń w góre i w dół"
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Move left and right"
 msgstr "Przenieś w lewo i w prawo"
+
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "Moved out"
+msgid "Move up"
+msgstr "Przeniesione z"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Move up and down"
@@ -7874,7 +7930,7 @@ msgstr ""
 "target=\"zammad_app\">Zobacz w Zammad</a>\n"
 "</div>\n"
 
-#: app/frontend/apps/mobile/modules/login/views/Login.vue
+#: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid "New user?"
 msgstr "Nowy użytkownik?"
 
@@ -7988,9 +8044,10 @@ msgstr "wersja robocza"
 msgid "No email!"
 msgstr "Brak e-mail!"
 
-#: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
-#: app/frontend/apps/mobile/modules/search/views/SearchOverview.vue
-#: app/frontend/apps/mobile/modules/ticket/components/TicketList/TicketList.vue
+#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
+#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue
+#: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue
 msgid "No entries"
 msgstr "Brak wpisów"
 
@@ -8018,7 +8075,7 @@ msgstr "Nie znaleziono folderów dla podanych poświadczeń użytkownika."
 msgid "No linked issues"
 msgstr "Brak powiązanych problemów"
 
-#: app/frontend/apps/mobile/modules/search/views/SearchOverview.vue
+#: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
 msgid "No previous searches"
 msgstr "Brak wcześniejszych wyszukiwań"
 
@@ -8222,12 +8279,18 @@ msgstr "Nadawca powiadomień"
 msgid "Notification Sound"
 msgstr "Dźwięk powiadomienia"
 
+#: app/frontend/apps/mobile/pages/online-notification/components/NotificationItem.vue
+#, fuzzy
+#| msgid "Notification Sender"
+msgid "Notification read"
+msgstr "Nadawca powiadomień"
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
 #: app/assets/javascripts/app/views/widget/online_notification.jst.eco
-#: app/frontend/apps/mobile/modules/notifications/routes.ts
+#: app/frontend/apps/mobile/pages/online-notification/routes.ts
 #: db/seeds/permissions.rb
 msgid "Notifications"
 msgstr "Powiadomienia"
@@ -8405,7 +8468,7 @@ msgstr "otwórz okno notatki"
 msgid "Open ticket indicator"
 msgstr "Wskaźnik otwartego zgłoszenia"
 
-#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/TicketViewersDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue
 msgid "Opened in taskbar"
 msgstr "Otwarty na pasku zadań"
 
@@ -8447,9 +8510,9 @@ msgstr "Nowy widok"
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 #: app/controllers/time_accountings_controller.rb
-#: app/frontend/apps/mobile/modules/organization/routes.ts
-#: app/frontend/apps/mobile/modules/organization/views/OrganizationDetailView.vue
-#: app/frontend/apps/mobile/modules/ticket/views/TicketInformationView.vue
+#: app/frontend/apps/mobile/pages/organization/routes.ts
+#: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformationView.vue
 #: app/graphql/gql/types/overview_type.rb db/seeds/object_manager_attributes.rb
 #: db/seeds/settings.rb lib/excel_sheet/ticket.rb
 msgid "Organization"
@@ -8468,7 +8531,7 @@ msgstr "Nazwa organizacji"
 msgid "Organization Support"
 msgstr "Wsparcie organizacji"
 
-#: app/frontend/apps/mobile/modules/user/views/UserDetailView.vue
+#: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue
 #, fuzzy
 #| msgid "My Organization Tickets"
 msgid "Organization tickets"
@@ -8481,7 +8544,7 @@ msgstr "Zgłoszenia mojej organizacji"
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
-#: app/frontend/apps/mobile/modules/search/plugins/organization.ts
+#: app/frontend/apps/mobile/pages/search/plugins/organization.ts
 #: db/seeds/permissions.rb
 msgid "Organizations"
 msgstr "Organizacje"
@@ -8507,7 +8570,7 @@ msgid "Original"
 msgstr "oryginał"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
-#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Original Formatting"
 msgstr "Oryginalne formatowanie"
 
@@ -8650,7 +8713,7 @@ msgstr "Rodzic"
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
-#: app/frontend/apps/mobile/modules/login/views/Login.vue
+#: app/frontend/apps/mobile/pages/login/views/Login.vue
 #: app/frontend/shared/components/Form/Form.stories.ts
 #: db/seeds/object_manager_attributes.rb db/seeds/permissions.rb
 msgid "Password"
@@ -8723,6 +8786,7 @@ msgid "Pending Reached Tickets"
 msgstr "Oczekujące na realizację"
 
 #: app/assets/javascripts/app/models/ticket.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/ticket.ts
 msgid "Pending reminder reached for ticket |%s|"
 msgstr "Osiągnięto czas oczekiwania na przypomnienie dla zgłoszenia |%s|"
 
@@ -8872,7 +8936,7 @@ msgstr "Podaj prawidłowy adres URL."
 msgid "Please select at least one folder."
 msgstr "Wybierz co najmniej jeden folder."
 
-#: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
+#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
 msgid "Please select at least one ticket overview"
 msgstr "Wybierz co najmniej jeden przegląd biletów"
 
@@ -8918,7 +8982,7 @@ msgstr "Filtr postmastera"
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco
 #: app/assets/javascripts/app/views/signup.jst.eco
 #: app/assets/javascripts/app/views/signup/verify.jst.eco
-#: app/frontend/apps/mobile/modules/login/views/Login.vue
+#: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid "Powered by"
 msgstr "Zasilane przez"
 
@@ -9124,7 +9188,7 @@ msgid "Queue already exists!"
 msgstr "Kolejka już istnieje!"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
-#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Raw"
 msgstr "Surowe"
 
@@ -9191,7 +9255,7 @@ msgstr ""
 "Referencje — szukaj dalszych informacji również w nagłówkach w odpowiedzi na "
 "pytania lub referencjach."
 
-#: app/frontend/apps/mobile/modules/login/views/Login.vue
+#: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid "Register"
 msgstr "Zarejestrować"
 
@@ -9213,7 +9277,7 @@ msgstr "Załaduj ponownie aplikację"
 
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
-#: app/frontend/apps/mobile/modules/login/views/Login.vue
+#: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid "Remember me"
 msgstr "Zapamiętaj mnie"
 
@@ -9277,11 +9341,18 @@ msgstr "Otwarte ponownie"
 msgid "Reopening rate"
 msgstr "Wskaźnik wznowionych"
 
+#: app/assets/javascripts/app/models/group.coffee
+#: db/seeds/object_manager_attributes.rb
+#, fuzzy
+#| msgid "Reopening rate"
+msgid "Reopening time in days"
+msgstr "Wskaźnik wznowionych"
+
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
 msgid "Replacement"
 msgstr "Zastępstwo"
 
-#: app/frontend/apps/mobile/modules/ticket/composable/useTicketArticleContext.ts
+#: app/frontend/apps/mobile/pages/ticket/composable/useTicketArticleContext.ts
 msgid "Reply"
 msgstr "Odpowiedz"
 
@@ -9290,7 +9361,7 @@ msgid "Reply to last article"
 msgstr "Odpowiedź na ostatni wpis"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
-#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Reply-To"
 msgstr "Odpowiedz do"
 
@@ -9682,7 +9753,7 @@ msgstr "Sobota"
 #: app/assets/javascripts/app/views/widget/template.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 #: app/frontend/apps/mobile/components/Organization/OrganizationEditDialog.vue
-#: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 msgid "Save"
 msgstr "Zapisz"
 
@@ -9759,7 +9830,7 @@ msgstr "Skroluj w dół, aby zobaczyć wiadomości"
 #: app/assets/javascripts/app/views/integration/idoit_object_selector.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/search_field_widget.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
-#: app/frontend/apps/mobile/modules/search/routes.ts
+#: app/frontend/apps/mobile/pages/search/routes.ts
 msgid "Search"
 msgstr "Szukaj"
 
@@ -9776,14 +9847,14 @@ msgstr "Szukane wyrażenia"
 msgid "Search for users"
 msgstr "Szukaj użytkowników"
 
-#: app/frontend/apps/mobile/modules/search/views/SearchOverview.vue
+#: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
 msgid "Search for…"
 msgstr "Szukaj…"
 
 #: app/frontend/shared/components/Form/fields/FieldRecipient/index.ts
 #, fuzzy
 #| msgid "Enter your username or email address"
-msgid "Search or enter email address..."
+msgid "Search or enter email address…"
 msgstr "Wprowadź swoją nazwę użytkownika lub adres e-mail"
 
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax.coffee
@@ -9794,8 +9865,8 @@ msgstr "Wprowadź swoją nazwę użytkownika lub adres e-mail"
 msgid "Search…"
 msgstr "Szukaj…"
 
-#: app/frontend/apps/mobile/modules/ticket/views/TicketInformationCustomer.vue
-#: app/frontend/apps/mobile/modules/user/views/UserDetailView.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformationCustomer.vue
+#: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue
 #: db/seeds/object_manager_attributes.rb
 msgid "Secondary organizations"
 msgstr "Drugorzędna organizacja"
@@ -9807,7 +9878,7 @@ msgstr "Drugorzędna organizacja"
 #| "given."
 msgid ""
 "Secondary organizations are only allowed when the primary organization is "
-"not given."
+"given."
 msgstr ""
 "Organizacje drugorzędne są dozwolone tylko wtedy, gdy podana jest "
 "organizacja podstawowa."
@@ -9826,7 +9897,7 @@ msgstr "Błąd zabezpieczeń"
 
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
-#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleBubble.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue
 msgid "See less"
 msgstr "Pokaż mniej"
 
@@ -9834,7 +9905,7 @@ msgstr "Pokaż mniej"
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
-#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleBubble.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue
 msgid "See more"
 msgstr "Zobacz więcej"
 
@@ -9961,7 +10032,7 @@ msgstr "Nadawca ostatniego wpisu"
 msgid "Sending…"
 msgstr "Wysyłanie…"
 
-#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Sent"
 msgstr "Wysłano"
 
@@ -10159,6 +10230,7 @@ msgstr ""
 msgid "Show"
 msgstr "Pokaż"
 
+#: app/frontend/apps/mobile/components/CommonOrganizationsList/CommonOrganizationsList.vue
 #: app/frontend/apps/mobile/components/CommonUsersList/CommonUsersList.vue
 #, fuzzy
 #| msgid "show more"
@@ -10186,7 +10258,7 @@ msgstr "Pokaż czat automatycznie"
 msgid "Show less"
 msgstr "Pokaż mniej"
 
-#: app/frontend/apps/mobile/modules/ticket/composable/useTicketArticleContext.ts
+#: app/frontend/apps/mobile/pages/ticket/composable/useTicketArticleContext.ts
 msgid "Show meta data"
 msgstr "Pokaż wyniki wyszukiwania"
 
@@ -10208,7 +10280,7 @@ msgstr "Pokaż poprzednią zakładkę"
 msgid "Show the chat when ready."
 msgstr "Pokaz czat gdy gotowy."
 
-#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/TicketDetailViewHeader.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewHeader.vue
 msgid "Show ticket viewers"
 msgstr "Pokaż widoczne bilety"
 
@@ -10249,8 +10321,8 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/login.coffee
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
-#: app/frontend/apps/mobile/modules/login/routes.ts
-#: app/frontend/apps/mobile/modules/login/views/Login.vue
+#: app/frontend/apps/mobile/pages/login/routes.ts
+#: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid "Sign in"
 msgstr "Zaloguj się"
 
@@ -10261,7 +10333,7 @@ msgid "Sign in using"
 msgstr "lub podpisać się używając"
 
 #: app/assets/javascripts/app/controllers/logout.coffee
-#: app/frontend/apps/mobile/modules/account/views/AccountOverview.vue
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 msgid "Sign out"
 msgstr "Wyloguj"
 
@@ -10378,8 +10450,8 @@ msgstr ""
 msgid "Something went wrong. Please contact your administrator."
 msgstr "Coś poszło nie tak. Skontaktuj się z administratorem."
 
-#: app/frontend/apps/mobile/modules/organization/views/OrganizationDetailView.vue
-#: app/frontend/apps/mobile/modules/ticket/views/TicketDetailView.vue
+#: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
 msgid "Sorry, but you have insufficient rights to open this page."
 msgstr ""
 "Przepraszamy, ale nie masz wystarczających uprawnień, aby otworzyć tę stronę."
@@ -10420,7 +10492,7 @@ msgstr "Źródła"
 msgid "Special character required"
 msgstr "Wymagany znak specjalny"
 
-#: app/frontend/apps/mobile/modules/ticket/composable/useTicketArticleContext.ts
+#: app/frontend/apps/mobile/pages/ticket/composable/useTicketArticleContext.ts
 msgid "Split"
 msgstr "Rozdziel"
 
@@ -10560,7 +10632,7 @@ msgstr "Ulica"
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
-#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Subject"
 msgstr "Temat"
 
@@ -10907,15 +10979,15 @@ msgstr ""
 "Automatyczny kreator jest włączony. Użyj podanego adresu URL kreatora "
 "automatycznego."
 
-#: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 msgid "The avatar could not be deleted."
 msgstr "Nie można zaktualizować awataru."
 
-#: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 msgid "The avatar could not be fetched."
 msgstr "Nie można pobrać awatara."
 
-#: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 msgid "The avatar could not be uploaded."
 msgstr "Awatar nie mógł zostać załadowany."
 
@@ -11093,15 +11165,21 @@ msgstr ""
 msgid "The issue could not be saved."
 msgstr "Nie udało się zapisać problemu."
 
-#: app/frontend/apps/mobile/modules/account/views/AccountOverview.vue
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 msgid "The language could not be updated."
 msgstr "Nie można zaktualizować języka."
 
-#: app/frontend/apps/mobile/modules/ticket/components/TicketList/TicketList.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue
 #, fuzzy
 #| msgid "The limit of %s tickets reached (%s remaining)"
 msgid "The limit of %s displayable tickets was reached (%s remaining)"
 msgstr "Osiągnięto limit %s zgłoszeń (pozostało %s)"
+
+#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue
+#, fuzzy
+#| msgid "The avatar could not be deleted."
+msgid "The notifcation could not be deleted."
+msgstr "Nie można zaktualizować awataru."
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_new.coffee
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee
@@ -11154,6 +11232,12 @@ msgid ""
 "The preview cannot be generated. The format is corrupted or not supported."
 msgstr ""
 "Nie można wygenerować podglądu. Format jest uszkodzony lub nieobsługiwany."
+
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
+#, fuzzy
+#| msgid "The avatar could not be fetched."
+msgid "The product version could not be fetched."
+msgstr "Nie można pobrać awatara."
 
 #: app/controllers/import_freshdesk_controller.rb
 #: app/controllers/import_kayako_controller.rb
@@ -11351,7 +11435,7 @@ msgstr ""
 "Ustawienia serwera nie mogły zostać wykryte automatycznie. Skonfiguruj je "
 "ręcznie."
 
-#: app/frontend/apps/mobile/modules/login/views/Login.vue
+#: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid "The session is no longer valid. Please log in again."
 msgstr "Sesja nie jest już ważna. Proszę, zaloguj się ponownie."
 
@@ -11427,7 +11511,7 @@ msgstr ""
 "Webhook nie mógł zostać zapisany przez Telegram, prawdopodobnie jest to "
 "nieprawidłowy adres URL."
 
-#: app/frontend/apps/mobile/modules/user/views/UserDetailView.vue
+#: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue
 #, fuzzy
 #| msgid "Tickets"
 msgid "Their tickets"
@@ -11744,8 +11828,8 @@ msgstr "Czwartek"
 #: app/assets/javascripts/app/models/signature.coffee
 #: app/assets/javascripts/app/models/text_module.coffee
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
-#: app/frontend/apps/mobile/modules/ticket/routes.ts
-#: app/frontend/apps/mobile/modules/ticket/views/TicketInformationView.vue
+#: app/frontend/apps/mobile/pages/ticket/routes.ts
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformationView.vue
 #: db/seeds/permissions.rb
 msgid "Ticket"
 msgstr "Zgłoszenie"
@@ -11823,7 +11907,7 @@ msgstr ""
 msgid "Ticket Count"
 msgstr "Liczba zgłoszeń"
 
-#: app/frontend/apps/mobile/modules/ticket/routes.ts
+#: app/frontend/apps/mobile/pages/ticket/routes.ts
 #, fuzzy
 #| msgid "Ticket %s created!"
 msgid "Ticket Create"
@@ -11865,17 +11949,17 @@ msgstr "Data przyrostu numeru zgłoszenia"
 msgid "Ticket Number ignore system_id"
 msgstr "Numer zgłoszenia ignoruj system_id"
 
-#: app/frontend/apps/mobile/modules/home/routes.ts
-#: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
-#: app/frontend/apps/mobile/modules/home/views/Home.vue
+#: app/frontend/apps/mobile/pages/home/routes.ts
+#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
+#: app/frontend/apps/mobile/pages/home/views/Home.vue
 msgid "Ticket Overview"
 msgstr "Widok zgłoszeń"
 
-#: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
+#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
 msgid "Ticket Overview settings are saved"
 msgstr "Ustawienia przeglądu biletów są zapisywane"
 
-#: app/frontend/apps/mobile/modules/home/views/Home.vue
+#: app/frontend/apps/mobile/pages/home/views/Home.vue
 msgid "Ticket Overviews"
 msgstr "Widoki zgłoszeń"
 
@@ -11907,12 +11991,12 @@ msgstr "Zgłoszenie eskalowane"
 msgid "Ticket failed to save: %s"
 msgstr "Zgłoszenie nie zostało zapisane: %s"
 
-#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/TicketDetailViewHeader.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewHeader.vue
 msgid "Ticket has %s viewers"
 msgstr "Bilet ma %s widzów"
 
-#: app/frontend/apps/mobile/modules/ticket/routes.ts
-#: app/frontend/apps/mobile/modules/ticket/views/TicketInformationView.vue
+#: app/frontend/apps/mobile/pages/ticket/routes.ts
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformationView.vue
 #, fuzzy
 #| msgid "Block Notifications"
 msgid "Ticket information"
@@ -11994,7 +12078,7 @@ msgstr ""
 msgid "Ticket update"
 msgstr "Aktualizacja zgłoszenia"
 
-#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/TicketViewersDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue
 msgid "Ticket viewers"
 msgstr "Widoki zgłoszeń"
 
@@ -12067,14 +12151,17 @@ msgstr ""
 "</div>\n"
 
 #: app/assets/javascripts/app/models/ticket.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/ticket.ts
 msgid "Ticket |%s| has escalated!"
 msgstr "Zgłoszenie |%s| zostało eskalowane!"
 
 #: app/assets/javascripts/app/models/ticket.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/ticket.ts
 msgid "Ticket |%s| was merged into another ticket"
 msgstr "Zgłoszenie |%s| zostało połączone z innym zgłoszeniem"
 
 #: app/assets/javascripts/app/models/ticket.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/ticket.ts
 msgid "Ticket |%s| will escalate soon!"
 msgstr "Zgłoszenie |%s| będzie wkrótce eskalowane!"
 
@@ -12094,9 +12181,9 @@ msgstr "Identyfikator zgłoszenia"
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
-#: app/frontend/apps/mobile/modules/search/plugins/ticket.ts
-#: app/frontend/apps/mobile/modules/ticket/routes.ts
-#: app/frontend/apps/mobile/modules/ticket/views/TicketOverview.vue
+#: app/frontend/apps/mobile/pages/search/plugins/ticket.ts
+#: app/frontend/apps/mobile/pages/ticket/routes.ts
+#: app/frontend/apps/mobile/pages/ticket/views/TicketOverview.vue
 msgid "Tickets"
 msgstr "Zgłoszenia"
 
@@ -12210,7 +12297,7 @@ msgstr "Tytył formularza"
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
-#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 #: db/seeds/object_manager_attributes.rb
 msgid "To"
 msgstr "Do"
@@ -12475,6 +12562,12 @@ msgstr "Nieznany błąd"
 #: app/assets/javascripts/app/controllers/user.coffee
 msgid "Unlock"
 msgstr "Odblokuj"
+
+#: app/frontend/apps/mobile/pages/online-notification/components/NotificationItem.vue
+#, fuzzy
+#| msgid "Service Notification"
+msgid "Unread notification"
+msgstr "Powiadomienie serwisowe"
 
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
 msgid "Unsubscribe"
@@ -12824,8 +12917,8 @@ msgstr "Używane podczas przeglądania zgłoszenia"
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 #: app/assets/javascripts/app/views/session.jst.eco
-#: app/frontend/apps/mobile/modules/user/routes.ts
-#: app/frontend/apps/mobile/modules/user/views/UserDetailView.vue
+#: app/frontend/apps/mobile/pages/user/routes.ts
+#: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue
 msgid "User"
 msgstr "Użytkownik"
 
@@ -12878,7 +12971,7 @@ msgstr "Użytkownik pomyślnie odblokowany!"
 msgid "Username"
 msgstr "Nazwa użytkownika"
 
-#: app/frontend/apps/mobile/modules/login/views/Login.vue
+#: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid "Username / Email"
 msgstr "Nazwa użytkownika / E-mail"
 
@@ -12908,7 +13001,7 @@ msgstr "Użytkownik dla połączenia proxy."
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco
-#: app/frontend/apps/mobile/modules/search/plugins/user.ts db/seeds/groups.rb
+#: app/frontend/apps/mobile/pages/search/plugins/user.ts db/seeds/groups.rb
 #: db/seeds/permissions.rb
 msgid "Users"
 msgstr "Użytkownicy"
@@ -13044,7 +13137,7 @@ msgstr "wyświetl jako użytkownik"
 msgid "View this in Zammad"
 msgstr "Zobacz w Zammad"
 
-#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/TicketViewersDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue
 msgid "Viewing ticket"
 msgstr "Wyświetlający bilet"
 
@@ -13897,7 +13990,7 @@ msgstr "Agent użytkownika Zammad"
 
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
-#: app/frontend/apps/mobile/modules/login/views/Login.vue
+#: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid ""
 "Zammad is currently in maintenance mode. Only administrators can log in. "
 "Please wait until the maintenance window is over."
@@ -13986,7 +14079,7 @@ msgstr "zarchiwizowane"
 
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
-#: app/frontend/apps/mobile/modules/ticket/views/TicketOverview.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketOverview.vue
 msgid "ascending"
 msgstr "rosnąco"
 
@@ -14095,7 +14188,7 @@ msgstr "nie zawiera jednej z"
 msgid "created"
 msgstr "utworzone"
 
-#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/TicketDetailViewHeader.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewHeader.vue
 msgid "created %s"
 msgstr "utworzone %s"
 
@@ -14143,7 +14236,7 @@ msgstr "usuń"
 
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
-#: app/frontend/apps/mobile/modules/ticket/views/TicketOverview.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketOverview.vue
 msgid "descending"
 msgstr "malejąco"
 
@@ -14436,7 +14529,7 @@ msgstr "zeszły tydzień"
 msgid "left"
 msgstr "lewo"
 
-#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleSeparatorMore.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSeparatorMore.vue
 msgid "load %s more"
 msgstr "załaduj %s więcej"
 
@@ -14489,7 +14582,7 @@ msgstr "minut"
 msgid "my own note"
 msgstr "własna notatka"
 
-#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleSeparatorNew.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSeparatorNew.vue
 #: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
 msgid "new"
 msgstr "nowe"
@@ -14910,6 +15003,16 @@ msgstr "...całego pola tekstowego"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ dzisiejszy czas oczekiwania "
+
+#, fuzzy
+#~| msgid "Loading…"
+#~ msgid "Loading..."
+#~ msgstr "Ładowanie…"
+
+#, fuzzy
+#~| msgid "Notification"
+#~ msgid "Read notification"
+#~ msgstr "Powiadomienie"
 
 #~ msgid "You have no configured account right now."
 #~ msgstr "W tej chwili nie masz skonfigurowanego konta."

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-09-01 03:30+0000\n"
+"PO-Revision-Date: 2022-09-30 03:30+0000\n"
 "Last-Translator: LAO <sumonchai@gmail.com>\n"
 "Language-Team: Thai <https://translations.zammad.org/projects/zammad/zammad-"
 "development/th/>\n"
@@ -236,41 +236,47 @@ msgstr "%s URL"
 msgid "%s ago"
 msgstr "%s มาแล้ว"
 
-#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleBubble.vue
-#, fuzzy
-#| msgid "Attached Files"
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue
 msgid "%s attached files"
-msgstr "ไฟล์แนบ"
+msgstr "%s ไฟล์แนบ"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts
 msgid "%s completed data privacy task to delete user ID |%s|"
 msgstr "%s completed data privacy task to delete user ID |%s|"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts
 msgid "%s created article for |%s|"
 msgstr "%s สร้างบทความสำหรับ |%s|"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts
 msgid "%s created data privacy task to delete user ID |%s|"
 msgstr "%s ได้สร้างภารกิจความเป็นส่วนตัวของข้อมูลเพื่อลบ ID ผู้ใช้ |%s|"
 
 #: app/assets/javascripts/app/models/group.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/group.ts
 msgid "%s created group |%s|"
 msgstr "%s สร้างกลุ่ม |%s|"
 
 #: app/assets/javascripts/app/models/organization.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/organization.ts
 msgid "%s created organization |%s|"
 msgstr "%s สร้างองค์กร |%s|"
 
 #: app/assets/javascripts/app/models/role.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/role.ts
 msgid "%s created role |%s|"
 msgstr "%s สร้างบทบาท |%s|"
 
 #: app/assets/javascripts/app/models/ticket.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/ticket.ts
 msgid "%s created ticket |%s|"
 msgstr "%s สร้าง ticket |%s|"
 
 #: app/assets/javascripts/app/models/user.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/user.ts
 msgid "%s created user |%s|"
 msgstr "%s สร้างชื่อผู้ใช้ |%s|"
 
@@ -285,6 +291,7 @@ msgid "%s days ago"
 msgstr "%s วันมาแล้ว"
 
 #: app/assets/javascripts/app/models/user.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/user.ts
 msgid "%s ended switch to |%s|!"
 msgstr "%s สิ้นสุดการเปลี่ยนไปใช้ |%s|!"
 
@@ -365,6 +372,7 @@ msgid "%s required!"
 msgstr "%s จำเป็น!"
 
 #: app/assets/javascripts/app/models/user.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/user.ts
 msgid "%s started a new session"
 msgstr "%s เริ่มการเข้าสู่ระบบต่อ"
 
@@ -374,6 +382,7 @@ msgid "%s subdomain"
 msgstr "%s โดเมนย่อย"
 
 #: app/assets/javascripts/app/models/user.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/user.ts
 msgid "%s switched to |%s|!"
 msgstr "%s เปลี่ยนเป็น |%s|!"
 
@@ -383,30 +392,37 @@ msgid "%s tickets"
 msgstr "%s tickets"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts
 msgid "%s updated article for |%s|"
 msgstr "%s อัปเดตบทความสำหรับ |%s|"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts
 msgid "%s updated data privacy task to delete user ID |%s|"
 msgstr "%s อัปเดตงานความเป็นส่วนตัวของข้อมูลเพื่อลบ ID ผู้ใช้ |%s|"
 
 #: app/assets/javascripts/app/models/group.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/group.ts
 msgid "%s updated group |%s|"
 msgstr "%s กลุ่มปรับปรุงแล้ว |%s|"
 
 #: app/assets/javascripts/app/models/organization.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/organization.ts
 msgid "%s updated organization |%s|"
 msgstr "%s ปรับปรุงองค์กร |%s|"
 
 #: app/assets/javascripts/app/models/role.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/role.ts
 msgid "%s updated role |%s|"
 msgstr "%s บทบาทที่อัปเดต |%s|"
 
 #: app/assets/javascripts/app/models/ticket.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/ticket.ts
 msgid "%s updated ticket |%s|"
 msgstr "%s ticket ที่อัปเดต |%s|"
 
 #: app/assets/javascripts/app/models/user.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/user.ts
 msgid "%s updated user |%s|"
 msgstr "%s ผู้ใช้ปรับปรุงแล้ว |%s|"
 
@@ -484,11 +500,9 @@ msgstr ""
 "จะแสดงในมุมมองที่แยกต่างหากในภาพรวมของคุณ คุณยังสามารถกำหนดค่า ** การแจ้งเตือนทางอีเมล "
 "**"
 
-#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleBubble.vue
-#, fuzzy
-#| msgid "Attached Files"
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue
 msgid "1 attached file"
-msgstr "ไฟล์แนบ"
+msgstr "1 ไฟล์แนบ"
 
 #: db/seeds/settings.rb
 msgid "1 day"
@@ -657,7 +671,7 @@ msgstr "เข้าถึงโทเค็น API"
 msgid "API token"
 msgstr "โทเค็น API"
 
-#: app/frontend/apps/mobile/modules/account/views/AccountOverview.vue
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 msgid "About"
 msgstr "เกี่ยวกับ"
 
@@ -679,8 +693,8 @@ msgid "Access to Customer Tickets based on current_user and organization"
 msgstr "การเข้าถึง Tickets ของลูกค้าตาม บน current_user และองค์กร"
 
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
-#: app/frontend/apps/mobile/modules/account/routes.ts
-#: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/routes.ts
+#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 msgid "Account"
 msgstr "บัญชี"
 
@@ -916,11 +930,9 @@ msgstr "เพิ่ม ลิ้ง"
 msgid "Add ordered list"
 msgstr "เพิ่มรายการสั่งซื้อ"
 
-#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/TicketDetailViewReplyButton.vue
-#, fuzzy
-#| msgid "reply"
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewReplyButton.vue
 msgid "Add reply"
-msgstr "ตอบกลับ"
+msgstr "เพิ่ม ตอบกลับ"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Add second level heading"
@@ -968,10 +980,8 @@ msgid "Admin Interface"
 msgstr "อินเทอร์เฟซสำหรับผู้ดูแลระบบ"
 
 #: app/assets/javascripts/app/controllers/admin_password_auth.coffee
-#, fuzzy
-#| msgid "Bind Password"
 msgid "Admin Password Login"
-msgstr "รหัสผ่าน Bind"
+msgstr "รหัสผ่าน admin"
 
 #. This is the template file app/views/mailer/admin_password_auth/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -1080,6 +1090,10 @@ msgstr "ให้อนาคต"
 msgid "Allow past"
 msgstr "ปล่อยให้ผ่านไป"
 
+#: db/seeds/object_manager_attributes.rb
+msgid "Allow reopening of tickets within a certain time."
+msgstr ""
+
 #: app/assets/javascripts/app/views/tag/index.jst.eco
 msgid "Allow users to add new tags."
 msgstr "อนุญาตให้ผู้ใช้เพิ่มแท็กใหม่"
@@ -1123,11 +1137,8 @@ msgid "An error has occurred"
 msgstr "เกิดข้อผิดพลาด"
 
 #: app/frontend/shared/server/apollo/handler/BaseHandler.ts
-#, fuzzy
-#| msgid ""
-#| "An error occured during the operation. Please contact your administrator."
 msgid "An error occured during the operation."
-msgstr "เกิดข้อผิดพลาดระหว่างการดำเนินการ โปรดติดต่อผู้ดูแลระบบของคุณ."
+msgstr "มีข้อผิดพลาดเกิดขึ้นในระหว่างการดําเนินการ"
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
@@ -1171,6 +1182,7 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/ticket.ts
 msgid "Another ticket was merged into ticket |%s|"
 msgstr "Ticket อีกใบถูกรวมเข้าเป็น ticket |%s|"
 
@@ -1183,10 +1195,8 @@ msgid "Answers"
 msgstr "คำตอบ"
 
 #: app/assets/javascripts/app/views/knowledge_base/_reader_list_item.jst.eco
-#, fuzzy
-#| msgid "Answers"
 msgid "Answers: %s"
-msgstr "คำตอบ"
+msgstr "คำตอบ: %s"
 
 #: app/assets/javascripts/app/lib/app_post/iconset_picker.coffee
 msgid "Anticon"
@@ -1231,7 +1241,7 @@ msgstr "ข้อมูลรับรองแอพสำหรับ Twitter"
 #: app/assets/javascripts/app/controllers/_profile/appearance.coffee
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco
 msgid "Appearance"
-msgstr ""
+msgstr "ลักษณะ"
 
 #: app/assets/javascripts/app/controllers/api.coffee
 msgid "Application"
@@ -1315,11 +1325,9 @@ msgstr "บทความ - กล่องโต้ตอบการยืน
 msgid "Article Count"
 msgstr "จำนวนบทความ"
 
-#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleBubble.vue
-#, fuzzy
-#| msgid "Article Count"
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue
 msgid "Article actions"
-msgstr "จำนวนบทความ"
+msgstr "การกระทําของบทความ"
 
 #: app/models/ticket.rb
 msgid ""
@@ -1406,14 +1414,10 @@ msgid "At least one user needs to have admin permissions."
 msgstr "ผู้ใช้อย่างน้อยหนึ่งรายต้องมีสิทธิ์ของผู้ดูแลระบบ."
 
 #: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue
-#, fuzzy
-#| msgid "Attached Files"
 msgid "Attach another file"
-msgstr "ไฟล์แนบ"
+msgstr "แนบไฟล์อื่น"
 
 #: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue
-#, fuzzy
-#| msgid "Attached Files"
 msgid "Attach files"
 msgstr "ไฟล์แนบ"
 
@@ -1577,23 +1581,21 @@ msgstr "ประเภทที่มีสำหรับ ticket ใหม่"
 #: app/assets/javascripts/app/views/customer_chat/setting.jst.eco
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco
 #: app/assets/javascripts/app/views/profile/imageCropper.jst.eco
-#: app/frontend/apps/mobile/modules/account/routes.ts
-#: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
-#: app/frontend/apps/mobile/modules/account/views/AccountOverview.vue
+#: app/frontend/apps/mobile/pages/account/routes.ts
+#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 #: app/frontend/shared/components/CommonUserAvatar/CommonUserAvatar.vue
 #: db/seeds/permissions.rb
 msgid "Avatar"
 msgstr "อวตาร"
 
 #: app/graphql/gql/mutations/account/avatar/delete.rb
-#, fuzzy
-#| msgid "Locale not found"
 msgid "Avatar could not be found."
-msgstr "ไม่พบสถานที่"
+msgstr "ไม่พบอวตาร."
 
 #: app/frontend/shared/components/CommonAvatar/CommonAvatar.vue
 msgid "Avatar with initials %s"
-msgstr ""
+msgstr "อวตารพร้อมชื่อย่อ %s"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_load_measure.jst.eco
 msgid "Average: %s"
@@ -1795,7 +1797,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/ticket_article.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
-#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 #: db/seeds/object_manager_attributes.rb
 msgid "CC"
 msgstr "CC"
@@ -1888,7 +1890,7 @@ msgstr "บันทึกผู้โทร"
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco
-#: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 msgid "Camera"
 msgstr "กล้อง"
 
@@ -1936,8 +1938,8 @@ msgstr "อัปเดตรหัสผ่านไม่ได้ รหั�
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue
 #: app/frontend/apps/mobile/components/Organization/OrganizationEditDialog.vue
-#: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
-#: app/frontend/apps/mobile/modules/search/views/SearchOverview.vue
+#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
 #: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 msgid "Cancel"
 msgstr "ยกเลิก"
@@ -1967,6 +1969,12 @@ msgstr "ไม่สามารถลบหมวดหมู่"
 #: app/policies/ticket_policy.rb
 msgid "Cannot follow-up on a closed ticket. Please create a new ticket."
 msgstr "ไม่สามารถติดตามผล ticket ที่ปิดได้ โปรดสร้าง ticket ใหม่"
+
+#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue
+#, fuzzy
+#| msgid "Delete old online notification entries."
+msgid "Cannot set online notifications as seen"
+msgstr "ลบรายการแจ้งเตือนออนไลน์เก่า"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/categories.coffee
 msgid "Categories"
@@ -2055,7 +2063,7 @@ msgstr "มีการเปลี่ยนแปลงที่จำเป็
 #: app/assets/javascripts/app/models/email_address.coffee
 #: app/assets/javascripts/app/models/postmaster_filter.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
-#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Channel"
 msgstr "แชนเนล"
 
@@ -2274,7 +2282,7 @@ msgstr "กำหนดค่า Clearbit"
 
 #: db/seeds/settings.rb
 msgid "Clearbit integration"
-msgstr ""
+msgstr "Clearbit integration"
 
 #: app/views/knowledge_base/public/not_found.html.erb
 msgid "Click here"
@@ -2588,7 +2596,7 @@ msgstr "ดำเนินการต่อ"
 msgid "Continue session"
 msgstr "เข้าสู่ระบบต่อไป"
 
-#: app/frontend/apps/mobile/modules/login/views/Login.vue
+#: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid "Continue to desktop app"
 msgstr "ไปที่แอปเดสก์ท็อป"
 
@@ -2766,16 +2774,12 @@ msgid "Create new records"
 msgstr "สร้างบันทึกใหม่"
 
 #: app/frontend/apps/mobile/entities/organization/composables/useOrganizationTicketsCount.ts
-#, fuzzy
-#| msgid "Tickets of Organization"
 msgid "Create new ticket for this organization"
-msgstr "Tickets ขององค์กร"
+msgstr "สร้าง Tickets ใหม่สําหรับองค์กรนี้"
 
 #: app/frontend/apps/mobile/entities/user/composables/useUserTicketsCount.ts
-#, fuzzy
-#| msgid "Tickets of Organization"
 msgid "Create new ticket for this user"
-msgstr "Tickets ขององค์กร"
+msgstr "สร้าง Tickets ใหม่สําหรับผู้ใช้รายนี้"
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee
 msgid "Create organizations automatically if record has one."
@@ -2787,10 +2791,8 @@ msgid ""
 msgstr "สร้างกฎที่แยก tickets สำหรับข้อตกลงระดับการให้บริการ"
 
 #: app/frontend/shared/components/Form/fields/FieldTags/FieldTagsDialog.vue
-#, fuzzy
-#| msgid "Created At"
 msgid "Create tag"
-msgstr "สร้าง ที่"
+msgstr "สร้าง tag"
 
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
 msgid "Create your first ticket"
@@ -2899,13 +2901,9 @@ msgstr "ต้องใช้รหัสผ่านปัจจุบัน!"
 msgid "Current user has no permission to use 'From'/'X-On-Behalf-Of'!"
 msgstr "ผู้ใช้ปัจจุบันไม่ได้รับอนุญาตให้ใช้ 'From'/'X-On-Behalf-Of'!"
 
-#: app/frontend/apps/mobile/modules/ticket/views/TicketOverview.vue
-#, fuzzy
-#| msgid ""
-#| "Currently no overview is assigned to your roles. Please contact your "
-#| "administrator."
+#: app/frontend/apps/mobile/pages/ticket/views/TicketOverview.vue
 msgid "Currently no overview is assigned to your roles."
-msgstr "ขณะนี้ยังไม่มีการกำหนดภาพรวมให้กับบทบาทของคุณ โปรดติดต่อผู้ดูแลระบบของคุณ"
+msgstr "ขณะนี้ยังไม่มีการกําหนดภาพรวมให้กับบทบาทของคุณ"
 
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 msgid ""
@@ -2942,7 +2940,7 @@ msgstr "ไม่ได้ตั้งค่าที่อยู่ที่ก
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 #: app/controllers/time_accountings_controller.rb
-#: app/frontend/apps/mobile/modules/ticket/views/TicketInformationView.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformationView.vue
 #: app/graphql/gql/types/overview_type.rb db/seeds/object_manager_attributes.rb
 #: db/seeds/roles.rb db/seeds/ticket_article_senders.rb
 #: lib/excel_sheet/ticket.rb
@@ -2978,10 +2976,8 @@ msgid "Dark"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/dark_mode.coffee
-#, fuzzy
-#| msgid "Mode"
 msgid "Dark Mode"
-msgstr "โหมดการบำรุงรักษา"
+msgstr "โหมดมืด"
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
@@ -3154,6 +3150,10 @@ msgid ""
 msgstr ""
 "กำหนดคิวหรือปลายทางการโทร (สิ่งที่เหมาะกับ PBX ของคุณ) และจับคู่ตัวแทนของคุณกับมัน ด้วยเหตุนี้ "
 "Zammad สามารถสนับสนุนตัวแทนของคุณโดยแสดงเฉพาะรายการการโทรและการแจ้งเตือนที่เกี่ยวข้อง"
+
+#: db/seeds/settings.rb
+msgid "Define the maximum number of ticket shown in overviews."
+msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Defines Elasticsearch index name."
@@ -3817,7 +3817,7 @@ msgstr "กำหนดแบ็กเอนด์ transaction"
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
 #: app/assets/javascripts/app/views/widget/template.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
-#: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 msgid "Delete"
 msgstr "ลบ"
 
@@ -3849,11 +3849,9 @@ msgstr "ลบหมวดหมู่ย่อยและคำตอบทั
 msgid "Delete all existing records first."
 msgstr "ลบระเบียนที่มีอยู่ทั้งหมดก่อน"
 
-#: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
-#, fuzzy
-#| msgid "Delete Avatar?"
+#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 msgid "Delete avatar"
-msgstr "‎ลบ อวตาร?‎"
+msgstr "‎ลบ อวตาร‎"
 
 #: db/seeds/schedulers.rb
 msgid "Delete obsolete classic IMAP backup."
@@ -3976,7 +3974,7 @@ msgid "Devices"
 msgstr "อุปกรณ์"
 
 #: app/assets/javascripts/app/views/profile/language.jst.eco
-#: app/frontend/apps/mobile/modules/account/views/AccountOverview.vue
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 msgid "Did you know? You can help translating %s at:"
 msgstr "เธอรู้รึเปล่า? คุณสามารถช่วยแปล %s ได้ที่:"
 
@@ -4039,10 +4037,8 @@ msgid "Display"
 msgstr "จอแสดงผล"
 
 #: app/assets/javascripts/app/models/public_link.coffee
-#, fuzzy
-#| msgid "Display name"
 msgid "Display in new tab"
-msgstr "ชื่อที่แสดง"
+msgstr "แสดงในแท็บใหม่"
 
 #: app/assets/javascripts/app/models/email_address.coffee db/seeds/settings.rb
 msgid "Display name"
@@ -4074,11 +4070,9 @@ msgstr "คุณต้องการลบฉบับร่างนี้จ
 msgid "Do you really want to delete this object?"
 msgstr "คุณต้องการลบ object นี้จริงหรือ?"
 
-#: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
-#, fuzzy
-#| msgid "Do you really want to delete this draft?"
+#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 msgid "Do you really want to delete your current avatar?"
-msgstr "คุณต้องการลบฉบับร่างนี้จริงหรือ?"
+msgstr "คุณต้องการลบอวาตาร์ปัจจุบันของคุณหรือไม่?"
 
 #: app/assets/javascripts/app/controllers/_application_controller/article_public_confirm.coffee
 msgid "Do you really want to set the visibility of this article to \"public\"?"
@@ -4104,8 +4098,8 @@ msgid "Don't synchronize"
 msgstr "อย่าซิงโครไนซ์"
 
 #: app/frontend/apps/mobile/components/CommonDialog/CommonDialog.vue
-#: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
-#: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
+#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
 #: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 msgid "Done"
 msgstr "เสร็จแล้ว"
@@ -4115,10 +4109,8 @@ msgid "Download"
 msgstr "ดาวน์โหลด"
 
 #: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue
-#, fuzzy
-#| msgid "Download"
 msgid "Download %s"
-msgstr "ดาวน์โหลด"
+msgstr "ดาวน์โหลด %s"
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 msgid "Download %s Migration Plugin"
@@ -4193,21 +4185,21 @@ msgstr "วันหยุดอีสเตอร์"
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 #: app/frontend/apps/mobile/components/Organization/OrganizationEditDialog.vue
-#: app/frontend/apps/mobile/modules/home/views/Home.vue
-#: app/frontend/apps/mobile/modules/organization/views/OrganizationDetailView.vue
-#: app/frontend/apps/mobile/modules/user/views/UserDetailView.vue
+#: app/frontend/apps/mobile/pages/home/views/Home.vue
+#: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue
+#: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue
 msgid "Edit"
 msgstr "แก้ไข"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_customer.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee
-#: app/frontend/apps/mobile/modules/ticket/views/TicketInformationCustomer.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformationCustomer.vue
 msgid "Edit Customer"
 msgstr "แก้ไขลูกค้า"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_organization.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_organization.coffee
-#: app/frontend/apps/mobile/modules/ticket/views/TicketInformationOrganization.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformationOrganization.vue
 msgid "Edit Organization"
 msgstr "แก้ไของค์กร"
 
@@ -4215,11 +4207,9 @@ msgstr "แก้ไของค์กร"
 msgid "Edit mask"
 msgstr "แก้ไขหน้ากาก"
 
-#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/TicketViewersDialog.vue
-#, fuzzy
-#| msgid "assign tickets"
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue
 msgid "Editing ticket"
-msgstr "กำหนด tickets"
+msgstr "แก้ไข tickets"
 
 #: db/seeds/settings.rb
 msgid "Elasticsearch Attachment Extensions"
@@ -4548,12 +4538,12 @@ msgid "Enables user authentication via Weibo."
 msgstr "เปิดใช้งานการตรวจสอบผู้ใช้ผ่าน Weibo"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Enables users to create their own account via web interface."
 msgid ""
 "Enables users to create their own account via web interface. This setting is "
 "only effective if the password login is enabled."
-msgstr "ให้ผู้ใช้สร้างบัญชีของตนเองผ่านอินเทอร์เฟซทางเว็บ"
+msgstr ""
+"ช่วยให้ผู้ใช้สามารถสร้างบัญชีของตนเองผ่านเว็บอินเตอร์เฟส "
+"การตั้งค่านี้จะมีผลก็ต่อเมื่อเปิดใช้งานการเข้าสู่ระบบด้วยรหัสผ่านเท่านั้น"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 msgid "Enclosed"
@@ -4635,7 +4625,7 @@ msgstr "ป้อนข้อมูลประจำตัว"
 msgid "Enter link URL"
 msgstr "ป้อน URL ลิงค์"
 
-#: app/frontend/apps/mobile/modules/search/views/SearchOverview.vue
+#: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
 msgid "Enter more than two characters to get any results…"
 msgstr ""
 
@@ -4696,7 +4686,7 @@ msgstr "ใส่ชื่อผู้ใช้หรือที่อยู่
 msgid "Error"
 msgstr "ข้อผิดพลาด"
 
-#: app/frontend/apps/mobile/modules/error/views/Error.vue
+#: app/frontend/apps/mobile/pages/error/views/Error.vue
 msgid "Error - %s"
 msgstr "ผิดพลาด - %s"
 
@@ -4796,11 +4786,14 @@ msgstr ""
 "ทุกครั้งที่ลูกค้าสร้างตั๋วใหม่ "
 "พวกเขาจะได้รับอีเมลยืนยันโดยอัตโนมัติเพื่อให้มั่นใจว่าปัญหาของพวกเขาได้รับการส่งเรียบร้อยแล้ว "
 "ลักษณะการทำงานนี้สร้างขึ้นใน Zammad แต่ก็ปรับแต่งได้สูงเช่นกัน "
-"และคุณสามารถตั้งค่าการทำงานอัตโนมัติอื่นๆ ได้เช่นเดียวกัน "
+"และคุณสามารถตั้งค่าการทำงานอัตโนมัติอื่นๆ ได้เช่นเดียวกัน \n"
+"\n"
 "บางทีคุณอาจต้องการกำหนดลำดับความสำคัญให้สูงขึ้นในตั๋วใดๆ ที่มีคำว่า \"ด่วน\" ในชื่อ "
 "บางทีคุณอาจต้องการหลีกเลี่ยงการส่งอีเมลตอบกลับอัตโนมัติไปยังลูกค้าจากบางองค์กร "
 "บางทีคุณอาจต้องการทำเครื่องหมายตั๋วว่า \"รอดำเนินการ\" "
-"เมื่อใดก็ตามที่มีคนเพิ่มบันทึกภายในไปยังตั๋ว ไม่ว่ามันจะเป็นอะไร คุณสามารถทำได้ด้วยทริกเกอร์: "
+"เมื่อใดก็ตามที่มีคนเพิ่มบันทึกภายในไปยังตั๋ว \n"
+"\n"
+"ไม่ว่ามันจะเป็นอะไร คุณสามารถทำได้ด้วยทริกเกอร์: "
 "การกระทำที่คอยดูตั๋วสำหรับการเปลี่ยนแปลงบางอย่าง "
 "จากนั้นจึงเริ่มดำเนินการเมื่อใดก็ตามที่การเปลี่ยนแปลงเหล่านั้นเกิดขึ้น"
 
@@ -5101,13 +5094,11 @@ msgid "Forbidden"
 msgstr "ห้ามใช้"
 
 #: app/assets/javascripts/app/models/public_link.coffee
-#, fuzzy
-#| msgid "Forgot password?"
 msgid "Forgot Password Screen"
-msgstr "ลืมรหัสผ่าน?"
+msgstr "ลืมรหัสผ่าน ? หน้าจอ"
 
 #: app/assets/javascripts/app/views/login.jst.eco
-#: app/frontend/apps/mobile/modules/login/views/Login.vue
+#: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid "Forgot password?"
 msgstr "ลืมรหัสผ่าน?"
 
@@ -5121,10 +5112,8 @@ msgid "Form"
 msgstr "แบบฟอร์ม"
 
 #: app/graphql/gql/queries/form_updater.rb
-#, fuzzy
-#| msgid "Locale not found"
 msgid "FormSchema could not be found."
-msgstr "ไม่พบสถานที่"
+msgstr ""
 
 #: app/assets/javascripts/app/models/object_manager_attribute.coffee
 msgid "Format"
@@ -5166,7 +5155,7 @@ msgstr ""
 msgid "Format as ||italic||"
 msgstr ""
 
-#: app/frontend/apps/mobile/modules/ticket/composable/useTicketArticleContext.ts
+#: app/frontend/apps/mobile/pages/ticket/composable/useTicketArticleContext.ts
 msgid "Forward"
 msgstr ""
 
@@ -5197,7 +5186,7 @@ msgstr "วันศุกร์"
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
-#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "From"
 msgstr "จาก"
 
@@ -5492,7 +5481,7 @@ msgstr "จัดการงานความเป็นส่วนตัว
 msgid "Has processed"
 msgstr "Has processed"
 
-#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/TicketViewersDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue
 msgid "Has ticket open in taskbar, but is not actively looking at the ticket."
 msgstr ""
 
@@ -5535,7 +5524,7 @@ msgstr "สวัสดี! ฉันต้องการความช่ว�
 
 #: app/assets/javascripts/app/views/customer_chat/setting.jst.eco
 msgid "Hello, my name is %s, what can I do for you?"
-msgstr "สวัสดี ฉันชื่อ %s มีอะไรให้ช่วยไหม"
+msgstr "สวัสดี ฉันชื่อ %s มีอะไรให้ช่วยไหม?"
 
 #: app/assets/javascripts/app/controllers/_plugin/translation_support.coffee
 msgid "Help to improve Zammad!"
@@ -5614,9 +5603,9 @@ msgstr "วันหยุด"
 msgid "Holidays iCalendar Feed"
 msgstr "วันหยุด iCalendar Feed"
 
-#: app/frontend/apps/mobile/modules/home/routes.ts
-#: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
-#: app/frontend/apps/mobile/modules/home/views/Home.vue
+#: app/frontend/apps/mobile/pages/home/routes.ts
+#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
+#: app/frontend/apps/mobile/pages/home/views/Home.vue
 msgid "Home"
 msgstr "Home"
 
@@ -5671,7 +5660,7 @@ msgstr ""
 msgid ""
 "How long did each customer have to wait, on average, to get a response from "
 "you today?"
-msgstr "ลูกค้าแต่ละรายต้องรอโดยเฉลี่ยนานเท่าใดจึงจะได้รับคำตอบจากคุณในวันนี้"
+msgstr "ลูกค้าแต่ละรายต้องรอโดยเฉลี่ยนานเท่าใดจึงจะได้รับคำตอบจากคุณในวันนี้?"
 
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_escalation.coffee
 msgid ""
@@ -5690,7 +5679,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_reopen.coffee
 msgid ""
 "How many of your tickets have been re-opened after being marked “closed”?"
-msgstr "ตั๋วของคุณถูกเปิดใหม่หลังจากถูกทำเครื่องหมายว่า \"ปิด\" จำนวนเท่าใด"
+msgstr "ตั๋วของคุณถูกเปิดใหม่หลังจากถูกทำเครื่องหมายว่า \"ปิด\" จำนวนเท่าใด?"
 
 #: app/controllers/first_steps_controller.rb
 msgid "How to use it"
@@ -5852,10 +5841,8 @@ msgid "Image Service"
 msgstr ""
 
 #: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue
-#, fuzzy
-#| msgid "Image"
 msgid "Image of %s"
-msgstr "ภาพ"
+msgstr "ของภาพ %s"
 
 #: app/assets/javascripts/app/controllers/import.coffee
 #: app/assets/javascripts/app/controllers/import_freshdesk.coffee
@@ -6012,7 +5999,7 @@ msgstr "เหตุการณ์"
 msgid "Include attachments of the article?"
 msgstr ""
 
-#: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
+#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
 msgid "Included ticket overviews"
 msgstr "ภาพรวม Ticket ทั้งหมด"
 
@@ -6466,7 +6453,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/multi_locales.jst.eco
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco
 #: app/assets/javascripts/app/views/profile/language.jst.eco
-#: app/frontend/apps/mobile/modules/account/views/AccountOverview.vue
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 #: db/seeds/permissions.rb
 msgid "Language"
 msgstr "ภาษา"
@@ -6516,7 +6503,7 @@ msgstr "นามสกุล"
 msgid "Last run"
 msgstr ""
 
-#: app/frontend/apps/mobile/modules/search/views/SearchOverview.vue
+#: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
 msgid "Last searches"
 msgstr "กลับไปที่ผลการค้นหา"
 
@@ -6541,15 +6528,13 @@ msgstr ""
 msgid "Layout"
 msgstr "ผังแป้นพิมพ์"
 
-#: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 msgid "Library"
 msgstr "Library"
 
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco
-#, fuzzy
-#| msgid "right"
 msgid "Light"
-msgstr "ขวา"
+msgstr "แสง"
 
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
 msgid "Limit Groups"
@@ -6642,6 +6627,12 @@ msgstr ""
 msgid "Load"
 msgstr "โหลด"
 
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "show more"
+msgid "Load more"
+msgstr "แสดงเพิ่ม"
+
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee
@@ -6654,6 +6645,7 @@ msgstr ""
 #: app/assets/javascripts/app/lib/app_post/task_manager.coffee
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 #: app/assets/javascripts/app/views/generic/page_loading.jst.eco
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "Loading…"
 msgstr "กำลังโหลด…"
 
@@ -6666,10 +6658,8 @@ msgid "Locale"
 msgstr "ท้องถิ่น"
 
 #: app/graphql/gql/mutations/account/locale.rb
-#, fuzzy
-#| msgid "Locale not found"
 msgid "Locale could not be found."
-msgstr "ไม่พบสถานที่"
+msgstr "ไม่พบตําแหน่งที่ตั้ง"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 msgid "Locale not found"
@@ -6697,10 +6687,8 @@ msgid "Login"
 msgstr "ล็อกอิน"
 
 #: app/assets/javascripts/app/models/public_link.coffee
-#, fuzzy
-#| msgid "Screen"
 msgid "Login Screen"
-msgstr "หน้าจอ"
+msgstr "หน้า ล๊อกอิน"
 
 #: app/controllers/application_controller/authenticates.rb
 #: app/graphql/gql/mutations/login.rb
@@ -6712,7 +6700,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 #: db/seeds/settings.rb
 msgid "Logo"
-msgstr "โลโก"
+msgstr "โลโก้"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Logout"
@@ -6766,11 +6754,9 @@ msgstr "โหมดบำรุงรักษา"
 msgid "Maintenance mode enabled!"
 msgstr "เปิดใช้งานโหมดบำรุงรักษาแล้ว!"
 
-#: app/frontend/apps/mobile/modules/ticket/composable/useTicketArticleContext.ts
-#, fuzzy
-#| msgid "internal"
+#: app/frontend/apps/mobile/pages/ticket/composable/useTicketArticleContext.ts
 msgid "Make internal"
-msgstr "ภายใน"
+msgstr "ย้ายเป็นภายใน"
 
 #: app/assets/javascripts/app/controllers/manage.coffee
 msgid "Manage"
@@ -6834,7 +6820,7 @@ msgid "March"
 msgstr "มีนาคม"
 
 #: app/assets/javascripts/app/views/widget/online_notification.jst.eco
-#: app/frontend/apps/mobile/modules/notifications/views/NotificationsList.vue
+#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue
 msgid "Mark all as read"
 msgstr ""
 
@@ -6887,6 +6873,10 @@ msgstr "การเข้าสู่ระบบล้มเหลวสูง
 msgid "Maximum number of recursively executed triggers."
 msgstr "จำนวนทริกเกอร์ที่เรียกซ้ำสูงสุด"
 
+#: db/seeds/settings.rb
+msgid "Maximum number of ticket shown in overviews"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
@@ -6894,11 +6884,9 @@ msgstr "จำนวนทริกเกอร์ที่เรียกซ้
 msgid "May"
 msgstr "พฤษภาคม"
 
-#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleBubble.vue
-#, fuzzy
-#| msgid "Mode"
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue
 msgid "Me"
-msgstr "โหมดการบำรุงรักษา"
+msgstr "เรา"
 
 #: app/assets/javascripts/app/views/organization_profile/object.jst.eco
 #: app/assets/javascripts/app/views/popover/organization.jst.eco
@@ -6946,11 +6934,9 @@ msgstr "ข้อความสำหรับหน้าล็อกอิน
 msgid "Messages"
 msgstr "ข้อความ"
 
-#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
-#, fuzzy
-#| msgid "Data"
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Meta Data"
-msgstr "ข้อมูล"
+msgstr "Meta Data"
 
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
 msgid "Method"
@@ -7084,9 +7070,7 @@ msgstr "อารมณ์"
 msgid "More than 250 secondary organizations are not allowed."
 msgstr "ไม่อนุญาตให้มีองค์กรรองมากกว่า 250 แห่ง"
 
-#: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
-#, fuzzy
-#| msgid "Ticket Overviews"
+#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
 msgid "More ticket overviews"
 msgstr "ภาพรวม Ticket ทั้งหมด"
 
@@ -7098,9 +7082,21 @@ msgstr "กิจกรรมล่าสุด"
 msgid "Move all from \"%s\" to \"%s\""
 msgstr "ย้ายทั้งหมดจาก \"%s\" เป็น \"%s\""
 
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "Move up and down"
+msgid "Move down"
+msgstr "เลื่อนขึ้นและลง"
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Move left and right"
 msgstr "เลื่อนไปทางซ้ายและขวา"
+
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "Moved out"
+msgid "Move up"
+msgstr "ย้ายออก"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Move up and down"
@@ -7343,8 +7339,6 @@ msgid "New Profile"
 msgstr "โปรไฟล์ใหม่"
 
 #: app/assets/javascripts/app/controllers/public_link.coffee
-#, fuzzy
-#| msgid "Public Menu"
 msgid "New Public Link"
 msgstr "เมนูสาธารณะ"
 
@@ -7452,7 +7446,7 @@ msgid ""
 "</div>\n"
 msgstr ""
 
-#: app/frontend/apps/mobile/modules/login/views/Login.vue
+#: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid "New user?"
 msgstr "ผู้ใช้ใหม่?"
 
@@ -7557,18 +7551,17 @@ msgid "No content to show"
 msgstr "ไม่มีเนื้อหาที่จะแสดง"
 
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
-#, fuzzy
-#| msgid "draft"
 msgid "No drafts"
-msgstr "แบบร่าง"
+msgstr "ไ่ม่ต้องแบบร่าง"
 
 #: app/controllers/users_controller.rb
 msgid "No email!"
 msgstr "ไม่มีอีเมล!"
 
-#: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
-#: app/frontend/apps/mobile/modules/search/views/SearchOverview.vue
-#: app/frontend/apps/mobile/modules/ticket/components/TicketList/TicketList.vue
+#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
+#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue
+#: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue
 msgid "No entries"
 msgstr ""
 
@@ -7596,7 +7589,7 @@ msgstr ""
 msgid "No linked issues"
 msgstr ""
 
-#: app/frontend/apps/mobile/modules/search/views/SearchOverview.vue
+#: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
 msgid "No previous searches"
 msgstr "ไม่มีการค้นหาก่อนหน้า"
 
@@ -7796,12 +7789,18 @@ msgstr "ส่งการแจ้งเตือน"
 msgid "Notification Sound"
 msgstr "เสียงแจ้งเตือน"
 
+#: app/frontend/apps/mobile/pages/online-notification/components/NotificationItem.vue
+#, fuzzy
+#| msgid "Notification Sender"
+msgid "Notification read"
+msgstr "ส่งการแจ้งเตือน"
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
 #: app/assets/javascripts/app/views/widget/online_notification.jst.eco
-#: app/frontend/apps/mobile/modules/notifications/routes.ts
+#: app/frontend/apps/mobile/pages/online-notification/routes.ts
 #: db/seeds/permissions.rb
 msgid "Notifications"
 msgstr "การแจ้งเตือน"
@@ -7872,10 +7871,8 @@ msgid "October"
 msgstr "ตุลาคม"
 
 #: public/assets/chat/chat.coffee
-#, fuzzy
-#| msgid "Online"
 msgid "Offline"
-msgstr "ออนไลน์"
+msgstr "ออฟไลน์"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee
 msgid "Ok"
@@ -7946,10 +7943,8 @@ msgid "Oops.. I'm sorry, but you have insufficient rights to open this %s."
 msgstr "อ๊ะ.. ขออภัย คุณมีสิทธิ์ไม่เพียงพอในการเปิด %s นี้"
 
 #: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue
-#, fuzzy
-#| msgid "in %s"
 msgid "Open %s"
-msgstr "ใน %s"
+msgstr "เปิด %s"
 
 #: app/assets/javascripts/app/views/dashboard/first_steps_test_ticket_finish.jst.eco
 msgid "Open Ticket# %s"
@@ -7973,7 +7968,7 @@ msgstr "เปิดกล่องโน้ต"
 msgid "Open ticket indicator"
 msgstr ""
 
-#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/TicketViewersDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue
 msgid "Opened in taskbar"
 msgstr ""
 
@@ -7993,10 +7988,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "New Overview"
 msgid "Order of Overviews"
-msgstr "ภาพรวมใหม่"
+msgstr "ลําดับของภาพรวม"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
@@ -8015,9 +8008,9 @@ msgstr "ภาพรวมใหม่"
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 #: app/controllers/time_accountings_controller.rb
-#: app/frontend/apps/mobile/modules/organization/routes.ts
-#: app/frontend/apps/mobile/modules/organization/views/OrganizationDetailView.vue
-#: app/frontend/apps/mobile/modules/ticket/views/TicketInformationView.vue
+#: app/frontend/apps/mobile/pages/organization/routes.ts
+#: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformationView.vue
 #: app/graphql/gql/types/overview_type.rb db/seeds/object_manager_attributes.rb
 #: db/seeds/settings.rb lib/excel_sheet/ticket.rb
 msgid "Organization"
@@ -8036,9 +8029,7 @@ msgstr "ชื่อองค์กร"
 msgid "Organization Support"
 msgstr "การสนับสนุนองค์กร"
 
-#: app/frontend/apps/mobile/modules/user/views/UserDetailView.vue
-#, fuzzy
-#| msgid "My Organization Tickets"
+#: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue
 msgid "Organization tickets"
 msgstr "Tickets องค์กรของฉัน"
 
@@ -8049,7 +8040,7 @@ msgstr "Tickets องค์กรของฉัน"
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
-#: app/frontend/apps/mobile/modules/search/plugins/organization.ts
+#: app/frontend/apps/mobile/pages/search/plugins/organization.ts
 #: db/seeds/permissions.rb
 msgid "Organizations"
 msgstr "องค์กร"
@@ -8073,7 +8064,7 @@ msgid "Original"
 msgstr "ต้นฉบับ"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
-#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Original Formatting"
 msgstr "การจัดรูปแบบเดิม"
 
@@ -8213,7 +8204,7 @@ msgstr "หลัก"
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
-#: app/frontend/apps/mobile/modules/login/views/Login.vue
+#: app/frontend/apps/mobile/pages/login/views/Login.vue
 #: app/frontend/shared/components/Form/Form.stories.ts
 #: db/seeds/object_manager_attributes.rb db/seeds/permissions.rb
 msgid "Password"
@@ -8224,8 +8215,6 @@ msgid "Password Access"
 msgstr "การเข้าถึงรหัสผ่าน"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Password"
 msgid "Password Login"
 msgstr "รหัสผ่าน"
 
@@ -8286,6 +8275,7 @@ msgid "Pending Reached Tickets"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/ticket.ts
 msgid "Pending reminder reached for ticket |%s|"
 msgstr ""
 
@@ -8435,7 +8425,7 @@ msgstr ""
 msgid "Please select at least one folder."
 msgstr ""
 
-#: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
+#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
 msgid "Please select at least one ticket overview"
 msgstr ""
 
@@ -8481,7 +8471,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco
 #: app/assets/javascripts/app/views/signup.jst.eco
 #: app/assets/javascripts/app/views/signup/verify.jst.eco
-#: app/frontend/apps/mobile/modules/login/views/Login.vue
+#: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid "Powered by"
 msgstr "ขับเคลื่อนโดย"
 
@@ -8500,10 +8490,8 @@ msgid "Preview"
 msgstr "ดูตัวอย่าง"
 
 #: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue
-#, fuzzy
-#| msgid "Preview "
 msgid "Preview %s"
-msgstr "ดูตัวอย่าง "
+msgstr "ดูตัวอย่าง %s"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Preview Width"
@@ -8623,23 +8611,17 @@ msgid "Public"
 msgstr "สาธารณะ"
 
 #: app/assets/javascripts/app/controllers/public_link.coffee
-#, fuzzy
-#| msgid "Public Menu"
 msgid "Public Link"
-msgstr "เมนูสาธารณะ"
+msgstr "ลิ้งสาธารณะ"
 
 #: app/assets/javascripts/app/controllers/public_link.coffee
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Public Menu"
 msgid "Public Links"
-msgstr "เมนูสาธารณะ"
+msgstr "ลิ้งสาธารณะ"
 
 #: app/assets/javascripts/app/controllers/public_link.coffee
-#, fuzzy
-#| msgid "Roles are …"
 msgid "Public Links are …"
-msgstr "บทบาทคือ …"
+msgstr "ลิงค์สาธารณะคือ …"
 
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
 #: app/assets/javascripts/app/views/knowledge_base/public_menu_manager.jst.eco
@@ -8686,7 +8668,7 @@ msgid "Queue already exists!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
-#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Raw"
 msgstr "ข้อมูลดิบ"
 
@@ -8749,7 +8731,7 @@ msgid ""
 "References - Search for follow-up also in In-Reply-To or References headers."
 msgstr ""
 
-#: app/frontend/apps/mobile/modules/login/views/Login.vue
+#: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid "Register"
 msgstr "สมัครสมาชิก"
 
@@ -8771,7 +8753,7 @@ msgstr "รีเฟรช แอปเพื่อเข้าใช้งา�
 
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
-#: app/frontend/apps/mobile/modules/login/views/Login.vue
+#: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid "Remember me"
 msgstr "จดจำฉัน"
 
@@ -8802,10 +8784,8 @@ msgid "Remove"
 msgstr "ลบ"
 
 #: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue
-#, fuzzy
-#| msgid "Remove"
 msgid "Remove %s"
-msgstr "ลบ"
+msgstr "ลบ %s"
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Remove all"
@@ -8835,13 +8815,18 @@ msgstr "เปิดใหม่"
 msgid "Reopening rate"
 msgstr "อัตราการเปิดใหม่"
 
+#: app/assets/javascripts/app/models/group.coffee
+#: db/seeds/object_manager_attributes.rb
+#, fuzzy
+#| msgid "Reopening rate"
+msgid "Reopening time in days"
+msgstr "อัตราการเปิดใหม่"
+
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
 msgid "Replacement"
 msgstr "ทดแทน"
 
-#: app/frontend/apps/mobile/modules/ticket/composable/useTicketArticleContext.ts
-#, fuzzy
-#| msgid "reply"
+#: app/frontend/apps/mobile/pages/ticket/composable/useTicketArticleContext.ts
 msgid "Reply"
 msgstr "ตอบกลับ"
 
@@ -8850,7 +8835,7 @@ msgid "Reply to last article"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
-#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Reply-To"
 msgstr ""
 
@@ -8938,10 +8923,8 @@ msgid "Reset changes"
 msgstr "รีเซ็ตการเปลี่ยนแปลง"
 
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee
-#, fuzzy
-#| msgid "Reset Password"
 msgid "Reset overview order"
-msgstr "รีเซ็ตรหัสผ่าน"
+msgstr "รีเซ็ตลําดับภาพรวม"
 
 #. This is the template file app/views/mailer/password_reset/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -9215,7 +9198,7 @@ msgstr "วันเสาร์"
 #: app/assets/javascripts/app/views/widget/template.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 #: app/frontend/apps/mobile/components/Organization/OrganizationEditDialog.vue
-#: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 msgid "Save"
 msgstr "บันทึก"
 
@@ -9292,7 +9275,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/idoit_object_selector.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/search_field_widget.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
-#: app/frontend/apps/mobile/modules/search/routes.ts
+#: app/frontend/apps/mobile/pages/search/routes.ts
 msgid "Search"
 msgstr ""
 
@@ -9309,15 +9292,15 @@ msgstr ""
 msgid "Search for users"
 msgstr ""
 
-#: app/frontend/apps/mobile/modules/search/views/SearchOverview.vue
+#: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
 msgid "Search for…"
 msgstr ""
 
 #: app/frontend/shared/components/Form/fields/FieldRecipient/index.ts
 #, fuzzy
-#| msgid "Enter your username or email address"
-msgid "Search or enter email address..."
-msgstr "ใส่ชื่อผู้ใช้หรือที่อยู่อีเมลของคุณ"
+#| msgid "Search or enter email address..."
+msgid "Search or enter email address…"
+msgstr "ค้นหาหรือป้อนที่อยู่อีเมล..."
 
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax_customer_organization.coffee
@@ -9327,8 +9310,8 @@ msgstr "ใส่ชื่อผู้ใช้หรือที่อยู่
 msgid "Search…"
 msgstr ""
 
-#: app/frontend/apps/mobile/modules/ticket/views/TicketInformationCustomer.vue
-#: app/frontend/apps/mobile/modules/user/views/UserDetailView.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformationCustomer.vue
+#: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue
 #: db/seeds/object_manager_attributes.rb
 msgid "Secondary organizations"
 msgstr "องค์กรที่ 2"
@@ -9340,7 +9323,7 @@ msgstr "องค์กรที่ 2"
 #| "given."
 msgid ""
 "Secondary organizations are only allowed when the primary organization is "
-"not given."
+"given."
 msgstr "องค์กรรองจะได้รับอนุญาตก็ต่อเมื่อได้รับองค์กรหลัก"
 
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
@@ -9357,7 +9340,7 @@ msgstr "ข้อผิดพลาดด้านความปลอดภั
 
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
-#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleBubble.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue
 msgid "See less"
 msgstr ""
 
@@ -9365,7 +9348,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
-#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleBubble.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue
 msgid "See more"
 msgstr "แสดงเพิ่ม"
 
@@ -9486,7 +9469,7 @@ msgstr ""
 msgid "Sending…"
 msgstr ""
 
-#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Sent"
 msgstr ""
 
@@ -9668,17 +9651,16 @@ msgstr ""
 msgid ""
 "Should the emails from this mailbox be imported as an archive or as regular "
 "emails?"
-msgstr "อีเมลจากกล่องจดหมายนี้ควรนำเข้าเป็นที่เก็บถาวรหรือเป็นอีเมลปกติหรือไม่"
+msgstr "อีเมลจากกล่องจดหมายนี้ควรนำเข้าเป็นที่เก็บถาวรหรือเป็นอีเมลปกติหรือไม่?"
 
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 msgid "Show"
 msgstr "แสดง"
 
+#: app/frontend/apps/mobile/components/CommonOrganizationsList/CommonOrganizationsList.vue
 #: app/frontend/apps/mobile/components/CommonUsersList/CommonUsersList.vue
-#, fuzzy
-#| msgid "show more"
 msgid "Show %s more"
-msgstr "แสดงเพิ่ม"
+msgstr "แสดง %s เพิ่ม"
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_overwrite_modal.coffee
 msgid "Show Draft"
@@ -9701,11 +9683,9 @@ msgstr "แสดงแชทอัตโนมัติ"
 msgid "Show less"
 msgstr "แสดงน้อยลง"
 
-#: app/frontend/apps/mobile/modules/ticket/composable/useTicketArticleContext.ts
-#, fuzzy
-#| msgid "Show next tab"
+#: app/frontend/apps/mobile/pages/ticket/composable/useTicketArticleContext.ts
 msgid "Show meta data"
-msgstr "แสดงแท็บถัดไป"
+msgstr "แสดง meta data"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Show next tab"
@@ -9725,9 +9705,7 @@ msgstr "แสดงแท็บก่อนหน้า"
 msgid "Show the chat when ready."
 msgstr "แสดงแชทเมื่อพร้อม"
 
-#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/TicketDetailViewHeader.vue
-#, fuzzy
-#| msgid "Ticket Overviews"
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewHeader.vue
 msgid "Show ticket viewers"
 msgstr "ภาพรวม Ticket ทั้งหมด"
 
@@ -9767,19 +9745,17 @@ msgstr "ลงชื่ออีเมล (ถ้าทำไม่ได้ส�
 #: app/assets/javascripts/app/controllers/login.coffee
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
-#: app/frontend/apps/mobile/modules/login/routes.ts
-#: app/frontend/apps/mobile/modules/login/views/Login.vue
+#: app/frontend/apps/mobile/pages/login/routes.ts
+#: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid "Sign in"
 msgstr "ลงชื่อเข้าใช้"
 
 #: app/assets/javascripts/app/views/login.jst.eco
-#, fuzzy
-#| msgid "or sign in using"
 msgid "Sign in using"
-msgstr "หรือเข้าสู่ระบบโดยใช้"
+msgstr "เข้าสู่ระบบโดยใช้"
 
 #: app/assets/javascripts/app/controllers/logout.coffee
-#: app/frontend/apps/mobile/modules/account/views/AccountOverview.vue
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 msgid "Sign out"
 msgstr "ออกจากระบบ"
 
@@ -9808,10 +9784,8 @@ msgid "Signed"
 msgstr ""
 
 #: app/assets/javascripts/app/models/public_link.coffee
-#, fuzzy
-#| msgid "Signature"
 msgid "Signup Screen"
-msgstr "ลายเซ็น"
+msgstr "หน้าจอลงทะเบียน"
 
 #: app/assets/javascripts/app/lib/app_post/iconset_picker.coffee
 msgid "Simple Line Icons"
@@ -9889,12 +9863,10 @@ msgstr ""
 msgid "Something went wrong. Please contact your administrator."
 msgstr ""
 
-#: app/frontend/apps/mobile/modules/organization/views/OrganizationDetailView.vue
-#: app/frontend/apps/mobile/modules/ticket/views/TicketDetailView.vue
-#, fuzzy
-#| msgid "Oops.. I'm sorry, but you have insufficient rights to open this %s."
+#: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
 msgid "Sorry, but you have insufficient rights to open this page."
-msgstr "อ๊ะ.. ขออภัย คุณมีสิทธิ์ไม่เพียงพอในการเปิด %s นี้"
+msgstr "ขออภัย แต่คุณมีสิทธิ์ไม่เพียงพอที่จะเปิดหน้านี้"
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Sorry, not all fields are filled out correctly."
@@ -9932,9 +9904,7 @@ msgstr "แหล่ง"
 msgid "Special character required"
 msgstr ""
 
-#: app/frontend/apps/mobile/modules/ticket/composable/useTicketArticleContext.ts
-#, fuzzy
-#| msgid "split"
+#: app/frontend/apps/mobile/pages/ticket/composable/useTicketArticleContext.ts
 msgid "Split"
 msgstr "แยก"
 
@@ -9969,10 +9939,8 @@ msgid "Start typing to search in Knowledge Base…"
 msgstr "พิมพ์ค้นหาใน ศูนย์การเรียนรู้…"
 
 #: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
-#, fuzzy
-#| msgid "Start typing to search in Knowledge Base…"
 msgid "Start typing to search…"
-msgstr "พิมพ์ค้นหาใน ศูนย์การเรียนรู้…"
+msgstr "เริ่มพิมพ์เพื่อค้นหา…"
 
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
 msgid "Started"
@@ -10074,7 +10042,7 @@ msgstr "ถนน"
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
-#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Subject"
 msgstr "หัวเรื่อง"
 
@@ -10394,19 +10362,19 @@ msgstr ""
 msgid "The auto wizard is enabled. Please use the provided auto wizard url."
 msgstr ""
 
-#: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 #, fuzzy
 #| msgid "The file could not be uploaded."
 msgid "The avatar could not be deleted."
 msgstr "ไม่สามารถอัปโหลดไฟล์ได้"
 
-#: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 #, fuzzy
 #| msgid "The file could not be uploaded."
 msgid "The avatar could not be fetched."
 msgstr "ไม่สามารถอัปโหลดไฟล์ได้"
 
-#: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 #, fuzzy
 #| msgid "The file could not be uploaded."
 msgid "The avatar could not be uploaded."
@@ -10569,15 +10537,21 @@ msgstr ""
 msgid "The issue could not be saved."
 msgstr ""
 
-#: app/frontend/apps/mobile/modules/account/views/AccountOverview.vue
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 #, fuzzy
 #| msgid "The file could not be uploaded."
 msgid "The language could not be updated."
 msgstr "ไม่สามารถอัปโหลดไฟล์ได้"
 
-#: app/frontend/apps/mobile/modules/ticket/components/TicketList/TicketList.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue
 msgid "The limit of %s displayable tickets was reached (%s remaining)"
 msgstr ""
+
+#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue
+#, fuzzy
+#| msgid "The file could not be uploaded."
+msgid "The notifcation could not be deleted."
+msgstr "ไม่สามารถอัปโหลดไฟล์ได้"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_new.coffee
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee
@@ -10630,6 +10604,12 @@ msgid ""
 "The preview cannot be generated. The format is corrupted or not supported."
 msgstr ""
 
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
+#, fuzzy
+#| msgid "The file could not be uploaded."
+msgid "The product version could not be fetched."
+msgstr "ไม่สามารถอัปโหลดไฟล์ได้"
+
 #: app/controllers/import_freshdesk_controller.rb
 #: app/controllers/import_kayako_controller.rb
 #: app/controllers/import_otrs_controller.rb
@@ -10668,7 +10648,7 @@ msgstr "โทเค็นที่ระบุไม่ถูกต้อง"
 
 #: lib/static_assets.rb
 msgid "The raw logo could not be read."
-msgstr "ไม่สามารถอ่านโลโก้ดิบได้"
+msgstr "ไม่สามารถอ่าน โลโก้ RAW ไฟล์"
 
 #: app/assets/javascripts/app/controllers/report.coffee
 msgid "The report could not be generated"
@@ -10817,7 +10797,7 @@ msgid ""
 "them manually."
 msgstr "ไม่สามารถตรวจพบการตั้งค่าเซิร์ฟเวอร์โดยอัตโนมัติ โปรดกำหนดค่าด้วยตนเอง"
 
-#: app/frontend/apps/mobile/modules/login/views/Login.vue
+#: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid "The session is no longer valid. Please log in again."
 msgstr ""
 
@@ -10888,7 +10868,7 @@ msgstr "ช่องทางการติดต่อสื่อสารก
 msgid "The webhook could not be saved by Telegram, seems to be an invalid URL."
 msgstr ""
 
-#: app/frontend/apps/mobile/modules/user/views/UserDetailView.vue
+#: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue
 #, fuzzy
 #| msgid "Tickets"
 msgid "Their tickets"
@@ -11183,8 +11163,8 @@ msgstr "วันพฤหัสบดี"
 #: app/assets/javascripts/app/models/signature.coffee
 #: app/assets/javascripts/app/models/text_module.coffee
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
-#: app/frontend/apps/mobile/modules/ticket/routes.ts
-#: app/frontend/apps/mobile/modules/ticket/views/TicketInformationView.vue
+#: app/frontend/apps/mobile/pages/ticket/routes.ts
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformationView.vue
 #: db/seeds/permissions.rb
 msgid "Ticket"
 msgstr "Ticket"
@@ -11220,11 +11200,9 @@ msgstr ""
 msgid "Ticket Count"
 msgstr "จำนวน Ticket"
 
-#: app/frontend/apps/mobile/modules/ticket/routes.ts
-#, fuzzy
-#| msgid "Ticket %s created!"
+#: app/frontend/apps/mobile/pages/ticket/routes.ts
 msgid "Ticket Create"
-msgstr "Ticket %s สร้าง!"
+msgstr "สร้าง Ticket"
 
 #: db/seeds/settings.rb
 msgid "Ticket Hook"
@@ -11262,19 +11240,19 @@ msgstr "Ticket วันที่เพิ่มจำนวน"
 msgid "Ticket Number ignore system_id"
 msgstr "Ticket หมายเลขละเว้น system_id"
 
-#: app/frontend/apps/mobile/modules/home/routes.ts
-#: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
-#: app/frontend/apps/mobile/modules/home/views/Home.vue
+#: app/frontend/apps/mobile/pages/home/routes.ts
+#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
+#: app/frontend/apps/mobile/pages/home/views/Home.vue
 msgid "Ticket Overview"
 msgstr "ภาพรวม Ticket ทั้งหมด"
 
-#: app/frontend/apps/mobile/modules/home/views/FavoriteTicketOverviewsEdit.vue
+#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
 #, fuzzy
 #| msgid "Ticket Overviews"
 msgid "Ticket Overview settings are saved"
 msgstr "ภาพรวม Ticket ทั้งหมด"
 
-#: app/frontend/apps/mobile/modules/home/views/Home.vue
+#: app/frontend/apps/mobile/pages/home/views/Home.vue
 #, fuzzy
 #| msgid "Ticket Overview"
 msgid "Ticket Overviews"
@@ -11308,14 +11286,14 @@ msgstr "Ticket ขยาย"
 msgid "Ticket failed to save: %s"
 msgstr ""
 
-#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/TicketDetailViewHeader.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewHeader.vue
 #, fuzzy
 #| msgid "Ticket Overview"
 msgid "Ticket has %s viewers"
 msgstr "ภาพรวม Ticket ทั้งหมด"
 
-#: app/frontend/apps/mobile/modules/ticket/routes.ts
-#: app/frontend/apps/mobile/modules/ticket/views/TicketInformationView.vue
+#: app/frontend/apps/mobile/pages/ticket/routes.ts
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformationView.vue
 #, fuzzy
 #| msgid "Ticket notifications"
 msgid "Ticket information"
@@ -11355,7 +11333,7 @@ msgstr ""
 msgid "Ticket update"
 msgstr "Ticket อัปเดต"
 
-#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/TicketViewersDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue
 #, fuzzy
 #| msgid "Ticket Overview"
 msgid "Ticket viewers"
@@ -11388,14 +11366,17 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/ticket.ts
 msgid "Ticket |%s| has escalated!"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/ticket.ts
 msgid "Ticket |%s| was merged into another ticket"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee
+#: app/frontend/shared/components/ActivityMessage/builders/ticket.ts
 msgid "Ticket |%s| will escalate soon!"
 msgstr ""
 
@@ -11415,9 +11396,9 @@ msgstr "TicketID"
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
-#: app/frontend/apps/mobile/modules/search/plugins/ticket.ts
-#: app/frontend/apps/mobile/modules/ticket/routes.ts
-#: app/frontend/apps/mobile/modules/ticket/views/TicketOverview.vue
+#: app/frontend/apps/mobile/pages/search/plugins/ticket.ts
+#: app/frontend/apps/mobile/pages/ticket/routes.ts
+#: app/frontend/apps/mobile/pages/ticket/views/TicketOverview.vue
 msgid "Tickets"
 msgstr "Tickets"
 
@@ -11529,7 +11510,7 @@ msgstr "ชื่อของแบบฟอร์ม"
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
-#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 #: db/seeds/object_manager_attributes.rb
 msgid "To"
 msgstr "ถึง"
@@ -11783,6 +11764,12 @@ msgstr "เกิดข้อผิดพลาดไม่ทราบสาเ
 #: app/assets/javascripts/app/controllers/user.coffee
 msgid "Unlock"
 msgstr "ปลดล็อค"
+
+#: app/frontend/apps/mobile/pages/online-notification/components/NotificationItem.vue
+#, fuzzy
+#| msgid "Notification"
+msgid "Unread notification"
+msgstr "การแจ้งเตือน"
 
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
 msgid "Unsubscribe"
@@ -12071,8 +12058,8 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 #: app/assets/javascripts/app/views/session.jst.eco
-#: app/frontend/apps/mobile/modules/user/routes.ts
-#: app/frontend/apps/mobile/modules/user/views/UserDetailView.vue
+#: app/frontend/apps/mobile/pages/user/routes.ts
+#: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue
 msgid "User"
 msgstr "ผู้ใช้"
 
@@ -12123,7 +12110,7 @@ msgstr "ปลดล็อกผู้ใช้สำเร็จแล้ว!"
 msgid "Username"
 msgstr "บัญชีผู้ใช้"
 
-#: app/frontend/apps/mobile/modules/login/views/Login.vue
+#: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid "Username / Email"
 msgstr "ชื่อผู้ใช้ / อีเมล"
 
@@ -12153,7 +12140,7 @@ msgstr "ชื่อผู้ใช้สำหรับการเชื่อ
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco
-#: app/frontend/apps/mobile/modules/search/plugins/user.ts db/seeds/groups.rb
+#: app/frontend/apps/mobile/pages/search/plugins/user.ts db/seeds/groups.rb
 #: db/seeds/permissions.rb
 msgid "Users"
 msgstr "ผู้ใช้"
@@ -12281,7 +12268,7 @@ msgstr ""
 msgid "View this in Zammad"
 msgstr "ดูสิ่งนี้ใน Zammad"
 
-#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/TicketViewersDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue
 #, fuzzy
 #| msgid "New Ticket"
 msgid "Viewing ticket"
@@ -12881,7 +12868,7 @@ msgstr "คุณต้องกำหนดค่าปลายทาง Zamma
 msgid ""
 "You used %s in the text but no attachment could be found. Do you want to "
 "continue?"
-msgstr "คุณใช้ %s ในข้อความแต่ไม่พบไฟล์แนบ คุณต้องการดำเนินการต่อหรือไม่"
+msgstr "คุณใช้ %s ในข้อความแต่ไม่พบไฟล์แนบ คุณต้องการดำเนินการต่อหรือไม่?"
 
 #: app/assets/javascripts/app/views/karma/index.jst.eco
 msgid ""
@@ -13070,7 +13057,7 @@ msgstr "เจ้าหน้าที่ ผู้ใช้ Zammad"
 
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
-#: app/frontend/apps/mobile/modules/login/views/Login.vue
+#: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid ""
 "Zammad is currently in maintenance mode. Only administrators can log in. "
 "Please wait until the maintenance window is over."
@@ -13159,7 +13146,7 @@ msgstr "เก็บถาวร"
 
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
-#: app/frontend/apps/mobile/modules/ticket/views/TicketOverview.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketOverview.vue
 msgid "ascending"
 msgstr "กำลัง"
 
@@ -13199,7 +13186,7 @@ msgstr "ระหว่างการปรับปรุงเจ้าหน
 
 #: app/assets/javascripts/app/controllers/cti.coffee
 msgid "busy"
-msgstr ""
+msgstr "ไม่ว่าง"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "changed to"
@@ -13268,11 +13255,9 @@ msgstr ""
 msgid "created"
 msgstr "สร้าง"
 
-#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/TicketDetailViewHeader.vue
-#, fuzzy
-#| msgid "created"
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewHeader.vue
 msgid "created %s"
-msgstr "สร้าง"
+msgstr "สร้าง %s"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
@@ -13318,7 +13303,7 @@ msgstr "ลบ"
 
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
-#: app/frontend/apps/mobile/modules/ticket/views/TicketOverview.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketOverview.vue
 msgid "descending"
 msgstr "กำลัง"
 
@@ -13611,7 +13596,7 @@ msgstr "อาทิตย์ที่แล้ว"
 msgid "left"
 msgstr "ซ้าย"
 
-#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleSeparatorMore.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSeparatorMore.vue
 #, fuzzy
 #| msgid "show more"
 msgid "load %s more"
@@ -13666,7 +13651,7 @@ msgstr "นาที"
 msgid "my own note"
 msgstr "บันทึกของฉันเอง"
 
-#: app/frontend/apps/mobile/modules/ticket/components/TicketDetailView/ArticleSeparatorNew.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSeparatorNew.vue
 #: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
 msgid "new"
 msgstr "ใหม่"
@@ -13789,10 +13774,8 @@ msgid "regex mismatch"
 msgstr "regex mismatch"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
-#, fuzzy
-#| msgid "active"
 msgid "relative"
-msgstr "กำลังใช้งาน"
+msgstr "สัมพันธ์"
 
 #: db/seeds/settings.rb
 msgid "relative - e. g. \"2 hours ago\" or \"2 days and 15 minutes ago\""
@@ -14088,6 +14071,16 @@ msgstr "‎... ของพื้นที่ข้อความทั้ง�
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ รอเวลาวันนี้"
+
+#, fuzzy
+#~| msgid "Loading…"
+#~ msgid "Loading..."
+#~ msgstr "กำลังโหลด…"
+
+#, fuzzy
+#~| msgid "Notification"
+#~ msgid "Read notification"
+#~ msgstr "การแจ้งเตือน"
 
 #~ msgid "You have no configured account right now."
 #~ msgstr "ไม่มีบัญชีที่กำหนดค่า ในขณะนี้"
