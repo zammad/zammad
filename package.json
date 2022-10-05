@@ -50,6 +50,7 @@
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-prettier-vue": "^4.2.0",
+    "eslint-plugin-security": "^1.5.0",
     "eslint-plugin-sonarjs": "^0.15.0",
     "eslint-plugin-vue": "^9.5.1",
     "eslint-plugin-zammad": "file:.eslint-plugin-zammad",

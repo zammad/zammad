@@ -8,7 +8,14 @@ module.exports = {
     browser: true,
     node: true,
   },
-  plugins: ['@typescript-eslint', 'vue', 'prettier', 'sonarjs', 'zammad'],
+  plugins: [
+    '@typescript-eslint',
+    'vue',
+    'prettier',
+    'sonarjs',
+    'security',
+    'zammad',
+  ],
   extends: [
     'airbnb-base',
     'plugin:vue/vue3-recommended',
@@ -19,6 +26,7 @@ module.exports = {
     '@vue/typescript/recommended',
     'prettier',
     'plugin:sonarjs/recommended',
+    'plugin:security/recommended',
   ],
   rules: {
     'zammad/zammad-copyright': 'error',
@@ -140,6 +148,9 @@ module.exports = {
       files: ['*.js'],
       rules: {
         '@typescript-eslint/no-var-requires': 'off',
+        'security/detect-object-injection': 'off',
+        'security/detect-non-literal-fs-filename': 'off',
+        'security/detect-non-literal-regexp': 'off',
       },
     },
     {
@@ -170,6 +181,9 @@ module.exports = {
           { prefer: 'type-imports', disallowTypeAnnotations: false },
         ],
         '@typescript-eslint/consistent-type-exports': 'error',
+        'security/detect-object-injection': 'off',
+        'security/detect-non-literal-fs-filename': 'off',
+        'security/detect-non-literal-regexp': 'off',
       },
       parserOptions: {
         project: ['./tsconfig.json', './app/frontend/cypress/tsconfig.json'],
