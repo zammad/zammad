@@ -26,5 +26,3 @@ echo "Stylelint check..."
 yarn lint:css
 echo "ESLint check..."
 yarn lint
-echo "Storybook test build..."
-yarn storybook:build
