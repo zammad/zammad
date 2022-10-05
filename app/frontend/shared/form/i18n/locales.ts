@@ -51,7 +51,7 @@ const loadLocales = (): FormKitLocaleExtended => {
       /**
        * Shown when something is actively loading.
        */
-      isLoading: () => i18n.t('Loading...'),
+      isLoading: () => i18n.t('Loading…'),
       /**
        * Shown when there is more to load.
        */

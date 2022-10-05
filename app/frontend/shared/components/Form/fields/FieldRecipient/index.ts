@@ -12,7 +12,7 @@ const setAutoCompleteBehavior = (node: FormKitNode) => {
   // Allow selection of unknown values, but only if they pass email validation.
   //   Include helpful hint in the search input field.
   props.allowUnknownValues = true
-  props.filterInputPlaceholder = __('Search or enter email address...')
+  props.filterInputPlaceholder = __('Search or enter email address…')
   props.filterInputValidation = 'email'
 
   node.addProps(['gqlQuery'])

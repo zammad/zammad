@@ -1034,7 +1034,7 @@ try to find correct name
     return if organization_ids.blank?
     return if organization_id.present?
 
-    errors.add :base, __('Secondary organizations are only allowed when the primary organization is not given.')
+    errors.add :base, __('Secondary organizations are only allowed when the primary organization is given.')
   end
 
   def ensure_organizations_limit

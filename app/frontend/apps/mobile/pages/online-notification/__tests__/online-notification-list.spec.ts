@@ -72,7 +72,7 @@ describe('selecting a online notification', () => {
     })
 
     expect(notificationItems).toHaveLength(3)
-    expect(view.getAllByLabelText('Read notification')).toHaveLength(1)
+    expect(view.getAllByLabelText('Notification read')).toHaveLength(1)
     expect(view.getAllByLabelText('Unread notification')).toHaveLength(2)
   })
 

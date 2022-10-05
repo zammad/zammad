@@ -60,7 +60,7 @@ describe('selecting a online notification', () => {
 
     await waitUntil(() => mockApi.calls.resolve)
 
-    expect(view.getAllByLabelText('Read notification')).toHaveLength(1)
+    expect(view.getAllByLabelText('Notification read')).toHaveLength(1)
 
     mockGraphQLApi(OnlineNotificationMarkAllAsSeenDocument).willResolve({
       onlineNotificationMarkAllAsSeen: {
@@ -82,7 +82,7 @@ describe('selecting a online notification', () => {
 
     await view.events.click(view.getByText('Mark all as read'))
 
-    expect(view.getAllByLabelText('Read notification')).toHaveLength(3)
+    expect(view.getAllByLabelText('Notification read')).toHaveLength(3)
 
     await triggerNextOnlineNotificationCount(0)
 

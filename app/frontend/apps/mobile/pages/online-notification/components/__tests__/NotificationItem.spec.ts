@@ -50,7 +50,7 @@ describe('NotificationItem.vue', () => {
       seen: true,
     })
 
-    expect(view.getByLabelText('Read notification')).toBeInTheDocument()
+    expect(view.getByLabelText('Notification read')).toBeInTheDocument()
   })
 
   it('can delete online notification', async () => {

@@ -37,7 +37,7 @@ defineEmits<{
         role="status"
         class="h-3 w-3 rounded-full"
         :class="{ 'bg-blue': !seen }"
-        :aria-label="seen ? $t('Read notification') : $t('Unread notification')"
+        :aria-label="seen ? $t('Notification read') : $t('Unread notification')"
       ></div>
     </div>
     <ActivityMessage
