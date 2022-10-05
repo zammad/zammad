@@ -94,6 +94,9 @@
 yarn-error.log
 .yarn/cache
 
+# Generated Stories
+.histoire
+
 # Cypress
 .cypress/screenshots/*
 .cypress/videos/*

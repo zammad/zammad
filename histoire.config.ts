@@ -11,6 +11,7 @@ export default defineConfig({
     server: {
       port: 3074,
     },
+    logLevel: 'error',
   },
   tree: {
     groups: [
