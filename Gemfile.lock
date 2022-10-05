@@ -528,7 +528,7 @@ GEM
       dry-inflector
       faraday (~> 1.0)
       virtus (~> 2.0)
-    telephone_number (1.4.16)
+    telephone_number (1.4.17)
     terser (1.1.12)
       execjs (>= 0.3.0, < 3)
     test-unit (3.5.3)
