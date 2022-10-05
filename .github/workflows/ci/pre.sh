@@ -10,6 +10,5 @@ bundle config set --local frozen 'true'
 bundle config set --local path 'vendor'
 bundle install -j "$(nproc)"
 yarn install
-yarn storybook:install
 yarn cypress:install
 bundle exec ruby .gitlab/configure_environment.rb

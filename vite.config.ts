@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import { createRequire } from 'module'
-import { defineConfig } from 'vite'
+import { defineConfig, type ResolvedConfig } from 'vite'
 import VuePlugin from '@vitejs/plugin-vue'
 import {
   createSvgIconsPlugin,
@@ -12,10 +12,57 @@ import path from 'path'
 import tsconfig from './tsconfig.base.json'
 
 export default defineConfig(({ mode, command }) => {
-  const isTesting = ['test', 'storybook', 'cypress'].includes(mode)
-  const isBuild = command === 'build'
+  const isStory = Boolean(process.env.HISTOIRE)
+  const isTesting = ['test', 'cypress'].includes(mode) || isStory
+  const isBuild = command === 'build' && !isStory
 
   const require = createRequire(import.meta.url)
+
+  const svgPlugin = createSvgIconsPlugin({
+    // Specify the icon folder to be cached
+    iconDirs: [
+      path.resolve(
+        process.cwd(),
+        `${mode === 'storybook' ? '../public' : 'public'}/assets/images/icons`,
+      ),
+    ],
+    // Specify symbolId format
+    symbolId: 'icon-[dir]-[name]',
+    svgoOptions: {
+      plugins: [
+        { name: 'preset-default' },
+        {
+          name: 'removeAttributesBySelector',
+          params: {
+            selectors: [
+              {
+                selector: "[fill='#50E3C2']",
+                attributes: 'fill',
+              },
+              // TODO: we need to add a own plugin or add some identifier to the svg files, to add the same functionality
+              // like we have in the old gulp script (fill='#50E3C2'] + parent fill='none' should be removed).
+            ],
+          },
+        },
+        {
+          name: 'convertColors',
+          params: {
+            currentColor: /(#BD0FE1|#BD10E0)/,
+          },
+        },
+      ],
+    } as ViteSvgIconsPlugin['svgoOptions'],
+  })
+
+  if (isStory) {
+    svgPlugin.configResolved?.({ command: 'build' } as ResolvedConfig)
+    delete svgPlugin.configResolved
+    const { load } = svgPlugin
+    svgPlugin.load = function fakeLoad(id) {
+      // @ts-expect-error the plugin is not updated
+      return load?.call(this, id, true)
+    }
+  }
 
   const plugins = [
     VuePlugin({
@@ -28,43 +75,7 @@ export default defineConfig(({ mode, command }) => {
         },
       },
     }),
-    createSvgIconsPlugin({
-      // Specify the icon folder to be cached
-      iconDirs: [
-        path.resolve(
-          process.cwd(),
-          `${
-            mode === 'storybook' ? '../public' : 'public'
-          }/assets/images/icons`,
-        ),
-      ],
-      // Specify symbolId format
-      symbolId: 'icon-[dir]-[name]',
-      svgoOptions: {
-        plugins: [
-          { name: 'preset-default' },
-          {
-            name: 'removeAttributesBySelector',
-            params: {
-              selectors: [
-                {
-                  selector: "[fill='#50E3C2']",
-                  attributes: 'fill',
-                },
-                // TODO: we need to add a own plugin or add some identifier to the svg files, to add the same functionality
-                // like we have in the old gulp script (fill='#50E3C2'] + parent fill='none' should be removed).
-              ],
-            },
-          },
-          {
-            name: 'convertColors',
-            params: {
-              currentColor: /(#BD0FE1|#BD10E0)/,
-            },
-          },
-        ],
-      } as ViteSvgIconsPlugin['svgoOptions'],
-    }),
+    svgPlugin,
   ]
 
   // Ruby plugin is not needed inside of the vitest context and has some side effects.

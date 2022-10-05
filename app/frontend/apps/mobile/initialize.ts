@@ -2,7 +2,10 @@
 
 import type { App } from 'vue'
 
-import initializeApolloClient from '@mobile/server/apollo'
+import '@shared/initializer/translatableMarker'
+import 'virtual:svg-icons-register' // eslint-disable-line import/no-unresolved
+import '@mobile/styles/main.scss'
+
 import initializeStore from '@shared/stores'
 import initializeGlobalComponents from '@shared/initializer/globalComponents'
 import initializeForm from '@mobile/form'
@@ -12,7 +15,6 @@ export default function initializeApp(app: App) {
   // TODO remove when Vue 3.3 released
   app.config.unwrapInjectedRef = true
 
-  initializeApolloClient(app)
   initializeStore(app)
   initializeGlobalComponents(app)
   initializeGlobalProperties(app)

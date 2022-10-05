@@ -81,10 +81,9 @@
     - !reference [.scripts, yarn_install]
     - yarn lint:css
     - echo "ESLint check..."
-    - yarn storybook:install
     - yarn lint
-    - echo "Storybook test build..."
-    - yarn storybook:build
+    - echo "Histoire test build..."
+    - yarn story:build
 
 # Must be a separate job because it may fail and is only executed manually.
 'lint: orphaned ruby gems':

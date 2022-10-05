@@ -94,9 +94,6 @@
 yarn-error.log
 .yarn/cache
 
-# Storybook
-.storybook/storybook-static
-
 # Cypress
 .cypress/screenshots/*
 .cypress/videos/*

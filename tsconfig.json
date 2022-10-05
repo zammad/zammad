@@ -6,7 +6,8 @@
   "include": [
     "app/frontend/**/*",
     ".storybook/config/**/*.ts",
-    "./vite.config.*"
+    "./vite.config.*",
+    "./histoire.config.*"
   ],
   "exclude": ["app/frontend/cypress/**/*", "node_modules", "public", "vendor"]
 }

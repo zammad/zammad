@@ -7519,7 +7519,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
 #: app/frontend/apps/mobile/pages/login/views/Login.vue
-#: app/frontend/shared/components/Form/Form.stories.ts
 #: db/seeds/object_manager_attributes.rb
 #: db/seeds/permissions.rb
 msgid "Password"

@@ -17,8 +17,7 @@
       "@tests/*": ["app/frontend/tests/*"],
       "@stories/*": ["app/frontend/stories/*"],
       "@cy/*": [".cypress/*"],
-      "@/*": ["app/frontend/*"],
-      "@storybook/vue3": [".storybook/node_modules/@storybook/vue3"]
+      "@/*": ["app/frontend/*"]
     },
     "types": [
       "vite/client",

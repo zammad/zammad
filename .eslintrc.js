@@ -46,6 +46,7 @@ module.exports = {
       'error',
       {
         devDependencies: [
+          'histoire.config.ts',
           'tailwind.config.js',
           'vite.config.*',
           'app/frontend/build/**',
@@ -53,7 +54,9 @@ module.exports = {
           'app/frontend/**/__tests__/**/*',
           'app/frontend/tests/**/*',
           'app/frontend/**/*.stories.ts',
-          '.storybook/**/*',
+          'app/frontend/**/*.story.vue',
+          'app/frontend/**/*.story.vue',
+          'app/frontend/stories/**/*.ts',
           'app/frontend/cypress/**/*',
         ],
       },
@@ -140,12 +143,6 @@ module.exports = {
       },
     },
     {
-      files: ['.storybook/config/*'],
-      rules: {
-        'import/no-extraneous-dependencies': 'off',
-      },
-    },
-    {
       files: [
         'app/frontend/tests/**',
         'app/frontend/**/__tests__/**',
@@ -153,6 +150,7 @@ module.exports = {
         'app/frontend/stories/**',
         'app/frontend/cypress/**',
         'app/frontend/**/*.stories.ts',
+        'app/frontend/**/*.story.vue',
         '.eslint-plugin-zammad/**',
         '.eslintrc.js',
       ],
@@ -199,12 +197,18 @@ module.exports = {
               'node_modules/vue-easy-lightbox/dist/external-css/vue-easy-lightbox.css',
             ),
           ],
+          [
+            'histoire',
+            path.resolve(
+              __dirname,
+              './node_modules/histoire/dist/node/index.js',
+            ),
+          ],
         ],
         extensions: ['.js', '.jsx', '.ts', '.tsx', '.vue'],
       },
       node: {
         extensions: ['.js', '.jsx', '.ts', '.tsx', '.vue'],
-        paths: [path.resolve(__dirname, '.storybook/node_modules/')],
       },
     },
     // Adding typescript file types, because airbnb doesn't allow this by default.

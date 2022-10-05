@@ -4,7 +4,7 @@
     "generate-graphql-api": "RAILS_ENV=development bundle exec rails generate zammad:graphql_introspection > tmp/graphql_introspection.json && npx graphql-codegen -c .graphql_code_generator.yml && rm tmp/graphql_introspection.json",
     "dev": "RAILS_ENV=development forego start -f Procfile.dev",
     "i18n": "rails generate zammad:translation_catalog",
-    "lint": "vue-tsc --noEmit && eslint --cache --cache-location ./tmp/eslintcache.js -c .eslintrc.js --ext .js,.ts,.vue app/frontend/ .eslint-plugin-zammad/ .storybook/",
+    "lint": "vue-tsc --noEmit && eslint --cache --cache-location ./tmp/eslintcache.js -c .eslintrc.js --ext .js,.ts,.vue app/frontend/ .eslint-plugin-zammad/",
     "lint:fix": "yarn lint -- --fix",
     "lint:css": "stylelint **/*.{css,vue,scss}",
     "lint:css:fix": "stylelint **/*.{css,vue,scss} --fix",
@@ -13,9 +13,8 @@
     "test:ci:ct": "yarn --cwd ./.cypress cypress run --component --project ../ --config-file .cypress/cypress.config.ts",
     "cypress:install": "yarn --cwd ./.cypress install",
     "postinstall": "node script/fix-node-modules.mjs",
-    "storybook": "yarn --cwd ./.storybook start",
-    "storybook:build": "yarn --cwd ./.storybook build",
-    "storybook:install": "yarn --cwd ./.storybook install"
+    "story": "HISTOIRE=1 histoire dev",
+    "story:build": "HISTOIRE=1 histoire build"
   },
   "engines": {
     "node": ">=16"
@@ -27,6 +26,7 @@
     "@graphql-codegen/typescript": "^2.7.3",
     "@graphql-codegen/typescript-operations": "^2.5.3",
     "@graphql-codegen/typescript-vue-apollo": "^3.3.3",
+    "@histoire/plugin-vue": "^0.11.0",
     "@pinia/testing": "^0.0.14",
     "@tailwindcss/line-clamp": "^0.4.2",
     "@testing-library/jest-dom": "^5.16.5",
@@ -51,9 +51,9 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-prettier-vue": "^4.2.0",
     "eslint-plugin-sonarjs": "^0.15.0",
-    "eslint-plugin-storybook": "^0.6.4",
     "eslint-plugin-vue": "^9.5.1",
     "eslint-plugin-zammad": "file:.eslint-plugin-zammad",
+    "histoire": "^0.11.0",
     "jsdom": "^20.0.1",
     "mock-apollo-client": "^1.2.1",
     "postcss": "^8.4.17",

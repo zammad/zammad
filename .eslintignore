@@ -3,7 +3,6 @@
 # Skip auto generated files.
 app/frontend/**/graphql/**/*.api.ts
 app/frontend/shared/graphql/types.ts
-.storybook/storybook-static/**
 
 # Skip legacy files
 public/assets/tests/**/*.js

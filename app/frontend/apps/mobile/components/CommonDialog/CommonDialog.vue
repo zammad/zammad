@@ -10,6 +10,7 @@ import { useDialogState } from './composable'
 const props = defineProps<{
   name: string
   label?: string
+  content?: string
   listeners?: {
     done?: EventHandlers<Events>
   }
@@ -94,7 +95,7 @@ export default {
         class="flex grow flex-col items-start overflow-y-auto bg-black text-white"
         v-bind="$attrs"
       >
-        <slot />
+        <slot>{{ content }}</slot>
       </div>
     </div>
   </div>

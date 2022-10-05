@@ -8,9 +8,9 @@ const { viewTransition } = useViewTransition()
 
 <template>
   <main class="grid flex-1 overflow-hidden">
-    <transition class="z-10 flex-auto" :name="viewTransition">
+    <Transition class="z-10 flex-auto" :name="viewTransition">
       <slot></slot>
-    </transition>
+    </Transition>
   </main>
 </template>
 

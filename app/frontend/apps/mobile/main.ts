@@ -1,23 +1,22 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import { createApp } from 'vue'
-import '@shared/initializer/translatableMarker'
+import initializeApp from '@mobile/initialize'
 import App from '@mobile/App.vue'
 import { useSessionStore } from '@shared/stores/session'
-import '@mobile/styles/main.scss'
 import initializeStoreSubscriptions from '@shared/initializer/storeSubscriptions'
 import { useApplicationStore } from '@shared/stores/application'
 import { useLocaleStore } from '@shared/stores/locale'
+import initializeApolloClient from '@mobile/server/apollo'
 import initializeRouter from '@mobile/router'
 import { useAuthenticationStore } from '@shared/stores/authentication'
-import 'virtual:svg-icons-register' // eslint-disable-line import/no-unresolved
-import initializeApp from './initialize'
 
 export default async function mountApp(): Promise<void> {
   const app = createApp(App)
 
   initializeApp(app)
   initializeRouter(app)
+  initializeApolloClient(app)
 
   initializeStoreSubscriptions()
 

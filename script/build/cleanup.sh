@@ -11,9 +11,8 @@ rm -rf test spec app/frontend/tests .cypress
 find app/frontend/ -type d -name __tests__ -exec rm -rf {} +
 rm .rspec
 
-# Storybook
-rm -rf .storybook
-find app/frontend/ -name '*.stories.ts' -exec rm {} +
+# Histoire
+find app/frontend/ -name '*.story.vue' -exec rm {} +
 
 # Remove our customized .yarnrc to let yarn use the global cache
 #   instead of .yarn/cache which would go into the packages.
