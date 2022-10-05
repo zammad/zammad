@@ -14,6 +14,7 @@
         - db/**/*
       when: always
     - when: manual
+      allow_failure: true
   variables:
     # Turn off not not require redis for MySQL/MariaDB.
     ENABLE_EXPERIMENTAL_MOBILE_FRONTEND: ''
