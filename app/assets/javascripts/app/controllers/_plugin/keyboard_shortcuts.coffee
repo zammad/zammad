@@ -57,7 +57,7 @@ class App.KeyboardShortcutWidget extends App.Controller
               if shortcut.callback
                 @log 'debug', 'bind for', modifier
                 $(document).on('keydown.shortcuts', {keys: modifier}, (e) =>
-                  return if shortcut.onlyOutsideInputs && (_.contains(['INPUT', 'TEXTAREA'], document.activeElement.nodeName) || document.activeElement.getAttribute('contenteditable') == 'true')
+                  return if shortcut.onlyOutsideInputs && (_.contains(['INPUT', 'TEXTAREA', 'SELECT'], document.activeElement.nodeName) || document.activeElement.getAttribute('contenteditable') == 'true')
                   e.preventDefault()
                   if @lastKey && @lastKey.modifier is modifier && @lastKey.time + 5500  > new Date().getTime()
                     @lastKey.count += 1
