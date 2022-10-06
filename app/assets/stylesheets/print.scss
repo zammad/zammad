@@ -157,6 +157,14 @@ th.js-tableHead:not([data-column-key='icon']) {
   background: white !important;
 }
 
+.is-internal .internal-border {
+  background: none;
+}
+
+.is-internal .textBubble {
+  border: 5px dashed gray !important;
+}
+
 .bubble-arrow::after {
   background: white !important;
   border-color: black !important;
