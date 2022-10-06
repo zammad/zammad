@@ -3,7 +3,6 @@
 <script setup lang="ts">
 import { FormKit } from '@formkit/vue'
 import { AutocompleteSearchUserDocument } from '@shared/graphql/queries/autocompleteSearch/user.api'
-
 import { createMockClient } from 'mock-apollo-client'
 import { provideApolloClient } from '@vue/apollo-composable'
 import type { AutocompleteSearchUserQuery } from '@shared/graphql/types'
@@ -72,7 +71,6 @@ const mockClient = () => {
   mockApolloClient.setRequestHandler(
     AutocompleteSearchUserDocument,
     (variables) => {
-      console.log('requet hanlder')
       return Promise.resolve({
         data: mockQueryResult(variables.query, variables.limit),
       })
@@ -82,12 +80,16 @@ const mockClient = () => {
   provideApolloClient(mockApolloClient)
 }
 
+mockClient()
+
 const gqlQuery = `
   query autocompleteSearchUser($query: String!, $limit: Int) {
     autocompleteSearchUser(query: $query, limit: $limit) {
       value
       label
       labelPlaceholder
+      heading
+      headingPlaceholder
       disabled
       icon
     }
@@ -368,8 +370,6 @@ const variants = [
     name: 'autocomplete_action',
   },
 ] as any
-
-mockClient()
 </script>
 
 <template>

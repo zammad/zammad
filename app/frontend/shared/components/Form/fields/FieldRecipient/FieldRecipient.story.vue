@@ -369,7 +369,7 @@ const variants = [
       :key="idx"
       :title="variant.label"
     >
-      <FormKit type="organization" v-bind="variant" />
+      <FormKit type="recipient" v-bind="variant" />
     </Variant>
   </Story>
 </template>
