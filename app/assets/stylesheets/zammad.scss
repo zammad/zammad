@@ -27,7 +27,6 @@ $mobileNavigationWidthOpen: 220px;
   --menu-icon: hsl(206, 5%, 42%);
   --nav-icon: hsl(0, 0%, 50%);
   --highlight: hsl(205, 90%, 60%);
-  --highlight-muted: hsl(198, 19%, 72%);
   --interactive-primary: black;
   --interactive-muted: hsl(210, 3%, 71%);
   --interactive-muted-active: hsl(210, 4%, 71%);
@@ -102,7 +101,6 @@ $mobileNavigationWidthOpen: 220px;
   --text-nav: hsl(205, 1%, 84%);
   --nav-icon: hsl(0, 0%, 50%);
   --highlight: hsl(205, 90%, 60%);
-  --highlight-muted: hsl(210, 8%, 22%);
   --interactive-primary: white;
   --interactive-muted: hsl(213, 3%, 64%);
   --interactive-muted-active: hsl(213, 3%, 35%);
@@ -6488,7 +6486,7 @@ a.list-group-item.active > .badge,
   top: 50%;
   margin-top: -3px;
   border-radius: 100%;
-  background: var(--highlight-muted);
+  background: var(--interactive-muted-alt);
 }
 
 .form-inline .form-group .btn {
@@ -7806,7 +7804,7 @@ a.list-group-item.active > .badge,
   top: 50%;
   margin-top: -3px;
   border-radius: 100%;
-  background: var(--highlight-muted);
+  background: var(--interactive-muted-alt);
   box-shadow: 0 0 0 2px var(--background-primary);
 }
 
@@ -8093,7 +8091,7 @@ li.list-item-none {
 
 .ticket-id {
   color: var(--text-inverted);
-  background: var(--highlight-muted);
+  background: var(--interactive-muted-alt);
   font-size: 11px;
   border-radius: 7px;
   padding: 0 5px;
